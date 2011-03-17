@@ -18,20 +18,17 @@
    width="21.968504"
    height="16.653543"
    id="svg2">
-  <defs
-     id="defs4" />
-  <g
-     id="g3646">
+
+
     <g
-       transform="translate(3.7546232e-7,-1036.5944)"
        id="copper1">
       <g
          id="g3651">
         <rect
            width="9.2125988"
            height="5.6692915"
-           x="-3.7546232e-07"
-           y="1042.0865"
+           x="0"
+           y="5.4921"
            stroke-width="0"
            id="connector1pin"
            style="fill:#f7bd13;fill-opacity:1;stroke:none" />
@@ -39,13 +36,13 @@
            width="9.2125988"
            height="5.6692915"
            x="12.755905"
-           y="1042.0865"
+           y="5.4921"
            stroke-width="0"
            id="connector0pin"
            style="fill:#f7bd13;fill-opacity:1;stroke:none" />
       </g>
     </g>
-  </g>
+
   <g
      id="silkscreen">
     <path

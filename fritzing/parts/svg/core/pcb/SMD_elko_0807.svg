@@ -19,17 +19,14 @@
    height="31.889763"
    viewBox="0 0 35.787399 31.889763"
    id="svg2">
-  <defs
-     id="defs4" />
-  <g
-     id="g3651">
+
     <g
-       id="copper1" transform="translate(0,-1015.866)">
+       id="copper1" >
       <rect
          width="14.173228"
          height="5.6692915"
          x="0"
-         y="1028.9762"
+         y="13.1102"
          stroke-width="0"
          id="connector1pin"
          style="fill:#f7bd13;fill-opacity:1;stroke:none" />
@@ -37,12 +34,12 @@
          width="14.173228"
          height="5.6692915"
          x="21.6141726"
-         y="1028.9762"
+         y="13.1102"
          stroke-width="0"
          id="connector0pin"
          style="fill:#f7bd13;fill-opacity:1;stroke:none" />
     </g>
-  </g>
+
   <g
      id="silkscreen">
     <path
