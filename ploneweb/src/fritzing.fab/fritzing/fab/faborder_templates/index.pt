@@ -32,7 +32,8 @@
                 check: <span tal:content="item/check">-?-</span><br />
               </td>
               <td>
-                price per board: <span>-?-</span>
+                board dimensions: <span tal:content="item/width">width</span>&nbsp;&times;&nbsp;<span tal:content="item/height">height</span><br />
+                price without taxes: <span>-?-</span>
               </td>
               <td>
                 <a class="editSketchLink" href="#" tal:attributes="href string:${item/absolute_url}/edit">edit</a><br />

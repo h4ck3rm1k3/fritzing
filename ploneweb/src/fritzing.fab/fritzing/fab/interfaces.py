@@ -1,23 +1,39 @@
-import zope.i18nmessageid
+from five import grok
 
+import zope.i18nmessageid
 from zope import interface
 from zope.schema import Text, TextLine, ASCIILine, Int, Choice, Bool
+from zope.interface import Invalid
+
+from z3c.form import validator
 
 from plone.directives import form
 from plone.namedfile.field import NamedBlobFile
 
-from fritzing.fab.constraints import checkFiletype, checkEMail, checkTermsAccepted, checkInstructionsRead
+from fritzing.fab.constraints import checkEMail, checkTermsAccepted, checkInstructionsRead
+from fritzing.fab import getboardsize
 from fritzing.fab import _
+
+from Products.statusmessages.interfaces import IStatusMessage
+
+try:
+    from cStringIO import StringIO
+except ImportError:
+    from StringIO import StringIO
+
+import zipfile
 
 
 class ISketch(form.Schema):
     """A Fritzing Sketch file and meta-information
     """
     
+    width = interface.Attribute("width")
+    height = interface.Attribute("height")
+
     orderItem = NamedBlobFile(
         title=_(u"Sketch file"),
-        description=_(u"The .fzz or .fz file of your sketch"),
-        constraint=checkFiletype)
+        description=_(u"The .fzz or .fz file of your sketch"))
     
     copies = Int(
         title=_(u"Copies"),
@@ -27,6 +43,52 @@ class ISketch(form.Schema):
     check = Bool(
         title=_(u"Quality Check"),
         default=False)
+
+
+class SampleValidator(validator.SimpleFieldValidator):
+    
+    def validate(self, value):
+        super(SampleValidator, self).validate(value)
+        
+        fzzName = value.filename
+        fzzNameLower = fzzName.lower()
+        
+        if not (fzzNameLower.endswith('.fzz')):
+            raise Invalid(
+                _(u"We can only produce from compressed Fritzing sketch files (.fzz)"))
+        
+        # if not (fzzNameLower.endswith('.fz') or fzzNameLower.endswith('.fzz')):
+        #     raise Invalid(
+        #         _(u"We can only produce from Fritzing sketch files (.fz or .fzz)"))
+        
+        # use StringIO to make the blob to look like a file object:
+        fzzData = StringIO(value.data)
+        
+        zf = None
+        try:
+            zf = zipfile.ZipFile(fzzData) 
+        except:
+            raise Invalid(
+                _(u"Hmmm, '%s' doesn't seem to be a valid .fzz file. Sorry, we only support those at this time." % fzzName))
+        
+        pairs = getboardsize.fromZipFile(zf, fzzName)
+        
+        if not (len(pairs) >= 2):
+            raise Invalid(
+                _(u"No boards found in '%s'." % fzzName))
+        
+        if not (len(pairs) == 2):
+            raise Invalid(
+                _(u"Multiple boards found in '%s'. Sorry, we still work on the support for multiple boards per file." % fzzName))
+        
+        self.context.width = pairs[0]
+        self.context.height = pairs[1]
+        
+        return True
+
+
+validator.WidgetValidatorDiscriminators(SampleValidator, field=ISketch['orderItem'])
+grok.global_adapter(SampleValidator)
 
 
 class IFabOrder(form.Schema):

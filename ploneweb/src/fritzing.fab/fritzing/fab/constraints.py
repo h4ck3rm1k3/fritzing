@@ -24,14 +24,6 @@ def checkInstructionsRead(value):
     #     raise Invalid(_(u"You should read the instructions before ordering."))
     return True
 
-def checkFiletype(file):
-    """Check that the file type is correct
-    """
-    if not (file.filename.endswith('.fz') or file.filename.endswith('.fzz')):
-        raise Invalid(
-            _(u"We can only produce from Fritzing sketch files (.fz or .fzz)"))
-    return True
-
 eMailMatch = re.compile(
     r"[a-zA-Z0-9._%-]+@([a-zA-Z0-9-]+\.)*[a-zA-Z]{2,4}").match
 

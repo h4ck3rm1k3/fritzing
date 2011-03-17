@@ -95,7 +95,6 @@ class Edit(dexterity.EditForm):
 
 
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent
-from Products.CMFCore.utils import getToolByName
 
 @grok.subscribe(IFabOrder, IObjectModifiedEvent)
 def modifiedHandler(faborder, event):

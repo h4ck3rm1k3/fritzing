@@ -54,6 +54,17 @@ def main():
     except:
         assert False, "'" + fzz + "' is not a zip file"
     
+    pairs = fromZipFile(zf, fzz)
+    
+    print "pairs", pairs
+    
+    assert len(pairs) >= 2, "no boards found in '" + fzz + "'"
+    assert len(pairs) == 2, "multiple boards found in '" + fzz + "'"
+    
+    print "result", pairs
+
+
+def fromZipFile(zf, fzz):
     fzString = None
     for i, name in enumerate(zf.namelist()):   
         if name.endswith('fz'):
@@ -152,16 +163,10 @@ def main():
             if pair != None:
                 pairs.append(pair[0])
                 pairs.append(pair[1])
-     
-    print "pairs", pairs
     
-    assert len(pairs) >= 2, "no boards found in '" + fzz + "'"
-    assert len(pairs) == 2, "multiple boards found in '" + fzz + "'"
-    
-    print "result", pairs
-        
-    return pairs       
- 
+    return pairs
+
+
 def getText(nodelist):
     rc = []
     for node in nodelist:
