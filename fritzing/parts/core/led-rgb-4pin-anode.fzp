@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.1b.06.02.3056" moduleId="f5sadfcefde5f807268983b38d37da5d">
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.1b.06.02.3056" moduleId="f5sadfcefde5f807268983b38d37da5dLEDModuleID">
     <version>4</version>
     <author>Adafruit Industries</author>
     <title>RGB LED - (4 legs)</title>
@@ -13,6 +13,7 @@
         <property name="package">5 mm [THT]</property>
         <property name="family">LED</property>
         <property name="color" showInLabel="yes">RGB</property>
+	  <property name="current" showInLabel="yes"></property>
     </properties>
     <description>A 5mm tri-color LED with red, green and blue inside.</description>
     <views>

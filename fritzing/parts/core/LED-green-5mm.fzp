@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.1.beta.1407" moduleId="3915BBEC34">
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.1.beta.1407" moduleId="3915BBEC34LEDModuleID">
  <version>4</version>
  <author>Stefan Hermann</author>
  <title>green LED - 5mm</title>
@@ -14,6 +14,7 @@
   <property name="package">5 mm [THT]</property>
   <property name="family">LED</property>
   <property name="color" showInLabel="yes">green</property>
+  <property name="current" showInLabel="yes"></property>
  </properties>
  <description>A generic green LED (~1.8V)</description>
  <views>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.1.beta.1396" moduleId="b9acdb18-0668-4ae1-9f43-4563426a4dff">
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.1.beta.1396" moduleId="603RedLEDModuleID">
  <version>4</version>
  <author>Mr.T</author>
  <title>red smd LED</title>
@@ -14,7 +14,8 @@
   <property name="package">0603 [SMD]</property>
   <property name="family">LED</property>
   <property name="color" showInLabel="yes">red</property>
- </properties>
+   <property name="current" showInLabel="yes"></property>
+   </properties>
  <description>A generic red LED (~1.8V)</description>
  <views>
   <iconView>

@@ -68,6 +68,7 @@
 
   <property name="current" symbol="A" minValue="" maxValue="" defaultValue="" numeric="yes" editable="yes">
     	<suffix suffix="InductorModuleID"/>
+    	<suffix suffix="LEDModuleID"/>
 </property>
   
 <property name="power" symbol="W" minValue="" maxValue="" defaultValue="" numeric="yes" editable="yes">

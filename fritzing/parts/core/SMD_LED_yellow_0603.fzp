@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.1.beta.1396" moduleId="cff40fb3-a920-453a-8475-a578d706a19f">
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.1.beta.1396" moduleId="603YellowLEDModuleID">
  <version>4</version>
  <author>Mr.T</author>
  <title>yellow smd LED</title>
@@ -14,6 +14,7 @@
   <property name="package">0603 [SMD]</property>
   <property name="family">LED</property>
   <property name="color" showInLabel="yes">yellow</property>
+    <property name="current" showInLabel="yes"></property>
  </properties>
  <description>A generic yellow LED (~1.8V)</description>
  <views>

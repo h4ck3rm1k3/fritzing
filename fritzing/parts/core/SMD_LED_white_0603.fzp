@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.1.beta.1396" moduleId="2126b112-960c-4b26-9620-f616779b9f23">
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.1.beta.1396" moduleId="603WhiteLedModuleID">
  <version>4</version>
  <author>Mr.T</author>
  <title>white smd LED</title>
@@ -14,6 +14,7 @@
   <property name="package">0603 [SMD]</property>
   <property name="family">LED</property>
   <property name="color" showInLabel="yes">white</property>
+    <property name="current" showInLabel="yes"></property>
  </properties>
  <description>A generic white LED (~1.8V)</description>
  <views>

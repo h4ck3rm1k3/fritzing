@@ -122,6 +122,9 @@ ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClas
 					if (moduleID.endsWith(ModuleIDNames::InductorModuleIDName)) {
 						return new Capacitor(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 					}
+					if (moduleID.endsWith(ModuleIDNames::LEDModuleIDName)) {
+						return new Capacitor(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
+					}
 				}
 				QString family = modelPart->properties().value("family", "");
 				if (family.compare("mystery part", Qt::CaseInsensitive) == 0) {

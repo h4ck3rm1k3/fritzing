@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.1.beta.1407" moduleId="3912whiteBBEC34">
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.1.beta.1407" moduleId="3912whiteBBEC34LEDModuleID">
  <version>4</version>
  <author>Stefan Hermann</author>
  <title>white LED - 5mm</title>
@@ -14,6 +14,7 @@
   <property name="package">5 mm [THT]</property>
   <property name="family">LED</property>
   <property name="color" showInLabel="yes">white</property>
+  <property name="current" showInLabel="yes"></property>
  </properties>
  <description>A generic white LED (~1.8V)</description>
  <views>

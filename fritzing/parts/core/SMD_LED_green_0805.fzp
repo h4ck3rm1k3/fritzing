@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.1.beta.1396" moduleId="32981054-d89f-45d3-9403-a582d494a785">
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.1.beta.1396" moduleId="805GreenLEDModuleID">
  <version>4</version>
  <author>Mr.T</author>
  <title>green smd LED</title>
@@ -14,7 +14,8 @@
   <property name="package">0805 [SMD]</property>
   <property name="family">LED</property>
   <property name="color" showInLabel="yes">green</property>
- </properties>
+    <property name="current" showInLabel="yes"></property>
+    </properties>
  <description>A generic green LED (~1.8V)</description>
  <views>
   <iconView>

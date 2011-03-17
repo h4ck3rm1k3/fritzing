@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.1.beta.1396" moduleId="febddbb3-aaff-48d8-a79f-c7d80dc2dfb1">
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.1.beta.1396" moduleId="603BlueLEDModuleID">
  <version>4</version>
  <author>Mr.T</author>
  <title>Blue smd LED</title>
@@ -14,6 +14,7 @@
   <property name="package">0603 [SMD]</property>
   <property name="family">LED</property>
   <property name="color" showInLabel="yes">blue</property>
+  <property name="current" showInLabel="yes"></property>
  </properties>
  <description>A generic blue LED (~1.8V)</description>
  <views>
