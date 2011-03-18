@@ -4732,14 +4732,17 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 	if (newModelPart == NULL) return;
 
 	newModelPart->initConnectors();			//  make sure the connectors are set up
-	QHash<QString, QPointer<Connector> > newConnectors = newModelPart->connectors();
+	QList< QPointer<Connector> > newConnectors = newModelPart->connectors().values();
+
+	QList<ConnectorItem *> notFound;
+	QHash<ConnectorItem *, Connector *> found;
 
 	foreach (ConnectorItem * fromConnectorItem, connectorHash.uniqueKeys()) {
 		QList<Connector *> candidates;
 		Connector * newConnector = NULL;
 		QString fromName = fromConnectorItem->connectorSharedName();
 		QString fromDescription = fromConnectorItem->connectorSharedDescription();
-		foreach (Connector * connector, newConnectors.values()) {
+		foreach (Connector * connector, newConnectors) {
 			QString toName = connector->connectorSharedName();
 			QString toDescription = connector->connectorSharedDescription();
 			if (fromName.compare(toName, Qt::CaseInsensitive) == 0) {
@@ -4756,7 +4759,6 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 			}
 		}
 
-		bool swappedGenderFlag = false;
 		if (candidates.count() > 0) {
 			// TODO: check distances (for capacitors, for example)
 			//			use preloadSlowParts code to set up new connectors (which layers?)
@@ -4773,9 +4775,30 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 					}
 				}
 			}
-			swappedGenderFlag = swappedGender(fromConnectorItem, newConnector);
+
+			newConnectors.removeOne(newConnector);
+			found.insert(fromConnectorItem, newConnector);
+			
 		}
-	
+		else {
+			notFound.append(fromConnectorItem);
+		}
+	}
+
+	// matching by connectorid only can lead to weird results, so commenting out this section
+	/*
+	foreach (ConnectorItem * fromConnectorItem, notFound) {
+		foreach (Connector * connector, newConnectors) {
+			if (fromConnectorItem->connectorSharedID().compare(connector->connectorSharedID(), Qt::CaseInsensitive) == 0) {	
+				newConnectors.removeOne(connector);
+				found.insert(fromConnectorItem, connector);
+			}
+		}
+	}
+	*/
+
+	foreach (ConnectorItem * fromConnectorItem, connectorHash.uniqueKeys()) {
+		Connector * newConnector = found.value(fromConnectorItem, NULL);
 		foreach (ConnectorItem * toConnectorItem, connectorHash.values(fromConnectorItem)) {
 			// delete connection to part being swapped out
 
@@ -4785,7 +4808,7 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 										false, parentCommand);
 
 			bool cleanup = false;
-			if (swappedGenderFlag) {
+			if (newConnector && swappedGender(fromConnectorItem, newConnector)) {
 				cleanup = toConnectorItem->connectorType() == newConnector->connectorType();
 			}
 			if ((newConnector == NULL) || cleanup) {
