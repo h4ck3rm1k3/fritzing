@@ -53,11 +53,10 @@ public:
 	bool hasCustomSVG();
 	bool canEditPart();
 	PluralType isPlural();
-	void syncKinSceneChanged(PaletteItemBase *originator);
+	void addedToScene();
 
 protected:
 	QString makeBreadboardSvg(const QString & ohms);
-	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	void updateResistances(QString r);
 	ConnectorItem* newConnectorItem(class Connector *connector);
 	ConnectorItem* newConnectorItem(ItemBase * layerkin, Connector *connector);

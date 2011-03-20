@@ -64,11 +64,6 @@ QVariant LayerKinPaletteItem::itemChange(GraphicsItemChange change, const QVaria
 	    else if (change == ItemPositionHasChanged) {
 	    	m_layerKinChief->syncKinMoved(this->m_offset, value.toPointF());
 	   	}
-		else if (change == ItemSceneHasChanged) {
-			if (this->scene()) {
-				m_layerKinChief->syncKinSceneChanged(this);
-			}
-		}
    	}
     return PaletteItemBase::itemChange(change, value);
 }

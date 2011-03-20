@@ -58,6 +58,7 @@ public:
 	void reloadImage(const QString & svg, const QSizeF & aspectRatio, const QString & fileName, bool addName);
 	bool stickyEnabled();
 	PluralType isPlural();
+	void addedToScene();
 
 protected slots:
 	void prepLoadImage();
@@ -68,7 +69,6 @@ protected slots:
 	void fileNameEntry(const QString & filename);
 
 protected:
-	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	bool hasGrips();
 	QString hackSvg(const QString & svg, const QString & logo);
 	void unableToLoad(const QString & fileName);

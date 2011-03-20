@@ -457,21 +457,21 @@ ItemBase::PluralType JumperItem::isPlural() {
 	return Singular;
 }
 
-void JumperItem::syncKinSceneChanged(PaletteItemBase * originator) {
+void JumperItem::addedToScene() {
 
 	if (m_connector0 == NULL) return;
 	if (m_connector1 == NULL) return;
 
 	ConnectorItem * cc0 = m_connector0->getCrossLayerConnectorItem();
 	if (cc0 != NULL) {
-		if (cc0->parentItem() != originator) return;
-
 		cc0->setRect(m_connector0->rect());
 	}
 	ConnectorItem * cc1 = m_connector1->getCrossLayerConnectorItem();
 	if (cc1 != NULL) {
 		cc1->setRect(m_connector1->rect());
 	}
+
+	PaletteItem::addedToScene();
 }
 
 void JumperItem::rotateItem(qreal degrees) {

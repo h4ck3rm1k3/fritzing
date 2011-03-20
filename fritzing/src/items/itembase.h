@@ -197,7 +197,7 @@ public:
 	bool moveLock();
 	void setMoveLock(bool);
 	void debugInfo(const QString & msg);
-
+	virtual void addedToScene();
 
 public:
 	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth);

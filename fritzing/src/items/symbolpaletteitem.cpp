@@ -230,21 +230,13 @@ ConnectorItem * SymbolPaletteItem::connector1() {
 	return m_connector1;
 }
 
-QVariant SymbolPaletteItem::itemChange(GraphicsItemChange change, const QVariant &value)
+void SymbolPaletteItem::addedToScene()
 {
-	if (m_voltageReference) {
-		switch (change) {
-			case ItemSceneHasChanged:
-				if (this->scene()) {
-					setVoltage(m_voltage);
-				}
-				break;
-			default:
-				break;
-   		}
+	if (this->scene()) {
+		setVoltage(m_voltage);
 	}
 
-    return PaletteItem::itemChange(change, value);
+    return PaletteItem::addedToScene();
 }
 
 QString SymbolPaletteItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi) 

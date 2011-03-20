@@ -260,19 +260,13 @@ QString Resistor::pinSpacing() {
 	return m_pinSpacing;
 }
 
-QVariant Resistor::itemChange(GraphicsItemChange change, const QVariant &value)
+void Resistor::addedToScene()
 {
-	switch (change) {
-		case ItemSceneHasChanged:
-			if (this->scene()) {
-				setResistance(m_ohms, m_pinSpacing, true);
-			}
-			break;
-		default:
-			break;
-   	}
+	if (this->scene()) {
+		setResistance(m_ohms, m_pinSpacing, true);
+	}
 
-    return Capacitor::itemChange(change, value);
+    return Capacitor::addedToScene();
 }
 
 const QString & Resistor::title() {
@@ -338,13 +332,4 @@ void Resistor::resistanceEntry(const QString & text) {
 
 ItemBase::PluralType Resistor::isPlural() {
 	return Plural;
-}
-
-void Resistor::syncKinSceneChanged(PaletteItemBase * originator) {
-	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
-	if (infoGraphicsView == NULL) return;
-
-	m_changingPinSpacing = true;
-	resetKinImage(originator, infoGraphicsView);
-	m_changingPinSpacing = false;
 }

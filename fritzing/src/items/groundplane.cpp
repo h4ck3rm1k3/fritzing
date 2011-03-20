@@ -114,19 +114,13 @@ void GroundPlane::setProp(const QString & prop, const QString & value) {
 	PaletteItemBase::setProp(prop, value);
 }
 
-QVariant GroundPlane::itemChange(GraphicsItemChange change, const QVariant &value)
+void GroundPlane::addedToScene() 
 {
-	switch (change) {
-		case ItemSceneHasChanged:
-			if (this->scene()) {
-				setSvgAux(modelPart()->prop("svg").toString());
-			}
-			break;
-		default:
-			break;
-   	}
+	if (this->scene()) {
+		setSvgAux(modelPart()->prop("svg").toString());
+	}
 
-    return PaletteItem::itemChange(change, value);
+	PaletteItem::addedToScene();
 }
 
 

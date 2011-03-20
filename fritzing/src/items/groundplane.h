@@ -45,11 +45,11 @@ public:
 	QString svg();
 	bool hasPartLabel();
 	void loadLayerKin( const LayerHash & viewLayers, ViewLayer::ViewLayerSpec viewLayerSpec);
+	void addedToScene();
 
 protected:
 	void setSvg(const QString &);
 	void setSvgAux(const QString &);
-	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 
 protected:
 	ConnectorItem * m_connector0;

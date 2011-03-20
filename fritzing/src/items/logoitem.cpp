@@ -70,44 +70,38 @@ LogoItem::~LogoItem() {
 }
 
 
-QVariant LogoItem::itemChange(GraphicsItemChange change, const QVariant &value)
+void LogoItem::addedToScene()
 {
-	switch (change) {
-		case ItemSceneHasChanged:
-			if (this->scene()) {
-				setInitialSize();
-				m_aspectRatio.setWidth(this->boundingRect().width());
-				m_aspectRatio.setHeight(this->boundingRect().height());
-				m_originalFilename = filename();
-				QString shape = modelPart()->prop("shape").toString();
-				if (!shape.isEmpty()) {
+	if (this->scene()) {
+		setInitialSize();
+		m_aspectRatio.setWidth(this->boundingRect().width());
+		m_aspectRatio.setHeight(this->boundingRect().height());
+		m_originalFilename = filename();
+		QString shape = modelPart()->prop("shape").toString();
+		if (!shape.isEmpty()) {
 					
-					m_aspectRatio = modelPart()->prop("aspectratio").toSizeF();
-					if (m_renderer == NULL) {
-						m_renderer = new FSvgRenderer(this);
-					}
-
-					bool result = m_renderer->fastLoad(shape.toUtf8());
-					if (result) {
-						setSharedRendererEx(m_renderer);
-						positionGrips();
-					}
-				}
-				else {
-					QFile f(m_originalFilename);
-					if (f.open(QFile::ReadOnly)) {
-						QString svg = f.readAll();
-						modelPart()->setProp("shape", svg);
-						modelPart()->setProp("lastfilename", m_originalFilename);
-					}
-				}
+			m_aspectRatio = modelPart()->prop("aspectratio").toSizeF();
+			if (m_renderer == NULL) {
+				m_renderer = new FSvgRenderer(this);
 			}
-			break;
-		default:
-			break;
-   	}
 
-    return ResizableBoard::itemChange(change, value);
+			bool result = m_renderer->fastLoad(shape.toUtf8());
+			if (result) {
+				setSharedRendererEx(m_renderer);
+				positionGrips();
+			}
+		}
+		else {
+			QFile f(m_originalFilename);
+			if (f.open(QFile::ReadOnly)) {
+				QString svg = f.readAll();
+				modelPart()->setProp("shape", svg);
+				modelPart()->setProp("lastfilename", m_originalFilename);
+			}
+		}
+	}
+
+    return ResizableBoard::addedToScene();
 }
 
 

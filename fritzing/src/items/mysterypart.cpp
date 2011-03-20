@@ -247,20 +247,14 @@ QString MysteryPart::chipLabel() {
 	return m_chipLabel;
 }
 
-QVariant MysteryPart::itemChange(GraphicsItemChange change, const QVariant &value)
+void MysteryPart::addedToScene()
 {
-	switch (change) {
-		case ItemSceneHasChanged:
-			if (this->scene()) {
-				setChipLabel(m_chipLabel, true);
-				setSpacing(m_spacing, true);
-			}
-			break;
-		default:
-			break;
-   	}
+	if (this->scene()) {
+		setChipLabel(m_chipLabel, true);
+		setSpacing(m_spacing, true);
+	}
 
-    return PaletteItem::itemChange(change, value);
+    return PaletteItem::addedToScene();
 }
 
 const QString & MysteryPart::title() {
@@ -342,11 +336,3 @@ ItemBase::PluralType MysteryPart::isPlural() {
 	return Plural;
 }
 
-void MysteryPart::syncKinSceneChanged(PaletteItemBase * originator) {
-	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
-	if (infoGraphicsView == NULL) return;
-
-	m_changingSpacing = true;
-	resetKinImage(originator, infoGraphicsView);
-	m_changingSpacing = false;
-}

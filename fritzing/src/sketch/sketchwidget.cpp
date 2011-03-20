@@ -673,7 +673,6 @@ PaletteItem* SketchWidget::addPartItem(ModelPart * modelPart, ViewLayer::ViewLay
 			}
 
 			ok = true;
-			return paletteItem;
 		}
 		else {
 			// nobody falls through to here now?
@@ -689,8 +688,10 @@ PaletteItem* SketchWidget::addPartItem(ModelPart * modelPart, ViewLayer::ViewLay
 			//return NULL;
 			scene()->addItem(paletteItem);
 			//paletteItem->setVisible(false);
-			return paletteItem;
 		}
+		paletteItem->addedToScene();
+		return paletteItem;
+
 	} else {
 		return paletteItem;
 	}

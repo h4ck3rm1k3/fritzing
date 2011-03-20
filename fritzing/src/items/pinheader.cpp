@@ -168,19 +168,13 @@ QString PinHeader::getProperty(const QString & key) {
 	return PaletteItem::getProperty(key);
 }
 
-QVariant PinHeader::itemChange(GraphicsItemChange change, const QVariant &value)
+void PinHeader::addedToScene()
 {
-	switch (change) {
-		case ItemSceneHasChanged:
-			if (this->scene()) {
-				setForm(m_form, true);
-			}
-			break;
-		default:
-			break;
-   	}
+	if (this->scene()) {
+		setForm(m_form, true);
+	}
 
-    return PaletteItem::itemChange(change, value);
+    return PaletteItem::addedToScene();
 }
 
 ConnectorItem* PinHeader::newConnectorItem(Connector *connector) {
@@ -233,11 +227,3 @@ ItemBase::PluralType PinHeader::isPlural() {
 	return Plural;
 }
 
-void PinHeader::syncKinSceneChanged(PaletteItemBase * originator) {
-	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
-	if (infoGraphicsView == NULL) return;
-
-	m_changingForm = true;
-	resetKinImage(originator, infoGraphicsView);
-	m_changingForm = false;
-}

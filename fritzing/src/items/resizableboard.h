@@ -74,6 +74,7 @@ public:
 	PluralType isPlural();
 	void calcRotation(QTransform & rotation, QPointF center, ViewGeometry &);
 	QSizeF getSizeMM();
+	void addedToScene();
 
 public:
 	static QString customShapeTranslated;

@@ -55,14 +55,13 @@ public:
 	const QString & spacing();
 	bool onlySpacingChanges(QMap<QString, QString> & propsMap);
 	PluralType isPlural();
-	void syncKinSceneChanged(PaletteItemBase *originator);
+	void addedToScene();
 
 public slots:
 	void chipLabelEntry();
 
 protected:
 	QString makeSvg(const QString & chipLabel);
-	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	ConnectorItem* newConnectorItem(class Connector *connector);
 	ConnectorItem* newConnectorItem(ItemBase * layerkin, Connector *connector);
 	QStringList collectValues(const QString & family, const QString & prop, QString & value);

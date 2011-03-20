@@ -313,26 +313,20 @@ ItemBase::PluralType Ruler::isPlural() {
 }
 
 
-QVariant Ruler::itemChange(GraphicsItemChange change, const QVariant &value)
+void Ruler::addedToScene(void)
 {
-	switch (change) {
-		case ItemSceneHasChanged:
-			if (this->scene()) {
-				LayerHash viewLayers;
-				QString w = modelPart()->prop("width").toString();
-				modelPart()->setProp("width", "");							// makes sure resizeMM will do the work
-				qreal inches = TextUtils::convertToInches(w);
-				if (w.endsWith("cm")) {
-					resizeMM(inches * 2.54, IndexCm, viewLayers);
-				}
-				else {
-					resizeMM(inches, IndexIn, viewLayers);
-				}
-			}
-			break;
-		default:
-			break;
-   	}
+	if (this->scene()) {
+		LayerHash viewLayers;
+		QString w = modelPart()->prop("width").toString();
+		modelPart()->setProp("width", "");							// makes sure resizeMM will do the work
+		qreal inches = TextUtils::convertToInches(w);
+		if (w.endsWith("cm")) {
+			resizeMM(inches * 2.54, IndexCm, viewLayers);
+		}
+		else {
+			resizeMM(inches, IndexIn, viewLayers);
+		}
+	}
 
-    return PaletteItem::itemChange(change, value);
+    return PaletteItem::addedToScene();
 }

@@ -1196,11 +1196,6 @@ int ItemBase::getNextTitle(QList<QGraphicsItem*> & items, const QString &title) 
 QVariant ItemBase::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant & value)
 {
 	switch (change) {
-		case QGraphicsItem::ItemSceneHasChanged:
-			if (this->scene() && instanceTitle().isEmpty()) {
-				setTooltip();
-			}
-			break;
 		case QGraphicsItem::ItemSelectedChange:
 			if (m_partLabel) {
 				m_partLabel->ownerSelected(value.toBool());
@@ -1860,3 +1855,11 @@ void ItemBase::debugInfo(const QString & msg)
 	Q_UNUSED(msg);
 #endif
 }
+
+
+void ItemBase::addedToScene() {
+	if (this->scene() && instanceTitle().isEmpty()) {
+		setTooltip();
+	}
+}
+

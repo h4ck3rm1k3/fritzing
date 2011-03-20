@@ -274,19 +274,13 @@ QString Hole::getProperty(const QString & key) {
 	return PaletteItem::getProperty(key);
 }
 
-QVariant Hole::itemChange(GraphicsItemChange change, const QVariant &value)
+void Hole::addedToScene()
 {
-	switch (change) {
-		case ItemSceneHasChanged:
-			if (this->scene()) {
-				setHoleSize(QString("%1,%2").arg(m_holeDiameter).arg(m_ringThickness), true);
-			}
-			break;
-		default:
-			break;
-   	}
+	if (this->scene()) {
+		setHoleSize(QString("%1,%2").arg(m_holeDiameter).arg(m_ringThickness), true);
+	}
 
-    return PaletteItem::itemChange(change, value);
+    return PaletteItem::addedToScene();
 }
 
 bool Hole::hasCustomSVG() {

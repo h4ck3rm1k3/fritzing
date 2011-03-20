@@ -129,9 +129,6 @@ void PaletteItemBase::syncKinMoved(QPointF offset, QPointF newPos) {
 	Q_UNUSED(newPos);
 }
 
-void PaletteItemBase::syncKinSceneChanged(PaletteItemBase * originator) {
-	Q_UNUSED(originator);
-}
 
 QPointF PaletteItemBase::syncMoved() {
 	return m_syncMoved;

@@ -49,6 +49,7 @@ public:
 	ConnectorItem * connector1();
 	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi);
 	PluralType isPlural();
+	void addedToScene();
 
 public:
 	static qreal DefaultVoltage;
@@ -60,7 +61,6 @@ protected:
 	void removeMeFromBus(qreal voltage);
 	qreal useVoltage(ConnectorItem * connectorItem);
 	QString makeSvg();
-	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	QString replaceTextElement(QString svg);
 
 protected:

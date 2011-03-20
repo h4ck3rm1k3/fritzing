@@ -50,10 +50,9 @@ public:
 	bool onlyFormChanges(QMap<QString, QString> & propsMap);
     bool hasCustomSVG();
 	PluralType isPlural();
-	void syncKinSceneChanged(PaletteItemBase *originator);
+	void addedToScene();
 
 protected:
-	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	ConnectorItem* newConnectorItem(class Connector *connector);
 	ConnectorItem* newConnectorItem(ItemBase * layerkin, Connector *connector);
 	QStringList collectValues(const QString & family, const QString & prop, QString & value);
