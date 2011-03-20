@@ -1138,7 +1138,6 @@ Plane * CMRouter::tilePlane(ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewL
 
 			if (!nonConnectorItem->attachedTo()->isVisible()) continue;
 			if (nonConnectorItem->attachedTo()->hidden()) continue;
-			if (!m_sketchWidget->sameElectricalLayer2(connectorItem->attachedToViewLayerID(), viewLayerID)) continue;
 
 			QPolygonF poly = nonConnectorItem->mapToScene(nonConnectorItem->boundingRect());
 			if (!m_maxRect.contains(poly.boundingRect())) {
