@@ -6637,14 +6637,26 @@ ViewLayer::ViewLayerSpec SketchWidget::getViewLayerSpec(ModelPart * modelPart, Q
 
 	ViewLayer::ViewLayerSpec viewLayerSpec = defaultViewLayerSpec();
 
-	if (!viewGeometry.getTrace()) return viewLayerSpec;
+	if (modelPart->moduleID().compare(ModuleIDNames::GroundPlaneModuleIDName) == 0) {
+		QString layer = view.attribute("layer");
+		if (layer.isEmpty()) return viewLayerSpec;
 
-	QString layer = view.attribute("layer");
-	if (layer.isEmpty()) return viewLayerSpec;
+		ViewLayer::ViewLayerID viewLayerID = ViewLayer::viewLayerIDFromXmlString(layer);
+		if (viewLayerID == ViewLayer::GroundPlane1) {
+			return ViewLayer::GroundPlane_Top;
+		}
 
-	ViewLayer::ViewLayerID viewLayerID = ViewLayer::viewLayerIDFromXmlString(layer);
-	if (viewLayerID == ViewLayer::Copper1Trace) {
-		return ViewLayer::WireOnTop_TwoLayers;
+		return ViewLayer::GroundPlane_Bottom;
+	}
+
+	if (viewGeometry.getTrace()) {
+		QString layer = view.attribute("layer");
+		if (layer.isEmpty()) return viewLayerSpec;
+
+		ViewLayer::ViewLayerID viewLayerID = ViewLayer::viewLayerIDFromXmlString(layer);
+		if (viewLayerID == ViewLayer::Copper1Trace) {
+			return ViewLayer::WireOnTop_TwoLayers;
+		}
 	}
 
 	return viewLayerSpec;
