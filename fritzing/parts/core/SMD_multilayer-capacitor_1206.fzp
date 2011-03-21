@@ -41,7 +41,7 @@
   </pcbView>
  </views>
  <connectors>
-  <connector id="connector0" name="pin 0" type="male">
+  <connector id="connector0" name="0" type="male">
    <description>pin0</description>
    <views>
     <breadboardView>
@@ -55,7 +55,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector id="connector1" name="pin 1" type="male">
+  <connector id="connector1" name="1" type="male">
    <description>pin1</description>
    <views>
     <breadboardView>
