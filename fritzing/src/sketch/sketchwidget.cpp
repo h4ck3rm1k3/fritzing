@@ -4726,19 +4726,20 @@ long SketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const QStr
 
 void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QString & newModuleID, bool master, QUndoCommand * parentCommand)
 {
-	ConnectorPairHash connectorHash;
-	itemBase->collectConnectors(connectorHash, NULL);
-
 	ModelPart * newModelPart = m_refModel->retrieveModelPart(newModuleID);
 	if (newModelPart == NULL) return;
+
+	QList<ConnectorItem *> fromConnectorItems;
+	itemBase->collectConnectors(fromConnectorItems);
 
 	newModelPart->initConnectors();			//  make sure the connectors are set up
 	QList< QPointer<Connector> > newConnectors = newModelPart->connectors().values();
 
 	QList<ConnectorItem *> notFound;
+	QList<ConnectorItem *> other;
 	QHash<ConnectorItem *, Connector *> found;
 
-	foreach (ConnectorItem * fromConnectorItem, connectorHash.uniqueKeys()) {
+	foreach (ConnectorItem * fromConnectorItem, fromConnectorItems) {
 		QList<Connector *> candidates;
 		Connector * newConnector = NULL;
 		QString fromName = fromConnectorItem->connectorSharedName();
@@ -4779,7 +4780,11 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 
 			newConnectors.removeOne(newConnector);
 			found.insert(fromConnectorItem, newConnector);
-			
+			fromConnectorItem = fromConnectorItem->getCrossLayerConnectorItem();
+			if (fromConnectorItem) {
+				other.append(fromConnectorItem);
+				found.insert(fromConnectorItem, newConnector);
+			}
 		}
 		else {
 			notFound.append(fromConnectorItem);
@@ -4798,10 +4803,13 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 	}
 	*/
 
-	foreach (ConnectorItem * fromConnectorItem, connectorHash.uniqueKeys()) {
+	fromConnectorItems.append(other);
+	foreach (ConnectorItem * fromConnectorItem, fromConnectorItems) {
 		Connector * newConnector = found.value(fromConnectorItem, NULL);
-		foreach (ConnectorItem * toConnectorItem, connectorHash.values(fromConnectorItem)) {
+		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
 			// delete connection to part being swapped out
+			Wire * wire = qobject_cast<Wire *>(toConnectorItem->attachedTo());
+			if (wire != NULL && wire->getRatsnest()) continue;
 
 			extendChangeConnectionCommand(BaseCommand::SingleView,
 										fromConnectorItem, toConnectorItem,
