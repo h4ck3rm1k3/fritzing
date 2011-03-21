@@ -2,6 +2,7 @@
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1 Basic//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-basic.dtd'>
 <!-- Generator: Adobe Illustrator 15.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg xmlns="http://www.w3.org/2000/svg" width="1.59993in" xml:space="preserve" xmlns:xml="http://www.w3.org/XML/1998/namespace" x="0px" version="1.1" y="0px" height="0.399986in" viewBox="0 0 115.195 28.799" baseProfile="basic" id="svg">
+<g  id="breadboard">
  <rect  width="2.296" x="2.318" y="23.97" fill="none" height="2.297" id="connector0pin"/>
  <rect  width="2.296" x="9.517" y="23.97" fill="none" height="2.297" id="connector1pin"/>
  <rect  width="2.298" x="16.716" y="23.97" fill="none" height="2.297" id="connector2pin"/>
@@ -34,7 +35,6 @@
  <rect  width="2.298" x="16.716" y="2.373" fill="none" height="2.296" id="connector29pin"/>
  <rect  width="2.296" x="9.517" y="2.373" fill="none" height="2.296" id="connector30pin"/>
  <rect  width="2.296" x="2.318" y="2.373" fill="none" height="2.296" id="connector31pin"/>
- <g  id="breadboard">
   <g >
    <g >
     <g >
