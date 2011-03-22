@@ -1380,6 +1380,7 @@ QList<ModelPart*> MainWindow::moveToPartsFolder(QDir &unzipDir, MainWindow* mw, 
 	if(mw) {
 		namefilters << ZIP_SVG+"*";
 		foreach(QFileInfo file, unzipDir.entryInfoList(namefilters)) { // svg files
+			//DebugDialog::debug("unzip svg " + file.absoluteFilePath());
 			mw->copyToSvgFolder(file);
 		}
 
@@ -1387,6 +1388,7 @@ QList<ModelPart*> MainWindow::moveToPartsFolder(QDir &unzipDir, MainWindow* mw, 
 		namefilters << ZIP_PART+"*";
 
 		foreach(QFileInfo file, unzipDir.entryInfoList(namefilters)) { // part files
+			//DebugDialog::debug("unzip part " + file.absoluteFilePath());
 			retval << mw->copyToPartsFolder(file,addToBin);
 		}
 	}
@@ -1399,7 +1401,7 @@ void MainWindow::copyToSvgFolder(const QFileInfo& file, const QString &destFolde
 	// let's make sure that we remove just the suffix
 	QString fileName = file.fileName().remove(QRegExp("^"+ZIP_SVG));
 	QString viewFolder = fileName.left(fileName.indexOf("."));
-	fileName.remove(viewFolder+".");
+	fileName.remove(0, viewFolder.length() + 1);
 
 	QString destFilePath =
 		FolderUtils::getUserDataStorePath("parts")+"/svg/"+destFolder+"/"+viewFolder+"/"+fileName;
