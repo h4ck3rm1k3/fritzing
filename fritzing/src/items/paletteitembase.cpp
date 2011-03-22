@@ -34,6 +34,7 @@ $Date$
 #include "../connectors/connectoritem.h"
 #include "../connectors/svgidlayer.h"
 #include "wire.h"
+#include "partlabel.h"
 #include "../utils/focusoutcombobox.h"
 
 #include <QBrush>
@@ -465,6 +466,18 @@ bool PaletteItemBase::collectExtraInfo(QWidget * parent, const QString & family,
 
 	return ItemBase::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
 }
+
+void PaletteItemBase::setProp(const QString & prop, const QString & value) 
+{	
+	if (prop.compare("part") == 0) {
+		modelPart()->setProp("part", value);
+		if (m_partLabel) m_partLabel->displayTextsIf();
+		return;
+	}
+
+	ItemBase::setProp(prop, value);
+}
+
 
 void PaletteItemBase::partPropertyEntry(const QString & text) {
 

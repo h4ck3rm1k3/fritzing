@@ -113,6 +113,7 @@ PartLabel::PartLabel(ItemBase * owner, QGraphicsItem * parent)
 
 	m_inactive = m_hidden = m_initialized = false;
 	m_displayKeys.append(LabelTextKey);
+	m_displayKeys.append("part");
 
 	setFlag(QGraphicsItem::ItemIsSelectable, false);
 	setFlag(QGraphicsItem::ItemIsMovable, false);					// don't move this in the standard QGraphicsItem way
@@ -140,7 +141,11 @@ void PartLabel::showLabel(bool showIt, ViewLayer * viewLayer) {
 		bool flipped = (viewLayer->viewLayerID() == ViewLayer::Silkscreen0Label);
 
 		if (m_owner->viewIdentifier() != ViewIdentifierClass::PCBView) {
-			m_displayKeys.append(m_owner->modelPart()->displayKeys());
+			foreach (QString dk, m_owner->modelPart()->displayKeys()) {
+				if (!m_displayKeys.contains(dk)) {
+					m_displayKeys.append(dk);
+				}
+			}
 		}
 
 		m_owner->scene()->addItem(this);
@@ -388,6 +393,7 @@ void PartLabel::restoreLabel(QDomElement & labelGeometry, ViewLayer::ViewLayerID
 
 	if (m_displayKeys.length() == 0) {
 		m_displayKeys.append(LabelTextKey);
+		m_displayKeys.append("part");
 	}
 
 	QTransform t;

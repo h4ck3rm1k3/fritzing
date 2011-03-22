@@ -71,6 +71,7 @@ ModelPartShared::ModelPartShared(QDomDocument * domDocument, const QString & pat
 		populateProperties(root, m_properties, m_displayKeys);
 		if (!m_properties.keys().contains("part")) {
 			m_properties.insert("part", "");
+			m_displayKeys.append("part");
 		}
 
 		m_moduleID = root.attribute("moduleId", "");
@@ -265,6 +266,7 @@ void ModelPartShared::setProperties(const QHash<QString,QString> &properties) {
 	m_properties = properties;
 	if (!m_properties.keys().contains("part")) {
 		m_properties.insert("part", "");
+		m_displayKeys.append("part");
 	}
 }
 
