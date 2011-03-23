@@ -13,28 +13,40 @@ from fritzing.fab import _
 
 
 class Index(grok.View):
+    """Review the order
+    """
     grok.require('zope2.View')
     grok.context(IFabOrder)
-    message = None
     
     label = _(u"Order your PCBs")
-    description = _(u"Bla bla description")
+    description = _(u"Review the order")
+
+
+class Edit(dexterity.EditForm):
+    """Edit the order
+    """
+    grok.name('edit')
+    grok.require('cmf.ModifyPortalContent')
+    grok.context(IFabOrder)
+    
+    schema = IFabOrder
+    
+    label = _(u"Edit order")
+    description = _(u"Edit the order")
 
 
 class Checkout(grok.View):
-    """order checkout
+    """Order checkout
     """
     grok.name('checkout')
     grok.require('cmf.ModifyPortalContent')
     grok.context(IFabOrder)
     
+    label = _(u"Checkout")
+    description = _(u"Order checkout")
+    
     def update(self):
-        if not self.context.addressOk:
-            IStatusMessage(self.request).addStatusMessage(
-                _(u"Address missing/invalid, checkout aborted."), 
-                "info")
-            return
-        if not self.context.sketchesOk:
+        if not self.context.area > 0:
             IStatusMessage(self.request).addStatusMessage(
                 _(u"Sketches missing/invalid, checkout aborted."), 
                 "info")
@@ -51,8 +63,7 @@ class Checkout(grok.View):
     def render(self):
         faborderURL = self.context.absolute_url()
         self.request.response.redirect(faborderURL)
-
-
+    
     def changeOwnership(self, obj, userid):
         """ Change ownership of obj to userid """
         # http://keeshink.blogspot.com/2010/04/change-creator-programmatically.html
@@ -81,31 +92,60 @@ class Checkout(grok.View):
         obj.reindexObject()
 
 
-class Edit(dexterity.EditForm):
-    """edit the order
-    """
-    grok.name('edit')
-    grok.require('cmf.ModifyPortalContent')
-    grok.context(IFabOrder)
-    
-    schema = IFabOrder
-    
-    label = _(u"Edit order details")
-    description = _(u"you have to bla bla...")
-
-
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent
-
 @grok.subscribe(IFabOrder, IObjectModifiedEvent)
 def modifiedHandler(faborder, event):
-    # print "### faborder '%s' modified" % faborder.title
-    # print "### faborder '%s' sketches:" % len(faborder)
-    # for sketch in faborder:
-    #     print "### sketch '%s'" % sketch.title()
-    faborder.sketchesOk = (len(faborder) > 0)
-    faborder.addressOk = True
+    
+    # shipping and taxes
+    if faborder.shipTo == u'germany':
+        faborder.priceShippingNetto = 5
+        faborder.taxesPercent = 19
+    elif faborder.shipTo == u'eu':
+        faborder.priceShippingNetto = 10
+        faborder.taxesPercent = 19
+    else:
+        faborder.priceShippingNetto = 20
+        faborder.taxesPercent = 0
+    
+    recalculatePrices(faborder)
+    
+    # TODO: for testing we rely on the constraints to validatate the fields
 
-    # TODO: for testing we rely on the constraints to validatate the other fields
+
+from zope.app.container.interfaces import IObjectMovedEvent
+@grok.subscribe(ISketch, IObjectModifiedEvent)
+@grok.subscribe(ISketch, IObjectMovedEvent)
+def modifiedHandler(sketch, event):
+    faborder = sketch.aq_parent
+    # print "### faborder '%s' sketch '%s' event '%s'" % (faborder.title, sketch.title, event)
+    
+    # sum up the areas of all sketches and the number of quality checks
+    faborder.area = 0
+    faborder.numberOfQualityChecks = 0
+    for sketch in faborder.listFolderContents():
+        faborder.area += sketch.copies * sketch.area
+        if sketch.check:
+            faborder.numberOfQualityChecks += 1
+    
+    # choose discount
+    if (faborder.area < 70):
+        faborder.pricePerSquareCm = 0.59
+    elif (faborder.area < 175):
+        faborder.pricePerSquareCm = 0.55
+    elif (faborder.area < 350):
+        faborder.pricePerSquareCm = 0.48
+    else:
+        faborder.pricePerSquareCm = 0.42
+    
+    recalculatePrices(faborder)
+
+
+def recalculatePrices(faborder):
+    faborder.priceNetto = faborder.area * faborder.pricePerSquareCm
+    faborder.priceQualityChecksNetto = faborder.numberOfQualityChecks * 10.0
+    faborder.priceTotalNetto = faborder.priceNetto + faborder.priceQualityChecksNetto + faborder.priceShippingNetto
+    faborder.taxes = faborder.priceTotalNetto * faborder.taxesPercent / 100.0
+    faborder.priceTotalBrutto = faborder.priceTotalNetto + faborder.taxes
 
 
 class AddForm(dexterity.AddForm):
@@ -120,18 +160,15 @@ class AddForm(dexterity.AddForm):
     label = _(u"Add Sketch")
     description = u''
     
-    # def update(self):
-    #     super(AddForm, self).update()
-    
     def create(self, data):
         from zope.component import createObject
-        type = createObject('sketch')
-        type.id = data['orderItem'].filename.encode("ascii")
-        type.title = data['orderItem'].filename
-        type.orderItem = data['orderItem']
-        type.copies = data['copies']
-        type.check = data['check']
-        return type
+        sketch = createObject('sketch')
+        sketch.id = data['orderItem'].filename.encode("ascii")
+        sketch.title = data['orderItem'].filename
+        sketch.orderItem = data['orderItem']
+        sketch.copies = data['copies']
+        sketch.check = data['check']
+        return sketch
 
     def add(self, object):
         self.context._setObject(object.id, object)
@@ -139,52 +176,3 @@ class AddForm(dexterity.AddForm):
         self.request.response.redirect(faborderURL)
 
 
-# class FabOrder(form.SchemaForm):
-#     """somefaborderinstance/@@faborder
-#     """
-#     grok.require('zope2.View')
-#     grok.context(IFabOrders)
-# 
-#     schema = IFabOrder
-#     # ignoreContext = True
-# 
-#     label = _(u"Order your PCB")
-#     description = _(u"We will contact you to confirm your order and delivery.")
-# 
-#     def update(self):
-#         # pre-processing
-#         # disable Plone's editable border
-#         self.request.set('disable_border', True)
-#         # call the base class version - this is very important!
-#         super(FabOrder, self).update()
-#         # postprocessing
-#         # nothing at the moment
-#     
-#     @button.buttonAndHandler(_(u'Order'))
-#     def handleApply(self, action):
-#         data, errors = self.extractData()
-#         if errors:
-#             self.status = self.formErrorsMessage
-#             return
-#         
-#         from zope.component import createObject
-#         type = createObject('fritzing.fab.faborder')
-#         # type = FabOrder()
-#         object.id = data['id']
-#         object.title = data['name']
-#         self.context._setObject(object.id, object)
-#         
-#         # Redirect back to the front page with a status message
-#         IStatusMessage(self.request).addStatusMessage(
-#             _(u"Thank you for your order. We will contact you shortly"),
-#             "info")
-#         
-#         contextURL = self.context.absolute_url()
-#         self.request.response.redirect(contextURL)
-#     
-#     @button.buttonAndHandler(_(u"Cancel"))
-#     def handleCancel(self, action):
-#         """User cancelled. Redirect back to the front page.
-#         """
-#         contextURL = self.context.absolute_url()
-#         self.request.response.redirect(contextURL)

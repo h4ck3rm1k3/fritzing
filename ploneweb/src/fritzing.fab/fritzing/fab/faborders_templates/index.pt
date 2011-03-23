@@ -40,14 +40,12 @@
                   </ul>
                 </td>
                 <td>
-                  <span tal:condition="python: not (item.sketchesOk and item.addressOk)">incomplete</span>
                   <span tal:condition="item/isOrdered">ordered</span>
                 </td>
                 <td>
                   <a class="viewOrderLink" href="#" tal:attributes="href string:${item/absolute_url}">view</a><br/>
                   <a class="editOrderLink" href="#" tal:attributes="href string:${item/absolute_url}/edit">edit</a><br/>
-                  <a class="deleteOrderLink" href="#" tal:attributes="href string:${item/absolute_url}/delete_confirmation">delete</a><br/>
-                  <a class="checkoutLink" href="#" tal:attributes="href string:${item/absolute_url}/checkout">checkout</a>
+                  <a class="deleteOrderLink" href="#" tal:attributes="href string:${item/absolute_url}/delete_confirmation">delete</a>
                   <p tal:content="item/Creator | string:error"></p>
                 </td>
               </tr>

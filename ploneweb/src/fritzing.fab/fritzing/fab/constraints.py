@@ -3,11 +3,63 @@ from five import grok
 import zope.i18nmessageid
 from zope.interface import Invalid
 
+from z3c.form import validator
+
 from Products.statusmessages.interfaces import IStatusMessage
 
 import re
 
+from fritzing.fab import getboardsize
 from fritzing.fab import _
+
+try:
+    from cStringIO import StringIO
+except ImportError:
+    from StringIO import StringIO
+
+import zipfile
+
+
+class SketchFileValidator(validator.SimpleFieldValidator):
+    
+    def validate(self, value):
+        super(SketchFileValidator, self).validate(value)
+        
+        fzzName = value.filename
+        fzzNameLower = fzzName.lower()
+        
+        if not (fzzNameLower.endswith('.fzz')):
+            raise Invalid(
+                _(u"We can only produce from compressed Fritzing sketch files (.fzz)"))
+        
+        # if not (fzzNameLower.endswith('.fz') or fzzNameLower.endswith('.fzz')):
+        #     raise Invalid(
+        #         _(u"We can only produce from Fritzing sketch files (.fz or .fzz)"))
+        
+        # use StringIO to make the blob to look like a file object:
+        fzzData = StringIO(value.data)
+        
+        zf = None
+        try:
+            zf = zipfile.ZipFile(fzzData) 
+        except:
+            raise Invalid(
+                _(u"Hmmm, '%s' doesn't seem to be a valid .fzz file. Sorry, we only support those at this time." % fzzName))
+        
+        pairs = getboardsize.fromZipFile(zf, fzzName)
+        
+        if not (len(pairs) >= 2):
+            raise Invalid(
+                _(u"No boards found in '%s'." % fzzName))
+        
+        if not (len(pairs) == 2):
+            raise Invalid(
+                _(u"Multiple boards found in '%s'. Sorry, we still work on the support for multiple boards per file." % fzzName))
+        
+        value.width = pairs[0] / 10
+        value.height = pairs[1] / 10
+        
+        return True
 
 
 def checkTermsAccepted(value):

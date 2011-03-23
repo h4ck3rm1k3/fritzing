@@ -18,63 +18,113 @@
     <metal:main fill-slot="main">
       <tal:main-macro metal:define-macro="main">
         <h1 tal:content="view/label" class="documentFirstHeading">xOrder your PCB</h1>
-        <p tal:content="view/description" class="documentDescription">xWe will contact you to confirm your order and delivery.</p>
         <div id="content-core">
+          
+          
+          <h2>Step 1: Upload your sketches</h2>
+          
           <div tal:condition="not:container/listFolderContents">
-            no sketches, bla bla
+            <p>no sketches, bla bla</p>
+            <a class="addSketchLink" href="#" tal:attributes="href string:${context/absolute_url}/++add++sketch">Add Sketch</a>
           </div>
+          
           <table tal:condition="container/listFolderContents">
             <tr tal:repeat="item container/listFolderContents">
-              <td tal:content="repeat/item/number">#</td>
-              <td tal:content="item/orderItem/filename | string:error">filename</td>
               <td>
-                copies: <span tal:content="item/copies">-?-</span><br />
-                check: <span tal:content="item/check">-?-</span><br />
+                filename: <span tal:content="item/orderItem/filename | string:error">filename</span><br />
+                board dimensions: <span tal:content="python: '%.2f&nbsp;cm&nbsp;&times;&nbsp;%.2f&nbsp;cm' % (item.width, item.height)">size</span><br />
+                area: <span tal:content="python: '%.2f&nbsp;cm&sup2;' % (item.area)">area</span>
               </td>
               <td>
-                board dimensions: <span tal:content="item/width">width</span>&nbsp;&times;&nbsp;<span tal:content="item/height">height</span><br />
-                price without taxes: <span>-?-</span>
+                copies: <span tal:content="item/copies">-?-</span><br />
+                check: <span tal:content="item/check">-?-</span>
               </td>
               <td>
                 <a class="editSketchLink" href="#" tal:attributes="href string:${item/absolute_url}/edit">edit</a><br />
                 <a class="deleteSketchLink" href="#" tal:attributes="href string:${item/absolute_url}/delete_confirmation">delete</a>
               </td>
             </tr>
+            <tr>
+              <td colspan="3"><a class="addSketchLink" href="#" tal:attributes="href string:${context/absolute_url}/++add++sketch">Add Sketch</a></td>
+            </tr>
           </table>
-          <a class="addSketchLink" href="#" tal:attributes="href string:${context/absolute_url}/++add++sketch">add sketch</a>
-          <div>
-            please add your phone number and shipping destination to complete your order:<br />
-            <a class="editAddressLink" href="#" tal:attributes="href string:${context/absolute_url}/edit">add phone number and shipping destination</a>
+          
+          
+          <div tal:condition="python: (context.area > 0)">
+
+            <h2>Step 2: Provide shipping and contact information</h2>
+          
+            <div tal:condition="python: not context.shipTo">
+              <p>
+                please add your phone number, e-mail address and shipping destination to complete your order:<br />
+                <a class="editAddressLink" href="#" tal:attributes="href string:${context/absolute_url}/edit">Add a phone number and shipping destination</a>
+              </p>
+            </div>
+          
+            <table tal:condition="python: context.shipTo">
+              <tr>
+                <td>E-Mail: </td>
+                <td tal:content="context/email"></td>
+              </tr>
+              <tr>
+                <td>Phone: </td>
+                <td tal:content="context/telephone"></td>
+              </tr>
+              <tr>
+                <td>Shipping Area: </td>
+                <td tal:content="context/shipTo"></td>
+              </tr>
+              <tr>
+                <td colspan="2"><a class="editAddressLink" href="#" tal:attributes="href string:${context/absolute_url}/edit">Edit</a></td>
+              </tr>
+            </table>
           </div>
-          <!--
-          <div tal:condition="context/name">
-            <div tal:content="context/name">name</div>
-            <div tal:condition="context/company" tal:content="context/company">company</div>
-            <div>
-              <span tal:content="context/streetNumber">streetNumber</span> 
-              <span tal:content="context/street">street</span>
-            </div>
-            <div>
-              <span tal:content="context/postcode">postcode</span> 
-              <span tal:content="context/city">city</span>, 
-              <span tal:content="context/country">country</span> 
-            </div>
-            <div tal:content="context/email">email</div>
-            <div tal:content="context/telephone">telephone</div>
-            <div>
-              <span>Shipping Area:</span> 
-              <span tal:content="context/shipTo">shipTo</span>
-            </div>
-            <div tal:condition="context/instructionsRead">instructions read</div>
-            <div tal:condition="not:context/instructionsRead">instructions NOT read</div>
-            <div tal:condition="context/termsAccepted">terms accepted</div>
-            <div tal:condition="not:context/termsAccepted">terms NOT accepted</div>
-            <a class="editAddressLink" href="#" tal:attributes="href string:${context/absolute_url}/edit">edit address</a>
-          </div>
-          -->
-          <div tal:condition="python: (context.sketchesOk and context.addressOk)">
-            everything alright blabla... you can now: <br />
-            <a class="checkoutLink" href="#" tal:attributes="href string:${context/absolute_url}/checkout">checkout</a>
+          
+          
+          <div tal:condition="python: (context.area > 0 and context.shipTo and context.email)">
+        
+            <h2>Step 3: Review your order</h2>
+        
+            <table>
+              <tr>
+                <td tal:content="python: '%.2f&nbsp;cm&sup2;' % (context.area)"></td>
+                <td>PCB Area (<span tal:content="context/pricePerSquareCm"></span>&nbsp;EUR/cm&sup2;)</td>
+                <td tal:content="python: '%.2f&nbsp;EUR' % (context.priceNetto)"></td>
+              </tr>
+              <tr tal:condition="python: (context.numberOfQualityChecks > 0)">
+                <td><span tal:content="context/numberOfQualityChecks"></span>&times;</td>
+                <td>Sketch quality check</td>
+                <td tal:content="python: '%.2f&nbsp;EUR' % (context.priceQualityChecksNetto)"></td>
+              </tr>
+              <tr>
+                <td>1&times;</td>
+                <td>Shipping</td>
+                <td tal:content="python: '%.2f&nbsp;EUR' % (context.priceShippingNetto)"></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>Total Netto</td>
+                <td tal:content="python: '%.2f&nbsp;EUR' % (context.priceTotalNetto)"></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>Taxes (<span tal:content="context/taxesPercent"></span>%)</td>
+                <td tal:content="python: '%.2f&nbsp;EUR' % (context.taxes)"></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>Total</td>
+                <td tal:content="python: '%.2f&nbsp;EUR' % (context.priceTotalBrutto)"></td>
+              </tr>
+            </table>
+            
+            
+            <h2>Step 4: PayPal checkout</h2>
+            
+            <p>
+              everything alright blabla... you can now: <br />
+              <a class="checkoutLink" href="#" tal:attributes="href string:${context/absolute_url}/checkoutxx">Checkout</a>
+            </p>
           </div>
         </div>
       </tal:main-macro>

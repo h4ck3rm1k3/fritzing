@@ -33,9 +33,9 @@ class AddForm(dexterity.AddForm):
         object = createObject('faborder')
         object.id = data['id']
         object.title = data['name']
-        object.userId = u"%s" % self.context.portal_membership.getAuthenticatedMember()
-        object.sketchesOk = False
-        object.addressOk = False
+        user = self.context.portal_membership.getAuthenticatedMember()
+        object.userId = u"%s" % user
+        object.email = user.getProperty('email')
         object.isOrdered = False;
         object.reindexObject()
         return object
