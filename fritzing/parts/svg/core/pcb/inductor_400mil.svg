@@ -14,14 +14,8 @@
      id="copper0">
     <g
        id="copper1">
-      <path
-         d="m 6.3,3.5999999 a 2.7000001,2.7000001 0 1 1 -5.40000014,0 2.7000001,2.7000001 0 1 1 5.40000014,0 z"
-         id="connector1pin"
-         style="opacity:0.86000001;fill:none;stroke:#f7bd13;stroke-width:1.79999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-      <path
-         d="m 42.299999,3.5999999 a 2.7000005,2.7000005 0 1 1 -5.400001,0 2.7000005,2.7000005 0 1 1 5.400001,0 z"
-         id="connector0pin"
-         style="opacity:0.86000001;fill:none;stroke:#f7bd13;stroke-width:1.79999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+       <circle cx="3.6" cy="3.6" fill="none" id="connector1pin" r="2.7" stroke="#f7bd13" stroke-width="1.8"/>
+       <circle cx="39.6" cy="3.6" fill="none" id="connector0pin" r="2.7" stroke="#f7bd13" stroke-width="1.8"/>
     </g>
   </g>
   <g
