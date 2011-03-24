@@ -36,7 +36,7 @@ $Date$
 #include "../utils/graphicsutils.h"
 
 //static const qreal EffectiveAdjustment = 1.25;
-static const qreal EffectiveAdjustmentFactor = 5.0 / 27.0;
+static const qreal EffectiveAdjustmentFactor = 5.0 / 15.0;
 
 /////////////////////////////////////////////////////////
 
