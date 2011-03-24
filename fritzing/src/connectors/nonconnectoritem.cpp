@@ -45,7 +45,6 @@ NonConnectorItem::NonConnectorItem(ItemBase * attachedTo) : QGraphicsRectItem(at
 	m_radius = m_strokeWidth = 0;
 	m_effectivelyCircular = m_effectivelyRectangular = m_circular = false;
 	m_inactive = m_hidden = false;
-	m_white = false;
 	m_attachedTo = attachedTo;
     setAcceptHoverEvents(false);
 	setAcceptedMouseButtons(Qt::NoButton);
@@ -62,11 +61,6 @@ ItemBase * NonConnectorItem::attachedTo() {
 }
 
 void NonConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget ) {
-	if (m_white) {
-		qreal pw = (m_negativePenWidth < 0) ? m_negativePenWidth + 1 : pen().width() + 1;
-		painter->fillRect(rect().adjusted(-pw, -pw, pw, pw), QColor(255, 255, 255, 255));
-		return;
-	}
 
 	if (m_hidden || m_inactive || !m_paint) return;
 
@@ -82,8 +76,10 @@ void NonConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem
 		}
 		else
 		{
+			QRectF r = rect();
+			qreal delta = .66 * m_strokeWidth;
 			painter->setPen(pen());
-			painter->drawEllipse(rect());
+			painter->drawEllipse(r.adjusted(delta, delta, -delta, -delta));
 		}
 	}
 	else if (!m_shape.isEmpty()) {
@@ -179,9 +175,4 @@ QPainterPath NonConnectorItem::shape() const
 void NonConnectorItem::setShape(QPainterPath & pp) {
 	// so far only used by GroundPlane
 	m_shape = GraphicsSvgLineItem::qt_graphicsItem_shapeFromPath(pp, pen(), 1);
-}
-
-void NonConnectorItem::setWhite(bool white) {
-	m_white = white;
-	update();
 }
