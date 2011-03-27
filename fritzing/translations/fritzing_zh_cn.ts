@@ -257,12 +257,6 @@
 </context>
 <context>
     <name>CMRouter</name>
-    <message numerus="yes">
-        <source>best so far: %1 unrouted/%n jumpers</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-        </translation>
-    </message>
     <message>
         <source>round %1 of:</source>
         <translation type="unfinished"></translation>
@@ -288,6 +282,22 @@
     <message numerus="yes">
         <source>
 Note: %n parts are not located entirely on the board.</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>best so far: %1 unrouted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>/%n jumpers</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>/%n vias</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
@@ -714,6 +724,26 @@ y:%2</translation>
     </message>
     <message>
         <source>unable to create renderer for svg</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>inductance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>power</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>part</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2323,15 +2353,43 @@ Please check all views for potential side-effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Export the current sketch to PDF for DIY PCB production</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>as Etchable SVG...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Export the current sketch to SVG for DIY PCB production</source>
+        <source>Export the current sketch to PDF for DIY PCB production (photoresist)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as Etchable PDF (mirrored)...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export the current sketch to PDF for DIY PCB production (tone transfer)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export the current sketch to SVG for DIY PCB production (photoresist)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as Etchable SVG (mirrored)...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export the current sketch to SVG for DIY PCB production (tone transfer)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Etchable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set Via Size...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set via size when autorouting double-sided boards</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2374,6 +2432,17 @@ Reason: %2 (errcode %3)</source>
     </message>
     <message>
         <source>at</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ModelPartShared</name>
+    <message>
+        <source>Fritzing</source>
+        <translation type="unfinished">Fritzing</translation>
+    </message>
+    <message>
+        <source>Unable to parse &apos;%1&apos;: %2: line %3 column %4.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2424,6 +2493,22 @@ Reason: %2 (errcode %3)</source>
     <message>
         <source>Delete ratsnest</source>
         <translation>删除覆铜</translation>
+    </message>
+    <message>
+        <source>Select Via Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set the via size to use when autorouting.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">取消</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished">确定</translation>
     </message>
 </context>
 <context>
@@ -2564,10 +2649,6 @@ Reason: %2 (errcode %3)</source>
         <translation>另存为...</translation>
     </message>
     <message>
-        <source>Export...</source>
-        <translation>导出...</translation>
-    </message>
-    <message>
         <source>Rename...</source>
         <translation>重命名...</translation>
     </message>
@@ -2594,10 +2675,6 @@ Reason: %2 (errcode %3)</source>
     <message>
         <source>All User Parts</source>
         <translation>所有用户元件</translation>
-    </message>
-    <message>
-        <source>Import...</source>
-        <translation>导入...</translation>
     </message>
     <message>
         <source>Edit...</source>
@@ -2687,6 +2764,18 @@ Reason: %2 (errcode %3)</source>
     </message>
     <message>
         <source>Parts Bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export Bin...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import Part...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export Part...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
