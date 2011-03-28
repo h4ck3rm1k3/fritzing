@@ -314,7 +314,7 @@ void PartsBinPaletteWidget::createBinMenu() {
 	m_closeBinAction = new QAction(tr("Close"),this);
 	m_saveAction = new QAction(tr("Save"),this);
 	m_saveAsAction = new QAction(tr("Save As..."),this);
-	m_saveAsBundledAction = new QAction(tr("Export..."),this);
+	m_saveAsBundledAction = new QAction(tr("Export Bin..."),this);
 	m_renameAction = new QAction(tr("Rename..."),this);
 
 	connect(m_newBinAction, SIGNAL(triggered()),this, SLOT(newBin()));
@@ -428,9 +428,9 @@ void PartsBinPaletteWidget::createPartMenu() {
 	m_partMenuButton = newToolButton("partsBinPartMenu");
 
 	m_newPartAction = new QAction(tr("New..."), this);
-	m_importPartAction = new QAction(tr("Import..."),this);
+	m_importPartAction = new QAction(tr("Import Part..."),this);
 	m_editPartAction = new QAction(tr("Edit..."),this);
-	m_exportPartAction = new QAction(tr("Export..."),this);
+	m_exportPartAction = new QAction(tr("Export Part..."),this);
 	m_removePartAction = new QAction(tr("Remove"),this);
 
 	connect(m_newPartAction, SIGNAL(triggered()),this, SLOT(newPart()));
