@@ -6,8 +6,12 @@
 <description></description>
 <title>QFN-20-0.4MM</title>
 <tags>
+<tag>SMD</tag>
 </tags>
 <properties>
+<property name='package'>QFN-20-0.4MM</property>
+<property name='family'>Generic IC</property>
+<property name='chip label'>QFN-20-0.4MM</property>
 </properties>
 <views>
 <breadboardView>
