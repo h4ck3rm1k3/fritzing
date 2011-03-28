@@ -5,8 +5,9 @@
  <g  id="breadboard" stroke-width="0">
   <g  id="icon" stroke-width="0">
    <path  fill="#1F7A34" stroke="none" stroke-width="0" d="M0,0L0,19.44A2.16,2.16,0,0,1,0,23.76L0,43.2L129.6,43.2L129.6,0L0,0z"/>
+   <text  x="3.6" y="23.355" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="4.68">QFN-36</text>
    <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 55.152, 11.952)">
-    <g  stroke-width="0" transform="matrix(0.707107, 0.707107, -0.707107, 0.707107, 9.648, -3.99633)">
+    <g  stroke-width="0" transform="matrix(0.5, 0, 0, 0.5, 4.824, 4.824)">
      <g  stroke-width="0" transform="matrix(-1, 0, 0, -1, 7.95744, 36.3038)">
       <rect  width="0.651969" x="3.65273" y="17.0181" fill="#8c8c8c" height="2.26772" stroke="none" stroke-width="0"/>
      </g>

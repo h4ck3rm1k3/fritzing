@@ -5,8 +5,9 @@
  <g  id="breadboard" stroke-width="0">
   <g  id="icon" stroke-width="0">
    <path  fill="#1F7A34" stroke="none" stroke-width="0" d="M0,0L0,19.44A2.16,2.16,0,0,1,0,23.76L0,43.2L57.6,43.2L57.6,0L0,0z"/>
+   <text  x="3.6" y="23.355" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="4.68">SSOP16</text>
    <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 21.672, 9.41047)">
-    <g  stroke-width="0" transform="matrix(0.707107, 0.707107, -0.707107, 0.707107, 10.707, -1.47002)">
+    <g  stroke-width="0" transform="matrix(0.5, 0, 0, 0.5, 3.564, 6.09477)">
      <rect  width="0.992124" x="0.331937" y="18.1423" fill="#8c8c8c" height="6.23622" stroke="none" stroke-width="0"/>
      <rect  width="0.992124" x="2.13193" y="18.1423" fill="#8c8c8c" height="6.23622" stroke="none" stroke-width="0"/>
      <rect  width="0.992124" x="3.93193" y="18.1423" fill="#8c8c8c" height="6.23622" stroke="none" stroke-width="0"/>
