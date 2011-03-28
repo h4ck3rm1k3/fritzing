@@ -5,7 +5,6 @@
  <g  id="breadboard" stroke-width="0">
   <g  id="icon" stroke-width="0">
    <path  fill="#1F7A34" stroke="none" stroke-width="0" d="M0,0L0,19.44A2.16,2.16,0,0,1,0,23.76L0,43.2L72,43.2L72,0L0,0z"/>
-   <text  x="3.6" y="23.355" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="4.68">SSOP20</text>
    <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 24.948, 9.19447)">
     <g  stroke-width="0" transform="matrix(0.5, 0, 0, 0.5, 5.526, 6.20277)">
      <rect  width="1.13386" x="2.19373" y="20.5551" fill="#8c8c8c" height="4.25197" stroke="none" stroke-width="0"/>
@@ -36,6 +35,7 @@
      <circle  fill="#1f1f1f" cx="2.40492" cy="17.6156" stroke="none" r="0.72" stroke-width="0"/>
     </g>
    </g>
+   <text  x="3.6" y="23.355" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="4.68">SSOP20</text>
    <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 4.572, 37.8756)">
     <g  stroke-width="0" transform="rotate(-90)">
      <text  x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="3.24">1</text>
