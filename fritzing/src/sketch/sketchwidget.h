@@ -373,7 +373,8 @@ protected:
 	QString makeWireSVG(Wire * wire, QPointF offset, qreal dpi, qreal printerscale, bool blackOnly);
 	QString makeRectSVG(QRectF r, QPointF offset, qreal dpi, qreal printerscale);
 	QString makeMoveSVG(qreal printerScale, qreal dpi, QPointF & offset); 
-	void prepDeleteProps(ItemBase * itemBase, QUndoCommand * parentCommand);
+	void prepDeleteProps(ItemBase * itemBase, long id, QUndoCommand * parentCommand);
+	void prepDeleteOtherProps(ItemBase * itemBase, long id, QUndoCommand * parentCommand);
 	ViewLayer::ViewLayerSpec getViewLayerSpec(ModelPart * modelPart, QDomElement & instance, QDomElement & view, ViewGeometry &);
 	virtual ViewLayer::ViewLayerSpec wireViewLayerSpec(ConnectorItem *);
 

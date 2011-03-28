@@ -4072,7 +4072,7 @@ void SketchWidget::makeDeleteItemCommandPrepSlot(ItemBase * itemBase, bool forei
 	}
 
 	if (!foreign) {
-		prepDeleteProps(itemBase, parentCommand);
+		prepDeleteProps(itemBase, itemBase->id(), parentCommand);
 	}
 
 	rememberSticky(itemBase, parentCommand);
@@ -4089,7 +4089,7 @@ void SketchWidget::makeDeleteItemCommandFinalSlot(ItemBase * itemBase, bool fore
 	new DeleteItemCommand(this, BaseCommand::SingleView, mp->moduleID(), itemBase->viewLayerSpec(), itemBase->getViewGeometry(), itemBase->id(), mp->modelIndex(), parentCommand);
 }
 
-void SketchWidget::prepDeleteProps(ItemBase * itemBase, QUndoCommand * parentCommand) 
+void SketchWidget::prepDeleteProps(ItemBase * itemBase, long id,  QUndoCommand * parentCommand) 
 {
 	// TODO: does this need to be generalized to the whole set of modelpart props?
 	// TODO: LogoItem and Ruler
@@ -4097,20 +4097,21 @@ void SketchWidget::prepDeleteProps(ItemBase * itemBase, QUndoCommand * parentCom
 	switch (itemBase->itemType()) {
 		case ModelPart::Wire:
 			{
-			Wire * wire = dynamic_cast<Wire *>(itemBase);
-			new WireWidthChangeCommand(this, wire->id(), wire->width(), wire->width(), parentCommand);
-			new WireColorChangeCommand(this, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), parentCommand);
+				Wire * wire = dynamic_cast<Wire *>(itemBase);
+				new WireWidthChangeCommand(this, id, wire->width(), wire->width(), parentCommand);
+				new WireColorChangeCommand(this, id, wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), parentCommand);
 			}
 			return;
 		
 		case ModelPart::ResizableBoard:
 			{
-			ResizableBoard * rb = dynamic_cast<ResizableBoard *>(itemBase);
-			rb->saveParams();
-			QPointF p;
-			QSizeF sz;
-			rb->getParams(p, sz);
-			new ResizeBoardCommand(this, rb->id(), sz.width(), sz.height(), sz.width(), sz.height(), parentCommand);
+				ResizableBoard * rb = dynamic_cast<ResizableBoard *>(itemBase);
+				rb->saveParams();
+				QPointF p;
+				QSizeF sz;
+				rb->getParams(p, sz);
+				new ResizeBoardCommand(this, id, sz.width(), sz.height(), sz.width(), sz.height(), parentCommand);
+				prepDeleteOtherProps(itemBase, id, parentCommand);
 			}
 			return;
 
@@ -4121,33 +4122,36 @@ void SketchWidget::prepDeleteProps(ItemBase * itemBase, QUndoCommand * parentCom
 				QPointF p;
 				QSizeF sz;
 				logo->getParams(p, sz);
-				new ResizeBoardCommand(this, logo->id(), sz.width(), sz.height(), sz.width(), sz.height(), parentCommand);
+				new ResizeBoardCommand(this, id, sz.width(), sz.height(), sz.width(), sz.height(), parentCommand);
 				QString logoProp = logo->modelPart()->prop("logo").toString();
 				QString shapeProp = logo->modelPart()->prop("shape").toString();
 				if (!logoProp.isEmpty()) {
-					new SetPropCommand(this, logo->id(), "logo", logoProp, logoProp, true, parentCommand);
+					new SetPropCommand(this, id, "logo", logoProp, logoProp, true, parentCommand);
 				}
 				else if (!shapeProp.isEmpty()) {
-					new LoadLogoImageCommand(this, logo->id(), shapeProp, logo->modelPart()->prop("aspectratio").toSizeF(), logo->modelPart()->prop("lastfilename").toString(), "", false, parentCommand);
+					new LoadLogoImageCommand(this, id, shapeProp, logo->modelPart()->prop("aspectratio").toSizeF(), logo->modelPart()->prop("lastfilename").toString(), "", false, parentCommand);
 				}
+				prepDeleteOtherProps(itemBase, id, parentCommand);
 			}
 			return;
 
 		case ModelPart::Jumper:
 			{
-			JumperItem * jumper = dynamic_cast<JumperItem *>(itemBase);
-			jumper->saveParams();
-			QPointF p;
-			QPointF c0, c1;
-			jumper->getParams(p, c0, c1);
-			new ResizeJumperItemCommand(this, jumper->id(), p, c0, c1, p, c0, c1, parentCommand);
+				JumperItem * jumper = dynamic_cast<JumperItem *>(itemBase);
+				jumper->saveParams();
+				QPointF p;
+				QPointF c0, c1;
+				jumper->getParams(p, c0, c1);
+				new ResizeJumperItemCommand(this, id, p, c0, c1, p, c0, c1, parentCommand);
+				prepDeleteOtherProps(itemBase, id, parentCommand);
 			}
 			return;
 
 		case ModelPart::CopperFill:
 			{
-			GroundPlane * groundPlane = dynamic_cast<GroundPlane *>(itemBase);
-			new SetPropCommand(this, itemBase->id(), "svg", groundPlane->svg(), groundPlane->svg(), true, parentCommand);
+				GroundPlane * groundPlane = dynamic_cast<GroundPlane *>(itemBase);
+				new SetPropCommand(this, id, "svg", groundPlane->svg(), groundPlane->svg(), true, parentCommand);
+				prepDeleteOtherProps(itemBase, id, parentCommand);
 			}
 			return;
 
@@ -4155,39 +4159,53 @@ void SketchWidget::prepDeleteProps(ItemBase * itemBase, QUndoCommand * parentCom
 			break;
 	}
 
+	Resistor * resistor =  dynamic_cast<Resistor *>(itemBase);
+	if (resistor != NULL) {
+		new SetResistanceCommand(this, id, resistor->resistance(), resistor->resistance(), resistor->pinSpacing(), resistor->pinSpacing(), parentCommand);
+		prepDeleteOtherProps(itemBase, id, parentCommand);
+		return;
+	}
+
 	MysteryPart * mysteryPart = dynamic_cast<MysteryPart *>(itemBase);
 	if (mysteryPart != NULL) {
-		new SetPropCommand(this, itemBase->id(), "chip label", mysteryPart->chipLabel(), mysteryPart->chipLabel(), true, parentCommand);
-		new SetPropCommand(this, itemBase->id(), "spacing", mysteryPart->spacing(), mysteryPart->spacing(), true, parentCommand);
+		new SetPropCommand(this, id, "chip label", mysteryPart->chipLabel(), mysteryPart->chipLabel(), true, parentCommand);
+		new SetPropCommand(this, id, "spacing", mysteryPart->spacing(), mysteryPart->spacing(), true, parentCommand);
+		prepDeleteOtherProps(itemBase, id, parentCommand);
 		return;
 	}
 
 	PinHeader * pinHeader = dynamic_cast<PinHeader *>(itemBase);
 	if (pinHeader != NULL) {
-		new SetPropCommand(this, itemBase->id(), "form", pinHeader->form(), pinHeader->form(), true, parentCommand);
+		new SetPropCommand(this, id, "form", pinHeader->form(), pinHeader->form(), true, parentCommand);
+		prepDeleteOtherProps(itemBase, id, parentCommand);
 		return;
 	}
 
-	Resistor * resistor =  dynamic_cast<Resistor *>(itemBase);
-	if (resistor != NULL) {
-		new SetResistanceCommand(this, itemBase->id(), resistor->resistance(), resistor->resistance(), resistor->pinSpacing(), resistor->pinSpacing(), parentCommand);
-		return;
-	}
 
 	Hole * hole = dynamic_cast<Hole *>(itemBase);
 	if (hole != NULL) {
-		new SetPropCommand(this, itemBase->id(), "hole size", hole->holeSize(), hole->holeSize(), true, parentCommand);
+		new SetPropCommand(this, id, "hole size", hole->holeSize(), hole->holeSize(), true, parentCommand);
+		prepDeleteOtherProps(itemBase, id, parentCommand);
 		return;
 	}
 
-	Capacitor * capacitor = dynamic_cast<Capacitor *>(itemBase);
-	if (capacitor != NULL) {
+	prepDeleteOtherProps(itemBase, id, parentCommand);
+}
+
+void SketchWidget::prepDeleteOtherProps(ItemBase * itemBase, long id, QUndoCommand * parentCommand) 
+{
+	Capacitor * capacitor = qobject_cast<Capacitor *>(itemBase); 
+	if (capacitor) {
 		QHash<QString, QString> properties;
 		capacitor->getProperties(properties);
 		foreach(QString prop, properties.keys()) {
-			new SetPropCommand(this, itemBase->id(), prop, properties.value(prop), properties.value(prop), true, parentCommand);
+			new SetPropCommand(this, id, prop, properties.value(prop), properties.value(prop), true, parentCommand);
 		}
-		return;
+	}
+
+	QString value = itemBase->modelPart()->prop("part").toString();
+	if (!value.isEmpty()) {
+		new SetPropCommand(this, id, "part", value, value, true, parentCommand);
 	}
 }
 
@@ -4718,6 +4736,8 @@ long SketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const QStr
 		makeDeleteItemCommand(itemBase, BaseCommand::CrossView, parentCommand);
 		selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
 		selectItemCommand->addRedo(newID);  // to make sure new item is selected so it appears in the info view
+
+		prepDeleteProps(itemBase, newID, parentCommand);
 		new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
 	}
 
