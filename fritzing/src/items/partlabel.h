@@ -84,6 +84,7 @@ protected:
 	void rotateFlip(int action);
 	void setLabelDisplay(const QString & key);
 	void setHiddenOrInactive();
+	void partLabelHide();
 
 protected:
 	QPointer<class ItemBase> m_owner;

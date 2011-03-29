@@ -259,6 +259,7 @@ public:
 
 public slots:
 	void showPartLabel(bool show, ViewLayer *);
+	void hidePartLabel();
 	void partLabelChanged(const QString &newText);
 	qint64 id();
 	void swapEntry(const QString & text);

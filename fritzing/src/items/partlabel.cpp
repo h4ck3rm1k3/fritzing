@@ -95,6 +95,7 @@ enum PartLabelAction {
 	PartLabelFontSizeMedium,
 	PartLabelFontSizeLarge,
 	PartLabelDisplayLabelText,
+	PartLabelHide
 };
 
 /////////////////////////////////////////////
@@ -418,6 +419,10 @@ void PartLabel::initMenu()
 	editAct->setData(QVariant(PartLabelEdit));
 	editAct->setStatusTip(tr("Edit label text"));
 
+    QAction *hideAct = m_menu.addAction(tr("Hide"));
+	hideAct->setData(QVariant(PartLabelHide));
+	hideAct->setStatusTip(tr("Hide part label"));
+
 	m_menu.addSeparator();
 
 	QMenu * dvmenu = m_menu.addMenu(tr("Display Values"));
@@ -598,6 +603,9 @@ void PartLabel::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 		case PartLabelEdit:
 			partLabelEdit();
 			break;
+		case PartLabelHide:
+			partLabelHide();
+			break;
 		case PartLabelFontSizeSmall:
 		case PartLabelFontSizeMedium:
 		case PartLabelFontSizeLarge:
@@ -649,7 +657,13 @@ void PartLabel::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
 	partLabelEdit();
 }
 
-void PartLabel::partLabelEdit() {
+void PartLabel::partLabelHide() 
+{
+	m_owner->hidePartLabel();
+}
+
+void PartLabel::partLabelEdit() 
+{
 	bool ok;
 	QString oldText = m_text;
     QString text = QInputDialog::getText((QGraphicsView *) this->scene()->parent(), tr("Set label for %1").arg(m_owner->title()),

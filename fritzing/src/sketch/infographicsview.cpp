@@ -87,6 +87,10 @@ HtmlInfoView * InfoGraphicsView::infoView() {
 void InfoGraphicsView::mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *) {
 }
 
+void InfoGraphicsView::hidePartLabel(ItemBase * item) {
+	Q_UNUSED(item);
+}
+
 void InfoGraphicsView::partLabelChanged(ItemBase * item, const QString &oldText, const QString & newText) {
 	Q_UNUSED(item);
 	Q_UNUSED(oldText);

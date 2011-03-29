@@ -1787,11 +1787,11 @@ long MainWindow::swapSelectedAuxAux(ItemBase * itemBase, const QString & moduleI
 		masterflags[0] = true;
 	}
 
-	long newID1 = m_schematicGraphicsView->setUpSwap(itemBase, modelIndex, moduleID, viewLayerSpec, masterflags[0], parentCommand);
-	long newID2 = m_pcbGraphicsView->setUpSwap(itemBase, modelIndex, moduleID, viewLayerSpec, masterflags[1], parentCommand);
+	long newID1 = m_schematicGraphicsView->setUpSwap(itemBase, modelIndex, moduleID, viewLayerSpec, masterflags[0], false, parentCommand);
+	long newID2 = m_pcbGraphicsView->setUpSwap(itemBase, modelIndex, moduleID, viewLayerSpec, masterflags[1], false, parentCommand);
 
 	// master view must go last, since it creates the delete command
-	long newID3 = m_breadboardGraphicsView->setUpSwap(itemBase, modelIndex, moduleID, viewLayerSpec, masterflags[2], parentCommand);
+	long newID3 = m_breadboardGraphicsView->setUpSwap(itemBase, modelIndex, moduleID, viewLayerSpec, masterflags[2], false, parentCommand);
 
 	// TODO:  z-order?
 

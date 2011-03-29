@@ -1076,6 +1076,12 @@ void ItemBase::clearModelPart() {
 	m_modelPart = NULL;
 }
 
+void ItemBase::hidePartLabel() 
+{
+	InfoGraphicsView *infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView) infoGraphicsView->hidePartLabel(this);
+}
+
 void ItemBase::showPartLabel(bool showIt, ViewLayer* viewLayer) {
 	if (m_partLabel) {
 		m_partLabel->showLabel(showIt, viewLayer);

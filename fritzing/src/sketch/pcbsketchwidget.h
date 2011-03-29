@@ -71,7 +71,7 @@ public:
 	virtual qreal getRatsnestOpacity(bool);
 	void updateRoutingStatus(RoutingStatus &, bool manual);
 	void setBoardLayers(int, bool redraw);
-	long setUpSwap(ItemBase *, long newModelIndex, const QString & newModuleID, ViewLayer::ViewLayerSpec, bool doEmit, QUndoCommand * parentCommand);
+	long setUpSwap(ItemBase *, long newModelIndex, const QString & newModuleID, ViewLayer::ViewLayerSpec, bool doEmit, bool noFinalChangeWiresCommand, QUndoCommand * parentCommand);
 	void loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType, QUndoCommand * parentCommand, 
 							bool offsetPaste, const QRectF * boundingRect, bool seekOutsideConnections);
 	virtual bool isInLayers(ConnectorItem *, ViewLayer::ViewLayerSpec);

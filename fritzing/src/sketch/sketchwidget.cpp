@@ -4691,7 +4691,8 @@ void SketchWidget::updateInfoViewSlot() {
 	InfoGraphicsView::viewItemInfo(m_lastPaletteItemSelected);
 }
 
-long SketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const QString & newModuleID, ViewLayer::ViewLayerSpec viewLayerSpec, bool master, QUndoCommand * parentCommand)
+long SketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const QString & newModuleID, ViewLayer::ViewLayerSpec viewLayerSpec, 
+								bool master, bool noFinalChangeWiresCommand, QUndoCommand * parentCommand)
 {
 	long newID = ItemBase::getNextID(newModelIndex);
 	if (itemBase->viewIdentifier() != m_viewIdentifier) {
@@ -4738,7 +4739,9 @@ long SketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const QStr
 		selectItemCommand->addRedo(newID);  // to make sure new item is selected so it appears in the info view
 
 		prepDeleteProps(itemBase, newID, parentCommand);
-		new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
+		if (!noFinalChangeWiresCommand) {
+			new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
+		}
 	}
 
 	return newID;
@@ -5471,6 +5474,13 @@ void SketchWidget::showPartLabel(long itemID, bool showIt) {
 	}
 }
 
+void SketchWidget::hidePartLabel(ItemBase * item) {
+	QList <ItemBase *> itemBases;
+	itemBases.append(item);
+	showPartLabelsAux(false, itemBases);
+}
+
+
 void SketchWidget::collectParts(QList<ItemBase *> & partList) {
 	foreach (QGraphicsItem * item, scene()->items()) {
 		PaletteItem * pitem = dynamic_cast<PaletteItem *>(item);
@@ -5530,6 +5540,11 @@ void SketchWidget::showPartLabels(bool show)
 
 	if (itemBases.count() <= 0) return;
 
+	showPartLabelsAux(show, itemBases);
+}
+
+void SketchWidget::showPartLabelsAux(bool show, QList<ItemBase *> & itemBases)
+{
 	ShowLabelCommand * showLabelCommand = new ShowLabelCommand(this, NULL);
 	QString text;
 	if (show) {

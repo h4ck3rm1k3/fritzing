@@ -190,6 +190,7 @@ public:
 	void rotateFlipPartLabel(ItemBase *, qreal degrees, Qt::Orientations flipDirection);
 	void rotateFlipPartLabel(long itemID, qreal degrees, Qt::Orientations flipDirection);
 	void showPartLabels(bool show);
+	void hidePartLabel(ItemBase * item);
 	void noteSizeChanged(ItemBase * itemBase, const QSizeF & oldSize, const QSizeF & newSize);
 	void resizeNote(long itemID, const QSizeF & );
 	class SelectItemCommand* stackSelectionState(bool pushIt, QUndoCommand * parentCommand);
@@ -202,7 +203,7 @@ public:
 								  QList<ItemBase *> & itemBases, QRectF itemsBoundingRect, bool & empty);
 
 	bool spaceBarIsPressed();
-	virtual long setUpSwap(ItemBase *, long newModelIndex, const QString & newModuleID, ViewLayer::ViewLayerSpec, bool doEmit, QUndoCommand * parentCommand);
+	virtual long setUpSwap(ItemBase *, long newModelIndex, const QString & newModuleID, ViewLayer::ViewLayerSpec, bool doEmit, bool noFinalChangeWiresCommand, QUndoCommand * parentCommand);
 	ConnectorItem * lastHoverEnterConnectorItem();
 	ItemBase * lastHoverEnterItem();
 	LayerHash & viewLayers();
@@ -388,6 +389,7 @@ protected:
 	virtual bool acceptsTrace(const ViewGeometry &);
 	virtual ItemBase * placePartDroppedInOtherView(ModelPart *, ViewLayer::ViewLayerSpec, const ViewGeometry & viewGeometry, long id, SketchWidget * dropOrigin);
 	void alignOneToGrid(ItemBase * itemBase);
+	void showPartLabelsAux(bool show, QList<ItemBase *> & itemBases);
 
 protected:
 	static bool lessThan(int a, int b);
