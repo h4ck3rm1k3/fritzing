@@ -132,16 +132,25 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	m_icon2 = addLabel(hboxLayout, NoIcon);
 	m_icon3 = addLabel(hboxLayout, NoIcon);
 
+	
+	m_locationUnits = NULL;
+	m_location = NULL;
+
+	/*
 	hboxLayout->addSpacing(20);
+	
 	m_locationUnits = new QComboBox();
+	m_location = new QLabel();
+
 	m_locationUnits->addItem("in");
 	m_locationUnits->addItem("mm");
 	m_locationUnits->setCurrentIndex(0);
 	m_locationUnits->setVisible(false);
 	hboxLayout->addWidget(m_locationUnits);
-	m_location = new QLabel();
+
 	hboxLayout->addWidget(m_location);
 	connect(m_locationUnits, SIGNAL(currentIndexChanged(int)), this, SLOT(updateLocation()));
+	*/
 
 	hboxLayout->addSpacerItem(new QSpacerItem(IconSpace, 1, QSizePolicy::Expanding));
 	iconFrame->setLayout(hboxLayout);
@@ -843,6 +852,9 @@ QPixmap * HtmlInfoView::getPixmap(ModelPart * modelPart, ViewIdentifierClass::Vi
 }
 
 void HtmlInfoView::setUpLocation(ItemBase * itemBase) {
+	if (m_location == NULL) return;
+	if (m_locationUnits == NULL) return;
+
 	if (itemBase == NULL) {
 		m_location->setText("");
 		m_locationUnits->setVisible(false);
