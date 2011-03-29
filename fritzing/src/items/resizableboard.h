@@ -75,6 +75,7 @@ public:
 	void calcRotation(QTransform & rotation, QPointF center, ViewGeometry &);
 	QSizeF getSizeMM();
 	void addedToScene();
+	bool hasPartNumberProperty();
 
 public:
 	static QString customShapeTranslated;

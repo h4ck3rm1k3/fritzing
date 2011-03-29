@@ -1358,3 +1358,9 @@ void Wire::checkVisibility(ConnectorItem * onMe, ConnectorItem * onIt, bool conn
 bool Wire::canSwitchLayers() {
 	return false;
 }
+
+bool Wire::hasPartNumberProperty()
+{
+	return false;
+}
+

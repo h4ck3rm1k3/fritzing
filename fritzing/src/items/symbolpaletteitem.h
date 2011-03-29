@@ -50,6 +50,7 @@ public:
 	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi);
 	PluralType isPlural();
 	void addedToScene();
+	bool hasPartNumberProperty();
 
 public:
 	static qreal DefaultVoltage;

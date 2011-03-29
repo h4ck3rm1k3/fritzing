@@ -299,3 +299,9 @@ ItemBase::PluralType SymbolPaletteItem::isPlural() {
 	return Singular;
 }
 
+bool SymbolPaletteItem::hasPartNumberProperty()
+{
+	return false;
+}
+
+

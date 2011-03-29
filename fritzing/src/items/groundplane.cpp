@@ -170,3 +170,8 @@ void GroundPlane::loadLayerKin( const LayerHash & viewLayers, ViewLayer::ViewLay
 	Q_UNUSED(viewLayerSpec);
 	// GroundPlane is only on one side or another, not both
 }
+
+bool GroundPlane::hasPartNumberProperty()
+{
+	return false;
+}

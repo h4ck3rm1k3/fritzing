@@ -12,7 +12,7 @@
         <property name="family">Relay</property>
         <property name="contact rating">125VAC / 30VDC @ 1 AMP</property>
         <property name="switching circuit">SPDT</property>
-        <property name="part">FRS1B-S</property>
+        <property name="part number">FRS1B-S</property>
     <property name="package">THT</property></properties>
     <description>An SPDT relay.</description>
     <views>

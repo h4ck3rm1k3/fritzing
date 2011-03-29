@@ -58,11 +58,13 @@ PaletteItemBase::PaletteItemBase(ModelPart * modelPart, ViewIdentifierClass::Vie
 #endif
 	setAcceptHoverEvents(true);
 
-	QString savedValue = modelPart->prop("part").toString();
-	if (savedValue.isEmpty()) {
-		savedValue = modelPart->properties().value("part", "");
-		if (!savedValue.isEmpty()) {
-			modelPart->setProp("part", savedValue);
+	if (hasPartNumberProperty()) {
+		QString savedValue = modelPart->prop(ModelPartShared::PartNumberPropertyName).toString();
+		if (savedValue.isEmpty()) {
+			savedValue = modelPart->properties().value(ModelPartShared::PartNumberPropertyName, "");
+			if (!savedValue.isEmpty()) {
+				modelPart->setProp(ModelPartShared::PartNumberPropertyName, savedValue);
+			}
 		}
 	}
 }
@@ -443,13 +445,13 @@ bool PaletteItemBase::canEditPart() {
 
 bool PaletteItemBase::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget)
 {
-	if (prop.compare("part", Qt::CaseInsensitive) == 0) {
+	if (prop.compare(ModelPartShared::PartNumberPropertyName, Qt::CaseInsensitive) == 0) {
 		returnProp = TranslatedPropertyNames.value(prop);
 
 		FocusOutComboBox * focusOutComboBox = new FocusOutComboBox();
 		focusOutComboBox->setEnabled(swappingEnabled);
 		focusOutComboBox->setEditable(true);
-		QString current = m_modelPart->prop("part").toString();
+		QString current = m_modelPart->prop(ModelPartShared::PartNumberPropertyName).toString();
 		if (!current.isEmpty()) {
 			int ix = focusOutComboBox->findText(current);
 			if (ix < 0) {
@@ -469,8 +471,8 @@ bool PaletteItemBase::collectExtraInfo(QWidget * parent, const QString & family,
 
 void PaletteItemBase::setProp(const QString & prop, const QString & value) 
 {	
-	if (prop.compare("part") == 0) {
-		modelPart()->setProp("part", value);
+	if (prop.compare(ModelPartShared::PartNumberPropertyName) == 0) {
+		modelPart()->setProp(ModelPartShared::PartNumberPropertyName, value);
 		if (m_partLabel) m_partLabel->displayTextsIf();
 		return;
 	}
@@ -483,7 +485,7 @@ void PaletteItemBase::partPropertyEntry(const QString & text) {
 
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
-		infoGraphicsView->setProp(this, "part", "", m_modelPart->prop("part").toString(), text, true);
+		infoGraphicsView->setProp(this, ModelPartShared::PartNumberPropertyName, "", m_modelPart->prop(ModelPartShared::PartNumberPropertyName).toString(), text, true);
 	}
 }
 

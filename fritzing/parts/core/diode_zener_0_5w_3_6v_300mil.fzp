@@ -15,7 +15,7 @@
         <property name="type">Zener</property>
         <property name="power dissipation">0.5W</property>
         <property name="breakdown voltage">3.6V</property>
-        <property name="part">1N4732A</property>
+        <property name="part number">1N4732A</property>
     <property name="package">300 mil [THT]</property></properties>
     <description>A standard zener diode</description>
     <views>

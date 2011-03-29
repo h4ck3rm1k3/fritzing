@@ -4203,9 +4203,9 @@ void SketchWidget::prepDeleteOtherProps(ItemBase * itemBase, long id, QUndoComma
 		}
 	}
 
-	QString value = itemBase->modelPart()->prop("part").toString();
+	QString value = itemBase->modelPart()->prop(ModelPartShared::PartNumberPropertyName).toString();
 	if (!value.isEmpty()) {
-		new SetPropCommand(this, id, "part", value, value, true, parentCommand);
+		new SetPropCommand(this, id, ModelPartShared::PartNumberPropertyName, value, value, true, parentCommand);
 	}
 }
 

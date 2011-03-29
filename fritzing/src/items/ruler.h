@@ -53,6 +53,7 @@ public:
     bool hasPartLabel();
 	PluralType isPlural();
 	void addedToScene();
+	bool hasPartNumberProperty();
 
 public slots:
 	void widthEntry();

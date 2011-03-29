@@ -114,7 +114,7 @@ PartLabel::PartLabel(ItemBase * owner, QGraphicsItem * parent)
 
 	m_inactive = m_hidden = m_initialized = false;
 	m_displayKeys.append(LabelTextKey);
-	m_displayKeys.append("part");
+	if (m_owner->hasPartNumberProperty()) m_displayKeys.append(ModelPartShared::PartNumberPropertyName);
 
 	setFlag(QGraphicsItem::ItemIsSelectable, false);
 	setFlag(QGraphicsItem::ItemIsMovable, false);					// don't move this in the standard QGraphicsItem way
@@ -394,7 +394,7 @@ void PartLabel::restoreLabel(QDomElement & labelGeometry, ViewLayer::ViewLayerID
 
 	if (m_displayKeys.length() == 0) {
 		m_displayKeys.append(LabelTextKey);
-		m_displayKeys.append("part");
+		if (m_owner->hasPartNumberProperty()) m_displayKeys.append(ModelPartShared::PartNumberPropertyName);
 	}
 
 	QTransform t;

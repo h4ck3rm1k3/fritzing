@@ -61,6 +61,7 @@ public:
 	bool stickyEnabled();
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	QPainterPath shape() const;
+	bool hasPartNumberProperty();
 
 protected:
 	QRectF boundingRect() const;

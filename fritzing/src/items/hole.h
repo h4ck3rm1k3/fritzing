@@ -55,7 +55,8 @@ public:
 	QString retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi); 
 	bool canEditPart();
 	virtual void setBoth(const QString & holeDiameter, const QString &  thickness);
-	void addedToScene();
+	void addedToScene();	
+	bool hasPartNumberProperty();
 
 protected slots:
 	void changeDiameter();

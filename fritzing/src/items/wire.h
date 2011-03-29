@@ -144,6 +144,7 @@ public:
 	PluralType isPlural();
 	virtual bool canSwitchLayers();
 	void paint ( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
+	bool hasPartNumberProperty();
 
 protected slots:
 	void colorEntry(const QString & text);

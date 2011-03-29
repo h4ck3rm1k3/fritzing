@@ -13,7 +13,7 @@
  <properties>
   <property name="family">Diode</property>
   <property name="type">Rectifier</property>
-  <property name="part">1N4001</property>
+  <property name="part number">1N4001</property>
   <property name="package">Melf DO-213 AB [SMD]</property>
  </properties>
  <description>A smd rectifier diode</description>

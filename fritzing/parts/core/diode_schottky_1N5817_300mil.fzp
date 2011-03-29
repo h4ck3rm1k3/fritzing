@@ -13,7 +13,7 @@
  <properties>
   <property name="family">Diode</property>
   <property name="type">Schottky</property>
-  <property name="part">1N5817</property>
+  <property name="part number">1N5817</property>
  <property name="package">300 mil [THT]</property></properties>
  <description>A standard schottky barrier rectifier diode</description>
  <views>

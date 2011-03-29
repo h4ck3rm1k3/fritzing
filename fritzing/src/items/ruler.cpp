@@ -330,3 +330,8 @@ void Ruler::addedToScene(void)
 
     return PaletteItem::addedToScene();
 }
+
+bool Ruler::hasPartNumberProperty()
+{
+	return false;
+}

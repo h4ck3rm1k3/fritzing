@@ -639,6 +639,7 @@ void HtmlInfoView::displayProps(ModelPart * modelPart, ItemBase * itemBase, bool
 	QStringList keys;
 	QHash<QString, QString> properties;
 	QString family;
+	QString partNumber;
 	if (modelPart) {
 		properties = modelPart->properties();
 		family = properties.value("family", "").toLower();
@@ -651,6 +652,10 @@ void HtmlInfoView::displayProps(ModelPart * modelPart, ItemBase * itemBase, bool
 		keys.removeOne("family");
 		keys.push_front("family");
 
+		// ensure part number  is last
+		partNumber = properties.value(ModelPartShared::PartNumberPropertyName, "").toLower();
+		keys.removeOne(ModelPartShared::PartNumberPropertyName);
+		
 #ifndef QT_NO_DEBUG
 		properties.insert("id", QString("%1 %2 %3")
 			.arg(itemBase ? QString::number(itemBase->id()) : "")
@@ -681,6 +686,11 @@ void HtmlInfoView::displayProps(ModelPart * modelPart, ItemBase * itemBase, bool
 		}	
 #endif
 
+	}
+
+	// ensure part number is last
+	if (itemBase != NULL && itemBase->hasPartNumberProperty()) {
+		keys.append(ModelPartShared::PartNumberPropertyName);
 	}
 
 	int ix = 0;

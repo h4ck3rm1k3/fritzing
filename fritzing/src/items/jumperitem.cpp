@@ -525,3 +525,8 @@ void JumperItem::saveInstanceLocation(QXmlStreamWriter & streamWriter)
 	streamWriter.writeAttribute("wireFlags", QString::number(m_viewGeometry.flagsAsInt()));
 	GraphicsUtils::saveTransform(streamWriter, m_viewGeometry.transform());
 }
+
+bool JumperItem::hasPartNumberProperty()
+{
+	return false;
+}

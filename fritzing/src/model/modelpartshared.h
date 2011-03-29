@@ -123,6 +123,10 @@ protected:
 	void commonInit();
 	void loadDocument();
 	bool checkNeedsCopper1(QDomElement & copper0, QDomElement & copper1);
+	void ensurePartNumberProperty();
+
+public:
+	static const QString PartNumberPropertyName;
 
 protected:
 

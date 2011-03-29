@@ -706,3 +706,8 @@ bool Note::hasPartLabel() {
 bool Note::stickyEnabled() {
 	return false;
 }
+
+bool Note::hasPartNumberProperty()
+{
+	return false;
+}

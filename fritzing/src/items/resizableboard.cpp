@@ -749,3 +749,7 @@ void ResizableBoard::calcRotation(QTransform & rotation, QPointF center, ViewGeo
 	}
 }
 
+bool ResizableBoard::hasPartNumberProperty()
+{
+	return false;
+}

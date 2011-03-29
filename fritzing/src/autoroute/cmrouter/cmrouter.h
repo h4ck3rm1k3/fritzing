@@ -59,7 +59,7 @@ struct Edge {
 	QSet<class Wire *> toTraces;
 	bool routed;
 	bool withJumper;
-	int withVia;
+	int viaCount;
 	QLineF line;
 	int id;
 };

@@ -336,7 +336,7 @@ void ItemBase::initNames() {
 		TranslatedPropertyNames.insert("package", tr("package"));
 		TranslatedPropertyNames.insert("shape", tr("shape"));
 		TranslatedPropertyNames.insert("form", tr("form"));
-		TranslatedPropertyNames.insert("part", tr("part"));
+		TranslatedPropertyNames.insert("part number", tr("part number"));
 		TranslatedPropertyNames.insert("maximum resistance", tr("maximum resistance"));
 		// TODO: translate more known property names from fzp files
 	}
@@ -1867,5 +1867,10 @@ void ItemBase::addedToScene() {
 	if (this->scene() && instanceTitle().isEmpty()) {
 		setTooltip();
 	}
+}
+
+bool ItemBase::hasPartNumberProperty()
+{
+	return true;
 }
 

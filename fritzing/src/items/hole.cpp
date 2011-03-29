@@ -559,3 +559,8 @@ void Hole::updateSizes() {
 bool Hole::canEditPart() {
 	return false;
 }
+
+bool Hole::hasPartNumberProperty()
+{
+	return false;
+}

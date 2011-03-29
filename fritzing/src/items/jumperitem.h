@@ -59,6 +59,7 @@ public:
 	void calcRotation(QTransform & rotation, QPointF center, ViewGeometry &);
 	QPointF dragOffset();
 	void saveInstanceLocation(QXmlStreamWriter & streamWriter);
+	bool hasPartNumberProperty();
 
 protected:
 	void resize();

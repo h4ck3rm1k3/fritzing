@@ -32,6 +32,8 @@ $Date$
 #include <QHash>
 #include <QMessageBox>
 
+const QString ModelPartShared::PartNumberPropertyName = "part number";
+
 ModelPartShared::ModelPartShared() {
 	commonInit();
 
@@ -69,10 +71,7 @@ ModelPartShared::ModelPartShared(QDomDocument * domDocument, const QString & pat
 
 		populateTags(root, m_tags);
 		populateProperties(root, m_properties, m_displayKeys);
-		if (!m_properties.keys().contains("part")) {
-			m_properties.insert("part", "");
-			m_displayKeys.append("part");
-		}
+		ensurePartNumberProperty();
 
 		m_moduleID = root.attribute("moduleId", "");
 
@@ -264,10 +263,7 @@ QHash<QString,QString> & ModelPartShared::properties() {
 }
 void ModelPartShared::setProperties(const QHash<QString,QString> &properties) {
 	m_properties = properties;
-	if (!m_properties.keys().contains("part")) {
-		m_properties.insert("part", "");
-		m_displayKeys.append("part");
-	}
+	ensurePartNumberProperty();
 }
 
 const QString & ModelPartShared::path() {
@@ -647,3 +643,11 @@ const QStringList & ModelPartShared::displayKeys() {
 void ModelPartShared::setDisplayKeys(const QStringList & displayKeys) {
 	m_displayKeys = displayKeys;
 }
+
+void ModelPartShared::ensurePartNumberProperty() {
+	if (!m_properties.keys().contains(PartNumberPropertyName)) {
+		m_properties.insert(PartNumberPropertyName, "");
+		m_displayKeys.append(PartNumberPropertyName);
+	}
+}
+

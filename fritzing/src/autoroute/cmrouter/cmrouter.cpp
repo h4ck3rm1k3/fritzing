@@ -736,7 +736,7 @@ bool CMRouter::reorder(QList<Ordering *> & orderings, Ordering * currentOrdering
 	foreach (Edge * edge, currentOrdering->edges) {
 		if (!edge->routed) currentOrdering->unroutedCount++;
 		if (edge->withJumper) currentOrdering->jumperCount++;
-		if (edge->withVia) currentOrdering->viaCount += edge->withVia;
+		currentOrdering->viaCount = edge->viaCount;
 	}
 
 	if (orderings.count() > 1) {
@@ -2359,7 +2359,7 @@ void CMRouter::collectEdges(QList<Edge *> & edges)
 
 void CMRouter::clearEdge(Edge * edge) {
 	edge->withJumper = edge->routed = false;
-	edge->withVia = 0;
+	edge->viaCount = 0;
 	edge->fromConnectorItems.clear();
 	edge->toConnectorItems.clear();
 	edge->fromTraces.clear();
@@ -4101,10 +4101,6 @@ Via * CMRouter::makeVia(PathUnit * pathUnit) {
 	if (cy < nearestSpace.ymini + tHalfHeight) cy = nearestSpace.ymini + tHalfHeight;
 	if (cy > nearestSpace.ymaxi - tHalfHeight) cy = nearestSpace.ymaxi - tHalfHeight;
 
-	// add via to undo
-	// set the hole diameter and ring thickness
-	// delete during autorouting
-
 	long newID = ItemBase::getNextID();
 	ViewGeometry viewGeometry;
 	viewGeometry.setLoc(QPointF(tileToReal(cx - tHalfWidth), tileToReal(cy - tHalfHeight)));
@@ -4118,6 +4114,8 @@ Via * CMRouter::makeVia(PathUnit * pathUnit) {
 	m_sketchWidget->getViaSize(ringThickness, holeSize);
 	via->setBoth(QString("%1in").arg(holeSize * FSvgRenderer::printerScale()), 
 					QString("%1in").arg(ringThickness * FSvgRenderer::printerScale()));
+
+	pathUnit->edge->viaCount++;
 
 	return via;
 }

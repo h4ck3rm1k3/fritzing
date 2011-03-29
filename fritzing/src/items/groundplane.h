@@ -46,6 +46,7 @@ public:
 	bool hasPartLabel();
 	void loadLayerKin( const LayerHash & viewLayers, ViewLayer::ViewLayerSpec viewLayerSpec);
 	void addedToScene();
+	bool hasPartNumberProperty();
 
 protected:
 	void setSvg(const QString &);
