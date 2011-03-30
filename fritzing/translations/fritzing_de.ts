@@ -245,7 +245,7 @@
     <message>
         <location filename="../src/autoroute/autorouteprogressdialog.cpp" line="98"/>
         <source>zoom and pan controls</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoomen und verschieben</translation>
     </message>
     <message>
         <location filename="../src/autoroute/autorouteprogressdialog.cpp" line="142"/>
@@ -319,58 +319,58 @@
     <message>
         <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="654"/>
         <source>best so far: %1 unrouted</source>
-        <translation type="unfinished"></translation>
+        <translation>Bester bisher: %1 ungeroutet</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="656"/>
         <source>/%n jumpers</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>/%n Drahtbrücke</numerusform>
+            <numerusform>/%n Drahtbrücken</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="656"/>
         <source>/%n vias</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>/%n Via</numerusform>
+            <numerusform>/%n Vias</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="660"/>
         <source>round %1 of:</source>
-        <translation type="unfinished"></translation>
+        <translation>Runde %1 von:</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="729"/>
         <source>Note: the autorouter did not route %n parts which are not located entirely on the board.</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Hinweis: Der Autorouter konnte %1 Bauteil nicht berücksichtigen, da es nicht vollständig auf der Leiterplatte liegt.</numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="861"/>
         <source>No board part found, DRC cancelled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Regelüberprüfung abgebrochen: Keine Leiterplatte gefunden.</translation>
     </message>
     <message>
         <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="868"/>
         <source>The sketch is ok: connectors and traces are not too close together.</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine Probleme gefunden, alle Abstände sind in Ordnung.</translation>
     </message>
     <message>
         <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="869"/>
         <source>Some connectors and/or traces are too close together.</source>
-        <translation type="unfinished"></translation>
+        <translation>Einige Leiterbahnen und/oder Pads sind zu nahe beieinander. Versuche, durch Verschieben einen größeren Abstand herzustellen.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="876"/>
         <source>
 Note: %n parts are not located entirely on the board.</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Hinweis: %n Bauteile liegen nicht vollständig auf der Leiterplatte.</numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
@@ -815,12 +815,12 @@ y:%2</translation>
     <message>
         <location filename="../src/items/itembase.cpp" line="326"/>
         <source>capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Kapazität</translation>
     </message>
     <message>
         <location filename="../src/items/itembase.cpp" line="327"/>
         <source>inductance</source>
-        <translation type="unfinished"></translation>
+        <translation>Induktivität</translation>
     </message>
     <message>
         <location filename="../src/items/itembase.cpp" line="328"/>
@@ -830,12 +830,12 @@ y:%2</translation>
     <message>
         <location filename="../src/items/itembase.cpp" line="329"/>
         <source>current</source>
-        <translation type="unfinished"></translation>
+        <translation>Strom</translation>
     </message>
     <message>
         <location filename="../src/items/itembase.cpp" line="330"/>
         <source>power</source>
-        <translation type="unfinished"></translation>
+        <translation>Leistung</translation>
     </message>
     <message>
         <location filename="../src/items/itembase.cpp" line="331"/>
@@ -880,7 +880,7 @@ y:%2</translation>
     <message>
         <location filename="../src/items/itembase.cpp" line="339"/>
         <source>part</source>
-        <translation type="unfinished"></translation>
+        <translation>Bauteil-Nr.</translation>
     </message>
     <message>
         <location filename="../src/items/itembase.cpp" line="340"/>
@@ -895,27 +895,27 @@ y:%2</translation>
     <message>
         <location filename="../src/items/itembase.cpp" line="1304"/>
         <source>model part problem</source>
-        <translation type="unfinished"></translation>
+        <translation>Model Part Problem</translation>
     </message>
     <message>
         <location filename="../src/items/itembase.cpp" line="1308"/>
         <source>part xml missing</source>
-        <translation type="unfinished"></translation>
+        <translation>Bauteil-XML fehlt</translation>
     </message>
     <message>
         <location filename="../src/items/itembase.cpp" line="1314"/>
         <source>missing xml for view %1 layer %2</source>
-        <translation type="unfinished"></translation>
+        <translation>XML für Ansicht %1 Ebene %2 fehlt</translation>
     </message>
     <message>
         <location filename="../src/items/itembase.cpp" line="1333"/>
         <source>file %1 not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei &apos;%1&apos; konnte nicht gefunden werden</translation>
     </message>
     <message>
         <location filename="../src/items/itembase.cpp" line="1407"/>
         <source>unable to create renderer for svg</source>
-        <translation type="unfinished"></translation>
+        <translation>Renderer für SVG konnte nicht erzeugt werden</translation>
     </message>
 </context>
 <context>
@@ -1057,17 +1057,17 @@ y:%2</translation>
     <message>
         <location filename="../src/mainwindow.cpp" line="649"/>
         <source>Bottom Layer</source>
-        <translation>Obere Seite</translation>
+        <translation>Untere Seite</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="654"/>
         <source>Top Layer</source>
-        <translation>Untere Seite</translation>
+        <translation>Obere Seite</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="672"/>
         <source>Export for PCB</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportieren</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="734"/>
@@ -1506,32 +1506,32 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1042"/>
         <source>Export the current sketch to PDF for DIY PCB production (photoresist)</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuellen Entwurf als PDF für DIY PCB  exportieren (Fotoresist-Methode)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1047"/>
         <source>as Etchable PDF (mirrored)...</source>
-        <translation type="unfinished"></translation>
+        <translation>als Ätzbares PDF (gespiegelt)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1048"/>
         <source>Export the current sketch to PDF for DIY PCB production (tone transfer)</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuellen Entwurf als PDF für DIY PCB  exportieren (Toner-Transfer-Methode)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1054"/>
         <source>Export the current sketch to SVG for DIY PCB production (photoresist)</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuellen Entwurf als SVG für DIY PCB  exportieren (Fotoresist-Methode)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1059"/>
         <source>as Etchable SVG (mirrored)...</source>
-        <translation type="unfinished"></translation>
+        <translation>als Ätzbares SVG (gespiegelt)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1060"/>
         <source>Export the current sketch to SVG for DIY PCB production (tone transfer)</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuellen Entwurf als SVG für DIY PCB  exportieren (Toner-Transfer-Methode)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1070"/>
@@ -1777,73 +1777,74 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1416"/>
         <source>Lock Part</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Abschließen/Verriegeln</translatorcomment>
+        <translation>Sperren</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1417"/>
         <source>Prevent a part from being moved</source>
-        <translation type="unfinished"></translation>
+        <translation>Position des Bauteils sperren</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1421"/>
         <source>Select All Locked Parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle gesperrten Bauteile auswählen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1422"/>
         <source>Select all parts that can&apos;t be moved</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Bauteile auswählen, die nicht bewegt werden können</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1462"/>
         <source>Search parts bin</source>
-        <translation type="unfinished"></translation>
+        <translation>Sortiment durchsuchen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1463"/>
         <source>Search for a part in the parts bin</source>
-        <translation type="unfinished"></translation>
+        <translation>Nach einem Bauteil im Sortiment suchen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1528"/>
         <source>Show Parts Bin Icon View</source>
-        <translation type="unfinished"></translation>
+        <translation>Sortiment als Icons anzeigen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1529"/>
         <source>Display the parts bin in an icon view</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Bauteile des Sortiments als Icons anzeigen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1532"/>
         <source>Show Parts Bin List View</source>
-        <translation type="unfinished"></translation>
+        <translation>Sortiment als Liste anzeigen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1533"/>
         <source>Display the parts bin in a list view</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Bauteile des Sortiments als Liste anzeigen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1564"/>
         <source>Donate to Fritzing</source>
-        <translation type="unfinished"></translation>
+        <translation>Spenden an Fritzing</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1565"/>
         <source>Open Fritzing donation web page</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffnet die Fritzing Spenden-Website</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1620"/>
         <location filename="../src/mainwindow_menu.cpp" line="1622"/>
         <source>Parts Bin</source>
-        <translation type="unfinished"></translation>
+        <translation>Sortiment</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1669"/>
         <source>Etchable</source>
-        <translation type="unfinished"></translation>
+        <translation>Ätzbar</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2218"/>
@@ -2193,57 +2194,57 @@ Please check all views for potential side-effects.</source>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="187"/>
         <source>Export PDF or SVG for etchable PCB production...</source>
-        <translation type="unfinished"></translation>
+        <translation>Export für DIY-Produktion als PDF/SVG...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="996"/>
         <source>as JPG...</source>
-        <translation type="unfinished"></translation>
+        <translation>als JPG...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1001"/>
         <source>as PNG...</source>
-        <translation type="unfinished"></translation>
+        <translation>als PNG...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1006"/>
         <source>as PostScript...</source>
-        <translation type="unfinished"></translation>
+        <translation>als PostScript...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1011"/>
         <source>as PDF...</source>
-        <translation type="unfinished"></translation>
+        <translation>als PDF...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1016"/>
         <source>as SVG...</source>
-        <translation type="unfinished"></translation>
+        <translation>als SVG...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1031"/>
         <source>as Eagle...</source>
-        <translation type="unfinished"></translation>
+        <translation>als Eagle...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1036"/>
         <source>as Gerber (RS-274X Format)...</source>
-        <translation type="unfinished"></translation>
+        <translation>als Gerber (RS-274X Format)...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1038"/>
         <source>Export the current sketch to Gerber for professional PCB production</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportiert den aktuellen Entwurf im Gerber-Format für professionelle Leiterplattenherstellung</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1041"/>
         <source>as Etchable PDF...</source>
-        <translation type="unfinished"></translation>
+        <translation>als ätzbares PDF...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1053"/>
         <source>as Etchable SVG...</source>
-        <translation type="unfinished"></translation>
+        <translation>als ätzbares SVG</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1458"/>
@@ -2513,12 +2514,12 @@ Please check all views for potential side-effects.</source>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="3090"/>
         <source>Set Via Size...</source>
-        <translation type="unfinished"></translation>
+        <translation>Via-Größe ändern...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="3091"/>
         <source>Set via size when autorouting double-sided boards</source>
-        <translation type="unfinished"></translation>
+        <translation>Größe von Vias setzen (für das Autorouting)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="3366"/>
@@ -2706,7 +2707,7 @@ Please check all views for potential side-effects.</source>
     <message>
         <location filename="../src/mainwindow_gerber.cpp" line="232"/>
         <source>silk export failure</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Exportieren des Siebdrucks</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_gerber.cpp" line="255"/>
@@ -3054,15 +3055,15 @@ We&apos;re working to avoid this message, and only let you choose between proper
     <message numerus="yes">
         <location filename="../src/model/modelbase.cpp" line="265"/>
         <source>Unable to find the following %n part(s):</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Das folgende Bauteil konnten nicht gefunden werden:</numerusform>
+            <numerusform>Die folgenden %n Bauteile konnten nicht gefunden werden:</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/model/modelbase.cpp" line="268"/>
         <source>at</source>
-        <translation type="unfinished"></translation>
+        <translation>bei</translation>
     </message>
     <message>
         <location filename="../src/model/modelbase.cpp" line="323"/>
@@ -3082,12 +3083,12 @@ Ursache: %2 (Fehlercode %3)</translation>
     <message>
         <location filename="../src/model/modelpartshared.cpp" line="451"/>
         <source>Fritzing</source>
-        <translation type="unfinished">Fritzing</translation>
+        <translation>Fritzing</translation>
     </message>
     <message>
         <location filename="../src/model/modelpartshared.cpp" line="451"/>
         <source>Unable to parse &apos;%1&apos;: %2: line %3 column %4.</source>
-        <translation type="unfinished"></translation>
+        <translation>Parsing-Fehler &apos;%1&apos;: %2: Zeile %3 Spalte %4.</translation>
     </message>
 </context>
 <context>
@@ -3152,22 +3153,22 @@ Ursache: %2 (Fehlercode %3)</translation>
     <message>
         <location filename="../src/sketch/pcbsketchwidget.cpp" line="2259"/>
         <source>Select Via Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Via-Größe ändern</translation>
     </message>
     <message>
         <location filename="../src/sketch/pcbsketchwidget.cpp" line="2263"/>
         <source>Set the via size to use when autorouting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Größe von Vias setzen (für das Autorouting)</translation>
     </message>
     <message>
         <location filename="../src/sketch/pcbsketchwidget.cpp" line="2297"/>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../src/sketch/pcbsketchwidget.cpp" line="2298"/>
         <source>OK</source>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
@@ -3318,7 +3319,7 @@ Ursache: %2 (Fehlercode %3)</translation>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="317"/>
         <source>Export Bin...</source>
-        <translation type="unfinished"></translation>
+        <translation>Sortiment exportieren...</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="491"/>
@@ -3382,7 +3383,7 @@ Ursache: %2 (Fehlercode %3)</translation>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="327"/>
         <source>Parts Bin</source>
-        <translation type="unfinished"></translation>
+        <translation>Sortiment</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="341"/>
@@ -3417,12 +3418,12 @@ Ursache: %2 (Fehlercode %3)</translation>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="431"/>
         <source>Import Part...</source>
-        <translation type="unfinished"></translation>
+        <translation>Bauteil importieren...</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="433"/>
         <source>Export Part...</source>
-        <translation type="unfinished"></translation>
+        <translation>Bauteil exportieren...</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="434"/>
@@ -3525,7 +3526,7 @@ Ursache: %2 (Fehlercode %3)</translation>
         <location filename="../src/partseditor/partseditormainwindow.cpp" line="164"/>
         <source>Error! Cannot load part.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler! Das Bauteil konnte nicht geladen werden.</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partseditormainwindow.cpp" line="250"/>
@@ -4343,22 +4344,22 @@ Vertikal scrollen</translation>
     <message>
         <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="541"/>
         <source>Cannot autoroute: no board part found</source>
-        <translation type="unfinished"></translation>
+        <translation>Autorouting abgebrochen: Keine Leiterplatte gefunden.</translation>
     </message>
     <message>
         <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="576"/>
         <source>No connections to route&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine Verbindungen zu routen.</translation>
     </message>
     <message>
         <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="631"/>
         <source>Cannot autoroute: maybe all traces are marked &apos;do not autoroute&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Autorouting abgebrochen - vielleicht sind alle Leiterbahnen als &apos;nicht autorouten&apos; markiert?</translation>
     </message>
     <message>
         <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="947"/>
         <source>Cannot autoroute: parts or traces are overlapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Autorouting abgebrochen: Einige Bauteile oder Leiterbahnen sind zu nah beieinander.</translation>
     </message>
     <message>
         <location filename="../src/viewidentifierclass.cpp" line="95"/>
@@ -4480,7 +4481,7 @@ Vertikal scrollen</translation>
     <message>
         <location filename="../src/sketch/sketchwidget.cpp" line="681"/>
         <source>Error reading file %1: %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim lesen der Datei %1: %2.</translation>
     </message>
     <message>
         <location filename="../src/sketch/sketchwidget.cpp" line="2913"/>
@@ -4526,7 +4527,7 @@ Vertikal scrollen</translation>
     <message>
         <location filename="../src/sketch/sketchwidget.cpp" line="6389"/>
         <source>Select locked parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle gesperrten Bauteile auswählen</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="60"/>
@@ -5396,7 +5397,7 @@ im Sortiment.</translation>
     <message>
         <location filename="../src/sketch/sketchwidget.cpp" line="4625"/>
         <source>Change note to &apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Notiz ändern nach &apos;%2&apos;</translation>
     </message>
     <message>
         <location filename="../src/sketch/sketchwidget.cpp" line="5479"/>
@@ -5618,22 +5619,22 @@ im Sortiment.</translation>
     <message>
         <location filename="../src/dialogs/translatorlistmodel.cpp" line="71"/>
         <source>Turkish - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Türkisch - %1</translation>
     </message>
     <message>
         <location filename="../src/dialogs/translatorlistmodel.cpp" line="73"/>
         <source>Swedish - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Schwedisch - %1</translation>
     </message>
     <message>
         <location filename="../src/dialogs/translatorlistmodel.cpp" line="76"/>
         <source>Romanian - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Rumänisch - %1</translation>
     </message>
     <message>
         <location filename="../src/dialogs/translatorlistmodel.cpp" line="79"/>
         <source>Thai - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Thailändisch - %1</translation>
     </message>
     <message>
         <location filename="../src/dialogs/translatorlistmodel.cpp" line="44"/>
