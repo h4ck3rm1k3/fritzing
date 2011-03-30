@@ -18,40 +18,38 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision$:
-$Author$:
-$Date$
+$Revision: 4183 $:
+$Author: cohen@irascible.com $:
+$Date: 2010-05-06 22:30:19 +0200 (Thu, 06 May 2010) $
 
 ********************************************************************/
 
-#ifndef EXPANDABLEVIEW_H
-#define EXPANDABLEVIEW_H
+#ifndef AUTOROUTERSETTINGSDIALOG_H
+#define AUTOROUTERSETTINGSDIALOG_H
 
-#include <QGroupBox>
-#include <QVBoxLayout>
+#include <QDialog>
+#include <QLineEdit>
+#include <QDoubleValidator>
+#include <QRadioButton>
 
-#include "clickablelabel.h"
-
-
-class ExpandableView : public QGroupBox {
+class AutorouterSettingsDialog : public QDialog
+{
 Q_OBJECT
 
 public:
-	ExpandableView(const QString & text = "", QWidget * parent = NULL);
+	AutorouterSettingsDialog(QWidget *parent = 0);
+	~AutorouterSettingsDialog();
 
-	void setChildFrame(QFrame *);
-
-signals:
-	void expanded(bool);
-
-public slots:
-	void expanderClicked();
+protected slots:
+	void acceptAnd();
+	void restoreDefault();
+	void production(bool);
 
 protected:
-	QVBoxLayout * m_vLayout;
-	ClickableLabel * m_expander;
-	QFrame * m_childFrame;
+	QRadioButton * m_homebrewButton;
+	QRadioButton * m_professionalButton;
+	QRadioButton * m_customButton;
 };
 
 
-#endif
+#endif // AUTOROUTERSETTINGSDIALOG_H

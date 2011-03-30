@@ -30,6 +30,8 @@ $Date$
 #include <QSettings>
 #include <QPalette>
 #include <QFormLayout>
+#include <QFontMetricsF>
+#include <qmath.h>
 
 #include "htmlinfoview.h"
 #include "../sketch/infographicsview.h"
@@ -39,7 +41,6 @@ $Date$
 #include "../fsvgrenderer.h"
 #include "../dockmanager.h"
 #include "../utils/flineedit.h"
-#include "../utils/expandableview.h"
 
 
 #define HTML_EOF "</body>\n</html>"
@@ -49,10 +50,6 @@ QPixmap * NoIcon = NULL;
 const int HtmlInfoView::STANDARD_ICON_IMG_WIDTH = 32;
 const int HtmlInfoView::STANDARD_ICON_IMG_HEIGHT = 32;
 const int IconSpace = 3;
-
-QString HtmlInfoView::PropsBlockId = "props_id";
-QString HtmlInfoView::TagsBlockId = "tags_id";
-QString HtmlInfoView::ConnsBlockId = "conns_id";
 
 QHash<QString, QPixmap *> HtmlInfoView::m_pixmaps;
 
@@ -71,12 +68,43 @@ QLabel * addLabel(QHBoxLayout * hboxLayout, QPixmap * pixmap) {
 
 	return label;
 }
+//////////////////////////////////////
+
+
+TagLabel::TagLabel(QWidget * parent) : QLabel(parent) 
+{
+}
+
+QSize TagLabel::sizeHint() const
+{
+	QSize hint = QLabel::sizeHint();
+	QString t = text();
+	if (t.isEmpty()) return hint;
+
+	QFontMetricsF fm(this->font());
+	qreal textWidth = fm.width(t);
+
+	QWidget * w = this->window();
+	QPoint pos(0,0);
+	pos = this->mapTo(w, pos);
+
+	int myWidth = w->width() - pos.x() - 10;
+	if (textWidth < myWidth) {
+		return hint;
+	}
+
+	int lines = qCeil(textWidth / myWidth);
+	int h = lines * fm.height();
+
+	return QSize(myWidth, h);
+}
 
 //////////////////////////////////////
 
 HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent) 
 {
     this->setWidgetResizable(true);
+	this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     QFrame * mainFrame = new QFrame(this);
 	mainFrame->setObjectName("infoViewMainFrame");
 
@@ -132,6 +160,9 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	m_icon2 = addLabel(hboxLayout, NoIcon);
 	m_icon3 = addLabel(hboxLayout, NoIcon);
 
+	m_partVersion = new QLabel();
+	m_partVersion->setObjectName("infoViewPartTitle");
+	hboxLayout->addWidget(m_partVersion);
 	
 	m_locationUnits = NULL;
 	m_location = NULL;
@@ -156,70 +187,58 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	iconFrame->setLayout(hboxLayout);
 	vlo->addWidget(iconFrame);
 
-	QFrame * tFrame = new QFrame(mainFrame);
-	tFrame->setObjectName("infoViewPartTitleFrame");
-	hboxLayout = new QHBoxLayout();
-	hboxLayout->setContentsMargins (0, 0, 0, 0);
-	m_partTitle = new QLabel(tFrame);
+	m_partTitle = new TagLabel(this);
+	m_partTitle->setWordWrap(true);
 	m_partTitle->setObjectName("infoViewPartTitle");
-	hboxLayout->addWidget(m_partTitle);
-	hboxLayout->addSpacerItem(new QSpacerItem(IconSpace, 1, QSizePolicy::Expanding));
-	m_partVersion = new QLabel(tFrame);
-	m_partVersion->setObjectName("infoViewPartTitle");
-	hboxLayout->addWidget(m_partVersion);
-	tFrame->setLayout(hboxLayout);
-	vlo->addWidget(tFrame);
+	vlo->addWidget(m_partTitle);
 
-	ExpandableView * pev = new ExpandableView(tr("Properties"), this);
-	pev->setProperty("blockid", PropsBlockId);
-	connect(pev, SIGNAL(expanded(bool)), this, SLOT(viewExpanded(bool)));
+	QLabel * proplabel = new QLabel(tr("Properties"), NULL);
+	proplabel->setObjectName("expandableViewLabel");
+	vlo->addWidget(proplabel);
+
 	QFrame * propFrame = new QFrame(this);
 	m_propLayout = new QGridLayout(propFrame);
 	m_propLayout->setMargin(0);
 	propFrame->setLayout(m_propLayout);
-	pev->setChildFrame(propFrame);
-	pev->layout()->setSizeConstraint(QLayout::SetMinAndMaxSize);
-	vlo->addWidget(pev);
+	vlo->addWidget(propFrame);
 
-	ExpandableView * tev = new ExpandableView(tr("Tags"), this);
-	tev->setProperty("blockid", TagsBlockId);
-	connect(tev, SIGNAL(expanded(bool)), this, SLOT(viewExpanded(bool)));
-	m_tagsLabel = new QLabel(this);
-	tev->setChildFrame(m_tagsLabel);
-	tev->layout()->setSizeConstraint(QLayout::SetMinAndMaxSize);
-	vlo->addWidget(tev);
+	QLabel * taglabel = new QLabel(tr("Tags"), NULL);
+	taglabel->setObjectName("expandableViewLabel");
+	vlo->addWidget(taglabel);
 
+	m_tagsLabel = new TagLabel(this);
+	m_tagsLabel->setWordWrap(true);
+	m_tagsLabel->setObjectName("tagsValue");
+	vlo->addWidget(m_tagsLabel);
 
-	ExpandableView * cev = new ExpandableView(tr("Connections"), this);
-	cev->setProperty("blockid", ConnsBlockId);
-	connect(cev, SIGNAL(expanded(bool)), this, SLOT(viewExpanded(bool)));
+	QLabel * clabel = new QLabel(tr("Connections"), NULL);
+	clabel->setObjectName("expandableViewLabel");
+	vlo->addWidget(clabel);
+
 	QFrame * connFrame = new QFrame(this);
-        QGridLayout * connLayout = new QGridLayout(connFrame);
+    QGridLayout * connLayout = new QGridLayout(connFrame);
 	connLayout->setMargin(0);
 	connFrame->setLayout(connLayout);
 
 	QLabel * descrLabel = new QLabel(tr("conn."), this);
 	descrLabel->setObjectName("connectionsLabel");
 	m_connDescr = new QLabel(this);
-        connLayout->addWidget(descrLabel, 0, 0);
-        connLayout->addWidget(m_connDescr, 0, 1);
+    connLayout->addWidget(descrLabel, 0, 0);
+    connLayout->addWidget(m_connDescr, 0, 1);
 
 	QLabel * nameLabel = new QLabel(tr("name"), this);
 	nameLabel->setObjectName("connectionsLabel");
 	m_connName = new QLabel(this);
-        connLayout->addWidget(nameLabel, 1, 0);
-        connLayout->addWidget(m_connName, 1, 1);
+    connLayout->addWidget(nameLabel, 1, 0);
+    connLayout->addWidget(m_connName, 1, 1);
 
 	QLabel * typeLabel = new QLabel(tr("type"), this);
 	typeLabel->setObjectName("connectionsLabel");
 	m_connType = new QLabel(this);
-        connLayout->addWidget(typeLabel, 2, 0);
-        connLayout->addWidget(m_connType, 2, 1);
+    connLayout->addWidget(typeLabel, 2, 0);
+    connLayout->addWidget(m_connType, 2, 1);
 
-	cev->setChildFrame(connFrame);
-	cev->layout()->setSizeConstraint(QLayout::SetMinAndMaxSize);
-
-	vlo->addWidget(cev);
+	vlo->addWidget(connFrame);
 
 	vlo->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Minimum, QSizePolicy::Expanding));
 
@@ -230,16 +249,6 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	m_currentItem = NULL;
 	m_currentSwappingEnabled = false;
 
-	QSettings settings;
-	if (!settings.value(settingsBlockVisibilityName(PropsBlockId),true).toBool()) {
-		pev->expanderClicked();
-	}
-	if (!settings.value(settingsBlockVisibilityName(TagsBlockId),true).toBool()) {
-		tev->expanderClicked();
-	}
-	if (!settings.value(settingsBlockVisibilityName(ConnsBlockId),true).toBool()) {
-		cev->expanderClicked();
-	}
 }
 
 HtmlInfoView::~HtmlInfoView() {
@@ -507,10 +516,6 @@ void HtmlInfoView::setInstanceTitleColors(FLineEdit * edit, const QColor & base,
 		.arg(text.red()).arg(text.green()).arg(text.blue()) );
 }
 
-QString HtmlInfoView::settingsBlockVisibilityName(const QString &blockId) {
-	return "infoView/"+blockId+"Visibility";
-}
-
 void HtmlInfoView::setUpTitle(ItemBase * itemBase) 
 {
 	if (itemBase == m_lastTitleItemBase) return;
@@ -618,8 +623,7 @@ void HtmlInfoView::partTitle(const QString & title, const QString & version) {
 	m_lastPartVersion = version;
 
 	m_partTitle->setText(title);
-	m_partVersion->setText(version);
-
+	m_partVersion->setText(tr("v. %1").arg(version));
 }
 
 void HtmlInfoView::displayProps(ModelPart * modelPart, ItemBase * itemBase, bool swappingEnabled) 
@@ -792,17 +796,6 @@ void HtmlInfoView::displayProps(ModelPart * modelPart, ItemBase * itemBase, bool
 		}
 	}
 	*/
-}
-
-void HtmlInfoView::viewExpanded(bool value) {
-	QObject * view = sender();
-	if (view == NULL) return;
-
-	QString blockId = view->property("blockid").toString();
-	if (!blockId.isEmpty()) {
-		QSettings settings;
-		settings.setValue(settingsBlockVisibilityName(blockId),QVariant::fromValue(value));
-	}
 }
 
 void HtmlInfoView::clearPropThingPlugin(PropThing * propThing) 

@@ -46,6 +46,7 @@ $Date$
 #include "../utils/graphutils.h"
 #include "../processeventblocker.h"
 #include "../autoroute/cmrouter/cmrouter.h"
+#include "../autoroute/autoroutersettingsdialog.h"
 
 #include <limits>
 #include <QApplication>
@@ -2241,7 +2242,7 @@ ItemBase * PCBSketchWidget::placePartDroppedInOtherView(ModelPart * modelPart, V
 }
 
 
-void PCBSketchWidget::setViaSize() {	
+void PCBSketchWidget::autorouterSettings() {	
 	QFile file(":/resources/vias.xml");
 
 	QString errorStr;
@@ -2264,18 +2265,7 @@ void PCBSketchWidget::setViaSize() {
 	QString defaultRingThickness, defaultHoleSize;
 	getDefaultViaSize(defaultRingThickness, defaultHoleSize);
 
-	QDialog dialog;
-	dialog.setWindowTitle(tr("Select Via Size"));
-
-	QVBoxLayout * vLayout = new QVBoxLayout();
-
-	QLabel * explain = new QLabel(tr("Set the via size to use when autorouting."));
-	vLayout->addWidget(explain);
-
-	QGroupBox * groupBox = new QGroupBox(&dialog);
-
-	QVBoxLayout * gvLayout = new QVBoxLayout();
-
+/*
 	QList<QRadioButton *> buttons;
 
 	while (!viaElement.isNull()) {
@@ -2296,22 +2286,13 @@ void PCBSketchWidget::setViaSize() {
 		viaElement = viaElement.nextSiblingElement("via");
 	}	
 
-	groupBox->setLayout(gvLayout);
+*/
 
-	vLayout->addWidget(groupBox);
+	AutorouterSettingsDialog dialog;
+	if (dialog.exec() == QDialog::Accepted) {
+	}
 
-	vLayout->addSpacing(10);
-
-    QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-	buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
-	buttonBox->button(QDialogButtonBox::Ok)->setText(tr("OK"));
-
-	vLayout->addWidget(buttonBox);
-
-	connect(buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
-    connect(buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
-
-	dialog.setLayout(vLayout);
+/*
 	if (dialog.exec() == QDialog::Accepted) {
 		foreach (QRadioButton * button, buttons) {
 			if (button->isChecked()) {
@@ -2322,6 +2303,8 @@ void PCBSketchWidget::setViaSize() {
 			}
 		}
 	}
+
+	*/
 }
 
 void PCBSketchWidget::getViaSize(qreal & ringThickness, qreal & holeSize) {

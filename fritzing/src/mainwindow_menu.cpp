@@ -1777,7 +1777,7 @@ void MainWindow::createMenus()
 	m_pcbTraceMenu = menuBar()->addMenu(tr("&Trace"));
 	m_pcbTraceMenu->addAction(m_autorouteAct);
 	m_pcbTraceMenu->addAction(m_designRulesCheckAct);
-	m_pcbTraceMenu->addAction(m_setViaSizeAct);
+	m_pcbTraceMenu->addAction(m_autorouterSettingsAct);
 	m_pcbTraceMenu->addSeparator();
 
 	m_pcbTraceMenu->addAction(m_groundFillAct);
@@ -2313,7 +2313,7 @@ void MainWindow::updateTraceMenu() {
 	m_groundFillAct->setEnabled(gfEnabled);
 	m_removeGroundFillAct->setEnabled(gfrEnabled);
 	m_designRulesCheckAct->setEnabled(true);
-	m_setViaSizeAct->setEnabled(m_currentGraphicsView != NULL && m_currentGraphicsView->routeBothSides());
+	m_autorouterSettingsAct->setEnabled(m_currentGraphicsView == m_pcbGraphicsView);
 	m_updateRoutingStatusAct->setEnabled(true);
 }
 
@@ -3087,9 +3087,9 @@ void MainWindow::createTraceMenuActions() {
 	m_designRulesCheckAct->setStatusTip(tr("Select any parts that are too close together for safe board production (w/in 10 mil)"));
 	connect(m_designRulesCheckAct, SIGNAL(triggered()), this, SLOT(designRulesCheck()));
 
-	m_setViaSizeAct = new QAction(tr("Set Via Size..."), this);
-	m_setViaSizeAct->setStatusTip(tr("Set via size when autorouting double-sided boards"));
-	connect(m_setViaSizeAct, SIGNAL(triggered()), this, SLOT(setViaSize()));
+	m_autorouterSettingsAct = new QAction(tr("Autorouter settings..."), this);
+	m_autorouterSettingsAct->setStatusTip(tr("Set autorouting parameters..."));
+	connect(m_autorouterSettingsAct, SIGNAL(triggered()), this, SLOT(autorouterSettings()));
 }
 
 void MainWindow::activeLayerBoth() {
@@ -4087,9 +4087,9 @@ void  MainWindow::searchPartsBin() {
 	if (m_binManager) m_binManager->showSearch();
 }
 
-void MainWindow::setViaSize() {
+void MainWindow::autorouterSettings() {
 	if (m_currentGraphicsView != m_pcbGraphicsView) return;
 
-	m_pcbGraphicsView->setViaSize();
+	m_pcbGraphicsView->autorouterSettings();
 }
 

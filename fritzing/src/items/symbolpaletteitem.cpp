@@ -277,6 +277,8 @@ bool SymbolPaletteItem::collectExtraInfo(QWidget * parent, const QString & famil
 		edit->setValidator(validator);
 
 		edit->setMaximumWidth(200);
+		edit->setObjectName("infoViewComboBox");
+
 
 		connect(edit, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(voltageEntry(const QString &)));
 		returnWidget = edit;	

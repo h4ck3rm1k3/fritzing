@@ -333,19 +333,29 @@ bool Hole::collectExtraInfo(QWidget * parent, const QString & family, const QStr
 		returnProp = tr("hole size");
 
 		QFrame * frame = new QFrame(parent);
+		frame->setObjectName("infoViewPartFrame");
+
 		QVBoxLayout * vBoxLayout = new QVBoxLayout(frame);
+		vBoxLayout->setMargin(0);
+		vBoxLayout->setContentsMargins(0, 0, 0, 0);
+		vBoxLayout->setSpacing(0);
 
 		m_sizesComboBox = new QComboBox(frame);
 		m_sizesComboBox->setMaximumWidth(200);
 		m_sizesComboBox->setEditable(false);
+		m_sizesComboBox->setObjectName("infoViewComboBox");
 
 		vBoxLayout->addWidget(m_sizesComboBox);
 
         QFrame * hFrame = new QFrame(frame);
         QHBoxLayout * hLayout = new QHBoxLayout(hFrame);
+		hLayout->setMargin(0);
 
 		QGroupBox * subFrame = new QGroupBox(tr("custom settings"), frame);
+		subFrame->setObjectName("infoViewGroupBox");
+
 		QGridLayout * gridLayout = new QGridLayout(subFrame);
+		gridLayout->setMargin(0);
 
 		m_unitsComboBox = new QComboBox(subFrame);
         m_unitsComboBox->setMaximumWidth(60);
@@ -355,6 +365,7 @@ bool Hole::collectExtraInfo(QWidget * parent, const QString & family, const QStr
 		m_unitsComboBox->addItem("mm");
 		m_unitsComboBox->addItem("in");
 		gridLayout->addWidget(m_unitsComboBox, 0, 2, 2, 1);
+		m_unitsComboBox->setObjectName("infoViewComboBox");
 
 		m_diameterEdit = new QLineEdit(subFrame);
 		m_diameterEdit->setMaximumWidth(50);
@@ -363,9 +374,11 @@ bool Hole::collectExtraInfo(QWidget * parent, const QString & family, const QStr
 		m_diameterValidator->setNotation(QDoubleValidator::StandardNotation);
 		m_diameterEdit->setValidator(m_diameterValidator);
 		gridLayout->addWidget(m_diameterEdit, 0, 1);
+		m_diameterEdit->setObjectName("infoViewLineEdit");
 
 		QLabel * label = new QLabel(tr("Hole Diameter"));
 		label->setMinimumHeight(rowHeight);
+		label->setObjectName("infoViewLabel");
 		gridLayout->addWidget(label, 0, 0);
 
 		m_thicknessEdit = new QLineEdit(subFrame);
@@ -375,10 +388,12 @@ bool Hole::collectExtraInfo(QWidget * parent, const QString & family, const QStr
 		m_thicknessValidator->setNotation(QDoubleValidator::StandardNotation);
 		m_thicknessEdit->setValidator(m_thicknessValidator);
 		gridLayout->addWidget(m_thicknessEdit, 1, 1);
+		m_thicknessEdit->setObjectName("infoViewLineEdit");
 
 		label = new QLabel(tr("Ring Thickness"));
 		label->setMinimumHeight(rowHeight);
 		gridLayout->addWidget(label, 1, 0);
+		label->setObjectName("infoViewLabel");
 
 		gridLayout->setContentsMargins(10, 2, 0, 2);
 		gridLayout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum), 0, 3);

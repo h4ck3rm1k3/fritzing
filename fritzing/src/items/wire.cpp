@@ -1285,6 +1285,7 @@ bool Wire::collectExtraInfo(QWidget * parent, const QString & family, const QStr
 			QComboBox * comboBox = new QComboBox(parent);
 			comboBox->setEditable(false);
 			comboBox->setEnabled(swappingEnabled);
+			comboBox->setObjectName("infoViewComboBox");
 			
 			int ix = 0;
 			QString englishCurrColor = colorString();

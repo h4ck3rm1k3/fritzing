@@ -151,6 +151,7 @@ bool LogoItem::collectExtraInfo(QWidget * parent, const QString & family, const 
 			vboxLayout->setAlignment(Qt::AlignLeft);
 			vboxLayout->setContentsMargins(0, 0, 0, 0);
 			vboxLayout->setSpacing(0);
+			vboxLayout->setMargin(0);
 
 			QComboBox * comboBox = new QComboBox();
 			comboBox->setEditable(false);

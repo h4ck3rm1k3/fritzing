@@ -1649,6 +1649,7 @@ bool ItemBase::collectExtraInfo(QWidget * parent, const QString & family, const 
 	if (values.count() > 1) {
 		FamilyPropertyComboBox * comboBox = new FamilyPropertyComboBox(family, prop, parent);
 		comboBox->setMaximumWidth(200);
+		comboBox->setObjectName("infoViewComboBox");
 
 		comboBox->addItems(values);
 		comboBox->setCurrentIndex(comboBox->findText(tempValue));

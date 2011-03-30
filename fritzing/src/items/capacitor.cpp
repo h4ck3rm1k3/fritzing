@@ -61,8 +61,8 @@ bool Capacitor::collectExtraInfo(QWidget * parent, const QString & family, const
 			FocusOutComboBox * focusOutComboBox = new FocusOutComboBox();
 			focusOutComboBox->setEnabled(swappingEnabled);
 			focusOutComboBox->setEditable(propertyDef->editable);
+			focusOutComboBox->setObjectName("infoViewComboBox");
 			QString current = m_propertyDefs.value(propertyDef);
-
 		
 			if (propertyDef->numeric) {
 				if (!current.isEmpty()) {

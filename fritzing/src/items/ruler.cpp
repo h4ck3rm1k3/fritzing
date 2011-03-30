@@ -231,6 +231,8 @@ bool Ruler::collectExtraInfo(QWidget * parent, const QString & family, const QSt
 		QString temp = m_modelPart->prop("width").toString();
 		temp.chop(2);
 		e1->setText(temp);
+		e1->setObjectName("infoViewLineEdit");		
+
 		m_widthEditor = e1;
 		m_widthValidator = validator;
 
@@ -241,17 +243,22 @@ bool Ruler::collectExtraInfo(QWidget * parent, const QString & family, const QSt
 		comboBox->addItem("in");
 		comboBox->setCurrentIndex(units);
 		m_unitsEditor = comboBox;
+		comboBox->setObjectName("infoViewComboBox");		
+
 
 		QHBoxLayout * hboxLayout = new QHBoxLayout();
 		hboxLayout->setAlignment(Qt::AlignLeft);
 		hboxLayout->setContentsMargins(0, 0, 0, 0);
 		hboxLayout->setSpacing(0);
+		hboxLayout->setMargin(0);
+
 
 		hboxLayout->addWidget(e1);
 		hboxLayout->addWidget(comboBox);
 
 		QFrame * frame = new QFrame();
 		frame->setLayout(hboxLayout);
+		frame->setObjectName("infoViewPartFrame");
 
 		connect(e1, SIGNAL(editingFinished()), this, SLOT(widthEntry()));
 		connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(unitsEntry(const QString &)));

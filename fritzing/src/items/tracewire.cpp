@@ -47,34 +47,42 @@ TraceWire::~TraceWire()
 {
 }
 
+QComboBox * TraceWire::createWidthComboBox(qreal m, QWidget * parent) 
+{
+	QComboBox * comboBox = new QComboBox(parent);
+	comboBox->setEditable(true);
+	QIntValidator * intValidator = new QIntValidator(comboBox);
+	intValidator->setRange(MinTraceWidthMils, MaxTraceWidthMils);
+	comboBox->setValidator(intValidator);
+
+	int ix = 0;
+	if (!Wire::widths.contains(m)) {
+		Wire::widths.append(m);
+		qSort(Wire::widths.begin(), Wire::widths.end());
+	}
+	foreach(long widthValue, Wire::widths) {
+		QString widthName = Wire::widthTrans.value(widthValue, "");
+		QVariant val((int) widthValue);
+		comboBox->addItem(widthName.isEmpty() ? QString::number(widthValue) : widthName, val);
+		if (qAbs(m - widthValue) < .01) {
+			comboBox->setCurrentIndex(ix);
+		}
+		ix++;
+	}
+
+	return comboBox;
+
+}
+
+
 bool TraceWire::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget)
 {
 	if (prop.compare("width", Qt::CaseInsensitive) == 0) {
 		returnProp = tr("width");
-		QComboBox * comboBox = new QComboBox(parent);
-		comboBox->setEditable(true);
-		comboBox->setEnabled(swappingEnabled);
-		QIntValidator * intValidator = new QIntValidator(comboBox);
-		intValidator->setRange(MinTraceWidthMils, MaxTraceWidthMils);
-		comboBox->setValidator(intValidator);
-
-		int ix = 0;
-		qreal m = mils();
-		if (!Wire::widths.contains(m)) {
-			Wire::widths.append(m);
-			qSort(Wire::widths.begin(), Wire::widths.end());
-		}
-		foreach(long widthValue, Wire::widths) {
-			QString widthName = Wire::widthTrans.value(widthValue, "");
-			QVariant val((int) widthValue);
-			comboBox->addItem(widthName.isEmpty() ? QString::number(widthValue) : widthName, val);
-			if (qAbs(m - widthValue) < .01) {
-				comboBox->setCurrentIndex(ix);
-			}
-			ix++;
-		}
-
+		QComboBox * comboBox = createWidthComboBox(mils(), parent);
 		comboBox->setMaximumWidth(200);
+		comboBox->setEnabled(swappingEnabled);
+		comboBox->setObjectName("infoViewComboBox");
 
 		connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(widthEntry(const QString &)));
 		returnWidget = comboBox;

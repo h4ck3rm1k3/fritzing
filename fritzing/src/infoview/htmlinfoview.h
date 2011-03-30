@@ -51,6 +51,16 @@ struct PropThing {
         QPointer<QVBoxLayout> m_layout;
 };
 
+class TagLabel : public QLabel {
+	Q_OBJECT
+
+public:
+	TagLabel(QWidget * parent);
+
+protected:
+	QSize sizeHint() const;
+};
+
 class HtmlInfoView : public QScrollArea
 {
 Q_OBJECT
@@ -88,7 +98,6 @@ protected slots:
 	void instanceTitleEnter();
 	void instanceTitleLeave();
 	void instanceTitleEditable(bool editable);
-	void viewExpanded(bool);
 
 public slots:
 	void updateLocation();
@@ -101,8 +110,6 @@ protected:
 	void appendItemStuff(ItemBase * base, ModelPart * modelPart, bool swappingEnabled, bool labelIsVisible = false);
 
 	void setInstanceTitleColors(class FLineEdit * edit, const QColor & base, const QColor & text);
-
-	QString settingsBlockVisibilityName(const QString &blockId);
 
 	void setCurrentItem(ItemBase *);
 	void setNullContent();
@@ -156,9 +163,6 @@ protected:
 	// end note
 
 protected:
-	static QString PropsBlockId;
-	static QString TagsBlockId;
-	static QString ConnsBlockId;
 	static QHash<QString, QPixmap *> m_pixmaps;
 };
 

@@ -572,19 +572,24 @@ bool ResizableBoard::collectExtraInfo(QWidget * parent, const QString & family, 
 		if (!m_modelPart->prop("height").isValid()) { 
 			// display uneditable width and height
 			QFrame * frame = new QFrame();
+			frame->setObjectName("infoViewPartFrame");		
+
 			QVBoxLayout * vboxLayout = new QVBoxLayout();
 			vboxLayout->setAlignment(Qt::AlignLeft);
 			vboxLayout->setSpacing(0);
+			vboxLayout->setMargin(0);
 			vboxLayout->setContentsMargins(0, 3, 0, 0);
 
 			QRectF r = this->boundingRect();
 			qreal w = qRound(GraphicsUtils::pixels2mm(r.width(), FSvgRenderer::printerScale()) * 100) / 100.0;
 			QLabel * l1 = new QLabel(tr("width: %1mm").arg(w));	
 			l1->setMargin(0);
+			l1->setObjectName("infoViewLabel");		
 
 			qreal h = qRound(GraphicsUtils::pixels2mm(r.height(), FSvgRenderer::printerScale()) * 100) / 100.0;
 			QLabel * l2 = new QLabel(tr("height: %1mm").arg(h));
 			l2->setMargin(0);
+			l2->setObjectName("infoViewLabel");		
 
 			vboxLayout->addWidget(qobject_cast<QWidget *>(returnWidget));
 			vboxLayout->addWidget(l1);
@@ -606,6 +611,7 @@ bool ResizableBoard::collectExtraInfo(QWidget * parent, const QString & family, 
 		vboxLayout->setAlignment(Qt::AlignLeft);
 		vboxLayout->setSpacing(1);
 		vboxLayout->setContentsMargins(0, 3, 0, 0);
+		vboxLayout->setMargin(0);
 
 		QFrame * subframe1 = new QFrame();
 		QHBoxLayout * hboxLayout1 = new QHBoxLayout();

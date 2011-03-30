@@ -280,7 +280,7 @@ protected slots:
 	void searchPartsBin();
 	void showNavigator();
 	void macNavigatorHack();
-	void setViaSize();
+	void autorouterSettings();
 
 protected:
 	void initSketchWidget(SketchWidget *);
@@ -607,7 +607,7 @@ protected:
 	QAction *m_groundFillAct;
 	QAction *m_removeGroundFillAct;
 	QAction *m_designRulesCheckAct;
-	QAction *m_setViaSizeAct;
+	QAction *m_autorouterSettingsAct;
 	QAction *m_tidyWiresAct;
 
 	// Help Menu
