@@ -19,6 +19,7 @@ it, we make no guarantees about anything.
     {% for download in latest_release.download_set.all reversed %}
     <img src="{{ MEDIA_URL }}fritzing/img/arrow-down.gif" alt="Arrow down" />
         <strong><a href="{{  download.get_absolute_url }}" 
+	    onclick="_gaq.push(['_trackPageview', '/download/{{ latest_release.version }}/{{ download.platform }}']);"
             title="{{ download.counter|add:download.updated }} downloads">
             {{ download.platform }}</a></strong>
     {% endfor %}
