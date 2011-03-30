@@ -1860,14 +1860,14 @@ bool PCBSketchWidget::resizingJumperItemPress(QGraphicsItem * item) {
 		if (m_alignToGrid) {
 			m_alignmentStartPoint = QPointF(0,0);
 			ItemBase * board = findBoard();
-			QSet<ItemBase *> savedItems;
+			QHash<long, ItemBase *> savedItems;
 			QHash<Wire *, ConnectorItem *> savedWires;
 			if (board == NULL) {
 				foreach (QGraphicsItem * item, scene()->items()) {
 					PaletteItemBase * itemBase = dynamic_cast<PaletteItemBase *>(item);
 					if (itemBase->itemType() == ModelPart::Jumper) continue;
 
-					savedItems.insert(itemBase);
+					savedItems.insert(itemBase->layerKinChief()->id(), itemBase);
 				}
 			}
 			findAlignmentAnchor(board, savedItems, savedWires);

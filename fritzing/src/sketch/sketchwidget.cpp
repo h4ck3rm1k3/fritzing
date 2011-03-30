@@ -1429,7 +1429,7 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 		// create temporary item for dragging
 		m_droppingItem = addItemAux(modelPart, defaultViewLayerSpec(), viewGeometry, fromID, NULL, doConnectors, m_viewIdentifier);
 
-		QSet<ItemBase *> savedItems;
+		QHash<long, ItemBase *> savedItems;
 		QHash<Wire *, ConnectorItem *> savedWires;
 		findAlignmentAnchor(m_droppingItem, savedItems, savedWires);
 
@@ -1921,7 +1921,7 @@ void SketchWidget::prepMove(ItemBase * originatingItem) {
 		ItemBase * chief = itemBase->layerKinChief();
 		if (chief->moveLock()) continue;
 
-		m_savedItems.insert(chief);
+		m_savedItems.insert(chief->id(), chief);
 		if (chief->sticky()) {
 			foreach(ItemBase * sitemBase, chief->stickyList()) {
 				if (sitemBase->isVisible()) {
@@ -1929,7 +1929,7 @@ void SketchWidget::prepMove(ItemBase * originatingItem) {
 						wires.insert(dynamic_cast<Wire *>(sitemBase));
 					}
 					else {
-						m_savedItems.insert(sitemBase);
+						m_savedItems.insert(sitemBase->layerKinChief()->id(), sitemBase);
 						if (!items.contains(sitemBase)) {
 							items.append(sitemBase);
 						}
@@ -1954,7 +1954,7 @@ void SketchWidget::prepMove(ItemBase * originatingItem) {
 		categorizeDragWires(wires);
 	}
 
-	foreach (ItemBase * itemBase, m_savedItems) {
+	foreach (ItemBase * itemBase, m_savedItems.values()) {
 		itemBase->saveGeometry();
 	}
 
@@ -1967,7 +1967,7 @@ void SketchWidget::prepMove(ItemBase * originatingItem) {
 
 }
 
-void SketchWidget::findAlignmentAnchor(ItemBase * originatingItem, 	QSet<ItemBase *> & savedItems, QHash<Wire *, ConnectorItem *> & savedWires) 
+void SketchWidget::findAlignmentAnchor(ItemBase * originatingItem, 	QHash<long, ItemBase *> & savedItems, QHash<Wire *, ConnectorItem *> & savedWires) 
 {
 	m_alignmentItem = NULL;
 	if (!m_alignToGrid) return;
@@ -2059,20 +2059,13 @@ void SketchWidget::categorizeDragWires(QSet<Wire *> & wires)
 			if (ct->status[i] != UNDETERMINED) continue;
 
 			foreach (ConnectorItem * toConnectorItem, from.at(i)->connectedToItems()) {
-				if (m_savedItems.contains(toConnectorItem->attachedTo())) {
+				if (m_savedItems.keys().contains(toConnectorItem->attachedTo()->layerKinChief()->id())) {
 					changed = true;
 					ct->status[i] = IN;
 					break;
 				}
 
 				bool notWire = toConnectorItem->attachedToItemType() != ModelPart::Wire;
-				if (notWire) {
-					if (m_savedItems.contains(qobject_cast<PaletteItemBase *>(toConnectorItem->attachedTo())->layerKinChief())) {
-						changed = true;
-						ct->status[i] = IN;
-						break;
-					}
-				}
 
 				if (notWire || outWires.contains(toConnectorItem->attachedTo())) {
 					changed = true;
@@ -2086,7 +2079,7 @@ void SketchWidget::categorizeDragWires(QSet<Wire *> & wires)
 			if (stickingTo != NULL) {
 				QPointF p = from.at(i)->sceneAdjustedTerminalPoint(NULL);
 				if (stickingTo->contains(stickingTo->mapFromScene(p))) {
-					ct->status[i] = m_savedItems.contains(stickingTo) ? IN : OUT;
+					ct->status[i] = m_savedItems.keys().contains(stickingTo->layerKinChief()->id()) ? IN : OUT;
 					changed = true;
 				}
 			}
@@ -2102,7 +2095,7 @@ void SketchWidget::categorizeDragWires(QSet<Wire *> & wires)
 		if (ct->status[0] != UNDETERMINED && ct->status[1] != UNDETERMINED) {
 			if (ct->status[0] == IN) {
 				if (ct->status[1] == IN) {
-					m_savedItems.insert(ct->wire);
+					m_savedItems.insert(ct->wire->id(), ct->wire);
 				}
 				else {
 					// OUT == FREE in this case
@@ -2128,7 +2121,7 @@ void SketchWidget::categorizeDragWires(QSet<Wire *> & wires)
 				else if (ct->status[1] == FREE) {
 					// both sides are free, so if the wire is selected, drag it
 					if (ct->wire->isSelected()) {
-						m_savedItems.insert(ct->wire);
+						m_savedItems.insert(ct->wire->id(), ct->wire);
 					}
 				}
 				else {
@@ -2170,7 +2163,7 @@ void SketchWidget::categorizeDragWires(QSet<Wire *> & wires)
 					else {
 						// we've elimated all OUT items so mark everybody IN
 						foreach (ConnectionThing * ct, connectionThings) {
-							m_savedItems.insert(ct->wire);
+							m_savedItems.insert(ct->wire->id(), ct->wire);
 							delete ct;
 						}						
 						connectionThings.clear();
@@ -2229,7 +2222,7 @@ void SketchWidget::prepDragWire(Wire * wire)
 	}
 
 	m_savedItems.clear();
-	m_savedItems.insert(wire);
+	m_savedItems.insert(wire->id(), wire);
 	wire->saveGeometry();
 	foreach (Wire * w, m_savedWires.keys()) {
 		w->saveGeometry();
@@ -3580,8 +3573,12 @@ void SketchWidget::rotateX(qreal degrees)
 
 	QString string = tr("Rotate %2 (%1)")
 			.arg(ViewIdentifierClass::viewIdentifierName(m_viewIdentifier))
-			.arg((m_savedItems.count() == 1) ? m_savedItems.values()[0]->title() : QString::number(m_savedItems.count() + m_savedWires.count()) + " items" );
+			.arg((m_savedItems.count() == 1) ? m_savedItems.values().at(0)->title() : QString::number(m_savedItems.count() + m_savedWires.count()) + " items" );
 	QUndoCommand * parentCommand = new QUndoCommand(string);
+
+	foreach (long id, m_savedItems.keys()) {
+		m_savedItems.value(id)->debugInfo(QString("save item %1").arg(id));
+	}
 
 	new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
 
@@ -3597,10 +3594,8 @@ void SketchWidget::rotateX(qreal degrees)
 		ViewGeometry vg2(vg1);
 		if (itemBase->itemType() != ModelPart::Wire) {
 			itemBase->calcRotation(rotation, center, vg2);
-
-			QSet<ItemBase *> emptyList;			// emptylist is only used for a move command
 			ConnectorPairHash connectorHash;
-			disconnectFromFemale(itemBase, emptyList, connectorHash, true, parentCommand);
+			disconnectFromFemale(itemBase, m_savedItems, connectorHash, true, parentCommand);
 			new MoveItemCommand(this, itemBase->id(), vg1, vg1, true, parentCommand);
 			new RotateItemCommand(this, itemBase->id(), degrees, parentCommand);
 			new MoveItemCommand(this, itemBase->id(), vg2, vg2, true, parentCommand);
@@ -3709,7 +3704,7 @@ void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
 
 	new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
 
-	QSet<ItemBase *> emptyList;			// emptylist is only used for a move command
+	QHash<long, ItemBase *> emptyList;			// emptylist is only used for a move command
 	ConnectorPairHash connectorHash;
 	foreach (ItemBase * item, targets) {
 		disconnectFromFemale(item, emptyList, connectorHash, true, parentCommand);
@@ -5129,7 +5124,7 @@ void SketchWidget::changeWireFlags(long wireId, ViewGeometry::WireFlags wireFlag
 	}
 }
 
-bool SketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, ConnectorPairHash & connectorHash, bool doCommand, QUndoCommand * parentCommand)
+bool SketchWidget::disconnectFromFemale(ItemBase * item, QHash<long, ItemBase *> & savedItems, ConnectorPairHash & connectorHash, bool doCommand, QUndoCommand * parentCommand)
 {
 	// schematic and pcb view connections are always via wires so this is a no-op.  breadboard view has its own version.
 
@@ -6283,9 +6278,9 @@ void SketchWidget::disconnectAllSlot(QList<ConnectorItem *> connectorItems, QHas
 					ViewGeometry vg = detachee->getViewGeometry();
 					vg.setLoc(newPos);
 					new MoveItemCommand(this, detachee->id(), detachee->getViewGeometry(), vg, false, parentCommand);
-					QSet<ItemBase *> tempItems;
+					QHash<long, ItemBase *> emptyList;
 					ConnectorPairHash connectorHash;
-					disconnectFromFemale(detachee, tempItems, connectorHash, true, parentCommand);
+					disconnectFromFemale(detachee, emptyList, connectorHash, true, parentCommand);
 					foreach (ConnectorItem * fConnectorItem, connectorHash.uniqueKeys()) {
 						if (myConnectorItems.contains(fConnectorItem)) {
 							// don't need to reconnect
@@ -6919,9 +6914,9 @@ void SketchWidget::disconnectWireSlot(QSet<ItemBase *> & foreignDeletedItems, QL
 			ViewGeometry vg = detachee->getViewGeometry();
 			vg.setLoc(newPos);
 			new MoveItemCommand(this, detachee->id(), detachee->getViewGeometry(), vg, false, parentCommand);
-			QSet<ItemBase *> tempItems;
+			QHash<long, ItemBase *> emptyList;
 			ConnectorPairHash connectorHash;
-			disconnectFromFemale(detachee, tempItems, connectorHash, true, parentCommand);
+			disconnectFromFemale(detachee, emptyList, connectorHash, true, parentCommand);
 			foreach (ConnectorItem * fromConnectorItem, connectorHash.uniqueKeys()) {
 				if (detachItems.keys().contains(fromConnectorItem)) {
 					// don't need to reconnect
@@ -7021,7 +7016,7 @@ bool SketchWidget::acceptsTrace(const ViewGeometry &) {
 
 void SketchWidget::alignOneToGrid(ItemBase * itemBase) {
 	if (m_alignToGrid) {
-		QSet<ItemBase *> savedItems;
+		QHash<long, ItemBase *> savedItems;
 		QHash<Wire *, ConnectorItem *> savedWires;
 		findAlignmentAnchor(itemBase, savedItems, savedWires);
 		if (m_alignmentItem) {

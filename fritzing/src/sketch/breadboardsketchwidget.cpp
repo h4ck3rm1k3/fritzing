@@ -67,7 +67,7 @@ void BreadboardSketchWidget::addViewLayers() {
 	addBreadboardViewLayers();
 }
 
-bool BreadboardSketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, ConnectorPairHash & connectorHash, bool doCommand, QUndoCommand * parentCommand)
+bool BreadboardSketchWidget::disconnectFromFemale(ItemBase * item, QHash<long, ItemBase *> & savedItems, ConnectorPairHash & connectorHash, bool doCommand, QUndoCommand * parentCommand)
 {
 	// if item is attached to a virtual wire or a female connector in breadboard view
 	// then disconnect it
@@ -79,12 +79,7 @@ bool BreadboardSketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase
 	foreach (ConnectorItem * fromConnectorItem , connectorItems) {
 		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems())  {
 			if (toConnectorItem->connectorType() == Connector::Female) {
-				// go up the tree in case it's a group
-				ItemBase * parent = toConnectorItem->attachedTo();
-				while (parent->parentItem() != NULL) {
-					parent = dynamic_cast<ItemBase *>(parent->parentItem());
-				}
-				if (savedItems.contains(parent)) {
+				if (savedItems.keys().contains(toConnectorItem->attachedTo()->layerKinChief()->id())) {
 					// the thing we're connected to is also moving, so don't disconnect
 					continue;
 				}

@@ -318,7 +318,7 @@ protected:
 	void addViewLayersAux(const LayerList &layers, float startZ = 1.5);
 	void tempConnectWire(Wire * wire, ConnectorItem * from, ConnectorItem * to);
 	void rotateFlip(qreal degrees, Qt::Orientations orientation);
-	virtual bool disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, ConnectorPairHash &, bool doCommand, QUndoCommand * parentCommand);
+	virtual bool disconnectFromFemale(ItemBase * item, QHash<long, ItemBase *> & savedItems, ConnectorPairHash &, bool doCommand, QUndoCommand * parentCommand);
 	void clearDragWireTempCommand();
 	bool draggingWireEnd();
 	void moveItems(QPoint globalPos, bool checkAutoScroll);
@@ -366,7 +366,7 @@ protected:
 	bool moveByArrow(int dx, int dy, QKeyEvent * );
 	double gridSizeInches();
 	virtual bool canAlignToTopLeft(ItemBase *);
-	void findAlignmentAnchor(ItemBase * originatingItem, QSet<ItemBase *> & savedItems, QHash<Wire *, ConnectorItem *> & savedWires);
+	void findAlignmentAnchor(ItemBase * originatingItem, QHash<long, ItemBase *> & savedItems, QHash<Wire *, ConnectorItem *> & savedWires);
 	void alignLoc(QPointF & loc, const QPointF startPoint, const QPointF newLoc, const QPointF originalLoc);
 	void copyAux(QList<ItemBase *> & bases, bool saveBoundingRects);
 	void copyDrop();
@@ -537,7 +537,7 @@ protected:
 
 	bool m_infoViewOnHover;
 
-	QSet<ItemBase *> m_savedItems;
+	QHash<long, ItemBase *> m_savedItems;
 	QHash<Wire *, ConnectorItem *> m_savedWires;
 	QList<ItemBase *> m_additionalSavedItems;
 	int m_ignoreSelectionChangeEvents;
