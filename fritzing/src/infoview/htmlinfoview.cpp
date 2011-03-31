@@ -118,7 +118,7 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	m_partTitle = NULL;
 	m_partVersion = NULL;
 	m_connDescr = NULL;
-	m_tagsLabel = NULL;
+	m_tagsTextLabel = NULL;
 	m_lastSwappingEnabled = false;
 	m_lastItemBase = NULL;
 	m_infoGraphicsView = NULL;
@@ -192,33 +192,37 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	m_partTitle->setObjectName("infoViewPartTitle");
 	vlo->addWidget(m_partTitle);
 
-	QLabel * proplabel = new QLabel(tr("Properties"), NULL);
-	proplabel->setObjectName("expandableViewLabel");
-	vlo->addWidget(proplabel);
+	m_proplabel = new QLabel(tr("Properties"), NULL);
+	m_proplabel->setObjectName("expandableViewLabel");
+	vlo->addWidget(m_proplabel);
 
 	QFrame * propFrame = new QFrame(this);
+	propFrame->setObjectName("infoViewPropertyFrame");
 	m_propLayout = new QGridLayout(propFrame);
 	m_propLayout->setMargin(0);
+	m_propLayout->setSpacing(0);
 	propFrame->setLayout(m_propLayout);
 	vlo->addWidget(propFrame);
 
-	QLabel * taglabel = new QLabel(tr("Tags"), NULL);
-	taglabel->setObjectName("expandableViewLabel");
-	vlo->addWidget(taglabel);
+	m_taglabel = new QLabel(tr("Tags"), NULL);
+	m_taglabel->setObjectName("expandableViewLabel");
+	vlo->addWidget(m_taglabel);
 
-	m_tagsLabel = new TagLabel(this);
-	m_tagsLabel->setWordWrap(true);
-	m_tagsLabel->setObjectName("tagsValue");
-	vlo->addWidget(m_tagsLabel);
+	m_tagsTextLabel = new TagLabel(this);
+	m_tagsTextLabel->setWordWrap(true);
+	m_tagsTextLabel->setObjectName("tagsValue");
+	vlo->addWidget(m_tagsTextLabel);
 
-	QLabel * clabel = new QLabel(tr("Connections"), NULL);
-	clabel->setObjectName("expandableViewLabel");
-	vlo->addWidget(clabel);
+	m_connLabel = new QLabel(tr("Connections"), NULL);
+	m_connLabel->setObjectName("expandableViewLabel");
+	vlo->addWidget(m_connLabel);
 
-	QFrame * connFrame = new QFrame(this);
-    QGridLayout * connLayout = new QGridLayout(connFrame);
+	m_connFrame = new QFrame(this);
+	m_connFrame->setObjectName("connectionsFrame");
+
+    QGridLayout * connLayout = new QGridLayout(m_connFrame);
 	connLayout->setMargin(0);
-	connFrame->setLayout(connLayout);
+	m_connFrame->setLayout(connLayout);
 
 	QLabel * descrLabel = new QLabel(tr("conn."), this);
 	descrLabel->setObjectName("connectionsLabel");
@@ -238,7 +242,7 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
     connLayout->addWidget(typeLabel, 2, 0);
     connLayout->addWidget(m_connType, 2, 1);
 
-	vlo->addWidget(connFrame);
+	vlo->addWidget(m_connFrame);
 
 	vlo->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Minimum, QSizePolicy::Expanding));
 
@@ -425,6 +429,11 @@ void HtmlInfoView::setContent()
 	setCurrentItem(m_pendingItemBase);
 	m_infoGraphicsView = m_pendingInfoGraphicsView;
 
+	m_connFrame->setVisible(true);
+	m_proplabel->setVisible(true);
+	m_taglabel->setVisible(true);
+	m_connLabel->setVisible(true);
+
 	m_setContentTimer.stop();
 	//DebugDialog::debug(QString("end   updating %1").arg(QTime::currentTime().toString("HH:mm:ss.zzz")));
 
@@ -473,6 +482,10 @@ void HtmlInfoView::setNullContent()
 	addTags(NULL);
 	viewConnectorItemInfo(NULL);
 	setUpLocation(NULL);
+	m_connFrame->setVisible(false);
+	m_proplabel->setVisible(false);
+	m_taglabel->setVisible(false);
+	m_connLabel->setVisible(false);
 }
 
 void HtmlInfoView::setInstanceTitle() {
@@ -600,18 +613,18 @@ void HtmlInfoView::setUpIcons(ModelPart * modelPart) {
 }
 
 void HtmlInfoView::addTags(ModelPart * modelPart) {
-	if (m_tagsLabel == NULL) return;
+	if (m_tagsTextLabel == NULL) return;
 
 	if (m_lastTagsModelPart == modelPart) return;
 
 	m_lastTagsModelPart = modelPart;
 
 	if (modelPart == NULL || modelPart->tags().isEmpty()) {
-		m_tagsLabel->setText("");
+		m_tagsTextLabel->setText("");
 		return;
 	}
 
-	m_tagsLabel->setText(modelPart->tags().join(", "));
+	m_tagsTextLabel->setText(modelPart->tags().join(", "));
 }
 
 void HtmlInfoView::partTitle(const QString & title, const QString & version) {
@@ -623,7 +636,10 @@ void HtmlInfoView::partTitle(const QString & title, const QString & version) {
 	m_lastPartVersion = version;
 
 	m_partTitle->setText(title);
-	m_partVersion->setText(tr("v. %1").arg(version));
+	if (!version.isEmpty()) {
+		m_partVersion->setText(tr("v. %1").arg(version));
+	}
+	else m_partVersion->setText("");
 }
 
 void HtmlInfoView::displayProps(ModelPart * modelPart, ItemBase * itemBase, bool swappingEnabled) 

@@ -139,10 +139,14 @@ protected:
 	QLabel * m_partVersion;
 	QLabel * m_location;
 	QComboBox * m_locationUnits;
-	QLabel * m_tagsLabel;
+	QLabel * m_tagsTextLabel;
 	QLabel * m_connDescr;
 	QLabel * m_connName;
 	QLabel * m_connType;
+	QLabel * m_proplabel;
+	QLabel * m_taglabel;
+	QLabel * m_connLabel;
+	QFrame * m_connFrame;
 	QGridLayout * m_propLayout;
 	QList <PropThing *> m_propThings;
         QPointer<class InfoGraphicsView> m_pendingInfoGraphicsView;

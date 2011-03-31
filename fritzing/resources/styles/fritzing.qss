@@ -196,7 +196,8 @@ AutoCloseMessageBox {
 	font-size: 12px;
 }
 
-/* INFO VIEW */
+/* ################### info view #################### */
+
 HtmlInfoView {
 	border: 1px solid rgb(117,117,117);
 	border-top: 0px;
@@ -227,30 +228,40 @@ HtmlInfoView {
 	font-size: 10px;
 	font-weight: normal;
 	color: rgb(87,87,87);
-	min-height: 18px;
 }
 
 #tagsValue {
 	margin: 4px;
 }
 
+#connectionsFrame {
+}
+
 #connectionsLabel {
 	color: rgb(87,87,87);
-	min-width: 65px;
-	max-width: 65px;
-	margin: 4px;
+	min-width: 60px;
+	max-width: 60px;
+	margin-left: 4px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-right: 0px;
 }
 
 /* the title  */
 #expandableViewLabel {
 	padding: 0px;
-	margin: 4px;
+	margin-left: 3px;
+	margin-top: 5px;
+	margin-bottom: 0px;
+	margin-right:0px;
 	border: 0px;
 	font-weight: bold;
 	text-align: left;
 	font-size: 11px;
 	color: rgb(84,24,44);
-	min-height: 18px;
+}
+
+#infoViewPropertyFrame {
 }
 
 /* part-specfic widgets */
