@@ -147,6 +147,7 @@ protected:
 	QLabel * m_taglabel;
 	QLabel * m_connLabel;
 	QFrame * m_connFrame;
+	QFrame * m_propFrame;
 	QGridLayout * m_propLayout;
 	QList <PropThing *> m_propThings;
         QPointer<class InfoGraphicsView> m_pendingInfoGraphicsView;

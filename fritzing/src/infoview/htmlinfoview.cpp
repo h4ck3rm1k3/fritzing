@@ -126,8 +126,8 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	m_setContentTimer.setInterval(10);
 	connect(&m_setContentTimer, SIGNAL(timeout()), this, SLOT(setContent()));
 	QVBoxLayout *vlo = new QVBoxLayout(mainFrame);
-	vlo->setMargin(0);
 	vlo->setSpacing(0);
+	vlo->setContentsMargins(0, 0, 0, 0);
 	vlo->setSizeConstraint( QLayout::SetMinAndMaxSize );
 
         /* Part Title */
@@ -151,10 +151,10 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	}
 
 	QFrame * iconFrame = new QFrame(mainFrame);
-	iconFrame->setObjectName("IconFrame");
+	iconFrame->setObjectName("iconFrame");
 
 	QHBoxLayout * hboxLayout = new QHBoxLayout();
-	hboxLayout->setContentsMargins (0, 0, 0, 0);
+	hboxLayout->setContentsMargins(0, 0, 0, 0);
 	hboxLayout->addSpacing(IconSpace);
 	m_icon1 = addLabel(hboxLayout, NoIcon);
 	m_icon2 = addLabel(hboxLayout, NoIcon);
@@ -196,13 +196,13 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	m_proplabel->setObjectName("expandableViewLabel");
 	vlo->addWidget(m_proplabel);
 
-	QFrame * propFrame = new QFrame(this);
-	propFrame->setObjectName("infoViewPropertyFrame");
-	m_propLayout = new QGridLayout(propFrame);
-	m_propLayout->setMargin(0);
+	m_propFrame = new QFrame(this);
+	m_propFrame->setObjectName("infoViewPropertyFrame");
+	m_propLayout = new QGridLayout(m_propFrame);
 	m_propLayout->setSpacing(0);
-	propFrame->setLayout(m_propLayout);
-	vlo->addWidget(propFrame);
+	m_propLayout->setContentsMargins(0, 0, 0, 0);
+	m_propFrame->setLayout(m_propLayout);
+	vlo->addWidget(m_propFrame);
 
 	m_taglabel = new QLabel(tr("Tags"), NULL);
 	m_taglabel->setObjectName("expandableViewLabel");
@@ -221,7 +221,8 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	m_connFrame->setObjectName("connectionsFrame");
 
     QGridLayout * connLayout = new QGridLayout(m_connFrame);
-	connLayout->setMargin(0);
+	connLayout->setSpacing(0);
+	connLayout->setContentsMargins(0, 0, 0, 0);
 	m_connFrame->setLayout(connLayout);
 
 	QLabel * descrLabel = new QLabel(tr("conn."), this);
@@ -433,6 +434,7 @@ void HtmlInfoView::setContent()
 	m_proplabel->setVisible(true);
 	m_taglabel->setVisible(true);
 	m_connLabel->setVisible(true);
+	m_propFrame->setVisible(true);
 
 	m_setContentTimer.stop();
 	//DebugDialog::debug(QString("end   updating %1").arg(QTime::currentTime().toString("HH:mm:ss.zzz")));
@@ -483,6 +485,7 @@ void HtmlInfoView::setNullContent()
 	viewConnectorItemInfo(NULL);
 	setUpLocation(NULL);
 	m_connFrame->setVisible(false);
+	m_propFrame->setVisible(false);
 	m_proplabel->setVisible(false);
 	m_taglabel->setVisible(false);
 	m_connLabel->setVisible(false);
@@ -728,8 +731,9 @@ void HtmlInfoView::displayProps(ModelPart * modelPart, ItemBase * itemBase, bool
 
 			QFrame * valueFrame = new QFrame(this);
 			QVBoxLayout * vlayout = new QVBoxLayout(valueFrame);
+			vlayout->setSpacing(0);
+			vlayout->setContentsMargins(0, 0, 0, 0);
 			propThing->m_layout = vlayout;
-			vlayout->setMargin(0);
 
 			QLabel * propValueLabel = new QLabel(valueFrame);
 			propValueLabel->setTextInteractionFlags(Qt::TextSelectableByMouse | Qt::TextSelectableByKeyboard);

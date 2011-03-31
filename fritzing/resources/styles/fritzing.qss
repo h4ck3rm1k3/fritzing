@@ -205,6 +205,9 @@ HtmlInfoView {
 
 #infoViewMainFrame {
 	background-color: rgb(179,179,179);
+	margin: 0px;
+	border: 0px;
+	padding: 0px;
 }
 
 #instanceTitleEditor {
@@ -216,10 +219,11 @@ HtmlInfoView {
 	margin-top: 3px;
 }
 
-#IconFrame {
+#iconFrame {
 	background-color: rgb(179,179,179);
 	max-height: 32px;
 	min-height: 32px;
+	margin: 0px;
 }
 
 /* part title */
@@ -231,16 +235,20 @@ HtmlInfoView {
 }
 
 #tagsValue {
-	margin: 4px;
+	margin-left: 4px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin_right: 0px;
 }
 
 #connectionsFrame {
+	margin: 0px;
 }
 
 #connectionsLabel {
 	color: rgb(87,87,87);
-	min-width: 60px;
-	max-width: 60px;
+	min-width: 65px;
+	max-width: 65px;
 	margin-left: 4px;
 	margin-top: 0px;
 	margin-bottom: 0px;
@@ -262,6 +270,7 @@ HtmlInfoView {
 }
 
 #infoViewPropertyFrame {
+	margin: 0px;
 }
 
 /* part-specfic widgets */
