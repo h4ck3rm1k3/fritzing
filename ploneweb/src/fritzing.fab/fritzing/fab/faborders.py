@@ -13,7 +13,21 @@ class Index(grok.View):
     message = None
     
     label = _(u"Fritzing Fab")
-    description = _(u"Bla bla description")
+    description = _(u"There's nothing better than turning a concept into product reality.")
+
+
+class PayPalIpn(grok.View):
+    """Payment Confirmation
+    """
+    grok.name('paypal_ipn')
+    grok.require('zope2.View')
+    grok.context(IFabOrders)
+    
+    def update(self):
+        pass
+    
+    def render(self):
+        pass
 
 
 class AddForm(dexterity.AddForm):
@@ -37,6 +51,7 @@ class AddForm(dexterity.AddForm):
         object.userId = u"%s" % user
         object.email = user.getProperty('email')
         object.isOrdered = False;
+        object.isPaid = False;
         object.reindexObject()
         return object
 

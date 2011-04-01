@@ -26,7 +26,7 @@ jQuery(function($) {
     {
         subtype: 'ajax',
         filter: common_content_filter,
-        formselector: 'form',
+        formselector: '#content-core>form',
         noform: function(el) {
             return noformerrorshow(el, 'reload');
         },
@@ -40,7 +40,7 @@ jQuery(function($) {
     {
         subtype: 'ajax',
         filter: common_content_filter,
-        formselector: 'form',
+        formselector: '#content-core>form',
         noform: function(el) {
             return noformerrorshow(el, 'reload');
         },
@@ -54,7 +54,7 @@ jQuery(function($) {
     {
         subtype: 'ajax',
         filter: common_content_filter,
-        formselector: 'form',
+        formselector: '#content-core>form',
         noform: function(el) {
             return noformerrorshow(el, 'reload');
         },
@@ -68,7 +68,7 @@ jQuery(function($) {
     {
         subtype: 'ajax',
         filter: common_content_filter,
-        formselector: 'form',
+        formselector: '#content-core>form',
         noform: function(el) {
             return noformerrorshow(el, 'reload');
         },

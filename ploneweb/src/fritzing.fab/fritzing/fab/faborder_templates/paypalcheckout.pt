@@ -1,0 +1,42 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:tal="http://xml.zope.org/namespaces/tal" xmlns:metal="http://xml.zope.org/namespaces/metal" xmlns:i18n="http://xml.zope.org/namespaces/i18n" xml:lang="en" lang="en" metal:use-macro="context/main_template/macros/master" i18n:domain="fritzing.fab">
+  <head>
+      <metal:block fill-slot="style_slot">
+          <link rel="stylesheet" type="text/css" 
+              tal:define="navroot context/@@plone_portal_state/navigation_root_url"
+              tal:attributes="href string:${navroot}/++resource++fritzing.fab/styles.css"
+              />
+      </metal:block>
+      <metal:block fill-slot="javascript_head_slot">
+        <script type="text/javascript">
+            window.onload = function() {
+                document.getElementById('orderform').submit();
+            }
+        </script>
+      </metal:block>
+  </head>
+  <body>
+    <metal:main fill-slot="main">
+      <tal:main-macro metal:define-macro="main">
+        <h1 tal:content="view/label" class="documentFirstHeading">xOrder your PCB</h1>
+        <div id="content-core">
+          <form id="orderform" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+            <input name="cmd" type="hidden" value="_xclick" />
+            <input name="currency_code" type="hidden" value="EUR" />
+            <input name="lc" type="hidden" value="de" />
+            <input name="business" type="hidden" value="order@ixds.de" />
+            <input name="item_name" type="hidden" value="Fritzing Fab order" />
+            <input name="item_number" type="hidden" tal:attributes="value context/id" />
+            <input name="amount" type="hidden" tal:attributes="value python: '%.2f&nbsp;EUR' % (context.priceTotalNetto)" />
+            <input name="quantity" type="hidden" value="1" />
+            <input name="tax" type="hidden" tal:attributes="value python: '%.2f&nbsp;EUR' % (context.taxes)" />
+            <input name="shipping" type="hidden" tal:attributes="value python: '%.2f&nbsp;EUR' % (context.priceShipping)" />
+            <input name="return" type="hidden" tal:attributes="value string:${context/absolute_url}/checkout_success" />
+            <input name="cancel_return" type="hidden" tal:attributes="value string:${context/absolute_url}/checkout_fail" />
+<!--            <input name="notify_url" type="hidden" tal:attributes="value string:${context/absolute_url}/paypal_ipn" /> -->
+            <input type="image" alt="Checkout" src="https://www.paypal.com/en_US/DE/i/btn/btn_buynowCC_LG.gif" />
+          </form>
+        </div>
+      </tal:main-macro>
+    </metal:main>
+  </body>
+</html>

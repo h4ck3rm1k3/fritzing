@@ -80,82 +80,87 @@ class IFabOrder(form.Schema):
         title=_(u"Telephone number"),
         description=_(u"We prefer a mobile number"))
     
-    form.mode(isOrdered='hidden')
+    form.omitted(
+        'isOrdered', 
+        'isPaid', 
+        'userId', 
+        'area', 
+        'pricePerSquareCm', 
+        'priceNetto', 
+        'priceShipping', 
+        'numberOfQualityChecks', 
+        'priceQualityChecksNetto', 
+        'taxesPercent', 
+        'taxes', 
+        'priceTotalNetto', 
+        'priceTotalBrutto')
+    
     isOrdered = Bool(
         title=_(u"Is ordered"),
-        description=u"True after checkout",
-        default=False,
-        required=False)
+        description=u"True after checkout")
     
-    form.mode(userId='hidden')
+    isPaid = Bool(
+        title=_(u"Is paid"),
+        description=u"True after positive feedback from payment provider")
+    
     userId = TextLine(
         title=_(u"User ID"),
         description=u"The orderers user ID")
     
-    form.mode(area='hidden')
     area = Float(
         title=_(u"Area"),
         description=u"The total area of all sketches in cm^2",
         min=0.0,
         default=0.0)
     
-    form.mode(pricePerSquareCm='hidden')
     pricePerSquareCm = Float(
         title=_(u"Price per cm^2"),
         description=u"The price per cm^2 in Euro",
         min=0.0,
-        default=0.59)
+        default=0.0)
     
-    form.mode(priceNetto='hidden')
     priceNetto = Float(
         title=_(u"Netto price"),
         description=u"The netto price without shipping in Euro",
         min=0.0,
         default=0.0)
     
-    form.mode(priceShippingNetto='hidden')
-    priceShippingNetto = Float(
+    priceShipping = Float(
         title=_(u"Shipping costs"),
         description=u"The shipping costs in Euro",
         min=0.0,
         default=0.0)
     
-    form.mode(numberOfQualityChecks='hidden')
     numberOfQualityChecks = Int(
         title=_(u"Number of quality checks"),
         description=u"Number of quality checks",
         min=0,
         default=0)
     
-    form.mode(priceQualityChecksNetto='hidden')
     priceQualityChecksNetto = Float(
         title=_(u"Costs for quality checks"),
         description=u"The costs for quality checks in Euro",
         min=0.0,
         default=0.0)
     
-    form.mode(taxesPercent='hidden')
     taxesPercent = Float(
         title=_(u"Percent Taxes"),
         description=u"Taxes like VAT in Percent",
         min=0.0,
         default=0.0)
     
-    form.mode(taxes='hidden')
     taxes = Float(
         title=_(u"Taxes"),
         description=u"Taxes like VAT",
         min=0.0,
         default=0.0)
     
-    form.mode(priceTotalNetto='hidden')
     priceTotalNetto = Float(
         title=_(u"Total Netto"),
-        description=u"The netto price including shipping costs in Euro",
+        description=u"The netto price costs in Euro",
         min=0.0,
         default=0.0)
     
-    form.mode(priceTotalBrutto='hidden')
     priceTotalBrutto = Float(
         title=_(u"Total"),
         description=u"The price including shipping costs and taxes in Euro",

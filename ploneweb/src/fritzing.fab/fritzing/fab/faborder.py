@@ -45,22 +45,70 @@ class Checkout(grok.View):
     label = _(u"Checkout")
     description = _(u"Order checkout")
     
+    def render(self):
+        faborderURL = self.context.absolute_url()
+        self.request.response.redirect(faborderURL)
+
+
+class CheckoutFail(grok.View):
+    """Order checkout fail
+    """
+    grok.name('checkout_fail')
+    grok.require('zope2.View')
+    grok.context(IFabOrder)
+    
+    label = _(u"Checkout")
+    description = _(u"Order checkout")
+    
+    def render(self):
+        faborderURL = self.context.absolute_url()
+        self.request.response.redirect(faborderURL)
+
+
+class CheckoutSuccess(grok.View):
+    """Order checkout success
+    """
+    grok.name('checkout_success')
+    grok.require('zope2.View')
+    grok.context(IFabOrder)
+    
+    label = _(u"Checkout")
+    description = _(u"Order checkout")
+    
+    def render(self):
+        faborderURL = self.context.absolute_url()
+        self.request.response.redirect(faborderURL)
+
+
+class PayPalCheckout(grok.View):
+    """Order checkout
+    """
+    grok.name('paypal_checkout')
+    grok.require('zope2.View')
+    grok.context(IFabOrder)
+    
+    label = _(u"PayPal Checkout")
+    description = _(u"Order checkout")
+    
+    
     def update(self):
+        if self.context.isOrdered:
+            self.abort(_(u"Already checked out."), "info")
+            return
+        
         if not self.context.area > 0:
-            IStatusMessage(self.request).addStatusMessage(
-                _(u"Sketches missing/invalid, checkout aborted."), 
-                "info")
+            self.abort(_(u"Sketches missing/invalid, checkout aborted."), "error")
             return
         
         originalOwner = self.context.getOwner()
         fabManager = self.context.aq_parent.getOwner()
         self.changeOwnership(self.context, fabManager)
         self.context.isOrdered = True
-        IStatusMessage(self.request).addStatusMessage(
-            _(u"Thank you for your order. We will contact you shortly."), 
-            "info")
+        
+        # SEND E-MAILS
     
-    def render(self):
+    def abort(self, message, messageType):
+        IStatusMessage(self.request).addStatusMessage(message, messageType)
         faborderURL = self.context.absolute_url()
         self.request.response.redirect(faborderURL)
     
@@ -69,6 +117,7 @@ class Checkout(grok.View):
         # http://keeshink.blogspot.com/2010/04/change-creator-programmatically.html
         # http://plone.org/documentation/manual/plone-community-developer-documentation/content/ownership
         userid = u"%s" % userid
+        from Products.CMFCore.utils import getToolByName
         membership = getToolByName(self.context, 'portal_membership')
         user = membership.getMemberById(userid)
         # change ownership
@@ -98,13 +147,13 @@ def modifiedHandler(faborder, event):
     
     # shipping and taxes
     if faborder.shipTo == u'germany':
-        faborder.priceShippingNetto = 5
+        faborder.priceShipping = 4.5
         faborder.taxesPercent = 19
     elif faborder.shipTo == u'eu':
-        faborder.priceShippingNetto = 10
+        faborder.priceShipping = 7
         faborder.taxesPercent = 19
     else:
-        faborder.priceShippingNetto = 20
+        faborder.priceShipping = 14
         faborder.taxesPercent = 0
     
     recalculatePrices(faborder)
@@ -143,9 +192,9 @@ def modifiedHandler(sketch, event):
 def recalculatePrices(faborder):
     faborder.priceNetto = faborder.area * faborder.pricePerSquareCm
     faborder.priceQualityChecksNetto = faborder.numberOfQualityChecks * 10.0
-    faborder.priceTotalNetto = faborder.priceNetto + faborder.priceQualityChecksNetto + faborder.priceShippingNetto
+    faborder.priceTotalNetto = faborder.priceNetto + faborder.priceQualityChecksNetto
     faborder.taxes = faborder.priceTotalNetto * faborder.taxesPercent / 100.0
-    faborder.priceTotalBrutto = faborder.priceTotalNetto + faborder.taxes
+    faborder.priceTotalBrutto = faborder.priceTotalNetto + faborder.taxes + faborder.priceShipping
 
 
 class AddForm(dexterity.AddForm):
@@ -164,15 +213,22 @@ class AddForm(dexterity.AddForm):
         from zope.component import createObject
         sketch = createObject('sketch')
         sketch.id = data['orderItem'].filename.encode("ascii")
+        
+        # lets make shure this file doesn't already exist
+        if self.context.hasObject(sketch.id):
+            IStatusMessage(self.request).addStatusMessage(
+                _(u"A Sketch with this name already exists."), "error")
+            return None
+        
         sketch.title = data['orderItem'].filename
         sketch.orderItem = data['orderItem']
         sketch.copies = data['copies']
         sketch.check = data['check']
         return sketch
-
+    
     def add(self, object):
-        self.context._setObject(object.id, object)
-        faborderURL = self.context.absolute_url()
-        self.request.response.redirect(faborderURL)
+        from plone.dexterity.content import Item
+        if isinstance(object, Item):
+            self.context._setObject(object.id, object)
 
 

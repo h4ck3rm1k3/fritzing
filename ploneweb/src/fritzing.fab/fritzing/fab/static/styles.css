@@ -1,4 +1,42 @@
-table td {
-    border: 1px solid black;
-    padding: 4px;
+table.sketchesTable {
+    border-collapse: separate !important;
 }
+table.sketchesTable>tbody>tr>td {
+    padding: 6pt 10pt;
+    vertical-align: bottom;
+}
+table.sketchesTable td.sketchCell {
+    border-right: 1px dotted white;
+    padding-right: 20pt;
+}
+table.sketchesTable td.sketchCell, 
+table.sketchesTable td.priceCell {
+    border-top: 2px solid white;
+    border-bottom: 1px solid gray;
+}
+table.sketchesTable td.sumCell {
+    background: transparent;
+    border-bottom: 3px double gray;
+}
+table.sketchesTable td.actionCell {
+    vertical-align: middle;
+}
+
+table.boardPreviewTable {
+    border-spacing: 0 !important;
+}
+table.boardPreviewTable td {
+    padding: 1pt 3pt;
+    vertical-align: middle;
+    text-align: center;
+}
+td.boardPreview {
+    vertical-align: middle;
+    background: #177537;
+    color: #fff1b3;
+    font-weight: bold;
+}
+.boardPreview span {
+    background: blue;
+}
+
