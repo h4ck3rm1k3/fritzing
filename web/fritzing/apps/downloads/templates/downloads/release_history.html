@@ -5,7 +5,8 @@
     <a href="{{ release.get_absolute_url }}">{{ release.version }}</a> &gt; 
     {{ release.release_date|date:"d m Y" }} &gt;
     {% for download in release.download_set.all reversed %}
-        <a href="{{ download.get_absolute_url }}">{{ download.platform }}</a>
+        <a href="{{ download.get_absolute_url }}"
+	onclick="_gaq.push(['_trackPageview', '/download/{{ release.version }}/{{ download.platform }}']);">{{ download.platform }}</a>
     {% endfor %}
     <br />
     {% endif %}
