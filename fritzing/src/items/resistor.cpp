@@ -230,7 +230,6 @@ bool Resistor::collectExtraInfo(QWidget * parent, const QString & family, const 
 		focusOutComboBox->setValidator(validator);
 		connect(focusOutComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(resistanceEntry(const QString &)));
 
-		focusOutComboBox->setMaximumWidth(100);
 		focusOutComboBox->setObjectName("infoViewComboBox");		
 
 					

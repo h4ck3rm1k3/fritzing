@@ -276,7 +276,6 @@ bool SymbolPaletteItem::collectExtraInfo(QWidget * parent, const QString & famil
 		validator->setNotation(QDoubleValidator::StandardNotation);
 		edit->setValidator(validator);
 
-		edit->setMaximumWidth(200);
 		edit->setObjectName("infoViewComboBox");
 
 

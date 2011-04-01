@@ -597,8 +597,6 @@ bool ResizableBoard::collectExtraInfo(QWidget * parent, const QString & family, 
 
 			frame->setLayout(vboxLayout);
 
-			frame->setMaximumWidth(200);
-
 			returnWidget = frame;
 			return true;
 		}
@@ -666,8 +664,6 @@ bool ResizableBoard::collectExtraInfo(QWidget * parent, const QString & family, 
 
 		connect(e1, SIGNAL(editingFinished()), this, SLOT(widthEntry()));
 		connect(e2, SIGNAL(editingFinished()), this, SLOT(heightEntry()));
-
-		frame->setMaximumWidth(200);
 
 		returnWidget = frame;
 		return true;

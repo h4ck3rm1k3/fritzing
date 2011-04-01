@@ -228,19 +228,22 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	QLabel * descrLabel = new QLabel(tr("conn."), this);
 	descrLabel->setObjectName("connectionsLabel");
 	m_connDescr = new QLabel(this);
+	m_connDescr->setObjectName("connectionsValue");
     connLayout->addWidget(descrLabel, 0, 0);
     connLayout->addWidget(m_connDescr, 0, 1);
 
 	QLabel * nameLabel = new QLabel(tr("name"), this);
 	nameLabel->setObjectName("connectionsLabel");
 	m_connName = new QLabel(this);
+	m_connName->setObjectName("connectionsValue");
     connLayout->addWidget(nameLabel, 1, 0);
     connLayout->addWidget(m_connName, 1, 1);
 
 	QLabel * typeLabel = new QLabel(tr("type"), this);
 	typeLabel->setObjectName("connectionsLabel");
 	m_connType = new QLabel(this);
-    connLayout->addWidget(typeLabel, 2, 0);
+	m_connType->setObjectName("connectionsValue");
+	connLayout->addWidget(typeLabel, 2, 0);
     connLayout->addWidget(m_connType, 2, 1);
 
 	vlo->addWidget(m_connFrame);
@@ -730,12 +733,14 @@ void HtmlInfoView::displayProps(ModelPart * modelPart, ItemBase * itemBase, bool
 			m_propLayout->addWidget(propNameLabel, ix, 0);
 
 			QFrame * valueFrame = new QFrame(this);
+			valueFrame->setObjectName("valueFrame");
 			QVBoxLayout * vlayout = new QVBoxLayout(valueFrame);
 			vlayout->setSpacing(0);
 			vlayout->setContentsMargins(0, 0, 0, 0);
 			propThing->m_layout = vlayout;
 
 			QLabel * propValueLabel = new QLabel(valueFrame);
+			propValueLabel->setObjectName("propValueLabel");
 			propValueLabel->setTextInteractionFlags(Qt::TextSelectableByMouse | Qt::TextSelectableByKeyboard);
 			vlayout->addWidget(propValueLabel);
 			propThing->m_value = propValueLabel;

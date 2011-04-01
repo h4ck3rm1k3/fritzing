@@ -512,7 +512,6 @@ QWidget * Hole::createHoleSettings(QWidget * parent, HoleSettings & holeSettings
 	vBoxLayout->setSpacing(0);
 
 	holeSettings.sizesComboBox = new QComboBox(frame);
-	holeSettings.sizesComboBox->setMaximumWidth(200);
 	holeSettings.sizesComboBox->setEditable(false);
 	holeSettings.sizesComboBox->setObjectName("infoViewComboBox");
 
@@ -539,7 +538,6 @@ QWidget * Hole::createHoleSettings(QWidget * parent, HoleSettings & holeSettings
 	holeSettings.unitsComboBox->setObjectName("infoViewComboBox");
 
 	holeSettings.diameterEdit = new QLineEdit(subFrame);
-	holeSettings.diameterEdit->setMaximumWidth(50);
 	holeSettings.diameterEdit->setMinimumHeight(rowHeight);
 	holeSettings.diameterValidator = new QDoubleValidator(holeSettings.diameterEdit);
 	holeSettings.diameterValidator->setNotation(QDoubleValidator::StandardNotation);
@@ -553,7 +551,6 @@ QWidget * Hole::createHoleSettings(QWidget * parent, HoleSettings & holeSettings
 	gridLayout->addWidget(label, 0, 0);
 
 	holeSettings.thicknessEdit = new QLineEdit(subFrame);
-	holeSettings.thicknessEdit->setMaximumWidth(50);
 	holeSettings.thicknessEdit->setMinimumHeight(rowHeight);
 	holeSettings.thicknessValidator = new QDoubleValidator(holeSettings.thicknessEdit);
 	holeSettings.thicknessValidator->setNotation(QDoubleValidator::StandardNotation);

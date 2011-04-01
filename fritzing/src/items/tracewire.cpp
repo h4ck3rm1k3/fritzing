@@ -80,7 +80,6 @@ bool TraceWire::collectExtraInfo(QWidget * parent, const QString & family, const
 	if (prop.compare("width", Qt::CaseInsensitive) == 0) {
 		returnProp = tr("width");
 		QComboBox * comboBox = createWidthComboBox(mils(), parent);
-		comboBox->setMaximumWidth(200);
 		comboBox->setEnabled(swappingEnabled);
 		comboBox->setObjectName("infoViewComboBox");
 

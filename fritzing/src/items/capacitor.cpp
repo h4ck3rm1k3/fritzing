@@ -113,8 +113,6 @@ bool Capacitor::collectExtraInfo(QWidget * parent, const QString & family, const
 				connect(focusOutComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(simplePropertyEntry(const QString &)));
 			}
 
-			focusOutComboBox->setMaximumWidth(100);
-
 			this->m_comboBoxes.insert(propertyDef, focusOutComboBox);
 						
 			returnWidget = focusOutComboBox;	

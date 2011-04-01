@@ -1298,8 +1298,6 @@ bool Wire::collectExtraInfo(QWidget * parent, const QString & family, const QStr
 				ix++;
 			}
 
-			comboBox->setMaximumWidth(200);
-
 			connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(colorEntry(const QString &)));
 			returnWidget = comboBox;
 			return true;

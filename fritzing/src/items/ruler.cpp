@@ -263,8 +263,6 @@ bool Ruler::collectExtraInfo(QWidget * parent, const QString & family, const QSt
 		connect(e1, SIGNAL(editingFinished()), this, SLOT(widthEntry()));
 		connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(unitsEntry(const QString &)));
 
-		frame->setMaximumWidth(200);
-
 		returnWidget = frame;
 
 		return true;

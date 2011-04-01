@@ -134,7 +134,7 @@ bool LogoItem::collectExtraInfo(QWidget * parent, const QString & family, const 
 			returnProp = tr("logo");
 
 			QLineEdit * e1 = new QLineEdit(parent);
-			e1->setMaximumWidth(200);
+			e1->setObjectName("infoViewLineEdit");
 
 			e1->setText(m_logo);
 			e1->setEnabled(swappingEnabled);
@@ -146,14 +146,17 @@ bool LogoItem::collectExtraInfo(QWidget * parent, const QString & family, const 
 	}
 	else {
 		if (prop.compare("filename", Qt::CaseInsensitive) == 0) {
+			returnProp = tr("image file");
+
 			QFrame * frame = new QFrame();
+			frame->setObjectName("infoViewPartFrame");
 			QVBoxLayout * vboxLayout = new QVBoxLayout();
-			vboxLayout->setAlignment(Qt::AlignLeft);
 			vboxLayout->setContentsMargins(0, 0, 0, 0);
 			vboxLayout->setSpacing(0);
 			vboxLayout->setMargin(0);
 
 			QComboBox * comboBox = new QComboBox();
+			comboBox->setObjectName("infoViewComboBox");
 			comboBox->setEditable(false);
 			comboBox->setEnabled(swappingEnabled);
 			m_fileNameComboBox = comboBox;
@@ -163,15 +166,14 @@ bool LogoItem::collectExtraInfo(QWidget * parent, const QString & family, const 
 			connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(fileNameEntry(const QString &)));
 
 			QPushButton * button = new QPushButton (tr("load image file"));
+			button->setObjectName("infoViewButton");
 			connect(button, SIGNAL(pressed()), this, SLOT(prepLoadImage()));
-			button->setMinimumWidth(100);
 			button->setEnabled(swappingEnabled);
 
 			vboxLayout->addWidget(comboBox);
 			vboxLayout->addWidget(button);
 
 			frame->setLayout(vboxLayout);
-			frame->setMaximumWidth(200);
 			returnWidget = frame;
 
 			returnProp = "";
@@ -180,6 +182,7 @@ bool LogoItem::collectExtraInfo(QWidget * parent, const QString & family, const 
 	}
 
 	if (prop.compare("shape", Qt::CaseInsensitive) == 0) {
+		returnProp = tr("shape");
 		qreal w = qRound(m_modelPart->prop("width").toDouble() * 10) / 10.0;	// truncate to 1 decimal point
 		qreal h = qRound(m_modelPart->prop("height").toDouble() * 10) / 10.0;  // truncate to 1 decimal point
 
@@ -187,6 +190,7 @@ bool LogoItem::collectExtraInfo(QWidget * parent, const QString & family, const 
 		QFrame * frame = NULL;
 
 		frame = new QFrame();
+		frame->setObjectName("infoViewPartFrame");
 		vboxLayout = new QVBoxLayout();
 		vboxLayout->setAlignment(Qt::AlignLeft);
 		vboxLayout->setSpacing(1);
@@ -258,8 +262,6 @@ bool LogoItem::collectExtraInfo(QWidget * parent, const QString & family, const 
 		vboxLayout->addWidget(subframe2);
 		vboxLayout->addWidget(subframe3);
 		frame->setLayout(vboxLayout);
-
-		frame->setMaximumWidth(200);
 
 		returnWidget = frame;
 

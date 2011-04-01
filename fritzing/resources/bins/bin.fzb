@@ -144,6 +144,13 @@
                 </iconView>
             </views>
         </instance>
+       <instance moduleIdRef="fa3e296736059e8c25d88ac262af999a" modelIndex="19" path="parts/core/Basic Force Sensing Resistor (FSR).fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
         <instance moduleIdRef="2010BBCD20113" modelIndex="20" path="parts/core/LDR_photocell_300mil.fzp">
             <views>
                 <iconView layer="icon">

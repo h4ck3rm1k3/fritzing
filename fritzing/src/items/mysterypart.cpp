@@ -221,7 +221,6 @@ bool MysteryPart::collectExtraInfo(QWidget * parent, const QString & family, con
 		e1->setEnabled(swappingEnabled);
 		e1->setText(m_chipLabel);
 		connect(e1, SIGNAL(editingFinished()), this, SLOT(chipLabelEntry()));
-		e1->setMaximumWidth(200);
 		e1->setObjectName("infoViewLineEdit");
 
 

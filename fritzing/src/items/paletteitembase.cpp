@@ -460,8 +460,7 @@ bool PaletteItemBase::collectExtraInfo(QWidget * parent, const QString & family,
 			}
 			focusOutComboBox->setCurrentIndex(ix);
 		}
-		connect(focusOutComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(partPropertyEntry(const QString &)));
-		focusOutComboBox->setMaximumWidth(100);		
+		connect(focusOutComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(partPropertyEntry(const QString &)));	
 		focusOutComboBox->setObjectName("infoViewComboBox");		
 		returnWidget = focusOutComboBox;	
 		return true;
