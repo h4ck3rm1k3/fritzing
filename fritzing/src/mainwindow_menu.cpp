@@ -993,27 +993,27 @@ void MainWindow::createFileMenuActions() {
 	m_shareOnlineAct->setStatusTip(tr("Post a project to the Fritzing website"));
 	connect(m_shareOnlineAct, SIGNAL(triggered()), this, SLOT(shareOnline()));
 
-	m_exportJpgAct = new QAction(tr("as JPG..."), this);
+	m_exportJpgAct = new QAction(tr("JPG..."), this);
 	m_exportJpgAct->setData(jpgActionType);
 	m_exportJpgAct->setStatusTip(tr("Export the visible area of the current sketch as a JPG image"));
 	connect(m_exportJpgAct, SIGNAL(triggered()), this, SLOT(doExport()));
 
-	m_exportPngAct = new QAction(tr("as PNG..."), this);
+	m_exportPngAct = new QAction(tr("PNG..."), this);
 	m_exportPngAct->setData(pngActionType);
 	m_exportPngAct->setStatusTip(tr("Export the visible area of the current sketch as a PNG image"));
 	connect(m_exportPngAct, SIGNAL(triggered()), this, SLOT(doExport()));
 
-	m_exportPsAct = new QAction(tr("as PostScript..."), this);
+	m_exportPsAct = new QAction(tr("PostScript..."), this);
 	m_exportPsAct->setData(psActionType);
 	m_exportPsAct->setStatusTip(tr("Export the visible area of the current sketch as a PostScript image"));
 	connect(m_exportPsAct, SIGNAL(triggered()), this, SLOT(doExport()));
 
-	m_exportPdfAct = new QAction(tr("as PDF..."), this);
+	m_exportPdfAct = new QAction(tr("PDF..."), this);
 	m_exportPdfAct->setData(pdfActionType);
 	m_exportPdfAct->setStatusTip(tr("Export the visible area of the current sketch as a PDF image"));
 	connect(m_exportPdfAct, SIGNAL(triggered()), this, SLOT(doExport()));
 
-	m_exportSvgAct = new QAction(tr("as SVG..."), this);
+	m_exportSvgAct = new QAction(tr("SVG..."), this);
 	m_exportSvgAct->setData(svgActionType);
 	m_exportSvgAct->setStatusTip(tr("Export the current sketch as an SVG image"));
 	connect(m_exportSvgAct, SIGNAL(triggered()), this, SLOT(doExport()));
@@ -1028,35 +1028,35 @@ void MainWindow::createFileMenuActions() {
     m_exportNetlistAct->setStatusTip(tr("Save a netlist in XML format"));
     connect(m_exportNetlistAct, SIGNAL(triggered()), this, SLOT(doExport()));
 
-	m_exportEagleAct = new QAction(tr("as Eagle..."), this);
+	m_exportEagleAct = new QAction(tr("Eagle..."), this);
 	m_exportEagleAct->setData(eagleActionType);
 	m_exportEagleAct->setStatusTip(tr("Export the current sketch to Eagle CAD"));
 	connect(m_exportEagleAct, SIGNAL(triggered()), this, SLOT(doExport()));
 
-	m_exportGerberAct = new QAction(tr("as Gerber (RS-274X Format)..."), this);
+	m_exportGerberAct = new QAction(tr("Gerber (RS-274X)..."), this);
 	m_exportGerberAct->setData(gerberActionType);
 	m_exportGerberAct->setStatusTip(tr("Export the current sketch to Gerber for professional PCB production"));
 	connect(m_exportGerberAct, SIGNAL(triggered()), this, SLOT(doExport()));
 
-	m_exportEtchablePdfAct = new QAction(tr("as Etchable PDF..."), this);
+	m_exportEtchablePdfAct = new QAction(tr("Etchable (PDF)..."), this);
 	m_exportEtchablePdfAct->setStatusTip(tr("Export the current sketch to PDF for DIY PCB production (photoresist)"));
 	m_exportEtchablePdfAct->setProperty("svg", false);
 	m_exportEtchablePdfAct->setProperty("flip", false);
 	connect(m_exportEtchablePdfAct, SIGNAL(triggered()), this, SLOT(exportEtchable()));
 
-	m_exportEtchablePdfFlipAct = new QAction(tr("as Etchable PDF (mirrored)..."), this);
+	m_exportEtchablePdfFlipAct = new QAction(tr("Etchable mirrored (PDF)..."), this);
 	m_exportEtchablePdfFlipAct->setStatusTip(tr("Export the current sketch to PDF for DIY PCB production (tone transfer)"));
 	m_exportEtchablePdfFlipAct->setProperty("svg", false);
 	m_exportEtchablePdfFlipAct->setProperty("flip", true);
 	connect(m_exportEtchablePdfFlipAct, SIGNAL(triggered()), this, SLOT(exportEtchable()));
 
-	m_exportEtchableSvgAct = new QAction(tr("as Etchable SVG..."), this);
+	m_exportEtchableSvgAct = new QAction(tr("Etchable (SVG)..."), this);
 	m_exportEtchableSvgAct->setStatusTip(tr("Export the current sketch to SVG for DIY PCB production (photoresist)"));
 	m_exportEtchableSvgAct->setProperty("svg", true);
 	m_exportEtchableSvgAct->setProperty("flip", false);
 	connect(m_exportEtchableSvgAct, SIGNAL(triggered()), this, SLOT(exportEtchable()));
 
-	m_exportEtchableSvgFlipAct = new QAction(tr("as Etchable SVG (mirrored)..."), this);
+	m_exportEtchableSvgFlipAct = new QAction(tr("Etchable mirrored (SVG)..."), this);
 	m_exportEtchableSvgFlipAct->setStatusTip(tr("Export the current sketch to SVG for DIY PCB production (tone transfer)"));
 	m_exportEtchableSvgFlipAct->setProperty("svg", true);
 	m_exportEtchableSvgFlipAct->setProperty("flip", true);
@@ -1659,23 +1659,26 @@ void MainWindow::createMenus()
 	m_fileMenu->addAction(m_quitAct);
     connect(m_fileMenu, SIGNAL(aboutToShow()), this, SLOT(updateFileMenu()));
 
-	m_exportMenu->addAction(m_exportPdfAct);
-	m_exportMenu->addAction(m_exportPsAct);
-	m_exportMenu->addAction(m_exportSvgAct);
-	m_exportMenu->addAction(m_exportPngAct);
-	m_exportMenu->addAction(m_exportJpgAct);
-	m_exportMenu->addSeparator();
-	m_exportMenu->addAction(m_exportBomAct);
-	m_exportEtchableMenu = m_exportMenu->addMenu(tr("Etchable"));
+	QMenu * imageMenu = m_exportMenu->addMenu(tr("as Image"));
+	imageMenu->addAction(m_exportPngAct);
+	imageMenu->addAction(m_exportJpgAct);
+	imageMenu->addSeparator();
+	imageMenu->addAction(m_exportSvgAct);
+	imageMenu->addAction(m_exportPdfAct);
+	imageMenu->addAction(m_exportPsAct);
 
-	m_exportEtchableMenu->addAction(m_exportEtchablePdfAct);
-	m_exportEtchableMenu->addAction(m_exportEtchablePdfFlipAct);
-	m_exportEtchableMenu->addAction(m_exportEtchableSvgAct);
-	m_exportEtchableMenu->addAction(m_exportEtchableSvgFlipAct);
+	QMenu * productionMenu = m_exportMenu->addMenu(tr("for Production"));
+	productionMenu->addAction(m_exportEtchablePdfAct);
+	productionMenu->addAction(m_exportEtchableSvgAct);
+	productionMenu->addAction(m_exportEtchablePdfFlipAct);
+	productionMenu->addAction(m_exportEtchableSvgFlipAct);
+	productionMenu->addSeparator();
+	productionMenu->addAction(m_exportGerberAct);
+
+	m_exportMenu->addAction(m_exportBomAct);
+	m_exportMenu->addAction(m_exportNetlistAct);
 
 	//m_exportMenu->addAction(m_exportEagleAct);
-	m_exportMenu->addAction(m_exportGerberAct);
-	m_exportMenu->addAction(m_exportNetlistAct);
 
     m_editMenu = menuBar()->addMenu(tr("&Edit"));
     m_editMenu->addAction(m_undoAct);

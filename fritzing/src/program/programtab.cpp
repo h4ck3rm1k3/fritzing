@@ -724,10 +724,10 @@ void ProgramTab::updateMenu() {
 
 void ProgramTab::updateProgrammerComboBox(const QString & programmer) {
 	// don't want activate signal triggered recursively
-	disconnect(m_programmerComboBox, SIGNAL(activated(int)), this, SLOT(chooseProgrammer(int)));
+	bool wasBlocked = m_programmerComboBox->blockSignals(true);
 	m_programmerComboBox->setCurrentIndex(m_programmerComboBox->findData(programmer));
 	m_programmerComboBox->setToolTip(m_programmerPath);
-	connect(m_programmerComboBox, SIGNAL(activated(int)), this, SLOT(chooseProgrammer(int)));
+	m_programmerComboBox->blockSignals(wasBlocked);
 }
 
 void ProgramTab::updateProgrammers() {

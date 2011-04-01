@@ -32,6 +32,8 @@ $Date: 2010-05-06 22:30:19 +0200 (Thu, 06 May 2010) $
 #include <QDoubleValidator>
 #include <QRadioButton>
 
+#include "../items/via.h"
+
 class AutorouterSettingsDialog : public QDialog
 {
 Q_OBJECT
@@ -46,9 +48,14 @@ protected slots:
 	void production(bool);
 
 protected:
+	void enableCustom(bool enable);
+	bool initRadios();
+
+protected:
 	QRadioButton * m_homebrewButton;
 	QRadioButton * m_professionalButton;
 	QRadioButton * m_customButton;
+	HoleSettings m_holeSettings;
 };
 
 

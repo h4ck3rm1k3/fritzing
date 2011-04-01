@@ -492,7 +492,6 @@ protected:
 
 	// Export Menu
 	QMenu *m_exportMenu;
-	QMenu *m_exportEtchableMenu;
 	QAction *m_exportJpgAct;
 	QAction *m_exportPsAct;
 	QAction *m_exportPngAct;

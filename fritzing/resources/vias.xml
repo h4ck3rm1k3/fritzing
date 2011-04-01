@@ -1,6 +1,4 @@
 <vias>
-<via holesize="0.6mm" ringthickness="0.3mm" name="pro" />
+<via holesize="0.6mm" ringthickness="0.3mm" name="professional" />
 <via holesize="0.8mm" ringthickness="0.3mm" name="homebrew" default="yes"/>
-<via holesize="1.0mm" ringthickness="0.3mm" name="pinheader (small)" />
-<via holesize="1.2mm" ringthickness="0.3mm" name="pinheader (large)" />
 </vias>

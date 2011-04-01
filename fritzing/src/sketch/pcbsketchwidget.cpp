@@ -2243,51 +2243,6 @@ ItemBase * PCBSketchWidget::placePartDroppedInOtherView(ModelPart * modelPart, V
 
 
 void PCBSketchWidget::autorouterSettings() {	
-	QFile file(":/resources/vias.xml");
-
-	QString errorStr;
-	int errorLine;
-	int errorColumn;
-
-	QDomDocument domDocument;
-	if (!domDocument.setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
-		DebugDialog::debug(QString("failed loading properties %1 line:%2 col:%3").arg(errorStr).arg(errorLine).arg(errorColumn));
-		return;
-	}
-
-	QDomElement root = domDocument.documentElement();
-	if (root.isNull()) return;
-	if (root.tagName() != "vias") return;
-
-	QDomElement viaElement = root.firstChildElement("via");
-	if (viaElement.isNull()) return;
-
-	QString defaultRingThickness, defaultHoleSize;
-	getDefaultViaSize(defaultRingThickness, defaultHoleSize);
-
-/*
-	QList<QRadioButton *> buttons;
-
-	while (!viaElement.isNull()) {
-		QString name = viaElement.attribute("name");
-		QString ringThickness = viaElement.attribute("ringthickness");
-		QString holeSize = viaElement.attribute("holesize");
-		if (!name.isEmpty() && !ringThickness.isEmpty() && !holeSize.isEmpty()) {
-			QRadioButton * button = new QRadioButton(QString("%1 (hole diameter), %2 (ring thickness)").arg(holeSize).arg(ringThickness), &dialog);
-			button->setProperty("ringthickness", ringThickness);
-			button->setProperty("holesize", holeSize);
-			if (ringThickness.compare(defaultRingThickness, Qt::CaseInsensitive) == 0 && holeSize.compare(defaultHoleSize, Qt::CaseInsensitive) == 0) {
-				button->setChecked(true);
-			}
-			gvLayout->addWidget(button);
-			buttons.append(button);
-		}
-
-		viaElement = viaElement.nextSiblingElement("via");
-	}	
-
-*/
-
 	AutorouterSettingsDialog dialog;
 	if (dialog.exec() == QDialog::Accepted) {
 	}

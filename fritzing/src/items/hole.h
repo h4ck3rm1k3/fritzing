@@ -28,6 +28,7 @@ $Date$
 #define HOLE_H
 
 #include <QRectF>
+#include <QPointF>
 #include <QPainterPath>
 #include <QPixmap>
 #include <QVariant>
@@ -35,6 +36,22 @@ $Date$
 #include <QDoubleValidator>
 
 #include "paletteitem.h"
+
+typedef QPointF (*RangeCalc)(const QString &);
+
+struct HoleSettings
+{
+	QString holeDiameter;
+	QString ringThickness;
+	QPointer<QDoubleValidator> diameterValidator;
+	QPointer<QDoubleValidator> thicknessValidator;
+	QPointer<QLineEdit> diameterEdit;
+	QPointer<QLineEdit> thicknessEdit;
+	QPointer<QComboBox> unitsComboBox;
+	QPointer<QComboBox> sizesComboBox;
+	RangeCalc ringThicknessRange;
+	RangeCalc holeDiameterRange;
+};
 
 class Hole : public PaletteItem 
 {
@@ -58,6 +75,15 @@ public:
 	void addedToScene();	
 	bool hasPartNumberProperty();
 
+public:
+	static QWidget * createHoleSettings(QWidget * parent, HoleSettings &, bool swappingEnabled, const QString & currentHoleSize);
+	static void updateValidators(HoleSettings &);
+	static void updateEditTexts(HoleSettings &);
+	static void updateSizes(HoleSettings &);
+	static QPointF ringThicknessRange(const QString & holeDiameter);
+	static QPointF holeDiameterRange(const QString & ringThickness);
+
+
 protected slots:
 	void changeDiameter();
 	void changeThickness();
@@ -66,26 +92,14 @@ protected slots:
 
 protected:
 	QString makeSvg(const QString & holeDiameter, const QString & ringThickness, ViewLayer::ViewLayerID);
-	void updateValidators();
-	void updateEditTexts();
-	void updateSizes();
 	virtual QString makeID();
-	virtual QPointF ringThicknessRange();
-	virtual QPointF holeDiameterRange();
 	ItemBase * setBothSvg(const QString & holeDiameter, const QString & ringThickness, const QStringList & connectorIDs); 
 	void setBothNonConnectors(ItemBase * itemBase, SvgIdLayer * svgIdLayer);
 											 
 protected:
 	class FSvgRenderer * m_renderer;
 	class FSvgRenderer * m_otherLayerRenderer;
-	QString m_holeDiameter;
-	QString m_ringThickness;
-	QPointer<QDoubleValidator> m_diameterValidator;
-	QPointer<QDoubleValidator> m_thicknessValidator;
-	QPointer<QLineEdit> m_diameterEdit;
-	QPointer<QLineEdit> m_thicknessEdit;
-	QPointer<QComboBox> m_unitsComboBox;
-	QPointer<QComboBox> m_sizesComboBox;
+	HoleSettings m_holeSettings;
 
 protected:
 	static QHash<QString, QString> m_holeSizes;

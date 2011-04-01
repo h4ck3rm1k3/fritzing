@@ -42,10 +42,11 @@ public:
 	ConnectorItem * connectorItem();
 	void setBoth(const QString & holeDiameter, const QString &  thickness);
 
+	static QPointF ringThicknessRange(const QString & holeDiameter);
+	static QPointF holeDiameterRange(const QString & ringThickness);
+
 protected:
 	QString makeID();
-	QPointF ringThicknessRange();
-	QPointF holeDiameterRange();
 	static void setBothConnectors(ItemBase * itemBase, SvgIdLayer * svgIdLayer);
 
 

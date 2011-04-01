@@ -24,6 +24,19 @@ $Date: 2010-05-06 22:30:19 +0200 (Thu, 06 May 2010) $
 
 ********************************************************************/
 
+
+///////////////////////////////////////
+
+// todo: 
+//	save and reload as settings
+//	enable/disable custom on radio presses
+//	change wording on custom via
+//	actually modify the autorouter
+//	enable single vs. double-sided settings
+
+
+///////////////////////////////////////
+
 #include "autoroutersettingsdialog.h"
 
 #include <QLabel>
@@ -36,10 +49,13 @@ $Date: 2010-05-06 22:30:19 +0200 (Thu, 06 May 2010) $
 #include <QComboBox>
 
 #include "../items/tracewire.h"
+#include "../sketch/pcbsketchwidget.h"
 
 
 AutorouterSettingsDialog::AutorouterSettingsDialog(QWidget *parent) : QDialog(parent) 
 {
+	PCBSketchWidget::getDefaultViaSize(m_holeSettings.ringThickness, m_holeSettings.holeDiameter);
+
 	this->setWindowTitle(QObject::tr("Auorouter Settings"));
 
 	QVBoxLayout * vLayout = new QVBoxLayout();
@@ -59,6 +75,26 @@ AutorouterSettingsDialog::AutorouterSettingsDialog(QWidget *parent) : QDialog(pa
 	m_customButton = new QRadioButton(tr("custom"), this); 
 	connect(m_customButton, SIGNAL(clicked(bool)), this, SLOT(production(bool)));
 	gLayout->addWidget(m_customButton);
+
+	QFrame * customFrame = new QFrame(this);
+	QHBoxLayout * customFrameLayout = new QHBoxLayout(this);
+	customFrameLayout->addSpacing(10);
+
+	QGroupBox * customGroupBox = new QGroupBox("Via size", this);
+	QVBoxLayout * customLayout = new QVBoxLayout();
+	m_holeSettings.ringThicknessRange = Via::ringThicknessRange;
+	m_holeSettings.holeDiameterRange = Via::holeDiameterRange;
+	QWidget * customWidget = Hole::createHoleSettings(customGroupBox, m_holeSettings, true, "");
+	enableCustom(initRadios());
+	customLayout->addWidget(customWidget);
+	customGroupBox->setLayout(customLayout);
+
+
+
+	customFrameLayout->addWidget(customGroupBox);
+	customFrame->setLayout(customFrameLayout);
+
+	gLayout->addWidget(customFrame);
 
 	groupBox->setLayout(gLayout);
 	vLayout->addWidget(groupBox);
@@ -117,10 +153,13 @@ AutorouterSettingsDialog::~AutorouterSettingsDialog() {
 void AutorouterSettingsDialog::production(bool checked) {
 	QString units;
 	if (sender() == m_homebrewButton) {
+		enableCustom(false);
 	}
 	else if (sender() == m_professionalButton) {
+		enableCustom(false);
 	}
 	else if (sender() == m_customButton) {
+		enableCustom(true);
 	}
 	
 }
@@ -134,4 +173,62 @@ void AutorouterSettingsDialog::acceptAnd() {
 void AutorouterSettingsDialog::restoreDefault() {
 	//m_inButton->setChecked(true);
 	//m_mmButton->setChecked(false);
+}
+
+void AutorouterSettingsDialog::enableCustom(bool enable) 
+{
+	m_holeSettings.diameterEdit->setEnabled(enable);
+	m_holeSettings.thicknessEdit->setEnabled(enable);
+	m_holeSettings.unitsComboBox->setEnabled(enable);
+	m_holeSettings.sizesComboBox->setEnabled(enable);
+}
+
+bool AutorouterSettingsDialog::initRadios() 
+{
+
+	QFile file(":/resources/vias.xml");
+
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+
+	QDomDocument domDocument;
+	if (!domDocument.setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
+		DebugDialog::debug(QString("failed loading properties %1 line:%2 col:%3").arg(errorStr).arg(errorLine).arg(errorColumn));
+		return false;
+	}
+
+	QDomElement root = domDocument.documentElement();
+	if (root.isNull()) return false;
+	if (root.tagName() != "vias") return false;
+
+	QDomElement viaElement = root.firstChildElement("via");
+	if (viaElement.isNull()) return false;
+
+	bool custom = true;
+
+	while (!viaElement.isNull()) {
+		QString name = viaElement.attribute("name");
+		QString ringThickness = viaElement.attribute("ringthickness");
+		QString holeSize = viaElement.attribute("holesize");
+		if (!name.isEmpty() && !ringThickness.isEmpty() && !holeSize.isEmpty()) {
+			QRadioButton * button = NULL;
+			if (name.compare("homebrew", Qt::CaseInsensitive) == 0) button = m_homebrewButton;
+			else if (name.compare("professional", Qt::CaseInsensitive) == 0) button = m_professionalButton;
+			if (button) {
+				button->setProperty("ringthickness", ringThickness);
+				button->setProperty("holesize", holeSize);
+				if (ringThickness.compare(m_holeSettings.ringThickness, Qt::CaseInsensitive) == 0 && holeSize.compare(m_holeSettings.holeDiameter, Qt::CaseInsensitive) == 0) {
+					button->setChecked(true);
+					custom = false;
+				}
+			}
+		}
+
+		viaElement = viaElement.nextSiblingElement("via");
+	}	
+
+	m_customButton->setChecked(custom);
+
+	return custom;
 }

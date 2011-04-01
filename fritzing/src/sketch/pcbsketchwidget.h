@@ -92,6 +92,7 @@ public:
 
 public:
 	static QSizeF jumperItemSize();
+	static void getDefaultViaSize(QString & ringThickness, QString & holeSize);
 
 public slots:
 	void resizeBoard(qreal w, qreal h, bool doEmit);
@@ -154,7 +155,6 @@ protected:
 	bool checkUpdateRatsnest(QList<ConnectorItem *> & connectorItems);
 	QPoint calcFixedToCenterItemOffset(const QRect & viewPortRect, const QSizeF & helpSize);
 	void dealWithDefaultParts();
-	void getDefaultViaSize(QString & ringThickness, QString & holeSize);
 
 signals:
 	void subSwapSignal(SketchWidget *, ItemBase *, ViewLayer::ViewLayerSpec, QUndoCommand * parentCommand);

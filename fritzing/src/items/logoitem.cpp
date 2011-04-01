@@ -329,12 +329,12 @@ void LogoItem::reloadImage(const QString & svg, const QSizeF & aspectRatio, cons
 		if (addName) {
 			if (!NewImageNames.contains(fileName, Qt::CaseInsensitive)) {
 				NewImageNames.append(fileName);
-				disconnect(m_fileNameComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(fileNameEntry(const QString &)));
+				bool wasBlocked = m_fileNameComboBox->blockSignals(true);
 				while (m_fileNameComboBox->count() > 0) {
 					m_fileNameComboBox->removeItem(0);
 				}
 				setFileNameItems();
-				connect(m_fileNameComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(fileNameEntry(const QString &)));
+				m_fileNameComboBox->blockSignals(wasBlocked);
 			}
 		}
 		positionGrips();

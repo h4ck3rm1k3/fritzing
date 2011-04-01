@@ -37,6 +37,8 @@ $Date$
 Via::Via( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: Hole(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
+	m_holeSettings.holeDiameterRange = Via::holeDiameterRange;
+	m_holeSettings.ringThicknessRange = Via::ringThicknessRange;
 	//DebugDialog::debug(QString("creating via %1 %2 %3").arg((long) this, 0, 16).arg(id).arg(m_viewIdentifier));
 }
 
@@ -101,12 +103,14 @@ QString Via::makeID() {
 	return "connector0pin";
 }
 
-QPointF Via::ringThicknessRange() {
+QPointF Via::ringThicknessRange(const QString & holeDiameter) {
+	Q_UNUSED(holeDiameter);
 	QPointF p(.001, 1.0);
 	return p;
 }
 
-QPointF Via::holeDiameterRange() {
+QPointF Via::holeDiameterRange(const QString & ringThickness) {
+	Q_UNUSED(ringThickness);
 	QPointF p(.001, 1.0);
 	return p;
 }

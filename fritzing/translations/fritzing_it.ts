@@ -210,6 +210,37 @@
     </message>
 </context>
 <context>
+    <name>AutorouterSettingsDialog</name>
+    <message>
+        <source>Production type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>homebrew</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>professional</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>custom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trace width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annulla</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished">OK</translation>
+    </message>
+</context>
+<context>
     <name>BinManager</name>
     <message>
         <source>Parts</source>
@@ -571,15 +602,15 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>custom settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Hole Diameter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Ring Thickness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>advanced settings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -642,6 +673,10 @@ y:%3 %4</source>
     <message>
         <source>x:%1
 y:%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>v. %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -744,7 +779,39 @@ y:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>part</source>
+        <source>part number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>type</source>
+        <translation type="unfinished">tipo</translation>
+    </message>
+    <message>
+        <source>model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>spacing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>frequency</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>processor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>variant</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>layers</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2318,51 +2385,11 @@ Please check all views for potential side-effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>as JPG...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>as PNG...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>as PostScript...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>as PDF...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>as SVG...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>as Eagle...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>as Gerber (RS-274X Format)...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Export the current sketch to Gerber for professional PCB production</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>as Etchable PDF...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>as Etchable SVG...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Export the current sketch to PDF for DIY PCB production (photoresist)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>as Etchable PDF (mirrored)...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2374,23 +2401,67 @@ Please check all views for potential side-effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>as Etchable SVG (mirrored)...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Export the current sketch to SVG for DIY PCB production (tone transfer)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Etchable</source>
+        <source>Autorouter settings...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Set Via Size...</source>
+        <source>Set autorouting parameters...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Set via size when autorouting double-sided boards</source>
+        <source>JPG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PNG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PostScript...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PDF...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SVG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Eagle...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gerber (RS-274X)...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Etchable (PDF)...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Etchable mirrored (PDF)...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Etchable (SVG)...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Etchable mirrored (SVG)...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>for Production</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2494,22 +2565,6 @@ Reason: %2 (errcode %3)</source>
     <message>
         <source>Delete ratsnest</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select Via Size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Set the via size to use when autorouting.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Annulla</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="unfinished">OK</translation>
     </message>
 </context>
 <context>
@@ -2616,6 +2671,14 @@ Reason: %2 (errcode %3)</source>
     </message>
     <message>
         <source>Label text:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide part label</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3938,6 +4001,10 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>Cannot autoroute: maybe all traces are marked &apos;do not autoroute&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auorouter Settings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
