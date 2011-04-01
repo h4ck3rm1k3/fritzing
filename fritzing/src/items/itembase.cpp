@@ -320,6 +320,8 @@ void ItemBase::initNames() {
 
 	if (TranslatedPropertyNames.count() == 0) {
 		TranslatedPropertyNames.insert("family", tr("family"));
+		TranslatedPropertyNames.insert("type", tr("type"));
+		TranslatedPropertyNames.insert("model", tr("model"));
 		TranslatedPropertyNames.insert("size", tr("size"));
 		TranslatedPropertyNames.insert("color", tr("color"));
 		TranslatedPropertyNames.insert("resistance", tr("resistance"));
@@ -338,6 +340,12 @@ void ItemBase::initNames() {
 		TranslatedPropertyNames.insert("form", tr("form"));
 		TranslatedPropertyNames.insert("part number", tr("part number"));
 		TranslatedPropertyNames.insert("maximum resistance", tr("maximum resistance"));
+		TranslatedPropertyNames.insert("pins", tr("pins"));
+		TranslatedPropertyNames.insert("spacing", tr("spacing"));
+		TranslatedPropertyNames.insert("frequency", tr("frequency"));
+		TranslatedPropertyNames.insert("processor", tr("processor"));
+		TranslatedPropertyNames.insert("variant", tr("variant"));
+		TranslatedPropertyNames.insert("layers", tr("layers"));
 		// TODO: translate more known property names from fzp files
 	}
 
