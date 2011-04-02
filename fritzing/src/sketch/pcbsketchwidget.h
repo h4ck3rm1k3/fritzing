@@ -155,6 +155,8 @@ protected:
 	bool checkUpdateRatsnest(QList<ConnectorItem *> & connectorItems);
 	QPoint calcFixedToCenterItemOffset(const QRect & viewPortRect, const QSizeF & helpSize);
 	void dealWithDefaultParts();
+	void changeTrace(Wire * wire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand);
+
 
 signals:
 	void subSwapSignal(SketchWidget *, ItemBase *, ViewLayer::ViewLayerSpec, QUndoCommand * parentCommand);

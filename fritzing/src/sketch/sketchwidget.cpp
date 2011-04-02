@@ -2861,10 +2861,24 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 
 	rememberSticky(wire, parentCommand);
 
+
+	bool chained = false;
+	foreach (ConnectorItem * toConnectorItem, from->connectedToItems()) {
+		Wire * toWire = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
+		if (toWire) {
+			chained = true;
+			break;
+		}
+	}
+
+	if (wire->getTrace() && !chained) {
+		changeTrace(wire, from, to, parentCommand);
+		return;
+	}
+
 	new ChangeWireCommand(this, fromID, oldLine, newLine, oldPos, newPos, true, true, parentCommand);
 	new CheckStickyCommand(this, BaseCommand::SingleView, fromID, false, CheckStickyCommand::RedoOnly, parentCommand);
 
-	bool chained = false;
 	foreach (ConnectorItem * toConnectorItem, from->connectedToItems()) {
 		Wire * toWire = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
 		if (toWire == NULL) continue;
@@ -2876,10 +2890,7 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 		QPointF np = toWire->pos();
 		new ChangeWireCommand(this, toWire->id(), vg.line(), nl, vg.loc(), np, true, true, parentCommand);
 		new CheckStickyCommand(this, BaseCommand::SingleView, toWire->id(), false, CheckStickyCommand::RedoOnly, parentCommand);
-		chained = true;
 	}
-
-
 
 	QList< QPointer<ConnectorItem> > former = from->connectedToItems();
 
@@ -7026,5 +7037,12 @@ void SketchWidget::alignOneToGrid(ItemBase * itemBase) {
 			itemBase->setPos(loc);
 		}
 	}
+}
+
+void SketchWidget::changeTrace(Wire * wire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand) {
+	Q_UNUSED(wire);
+	Q_UNUSED(from);
+	Q_UNUSED(to);
+	Q_UNUSED(parentCommand);
 }
 

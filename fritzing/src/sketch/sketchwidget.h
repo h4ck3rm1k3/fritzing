@@ -390,6 +390,7 @@ protected:
 	virtual ItemBase * placePartDroppedInOtherView(ModelPart *, ViewLayer::ViewLayerSpec, const ViewGeometry & viewGeometry, long id, SketchWidget * dropOrigin);
 	void alignOneToGrid(ItemBase * itemBase);
 	void showPartLabelsAux(bool show, QList<ItemBase *> & itemBases);
+	virtual void changeTrace(Wire * wire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand);
 
 protected:
 	static bool lessThan(int a, int b);
