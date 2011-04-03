@@ -199,51 +199,75 @@ AutoCloseMessageBox {
 /* ################### info view #################### */
 
 HtmlInfoView {
+    /*
 	border: 1px solid rgb(117,117,117);
 	border-top: 0px;
+	*/
 }
 
 #infoViewMainFrame {
-	background-color: rgb(179,179,179);
-	margin: 0px;
+	background-color: rgb(175,175,180);
 	border: 0px;
+	margin: 0px;
 	padding: 0px;
 }
 
 #instanceTitleEditor {
+	/* background-color is set programmatically */
 	font-size: 14px;
 	font-weight: 600;
-	border: 1px solid rgb(164,164,164);
-	margin-left: 2px;
-	margin-right: 2px;
-	margin-top: 3px;
+	border: 0px;
+	margin: 5px 5px 5px 5px;
+	padding: 0px;
 }
 
 #iconFrame {
-	background-color: rgb(179,179,179);
+	background-color: rgb(175,175,180);
+	/* how to set background for each icon? */
 	max-height: 32px;
 	min-height: 32px;
+	margin: 0px 0px 0px 5px;
+	padding: 0px;
+}
+
+/* part description/subtitle */
+#infoViewPartTitle {
+	margin: 4px 4px 0px 4px;
+	padding: 0px 0px 1px 0px;
+	font-size: 10px;
+	font-weight: normal;
+	color: rgb(87,87,87);/*rgb(110,110,110);*/
+}
+
+/* section title */
+#expandableViewLabel {
+	padding: 0px 0px 3px 0px;
+	margin: 4px 0px 0px 4px;
+	border: 0px;
+	font-weight: bold;
+	text-align: left;
+	font-size: 10px;
+	color: rgb(84,24,44);
+}
+
+/* Properties */
+#infoViewPropertyFrame {
 	margin: 0px;
 }
 
-/* part title */
-#infoViewPartTitle {
-	margin: 4px;
+#propNameLabel {
 	font-size: 10px;
-	font-weight: normal;
 	color: rgb(87,87,87);
-}
-
-#tagsValue {
-	margin-left: 4px;
-	margin-top: 0px;
-	margin-bottom: 0px;
-	margin_right: 0px;
+	min-width: 65px;
+	max-width: 65px;
+	margin: 0px 0px 0px 4px;
+	padding: 3px 3px 3px 0px;
 	border-top: 1px solid rgb(164,164,164);
 }
 
-#connectionsFrame {
-	margin: 0px;
+#propValueLabel {
+	font-size: 10px;
+	padding: 3px 3px 3px 0px;
 }
 
 #valueFrame {
@@ -253,57 +277,57 @@ HtmlInfoView {
 	border-top: 1px solid rgb(164,164,164);
 }
 
-#connectionsValue {
-	margin: 0px;
+#infoViewComboBox, #infoViewComboBox:editable {
+	font-size: 10px;
+	color: rgb(0,0,0);
+	background: rgb(210, 210, 215);
 	border: 0px;
-	padding: 0px;
-	border-top: 1px solid rgb(164,164,164);
+}
+#infoViewComboBox:hover {
+	background: rgb(235, 235, 238);
+}
+#infoViewComboBox:on {
+	background: rgb(255, 255, 255); /* doesn't work */
 }
 
-#propValueLabel {
+#infoViewComboBox::down-arrow {
+	border-width: 0px; /* doesn't work */
+	border-style: none; /* doesn't work */
+	border: 0px none black;
+	background-color: rgb(210, 210, 215); /* doesn't work */
+	image: url(:/resources/images/icons/combobox-arrow.png);
+}
+#infoViewCombBox::drop-down {
+	background-color: rgb(235, 235, 238); /* doesn't work */
 }
 
-#connectionsLabel {
-	color: rgb(87,87,87);
-	min-width: 65px;
-	max-width: 65px;
-	margin-left: 4px;
-	margin-top: 0px;
-	margin-bottom: 0px;
-	margin-right: 0px;
-	border-top: 1px solid rgb(164,164,164);
+#infoViewComboBox:editable {
+	border-bottom: 1px solid rgb(120,120,120);
+}
+#infoViewComboBox:hover:editable {
+	background: rgb(235, 235, 238); /* doesn't work */
+}
+#infoViewComboBox::down-arrow:editable {
+	border-left: 1px solid black; /* doesn't work */
 }
 
-/* the title  */
-#expandableViewLabel {
-	padding: 0px;
-	margin-left: 3px;
-	margin-top: 5px;
-	margin-bottom: 0px;
-	margin-right:0px;
+
+#infoViewLineEdit {
+	font-size: 10px;
+	background: rgb(210, 210, 215);
 	border: 0px;
-	font-weight: bold;
-	text-align: left;
-	font-size: 11px;
-	color: rgb(84,24,44);
+}
+#infoViewLineEdit:hover {
+	background: rgb(235, 235, 238);
+}
+#infoViewLineEdit:focus {
+	background: rgb(255, 255, 255);
 }
 
-#infoViewPropertyFrame {
-	margin: 0px;
-}
-
-/* part-specfic widgets */
-
-#infoViewComboBox {
-}
-
-#propValueLabel {
-}
-
+/* complex properties */
 #infoViewPartFrame {
 	padding: 0px;
 	margin: 0px;
-	border: 0px;
 }
 
 #infoViewButton {
@@ -312,12 +336,43 @@ HtmlInfoView {
 }
 
 #infoViewGroupBox {
-}
-
-#infoViewLineEdit {
+	background: red;
 }
 
 #infoViewLabel {
+}
+
+
+/* Connections */
+#connectionsFrame {
+	margin: 0px;
+}
+
+#connectionsLabel {
+	font-size: 10px;
+	color: rgb(87,87,87);
+	min-width: 65px;
+	max-width: 65px;
+	margin: 0px 0px 0px 4px;
+	padding: 3px 3px 3px 0px;
+	border-top: 1px solid rgb(164,164,164);
+}
+
+#connectionsValue {
+	font-size: 10px;
+	color: black;
+	margin: 0px;
+	border: 0px;
+	padding: 3px 3px 3px 0px;
+	border-top: 1px solid rgb(164,164,164);
+}
+
+/* Tags */
+
+#tagsValue {
+	margin: 0px 0px 0px 4px;
+	border-top: 1px solid rgb(164,164,164);
+	font-size: 10px;
 }
 
 

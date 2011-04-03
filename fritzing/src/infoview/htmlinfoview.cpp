@@ -49,7 +49,7 @@ QPixmap * NoIcon = NULL;
 
 const int HtmlInfoView::STANDARD_ICON_IMG_WIDTH = 32;
 const int HtmlInfoView::STANDARD_ICON_IMG_HEIGHT = 32;
-const int IconSpace = 3;
+const int IconSpace = 0;
 
 QHash<QString, QPixmap *> HtmlInfoView::m_pixmaps;
 
@@ -140,7 +140,7 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	connect(m_titleEdit, SIGNAL(mouseLeave()), this, SLOT(instanceTitleLeave()));
 	connect(m_titleEdit, SIGNAL(editable(bool)), this, SLOT(instanceTitleEditable(bool)));
 
-	setInstanceTitleColors(m_titleEdit, QColor(0xb3, 0xb3, 0xb3), QColor(0x57, 0x57, 0x57));
+	setInstanceTitleColors(m_titleEdit, QColor(0xaf, 0xaf, 0xb4), QColor(0x00, 0x00, 0x00)); //b3b3b3, 575757
 	m_titleEdit->setAutoFillBackground(true);
 	vlo->addWidget(m_titleEdit);
 
@@ -508,24 +508,24 @@ void HtmlInfoView::setInstanceTitle() {
 void HtmlInfoView::instanceTitleEnter() {
 	FLineEdit * edit = dynamic_cast<FLineEdit *>(sender());
 	if (edit->isEnabled()) {
-		setInstanceTitleColors(edit, QColor(0xc8, 0xc8, 0xc8), QColor(0x57, 0x57, 0x57));
+		setInstanceTitleColors(edit, QColor(0xeb, 0xeb, 0xee), QColor(0x00, 0x00, 0x00)); //c8c8c8, 575757
 	}
 }
 
 void HtmlInfoView::instanceTitleLeave() {
 	FLineEdit * edit = dynamic_cast<FLineEdit *>(sender());
 	if (edit->isEnabled()) {
-		setInstanceTitleColors(edit, QColor(0xb3, 0xb3, 0xb3), QColor(0x57, 0x57, 0x57));
+		setInstanceTitleColors(edit, QColor(0xd2, 0xd2, 0xd7), QColor(0x00, 0x00, 0x00)); //b3b3b3, 575757
 	}
 }
 
 void HtmlInfoView::instanceTitleEditable(bool editable) {
 	FLineEdit * edit = dynamic_cast<FLineEdit *>(sender());
 	if (editable) {
-		setInstanceTitleColors(edit, QColor(0xfc, 0xfc, 0xfc), QColor(0x00, 0x00, 0x00));
+		setInstanceTitleColors(edit, QColor(0xff, 0xff, 0xff), QColor(0x00, 0x00, 0x00)); //fcfcfc, 000000
 	}
 	else {
-		setInstanceTitleColors(edit, QColor(0xb3, 0xb3, 0xb3), QColor(0x57, 0x57, 0x57));
+		setInstanceTitleColors(edit, QColor(0xd2, 0xd2, 0xd7), QColor(0x00, 0x00, 0x00)); //b3b3b3, 57575
 	}
 }
 
@@ -727,7 +727,7 @@ void HtmlInfoView::displayProps(ModelPart * modelPart, ItemBase * itemBase, bool
 			m_propThings.append(propThing);
 
 			QLabel * propNameLabel = new QLabel(this);
-			propNameLabel->setObjectName("connectionsLabel");
+			propNameLabel->setObjectName("propNameLabel");
 			propNameLabel->setWordWrap(true);
 			propThing->m_name = propNameLabel;
 			m_propLayout->addWidget(propNameLabel, ix, 0);
