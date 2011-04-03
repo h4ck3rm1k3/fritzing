@@ -31,8 +31,8 @@ win32 {
 # release build using msvc 2010 needs to use Multi-threaded (/MT) for the code generation/runtime library option
 # release build using msvc 2010 needs to add msvcrt.lib;%(IgnoreSpecificDefaultLibraries) to the linker/no default libraries option
 	CONFIG -= embed_manifest_exe
-        #INCLUDEPATH += $$[QT_INSTALL_PREFIX]/src/3rdparty/zlib
-        INCLUDEPATH += C:/QtSDK/QtSources/4.7.2/src/3rdparty/zlib
+        INCLUDEPATH += $$[QT_INSTALL_PREFIX]/src/3rdparty/zlib
+        #INCLUDEPATH += C:/QtSDK/QtSources/4.7.2/src/3rdparty/zlib
 	DEFINES += _CRT_SECURE_NO_DEPRECATE
     LIBS += setupapi.lib
 }

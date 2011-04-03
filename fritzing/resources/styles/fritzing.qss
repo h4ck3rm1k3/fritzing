@@ -336,7 +336,7 @@ HtmlInfoView {
 }
 
 #infoViewGroupBox {
-	background: red;
+
 }
 
 #infoViewLabel {
