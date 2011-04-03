@@ -263,37 +263,37 @@
     <message>
         <location filename="../src/autoroute/autoroutersettingsdialog.cpp" line="63"/>
         <source>Production type</source>
-        <translation type="unfinished"></translation>
+        <translation>Produktionsart</translation>
     </message>
     <message>
         <location filename="../src/autoroute/autoroutersettingsdialog.cpp" line="67"/>
         <source>homebrew</source>
-        <translation type="unfinished"></translation>
+        <translation>Manuell</translation>
     </message>
     <message>
         <location filename="../src/autoroute/autoroutersettingsdialog.cpp" line="71"/>
         <source>professional</source>
-        <translation type="unfinished"></translation>
+        <translation>Professionell</translation>
     </message>
     <message>
         <location filename="../src/autoroute/autoroutersettingsdialog.cpp" line="75"/>
         <source>custom</source>
-        <translation type="unfinished"></translation>
+        <translation>Eigene Einst.</translation>
     </message>
     <message>
         <location filename="../src/autoroute/autoroutersettingsdialog.cpp" line="103"/>
         <source>Trace width</source>
-        <translation type="unfinished"></translation>
+        <translation>Leiterbahnbreite</translation>
     </message>
     <message>
         <location filename="../src/autoroute/autoroutersettingsdialog.cpp" line="118"/>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../src/autoroute/autoroutersettingsdialog.cpp" line="119"/>
         <source>OK</source>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
@@ -740,7 +740,7 @@ Bitte wähle eine der Fritzing-Schriftarten, um sie zu ersetzen:</translation>
     <message>
         <location filename="../src/items/hole.cpp" line="525"/>
         <source>advanced settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Erweiterte Einst.</translation>
     </message>
     <message>
         <location filename="../src/items/hole.cpp" line="550"/>
@@ -793,7 +793,7 @@ Bitte wähle eine der Fritzing-Schriftarten, um sie zu ersetzen:</translation>
     <message>
         <location filename="../src/infoview/htmlinfoview.cpp" line="643"/>
         <source>v. %1</source>
-        <translation type="unfinished"></translation>
+        <translation>v. %1</translation>
     </message>
     <message>
         <location filename="../src/infoview/htmlinfoview.cpp" line="897"/>
@@ -843,12 +843,12 @@ y:%2</translation>
     <message>
         <location filename="../src/items/itembase.cpp" line="323"/>
         <source>type</source>
-        <translation type="unfinished">Typ</translation>
+        <translation>Typ</translation>
     </message>
     <message>
         <location filename="../src/items/itembase.cpp" line="324"/>
         <source>model</source>
-        <translation type="unfinished"></translation>
+        <translation>Modell</translation>
     </message>
     <message>
         <location filename="../src/items/itembase.cpp" line="325"/>
@@ -933,7 +933,7 @@ y:%2</translation>
     <message>
         <location filename="../src/items/itembase.cpp" line="341"/>
         <source>part number</source>
-        <translation type="unfinished"></translation>
+        <translation>Bauteil-Nr.</translation>
     </message>
     <message>
         <location filename="../src/items/itembase.cpp" line="342"/>
@@ -943,32 +943,32 @@ y:%2</translation>
     <message>
         <location filename="../src/items/itembase.cpp" line="343"/>
         <source>pins</source>
-        <translation type="unfinished"></translation>
+        <translation>Beine</translation>
     </message>
     <message>
         <location filename="../src/items/itembase.cpp" line="344"/>
         <source>spacing</source>
-        <translation type="unfinished"></translation>
+        <translation>Abstand</translation>
     </message>
     <message>
         <location filename="../src/items/itembase.cpp" line="345"/>
         <source>frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>Frequenz</translation>
     </message>
     <message>
         <location filename="../src/items/itembase.cpp" line="346"/>
         <source>processor</source>
-        <translation type="unfinished"></translation>
+        <translation>Prozessor</translation>
     </message>
     <message>
         <location filename="../src/items/itembase.cpp" line="347"/>
         <source>variant</source>
-        <translation type="unfinished"></translation>
+        <translation>Variante</translation>
     </message>
     <message>
         <location filename="../src/items/itembase.cpp" line="348"/>
         <source>layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Ebenen</translation>
     </message>
     <message>
         <location filename="../src/items/itembase.cpp" line="352"/>
@@ -1427,17 +1427,17 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1047"/>
         <source>Etchable mirrored (PDF)...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ätzbar gespiegelt (PDF)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1053"/>
         <source>Etchable (SVG)...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ätzbar (SVG)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1059"/>
         <source>Etchable mirrored (SVG)...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ätzbar gespiegelt (SVG)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1324"/>
@@ -1584,27 +1584,27 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="996"/>
         <source>JPG...</source>
-        <translation type="unfinished"></translation>
+        <translation>JPG...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1001"/>
         <source>PNG...</source>
-        <translation type="unfinished"></translation>
+        <translation>PNG...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1006"/>
         <source>PostScript...</source>
-        <translation type="unfinished"></translation>
+        <translation>PostScript...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1011"/>
         <source>PDF...</source>
-        <translation type="unfinished"></translation>
+        <translation>PDF...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1016"/>
         <source>SVG...</source>
-        <translation type="unfinished"></translation>
+        <translation>SVG...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1021"/>
@@ -1624,7 +1624,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1031"/>
         <source>Eagle...</source>
-        <translation type="unfinished"></translation>
+        <translation>Eagle...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1033"/>
@@ -1634,12 +1634,12 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1036"/>
         <source>Gerber (RS-274X)...</source>
-        <translation type="unfinished"></translation>
+        <translation>Gerber (RS-274X)...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1041"/>
         <source>Etchable (PDF)...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ätzbar (PDF)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1042"/>
@@ -2207,12 +2207,12 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1662"/>
         <source>as Image</source>
-        <translation type="unfinished"></translation>
+        <translation>als Bild</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1670"/>
         <source>for Production</source>
-        <translation type="unfinished"></translation>
+        <translation>für die Produktion</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="3028"/>
@@ -2255,12 +2255,12 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="3093"/>
         <source>Autorouter settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>Autorouter-Einstellungen...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="3094"/>
         <source>Set autorouting parameters...</source>
-        <translation type="unfinished"></translation>
+        <translation>Einstellungen für den Autorouter setzen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="3104"/>
@@ -3254,12 +3254,12 @@ Ursache: %2 (Fehlercode %3)</translation>
     <message>
         <location filename="../src/items/partlabel.cpp" line="422"/>
         <source>Hide</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausblenden</translation>
     </message>
     <message>
         <location filename="../src/items/partlabel.cpp" line="424"/>
         <source>Hide part label</source>
-        <translation type="unfinished"></translation>
+        <translation>Beschriftung  ausblenden</translation>
     </message>
     <message>
         <location filename="../src/items/partlabel.cpp" line="428"/>
@@ -5083,7 +5083,7 @@ im Sortiment.</translation>
     <message>
         <location filename="../src/autoroute/autoroutersettingsdialog.cpp" line="59"/>
         <source>Auorouter Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Autorouter-Einstellungen</translation>
     </message>
 </context>
 <context>
