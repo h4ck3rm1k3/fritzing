@@ -2315,66 +2315,147 @@ void PCBSketchWidget::getDefaultViaSize(QString & ringThickness, QString & holeS
 
 void PCBSketchWidget::changeTrace(Wire * wire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand) 
 {
+	// first figure out whether this is a delete or a reconnect
 	QList<ConnectorItem *> ends;
 	QList<Wire *> wires;
-	removeWire(wire, ends, wires, parentCommand);
+	wire->collectChained(wires, ends);
 
-	bool reconnect = true;
-	if (to == NULL) {
-		reconnect = false;
-	}
-	else {
+	ConnectorItem * anchor = wire->otherConnector(from);
+
+	ConnectorItem * fromDest = NULL;
+	bool reconnect = (to != NULL);
+	if (reconnect) {
 		// check whether wire end was dropped on a legitimate target
-		foreach (Wire * w, wires) {
-			if (w->connector0() == to) {
-				reconnect = false;
-				break;
-			}
-			if (w->connector1() == to) {
-				reconnect = false;
-				break;
+		if (ends.contains(to)) {
+			reconnect = false;
+		}
+		else {
+			foreach (Wire * w, wires) {
+				if (w->connector0() == to) {
+					reconnect = false;
+					break;
+				}
+				if (w->connector1() == to) {
+					reconnect = false;
+					break;
+				}
 			}
 		}
 	}
 
-	ConnectorItem * newFrom = NULL;
 	if (reconnect) {
-		foreach (ConnectorItem * toConnectorItem, wire->otherConnector(from)->connectedToItems()) {
+		foreach (ConnectorItem * toConnectorItem, from->connectedToItems()) {
 			if (toConnectorItem->attachedToItemType() == ModelPart::Wire) continue;
 
-			newFrom = toConnectorItem;
+			// the part we were originally connected to
+			fromDest = toConnectorItem;
 			break;
 		}
 	}
 
-	if (newFrom) {
-		QList<ConnectorItem *> connectorItems;
-		connectorItems.append(to);
-		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::NormalFlag | ViewGeometry::RatsnestFlag);
-		if (connectorItems.contains(newFrom)) {
-			// newfrom is  already connected by a trace to to
-			newFrom = NULL;
+	if (fromDest) {
+		ViewGeometry vg = wire->getViewGeometry();
+		ViewGeometry newvg;
+		QPointF wp = wire->pos();
+		QPointF ap = anchor->sceneAdjustedTerminalPoint(NULL);
+		if (wp == ap) {
+			makeRatsnestViewGeometry(newvg, anchor, to);
 		}
-	}
+		else {
+			makeRatsnestViewGeometry(newvg, to, anchor);
+		}
 
-	if (newFrom) {
+		new ChangeWireCommand(this, wire->id(), vg.line(), newvg.line(), vg.loc(), newvg.loc(), true, true, parentCommand);
+
+		extendChangeConnectionCommand(BaseCommand::CrossView, from, fromDest, 
+					ViewLayer::specFromID(wire->viewLayerID()),
+					false, parentCommand);
+
+
+		ConnectorItem * toDest = to;
+		if (toDest->attachedToItemType() == ModelPart::Wire) {
+			toDest = this->findNearestPartConnectorItem(toDest);
+		}
+
 		QList<ConnectorItem *> connectorItems;
-		connectorItems.append(to);
+		connectorItems.append(toDest);
 		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::TraceFlag | ViewGeometry::RatsnestFlag);
-		if (!connectorItems.contains(newFrom)) {
+		if (!connectorItems.contains(fromDest)) {
 			// have to make a permanent connection
-			makeModifiedWire(newFrom, to, BaseCommand::CrossView, ViewGeometry::NormalFlag, parentCommand);	
+			ConnectorItem * permanentFrom = fromDest;
+			foreach (ConnectorItem * end, ends) {
+				if (end != fromDest) {
+					permanentFrom = end;
+					break;
+				}
+			}
+			makeModifiedWire(permanentFrom, toDest, BaseCommand::CrossView, ViewGeometry::NormalFlag, parentCommand);	
 		}	
 
-		long newID = makeModifiedWire(newFrom, to, BaseCommand::SingleView, wire->getViewGeometry().wireFlags(), parentCommand);	
-		new WireWidthChangeCommand(this, newID, wire->width(), wire->width(), parentCommand);
-		new WireColorChangeCommand(this, newID, wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), parentCommand);
+		extendChangeConnectionCommand(BaseCommand::CrossView, from, to, 
+				ViewLayer::specFromID(wire->viewLayerID()),
+				true, parentCommand);
+
 		parentCommand->setText(QObject::tr("change trace").arg(wire->title()) );
-	}
-	else {
-		parentCommand->setText(QObject::tr("delete trace").arg(wire->title()) );
+		new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
+		m_undoStack->push(parentCommand);
+		return;
 	}
 
+
+	QList<Wire *> toDelete;
+	ConnectorItem * target = anchor;
+	toDelete.append(wire);
+	while (true) {
+		int count = 0;
+		Wire * candidate = NULL;
+		ConnectorItem * candidateTarget = NULL;
+		foreach (ConnectorItem * toTarget, target->connectedToItems()) {
+			Wire * w = qobject_cast<Wire *>(toTarget->attachedTo());
+			if (w == NULL) {
+				// this is a part, so delete all wires
+				break;
+			}
+
+			candidate = w;
+			candidateTarget = w->otherConnector(toTarget);
+			++count;
+
+			// it may be that the other connector is the one with multiple connections
+			foreach (ConnectorItem * toTargetTarget, toTarget->connectedToItems()) {
+				Wire * wx = qobject_cast<Wire *>(toTargetTarget->attachedTo());
+				if (wx == NULL) continue;
+				if (toTargetTarget->attachedTo() == target->attachedTo()) continue;
+
+				++count;
+				break;
+			}
+
+			if (count > 1) {
+				break;
+			}
+		}
+
+		if (candidate == NULL) {
+			// connected to a part
+			break;
+		}
+
+		if (count > 1) {
+			// junction for multiple wires; stop here
+			break;
+		}
+
+		toDelete.append(candidate);
+		target = candidateTarget;	
+	}
+
+	makeWiresChangeConnectionCommands(toDelete, parentCommand);
+	foreach (Wire * w, toDelete) {
+		makeDeleteItemCommand(w, BaseCommand::CrossView, parentCommand);
+	}
+
+	parentCommand->setText(QObject::tr("delete trace").arg(wire->title()) );
 
 	new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
 	m_undoStack->push(parentCommand);
