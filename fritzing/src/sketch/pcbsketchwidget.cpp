@@ -1248,61 +1248,8 @@ void PCBSketchWidget::updateRoutingStatus(CleanUpWiresCommand* command, RoutingS
 {
 	//DebugDialog::debug("update ratsnest status");
 
-	/*
 
-	// I think this code is now obsolete since wire_wireChanged is now catching deleted traces before the command is execute,
-	// rather than here, where the undo stack has to be cleaned up after the fact
-
-	if (command != NULL && m_ratsnestUpdateDisconnect.count() > 0 && !command->hasTraces(this)) {
-		QSet<Wire *> deletedWires;
-		QList<Wire *> visitedWires;
-		foreach (QGraphicsItem * item, scene()->items()) {
-			Wire * wire = dynamic_cast<Wire *>(item);
-			if (wire == NULL) continue;
-			if (!wire->getTrace()) continue;
-			if (visitedWires.contains(wire)) continue;
-
-			if (wire->connector0()->connectedToItems().count() == 0) {
-				// trace is already going to be deleted
-				continue;
-			}
-
-			QList<Wire *> wires;
-			QList<ConnectorItem *> ends;
-			wire->collectChained(wires, ends);
-			visitedWires.append(wires);
-			if (ends.count() <= 0) continue;
-
-			foreach (ConnectorItem * ci, ends) ci->debugInfo("end");
-
-			QList<ConnectorItem *> connectorItems;
-			connectorItems.append(ends[0]);
-			ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::RatsnestFlag | ViewGeometry::TraceFlag);
-			foreach (ConnectorItem * ci, connectorItems) ci->debugInfo("   eq");
-
-			bool doDelete = false;
-			foreach (ConnectorItem * end, ends) {
-				if (!connectorItems.contains(end)) {
-					doDelete = true;
-					break;
-				}
-			}
-
-			if (doDelete) {
-				foreach (Wire * w, wires) {
-					command->addTrace(this, w);
-					deletedWires.insert(w);
-				}
-			}
-		}
-
-		foreach (Wire * w, deletedWires.values()) {
-			//wire->markDeleted(true);
-			deleteItem(w, true, false, false);
-		}
-	}
-
-	*/
+	checkDeleteTrace(command);
 
 	routingStatus.zero();
 	updateRoutingStatus(routingStatus, manual);
@@ -2459,4 +2406,61 @@ void PCBSketchWidget::changeTrace(Wire * wire, ConnectorItem * from, ConnectorIt
 
 	new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
 	m_undoStack->push(parentCommand);
+}
+
+void PCBSketchWidget::checkDeleteTrace(CleanUpWiresCommand* command) 
+{
+	if (command == NULL) return;
+	if (m_ratsnestUpdateDisconnect.count() == 0) return;
+	if (command->hasTraces(this)) return;			// already dealt with this
+
+	// this code should now only be relevant to the case in which a wire is deleted in breadboard view
+	if (command->sketchWidget()->viewIdentifier() != ViewIdentifierClass::BreadboardView) return;
+
+	QSet<Wire *> deletedWires;
+	QList<Wire *> visitedWires;
+	foreach (QGraphicsItem * item, scene()->items()) {
+		Wire * wire = dynamic_cast<Wire *>(item);
+		if (wire == NULL) continue;
+		if (!wire->getTrace()) continue;
+		if (visitedWires.contains(wire)) continue;
+
+		if (wire->connector0()->connectedToItems().count() == 0) {
+			// trace is already going to be deleted
+			continue;
+		}
+
+		QList<Wire *> wires;
+		QList<ConnectorItem *> ends;
+		wire->collectChained(wires, ends);
+		visitedWires.append(wires);
+		if (ends.count() <= 0) continue;
+
+		foreach (ConnectorItem * ci, ends) ci->debugInfo("end");
+
+		QList<ConnectorItem *> connectorItems;
+		connectorItems.append(ends[0]);
+		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::RatsnestFlag | ViewGeometry::TraceFlag);
+		foreach (ConnectorItem * ci, connectorItems) ci->debugInfo("   eq");
+
+		bool doDelete = false;
+		foreach (ConnectorItem * end, ends) {
+			if (!connectorItems.contains(end)) {
+				doDelete = true;
+				break;
+			}
+		}
+
+		if (doDelete) {
+			foreach (Wire * w, wires) {
+				command->addTrace(this, w);
+				deletedWires.insert(w);
+			}
+		}
+	}
+
+	foreach (Wire * w, deletedWires.values()) {
+		//wire->markDeleted(true);
+		deleteItem(w, true, false, false);
+	}
 }
