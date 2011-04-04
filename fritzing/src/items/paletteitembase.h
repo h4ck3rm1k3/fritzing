@@ -89,7 +89,7 @@ protected:
 	);
 
 protected slots:
-	void partPropertyEntry(const QString & text);
+	void partPropertyEntry();
 
 protected:
  	bool m_blockItemSelectedChange;

@@ -42,6 +42,7 @@ $Date$
 #include <QColor>
 #include <QDir>
 #include <QMessageBox>
+#include <QLineEdit>
 
 
 PaletteItemBase::PaletteItemBase(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu ) :
@@ -448,21 +449,13 @@ bool PaletteItemBase::collectExtraInfo(QWidget * parent, const QString & family,
 	if (prop.compare(ModelPartShared::PartNumberPropertyName, Qt::CaseInsensitive) == 0) {
 		returnProp = TranslatedPropertyNames.value(prop);
 
-		FocusOutComboBox * focusOutComboBox = new FocusOutComboBox();
-		focusOutComboBox->setEnabled(swappingEnabled);
-		focusOutComboBox->setEditable(true);
+		QLineEdit * lineEdit = new QLineEdit();
+		lineEdit->setEnabled(swappingEnabled);
 		QString current = m_modelPart->prop(ModelPartShared::PartNumberPropertyName).toString();
-		if (!current.isEmpty()) {
-			int ix = focusOutComboBox->findText(current);
-			if (ix < 0) {
-				focusOutComboBox->addItem(current);
-				ix = focusOutComboBox->findText(current);
-			}
-			focusOutComboBox->setCurrentIndex(ix);
-		}
-		connect(focusOutComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(partPropertyEntry(const QString &)));	
-		focusOutComboBox->setObjectName("infoViewComboBox");		
-		returnWidget = focusOutComboBox;	
+		lineEdit->setText(current);
+		connect(lineEdit, SIGNAL(editingFinished()), this, SLOT(partPropertyEntry()));	
+		lineEdit->setObjectName("infoViewLineEdit");		
+		returnWidget = lineEdit;	
 		return true;
 	}
 
@@ -481,11 +474,13 @@ void PaletteItemBase::setProp(const QString & prop, const QString & value)
 }
 
 
-void PaletteItemBase::partPropertyEntry(const QString & text) {
+void PaletteItemBase::partPropertyEntry() {
+	QLineEdit * lineEdit = qobject_cast<QLineEdit *>(sender());
+	if (lineEdit == NULL) return;
 
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
-		infoGraphicsView->setProp(this, ModelPartShared::PartNumberPropertyName, "", m_modelPart->prop(ModelPartShared::PartNumberPropertyName).toString(), text, true);
+		infoGraphicsView->setProp(this, ModelPartShared::PartNumberPropertyName, "", m_modelPart->prop(ModelPartShared::PartNumberPropertyName).toString(), lineEdit->text(), true);
 	}
 }
 
