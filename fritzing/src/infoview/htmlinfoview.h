@@ -46,6 +46,7 @@ $Date$
 
 struct PropThing {
         QPointer<QLabel> m_name;
+        QPointer<QFrame> m_frame;
         QPointer<QLabel> m_value;
         QPointer<QWidget> m_plugin;
         QPointer<QVBoxLayout> m_layout;

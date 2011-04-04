@@ -720,6 +720,7 @@ void HtmlInfoView::displayProps(ModelPart * modelPart, ItemBase * itemBase, bool
 	int ix = 0;
 	foreach(QString key, keys) {
 		if (ix >= m_propThings.count()) {
+			//DebugDialog::debug(QString("new prop thing %1").arg(ix));
 			PropThing * propThing = new PropThing;
 			propThing->m_plugin = NULL;
 			m_propThings.append(propThing);
@@ -736,6 +737,7 @@ void HtmlInfoView::displayProps(ModelPart * modelPart, ItemBase * itemBase, bool
 			vlayout->setSpacing(0);
 			vlayout->setContentsMargins(0, 0, 0, 0);
 			propThing->m_layout = vlayout;
+			propThing->m_frame = valueFrame;
 
 			QLabel * propValueLabel = new QLabel(valueFrame);
 			propValueLabel->setObjectName("propValueLabel");
@@ -745,7 +747,7 @@ void HtmlInfoView::displayProps(ModelPart * modelPart, ItemBase * itemBase, bool
 			m_propLayout->addWidget(valueFrame, ix, 1);
 		}
 
-		PropThing * propThing = m_propThings.at(ix);
+		PropThing * propThing = m_propThings.at(ix++);
 
 		QWidget * oldPlugin = propThing->m_plugin;
 		propThing->m_plugin = NULL;
@@ -792,18 +794,19 @@ void HtmlInfoView::displayProps(ModelPart * modelPart, ItemBase * itemBase, bool
 			propThing->m_name->setText(newName);
 		}
 		propThing->m_name->setVisible(true);
+		propThing->m_frame->setVisible(true);
 
 		if (newWidget == NULL && propThing->m_value->text().compare(newValue) != 0) {
 			propThing->m_value->setText(newValue);
 		}
 		propThing->m_value->setVisible(newWidget == NULL);
-		ix++;
 	}
 
 	for (int jx = ix; jx < m_propThings.count(); jx++) {
 		PropThing * propThing = m_propThings.at(jx);
 		propThing->m_name->setVisible(false);
 		propThing->m_value->setVisible(false);
+		propThing->m_frame->setVisible(false);
 		if (propThing->m_plugin) {
 			propThing->m_plugin->setVisible(false);
 		}
