@@ -229,6 +229,9 @@ HtmlInfoView {
 	margin: 0px 0px 0px 5px;
 	padding: 0px;
 }
+#iconLabel {
+	background-color: rgb(155,155,160);
+}
 
 /* part description/subtitle */
 #infoViewPartTitle {
@@ -236,7 +239,7 @@ HtmlInfoView {
 	padding: 0px 0px 1px 0px;
 	font-size: 10px;
 	font-weight: normal;
-	color: rgb(87,87,87);/*rgb(110,110,110);*/
+	color: rgb(70,70,70);/*rgb(110,110,110);*/
 }
 
 /* section title */
@@ -257,87 +260,93 @@ HtmlInfoView {
 
 #propNameLabel {
 	font-size: 10px;
-	color: rgb(87,87,87);
+	color: rgb(70,70,70);
 	min-width: 65px;
 	max-width: 65px;
 	margin: 0px 0px 0px 4px;
 	padding: 3px 3px 3px 0px;
-	border-top: 1px solid rgb(164,164,164);
+	border-top: 1px solid rgb(155,155,155);
 }
-
+#propValueFrame {
+	margin: 0px;
+	border: 0px;
+	padding: 1px 4px 1px 0px;
+	border-top: 1px solid rgb(155,155,155);
+}
 #propValueLabel {
 	font-size: 10px;
 	padding: 3px 3px 3px 0px;
 }
 
-#valueFrame {
-	margin: 0px;
-	border: 0px;
-	padding: 0px;
-	border-top: 1px solid rgb(164,164,164);
-}
 
-#infoViewComboBox, #infoViewComboBox:editable {
+/* complex property values */
+
+#infoViewComboBox,
+#infoViewLineEdit {
 	font-size: 10px;
 	color: rgb(0,0,0);
-	background: rgb(210, 210, 215);
-	border: 0px;
 }
-#infoViewComboBox:hover {
+#infoViewComboBox,
+#infoViewComboBox::drop-down:button,
+#infoViewLineEdit {
+	background: rgb(210, 210, 215);
+	border: none;
+}
+#infoViewComboBox:hover,
+#infoViewComboBox:editable:hover, /* doesn't work */
+#infoViewComboBox::drop-down:hover, /* should also respond to combo hover */
+#infoViewLineEdit:hover  { 
 	background: rgb(235, 235, 238);
 }
-#infoViewComboBox:on {
+#infoViewComboBox:on,
+#infoViewComboBox:editable:on, /* doesn't work */
+#infoViewComboBox::drop-down:on,
+#infoViewLineEdit:focus  {
 	background: rgb(255, 255, 255);
 }
 
-
-#infoViewComboBox::drop-down:button{
-	background: rgb(210, 210, 215);
-	border: 0px;
-}
 #infoViewComboBox::down-arrow {
 	image: url(:/resources/images/icons/combobox-arrow.png);
 }
 
 #infoViewComboBox:editable {
-	border-bottom: 1px solid rgb(120,120,120);
+	border-bottom: 1px solid rgb(100,100,100);
 }
-#infoViewComboBox:editable:hover {
-	background: rgb(235, 235, 238); /* doesn't work */
-}
-#infoViewComboBox::down-arrow:editable {
-	border-left: 1px solid black;
+#infoViewComboBox::drop-down:editable {
+	border-left: 1px solid rgb(100,100,100);
 }
 
-
-#infoViewLineEdit {
-	font-size: 10px;
-	background: rgb(210, 210, 215);
-	border: 0px;
-}
-#infoViewLineEdit:hover {
-	background: rgb(235, 235, 238);
-}
-#infoViewLineEdit:focus {
-	background: rgb(255, 255, 255);
-}
-
-/* complex properties */
 #infoViewPartFrame {
+	font-size: 10px;
 	padding: 0px;
 	margin: 0px;
 }
 
 #infoViewButton {
-	min-width: 100px;
-	text-align: left;
+	font-size: 10px;
+	/*min-width: 100px;*/
+	text-align: center;
 }
 
 #infoViewGroupBox {
-
+	border: none;
+	font-size: 10px;
+	font-weight: bold;
+	margin: 5px 0px 0px 0px;
+	padding: 15px 0px 0px 0px;
+}
+#infoViewGroupBox::title {
 }
 
 #infoViewLabel {
+	font-size: 10px;
+	min-width: 60px;
+	max-width: 60px;
+}
+
+#infoViewCheckBox::indicator {
+	/* needs a nice checkmark graphic */
+	/*background-color: rgb(210, 210, 215);*/
 }
 
 
@@ -353,7 +362,7 @@ HtmlInfoView {
 	max-width: 65px;
 	margin: 0px 0px 0px 4px;
 	padding: 3px 3px 3px 0px;
-	border-top: 1px solid rgb(164,164,164);
+	border-top: 1px solid rgb(155,155,155);
 }
 
 #connectionsValue {
@@ -362,15 +371,16 @@ HtmlInfoView {
 	margin: 0px;
 	border: 0px;
 	padding: 3px 3px 3px 0px;
-	border-top: 1px solid rgb(164,164,164);
+	border-top: 1px solid rgb(155,155,155);
 }
 
 /* Tags */
 
 #tagsValue {
-	margin: 0px 0px 0px 4px;
-	border-top: 1px solid rgb(164,164,164);
 	font-size: 10px;
+	margin: 0px 4px 0px 4px;
+	padding: 2px 0px 0px 0px;
+	border-top: 1px solid rgb(155,155,155);
 }
 
 
@@ -410,9 +420,9 @@ PartsBinListView {
 
 PartsBinIconView,
 PartsBinListView {
-	background-color: #B2B2B2;
+	background-color: #555555;/*#B2B2B2;*/
 	border: 0;
-	border-bottom: 1px solid white;
+	border-bottom: 1px solid #D0D0D0;
 }
 
 #partsBinFooter,
@@ -421,14 +431,20 @@ PartsBinPaletteWidget,
 PartsBinPaletteWidget SimpleEditableLabelWidget,
 PartsBinPaletteWidget InfoGraphicsView {
 	background-color: rgb(164,164,164);
+	border: none;
 }
 
-StackTabWidget::pane {
-    border: 1px solid #d8d8d8;
+/* trying to get rid of the line across the top of the tabs */
+PartsBinPaletteWidget,
+StackWidget,
+StackTabWidget,
+StackTabWidget::pane,
+StackTabBar {
+	border: none;
 }
 
 StackTabBar::tab {
-    margin: 0;
+    margin: 0px 2px 0px 0px;
     padding: 2px;
 	
     /*min-height: 1.7em;*/
@@ -438,23 +454,19 @@ StackTabBar::tab {
 
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
-    border: 1px solid rgb(217,217,217);
+	border: 0;
 	background: rgb(164,164,164);
 
-	font-weight: bold;
+	font-weight: 600;
 }
 
 StackTabBar::tab:selected {
-	border-color: #d8d8d8;
-	border-bottom: 0;
 	color: #6b3e4d;
 }
 
 StackTabBar::tab:!selected {
-	background-color: #9b9b9b;
-	border-color: #B0B0B2;
-	border-bottom-color: #d8d8d8;
-	color: #686868;
+	background-color: #878787; /*#9b9b9b;*/
+	color: #444444;/*#686868;*/
 }
 
 StackTabBar::tab:!selected:hover {

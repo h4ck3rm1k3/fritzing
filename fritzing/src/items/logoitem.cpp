@@ -216,28 +216,34 @@ bool LogoItem::collectExtraInfo(QWidget * parent, const QString & family, const 
 
 		QLabel * l1 = new QLabel(tr("width(mm)"));	
 		l1->setMargin(0);
+		l1->setObjectName("infoViewLabel");
 		QLineEdit * e1 = new QLineEdit();
 		QDoubleValidator * validator = new QDoubleValidator(e1);
 		validator->setRange(0.1, 999.9, 1);
 		validator->setNotation(QDoubleValidator::StandardNotation);
+		e1->setObjectName("infoViewLineEdit");
 		e1->setValidator(validator);
 		e1->setMaxLength(5);
 		e1->setText(QString::number(w));
 
 		QLabel * l2 = new QLabel(tr("height(mm)"));
 		l2->setMargin(0);
+		l2->setObjectName("infoViewLabel");
 		QLineEdit * e2 = new QLineEdit();
 		validator = new QDoubleValidator(e1);
 		validator->setRange(0.1, 999.9, 1);
 		validator->setNotation(QDoubleValidator::StandardNotation);
+		e2->setObjectName("infoViewLineEdit");
 		e2->setValidator(validator);
 		e2->setMaxLength(5);
 		e2->setText(QString::number(h));
 
-		QLabel * l3 = new QLabel(tr("keep in proportion"));	
-		l1->setMargin(0);
+		QLabel * l3 = new QLabel(tr("keep in proportion"));
+		l3->setMargin(0);
+		l3->setObjectName("infoViewLabel");
 		QCheckBox * checkBox = new QCheckBox();
 		checkBox->setChecked(m_keepAspectRatio);
+		checkBox->setObjectName("infoViewCheckBox");
 
 		hboxLayout1->addWidget(l1);
 		hboxLayout1->addWidget(e1);

@@ -619,11 +619,13 @@ bool ResizableBoard::collectExtraInfo(QWidget * parent, const QString & family, 
 
 		QLabel * l1 = new QLabel(tr("width(mm)"));	
 		l1->setMargin(0);
+		l1->setObjectName("infoViewLabel");	
 		QLineEdit * e1 = new QLineEdit();
 		e1->setEnabled(swappingEnabled);
 		QDoubleValidator * validator = new QDoubleValidator(e1);
 		validator->setRange(0.1, 999.9, 1);
 		validator->setNotation(QDoubleValidator::StandardNotation);
+		e1->setObjectName("infoViewLineEdit");	
 		e1->setValidator(validator);
 		e1->setMaxLength(5);
 		e1->setText(QString::number(w));
@@ -637,11 +639,13 @@ bool ResizableBoard::collectExtraInfo(QWidget * parent, const QString & family, 
 
 		QLabel * l2 = new QLabel(tr("height(mm)"));
 		l2->setMargin(0);
+		l2->setObjectName("infoViewLabel");	
 		QLineEdit * e2 = new QLineEdit();
 		e2->setEnabled(swappingEnabled);
 		validator = new QDoubleValidator(e1);
 		validator->setRange(0.1, 999.9, 1);
 		validator->setNotation(QDoubleValidator::StandardNotation);
+		e2->setObjectName("infoViewLineEdit");	
 		e2->setValidator(validator);
 		e2->setMaxLength(5);
 		e2->setText(QString::number(h));

@@ -57,9 +57,7 @@ QHash<QString, QPixmap *> HtmlInfoView::m_pixmaps;
 
 QLabel * addLabel(QHBoxLayout * hboxLayout, QPixmap * pixmap) {
 	QLabel * label = new QLabel();
-	QPalette palette = label->palette();
-	palette.setColor(QPalette::Window, QColor(0xc2, 0xc2, 0xc2));
-	label->setPalette(palette);
+	label->setObjectName("iconLabel");
 	label->setAutoFillBackground(true);
 	label->setPixmap(*pixmap);
 	label->setFixedSize(pixmap->size());
@@ -733,7 +731,7 @@ void HtmlInfoView::displayProps(ModelPart * modelPart, ItemBase * itemBase, bool
 			m_propLayout->addWidget(propNameLabel, ix, 0);
 
 			QFrame * valueFrame = new QFrame(this);
-			valueFrame->setObjectName("valueFrame");
+			valueFrame->setObjectName("propValueFrame");
 			QVBoxLayout * vlayout = new QVBoxLayout(valueFrame);
 			vlayout->setSpacing(0);
 			vlayout->setContentsMargins(0, 0, 0, 0);
