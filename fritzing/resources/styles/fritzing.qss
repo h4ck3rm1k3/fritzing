@@ -287,28 +287,26 @@ HtmlInfoView {
 	background: rgb(235, 235, 238);
 }
 #infoViewComboBox:on {
-	background: rgb(255, 255, 255); /* doesn't work */
+	background: rgb(255, 255, 255);
 }
 
-#infoViewComboBox::down-arrow {
-	border-width: 0px; /* doesn't work */
-	border-style: none; /* doesn't work */
-	border: 0px none black;
-	background-color: rgb(210, 210, 215); /* doesn't work */
-	image: url(:/resources/images/icons/combobox-arrow.png);
+
+#infoViewComboBox::drop-down:button{
+	background: rgb(210, 210, 215);
+	border: 0px;
 }
-#infoViewCombBox::drop-down {
-	background-color: rgb(235, 235, 238); /* doesn't work */
+#infoViewComboBox::down-arrow {
+	image: url(:/resources/images/icons/combobox-arrow.png);
 }
 
 #infoViewComboBox:editable {
 	border-bottom: 1px solid rgb(120,120,120);
 }
-#infoViewComboBox:hover:editable {
+#infoViewComboBox:editable:hover {
 	background: rgb(235, 235, 238); /* doesn't work */
 }
 #infoViewComboBox::down-arrow:editable {
-	border-left: 1px solid black; /* doesn't work */
+	border-left: 1px solid black;
 }
 
 

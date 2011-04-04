@@ -34,7 +34,6 @@ $Date$
 #include <QDir>
 #include <QLabel>
 #include <QTime>
-#include <QCleanlooksStyle>
 #include <QSettings>
 #include <QRegExp>
 #include <QPaintDevice>
