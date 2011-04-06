@@ -95,7 +95,7 @@
      <circle  fill="#1f1f1f" cx="3.29939" cy="13.1491" stroke="none" r="0.72" stroke-width="0"/>
     </g>
    </g>
-   <text  x="3.6" y="23.355" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="4.68">QFN-32</text>
+   <text  x="3.6" y="23.355" font-family="OCRA" fill="white" text-anchor="start" stroke="none" id="label" stroke-width="0" font-size="4.68">QFN-32</text>
    <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 4.572, 37.8756)">
     <g  stroke-width="0" transform="rotate(-90)">
      <text  x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="3.24">1</text>

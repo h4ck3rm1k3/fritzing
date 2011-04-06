@@ -47,7 +47,7 @@
      <circle  fill="#1f1f1f" cx="2.34312" cy="15.5571" stroke="none" r="0.72" stroke-width="0"/>
     </g>
    </g>
-   <text  x="3.6" y="23.355" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="4.68">SSOP16</text>
+   <text  x="3.6" y="23.355" font-family="OCRA" fill="white" text-anchor="start" stroke="none" id="label" stroke-width="0" font-size="4.68">SSOP16</text>
    <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 4.572, 37.8756)">
     <g  stroke-width="0" transform="rotate(-90)">
      <text  x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="3.24">1</text>
