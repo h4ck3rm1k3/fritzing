@@ -110,6 +110,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	m_comboboxChanged = false;
 	m_helper = NULL;
 	m_recovered = false;
+	m_smdOneSideWarningGiven = false;
 
     // Add a timer for autosaving
 	m_backingUp = m_autosaveNeeded = false;
@@ -380,6 +381,11 @@ void MainWindow::connectPairs() {
 						this, SLOT(swapSelectedMap(const QString &, const QString &, QMap<QString, QString> &)));
 	succeeded = connect(m_pcbGraphicsView, SIGNAL(swapSignal(const QString &, const QString &, QMap<QString, QString> &)), 
 						this, SLOT(swapSelectedMap(const QString &, const QString &, QMap<QString, QString> &)));
+
+	succeeded = connect(m_breadboardGraphicsView, SIGNAL(warnSMDSignal(const QString &)), this, SLOT(warnSMD(const QString &)));
+	succeeded = connect(m_pcbGraphicsView, SIGNAL(warnSMDSignal(const QString &)), this, SLOT(warnSMD(const QString &)));
+	succeeded = connect(m_schematicGraphicsView, SIGNAL(warnSMDSignal(const QString &)), this, SLOT(warnSMD(const QString &)));
+
 
 	succeeded = connect(m_breadboardGraphicsView, SIGNAL(dropPasteSignal(SketchWidget *)), 
 						this, SLOT(dropPaste(SketchWidget *)));
@@ -1762,6 +1768,9 @@ void MainWindow::swapSelectedAux(ItemBase * itemBase, const QString & moduleID) 
 	swapSelectedAuxAux(itemBase, moduleID, itemBase->viewLayerSpec(), parentCommand);
 	// need to defer execution so the content of the info view doesn't change during an event that started in the info view
 	m_undoStack->waitPush(parentCommand, 10);
+
+	warnSMD(moduleID);
+
 }
 
 
@@ -2262,3 +2271,13 @@ void MainWindow::setReportMissingModules(bool b) {
 	}
 }
 
+void MainWindow::warnSMD(const QString & moduleID) {
+	if (!m_smdOneSideWarningGiven && !m_pcbGraphicsView->routeBothSides()) {
+		ModelPart * mp = m_refModel->retrieveModelPart(moduleID);
+		if (mp->flippedSMD()) {
+			m_smdOneSideWarningGiven = true;
+			QMessageBox::information(this, tr("SMD"), tr("SMD parts are rarely used on single-sided boards"));
+		}
+	}
+
+}

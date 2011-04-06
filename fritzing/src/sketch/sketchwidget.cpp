@@ -1683,6 +1683,7 @@ void SketchWidget::dropItemEvent(QDropEvent *event) {
     event->acceptProposedAction();
 
 	emit dropSignal(event->pos());
+	emit warnSMDSignal(modelPart->moduleID());
 }
 
 SelectItemCommand* SketchWidget::stackSelectionState(bool pushIt, QUndoCommand * parentCommand) {

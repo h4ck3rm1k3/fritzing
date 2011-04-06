@@ -119,6 +119,7 @@ public slots:
 	void importFilesFromPrevInstall();
 	void acceptAlienFiles();
 	void statusMessage(QString message, int timeout);
+	void warnSMD(const QString & moduleID);
 
 protected slots:
 	void load();
@@ -407,6 +408,7 @@ protected:
 	class Wire * retrieveWire();
 	void updatePartsBinMenu(QMenu * partsBinMenu, QMenu * binMenu, int skip);
 
+
 protected:
 	static void removeActionsStartingAt(QMenu *menu, int start=0);
 	static void setAutosave(int, bool);
@@ -671,6 +673,7 @@ protected:
 	bool m_recovered;
 	QString m_bundledSketchName;
 	RoutingStatus m_routingStatus;
+	bool m_smdOneSideWarningGiven;
 
 public:
 	static int RestartNeeded;
