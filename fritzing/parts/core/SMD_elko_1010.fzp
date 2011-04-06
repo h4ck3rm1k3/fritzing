@@ -8,15 +8,15 @@
   <tag>Electrolytic</tag>
   <tag>Capacitor</tag>
   <tag>fritzing core</tag>
- </tags>
+ <tag>SMD</tag></tags>
  <properties>
   <property name="family">Capacitor [unidirectional]</property>
-  <property name="capacitance" showInLabel="yes">1000&#x3BC;F</property>
+  <property name="capacitance" showInLabel="yes">1000μF</property>
   <property name="package">1010 [SMD, electrolytic]</property>
-  <property name="voltage" showInLabel="yes"></property>
+  <property name="voltage" showInLabel="yes"/>
  </properties>
  <taxonomy>discreteParts.capacitor.elecrtolytic</taxonomy>
- <description>An 1&#x3BC;F electrolytic capacitor</description>
+ <description>An 1μF electrolytic capacitor</description>
  <views>
   <iconView>
    <layers image="icon/electrolytic_capacitor_small_icon.svg">
@@ -50,7 +50,7 @@
      <p layer="schematic" svgId="connector0pin" terminalId="connector0terminal"/>
     </schematicView>
     <pcbView>
-    <p layer="copper1" svgId="connector0pin" /></pcbView>
+    <p layer="copper1" svgId="connector0pin"/></pcbView>
    </views>
   </connector>
   <connector id="connector1" name="+" type="male">
@@ -63,7 +63,7 @@
      <p layer="schematic" svgId="connector1pin" terminalId="connector1terminal"/>
     </schematicView>
     <pcbView>
-    <p layer="copper1" svgId="connector1pin" /></pcbView>
+    <p layer="copper1" svgId="connector1pin"/></pcbView>
    </views>
   </connector>
  </connectors>

@@ -8,12 +8,12 @@
   <tag>Capacitor</tag>
   <tag>Ceramic Capacitor</tag>
   <tag>fritzing core</tag>
- </tags>
+ <tag>SMD</tag></tags>
  <properties>
   <property name="family">Capacitor [bidirectional]</property>
   <property name="capacitance" showInLabel="yes">100 nF</property>
   <property name="package">1206 [SMD, multilayer]</property>
-   <property name="voltage" showInLabel="yes"></property>
+   <property name="voltage" showInLabel="yes"/>
 </properties>
  <taxonomy>discreteParts.capacitor.ceramic</taxonomy>
  <description>0.01 nF multilayered Ceramic Capacitor</description>

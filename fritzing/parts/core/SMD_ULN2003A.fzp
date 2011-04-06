@@ -8,7 +8,7 @@
         <tag>Darlington</tag>
         <tag>Transistor</tag>
         <tag>DIP</tag>
-    </tags>
+    <tag>SMD</tag></tags>
     <properties>
         <property name="family">Darlington Transistor Driver</property>
         <property name="variant">ULN2003A</property>

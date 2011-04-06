@@ -8,7 +8,7 @@
   <tag>Transistor</tag>
   <tag>FET</tag>
   <tag>fritzing core</tag>
- </tags>
+ <tag>SMD</tag></tags>
  <properties>
   <property name="package">D2Pak [SMD]</property>
   <property name="family">FET-Transistor</property>

@@ -7,7 +7,7 @@
     <tags>
         <tag>IC</tag>
         <tag>Shift Register</tag>
-    </tags>
+    <tag>SMD</tag></tags>
     <properties>
         <property name="family">Logic IC</property>
         <property name="logic family">74xx</property>

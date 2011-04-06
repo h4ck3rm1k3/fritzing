@@ -9,7 +9,7 @@
         <tag>zener</tag>
         <tag>semiconductor</tag>
   <tag>fritzing core</tag>
-    </tags>
+    <tag>SMD</tag></tags>
     <properties>
         <property name="family">Diode</property>
         <property name="type">Zener</property>

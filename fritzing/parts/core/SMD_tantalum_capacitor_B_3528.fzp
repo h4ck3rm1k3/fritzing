@@ -8,12 +8,12 @@
   <tag>Capacitor</tag>
   <tag>Ceramic Capacitor</tag>
   <tag>fritzing core</tag>
- </tags>
+ <tag>SMD</tag></tags>
  <properties>
   <property name="family">Capacitor [unidirectional]</property>
-  <property name="capacitance" showInLabel="yes">1 &#x3BC;F</property>
+  <property name="capacitance" showInLabel="yes">1 μF</property>
   <property name="package">B 3528 [SMD, tantalum]</property>
-   <property name="voltage" showInLabel="yes"></property>
+   <property name="voltage" showInLabel="yes"/>
 </properties>
  <taxonomy>discreteParts.capacitor.ceramic</taxonomy>
  <description>1 uF multilayered Ceramic Capacitor</description>

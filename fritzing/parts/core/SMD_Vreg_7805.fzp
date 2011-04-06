@@ -10,7 +10,7 @@
   <tag>power</tag>
   <tag>aplifier</tag>
   <tag>fritzing core</tag>
- </tags>
+ <tag>SMD</tag></tags>
  <properties>
   <property name="package">DPak [SMD]</property>
   <property name="voltage">5V</property>

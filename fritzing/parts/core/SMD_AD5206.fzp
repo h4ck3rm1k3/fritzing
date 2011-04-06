@@ -6,12 +6,12 @@
     <tags>
         <tag>Digital potentiometer</tag>
         <tag>SPI</tag>
-    </tags>
+    <tag>SMD</tag></tags>
     <properties>
         <property name="family">IC-Poti</property>
     <property name="package">SO28 [SMD]</property>
-   <property name="power" showInLabel="yes"></property>
-    <property name="Maximum Resistance" showInLabel="yes">10k&#937;</property>
+   <property name="power" showInLabel="yes"/>
+    <property name="Maximum Resistance" showInLabel="yes">10kΩ</property>
     </properties>
     <description>Digital potentiometer. 6 channels with SPI-compatible interface.</description>
     <views>

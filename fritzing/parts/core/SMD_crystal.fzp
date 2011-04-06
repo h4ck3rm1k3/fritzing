@@ -10,7 +10,7 @@
         <tag>quartz</tag>
         <tag>oscillator</tag>
 	<tag>piezoelectric</tag>
-    </tags>
+    <tag>SMD</tag></tags>
     <properties>
         <property name="family">oscillator</property>
         <property name="type">crystal</property>

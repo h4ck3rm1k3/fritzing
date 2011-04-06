@@ -7,7 +7,7 @@
     <tags>
         <tag>RTC</tag>
         <tag>SPI</tag>
-    </tags>
+    <tag>SMD</tag></tags>
     <properties>
         <property name="family">RTC</property>
         <property name="variant">DS1302</property>

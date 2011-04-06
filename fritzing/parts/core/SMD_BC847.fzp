@@ -10,7 +10,7 @@
   <tag>signal transistor</tag>
   <tag>amplifier</tag>
   <tag>fritzing core</tag>
- </tags>
+ <tag>SMD</tag></tags>
  <properties>
   <property name="package">SOT-23 [SMD]</property>
   <property name="family">Bipolar Transistor</property>

@@ -7,12 +7,12 @@
     <tags>
         <tag>inductor</tag>
         <tag>coil</tag>
-    </tags>
+    <tag>SMD</tag></tags>
     <properties>
         <property name="family">air-core inductor</property>
     <property name="package">1206 [SMD]</property>
-     <property name="inductance" showInLabel="yes"></property>
-     <property name="current" showInLabel="yes"></property>
+     <property name="inductance" showInLabel="yes"/>
+     <property name="current" showInLabel="yes"/>
      </properties>
     <description>Inductor</description>
     <views>

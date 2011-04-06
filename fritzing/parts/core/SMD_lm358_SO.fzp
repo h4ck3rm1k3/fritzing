@@ -8,7 +8,7 @@
         <tag>Op-Amp,LM358</tag>
         <tag>IC</tag>
         <tag>DIP</tag>
-    </tags>
+    <tag>SMD</tag></tags>
     <properties>
         <property name="family">Op-Amp IC</property>
     <property name="package">SO 08 [SMD]</property></properties>
