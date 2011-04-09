@@ -255,7 +255,7 @@ HtmlInfoView {
 
 /* Properties */
 #infoViewPropertyFrame {
-	margin: 0px;
+	margin: 0px 4px 0px 0px;
 }
 
 #propNameLabel {
@@ -270,7 +270,7 @@ HtmlInfoView {
 #propValueFrame {
 	margin: 0px;
 	border: 0px;
-	padding: 1px 4px 1px 0px;
+	padding: 1px 0px 1px 0px;
 	border-top: 1px solid rgb(155,155,155);
 }
 #propValueLabel {

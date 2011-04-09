@@ -2276,7 +2276,21 @@ void MainWindow::warnSMD(const QString & moduleID) {
 		ModelPart * mp = m_refModel->retrieveModelPart(moduleID);
 		if (mp->flippedSMD()) {
 			m_smdOneSideWarningGiven = true;
-			QMessageBox::information(this, tr("SMD"), tr("SMD parts are rarely used on single-sided boards"));
+			int ret = QMessageBox::information(this, tr("Using SMD parts"), tr("For using SMD parts, a double-sided board is usually desired."
+				"On the default single-sided board, SMD parts will end up on the back of the board.\n\n"
+				"Do you want to switch to a double-sided board now?"),
+				QMessageBox::Yes|QMessageBox::Ignore,
+				QMessageBox::Yes);
+			switch (ret) {
+			   case QMessageBox::Yes:
+				   m_pcbGraphicsView->changeBoardLayers(2, true); // XXX: doesn't seem to be enough
+				   break;
+			   case QMessageBox::Ignore:
+				   break;
+			   default:
+				   // should never be reached
+				   break;
+			 }
 		}
 	}
 
