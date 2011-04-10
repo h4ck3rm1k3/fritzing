@@ -37,6 +37,7 @@ public:
 	static const QString BreadboardModuleIDName;
 	static const QString TinyBreadboardModuleIDName;
 	static const QString RectangleModuleIDName;
+	static const QString TwoSidedRectangleModuleIDName;
 	static const QString NoteModuleIDName;
 	static const QString WireModuleIDName;
 	static const QString JumperModuleIDName;

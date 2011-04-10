@@ -199,6 +199,7 @@ public:
 	void debugInfo(const QString & msg);
 	virtual void addedToScene();
 	virtual bool hasPartNumberProperty();
+	void collectPropsMap(QString & family, QMap<QString, QString> &);
 
 public:
 	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth);

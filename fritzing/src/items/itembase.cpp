@@ -1679,7 +1679,7 @@ void ItemBase::swapEntry(const QString & text) {
 
     InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
     if (infoGraphicsView != NULL) {
-        infoGraphicsView->swap(comboBox->family(), comboBox->prop(), m_propsMap);
+        infoGraphicsView->swap(comboBox->family(), comboBox->prop(), m_propsMap, this);
     }
 }
 
@@ -1882,3 +1882,18 @@ bool ItemBase::hasPartNumberProperty()
 	return true;
 }
 
+void ItemBase::collectPropsMap(QString & family, QMap<QString, QString> & propsMap) {
+	QHash<QString, QString> properties;
+	properties = m_modelPart->properties();
+	family = properties.value("family", "");
+	foreach (QString key, properties.keys()) {
+		if (key.compare("family") == 0) continue;
+		if (key.compare("id") == 0) continue;
+
+		QString value = properties.value(key,"");
+		QString tempValue = value;
+		QStringList values = collectValues(family, key, tempValue);
+		propsMap.insert(key, tempValue);
+		DebugDialog::debug(QString("props map %1 %2").arg(key).arg(tempValue));
+	}
+}

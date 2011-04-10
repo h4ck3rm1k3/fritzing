@@ -375,16 +375,16 @@ void MainWindow::connectPairs() {
 	succeeded = connect(m_schematicGraphicsView, SIGNAL(routingStatusSignal(SketchWidget *, const RoutingStatus &)),
 						this, SLOT(routingStatusSlot(SketchWidget *, const RoutingStatus &)));
 
-	succeeded = connect(m_breadboardGraphicsView, SIGNAL(swapSignal(const QString &, const QString &, QMap<QString, QString> &)), 
-						this, SLOT(swapSelectedMap(const QString &, const QString &, QMap<QString, QString> &)));
-	succeeded = connect(m_schematicGraphicsView, SIGNAL(swapSignal(const QString &, const QString &, QMap<QString, QString> &)), 
-						this, SLOT(swapSelectedMap(const QString &, const QString &, QMap<QString, QString> &)));
-	succeeded = connect(m_pcbGraphicsView, SIGNAL(swapSignal(const QString &, const QString &, QMap<QString, QString> &)), 
-						this, SLOT(swapSelectedMap(const QString &, const QString &, QMap<QString, QString> &)));
+	succeeded = connect(m_breadboardGraphicsView, SIGNAL(swapSignal(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)), 
+						this, SLOT(swapSelectedMap(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)));
+	succeeded = connect(m_schematicGraphicsView, SIGNAL(swapSignal(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)), 
+						this, SLOT(swapSelectedMap(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)));
+	succeeded = connect(m_pcbGraphicsView, SIGNAL(swapSignal(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)), 
+						this, SLOT(swapSelectedMap(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)));
 
-	succeeded = connect(m_breadboardGraphicsView, SIGNAL(warnSMDSignal(const QString &)), this, SLOT(warnSMD(const QString &)));
-	succeeded = connect(m_pcbGraphicsView, SIGNAL(warnSMDSignal(const QString &)), this, SLOT(warnSMD(const QString &)));
-	succeeded = connect(m_schematicGraphicsView, SIGNAL(warnSMDSignal(const QString &)), this, SLOT(warnSMD(const QString &)));
+	succeeded = connect(m_breadboardGraphicsView, SIGNAL(warnSMDSignal(const QString &)), this, SLOT(warnSMD(const QString &)), Qt::QueuedConnection);
+	succeeded = connect(m_pcbGraphicsView, SIGNAL(warnSMDSignal(const QString &)), this, SLOT(warnSMD(const QString &)), Qt::QueuedConnection);
+	succeeded = connect(m_schematicGraphicsView, SIGNAL(warnSMDSignal(const QString &)), this, SLOT(warnSMD(const QString &)), Qt::QueuedConnection);
 
 
 	succeeded = connect(m_breadboardGraphicsView, SIGNAL(dropPasteSignal(SketchWidget *)), 
@@ -1640,7 +1640,7 @@ void MainWindow::enableCheckUpdates(bool enabled)
 	}
 }
 
-void MainWindow::swapSelectedMap(const QString & family, const QString & prop, QMap<QString, QString> & currPropsMap) 
+void MainWindow::swapSelectedMap(const QString & family, const QString & prop, QMap<QString, QString> & currPropsMap, ItemBase * itemBase) 
 {
 	if ((prop.compare("package", Qt::CaseSensitive) != 0) && swapSpecial(currPropsMap)) {
 		return;
@@ -1665,7 +1665,6 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 		return;
 	}
 
-	ItemBase * itemBase = m_infoView->currentItem();
 	if (itemBase == NULL) return;
 
 	itemBase = itemBase->layerKinChief();
@@ -2272,26 +2271,47 @@ void MainWindow::setReportMissingModules(bool b) {
 }
 
 void MainWindow::warnSMD(const QString & moduleID) {
-	if (!m_smdOneSideWarningGiven && !m_pcbGraphicsView->routeBothSides()) {
-		ModelPart * mp = m_refModel->retrieveModelPart(moduleID);
-		if (mp->flippedSMD()) {
-			m_smdOneSideWarningGiven = true;
-			int ret = QMessageBox::information(this, tr("Using SMD parts"), tr("For using SMD parts, a double-sided board is usually desired."
-				"On the default single-sided board, SMD parts will end up on the back of the board.\n\n"
-				"Do you want to switch to a double-sided board now?"),
-				QMessageBox::Yes|QMessageBox::Ignore,
-				QMessageBox::Yes);
-			switch (ret) {
-			   case QMessageBox::Yes:
-				   m_pcbGraphicsView->changeBoardLayers(2, true); // XXX: doesn't seem to be enough
-				   break;
-			   case QMessageBox::Ignore:
-				   break;
-			   default:
-				   // should never be reached
-				   break;
-			 }
-		}
+	if (m_smdOneSideWarningGiven) return;
+	if (m_pcbGraphicsView->routeBothSides()) return;
+	if (m_pcbGraphicsView->findBoard() == NULL) return;
+
+	ModelPart * mp = m_refModel->retrieveModelPart(moduleID);
+	if (!mp->flippedSMD()) return;
+
+	m_smdOneSideWarningGiven = true;
+	// don't want to trigger the message box and subsequent swap from within the original event
+	QTimer::singleShot(15, this, SLOT(warnSMDReally()));
+}
+
+void MainWindow::warnSMDReally() 
+{
+	QMessageBox messageBox(this);
+    messageBox.setWindowTitle(tr("Using SMD parts"));
+    messageBox.setInformativeText(tr("When using SMD parts, a double-sided board is usually desired. "
+									"On the default single-sided board, SMD parts will end up on the back of the board."));
+	messageBox.setText(tr("Do you want to swap to a double-sided board now?"));
+    messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    messageBox.setDefaultButton(QMessageBox::Yes);
+    messageBox.setIcon(QMessageBox::Information);
+    messageBox.setWindowModality(Qt::WindowModal);
+    messageBox.setButtonText(QMessageBox::Yes, tr("Swap"));
+    messageBox.setButtonText(QMessageBox::No, tr("Don't Swap"));
+    messageBox.button(QMessageBox::No)->setShortcut(tr("Ctrl+D"));
+
+	int ret = messageBox.exec();
+	switch (ret) {
+		case QMessageBox::Yes:
+			break;
+		default:
+			return;
 	}
 
+	ItemBase * board = m_pcbGraphicsView->findBoard();
+	if (board == NULL) return;
+
+	QMap<QString, QString> propsMap;
+	QString family;
+	board->collectPropsMap(family, propsMap);
+	propsMap.insert("layers", "2");
+	swapSelectedMap(family, "layers", propsMap, board);
 }

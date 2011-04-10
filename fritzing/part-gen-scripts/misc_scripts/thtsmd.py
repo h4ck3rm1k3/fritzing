@@ -7,7 +7,7 @@ import getopt, sys, os, os.path, re, xml.dom.minidom, xml.dom
 def usage():
         print """
 usage:
-    thtsms.py -d [fzp folder] -t [tht | smd]
+    thtsmd.py -d [fzp folder] -t [tht | smd]
     add or update a package <property> element.
 """
            

@@ -35,6 +35,7 @@ const QString ModuleIDNames::RulerModuleIDName = "RulerModuleID";
 const QString ModuleIDNames::BreadboardModuleIDName = "BreadboardModuleID";
 const QString ModuleIDNames::TinyBreadboardModuleIDName = "TinyBreadboardModuleID";
 const QString ModuleIDNames::RectangleModuleIDName = "RectanglePCBModuleID";
+const QString ModuleIDNames::TwoSidedRectangleModuleIDName = "TwoLayerRectanglePCBModuleID";
 const QString ModuleIDNames::NoteModuleIDName = "NoteModuleID";
 const QString ModuleIDNames::WireModuleIDName = "WireModuleID";
 const QString ModuleIDNames::JumperModuleIDName = "JumperModuleID";

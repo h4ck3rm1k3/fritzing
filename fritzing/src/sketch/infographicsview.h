@@ -79,7 +79,7 @@ public:
 	virtual void setProp(ItemBase *, const QString & propName, const QString & translatedPropName, const QString & oldValue, const QString & newValue, bool redraw);
 	virtual void changeWireWidthMils(const QString newWidth);
 	virtual void changeWireColor(const QString newColor);
-	virtual void swap(const QString & family, const QString & prop, QMap<QString, QString> & propsMap);
+	virtual void swap(const QString & family, const QString & prop, QMap<QString, QString> & propsMap, ItemBase *);
 	virtual LayerHash & viewLayers();
 	virtual void loadLogoImage(long itemID, const QString & oldSvg, const QSizeF oldAspectRatio, const QString & oldFilename, const QString & newFilename, bool addName);
 
@@ -98,7 +98,7 @@ public slots:
 
 signals:
 	void setVoltageSignal(qreal, bool doEmit);
-	void swapSignal(const QString & family, const QString & prop, QMap<QString, QString> & propsMap);
+	void swapSignal(const QString & family, const QString & prop, QMap<QString, QString> & propsMap, ItemBase *);
 
 public:
 	static InfoGraphicsView * getInfoGraphicsView(QGraphicsItem *);

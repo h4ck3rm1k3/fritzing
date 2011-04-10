@@ -113,7 +113,7 @@ signals:
 
 public slots:
 	void ensureClosable();
-	void swapSelectedMap(const QString & family, const QString & prop, QMap<QString, QString> & currPropsMap);
+	void swapSelectedMap(const QString & family, const QString & prop, QMap<QString, QString> & currPropsMap, ItemBase *);
 	ModelPart* loadBundledPart(const QString &fileName, bool addToBin=true);
 	void partsEditorClosed(long id);
 	void importFilesFromPrevInstall();
@@ -282,6 +282,7 @@ protected slots:
 	void showNavigator();
 	void macNavigatorHack();
 	void autorouterSettings();
+	void warnSMDReally();
 
 protected:
 	void initSketchWidget(SketchWidget *);
