@@ -1,0 +1,33 @@
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+   xmlns:zcml="http://namespaces.zope.org/zcml"
+   xmlns:five="http://namespaces.zope.org/five"
+   xmlns:db="http://namespaces.zope.org/db">
+
+  <five:registerPackage package="." initialize=".initialize" />
+  <include package="Products.GenericSetup" file="meta.zcml" />
+
+  <genericsetup:registerProfile
+     name="install"
+     title="fritzing.SqlPasPlugin install"
+     description="This profile installs fritzing.SqlPasPlugin."
+     directory="profiles/install"
+     provides="Products.GenericSetup.interfaces.EXTENSION"
+     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+     />
+
+  <genericsetup:registerProfile
+     name="uninstall"
+     title="fritzing.SqlPasPlugin uninstall"
+     description="This profile uninstalls fritzing.SqlPasPlugin."
+     directory="profiles/uninstall"
+     provides="Products.GenericSetup.interfaces.EXTENSION"
+     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+     />
+
+  <include package="z3c.saconfig" file="meta.zcml" />
+  <db:engine name="pas" url="mysql://root:root@localhost/fritzing_django" echo="echo" />
+  <db:session name="fritzing.SqlPasPlugin" engine="pas" />
+
+</configure>

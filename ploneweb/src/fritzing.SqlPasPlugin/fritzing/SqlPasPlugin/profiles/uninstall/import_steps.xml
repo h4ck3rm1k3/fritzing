@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<import-steps>
+  <import-step id="fritzing.SqlPasPlugin.uninstall" version="1"
+               handler="fritzing.SqlPasPlugin.setuphandlers.uninstall"
+               title="Uninstall PAS plugins">
+  </import-step>
+</import-steps>
