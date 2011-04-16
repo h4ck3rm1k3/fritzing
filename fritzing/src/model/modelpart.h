@@ -71,7 +71,7 @@ public:
 	ModelPart(ItemType type = ModelPart::Unknown);
 	~ModelPart();
 
-	ItemType itemType() const { return m_type; };
+	ModelPart::ItemType itemType() const;
 	void setItemType(ItemType);
 	const QString & moduleID();
 	void copy(ModelPart *);

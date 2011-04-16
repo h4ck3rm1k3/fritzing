@@ -1483,7 +1483,8 @@ long PCBSketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const Q
 	QList<Wire *> already;
 	ChangeBoardLayersCommand * changeBoardCommand = new ChangeBoardLayersCommand(this, m_boardLayers, newLayers, parentCommand);
 
-	if (itemBase->itemType() == ModelPart::ResizableBoard) {
+	ModelPart * mp = paletteModel()->retrieveModelPart(newModuleID);
+	if (mp->itemType() == ModelPart::ResizableBoard) {
 		// preserve the size if swapping rectangular board
 		ResizableBoard * rb = qobject_cast<ResizableBoard *>(itemBase);
 		QPointF p;

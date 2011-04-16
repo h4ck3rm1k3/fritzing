@@ -4099,9 +4099,15 @@ void SketchWidget::makeDeleteItemCommandFinalSlot(ItemBase * itemBase, bool fore
 void SketchWidget::prepDeleteProps(ItemBase * itemBase, long id, const QString & newModuleID, QUndoCommand * parentCommand) 
 {
 	// TODO: does this need to be generalized to the whole set of modelpart props?
-	// TODO: LogoItem and Ruler
+	// TODO: Ruler?
 
-	switch (itemBase->itemType()) {
+	// NOTE:  prepDeleteProps is called after a swap and assumes that the new part is closely related to the old part
+	// meaning that the properties of itemBase (which is the old part) apply to the new part (which has not yet been created)
+	// this works most of the time, but does not, for example, when a ResizableBoard is swapped for a custom board shape
+
+	ModelPart * mp = (newModuleID.isEmpty()) ? itemBase->modelPart() : paletteModel()->retrieveModelPart(newModuleID);
+
+	switch (mp->itemType()) {
 		case ModelPart::Wire:
 			{
 				Wire * wire = dynamic_cast<Wire *>(itemBase);

@@ -455,6 +455,8 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastL
 		// check if it's a wire
 		QDomElement properties = root.firstChildElement("properties");
 		propertiesText = properties.text();
+
+		TextUtils::findText(root.firstChildElement("title"), title);
 	}
 
 	// FIXME: properties is nested right now
@@ -498,7 +500,7 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastL
 		type = ModelPart::Breadboard;
 	}
 	else if (propertiesText.contains("plain vanilla pcb", Qt::CaseInsensitive)) {
-		if (propertiesText.contains("shield", Qt::CaseInsensitive)) {
+		if (propertiesText.contains("shield", Qt::CaseInsensitive) || title.contains("custom", Qt::CaseInsensitive)) {
 			type = ModelPart::Board;
 		}
 		else {

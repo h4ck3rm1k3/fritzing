@@ -690,3 +690,8 @@ const QStringList & ModelPart::displayKeys() {
 
 	return m_modelPartShared->displayKeys();
 }
+
+ModelPart::ItemType ModelPart::itemType() const 
+{ 
+	return m_type; 
+};
