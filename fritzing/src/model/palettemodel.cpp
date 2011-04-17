@@ -456,7 +456,8 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastL
 		QDomElement properties = root.firstChildElement("properties");
 		propertiesText = properties.text();
 
-		TextUtils::findText(root.firstChildElement("title"), title);
+		QDomElement t = root.firstChildElement("title");
+		TextUtils::findText(t, title);
 	}
 
 	// FIXME: properties is nested right now
