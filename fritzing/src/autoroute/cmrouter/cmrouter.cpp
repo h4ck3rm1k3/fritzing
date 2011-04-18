@@ -43,13 +43,6 @@ $Date$
 //
 //	think of orderings like simulated annealing or genetic algorithms
 //
-//	placing vias
-//		if double-sided, tile both sides
-//		during the normal course of routing, whenever a space large enough for a via is found
-//		somehow include the cost of additional real estate
-//			see if there's an intersecting space on the other side
-//				if so, add that space to the path
-//
 //	option to turn off propagation feedback?
 //	remove debugging output and extra calls to processEvents
 //
@@ -74,7 +67,7 @@ $Date$
 //
 //  longer route than expected:  
 //		It is possible that the shortest tile route is actually longer than the shortest crow-fly route.  
-//		For example, in the fóllowing case, route ABC will reach goal before ABDEF:
+//		For example, in the following case, route ABC will reach goal before ABDEF:
 //                                   -------
 //                                   |  A  |  
 //      ------------------------------------
@@ -486,6 +479,15 @@ void GridEntry::setDrawn(bool d) {
 	m_drawn = d;
 }
 
+
+double Ordering::score() {
+	double s = (this->unroutedCount - this->viaCount - this->jumperCount) * 10000000;
+	s += (this->jumperCount * 10000);
+	s += (this->viaCount * 10);
+	s += this->totalViaCount;
+	return s;
+}
+
 ////////////////////////////////////////////////////////////////////
 
 CMRouter::CMRouter(PCBSketchWidget * sketchWidget) : Autorouter(sketchWidget)
@@ -638,7 +640,7 @@ void CMRouter::start()
 	bestOrdering->edges.append(edges);
 	computeMD5(bestOrdering);
 	orderings.append(bestOrdering);
-	bestOrdering->unroutedCount = edges.count() * 1;	// so runEdges doesn't bail out the first time through
+	bestOrdering->unroutedCount = edges.count() + 1;	// so runEdges doesn't bail out the first time through
 
 	QPen pen(QColor(0,0,0,0));
 	pen.setWidthF(Wire::STANDARD_TRACE_WIDTH);
@@ -653,7 +655,7 @@ void CMRouter::start()
 		if (run > 0) {
 			score = tr("best so far: %1 unrouted").arg(bestOrdering->unroutedCount);
 			if (m_sketchWidget->usesJumperItem()) {
-				score += tr("/%n jumpers", "", bestOrdering->jumperCount) + tr("/%n vias", "", bestOrdering->viaCount);
+				score += tr("/%n jumpers", "", bestOrdering->jumperCount) + tr("/%n vias", "", bestOrdering->totalViaCount);
 			}
 			emit setProgressMessage(score);
 		}
@@ -732,11 +734,12 @@ void CMRouter::start()
 
 
 bool CMRouter::reorder(QList<Ordering *> & orderings, Ordering * currentOrdering, Ordering * & bestOrdering, QByteArray & bestResult, QGraphicsLineItem * lineItem) {
-	currentOrdering->jumperCount = currentOrdering->unroutedCount = currentOrdering->viaCount = 0;
+	currentOrdering->jumperCount = currentOrdering->unroutedCount = currentOrdering->viaCount = currentOrdering->totalViaCount = 0;
 	foreach (Edge * edge, currentOrdering->edges) {
 		if (!edge->routed) currentOrdering->unroutedCount++;
 		if (edge->withJumper) currentOrdering->jumperCount++;
-		currentOrdering->viaCount = edge->viaCount;
+		if (edge->viaCount > 0) currentOrdering->viaCount++;
+		currentOrdering->totalViaCount += edge->viaCount;
 	}
 
 	if (orderings.count() > 1) {
@@ -752,24 +755,9 @@ bool CMRouter::reorder(QList<Ordering *> & orderings, Ordering * currentOrdering
 	return reorderEdges(orderings, currentOrdering, lineItem);
 }
 
-bool CMRouter::orderingImproved(Ordering * currentOrdering, Ordering * bestOrdering) {
-	if (currentOrdering->unroutedCount + currentOrdering->jumperCount < bestOrdering->unroutedCount + bestOrdering->jumperCount) {
-		return true;
-	}
-
-	if (currentOrdering->unroutedCount + currentOrdering->jumperCount > bestOrdering->unroutedCount + bestOrdering->jumperCount) {
-		return false;
-	}
-
-	if (currentOrdering->unroutedCount < bestOrdering->unroutedCount) {
-		return true;
-	}
-
-	if (currentOrdering->unroutedCount > bestOrdering->unroutedCount) {
-		return false;
-	}
-
-	return (currentOrdering->viaCount < bestOrdering->viaCount);
+bool CMRouter::orderingImproved(Ordering * currentOrdering, Ordering * bestOrdering) 
+{
+	return currentOrdering->score() < bestOrdering->score();
 }
 
 bool CMRouter::reorderEdges(QList<Ordering *> & orderings, Ordering * currentOrdering, QGraphicsLineItem * lineItem) {
@@ -780,8 +768,7 @@ bool CMRouter::reorderEdges(QList<Ordering *> & orderings, Ordering * currentOrd
 	int ix = 0;
 	while (ix < middle->edges.count()) {
 		Edge * edge = middle->edges.at(ix++);
-		if (edge->routed && !edge->withJumper) {
-			// TODO: should edges with vias get reordered?
+		if (edge->routed && !edge->withJumper && edge->viaCount == 0) {
 			continue;
 		}
 
@@ -953,9 +940,8 @@ bool CMRouter::runEdges(QList<Edge *> & edges, QVector<int> & netCounters, Routi
 	}
 
 	int edgesDone = 0;
-	int unrouted = 0;
+	Ordering tempOrdering;
 	int routed = 0;
-	int jumpers = 0;
 	foreach (Edge * edge, edges) {	
 		expand(edge->from, edge->fromConnectorItems, edge->fromTraces);
 		expand(edge->to, edge->toConnectorItems, edge->toTraces);
@@ -988,22 +974,29 @@ bool CMRouter::runEdges(QList<Edge *> & edges, QVector<int> & netCounters, Routi
 		edge->routed = propagate(queue1, queue2, tilePathUnits, keepout, completePath, m_bothSidesNow && m_sketchWidget->autorouteTypePCB());
 
 		if (edge->routed) {
-			routed++;
+			if (edge->viaCount > 0) {
+				tempOrdering.unroutedCount++;
+				tempOrdering.totalViaCount += edge->viaCount;
+				tempOrdering.viaCount++;
+				if (!orderingImproved(&tempOrdering, bestOrdering)) {
+					deletePathUnits();
+					break;
+				}
+			}
+			else {
+				routed++;
+			}
 		}
 		else {
-			if (++unrouted > bestOrdering->unroutedCount + bestOrdering->jumperCount) {
-				deletePathUnits();
-				break;
-			}
-
+			tempOrdering.unroutedCount++;
 			if (makeJumper) {
 				if (addJumperItem(queue1, queue2, edge, tilePathUnits, keepout)) {
 					edge->withJumper = edge->routed = true;
-					jumpers++;
+					tempOrdering.jumperCount++;
 				}
 			}
 
-			if ((unrouted == bestOrdering->unroutedCount + bestOrdering->jumperCount) && jumpers >= bestOrdering->jumperCount) {
+			if (!orderingImproved(&tempOrdering, bestOrdering)) {
 				deletePathUnits();
 				break;
 			}
@@ -3690,11 +3683,13 @@ void CMRouter::tracePath(CompletePath & completePath, qreal keepout)
 
 	cleanPoints(allPoints, first->plane);
 
+	qreal wireWidth = minWireWidth(completePath);
+		 
 	QList<Wire *> wires;
 	for (int i = 0; i < allPoints.count() - 1; i++) {
 		QPointF p1 = allPoints.at(i);
 		QPointF p2 = allPoints.at(i + 1);
-		Wire * trace = drawOneTrace(p1, p2, Wire::STANDARD_TRACE_WIDTH, m_specHash.value(first->plane));
+		Wire * trace = drawOneTrace(p1, p2, wireWidth, m_specHash.value(first->plane));
 		//ProcessEventBlocker::processEvents();
 		wires.append(trace);
 	}
@@ -4118,4 +4113,34 @@ Via * CMRouter::makeVia(PathUnit * pathUnit) {
 	pathUnit->edge->viaCount++;
 
 	return via;
+}
+
+qreal CMRouter::minWireWidth(CompletePath & completePath) {
+	qreal wireWidth = Wire::STANDARD_TRACE_WIDTH;
+	if (completePath.source) {
+		if (completePath.source->connectorItem) {
+			if (completePath.source->connectorItem->minDimension() < wireWidth) {
+				wireWidth = completePath.source->connectorItem->minDimension();
+			}
+		}
+		else if (completePath.source->wire) {
+			if (completePath.source->wire->width() < wireWidth) {
+				wireWidth = completePath.source->wire->width();
+			}
+		}
+	}
+	if (completePath.dest) {
+		if (completePath.dest->connectorItem) {
+			if (completePath.dest->connectorItem->minDimension() < wireWidth) {
+				wireWidth = completePath.dest->connectorItem->minDimension();
+			}
+		}
+		else if (completePath.dest->wire) {
+			if (completePath.dest->wire->width() < wireWidth) {
+				wireWidth = completePath.dest->wire->width();
+			}
+		}
+	}
+
+	return wireWidth;
 }

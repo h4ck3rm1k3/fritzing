@@ -101,7 +101,8 @@ public:
 	qreal calcClipRadius();
 	bool isEffectivelyCircular();
 	void paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
-        void debugInfo(const QString & msg);
+    void debugInfo(const QString & msg);
+	qreal minDimension();
 
 protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );

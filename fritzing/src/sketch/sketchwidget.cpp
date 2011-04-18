@@ -4118,12 +4118,14 @@ void SketchWidget::prepDeleteProps(ItemBase * itemBase, long id, const QString &
 		
 		case ModelPart::ResizableBoard:
 			{
-				ResizableBoard * rb = dynamic_cast<ResizableBoard *>(itemBase);
-				rb->saveParams();
-				QPointF p;
-				QSizeF sz;
-				rb->getParams(p, sz);
-				new ResizeBoardCommand(this, id, sz.width(), sz.height(), sz.width(), sz.height(), parentCommand);
+				ResizableBoard * brd = dynamic_cast<ResizableBoard *>(itemBase);
+				if (brd) {
+					brd->saveParams();
+					QPointF p;
+					QSizeF sz;
+					brd->getParams(p, sz);
+					new ResizeBoardCommand(this, id, sz.width(), sz.height(), sz.width(), sz.height(), parentCommand);
+				}
 				prepDeleteOtherProps(itemBase, id, newModuleID, parentCommand);
 			}
 			return;

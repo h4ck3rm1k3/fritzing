@@ -1309,3 +1309,7 @@ void ConnectorItem::debugInfo(const QString & msg)
 #endif
 }
 
+qreal ConnectorItem::minDimension() {
+	QRectF r = this->boundingRect();
+	return qMin(r.width(), r.height());
+}

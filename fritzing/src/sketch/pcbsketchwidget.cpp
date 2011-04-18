@@ -1487,10 +1487,12 @@ long PCBSketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const Q
 	if (mp->itemType() == ModelPart::ResizableBoard) {
 		// preserve the size if swapping rectangular board
 		ResizableBoard * rb = qobject_cast<ResizableBoard *>(itemBase);
-		QPointF p;
-		QSizeF sz;
-		rb->getParams(p, sz);
-		new ResizeBoardCommand(this, newID, sz.width(), sz.height(), sz.width(), sz.height(), parentCommand);
+		if (rb) {
+			QPointF p;
+			QSizeF sz;
+			rb->getParams(p, sz);
+			new ResizeBoardCommand(this, newID, sz.width(), sz.height(), sz.width(), sz.height(), parentCommand);
+		}
 		new CheckStickyCommand(this, BaseCommand::SingleView, newID, false, CheckStickyCommand::RemoveOnly, parentCommand);
 	}
 

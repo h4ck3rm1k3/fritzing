@@ -121,11 +121,14 @@ struct Ordering {
 	int unroutedCount;
 	int jumperCount;
 	int viaCount;
+	int totalViaCount;
 	QByteArray md5sum;
 
 	Ordering() {
-		unroutedCount = jumperCount = viaCount = 0;
+		unroutedCount = jumperCount = viaCount = totalViaCount = 0;
 	}
+
+	double score();
 };
 
 struct Segment {
@@ -188,7 +191,9 @@ public:
 	bool initBoard(ItemBase * board, Plane *, QList<Tile *> & alreadyTiled, qreal keepout);
 	Tile * insertTile(Plane* thePlane, QRectF &tileRect, QList<Tile *> &alreadyTiled, QGraphicsItem *, Tile::TileType type, CMRouter::OverlapType);
 	TileRect boardRect();
-        static int realToTile(qreal);
+
+public:
+    static int realToTile(qreal);
 	static void tileToQRect(Tile * tile, QRectF & rect);
 
 public slots:
@@ -282,9 +287,10 @@ protected:
 	void getViaSize(int & tWidthNeeded, int & tHeightNeeded);
 	void traceViaPath(PathUnit * from, PathUnit * to, QList<class Via *> & vias, qreal keepout);
 	void listCompletePath(CompletePath & completePath, QList<PathUnit *> & fullPath);
-        class Via * makeVia(PathUnit * pathUnit);
+    class Via * makeVia(PathUnit * pathUnit);
 	bool orderingImproved(Ordering * currentOrdering, Ordering * bestOrdering);
 	ConnectorItem * findViaConnector(ConnectorItem * viaConnectorItem);
+	qreal minWireWidth(CompletePath & completePath);
 
 protected:
 	QRectF m_maxRect;
