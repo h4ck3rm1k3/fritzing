@@ -1,8 +1,1 @@
-StackTabWidget::pane {
-	position: absolute;
-	top: 0.57em;
-}
-
-#partsEditor QTabWidget::pane {
-	top: 0.88em;
-}
+/* add Mac-specific styles here */
