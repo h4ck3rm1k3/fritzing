@@ -55,6 +55,7 @@ $Date$
 #include "items/pinheader.h"
 #include "dialogs/recoverydialog.h"
 #include "lib/qtlockedfile/qtlockedfile.h"
+#include "lib/qtsysteminfo/QtSystemInfo.h"
 #include "processeventblocker.h"
 
 // dependency injection :P
@@ -835,9 +836,9 @@ void FApplication::checkForUpdates(bool atUserRequest)
 
 	VersionChecker * versionChecker = new VersionChecker();
 
+	QSettings settings;
 	if (!atUserRequest) {
 		// if I've already been notified about these updates, don't bug me again
-		QSettings settings;
 		QString lastMainVersionChecked = settings.value("lastMainVersionChecked").toString();
 		if (!lastMainVersionChecked.isEmpty()) {
 			versionChecker->ignore(lastMainVersionChecked, false);
@@ -848,9 +849,29 @@ void FApplication::checkForUpdates(bool atUserRequest)
 		}
 	}
 
-        QString atom = QString("http://fritzing.org/download/feed/atom/%1/").arg(PLATFORM_NAME);
-        DebugDialog::debug(atom);
-        versionChecker->setUrl(atom);
+	if (settings.value("pid").isNull()) {
+		settings.setValue("pid", FolderUtils::getRandText());
+	}
+
+	QtSystemInfo systemInfo(this);
+	QString siVersion(QUrl::toPercentEncoding(Version::versionString()));
+	QString siSystemName(QUrl::toPercentEncoding(systemInfo.systemName()));
+	QString siSystemVersion(QUrl::toPercentEncoding(systemInfo.systemVersion()));
+	QString siKernelName(QUrl::toPercentEncoding(systemInfo.kernelName()));
+	QString siKernelVersion(QUrl::toPercentEncoding(systemInfo.kernelVersion()));
+	QString siArchitecture(QUrl::toPercentEncoding(systemInfo.architectureName()));
+    QString atom = QString("http://fritzing.org/download/feed/atom/%1/?pid=%2&version=%3&sysname=%4&kernname=%5&kernversion=%6&arch=%7&sysversion=%8")
+		.arg(PLATFORM_NAME)
+		.arg(settings.value("pid").toString())
+		.arg(siVersion)
+		.arg(siSystemName)
+		.arg(siKernelName)
+		.arg(siKernelVersion)
+		.arg(siArchitecture)
+		.arg(siSystemVersion)
+		;
+    DebugDialog::debug(atom);
+    versionChecker->setUrl(atom);
 	m_updateDialog->setAtUserRequest(atUserRequest);
 	m_updateDialog->setVersionChecker(versionChecker);
 

@@ -91,7 +91,8 @@ RESOURCES += phoenixresources.qrc
 	include(pri/translations.pri)
 	include(pri/program.pri)
 	include(pri/qtlockedfile.pri)
-	include(pri/ff.pri)
+	include(pri/ff.pri)	
+	include(pri/qtsysteminfo.pri)
 TARGET = Fritzing
 TEMPLATE = app
 
