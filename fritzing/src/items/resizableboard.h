@@ -44,6 +44,7 @@ public:
 	~Board();
 
 	QStringList collectValues(const QString & family, const QString & prop, QString & value);
+	void paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 public:
 	static QString oneLayerTranslated;

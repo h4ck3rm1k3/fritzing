@@ -60,6 +60,17 @@ Board::Board( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIde
 Board::~Board() {
 }
 
+void Board::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+	Q_UNUSED(widget);
+	Q_UNUSED(option);
+	painter->save();
+	painter->setOpacity(0);
+	painter->fillPath(this->hoverShape(), QBrush(hoverColor));
+	painter->restore();
+}
+
+
 QStringList Board::collectValues(const QString & family, const QString & prop, QString & value) {
 	if (prop.compare("layers", Qt::CaseInsensitive) == 0) {
 		QStringList result;
