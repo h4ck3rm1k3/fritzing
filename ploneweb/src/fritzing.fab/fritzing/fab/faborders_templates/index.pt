@@ -38,25 +38,25 @@
 		The boards are manufactured by a professional board house here in Berlin.
 		</p>
 		<h3>What you get</h3>
-		<p><ul>
+		<ul>
 		<li>Your Fritzing sketch as a professional PCB</li>
 		<li>Double-sided board with sweet black print on a white board</li>
 		<li>Quality "Made in Germany" and RoHS compliant</li>
-		</ul></p>
+		</ul>
 		<h3>How much it costs</h3>
 		<p>We charge per cm2, and the more cm2 the cheaper a cm2 gets.
-		One Arduino Shield costs you 27€, two copies will cost 25€ each, etc. See a complete price table.<br/>
-		You can opt for a "sanity check" for an extra 5€, and have us take a closer look at your design.
+		One Arduino Shield costs you 27&eur;, two copies will cost 25&eur; each, etc. See a complete price table.<br/>
+		You can opt for a "sanity check" for an extra 5&eur;, and have us take a closer look at your design.
 		</p>
 		<h3>How to get started</h3>
-		<p>This is easier than you might think:
+		<p>This is easier than you might think:</p>
 			<ol>
 			<li>1. Layout your board in Fritzing's PCB view. <a href="http://fritzing.org/learning/tutorials/designing-pcb/">Learn how.</a></li>
-			<li>2. Go through <a href="http://fritzing.org/learning/tutorials/fritzing-fab-howto/">these checks</a> to prepare it for production. <link></li>
+			<li>2. Go through <a href="http://fritzing.org/learning/tutorials/fritzing-fab-howto/">these checks</a> to prepare it for production. </li>
 			<li>3. <a class="addOrderLink" tal:attributes="href string:${context/absolute_url}/++add++faborder">Submit your order</a> and hold your patience</li>
 			<li>4. Receive your fine board and populate it with parts</li>
 			</ol>
-		</p>
+		
                   </div>
                                 
                   <div tal:condition="container/listFolderContents">
