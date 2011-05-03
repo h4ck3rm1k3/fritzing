@@ -13,16 +13,16 @@ def install_pas_plugin(self):
         pas._setObject(plugin_name, manager)
         provider = pas[plugin_name]
         provider.manage_activateInterfaces([
-            'IGroupsPlugin',
-            'IGroupEnumerationPlugin',
-            'IGroupIntrospection',
-            'IGroupManagement',
+            # 'IGroupsPlugin',
+            # 'IGroupEnumerationPlugin',
+            # 'IGroupIntrospection',
+            # 'IGroupManagement',
             'IAuthenticationPlugin',
             'IUserEnumerationPlugin',
             'IUserManagement',
-            'IUserAdderPlugin',
-            'IRolesPlugin',
-            'IRoleAssignerPlugin',
+            # 'IUserAdderPlugin',
+            # 'IRolesPlugin',
+            # 'IRoleAssignerPlugin',
             'IPropertiesPlugin',
             'IUpdatePlugin'])
 
