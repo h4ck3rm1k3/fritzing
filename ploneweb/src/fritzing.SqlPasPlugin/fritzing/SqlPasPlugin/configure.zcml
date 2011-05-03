@@ -6,6 +6,10 @@
    xmlns:db="http://namespaces.zope.org/db">
 
   <five:registerPackage package="." initialize=".initialize" />
+
+  <includeDependencies package="." />
+  <includePlugins package="." />
+
   <include package="Products.GenericSetup" file="meta.zcml" />
 
   <genericsetup:registerProfile

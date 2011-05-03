@@ -26,7 +26,9 @@ setup(name='fritzing.SqlPasPlugin',
       install_requires=[
         'setuptools',
         # -*- Extra requirements: -*-
+        'MySQL-python',
         'SQLAlchemy',
+        'Products.PlonePAS',
         'z3c.saconfig',
         'zope.sqlalchemy'
       ],
