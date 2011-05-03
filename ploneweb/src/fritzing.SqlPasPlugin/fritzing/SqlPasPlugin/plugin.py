@@ -460,9 +460,18 @@ class Plugin(BasePlugin, Cacheable):
         # (truncate if necessary--this is better than breaking the
         # application)
         if isinstance(value, basestring):
-            cspec = getattr(model.User.__table__.columns, name).type
-            if isinstance(cspec, rdb.String):
-                value = value[:cspec.length]
+            # cspec = getattr(model.User.__table__.columns, name).type
+            # doesn't work for columns declared with an attribute name that
+            # differs from the original table name, or those which actually
+            # are ordinary attributes.
+            # this seems to be better:
+            cspec = getattr(model.User, name)
+            if isinstance(cspec, basestring):
+                value = value
+            else:
+                cspec = cspec.comparator.property.columns[0].type
+                if isinstance(cspec, rdb.String):
+                    value = value[:cspec.length]
         setattr(user, name, value)
 
     @graceful_recovery()
