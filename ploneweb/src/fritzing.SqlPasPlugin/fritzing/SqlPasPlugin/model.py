@@ -70,8 +70,9 @@ class User(Base):
         primary_key=True)
     
     name = Column('username', String(30), unique=True)
-    # firstname = Column('first_name', String(30), default=u"")
-    # lastname = Column('last_name', String(30), default=u"")
+    firstname = Column('first_name', String(30), default=u"")
+    lastname = Column('last_name', String(30), default=u"")
+    fullname = u""
     email = Column(String(75), default=u"")
     password = Column(String(128))
     is_staff = Column(Boolean(), default=0)
@@ -85,9 +86,13 @@ class User(Base):
     #     RoleAssignment, collection_class=set, cascade="all, delete, delete-orphan")
     # roles = association_proxy("_roles", "name")
     
-    def __init__(self, username=None):
-        self.username = username
+    def __init__(self):
         self.date_created = datetime.datetime.now()
+    
+    from sqlalchemy import orm
+    @orm.reconstructor
+    def init_on_load(self):
+        self.fullname = u"%s %s" % (self.firstname, self.lastname)
     
     def generate_salt(self):
         return ''.join(random.sample(string.letters, 5))
@@ -105,8 +110,8 @@ class User(Base):
         return self.encrypt(password, salt) == passhash
     
     def __repr__(self):
-        return "<User id=%d username=%s>" % (
-            self.id, self.username)
+        return "<User id=%d name=%s>" % (
+            self.id, self.name)
 
 class Group(Base):
     __tablename__ = "auth_group"
