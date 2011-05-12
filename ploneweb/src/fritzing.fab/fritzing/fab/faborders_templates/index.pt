@@ -13,6 +13,7 @@
     </metal:block>
   </head>
   <body>
+    <metal:top_slot metal:fill-slot="top_slot" tal:define="dummy python:request.set('disable_border', 1)" />
     <metal:main fill-slot="main">
       <tal:main-macro metal:define-macro="main">
         <h1 class="documentFirstHeading">Fritzing Fab</h1>

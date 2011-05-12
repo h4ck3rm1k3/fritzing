@@ -35,6 +35,7 @@ td.boardPreview {
     background: #177537;
     color: #fff1b3;
     font-weight: bold;
+    border-radius: 3px;
 }
 .boardPreview span {
     background: blue;
