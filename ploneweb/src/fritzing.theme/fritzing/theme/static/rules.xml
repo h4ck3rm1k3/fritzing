@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<rules xmlns="http://namespaces.plone.org/xdv" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:css="http://namespaces.plone.org/xdv+css" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  <!-- 
+  
+  
+  FRAMEWORK
+  
+  Plone <title>, <meta> and <base> -->
+  <replace theme="/html/head/title" content="/html/head/title"/>
+  <append theme="/html/head/meta" content="/html/head"/>
+  <append theme="/html/head/base" content="/html/head"/>
+  <!-- 
+  Drop theme styles -->
+  <drop theme="/html/head/link"/>
+  <drop theme="/html/head/style"/>
+  <!-- 
+  Plone CSS -->
+  <append content="/html/head/link | /html/head/style" theme="/html/head"/>
+  <!-- 
+  Plone JS -->
+  <append content="/html/head/script" theme="/html/head"/>
+  <!-- 
+  set class- and id-attributes as on plones body-tag-->
+  <prepend content="/html/body/@class" theme="/html/body"/>
+  <prepend content="/html/body/@id" theme="/html/body"/>
+  <!-- 
+  
+  
+  NAVIGATION AND SITE INTERFACE
+  
+  personal tools -->
+  <replace css:theme="#login a" css:content="a#personaltools-login"/>
+  <drop css:theme="#login" if-content="not(//a[@id='personaltools-login'])"/>
+  <replace css:theme="#join a" css:content="a#personaltools-join"/>
+  <drop css:theme="#join" if-content="not(//a[@id='personaltools-join'])"/>
+  <replace css:theme="#logout" css:content="#personaltools-logout"/>
+  <replace css:theme="#preferences" css:content="#personaltools-preferences"/>
+  <replace css:theme="#plone-setup" css:content="#personaltools-plone_setup"/>
+  <!-- 
+  logo block
+  (just use the code plone provides: customize the logo in the zmi.) -->
+  <!-- <replace css:theme="#portal-logo" css:content="#portal-logo"/> -->
+  <!-- 
+  logo href only
+  (if you chose to use the themes built-in logo) -->
+  <prepend content="//*[@id='portal-logo']/@href" theme="//*[@id='portal-logo']"/>
+  <!-- 
+  searchbox -->
+  <prepend css:theme="#logo-wrapper" css:content="#portal-searchbox"/>
+  <drop content="//*[@id='portal-searchbox']//*[contains(@class, 'searchButton')]"/>
+  <drop content="//*[@id='portal-searchbox']//*[contains(@class, 'searchSection')]"/>
+  <!-- 
+  main menu -->
+  <replace css:content="#portal-globalnav" css:theme="#portal-globalnav"/>
+  <!-- 
+  copy child elements list from portlet to selected main menu item -->
+  <xsl:template match="@*|node()">
+    <xsl:copy>
+      <xsl:apply-templates select="@*|node()"/>
+    </xsl:copy>
+  </xsl:template>
+  <xsl:template match="//*[@id='portal-globalnav']//*[contains(@class, 'selected')]">
+    <li>
+      <xsl:apply-templates select="@* | *"/>
+      <ul class="subnav">
+        <xsl:for-each select="//*[contains(@class, 'navTreeLevel0')]/li">
+          <li>
+            <xsl:if test="contains(@class, 'navTreeCurrentNode')">
+              <xsl:attribute name="class">selected</xsl:attribute>
+            </xsl:if>
+            <a href="{a/@href}">
+              <xsl:apply-templates select="a/span"/>
+            </a>
+          </li>
+        </xsl:for-each>
+      </ul>
+    </li>
+  </xsl:template>
+  <!-- 
+  
+  
+  CONTENT
+  
+  -->
+  <drop css:theme="#fritzing-content *"/>
+  <append css:theme="#fritzing-content" css:content="#edit-bar"/>
+  <append css:theme="#fritzing-content" css:content="#kssPortalMessage"/>
+  <append css:theme="#fritzing-content" css:content="#content"/>
+</rules>

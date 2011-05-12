@@ -1,0 +1,144 @@
+/* Fritzing Stylesheet
+   
+   depends on the Sunbird theme.
+   
+*/
+
+body {
+    font-size: 10pt;
+}
+
+#fritzing-content a:link, 
+#fritzing-content a:visited {
+    color: #962320 !important;
+}
+#fritzing-content a:link:hover {
+    color: #cc5447 !important;
+    border-bottom-color: #962320;
+}
+
+#portal-header {
+    margin-bottom: 4.5em;
+}
+
+#meta-wrapper {
+    width: 100%;
+    background-color: #9ebea7;
+    font-size: 85%;
+}
+#meta,
+#logo-wrapper,
+#portal-globalnav,
+#fritzing-content {
+    margin: 0 auto;
+    width: 960px;
+}
+
+#logo-wrapper {
+    margin-top: 9ex;
+    margin-bottom: 3ex;
+}
+
+#portal-logo {
+    margin: 0px;
+}
+
+#portal-personaltools {
+    float: right;
+    clear: right;
+    white-space: nowrap;
+    /* reset sunbursts styles: */
+    background: none repeat scroll 0 0 transparent;
+    font-size: 100%;
+    padding: 0;
+    position: inherit;
+    border-radius: 0;
+}
+#related-sites a,
+#portal-personaltools a {
+    display: inline-block;
+    padding: .2em .6em;
+    color: white;
+}
+#related-sites li:before,
+#portal-personaltools li:before {
+    content: "\\";
+    color: white;
+}
+#related-sites li:first-child:before,
+#portal-personaltools li:first-child:before {
+    content: "";
+}
+
+#related-sites a.active {
+    font-weight: bold;
+}
+#related-sites a:hover,
+#portal-personaltools a:hover {
+    text-decoration: underline;
+}
+
+input#searchGadget {
+    width: 170px;
+    padding: .1em;
+    padding-right: 16px;
+    background: url(../img/searchField.png) top right no-repeat;
+}
+
+#portal-globalnav {
+    background: #962320;
+    font-size: 100%;
+}
+#portal-globalnav ul.subnav {
+    background: #cc5447;
+    position: absolute;
+}
+#portal-globalnav li {
+    display: inline-block;
+}
+#portal-globalnav li > a,
+#portal-globalnav ul.subnav li > a {
+    min-width: 0;
+    border: none;
+    padding: .2em .6em;
+    color: white;
+    background: transparent;
+}
+#portal-globalnav li:before,
+#portal-globalnav ul.subnav li:before {
+    content: "\\";
+    color: white;
+}
+#portal-globalnav li:first-child:before,
+#portal-globalnav ul.subnav li:first-child:before {
+    content: " "; /* webkit needs a space here */
+}
+#portal-globalnav li > a:hover,
+#portal-globalnav ul.subnav li > a:hover {
+    color: white;
+    text-decoration: underline;
+    background: transparent;
+}
+#portal-globalnav li.selected > a,
+#portal-globalnav ul.subnav li.selected > a {
+    color: white;
+    font-weight: bold;
+    background: transparent;
+}
+#portal-globalnav li.selected > a:hover,
+#portal-globalnav ul.subnav li.selected > a:hover {
+    color: white;
+    background: transparent;
+}
+
+#content fieldset {
+    border-color: #cc5447;
+}
+
+#edit-bar,
+#content-views,
+#contentActionMenus,
+#contentActionMenus dl.actionMenu a, #contentActionMenus dl.actionMenu.activated dd {
+    border-color: #ddd;
+    background-color: #ddd;
+}

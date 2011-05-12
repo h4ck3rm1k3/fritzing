@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<object name="portal_css">
+
+ <!-- Re-set conditions on stylesheets we don't want to pull in -->
+ <!-- <stylesheet
+     expression=""
+     id="public.css"
+     /> -->
+
+ <!-- Newly added stylesheets seem to be removed automatically -->
+
+
+</object>

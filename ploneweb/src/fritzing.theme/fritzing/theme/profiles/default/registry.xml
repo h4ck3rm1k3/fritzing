@@ -1,0 +1,29 @@
+<registry>
+
+    <!-- collective.xdv settings -->
+
+    <record interface="collective.xdv.interfaces.ITransformSettings" field="enabled">
+        <value>True</value>
+    </record>
+
+    <record interface="collective.xdv.interfaces.ITransformSettings" field="domains">
+        <value>
+            <element>fritzing.org</element>
+            <element>fritzing.org:8080</element>
+            <element>f.plone.local:8080</element>
+        </value>
+    </record>
+
+    <record interface="collective.xdv.interfaces.ITransformSettings" field="rules">
+        <value>python://fritzing.theme/static/rules.xml</value>
+    </record>
+
+    <record interface="collective.xdv.interfaces.ITransformSettings" field="theme">
+        <value>python://fritzing.theme/static/theme.html</value>
+    </record>
+
+    <record interface="collective.xdv.interfaces.ITransformSettings" field="absolute_prefix">
+        <value>/++resource++fritzing.theme</value>
+    </record>
+
+</registry>

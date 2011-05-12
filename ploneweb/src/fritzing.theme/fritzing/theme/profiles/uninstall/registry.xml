@@ -1,0 +1,26 @@
+<registry>
+
+    <!-- collective.xdv settings -->
+
+    <record interface="collective.xdv.interfaces.ITransformSettings" field="enabled">
+        <value>False</value>
+    </record>
+
+    <record interface="collective.xdv.interfaces.ITransformSettings" field="domains">
+        <value>
+        </value>
+    </record>
+
+    <record interface="collective.xdv.interfaces.ITransformSettings" field="rules">
+        <value></value>
+    </record>
+
+    <record interface="collective.xdv.interfaces.ITransformSettings" field="theme">
+        <value></value>
+    </record>
+
+    <record interface="collective.xdv.interfaces.ITransformSettings" field="absolute_prefix">
+        <value></value>
+    </record>
+
+</registry>
