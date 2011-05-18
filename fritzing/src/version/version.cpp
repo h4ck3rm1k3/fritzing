@@ -24,7 +24,7 @@ $Date$
 
 ********************************************************************/
 						
-#include "version.h"			
+#include "version.h"		
 
 #include <QString>
 #include <QStringList>	
@@ -33,7 +33,7 @@ $Date$
 	
 QString Version::m_majorVersion("0");				
 QString Version::m_minorVersion("5");
-QString Version::m_minorSubVersion("3");
+QString Version::m_minorSubVersion("4");
 QString Version::m_modifier("b");
 QString Version::m_svnRevision("$Revision$:");
 QString Version::m_svnDate("$Date$");

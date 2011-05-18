@@ -304,7 +304,9 @@ void PaletteItemBase::setUpConnectors(FSvgRenderer * renderer, bool ignoreTermin
 		if (svgIdLayer == NULL) continue;
 
 		bool result = renderer->setUpConnector(svgIdLayer, ignoreTerminalPoints);
-		if (!result) continue;
+		if (!result) {
+			continue;
+		}
 
 		//DebugDialog::debug(QString("<rect view=\"%6\" id=\"%1pin\" x=\"%2\" y=\"%3\" width=\"%4\" height=\"%5\" />")
 						   //.arg(connector->connectorSharedID())
@@ -322,6 +324,7 @@ void PaletteItemBase::setUpConnectors(FSvgRenderer * renderer, bool ignoreTermin
 			//.arg(ViewLayer::viewLayerNameFromID(m_viewLayerID))
 			//.arg(this->zValue()) );
 
+		connectorItem->setHybrid(svgIdLayer->m_hybrid);
 		connectorItem->setRect(svgIdLayer->m_rect);
 		connectorItem->setTerminalPoint(svgIdLayer->m_point);
 		connectorItem->setRadius(svgIdLayer->m_radius, svgIdLayer->m_strokeWidth);

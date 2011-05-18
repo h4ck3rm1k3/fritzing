@@ -103,6 +103,8 @@ public:
 	void paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
     void debugInfo(const QString & msg);
 	qreal minDimension();
+	void setHybrid(bool);
+	bool isHybrid();
 
 protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
@@ -136,6 +138,7 @@ protected:
 	bool m_hoverEnterSpaceBarWasPressed;
 	bool m_checkedEffectively;
 	bool m_marked;
+	bool m_hybrid;
 	
 protected:	
 	static QList<ConnectorItem *>  m_equalPotentialDisplayItems;

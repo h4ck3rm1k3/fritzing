@@ -1319,7 +1319,7 @@ QByteArray SketchWidget::removeOutsideConnections(const QByteArray & itemData, Q
 							foreach (QDomElement connect, toDelete) {
 								QDomNode removed = connects.removeChild(connect);
 								if (removed.isNull()) {
-									DebugDialog::debug("shit");
+									DebugDialog::debug("removed is null");
 								}
 							}
 						}

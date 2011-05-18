@@ -58,6 +58,7 @@ static double MAX_DOUBLE = std::numeric_limits<double>::max();
 ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 	: NonConnectorItem(attachedTo)
 {
+	m_hybrid = false;
 	m_marked = false;
 	m_checkedEffectively = false;
 	m_hoverEnterSpaceBarWasPressed = m_spaceBarWasPressed = false;
@@ -514,7 +515,17 @@ const QList< QPointer<ConnectorItem> > & ConnectorItem::connectedToItems() {
 
 void ConnectorItem::setHidden(bool hide) {
 	m_hidden = hide;
+
 	setHiddenOrInactive();
+}
+
+void ConnectorItem::setHybrid(bool h) {
+	m_hybrid = h;
+	setHiddenOrInactive();
+}
+
+bool ConnectorItem::isHybrid() {
+	return m_hybrid;
 }
 
 void ConnectorItem::setInactive(bool inactivate) {
@@ -523,7 +534,7 @@ void ConnectorItem::setInactive(bool inactivate) {
 }
 
 void ConnectorItem::setHiddenOrInactive() {
-	if (m_hidden || m_inactive) {
+	if (m_hidden || m_inactive || m_hybrid) {
 		this->setAcceptedMouseButtons(Qt::NoButton);
 		this->unsetCursor();
 		setAcceptHoverEvents(false);
@@ -904,6 +915,10 @@ void ConnectorItem::collectParts(QList<ConnectorItem *> & connectorItems, QList<
 	}
 	
 	foreach (ConnectorItem * connectorItem, connectorItems) {
+		if (connectorItem->isHybrid()) {
+			continue;
+		}
+
 		ItemBase * candidate = connectorItem->attachedTo();
 		switch (candidate->itemType()) {
 			case ModelPart::Symbol:
@@ -1110,6 +1125,8 @@ bool ConnectorItem::isCrossLayerFrom(ConnectorItem * candidate) {
 
 void ConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget ) 
 {
+	if (m_hybrid) return;
+
 	if (!m_checkedEffectively) {
 		if (!m_circular && m_shape.isEmpty()) {
 			if (this->attachedTo()->viewIdentifier() == ViewIdentifierClass::PCBView) {
