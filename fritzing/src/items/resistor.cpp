@@ -34,6 +34,7 @@ $Date$
 #include "../svg/svgfilesplitter.h"
 #include "../commands.h"
 #include "../layerattributes.h"
+#include "moduleidnames.h"
 #include "partlabel.h"
 
 #include <qmath.h>
@@ -41,7 +42,7 @@ $Date$
 
 static QString BreadboardLayerTemplate = "";
 static QStringList Resistances;
-static QStringList PinSpacings;
+static QHash<QString, QString> PinSpacings;
 static QHash<int, QColor> ColorBands;
 static QString OhmSymbol(QChar(0x03A9));
 static QRegExp Digits("(\\d)+");
@@ -68,7 +69,13 @@ Resistor::Resistor( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier v
 	}
 
 	if (PinSpacings.count() == 0) {
-		PinSpacings << "300 mil" << "400 mil" << "500 mil" << "600 mil" << "800 mil";
+		PinSpacings.insert("100 mil (stand-up right)", "pcb/axial_stand0_2_100mil_pcb.svg");
+		PinSpacings.insert("100 mil (stand-up left)", "pcb/axial_stand1_2_100mil_pcb.svg");
+		PinSpacings.insert("300 mil", "pcb/axial_lay_2_300mil_pcb.svg");
+		PinSpacings.insert("400 mil", "pcb/axial_lay_2_400mil_pcb.svg");
+		PinSpacings.insert("500 mil", "pcb/axial_lay_2_500mil_pcb.svg");
+		PinSpacings.insert("600 mil", "pcb/axial_lay_2_600mil_pcb.svg");
+		PinSpacings.insert("800 mil", "pcb/axial_lay_2_800mil_pcb.svg");
 	}
 
 	if (ColorBands.count() == 0) {
@@ -138,18 +145,16 @@ void Resistor::setResistance(QString resistance, QString pinSpacing, bool force)
 				InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 				if (infoGraphicsView == NULL) break;
 
-				// hack the dom element and call setUpImage
-				FSvgRenderer::removeFromHash(moduleID(), "");
+				if (moduleID().compare(ModuleIDNames::ResistorModuleIDName) != 0) break;
+
 				QDomElement element = LayerAttributes::getSvgElementLayers(modelPart()->domDocument(), m_viewIdentifier);
 				if (element.isNull()) break;
 
-				QString filename = element.attribute("image");
+				// hack the dom element and call setUpImage
+				FSvgRenderer::removeFromHash(moduleID(), "");
+				QString filename = PinSpacings.value(pinSpacing, "");
 				if (filename.isEmpty()) break;
 
-				if (pinSpacing.indexOf(Digits) < 0) break;
-
-				QString newSpacing = Digits.cap(0);		
-				filename.replace(DigitsMil, newSpacing + "mil");
 				element.setAttribute("image", filename);
 
 				m_changingPinSpacing = true;
@@ -314,7 +319,7 @@ bool Resistor::canEditPart() {
 QStringList Resistor::collectValues(const QString & family, const QString & prop, QString & value) {
 	if (prop.compare("pin spacing", Qt::CaseInsensitive) == 0) {
 		QStringList values;
-		foreach (QString f, PinSpacings) {
+		foreach (QString f, PinSpacings.keys()) {
 			values.append(f);
 		}
 		value = m_pinSpacing;
