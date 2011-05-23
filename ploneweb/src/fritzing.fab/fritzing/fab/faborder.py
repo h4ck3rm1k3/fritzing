@@ -144,28 +144,14 @@ class PayPalCheckout(grok.View):
 
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent
 @grok.subscribe(IFabOrder, IObjectModifiedEvent)
-def modifiedHandler(faborder, event):
-    
-    # shipping and taxes
-    if faborder.shipTo == u'germany':
-        faborder.priceShipping = 4.5
-        faborder.taxesPercent = 19
-    elif faborder.shipTo == u'eu':
-        faborder.priceShipping = 7
-        faborder.taxesPercent = 19
-    else:
-        faborder.priceShipping = 14
-        faborder.taxesPercent = 0
-    
+def orderModifiedHandler(faborder, event):
     recalculatePrices(faborder)
-    
-    # TODO: for testing we rely on the constraints to validatate the fields
 
 
 from zope.app.container.interfaces import IObjectMovedEvent
 @grok.subscribe(ISketch, IObjectModifiedEvent)
 @grok.subscribe(ISketch, IObjectMovedEvent)
-def modifiedHandler(sketch, event):
+def sketchModifiedHandler(sketch, event):
     faborder = sketch.aq_parent
     
     # sum up the areas of all sketches and the number of quality checks
@@ -193,6 +179,18 @@ def recalculatePrices(faborder):
     faborder.priceNetto = faborder.area * faborder.pricePerSquareCm
     faborder.priceQualityChecksNetto = faborder.numberOfQualityChecks * 10.0
     faborder.priceTotalNetto = faborder.priceNetto + faborder.priceQualityChecksNetto
+    
+    # shipping and taxes
+    faborders = faborder.aq_parent
+    faborder.priceShipping = faborders.shippingWorld
+    faborder.taxesPercent = faborders.taxesWorld
+    if faborder.shipTo == u'germany':
+        faborder.priceShipping = faborders.shippingGermany
+        faborder.taxesPercent = faborders.taxesGermany
+    elif faborder.shipTo == u'eu':
+        faborder.priceShipping = faborders.shippingEU
+        faborder.taxesPercent = faborders.taxesEU
+    
     faborder.taxes = faborder.priceTotalNetto * faborder.taxesPercent / 100.0
     faborder.priceTotalBrutto = faborder.priceTotalNetto + faborder.taxes + faborder.priceShipping
 

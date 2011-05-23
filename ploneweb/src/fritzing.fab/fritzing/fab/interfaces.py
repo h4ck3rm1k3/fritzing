@@ -76,6 +76,7 @@ class IFabOrder(form.Schema):
     
     form.omitted(
         'telephone',
+        'isOrdered', 
         'isPaid', 
         'userId', 
         'area', 
