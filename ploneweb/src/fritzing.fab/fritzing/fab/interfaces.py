@@ -227,10 +227,12 @@ class IFabOrders(form.Schema):
     
     nextProductionDelivery = Date(
         title = _(u"Next production delivery date"),
-        description = _(u"Estimated delivery date of PCBs from the next production"))
+        description = _(u"Estimated delivery date of PCBs from the next production"),
+        required = False)
     
     nextProductionClosingDate= Date(
         title = _(u"Next production closing date"),
-        description = _(u"Orders must be send in before this date to be included in the next production run"))
+        description = _(u"Orders must be send in before this date to be included in the next production run"),
+        required = False)
 
 
