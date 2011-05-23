@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<object name="portal_workflow" meta_type="Plone Workflow Tool">
+ <property
+    name="title">Contains workflow definitions for your portal</property>
+ <object name="fritzing_fab_portal_workflow" meta_type="Workflow"/>
+ <bindings>
+  <type type_id="faborders">
+   <bound-workflow workflow_id="fritzing_fab_portal_workflow"/>
+  </type>
+ </bindings>
+</object>

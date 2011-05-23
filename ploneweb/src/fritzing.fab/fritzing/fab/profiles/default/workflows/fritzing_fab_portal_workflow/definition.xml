@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<dc-workflow workflow_id="fritzing_fab_portal_workflow" title="Fritzing Fab Portal Workflow" description="fritzing_fab_portal_workflow" state_variable="review_state" initial_state="private" manager_bypass="True">
+ <permission>Access contents information</permission>
+ <permission>Modify portal content</permission>
+ <permission>View</permission>
+ <permission>Add portal content</permission>
+ <state state_id="private" title="Private">
+  <description>Can only be seen and edited by the owner.</description>
+  <exit-transition transition_id="publish"/>
+  <permission-map name="Access contents information" acquired="True">
+   <permission-role>Manager</permission-role>
+   <permission-role>Owner</permission-role>
+   <permission-role>Site Administrator</permission-role>
+  </permission-map>
+  <permission-map name="Add portal content" acquired="True">
+   <permission-role>Manager</permission-role>
+   <permission-role>Owner</permission-role>
+   <permission-role>Site Administrator</permission-role>
+  </permission-map>
+  <permission-map name="Modify portal content" acquired="True">
+   <permission-role>Manager</permission-role>
+   <permission-role>Owner</permission-role>
+   <permission-role>Site Administrator</permission-role>
+  </permission-map>
+  <permission-map name="View" acquired="True">
+   <permission-role>Manager</permission-role>
+   <permission-role>Owner</permission-role>
+   <permission-role>Site Administrator</permission-role>
+  </permission-map>
+ </state>
+ <state state_id="published" title="Published">
+  <description>Visible to everyone, not editable by the owner.</description>
+  <exit-transition transition_id="hide"/>
+  <permission-map name="Access contents information" acquired="False">
+   <permission-role>Anonymous</permission-role>
+  </permission-map>
+  <permission-map name="Add portal content" acquired="False">
+   <permission-role>Member</permission-role>
+  </permission-map>
+  <permission-map name="Modify portal content" acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Owner</permission-role>
+   <permission-role>Site Administrator</permission-role>
+  </permission-map>
+  <permission-map name="View" acquired="False">
+   <permission-role>Anonymous</permission-role>
+  </permission-map>
+ </state>
+ <transition transition_id="hide" title="Make private" new_state="private" trigger="USER" before_script="" after_script="">
+  <description>Making an item private means that it will not be visible to anyone but the owner and the site administrator.</description>
+  <action url="%(content_url)s/content_status_modify?workflow_action=hide" category="workflow" icon="">Make private</action>
+  <guard>
+   <guard-permission>Modify portal content</guard-permission>
+  </guard>
+ </transition>
+ <transition transition_id="publish" title="Publish" new_state="published" trigger="USER" before_script="" after_script="">
+  <description>Allow members to use this Fab-Instance</description>
+  <action url="%(content_url)s/content_status_modify?workflow_action=publish" category="workflow" icon="">Publish</action>
+  <guard>
+   <guard-permission>Modify portal content</guard-permission>
+   <guard-role>Manager</guard-role>
+  </guard>
+ </transition>
+</dc-workflow>
