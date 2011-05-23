@@ -36,7 +36,7 @@ SVG2gerber::SVG2gerber()
 {
 }
 
-void SVG2gerber::convert(const QString & svgStr, bool doubleSided, const QString & mainLayerName, const QString & maskLayerName)
+int SVG2gerber::convert(const QString & svgStr, bool doubleSided, const QString & mainLayerName, const QString & maskLayerName, bool forOutline)
 {
     m_SVGDom = QDomDocument("svg");
     QString errorStr;
@@ -78,7 +78,7 @@ void SVG2gerber::convert(const QString & svgStr, bool doubleSided, const QString
     temp = m_SVGDom.toString();
 #endif
 
-    renderGerber(doubleSided, mainLayerName, maskLayerName);
+    return renderGerber(doubleSided, mainLayerName, maskLayerName, forOutline);
 }
 
 QString SVG2gerber::getGerber(){
@@ -97,7 +97,7 @@ QString SVG2gerber::getNCDrill(){
     return m_drill_header + m_drill_paths + m_drill_slots + m_drill_footer;
 }
 
-void SVG2gerber::renderGerber(bool doubleSided, const QString & mainLayerName, const QString & maskLayerName){
+int SVG2gerber::renderGerber(bool doubleSided, const QString & mainLayerName, const QString & maskLayerName, bool forOutline){
     // human readable description comments
     m_gerber_header = "G04 MADE WITH FRITZING*\n";
     m_gerber_header += "G04 WWW.FRITZING.ORG*\n";
@@ -139,7 +139,7 @@ void SVG2gerber::renderGerber(bool doubleSided, const QString & mainLayerName, c
 
 
     // define apertures and draw em
-    allPaths2gerber();
+    int invalidCount = allPaths2gerber(forOutline);
 
     // label our layers
     m_gerber_header += QString("%LN%1*%\n").arg(mainLayerName.toUpper());
@@ -165,6 +165,8 @@ void SVG2gerber::renderGerber(bool doubleSided, const QString & mainLayerName, c
     m_soldermask_paths += "M02*";
     m_contour_paths += "M02*";
 
+
+	return invalidCount;
 }
 
 void SVG2gerber::normalizeSVG(){
@@ -247,13 +249,24 @@ QMatrix SVG2gerber::parseTransform(QDomElement element){
     return transform;
 }
 
-void SVG2gerber::allPaths2gerber() {
+int SVG2gerber::allPaths2gerber(bool forOutline) {
+	int invalidPathsCount = 0;
     QHash<QString, QString> apertureMap;
     QString current_dcode;
     int dcode_index = 10;
     bool light_on = false;
     int currentx = -1;
     int currenty = -1;
+
+    // if this is the board outline, use it as the contour
+    if (forOutline) {
+        DebugDialog::debug("drawing board outline");
+        // add circular aperture with 0 width
+        m_gerber_header += "%ADD10C,0.008*%\n";
+
+        // switch aperture
+        m_gerber_paths += "G54D10*\n";
+    }
 
     // iterates through all circles, rects, lines and paths
     //  1. check if we already have an aperture
@@ -309,15 +322,18 @@ void SVG2gerber::allPaths2gerber() {
             dcode_index++;
         }
 
-        QString dcode = apertureMap[aperture];
-        if(current_dcode != dcode){
-            //switch to correct aperture
-            m_gerber_paths += "G54D" + dcode + "*\n";
-            m_soldermask_paths += "G54D" + dcode + "*\n";
-            if(drill_aperture != "")
-                m_drill_paths += "T" + dcode + "\n";
-            current_dcode = dcode;
-        }
+		if (!forOutline) {
+			QString dcode = apertureMap[aperture];
+			if(current_dcode != dcode){
+				//switch to correct aperture
+				m_gerber_paths += "G54D" + dcode + "*\n";
+				m_soldermask_paths += "G54D" + dcode + "*\n";
+				if(drill_aperture != "")
+					m_drill_paths += "T" + dcode + "\n";
+				current_dcode = dcode;
+			}
+		}
+
         //flash
         m_gerber_paths += "X" + cx + "Y" + cy + "D03*\n";
         m_soldermask_paths += "X" + cx + "Y" + cy + "D03*\n";
@@ -370,17 +386,21 @@ void SVG2gerber::allPaths2gerber() {
             dcode_index++;
         }
 
-        QString dcode = apertureMap[aperture];
-        if(current_dcode != dcode){
-            //switch to correct aperture
-            m_gerber_paths += "G54" + dcode + "*\n";
-            m_soldermask_paths += "G54" + dcode + "*\n";
-            current_dcode = dcode;
-        }
+		if (!forOutline) {
+			QString dcode = apertureMap[aperture];
+			if(current_dcode != dcode){
+				//switch to correct aperture
+				m_gerber_paths += "G54" + dcode + "*\n";
+				m_soldermask_paths += "G54" + dcode + "*\n";
+				current_dcode = dcode;
+			}
+		}
         //flash
         m_gerber_paths += "X" + cx + "Y" + cy + "D03*\n";
         m_soldermask_paths += "X" + cx + "Y" + cy + "D03*\n";
 
+
+		/*
         // if this is the board outline, use it as the contour
         if(rect.attribute("id").toLower() == "boardoutline"){
             // add circular aperture with 0 width
@@ -397,6 +417,7 @@ void SVG2gerber::allPaths2gerber() {
             m_contour_paths += "X" + QString::number(qRound(x)) + "Y" + QString::number(qRound(y)) + "D01*\n";
             m_contour_paths += "D02*\n";
         }
+		*/
     }
 
     // polys - NOTE: assumes comma- or space- separated formatting
@@ -413,7 +434,7 @@ void SVG2gerber::allPaths2gerber() {
 		QString mask_aperture;
 
         // set poly fill if this is actually a filled in shape
-        if(polygon.hasAttribute("fill") && !(polygon.hasAttribute("stroke"))){
+        if(!forOutline && polygon.hasAttribute("fill") && !(polygon.hasAttribute("stroke"))){
             // start poly fill
             m_gerber_paths += "G36*\n";
 			aperture = QString("C,%1").arg(1/1000.0, 0, 'f');
@@ -435,12 +456,14 @@ void SVG2gerber::allPaths2gerber() {
 			dcode_index++;
 		}
 
-		QString dcode = apertureMap[aperture];
-		if(current_dcode != dcode){
-			//switch to correct aperture
-			m_gerber_paths += "G54" + dcode + "*\n";
-			m_soldermask_paths += "G54" + dcode + "*\n";
-			current_dcode = dcode;
+		if (!forOutline) {
+			QString dcode = apertureMap[aperture];
+			if(current_dcode != dcode){
+				//switch to correct aperture
+				m_gerber_paths += "G54" + dcode + "*\n";
+				m_soldermask_paths += "G54" + dcode + "*\n";
+				current_dcode = dcode;
+			}
 		}
 
         int startx = qRound(pointList.at(0).toDouble());
@@ -462,7 +485,7 @@ void SVG2gerber::allPaths2gerber() {
         m_soldermask_paths += "X" + QString::number(startx) + "Y" + QString::number(starty) + "D01*\n";
 
         // stop poly fill if this is actually a filled in shape
-        if(polygon.hasAttribute("fill") && !(polygon.hasAttribute("stroke"))){
+        if(!forOutline && polygon.hasAttribute("fill") && !(polygon.hasAttribute("stroke"))){
             // stop poly fill
             m_gerber_paths += "G37*\n";
         }
@@ -503,12 +526,15 @@ void SVG2gerber::allPaths2gerber() {
             }
         }
 
-        QString dcode = apertureMap[aperture];
-        if(current_dcode != dcode){
-            //switch to correct aperture
-            m_gerber_paths += "G54" + dcode + "*\n";
-            current_dcode = dcode;
-        }
+		if (!forOutline) {
+			QString dcode = apertureMap[aperture];
+			if(current_dcode != dcode){
+				//switch to correct aperture
+				m_gerber_paths += "G54" + dcode + "*\n";
+				current_dcode = dcode;
+			}
+		}
+
         //go to start - light off
         m_gerber_paths += "X" + QString::number(x1) + "Y" + QString::number(y1) + "D02*\n";
         //go to end point - light on
@@ -541,11 +567,13 @@ void SVG2gerber::allPaths2gerber() {
 
         // only add paths if they contained gerber-izable path commands (NO CURVES!)
         // TODO: display some informative error for the user
-        if(pathUserData.string.contains("INVALID"))
+        if(pathUserData.string.contains("INVALID")) {
+			invalidPathsCount++;
             continue;
+		}
 
         // set poly fill if this is actually a filled in shape
-        if(path.hasAttribute("fill") && !(path.hasAttribute("stroke"))){
+        if(!forOutline && path.hasAttribute("fill") && !(path.hasAttribute("stroke"))){
             // start poly fill
             m_gerber_paths += "G36*\n";
         }
@@ -564,6 +592,8 @@ void SVG2gerber::allPaths2gerber() {
         m_gerber_paths += pathUserData.string;
 
         DebugDialog::debug("path id: " + path.attribute("id"));
+
+		/*
         // if this is the board outline, use it as the contour
         if(path.attribute("id").toLower() == "boardoutline"){
             DebugDialog::debug("drawing board outline");
@@ -577,12 +607,16 @@ void SVG2gerber::allPaths2gerber() {
             m_contour_paths += pathUserData.string;
         }
 
+		*/
+
         // stop poly fill if this is actually a filled in shape
-        if(path.hasAttribute("fill") && !(path.hasAttribute("stroke"))){
+        if(!forOutline && path.hasAttribute("fill") && !(path.hasAttribute("stroke"))){
             // stop poly fill
             m_gerber_paths += "G37*\n";
         }
     }
+
+	return invalidPathsCount;
 }
 
 void SVG2gerber::handleOblongPath(QDomElement & path, int & dcode_index) {

@@ -239,12 +239,7 @@ QString Hole::makeSvg(const QString & holeDiameter, const QString & ringThicknes
 	svg += QString("<g id='%1'>").arg(ViewLayer::viewLayerXmlNameFromID(viewLayerID));
 	
 	QString id = makeID();
-	if (rt == 0) {
-		svg += QString("<circle cx='%1' cy='%1' r='%1' fill='black' id='%2' />")
-					.arg(hd / 2)
-					.arg(id);
-	}
-	else if (hd == 0) {
+	if (hd == 0) {
 		svg += QString("<circle cx='%1' cy='%1' r='%1' fill='%2' id='%3' />")
 					.arg(rt)
 					.arg(setColor)
@@ -257,7 +252,7 @@ QString Hole::makeSvg(const QString & holeDiameter, const QString & ringThicknes
 			.arg(rt)
 			.arg(setColor)
 			.arg(id);
-		svg += QString("<circle drill='0' fill='black' cx='%1' cy='%1' r='%2' stroke-width='0'  />")   // set the drill attribute for gerber translation
+		svg += QString("<circle drill='0' fill='black' cx='%1' cy='%1' r='%2' stroke-width='0'  />")   // set the drill attribute to 0 for gerber translation
 			.arg((hd / 2) + rt)
 			.arg(hd / 2);
 	}

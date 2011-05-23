@@ -78,22 +78,20 @@ void MainWindow::exportToGerber(const QString & exportDir, ItemBase * board, boo
 		return;
 	}
 
-	// TODO:  need copper1 (.gbl) mask (.gbs) 
-
 	LayerList viewLayerIDs = ViewLayer::copperLayers(ViewLayer::Bottom);
-	doCopper(board, viewLayerIDs, "Copper0", "_copperTop.gtl", "_maskTop.gts", true, exportDir, displayMessageBoxes);
+	int copperInvalidCount = doCopper(board, viewLayerIDs, "Copper0", "_copperTop.gtl", "_maskTop.gts", true, exportDir, displayMessageBoxes);
 
 	if (m_pcbGraphicsView->boardLayers() == 2) {
 		viewLayerIDs = ViewLayer::copperLayers(ViewLayer::Top);
-		doCopper(board, viewLayerIDs, "Copper1", "_copperBottom.gbl", "_maskBottom.gbs", false, exportDir, displayMessageBoxes);
+		copperInvalidCount += doCopper(board, viewLayerIDs, "Copper1", "_copperBottom.gbl", "_maskBottom.gbs", false, exportDir, displayMessageBoxes);
 	}
 
     LayerList silkLayerIDs;
     silkLayerIDs << ViewLayer::Silkscreen1  << ViewLayer::Silkscreen1Label;
-	doSilk(silkLayerIDs, "Silk1", "_silkBottom.gbo", board, exportDir, displayMessageBoxes);
+	int silkInvalidCount = doSilk(silkLayerIDs, "Silk1", "_silkBottom.gbo", board, exportDir, displayMessageBoxes);
     silkLayerIDs.clear();
     silkLayerIDs << ViewLayer::Silkscreen0  << ViewLayer::Silkscreen0Label;
-	doSilk(silkLayerIDs, "Silk0", "_silkTop.gto", board, exportDir, displayMessageBoxes);
+	silkInvalidCount += doSilk(silkLayerIDs, "Silk0", "_silkTop.gto", board, exportDir, displayMessageBoxes);
 
     // now do it for the outline/contour
     LayerList outlineLayerIDs;
@@ -102,9 +100,10 @@ void MainWindow::exportToGerber(const QString & exportDir, ItemBase * board, boo
 	bool empty;
 	QString svgOutline = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), outlineLayerIDs, outlineLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, false, empty);
     if (svgOutline.isEmpty()) {
-        // tell the user something reasonable
+        displayMessage(tr("outline is empty"), displayMessageBoxes);
         return;
     }
+
 
 	QDomDocument domDocument;
 	QString errorStr;
@@ -118,7 +117,12 @@ void MainWindow::exportToGerber(const QString & exportDir, ItemBase * board, boo
 
     // create copper0 gerber from svg
     SVG2gerber outlineGerber;
-	outlineGerber.convert(svgOutline, m_pcbGraphicsView->boardLayers() == 2, "contour", "Mask");
+	int outlineInvalidCount = outlineGerber.convert(svgOutline, m_pcbGraphicsView->boardLayers() == 2, "contour", "Mask", true);
+	if (outlineInvalidCount > 0) {
+		outlineInvalidCount = 0;
+		svgOutline = clipToBoard(svgOutline, board, "board");
+		outlineInvalidCount = outlineGerber.convert(svgOutline, m_pcbGraphicsView->boardLayers() == 2, "contour", "Mask", true);
+	}
 
     // contour / board outline
     QString contourFile = exportDir + "/" +
@@ -131,23 +135,33 @@ void MainWindow::exportToGerber(const QString & exportDir, ItemBase * board, boo
 	}
 
     QTextStream contourStream(&contourOut);
-    contourStream << outlineGerber.getContour();
+    contourStream << outlineGerber.getGerber();
+
+	if (outlineInvalidCount > 0 || silkInvalidCount > 0 || copperInvalidCount > 0) {
+		QString s;
+		if (outlineInvalidCount > 0) s += tr("the board outline layer, ");
+		if (silkInvalidCount > 0) s += tr("silkscreen layer(s), ");
+		if (copperInvalidCount > 0) s += tr("copper layer(s), ");
+		s.chop(2);
+		displayMessage(tr("Unable to translate svg curves in ").arg(s), displayMessageBoxes);
+	}
+
 }
 
-void MainWindow::doCopper(ItemBase * board, LayerList & viewLayerIDs, const QString & copperName, const QString & copperSuffix, const QString & solderMaskSuffix, bool doDrill, const QString & exportDir, bool displayMessageBoxes) 
+int MainWindow::doCopper(ItemBase * board, LayerList & viewLayerIDs, const QString & copperName, const QString & copperSuffix, const QString & solderMaskSuffix, bool doDrill, const QString & exportDir, bool displayMessageBoxes) 
 {
 	QSizeF imageSize;
 	bool empty;
 	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, false, empty);
 	if (svg.isEmpty()) {
 		displayMessage(tr("%1 file export failure (1)").arg(copperName), displayMessageBoxes);
-		return;
+		return 0;
 	}
 
-	svg = clipToBoard(svg, board);
+	svg = clipToBoard(svg, board, copperName);
 	if (svg.isEmpty()) {
 		displayMessage(tr("%1 file export failure (3)").arg(copperName), displayMessageBoxes);
-		return;
+		return 0;
 	}
 
 	QDomDocument domDocument;
@@ -157,13 +171,13 @@ void MainWindow::doCopper(ItemBase * board, LayerList & viewLayerIDs, const QStr
 	bool result = domDocument.setContent(svg, &errorStr, &errorLine, &errorColumn);
 	if (!result) {
 		displayMessage(tr("%1 file export failure (2)").arg(copperName), displayMessageBoxes);
-		return;
+		return 0;
 	}
 
     // create copper gerber from svg
     SVG2gerber copperGerber;
 	QString maskName = QString("Mask%1").arg(copperName[copperName.length() - 1]);
-	copperGerber.convert(svg, m_pcbGraphicsView->boardLayers() == 2, copperName, maskName);
+	int copperInvalidCount = copperGerber.convert(svg, m_pcbGraphicsView->boardLayers() == 2, copperName, maskName, false);
 
     QString copperFile = exportDir + "/" +
                           QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)
@@ -171,7 +185,7 @@ void MainWindow::doCopper(ItemBase * board, LayerList & viewLayerIDs, const QStr
     QFile copperOut(copperFile);
 	if (!copperOut.open(QIODevice::WriteOnly | QIODevice::Text)) {
 		displayMessage(tr("%1 file export failure (3)").arg(copperName), displayMessageBoxes);
-		return;
+		return 0;
 	}
 
     QTextStream copperStream(&copperOut);
@@ -186,7 +200,7 @@ void MainWindow::doCopper(ItemBase * board, LayerList & viewLayerIDs, const QStr
     QFile maskOut(soldermaskFile);
 	if (!maskOut.open(QIODevice::WriteOnly | QIODevice::Text)) {
 		displayMessage(tr("%1 mask file export failure (4)").arg(copperName), displayMessageBoxes);
-		return;
+		return 0;
 	}
 
     QTextStream maskStream(&maskOut);
@@ -202,7 +216,7 @@ void MainWindow::doCopper(ItemBase * board, LayerList & viewLayerIDs, const QStr
 		QFile drillOut(drillFile);
 		if (!drillOut.open(QIODevice::WriteOnly | QIODevice::Text)) {
 			displayMessage(tr("%1 drill file export failure (5)").arg(copperName), displayMessageBoxes);
-			return;
+			return 0;
 		}
 
 		QTextStream drillStream(&drillOut);
@@ -210,27 +224,29 @@ void MainWindow::doCopper(ItemBase * board, LayerList & viewLayerIDs, const QStr
 		drillStream.flush();
 		drillOut.close();
 	}
+
+	return copperInvalidCount;
 }
 
-void MainWindow::doSilk(LayerList silkLayerIDs, const QString & silkName, const QString & gerberSuffix, ItemBase * board, const QString & exportDir, bool displayMessageBoxes ) 
+int MainWindow::doSilk(LayerList silkLayerIDs, const QString & silkName, const QString & gerberSuffix, ItemBase * board, const QString & exportDir, bool displayMessageBoxes ) 
 {
 	QSizeF imageSize;
 	bool empty;
 	QString svgSilk = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), silkLayerIDs, silkLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, false, empty);
     if (svgSilk.isEmpty()) {
 		displayMessage(tr("silk file export failure (1)"), displayMessageBoxes);
-        return;
+        return 0;
     }
 
 	if (empty) {
 		// don't bother with file
-		return;
+		return 0;
 	}
 
-	svgSilk = clipToBoard(svgSilk, board);
+	svgSilk = clipToBoard(svgSilk, board, silkName);
 	if (svgSilk.isEmpty()) {
 		displayMessage(tr("silk export failure"), displayMessageBoxes);
-		return;
+		return 0;
 	}
 
 #ifndef QT_NO_DEBUG
@@ -245,7 +261,7 @@ void MainWindow::doSilk(LayerList silkLayerIDs, const QString & silkName, const 
 
     // create silk gerber from svg
     SVG2gerber silkGerber;
-	silkGerber.convert(svgSilk, m_pcbGraphicsView->boardLayers() == 2, silkName, "Mask");
+	int silkInvalidCount = silkGerber.convert(svgSilk, m_pcbGraphicsView->boardLayers() == 2, silkName, "Mask", false);
 
     QString silkFile = exportDir + "/" +
                           QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)
@@ -253,13 +269,15 @@ void MainWindow::doSilk(LayerList silkLayerIDs, const QString & silkName, const 
     QFile silkOut(silkFile);
 	if (!silkOut.open(QIODevice::WriteOnly | QIODevice::Text)) {
 		displayMessage(tr("silk file export failure (2)"), displayMessageBoxes);
-		return;
+		return 0;
 	}
 
     QTextStream silkStream(&silkOut);
     silkStream << silkGerber.getGerber();
 	silkStream.flush();
 	silkOut.close();
+
+	return silkInvalidCount;
 }
 
 void MainWindow::displayMessage(const QString & message, bool displayMessageBoxes) {
@@ -272,7 +290,7 @@ void MainWindow::displayMessage(const QString & message, bool displayMessageBoxe
 	DebugDialog::debug(message);
 }
 
-QString MainWindow::clipToBoard(QString svgString, ItemBase * board) {
+QString MainWindow::clipToBoard(QString svgString, ItemBase * board, const QString & layerName) {
 	QDomDocument domDocument1;
 	QString errorStr;
 	int errorLine;
@@ -393,7 +411,7 @@ QString MainWindow::clipToBoard(QString svgString, ItemBase * board) {
 		//image.save("output.png");
 
 		GroundPlaneGenerator gpg;
-		gpg.scanImage(image, image.width(), image.height(), GraphicsUtils::StandardFritzingDPI / res, GraphicsUtils::StandardFritzingDPI, "#ffffff", "silkscreen", false, 1);
+		gpg.scanImage(image, image.width(), image.height(), GraphicsUtils::StandardFritzingDPI / res, GraphicsUtils::StandardFritzingDPI, "#ffffff", layerName, false, 1);
 		
 		QDomDocument doc;
 		TextUtils::mergeSvg(doc, svgString, "");
