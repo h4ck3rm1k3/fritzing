@@ -41,7 +41,6 @@ public:
 	int convert(const QString & svgStr, bool doubleSided, const QString & mainLayerName, const QString & maskLayerName, bool forOutline);
     QString getGerber();
     QString getSolderMask();
-    QString getContour();
     QString getNCDrill();
 
 protected:
@@ -50,8 +49,6 @@ protected:
     QString m_gerber_paths;
     QString m_soldermask_header;
     QString m_soldermask_paths;
-    QString m_contour_header;
-    QString m_contour_paths;
     QString m_drill_header;
     QString m_drill_footer;
     QString m_drill_paths;

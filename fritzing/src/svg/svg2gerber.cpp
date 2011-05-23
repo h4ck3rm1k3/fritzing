@@ -89,9 +89,6 @@ QString SVG2gerber::getSolderMask(){
     return m_soldermask_header + m_soldermask_paths;
 }
 
-QString SVG2gerber::getContour(){
-    return m_contour_header + m_contour_paths;
-}
 
 QString SVG2gerber::getNCDrill(){
     return m_drill_header + m_drill_paths + m_drill_slots + m_drill_footer;
@@ -123,7 +120,6 @@ int SVG2gerber::renderGerber(bool doubleSided, const QString & mainLayerName, co
 
     // clone it for the mask and contour headers
     m_soldermask_header = m_gerber_header;
-    m_contour_header = m_gerber_header;
 
     // set inverse polarity: Loch says don't do this
     //m_soldermask_header += "%IPNEG*%\n";
@@ -144,7 +140,6 @@ int SVG2gerber::renderGerber(bool doubleSided, const QString & mainLayerName, co
     // label our layers
     m_gerber_header += QString("%LN%1*%\n").arg(mainLayerName.toUpper());
     m_soldermask_header += QString("%LN%1*%\n").arg(maskLayerName.toUpper());
-    m_contour_header += "%LNCONTOUR*%\n";
 
     // rewind drill to start position
     m_drill_header += "%\n";
@@ -152,19 +147,15 @@ int SVG2gerber::renderGerber(bool doubleSided, const QString & mainLayerName, co
     //just to be safe: G90 (absolute coords) and G70 (inches)
     m_gerber_header += "G90*\nG70*\n";
     m_soldermask_header += "G90*\nG70*\n";
-    m_contour_header += "G90*\nG70*\n";
 
     // now write the footer
     // comment to indicate end-of-sketch
     m_gerber_paths += QString("G04 End of %1*\n").arg(mainLayerName);
 	m_soldermask_paths += QString("G04 End of %1*\n").arg(maskLayerName);
-    m_contour_paths += "G04 End of contour layer*\n";
 
     // write gerber end-of-program
     m_gerber_paths += "M02*";
     m_soldermask_paths += "M02*";
-    m_contour_paths += "M02*";
-
 
 	return invalidCount;
 }
@@ -258,35 +249,51 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
     int currentx = -1;
     int currenty = -1;
 
-    // if this is the board outline, use it as the contour
-    if (forOutline) {
-        DebugDialog::debug("drawing board outline");
-        // add circular aperture with 0 width
-        m_gerber_header += "%ADD10C,0.008*%\n";
-
-        // switch aperture
-        m_gerber_paths += "G54D10*\n";
-    }
-
     // iterates through all circles, rects, lines and paths
     //  1. check if we already have an aperture
     //      if aperture does not exist, add it to the header
     //  2. switch to this aperture
     //  3. draw it at the correct path/location
 
-    // circles
     QDomNodeList circleList = m_SVGDom.elementsByTagName("circle");
-
     DebugDialog::debug("circles to gerber: " + QString::number(circleList.length()));
+
+    QDomNodeList rectList = m_SVGDom.elementsByTagName("rect");
+    DebugDialog::debug("rects to gerber: " + QString::number(rectList.length()));
+
+    QDomNodeList polyList = m_SVGDom.elementsByTagName("polygon");
+    DebugDialog::debug("polygons to gerber: " + QString::number(polyList.length()));
+
+	QDomNodeList lineList = m_SVGDom.elementsByTagName("line");
+    DebugDialog::debug("lines to gerber: " + QString::number(lineList.length()));
+
+	QDomNodeList pathList = m_SVGDom.elementsByTagName("path");
+    DebugDialog::debug("paths to gerber: " + QString::number(pathList.length()));
+
+	int totalCount = circleList.count() + rectList.count() + polyList.count() + lineList.count() + pathList.count();
+
+    // if this is the board outline, use it as the contour
+    if (forOutline) {
+        DebugDialog::debug("drawing board outline");
+
+        // switch aperture to the only one used for contour: note this is the last one on the list: the aperture is added at the end of this function
+        m_gerber_paths += "G54D10*\n";
+    }
+
+	// circles
     for(uint i = 0; i < circleList.length(); i++){
         QDomElement circle = circleList.item(i).toElement();
-        QString aperture;
-        QString mask_aperture;
-        QString drill_aperture;
-
 		if (circle.attribute("drill").compare("0") == 0) {
 			continue;
 		}
+
+		if (forOutline && totalCount > 1) {
+			if (circle.attribute("id").compare("boardoutline", Qt::CaseInsensitive) != 0) continue;
+		}
+
+        QString aperture;
+        QString mask_aperture;
+        QString drill_aperture;
 
         qreal centerx = circle.attribute("cx").toDouble();
         qreal centery = circle.attribute("cy").toDouble();
@@ -332,22 +339,32 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
 					m_drill_paths += "T" + dcode + "\n";
 				current_dcode = dcode;
 			}
+			//flash
+			m_gerber_paths += "X" + cx + "Y" + cy + "D03*\n";
+			m_soldermask_paths += "X" + cx + "Y" + cy + "D03*\n";
+			if(drill_aperture != "") {
+				m_drill_paths += "X" + drill_cx + "Y" + drill_cy + "\n";
+			}
 		}
-
-        //flash
-        m_gerber_paths += "X" + cx + "Y" + cy + "D03*\n";
-        m_soldermask_paths += "X" + cx + "Y" + cy + "D03*\n";
-		if(drill_aperture != "") {
-            m_drill_paths += "X" + drill_cx + "Y" + drill_cy + "\n";
+		else {
+			// create circle outline 
+			m_gerber_paths += QString("G01X%1Y%2D02*\n"
+									  "G75*\n"
+									  "G03X%1Y%2I%3J0D01*\n")
+					.arg(QString::number(qRound(centerx + r)))
+					.arg(QString::number(qRound(centery)))
+					.arg(QString::number(qRound(-r)));
+			m_gerber_paths += "G01*\n";
 		}
     }
 
     // rects
-    QDomNodeList rectList = m_SVGDom.elementsByTagName("rect");
-
-    DebugDialog::debug("rects to gerber: " + QString::number(rectList.length()));
     for(uint j = 0; j < rectList.length(); j++){
         QDomElement rect = rectList.item(j).toElement();
+		if (forOutline && totalCount > 1) {
+			if (rect.attribute("id").compare("boardoutline", Qt::CaseInsensitive) != 0) continue;
+		}
+
         QString aperture;
         QString mask_aperture;
 
@@ -394,38 +411,27 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
 				m_soldermask_paths += "G54" + dcode + "*\n";
 				current_dcode = dcode;
 			}
+			//flash
+			m_gerber_paths += "X" + cx + "Y" + cy + "D03*\n";
+			m_soldermask_paths += "X" + cx + "Y" + cy + "D03*\n";
 		}
-        //flash
-        m_gerber_paths += "X" + cx + "Y" + cy + "D03*\n";
-        m_soldermask_paths += "X" + cx + "Y" + cy + "D03*\n";
-
-
-		/*
-        // if this is the board outline, use it as the contour
-        if(rect.attribute("id").toLower() == "boardoutline"){
-            // add circular aperture with 0 width
-            m_contour_header += "%ADD10C,0.008*%\n";
-
-            // switch aperture
-            m_contour_paths += "G54D10*\n";
-
+        else {
             // draw 4 lines
-            m_contour_paths += "X" + QString::number(qRound(x)) + "Y" + QString::number(qRound(y)) + "D02*\n";
-            m_contour_paths += "X" + QString::number(qRound(x+width)) + "Y" + QString::number(qRound(y)) + "D01*\n";
-            m_contour_paths += "X" + QString::number(qRound(x+width)) + "Y" + QString::number(qRound(y+height)) + "D01*\n";
-            m_contour_paths += "X" + QString::number(qRound(x)) + "Y" + QString::number(qRound(y+height)) + "D01*\n";
-            m_contour_paths += "X" + QString::number(qRound(x)) + "Y" + QString::number(qRound(y)) + "D01*\n";
-            m_contour_paths += "D02*\n";
+            m_gerber_paths += "X" + QString::number(qRound(x)) + "Y" + QString::number(qRound(y)) + "D02*\n";
+            m_gerber_paths += "X" + QString::number(qRound(x+width)) + "Y" + QString::number(qRound(y)) + "D01*\n";
+            m_gerber_paths += "X" + QString::number(qRound(x+width)) + "Y" + QString::number(qRound(y+height)) + "D01*\n";
+            m_gerber_paths += "X" + QString::number(qRound(x)) + "Y" + QString::number(qRound(y+height)) + "D01*\n";
+            m_gerber_paths += "X" + QString::number(qRound(x)) + "Y" + QString::number(qRound(y)) + "D01*\n";
+            m_gerber_paths += "D02*\n";
         }
-		*/
     }
 
-    // polys - NOTE: assumes comma- or space- separated formatting
-    QDomNodeList polyList = m_SVGDom.elementsByTagName("polygon");
-
-    DebugDialog::debug("polygons to gerber: " + QString::number(polyList.length()));
+	// polys - NOTE: assumes comma- or space- separated formatting
     for(uint p = 0; p < polyList.length(); p++){
         QDomElement polygon = polyList.item(p).toElement();
+		if (forOutline && totalCount > 1) {
+			if (polygon.attribute("id").compare("boardoutline", Qt::CaseInsensitive) != 0) continue;
+		}
 
         QString points = polygon.attribute("points");
 		QStringList pointList = points.split(QRegExp("\\s+|,"), QString::SkipEmptyParts);
@@ -495,12 +501,13 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
     }
 
     // lines - NOTE: this assumes a circular aperture
-    QDomNodeList lineList = m_SVGDom.elementsByTagName("line");
-
-    DebugDialog::debug("lines to gerber: " + QString::number(lineList.length()));
     for(uint k = 0; k < lineList.length(); k++){
         QDomElement line = lineList.item(k).toElement();
-        QString aperture;
+		if (forOutline && totalCount > 1) {
+			if (line.attribute("id").compare("boardoutline", Qt::CaseInsensitive) != 0) continue;
+		}
+
+		QString aperture;
 
         int x1 = qRound(line.attribute("x1").toDouble());
         int y1 = qRound(line.attribute("y1").toDouble());
@@ -545,12 +552,13 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
     }
 
     // paths - NOTE: this assumes circular aperture and does not fill!
-    QDomNodeList pathList = m_SVGDom.elementsByTagName("path");
-
-    DebugDialog::debug("paths to gerber: " + QString::number(pathList.length()));
     for(uint n = 0; n < pathList.length(); n++){
         QDomElement path = pathList.item(n).toElement();
-        QString data = path.attribute("d").trimmed();
+		if (forOutline && totalCount > 1) {
+			if (path.attribute("id").compare("boardoutline", Qt::CaseInsensitive) != 0) continue;
+		}
+
+		QString data = path.attribute("d").trimmed();
         QString aperture;
 
         const char * slot = SLOT(path2gerbCommandSlot(QChar, bool, QList<double> &, void *));
@@ -593,27 +601,17 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
 
         DebugDialog::debug("path id: " + path.attribute("id"));
 
-		/*
-        // if this is the board outline, use it as the contour
-        if(path.attribute("id").toLower() == "boardoutline"){
-            DebugDialog::debug("drawing board outline");
-            // add circular aperture with 0 width
-            m_contour_header += "%ADD10C,0.008*%\n";
-
-            // switch aperture
-            m_contour_paths += "G54D10*\n";
-
-            // draw 4 lines
-            m_contour_paths += pathUserData.string;
-        }
-
-		*/
-
         // stop poly fill if this is actually a filled in shape
         if(!forOutline && path.hasAttribute("fill") && !(path.hasAttribute("stroke"))){
             // stop poly fill
             m_gerber_paths += "G37*\n";
         }
+    }
+
+
+    if (forOutline) {
+        // add circular aperture with 0 width
+        m_gerber_header += "%ADD10C,0.008*%\n";
     }
 
 	return invalidPathsCount;
