@@ -74,11 +74,8 @@ class IFabOrder(form.Schema):
         title = _(u"E-Mail"),
         constraint = checkEMail)
     
-    telephone = ASCIILine(
-        title = _(u"Telephone number"),
-        description = _(u"We prefer a mobile number"))
-    
     form.omitted(
+        'telephone',
         'isPaid', 
         'userId', 
         'area', 
@@ -92,6 +89,10 @@ class IFabOrder(form.Schema):
         'priceTotalNetto', 
         'priceTotalBrutto',
         'trackingNumber')
+    
+    telephone = ASCIILine(
+        title = _(u"Telephone number"),
+        description = _(u"We prefer a mobile number"))
     
     isOrdered = Bool(
         title = _(u"Is ordered"),

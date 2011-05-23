@@ -63,7 +63,7 @@
                   <div tal:condition="item/check">10.00&nbsp;EUR</div>
                 </td>
                 <td class="actionCell" tal:condition="not:context/isOrdered">
-                  <a class="editSketchLink" href="#" tal:attributes="href string:${item/absolute_url}/edit">edit</a><br />
+                  <a class="editSketchLink" tal:condition="view/isManager" href="#" tal:attributes="href string:${item/absolute_url}/edit">edit</a><br />
                   <a class="deleteSketchLink" href="#" tal:attributes="href string:${item/absolute_url}/delete_confirmation">delete</a>
                 </td>
               </tr>
@@ -82,8 +82,8 @@
           
             <div tal:condition="python: not context.shipTo">
               <p>
-                please add your phone number, e-mail address and shipping destination to complete your order:<br />
-                <a class="editAddressLink" href="#" tal:attributes="href string:${context/absolute_url}/edit">Add a phone number and shipping destination</a>
+                please add your e-mail address and shipping destination to complete your order:<br />
+                <a class="editAddressLink" href="#" tal:attributes="href string:${context/absolute_url}/edit">Add a shipping destination</a>
               </p>
             </div>
           
@@ -91,10 +91,6 @@
               <tr>
                 <td>E-Mail: </td>
                 <td tal:content="context/email"></td>
-              </tr>
-              <tr>
-                <td>Phone: </td>
-                <td tal:content="context/telephone"></td>
               </tr>
               <tr>
                 <td>Shipping Area: </td>
