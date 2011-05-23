@@ -1,14 +1,10 @@
 from five import grok
 
-from plone.directives import form, dexterity
-
-from z3c.form import button
+from plone.directives import dexterity
 
 from Products.statusmessages.interfaces import IStatusMessage
 
-import re
-
-from fritzing.fab.interfaces import IFabOrder, IFabOrders, ISketch
+from fritzing.fab.interfaces import IFabOrder, ISketch
 from fritzing.fab import _
 
 
@@ -20,6 +16,12 @@ class Index(grok.View):
     
     label = _(u"Order your PCBs")
     description = _(u"Review the order")
+    
+    def update(self):
+        member = self.context.portal_membership.getAuthenticatedMember()
+        self.isManager = member.has_role('Manager')
+        if not (self.isManager):
+            self.request.set('disable_border', 1)
 
 
 class Edit(dexterity.EditForm):
@@ -100,7 +102,6 @@ class PayPalCheckout(grok.View):
             self.abort(_(u"Sketches missing/invalid, checkout aborted."), "error")
             return
         
-        originalOwner = self.context.getOwner()
         fabManager = self.context.aq_parent.getOwner()
         self.changeOwnership(self.context, fabManager)
         self.context.isOrdered = True
@@ -166,7 +167,6 @@ from zope.app.container.interfaces import IObjectMovedEvent
 @grok.subscribe(ISketch, IObjectMovedEvent)
 def modifiedHandler(sketch, event):
     faborder = sketch.aq_parent
-    # print "### faborder '%s' sketch '%s' event '%s'" % (faborder.title, sketch.title, event)
     
     # sum up the areas of all sketches and the number of quality checks
     faborder.area = 0

@@ -13,17 +13,13 @@
     </metal:block>
   </head>
   <body>
-    <metal:top_slot metal:fill-slot="top_slot" tal:define="dummy python:request.set('disable_border', 1)" />
     <metal:main fill-slot="main">
       <tal:main-macro metal:define-macro="main">
         <h1 class="documentFirstHeading">Fritzing Fab</h1>
         <p class="documentDescription">
 	There's nothing better than turning a concept into product reality.
 	</p>
-        <div id="content-core" 
-          tal:define="member python:context.portal_membership.getAuthenticatedMember(); 
-                      isManager python:member.has_role('Manager');
-                      isOwner python:member.has_role('Owner')">
+        <div id="content-core">
           <table class="plain">
             <tbody>
               <tr>
@@ -64,17 +60,17 @@
                     <h3>Your orders</h3>
                     <table>
                       <tr tal:condition="container/listFolderContents">
-                        <th tal:condition="isManager">User</th>
-                        <th tal:condition="isManager">Order ID</th>
+                        <th tal:condition="view/isManager">User</th>
+                        <th tal:condition="view/isManager">Order ID</th>
                         <th>Sketches</th>
                         <th>Status</th>
                         <th>Actions</th>
                       </tr>
                       <tr tal:repeat="item container/listFolderContents">
-                        <td tal:condition="isManager">
+                        <td tal:condition="view/isManager">
                           <p tal:content="item/userId | string:error"></p>
                         </td>
-                        <td tal:condition="isManager" tal:content="item/id | string:error">title</td>
+                        <td tal:condition="view/isManager" tal:content="item/id | string:error">title</td>
                         <td>
                           <span tal:condition="not:item/listFolderContents">no sketches</span>
                           <ul tal:condition="item/listFolderContents">
@@ -94,13 +90,13 @@
                         </td>
                         <td>
                           <a class="viewOrderLink" 
-                            tal:condition="not:python:isOwner or isManager" 
+                            tal:condition="not:python:view.isOwner or view.isManager" 
                             tal:attributes="href string:${item/absolute_url}">view</a>
                           <a class="viewOrderLink" 
-                            tal:condition="python:isOwner or isManager" 
+                            tal:condition="python:view.isOwner or view.isManager" 
                             tal:attributes="href string:${item/absolute_url}">view/edit</a><br/>
                           <a class="deleteOrderLink" 
-                            tal:condition="python:isOwner or isManager" 
+                            tal:condition="python:view.isOwner or view.isManager" 
                             tal:attributes="href string:${item/absolute_url}/delete_confirmation">delete</a>
                         </td>
                       </tr>

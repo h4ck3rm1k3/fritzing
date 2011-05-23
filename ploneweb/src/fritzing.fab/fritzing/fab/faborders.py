@@ -2,7 +2,7 @@ from five import grok
 
 from plone.directives import dexterity
 
-from fritzing.fab.interfaces import IFabOrder, IFabOrders
+from fritzing.fab.interfaces import IFabOrders
 from fritzing.fab import _
 
 import datetime
@@ -14,6 +14,13 @@ class Index(grok.View):
     
     label = _(u"Fritzing Fab")
     description = _(u"There's nothing better than turning a concept into product reality.")
+    
+    def update(self):
+        member = self.context.portal_membership.getAuthenticatedMember()
+        self.isManager = member.has_role('Manager')
+        self.isOwner = member.has_role('Owner')
+        if not (self.isManager):
+            self.request.set('disable_border', 1)
 
 
 class PayPalIpn(grok.View):
