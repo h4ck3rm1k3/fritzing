@@ -45,8 +45,7 @@ static QStringList Resistances;
 static QHash<QString, QString> PinSpacings;
 static QHash<int, QColor> ColorBands;
 static QString OhmSymbol(QChar(0x03A9));
-static QRegExp Digits("(\\d)+");
-static QRegExp DigitsMil("(\\d)+mil");
+
 
 // TODO
 //	save into parts bin

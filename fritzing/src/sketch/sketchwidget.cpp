@@ -6612,6 +6612,24 @@ ViewLayer::ViewLayerSpec SketchWidget::wireViewLayerSpec(ConnectorItem *) {
 
 void SketchWidget::changeBoardLayers(int layers, bool doEmit) {
 	m_boardLayers = layers;
+
+	foreach (QGraphicsItem * item, scene()->items()) {
+		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+		if (itemBase == NULL) continue;
+		if (itemBase->modelPart()->flippedSMD()) continue;
+		if (itemBase->itemType() != ModelPart::Part) continue;
+
+		if (itemBase->viewLayerSpec() == ViewLayer::ThroughHoleThroughTop_OneLayer && layers == 2) {
+			itemBase->setViewLayerSpec(ViewLayer::ThroughHoleThroughTop_TwoLayers);
+			continue;
+		}
+	
+		if (itemBase->viewLayerSpec() == ViewLayer::ThroughHoleThroughTop_TwoLayers && layers == 1) {
+			itemBase->setViewLayerSpec(ViewLayer::ThroughHoleThroughTop_OneLayer);
+			continue;
+		}
+	}
+
 	if (doEmit) {
 		emit changeBoardLayersSignal(layers, false);
 	}
