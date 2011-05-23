@@ -2271,12 +2271,19 @@ void MainWindow::setReportMissingModules(bool b) {
 }
 
 void MainWindow::warnSMD(const QString & moduleID) {
-	if (m_smdOneSideWarningGiven) return;
-	if (m_pcbGraphicsView->routeBothSides()) return;
-	if (m_pcbGraphicsView->findBoard() == NULL) return;
 
 	ModelPart * mp = m_refModel->retrieveModelPart(moduleID);
 	if (!mp->flippedSMD()) return;
+
+	if (m_pcbGraphicsView->routeBothSides()) {
+		if (!m_pcbGraphicsView->layerIsActive(ViewLayer::Copper1)) {
+			activeLayerBoth();
+		}
+		return;
+	}
+
+	if (m_smdOneSideWarningGiven) return;
+	if (m_pcbGraphicsView->findBoard() == NULL) return;
 
 	m_smdOneSideWarningGiven = true;
 	// don't want to trigger the message box and subsequent swap from within the original event

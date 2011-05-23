@@ -498,8 +498,10 @@ void PCBSketchWidget::addDefaultParts() {
 	viewGeometry.setLoc(QPointF(0, 0));
 
 	// have to put this off until later, because positioning the item doesn't work correctly until the view is visible
-	m_addedDefaultPart = addItem(paletteModel()->retrieveModelPart(ModuleIDNames::RectangleModuleIDName), defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
+	m_addedDefaultPart = addItem(paletteModel()->retrieveModelPart(ModuleIDNames::TwoSidedRectangleModuleIDName), defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
 	m_addDefaultParts = true;
+
+	changeBoardLayers(2, true);
 }
 
 QPoint PCBSketchWidget::calcFixedToCenterItemOffset(const QRect & viewPortRect, const QSizeF & helpSize) {
@@ -544,6 +546,9 @@ void PCBSketchWidget::dealWithDefaultParts() {
 	ResizableBoard * rb = qobject_cast<ResizableBoard *>(m_addedDefaultPart);
 	if (rb) rb->resizePixels(partSize.width(), partSize.height(), m_viewLayers);
 	QTimer::singleShot(10, this, SLOT(vScrollToZero()));
+
+	setLayerActive(ViewLayer::Copper1, false);
+	setLayerActive(ViewLayer::Copper0, true);
 }
 
 
