@@ -1,21 +1,13 @@
-from five import grok
-
-import zope.i18nmessageid
 from zope.interface import Invalid
 
 from z3c.form import validator
-
-from Products.statusmessages.interfaces import IStatusMessage
 
 import re
 
 from fritzing.fab import getboardsize
 from fritzing.fab import _
 
-try:
-    from cStringIO import StringIO
-except ImportError:
-    from StringIO import StringIO
+from cStringIO import StringIO
 
 import zipfile
 
@@ -30,11 +22,7 @@ class SketchFileValidator(validator.SimpleFieldValidator):
         
         if not (fzzNameLower.endswith('.fzz')):
             raise Invalid(
-                _(u"We can only produce from compressed Fritzing sketch files (.fzz)"))
-        
-        # if not (fzzNameLower.endswith('.fz') or fzzNameLower.endswith('.fzz')):
-        #     raise Invalid(
-        #         _(u"We can only produce from Fritzing sketch files (.fz or .fzz)"))
+                _(u"We can only produce from shareable Fritzing sketch files (.fzz)"))
         
         # use StringIO to make the blob to look like a file object:
         fzzData = StringIO(value.data)
@@ -61,20 +49,6 @@ class SketchFileValidator(validator.SimpleFieldValidator):
         
         return True
 
-
-def checkTermsAccepted(value):
-    """is the the terms of business-box checked?
-    """
-    # if not value:
-    #     raise Invalid(_(u"You need to accept our terms of business."))
-    return True
-
-def checkInstructionsRead(value):
-    """is the the instructions read-box checked?
-    """
-    # if not value:
-    #     raise Invalid(_(u"You should read the instructions before ordering."))
-    return True
 
 eMailMatch = re.compile(
     r"[a-zA-Z0-9._%-]+@([a-zA-Z0-9-]+\.)*[a-zA-Z]{2,4}").match
