@@ -728,7 +728,7 @@ void CMRouter::start()
 		foreach (ConnectorItem * connectorItem, m_offBoardConnectors) {
 			parts.insert(connectorItem->attachedTo()->layerKinChief());
 		}
-		QMessageBox::information(NULL, QObject::tr("Fritzing"), tr("Note: the autorouter did not route %n parts which are not located entirely on the board.", "", parts.count()));
+                QMessageBox::information(NULL, QObject::tr("Fritzing"), tr("Note: the autorouter did not route %n parts, because they are not located entirely on the board.", "", parts.count()));
 	}
 }
 
@@ -845,22 +845,23 @@ bool CMRouter::drc(QString & message)
 	//	what about ground plane?
 
 	if (m_sketchWidget->autorouteTypePCB() && m_board == NULL) {
-		message = tr("No board part found, DRC cancelled.");
+                message = tr("The Design Rule Check (DRC) was cancelled, because it could not find a PCB board part.");
 		return false;
 	}
 
 	qreal keepout = m_sketchWidget->getKeepout() / 2;			// 15 mils space
 
 	bool result = drc(keepout, CMRouter::ReportAllOverlaps, CMRouter::AllowEquipotentialOverlaps, false, false);
-	if (result) message = tr("The sketch is ok: connectors and traces are not too close together.");
-	else message = tr("Some connectors and/or traces are too close together.");
+        if (result) message = tr("Your sketch is ready for production: there are no connectors or traces that are overlapping or too close to each other.");
+        else message = tr("Warning: Some of the connectors and/or traces on your board are too close to each other or even overlapping."
+                          "\nOne problematic area is highlighted in red. Once you have fixed this problem, run the DRC check again to find more.");
 
 	if (m_offBoardConnectors.count() > 0) {
 		QSet<ItemBase *> parts;
 		foreach (ConnectorItem * connectorItem, m_offBoardConnectors) {
 			parts.insert(connectorItem->attachedTo()->layerKinChief());
 		}
-		message += tr("\nNote: %n parts are not located entirely on the board.", "", parts.count());
+                message += tr("\n\nNote: %n parts are not located entirely on the board.", "", parts.count());
 	}
 	return result;
 }
