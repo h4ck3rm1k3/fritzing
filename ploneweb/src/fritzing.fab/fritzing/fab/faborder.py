@@ -7,6 +7,8 @@ from Products.statusmessages.interfaces import IStatusMessage
 from fritzing.fab.interfaces import IFabOrder, ISketch
 from fritzing.fab import _
 
+from Products.CMFCore.utils import getToolByName
+
 
 class Index(grok.View):
     """Review the order
@@ -22,6 +24,10 @@ class Index(grok.View):
         self.isManager = member.has_role('Manager')
         if not (self.isManager):
             self.request.set('disable_border', 1)
+        
+        portal_workflow = getToolByName(self.context, 'portal_workflow')
+        self.review_state = portal_workflow.getInfoFor(self.context, 'review_state')
+        self.isOrdered = (self.review_state != 'open')
 
 
 class Edit(dexterity.EditForm):
@@ -94,52 +100,24 @@ class PayPalCheckout(grok.View):
     
     
     def update(self):
-        if self.context.isOrdered:
-            self.abort(_(u"Already checked out."), "info")
-            return
+        portal_workflow = getToolByName(self.context, 'portal_workflow')
+        review_state = portal_workflow.getInfoFor(self.context, 'review_state')
         
+        if review_state != 'open':
+            self.addStatusMessage(_(u"Already checked out."), "info")
+            return
         if not self.context.area > 0:
-            self.abort(_(u"Sketches missing/invalid, checkout aborted."), "error")
+            self.addStatusMessage(_(u"Sketches missing/invalid, checkout aborted."), "error")
             return
         
-        fabManager = self.context.aq_parent.getOwner()
-        self.changeOwnership(self.context, fabManager)
-        self.context.isOrdered = True
+        portal_workflow.doActionFor(self.context, action='submit')
         
-        # SEND E-MAILS
+        # TODO: SEND E-MAILS
     
-    def abort(self, message, messageType):
+    def addStatusMessage(self, message, messageType):
         IStatusMessage(self.request).addStatusMessage(message, messageType)
         faborderURL = self.context.absolute_url()
         self.request.response.redirect(faborderURL)
-    
-    def changeOwnership(self, obj, userid):
-        """ Change ownership of obj to userid """
-        # http://keeshink.blogspot.com/2010/04/change-creator-programmatically.html
-        # http://plone.org/documentation/manual/plone-community-developer-documentation/content/ownership
-        userid = u"%s" % userid
-        from Products.CMFCore.utils import getToolByName
-        membership = getToolByName(self.context, 'portal_membership')
-        user = membership.getMemberById(userid)
-        # change ownership
-        obj.changeOwnership(user)
-        obj.setCreators(userid,)
-        # remove owner role from others
-        owners = [o for o in obj.users_with_local_role('Owner')]
-        for owner in owners:
-            roles = list(obj.get_local_roles_for_userid(owner))
-            roles.remove('Owner')
-            if roles:
-                obj.manage_setLocalRoles(owner, roles)
-            else:
-                obj.manage_delLocalRoles([owner])
-        # add owner role to new owner
-        roles = list(obj.get_local_roles_for_userid(userid))
-        if 'Owner' not in roles:
-            roles.append('Owner')
-            obj.manage_setLocalRoles(userid, roles)
-        # reindex
-        obj.reindexObject()
 
 
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent

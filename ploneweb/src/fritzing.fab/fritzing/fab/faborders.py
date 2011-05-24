@@ -2,10 +2,12 @@ from five import grok
 
 from plone.directives import dexterity
 
-from fritzing.fab.interfaces import IFabOrders
+from fritzing.fab.interfaces import IFabOrders, IFabOrder
 from fritzing.fab import _
 
 import datetime
+
+from Products.CMFCore.utils import getToolByName
 
 
 class Index(grok.View):
@@ -21,6 +23,8 @@ class Index(grok.View):
         self.isOwner = member.has_role('Owner')
         if not (self.isManager):
             self.request.set('disable_border', 1)
+        
+        self.portal_workflow = getToolByName(self.context, 'portal_workflow')
 
 
 class PayPalIpn(grok.View):
@@ -43,12 +47,12 @@ class AddForm(dexterity.AddForm):
     grok.name('faborder')
     grok.require('cmf.AddPortalContent')
     grok.context(IFabOrders)
-
-    # schema = IFabOrder
-
+    
+    schema = IFabOrder
+    
     label = _(u"New Fab Order")
-    description = _(u"Creates a faborder instance...")
-
+    description = _(u"Creates a new order for the Fritzing Fab Service")
+    
     def create(self, data):
         from zope.component import createObject
         object = createObject('faborder')
@@ -57,8 +61,6 @@ class AddForm(dexterity.AddForm):
         user = self.context.portal_membership.getAuthenticatedMember()
         object.userId = u"%s" % user
         object.email = user.getProperty('email')
-        object.isOrdered = False;
-        object.isPaid = False;
         object.reindexObject()
         return object
 
@@ -66,8 +68,10 @@ class AddForm(dexterity.AddForm):
         self.context._setObject(object.id, object)
 
     def render(self):
-        """create faborder instance and redirect to its edit view
+        """create faborder instance and redirect to its default view
         """
+        
+        # TODO: generate shorter order numbers
         timestamp = "%s" % datetime.datetime.now()
         def r(s):
             if (s == ' '):
@@ -76,12 +80,12 @@ class AddForm(dexterity.AddForm):
                 return '-'
             return s
         simple_timestamp = ''.join(map(r, timestamp))
-
+        
         instance = self.create({
             'id': "order_%s" % (simple_timestamp), 
             'name': u"Order %s" % (timestamp)})
         self.add(instance)
-
+        
         faborderURL = self.context.absolute_url()+"/"+instance.id
         self.request.response.redirect(faborderURL)
 

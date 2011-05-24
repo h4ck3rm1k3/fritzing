@@ -76,8 +76,6 @@ class IFabOrder(form.Schema):
     
     form.omitted(
         'telephone',
-        'isOrdered', 
-        'isPaid', 
         'userId', 
         'area', 
         'pricePerSquareCm', 
@@ -94,14 +92,6 @@ class IFabOrder(form.Schema):
     telephone = ASCIILine(
         title = _(u"Telephone number"),
         description = _(u"We prefer a mobile number"))
-    
-    isOrdered = Bool(
-        title = _(u"Is ordered"),
-        description = _(u"True after checkout"))
-    
-    isPaid = Bool(
-        title = _(u"Is paid"),
-        description = _(u"True after positive feedback from payment provider"))
     
     userId = TextLine(
         title = _(u"User ID"),

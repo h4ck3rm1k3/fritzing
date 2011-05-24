@@ -81,12 +81,7 @@
                           </ul>
                         </td>
                         <td>
-                          <div tal:condition="not:item/isOrdered">not submitted</div>
-                          <div tal:condition="item/isOrdered">
-                            submitted, 
-                            <div tal:condition="not:item/isPaid">payment not confirmed</div>
-                            <div tal:condition="item/isPaid">payment confirmed</div>
-                          </div>
+                          <div tal:content="python:view.portal_workflow.getInfoFor(item, 'review_state')">unknown</div>
                         </td>
                         <td>
                           <a class="viewOrderLink" 
