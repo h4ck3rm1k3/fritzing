@@ -1033,9 +1033,9 @@ void MainWindow::createFileMenuActions() {
 	m_exportEagleAct->setStatusTip(tr("Export the current sketch to Eagle CAD"));
 	connect(m_exportEagleAct, SIGNAL(triggered()), this, SLOT(doExport()));
 
-        m_exportGerberAct = new QAction(tr("Ext. Gerber (RS-274X)..."), this);
+        m_exportGerberAct = new QAction(tr("Extended Gerber (RS-274X)..."), this);
 	m_exportGerberAct->setData(gerberActionType);
-        m_exportGerberAct->setStatusTip(tr("Export the current sketch to extended Gerber format (RS-274X) for professional PCB production"));
+        m_exportGerberAct->setStatusTip(tr("Export the current sketch to Extended Gerber format (RS-274X) for professional PCB production"));
 	connect(m_exportGerberAct, SIGNAL(triggered()), this, SLOT(doExport()));
 
 	m_exportEtchablePdfAct = new QAction(tr("Etchable (PDF)..."), this);
@@ -3054,7 +3054,7 @@ void MainWindow::createTraceMenuActions() {
 	m_excludeFromAutorouteWireAct = new WireAction(m_excludeFromAutorouteAct);
 	connect(m_excludeFromAutorouteWireAct, SIGNAL(triggered()), this, SLOT(excludeFromAutoroute()));
 
-        m_changeTraceLayerAct = new QAction(tr("Move to other board side"), this);
+        m_changeTraceLayerAct = new QAction(tr("Move to other side of the board"), this);
 	m_changeTraceLayerAct->setStatusTip(tr("Move selected traces to the other side of the board (note: the 'first' trace will be moved and the rest will follow to the same side)"));
 	connect(m_changeTraceLayerAct, SIGNAL(triggered()), this, SLOT(changeTraceLayer()));
 
