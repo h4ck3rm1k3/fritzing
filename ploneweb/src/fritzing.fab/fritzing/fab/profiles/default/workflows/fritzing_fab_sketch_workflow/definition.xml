@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<dc-workflow workflow_id="fritzing_fab_sketch_workflow" title="Fritzing Sketch Workflow" description="" state_variable="state" initial_state="private" manager_bypass="False">
+ <instance-creation-conditions>
+   <guard>
+    <guard-permission>Add portal content</guard-permission>
+   </guard>
+ </instance-creation-conditions>
+ <permission>Modify portal content</permission>
+ <permission>Access contents information</permission>
+ <permission>View</permission>
+ <permission>Copy or Move</permission>
+ <permission>Delete objects</permission>
+ <permission>Manage properties</permission>
+ <permission>Modify view template</permission>
+ <permission>Take ownership</permission>
+ <permission>Undo changes</permission>
+ <permission>View management screens</permission>
+ <state state_id="private" title="Private">
+  <permission-map name="Access contents information" acquired="True">
+   <permission-role>Manager</permission-role>
+   <permission-role>Site Administrator</permission-role>
+  </permission-map>
+  <permission-map name="Copy or Move" acquired="True">
+   <permission-role>Manager</permission-role>
+   <permission-role>Site Administrator</permission-role>
+  </permission-map>
+  <permission-map name="Delete objects" acquired="True">
+   <permission-role>Manager</permission-role>
+   <permission-role>Site Administrator</permission-role>
+  </permission-map>
+  <permission-map name="Manage properties" acquired="True">
+   <permission-role>Manager</permission-role>
+   <permission-role>Site Administrator</permission-role>
+  </permission-map>
+  <permission-map name="Modify portal content" acquired="True">
+   <permission-role>Manager</permission-role>
+   <permission-role>Site Administrator</permission-role>
+  </permission-map>
+  <permission-map name="Modify view template" acquired="True">
+   <permission-role>Manager</permission-role>
+   <permission-role>Site Administrator</permission-role>
+  </permission-map>
+  <permission-map name="Take ownership" acquired="True">
+   <permission-role>Manager</permission-role>
+   <permission-role>Site Administrator</permission-role>
+  </permission-map>
+  <permission-map name="Undo changes" acquired="True">
+   <permission-role>Manager</permission-role>
+   <permission-role>Site Administrator</permission-role>
+  </permission-map>
+  <permission-map name="View" acquired="True">
+   <permission-role>Manager</permission-role>
+   <permission-role>Site Administrator</permission-role>
+  </permission-map>
+  <permission-map name="View management screens" acquired="True">
+   <permission-role>Manager</permission-role>
+   <permission-role>Site Administrator</permission-role>
+  </permission-map>
+ </state>
+</dc-workflow>
