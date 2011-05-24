@@ -1857,13 +1857,14 @@ void ItemBase::debugInfo(const QString & msg)
 {
 
 #ifndef QT_NO_DEBUG
-	DebugDialog::debug(QString("%1 '%2' id:%3 '%4' vlid:%5 spec:%6")
+	DebugDialog::debug(QString("%1 '%2' id:%3 '%4' vlid:%5 spec:%6 flg:%7")
 		.arg(msg)
 		.arg(this->title())
 		.arg(this->id())
 		.arg(this->instanceTitle())
 		.arg(this->viewLayerID())
 		.arg(this->viewLayerSpec())
+		.arg(this->getViewGeometry().wireFlags())
 	);
 #else
 	Q_UNUSED(msg);
