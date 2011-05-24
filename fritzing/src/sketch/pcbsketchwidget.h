@@ -89,6 +89,7 @@ public:
 	ItemBase * placePartDroppedInOtherView(ModelPart *, ViewLayer::ViewLayerSpec, const ViewGeometry & viewGeometry, long id, SketchWidget * dropOrigin);
 	void autorouterSettings();
 	void getViaSize(qreal & ringThickness, qreal & holeSize);
+    void deleteItem(ItemBase *, bool deleteModelPart, bool doEmit, bool later);
 
 public:
 	static QSizeF jumperItemSize();
@@ -157,10 +158,12 @@ protected:
 	void dealWithDefaultParts();
 	void changeTrace(Wire * wire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand);
 	void checkDeleteTrace(CleanUpWiresCommand* command);
+	void clearSmdTraces(QList<ItemBase *> & smds, 	QList<Wire *> & already, QUndoCommand * parentCommand);
 
 signals:
 	void subSwapSignal(SketchWidget *, ItemBase *, ViewLayer::ViewLayerSpec, QUndoCommand * parentCommand);
 	void updateLayerMenuSignal();
+	void boardDeletedSignal();
 
 protected:
 	static void calcDistances(Wire * wire, QList<ConnectorItem *> & ends);

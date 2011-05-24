@@ -283,6 +283,7 @@ protected slots:
 	void macNavigatorHack();
 	void autorouterSettings();
 	void warnSMDReally();
+	void boardDeletedSlot();
 
 protected:
 	void initSketchWidget(SketchWidget *);

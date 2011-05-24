@@ -265,3 +265,4 @@ void InfoGraphicsView::getRatsnestColor(QColor & color)
 {
 	Q_UNUSED(color);
 }
+

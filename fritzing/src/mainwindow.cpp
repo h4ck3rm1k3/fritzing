@@ -409,6 +409,8 @@ void MainWindow::connectPairs() {
 	succeeded = connect(qApp, SIGNAL(spaceBarIsPressedSignal(bool)), m_breadboardGraphicsView, SLOT(spaceBarIsPressedSlot(bool)));
 	succeeded = connect(qApp, SIGNAL(spaceBarIsPressedSignal(bool)), m_schematicGraphicsView, SLOT(spaceBarIsPressedSlot(bool)));
 	succeeded = connect(qApp, SIGNAL(spaceBarIsPressedSignal(bool)), m_pcbGraphicsView, SLOT(spaceBarIsPressedSlot(bool)));
+
+	succeeded = connect(m_pcbGraphicsView, SIGNAL(boardDeletedSignal()), this, SLOT(boardDeletedSlot()));
 }
 
 void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
@@ -2321,4 +2323,10 @@ void MainWindow::warnSMDReally()
 	board->collectPropsMap(family, propsMap);
 	propsMap.insert("layers", "2");
 	swapSelectedMap(family, "layers", propsMap, board);
+}
+
+
+void MainWindow::boardDeletedSlot() 
+{
+	activeLayerBottom();
 }

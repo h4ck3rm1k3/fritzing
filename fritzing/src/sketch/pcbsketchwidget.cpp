@@ -1469,10 +1469,23 @@ long PCBSketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const Q
 {
 	Q_UNUSED(noFinalChangeWiresCommand);
 
+	QList<ItemBase *> smds;
+	QList<Wire *> already;
+
 	int newLayers = isBoardLayerChange(itemBase, newModuleID, master);
+	bool wasSMD = itemBase->modelPart()->flippedSMD();
 
 	long newID = SketchWidget::setUpSwap(itemBase, newModelIndex, newModuleID, viewLayerSpec, master, newLayers != m_boardLayers, parentCommand);
-	if (newLayers == m_boardLayers) return newID;
+	if (newLayers == m_boardLayers) {
+		if (!wasSMD) {
+			ModelPart * mp = paletteModel()->retrieveModelPart(newModuleID);
+			if (mp->flippedSMD()) {
+				smds.append(itemBase);
+				clearSmdTraces(smds, already, parentCommand);
+			}
+		}
+		return newID;
+	}
 
 	if (itemBase->viewIdentifier() != m_viewIdentifier) {
 		itemBase = findItem(itemBase->id());
@@ -1484,8 +1497,6 @@ long PCBSketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const Q
 		}
 	}
 
-	QList<ItemBase *> smds;
-	QList<Wire *> already;
 	ChangeBoardLayersCommand * changeBoardCommand = new ChangeBoardLayersCommand(this, m_boardLayers, newLayers, parentCommand);
 
 	ModelPart * mp = paletteModel()->retrieveModelPart(newModuleID);
@@ -1501,6 +1512,7 @@ long PCBSketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const Q
 		new CheckStickyCommand(this, BaseCommand::SingleView, newID, false, CheckStickyCommand::RemoveOnly, parentCommand);
 	}
 
+
 	// disconnect and flip smds
 	foreach (QGraphicsItem * item, scene()->items()) {
 		ItemBase * smd = dynamic_cast<ItemBase *>(item);
@@ -1510,39 +1522,10 @@ long PCBSketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const Q
 		smd = smd->layerKinChief();
 		if (smds.contains(smd)) continue;
 
-		foreach (QGraphicsItem * child, smd->childItems()) {
-			ConnectorItem * ci = dynamic_cast<ConnectorItem *>(child);
-			if (ci == NULL) continue;
-			ci->debugInfo("smd from");
-
-			foreach (ConnectorItem * toci, ci->connectedToItems()) {
-				toci->debugInfo(" smd to");
-				TraceWire * tw = qobject_cast<TraceWire *>(toci->attachedTo());
-				if (tw == NULL) continue;
-				if (already.contains(tw)) continue;
-
-				QList<ConnectorItem *> ends;
-				removeWire(tw, ends, already, changeBoardCommand);		
-			}
-		}
-
 		smds.append(smd);
 	}
 
-	// remove these trace connections now so they're not added back in when the part is swapped
-	QList<ConnectorItem *> ends;
-	foreach (Wire * wire, already) {
-		ends.append(wire->connector0());				
-		ends.append(wire->connector1());
-	}
-	foreach (ConnectorItem * end, ends) {
-		end->debugInfo("end from");
-		foreach (ConnectorItem * endTo, end->connectedToItems()) {
-			endTo->debugInfo("   end to");
-			end->tempRemove(endTo, false);
-			endTo->tempRemove(end, false);
-		}
-	}
+	clearSmdTraces(smds, already, changeBoardCommand);
 
 	if (newLayers == 1) {
 		// remove traces on the top layer
@@ -1562,6 +1545,42 @@ long PCBSketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const Q
 	}
 
 	return newID;
+}
+
+void PCBSketchWidget::clearSmdTraces(QList<ItemBase *> & smds, 	QList<Wire *> & already, QUndoCommand * parentCommand) {
+
+	foreach (ItemBase * smd, smds) {
+		foreach (QGraphicsItem * child, smd->childItems()) {
+			ConnectorItem * ci = dynamic_cast<ConnectorItem *>(child);
+			if (ci == NULL) continue;
+			ci->debugInfo("smd from");
+
+			foreach (ConnectorItem * toci, ci->connectedToItems()) {
+				toci->debugInfo(" smd to");
+				TraceWire * tw = qobject_cast<TraceWire *>(toci->attachedTo());
+				if (tw == NULL) continue;
+				if (already.contains(tw)) continue;
+
+				QList<ConnectorItem *> ends;
+				removeWire(tw, ends, already, parentCommand);		
+			}
+		}
+	}
+
+	// remove these trace connections now so they're not added back in when the part is swapped
+	QList<ConnectorItem *> ends;
+	foreach (Wire * wire, already) {
+		ends.append(wire->connector0());				
+		ends.append(wire->connector1());
+	}
+	foreach (ConnectorItem * end, ends) {
+		end->debugInfo("end from");
+		foreach (ConnectorItem * endTo, end->connectedToItems()) {
+			endTo->debugInfo("   end to");
+			end->tempRemove(endTo, false);
+			endTo->tempRemove(end, false);
+		}
+	}
 }
 
 int PCBSketchWidget::isBoardLayerChange(ItemBase * itemBase, const QString & newModuleID, bool master)
@@ -2463,5 +2482,16 @@ void PCBSketchWidget::checkDeleteTrace(CleanUpWiresCommand* command)
 	foreach (Wire * w, deletedWires.values()) {
 		//wire->markDeleted(true);
 		deleteItem(w, true, false, false);
+	}
+}
+
+
+void PCBSketchWidget::deleteItem(ItemBase * itemBase, bool deleteModelPart, bool doEmit, bool later)
+{
+	bool boardDeleted = qobject_cast<Board *>(itemBase) != NULL;
+	SketchWidget::deleteItem(itemBase, deleteModelPart, doEmit, later);
+	if (boardDeleted) {
+		changeBoardLayers(1, true);
+		emit boardDeletedSignal();
 	}
 }

@@ -90,7 +90,6 @@ public:
 	virtual class VirtualWire * makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, bool routed, QColor);
 	virtual void getRatsnestColor(QColor &);
 
-
 public slots:
 	virtual void setVoltage(qreal, bool doEmit);
 	virtual void resizeBoard(qreal w, qreal h, bool doEmit);
