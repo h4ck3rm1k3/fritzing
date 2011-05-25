@@ -95,15 +95,19 @@ protected:
 	virtual QString makeID();
 	ItemBase * setBothSvg(const QString & holeDiameter, const QString & ringThickness, const QStringList & connectorIDs); 
 	void setBothNonConnectors(ItemBase * itemBase, SvgIdLayer * svgIdLayer);
+	void setUpHoleSizes();
 											 
 protected:
 	class FSvgRenderer * m_renderer;
 	class FSvgRenderer * m_otherLayerRenderer;
 	HoleSettings m_holeSettings;
 
-protected:
-	static QHash<QString, QString> m_holeSizes;
-	static QHash<QString, QString> m_holeSizeTranslations;
+public:
+	static QHash<QString, QString> HoleSizes;
+
+public:
+	static const QString AutorouteViaHoleSize;
+	static const QString AutorouteViaRingThickness;
 };
 
 #endif

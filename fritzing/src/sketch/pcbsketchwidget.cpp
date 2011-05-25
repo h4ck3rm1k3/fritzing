@@ -567,7 +567,7 @@ ViewLayer::ViewLayerID PCBSketchWidget::getWireViewLayerID(const ViewGeometry & 
 		return ViewLayer::Ratsnest;
 	}
 
-	if (viewGeometry.getTrace()) {
+	if (viewGeometry.getAnyTrace()) {
 		switch (viewLayerSpec) {
 			case ViewLayer::Top:
 			case ViewLayer::WireOnTop_TwoLayers:
@@ -2209,7 +2209,7 @@ ItemBase * PCBSketchWidget::placePartDroppedInOtherView(ModelPart * modelPart, V
 
 void PCBSketchWidget::autorouterSettings() {	
 	AutorouterSettingsDialog dialog;
-
+	dialog.exec();
 }
 
 void PCBSketchWidget::getViaSize(qreal & ringThickness, qreal & holeSize) {
@@ -2222,40 +2222,10 @@ void PCBSketchWidget::getViaSize(qreal & ringThickness, qreal & holeSize) {
 }
 
 void PCBSketchWidget::getDefaultViaSize(QString & ringThickness, QString & holeSize) {
+	// these settings are initialized in hole.cpp
 	QSettings settings;
-	ringThickness = settings.value(AutorouterSettingsDialog::AutorouteViaRingThickness, "").toString();
-	holeSize = settings.value(AutorouterSettingsDialog::AutorouteViaHoleSize, "").toString();
-
-	if (!ringThickness.isEmpty() && !holeSize.isEmpty()) return;
-
-	QFile file(":/resources/vias.xml");
-
-	QString errorStr;
-	int errorLine;
-	int errorColumn;
-
-	QDomDocument domDocument;
-	if (!domDocument.setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
-		DebugDialog::debug(QString("failed loading properties %1 line:%2 col:%3").arg(errorStr).arg(errorLine).arg(errorColumn));
-		return;
-	}
-
-	QDomElement root = domDocument.documentElement();
-	if (root.isNull()) return;
-	if (root.tagName() != "vias") return;
-
-	QDomElement ve = root.firstChildElement("via");
-	while (!ve.isNull()) {
-		if (ve.attribute("default").compare("yes") == 0) {
-			if (ringThickness.isEmpty()) ringThickness = ve.attribute("ringthickness");
-			if (holeSize.isEmpty()) holeSize = ve.attribute("holesize");
-			settings.setValue(AutorouterSettingsDialog::AutorouteViaHoleSize, holeSize);
-			settings.setValue(AutorouterSettingsDialog::AutorouteViaRingThickness, ringThickness);
-			break;
-		}
-		ve = ve.nextSiblingElement("via");
-	}
-
+	ringThickness = settings.value(Hole::AutorouteViaRingThickness, "").toString();
+	holeSize = settings.value(Hole::AutorouteViaHoleSize, "").toString();
 }
 
 void PCBSketchWidget::changeTrace(Wire * wire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand) 

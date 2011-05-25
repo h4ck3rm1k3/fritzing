@@ -76,12 +76,19 @@ TraceWire * Autorouter::drawOneTrace(QPointF fromPos, QPointF toPos, int width, 
 		  viewLayerSpec, BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
 	if (trace == NULL) {
 		// we're in trouble
+		DebugDialog::debug("autorouter unable to draw one trace");
 		return NULL;
 	}
 
 	// addItemAux calls trace->setSelected(true) so unselect it
 	trace->setSelected(false);
 	TraceWire * traceWire = dynamic_cast<TraceWire *>(trace);
+	if (traceWire == NULL) {
+		DebugDialog::debug("autorouter unable to draw one trace as trace");
+		return NULL;
+	}
+
+
 	m_sketchWidget->setClipEnds(traceWire, false);
 	traceWire->setColorString(m_sketchWidget->traceColor(viewLayerSpec), 1.0);
 	traceWire->setWireWidth(width, m_sketchWidget);

@@ -871,7 +871,7 @@ bool Wire::stickyEnabled()
 }
 
 bool Wire::getTrace() {
-	return m_viewGeometry.getTrace() || m_viewGeometry.getSchematicTrace();
+	return m_viewGeometry.getAnyTrace();
 }
 
 bool Wire::getRouted() {

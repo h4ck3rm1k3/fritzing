@@ -82,6 +82,7 @@ public:
 	bool getRouted() const;
 	void setTrace(bool);
 	bool getTrace() const;
+	bool getAnyTrace() const;
 	void setSchematicTrace(bool);
 	bool getSchematicTrace() const;
 	void setRatsnest(bool);

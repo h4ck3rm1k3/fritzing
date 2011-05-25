@@ -517,7 +517,7 @@ ItemBase * SketchWidget::addItem(ModelPart * modelPart, ViewLayer::ViewLayerSpec
 
 	bool emitOnly = false;
 	bool doEmit = true;
-	if (originatingCommand != NULL && viewGeometry.getTrace()) {
+	if (originatingCommand != NULL && viewGeometry.getAnyTrace()) {
 		if (acceptsTrace(viewGeometry)) {
 			doEmit = false;
 		}
@@ -569,7 +569,7 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, ViewLayer::ViewLayerS
 		if (ratsnest) {
 			setClipEnds((ClipableWire *) wire, true);
 		}
-		else if (viewGeometry.getTrace() ) {
+		else if (viewGeometry.getAnyTrace() ) {
 			setClipEnds((ClipableWire *) wire, true);
 		}
 		else {
@@ -6738,7 +6738,7 @@ ViewLayer::ViewLayerSpec SketchWidget::getViewLayerSpec(ModelPart * modelPart, Q
 		return ViewLayer::GroundPlane_Bottom;
 	}
 
-	if (viewGeometry.getTrace()) {
+	if (viewGeometry.getAnyTrace()) {
 		QString layer = view.attribute("layer");
 		if (layer.isEmpty()) return viewLayerSpec;
 

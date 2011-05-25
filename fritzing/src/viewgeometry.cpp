@@ -174,6 +174,10 @@ bool ViewGeometry::getTrace() const {
 	return m_wireFlags.testFlag(TraceFlag);
 }
 
+bool ViewGeometry::getAnyTrace() const {
+	return getTrace() || getSchematicTrace();
+}
+
 bool ViewGeometry::getSchematicTrace() const {
 	return m_wireFlags.testFlag(SchematicTraceFlag);
 }

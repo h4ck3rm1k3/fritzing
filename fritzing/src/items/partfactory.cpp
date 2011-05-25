@@ -67,7 +67,7 @@ ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClas
 			if (ratsnest) {
 				return new VirtualWire(modelPart, viewIdentifier, viewGeometry, id, wireMenu);		
 			}
-			if (viewGeometry.getTrace()) {
+			if (viewGeometry.getAnyTrace()) {
 				TraceWire * traceWire = new TraceWire(modelPart, viewIdentifier, viewGeometry, id, wireMenu);
 				traceWire->setSchematic(viewIdentifier == ViewIdentifierClass::SchematicView);
 				return traceWire;

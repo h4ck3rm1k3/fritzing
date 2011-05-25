@@ -64,7 +64,7 @@ ViewLayer::ViewLayerID SchematicSketchWidget::getDragWireViewLayerID(ConnectorIt
 }
 
 ViewLayer::ViewLayerID SchematicSketchWidget::getWireViewLayerID(const ViewGeometry & viewGeometry, ViewLayer::ViewLayerSpec viewLayerSpec) {
-	if (viewGeometry.getTrace()) {
+	if (viewGeometry.getAnyTrace()) {
 		return ViewLayer::SchematicTrace;
 	}
 

@@ -31,6 +31,7 @@ $Date: 2010-05-06 22:30:19 +0200 (Thu, 06 May 2010) $
 #include <QLineEdit>
 #include <QDoubleValidator>
 #include <QRadioButton>
+#include <QGroupBox>
 
 #include "../items/via.h"
 
@@ -56,10 +57,8 @@ protected:
 	QRadioButton * m_professionalButton;
 	QRadioButton * m_customButton;
 	HoleSettings m_holeSettings;
+	QGroupBox * m_customGroupBox;
 
-public:
-	static const QString AutorouteViaHoleSize;
-	static const QString AutorouteViaRingThickness;
 };
 
 

@@ -46,11 +46,13 @@ $Date$
 #include <QLabel>
 #include <QSpacerItem>
 #include <QGroupBox>
+#include <QSettings>
 
 static const int rowHeight = 21;
 
-QHash<QString, QString> Hole::m_holeSizes;
-QHash<QString, QString> Hole::m_holeSizeTranslations;
+QHash<QString, QString> Hole::HoleSizes;
+const QString Hole::AutorouteViaHoleSize = "autorouteViaHoleSize";
+const QString Hole::AutorouteViaRingThickness = "autorouteViaRingThickness";
 
 Hole::Hole( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
@@ -61,36 +63,14 @@ Hole::Hole( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdent
 	m_holeSettings.holeDiameterRange = Hole::holeDiameterRange;
 	m_holeSettings.ringThicknessRange = Hole::ringThicknessRange;
 
-	if (m_holeSizes.count() == 0) {
-		QString name = "pin header";
-		m_holeSizes.insert(name, ".038in,.02in");
-		m_holeSizeTranslations.insert(tr("Pin Header"), name);
-
-		name = "std through-hole";
-		m_holeSizes.insert(name, ".035in,.02in");
-		m_holeSizeTranslations.insert(tr("Standard Through-hole"), name);
-
-		name = "big through-hole";
-		m_holeSizes.insert(name, ".042in,.02in");
-		m_holeSizeTranslations.insert(tr("Big Through-hole"), name);
-
-		name = "mounting hole";
-		m_holeSizes.insert(name, ".086in,.02in");
-		m_holeSizeTranslations.insert(tr("Mounting Hole"), name);
-
-		name = "fine lead";
-		m_holeSizes.insert(name, ".028in,.02in");
-		m_holeSizeTranslations.insert(tr("Fine Lead Parts"), name);
-
-		name = "thick lead";
-		m_holeSizes.insert(name, ".052in,.02in");
-		m_holeSizeTranslations.insert(tr("Thick Lead Parts"), name);
+	if (HoleSizes.count() == 0) {
+		setUpHoleSizes();
 	}
 
 	QString holeSize = modelPart->prop("hole size").toString();
 	QStringList sizes = holeSize.split(",");
 	if (sizes.count() != 2) {
-		holeSize = m_holeSizes.value(holeSize, "");
+		holeSize = HoleSizes.value(holeSize, "");
 		if (holeSize.isEmpty()) {
 			holeSize = modelPart->properties().value("hole size", ".035in,0.2in");
 			modelPart->setProp("hole size", holeSize);
@@ -105,6 +85,41 @@ Hole::Hole( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdent
 }
 
 Hole::~Hole() {
+}
+
+void Hole::setUpHoleSizes() {
+	QSettings settings;
+	QString ringThickness = settings.value(AutorouteViaRingThickness, "").toString();
+	QString holeSize = settings.value(AutorouteViaHoleSize, "").toString();
+
+	QFile file(":/resources/vias.xml");
+
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+
+	QDomDocument domDocument;
+	if (!domDocument.setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
+		DebugDialog::debug(QString("failed loading properties %1 line:%2 col:%3").arg(errorStr).arg(errorLine).arg(errorColumn));
+		return;
+	}
+
+	QDomElement root = domDocument.documentElement();
+	if (root.isNull()) return;
+	if (root.tagName() != "vias") return;
+
+	QDomElement ve = root.firstChildElement("via");
+	while (!ve.isNull()) {
+		QString rt = ve.attribute("ringthickness");
+		QString hs = ve.attribute("holesize");
+		QString name = ve.attribute("name");
+		if (ve.attribute("default").compare("yes") == 0) {
+			if (ringThickness.isEmpty()) settings.setValue(AutorouteViaRingThickness, rt);
+			if (holeSize.isEmpty()) settings.setValue(AutorouteViaHoleSize, hs);
+		}
+		HoleSizes.insert(name, QString("%1,%2").arg(hs).arg(rt));
+		ve = ve.nextSiblingElement("via");
+	}
 }
 
 
@@ -122,7 +137,7 @@ QString Hole::holeSize() {
 }
 
 void Hole::setHoleSize(QString holeSize, bool force) {
-	QString hashedHoleSize = m_holeSizes.value(holeSize);
+	QString hashedHoleSize = HoleSizes.value(holeSize);
 	QStringList sizes;
 	if (hashedHoleSize.isEmpty()) {
 		sizes = holeSize.split(",");
@@ -459,7 +474,7 @@ void Hole::updateSizes(HoleSettings &  holeSettings) {
 	QPointF current(TextUtils::convertToInches(holeSettings.holeDiameter), TextUtils::convertToInches(holeSettings.ringThickness));
 	for (int ix = 0; ix < holeSettings.sizesComboBox->count(); ix++) {
 		QString key = holeSettings.sizesComboBox->itemText(ix);
-		QString value = m_holeSizes.value(key, "");
+		QString value = HoleSizes.value(key, "");
 		QStringList sizes;
 		if (value.isEmpty()) {
 			sizes = key.split(",");
@@ -566,7 +581,7 @@ QWidget * Hole::createHoleSettings(QWidget * parent, HoleSettings & holeSettings
     hLayout->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Expanding,QSizePolicy::Minimum));
     vBoxLayout->addWidget(hFrame);
 
-	holeSettings.sizesComboBox->addItems(m_holeSizes.keys());
+	holeSettings.sizesComboBox->addItems(HoleSizes.keys());
 	holeSettings.sizesComboBox->setEnabled(swappingEnabled);
 	holeSettings.unitsComboBox->setEnabled(swappingEnabled);
 	holeSettings.unitsComboBox->setCurrentIndex(currentHoleSize.contains("in") ? 1 : 0);
