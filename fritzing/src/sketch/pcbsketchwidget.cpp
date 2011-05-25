@@ -59,10 +59,6 @@ $Date$
 #include <QSettings>
 #include <QPushButton>
 
-
-const QString SettingsAutorouteViaHoleSize = "autorouteViaHoleSize";
-const QString SettingsAutorouteViaRingThickness = "autorouteViaRingThickness";
-
 static const int MAX_INT = std::numeric_limits<int>::max();
 
 static QString PCBTraceColor1 = "trace1";
@@ -1209,14 +1205,14 @@ void PCBSketchWidget::resizeBoard(qreal mmW, qreal mmH, bool doEmit)
 }
 
 void PCBSketchWidget::showLabelFirstTime(long itemID, bool show, bool doEmit) {
+	// called when new item is added, to decide whether to show part label
 	SketchWidget::showLabelFirstTime(itemID, show, doEmit);
 	ItemBase * itemBase = findItem(itemID);
 	if (itemBase == NULL) return;
 
 	switch (itemBase->itemType()) {
 		case ModelPart::Part:
-		case ModelPart::Hole:
-		case ModelPart::Via:
+		case ModelPart::Jumper:
 			{
 				ViewLayer * viewLayer = m_viewLayers.value(getLabelViewLayerID(itemBase->viewLayerSpec()));
 				itemBase->showPartLabel(itemBase->isVisible(), viewLayer);
@@ -2216,22 +2212,7 @@ ItemBase * PCBSketchWidget::placePartDroppedInOtherView(ModelPart * modelPart, V
 
 void PCBSketchWidget::autorouterSettings() {	
 	AutorouterSettingsDialog dialog;
-	if (dialog.exec() == QDialog::Accepted) {
-	}
 
-/*
-	if (dialog.exec() == QDialog::Accepted) {
-		foreach (QRadioButton * button, buttons) {
-			if (button->isChecked()) {
-				QSettings settings;
-				settings.setValue(SettingsAutorouteViaHoleSize, button->property("holesize").toString());
-				settings.setValue(SettingsAutorouteViaRingThickness, button->property("ringthickness").toString());
-				break;
-			}
-		}
-	}
-
-	*/
 }
 
 void PCBSketchWidget::getViaSize(qreal & ringThickness, qreal & holeSize) {
@@ -2245,8 +2226,8 @@ void PCBSketchWidget::getViaSize(qreal & ringThickness, qreal & holeSize) {
 
 void PCBSketchWidget::getDefaultViaSize(QString & ringThickness, QString & holeSize) {
 	QSettings settings;
-	ringThickness = settings.value(SettingsAutorouteViaRingThickness, "").toString();
-	holeSize = settings.value(SettingsAutorouteViaHoleSize, "").toString();
+	ringThickness = settings.value(AutorouterSettingsDialog::AutorouteViaRingThickness, "").toString();
+	holeSize = settings.value(AutorouterSettingsDialog::AutorouteViaHoleSize, "").toString();
 
 	if (!ringThickness.isEmpty() && !holeSize.isEmpty()) return;
 
@@ -2271,8 +2252,8 @@ void PCBSketchWidget::getDefaultViaSize(QString & ringThickness, QString & holeS
 		if (ve.attribute("default").compare("yes") == 0) {
 			if (ringThickness.isEmpty()) ringThickness = ve.attribute("ringthickness");
 			if (holeSize.isEmpty()) holeSize = ve.attribute("holesize");
-			settings.setValue(SettingsAutorouteViaHoleSize, holeSize);
-			settings.setValue(SettingsAutorouteViaRingThickness, ringThickness);
+			settings.setValue(AutorouterSettingsDialog::AutorouteViaHoleSize, holeSize);
+			settings.setValue(AutorouterSettingsDialog::AutorouteViaRingThickness, ringThickness);
 			break;
 		}
 		ve = ve.nextSiblingElement("via");

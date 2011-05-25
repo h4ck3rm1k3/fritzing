@@ -51,6 +51,8 @@ $Date: 2010-05-06 22:30:19 +0200 (Thu, 06 May 2010) $
 #include "../items/tracewire.h"
 #include "../sketch/pcbsketchwidget.h"
 
+const QString AutorouterSettingsDialog::AutorouteViaHoleSize = "autorouteViaHoleSize";
+const QString AutorouterSettingsDialog::AutorouteViaRingThickness = "autorouteViaRingThickness";
 
 AutorouterSettingsDialog::AutorouterSettingsDialog(QWidget *parent) : QDialog(parent) 
 {
@@ -88,8 +90,6 @@ AutorouterSettingsDialog::AutorouterSettingsDialog(QWidget *parent) : QDialog(pa
 	enableCustom(initRadios());
 	customLayout->addWidget(customWidget);
 	customGroupBox->setLayout(customLayout);
-
-
 
 	customFrameLayout->addWidget(customGroupBox);
 	customFrame->setLayout(customFrameLayout);
@@ -165,8 +165,19 @@ void AutorouterSettingsDialog::production(bool checked) {
 }
 
 void AutorouterSettingsDialog::acceptAnd() {
-	//QSettings settings;
-	//settings.setValue(QString("%1GridSize").arg(m_viewName), m_lineEdit->text() + units);
+	QSettings settings;
+
+	QList<QRadioButton *> buttons;
+	buttons << m_homebrewButton << m_professionalButton << m_customButton;
+	foreach (QRadioButton * button, buttons) {
+		if (button->isChecked()) {
+			QSettings settings;
+			settings.setValue(AutorouteViaHoleSize, button->property("holesize").toString());
+			settings.setValue(AutorouteViaRingThickness, button->property("ringthickness").toString());
+			break;
+		}
+	}
+	
 	accept();
 }
 

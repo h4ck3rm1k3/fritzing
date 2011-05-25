@@ -56,6 +56,10 @@ protected:
 	QRadioButton * m_professionalButton;
 	QRadioButton * m_customButton;
 	HoleSettings m_holeSettings;
+
+public:
+	static const QString AutorouteViaHoleSize;
+	static const QString AutorouteViaRingThickness;
 };
 
 
