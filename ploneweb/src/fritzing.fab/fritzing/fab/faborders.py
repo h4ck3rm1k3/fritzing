@@ -23,8 +23,12 @@ class Index(grok.View):
         self.isOwner = member.has_role('Owner')
         if not (self.isManager):
             self.request.set('disable_border', 1)
-        
-        self.portal_workflow = getToolByName(self.context, 'portal_workflow')
+    
+    def getStateTitle(self, item):
+        portal_workflow = getToolByName(item, 'portal_workflow')
+        state_id = portal_workflow.getInfoFor(item, 'review_state')
+        state_title = portal_workflow.getTitleForStateOnType(state_id, item.portal_type)
+        return state_title
 
 
 class PayPalIpn(grok.View):
@@ -59,7 +63,6 @@ class AddForm(dexterity.AddForm):
         object.id = data['id']
         object.title = data['name']
         user = self.context.portal_membership.getAuthenticatedMember()
-        object.userId = u"%s" % user
         object.email = user.getProperty('email')
         object.reindexObject()
         return object

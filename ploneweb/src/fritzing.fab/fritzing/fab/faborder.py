@@ -1,13 +1,23 @@
 from five import grok
 
+from zope.app.component.hooks import getSite
+from zope.lifecycleevent.interfaces import IObjectModifiedEvent
+from zope.app.container.interfaces import IObjectMovedEvent
+from zope.component import createObject
+
 from plone.directives import dexterity
+from plone.dexterity.content import Item
 
 from Products.statusmessages.interfaces import IStatusMessage
+from Products.CMFCore.utils import getToolByName
+from Products.CMFCore.interfaces import IActionSucceededEvent
+
+from email.MIMEText import MIMEText
+from email.Utils import formataddr
+from smtplib import SMTPRecipientsRefused
 
 from fritzing.fab.interfaces import IFabOrder, ISketch
 from fritzing.fab import _
-
-from Products.CMFCore.utils import getToolByName
 
 
 class Index(grok.View):
@@ -26,8 +36,11 @@ class Index(grok.View):
             self.request.set('disable_border', 1)
         
         portal_workflow = getToolByName(self.context, 'portal_workflow')
-        self.review_state = portal_workflow.getInfoFor(self.context, 'review_state')
-        self.isOrdered = (self.review_state != 'open')
+        self.state_id = portal_workflow.getInfoFor(self.context, 'review_state')
+        self.state_title = portal_workflow.getTitleForStateOnType(self.state_id, self.context.portal_type)
+        self.isOrdered = (self.state_id != 'open')
+        if self.context.shipTo:
+            self.shipToTitle = IFabOrder['shipTo'].vocabulary.getTerm(self.context.shipTo).title
 
 
 class Edit(dexterity.EditForm):
@@ -112,7 +125,8 @@ class PayPalCheckout(grok.View):
         
         portal_workflow.doActionFor(self.context, action='submit')
         
-        # TODO: SEND E-MAILS
+        # SEND E-MAILS
+        sendStatusMail(self.context)
     
     def addStatusMessage(self, message, messageType):
         IStatusMessage(self.request).addStatusMessage(message, messageType)
@@ -120,13 +134,67 @@ class PayPalCheckout(grok.View):
         self.request.response.redirect(faborderURL)
 
 
-from zope.lifecycleevent.interfaces import IObjectModifiedEvent
+def sendStatusMail(context):
+    """Sends notification on the order status to the orderer and faborders.salesEmail
+    """
+    mail_text = u""
+    charset = 'utf-8'
+    
+    portal_workflow = getToolByName(context, 'portal_workflow')
+    state_id = portal_workflow.getInfoFor(context, 'review_state')
+    state_title = portal_workflow.getTitleForStateOnType(state_id, context.portal_type)
+    portal = getSite()
+    mail_template = portal.mail_order_status_change
+    faborders = context.aq_parent
+    
+    from_address = faborders.salesEmail
+    from_name = "Fritzing Fab"
+    user  = context.getOwner()
+    to_address = user.getProperty('email')
+    to_name = user.getProperty('fullname')
+    
+    mail_text = mail_template(
+        to_name = to_name,
+        state_id = state_id,
+        state_title = state_title,
+        faborder = context,
+        ship_to = IFabOrder['shipTo'].vocabulary.getTerm(context.shipTo).title,
+        )
+    
+    try:
+        host = getToolByName(context, 'MailHost')
+        # send our copy:
+        host.secureSend(
+            message = MIMEText(mail_text, 'plain', charset), 
+            mfrom = formataddr((from_name, from_address)),
+            mto = formataddr((from_name, from_address)),
+            charset = charset,
+        )
+        # send notification for the orderer:
+        host.secureSend(
+            message = MIMEText(mail_text, 'plain', charset), 
+            mfrom = formataddr((from_name, from_address)),
+            mto = formataddr((to_name, to_address)),
+            charset = charset,
+        )
+    except SMTPRecipientsRefused:
+        # Don't disclose email address on failure
+        raise SMTPRecipientsRefused('Recipient address rejected by server')
+
+
+@grok.subscribe(IFabOrder, IActionSucceededEvent)
+def workflowTransitionHandler(faborder, event):
+    """event-handler for workflow transitions on IFabOrder instances
+    """
+    if event.action == 'complete':
+        sendStatusMail(faborder)
+
+
 @grok.subscribe(IFabOrder, IObjectModifiedEvent)
 def orderModifiedHandler(faborder, event):
     recalculatePrices(faborder)
 
 
-from zope.app.container.interfaces import IObjectMovedEvent
 @grok.subscribe(ISketch, IObjectModifiedEvent)
 @grok.subscribe(ISketch, IObjectMovedEvent)
 def sketchModifiedHandler(sketch, event):
@@ -186,7 +254,6 @@ class AddForm(dexterity.AddForm):
     description = u''
     
     def create(self, data):
-        from zope.component import createObject
         sketch = createObject('sketch')
         sketch.id = data['orderItem'].filename.encode("ascii")
         
@@ -203,7 +270,6 @@ class AddForm(dexterity.AddForm):
         return sketch
     
     def add(self, object):
-        from plone.dexterity.content import Item
         if isinstance(object, Item):
             self.context._setObject(object.id, object)
 

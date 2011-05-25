@@ -4,14 +4,17 @@
     xmlns:i18n="http://namespaces.zope.org/i18n"
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     xmlns:grok="http://namespaces.zope.org/grok"
+    xmlns:cmf="http://namespaces.zope.org/cmf"
     i18n_domain="fritzing.fab">
-
+  
   <five:registerPackage package="." initialize=".initialize" />
   <i18n:registerTranslations directory="locales" />
   
   <includeDependencies package="." />
   <grok:grok package="." />
-    
+  
+  <cmf:registerDirectory name="fritzing_fab"/>
+  
   <genericsetup:registerProfile
         name="default"
         title="Fritzing Fab"

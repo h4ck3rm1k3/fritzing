@@ -94,7 +94,7 @@
               </tr>
               <tr>
                 <td>Shipping Area: </td>
-                <td tal:content="context/shipTo"></td>
+                <td tal:content="view/shipToTitle"></td>
               </tr>
               <tr tal:condition="not:view/isOrdered">
                 <td colspan="2"><a class="editAddressLink" href="#" tal:attributes="href string:${context/absolute_url}/edit">Edit</a></td>
@@ -131,7 +131,7 @@
               </tr>
               <tr>
                 <td></td>
-                <td>Shipping</td>
+                <td>Shipping to <span tal:replace="view/shipToTitle" /></td>
                 <td tal:content="python: '%.2f&nbsp;EUR' % (context.priceShipping)"></td>
               </tr>
               <tr>

@@ -68,7 +68,7 @@
                       </tr>
                       <tr tal:repeat="item container/listFolderContents">
                         <td tal:condition="view/isManager">
-                          <p tal:content="item/userId | string:error"></p>
+                          <p tal:content="item/getOwner | string:error"></p>
                         </td>
                         <td tal:condition="view/isManager" tal:content="item/id | string:error">title</td>
                         <td>
@@ -81,7 +81,7 @@
                           </ul>
                         </td>
                         <td>
-                          <div tal:content="python:view.portal_workflow.getInfoFor(item, 'review_state')">unknown</div>
+                          <div tal:content="python:view.getStateTitle(item)">unknown</div>
                         </td>
                         <td>
                           <a class="viewOrderLink" 

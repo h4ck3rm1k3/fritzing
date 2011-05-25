@@ -67,7 +67,7 @@ class IFabOrder(form.Schema):
         vocabulary = SimpleVocabulary([
             SimpleTerm(value = u'germany', title = _(u'Germany')),
             SimpleTerm(value = u'eu', title = _(u'Europe (EU)')),
-            SimpleTerm(value = u'world', title = _(u'somewhere else'))
+            SimpleTerm(value = u'world', title = _(u'the rest of the World'))
         ]))
     
     email = TextLine(
@@ -76,7 +76,6 @@ class IFabOrder(form.Schema):
     
     form.omitted(
         'telephone',
-        'userId', 
         'area', 
         'pricePerSquareCm', 
         'priceNetto', 
@@ -92,10 +91,6 @@ class IFabOrder(form.Schema):
     telephone = ASCIILine(
         title = _(u"Telephone number"),
         description = _(u"We prefer a mobile number"))
-    
-    userId = TextLine(
-        title = _(u"User ID"),
-        description = _(u"The orderers user ID"))
     
     area = Float(
         title = _(u"Area"),

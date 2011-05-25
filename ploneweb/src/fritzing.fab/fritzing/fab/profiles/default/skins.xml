@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<object name="portal_skins" meta_type="Plone Skins Tool">
+  <object name="fritzing_fab" meta_type="Filesystem Directory View" directory="fritzing.fab:skins/fritzing_fab"/>
+  <skin-path name="*">
+    <layer name="fritzing_fab" insert-after="custom"/>
+  </skin-path>
+</object>
