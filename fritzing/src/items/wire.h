@@ -102,8 +102,6 @@ public:
 	void collectWires(QList<Wire *> & wires);
 	bool stickyEnabled();
 	void setPcbPenBrush(QBrush & brush);
-	bool getTrace();
-	void setTrace(bool);
 	bool getRouted();
 	void setRouted(bool);
 	bool getRatsnest();
@@ -112,6 +110,7 @@ public:
 	bool getAutoroutable();
 	void setNormal(bool);
 	bool getNormal();
+	bool getTrace();
 
 
 	bool hasFlag(ViewGeometry::WireFlag);

@@ -200,7 +200,7 @@ bool PCBSketchWidget::canChainWire(Wire * wire) {
 
 void PCBSketchWidget::createTrace(Wire * wire) {
 	QString commandString = tr("Create Trace from this Wire");
-	createTrace(wire, commandString, ViewGeometry::TraceFlag);
+	createTrace(wire, commandString, getTraceFlag());
 	ensureTraceLayerVisible();
 }
 
@@ -239,7 +239,7 @@ bool PCBSketchWidget::createOneTrace(Wire * wire, ViewGeometry::WireFlag flag, b
 	QList<ConnectorItem *> ends;
 	Wire * trace = NULL;
 	if (wire->getRatsnest()) {
-		trace = wire->findTraced(ViewGeometry::TraceFlag, ends);
+		trace = wire->findTraced(getTraceFlag(), ends);
 	}
 	else if (wire->getTrace()) {
 		trace = wire;
@@ -249,7 +249,7 @@ bool PCBSketchWidget::createOneTrace(Wire * wire, ViewGeometry::WireFlag flag, b
 		return false;
 	}
 	else {
-		trace = wire->findTraced(ViewGeometry::TraceFlag, ends);
+		trace = wire->findTraced(getTraceFlag(), ends);
 	}
 
 	if (trace && trace->hasFlag(flag)) {
@@ -391,13 +391,12 @@ bool PCBSketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * 
 	dragWire->connector0()->tempConnectTo(fromConnectorItem, false);
 	dragWire->connector1()->tempConnectTo(toConnectorItem, false);
 	QList<ConnectorItem *> ends;
-	Wire * Trace = dragWire->findTraced(ViewGeometry::TraceFlag, ends);
+	Wire * Trace = dragWire->findTraced(getTraceFlag(), ends);
 	dragWire->connector0()->tempRemove(fromConnectorItem, false);
 	dragWire->connector1()->tempRemove(toConnectorItem, false);
 
 	if (Trace == NULL) {
-		ViewGeometry::WireFlags flags =  ViewGeometry::TraceFlag;
-		if (m_viewIdentifier == ViewIdentifierClass::SchematicView) flags |= ViewGeometry::SchematicTraceFlag;
+		ViewGeometry::WireFlags flags =  getTraceFlag();
 		long newID = makeModifiedWire(fromConnectorItem, toConnectorItem, BaseCommand::SingleView, flags, parentCommand);
 		QString tc = traceColor(fromConnectorItem);
 		new WireColorChangeCommand(this, newID, tc, tc, 1.0, 1.0, parentCommand);
@@ -712,7 +711,7 @@ bool PCBSketchWidget::bothEndsConnectedAux(Wire * wire, ViewGeometry::WireFlags 
 		if (toConnectorItem->attachedToItemType() != ModelPart::Wire) continue;
 
 		Wire * w = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
-		ViewGeometry::WireFlags wflag = w->wireFlags() & (ViewGeometry::RatsnestFlag | ViewGeometry::TraceFlag);
+		ViewGeometry::WireFlags wflag = w->wireFlags() & (ViewGeometry::RatsnestFlag | getTraceFlag());
 		if (wflag != flag) continue;
 
 		result = bothEndsConnectedAux(w, flag, toConnectorItem, wires, partConnectorItems, visited) || result;   // let it recurse
@@ -1289,7 +1288,7 @@ void PCBSketchWidget::updateRoutingStatus(RoutingStatus & routingStatus, bool ma
 
 		QList<ConnectorItem *> connectorItems;
 		connectorItems.append(connectorItem);
-		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::RatsnestFlag | ViewGeometry::TraceFlag);
+		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::RatsnestFlag | getTraceFlag());
 		visited.append(connectorItems);
 
 		bool doRatsnest = manual || checkUpdateRatsnest(connectorItems);
@@ -2003,8 +2002,7 @@ void PCBSketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Co
 
 	long newID1 = ItemBase::getNextID();
 	ViewGeometry vg1 = m_connectorDragWire->getViewGeometry();
-	vg1.setRatsnest(false);
-	vg1.setTrace(true);
+	vg1.setWireFlags(getTraceFlag());
 	new AddItemCommand(this, crossViewType, m_connectorDragWire->moduleID(), viewLayerSpec, vg1, newID1, true, -1, parentCommand);
 	new CheckStickyCommand(this, crossViewType, newID1, false, CheckStickyCommand::RemoveOnly, parentCommand);
 	new WireColorChangeCommand(this, newID1, traceColor(viewLayerSpec), traceColor(viewLayerSpec), 1.0, 1.0, parentCommand);
@@ -2012,8 +2010,7 @@ void PCBSketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Co
 
 	long newID2 = ItemBase::getNextID();
 	ViewGeometry vg2 = m_bendpointWire->getViewGeometry();
-	vg2.setRatsnest(false);
-	vg2.setTrace(true);
+	vg2.setWireFlags(getTraceFlag());
 	new AddItemCommand(this, crossViewType, m_bendpointWire->moduleID(), viewLayerSpec, vg2, newID2, true, -1, parentCommand);
 	new CheckStickyCommand(this, crossViewType, newID2, false, CheckStickyCommand::RemoveOnly, parentCommand);
 	new WireColorChangeCommand(this, newID2, traceColor(viewLayerSpec), traceColor(viewLayerSpec), 1.0, 1.0, parentCommand);
@@ -2327,7 +2324,7 @@ void PCBSketchWidget::changeTrace(Wire * wire, ConnectorItem * from, ConnectorIt
 
 		QList<ConnectorItem *> connectorItems;
 		connectorItems.append(toDest);
-		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::TraceFlag | ViewGeometry::RatsnestFlag);
+		ConnectorItem::collectEqualPotential(connectorItems, true,getTraceFlag() | ViewGeometry::RatsnestFlag);
 		if (!connectorItems.contains(fromDest)) {
 			// have to make a permanent connection
 			ConnectorItem * permanentFrom = fromDest;
@@ -2441,7 +2438,7 @@ void PCBSketchWidget::checkDeleteTrace(CleanUpWiresCommand* command)
 
 		QList<ConnectorItem *> connectorItems;
 		connectorItems.append(ends[0]);
-		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::RatsnestFlag | ViewGeometry::TraceFlag);
+		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::RatsnestFlag | getTraceFlag());
 		foreach (ConnectorItem * ci, connectorItems) ci->debugInfo("   eq");
 
 		bool doDelete = false;

@@ -870,12 +870,8 @@ bool Wire::stickyEnabled()
 	return (connector0()->connectionsCount() <= 0) && (connector1()->connectionsCount() <= 0);
 }
 
-void Wire::setTrace(bool trace) {
-	m_viewGeometry.setTrace(trace);
-}
-
 bool Wire::getTrace() {
-	return m_viewGeometry.getTrace();
+	return m_viewGeometry.getTrace() || m_viewGeometry.getSchematicTrace();
 }
 
 bool Wire::getRouted() {

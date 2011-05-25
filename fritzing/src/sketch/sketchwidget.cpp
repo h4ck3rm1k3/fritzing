@@ -569,7 +569,7 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, ViewLayer::ViewLayerS
 		if (ratsnest) {
 			setClipEnds((ClipableWire *) wire, true);
 		}
-		else if (viewGeometry.getTrace()) {
+		else if (viewGeometry.getTrace() ) {
 			setClipEnds((ClipableWire *) wire, true);
 		}
 		else {
@@ -6140,7 +6140,7 @@ void SketchWidget::selectAllWires(ViewGeometry::WireFlag flag)
 	}
 
 	QString wireName;
-	if (flag == ViewGeometry::TraceFlag) {
+	if (flag == getTraceFlag()) {
 		wireName = QObject::tr("Trace wires");
 	}
 	else if (flag == ViewGeometry::RatsnestFlag) {
@@ -7086,3 +7086,6 @@ void SketchWidget::changeTrace(Wire * wire, ConnectorItem * from, ConnectorItem 
 	Q_UNUSED(parentCommand);
 }
 
+ViewGeometry::WireFlag SketchWidget::getTraceFlag() {
+	return ViewGeometry::TraceFlag;
+}

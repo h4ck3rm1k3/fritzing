@@ -250,6 +250,7 @@ public:
 	QGraphicsItem * addWatermark(const QString & filename);
 	void copyHeart(QList<ItemBase *> & bases, bool saveBoundingRects, QByteArray & itemData, QList<long> & modelIndexes);
 	void pasteHeart(QByteArray & itemData, bool seekOutsideConnections);
+	virtual ViewGeometry::WireFlag getTraceFlag();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

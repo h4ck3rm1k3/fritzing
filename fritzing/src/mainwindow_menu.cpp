@@ -1962,7 +1962,7 @@ void MainWindow::updateWireMenu() {
 	if (wire != NULL) {
 		if (wire->getRatsnest()) {
 			QList<ConnectorItem *> ends;
-			Wire * jt = wire->findTraced(ViewGeometry::TraceFlag, ends);
+			Wire * jt = wire->findTraced(m_currentGraphicsView->getTraceFlag(), ends);
 			createTraceOK = (jt == NULL) || (!jt->getTrace());
 			deleteOK = true;
 			gotRat = true;
@@ -3188,7 +3188,7 @@ void MainWindow::excludeFromAutoroute() {
 }
 
 void MainWindow::selectAllTraces() {
-	m_currentGraphicsView->selectAllWires(ViewGeometry::TraceFlag);
+	m_currentGraphicsView->selectAllWires(m_currentGraphicsView->getTraceFlag());
 }
 
 void MainWindow::updateRoutingStatus() {

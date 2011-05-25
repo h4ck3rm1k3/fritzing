@@ -524,7 +524,7 @@ CMRouter::CMRouter(PCBSketchWidget * sketchWidget) : Autorouter(sketchWidget)
         TileHalfStandardWireWidth = fasterRealToTile(HalfStandardWireWidth);
 
 	ViewGeometry vg;
-	vg.setTrace(true);
+	vg.setWireFlags(m_sketchWidget->getTraceFlag());
 	ViewLayer::ViewLayerID copper0 = sketchWidget->getWireViewLayerID(vg, ViewLayer::Bottom);
 	m_viewLayerIDs << copper0;
 	if  (m_bothSidesNow) {
@@ -2523,7 +2523,7 @@ void CMRouter::addToUndo(QUndoCommand * parentCommand)
 			ConnectorItem * connector1 = NULL;
 			QList<ConnectorItem *> connectorItems;
 			connectorItems.append(jumperItem->connector0());
-			ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::TraceFlag | ViewGeometry::RatsnestFlag);
+			ConnectorItem::collectEqualPotential(connectorItems, true, m_sketchWidget->getTraceFlag() | ViewGeometry::RatsnestFlag);
 			QList<ConnectorItem *> partsConnectors;
 			ConnectorItem::collectParts(connectorItems, partsConnectors, false, ViewLayer::TopAndBottom);
 			if (partsConnectors.count() <= 4) {
@@ -2591,7 +2591,7 @@ void CMRouter::addToUndo(QUndoCommand * parentCommand)
 ConnectorItem * CMRouter::findViaConnector(ConnectorItem * connectorItem) {
 	QList<ConnectorItem *> connectorItems;
 	connectorItems.append(connectorItem);
-	ConnectorItem::collectEqualPotential(connectorItems, false, ViewGeometry::TraceFlag | ViewGeometry::RatsnestFlag);
+	ConnectorItem::collectEqualPotential(connectorItems, false, m_sketchWidget->getTraceFlag() | ViewGeometry::RatsnestFlag);
 	QList<ConnectorItem *> partsConnectors;
 	ConnectorItem::collectParts(connectorItems, partsConnectors, false, ViewLayer::TopAndBottom);
 	if (partsConnectors.count() <= 2) {

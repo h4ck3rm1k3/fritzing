@@ -370,3 +370,8 @@ bool SchematicSketchWidget::acceptsTrace(const ViewGeometry & viewGeometry) {
 	return viewGeometry.getSchematicTrace();
 }
 
+ViewGeometry::WireFlag SchematicSketchWidget::getTraceFlag() {
+	return ViewGeometry::SchematicTraceFlag;
+}
+
+
