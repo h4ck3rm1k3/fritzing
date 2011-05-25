@@ -1701,6 +1701,8 @@ bool MainWindow::swapSpecial(QMap<QString, QString> & currPropsMap) {
 			Board * board = dynamic_cast<Board *>(itemBase);
 			if (board == NULL) continue;
 
+			if (board->itemType() != ModelPart::Board && board->itemType() != ModelPart::ResizableBoard) continue;
+
 			QString value = currPropsMap.value(key, "");
 			if (value.compare(Board::oneLayerTranslated) == 0) {
 				layers = "1";

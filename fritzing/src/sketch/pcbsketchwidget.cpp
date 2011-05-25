@@ -2469,7 +2469,7 @@ void PCBSketchWidget::checkDeleteTrace(CleanUpWiresCommand* command)
 
 void PCBSketchWidget::deleteItem(ItemBase * itemBase, bool deleteModelPart, bool doEmit, bool later)
 {
-	bool boardDeleted = qobject_cast<Board *>(itemBase) != NULL;
+	bool boardDeleted = (itemBase->itemType() == ModelPart::Board || itemBase->itemType() == ModelPart::ResizableBoard);
 	SketchWidget::deleteItem(itemBase, deleteModelPart, doEmit, later);
 	if (boardDeleted) {
 		changeBoardLayers(1, true);
