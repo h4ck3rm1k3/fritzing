@@ -95,6 +95,7 @@ public:
 
 	const QString & title();
 	const QString & description();
+	const QString & url();
 	const QStringList & tags();
 	const QStringList & displayKeys();
 	const QHash<QString,QString> & properties() const;

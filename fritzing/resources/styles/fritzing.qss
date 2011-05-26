@@ -242,6 +242,16 @@ HtmlInfoView {
 	color: rgb(70,70,70);/*rgb(110,110,110);*/
 }
 
+
+#infoViewPartUrl {
+	margin: 4px 4px 0px 4px;
+	padding: 0px 0px 1px 0px;
+	font-size: 10px;
+	font-weight: normal;
+	color: rgb(70,70,70);/*rgb(110,110,110);*/
+}
+
+
 /* section title */
 #expandableViewLabel {
 	padding: 0px 0px 3px 0px;

@@ -64,6 +64,8 @@ public:
 	void setAuthor(QString author);
 	const QString & description();
 	void setDescription(QString description);
+	const QString & url();
+	void setUrl(QString url);
 	const QString & title();
 	void setTitle(QString title);
 	const QString & label();
@@ -139,6 +141,7 @@ protected:
 	QString m_title;
 	QString m_label;
 	QString m_description;
+	QString m_url;
 	QString m_date;
 	QString m_replacedby;
 

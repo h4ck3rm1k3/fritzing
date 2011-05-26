@@ -328,7 +328,7 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastL
 	QString moduleID;
 	QString propertiesText;
 	QDomDocument* domDocument = NULL;
-	QString title, label, date, author, description, taxonomy, replacedby, version;
+	QString title, label, date, author, description, taxonomy, replacedby, version, url;
 	QStringList tags;
 	QStringList displayKeys;
 	QHash<QString, QString> properties;
@@ -378,6 +378,9 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastL
 					}
 					else if (name.compare("description") == 0) {
 						description = xml.readElementText();
+					}
+					else if (name.compare("url") == 0) {
+						url = xml.readElementText();
 					}
 					else if (name.compare("taxonomy") == 0) {
 						taxonomy = xml.readElementText();
@@ -549,6 +552,7 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastL
 		}
 		modelPartShared->setLabel(label);
 		modelPartShared->setDescription(description);
+		modelPartShared->setUrl(url);
 		modelPartShared->setTaxonomy(taxonomy);
 		modelPartShared->setVersion(version);
 		modelPartShared->setReplacedby(replacedby);
@@ -693,6 +697,9 @@ void PaletteModel::search(ModelPart * modelPart, const QStringList & searchStrin
         candidate = modelPart;
 	}
     if (!candidate && modelPart->description().contains(searchStrings[0], Qt::CaseInsensitive)) {
+        candidate = modelPart;
+	}
+    if (!candidate && modelPart->url().contains(searchStrings[0], Qt::CaseInsensitive)) {
         candidate = modelPart;
 	}
     if (!candidate && modelPart->author().contains(searchStrings[0], Qt::CaseInsensitive)) {

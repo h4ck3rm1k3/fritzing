@@ -298,6 +298,7 @@ void ModelPart::saveAsPart(QXmlStreamWriter & streamWriter, bool startDocument) 
 
     	writeTag(streamWriter,"taxonomy",m_modelPartShared->taxonomy());
     	writeTag(streamWriter,"description",m_modelPartShared->description());
+    	writeTag(streamWriter,"url",m_modelPartShared->url());
 	}
 
 	if (m_viewItems.size() > 0) {
@@ -441,6 +442,12 @@ const QString & ModelPart::path() {
 
 const QString & ModelPart::description() {
 	if (m_modelPartShared != NULL) return m_modelPartShared->description();
+
+	return ___emptyString___;
+}
+
+const QString & ModelPart::url() {
+	if (m_modelPartShared != NULL) return m_modelPartShared->url();
 
 	return ___emptyString___;
 }

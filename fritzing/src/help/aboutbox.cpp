@@ -84,7 +84,7 @@ AboutBox::AboutBox(QWidget *parent)
 	linkToFritzing->setFont(smallFont);
 	linkToFritzing->setGeometry(45, 168, 300, 18);
 	linkToFritzing->setAlignment(Qt::AlignBottom | Qt::AlignHCenter);
-	linkToFritzing->setOpenExternalLinks(TRUE);
+
 
 	// Copyright messages
 	

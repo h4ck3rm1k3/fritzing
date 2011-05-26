@@ -118,7 +118,7 @@ protected:
 	void setUpIcons(ModelPart *);
 	void setUpLocation(ItemBase *);
 	void addTags(ModelPart * modelPart);
-	void partTitle(const QString & title, const QString & version);
+	void partTitle(const QString & title, const QString & version, const QString & url);
 	void displayProps(ModelPart * modelPart, ItemBase * itemBase, bool swappingEnabled);
 	void clearPropThingPlugin(PropThing * propThing);
 	void clearPropThingPlugin(PropThing * propThing, QWidget * plugin);
@@ -137,6 +137,7 @@ protected:
 	QLabel * m_icon2;
 	QLabel * m_icon3;
 	QLabel * m_partTitle;
+	QLabel * m_partUrl;
 	QLabel * m_partVersion;
 	QLabel * m_location;
 	QComboBox * m_locationUnits;

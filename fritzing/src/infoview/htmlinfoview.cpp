@@ -114,6 +114,7 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	m_lastPropsItemBase = NULL;
 
 	m_partTitle = NULL;
+	m_partUrl = NULL;
 	m_partVersion = NULL;
 	m_connDescr = NULL;
 	m_tagsTextLabel = NULL;
@@ -185,9 +186,16 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	iconFrame->setLayout(hboxLayout);
 	vlo->addWidget(iconFrame);
 
+	m_partUrl = new TagLabel(this);
+	m_partUrl->setWordWrap(false);
+	m_partUrl->setObjectName("infoViewPartUrl");
+	m_partUrl->setOpenExternalLinks(true);
+	vlo->addWidget(m_partUrl);
+
 	m_partTitle = new TagLabel(this);
 	m_partTitle->setWordWrap(true);
 	m_partTitle->setObjectName("infoViewPartTitle");
+	m_partTitle->setOpenExternalLinks(true);
 	vlo->addWidget(m_partTitle);
 
 	m_proplabel = new QLabel(tr("Properties"), NULL);
@@ -374,7 +382,7 @@ void HtmlInfoView::appendWireStuff(Wire* wire, bool swappingEnabled) {
 	else {
 		 nameString = modelPart->description();
 	}
-	partTitle(nameString, modelPart->version());
+	partTitle(nameString, modelPart->version(), modelPart->url());
 
 	setUpTitle(wire);
 	setUpIcons(wire->modelPart());
@@ -408,7 +416,7 @@ void HtmlInfoView::appendItemStuff(ItemBase * itemBase, ModelPart * modelPart, b
 	else {
 		nameString = modelPart->description();
 	}
-	partTitle(nameString, modelPart->version());
+	partTitle(nameString, modelPart->version(), modelPart->url());
 
 	displayProps(modelPart, itemBase, swappingEnabled);
 	addTags(modelPart);
@@ -479,7 +487,7 @@ void HtmlInfoView::reloadContent(InfoGraphicsView * infoGraphicsView) {
 void HtmlInfoView::setNullContent()
 {
 	setUpTitle(NULL);
-	partTitle("", "");
+	partTitle("", "", "");
 	setUpIcons(NULL);
 	displayProps(NULL, NULL, false);
 	addTags(NULL);
@@ -631,13 +639,22 @@ void HtmlInfoView::addTags(ModelPart * modelPart) {
 	m_tagsTextLabel->setText(modelPart->tags().join(", "));
 }
 
-void HtmlInfoView::partTitle(const QString & title, const QString & version) {
+void HtmlInfoView::partTitle(const QString & title, const QString & version, const QString & url) {
 	if (m_partTitle == NULL) return;
 
 	if (m_lastPartTitle == title && m_lastPartVersion == version) return;
 
 	m_lastPartTitle = title;
 	m_lastPartVersion = version;
+
+	if (url.isEmpty()) {
+		m_partUrl->setVisible(false);	
+		m_partUrl->setText("");
+	}
+	else {
+		m_partUrl->setText(QString("<a href=\"%1\">%1</a>").arg(url));
+		m_partUrl->setVisible(true);
+	}
 
 	m_partTitle->setText(title);
 	if (!version.isEmpty()) {

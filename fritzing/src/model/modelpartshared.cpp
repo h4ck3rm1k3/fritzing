@@ -62,6 +62,7 @@ ModelPartShared::ModelPartShared(QDomDocument * domDocument, const QString & pat
 		loadTagText(root, "version", m_version);
 		loadTagText(root, "author", m_author);
 		loadTagText(root, "description", m_description);
+		loadTagText(root, "url", m_url);
 		loadTagText(root, "taxonomy", m_taxonomy);
 		loadTagText(root, "date", m_date);
 		QDomElement version = root.firstChildElement("version");
@@ -220,8 +221,16 @@ const QString & ModelPartShared::description() {
 	return m_description;
 }
 
+const QString & ModelPartShared::url() {
+	return m_url;
+}
+
 void ModelPartShared::setDescription(QString description) {
 	m_description = description;
+}
+
+void ModelPartShared::setUrl(QString url) {
+	m_url = url;
 }
 
 const QDate & ModelPartShared::date() {
@@ -380,6 +389,7 @@ void ModelPartShared::copy(ModelPartShared* other) {
 	setDate(other->date());
 	setLabel(other->label());
 	setDescription(other->description());
+	setUrl(other->url());
 	setFamily(other->family());
 	setProperties(other->properties());
 	setTags(other->tags());
