@@ -52,7 +52,7 @@ LogoItem::LogoItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier v
 	: ResizableBoard(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
 	if (ImageNames.count() == 0) {
-		ImageNames << "Made with Fritzing" << "Fritzing icon";
+                ImageNames << "Made with Fritzing" << "Fritzing icon" << "OHANDA logo" << "OSHW logo";
 	}
 
 	m_fileNameComboBox = NULL;
