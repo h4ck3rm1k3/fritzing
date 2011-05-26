@@ -1,13 +1,14 @@
+import string
+import random
+
 from five import grok
 
 from plone.directives import dexterity
 
+from Products.CMFCore.utils import getToolByName
+
 from fritzing.fab.interfaces import IFabOrders, IFabOrder
 from fritzing.fab import _
-
-import datetime
-
-from Products.CMFCore.utils import getToolByName
 
 
 class Index(grok.View):
@@ -74,19 +75,18 @@ class AddForm(dexterity.AddForm):
         """create faborder instance and redirect to its default view
         """
         
-        # TODO: generate shorter order numbers
-        timestamp = "%s" % datetime.datetime.now()
-        def r(s):
-            if (s == ' '):
-                return '_'
-            if (s == ':' or s == '.'):
-                return '-'
-            return s
-        simple_timestamp = ''.join(map(r, timestamp))
+        # generate a nice order-number
+        length = 8 # order number length
+        chars = list(string.digits) # possible chars in order numbers
+        # chars = chars, list(string.ascii_lowercase) # (add letters)
+        # chars = sum(chars, []) # (flatten list)
+        n = "".join(random.sample(chars, length))
+        while self.context.hasObject(n):
+            n = "".join(random.sample(chars, length))
         
         instance = self.create({
-            'id': "order_%s" % (simple_timestamp), 
-            'name': u"Order %s" % (timestamp)})
+            'id': n, 
+            'name': u"Fritzing Fab order %s" % (n)})
         self.add(instance)
         
         faborderURL = self.context.absolute_url()+"/"+instance.id
