@@ -1004,8 +1004,8 @@ void Wire::initNames() {
 	colorNames.append(tr("grey"));
 	colorNames.append(tr("white"));
 	colorNames.append(tr("orange"));
-        colorNames.append(tr("brown"));
-        colorNames.append(tr("purple"));
+    colorNames.append(tr("brown"));
+    colorNames.append(tr("purple"));
 
 	// need this hash table to translate from user's language to internal color name
     colorTrans.insert(tr("blue"), "blue");
@@ -1017,7 +1017,7 @@ void Wire::initNames() {
 	colorTrans.insert(tr("white"), "white");
 	colorTrans.insert(tr("orange"), "orange");
 	colorTrans.insert(tr("brown"), "brown");
-        colorTrans.insert(tr("purple"), "purple");
+    colorTrans.insert(tr("purple"), "purple");
 
     colors.insert("blue",	"#418dd9");
 	colors.insert("red",	"#cc1414");

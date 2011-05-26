@@ -47,6 +47,12 @@ protected slots:
 	void acceptAnd();
 	void restoreDefault();
 	void production(bool);
+	void widthEntry(const QString &);
+
+	void changeUnits(const QString &);
+	void changeHoleSize(const QString &);
+	void changeDiameter();
+	void changeThickness();
 
 protected:
 	void enableCustom(bool enable);
@@ -58,6 +64,10 @@ protected:
 	QRadioButton * m_customButton;
 	HoleSettings m_holeSettings;
 	QGroupBox * m_customGroupBox;
+	int m_traceWidth;
+
+public:
+	static const QString AutorouteTraceWidth;
 
 };
 

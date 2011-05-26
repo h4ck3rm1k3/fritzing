@@ -27,6 +27,8 @@ $Date$
 #include "tracewire.h"
 #include "../sketch/infographicsview.h"
 #include "../connectors/connectoritem.h"
+#include "../utils/focusoutcombobox.h"
+
 
 #include <QComboBox>
 
@@ -49,7 +51,7 @@ TraceWire::~TraceWire()
 
 QComboBox * TraceWire::createWidthComboBox(qreal m, QWidget * parent) 
 {
-	QComboBox * comboBox = new QComboBox(parent);
+	QComboBox * comboBox = new FocusOutComboBox(parent);  // new QComboBox(parent);
 	comboBox->setEditable(true);
 	QIntValidator * intValidator = new QIntValidator(comboBox);
 	intValidator->setRange(MinTraceWidthMils, MaxTraceWidthMils);
@@ -92,10 +94,22 @@ bool TraceWire::collectExtraInfo(QWidget * parent, const QString & family, const
 	return ClipableWire::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
 }
 
+
 void TraceWire::widthEntry(const QString & text) {
 
-	QComboBox * comboBox = dynamic_cast<QComboBox *>(sender());
-	if (comboBox == NULL) return;
+	int w = widthEntry(text, sender());
+	if (w == 0) return;
+
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView != NULL) {
+		infoGraphicsView->changeWireWidthMils(QString::number(w));
+	}
+}
+
+int TraceWire::widthEntry(const QString & text, QObject * sender) {
+
+	QComboBox * comboBox = dynamic_cast<QComboBox *>(sender);
+	if (comboBox == NULL) return 0;
 
 	int w = comboBox->itemData(comboBox->currentIndex()).toInt();
 	if (w == 0) {
@@ -107,10 +121,7 @@ void TraceWire::widthEntry(const QString & text) {
 		qSort(Wire::widths.begin(), Wire::widths.end());
 	}
 
-	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
-	if (infoGraphicsView != NULL) {
-		infoGraphicsView->changeWireWidthMils(QString::number(w));
-	}
+	return w;
 }
 
 void TraceWire::setColorFromElement(QDomElement & element) {

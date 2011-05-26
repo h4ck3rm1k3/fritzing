@@ -50,10 +50,27 @@ $Date: 2010-05-06 22:30:19 +0200 (Thu, 06 May 2010) $
 
 #include "../items/tracewire.h"
 #include "../items/hole.h"
+#include "../fsvgrenderer.h"
 #include "../sketch/pcbsketchwidget.h"
+#include "../utils/textutils.h"
+#include "../utils/graphicsutils.h"
+
+
+const QString AutorouterSettingsDialog::AutorouteTraceWidth = "autorouteTraceWidth";
 
 AutorouterSettingsDialog::AutorouterSettingsDialog(QWidget *parent) : QDialog(parent) 
 {
+	QSettings settings;
+	m_traceWidth = settings.value(AutorouteTraceWidth, "0").toInt();
+	if (m_traceWidth == 0) {
+		m_traceWidth = GraphicsUtils::pixels2mils(Wire::STANDARD_TRACE_WIDTH, FSvgRenderer::printerScale());
+		settings.setValue(AutorouteTraceWidth, m_traceWidth);
+	}
+
+	Hole::initHoleSettings(m_holeSettings);
+	m_holeSettings.ringThicknessRange = Via::ringThicknessRange;
+	m_holeSettings.holeDiameterRange = Via::holeDiameterRange;
+
 	PCBSketchWidget::getDefaultViaSize(m_holeSettings.ringThickness, m_holeSettings.holeDiameter);
 
 	this->setWindowTitle(QObject::tr("Auorouter Settings"));
@@ -82,9 +99,13 @@ AutorouterSettingsDialog::AutorouterSettingsDialog(QWidget *parent) : QDialog(pa
 
 	m_customGroupBox = new QGroupBox("Via size", this);
 	QVBoxLayout * customLayout = new QVBoxLayout();
-	m_holeSettings.ringThicknessRange = Via::ringThicknessRange;
-	m_holeSettings.holeDiameterRange = Via::holeDiameterRange;
 	QWidget * customWidget = Hole::createHoleSettings(m_customGroupBox, m_holeSettings, true, "");
+
+	connect(m_holeSettings.sizesComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeHoleSize(const QString &)));
+	connect(m_holeSettings.unitsComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeUnits(const QString &)));
+	connect(m_holeSettings.diameterEdit, SIGNAL(editingFinished()), this, SLOT(changeDiameter()));
+	connect(m_holeSettings.thicknessEdit, SIGNAL(editingFinished()), this, SLOT(changeThickness()));
+
 	enableCustom(initRadios());
 	customLayout->addWidget(customWidget);
 	m_customGroupBox->setLayout(customLayout);
@@ -101,14 +122,15 @@ AutorouterSettingsDialog::AutorouterSettingsDialog(QWidget *parent) : QDialog(pa
 	groupBox = new QGroupBox(tr("Trace width"), this);
 
 	gLayout = new QVBoxLayout();
-	QComboBox * comboBox = TraceWire::createWidthComboBox(Wire::STANDARD_TRACE_WIDTH, groupBox);
-
+	QComboBox * comboBox = TraceWire::createWidthComboBox(m_traceWidth, groupBox);
 	connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(widthEntry(const QString &)));
 
 	gLayout->addWidget(comboBox);
 	groupBox->setLayout(gLayout);
 
 	vLayout->addWidget(groupBox);
+
+	vLayout->addSpacerItem(new QSpacerItem (1, 1, QSizePolicy::Minimum, QSizePolicy::Expanding));
 	vLayout->addSpacing(10);
 
     QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
@@ -121,59 +143,33 @@ AutorouterSettingsDialog::AutorouterSettingsDialog(QWidget *parent) : QDialog(pa
 	vLayout->addWidget(buttonBox);
 
 	this->setLayout(vLayout);
-
-	QSettings settings;
-
-	/*
-	QString szString = settings.value(QString("Autorouter"), "").toString();
-	if (szString.isEmpty()) {
-		m_inButton->setChecked(true);
-		m_lineEdit->setText(QString::number(m_defaultSize));
-	}
-	else {
-		if (szString.endsWith("mm")) {
-			m_mmButton->setChecked(true);
-			m_validator->setTop(25.4);
-		}
-		else {
-			m_inButton->setChecked(true);
-		}
-		szString.chop(2);
-		m_lineEdit->setText(szString);
-	}
-	*/
 }
 
 AutorouterSettingsDialog::~AutorouterSettingsDialog() {
 }
 
 void AutorouterSettingsDialog::production(bool checked) {
+	Q_UNUSED(checked);
+
 	QString units;
 	if (sender() == m_homebrewButton) {
 		enableCustom(false);
+		changeHoleSize(sender()->property("holesize").toString() + "," + sender()->property("ringthickness").toString());
 	}
 	else if (sender() == m_professionalButton) {
 		enableCustom(false);
+		changeHoleSize(sender()->property("holesize").toString() + "," + sender()->property("ringthickness").toString());
 	}
 	else if (sender() == m_customButton) {
 		enableCustom(true);
-	}
-	
+	}	
 }
 
 void AutorouterSettingsDialog::acceptAnd() {
 	QSettings settings;
-
-	QList<QRadioButton *> buttons;
-	buttons << m_homebrewButton << m_professionalButton << m_customButton;
-	foreach (QRadioButton * button, buttons) {
-		if (button->isChecked()) {
-			QSettings settings;
-			settings.setValue(Hole::AutorouteViaHoleSize, button->property("holesize").toString());
-			settings.setValue(Hole::AutorouteViaRingThickness, button->property("ringthickness").toString());
-			break;
-		}
-	}
+	settings.setValue(Hole::AutorouteViaHoleSize, m_holeSettings.holeDiameter);
+	settings.setValue(Hole::AutorouteViaRingThickness, m_holeSettings.ringThickness);
+	settings.setValue(AutorouteTraceWidth, m_traceWidth);
 	
 	accept();
 }
@@ -201,8 +197,8 @@ bool AutorouterSettingsDialog::initRadios()
 		QString holeSize = values[0];
 		if (!name.isEmpty() && !ringThickness.isEmpty() && !holeSize.isEmpty()) {
 			QRadioButton * button = NULL;
-			if (name.contains("homebrew", Qt::CaseInsensitive) == 0) button = m_homebrewButton;
-			else if (name.contains("professional", Qt::CaseInsensitive) == 0) button = m_professionalButton;
+			if (name.contains("homebrew", Qt::CaseInsensitive)) button = m_homebrewButton;
+			else if (name.contains("professional", Qt::CaseInsensitive)) button = m_professionalButton;
 			if (button) {
 				button->setProperty("ringthickness", ringThickness);
 				button->setProperty("holesize", holeSize);
@@ -217,4 +213,37 @@ bool AutorouterSettingsDialog::initRadios()
 	m_customButton->setChecked(custom);
 
 	return custom;
+}
+
+void AutorouterSettingsDialog::widthEntry(const QString & text) {
+	int w = TraceWire::widthEntry(text, sender());
+	if (w == 0) return;
+
+	m_traceWidth = w;
+}
+
+void AutorouterSettingsDialog::changeHoleSize(const QString & newSize) {
+	QString s = newSize;
+	Hole::setHoleSize(s, false, m_holeSettings);
+}
+
+void AutorouterSettingsDialog::changeUnits(const QString & units) 
+{
+	QString newVal = Hole::changeUnits(units, m_holeSettings);
+}
+
+void AutorouterSettingsDialog::changeDiameter() 
+{
+	if (Hole::changeDiameter(m_holeSettings, sender())) {
+		QLineEdit * edit = dynamic_cast<QLineEdit *>(sender());
+		changeHoleSize(edit->text() + m_holeSettings.unitsComboBox->currentText() + "," + m_holeSettings.ringThickness);
+	}
+}
+
+void AutorouterSettingsDialog::changeThickness() 
+{
+	if (Hole::changeThickness(m_holeSettings, sender())) {
+		QLineEdit * edit = dynamic_cast<QLineEdit *>(sender());
+		changeHoleSize(m_holeSettings.holeDiameter + "," + edit->text() + m_holeSettings.unitsComboBox->currentText());
+	}	
 }

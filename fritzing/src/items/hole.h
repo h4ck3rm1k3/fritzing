@@ -65,7 +65,7 @@ public:
 	QString getProperty(const QString & key);
 	void setProp(const QString & prop, const QString & value);
 	void setHoleSize(QString holeSize, bool force);
-	QString holeSize();
+
 	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
 	bool hasCustomSVG();
 	PluralType isPlural();
@@ -74,15 +74,21 @@ public:
 	virtual void setBoth(const QString & holeDiameter, const QString &  thickness);
 	void addedToScene();	
 	bool hasPartNumberProperty();
+	QString holeSize();
 
 public:
 	static QWidget * createHoleSettings(QWidget * parent, HoleSettings &, bool swappingEnabled, const QString & currentHoleSize);
 	static void updateValidators(HoleSettings &);
 	static void updateEditTexts(HoleSettings &);
 	static void updateSizes(HoleSettings &);
+	static QString changeUnits(const QString &, HoleSettings &);
 	static QPointF ringThicknessRange(const QString & holeDiameter);
 	static QPointF holeDiameterRange(const QString & ringThickness);
-
+	static bool changeDiameter(HoleSettings & holeSettings, QObject * sender);
+	static bool changeThickness(HoleSettings & holeSettings, QObject * sender);
+	static bool setHoleSize(QString & holeSize, bool force, HoleSettings & holeSettings);
+	static QString holeSize(HoleSettings &);
+	static void initHoleSettings(HoleSettings & holeSettings);
 
 protected slots:
 	void changeDiameter();

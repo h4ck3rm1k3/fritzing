@@ -43,6 +43,7 @@ public:
 public:
 	static TraceWire * getTrace(ConnectorItem *);
 	static class QComboBox * createWidthComboBox(qreal currentMils, QWidget * parent);
+	static int widthEntry(const QString & text, QObject * sender);
 
 public:
 	enum WireDirection {

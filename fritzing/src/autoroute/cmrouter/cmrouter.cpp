@@ -519,9 +519,9 @@ CMRouter::CMRouter(PCBSketchWidget * sketchWidget) : Autorouter(sketchWidget)
 	qrectToTile(m_maxRect, m_tileMaxRect); 
 	qrectToTile(m_maxRect90, m_tileMaxRect90); 
 
-        TileStandardWireWidth = fasterRealToTile(Wire::STANDARD_TRACE_WIDTH);
+    TileStandardWireWidth = fasterRealToTile(Wire::STANDARD_TRACE_WIDTH);
 	HalfStandardWireWidth = Wire::STANDARD_TRACE_WIDTH / 2;
-        TileHalfStandardWireWidth = fasterRealToTile(HalfStandardWireWidth);
+    TileHalfStandardWireWidth = fasterRealToTile(HalfStandardWireWidth);
 
 	ViewGeometry vg;
 	vg.setWireFlags(m_sketchWidget->getTraceFlag());
