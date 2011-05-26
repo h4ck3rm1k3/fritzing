@@ -1,14 +1,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:tal="http://xml.zope.org/namespaces/tal" xmlns:metal="http://xml.zope.org/namespaces/metal" xmlns:i18n="http://xml.zope.org/namespaces/i18n" xml:lang="en" lang="en" metal:use-macro="context/main_template/macros/master" i18n:domain="fritzing.fab">
   <head>
     <metal:block fill-slot="style_slot">
-      <link rel="stylesheet" type="text/css" 
-        tal:define="navroot context/@@plone_portal_state/navigation_root_url" 
-        tal:attributes="href string:${navroot}/++resource++fritzing.fab/styles.css" />
+      <link rel="stylesheet" type="text/css" tal:define="navroot context/@@plone_portal_state/navigation_root_url" tal:attributes="href string:${navroot}/++resource++fritzing.fab/styles.css"/>
     </metal:block>
     <metal:block fill-slot="javascript_head_slot">
-      <script type="text/javascript" 
-        tal:define="navroot context/@@plone_portal_state/navigation_root_url" 
-        tal:attributes="src string:${navroot}/++resource++fritzing.fab/fab.js">
+      <script type="text/javascript" tal:define="navroot context/@@plone_portal_state/navigation_root_url" tal:attributes="src string:${navroot}/++resource++fritzing.fab/fab.js">
       </script>
     </metal:block>
   </head>
@@ -17,66 +13,81 @@
       <tal:main-macro metal:define-macro="main">
         <h1 class="documentFirstHeading">Fritzing Fab</h1>
         <p class="documentDescription">
-	There's nothing better than turning a concept into product reality.
-	</p>
+          There's nothing better than turning a concept into product reality.
+        </p>
         <div id="content-core">
-          <table class="plain">
+          <table class="blind">
             <tbody>
               <tr>
                 <td width="50%">
-              
-                  <div tal:condition="not:container/listFolderContents">
-		<p>Fritzing Fab is a service that produces a PCB out of your Fritzing design.<br/>
-		It is the easiest and probably cheapest way to get your project produced as a professional product.
-		</p>
-		<h3>How it works</h3>
-		<p>Simple: We are collecting the submitted designs and produce a bunch of them at once.
-		That way, it stays cheap -- and easy: all you have to do is to send us your Fritzing file.
-		The boards are manufactured by a professional board house here in Berlin.
-		</p>
-		<h3>What you get</h3>
-		<ul>
-		<li>Your Fritzing sketch as a professional PCB</li>
-		<li>Double-sided board with sweet black print on a white board</li>
-		<li>Quality "Made in Germany" and RoHS compliant</li>
-		</ul>
-		<h3>How much it costs</h3>
-		<p>We charge per cm2, and the more cm2 the cheaper a cm2 gets.
-		One Arduino Shield costs you 27&eur;, two copies will cost 25&eur; each, etc. See a complete price table.<br/>
-		You can opt for a "sanity check" for an extra 5&eur;, and have us take a closer look at your design.
-		</p>
-		<h3>How to get started</h3>
-		<p>This is easier than you might think:</p>
-			<ol>
-			<li>1. Layout your board in Fritzing's PCB view. <a href="http://fritzing.org/learning/tutorials/designing-pcb/">Learn how.</a></li>
-			<li>2. Go through <a href="http://fritzing.org/learning/tutorials/fritzing-fab-howto/">these checks</a> to prepare it for production. </li>
-			<li>3. <a class="addOrderLink" tal:attributes="href string:${context/absolute_url}/++add++faborder">Submit your order</a> and hold your patience</li>
-			<li>4. Receive your fine board and populate it with parts</li>
-			</ol>
-		
+                  <div>
+                    <p>Fritzing Fab is a service that produces a PCB out of your Fritzing design.<br/>
+                      It is the easiest and probably cheapest way to get your project produced as a professional product.
+                    </p>
+                    <h3>How it works</h3>
+                    <p>Simple: We are collecting the submitted designs and produce a bunch of them at once.
+                      That way, it stays cheap -- and easy: all you have to do is to send us your Fritzing file.
+                      The boards are manufactured by a professional board house here in Berlin.
+                    </p>
+                    <h3>What you get</h3>
+                    <ul>
+                      <li>Your Fritzing sketch as a professional PCB</li>
+                      <li>Double-sided board with sweet black print on a white board</li>
+                      <li>Quality "Made in Germany" and RoHS compliant</li>
+                    </ul>
+                    <h3>How much it costs</h3>
+                    <p>We charge per cm2, and the more cm2 the cheaper a cm2 gets.
+                      One Arduino Shield costs you 27&#x20AC;, two copies will cost 25&#x20AC; each, etc. See a complete price table.<br/>
+                      You can opt for a "sanity check" for an extra 5&#x20AC;, and have us take a closer look at your design.
+                    </p>
+                    <h3>How to get started</h3>
+                    <p>This is easier than you might think:</p>
+                    <ol>
+                      <li>1. Layout your board in Fritzing's PCB view. <a href="http://fritzing.org/learning/tutorials/designing-pcb/">Learn how.</a></li>
+                      <li>2. Go through <a href="http://fritzing.org/learning/tutorials/fritzing-fab-howto/">these checks</a> to prepare it for production. </li>
+                      <li>3. <a class="addOrderLink" tal:attributes="href string:${context/absolute_url}/++add++faborder">Submit your order</a> and hold your patience</li>
+                      <li>4. Receive your fine board and populate it with parts</li>
+                    </ol>
                   </div>
-                                
+                  <p>
+                    <br/>
+                  </p>
+                  <p>
+                    <strong>Good luck and happy routing!</strong>
+                  </p>
+                  <p>
+                    <br/>
+                  </p>
+                  <p>
+                    P.S. While you're here, please also take a look at our 
+                    <a href="http://fritzing.org/shop/starter-kit/">Fritzing Starter Kit</a>. :)
+                  </p>
+                </td>
+                <td width="50%">
+                  <h2>
+                    <a class="addOrderLink" tal:attributes="href string:${context/absolute_url}/++add++faborder">Order now</a>
+                  </h2>
+                  <p>Submit your design by the ... to receive your PCB by the ....</p>
                   <div tal:condition="container/listFolderContents">
-                    <h3>Your orders</h3>
-                    <table>
+                    <h2>Your orders</h2>
+                    <table class="orderTable">
                       <tr tal:condition="container/listFolderContents">
                         <th tal:condition="view/isManager">User</th>
-                        <th tal:condition="view/isManager">Order ID</th>
+                        <th>Order Number</th>
                         <th>Sketches</th>
                         <th>Status</th>
                         <th>Actions</th>
                       </tr>
                       <tr tal:repeat="item container/listFolderContents">
                         <td tal:condition="view/isManager">
-                          <p tal:content="item/getOwner | string:error"></p>
+                          <p tal:content="item/getOwner | string:error"/>
                         </td>
-                        <td tal:condition="view/isManager" tal:content="item/id | string:error">title</td>
+                        <td tal:content="item/id | string:error">title</td>
                         <td>
                           <span tal:condition="not:item/listFolderContents">no sketches</span>
                           <ul tal:condition="item/listFolderContents">
-                            <li tal:repeat="sketch item/listFolderContents" 
-                              tal:content="sketch/orderItem/filename | string:error">
-                              filename
+                            <li tal:repeat="sketch item/listFolderContents">
+                              <a tal:define="filename sketch/orderItem/filename;                                              filename_encoded python:view.encodeFilename(filename);" tal:content="filename" tal:attributes="href string:${sketch/absolute_url}/@@download/orderItem/${filename_encoded};                                                  title string:Download ${filename}"/>
                             </li>
                           </ul>
                         </td>
@@ -84,42 +95,15 @@
                           <div tal:content="python:view.getStateTitle(item)">unknown</div>
                         </td>
                         <td>
-                          <a class="viewOrderLink" 
-                            tal:condition="not:python:view.isOwner or view.isManager" 
-                            tal:attributes="href string:${item/absolute_url}">view</a>
-                          <a class="viewOrderLink" 
-                            tal:condition="python:view.isOwner or view.isManager" 
-                            tal:attributes="href string:${item/absolute_url}">view/edit</a><br/>
-                          <a class="deleteOrderLink" 
-                            tal:condition="python:view.isOwner or view.isManager" 
-                            tal:attributes="href string:${item/absolute_url}/delete_confirmation">delete</a>
+                          <a class="viewOrderLink" tal:condition="not:python:view.isOwner or view.isManager" tal:attributes="href string:${item/absolute_url}">view</a>
+                          <a class="viewOrderLink" tal:condition="python:view.isOwner or view.isManager" tal:attributes="href string:${item/absolute_url}">view/edit</a>
+                          <br/>
+                          <a class="deleteOrderLink" tal:condition="python:view.canDelete(item)" tal:attributes="href string:${item/absolute_url}/delete_confirmation">delete</a>
                         </td>
                       </tr>
                     </table>
-                    <a class="addOrderLink" 
-                      tal:attributes="href string:${context/absolute_url}/++add++faborder">add order</a>
                   </div>
-                  
-                  <p><br /></p>
-                  <p>
-                    <strong>Good luck and happy routing!</strong>
-                  </p>
-                  <p><br /></p>
-                  <p>
-                    P.S. While you're here, please also take a look at our 
-                    <a href="http://fritzing.org/shop/starter-kit/">Fritzing Starter Kit</a>. :)
-                  </p>
                 </td>
-		
-                <td width="50%">
-			
-		<h2><a class="addOrderLink" tal:attributes="href string:${context/absolute_url}/++add++faborder">Order now</a></h2>
-
-		<h2>Next Production Run</h2>
-		<p>Submit your design by the ... to receive your PCB by the ....</p>
-                </td>
-		
-		
               </tr>
             </tbody>
           </table>

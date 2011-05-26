@@ -1,3 +1,28 @@
+.align_right {
+    text-align: right;
+}
+
+table.blind {
+    border-style: none;
+}
+table.blind td {
+    padding: 2pt 0pt;
+    padding-right: 20pt;
+    vertical-align: top;
+}
+
+table.orderTable {
+}
+table.orderTable th,
+table.orderTable td {
+    padding: 4pt 8pt;
+    border: 1px solid #ddd;
+}
+table.orderTable ul {
+    margin:0 !important;
+    list-style: none !important;
+}
+
 table.sketchesTable {
     border-collapse: separate !important;
 }
@@ -13,6 +38,9 @@ table.sketchesTable td.sketchCell,
 table.sketchesTable td.priceCell {
     border-top: 2px solid white;
     border-bottom: 1px solid gray;
+}
+table.sketchesTable td.priceCell {
+    text-align: right;
 }
 table.sketchesTable td.sumCell {
     background: transparent;

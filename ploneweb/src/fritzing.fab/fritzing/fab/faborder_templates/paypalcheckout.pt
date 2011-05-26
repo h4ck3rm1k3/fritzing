@@ -17,7 +17,11 @@
   <body>
     <metal:main fill-slot="main">
       <tal:main-macro metal:define-macro="main">
-        <h1 tal:content="view/label" class="documentFirstHeading">xOrder your PCB</h1>
+        <h1 class="documentFirstHeading">PayPal Checkout, please wait</h1>
+        <p class="documentDescription">
+          You will be redirected to PayPal to complete your order. <br />
+          If the redirection doesn't work please click the PayPal-Button below again.
+        </p>
         <div id="content-core">
           <form id="orderform" action="https://www.paypal.com/cgi-bin/webscr" method="post">
             <input name="cmd" type="hidden" value="_xclick" />

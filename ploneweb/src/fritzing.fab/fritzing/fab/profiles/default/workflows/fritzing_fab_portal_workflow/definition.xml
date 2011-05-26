@@ -2,10 +2,11 @@
 <dc-workflow workflow_id="fritzing_fab_portal_workflow" title="Fritzing Fab Portal Workflow" description="Workflow for the Fritzing Fab portal folder." state_variable="review_state" initial_state="private" manager_bypass="False">
  <permission>Access contents information</permission>
  <permission>Add portal content</permission>
- <permission>Modify portal content</permission>
- <permission>View</permission>
  <permission>Copy or Move</permission>
  <permission>List folder contents</permission>
+ <permission>Modify portal content</permission>
+ <permission>View</permission>
+ <permission>Delete objects</permission>
  <state state_id="private" title="Private">
   <description>Can only be seen and edited by the owner.</description>
   <exit-transition transition_id="publish"/>
@@ -55,6 +56,12 @@
    <permission-role>Owner</permission-role>
    <permission-role>Site Administrator</permission-role>
   </permission-map>
+  <permission-map name="Delete objects" acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Member</permission-role>
+   <permission-role>Owner</permission-role>
+   <permission-role>Site Administrator</permission-role>
+  </permission-map>
   <permission-map name="List folder contents" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Member</permission-role>
@@ -68,9 +75,6 @@
   </permission-map>
   <permission-map name="View" acquired="False">
    <permission-role>Anonymous</permission-role>
-   <permission-role>Manager</permission-role>
-   <permission-role>Owner</permission-role>
-   <permission-role>Site Administrator</permission-role>
   </permission-map>
  </state>
  <transition transition_id="hide" title="Make private" new_state="private" trigger="USER" before_script="" after_script="">

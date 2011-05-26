@@ -5,8 +5,6 @@ from five import grok
 
 from plone.directives import dexterity
 
-from Products.CMFCore.utils import getToolByName
-
 from fritzing.fab.interfaces import IFabOrders, IFabOrder
 from fritzing.fab import _
 
@@ -18,18 +16,16 @@ class Index(grok.View):
     label = _(u"Fritzing Fab")
     description = _(u"There's nothing better than turning a concept into product reality.")
     
+    # make tools availible to the template as view.toolname()
+    from fritzing.fab.tools \
+        import encodeFilename, getStateId, getStateTitle, isStateId, canDelete
+    
     def update(self):
         member = self.context.portal_membership.getAuthenticatedMember()
         self.isManager = member.has_role('Manager')
         self.isOwner = member.has_role('Owner')
         if not (self.isManager):
             self.request.set('disable_border', 1)
-    
-    def getStateTitle(self, item):
-        portal_workflow = getToolByName(item, 'portal_workflow')
-        state_id = portal_workflow.getInfoFor(item, 'review_state')
-        state_title = portal_workflow.getTitleForStateOnType(state_id, item.portal_type)
-        return state_title
 
 
 class PayPalIpn(grok.View):
