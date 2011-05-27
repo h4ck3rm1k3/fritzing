@@ -838,7 +838,7 @@ QString PartLabel::makeSvg(bool blackOnly, qreal dpi, qreal printerScale) {
 	foreach (QString t, texts) {
 		svg += QString("<tspan x='0' y='%1'>%2</tspan>")
 			.arg(y * dpi / printerScale)
-			.arg(TextUtils::stripNonValidXMLCharacters(TextUtils::escapeAnd(QString(t.toUtf8()))));
+			.arg(TextUtils::stripNonValidXMLCharacters(TextUtils::escapeAnd(t)));
 		y += fm.height();
 	}
 

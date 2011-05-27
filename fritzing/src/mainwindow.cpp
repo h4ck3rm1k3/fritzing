@@ -39,7 +39,6 @@ $Date$
 #include <QPaintDevice>
 #include <QPixmap>
 #include <QTimer>
-#include <QWebView>
 #include <QStackedWidget>
 #include <QXmlStreamReader>
 
@@ -1242,6 +1241,8 @@ bool MainWindow::loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps) {
 	return true;
 }
 
+
+/*
 void MainWindow::loadBundledPartFromWeb() {
 	QMainWindow *mw = new QMainWindow();
 	QString url = "http://localhost:8081/parts_gen/choose";
@@ -1251,6 +1252,7 @@ void MainWindow::loadBundledPartFromWeb() {
 	mw->show();
 	mw->raise();
 }
+*/
 
 void MainWindow::loadBundledPart() {
 	QStringList fileNames = FolderUtils::getOpenFileNames(

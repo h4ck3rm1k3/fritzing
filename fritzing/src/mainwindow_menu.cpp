@@ -207,6 +207,7 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 												 | QFileDialog::DontResolveSymlinks);
 		if (exportDir.isEmpty()) return;
 
+		FolderUtils::setOpenSaveFolder(exportDir);
 		fileNames.append(exportDir + "/" + constructFileName("etch_bottom", suffix));
 		fileNames.append(exportDir + "/" + constructFileName("etch_top", suffix));
 		fileExt = extFmt;

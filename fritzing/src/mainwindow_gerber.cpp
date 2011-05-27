@@ -26,8 +26,6 @@ $Date$
 
 #include <QMessageBox>
 #include <QFileDialog>
-#include <QWebPage>
-#include <QWebFrame>
 #include <QSvgRenderer>
 
 #include "mainwindow.h"
@@ -39,6 +37,7 @@ $Date$
 #include "svg/groundplanegenerator.h"
 #include "utils/graphicsutils.h"
 #include "utils/textutils.h"
+#include "utils/folderutils.h"
 
 
 static QRegExp AaCc("[aAcC]");
@@ -65,6 +64,7 @@ void MainWindow::exportToGerber() {
 
 	if (exportDir.isEmpty()) return;
 
+	FolderUtils::setOpenSaveFolder(exportDir);
 	exportToGerber(exportDir, board, true);
 }
 
@@ -390,22 +390,15 @@ QString MainWindow::clipToBoard(QString svgString, ItemBase * board, const QStri
 		SvgFileSplitter::changeColors(svg, toColor, exceptions, svgByteArray);
 
 		QImage image(imgSize, QImage::Format_RGB32);
-		image.fill(0);
+		image.fill(0xffffffff);
 		image.setDotsPerMeterX(res * GraphicsUtils::InchesPerMeter);
 		image.setDotsPerMeterY(res * GraphicsUtils::InchesPerMeter);
 		QRectF target(0, 0, twidth, theight);
 
-		//QString simple = "<html>"
-			//"<body><font color='#ff0000'>hello world</font>"
-			//"</body></html>";
-
-		QWebPage webpage;
-		webpage.setViewportSize(image.size());
-		webpage.mainFrame()->setContent(svgByteArray, "image/svg+xml");
-		//webpage.mainFrame()->setContent(simple.toUtf8());
+		QSvgRenderer renderer(svgByteArray);
 		QPainter painter;
 		painter.begin(&image);
-		webpage.mainFrame()->render(&painter);
+		renderer.render(&painter, target);
 		painter.end();
 		image.invertPixels();				// need white pixels on a black background for GroundPlaneGenerator
 		//image.save("output.png");

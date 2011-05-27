@@ -24,7 +24,6 @@ $Date$
 
 ********************************************************************/
 
-#include <QWebFrame>
 #include <QBuffer>
 #include <QHBoxLayout>
 #include <QSettings>

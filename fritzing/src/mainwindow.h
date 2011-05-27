@@ -221,7 +221,6 @@ protected slots:
 	void saveBundledAux(ModelPart *mp, const QDir &destFolder);
 	void loadBundledSketch(const QString &fileName);
 	void loadBundledPart();
-	void loadBundledPartFromWeb();
 
 	void binSaved(bool hasAlienParts);
 	void routingStatusSlot(SketchWidget *, const RoutingStatus &);
