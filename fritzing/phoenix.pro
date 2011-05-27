@@ -64,7 +64,6 @@ QT += core \
     svg \
     xml \
     network \
-    webkit \
     sql
 RC_FILE = fritzing.rc
 RESOURCES += phoenixresources.qrc
