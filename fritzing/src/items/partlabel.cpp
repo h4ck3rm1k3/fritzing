@@ -95,6 +95,7 @@ enum PartLabelAction {
 	PartLabelFlipHorizontal,
 	PartLabelFlipVertical,
 	PartLabelEdit,
+        PartLabelFontSizeTiny,
 	PartLabelFontSizeSmall,
 	PartLabelFontSizeMedium,
 	PartLabelFontSizeLarge,
@@ -379,7 +380,7 @@ void PartLabel::restoreLabel(QDomElement & labelGeometry, ViewLayer::ViewLayerID
 	if (!ok) {
 		InfoGraphicsView *infographics = InfoGraphicsView::getInfoGraphicsView(this);
 		if (infographics != NULL) {
-			fs = infographics->getLabelFontSizeMedium();
+                        fs = infographics->getLabelFontSizeMedium();
 			ok = true;
 		}
 	}
@@ -480,6 +481,12 @@ void PartLabel::initMenu()
 	QAction *flipVerticalAct = rlmenu->addAction(tr("Flip Vertical"));
 	flipVerticalAct->setData(QVariant(PartLabelFlipVertical));
 	flipVerticalAct->setStatusTip(tr("Flip label vertically"));
+
+    m_tinyAct = fsmenu->addAction(tr("Tiny"));
+        m_tinyAct->setData(QVariant(PartLabelFontSizeTiny));
+        m_tinyAct->setStatusTip(tr("Set font size to tiny"));
+        m_tinyAct->setCheckable(true);
+        m_tinyAct->setChecked(false);
 
     m_smallAct = fsmenu->addAction(tr("Small"));
 	m_smallAct->setData(QVariant(PartLabelFontSizeSmall));
@@ -602,6 +609,7 @@ void PartLabel::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 		displayAct->setChecked(m_displayKeys.contains(data));
 	}
 
+        m_tinyAct->setChecked(false);
 	m_smallAct->setChecked(false);
 	m_mediumAct->setChecked(false);
 	m_largeAct->setChecked(false);
@@ -609,9 +617,12 @@ void PartLabel::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 	if (infographics != NULL) {
 		QFont font = this->font();
 		int fs = font.pointSize();
-		if (fs == infographics->getLabelFontSizeSmall()) {
-			m_smallAct->setChecked(true);
+                if (fs == infographics->getLabelFontSizeTiny()) {
+                        m_tinyAct->setChecked(true);
 		}
+                else if (fs == infographics->getLabelFontSizeSmall()) {
+                        m_smallAct->setChecked(true);
+                }
 		else if (fs == infographics->getLabelFontSizeMedium()) {
 			m_mediumAct->setChecked(true);
 		}
@@ -642,6 +653,7 @@ void PartLabel::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 		case PartLabelHide:
 			partLabelHide();
 			break;
+                case PartLabelFontSizeTiny:
 		case PartLabelFontSizeSmall:
 		case PartLabelFontSizeMedium:
 		case PartLabelFontSizeLarge:
@@ -752,6 +764,9 @@ void PartLabel::setFontSize(int action) {
 
 	qreal fs = 0;
 	switch (action) {
+                case PartLabelFontSizeTiny:
+                        fs = infographics->getLabelFontSizeTiny();
+                        break;
 		case PartLabelFontSizeSmall:
 			fs = infographics->getLabelFontSizeSmall();
 			break;

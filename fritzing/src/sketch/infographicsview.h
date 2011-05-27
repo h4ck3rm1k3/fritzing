@@ -71,6 +71,7 @@ public:
 	virtual void setIgnoreSelectionChangeEvents(bool) {}
 	virtual void getBendpointWidths(class Wire *, qreal w, qreal & w1, qreal & w2);
 	virtual void getLabelFont(QFont &, QColor &, ViewLayer::ViewLayerSpec);
+        virtual qreal getLabelFontSizeTiny();
 	virtual qreal getLabelFontSizeSmall();
 	virtual qreal getLabelFontSizeMedium();
 	virtual qreal getLabelFontSizeLarge();

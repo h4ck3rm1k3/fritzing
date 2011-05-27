@@ -62,6 +62,7 @@ public:
 	virtual bool usesJumperItem();
 	void setClipEnds(class ClipableWire *, bool);
 	void showGroundTraces(bool show);
+        virtual qreal getLabelFontSizeTiny();
 	virtual qreal getLabelFontSizeSmall();
 	virtual qreal getLabelFontSizeMedium();
 	virtual qreal getLabelFontSizeLarge();

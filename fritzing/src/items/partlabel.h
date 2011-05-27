@@ -100,6 +100,7 @@ protected:
 	QMenu m_menu;
 	QString m_text;
 	QStringList m_displayKeys;
+        QAction * m_tinyAct;
 	QAction * m_smallAct;
 	QAction * m_mediumAct;
 	QAction * m_largeAct;

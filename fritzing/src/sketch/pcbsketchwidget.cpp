@@ -1096,7 +1096,7 @@ void PCBSketchWidget::showGroundTraces(bool show) {
 
 void PCBSketchWidget::getLabelFont(QFont & font, QColor & color, ViewLayer::ViewLayerSpec viewLayerSpec) {
 	font.setFamily("OCRA");			// ocra10
-	font.setPointSize(getLabelFontSizeMedium());
+        font.setPointSize(getLabelFontSizeSmall());
 	color.setAlpha(255);
 
 	switch (viewLayerSpec) {
@@ -1150,6 +1150,10 @@ void PCBSketchWidget::makeWiresChangeConnectionCommands(const QList<Wire *> & wi
 			}
 		}
 	}
+}
+
+qreal PCBSketchWidget::getLabelFontSizeTiny() {
+        return 3;
 }
 
 qreal PCBSketchWidget::getLabelFontSizeSmall() {
@@ -1336,6 +1340,13 @@ void PCBSketchWidget::updateRoutingStatus(RoutingStatus & routingStatus, bool ma
 	foreach (QList<ConnectorItem *> partConnectorItems, ratnestsToUpdate) {
 		partConnectorItems.at(0)->displayRatsnest(partConnectorItems);
 	}
+
+        /*
+        // uncomment for live drc
+        CMRouter cmRouter(this);
+        QString message;
+        bool result = cmRouter.drc(message);
+        */
 }
 
 bool PCBSketchWidget::checkUpdateRatsnest(QList<ConnectorItem *> & connectorItems) {
