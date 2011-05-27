@@ -10,6 +10,7 @@ from email.Utils import formataddr
 from smtplib import SMTPRecipientsRefused
 
 from fritzing.fab.interfaces import IFabOrder
+from fritzing.fab import _
 
 
 def canDelete(self, item):
@@ -93,10 +94,15 @@ def sendStatusMail(context):
     to_address = user.getProperty('email')
     to_name = user.getProperty('fullname')
     
+    state_id = getStateId(False, context)
+    state_title = getStateTitle(False, context)
+    
+    mail_subject = _(u"Your Fritzing Fab order is now %s") % state_title.lower()
+    
     mail_text = mail_template(
         to_name = to_name,
-        state_id = getStateId(False, context),
-        state_title = getStateTitle(False, context),
+        state_id = state_id,
+        state_title = state_title,
         faborder = context,
         ship_to = IFabOrder['shipTo'].vocabulary.getTerm(context.shipTo).title,
         )
@@ -104,18 +110,22 @@ def sendStatusMail(context):
     try:
         host = getToolByName(context, 'MailHost')
         # send our copy:
-        host.secureSend(
+        host.send(
             message = MIMEText(mail_text, 'plain', charset), 
-            mfrom = formataddr((from_name, from_address)),
             mto = formataddr((from_name, from_address)),
+            mfrom = formataddr((from_name, from_address)),
+            subject = mail_subject,
             charset = charset,
+            msg_type="text/plain",
         )
         # send notification for the orderer:
-        host.secureSend(
+        host.send(
             message = MIMEText(mail_text, 'plain', charset), 
-            mfrom = formataddr((from_name, from_address)),
             mto = formataddr((to_name, to_address)),
+            mfrom = formataddr((from_name, from_address)),
+            subject = mail_subject,
             charset = charset,
+            msg_type="text/plain",
         )
     except SMTPRecipientsRefused:
         # Don't disclose email address on failure

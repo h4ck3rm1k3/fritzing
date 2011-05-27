@@ -4,8 +4,6 @@
                   times string:&times;;
                   sup2 string:&sup2;;
                   ">
-Subject: Your Fritzing Fab order is now <span tal:replace="python:options['state_title'].lower()" />
-Content-Type: text/plain; charset=utf-8
 
 Dear <span tal:replace="options/to_name" />,
 
