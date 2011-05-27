@@ -636,8 +636,6 @@ void CMRouter::start()
 		return;
 	}
 
-	bool pastedHeart = false;
-
 	Ordering * bestOrdering = new Ordering();
 	bestOrdering->edges.append(edges);
 	computeMD5(bestOrdering);
@@ -672,11 +670,9 @@ void CMRouter::start()
 
 		// TODO: only delete the edges that have been reordered
 		clearTracesAndJumpers();
-		pastedHeart = false;
 		drcClean();
 		if (!m_startState.isEmpty()) {
 			m_sketchWidget->pasteHeart(m_startState, true);
-			pastedHeart = true;
 		}
 		ProcessEventBlocker::processEvents();
 
@@ -700,14 +696,9 @@ void CMRouter::start()
 			// stop where we are
 		}
 		else {
-			if (m_stopTracing) {
-				clearTracesAndJumpers();
-				drcClean();
-			}
-			if (!pastedHeart) {
-				m_sketchWidget->pasteHeart(bestResult, true);
-				pastedHeart = true;
-			}
+			clearTracesAndJumpers();
+			// what happens to non-empty start state 
+			m_sketchWidget->pasteHeart(bestResult, true);
 			ProcessEventBlocker::processEvents();
 		}
 	}
@@ -2381,8 +2372,14 @@ Edge * CMRouter::makeEdge(ConnectorItem * from, ConnectorItem * to,  VirtualWire
 	return edge;
 }
 
+void CMRouter::initUndo(QUndoCommand * parentCommand) 
+{
+	// autoroutable traces, jumpers and vias are saved on the undo command and deleted
+	// non-autoroutable jumpers and via are not deleted
+	// non-autoroutable traces are saved as a copy and deleted: they are restored at each run of the autorouter
 
-void CMRouter::initUndo(QUndoCommand * parentCommand) {
+	// what happens when a non-autoroutable trace is split?
+
 	QList<JumperItem *> jumperItems;
 	QList<Via *> vias;
 	QList<TraceWire *> traceWires;
@@ -2410,6 +2407,7 @@ void CMRouter::initUndo(QUndoCommand * parentCommand) {
 				QList<ConnectorItem *> ends;
 				w->collectChained(wires, ends);
 				foreach (Wire * wire, wires) {
+					// make sure the jumper item doesn't lose its wires
 					wire->setAutoroutable(false);
 				}
 			}
@@ -2436,6 +2434,7 @@ void CMRouter::initUndo(QUndoCommand * parentCommand) {
 				QList<ConnectorItem *> ends;
 				w->collectChained(wires, ends);
 				foreach (Wire * wire, wires) {
+					// make sure the via doesn't lose its wires
 					wire->setAutoroutable(false);
 				}
 			}

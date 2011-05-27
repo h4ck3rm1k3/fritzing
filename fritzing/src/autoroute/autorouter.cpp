@@ -66,10 +66,10 @@ TraceWire * Autorouter::drawOneTrace(QPointF fromPos, QPointF toPos, int width, 
 	long newID = ItemBase::getNextID();
 	ViewGeometry viewGeometry;
 	viewGeometry.setWireFlags(m_sketchWidget->getTraceFlag());
+	viewGeometry.setAutoroutable(true);
 	viewGeometry.setLoc(fromPos);
 	QLineF line(0, 0, toPos.x() - fromPos.x(), toPos.y() - fromPos.y());
 	viewGeometry.setLine(line);
-	viewGeometry.setAutoroutable(true);
 
 	ItemBase * trace = m_sketchWidget->
 	  addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ModuleIDNames::WireModuleIDName), 

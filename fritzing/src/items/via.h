@@ -41,6 +41,7 @@ public:
 	bool getAutoroutable();
 	ConnectorItem * connectorItem();
 	void setBoth(const QString & holeDiameter, const QString &  thickness);
+	void saveInstanceLocation(QXmlStreamWriter & streamWriter);
 
 	static QPointF ringThicknessRange(const QString & holeDiameter);
 	static QPointF holeDiameterRange(const QString & ringThickness);
@@ -48,7 +49,6 @@ public:
 protected:
 	QString makeID();
 	static void setBothConnectors(ItemBase * itemBase, SvgIdLayer * svgIdLayer);
-
 
 };
 
