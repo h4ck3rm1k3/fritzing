@@ -1423,7 +1423,7 @@ void CMRouter::eliminateThinTiles2(QList<TileRect> & tileRects, Plane * thePlane
 		TiSrArea(NULL, thePlane, &tileRect, collectOneThinTile, &tile);
 		if (tile == NULL) continue;
 
-		infoTile("remaining", tile);
+		//infoTile("remaining", tile);
 		//drawGridItem(tile);
 	}
 
@@ -2183,7 +2183,7 @@ bool CMRouter::blockDirection(PathUnit * pathUnit, PathUnit::Direction direction
 }
 
 void CMRouter::seedNext(PathUnit * pathUnit, QList<Tile *> & tiles) {
-	infoTile("seed next", pathUnit->tile);
+	//infoTile("seed next", pathUnit->tile);
 	int tWidthNeeded = TileStandardWireWidth;
 	if ((RIGHT(pathUnit->tile) < m_tileMaxRect.xmaxi) && (HEIGHT(pathUnit->tile) >= tWidthNeeded)) {
 		Tile * next = TR(pathUnit->tile);
@@ -2578,6 +2578,7 @@ void CMRouter::addToUndo(QUndoCommand * parentCommand)
 	}
 
 	foreach (TraceWire * traceWire, wires) {
+		traceWire->debugInfo("trace");
 		addUndoConnection(true, traceWire, parentCommand);
 	}
 	foreach (JumperItem * jumperItem, jumperItems) {
@@ -2820,7 +2821,7 @@ bool CMRouter::allowEquipotentialOverlaps(QGraphicsItem * item, QList<Tile *> & 
 			}
 			if (!equipotential.contains(ci)) {
 				// overlap not allowed
-				infoTile("intersecting", intersectingTile);
+				//infoTile("intersecting", intersectingTile);
 				return false;
 			}
 		}
@@ -2835,7 +2836,7 @@ bool CMRouter::allowEquipotentialOverlaps(QGraphicsItem * item, QList<Tile *> & 
 
 			if (!equipotential.contains(w->connector0())) {
 				// overlap not allowed
-				infoTile("intersecting", intersectingTile);
+				//infoTile("intersecting", intersectingTile);
 				return false;
 			}
 		}
@@ -2999,7 +3000,7 @@ bool CMRouter::findNearestSpaceAux(PathUnit * pathUnit, TileRect & searchRect, i
 	// look at adjacent space tiles to see if the via or jumperItem connector can fit
 	// this also checks that the space isn't beneath a part
 
-	infoTileRect("search rect", searchRect);
+	//infoTileRect("search rect", searchRect);
 	bool result = false;
 
 	QList<Tile *> spaces;
@@ -3319,7 +3320,7 @@ bool CMRouter::propagateUnit(PathUnit * pathUnit, PriorityQueue<PathUnit *> & so
 
 	//seedNextTime += seedNextTimer.elapsed();
 	foreach (Tile * tile, tiles) {
-		infoTile("   eval", tile);
+		//infoTile("   eval", tile);
 		int destCost = std::numeric_limits<int>::max();
 		TileRect minCostRect = calcMinCostRect(pathUnit, tile);
 		int sourceCost = pathUnit->sourceCost + manhattan(pathUnit->minCostRect, minCostRect);	
@@ -3599,9 +3600,9 @@ void CMRouter::listCompletePath(CompletePath & completePath, QList<PathUnit *> &
 	for (PathUnit * dpu = completePath.dest; dpu; dpu = dpu->parent) {
 		fullPath.append(dpu);
 	}
-	foreach (PathUnit * pu, fullPath) {
-		infoTile(QString("lcp1 %1").arg((long) pu->plane, 0, 16), pu->tile);
-	}
+	//foreach (PathUnit * pu, fullPath) {
+		//infoTile(QString("lcp1 %1").arg((long) pu->plane, 0, 16), pu->tile);
+	//}
 }
 
 void CMRouter::tracePath(CompletePath & completePath, qreal keepout)
@@ -4108,8 +4109,8 @@ Via * CMRouter::makeVia(PathUnit * pathUnit) {
 	via->setAutoroutable(true);
 	qreal ringThickness, holeSize;
 	m_sketchWidget->getViaSize(ringThickness, holeSize);
-	via->setBoth(QString("%1in").arg(holeSize * FSvgRenderer::printerScale()), 
-					QString("%1in").arg(ringThickness * FSvgRenderer::printerScale()));
+	via->setBoth(QString("%1in").arg(holeSize / FSvgRenderer::printerScale()), 
+					QString("%1in").arg(ringThickness / FSvgRenderer::printerScale()));
 
 	pathUnit->edge->viaCount++;
 

@@ -2217,8 +2217,8 @@ void PCBSketchWidget::getViaSize(qreal & ringThickness, qreal & holeSize) {
 	getDefaultViaSize(ringThicknessStr, holeSizeStr);
 	qreal rt = TextUtils::convertToInches(ringThicknessStr);
 	qreal hs = TextUtils::convertToInches(holeSizeStr);
-	ringThickness = rt / FSvgRenderer::printerScale();
-	holeSize = hs / FSvgRenderer::printerScale();
+	ringThickness = rt * FSvgRenderer::printerScale();
+	holeSize = hs * FSvgRenderer::printerScale();
 }
 
 void PCBSketchWidget::getDefaultViaSize(QString & ringThickness, QString & holeSize) {

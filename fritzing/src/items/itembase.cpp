@@ -1867,6 +1867,11 @@ void ItemBase::debugInfo(const QString & msg)
 		.arg(this->viewLayerSpec())
 		.arg(this->getViewGeometry().wireFlags())
 	);
+
+	foreach (QGraphicsItem * item, childItems()) {
+		ConnectorItem * ci = dynamic_cast<ConnectorItem *>(item);
+		if (ci) ci->debugInfo("\t");
+	}
 #else
 	Q_UNUSED(msg);
 #endif
