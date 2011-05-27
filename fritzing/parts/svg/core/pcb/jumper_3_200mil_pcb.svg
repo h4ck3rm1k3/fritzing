@@ -5,7 +5,7 @@
   <line stroke="white" stroke-width="10" x1="5" x2="135" y1="535.0" y2="535.0"/>
   <line stroke="white" stroke-width="10" x1="135" x2="135" y1="535.0" y2="5"/>
   <line stroke="white" stroke-width="10" x1="135" x2="5" y1="5" y2="5"/>
-  <line stroke="white" stroke-width="10" x1="5" x2="135" y1="135" y2="135"/>
+  <line stroke="white" stroke-width="5" x1="5" x2="135" y1="135" y2="135"/>
  </g>
  <g id="copper1"><g id="copper0">
   <rect fill="none" height="72" stroke="rgb(255, 191, 0)" stroke-width="20" width="72" x="34" y="34"/>

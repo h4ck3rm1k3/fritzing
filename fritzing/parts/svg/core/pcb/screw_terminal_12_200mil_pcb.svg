@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?><svg baseProfile="tiny" height="2.44in" id="svg2" version="1.2" viewBox="0 0 480.0 2440.0" width="0.48in">
   <desc id="desc4">Fritzing footprint SVG</desc>
   <g id="silkscreen">
-    <line id="vertical-left" stroke="white" stroke-width="20" x1="20" x2="20" y1="20" y2="2430.0"/>
-    <line id="bottom" stroke="white" stroke-width="20" x1="20" x2="460.0" y1="2430.0" y2="2430.0"/>
-    <line id="vertical-right" stroke="white" stroke-width="20" x1="460.0" x2="460.0" y1="2430.0" y2="20"/>
-    <line id="top" stroke="white" stroke-width="20" x1="460.0" x2="20" y1="20" y2="20"/>
+    <line id="vertical-left" stroke="white" stroke-width="10" x1="20" x2="20" y1="20" y2="2430.0"/>
+    <line id="bottom" stroke="white" stroke-width="10" x1="20" x2="460.0" y1="2430.0" y2="2430.0"/>
+    <line id="vertical-right" stroke="white" stroke-width="10" x1="460.0" x2="460.0" y1="2430.0" y2="20"/>
+    <line id="top" stroke="white" stroke-width="10" x1="460.0" x2="20" y1="20" y2="20"/>
     <line id="mid-vertical" stroke="white" stroke-width="10" x1="380.0" x2="380.0" y1="2430.0" y2="20"/>
   </g>
   <g id="copper1"><g id="copper0">
