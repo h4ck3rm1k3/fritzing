@@ -1822,10 +1822,13 @@ void PCBSketchWidget::changeLayer(long id, qreal z, ViewLayer::ViewLayerID viewL
 
 	TraceWire * tw = qobject_cast<TraceWire *>(itemBase);
 	if (tw != NULL) {
-		tw->setColorString(traceColor(ViewLayer::specFromID(viewLayerID)), 1.0);
+		ViewLayer::ViewLayerSpec viewLayerSpec = ViewLayer::specFromID(viewLayerID);
+		tw->setViewLayerSpec(viewLayerSpec);
+		tw->setColorString(traceColor(viewLayerSpec), 1.0);
 		ViewLayer * viewLayer = m_viewLayers.value(viewLayerID);
-		tw->setActive(viewLayer->isActive());
+		tw->setInactive(!viewLayer->isActive());
 		tw->setHidden(!viewLayer->visible());
+		tw->update();
 	}
 }
 
