@@ -419,6 +419,8 @@ ItemBase * PartLabel::owner() {
 
 void PartLabel::initMenu() 
 {
+	// todo: make this a static var?
+
     QAction *editAct = m_menu.addAction(tr("Edit"));
 	editAct->setData(QVariant(PartLabelEdit));
 	editAct->setStatusTip(tr("Edit label text"));

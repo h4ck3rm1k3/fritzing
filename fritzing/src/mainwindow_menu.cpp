@@ -887,7 +887,7 @@ void MainWindow::pasteAux(bool pasteInPlace)
     QByteArray itemData = mimeData->data("application/x-dnditemsdata");
 	QList<ModelPart *> modelParts;
 	QHash<QString, QRectF> boundingRects;
-	if (((ModelBase *) m_sketchModel)->paste(m_paletteModel, itemData, modelParts, boundingRects)) {
+	if (m_sketchModel->paste(m_paletteModel, itemData, modelParts, boundingRects, false)) {
 		QUndoCommand * parentCommand = new QUndoCommand("Paste");
 
 		QRectF r;

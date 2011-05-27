@@ -1229,7 +1229,7 @@ void SketchWidget::copyAux(QList<ItemBase *> & bases, bool saveBoundingRects)
 void SketchWidget::pasteHeart(QByteArray & itemData, bool seekOutsideConnections) {
 	QList<ModelPart *> modelParts;
 	QHash<QString, QRectF> boundingRects;
-	if (((ModelBase *) m_sketchModel)->paste(m_paletteModel, itemData, modelParts, boundingRects)) {
+	if (m_sketchModel->paste(m_paletteModel, itemData, modelParts, boundingRects, true)) {
 		QRectF r;
 		QRectF boundingRect = boundingRects.value(this->viewName(), r);
 		this->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, true, &r, seekOutsideConnections);

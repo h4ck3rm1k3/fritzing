@@ -340,7 +340,7 @@ void ModelBase::save(const QString & fileName, QXmlStreamWriter & streamWriter, 
     }
 }
 
-bool ModelBase::paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *> & modelParts, QHash<QString, QRectF> & boundingRects)
+bool ModelBase::paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *> & modelParts, QHash<QString, QRectF> & boundingRects, bool preserveIndex)
 {
 	m_referenceModel = refModel;
 
@@ -380,15 +380,17 @@ bool ModelBase::paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *
    		return false;
 	}
 
-	// need to map modelIndexes from copied parts to new modelIndexes
-	QHash<long, long> oldToNew;
-	QDomElement instance = instances.firstChildElement("instance");
-	while (!instance.isNull()) {
-		long oldModelIndex = instance.attribute("modelIndex").toLong();
-		oldToNew.insert(oldModelIndex, ModelPart::nextIndex());
-		instance = instance.nextSiblingElement("instance");
+	if (!preserveIndex) {
+		// need to map modelIndexes from copied parts to new modelIndexes
+		QHash<long, long> oldToNew;
+		QDomElement instance = instances.firstChildElement("instance");
+		while (!instance.isNull()) {
+			long oldModelIndex = instance.attribute("modelIndex").toLong();
+			oldToNew.insert(oldModelIndex, ModelPart::nextIndex());
+			instance = instance.nextSiblingElement("instance");
+		}
+		renewModelIndexes(instances, "instance", oldToNew);
 	}
-	renewModelIndexes(instances, "instance", oldToNew);
 
 	//QFile file("test.xml");
 	//file.open(QFile::WriteOnly);

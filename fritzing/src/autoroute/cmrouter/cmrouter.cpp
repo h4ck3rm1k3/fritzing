@@ -636,6 +636,8 @@ void CMRouter::start()
 		return;
 	}
 
+	bool pastedHeart = false;
+
 	Ordering * bestOrdering = new Ordering();
 	bestOrdering->edges.append(edges);
 	computeMD5(bestOrdering);
@@ -670,9 +672,11 @@ void CMRouter::start()
 
 		// TODO: only delete the edges that have been reordered
 		clearTracesAndJumpers();
+		pastedHeart = false;
 		drcClean();
 		if (!m_startState.isEmpty()) {
 			m_sketchWidget->pasteHeart(m_startState, true);
+			pastedHeart = true;
 		}
 		ProcessEventBlocker::processEvents();
 
@@ -700,7 +704,10 @@ void CMRouter::start()
 				clearTracesAndJumpers();
 				drcClean();
 			}
-			m_sketchWidget->pasteHeart(bestResult, true);
+			if (!pastedHeart) {
+				m_sketchWidget->pasteHeart(bestResult, true);
+				pastedHeart = true;
+			}
 			ProcessEventBlocker::processEvents();
 		}
 	}
@@ -728,7 +735,7 @@ void CMRouter::start()
 		foreach (ConnectorItem * connectorItem, m_offBoardConnectors) {
 			parts.insert(connectorItem->attachedTo()->layerKinChief());
 		}
-                QMessageBox::information(NULL, QObject::tr("Fritzing"), tr("Note: the autorouter did not route %n parts, because they are not located entirely on the board.", "", parts.count()));
+        QMessageBox::information(NULL, QObject::tr("Fritzing"), tr("Note: the autorouter did not route %n parts, because they are not located entirely on the board.", "", parts.count()));
 	}
 }
 
