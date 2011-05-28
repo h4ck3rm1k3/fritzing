@@ -38,6 +38,8 @@ $Date$
 
 static QString SchematicTraceColor = "blackblack";
 
+static const qreal TraceWidthMils = 33.3333;
+
 SchematicSketchWidget::SchematicSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent)
     : PCBSketchWidget(viewIdentifier, parent)
 {
@@ -46,8 +48,6 @@ SchematicSketchWidget::SchematicSketchWidget(ViewIdentifierClass::ViewIdentifier
 	m_standardBackgroundColor = QColor(255,255,255);
 	initBackgroundColor();
 
-	m_jumperColor = "blackblack";	
-	m_jumperWidth = 2;
 	m_cleanType = ninetyClean;
 
 	m_updateDotsTimer.setInterval(20);
@@ -82,7 +82,7 @@ void SchematicSketchWidget::initWire(Wire * wire, int penWidth) {
 		wire->setColorString("schematicGrey", 0.7);
 	}
 	else {
-		wire->setPenWidth(2, this);
+		wire->setPenWidth(getTraceWidth(), this);
 		wire->setColorString("blackblack", 1.0);
 	}
 }
@@ -374,4 +374,11 @@ ViewGeometry::WireFlag SchematicSketchWidget::getTraceFlag() {
 	return ViewGeometry::SchematicTraceFlag;
 }
 
+qreal SchematicSketchWidget::getTraceWidth() {
+	return FSvgRenderer::printerScale() * TraceWidthMils / 1000;
+}
+
+qreal SchematicSketchWidget::getAutorouterTraceWidth() {
+	return getTraceWidth();
+}
 

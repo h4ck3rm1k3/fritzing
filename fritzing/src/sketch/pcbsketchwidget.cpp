@@ -116,8 +116,6 @@ PCBSketchWidget::PCBSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentif
 	initBackgroundColor();
 
 	m_routingStatus.zero();
-	m_jumperColor = "jumper";
-	m_jumperWidth = 3;
 	m_cleanType = noClean;
 }
 
@@ -265,7 +263,7 @@ bool PCBSketchWidget::createOneTrace(Wire * wire, ViewGeometry::WireFlag flag, b
 	colorString = traceColor(toConnectorItem);
 	long newID = createWire(ends[0], ends[1], flag, false, false, BaseCommand::SingleView, parentCommand);
 	new WireColorChangeCommand(this, newID, colorString, colorString, getRatsnestOpacity(false), getRatsnestOpacity(false), parentCommand);
-	new WireWidthChangeCommand(this, newID, Wire::STANDARD_TRACE_WIDTH, Wire::STANDARD_TRACE_WIDTH, parentCommand);
+	new WireWidthChangeCommand(this, newID, getTraceWidth(), getTraceWidth(), parentCommand);
 	return true;
 }
 
@@ -407,7 +405,7 @@ bool PCBSketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * 
 		long newID = makeModifiedWire(fromConnectorItem, toConnectorItem, BaseCommand::SingleView, flags, parentCommand);
 		QString tc = traceColor(fromConnectorItem);
 		new WireColorChangeCommand(this, newID, tc, tc, 1.0, 1.0, parentCommand);
-		new WireWidthChangeCommand(this, newID, Wire::STANDARD_TRACE_WIDTH, Wire::STANDARD_TRACE_WIDTH, parentCommand);
+		new WireWidthChangeCommand(this, newID, getTraceWidth(), getTraceWidth(), parentCommand);
 		if (fromConnectorItem->attachedToItemType() == ModelPart::Wire) {
 			foreach (ConnectorItem * connectorItem, fromConnectorItem->connectedToItems()) {
 				if (connectorItem->attachedToItemType() == ModelPart::Wire) {
@@ -621,15 +619,6 @@ const QString & PCBSketchWidget::traceColor(ViewLayer::ViewLayerSpec viewLayerSp
 	}
 
 	return PCBTraceColor;
-}
-
-
-const QString & PCBSketchWidget::jumperColor() {
-	return m_jumperColor;
-}
-
-qreal PCBSketchWidget::jumperWidth() {
-	return m_jumperWidth;
 }
 
 PCBSketchWidget::CleanType PCBSketchWidget::cleanType() {
@@ -2027,7 +2016,7 @@ void PCBSketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Co
 	new AddItemCommand(this, crossViewType, m_connectorDragWire->moduleID(), viewLayerSpec, vg1, newID1, true, -1, parentCommand);
 	new CheckStickyCommand(this, crossViewType, newID1, false, CheckStickyCommand::RemoveOnly, parentCommand);
 	new WireColorChangeCommand(this, newID1, traceColor(viewLayerSpec), traceColor(viewLayerSpec), 1.0, 1.0, parentCommand);
-	new WireWidthChangeCommand(this, newID1, Wire::STANDARD_TRACE_WIDTH, Wire::STANDARD_TRACE_WIDTH, parentCommand);
+	new WireWidthChangeCommand(this, newID1, getTraceWidth(), getTraceWidth(), parentCommand);
 
 	long newID2 = ItemBase::getNextID();
 	ViewGeometry vg2 = m_bendpointWire->getViewGeometry();
@@ -2035,7 +2024,7 @@ void PCBSketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Co
 	new AddItemCommand(this, crossViewType, m_bendpointWire->moduleID(), viewLayerSpec, vg2, newID2, true, -1, parentCommand);
 	new CheckStickyCommand(this, crossViewType, newID2, false, CheckStickyCommand::RemoveOnly, parentCommand);
 	new WireColorChangeCommand(this, newID2, traceColor(viewLayerSpec), traceColor(viewLayerSpec), 1.0, 1.0, parentCommand);
-	new WireWidthChangeCommand(this, newID2, Wire::STANDARD_TRACE_WIDTH, Wire::STANDARD_TRACE_WIDTH, parentCommand);
+	new WireWidthChangeCommand(this, newID2, getTraceWidth(), getTraceWidth(), parentCommand);
 
 	new ChangeConnectionCommand(this, BaseCommand::SingleView,
 									newID2, m_connectorDragConnector->connectorSharedID(),
@@ -2464,3 +2453,13 @@ void PCBSketchWidget::deleteItem(ItemBase * itemBase, bool deleteModelPart, bool
 		emit boardDeletedSignal();
 	}
 }
+
+qreal PCBSketchWidget::getTraceWidth() {
+	return Wire::STANDARD_TRACE_WIDTH;
+}
+
+qreal PCBSketchWidget::getAutorouterTraceWidth() {
+	// TODO: use settings from Autoroutersettingsdialog
+	return getTraceWidth();
+}
+

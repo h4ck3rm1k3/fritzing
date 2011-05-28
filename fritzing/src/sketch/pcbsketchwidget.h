@@ -53,8 +53,6 @@ public:
 	virtual qreal getKeepout();
 	virtual const QString & traceColor(ConnectorItem *);
 	virtual const QString & traceColor(ViewLayer::ViewLayerSpec);
-	const QString & jumperColor();
-	qreal jumperWidth();
 	virtual void ensureTraceLayersVisible();
 	virtual void ensureTraceLayerVisible();
 	bool canChainMultiple();
@@ -91,6 +89,8 @@ public:
 	void autorouterSettings();
 	void getViaSize(qreal & ringThickness, qreal & holeSize);
     void deleteItem(ItemBase *, bool deleteModelPart, bool doEmit, bool later);
+	virtual qreal getTraceWidth();
+	virtual qreal getAutorouterTraceWidth();
 
 public:
 	static QSizeF jumperItemSize();
@@ -178,8 +178,6 @@ protected slots:
 
 protected:
 	RoutingStatus m_routingStatus;
-	QString m_jumperColor;
-	qreal m_jumperWidth;
 	CleanType m_cleanType;
 	QPointF m_jumperDragOffset;
 	QPointer<class JumperItem> m_resizingJumperItem;

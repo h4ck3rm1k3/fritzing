@@ -70,6 +70,8 @@ public:
 	bool sameElectricalLayer2(ViewLayer::ViewLayerID, ViewLayer::ViewLayerID);
 	bool acceptsTrace(const ViewGeometry &);
 	ViewGeometry::WireFlag getTraceFlag();
+	qreal getTraceWidth();
+	qreal getAutorouterTraceWidth();
 
 public slots:
 	void setVoltage(qreal voltage, bool doEmit);

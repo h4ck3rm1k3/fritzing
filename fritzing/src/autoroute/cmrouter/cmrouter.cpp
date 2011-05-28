@@ -114,6 +114,7 @@ static const int MaximumProgress = 1000;
 static const int TILEFACTOR = 1000;
 static int TileStandardWireWidth = 0;
 static int TileHalfStandardWireWidth = 0;
+static qreal StandardWireWidth = 0;
 static qreal HalfStandardWireWidth = 0;
 static const qreal CloseEnough = 0.5;
 static const int GridEntryAlpha = 128;
@@ -519,8 +520,9 @@ CMRouter::CMRouter(PCBSketchWidget * sketchWidget) : Autorouter(sketchWidget)
 	qrectToTile(m_maxRect, m_tileMaxRect); 
 	qrectToTile(m_maxRect90, m_tileMaxRect90); 
 
-    TileStandardWireWidth = fasterRealToTile(Wire::STANDARD_TRACE_WIDTH);
-	HalfStandardWireWidth = Wire::STANDARD_TRACE_WIDTH / 2;
+	StandardWireWidth = m_sketchWidget->getAutorouterTraceWidth();
+    TileStandardWireWidth = fasterRealToTile(StandardWireWidth);						
+	HalfStandardWireWidth = StandardWireWidth / 2;										
     TileHalfStandardWireWidth = fasterRealToTile(HalfStandardWireWidth);
 
 	ViewGeometry vg;
@@ -643,7 +645,7 @@ void CMRouter::start()
 	bestOrdering->unroutedCount = edges.count() + 1;	// so runEdges doesn't bail out the first time through
 
 	QPen pen(QColor(0,0,0,0));
-	pen.setWidthF(Wire::STANDARD_TRACE_WIDTH);
+	pen.setWidthF(StandardWireWidth);
 	QGraphicsLineItem * lineItem = new QGraphicsLineItem();
 	lineItem->setPen(pen);
 	m_sketchWidget->scene()->addItem(lineItem);
@@ -851,11 +853,11 @@ bool CMRouter::drc(QString & message)
 
 	bool ok = drc(keepout, CMRouter::ReportAllOverlaps, CMRouter::AllowEquipotentialOverlaps, false, false);
     if (ok) {
-		message = tr("Your sketch is ready for production: there are no connectors or traces that are overlapping or too close to each other.");
+		message = tr("Your sketch is ready for production: there are no connectors or traces that overlap or are too close together.");
 	}
     else {
-		message = tr("Warning: some of the connectors and/or traces on your board are too close together or overlap. "
-                     "These areas are highlighted in red.");
+		message = tr("The areas on your board highlighted in red are connectors and traces which overlap or are too close together. "
+					 "Reposition them and run the DRC again to find more problems.");
 	}
 
 	if (m_offBoardConnectors.count() > 0) {
@@ -1588,7 +1590,7 @@ void CMRouter::tileWires(QList<Wire *> & wires, QList<Tile *> & alreadyTiled, Ti
 			qobject_cast<TraceWire *>(wire)->setWireDirection(TraceWire::Horizontal);
 		}
 		else {
-			qreal factor = (eliminateThin ? Wire::STANDARD_TRACE_WIDTH : 1);
+			qreal factor = (eliminateThin ? StandardWireWidth : 1);
 			qreal w = (dx + keepout + keepout) / factor;
 			qreal h = (dy + keepout + keepout) / factor;
 			QImage image(w, h, QImage::Format_RGB32);
@@ -1603,7 +1605,7 @@ void CMRouter::tileWires(QList<Wire *> & wires, QList<Tile *> & alreadyTiled, Ti
 			painter.translate(tx, ty);
 			QPen pen = painter.pen();
 			pen.setColor(QColor(255,255,255,255));
-			pen.setWidth(Wire::STANDARD_TRACE_WIDTH + keepout + keepout);
+			pen.setWidth(StandardWireWidth + keepout + keepout);
 			painter.setPen(pen);
 			painter.drawLine(wire->line());
 			painter.end();
@@ -1712,7 +1714,7 @@ void CMRouter::hookUpWires(QList<PathUnit *> & fullPath, QList<Wire *> & wires, 
 	}
 
 	TileRect searchRect;
-	realsToTile(searchRect, l - Wire::STANDARD_TRACE_WIDTH, t - Wire::STANDARD_TRACE_WIDTH, r + Wire::STANDARD_TRACE_WIDTH, b + Wire::STANDARD_TRACE_WIDTH); 
+	realsToTile(searchRect, l - StandardWireWidth, t - StandardWireWidth, r + StandardWireWidth, b + StandardWireWidth); 
 	
 	foreach (ViewLayer::ViewLayerID viewLayerID, viewLayerIDs.values()) {
 		QList<TileRect> tileRects;
@@ -2027,10 +2029,10 @@ bool CMRouter::checkProposed(const QPointF & proposed, const QPointF & p1, const
 	QList<Tile *> alreadyTiled;
 	TileRect tileRect;
 	qreal x = proposed.x() - HalfStandardWireWidth;
-	realsToTile(tileRect, x, qMin(p1.y(), p3.y()), x + Wire::STANDARD_TRACE_WIDTH, qMax(p1.y(), p3.y()));
+	realsToTile(tileRect, x, qMin(p1.y(), p3.y()), x + StandardWireWidth, qMax(p1.y(), p3.y()));
 	TiSrArea(NULL, thePlane, &tileRect, simpleList, &alreadyTiled);
 	qreal y = proposed.y() - HalfStandardWireWidth;
-	realsToTile(tileRect, qMin(p1.x(), p3.x()), y, qMax(p1.x(), p3.x()), y + Wire::STANDARD_TRACE_WIDTH);
+	realsToTile(tileRect, qMin(p1.x(), p3.x()), y, qMax(p1.x(), p3.x()), y + StandardWireWidth);
 	TiSrArea(NULL, thePlane, &tileRect, simpleList, &alreadyTiled);
 	foreach (Tile * tile, alreadyTiled) {
 		switch (TiGetType(tile)) {
@@ -2551,7 +2553,7 @@ void CMRouter::addToUndo(QUndoCommand * parentCommand)
 			m_sketchWidget->setClipEnds(wire, true);
 			wire->update();
 			if (wire->getAutoroutable()) {
-				wire->setWireWidth(Wire::STANDARD_TRACE_WIDTH, m_sketchWidget);
+				wire->setWireWidth(StandardWireWidth, m_sketchWidget);
 			}
 			addWireToUndo(wire, parentCommand);
 			wires.append(wire);
@@ -4163,7 +4165,7 @@ Via * CMRouter::makeVia(PathUnit * pathUnit) {
 }
 
 qreal CMRouter::minWireWidth(CompletePath & completePath) {
-	qreal wireWidth = Wire::STANDARD_TRACE_WIDTH;
+	qreal wireWidth = StandardWireWidth;
 	if (completePath.source) {
 		if (completePath.source->connectorItem) {
 			if (completePath.source->connectorItem->minDimension() < wireWidth) {
