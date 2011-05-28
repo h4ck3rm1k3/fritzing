@@ -38,6 +38,7 @@ $Date$
 #include "autoroute/autorouteprogressdialog.h"
 #include "items/virtualwire.h"
 #include "items/jumperitem.h"
+#include "items/via.h"
 #include "fsvgrenderer.h"
 #include "items/note.h"
 #include "svg/svg2gerber.h"
@@ -1802,6 +1803,7 @@ void MainWindow::createMenus()
 	m_pcbTraceMenu->addAction(m_selectAllTracesAct);
 	m_pcbTraceMenu->addAction(m_selectAllExcludedTracesAct);
 	m_pcbTraceMenu->addAction(m_selectAllJumperItemsAct);
+	m_pcbTraceMenu->addAction(m_selectAllViasAct);
 
 	m_schematicTraceMenu = menuBar()->addMenu(tr("&Diagram"));
 	m_schematicTraceMenu->addAction(m_autorouteAct);
@@ -2228,6 +2230,7 @@ void MainWindow::updateEditMenu() {
 
 void MainWindow::updateTraceMenu() {
 	bool jiEnabled = false;
+	bool viaEnabled = false;
 	bool tEnabled = false;
 	bool ctEnabled = false;
 	bool cjEnabled = false;
@@ -2249,20 +2252,33 @@ void MainWindow::updateTraceMenu() {
 				ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 				if (itemBase == NULL) continue;
 
-				if (itemBase->itemType() == ModelPart::Board ||  itemBase->itemType() == ModelPart::ResizableBoard) {
-					gfEnabled = true;
-				}
-				else if (itemBase->itemType() == ModelPart::Jumper) {
-					jiEnabled = true;
-					if (itemBase->isSelected()) {
-						exEnabled = true;
-						if (qobject_cast<JumperItem *>(itemBase->layerKinChief())->getAutoroutable()) {
-							exChecked = false;
+				switch (itemBase->itemType()) {
+					case ModelPart::Board:
+					case ModelPart::ResizableBoard:
+						gfEnabled = true;
+						break;
+					case ModelPart::Jumper:
+						jiEnabled = true;
+						if (itemBase->isSelected()) {
+							exEnabled = true;
+							if (qobject_cast<JumperItem *>(itemBase->layerKinChief())->getAutoroutable()) {
+								exChecked = false;
+							}
 						}
-					}
-				}
-				else if (isGroundFill(itemBase)) {
-					gfrEnabled = true;
+						break;
+					case ModelPart::Via:
+						viaEnabled = true;
+						if (itemBase->isSelected()) {
+							exEnabled = true;
+							if (qobject_cast<Via *>(itemBase->layerKinChief())->getAutoroutable()) {
+								exChecked = false;
+							}
+						}
+						break;
+					case ModelPart::CopperFill:
+						gfrEnabled = true;
+					default:
+						break;
 				}
 
 				continue;
@@ -2313,6 +2329,7 @@ void MainWindow::updateTraceMenu() {
 	m_selectAllTracesAct->setEnabled(tEnabled);
 	m_selectAllExcludedTracesAct->setEnabled(tEnabled);
 	m_selectAllJumperItemsAct->setEnabled(jiEnabled);
+	m_selectAllViasAct->setEnabled(viaEnabled);
 	m_tidyWiresAct->setEnabled(twEnabled);
 	m_groundFillAct->setEnabled(gfEnabled);
 	m_removeGroundFillAct->setEnabled(gfrEnabled);
@@ -3048,14 +3065,14 @@ void MainWindow::createTraceMenuActions() {
 	m_updateNetAct->setStatusTip(tr("Redraw this net"));
 	connect(m_updateNetAct, SIGNAL(triggered()), this, SLOT(updateNet()));
 
-	m_excludeFromAutorouteAct = new QAction(tr("&Don't Autoroute This Trace"), this);
-	m_excludeFromAutorouteAct->setStatusTip(tr("When autorouting, do not rip up this wire"));
+	m_excludeFromAutorouteAct = new QAction(tr("Do not autoroute"), this);
+	m_excludeFromAutorouteAct->setStatusTip(tr("When autorouting, do not rip up this trace wire, via, or jumper item"));
 	connect(m_excludeFromAutorouteAct, SIGNAL(triggered()), this, SLOT(excludeFromAutoroute()));
 	m_excludeFromAutorouteAct->setCheckable(true);
 	m_excludeFromAutorouteWireAct = new WireAction(m_excludeFromAutorouteAct);
 	connect(m_excludeFromAutorouteWireAct, SIGNAL(triggered()), this, SLOT(excludeFromAutoroute()));
 
-        m_changeTraceLayerAct = new QAction(tr("Move to other side of the board"), this);
+    m_changeTraceLayerAct = new QAction(tr("Move to other side of the board"), this);
 	m_changeTraceLayerAct->setStatusTip(tr("Move selected traces to the other side of the board (note: the 'first' trace will be moved and the rest will follow to the same side)"));
 	connect(m_changeTraceLayerAct, SIGNAL(triggered()), this, SLOT(changeTraceLayer()));
 
@@ -3072,8 +3089,12 @@ void MainWindow::createTraceMenuActions() {
 	connect(m_selectAllExcludedTracesAct, SIGNAL(triggered()), this, SLOT(selectAllExcludedTraces()));
 
 	m_selectAllJumperItemsAct = new QAction(tr("Select All Jumpers"), this);
-	m_selectAllJumperItemsAct->setStatusTip(tr("Select all jumper parts"));
+	m_selectAllJumperItemsAct->setStatusTip(tr("Select all jumper item parts"));
 	connect(m_selectAllJumperItemsAct, SIGNAL(triggered()), this, SLOT(selectAllJumperItems()));
+
+	m_selectAllViasAct = new QAction(tr("Select All Vias"), this);
+	m_selectAllViasAct->setStatusTip(tr("Select all via parts"));
+	connect(m_selectAllViasAct, SIGNAL(triggered()), this, SLOT(selectAllVias()));
 
 	m_tidyWiresAct = new QAction(tr("Tidy Wires"), this);
 	m_tidyWiresAct->setStatusTip(tr("Tidy selected wires"));
@@ -3204,6 +3225,10 @@ void MainWindow::selectAllExcludedTraces() {
 
 void MainWindow::selectAllJumperItems() {
 	m_currentGraphicsView->selectAllItemType(ModelPart::Jumper);
+}
+
+void MainWindow::selectAllVias() {
+	m_currentGraphicsView->selectAllItemType(ModelPart::Via);
 }
 
 void MainWindow::notClosableForAWhile() {

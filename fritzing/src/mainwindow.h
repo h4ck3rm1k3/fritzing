@@ -214,6 +214,7 @@ protected slots:
 	void updateRoutingStatus();
 	void selectAllExcludedTraces();
 	void selectAllJumperItems();
+	void selectAllVias();
 
 	void saveBundledSketch();
 	void shareOnline();
@@ -606,6 +607,7 @@ protected:
 	QAction *m_updateRoutingStatusAct;
 	QAction *m_selectAllExcludedTracesAct;
 	QAction *m_selectAllJumperItemsAct;
+	QAction *m_selectAllViasAct;
 	QAction *m_groundFillAct;
 	QAction *m_removeGroundFillAct;
 	QAction *m_designRulesCheckAct;

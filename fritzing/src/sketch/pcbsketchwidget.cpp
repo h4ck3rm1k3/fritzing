@@ -274,19 +274,26 @@ void PCBSketchWidget::excludeFromAutoroute(bool exclude)
 {
 	foreach (QGraphicsItem * item, scene()->selectedItems()) {
 		TraceWire * wire = dynamic_cast<TraceWire *>(item);
-		if (wire != NULL) {
+		if (wire) {
 			QList<Wire *> wires;
 			QList<ConnectorItem *> ends;
 			wire->collectChained(wires, ends);
 			foreach (Wire * w, wires) {
 				w->setAutoroutable(!exclude);
 			}
+			continue;
 		}
-		else {
-			JumperItem * jumperItem = dynamic_cast<JumperItem *>(item);
-			if (jumperItem) {
-				jumperItem->setAutoroutable(!exclude);
-			}
+
+		JumperItem * jumperItem = dynamic_cast<JumperItem *>(item);
+		if (jumperItem) {
+			jumperItem->setAutoroutable(!exclude);
+			continue;
+		}
+
+		Via * via = dynamic_cast<Via *>(item);
+		if (via) {
+			via->setAutoroutable(!exclude);
+			continue;
 		}
 	}
 }
