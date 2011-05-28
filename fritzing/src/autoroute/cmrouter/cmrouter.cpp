@@ -843,25 +843,30 @@ bool CMRouter::drc(QString & message)
 	//	what about ground plane?
 
 	if (m_sketchWidget->autorouteTypePCB() && m_board == NULL) {
-                message = tr("The Design Rule Check (DRC) was cancelled, because it could not find a PCB board part.");
+        message = tr("The Design Rule Check (DRC) was cancelled, because it could not find a PCB board part.");
 		return false;
 	}
 
 	qreal keepout = m_sketchWidget->getKeepout() / 2;			// 15 mils space
 
-	bool result = drc(keepout, CMRouter::ReportAllOverlaps, CMRouter::AllowEquipotentialOverlaps, false, false);
-        if (result) message = tr("Your sketch is ready for production: there are no connectors or traces that are overlapping or too close to each other.");
-        else message = tr("Warning: Some of the connectors and/or traces on your board are too close to each other or even overlapping."
-                          "\nOne problematic area is highlighted in red. Once you have fixed this problem, run the DRC check again to find more.");
+	bool ok = drc(keepout, CMRouter::ReportAllOverlaps, CMRouter::AllowEquipotentialOverlaps, false, false);
+    if (ok) {
+		message = tr("Your sketch is ready for production: there are no connectors or traces that are overlapping or too close to each other.");
+	}
+    else {
+		message = tr("Warning: some of the connectors and/or traces on your board are too close together or overlap. "
+                     "These areas are highlighted in red.");
+	}
 
 	if (m_offBoardConnectors.count() > 0) {
 		QSet<ItemBase *> parts;
 		foreach (ConnectorItem * connectorItem, m_offBoardConnectors) {
 			parts.insert(connectorItem->attachedTo()->layerKinChief());
 		}
-                message += tr("\n\nNote: %n parts are not located entirely on the board.", "", parts.count());
+		message += tr("\n\nNote: %n parts are not located entirely on the board.", "", parts.count());
 	}
-	return result;
+
+	return ok;
 }
 
 void CMRouter::drcClean() 
@@ -883,6 +888,7 @@ void CMRouter::drcClean()
 
 bool CMRouter::drc(qreal keepout, CMRouter::OverlapType overlapType, CMRouter::OverlapType wireOverlapType, bool eliminateThin, bool combinePlanes) 
 {
+	m_hasOverlaps = false;
 	if (combinePlanes) {
 		m_unionPlane = initPlane(false);
 		m_union90Plane = initPlane(true);
@@ -894,11 +900,14 @@ bool CMRouter::drc(qreal keepout, CMRouter::OverlapType overlapType, CMRouter::O
 
 	m_offBoardConnectors.clear();
 
+	bool gotBad = false;
+
 	QList<Tile *> alreadyTiled;
 	Plane * plane = tilePlane(m_viewLayerIDs.at(0), ViewLayer::Bottom, alreadyTiled, keepout, overlapType, wireOverlapType, eliminateThin);
-	if (alreadyTiled.count() > 0) {
-		displayBadTiles(alreadyTiled);
-		return false;
+	if (m_hasOverlaps) {
+		gotBad = true;
+		m_hasOverlaps = false;
+		//return false;
 	}
 	else {
 		//hideTiles();
@@ -906,10 +915,15 @@ bool CMRouter::drc(qreal keepout, CMRouter::OverlapType overlapType, CMRouter::O
 
 	if (m_bothSidesNow) {
 		plane = tilePlane(m_viewLayerIDs.at(1), ViewLayer::Top, alreadyTiled, keepout, overlapType, wireOverlapType, eliminateThin);
-		if (alreadyTiled.count() > 0) {
-			displayBadTiles(alreadyTiled);
-			return false;
+		if (m_hasOverlaps) {
+			gotBad = true;
+			//return false;
 		}
+	}
+
+	if (gotBad) {
+		m_hasOverlaps = true;
+		return false;
 	}
 
 	if (eliminateThin && m_unionPlane != NULL) {
@@ -1097,7 +1111,12 @@ Plane * CMRouter::tilePlane(ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewL
 
 			addTile(connectorItem, Tile::OBSTACLE, thePlane, alreadyTiled, overlapType, keepout);
 			if (alreadyTiled.count() > 0) {
-				return thePlane;
+				m_hasOverlaps = true;
+				if (overlapType != ReportAllOverlaps) return thePlane;
+				else {
+					displayBadTiles(alreadyTiled);
+					alreadyTiled.clear();
+				}
 			}
 		}
 
@@ -1114,7 +1133,12 @@ Plane * CMRouter::tilePlane(ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewL
 
 			tileWire(wire, beenThere, alreadyTiled, m_sketchWidget->autorouteTypePCB() ? Tile::OBSTACLE : Tile::SCHEMATICWIRESPACE, wireOverlapType, keepout, eliminateThin);
 			if (alreadyTiled.count() > 0) {
-				return thePlane;
+				m_hasOverlaps = true;
+				if (overlapType != ReportAllOverlaps) return thePlane;
+				else {
+					displayBadTiles(alreadyTiled);
+					alreadyTiled.clear();
+				}
 			}	
 		}
 
@@ -1143,7 +1167,12 @@ Plane * CMRouter::tilePlane(ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewL
 
 			addTile(nonConnectorItem, Tile::OBSTACLE, thePlane, alreadyTiled, overlapType, keepout);
 			if (alreadyTiled.count() > 0) {
-				return thePlane;
+				m_hasOverlaps = true;
+				if (overlapType != ReportAllOverlaps) return thePlane;
+				else {
+					displayBadTiles(alreadyTiled);
+					alreadyTiled.clear();
+				}
 			}
 		}
 	}
@@ -1162,7 +1191,12 @@ Plane * CMRouter::tilePlane(ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewL
 			realsToTile(partTileRect, r.left() - keepout, r.top() - keepout, r.right() + keepout, r.bottom() + keepout);
 			insertTile(thePlane, partTileRect, alreadyTiled, itemBase, Tile::OBSTACLE, overlapType);
 			if (alreadyTiled.count() > 0) {
-				return thePlane;
+				m_hasOverlaps = true;
+				if (overlapType != ReportAllOverlaps) return thePlane;
+				else {
+					displayBadTiles(alreadyTiled);
+					alreadyTiled.clear();
+				}
 			}
 			
 			// TODO: only bother with connectors that might be electrically relevant, since parts are all we need for obstacles
@@ -1595,7 +1629,12 @@ void CMRouter::tileWires(QList<Wire *> & wires, QList<Tile *> & alreadyTiled, Ti
 			insertTile(m_planeHash.value(w->viewLayerID()), tileRect, alreadyTiled, w, tileType, overlapType);
 			//drawGridItem(tile);
 			if (alreadyTiled.count() > 0) {
-				return;
+				m_hasOverlaps = true;
+				if (overlapType != ReportAllOverlaps) return;
+				else {
+					displayBadTiles(alreadyTiled);
+					alreadyTiled.clear();
+				}
 			}
 		}
 	}
@@ -2763,9 +2802,9 @@ Tile * CMRouter::insertTile(Plane * thePlane, TileRect & tileRect, QList<Tile *>
 					gotOverlap = !allowEquipotentialOverlaps(item, alreadyTiled);
 					doClip = alreadyTiled.count() > 0;
 					break;
-                                default:
-                                        // shouldn't be here
-                                        break;
+                default:
+					// shouldn't be here
+                    break;
 			}
 		}
 	}
@@ -2926,15 +2965,15 @@ PathUnit * CMRouter::initPathUnit(Edge * edge, Tile * tile, PriorityQueue<PathUn
 			case TraceWire::Vertical:
 				pathUnit->minCostRect.ymini = tileRect.ymini;
 				pathUnit->minCostRect.ymaxi = tileRect.ymaxi;
-                                pathUnit->minCostRect.xmini = fasterRealToTile(qMin(p1.x(), p2.x()) - HalfStandardWireWidth);
-                                pathUnit->minCostRect.xmaxi = fasterRealToTile(qMax(p1.x(), p2.x()) + HalfStandardWireWidth);
+                pathUnit->minCostRect.xmini = fasterRealToTile(qMin(p1.x(), p2.x()) - HalfStandardWireWidth);
+                pathUnit->minCostRect.xmaxi = fasterRealToTile(qMax(p1.x(), p2.x()) + HalfStandardWireWidth);
 				break;
 
 			case TraceWire::Horizontal:
 				pathUnit->minCostRect.xmini = tileRect.xmini;
 				pathUnit->minCostRect.xmaxi = tileRect.xmaxi;
-                                pathUnit->minCostRect.ymini = fasterRealToTile(qMin(p1.y(), p2.y()) - HalfStandardWireWidth);
-                                pathUnit->minCostRect.ymaxi = fasterRealToTile(qMax(p1.y(), p2.y()) + HalfStandardWireWidth);
+                pathUnit->minCostRect.ymini = fasterRealToTile(qMin(p1.y(), p2.y()) - HalfStandardWireWidth);
+                pathUnit->minCostRect.ymaxi = fasterRealToTile(qMax(p1.y(), p2.y()) + HalfStandardWireWidth);
 				break;
 
 			case TraceWire::Diagonal:

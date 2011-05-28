@@ -312,6 +312,7 @@ protected:
 	QByteArray m_startState;
 	QSet<ConnectorItem *> m_offBoardConnectors;
 	QHash<PathUnit *, TileRect> m_nearestSpaces;
+	bool m_hasOverlaps;
 };
 
 #endif
