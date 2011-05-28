@@ -71,7 +71,6 @@ public:
 	PluralType isPlural();
 	QString retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi); 
 	bool canEditPart();
-	virtual void setBoth(const QString & holeDiameter, const QString &  thickness);
 	void addedToScene();	
 	bool hasPartNumberProperty();
 	QString holeSize();
@@ -102,6 +101,7 @@ protected:
 	ItemBase * setBothSvg(const QString & holeDiameter, const QString & ringThickness, const QStringList & connectorIDs); 
 	void setBothNonConnectors(ItemBase * itemBase, SvgIdLayer * svgIdLayer);
 	void setUpHoleSizes();
+	virtual void setBoth(const QString & holeDiameter, const QString &  thickness);
 											 
 protected:
 	class FSvgRenderer * m_renderer;

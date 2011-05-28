@@ -4156,8 +4156,10 @@ Via * CMRouter::makeVia(PathUnit * pathUnit) {
 	via->setAutoroutable(true);
 	qreal ringThickness, holeSize;
 	m_sketchWidget->getViaSize(ringThickness, holeSize);
-	via->setBoth(QString("%1in").arg(holeSize / FSvgRenderer::printerScale()), 
-					QString("%1in").arg(ringThickness / FSvgRenderer::printerScale()));
+	via->setHoleSize(QString("%1in,%2in")
+						.arg(holeSize / FSvgRenderer::printerScale())
+						.arg(ringThickness / FSvgRenderer::printerScale()),
+		false);
 
 	pathUnit->edge->viaCount++;
 
