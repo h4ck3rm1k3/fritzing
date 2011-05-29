@@ -6187,6 +6187,7 @@ const QString & SketchWidget::getShortName() {
 
 void SketchWidget::getBendpointWidths(Wire * wire, qreal width, qreal & bendpointWidth, qreal & bendpoint2Width) {
 	Q_UNUSED(wire);
+	Q_UNUSED(width);
 	bendpoint2Width = bendpointWidth = -1;
 }
 

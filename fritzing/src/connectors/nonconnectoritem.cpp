@@ -85,7 +85,7 @@ void NonConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem
 		if (m_negativePenWidth < 0) {
 			// for wires
 			painter->setPen(Qt::NoPen);
-			if (m_negativePenWidth < -1000) {
+			if (m_negativePenWidth <= -1000) {
 				painter->drawEllipse(rect().center(), m_negativePenWidth + 1000, m_negativePenWidth + 1000);
 			}
 			else {
