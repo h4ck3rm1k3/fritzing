@@ -2178,10 +2178,11 @@ ItemBase * PCBSketchWidget::placePartDroppedInOtherView(ModelPart * modelPart, V
 	// Use a simple best-fit approach for now.  No idea how optimal a solution it is.
 
 	CMRouter router(this);
+	int keepout = 10;
+	router.setKeepout(keepout);
 	Plane * plane = router.initPlane(false);
-	QList<Tile *> alreadyTiled;
-	qreal keepout = 10;
-	router.initBoard(board, plane, alreadyTiled, keepout);
+	QList<Tile *> alreadyTiled;	
+	router.initBoard(board, plane, alreadyTiled);
 
 	QRectF boardRect = board->sceneBoundingRect();
 	foreach (QGraphicsItem * item, scene()->items()) {
