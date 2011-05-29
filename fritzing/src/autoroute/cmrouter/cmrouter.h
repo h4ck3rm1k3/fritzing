@@ -241,7 +241,8 @@ protected:
 	bool propagate(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit *> & p2, QMultiHash<Tile *, PathUnit *> &, qreal keepout, CompletePath  &, bool canCrossLayers);
 	bool addJumperItem(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit *> & p2, Edge *, 
 						QMultiHash<Tile *, PathUnit *> &, qreal keepout);
-	bool propagateUnit(PathUnit * pathUnit, PriorityQueue<PathUnit *> & sourceQueue, PriorityQueue<PathUnit *> & destQueue, QList<PathUnit *> & destPathUnits, QMultiHash<Tile *, PathUnit *> &, CompletePath &, bool canCrossLayers);
+	bool propagateUnit(PathUnit * pathUnit, PriorityQueue<PathUnit *> & sourceQueue, PriorityQueue<PathUnit *> & destQueue, 
+						QList<PathUnit *> & destPathUnits, QMultiHash<Tile *, PathUnit *> &, CompletePath &, bool canCrossLayers, qreal keepout);
 	TileRect calcMinCostRect(PathUnit * pathUnit, Tile * next);
 	TileRect calcMinCostRect(PathUnit * pathUnit, TileRect & next);
 	bool isRedundantPath(PathUnit * pathUnit, TileRect & minCostRect, int sourceCost);
@@ -283,14 +284,15 @@ protected:
 	void deletePathUnits();
 	void computeMD5(Ordering * ordering);
 	void crossLayerSource(PathUnit * pathUnit, PriorityQueue<PathUnit *> & sourceQueue);
-	void crossLayerDest(PathUnit * pathUnit, PriorityQueue<PathUnit *> & sourceQueue, QMultiHash<Tile *, PathUnit *> & tilePathUnits);
-	void getViaSize(int & tWidthNeeded, int & tHeightNeeded);
+	void crossLayerDest(PathUnit * pathUnit, PriorityQueue<PathUnit *> & sourceQueue, QMultiHash<Tile *, PathUnit *> & tilePathUnits, qreal keepout);
+	void getViaSize(int & tWidthNeeded, int & tHeightNeeded, qreal keepout);
 	void traceViaPath(PathUnit * from, PathUnit * to, QList<class Via *> & vias, qreal keepout);
 	void listCompletePath(CompletePath & completePath, QList<PathUnit *> & fullPath);
-    class Via * makeVia(PathUnit * pathUnit);
+    class Via * makeVia(PathUnit * pathUnit, qreal keepout);
 	bool orderingImproved(Ordering * currentOrdering, Ordering * bestOrdering);
 	ConnectorItem * findViaConnector(ConnectorItem * viaConnectorItem);
 	qreal minWireWidth(CompletePath & completePath);
+	void setUpWidths(qreal width);
 
 protected:
 	QRectF m_maxRect;

@@ -91,6 +91,7 @@ public:
     void deleteItem(ItemBase *, bool deleteModelPart, bool doEmit, bool later);
 	virtual qreal getTraceWidth();
 	virtual qreal getAutorouterTraceWidth();
+	void getBendpointWidths(class Wire *, qreal w, qreal & w1, qreal & w2);
 
 public:
 	static QSizeF jumperItemSize();

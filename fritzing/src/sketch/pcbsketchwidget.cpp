@@ -2121,7 +2121,7 @@ QSizeF PCBSketchWidget::jumperItemSize() {
 }
 
 qreal PCBSketchWidget::getKeepout() {
-	return 0.015 * FSvgRenderer::printerScale();
+	return 0.015 * FSvgRenderer::printerScale();  // mils converted to pixels
 }
 
 bool PCBSketchWidget::acceptsTrace(const ViewGeometry & viewGeometry) {
@@ -2464,3 +2464,9 @@ qreal PCBSketchWidget::getAutorouterTraceWidth() {
 	return FSvgRenderer::printerScale() * traceWidthMils / 1000;
 }
 
+void PCBSketchWidget::getBendpointWidths(Wire * wire, qreal width, qreal & bendpointWidth, qreal & bendpoint2Width) 
+{
+	Q_UNUSED(wire);
+	bendpointWidth = -width - 1;
+	bendpoint2Width = width + 3;
+}

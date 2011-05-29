@@ -152,6 +152,18 @@ bool tilePointRectYGreaterThan(TilePointRect * tpr1, TilePointRect * tpr2)
 
 static inline void infoTile(const QString & message, Tile * tile)
 {
+	if (tile == NULL) {
+		DebugDialog::debug("infoTile: tile is NULL");
+		return;
+	}
+
+	DebugDialog::debug(QString("tile:%1 lb:%2 bl:%3 tr:%4 rt%5")
+		.arg((long) tile, 0, 16)
+		.arg((long) tile->ti_lb, 0, 16)
+		.arg((long) tile->ti_bl, 0, 16)
+		.arg((long) tile->ti_tr, 0, 16)
+		.arg((long) tile->ti_rt, 0, 16));
+
 	DebugDialog::debug(QString("%1 tile:%2 l:%3 t:%4 w:%5 h:%6 type:%7 body:%8")
 		.arg(message)
 		.arg((long) tile, 0, 16)
@@ -520,10 +532,7 @@ CMRouter::CMRouter(PCBSketchWidget * sketchWidget) : Autorouter(sketchWidget)
 	qrectToTile(m_maxRect, m_tileMaxRect); 
 	qrectToTile(m_maxRect90, m_tileMaxRect90); 
 
-	StandardWireWidth = m_sketchWidget->getAutorouterTraceWidth();
-    TileStandardWireWidth = fasterRealToTile(StandardWireWidth);						
-	HalfStandardWireWidth = StandardWireWidth / 2;										
-    TileHalfStandardWireWidth = fasterRealToTile(HalfStandardWireWidth);
+	setUpWidths(m_sketchWidget->getAutorouterTraceWidth());
 
 	ViewGeometry vg;
 	vg.setWireFlags(m_sketchWidget->getTraceFlag());
@@ -597,6 +606,20 @@ void CMRouter::start()
 		return;
 	}
 
+
+	qreal minDim = std::numeric_limits<int>::max();
+	foreach (QList<ConnectorItem *> * list, m_allPartConnectorItems) {
+		foreach (ConnectorItem * connectorItem, *list) {
+			qreal md = connectorItem->minDimension();
+			if (md < minDim) minDim = md;
+		}
+	}
+
+	if (minDim < StandardWireWidth) {
+		int mils = qMax((int) GraphicsUtils::pixels2mils(minDim, FSvgRenderer::printerScale()) - 1, TraceWire::MinTraceWidthMils);
+		setUpWidths(GraphicsUtils::mils2pixels(mils, FSvgRenderer::printerScale()));
+	}
+
 	ProcessEventBlocker::processEvents(); // to keep the app  from freezing
 
 	//	rip up and reroute:
@@ -665,6 +688,7 @@ void CMRouter::start()
 		ProcessEventBlocker::processEvents();
 
 		allDone = runEdges(currentOrdering->edges, netCounters, routingStatus, keepout, m_sketchWidget->usesJumperItem(), bestOrdering);
+		//DebugDialog::debug("after run edges");
 		if (m_cancelled || allDone || m_stopTracing) break;
 
 		ProcessEventBlocker::processEvents();
@@ -679,6 +703,9 @@ void CMRouter::start()
 		ProcessEventBlocker::processEvents();
 
 	}
+
+
+	//DebugDialog::debug("done running");
 
 	delete lineItem;
 
@@ -1087,7 +1114,7 @@ Plane * CMRouter::tilePlane(ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewL
 	m_planeHash.insert(viewLayerID, thePlane);
 	m_planes.append(thePlane);
 	m_specHash.insert(thePlane, viewLayerSpec);
-	DebugDialog::debug(QString("spec hash %1 %2").arg((long) thePlane, 0, 16).arg(viewLayerSpec));
+	//DebugDialog::debug(QString("spec hash %1 %2").arg((long) thePlane, 0, 16).arg(viewLayerSpec));
 
 	// if board is not rectangular, add tiles for the outside edges;
 	if (!initBoard(m_board, thePlane, alreadyTiled, keepout)) return thePlane;
@@ -1162,10 +1189,12 @@ Plane * CMRouter::tilePlane(ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewL
 				continue;
 			}
 
+			/*
 			DebugDialog::debug(QString("coords nonconnectoritem %1 %2")
 									.arg(nonConnectorItem->attachedToTitle())
 									.arg(nonConnectorItem->attachedToID())
 									);
+			*/
 
 			addTile(nonConnectorItem, Tile::OBSTACLE, thePlane, alreadyTiled, overlapType, keepout);
 			if (alreadyTiled.count() > 0) {
@@ -1546,13 +1575,14 @@ bool clipRect(TileRect * r, TileRect * clip, QList<TileRect> & rects) {
 void CMRouter::tileWire(Wire * wire, QList<Wire *> & beenThere, QList<Tile *> & alreadyTiled, Tile::TileType tileType, 
 						CMRouter::OverlapType overlapType, qreal keepout, bool eliminateThin) 
 {
+	/*
 	DebugDialog::debug(QString("coords wire %1, x1:%2 y1:%3, x2:%4 y2:%5")
 		.arg(wire->id())
 		.arg(wire->pos().x())
 		.arg(wire->pos().y())
 		.arg(wire->line().p2().x())
 		.arg(wire->line().p2().y()) );			
-
+	*/
 
 	QList<ConnectorItem *> ends;
 	QList<Wire *> wires;
@@ -2222,6 +2252,7 @@ bool CMRouter::blockDirection(PathUnit * pathUnit, PathUnit::Direction direction
 }
 
 void CMRouter::seedNext(PathUnit * pathUnit, QList<Tile *> & tiles) {
+	//DebugDialog::debug(QString("seed next %1").arg((long) pathUnit, 0, 16));
 	//infoTile("seed next", pathUnit->tile);
 	int tWidthNeeded = TileStandardWireWidth;
 	if ((RIGHT(pathUnit->tile) < m_tileMaxRect.xmaxi) && (HEIGHT(pathUnit->tile) >= tWidthNeeded)) {
@@ -2784,7 +2815,7 @@ Tile * CMRouter::insertTile(Plane * thePlane, TileRect & tileRect, QList<Tile *>
 {
 	//infoTileRect("insert tile", tileRect);
 	if (tileRect.xmaxi - tileRect.xmini <= 0) {
-		DebugDialog::debug("zero width tile");
+		DebugDialog::debug("attempting to insert zero width tile");
 		return NULL;
 	}
 
@@ -2805,6 +2836,7 @@ Tile * CMRouter::insertTile(Plane * thePlane, TileRect & tileRect, QList<Tile *>
 					doClip = alreadyTiled.count() > 0;
 					break;
                 default:
+					DebugDialog::debug("insert tile: bad overlaptype");
 					// shouldn't be here
                     break;
 			}
@@ -3149,8 +3181,8 @@ bool CMRouter::addJumperItem(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathU
 							QMultiHash<Tile *, PathUnit *> & tilePathUnits, qreal keepout)
 {
 	QSizeF sizeNeeded(m_sketchWidget->jumperItemSize().width(), m_sketchWidget->jumperItemSize().height());
-    int tWidthNeeded = fasterRealToTile(sizeNeeded.width());
-    int tHeightNeeded = fasterRealToTile(sizeNeeded.height());
+    int tWidthNeeded = fasterRealToTile(sizeNeeded.width() + keepout + keepout);
+    int tHeightNeeded = fasterRealToTile(sizeNeeded.height() + keepout + keepout);
 
 	//hideTiles();
 
@@ -3297,6 +3329,8 @@ bool CMRouter::propagate(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit 
 
 	//QElapsedTimer propagateUnitTimer;
 
+	//DebugDialog::debug("propagate prelims done");
+
 	completePath.source = completePath.dest = NULL;
 	bool success = false;
 	while (p1.count() > 0 && p2.count() > 0) {
@@ -3309,15 +3343,18 @@ bool CMRouter::propagate(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit 
 		}
 
 		//propagateUnitTimer.start();
-		bool ok = propagateUnit(pathUnit1, p1, p2, p2Terminals, tilePathUnits, completePath, canCrossLayers);
+		bool ok = propagateUnit(pathUnit1, p1, p2, p2Terminals, tilePathUnits, completePath, canCrossLayers, keepout);
 		//propagateUnitTime += propagateUnitTimer.elapsed();
+
+		//DebugDialog::debug("propagate unit done");
+
 		if (ok) {
 			success = true;
 			if (completePath.goodEnough) break;
 		}
 
 		//propagateUnitTimer.start();
-		ok = propagateUnit(pathUnit2, p2, p1, p1Terminals, tilePathUnits, completePath, canCrossLayers);
+		ok = propagateUnit(pathUnit2, p2, p1, p1Terminals, tilePathUnits, completePath, canCrossLayers, keepout);
 		//propagateUnitTime += propagateUnitTimer.elapsed();
 		if (ok) {
 			success = true;
@@ -3352,18 +3389,20 @@ bool CMRouter::propagate(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit 
 bool CMRouter::propagateUnit(PathUnit * pathUnit, PriorityQueue<PathUnit *> & sourceQueue, 
 							PriorityQueue<PathUnit *> & destQueue, QList<PathUnit *> & destTerminals, 
 							QMultiHash<Tile *, PathUnit *> & tilePathUnits, CompletePath & completePath,
-							bool canCrossLayers)
+							bool canCrossLayers, qreal keepout)
 {
+	//DebugDialog::debug("start propagate unit");
 	bool result = false;
 	QList<Tile *> tiles;
 	//QElapsedTimer seedNextTimer;
 	//seedNextTimer.start();
 	if (pathUnit->layerDirection == PathUnit::CrossLayer) {
-		crossLayerDest(pathUnit, sourceQueue, tilePathUnits);
+		crossLayerDest(pathUnit, sourceQueue, tilePathUnits, keepout);
 		return false;
 	}
-
+	//DebugDialog::debug("before seed next");
 	seedNext(pathUnit, tiles);
+	//DebugDialog::debug("after seed next");
 
 	//seedNextTime += seedNextTimer.elapsed();
 	foreach (Tile * tile, tiles) {
@@ -3476,11 +3515,11 @@ void CMRouter::crossLayerSource(PathUnit * pathUnit, PriorityQueue<PathUnit *> &
 	sourceQueue.enqueue(nextPathUnit->sourceCost + nextPathUnit->destCost, nextPathUnit);
 }
 
-void CMRouter::crossLayerDest(PathUnit * pathUnit, PriorityQueue<PathUnit *> & sourceQueue, QMultiHash<Tile *, PathUnit *> & tilePathUnits) 
+void CMRouter::crossLayerDest(PathUnit * pathUnit, PriorityQueue<PathUnit *> & sourceQueue, QMultiHash<Tile *, PathUnit *> & tilePathUnits, qreal keepout) 
 {
 	PathUnit * nearest = NULL;
 	int tWidthNeeded, tHeightNeeded;
-	getViaSize(tWidthNeeded, tHeightNeeded);
+	getViaSize(tWidthNeeded, tHeightNeeded, keepout);
 	int bestCost = std::numeric_limits<int>::max();
 	TileRect nearestSpace;
 	//drawGridItem(pathUnit->tile);
@@ -3639,7 +3678,7 @@ bool CMRouter::goodEnough(CompletePath & completePath) {
 }
 
 void CMRouter::listCompletePath(CompletePath & completePath, QList<PathUnit *> & fullPath) {
-	DebugDialog::debug("list full path");
+	//DebugDialog::debug("list full path");
 	for (PathUnit * spu = completePath.source; spu; spu = spu->parent) {
 		fullPath.push_front(spu);
 	}
@@ -3660,15 +3699,18 @@ void CMRouter::tracePath(CompletePath & completePath, qreal keepout)
 		QList<Via *> vias;
 		foreach (PathUnit * pathUnit, fullPath) {
 			if (pathUnit->layerDirection == PathUnit::CrossLayer) {
-				vias.append(makeVia(pathUnit));
+				vias.append(makeVia(pathUnit, keepout));
 				//ProcessEventBlocker::processEvents();
 			}
 		}
 		if (vias.count() > 0) {
+			//DebugDialog::debug("trace via path");
 			traceViaPath(fullPath.first(), fullPath.last(), vias, keepout);
+			//DebugDialog::debug("done trace via path");
 			return;
 		}
 	}
+			
 
 	QList<Segment *> hSegments;
 	QList<Segment *> vSegments;
@@ -3773,6 +3815,8 @@ void CMRouter::traceViaPath(PathUnit * from, PathUnit * to, QList<Via *> & vias,
 	QMultiHash<Tile *, PathUnit *> tempPathUnits;
 	QList<PathUnit *> pathUnits;
 
+	//DebugDialog::debug("traceviapath start");
+
 	pathUnits.append(from);
 	PathUnit * currentPathUnit = from;
 	foreach (Via * via, vias) {
@@ -3784,10 +3828,12 @@ void CMRouter::traceViaPath(PathUnit * from, PathUnit * to, QList<Via *> & vias,
 		foreach (ViewLayer::ViewLayerID viewLayerID, m_planeHash.keys()) {
 			if (m_sketchWidget->sameElectricalLayer2(viewLayerID, viaConnectorItem->attachedToViewLayerID())) {
 				Tile * tile = addTile(viaConnectorItem, Tile::DESTINATION, m_planeHash.value(viewLayerID), alreadyTiled, CMRouter::IgnoreAllOverlaps, keepout);
+				//infoTile(QString("via tile a %1").arg(keepout), tile);
 				pu1 = initPathUnit(NULL, tile, tempq, tempPathUnits);
 			}
 			else if (m_sketchWidget->sameElectricalLayer2(viewLayerID, otherViaConnectorItem->attachedToViewLayerID())) {
 				Tile * tile = addTile(otherViaConnectorItem, Tile::DESTINATION, m_planeHash.value(viewLayerID), alreadyTiled, CMRouter::IgnoreAllOverlaps, keepout);
+				//infoTile(QString("via tile b %1").arg(keepout), tile);
 				pu2 = initPathUnit(NULL, tile, tempq, tempPathUnits);
 			}
 		}
@@ -3804,6 +3850,7 @@ void CMRouter::traceViaPath(PathUnit * from, PathUnit * to, QList<Via *> & vias,
 		}
 	}
 	pathUnits.append(to);
+
 
 	for (int i = 0; i < pathUnits.count(); i += 2) {
 		PathUnit * source = pathUnits.at(i);
@@ -3822,6 +3869,7 @@ void CMRouter::traceViaPath(PathUnit * from, PathUnit * to, QList<Via *> & vias,
 		//hideTiles();
 		propagate(q1, q2, tilePathUnits, keepout, completePath, false);
 	}
+
 }
 
 void CMRouter::cleanPoints(QList<QPointF> & allPoints, Plane * thePlane) 
@@ -4126,16 +4174,16 @@ void CMRouter::tileToQRect(Tile * tile, QRectF & rect) {
 	tileRectToQRect(tileRect, rect);
 }
 
-void CMRouter::getViaSize(int & tWidthNeeded, int & tHeightNeeded) {
+void CMRouter::getViaSize(int & tWidthNeeded, int & tHeightNeeded, qreal keepout) {
 	qreal ringThickness, holeSize;
 	m_sketchWidget->getViaSize(ringThickness, holeSize);
-	tHeightNeeded = tWidthNeeded = fasterRealToTile(ringThickness + ringThickness + holeSize);
+	tHeightNeeded = tWidthNeeded = fasterRealToTile(ringThickness + ringThickness + holeSize + keepout + keepout);
 }
 
-Via * CMRouter::makeVia(PathUnit * pathUnit) {
+Via * CMRouter::makeVia(PathUnit * pathUnit, qreal keepout) {
 	TileRect nearestSpace = m_nearestSpaces.value(pathUnit);
 	int tWidthNeeded, tHeightNeeded;
-	getViaSize(tWidthNeeded, tHeightNeeded);
+	getViaSize(tWidthNeeded, tHeightNeeded, keepout);
 	qreal tHalfWidth = tWidthNeeded / 2.0;
 	qreal tHalfHeight = tHeightNeeded / 2.0;
 	qreal cx = (pathUnit->minCostRect.xmaxi + pathUnit->minCostRect.xmini) / 2.0; 
@@ -4152,6 +4200,7 @@ Via * CMRouter::makeVia(PathUnit * pathUnit) {
 	ItemBase * itemBase = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ModuleIDNames::ViaModuleIDName), 
 										m_specHash.value(pathUnit->plane), BaseCommand::CrossView, viewGeometry, newID, -1, NULL, NULL);
 
+	//DebugDialog::debug(QString("back from adding via %1").arg((long) itemBase, 0, 16));
 	Via * via = dynamic_cast<Via *>(itemBase);
 	via->setAutoroutable(true);
 	qreal ringThickness, holeSize;
@@ -4160,6 +4209,8 @@ Via * CMRouter::makeVia(PathUnit * pathUnit) {
 						.arg(holeSize / FSvgRenderer::printerScale())
 						.arg(ringThickness / FSvgRenderer::printerScale()),
 		false);
+
+	//DebugDialog::debug(QString("set via size %1 %2").arg(holeSize).arg(ringThickness));
 
 	pathUnit->edge->viaCount++;
 
@@ -4194,4 +4245,12 @@ qreal CMRouter::minWireWidth(CompletePath & completePath) {
 	}
 
 	return wireWidth;
+}
+
+void CMRouter::setUpWidths(qreal width)
+{
+	StandardWireWidth = width;
+    TileStandardWireWidth = fasterRealToTile(StandardWireWidth);						
+	HalfStandardWireWidth = StandardWireWidth / 2;										
+    TileHalfStandardWireWidth = fasterRealToTile(HalfStandardWireWidth);
 }

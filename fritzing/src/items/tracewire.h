@@ -56,6 +56,11 @@ public:
 	void setWireDirection(TraceWire::WireDirection);
 	TraceWire::WireDirection wireDirection();
 
+public:
+	static const int TraceWire::MinTraceWidthMils;
+	static const int TraceWire::MaxTraceWidthMils;
+
+
 protected:
 	void setColorFromElement(QDomElement & element);
 

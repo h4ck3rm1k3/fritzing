@@ -122,11 +122,12 @@ void SchematicSketchWidget::setClipEnds(ClipableWire * vw, bool) {
 	vw->setClipEnds(false);
 }
 
-void SchematicSketchWidget::getBendpointWidths(Wire * wire, qreal width, qreal & bendpointWidth, qreal & bendpoint2Width) {
-	SketchWidget::getBendpointWidths(wire, width, bendpointWidth, bendpoint2Width);
+void SchematicSketchWidget::getBendpointWidths(Wire * wire, qreal width, qreal & bendpointWidth, qreal & bendpoint2Width) 
+{
+	Q_UNUSED(wire);
+	bendpointWidth = -width - 1;
 	bendpoint2Width = width + 3;
 }
-
 
 void SchematicSketchWidget::getLabelFont(QFont & font, QColor & color, ViewLayer::ViewLayerSpec) {
 	font.setFamily("Droid Sans");

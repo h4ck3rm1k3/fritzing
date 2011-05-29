@@ -32,8 +32,8 @@ $Date$
 
 #include <QComboBox>
 
-static const int MinTraceWidthMils = 8;
-static const int MaxTraceWidthMils = 128;
+const int TraceWire::MinTraceWidthMils = 8;
+const int TraceWire::MaxTraceWidthMils = 128;
 
 /////////////////////////////////////////////////////////
 
