@@ -2468,6 +2468,5 @@ qreal PCBSketchWidget::getAutorouterTraceWidth() {
 void PCBSketchWidget::getBendpointWidths(Wire * wire, qreal width, qreal & bendpointWidth, qreal & bendpoint2Width) 
 {
 	Q_UNUSED(wire);
-	bendpointWidth = -width - 1;
-	bendpoint2Width = width + 3;
+	bendpointWidth = bendpoint2Width = (width / -2) - 1000;
 }

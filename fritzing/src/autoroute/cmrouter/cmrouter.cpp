@@ -606,6 +606,7 @@ void CMRouter::start()
 		return;
 	}
 
+
 	fixWidths();
 
 	ProcessEventBlocker::processEvents(); // to keep the app  from freezing
@@ -4254,6 +4255,8 @@ void CMRouter::setKeepout(qreal keepout)
 
 void CMRouter::fixWidths()
 {
+	if (!m_sketchWidget->autorouteTypePCB()) return;
+
 	qreal minDim = std::numeric_limits<int>::max();
 	foreach (QList<ConnectorItem *> * list, m_allPartConnectorItems) {
 		foreach (ConnectorItem * connectorItem, *list) {

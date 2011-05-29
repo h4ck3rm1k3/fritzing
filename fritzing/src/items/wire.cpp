@@ -456,6 +456,7 @@ void Wire::setConnector0Rect() {
 	QRectF rect = m_connector0->rect();
 	rect.moveTo(0 - (rect.width()  / 2.0)  ,
 				0 - (rect.height()  / 2.0) );
+	//DebugDialog::debug(QString("set connector rect %1 %2").arg(rect.width()).arg(rect.height()));
 	m_connector0->setRect(rect);
 }
 
@@ -1176,6 +1177,7 @@ void Wire::getConnectedColor(ConnectorItem * connectorItem, QBrush * &brush, QPe
 	bool bendpoint = true;
 	foreach (ConnectorItem * toConnectorItem, connectorItem->connectedToItems()) {
 		if (toConnectorItem->attachedToItemType() != ModelPart::Wire) {
+			// for drawing a big dot on the end of a part connector in schematic view if the part is connected to more than one trace
 			bendpoint = false;
 			if (toConnectorItem->connectionsCount() > 1) {	
 				InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
@@ -1210,13 +1212,14 @@ void Wire::getConnectedColor(ConnectorItem * connectorItem, QBrush * &brush, QPe
 	
 	// connectorItem is a bendpoint or connects to a multiply connected connector
 
-	if (!bendpoint) {
+	//if (!bendpoint) {
 		//DebugDialog::debug(QString("big dot %1 %2 %3").arg(this->id()).arg(connectorItem->connectorSharedID()).arg(count));
-	}
+	//}
 
 	brush = &m_shadowBrush;
 	opacity = 1.0;
 	if (count > 1) {
+		// only ever reach here when drawing a connector that is connected to more than one trace
 		pen = &m_bendpoint2Pen;
 		negativePenWidth = m_bendpoint2Width;
 	}
@@ -1265,8 +1268,6 @@ bool Wire::acceptsMouseReleaseConnectorEvent(ConnectorItem *, QGraphicsSceneMous
 void Wire::setIgnoreSelectionChange(bool ignore) {
 	m_ignoreSelectionChange = ignore;
 }
-
-
 
 bool Wire::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget)
 {

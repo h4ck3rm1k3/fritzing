@@ -66,16 +66,36 @@ void NonConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem
 
 	painter->setOpacity(m_opacity);
 
+	/*
+	DebugDialog::debug(QString("id:%1 %2 w:%3 %4 c:%5 ec:%6 er:%7 neg:%8 w:%9")
+		.arg(attachedToID())
+		.arg(attachedToTitle())
+		.arg(pen().width())
+		.arg(pen().color().name()) 
+		.arg(m_circular)
+		.arg(m_effectivelyCircular)
+		.arg(m_effectivelyRectangular)
+		.arg(m_negativePenWidth)
+		.arg(rect().width())
+		);
+	*/
+
 	if (m_circular) {
-		//DebugDialog::debug(QString("id:%1 w:%2 %3").arg(attachedToID()).arg(pen().width()).arg(pen().color().name()) );
 		painter->setBrush(brush());
 		if (m_negativePenWidth < 0) {
-			int pw = m_negativePenWidth + 1;
+			// for wires
 			painter->setPen(Qt::NoPen);
-			painter->drawEllipse(rect().adjusted(-pw, -pw, pw, pw));
+			if (m_negativePenWidth < -1000) {
+				painter->drawEllipse(rect().center(), m_negativePenWidth + 1000, m_negativePenWidth + 1000);
+			}
+			else {
+				int pw = m_negativePenWidth + 1;
+				painter->drawEllipse(rect().adjusted(-pw, -pw, pw, pw));
+			}
 		}
 		else
 		{
+			// for parts
 			QRectF r = rect();
 			qreal delta = .66 * m_strokeWidth;
 			painter->setPen(pen());
