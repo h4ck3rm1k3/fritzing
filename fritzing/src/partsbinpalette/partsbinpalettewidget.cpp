@@ -324,7 +324,7 @@ void PartsBinPaletteWidget::createBinMenu() {
 	connect(m_saveAsBundledAction, SIGNAL(triggered()),this, SLOT(saveBundledBin()));
 	connect(m_renameAction, SIGNAL(triggered()),this, SLOT(rename()));
 
-	m_fileMenu = new QMenu(tr("Parts Bin"), this);
+	m_fileMenu = new QMenu(tr("Parts Bin Actions"), this);
 	m_fileMenu->addAction(newTitleAction(tr("Bin")));
 	m_fileMenu->addAction(m_newBinAction);
 	m_fileMenu->addMenu(m_openBinMenu);
@@ -439,7 +439,7 @@ void PartsBinPaletteWidget::createPartMenu() {
 	connect(m_exportPartAction, SIGNAL(triggered()),this, SLOT(exportSelected()));
 	connect(m_removePartAction, SIGNAL(triggered()),this, SLOT(removeSelected()));
 
-	m_partMenu = new QMenu(this);
+	m_partMenu = new QMenu(tr("Parts Actions"), this);
 	connect(m_partMenu, SIGNAL(aboutToShow()), this, SLOT(updateMenus()));
 	m_partMenu->addAction(newTitleAction(tr("Part")));
 	m_partMenu->addAction(m_newPartAction);
@@ -456,6 +456,7 @@ void PartsBinPaletteWidget::createContextMenus() {
 	m_binContextMenu->addAction(m_closeBinAction);
 	m_binContextMenu->addAction(m_saveAction);
 	m_binContextMenu->addAction(m_saveAsAction);
+	m_binContextMenu->addAction(m_saveAsBundledAction);
 	m_binContextMenu->addAction(m_renameAction);
 
 	m_partContextMenu = new QMenu(this);

@@ -27,6 +27,7 @@ $Date$
 
 #include <QApplication>
 #include <QMouseEvent>
+#include <QMenu>
 
 #include "stacktabbar.h"
 #include "stacktabwidget.h"
@@ -44,6 +45,11 @@ StackTabBar::StackTabBar(StackTabWidget *parent) : QTabBar(parent) {
 	setProperty("current","false");
 	setExpanding(false);
 	setElideMode(Qt::ElideRight);
+
+	setContextMenuPolicy(Qt::CustomContextMenu);
+ 
+	connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), SLOT(showContextMenu(const QPoint &)));
+
 }
 
 bool StackTabBar::mimeIsAction(const QMimeData* m, const QString& action) {
@@ -80,9 +86,6 @@ void StackTabBar::dropEvent(QDropEvent* event) {
 
 	const QMimeData *m = event->mimeData();
     if(mimeIsAction(m, "part-reordering")) {
-		// this widget shouldn't know about bin widgets,
-		// but it's already aware of "part-reordering"
-		// actions, so fuck it!
 		PartsBinPaletteWidget* bin = dynamic_cast<PartsBinPaletteWidget*>(m_parent->widget(toIndex));
 		if(bin && bin->allowsChanges()) {
 			bin->currentView()->dropEventAux(event,true);
@@ -90,5 +93,26 @@ void StackTabBar::dropEvent(QDropEvent* event) {
 	}
 
 	event->acceptProposedAction();
+}
+ 
+void StackTabBar::showContextMenu(const QPoint &point)
+{
+	if (point.isNull()) return;
+ 
+	int tabIndex = this->tabAt(point);
+	PartsBinPaletteWidget* bin = dynamic_cast<PartsBinPaletteWidget*>(m_parent->widget(tabIndex));
+	if (bin == NULL) return;
+
+
+	QMenu * binMenu = bin->getFileMenu();
+	if (binMenu == NULL) return;
+
+	QMenu * partMenu = bin->getPartMenu();
+	if (partMenu == NULL) return;
+
+	QMenu menu;
+	menu.addMenu(partMenu);
+	menu.addMenu(binMenu);
+	menu.exec(this->mapToGlobal(point));
 }
 

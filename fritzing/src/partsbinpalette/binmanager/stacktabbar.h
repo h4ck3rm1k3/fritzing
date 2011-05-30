@@ -42,6 +42,10 @@ class StackTabBar : public QTabBar {
 
 		bool mimeIsAction(const class QMimeData* m, const QString& action);
 
+		protected slots:
+			void showContextMenu(const QPoint &point);
+
+	protected:
 		class StackTabWidget* m_parent;
 };
 
