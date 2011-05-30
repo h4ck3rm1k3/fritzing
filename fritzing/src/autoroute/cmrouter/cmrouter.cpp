@@ -2819,7 +2819,26 @@ Tile * CMRouter::insertTile(Plane * thePlane, TileRect & tileRect, QList<Tile *>
 		if (alreadyTiled.count() > 0) {	
 			switch(overlapType) {
 				case CMRouter::ReportAllOverlaps:
-					gotOverlap = true;
+					{
+						gotOverlap = true;
+						ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
+						if (connectorItem != NULL) {
+							bool samePart = true;
+							foreach (Tile * overlappingTile, alreadyTiled) {
+								ConnectorItem * overlappingConnectorItem = dynamic_cast<ConnectorItem *>(TiGetBody(overlappingTile)); 
+								if (overlappingConnectorItem == NULL) {
+									samePart = false;
+									break;
+								}
+								if (overlappingConnectorItem->attachedTo()->layerKinChief() != connectorItem->attachedTo()->layerKinChief()) {
+									samePart = false;
+									break;
+								}
+							}
+							gotOverlap = !samePart;
+						}
+						doClip = !gotOverlap;
+					}
 					break;
 				case CMRouter::ClipAllOverlaps:
 					doClip = overlapsOnly(item, alreadyTiled);
