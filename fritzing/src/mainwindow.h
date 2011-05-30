@@ -409,6 +409,7 @@ protected:
 	void routingStatusLabelMouse(QMouseEvent*, bool show);
 	class Wire * retrieveWire();
 	void updatePartsBinMenu(QMenu * partsBinMenu, QMenu * binMenu, int skip);
+	QString getBomProps(ItemBase *);
 
 
 protected:

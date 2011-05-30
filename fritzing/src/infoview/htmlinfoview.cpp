@@ -676,65 +676,16 @@ void HtmlInfoView::displayProps(ModelPart * modelPart, ItemBase * itemBase, bool
 		DebugDialog::debug(QString("repeat possible %1").arg(repeatPossible));
 	}
 
-	QStringList keys;
-	QHash<QString, QString> properties;
-	QString family;
-	QString partNumber;
-	if (modelPart) {
-		properties = modelPart->properties();
-		family = properties.value("family", "").toLower();
-		if (itemBase) {
-			itemBase->prepareProps();
-		}
-
-		// ensure family is first;
-		keys = properties.keys();
-		keys.removeOne("family");
-		keys.push_front("family");
-
-		// ensure part number  is last
-		partNumber = properties.value(ModelPartShared::PartNumberPropertyName, "").toLower();
-		keys.removeOne(ModelPartShared::PartNumberPropertyName);
-		
-#ifndef QT_NO_DEBUG
-		properties.insert("id", QString("%1 %2 %3")
-			.arg(itemBase ? QString::number(itemBase->id()) : "")
-			.arg(modelPart->moduleID())
-			.arg(itemBase ? ViewLayer::viewLayerNameFromID(itemBase->viewLayerID()) : "")
-		);
-		keys.insert(1, "id");
-
-		int insertAt = 2;
-
-		if (itemBase) {
-			PaletteItemBase * paletteItemBase = qobject_cast<PaletteItemBase *>(itemBase);
-			if (paletteItemBase != NULL) {
-				properties.insert("svg", paletteItemBase->filename());
-				keys.insert(insertAt++, "svg");
-			}
-		}
-		else {
-			FSvgRenderer * renderer = FSvgRenderer::getByModuleID(modelPart->moduleID(), ViewLayer::Icon);
-			if (renderer != NULL) {
-				properties.insert("svg", renderer->filename());
-				keys.insert(insertAt++, "svg");
-			}
-		}
-		if (modelPart->modelPartShared()) {
-			properties.insert("fzp",  modelPart->path());
-			keys.insert(insertAt++, "fzp");
-		}	
+	bool wantDebug = false;
+#ifndef QT_NODEBUG
+	wantDebug = true;
 #endif
 
-	}
-
-	// ensure part number is last
-	if (itemBase != NULL && itemBase->hasPartNumberProperty()) {
-		keys.append(ModelPartShared::PartNumberPropertyName);
-	}
+	QHash<QString, QString> properties = getPartProperties(modelPart, itemBase, wantDebug);
+	QString family = properties.value("family", "");
 
 	int ix = 0;
-	foreach(QString key, keys) {
+	foreach(QString key, properties.keys()) {
 		if (ix >= m_propThings.count()) {
 			//DebugDialog::debug(QString("new prop thing %1").arg(ix));
 			PropThing * propThing = new PropThing;
@@ -933,4 +884,65 @@ void HtmlInfoView::setUpLocation(ItemBase * itemBase) {
 
 void HtmlInfoView::updateLocation() {
 	setUpLocation(m_currentItem);
+}
+
+QHash<QString, QString> HtmlInfoView::getPartProperties(ModelPart * modelPart, ItemBase * itemBase, bool wantDebug) 
+{
+	QStringList keys;
+	QHash<QString, QString> properties;
+	QString family;
+	QString partNumber;
+	if (modelPart) {
+		properties = modelPart->properties();
+		family = properties.value("family", "").toLower();
+		if (itemBase) {
+			itemBase->prepareProps();
+		}
+
+		// ensure family is first;
+		keys = properties.keys();
+		keys.removeOne("family");
+		keys.push_front("family");
+
+		// ensure part number  is last
+		partNumber = properties.value(ModelPartShared::PartNumberPropertyName, "").toLower();
+		keys.removeOne(ModelPartShared::PartNumberPropertyName);
+		
+		if (wantDebug) {
+			properties.insert("id", QString("%1 %2 %3")
+				.arg(itemBase ? QString::number(itemBase->id()) : "")
+				.arg(modelPart->moduleID())
+				.arg(itemBase ? ViewLayer::viewLayerNameFromID(itemBase->viewLayerID()) : "")
+			);
+			keys.insert(1, "id");
+
+			int insertAt = 2;
+
+			if (itemBase) {
+				PaletteItemBase * paletteItemBase = qobject_cast<PaletteItemBase *>(itemBase);
+				if (paletteItemBase != NULL) {
+					properties.insert("svg", paletteItemBase->filename());
+					keys.insert(insertAt++, "svg");
+				}
+			}
+			else {
+				FSvgRenderer * renderer = FSvgRenderer::getByModuleID(modelPart->moduleID(), ViewLayer::Icon);
+				if (renderer != NULL) {
+					properties.insert("svg", renderer->filename());
+					keys.insert(insertAt++, "svg");
+				}
+			}
+			if (modelPart->modelPartShared()) {
+				properties.insert("fzp",  modelPart->path());
+				keys.insert(insertAt++, "fzp");
+			}	
+		}
+	}
+
+	// ensure part number is last
+	if (itemBase != NULL && itemBase->hasPartNumberProperty()) {
+		keys.append(ModelPartShared::PartNumberPropertyName);
+	}
+
+	return properties;
 }

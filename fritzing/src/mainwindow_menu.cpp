@@ -77,7 +77,7 @@ static QString psActionType = ".ps";
 static QString pdfActionType = ".pdf";
 static QString pngActionType = ".png";
 static QString svgActionType = ".svg";
-static QString bomActionType = ".txt";
+static QString bomActionType = ".html";
 static QString netlistActionType = ".xml";
 
 static QHash<QString, QPrinter::OutputFormat> filePrintFormats;
@@ -130,7 +130,7 @@ void MainWindow::initNames()
 	fileExtFormats[pngActionType] = tr("PNG Image (*.png)");
 	fileExtFormats[jpgActionType] = tr("JPEG Image (*.jpg)");
 	fileExtFormats[svgActionType] = tr("SVG Image (*.svg)");
-	fileExtFormats[bomActionType] = tr("BoM Text File (*.txt)");
+	fileExtFormats[bomActionType] = tr("BoM Text File (*.html)");
 
 	QSettings settings;
 	AutosaveEnabled = settings.value("autosaveEnabled", QString("%1").arg(AutosaveEnabled)).toBool();
@@ -2836,58 +2836,82 @@ void MainWindow::exportSvgWatermark(QString & svg, qreal res)
 }
 
 void MainWindow::exportBOM() {
-    QList <ItemBase*> partList;
-    QMap<QString, int> shoppingList;
-
-    int maxLabelWidth = 0;
-
-    QString bom = tr("Fritzing Bill of Materials\n\n");
-
-    bom += tr("Sketch: \t") + QFileInfo(m_fileName).fileName() + "\n";
-    //TODO:  add the Author ID - system specific crap
-    //bom += tr("Printed by: ") +
-
-    bom += tr("Date: \t") + QDateTime::currentDateTime().toString() + "\n\n";
 
     // bail out if something is wrong
     // TODO: show an error in QMessageBox
-    if(m_currentWidget == NULL) {
+	if (m_currentWidget == NULL) {
         return;
     }
 
-    m_currentGraphicsView->collectParts(partList);
+	QString bomTemplate;
+	QFile file(":/resources/templates/bom.html");
+	if (file.open(QFile::ReadOnly)) {
+		bomTemplate = file.readAll();
+		file.close();
+	}
+	else {
+		return;
+	}
+
+	QString bomRowTemplate;
+	QFile file2(":/resources/templates/bom_row.html");
+	if (file2.open(QFile::ReadOnly)) {
+		bomRowTemplate = file2.readAll();
+		file2.close();
+	}
+	else {
+		return;
+	}
+
+    QList <ItemBase*> partList;
+    QMap<QString, int> shoppingList;
+	QHash<QString, ItemBase *> descrs;
+
+	m_currentGraphicsView->collectParts(partList);
 
     qSort(partList.begin(), partList.end(), sortPartList);
 
-    for(int i=0; i < partList.size(); i++){
-        QString label = partList.at(i)->instanceTitle();
-        QString desc = partList.at(i)->title();
-        if(label.length() > maxLabelWidth) {
-            maxLabelWidth = label.length();
-        }
-        if(!shoppingList.contains(desc)){
+	foreach (ItemBase * itemBase, partList) {
+		if (itemBase->itemType() != ModelPart::Part) continue;
+
+        QString label = itemBase->instanceTitle();
+        QString desc = itemBase->title();
+
+        if(!shoppingList.contains(desc)) {
             shoppingList.insert(desc, 1);
+			descrs.insert(desc, itemBase);
         }
         else {
             shoppingList[desc]++;
         }
     }
 
-    for(int i=0; i < partList.size(); i++){
-        QString spacer = "   ";
-        QString label = partList.at(i)->instanceTitle();
 
-        spacer += QString(maxLabelWidth - label.length(), QChar(' '));
-        bom += label + spacer +
-               partList.at(i)->title() + "\n";
+	QString assemblyString;
+	foreach (ItemBase * itemBase, partList) {
+		if (itemBase->itemType() != ModelPart::Part) continue;
+
+		assemblyString += bomRowTemplate.arg(itemBase->instanceTitle()).arg(itemBase->title()).arg(getBomProps(itemBase));
     }
 
-    bom += tr("\n\nShopping List\n\nQuantity\tPart\n\n");
+	QString shoppingListString;
     QMapIterator<QString, int> it(shoppingList);
     while (it.hasNext()) {
         it.next();
-        bom += QString::number(it.value()) + "\t\t" + it.key() + "\n";
+		ItemBase * itemBase = descrs.value(it.key());
+
+		shoppingListString += bomRowTemplate.arg(it.value()).arg(it.key()).arg(getBomProps(itemBase));
     }
+
+	QString bom = bomTemplate
+		.arg("Fritzing Bill of Materials")
+		.arg(QFileInfo(m_fileName).fileName())
+		.arg(m_fileName)
+		.arg(QDateTime::currentDateTime().toString("dddd, MMMM d yyyy, hh:mm:ss"))
+		.arg(assemblyString)
+		.arg(shoppingListString)
+		.arg(QString("%1.%2.%3").arg(Version::majorVersion()).arg(Version::minorVersion()).arg(Version::minorSubVersion()));
+
 
     QString path = defaultSaveFolder();
 
@@ -2904,7 +2928,7 @@ void MainWindow::exportBOM() {
     );
 
     if (fileName.isEmpty()) {
-            return; //Cancel pressed
+		return; //Cancel pressed
     }
 
 	FileProgressDialog * fileProgressDialog = exportProgress();
@@ -2913,10 +2937,16 @@ void MainWindow::exportBOM() {
 		fileName += bomActionType;
     }
 
-    QFile fp( fileName );
-    fp.open(QIODevice::WriteOnly);
-    fp.write(bom.toUtf8(),bom.length());
-    fp.close();
+    QFile fp(fileName);
+   	if (fp.open(QIODevice::WriteOnly)) {
+   		QTextStream out(&fp);
+		out.setCodec("UTF-8");
+   		out << bom;
+		fp.close();
+	}
+	else {
+		QMessageBox::warning(this, tr("Fritzing"), tr("Unable to save BOM file, but the text is on the clipboard."));
+	}
 
 	QClipboard *clipboard = QApplication::clipboard();
 	if (clipboard != NULL) {
@@ -4122,3 +4152,27 @@ void MainWindow::autorouterSettings() {
 	m_pcbGraphicsView->autorouterSettings();
 }
 
+QString MainWindow::getBomProps(ItemBase * itemBase)
+{
+	if (itemBase == NULL) return "";
+
+	QHash<QString, QString> properties = HtmlInfoView::getPartProperties(itemBase->modelPart(), itemBase, false);
+	QString pString;
+	foreach (QString key, properties.keys()) {
+		if (key.compare("family") == 0) continue;
+
+		QString value = properties.value(key);
+
+		QWidget widget;
+		QWidget * resultWidget = NULL;
+		QString resultKey, resultValue;
+		itemBase->collectExtraInfo(&widget, properties.value("family"), key, value, false, resultKey, resultValue, resultWidget);
+		if (resultValue.isEmpty()) continue;
+
+		pString += ItemBase::translatePropertyName(resultKey) + " " + resultValue + "; ";
+	}
+
+	if (pString.length() > 2) pString.chop(2);
+
+	return pString;
+}

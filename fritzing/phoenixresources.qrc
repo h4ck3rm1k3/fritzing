@@ -213,12 +213,14 @@
         <file>resources/templates/resizableBoard_silkscreenLayerTemplate.txt</file>
         <file>resources/templates/resizableBoard_fzpTemplate.txt</file>
         <file>resources/templates/resistor_breadboardLayerTemplate.txt</file>
-        <file>resources/images/splitterHandle.png</file>
+	<file>resources/templates/bom.html</file>
+	<file>resources/templates/bom_row.html</file>
         <file>resources/bins/search.fzb</file>
         <file>resources/images/icons/searchField.png</file>
 	<file>resources/images/icons/noicon.png</file>
 	<file>resources/images/icons/parts_plural_v3_plur.png</file>
 	<file>resources/images/icons/parts_plural_v3_sing.png</file>
 	<file>resources/images/icons/asterisk.png</file>	
-   </qresource>
+        <file>resources/images/splitterHandle.png</file>
+    </qresource>
 </RCC>
