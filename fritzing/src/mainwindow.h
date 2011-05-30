@@ -205,6 +205,7 @@ protected slots:
 	void updateItemMenu();
 
 	void autoroute();
+	void orderFab();
 	void activeLayerTop();
 	void activeLayerBottom();
 	void activeLayerBoth();
@@ -366,6 +367,7 @@ protected:
 	SketchToolButton *createShareButton(SketchAreaWidget *parent);
 	SketchToolButton *createFlipButton(SketchAreaWidget *parent);
 	SketchToolButton *createAutorouteButton(SketchAreaWidget *parent);
+	SketchToolButton *createOrderButton(SketchAreaWidget *parent);
 	QWidget *createActiveLayerButton(SketchAreaWidget *parent);
 	class ExpandingLabel * createRoutingStatusLabel(SketchAreaWidget *);
 	SketchToolButton *createExportEtchableButton(SketchAreaWidget *parent);
@@ -594,6 +596,7 @@ protected:
 	QMenu *m_pcbTraceMenu;
 	QMenu *m_schematicTraceMenu;
 	QAction *m_autorouteAct;
+	QAction *m_orderFabAct;
 	QAction *m_activeLayerTopAct;
 	QAction *m_activeLayerBottomAct;
 	QAction *m_activeLayerBothAct;

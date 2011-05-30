@@ -1783,6 +1783,7 @@ void MainWindow::createMenus()
 	m_pcbTraceMenu->addAction(m_autorouteAct);
 	m_pcbTraceMenu->addAction(m_designRulesCheckAct);
 	m_pcbTraceMenu->addAction(m_autorouterSettingsAct);
+	m_pcbTraceMenu->addAction(m_orderFabAct);
 	m_pcbTraceMenu->addSeparator();
 
 	m_pcbTraceMenu->addAction(m_groundFillAct);
@@ -2322,6 +2323,7 @@ void MainWindow::updateTraceMenu() {
 	m_excludeFromAutorouteAct->setChecked(exChecked);
 	m_changeTraceLayerAct->setEnabled(ctlEnabled);
 	m_autorouteAct->setEnabled(arEnabled);
+	m_orderFabAct->setEnabled(arEnabled);
 	m_exportEtchablePdfAct->setEnabled(true);
 	m_exportEtchablePdfFlipAct->setEnabled(true);
 	m_exportEtchableSvgAct->setEnabled(true);
@@ -2948,6 +2950,10 @@ void MainWindow::exportBOM() {
 		QMessageBox::warning(this, tr("Fritzing"), tr("Unable to save BOM file, but the text is on the clipboard."));
 	}
 
+	if (fp.exists()) {
+		QDesktopServices::openUrl(QString("file:///%1").arg(fileName));
+	}
+
 	QClipboard *clipboard = QApplication::clipboard();
 	if (clipboard != NULL) {
 		clipboard->setText(bom);
@@ -3072,6 +3078,10 @@ void MainWindow::createTraceMenuActions() {
 	m_autorouteAct = new QAction(tr("&Autoroute"), this);
 	m_autorouteAct->setStatusTip(tr("Autoroute..."));
 	connect(m_autorouteAct, SIGNAL(triggered()), this, SLOT(autoroute()));
+
+	m_orderFabAct = new QAction(tr("Order from Fritzing Fab"), this);
+	m_autorouteAct->setStatusTip(tr("Order from Fritzing Fab..."));
+	connect(m_orderFabAct, SIGNAL(triggered()), this, SLOT(orderFab()));
 
 	m_activeLayerBothAct = new QAction(tr("Set both copper layers clickable"), this);
 	m_activeLayerBothAct->setStatusTip(tr("Set both copper layers clickable"));
@@ -4175,4 +4185,12 @@ QString MainWindow::getBomProps(ItemBase * itemBase)
 	if (pString.length() > 2) pString.chop(2);
 
 	return pString;
+}
+
+
+void MainWindow::orderFab() 
+{
+	// TODO: some kind of checking
+
+	QDesktopServices::openUrl(QString("http://fritzing.org/shop/donations/"));
 }

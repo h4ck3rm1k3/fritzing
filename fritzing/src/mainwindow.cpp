@@ -637,6 +637,13 @@ SketchToolButton *MainWindow::createAutorouteButton(SketchAreaWidget *parent) {
 	return autorouteButton;
 }
 
+SketchToolButton *MainWindow::createOrderButton(SketchAreaWidget *parent) {
+	SketchToolButton *orderButton = new SketchToolButton("Order",parent, m_orderFabAct);
+	orderButton->setText(tr("Order"));
+
+	return orderButton;
+}
+
 QWidget *MainWindow::createActiveLayerButton(SketchAreaWidget *parent) 
 {
 	QList<QAction *> actions;
@@ -708,7 +715,10 @@ QList<QWidget*> MainWindow::getButtonsForView(ViewIdentifierClass::ViewIdentifie
 		case ViewIdentifierClass::PCBView:
 			retval << SketchAreaWidget::separator(parent) 
 				<< createActiveLayerButton(parent) 
-				<< createAutorouteButton(parent) << createExportEtchableButton(parent) << createRoutingStatusLabel(parent);
+				<< createAutorouteButton(parent) 
+				<< createExportEtchableButton(parent) 
+				<< createOrderButton(parent) 
+				<< createRoutingStatusLabel(parent);
 			break;
 		default:
 			break;
