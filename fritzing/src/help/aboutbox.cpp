@@ -66,13 +66,22 @@ AboutBox::AboutBox(QWidget *parent)
 
 	// Version String
 	QLabel *versionMain = new QLabel(this);
-	versionMain->setText(tr("Version %1.%2.%3 <small>(%4%5 %6)</small>")
+	QString macBuildType;
+#ifdef Q_WS_MAC
+#ifdef QT_MAC_USE_COCOA
+	macBuildType = " Cocoa";
+#else
+	macBuildType = " Carbon";
+#endif
+#endif
+	versionMain->setText(tr("Version %1.%2.%3 <small>(%4%5 %6)%7</small>")
 						 .arg(Version::majorVersion())
 						 .arg(Version::minorVersion())
 						 .arg(Version::minorSubVersion())
 						 .arg(Version::modifier())
 						 .arg(Version::revision())
-						 .arg(Version::date()) );
+						 .arg(Version::date())
+						 .arg(macBuildType));
 	versionMain->setFont(smallFont);
 	versionMain->setGeometry(45, 150, 300, 20);
 	versionMain->setAlignment(Qt::AlignBottom | Qt::AlignHCenter);

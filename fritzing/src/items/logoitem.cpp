@@ -47,6 +47,8 @@ $Date$
 
 static QStringList ImageNames;
 static QStringList NewImageNames;
+static QStringList CopperImageNames;
+static QStringList NewCopperImageNames;
 
 LogoItem::LogoItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: ResizableBoard(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
@@ -107,7 +109,7 @@ void LogoItem::addedToScene()
 
 QString LogoItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi)
 {
-	if (viewLayerID == ViewLayer::Silkscreen1) {
+	if (viewLayerID == layer() ) {
 		QString svg = modelPart()->prop("shape").toString();
 		if (!svg.isEmpty()) {
 			QString xmlName = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
@@ -398,7 +400,7 @@ void LogoItem::loadImage(const QString & fileName, bool addName)
 
 		QStringList exceptions;
 		exceptions << "none" << "";
-		QString toColor("#ffffff");
+		QString toColor(colorString());
 		SvgFileSplitter::changeColors(root, toColor, exceptions);
 
 		bool isIllustrator = TextUtils::isIllustratorDoc(domDocument);
@@ -424,7 +426,7 @@ void LogoItem::loadImage(const QString & fileName, bool addName)
 		}
 
 		QDomElement topG = domDocument.createElement("g");
-		topG.setAttribute("id", "silkscreen");
+		topG.setAttribute("id", layerName());
 		root.appendChild(topG);
 		foreach (QDomNode node, rootChildren) {
 			topG.appendChild(node);
@@ -445,7 +447,7 @@ void LogoItem::loadImage(const QString & fileName, bool addName)
 
 		GroundPlaneGenerator gpg;
 		qreal res = image.dotsPerMeterX() / GraphicsUtils::InchesPerMeter;
-		gpg.scanImage(image, image.width(), image.height(), 1, res, "#ffffff", "silkscreen", false, 1);
+		gpg.scanImage(image, image.width(), image.height(), 1, res, colorString(), layerName(), false, 1);
 		QStringList newSvgs = gpg.newSVGs();
 		if (newSvgs.count() < 1) {
 			QMessageBox::information(
@@ -458,7 +460,7 @@ void LogoItem::loadImage(const QString & fileName, bool addName)
 
 		QDomDocument doc;
 		foreach (QString newSvg, newSvgs) {
-			TextUtils::mergeSvg(doc, newSvg, "silkscreen");
+			TextUtils::mergeSvg(doc, newSvg, layerName());
 		}
 		svg = TextUtils::mergeSvgFinish(doc);
 	}
@@ -756,3 +758,43 @@ ItemBase::PluralType LogoItem::isPlural() {
 	return Singular;
 }
 
+ViewLayer::ViewLayerID LogoItem::layer() {
+	return  ViewLayer::Silkscreen1;
+}
+
+QString LogoItem::colorString() {
+	return ViewLayer::Silkscreen1Color;
+}
+
+QString LogoItem::layerName() 
+{
+	return ViewLayer::viewLayerXmlNameFromID(layer());
+}
+
+///////////////////////////////////////////////////////////////////////
+
+CopperLogoItem::CopperLogoItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
+	: LogoItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
+{
+	if (CopperImageNames.count() == 0) {
+		// CopperImageNames << "Made with Fritzing" << "Fritzing icon" << "OHANDA logo" << "OSHW logo";
+	}
+
+	m_hasLogo = (modelPart->moduleID() == ModuleIDNames::CopperLogoTextModuleIDName);
+	m_logo = modelPart->prop("logo").toString();
+	if (m_hasLogo && m_logo.isEmpty()) {
+		m_logo = modelPart->properties().value("logo", "copperlogo");
+		modelPart->setProp("logo", m_logo);
+	}
+}
+
+CopperLogoItem::~CopperLogoItem() {
+}
+
+ViewLayer::ViewLayerID CopperLogoItem::layer() {
+	return  ViewLayer::Copper1;
+}
+
+QString CopperLogoItem::colorString() {
+	return ViewLayer::Copper1Color;
+}

@@ -602,7 +602,7 @@ bool ResizableBoard::collectExtraInfo(QWidget * parent, const QString & family, 
 			l2->setMargin(0);
 			l2->setObjectName("infoViewLabel");		
 
-			vboxLayout->addWidget(qobject_cast<QWidget *>(returnWidget));
+			if (returnWidget) vboxLayout->addWidget(qobject_cast<QWidget *>(returnWidget));
 			vboxLayout->addWidget(l1);
 			vboxLayout->addWidget(l2);
 

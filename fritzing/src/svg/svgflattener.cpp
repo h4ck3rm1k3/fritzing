@@ -52,11 +52,11 @@ void SvgFlattener::flattenChildren(QDomElement &element){
 		QList<qreal> params = TextUtils::getTransformFloats(element);
 		if(params.size() > 1) {
             shiftChild(element, params.at(0), params.at(1), false);
-			DebugDialog::debug(QString("translating %1 %2").arg(params.at(0)).arg(params.at(1)));
+			//DebugDialog::debug(QString("translating %1 %2").arg(params.at(0)).arg(params.at(1)));
 		}
 		else {
             shiftChild(element, params.at(0), 0, false);
-			DebugDialog::debug(QString("translating %1").arg(params.at(0)));
+			//DebugDialog::debug(QString("translating %1").arg(params.at(0)));
 		}
     }
     //do rotate
@@ -64,7 +64,7 @@ void SvgFlattener::flattenChildren(QDomElement &element){
 		QList<qreal> params = TextUtils::getTransformFloats(element);
         QMatrix transform = QMatrix(params.at(0), params.at(1), params.at(2), params.at(3), params.at(4), params.at(5));
 
-        DebugDialog::debug(QString("rotating %1 %2 %3 %4 %5 %6").arg(params.at(0)).arg(params.at(1)).arg(params.at(2)).arg(params.at(3)).arg(params.at(4)).arg(params.at(5)));
+        //DebugDialog::debug(QString("rotating %1 %2 %3 %4 %5 %6").arg(params.at(0)).arg(params.at(1)).arg(params.at(2)).arg(params.at(3)).arg(params.at(4)).arg(params.at(5)));
         unRotateChild(element, transform);
     }
 

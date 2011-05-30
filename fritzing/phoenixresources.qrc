@@ -38,6 +38,7 @@
         <file>resources/parts/core/rectangle_pcb_two_layers.fzp</file>
         <file>resources/parts/core/logotext.fzp</file>
         <file>resources/parts/core/logoimage.fzp</file>
+        <file>resources/parts/core/copperlogotext.fzp</file>
         <file>resources/parts/svg/core/icon/wireicon.svg</file>
         <file>resources/parts/svg/core/icon/rulericon.svg</file>
         <file>resources/parts/svg/core/icon/rectangle_pcb.svg</file>
@@ -45,12 +46,14 @@
         <file>resources/parts/svg/core/breadboard/wire.svg</file>
         <file>resources/parts/svg/core/pcb/rectangle_pcb.svg</file>
         <file>resources/parts/svg/core/pcb/logo.svg</file>
+        <file>resources/parts/svg/core/pcb/copperlogo.svg</file>
         <file>resources/parts/core/ground.fzp</file>
         <file>resources/parts/svg/core/schematic/ground.svg</file>
         <file>resources/parts/svg/core/schematic/cell.svg</file>
         <file>resources/parts/svg/core/schematic/power.svg</file>
         <file>resources/parts/svg/core/icon/silkscreen_logo.svg</file>
-        <file>resources/parts/svg/core/icon/silkscreen_text.svg</file>
+        <file>resources/parts/svg/core/icon/silkscreen_text.svg</file>        
+	<file>resources/parts/svg/core/icon/copper_text.svg</file>
         <file>resources/parts/svg/core/icon/ground.svg</file>
         <file>resources/parts/svg/core/icon/cell.svg</file>
         <file>resources/parts/svg/core/icon/power.svg</file>

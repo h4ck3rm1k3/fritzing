@@ -476,6 +476,12 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastL
 	else if (moduleID.compare(ModuleIDNames::LogoTextModuleIDName) == 0) {
 		type = ModelPart::Logo;
 	}
+	else if (moduleID.compare(ModuleIDNames::CopperLogoImageModuleIDName) == 0) {
+		type = ModelPart::Logo;
+	}
+	else if (moduleID.compare(ModuleIDNames::CopperLogoTextModuleIDName) == 0) {
+		type = ModelPart::Logo;
+	}
 	else if (moduleID.compare(ModuleIDNames::GroundPlaneModuleIDName) == 0) {
 		type = ModelPart::CopperFill;
 	}

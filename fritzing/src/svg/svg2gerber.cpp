@@ -180,7 +180,7 @@ void SVG2gerber::convertShapes2paths(QDomNode node){
         QDomElement element = node.toElement();
         QDomElement path;
 
-        DebugDialog::debug("converting child to path: " + tag);
+        //DebugDialog::debug("converting child to path: " + tag);
 
         if(tag=="polygon"){
             path = element;
@@ -216,7 +216,7 @@ void SVG2gerber::convertShapes2paths(QDomNode node){
     // recurse the children
     QDomNodeList tagList = node.childNodes();
 
-    DebugDialog::debug("child nodes: " + QString::number(tagList.length()));
+    //DebugDialog::debug("child nodes: " + QString::number(tagList.length()));
     for(uint i = 0; i < tagList.length(); i++){
         convertShapes2paths(tagList.item(i));
     }
@@ -256,25 +256,25 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
     //  3. draw it at the correct path/location
 
     QDomNodeList circleList = m_SVGDom.elementsByTagName("circle");
-    DebugDialog::debug("circles to gerber: " + QString::number(circleList.length()));
+    //DebugDialog::debug("circles to gerber: " + QString::number(circleList.length()));
 
     QDomNodeList rectList = m_SVGDom.elementsByTagName("rect");
-    DebugDialog::debug("rects to gerber: " + QString::number(rectList.length()));
+    //DebugDialog::debug("rects to gerber: " + QString::number(rectList.length()));
 
     QDomNodeList polyList = m_SVGDom.elementsByTagName("polygon");
-    DebugDialog::debug("polygons to gerber: " + QString::number(polyList.length()));
+    //DebugDialog::debug("polygons to gerber: " + QString::number(polyList.length()));
 
 	QDomNodeList lineList = m_SVGDom.elementsByTagName("line");
-    DebugDialog::debug("lines to gerber: " + QString::number(lineList.length()));
+    //DebugDialog::debug("lines to gerber: " + QString::number(lineList.length()));
 
 	QDomNodeList pathList = m_SVGDom.elementsByTagName("path");
-    DebugDialog::debug("paths to gerber: " + QString::number(pathList.length()));
+    //DebugDialog::debug("paths to gerber: " + QString::number(pathList.length()));
 
 	int totalCount = circleList.count() + rectList.count() + polyList.count() + lineList.count() + pathList.count();
 
     // if this is the board outline, use it as the contour
     if (forOutline) {
-        DebugDialog::debug("drawing board outline");
+        //DebugDialog::debug("drawing board outline");
 
         // switch aperture to the only one used for contour: note this is the last one on the list: the aperture is added at the end of this function
         m_gerber_paths += "G54D10*\n";
@@ -599,7 +599,7 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
 
         m_gerber_paths += pathUserData.string;
 
-        DebugDialog::debug("path id: " + path.attribute("id"));
+        //DebugDialog::debug("path id: " + path.attribute("id"));
 
         // stop poly fill if this is actually a filled in shape
         if(!forOutline && path.hasAttribute("fill") && !(path.hasAttribute("stroke"))){

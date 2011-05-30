@@ -622,6 +622,13 @@
           </iconView>
         </views>
       </instance>
+      <instance moduleIdRef="CopperLogoTextModuleID" modelIndex="56" path=":/resources/parts/core/copperlogotext.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"/>
+          </iconView>
+        </views>
+      </instance>
       <instance moduleIdRef="HoleModuleID" modelIndex="58" path=":/resources/parts/core/hole.fzp">
         <views>
           <iconView layer="icon">

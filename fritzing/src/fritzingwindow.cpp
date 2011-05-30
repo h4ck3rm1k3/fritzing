@@ -42,7 +42,7 @@ $Date$
 
 #include "utils/fileprogressdialog.h"
 
-const QString FritzingWindow::QtFunkyPlaceholder("[*]");  // this is some weird hack Qt uses in window titles as a placeholder to setr the modified state
+const QString FritzingWindow::QtFunkyPlaceholder = QLatin1String("[*]");  // this is some weird hack Qt uses in window titles as a placeholder to setr the modified state
 QString FritzingWindow::ReadOnlyPlaceholder(" [READ-ONLY] ");
 static QString ___fritzingTitle___;
 QStringList FritzingWindow::OtherKnownExtensions;

@@ -74,6 +74,9 @@ protected:
 	void unableToLoad(const QString & fileName);
 	void prepLoadImageAux(const QString & fileName, bool addName);
 	void setFileNameItems();
+	virtual ViewLayer::ViewLayerID layer();
+	virtual QString colorString();
+	virtual QString layerName();
 
 protected:
 	QString m_logo;
@@ -81,6 +84,21 @@ protected:
 	QString m_originalFilename;
 	QCheckBox * m_aspectRatioCheck;
 	QComboBox * m_fileNameComboBox;
+};
+
+class CopperLogoItem : public LogoItem
+{
+Q_OBJECT
+	
+public:
+	// after calling this constructor if you want to render the loaded svg (either from model or from file), MUST call <renderImage>
+	CopperLogoItem(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel);
+	~CopperLogoItem();
+
+protected:
+	ViewLayer::ViewLayerID layer();
+	QString colorString();
+
 };
 
 #endif

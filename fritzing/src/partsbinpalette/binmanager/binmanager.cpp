@@ -280,6 +280,15 @@ void BinManager::load(const QString& filename) {
 
 
 void BinManager::setDirtyTab(PartsBinPaletteWidget* w, bool dirty) {
+	/*
+	if (!w->windowTitle().contains(FritzingWindow::QtFunkyPlaceholder)) {
+		// trying to deal with the warning in QWidget::setWindowModified
+		// but setting the title here doesn't work
+		QString t = w->windowTitle();
+		if (t.isEmpty()) t = " ";
+		w->setWindowTitle(t);
+	}
+	*/
 	w->setWindowModified(dirty);
 	QTabWidget* tw = m_tabWidgets[w];
 	if(tw) {
