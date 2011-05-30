@@ -57,8 +57,8 @@ public:
 	TraceWire::WireDirection wireDirection();
 
 public:
-	static const int TraceWire::MinTraceWidthMils;
-	static const int TraceWire::MaxTraceWidthMils;
+	static const int MinTraceWidthMils;
+	static const int MaxTraceWidthMils;
 
 
 protected:
