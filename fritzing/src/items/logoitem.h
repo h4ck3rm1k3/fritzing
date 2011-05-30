@@ -77,6 +77,8 @@ protected:
 	virtual ViewLayer::ViewLayerID layer();
 	virtual QString colorString();
 	virtual QString layerName();
+	virtual QStringList & getImageNames();
+	virtual QStringList & getNewImageNames();
 
 protected:
 	QString m_logo;
@@ -98,6 +100,8 @@ public:
 protected:
 	ViewLayer::ViewLayerID layer();
 	QString colorString();
+	QStringList & getImageNames();
+	QStringList & getNewImageNames();
 
 };
 

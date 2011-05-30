@@ -54,7 +54,7 @@ LogoItem::LogoItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier v
 	: ResizableBoard(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
 	if (ImageNames.count() == 0) {
-                ImageNames << "Made with Fritzing" << "Fritzing icon" << "OHANDA logo" << "OSHW logo";
+		ImageNames << "Made with Fritzing" << "Fritzing icon" << "OHANDA logo" << "OSHW logo";
 	}
 
 	m_fileNameComboBox = NULL;
@@ -337,8 +337,8 @@ void LogoItem::reloadImage(const QString & svg, const QSizeF & aspectRatio, cons
 		modelPart()->setProp("logo", "");
 		modelPart()->setProp("lastfilename", fileName);
 		if (addName) {
-			if (!NewImageNames.contains(fileName, Qt::CaseInsensitive)) {
-				NewImageNames.append(fileName);
+			if (!getNewImageNames().contains(fileName, Qt::CaseInsensitive)) {
+				getNewImageNames().append(fileName);
 				bool wasBlocked = m_fileNameComboBox->blockSignals(true);
 				while (m_fileNameComboBox->count() > 0) {
 					m_fileNameComboBox->removeItem(0);
@@ -715,7 +715,7 @@ void LogoItem::keepAspectRatio(bool checkState) {
 }
 
 void LogoItem::fileNameEntry(const QString & filename) {
-	foreach (QString name, ImageNames) {
+	foreach (QString name, getImageNames()) {
 		if (filename.compare(name) == 0) {
 			QString f = FolderUtils::getApplicationSubFolderPath("parts") + "/svg/core/pcb/" + filename + ".svg";
 			return prepLoadImageAux(f, false);
@@ -729,11 +729,11 @@ void LogoItem::fileNameEntry(const QString & filename) {
 void LogoItem::setFileNameItems() {
 	if (m_fileNameComboBox == NULL) return;
 
-	m_fileNameComboBox->addItems(ImageNames);
-	m_fileNameComboBox->addItems(NewImageNames);
+	m_fileNameComboBox->addItems(getImageNames());
+	m_fileNameComboBox->addItems(getNewImageNames());
 
 	int ix = 0;
-	foreach (QString name, ImageNames) {
+	foreach (QString name, getImageNames()) {
 		if (modelPart()->prop("lastfilename").toString().contains(name)) {
 			m_fileNameComboBox->setCurrentIndex(ix);
 			return;
@@ -741,7 +741,7 @@ void LogoItem::setFileNameItems() {
 		ix++;
 	}
 
-	foreach (QString name, NewImageNames) {
+	foreach (QString name, getNewImageNames()) {
 		if (modelPart()->prop("lastfilename").toString().contains(name)) {
 			m_fileNameComboBox->setCurrentIndex(ix);
 			return;
@@ -771,13 +771,21 @@ QString LogoItem::layerName()
 	return ViewLayer::viewLayerXmlNameFromID(layer());
 }
 
+QStringList & LogoItem::getImageNames() {
+	return ImageNames;
+}
+
+QStringList & LogoItem::getNewImageNames() {
+	return NewImageNames;
+}
+
 ///////////////////////////////////////////////////////////////////////
 
 CopperLogoItem::CopperLogoItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: LogoItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
 	if (CopperImageNames.count() == 0) {
-		// CopperImageNames << "Made with Fritzing" << "Fritzing icon" << "OHANDA logo" << "OSHW logo";
+		CopperImageNames << "Fritzing icon copper";
 	}
 
 	m_hasLogo = (modelPart->moduleID() == ModuleIDNames::CopperLogoTextModuleIDName);
@@ -797,4 +805,12 @@ ViewLayer::ViewLayerID CopperLogoItem::layer() {
 
 QString CopperLogoItem::colorString() {
 	return ViewLayer::Copper1Color;
+}
+
+QStringList & CopperLogoItem::getImageNames() {
+	return CopperImageNames;
+}
+
+QStringList & CopperLogoItem::getNewImageNames() {
+	return NewCopperImageNames;
 }
