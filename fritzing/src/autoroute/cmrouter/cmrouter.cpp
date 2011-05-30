@@ -4285,7 +4285,6 @@ void CMRouter::fixWidths()
 	}
 
 	if (minDim < StandardWireWidth) {
-		int mils = qMax((int) GraphicsUtils::pixels2mils(minDim, FSvgRenderer::printerScale()) - 1, TraceWire::MinTraceWidthMils);
-		setUpWidths(GraphicsUtils::mils2pixels(mils, FSvgRenderer::printerScale()));
+		setUpWidths(m_sketchWidget->getSmallerTraceWidth(minDim));
 	}
 }

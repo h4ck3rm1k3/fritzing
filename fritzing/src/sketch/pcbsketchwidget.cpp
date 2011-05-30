@@ -405,7 +405,14 @@ bool PCBSketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * 
 		long newID = makeModifiedWire(fromConnectorItem, toConnectorItem, BaseCommand::SingleView, flags, parentCommand);
 		QString tc = traceColor(fromConnectorItem);
 		new WireColorChangeCommand(this, newID, tc, tc, 1.0, 1.0, parentCommand);
-		new WireWidthChangeCommand(this, newID, getTraceWidth(), getTraceWidth(), parentCommand);
+		qreal traceWidth = getTraceWidth();
+		if (autorouteTypePCB()) {
+			qreal minDim = qMin(fromConnectorItem->minDimension(), toConnectorItem->minDimension());
+			if (minDim < traceWidth) {
+				traceWidth = getSmallerTraceWidth(minDim);  
+			}
+		}
+		new WireWidthChangeCommand(this, newID, traceWidth, traceWidth, parentCommand);
 		if (fromConnectorItem->attachedToItemType() == ModelPart::Wire) {
 			foreach (ConnectorItem * connectorItem, fromConnectorItem->connectedToItems()) {
 				if (connectorItem->attachedToItemType() == ModelPart::Wire) {
@@ -2469,4 +2476,9 @@ void PCBSketchWidget::getBendpointWidths(Wire * wire, qreal width, qreal & bendp
 {
 	Q_UNUSED(wire);
 	bendpointWidth = bendpoint2Width = (width / -2) - 1000;
+}
+
+qreal PCBSketchWidget::getSmallerTraceWidth(qreal minDim) {
+	int mils = qMax((int) GraphicsUtils::pixels2mils(minDim, FSvgRenderer::printerScale()) - 1, TraceWire::MinTraceWidthMils);
+	return GraphicsUtils::mils2pixels(mils, FSvgRenderer::printerScale());
 }

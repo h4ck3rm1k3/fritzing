@@ -92,6 +92,7 @@ public:
 	virtual qreal getTraceWidth();
 	virtual qreal getAutorouterTraceWidth();
 	void getBendpointWidths(class Wire *, qreal w, qreal & w1, qreal & w2);
+	qreal getSmallerTraceWidth(qreal minDim);
 
 public:
 	static QSizeF jumperItemSize();
