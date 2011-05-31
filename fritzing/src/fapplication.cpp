@@ -804,14 +804,23 @@ void FApplication::initSplash(FSplashScreen & splash, QPixmap & pixmap) {
 	splash.showMessage(msg1, r1, Qt::AlignLeft | Qt::AlignTop, w);
 
 	QRect r2(0, kBottomOfAlpha, pixmap.width() - 12, 20);
+	QString macBuildType;
+#ifdef Q_WS_MAC
+#ifdef QT_MAC_USE_COCOA
+	macBuildType = " Cocoa";
+#else
+	macBuildType = " Carbon";
+#endif
+#endif
 	QString msg2 = QObject::tr("<font face='Lucida Grande, Tahoma, Sans Serif' size='2' color='#eaf4ed'>"
-							   "Version %1.%2.%3 (%4%5)"
+							   "Version %1.%2.%3 (%4%5)%6"
 							   "</font>")
-	.arg(Version::majorVersion())
-	.arg(Version::minorVersion())
-	.arg(Version::minorSubVersion())
-	.arg(Version::modifier())
-	.arg(Version::shortDate());
+						.arg(Version::majorVersion())
+						.arg(Version::minorVersion())
+						.arg(Version::minorSubVersion())
+						.arg(Version::modifier())
+						.arg(Version::shortDate())
+						.arg(macBuildType);
 	splash.showMessage(msg2, r2, Qt::AlignRight | Qt::AlignTop, w);
     splash.show();
 }
