@@ -996,7 +996,7 @@ void Wire::initNames() {
 	STANDARD_TRACE_WIDTH = GraphicsUtils::mils2pixels(widths[1], FSvgRenderer::printerScale());
 	HALF_STANDARD_TRACE_WIDTH = STANDARD_TRACE_WIDTH / 2.0;
 
-    // need a list because a hash table doesn't guarantee order
+    // need a list because a hash table doesn't guarantee order 
     colorNames.append(tr("blue"));
 	colorNames.append(tr("red"));
     colorNames.append(tr("black"));
@@ -1007,6 +1007,7 @@ void Wire::initNames() {
 	colorNames.append(tr("orange"));
     colorNames.append(tr("brown"));
     colorNames.append(tr("purple"));
+    colorNames.append(tr("schematic black"));
 
 	// need this hash table to translate from user's language to internal color name
     colorTrans.insert(tr("blue"), "blue");
@@ -1019,6 +1020,7 @@ void Wire::initNames() {
 	colorTrans.insert(tr("orange"), "orange");
 	colorTrans.insert(tr("brown"), "brown");
     colorTrans.insert(tr("purple"), "purple");
+    colorTrans.insert(tr("schematic black"), "schematic black");
 
     colors.insert("blue",	"#418dd9");
 	colors.insert("red",	"#cc1414");
@@ -1031,11 +1033,12 @@ void Wire::initNames() {
 	colors.insert("jumper", ViewLayer::JumperColor);
 	colors.insert("trace",  ViewLayer::Copper0Color);    
 	colors.insert("trace1",  ViewLayer::Copper1Color);    
-	colors.insert("unrouted", "#000000");
-	colors.insert("blackblack", "#000000");
+	//colors.insert("unrouted", "#000000");
+	//colors.insert("blackblack", "#000000");
 	colors.insert("schematicGrey", "#9d9d9d");
     colors.insert("purple", "#ab58a2");
 	colors.insert("brown", "#8c3b00");
+	colors.insert("schematic black", "#000000");
 
     shadowColors.insert("blue",		"#1b5bb3");
 	shadowColors.insert("red",		"#8c0000");
@@ -1048,11 +1051,12 @@ void Wire::initNames() {
     shadowColors.insert("jumper",	"#2d6563");
 	shadowColors.insert("trace",	"#d69b00");
 	shadowColors.insert("trace1",   "#d69b00");    
-	shadowColors.insert("unrouted", "#000000");
+	//shadowColors.insert("unrouted", "#000000");
     shadowColors.insert("purple",	"#7a3a73");
     shadowColors.insert("brown",	"#6c2710");
 	shadowColors.insert("schematicGrey", "#1d1d1d");
-	shadowColors.insert("blackblack", "#000000");
+	//shadowColors.insert("blackblack", "#000000");
+	shadowColors.insert("schematic black", "#000000");
 }
 
 bool Wire::hasFlag(ViewGeometry::WireFlag flag)
@@ -1109,9 +1113,10 @@ void Wire::setCanChainMultiple(bool can) {
 }
 
 bool Wire::canChangeColor() {
-	if (getTrace() || getRatsnest()) return false;
+	if (getRatsnest()) return false;
+	if (!getTrace()) return true;
 
-	return true;
+	return (this->m_viewIdentifier == ViewIdentifierClass::SchematicView);
 }
 
 void Wire::collectDirectWires(QList<Wire *> & wires) {

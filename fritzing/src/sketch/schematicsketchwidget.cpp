@@ -36,7 +36,7 @@ $Date$
 
 #include <limits>
 
-static QString SchematicTraceColor = "blackblack";
+static QString SchematicTraceColor = "schematic black";
 
 static const qreal TraceWidthMils = 33.3333;
 
@@ -78,12 +78,12 @@ ViewLayer::ViewLayerID SchematicSketchWidget::getWireViewLayerID(const ViewGeome
 void SchematicSketchWidget::initWire(Wire * wire, int penWidth) {
 	Q_UNUSED(penWidth);
 	if (wire->getRatsnest()) {
-		wire->setPenWidth(1, this);
+		wire->setPenWidth(0.5, this);
 		wire->setColorString("schematicGrey", 0.7);
 	}
 	else {
 		wire->setPenWidth(getTraceWidth(), this);
-		wire->setColorString("blackblack", 1.0);
+		wire->setColorString("schematic black", 1.0);
 	}
 }
 
@@ -327,7 +327,9 @@ ViewLayer::ViewLayerID SchematicSketchWidget::getLabelViewLayerID(ViewLayer::Vie
 }
 
 const QString & SchematicSketchWidget::traceColor(ConnectorItem *) {
-	return SchematicTraceColor;
+	if (m_lastColorSelected.isEmpty()) return SchematicTraceColor;
+
+	else return m_lastColorSelected;
 }
 
 const QString & SchematicSketchWidget::traceColor(ViewLayer::ViewLayerSpec) {

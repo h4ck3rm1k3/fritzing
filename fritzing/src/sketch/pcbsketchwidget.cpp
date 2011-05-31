@@ -603,7 +603,7 @@ ViewLayer::ViewLayerID PCBSketchWidget::getWireViewLayerID(const ViewGeometry & 
 
 void PCBSketchWidget::initWire(Wire * wire, int penWidth) {
 	Q_UNUSED(penWidth);
-	wire->setColorString("unrouted", 1.0);
+	wire->setColorString("black", 1.0);
 	wire->setPenWidth(1, this);
 }
 

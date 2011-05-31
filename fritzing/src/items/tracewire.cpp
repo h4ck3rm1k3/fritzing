@@ -134,7 +134,7 @@ void TraceWire::setColorFromElement(QDomElement & element) {
 			element.setAttribute("color", ViewLayer::Copper1Color);
 			break;
 		case ViewLayer::SchematicTrace:
-			element.setAttribute("color", "#000000");
+			//element.setAttribute("color", "#000000");
 		default:
 			break;
 	}
