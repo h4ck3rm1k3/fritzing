@@ -54,7 +54,6 @@ $Date$
 #include "utils/fileprogressdialog.h"
 #include "svg/svgfilesplitter.h"
 #include "version/version.h"
-#include "svg/groundplanegenerator.h"
 #include "help/tipsandtricks.h"
 #include "dialogs/setcolordialog.h"
 #include "utils/folderutils.h"

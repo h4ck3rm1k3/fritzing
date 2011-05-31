@@ -47,6 +47,7 @@ $Date$
 #include "../processeventblocker.h"
 #include "../autoroute/cmrouter/cmrouter.h"
 #include "../autoroute/autoroutersettingsdialog.h"
+#include "../svg/groundplanegenerator.h"
 
 #include <limits>
 #include <QApplication>
@@ -58,6 +59,7 @@ $Date$
 #include <QDialogButtonBox>
 #include <QSettings>
 #include <QPushButton>
+#include <QMessageBox>
 
 static const int MAX_INT = std::numeric_limits<int>::max();
 
@@ -2481,4 +2483,92 @@ void PCBSketchWidget::getBendpointWidths(Wire * wire, qreal width, qreal & bendp
 qreal PCBSketchWidget::getSmallerTraceWidth(qreal minDim) {
 	int mils = qMax((int) GraphicsUtils::pixels2mils(minDim, FSvgRenderer::printerScale()) - 1, TraceWire::MinTraceWidthMils);
 	return GraphicsUtils::mils2pixels(mils, FSvgRenderer::printerScale());
+}
+
+bool PCBSketchWidget::groundFill(QUndoCommand * parentCommand)
+{
+	ItemBase * board = findBoard();
+    // barf an error if there's no board
+    if (!board) {
+        QMessageBox::critical(this->window(), tr("Fritzing"),
+                   tr("Your sketch does not have a board yet!  Please add a PCB in order to use copper fill."));
+        return false;
+    }
+
+	LayerList viewLayerIDs;
+	viewLayerIDs << ViewLayer::Board;
+	QSizeF boardImageSize;
+	bool empty;
+	QString boardSvg = renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, boardImageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, false, empty);
+	if (boardSvg.isEmpty()) {
+        QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to render board svg (1)."));
+		return false;
+	}
+
+	viewLayerIDs.clear();
+	viewLayerIDs << ViewLayer::Copper0 << ViewLayer::Copper0Trace;
+	QSizeF copperImageSize;
+
+	showGroundTraces(false);
+	QString svg = renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, copperImageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, true, empty);
+	showGroundTraces(true);
+	if (svg.isEmpty()) {
+        QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to render copper svg (1)."));
+		return false;
+	}
+
+	QString svg2;
+	if (boardLayers() > 1) {
+		viewLayerIDs.clear();
+		viewLayerIDs << ViewLayer::Copper1 << ViewLayer::Copper1Trace;
+		showGroundTraces(false);
+		svg2 = renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, copperImageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, true, empty);
+		showGroundTraces(true);
+		if (svg2.isEmpty()) {
+			QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to render copper svg (1)."));
+			return false;
+		}
+	}
+
+	QStringList exceptions;
+	exceptions << background().name();    // the color of holes in the board
+
+	GroundPlaneGenerator gpg;
+	bool result = gpg.generateGroundPlane(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board, 1000 / 10.0  /* 1 MIL */,
+		ViewLayer::Copper0Color, "groundplane");
+	if (result == false) {
+        QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to write copper fill."));
+		return false;
+	}
+
+	GroundPlaneGenerator gpg2;
+	if (boardLayers() > 1) {
+		bool result = gpg2.generateGroundPlane(boardSvg, boardImageSize, svg2, copperImageSize, exceptions, board, 1000 / 10.0  /* 1 MIL */,
+			ViewLayer::Copper1Color, "groundplane1");
+		if (result == false) {
+			QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to write copper fill."));
+			return false;
+		}
+	}
+
+
+
+	foreach (QString svg, gpg.newSVGs()) {
+		ViewGeometry vg;
+		vg.setLoc(board->pos());
+		long newID = ItemBase::getNextID();
+		new AddItemCommand(this, BaseCommand::CrossView, ModuleIDNames::GroundPlaneModuleIDName, ViewLayer::GroundPlane_Bottom, vg, newID, false, -1, parentCommand);
+		new SetPropCommand(this, newID, "svg", svg, svg, true, parentCommand);
+	}
+
+	foreach (QString svg, gpg2.newSVGs()) {
+		ViewGeometry vg;
+		vg.setLoc(board->pos());
+		long newID = ItemBase::getNextID();
+		new AddItemCommand(this, BaseCommand::CrossView, ModuleIDNames::GroundPlaneModuleIDName, ViewLayer::GroundPlane_Top, vg, newID, false, -1, parentCommand);
+		new SetPropCommand(this, newID, "svg", svg, svg, true, parentCommand);
+	}
+
+	return true;
+
 }
