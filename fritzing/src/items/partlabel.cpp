@@ -825,7 +825,7 @@ QString PartLabel::makeSvg(bool blackOnly, qreal dpi, qreal printerScale) {
 	QFontMetricsF fm(f);
 	qreal y = fm.ascent();
 	
-	QString svg = QString("<text font-size='%1' font-style='%2' font-weight='%3' fill='%4' font-family=\"'%5'\" id='%6' fill-opacity='1' stroke='none' >")
+	QString svg = QString("<g font-size='%1' font-style='%2' font-weight='%3' fill='%4' font-family=\"'%5'\" id='%6' fill-opacity='1' stroke='none' >")
 		.arg(f.pointSizeF() * dpi / 72)
 		.arg(mapToSVGStyle(f.style()))
 		.arg(mapToSVGWeight(f.weight()))
@@ -836,13 +836,13 @@ QString PartLabel::makeSvg(bool blackOnly, qreal dpi, qreal printerScale) {
 
 	QStringList texts = text().split("\n");
 	foreach (QString t, texts) {
-		svg += QString("<tspan x='0' y='%1'>%2</tspan>")
+		svg += QString("<text x='0' y='%1'>%2</text>")
 			.arg(y * dpi / printerScale)
 			.arg(TextUtils::stripNonValidXMLCharacters(TextUtils::escapeAnd(t)));
 		y += fm.height();
 	}
 
-	svg += "</text>";
-        QTransform t = transform();
-        return TextUtils::svgTransform(svg, t, false, QString());
+	svg += "</g>";
+    QTransform t = transform();
+    return TextUtils::svgTransform(svg, t, false, QString());
 }
