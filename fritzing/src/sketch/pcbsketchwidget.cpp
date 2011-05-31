@@ -2468,7 +2468,7 @@ qreal PCBSketchWidget::getTraceWidth() {
 
 qreal PCBSketchWidget::getAutorouterTraceWidth() {
 	QSettings settings;
-	int traceWidthMils = settings.value(AutorouterSettingsDialog::AutorouteTraceWidth, "0").toInt();
+	int traceWidthMils = settings.value(AutorouterSettingsDialog::AutorouteTraceWidth, QString::number(GraphicsUtils::pixels2mils(getTraceWidth(), FSvgRenderer::printerScale()))).toInt();
 	return FSvgRenderer::printerScale() * traceWidthMils / 1000;
 }
 
