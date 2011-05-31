@@ -11,9 +11,9 @@
 		<rect id="connector1terminal" x="16.292" width="0.75" height="0.799"/>
 		<rect id="connector0terminal" x="16.292" y="43.032" width="0.75" height="0.8"/>
 	</g>
-</g>
 <line fill="none" stroke="#000000" stroke-width="2.4" stroke-linecap="round" x1="16.616" y1="0.852" x2="16.616" y2="18.477"/>
 <line fill="none" stroke="#000000" stroke-width="2.4" stroke-linecap="round" x1="1.366" y1="18.852" x2="31.366" y2="18.852"/>
 <line fill="none" stroke="#000000" stroke-width="2.4" stroke-linecap="round" x1="1.366" y1="25.227" x2="31.366" y2="25.227"/>
 <line fill="none" stroke="#000000" stroke-width="2.4" stroke-linecap="round" x1="16.616" y1="26.102" x2="16.616" y2="43.227"/>
+</g>
 </svg>
