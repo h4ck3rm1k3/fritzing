@@ -682,7 +682,7 @@ void HtmlInfoView::displayProps(ModelPart * modelPart, ItemBase * itemBase, bool
 #endif
 
 	QHash<QString, QString> properties = getPartProperties(modelPart, itemBase, wantDebug);
-	QString family = properties.value("family", "");
+	QString family = properties.value("family", "").toLower();
 
 	int ix = 0;
 	foreach(QString key, properties.keys()) {

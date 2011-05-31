@@ -671,7 +671,7 @@ bool ResizableBoard::collectExtraInfo(QWidget * parent, const QString & family, 
 		subframe1->setLayout(hboxLayout1);
 		subframe2->setLayout(hboxLayout2);
 
-		vboxLayout->addWidget(qobject_cast<QWidget *>(returnWidget));
+		if (returnWidget != NULL) vboxLayout->addWidget(qobject_cast<QWidget *>(returnWidget));
 		vboxLayout->addWidget(subframe1);
 		vboxLayout->addWidget(subframe2);
 
