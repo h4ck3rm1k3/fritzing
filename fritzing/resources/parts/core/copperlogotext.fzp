@@ -16,7 +16,7 @@
    <property name="logo" >copperlogo</property>
    <property name="shape" ></property>
    <property name="type" >text</property>
-   <property name="layers" >copper</property>
+   <property name="layer" >copper</property>
  </properties>
  <taxonomy>discreteParts.pcb.logo.copper</taxonomy>
  <description>For adding text to the copper layer of the board</description>

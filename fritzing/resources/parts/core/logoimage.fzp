@@ -16,7 +16,7 @@
    <property name="filename" ></property>
    <property name="shape" ></property>
    <property name="type" >image</property>
-   <property name="layers" >silkscreen</property>
+   <property name="layer" >silkscreen</property>
  </properties>
  <taxonomy>discreteParts.pcb.logo</taxonomy>
  <description>For adding images to the silkscreen layer of the board</description>

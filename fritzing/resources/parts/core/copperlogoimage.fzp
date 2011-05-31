@@ -16,7 +16,7 @@
    <property name="filename" ></property>
    <property name="shape" ></property>
    <property name="type" >image</property>
-   <property name="layers" >copper</property>
+   <property name="layer" >copper</property>
  </properties>
  <taxonomy>discreteParts.pcb.logo</taxonomy>
  <description>For adding images to the copper layer of the board</description>
