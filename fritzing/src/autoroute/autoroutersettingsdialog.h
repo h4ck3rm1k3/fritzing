@@ -57,13 +57,15 @@ protected slots:
 protected:
 	void enableCustom(bool enable);
 	bool initRadios();
+	void setTraceWidth(int newWidth);
 
 protected:
 	QRadioButton * m_homebrewButton;
 	QRadioButton * m_professionalButton;
 	QRadioButton * m_customButton;
 	HoleSettings m_holeSettings;
-	QGroupBox * m_customGroupBox;
+	QFrame * m_customFrame;
+	QComboBox * m_traceWidthComboBox;
 	int m_traceWidth;
 
 public:

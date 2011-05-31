@@ -75,31 +75,37 @@ AutorouterSettingsDialog::AutorouterSettingsDialog(QWidget *parent) : QDialog(pa
 
 	this->setWindowTitle(QObject::tr("Auorouter Settings"));
 
-	QVBoxLayout * vLayout = new QVBoxLayout();
+	QVBoxLayout * windowLayout = new QVBoxLayout();
+	this->setLayout(windowLayout);
 
-	QGroupBox * groupBox = new QGroupBox(tr("Production type"), this);
-
-	QVBoxLayout * gLayout = new QVBoxLayout();
+	QGroupBox * prodGroupBox = new QGroupBox(tr("Production type"), this);
+	QVBoxLayout * prodLayout = new QVBoxLayout();
+	prodGroupBox->setLayout(prodLayout);
 
 	m_homebrewButton = new QRadioButton(tr("homebrew"), this); 
 	connect(m_homebrewButton, SIGNAL(clicked(bool)), this, SLOT(production(bool)));
-	gLayout->addWidget(m_homebrewButton);
 
 	m_professionalButton = new QRadioButton(tr("professional"), this); 
 	connect(m_professionalButton, SIGNAL(clicked(bool)), this, SLOT(production(bool)));
-	gLayout->addWidget(m_professionalButton);
 
 	m_customButton = new QRadioButton(tr("custom"), this); 
 	connect(m_customButton, SIGNAL(clicked(bool)), this, SLOT(production(bool)));
-	gLayout->addWidget(m_customButton);
 
-	QFrame * customFrame = new QFrame(this);
+	m_customFrame = new QFrame(this);
 	QHBoxLayout * customFrameLayout = new QHBoxLayout(this);
+	m_customFrame->setLayout(customFrameLayout);
+
 	customFrameLayout->addSpacing(10);
 
-	m_customGroupBox = new QGroupBox("Via size", this);
-	QVBoxLayout * customLayout = new QVBoxLayout();
-	QWidget * customWidget = Hole::createHoleSettings(m_customGroupBox, m_holeSettings, true, "");
+	QFrame * innerFrame = new QFrame(this);
+	QVBoxLayout * innerFrameLayout = new QVBoxLayout(this);
+	innerFrame->setLayout(innerFrameLayout);
+
+	QGroupBox * viaGroupBox = new QGroupBox("Via size", this);
+	QVBoxLayout * viaLayout = new QVBoxLayout();
+	viaGroupBox->setLayout(viaLayout);
+
+	QWidget * viaWidget = Hole::createHoleSettings(viaGroupBox, m_holeSettings, true, "");
 
 	connect(m_holeSettings.sizesComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeHoleSize(const QString &)));
 	connect(m_holeSettings.unitsComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeUnits(const QString &)));
@@ -107,31 +113,13 @@ AutorouterSettingsDialog::AutorouterSettingsDialog(QWidget *parent) : QDialog(pa
 	connect(m_holeSettings.thicknessEdit, SIGNAL(editingFinished()), this, SLOT(changeThickness()));
 
 	enableCustom(initRadios());
-	customLayout->addWidget(customWidget);
-	m_customGroupBox->setLayout(customLayout);
 
-	customFrameLayout->addWidget(m_customGroupBox);
-	customFrame->setLayout(customFrameLayout);
+	QGroupBox * traceGroupBox = new QGroupBox(tr("Trace width"), this);
+	QBoxLayout * traceLayout = new QVBoxLayout();
+	traceGroupBox->setLayout(traceLayout);
 
-	gLayout->addWidget(customFrame);
-
-	groupBox->setLayout(gLayout);
-	vLayout->addWidget(groupBox);
-	vLayout->addSpacing(5);
-
-	groupBox = new QGroupBox(tr("Trace width"), this);
-
-	gLayout = new QVBoxLayout();
-	QComboBox * comboBox = TraceWire::createWidthComboBox(m_traceWidth, groupBox);
-	connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(widthEntry(const QString &)));
-
-	gLayout->addWidget(comboBox);
-	groupBox->setLayout(gLayout);
-
-	vLayout->addWidget(groupBox);
-
-	vLayout->addSpacerItem(new QSpacerItem (1, 1, QSizePolicy::Minimum, QSizePolicy::Expanding));
-	vLayout->addSpacing(10);
+	m_traceWidthComboBox = TraceWire::createWidthComboBox(m_traceWidth, traceGroupBox);
+	connect(m_traceWidthComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(widthEntry(const QString &)));
 
     QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
 	buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
@@ -140,9 +128,25 @@ AutorouterSettingsDialog::AutorouterSettingsDialog(QWidget *parent) : QDialog(pa
     connect(buttonBox, SIGNAL(accepted()), this, SLOT(acceptAnd()));
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 
-	vLayout->addWidget(buttonBox);
+	viaLayout->addWidget(viaWidget);
+	traceLayout->addWidget(m_traceWidthComboBox);
 
-	this->setLayout(vLayout);
+	innerFrameLayout->addWidget(viaGroupBox);
+	innerFrameLayout->addWidget(traceGroupBox);
+
+	customFrameLayout->addWidget(innerFrame);
+
+	prodLayout->addWidget(m_homebrewButton);
+	prodLayout->addWidget(m_professionalButton);
+	prodLayout->addWidget(m_customButton);
+	prodLayout->addWidget(m_customFrame);
+
+	windowLayout->addWidget(prodGroupBox);
+
+	windowLayout->addSpacerItem(new QSpacerItem(1, 10, QSizePolicy::Preferred, QSizePolicy::Expanding));
+
+	windowLayout->addWidget(buttonBox);
+	
 }
 
 AutorouterSettingsDialog::~AutorouterSettingsDialog() {
@@ -155,10 +159,12 @@ void AutorouterSettingsDialog::production(bool checked) {
 	if (sender() == m_homebrewButton) {
 		enableCustom(false);
 		changeHoleSize(sender()->property("holesize").toString() + "," + sender()->property("ringthickness").toString());
+		setTraceWidth(16);
 	}
 	else if (sender() == m_professionalButton) {
 		enableCustom(false);
 		changeHoleSize(sender()->property("holesize").toString() + "," + sender()->property("ringthickness").toString());
+		setTraceWidth(24);
 	}
 	else if (sender() == m_customButton) {
 		enableCustom(true);
@@ -185,7 +191,7 @@ void AutorouterSettingsDialog::enableCustom(bool enable)
 	m_holeSettings.thicknessEdit->setEnabled(enable);
 	m_holeSettings.unitsComboBox->setEnabled(enable);
 	m_holeSettings.sizesComboBox->setEnabled(enable);
-	m_customGroupBox->setVisible(enable);
+	m_customFrame->setVisible(enable);
 }
 
 bool AutorouterSettingsDialog::initRadios() 
@@ -246,4 +252,15 @@ void AutorouterSettingsDialog::changeThickness()
 		QLineEdit * edit = dynamic_cast<QLineEdit *>(sender());
 		changeHoleSize(m_holeSettings.holeDiameter + "," + edit->text() + m_holeSettings.unitsComboBox->currentText());
 	}	
+}
+
+
+void AutorouterSettingsDialog::setTraceWidth(int width)
+{
+	for (int i = 0; i > m_traceWidthComboBox->count(); i++) {
+		if (m_traceWidthComboBox->itemData(i).toInt() == width) {
+			m_traceWidthComboBox->setCurrentIndex(i);
+			return;
+		}
+	}
 }
