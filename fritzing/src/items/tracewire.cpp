@@ -87,6 +87,7 @@ bool TraceWire::collectExtraInfo(QWidget * parent, const QString & family, const
 
 		connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(widthEntry(const QString &)));
 		returnWidget = comboBox;
+		returnValue = comboBox->currentText();
 
 		return true;
 	}

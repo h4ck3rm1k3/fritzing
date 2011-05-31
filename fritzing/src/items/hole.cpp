@@ -360,7 +360,8 @@ bool Hole::collectExtraInfo(QWidget * parent, const QString & family, const QStr
 	if (prop.compare("hole size", Qt::CaseInsensitive) == 0) {
 		returnProp = tr("hole size");
 
-		QWidget * frame = createHoleSettings(parent, m_holeSettings, swappingEnabled, m_modelPart->prop("hole size").toString());
+		returnValue = m_modelPart->prop("hole size").toString();
+		QWidget * frame = createHoleSettings(parent, m_holeSettings, swappingEnabled, returnValue);
 
 		connect(m_holeSettings.sizesComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeHoleSize(const QString &)));
 		connect(m_holeSettings.unitsComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeUnits(const QString &)));

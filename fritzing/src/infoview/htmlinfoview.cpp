@@ -681,11 +681,12 @@ void HtmlInfoView::displayProps(ModelPart * modelPart, ItemBase * itemBase, bool
 	wantDebug = true;
 #endif
 
-	QHash<QString, QString> properties = getPartProperties(modelPart, itemBase, wantDebug);
+	QStringList keys;
+	QHash<QString, QString> properties = getPartProperties(modelPart, itemBase, wantDebug, keys);
 	QString family = properties.value("family", "").toLower();
 
 	int ix = 0;
-	foreach(QString key, properties.keys()) {
+	foreach(QString key, keys) {
 		if (ix >= m_propThings.count()) {
 			//DebugDialog::debug(QString("new prop thing %1").arg(ix));
 			PropThing * propThing = new PropThing;
@@ -886,9 +887,8 @@ void HtmlInfoView::updateLocation() {
 	setUpLocation(m_currentItem);
 }
 
-QHash<QString, QString> HtmlInfoView::getPartProperties(ModelPart * modelPart, ItemBase * itemBase, bool wantDebug) 
+QHash<QString, QString> HtmlInfoView::getPartProperties(ModelPart * modelPart, ItemBase * itemBase, bool wantDebug, QStringList & keys) 
 {
-	QStringList keys;
 	QHash<QString, QString> properties;
 	QString family;
 	QString partNumber;

@@ -291,6 +291,7 @@ protected:
 
     void createActions();
     void createFileMenuActions();
+    void createExportActions();
     void createOpenExampleMenu();
     void populateMenuFromXMLFile(
     		QMenu *parentMenu, QStringList &actionsTracker,

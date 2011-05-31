@@ -236,7 +236,7 @@ bool Resistor::collectExtraInfo(QWidget * parent, const QString & family, const 
 
 		focusOutComboBox->setObjectName("infoViewComboBox");		
 
-					
+		returnValue = current;			
 		returnWidget = focusOutComboBox;	
 
 		return true;

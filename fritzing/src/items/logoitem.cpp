@@ -134,6 +134,7 @@ bool LogoItem::collectExtraInfo(QWidget * parent, const QString & family, const 
 	if (m_hasLogo) {
 		if (prop.compare("logo", Qt::CaseInsensitive) == 0) {
 			returnProp = tr("logo");
+			returnValue = m_logo;
 
 			QLineEdit * e1 = new QLineEdit(parent);
 			e1->setObjectName("infoViewLineEdit");

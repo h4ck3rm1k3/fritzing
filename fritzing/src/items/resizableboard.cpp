@@ -608,6 +608,7 @@ bool ResizableBoard::collectExtraInfo(QWidget * parent, const QString & family, 
 
 			frame->setLayout(vboxLayout);
 
+			returnValue = l1->text() + "," + l2->text();
 			returnWidget = frame;
 			return true;
 		}

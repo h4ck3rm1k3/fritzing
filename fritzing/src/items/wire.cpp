@@ -1297,6 +1297,7 @@ bool Wire::collectExtraInfo(QWidget * parent, const QString & family, const QStr
 
 			connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(colorEntry(const QString &)));
 			returnWidget = comboBox;
+			returnValue = comboBox->currentText();
 			return true;
 		}
 		else {

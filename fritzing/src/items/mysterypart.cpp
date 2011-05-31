@@ -216,6 +216,7 @@ bool MysteryPart::collectExtraInfo(QWidget * parent, const QString & family, con
 {
 	if (prop.compare("chip label", Qt::CaseInsensitive) == 0) {
 		returnProp = tr("label");
+		returnValue = m_chipLabel;
 
 		QLineEdit * e1 = new QLineEdit(parent);
 		e1->setEnabled(swappingEnabled);

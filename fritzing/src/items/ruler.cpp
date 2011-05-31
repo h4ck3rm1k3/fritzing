@@ -263,6 +263,7 @@ bool Ruler::collectExtraInfo(QWidget * parent, const QString & family, const QSt
 		connect(e1, SIGNAL(editingFinished()), this, SLOT(widthEntry()));
 		connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(unitsEntry(const QString &)));
 
+		returnValue = temp + units;
 		returnWidget = frame;
 
 		return true;

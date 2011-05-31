@@ -92,7 +92,7 @@ public:
 	static const int STANDARD_ICON_IMG_HEIGHT;
 
 	static void cleanup();
-	static QHash<QString, QString> getPartProperties(ModelPart * modelPart, ItemBase * itemBase, bool wantDebug);
+	static QHash<QString, QString> getPartProperties(ModelPart * modelPart, ItemBase * itemBase, bool wantDebug, QStringList & keys);
 
 protected slots:
 	void setContent();

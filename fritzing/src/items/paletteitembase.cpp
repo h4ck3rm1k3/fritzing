@@ -459,6 +459,7 @@ bool PaletteItemBase::collectExtraInfo(QWidget * parent, const QString & family,
 		connect(lineEdit, SIGNAL(editingFinished()), this, SLOT(partPropertyEntry()));	
 		lineEdit->setObjectName("infoViewLineEdit");		
 		returnWidget = lineEdit;	
+		returnValue = current;
 		return true;
 	}
 

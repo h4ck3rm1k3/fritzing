@@ -114,7 +114,8 @@ bool Capacitor::collectExtraInfo(QWidget * parent, const QString & family, const
 			}
 
 			this->m_comboBoxes.insert(propertyDef, focusOutComboBox);
-						
+				
+			returnValue = current;
 			returnWidget = focusOutComboBox;	
 
 			return true;
