@@ -18,8 +18,8 @@
 			<line fill="none" stroke="#000000" stroke-width="2.2284" stroke-linecap="round" x1="10.66" y1="43.358" x2="10.66" y2="61.262"/>
 		<line fill="none" stroke="#000000" stroke-width="2.2284" stroke-linecap="round" x1="10.66" y1="1.095" x2="10.66" y2="19.151"/>
 		<line fill="none" stroke="#000000" stroke-width="2.2" stroke-linecap="round" x1="10.66" y1="43.358" x2="1.082" y2="20.647"/>
-	</g>
-</g>
 <circle cx="10.66" cy="19.151" r="2.701"/>
 <circle cx="10.66" cy="43.357" r="2.7"/>
+	</g>
+</g>
 </svg>
