@@ -121,7 +121,10 @@ Resistor::Resistor( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier v
 
 	QString tolerance = modelPart->prop("tolerance").toString();
 	if (tolerance.isEmpty()) {
-		tolerance = modelPart->properties().value("tolerance", PlusMinusSymbol + "5%");
+		tolerance = modelPart->properties().value("tolerance");
+		if (tolerance.isEmpty()) {
+			tolerance = PlusMinusSymbol + "5%";
+		}
 		modelPart->setProp("tolerance", tolerance);
 	}
 	DebugDialog::debug(QString("tolerance %1").arg(tolerance));
@@ -390,8 +393,8 @@ ItemBase::PluralType Resistor::isPlural() {
 	return Plural;
 }
 
-void Resistor::setProp(const QString & prop, const QString & value) {
-
+void Resistor::setProp(const QString & prop, const QString & value) 
+{
 	if (prop.compare("tolerance") == 0) {
 		modelPart()->setProp(prop, value);
 		setResistance(m_ohms, m_pinSpacing, true);
