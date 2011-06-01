@@ -54,6 +54,7 @@ public:
 	bool canEditPart();
 	PluralType isPlural();
 	void addedToScene();
+	void setProp(const QString & prop, const QString & value);
 
 protected:
 	QString makeBreadboardSvg(const QString & ohms);
@@ -64,6 +65,7 @@ protected:
 
 public slots:
 	void resistanceEntry(const QString & text);
+	void toleranceEntry(const QString & text);
 
 
 public:

@@ -16,6 +16,7 @@
       <property name="power" showInLabel="yes"></property>
       <property name="Pin Spacing">400 mil</property>
       <property name="package">THT</property>
+      <property name="tolerance">&plusmn;5%</property>
     </properties>
     <taxonomy>discreteParts.resistor.220</taxonomy>
     <description>A generic resistor (0.25W)</description>

@@ -346,6 +346,7 @@ void ItemBase::initNames() {
 		TranslatedPropertyNames.insert("processor", tr("processor"));
 		TranslatedPropertyNames.insert("variant", tr("variant"));
 		TranslatedPropertyNames.insert("layers", tr("layers"));
+		TranslatedPropertyNames.insert("tolerance", tr("tolerance"));
 
 		// TODO: translate more known property names from fzp files and resource xml files
 	}

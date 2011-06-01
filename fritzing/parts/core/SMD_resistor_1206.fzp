@@ -14,6 +14,7 @@
         <property name="family">Resistor</property>
       <property name="package">1206 [SMD]</property>
       <property name="power" showInLabel="yes"/>
+      <property name="tolerance">&plusmn;5%</property>
     </properties>
     <taxonomy>discreteParts.resistor.220</taxonomy>
     <description>A generic resistor</description>
