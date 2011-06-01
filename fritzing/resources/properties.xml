@@ -48,6 +48,20 @@
 	<menuItem value="20" />
 </property>
 
+
+<property name="tolerance" symbol="" minValue="" maxValue="" defaultValue="5%" numeric="no" editable="no">
+   	<suffix suffix="ResistorModuleID"/>
+	<menuItem value="&#177;0.05%" />
+	<menuItem value="&#177;0.1%" />
+	<menuItem value="&#177;0.25%" />
+	<menuItem value="&#177;0.5%" />
+	<menuItem value="&#177;1%" />
+	<menuItem value="&#177;2%" />
+	<menuItem value="&#177;5%" />
+	<menuItem value="&#177;10%" />
+	<menuItem value="&#177;20%" />
+</property>
+
 <property name="breakdown voltage" symbol="V" minValue="2" maxValue="30" defaultValue="3.6" numeric="yes" editable="yes">
    	<suffix suffix="ZenerDiodeModuleID"/>
 	<menuItem value="2" />

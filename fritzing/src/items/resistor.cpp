@@ -95,12 +95,12 @@ Resistor::Resistor( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier v
 	}
 
 	if (Tolerances.count() == 0) {
+		Tolerances.insert(PlusMinusSymbol + "0.05%", QColor(140, 140, 140));
+		Tolerances.insert(PlusMinusSymbol + "0.1%", QColor(130, 16, 210));
+		Tolerances.insert(PlusMinusSymbol + "0.25%", QColor(0, 96, 182));
+		Tolerances.insert(PlusMinusSymbol + "0.5%", QColor(0, 163, 61));
 		Tolerances.insert(PlusMinusSymbol + "1%", QColor(138, 61, 6));
 		Tolerances.insert(PlusMinusSymbol + "2%", QColor(196, 8, 8));
-		Tolerances.insert(PlusMinusSymbol + "0.5%", QColor(0, 163, 61));
-		Tolerances.insert(PlusMinusSymbol + "0.25%", QColor(0, 96, 182));
-		Tolerances.insert(PlusMinusSymbol + "0.1%", QColor(130, 16, 210));
-		Tolerances.insert(PlusMinusSymbol + "0.05%", QColor(140, 140, 140));
 		Tolerances.insert(PlusMinusSymbol + "5%", QColor(173, 159, 78));
 		Tolerances.insert(PlusMinusSymbol + "10%", QColor(192, 192, 192));
 		Tolerances.insert(PlusMinusSymbol + "20%", QColor(0xdb, 0xb4, 0x77));
@@ -119,16 +119,6 @@ Resistor::Resistor( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier v
 		modelPart->setProp("resistance", m_ohms);
 	}
 
-	QString tolerance = modelPart->prop("tolerance").toString();
-	if (tolerance.isEmpty()) {
-		tolerance = modelPart->properties().value("tolerance");
-		if (tolerance.isEmpty()) {
-			tolerance = PlusMinusSymbol + "5%";
-		}
-		modelPart->setProp("tolerance", tolerance);
-	}
-	DebugDialog::debug(QString("tolerance %1").arg(tolerance));
-
 	m_pinSpacing = modelPart->prop("pin spacing").toString();
 	if (m_pinSpacing.isEmpty()) {
 		m_pinSpacing = modelPart->properties().value("pin spacing", "400 mil");
@@ -144,6 +134,9 @@ Resistor::~Resistor() {
 }
 
 void Resistor::setResistance(QString resistance, QString pinSpacing, bool force) {
+
+	QString tolerance = modelPart()->prop("tolerance").toString();
+
 	if (resistance.endsWith(OhmSymbol)) {
 		resistance.chop(1);
 	}
@@ -195,6 +188,7 @@ void Resistor::setResistance(QString resistance, QString pinSpacing, bool force)
 	m_pinSpacing = pinSpacing;
 	modelPart()->setProp("resistance", resistance);
 	modelPart()->setProp("pin spacing", pinSpacing);
+	modelPart()->setProp("tolerance", tolerance);
 
 	updateResistances(m_ohms);
 	updateTooltip();
@@ -262,25 +256,6 @@ bool Resistor::collectExtraInfo(QWidget * parent, const QString & family, const 
 		validator->setRegExp(QRegExp("((\\d{1,3})|(\\d{1,3}\\.)|(\\d{1,3}\\.\\d))[kMG]{0,1}[\\x03A9]{0,1}"));
 		focusOutComboBox->setValidator(validator);
 		connect(focusOutComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(resistanceEntry(const QString &)));
-
-		focusOutComboBox->setObjectName("infoViewComboBox");		
-
-		returnValue = current;			
-		returnWidget = focusOutComboBox;	
-
-		return true;
-	}
-
-	if (prop.compare("tolerance", Qt::CaseInsensitive) == 0) {
-		returnProp = tr("tolerance");
-
-		FocusOutComboBox * focusOutComboBox = new FocusOutComboBox();
-		focusOutComboBox->setEnabled(swappingEnabled);
-		focusOutComboBox->setEditable(false);
-		QString current = modelPart()->prop("tolerance").toString();
-		focusOutComboBox->addItems(Tolerances.keys());
-		focusOutComboBox->setCurrentIndex(focusOutComboBox->findText(current));
-		connect(focusOutComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(toleranceEntry(const QString &)));
 
 		focusOutComboBox->setObjectName("infoViewComboBox");		
 
@@ -395,11 +370,9 @@ ItemBase::PluralType Resistor::isPlural() {
 
 void Resistor::setProp(const QString & prop, const QString & value) 
 {
-	if (prop.compare("tolerance") == 0) {
-		modelPart()->setProp(prop, value);
-		setResistance(m_ohms, m_pinSpacing, true);
-		return;
-	}
-
 	Capacitor::setProp(prop, value);
+
+	if (prop.compare("tolerance") == 0) {
+		setResistance(m_ohms, m_pinSpacing, true);
+	}
 }
