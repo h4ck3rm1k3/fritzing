@@ -779,7 +779,7 @@ int ItemBase::itemType() const
 
 void ItemBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
 	if (!m_inactive && (m_connectorHoverCount > 0 || m_hoverCount > 0 || m_connectorHoverCount2 > 0)) {
-		paintHover(painter, option, widget);
+		layerKinChief()->paintHover(painter, option, widget);
 	}
 
 	if (m_inactive) {
