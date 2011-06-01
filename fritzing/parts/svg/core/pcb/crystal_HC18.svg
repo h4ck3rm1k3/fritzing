@@ -1,48 +1,22 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
-<svg
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   version="1.1"
-   width="38.976376"
-   height="17.716536"
-   id="svg3616">
-
-    <g id="copper0">
-    <g id="copper1">
-
- 	<circle  id="connector1pin" cx="28.1848332" cy="8.8556042" fill="none"  r="2.3058138" stroke="#f7bd13" stroke-width="1.77165353"/>
-	<circle  id="connector0pin" cx="10.8070873" cy="8.8582678" fill="none"  r="2.3031497" stroke="#f7bd13" stroke-width="1.77165353"/>
-    </g>
-    </g>
-    
-    <g
-       id="silkscreen">
-      <rect
-         width="37.913387"
-         height="16.653543"
-         ry="8.3267717"
-         x="0.53149605"
-         y="0.53149623"
-         id="rect4181"
-         style="fill:none;stroke:#ffffff;stroke-width:0.88582677;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-      <rect
-         width="2.5984251"
-         height="7.7952757"
-         x="18.188976"
-         y="4.9606299"
-         id="rect4193"
-         style="fill:none;stroke:#ffffff;stroke-width:0.88582677;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-      <path
-         d="m 22.322835,5.3149608 0,7.0866142"
-         id="path4195"
-         style="fill:none;stroke:#ffffff;stroke-width:0.88582677;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-      <path
-         d="m 16.653543,5.3149608 0,7.0866142"
-         id="path4199"
-         style="fill:none;stroke:#ffffff;stroke-width:0.88582677;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-    </g>
-    
-
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 15.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="svg3616" xmlns:svg="http://www.w3.org/2000/svg"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="38.977px"
+	 height="17.717px" viewBox="0 0 38.977 17.717" enable-background="new 0 0 38.977 17.717" xml:space="preserve">
+<g id="copper0">
+	<g id="copper1">
+		<circle id="connector1pin" fill="none" stroke="#F7BD13" stroke-width="1.7717" cx="28.186" cy="8.855" r="2.306"/>
+		<circle id="connector0pin" fill="none" stroke="#F7BD13" stroke-width="1.7717" cx="10.807" cy="8.858" r="2.303"/>
+	</g>
+</g>
+<g id="silkscreen">
+	<path id="rect4181" fill="none" stroke="#FFFFFF" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round" d="
+		M8.858,0.531h21.26c4.599,0,8.327,3.729,8.327,8.327l0,0c0,4.599-3.729,8.326-8.327,8.326H8.858c-4.599,0-8.327-3.728-8.327-8.326
+		l0,0C0.532,4.26,4.259,0.531,8.858,0.531z"/>
+	
+		<rect id="rect4193" x="18.189" y="4.96" fill="none" stroke="#FFFFFF" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round" width="2.598" height="7.795"/>
+	<path id="path4195" fill="none" stroke="#FFFFFF" stroke-width="0.5" stroke-linecap="round" d="M22.322,5.315v7.086"/>
+	<path id="path4199" fill="none" stroke="#FFFFFF" stroke-width="0.5" stroke-linecap="round" d="M16.653,5.315v7.086"/>
+</g>
 </svg>
