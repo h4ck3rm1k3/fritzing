@@ -40,7 +40,7 @@ $Date$
 #include <QDate>
 #include <QTextStream>
 
-#define MILS 10			// operate on a 10 mil scale
+#define MILS 5			// operate on a 5 mil scale
 
 QString GroundPlaneGenerator::ConnectorName = "connector0pad";
 
@@ -197,9 +197,27 @@ bool GroundPlaneGenerator::generateGroundPlane(const QString & boardSvg, QSizeF 
 
 	//image.save("testGroundFillBoard.png");
 
+	// "blur" the image a little
 	QSvgRenderer renderer2(copperByteArray);
 	painter.begin(&image);
-	renderer2.render(&painter, QRectF(0, 0, res * copperImageSize.width() / FSvgRenderer::printerScale(), res * copperImageSize.height() / FSvgRenderer::printerScale()));
+	QRectF bounds(0, 0, res * copperImageSize.width() / FSvgRenderer::printerScale(), res * copperImageSize.height() / FSvgRenderer::printerScale());
+	renderer2.render(&painter, bounds);
+	bounds.moveTo(1, 0);
+	renderer2.render(&painter, bounds);
+	bounds.moveTo(-1, 0);
+	renderer2.render(&painter, bounds);
+	bounds.moveTo(0, 1);
+	renderer2.render(&painter, bounds);
+	bounds.moveTo(0, -1);
+	renderer2.render(&painter, bounds);
+	bounds.moveTo(1, 1);
+	renderer2.render(&painter, bounds);
+	bounds.moveTo(-1, -1);
+	renderer2.render(&painter, bounds);
+	bounds.moveTo(-1, 1);
+	renderer2.render(&painter, bounds);
+	bounds.moveTo(1, -1);
+	renderer2.render(&painter, bounds);
 	painter.end();
 
 	//image.save("testGroundFill.png");
