@@ -1311,7 +1311,7 @@ void ConnectorItem::debugInfo(const QString & msg)
 {
 
 #ifndef QT_NO_DEBUG
-	DebugDialog::debug(QString("%1 cid:%2 %3 %4 id:%5 %6 vlid:%7 spec:%8")
+	DebugDialog::debug(QString("%1 cid:%2 %3 %4 id:%5 %6 vlid:%7 vid:%8 spec:%9")
 		.arg(msg)
 		.arg(this->connectorSharedID())
 		.arg(this->connectorSharedName())
@@ -1319,6 +1319,7 @@ void ConnectorItem::debugInfo(const QString & msg)
 		.arg(this->attachedToID())
 		.arg(this->attachedToInstanceTitle())
 		.arg(this->attachedToViewLayerID())
+		.arg(this->attachedToViewIdentifier())
 		.arg(this->attachedToViewLayerSpec())
 	);
 #else

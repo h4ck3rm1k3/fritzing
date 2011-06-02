@@ -145,7 +145,7 @@ void Connector::saveAsPart(QXmlStreamWriter & writer) {
 		writer.writeStartElement(ViewIdentifierClass::viewIdentifierXmlName(currView));
 		foreach (SvgIdLayer * svgIdLayer, pins.values(currView)) {
 			writer.writeStartElement("p");
-			writeLayerAttr(writer, svgIdLayer->m_viewLayerID);
+			writeLayerAttr(writer, svgIdLayer->m_svgViewLayerID);
 			writeSvgIdAttr(writer, currView, svgIdLayer->m_svgId);
 			writeTerminalIdAttr(writer, currView, svgIdLayer->m_terminalId);
 			writer.writeEndElement();
@@ -263,3 +263,6 @@ int Connector::connectorItemCount() {
 	return m_connectorItems.count();
 }
 
+QList< QPointer<ConnectorItem> > Connector::viewItems() {
+	return m_connectorItems.values();
+}

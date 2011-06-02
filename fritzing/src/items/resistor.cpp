@@ -357,12 +357,6 @@ void Resistor::resistanceEntry(const QString & text) {
 		infoGraphicsView->setResistance(text, "");
 	}
 }
-void Resistor::toleranceEntry(const QString & text) {
-	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
-	if (infoGraphicsView != NULL) {
-		infoGraphicsView->setProp(this, "tolerance", "", modelPart()->prop("tolerance").toString(), text, true);
-	}
-}
 
 ItemBase::PluralType Resistor::isPlural() {
 	return Plural;

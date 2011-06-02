@@ -51,7 +51,7 @@ public:
 	PartsEditorMainWindow(QWidget *parent=0);
 	~PartsEditorMainWindow();
 
-	void setup(long id, ModelPart *modelPart, bool fromTemplate);
+	void setup(long id, ModelPart *modelPart, bool fromTemplate, class ItemBase * fromItem);
 	void setViewItems(class ItemBase *, class ItemBase *, class ItemBase *, class ItemBase *);
 	static const QString templatePath;
 	const QDir& tempDir();
@@ -81,7 +81,7 @@ protected:
 	bool eventFilter(QObject *object, QEvent *event);
 
 	void createHeader(ModelPart * = 0);
-	void createCenter(ModelPart * = 0);
+	void createCenter(ModelPart * = 0, class ItemBase * fromItem = 0);
 	void connectWidgetsToSave(const QList<QWidget*> &widgets);
 	void createFooter();
 

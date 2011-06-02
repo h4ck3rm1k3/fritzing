@@ -339,7 +339,13 @@ const QList< QPointer<ConnectorShared> > ConnectorsInfoWidget::connectorsShared(
 		SingleConnectorInfoWidget *sci = m_connsInfo[i];
 		QString id = sci->id();
 		Connector *conn = sci->connector();
+		//foreach (ConnectorItem * connectorItem, conn->viewItems()) {
+			//connectorItem->debugInfo("what is this connector");
+		//}
 		ConnectorShared* cs = conn->connectorShared();
+		//foreach (SvgIdLayer * sil, cs->pins()) {
+			//DebugDialog::debug(QString("what is this pin %1").arg(sil->m_svgViewLayerID));
+		//}
 		cs->setId(id);
 		cs->setName(sci->name());
 		cs->setDescription(sci->description());

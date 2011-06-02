@@ -37,7 +37,7 @@ $Date$
 class PartsEditorViewsWidget : public QFrame {
 Q_OBJECT
 	public:
-		PartsEditorViewsWidget(SketchModel *sketchModel, class WaitPushUndoStack *undoStack, ConnectorsInfoWidget* info, QWidget *parent);
+		PartsEditorViewsWidget(SketchModel *sketchModel, class WaitPushUndoStack *undoStack, ConnectorsInfoWidget* info, QWidget *parent, class ItemBase * fromItem);
 		~PartsEditorViewsWidget();
 
 		void copySvgFilesToDestiny(const QString &partFileName);
@@ -74,7 +74,7 @@ Q_OBJECT
 		PartsEditorView * createViewImageWidget(
 			SketchModel* sketchModel, class WaitPushUndoStack *undoStack,
 			ViewIdentifierClass::ViewIdentifier viewId, QString iconFileName, QString startText,
-			ConnectorsInfoWidget* info, ViewLayer::ViewLayerID viewLayerId
+			ConnectorsInfoWidget* info, ViewLayer::ViewLayerID viewLayerId, class ItemBase * fromItem
 		);
 		void init();
 

@@ -1776,7 +1776,7 @@ PartsEditorMainWindow* MainWindow::getPartsEditor(ModelPart *modelPart, long _id
 		mainPartsEditorWindow->setViewItems(ii, bb, ss, pp);
 	}
 
-	mainPartsEditorWindow->setup(id, modelPart, (modelPart!=NULL));
+	mainPartsEditorWindow->setup(id, modelPart, (modelPart!=NULL), fromItem);
 
 	connect(mainPartsEditorWindow, SIGNAL(partUpdated(const QString&, long, bool)), this, SLOT(loadPart(const QString&, long, bool)));
 	connect(mainPartsEditorWindow, SIGNAL(closed(long)), this, SLOT(partsEditorClosed(long)));

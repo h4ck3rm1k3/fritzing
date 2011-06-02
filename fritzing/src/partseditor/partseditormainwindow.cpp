@@ -109,7 +109,7 @@ void PartsEditorMainWindow::initText() {
 
 }
 
-void PartsEditorMainWindow::setup(long id, ModelPart *modelPart, bool fromTemplate)
+void PartsEditorMainWindow::setup(long id, ModelPart *modelPart, bool fromTemplate, ItemBase * fromItem)
 {
     QFile styleSheet(":/resources/styles/partseditor.qss");
     m_mainFrame = new QFrame(this);
@@ -188,7 +188,7 @@ void PartsEditorMainWindow::setup(long id, ModelPart *modelPart, bool fromTempla
 	ModelPart *mp = fromTemplate ? modelPart : NULL;
 
 	createHeader(mp);
-	createCenter(mp);
+	createCenter(mp, fromItem);
 	createFooter();
 
 	layout()->setMargin(0);
@@ -270,7 +270,7 @@ void PartsEditorMainWindow::createHeader(ModelPart *modelPart) {
 	m_headerFrame->setLayout(headerLayout);
 }
 
-void PartsEditorMainWindow::createCenter(ModelPart *modelPart) {
+void PartsEditorMainWindow::createCenter(ModelPart *modelPart, ItemBase * fromItem) {
 	m_moduleId = modelPart ? modelPart->moduleID() : "";
 	m_version  = modelPart ? modelPart->version() : "";
 	m_uri      = modelPart ? modelPart->uri() : "";
@@ -281,7 +281,7 @@ void PartsEditorMainWindow::createCenter(ModelPart *modelPart) {
 	QList<QWidget*> specWidgets;
 
 	m_connsInfo = new ConnectorsInfoWidget(m_undoStack,this);
-	m_views = new PartsEditorViewsWidget(m_sketchModel, m_undoStack, m_connsInfo, this);
+	m_views = new PartsEditorViewsWidget(m_sketchModel, m_undoStack, m_connsInfo, this, fromItem);
 
 	QString label = modelPart ? modelPart->label() : LabelFreshStartText;
 	m_label = new EditableLineWidget(label,m_undoStack,this,tr("Label"),modelPart);

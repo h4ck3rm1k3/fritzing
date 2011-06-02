@@ -330,6 +330,8 @@ void ModelPartShared::initConnectors() {
 		return;
 	}
 
+	QString deleteMe = m_domDocument->toString();
+
 	m_connectorsInitialized = true;
 	QDomElement root = m_domDocument->documentElement();
 	if (root.isNull()) {

@@ -130,7 +130,7 @@ void ConnectorShared::insertPin(ViewIdentifierClass::ViewIdentifier layer, SvgId
 
 void ConnectorShared::addPin(ViewIdentifierClass::ViewIdentifier layer, QString connectorId, ViewLayer::ViewLayerID viewLayerID, QString terminalId) {
 	SvgIdLayer * svgIdLayer = new SvgIdLayer;
-	svgIdLayer->m_viewLayerID = viewLayerID;
+	svgIdLayer->m_svgViewLayerID = viewLayerID;
 	svgIdLayer->m_svgId = connectorId;
 	svgIdLayer->m_terminalId = terminalId;
 	svgIdLayer->m_processed = false;	
@@ -153,7 +153,7 @@ void ConnectorShared::removePin(ViewIdentifierClass::ViewIdentifier layer, SvgId
 const QString ConnectorShared::pin(ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID) {
 	QList<SvgIdLayer *> svgLayers = m_pins.values(viewId);
 	foreach ( SvgIdLayer * svgIdLayer, svgLayers) {
-		if (svgIdLayer->m_viewLayerID == viewLayerID) {
+		if (svgIdLayer->m_svgViewLayerID == viewLayerID) {
 			return svgIdLayer->m_svgId;
 		}
 	}
@@ -164,7 +164,7 @@ const QString ConnectorShared::pin(ViewIdentifierClass::ViewIdentifier viewId, V
 const QString ConnectorShared::terminal(ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID) {
 	QList<SvgIdLayer *> svgLayers = m_pins.values(viewId);
 	foreach ( SvgIdLayer * svgIdLayer, svgLayers) {
-		if (svgIdLayer->m_viewLayerID == viewLayerID) {
+		if (svgIdLayer->m_svgViewLayerID == viewLayerID) {
 			return svgIdLayer->m_terminalId;
 		}
 	}
@@ -176,7 +176,7 @@ const QString ConnectorShared::terminal(ViewIdentifierClass::ViewIdentifier view
 SvgIdLayer * ConnectorShared::fullPinInfo(ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID) {
 	QList<SvgIdLayer *> svgLayers = m_pins.values(viewId);
 	foreach ( SvgIdLayer * svgIdLayer, svgLayers) {
-		if (svgIdLayer->m_viewLayerID == viewLayerID) {
+		if (svgIdLayer->m_svgViewLayerID == viewLayerID) {
 			return svgIdLayer;
 		}
 	}
@@ -209,7 +209,7 @@ void ConnectorShared::loadPin(QDomElement elem, ViewIdentifierClass::ViewIdentif
 		svgIdLayer->m_processed = false;
 		svgIdLayer->m_hybrid = (pinElem.attribute("hybrid").compare("yes") == 0);
 		svgIdLayer->m_svgId = svgId;
-		svgIdLayer->m_viewLayerID = ViewLayer::viewLayerIDFromXmlString(layer);
+		svgIdLayer->m_svgViewLayerID = ViewLayer::viewLayerIDFromXmlString(layer);
 
 		QString terminalId = pinElem.attribute("terminalId");
 		//DebugDialog::debug(QString("svg id view layer id %1, %2").arg(svgIdLayer->m_viewLayerID).arg(layer));

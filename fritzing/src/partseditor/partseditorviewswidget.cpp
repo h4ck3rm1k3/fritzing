@@ -40,16 +40,16 @@ QString PartsEditorViewsWidget::EmptyBreadViewText = ___emptyString___;
 QString PartsEditorViewsWidget::EmptySchemViewText = ___emptyString___;
 QString PartsEditorViewsWidget::EmptyPcbViewText = ___emptyString___;
 
-PartsEditorViewsWidget::PartsEditorViewsWidget(SketchModel *sketchModel, WaitPushUndoStack *undoStack, ConnectorsInfoWidget* info, QWidget *parent) : QFrame(parent) {
+PartsEditorViewsWidget::PartsEditorViewsWidget(SketchModel *sketchModel, WaitPushUndoStack *undoStack, ConnectorsInfoWidget* info, QWidget *parent, ItemBase * fromItem) : QFrame(parent) {
 	init();
 
 	m_showTerminalPointsCheckBox = new QCheckBox(this);
 	m_showTerminalPointsCheckBox->setText(tr("Show Anchor Points"));
 	connect(m_showTerminalPointsCheckBox, SIGNAL(stateChanged(int)), this, SLOT(showHideTerminalPoints(int)));
 
-	m_breadView = createViewImageWidget(sketchModel, undoStack, ViewIdentifierClass::BreadboardView, "breadboard_icon.png", EmptyBreadViewText, info, ViewLayer::Breadboard);
-	m_schemView = createViewImageWidget(sketchModel, undoStack, ViewIdentifierClass::SchematicView, "schematic_icon.png", EmptySchemViewText, info, ViewLayer::Schematic);
-	m_pcbView = createViewImageWidget(sketchModel, undoStack, ViewIdentifierClass::PCBView, "pcb_icon.png", EmptyPcbViewText, info, ViewLayer::Copper0);
+	m_breadView = createViewImageWidget(sketchModel, undoStack, ViewIdentifierClass::BreadboardView, "breadboard_icon.png", EmptyBreadViewText, info, ViewLayer::Breadboard, fromItem);
+	m_schemView = createViewImageWidget(sketchModel, undoStack, ViewIdentifierClass::SchematicView, "schematic_icon.png", EmptySchemViewText, info, ViewLayer::Schematic, fromItem);
+	m_pcbView = createViewImageWidget(sketchModel, undoStack, ViewIdentifierClass::PCBView, "pcb_icon.png", EmptyPcbViewText, info, ViewLayer::Copper0, fromItem);
 
 	m_breadView->setViewLayerIDs(ViewLayer::Breadboard, ViewLayer::BreadboardWire, ViewLayer::Breadboard, ViewLayer::BreadboardRuler, ViewLayer::BreadboardNote);
 	m_schemView->setViewLayerIDs(ViewLayer::Schematic, ViewLayer::SchematicWire, ViewLayer::Schematic, ViewLayer::SchematicRuler, ViewLayer::SchematicNote);
@@ -119,10 +119,10 @@ void PartsEditorViewsWidget::init() {
 PartsEditorView * PartsEditorViewsWidget::createViewImageWidget(
 		SketchModel* sketchModel, WaitPushUndoStack *undoStack,
 		ViewIdentifierClass::ViewIdentifier viewId, QString iconFileName, QString startText,
-		ConnectorsInfoWidget* info, ViewLayer::ViewLayerID viewLayerId
-	) {
+		ConnectorsInfoWidget* info, ViewLayer::ViewLayerID viewLayerId, ItemBase * fromItem) 
+{
 
-	PartsEditorView * viw = new PartsEditorView(viewId,tempDir(),showingTerminalPoints(),PartsEditorMainWindow::emptyViewItem(iconFileName,startText),this);
+	PartsEditorView * viw = new PartsEditorView(viewId,tempDir(),showingTerminalPoints(),PartsEditorMainWindow::emptyViewItem(iconFileName,startText),this, 150, false, fromItem);
 	viw->setSketchModel(sketchModel);
 	viw->setUndoStack(undoStack);
 	viw->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);

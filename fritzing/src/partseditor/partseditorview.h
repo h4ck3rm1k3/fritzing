@@ -56,7 +56,8 @@ class PartsEditorView : public SketchWidget {
 		PartsEditorView(
 			ViewIdentifierClass::ViewIdentifier, QDir tempDir,
 			bool showingTerminalPoints, QGraphicsProxyWidget *startItem=0,
-			QWidget *parent=0, int size=150, bool deleteModelPartOnClearScene=false);
+			QWidget *parent=0, int size=150, bool deleteModelPartOnClearScene=false,
+			class ItemBase * fromItem = NULL);
 		~PartsEditorView();
 
 		// general
@@ -126,7 +127,7 @@ class PartsEditorView : public SketchWidget {
 		void setDefaultBackground();
 		void clearScene();
 		void removeConnectors();
-		void addDefaultLayers();
+		void addDefaultLayers(class ItemBase * fromItem);
 
 		void wheelEvent(QWheelEvent* event);
 		void drawBackground(QPainter *painter, const QRectF &rect);
@@ -144,6 +145,10 @@ class PartsEditorView : public SketchWidget {
 		QString getOrCreateViewFolderInTemp();
 		bool ensureFilePath(const QString &filePath);
 
+
+		// TODO: retire all singular findConnectorsLayerId() for plural findConnectorsLayerIds()
+		QStringList findConnectorsLayerIds(QDomDocument *svgDom);
+		void findConnectorsLayerIdsAux(QStringList &result, QDomElement &docElem);
 		void findConnectorsLayerId();
 		QString findConnectorsLayerId(QDomDocument *svgDom);
 		bool findConnectorsLayerIdAux(QString &result, QDomElement &docElem, QStringList &prevLayers);

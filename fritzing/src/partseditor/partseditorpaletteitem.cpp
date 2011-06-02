@@ -227,12 +227,18 @@ bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ViewIdentifierCla
 	QDomElement layers = LayerAttributes::getSvgElementLayers(modelPartShared->domDocument(), viewIdentifier);
 	QDomElement layer = layers.firstChildElement("layer");
 	while (!layer.isNull()) {
-		QString layerName = layer.attribute("layerId");
-		if (!layerName.isEmpty()) {
-			ViewLayer::ViewLayerID vlid = ViewLayer::viewLayerIDFromXmlString(layerName);
-			if (vlid != viewLayerID) {
-				m_extraViewLayers << vlid;
+		// skip layer if it's an SMD
+		if (layer.attribute("flipSMD").compare("true") != 0) {
+			QString layerName = layer.attribute("layerId");
+			if (!layerName.isEmpty()) {
+				ViewLayer::ViewLayerID vlid = ViewLayer::viewLayerIDFromXmlString(layerName);
+				if (vlid != viewLayerID) {
+					m_extraViewLayers << vlid;
+				}
 			}
+		}
+		else {
+			DebugDialog::debug(QString("skipping layer %1").arg(layer.attribute("layerId")));
 		}
 		layer = layer.nextSiblingElement("layer");
 	}

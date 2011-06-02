@@ -65,8 +65,6 @@ protected:
 
 public slots:
 	void resistanceEntry(const QString & text);
-	void toleranceEntry(const QString & text);
-
 
 public:
 	static qreal toOhms(const QString & ohmsString, void * data);

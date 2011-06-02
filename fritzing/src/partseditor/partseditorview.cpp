@@ -61,7 +61,8 @@ int PartsEditorView::ConnDefaultHeight = ConnDefaultWidth;
 PartsEditorView::PartsEditorView(
 		ViewIdentifierClass::ViewIdentifier viewId, QDir tempDir,
 		bool showingTerminalPoints, QGraphicsProxyWidget *startItem,
-		QWidget *parent, int size, bool deleteModelPartOnClearScene)
+		QWidget *parent, int size, bool deleteModelPartOnClearScene,
+		ItemBase * fromItem)
 	: SketchWidget(viewId, parent, size, size)
 {
 	m_viewItem = NULL;
@@ -93,7 +94,7 @@ PartsEditorView::PartsEditorView(
 		// TODO: do we still need this?
 		QTimer::singleShot(400, this, SLOT(ensureFixedItemsPositions()));
 	}
-	addDefaultLayers();
+	addDefaultLayers(fromItem);
 
 
 	// conns
@@ -123,12 +124,26 @@ PartsEditorView::~PartsEditorView() {
 	clearScene();
 }
 
-void PartsEditorView::addDefaultLayers() {
+void PartsEditorView::addDefaultLayers(ItemBase * fromItem) {
 	switch( m_viewIdentifier ) {
-		case ViewIdentifierClass::BreadboardView: addBreadboardViewLayers(); break;
-		case ViewIdentifierClass::SchematicView: addSchematicViewLayers(); break;
-		case ViewIdentifierClass::PCBView: addPcbViewLayers(); break;
-		default: break;
+		case ViewIdentifierClass::BreadboardView: 
+			addBreadboardViewLayers(); 
+			break;
+		case ViewIdentifierClass::SchematicView: 
+			addSchematicViewLayers(); 
+			break;
+		case ViewIdentifierClass::PCBView: 
+			addPcbViewLayers(); 
+			if (fromItem && fromItem->modelPart()->flippedSMD()) {
+				DebugDialog::debug("editing an SMD part");
+				setViewLayerIDs(ViewLayer::Silkscreen1, ViewLayer::Copper1Trace, ViewLayer::Copper1, ViewLayer::PcbRuler, ViewLayer::PcbNote);
+				this->m_viewLayers.remove(ViewLayer::Copper0);
+				this->m_viewLayers.remove(ViewLayer::Silkscreen0);
+				this->m_viewLayers.remove(ViewLayer::Copper0Trace);
+			}
+			break;
+		default: 
+			break;
 	}
 }
 
@@ -177,7 +192,7 @@ ItemBase * PartsEditorView::addItemAux(ModelPart * modelPart, ViewLayer::ViewLay
 				if(viewLayerID == ViewLayer::UnknownLayer) {
 					viewLayerID = getViewLayerID(modelPart, m_viewIdentifier, viewLayerSpec);
 				}
-				addDefaultLayers();
+				addDefaultLayers(NULL);
 				if (m_viewItem != NULL) {
 					QHash<QString, QString> svgHash;
 					QString svg = "";
@@ -472,6 +487,33 @@ void PartsEditorView::findConnectorsLayerId() {
 		if(m_connsLayerID == ViewLayer::UnknownLayer) {
 			m_connsLayerID = SketchWidget::defaultConnectorLayer(m_viewIdentifier);
 		}
+	}
+}
+
+QStringList PartsEditorView::findConnectorsLayerIds(QDomDocument *svgDom) {
+	QStringList result;
+	QDomElement docElem = svgDom->documentElement();
+	findConnectorsLayerIdsAux(result, docElem);
+	if (result.count() > 0) return result;
+
+	return defaultLayerAsStringlist();
+}
+
+void PartsEditorView::findConnectorsLayerIdsAux(QStringList &result, QDomElement &docElem) {
+	QDomElement e = docElem.firstChildElement();
+	while(!e.isNull()) {
+		QString id = e.attribute("id");
+		if (id.startsWith("connector")) {
+			QDomElement parent = e.parentNode().toElement();
+			QString id = parent.attribute("id");
+			if (!id.isEmpty() && (ViewLayer::viewLayerIDFromXmlString(id) != ViewLayer::UnknownLayer)) {
+				result << id;
+			}
+		} 
+		else if(e.hasChildNodes()) {
+			findConnectorsLayerIdsAux(result, e);
+		}
+		e = e.nextSiblingElement();
 	}
 }
 
@@ -1164,12 +1206,14 @@ void PartsEditorView::aboutToSave(bool fakeDefaultIfNone) {
 			// let's get the connectorsLayer after it
 			bool somethingChanged = addDefaultLayerIfNotInSvg(svgDom, fakeDefaultIfNone);
 
-			QString connectorsLayerId = findConnectorsLayerId(svgDom);
 			QDomElement elem = svgDom->documentElement();
 
 			somethingChanged |= removeConnectorsIfNeeded(elem);
-			somethingChanged |= updateTerminalPoints(svgDom, sceneViewBox, svgViewBox, connectorsLayerId);
-			somethingChanged |= addConnectorsIfNeeded(svgDom, sceneViewBox, svgViewBox, connectorsLayerId);
+			QStringList connectorsLayerIds = findConnectorsLayerIds(svgDom);
+			foreach (QString connectorsLayerId, connectorsLayerIds) {
+				somethingChanged |= updateTerminalPoints(svgDom, sceneViewBox, svgViewBox, connectorsLayerId);
+				somethingChanged |= addConnectorsIfNeeded(svgDom, sceneViewBox, svgViewBox, connectorsLayerId);
+			}
 			somethingChanged |= (m_viewItem != NULL);
 
 			if(somethingChanged) {
@@ -1323,9 +1367,8 @@ QString PartsEditorView::svgIdForConnector(Connector* conn, const QString &connI
 bool PartsEditorView::updateTerminalPoints(QDomDocument *svgDom, const QSizeF &sceneViewBox, const QRectF &svgViewBox, const QString &connectorsLayerId) {
 	QList<PartsEditorConnectorsConnectorItem*> connsWithNewTPs;
 	QStringList tpIdsToRemove;
-	foreach(QGraphicsItem *item, items()) {
-		PartsEditorConnectorsConnectorItem *citem =
-			dynamic_cast<PartsEditorConnectorsConnectorItem*>(item);
+	foreach(QGraphicsItem *item, items()) { 
+		PartsEditorConnectorsConnectorItem *citem = dynamic_cast<PartsEditorConnectorsConnectorItem*>(item);
 		if(citem) {
 			TerminalPointItem *tp = citem->terminalPointItem();
 			if (!tp) {
@@ -1357,14 +1400,23 @@ bool PartsEditorView::updateTerminalPoints(QDomDocument *svgDom, const QSizeF &s
 }
 
 void PartsEditorView::updateSvgIdLayer(const QString &connId, const QString &terminalId, const QString &connectorsLayerId) {
+	ViewLayer::ViewLayerID viewLayerID = ViewLayer::viewLayerIDFromXmlString(connectorsLayerId);
 	foreach(Connector *conn, m_item->connectors()) {
 		foreach(SvgIdLayer *sil, conn->connectorShared()->pins().values(m_viewIdentifier)) {
 			if(conn->connectorSharedID() == connId) {
+				if (sil->m_svgViewLayerID == viewLayerID) {
+					sil->m_terminalId = terminalId;
+					return;
+				}
+			}
+		}
+
+		foreach(SvgIdLayer *sil, conn->connectorShared()->pins().values(m_viewIdentifier)) {
+			if(conn->connectorSharedID() == connId) {
 				sil->m_terminalId = terminalId;
-				ViewLayer::ViewLayerID viewLayerID =
-					ViewLayer::viewLayerIDFromXmlString(connectorsLayerId);
+				
 				if(viewLayerID != ViewLayer::UnknownLayer) {
-					sil->m_viewLayerID = viewLayerID;
+					sil->m_svgViewLayerID = viewLayerID;
 				}
 			}
 		}
@@ -1621,10 +1673,10 @@ void PartsEditorView::checkConnectorLayers(ViewIdentifierClass::ViewIdentifier v
 	QList<SvgIdLayer *> changes;
 	foreach (SvgIdLayer * newSvgIdLayer, newpins) {
 		bool gotOne = false;
-		layerList << newSvgIdLayer->m_viewLayerID;
+		layerList << newSvgIdLayer->m_svgViewLayerID;
 
 		foreach (SvgIdLayer * oldSvgIdLayer, oldpins) {
-			if (newSvgIdLayer->m_viewLayerID == oldSvgIdLayer->m_viewLayerID) {
+			if (newSvgIdLayer->m_svgViewLayerID == oldSvgIdLayer->m_svgViewLayerID) {
 				gotOne = true;
 				break;
 			}
@@ -1644,7 +1696,7 @@ void PartsEditorView::checkConnectorLayers(ViewIdentifierClass::ViewIdentifier v
 	foreach (SvgIdLayer * oldSvgIdLayer, oldpins) {
 		bool gotOne = false;
 		foreach (SvgIdLayer * newSvgIdLayer, newpins) {
-			if (newSvgIdLayer->m_viewLayerID == oldSvgIdLayer->m_viewLayerID) {
+			if (newSvgIdLayer->m_svgViewLayerID == oldSvgIdLayer->m_svgViewLayerID) {
 				gotOne = true;
 				break;
 			}
@@ -1692,7 +1744,7 @@ void PartsEditorView::updatePinsInfo(QList< QPointer<ConnectorShared> > connsSha
 			SvgIdLayer* pinInfo = cs->fullPinInfo(m_viewIdentifier, vlid);
 			if (pinInfo != NULL && m_svgIds[connId].connectorId != ___emptyString___) {
 				pinInfo->m_svgId = m_svgIds[connId].connectorId;
-				pinInfo->m_viewLayerID = layerID;
+				pinInfo->m_svgViewLayerID = layerID;
 				found << cs;
 			}
 		}
