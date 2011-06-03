@@ -3027,5 +3027,5 @@ void MainWindow::orderFab()
 {
 	// TODO: some kind of checking
 
-	QDesktopServices::openUrl(QString("http://fritzing.org/shop/donations/"));
+        QDesktopServices::openUrl(QString("http://fab.fritzing.org/"));
 }
