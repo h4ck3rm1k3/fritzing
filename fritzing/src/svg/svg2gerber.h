@@ -72,6 +72,8 @@ protected:
     int allPaths2gerber(bool forOutline);
     QString path2gerber(QDomElement);
 	void handleOblongPath(QDomElement & path, int & dcode_index);
+	QString standardAperture(QDomElement & element, QHash<QString, QString> & apertureMap, QString & current_dcode, int & dcode_index);
+
 
 
 protected slots:

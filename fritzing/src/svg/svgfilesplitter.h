@@ -46,6 +46,7 @@ struct PathUserData {
 	qreal vbHeight;
 	qreal x;
 	qreal y;
+	bool pathStarting;
 	QPainterPath * painterPath;
 };
 
@@ -90,6 +91,7 @@ protected:
 							qreal sNewWidth, qreal sNewHeight,
 							qreal vbWidth, qreal vbHeight);
 	bool shiftTranslation(QDomElement & element, qreal x, qreal y);
+	void standardArgs(bool relative, bool starting, QList<double> & args, PathUserData * pathUserData);
 
 protected:
 	static void changeStrokeWidth(QDomElement & element, qreal delta, bool absolute);

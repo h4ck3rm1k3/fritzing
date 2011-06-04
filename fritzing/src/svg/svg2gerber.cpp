@@ -347,6 +347,8 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
 			}
 		}
 		else {
+			standardAperture(circle, apertureMap, current_dcode, dcode_index);
+
 			// create circle outline 
 			m_gerber_paths += QString("G01X%1Y%2D02*\n"
 									  "G75*\n"
@@ -397,7 +399,7 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
 
         // add aperture to defs if we don't have it yet
         if(!apertureMap.contains(aperture)){
-            apertureMap[aperture] = "D" + QString::number(dcode_index);
+            apertureMap[aperture] = QString::number(dcode_index);
             m_gerber_header += "%ADD" + QString::number(dcode_index) + aperture + "*%\n";
             m_soldermask_header += "%ADD" + QString::number(dcode_index) + mask_aperture + "*%\n";
             dcode_index++;
@@ -407,8 +409,8 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
 			QString dcode = apertureMap[aperture];
 			if(current_dcode != dcode){
 				//switch to correct aperture
-				m_gerber_paths += "G54" + dcode + "*\n";
-				m_soldermask_paths += "G54" + dcode + "*\n";
+				m_gerber_paths += "G54D" + dcode + "*\n";
+				m_soldermask_paths += "G54D" + dcode + "*\n";
 				current_dcode = dcode;
 			}
 			//flash
@@ -417,6 +419,8 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
 		}
         else {
             // draw 4 lines
+
+			standardAperture(rect, apertureMap, current_dcode, dcode_index);
             m_gerber_paths += "X" + QString::number(qRound(x)) + "Y" + QString::number(qRound(y)) + "D02*\n";
             m_gerber_paths += "X" + QString::number(qRound(x+width)) + "Y" + QString::number(qRound(y)) + "D01*\n";
             m_gerber_paths += "X" + QString::number(qRound(x+width)) + "Y" + QString::number(qRound(y+height)) + "D01*\n";
@@ -445,31 +449,26 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
             m_gerber_paths += "G36*\n";
 			aperture = QString("C,%1").arg(1/1000.0, 0, 'f');
 			mask_aperture = QString("C,%1").arg((1/1000.0) + 0.006, 0, 'f');
-        }
-		else {
-			qreal stroke_width = polygon.attribute("stroke-width").toDouble();
-
-			aperture = QString("C,%1").arg(stroke_width/1000, 0, 'f');
-			mask_aperture = QString("C,%1").arg((stroke_width/1000) + 0.006, 0, 'f');
-
+ 			if (!apertureMap.contains(aperture)){
+				apertureMap[aperture] = QString::number(dcode_index);
+				m_gerber_header += "%ADD" + QString::number(dcode_index) + aperture + "*%\n";
+				m_soldermask_header += "%ADD" + QString::number(dcode_index) + mask_aperture + "*%\n";
+				dcode_index++;
+			}
 		}
-
-		// add aperture to defs if we don't have it yet
-		if(!apertureMap.contains(aperture)){
-			apertureMap[aperture] = "D" + QString::number(dcode_index);
-			m_gerber_header += "%ADD" + QString::number(dcode_index) + aperture + "*%\n";
-			m_soldermask_header += "%ADD" + QString::number(dcode_index) + mask_aperture + "*%\n";
-			dcode_index++;
-		}
+ 		// add aperture to defs if we don't have it yet
 
 		if (!forOutline) {
 			QString dcode = apertureMap[aperture];
 			if(current_dcode != dcode){
 				//switch to correct aperture
-				m_gerber_paths += "G54" + dcode + "*\n";
-				m_soldermask_paths += "G54" + dcode + "*\n";
+				m_gerber_paths += "G54D" + dcode + "*\n";
+				m_soldermask_paths += "G54D" + dcode + "*\n";
 				current_dcode = dcode;
 			}
+		}
+		else {
+			standardAperture(polygon, apertureMap, current_dcode, dcode_index);
 		}
 
         int startx = qRound(pointList.at(0).toDouble());
@@ -507,23 +506,12 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
 			if (line.attribute("id").compare("boardoutline", Qt::CaseInsensitive) != 0) continue;
 		}
 
-		QString aperture;
-
         int x1 = qRound(line.attribute("x1").toDouble());
         int y1 = qRound(line.attribute("y1").toDouble());
         int x2 = qRound(line.attribute("x2").toDouble());
         int y2 = qRound(line.attribute("y2").toDouble());
-        qreal stroke_width = line.attribute("stroke-width").toDouble();
-		if (stroke_width == 0) continue;
 
-        aperture = QString("C,%1").arg(stroke_width/1000, 0, 'f');
-
-        // add aperture to defs if we don't have it yet
-        if(!apertureMap.contains(aperture)){
-            apertureMap[aperture] = "D" + QString::number(dcode_index);
-            m_gerber_header += "%ADD" + QString::number(dcode_index) + aperture + "*%\n";
-            dcode_index++;
-        }
+		standardAperture(line, apertureMap, current_dcode, dcode_index);
 
         // turn off light if we are not continuing along a path
         if ((y1 != currenty) || (x1 != currentx)) {
@@ -532,15 +520,6 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
                 light_on = false;
             }
         }
-
-		if (!forOutline) {
-			QString dcode = apertureMap[aperture];
-			if(current_dcode != dcode){
-				//switch to correct aperture
-				m_gerber_paths += "G54" + dcode + "*\n";
-				current_dcode = dcode;
-			}
-		}
 
         //go to start - light off
         m_gerber_paths += "X" + QString::number(x1) + "Y" + QString::number(y1) + "D02*\n";
@@ -559,13 +538,15 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
 		}
 
 		QString data = path.attribute("d").trimmed();
-        QString aperture;
+
+		standardAperture(path, apertureMap, current_dcode, dcode_index);
 
         const char * slot = SLOT(path2gerbCommandSlot(QChar, bool, QList<double> &, void *));
 
         PathUserData pathUserData;
         pathUserData.x = 0;
         pathUserData.y = 0;
+		pathUserData.pathStarting = true;
         pathUserData.string = "";
 
         SvgFlattener flattener;
@@ -584,17 +565,6 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
         if(!forOutline && path.hasAttribute("fill") && !(path.hasAttribute("stroke"))){
             // start poly fill
             m_gerber_paths += "G36*\n";
-        }
-
-		qreal stroke_width = path.attribute("stroke-width").toDouble();
-
-        aperture = QString("C,%1").arg(stroke_width/1000, 0, 'f');
-
-        // add aperture to defs if we don't have it yet
-        if(!apertureMap.contains(aperture)){
-            apertureMap[aperture] = "D" + QString::number(dcode_index);
-            m_gerber_header += "%ADD" + QString::number(dcode_index) + aperture + "*%\n";
-            dcode_index++;
         }
 
         m_gerber_paths += pathUserData.string;
@@ -616,6 +586,35 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
 
 	return invalidPathsCount;
 }
+
+QString SVG2gerber::standardAperture(QDomElement & element, QHash<QString, QString> & apertureMap, QString & current_dcode, int & dcode_index) {
+	qreal stroke_width = element.attribute("stroke-width").toDouble();
+	if (stroke_width == 0) return "";
+
+	QString aperture = QString("C,%1").arg(stroke_width/1000, 0, 'f');
+	QString mask_aperture = QString("C,%1").arg((stroke_width/1000.0) + 0.006, 0, 'f');
+
+
+        // add aperture to defs if we don't have it yet
+    if (!apertureMap.contains(aperture)){
+        apertureMap[aperture] = QString::number(dcode_index);
+        m_gerber_header += "%ADD" + QString::number(dcode_index) + aperture + "*%\n";
+        m_soldermask_header += "%ADD" + QString::number(dcode_index) + mask_aperture + "*%\n";
+        dcode_index++;
+    }
+
+	QString dcode = apertureMap[aperture];
+	if (current_dcode != dcode) {
+		//switch to correct aperture
+		m_gerber_paths += "G54D" + dcode + "*\n";
+		m_soldermask_paths += "G54D" + dcode + "*\n";
+		current_dcode = dcode;
+	}
+
+	return aperture;
+
+}
+
 
 void SVG2gerber::handleOblongPath(QDomElement & path, int & dcode_index) {
 		// look for oblong paths
@@ -667,74 +666,95 @@ void SVG2gerber::path2gerbCommandSlot(QChar command, bool relative, QList<double
 
     PathUserData * pathUserData = (PathUserData *) userData;
 
-    switch(command.toAscii()) {
-				case 'a':
-				case 'A':
-					// TODO: implement elliptical arc 
-					pathUserData->string.append("INVALID");
-					break;
-                case 'm':
-                case 'M':
-                    x = args[0];
-                    y = args[1];
-                    if (relative) {
-                        x += pathUserData->x;
-                        y += pathUserData->y;
-                    }
-                    gerb = "X" + QString::number(x) + "Y" + QString::number(y) + "D02*\n";
-                    pathUserData->x = x;
-                    pathUserData->y = y;
-                    m_pathstart_x = x;
-                    m_pathstart_y = y;
-                    pathUserData->string.append(gerb);
-                    break;
-                case 'v':
-                case 'V':
-					DebugDialog::debug("'v' and 'V' are now removed by preprocessing; shouldn't be here");
-					/*
-                    y = args[0];
-                    if (relative) {
-                        y += pathUserData->y;
-                    }
-                    gerb = "Y" + QString::number(y) + "D01*\n";
-                    pathUserData->y = y;
-                    pathUserData->string.append(gerb);
-					*/
-                    break;
-                case 'h':
-                case 'H':
-					DebugDialog::debug("'h' and 'H' are now removed by preprocessing; shouldn't be here");
-					/*
-                    x = args[0];
-                    if (relative) {
-                        x += pathUserData->x;
-                    }
-                    gerb = "X" + QString::number(x) + "D01*\n";
-                    pathUserData->x = x;
-                    pathUserData->string.append(gerb);
-					*/
-                    break;
-                case 'l':
-                case 'L':
-                    x = args[0];
-                    y = args[1];
-                    if (relative) {
-                        x += pathUserData->x;
-                        y += pathUserData->y;
-                    }
-                    gerb = "X" + QString::number(x) + "Y" + QString::number(y) + "D01*\n";
-                    pathUserData->x = x;
-                    pathUserData->y = y;
-                    pathUserData->string.append(gerb);
-                    break;
-                case 'z':
-                case 'Z':
-                    gerb = "X" + QString::number(m_pathstart_x) + "Y" + QString::number(m_pathstart_y) + "D01*\n";
-                    gerb += "D02*\n";
-                    pathUserData->string.append(gerb);
-                    break;
-                default:
-                    pathUserData->string.append("INVALID");
-                    break;
-    }
+	int argIndex = 0;
+	while (argIndex < args.count()) {
+		switch(command.toAscii()) {
+					case 'a':
+					case 'A':
+					case 'c':
+					case 'C':
+					case 'q':
+					case 'Q':
+					case 't':
+					case 'T':
+						// TODO: implement elliptical arc, etc.
+						pathUserData->string.append("INVALID");
+						break;
+					case 'm':
+					case 'M':
+						x = args[argIndex];
+						y = args[argIndex + 1];
+						if (relative && !pathUserData->pathStarting) {
+							x += pathUserData->x;
+							y += pathUserData->y;
+						}
+						if (argIndex == 0) {
+							// treat first 'm' arg pair as a move to
+							gerb = "X" + QString::number(x) + "Y" + QString::number(y) + "D02*\n";
+							m_pathstart_x = x;
+							m_pathstart_y = y;
+						}
+						else {
+							// treat subsequent 'm' arg pair as line to
+							gerb = "X" + QString::number(x) + "Y" + QString::number(y) + "D01*\n";
+						}
+
+						pathUserData->x = x;
+						pathUserData->y = y;
+						pathUserData->pathStarting = false;
+						pathUserData->string.append(gerb);
+						argIndex += 2;
+						break;
+					case 'v':
+					case 'V':
+						DebugDialog::debug("'v' and 'V' are now removed by preprocessing; shouldn't be here");
+						/*
+						y = args[0];
+						if (relative) {
+							y += pathUserData->y;
+						}
+						gerb = "Y" + QString::number(y) + "D01*\n";
+						pathUserData->y = y;
+						pathUserData->string.append(gerb);
+						*/
+						break;
+					case 'h':
+					case 'H':
+						DebugDialog::debug("'h' and 'H' are now removed by preprocessing; shouldn't be here");
+						/*
+						x = args[0];
+						if (relative) {
+							x += pathUserData->x;
+						}
+						gerb = "X" + QString::number(x) + "D01*\n";
+						pathUserData->x = x;
+						pathUserData->string.append(gerb);
+						*/
+						break;
+					case 'l':
+					case 'L':
+						x = args[argIndex];
+						y = args[argIndex + 1];
+						if (relative) {
+							x += pathUserData->x;
+							y += pathUserData->y;
+						}
+						gerb = "X" + QString::number(x) + "Y" + QString::number(y) + "D01*\n";
+						pathUserData->x = x;
+						pathUserData->y = y;
+						pathUserData->string.append(gerb);
+						argIndex += 2;
+						break;
+					case 'z':
+					case 'Z':
+						gerb = "X" + QString::number(m_pathstart_x) + "Y" + QString::number(m_pathstart_y) + "D01*\n";
+						gerb += "D02*\n";
+						pathUserData->string.append(gerb);
+						pathUserData->pathStarting = true;
+						break;
+					default:
+						pathUserData->string.append("INVALID");
+						break;
+		}
+	}
 }
