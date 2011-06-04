@@ -59,6 +59,7 @@ public:
 	static const QString PotentiometerModuleIDName;
 	static const QString InductorModuleIDName;
 	static const QString LEDModuleIDName;
+	static const QString PerfboardModuleIDName;
 };
 
 #endif

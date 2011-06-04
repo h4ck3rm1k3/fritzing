@@ -506,6 +506,9 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastL
 	else if (moduleID.compare(ModuleIDNames::HoleModuleIDName) == 0) {
 		type = ModelPart::Hole;
 	}
+	else if (moduleID.endsWith(ModuleIDNames::PerfboardModuleIDName)) {
+		type = ModelPart::Breadboard;
+	}
 	else if (propertiesText.contains("breadboard", Qt::CaseInsensitive)) {
 		type = ModelPart::Breadboard;
 	}

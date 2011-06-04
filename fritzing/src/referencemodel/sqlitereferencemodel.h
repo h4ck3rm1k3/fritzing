@@ -54,6 +54,7 @@ class SqliteReferenceModel : public ReferenceModel {
 		bool addPart(ModelPart * newModel, bool update);
 		bool updatePart(ModelPart * newModel);
 		bool addPart(Part* part);
+		ModelPart * addPart(QString newPartPath, bool addToReference, bool updateIdAlreadyExists);
 
 		bool swapEnabled();
 		bool containsModelPart(const QString & moduleID);

@@ -654,7 +654,7 @@ bool ResizableBoard::collectExtraInfo(QWidget * parent, const QString & family, 
 		l2->setObjectName("infoViewLabel");	
 		QLineEdit * e2 = new QLineEdit();
 		e2->setEnabled(swappingEnabled);
-		validator = new QDoubleValidator(e1);
+		validator = new QDoubleValidator(e2);
 		validator->setRange(0.1, 999.9, 1);
 		validator->setNotation(QDoubleValidator::StandardNotation);
 		e2->setObjectName("infoViewLineEdit");	

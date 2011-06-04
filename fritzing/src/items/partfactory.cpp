@@ -46,6 +46,7 @@ $Date$
 #include "hole.h"
 #include "via.h"
 #include "capacitor.h"
+#include "perfboard.h"
 
 
 ItemBase * PartFactory::createPart( ModelPart * modelPart, ViewLayer::ViewLayerSpec viewLayerSpec, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, QMenu * wireMenu, bool doLabel)
@@ -128,6 +129,9 @@ ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClas
 					if (moduleID.endsWith(ModuleIDNames::LEDModuleIDName)) {
 						return new Capacitor(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 					}
+					if (moduleID.endsWith(ModuleIDNames::PerfboardModuleIDName)) {
+						return new Perfboard(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
+					}
 				}
 				QString family = modelPart->properties().value("family", "");
 				if (family.compare("mystery part", Qt::CaseInsensitive) == 0) {
@@ -143,4 +147,41 @@ ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClas
 
 			}
 	}
+}
+
+QString PartFactory::getSvgFilename(ModelPart * modelPart, const QString & expectedFileName) {
+	Q_UNUSED(expectedFileName);
+	if (modelPart->moduleID().endsWith(ModuleIDNames::PerfboardModuleIDName)) {
+		QString svg = Perfboard::makeBreadboardSvg(modelPart->properties().value("size"));
+		QString path = QDir::temp().absoluteFilePath(modelPart->moduleID() + ".svg");
+		QFile file(path);
+		if (file.open(QFile::WriteOnly)) {
+			QTextStream stream(&file);
+			stream.setCodec("UTF-8");
+			stream << svg;
+			file.close();
+			// TODO: figure out how to delete later
+			return path;
+		}
+	}
+
+	return "";
+}
+
+QString PartFactory::getFzpFilename(const QString & moduleID) {
+	if (moduleID.endsWith(ModuleIDNames::PerfboardModuleIDName)) {
+		QString path = QDir::temp().absoluteFilePath(moduleID + FritzingPartExtension);
+		QString fzp = Perfboard::genFZP(moduleID);
+		QFile file(path);
+		if (file.open(QFile::WriteOnly)) {
+			QTextStream stream(&file);
+			stream.setCodec("UTF-8");
+			stream << fzp;
+			file.close();
+			return path;
+			// TODO: figure out how to delete later
+		}
+	}
+
+	return "";
 }

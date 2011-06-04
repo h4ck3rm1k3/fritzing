@@ -1,5 +1,11 @@
 <RCC>
     <qresource prefix="/">
+ 
+        <file>resources/zoomfactors.txt</file>
+        <file>resources/ratsnestcolors.xml</file>
+        <file>resources/properties.xml</file>
+        <file>resources/vias.xml</file>
+	 
         <file>resources/images/splash_2010.png</file>
         <file>resources/images/fhp_logo_small.png</file>
         <file>resources/images/splash_progressbar.png</file>
@@ -27,51 +33,17 @@
         <file>resources/images/error_x_mini.svg</file>
         <file>resources/images/remove_prop_enter.png</file>
         <file>resources/images/remove_prop_leave.png</file>
-        <file>resources/zoomfactors.txt</file>
-        <file>resources/ratsnestcolors.xml</file>
-        <file>resources/properties.xml</file>
-        <file>resources/vias.xml</file>
-        <file>resources/parts/core/wire.fzp</file>
-        <file>resources/parts/core/cmRuler.fzp</file>
-        <file>resources/parts/core/note.fzp</file>
-        <file>resources/parts/core/rectangle_pcb.fzp</file>
-        <file>resources/parts/core/rectangle_pcb_two_layers.fzp</file>
-        <file>resources/parts/core/logotext.fzp</file>
-        <file>resources/parts/core/logoimage.fzp</file>
-        <file>resources/parts/core/copperlogotext.fzp</file>
-        <file>resources/parts/core/copperlogoimage.fzp</file>
-        <file>resources/parts/svg/core/icon/wireicon.svg</file>
-        <file>resources/parts/svg/core/icon/rulericon.svg</file>
-        <file>resources/parts/svg/core/icon/rectangle_pcb.svg</file>
-        <file>resources/parts/svg/core/breadboard/ruler.svg</file>
-        <file>resources/parts/svg/core/breadboard/wire.svg</file>
-        <file>resources/parts/svg/core/pcb/rectangle_pcb.svg</file>
-        <file>resources/parts/svg/core/pcb/logo.svg</file>
-        <file>resources/parts/svg/core/pcb/copperlogo.svg</file>
-        <file>resources/parts/core/ground.fzp</file>
-        <file>resources/parts/svg/core/schematic/ground.svg</file>
-        <file>resources/parts/svg/core/schematic/cell.svg</file>
-        <file>resources/parts/svg/core/schematic/power.svg</file>
-        <file>resources/parts/svg/core/icon/silkscreen_logo.svg</file>
-        <file>resources/parts/svg/core/icon/silkscreen_text.svg</file>        
-	<file>resources/parts/svg/core/icon/copper_text.svg</file>
-	<file>resources/parts/svg/core/icon/copper_logo.svg</file>
-        <file>resources/parts/svg/core/icon/ground.svg</file>
-        <file>resources/parts/svg/core/icon/cell.svg</file>
-        <file>resources/parts/svg/core/icon/power.svg</file>
-        <file>resources/parts/core/dcpower.fzp</file>
-        <file>resources/parts/core/power.fzp</file>
-        <file>resources/parts/core/jumper.fzp</file>
-        <file>resources/parts/svg/core/pcb/jumper.svg</file>
-        <file>resources/parts/svg/core/icon/jumpericon.svg</file>
-        <file>resources/parts/core/groundplane.fzp</file>
-        <file>resources/parts/core/hole.fzp</file>
-        <file>resources/parts/svg/core/pcb/hole.svg</file>
-        <file>resources/parts/svg/core/icon/hole.svg</file>
-        <file>resources/parts/svg/core/pcb/groundplane.svg</file>
-        <file>resources/parts/core/via.fzp</file>
-        <file>resources/parts/svg/core/pcb/via.svg</file>
-        <file>resources/parts/svg/core/icon/via.svg</file>
+        <file>resources/images/helpImageBreadboard.png</file>
+        <file>resources/images/helpImageSchematic.png</file>
+        <file>resources/images/helpImagePCB.png</file>
+        <file>resources/images/inViewHelpCloseButtonBreadboard.png</file>
+        <file>resources/images/inViewHelpCloseButtonSchematic.png</file>
+        <file>resources/images/inViewHelpCloseButtonPCB.png</file>
+        <file>resources/images/inViewHelpPartsBinArrow.png</file>
+        <file>resources/images/inViewHelpAutorouteArrow.png</file>
+        <file>resources/images/inViewHelpSwitchButtonsArrow.png</file>
+        <file>resources/images/splitterHandle.png</file>
+	
         <file>resources/images/icons/partsBinOpenEnabled_icon.png</file>
         <file>resources/images/icons/partsBinOpenPressed_icon.png</file>
         <file>resources/images/icons/partsBinSaveEnabled_icon.png</file>
@@ -141,28 +113,7 @@
         <file>resources/images/icons/dockWidgetCollapsePressed_icon.png</file>
         <file>resources/images/icons/noteResizeGrip.png</file>
         <file>resources/images/icons/combobox-arrow.png</file>
-        <file>resources/styles/fritzing.qss</file>
-        <file>resources/styles/partseditor.qss</file>
-        <file>resources/styles/programwindow.qss</file>
-        <file>resources/styles/inviewhelp.qss</file>
-        <file>resources/styles/linux.qss</file>
-        <file>resources/styles/linux-kde-oxygen.qss</file>
-        <file>resources/styles/linux-gnome.qss</file>
-        <file>resources/styles/win.qss</file>
-        <file>resources/styles/mac.qss</file>
-        <file>resources/styles/updatedialog.css</file>
-        <file>resources/bins/bin.fzb</file>
-        <file>resources/bins/my_parts.fzb</file>
-        <file>resources/images/helpImageBreadboard.png</file>
-        <file>resources/images/helpImageSchematic.png</file>
-        <file>resources/images/helpImagePCB.png</file>
-        <file>resources/images/inViewHelpCloseButtonBreadboard.png</file>
-        <file>resources/images/inViewHelpCloseButtonSchematic.png</file>
-        <file>resources/images/inViewHelpCloseButtonPCB.png</file>
-        <file>resources/images/inViewHelpPartsBinArrow.png</file>
-        <file>resources/images/inViewHelpAutorouteArrow.png</file>
-        <file>resources/images/inViewHelpSwitchButtonsArrow.png</file>
-        <file>resources/images/icons/segmentedSwitcherXActiveDimmed.png</file>
+	<file>resources/images/icons/segmentedSwitcherXActiveDimmed.png</file>
         <file>resources/images/icons/segmentedSwitcherXActiveFocus.png</file>
         <file>resources/images/icons/segmentedSwitcherXActiveFocusHover.png</file>
         <file>resources/images/icons/segmentedSwitcherXInactiveDimmed.png</file>
@@ -178,7 +129,24 @@
         <file>resources/images/icons/partsEditorConnectorRemoveEnabled_icon.png</file>
         <file>resources/images/icons/partsEditorConnectorRemoveDisabled_icon.png</file>
         <file>resources/images/icons/partsEditorConnectorRemovePressed_icon.png</file>
-        <file>resources/images/itemselection/cornerHandlerActiveBottomLeft.png</file>
+        <file>resources/images/icons/arrowButtonUp.png</file>
+        <file>resources/images/icons/arrowButtonDown.png</file>
+        <file>resources/images/icons/arrowButtonLeft.png</file>
+        <file>resources/images/icons/arrowButtonRight.png</file>
+        <file>resources/images/icons/toolbarSharePressed_icon.png</file>
+        <file>resources/images/icons/toolbarShareDisabled_icon.png</file>
+        <file>resources/images/icons/toolbarShareEnabled_icon.png</file>
+        <file>resources/images/icons/zoomSliderMinus.png</file>
+        <file>resources/images/icons/zoomSliderMinusPressed.png</file>
+        <file>resources/images/icons/zoomSliderPlus.png</file>
+        <file>resources/images/icons/zoomSliderPlusPressed.png</file>
+        <file>resources/images/icons/searchField.png</file>
+	<file>resources/images/icons/noicon.png</file>
+	<file>resources/images/icons/parts_plural_v3_plur.png</file>
+	<file>resources/images/icons/parts_plural_v3_sing.png</file>
+	<file>resources/images/icons/asterisk.png</file>
+	
+	<file>resources/images/itemselection/cornerHandlerActiveBottomLeft.png</file>
         <file>resources/images/itemselection/cornerHandlerActiveBottomRight.png</file>
         <file>resources/images/itemselection/cornerHandlerActiveTopLeft.png</file>
         <file>resources/images/itemselection/cornerHandlerActiveTopRight.png</file>
@@ -197,24 +165,78 @@
         <file>resources/images/itemselection/selectionRingTop.png</file>
         <file>resources/images/itemselection/selectionRingTopLeft.png</file>
         <file>resources/images/itemselection/selectionRingTopRight.png</file>
+	
+        <file>resources/parts/core/wire.fzp</file>
+        <file>resources/parts/core/cmRuler.fzp</file>
+        <file>resources/parts/core/note.fzp</file>
+        <file>resources/parts/core/rectangle_pcb.fzp</file>
+        <file>resources/parts/core/rectangle_pcb_two_layers.fzp</file>
+        <file>resources/parts/core/logotext.fzp</file>
+        <file>resources/parts/core/logoimage.fzp</file>
+        <file>resources/parts/core/copperlogotext.fzp</file>
+        <file>resources/parts/core/copperlogoimage.fzp</file>
+        <file>resources/parts/core/ground.fzp</file>
+	<file>resources/parts/core/via.fzp</file>
+        <file>resources/parts/core/dcpower.fzp</file>
+        <file>resources/parts/core/power.fzp</file>
+        <file>resources/parts/core/jumper.fzp</file>
+        <file>resources/parts/core/groundplane.fzp</file>
+        <file>resources/parts/core/hole.fzp</file>
+        <file>resources/parts/core/perfboard.fzp</file>
+	
+        <file>resources/parts/svg/core/icon/wireicon.svg</file>
+        <file>resources/parts/svg/core/icon/rulericon.svg</file>
+        <file>resources/parts/svg/core/icon/rectangle_pcb.svg</file>
+        <file>resources/parts/svg/core/icon/silkscreen_logo.svg</file>
+        <file>resources/parts/svg/core/icon/silkscreen_text.svg</file>        
+	<file>resources/parts/svg/core/icon/copper_text.svg</file>
+	<file>resources/parts/svg/core/icon/copper_logo.svg</file>
+        <file>resources/parts/svg/core/icon/ground.svg</file>
+        <file>resources/parts/svg/core/icon/cell.svg</file>
+        <file>resources/parts/svg/core/icon/power.svg</file>
+        <file>resources/parts/svg/core/icon/jumpericon.svg</file>
+        <file>resources/parts/svg/core/icon/hole.svg</file>
+	<file>resources/parts/svg/core/icon/via.svg</file>
+	
+        <file>resources/parts/svg/core/breadboard/ruler.svg</file>
+        <file>resources/parts/svg/core/breadboard/wire.svg</file>
+        <file>resources/parts/svg/core/breadboard/perfboard.svg</file>
+	
+        <file>resources/parts/svg/core/pcb/rectangle_pcb.svg</file>
+        <file>resources/parts/svg/core/pcb/logo.svg</file>
+        <file>resources/parts/svg/core/pcb/copperlogo.svg</file>
+        <file>resources/parts/svg/core/pcb/jumper.svg</file>
+        <file>resources/parts/svg/core/pcb/hole.svg</file>
+        <file>resources/parts/svg/core/pcb/groundplane.svg</file>
+        <file>resources/parts/svg/core/pcb/via.svg</file>
+
+        <file>resources/parts/svg/core/schematic/ground.svg</file>
+        <file>resources/parts/svg/core/schematic/cell.svg</file>
+        <file>resources/parts/svg/core/schematic/power.svg</file>
+	
+	<file>resources/styles/fritzing.qss</file>
+        <file>resources/styles/partseditor.qss</file>
+        <file>resources/styles/programwindow.qss</file>
+        <file>resources/styles/inviewhelp.qss</file>
+        <file>resources/styles/linux.qss</file>
+        <file>resources/styles/linux-kde-oxygen.qss</file>
+        <file>resources/styles/linux-gnome.qss</file>
+        <file>resources/styles/win.qss</file>
+        <file>resources/styles/mac.qss</file>
+        <file>resources/styles/updatedialog.css</file>
+	
+        <file>resources/bins/bin.fzb</file>
+        <file>resources/bins/my_parts.fzb</file>
+        <file>resources/bins/search.fzb</file>
+	
         <file>resources/fonts/DroidSans.ttf</file>
         <file>resources/fonts/DroidSansMono.ttf</file>
         <file>resources/fonts/DroidSans-Bold.ttf</file>
         <file>resources/fonts/NOTICE</file>
         <file>resources/fonts/OCRA.otf</file>
         <file>resources/fonts/ReadMe.txt</file>
-        <file>resources/images/icons/arrowButtonUp.png</file>
-        <file>resources/images/icons/arrowButtonDown.png</file>
-        <file>resources/images/icons/arrowButtonLeft.png</file>
-        <file>resources/images/icons/arrowButtonRight.png</file>
-        <file>resources/images/icons/toolbarSharePressed_icon.png</file>
-        <file>resources/images/icons/toolbarShareDisabled_icon.png</file>
-        <file>resources/images/icons/toolbarShareEnabled_icon.png</file>
-        <file>resources/images/icons/zoomSliderMinus.png</file>
-        <file>resources/images/icons/zoomSliderMinusPressed.png</file>
-        <file>resources/images/icons/zoomSliderPlus.png</file>
-        <file>resources/images/icons/zoomSliderPlusPressed.png</file>
-        <file>resources/templates/jumper_copper0LayerTemplate.txt</file>
+	
+	<file>resources/templates/jumper_copper0LayerTemplate.txt</file>
         <file>resources/templates/jumper_jumperwiresLayerTemplate.txt</file>
         <file>resources/templates/resizableBoard_boardLayerTemplate.txt</file>
         <file>resources/templates/resizableBoard_silkscreenLayerTemplate.txt</file>
@@ -222,12 +244,10 @@
         <file>resources/templates/resistor_breadboardLayerTemplate.txt</file>
 	<file>resources/templates/bom.html</file>
 	<file>resources/templates/bom_row.html</file>
-        <file>resources/bins/search.fzb</file>
-        <file>resources/images/icons/searchField.png</file>
-	<file>resources/images/icons/noicon.png</file>
-	<file>resources/images/icons/parts_plural_v3_plur.png</file>
-	<file>resources/images/icons/parts_plural_v3_sing.png</file>
-	<file>resources/images/icons/asterisk.png</file>	
-        <file>resources/images/splitterHandle.png</file>
+	<file>resources/templates/perfboard_boardLayerTemplate.txt</file>
+	<file>resources/templates/perfboard_connectorTemplate.txt</file>
+	<file>resources/templates/perfboard_connectorFzpTemplate.txt</file>
+	<file>resources/templates/perfboard_fzpTemplate.txt</file>
+	
     </qresource>
 </RCC>

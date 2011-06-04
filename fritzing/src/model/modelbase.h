@@ -46,8 +46,10 @@ public:
 	void save(const QString & fileName, class QXmlStreamWriter &, bool asPart);
 	virtual ModelPart * addPart(QString newPartPath, bool addToReference);
 	virtual bool addPart(ModelPart * modelPart, bool update);
+	virtual ModelPart * addPart(QString newPartPath, bool addToReference, bool updateIdAlreadyExists);
 	bool paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *> & modelParts, QHash<QString, QRectF> & boundingRects, bool preserveIndex);
 	void setReportMissingModules(bool);
+	bool genFZP(const QString & moduleID);
 
 signals:
 	void loadedViews(ModelBase *, QDomElement & views);

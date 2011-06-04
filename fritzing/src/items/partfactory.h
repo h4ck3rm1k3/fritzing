@@ -35,6 +35,9 @@ class PartFactory
 {
 public:
 	static class ItemBase * createPart(class ModelPart *, ViewLayer::ViewLayerSpec, ViewIdentifierClass::ViewIdentifier, const class ViewGeometry & viewGeometry, long id, QMenu * itemMenu, QMenu * wireMenu, bool doLabel);
+	static QString getSvgFilename(class ModelPart *, const QString & filename);
+	static QString getFzpFilename(const QString & moduleID);
+
 
 protected:
 	static class ItemBase * createPartAux(class ModelPart *, ViewIdentifierClass::ViewIdentifier, const class ViewGeometry & viewGeometry, long id, QMenu * itemMenu, QMenu * wireMenu, bool doLabel);

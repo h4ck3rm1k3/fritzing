@@ -339,6 +339,11 @@ bool SqliteReferenceModel::addPart(ModelPart * newModel, bool update) {
 	return result;
 }
 
+ModelPart * SqliteReferenceModel::addPart(QString newPartPath, bool addToReference, bool updateIdAlreadyExists)
+{
+	return PaletteModel::addPart(newPartPath, addToReference, updateIdAlreadyExists);
+}
+
 bool SqliteReferenceModel::updatePart(ModelPart * newModel) {
 	if(m_swappingEnabled) {
 		qlonglong partId = this->partId(newModel->moduleID());

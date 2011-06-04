@@ -59,7 +59,9 @@ $Date$
 #include "utils/textutils.h"
 #include "utils/graphicsutils.h"
 #include "items/mysterypart.h"
+#include "items/moduleidnames.h"
 #include "items/pinheader.h"
+#include "items/perfboard.h"
 #include "layerpalette.h"
 #include "items/paletteitem.h"
 #include "items/virtualwire.h"
@@ -973,7 +975,7 @@ ModelPart *MainWindow::loadPartFromFile(const QString& newPartPath, bool connect
 		QApplication::exit(RestartNeeded);
 		return NULL;
 	} else {
-		ModelPart* mp = ((PaletteModel*)m_refModel)->addPart(newPartPath, true, true);
+		ModelPart* mp = m_refModel->addPart(newPartPath, true, true);
 		m_refModel->addPart(mp,true);
 		FSvgRenderer::removeFromHash(mp->moduleID(), newPartPath);
 		return mp;
@@ -1656,6 +1658,22 @@ void MainWindow::enableCheckUpdates(bool enabled)
 
 void MainWindow::swapSelectedMap(const QString & family, const QString & prop, QMap<QString, QString> & currPropsMap, ItemBase * itemBase) 
 {
+	if (itemBase == NULL) return;
+
+	if (prop.compare("size") == 0 && family.compare("Perfboard") == 0) {
+		QString size = currPropsMap.value("size");
+		QString moduleID = size + ModuleIDNames::PerfboardModuleIDName;
+		ModelPart * modelPart = m_refModel->retrieveModelPart(moduleID);
+		if (modelPart == NULL) {
+			if (!m_refModel->genFZP(moduleID)) {
+				return;
+			}
+		}
+
+		swapSelectedAux(itemBase->layerKinChief(), moduleID);
+		return;
+	}
+	
 	if ((prop.compare("package", Qt::CaseSensitive) != 0) && swapSpecial(currPropsMap)) {
 		return;
 	}
@@ -1679,7 +1697,7 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 		return;
 	}
 
-	if (itemBase == NULL) return;
+
 
 	itemBase = itemBase->layerKinChief();
 
@@ -1971,7 +1989,7 @@ bool MainWindow::loadCustomBoardShape()
 	out2 << fzp;
 	file2.close();
 
-	loadPart(userPartsFolderPath + moduleID + FritzingPartExtension);
+	loadPart(userPartsFolderPath + moduleID + FritzingPartExtension, -1, false);
 
 	swapSelectedAux(itemBase, moduleID);
 

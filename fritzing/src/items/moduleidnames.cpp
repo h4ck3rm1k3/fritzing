@@ -57,4 +57,5 @@ const QString ModuleIDNames::ThermistorModuleIDName = "ThermistorModuleID";
 const QString ModuleIDNames::PotentiometerModuleIDName = "PotentiometerModuleID";
 const QString ModuleIDNames::InductorModuleIDName = "InductorModuleID";
 const QString ModuleIDNames::LEDModuleIDName = "LEDModuleID";
+const QString ModuleIDNames::PerfboardModuleIDName = "PerfboardModuleID";
 

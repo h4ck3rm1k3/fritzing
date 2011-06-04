@@ -27,6 +27,7 @@ $Date$
 #include "modelbase.h"
 #include "../debugdialog.h"
 #include "../items/pinheader.h"
+#include "../items/partfactory.h"
 #include "../items/moduleidnames.h"
 #include "../version/version.h"
 
@@ -200,9 +201,14 @@ bool ModelBase::loadInstances(QDomDocument & domDocument, QDomElement & instance
 			DebugDialog::debug(QString("module id %1 not found in database").arg(moduleIDRef));
 			modelPart = fixObsoleteModuleID(domDocument, instance, moduleIDRef);
 			if (modelPart == NULL) {
-				missingModules.insert(moduleIDRef, instance.attribute("path"));
-   				instance = instance.nextSiblingElement("instance");
-   				continue;
+				if (genFZP(moduleIDRef)) {
+					modelPart = m_referenceModel->retrieveModelPart(moduleIDRef);
+				}
+				if (modelPart == NULL) {
+					missingModules.insert(moduleIDRef, instance.attribute("path"));
+   					instance = instance.nextSiblingElement("instance");
+   					continue;
+				}
 			}
    		}
 
@@ -284,6 +290,15 @@ ModelPart * ModelBase::addModelPart(ModelPart * parent, ModelPart * copyChild) {
 }
 
 ModelPart * ModelBase::addPart(QString newPartPath, bool addToReference) {
+	Q_UNUSED(newPartPath);
+	Q_UNUSED(addToReference);
+	throw "ModelBase::addPart should not be invoked";
+	return NULL;
+}
+
+ModelPart * ModelBase::addPart(QString newPartPath, bool addToReference, bool updateIdAlreadyExists)
+{
+	Q_UNUSED(updateIdAlreadyExists);
 	Q_UNUSED(newPartPath);
 	Q_UNUSED(addToReference);
 	throw "ModelBase::addPart should not be invoked";
@@ -472,4 +487,12 @@ bool ModelBase::isRatsnest(QDomElement & instance) {
 
 void ModelBase::setReportMissingModules(bool b) {
 	m_reportMissingModules = b;
+}
+
+bool ModelBase::genFZP(const QString & moduleID) {
+	QString path = PartFactory::getFzpFilename(moduleID);
+	if (path.isEmpty()) return false;
+
+	ModelPart* mp = m_referenceModel->addPart(path, true, true);
+	return mp != NULL;
 }

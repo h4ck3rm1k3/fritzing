@@ -43,6 +43,7 @@ class ReferenceModel : public PaletteModel {
 		virtual QString retrieveModuleId(const Part *examplePart, const QString &propertyName, bool closestMatch) = 0;
 
 		virtual bool addPart(ModelPart * newModel, bool update) = 0;
+		virtual ModelPart * addPart(QString newPartPath, bool addToReference, bool updateIdAlreadyExists) = 0;
 		virtual bool updatePart(ModelPart * newModel) = 0;
 		virtual bool addPart(Part* part) = 0;
 

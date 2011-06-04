@@ -199,7 +199,7 @@ protected slots:
 	void updateZoomOptionsNoMatterWhat(qreal zoom);
 	void updateViewZoom(qreal newZoom);
 
-	void loadPart(const QString &newPartPath, long partsEditorId=-1, bool connectorsChanged=false);
+	void loadPart(const QString &newPartPath, long partsEditorId, bool connectorsChanged);
 
 	void setInfoViewOnHover(bool infoViewOnHover);
 	void updateItemMenu();

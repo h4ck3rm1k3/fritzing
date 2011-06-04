@@ -179,7 +179,10 @@ bool FSvgRenderer::loadAux(const QByteArray & contents, const QString & filename
 		int errorLine;
 		int errorColumn;
 		QDomDocument doc;
-		doc.setContent(cleanContents, &errorStr, &errorLine, &errorColumn);
+		if (!doc.setContent(cleanContents, &errorStr, &errorLine, &errorColumn)) {
+			DebugDialog::debug(QString("renderer loadAux failed %1 %2 %3 %4").arg(filename).arg(errorStr).arg(errorLine).arg(errorColumn));
+		}
+
 		QDomElement root = doc.documentElement();
 		if (!setColor.isEmpty()) {
 			QDomElement element = TextUtils::findElementWithAttribute(root, "id", colorElementID);
@@ -535,11 +538,6 @@ bool FSvgRenderer::setUpConnector(SvgIdLayer * svgIdLayer, bool ignoreTerminalPo
 
 	QSizeF defaultSizeF = this->defaultSizeF();
 	QSize defaultSize = this->defaultSize();
-	if ((bounds.width()) == defaultSizeF.width() && (bounds.height()) == defaultSizeF.height()) {
-		svgIdLayer->m_visible = false;
-		return false;
-	}
-
 	QRectF viewBox = this->viewBoxF();
 
 	ConnectorInfo * connectorInfo = getConnectorInfo(connectorID);		

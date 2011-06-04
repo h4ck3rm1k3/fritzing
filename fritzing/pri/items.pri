@@ -35,6 +35,7 @@ HEADERS += \
     src/items/paletteitembase.h \
     src/items/partfactory.h \
     src/items/partlabel.h \
+    src/items/perfboard.h \
     src/items/pinheader.h \
     src/items/propertydef.h \
     src/items/resistor.h \
@@ -65,6 +66,7 @@ SOURCES += \
     src/items/paletteitembase.cpp \
     src/items/partfactory.cpp \
     src/items/partlabel.cpp \
+    src/items/perfboard.cpp \
     src/items/pinheader.cpp \
     src/items/propertydef.cpp \
     src/items/resistor.cpp \
