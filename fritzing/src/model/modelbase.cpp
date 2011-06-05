@@ -201,7 +201,7 @@ bool ModelBase::loadInstances(QDomDocument & domDocument, QDomElement & instance
 			DebugDialog::debug(QString("module id %1 not found in database").arg(moduleIDRef));
 			modelPart = fixObsoleteModuleID(domDocument, instance, moduleIDRef);
 			if (modelPart == NULL) {
-				if (genFZP(moduleIDRef)) {
+				if (genFZP(moduleIDRef, m_referenceModel)) {
 					modelPart = m_referenceModel->retrieveModelPart(moduleIDRef);
 				}
 				if (modelPart == NULL) {
@@ -489,10 +489,12 @@ void ModelBase::setReportMissingModules(bool b) {
 	m_reportMissingModules = b;
 }
 
-bool ModelBase::genFZP(const QString & moduleID) {
+bool ModelBase::genFZP(const QString & moduleID, ModelBase * refModel) {
 	QString path = PartFactory::getFzpFilename(moduleID);
 	if (path.isEmpty()) return false;
 
-	ModelPart* mp = m_referenceModel->addPart(path, true, true);
+	ModelPart* mp = refModel->addPart(path, true, true);
 	return mp != NULL;
 }
+
+

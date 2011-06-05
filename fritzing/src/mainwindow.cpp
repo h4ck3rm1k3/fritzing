@@ -1665,7 +1665,7 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 		QString moduleID = size + ModuleIDNames::PerfboardModuleIDName;
 		ModelPart * modelPart = m_refModel->retrieveModelPart(moduleID);
 		if (modelPart == NULL) {
-			if (!m_refModel->genFZP(moduleID)) {
+			if (!m_refModel->genFZP(moduleID, m_refModel)) {
 				return;
 			}
 		}
@@ -2307,6 +2307,8 @@ void MainWindow::setReportMissingModules(bool b) {
 void MainWindow::warnSMD(const QString & moduleID) {
 
 	ModelPart * mp = m_refModel->retrieveModelPart(moduleID);
+	if (mp == NULL) return;
+
 	if (!mp->flippedSMD()) return;
 
 	if (m_pcbGraphicsView->routeBothSides()) {

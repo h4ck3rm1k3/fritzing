@@ -53,6 +53,7 @@ $Date$
 #include "svg/kicadschematic2svg.h"
 #include "installedfonts.h"
 #include "items/pinheader.h"
+#include "items/partfactory.h"
 #include "dialogs/recoverydialog.h"
 #include "lib/qtlockedfile/qtlockedfile.h"
 #include "lib/qtsysteminfo/QtSystemInfo.h"
@@ -106,8 +107,6 @@ QMultiHash<QString, QString> InstalledFonts::InstalledFontsNameMapper;   // fami
 
 static const qreal LoadProgressStart = 0.085;
 static const qreal LoadProgressEnd = 0.6;
-
-static const QString LockFileName = "___lockfile___.txt";
 
 //////////////////////////
 
@@ -296,6 +295,7 @@ FApplication::~FApplication(void)
 	RatsnestColors::cleanup();
 	HtmlInfoView::cleanup();
 	SvgIconWidget::cleanup();
+	PartFactory::cleanup();
 }
 
 void FApplication::clearModels() {
@@ -479,9 +479,10 @@ int FApplication::serviceStartup() {
 		return 0;
 	}
 
+	createUserDataStoreFolderStructure();
+
 	registerFonts();
 	loadReferenceModel();
-	createUserDataStoreFolderStructure();
 	if (!loadBin("")) {
 		return -1;
 	}
@@ -914,7 +915,7 @@ void FApplication::createUserDataStoreFolderStructure() {
 
     copyBin(BinManager::MyPartsBinLocation, BinManager::MyPartsBinTemplateLocation);
     copyBin(BinManager::SearchBinLocation, BinManager::SearchBinTemplateLocation);
-
+	PartFactory::initFolder();
 }
 
 void FApplication::copyBin(const QString & dest, const QString & source) {
@@ -1211,54 +1212,9 @@ void FApplication::doLoadPrevious(MainWindow * sketchWindow) {
 
 QList<MainWindow *> FApplication::recoverBackups()
 {	
+
 	QFileInfoList backupList;
-	QDir backupDir(FolderUtils::getUserDataStorePath("backup"));
-	QFileInfoList dirList = backupDir.entryInfoList(QDir::AllDirs | QDir::NoDotAndDotDot | QDir::Hidden | QDir::NoSymLinks);
-	foreach (QFileInfo dirInfo, dirList) {
-		QDir dir(dirInfo.filePath());
-		DebugDialog::debug(QString("looking in backup dir %1").arg(dir.absolutePath()));
-		QFileInfoList fileInfoList = dir.entryInfoList(QStringList("*.fz"), QDir::Files | QDir::Hidden | QDir::NoSymLinks);
-
-		if (fileInfoList.isEmpty()) {
-			// could mean this backup folder is just being created by another process
-			// could also mean it's leftover crap.
-			// check the date and only delete if it's old
-
-			// don't lock the file, in case this is a race condition:
-			// if another instance starting up is about to lock the file, 
-			// the date will be recent and we won't delete 
-			
-			QDateTime lastModified = dirInfo.lastModified();
-			if (lastModified < QDateTime::currentDateTime().addSecs(-5 * 60)) {
-				// At startup, creating the backup folder, the lock file, and locking it are successive operations
-				// so even giving it 5 minutes here is probably way more than we need
-				FolderUtils::rmdir(dirInfo.filePath());
-			}
-			
-			continue;
-		}
-		
-		QtLockedFile * otherLockFile = new QtLockedFile(dir.absoluteFilePath(LockFileName));
-		bool isOpen = otherLockFile->open(QFile::WriteOnly);
-		if (!isOpen) {
-			// somebody else owns the file
-			delete otherLockFile;
-			continue;
-		}
-
-		if (!otherLockFile->lock(QtLockedFile::WriteLock, false)) {
-			// somebody else owns the file
-			otherLockFile->close();
-			delete otherLockFile;
-			continue;
-		}
-
-		// we own the file
-		m_lockedFiles.insert(dirInfo.fileName(), otherLockFile);		
-		foreach (QFileInfo fileInfo, fileInfoList) {
-			backupList << fileInfo;
-		}
-	}
+	FolderUtils::checkLockedFiles("backup", backupList, QStringList("*.fz"), m_lockedFiles);
 
 	QList<MainWindow*> recoveredSketches;
     if (backupList.size() == 0) return recoveredSketches;
@@ -1301,27 +1257,9 @@ void FApplication::initFilesToLoad()
 }
 
 void FApplication::initBackups() {
-		// first create our own unique backup folder and lock it
-	QDir backupDir(FolderUtils::getUserDataStorePath("backup"));
-	QString lockedSubfolder = FolderUtils::getRandText();
-	backupDir.mkdir(lockedSubfolder);
-	MainWindow::BackupFolder = backupDir.absoluteFilePath(lockedSubfolder);
-	QtLockedFile * lockFile = new QtLockedFile(MainWindow::BackupFolder + "/" + LockFileName);
-	lockFile->open(QFile::WriteOnly);
-	lockFile->lock(QtLockedFile::WriteLock, true);
-	m_lockedFiles.insert(lockedSubfolder, lockFile);
+	FolderUtils::initLockedFiles("backup", MainWindow::BackupFolder, m_lockedFiles);
 }
 
 void FApplication::cleanupBackups() {
-	// remove backup files; this is a clean exit
-	QDir backupDir(MainWindow::BackupFolder);
-	backupDir.cdUp();
-	foreach (QString sub, m_lockedFiles.keys()) {
-        QtLockedFile * lockedFile = m_lockedFiles.value(sub);
-		lockedFile->unlock();
-		lockedFile->close();
-		delete lockedFile;
-        FolderUtils::rmdir(backupDir.absoluteFilePath(sub));
-	}
-	m_lockedFiles.clear();
+	FolderUtils::releaseLockedFiles(MainWindow::BackupFolder, m_lockedFiles);
 }
