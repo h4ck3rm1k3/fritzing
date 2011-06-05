@@ -43,10 +43,6 @@ $Date$
 #include <QVBoxLayout>
 #include <QLabel>
 
-static QString FzpTemplate = "";
-static QString BreadboardLayerTemplate = "";
-static QString ConnectorTemplate = "";
-static QString ConnectorFzpTemplate = "";
 
 static const int MaxXDimension = 100;
 static const int MinXDimension = 5;
@@ -68,31 +64,6 @@ bool getXY(int & x, int & y, const QString & s) {
 Perfboard::Perfboard( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: Capacitor(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
-	if (BreadboardLayerTemplate.isEmpty()) {
-		QFile file(":/resources/templates/perfboard_boardLayerTemplate.txt");
-		file.open(QFile::ReadOnly);
-		BreadboardLayerTemplate = file.readAll();
-		file.close();
-	}
-	if (ConnectorTemplate.isEmpty()) {
-		QFile file(":/resources/templates/perfboard_connectorTemplate.txt");
-		file.open(QFile::ReadOnly);
-		ConnectorTemplate = file.readAll();
-		file.close();
-	}
-	if (ConnectorFzpTemplate.isEmpty()) {
-		QFile file(":/resources/templates/perfboard_connectorFzpTemplate.txt");
-		file.open(QFile::ReadOnly);
-		ConnectorFzpTemplate = file.readAll();
-		file.close();
-	}
-	if (FzpTemplate.isEmpty()) {
-		QFile file(":/resources/templates/perfboard_fzpTemplate.txt");
-		file.open(QFile::ReadOnly);
-		FzpTemplate = file.readAll();
-		file.close();
-	}
-
 	m_size = modelPart->prop("size").toString();
 	if (m_size.isEmpty()) {
 		m_size = modelPart->properties().value("size", "20.20");
@@ -163,6 +134,22 @@ QString Perfboard::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString
 
 QString Perfboard::makeBreadboardSvg(const QString & size) 
 {
+	QString BreadboardLayerTemplate = "";
+	QString ConnectorTemplate = "";
+
+	if (BreadboardLayerTemplate.isEmpty()) {
+		QFile file(":/resources/templates/perfboard_boardLayerTemplate.txt");
+		file.open(QFile::ReadOnly);
+		BreadboardLayerTemplate = file.readAll();
+		file.close();
+	}
+	if (ConnectorTemplate.isEmpty()) {
+		QFile file(":/resources/templates/perfboard_connectorTemplate.txt");
+		file.open(QFile::ReadOnly);
+		ConnectorTemplate = file.readAll();
+		file.close();
+	}
+
 	int x, y;
 	getXY(x, y, size);
 
@@ -192,6 +179,22 @@ QString Perfboard::makeBreadboardSvg(const QString & size)
 
 QString Perfboard::genFZP(const QString & moduleid)
 {
+	QString ConnectorFzpTemplate = "";
+	QString FzpTemplate = "";
+
+	if (ConnectorFzpTemplate.isEmpty()) {
+		QFile file(":/resources/templates/perfboard_connectorFzpTemplate.txt");
+		file.open(QFile::ReadOnly);
+		ConnectorFzpTemplate = file.readAll();
+		file.close();
+	}
+	if (FzpTemplate.isEmpty()) {
+		QFile file(":/resources/templates/perfboard_fzpTemplate.txt");
+		file.open(QFile::ReadOnly);
+		FzpTemplate = file.readAll();
+		file.close();
+	}
+
 	QString size = moduleid;
 	size.remove(ModuleIDNames::PerfboardModuleIDName);
 	int x, y;

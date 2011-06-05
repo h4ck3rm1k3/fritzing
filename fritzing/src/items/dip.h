@@ -39,6 +39,10 @@ public:
 	~Dip();
 
 	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
+	QStringList collectValues(const QString & family, const QString & prop, QString & value);
+
+public:
+	static QString genSipFZP(const QString & moduleid);
 
 protected:
 	bool isDIP();

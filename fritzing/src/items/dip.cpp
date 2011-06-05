@@ -28,6 +28,9 @@ $Date$
 
 static QStringList Spacings;
 
+static int MinSipPins = 2;
+static int MaxSipPins = 64;
+
 Dip::Dip( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: MysteryPart(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
@@ -61,4 +64,58 @@ const QStringList & Dip::spacings() {
 	}
 
 	return Spacings;
+}
+
+QString Dip::genSipFZP(const QString & moduleid)
+{
+	QString SipFzpTemplate = "";
+	QString SipConnectorFzpTemplate = "";
+
+	if (SipFzpTemplate.isEmpty()) {
+		QFile file(":/resources/templates/generic_sip_fzpTemplate.txt");
+		file.open(QFile::ReadOnly);
+		SipFzpTemplate = file.readAll();
+		file.close();
+	}
+	if (SipConnectorFzpTemplate.isEmpty()) {
+		QFile file(":/resources/templates/generic_sip_connectorFzpTemplate.txt");
+		file.open(QFile::ReadOnly);
+		SipConnectorFzpTemplate = file.readAll();
+		file.close();
+	}
+
+	QStringList ss = moduleid.split("_");
+	int count = 0;
+	foreach (QString s, ss) {
+		bool ok;
+		int c = s.toInt(&ok);
+		if (ok) {
+			count = c;
+			break;
+		}
+	}
+
+	if (count > MaxSipPins || count < MinSipPins) return "";
+
+	QString middle;
+
+	for (int i = 0; i < count; i++) {
+		middle += SipConnectorFzpTemplate.arg(i).arg(i + 1);
+	}
+
+	return SipFzpTemplate.arg(count).arg(middle);
+}
+
+QStringList Dip::collectValues(const QString & family, const QString & prop, QString & value) {
+	if (prop.compare("pins", Qt::CaseInsensitive) == 0 && !isDIP()) {
+		QStringList values;
+		for (int i = MinSipPins; i <= MaxSipPins; i++) {
+			values << QString::number(i);
+		}
+		
+		value = modelPart()->properties().value("pins");
+		return values;
+	}
+
+	return MysteryPart::collectValues(family, prop, value);
 }
