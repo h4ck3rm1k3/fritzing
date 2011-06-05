@@ -55,7 +55,7 @@ public:
 	void setProp(const QString & prop, const QString & value);
 	bool hasPartLabel();
 	void loadImage(const QString & fileName, bool addName);
-	void reloadImage(const QString & svg, const QSizeF & aspectRatio, const QString & fileName, bool addName);
+	virtual void reloadImage(const QString & svg, const QSizeF & aspectRatio, const QString & fileName, bool addName);
 	bool stickyEnabled();
 	PluralType isPlural();
 	void addedToScene();
@@ -70,7 +70,8 @@ protected slots:
 
 protected:
 	bool hasGrips();
-	QString hackSvg(const QString & svg, const QString & logo);
+	virtual QString hackSvg(const QString & svg, const QString & logo);
+	void initImage();
 	void unableToLoad(const QString & fileName);
 	void prepLoadImageAux(const QString & fileName, bool addName);
 	void setFileNameItems();
@@ -79,6 +80,8 @@ protected:
 	virtual QString layerName();
 	virtual QStringList & getImageNames();
 	virtual QStringList & getNewImageNames();
+	void rerender(const QString & svg);
+
 
 protected:
 	QString m_logo;
@@ -97,11 +100,15 @@ public:
 	CopperLogoItem(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel);
 	~CopperLogoItem();
 
+	void reloadImage(const QString & svg, const QSizeF & aspectRatio, const QString & fileName, bool addName);
+
 protected:
 	ViewLayer::ViewLayerID layer();
 	QString colorString();
 	QStringList & getImageNames();
 	QStringList & getNewImageNames();
+	QString hackSvg(const QString & svg, const QString & logo);
+	QString flipSvg(const QString & svg);
 
 };
 

@@ -173,8 +173,10 @@
         <file>resources/parts/core/rectangle_pcb_two_layers.fzp</file>
         <file>resources/parts/core/logotext.fzp</file>
         <file>resources/parts/core/logoimage.fzp</file>
-        <file>resources/parts/core/copperlogotext.fzp</file>
-        <file>resources/parts/core/copperlogoimage.fzp</file>
+        <file>resources/parts/core/copper1logotext.fzp</file>
+        <file>resources/parts/core/copper1logoimage.fzp</file>
+         <file>resources/parts/core/copper0logotext.fzp</file>
+        <file>resources/parts/core/copper0logoimage.fzp</file>
         <file>resources/parts/core/ground.fzp</file>
 	<file>resources/parts/core/via.fzp</file>
         <file>resources/parts/core/dcpower.fzp</file>
@@ -189,8 +191,10 @@
         <file>resources/parts/svg/core/icon/rectangle_pcb.svg</file>
         <file>resources/parts/svg/core/icon/silkscreen_logo.svg</file>
         <file>resources/parts/svg/core/icon/silkscreen_text.svg</file>        
-	<file>resources/parts/svg/core/icon/copper_text.svg</file>
-	<file>resources/parts/svg/core/icon/copper_logo.svg</file>
+	<file>resources/parts/svg/core/icon/copper0_text.svg</file>
+	<file>resources/parts/svg/core/icon/copper0_logo.svg</file>
+ 	<file>resources/parts/svg/core/icon/copper1_text.svg</file>
+	<file>resources/parts/svg/core/icon/copper1_logo.svg</file>
         <file>resources/parts/svg/core/icon/ground.svg</file>
         <file>resources/parts/svg/core/icon/cell.svg</file>
         <file>resources/parts/svg/core/icon/power.svg</file>
@@ -204,7 +208,7 @@
 	
         <file>resources/parts/svg/core/pcb/rectangle_pcb.svg</file>
         <file>resources/parts/svg/core/pcb/logo.svg</file>
-        <file>resources/parts/svg/core/pcb/copperlogo.svg</file>
+        <file>resources/parts/svg/core/pcb/copper1logo.svg</file>
         <file>resources/parts/svg/core/pcb/jumper.svg</file>
         <file>resources/parts/svg/core/pcb/hole.svg</file>
         <file>resources/parts/svg/core/pcb/groundplane.svg</file>

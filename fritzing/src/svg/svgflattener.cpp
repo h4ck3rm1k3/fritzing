@@ -259,12 +259,18 @@ void SvgFlattener::rotateCommandSlot(QChar command, bool relative, QList<double>
 	}
 }
 
-void SvgFlattener::flipSMDSvg(const QString & filename, QDomDocument & domDocument, const QString & elementID, const QString & altElementID, qreal printerScale) {
+void SvgFlattener::flipSMDSvg(const QString & filename, const QString & svg, QDomDocument & domDocument, const QString & elementID, const QString & altElementID, qreal printerScale) {
 	QString errorStr;
 	int errorLine;
 	int errorColumn;
-	QFile file(filename);
-	bool result = domDocument.setContent(&file, &errorStr, &errorLine, &errorColumn);
+	bool result;
+	if (filename.isEmpty()) {
+		result = domDocument.setContent(svg, &errorStr, &errorLine, &errorColumn);
+	}
+	else {
+		QFile file(filename);
+		result = domDocument.setContent(&file, &errorStr, &errorLine, &errorColumn);
+	}
 	if (!result) {
 		domDocument.clear();			// probably redundant
 		return;
@@ -272,7 +278,16 @@ void SvgFlattener::flipSMDSvg(const QString & filename, QDomDocument & domDocume
 
     QDomElement root = domDocument.documentElement();
 
-	QSvgRenderer renderer(filename);
+	QSvgRenderer renderer;
+	bool loaded;
+	if (filename.isEmpty()) {
+		loaded = renderer.load(svg.toUtf8());
+	}
+	else {
+		loaded = renderer.load(filename);
+	}
+
+	if (!loaded) return;
 
 	QDomElement element = TextUtils::findElementWithAttribute(root, "id", elementID);
 	if (!element.isNull()) {
@@ -281,8 +296,8 @@ void SvgFlattener::flipSMDSvg(const QString & filename, QDomDocument & domDocume
 	}
 
 #ifndef QT_NO_DEBUG
-	QString temp = domDocument.toString();
-	Q_UNUSED(temp);
+	//QString temp = domDocument.toString();
+	//Q_UNUSED(temp);
 #endif
 }
 
@@ -295,7 +310,7 @@ void SvgFlattener::flipSMDElement(QDomDocument & domDocument, QSvgRenderer & ren
 	QRectF bounds = renderer.boundsOnElement(att);
 	m.translate(bounds.center().x(), bounds.center().y());
 	QMatrix mMinus = m.inverted();
-        QMatrix cm = mMinus * QMatrix().scale(1, -1) * m;
+    QMatrix cm = mMinus * QMatrix().scale(1, -1) * m;
 	QDomElement newElement = element.cloneNode(true).toElement();
 	newElement.removeAttribute("id");
 	QDomElement pElement = domDocument.createElement("g");

@@ -470,16 +470,10 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastL
 	else if (moduleID.compare(ModuleIDNames::JumperModuleIDName) == 0) {
 		type = ModelPart::Jumper;
 	}
-	else if (moduleID.compare(ModuleIDNames::LogoImageModuleIDName) == 0) {
+	else if (moduleID.endsWith(ModuleIDNames::LogoImageModuleIDName)) {
 		type = ModelPart::Logo;
 	}
-	else if (moduleID.compare(ModuleIDNames::LogoTextModuleIDName) == 0) {
-		type = ModelPart::Logo;
-	}
-	else if (moduleID.compare(ModuleIDNames::CopperLogoImageModuleIDName) == 0) {
-		type = ModelPart::Logo;
-	}
-	else if (moduleID.compare(ModuleIDNames::CopperLogoTextModuleIDName) == 0) {
+	else if (moduleID.endsWith(ModuleIDNames::LogoTextModuleIDName)) {
 		type = ModelPart::Logo;
 	}
 	else if (moduleID.compare(ModuleIDNames::GroundPlaneModuleIDName) == 0) {

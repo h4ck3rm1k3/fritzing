@@ -34,6 +34,7 @@ $Date$
 #include "moduleidnames.h"
 #include "../svg/groundplanegenerator.h"
 
+
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QFrame>
@@ -47,8 +48,10 @@ $Date$
 
 static QStringList ImageNames;
 static QStringList NewImageNames;
-static QStringList CopperImageNames;
-static QStringList NewCopperImageNames;
+static QStringList Copper0ImageNames;
+static QStringList NewCopper0ImageNames;
+static QStringList Copper1ImageNames;
+static QStringList NewCopper1ImageNames;
 
 LogoItem::LogoItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: ResizableBoard(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
@@ -97,8 +100,10 @@ void LogoItem::addedToScene()
 			QFile f(m_originalFilename);
 			if (f.open(QFile::ReadOnly)) {
 				QString svg = f.readAll();
+				f.close();
 				modelPart()->setProp("shape", svg);
 				modelPart()->setProp("lastfilename", m_originalFilename);
+				initImage();
 			}
 		}
 	}
@@ -562,20 +567,27 @@ void LogoItem::setLogo(QString logo, bool force) {
 	}
 
 	QString svg;
-	if (false  /* m_hasLogo */) {
-		svg = modelPart()->prop("shape").toString();
-	}
-	else {
-		QFile f(m_originalFilename);
-		if (f.open(QFile::ReadOnly)) {
-			svg = f.readAll();
-		}
+	QFile f(m_originalFilename);
+	if (f.open(QFile::ReadOnly)) {
+		svg = f.readAll();
 	}
 
 	if (svg.isEmpty()) return;
 
 	svg = hackSvg(svg, logo);
 
+	rerender(svg);
+
+	m_logo = logo;
+	modelPart()->setProp("logo", logo);
+	modelPart()->setProp("shape", svg);
+	positionGrips();
+
+	updateTooltip();
+}
+
+void LogoItem::rerender(const QString & svg)
+{
 	if (m_renderer == NULL) {
 		m_renderer = new FSvgRenderer(this);
 	}
@@ -588,13 +600,6 @@ void LogoItem::setLogo(QString logo, bool force) {
 		m_aspectRatio.setWidth(r.width());
 		m_aspectRatio.setHeight(r.height());
 	}
-
-	m_logo = logo;
-	modelPart()->setProp("logo", logo);
-	modelPart()->setProp("shape", svg);
-	positionGrips();
-
-	updateTooltip();
 }
 
 QString LogoItem::getProperty(const QString & key) {
@@ -629,7 +634,17 @@ void LogoItem::logoEntry() {
 	}
 }
 
-QString LogoItem::hackSvg(const QString & svg, const QString & logo) {
+void LogoItem::initImage() {
+	if (m_hasLogo) {
+		setLogo(m_logo, true);
+		return;
+	}
+
+	loadImage(m_originalFilename, false);
+}
+
+QString LogoItem::hackSvg(const QString & svg, const QString & logo) 
+{
 	QString errorStr;
 	int errorLine;
 	int errorColumn;
@@ -785,14 +800,18 @@ QStringList & LogoItem::getNewImageNames() {
 CopperLogoItem::CopperLogoItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: LogoItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
-	if (CopperImageNames.count() == 0) {
-		CopperImageNames << "Fritzing icon copper";
+	if (Copper1ImageNames.count() == 0) {
+		Copper1ImageNames << "Fritzing icon copper1";
 	}
 
-	m_hasLogo = (modelPart->moduleID() == ModuleIDNames::CopperLogoTextModuleIDName);
+	if (Copper0ImageNames.count() == 0) {
+		Copper0ImageNames << "Fritzing icon copper1";
+	}
+
+	m_hasLogo = (modelPart->moduleID().endsWith(ModuleIDNames::LogoTextModuleIDName));
 	m_logo = modelPart->prop("logo").toString();
 	if (m_hasLogo && m_logo.isEmpty()) {
-		m_logo = modelPart->properties().value("logo", "copperlogo");
+		m_logo = modelPart->properties().value("logo", "logo");
 		modelPart->setProp("logo", m_logo);
 	}
 }
@@ -801,17 +820,52 @@ CopperLogoItem::~CopperLogoItem() {
 }
 
 ViewLayer::ViewLayerID CopperLogoItem::layer() {
-	return  ViewLayer::Copper1;
+	return modelPart()->properties().value("layer").contains("0") ? ViewLayer::Copper0 :  ViewLayer::Copper1;
 }
 
 QString CopperLogoItem::colorString() {
-	return ViewLayer::Copper1Color;
+	return modelPart()->properties().value("layer").contains("0") ? ViewLayer::Copper0Color :  ViewLayer::Copper1Color;
 }
 
 QStringList & CopperLogoItem::getImageNames() {
-	return CopperImageNames;
+	return modelPart()->properties().value("layer").contains("0") ? Copper0ImageNames :  Copper1ImageNames;
 }
 
 QStringList & CopperLogoItem::getNewImageNames() {
-	return NewCopperImageNames;
+	return modelPart()->properties().value("layer").contains("0") ? NewCopper0ImageNames :  NewCopper1ImageNames;
+}
+
+QString CopperLogoItem::hackSvg(const QString & svg, const QString & logo) {
+	QString newSvg = LogoItem::hackSvg(svg, logo);
+	if (!modelPart()->properties().value("layer").contains("0")) return newSvg;
+
+	return flipSvg(newSvg);
+}
+
+QString CopperLogoItem::flipSvg(const QString & svg)
+{
+	QString newSvg = svg;
+	newSvg.replace("copper1", "copper0");
+	newSvg.replace(ViewLayer::Copper1Color, ViewLayer::Copper0Color, Qt::CaseInsensitive);
+	QMatrix m;
+	QSvgRenderer renderer(newSvg.toUtf8());
+	QRectF bounds = renderer.viewBoxF();
+	m.translate(bounds.center().x(), bounds.center().y());
+	QMatrix mMinus = m.inverted();
+    QMatrix cm = mMinus * QMatrix().scale(1, -1) * m;
+	int gix = newSvg.indexOf("<g");
+	newSvg.replace(gix, 2, "<g _flipped_='1' transform='" + TextUtils::svgMatrix(cm) + "'");
+	return newSvg;
+}
+
+void CopperLogoItem::reloadImage(const QString & svg, const QSizeF & aspectRatio, const QString & fileName, bool addName) 
+{
+	if (modelPart()->properties().value("layer").contains("0")) {
+		if (!svg.contains("_flipped_")) {
+			LogoItem::reloadImage(flipSvg(svg), aspectRatio, fileName, addName);
+			return;
+		}
+	}
+
+	LogoItem::reloadImage(svg, aspectRatio, fileName, addName);
 }
