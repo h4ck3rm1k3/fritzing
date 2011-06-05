@@ -43,6 +43,7 @@ public:
 
 public:
 	static QString genSipFZP(const QString & moduleid);
+	static QString genDipFZP(const QString & moduleid);
 
 protected:
 	bool isDIP();

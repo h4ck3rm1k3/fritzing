@@ -210,6 +210,23 @@ QString PartFactory::getFzpFilename(const QString & moduleID) {
 		}
 	}
 
+	if (moduleID.startsWith("generic_ic_dip")) {
+		QString path = PartFactoryFolderPath + "/" + moduleID + FritzingPartExtension;
+		QFile file(path);
+		if (file.exists()) {
+			return path;
+		}
+
+		QString fzp = Dip::genDipFZP(moduleID);
+		if (file.open(QFile::WriteOnly)) {
+			QTextStream stream(&file);
+			stream.setCodec("UTF-8");
+			stream << fzp;
+			file.close();
+			return path;
+		}
+	}
+
 	return "";
 }
 

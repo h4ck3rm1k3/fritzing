@@ -1687,6 +1687,20 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 		return;
 	}
 	
+	if (prop.compare("pins") == 0 && itemBase->moduleID().contains("generic_ic_dip", Qt::CaseInsensitive)) {
+		QString pins = currPropsMap.value("pins");
+		QString moduleID = QString("generic_ic_dip_%1_300mil").arg(pins);
+		ModelPart * modelPart = m_refModel->retrieveModelPart(moduleID);
+		if (modelPart == NULL) {
+			if (!m_refModel->genFZP(moduleID, m_refModel)) {
+				return;
+			}
+		}
+
+		swapSelectedAux(itemBase->layerKinChief(), moduleID);
+		return;
+	}
+	
 	if ((prop.compare("package", Qt::CaseSensitive) != 0) && swapSpecial(currPropsMap)) {
 		return;
 	}

@@ -254,6 +254,7 @@
 	<file>resources/templates/perfboard_fzpTemplate.txt</file>
 	<file>resources/templates/generic_sip_connectorFzpTemplate.txt</file>
 	<file>resources/templates/generic_sip_fzpTemplate.txt</file>
+	<file>resources/templates/generic_dip_fzpTemplate.txt</file>
 	
     </qresource>
 </RCC>
