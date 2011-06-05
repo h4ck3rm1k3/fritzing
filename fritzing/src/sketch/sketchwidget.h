@@ -367,7 +367,7 @@ protected:
 	bool moveByArrow(int dx, int dy, QKeyEvent * );
 	double gridSizeInches();
 	virtual bool canAlignToTopLeft(ItemBase *);
-	void findAlignmentAnchor(ItemBase * originatingItem, QHash<long, ItemBase *> & savedItems, QHash<Wire *, ConnectorItem *> & savedWires);
+	virtual void findAlignmentAnchor(ItemBase * originatingItem, QHash<long, ItemBase *> & savedItems, QHash<Wire *, ConnectorItem *> & savedWires);
 	void alignLoc(QPointF & loc, const QPointF startPoint, const QPointF newLoc, const QPointF originalLoc);
 	void copyAux(QList<ItemBase *> & bases, bool saveBoundingRects);
 	void copyDrop();

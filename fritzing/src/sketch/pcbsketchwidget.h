@@ -145,7 +145,6 @@ protected:
 	void connectSymbols(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, QUndoCommand * parentCommand);
 	void makeWiresChangeConnectionCommands(const QList<Wire *> & wires, QUndoCommand * parentCommand);
 	double defaultGridSizeInches();
-	bool canAlignToTopLeft(ItemBase *);
 	ViewLayer::ViewLayerID getLabelViewLayerID(ViewLayer::ViewLayerSpec);
 	ViewLayer::ViewLayerSpec wireViewLayerSpec(ConnectorItem *);
 	int isBoardLayerChange(ItemBase * itemBase, const QString & newModuleID, bool master);
@@ -163,6 +162,7 @@ protected:
 	void changeTrace(Wire * wire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand);
 	void checkDeleteTrace(CleanUpWiresCommand* command);
 	void clearSmdTraces(QList<ItemBase *> & smds, 	QList<Wire *> & already, QUndoCommand * parentCommand);
+
 
 signals:
 	void subSwapSignal(SketchWidget *, ItemBase *, ViewLayer::ViewLayerSpec, QUndoCommand * parentCommand);

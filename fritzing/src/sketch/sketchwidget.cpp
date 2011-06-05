@@ -1531,7 +1531,12 @@ void SketchWidget::dragMoveHighlightConnector(QPoint eventPos) {
 
 	QPointF loc = this->mapToScene(eventPos) - m_droppingOffset;
 	if (m_alignToGrid && (m_alignmentItem != NULL)) {
-		alignLoc(loc, m_alignmentStartPoint, loc, m_alignmentItem->getViewGeometry().loc());
+		QPointF l =  m_alignmentItem->getViewGeometry().loc();
+		alignLoc(loc, m_alignmentStartPoint, loc, l);
+		QPointF q = m_alignmentItem->pos();
+		if (q != l) {
+			DebugDialog::debug(QString("m alignment %1 %2, %3 %4").arg(q.x()).arg(q.y()).arg(l.x()).arg(l.y()));
+		}
 	}
 
 	m_droppingItem->setItemPos(loc);
@@ -1539,15 +1544,6 @@ void SketchWidget::dragMoveHighlightConnector(QPoint eventPos) {
 		m_droppingItem->findConnectorsUnder();
 	}
 
-}
-
-void SketchWidget::alignLoc(QPointF & loc, const QPointF startPoint, const QPointF newLoc, const QPointF originalLoc) 
-{
-	QPointF newPos = startPoint + newLoc - originalLoc;
-	qreal ny = GraphicsUtils::getNearestOrdinate(newPos.y(), gridSizeInches() * FSvgRenderer::printerScale());
-	qreal nx = GraphicsUtils::getNearestOrdinate(newPos.x(), gridSizeInches() * FSvgRenderer::printerScale());
-	loc.setX(loc.x() + nx - newPos.x());
-	loc.setY(loc.y() + ny - newPos.y());
 }
 
 void SketchWidget::dropEvent(QDropEvent *event)
@@ -1973,6 +1969,21 @@ void SketchWidget::prepMove(ItemBase * originatingItem) {
 
 }
 
+void SketchWidget::alignLoc(QPointF & loc, const QPointF startPoint, const QPointF newLoc, const QPointF originalLoc) 
+{
+	// in the standard case, startpoint is the center of the connectorItem, newLoc is the current mouse position, 
+	// originalLoc is the original mouse position.  newpos is therefore the new position of the center of the connectorItem
+	// and ny and ny make up the nearest grid point.  nx, ny - newloc give just the offset from the grid, which is then
+	// applied to loc, which is the location of the item being dragged
+
+	QPointF newPos = startPoint + newLoc - originalLoc;
+	qreal ny = GraphicsUtils::getNearestOrdinate(newPos.y(), gridSizeInches() * FSvgRenderer::printerScale());
+	qreal nx = GraphicsUtils::getNearestOrdinate(newPos.x(), gridSizeInches() * FSvgRenderer::printerScale());
+	loc.setX(loc.x() + nx - newPos.x());
+	loc.setY(loc.y() + ny - newPos.y());
+}
+
+
 void SketchWidget::findAlignmentAnchor(ItemBase * originatingItem, 	QHash<long, ItemBase *> & savedItems, QHash<Wire *, ConnectorItem *> & savedWires) 
 {
 	m_alignmentItem = NULL;
@@ -2363,10 +2374,7 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 	if (m_alignToGrid && m_draggingBendpoint) {
 		QPointF sp = mapToScene(event->pos());
 		
-
-		// not sure where the 0.5 offset comes from, probably has to do with where the center of the bendpoint is
-		// wrt the end of the wire...
-		alignLoc(sp, sp, QPointF(0,0), QPointF(-0.5, -0.5));  
+		alignLoc(sp, sp, QPointF(0,0), QPointF(0,0));  
 		QPointF p = mapFromScene(sp);
 		QPoint pp(qRound(p.x()), qRound(p.y()));
 		QPointF q = mapToGlobal(pp);

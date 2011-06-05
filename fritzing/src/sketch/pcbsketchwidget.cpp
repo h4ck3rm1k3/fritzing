@@ -1408,18 +1408,6 @@ double PCBSketchWidget::defaultGridSizeInches() {
 	return 0.1;
 }
 
-bool PCBSketchWidget::canAlignToTopLeft(ItemBase * itemBase) 
-{
-	switch (itemBase->itemType()) {
-		case ModelPart::Board:
-		case ModelPart::ResizableBoard:
-		case ModelPart::Ruler:
-			return true;
-		default:
-			return false;
-	}
-}
-
 ViewLayer::ViewLayerID PCBSketchWidget::getLabelViewLayerID(ViewLayer::ViewLayerSpec viewLayerSpec) {
 	switch (viewLayerSpec) {
 		case ViewLayer::WireOnTop_TwoLayers:
@@ -2573,3 +2561,6 @@ bool PCBSketchWidget::groundFill(QUndoCommand * parentCommand)
 	return true;
 
 }
+
+
+
