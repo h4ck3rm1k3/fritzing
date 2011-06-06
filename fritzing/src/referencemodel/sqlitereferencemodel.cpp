@@ -293,6 +293,11 @@ QString SqliteReferenceModel::getClosestMatch(const Part *examplePart, QStringLi
 }
 
 int SqliteReferenceModel::countPropsInCommon(const Part *part1, const ModelPart *part2) {
+	if (part1 == NULL || part2 == NULL) {
+		DebugDialog::debug("countPropsInCommon failure");
+		return 0;
+	}
+
 	int result = 0;
 	PartPropertyList props1 = part1->properties();
 	QMultiHash<QString,QString> props2 = part2->properties();

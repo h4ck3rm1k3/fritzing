@@ -1673,6 +1673,59 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 		swapSelectedAux(itemBase->layerKinChief(), moduleID);
 		return;
 	}
+
+	if (prop.compare("package", Qt::CaseInsensitive) == 0) {
+		if (family.compare("generic ic", Qt::CaseInsensitive) == 0) {
+			QString value = currPropsMap.value(prop);
+			QString pins = currPropsMap.value("pins");
+			QString moduleID;
+			if (value.contains("sip", Qt::CaseInsensitive)) {
+				moduleID = QString("generic_sip_%1_300mil").arg(pins);
+			}
+			else {
+				int p = pins.toInt();
+				if (p < 4) p = 4;
+				if (p % 2 == 1) p--;
+				moduleID = QString("generic_ic_dip_%1_300mil").arg(p);
+			}
+			ModelPart * modelPart = m_refModel->retrieveModelPart(moduleID);
+			if (modelPart == NULL) {
+				if (!m_refModel->genFZP(moduleID, m_refModel)) {
+					return;
+				}
+			}
+
+			swapSelectedAux(itemBase->layerKinChief(), moduleID);
+			return;
+		}
+	}
+
+	if (prop.compare("layout", Qt::CaseInsensitive) == 0) {
+		if (family.compare("mystery part", Qt::CaseInsensitive) == 0) {
+			QString value = currPropsMap.value(prop);
+			QString pins = currPropsMap.value("pins");
+			QString moduleID;
+			if (value.contains("single", Qt::CaseInsensitive)) {
+				moduleID = QString("mystery_part_%1").arg(pins);
+			}
+			else {
+				int p = pins.toInt();
+				if (p < 4) p = 4;
+				if (p % 2 == 1) p--;
+				moduleID = QString("mystery_part_%1_dip_300mil").arg(p);
+			}
+			ModelPart * modelPart = m_refModel->retrieveModelPart(moduleID);
+			if (modelPart == NULL) {
+				if (!m_refModel->genFZP(moduleID, m_refModel)) {
+					return;
+				}
+			}
+
+			swapSelectedAux(itemBase->layerKinChief(), moduleID);
+			return;
+		}
+	}
+
 	if (prop.compare("pins") == 0) {
 		QString pins = currPropsMap.value("pins");
 
