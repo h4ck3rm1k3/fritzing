@@ -931,8 +931,8 @@ QString PartsEditorView::createSvgFromImage(const QString &origFilePath) {
 
 	if (origFilePath.endsWith(".fp")) {
 		// this is a geda footprint file
-		GedaElement2Svg g;
-		QString svg = g.convert(origFilePath, false);
+		GedaElement2Svg geda;
+		QString svg = geda.convert(origFilePath, false);
 		return saveSvg(svg, newFilePath);
 	}
 
@@ -957,8 +957,8 @@ QString PartsEditorView::createSvgFromImage(const QString &origFilePath) {
 			def = defs.at(0);
 		}
 
-		KicadSchematic2Svg k;
-		QString svg = k.convert(origFilePath, def);
+		KicadSchematic2Svg kicad;
+		QString svg = kicad.convert(origFilePath, def);
 		return saveSvg(svg, newFilePath);
 	}
 
@@ -983,8 +983,8 @@ QString PartsEditorView::createSvgFromImage(const QString &origFilePath) {
 			module = modules.at(0);
 		}
 
-		KicadModule2Svg k;
-		QString svg = k.convert(origFilePath, module, false);
+		KicadModule2Svg kicad;
+		QString svg = kicad.convert(origFilePath, module, false);
 		return saveSvg(svg, newFilePath);
 	}
 

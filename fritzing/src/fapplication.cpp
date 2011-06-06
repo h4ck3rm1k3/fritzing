@@ -510,8 +510,8 @@ void FApplication::runGedaService() {
 			QString filepath = dir.absoluteFilePath(filename);
 			QString newfilepath = filepath;
 			newfilepath.replace(".fp", ".svg");
-			GedaElement2Svg g;
-			QString svg = g.convert(filepath, false);
+			GedaElement2Svg geda;
+			QString svg = geda.convert(filepath, false);
 			QFile file(newfilepath);
 			if (file.open(QFile::WriteOnly)) {
 				QTextStream stream(&file);
@@ -538,9 +538,9 @@ void FApplication::runKicadFootprintService() {
 		QString filepath = dir.absoluteFilePath(filename);
 		QStringList moduleNames = KicadModule2Svg::listModules(filepath);
 		foreach (QString moduleName, moduleNames) {
-			KicadModule2Svg k;
+			KicadModule2Svg kicad;
 			try {
-				QString svg = k.convert(filepath, moduleName, false);
+				QString svg = kicad.convert(filepath, moduleName, false);
 				if (svg.isEmpty()) {
 					DebugDialog::debug("svg is empty " + filepath + " " + moduleName);
 					continue;
@@ -581,9 +581,9 @@ void FApplication::runKicadSchematicService() {
 		QString filepath = dir.absoluteFilePath(filename);
 		QStringList defNames = KicadSchematic2Svg::listDefs(filepath);
 		foreach (QString defName, defNames) {
-			KicadSchematic2Svg k;
+			KicadSchematic2Svg kicad;
 			try {
-				QString svg = k.convert(filepath, defName);
+				QString svg = kicad.convert(filepath, defName);
 				if (svg.isEmpty()) {
 					DebugDialog::debug("svg is empty " + filepath + " " + defName);
 					continue;
