@@ -42,6 +42,12 @@ static QStringList Spacings;
 static QRegExp Digits("(\\d)+");
 static QRegExp DigitsMil("(\\d)+mil");
 
+static int MinSipPins = 1;
+static int MaxSipPins = 64;
+static int MinDipPins = 4;
+static int MaxDipPins = 64;
+
+
 
 // TODO
 //	save into parts bin
@@ -209,6 +215,25 @@ QStringList MysteryPart::collectValues(const QString & family, const QString & p
 		return values;
 	}
 
+	if (prop.compare("pins", Qt::CaseInsensitive) == 0) {
+		QStringList values;
+		value = modelPart()->properties().value("pins");
+
+		if (moduleID().contains("dip")) {
+			for (int i = MinDipPins; i <= MaxDipPins; i += 2) {
+				values << QString::number(i);
+			}
+		}
+		else {
+			for (int i = MinSipPins; i <= MaxSipPins; i++) {
+				values << QString::number(i);
+			}
+		}
+		
+		return values;
+	}
+
+
 	return PaletteItem::collectValues(family, prop, value);
 }
 
@@ -338,3 +363,82 @@ ItemBase::PluralType MysteryPart::isPlural() {
 	return Plural;
 }
 
+QString MysteryPart::genSipFZP(const QString & moduleid)
+{
+	QString SipFzpTemplate = "";
+	QString SipConnectorFzpTemplate = "";
+
+	if (SipFzpTemplate.isEmpty()) {
+		QFile file(":/resources/templates/mystery_part_sipFzpTemplate.txt");
+		file.open(QFile::ReadOnly);
+		SipFzpTemplate = file.readAll();
+		file.close();
+	}
+	if (SipConnectorFzpTemplate.isEmpty()) {
+		QFile file(":/resources/templates/generic_sip_connectorFzpTemplate.txt");
+		file.open(QFile::ReadOnly);
+		SipConnectorFzpTemplate = file.readAll();
+		file.close();
+	}
+
+	QStringList ss = moduleid.split("_");
+	int count = 0;
+	foreach (QString s, ss) {
+		bool ok;
+		int c = s.toInt(&ok);
+		if (ok) {
+			count = c;
+			break;
+		}
+	}
+
+	if (count > MaxSipPins || count < MinSipPins) return "";
+
+	QString middle;
+
+	for (int i = 0; i < count; i++) {
+		middle += SipConnectorFzpTemplate.arg(i).arg(i + 1);
+	}
+
+	return SipFzpTemplate.arg(count).arg(middle);
+}
+
+QString MysteryPart::genDipFZP(const QString & moduleid)
+{
+	QString DipFzpTemplate = "";
+	QString DipConnectorFzpTemplate = "";
+
+	if (DipFzpTemplate.isEmpty()) {
+		QFile file(":/resources/templates/mystery_part_dipFzpTemplate.txt");
+		file.open(QFile::ReadOnly);
+		DipFzpTemplate = file.readAll();
+		file.close();
+	}
+	if (DipConnectorFzpTemplate.isEmpty()) {
+		QFile file(":/resources/templates/generic_sip_connectorFzpTemplate.txt");
+		file.open(QFile::ReadOnly);
+		DipConnectorFzpTemplate = file.readAll();
+		file.close();
+	}
+
+	QStringList ss = moduleid.split("_");
+	int count = 0;
+	foreach (QString s, ss) {
+		bool ok;
+		int c = s.toInt(&ok);
+		if (ok) {
+			count = c;
+			break;
+		}
+	}
+
+	if (count > MaxDipPins || count < MinDipPins) return "";
+
+	QString middle;
+
+	for (int i = 0; i < count; i++) {
+		middle += DipConnectorFzpTemplate.arg(i).arg(i + 1);
+	}
+
+	return DipFzpTemplate.arg(count).arg(middle);
+}

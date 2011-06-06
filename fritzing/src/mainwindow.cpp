@@ -1673,32 +1673,61 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 		swapSelectedAux(itemBase->layerKinChief(), moduleID);
 		return;
 	}
-	if (prop.compare("pins") == 0 && itemBase->moduleID().contains("generic_sip", Qt::CaseInsensitive)) {
+	if (prop.compare("pins") == 0) {
 		QString pins = currPropsMap.value("pins");
-		QString moduleID = QString("generic_sip_%1_300mil").arg(pins);
-		ModelPart * modelPart = m_refModel->retrieveModelPart(moduleID);
-		if (modelPart == NULL) {
-			if (!m_refModel->genFZP(moduleID, m_refModel)) {
-				return;
+		if (itemBase->moduleID().startsWith("generic_sip", Qt::CaseInsensitive)) {
+			QString moduleID = QString("generic_sip_%1_300mil").arg(pins);
+			ModelPart * modelPart = m_refModel->retrieveModelPart(moduleID);
+			if (modelPart == NULL) {
+				if (!m_refModel->genFZP(moduleID, m_refModel)) {
+					return;
+				}
 			}
-		}
 
-		swapSelectedAux(itemBase->layerKinChief(), moduleID);
-		return;
-	}
+			swapSelectedAux(itemBase->layerKinChief(), moduleID);
+			return;
+		}
 	
-	if (prop.compare("pins") == 0 && itemBase->moduleID().contains("generic_ic_dip", Qt::CaseInsensitive)) {
-		QString pins = currPropsMap.value("pins");
-		QString moduleID = QString("generic_ic_dip_%1_300mil").arg(pins);
-		ModelPart * modelPart = m_refModel->retrieveModelPart(moduleID);
-		if (modelPart == NULL) {
-			if (!m_refModel->genFZP(moduleID, m_refModel)) {
+		if (itemBase->moduleID().startsWith("generic_ic_dip", Qt::CaseInsensitive)) {
+			QString moduleID = QString("generic_ic_dip_%1_300mil").arg(pins);
+			ModelPart * modelPart = m_refModel->retrieveModelPart(moduleID);
+			if (modelPart == NULL) {
+				if (!m_refModel->genFZP(moduleID, m_refModel)) {
+					return;
+				}
+			}
+
+			swapSelectedAux(itemBase->layerKinChief(), moduleID);
+			return;
+		}
+	
+		if (itemBase->moduleID().startsWith("mystery_part_", Qt::CaseInsensitive)) 
+		{
+			if (itemBase->moduleID().contains("dip", Qt::CaseInsensitive)) {
+				QString moduleID = QString("mystery_part_%1_dip_300mil").arg(pins);
+				ModelPart * modelPart = m_refModel->retrieveModelPart(moduleID);
+				if (modelPart == NULL) {
+					if (!m_refModel->genFZP(moduleID, m_refModel)) {
+						return;
+					}
+				}
+
+				swapSelectedAux(itemBase->layerKinChief(), moduleID);
+				return;
+			}
+			else {
+				QString moduleID = QString("mystery_part_%1").arg(pins);
+				ModelPart * modelPart = m_refModel->retrieveModelPart(moduleID);
+				if (modelPart == NULL) {
+					if (!m_refModel->genFZP(moduleID, m_refModel)) {
+						return;
+					}
+				}
+
+				swapSelectedAux(itemBase->layerKinChief(), moduleID);
 				return;
 			}
 		}
-
-		swapSelectedAux(itemBase->layerKinChief(), moduleID);
-		return;
 	}
 	
 	if ((prop.compare("package", Qt::CaseSensitive) != 0) && swapSpecial(currPropsMap)) {

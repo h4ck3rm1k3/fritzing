@@ -42,6 +42,7 @@ public:
 
 
 protected:
+	static QString getFzpFilenameAux(const QString & moduleID, QString (*getFzp)(const QString &));
 	static class ItemBase * createPartAux(class ModelPart *, ViewIdentifierClass::ViewIdentifier, const class ViewGeometry & viewGeometry, long id, QMenu * itemMenu, QMenu * wireMenu, bool doLabel);
 };
 

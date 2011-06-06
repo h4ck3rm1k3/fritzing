@@ -60,6 +60,10 @@ public:
 public slots:
 	void chipLabelEntry();
 
+public:
+	static QString genSipFZP(const QString & moduleid);
+	static QString genDipFZP(const QString & moduleid);
+
 protected:
 	QString makeSvg(const QString & chipLabel);
 	ConnectorItem* newConnectorItem(class Connector *connector);

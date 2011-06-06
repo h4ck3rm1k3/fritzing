@@ -174,56 +174,47 @@ QString PartFactory::getSvgFilename(ModelPart * modelPart, const QString & expec
 	return "";
 }
 
-QString PartFactory::getFzpFilename(const QString & moduleID) {
-	if (moduleID.endsWith(ModuleIDNames::PerfboardModuleIDName)) {
-		QString path = PartFactoryFolderPath + "/" + moduleID + FritzingPartExtension;
-		QFile file(path);
-		if (file.exists()) {
-			return path;
-		}
-
-		QString fzp = Perfboard::genFZP(moduleID);
-		if (file.open(QFile::WriteOnly)) {
-			QTextStream stream(&file);
-			stream.setCodec("UTF-8");
-			stream << fzp;
-			file.close();
-			return path;
-		}
+QString PartFactory::getFzpFilenameAux(const QString & moduleID, QString (*getFzp)(const QString &))
+{
+	QString path = PartFactoryFolderPath + "/" + moduleID + FritzingPartExtension;
+	QFile file(path);
+	if (file.exists()) {
+		return path;
 	}
 
+	QString fzp = (*getFzp)(moduleID);
+	if (file.open(QFile::WriteOnly)) {
+		QTextStream stream(&file);
+		stream.setCodec("UTF-8");
+		stream << fzp;
+		file.close();
+		return path;
+	}
+
+	return "";
+}
+
+
+QString PartFactory::getFzpFilename(const QString & moduleID) 
+{
+	if (moduleID.endsWith(ModuleIDNames::PerfboardModuleIDName)) {
+		return getFzpFilenameAux(moduleID, &Perfboard::genFZP);
+	}
 
 	if (moduleID.startsWith("generic_sip")) {
-		QString path = PartFactoryFolderPath + "/" + moduleID + FritzingPartExtension;
-		QFile file(path);
-		if (file.exists()) {
-			return path;
-		}
-
-		QString fzp = Dip::genSipFZP(moduleID);
-		if (file.open(QFile::WriteOnly)) {
-			QTextStream stream(&file);
-			stream.setCodec("UTF-8");
-			stream << fzp;
-			file.close();
-			return path;
-		}
+		return getFzpFilenameAux(moduleID, &Dip::genSipFZP);
 	}
 
 	if (moduleID.startsWith("generic_ic_dip")) {
-		QString path = PartFactoryFolderPath + "/" + moduleID + FritzingPartExtension;
-		QFile file(path);
-		if (file.exists()) {
-			return path;
-		}
+		return getFzpFilenameAux(moduleID, &Dip::genDipFZP);
+	}
 
-		QString fzp = Dip::genDipFZP(moduleID);
-		if (file.open(QFile::WriteOnly)) {
-			QTextStream stream(&file);
-			stream.setCodec("UTF-8");
-			stream << fzp;
-			file.close();
-			return path;
+	if (moduleID.startsWith("mystery_part")) {
+		if (moduleID.contains("dip", Qt::CaseInsensitive)) {
+			return getFzpFilenameAux(moduleID, &MysteryPart::genDipFZP);
+		}
+		else {
+			return getFzpFilenameAux(moduleID, &MysteryPart::genSipFZP);
 		}
 	}
 
