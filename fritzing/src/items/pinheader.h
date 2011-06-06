@@ -63,6 +63,8 @@ public:
 	static QString FemaleRoundedFormString;
 	static QString MaleFormString;
 	static void initNames();
+	static QString genFZP(const QString & moduleid);
+
 
 protected:
 	class FSvgRenderer * m_renderer;

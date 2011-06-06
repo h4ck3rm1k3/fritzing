@@ -27,6 +27,7 @@ $Date$
 #include "partfactory.h"
 #include "../viewgeometry.h"
 #include "../model/modelpart.h"
+#include "../model/modelbase.h"
 #include "paletteitem.h"
 #include "symbolpaletteitem.h"
 #include "wire.h"
@@ -201,12 +202,16 @@ QString PartFactory::getFzpFilename(const QString & moduleID)
 		return getFzpFilenameAux(moduleID, &Perfboard::genFZP);
 	}
 
+	if (moduleID.startsWith("generic_ic_dip")) {
+		return getFzpFilenameAux(moduleID, &Dip::genDipFZP);
+	}
+
 	if (moduleID.startsWith("generic_sip")) {
 		return getFzpFilenameAux(moduleID, &Dip::genSipFZP);
 	}
 
-	if (moduleID.startsWith("generic_ic_dip")) {
-		return getFzpFilenameAux(moduleID, &Dip::genDipFZP);
+	if (moduleID.startsWith("generic_female_pin_header_")) {
+		return getFzpFilenameAux(moduleID, &PinHeader::genFZP);
 	}
 
 	if (moduleID.startsWith("mystery_part")) {
@@ -233,4 +238,77 @@ void PartFactory::initFolder()
 void PartFactory::cleanup()
 {
 	FolderUtils::releaseLockedFiles(PartFactoryFolderPath, LockedFiles);
+}
+
+ModelPart * PartFactory::fixObsoleteModuleID(QDomDocument & domDocument, QDomElement & instance, QString & moduleIDRef, ModelBase * referenceModel) {
+	// TODO: less hard-coding
+	QRegExp oldDip("generic_ic_dip_(\\d{1,2})_(\\d{3}mil)");
+	if (oldDip.indexIn(moduleIDRef) == 0) {
+		QString spacing = oldDip.cap(2);
+		QString pins = oldDip.cap(1);
+		moduleIDRef = QString("generic_ic_dip_%1_300mil").arg(pins);
+		ModelPart * modelPart = referenceModel->retrieveModelPart(moduleIDRef);
+		if (modelPart != NULL) {
+			instance.setAttribute("moduleIdRef", moduleIDRef);
+			QDomElement prop = domDocument.createElement("property");
+			instance.appendChild(prop);
+			prop.setAttribute("name", "spacing");
+			prop.setAttribute("value", spacing);
+			return modelPart;
+		}
+	}
+
+	if (moduleIDRef.startsWith("generic_male")) {
+		moduleIDRef.replace("male", "female");
+		ModelPart * modelPart = referenceModel->retrieveModelPart(moduleIDRef);
+		if (modelPart != NULL) {
+			instance.setAttribute("moduleIdRef", moduleIDRef);
+			QDomElement prop = domDocument.createElement("property");
+			instance.appendChild(prop);
+			prop.setAttribute("name", "form");
+			prop.setAttribute("value", PinHeader::MaleFormString);
+			return modelPart;
+		}
+	}
+
+	if (moduleIDRef.startsWith("generic_rounded_female")) {
+		moduleIDRef.replace("rounded_female", "female");
+		ModelPart * modelPart = referenceModel->retrieveModelPart(moduleIDRef);
+		if (modelPart != NULL) {
+			instance.setAttribute("moduleIdRef", moduleIDRef);
+			QDomElement prop = domDocument.createElement("property");
+			instance.appendChild(prop);
+			prop.setAttribute("name", "form");
+			prop.setAttribute("value", PinHeader::FemaleRoundedFormString);
+			return modelPart;
+		}
+	}
+
+	return NULL;
+}
+
+bool PartFactory::isRatsnest(QDomElement & instance) {
+	QString moduleIDRef = instance.attribute("moduleIdRef");
+	if (moduleIDRef.compare(ModuleIDNames::WireModuleIDName) != 0) return false;
+
+	QDomElement views = instance.firstChildElement("views");
+	if (views.isNull()) return false;
+
+	QDomElement view = views.firstChildElement();
+	while (!view.isNull()) {
+		QDomElement geometry = view.firstChildElement("geometry");
+		if (!geometry.isNull()) {
+			int flags = geometry.attribute("wireFlags").toInt();
+			if (flags & ViewGeometry::RatsnestFlag) {
+				return true;
+			}
+			if (flags & ViewGeometry::ObsoleteJumperFlag) {
+				return true;
+			}
+		}
+
+		view = view.nextSiblingElement();
+	}
+
+	return false;
 }

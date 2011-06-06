@@ -26,7 +26,6 @@ $Date$
 
 #include "modelbase.h"
 #include "../debugdialog.h"
-#include "../items/pinheader.h"
 #include "../items/partfactory.h"
 #include "../items/moduleidnames.h"
 #include "../version/version.h"
@@ -136,50 +135,7 @@ bool ModelBase::load(const QString & fileName, ModelBase * refModel, QList<Model
 }
 
 ModelPart * ModelBase::fixObsoleteModuleID(QDomDocument & domDocument, QDomElement & instance, QString & moduleIDRef) {
-	// TODO: less hard-coding
-	QRegExp oldDip("generic_ic_dip_(\\d{1,2})_(\\d{3}mil)");
-	if (oldDip.indexIn(moduleIDRef) == 0) {
-		QString spacing = oldDip.cap(2);
-		QString pins = oldDip.cap(1);
-		moduleIDRef = QString("generic_ic_dip_%1_300mil").arg(pins);
-		ModelPart * modelPart = m_referenceModel->retrieveModelPart(moduleIDRef);
-		if (modelPart != NULL) {
-			instance.setAttribute("moduleIdRef", moduleIDRef);
-			QDomElement prop = domDocument.createElement("property");
-			instance.appendChild(prop);
-			prop.setAttribute("name", "spacing");
-			prop.setAttribute("value", spacing);
-			return modelPart;
-		}
-	}
-
-	if (moduleIDRef.startsWith("generic_male")) {
-		moduleIDRef.replace("male", "female");
-		ModelPart * modelPart = m_referenceModel->retrieveModelPart(moduleIDRef);
-		if (modelPart != NULL) {
-			instance.setAttribute("moduleIdRef", moduleIDRef);
-			QDomElement prop = domDocument.createElement("property");
-			instance.appendChild(prop);
-			prop.setAttribute("name", "form");
-			prop.setAttribute("value", PinHeader::MaleFormString);
-			return modelPart;
-		}
-	}
-
-	if (moduleIDRef.startsWith("generic_rounded_female")) {
-		moduleIDRef.replace("rounded_female", "female");
-		ModelPart * modelPart = m_referenceModel->retrieveModelPart(moduleIDRef);
-		if (modelPart != NULL) {
-			instance.setAttribute("moduleIdRef", moduleIDRef);
-			QDomElement prop = domDocument.createElement("property");
-			instance.appendChild(prop);
-			prop.setAttribute("name", "form");
-			prop.setAttribute("value", PinHeader::FemaleRoundedFormString);
-			return modelPart;
-		}
-	}
-
-	return NULL;
+	return PartFactory::fixObsoleteModuleID(domDocument, instance, moduleIDRef, m_referenceModel);
 }
 
 bool ModelBase::loadInstances(QDomDocument & domDocument, QDomElement & instances, QList<ModelPart *> & modelParts, bool checkForRats)
@@ -460,29 +416,7 @@ void ModelBase::renewModelIndexes(QDomElement & parentElement, const QString & c
 }
 
 bool ModelBase::isRatsnest(QDomElement & instance) {
-	QString moduleIDRef = instance.attribute("moduleIdRef");
-	if (moduleIDRef.compare(ModuleIDNames::WireModuleIDName) != 0) return false;
-
-	QDomElement views = instance.firstChildElement("views");
-	if (views.isNull()) return false;
-
-	QDomElement view = views.firstChildElement();
-	while (!view.isNull()) {
-		QDomElement geometry = view.firstChildElement("geometry");
-		if (!geometry.isNull()) {
-			int flags = geometry.attribute("wireFlags").toInt();
-			if (flags & ViewGeometry::RatsnestFlag) {
-				return true;
-			}
-			if (flags & ViewGeometry::ObsoleteJumperFlag) {
-				return true;
-			}
-		}
-
-		view = view.nextSiblingElement();
-	}
-
-	return false;
+	return PartFactory::isRatsnest(instance);
 }
 
 void ModelBase::setReportMissingModules(bool b) {

@@ -77,6 +77,10 @@ public:
 	void resetImage(class InfoGraphicsView *);
 	void resetKinImage(ItemBase * layerKin, InfoGraphicsView * infoGraphicsView);
 
+public:
+	static QString genFZP(const QString & moduleid, const QString & templateName, int minPins, int maxPins, int steps);
+
+
 protected:
 	void syncKinSelection(bool selected, PaletteItemBase * originator);
  	QVariant itemChange(GraphicsItemChange change, const QVariant &value);

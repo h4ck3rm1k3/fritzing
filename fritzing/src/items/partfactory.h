@@ -28,6 +28,8 @@ $Date$
 #define PARTFACTORY_H
 
 #include <QMenu>
+#include <QDomDocument>
+#include <QDomElement>
 #include "../viewidentifierclass.h"
 #include "../viewlayer.h"
 
@@ -39,6 +41,9 @@ public:
 	static QString getFzpFilename(const QString & moduleID);
 	static void initFolder();
 	static void cleanup();
+	static class ModelPart * fixObsoleteModuleID(QDomDocument & domDocument, QDomElement & instance, QString & moduleIDRef, class ModelBase * referenceModel);
+	static bool isRatsnest(QDomElement & instance);
+
 
 
 protected:

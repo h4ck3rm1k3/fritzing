@@ -42,6 +42,8 @@ static QStringList Forms;
 QString PinHeader::FemaleFormString;
 QString PinHeader::FemaleRoundedFormString;
 QString PinHeader::MaleFormString;
+static int MinPins = 1;
+static int MaxPins = 64;
 
 
 // TODO
@@ -157,6 +159,18 @@ QStringList PinHeader::collectValues(const QString & family, const QString & pro
 		return values;
 	}
 
+	if (prop.compare("pins", Qt::CaseInsensitive) == 0) {
+		QStringList values;
+		value = modelPart()->properties().value("pins");
+
+		for (int i = MinPins; i <= MaxPins; i++) {
+			values << QString::number(i);
+		}
+		
+		return values;
+	}
+
+
 	return PaletteItem::collectValues(family, prop, value);
 }
 
@@ -197,7 +211,6 @@ const QString & PinHeader::form() {
 	return m_form;
 }
 
-
 const QStringList & PinHeader::forms() {
 	if (Forms.count() == 0) {
 		Forms << FemaleFormString << FemaleRoundedFormString << MaleFormString;
@@ -227,3 +240,7 @@ ItemBase::PluralType PinHeader::isPlural() {
 	return Plural;
 }
 
+QString PinHeader::genFZP(const QString & moduleid)
+{
+	return PaletteItem::genFZP(moduleid, "generic_female_pin_header_fzpTemplate", MinPins, MaxPins, 1); 
+}

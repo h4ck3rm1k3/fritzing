@@ -458,3 +458,43 @@ void PaletteItem::resetKinImage(ItemBase * layerKin, InfoGraphicsView * infoGrap
 	qobject_cast<PaletteItemBase *>(layerKin)->setUpImage(modelPart(), layerKin->viewIdentifier(), infoGraphicsView->viewLayers(), layerKin->viewLayerID(), layerKin->viewLayerSpec(), true, error);
 }
 
+QString PaletteItem::genFZP(const QString & moduleid, const QString & templateName, int minPins, int maxPins, int steps)
+{
+	QString FzpTemplate = "";
+	QString ConnectorFzpTemplate = "";
+
+	if (FzpTemplate.isEmpty()) {
+		QFile file(QString(":/resources/templates/%1.txt").arg(templateName));
+		file.open(QFile::ReadOnly);
+		FzpTemplate = file.readAll();
+		file.close();
+	}
+	if (ConnectorFzpTemplate.isEmpty()) {
+		QFile file(":/resources/templates/generic_sip_connectorFzpTemplate.txt");
+		file.open(QFile::ReadOnly);
+		ConnectorFzpTemplate = file.readAll();
+		file.close();
+	}
+
+	QStringList ss = moduleid.split("_");
+	int count = 0;
+	foreach (QString s, ss) {
+		bool ok;
+		int c = s.toInt(&ok);
+		if (ok) {
+			count = c;
+			break;
+		}
+	}
+
+	if (count > maxPins || count < minPins) return "";
+	if (count % steps != 0) return "";
+
+	QString middle;
+
+	for (int i = 0; i < count; i++) {
+		middle += ConnectorFzpTemplate.arg(i).arg(i + 1);
+	}
+
+	return FzpTemplate.arg(count).arg(middle);
+}

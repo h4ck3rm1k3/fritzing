@@ -257,6 +257,7 @@
 	<file>resources/templates/generic_dip_fzpTemplate.txt</file>
 	<file>resources/templates/mystery_part_sipFzpTemplate.txt</file>
 	<file>resources/templates/mystery_part_dipFzpTemplate.txt</file>
+	<file>resources/templates/generic_female_pin_header_fzpTemplate.txt</file>
 	
     </qresource>
 </RCC>
