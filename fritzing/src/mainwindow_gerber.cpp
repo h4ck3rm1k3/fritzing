@@ -79,19 +79,19 @@ void MainWindow::exportToGerber(const QString & exportDir, ItemBase * board, boo
 	}
 
 	LayerList viewLayerIDs = ViewLayer::copperLayers(ViewLayer::Bottom);
-	int copperInvalidCount = doCopper(board, viewLayerIDs, "Copper0", "_copperTop.gtl", "_maskTop.gts", true, exportDir, displayMessageBoxes);
+	int copperInvalidCount = doCopper(board, viewLayerIDs, "Copper0", "_copperBottom.gbl", "_maskBottom.gbs", true, exportDir, displayMessageBoxes);
 
 	if (m_pcbGraphicsView->boardLayers() == 2) {
 		viewLayerIDs = ViewLayer::copperLayers(ViewLayer::Top);
-		copperInvalidCount += doCopper(board, viewLayerIDs, "Copper1", "_copperBottom.gbl", "_maskBottom.gbs", false, exportDir, displayMessageBoxes);
+		copperInvalidCount += doCopper(board, viewLayerIDs, "Copper1", "_copperTop.gtl", "_maskTop.gts", false, exportDir, displayMessageBoxes);
 	}
 
     LayerList silkLayerIDs;
     silkLayerIDs << ViewLayer::Silkscreen1  << ViewLayer::Silkscreen1Label;
-	int silkInvalidCount = doSilk(silkLayerIDs, "Silk1", "_silkBottom.gbo", board, exportDir, displayMessageBoxes);
+	int silkInvalidCount = doSilk(silkLayerIDs, "Silk1", "_silkTop.gto", board, exportDir, displayMessageBoxes);
     silkLayerIDs.clear();
     silkLayerIDs << ViewLayer::Silkscreen0  << ViewLayer::Silkscreen0Label;
-	silkInvalidCount += doSilk(silkLayerIDs, "Silk0", "_silkTop.gto", board, exportDir, displayMessageBoxes);
+	silkInvalidCount += doSilk(silkLayerIDs, "Silk0", "_silkBottom.gbo", board, exportDir, displayMessageBoxes);
 
     // now do it for the outline/contour
     LayerList outlineLayerIDs;
