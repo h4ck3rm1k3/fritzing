@@ -63,6 +63,7 @@ public slots:
 public:
 	static QString genSipFZP(const QString & moduleid);
 	static QString genDipFZP(const QString & moduleid);
+	static QString genModuleID(QMap<QString, QString> & currPropsMap);
 
 protected:
 	QString makeSvg(const QString & chipLabel);

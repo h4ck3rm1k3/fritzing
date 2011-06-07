@@ -373,3 +373,18 @@ QString MysteryPart::genDipFZP(const QString & moduleid)
 	return PaletteItem::genFZP(moduleid, "mystery_part_dipFzpTemplate", MinDipPins, MaxDipPins, 2);
 }
 
+QString MysteryPart::genModuleID(QMap<QString, QString> & currPropsMap)
+{
+	QString value = currPropsMap.value("layout");
+	QString pins = currPropsMap.value("pins");
+	if (value.contains("single", Qt::CaseInsensitive)) {
+		return QString("mystery_part_%1").arg(pins);
+	}
+	else {
+		int p = pins.toInt();
+		if (p < 4) p = 4;
+		if (p % 2 == 1) p--;
+		return QString("mystery_part_%1_dip_300mil").arg(p);
+	}
+}
+

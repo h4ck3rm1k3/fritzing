@@ -24,53 +24,31 @@ $Date$
 
 ********************************************************************/
 
-#ifndef PINHEADER_H
-#define PINHEADER_H
-
-#include <QRectF>
-#include <QPainterPath>
-#include <QPixmap>
-#include <QVariant>
+#ifndef SCREWTERMINAL_H
+#define SCREWTERMINAL_H
 
 #include "paletteitem.h"
 
-class PinHeader : public PaletteItem 
+class ScrewTerminal : public PaletteItem 
 {
 	Q_OBJECT
 
 public:
 	// after calling this constructor if you want to render the loaded svg (either from model or from file), MUST call <renderImage>
-	PinHeader(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel);
-	~PinHeader();
+	ScrewTerminal(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel);
+	~ScrewTerminal();
 
-	QString getProperty(const QString & key);
-	void setProp(const QString & prop, const QString & value);
-	void setForm(QString form, bool force);
-	const QString & form();
-	bool onlyFormChanges(QMap<QString, QString> & propsMap);
-    bool hasCustomSVG();
 	PluralType isPlural();
-	void addedToScene();
-
-protected:
-	ConnectorItem* newConnectorItem(class Connector *connector);
-	ConnectorItem* newConnectorItem(ItemBase * layerkin, Connector *connector);
 	QStringList collectValues(const QString & family, const QString & prop, QString & value);
-	const QStringList & forms();
 
 public:
-	static QString FemaleFormString;
-	static QString FemaleRoundedFormString;
-	static QString MaleFormString;
-	static void initNames();
 	static QString genFZP(const QString & moduleid);
 	static QString genModuleID(QMap<QString, QString> & currPropsMap);
 
-
 protected:
-	class FSvgRenderer * m_renderer;
-	QString m_form;
-	bool m_changingForm;
+	static void initSpacings();
+
+
 };
 
 #endif

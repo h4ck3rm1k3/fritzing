@@ -350,3 +350,10 @@ void Perfboard::enableSetButton() {
 
 	m_setButton->setEnabled(vx != x || vy != y);
 }
+
+QString Perfboard::genModuleID(QMap<QString, QString> & currPropsMap)
+{
+	QString size = currPropsMap.value("size");
+	return size + ModuleIDNames::PerfboardModuleIDName;
+}
+

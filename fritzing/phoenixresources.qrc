@@ -239,7 +239,7 @@
         <file>resources/fonts/NOTICE</file>
         <file>resources/fonts/OCRA.otf</file>
         <file>resources/fonts/ReadMe.txt</file>
-	
+
 	<file>resources/templates/jumper_copper0LayerTemplate.txt</file>
         <file>resources/templates/jumper_jumperwiresLayerTemplate.txt</file>
         <file>resources/templates/resizableBoard_boardLayerTemplate.txt</file>
@@ -258,6 +258,7 @@
 	<file>resources/templates/mystery_part_sipFzpTemplate.txt</file>
 	<file>resources/templates/mystery_part_dipFzpTemplate.txt</file>
 	<file>resources/templates/generic_female_pin_header_fzpTemplate.txt</file>
+	<file>resources/templates/screw_terminal_fzpTemplate.txt</file>
 	
     </qresource>
 </RCC>

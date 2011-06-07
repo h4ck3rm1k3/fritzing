@@ -65,6 +65,8 @@ $Date$
 #include "layerpalette.h"
 #include "items/paletteitem.h"
 #include "items/virtualwire.h"
+#include "items/screwterminal.h"
+#include "items/dip.h"
 #include "processeventblocker.h"
 #include "help/helper.h"
 #include "dockmanager.h"
@@ -1660,143 +1662,73 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 {
 	if (itemBase == NULL) return;
 
-	if (prop.compare("size") == 0 && family.compare("Perfboard") == 0) {
-		QString size = currPropsMap.value("size");
-		QString moduleID = size + ModuleIDNames::PerfboardModuleIDName;
-		ModelPart * modelPart = m_refModel->retrieveModelPart(moduleID);
+	QString generatedModuleID;
+
+	if (generatedModuleID.isEmpty()) {
+		if (prop.compare("size") == 0 && family.compare("Perfboard") == 0) {
+			QString size = currPropsMap.value("size");
+			generatedModuleID = Perfboard::genModuleID(currPropsMap);
+		}
+	}
+
+	if (generatedModuleID.isEmpty()) {
+		if (prop.compare("pin spacing", Qt::CaseInsensitive)) {
+			if (family.compare("screw terminal", Qt::CaseInsensitive) == 0) {
+				generatedModuleID = ScrewTerminal::genModuleID(currPropsMap);
+			}
+		}
+	}
+
+	if (generatedModuleID.isEmpty()) {
+		if (prop.compare("package", Qt::CaseInsensitive) == 0) {
+			QString package = currPropsMap.value(prop);
+			if (package.startsWith("sip", Qt::CaseInsensitive) || package.startsWith("dip", Qt::CaseInsensitive)) {
+				generatedModuleID = Dip::genModuleID(currPropsMap);
+			}
+		}
+	}
+
+	if (generatedModuleID.isEmpty()) {
+		if (prop.compare("layout", Qt::CaseInsensitive) == 0) {
+			if (family.compare("mystery part", Qt::CaseInsensitive) == 0) {
+				generatedModuleID = MysteryPart::genModuleID(currPropsMap);
+			}
+		}
+	}
+
+	if (generatedModuleID.isEmpty()) {
+		if (prop.compare("pins") == 0) {
+			if (itemBase->moduleID().startsWith("generic_female_pin_header_", Qt::CaseInsensitive)) {
+				generatedModuleID = PinHeader::genModuleID(currPropsMap);
+			}
+			else if (itemBase->moduleID().startsWith("screw_terminal_", Qt::CaseInsensitive)) {
+				generatedModuleID = ScrewTerminal::genModuleID(currPropsMap);
+			}
+			else if (itemBase->moduleID().startsWith("generic_sip", Qt::CaseInsensitive)) {
+				generatedModuleID = Dip::genModuleID(currPropsMap);
+			}
+			else if (itemBase->moduleID().startsWith("generic_ic_dip", Qt::CaseInsensitive)) {
+				generatedModuleID = Dip::genModuleID(currPropsMap);
+			}
+			else if (itemBase->moduleID().startsWith("mystery_part_", Qt::CaseInsensitive)) 
+			{
+				generatedModuleID = MysteryPart::genModuleID(currPropsMap);
+			}
+		}
+	}
+
+	if (!generatedModuleID.isEmpty()) {
+		ModelPart * modelPart = m_refModel->retrieveModelPart(generatedModuleID);
 		if (modelPart == NULL) {
-			if (!m_refModel->genFZP(moduleID, m_refModel)) {
+			if (!m_refModel->genFZP(generatedModuleID, m_refModel)) {
 				return;
 			}
 		}
 
-		swapSelectedAux(itemBase->layerKinChief(), moduleID);
+		swapSelectedAux(itemBase->layerKinChief(), generatedModuleID);
 		return;
 	}
 
-	if (prop.compare("package", Qt::CaseInsensitive) == 0) {
-		if (family.compare("generic ic", Qt::CaseInsensitive) == 0) {
-			QString value = currPropsMap.value(prop);
-			QString pins = currPropsMap.value("pins");
-			QString moduleID;
-			if (value.contains("sip", Qt::CaseInsensitive)) {
-				moduleID = QString("generic_sip_%1_300mil").arg(pins);
-			}
-			else {
-				int p = pins.toInt();
-				if (p < 4) p = 4;
-				if (p % 2 == 1) p--;
-				moduleID = QString("generic_ic_dip_%1_300mil").arg(p);
-			}
-			ModelPart * modelPart = m_refModel->retrieveModelPart(moduleID);
-			if (modelPart == NULL) {
-				if (!m_refModel->genFZP(moduleID, m_refModel)) {
-					return;
-				}
-			}
-
-			swapSelectedAux(itemBase->layerKinChief(), moduleID);
-			return;
-		}
-	}
-
-	if (prop.compare("layout", Qt::CaseInsensitive) == 0) {
-		if (family.compare("mystery part", Qt::CaseInsensitive) == 0) {
-			QString value = currPropsMap.value(prop);
-			QString pins = currPropsMap.value("pins");
-			QString moduleID;
-			if (value.contains("single", Qt::CaseInsensitive)) {
-				moduleID = QString("mystery_part_%1").arg(pins);
-			}
-			else {
-				int p = pins.toInt();
-				if (p < 4) p = 4;
-				if (p % 2 == 1) p--;
-				moduleID = QString("mystery_part_%1_dip_300mil").arg(p);
-			}
-			ModelPart * modelPart = m_refModel->retrieveModelPart(moduleID);
-			if (modelPart == NULL) {
-				if (!m_refModel->genFZP(moduleID, m_refModel)) {
-					return;
-				}
-			}
-
-			swapSelectedAux(itemBase->layerKinChief(), moduleID);
-			return;
-		}
-	}
-
-	if (prop.compare("pins") == 0) {
-		QString pins = currPropsMap.value("pins");
-
-		if (itemBase->moduleID().startsWith("generic_female_pin_header_", Qt::CaseInsensitive)) {
-			QString moduleID = QString("generic_female_pin_header_%1_100mil").arg(pins);
-			ModelPart * modelPart = m_refModel->retrieveModelPart(moduleID);
-			if (modelPart == NULL) {
-				if (!m_refModel->genFZP(moduleID, m_refModel)) {
-					return;
-				}
-			}
-
-			swapSelectedAux(itemBase->layerKinChief(), moduleID);
-			return;
-		}
-
-		if (itemBase->moduleID().startsWith("generic_sip", Qt::CaseInsensitive)) {
-			QString moduleID = QString("generic_sip_%1_300mil").arg(pins);
-			ModelPart * modelPart = m_refModel->retrieveModelPart(moduleID);
-			if (modelPart == NULL) {
-				if (!m_refModel->genFZP(moduleID, m_refModel)) {
-					return;
-				}
-			}
-
-			swapSelectedAux(itemBase->layerKinChief(), moduleID);
-			return;
-		}
-	
-		if (itemBase->moduleID().startsWith("generic_ic_dip", Qt::CaseInsensitive)) {
-			QString moduleID = QString("generic_ic_dip_%1_300mil").arg(pins);
-			ModelPart * modelPart = m_refModel->retrieveModelPart(moduleID);
-			if (modelPart == NULL) {
-				if (!m_refModel->genFZP(moduleID, m_refModel)) {
-					return;
-				}
-			}
-
-			swapSelectedAux(itemBase->layerKinChief(), moduleID);
-			return;
-		}
-	
-		if (itemBase->moduleID().startsWith("mystery_part_", Qt::CaseInsensitive)) 
-		{
-			if (itemBase->moduleID().contains("dip", Qt::CaseInsensitive)) {
-				QString moduleID = QString("mystery_part_%1_dip_300mil").arg(pins);
-				ModelPart * modelPart = m_refModel->retrieveModelPart(moduleID);
-				if (modelPart == NULL) {
-					if (!m_refModel->genFZP(moduleID, m_refModel)) {
-						return;
-					}
-				}
-
-				swapSelectedAux(itemBase->layerKinChief(), moduleID);
-				return;
-			}
-			else {
-				QString moduleID = QString("mystery_part_%1").arg(pins);
-				ModelPart * modelPart = m_refModel->retrieveModelPart(moduleID);
-				if (modelPart == NULL) {
-					if (!m_refModel->genFZP(moduleID, m_refModel)) {
-						return;
-					}
-				}
-
-				swapSelectedAux(itemBase->layerKinChief(), moduleID);
-				return;
-			}
-		}
-	}
-	
 	if ((prop.compare("package", Qt::CaseSensitive) != 0) && swapSpecial(currPropsMap)) {
 		return;
 	}

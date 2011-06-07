@@ -99,3 +99,22 @@ QStringList Dip::collectValues(const QString & family, const QString & prop, QSt
 
 	return MysteryPart::collectValues(family, prop, value);
 }
+
+
+QString Dip::genModuleID(QMap<QString, QString> & currPropsMap)
+{
+	QString value = currPropsMap.value("package");
+	QString pins = currPropsMap.value("pins");
+	if (pins.isEmpty()) pins = "16";		// pick something safe
+	QString moduleID;
+	if (value.contains("sip", Qt::CaseInsensitive)) {
+		return QString("generic_sip_%1_300mil").arg(pins);
+	}
+	else {
+		int p = pins.toInt();
+		if (p < 4) p = 4;
+		if (p % 2 == 1) p--;
+		return QString("generic_ic_dip_%1_300mil").arg(p);
+	}
+}
+

@@ -44,6 +44,7 @@ $Date$
 #include "ruler.h"
 #include "dip.h"
 #include "pinheader.h"
+#include "screwterminal.h"
 #include "hole.h"
 #include "via.h"
 #include "capacitor.h"
@@ -141,6 +142,9 @@ ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClas
 				if (family.compare("mystery part", Qt::CaseInsensitive) == 0) {
 					return new MysteryPart(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 				}
+				if (family.compare("screw terminal", Qt::CaseInsensitive) == 0) {
+					return new ScrewTerminal(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
+				}
 				if (family.compare("pin header", Qt::CaseInsensitive) == 0) {
 					return new PinHeader(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 				}
@@ -204,6 +208,10 @@ QString PartFactory::getFzpFilename(const QString & moduleID)
 
 	if (moduleID.startsWith("generic_ic_dip")) {
 		return getFzpFilenameAux(moduleID, &Dip::genDipFZP);
+	}
+
+	if (moduleID.startsWith("screw_terminal")) {
+		return getFzpFilenameAux(moduleID, &ScrewTerminal::genFZP);
 	}
 
 	if (moduleID.startsWith("generic_sip")) {

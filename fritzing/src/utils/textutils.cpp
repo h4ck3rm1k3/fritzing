@@ -113,6 +113,10 @@ qreal TextUtils::convertToInches(const QString & s, bool * ok, bool isIllustrato
 		divisor = isIllustrator? 72.0: 90.0;
 		string.chop(2);
 	}
+	else if (string.endsWith("mil", Qt::CaseInsensitive)) {
+		divisor = 1000.0;
+		string.chop(3);
+	}
 	else {
 		divisor = 90.0;			// default to Qt's standard internal units if all else fails
 	}

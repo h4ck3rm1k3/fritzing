@@ -244,3 +244,10 @@ QString PinHeader::genFZP(const QString & moduleid)
 {
 	return PaletteItem::genFZP(moduleid, "generic_female_pin_header_fzpTemplate", MinPins, MaxPins, 1); 
 }
+
+QString PinHeader::genModuleID(QMap<QString, QString> & currPropsMap)
+{
+	QString pins = currPropsMap.value("pins");
+	return QString("generic_female_pin_header_%1_100mil").arg(pins);
+}
+

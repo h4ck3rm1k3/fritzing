@@ -122,7 +122,9 @@ void SqliteReferenceModel::deleteConnection() {
 
 ModelPart *SqliteReferenceModel::loadPart(const QString & path, bool update, bool fastLoad) {
 	ModelPart *modelPart = PaletteModel::loadPart(path, update, fastLoad);
-	if(!m_init) addPart(modelPart, update);
+	if (modelPart == NULL) return modelPart;
+
+	if (!m_init) addPart(modelPart, update);
 	return modelPart;
 }
 
