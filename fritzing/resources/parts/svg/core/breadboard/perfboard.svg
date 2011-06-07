@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width=".1in" height=".1in" viewBox="0 0 100 100" >
-<g id="board"> 
-<rect id="boardoutline" stroke-width="8" stroke="#338040" fill="#338040" style="fill-opacity:0.5;stroke-opacity:1" width="92" height="92" x="4" y="4" /> 
-<circle fill="none" cx="50" cy="50" connectorname="1.1" stroke="#9A916C" r="27.5" id="connector0pin" stroke-width="20"/>
-</g> 
-</svg>

@@ -184,8 +184,9 @@
         <file>resources/parts/core/jumper.fzp</file>
         <file>resources/parts/core/groundplane.fzp</file>
         <file>resources/parts/core/hole.fzp</file>
-        <file>resources/parts/core/perfboard.fzp</file>
+        <file>resources/parts/core/10.10PerfboardModuleID.fzp</file>
 	
+        <file>resources/parts/svg/core/icon/5.5PerfboardModuleID.svg</file>
         <file>resources/parts/svg/core/icon/wireicon.svg</file>
         <file>resources/parts/svg/core/icon/rulericon.svg</file>
         <file>resources/parts/svg/core/icon/rectangle_pcb.svg</file>
@@ -204,7 +205,7 @@
 	
         <file>resources/parts/svg/core/breadboard/ruler.svg</file>
         <file>resources/parts/svg/core/breadboard/wire.svg</file>
-        <file>resources/parts/svg/core/breadboard/perfboard.svg</file>
+        <file>resources/parts/svg/core/breadboard/10.10PerfboardModuleID.svg</file>
 	
         <file>resources/parts/svg/core/pcb/rectangle_pcb.svg</file>
         <file>resources/parts/svg/core/pcb/logo.svg</file>
