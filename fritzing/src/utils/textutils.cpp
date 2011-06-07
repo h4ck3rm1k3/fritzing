@@ -693,6 +693,7 @@ QMatrix TextUtils::elementToMatrix(QDomElement & element) {
 
 QMatrix TextUtils::transformStringToMatrix(const QString & transform) {
 
+	// doesn't handle multiple transform attributes
 	QList<qreal> floats = getTransformFloats(transform);
 
 	if (transform.startsWith("translate")) {

@@ -40,12 +40,12 @@ public:
     void unRotateChild(QDomElement & element,QMatrix transform);
 
 public:
-    static bool hasTranslate(QDomElement & element);
-    static bool hasRotate(QDomElement & element);
 	static void flipSMDSvg(const QString & filename, const QString & svg, QDomDocument & flipDoc, const QString & elementID, const QString & altElementID, qreal printerScale);
 
 protected:
 	static void flipSMDElement(QDomDocument & domDocument, QSvgRenderer & renderer, QDomElement & element, const QString & att, QDomElement altAtt, const QString & altElementID, qreal printerScale);
+    static bool hasOtherTransform(QDomElement & element);
+    static bool hasTranslate(QDomElement & element);
 
 protected slots:
     void rotateCommandSlot(QChar command, bool relative, QList<double> & args, void * userData);

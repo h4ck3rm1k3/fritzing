@@ -49,33 +49,12 @@ int SVG2gerber::convert(const QString & svgStr, bool doubleSided, const QString 
     }
 
 #ifndef QT_NO_DEBUG
-    QString temp;
-    // dump paths SVG to tmp file for now
-    QFile dump(QDir::temp().absoluteFilePath("paths_in" + mainLayerName + ".svg"));
-    if (!dump.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        DebugDialog::debug("gerber svg dump: cannot open output file");
-    }
-    else {
-        QTextStream out(&dump);
-		out.setCodec("UTF-8");
-        out << m_SVGDom.toString();
-    }
-    temp = m_SVGDom.toString();
+    QString temp = m_SVGDom.toString();
 #endif
 
     normalizeSVG();
 
 #ifndef QT_NO_DEBUG
-    // dump paths SVG to tmp file for now
-    QFile dump2(QDir::temp().absoluteFilePath("paths_normal" + mainLayerName + ".svg"));
-    if (!dump2.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        DebugDialog::debug("gerber svg dump: cannot open output file");
-    }
-    else {
-        QTextStream out2(&dump2);
-		out2.setCodec("UTF-8");
-        out2 << m_SVGDom.toString();
-    }
     temp = m_SVGDom.toString();
 #endif
 

@@ -59,10 +59,8 @@ void SvgFlattener::flattenChildren(QDomElement &element){
 			//DebugDialog::debug(QString("translating %1").arg(params.at(0)));
 		}
     }
-    //do rotate
-    if(hasRotate(element)){
-		QList<qreal> params = TextUtils::getTransformFloats(element);
-        QMatrix transform = QMatrix(params.at(0), params.at(1), params.at(2), params.at(3), params.at(4), params.at(5));
+    else if(hasOtherTransform(element)) {
+        QMatrix transform = TextUtils::transformStringToMatrix(element.attribute("transform"));
 
         //DebugDialog::debug(QString("rotating %1 %2 %3 %4 %5 %6").arg(params.at(0)).arg(params.at(1)).arg(params.at(2)).arg(params.at(3)).arg(params.at(4)).arg(params.at(5)));
         unRotateChild(element, transform);
@@ -180,15 +178,13 @@ bool SvgFlattener::hasTranslate(QDomElement & element){
     return rtn;
 }
 
-bool SvgFlattener::hasRotate(QDomElement & element){
-    bool rtn = false;
+bool SvgFlattener::hasOtherTransform(QDomElement & element)
+{
+	QString transform = element.attribute("transform");
+	if (transform.isEmpty()) return false;
 
-    // ACHTUNG! this assumes that all rotates are done using a matrix() not rotate()
-    if(element.hasAttribute("transform")){
-        rtn = element.attribute("transform").startsWith("matrix");
-    }
-
-    return rtn;
+	// NOTE: doesn't handle multiple transform attributes...
+	return (!transform.contains("translate"));
 }
 
 void SvgFlattener::rotateCommandSlot(QChar command, bool relative, QList<double> & args, void * userData) {
