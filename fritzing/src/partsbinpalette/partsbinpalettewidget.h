@@ -170,7 +170,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		bool loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps);
 
 		void setFilename(const QString &filename);
-		void collectBins(QDir & dir);
+		void collectBins(QDir & dir, QMenu * toMenu);
 		QString getBinName(const QFileInfo &info);
 
 	protected:

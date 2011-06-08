@@ -356,23 +356,25 @@ void PartsBinPaletteWidget::createOpenBinMenu() {
 	m_openBinMenu->addAction(m_openAllBinAction);
 	m_openBinMenu->addSeparator();
 
-
 	QDir userBinsDir(FolderUtils::getUserDataStorePath("bins"));
-	collectBins(userBinsDir);
+	collectBins(userBinsDir, m_openBinMenu);
+
+	QMenu * moreMenu = m_openBinMenu->addMenu(tr("More bins"));
 
 	QFileInfo fileInfo(BinManager::AllPartsBinLocation);
 	QDir dir = fileInfo.absoluteDir();
 	dir.cd("more");
-	collectBins(dir);
+	collectBins(dir, moreMenu);
+	moreMenu->addSeparator();
+	moreMenu->addAction(m_openNonCoreBinAction);
+	moreMenu->addAction(m_openContribBinAction);
 
-	m_openBinMenu->addAction(m_openNonCoreBinAction);
-	m_openBinMenu->addAction(m_openContribBinAction);
 	m_openBinMenu->addSeparator();
 	m_openBinMenu->addAction(m_openBinAction);
 
 }
 
-void PartsBinPaletteWidget::collectBins(QDir & dir) {
+void PartsBinPaletteWidget::collectBins(QDir & dir, QMenu * menu) {
 	QHash<QString,QString> binsInfo;
 
 	QStringList filters;
@@ -390,7 +392,7 @@ void PartsBinPaletteWidget::collectBins(QDir & dir) {
 		QAction *action = new QAction(binsInfo[binFile],this);
 		action->setData(binFile);
 		connect(action, SIGNAL(triggered()),this, SLOT(openUserBin()));
-		m_openBinMenu->addAction(action);
+		menu->addAction(action);
 	}
 
 }
