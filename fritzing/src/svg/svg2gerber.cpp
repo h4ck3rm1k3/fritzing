@@ -438,7 +438,7 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
 		}
  		// add aperture to defs if we don't have it yet
 
-		if (!forOutline) {
+		if (!aperture.isEmpty()) {
 			QString dcode = apertureMap[aperture];
 			if(current_dcode != dcode){
 				//switch to correct aperture
