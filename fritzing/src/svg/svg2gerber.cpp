@@ -282,6 +282,8 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
         QString drill_cx = QString::number(flipxNoRound(centerx) / 1000, 'f');				// drill file seems to be in inches
         QString drill_cy = QString::number(flipyNoRound(centery) / 1000, 'f');				// drill file seems to be in inches
         qreal r = circle.attribute("r").toDouble();
+		if (r == 0) continue;
+
         QString fill = circle.attribute("fill");
         qreal stroke_width = circle.attribute("stroke-width").toDouble();
 
@@ -352,6 +354,10 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
 
         qreal width = rect.attribute("width").toDouble();
         qreal height = rect.attribute("height").toDouble();
+
+		if (width == 0) continue;
+		if (height == 0) continue;
+
         qreal x = rect.attribute("x").toDouble();
         qreal y = rect.attribute("y").toDouble();
         qreal centerx = x + (width/2);
