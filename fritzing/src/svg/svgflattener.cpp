@@ -105,24 +105,16 @@ void SvgFlattener::unRotateChild(QDomElement & element,QMatrix transform){
 			float y = element.attribute("y").toFloat();
 			float width = element.attribute("width").toFloat();
 			float height = element.attribute("height").toFloat();
-			if (GraphicsUtils::is90(transform)) {
-				float cx = x + (width/2);
-				float cy = y + (height/2);
-				QPointF point = transform.map(QPointF(cx,cy));
-				if (transform.m11() == 0 || transform.m11() == M_PI / 2) {
-					element.setAttribute("x", point.x()-(width/2));
-					element.setAttribute("y", point.y()-(height/2));
-				}
-				else {
-					element.setAttribute("x", point.x()-(height/2));
-					element.setAttribute("y", point.y()-(width/2));
-					element.setAttribute("width", height);
-					element.setAttribute("height", width);
-				}
+			QRectF r(x, y, width, height);
+			QPolygonF poly = transform.map(r);
+			if (GraphicsUtils::isRect(poly)) {
+				QRectF rect = GraphicsUtils::getRect(poly);
+				element.setAttribute("x", rect.left());
+				element.setAttribute("y", rect.top());
+				element.setAttribute("width", rect.width());
+				element.setAttribute("height", rect.height());
 			}
 			else {
-				QRectF r(x, y, width, height);
-				QPolygonF poly = transform.map(r);
 				element.setTagName("polygon");
 				QString pts;
 				for (int i = 1; i < poly.count(); i++) {

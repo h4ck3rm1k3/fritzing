@@ -216,16 +216,6 @@ qreal GraphicsUtils::getNearestOrdinate(qreal ordinate, qreal units) {
 	return (qAbs(lo - ordinate) <= qAbs(hi - ordinate)) ? lo : hi;
 }
 
-bool GraphicsUtils::is90(const QMatrix & matrix) {
-	if (matrix.m11() == 0) return true;
-
-	if (matrix.m11() == M_PI / 2) return true;
-	if (matrix.m11() == -M_PI / 2) return true;
-	if (matrix.m11() == 3 * M_PI / 2) return true;
-
-	return false;
-}
-
 void GraphicsUtils::shortenLine(QPointF & p1, QPointF & p2, qreal d1, qreal d2) {
 	qreal angle1 = atan2(p2.y() - p1.y(), p2.x() - p1.x());
 	qreal angle2 = angle1 - M_PI;  
@@ -238,6 +228,46 @@ void GraphicsUtils::shortenLine(QPointF & p1, QPointF & p2, qreal d1, qreal d2) 
 	p2.setX(p2.x() + dx2);
 	p2.setY(p2.y() + dy2);
 }
+
+bool GraphicsUtils::isRect(const QPolygonF & poly) {
+	if (poly.count() != 5) return false;
+	if (poly.at(0) != poly.at(4)) return false;
+
+	// either we start running across top or running along side
+
+	if (poly.at(0).x() == poly.at(1).x() && 
+		poly.at(1).y() == poly.at(2).y() &&
+		poly.at(2).x() == poly.at(3).x() &&
+		poly.at(3).y() == poly.at(4).y()) return true;
+
+	if (poly.at(0).y() == poly.at(1).y() && 
+		poly.at(1).x() == poly.at(2).x() &&
+		poly.at(2).y() == poly.at(3).y() &&
+		poly.at(3).x() == poly.at(4).x()) return true;
+
+	return false;
+}
+
+QRectF GraphicsUtils::getRect(const QPolygonF & poly) 
+{
+	// assumes poly is known to be a rect
+	qreal minX, maxX, minY, maxY;
+
+	minX = maxX = poly.at(0).x();
+	minY = maxY = poly.at(0).y();
+
+	for (int i = 1; i < 4; i++) {
+		QPointF p = poly.at(i);
+		if (p.x() > maxX) maxX = p.x();
+		if (p.x() < minX) minX = p.x();
+		if (p.y() > maxY) maxY = p.y();
+		if (p.y() < minY) minY = p.y();
+	}
+
+	return QRectF(minX, minY, maxX - minX, maxY - minY);
+
+}
+
 
 
 // based on code from http://code-heaven.blogspot.com/2009/05/c-program-for-liang-barsky-line.html

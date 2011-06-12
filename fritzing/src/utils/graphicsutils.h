@@ -51,7 +51,8 @@ public:
 	static qreal mils2pixels(qreal m, qreal dpi);
 	static void saveTransform(QXmlStreamWriter & streamWriter, const QTransform & transform);
 	static bool loadTransform(const QDomElement & transformElement, QTransform & transform);
-	static bool is90(const QMatrix & matrix);
+	static bool isRect(const QPolygonF & poly);
+	static QRectF getRect(const QPolygonF & poly);
 	static void shortenLine(QPointF & p1, QPointF & p2, qreal d1, qreal d2);
 	static bool liangBarskyLineClip(double x1, double y1, double x2, double y2, 
 									double wxmin, double wxmax, double wymin, double wymax, 
