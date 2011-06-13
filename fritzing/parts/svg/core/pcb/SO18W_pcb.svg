@@ -16,9 +16,6 @@
     <path  fill="none" stroke="white" stroke-width="0.432" d="M0.216,19.116A3.6,3.6,0,1,0,0.216,11.916"/>
    </g>
   </g>
-  <line  fill="none" stroke="white" fill-opacity="1" y1="0.288" x1="0.288" y2="0.288" stroke-width="0.576" x2="33.552"/>
-  <line  fill="none" stroke="white" fill-opacity="1" y1="0" x1="0.288" y2="0.288" stroke-width="0.576" x2="0.288"/>
-  <line  fill="none" stroke="white" fill-opacity="1" y1="0" x1="33.552" y2="0.288" stroke-width="0.576" x2="33.552"/>
  </g>
  <g  id="copper1" stroke-width="0">
   <rect  width="1.872" x="1.584" y="22.3917" fill="#F7BD13" height="8.64" stroke="none" id="connector0pad" stroke-width="0"/>
