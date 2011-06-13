@@ -30,6 +30,19 @@ $Date$
 #include <QTextStream>
 #include <qmath.h>
 
+bool fillNotStroke(QDomElement & element) {
+	QString fill = element.attribute("fill");
+	if (fill.isEmpty()) return false;
+	if (fill.compare("none") == 0) return false;
+
+	QString stroke = element.attribute("stroke");
+	if (stroke.isEmpty()) return true;
+	if (stroke.compare("none") == 0) return true;
+
+	// both fill and stroke
+	return false;
+}
+
 //TODO: currently only supports one board per sketch (i.e. multiple board outlines will mess you up)
 
 SVG2gerber::SVG2gerber()
@@ -329,7 +342,7 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
 			}
 		}
 		else {
-			standardAperture(circle, apertureMap, current_dcode, dcode_index);
+			standardAperture(circle, apertureMap, current_dcode, dcode_index, 0);
 
 			// create circle outline 
 			m_gerber_paths += QString("G01X%1Y%2D02*\n"
@@ -406,7 +419,7 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
         else {
             // draw 4 lines
 
-			standardAperture(rect, apertureMap, current_dcode, dcode_index);
+			standardAperture(rect, apertureMap, current_dcode, dcode_index, 0);
             m_gerber_paths += "X" + QString::number(flipx(x)) + "Y" + QString::number(flipy(y)) + "D02*\n";
             m_gerber_paths += "X" + QString::number(flipx(x+width)) + "Y" + QString::number(flipy(y)) + "D01*\n";
             m_gerber_paths += "X" + QString::number(flipx(x+width)) + "Y" + QString::number(flipy(y+height)) + "D01*\n";
@@ -423,39 +436,25 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
 			if (polygon.attribute("id").compare("boardoutline", Qt::CaseInsensitive) != 0) continue;
 		}
 
+		QString temp;
+		QTextStream tempStream(&temp);
+		polygon.save(tempStream, 1);
+
         QString points = polygon.attribute("points");
 		QStringList pointList = points.split(QRegExp("\\s+|,"), QString::SkipEmptyParts);
 
 		QString aperture;
 		QString mask_aperture;
 
+
+		bool polyFill = !forOutline && fillNotStroke(polygon);
         // set poly fill if this is actually a filled in shape
-        if(!forOutline && polygon.hasAttribute("fill") && !(polygon.hasAttribute("stroke"))){
+        if(polyFill) {							
             // start poly fill
             m_gerber_paths += "G36*\n";
-			aperture = QString("C,%1").arg(1/1000.0, 0, 'f');
-			mask_aperture = QString("C,%1").arg((1/1000.0) + 0.006, 0, 'f');
- 			if (!apertureMap.contains(aperture)){
-				apertureMap[aperture] = QString::number(dcode_index);
-				m_gerber_header += "%ADD" + QString::number(dcode_index) + aperture + "*%\n";
-				m_soldermask_header += "%ADD" + QString::number(dcode_index) + mask_aperture + "*%\n";
-				dcode_index++;
-			}
 		}
- 		// add aperture to defs if we don't have it yet
 
-		if (!aperture.isEmpty()) {
-			QString dcode = apertureMap[aperture];
-			if(current_dcode != dcode){
-				//switch to correct aperture
-				m_gerber_paths += "G54D" + dcode + "*\n";
-				m_soldermask_paths += "G54D" + dcode + "*\n";
-				current_dcode = dcode;
-			}
-		}
-		else {
-			standardAperture(polygon, apertureMap, current_dcode, dcode_index);
-		}
+		standardAperture(polygon, apertureMap, current_dcode, dcode_index, polyFill ? 1 : 0);			
 
         qreal startx = pointList.at(0).toDouble();
         qreal starty = pointList.at(1).toDouble();
@@ -476,7 +475,7 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
         m_soldermask_paths += "X" + QString::number(flipx(startx)) + "Y" + QString::number(flipy(starty)) + "D01*\n";
 
         // stop poly fill if this is actually a filled in shape
-        if(!forOutline && polygon.hasAttribute("fill") && !(polygon.hasAttribute("stroke"))){
+        if(polyFill){
             // stop poly fill
             m_gerber_paths += "G37*\n";
         }
@@ -497,7 +496,7 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
         qreal x2 = line.attribute("x2").toDouble();
         qreal y2 = line.attribute("y2").toDouble();
 
-		standardAperture(line, apertureMap, current_dcode, dcode_index);
+		standardAperture(line, apertureMap, current_dcode, dcode_index, 0);
 
         // turn off light if we are not continuing along a path
         if ((y1 != currenty) || (x1 != currentx)) {
@@ -525,7 +524,9 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
 
 		QString data = path.attribute("d").trimmed();
 
-		standardAperture(path, apertureMap, current_dcode, dcode_index);
+		bool polyFill = !forOutline && fillNotStroke(path);
+
+		standardAperture(path, apertureMap, current_dcode, dcode_index, polyFill ? 1 : 0);
 
         const char * slot = SLOT(path2gerbCommandSlot(QChar, bool, QList<double> &, void *));
 
@@ -548,7 +549,7 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
 		}
 
         // set poly fill if this is actually a filled in shape
-        if(!forOutline && path.hasAttribute("fill") && !(path.hasAttribute("stroke"))){
+        if(polyFill) {
             // start poly fill
             m_gerber_paths += "G36*\n";
         }
@@ -558,7 +559,7 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
         //DebugDialog::debug("path id: " + path.attribute("id"));
 
         // stop poly fill if this is actually a filled in shape
-        if(!forOutline && path.hasAttribute("fill") && !(path.hasAttribute("stroke"))){
+        if(polyFill){
             // stop poly fill
             m_gerber_paths += "G37*\n";
         }
@@ -573,8 +574,10 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
 	return invalidPathsCount;
 }
 
-QString SVG2gerber::standardAperture(QDomElement & element, QHash<QString, QString> & apertureMap, QString & current_dcode, int & dcode_index) {
-	qreal stroke_width = element.attribute("stroke-width").toDouble();
+QString SVG2gerber::standardAperture(QDomElement & element, QHash<QString, QString> & apertureMap, QString & current_dcode, int & dcode_index, qreal stroke_width) {
+	if (stroke_width == 0) {
+		stroke_width = element.attribute("stroke-width").toDouble();
+	}
 	if (stroke_width == 0) return "";
 
 	QString aperture = QString("C,%1").arg(stroke_width/1000, 0, 'f');

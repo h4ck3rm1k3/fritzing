@@ -1014,7 +1014,9 @@ void SvgFileSplitter::setStrokeOrFill(QDomElement & element, bool blackOnly, con
 	// if fill attribute is not empty and not "none" make it black
 	QString stroke = element.attribute("stroke");
 	if (!stroke.isEmpty()) {
-		element.setAttribute("stroke", color);
+		if (stroke.compare("none") != 0) {
+			element.setAttribute("stroke", color);
+		}
 	}
 	QString fill = element.attribute("fill");
 	if (!fill.isEmpty()) {
