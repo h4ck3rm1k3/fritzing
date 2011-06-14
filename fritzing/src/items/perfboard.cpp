@@ -61,6 +61,10 @@ bool getXY(int & x, int & y, const QString & s) {
 	return ok;
 }
 
+static const QString OneHole("M%1,%2a%3,%3 0 1 %5 %4,0 %3,%3 0 1 %5 -%4,0z\n");
+
+/////////////////////////////////////////////////////////////////////
+
 Perfboard::Perfboard( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: Capacitor(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
@@ -154,24 +158,35 @@ QString Perfboard::makeBreadboardSvg(const QString & size)
 	getXY(x, y, size);
 
 	QString middle;
+	QString holes;
+	qreal radius = 17.5;
+	int sweepflag = 0;
 
-	int top = 50;
+	int top = 100;
 	for (int iy = 0; iy < y; iy++) {
-		int left = 50;
+		int left = 100;
 		for (int jx = 0; jx < x; jx++) {
 			middle += ConnectorTemplate.arg(left).arg(top).arg(jx).arg(iy).arg(QString::number((iy * MaxXDimension * 2) + jx));
+			holes += OneHole				
+				.arg(left - radius)
+				.arg(top)
+				.arg(radius)
+				.arg(2 * radius)
+				.arg(sweepflag);
+
 			left += 100;
 		}
 		top += 100;
 	}
 
 	QString svg = BreadboardLayerTemplate
-					.arg(x / 10.0)
-					.arg(y / 10.0)
-					.arg(x * 100)
-					.arg(y * 100)
-					.arg(x * 100 - 8)
-					.arg(y * 100 - 8)
+					.arg((x / 10.0) + 0.1)
+					.arg((y / 10.0) + 0.1)
+					.arg((x * 100) + 100)
+					.arg((y * 100) + 100)
+					.arg(holes)
+					.arg(x * 100 - 8 + 100)
+					.arg(y * 100 - 8 + 100)
 					.arg(middle);
 
 	return svg;
