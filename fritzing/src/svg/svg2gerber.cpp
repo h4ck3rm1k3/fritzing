@@ -30,7 +30,12 @@ $Date$
 #include <QTextStream>
 #include <qmath.h>
 
-bool fillNotStroke(QDomElement & element) {
+static const qreal MaskClearance = 0.003;  // 3 mils clearance
+
+bool fillNotStroke(QDomElement & element, SVG2gerber::ForWhy forWhy) {
+	if (forWhy == SVG2gerber::ForOutline) return false;
+	if (forWhy == SVG2gerber::ForMask) return true;
+
 	QString fill = element.attribute("fill");
 	if (fill.isEmpty()) return false;
 	if (fill.compare("none") == 0) return false;
@@ -49,7 +54,7 @@ SVG2gerber::SVG2gerber()
 {
 }
 
-int SVG2gerber::convert(const QString & svgStr, bool doubleSided, const QString & mainLayerName, const QString & maskLayerName, bool forOutline, QSizeF boardSize)
+int SVG2gerber::convert(const QString & svgStr, bool doubleSided, const QString & mainLayerName, ForWhy forWhy, QSizeF boardSize)
 {
 	m_boardSize = boardSize;
     m_SVGDom = QDomDocument("svg");
@@ -71,15 +76,11 @@ int SVG2gerber::convert(const QString & svgStr, bool doubleSided, const QString 
     temp = m_SVGDom.toString();
 #endif
 
-    return renderGerber(doubleSided, mainLayerName, maskLayerName, forOutline);
+    return renderGerber(doubleSided, mainLayerName, forWhy);
 }
 
 QString SVG2gerber::getGerber(){
     return m_gerber_header + m_gerber_paths;
-}
-
-QString SVG2gerber::getSolderMask(){
-    return m_soldermask_header + m_soldermask_paths;
 }
 
 
@@ -87,7 +88,7 @@ QString SVG2gerber::getNCDrill(){
     return m_drill_header + m_drill_paths + m_drill_slots + m_drill_footer;
 }
 
-int SVG2gerber::renderGerber(bool doubleSided, const QString & mainLayerName, const QString & maskLayerName, bool forOutline){
+int SVG2gerber::renderGerber(bool doubleSided, const QString & mainLayerName, ForWhy forWhy){
     // human readable description comments
     m_gerber_header = "G04 MADE WITH FRITZING*\n";
     m_gerber_header += "G04 WWW.FRITZING.ORG*\n";
@@ -111,12 +112,6 @@ int SVG2gerber::renderGerber(bool doubleSided, const QString & mainLayerName, co
     // scale factor 1x1
     m_gerber_header += "%SFA1.0B1.0*%\n";
 
-    // clone it for the mask and contour headers
-    m_soldermask_header = m_gerber_header;
-
-    // set inverse polarity: Loch says don't do this
-    //m_soldermask_header += "%IPNEG*%\n";
-
     // setup drill file header
     m_drill_header = "M48\n";
     // set to english (inches) units, with trailing zeros
@@ -128,27 +123,23 @@ int SVG2gerber::renderGerber(bool doubleSided, const QString & mainLayerName, co
 
 
     // define apertures and draw em
-    int invalidCount = allPaths2gerber(forOutline);
+    int invalidCount = allPaths2gerber(forWhy);
 
     // label our layers
     m_gerber_header += QString("%LN%1*%\n").arg(mainLayerName.toUpper());
-    m_soldermask_header += QString("%LN%1*%\n").arg(maskLayerName.toUpper());
 
     // rewind drill to start position
     m_drill_header += "%\n";
 
     //just to be safe: G90 (absolute coords) and G70 (inches)
     m_gerber_header += "G90*\nG70*\n";
-    m_soldermask_header += "G90*\nG70*\n";
 
     // now write the footer
     // comment to indicate end-of-sketch
     m_gerber_paths += QString("G04 End of %1*\n").arg(mainLayerName);
-	m_soldermask_paths += QString("G04 End of %1*\n").arg(maskLayerName);
 
     // write gerber end-of-program
     m_gerber_paths += "M02*";
-    m_soldermask_paths += "M02*";
 
 	return invalidCount;
 }
@@ -233,7 +224,7 @@ QMatrix SVG2gerber::parseTransform(QDomElement element){
     return transform;
 }
 
-int SVG2gerber::allPaths2gerber(bool forOutline) {
+int SVG2gerber::allPaths2gerber(ForWhy forWhy) {
 	int invalidPathsCount = 0;
     QHash<QString, QString> apertureMap;
     QString current_dcode;
@@ -266,7 +257,7 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
 	int totalCount = circleList.count() + rectList.count() + polyList.count() + lineList.count() + pathList.count();
 
     // if this is the board outline, use it as the contour
-    if (forOutline) {
+    if (forWhy == ForOutline) {
         //DebugDialog::debug("drawing board outline");
 
         // switch aperture to the only one used for contour: note this is the last one on the list: the aperture is added at the end of this function
@@ -280,12 +271,11 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
 			continue;
 		}
 
-		if (forOutline && totalCount > 1) {
+		if (forWhy == ForOutline && totalCount > 1) {
 			if (circle.attribute("id").compare("boardoutline", Qt::CaseInsensitive) != 0) continue;
 		}
 
         QString aperture;
-        QString mask_aperture;
         QString drill_aperture;
 
         qreal centerx = circle.attribute("cx").toDouble();
@@ -301,42 +291,40 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
         qreal stroke_width = circle.attribute("stroke-width").toDouble();
 
         qreal diam = ((2*r) + stroke_width)/1000;
+		if (forWhy == ForMask) {
+			diam += 2 * MaskClearance;
+		}
         qreal hole = ((2*r) - stroke_width)/1000;
-        //NOTE: assuming 3 mil soldermask clearance
-        qreal mask_diam = diam + 0.006;
 
-        if(fill=="none"){
+        if(fill=="none" && forWhy != ForMask){
 			aperture = QString("C,%1X%2").arg(diam, 0, 'f').arg(hole);
             drill_aperture = QString("C%1").arg(hole, 0, 'f');
         }
-        else
+        else {
             aperture = QString("C,%1").arg(diam, 0, 'f');
+		}
 
-        mask_aperture = QString("C,%1").arg(mask_diam, 0, 'f');
 
         // add aperture to defs if we don't have it yet
         if(!apertureMap.contains(aperture)){
             apertureMap[aperture] = QString::number(dcode_index);
             m_gerber_header += "%ADD" + QString::number(dcode_index) + aperture + "*%\n";
-            m_soldermask_header += "%ADD" + QString::number(dcode_index) + mask_aperture + "*%\n";
             if(drill_aperture != "")
                 m_drill_header += "T" + QString::number(dcode_index) + drill_aperture + "\n";
             dcode_index++;
         }
 
-		if (!forOutline) {
+		if (forWhy != ForOutline) {
 			QString dcode = apertureMap[aperture];
 			if(current_dcode != dcode){
 				//switch to correct aperture
 				m_gerber_paths += "G54D" + dcode + "*\n";
-				m_soldermask_paths += "G54D" + dcode + "*\n";
 				if(drill_aperture != "")
 					m_drill_paths += "T" + dcode + "\n";
 				current_dcode = dcode;
 			}
 			//flash
 			m_gerber_paths += "X" + cx + "Y" + cy + "D03*\n";
-			m_soldermask_paths += "X" + cx + "Y" + cy + "D03*\n";
 			if(drill_aperture != "") {
 				m_drill_paths += "X" + drill_cx + "Y" + drill_cy + "\n";
 			}
@@ -358,12 +346,11 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
     // rects
     for(uint j = 0; j < rectList.length(); j++){
         QDomElement rect = rectList.item(j).toElement();
-		if (forOutline && totalCount > 1) {
+		if (forWhy == ForOutline && totalCount > 1) {
 			if (rect.attribute("id").compare("boardoutline", Qt::CaseInsensitive) != 0) continue;
 		}
 
         QString aperture;
-        QString mask_aperture;
 
         qreal width = rect.attribute("width").toDouble();
         qreal height = rect.attribute("height").toDouble();
@@ -385,36 +372,35 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
         qreal holex = (width - stroke_width)/1000;
         qreal holey = (height - stroke_width)/1000;
 
-        //NOTE: assumes 3 mil mask clearance
-        qreal mask_totalx = totalx + 0.006;
-        qreal mask_totaly = totaly + 0.006;
+		if (forWhy == ForMask) {
+			totalx += 2 * MaskClearance;
+			totaly += 2 * MaskClearance;
+		}
 
-        if(fill=="none")
+
+        if(fill=="none" && forWhy != ForMask) {
             aperture = QString("R,%1X%2X%3X%4").arg(totalx, 0, 'f').arg(totaly, 0, 'f').arg(holex, 0, 'f').arg(holey, 0, 'f');
-        else
+		}
+        else {
             aperture = QString("R,%1X%2").arg(totalx, 0, 'f').arg(totaly, 0, 'f');
-
-        mask_aperture = QString("R,%1X%2").arg(mask_totalx, 0, 'f').arg(mask_totaly, 0, 'f');
+		}
 
         // add aperture to defs if we don't have it yet
         if(!apertureMap.contains(aperture)){
             apertureMap[aperture] = QString::number(dcode_index);
             m_gerber_header += "%ADD" + QString::number(dcode_index) + aperture + "*%\n";
-            m_soldermask_header += "%ADD" + QString::number(dcode_index) + mask_aperture + "*%\n";
             dcode_index++;
         }
 
-		if (!forOutline) {
+		if (forWhy != ForOutline) {
 			QString dcode = apertureMap[aperture];
 			if(current_dcode != dcode){
 				//switch to correct aperture
 				m_gerber_paths += "G54D" + dcode + "*\n";
-				m_soldermask_paths += "G54D" + dcode + "*\n";
 				current_dcode = dcode;
 			}
 			//flash
 			m_gerber_paths += "X" + cx + "Y" + cy + "D03*\n";
-			m_soldermask_paths += "X" + cx + "Y" + cy + "D03*\n";
 		}
         else {
             // draw 4 lines
@@ -428,68 +414,15 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
             m_gerber_paths += "D02*\n";
         }
     }
-
-	// polys - NOTE: assumes comma- or space- separated formatting
-    for(uint p = 0; p < polyList.length(); p++){
-        QDomElement polygon = polyList.item(p).toElement();
-		if (forOutline && totalCount > 1) {
-			if (polygon.attribute("id").compare("boardoutline", Qt::CaseInsensitive) != 0) continue;
-		}
-
-		QString temp;
-		QTextStream tempStream(&temp);
-		polygon.save(tempStream, 1);
-
-        QString points = polygon.attribute("points");
-		QStringList pointList = points.split(QRegExp("\\s+|,"), QString::SkipEmptyParts);
-
-		QString aperture;
-		QString mask_aperture;
-
-
-		bool polyFill = !forOutline && fillNotStroke(polygon);
-        // set poly fill if this is actually a filled in shape
-        if(polyFill) {							
-            // start poly fill
-            m_gerber_paths += "G36*\n";
-		}
-
-		standardAperture(polygon, apertureMap, current_dcode, dcode_index, polyFill ? 1 : 0);			
-
-        qreal startx = pointList.at(0).toDouble();
-        qreal starty = pointList.at(1).toDouble();
-        // move to start - light off
-        m_gerber_paths += "X" + QString::number(flipx(startx)) + "Y" + QString::number(flipy(starty)) + "D02*\n";
-        m_soldermask_paths += "X" + QString::number(flipx(startx)) + "Y" + QString::number(flipy(starty)) + "D02*\n";
-
-        // iterate through all other points - light on
-        for(int pt = 2; pt < pointList.length(); pt +=2){
-            qreal ptx = pointList.at(pt).toDouble();
-            qreal pty = pointList.at(pt+1).toDouble();
-            m_gerber_paths += "X" + QString::number(flipx(ptx)) + "Y" + QString::number(flipy(pty)) + "D01*\n";
-            m_soldermask_paths += "X" + QString::number(flipx(ptx)) + "Y" + QString::number(flipy(pty)) + "D01*\n";
-        }
-
-        // move back to start point
-        m_gerber_paths += "X" + QString::number(flipx(startx)) + "Y" + QString::number(flipy(starty)) + "D01*\n";
-        m_soldermask_paths += "X" + QString::number(flipx(startx)) + "Y" + QString::number(flipy(starty)) + "D01*\n";
-
-        // stop poly fill if this is actually a filled in shape
-        if(polyFill){
-            // stop poly fill
-            m_gerber_paths += "G37*\n";
-        }
-
-        // light off
-        m_gerber_paths += "D02*\n";
-    }
-
+	
     // lines - NOTE: this assumes a circular aperture
     for(uint k = 0; k < lineList.length(); k++){
         QDomElement line = lineList.item(k).toElement();
-		if (forOutline && totalCount > 1) {
+		if (forWhy == ForOutline && totalCount > 1) {
 			if (line.attribute("id").compare("boardoutline", Qt::CaseInsensitive) != 0) continue;
 		}
+
+		// Note: should be no forWhy == ForMask cases 
 
         qreal x1 = line.attribute("x1").toDouble();
         qreal y1 = line.attribute("y1").toDouble();
@@ -515,18 +448,74 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
         currenty = y2;
     }
 
-    // paths - NOTE: this assumes circular aperture and does not fill!
+	// polys - NOTE: assumes comma- or space- separated formatting
+    for(uint p = 0; p < polyList.length(); p++){
+        QDomElement polygon = polyList.item(p).toElement();
+		if (forWhy == ForOutline && totalCount > 1) {
+			if (polygon.attribute("id").compare("boardoutline", Qt::CaseInsensitive) != 0) continue;
+		}
+
+		QString temp;
+		QTextStream tempStream(&temp);
+		polygon.save(tempStream, 1);
+
+        QString points = polygon.attribute("points");
+		QStringList pointList = points.split(QRegExp("\\s+|,"), QString::SkipEmptyParts);
+
+		QString aperture;
+
+		QString pointString;
+
+        qreal startx = pointList.at(0).toDouble();
+        qreal starty = pointList.at(1).toDouble();
+        // move to start - light off
+        pointString += "X" + QString::number(flipx(startx)) + "Y" + QString::number(flipy(starty)) + "D02*\n";
+
+        // iterate through all other points - light on
+        for(int pt = 2; pt < pointList.length(); pt +=2){
+            qreal ptx = pointList.at(pt).toDouble();
+            qreal pty = pointList.at(pt+1).toDouble();
+            pointString += "X" + QString::number(flipx(ptx)) + "Y" + QString::number(flipy(pty)) + "D01*\n";
+        }
+
+        // move back to start point
+        pointString += "X" + QString::number(flipx(startx)) + "Y" + QString::number(flipy(starty)) + "D01*\n";
+
+		standardAperture(polygon, apertureMap, current_dcode, dcode_index, 0);		
+
+		bool polyFill = fillNotStroke(polygon, forWhy);
+        // set poly fill if this is actually a filled in shape
+        if (polyFill) {							
+            // start poly fill
+            m_gerber_paths += "G36*\n";
+		}
+
+		m_gerber_paths += pointString;
+
+        // stop poly fill if this is actually a filled in shape
+        if(polyFill){
+            // stop poly fill
+            m_gerber_paths += "G37*\n";
+        }
+
+		if (forWhy == ForMask) {
+			// draw the outline, G36 only does the fill
+			standardAperture(polygon, apertureMap, current_dcode, dcode_index,  polygon.attribute("stroke-width").toDouble() + (MaskClearance * 2 * 1000));
+			m_gerber_paths += pointString;
+		}
+
+        // light off
+        m_gerber_paths += "D02*\n";
+    }
+
+    // paths - NOTE: this assumes circular aperture
     for(uint n = 0; n < pathList.length(); n++){
         QDomElement path = pathList.item(n).toElement();
-		if (forOutline && totalCount > 1) {
+		if (forWhy == ForOutline && totalCount > 1) {
 			if (path.attribute("id").compare("boardoutline", Qt::CaseInsensitive) != 0) continue;
 		}
 
 		QString data = path.attribute("d").trimmed();
-
-		bool polyFill = !forOutline && fillNotStroke(path);
-
-		standardAperture(path, apertureMap, current_dcode, dcode_index, polyFill ? 1 : 0);
 
         const char * slot = SLOT(path2gerbCommandSlot(QChar, bool, QList<double> &, void *));
 
@@ -548,7 +537,10 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
             continue;
 		}
 
+		standardAperture(path, apertureMap, current_dcode, dcode_index, 0);
+
         // set poly fill if this is actually a filled in shape
+		bool polyFill = fillNotStroke(path, forWhy);
         if(polyFill) {
             // start poly fill
             m_gerber_paths += "G36*\n";
@@ -563,10 +555,19 @@ int SVG2gerber::allPaths2gerber(bool forOutline) {
             // stop poly fill
             m_gerber_paths += "G37*\n";
         }
+
+		if (forWhy == ForMask) {
+			// draw the outline, G36 only does the fill
+			standardAperture(path, apertureMap, current_dcode, dcode_index, path.attribute("stroke-width").toDouble() + (MaskClearance * 2 * 1000));
+			m_gerber_paths += pathUserData.string;
+		}
+
+        // light off
+        m_gerber_paths += "D02*\n";
     }
 
 
-    if (forOutline) {
+    if (forWhy == ForOutline) {
         // add circular aperture with 0 width
         m_gerber_header += "%ADD10C,0.008*%\n";
     }
@@ -581,14 +582,11 @@ QString SVG2gerber::standardAperture(QDomElement & element, QHash<QString, QStri
 	if (stroke_width == 0) return "";
 
 	QString aperture = QString("C,%1").arg(stroke_width/1000, 0, 'f');
-	QString mask_aperture = QString("C,%1").arg((stroke_width/1000.0) + 0.006, 0, 'f');
-
 
         // add aperture to defs if we don't have it yet
     if (!apertureMap.contains(aperture)){
         apertureMap[aperture] = QString::number(dcode_index);
         m_gerber_header += "%ADD" + QString::number(dcode_index) + aperture + "*%\n";
-        m_soldermask_header += "%ADD" + QString::number(dcode_index) + mask_aperture + "*%\n";
         dcode_index++;
     }
 
@@ -596,7 +594,6 @@ QString SVG2gerber::standardAperture(QDomElement & element, QHash<QString, QStri
 	if (current_dcode != dcode) {
 		//switch to correct aperture
 		m_gerber_paths += "G54D" + dcode + "*\n";
-		m_soldermask_paths += "G54D" + dcode + "*\n";
 		current_dcode = dcode;
 	}
 

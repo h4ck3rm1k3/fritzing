@@ -846,3 +846,20 @@ QDomElement TextUtils::copyText(QDomDocument & svgDom, QDomElement & parent, QDo
 
 	return ___emptyElement___;
 }
+
+void TextUtils::slamStrokeAndFill(QDomElement & element, const QString & stroke, const QString & fill)
+{
+	// assumes style elements have been normalized already
+	QString strokeAtt = element.attribute("stroke");
+	QString fillAtt = element.attribute("fill");
+	if (!strokeAtt.isEmpty() || !fillAtt.isEmpty()) {
+		element.setAttribute("stroke", stroke);
+		element.setAttribute("fill", fill);
+	}
+
+	QDomElement child = element.firstChildElement();
+	while (!child.isNull()) {
+		slamStrokeAndFill(child, stroke, fill);
+		child = child.nextSiblingElement();
+	}
+}

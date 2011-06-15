@@ -247,3 +247,17 @@ const LayerList & ViewLayer::copperLayers(ViewLayer::ViewLayerSpec viewLayerSpec
 	
 	return bottom;
 }
+
+const LayerList & ViewLayer::maskLayers(ViewLayer::ViewLayerSpec viewLayerSpec) {
+	static LayerList bottom;
+	static LayerList top;
+	if (bottom.isEmpty()) {
+		bottom << ViewLayer::Copper0;
+	}
+	if (top.isEmpty()) {
+		top << ViewLayer::Copper1;
+	}
+	if (viewLayerSpec == ViewLayer::Top) return top;
+	
+	return bottom;
+}

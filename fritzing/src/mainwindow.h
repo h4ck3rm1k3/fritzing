@@ -403,7 +403,8 @@ protected:
 
 	QString clipToBoard(QString svgString, ItemBase * board, const QString & layerName);
 	int doSilk(LayerList silkLayerIDs, const QString & silkName, const QString & gerberSuffix, ItemBase * board, const QString & exportDir, bool displayMessageBoxes);
-	int doCopper(ItemBase * board, LayerList & viewLayerIDs, const QString & copperName, const QString & copperSuffix, const QString & solderMaskSuffix, bool doDrill, const QString & exportDir, bool displayMessageBoxes);
+	int doMask(LayerList maskLayerIDs, const QString & maskName, const QString & gerberSuffix, ItemBase * board, const QString & exportDir, bool displayMessageBoxes);
+	int doCopper(ItemBase * board, LayerList & viewLayerIDs, const QString & copperName, const QString & copperSuffix, bool doDrill, const QString & exportDir, bool displayMessageBoxes);
 	void displayMessage(const QString & message, bool displayMessageBoxes);
 	void updateActiveLayerButtons();
 	bool hasLinkedProgramFiles(const QString & filename, QStringList & linkedProgramFiles);

@@ -136,6 +136,7 @@ public:
 	static bool canConnect(ViewLayerID, ViewLayerID);
 	static ViewLayer::ViewLayerSpec specFromID(ViewLayer::ViewLayerID);
 	static const QList<ViewLayer::ViewLayerID> & copperLayers(ViewLayer::ViewLayerSpec);
+	static const QList<ViewLayer::ViewLayerID> & maskLayers(ViewLayer::ViewLayerSpec);
 
 protected:
 	bool m_visible;

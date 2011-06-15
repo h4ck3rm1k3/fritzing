@@ -38,17 +38,24 @@ class SVG2gerber : public QObject
 
 public:
     SVG2gerber();
-	int convert(const QString & svgStr, bool doubleSided, const QString & mainLayerName, const QString & maskLayerName, bool forOutline, QSizeF boardSize);
+
+public:
+	enum ForWhy {
+		ForNormal,
+		ForOutline,
+		ForMask
+	};
+
+	int convert(const QString & svgStr, bool doubleSided, const QString & mainLayerName, ForWhy, QSizeF boardSize);
     QString getGerber();
-    QString getSolderMask();
     QString getNCDrill();
+
+
 
 protected:
     QDomDocument m_SVGDom;
     QString m_gerber_header;
     QString m_gerber_paths;
-    QString m_soldermask_header;
-    QString m_soldermask_paths;
     QString m_drill_header;
     QString m_drill_footer;
     QString m_drill_paths;
@@ -69,8 +76,8 @@ protected:
 
     void copyStyles(QDomElement, QDomElement);
 
-    int renderGerber(bool doubleSided, const QString & mainLayerName, const QString & maskLayerName, bool forOutline);
-    int allPaths2gerber(bool forOutline);
+    int renderGerber(bool doubleSided, const QString & mainLayerName, ForWhy);
+    int allPaths2gerber(ForWhy);
     QString path2gerber(QDomElement);
 	void handleOblongPath(QDomElement & path, int & dcode_index);
 	QString standardAperture(QDomElement & element, QHash<QString, QString> & apertureMap, QString & current_dcode, int & dcode_index, qreal stroke_width);

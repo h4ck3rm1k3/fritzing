@@ -74,6 +74,7 @@ public:
 	static QString removeXMLNS(QString svgContent);
 	static void gWrap(QDomDocument & domDocument, const QHash<QString, QString> & attributes);
 	static bool tspanRemove(QString &svg);
+	static void slamStrokeAndFill(QDomElement &, const QString & stroke, const QString & fill);
 
 public:
 	static const QRegExp FindWhitespace;
