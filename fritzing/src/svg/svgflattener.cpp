@@ -70,11 +70,23 @@ void SvgFlattener::flattenChildren(QDomElement &element){
     element.removeAttribute("transform");
 }
 
-void SvgFlattener::unRotateChild(QDomElement & element,QMatrix transform){
+void SvgFlattener::unRotateChild(QDomElement & element, QMatrix transform) {
 
 	// TODO: missing ellipse element
 
     if(!element.hasChildNodes()) {
+		qreal scale = qMin(qAbs(transform.m11()), qAbs(transform.m22()));
+		if (scale != 1) {
+			QString sw = element.attribute("stroke-width");
+			if (!sw.isEmpty()) {
+				bool ok;
+				qreal strokeWidth = sw.toDouble(&ok);
+				if (ok) {
+					element.setAttribute("stroke-width", QString::number(strokeWidth * scale));
+				}
+			}
+		}
+
 		// I'm a leaf node.
 		QString tag = element.nodeName().toLower();
 		if(tag == "path"){
@@ -145,8 +157,9 @@ void SvgFlattener::unRotateChild(QDomElement & element,QMatrix transform){
             element.setAttribute("x2", p2.x());
             element.setAttribute("y2", p2.y());
         }
-        else
+        else {
             DebugDialog::debug("Warning! Can't rotate element: " + tag);
+		}
         return;
     }
 
