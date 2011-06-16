@@ -75,8 +75,9 @@ void SvgFlattener::unRotateChild(QDomElement & element, QMatrix transform) {
 	// TODO: missing ellipse element
 
     if(!element.hasChildNodes()) {
+
 		qreal scale = qMin(qAbs(transform.m11()), qAbs(transform.m22()));
-		if (scale != 1) {
+		if (scale != 1 && transform.m21() == 0 && transform.m12() == 0) {
 			QString sw = element.attribute("stroke-width");
 			if (!sw.isEmpty()) {
 				bool ok;
