@@ -2,6 +2,17 @@
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='SO08'>
 <version>4</version>
 <date>2011-06-17</date>
+<author>jonathan</author>
+<description></description>
+<title>SO08</title>
+<tags>
+<tag>SMD</tag>
+</tags>
+<properties>
+<property name='package'>SO08</property>
+<property name='family'>Generic IC</property>
+<property name='chip label'>SO08</property>
+</properties>
 <views>
 <breadboardView>
 <layers image='breadboard/SO08_breadboard.svg'>
