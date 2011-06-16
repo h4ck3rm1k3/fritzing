@@ -1285,6 +1285,8 @@ void PCBSketchWidget::updateRoutingStatus(RoutingStatus & routingStatus, bool ma
 
 	// TODO: think about ways to optimize this...
 
+	QList< QPointer<VirtualWire> > ratsToDelete;
+
 	QList< QList<ConnectorItem *> > ratnestsToUpdate;
 	QList<ConnectorItem *> visited;
 	foreach (QGraphicsItem * item, scene()->items()) {
@@ -1293,7 +1295,12 @@ void PCBSketchWidget::updateRoutingStatus(RoutingStatus & routingStatus, bool ma
 		if (visited.contains(connectorItem)) continue;
 
 		VirtualWire * vw = qobject_cast<VirtualWire *>(connectorItem->attachedTo());
-		if (vw != NULL) continue;  // skip virtual wires (ratsnests)
+		if (vw != NULL) {
+			if (vw->connector0()->connectionsCount() == 0 || vw->connector1()->connectionsCount() == 0) {
+				ratsToDelete.append(vw);
+			}
+			continue;  
+		}
 
 		QList<ConnectorItem *> connectorItems;
 		connectorItems.append(connectorItem);
@@ -1344,6 +1351,13 @@ void PCBSketchWidget::updateRoutingStatus(RoutingStatus & routingStatus, bool ma
 	// can't do this in the above loop since VirtualWires and ConnectorItems are added and deleted
 	foreach (QList<ConnectorItem *> partConnectorItems, ratnestsToUpdate) {
 		partConnectorItems.at(0)->displayRatsnest(partConnectorItems);
+	}
+
+	foreach(QPointer<VirtualWire> vw, ratsToDelete) {
+		if (vw != NULL) {
+			vw->scene()->removeItem(vw);
+			delete vw;
+		}
 	}
 
         /*

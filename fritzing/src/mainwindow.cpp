@@ -2142,7 +2142,7 @@ void MainWindow::showFileProgressDialog(const QString & path) {
 	m_fileProgressDialog = new FileProgressDialog(tr("Loading..."), 200, this);
 	m_fileProgressDialog->setBinLoadingChunk(50);
 	if (!path.isEmpty()) {
-		setFileProgressPath(QFileInfo(path).baseName());
+		setFileProgressPath(QFileInfo(path).fileName());
 	}
 	else {
 		setFileProgressPath(tr("new sketch"));
