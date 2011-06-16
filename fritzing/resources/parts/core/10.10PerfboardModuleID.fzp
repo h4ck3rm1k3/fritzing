@@ -17,7 +17,7 @@
   <description>A perfboard for easily prototyping circuits</description>
   <views>
     <iconView>
-      <layers image="breadboard/perfboard.svg">
+      <layers image="breadboard/iconPerfboard.svg">
         <layer layerId="icon"/>
       </layers>
     </iconView>
