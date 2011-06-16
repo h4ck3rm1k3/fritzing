@@ -36,6 +36,7 @@ $Date$
 #include "../model/modelpart.h"
 #include "../waitpushundostack.h"
 #include "../utils/abstractimagebutton.h"
+#include "../utils/fileprogressdialog.h"
 #include "../utils/bundler.h"
 
 class ImageButton : public AbstractImageButton {
@@ -80,7 +81,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		void addNewPart(ModelPart *modelPart);
         void removePart(const QString& moduleID);
         void removeParts();
-        void load(const QString&);
+        void load(const QString& filename, QObject * progressTarget);
 
 		bool contains(const QString &moduleID);
 		void setDirty(bool dirty=true);
@@ -93,7 +94,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		void setAllowsChanges(bool);
 		void focusSearch();
 		void setSaveQuietly(bool);
-		bool open(QString fileName="");
+		bool open(QString fileName, QObject * progressTarget);
 
 		bool currentViewIsIconView();
 		QMenu * getFileMenu();		
@@ -103,7 +104,6 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		void addPartCommand(const QString& moduleID);
 		void removePartCommand(const QString& moduleID);
 		void removeAlienParts();
-		void openCore();
 		void itemMoved();
 		void saveAsLastBin();
 		void rename();
@@ -232,6 +232,8 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		QStringList m_alienParts;
 		bool m_allowsChanges;
 		bool m_saveQuietly;
+
+		FileProgressDialog * m_loadingProgressDialog;
 
 	public:
 		static QString Title;

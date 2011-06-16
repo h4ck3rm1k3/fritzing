@@ -77,7 +77,9 @@ public:
 	void addDefaultParts();
 	void init();
 	void showFileProgressDialog(const QString & path);
+	void setFileProgressPath(const QString & path);
 	void clearFileProgressDialog();
+	class FileProgressDialog * fileProgressDialog();
 
 	const QString &selectedModuleID();
 
@@ -99,7 +101,7 @@ public:
 
 public:
 	static void initNames();
-	static MainWindow * newMainWindow(PaletteModel * paletteModel, ReferenceModel *refModel, const QString & path, bool showProgress);
+	static MainWindow * newMainWindow(PaletteModel * paletteModel, ReferenceModel *refModel, const QString & displayPath, bool showProgress);
 	static void setAutosavePeriod(int);
 	static void setAutosaveEnabled(bool);
 

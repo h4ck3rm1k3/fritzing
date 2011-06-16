@@ -43,6 +43,7 @@ $Date$
 #include "../../debugdialog.h"
 #include "../../partseditor/partseditormainwindow.h"
 #include "../../utils/folderutils.h"
+#include "../../utils/fileprogressdialog.h"
 #include "../../referencemodel/referencemodel.h"
 
 
@@ -343,7 +344,7 @@ PartsBinPaletteWidget* BinManager::openBinIn(StackTabWidget* tb, QString fileNam
 
 	if(createNewOne) {
 		bin = newBin();
-		if(bin->open(fileName)) {
+		if(bin->open(fileName, bin)) {
 			m_openedBins[fileName] = bin;
 			insertBin(bin, tb->currentIndex()+1, tb);
 
@@ -367,7 +368,7 @@ PartsBinPaletteWidget* BinManager::openCoreBinIn(StackTabWidget* tb) {
 	else {
 		bin = newBin();
 		bin->setAllowsChanges(false);
-		bin->openCore();
+		bin->load(BinManager::CorePartsBinLocation, bin);
 		insertBin(bin, tb->currentIndex()+1, tb);
 	}
 	setAsCurrentBin(bin);
@@ -485,13 +486,15 @@ void BinManager::restoreStateAndGeometry() {
 	if(settings.childGroups().size()==0) { // first time? open core and my_parts then
 		StackTabWidget *tw = new StackTabWidget(m_stackWidget);
 
+		m_mainWindow->fileProgressDialog()->setBinLoadingCount(2);
+
 		PartsBinPaletteWidget* core = newBin();
-		core->openCore();
+		core->load(BinManager::CorePartsBinLocation, m_mainWindow->fileProgressDialog());
 		tw->addTab(core,core->title());
 		registerBin(core,tw);
 
 		PartsBinPaletteWidget* myParts = newBin();
-		myParts->open(MyPartsBinLocation);
+		myParts->open(MyPartsBinLocation, m_mainWindow->fileProgressDialog());
 		tw->addTab(myParts,myParts->title());
 		registerBin(myParts,tw);
 
@@ -501,10 +504,11 @@ void BinManager::restoreStateAndGeometry() {
 			settings.beginGroup(g);
 
 			StackTabWidget *tw = new StackTabWidget(m_stackWidget);
+			m_mainWindow->fileProgressDialog()->setBinLoadingCount(settings.childKeys().count());
 			foreach(QString k, settings.childKeys()) {
 				PartsBinPaletteWidget* bin = newBin();
 				QString filename = settings.value(k).toString();
-				if(QFileInfo(filename).exists() && bin->open(filename)) {
+				if(QFileInfo(filename).exists() && bin->open(filename, m_mainWindow->fileProgressDialog())) {
 					bin->setTabWidget(tw);
 					tw->addTab(bin,bin->title());
 					registerBin(bin,tw);

@@ -435,15 +435,10 @@ bool FApplication::loadBin(QString binToOpen) {
 	return true;
 }
 
-MainWindow * FApplication::loadWindows(bool showProgress, int & loaded) {
+MainWindow * FApplication::loadWindows(int & loaded) {
 	// our MainWindows use WA_DeleteOnClose so this has to be added to the heap (via new) rather than the stack (for local vars)
 	MainWindow * mainWindow = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, "", false);   // this is also slow
 	mainWindow->setReportMissingModules(false);
-
-	if (showProgress) {
-		m_splash->showProgress(m_progressIndex, 0.9);
-		ProcessEventBlocker::processEvents();
-	}
 
 	loaded = 0;
 	initFilesToLoad();
@@ -488,7 +483,7 @@ int FApplication::serviceStartup() {
 	}
 
 	int loaded = 0;
-	MainWindow * mainWindow = loadWindows(false, loaded);
+	MainWindow * mainWindow = loadWindows(loaded);
 	m_started = true;
 
 	if (loaded == 0) {
@@ -1131,8 +1126,7 @@ void FApplication::loadSomething(bool firstRun, const QString & prevVersion) {
 
         foreach (QString filename, m_filesToLoad) {
             DebugDialog::debug(QString("Loading non-service file %1").arg(filename));
-            MainWindow *mainWindow = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, filename, false);
-            mainWindow->showFileProgressDialog(filename);
+            MainWindow *mainWindow = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, filename, true);
             mainWindow->loadWhich(filename, true, true);
             sketchesToLoad << mainWindow;
         }
@@ -1147,7 +1141,7 @@ void FApplication::loadSomething(bool firstRun, const QString & prevVersion) {
 	MainWindow * newBlankSketch = NULL;
 	if (sketchesToLoad.isEmpty()) {
 		//DebugDialog::debug(QString("empty sketch"));
-		newBlankSketch = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, "", false);
+		newBlankSketch = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, "", true);
 		if (newBlankSketch) {
 			// make sure to start an empty sketch with a board
 			newBlankSketch->addDefaultParts();   // do this before call to show()
@@ -1179,8 +1173,7 @@ QList<MainWindow *> FApplication::loadLastOpenSketch() {
 
     DebugDialog::debug(QString("Loading last open sketch %1").arg(lastSketchPath));
     settings.remove("lastOpenSketch");				// clear the preference, in case the load crashes
-    MainWindow *mainWindow = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, lastSketchPath, false);
-    mainWindow->showFileProgressDialog(lastSketchPath);
+    MainWindow *mainWindow = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, lastSketchPath, true);
     mainWindow->load(lastSketchPath, true, true, "");
     sketches << mainWindow;
     settings.setValue("lastOpenSketch", lastSketchPath);	// the load works, so restore the preference
@@ -1227,8 +1220,7 @@ QList<MainWindow *> FApplication::recoverBackups()
         if (result == QDialog::Accepted && item->isSelected()) {
 			QString originalBaseName = item->text(0);
             DebugDialog::debug(QString("Loading recovered sketch %1").arg(originalBaseName));
-            MainWindow *currentRecoveredSketch = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, "", false);
-            currentRecoveredSketch->showFileProgressDialog(originalBaseName);
+            MainWindow *currentRecoveredSketch = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, originalBaseName, true);
 			QString backupName = item->data(0, Qt::UserRole).value<QString>();
 			QString originalPath = item->data(1, Qt::UserRole).value<QString>();
  			currentRecoveredSketch->setRecovered(true);

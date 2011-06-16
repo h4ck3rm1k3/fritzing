@@ -167,21 +167,37 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 void MainWindow::init() {
 	m_restarting = false;
 
+	if (m_fileProgressDialog) {
+		m_fileProgressDialog->setValue(2);
+	}
+
 	// all this belongs in viewLayer.xml
 	m_breadboardGraphicsView = new BreadboardSketchWidget(ViewIdentifierClass::BreadboardView, this);
 	initSketchWidget(m_breadboardGraphicsView);
 	m_breadboardWidget = new SketchAreaWidget(m_breadboardGraphicsView,this);
 	m_tabWidget->addWidget(m_breadboardWidget);
 
+	if (m_fileProgressDialog) {
+		m_fileProgressDialog->setValue(11);
+	}
+
 	m_schematicGraphicsView = new SchematicSketchWidget(ViewIdentifierClass::SchematicView, this);
 	initSketchWidget(m_schematicGraphicsView);
 	m_schematicWidget = new SketchAreaWidget(m_schematicGraphicsView, this);
 	m_tabWidget->addWidget(m_schematicWidget);
 
+	if (m_fileProgressDialog) {
+		m_fileProgressDialog->setValue(20);
+	}
+
 	m_pcbGraphicsView = new PCBSketchWidget(ViewIdentifierClass::PCBView, this);
 	initSketchWidget(m_pcbGraphicsView);
 	m_pcbWidget = new SketchAreaWidget(m_pcbGraphicsView, this);
 	m_tabWidget->addWidget(m_pcbWidget);
+
+	if (m_fileProgressDialog) {
+		m_fileProgressDialog->setValue(29);
+	}
 
     m_undoView = new QUndoView();
     m_undoGroup = new QUndoGroup(this);
@@ -192,6 +208,11 @@ void MainWindow::init() {
 
     m_dockManager = new DockManager(this);
     m_dockManager->createBinAndInfoViewDocks();
+
+
+	if (m_fileProgressDialog) {
+		m_fileProgressDialog->setValue(89);
+	}
 
 	// This is the magic translation that changes all the shortcut text on the menu items
 	// to the native language instead of "Ctrl", so the German menu items will now read "Strg"
@@ -206,6 +227,10 @@ void MainWindow::init() {
     createToolBars();
     createStatusBar();
 
+	if (m_fileProgressDialog) {
+		m_fileProgressDialog->setValue(91);
+	}
+
 	m_layerPalette->setShowAllLayersAction(m_showAllLayersAct);
 	m_layerPalette->setHideAllLayersAction(m_hideAllLayersAct);
 
@@ -215,6 +240,10 @@ void MainWindow::init() {
 	m_viewSwitcher->viewSwitchedTo(0);
 
     m_dockManager->createDockWindows();
+
+	if (m_fileProgressDialog) {
+		m_fileProgressDialog->setValue(93);
+	}
 
 	createZoomOptions(m_breadboardWidget);
 	createZoomOptions(m_schematicWidget);
@@ -283,6 +312,9 @@ void MainWindow::init() {
 
 	this->installEventFilter(this);
 
+	if (m_fileProgressDialog) {
+		m_fileProgressDialog->setValue(95);
+	}
 
 	QSettings settings;
 	m_viewSwitcherDock->prestorePreference();
@@ -306,6 +338,10 @@ void MainWindow::init() {
 	m_setUpDockManagerTimer.setSingleShot(true);
 	connect(&m_setUpDockManagerTimer, SIGNAL(timeout()), m_dockManager, SLOT(keepMargins()));
 	m_setUpDockManagerTimer.start(1000);
+
+	if (m_fileProgressDialog) {
+		m_fileProgressDialog->setValue(98);
+	}
 
 	m_pcbGraphicsView->jumperItemHack();
 	
@@ -2073,10 +2109,10 @@ void MainWindow::addDefaultParts() {
 	m_schematicGraphicsView->addDefaultParts();
 }
 
-MainWindow * MainWindow::newMainWindow(PaletteModel * paletteModel, ReferenceModel *refModel, const QString & path, bool showProgress) {
+MainWindow * MainWindow::newMainWindow(PaletteModel * paletteModel, ReferenceModel *refModel, const QString & displayPath, bool showProgress) {
 	MainWindow * mw = new MainWindow(paletteModel, refModel);
 	if (showProgress) {
-		mw->showFileProgressDialog(path);
+		mw->showFileProgressDialog(displayPath);
 	}
 
 	mw->init();
@@ -2092,10 +2128,24 @@ void  MainWindow::clearFileProgressDialog() {
 	}
 }
 
+void MainWindow::setFileProgressPath(const QString & path)
+{
+	if (m_fileProgressDialog) m_fileProgressDialog->setMessage(tr("loading %1").arg(path));
+}
+
+FileProgressDialog * MainWindow::fileProgressDialog()
+{
+	return m_fileProgressDialog;
+}
+
 void MainWindow::showFileProgressDialog(const QString & path) {
-	m_fileProgressDialog = new FileProgressDialog("Loading...", 100, this);
+	m_fileProgressDialog = new FileProgressDialog(tr("Loading..."), 200, this);
+	m_fileProgressDialog->setBinLoadingChunk(50);
 	if (!path.isEmpty()) {
-		m_fileProgressDialog->setMessage(QString("loading %1").arg(QFileInfo(path).baseName()));
+		setFileProgressPath(QFileInfo(path).baseName());
+	}
+	else {
+		setFileProgressPath(tr("new sketch"));
 	}
 }
 
@@ -2419,3 +2469,4 @@ void MainWindow::boardDeletedSlot()
 {
 	activeLayerBottom();
 }
+

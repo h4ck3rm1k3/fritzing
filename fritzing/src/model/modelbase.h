@@ -54,6 +54,9 @@ public:
 signals:
 	void loadedViews(ModelBase *, QDomElement & views);
 	void loadedRoot(const QString & fileName, ModelBase *, QDomElement & root);
+	void loadingInstances(ModelBase *, QDomElement & instances);
+	void loadingInstance(ModelBase *, QDomElement & instance);
+	void loadedInstances(ModelBase *, QDomElement & instances);
 
 protected:
 	void renewModelIndexes(QDomElement & root, const QString & childName, QHash<long, long> & oldToNew);

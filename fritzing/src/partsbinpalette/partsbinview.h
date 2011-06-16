@@ -36,6 +36,7 @@ $Date$
 class PartsBinPaletteWidget;
 
 class PartsBinView {
+
 	public:
 		PartsBinView(ReferenceModel *refModel, PartsBinPaletteWidget *parent, QMenu *binMenu, QMenu *partMenu);
 		virtual ~PartsBinView() {};				// removes compiler warnings

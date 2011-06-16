@@ -83,7 +83,7 @@ protected:
 	void clearModels();
     void copyBin(const QString & source, const QString & dest);
     bool notify(QObject *receiver, QEvent *e);
-	class MainWindow * loadWindows(bool showProgress, int & loaded);
+	class MainWindow * loadWindows(int & loaded);
 	void loadReferenceModel();
 	void registerFonts();
 	bool loadBin(QString binToOpen);

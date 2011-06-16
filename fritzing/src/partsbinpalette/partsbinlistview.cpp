@@ -80,6 +80,7 @@ int PartsBinListView::setItemAux(ModelPart * modelPart, int position) {
 		return position;
 	}
 
+	emit settingItem();
 	QString moduleID = modelPart->moduleID();
 	if(!contains(moduleID)) {
 		QListWidgetItem * lwi = new QListWidgetItem(modelPart->title());

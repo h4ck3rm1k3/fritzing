@@ -54,6 +54,8 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 	m_searchLineEdit = NULL;
 	m_saveQuietly = false;
 
+	m_loadingProgressDialog = NULL;
+
 	setAcceptDrops(true);
 	setAllowsChanges(true);
 
@@ -522,7 +524,7 @@ bool PartsBinPaletteWidget::loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps
 	QStringList namefilters;
 	namefilters << "*"+FritzingBinExtension;
 
-	this->load(unzipDir.entryInfoList(namefilters)[0].filePath());
+	this->load(unzipDir.entryInfoList(namefilters)[0].filePath(), this);
 	foreach(ModelPart* mp, mps) {
 		if(mp->isAlien()) { // double check
 			m_alienParts << mp->moduleID();
@@ -534,7 +536,7 @@ bool PartsBinPaletteWidget::loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps
 }
 
 
-bool PartsBinPaletteWidget::open(QString fileName) {
+bool PartsBinPaletteWidget::open(QString fileName, QObject * progressTarget) {
 	QFile file(fileName);
 	if (!file.exists()) {
        QMessageBox::warning(this, tr("Fritzing"),
@@ -554,7 +556,7 @@ bool PartsBinPaletteWidget::open(QString fileName) {
     file.close();
 
     if(fileName.endsWith(FritzingBinExtension)) {
-    	load(fileName);
+    	load(fileName, progressTarget);
     	saveAsLastBin();
     	m_isDirty = false;
     } else if(fileName.endsWith(FritzingBundledBinExtension)) {
@@ -564,17 +566,31 @@ bool PartsBinPaletteWidget::open(QString fileName) {
     return true;
 }
 
-void PartsBinPaletteWidget::openCore() {
-    load(BinManager::CorePartsBinLocation);
-}
 
-void PartsBinPaletteWidget::load(const QString &filename) {
+void PartsBinPaletteWidget::load(const QString &filename, QObject * progressTarget) {
 	// TODO deleting this local palette reference model deletes modelPartShared held by the palette bin modelParts
 	//PaletteModel * paletteReferenceModel = new PaletteModel(true, true);
 
 	PaletteModel * oldModel = (m_canDeleteModel) ? m_model : NULL;
 	PaletteModel * paletteBinModel = new PaletteModel(true, false, false);
-	if (!paletteBinModel->load(filename, m_refModel)) {		// paletteReferenceModel
+
+	if (progressTarget == this) {
+		progressTarget = m_loadingProgressDialog = new FileProgressDialog(tr("Loading..."), 200, this);
+		m_loadingProgressDialog->setBinLoadingChunk(200);
+		m_loadingProgressDialog->setBinLoadingCount(1);
+		m_loadingProgressDialog->setMessage(tr("loading bin %1").arg(QFileInfo(filename).baseName()));
+		m_loadingProgressDialog->show();
+	}
+	
+	if (progressTarget) {
+		connect(paletteBinModel, SIGNAL(loadingInstances(ModelBase *, QDomElement &)), progressTarget, SLOT(loadingInstancesSlot(ModelBase *, QDomElement &)));
+		connect(paletteBinModel, SIGNAL(loadingInstance(ModelBase *, QDomElement &)), progressTarget, SLOT(loadingInstanceSlot(ModelBase *, QDomElement &)));
+		connect(m_iconView, SIGNAL(settingItem()), progressTarget, SLOT(settingItemSlot()));
+		connect(m_listView, SIGNAL(settingItem()), progressTarget, SLOT(settingItemSlot()));
+	}
+	bool result = paletteBinModel->load(filename, m_refModel);
+
+	if (!result) {
 		QMessageBox::warning(NULL, QObject::tr("Fritzing"), QObject::tr("Friting cannot load the parts bin"));
 		return;
 	}
@@ -583,6 +599,16 @@ void PartsBinPaletteWidget::load(const QString &filename) {
 	if (oldModel) {
 		delete oldModel;
 	}
+
+	if (progressTarget) {
+		disconnect(paletteBinModel, SIGNAL(loadingInstances(ModelBase *, QDomElement &)), progressTarget, SLOT(loadingInstancesSlot(ModelBase *, QDomElement &)));
+		disconnect(paletteBinModel, SIGNAL(loadingInstance(ModelBase *, QDomElement &)), progressTarget, SLOT(loadingInstanceSlot(ModelBase *, QDomElement &)));
+		disconnect(m_iconView, SIGNAL(settingItem()), progressTarget, SLOT(settingItemSlot()));
+		disconnect(m_listView, SIGNAL(settingItem()), progressTarget, SLOT(settingItemSlot()));
+		delete m_loadingProgressDialog;
+		m_loadingProgressDialog = NULL;
+	}
+
 	//delete paletteReferenceModel;
 }
 
@@ -962,3 +988,5 @@ QMenu * PartsBinPaletteWidget::getFileMenu() {
 QMenu * PartsBinPaletteWidget::getPartMenu() {
 	return m_partMenu;
 }
+
+

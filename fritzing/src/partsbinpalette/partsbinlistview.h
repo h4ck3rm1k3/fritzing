@@ -58,6 +58,7 @@ class PartsBinListView : public QListWidget, public PartsBinView {
 
 	signals:
 		void informItemMoved(int fromIndex, int toIndex);
+		void settingItem();
 
 	protected:
 		void doClear();

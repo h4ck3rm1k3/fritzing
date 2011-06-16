@@ -130,8 +130,10 @@ bool ModelBase::load(const QString & fileName, ModelBase * refModel, QList<Model
     	delete child;
    	}
 
-	return loadInstances(domDocument, instances, modelParts, checkForRats);
-
+	emit loadingInstances(this, instances);
+	bool result = loadInstances(domDocument, instances, modelParts, checkForRats);
+	emit loadedInstances(this, instances);
+	return result;
 }
 
 ModelPart * ModelBase::fixObsoleteModuleID(QDomDocument & domDocument, QDomElement & instance, QString & moduleIDRef) {
@@ -144,6 +146,7 @@ bool ModelBase::loadInstances(QDomDocument & domDocument, QDomElement & instance
    	QDomElement instance = instances.firstChildElement("instance");
    	ModelPart* modelPart = NULL;
    	while (!instance.isNull()) {
+		emit loadingInstance(this, instance);
 		if (checkForRats && isRatsnest(instance)) {
 			// ratsnests in sketches are now obsolete
 			instance = instance.nextSiblingElement("instance");

@@ -194,8 +194,8 @@ bool MainWindow::loadWhich(const QString & fileName, bool setAsLastOpened, bool 
 void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addToRecent, const QString & displayName) {
 
 	if (m_fileProgressDialog) {
-		m_fileProgressDialog->setMaximum(100);
-		m_fileProgressDialog->setValue(2);
+		m_fileProgressDialog->setMaximum(200);
+		m_fileProgressDialog->setValue(102);
 	}
 	this->show();
 	showAllFirstTimeHelp(false);
@@ -210,8 +210,7 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 
 	if (m_fileProgressDialog) {
 		m_fileProgressDialog->setMessage(tr("loading %1 (model)").arg(displayName2));
-		m_fileProgressDialog->setMaximum(100);
-		m_fileProgressDialog->setValue(10);
+		m_fileProgressDialog->setValue(110);
 	}
 	ProcessEventBlocker::processEvents();
 
@@ -230,7 +229,7 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 
 	ProcessEventBlocker::processEvents();
 	if (m_fileProgressDialog) {
-		m_fileProgressDialog->setValue(55);
+		m_fileProgressDialog->setValue(155);
 		m_fileProgressDialog->setMessage(tr("loading %1 (breadboard)").arg(displayName2));
 	}
 
@@ -238,7 +237,7 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 
 	ProcessEventBlocker::processEvents();
 	if (m_fileProgressDialog) {
-		m_fileProgressDialog->setValue(70);
+		m_fileProgressDialog->setValue(170);
 		m_fileProgressDialog->setMessage(tr("loading %1 (pcb)").arg(displayName2));
 	}
 
@@ -246,7 +245,7 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 
 	ProcessEventBlocker::processEvents();
 	if (m_fileProgressDialog) {
-		m_fileProgressDialog->setValue(85);
+		m_fileProgressDialog->setValue(185);
 		m_fileProgressDialog->setMessage(tr("loading %1 (schematic)").arg(displayName2));
 	}
 
@@ -254,7 +253,7 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 
 	ProcessEventBlocker::processEvents();
 	if (m_fileProgressDialog) {
-		m_fileProgressDialog->setValue(98);
+		m_fileProgressDialog->setValue(198);
 	}
 
 	if(setAsLastOpened) {
@@ -1811,7 +1810,7 @@ void MainWindow::openInPartsEditor() {
 }
 
 void MainWindow::createNewSketch() {
-    MainWindow* mw = newMainWindow(m_paletteModel, m_refModel, "new sketch", true);
+    MainWindow* mw = newMainWindow(m_paletteModel, m_refModel, "", true);
     mw->move(x()+CascadeFactorX,y()+CascadeFactorY);
 	ProcessEventBlocker::processEvents();
 

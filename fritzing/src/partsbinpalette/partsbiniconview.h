@@ -90,6 +90,7 @@ class PartsBinIconView : public InfoGraphicsView, public PartsBinView
 	signals:
 		void informItemMoved(int fromIndex, int toIndex);
 		void selectionChanged(int index);
+		void settingItem();
 
 	protected:
 		LayerHash m_viewLayers;

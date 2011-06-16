@@ -37,6 +37,7 @@ $Date$
 #include <QGroupBox>
 #include <QCloseEvent>
 #include <QApplication>
+#include <QDesktopWidget>
 
 /////////////////////////////////////
 
@@ -98,6 +99,10 @@ void FileProgressDialog::setValue(int value) {
 	ProcessEventBlocker::processEvents();
 }
 
+int FileProgressDialog::value() {
+	return m_progressBar->value();
+}
+
 void FileProgressDialog::sendCancel() {
 	emit cancel();
 }
@@ -112,4 +117,46 @@ void FileProgressDialog::setMessage(const QString & message) {
 	ProcessEventBlocker::processEvents();
 }
 
+void FileProgressDialog::setBinLoadingCount(int count) 
+{
+	m_binLoadingCount = count;
+	m_binLoadingIndex = -1;
+	m_binLoadingStart = value();
+}
 
+void FileProgressDialog::setBinLoadingChunk(int chunk) 
+{
+	m_binLoadingChunk = chunk;
+}
+
+void FileProgressDialog::loadingInstancesSlot(class ModelBase *, QDomElement & instances)
+{
+	m_binLoadingValue = m_binLoadingStart + (++m_binLoadingIndex * m_binLoadingChunk / (qreal) m_binLoadingCount);
+	setValue(m_binLoadingValue);
+
+	int count = instances.childNodes().count();
+
+	// * 3 comes from: once for model part load, once for list view, once for icon view
+	m_binLoadingInc = m_binLoadingChunk / (qreal) (m_binLoadingCount * 3 * count);
+}
+		
+void FileProgressDialog::loadingInstanceSlot(class ModelBase *, QDomElement & instance)
+{
+	Q_UNUSED(instance);
+	settingItemSlot();
+}
+
+void FileProgressDialog::settingItemSlot()
+{
+	m_binLoadingValue += m_binLoadingInc;
+	if ((int) m_binLoadingValue > value()) {
+		setValue(m_binLoadingValue);
+	}
+}
+
+void FileProgressDialog::resizeEvent(QResizeEvent * event)
+{
+	QDialog::resizeEvent(event);
+	QRect scr = QApplication::desktop()->screenGeometry();
+	move( scr.center() - rect().center() );
+}
