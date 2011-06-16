@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="%1in" height="%2in" viewBox="0 0 %3 %4" >
-<path id="boardoutline" stroke-width="0" stroke="none" fill="#338040" fill-opacity="1" d="M0,0L%3,0 %3,%4 0,%4z
+<path id="boardoutline" stroke-width="0" stroke="none" fill="#b6ab59" fill-opacity="1" d="M0,0L%3,0 %3,%4 0,%4z
 %5" /> 
-<path stroke-width="8" stroke="#338040" fill="none" stroke-opacity="1" d="M4,4L%6,4 %6,%7 4,%7z" /> 
+<path stroke-width="8" stroke="#b6ab59" fill="none" stroke-opacity="1" d="M4,4L%6,4 %6,%7 4,%7z" /> 
 %8
 </svg>
