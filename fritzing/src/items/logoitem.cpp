@@ -852,7 +852,7 @@ QString CopperLogoItem::flipSvg(const QString & svg)
 	QRectF bounds = renderer.viewBoxF();
 	m.translate(bounds.center().x(), bounds.center().y());
 	QMatrix mMinus = m.inverted();
-    QMatrix cm = mMinus * QMatrix().scale(1, -1) * m;
+    QMatrix cm = mMinus * QMatrix().scale(-1, 1) * m;
 	int gix = newSvg.indexOf("<g");
 	newSvg.replace(gix, 2, "<g _flipped_='1' transform='" + TextUtils::svgMatrix(cm) + "'");
 	return newSvg;
