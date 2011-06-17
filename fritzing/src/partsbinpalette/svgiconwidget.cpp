@@ -188,7 +188,6 @@ void SvgIconWidget::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
 	}
 }
 
-
 void SvgIconWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) 
 {
 	if (m_moduleId.compare(ModuleIDNames::SpacerModuleIDName) == 0) {
@@ -211,3 +210,4 @@ void SvgIconWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 
 	QGraphicsWidget::paint(painter, option, widget);
 }
+
