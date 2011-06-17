@@ -26,8 +26,10 @@ $Date$
 
 
 #include <QtGui>
-
 #include "graphicsflowlayout.h"
+
+static const int SpaceBefore = 5;
+static const int SpaceAfter = 3;
 
 GraphicsFlowLayout::GraphicsFlowLayout(QGraphicsLayoutItem *parent, int spacing)
 	: QGraphicsLinearLayout(parent)
@@ -61,13 +63,14 @@ int GraphicsFlowLayout::doLayout(const QRectF &rect) {
 
 		QSizePolicy policy = item->sizePolicy();
 		if (item->sizePolicy().horizontalPolicy() == QSizePolicy::Expanding) { 
-			item->setGeometry(QRectF(QPoint(x, y), QSize(0,0)));
+			int myY = y + lineHeight + spacing() + SpaceBefore;
+			QRectF r(QPoint(rect.x(), myY), item->preferredSize());
+			item->setGeometry(r);
 			x = rect.x();
-			y = y + lineHeight + spacing() + (lineHeight / 2);
+			y = myY + item->preferredSize().height() + spacing() + SpaceAfter;
 			continue;
 		}
 		
-
 		if (nextX - spacing() > rect.right() && lineHeight > 0) {
 			x = rect.x();
 			y = y + lineHeight + spacing();

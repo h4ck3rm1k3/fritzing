@@ -157,6 +157,7 @@ bool ModelBase::loadInstances(QDomDocument & domDocument, QDomElement & instance
    		QString moduleIDRef = instance.attribute("moduleIdRef");
 		if (moduleIDRef.compare(ModuleIDNames::SpacerModuleIDName) == 0) {
 			ModelPart * mp = new ModelPart(ModelPart::Space);
+			mp->setInstanceText(instance.attribute("path"));
 			mp->setParent(m_root);
 			modelParts.append(mp);
 			instance = instance.nextSiblingElement("instance");

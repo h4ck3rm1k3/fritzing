@@ -32,6 +32,7 @@ $Date$
 #include "../debugdialog.h"
 #include "../utils/misc.h"
 #include "../fsvgrenderer.h"
+#include "../items/moduleidnames.h"
 
 #define SELECTED_STYLE "background-color: white;"
 #define NON_SELECTED_STYLE "background-color: #C2C2C2;"
@@ -55,8 +56,8 @@ void  SvgIconPixmapItem::setPlural(bool plural) {
 	m_plural = plural;
 }
 
-void SvgIconPixmapItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-
+void SvgIconPixmapItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) 
+{
 	QGraphicsPixmapItem::paint(painter, option, widget);
 
 	if (this->parentItem()->isSelected()) {
@@ -81,14 +82,23 @@ SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ViewIdentifierClass::ViewIde
 	m_moduleId = modelPart->moduleID();
 	m_itemBase = itemBase;
 
-	this->setMaximumSize(PluralImage->size());
 
 	if (modelPart->itemType() == ModelPart::Space) {
+		m_moduleId = ModuleIDNames::SpacerModuleIDName;
+		QString text = modelPart->instanceText();
+		this->setData(Qt::UserRole, text);
+		if (text.isEmpty()) {
+			this->setMaximumSize(PluralImage->size().width(), 1);
+		}
+		else {
+			this->setMaximumSize(PluralImage->size().width(), 8);
+		}
 		setAcceptHoverEvents(false);
 		setFlags(0);
 		setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
 	}
 	else {
+		this->setMaximumSize(PluralImage->size());
 		setAcceptHoverEvents(true);
 		setFlags(QGraphicsItem::ItemIsSelectable);
 
@@ -176,4 +186,28 @@ void SvgIconWidget::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
 	if (igv) {
 		igv->hoverLeaveItem(event, m_itemBase);
 	}
+}
+
+
+void SvgIconWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) 
+{
+	if (m_moduleId.compare(ModuleIDNames::SpacerModuleIDName) == 0) {
+		QRectF r = this->boundingRect();
+		painter->save();
+		QPen pen = painter->pen();
+		pen.setColor(QColor(222, 222, 222));
+		pen.setWidth(1);
+		painter->setPen(pen);
+		QString text = data(Qt::UserRole).toString();
+		if (!text.isEmpty()) {
+			painter->drawText(r.left(), r.bottom(), text);
+			QFontMetrics fm(font());
+			r.setLeft(r.left() + fm.width(text));
+		}
+		painter->drawLine(r.left(), r.bottom(), scene()->width(), r.bottom());
+		painter->restore();	
+		return;
+	}
+
+	QGraphicsWidget::paint(painter, option, widget);
 }
