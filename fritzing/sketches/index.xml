@@ -23,6 +23,7 @@
 		<sketch id="Parking" name="Parking Assistant (Infrared)" src="core/Parking-Assistant.fz"/>
 		<sketch id="Relay" name="Relay" src="core/Relay.fz"/>
 		<sketch id="RGB_LED" name="Colored Light (RGB LED)" src="core/RGB-LED.fz"/>
+		<sketch id="Color-Fader" name="Color Fader (RGB LED)" src="core/color-fader.fz"/>
 		<sketch id="Shift_Register" name="Shift Register" src="core/Shift_Register.fz"/>
 		<sketch id="Shift_Register2" name="Shift Register (double-sided)" src="core/Shift_Register_double_sided.fz"/>
 		<sketch id="Stepper_Motor" name="Stepper Motor" src="core/Stepper_Motor.fz"/>
@@ -103,6 +104,7 @@
 					<sketch id="Parking"/>
 					<sketch id="TrafficLight"/>
 					<sketch id="RGB_LED"/>
+					<sketch id="Color-Fader"/>
 					<sketch id="Shift_Register"/>
 					<sketch id="Shift_Register2"/>
 					<sketch id="AnalogInputOutput"/>
@@ -144,7 +146,17 @@
 				<sketch id="ArduinoISP"/>
 			</category>
 		</category>
-		<category name="Picaxe">
+		<category name="Fritzing Starter Kit">
+			<sketch id="Photocell"/>
+			<sketch id="TiltSwitch"/>
+			<sketch id="AnalogInputToServo"/>
+			<sketch id="Color-Fader"/>
+			<sketch id="Touch_Switch"/>
+			<sketch id="TrafficLight"/>
+			<sketch id="AnalogInputOutput"/>
+			<sketch id="Loop"/>
+			<sketch id="Button"/>
+			<sketch id="Melody"/>
 		</category>
 	</categories>
 </fritzing-sketches>
