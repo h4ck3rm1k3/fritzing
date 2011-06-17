@@ -2,6 +2,14 @@
 <module fritzingVersion="0.4.3b.0.0">
 	<title>Core</title>
     <instances>
+          <instance moduleIdRef="__spacer__" modelIndex="3" path="Basic">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      
       <instance moduleIdRef="ResistorModuleID" modelIndex="3" path=":/resources/parts/core/resistor.fzp">
         <views>
           <iconView layer="icon">
@@ -44,6 +52,7 @@
                 </iconView>
             </views>
         </instance>
+	<!--
         <instance moduleIdRef="2244EBEC21" modelIndex="10" path="parts/core/transistor_signal_PNP_TO92.fzp">
             <views>
                 <iconView layer="icon">
@@ -51,6 +60,7 @@
                 </iconView>
             </views>
         </instance>
+	-->
         <instance moduleIdRef="2244EBEC10" modelIndex="11" path="parts/core/transistor_signal_NPN_TO92.fzp">
             <views>
                 <iconView layer="icon">
@@ -65,6 +75,7 @@
                 </iconView>
             </views>
         </instance>
+	<!--
         <instance moduleIdRef="1001ABDC04" modelIndex="12" path="parts/core/basic_fet_n.fzp">
             <views>
                 <iconView layer="icon">
@@ -72,6 +83,23 @@
                 </iconView>
             </views>
         </instance>
+	-->
+        <instance moduleIdRef="mystery_part_3" modelIndex="47" path="parts/core/mystery_part_3.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
+	
+      <instance moduleIdRef="__spacer__" modelIndex="3" path="Input">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+	
         <instance moduleIdRef="3234DBDC00PotentiometerModuleID" modelIndex="13" path="parts/core/basic_poti.fzp">
             <views>
                 <iconView layer="icon">
@@ -79,6 +107,7 @@
                 </iconView>
             </views>
         </instance>
+	<!--
         <instance moduleIdRef="3234DFDC00PotentiometerModuleID" modelIndex="14" path="parts/core/big_pot.fzp">
             <views>
                 <iconView layer="icon">
@@ -86,7 +115,7 @@
                 </iconView>
             </views>
         </instance>
-
+	-->
         <instance moduleIdRef="cee49c7a6b94e1759bb995959b72f50cPotentiometerModuleID" modelIndex="14" path="parts/core/pot-small.fzp">
             <views>
                 <iconView layer="icon">
@@ -108,7 +137,6 @@
                 </iconView>
             </views>
         </instance>
-
         <instance moduleIdRef="20A9BBEE34_ST-2leadbutton-horizon" modelIndex="15" path="parts/core/pushbutton_2_horizontal.fzp">
             <views>
                 <iconView layer="icon">
@@ -200,6 +228,23 @@
                 </iconView>
             </views>
         </instance>
+        <instance moduleIdRef="a975d1270bd55d6fc3916947793f1a57" modelIndex="31" path="parts/core/rfid-reader.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
+	
+	
+      <instance moduleIdRef="__spacer__" modelIndex="3" path="Output">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      
         <instance moduleIdRef="3244BBEC34LEDModuleID" modelIndex="24" path="parts/core/LED-red-5mm.fzp">
             <views>
                 <iconView layer="icon">
@@ -314,21 +359,6 @@
           </iconView>
         </views>
       </instance>
-        <instance moduleIdRef="mystery_part_3" modelIndex="47" path="parts/core/mystery_part_3.fzp">
-            <views>
-                <iconView layer="icon">
-                    <geometry z="-1" x="-1" y="-1"/>
-                </iconView>
-            </views>
-        </instance>
-
-        <instance moduleIdRef="a975d1270bd55d6fc3916947793f1a57" modelIndex="31" path="parts/core/rfid-reader.fzp">
-            <views>
-                <iconView layer="icon">
-                    <geometry z="-1" x="-1" y="-1"/>
-                </iconView>
-            </views>
-        </instance>
         <instance moduleIdRef="f5e8f260-de38-11dd-b332-0022430987e8" modelIndex="32" path="parts/core/atmega168.fzp">
             <views>
                 <iconView layer="icon">
@@ -413,15 +443,6 @@
           </iconView>
         </views>
       </instance>
-      
-      <instance moduleIdRef="__spacer__" modelIndex="3" path="">
-        <views>
-          <iconView layer="icon">
-            <geometry z="-1" x="-1" y="-1"></geometry>
-          </iconView>
-        </views>
-      </instance>
-
         <instance moduleIdRef="CrystalModuleID" modelIndex="38" path="parts/core/crystal.fzp">
             <views>
                 <iconView layer="icon">
@@ -436,6 +457,15 @@
                 </iconView>
             </views>
         </instance>
+	
+	<instance moduleIdRef="__spacer__" modelIndex="3" path="Power">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+	
         <instance moduleIdRef="1000AFDF10011" modelIndex="39" path="parts/core/battery-AA.fzp">
             <views>
                 <iconView layer="icon">
@@ -457,13 +487,36 @@
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="1a4bfb87a0f0fd2c59be43f3497d72e6" modelIndex="42" path="parts/core/xbee.fzp">
-            <views>
-                <iconView layer="icon">
-                  <geometry z="-1" x="-1" y="-1"/>
-                </iconView>
-            </views>
-        </instance>
+	
+	<instance moduleIdRef="__spacer__" modelIndex="3" path="Connection">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      
+      <instance moduleIdRef="generic_female_pin_header_2_100mil" modelIndex="45" path="parts/core/generic_female_pin_header_2_100mil.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="generic_female_pin_header_2_100mil" modelIndex="45" path="parts/core/generic_female_pin_header_2_100mil.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="screw_terminal_2_100mil" modelIndex="46" path="parts/core/screw_terminal_2_100mil.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
         <instance moduleIdRef="5e3b9f7a14a1627168e700bfc9a03b3c" modelIndex="43" path="parts/core/USB connector.fzp">
             <views>
                 <iconView layer="icon">
@@ -485,22 +538,22 @@
                 </iconView>
             </views>
         </instance>
-      <instance moduleIdRef="generic_female_pin_header_2_100mil" modelIndex="45" path="parts/core/generic_female_pin_header_2_100mil.fzp">
-        <views>
-          <iconView layer="icon">
-            <geometry z="-1" x="-1" y="-1"></geometry>
-          </iconView>
-        </views>
-      </instance>
-      <instance moduleIdRef="screw_terminal_2_100mil" modelIndex="46" path="parts/core/screw_terminal_2_100mil.fzp">
-        <views>
-          <iconView layer="icon">
-            <geometry z="-1" x="-1" y="-1"></geometry>
-          </iconView>
-        </views>
-      </instance>		
+        <instance moduleIdRef="1a4bfb87a0f0fd2c59be43f3497d72e6" modelIndex="42" path="parts/core/xbee.fzp">
+            <views>
+                <iconView layer="icon">
+                  <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
+	<instance moduleIdRef="7658504bdcb62998a7281b0d1baaac37" modelIndex="48" path="parts/core/Arduino Ethernet Shield.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
       
-      <instance moduleIdRef="__spacer__" modelIndex="3" path="microcontrollers">
+      <instance moduleIdRef="__spacer__" modelIndex="3" path="Microcontroller">
         <views>
           <iconView layer="icon">
             <geometry z="-1" x="-1" y="-1"></geometry>
@@ -579,15 +632,8 @@
                 </iconView>
             </views>
         </instance>
-     <instance moduleIdRef="7658504bdcb62998a7281b0d1baaac37" modelIndex="48" path="parts/core/Arduino Ethernet Shield.fzp">
-            <views>
-                <iconView layer="icon">
-                    <geometry z="-1" x="-1" y="-1"/>
-                </iconView>
-            </views>
-        </instance>
-
-      <instance moduleIdRef="__spacer__" modelIndex="3" path="breadboard parts">
+ 
+      <instance moduleIdRef="__spacer__" modelIndex="3" path="Breadboard View">
         <views>
           <iconView layer="icon">
             <geometry z="-1" x="-1" y="-1"></geometry>
@@ -617,7 +663,7 @@
             </views>
         </instance>
 	
-      <instance moduleIdRef="__spacer__" modelIndex="3" path="schematic parts">
+      <instance moduleIdRef="__spacer__" modelIndex="3" path="Schematic View">
         <views>
           <iconView layer="icon">
             <geometry z="-1" x="-1" y="-1"></geometry>
@@ -647,7 +693,7 @@
         </views>
       </instance>
       
-      <instance moduleIdRef="__spacer__" modelIndex="3" path="pcb parts">
+      <instance moduleIdRef="__spacer__" modelIndex="3" path="PCB View">
         <views>
           <iconView layer="icon">
             <geometry z="-1" x="-1" y="-1"></geometry>
@@ -698,7 +744,7 @@
         </views>
       </instance>
 
-      <instance moduleIdRef="__spacer__" modelIndex="3" path="">
+      <instance moduleIdRef="__spacer__" modelIndex="3" path="Tools">
         <views>
           <iconView layer="icon">
             <geometry z="-1" x="-1" y="-1"></geometry>

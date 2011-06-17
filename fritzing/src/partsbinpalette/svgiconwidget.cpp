@@ -194,16 +194,20 @@ void SvgIconWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 		QRectF r = this->boundingRect();
 		painter->save();
 		QPen pen = painter->pen();
-		pen.setColor(QColor(222, 222, 222));
-		pen.setWidth(1);
+                pen.setColor(QColor(80, 80, 80));
+                pen.setWidth(1);
 		painter->setPen(pen);
+                QFont font = painter->font();
+                font.setPointSize(8);
+                painter->setFont(font);
 		QString text = data(Qt::UserRole).toString();
 		if (!text.isEmpty()) {
 			painter->drawText(r.left(), r.bottom(), text);
-			QFontMetrics fm(font());
+                        QFontMetrics fm(font);
 			r.setLeft(r.left() + fm.width(text));
+                        r.setBottom(r.bottom() + 2);
 		}
-		painter->drawLine(r.left(), r.bottom(), scene()->width(), r.bottom());
+                //painter->drawLine(r.left(), r.bottom(), scene()->width(), r.bottom());
 		painter->restore();	
 		return;
 	}
