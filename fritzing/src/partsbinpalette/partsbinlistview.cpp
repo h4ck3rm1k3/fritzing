@@ -89,7 +89,7 @@ int PartsBinListView::setItemAux(ModelPart * modelPart, int position) {
 
 	QListWidgetItem * lwi = new QListWidgetItem(modelPart->title());
 	if (modelPart->itemType() == ModelPart::Space) {
-		lwi->setData(Qt::UserRole, NULL);
+		lwi->setData(Qt::UserRole, 0);
 		lwi->setFlags(0);
 	}
 	else {
