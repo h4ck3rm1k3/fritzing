@@ -4,10 +4,6 @@
 <context>
     <name>AboutBox</name>
     <message>
-        <source>Version %1.%2.%3 &lt;small&gt;(%4%5 %6)&lt;/small&gt;</source>
-        <translation>版本号 %1.%2.%3 &lt;small&gt;(%4%5 %6)&lt;/small&gt;</translation>
-    </message>
-    <message>
         <source>&lt;a href=&quot;http://www.fritzing.org&quot;&gt;www.fritzing.org&lt;/a&gt;</source>
         <translation>&lt;a href=&quot;http://www.fritzing.org&quot;&gt;www.fritzing.org&lt;/a&gt;</translation>
     </message>
@@ -21,134 +17,138 @@
     </message>
     <message>
         <source>Fritzing is made by: </source>
-        <translation type="unfinished"></translation>
+        <translation>Fritzing 的作者是:</translation>
     </message>
     <message>
         <source>Prof. Reto Wettach, Andr&amp;eacute; Kn&amp;ouml;rig, Myriel Milicevic, </source>
-        <translation type="unfinished"></translation>
+        <translation>Prof. Reto Wettach, Andr&amp;eacute; Kn&amp;ouml;rig, Myriel Milicevic, </translation>
     </message>
     <message>
         <source>Zach Eveland, Dirk van Oosterbosch, </source>
-        <translation type="unfinished"></translation>
+        <translation>Zach Eveland, Dirk van Oosterbosch, </translation>
     </message>
     <message>
         <source>Jonathan Cohen, Marcus Paeschke, Omer Yosha, </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Travis Robertson, Stefan Hermann, Brendan Howell, </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Mariano Crowe, Johannes Landstorfer, </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Jenny Chowdhury, Lionel Michel, Jannis Leidel, </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Bryant Mairs, Uleshka Asher, and Daniel Tzschentke. </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Special thanks goes out to: </source>
-        <translation type="unfinished"></translation>
+        <translation>特别感谢:</translation>
     </message>
     <message>
         <source>Jussi &amp;Auml;ngeslev&amp;auml;, Massimo Banzi, Ayah Bdeir, </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Durrell Bishop, David Cuartielles, Fabian Hemmert, </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Gero Herkenrath, Jeff Hoefs, Tom Hulbert, </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Tom Igoe, Hans-Peter Kadel, Till Savelkoul, </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Jan Sieber, Yaniv Steiner, Olaf Val, </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Michaela Vieser and Julia Werner.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Thanks to Kurt Badelt and Miguel Solis for the Spanish translation, </source>
-        <translation type="unfinished"></translation>
+        <translation>感谢 Kurt Badelt和Miguel Solis 对西班牙语的翻译,</translation>
     </message>
     <message>
         <source>to Gianluca Urgese for the Italian translation, </source>
-        <translation type="unfinished"></translation>
+        <translation>Gianluca Urgese 对意大利版的翻译,</translation>
     </message>
     <message>
         <source>to Nuno Pessanha Santos for the Portuguese (European) translation, </source>
-        <translation type="unfinished"></translation>
+        <translation>Nuno Pessanha Santos 对葡萄牙(欧洲)版的翻译,</translation>
     </message>
     <message>
         <source>to Yuelin and Ninjia  for the Chinese (Simplified) translation, </source>
-        <translation type="unfinished"></translation>
+        <translation>Yuelin和Ninjia 对简体中文版的翻译,</translation>
     </message>
     <message>
         <source>to Hiroshi Suzuki for the Japanese translation, </source>
-        <translation type="unfinished"></translation>
+        <translation>Hiroshi Suzuki 对日文版的翻译,</translation>
     </message>
     <message>
         <source>to Robert Lee for the Chinese (Traditional) translation, </source>
-        <translation type="unfinished"></translation>
+        <translation>Robert Lee 对繁体中文版的翻译,</translation>
     </message>
     <message>
         <source>to Vladimir Savinov for the Russian translation, </source>
-        <translation type="unfinished"></translation>
+        <translation>Vladimir Savinov 对俄罗斯版的翻译,</translation>
     </message>
     <message>
         <source>to Steven Noppe for the Dutch translation, </source>
-        <translation type="unfinished"></translation>
+        <translation>Steven Noppe 对荷兰版的翻译,</translation>
     </message>
     <message>
         <source>and to Arthur Zanona for the Portuguese (Brazilian) translation. </source>
-        <translation type="unfinished"></translation>
+        <translation>和Arthur Zanona 对葡萄牙版(巴西)的翻译. </translation>
     </message>
     <message>
         <source>Fritzing is made possible with funding from the </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>MWFK Brandenburg, the sponsorship of the Design </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Department of Bauhaus-University Weimar, </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>IxDS, an anonymous donor, Parallax, Picaxe, Sparkfun, </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>and from each purchase of a Fritzing Starter Kit.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Special thanks goes out as well to all the students </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>and alpha testers who were brave enough to give </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Fritzing a test spin. </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Version %1.%2.%3 &lt;small&gt;(%4%5 %6)%7&lt;/small&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -206,38 +206,38 @@
     </message>
     <message>
         <source>zoom and pan controls</source>
-        <translation type="unfinished"></translation>
+        <translation>缩放旋转控制</translation>
     </message>
 </context>
 <context>
     <name>AutorouterSettingsDialog</name>
     <message>
         <source>Production type</source>
-        <translation type="unfinished"></translation>
+        <translation>产品型号</translation>
     </message>
     <message>
         <source>homebrew</source>
-        <translation type="unfinished"></translation>
+        <translation>自制</translation>
     </message>
     <message>
         <source>professional</source>
-        <translation type="unfinished"></translation>
+        <translation>专业</translation>
     </message>
     <message>
         <source>custom</source>
-        <translation type="unfinished"></translation>
+        <translation>自定义</translation>
     </message>
     <message>
         <source>Trace width</source>
-        <translation type="unfinished"></translation>
+        <translation>铜线宽度</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">取消</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished">确定</translation>
+        <translation>确定</translation>
     </message>
 </context>
 <context>
@@ -290,45 +290,46 @@
     <name>CMRouter</name>
     <message>
         <source>round %1 of:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No board part found, DRC cancelled.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The sketch is ok: connectors and traces are not too close together.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Some connectors and/or traces are too close together.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message numerus="yes">
-        <source>Note: the autorouter did not route %n parts which are not located entirely on the board.</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>
-Note: %n parts are not located entirely on the board.</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-        </translation>
+        <translation>round %1 of:</translation>
     </message>
     <message>
         <source>best so far: %1 unrouted</source>
-        <translation type="unfinished"></translation>
+        <translation>至此:%1没有布线</translation>
     </message>
     <message numerus="yes">
         <source>/%n jumpers</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>/%n 跳线</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>/%n vias</source>
+        <translation>
+            <numerusform>/%n 通孔</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Note: the autorouter did not route %n parts, because they are not located entirely on the board.</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>The Design Rule Check (DRC) was cancelled, because it could not find a PCB board part.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your sketch is ready for production: there are no connectors or traces that overlap or are too close together.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The areas on your board highlighted in red are connectors and traces which overlap or are too close together. Reposition them and run the DRC again to find more problems.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>
+
+Note: %n parts are not located entirely on the board.</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
@@ -574,30 +575,6 @@ Please select one of the Fritzing fonts to replace them:</source>
 <context>
     <name>Hole</name>
     <message>
-        <source>Pin Header</source>
-        <translation>针脚头</translation>
-    </message>
-    <message>
-        <source>Standard Through-hole</source>
-        <translation>标准过孔</translation>
-    </message>
-    <message>
-        <source>Big Through-hole</source>
-        <translation>标准通孔</translation>
-    </message>
-    <message>
-        <source>Mounting Hole</source>
-        <translation>装配孔</translation>
-    </message>
-    <message>
-        <source>Fine Lead Parts</source>
-        <translation>标准针脚元件</translation>
-    </message>
-    <message>
-        <source>Thick Lead Parts</source>
-        <translation>粗针脚元件</translation>
-    </message>
-    <message>
         <source>hole size</source>
         <translation>孔径</translation>
     </message>
@@ -611,7 +588,7 @@ Please select one of the Fritzing fonts to replace them:</source>
     </message>
     <message>
         <source>advanced settings</source>
-        <translation type="unfinished"></translation>
+        <translation>高级设置</translation>
     </message>
 </context>
 <context>
@@ -676,7 +653,7 @@ y:%2</translation>
     </message>
     <message>
         <source>v. %1</source>
-        <translation type="unfinished"></translation>
+        <translation>v. %1</translation>
     </message>
 </context>
 <context>
@@ -743,74 +720,78 @@ y:%2</translation>
     </message>
     <message>
         <source>model part problem</source>
-        <translation type="unfinished"></translation>
+        <translation>模型元件问题</translation>
     </message>
     <message>
         <source>part xml missing</source>
-        <translation type="unfinished"></translation>
+        <translation>元件xml缺失</translation>
     </message>
     <message>
         <source>missing xml for view %1 layer %2</source>
-        <translation type="unfinished"></translation>
+        <translation>视图%1层%2丢失了xml</translation>
     </message>
     <message>
         <source>file %1 not found</source>
-        <translation type="unfinished"></translation>
+        <translation>文件%1未找到</translation>
     </message>
     <message>
         <source>unable to create renderer for svg</source>
-        <translation type="unfinished"></translation>
+        <translation>不能创建svg的渲染</translation>
     </message>
     <message>
         <source>capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>电容</translation>
     </message>
     <message>
         <source>inductance</source>
-        <translation type="unfinished"></translation>
+        <translation>电感</translation>
     </message>
     <message>
         <source>current</source>
-        <translation type="unfinished"></translation>
+        <translation>电流</translation>
     </message>
     <message>
         <source>power</source>
-        <translation type="unfinished"></translation>
+        <translation>电源</translation>
     </message>
     <message>
         <source>part number</source>
-        <translation type="unfinished"></translation>
+        <translation>元件号</translation>
     </message>
     <message>
         <source>type</source>
-        <translation type="unfinished">类型</translation>
+        <translation>类型</translation>
     </message>
     <message>
         <source>model</source>
-        <translation type="unfinished"></translation>
+        <translation>型号</translation>
     </message>
     <message>
         <source>pins</source>
-        <translation type="unfinished"></translation>
+        <translation>针脚</translation>
     </message>
     <message>
         <source>spacing</source>
-        <translation type="unfinished"></translation>
+        <translation>空间</translation>
     </message>
     <message>
         <source>frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>频率</translation>
     </message>
     <message>
         <source>processor</source>
-        <translation type="unfinished"></translation>
+        <translation>处理器</translation>
     </message>
     <message>
         <source>variant</source>
-        <translation type="unfinished"></translation>
+        <translation>变形</translation>
     </message>
     <message>
         <source>layers</source>
+        <translation>层</translation>
+    </message>
+    <message>
+        <source>tolerance</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -900,6 +881,14 @@ y:%2</translation>
     <message>
         <source>keep in proportion</source>
         <translation>保持比例</translation>
+    </message>
+    <message>
+        <source>image file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>shape</source>
+        <translation type="unfinished">形状</translation>
     </message>
 </context>
 <context>
@@ -1067,10 +1056,6 @@ We&apos;re working to avoid this message, and only let you choose between proper
     <message>
         <source>SVG Image (*.svg)</source>
         <translation>SVG图像(*.svg)</translation>
-    </message>
-    <message>
-        <source>BoM Text File (*.txt)</source>
-        <translation>BoM 文本文件(*.txt)</translation>
     </message>
     <message>
         <source>Printing...</source>
@@ -1821,38 +1806,6 @@ We&apos;re working to avoid this message, and only let you choose between proper
         <translation>导出SVG...</translation>
     </message>
     <message>
-        <source>Fritzing Bill of Materials
-
-</source>
-        <translation>Fritzing 材料列表
-
-</translation>
-    </message>
-    <message>
-        <source>Sketch: 	</source>
-        <translation>设计: 	</translation>
-    </message>
-    <message>
-        <source>Date: 	</source>
-        <translation>日期: 	</translation>
-    </message>
-    <message>
-        <source>
-
-Shopping List
-
-Quantity	Part
-
-</source>
-        <translation>
-
-采购单
-
-数量	元件
-
-</translation>
-    </message>
-    <message>
         <source>Export Bill of Materials (BoM)...</source>
         <translation>导出材料单(BoM)...</translation>
     </message>
@@ -1875,14 +1828,6 @@ Quantity	Part
     <message>
         <source>Create a trace from the selected wire</source>
         <translation>为选择的导线创建一条引导线</translation>
-    </message>
-    <message>
-        <source>&amp;Don&apos;t Autoroute This Trace</source>
-        <translation>不要自动为此引导线布线(&amp;D)</translation>
-    </message>
-    <message>
-        <source>When autorouting, do not rip up this wire</source>
-        <translation>当自动布线时，不要断开这条线</translation>
     </message>
     <message>
         <source>Select All Traces</source>
@@ -1943,22 +1888,6 @@ Quantity	Part
     <message>
         <source>You will have to restart Fritzing in order to use the imported parts</source>
         <translation>使用导入的元件必须重新启动Fritzing</translation>
-    </message>
-    <message>
-        <source>Your sketch does not have a board yet!  Please add a PCB in order to use copper fill.</source>
-        <translation>你的设计中还没有包含板！请添加一块PCB以便使用覆铜功能.</translation>
-    </message>
-    <message>
-        <source>Fritzing error: unable to render board svg (1).</source>
-        <translation>Fritzing错误:不能渲染板svg (1).</translation>
-    </message>
-    <message>
-        <source>Fritzing error: unable to render copper svg (1).</source>
-        <translation>Fritzing错误:不能渲染铜层svg (1).</translation>
-    </message>
-    <message>
-        <source>Fritzing error: unable to write copper fill.</source>
-        <translation></translation>
     </message>
     <message>
         <source>Remove copper fill</source>
@@ -2066,10 +1995,6 @@ Please check all views for potential side-effects.</source>
         <translation>选择所有跳线</translation>
     </message>
     <message>
-        <source>Select all jumper parts</source>
-        <translation>选择所有跳线元件</translation>
-    </message>
-    <message>
         <source>New</source>
         <translation>新建</translation>
     </message>
@@ -2156,10 +2081,6 @@ Please check all views for potential side-effects.</source>
     <message>
         <source>%1 file export failure (3)</source>
         <translation>%1文件导出失败(3)</translation>
-    </message>
-    <message>
-        <source>%1 mask file export failure (4)</source>
-        <translation>%1机械层文件导出失败(4)</translation>
     </message>
     <message>
         <source>%1 drill file export failure (5)</source>
@@ -2266,10 +2187,6 @@ Please check all views for potential side-effects.</source>
         <translation>将剪贴板内容粘贴到这里</translation>
     </message>
     <message>
-        <source>Change Trace Layer</source>
-        <translation>改变引导线层</translation>
-    </message>
-    <message>
         <source>Delete</source>
         <translation>删除</translation>
     </message>
@@ -2321,146 +2238,258 @@ Please check all views for potential side-effects.</source>
     </message>
     <message>
         <source>silk export failure</source>
-        <translation type="unfinished"></translation>
+        <translation>丝印导出错误</translation>
     </message>
     <message>
         <source>Lock Part</source>
-        <translation type="unfinished"></translation>
+        <translation>锁定元件</translation>
     </message>
     <message>
         <source>Prevent a part from being moved</source>
-        <translation type="unfinished"></translation>
+        <translation>防止元件被移动</translation>
     </message>
     <message>
         <source>Select All Locked Parts</source>
-        <translation type="unfinished"></translation>
+        <translation>选择所有锁定元件</translation>
     </message>
     <message>
         <source>Select all parts that can&apos;t be moved</source>
-        <translation type="unfinished"></translation>
+        <translation>选择所有不能移动元件</translation>
     </message>
     <message>
         <source>Search parts bin</source>
-        <translation type="unfinished"></translation>
+        <translation>搜索元件库</translation>
     </message>
     <message>
         <source>Search for a part in the parts bin</source>
-        <translation type="unfinished"></translation>
+        <translation>从元件库中搜索元件</translation>
     </message>
     <message>
         <source>Show Parts Bin Icon View</source>
-        <translation type="unfinished"></translation>
+        <translation>显示元件库图标视图</translation>
     </message>
     <message>
         <source>Display the parts bin in an icon view</source>
-        <translation type="unfinished"></translation>
+        <translation>在图标视图中显示元件库</translation>
     </message>
     <message>
         <source>Show Parts Bin List View</source>
-        <translation type="unfinished"></translation>
+        <translation>以列表视图显示元件库</translation>
     </message>
     <message>
         <source>Display the parts bin in a list view</source>
-        <translation type="unfinished"></translation>
+        <translation>在列表视图中显示元件库</translation>
     </message>
     <message>
         <source>Parts Bin</source>
-        <translation type="unfinished"></translation>
+        <translation>元件库</translation>
     </message>
     <message>
         <source>Donate to Fritzing</source>
-        <translation type="unfinished"></translation>
+        <translation>捐赠Fritzing</translation>
     </message>
     <message>
         <source>Open Fritzing donation web page</source>
-        <translation type="unfinished"></translation>
+        <translation>打开Fritzing捐赠网址</translation>
     </message>
     <message>
         <source>Export for PCB</source>
-        <translation type="unfinished"></translation>
+        <translation>导出为PCB</translation>
     </message>
     <message>
         <source>Export PDF or SVG for etchable PCB production...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Export the current sketch to Gerber for professional PCB production</source>
-        <translation type="unfinished"></translation>
+        <translation>为蚀刻PCB制作导出PDF或SVG...</translation>
     </message>
     <message>
         <source>Export the current sketch to PDF for DIY PCB production (photoresist)</source>
-        <translation type="unfinished"></translation>
+        <translation>导出当前项目至PDF进行DIY的PCB生产(photoresist)</translation>
     </message>
     <message>
         <source>Export the current sketch to PDF for DIY PCB production (tone transfer)</source>
-        <translation type="unfinished"></translation>
+        <translation>导出当前项目至PDF进行DIY的PCB生产(tone transfer)</translation>
     </message>
     <message>
         <source>Export the current sketch to SVG for DIY PCB production (photoresist)</source>
-        <translation type="unfinished"></translation>
+        <translation>导出当前项目至SVG进行DIY的PCB生产(photoresist)</translation>
     </message>
     <message>
         <source>Export the current sketch to SVG for DIY PCB production (tone transfer)</source>
-        <translation type="unfinished"></translation>
+        <translation>导出当前项目至PDF进行DIY的PCB生产(tone transfer)</translation>
     </message>
     <message>
         <source>Autorouter settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>自动布线设置...</translation>
     </message>
     <message>
         <source>Set autorouting parameters...</source>
-        <translation type="unfinished"></translation>
+        <translation>设置自动布线参数...</translation>
     </message>
     <message>
         <source>JPG...</source>
-        <translation type="unfinished"></translation>
+        <translation>JPG...</translation>
     </message>
     <message>
         <source>PNG...</source>
-        <translation type="unfinished"></translation>
+        <translation>PNG...</translation>
     </message>
     <message>
         <source>PostScript...</source>
-        <translation type="unfinished"></translation>
+        <translation>PostScript...</translation>
     </message>
     <message>
         <source>PDF...</source>
-        <translation type="unfinished"></translation>
+        <translation>PDF...</translation>
     </message>
     <message>
         <source>SVG...</source>
-        <translation type="unfinished"></translation>
+        <translation>SVG...</translation>
     </message>
     <message>
         <source>Eagle...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Gerber (RS-274X)...</source>
-        <translation type="unfinished"></translation>
+        <translation>Eagle...</translation>
     </message>
     <message>
         <source>Etchable (PDF)...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Etchable mirrored (PDF)...</source>
-        <translation type="unfinished"></translation>
+        <translation>Etchable mirrored (PDF)...</translation>
     </message>
     <message>
         <source>Etchable (SVG)...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Etchable mirrored (SVG)...</source>
-        <translation type="unfinished"></translation>
+        <translation>Etchable mirrored (SVG)...</translation>
     </message>
     <message>
         <source>as Image</source>
-        <translation type="unfinished"></translation>
+        <translation>作为图像</translation>
     </message>
     <message>
         <source>for Production</source>
+        <translation>为了生产</translation>
+    </message>
+    <message>
+        <source>Order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>loading %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>new sketch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Using SMD parts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When using SMD parts, a double-sided board is usually desired. On the default single-sided board, SMD parts will end up on the back of the board.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to swap to a double-sided board now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Swap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don&apos;t Swap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>BoM Text File (*.html)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extended Gerber (RS-274X)...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export the current sketch to Extended Gerber format (RS-274X) for professional PCB production</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to save BOM file, but the text is on the clipboard.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>outline is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>the board outline layer, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>silkscreen layer(s), </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>copper layer(s), </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mask layer(s), </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to translate svg curves in </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mask file export failure (1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mask export failure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mask file export failure (2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Order from Fritzing Fab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Order from Fritzing Fab...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do not autoroute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When autorouting, do not rip up this trace wire, via, or jumper item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move to other side of the board</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all jumper item parts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select All Vias</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all via parts</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2497,24 +2526,24 @@ Reason: %2 (errcode %3)</source>
     </message>
     <message numerus="yes">
         <source>Unable to find the following %n part(s):</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>不能够找到如下%n个元件:</numerusform>
         </translation>
     </message>
     <message>
         <source>at</source>
-        <translation type="unfinished"></translation>
+        <translation>在</translation>
     </message>
 </context>
 <context>
     <name>ModelPartShared</name>
     <message>
         <source>Fritzing</source>
-        <translation type="unfinished">Fritzing</translation>
+        <translation>Fritzing</translation>
     </message>
     <message>
         <source>Unable to parse &apos;%1&apos;: %2: line %3 column %4.</source>
-        <translation type="unfinished"></translation>
+        <translation>不能解析&apos;%1&apos;: %2: 行 %3 列 %4.</translation>
     </message>
 </context>
 <context>
@@ -2564,6 +2593,26 @@ Reason: %2 (errcode %3)</source>
     <message>
         <source>Delete ratsnest</source>
         <translation>删除覆铜</translation>
+    </message>
+    <message>
+        <source>Fritzing</source>
+        <translation type="unfinished">Fritzing</translation>
+    </message>
+    <message>
+        <source>Your sketch does not have a board yet!  Please add a PCB in order to use copper fill.</source>
+        <translation type="unfinished">你的设计中还没有包含板！请添加一块PCB以便使用覆铜功能.</translation>
+    </message>
+    <message>
+        <source>Fritzing error: unable to render board svg (1).</source>
+        <translation type="unfinished">Fritzing错误:不能渲染板svg (1).</translation>
+    </message>
+    <message>
+        <source>Fritzing error: unable to render copper svg (1).</source>
+        <translation type="unfinished">Fritzing错误:不能渲染铜层svg (1).</translation>
+    </message>
+    <message>
+        <source>Fritzing error: unable to write copper fill.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2674,10 +2723,50 @@ Reason: %2 (errcode %3)</source>
     </message>
     <message>
         <source>Hide</source>
-        <translation type="unfinished"></translation>
+        <translation>隐藏</translation>
     </message>
     <message>
         <source>Hide part label</source>
+        <translation>隐藏元件标志</translation>
+    </message>
+    <message>
+        <source>Rotate 45° Clockwise</source>
+        <translation type="unfinished">顺时针旋转 90° {45°?}</translation>
+    </message>
+    <message>
+        <source>Rotate the label by 45 degrees clockwise</source>
+        <translation type="unfinished">将标签顺时针旋转90度 {45 ?}</translation>
+    </message>
+    <message>
+        <source>Rotate 135° Clockwise</source>
+        <translation type="unfinished">顺时针旋转 90° {135°?}</translation>
+    </message>
+    <message>
+        <source>Rotate the label by 135 degrees clockwise</source>
+        <translation type="unfinished">将标签顺时针旋转90度 {135 ?}</translation>
+    </message>
+    <message>
+        <source>Rotate 135° Counter Clockwise</source>
+        <translation type="unfinished">逆时针旋转90度 {135°?}</translation>
+    </message>
+    <message>
+        <source>Rotate the label by 135 degrees counter clockwise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotate 45° Counter Clockwise</source>
+        <translation type="unfinished">逆时针旋转90度 {45°?}</translation>
+    </message>
+    <message>
+        <source>Rotate the label by 45 degrees counter clockwise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tiny</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set font size to tiny</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2826,19 +2915,35 @@ Reason: %2 (errcode %3)</source>
         <translation>取消</translation>
     </message>
     <message>
-        <source>Parts Bin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Export Bin...</source>
-        <translation type="unfinished"></translation>
+        <translation>导出库...</translation>
     </message>
     <message>
         <source>Import Part...</source>
-        <translation type="unfinished"></translation>
+        <translation>导入元件...</translation>
     </message>
     <message>
         <source>Export Part...</source>
+        <translation>导出元件...</translation>
+    </message>
+    <message>
+        <source>Parts Bin Actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>More bins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parts Actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>loading bin %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2981,7 +3086,7 @@ Please, specify a new filename</source>
     <message>
         <source>Error! Cannot load part.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>错误!不能载入元件.</translation>
     </message>
 </context>
 <context>
@@ -3099,6 +3204,25 @@ the PCB view?</source>
     <message>
         <source>Load image..</source>
         <translation>载入图像..</translation>
+    </message>
+</context>
+<context>
+    <name>Perfboard</name>
+    <message>
+        <source>size</source>
+        <translation type="unfinished">大小</translation>
+    </message>
+    <message>
+        <source>horizontal holes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>vertical holes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>set board size</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3528,10 +3652,6 @@ Vertical scroll</source>
     <message>
         <source>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;&amp;#169; 2007-%1 Fachhochschule Potsdam&lt;/font&gt;</source>
         <translation>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;&amp;#169; 2007-%1 Fachhochschule Potsdam&lt;/font&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;Version %1.%2.%3 (%4%5)&lt;/font&gt;</source>
-        <translation>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;版本号: %1.%2.%3 (%4%5)&lt;/font&gt;</translation>
     </message>
     <message>
         <source>The file &apos;%1&apos; is read-only; please use a different filename.</source>
@@ -4004,30 +4124,42 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     </message>
     <message>
         <source>Cannot autoroute: parts or traces are overlapping</source>
-        <translation type="unfinished"></translation>
+        <translation>不能自动布线:元件或者覆铜过大</translation>
     </message>
     <message>
         <source>Error reading file %1: %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>读取文件%1错误:%2.</translation>
     </message>
     <message>
         <source>Select locked parts</source>
-        <translation type="unfinished"></translation>
+        <translation>选择锁定的元件</translation>
     </message>
     <message>
         <source>Cannot autoroute: no board part found</source>
-        <translation type="unfinished"></translation>
+        <translation>不能自动布线:没有选择线路板</translation>
     </message>
     <message>
         <source>No connections to route&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>没有连接的线路&apos;.</translation>
     </message>
     <message>
         <source>Cannot autoroute: maybe all traces are marked &apos;do not autoroute&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>不能自动布线:可能因为所有的覆铜层都被标记为&apos;不自动布线&apos;.</translation>
     </message>
     <message>
         <source>Auorouter Settings</source>
+        <translation>自动布线设置</translation>
+    </message>
+    <message>
+        <source>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;Version %1.%2.%3 (%4%5)%6&lt;/font&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>change trace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>delete trace</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4374,7 +4506,7 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     </message>
     <message>
         <source>Change note to &apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>改变注释为&apos;%2&apos;</translation>
     </message>
 </context>
 <context>
@@ -4558,15 +4690,15 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     </message>
     <message>
         <source>Swedish - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>瑞典语 - %1</translation>
     </message>
     <message>
         <source>Romanian - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>罗马尼亚语 - %1</translation>
     </message>
     <message>
         <source>Thai - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>泰国语 - %1</translation>
     </message>
 </context>
 <context>
@@ -4672,6 +4804,10 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     <message>
         <source>purple</source>
         <translation>紫色</translation>
+    </message>
+    <message>
+        <source>schematic black</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

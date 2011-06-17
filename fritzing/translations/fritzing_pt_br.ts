@@ -4,10 +4,6 @@
 <context>
     <name>AboutBox</name>
     <message>
-        <source>Version %1.%2.%3 &lt;small&gt;(%4%5 %6)&lt;/small&gt;</source>
-        <translation>Versão %1.%2.%3 &lt;small&gt;(%4%5 %6)&lt;/small&gt;</translation>
-    </message>
-    <message>
         <source>&lt;a href=&quot;http://www.fritzing.org&quot;&gt;www.fritzing.org&lt;/a&gt;</source>
         <translation>&lt;a href=&quot;http://www.fritzing.org&quot;&gt;www.fritzing.org&lt;/a&gt;</translation>
     </message>
@@ -149,6 +145,10 @@
     </message>
     <message>
         <source>&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Version %1.%2.%3 &lt;small&gt;(%4%5 %6)%7&lt;/small&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -295,33 +295,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>No board part found, DRC cancelled.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The sketch is ok: connectors and traces are not too close together.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Some connectors and/or traces are too close together.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message numerus="yes">
-        <source>Note: the autorouter did not route %n parts which are not located entirely on the board.</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>
-Note: %n parts are not located entirely on the board.</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
-    <message>
         <source>best so far: %1 unrouted</source>
         <translation type="unfinished"></translation>
     </message>
@@ -334,6 +307,34 @@ Note: %n parts are not located entirely on the board.</source>
     </message>
     <message numerus="yes">
         <source>/%n vias</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Note: the autorouter did not route %n parts, because they are not located entirely on the board.</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>The Design Rule Check (DRC) was cancelled, because it could not find a PCB board part.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your sketch is ready for production: there are no connectors or traces that overlap or are too close together.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The areas on your board highlighted in red are connectors and traces which overlap or are too close together. Reposition them and run the DRC again to find more problems.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>
+
+Note: %n parts are not located entirely on the board.</source>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -579,30 +580,6 @@ Por favor selecione outro tipo de fonte do Fritzing para o substituir:</translat
 <context>
     <name>Hole</name>
     <message>
-        <source>Pin Header</source>
-        <translation type="unfinished">Pin Header</translation>
-    </message>
-    <message>
-        <source>Standard Through-hole</source>
-        <translation type="unfinished">Buraco de Passagem Padrão</translation>
-    </message>
-    <message>
-        <source>Big Through-hole</source>
-        <translation type="unfinished">Grande Buraco de Passagem</translation>
-    </message>
-    <message>
-        <source>Mounting Hole</source>
-        <translation>Furo de montagem</translation>
-    </message>
-    <message>
-        <source>Fine Lead Parts</source>
-        <translation type="unfinished">Componente Chumbo Fino</translation>
-    </message>
-    <message>
-        <source>Thick Lead Parts</source>
-        <translation type="unfinished">Componente Chumbo Grosso</translation>
-    </message>
-    <message>
         <source>hole size</source>
         <translation>tamanho do furo</translation>
     </message>
@@ -819,6 +796,10 @@ y:%2</translation>
         <source>layers</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>tolerance</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>KicadModuleDialog</name>
@@ -906,6 +887,14 @@ y:%2</translation>
     <message>
         <source>keep in proportion</source>
         <translation>manter na proporção</translation>
+    </message>
+    <message>
+        <source>image file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>shape</source>
+        <translation type="unfinished">forma</translation>
     </message>
 </context>
 <context>
@@ -1032,10 +1021,6 @@ y:%2</translation>
     <message>
         <source>SVG Image (*.svg)</source>
         <translation>Imagem SVG (*.svg)</translation>
-    </message>
-    <message>
-        <source>BoM Text File (*.txt)</source>
-        <translation>Arquivo de texto BoM (*txt)</translation>
     </message>
     <message>
         <source>Printing...</source>
@@ -1642,36 +1627,6 @@ y:%2</translation>
         <translation>Desculpe, ainda não foi implementado &quot;%1&quot;</translation>
     </message>
     <message>
-        <source>Fritzing Bill of Materials
-
-</source>
-        <translation>Conta de materiais Fritzing
-
-</translation>
-    </message>
-    <message>
-        <source>Sketch: 	</source>
-        <translation>Sketch: 	</translation>
-    </message>
-    <message>
-        <source>Date: 	</source>
-        <translation>Data: 	</translation>
-    </message>
-    <message>
-        <source>
-
-Shopping List
-
-Quantity	Part
-
-</source>
-        <translation>
-
-Lista de Compras
-
-Quantidade	Componente</translation>
-    </message>
-    <message>
         <source>Export Bill of Materials (BoM)...</source>
         <translation>Exportar lista de material (BoM)...</translation>
     </message>
@@ -1690,14 +1645,6 @@ Quantidade	Componente</translation>
     <message>
         <source>Create a trace from the selected wire</source>
         <translation>Criar um traço a partir do fio selecionado</translation>
-    </message>
-    <message>
-        <source>&amp;Don&apos;t Autoroute This Trace</source>
-        <translation>&amp;Não Rotear Automaticamente Este Traço</translation>
-    </message>
-    <message>
-        <source>When autorouting, do not rip up this wire</source>
-        <translation>Quando fizer roteamento automático, não parta este fio</translation>
     </message>
     <message>
         <source>Select All Traces</source>
@@ -1874,14 +1821,6 @@ Estamos trabalhando para evitar esta mensagem, e apenas deixar você escolher en
         <translation>Vais ter de reiniciar o Fritzing para utilizar os componentes importados</translation>
     </message>
     <message>
-        <source>Fritzing error: unable to render board svg (1).</source>
-        <translation>Erro no Fritzing: Incapaz de fazer a placa svg(1).</translation>
-    </message>
-    <message>
-        <source>Fritzing error: unable to render copper svg (1).</source>
-        <translation>Erro no Fritzing: Incapaz de fazer o cobre svg(1).</translation>
-    </message>
-    <message>
         <source>&amp;Wire Color</source>
         <translation>&amp;Cor dos fios</translation>
     </message>
@@ -1966,14 +1905,6 @@ Do you want to restart now?</source>
     <message>
         <source>Remove the copper fill</source>
         <translation>Remover a camada de cobre</translation>
-    </message>
-    <message>
-        <source>Your sketch does not have a board yet!  Please add a PCB in order to use copper fill.</source>
-        <translation>O teu sketch ainda não tem uma placa! Por favor adiciona uma PCB (Placa de Circuito Impresso) para usar o preenchimento em cobre.</translation>
-    </message>
-    <message>
-        <source>Fritzing error: unable to write copper fill.</source>
-        <translation>Erro no Fritzing: Incapaz de criar o preenchimento em cobre.</translation>
     </message>
     <message>
         <source>Remove copper fill</source>
@@ -2069,10 +2000,6 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
         <translation>Selecionar Todos os Jumpers</translation>
     </message>
     <message>
-        <source>Select all jumper parts</source>
-        <translation>Selecionar todos os elementos</translation>
-    </message>
-    <message>
         <source>New</source>
         <translation>Novo</translation>
     </message>
@@ -2159,10 +2086,6 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
     <message>
         <source>%1 file export failure (3)</source>
         <translation>%1 falha ao exportar arquivo (3)</translation>
-    </message>
-    <message>
-        <source>%1 mask file export failure (4)</source>
-        <translation>%1 falha ao exportar arquivo máscara(4)</translation>
     </message>
     <message>
         <source>%1 drill file export failure (5)</source>
@@ -2267,10 +2190,6 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
     <message>
         <source>Paste clipboard contents in place</source>
         <translation>Colar o conteúdo do clipboard no local</translation>
-    </message>
-    <message>
-        <source>Change Trace Layer</source>
-        <translation>Mudar Camada de Traço</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -2388,10 +2307,6 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Export the current sketch to Gerber for professional PCB production</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Export the current sketch to PDF for DIY PCB production (photoresist)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2440,10 +2355,6 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Gerber (RS-274X)...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Etchable (PDF)...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2465,6 +2376,126 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
     </message>
     <message>
         <source>for Production</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>loading %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>new sketch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Using SMD parts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When using SMD parts, a double-sided board is usually desired. On the default single-sided board, SMD parts will end up on the back of the board.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to swap to a double-sided board now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Swap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don&apos;t Swap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>BoM Text File (*.html)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extended Gerber (RS-274X)...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export the current sketch to Extended Gerber format (RS-274X) for professional PCB production</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to save BOM file, but the text is on the clipboard.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>outline is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>the board outline layer, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>silkscreen layer(s), </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>copper layer(s), </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mask layer(s), </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to translate svg curves in </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mask file export failure (1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mask export failure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mask file export failure (2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Order from Fritzing Fab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Order from Fritzing Fab...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do not autoroute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When autorouting, do not rip up this trace wire, via, or jumper item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move to other side of the board</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all jumper item parts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select All Vias</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all via parts</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2569,6 +2600,26 @@ Razão: %2 (código do erro %3)</translation>
     <message>
         <source>Delete ratsnest</source>
         <translation>Apagar emaranhado</translation>
+    </message>
+    <message>
+        <source>Fritzing</source>
+        <translation type="unfinished">Fritzing</translation>
+    </message>
+    <message>
+        <source>Your sketch does not have a board yet!  Please add a PCB in order to use copper fill.</source>
+        <translation type="unfinished">O teu sketch ainda não tem uma placa! Por favor adiciona uma PCB (Placa de Circuito Impresso) para usar o preenchimento em cobre.</translation>
+    </message>
+    <message>
+        <source>Fritzing error: unable to render board svg (1).</source>
+        <translation type="unfinished">Erro no Fritzing: Incapaz de fazer a placa svg(1).</translation>
+    </message>
+    <message>
+        <source>Fritzing error: unable to render copper svg (1).</source>
+        <translation type="unfinished">Erro no Fritzing: Incapaz de fazer o cobre svg(1).</translation>
+    </message>
+    <message>
+        <source>Fritzing error: unable to write copper fill.</source>
+        <translation type="unfinished">Erro no Fritzing: Incapaz de criar o preenchimento em cobre.</translation>
     </message>
 </context>
 <context>
@@ -2683,6 +2734,46 @@ Razão: %2 (código do erro %3)</translation>
     </message>
     <message>
         <source>Hide part label</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotate 45° Clockwise</source>
+        <translation type="unfinished">Rodar 90º no sentido Horário {45°?}</translation>
+    </message>
+    <message>
+        <source>Rotate the label by 45 degrees clockwise</source>
+        <translation type="unfinished">Rodar a etiqueta 90º no sentido Horário {45 ?}</translation>
+    </message>
+    <message>
+        <source>Rotate 135° Clockwise</source>
+        <translation type="unfinished">Rodar 90º no sentido Horário {135°?}</translation>
+    </message>
+    <message>
+        <source>Rotate the label by 135 degrees clockwise</source>
+        <translation type="unfinished">Rodar a etiqueta 90º no sentido Horário {135 ?}</translation>
+    </message>
+    <message>
+        <source>Rotate 135° Counter Clockwise</source>
+        <translation type="unfinished">Rodar 90º no sentido Anti-Horário {135°?}</translation>
+    </message>
+    <message>
+        <source>Rotate the label by 135 degrees counter clockwise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotate 45° Counter Clockwise</source>
+        <translation type="unfinished">Rodar 90º no sentido Anti-Horário {45°?}</translation>
+    </message>
+    <message>
+        <source>Rotate the label by 45 degrees counter clockwise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tiny</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set font size to tiny</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2831,10 +2922,6 @@ Razão: %2 (código do erro %3)</translation>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <source>Parts Bin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Export Bin...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2844,6 +2931,26 @@ Razão: %2 (código do erro %3)</translation>
     </message>
     <message>
         <source>Export Part...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parts Bin Actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>More bins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parts Actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>loading bin %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3106,6 +3213,25 @@ numa PCB (Placa de Circuito Impresso)?</translation>
     <message>
         <source>Load image..</source>
         <translation>Carregar imagem..</translation>
+    </message>
+</context>
+<context>
+    <name>Perfboard</name>
+    <message>
+        <source>size</source>
+        <translation type="unfinished">tamanho</translation>
+    </message>
+    <message>
+        <source>horizontal holes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>vertical holes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>set board size</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3502,10 +3628,6 @@ Rolagem Vertical</translation>
     <message>
         <source>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;&amp;#169; 2007-%1 Fachhochschule Potsdam&lt;/font&gt;</source>
         <translation>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;&amp;#169; 2007-%1 Fachhochschule Potsdam&lt;/font&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;Version %1.%2.%3 (%4%5)&lt;/font&gt;</source>
-        <translation>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;Versão %1.%2.%3 (%4%5)&lt;/font&gt;</translation>
     </message>
     <message>
         <source>The file &apos;%1&apos; is read-only; please use a different filename.</source>
@@ -4034,6 +4156,18 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>Auorouter Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;Version %1.%2.%3 (%4%5)%6&lt;/font&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>change trace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>delete trace</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4685,6 +4819,10 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
         <source>purple</source>
         <translatorcomment>lilás/roxo</translatorcomment>
         <translation>lilás</translation>
+    </message>
+    <message>
+        <source>schematic black</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
