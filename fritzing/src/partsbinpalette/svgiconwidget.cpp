@@ -191,24 +191,24 @@ void SvgIconWidget::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
 void SvgIconWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) 
 {
 	if (m_moduleId.compare(ModuleIDNames::SpacerModuleIDName) == 0) {
-		QRectF r = this->boundingRect();
-		painter->save();
-		QPen pen = painter->pen();
-                pen.setColor(QColor(80, 80, 80));
-                pen.setWidth(1);
-		painter->setPen(pen);
-                QFont font = painter->font();
-                font.setPointSize(8);
-                painter->setFont(font);
 		QString text = data(Qt::UserRole).toString();
 		if (!text.isEmpty()) {
+			painter->save();
+			QRectF r = this->boundingRect();
+			QPen pen = painter->pen();
+			pen.setColor(QColor(80, 80, 80));
+			pen.setWidth(1);
+			painter->setPen(pen);
+			QFont font = painter->font();
+			font.setPointSize(8);
+			painter->setFont(font);
 			painter->drawText(r.left(), r.bottom(), text);
-                        QFontMetrics fm(font);
-			r.setLeft(r.left() + fm.width(text));
-                        r.setBottom(r.bottom() + 2);
-		}
-                //painter->drawLine(r.left(), r.bottom(), scene()->width(), r.bottom());
-		painter->restore();	
+			//QFontMetrics fm(font);
+			//r.setLeft(r.left() + fm.width(text));
+			//r.setBottom(r.bottom() + 2);
+			//painter->drawLine(r.left(), r.bottom(), scene()->width(), r.bottom());
+			painter->restore();	
+		}		
 		return;
 	}
 
