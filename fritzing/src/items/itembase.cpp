@@ -780,6 +780,7 @@ int ItemBase::itemType() const
 
 void ItemBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
 	if (!m_inactive && (itemType() != ModelPart::Breadboard) && (m_connectorHoverCount > 0 || m_hoverCount > 0 || m_connectorHoverCount2 > 0)) {
+		// TODO: instead of checking ModelPart::Breadboard, make breadboards a class, and override paintHover()
 		//DebugDialog::debug(QString("chc:%1 hc:%2 chc2:%3").arg(m_connectorHoverCount).arg(m_hoverCount).arg(m_connectorHoverCount2));
 		layerKinChief()->paintHover(painter, option, widget);
 	}

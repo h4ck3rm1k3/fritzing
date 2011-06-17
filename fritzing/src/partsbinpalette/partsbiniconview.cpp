@@ -199,7 +199,13 @@ int PartsBinIconView::setItemAux(ModelPart * modelPart, int position) {
 
 	emit settingItem();
 	QString moduleID = modelPart->moduleID();
-	if(!contains(moduleID)) {
+	if(contains(moduleID)) {
+		m_partHash[moduleID]->copy(modelPart);
+		return position;
+	}
+	
+	SvgIconWidget* svgicon = NULL;
+	if (modelPart->itemType() != ModelPart::Space) {
 		ItemBase * itemBase = PartFactory::createPart(modelPart, ViewLayer::ThroughHoleThroughTop_OneLayer, ViewIdentifierClass::IconView, ViewGeometry(), ItemBase::getNextID(), NULL, NULL, false);
 		ItemBase::PluralType plural = itemBase->isPlural();
 		if (plural == ItemBase::NotSure) {
@@ -213,18 +219,21 @@ int PartsBinIconView::setItemAux(ModelPart * modelPart, int position) {
 				}
 			}
 		}
-
-		SvgIconWidget* svgicon = new SvgIconWidget(modelPart, ViewIdentifierClass::IconView, itemBase, plural == ItemBase::Plural);
-		if(position > -1) {
-			m_layout->insertItem(position, svgicon);
-		} else {
-			m_layout->addItem(svgicon);
-			position = m_layout->count() - 1;
-		}
-		m_partHash[moduleID] = svgicon->modelPart();
-	} else {
-		m_partHash[moduleID]->copy(modelPart);
+		svgicon = new SvgIconWidget(modelPart, ViewIdentifierClass::IconView, itemBase, plural == ItemBase::Plural);
+		m_partHash[moduleID] = modelPart;
 	}
+	else {
+		svgicon = new SvgIconWidget(modelPart, ViewIdentifierClass::IconView, NULL, false);
+	}
+
+
+	if(position > -1) {
+		m_layout->insertItem(position, svgicon);
+	} else {
+		m_layout->addItem(svgicon);
+		position = m_layout->count() - 1;
+	}
+
 
 	return position;
 }

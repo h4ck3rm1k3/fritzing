@@ -63,6 +63,7 @@ public:
 		 Hole,
 		 Via,
 		 Ruler,
+		 Space,
 		 Unknown
 	};
 

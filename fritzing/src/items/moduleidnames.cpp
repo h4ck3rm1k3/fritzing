@@ -60,4 +60,5 @@ const QString ModuleIDNames::PotentiometerModuleIDName = "PotentiometerModuleID"
 const QString ModuleIDNames::InductorModuleIDName = "InductorModuleID";
 const QString ModuleIDNames::LEDModuleIDName = "LEDModuleID";
 const QString ModuleIDNames::PerfboardModuleIDName = "PerfboardModuleID";
+const QString ModuleIDNames::SpacerModuleIDName = "__spacer__";
 

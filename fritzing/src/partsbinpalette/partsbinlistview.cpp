@@ -82,8 +82,17 @@ int PartsBinListView::setItemAux(ModelPart * modelPart, int position) {
 
 	emit settingItem();
 	QString moduleID = modelPart->moduleID();
-	if(!contains(moduleID)) {
-		QListWidgetItem * lwi = new QListWidgetItem(modelPart->title());
+	if(contains(moduleID)) {
+		m_partHash[moduleID]->copy(modelPart);
+		return position;
+	}
+
+	QListWidgetItem * lwi = new QListWidgetItem(modelPart->title());
+	if (modelPart->itemType() == ModelPart::Space) {
+		lwi->setData(Qt::UserRole, NULL);
+		lwi->setFlags(0);
+	}
+	else {
 		ItemBase * itemBase = PartFactory::createPart(modelPart, ViewLayer::ThroughHoleThroughTop_OneLayer, ViewIdentifierClass::IconView, ViewGeometry(), ItemBase::getNextID(), NULL, NULL, false);
 		lwi->setData(Qt::UserRole, qVariantFromValue( itemBase ) );
 		QString error;
@@ -99,19 +108,18 @@ int PartsBinListView::setItemAux(ModelPart * modelPart, int position) {
 			lwi->setData(Qt::UserRole + 1, renderer->defaultSize());
 		}
 
-		if(position > -1 && position < count()) {
-			insertItem(position, lwi);
-		} else {
-			addItem(lwi);
-			position = this->count();
-		}
-
 		m_partHash[moduleID] = modelPart;
+	}
+
+	if(position > -1 && position < count()) {
+		insertItem(position, lwi);
 	} else {
-		m_partHash[moduleID]->copy(modelPart);
+		addItem(lwi);
+		position = this->count();
 	}
 
 	return position;
+	
 }
 
 void PartsBinListView::mouseMoveEvent(QMouseEvent *event) {

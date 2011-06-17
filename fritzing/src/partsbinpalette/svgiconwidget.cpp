@@ -78,43 +78,52 @@ void SvgIconPixmapItem::paint(QPainter *painter, const QStyleOptionGraphicsItem 
 SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, ItemBase * itemBase, bool plural)
 	: QGraphicsWidget() 
 {
-	setAcceptHoverEvents(true);
 	m_moduleId = modelPart->moduleID();
 	m_itemBase = itemBase;
 
-	setFlags(QGraphicsItem::ItemIsSelectable);
-
 	this->setMaximumSize(PluralImage->size());
 
-	QString error;
-	FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, viewIdentifier, ViewLayer::Icon, ViewLayer::ThroughHoleThroughTop_OneLayer, error);
-	if (renderer && m_itemBase) {
-		m_itemBase->setFilename(renderer->filename());
+	if (modelPart->itemType() == ModelPart::Space) {
+		setAcceptHoverEvents(false);
+		setFlags(0);
+		setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
 	}
+	else {
+		setAcceptHoverEvents(true);
+		setFlags(QGraphicsItem::ItemIsSelectable);
 
-	QPixmap pixmap(plural ? *PluralImage : *SingularImage);
-	QPixmap * icon = FSvgRenderer::getPixmap(m_moduleId, ViewLayer::Icon, QSize(ICON_SIZE, ICON_SIZE));
-	if (icon) {
-		QPainter painter;
-		painter.begin(&pixmap);
-		if (plural) {
-			painter.drawPixmap(PLURAL_OFFSET, PLURAL_OFFSET, *icon);
+		QString error;
+		FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, viewIdentifier, ViewLayer::Icon, ViewLayer::ThroughHoleThroughTop_OneLayer, error);
+		if (renderer && m_itemBase) {
+			m_itemBase->setFilename(renderer->filename());
 		}
-		else {
-			painter.drawPixmap(SINGULAR_OFFSET, SINGULAR_OFFSET, *icon);
+
+		QPixmap pixmap(plural ? *PluralImage : *SingularImage);
+		QPixmap * icon = FSvgRenderer::getPixmap(m_moduleId, ViewLayer::Icon, QSize(ICON_SIZE, ICON_SIZE));
+		if (icon) {
+			QPainter painter;
+			painter.begin(&pixmap);
+			if (plural) {
+				painter.drawPixmap(PLURAL_OFFSET, PLURAL_OFFSET, *icon);
+			}
+			else {
+				painter.drawPixmap(SINGULAR_OFFSET, SINGULAR_OFFSET, *icon);
+			}
+			painter.end();
+			delete icon;
 		}
-		painter.end();
-		delete icon;
+
+		m_pixmapItem = new SvgIconPixmapItem(pixmap, this);
+		m_pixmapItem->setPlural(plural);
+
+		m_pixmapItem->setFlags(0);
+		m_pixmapItem->setPos(0, 0);
+
+		if (m_itemBase) {
+			m_itemBase->setTooltip();
+			setToolTip(m_itemBase->toolTip());
+		}
 	}
-
-	m_pixmapItem = new SvgIconPixmapItem(pixmap, this);
-	m_pixmapItem->setPlural(plural);
-
-	m_pixmapItem->setFlags(0);
-	m_pixmapItem->setPos(0, 0);
-
-	m_itemBase->setTooltip();
-	setToolTip(m_itemBase->toolTip());
 }
 
 void SvgIconWidget::initNames() {

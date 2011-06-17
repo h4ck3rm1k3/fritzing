@@ -155,6 +155,15 @@ bool ModelBase::loadInstances(QDomDocument & domDocument, QDomElement & instance
 
    		// for now assume all parts are in the palette
    		QString moduleIDRef = instance.attribute("moduleIdRef");
+		if (moduleIDRef.compare(ModuleIDNames::SpacerModuleIDName) == 0) {
+			ModelPart * mp = new ModelPart(ModelPart::Space);
+			mp->setParent(m_root);
+			modelParts.append(mp);
+			instance = instance.nextSiblingElement("instance");
+			continue;
+		}
+
+
    		modelPart = m_referenceModel->retrieveModelPart(moduleIDRef);
    		if (modelPart == NULL) {
 			DebugDialog::debug(QString("module id %1 not found in database").arg(moduleIDRef));
