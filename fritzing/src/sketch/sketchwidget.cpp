@@ -42,7 +42,7 @@ $Date$
 #include <QApplication>
 #include <QDomElement>
 #include <QSettings>
-#include <QGLWidget>
+//#include <QGLWidget>
 
 #include "../items/partfactory.h"
 #include "../items/paletteitem.h"

@@ -59,13 +59,8 @@ unix {
 }
 		
 ICON = resources/images/fritzing_icon.icns
-QT += core \
-    opengl \
-    gui \
-    svg \
-    xml \
-    network \
-    sql
+QT += core gui svg xml network sql #opengl
+
 RC_FILE = fritzing.rc
 RESOURCES += phoenixresources.qrc
 	include(pri/kitchensink.pri)
