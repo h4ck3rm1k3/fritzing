@@ -101,7 +101,7 @@ SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, Q
     : InfoGraphicsView(parent)
 {
 
-	setViewport(new QGLWidget);
+        //setViewport(new QGLWidget);
 
 	m_arrowTimer.setParent(this);
 	m_arrowTimer.setInterval(AutoRepeatDelay);
