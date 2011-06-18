@@ -91,7 +91,7 @@ int PartsBinListView::setItemAux(ModelPart * modelPart, int position) {
 	if (modelPart->itemType() == ModelPart::Space) {
 		lwi->setData(Qt::UserRole, 0);
 		lwi->setFlags(0);
-		lwi->setText(modelPart->instanceText());
+		lwi->setText("        " + TranslatedCategoryNames.value(modelPart->instanceText(), modelPart->instanceText()));
 	}
 	else {
 		ItemBase * itemBase = PartFactory::createPart(modelPart, ViewLayer::ThroughHoleThroughTop_OneLayer, ViewIdentifierClass::IconView, ViewGeometry(), ItemBase::getNextID(), NULL, NULL, false);

@@ -33,6 +33,7 @@ $Date$
 #include "../utils/misc.h"
 #include "../fsvgrenderer.h"
 #include "../items/moduleidnames.h"
+#include "partsbinview.h"
 
 #define SELECTED_STYLE "background-color: white;"
 #define NON_SELECTED_STYLE "background-color: #C2C2C2;"
@@ -85,7 +86,7 @@ SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ViewIdentifierClass::ViewIde
 
 	if (modelPart->itemType() == ModelPart::Space) {
 		m_moduleId = ModuleIDNames::SpacerModuleIDName;
-		QString text = modelPart->instanceText();
+		QString text = PartsBinView::TranslatedCategoryNames.value(modelPart->instanceText(), modelPart->instanceText());
 		this->setData(Qt::UserRole, text);
 		if (text.isEmpty()) {
 			this->setMaximumSize(PluralImage->size().width(), 1);

@@ -103,6 +103,7 @@ int main(int argc, char *argv[])
 
 	int result = 0;
 	try {
+		//QApplication::setGraphicsSystem("raster");
 		FApplication * app = new FApplication(argc, argv);
 		if (app->init()) {
 			//DebugDialog::setDebugLevel(DebugDialog::Error);

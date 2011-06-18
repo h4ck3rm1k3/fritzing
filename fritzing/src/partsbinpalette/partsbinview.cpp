@@ -35,8 +35,23 @@ $Date$
 #include "../itemdrag.h"
 #include "../utils/misc.h"
 
+QHash<QString, QString> PartsBinView::TranslatedCategoryNames;
 
 PartsBinView::PartsBinView(ReferenceModel *refModel, PartsBinPaletteWidget *parent, QMenu *binMenu, QMenu *partMenu) {
+	if (TranslatedCategoryNames.count() == 0) {
+		TranslatedCategoryNames.insert("Basic", QObject::tr("Basic"));
+		TranslatedCategoryNames.insert("Input", QObject::tr("Input"));
+		TranslatedCategoryNames.insert("Output", QObject::tr("Output"));
+		TranslatedCategoryNames.insert("ICs", QObject::tr("ICs"));
+		TranslatedCategoryNames.insert("Power", QObject::tr("Power"));
+		TranslatedCategoryNames.insert("Connection", QObject::tr("Connection"));
+		TranslatedCategoryNames.insert("Microcontroller", QObject::tr("Microcontroller"));
+		TranslatedCategoryNames.insert("Breadboard View", QObject::tr("Breadboard View"));
+		TranslatedCategoryNames.insert("Schematic View", QObject::tr("Schematic View"));
+		TranslatedCategoryNames.insert("PCB View", QObject::tr("PCB View"));
+		TranslatedCategoryNames.insert("Tools",  QObject::tr("Tools"));
+	}
+
 	m_refModel = refModel;
 	m_parent = parent;
 

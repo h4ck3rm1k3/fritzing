@@ -60,6 +60,7 @@ unix {
 		
 ICON = resources/images/fritzing_icon.icns
 QT += core \
+    opengl \
     gui \
     svg \
     xml \

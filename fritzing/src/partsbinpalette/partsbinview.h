@@ -71,6 +71,11 @@ class PartsBinView {
 
 		virtual int setItemAux(ModelPart * modelPart, int position = -1) = 0;
 
+	public:
+		static QHash<QString, QString> TranslatedCategoryNames;
+
+	protected:
+
 		ReferenceModel *m_refModel;
 		PartsBinPaletteWidget *m_parent;
 

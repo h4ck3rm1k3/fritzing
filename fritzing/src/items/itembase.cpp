@@ -350,6 +350,7 @@ void ItemBase::initNames() {
 		TranslatedPropertyNames.insert("tolerance", tr("tolerance"));
 
 		// TODO: translate more known property names from fzp files and resource xml files
+
 	}
 
 	partInstanceDefaultTitle = tr("Part");

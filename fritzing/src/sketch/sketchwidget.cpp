@@ -42,6 +42,7 @@ $Date$
 #include <QApplication>
 #include <QDomElement>
 #include <QSettings>
+#include <QGLWidget>
 
 #include "../items/partfactory.h"
 #include "../items/paletteitem.h"
@@ -83,6 +84,13 @@ $Date$
 #include "../items/capacitor.h"
 #include "../lib/ff/flow.h"
 
+enum ConnectionStatus {
+	IN_,
+	OUT_,
+	FREE_,
+	UNDETERMINED_
+};
+
 QHash<ViewIdentifierClass::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
 
 const int SketchWidget::MoveAutoScrollThreshold = 5;
@@ -92,6 +100,9 @@ const int AutoRepeatDelay = 750;
 SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
 {
+
+	setViewport(new QGLWidget);
+
 	m_arrowTimer.setParent(this);
 	m_arrowTimer.setInterval(AutoRepeatDelay);
 	m_arrowTimer.setSingleShot(true);
@@ -2031,13 +2042,6 @@ void SketchWidget::findAlignmentAnchor(ItemBase * originatingItem, 	QHash<long, 
 	}
 }
 
-enum ConnectionStatus {
-	IN,
-	OUT,
-	FREE,
-	UNDETERMINED
-};
-
 struct ConnectionThing {
 	Wire * wire;
 	ConnectionStatus status[2];
@@ -2059,7 +2063,7 @@ void SketchWidget::categorizeDragWires(QSet<Wire *> & wires)
 	foreach (Wire * w, wires) {
 		ConnectionThing * ct = new ConnectionThing;
 		ct->wire = w;
-		ct->status[0] = ct->status[1] = UNDETERMINED;
+		ct->status[0] = ct->status[1] = UNDETERMINED_;
 		connectionThings.append(ct);
 	}
 
@@ -2073,12 +2077,12 @@ void SketchWidget::categorizeDragWires(QSet<Wire *> & wires)
 		from.append(ct->wire->connector0());
 		from.append(ct->wire->connector1());
 		for (int i = 0; i < 2; i++) {
-			if (ct->status[i] != UNDETERMINED) continue;
+			if (ct->status[i] != UNDETERMINED_) continue;
 
 			foreach (ConnectorItem * toConnectorItem, from.at(i)->connectedToItems()) {
 				if (m_savedItems.keys().contains(toConnectorItem->attachedTo()->layerKinChief()->id())) {
 					changed = true;
-					ct->status[i] = IN;
+					ct->status[i] = IN_;
 					break;
 				}
 
@@ -2086,32 +2090,32 @@ void SketchWidget::categorizeDragWires(QSet<Wire *> & wires)
 
 				if (notWire || outWires.contains(toConnectorItem->attachedTo())) {
 					changed = true;
-					ct->status[i] = OUT;
+					ct->status[i] = OUT_;
 					break;
 				}
 			}
-			if (ct->status[i] != UNDETERMINED) continue;
+			if (ct->status[i] != UNDETERMINED_) continue;
 
 			ItemBase * stickingTo = ct->wire->stickingTo();
 			if (stickingTo != NULL) {
 				QPointF p = from.at(i)->sceneAdjustedTerminalPoint(NULL);
 				if (stickingTo->contains(stickingTo->mapFromScene(p))) {
-					ct->status[i] = m_savedItems.keys().contains(stickingTo->layerKinChief()->id()) ? IN : OUT;
+					ct->status[i] = m_savedItems.keys().contains(stickingTo->layerKinChief()->id()) ? IN_ : OUT_;
 					changed = true;
 				}
 			}
-			if (ct->status[i] != UNDETERMINED) continue;
+			if (ct->status[i] != UNDETERMINED_) continue;
 
 			// if it's not connected at either end and not stuck
 			if (from.at(i)->connectionsCount() == 0) {
 				changed = true;
-				ct->status[i] = FREE;
+				ct->status[i] = FREE_;
 			}
 		}
 
-		if (ct->status[0] != UNDETERMINED && ct->status[1] != UNDETERMINED) {
-			if (ct->status[0] == IN) {
-				if (ct->status[1] == IN) {
+		if (ct->status[0] != UNDETERMINED_ && ct->status[1] != UNDETERMINED_) {
+			if (ct->status[0] == IN_) {
+				if (ct->status[1] == IN_) {
 					m_savedItems.insert(ct->wire->id(), ct->wire);
 				}
 				else {
@@ -2120,8 +2124,8 @@ void SketchWidget::categorizeDragWires(QSet<Wire *> & wires)
 					m_savedWires.insert(ct->wire, ct->wire->connector0());
 				}
 			}
-			else if (ct->status[0] == OUT) {
-				if (ct->status[1] == IN) {
+			else if (ct->status[0] == OUT_) {
+				if (ct->status[1] == IN_) {
 					// attach the connector that stays in
 					m_savedWires.insert(ct->wire, ct->wire->connector1());
 				}
@@ -2130,12 +2134,12 @@ void SketchWidget::categorizeDragWires(QSet<Wire *> & wires)
 					outWires.append(ct->wire);
 				}
 			}
-			else /* ct->status[0] == FREE */ {  
-				if (ct->status[1] == IN) {
+			else /* ct->status[0] == FREE_ */ {  
+				if (ct->status[1] == IN_) {
 					// attach the connector that stays IN
 					m_savedWires.insert(ct->wire, ct->wire->connector1());
 				}
-				else if (ct->status[1] == FREE) {
+				else if (ct->status[1] == FREE_) {
 					// both sides are free, so if the wire is selected, drag it
 					if (ct->wire->isSelected()) {
 						m_savedItems.insert(ct->wire->id(), ct->wire);
@@ -2159,8 +2163,8 @@ void SketchWidget::categorizeDragWires(QSet<Wire *> & wires)
 					QList<ConnectionThing *> cts;
 					foreach (ConnectionThing * ct, connectionThings) {
 						// if one end is OUT and the other end is unaccounted for at this pass, then both ends are OUT
-						if ((ct->status[0] == FREE || ct->status[0] == OUT) || 
-							(ct->status[1] == FREE || ct->status[1] == OUT)) 
+						if ((ct->status[0] == FREE_ || ct->status[0] == OUT_) || 
+							(ct->status[1] == FREE_ || ct->status[1] == OUT_)) 
 						{
 							noChangeCount = 0;
 							outWires.append(ct->wire);
