@@ -154,10 +154,11 @@ void InfoGraphicsView::initWire(Wire *, int penWidth) {
 }
 
 
-void InfoGraphicsView::getBendpointWidths(class Wire *, qreal w, qreal & w1, qreal & w2) {
+void InfoGraphicsView::getBendpointWidths(class Wire *, qreal w, qreal & w1, qreal & w2, bool & negativeOffsetRect) {
 	Q_UNUSED(w);
 	Q_UNUSED(w1);
 	Q_UNUSED(w2);
+	Q_UNUSED(negativeOffsetRect);
 }
 
 void InfoGraphicsView::getLabelFont(QFont &, QColor &, ViewLayer::ViewLayerSpec) {

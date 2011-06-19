@@ -213,7 +213,7 @@ public:
 	virtual void tidyWires();
 	const QString & getShortName();
 	virtual void setClipEnds(class ClipableWire *, bool);
-	void getBendpointWidths(class Wire *, qreal w, qreal & w1, qreal & w2);
+	void getBendpointWidths(class Wire *, qreal w, qreal & w1, qreal & w2, bool & negativeOffsetRect);
 	virtual bool includeSymbols();
 	void disconnectAll();
 	virtual bool canDisconnectAll();

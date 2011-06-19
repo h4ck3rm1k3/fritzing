@@ -182,7 +182,7 @@ protected:
 	void calcNewLine(ConnectorItem * from, ConnectorItem * to, QPointF & p1, QPointF & p2);
 	void collectDirectWires(ConnectorItem * connectorItem, QList<Wire *> & wires);
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
-	void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth);
+	void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth, bool & negativeOffsetRect);
 	bool connectionIsAllowed(ConnectorItem *);
 	bool releaseDrag();
 	void setIgnoreSelectionChange(bool);
@@ -203,6 +203,7 @@ protected:
 	QPen m_bendpoint2Pen;
 	qreal m_bendpointWidth;
 	qreal m_bendpoint2Width;
+	bool m_negativeOffsetRect;
 	qreal m_opacity;
 	bool m_canChainMultiple;
 	bool m_ignoreSelectionChange;

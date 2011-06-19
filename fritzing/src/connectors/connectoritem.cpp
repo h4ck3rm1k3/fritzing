@@ -91,6 +91,22 @@ ConnectorItem::~ConnectorItem() {
 }
 
 void ConnectorItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
+
+	/*
+	QRectF sbr = this->sceneBoundingRect();
+	QPointF p = event->scenePos();
+
+	debugInfo(QString("hover %1, %2 %3 %4 %5, %6 %7")
+		.arg((long) this, 0, 16)
+		.arg(sbr.left())
+		.arg(sbr.top())
+		.arg(sbr.width())
+		.arg(sbr.height())
+		.arg(p.x())
+		.arg(p.y())
+		);
+	*/
+
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL && infoGraphicsView->spaceBarIsPressed()) {
 		m_hoverEnterSpaceBarWasPressed = true;
@@ -309,7 +325,7 @@ void ConnectorItem::setConnectedColor() {
 
 	QBrush * brush = NULL;
 	QPen * pen = NULL;
-	m_attachedTo->getConnectedColor(this, brush, pen, m_opacity, m_negativePenWidth);
+	m_attachedTo->getConnectedColor(this, brush, pen, m_opacity, m_negativePenWidth, m_negativeOffsetRect);
 	//DebugDialog::debug(QString("set connected %1 %2").arg(attachedToID()).arg(pen->width()));
 	setColorAux(*brush, *pen, true);
 }
@@ -319,7 +335,7 @@ void ConnectorItem::setNormalColor() {
 
 	QBrush * brush = NULL;
 	QPen * pen = NULL;
-	m_attachedTo->getNormalColor(this, brush, pen, m_opacity, m_negativePenWidth);
+	m_attachedTo->getNormalColor(this, brush, pen, m_opacity, m_negativePenWidth, m_negativeOffsetRect);
 	//DebugDialog::debug(QString("set normal %1 %2").arg(attachedToID()).arg(pen->width()));
 	setColorAux(*brush, *pen, false);
 }
@@ -330,7 +346,7 @@ void ConnectorItem::setUnconnectedColor() {
 	QBrush * brush = NULL;
 	QPen * pen = NULL;
 	//DebugDialog::debug(QString("set unconnected %1").arg(attachedToID()) );
-	m_attachedTo->getUnconnectedColor(this, brush, pen, m_opacity, m_negativePenWidth);
+	m_attachedTo->getUnconnectedColor(this, brush, pen, m_opacity, m_negativePenWidth, m_negativeOffsetRect);
 	setColorAux(*brush, *pen, true);
 }
 
@@ -339,7 +355,7 @@ void ConnectorItem::setHoverColor() {
 
 	QBrush * brush = NULL;
 	QPen * pen = NULL;
-	m_attachedTo->getHoverColor(this, brush, pen, m_opacity, m_negativePenWidth);
+	m_attachedTo->getHoverColor(this, brush, pen, m_opacity, m_negativePenWidth, m_negativeOffsetRect);
 	setColorAux(*brush, *pen, true);
 }
 
@@ -1051,7 +1067,7 @@ void ConnectorItem::showEqualPotential(bool show) {
 
 	QBrush * brush = NULL;
 	QPen * pen = NULL;
-	m_attachedTo->getEqualPotentialColor(this, brush, pen, m_opacity, m_negativePenWidth);
+	m_attachedTo->getEqualPotentialColor(this, brush, pen, m_opacity, m_negativePenWidth, m_negativeOffsetRect);
 	//DebugDialog::debug(QString("set normal %1 %2").arg(attachedToID()).arg(pen->width()));
 	setColorAux(*brush, *pen, true);
 

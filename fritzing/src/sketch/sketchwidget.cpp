@@ -6197,10 +6197,11 @@ const QString & SketchWidget::getShortName() {
 	return m_shortName;
 }
 
-void SketchWidget::getBendpointWidths(Wire * wire, qreal width, qreal & bendpointWidth, qreal & bendpoint2Width) {
+void SketchWidget::getBendpointWidths(Wire * wire, qreal width, qreal & bendpointWidth, qreal & bendpoint2Width, bool & negativeOffsetRect) {
 	Q_UNUSED(wire);
 	Q_UNUSED(width);
 	bendpoint2Width = bendpointWidth = -1;
+	negativeOffsetRect = true;
 }
 
 const QColor & SketchWidget::standardBackground() {

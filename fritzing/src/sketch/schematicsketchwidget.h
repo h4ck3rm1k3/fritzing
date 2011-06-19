@@ -48,7 +48,7 @@ public:
 	void ensureTraceLayerVisible();
 	bool usesJumperItem();
 	void setClipEnds(ClipableWire * vw, bool);
-	void getBendpointWidths(class Wire *, qreal w, qreal & w1, qreal & w2);
+	void getBendpointWidths(class Wire *, qreal w, qreal & w1, qreal & w2, bool & negativeOffsetRect);
 	void getLabelFont(QFont &, QColor &, ViewLayer::ViewLayerSpec);
 	void setNewPartVisible(ItemBase *);
 	bool canDropModelPart(ModelPart * modelPart); 

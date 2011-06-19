@@ -1176,7 +1176,7 @@ QVariant Wire::itemChange(GraphicsItemChange change, const QVariant &value)
 void Wire::cleanup() {
 }
 
-void Wire::getConnectedColor(ConnectorItem * connectorItem, QBrush * &brush, QPen * &pen, qreal & opacity, qreal & negativePenWidth) {
+void Wire::getConnectedColor(ConnectorItem * connectorItem, QBrush * &brush, QPen * &pen, qreal & opacity, qreal & negativePenWidth, bool & negativeOffsetRect) {
 
 	int count = 0;
 	bool bendpoint = true;
@@ -1203,7 +1203,7 @@ void Wire::getConnectedColor(ConnectorItem * connectorItem, QBrush * &brush, QPe
 				}
 			}
 
-			ItemBase::getConnectedColor(connectorItem, brush, pen, opacity, negativePenWidth);
+			ItemBase::getConnectedColor(connectorItem, brush, pen, opacity, negativePenWidth, negativeOffsetRect);
 			return;
 		}
 
@@ -1211,7 +1211,7 @@ void Wire::getConnectedColor(ConnectorItem * connectorItem, QBrush * &brush, QPe
 	}
 
 	if (count == 0) {
-		ItemBase::getConnectedColor(connectorItem, brush, pen, opacity, negativePenWidth);
+		ItemBase::getConnectedColor(connectorItem, brush, pen, opacity, negativePenWidth, negativeOffsetRect);
 		return;
 	}
 	
@@ -1227,17 +1227,18 @@ void Wire::getConnectedColor(ConnectorItem * connectorItem, QBrush * &brush, QPe
 		// only ever reach here when drawing a connector that is connected to more than one trace
 		pen = &m_bendpoint2Pen;
 		negativePenWidth = m_bendpoint2Width;
+		negativeOffsetRect = m_negativeOffsetRect;
 	}
 	else {
+		negativeOffsetRect = m_negativeOffsetRect;
 		negativePenWidth = m_bendpointWidth;
 		pen = &m_bendpointPen;
-
 	}
 }
 
 void Wire::setPenWidth(qreal w, InfoGraphicsView * infoGraphicsView) {
 	m_pen.setWidthF(w);
-	infoGraphicsView->getBendpointWidths(this, w, m_bendpointWidth, m_bendpoint2Width);
+	infoGraphicsView->getBendpointWidths(this, w, m_bendpointWidth, m_bendpoint2Width, m_negativeOffsetRect);
 	m_bendpointPen.setWidthF(qAbs(m_bendpointWidth));
 	m_bendpoint2Pen.setWidthF(qAbs(m_bendpoint2Width));
 	m_shadowPen.setWidthF(w + 2);

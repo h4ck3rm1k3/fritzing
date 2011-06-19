@@ -1526,46 +1526,52 @@ bool ItemBase::hasConnections()
 	return false;
 }
 
-void ItemBase::getConnectedColor(ConnectorItem *, QBrush * &brush, QPen * &pen, qreal & opacity, qreal & negativePenWidth) {
+void ItemBase::getConnectedColor(ConnectorItem *, QBrush * &brush, QPen * &pen, qreal & opacity, qreal & negativePenWidth, bool & negativeOffsetRect) {
 	brush = &connectedBrush;
 	pen = &connectedPen;
 	opacity = 0.2;
 	negativePenWidth = 0;
+	negativeOffsetRect = true;
 }
 
-void ItemBase::getNormalColor(ConnectorItem *, QBrush * &brush, QPen * &pen, qreal & opacity, qreal & negativePenWidth) {
+void ItemBase::getNormalColor(ConnectorItem *, QBrush * &brush, QPen * &pen, qreal & opacity, qreal & negativePenWidth, bool & negativeOffsetRect) {
 	brush = &normalBrush;
 	pen = &normalPen;
 	opacity = normalConnectorOpacity;
 	negativePenWidth = 0;
+	negativeOffsetRect = true;
 }
 
-void ItemBase::getUnconnectedColor(ConnectorItem *, QBrush * &brush, QPen * &pen, qreal & opacity, qreal & negativePenWidth) {
+void ItemBase::getUnconnectedColor(ConnectorItem *, QBrush * &brush, QPen * &pen, qreal & opacity, qreal & negativePenWidth, bool & negativeOffsetRect) {
 	brush = &unconnectedBrush;
 	pen = &unconnectedPen;
 	opacity = 0.6;
 	negativePenWidth = 0;
+	negativeOffsetRect = true;
 }
 
-void ItemBase::getChosenColor(ConnectorItem *, QBrush * &brush, QPen * &pen, qreal & opacity, qreal & negativePenWidth) {
+void ItemBase::getChosenColor(ConnectorItem *, QBrush * &brush, QPen * &pen, qreal & opacity, qreal & negativePenWidth, bool & negativeOffsetRect) {
 	brush = &chosenBrush;
 	pen = &chosenPen;
 	opacity = normalConnectorOpacity;
 	negativePenWidth = 0;
+	negativeOffsetRect = true;
 }
 
-void ItemBase::getHoverColor(ConnectorItem *, QBrush * &brush, QPen * &pen, qreal & opacity, qreal & negativePenWidth) {
+void ItemBase::getHoverColor(ConnectorItem *, QBrush * &brush, QPen * &pen, qreal & opacity, qreal & negativePenWidth, bool & negativeOffsetRect) {
 	brush = &hoverBrush;
 	pen = &hoverPen;
 	opacity = normalConnectorOpacity;
 	negativePenWidth = 0;
+	negativeOffsetRect = true;
 }
 
-void ItemBase::getEqualPotentialColor(ConnectorItem *, QBrush * &brush, QPen * &pen, qreal & opacity, qreal & negativePenWidth) {
+void ItemBase::getEqualPotentialColor(ConnectorItem *, QBrush * &brush, QPen * &pen, qreal & opacity, qreal & negativePenWidth, bool & negativeOffsetRect) {
 	brush = &equalPotentialBrush;
 	pen = &equalPotentialPen;
 	opacity = 1.0;
 	negativePenWidth = 0;
+	negativeOffsetRect = true;
 }
 
 void ItemBase::slamZ(qreal newZ) {

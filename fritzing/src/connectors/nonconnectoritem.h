@@ -72,6 +72,7 @@ protected:
 	qreal m_radius;
 	qreal m_strokeWidth;
 	qreal m_negativePenWidth;
+	bool m_negativeOffsetRect;
 	QPainterPath m_shape;
 	
 };

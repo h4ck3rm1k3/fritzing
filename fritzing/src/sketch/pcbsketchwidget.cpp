@@ -2476,10 +2476,11 @@ qreal PCBSketchWidget::getAutorouterTraceWidth() {
 	return FSvgRenderer::printerScale() * traceWidthMils / 1000;
 }
 
-void PCBSketchWidget::getBendpointWidths(Wire * wire, qreal width, qreal & bendpointWidth, qreal & bendpoint2Width) 
+void PCBSketchWidget::getBendpointWidths(Wire * wire, qreal width, qreal & bendpointWidth, qreal & bendpoint2Width, bool & negativeOffsetRect) 
 {
 	Q_UNUSED(wire);
-	bendpointWidth = bendpoint2Width = (width / -2) - 1000;
+	bendpointWidth = bendpoint2Width = (width / -2);
+	negativeOffsetRect = false;
 }
 
 qreal PCBSketchWidget::getSmallerTraceWidth(qreal minDim) {

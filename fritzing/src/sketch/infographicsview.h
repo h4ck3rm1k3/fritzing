@@ -69,7 +69,7 @@ public:
 	virtual void initWire(class Wire *, int penWidth);
 
 	virtual void setIgnoreSelectionChangeEvents(bool) {}
-	virtual void getBendpointWidths(class Wire *, qreal w, qreal & w1, qreal & w2);
+	virtual void getBendpointWidths(class Wire *, qreal w, qreal & w1, qreal & w2, bool & negativeOffsetRect);
 	virtual void getLabelFont(QFont &, QColor &, ViewLayer::ViewLayerSpec);
         virtual qreal getLabelFontSizeTiny();
 	virtual qreal getLabelFontSizeSmall();
