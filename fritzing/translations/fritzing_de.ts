@@ -6,7 +6,7 @@
     <message>
         <location filename="../src/help/aboutbox.cpp" line="77"/>
         <source>Version %1.%2.%3 &lt;small&gt;(%4%5 %6)%7&lt;/small&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Version %1.%2.%3 &lt;small&gt;(%4%5 %6)%7&lt;/small&gt;</translation>
     </message>
     <message>
         <location filename="../src/help/aboutbox.cpp" line="91"/>
@@ -26,7 +26,7 @@
     <message>
         <location filename="../src/help/aboutbox.cpp" line="132"/>
         <source>Fritzing is made by: </source>
-        <translation type="unfinished"></translation>
+        <translation>Fritzing ist die gemeinsame Arbeit von:</translation>
     </message>
     <message>
         <location filename="../src/help/aboutbox.cpp" line="133"/>
@@ -383,34 +383,38 @@
     <message numerus="yes">
         <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="747"/>
         <source>Note: the autorouter did not route %n parts, because they are not located entirely on the board.</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Hinweis: Der Autorouter konnte %n Bauteile nicht routen, da sie nicht vollständig auf der Leiterplatte positioniert sind.</numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="864"/>
         <source>The Design Rule Check (DRC) was cancelled, because it could not find a PCB board part.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Entwurfsregelprüfung (DRC) wurde abgebrochen, da keine Leiterplatte gefunden werden konnte.</translation>
     </message>
     <message>
         <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="876"/>
         <source>Your sketch is ready for production: there are no connectors or traces that overlap or are too close together.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dein Entwurf ist fertig für die Produktion: Es konnten keine Leiterbahnen oder Bauteile gefunden werden, die zu nah sind oder sich überlappen.</translation>
     </message>
     <message>
         <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="879"/>
         <source>The areas on your board highlighted in red are connectors and traces which overlap or are too close together. Reposition them and run the DRC again to find more problems.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die rot hervorgehobenen Leiterbahnen und Fußabdrücke überschneiden sich oder sind zu nah beieinander. Versuche dies durch verschieben zu beheben, und führe dann die Überprüfung erneut aus.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="888"/>
         <source>
 
 Note: %n parts are not located entirely on the board.</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>
+
+Hinweis: %n Bauteil befindet sich außerhalb derLeiterplatte.</numerusform>
+            <numerusform>
+
+Hinweis: %n Bauteil befinden sich außerhalb derLeiterplatte.</numerusform>
         </translation>
     </message>
 </context>
@@ -944,7 +948,7 @@ y:%2</translation>
     <message>
         <location filename="../src/items/itembase.cpp" line="350"/>
         <source>tolerance</source>
-        <translation type="unfinished"></translation>
+        <translation>Toleranz</translation>
     </message>
     <message>
         <location filename="../src/items/itembase.cpp" line="355"/>
@@ -1037,7 +1041,7 @@ y:%2</translation>
     <message>
         <location filename="../src/items/logoitem.cpp" line="157"/>
         <source>image file</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilddatei</translation>
     </message>
     <message>
         <location filename="../src/items/logoitem.cpp" line="176"/>
@@ -1047,7 +1051,7 @@ y:%2</translation>
     <message>
         <location filename="../src/items/logoitem.cpp" line="193"/>
         <source>shape</source>
-        <translation type="unfinished">Form</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/items/logoitem.cpp" line="249"/>
@@ -1121,7 +1125,7 @@ y:%2</translation>
     <message>
         <location filename="../src/mainwindow.cpp" line="682"/>
         <source>Order</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestellen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="697"/>
@@ -1275,27 +1279,27 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow.cpp" line="2437"/>
         <source>Using SMD parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Benutzen von SMD-Bauteilen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="2438"/>
         <source>When using SMD parts, a double-sided board is usually desired. On the default single-sided board, SMD parts will end up on the back of the board.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zur Nutzung von SMD-Bauteilen benötigt man üblicherweise eine zweiseitige Leiterplatte. Auf einer einseitigen Leiterplatte würden die SMD-Bauteile auf der Unterseite landen.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="2440"/>
         <source>Do you want to swap to a double-sided board now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Möchtest Du jetz zu einer zweiseitigen Leiterplatte wechseln?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="2445"/>
         <source>Swap</source>
-        <translation type="unfinished"></translation>
+        <translation>Wechseln</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="2446"/>
         <source>Don&apos;t Swap</source>
-        <translation type="unfinished"></translation>
+        <translation>Nicht wechseln</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1596"/>
@@ -1355,17 +1359,17 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow.cpp" line="2133"/>
         <source>loading %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Lade %1</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="2142"/>
         <source>Loading...</source>
-        <translation type="unfinished"></translation>
+        <translation>Lade...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="2148"/>
         <source>new sketch</source>
-        <translation type="unfinished"></translation>
+        <translation>Neuer Entwurf</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="2258"/>
@@ -1400,7 +1404,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_export.cpp" line="111"/>
         <source>BoM Text File (*.html)</source>
-        <translation type="unfinished"></translation>
+        <translation>BoM-Liste (*.html)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_export.cpp" line="124"/>
@@ -1665,12 +1669,12 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_export.cpp" line="724"/>
         <source>Extended Gerber (RS-274X)...</source>
-        <translation type="unfinished"></translation>
+        <translation>Extended Gerber (RS-274X)...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_export.cpp" line="726"/>
         <source>Export the current sketch to Extended Gerber format (RS-274X) for professional PCB production</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuellen Entwurf im Extended Gerber-Format (RS-274X) für professionelle Platinenproduktion exportieren</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_export.cpp" line="729"/>
@@ -2249,12 +2253,12 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2031"/>
         <source>Order from Fritzing Fab</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestellen bei Fritzing Fab</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2032"/>
         <source>Order from Fritzing Fab...</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestellen bei Fritzing Fab</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2035"/>
@@ -2277,17 +2281,17 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2057"/>
         <source>Do not autoroute</source>
-        <translation type="unfinished"></translation>
+        <translation>Von Autorouting ausschließen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2058"/>
         <source>When autorouting, do not rip up this trace wire, via, or jumper item</source>
-        <translation type="unfinished"></translation>
+        <translation>Beim Autorouten dieses Element ignorieren</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2064"/>
         <source>Move to other side of the board</source>
-        <translation type="unfinished"></translation>
+        <translation>Auf andere Platinenseite verschieben</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2080"/>
@@ -2297,7 +2301,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2100"/>
         <source>Design Rules Check</source>
-        <translation>Entwurfsregeln überprüfen</translation>
+        <translation>Entwurfsregeln überprüfen (DRC)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2101"/>
@@ -2619,7 +2623,7 @@ Please check all views for potential side-effects.</source>
     <message>
         <location filename="../src/mainwindow_export.cpp" line="1008"/>
         <source>Unable to save BOM file, but the text is on the clipboard.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die BoM-Datei konnte nicht gespeicher werden, aber der Text liegt im Zwischenspeicher.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_export.cpp" line="1100"/>
@@ -2654,17 +2658,17 @@ Please check all views for potential side-effects.</source>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2081"/>
         <source>Select all jumper item parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Drahtbrücken auswählen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2084"/>
         <source>Select All Vias</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Vias auswählen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2085"/>
         <source>Select all via parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Vias auswählen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2088"/>
@@ -2799,7 +2803,7 @@ Please check all views for potential side-effects.</source>
     <message>
         <location filename="../src/mainwindow_gerber.cpp" line="111"/>
         <source>outline is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Umriss/Kontur ist leer</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_gerber.cpp" line="124"/>
@@ -2814,27 +2818,27 @@ Please check all views for potential side-effects.</source>
     <message>
         <location filename="../src/mainwindow_gerber.cpp" line="152"/>
         <source>the board outline layer, </source>
-        <translation type="unfinished"></translation>
+        <translation>Umriss/Kontur-Ebene, </translation>
     </message>
     <message>
         <location filename="../src/mainwindow_gerber.cpp" line="153"/>
         <source>silkscreen layer(s), </source>
-        <translation type="unfinished"></translation>
+        <translation>Siebdruck-Ebene(n), </translation>
     </message>
     <message>
         <location filename="../src/mainwindow_gerber.cpp" line="154"/>
         <source>copper layer(s), </source>
-        <translation type="unfinished"></translation>
+        <translation>Kupfer-Ebene(n), </translation>
     </message>
     <message>
         <location filename="../src/mainwindow_gerber.cpp" line="155"/>
         <source>mask layer(s), </source>
-        <translation type="unfinished"></translation>
+        <translation>Lötstoppmasken-Ebene(n), </translation>
     </message>
     <message>
         <location filename="../src/mainwindow_gerber.cpp" line="157"/>
         <source>Unable to translate svg curves in </source>
-        <translation type="unfinished"></translation>
+        <translation>Konnte die SVG-Kurven nicht verarbeiten in </translation>
     </message>
     <message>
         <location filename="../src/mainwindow_gerber.cpp" line="168"/>
@@ -2844,7 +2848,7 @@ Please check all views for potential side-effects.</source>
     <message>
         <location filename="../src/mainwindow_gerber.cpp" line="280"/>
         <source>mask file export failure (1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Exportieren der Lötstoppmasken-Datei (1)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_gerber.cpp" line="299"/>
@@ -2854,12 +2858,12 @@ Please check all views for potential side-effects.</source>
     <message>
         <location filename="../src/mainwindow_gerber.cpp" line="308"/>
         <source>mask export failure</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Exportieren der Lötstoppmasken-Datei</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_gerber.cpp" line="321"/>
         <source>mask file export failure (2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Exportieren der Lötstoppmasken-Datei (2)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_gerber.cpp" line="177"/>
@@ -3280,29 +3284,29 @@ Ursache: %2 (Fehlercode %3)</translation>
         <location filename="../src/sketch/pcbsketchwidget.cpp" line="2545"/>
         <location filename="../src/sketch/pcbsketchwidget.cpp" line="2554"/>
         <source>Fritzing</source>
-        <translation type="unfinished">Fritzing</translation>
+        <translation>Fritzing</translation>
     </message>
     <message>
         <location filename="../src/sketch/pcbsketchwidget.cpp" line="2496"/>
         <source>Your sketch does not have a board yet!  Please add a PCB in order to use copper fill.</source>
-        <translation type="unfinished">Deinem Entwurf fehlt noch die Leiterplatte! Für die Kupferfüllung musst Du erst eine Leiterplatte (PCB) einfügen.</translation>
+        <translation>Deinem Entwurf fehlt noch die Leiterplatte! Für die Kupferfüllung musst Du erst eine Leiterplatte (PCB) einfügen.</translation>
     </message>
     <message>
         <location filename="../src/sketch/pcbsketchwidget.cpp" line="2506"/>
         <source>Fritzing error: unable to render board svg (1).</source>
-        <translation type="unfinished">Fehler: Die Platinen-SVG konnte nicht gerendert werden (1).</translation>
+        <translation>Fehler: Das Leiterplatten-SVG konnte nicht gerendert werden (1).</translation>
     </message>
     <message>
         <location filename="../src/sketch/pcbsketchwidget.cpp" line="2521"/>
         <location filename="../src/sketch/pcbsketchwidget.cpp" line="2533"/>
         <source>Fritzing error: unable to render copper svg (1).</source>
-        <translation type="unfinished">Fehler: Die Kupfer-SVG konnte nicht gerendert werden (1).</translation>
+        <translation>Fehler: Das Kupfer-SVG konnte nicht gerendert werden (1).</translation>
     </message>
     <message>
         <location filename="../src/sketch/pcbsketchwidget.cpp" line="2545"/>
         <location filename="../src/sketch/pcbsketchwidget.cpp" line="2554"/>
         <source>Fritzing error: unable to write copper fill.</source>
-        <translation type="unfinished">Fehler: Kupferfüllung konnte nicht erstellt werden.</translation>
+        <translation>Fehler: Kupferfüllung konnte nicht erstellt werden.</translation>
     </message>
 </context>
 <context>
@@ -3345,12 +3349,12 @@ Ursache: %2 (Fehlercode %3)</translation>
     <message>
         <location filename="../src/items/partlabel.cpp" line="442"/>
         <source>Rotate 45° Clockwise</source>
-        <translation type="unfinished">&amp;Rotieren um 90° im Uhrzeigersinn {45°?}</translation>
+        <translation>&amp;Rotieren um 45° im Uhrzeigersinn </translation>
     </message>
     <message>
         <location filename="../src/items/partlabel.cpp" line="444"/>
         <source>Rotate the label by 45 degrees clockwise</source>
-        <translation type="unfinished">Beschriftung um 90° im Uhrzeigersinn rotieren {45 ?}</translation>
+        <translation>Beschriftung um 45° im Uhrzeigersinn rotieren</translation>
     </message>
     <message>
         <location filename="../src/items/partlabel.cpp" line="447"/>
@@ -3365,12 +3369,12 @@ Ursache: %2 (Fehlercode %3)</translation>
     <message>
         <location filename="../src/items/partlabel.cpp" line="452"/>
         <source>Rotate 135° Clockwise</source>
-        <translation type="unfinished">&amp;Rotieren um 90° im Uhrzeigersinn {135°?}</translation>
+        <translation>&amp;Rotieren um 135° im Uhrzeigersinn</translation>
     </message>
     <message>
         <location filename="../src/items/partlabel.cpp" line="454"/>
         <source>Rotate the label by 135 degrees clockwise</source>
-        <translation type="unfinished">Beschriftung um 90° im Uhrzeigersinn rotieren {135 ?}</translation>
+        <translation>Beschriftung um 135° im Uhrzeigersinn rotieren </translation>
     </message>
     <message>
         <location filename="../src/items/partlabel.cpp" line="457"/>
@@ -3385,12 +3389,12 @@ Ursache: %2 (Fehlercode %3)</translation>
     <message>
         <location filename="../src/items/partlabel.cpp" line="462"/>
         <source>Rotate 135° Counter Clockwise</source>
-        <translation type="unfinished">&amp;Rotieren um 90° gegen den Uhrzeigersinn {135°?}</translation>
+        <translation>&amp;Rotieren um 135° gegen den Uhrzeigersinn </translation>
     </message>
     <message>
         <location filename="../src/items/partlabel.cpp" line="464"/>
         <source>Rotate the label by 135 degrees counter clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>Beschriftung um 135° gegen den Uhrzeigersinn rotieren </translation>
     </message>
     <message>
         <location filename="../src/items/partlabel.cpp" line="467"/>
@@ -3405,12 +3409,12 @@ Ursache: %2 (Fehlercode %3)</translation>
     <message>
         <location filename="../src/items/partlabel.cpp" line="472"/>
         <source>Rotate 45° Counter Clockwise</source>
-        <translation type="unfinished">&amp;Rotieren um 90° gegen den Uhrzeigersinn {45°?}</translation>
+        <translation>&amp;Rotieren um 45° gegen den Uhrzeigersinn</translation>
     </message>
     <message>
         <location filename="../src/items/partlabel.cpp" line="474"/>
         <source>Rotate the label by 45 degrees counter clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>Beschriftung um 45° gegen den Uhrzeigersinn rotieren </translation>
     </message>
     <message>
         <location filename="../src/items/partlabel.cpp" line="477"/>
@@ -3435,12 +3439,12 @@ Ursache: %2 (Fehlercode %3)</translation>
     <message>
         <location filename="../src/items/partlabel.cpp" line="485"/>
         <source>Tiny</source>
-        <translation type="unfinished"></translation>
+        <translation>Sehr klein</translation>
     </message>
     <message>
         <location filename="../src/items/partlabel.cpp" line="487"/>
         <source>Set font size to tiny</source>
-        <translation type="unfinished"></translation>
+        <translation>Sehr kleine Schriftgröße wählen</translation>
     </message>
     <message>
         <location filename="../src/items/partlabel.cpp" line="491"/>
@@ -3518,7 +3522,7 @@ Ursache: %2 (Fehlercode %3)</translation>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="329"/>
         <source>Parts Bin Actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Sortiment-Aktionen</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="496"/>
@@ -3612,7 +3616,7 @@ Ursache: %2 (Fehlercode %3)</translation>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="364"/>
         <source>More bins</source>
-        <translation type="unfinished"></translation>
+        <translation>Mehr Sortimente</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="435"/>
@@ -3632,7 +3636,7 @@ Ursache: %2 (Fehlercode %3)</translation>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="446"/>
         <source>Parts Actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Bauteil-Aktionen</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="448"/>
@@ -3647,12 +3651,12 @@ Ursache: %2 (Fehlercode %3)</translation>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="578"/>
         <source>Loading...</source>
-        <translation type="unfinished"></translation>
+        <translation>Lade...</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="581"/>
         <source>loading bin %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Lade Sortiment %1</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="637"/>
@@ -4040,22 +4044,22 @@ Ansicht aus?</translation>
     <message>
         <location filename="../src/items/perfboard.cpp" line="232"/>
         <source>size</source>
-        <translation type="unfinished">Größe</translation>
+        <translation>Größe</translation>
     </message>
     <message>
         <location filename="../src/items/perfboard.cpp" line="251"/>
         <source>horizontal holes</source>
-        <translation type="unfinished"></translation>
+        <translation>Horizontale Löcher</translation>
     </message>
     <message>
         <location filename="../src/items/perfboard.cpp" line="269"/>
         <source>vertical holes</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertikale Löcher</translation>
     </message>
     <message>
         <location filename="../src/items/perfboard.cpp" line="294"/>
         <source>set board size</source>
-        <translation type="unfinished"></translation>
+        <translation>Leiterplattengröße</translation>
     </message>
 </context>
 <context>
@@ -4541,12 +4545,12 @@ Vertikal scrollen</translation>
     <message>
         <location filename="../src/sketch/pcbsketchwidget.cpp" line="2336"/>
         <source>change trace</source>
-        <translation type="unfinished"></translation>
+        <translation>Leiterbahn ändern</translation>
     </message>
     <message>
         <location filename="../src/sketch/pcbsketchwidget.cpp" line="2395"/>
         <source>delete trace</source>
-        <translation type="unfinished"></translation>
+        <translation>Leiterbahn entfernen</translation>
     </message>
     <message>
         <location filename="../src/sketch/breadboardsketchwidget.cpp" line="40"/>
@@ -4636,7 +4640,7 @@ Vertikal scrollen</translation>
     <message>
         <location filename="../src/fapplication.cpp" line="811"/>
         <source>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;Version %1.%2.%3 (%4%5)%6&lt;/font&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;Version %1.%2.%3 (%4%5)%6&lt;/font&gt;</translation>
     </message>
     <message>
         <location filename="../src/fapplication.cpp" line="676"/>
@@ -6059,7 +6063,7 @@ im Sortiment.</translation>
         <location filename="../src/items/wire.cpp" line="1010"/>
         <location filename="../src/items/wire.cpp" line="1023"/>
         <source>schematic black</source>
-        <translation type="unfinished"></translation>
+        <translation>Schaltplan-schwarz</translation>
     </message>
     <message>
         <location filename="../src/items/wire.cpp" line="1285"/>
