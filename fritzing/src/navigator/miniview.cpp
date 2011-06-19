@@ -36,14 +36,13 @@ static const int FontPixelSize = 11;
 static const QString FontFamily = "Droid Sans";
 
 MiniView::MiniView(QWidget *parent )
-	: QGraphicsView(parent)
+	: QFrame(parent)
 {
-	m_otherView = NULL;
-    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-	//setAlignment(Qt::AlignLeft | Qt::AlignTop);
-	setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+	m_graphicsView = NULL;
 	m_selected = false;
+	m_updateSceneTimer.setSingleShot(true);
+	m_updateSceneTimer.setInterval(250);
+	connect(&m_updateSceneTimer, SIGNAL(timeout()), this, SLOT(reallyUpdateScene()));
 }
 
 MiniView::~MiniView()
@@ -62,65 +61,73 @@ void MiniView::setTitle(const QString & title) {
 	parentWidget()->setMinimumWidth(br.width());
 }
 
-void MiniView::drawBackground(QPainter * painter, const QRectF & rect) {
-	QGraphicsView::drawBackground(painter, rect);
+void MiniView::paintEvent(QPaintEvent * event) {
+	QFrame::paintEvent(event);
 
-	painter->save();
-	QRect vp = painter->viewport(); 
-	painter->setWindow(vp);
-	painter->setTransform(QTransform());
-	//painter->fillRect(0, 0, 10, 10, QBrush(QColor(Qt::blue)));
+	QPainter painter(this);
+	QRect vp = painter.viewport(); 
+	if (m_graphicsView && m_graphicsView->scene()) {
+		painter.fillRect(0, 0, vp.width(), vp.height(), m_graphicsView->scene()->backgroundBrush());
+		QRectF sr = m_graphicsView->scene()->sceneRect();
+		int cw = width();
+		int ch = qRound(sr.height() * cw / sr.width());
+		if (ch > height()) {
+			ch = height();
+			cw = qRound(sr.width() * ch / sr.height());
+		}
+		m_sceneRect.setCoords((width() - cw) / 2, (height() - ch) / 2, cw, ch);
+		m_graphicsView->scene()->render(&painter, m_sceneRect, sr, Qt::KeepAspectRatio);
+	}
+
 	QPen pen(m_titleColor, 1);
-	painter->setPen(pen);
+	painter.setPen(pen);
 	QFont font;
 	font.setFamily(FontFamily);
 	font.setWeight(m_titleWeight);
 	font.setPixelSize(FontPixelSize);
-	painter->setFont(font);
-	QFontMetrics metrics = painter->fontMetrics();
+	painter.setFont(font);
+	QFontMetrics metrics = painter.fontMetrics();
 	m_lastHeight = metrics.descent() + metrics.ascent();
 	int h = 0;  // metrics.descent();
 	int y = vp.bottom() - h - 2;
 	QRect br = metrics.boundingRect(m_title);
 	int x = vp.left() + ((vp.width() - br.width()) / 2);
-	painter->drawText(QPointF(x, y), m_title);
-	painter->restore();
+	painter.drawText(QPointF(x, y), m_title);
+
 }
 
-void MiniView::paintEvent ( QPaintEvent * event ) {
-    //DebugDialog::debug("mini view paint event");
-    if (scene()) {
-        ((FGraphicsScene *) scene())->setDisplayHandles(false);
-    }
-    QGraphicsView::paintEvent(event);
-}
 
 void MiniView::setView(QGraphicsView * view) {
-	m_otherView = view;
-	this->setBackgroundBrush(view->backgroundBrush());
-	QGraphicsView::setScene(view->scene());
+	if (m_graphicsView) {
+		if (m_graphicsView->scene()) {
+			disconnect(m_graphicsView->scene(), SIGNAL(void sceneRectChanged(QRectF)), this, SLOT(void updateSceneRect()));
+			disconnect(m_graphicsView->scene(), SIGNAL(changed(QList<QRectF>)), this, SLOT(updateScene()));
+
+		}
+	}
+	m_graphicsView = view;
+	if (view->scene()) {
+		connect(view->scene(), SIGNAL(sceneRectChanged(QRectF)), this, SLOT(updateSceneRect()));
+		connect(view->scene(), SIGNAL(changed(QList<QRectF>)), this, SLOT(updateScene()));
+	}
 }
 
-void MiniView::updateSceneRect ( const QRectF & rect ) {
-	QGraphicsView::updateSceneRect(rect);
-	fitInView ( rect, Qt::KeepAspectRatio );
-	QMatrix matrix = this->matrix();
-	if (matrix.m11() < 0 && matrix.m22() < 0) {
-		// bug (in Qt?) scales the matrix negatively;  try flipping the scale
-		//DebugDialog::debug(QString("updatescenerect rect:%1 %2 %3 %4' m11:%5 m22:%6")
-						   //.arg(rect.x()).arg(rect.y()).arg(rect.width()).arg(rect.height())
-						   //.arg(matrix.m11()).arg(matrix.m22()) );
-		QMatrix m2(-matrix.m11(), matrix.m12(), matrix.m21(), -matrix.m22(), matrix.dx(), matrix.dy());
-		setMatrix(m2);
-	}
+void MiniView::updateScene() 
+{
+	m_updateSceneTimer.stop();
+	m_updateSceneTimer.start();
+}
 
+void MiniView::updateSceneRect() 
+{
+	updateScene();
 	emit rectChangedSignal();
 }
 
 void MiniView::resizeEvent ( QResizeEvent * event )
 {
-	QGraphicsView::resizeEvent(event);
-	fitInView(sceneRect(), Qt::KeepAspectRatio);
+	Q_UNUSED(event);
+	updateScene();
 	emit rectChangedSignal();
 }
 
@@ -131,23 +138,9 @@ void MiniView::mousePressEvent(QMouseEvent *) {
 }
 
 QGraphicsView * MiniView::view() {
-	return m_otherView;
+	return m_graphicsView;
 }
 
-void MiniView::mouseMoveEvent(QMouseEvent * event) {
-	Q_UNUSED(event);			// stops hover events when user hovers over QGraphicsItems in the navigator
-}
-
-bool MiniView::viewportEvent(QEvent *event)
-{
-	if (event->type() == QEvent::ToolTip) {
-		// stops hover events when user hovers over QGraphicsItems in the navigator
-		event->setAccepted(true);
-        return true;
-	}
-
-	return QGraphicsView::viewportEvent(event);
-}
 
 void MiniView::navigatorMousePressedSlot(MiniViewContainer * miniViewContainer) {
 	if (miniViewContainer == this->parentWidget()) {
@@ -163,9 +156,7 @@ void MiniView::navigatorMousePressedSlot(MiniViewContainer * miniViewContainer) 
 		qobject_cast<MiniViewContainer *>(parentWidget())->hideHandle(true);
 	}
 
-	//QSize sz = size();
-	//repaint(0, sz.height() - m_lastHeight, sz.width(), m_lastHeight);
-	this->setBackgroundBrush(backgroundBrush());				// only way I've found so far to force a repaint of the background
+	this->update();			
 
 }
 
@@ -173,9 +164,7 @@ void MiniView::navigatorMouseEnterSlot(MiniViewContainer * miniViewContainer) {
 	if (miniViewContainer == this->parentWidget()) {
 		if (!m_selected) {
 			m_titleColor = HoverColor;
-			//QSize sz = size();
-			//repaint(0, sz.height() - m_lastHeight, sz.width(), m_lastHeight);
-			this->setBackgroundBrush(backgroundBrush());				// only way I've found so far to force a repaint of the background
+			this->update();	
 		}
 	}
 }
@@ -184,9 +173,16 @@ void MiniView::navigatorMouseLeaveSlot(MiniViewContainer * miniViewContainer) {
 	if (miniViewContainer == this->parentWidget()) {
 		if (!m_selected) {
 			m_titleColor = NormalColor;
-			//QSize sz = size();
-			//repaint(0, sz.height() - m_lastHeight, sz.width(), m_lastHeight);
-			this->setBackgroundBrush(backgroundBrush());				// only way I've found so far to force a repaint of the background
+			this->update();	
 		}
 	}
+}
+
+void MiniView::reallyUpdateScene() 
+{
+	this->update();
+}
+
+QRectF MiniView::sceneRect() {
+	return m_sceneRect;
 }

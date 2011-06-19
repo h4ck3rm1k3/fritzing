@@ -115,36 +115,20 @@ void MiniViewContainer::updateFrame()
 		//.arg(topLeft.x()).arg(topLeft.y()).arg(bottomRight.x()).arg(bottomRight.y())
 		//.arg(vSize.width()).arg(vSize.height()) );
 	QRectF sceneRect = view->sceneRect();
+	QRectF miniSceneRect = m_miniView->sceneRect();
 
-	int h, w, dw, dh, newW, newH, newX, newY, tw, th;
+	int newW, newH, newX, newY, tw, th;
 
 	if (hVis && vVis) {
 		tw = (int) sceneRect.width();
-		w = m_miniView->width();
 		th = (int) sceneRect.height();
-		h = m_miniView->height();
 
 		//DebugDialog::debug(QString("tw:%1 th:%2").arg(tw).arg(th) );
 
-		// deal with aspect ratio
-		int trueH = w * th / tw;
-		if (trueH <= h) {
-			h = trueH;
-		}
-		else {
-			int trueW = h * tw / th;
-			w = trueW;
-		}
-
-		dw = (this->width() - w) / 2.0;
-		dh = (this->height() - h) / 2.0;
-
-		//DebugDialog::debug(QString("dw:%1 dh%2 w:%3 h:%4").arg(dw).arg(dh).arg(w).arg(h));
-
-		newW = (int) (w * (bottomRight.x() - topLeft.x())  / tw);
-		newX = (int) (w * (topLeft.x() - sceneRect.x()) / tw);
-		newY = (int) (h * (topLeft.y() - sceneRect.y()) / th);
-		newH = (int) (h * (bottomRight.y() - topLeft.y())  / th);
+		newW = (int) (miniSceneRect.width() * (bottomRight.x() - topLeft.x())  / tw);
+		newX = (int) (miniSceneRect.width() * (topLeft.x() - sceneRect.x()) / tw);
+		newY = (int) (miniSceneRect.height() * (topLeft.y() - sceneRect.y()) / th);
+		newH = (int) (miniSceneRect.height() * (bottomRight.y() - topLeft.y())  / th);
 	}
 	else if (hVis) {
 		int min = view->horizontalScrollBar()->minimum();
@@ -154,16 +138,11 @@ void MiniViewContainer::updateFrame()
 
 		//DebugDialog::debug(QString("min:%1 max:%2 page:%3 value:%4").arg(min).arg(max).arg(page).arg(value) );
 
-		QMatrix matrix = m_miniView->matrix();
-		w = (int) (sceneRect.width() * matrix.m11());
-		dw = (this->width() - w) / 2.0;
-		newW = w * page / (max + page - min);
-		newX = w * (value - min) / (max + page - min);
+		newW = miniSceneRect.width() * page / (max + page - min);
+		newX = miniSceneRect.width() * (value - min) / (max + page - min);
 
-		h = (int) (sceneRect.height() * matrix.m22());
-		dh = (this->height() - h) / 2.0;
 		newY = 0;
-		newH = h;
+		newH = miniSceneRect.height();
 
 	}
 	else if (vVis) {
@@ -174,40 +153,29 @@ void MiniViewContainer::updateFrame()
 
 		//DebugDialog::debug(QString("min:%1 max:%2 page:%3 value:%4").arg(min).arg(max).arg(page).arg(value) );
 
-		QMatrix matrix = m_miniView->matrix();
-		h = (int) (sceneRect.height() * matrix.m22());
-		dh = (this->height() - h) / 2.0;
-		newH = h * page / (max + page - min);
-		newY = h * (value - min) / (max + page - min);
+		newH = miniSceneRect.height() * page / (max + page - min);
+		newY = miniSceneRect.height() * (value - min) / (max + page - min);
 
-		w = (int) (sceneRect.width() * matrix.m11());
-		dw = (this->width() - w) / 2.0;
 		newX = 0;
-		newW = w;
+		newW = miniSceneRect.width();
 	}
 	else if ((sceneRect.width() > 0) && (sceneRect.height() > 0)) {
-		QMatrix matrix = m_miniView->matrix();
-		w = (int) (sceneRect.width() * matrix.m11());
-		dw = (this->width() - w) / 2.0;
 		newX = 0;
-		newW = w;
+		newW = miniSceneRect.width();
 
-		h = (int) (sceneRect.height() * matrix.m22());
-		dh = (this->height() - h) / 2.0;
 		newY = 0;
-		newH = h;
+		newH = miniSceneRect.height();
 	}
 	else {
-		dw = dh = 0;
-		newW = w = this->width();
-		newH = h = this->height();
+		newW = this->width();
+		newH = this->height();
 		newX = newY = 0;
 	}
 
-	m_outerFrame->setGeometry(dw, dh, w, h);
-	m_frame->setMaxDrag(w + dw, h + dh);
-	m_frame->setMinDrag(dw, dh);
-	m_frame->setGeometry(newX + dw, newY + dh, newW, newH);
+	m_outerFrame->setGeometry(miniSceneRect.left(), miniSceneRect.top(), miniSceneRect.width(), miniSceneRect.height());
+	m_frame->setMaxDrag(miniSceneRect.width() + miniSceneRect.left(), miniSceneRect.height() + miniSceneRect.top());
+	m_frame->setMinDrag(miniSceneRect.left(), miniSceneRect.top());
+	m_frame->setGeometry(newX + miniSceneRect.left(), newY + miniSceneRect.top(), newW, newH);
 
 }
 

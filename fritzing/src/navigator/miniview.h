@@ -27,13 +27,15 @@ $Date$
 #ifndef MINIVIEW_H
 #define MINIVIEW_H
 
-#include <QGraphicsView>
+#include <QFrame>
 #include <QBrush>
 #include <QPainter>
-#include <QGraphicsItem>
-#include <QStyleOptionGraphicsItem>
+#include <QPointer>
+#include <QGraphicsView>
+#include <QTimer>
+#include <QPixmap>
 
-class MiniView : public QGraphicsView
+class MiniView : public QFrame
 {
 	Q_OBJECT
 	
@@ -44,17 +46,17 @@ public:
 	void setView(QGraphicsView *);	
 	QGraphicsView* view();
 	void setTitle(const QString & title);
+	QRectF sceneRect();
 	
 protected:
 	void resizeEvent ( QResizeEvent * event ); 
 	void mousePressEvent(QMouseEvent *event);
     void paintEvent(QPaintEvent *);
-	void mouseMoveEvent(QMouseEvent * event);
-	bool viewportEvent(QEvent *event);
-	void drawBackground(QPainter * painter, const QRectF & rect);
 
 public slots:
-	void updateSceneRect ( const QRectF & rect );
+	void updateSceneRect();
+	void updateScene();
+	void reallyUpdateScene();
 	void navigatorMousePressedSlot(class MiniViewContainer *);
 	void navigatorMouseEnterSlot(class MiniViewContainer *);
 	void navigatorMouseLeaveSlot(class MiniViewContainer *);
@@ -64,13 +66,14 @@ signals:
 	void miniViewMousePressedSignal();
 	
 protected:
-	QGraphicsView * m_otherView;
+	QPointer<QGraphicsView> m_graphicsView;
 	QString m_title;
 	int m_titleWeight;
 	QColor m_titleColor;
 	bool m_selected;
 	int m_lastHeight;
-
+	QTimer m_updateSceneTimer;
+	QRectF m_sceneRect;
 };
 
 #endif
