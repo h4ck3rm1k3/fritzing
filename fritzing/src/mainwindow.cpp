@@ -347,7 +347,7 @@ void MainWindow::init() {
 	
 #ifdef Q_WS_MAC
 	if (m_navigatorDock) {
-		QTimer::singleShot(500, this, SLOT(macNavigatorHack()));
+		//QTimer::singleShot(500, this, SLOT(macNavigatorHack()));
 	}
 #endif
 }

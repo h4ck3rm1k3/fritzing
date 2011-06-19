@@ -121,14 +121,12 @@ void MiniView::updateScene()
 void MiniView::updateSceneRect() 
 {
 	updateScene();
-	emit rectChangedSignal();
 }
 
 void MiniView::resizeEvent ( QResizeEvent * event )
 {
 	Q_UNUSED(event);
 	updateScene();
-	emit rectChangedSignal();
 }
 
 void MiniView::mousePressEvent(QMouseEvent *) {
@@ -181,6 +179,7 @@ void MiniView::navigatorMouseLeaveSlot(MiniViewContainer * miniViewContainer) {
 void MiniView::reallyUpdateScene() 
 {
 	this->update();
+	emit rectChangedSignal();
 }
 
 QRectF MiniView::sceneRect() {
