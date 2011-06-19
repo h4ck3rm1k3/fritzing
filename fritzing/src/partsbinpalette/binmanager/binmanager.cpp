@@ -425,6 +425,11 @@ void BinManager::setAsCurrentBin(PartsBinPaletteWidget* bin) {
 }
 
 void BinManager::closeBinIn(StackTabWidget* tb, int index) {
+	// TODO: disable close tab if there is only one tab open
+	// or find some way to enable opening a bin
+
+	if (tb->count() == 1) return;
+
 	int realIndex = index == -1? tb->currentIndex(): index;
 	PartsBinPaletteWidget *w = getBin(tb, realIndex);
 	if(w && w->beforeClosing()) {

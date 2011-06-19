@@ -816,6 +816,12 @@ void PartsBinPaletteWidget::closeBin() {
 
 
 void PartsBinPaletteWidget::rename() {
+	if (!m_allowsChanges) {
+		// TODO: disable menu item instead
+		QMessageBox::warning(this, tr("Read-only bin"), tr("This bin cannot be renamed."));
+		return;
+	}
+
 	bool ok;
 	QString newTitle = QInputDialog::getText(
 		this,
