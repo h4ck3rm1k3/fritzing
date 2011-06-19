@@ -3277,64 +3277,8 @@ numa PCB (Placa de Circuito Impresso)?</translation>
         <translation>Controle</translation>
     </message>
     <message>
-        <source>No keys down:
-%1 key down:
-Alt key down:</source>
-        <translation>Sem teclas pressionadas:
-%1 tecla pessionada:
-Alt pressionado:</translation>
-    </message>
-    <message>
         <source>Change Wheel Behavior</source>
         <translation>Mudar Comportamento da Roda</translation>
-    </message>
-    <message>
-        <source>Zoom
-Vertical scroll
-Horizontal scroll</source>
-        <translation>Ampliar
-Rolagem Vertical
-Rolagem Horizontal</translation>
-    </message>
-    <message>
-        <source>Zoom
-Horizontal scroll
-Vertical scroll</source>
-        <translation>Ampliar
-Rolagem Horizontal
-Rolagem Vertical</translation>
-    </message>
-    <message>
-        <source>Vertical scroll
-Zoom
-Horizontal scroll</source>
-        <translation>Rolagem Vertical
-Ampliar
-Rolagem Horizontal</translation>
-    </message>
-    <message>
-        <source>Vertical scroll
-Horizontal scroll
-Zoom</source>
-        <translation>Rolagem Vertical
-Rolagem Horizontal
-Ampliar</translation>
-    </message>
-    <message>
-        <source>Horizontal scroll
-Vertical scroll
-Zoom</source>
-        <translation>Rolagem Horizontal
-Rolagem Vertical
-Ampliar</translation>
-    </message>
-    <message>
-        <source>Horizontal scroll
-Zoom
-Vertical scroll</source>
-        <translation>Rolagem Horizontal
-Ampliar
-Rolagem Vertical</translation>
     </message>
     <message>
         <source>Autosave</source>
@@ -3351,6 +3295,18 @@ Rolagem Vertical</translation>
     <message>
         <source>Debug</source>
         <translation>Depurar</translation>
+    </message>
+    <message>
+        <source>no keys down = scroll
+shift key swaps scroll axis
+Alt or %1 key = zoom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no keys down = zoom
+Alt or %1 key = scroll
+shift key swaps scroll axis</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4168,6 +4124,38 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>delete trace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Basic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ICs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Power</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microcontroller</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tools</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

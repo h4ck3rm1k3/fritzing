@@ -3269,64 +3269,8 @@ the PCB view?</source>
         <translation>控制</translation>
     </message>
     <message>
-        <source>No keys down:
-%1 key down:
-Alt key down:</source>
-        <translation>无键按下:
-%1键按下:
-Alt键按下:</translation>
-    </message>
-    <message>
         <source>Change Wheel Behavior</source>
         <translation>改变滚轮属性</translation>
-    </message>
-    <message>
-        <source>Zoom
-Vertical scroll
-Horizontal scroll</source>
-        <translation>缩放
-垂直滚动
-水平滚动</translation>
-    </message>
-    <message>
-        <source>Zoom
-Horizontal scroll
-Vertical scroll</source>
-        <translation>缩放
-水平滚动
-垂直滚动</translation>
-    </message>
-    <message>
-        <source>Vertical scroll
-Zoom
-Horizontal scroll</source>
-        <translation>垂直滚动
-缩放
-水平滚动</translation>
-    </message>
-    <message>
-        <source>Vertical scroll
-Horizontal scroll
-Zoom</source>
-        <translation>垂直滚动
-水平滚动
-缩放</translation>
-    </message>
-    <message>
-        <source>Horizontal scroll
-Vertical scroll
-Zoom</source>
-        <translation>水平滚动
-垂直滚动
-缩放</translation>
-    </message>
-    <message>
-        <source>Horizontal scroll
-Zoom
-Vertical scroll</source>
-        <translation>水平滚动
-缩放
-垂直滚动</translation>
     </message>
     <message>
         <source>Autosave</source>
@@ -3343,6 +3287,18 @@ Vertical scroll</source>
     <message>
         <source>Debug</source>
         <translation>调试</translation>
+    </message>
+    <message>
+        <source>no keys down = scroll
+shift key swaps scroll axis
+Alt or %1 key = zoom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no keys down = zoom
+Alt or %1 key = scroll
+shift key swaps scroll axis</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4160,6 +4116,38 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     </message>
     <message>
         <source>delete trace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Basic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ICs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Power</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microcontroller</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tools</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

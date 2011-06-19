@@ -3275,49 +3275,7 @@ op de PCB?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>No keys down:
-%1 key down:
-Alt key down:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Change Wheel Behavior</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Zoom
-Vertical scroll
-Horizontal scroll</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Zoom
-Horizontal scroll
-Vertical scroll</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Vertical scroll
-Zoom
-Horizontal scroll</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Vertical scroll
-Horizontal scroll
-Zoom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Horizontal scroll
-Vertical scroll
-Zoom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Horizontal scroll
-Zoom
-Vertical scroll</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3334,6 +3292,18 @@ Vertical scroll</source>
     </message>
     <message>
         <source>Debug</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no keys down = scroll
+shift key swaps scroll axis
+Alt or %1 key = zoom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no keys down = zoom
+Alt or %1 key = scroll
+shift key swaps scroll axis</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4151,6 +4121,38 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
     </message>
     <message>
         <source>delete trace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Basic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ICs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Power</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microcontroller</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tools</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
