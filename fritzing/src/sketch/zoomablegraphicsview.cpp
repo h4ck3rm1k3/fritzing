@@ -31,7 +31,15 @@ $Date$
 #include "zoomablegraphicsview.h"
 #include "../utils/zoomslider.h"
 
-ZoomableGraphicsView::WheelMapping ZoomableGraphicsView::m_wheelMapping = MapNoZCtrlVAltH;
+
+
+ZoomableGraphicsView::WheelMapping ZoomableGraphicsView::m_wheelMapping =
+#ifdef Q_WS_WIN
+	ZoomPrimary;
+#else
+	ScrollPrimary;
+#endif
+
 bool FirstTime = true;
 
 ZoomableGraphicsView::ZoomableGraphicsView( QWidget * parent )
@@ -45,6 +53,9 @@ ZoomableGraphicsView::ZoomableGraphicsView( QWidget * parent )
 		FirstTime = false;
 		QSettings settings;
 		m_wheelMapping = (WheelMapping) settings.value("wheelMapping", m_wheelMapping).toInt();
+		if (m_wheelMapping >= WheelMappingCount) {
+			m_wheelMapping = ScrollPrimary;
+		}
 	}
 }
 
@@ -60,41 +71,45 @@ void ZoomableGraphicsView::wheelEvent(QWheelEvent* event) {
 
 	bool control = event->modifiers() & Qt::ControlModifier;
 	bool alt = event->modifiers() & Qt::AltModifier;
+	bool shift = event->modifiers() & Qt::ShiftModifier;
 
 	switch (m_wheelMapping) {
-		case MapNoZCtrlVAltH:
-			if (control) doVertical = true;
-			else if (alt) doHorizontal = true;
+		case ScrollPrimary:
+			if (control || alt) doZoom = true;
+			else {
+				if (event->orientation() == Qt::Horizontal) {
+					doHorizontal = true;
+				}
+				else {
+					doVertical = true;
+				}
+			}
+			break;
+		case ZoomPrimary:
+			if (control || alt) {
+				if (event->orientation() == Qt::Horizontal) {
+					doHorizontal = true;
+				}
+				else {
+					doVertical = true;
+				}
+			}
 			else doZoom = true;
-			break;
-		case MapNoZCtrlHAltV:
-			if (control) doHorizontal = true;
-			else if (alt) doVertical = true;
-			else doZoom = true;
-			break;
-		case MapNoVCtrlZAltH:
-			if (control) doZoom = true;
-			else if (alt) doHorizontal = true;
-			else doVertical = true;
-			break;
-		case MapNoVCtrlHAltZ:
-			if (control) doHorizontal = true;
-			else if (alt) doZoom = true;
-			else doVertical = true;
-			break;
-		case MapNoHCtrlVAltZ:
-			if (control) doVertical = true;
-			else if (alt) doZoom = true;
-			else doHorizontal = true;
-			break;
-		case MapNoHCtrlZAltV:
-			if (control) doZoom = true;
-			else if (alt) doVertical = true;
-			else doHorizontal = true;
 			break;
 		default:
 			// shouldn't happen
 			return;
+	}
+
+	if (shift && (doVertical || doHorizontal)) {
+		if (doVertical) {
+			doVertical = false;
+			doHorizontal = true;
+		}
+		else {
+			doVertical = true;
+			doHorizontal = false;
+		}
 	}
 
 	int numSteps = event->delta() / 8;

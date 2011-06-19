@@ -96,10 +96,6 @@ QWidget * PrefsDialog::createZoomerForm() {
 	QString cKey = tr("Control");
 #endif
 
-	QLabel * l = new QLabel(tr("No keys down:\n%1 key down:\nAlt key down:").arg(cKey), this);
-	l->setWordWrap(true);
-	zhlayout->addWidget(l);
-
 	m_wheelLabel = new QLabel(this);
 	m_wheelLabel->setWordWrap(true);
 	updateWheelText();
@@ -293,29 +289,20 @@ void PrefsDialog::changeWheelBehavior() {
 
 void PrefsDialog::updateWheelText() {
 	QString text;
-	switch((ZoomableGraphicsView::WheelMapping) m_wheelMapping) {
-		case ZoomableGraphicsView::MapNoZCtrlVAltH:
-			text = tr("Zoom\nVertical scroll\nHorizontal scroll");
-			break;
-		case ZoomableGraphicsView::MapNoZCtrlHAltV:
-			text = tr("Zoom\nHorizontal scroll\nVertical scroll");
-			break;
-		case ZoomableGraphicsView::MapNoVCtrlZAltH:
-			text = tr("Vertical scroll\nZoom\nHorizontal scroll");
-			break;
-		case ZoomableGraphicsView::MapNoVCtrlHAltZ:
-			text = tr("Vertical scroll\nHorizontal scroll\nZoom");
-			break;
-		case ZoomableGraphicsView::MapNoHCtrlVAltZ:
-			text = tr("Horizontal scroll\nVertical scroll\nZoom");
-			break;
-		case ZoomableGraphicsView::MapNoHCtrlZAltV:
-			text = tr("Horizontal scroll\nZoom\nVertical scroll");
-			break;
-		default:
-			// shouldn't happen
-			return;
+#ifdef Q_WS_MAC
+	QString cKey = tr("Command");
+#else
+	QString cKey = tr("Control");
+#endif
 
+	switch((ZoomableGraphicsView::WheelMapping) m_wheelMapping) {
+		case ZoomableGraphicsView::ScrollPrimary:
+		default:
+			text = tr("no keys down = scroll\nshift key swaps scroll axis\nAlt or %1 key = zoom").arg(cKey);
+			break;
+		case ZoomableGraphicsView::ZoomPrimary:
+			text = tr("no keys down = zoom\nAlt or %1 key = scroll\nshift key swaps scroll axis").arg(cKey);
+			break;
 	}
 	m_wheelLabel->setText(text);
 }

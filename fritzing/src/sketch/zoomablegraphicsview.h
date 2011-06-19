@@ -50,12 +50,8 @@ public:
 	
 public:	
 	enum WheelMapping {
-		MapNoZCtrlVAltH,
-		MapNoVCtrlZAltH,
-		MapNoZCtrlHAltV,
-		MapNoVCtrlHAltZ,
-		MapNoHCtrlVAltZ,
-		MapNoHCtrlZAltV,
+		ScrollPrimary,
+		ZoomPrimary,
 		WheelMappingCount
 	};
 
