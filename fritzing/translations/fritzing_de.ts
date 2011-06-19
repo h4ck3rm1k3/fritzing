@@ -4147,14 +4147,18 @@ Ansicht aus?</translation>
         <source>no keys down = scroll
 shift key swaps scroll axis
 Alt or %1 key = zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>Mausrad = vertikaler Bildlauf
+Mausrad + Umschalt-Taste = horizontaler Bildlauf
+Mausrad + Alt- oder %1-Taste = Zoom</translation>
     </message>
     <message>
         <location filename="../src/dialogs/prefsdialog.cpp" line="304"/>
         <source>no keys down = zoom
 Alt or %1 key = scroll
 shift key swaps scroll axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Mausrad = Zoom
+Mausrad + Alt- oder %1-Taste = vertikaler Bildlauf
+Mausrad + Alt + Umschalt-Taste = horizontaler Bildlauf</translation>
     </message>
 </context>
 <context>
@@ -4968,42 +4972,42 @@ Versuche, Fritzing neu zu starten. Falls das Problem bestehen bleibt, wende Dich
     <message>
         <location filename="../src/partsbinpalette/partsbinview.cpp" line="42"/>
         <source>Basic</source>
-        <translation type="unfinished"></translation>
+        <translation>Basis</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinview.cpp" line="43"/>
         <source>Input</source>
-        <translation type="unfinished"></translation>
+        <translation>Eingabe</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinview.cpp" line="44"/>
         <source>Output</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgabe</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinview.cpp" line="45"/>
         <source>ICs</source>
-        <translation type="unfinished"></translation>
+        <translation>Halbleiter</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinview.cpp" line="46"/>
         <source>Power</source>
-        <translation type="unfinished"></translation>
+        <translation>Energie</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinview.cpp" line="47"/>
         <source>Connection</source>
-        <translation type="unfinished"></translation>
+        <translation>Verbindung</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinview.cpp" line="48"/>
         <source>Microcontroller</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrocontroller</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinview.cpp" line="52"/>
         <source>Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>Werkzeuge</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinview.cpp" line="192"/>
