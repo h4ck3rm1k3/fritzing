@@ -74,14 +74,15 @@ AboutBox::AboutBox(QWidget *parent)
 	macBuildType = " Carbon";
 #endif
 #endif
-	versionMain->setText(tr("Version %1.%2.%3 <small>(%4%5 %6)%7</small>")
+	versionMain->setText(tr("Version %1.%2.%3 <small>(%4%5 %6)%7 [Qt %8]</small>")
 						 .arg(Version::majorVersion())
 						 .arg(Version::minorVersion())
 						 .arg(Version::minorSubVersion())
 						 .arg(Version::modifier())
 						 .arg(Version::revision())
 						 .arg(Version::date())
-						 .arg(macBuildType));
+						 .arg(macBuildType)
+						 .arg(QT_VERSION_STR) );
 	versionMain->setFont(smallFont);
 	versionMain->setGeometry(45, 150, 300, 20);
 	versionMain->setAlignment(Qt::AlignBottom | Qt::AlignHCenter);
