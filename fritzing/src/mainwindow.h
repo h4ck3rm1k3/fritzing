@@ -283,7 +283,6 @@ protected slots:
 	void moveLock();
 	void searchPartsBin();
 	void showNavigator();
-	void macNavigatorHack();
 	void autorouterSettings();
 	void warnSMDReally();
 	void boardDeletedSlot();
