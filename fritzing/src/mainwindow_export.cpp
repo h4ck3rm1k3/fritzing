@@ -841,6 +841,7 @@ void MainWindow::exportSvg(qreal res, bool selectedItems, bool flatten) {
 	LayerList viewLayerIDs;
 	foreach (ViewLayer * viewLayer, m_currentGraphicsView->viewLayers()) {
 		if (viewLayer == NULL) continue;
+		if (!viewLayer->visible()) continue;
 
 		viewLayerIDs << viewLayer->viewLayerID();
 	}

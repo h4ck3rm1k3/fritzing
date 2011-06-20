@@ -67,8 +67,9 @@ void MiniView::paintEvent(QPaintEvent * event) {
 	QPainter painter(this);
 	QRect vp = painter.viewport(); 
 	if (m_graphicsView && m_graphicsView->scene()) {
-		painter.fillRect(0, 0, vp.width(), vp.height(), m_graphicsView->scene()->backgroundBrush());
-		QRectF sr = m_graphicsView->scene()->sceneRect();
+		FGraphicsScene * scene = qobject_cast<FGraphicsScene *>(m_graphicsView->scene());
+		painter.fillRect(0, 0, vp.width(), vp.height(), scene->backgroundBrush());
+		QRectF sr = scene->sceneRect();
 		int cw = width();
 		int ch = qRound(sr.height() * cw / sr.width());
 		if (ch > height()) {
@@ -76,7 +77,10 @@ void MiniView::paintEvent(QPaintEvent * event) {
 			cw = qRound(sr.width() * ch / sr.height());
 		}
 		m_sceneRect.setCoords((width() - cw) / 2, (height() - ch) / 2, cw, ch);
-		m_graphicsView->scene()->render(&painter, m_sceneRect, sr, Qt::KeepAspectRatio);
+
+		scene->setDisplayHandles(false);
+		scene->render(&painter, m_sceneRect, sr, Qt::KeepAspectRatio);
+		scene->setDisplayHandles(true);
 	}
 
 	QPen pen(m_titleColor, 1);

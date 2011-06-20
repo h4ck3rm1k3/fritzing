@@ -83,63 +83,97 @@ QString SVG2gerber::getGerber(){
     return m_gerber_header + m_gerber_paths;
 }
 
+int SVG2gerber::renderGerber(bool doubleSided, const QString & mainLayerName, ForWhy forWhy) {
+	if (forWhy != ForDrill) {
+		// human readable description comments
+		m_gerber_header = "G04 MADE WITH FRITZING*\n";
+		m_gerber_header += "G04 WWW.FRITZING.ORG*\n";
+		m_gerber_header += QString("G04 %1 SIDED*\n").arg(doubleSided ? "DOUBLE" : "SINGLE");
+		m_gerber_header += QString("G04 HOLES%1PLATED*\n").arg(doubleSided ? " " : " NOT ");
+		m_gerber_header += "G04 CONTOUR ON CENTER OF CONTOUR VECTOR*\n";
 
-QString SVG2gerber::getNCDrill(){
-    return m_drill_header + m_drill_paths + m_drill_slots + m_drill_footer;
-}
+		// initialize axes
+		m_gerber_header += "%ASAXBY*%\n";
 
-int SVG2gerber::renderGerber(bool doubleSided, const QString & mainLayerName, ForWhy forWhy){
-    // human readable description comments
-    m_gerber_header = "G04 MADE WITH FRITZING*\n";
-    m_gerber_header += "G04 WWW.FRITZING.ORG*\n";
-	m_gerber_header += QString("G04 %1 SIDED*\n").arg(doubleSided ? "DOUBLE" : "SINGLE");
-	m_gerber_header += QString("G04 HOLES%1PLATED*\n").arg(doubleSided ? " " : " NOT ");
-    m_gerber_header += "G04 CONTOUR ON CENTER OF CONTOUR VECTOR*\n";
+		// NOTE: this currently forces a 1 mil grid
+		// format coordinates to drop leading zeros with 2,3 digits
+		m_gerber_header += "%FSLAX23Y23*%\n";
 
-    // initialize axes
-    m_gerber_header += "%ASAXBY*%\n";
+		// set units to inches
+		m_gerber_header += "%MOIN*%\n";
 
-    // NOTE: this currently forces a 1 mil grid
-    // format coordinates to drop leading zeros with 2,3 digits
-    m_gerber_header += "%FSLAX23Y23*%\n";
+		// no offset
+		m_gerber_header += "%OFA0B0*%\n";
 
-    // set units to inches
-    m_gerber_header += "%MOIN*%\n";
+		// scale factor 1x1
+		m_gerber_header += "%SFA1.0B1.0*%\n";
+	}
+	else {
+		// setup drill file header
+		m_gerber_header = "M48\n";
+		// set to english (inches) units, with trailing zeros
+		m_gerber_header += "M72,TZ\n";
 
-    // no offset
-    m_gerber_header += "%OFA0B0*%\n";
-
-    // scale factor 1x1
-    m_gerber_header += "%SFA1.0B1.0*%\n";
-
-    // setup drill file header
-    m_drill_header = "M48\n";
-    // set to english (inches) units, with trailing zeros
-    m_drill_header += "M72,TZ\n";
-
-	// drill file unload tool and end of program
-    m_drill_footer = "T00\n";
-    m_drill_footer += "M30\n";
-
+	}
 
     // define apertures and draw em
     int invalidCount = allPaths2gerber(forWhy);
 
-    // label our layers
-    m_gerber_header += QString("%LN%1*%\n").arg(mainLayerName.toUpper());
+	if (forWhy == ForDrill) {
+		// rewind drill to start position
+		m_gerber_header += "%\n";
 
-    // rewind drill to start position
-    m_drill_header += "%\n";
+		//	sort apertures to minimize tool changes
 
-    //just to be safe: G90 (absolute coords) and G70 (inches)
-    m_gerber_header += "G90*\nG70*\n";
+		QMultiHash<QString, QString> apertures;
+		QStringList strings = m_gerber_paths.split("\n");
+		m_gerber_paths = "";
+		QString current;
+		foreach (QString string, strings) {
+			if (string.isEmpty()) continue;
 
-    // now write the footer
-    // comment to indicate end-of-sketch
-    m_gerber_paths += QString("G04 End of %1*\n").arg(mainLayerName);
+			if (string.startsWith("T")) {
+				current = string;
+				continue;
+			}
 
-    // write gerber end-of-program
-    m_gerber_paths += "M02*";
+			if (current.isEmpty()) {
+				DebugDialog::debug("drill output: somethings wrong");
+				continue;
+			}
+
+			apertures.insert(current, string);
+		}
+
+		foreach (QString T, apertures.uniqueKeys()) {
+			m_gerber_paths += T + "\n";
+			foreach (QString value, apertures.values(T)) {
+				m_gerber_paths += value + "\n";
+			}
+		}
+
+		m_gerber_paths += m_drill_slots;
+
+		// drill file unload tool and end of program
+		m_gerber_paths += "T00\n";
+		m_gerber_paths += "M30\n";
+
+	}
+	else {
+		// label our layers
+		m_gerber_header += QString("%LN%1*%\n").arg(mainLayerName.toUpper());
+
+
+		//just to be safe: G90 (absolute coords) and G70 (inches)
+		m_gerber_header += "G90*\nG70*\n";
+
+		// now write the footer
+		// comment to indicate end-of-sketch
+		m_gerber_paths += QString("G04 End of %1*\n").arg(mainLayerName);
+
+		// write gerber end-of-program
+		m_gerber_paths += "M02*";
+	}
 
 	return invalidCount;
 }
@@ -268,6 +302,7 @@ int SVG2gerber::allPaths2gerber(ForWhy forWhy) {
     for(uint i = 0; i < circleList.length(); i++){
         QDomElement circle = circleList.item(i).toElement();
 		if (circle.attribute("drill").compare("0") == 0) {
+			// this is not a hole or contact
 			continue;
 		}
 
@@ -275,30 +310,47 @@ int SVG2gerber::allPaths2gerber(ForWhy forWhy) {
 			if (circle.attribute("id").compare("boardoutline", Qt::CaseInsensitive) != 0) continue;
 		}
 
-        QString aperture;
-        QString drill_aperture;
-
         qreal centerx = circle.attribute("cx").toDouble();
         qreal centery = circle.attribute("cy").toDouble();
-        QString cx = QString::number(flipx(centerx));
-        QString cy = QString::number(flipy(centery));
-        QString drill_cx = QString::number(flipxNoRound(centerx) / 1000, 'f');				// drill file seems to be in inches
-        QString drill_cy = QString::number(flipyNoRound(centery) / 1000, 'f');				// drill file seems to be in inches
         qreal r = circle.attribute("r").toDouble();
 		if (r == 0) continue;
 
-        QString fill = circle.attribute("fill");
         qreal stroke_width = circle.attribute("stroke-width").toDouble();
+		qreal hole = ((2*r) - stroke_width)/1000;
+
+		if (forWhy == ForDrill) {
+			QString drill_cx = QString::number(flipxNoRound(centerx) / 1000, 'f');				// drill file seems to be in inches
+			QString drill_cy = QString::number(flipyNoRound(centery) / 1000, 'f');				// drill file seems to be in inches
+            QString aperture = QString("C%1").arg(hole, 0, 'f');
+			if(!apertureMap.contains(aperture)) {
+				apertureMap[aperture] = QString::number(dcode_index);
+				m_gerber_header += "T" + QString::number(dcode_index) + aperture + "\n";
+				dcode_index++;
+			}
+			QString dcode = apertureMap[aperture];
+			if(current_dcode != dcode){
+				//switch to correct aperture
+				m_gerber_paths += "T" + dcode + "\n";
+				current_dcode = dcode;
+			}
+			m_gerber_paths += "X" + drill_cx + "Y" + drill_cy + "\n";	
+			continue;
+		}
+
+		QString aperture;
+
+        QString cx = QString::number(flipx(centerx));
+        QString cy = QString::number(flipy(centery));
+
+        QString fill = circle.attribute("fill");
 
         qreal diam = ((2*r) + stroke_width)/1000;
 		if (forWhy == ForMask) {
 			diam += 2 * MaskClearance;
 		}
-        qreal hole = ((2*r) - stroke_width)/1000;
 
         if(fill=="none" && forWhy != ForMask){
 			aperture = QString("C,%1X%2").arg(diam, 0, 'f').arg(hole);
-            drill_aperture = QString("C%1").arg(hole, 0, 'f');
         }
         else {
             aperture = QString("C,%1").arg(diam, 0, 'f');
@@ -309,8 +361,6 @@ int SVG2gerber::allPaths2gerber(ForWhy forWhy) {
         if(!apertureMap.contains(aperture)){
             apertureMap[aperture] = QString::number(dcode_index);
             m_gerber_header += "%ADD" + QString::number(dcode_index) + aperture + "*%\n";
-            if(drill_aperture != "")
-                m_drill_header += "T" + QString::number(dcode_index) + drill_aperture + "\n";
             dcode_index++;
         }
 
@@ -319,15 +369,10 @@ int SVG2gerber::allPaths2gerber(ForWhy forWhy) {
 			if(current_dcode != dcode){
 				//switch to correct aperture
 				m_gerber_paths += "G54D" + dcode + "*\n";
-				if(drill_aperture != "")
-					m_drill_paths += "T" + dcode + "\n";
 				current_dcode = dcode;
 			}
 			//flash
 			m_gerber_paths += "X" + cx + "Y" + cy + "D03*\n";
-			if(drill_aperture != "") {
-				m_drill_paths += "X" + drill_cx + "Y" + drill_cy + "\n";
-			}
 		}
 		else {
 			standardAperture(circle, apertureMap, current_dcode, dcode_index, 0);
@@ -343,176 +388,183 @@ int SVG2gerber::allPaths2gerber(ForWhy forWhy) {
 		}
     }
 
-    // rects
-    for(uint j = 0; j < rectList.length(); j++){
-        QDomElement rect = rectList.item(j).toElement();
-		if (forWhy == ForOutline && totalCount > 1) {
-			if (rect.attribute("id").compare("boardoutline", Qt::CaseInsensitive) != 0) continue;
-		}
-
-        QString aperture;
-
-        qreal width = rect.attribute("width").toDouble();
-        qreal height = rect.attribute("height").toDouble();
-
-		if (width == 0) continue;
-		if (height == 0) continue;
-
-        qreal x = rect.attribute("x").toDouble();
-        qreal y = rect.attribute("y").toDouble();
-        qreal centerx = x + (width/2);
-        qreal centery = y + (height/2);
-        QString cx = QString::number(flipx(centerx));
-        QString cy = QString::number(flipy(centery));
-        QString fill = rect.attribute("fill");
-        qreal stroke_width = rect.attribute("stroke-width").toDouble();
-
-        qreal totalx = (width + stroke_width)/1000;
-        qreal totaly = (height + stroke_width)/1000;
-        qreal holex = (width - stroke_width)/1000;
-        qreal holey = (height - stroke_width)/1000;
-
-		if (forWhy == ForMask) {
-			totalx += 2 * MaskClearance;
-			totaly += 2 * MaskClearance;
-		}
-
-
-        if(fill=="none" && forWhy != ForMask) {
-            aperture = QString("R,%1X%2X%3X%4").arg(totalx, 0, 'f').arg(totaly, 0, 'f').arg(holex, 0, 'f').arg(holey, 0, 'f');
-		}
-        else {
-            aperture = QString("R,%1X%2").arg(totalx, 0, 'f').arg(totaly, 0, 'f');
-		}
-
-        // add aperture to defs if we don't have it yet
-        if(!apertureMap.contains(aperture)){
-            apertureMap[aperture] = QString::number(dcode_index);
-            m_gerber_header += "%ADD" + QString::number(dcode_index) + aperture + "*%\n";
-            dcode_index++;
-        }
-
-		if (forWhy != ForOutline) {
-			QString dcode = apertureMap[aperture];
-			if(current_dcode != dcode){
-				//switch to correct aperture
-				m_gerber_paths += "G54D" + dcode + "*\n";
-				current_dcode = dcode;
+	if (forWhy != ForDrill) {
+		// rects
+		for(uint j = 0; j < rectList.length(); j++){
+			QDomElement rect = rectList.item(j).toElement();
+			if (forWhy == ForOutline && totalCount > 1) {
+				if (rect.attribute("id").compare("boardoutline", Qt::CaseInsensitive) != 0) continue;
 			}
-			//flash
-			m_gerber_paths += "X" + cx + "Y" + cy + "D03*\n";
-		}
-        else {
-            // draw 4 lines
 
-			standardAperture(rect, apertureMap, current_dcode, dcode_index, 0);
-            m_gerber_paths += "X" + QString::number(flipx(x)) + "Y" + QString::number(flipy(y)) + "D02*\n";
-            m_gerber_paths += "X" + QString::number(flipx(x+width)) + "Y" + QString::number(flipy(y)) + "D01*\n";
-            m_gerber_paths += "X" + QString::number(flipx(x+width)) + "Y" + QString::number(flipy(y+height)) + "D01*\n";
-            m_gerber_paths += "X" + QString::number(flipx(x)) + "Y" + QString::number(flipy(y+height)) + "D01*\n";
-            m_gerber_paths += "X" + QString::number(flipx(x)) + "Y" + QString::number(flipy(y)) + "D01*\n";
-            m_gerber_paths += "D02*\n";
-        }
-    }
+			QString aperture;
+
+			qreal width = rect.attribute("width").toDouble();
+			qreal height = rect.attribute("height").toDouble();
+
+			if (width == 0) continue;
+			if (height == 0) continue;
+
+			qreal x = rect.attribute("x").toDouble();
+			qreal y = rect.attribute("y").toDouble();
+			qreal centerx = x + (width/2);
+			qreal centery = y + (height/2);
+			QString cx = QString::number(flipx(centerx));
+			QString cy = QString::number(flipy(centery));
+			QString fill = rect.attribute("fill");
+			qreal stroke_width = rect.attribute("stroke-width").toDouble();
+
+			qreal totalx = (width + stroke_width)/1000;
+			qreal totaly = (height + stroke_width)/1000;
+			qreal holex = (width - stroke_width)/1000;
+			qreal holey = (height - stroke_width)/1000;
+
+			if (forWhy == ForMask) {
+				totalx += 2 * MaskClearance;
+				totaly += 2 * MaskClearance;
+			}
+
+
+			if(fill=="none" && forWhy != ForMask) {
+				aperture = QString("R,%1X%2X%3X%4").arg(totalx, 0, 'f').arg(totaly, 0, 'f').arg(holex, 0, 'f').arg(holey, 0, 'f');
+			}
+			else {
+				aperture = QString("R,%1X%2").arg(totalx, 0, 'f').arg(totaly, 0, 'f');
+			}
+
+			// add aperture to defs if we don't have it yet
+			if(!apertureMap.contains(aperture)){
+				apertureMap[aperture] = QString::number(dcode_index);
+				m_gerber_header += "%ADD" + QString::number(dcode_index) + aperture + "*%\n";
+				dcode_index++;
+			}
+
+			if (forWhy != ForOutline) {
+				QString dcode = apertureMap[aperture];
+				if(current_dcode != dcode){
+					//switch to correct aperture
+					m_gerber_paths += "G54D" + dcode + "*\n";
+					current_dcode = dcode;
+				}
+				//flash
+				m_gerber_paths += "X" + cx + "Y" + cy + "D03*\n";
+			}
+			else {
+				// draw 4 lines
+
+				standardAperture(rect, apertureMap, current_dcode, dcode_index, 0);
+				m_gerber_paths += "X" + QString::number(flipx(x)) + "Y" + QString::number(flipy(y)) + "D02*\n";
+				m_gerber_paths += "X" + QString::number(flipx(x+width)) + "Y" + QString::number(flipy(y)) + "D01*\n";
+				m_gerber_paths += "X" + QString::number(flipx(x+width)) + "Y" + QString::number(flipy(y+height)) + "D01*\n";
+				m_gerber_paths += "X" + QString::number(flipx(x)) + "Y" + QString::number(flipy(y+height)) + "D01*\n";
+				m_gerber_paths += "X" + QString::number(flipx(x)) + "Y" + QString::number(flipy(y)) + "D01*\n";
+				m_gerber_paths += "D02*\n";
+			}
+		}
 	
-    // lines - NOTE: this assumes a circular aperture
-    for(uint k = 0; k < lineList.length(); k++){
-        QDomElement line = lineList.item(k).toElement();
-		if (forWhy == ForOutline && totalCount > 1) {
-			if (line.attribute("id").compare("boardoutline", Qt::CaseInsensitive) != 0) continue;
+		// lines - NOTE: this assumes a circular aperture
+		for(uint k = 0; k < lineList.length(); k++){
+			QDomElement line = lineList.item(k).toElement();
+			if (forWhy == ForOutline && totalCount > 1) {
+				if (line.attribute("id").compare("boardoutline", Qt::CaseInsensitive) != 0) continue;
+			}
+
+			// Note: should be no forWhy == ForMask cases 
+
+			qreal x1 = line.attribute("x1").toDouble();
+			qreal y1 = line.attribute("y1").toDouble();
+			qreal x2 = line.attribute("x2").toDouble();
+			qreal y2 = line.attribute("y2").toDouble();
+
+			standardAperture(line, apertureMap, current_dcode, dcode_index, 0);
+
+			// turn off light if we are not continuing along a path
+			if ((y1 != currenty) || (x1 != currentx)) {
+				if (light_on) {
+					m_gerber_paths += "D02*\n";
+					light_on = false;
+				}
+			}
+
+			//go to start - light off
+			m_gerber_paths += "X" + QString::number(flipx(x1)) + "Y" + QString::number(flipy(y1)) + "D02*\n";
+			//go to end point - light on
+			m_gerber_paths += "X" + QString::number(flipx(x2)) + "Y" + QString::number(flipy(y2)) + "D01*\n";
+			light_on = true;
+			currentx = x2;
+			currenty = y2;
 		}
 
-		// Note: should be no forWhy == ForMask cases 
+		// polys - NOTE: assumes comma- or space- separated formatting
+		for(uint p = 0; p < polyList.length(); p++){
+			QDomElement polygon = polyList.item(p).toElement();
+			if (forWhy == ForOutline && totalCount > 1) {
+				if (polygon.attribute("id").compare("boardoutline", Qt::CaseInsensitive) != 0) continue;
+			}
 
-        qreal x1 = line.attribute("x1").toDouble();
-        qreal y1 = line.attribute("y1").toDouble();
-        qreal x2 = line.attribute("x2").toDouble();
-        qreal y2 = line.attribute("y2").toDouble();
+			QString temp;
+			QTextStream tempStream(&temp);
+			polygon.save(tempStream, 1);
 
-		standardAperture(line, apertureMap, current_dcode, dcode_index, 0);
+			QString points = polygon.attribute("points");
+			QStringList pointList = points.split(QRegExp("\\s+|,"), QString::SkipEmptyParts);
 
-        // turn off light if we are not continuing along a path
-        if ((y1 != currenty) || (x1 != currentx)) {
-            if (light_on) {
-                m_gerber_paths += "D02*\n";
-                light_on = false;
-            }
-        }
+			QString aperture;
 
-        //go to start - light off
-        m_gerber_paths += "X" + QString::number(flipx(x1)) + "Y" + QString::number(flipy(y1)) + "D02*\n";
-        //go to end point - light on
-        m_gerber_paths += "X" + QString::number(flipx(x2)) + "Y" + QString::number(flipy(y2)) + "D01*\n";
-        light_on = true;
-        currentx = x2;
-        currenty = y2;
-    }
+			QString pointString;
 
-	// polys - NOTE: assumes comma- or space- separated formatting
-    for(uint p = 0; p < polyList.length(); p++){
-        QDomElement polygon = polyList.item(p).toElement();
-		if (forWhy == ForOutline && totalCount > 1) {
-			if (polygon.attribute("id").compare("boardoutline", Qt::CaseInsensitive) != 0) continue;
-		}
+			qreal startx = pointList.at(0).toDouble();
+			qreal starty = pointList.at(1).toDouble();
+			// move to start - light off
+			pointString += "X" + QString::number(flipx(startx)) + "Y" + QString::number(flipy(starty)) + "D02*\n";
 
-		QString temp;
-		QTextStream tempStream(&temp);
-		polygon.save(tempStream, 1);
+			// iterate through all other points - light on
+			for(int pt = 2; pt < pointList.length(); pt +=2){
+				qreal ptx = pointList.at(pt).toDouble();
+				qreal pty = pointList.at(pt+1).toDouble();
+				pointString += "X" + QString::number(flipx(ptx)) + "Y" + QString::number(flipy(pty)) + "D01*\n";
+			}
 
-        QString points = polygon.attribute("points");
-		QStringList pointList = points.split(QRegExp("\\s+|,"), QString::SkipEmptyParts);
+			// move back to start point
+			pointString += "X" + QString::number(flipx(startx)) + "Y" + QString::number(flipy(starty)) + "D01*\n";
 
-		QString aperture;
+			standardAperture(polygon, apertureMap, current_dcode, dcode_index, 0);		
 
-		QString pointString;
+			bool polyFill = fillNotStroke(polygon, forWhy);
+			// set poly fill if this is actually a filled in shape
+			if (polyFill) {							
+				// start poly fill
+				m_gerber_paths += "G36*\n";
+			}
 
-        qreal startx = pointList.at(0).toDouble();
-        qreal starty = pointList.at(1).toDouble();
-        // move to start - light off
-        pointString += "X" + QString::number(flipx(startx)) + "Y" + QString::number(flipy(starty)) + "D02*\n";
-
-        // iterate through all other points - light on
-        for(int pt = 2; pt < pointList.length(); pt +=2){
-            qreal ptx = pointList.at(pt).toDouble();
-            qreal pty = pointList.at(pt+1).toDouble();
-            pointString += "X" + QString::number(flipx(ptx)) + "Y" + QString::number(flipy(pty)) + "D01*\n";
-        }
-
-        // move back to start point
-        pointString += "X" + QString::number(flipx(startx)) + "Y" + QString::number(flipy(starty)) + "D01*\n";
-
-		standardAperture(polygon, apertureMap, current_dcode, dcode_index, 0);		
-
-		bool polyFill = fillNotStroke(polygon, forWhy);
-        // set poly fill if this is actually a filled in shape
-        if (polyFill) {							
-            // start poly fill
-            m_gerber_paths += "G36*\n";
-		}
-
-		m_gerber_paths += pointString;
-
-        // stop poly fill if this is actually a filled in shape
-        if(polyFill){
-            // stop poly fill
-            m_gerber_paths += "G37*\n";
-        }
-
-		if (forWhy == ForMask) {
-			// draw the outline, G36 only does the fill
-			standardAperture(polygon, apertureMap, current_dcode, dcode_index,  polygon.attribute("stroke-width").toDouble() + (MaskClearance * 2 * 1000));
 			m_gerber_paths += pointString;
-		}
 
-        // light off
-        m_gerber_paths += "D02*\n";
-    }
+			// stop poly fill if this is actually a filled in shape
+			if(polyFill){
+				// stop poly fill
+				m_gerber_paths += "G37*\n";
+			}
+
+			if (forWhy == ForMask) {
+				// draw the outline, G36 only does the fill
+				standardAperture(polygon, apertureMap, current_dcode, dcode_index,  polygon.attribute("stroke-width").toDouble() + (MaskClearance * 2 * 1000));
+				m_gerber_paths += pointString;
+			}
+
+			// light off
+			m_gerber_paths += "D02*\n";
+		}
+	}
 
     // paths - NOTE: this assumes circular aperture
     for(uint n = 0; n < pathList.length(); n++){
         QDomElement path = pathList.item(n).toElement();
 		if (forWhy == ForOutline && totalCount > 1) {
 			if (path.attribute("id").compare("boardoutline", Qt::CaseInsensitive) != 0) continue;
+		}
+
+		if (forWhy == ForDrill) {
+			handleOblongPath(path, dcode_index);
+			continue;
 		}
 
 		QString data = path.attribute("d").trimmed();
@@ -528,7 +580,7 @@ int SVG2gerber::allPaths2gerber(ForWhy forWhy) {
         SvgFlattener flattener;
         flattener.parsePath(data, slot, pathUserData, this, true);
 
-		handleOblongPath(path, dcode_index);
+		
 
         // only add paths if they contained gerber-izable path commands (NO CURVES!)
         // TODO: display some informative error for the user
@@ -601,7 +653,6 @@ QString SVG2gerber::standardAperture(QDomElement & element, QHash<QString, QStri
 
 }
 
-
 void SVG2gerber::handleOblongPath(QDomElement & path, int & dcode_index) {
 		// look for oblong paths
 	QDomElement parent = path.parentNode().toElement();
@@ -621,13 +672,13 @@ void SVG2gerber::handleOblongPath(QDomElement & path, int & dcode_index) {
 	qreal cy2 = nextLine.attribute("y2").toDouble();
 
 	QString drill_aperture = QString("C%1").arg(diameter / 1000, 0, 'f') + "\n";
-	if (!m_drill_header.contains(drill_aperture)) {
-		m_drill_header += "T" + QString::number(dcode_index++) + drill_aperture;
+	if (!m_gerber_header.contains(drill_aperture)) {
+		m_gerber_header += "T" + QString::number(dcode_index++) + drill_aperture;
 	}
-	int ix = m_drill_header.indexOf(drill_aperture);
-	int it = m_drill_header.lastIndexOf("T", ix);
+	int ix = m_gerber_header.indexOf(drill_aperture);
+	int it = m_gerber_header.lastIndexOf("T", ix);
 	m_drill_slots += QString("%1\nX%2Y%3G85X%4Y%5\nG05\n")
-		.arg(m_drill_header.mid(it, ix - it), 0, 'f')
+		.arg(m_gerber_header.mid(it, ix - it), 0, 'f')
 		.arg(flipxNoRound(cx1) / 1000, 0, 'f')
 		.arg(flipyNoRound(cy1) / 1000, 0, 'f')
 		.arg(flipxNoRound(cx2) / 1000, 0, 'f')

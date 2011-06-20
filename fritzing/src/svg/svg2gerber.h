@@ -43,22 +43,17 @@ public:
 	enum ForWhy {
 		ForNormal,
 		ForOutline,
-		ForMask
+		ForMask,
+		ForDrill
 	};
 
 	int convert(const QString & svgStr, bool doubleSided, const QString & mainLayerName, ForWhy, QSizeF boardSize);
     QString getGerber();
-    QString getNCDrill();
-
-
 
 protected:
     QDomDocument m_SVGDom;
     QString m_gerber_header;
     QString m_gerber_paths;
-    QString m_drill_header;
-    QString m_drill_footer;
-    QString m_drill_paths;
     QString m_drill_slots;
 	QSizeF m_boardSize;
 
