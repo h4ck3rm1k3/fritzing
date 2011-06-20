@@ -109,7 +109,11 @@ qtoolbutton
 	image: url(:/resources/images/icons/zoomSliderPlusPressed.png);
 }
 
-
+#LocationLabel {
+	font-size: 9px;
+	font-weight: 500;
+	color: rgb(255,255,255);
+}
 
 /* ################### the palettes #################### */
 FDockWidget {

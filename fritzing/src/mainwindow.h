@@ -287,6 +287,8 @@ protected slots:
 	void autorouterSettings();
 	void warnSMDReally();
 	void boardDeletedSlot();
+	void cursorLocationSlot(qreal, qreal);
+	void locationLabelClicked();
 
 protected:
 	void initSketchWidget(SketchWidget *);
@@ -672,6 +674,8 @@ protected:
 	QPointer<class DockManager> m_dockManager;
 	QPointer<class FileProgressDialog> m_fileProgressDialog;
 	QPointer<class ZoomSlider> m_zoomSlider;
+	QPointer<QLabel> m_locationLabel;
+	bool m_locationLabelInches;
 
 	QByteArray m_externalProcessOutput;
 
@@ -698,6 +702,20 @@ protected:
 	static int UntitledSketchIndex;
 	static int CascadeFactorX;
 	static int CascadeFactorY;
+};
+
+class LocationLabel : public QLabel {
+	Q_OBJECT
+
+public:
+	LocationLabel(QWidget * parent);
+	~LocationLabel();
+
+	void mousePressEvent (QMouseEvent * );
+
+signals:
+	void clicked();
+
 };
 
 #endif

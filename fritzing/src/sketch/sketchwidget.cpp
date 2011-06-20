@@ -2322,6 +2322,9 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 
 	if (m_movingByArrow) return;
 
+	QPointF sp = mapToScene(event->pos());
+	emit cursorLocationSignal(sp.x() / FSvgRenderer::printerScale(), sp.y() / FSvgRenderer::printerScale());
+
 	if (m_dragBendpointWire != NULL) {
 		prepDragBendpoint(m_dragBendpointWire, m_dragBendpointPos);
 		m_dragBendpointWire = NULL;

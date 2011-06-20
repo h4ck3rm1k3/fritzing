@@ -86,6 +86,25 @@ $Date$
 #include "items/symbolpaletteitem.h"
 #include "utils/zoomslider.h"
 
+///////////////////////////////////////////////
+
+LocationLabel::LocationLabel(QWidget * parent) : QLabel(parent)
+{
+}
+
+LocationLabel::~LocationLabel()
+{
+}
+
+void LocationLabel::mousePressEvent(QMouseEvent * event)
+{
+	QLabel::mousePressEvent(event);
+	emit clicked();
+}
+
+
+//////////////////////////////////////////////
+
 const QString MainWindow::UntitledSketchName = "Untitled Sketch";
 int MainWindow::UntitledSketchIndex = 1;
 int MainWindow::CascadeFactorX = 21;
@@ -137,9 +156,19 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	m_statusBar = new QStatusBar(this);
 	setStatusBar(m_statusBar);
 	m_statusBar->setSizeGripEnabled(false);
+
+	QSettings settings;
+	m_locationLabelInches = settings.value("LocationInches", QVariant(true)).toBool();
+
+	m_locationLabel = new LocationLabel(this);
+	m_locationLabel->setObjectName("LocationLabel");
+	connect(m_locationLabel, SIGNAL(clicked()), this, SLOT(locationLabelClicked()));
+	m_statusBar->addPermanentWidget(m_locationLabel);
+
 	m_zoomSlider = new ZoomSlider(m_statusBar);
 	connect(m_zoomSlider, SIGNAL(zoomChanged(qreal)), this, SLOT(updateViewZoom(qreal)));
 	m_statusBar->addPermanentWidget(m_zoomSlider);
+
 
 	setAttribute(Qt::WA_DeleteOnClose, true);
 
@@ -450,6 +479,10 @@ void MainWindow::connectPairs() {
 	succeeded = connect(qApp, SIGNAL(spaceBarIsPressedSignal(bool)), m_pcbGraphicsView, SLOT(spaceBarIsPressedSlot(bool)));
 
 	succeeded = connect(m_pcbGraphicsView, SIGNAL(boardDeletedSignal()), this, SLOT(boardDeletedSlot()));
+
+	succeeded = connect(m_pcbGraphicsView, SIGNAL(cursorLocationSignal(qreal, qreal)), this, SLOT(cursorLocationSlot(qreal, qreal)));
+
+
 }
 
 void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
@@ -795,6 +828,10 @@ void MainWindow::tabWidget_currentChanged(int index) {
 	if (widgetParent == NULL) return;
 
 	m_currentWidget = widgetParent;
+
+	if (m_locationLabel) {
+		m_locationLabel->setText("");
+	}
 
 	QStatusBar *sb = statusBar();
 	connect(sb, SIGNAL(messageChanged(const QString &)), m_statusBar, SLOT(showMessage(const QString &)));
@@ -2468,5 +2505,37 @@ void MainWindow::warnSMDReally()
 void MainWindow::boardDeletedSlot() 
 {
 	activeLayerBottom();
+}
+
+void MainWindow::cursorLocationSlot(qreal xinches, qreal yinches)
+{
+	if (m_locationLabel) {
+		QString units;
+		qreal x, y;
+
+		if (m_locationLabelInches) {
+			units = "in";
+			x = xinches;
+			y = yinches;
+		}
+		else {
+			units = "mm";
+			x = xinches * 25.4;
+			y = yinches * 25.4;
+		}
+
+		m_locationLabel->setText(tr("%1 %2 %3")
+			.arg(x, 0, 'f', 3)
+			.arg(y, 0, 'f', 3)
+			.arg(units) );
+	}
+}
+
+void MainWindow::locationLabelClicked()
+{
+	m_locationLabelInches = !m_locationLabelInches;
+		
+	QSettings settings;
+	settings.setValue("LocationInches", QVariant(m_locationLabelInches));
 }
 
