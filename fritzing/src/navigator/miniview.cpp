@@ -65,18 +65,20 @@ void MiniView::paintEvent(QPaintEvent * event) {
 	QFrame::paintEvent(event);
 
 	QPainter painter(this);
-	QRect vp = painter.viewport(); 
 	if (m_graphicsView && m_graphicsView->scene()) {
+		//DebugDialog::debug(QString("w:%1 h:%2").arg(width()).arg(height()));
 		FGraphicsScene * scene = qobject_cast<FGraphicsScene *>(m_graphicsView->scene());
-		painter.fillRect(0, 0, vp.width(), vp.height(), scene->backgroundBrush());
+		painter.fillRect(0, 0, width(), height(), scene->backgroundBrush());
 		QRectF sr = scene->sceneRect();
+		//DebugDialog::debug(QString("sr:%1 %2 %3 %4").arg(sr.left()).arg(sr.top()).arg(sr.width()).arg(sr.height()));
 		int cw = width();
 		int ch = qRound(sr.height() * cw / sr.width());
 		if (ch > height()) {
 			ch = height();
 			cw = qRound(sr.width() * ch / sr.height());
 		}
-		m_sceneRect.setCoords((width() - cw) / 2, (height() - ch) / 2, cw, ch);
+		m_sceneRect.setRect((width() - cw) / 2, (height() - ch) / 2, cw, ch);
+		//DebugDialog::debug(QString("m_sceneRect:%1 %2 %3 %4").arg(m_sceneRect.left()).arg(m_sceneRect.top()).arg(m_sceneRect.width()).arg(m_sceneRect.height()));
 
 		scene->setDisplayHandles(false);
 		scene->render(&painter, m_sceneRect, sr, Qt::KeepAspectRatio);
@@ -93,9 +95,9 @@ void MiniView::paintEvent(QPaintEvent * event) {
 	QFontMetrics metrics = painter.fontMetrics();
 	m_lastHeight = metrics.descent() + metrics.ascent();
 	int h = 0;  // metrics.descent();
-	int y = vp.bottom() - h - 2;
+	int y = height() - h - 2;
 	QRect br = metrics.boundingRect(m_title);
-	int x = vp.left() + ((vp.width() - br.width()) / 2);
+	int x = ((width() - br.width()) / 2);
 	painter.drawText(QPointF(x, y), m_title);
 
 }
