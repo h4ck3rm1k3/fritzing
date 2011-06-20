@@ -1368,7 +1368,9 @@ void SketchWidget::dragEnterEvent(QDragEnterEvent *event)
 				throw "drag enter event from unknown source";
 			}
 
+			// TODO: this checkunder will probably never work
 			m_checkUnder = other->m_checkUnder;
+
 			m_movingItem = new QGraphicsSvgItem();
 			m_movingItem->setSharedRenderer(other->m_movingSVGRenderer);
 			this->scene()->addItem(m_movingItem);
@@ -1386,8 +1388,6 @@ void SketchWidget::dragEnterEvent(QDragEnterEvent *event)
 bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 	if (!event->mimeData()->hasFormat("application/x-dnditemdata")) return false;
 
-
-	m_checkUnder = checkUnder();
 	scene()->setSceneRect(scene()->sceneRect());	// prevents inadvertent scrolling when dragging in items from the parts bin
 	m_clearSceneRect = true;
 
@@ -1454,6 +1454,11 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 		connect(ItemDrag::_itemDrag(), SIGNAL(dragIsDoneSignal(ItemDrag *)), this, SLOT(dragIsDoneSlot(ItemDrag *)));
 	}
 	//ItemDrag::_setPixmapVisible(false);
+
+	m_checkUnder.clear();
+	if (checkUnder()) {
+		m_checkUnder.append(m_droppingItem);
+	}
 
 
 // make sure relevant layer is visible
@@ -1551,7 +1556,7 @@ void SketchWidget::dragMoveHighlightConnector(QPoint eventPos) {
 	}
 
 	m_droppingItem->setItemPos(loc);
-	if (m_checkUnder) {
+	if (m_checkUnder.contains(m_droppingItem)) {
 		m_droppingItem->findConnectorsUnder();
 	}
 
@@ -1911,7 +1916,8 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 }
 
 void SketchWidget::prepMove(ItemBase * originatingItem) {
-	m_checkUnder = false;
+	m_checkUnder.clear();
+	DebugDialog::debug("prep move check under = false");
 	QSet<Wire *> wires;
 	QList<ItemBase *> items;
 	foreach (QGraphicsItem * gitem,  this->scene()->selectedItems()) {
@@ -1921,6 +1927,11 @@ void SketchWidget::prepMove(ItemBase * originatingItem) {
 
 		items.append(itemBase);
 	}
+
+
+	DebugDialog::debug(QString("prep move items %1").arg(items.count()));
+
+	int originalItemsCount = items.count();
 
 	for (int i = 0; i < items.count(); i++) {
 		ItemBase * itemBase = items[i];
@@ -1953,7 +1964,9 @@ void SketchWidget::prepMove(ItemBase * originatingItem) {
 
 		QSet<ItemBase *> set;
 		if (collectFemaleConnectees(chief, set)) {
-			m_checkUnder = true;
+			if (i < originalItemsCount) {
+				m_checkUnder.append(chief);
+			}
 		}
 		foreach (ItemBase * sitemBase, set) {
 			if (!items.contains(sitemBase)) {
@@ -2491,7 +2504,7 @@ void SketchWidget::moveItems(QPoint globalPos, bool checkAutoScrollFlag)
 		QPointF buttonDownParentPos = item->mapToParent(item->mapFromScene(m_mousePressScenePos));
 		item->setPos(item->getViewGeometry().loc() + currentParentPos - buttonDownParentPos);
 
-		if (m_checkUnder) {
+		if (m_checkUnder.contains(item)) {
 			findConnectorsUnder(item);
 		}
 

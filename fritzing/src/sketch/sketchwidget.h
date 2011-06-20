@@ -584,7 +584,7 @@ protected:
 	QPointer<QGraphicsSvgItem> m_movingItem;
 	QList< QPointer<ConnectorItem> > m_ratsnestUpdateDisconnect;
 	QList< QPointer<ConnectorItem> > m_ratsnestUpdateConnect;
-	bool m_checkUnder;
+	QList <ItemBase *> m_checkUnder;
 	bool m_addDefaultParts;
 	QPointer<ItemBase> m_addedDefaultPart;
 	float m_z;
