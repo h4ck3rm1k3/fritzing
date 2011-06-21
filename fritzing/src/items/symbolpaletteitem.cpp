@@ -133,12 +133,13 @@ ConnectorItem* SymbolPaletteItem::newConnectorItem(Connector *connector)
 		return connectorItem;
 	}
 
-	//connectorItem->debugInfo(QString("insert %1").arg(useVoltage(connectorItem)));
 	if (connectorItem->isGrounded()) {
 		localGrounds.append(connectorItem);
+		//connectorItem->debugInfo("new ground insert");
 	}
 	else {
 		localVoltages.insert(FROMVOLTAGE(useVoltage(connectorItem)), connectorItem);
+		//connectorItem->debugInfo(QString("new voltage insert %1").arg(useVoltage(connectorItem)));
 	}
 	return connectorItem;
 }
@@ -196,13 +197,15 @@ void SymbolPaletteItem::setVoltage(qreal v) {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
 		if (connectorItem == NULL) continue;
 
-		//connectorItem->debugInfo(QString("set voltage insert %1").arg(useVoltage(connectorItem)));
 
 		if (connectorItem->isGrounded()) {
 			localGrounds.append(connectorItem);
+			//connectorItem->debugInfo("ground insert");
+
 		}
 		else {
 			localVoltages.insert(FROMVOLTAGE(v), connectorItem);
+			//connectorItem->debugInfo(QString("voltage insert %1").arg(useVoltage(connectorItem)));
 		}
 	}
 

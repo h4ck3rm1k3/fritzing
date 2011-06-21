@@ -40,6 +40,14 @@ static QString SchematicTraceColor = "schematic black";
 
 static const qreal TraceWidthMils = 33.3333;
 
+bool sameGround(ConnectorItem * c1, ConnectorItem * c2) 
+{
+	bool c1Grounded = c1->isGrounded();
+	bool c2Grounded = c2->isGrounded();
+			
+	return (c1Grounded == c2Grounded);
+}
+
 SchematicSketchWidget::SchematicSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent)
     : PCBSketchWidget(viewIdentifier, parent)
 {
@@ -247,18 +255,21 @@ AddItemCommand * SchematicSketchWidget::newAddItemCommand(BaseCommand::CrossView
 		SymbolPaletteItem * symbol = dynamic_cast<SymbolPaletteItem *>(item);
 		if (symbol == NULL) continue;
 		if (symbol == newSymbol) continue;					// don't connect self to self
-		if (symbol == m_droppingItem) continue;					// the drag item
+		if (symbol == m_droppingItem) continue;				// the drag item
 
-		if (symbol->voltage() == v) {
+		if (symbol->voltage() == v && sameGround(newSymbol->connector0(), symbol->connector0())) {
 			makeModifiedWire(newSymbol->connector0(), symbol->connector0(), crossViewType, ViewGeometry::NormalFlag, parent); 
 		}
 
-		if (symbol->connector1() != NULL && v == 0) {
+		// connector1 is always ground
+		// connector0 may be ground or power
+
+		if (symbol->connector1() != NULL && v == 0 && sameGround(newSymbol->connector0(), symbol->connector1())) {
 			makeModifiedWire(newSymbol->connector0(), symbol->connector1(), crossViewType, ViewGeometry::NormalFlag, parent); 
 		}
 
 		if (newSymbol->connector1() != NULL) {
-			if (symbol->voltage() == 0) {
+			if (symbol->voltage() == 0 && sameGround(newSymbol->connector1(), symbol->connector0())) {
 				makeModifiedWire(newSymbol->connector1(), symbol->connector0(), crossViewType, ViewGeometry::NormalFlag, parent); 
 			}
 			if (symbol->connector1() != NULL) {
@@ -309,7 +320,7 @@ void SchematicSketchWidget::setVoltage(qreal v, bool doEmit)
 		if (other == NULL) continue;
 		if (other == sitem) continue;
 
-		if (other->voltage() == v) {
+		if (other->voltage() == v && sameGround(sitem->connector0(), other->connector0())) {
 			this->makeModifiedWire(sitem->connector0(), other->connector0(), BaseCommand::CrossView, ViewGeometry::NormalFlag, parentCommand);
 		}
 	}
