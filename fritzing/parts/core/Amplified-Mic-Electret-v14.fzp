@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='Amplified-Mic-Electret-v14'>
 <version>4</version>
-<date>2011-06-08</date>
+<date>2011-06-21</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description:&lt;/span&gt; Ready to add audio to your next project? This small breakout board couples a small electret microphone with a 100x opamp to amplify the sounds of voice, door knocks, etc loud enough to be picked up by a microcontroller&amp;#39;s Analog to Digital converter. Unit comes fully assembled as shown. Works from 2.7V up to 5.5V.&lt;br /&gt;

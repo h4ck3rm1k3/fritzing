@@ -12,7 +12,7 @@
      <title >text:VCC</title>
      <g  transform="matrix(1, 0, 0, 1, 13.32, 20.88)">
       <g  transform="rotate(-90)">
-       <text  fill="#FFFFFF" font-family="OCRA" transform="matrix(1 0 0 1 -3.662109e-04 -1.9838)" font-size="2.6726">VCC</text>
+       <text  fill="#FFFFFF" font-family="OCRA" transform="matrix(1 0 0 1 6.103516e-04 -2.267)" font-size="2.6726">VCC</text>
       </g>
      </g>
     </g>
@@ -20,7 +20,7 @@
      <title >text:TXO</title>
      <g  transform="matrix(1, 0, 0, 1, 13.32, 28.08)">
       <g  transform="rotate(-90)">
-       <text  fill="#FFFFFF" font-family="OCRA" transform="matrix(1 0 0 1 -5.798340e-04 -1.9838)" font-size="2.6726">TXO</text>
+       <text  fill="#FFFFFF" font-family="OCRA" transform="matrix(1 0 0 1 3.967285e-04 -2.267)" font-size="2.6726">TXO</text>
       </g>
      </g>
     </g>
@@ -28,7 +28,7 @@
      <title >text:RXI</title>
      <g  transform="matrix(1, 0, 0, 1, 13.32, 35.28)">
       <g  transform="rotate(-90)">
-       <text  fill="#FFFFFF" font-family="OCRA" transform="matrix(1 0 0 1 -7.629395e-04 -1.9838)" font-size="2.6726">RXI</text>
+       <text  fill="#FFFFFF" font-family="OCRA" transform="matrix(1 0 0 1 2.136230e-04 -2.267)" font-size="2.6726">RXI</text>
       </g>
      </g>
     </g>
@@ -36,35 +36,35 @@
      <title >text:GND</title>
      <g  transform="matrix(1, 0, 0, 1, 13.32, 6.84)">
       <g  transform="rotate(-90)">
-       <text  fill="#FFFFFF" font-family="OCRA" transform="matrix(1 0 0 1 -3.356934e-04 -1.9838)" font-size="2.6726">GND</text>
+       <text  fill="#FFFFFF" font-family="OCRA" transform="matrix(1 0 0 1 6.408691e-04 -2.267)" font-size="2.6726">GND</text>
       </g>
      </g>
     </g>
     <g >
      <title >text:FTDI Basic</title>
-     <text  fill="#FFFFFF" font-family="OCRA" transform="matrix(1 0 0 1 46.8 4.3208)" font-size="3.3408">FTDI Basic</text>
+     <text  fill="#FFFFFF" font-family="OCRA" transform="matrix(1 0 0 1 46.8 4.3198)" font-size="3.3408">FTDI Basic</text>
     </g>
     <g >
      <title >text:DTR</title>
      <g  transform="matrix(1, 0, 0, 1, 13.32, 42.48)">
       <g  transform="rotate(-90)">
-       <text  fill="#FFFFFF" font-family="OCRA" transform="matrix(1 0 0 1 -9.460449e-04 -1.9838)" font-size="2.6726">DTR</text>
+       <text  fill="#FFFFFF" font-family="OCRA" transform="matrix(1 0 0 1 0.001 -2.267)" font-size="2.6726">DTR</text>
       </g>
      </g>
     </g>
     <g >
      <title >text:RX</title>
-     <text  fill="#FFFFFF" font-family="OCRA" transform="matrix(1 0 0 1 29.8801 8.6401)" font-size="3.3408">RX</text>
+     <text  fill="#FFFFFF" font-family="OCRA" transform="matrix(1 0 0 1 29.8801 8.6392)" font-size="3.3408">RX</text>
     </g>
     <g >
      <title >text:TX</title>
-     <text  fill="#FFFFFF" font-family="OCRA" transform="matrix(1 0 0 1 22.6804 8.6401)" font-size="3.3408">TX</text>
+     <text  fill="#FFFFFF" font-family="OCRA" transform="matrix(1 0 0 1 22.6804 8.6392)" font-size="3.3408">TX</text>
     </g>
     <g >
      <title >text:CTS</title>
      <g  transform="matrix(1, 0, 0, 1, 13.32, 13.68)">
       <g  transform="rotate(-90)">
-       <text  fill="#FFFFFF" font-family="OCRA" transform="matrix(1 0 0 1 -1.831055e-04 -1.9838)" font-size="2.6726">CTS</text>
+       <text  fill="#FFFFFF" font-family="OCRA" transform="matrix(1 0 0 1 -1.831055e-04 -2.267)" font-size="2.6726">CTS</text>
       </g>
      </g>
     </g>
@@ -72,7 +72,7 @@
      <title >text:BLK</title>
      <g  transform="matrix(1, 0, 0, 1, 3.6, 6.84)">
       <g  transform="rotate(-90)">
-       <text  fill="#FFFFFF" font-family="OCRA" transform="matrix(1 0 0 1 -3.356934e-04 12.3329)" font-size="2.6726">BLK</text>
+       <text  fill="#FFFFFF" font-family="OCRA" transform="matrix(1 0 0 1 6.408691e-04 11.7918)" font-size="2.6726">BLK</text>
       </g>
      </g>
     </g>
@@ -80,7 +80,7 @@
      <title >text:GRN</title>
      <g  transform="matrix(1, 0, 0, 1, 3.6, 42.48)">
       <g  transform="rotate(-90)">
-       <text  fill="#FFFFFF" font-family="OCRA" transform="matrix(1 0 0 1 -9.460449e-04 12.3329)" font-size="2.6726">GRN</text>
+       <text  fill="#FFFFFF" font-family="OCRA" transform="matrix(1 0 0 1 0.001 11.7918)" font-size="2.6726">GRN</text>
       </g>
      </g>
     </g>
@@ -207,12 +207,47 @@
    <rect  width="0.907" x="31.89" y="2.296" fill="#FFFFFF" height="2.608" fill-opacity="0.15"/>
    <rect  width="5.698" x="21.271" y="35.325" fill="#FFFFFF" height="5.67" fill-opacity="0.15"/>
    <rect  width="29.48" x="17.659" y="13.309" fill="#FFFFFF" height="16.583" fill-opacity="0.15"/>
-   <rect  width="2.78" x="2.21" y="38.209" fill="none" height="2.781" id="connector6pad"/>
-   <rect  width="2.78" x="2.21" y="31.009" fill="none" height="2.781" id="connector7pad"/>
-   <rect  width="2.78" x="2.21" y="23.81" fill="none" height="2.781" id="connector8pad"/>
-   <rect  width="2.78" x="2.21" y="16.61" fill="none" height="2.78" id="connector9pad"/>
-   <rect  width="2.78" x="2.21" y="9.41" fill="none" height="2.78" id="connector10pad"/>
-   <rect  width="2.78" x="2.21" y="2.209" fill="none" height="2.781" id="connector11pad"/>
+   <rect  width="2.783" x="2.207" y="38.208" fill="none" height="2.783" id="connector6pin"/>
+   <rect  width="2.783" x="2.207" y="31.008" fill="none" height="2.783" id="connector7pin"/>
+   <rect  width="2.783" x="2.207" y="23.809" fill="none" height="2.783" id="connector8pin"/>
+   <rect  width="2.783" x="2.207" y="16.608" fill="none" height="2.783" id="connector9pin"/>
+   <rect  width="2.783" x="2.207" y="9.408" fill="none" height="2.783" id="connector10pin"/>
+   <rect  width="2.783" x="2.207" y="2.208" fill="none" height="2.783" id="connector11pin"/>
+  </g>
+  <g  id="_x31_x06" transform="matrix(1, 0, 0, 1, -11.3318, 18.7007)">
+   <g  transform="matrix(0, 1, -1, 0, 25.2, -18)">
+    <rect  width="7.199" x="17.314" y="-11.332" fill="#404040" height="43.2" transform="matrix(2.578893e-06 1 -1 2.578893e-06 31.1819 -10.6452)"/>
+    <rect  width="2.782" x="1.523" y="8.878" height="2.781" transform="matrix(2.578893e-06 1 -1 2.578893e-06 13.1829 7.3548)"/>
+    <polygon  fill="#2A2A29" points="0.499,7.853 1.521,8.878 4.306,8.878 5.331,7.853 "/>
+    <polygon  fill="#474747" points="5.331,7.853 4.306,8.881 4.306,11.662 5.331,12.685 "/>
+    <polygon  fill="#595959" points="5.33,12.685 4.305,11.662 1.521,11.662 0.499,12.685 "/>
+    <polygon  fill="#373737" points="0.497,12.685 1.521,11.66 1.521,8.878 0.497,7.853 "/>
+    <rect  width="2.782" x="8.724" y="8.878" height="2.781" transform="matrix(2.578893e-06 1 -1 2.578893e-06 20.3838 0.1539)"/>
+    <polygon  fill="#2A2A29" points="7.697,7.853 8.722,8.878 11.504,8.878 12.529,7.853 "/>
+    <polygon  fill="#474747" points="12.529,7.853 11.504,8.881 11.504,11.662 12.529,12.685 "/>
+    <polygon  fill="#595959" points="12.528,12.685 11.503,11.662 8.722,11.662 7.697,12.685 "/>
+    <polygon  fill="#373737" points="7.695,12.685 8.722,11.66 8.722,8.878 7.695,7.853 "/>
+    <rect  width="2.782" x="15.923" y="8.878" height="2.781" transform="matrix(2.578893e-06 1 -1 2.578893e-06 27.5827 -7.0451)"/>
+    <polygon  fill="#2A2A29" points="14.897,7.853 15.921,8.878 18.706,8.878 19.73,7.853 "/>
+    <polygon  fill="#474747" points="19.73,7.853 18.706,8.881 18.706,11.662 19.73,12.685 "/>
+    <polygon  fill="#595959" points="19.729,12.685 18.705,11.662 15.921,11.662 14.897,12.685 "/>
+    <polygon  fill="#373737" points="14.896,12.685 15.921,11.66 15.921,8.878 14.896,7.853 "/>
+    <rect  width="2.782" x="23.124" y="8.879" height="2.78" transform="matrix(2.578893e-06 1 -1 2.578893e-06 34.7839 -14.2463)"/>
+    <polygon  fill="#2A2A29" points="22.099,7.853 23.123,8.878 25.905,8.878 26.931,7.853 "/>
+    <polygon  fill="#474747" points="26.931,7.853 25.905,8.881 25.905,11.662 26.931,12.685 "/>
+    <polygon  fill="#595959" points="26.93,12.685 25.903,11.662 23.123,11.662 22.099,12.685 "/>
+    <polygon  fill="#373737" points="22.096,12.685 23.123,11.66 23.123,8.878 22.096,7.853 "/>
+    <rect  width="2.782" x="30.323" y="8.879" height="2.78" transform="matrix(2.578893e-06 1 -1 2.578893e-06 41.9831 -21.4455)"/>
+    <polygon  fill="#2A2A29" points="29.299,7.853 30.321,8.878 33.105,8.878 34.131,7.853 "/>
+    <polygon  fill="#474747" points="34.131,7.853 33.105,8.881 33.105,11.662 34.131,12.685 "/>
+    <polygon  fill="#595959" points="34.129,12.685 33.104,11.662 30.321,11.662 29.299,12.685 "/>
+    <polygon  fill="#373737" points="29.297,12.685 30.321,11.66 30.321,8.878 29.297,7.853 "/>
+    <rect  width="2.782" x="37.523" y="8.878" height="2.781" transform="matrix(2.578893e-06 1 -1 2.578893e-06 49.1828 -28.6452)"/>
+    <polygon  fill="#2A2A29" points="36.498,7.853 37.521,8.878 40.306,8.878 41.33,7.853 "/>
+    <polygon  fill="#474747" points="41.33,7.853 40.306,8.881 40.306,11.662 41.33,12.685 "/>
+    <polygon  fill="#595959" points="41.33,12.685 40.305,11.662 37.521,11.662 36.498,12.685 "/>
+    <polygon  fill="#373737" points="36.496,12.685 37.521,11.66 37.521,8.878 36.496,7.853 "/>
+   </g>
   </g>
   <g  id="usb-minib" transform="matrix(1, 0, 0, 1, 48.814, 4.58334)">
    <g  transform="matrix(-1, 0, 0, -1, 30.888, 34.056)">
@@ -246,39 +281,6 @@
     <line  stroke-opacity="0.15" fill="none" stroke="#FFFFFF" stroke-linecap="round" y1="27.326" stroke-width="0.5" x1="24.868" y2="27.326" x2="3.151"/>
     <line  fill="none" y1="14.33" x1="26.438" y2="19.719" x2="26.438"/>
    </g>
-  </g>
-  <g >
-   <rect  width="7.199" x="0" fill="#404040" height="43.2"/>
-   <rect  width="2.781" x="2.209" y="2.21" height="2.781"/>
-   <polygon  fill="#2A2A29" points="6.016,1.185 4.99,2.208 4.99,4.991 6.016,6.017 "/>
-   <polygon  fill="#474747" points="6.016,6.017 4.988,4.991 2.207,4.991 1.184,6.017 "/>
-   <polygon  fill="#595959" points="1.184,6.016 2.207,4.99 2.207,2.208 1.184,1.185 "/>
-   <polygon  fill="#373737" points="1.184,1.183 2.209,2.208 4.99,2.208 6.016,1.183 "/>
-   <rect  width="2.781" x="2.209" y="9.41" height="2.781"/>
-   <polygon  fill="#2A2A29" points="6.016,8.384 4.99,9.408 4.99,12.191 6.016,13.216 "/>
-   <polygon  fill="#474747" points="6.016,13.216 4.988,12.191 2.207,12.191 1.184,13.216 "/>
-   <polygon  fill="#595959" points="1.184,13.215 2.207,12.19 2.207,9.408 1.184,8.384 "/>
-   <polygon  fill="#373737" points="1.184,8.382 2.209,9.408 4.99,9.408 6.016,8.382 "/>
-   <rect  width="2.781" x="2.209" y="16.61" height="2.781"/>
-   <polygon  fill="#2A2A29" points="6.016,15.584 4.99,16.608 4.99,19.392 6.016,20.416 "/>
-   <polygon  fill="#474747" points="6.016,20.416 4.988,19.392 2.207,19.392 1.184,20.416 "/>
-   <polygon  fill="#595959" points="1.184,20.415 2.207,19.391 2.207,16.608 1.184,15.584 "/>
-   <polygon  fill="#373737" points="1.184,15.582 2.209,16.608 4.99,16.608 6.016,15.582 "/>
-   <rect  width="2.781" x="2.209" y="23.809" height="2.781"/>
-   <polygon  fill="#2A2A29" points="6.016,22.784 4.99,23.807 4.99,26.59 6.016,27.616 "/>
-   <polygon  fill="#474747" points="6.016,27.616 4.988,26.59 2.207,26.59 1.184,27.616 "/>
-   <polygon  fill="#595959" points="1.184,27.616 2.207,26.59 2.207,23.807 1.184,22.784 "/>
-   <polygon  fill="#373737" points="1.184,22.782 2.209,23.807 4.99,23.807 6.016,22.782 "/>
-   <rect  width="2.781" x="2.209" y="31.01" height="2.781"/>
-   <polygon  fill="#2A2A29" points="6.016,29.983 4.99,31.008 4.99,33.792 6.016,34.815 "/>
-   <polygon  fill="#474747" points="6.016,34.815 4.988,33.792 2.207,33.792 1.184,34.815 "/>
-   <polygon  fill="#595959" points="1.184,34.815 2.207,33.79 2.207,31.008 1.184,29.983 "/>
-   <polygon  fill="#373737" points="1.184,29.981 2.209,31.008 4.99,31.008 6.016,29.981 "/>
-   <rect  width="2.781" x="2.209" y="38.209" height="2.781"/>
-   <polygon  fill="#2A2A29" points="6.016,37.184 4.99,38.208 4.99,40.991 6.016,42.016 "/>
-   <polygon  fill="#474747" points="6.016,42.016 4.988,40.991 2.207,40.991 1.184,42.016 "/>
-   <polygon  fill="#595959" points="1.184,42.014 2.207,40.991 2.207,38.208 1.184,37.184 "/>
-   <polygon  fill="#373737" points="1.184,37.182 2.209,38.208 4.99,38.208 6.016,37.182 "/>
   </g>
  </g>
 </svg>

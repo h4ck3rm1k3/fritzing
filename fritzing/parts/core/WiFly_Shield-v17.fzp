@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='WiFly_Shield-v17'>
 <version>4</version>
-<date>2011-06-08</date>
+<date>2011-06-21</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description: &lt;/span&gt;This new version breaks out the PI09, FORCE WAKE, and the hardware reset lines. It also has a different crystal and uses the RN-131C.&lt;/p&gt;
@@ -69,7 +69,7 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector75' type='female' name='GND'>
+<connector id='connector75' type='male' name='GND'>
 <description>GND</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector75pin'/></breadboardView>
@@ -79,7 +79,7 @@
 <p layer='copper0' svgId='connector75pad'/><p layer='copper1' svgId='connector75pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector76' type='female' name='GND'>
+<connector id='connector76' type='male' name='GND'>
 <description>GND</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector76pin'/></breadboardView>
@@ -89,7 +89,7 @@
 <p layer='copper0' svgId='connector76pad'/><p layer='copper1' svgId='connector76pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector77' type='female' name='GND'>
+<connector id='connector77' type='male' name='GND'>
 <description>GND</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector77pin'/></breadboardView>
@@ -99,7 +99,7 @@
 <p layer='copper0' svgId='connector77pad'/><p layer='copper1' svgId='connector77pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector78' type='female' name='RES'>
+<connector id='connector78' type='male' name='RES'>
 <description>RES</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector78pin'/></breadboardView>
@@ -109,7 +109,7 @@
 <p layer='copper0' svgId='connector78pad'/><p layer='copper1' svgId='connector78pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector81' type='female' name='VIN'>
+<connector id='connector81' type='male' name='VIN'>
 <description>VIN</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector81pin'/></breadboardView>

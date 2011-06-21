@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='Si470x-Eval-v11'>
 <version>4</version>
-<date>2011-06-08</date>
+<date>2011-06-21</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Description:&lt;/strong&gt; This is a breakout board for the Silicon Laboratories Si4703 FM tuner chip. Beyond being a simple FM radio, the Si4703 is also capable of detecting and processing both Radio Data Service (RDS) and Radio Broadcast Data Service (RBDS) information. The Si4703 even does a very good job of filtering and carrier detection. It also enables data such as the station ID and song name to be displayed to the user.&lt;/p&gt;

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='Arduino-Pro-Mini-v11'>
 <version>4</version>
-<date>2011-06-08</date>
+<date>2011-06-21</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description:&lt;/span&gt; It&amp;#39;s blue! It&amp;#39;s thin (0.8mm)! It&amp;#39;s the Arduino Pro Mini! SparkFun&amp;#39;s minimal design approach to Arduino. This is a 3.3V Arduino running the 8MHz bootloader (select &amp;#39;Arduino Duemilanove w/ 328&amp;#39; within the Arduino software). Arduino Pro Mini does not come with connectors populated so that you can solder in any connector or wire with any orientation you need. We recommend first time Arduino users start with the Duemilanove. It&amp;#39;s a great board that will get you up and running quickly. The Arduino Pro series is meant for users that understand the limitations of system voltage (3.3V), lack of connectors, and USB off board.&lt;/p&gt;

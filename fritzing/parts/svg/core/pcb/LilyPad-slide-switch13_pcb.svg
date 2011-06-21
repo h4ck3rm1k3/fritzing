@@ -5,6 +5,12 @@
  <g  id="silkscreen" stroke-width="0">
   <path  fill="none" stroke="white" stroke-width="0.576" d="M21.2844,10.939A10.4836,10.4836,0,1,0,0.31559,10.939L0.31559,40.4815A10.4836,10.4836,0,1,0,21.2844,40.4815L21.2844,10.939M9.8833,21.4582a0.916726,0.916726,0,1,1,1.83345,0,0.916726,0.916726,0,1,1,-1.83345,0zM9.8833,29.9622a0.916726,0.916726,0,1,1,1.83345,0,0.916726,0.916726,0,1,1,-1.83345,0z"/>
   <g  stroke-width="0">
+   <title >element:LOGO1</title>
+   <g  stroke-width="0">
+    <title >package:LOGO-L</title>
+   </g>
+  </g>
+  <g  stroke-width="0">
    <title >element:S1</title>
    <g  stroke-width="0">
     <title >package:AYZ0202</title>

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='ISD1932 Breakout-v11'>
 <version>4</version>
-<date>2011-06-08</date>
+<date>2011-06-21</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description:&lt;/span&gt; This is a breakout board for the ISD1932, a&lt;span id=&quot;RadEditorPlaceHolderControl1&quot;&gt; multiple-message record/playback device.&lt;/span&gt; This single chip can record up to 64 seconds worth of voice messages. Microphone inputs and speaker outputs are all handled by the ISD1932.&lt;br /&gt;

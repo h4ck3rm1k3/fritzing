@@ -69,9 +69,32 @@
    </g>
   </g>
   <g  stroke-width="0">
+   <title >element:JP2</title>
+   <g  stroke-width="0">
+    <title >package:STAND-OFF</title>
+   </g>
+  </g>
+  <g  stroke-width="0">
+   <title >element:JP3</title>
+   <g  stroke-width="0">
+    <title >package:STAND-OFF</title>
+   </g>
+  </g>
+  <g  stroke-width="0">
    <title >element:U$2</title>
    <g  stroke-width="0">
     <title >package:SFE-NEW-WEBLOGO</title>
+   </g>
+  </g>
+  <g  stroke-width="0">
+   <title >element:U1</title>
+   <g  stroke-width="0">
+    <title >package:LGA14</title>
+    <line  stroke="white" stroke-linecap="round" y1="13.748" x1="35.8866" y2="16.0158" stroke-width="0.576" x2="35.8866"/>
+    <line  stroke="white" stroke-linecap="round" y1="19.9842" x1="35.8866" y2="22.252" stroke-width="0.576" x2="35.8866"/>
+    <line  stroke="white" stroke-linecap="round" y1="22.252" x1="21.7134" y2="19.9842" stroke-width="0.576" x2="21.7134"/>
+    <line  stroke="white" stroke-linecap="round" y1="16.0158" x1="21.7134" y2="13.748" stroke-width="0.576" x2="21.7134"/>
+    <circle  fill="none" cx="31.6346" cy="18" stroke="white" r="0.283465" stroke-width="0.576"/>
    </g>
   </g>
  </g>

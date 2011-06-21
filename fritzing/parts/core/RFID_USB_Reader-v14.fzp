@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='RFID_USB_Reader-v14'>
 <version>4</version>
-<date>2011-06-08</date>
+<date>2011-06-21</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Replacement:&lt;/strong&gt; &lt;a href=&quot;http://www.sparkfun.com/products/9963&quot;&gt;SEN-09963&lt;/a&gt;. The new revision uses SMD headers for the RFID module, and has a solder jumper which allows you to disable or enable the buzzer. This page is for reference only.&lt;/p&gt;

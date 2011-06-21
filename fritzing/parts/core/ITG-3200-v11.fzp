@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='ITG-3200-v11'>
 <version>4</version>
-<date>2011-06-08</date>
+<date>2011-06-21</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Description: &lt;/strong&gt;This is a breakout board for InvenSense&amp;#39;s ITG-3200, a groundbreaking triple-axis, digital output gyroscope. The ITG-3200 features three 16-bit analog-to-digital converters (ADCs) for digitizing the gyro outputs, a user-selectable internal low-pass filter bandwidth, and a Fast-Mode I&lt;sup&gt;2&lt;/sup&gt;C (400kHz) interface. Additional features include an embedded temperature sensor and a 2% accurate internal oscillator.&lt;/p&gt;

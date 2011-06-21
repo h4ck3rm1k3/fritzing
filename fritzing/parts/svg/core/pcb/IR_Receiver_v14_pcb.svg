@@ -5,9 +5,35 @@
  <g  id="silkscreen" stroke-width="0">
   <path  fill="none" stroke="white" stroke-width="0.576" d="M0.288,28.512L39.312,28.512L39.312,0.288L0.288,0.288L0.288,28.512"/>
   <g  stroke-width="0">
+   <title >element:C1</title>
+   <g  stroke-width="0">
+    <title >package:0603-CAP</title>
+    <line  stroke="white" stroke-linecap="round" y1="21.6" x1="18.0865" y2="21.6" stroke-width="1.584" x2="17.9135"/>
+   </g>
+  </g>
+  <g  stroke-width="0">
+   <title >element:C2</title>
+   <g  stroke-width="0">
+    <title >package:0603-CAP</title>
+    <line  stroke="white" stroke-linecap="round" y1="21.6" x1="25.2865" y2="21.6" stroke-width="1.584" x2="25.1135"/>
+   </g>
+  </g>
+  <g  stroke-width="0">
    <title >element:JP1</title>
    <g  stroke-width="0">
     <title >package:1X03</title>
+   </g>
+  </g>
+  <g  stroke-width="0">
+   <title >element:R1</title>
+   <g  stroke-width="0">
+    <title >package:0603-RES</title>
+   </g>
+  </g>
+  <g  stroke-width="0">
+   <title >element:R2</title>
+   <g  stroke-width="0">
+    <title >package:0603-RES</title>
    </g>
   </g>
   <g  stroke-width="0">

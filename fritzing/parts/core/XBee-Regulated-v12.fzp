@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='XBee-Regulated-v12'>
 <version>4</version>
-<date>2011-06-08</date>
+<date>2011-06-21</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description:&lt;/span&gt; The XBee Explorer Regulated takes care of the 3.3V regulation, signal conditioning, and basic activity indicators (Power, RSSI and DIN/DOUT activity LEDs). It translates the 5V signals to 3.3V so that you can connect a 5V (down to 3.3V) system to any XBee module. The board was conveniently designed to mate directly with Arduino Pro boards for &lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/tutorial_info.php?tutorials_id=122&quot; name=&quot;&quot; target=&quot;_blank&quot;&gt;wireless bootloading&lt;/a&gt; and USB based configuration.&lt;br /&gt;

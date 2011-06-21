@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='5DOF-v25'>
 <version>4</version>
-<date>2011-06-08</date>
+<date>2011-06-21</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;b&gt;Description:&lt;/b&gt; This Inertia Measurement Unit Combo Board incorporates the IDG500 dual-axis gyroscope and Analog Devices triple axis ADXL335 accelerometer in a tight footprint. The IMU board uses a standard 0.1&amp;quot; footprint and includes all outputs from both the IDG500 gyro and ADXL335 accelerometer ICs.&lt;/p&gt;

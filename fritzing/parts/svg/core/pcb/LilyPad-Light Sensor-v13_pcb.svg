@@ -5,6 +5,30 @@
  <g  id="silkscreen" stroke-width="0">
   <path  fill="none" stroke="white" stroke-width="0.576" d="M0.288,28.3465a28.0585,28.0585,0,1,0,56.1169,0,28.0585,28.0585,0,1,0,-56.1169,0z"/>
   <g  stroke-width="0">
+   <title >element:LIGHT+</title>
+   <g  stroke-width="0">
+    <title >package:PETAL-SMALL-2SIDE</title>
+   </g>
+  </g>
+  <g  stroke-width="0">
+   <title >element:LIGHT-</title>
+   <g  stroke-width="0">
+    <title >package:PETAL-SMALL-2SIDE</title>
+   </g>
+  </g>
+  <g  stroke-width="0">
+   <title >element:LIGHT1</title>
+   <g  stroke-width="0">
+    <title >package:PETAL-NOHOLE-2SIDE</title>
+   </g>
+  </g>
+  <g  stroke-width="0">
+   <title >element:LIGHT3</title>
+   <g  stroke-width="0">
+    <title >package:PETAL-NOHOLE-2SIDE</title>
+   </g>
+  </g>
+  <g  stroke-width="0">
    <title >element:U$2</title>
    <g  stroke-width="0">
     <title >package:LOGO-LILYPAD</title>

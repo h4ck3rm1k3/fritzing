@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='DeadOn RTC - DS3234 Breakout-v11'>
 <version>4</version>
-<date>2011-06-08</date>
+<date>2011-06-21</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Description:&lt;/strong&gt; Here is a real time clock based on the DS3234 Real Time Clock IC. The DS3234 is a low-cost, extremely accurate SPI bus real-time clock with an integrated temperature-compensated crystal oscillator and crystal.&lt;/p&gt;

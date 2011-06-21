@@ -74,6 +74,21 @@
     <line  stroke="white" stroke-linecap="round" y1="14.4" x1="52.2" y2="14.4" stroke-width="0.576" x2="55.8"/>
    </g>
   </g>
+  <g  stroke-width="0">
+   <title >element:U1</title>
+   <g  stroke-width="0">
+    <title >package:LGA28-5X5</title>
+    <line  stroke="white" stroke-linecap="round" y1="34.4693" x1="21.7134" y2="35.8866" stroke-width="0.36" x2="21.7134"/>
+    <line  stroke="white" stroke-linecap="round" y1="35.8866" x1="21.7134" y2="35.8866" stroke-width="0.36" x2="23.1307"/>
+    <line  stroke="white" stroke-linecap="round" y1="35.8866" x1="34.4693" y2="35.8866" stroke-width="0.36" x2="35.8866"/>
+    <line  stroke="white" stroke-linecap="round" y1="35.8866" x1="35.8866" y2="34.4693" stroke-width="0.36" x2="35.8866"/>
+    <line  stroke="white" stroke-linecap="round" y1="23.1307" x1="35.8866" y2="21.7134" stroke-width="0.36" x2="35.8866"/>
+    <line  stroke="white" stroke-linecap="round" y1="21.7134" x1="35.8866" y2="21.7134" stroke-width="0.36" x2="34.4693"/>
+    <line  stroke="white" stroke-linecap="round" y1="21.7134" x1="23.1307" y2="21.7134" stroke-width="0.36" x2="21.7134"/>
+    <line  stroke="white" stroke-linecap="round" y1="21.7134" x1="21.7134" y2="23.1307" stroke-width="0.36" x2="21.7134"/>
+    <circle  fill="none" cx="24.8315" cy="32.7685" stroke="white" r="0.283465" stroke-width="0.566929"/>
+   </g>
+  </g>
  </g>
  <g  id="copper1" stroke-width="0">
   <circle  fill="none" cx="3.6" cy="18" connectorname="SCL_M" stroke="#F7BD13" r="2.052" id="connector16pad" stroke-width="1.224"/>

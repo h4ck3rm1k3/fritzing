@@ -5,6 +5,13 @@
  <g  id="silkscreen" stroke-width="0">
   <path  fill="none" stroke="white" stroke-width="0.576" d="M0.288,35.712L28.512,35.712L28.512,0.288L0.288,0.288L0.288,35.712"/>
   <g  stroke-width="0">
+   <title >element:C1</title>
+   <g  stroke-width="0">
+    <title >package:0402-CAP</title>
+    <line  stroke="white" stroke-linecap="round" y1="12.6" x1="8.55353" y2="12.6" stroke-width="1.152" x2="8.72647"/>
+   </g>
+  </g>
+  <g  stroke-width="0">
    <title >element:JP1</title>
    <g  stroke-width="0">
     <title >package:1X04</title>
@@ -34,6 +41,44 @@
     <line  stroke="white" stroke-linecap="round" y1="34.2" x1="0" y2="36" stroke-width="0.576" x2="1.8"/>
     <line  stroke="white" stroke-linecap="round" y1="36" x1="5.4" y2="36" stroke-width="0.576" x2="1.8"/>
     <line  stroke="white" stroke-linecap="round" y1="30.6" x1="28.8" y2="34.2" stroke-width="0.576" x2="28.8"/>
+   </g>
+  </g>
+  <g  stroke-width="0">
+   <title >element:JP2</title>
+   <g  stroke-width="0">
+    <title >package:1X02</title>
+    <line  stroke="white" stroke-linecap="round" y1="7.2" x1="19.8" y2="7.2" stroke-width="0.576" x2="16.2"/>
+    <line  stroke="white" stroke-linecap="round" y1="7.2" x1="16.2" y2="5.4" stroke-width="0.576" x2="14.4"/>
+    <line  stroke="white" stroke-linecap="round" y1="1.8" x1="14.4" y2="0" stroke-width="0.576" x2="16.2"/>
+    <line  stroke="white" stroke-linecap="round" y1="5.4" x1="14.4" y2="7.2" stroke-width="0.576" x2="12.6"/>
+    <line  stroke="white" stroke-linecap="round" y1="7.2" x1="12.6" y2="7.2" stroke-width="0.576" x2="9"/>
+    <line  stroke="white" stroke-linecap="round" y1="7.2" x1="9" y2="5.4" stroke-width="0.576" x2="7.2"/>
+    <line  stroke="white" stroke-linecap="round" y1="1.8" x1="7.2" y2="0" stroke-width="0.576" x2="9"/>
+    <line  stroke="white" stroke-linecap="round" y1="0" x1="9" y2="0" stroke-width="0.576" x2="12.6"/>
+    <line  stroke="white" stroke-linecap="round" y1="0" x1="12.6" y2="1.8" stroke-width="0.576" x2="14.4"/>
+    <line  stroke="white" stroke-linecap="round" y1="5.4" x1="21.6" y2="1.8" stroke-width="0.576" x2="21.6"/>
+    <line  stroke="white" stroke-linecap="round" y1="7.2" x1="19.8" y2="5.4" stroke-width="0.576" x2="21.6"/>
+    <line  stroke="white" stroke-linecap="round" y1="1.8" x1="21.6" y2="0" stroke-width="0.576" x2="19.8"/>
+    <line  stroke="white" stroke-linecap="round" y1="0" x1="16.2" y2="0" stroke-width="0.576" x2="19.8"/>
+    <line  stroke="white" stroke-linecap="round" y1="5.4" x1="7.2" y2="1.8" stroke-width="0.576" x2="7.2"/>
+   </g>
+  </g>
+  <g  stroke-width="0">
+   <title >element:R1</title>
+   <g  stroke-width="0">
+    <title >package:0402-RES</title>
+   </g>
+  </g>
+  <g  stroke-width="0">
+   <title >element:R2</title>
+   <g  stroke-width="0">
+    <title >package:0402-RES</title>
+   </g>
+  </g>
+  <g  stroke-width="0">
+   <title >element:R3</title>
+   <g  stroke-width="0">
+    <title >package:0402-RES</title>
    </g>
   </g>
  </g>

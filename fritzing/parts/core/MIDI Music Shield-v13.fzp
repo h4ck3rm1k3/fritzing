@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='MIDI Music Shield-v13'>
 <version>4</version>
-<date>2011-06-08</date>
+<date>2011-06-21</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Description:&lt;/strong&gt; Do you ever wish your Arduino was more musically talented? Or maybe your project could use some cool sound effects. The Musical Instrument Shield is an easy way to add great sounding MIDI sound to your next Arduino project. This board is built around the VS1053 MP3 and MIDI codec IC, wired in MIDI mode. Simply connect a speaker/stereo/pair of headphones to the 1/8&amp;quot; stereo jack on the shied and pass the proper serial commands to the IC and you&amp;#39;ll be playing music in no time!&lt;/p&gt;
@@ -63,7 +63,7 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector85' type='female' name='VCC'>
+<connector id='connector85' type='male' name='VCC'>
 <description>VCC</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector85pin'/></breadboardView>
@@ -73,7 +73,7 @@
 <p layer='copper0' svgId='connector85pad'/><p layer='copper1' svgId='connector85pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector105' type='female' name='GND'>
+<connector id='connector105' type='male' name='GND'>
 <description>GND</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector105pin'/></breadboardView>
@@ -83,7 +83,7 @@
 <p layer='copper0' svgId='connector105pad'/><p layer='copper1' svgId='connector105pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector106' type='female' name='GND'>
+<connector id='connector106' type='male' name='GND'>
 <description>GND</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector106pin'/></breadboardView>
@@ -93,7 +93,7 @@
 <p layer='copper0' svgId='connector106pad'/><p layer='copper1' svgId='connector106pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector107' type='female' name='GND'>
+<connector id='connector107' type='male' name='GND'>
 <description>GND</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector107pin'/></breadboardView>

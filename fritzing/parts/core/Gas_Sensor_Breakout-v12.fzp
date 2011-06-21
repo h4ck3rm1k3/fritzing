@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='Gas_Sensor_Breakout-v12'>
 <version>4</version>
-<date>2011-06-08</date>
+<date>2011-06-21</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description:&lt;/span&gt; Simple breakout board for the MQ - 3, MQ - 4, MQ - 6 and MQ - 7 gas sensors.&amp;nbsp; All you need is VCC at 5V, GND, and a resistor to an ADC, that is it.&lt;br /&gt;

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='GPSShield-v15'>
 <version>4</version>
-<date>2011-06-08</date>
+<date>2011-06-21</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description: &lt;/span&gt;Adding GPS to your Arduino has never been easier. The multiple GPS receivers attach easily to the shield, and with the &lt;a href=&quot;http://www.sparkfun.com/tutorial/GPSQuickStart/gps_parsing_v13.pde&quot;&gt;example sketch&lt;/a&gt;, you will be able to locate your exact position within a few meters. Here&amp;#39;s where &lt;a href=&quot;http://maps.google.com/maps?q=40.06477,+-105.20997&quot; target=&quot;_blank&quot;&gt;we are&lt;/a&gt;. GPS also gives you amazingly accurate time! A &lt;a href=&quot;http://www.sparkfun.com/commerce/tutorial_info.php?tutorials_id=173&quot;&gt;GPS quickstart guide&lt;/a&gt; is available for this product.&lt;/p&gt;
@@ -309,7 +309,7 @@
 <p layer='copper0' svgId='connector34pad'/><p layer='copper1' svgId='connector34pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector59' type='female' name='3.3VIN'>
+<connector id='connector59' type='male' name='3.3VIN'>
 <description>3.3VIN</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector59pin'/></breadboardView>
@@ -319,7 +319,7 @@
 <p layer='copper0' svgId='connector59pad'/><p layer='copper1' svgId='connector59pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector60' type='female' name='5VIN'>
+<connector id='connector60' type='male' name='5VIN'>
 <description>5VIN</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector60pin'/></breadboardView>
@@ -329,7 +329,7 @@
 <p layer='copper0' svgId='connector60pad'/><p layer='copper1' svgId='connector60pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector68' type='female' name='D_RX'>
+<connector id='connector68' type='male' name='D_RX'>
 <description>D_RX</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector68pin'/></breadboardView>
@@ -339,7 +339,7 @@
 <p layer='copper0' svgId='connector68pad'/><p layer='copper1' svgId='connector68pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector69' type='female' name='D_TX'>
+<connector id='connector69' type='male' name='D_TX'>
 <description>D_TX</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector69pin'/></breadboardView>
@@ -349,7 +349,7 @@
 <p layer='copper0' svgId='connector69pad'/><p layer='copper1' svgId='connector69pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector80' type='female' name='GND'>
+<connector id='connector80' type='male' name='GND'>
 <description>GND</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector80pin'/></breadboardView>
@@ -359,7 +359,7 @@
 <p layer='copper0' svgId='connector80pad'/><p layer='copper1' svgId='connector80pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector81' type='female' name='GND'>
+<connector id='connector81' type='male' name='GND'>
 <description>GND</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector81pin'/></breadboardView>
@@ -369,7 +369,7 @@
 <p layer='copper0' svgId='connector81pad'/><p layer='copper1' svgId='connector81pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector82' type='female' name='GND'>
+<connector id='connector82' type='male' name='GND'>
 <description>GND</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector82pin'/></breadboardView>
@@ -379,7 +379,7 @@
 <p layer='copper0' svgId='connector82pad'/><p layer='copper1' svgId='connector82pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector83' type='female' name='RES'>
+<connector id='connector83' type='male' name='RES'>
 <description>RES</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector83pin'/></breadboardView>
@@ -389,7 +389,7 @@
 <p layer='copper0' svgId='connector83pad'/><p layer='copper1' svgId='connector83pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector84' type='female' name='UART_RX'>
+<connector id='connector84' type='male' name='UART_RX'>
 <description>UART_RX</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector84pin'/></breadboardView>
@@ -399,7 +399,7 @@
 <p layer='copper0' svgId='connector84pad'/><p layer='copper1' svgId='connector84pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector85' type='female' name='UART_TX'>
+<connector id='connector85' type='male' name='UART_TX'>
 <description>UART_TX</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector85pin'/></breadboardView>

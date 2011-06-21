@@ -36,6 +36,15 @@
     <title >package:MIC-9.7MM</title>
    </g>
   </g>
+  <g  stroke-width="0">
+   <title >element:U1</title>
+   <g  stroke-width="0">
+    <title >package:SOT23-5</title>
+    <line  stroke="white" stroke-linecap="round" y1="10.368" x1="23.9828" y2="10.368" stroke-width="0.576" x2="26.4172"/>
+    <line  stroke="white" stroke-linecap="round" y1="18.432" x1="26.4172" y2="18.432" stroke-width="0.576" x2="23.9828"/>
+    <line  stroke="white" stroke-linecap="round" y1="15.1608" x1="22.9028" y2="13.6392" stroke-width="0.576" x2="22.9028"/>
+   </g>
+  </g>
  </g>
  <g  id="copper1" stroke-width="0">
   <circle  fill="none" cx="43.2" cy="21.6" connectorname="VCC" stroke="#F7BD13" r="2.052" id="connector8pad" stroke-width="1.224"/>

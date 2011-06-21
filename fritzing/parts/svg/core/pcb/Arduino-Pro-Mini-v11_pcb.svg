@@ -23,6 +23,17 @@
    </g>
   </g>
   <g  stroke-width="0">
+   <title >element:S2</title>
+   <g  stroke-width="0">
+    <title >package:TACTILE_SWITCH_SMD</title>
+    <line  stroke="white" stroke-linecap="round" y1="79.285" x1="32.4" y2="86.4" stroke-width="0.576" x2="32.4"/>
+    <line  stroke="white" stroke-linecap="round" y1="90" x1="29.5654" y2="90" stroke-width="0.576" x2="20.8346"/>
+    <line  stroke="white" stroke-linecap="round" y1="86.315" x1="18" y2="79.285" stroke-width="0.576" x2="18"/>
+    <line  stroke="white" stroke-linecap="round" y1="75.6" x1="20.8346" y2="75.6" stroke-width="0.576" x2="29.5654"/>
+    <circle  fill="none" cx="25.2" cy="82.8" stroke="white" r="3.6" stroke-width="0.576"/>
+   </g>
+  </g>
+  <g  stroke-width="0">
    <title >element:U$11</title>
    <g  stroke-width="0">
     <title >package:SFE-NEW-WEBLOGO</title>

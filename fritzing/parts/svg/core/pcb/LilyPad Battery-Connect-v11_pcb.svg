@@ -32,12 +32,6 @@
    </g>
   </g>
  </g>
- <g  id="copper1" stroke-width="0">
-  <circle  fill="none" cx="14.4" cy="40.32" connectorname="1" stroke="#F7BD13" r="4.68" id="connector4pad" stroke-width="1.44"/>
-  <circle  fill="none" cx="14.4" cy="10.08" connectorname="N$1" stroke="#F7BD13" r="4.68" id="connector5pad" stroke-width="1.44"/>
- </g>
- <g  id="copper0" stroke-width="0">
-  <circle  fill="none" cx="14.4" cy="40.32" connectorname="1" stroke="#F7BD13" r="4.68" id="connector4pad" stroke-width="1.44"/>
-  <circle  fill="none" cx="14.4" cy="10.08" connectorname="N$1" stroke="#F7BD13" r="4.68" id="connector5pad" stroke-width="1.44"/>
- </g>
+ <g  id="copper1" stroke-width="0"/>
+ <g  id="copper0" stroke-width="0"/>
 </svg>

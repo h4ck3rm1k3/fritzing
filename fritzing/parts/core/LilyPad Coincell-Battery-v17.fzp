@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='LilyPad Coincell-Battery-v17'>
 <version>4</version>
-<date>2011-06-08</date>
+<date>2011-06-21</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Description:&lt;/strong&gt; If you&amp;#39;re looking for a simple way to add a battery to your LilyPad project, the LilyPad Coin Cell Battery Holder might do the trick. It&amp;#39;s a simple board which holds a 20mm coin cell battery (such as a CR2032) and gives you 4 connection points (two positive and two negative) for sewing into your project.&lt;/p&gt;

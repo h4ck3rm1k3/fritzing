@@ -20,6 +20,20 @@
    </g>
   </g>
   <g  stroke-width="0">
+   <title >element:R1</title>
+   <g  stroke-width="0">
+    <title >package:AXIAL-0.3</title>
+    <line  stroke="white" stroke-linecap="round" y1="42.48" x1="21.6" y2="42.48" stroke-width="0.576" x2="7.2"/>
+    <line  stroke="white" stroke-linecap="round" y1="42.48" x1="7.2" y2="40.32" stroke-width="0.576" x2="7.2"/>
+    <line  stroke="white" stroke-linecap="round" y1="40.32" x1="7.2" y2="38.16" stroke-width="0.576" x2="7.2"/>
+    <line  stroke="white" stroke-linecap="round" y1="38.16" x1="7.2" y2="38.16" stroke-width="0.576" x2="21.6"/>
+    <line  stroke="white" stroke-linecap="round" y1="38.16" x1="21.6" y2="40.32" stroke-width="0.576" x2="21.6"/>
+    <line  stroke="white" stroke-linecap="round" y1="40.32" x1="21.6" y2="42.48" stroke-width="0.576" x2="21.6"/>
+    <line  stroke="white" stroke-linecap="round" y1="40.32" x1="7.2" y2="40.32" stroke-width="0.576" x2="6.48"/>
+    <line  stroke="white" stroke-linecap="round" y1="40.32" x1="21.6" y2="40.32" stroke-width="0.576" x2="22.32"/>
+   </g>
+  </g>
+  <g  stroke-width="0">
    <title >element:S1</title>
    <g  stroke-width="0">
     <title >package:AYZ0202</title>

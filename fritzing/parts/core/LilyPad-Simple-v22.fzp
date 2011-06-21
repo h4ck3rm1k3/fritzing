@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='LilyPad-Simple-v22'>
 <version>4</version>
-<date>2011-06-08</date>
+<date>2011-06-21</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Replacement:&lt;/strong&gt; DEV-10274. The new revision removes the 6-pin ISP headers and adds a charging circuit based on the MCP73831. This page is for reference only.&lt;/p&gt;

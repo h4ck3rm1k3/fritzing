@@ -87,6 +87,63 @@
    </g>
   </g>
   <g  stroke-width="0">
+   <title >element:JP2</title>
+   <g  stroke-width="0">
+    <title >package:1X04</title>
+    <line  stroke="white" stroke-linecap="round" y1="0" x1="41.4" y2="0" stroke-width="0.576" x2="45"/>
+    <line  stroke="white" stroke-linecap="round" y1="0" x1="45" y2="1.8" stroke-width="0.576" x2="46.8"/>
+    <line  stroke="white" stroke-linecap="round" y1="5.4" x1="46.8" y2="7.2" stroke-width="0.576" x2="45"/>
+    <line  stroke="white" stroke-linecap="round" y1="1.8" x1="32.4" y2="0" stroke-width="0.576" x2="34.2"/>
+    <line  stroke="white" stroke-linecap="round" y1="0" x1="34.2" y2="0" stroke-width="0.576" x2="37.8"/>
+    <line  stroke="white" stroke-linecap="round" y1="0" x1="37.8" y2="1.8" stroke-width="0.576" x2="39.6"/>
+    <line  stroke="white" stroke-linecap="round" y1="5.4" x1="39.6" y2="7.2" stroke-width="0.576" x2="37.8"/>
+    <line  stroke="white" stroke-linecap="round" y1="7.2" x1="37.8" y2="7.2" stroke-width="0.576" x2="34.2"/>
+    <line  stroke="white" stroke-linecap="round" y1="7.2" x1="34.2" y2="5.4" stroke-width="0.576" x2="32.4"/>
+    <line  stroke="white" stroke-linecap="round" y1="0" x1="41.4" y2="1.8" stroke-width="0.576" x2="39.6"/>
+    <line  stroke="white" stroke-linecap="round" y1="5.4" x1="39.6" y2="7.2" stroke-width="0.576" x2="41.4"/>
+    <line  stroke="white" stroke-linecap="round" y1="7.2" x1="45" y2="7.2" stroke-width="0.576" x2="41.4"/>
+    <line  stroke="white" stroke-linecap="round" y1="0" x1="19.8" y2="0" stroke-width="0.576" x2="23.4"/>
+    <line  stroke="white" stroke-linecap="round" y1="0" x1="23.4" y2="1.8" stroke-width="0.576" x2="25.2"/>
+    <line  stroke="white" stroke-linecap="round" y1="5.4" x1="25.2" y2="7.2" stroke-width="0.576" x2="23.4"/>
+    <line  stroke="white" stroke-linecap="round" y1="1.8" x1="25.2" y2="0" stroke-width="0.576" x2="27"/>
+    <line  stroke="white" stroke-linecap="round" y1="0" x1="27" y2="0" stroke-width="0.576" x2="30.6"/>
+    <line  stroke="white" stroke-linecap="round" y1="0" x1="30.6" y2="1.8" stroke-width="0.576" x2="32.4"/>
+    <line  stroke="white" stroke-linecap="round" y1="5.4" x1="32.4" y2="7.2" stroke-width="0.576" x2="30.6"/>
+    <line  stroke="white" stroke-linecap="round" y1="7.2" x1="30.6" y2="7.2" stroke-width="0.576" x2="27"/>
+    <line  stroke="white" stroke-linecap="round" y1="7.2" x1="27" y2="5.4" stroke-width="0.576" x2="25.2"/>
+    <line  stroke="white" stroke-linecap="round" y1="1.8" x1="18" y2="5.4" stroke-width="0.576" x2="18"/>
+    <line  stroke="white" stroke-linecap="round" y1="0" x1="19.8" y2="1.8" stroke-width="0.576" x2="18"/>
+    <line  stroke="white" stroke-linecap="round" y1="5.4" x1="18" y2="7.2" stroke-width="0.576" x2="19.8"/>
+    <line  stroke="white" stroke-linecap="round" y1="7.2" x1="23.4" y2="7.2" stroke-width="0.576" x2="19.8"/>
+    <line  stroke="white" stroke-linecap="round" y1="1.8" x1="46.8" y2="5.4" stroke-width="0.576" x2="46.8"/>
+   </g>
+  </g>
+  <g  stroke-width="0">
+   <title >element:U$2</title>
+   <g  stroke-width="0">
+    <title >package:LFCSP-16</title>
+    <line  stroke="white" stroke-linecap="round" y1="19.5307" x1="42.548" y2="20.948" stroke-width="0.576" x2="41.1307"/>
+    <line  stroke="white" stroke-linecap="round" y1="19.5307" x1="51.052" y2="19.5307" stroke-width="0.576" x2="52.4693"/>
+    <line  stroke="white" stroke-linecap="round" y1="19.5307" x1="52.4693" y2="20.948" stroke-width="0.576" x2="52.4693"/>
+    <line  stroke="white" stroke-linecap="round" y1="29.452" x1="52.4693" y2="30.8693" stroke-width="0.576" x2="52.4693"/>
+    <line  stroke="white" stroke-linecap="round" y1="30.8693" x1="52.4693" y2="30.8693" stroke-width="0.576" x2="51.052"/>
+    <line  stroke="white" stroke-linecap="round" y1="30.8693" x1="42.548" y2="30.8693" stroke-width="0.576" x2="41.1307"/>
+    <line  stroke="white" stroke-linecap="round" y1="30.8693" x1="41.1307" y2="29.452" stroke-width="0.576" x2="41.1307"/>
+   </g>
+  </g>
+  <g  stroke-width="0">
+   <title >element:U$3</title>
+   <g  stroke-width="0">
+    <title >package:STAND-OFF</title>
+   </g>
+  </g>
+  <g  stroke-width="0">
+   <title >element:U$4</title>
+   <g  stroke-width="0">
+    <title >package:STAND-OFF</title>
+   </g>
+  </g>
+  <g  stroke-width="0">
    <title >element:U2</title>
    <g  stroke-width="0">
     <title >package:SPARKFUN_IDG500</title>

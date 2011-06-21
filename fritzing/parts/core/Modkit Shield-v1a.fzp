@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='Modkit Shield-v1a'>
 <version>4</version>
-<date>2011-06-08</date>
+<date>2011-06-21</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Description:&lt;/strong&gt; The Modkit MotoProto Shield for Arduino that makes it easy to connect up to 4 sensors and control two DC motors as well as a 16X2 character LCD. The sensor jacks accept 2.5mm cables and provide access to VCC, GND, and an analog input.&lt;/p&gt;
@@ -63,7 +63,7 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector24' type='female' name='GND'>
+<connector id='connector24' type='male' name='GND'>
 <description>GND</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector24pin'/></breadboardView>
@@ -73,7 +73,7 @@
 <p layer='copper0' svgId='connector24pad'/><p layer='copper1' svgId='connector24pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector25' type='female' name='3.3V'>
+<connector id='connector25' type='male' name='3.3V'>
 <description>3.3V</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector25pin'/></breadboardView>
@@ -123,7 +123,7 @@
 <p layer='copper0' svgId='connector29pad'/><p layer='copper1' svgId='connector29pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector141' type='female' name='3.3V'>
+<connector id='connector141' type='male' name='3.3V'>
 <description>3.3V</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector141pin'/></breadboardView>
@@ -133,7 +133,7 @@
 <p layer='copper0' svgId='connector141pad'/><p layer='copper1' svgId='connector141pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector142' type='female' name='5V'>
+<connector id='connector142' type='male' name='5V'>
 <description>5V</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector142pin'/></breadboardView>
@@ -143,7 +143,7 @@
 <p layer='copper0' svgId='connector142pad'/><p layer='copper1' svgId='connector142pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector150' type='female' name='DIRA'>
+<connector id='connector150' type='male' name='DIRA'>
 <description>DIRA</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector150pin'/></breadboardView>
@@ -153,7 +153,7 @@
 <p layer='copper0' svgId='connector150pad'/><p layer='copper1' svgId='connector150pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector151' type='female' name='PWMA'>
+<connector id='connector151' type='male' name='PWMA'>
 <description>PWMA</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector151pin'/></breadboardView>
@@ -163,7 +163,7 @@
 <p layer='copper0' svgId='connector151pad'/><p layer='copper1' svgId='connector151pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector152' type='female' name='DIRB'>
+<connector id='connector152' type='male' name='DIRB'>
 <description>DIRB</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector152pin'/></breadboardView>
@@ -173,7 +173,7 @@
 <p layer='copper0' svgId='connector152pad'/><p layer='copper1' svgId='connector152pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector153' type='female' name='PWMB'>
+<connector id='connector153' type='male' name='PWMB'>
 <description>PWMB</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector153pin'/></breadboardView>
@@ -183,7 +183,7 @@
 <p layer='copper0' svgId='connector153pad'/><p layer='copper1' svgId='connector153pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector154' type='female' name='RS'>
+<connector id='connector154' type='male' name='RS'>
 <description>RS</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector154pin'/></breadboardView>
@@ -193,7 +193,7 @@
 <p layer='copper0' svgId='connector154pad'/><p layer='copper1' svgId='connector154pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector155' type='female' name='E'>
+<connector id='connector155' type='male' name='E'>
 <description>E</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector155pin'/></breadboardView>
@@ -203,7 +203,7 @@
 <p layer='copper0' svgId='connector155pad'/><p layer='copper1' svgId='connector155pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector162' type='female' name='GND'>
+<connector id='connector162' type='male' name='GND'>
 <description>GND</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector162pin'/></breadboardView>
@@ -213,7 +213,7 @@
 <p layer='copper0' svgId='connector162pad'/><p layer='copper1' svgId='connector162pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector163' type='female' name='GND'>
+<connector id='connector163' type='male' name='GND'>
 <description>GND</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector163pin'/></breadboardView>
@@ -223,7 +223,7 @@
 <p layer='copper0' svgId='connector163pad'/><p layer='copper1' svgId='connector163pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector164' type='female' name='GND'>
+<connector id='connector164' type='male' name='GND'>
 <description>GND</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector164pin'/></breadboardView>
@@ -233,7 +233,7 @@
 <p layer='copper0' svgId='connector164pad'/><p layer='copper1' svgId='connector164pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector168' type='female' name='VIN'>
+<connector id='connector168' type='male' name='VIN'>
 <description>VIN</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector168pin'/></breadboardView>

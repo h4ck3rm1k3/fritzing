@@ -48,6 +48,21 @@
     <line  stroke="white" stroke-linecap="round" y1="1.8" x1="43.2" y2="5.4" stroke-width="0.576" x2="43.2"/>
    </g>
   </g>
+  <g  stroke-width="0">
+   <title >element:U$1</title>
+   <g  stroke-width="0">
+    <title >package:BMP085</title>
+    <line  stroke="white" stroke-linecap="round" y1="14.5134" x1="14.5134" y2="16.2142" stroke-width="0.36" x2="14.5134"/>
+    <line  stroke="white" stroke-linecap="round" y1="14.5134" x1="14.5134" y2="14.5134" stroke-width="0.36" x2="16.2142"/>
+    <line  stroke="white" stroke-linecap="round" y1="14.5134" x1="28.6866" y2="14.5134" stroke-width="0.36" x2="26.9858"/>
+    <line  stroke="white" stroke-linecap="round" y1="14.5134" x1="28.6866" y2="16.2142" stroke-width="0.36" x2="28.6866"/>
+    <line  stroke="white" stroke-linecap="round" y1="28.6866" x1="14.5134" y2="26.9858" stroke-width="0.36" x2="14.5134"/>
+    <line  stroke="white" stroke-linecap="round" y1="28.6866" x1="14.5134" y2="28.6866" stroke-width="0.36" x2="16.4976"/>
+    <line  stroke="white" stroke-linecap="round" y1="28.6866" x1="28.6866" y2="28.6866" stroke-width="0.36" x2="26.7024"/>
+    <line  stroke="white" stroke-linecap="round" y1="28.6866" x1="28.6866" y2="26.9858" stroke-width="0.36" x2="28.6866"/>
+    <circle  fill="none" cx="15.6473" cy="15.6473" stroke="white" r="0.566929" stroke-width="0.36"/>
+   </g>
+  </g>
  </g>
  <g  id="copper1" stroke-width="0">
   <circle  fill="none" cx="3.6" cy="3.6" connectorname="VCC" stroke="#F7BD13" r="2.052" id="connector5pad" stroke-width="1.224"/>

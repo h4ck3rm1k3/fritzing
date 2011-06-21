@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='Touch_Shield-v11'>
 <version>4</version>
-<date>2011-06-08</date>
+<date>2011-06-21</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Description:&lt;/strong&gt; The MPR121 IC is a great way to build simple capacitive touch interfaces, and now it&amp;#39;s even easier to incorporate into your Arduino projects with the touch shield. The touch shield has 9 capacitive touch pads, with headers for the remaining 3 electrode connections. With this shield you can have a total of 12 touch sensitive buttons. An on-board logic level converter allows it to work with 5V and 3.3V Arduino boards. Simply solder on some header pins and stack it on to your Arduino for a convenient input device. Check below for some example code to get you started.&lt;/p&gt;
@@ -81,7 +81,7 @@
 <p layer='copper0' svgId='connector26pad'/><p layer='copper1' svgId='connector26pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector43' type='female' name='3.3V'>
+<connector id='connector43' type='male' name='3.3V'>
 <description>3.3V</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector43pin'/></breadboardView>
@@ -91,7 +91,7 @@
 <p layer='copper0' svgId='connector43pad'/><p layer='copper1' svgId='connector43pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector44' type='female' name='5V'>
+<connector id='connector44' type='male' name='5V'>
 <description>5V</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector44pin'/></breadboardView>
@@ -101,7 +101,7 @@
 <p layer='copper0' svgId='connector44pad'/><p layer='copper1' svgId='connector44pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector49' type='female' name='SDA_H'>
+<connector id='connector49' type='male' name='SDA_H'>
 <description>SDA_H</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector49pin'/></breadboardView>
@@ -111,7 +111,7 @@
 <p layer='copper0' svgId='connector49pad'/><p layer='copper1' svgId='connector49pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector50' type='female' name='SCL_H'>
+<connector id='connector50' type='male' name='SCL_H'>
 <description>SCL_H</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector50pin'/></breadboardView>
@@ -121,7 +121,7 @@
 <p layer='copper0' svgId='connector50pad'/><p layer='copper1' svgId='connector50pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector52' type='female' name='*IRQ'>
+<connector id='connector52' type='male' name='*IRQ'>
 <description>*IRQ</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector52pin'/></breadboardView>
@@ -131,7 +131,7 @@
 <p layer='copper0' svgId='connector52pad'/><p layer='copper1' svgId='connector52pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector66' type='female' name='GND'>
+<connector id='connector66' type='male' name='GND'>
 <description>GND</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector66pin'/></breadboardView>
