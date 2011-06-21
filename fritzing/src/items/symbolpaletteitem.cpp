@@ -41,7 +41,8 @@ $Date$
 #define VOLTAGE_HASH_CONVERSION 1000000
 #define FROMVOLTAGE(v) ((long) (v * VOLTAGE_HASH_CONVERSION))
 
-static QMultiHash<long, ConnectorItem *> localVoltages;			// Qt doesn't do Hash keys with qreal
+static QMultiHash<long, QPointer<ConnectorItem> > localVoltages;			// Qt doesn't do Hash keys with qreal
+static QList< QPointer<ConnectorItem> > localGrounds;
 static QList<qreal> Voltages;
 qreal SymbolPaletteItem::DefaultVoltage = 5;
 
@@ -79,6 +80,9 @@ SymbolPaletteItem::SymbolPaletteItem( ModelPart * modelPart, ViewIdentifierClass
 }
 
 SymbolPaletteItem::~SymbolPaletteItem() {
+	if (m_connector0) localGrounds.removeOne(m_connector0);
+	if (m_connector1) localGrounds.removeOne(m_connector1);
+	localGrounds.removeOne(NULL);
 	foreach (long key, localVoltages.uniqueKeys()) {
 		if (m_connector0) {
 			localVoltages.remove(key, m_connector0);
@@ -86,6 +90,7 @@ SymbolPaletteItem::~SymbolPaletteItem() {
 		if (m_connector1) {
 			localVoltages.remove(key, m_connector1);
 		}
+		localVoltages.remove(key, NULL);
 	}
 }
 
@@ -96,8 +101,12 @@ void SymbolPaletteItem::removeMeFromBus(qreal v) {
 
 		qreal nv = useVoltage(connectorItem);
 		if (nv == v) {
+			//connectorItem->debugInfo(QString("remove %1").arg(useVoltage(connectorItem)));
+
+			bool gotOne = localGrounds.removeOne(connectorItem);
 			int count = localVoltages.remove(FROMVOLTAGE(v), connectorItem);
-			if (count == 0) {
+			localVoltages.remove(FROMVOLTAGE(v), NULL);
+			if (count == 0 && !gotOne) {
 				DebugDialog::debug(QString("removeMeFromBus failed %1 %2 %3 %4")
 					.arg(this->id())
 					.arg(connectorItem->connectorSharedID())
@@ -105,6 +114,8 @@ void SymbolPaletteItem::removeMeFromBus(qreal v) {
 			}
 		}
 	}
+	localGrounds.removeOne(NULL);
+
 }
 
 ConnectorItem* SymbolPaletteItem::newConnectorItem(Connector *connector) 
@@ -122,7 +133,13 @@ ConnectorItem* SymbolPaletteItem::newConnectorItem(Connector *connector)
 		return connectorItem;
 	}
 
-	localVoltages.insert(FROMVOLTAGE(useVoltage(connectorItem)), connectorItem);
+	//connectorItem->debugInfo(QString("insert %1").arg(useVoltage(connectorItem)));
+	if (connectorItem->isGrounded()) {
+		localGrounds.append(connectorItem);
+	}
+	else {
+		localVoltages.insert(FROMVOLTAGE(useVoltage(connectorItem)), connectorItem);
+	}
 	return connectorItem;
 }
 
@@ -131,9 +148,19 @@ void SymbolPaletteItem::busConnectorItems(Bus * bus, QList<class ConnectorItem *
 
 	if (m_viewIdentifier != ViewIdentifierClass::SchematicView) return;
 
-	qreal v = (bus->id().compare("groundbus", Qt::CaseInsensitive) == 0) ? 0 : m_voltage;
-	QList<ConnectorItem *> mitems = localVoltages.values(FROMVOLTAGE(v));
+	//foreach (ConnectorItem * bc, items) {
+		//bc->debugInfo(QString("bc %1").arg(bus->id()));
+	//}
+
+	QList< QPointer<ConnectorItem> > mitems;
+	if (bus->id().compare("groundbus", Qt::CaseInsensitive) == 0) {
+		mitems.append(localGrounds);
+	}
+	else {
+		mitems.append(localVoltages.values(FROMVOLTAGE(m_voltage)));
+	}
 	foreach (ConnectorItem * connectorItem, mitems) {
+		if (connectorItem == NULL) continue;
 		if (connectorItem->scene() == this->scene()) {
 			items.append(connectorItem);
 			//connectorItem->debugInfo(QString("symbol bus %1").arg(bus->id()));
@@ -169,10 +196,14 @@ void SymbolPaletteItem::setVoltage(qreal v) {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
 		if (connectorItem == NULL) continue;
 
-		// jrc: 21 jun 2011 I don't understand why ground is an exception here so commenting out this line
-		//if (connectorItem->connectorSharedName().compare("GND", Qt::CaseInsensitive) == 0) continue;
+		//connectorItem->debugInfo(QString("set voltage insert %1").arg(useVoltage(connectorItem)));
 
-		localVoltages.insert(FROMVOLTAGE(v), connectorItem);
+		if (connectorItem->isGrounded()) {
+			localGrounds.append(connectorItem);
+		}
+		else {
+			localVoltages.insert(FROMVOLTAGE(v), connectorItem);
+		}
 	}
 
 	if (!m_voltageReference) return;

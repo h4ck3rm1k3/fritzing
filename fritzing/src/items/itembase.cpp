@@ -1085,6 +1085,7 @@ void ItemBase::busConnectorItems(class Bus * bus, QList<class ConnectorItem *> &
 	if (busConnectorItems != NULL) {
 		foreach (ConnectorItem * connectorItem, *busConnectorItems) {
 			items.append(connectorItem);
+			//connectorItem->debugInfo("bus connector");
 		}
 	}
 }
