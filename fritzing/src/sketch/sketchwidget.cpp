@@ -3621,9 +3621,9 @@ void SketchWidget::rotateX(qreal degrees)
 			.arg((m_savedItems.count() == 1) ? m_savedItems.values().at(0)->title() : QString::number(m_savedItems.count() + m_savedWires.count()) + " items" );
 	QUndoCommand * parentCommand = new QUndoCommand(string);
 
-	foreach (long id, m_savedItems.keys()) {
-		m_savedItems.value(id)->debugInfo(QString("save item %1").arg(id));
-	}
+	//foreach (long id, m_savedItems.keys()) {
+		//m_savedItems.value(id)->debugInfo(QString("save item %1").arg(id));
+	//}
 
 	new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
 

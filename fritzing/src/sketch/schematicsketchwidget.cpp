@@ -250,19 +250,19 @@ AddItemCommand * SchematicSketchWidget::newAddItemCommand(BaseCommand::CrossView
 		if (symbol == m_droppingItem) continue;					// the drag item
 
 		if (symbol->voltage() == v) {
-			makeModifiedWire(newSymbol->connector0(), symbol->connector0(), crossViewType, 0, parent); 
+			makeModifiedWire(newSymbol->connector0(), symbol->connector0(), crossViewType, ViewGeometry::NormalFlag, parent); 
 		}
 
 		if (symbol->connector1() != NULL && v == 0) {
-			makeModifiedWire(newSymbol->connector0(), symbol->connector1(), crossViewType, 0, parent); 
+			makeModifiedWire(newSymbol->connector0(), symbol->connector1(), crossViewType, ViewGeometry::NormalFlag, parent); 
 		}
 
 		if (newSymbol->connector1() != NULL) {
 			if (symbol->voltage() == 0) {
-				makeModifiedWire(newSymbol->connector1(), symbol->connector0(), crossViewType, 0, parent); 
+				makeModifiedWire(newSymbol->connector1(), symbol->connector0(), crossViewType, ViewGeometry::NormalFlag, parent); 
 			}
 			if (symbol->connector1() != NULL) {
-				makeModifiedWire(newSymbol->connector1(), symbol->connector1(), crossViewType, 0, parent); 
+				makeModifiedWire(newSymbol->connector1(), symbol->connector1(), crossViewType, ViewGeometry::NormalFlag, parent); 
 			}
 		}
 	}
@@ -310,7 +310,7 @@ void SchematicSketchWidget::setVoltage(qreal v, bool doEmit)
 		if (other == sitem) continue;
 
 		if (other->voltage() == v) {
-			this->makeModifiedWire(sitem->connector0(), other->connector0(), BaseCommand::CrossView, 0, parentCommand);
+			this->makeModifiedWire(sitem->connector0(), other->connector0(), BaseCommand::CrossView, ViewGeometry::NormalFlag, parentCommand);
 		}
 	}
 

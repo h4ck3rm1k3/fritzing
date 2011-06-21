@@ -136,6 +136,7 @@ void SymbolPaletteItem::busConnectorItems(Bus * bus, QList<class ConnectorItem *
 	foreach (ConnectorItem * connectorItem, mitems) {
 		if (connectorItem->scene() == this->scene()) {
 			items.append(connectorItem);
+			//connectorItem->debugInfo(QString("symbol bus %1").arg(bus->id()));
 		}
 	}
 }
@@ -168,7 +169,8 @@ void SymbolPaletteItem::setVoltage(qreal v) {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
 		if (connectorItem == NULL) continue;
 
-		if (connectorItem->connectorSharedName().compare("GND", Qt::CaseInsensitive) == 0) continue;
+		// jrc: 21 jun 2011 I don't understand why ground is an exception here so commenting out this line
+		//if (connectorItem->connectorSharedName().compare("GND", Qt::CaseInsensitive) == 0) continue;
 
 		localVoltages.insert(FROMVOLTAGE(v), connectorItem);
 	}

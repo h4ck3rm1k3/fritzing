@@ -861,13 +861,7 @@ void ConnectorItem::collectEqualPotential(QList<ConnectorItem *> & connectorItem
 
 	for (int i = 0; i < tempItems.count(); i++) {
 		ConnectorItem * connectorItem = tempItems[i];
-		/*
-		DebugDialog::debug(QString("testing id:%1 '%2' %3 vlid:%4")
-			.arg(connectorItem->attachedToID())
-			.arg(connectorItem->attachedToTitle())
-			.arg(connectorItem->connectorSharedID())
-			.arg(connectorItem->attachedToViewLayerID()) );
-		*/
+		//connectorItem->debugInfo("testing");
 
 		Wire * fromWire = (connectorItem->attachedToItemType() == ModelPart::Wire) ? dynamic_cast<Wire *>(connectorItem->attachedTo()) : NULL;
 		if (fromWire != NULL) {
@@ -1327,7 +1321,7 @@ void ConnectorItem::debugInfo(const QString & msg)
 {
 
 #ifndef QT_NO_DEBUG
-	DebugDialog::debug(QString("%1 cid:%2 %3 %4 id:%5 %6 vlid:%7 vid:%8 spec:%9")
+	DebugDialog::debug(QString("%1 cid:%2 %3 %4 id:%5 %6 vlid:%7 vid:%8 spec:%9 flg:%10")
 		.arg(msg)
 		.arg(this->connectorSharedID())
 		.arg(this->connectorSharedName())
@@ -1337,6 +1331,7 @@ void ConnectorItem::debugInfo(const QString & msg)
 		.arg(this->attachedToViewLayerID())
 		.arg(this->attachedToViewIdentifier())
 		.arg(this->attachedToViewLayerSpec())
+		.arg(this->attachedTo()->getViewGeometry().wireFlags())
 	);
 #else
 	Q_UNUSED(msg);

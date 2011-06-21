@@ -375,7 +375,7 @@ bool PCBSketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * 
 				newToConnectorItem->attachedToItemType() == ModelPart::Breadboard)
 			{
 				// connection can be made with one wire
-				makeModifiedWire(newFromConnectorItem, newToConnectorItem, BaseCommand::CrossView, 0, parentCommand);
+				makeModifiedWire(newFromConnectorItem, newToConnectorItem, BaseCommand::CrossView, ViewGeometry::NormalFlag, parentCommand);
 			}
 			else if (newToConnectorItem->attachedToItemType() == ModelPart::Breadboard) {
 				makeTwoWires(originalToConnectorItem, newToConnectorItem, originalFromConnectorItem, newFromConnectorItem, parentCommand);
@@ -477,7 +477,7 @@ void PCBSketchWidget::connectSymbols(ConnectorItem * fromConnectorItem, Connecto
 	if (target1 == NULL) return;
 	if (target2 == NULL) return;
 
-	makeModifiedWire(target1, target2, BaseCommand::CrossView, 0, parentCommand);
+	makeModifiedWire(target1, target2, BaseCommand::CrossView, ViewGeometry::NormalFlag, parentCommand);
 }
 
 void PCBSketchWidget::connectSymbolPrep(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, ConnectorItem * & target1, ConnectorItem * & target2) {
@@ -855,7 +855,9 @@ long PCBSketchWidget::makeModifiedWire(ConnectorItem * fromConnectorItem, Connec
 {
 	// create a new real wire
 	long newID = ItemBase::getNextID();
-	DebugDialog::debug(QString("new real wire %1").arg(newID));
+	//DebugDialog::debug(QString("new real wire %1").arg(newID));
+	//fromConnectorItem->debugInfo("\tfrom");
+	//toConnectorItem->debugInfo("\tto");
 	ViewGeometry viewGeometry;
 	makeRatsnestViewGeometry(viewGeometry, fromConnectorItem, toConnectorItem);
 	viewGeometry.setWireFlags(wireFlags);
@@ -895,7 +897,7 @@ void PCBSketchWidget::modifyNewWireConnectionsAux(ConnectorItem * fromConnectorI
 	ConnectorItem * originalFromConnectorItem = fromConnectorItem;
 	fromConnectorItem = lookForBreadboardConnection(fromConnectorItem);		
 	if (fromConnectorItem->attachedToItemType() == ModelPart::Breadboard) {
-		makeModifiedWire(fromConnectorItem, toConnectorItem, BaseCommand::CrossView, 0, parentCommand);
+		makeModifiedWire(fromConnectorItem, toConnectorItem, BaseCommand::CrossView, ViewGeometry::NormalFlag, parentCommand);
 		return;
 	}
 
@@ -926,7 +928,7 @@ void PCBSketchWidget::makeTwoWires(ConnectorItem * originalFromConnectorItem, Co
 
 	// make a wire, from the part nearest to fromConnectorItem, to the breadboard
 	toConnectorItem = nearestPartConnectorItem;
-	makeModifiedWire(fromConnectorItem, toConnectorItem, BaseCommand::CrossView, 0, parentCommand);
+	makeModifiedWire(fromConnectorItem, toConnectorItem, BaseCommand::CrossView, ViewGeometry::NormalFlag, parentCommand);
 
 	if (originalToConnectorItem->attachedToItemType() == ModelPart::Wire) {
 		originalToConnectorItem = findNearestPartConnectorItem(originalToConnectorItem);
@@ -935,7 +937,7 @@ void PCBSketchWidget::makeTwoWires(ConnectorItem * originalFromConnectorItem, Co
 
 	// draw a wire from that bus on the breadboard to the other part (toConnectorItem)
 	ConnectorItem * otherPartBusConnectorItem = findEmptyBusConnectorItem(fromConnectorItem);
-	makeModifiedWire(otherPartBusConnectorItem, originalToConnectorItem, BaseCommand::CrossView, 0, parentCommand);
+	makeModifiedWire(otherPartBusConnectorItem, originalToConnectorItem, BaseCommand::CrossView, ViewGeometry::NormalFlag, parentCommand);
 }
 
 ConnectorItem * PCBSketchWidget::lookForNewBreadboardConnection(ConnectorItem * connectorItem,  ItemBase * & newBreadboard) {
@@ -1566,10 +1568,10 @@ void PCBSketchWidget::clearSmdTraces(QList<ItemBase *> & smds, 	QList<Wire *> & 
 		foreach (QGraphicsItem * child, smd->childItems()) {
 			ConnectorItem * ci = dynamic_cast<ConnectorItem *>(child);
 			if (ci == NULL) continue;
-			ci->debugInfo("smd from");
+			//ci->debugInfo("smd from");
 
 			foreach (ConnectorItem * toci, ci->connectedToItems()) {
-				toci->debugInfo(" smd to");
+				//toci->debugInfo(" smd to");
 				TraceWire * tw = qobject_cast<TraceWire *>(toci->attachedTo());
 				if (tw == NULL) continue;
 				if (already.contains(tw)) continue;
@@ -1587,9 +1589,9 @@ void PCBSketchWidget::clearSmdTraces(QList<ItemBase *> & smds, 	QList<Wire *> & 
 		ends.append(wire->connector1());
 	}
 	foreach (ConnectorItem * end, ends) {
-		end->debugInfo("end from");
+		//end->debugInfo("end from");
 		foreach (ConnectorItem * endTo, end->connectedToItems()) {
-			endTo->debugInfo("   end to");
+			//endTo->debugInfo("   end to");
 			end->tempRemove(endTo, false);
 			endTo->tempRemove(end, false);
 		}
@@ -2426,12 +2428,12 @@ void PCBSketchWidget::checkDeleteTrace(CleanUpWiresCommand* command)
 		visitedWires.append(wires);
 		if (ends.count() <= 0) continue;
 
-		foreach (ConnectorItem * ci, ends) ci->debugInfo("end");
+		//foreach (ConnectorItem * ci, ends) ci->debugInfo("end");
 
 		QList<ConnectorItem *> connectorItems;
 		connectorItems.append(ends[0]);
 		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::RatsnestFlag | getTraceFlag());
-		foreach (ConnectorItem * ci, connectorItems) ci->debugInfo("   eq");
+		//foreach (ConnectorItem * ci, connectorItems) ci->debugInfo("   eq");
 
 		bool doDelete = false;
 		foreach (ConnectorItem * end, ends) {

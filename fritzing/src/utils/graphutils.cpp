@@ -77,6 +77,7 @@ bool GraphUtils::chooseRatsnestGraph(const QList<ConnectorItem *> & connectorIte
 	QVector< QVector<qreal> > reverseWeights(num_nodes, QVector<qreal>(num_nodes, 0));
 	for (int i = 0; i < num_nodes; i++) {
 		ConnectorItem * c1 = temp.at(i);
+		//c1->debugInfo("c1");
 		for (int j = i + 1; j < num_nodes; j++) {
 			edges[ix].first = i;
 			edges[ix].second = j;
@@ -100,17 +101,23 @@ bool GraphUtils::chooseRatsnestGraph(const QList<ConnectorItem *> & connectorIte
 			}
 			if (already) continue;
 
+			//c2->debugInfo("\tc2");
+
 			if (checkWiredTo) {
 				QList<ConnectorItem *> connectorItems;
 				connectorItems.append(c1);
 				ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::NotTraceFlags);
 				wiredTo.append(connectorItems);
+				//foreach (ConnectorItem * cx, connectorItems) {
+					//cx->debugInfo("\t\tcx");
+				//}
 				if (connectorItems.contains(c2)) {
 					weights[ix++] = 0;
 					continue;
 				}
 			}
 
+			//DebugDialog::debug("c2 not eliminated");
 			double dx = locs[i].x() - locs[j].x();
 			double dy = locs[i].y() - locs[j].y();
 			weights[ix++] = reverseWeights[i][j] = reverseWeights[j][i] = (dx * dx) + (dy * dy);
