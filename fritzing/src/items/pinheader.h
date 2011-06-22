@@ -66,7 +66,9 @@ public:
 	static QString genModuleID(QMap<QString, QString> & currPropsMap);
 	static QString makePcbSvg(const QString & moduleID);
 	static QString makeSchematicSvg(const QString & moduleID, const QString & form);
+	static QString makeBreadboardSvg(const QString & moduleID, const QString & form);
 	static QString findForm(const QString & filename);
+	static QString incrementTemplate(const QString & filename, int pins, qreal unitIncrement); 
 
 protected:
 	static const QStringList & forms();

@@ -367,39 +367,52 @@ QString PinHeader::makeSchematicSvg(const QString & moduleID, const QString & fo
 
 	QString svg = header.arg(unitHeight * pins).arg(unitHeightPoints * pins);
 
-	QFile file(QString(":/resources/templates/generic_%1_pin_header_schem_template.txt")
-					.arg(form.contains("female") ? "female" : "male"));
-	file.open(QFile::ReadOnly);
-	QString schematicLayerTemplate = file.readAll();
-	file.close();
-
-	QRegExp yMatcher("\\[([\\.\\d]+)\\]");
-	MatchThing matchThings[32];
-	int pos = 0;
-	int matchThingIndex = 0;
-	while ((pos = yMatcher.indexIn(schematicLayerTemplate, pos)) != -1) {
-		MatchThing * mt = &matchThings[matchThingIndex++];
-		mt->pos = pos;
-		mt->len = yMatcher.matchedLength();
-		mt->val = yMatcher.cap(1).toDouble();
-		pos += yMatcher.matchedLength();
-	}
-
-	qreal y = 0;
-	for (int i = 0; i < pins; i++) {
-		QString argCopy(schematicLayerTemplate);
-		for (int j = matchThingIndex - 1; j >= 0; j--) {
-			MatchThing * mt = &matchThings[j];
-			argCopy.replace(mt->pos, mt->len, QString::number(mt->val + y));
-		}
-		svg += argCopy.arg(i),
-		y += unitHeightPoints;
-	}
+	svg += incrementTemplate(QString(":/resources/templates/generic_%1_pin_header_schem_template.txt").arg(form.contains("female") ? "female" : "male"),
+							 pins, unitHeightPoints);
+		
 
 	svg += "</g>\n</svg>";
 
 	return svg;
 }
+
+QString PinHeader::makeBreadboardSvg(const QString & moduleID, const QString & form) 
+{
+	QStringList pieces = moduleID.split("_");
+	if (pieces.count() != 6) return "";
+
+	int pins = pieces.at(4).toInt();
+	qreal unitHeight = 0.1;  // inches
+	qreal unitHeightPoints = unitHeight * 10000;
+
+	QString header("<?xml version='1.0' encoding='utf-8'?>\n"
+				"<svg version='1.2' baseProfile='tiny' id='svg2' xmlns:svg='http://www.w3.org/2000/svg' "
+				"xmlns='http://www.w3.org/2000/svg'  x='0in' y='0in' width='%1in' "
+				"height='0.1in' viewBox='0 0 %2 1000'>\n"
+				"<g id='breadboard' >\n");
+
+	QString fileForm;
+	if (form.contains("round")) {
+		fileForm = "rounded_female";
+		header += "<rect fill='#404040' width='%2' height='1000'/>\n";
+	}
+	else if (form.contains("female")) {
+		fileForm = "female";
+		header += "<rect fill='#404040' width='%2' height='1000'/>\n";
+	}
+	else {
+		fileForm = "male";
+	}
+
+	QString svg = header.arg(unitHeight * pins).arg(unitHeightPoints * pins);
+	svg += incrementTemplate(QString(":/resources/templates/generic_%1_pin_header_bread_template.txt").arg(fileForm),
+							 pins, unitHeightPoints);
+
+	svg += "</g>\n</svg>";
+
+	return svg;
+}
+
 
 QString  PinHeader::findForm(const QString & filename)
 {
@@ -407,3 +420,65 @@ QString  PinHeader::findForm(const QString & filename)
 	if (filename.contains("female")) return FemaleFormString;
 	return MaleFormString;
 }
+
+
+QString PinHeader::incrementTemplate(const QString & filename, int pins, qreal unitIncrement) 
+{
+	QString string;
+
+	QFile file(filename);
+	file.open(QFile::ReadOnly);
+	QString schematicLayerTemplate = file.readAll();
+	file.close();
+
+	QRegExp uMatcher("\\[([\\.\\d]+)\\]");
+	MatchThing matchThings[32];
+	int pos = 0;
+	int matchThingIndex = 0;
+	while ((pos = uMatcher.indexIn(schematicLayerTemplate, pos)) != -1) {
+		MatchThing * mt = &matchThings[matchThingIndex++];
+		mt->pos = pos;
+		mt->len = uMatcher.matchedLength();
+		mt->val = uMatcher.cap(1).toDouble();
+		pos += uMatcher.matchedLength();
+		if (matchThingIndex >= sizeof(matchThings) / sizeof(MatchThing)) break;
+	}
+
+	qreal unit = 0;
+	for (int i = 0; i < pins; i++) {
+		QString argCopy(schematicLayerTemplate);
+		for (int j = matchThingIndex - 1; j >= 0; j--) {
+			MatchThing * mt = &matchThings[j];
+			argCopy.replace(mt->pos, mt->len, QString::number(mt->val + unit));
+		}
+		string += argCopy.arg(i),
+		unit += unitIncrement;
+	}
+
+	return string;
+}
+
+
+
+
+
+
+
+
+
+
+/*
+
+
+	
+
+
+
+
+
+	</g>
+
+</svg>
+
+
+*/

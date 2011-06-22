@@ -158,6 +158,59 @@ ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClas
 }
 
 QString PartFactory::getSvgFilename(ModelPart * modelPart, const QString & expectedFileName) {
+	if (expectedFileName.contains("pin_header", Qt::CaseInsensitive)) {
+		if (expectedFileName.contains("schematic", Qt::CaseInsensitive)) {
+			QString path = FolderUtils::getApplicationSubFolderPath("parts") + "/"+ ItemBase::SvgFilesDir + "/core/";
+			if (QFileInfo(path + expectedFileName).exists()) return expectedFileName;
+
+			QString form = PinHeader::findForm(expectedFileName);
+			QString safeForm;
+			foreach (QChar c, form) {
+				if (c.isLetterOrNumber()) safeForm.append(c);
+			}
+
+			path = PartFactoryFolderPath + "/" + modelPart->moduleID() + "_" + safeForm + "_schematic.svg";
+			QFile file(path);
+			if (file.exists()) {
+				return path;
+			} 
+
+			QString svg = PinHeader::makeSchematicSvg(modelPart->moduleID(), form);
+			if (file.open(QFile::WriteOnly)) {
+				QTextStream stream(&file);
+				stream.setCodec("UTF-8");
+				stream << svg;
+				file.close();
+				return path;
+			}
+		}
+		else if (expectedFileName.contains("bread", Qt::CaseInsensitive)) {
+			QString path = FolderUtils::getApplicationSubFolderPath("parts") + "/"+ ItemBase::SvgFilesDir + "/core/";
+			if (QFileInfo(path + expectedFileName).exists()) return expectedFileName;
+
+			QString form = PinHeader::findForm(expectedFileName);
+			QString safeForm;
+			foreach (QChar c, form) {
+				if (c.isLetterOrNumber()) safeForm.append(c);
+			}
+
+			path = PartFactoryFolderPath + "/" + modelPart->moduleID() + "_" + safeForm + "_bread.svg";
+			QFile file(path);
+			if (file.exists()) {
+				return path;
+			} 
+
+			QString svg = PinHeader::makeBreadboardSvg(modelPart->moduleID(), form);
+			if (file.open(QFile::WriteOnly)) {
+				QTextStream stream(&file);
+				stream.setCodec("UTF-8");
+				stream << svg;
+				file.close();
+				return path;
+			}
+		}
+	}
+
 	if (modelPart->moduleID().endsWith(ModuleIDNames::PerfboardModuleIDName)) {
 		if (expectedFileName.contains("icon")) return expectedFileName;
 
@@ -198,31 +251,7 @@ QString PartFactory::getSvgFilename(ModelPart * modelPart, const QString & expec
 			}
 
 		}
-		if (expectedFileName.contains("schematic")) {
-			QString path = FolderUtils::getApplicationSubFolderPath("parts") + "/"+ ItemBase::SvgFilesDir + "/core/";
-			if (QFileInfo(path + expectedFileName).exists()) return expectedFileName;
 
-			QString form = PinHeader::findForm(expectedFileName);
-			QString safeForm;
-			foreach (QChar c, form) {
-				if (c.isLetterOrNumber()) safeForm.append(c);
-			}
-
-			path = PartFactoryFolderPath + "/" + modelPart->moduleID() + "_" + safeForm + "_schematic.svg";
-			QFile file(path);
-			if (file.exists()) {
-				return path;
-			} 
-
-			QString svg = PinHeader::makeSchematicSvg(modelPart->moduleID(), form);
-			if (file.open(QFile::WriteOnly)) {
-				QTextStream stream(&file);
-				stream.setCodec("UTF-8");
-				stream << svg;
-				file.close();
-				return path;
-			}
-		}
 	}
 
 	return "";
