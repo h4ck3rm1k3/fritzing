@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='ProtoShield-Mini-v12'>
 <version>4</version>
-<date>2011-06-21</date>
+<date>2011-06-22</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Description: &lt;/strong&gt;This is a small prototyping shield for the Arduino Pro Mini. If your project requires just a little bit more space for your external circuitry, this might be a perfect addition. 38 unconnected PTHs are provided for your prototyping needs.&lt;/p&gt;
@@ -699,41 +699,5 @@
 </connector>
 </connectors>
 <buses>
-<bus id='gnd1'>
-<nodeMember connectorId='connector0'/>
-<nodeMember connectorId='connector8'/>
-<nodeMember connectorId='connector9'/>
-<nodeMember connectorId='connector10'/>
-<nodeMember connectorId='connector11'/>
-<nodeMember connectorId='connector12'/>
-</bus>
-<bus id='gnd2'>
-<nodeMember connectorId='connector5'/>
-<nodeMember connectorId='connector13'/>
-<nodeMember connectorId='connector14'/>
-</bus>
-<bus id='raw'>
-<nodeMember connectorId='connector4'/>
-<nodeMember connectorId='connector53'/>
-<nodeMember connectorId='connector54'/>
-</bus>
-<bus id='rxi'>
-<nodeMember connectorId='connector2'/>
-<nodeMember connectorId='connector55'/>
-<nodeMember connectorId='connector56'/>
-</bus>
-<bus id='txo'>
-<nodeMember connectorId='connector3'/>
-<nodeMember connectorId='connector57'/>
-<nodeMember connectorId='connector58'/>
-</bus>
-<bus id='vcc'>
-<nodeMember connectorId='connector7'/>
-<nodeMember connectorId='connector59'/>
-<nodeMember connectorId='connector60'/>
-<nodeMember connectorId='connector61'/>
-<nodeMember connectorId='connector62'/>
-<nodeMember connectorId='connector63'/>
-</bus>
 </buses>
 </module>

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='Op Amp Breakout-v16'>
 <version>4</version>
-<date>2011-06-21</date>
+<date>2011-06-22</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description:&lt;/span&gt; This is a simple Op Amp breakout board, set up as a 2-stage amplifier with a gain of 100 (gain of 10 for each stage). The on-board trim pot sets the signal level between the stages, not the feedback path. The bandwidth is set to 15.9kHz by a pair of feedback capacitors, or over 100kHz with the caps removed. The LMV358 opamp can source up to 160mA and works well as a low impedance driver/buffer.&lt;br /&gt;

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='Mainboard-v18'>
 <version>4</version>
-<date>2011-06-21</date>
+<date>2011-06-22</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description:&lt;/span&gt; This is LilyPad Arduino - the main board consisting of an ATmega328 with the Arduino bootloader and a minimum number of external components to keep it as small (and as simple) as possible. Board will run from 2V to 5V. The latest version of the LilyPad supports automatic reset for even easier programming. The back side of the LilyPad is now completely flat! We now use a surface mount programming connector to keep the header from poking through.&lt;br /&gt;

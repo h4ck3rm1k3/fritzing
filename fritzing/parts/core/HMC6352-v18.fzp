@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='HMC6352-v18'>
 <version>4</version>
-<date>2011-06-21</date>
+<date>2011-06-22</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;b&gt;Description:&lt;/b&gt; This is a very simple breakout board for the popular HMC6352. Remember the KISS mantra? We really enjoy the simplicity and ease of use with the HMC6352. If you need simple, clean, degree resolution compass heading, this is the way to go.&lt;/p&gt;

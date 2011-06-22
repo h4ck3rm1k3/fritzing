@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='ArduinoBluetoothMatev13'>
 <version>4</version>
-<date>2011-06-21</date>
+<date>2011-06-22</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;b&gt;Description: &lt;/b&gt;The Bluetooth Mate is very similar to our BlueSMiRF modem, but it is designed specifically to be used with our &lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=9219&quot; name=&quot;&quot; target=&quot;_self&quot;&gt;Arduino Pros&lt;/a&gt; and &lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=9266&quot; name=&quot;&quot; target=&quot;_self&quot;&gt;LilyPad Arduinos&lt;/a&gt;. These modems work as a serial (RX/TX) pipe, and are a great wireless replacement for serial cables. Any serial stream from 9600 to 115200bps can be passed seamlessly from your computer to your target.&lt;/p&gt;

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='mp3-trigger-v22'>
 <version>4</version>
-<date>2011-06-21</date>
+<date>2011-06-22</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description: &lt;/span&gt;Created in collaboration with Jamie Robertson, the MP3 Trigger is quite possibly the most versatile, low-cost, low power embedded MP3 Player. The board has 18 external trigger pins that will directly trigger pre-selected MP3 tracks, and a full-duplex serial control port that provides full transport control, remote triggering for up to 256 tracks, and fast real-time volume control. The board plays the MP3 files directly from a FAT16 microSD flash card and supports 192Kbps stereo playback. There is also an on-board navigation switch for local access and playback of all MP3 tracks on the flash card.&lt;/p&gt;

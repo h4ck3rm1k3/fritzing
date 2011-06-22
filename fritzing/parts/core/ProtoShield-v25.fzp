@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='ProtoShield-v25'>
 <version>4</version>
-<date>2011-06-21</date>
+<date>2011-06-22</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description:&lt;/span&gt; Riding on the waves of the very popular Arduino USB board is this small prototyping shield. Originally spawned with collaboration between the folks at &lt;a href=&quot;http://www.sparkfun.com&quot; target=&quot;_blank&quot;&gt;SFE&lt;/a&gt; and &lt;a href=&quot;http://itp.nyu.edu/itp/&quot; target=&quot;_blank&quot;&gt;ITP @ NYU&lt;/a&gt;, the ProtoShield mates with the Arduino USB board and gives the user a small soldering area, two general LEDs, access to a BlueSMiRF socket, a general pushbutton switch, and most important of all - the Arduino reset switch is brought to the top level. A &lt;a href=&quot;http://www.sparkfun.com/commerce/tutorial_info.php?tutorials_id=191&quot;&gt;ProtoShield quickstart guide&lt;/a&gt; is available!&lt;br /&gt;

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='LilyPad SimplePower-v13'>
 <version>4</version>
-<date>2011-06-21</date>
+<date>2011-06-22</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Description: &lt;/strong&gt;The LilyPad Simple Power is a board that lets you connect a battery (or other power source) and switch it on or off, that&amp;#39;s it! We provide you with a JST connector and a slide switch. You can solder in your own surface mount (or through-hole) resistor in line with the output, or solder the jumper closed if you don&amp;#39;t require a resistor.&lt;/p&gt;

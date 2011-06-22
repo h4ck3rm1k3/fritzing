@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='LiPo-USB-Charger-v21'>
 <version>4</version>
-<date>2011-06-21</date>
+<date>2011-06-22</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;b&gt;Description:&lt;/b&gt; If you need to charge LiPo batteries, this simple charger will do just that, and do it fast! The USB LiPo Charger is a basic charging circuit that allows you to charge 3.7V LiPo cells at a rate of 500mA or 100mA per hour. It is designed to charge single-cell Li-Ion or Li-Polymer batteries. Check the datasheet below to see if it will work with your battery.&lt;/p&gt;

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='LSM303 breakout board-v11'>
 <version>4</version>
-<date>2011-06-21</date>
+<date>2011-06-22</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Description:&lt;/strong&gt; The LSM303DLH is a triple axis accelerometer combined with a triple axis magnetic sensor. This breakout board uses the LSM303DLH to give a you the data you need to feed into a microcontroller and calculate tilt-compensated output.&lt;/p&gt;

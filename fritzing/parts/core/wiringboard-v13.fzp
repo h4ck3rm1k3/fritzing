@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='wiringboard-v13'>
 <version>4</version>
-<date>2011-06-21</date>
+<date>2011-06-22</date>
 <author>lionelmichel</author>
 <description>&lt;p&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description:&lt;/span&gt; Created in collaboration with &lt;a href=&quot;http://barraganstudio.com/&quot; target=&quot;_blank&quot;&gt;Hernando Barragan&lt;/a&gt;, the Wiring Board is an electronics I/O board that has been designed around the open-source development environment called &lt;a href=&quot;http://wiring.org.co/&quot; target=&quot;_blank&quot;&gt;Wiring&lt;/a&gt;, which has been built upon the &lt;a class=&quot;urllink&quot; href=&quot;http://www.processing.org/&quot; rel=&quot;nofollow&quot; target=&quot;_blank&quot;&gt;Processing&lt;/a&gt;/&lt;a class=&quot;urllink&quot; href=&quot;http://wiring.org.co/&quot; rel=&quot;nofollow&quot; target=&quot;_blank&quot;&gt;Wiring&lt;/a&gt; programming language. Wiring explores the electronic arts, tangible media, computer programming, and prototyping with electronics. It illustrates the concept of programming with electronics and the physical realm of hardware control which are necessary to explore physical interaction design and tangible media aspects.&lt;/p&gt;

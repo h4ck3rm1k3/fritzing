@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='TEMT6000_Breakout-v12'>
 <version>4</version>
-<date>2011-06-21</date>
+<date>2011-06-22</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description:&lt;/span&gt; Basic breakout board for the TEMT6000 Ambient Light Sensor. Only what you need, nothing you don&amp;#39;t. Sensor acts like a transistor - the greater the incoming light, the higher the analog voltage on the signal pin.&lt;br /&gt;

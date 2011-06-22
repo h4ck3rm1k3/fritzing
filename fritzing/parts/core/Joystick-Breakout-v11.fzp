@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='Joystick-Breakout-v11'>
 <version>4</version>
-<date>2011-06-21</date>
+<date>2011-06-22</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description: &lt;/span&gt;This is the breakout board for the &lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=9032&quot; name=&quot;&quot; target=&quot;&quot;&gt;thumb joystick&lt;/a&gt;. Pins are broken out to a 0.1&amp;quot; header and includes 4 mounting holes in the corners.&lt;br /&gt;

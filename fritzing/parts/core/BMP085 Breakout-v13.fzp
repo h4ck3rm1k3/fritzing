@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='BMP085 Breakout-v13'>
 <version>4</version>
-<date>2011-06-21</date>
+<date>2011-06-22</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description: &lt;/span&gt;This is a simple breakout board for the BMP085 high-precision, low-power barometric pressure sensor. The BMP085 offers a measuring range of 300 to 1100 hPa with an absolute accuracy of down to 0.03 hPa. It&amp;#39;s based on piezo-resistive technology for EMC robustness, high accuracy and linearity as well as long term stability. This sensor supports a voltage supply between 1.8 and 3.6VDC. It is designed to be connected directly to a micro-controller via the I&amp;sup2;C bus&lt;/p&gt;

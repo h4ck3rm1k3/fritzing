@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='MP3 Shield-v13'>
 <version>4</version>
-<date>2011-06-21</date>
+<date>2011-06-22</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Description: &lt;/strong&gt;The MP3 Shield wires your Arduino up to a &lt;a href=&quot;http://www.sparkfun.com/products/8892&quot;&gt;VS1053B&lt;/a&gt; MP3 audio decoder IC, providing it with the ability to decode audio files. The VS1053 is also capable of decoding Ogg Vorbis/MP3/AAC/WMA/MIDI audio and encoding IMA ADPCM and user-loadable Ogg Vorbis.&lt;/p&gt;

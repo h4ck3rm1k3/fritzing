@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='screwshield-v15'>
 <version>4</version>
-<date>2011-06-21</date>
+<date>2011-06-22</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Description: &lt;/strong&gt;The ScrewShield extends all pins of the Arduino out to 3.5mm pitch screw terminals. It also has a lot of the utility provided by &lt;a href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=7914&quot; target=&quot;_self&quot;&gt;Arduino Protoshield&lt;/a&gt;, including: a large prototyping space of both connected and unconnected 0.1&amp;quot; spaced through-holes, a couple 5V and GND busses, a reset button, general use push button, and a 5mm yellow LED.&lt;/p&gt;
@@ -4690,156 +4690,6 @@
 <nodeMember connectorId='connector74'/>
 <nodeMember connectorId='connector225'/>
 <nodeMember connectorId='connector226'/>
-</bus>
-<bus id='b1'>
-<nodeMember connectorId='connector126'/>
-<nodeMember connectorId='connector127'/>
-<nodeMember connectorId='connector128'/>
-</bus>
-<bus id='b2'>
-<nodeMember connectorId='connector129'/>
-<nodeMember connectorId='connector130'/>
-<nodeMember connectorId='connector131'/>
-</bus>
-<bus id='b3'>
-<nodeMember connectorId='connector132'/>
-<nodeMember connectorId='connector133'/>
-<nodeMember connectorId='connector134'/>
-</bus>
-<bus id='b4'>
-<nodeMember connectorId='connector135'/>
-<nodeMember connectorId='connector136'/>
-<nodeMember connectorId='connector137'/>
-</bus>
-<bus id='b5'>
-<nodeMember connectorId='connector138'/>
-<nodeMember connectorId='connector139'/>
-<nodeMember connectorId='connector140'/>
-</bus>
-<bus id='b6'>
-<nodeMember connectorId='connector141'/>
-<nodeMember connectorId='connector142'/>
-<nodeMember connectorId='connector143'/>
-</bus>
-<bus id='b7'>
-<nodeMember connectorId='connector144'/>
-<nodeMember connectorId='connector145'/>
-<nodeMember connectorId='connector146'/>
-</bus>
-<bus id='b8'>
-<nodeMember connectorId='connector147'/>
-<nodeMember connectorId='connector148'/>
-<nodeMember connectorId='connector149'/>
-</bus>
-<bus id='b9'>
-<nodeMember connectorId='connector150'/>
-<nodeMember connectorId='connector151'/>
-<nodeMember connectorId='connector152'/>
-</bus>
-<bus id='b10'>
-<nodeMember connectorId='connector153'/>
-<nodeMember connectorId='connector154'/>
-<nodeMember connectorId='connector155'/>
-</bus>
-<bus id='b11'>
-<nodeMember connectorId='connector156'/>
-<nodeMember connectorId='connector157'/>
-<nodeMember connectorId='connector158'/>
-</bus>
-<bus id='b12'>
-<nodeMember connectorId='connector159'/>
-<nodeMember connectorId='connector160'/>
-<nodeMember connectorId='connector161'/>
-</bus>
-<bus id='b13'>
-<nodeMember connectorId='connector162'/>
-<nodeMember connectorId='connector163'/>
-<nodeMember connectorId='connector164'/>
-</bus>
-<bus id='b14'>
-<nodeMember connectorId='connector165'/>
-<nodeMember connectorId='connector166'/>
-<nodeMember connectorId='connector167'/>
-</bus>
-<bus id='b15'>
-<nodeMember connectorId='connector168'/>
-<nodeMember connectorId='connector169'/>
-<nodeMember connectorId='connector170'/>
-</bus>
-<bus id='b16'>
-<nodeMember connectorId='connector171'/>
-<nodeMember connectorId='connector172'/>
-<nodeMember connectorId='connector173'/>
-</bus>
-<bus id='b17'>
-<nodeMember connectorId='connector174'/>
-<nodeMember connectorId='connector175'/>
-<nodeMember connectorId='connector176'/>
-</bus>
-<bus id='b18'>
-<nodeMember connectorId='connector177'/>
-<nodeMember connectorId='connector178'/>
-<nodeMember connectorId='connector179'/>
-</bus>
-<bus id='b19'>
-<nodeMember connectorId='connector180'/>
-<nodeMember connectorId='connector181'/>
-<nodeMember connectorId='connector182'/>
-</bus>
-<bus id='b20'>
-<nodeMember connectorId='connector183'/>
-<nodeMember connectorId='connector184'/>
-<nodeMember connectorId='connector185'/>
-</bus>
-<bus id='cb1'>
-<nodeMember connectorId='connector187'/>
-<nodeMember connectorId='connector188'/>
-<nodeMember connectorId='connector189'/>
-<nodeMember connectorId='connector190'/>
-<nodeMember connectorId='connector191'/>
-<nodeMember connectorId='connector192'/>
-<nodeMember connectorId='connector193'/>
-<nodeMember connectorId='connector194'/>
-<nodeMember connectorId='connector195'/>
-<nodeMember connectorId='connector196'/>
-<nodeMember connectorId='connector197'/>
-<nodeMember connectorId='connector198'/>
-<nodeMember connectorId='connector199'/>
-<nodeMember connectorId='connector200'/>
-<nodeMember connectorId='connector201'/>
-<nodeMember connectorId='connector202'/>
-<nodeMember connectorId='connector203'/>
-<nodeMember connectorId='connector204'/>
-<nodeMember connectorId='connector205'/>
-<nodeMember connectorId='connector206'/>
-<nodeMember connectorId='connector207'/>
-<nodeMember connectorId='connector208'/>
-<nodeMember connectorId='connector209'/>
-<nodeMember connectorId='connector210'/>
-<nodeMember connectorId='connector211'/>
-<nodeMember connectorId='connector212'/>
-<nodeMember connectorId='connector213'/>
-<nodeMember connectorId='connector214'/>
-<nodeMember connectorId='connector215'/>
-<nodeMember connectorId='connector216'/>
-<nodeMember connectorId='connector217'/>
-<nodeMember connectorId='connector218'/>
-<nodeMember connectorId='connector219'/>
-<nodeMember connectorId='connector220'/>
-<nodeMember connectorId='connector221'/>
-<nodeMember connectorId='connector222'/>
-</bus>
-<bus id='n$1'>
-<nodeMember connectorId='connector295'/>
-<nodeMember connectorId='connector296'/>
-</bus>
-<bus id='n$21'>
-<nodeMember connectorId='connector313'/>
-<nodeMember connectorId='connector314'/>
-</bus>
-<bus id='n$47'>
-<nodeMember connectorId='connector334'/>
-<nodeMember connectorId='connector335'/>
 </bus>
 </buses>
 </module>

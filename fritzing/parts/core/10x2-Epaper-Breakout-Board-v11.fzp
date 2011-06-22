@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='10x2-Epaper-Breakout-Board-v11'>
 <version>4</version>
-<date>2011-06-21</date>
+<date>2011-06-22</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Description:&lt;/strong&gt; E-paper displays are rad. But those 26-pin SMD connectors can be a real pain to solder, so we put together a breakout board to help you integrate this very cool technology into your next project. This board breaks out all of the major pins from the e-paper ribbon connector to a 0.1&amp;quot; pitch header. Because the e-paper display requires a 35V supply, the breakout also includes a voltage step-up so that you can power the display using either 3.3V or 5V.&lt;/p&gt;
