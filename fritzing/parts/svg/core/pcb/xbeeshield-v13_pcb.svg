@@ -516,17 +516,41 @@
   <circle  fill="none" cx="129.6" cy="140.4" connectorname="N$22" stroke="#F7BD13" r="7.2e-06" id="connector138pad" stroke-width="0"/>
   <circle  fill="none" cx="129.6" cy="140.4" connectorname="N$19" stroke="#F7BD13" r="7.2e-06" id="connector135pad" stroke-width="0"/>
   <circle  fill="none" cx="129.6" cy="140.4" connectorname="N$20" stroke="#F7BD13" r="7.2e-06" id="connector136pad" stroke-width="0"/>
+  <circle  fill="none" cx="7.2" cy="104.4" connectorname="VIN" stroke="#F7BD13" r="2.052" id="connector109pad" stroke-width="1.224"/>
   <circle  fill="none" cx="144" cy="154.8" connectorname="UART_RX" stroke="#F7BD13" r="2.052" id="connector107pad" stroke-width="1.224"/>
   <circle  fill="none" cx="144" cy="50.4" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector105pad" stroke-width="1.224"/>
   <circle  fill="none" cx="144" cy="147.6" connectorname="UART_TX" stroke="#F7BD13" r="2.052" id="connector108pad" stroke-width="1.224"/>
   <circle  fill="none" cx="7.2" cy="90" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector103pad" stroke-width="1.224"/>
   <circle  fill="none" cx="7.2" cy="68.4" connectorname="RST - RES" stroke="#F7BD13" r="2.052" id="connector106pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="144" cy="64.8" connectorname="D12" stroke="#F7BD13" r="2.052" id="connector101pad" stroke-width="1.224"/>
   <circle  fill="none" cx="7.2" cy="97.2" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector104pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="144" cy="79.2" connectorname="D10" stroke="#F7BD13" r="2.052" id="connector99pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="144" cy="57.6" connectorname="D13" stroke="#F7BD13" r="2.052" id="connector102pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="144" cy="93.6" connectorname="D8" stroke="#F7BD13" r="2.052" id="connector97pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="144" cy="72" connectorname="D11" stroke="#F7BD13" r="2.052" id="connector100pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="144" cy="111.6" connectorname="D6" stroke="#F7BD13" r="2.052" id="connector95pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="144" cy="86.4" connectorname="D9" stroke="#F7BD13" r="2.052" id="connector98pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="144" cy="126" connectorname="D4" stroke="#F7BD13" r="2.052" id="connector93pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="144" cy="104.4" connectorname="D7" stroke="#F7BD13" r="2.052" id="connector96pad" stroke-width="1.224"/>
   <circle  fill="none" cx="144" cy="140.4" connectorname="D_RX - D2" stroke="#F7BD13" r="2.052" id="connector91pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="144" cy="118.8" connectorname="D5" stroke="#F7BD13" r="2.052" id="connector94pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="7.2" cy="154.8" connectorname="A5" stroke="#F7BD13" r="2.052" id="connector89pad" stroke-width="1.224"/>
   <circle  fill="none" cx="144" cy="133.2" connectorname="D_TX - D3" stroke="#F7BD13" r="2.052" id="connector92pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="7.2" cy="140.4" connectorname="A3" stroke="#F7BD13" r="2.052" id="connector87pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="144" cy="43.2" connectorname="AREF" stroke="#F7BD13" r="2.052" id="connector90pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="7.2" cy="126" connectorname="A1" stroke="#F7BD13" r="2.052" id="connector85pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="7.2" cy="147.6" connectorname="A4" stroke="#F7BD13" r="2.052" id="connector88pad" stroke-width="1.224"/>
   <circle  fill="none" cx="7.2" cy="82.8" connectorname="5V" stroke="#F7BD13" r="2.052" id="connector83pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="7.2" cy="133.2" connectorname="A2" stroke="#F7BD13" r="2.052" id="connector86pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="7.2" cy="118.8" connectorname="A0" stroke="#F7BD13" r="2.052" id="connector84pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="129.6" cy="57.6" connectorname="D13" stroke="#F7BD13" r="2.052" id="connector43pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="129.6" cy="72" connectorname="D11" stroke="#F7BD13" r="2.052" id="connector41pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="129.6" cy="86.4" connectorname="D9" stroke="#F7BD13" r="2.052" id="connector39pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="129.6" cy="64.8" connectorname="D12" stroke="#F7BD13" r="2.052" id="connector42pad" stroke-width="1.224"/>
   <circle  fill="none" cx="61.2" cy="90" connectorname="5V" stroke="#F7BD13" r="2.052" id="connector37pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="129.6" cy="79.2" connectorname="D10" stroke="#F7BD13" r="2.052" id="connector40pad" stroke-width="1.224"/>
   <circle  fill="none" cx="61.2" cy="104.4" connectorname="CTS" stroke="#F7BD13" r="2.052" id="connector35pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="129.6" cy="93.6" connectorname="D8" stroke="#F7BD13" r="2.052" id="connector38pad" stroke-width="1.224"/>
   <circle  fill="none" cx="61.2" cy="118.8" connectorname="RES2" stroke="#F7BD13" r="2.052" id="connector33pad" stroke-width="1.224"/>
   <circle  fill="none" cx="61.2" cy="97.2" connectorname="DIO4" stroke="#F7BD13" r="2.052" id="connector36pad" stroke-width="1.224"/>
   <circle  fill="none" cx="61.2" cy="133.2" connectorname="RTS" stroke="#F7BD13" r="2.052" id="connector31pad" stroke-width="1.224"/>
@@ -545,9 +569,13 @@
   <circle  fill="none" cx="97.2" cy="133.2" connectorname="DIO12" stroke="#F7BD13" r="2.052" id="connector22pad" stroke-width="1.224"/>
   <circle  fill="none" cx="97.2" cy="97.2" connectorname="DTR" stroke="#F7BD13" r="2.052" id="connector17pad" stroke-width="1.224"/>
   <circle  fill="none" cx="97.2" cy="118.8" connectorname="RSSI" stroke="#F7BD13" r="2.052" id="connector20pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="129.6" cy="104.4" connectorname="D7" stroke="#F7BD13" r="2.052" id="connector15pad" stroke-width="1.224"/>
   <circle  fill="none" cx="97.2" cy="104.4" connectorname="RES1" stroke="#F7BD13" r="2.052" id="connector18pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="129.6" cy="118.8" connectorname="D5" stroke="#F7BD13" r="2.052" id="connector13pad" stroke-width="1.224"/>
   <circle  fill="none" cx="97.2" cy="90" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector16pad" stroke-width="1.224"/>
   <circle  fill="none" cx="129.6" cy="133.2" connectorname="D_TX" stroke="#F7BD13" r="2.052" id="connector11pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="129.6" cy="111.6" connectorname="D6" stroke="#F7BD13" r="2.052" id="connector14pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="129.6" cy="126" connectorname="D4" stroke="#F7BD13" r="2.052" id="connector12pad" stroke-width="1.224"/>
   <circle  fill="none" cx="129.6" cy="140.4" connectorname="D_RX" stroke="#F7BD13" r="2.052" id="connector10pad" stroke-width="1.224"/>
  </g>
  <g  id="copper0" stroke-width="0">
@@ -661,17 +689,41 @@
   <circle  fill="none" cx="129.6" cy="140.4" connectorname="N$22" stroke="#F7BD13" r="7.2e-06" id="connector138pad" stroke-width="0"/>
   <circle  fill="none" cx="129.6" cy="140.4" connectorname="N$19" stroke="#F7BD13" r="7.2e-06" id="connector135pad" stroke-width="0"/>
   <circle  fill="none" cx="129.6" cy="140.4" connectorname="N$20" stroke="#F7BD13" r="7.2e-06" id="connector136pad" stroke-width="0"/>
+  <circle  fill="none" cx="7.2" cy="104.4" connectorname="VIN" stroke="#F7BD13" r="2.052" id="connector109pad" stroke-width="1.224"/>
   <circle  fill="none" cx="144" cy="154.8" connectorname="UART_RX" stroke="#F7BD13" r="2.052" id="connector107pad" stroke-width="1.224"/>
   <circle  fill="none" cx="144" cy="50.4" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector105pad" stroke-width="1.224"/>
   <circle  fill="none" cx="144" cy="147.6" connectorname="UART_TX" stroke="#F7BD13" r="2.052" id="connector108pad" stroke-width="1.224"/>
   <circle  fill="none" cx="7.2" cy="90" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector103pad" stroke-width="1.224"/>
   <circle  fill="none" cx="7.2" cy="68.4" connectorname="RST - RES" stroke="#F7BD13" r="2.052" id="connector106pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="144" cy="64.8" connectorname="D12" stroke="#F7BD13" r="2.052" id="connector101pad" stroke-width="1.224"/>
   <circle  fill="none" cx="7.2" cy="97.2" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector104pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="144" cy="79.2" connectorname="D10" stroke="#F7BD13" r="2.052" id="connector99pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="144" cy="57.6" connectorname="D13" stroke="#F7BD13" r="2.052" id="connector102pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="144" cy="93.6" connectorname="D8" stroke="#F7BD13" r="2.052" id="connector97pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="144" cy="72" connectorname="D11" stroke="#F7BD13" r="2.052" id="connector100pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="144" cy="111.6" connectorname="D6" stroke="#F7BD13" r="2.052" id="connector95pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="144" cy="86.4" connectorname="D9" stroke="#F7BD13" r="2.052" id="connector98pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="144" cy="126" connectorname="D4" stroke="#F7BD13" r="2.052" id="connector93pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="144" cy="104.4" connectorname="D7" stroke="#F7BD13" r="2.052" id="connector96pad" stroke-width="1.224"/>
   <circle  fill="none" cx="144" cy="140.4" connectorname="D_RX - D2" stroke="#F7BD13" r="2.052" id="connector91pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="144" cy="118.8" connectorname="D5" stroke="#F7BD13" r="2.052" id="connector94pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="7.2" cy="154.8" connectorname="A5" stroke="#F7BD13" r="2.052" id="connector89pad" stroke-width="1.224"/>
   <circle  fill="none" cx="144" cy="133.2" connectorname="D_TX - D3" stroke="#F7BD13" r="2.052" id="connector92pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="7.2" cy="140.4" connectorname="A3" stroke="#F7BD13" r="2.052" id="connector87pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="144" cy="43.2" connectorname="AREF" stroke="#F7BD13" r="2.052" id="connector90pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="7.2" cy="126" connectorname="A1" stroke="#F7BD13" r="2.052" id="connector85pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="7.2" cy="147.6" connectorname="A4" stroke="#F7BD13" r="2.052" id="connector88pad" stroke-width="1.224"/>
   <circle  fill="none" cx="7.2" cy="82.8" connectorname="5V" stroke="#F7BD13" r="2.052" id="connector83pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="7.2" cy="133.2" connectorname="A2" stroke="#F7BD13" r="2.052" id="connector86pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="7.2" cy="118.8" connectorname="A0" stroke="#F7BD13" r="2.052" id="connector84pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="129.6" cy="57.6" connectorname="D13" stroke="#F7BD13" r="2.052" id="connector43pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="129.6" cy="72" connectorname="D11" stroke="#F7BD13" r="2.052" id="connector41pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="129.6" cy="86.4" connectorname="D9" stroke="#F7BD13" r="2.052" id="connector39pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="129.6" cy="64.8" connectorname="D12" stroke="#F7BD13" r="2.052" id="connector42pad" stroke-width="1.224"/>
   <circle  fill="none" cx="61.2" cy="90" connectorname="5V" stroke="#F7BD13" r="2.052" id="connector37pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="129.6" cy="79.2" connectorname="D10" stroke="#F7BD13" r="2.052" id="connector40pad" stroke-width="1.224"/>
   <circle  fill="none" cx="61.2" cy="104.4" connectorname="CTS" stroke="#F7BD13" r="2.052" id="connector35pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="129.6" cy="93.6" connectorname="D8" stroke="#F7BD13" r="2.052" id="connector38pad" stroke-width="1.224"/>
   <circle  fill="none" cx="61.2" cy="118.8" connectorname="RES2" stroke="#F7BD13" r="2.052" id="connector33pad" stroke-width="1.224"/>
   <circle  fill="none" cx="61.2" cy="97.2" connectorname="DIO4" stroke="#F7BD13" r="2.052" id="connector36pad" stroke-width="1.224"/>
   <circle  fill="none" cx="61.2" cy="133.2" connectorname="RTS" stroke="#F7BD13" r="2.052" id="connector31pad" stroke-width="1.224"/>
@@ -690,9 +742,13 @@
   <circle  fill="none" cx="97.2" cy="133.2" connectorname="DIO12" stroke="#F7BD13" r="2.052" id="connector22pad" stroke-width="1.224"/>
   <circle  fill="none" cx="97.2" cy="97.2" connectorname="DTR" stroke="#F7BD13" r="2.052" id="connector17pad" stroke-width="1.224"/>
   <circle  fill="none" cx="97.2" cy="118.8" connectorname="RSSI" stroke="#F7BD13" r="2.052" id="connector20pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="129.6" cy="104.4" connectorname="D7" stroke="#F7BD13" r="2.052" id="connector15pad" stroke-width="1.224"/>
   <circle  fill="none" cx="97.2" cy="104.4" connectorname="RES1" stroke="#F7BD13" r="2.052" id="connector18pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="129.6" cy="118.8" connectorname="D5" stroke="#F7BD13" r="2.052" id="connector13pad" stroke-width="1.224"/>
   <circle  fill="none" cx="97.2" cy="90" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector16pad" stroke-width="1.224"/>
   <circle  fill="none" cx="129.6" cy="133.2" connectorname="D_TX" stroke="#F7BD13" r="2.052" id="connector11pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="129.6" cy="111.6" connectorname="D6" stroke="#F7BD13" r="2.052" id="connector14pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="129.6" cy="126" connectorname="D4" stroke="#F7BD13" r="2.052" id="connector12pad" stroke-width="1.224"/>
   <circle  fill="none" cx="129.6" cy="140.4" connectorname="D_RX" stroke="#F7BD13" r="2.052" id="connector10pad" stroke-width="1.224"/>
  </g>
 </svg>

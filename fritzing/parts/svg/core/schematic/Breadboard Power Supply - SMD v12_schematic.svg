@@ -9,16 +9,20 @@
   <text  x="86.2394" y="107.499" font-family="DroidSans" fill="#000000" text-anchor="middle" stroke="none" id="label" stroke-width="0" font-size="18">Supply</text>
   <text  x="86.2394" y="128.759" font-family="DroidSans" fill="#000000" text-anchor="middle" stroke="none" id="label" stroke-width="0" font-size="18">Board</text>
   <text  x="86.2394" y="150.019" font-family="DroidSans" fill="#000000" text-anchor="middle" stroke="none" id="label" stroke-width="0" font-size="18">SMD</text>
-  <line  fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="round" y1="1.2" stroke-width="2.4" x1="86.2394" y2="21.2599" x2="86.2394"/>
-  <rect  width="2.4" x="85.0392" y="0" fill="none" connectorname="VCC" height="21.2599" id="connector15pin" stroke-width="0"/>
-  <rect  width="2.4" x="85.0392" y="0" fill="none" height="0" id="connector15terminal" stroke-width="0"/>
-  <text  x="86.2394" y="33.8599" font-family="DroidSans" fill="#000000" text-anchor="middle" stroke="none" id="label15" stroke-width="0" font-size="9.936">VCC</text>
+  <line  fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="round" y1="1.2" stroke-width="2.4" x1="75.6094" y2="21.2599" x2="75.6094"/>
+  <rect  width="2.4" x="74.4091" y="0" fill="none" connectorname="VCC" height="21.2599" id="connector15pin" stroke-width="0"/>
+  <rect  width="2.4" x="74.4091" y="0" fill="none" height="0" id="connector15terminal" stroke-width="0"/>
+  <text  x="75.6094" y="33.8599" font-family="DroidSans" fill="#000000" text-anchor="middle" stroke="none" id="label15" stroke-width="0" font-size="9.936">VCC</text>
+  <line  fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="round" y1="1.2" stroke-width="2.4" x1="96.8695" y2="21.2599" x2="96.8695"/>
+  <rect  width="2.4" x="95.6693" y="0" fill="none" connectorname="VIN" height="21.2599" id="connector18pin" stroke-width="0"/>
+  <rect  width="2.4" x="95.6693" y="0" fill="none" height="0" id="connector18terminal" stroke-width="0"/>
+  <text  x="96.8695" y="33.8599" font-family="DroidSans" fill="#000000" text-anchor="middle" stroke="none" id="label18" stroke-width="0" font-size="9.936">VIN</text>
   <line  fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="round" y1="193.738" stroke-width="2.4" x1="86.2394" y2="213.798" x2="86.2394"/>
   <rect  width="2.4" x="85.0392" y="193.738" fill="none" connectorname="GND" height="21.2599" id="connector14pin" stroke-width="0"/>
   <rect  width="2.4" x="85.0392" y="214.998" fill="none" height="0" id="connector14terminal" stroke-width="0"/>
   <text  x="86.2394" y="187.978" font-family="DroidSans" fill="#000000" text-anchor="middle" stroke="none" id="label14" stroke-width="0" font-size="9.936">GND</text>
-  <rect  width="2.4" x="85.0392" y="0" fill="none" connectorname="VCC" height="21.2599" id="connector16pin" stroke-width="0"/>
-  <rect  width="2.4" x="85.0392" y="0" fill="none" height="0" id="connector16terminal" stroke-width="0"/>
+  <rect  width="2.4" x="74.4091" y="0" fill="none" connectorname="VCC" height="21.2599" id="connector16pin" stroke-width="0"/>
+  <rect  width="2.4" x="74.4091" y="0" fill="none" height="0" id="connector16terminal" stroke-width="0"/>
   <rect  width="2.4" x="85.0392" y="193.738" fill="none" connectorname="GND" height="21.2599" id="connector17pin" stroke-width="0"/>
   <rect  width="2.4" x="85.0392" y="214.998" fill="none" height="0" id="connector17terminal" stroke-width="0"/>
   <rect  width="2.4" x="85.0392" y="193.738" fill="none" connectorname="GND" height="21.2599" id="connector19pin" stroke-width="0"/>

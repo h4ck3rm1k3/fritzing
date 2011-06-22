@@ -67,6 +67,36 @@
 </iconView>
 </views>
 <connectors>
+<connector id='connector28' type='male' name='+'>
+<description>+</description><views>
+<breadboardView>
+<p layer='breadboard' svgId='connector28pin'/></breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector28pin' terminalId='connector28terminal'/></schematicView>
+<pcbView>
+<p layer='copper0' svgId='connector28pad'/><p layer='copper1' svgId='connector28pad'/></pcbView>
+</views>
+</connector>
+<connector id='connector29' type='male' name='C'>
+<description>C</description><views>
+<breadboardView>
+<p layer='breadboard' svgId='connector29pin'/></breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector29pin' terminalId='connector29terminal'/></schematicView>
+<pcbView>
+<p layer='copper0' svgId='connector29pad'/><p layer='copper1' svgId='connector29pad'/></pcbView>
+</views>
+</connector>
+<connector id='connector30' type='male' name='B'>
+<description>B</description><views>
+<breadboardView>
+<p layer='breadboard' svgId='connector30pin'/></breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector30pin' terminalId='connector30terminal'/></schematicView>
+<pcbView>
+<p layer='copper0' svgId='connector30pad'/><p layer='copper1' svgId='connector30pad'/></pcbView>
+</views>
+</connector>
 <connector id='connector31' type='male' name='GND'>
 <description>GND</description><views>
 <breadboardView>

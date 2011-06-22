@@ -117,6 +117,16 @@
 <p layer='copper0' svgId='connector17pad'/><p layer='copper1' svgId='connector17pad'/></pcbView>
 </views>
 </connector>
+<connector id='connector18' type='male' name='VIN'>
+<description>VIN</description><views>
+<breadboardView>
+<p layer='breadboard' svgId='connector18pin'/></breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector18pin' terminalId='connector18terminal'/></schematicView>
+<pcbView>
+<p layer='copper0' svgId='connector18pad'/><p layer='copper1' svgId='connector18pad'/></pcbView>
+</views>
+</connector>
 <connector id='connector19' type='male' name='GND'>
 <description>GND</description><views>
 <breadboardView>

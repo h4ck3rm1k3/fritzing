@@ -266,6 +266,7 @@
   <circle  fill="none" cx="7.2" cy="183.6" connectorname="D13" stroke="#F7BD13" r="2.052" id="connector40pad" stroke-width="1.224"/>
   <circle  fill="none" cx="144" cy="165.6" connectorname="3.3V" stroke="#F7BD13" r="2.052" id="connector20pad" stroke-width="1.224"/>
   <circle  fill="none" cx="144" cy="158.4" connectorname="5V" stroke="#F7BD13" r="2.052" id="connector21pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="144" cy="172.8" connectorname="RESET" stroke="#F7BD13" r="2.052" id="connector44pad" stroke-width="1.224"/>
   <circle  fill="none" cx="144" cy="122.4" connectorname="VERTICAL - A0" stroke="#F7BD13" r="2.052" id="connector22pad" stroke-width="1.224"/>
   <circle  fill="none" cx="7.2" cy="93.6" connectorname="TX" stroke="#F7BD13" r="2.052" id="connector46pad" stroke-width="1.224"/>
   <circle  fill="none" cx="144" cy="115.2" connectorname="HORIZONTAL - A1" stroke="#F7BD13" r="2.052" id="connector23pad" stroke-width="1.224"/>
@@ -291,6 +292,7 @@
   <circle  fill="none" cx="7.2" cy="183.6" connectorname="D13" stroke="#F7BD13" r="2.052" id="connector40pad" stroke-width="1.224"/>
   <circle  fill="none" cx="144" cy="165.6" connectorname="3.3V" stroke="#F7BD13" r="2.052" id="connector20pad" stroke-width="1.224"/>
   <circle  fill="none" cx="144" cy="158.4" connectorname="5V" stroke="#F7BD13" r="2.052" id="connector21pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="144" cy="172.8" connectorname="RESET" stroke="#F7BD13" r="2.052" id="connector44pad" stroke-width="1.224"/>
   <circle  fill="none" cx="144" cy="122.4" connectorname="VERTICAL - A0" stroke="#F7BD13" r="2.052" id="connector22pad" stroke-width="1.224"/>
   <circle  fill="none" cx="7.2" cy="93.6" connectorname="TX" stroke="#F7BD13" r="2.052" id="connector46pad" stroke-width="1.224"/>
   <circle  fill="none" cx="144" cy="115.2" connectorname="HORIZONTAL - A1" stroke="#F7BD13" r="2.052" id="connector23pad" stroke-width="1.224"/>

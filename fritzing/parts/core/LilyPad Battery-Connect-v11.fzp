@@ -52,6 +52,26 @@
 </iconView>
 </views>
 <connectors>
+<connector id='connector4' type='male' name='-'>
+<description>-</description><views>
+<breadboardView>
+<p layer='breadboard' svgId='connector4pin'/></breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/></schematicView>
+<pcbView>
+<p layer='copper0' svgId='connector4pad'/><p layer='copper1' svgId='connector4pad'/></pcbView>
+</views>
+</connector>
+<connector id='connector5' type='male' name='+'>
+<description>+</description><views>
+<breadboardView>
+<p layer='breadboard' svgId='connector5pin'/></breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/></schematicView>
+<pcbView>
+<p layer='copper0' svgId='connector5pad'/><p layer='copper1' svgId='connector5pad'/></pcbView>
+</views>
+</connector>
 </connectors>
 <buses>
 </buses>

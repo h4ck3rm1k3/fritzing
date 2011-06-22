@@ -281,6 +281,16 @@
 <p layer='copper0' svgId='connector40pad'/><p layer='copper1' svgId='connector40pad'/></pcbView>
 </views>
 </connector>
+<connector id='connector44' type='female' name='RESET'>
+<description>RESET</description><views>
+<breadboardView>
+<p layer='breadboard' svgId='connector44pin'/></breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector44pin' terminalId='connector44terminal'/></schematicView>
+<pcbView>
+<p layer='copper0' svgId='connector44pad'/><p layer='copper1' svgId='connector44pad'/></pcbView>
+</views>
+</connector>
 <connector id='connector45' type='female' name='RX'>
 <description>RX</description><views>
 <breadboardView>

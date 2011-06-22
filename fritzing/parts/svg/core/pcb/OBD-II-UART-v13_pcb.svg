@@ -281,9 +281,12 @@
   <circle  fill="none" cx="90" cy="59.2073" connectorname="CAN_HI" stroke="#F7BD13" r="2.052" id="connector100pad" stroke-width="1.224"/>
   <circle  fill="none" cx="82.8" cy="59.2073" connectorname="CAN_LO" stroke="#F7BD13" r="2.052" id="connector101pad" stroke-width="1.224"/>
   <circle  fill="none" cx="75.6" cy="59.2073" connectorname="VBAT" stroke="#F7BD13" r="2.052" id="connector102pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="108" cy="138.407" connectorname="NC3" stroke="#F7BD13" r="2.052" id="connector104pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="79.2" cy="138.407" connectorname="NC1" stroke="#F7BD13" r="2.052" id="connector105pad" stroke-width="1.224"/>
   <circle  fill="none" cx="115.2" cy="138.407" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector106pad" stroke-width="1.224"/>
   <circle  fill="none" cx="86.4" cy="138.407" connectorname="TX-O" stroke="#F7BD13" r="2.052" id="connector107pad" stroke-width="1.224"/>
   <circle  fill="none" cx="93.6" cy="138.407" connectorname="RX-I" stroke="#F7BD13" r="2.052" id="connector108pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="100.8" cy="138.407" connectorname="NC2" stroke="#F7BD13" r="2.052" id="connector109pad" stroke-width="1.224"/>
   <circle  fill="none" cx="126" cy="84.407" connectorname="RST_NVM" stroke="#F7BD13" r="2.052" id="connector110pad" stroke-width="1.224"/>
   <circle  fill="none" cx="126" cy="77.207" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector111pad" stroke-width="1.224"/>
  </g>
@@ -297,9 +300,12 @@
   <circle  fill="none" cx="90" cy="59.2073" connectorname="CAN_HI" stroke="#F7BD13" r="2.052" id="connector100pad" stroke-width="1.224"/>
   <circle  fill="none" cx="82.8" cy="59.2073" connectorname="CAN_LO" stroke="#F7BD13" r="2.052" id="connector101pad" stroke-width="1.224"/>
   <circle  fill="none" cx="75.6" cy="59.2073" connectorname="VBAT" stroke="#F7BD13" r="2.052" id="connector102pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="108" cy="138.407" connectorname="NC3" stroke="#F7BD13" r="2.052" id="connector104pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="79.2" cy="138.407" connectorname="NC1" stroke="#F7BD13" r="2.052" id="connector105pad" stroke-width="1.224"/>
   <circle  fill="none" cx="115.2" cy="138.407" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector106pad" stroke-width="1.224"/>
   <circle  fill="none" cx="86.4" cy="138.407" connectorname="TX-O" stroke="#F7BD13" r="2.052" id="connector107pad" stroke-width="1.224"/>
   <circle  fill="none" cx="93.6" cy="138.407" connectorname="RX-I" stroke="#F7BD13" r="2.052" id="connector108pad" stroke-width="1.224"/>
+  <circle  fill="none" cx="100.8" cy="138.407" connectorname="NC2" stroke="#F7BD13" r="2.052" id="connector109pad" stroke-width="1.224"/>
   <circle  fill="none" cx="126" cy="84.407" connectorname="RST_NVM" stroke="#F7BD13" r="2.052" id="connector110pad" stroke-width="1.224"/>
   <circle  fill="none" cx="126" cy="77.207" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector111pad" stroke-width="1.224"/>
  </g>
