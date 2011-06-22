@@ -434,7 +434,7 @@ QString PinHeader::incrementTemplate(const QString & filename, int pins, qreal u
 	QRegExp uMatcher("\\[([\\.\\d]+)\\]");
 	MatchThing matchThings[32];
 	int pos = 0;
-	int matchThingIndex = 0;
+	unsigned int matchThingIndex = 0;
 	while ((pos = uMatcher.indexIn(schematicLayerTemplate, pos)) != -1) {
 		MatchThing * mt = &matchThings[matchThingIndex++];
 		mt->pos = pos;

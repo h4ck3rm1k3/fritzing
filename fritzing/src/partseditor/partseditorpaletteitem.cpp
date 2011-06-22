@@ -202,6 +202,7 @@ void PartsEditorPaletteItem::setConnector(const QString &id, Connector *connecto
 bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors, QString & error)
 {
 	Q_UNUSED(viewLayerSpec);
+	Q_UNUSED(error);
 
     ModelPartShared * modelPartShared = modelPart->modelPartShared();
     if (modelPartShared == NULL) return false;
