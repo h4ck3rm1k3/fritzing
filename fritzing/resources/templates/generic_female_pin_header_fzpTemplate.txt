@@ -8,7 +8,7 @@
     <properties>
         <property name="family">Pin Header</property>
         <property name="Pins">%1</property>
-        <property name="Form">&#9792; (female)</property>
+        <property name="Form">.percent.3</property>
         <property name="Pin Spacing">.percent.1</property>
     <property name="package">THT</property></properties>
     <description>Generic female header</description>

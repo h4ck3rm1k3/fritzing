@@ -56,7 +56,6 @@ protected:
 	ConnectorItem* newConnectorItem(class Connector *connector);
 	ConnectorItem* newConnectorItem(ItemBase * layerkin, Connector *connector);
 	QStringList collectValues(const QString & family, const QString & prop, QString & value);
-	const QStringList & forms();
 
 public:
 	static QString FemaleFormString;
@@ -66,6 +65,11 @@ public:
 	static QString genFZP(const QString & moduleid);
 	static QString genModuleID(QMap<QString, QString> & currPropsMap);
 	static QString makePcbSvg(const QString & moduleID);
+	static QString makeSchematicSvg(const QString & moduleID, const QString & form);
+	static QString findForm(const QString & filename);
+
+protected:
+	static const QStringList & forms();
 
 protected:
 	static void initSpacings();

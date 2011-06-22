@@ -261,6 +261,8 @@
 	<file>resources/templates/generic_female_pin_header_fzpTemplate.txt</file>
 	<file>resources/templates/screw_terminal_fzpTemplate.txt</file>
 	<file>resources/templates/jumper_pcb_svg_template.txt</file>
+	<file>resources/templates/generic_female_pin_header_schem_template.txt</file>
+	<file>resources/templates/generic_male_pin_header_schem_template.txt</file>
 	
     </qresource>
 </RCC>

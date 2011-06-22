@@ -198,8 +198,32 @@ QString PartFactory::getSvgFilename(ModelPart * modelPart, const QString & expec
 			}
 
 		}
-	}
+		if (expectedFileName.contains("schematic")) {
+			QString path = FolderUtils::getApplicationSubFolderPath("parts") + "/"+ ItemBase::SvgFilesDir + "/core/";
+			if (QFileInfo(path + expectedFileName).exists()) return expectedFileName;
 
+			QString form = PinHeader::findForm(expectedFileName);
+			QString safeForm;
+			foreach (QChar c, form) {
+				if (c.isLetterOrNumber()) safeForm.append(c);
+			}
+
+			path = PartFactoryFolderPath + "/" + modelPart->moduleID() + "_" + safeForm + "_schematic.svg";
+			QFile file(path);
+			if (file.exists()) {
+				return path;
+			} 
+
+			QString svg = PinHeader::makeSchematicSvg(modelPart->moduleID(), form);
+			if (file.open(QFile::WriteOnly)) {
+				QTextStream stream(&file);
+				stream.setCodec("UTF-8");
+				stream << svg;
+				file.close();
+				return path;
+			}
+		}
+	}
 
 	return "";
 }

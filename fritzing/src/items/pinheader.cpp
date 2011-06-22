@@ -258,7 +258,7 @@ QString PinHeader::genFZP(const QString & moduleid)
 
 	QString result = PaletteItem::genFZP(moduleid, "generic_female_pin_header_fzpTemplate", MinPins, MaxPins, 1); 
 	result.replace(".percent.", "%");
-	return result.arg(Spacings.value(spacing, "")).arg(spacing); 
+	return result.arg(Spacings.value(spacing, "")).arg(spacing).arg(forms().at(0)); 
 }
 
 QString PinHeader::genModuleID(QMap<QString, QString> & currPropsMap)
@@ -266,6 +266,7 @@ QString PinHeader::genModuleID(QMap<QString, QString> & currPropsMap)
 	initSpacings();
 	QString pins = currPropsMap.value("pins");
 	QString spacing = currPropsMap.value("pin spacing");
+	QString form = currPropsMap.value("form");
 
 	foreach (QString key, Spacings.keys()) {
 		if (Spacings.value(key).compare(spacing, Qt::CaseInsensitive) == 0) {
@@ -339,4 +340,70 @@ void PinHeader::initSpacings() {
 		Spacings.insert("100mil", "0.1in (2.54mm)");
 		Spacings.insert("200mil", "0.2in (5.08mm)");
 	}
+}
+
+struct MatchThing
+{
+	int pos;
+	int len;
+	qreal val;
+};
+
+QString PinHeader::makeSchematicSvg(const QString & moduleID, const QString & form) 
+{
+	QStringList pieces = moduleID.split("_");
+	if (pieces.count() != 6) return "";
+
+	int pins = pieces.at(4).toInt();
+	qreal unitHeight = 0.27;  // inches
+	qreal unitHeightPoints = unitHeight * 72;
+
+	QString header("<?xml version='1.0' encoding='utf-8'?>\n"
+				"<svg version='1.2' baseProfile='tiny' id='svg2' xmlns:svg='http://www.w3.org/2000/svg' "
+				"xmlns='http://www.w3.org/2000/svg'  x='0in' y='0in' width='0.87in' "
+				"height='%1in' viewBox='0 0 62.641 %2'>\n"
+				"<g id='schematic' >\n");
+
+
+	QString svg = header.arg(unitHeight * pins).arg(unitHeightPoints * pins);
+
+	QFile file(QString(":/resources/templates/generic_%1_pin_header_schem_template.txt")
+					.arg(form.contains("female") ? "female" : "male"));
+	file.open(QFile::ReadOnly);
+	QString schematicLayerTemplate = file.readAll();
+	file.close();
+
+	QRegExp yMatcher("\\[([\\.\\d]+)\\]");
+	MatchThing matchThings[32];
+	int pos = 0;
+	int matchThingIndex = 0;
+	while ((pos = yMatcher.indexIn(schematicLayerTemplate, pos)) != -1) {
+		MatchThing * mt = &matchThings[matchThingIndex++];
+		mt->pos = pos;
+		mt->len = yMatcher.matchedLength();
+		mt->val = yMatcher.cap(1).toDouble();
+		pos += yMatcher.matchedLength();
+	}
+
+	qreal y = 0;
+	for (int i = 0; i < pins; i++) {
+		QString argCopy(schematicLayerTemplate);
+		for (int j = matchThingIndex - 1; j >= 0; j--) {
+			MatchThing * mt = &matchThings[j];
+			argCopy.replace(mt->pos, mt->len, QString::number(mt->val + y));
+		}
+		svg += argCopy.arg(i),
+		y += unitHeightPoints;
+	}
+
+	svg += "</g>\n</svg>";
+
+	return svg;
+}
+
+QString  PinHeader::findForm(const QString & filename)
+{
+	if (filename.contains("rounded")) return FemaleRoundedFormString;
+	if (filename.contains("female")) return FemaleFormString;
+	return MaleFormString;
 }
