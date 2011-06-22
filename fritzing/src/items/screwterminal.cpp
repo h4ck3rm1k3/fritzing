@@ -41,7 +41,7 @@ $Date$
 
 static const int MinPins = 2;
 static const int MaxPins = 12;
-QHash<QString, QString> Spacings;
+static QHash<QString, QString> Spacings;
 
 ScrewTerminal::ScrewTerminal( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)

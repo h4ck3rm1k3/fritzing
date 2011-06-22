@@ -65,7 +65,10 @@ public:
 	static void initNames();
 	static QString genFZP(const QString & moduleid);
 	static QString genModuleID(QMap<QString, QString> & currPropsMap);
+	static QString makePcbSvg(const QString & moduleID);
 
+protected:
+	static void initSpacings();
 
 protected:
 	class FSvgRenderer * m_renderer;

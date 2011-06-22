@@ -1722,10 +1722,15 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 	}
 
 	if (generatedModuleID.isEmpty()) {
-		if (prop.compare("pin spacing", Qt::CaseInsensitive)) {
+		if (prop.compare("pin spacing", Qt::CaseInsensitive) == 0) {
 			if (family.compare("screw terminal", Qt::CaseInsensitive) == 0) {
 				generatedModuleID = ScrewTerminal::genModuleID(currPropsMap);
 			}
+
+			if (itemBase->moduleID().startsWith("generic_female_pin_header_", Qt::CaseInsensitive)) {
+				generatedModuleID = PinHeader::genModuleID(currPropsMap);
+			}
+
 		}
 	}
 
@@ -1745,6 +1750,8 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 			}
 		}
 	}
+
+
 
 	if (generatedModuleID.isEmpty()) {
 		if (prop.compare("pins") == 0) {

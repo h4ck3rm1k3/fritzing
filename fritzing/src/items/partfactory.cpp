@@ -158,8 +158,9 @@ ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClas
 }
 
 QString PartFactory::getSvgFilename(ModelPart * modelPart, const QString & expectedFileName) {
-	Q_UNUSED(expectedFileName);
 	if (modelPart->moduleID().endsWith(ModuleIDNames::PerfboardModuleIDName)) {
+		if (expectedFileName.contains("icon")) return expectedFileName;
+
 		QString path = PartFactoryFolderPath + "/" + modelPart->moduleID() + ".svg";
 		QFile file(path);
 		if (file.exists()) {
@@ -175,6 +176,30 @@ QString PartFactory::getSvgFilename(ModelPart * modelPart, const QString & expec
 			return path;
 		}
 	}
+
+	if (modelPart->moduleID().startsWith("generic_female_pin_header_")) {
+		if (expectedFileName.contains("pcb")) {
+			QString path = FolderUtils::getApplicationSubFolderPath("parts") + "/"+ ItemBase::SvgFilesDir + "/core/";
+			if (QFileInfo(path + expectedFileName).exists()) return expectedFileName;
+
+			path = PartFactoryFolderPath + "/" + modelPart->moduleID() + "_pcb.svg";
+			QFile file(path);
+			if (file.exists()) {
+				return path;
+			} 
+
+			QString svg = PinHeader::makePcbSvg(modelPart->moduleID());
+			if (file.open(QFile::WriteOnly)) {
+				QTextStream stream(&file);
+				stream.setCodec("UTF-8");
+				stream << svg;
+				file.close();
+				return path;
+			}
+
+		}
+	}
+
 
 	return "";
 }

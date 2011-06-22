@@ -1309,6 +1309,8 @@ void PCBSketchWidget::updateRoutingStatus(RoutingStatus & routingStatus, bool ma
 		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::RatsnestFlag | getTraceFlag());
 		visited.append(connectorItems);
 
+		//foreach (ConnectorItem * ci, connectorItems) ci->debugInfo("cep");
+
 		bool doRatsnest = manual || checkUpdateRatsnest(connectorItems);
 		if (!doRatsnest && connectorItems.count() <= 1) continue;
 
@@ -1320,16 +1322,7 @@ void PCBSketchWidget::updateRoutingStatus(RoutingStatus & routingStatus, bool ma
 		for (int i = partConnectorItems.count() - 1; i >= 0; i--) {
 			ConnectorItem * ci = partConnectorItems[i];
 			
-			/*
-			DebugDialog::debug(QString("pc '%1' id:%2 cid:%3 vid:%4 vlid:%5 vis:%6")
-				.arg(ci->attachedToTitle())
-				.arg(ci->attachedToID())
-				.arg(ci->connectorSharedID())
-				.arg(m_viewIdentifier)
-				.arg(ci->attachedToViewLayerID())
-				.arg(ci->attachedTo()->isEverVisible())
-				);
-			*/
+			//ci->debugInfo("pc");
 
 			if (!ci->attachedTo()->isEverVisible()) {
 				// may not be necessary when views are brought completely into sync

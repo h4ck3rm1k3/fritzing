@@ -55,20 +55,6 @@ class ItemBase : public GraphicsSvgLineItem
 Q_OBJECT
 
 public:
-	static const QString ITEMBASE_FONT_PREFIX;
-	static const QString ITEMBASE_FONT_SUFFIX;
-	static QHash<QString, QString> TranslatedPropertyNames;
-
-public:
-	static void initNames();
-	static void cleanup();
-	static ItemBase * extractTopLevelItemBase(QGraphicsItem * thing);
-	static QString partInstanceDefaultTitle;
-	static QList<ItemBase *> emptyList;
-	static QString translatePropertyName(const QString & key);
-	static void setReferenceModel(class ReferenceModel *);
-
-public:
 	enum PluralType {
 		Singular,
 		Plural,
@@ -329,8 +315,23 @@ protected:
 	const static qreal hoverOpacity;
 	const static QColor connectorHoverColor;
 	const static qreal connectorHoverOpacity;
-	static QString SvgFilesDir;
 	static QPointer<class ReferenceModel> referenceModel;
+
+public:
+	static const QString ITEMBASE_FONT_PREFIX;
+	static const QString ITEMBASE_FONT_SUFFIX;
+	static QHash<QString, QString> TranslatedPropertyNames;
+	static QString SvgFilesDir;
+
+public:
+	static void initNames();
+	static void cleanup();
+	static ItemBase * extractTopLevelItemBase(QGraphicsItem * thing);
+	static QString partInstanceDefaultTitle;
+	static QList<ItemBase *> emptyList;
+	static QString translatePropertyName(const QString & key);
+	static void setReferenceModel(class ReferenceModel *);
+
 
 };
 

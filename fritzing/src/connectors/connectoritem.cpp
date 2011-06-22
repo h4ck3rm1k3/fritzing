@@ -1321,7 +1321,7 @@ void ConnectorItem::debugInfo(const QString & msg)
 {
 
 #ifndef QT_NO_DEBUG
-	DebugDialog::debug(QString("%1 cid:%2 %3 %4 id:%5 %6 vlid:%7 vid:%8 spec:%9 flg:%10")
+	DebugDialog::debug(QString("%1 cid:%2 %3 %4 id:%5 %6 vlid:%7 vid:%8 spec:%9 flg:%10 hy:%11")
 		.arg(msg)
 		.arg(this->connectorSharedID())
 		.arg(this->connectorSharedName())
@@ -1332,6 +1332,7 @@ void ConnectorItem::debugInfo(const QString & msg)
 		.arg(this->attachedToViewIdentifier())
 		.arg(this->attachedToViewLayerSpec())
 		.arg(this->attachedTo()->getViewGeometry().wireFlags())
+		.arg(this->m_hybrid)
 	);
 #else
 	Q_UNUSED(msg);

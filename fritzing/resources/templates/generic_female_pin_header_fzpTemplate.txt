@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.2.2.b.03.04.2550" moduleId="generic_female_pin_header_%1_100mil">
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.2.2.b.03.04.2550" moduleId="generic_female_pin_header_%1_.percent.2">
     <version>4</version>
     <author>Fritzing Part-o-matic</author>
     <title>Generic female header - %1 pins</title>
@@ -9,7 +9,7 @@
         <property name="family">Pin Header</property>
         <property name="Pins">%1</property>
         <property name="Form">&#9792; (female)</property>
-        <property name="Pin Spacing">0.1in (2.54mm)</property>
+        <property name="Pin Spacing">.percent.1</property>
     <property name="package">THT</property></properties>
     <description>Generic female header</description>
     <views>
@@ -29,7 +29,7 @@
             </layers>
         </schematicView>
         <pcbView>
-            <layers image="pcb/jumper_%1_100mil_pcb.svg">
+            <layers image="pcb/jumper_%1_.percent.2_pcb.svg">
                 <layer layerId="copper0"/>
                 <layer layerId="silkscreen"/>
             <layer layerId="copper1"/></layers>

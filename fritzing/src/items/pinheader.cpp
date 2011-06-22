@@ -44,10 +44,8 @@ QString PinHeader::FemaleRoundedFormString;
 QString PinHeader::MaleFormString;
 static int MinPins = 1;
 static int MaxPins = 64;
+static QHash<QString, QString> Spacings;
 
-
-// TODO
-//	save into parts bin
 
 PinHeader::PinHeader( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
@@ -170,6 +168,16 @@ QStringList PinHeader::collectValues(const QString & family, const QString & pro
 		return values;
 	}
 
+	if (prop.compare("pin spacing", Qt::CaseInsensitive) == 0) {
+		initSpacings();
+		QStringList values;
+		value = modelPart()->properties().value("pin spacing");
+
+		values = Spacings.values();
+		
+		return values;
+	}
+
 
 	return PaletteItem::collectValues(family, prop, value);
 }
@@ -242,12 +250,93 @@ ItemBase::PluralType PinHeader::isPlural() {
 
 QString PinHeader::genFZP(const QString & moduleid)
 {
-	return PaletteItem::genFZP(moduleid, "generic_female_pin_header_fzpTemplate", MinPins, MaxPins, 1); 
+	initSpacings();
+	QStringList pieces = moduleid.split("_");
+	if (pieces.count() != 6) return "";
+
+	QString spacing = pieces.at(5);
+
+	QString result = PaletteItem::genFZP(moduleid, "generic_female_pin_header_fzpTemplate", MinPins, MaxPins, 1); 
+	result.replace(".percent.", "%");
+	return result.arg(Spacings.value(spacing, "")).arg(spacing); 
 }
 
 QString PinHeader::genModuleID(QMap<QString, QString> & currPropsMap)
 {
+	initSpacings();
 	QString pins = currPropsMap.value("pins");
-	return QString("generic_female_pin_header_%1_100mil").arg(pins);
+	QString spacing = currPropsMap.value("pin spacing");
+
+	foreach (QString key, Spacings.keys()) {
+		if (Spacings.value(key).compare(spacing, Qt::CaseInsensitive) == 0) {
+			return QString("generic_female_pin_header_%1_%2").arg(pins).arg(key);
+		}
+	}
+
+	return "";
 }
 
+QString PinHeader::makePcbSvg(const QString & moduleID) 
+{
+	initSpacings();
+
+	QStringList pieces = moduleID.split("_");
+	if (pieces.count() != 6) return "";
+
+	int pins = pieces.at(4).toInt();
+	QString spacingString = pieces.at(5);
+
+	static QString pcbLayerTemplate = "";
+
+	QFile file(":/resources/templates/jumper_pcb_svg_template.txt");
+	file.open(QFile::ReadOnly);
+	pcbLayerTemplate = file.readAll();
+	file.close();
+
+	qreal outerBorder = 15;
+	qreal innerBorder = outerBorder / 2;
+	qreal silkStrokeWidth = 10;
+	qreal radius = 27.5;
+	qreal copperStrokeWidth = 20;
+	qreal totalWidth = (outerBorder * 2) + (silkStrokeWidth * 2) + (innerBorder * 2) + (radius * 2) + copperStrokeWidth;
+	qreal center = totalWidth / 2;
+	qreal spacing =TextUtils::convertToInches(spacingString) * 1000; 
+
+	QString middle;
+
+	middle += QString( "<rect fill='none' height='%1' width='%1' stroke='rgb(255, 191, 0)' stroke-width='%2' x='%3' y='%3'/>\n")
+					.arg(radius * 2)
+					.arg(copperStrokeWidth)
+					.arg(center - radius);
+	for (int i = 0; i < pins; i++) {
+		middle += QString("<circle cx='%1' cy='%2' fill='none' id='connector%3pin' r='%4' stroke='rgb(255, 191, 0)' stroke-width='%5'/>\n")
+					.arg(center)
+					.arg(center + (i * spacing)) 
+					.arg(i)
+					.arg(radius)
+					.arg(copperStrokeWidth);
+	}
+
+	qreal totalHeight = totalWidth + (pins * spacing) - spacing;
+
+	QString svg = pcbLayerTemplate
+					.arg(totalWidth / 1000)
+					.arg(totalHeight / 1000)
+					.arg(totalWidth)
+					.arg(totalHeight)
+					.arg(totalWidth - outerBorder - (silkStrokeWidth / 2))
+					.arg(totalHeight - outerBorder - (silkStrokeWidth / 2))
+					.arg(totalWidth - outerBorder - (silkStrokeWidth / 2))
+					.arg(silkStrokeWidth)
+					.arg(silkStrokeWidth / 2)
+					.arg(middle);
+
+	return svg;
+}
+
+void PinHeader::initSpacings() {
+	if (Spacings.count() == 0) {
+		Spacings.insert("100mil", "0.1in (2.54mm)");
+		Spacings.insert("200mil", "0.2in (5.08mm)");
+	}
+}
