@@ -158,63 +158,23 @@ ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClas
 }
 
 QString PartFactory::getSvgFilename(ModelPart * modelPart, const QString & expectedFileName) {
+	if (expectedFileName.startsWith("pcb/jumper_", Qt::CaseInsensitive)) {
+		return getSvgFilenameAux(expectedFileName, &PinHeader::makePcbSvg);
+	}
+
 	if (expectedFileName.contains("pin_header", Qt::CaseInsensitive)) {
 		if (expectedFileName.contains("schematic", Qt::CaseInsensitive)) {
-			QString path = FolderUtils::getApplicationSubFolderPath("parts") + "/"+ ItemBase::SvgFilesDir + "/core/";
-			if (QFileInfo(path + expectedFileName).exists()) return expectedFileName;
-
-			QString form = PinHeader::findForm(expectedFileName);
-			QString safeForm;
-			foreach (QChar c, form) {
-				if (c.isLetterOrNumber()) safeForm.append(c);
-			}
-
-			path = PartFactoryFolderPath + "/" + modelPart->moduleID() + "_" + safeForm + "_schematic.svg";
-			QFile file(path);
-			if (file.exists()) {
-				return path;
-			} 
-
-			QString svg = PinHeader::makeSchematicSvg(modelPart->moduleID(), form);
-			if (file.open(QFile::WriteOnly)) {
-				QTextStream stream(&file);
-				stream.setCodec("UTF-8");
-				stream << svg;
-				file.close();
-				return path;
-			}
+			return getSvgFilenameAux(expectedFileName, &PinHeader::makeSchematicSvg);
 		}
 		else if (expectedFileName.contains("bread", Qt::CaseInsensitive)) {
-			QString path = FolderUtils::getApplicationSubFolderPath("parts") + "/"+ ItemBase::SvgFilesDir + "/core/";
-			if (QFileInfo(path + expectedFileName).exists()) return expectedFileName;
-
-			QString form = PinHeader::findForm(expectedFileName);
-			QString safeForm;
-			foreach (QChar c, form) {
-				if (c.isLetterOrNumber()) safeForm.append(c);
-			}
-
-			path = PartFactoryFolderPath + "/" + modelPart->moduleID() + "_" + safeForm + "_bread.svg";
-			QFile file(path);
-			if (file.exists()) {
-				return path;
-			} 
-
-			QString svg = PinHeader::makeBreadboardSvg(modelPart->moduleID(), form);
-			if (file.open(QFile::WriteOnly)) {
-				QTextStream stream(&file);
-				stream.setCodec("UTF-8");
-				stream << svg;
-				file.close();
-				return path;
-			}
+			return getSvgFilenameAux(expectedFileName, &PinHeader::makeBreadboardSvg);		
 		}
 	}
 
 	if (modelPart->moduleID().endsWith(ModuleIDNames::PerfboardModuleIDName)) {
 		if (expectedFileName.contains("icon")) return expectedFileName;
 
-		QString path = PartFactoryFolderPath + "/" + modelPart->moduleID() + ".svg";
+		QString path = PartFactoryFolderPath + "/" + expectedFileName;
 		QFile file(path);
 		if (file.exists()) {
 			return path;
@@ -230,28 +190,27 @@ QString PartFactory::getSvgFilename(ModelPart * modelPart, const QString & expec
 		}
 	}
 
-	if (modelPart->moduleID().startsWith("generic_female_pin_header_")) {
-		if (expectedFileName.contains("pcb")) {
-			QString path = FolderUtils::getApplicationSubFolderPath("parts") + "/"+ ItemBase::SvgFilesDir + "/core/";
-			if (QFileInfo(path + expectedFileName).exists()) return expectedFileName;
+	return "";
+}
 
-			path = PartFactoryFolderPath + "/" + modelPart->moduleID() + "_pcb.svg";
-			QFile file(path);
-			if (file.exists()) {
-				return path;
-			} 
+QString PartFactory::getSvgFilenameAux(const QString & expectedFileName, QString (*getSvg)(const QString &))
+{
+	QString path = FolderUtils::getApplicationSubFolderPath("parts") + "/"+ ItemBase::SvgFilesDir + "/core/";
+	if (QFileInfo(path + expectedFileName).exists()) return expectedFileName;
 
-			QString svg = PinHeader::makePcbSvg(modelPart->moduleID());
-			if (file.open(QFile::WriteOnly)) {
-				QTextStream stream(&file);
-				stream.setCodec("UTF-8");
-				stream << svg;
-				file.close();
-				return path;
-			}
+	path = PartFactoryFolderPath + "/" + expectedFileName;
+	QFile file(path);
+	if (file.exists()) {
+		return path;
+	} 
 
-		}
-
+	QString svg = (*getSvg)(expectedFileName);
+	if (file.open(QFile::WriteOnly)) {
+		QTextStream stream(&file);
+		stream.setCodec("UTF-8");
+		stream << svg;
+		file.close();
+		return path;
 	}
 
 	return "";
@@ -319,6 +278,11 @@ void PartFactory::initFolder()
 	QStringList filters;
 	filters << "*.fzp" << "*.svg";
 	FolderUtils::checkLockedFiles("partfactory", backupList, filters, LockedFiles);
+	QDir dir(PartFactoryFolderPath);
+	dir.mkdir("icon");
+	dir.mkdir("breadboard");
+	dir.mkdir("schematic");
+	dir.mkdir("pcb");
 }
 
 void PartFactory::cleanup()

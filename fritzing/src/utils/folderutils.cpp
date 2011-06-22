@@ -45,12 +45,11 @@ const QString FolderUtils::LockFileName = "___lockfile___.txt";
 
 FolderUtils::FolderUtils() {
 	m_openSaveFolder = ___emptyString___;
-	m_folders << "/bins" << "/partfactory"
+	m_folders << "/bins" 
+		<< "/partfactory"
 		<< "/parts/user" << "/parts/contrib"
-		<< "/parts/svg/user/icon" << "/parts/svg/user/breadboard"
-		<< "/parts/svg/user/schematic" << "/parts/svg/user/pcb"
-		<< "/parts/svg/contrib/icon" << "/parts/svg/contrib/breadboard"
-		<< "/parts/svg/contrib/schematic" << "/parts/svg/contrib/pcb"
+		<< "/parts/svg/user/icon" << "/parts/svg/user/breadboard" << "/parts/svg/user/schematic" << "/parts/svg/user/pcb"
+		<< "/parts/svg/contrib/icon" << "/parts/svg/contrib/breadboard" << "/parts/svg/contrib/schematic" << "/parts/svg/contrib/pcb"
 		<< "/backup";
 }
 
@@ -133,8 +132,6 @@ void FolderUtils::cleanup() {
 		singleton = NULL;
 	}
 }
-
-/////////////////////////////////////////////////
 
 const QString FolderUtils::getLibraryPath() 
 {
@@ -475,7 +472,7 @@ void FolderUtils::checkLockedFiles(const QString & prefix, QFileInfoList & backu
 	QFileInfoList dirList = backupDir.entryInfoList(QDir::AllDirs | QDir::NoDotAndDotDot | QDir::Hidden | QDir::NoSymLinks);
 	foreach (QFileInfo dirInfo, dirList) {
 		QDir dir(dirInfo.filePath());
-		DebugDialog::debug(QString("looking in backup dir %1").arg(dir.absolutePath()));
+		//DebugDialog::debug(QString("looking in backup dir %1").arg(dir.absolutePath()));
 		QFileInfoList fileInfoList = dir.entryInfoList(filters, QDir::Files | QDir::Hidden | QDir::NoSymLinks);
 
 		if (fileInfoList.isEmpty()) {

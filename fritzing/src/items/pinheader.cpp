@@ -277,15 +277,15 @@ QString PinHeader::genModuleID(QMap<QString, QString> & currPropsMap)
 	return "";
 }
 
-QString PinHeader::makePcbSvg(const QString & moduleID) 
+QString PinHeader::makePcbSvg(const QString & expectedFileName) 
 {
 	initSpacings();
 
-	QStringList pieces = moduleID.split("_");
-	if (pieces.count() != 6) return "";
+	QStringList pieces = expectedFileName.split("_");
+	if (pieces.count() != 4) return "";
 
-	int pins = pieces.at(4).toInt();
-	QString spacingString = pieces.at(5);
+	int pins = pieces.at(1).toInt();
+	QString spacingString = pieces.at(2);
 
 	static QString pcbLayerTemplate = "";
 
@@ -349,12 +349,13 @@ struct MatchThing
 	qreal val;
 };
 
-QString PinHeader::makeSchematicSvg(const QString & moduleID, const QString & form) 
+QString PinHeader::makeSchematicSvg(const QString & expectedFileName) 
 {
-	QStringList pieces = moduleID.split("_");
-	if (pieces.count() != 6) return "";
+	QStringList pieces = expectedFileName.split("_");
+	if (pieces.count() != 7) return "";
 
 	int pins = pieces.at(4).toInt();
+	QString form = pieces.at(1);
 	qreal unitHeight = 0.27;  // inches
 	qreal unitHeightPoints = unitHeight * 72;
 
@@ -376,12 +377,16 @@ QString PinHeader::makeSchematicSvg(const QString & moduleID, const QString & fo
 	return svg;
 }
 
-QString PinHeader::makeBreadboardSvg(const QString & moduleID, const QString & form) 
+QString PinHeader::makeBreadboardSvg(const QString & expectedFileName) 
 {
-	QStringList pieces = moduleID.split("_");
-	if (pieces.count() != 6) return "";
+	QStringList pieces = expectedFileName.split("_");
+	if (pieces.count() < 7) return "";
 
-	int pins = pieces.at(4).toInt();
+	int pinIndex = 4;
+	if (pieces.count() == 8) pinIndex++;
+	QString form = pieces.at(1);
+
+	int pins = pieces.at(pinIndex).toInt();
 	qreal unitHeight = 0.1;  // inches
 	qreal unitHeightPoints = unitHeight * 10000;
 

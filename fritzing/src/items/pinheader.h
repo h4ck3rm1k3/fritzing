@@ -64,9 +64,9 @@ public:
 	static void initNames();
 	static QString genFZP(const QString & moduleid);
 	static QString genModuleID(QMap<QString, QString> & currPropsMap);
-	static QString makePcbSvg(const QString & moduleID);
-	static QString makeSchematicSvg(const QString & moduleID, const QString & form);
-	static QString makeBreadboardSvg(const QString & moduleID, const QString & form);
+	static QString makePcbSvg(const QString & expectedFileName);
+	static QString makeSchematicSvg(const QString & expectedFileName);
+	static QString makeBreadboardSvg(const QString & expectedFileName);
 	static QString findForm(const QString & filename);
 	static QString incrementTemplate(const QString & filename, int pins, qreal unitIncrement); 
 
