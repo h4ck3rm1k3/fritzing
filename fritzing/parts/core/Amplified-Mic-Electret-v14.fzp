@@ -51,7 +51,7 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector8' type='female' name='VCC'>
+<connector id='connector8' type='male' name='VCC'>
 <description>VCC</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector8pin'/></breadboardView>
@@ -61,7 +61,7 @@
 <p layer='copper0' svgId='connector8pad'/><p layer='copper1' svgId='connector8pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector9' type='female' name='GND'>
+<connector id='connector9' type='male' name='GND'>
 <description>GND</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector9pin'/></breadboardView>
@@ -71,7 +71,7 @@
 <p layer='copper0' svgId='connector9pad'/><p layer='copper1' svgId='connector9pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector10' type='female' name='AUD'>
+<connector id='connector10' type='male' name='AUD'>
 <description>AUD</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pin'/></breadboardView>

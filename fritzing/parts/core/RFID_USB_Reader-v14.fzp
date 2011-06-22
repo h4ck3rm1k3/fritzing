@@ -62,7 +62,7 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector8' type='female' name='GNDT'>
+<connector id='connector8' type='male' name='GNDT'>
 <description>GNDT</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector8pin'/></breadboardView>
@@ -72,7 +72,7 @@
 <p layer='copper0' svgId='connector8pad'/><p layer='copper1' svgId='connector8pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector9' type='female' name='CP'>
+<connector id='connector9' type='male' name='CP'>
 <description>CP</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector9pin'/></breadboardView>
@@ -82,7 +82,7 @@
 <p layer='copper0' svgId='connector9pad'/><p layer='copper1' svgId='connector9pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector10' type='female' name='ANT2'>
+<connector id='connector10' type='male' name='ANT2'>
 <description>ANT2</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pin'/></breadboardView>
@@ -92,7 +92,7 @@
 <p layer='copper0' svgId='connector10pad'/><p layer='copper1' svgId='connector10pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector11' type='female' name='ANT1'>
+<connector id='connector11' type='male' name='ANT1'>
 <description>ANT1</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector11pin'/></breadboardView>
@@ -102,7 +102,7 @@
 <p layer='copper0' svgId='connector11pad'/><p layer='copper1' svgId='connector11pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector12' type='female' name='TX-O-RS232'>
+<connector id='connector12' type='male' name='TX-O-RS232'>
 <description>TX-O-RS232</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector12pin'/></breadboardView>
@@ -112,7 +112,7 @@
 <p layer='copper0' svgId='connector12pad'/><p layer='copper1' svgId='connector12pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector13' type='female' name='TX-O'>
+<connector id='connector13' type='male' name='TX-O'>
 <description>TX-O</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector13pin'/></breadboardView>
@@ -122,7 +122,7 @@
 <p layer='copper0' svgId='connector13pad'/><p layer='copper1' svgId='connector13pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector14' type='female' name='GND'>
+<connector id='connector14' type='male' name='GND'>
 <description>GND</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector14pin'/></breadboardView>
@@ -132,7 +132,7 @@
 <p layer='copper0' svgId='connector14pad'/><p layer='copper1' svgId='connector14pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector15' type='female' name='VCC'>
+<connector id='connector15' type='male' name='VCC'>
 <description>VCC</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector15pin'/></breadboardView>

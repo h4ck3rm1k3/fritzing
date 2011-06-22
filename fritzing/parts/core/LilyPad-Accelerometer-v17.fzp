@@ -68,7 +68,7 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector12' type='female' name='COM'>
+<connector id='connector12' type='male' name='COM'>
 <description>COM</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector12pin'/></breadboardView>
@@ -78,7 +78,7 @@
 <p layer='copper0' svgId='connector12pad'/><p layer='copper1' svgId='connector12pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector13' type='female' name='XOUT'>
+<connector id='connector13' type='male' name='XOUT'>
 <description>XOUT</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector13pin'/></breadboardView>
@@ -88,7 +88,7 @@
 <p layer='copper0' svgId='connector13pad'/><p layer='copper1' svgId='connector13pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector14' type='female' name='YOUT'>
+<connector id='connector14' type='male' name='YOUT'>
 <description>YOUT</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector14pin'/></breadboardView>
@@ -98,7 +98,7 @@
 <p layer='copper0' svgId='connector14pad'/><p layer='copper1' svgId='connector14pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector15' type='female' name='ZOUT'>
+<connector id='connector15' type='male' name='ZOUT'>
 <description>ZOUT</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector15pin'/></breadboardView>
@@ -108,7 +108,7 @@
 <p layer='copper0' svgId='connector15pad'/><p layer='copper1' svgId='connector15pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector16' type='female' name='5V'>
+<connector id='connector16' type='male' name='5V'>
 <description>5V</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector16pin'/></breadboardView>

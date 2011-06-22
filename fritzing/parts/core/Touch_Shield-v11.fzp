@@ -51,7 +51,7 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector24' type='female' name='ELE11'>
+<connector id='connector24' type='male' name='ELE11'>
 <description>ELE11</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector24pin'/></breadboardView>
@@ -61,7 +61,7 @@
 <p layer='copper0' svgId='connector24pad'/><p layer='copper1' svgId='connector24pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector25' type='female' name='ELE10'>
+<connector id='connector25' type='male' name='ELE10'>
 <description>ELE10</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector25pin'/></breadboardView>
@@ -71,7 +71,7 @@
 <p layer='copper0' svgId='connector25pad'/><p layer='copper1' svgId='connector25pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector26' type='female' name='ELE9'>
+<connector id='connector26' type='male' name='ELE9'>
 <description>ELE9</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector26pin'/></breadboardView>
@@ -81,7 +81,7 @@
 <p layer='copper0' svgId='connector26pad'/><p layer='copper1' svgId='connector26pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector43' type='male' name='3.3V'>
+<connector id='connector43' type='female' name='3.3V'>
 <description>3.3V</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector43pin'/></breadboardView>
@@ -91,7 +91,7 @@
 <p layer='copper0' svgId='connector43pad'/><p layer='copper1' svgId='connector43pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector44' type='male' name='5V'>
+<connector id='connector44' type='female' name='5V'>
 <description>5V</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector44pin'/></breadboardView>
@@ -101,7 +101,7 @@
 <p layer='copper0' svgId='connector44pad'/><p layer='copper1' svgId='connector44pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector49' type='male' name='SDA_H'>
+<connector id='connector49' type='female' name='SDA_H'>
 <description>SDA_H</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector49pin'/></breadboardView>
@@ -111,7 +111,7 @@
 <p layer='copper0' svgId='connector49pad'/><p layer='copper1' svgId='connector49pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector50' type='male' name='SCL_H'>
+<connector id='connector50' type='female' name='SCL_H'>
 <description>SCL_H</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector50pin'/></breadboardView>
@@ -121,7 +121,7 @@
 <p layer='copper0' svgId='connector50pad'/><p layer='copper1' svgId='connector50pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector52' type='male' name='*IRQ'>
+<connector id='connector52' type='female' name='*IRQ'>
 <description>*IRQ</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector52pin'/></breadboardView>
@@ -131,7 +131,7 @@
 <p layer='copper0' svgId='connector52pad'/><p layer='copper1' svgId='connector52pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector66' type='male' name='GND'>
+<connector id='connector66' type='female' name='GND'>
 <description>GND</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector66pin'/></breadboardView>

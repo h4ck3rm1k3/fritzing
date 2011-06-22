@@ -84,7 +84,7 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector32' type='female' name='GND'>
+<connector id='connector32' type='male' name='GND'>
 <description>GND</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector32pin'/></breadboardView>
@@ -94,7 +94,7 @@
 <p layer='copper0' svgId='connector32pad'/><p layer='copper1' svgId='connector32pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector33' type='female' name='VCC'>
+<connector id='connector33' type='male' name='VCC'>
 <description>VCC</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector33pin'/></breadboardView>
@@ -104,7 +104,7 @@
 <p layer='copper0' svgId='connector33pad'/><p layer='copper1' svgId='connector33pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector34' type='female' name='SDA'>
+<connector id='connector34' type='male' name='SDA'>
 <description>SDA</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector34pin'/></breadboardView>
@@ -114,7 +114,7 @@
 <p layer='copper0' svgId='connector34pad'/><p layer='copper1' svgId='connector34pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector35' type='female' name='SCL'>
+<connector id='connector35' type='male' name='SCL'>
 <description>SCL</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector35pin'/></breadboardView>

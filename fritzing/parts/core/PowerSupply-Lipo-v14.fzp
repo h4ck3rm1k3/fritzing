@@ -67,7 +67,7 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector31' type='female' name='GND'>
+<connector id='connector31' type='male' name='GND'>
 <description>GND</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector31pin'/></breadboardView>
@@ -77,7 +77,7 @@
 <p layer='copper0' svgId='connector31pad'/><p layer='copper1' svgId='connector31pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector32' type='female' name='GND'>
+<connector id='connector32' type='male' name='GND'>
 <description>GND</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector32pin'/></breadboardView>
