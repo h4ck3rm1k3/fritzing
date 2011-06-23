@@ -33,6 +33,10 @@ $Date$
 #include <QMatrix>
 #include <QTransform>
 
+typedef QString (*CopyPinFunction)(int pin, const QString & argString);
+typedef QString (*MultiplyPinFunction)(int pin, qreal increment, qreal value);
+
+
 class TextUtils
 {
 
@@ -75,6 +79,10 @@ public:
 	static void gWrap(QDomDocument & domDocument, const QHash<QString, QString> & attributes);
 	static bool tspanRemove(QString &svg);
 	static void slamStrokeAndFill(QDomElement &, const QString & stroke, const QString & fill);
+	static QString incrementTemplate(const QString & filename, int pins, qreal unitIncrement, MultiplyPinFunction, CopyPinFunction);
+	static QString incrementTemplateString(const QString & templateString, int pins, qreal increment, MultiplyPinFunction, CopyPinFunction);
+	static QString standardCopyPinFunction(int pin, const QString & argString);
+	static QString standardMultiplyPinFunction(int pin, qreal increment, qreal value);
 
 public:
 	static const QRegExp FindWhitespace;

@@ -266,6 +266,7 @@
 	<file>resources/templates/generic_female_pin_header_bread_template.txt</file>
 	<file>resources/templates/generic_rounded_female_pin_header_bread_template.txt</file>
 	<file>resources/templates/generic_male_pin_header_bread_template.txt</file>
+	<file>resources/templates/generic_sip_bread_template.txt</file>
 	
     </qresource>
 </RCC>

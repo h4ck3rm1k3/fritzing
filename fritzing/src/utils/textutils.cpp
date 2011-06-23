@@ -863,3 +863,60 @@ void TextUtils::slamStrokeAndFill(QDomElement & element, const QString & stroke,
 		child = child.nextSiblingElement();
 	}
 }
+
+
+struct MatchThing
+{
+	int pos;
+	int len;
+	qreal val;
+};
+
+QString TextUtils::incrementTemplate(const QString & filename, int pins, qreal increment, MultiplyPinFunction multiFun, CopyPinFunction copyFun) 
+{
+	QFile file(filename);
+	file.open(QFile::ReadOnly);
+	QString templateString = file.readAll();
+	file.close();
+
+	return incrementTemplateString(templateString, pins, increment, multiFun, copyFun);
+}
+
+QString TextUtils::incrementTemplateString(const QString & templateString, int pins, qreal increment, MultiplyPinFunction multiFun, CopyPinFunction copyFun)
+{
+	QString string;
+
+	QRegExp uMatcher("\\[([\\.\\d]+)\\]");
+	MatchThing matchThings[32];
+	int pos = 0;
+	unsigned int matchThingIndex = 0;
+	while ((pos = uMatcher.indexIn(templateString, pos)) != -1) {
+		MatchThing * mt = &matchThings[matchThingIndex++];
+		mt->pos = pos;
+		mt->len = uMatcher.matchedLength();
+		mt->val = uMatcher.cap(1).toDouble();
+		pos += uMatcher.matchedLength();
+		if (matchThingIndex >= sizeof(matchThings) / sizeof(MatchThing)) break;
+	}
+
+	for (int i = 0; i < pins; i++) {
+		QString argCopy(templateString);
+		for (int j = matchThingIndex - 1; j >= 0; j--) {
+			MatchThing * mt = &matchThings[j];
+			argCopy.replace(mt->pos, mt->len, (*multiFun)(i, increment, mt->val));   
+		}
+		string += (*copyFun)(i, argCopy);
+	}
+
+	return string;
+}
+
+QString TextUtils::standardCopyPinFunction(int pin, const QString & argString)
+{
+	return argString.arg(pin);
+}
+
+QString TextUtils::standardMultiplyPinFunction(int pin, qreal increment, qreal value)
+{
+	return QString::number(value + (pin * increment));
+}

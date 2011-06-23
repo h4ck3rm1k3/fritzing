@@ -332,12 +332,6 @@ void PinHeader::initSpacings() {
 	}
 }
 
-struct MatchThing
-{
-	int pos;
-	int len;
-	qreal val;
-};
 
 QString PinHeader::makeSchematicSvg(const QString & expectedFileName) 
 {
@@ -358,8 +352,8 @@ QString PinHeader::makeSchematicSvg(const QString & expectedFileName)
 
 	QString svg = header.arg(unitHeight * pins).arg(unitHeightPoints * pins);
 
-	svg += incrementTemplate(QString(":/resources/templates/generic_%1_pin_header_schem_template.txt").arg(form.contains("female") ? "female" : "male"),
-							 pins, unitHeightPoints);
+	svg += TextUtils::incrementTemplate(QString(":/resources/templates/generic_%1_pin_header_schem_template.txt").arg(form.contains("female") ? "female" : "male"),
+							 pins, unitHeightPoints, TextUtils::standardMultiplyPinFunction, TextUtils::standardCopyPinFunction);
 		
 
 	svg += "</g>\n</svg>";
@@ -400,8 +394,8 @@ QString PinHeader::makeBreadboardSvg(const QString & expectedFileName)
 	}
 
 	QString svg = header.arg(unitHeight * pins).arg(unitHeightPoints * pins);
-	svg += incrementTemplate(QString(":/resources/templates/generic_%1_pin_header_bread_template.txt").arg(fileForm),
-							 pins, unitHeightPoints);
+	svg += TextUtils::incrementTemplate(QString(":/resources/templates/generic_%1_pin_header_bread_template.txt").arg(fileForm),
+							 pins, unitHeightPoints, TextUtils::standardMultiplyPinFunction, TextUtils::standardCopyPinFunction);
 
 	svg += "</g>\n</svg>";
 
@@ -417,63 +411,3 @@ QString  PinHeader::findForm(const QString & filename)
 }
 
 
-QString PinHeader::incrementTemplate(const QString & filename, int pins, qreal unitIncrement) 
-{
-	QString string;
-
-	QFile file(filename);
-	file.open(QFile::ReadOnly);
-	QString schematicLayerTemplate = file.readAll();
-	file.close();
-
-	QRegExp uMatcher("\\[([\\.\\d]+)\\]");
-	MatchThing matchThings[32];
-	int pos = 0;
-	unsigned int matchThingIndex = 0;
-	while ((pos = uMatcher.indexIn(schematicLayerTemplate, pos)) != -1) {
-		MatchThing * mt = &matchThings[matchThingIndex++];
-		mt->pos = pos;
-		mt->len = uMatcher.matchedLength();
-		mt->val = uMatcher.cap(1).toDouble();
-		pos += uMatcher.matchedLength();
-		if (matchThingIndex >= sizeof(matchThings) / sizeof(MatchThing)) break;
-	}
-
-	qreal unit = 0;
-	for (int i = 0; i < pins; i++) {
-		QString argCopy(schematicLayerTemplate);
-		for (int j = matchThingIndex - 1; j >= 0; j--) {
-			MatchThing * mt = &matchThings[j];
-			argCopy.replace(mt->pos, mt->len, QString::number(mt->val + unit));
-		}
-		string += argCopy.arg(i),
-		unit += unitIncrement;
-	}
-
-	return string;
-}
-
-
-
-
-
-
-
-
-
-
-/*
-
-
-	
-
-
-
-
-
-	</g>
-
-</svg>
-
-
-*/

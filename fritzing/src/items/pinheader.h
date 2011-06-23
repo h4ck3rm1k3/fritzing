@@ -67,7 +67,6 @@ public:
 	static QString makeSchematicSvg(const QString & expectedFileName);
 	static QString makeBreadboardSvg(const QString & expectedFileName);
 	static QString findForm(const QString & filename);
-	static QString incrementTemplate(const QString & filename, int pins, qreal unitIncrement); 
 
 protected:
 	static const QStringList & forms();
