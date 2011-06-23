@@ -47,7 +47,6 @@ public:
 
 	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi);
 	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
-	bool hasCustomSVG();
 	bool canEditPart();
 	PluralType isPlural();
 	void addedToScene();

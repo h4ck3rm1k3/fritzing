@@ -234,16 +234,6 @@ bool PinHeader::onlyFormChanges(QMap<QString, QString> & propsMap) {
 	return true;
 }
 
-bool PinHeader::hasCustomSVG() {
-	switch (m_viewIdentifier) {
-		case ViewIdentifierClass::BreadboardView:
-		case ViewIdentifierClass::SchematicView:
-			return true;
-		default:
-			return ItemBase::hasCustomSVG();
-	}
-}
-
 ItemBase::PluralType PinHeader::isPlural() {
 	return Plural;
 }

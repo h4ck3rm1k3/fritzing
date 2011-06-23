@@ -48,7 +48,6 @@ public:
 	void setForm(QString form, bool force);
 	const QString & form();
 	bool onlyFormChanges(QMap<QString, QString> & propsMap);
-    bool hasCustomSVG();
 	PluralType isPlural();
 	void addedToScene();
 

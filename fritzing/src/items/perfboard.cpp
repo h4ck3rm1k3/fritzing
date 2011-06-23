@@ -323,16 +323,6 @@ void Perfboard::addedToScene()
     return Capacitor::addedToScene();
 }
 
-
-bool Perfboard::hasCustomSVG() {
-	switch (m_viewIdentifier) {
-		case ViewIdentifierClass::BreadboardView:
-			return true;
-		default:
-			return ItemBase::hasCustomSVG();
-	}
-}
-
 bool Perfboard::canEditPart() {
 	return false;
 }
