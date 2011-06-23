@@ -456,3 +456,58 @@ QString MysteryPart::makeSchematicSvg(const QString & expectedFileName)
 	svg += "</svg>\n";
 	return svg;
 }
+
+QString MysteryPart::makeBreadboardSvg(const QString & expectedFileName) 
+{
+	if (expectedFileName.contains("_sip_")) return makeBreadboardSipSvg(expectedFileName);
+
+	return "";
+}
+
+QString MysteryPart::makeBreadboardSipSvg(const QString & expectedFileName) 
+{
+	QStringList pieces = expectedFileName.split("_");
+	int pins = pieces.at(2).toInt();
+	int increment = 10;
+
+	QString header("<?xml version='1.0' encoding='utf-8'?>\n"
+					"<svg version='1.2' baseProfile='tiny' id='svg2' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'\n"
+					"width='%1in' height='0.27586in' viewBox='0 0 [6.0022] 27.586' xml:space='preserve'>\n"
+					"<g id='breadboard'>\n"
+					"<rect width='[6.0022]' x='0' y='0' height='24.17675' fill='#000000' id='upper' stroke-width='0' />\n"
+					"<rect width='[6.0022]' x='0' y='22' fill='#404040' height='3.096' id='lower' stroke-width='0' />\n"
+					"<text id='label' x='2.5894' y='13' fill='#e6e6e6' stroke='none' font-family='DroidSans' text-anchor='start' font-size='7.3' >?</text>\n"
+					"<circle fill='#8C8C8C' cx='[1.0022]' cy='5' r='3' stroke-width='0' />\n"
+					"<text x='[1.0022]' y='6.7' font-family='DroidSans' text-anchor='middle' font-weight='bold' stroke-width='0' font-size='5.5' >?</text>\n"      
+					"%2\n"
+					"</g>\n"
+					"</svg>\n");
+
+	QString svg = TextUtils::incrementTemplateString(header, 1, increment * (pins - 1), incMultiplyPinFunction, noCopyPinFunction);
+
+	QString repeat("<rect id='connector%1terminal' stroke='none' stroke-width='0' x='[1.87]' y='25.586' fill='#8C8C8C' width='2.3' height='2.0'/>\n"
+					"<rect id='connector%1pin' stroke='none' stroke-width='0' x='[1.87]' y='23.336' fill='#8C8C8C' width='2.3' height='4.25'/>\n");
+
+	QString repeats = TextUtils::incrementTemplateString(repeat, pins, increment, TextUtils::standardMultiplyPinFunction, TextUtils::standardCopyPinFunction);
+
+	int ix1 = svg.indexOf("viewBox='");
+	int ix2 = svg.indexOf("'", ix1 + 9);
+	QString vb = svg.mid(ix1 + 9, ix2 - ix1 - 1);
+	QStringList coords = vb.split(" ");
+	return svg.arg(coords.at(2).toDouble() / 100).arg(repeats);
+}
+
+QString MysteryPart::noCopyPinFunction(int, const QString & argString) 
+{ 
+	return argString; 
+}
+
+QString MysteryPart::incCopyPinFunction(int pin, const QString & argString) 
+{ 
+	return argString.arg(pin + 1); 
+}
+
+QString MysteryPart::incMultiplyPinFunction(int pin, qreal increment, qreal value) 
+{
+	return QString::number(value + ((pin + 1) * increment));
+}

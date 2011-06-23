@@ -65,6 +65,14 @@ public:
 	static QString genDipFZP(const QString & moduleid);
 	static QString genModuleID(QMap<QString, QString> & currPropsMap);
 	static QString makeSchematicSvg(const QString & expectedFileName);
+	static QString makeBreadboardSvg(const QString & expectedFileName);
+	static QString makeBreadboardSipSvg(const QString & expectedFileName);
+
+protected:
+	static QString noCopyPinFunction(int pin, const QString & argString);
+	static QString incMultiplyPinFunction(int pin, qreal increment, qreal value);
+	static QString incCopyPinFunction(int pin, const QString & argString);
+
 
 protected:
 	QString makeSvg(const QString & chipLabel);

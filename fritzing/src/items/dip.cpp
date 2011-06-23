@@ -211,12 +211,6 @@ QString Dip::makeSchematicSvg(const QString & expectedFileName)
 
 	return svg;
 }
-
-QString noCopyPinFunction(int, const QString & argString) { return argString; }
-QString incCopyPinFunction(int pin, const QString & argString) { return argString.arg(pin + 1); }
-QString incMultiplyPinFunction(int pin, qreal increment, qreal value) {
-	return QString::number(value + ((pin + 1) * increment));
-}
  
 QString Dip::makeBreadboardSvg(const QString & expectedFileName) 
 {

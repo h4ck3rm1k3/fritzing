@@ -920,3 +920,4 @@ QString TextUtils::standardMultiplyPinFunction(int pin, qreal increment, qreal v
 {
 	return QString::number(value + (pin * increment));
 }
+
