@@ -211,3 +211,4 @@ QString Dip::makeSchematicSvg(const QString & expectedFileName)
 
 	return svg;
 }
+

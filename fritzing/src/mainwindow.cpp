@@ -687,11 +687,11 @@ SketchToolButton *MainWindow::createAutorouteButton(SketchAreaWidget *parent) {
 	return autorouteButton;
 }
 
-SketchToolButton *MainWindow::createOrderButton(SketchAreaWidget *parent) {
-	SketchToolButton *orderButton = new SketchToolButton("Order",parent, m_orderFabAct);
-	orderButton->setText(tr("Order"));
+SketchToolButton *MainWindow::createOrderFabButton(SketchAreaWidget *parent) {
+	SketchToolButton *orderFabButton = new SketchToolButton("Order",parent, m_orderFabAct);
+	orderFabButton->setText(tr("Order"));
 
-	return orderButton;
+	return orderFabButton;
 }
 
 QWidget *MainWindow::createActiveLayerButton(SketchAreaWidget *parent) 
@@ -767,7 +767,7 @@ QList<QWidget*> MainWindow::getButtonsForView(ViewIdentifierClass::ViewIdentifie
 				<< createActiveLayerButton(parent) 
 				<< createAutorouteButton(parent) 
 				<< createExportEtchableButton(parent) 
-				<< createOrderButton(parent) 
+				// << createOrderFabButton(parent) 
 				<< createRoutingStatusLabel(parent);
 			break;
 		default:

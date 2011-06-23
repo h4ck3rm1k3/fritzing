@@ -1097,8 +1097,8 @@ void MainWindow::createMenus()
 	m_pcbTraceMenu->addAction(m_autorouteAct);
 	m_pcbTraceMenu->addAction(m_designRulesCheckAct);
 	m_pcbTraceMenu->addAction(m_autorouterSettingsAct);
-	m_pcbTraceMenu->addAction(m_orderFabAct);
-	m_pcbTraceMenu->addSeparator();
+	//m_pcbTraceMenu->addAction(m_orderFabAct);
+	//m_pcbTraceMenu->addSeparator();
 
 	m_pcbTraceMenu->addAction(m_groundFillAct);
 	m_pcbTraceMenu->addAction(m_removeGroundFillAct);

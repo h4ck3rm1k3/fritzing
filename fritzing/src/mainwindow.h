@@ -371,7 +371,7 @@ protected:
 	SketchToolButton *createShareButton(SketchAreaWidget *parent);
 	SketchToolButton *createFlipButton(SketchAreaWidget *parent);
 	SketchToolButton *createAutorouteButton(SketchAreaWidget *parent);
-	SketchToolButton *createOrderButton(SketchAreaWidget *parent);
+	SketchToolButton *createOrderFabButton(SketchAreaWidget *parent);
 	QWidget *createActiveLayerButton(SketchAreaWidget *parent);
 	class ExpandingLabel * createRoutingStatusLabel(SketchAreaWidget *);
 	SketchToolButton *createExportEtchableButton(SketchAreaWidget *parent);
