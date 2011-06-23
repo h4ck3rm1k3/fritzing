@@ -46,6 +46,8 @@ public:
 	static QString genDipFZP(const QString & moduleid);
 	static QString genModuleID(QMap<QString, QString> & currPropsMap);
 	static QString makePcbSvg(const QString & expectedFileName);
+	static QString makeSchematicSvg(const QString & expectedFileName);
+
 
 protected:
 	bool isDIP();
