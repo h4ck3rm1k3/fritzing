@@ -166,6 +166,10 @@ QString PartFactory::getSvgFilename(ModelPart * modelPart, const QString & expec
 		return getSvgFilenameAux(expectedFileName, &MysteryPart::makeSchematicSvg);
 	}
 
+	if (expectedFileName.startsWith("schematic/generic_sip_", Qt::CaseInsensitive)) {
+		return getSvgFilenameAux(expectedFileName, &MysteryPart::makeSchematicSvg);
+	}
+
 	if (expectedFileName.startsWith("pcb/jumper_", Qt::CaseInsensitive)) {
 		return getSvgFilenameAux(expectedFileName, &PinHeader::makePcbSvg);
 	}
