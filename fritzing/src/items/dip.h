@@ -45,6 +45,7 @@ public:
 	static QString genSipFZP(const QString & moduleid);
 	static QString genDipFZP(const QString & moduleid);
 	static QString genModuleID(QMap<QString, QString> & currPropsMap);
+	static QString makePcbSvg(const QString & expectedFileName);
 
 protected:
 	bool isDIP();

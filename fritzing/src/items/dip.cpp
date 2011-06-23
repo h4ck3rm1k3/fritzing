@@ -25,6 +25,7 @@ $Date$
 ********************************************************************/
 
 #include "dip.h"
+#include "../utils/textutils.h"
 
 static QStringList Spacings;
 
@@ -118,3 +119,51 @@ QString Dip::genModuleID(QMap<QString, QString> & currPropsMap)
 	}
 }
 
+QString Dip::makePcbSvg(const QString & expectedFileName) 
+{
+	QStringList pieces = expectedFileName.split("_");
+	if (pieces.count() != 4) return "";
+
+	int pins = pieces.at(1).toInt();
+	QString spacingString = pieces.at(2);
+
+	QString header("<?xml version='1.0' encoding='UTF-8'?>\n"
+				    "<svg baseProfile='tiny' version='1.2' width='%1in' height='%2in' viewBox='0 0 %3 %4' xmlns='http://www.w3.org/2000/svg'>\n"
+				    "<desc>Fritzing footprint SVG</desc>\n"
+					"<g id='silkscreen'>\n"
+					"<line stroke='white' stroke-width='10' x1='10' x2='10' y1='10' y2='%5'/>\n"
+					"<line stroke='white' stroke-width='10' x1='10' x2='%6' y1='%5' y2='%5'/>\n"
+					"<line stroke='white' stroke-width='10' x1='%6' x2='%6' y1='%5' y2='10'/>\n"
+					"<line stroke='white' stroke-width='10' x1='10' x2='%7' y1='10' y2='10'/>\n"
+					"<line stroke='white' stroke-width='10' x1='%8' x2='%6' y1='10' y2='10'/>\n"
+					"</g>\n"
+					"<g id='copper1'><g id='copper0'>\n"
+					"<rect fill='none' height='55' stroke='rgb(255, 191, 0)' stroke-width='20' width='55' x='32.5' y='32.5'/>\n");
+
+	qreal outerBorder = 10;
+	qreal silkSplitTop = 100;
+	qreal offsetX = 60;
+	qreal offsetY = 60;
+	qreal spacing = TextUtils::convertToInches(spacingString) * 1000; 
+	qreal totalWidth = 120 + spacing;
+	qreal totalHeight = (100 * pins / 2) + (outerBorder * 2);
+	qreal center = totalWidth / 2;
+
+	QString svg = header.arg(totalWidth / 1000).arg(totalHeight / 1000).arg(totalWidth).arg(totalHeight)
+							.arg(totalHeight - outerBorder).arg(totalWidth - outerBorder)
+							.arg(center - (silkSplitTop / 2)).arg(center + (silkSplitTop / 2));
+
+	QString circle("<circle cx='%1' cy='%2' fill='none' id='connector%3pin' r='27.5' stroke='rgb(255, 191, 0)' stroke-width='20'/>\n");
+
+	int y = offsetY;
+	for (int i = 0; i < pins / 2; i++) {
+		svg += circle.arg(offsetX).arg(y).arg(i);
+		svg += circle.arg(totalWidth - offsetX).arg(y).arg(pins - 1 - i);
+		y += 100;
+	}
+
+	svg += "</g></g>\n";
+	svg += "</svg>\n";
+
+	return svg;
+}
