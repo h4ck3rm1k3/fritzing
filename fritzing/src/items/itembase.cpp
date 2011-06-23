@@ -1546,7 +1546,7 @@ void ItemBase::getNormalColor(ConnectorItem *, QBrush * &brush, QPen * &pen, qre
 void ItemBase::getUnconnectedColor(ConnectorItem *, QBrush * &brush, QPen * &pen, qreal & opacity, qreal & negativePenWidth, bool & negativeOffsetRect) {
 	brush = &unconnectedBrush;
 	pen = &unconnectedPen;
-	opacity = 0.6;
+        opacity = 0.3;
 	negativePenWidth = 0;
 	negativeOffsetRect = true;
 }
