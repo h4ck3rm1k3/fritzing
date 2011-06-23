@@ -64,6 +64,7 @@ public:
 	static QString genSipFZP(const QString & moduleid);
 	static QString genDipFZP(const QString & moduleid);
 	static QString genModuleID(QMap<QString, QString> & currPropsMap);
+	static QString makeSchematicSvg(const QString & expectedFileName);
 
 protected:
 	QString makeSvg(const QString & chipLabel);

@@ -388,3 +388,46 @@ QString MysteryPart::genModuleID(QMap<QString, QString> & currPropsMap)
 	}
 }
 
+QString MysteryPart::makeSchematicSvg(const QString & expectedFileName) 
+{
+	QStringList pieces = expectedFileName.split("_");
+	if (pieces.count() != 4) return "";
+
+	int pins = pieces.at(2).toInt();
+	int increment = 300;
+	qreal totalHeight = (pins * increment) + 330;
+	int border = 30;
+	int textOffset = 50;
+
+	QString header("<?xml version='1.0' encoding='UTF-8' standalone='no'?>\n"
+					"<svg\n"
+					"xmlns:svg='http://www.w3.org/2000/svg'\n"
+					"xmlns='http://www.w3.org/2000/svg'\n"
+					"version='1.2' baseProfile='tiny'\n"
+					"width='1.53in' height='%1in' viewBox='0 0 1530 %2'>\n"
+					"<g id='schematic'>\n"
+					"<rect x='315' y='15' fill='none' width='1200' height='%3' stroke='#000000' stroke-linejoin='round' stroke-linecap='round' stroke-width='30' />\n"
+					"<text id='label' x='915' y='%4' fill='#000000' stroke='none' font-family='DroidSans' text-anchor='middle' font-size='255' >?</text>\n"
+					"<circle fill='#000000' cx='1330' cy='200' r='150' stroke-width='0' />\n"
+					"<text x='1330' fill='#FFFFFF' y='305' font-family='DroidSans' text-anchor='middle' font-weight='bold' stroke-width='0' font-size='275' >?</text>\n");
+
+	QString svg = header.arg(totalHeight / 1000).arg(totalHeight).arg(totalHeight - border).arg((totalHeight / 2) + textOffset);
+
+	QString repeat("<line fill='none' stroke='#000000' stroke-linejoin='round' stroke-linecap='round' stroke-width='30' x1='15' y1='%1' x2='300' y2='%1'  />\n"
+					"<rect x='0' y='%2' fill='none' width='300' height='30' id='connector%3pin' stroke-width='0' />\n"
+					"<rect x='0' y='%2' fill='none' width='30' height='30' id='connector%3terminal' stroke-width='0' />\n"
+					"<text id='label%3' x='390' y='%4' font-family='DroidSans' stroke='none' fill='#000000' text-anchor='start' font-size='130' >%5</text>\n");
+  
+	for (int i = 0; i < pins; i++) {
+		svg += repeat
+			.arg(315 + (i * increment))
+			.arg(300 + (i * increment))
+			.arg(i)
+			.arg(300 + textOffset + (i * increment))
+			.arg(i + 1);
+	}
+
+	svg += "</g>\n";
+	svg += "</svg>\n";
+	return svg;
+}
