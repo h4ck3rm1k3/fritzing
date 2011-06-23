@@ -37,6 +37,7 @@ $Date$
 #include "../debugdialog.h"
 #include "../layerattributes.h"
 #include "../items/layerkinpaletteitem.h"
+#include "../items/partfactory.h"
 #include "../utils/folderutils.h"
 #include "../utils/graphicsutils.h"
 
@@ -120,7 +121,7 @@ bool PartsEditorPaletteItem::createSvgPath(const QString &modelPartSharedPath, c
 		tempPath.second = "%2/" + layerFileName;
 
 		QStringList possibleRootFolders;
-		possibleRootFolders << FolderUtils::getApplicationSubFolderPath("parts") << FolderUtils::getUserDataStorePath("parts");
+		possibleRootFolders << FolderUtils::getApplicationSubFolderPath("parts") << FolderUtils::getUserDataStorePath("parts") << PartFactory::folderPath();
 		QStringList possibleFolders = ModelPart::possibleFolders();
 		foreach(QString rootFolder, possibleRootFolders) {
 			foreach(QString folder, possibleFolders) {

@@ -42,6 +42,7 @@ $Date$
 #include "fixfontsdialog.h"
 #include "zoomcontrols.h"
 #include "../items/layerkinpaletteitem.h"
+#include "../items/partfactory.h"
 #include "../layerattributes.h"
 #include "../fritzingwindow.h"
 #include "../fsvgrenderer.h"
@@ -836,10 +837,13 @@ void PartsEditorView::copyToTempAndRenameIfNecessary(SvgAndPartFilePath *filePat
 	m_originalSvgFilePath = filePathOrig->absolutePath();
 	QString userSvgFolderPath = FolderUtils::getUserDataStorePath("parts")+"/svg";
 	QString coreSvgFolderPath = FolderUtils::getApplicationSubFolderPath("parts")+"/svg";
+	QString pfSvgFolderPath = PartFactory::folderPath()+"/svg"; 
 
 	if(!(filePathOrig->absolutePath().startsWith(userSvgFolderPath)
-		|| filePathOrig->absolutePath().startsWith(coreSvgFolderPath))
-		) { // it's outside the parts folder
+		|| filePathOrig->absolutePath().startsWith(coreSvgFolderPath)
+		|| filePathOrig->absolutePath().startsWith(pfSvgFolderPath))
+		) 
+	{ // it's outside the parts folder
 		DebugDialog::debug(QString("copying from %1").arg(m_originalSvgFilePath));
 		QString viewFolder = ViewIdentifierClass::viewIdentifierNaturalName(m_viewIdentifier);
 
@@ -887,6 +891,7 @@ void PartsEditorView::setSvgFilePath(const QString &filePath) {
 
 	QString userSvgFolder = FolderUtils::getUserDataStorePath("parts")+"/svg";
 	QString coreSvgFolder = FolderUtils::getApplicationSubFolderPath("parts")+"/svg";
+	QString pfSvgFolder = PartFactory::folderPath()+"/svg";
 
 	QString tempFolder = m_tempFolder.absolutePath();
 
@@ -899,10 +904,10 @@ void PartsEditorView::setSvgFilePath(const QString &filePath) {
 	// but the file dialog returns a string beginning with "C:"
 	cs = Qt::CaseInsensitive;
 #endif
-	if(filePath.contains(userSvgFolder, cs) || filePath.contains(coreSvgFolder, cs)) {
-		QString svgFolder = filePath.contains(userSvgFolder,cs)? userSvgFolder: coreSvgFolder;
+	if(filePath.contains(userSvgFolder, cs) || filePath.contains(coreSvgFolder, cs) || filePath.contains(pfSvgFolder, cs)) {
+		int ix = filePath.indexOf("svg");
 		// is core/user file
-		relative = filePathAux.remove(svgFolder+"/", cs);
+		relative = filePathAux.remove(0, ix + 4);
 		//Mariano: I don't like this folder thing anymore
 		relative = relative.mid(filePathAux.indexOf("/")+1); // remove core/user/contrib
 	} else {

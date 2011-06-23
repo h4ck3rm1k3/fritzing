@@ -60,7 +60,7 @@ public:
 	static QString getRandText();
 	static void initLockedFiles(const QString & prefix, QString & folder, QHash<QString, class QtLockedFile *> & lockedFiles);
 	static void releaseLockedFiles(const QString & folder, QHash<QString, class QtLockedFile *> & lockedFiles);
-	static void checkLockedFiles(const QString & prefix, QFileInfoList & backupList, QStringList & filters, QHash<QString, class QtLockedFile *> & lockedFiles);
+	static void checkLockedFiles(const QString & prefix, QFileInfoList & backupList, QStringList & filters, QHash<QString, class QtLockedFile *> & lockedFiles, bool recurse);
 	static void cleanup();
 
 protected:
@@ -71,6 +71,8 @@ protected:
 	bool setApplicationPath2(const QString & path);
 	const QString applicationDirPath();
 	const QString libraryPath();
+
+	static bool checkLockedFilesAux(const QDir & parent, QStringList & filters);
 
 public:
 	static const QString LockFileName;

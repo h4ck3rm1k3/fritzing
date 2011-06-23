@@ -1208,7 +1208,7 @@ QList<MainWindow *> FApplication::recoverBackups()
 
 	QFileInfoList backupList;
 	QStringList filters("*.fz");
-	FolderUtils::checkLockedFiles("backup", backupList, filters, m_lockedFiles);
+	FolderUtils::checkLockedFiles("backup", backupList, filters, m_lockedFiles, false);
 
 	QList<MainWindow*> recoveredSketches;
     if (backupList.size() == 0) return recoveredSketches;

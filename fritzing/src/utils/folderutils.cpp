@@ -466,7 +466,22 @@ void FolderUtils::releaseLockedFiles(const QString & folder, QHash<QString, clas
 	lockedFiles.clear();
 }
 
-void FolderUtils::checkLockedFiles(const QString & prefix, QFileInfoList & backupList, QStringList & filters, QHash<QString, class QtLockedFile *> & lockedFiles)
+bool FolderUtils::checkLockedFilesAux(const QDir & parent, QStringList & filters)
+{
+	QFileInfoList dirList = parent.entryInfoList(QDir::AllDirs | QDir::NoDotAndDotDot | QDir::Hidden | QDir::NoSymLinks);
+	foreach (QFileInfo dirInfo, dirList) {
+		QDir dir(dirInfo.filePath());
+		//DebugDialog::debug(QString("looking in backup dir %1").arg(dir.absolutePath()));
+		QFileInfoList fileInfoList = dir.entryInfoList(filters, QDir::Files | QDir::Hidden | QDir::NoSymLinks);
+		if (!fileInfoList.isEmpty()) return true;
+
+		if (checkLockedFilesAux(dir, filters)) return true;
+	}
+
+	return false;
+}
+
+void FolderUtils::checkLockedFiles(const QString & prefix, QFileInfoList & backupList, QStringList & filters, QHash<QString, class QtLockedFile *> & lockedFiles, bool recurse)
 {
 	QDir backupDir(FolderUtils::getUserDataStorePath(prefix));
 	QFileInfoList dirList = backupDir.entryInfoList(QDir::AllDirs | QDir::NoDotAndDotDot | QDir::Hidden | QDir::NoSymLinks);
@@ -474,8 +489,12 @@ void FolderUtils::checkLockedFiles(const QString & prefix, QFileInfoList & backu
 		QDir dir(dirInfo.filePath());
 		//DebugDialog::debug(QString("looking in backup dir %1").arg(dir.absolutePath()));
 		QFileInfoList fileInfoList = dir.entryInfoList(filters, QDir::Files | QDir::Hidden | QDir::NoSymLinks);
+		bool gotRecurse = false;
+		if (recurse && fileInfoList.isEmpty()) {
+			gotRecurse = checkLockedFilesAux(dir, filters);
+		}
 
-		if (fileInfoList.isEmpty()) {
+		if (fileInfoList.isEmpty() && !gotRecurse) {
 			// could mean this backup folder is just being created by another process
 			// could also mean it's leftover crap.
 			// check the date and only delete if it's old

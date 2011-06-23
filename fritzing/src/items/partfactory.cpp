@@ -51,8 +51,8 @@ $Date$
 #include "perfboard.h"
 #include "../utils/folderutils.h"
 
-QString PartFactoryFolderPath;
-QHash<QString, class QtLockedFile *> LockedFiles;
+static QString PartFactoryFolderPath;
+static QHash<QString, class QtLockedFile *> LockedFiles;
 
 ItemBase * PartFactory::createPart( ModelPart * modelPart, ViewLayer::ViewLayerSpec viewLayerSpec, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, QMenu * wireMenu, bool doLabel)
 {
@@ -174,7 +174,7 @@ QString PartFactory::getSvgFilename(ModelPart * modelPart, const QString & expec
 	if (modelPart->moduleID().endsWith(ModuleIDNames::PerfboardModuleIDName)) {
 		if (expectedFileName.contains("icon")) return expectedFileName;
 
-		QString path = PartFactoryFolderPath + "/" + expectedFileName;
+		QString path = PartFactoryFolderPath + "/svg/core/" + expectedFileName;
 		QFile file(path);
 		if (file.exists()) {
 			return path;
@@ -198,7 +198,7 @@ QString PartFactory::getSvgFilenameAux(const QString & expectedFileName, QString
 	QString path = FolderUtils::getApplicationSubFolderPath("parts") + "/"+ ItemBase::SvgFilesDir + "/core/";
 	if (QFileInfo(path + expectedFileName).exists()) return expectedFileName;
 
-	path = PartFactoryFolderPath + "/" + expectedFileName;
+	path = PartFactoryFolderPath + "/svg/core/" + expectedFileName;
 	QFile file(path);
 	if (file.exists()) {
 		return path;
@@ -218,7 +218,7 @@ QString PartFactory::getSvgFilenameAux(const QString & expectedFileName, QString
 
 QString PartFactory::getFzpFilenameAux(const QString & moduleID, QString (*getFzp)(const QString &))
 {
-	QString path = PartFactoryFolderPath + "/" + moduleID + FritzingPartExtension;
+	QString path = PartFactoryFolderPath + "/core/" + moduleID + FritzingPartExtension;
 	QFile file(path);
 	if (file.exists()) {
 		return path;
@@ -277,8 +277,13 @@ void PartFactory::initFolder()
 	QFileInfoList backupList;
 	QStringList filters;
 	filters << "*.fzp" << "*.svg";
-	FolderUtils::checkLockedFiles("partfactory", backupList, filters, LockedFiles);
+	FolderUtils::checkLockedFiles("partfactory", backupList, filters, LockedFiles, true);
 	QDir dir(PartFactoryFolderPath);
+	dir.mkdir("core");
+	dir.mkdir("svg");
+	dir.cd("svg");
+	dir.mkdir("core");
+	dir.cd("core");
 	dir.mkdir("icon");
 	dir.mkdir("breadboard");
 	dir.mkdir("schematic");
@@ -361,4 +366,8 @@ bool PartFactory::isRatsnest(QDomElement & instance) {
 	}
 
 	return false;
+}
+
+QString PartFactory::folderPath() {
+	return PartFactoryFolderPath;
 }
