@@ -689,6 +689,7 @@ protected:
 	QString m_bundledSketchName;
 	RoutingStatus m_routingStatus;
 	bool m_smdOneSideWarningGiven;
+	bool m_enableOrderFabButton;				
 
 public:
 	static int RestartNeeded;

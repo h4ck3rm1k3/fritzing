@@ -159,6 +159,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 
 	QSettings settings;
 	m_locationLabelInches = settings.value("LocationInches", QVariant(true)).toBool();
+	m_enableOrderFabButton = settings.value("OrderFabEnabled", QVariant(false)).toBool();
 
 	m_locationLabel = new LocationLabel(this);
 	m_locationLabel->setObjectName("LocationLabel");
@@ -766,9 +767,11 @@ QList<QWidget*> MainWindow::getButtonsForView(ViewIdentifierClass::ViewIdentifie
 			retval << SketchAreaWidget::separator(parent) 
 				<< createActiveLayerButton(parent) 
 				<< createAutorouteButton(parent) 
-				<< createExportEtchableButton(parent) 
-				// << createOrderFabButton(parent) 
-				<< createRoutingStatusLabel(parent);
+				<< createExportEtchableButton(parent);
+			if (m_enableOrderFabButton) {
+				retval << createOrderFabButton(parent);
+			}
+			retval << createRoutingStatusLabel(parent);
 			break;
 		default:
 			break;

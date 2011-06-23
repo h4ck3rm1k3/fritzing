@@ -74,8 +74,11 @@ $Date$
 #include <QTextStream>
 #include <QFontDatabase>
 #include <QtDebug>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
 
 static int kBottomOfAlpha = 204;
+static QNetworkAccessManager * NetworkAccessManager = NULL;
 
 #ifdef LINUX_32
 #define PLATFORM_NAME "linux-32bit"
@@ -660,6 +663,13 @@ int FApplication::startup(bool firstRun)
 	QString currVersion = Version::versionString();
 	if(prevVersion != currVersion) {
 		settings.clear();
+	}
+
+	bool fabEnabled = settings.value("OrderFabEnabled", QVariant(false)).toBool();
+	if (!fabEnabled) {
+		NetworkAccessManager = new QNetworkAccessManager(this);
+		connect(NetworkAccessManager, SIGNAL(finished(QNetworkReply *)), this, SLOT(gotFab(QNetworkReply *)));
+		NetworkAccessManager->get(QNetworkRequest(QUrl("http://fab.fritzing.org/launched")));
 	}
 
 	splash.showProgress(m_progressIndex, LoadProgressEnd);
@@ -1255,4 +1265,12 @@ void FApplication::initBackups() {
 
 void FApplication::cleanupBackups() {
 	FolderUtils::releaseLockedFiles(MainWindow::BackupFolder, m_lockedFiles);
+}
+
+void FApplication::gotFab(QNetworkReply * networkReply) {
+	int responseCode = networkReply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+	if (responseCode == 200) {
+		QSettings settings;
+		settings.setValue("OrderFabEnabled", QVariant(true));
+	}
 }

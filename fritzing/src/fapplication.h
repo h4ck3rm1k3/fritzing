@@ -36,6 +36,7 @@ $Date$
 #include <QMutex>
 #include <QMultiHash>
 #include <QTimer>
+#include <QNetworkReply>
 
 class FApplication :
 	public QApplication
@@ -71,6 +72,7 @@ public slots:
 	void closeAllWindows2();
 	void loadedPart(int loaded, int total);
 	void externalProcessSlot(QString & name, QString & path, QStringList & args);
+	void gotFab(QNetworkReply *);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
