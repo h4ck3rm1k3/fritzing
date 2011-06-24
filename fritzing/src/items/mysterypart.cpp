@@ -42,12 +42,23 @@ static QStringList Spacings;
 static QRegExp Digits("(\\d)+");
 static QRegExp DigitsMil("(\\d)+mil");
 
-static int MinSipPins = 1;
-static int MaxSipPins = 64;
-static int MinDipPins = 4;
-static int MaxDipPins = 64;
+static const int MinSipPins = 1;
+static const int MaxSipPins = 64;
+static const int MinDipPins = 4;
+static const int MaxDipPins = 64;
+static int Pins = 0;
 
+qreal getViewBoxCoord(const QString & svg, int coord)
+{
+	QRegExp re("viewBox='([^']+)'");
+	int ix = re.indexIn(svg);
+	if (ix < 0) return 0;
 
+	QString vb = re.cap(1);
+	QStringList coords = vb.split(" ");
+	QString c = coords.at(coord);
+	return c.toDouble();
+}
 
 // TODO
 //	save into parts bin
@@ -460,13 +471,78 @@ QString MysteryPart::makeSchematicSvg(const QString & expectedFileName)
 QString MysteryPart::makeBreadboardSvg(const QString & expectedFileName) 
 {
 	if (expectedFileName.contains("_sip_")) return makeBreadboardSipSvg(expectedFileName);
+	if (expectedFileName.contains("_dip_")) return makeBreadboardDipSvg(expectedFileName);
 
 	return "";
+}
+
+QString MysteryPart::makeBreadboardDipSvg(const QString & expectedFileName) 
+{
+	QStringList pieces = expectedFileName.split("_");
+	if (pieces.count() != 6) return "";
+
+	int pins = pieces.at(2).toInt();
+	qreal spacing = TextUtils::convertToInches(pieces.at(4)) * 100;
+
+
+	int increment = 10;
+
+	QString repeatT("<rect id='connector%1terminal' x='[1.87]' y='1' fill='#8C8C8C' width='2.3' height='0'/>\n"
+					"<rect id='connector%1pin' x='[1.87]' y='0' fill='#8C8C8C' width='2.3' height='3.5'/>\n");
+
+	QString repeatB("<rect id='connector.percent.1terminal' x='{1.87}' y='[11.0]' fill='#8C8C8C' width='2.3' height='0'/>\n"
+					"<rect id='connector.percent.1pin' x='{1.87}' y='[7.75]' fill='#8C8C8C' width='2.3' height='4.25'/>\n");
+
+	QString header("<?xml version='1.0' encoding='utf-8'?>\n"
+					"<svg version='1.2' baseProfile='tiny' xmlns='http://www.w3.org/2000/svg'\n"
+					"width='.percent.1in' height='%1in' viewBox='0 0 {16.0022} [12.0]' xml:space='preserve'>\n"
+					"<g id='breadboard'>\n"
+					".percent.2\n"
+					"<rect width='{16.0022}' x='0' y='2.5' height='[6.5]' fill='#000000' id='upper' stroke-width='0' />\n"
+					"<rect width='{16.0022}' x='0' y='[6.5]' fill='#404040' height='3.096' id='lower' stroke-width='0' />\n"
+					"<text id='label' x='2.5894' y='{{6.0}}' fill='#e6e6e6' stroke='none' font-family='DroidSans' text-anchor='start' font-size='7.3' >?</text>\n"
+					"<circle fill='#8C8C8C' cx='11.0022' cy='{{7.5}}' r='3' stroke-width='0' />\n"
+					"<text x='11.0022' y='{{9.2}}' font-family='DroidSans' text-anchor='middle' font-weight='bold' stroke-width='0' font-size='5.5' >?</text>\n"
+					".percent.3\n"
+					"</g>\n"
+					"</svg>\n");
+
+
+	header = TextUtils::incrementTemplateString(header, 1, spacing - increment, incMultiplyPinFunction, noCopyPinFunction);
+	header = header.arg(getViewBoxCoord(header, 3) / 100.0);
+	if (spacing == 10) {
+		header.replace("{{6.0}}", "8.0");
+		header.replace("{{7.5}}", "5.5");
+		header.replace("{{9.2}}", "7.2");
+	}
+	else {
+		header.replace("{{6.0}}", QString::number(6.0 + ((spacing - increment) / 2)));
+		header.replace("{{7.5}}", "7.5");
+		header.replace("{{9.2}}", "9.2");
+	}
+	header.replace(".percent.", "%");
+	header.replace("{", "[");
+	header.replace("}", "]");
+
+	repeatB = TextUtils::incrementTemplateString(repeatB, 1, spacing - increment, incMultiplyPinFunction, noCopyPinFunction);
+	repeatB.replace(".percent.", "%");
+	repeatB.replace("{", "[");
+	repeatB.replace("}", "]");
+
+	QString svg = TextUtils::incrementTemplateString(header, 1, increment * ((pins - 4) / 2), incMultiplyPinFunction, noCopyPinFunction);
+
+	Pins = pins;
+	QString repeatTs = TextUtils::incrementTemplateString(repeatT, pins / 2, increment, TextUtils::standardMultiplyPinFunction, negCopyPinFunction);
+	QString repeatBs = TextUtils::incrementTemplateString(repeatB, pins / 2, increment, TextUtils::standardMultiplyPinFunction, TextUtils::standardCopyPinFunction);
+
+	return svg.arg(getViewBoxCoord(svg, 2) / 100).arg(repeatTs).arg(repeatBs);
 }
 
 QString MysteryPart::makeBreadboardSipSvg(const QString & expectedFileName) 
 {
 	QStringList pieces = expectedFileName.split("_");
+	if (pieces.count() != 6) return "";
+
 	int pins = pieces.at(2).toInt();
 	int increment = 10;
 
@@ -490,11 +566,7 @@ QString MysteryPart::makeBreadboardSipSvg(const QString & expectedFileName)
 
 	QString repeats = TextUtils::incrementTemplateString(repeat, pins, increment, TextUtils::standardMultiplyPinFunction, TextUtils::standardCopyPinFunction);
 
-	int ix1 = svg.indexOf("viewBox='");
-	int ix2 = svg.indexOf("'", ix1 + 9);
-	QString vb = svg.mid(ix1 + 9, ix2 - ix1 - 1);
-	QStringList coords = vb.split(" ");
-	return svg.arg(coords.at(2).toDouble() / 100).arg(repeats);
+	return svg.arg(getViewBoxCoord(svg, 2) / 100).arg(repeats);
 }
 
 QString MysteryPart::noCopyPinFunction(int, const QString & argString) 
@@ -505,6 +577,11 @@ QString MysteryPart::noCopyPinFunction(int, const QString & argString)
 QString MysteryPart::incCopyPinFunction(int pin, const QString & argString) 
 { 
 	return argString.arg(pin + 1); 
+}
+
+QString MysteryPart::negCopyPinFunction(int pin, const QString & argString) 
+{ 
+	return argString.arg(Pins - (pin + 1)); 
 }
 
 QString MysteryPart::incMultiplyPinFunction(int pin, qreal increment, qreal value) 

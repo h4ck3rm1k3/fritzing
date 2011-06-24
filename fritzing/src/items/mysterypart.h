@@ -67,11 +67,13 @@ public:
 	static QString makeSchematicSvg(const QString & expectedFileName);
 	static QString makeBreadboardSvg(const QString & expectedFileName);
 	static QString makeBreadboardSipSvg(const QString & expectedFileName);
+	static QString makeBreadboardDipSvg(const QString & expectedFileName);
 
 protected:
 	static QString noCopyPinFunction(int pin, const QString & argString);
 	static QString incMultiplyPinFunction(int pin, qreal increment, qreal value);
 	static QString incCopyPinFunction(int pin, const QString & argString);
+	static QString negCopyPinFunction(int pin, const QString & argString);
 
 
 protected:
