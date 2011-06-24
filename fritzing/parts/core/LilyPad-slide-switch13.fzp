@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='LilyPad-slide-switch13'>
 <version>4</version>
-<date>2011-06-22</date>
+<date>2011-06-24</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description:&lt;/span&gt; This is a simple slide switch for the LilyPad. Use it as a simple ON/OFF switch, or to control LEDs, buzzers, sensors, etc.&lt;br /&gt;
@@ -56,7 +56,7 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector6' type='male' name='OFF'>
+<connector id='connector6' type='female' name='OFF'>
 <description>OFF</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pin'/></breadboardView>
@@ -66,7 +66,7 @@
 <p layer='copper0' svgId='connector6pad'/><p layer='copper1' svgId='connector6pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector7' type='male' name='ON'>
+<connector id='connector7' type='female' name='ON'>
 <description>ON</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pin'/></breadboardView>

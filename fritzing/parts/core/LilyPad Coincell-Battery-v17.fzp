@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='LilyPad Coincell-Battery-v17'>
 <version>4</version>
-<date>2011-06-22</date>
+<date>2011-06-24</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Description:&lt;/strong&gt; If you&amp;#39;re looking for a simple way to add a battery to your LilyPad project, the LilyPad Coin Cell Battery Holder might do the trick. It&amp;#39;s a simple board which holds a 20mm coin cell battery (such as a CR2032) and gives you 4 connection points (two positive and two negative) for sewing into your project.&lt;/p&gt;
@@ -44,7 +44,7 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector5' type='male' name='-'>
+<connector id='connector5' type='female' name='-'>
 <description>-</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector5pin'/></breadboardView>
@@ -54,7 +54,7 @@
 <p layer='copper0' svgId='connector5pad'/><p layer='copper1' svgId='connector5pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector6' type='male' name='+'>
+<connector id='connector6' type='female' name='+'>
 <description>+</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pin'/></breadboardView>
@@ -64,7 +64,7 @@
 <p layer='copper0' svgId='connector6pad'/><p layer='copper1' svgId='connector6pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector7' type='male' name='-'>
+<connector id='connector7' type='female' name='-'>
 <description>-</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pin'/></breadboardView>
@@ -74,7 +74,7 @@
 <p layer='copper0' svgId='connector7pad'/><p layer='copper1' svgId='connector7pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector8' type='male' name='+'>
+<connector id='connector8' type='female' name='+'>
 <description>+</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector8pin'/></breadboardView>
