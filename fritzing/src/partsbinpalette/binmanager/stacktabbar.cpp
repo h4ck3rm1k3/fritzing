@@ -103,6 +103,8 @@ void StackTabBar::showContextMenu(const QPoint &point)
 	PartsBinPaletteWidget* bin = dynamic_cast<PartsBinPaletteWidget*>(m_parent->widget(tabIndex));
 	if (bin == NULL) return;
 
+	setCurrentIndex(tabIndex);
+
 
 	QMenu * binMenu = bin->getFileMenu();
 	if (binMenu == NULL) return;

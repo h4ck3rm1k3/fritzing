@@ -876,8 +876,11 @@ bool CMRouter::drc(QString & message)
 		message = tr("Your sketch is ready for production: there are no connectors or traces that overlap or are too close together.");
 	}
     else {
-		message = tr("The areas on your board highlighted in red are connectors and traces which overlap or are too close together. "
+		if (m_error.length() > 0) message = m_error;
+		else {
+			message = tr("The areas on your board highlighted in red are connectors and traces which overlap or are too close together. "
 					 "Reposition them and run the DRC again to find more problems.");
+		}
 	}
 
 	if (m_offBoardConnectors.count() > 0) {
@@ -910,6 +913,7 @@ void CMRouter::drcClean()
 
 bool CMRouter::drc(CMRouter::OverlapType overlapType, CMRouter::OverlapType wireOverlapType, bool eliminateThin, bool combinePlanes) 
 {
+	m_error = "";
 	m_hasOverlaps = false;
 	if (combinePlanes) {
 		m_unionPlane = initPlane(false);
@@ -925,22 +929,28 @@ bool CMRouter::drc(CMRouter::OverlapType overlapType, CMRouter::OverlapType wire
 	bool gotBad = false;
 
 	QList<Tile *> alreadyTiled;
-	Plane * plane = tilePlane(m_viewLayerIDs.at(0), ViewLayer::Bottom, alreadyTiled, overlapType, wireOverlapType, eliminateThin);
-	if (m_hasOverlaps) {
-		gotBad = true;
-		m_hasOverlaps = false;
-		//return false;
-	}
-	else {
-		//hideTiles();
-	}
-
-	if (m_bothSidesNow) {
-		plane = tilePlane(m_viewLayerIDs.at(1), ViewLayer::Top, alreadyTiled, overlapType, wireOverlapType, eliminateThin);
+	try {
+		Plane * plane = tilePlane(m_viewLayerIDs.at(0), ViewLayer::Bottom, alreadyTiled, overlapType, wireOverlapType, eliminateThin);
 		if (m_hasOverlaps) {
 			gotBad = true;
+			m_hasOverlaps = false;
 			//return false;
 		}
+		else {
+			//hideTiles();
+		}
+
+		if (m_bothSidesNow) {
+			plane = tilePlane(m_viewLayerIDs.at(1), ViewLayer::Top, alreadyTiled, overlapType, wireOverlapType, eliminateThin);
+			if (m_hasOverlaps) {
+				gotBad = true;
+				//return false;
+			}
+		}
+	}
+	catch (const QString & msg) {
+		m_error = msg;
+		return false;
 	}
 
 	if (gotBad) {
@@ -966,7 +976,10 @@ bool CMRouter::runEdges(QList<Edge *> & edges, QVector<int> & netCounters, Routi
 	bool result = drc(CMRouter::ClipAllOverlaps, CMRouter::ClipAllOverlaps, true, m_sketchWidget->autorouteTypePCB());
 	if (!result) {
 		m_cancelled = true;
-		QMessageBox::warning(NULL, QObject::tr("Fritzing"), QObject::tr("Cannot autoroute: parts or traces are overlapping"));
+		QString message;
+		if (m_error.length() > 0) message = m_error;
+		else message = QObject::tr("Cannot autoroute: parts or traces are overlapping");
+		QMessageBox::warning(NULL, QObject::tr("Fritzing"), message);
 		return false;
 	}
 
@@ -1651,7 +1664,17 @@ void CMRouter::tileWires(QList<Wire *> & wires, QList<Tile *> & alreadyTiled, Ti
 		foreach (QRectF r, wireRects.values(w)) {
 			TileRect tileRect;
 			qrectToTile(r, tileRect);
-			insertTile(m_planeHash.value(w->viewLayerID()), tileRect, alreadyTiled, w, tileType, overlapType);
+			Plane * plane = m_planeHash.value(w->viewLayerID());
+			if (plane == NULL) {
+				QPointF p1 = w->connector0()->sceneAdjustedTerminalPoint(NULL);
+				QPointF p2 = w->connector1()->sceneAdjustedTerminalPoint(NULL);
+				throw QObject::tr("tiling failure: possibly due wire crossing layers bug. Wire at %1,%2 %3,%4 (in)")
+					.arg(p1.x() / FSvgRenderer::printerScale())
+					.arg(p1.y() / FSvgRenderer::printerScale())
+					.arg(p2.x() / FSvgRenderer::printerScale())
+					.arg(p2.y() / FSvgRenderer::printerScale());
+			}
+			insertTile(plane, tileRect, alreadyTiled, w, tileType, overlapType);
 			//drawGridItem(tile);
 			if (alreadyTiled.count() > 0) {
 				m_hasOverlaps = true;

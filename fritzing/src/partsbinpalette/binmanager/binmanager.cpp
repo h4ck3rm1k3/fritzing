@@ -679,11 +679,18 @@ QMenu * BinManager::getPartMenu() {
 	return bin->getPartMenu();
 }
 
-void BinManager::updateMenus() {
+void BinManager::updateBinPartsMenu() {
 	PartsBinPaletteWidget * bin = determineTopmostBin();
 	if (bin == NULL) return;
 
-	return bin->updateMenus();
+	return bin->updateBinPartsMenu();
+}
+
+void BinManager::updateBinFileMenu() {
+	PartsBinPaletteWidget * bin = determineTopmostBin();
+	if (bin == NULL) return;
+
+	return bin->updateBinFileMenu();
 }
 
 void BinManager::showSearch() {

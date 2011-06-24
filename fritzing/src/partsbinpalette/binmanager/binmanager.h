@@ -92,7 +92,8 @@ class BinManager : public QFrame {
 		QMenu * getFileMenu();
 		QMenu * getPartMenu();
 		void showSearch();
-		void updateMenus();
+		void updateBinPartsMenu();
+		void updateBinFileMenu();
 
 	protected slots:
 		void updateFileName(PartsBinPaletteWidget* bin, const QString &newFileName, const QString &oldFilename);

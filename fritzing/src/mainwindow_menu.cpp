@@ -1414,7 +1414,8 @@ void MainWindow::updatePartsBinMenu(QMenu * partsBinMenu, QMenu * binMenu, int s
 	partsBinMenu->clear();
 	if (binMenu) {
 		partsBinMenu->setEnabled(true);
-		m_binManager->updateMenus();
+		m_binManager->updateBinPartsMenu();
+		m_binManager->updateBinFileMenu();
 		foreach (QAction * action, binMenu->actions()) {
 			if (--skip >= 0) {
 				continue;

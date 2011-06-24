@@ -110,7 +110,8 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		void openNewBin(const QString &filename = ___emptyString___);
 		void toIconView();
 		void toListView();
-		void updateMenus();
+		void updateBinPartsMenu();
+		void updateBinFileMenu();
 
 	protected slots:
 		bool save();

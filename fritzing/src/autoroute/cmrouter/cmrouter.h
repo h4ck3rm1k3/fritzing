@@ -318,6 +318,7 @@ protected:
 	QHash<PathUnit *, TileRect> m_nearestSpaces;
 	bool m_hasOverlaps;
 	qreal m_keepout;
+	QString m_error;
 };
 
 #endif

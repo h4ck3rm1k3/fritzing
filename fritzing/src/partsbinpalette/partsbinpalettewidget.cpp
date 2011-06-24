@@ -35,6 +35,7 @@ $Date$
 #include <QWidgetAction>
 
 #include "partsbinpalettewidget.h"
+#include "binmanager/stacktabwidget.h"
 #include "partsbincommands.h"
 #include "partsbiniconview.h"
 #include "partsbinlistview.h"
@@ -89,8 +90,8 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 	connect(m_listView, SIGNAL(currentRowChanged(int)), m_iconView, SLOT(setSelected(int)));
 	connect(m_iconView, SIGNAL(selectionChanged(int)), m_listView, SLOT(setSelected(int)));
 
-	connect(m_listView, SIGNAL(currentRowChanged(int)), this, SLOT(updateMenus()));
-	connect(m_iconView, SIGNAL(selectionChanged(int)), this, SLOT(updateMenus()));
+	connect(m_listView, SIGNAL(currentRowChanged(int)), this, SLOT(updateBinPartsMenu()));
+	connect(m_iconView, SIGNAL(selectionChanged(int)), this, SLOT(updateBinPartsMenu()));
 
 	//connect(m_listView, SIGNAL(clicked()), this, SLOT(updateButtonStates()));
 	//connect(m_iconView, SIGNAL(clicked()(int)), this, SLOT(updateButtonStates()));
@@ -337,6 +338,9 @@ void PartsBinPaletteWidget::createBinMenu() {
 	m_fileMenu->addAction(m_saveAsBundledAction);
 	m_fileMenu->addAction(m_renameAction);
 	m_binMenuButton->setMenu(m_fileMenu);
+
+	connect(m_fileMenu, SIGNAL(aboutToShow()), this, SLOT(updateBinFileMenu()));
+
 }
 
 void PartsBinPaletteWidget::createOpenBinMenu() {
@@ -444,7 +448,7 @@ void PartsBinPaletteWidget::createPartMenu() {
 	connect(m_removePartAction, SIGNAL(triggered()),this, SLOT(removeSelected()));
 
 	m_partMenu = new QMenu(tr("Parts Actions"), this);
-	connect(m_partMenu, SIGNAL(aboutToShow()), this, SLOT(updateMenus()));
+	connect(m_partMenu, SIGNAL(aboutToShow()), this, SLOT(updateBinPartsMenu()));
 	m_partMenu->addAction(newTitleAction(tr("Part")));
 	m_partMenu->addAction(m_newPartAction);
 	m_partMenu->addAction(m_importPartAction);
@@ -462,9 +466,10 @@ void PartsBinPaletteWidget::createContextMenus() {
 	m_binContextMenu->addAction(m_saveAsAction);
 	m_binContextMenu->addAction(m_saveAsBundledAction);
 	m_binContextMenu->addAction(m_renameAction);
+	connect(m_binContextMenu, SIGNAL(aboutToShow()), this, SLOT(updateBinFileMenu()));
 
 	m_partContextMenu = new QMenu(this);
-	connect(m_partContextMenu, SIGNAL(aboutToShow()), this, SLOT(updateMenus()));
+	connect(m_partContextMenu, SIGNAL(aboutToShow()), this, SLOT(updateBinPartsMenu()));
 	m_partContextMenu->addAction(m_editPartAction);
 	m_partContextMenu->addAction(m_exportPartAction);
 	m_partContextMenu->addAction(m_removePartAction);
@@ -869,15 +874,6 @@ const QString &PartsBinPaletteWidget::fileName() {
 	return m_fileName;
 }
 
-void PartsBinPaletteWidget::updateMenus() {
-	ModelPart *mp = selected();
-	bool enabled = (mp != NULL);
-	m_editPartAction->setEnabled(enabled);
-	m_exportPartAction->setEnabled(enabled && !mp->isCore());
-	m_removePartAction->setEnabled(enabled && allowsChanges());
-	m_importPartAction->setEnabled(true);
-}
-
 bool PartsBinPaletteWidget::eventFilter(QObject *obj, QEvent *event) {
 	if (obj == this) {
 		if (event->type() == QEvent::MouseButtonPress ||
@@ -995,4 +991,17 @@ QMenu * PartsBinPaletteWidget::getPartMenu() {
 	return m_partMenu;
 }
 
+void PartsBinPaletteWidget::updateBinFileMenu() {
+	m_saveAction->setEnabled(m_allowsChanges);
+	m_renameAction->setEnabled(m_allowsChanges);
+	m_closeBinAction->setEnabled(m_tabWidget->count() > 1);
+}
 
+void PartsBinPaletteWidget::updateBinPartsMenu() {
+	ModelPart *mp = selected();
+	bool enabled = (mp != NULL);
+	m_editPartAction->setEnabled(enabled);
+	m_exportPartAction->setEnabled(enabled && !mp->isCore());
+	m_removePartAction->setEnabled(enabled && allowsChanges());
+	m_importPartAction->setEnabled(true);
+}
