@@ -74,6 +74,7 @@ protected:
 	static QString incMultiplyPinFunction(int pin, qreal increment, qreal value);
 	static QString incCopyPinFunction(int pin, const QString & argString);
 	static QString negCopyPinFunction(int pin, const QString & argString);
+	static qreal getViewBoxCoord(const QString & svg, int coord);
 
 
 protected:
@@ -84,6 +85,8 @@ protected:
 	virtual bool isDIP();
 	virtual bool otherPropsChange(const QMap<QString, QString> & propsMap);
 	virtual const QStringList & spacings();
+
+	static int NoExcusePins;
 
 protected:
 	class FSvgRenderer * m_renderer;

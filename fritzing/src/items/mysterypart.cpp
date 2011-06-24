@@ -46,19 +46,7 @@ static const int MinSipPins = 1;
 static const int MaxSipPins = 64;
 static const int MinDipPins = 4;
 static const int MaxDipPins = 64;
-static int Pins = 0;
-
-qreal getViewBoxCoord(const QString & svg, int coord)
-{
-	QRegExp re("viewBox='([^']+)'");
-	int ix = re.indexIn(svg);
-	if (ix < 0) return 0;
-
-	QString vb = re.cap(1);
-	QStringList coords = vb.split(" ");
-	QString c = coords.at(coord);
-	return c.toDouble();
-}
+int MysteryPart::NoExcusePins = 0;
 
 // TODO
 //	save into parts bin
@@ -487,15 +475,15 @@ QString MysteryPart::makeBreadboardDipSvg(const QString & expectedFileName)
 
 	int increment = 10;
 
-	QString repeatT("<rect id='connector%1terminal' x='[1.87]' y='1' fill='#8C8C8C' width='2.3' height='0'/>\n"
-					"<rect id='connector%1pin' x='[1.87]' y='0' fill='#8C8C8C' width='2.3' height='3.5'/>\n");
+	QString repeatT("<rect id='connector%1terminal' x='[1.87]' y='1' fill='#8C8C8C' stroke='none' stroke-width='0' width='2.3' height='0'/>\n"
+					"<rect id='connector%1pin' x='[1.87]' y='0' fill='#8C8C8C' stroke='none' stroke-width='0' width='2.3' height='3.5'/>\n");
 
-	QString repeatB("<rect id='connector.percent.1terminal' x='{1.87}' y='[11.0]' fill='#8C8C8C' width='2.3' height='0'/>\n"
-					"<rect id='connector.percent.1pin' x='{1.87}' y='[7.75]' fill='#8C8C8C' width='2.3' height='4.25'/>\n");
+	QString repeatB("<rect id='connector%1terminal' x='{1.87}' y='[11.0]' fill='#8C8C8C' stroke='none' stroke-width='0' width='2.3' height='0'/>\n"
+					"<rect id='connector%1pin' x='{1.87}' y='[7.75]' fill='#8C8C8C' stroke='none' stroke-width='0' width='2.3' height='4.25'/>\n");
 
 	QString header("<?xml version='1.0' encoding='utf-8'?>\n"
 					"<svg version='1.2' baseProfile='tiny' xmlns='http://www.w3.org/2000/svg'\n"
-					"width='.percent.1in' height='%1in' viewBox='0 0 {16.0022} [12.0]' xml:space='preserve'>\n"
+					"width='.percent.1in' height='%1in' viewBox='0 0 {16.0022} [12.0]'>\n"
 					"<g id='breadboard'>\n"
 					".percent.2\n"
 					"<rect width='{16.0022}' x='0' y='2.5' height='[6.5]' fill='#000000' id='upper' stroke-width='0' />\n"
@@ -524,14 +512,13 @@ QString MysteryPart::makeBreadboardDipSvg(const QString & expectedFileName)
 	header.replace("{", "[");
 	header.replace("}", "]");
 
+	QString svg = TextUtils::incrementTemplateString(header, 1, increment * ((pins - 4) / 2), incMultiplyPinFunction, noCopyPinFunction);
+
 	repeatB = TextUtils::incrementTemplateString(repeatB, 1, spacing - increment, incMultiplyPinFunction, noCopyPinFunction);
-	repeatB.replace(".percent.", "%");
 	repeatB.replace("{", "[");
 	repeatB.replace("}", "]");
 
-	QString svg = TextUtils::incrementTemplateString(header, 1, increment * ((pins - 4) / 2), incMultiplyPinFunction, noCopyPinFunction);
-
-	Pins = pins;
+	NoExcusePins = pins;
 	QString repeatTs = TextUtils::incrementTemplateString(repeatT, pins / 2, increment, TextUtils::standardMultiplyPinFunction, negCopyPinFunction);
 	QString repeatBs = TextUtils::incrementTemplateString(repeatB, pins / 2, increment, TextUtils::standardMultiplyPinFunction, TextUtils::standardCopyPinFunction);
 
@@ -581,10 +568,23 @@ QString MysteryPart::incCopyPinFunction(int pin, const QString & argString)
 
 QString MysteryPart::negCopyPinFunction(int pin, const QString & argString) 
 { 
-	return argString.arg(Pins - (pin + 1)); 
+	// TODO: pass an argument to these copyPin functions
+	return argString.arg(NoExcusePins - (pin + 1)); 
 }
 
 QString MysteryPart::incMultiplyPinFunction(int pin, qreal increment, qreal value) 
 {
 	return QString::number(value + ((pin + 1) * increment));
+}
+
+qreal MysteryPart::getViewBoxCoord(const QString & svg, int coord)
+{
+	QRegExp re("viewBox='([^']+)'");
+	int ix = re.indexIn(svg);
+	if (ix < 0) return 0;
+
+	QString vb = re.cap(1);
+	QStringList coords = vb.split(" ");
+	QString c = coords.at(coord);
+	return c.toDouble();
 }

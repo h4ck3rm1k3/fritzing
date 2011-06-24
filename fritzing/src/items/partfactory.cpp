@@ -182,6 +182,10 @@ QString PartFactory::getSvgFilename(ModelPart * modelPart, const QString & expec
 		return getSvgFilenameAux(expectedFileName, &Dip::makeSchematicSvg);
 	}
 
+	if (expectedFileName.startsWith("breadboard/generic_ic_dip_", Qt::CaseInsensitive)) {
+		return getSvgFilenameAux(expectedFileName, &Dip::makeBreadboardSvg);
+	}
+
 	if (expectedFileName.startsWith("pcb/jumper_", Qt::CaseInsensitive)) {
 		return getSvgFilenameAux(expectedFileName, &PinHeader::makePcbSvg);
 	}

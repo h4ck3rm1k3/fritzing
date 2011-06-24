@@ -48,6 +48,8 @@ public:
 	static QString makePcbSvg(const QString & expectedFileName);
 	static QString makeSchematicSvg(const QString & expectedFileName);
 	static QString makeBreadboardSvg(const QString & expectedFileName);
+	static QString makeBreadboardSipSvg(const QString & expectedFileName);
+	static QString makeBreadboardDipSvg(const QString & expectedFileName);
 
 
 protected:
