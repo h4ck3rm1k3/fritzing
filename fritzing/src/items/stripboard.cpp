@@ -32,16 +32,38 @@ $Date$
 #include "moduleidnames.h"
 #include "../connectors/connectoritem.h"
 
+#include <QCursor>
+#include <QBitmap>
+
+
+//////////////////////////////////////////////////
+
+// TODO:
+//
+//	set up initial bus config
+//	cursor(s) for mouse hover? and down
+//	change bus config at mouse release
+//	disconnect/reconnect affected parts
+//	undo
+
+
+static QCursor * SpotFaceCutterCursor = NULL;
+
 /////////////////////////////////////////////////////////////////////
 
 Stripbit::Stripbit(const QPainterPath & path, QGraphicsItem * parent = 0) : QGraphicsPathItem(path, parent)
 {
+	if (SpotFaceCutterCursor == NULL) {
+		QBitmap bitmap(":resources/images/spot_face_cutter.bmp");
+		SpotFaceCutterCursor = new QCursor(bitmap, bitmap, 0, 31);
+	}
+
 	m_inHover = m_removed = false;
 	setAcceptsHoverEvents(true);
 	setAcceptedMouseButtons(Qt::LeftButton);
 	setFlag(QGraphicsItem::ItemIsMovable, true);
 	setFlag(QGraphicsItem::ItemIsSelectable, true);
-	setCursor(Qt::PointingHandCursor);
+	setCursor(*SpotFaceCutterCursor);
 }
 
 Stripbit::~Stripbit() {
