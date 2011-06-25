@@ -52,8 +52,6 @@ QString BinManager::MyPartsBinLocation;
 QString BinManager::MyPartsBinTemplateLocation;
 QString BinManager::SearchBinLocation;
 QString BinManager::SearchBinTemplateLocation;
-QString BinManager::AllPartsBinLocation;
-QString BinManager::NonCorePartsBinLocation;
 QString BinManager::ContribPartsBinLocation;
 QString BinManager::CorePartsBinLocation;
 
@@ -118,9 +116,6 @@ void BinManager::registerBin(PartsBinPaletteWidget* bin, StackTabWidget *tb) {
 		bin->setAllowsChanges(false);
 	}
 	else if (bin->fileName().compare(ContribPartsBinLocation) == 0) {
-		bin->setAllowsChanges(false);
-	}
-	else if (bin->fileName().compare(NonCorePartsBinLocation) == 0) {
 		bin->setAllowsChanges(false);
 	}
 	else if (bin->fileName().contains(FolderUtils::getApplicationSubFolderPath("bins"))) {
@@ -610,8 +605,6 @@ void BinManager::initNames() {
     BinManager::MyPartsBinTemplateLocation =":/resources/bins/my_parts.fzb";
     BinManager::SearchBinLocation = FolderUtils::getUserDataStorePath("bins")+"/search.fzb";
     BinManager::SearchBinTemplateLocation =":/resources/bins/search.fzb";
-    BinManager::AllPartsBinLocation = FolderUtils::getApplicationSubFolderPath("bins")+"/allParts.fzb";
-	BinManager::NonCorePartsBinLocation = FolderUtils::getUserDataStorePath("bins")+"/nonCoreParts.fzb";
 	BinManager::ContribPartsBinLocation = FolderUtils::getUserDataStorePath("bins")+"/contribParts.fzb";
     BinManager::CorePartsBinLocation = ":/resources/bins/bin.fzb";
 }

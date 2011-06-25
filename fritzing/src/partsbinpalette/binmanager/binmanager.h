@@ -145,8 +145,6 @@ protected:
         static QString MyPartsBinTemplateLocation;
         static QString SearchBinLocation;
         static QString SearchBinTemplateLocation;
-        static QString AllPartsBinLocation;
-		static QString NonCorePartsBinLocation;
 		static QString ContribPartsBinLocation;
 		static bool isTabReorderingEvent(QDropEvent* event);
 		static void initNames();

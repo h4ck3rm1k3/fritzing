@@ -27,21 +27,22 @@ $Date$
 #include "stripboard.h"
 #include "../utils/graphicsutils.h"
 #include "../utils/textutils.h"
-#include "../utils/focusoutcombobox.h"
-#include "../utils/boundedregexpvalidator.h"
 #include "../fsvgrenderer.h"
 #include "../sketch/infographicsview.h"
-#include "../svg/svgfilesplitter.h"
-#include "../commands.h"
-#include "../layerattributes.h"
 #include "moduleidnames.h"
-#include "partlabel.h"
+#include "../connectors/connectoritem.h"
 
-#include <qmath.h>
-#include <QRegExpValidator>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QLabel>
+/////////////////////////////////////////////////////////////////////
+
+Stripbit::Stripbit(const QPainterPath & path, QGraphicsItem * parent = 0) : QGraphicsPathItem(path, parent)
+{
+	setFlag(QGraphicsItem::ItemIsMovable, false);
+	setFlag(QGraphicsItem::ItemIsSelectable, false);
+
+}
+
+Stripbit::~Stripbit() {
+}
 
 /////////////////////////////////////////////////////////////////////
 
@@ -66,7 +67,12 @@ QString Stripboard::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QStrin
 
 QString Stripboard::genFZP(const QString & moduleid)
 {
-	return Perfboard::genFZP(moduleid);
+	QString fzp = Perfboard::genFZP(moduleid);
+	fzp.replace("perfboard", "stripboard");
+	fzp.replace("Perfboard", "Stripboard");
+	fzp.replace("stripboard.svg", "perfboard.svg");
+	fzp.replace("Stripboard.svg", "Perfboard.svg");
+	return fzp;
 }
 
 bool Stripboard::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget)
@@ -77,6 +83,89 @@ bool Stripboard::collectExtraInfo(QWidget * parent, const QString & family, cons
 void Stripboard::addedToScene()
 {
     Perfboard::addedToScene();
+	if (this->scene() == NULL) return;
+
+	QList<QGraphicsItem *> items = childItems();
+
+	int x, y;
+	getXY(x, y, m_size);
+	ConnectorItem * ciFirst = NULL;
+	ConnectorItem * ciNext = NULL;
+	foreach (QGraphicsItem * item, items) {
+		ConnectorItem * ci = dynamic_cast<ConnectorItem *>(item);
+		if (ci == NULL) continue;
+
+		int cx, cy;
+		getXY(cx, cy, ci->connectorSharedName());
+		if (cy == 0 && cx == 0) {
+			ciFirst = ci;
+			break;
+		}
+	}
+	foreach (QGraphicsItem * item, items) {
+		ConnectorItem * ci = dynamic_cast<ConnectorItem *>(item);
+		if (ci == NULL) continue;
+
+		int cx, cy;
+		getXY(cx, cy, ci->connectorSharedName());
+		if (cy == 0 && cx == 1) {
+			ciNext = ci;
+			break;
+		}
+	}
+
+	if (ciFirst == NULL) return;
+	if (ciNext == NULL) return;
+
+	QRectF r1 = ciFirst->rect();
+	QRectF r2 = ciNext->rect();
+
+	qreal h = r1.height();
+	qreal w = r2.center().x() - r1.center().x();
+
+	r1.moveTo(-(r1.width() / 2), 0);
+	r2.moveTo(w - (r2.width() / 2), 0);
+
+	QPainterPath pp1;
+	pp1.addRect(0, 0, w / 2, h);
+	pp1.arcTo(r1, 90, -180);
+	pp1.addRect(w / 2, 0, w / 2, h);
+	pp1.moveTo(w, 0);
+	pp1.arcTo(r2, 90, 180);
+
+	//QPainterPath pp3;
+
+	//pp3.moveTo(w, h);
+
+	//QPainterPath pp4 = pp1.subtracted(pp3);
+
+	//pp1.moveTo(0, 0);
+	//QPainterPath pp2;
+	//pp2.addRect(w / 2, 0, w / 2, h);
+	//pp2.moveTo(w / 2, 0);
+	//QPainterPath pp3;
+	//pp3.addPath(pp1);
+	//pp3.addPath(pp2);
+
+	foreach (QGraphicsItem * item, items) {
+		ConnectorItem * ci = dynamic_cast<ConnectorItem *>(item);
+		if (ci == NULL) continue;
+
+		int cx, cy;
+		getXY(cx, cy, ci->connectorSharedName());
+		if (cx >= x - 1) {
+			// don't need a stripbit after the last column
+			continue;
+		}
+
+		Stripbit * stripbit = new Stripbit(pp1, this);
+		stripbit->setPen(Qt::NoPen);
+		// TODO: don't hardcode this color
+		stripbit->setBrush(QColor(0xc4, 0x9c, 0x59));
+		QRectF r = ci->rect();
+		stripbit->setPos(r.center().x(), r.top());
+	}
+
 }
 
 void Stripboard::changeBoardSize() 

@@ -41,7 +41,7 @@ $Date$
 
 bool PaletteModel::CreateAllPartsBinFile = false;  // now generating the all parts bin in advance using a python script:  [fritzing]/part-gen-scripts/misc_scripts/genAllParts.py
 
-bool PaletteModel::CreateNonCorePartsBinFile = true;
+bool PaletteModel::CreateNonCorePartsBinFile = false;
 bool PaletteModel::CreateContribPartsBinFile = true;
 
 static bool JustAppendAllPartsInstances = false;

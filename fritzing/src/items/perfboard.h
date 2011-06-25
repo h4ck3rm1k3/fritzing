@@ -63,6 +63,9 @@ protected slots:
 	void enableSetButton();
 
 protected:
+	static bool getXY(int & x, int & y, const QString & s);
+
+protected:
 	class FSvgRenderer * m_renderer;
 	QString m_size;
 	QPointer<QLineEdit> m_xEdit;

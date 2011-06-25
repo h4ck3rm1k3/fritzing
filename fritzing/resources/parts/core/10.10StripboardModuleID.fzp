@@ -1,0 +1,1445 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This xml file is generated through a template. Please don't edit it directly -->
+<module moduleId="10.10StripboardModuleID">
+  <version>4</version>
+  <author>JC</author>
+  <title>basic single-sided stripboard</title>
+  <date>2011-06-02</date>
+  <label>Stripboard</label>
+  <tags>
+    <tag>Stripboard</tag>
+  </tags>
+  <properties>
+    <property name="family">Stripboard</property>
+    <property name="size">10.10</property>
+  </properties>
+  <taxonomy>prototyping.stripboard.stripboard</taxonomy>
+  <description>A stripboard for easily prototyping circuits</description>
+  <views>
+    <iconView>
+      <layers image="icon/iconPerfboard.svg">
+        <layer layerId="icon"/>
+      </layers>
+    </iconView>
+    <breadboardView>
+      <layers image="breadboard/10.10perfboard.svg">
+        <layer layerId="breadboardbreadboard"/>
+      </layers>
+    </breadboardView>
+    <schematicView>
+      <layers image="breadboard/10.10perfboard.svg">
+        <layer layerId="breadboardbreadboard"/>
+      </layers>
+    </schematicView>
+    <pcbView>
+      <layers image="breadboard/10.10perfboard.svg">
+        <layer layerId="breadboardbreadboard"/>
+      </layers>
+    </pcbView>
+  </views>
+  <connectors ignoreTerminalPoints="true">
+     <connector id="connector0" name="0.0" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector0pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector0pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector0pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1" name="1.0" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector2" name="2.0" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector2pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector2pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector2pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector3" name="3.0" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector3pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector3pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector3pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector4" name="4.0" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector4pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector4pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector4pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector5" name="5.0" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector5pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector5pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector5pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector6" name="6.0" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector6pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector6pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector6pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector7" name="7.0" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector7pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector7pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector7pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector8" name="8.0" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector8pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector8pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector8pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector9" name="9.0" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector9pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector9pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector9pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector200" name="0.1" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector200pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector200pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector200pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector201" name="1.1" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector201pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector201pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector201pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector202" name="2.1" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector202pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector202pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector202pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector203" name="3.1" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector203pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector203pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector203pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector204" name="4.1" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector204pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector204pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector204pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector205" name="5.1" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector205pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector205pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector205pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector206" name="6.1" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector206pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector206pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector206pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector207" name="7.1" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector207pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector207pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector207pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector208" name="8.1" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector208pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector208pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector208pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector209" name="9.1" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector209pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector209pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector209pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector400" name="0.2" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector400pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector400pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector400pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector401" name="1.2" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector401pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector401pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector401pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector402" name="2.2" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector402pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector402pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector402pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector403" name="3.2" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector403pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector403pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector403pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector404" name="4.2" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector404pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector404pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector404pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector405" name="5.2" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector405pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector405pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector405pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector406" name="6.2" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector406pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector406pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector406pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector407" name="7.2" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector407pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector407pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector407pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector408" name="8.2" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector408pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector408pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector408pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector409" name="9.2" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector409pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector409pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector409pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector600" name="0.3" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector600pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector600pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector600pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector601" name="1.3" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector601pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector601pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector601pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector602" name="2.3" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector602pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector602pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector602pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector603" name="3.3" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector603pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector603pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector603pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector604" name="4.3" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector604pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector604pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector604pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector605" name="5.3" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector605pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector605pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector605pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector606" name="6.3" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector606pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector606pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector606pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector607" name="7.3" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector607pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector607pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector607pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector608" name="8.3" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector608pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector608pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector608pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector609" name="9.3" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector609pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector609pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector609pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector800" name="0.4" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector800pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector800pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector800pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector801" name="1.4" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector801pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector801pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector801pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector802" name="2.4" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector802pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector802pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector802pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector803" name="3.4" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector803pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector803pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector803pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector804" name="4.4" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector804pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector804pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector804pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector805" name="5.4" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector805pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector805pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector805pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector806" name="6.4" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector806pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector806pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector806pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector807" name="7.4" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector807pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector807pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector807pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector808" name="8.4" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector808pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector808pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector808pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector809" name="9.4" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector809pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector809pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector809pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1000" name="0.5" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1000pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1000pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1000pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1001" name="1.5" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1001pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1001pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1001pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1002" name="2.5" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1002pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1002pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1002pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1003" name="3.5" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1003pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1003pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1003pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1004" name="4.5" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1004pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1004pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1004pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1005" name="5.5" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1005pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1005pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1005pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1006" name="6.5" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1006pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1006pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1006pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1007" name="7.5" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1007pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1007pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1007pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1008" name="8.5" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1008pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1008pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1008pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1009" name="9.5" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1009pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1009pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1009pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1200" name="0.6" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1200pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1200pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1200pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1201" name="1.6" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1201pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1201pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1201pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1202" name="2.6" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1202pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1202pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1202pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1203" name="3.6" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1203pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1203pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1203pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1204" name="4.6" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1204pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1204pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1204pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1205" name="5.6" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1205pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1205pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1205pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1206" name="6.6" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1206pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1206pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1206pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1207" name="7.6" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1207pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1207pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1207pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1208" name="8.6" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1208pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1208pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1208pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1209" name="9.6" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1209pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1209pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1209pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1400" name="0.7" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1400pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1400pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1400pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1401" name="1.7" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1401pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1401pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1401pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1402" name="2.7" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1402pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1402pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1402pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1403" name="3.7" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1403pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1403pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1403pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1404" name="4.7" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1404pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1404pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1404pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1405" name="5.7" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1405pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1405pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1405pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1406" name="6.7" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1406pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1406pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1406pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1407" name="7.7" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1407pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1407pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1407pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1408" name="8.7" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1408pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1408pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1408pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1409" name="9.7" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1409pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1409pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1409pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1600" name="0.8" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1600pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1600pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1600pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1601" name="1.8" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1601pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1601pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1601pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1602" name="2.8" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1602pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1602pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1602pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1603" name="3.8" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1603pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1603pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1603pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1604" name="4.8" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1604pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1604pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1604pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1605" name="5.8" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1605pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1605pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1605pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1606" name="6.8" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1606pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1606pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1606pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1607" name="7.8" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1607pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1607pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1607pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1608" name="8.8" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1608pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1608pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1608pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1609" name="9.8" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1609pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1609pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1609pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1800" name="0.9" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1800pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1800pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1800pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1801" name="1.9" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1801pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1801pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1801pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1802" name="2.9" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1802pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1802pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1802pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1803" name="3.9" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1803pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1803pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1803pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1804" name="4.9" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1804pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1804pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1804pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1805" name="5.9" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1805pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1805pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1805pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1806" name="6.9" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1806pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1806pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1806pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1807" name="7.9" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1807pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1807pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1807pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1808" name="8.9" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1808pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1808pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1808pin"/>
+        </pcbView>
+      </views>
+    </connector>
+   <connector id="connector1809" name="9.9" type="female">
+      <description>stripboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="connector1809pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="connector1809pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="connector1809pin"/>
+        </pcbView>
+      </views>
+    </connector>
+
+  </connectors>
+  <buses>
+   </buses>
+</module>

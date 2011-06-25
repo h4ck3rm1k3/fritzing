@@ -348,32 +348,24 @@ void PartsBinPaletteWidget::createOpenBinMenu() {
 
 	m_openBinAction = new QAction(tr("From file..."),this);
 	m_openCoreBinAction = new QAction(tr("Core"),this);
-	m_openAllBinAction = new QAction(tr("All Parts"),this);
-	m_openNonCoreBinAction = new QAction(tr("All User Parts"),this);
 	m_openContribBinAction = new QAction(tr("Contributed Parts"),this);
 
 	connect(m_openBinAction, SIGNAL(triggered()),this, SLOT(openNewBin()));
 	connect(m_openCoreBinAction, SIGNAL(triggered()),this, SLOT(openCoreBin()));
-	connect(m_openAllBinAction, SIGNAL(triggered()),this, SLOT(openAllBin()));
-	connect(m_openNonCoreBinAction, SIGNAL(triggered()),this, SLOT(openNonCoreBin()));
 	connect(m_openContribBinAction, SIGNAL(triggered()),this, SLOT(openContribBin()));
 
 	m_openBinMenu->addAction(m_openCoreBinAction);
-	m_openBinMenu->addAction(m_openAllBinAction);
 	m_openBinMenu->addSeparator();
 
 	QDir userBinsDir(FolderUtils::getUserDataStorePath("bins"));
 	collectBins(userBinsDir, m_openBinMenu);
 
-	QMenu * moreMenu = m_openBinMenu->addMenu(tr("More bins"));
+	//QMenu * moreMenu = m_openBinMenu->addMenu(tr("More bins"));
+	m_openBinMenu->addSeparator();
 
-	QFileInfo fileInfo(BinManager::AllPartsBinLocation);
-	QDir dir = fileInfo.absoluteDir();
+	QDir dir(FolderUtils::getApplicationSubFolderPath("bins"));
 	dir.cd("more");
-	collectBins(dir, moreMenu);
-	moreMenu->addSeparator();
-	moreMenu->addAction(m_openNonCoreBinAction);
-	moreMenu->addAction(m_openContribBinAction);
+	collectBins(dir, m_openBinMenu);
 
 	m_openBinMenu->addSeparator();
 	m_openBinMenu->addAction(m_openBinAction);
@@ -392,8 +384,8 @@ void PartsBinPaletteWidget::collectBins(QDir & dir, QMenu * menu) {
 	}
 
 	foreach(QString binFile, binsInfo.keys()) {
-		if (binFile.compare(BinManager::NonCorePartsBinLocation) == 0) continue;
-		if (binFile.compare(BinManager::ContribPartsBinLocation) == 0) continue;
+		//if (binFile.compare(BinManager::ContribPartsBinLocation) == 0) continue;   // if we want to place this on some other menu
+		if (binFile.endsWith("nonCoreParts.fzb")) continue;			// was the "all my parts bin"
 
 		QAction *action = new QAction(binsInfo[binFile],this);
 		action->setData(binFile);
@@ -801,14 +793,6 @@ void PartsBinPaletteWidget::openNewBin(const QString &filename) {
 
 void PartsBinPaletteWidget::openCoreBin() {
 	m_manager->openCoreBinIn(m_tabWidget);
-}
-
-void PartsBinPaletteWidget::openAllBin() {
-	openNewBin(BinManager::AllPartsBinLocation);
-}
-
-void PartsBinPaletteWidget::openNonCoreBin() {
-	openNewBin(BinManager::NonCorePartsBinLocation);
 }
 
 void PartsBinPaletteWidget::openContribBin() {

@@ -49,21 +49,6 @@ static const int MinXDimension = 5;
 static const int MaxYDimension = 50;
 static const int MinYDimension = 5;
 
-bool getXY(int & x, int & y, const QString & s) 
-{
-	QRegExp re("(\\d+)\\.(\\d+)");
-
-	int ix = re.indexIn(s);
-	if (ix < 0) return false;
-
-	bool ok;
-	x = re.cap(1).toInt(&ok);
-	if (!ok) return false;
-
-	y = re.cap(2).toInt(&ok);
-	return ok;
-}
-
 static const QString OneHole("M%1,%2a%3,%3 0 1 %5 %4,0 %3,%3 0 1 %5 -%4,0z\n");
 
 /////////////////////////////////////////////////////////////////////
@@ -365,3 +350,17 @@ QString Perfboard::genModuleID(QMap<QString, QString> & currPropsMap)
 	return size + ModuleIDNames::PerfboardModuleIDName;
 }
 
+bool Perfboard::getXY(int & x, int & y, const QString & s) 
+{
+	QRegExp re("(\\d+)\\.(\\d+)");
+
+	int ix = re.indexIn(s);
+	if (ix < 0) return false;
+
+	bool ok;
+	x = re.cap(1).toInt(&ok);
+	if (!ok) return false;
+
+	y = re.cap(2).toInt(&ok);
+	return ok;
+}

@@ -185,6 +185,7 @@
         <file>resources/parts/core/groundplane.fzp</file>
         <file>resources/parts/core/hole.fzp</file>
         <file>resources/parts/core/10.10PerfboardModuleID.fzp</file>
+        <file>resources/parts/core/10.10StripboardModuleID.fzp</file>
 	
         <file>resources/parts/svg/core/icon/iconPerfboard.svg</file>
         <file>resources/parts/svg/core/icon/wireicon.svg</file>

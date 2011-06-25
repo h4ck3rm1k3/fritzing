@@ -121,8 +121,6 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		void undoStackCleanChanged(bool isClean);
 		void newBin();
 		void openCoreBin();
-		void openAllBin();
-		void openNonCoreBin();
 		void openContribBin();
 		void openUserBin();
 		void closeBin();
@@ -206,8 +204,6 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		QMenu *m_openBinMenu;
 		QAction *m_openBinAction;
 		QAction *m_openCoreBinAction;
-		QAction *m_openAllBinAction;
-		QAction *m_openNonCoreBinAction;
 		QAction *m_openContribBinAction;
 		QAction *m_closeBinAction;
 		QAction *m_saveAction;

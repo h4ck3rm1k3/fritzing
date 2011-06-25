@@ -29,12 +29,17 @@ $Date$
 
 #include <QRectF>
 #include <QPainterPath>
-#include <QPixmap>
-#include <QVariant>
-#include <QLineEdit>
-#include <QPushButton>
 
 #include "perfboard.h"
+
+class Stripbit : public QGraphicsPathItem
+{
+public:
+	Stripbit(const QPainterPath & path, QGraphicsItem * parent);
+	~Stripbit();
+
+
+};
 
 class Stripboard : public Perfboard 
 {
