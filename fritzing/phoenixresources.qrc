@@ -205,7 +205,7 @@
 	
         <file>resources/parts/svg/core/breadboard/ruler.svg</file>
         <file>resources/parts/svg/core/breadboard/wire.svg</file>
-        <file>resources/parts/svg/core/breadboard/10.10PerfboardModuleID.svg</file>
+        <file>resources/parts/svg/core/breadboard/10.10perfboard.svg</file>
 	
         <file>resources/parts/svg/core/pcb/rectangle_pcb.svg</file>
         <file>resources/parts/svg/core/pcb/logo.svg</file>

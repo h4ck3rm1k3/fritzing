@@ -258,7 +258,7 @@ public:
 	static qint64 getNextID(qint64 fromIndex);
 	static class FSvgRenderer * setUpImage(class ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID, ViewLayer::ViewLayerSpec, class LayerAttributes &, QString & error);
 	static class FSvgRenderer * setUpImage(class ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID, ViewLayer::ViewLayerSpec, QString & error);
-	static QString getSvgFilename(ModelPartShared * modelPartShared, const QString & baseName); 
+	static QString getSvgFilename(ModelPart *, const QString & baseName); 
 
 protected:
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);

@@ -49,15 +49,18 @@ static const int MinXDimension = 5;
 static const int MaxYDimension = 50;
 static const int MinYDimension = 5;
 
-bool getXY(int & x, int & y, const QString & s) {
-	QStringList ss = s.split(".");
-	if (ss.count() != 2) return false;
+bool getXY(int & x, int & y, const QString & s) 
+{
+	QRegExp re("(\\d+)\\.(\\d+)");
+
+	int ix = re.indexIn(s);
+	if (ix < 0) return false;
 
 	bool ok;
-	x = ss.at(0).toInt(&ok);
+	x = re.cap(1).toInt(&ok);
 	if (!ok) return false;
 
-	y = ss.at(1).toInt(&ok);
+	y = re.cap(2).toInt(&ok);
 	return ok;
 }
 

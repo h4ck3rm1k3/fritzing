@@ -49,6 +49,7 @@ $Date$
 #include "via.h"
 #include "capacitor.h"
 #include "perfboard.h"
+#include "stripboard.h"
 #include "../utils/folderutils.h"
 
 static QString PartFactoryFolderPath;
@@ -137,6 +138,9 @@ ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClas
 					if (moduleID.endsWith(ModuleIDNames::PerfboardModuleIDName)) {
 						return new Perfboard(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 					}
+					if (moduleID.endsWith(ModuleIDNames::StripboardModuleIDName)) {
+						return new Stripboard(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
+					}
 				}
 				QString family = modelPart->properties().value("family", "");
 				if (family.compare("mystery part", Qt::CaseInsensitive) == 0) {
@@ -158,6 +162,8 @@ ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClas
 }
 
 QString PartFactory::getSvgFilename(ModelPart * modelPart, const QString & expectedFileName) {
+	Q_UNUSED(modelPart);
+
 	if (expectedFileName.startsWith("pcb/dip_", Qt::CaseInsensitive)) {
 		return getSvgFilenameAux(expectedFileName, &Dip::makePcbSvg);
 	}
@@ -199,23 +205,16 @@ QString PartFactory::getSvgFilename(ModelPart * modelPart, const QString & expec
 		}
 	}
 
-	if (modelPart->moduleID().endsWith(ModuleIDNames::PerfboardModuleIDName)) {
+	if (expectedFileName.contains("perfboard", Qt::CaseInsensitive)) {
 		if (expectedFileName.contains("icon")) return expectedFileName;
 
-		QString path = PartFactoryFolderPath + "/svg/core/" + expectedFileName;
-		QFile file(path);
-		if (file.exists()) {
-			return path;
-		}
+		return getSvgFilenameAux(expectedFileName, &Perfboard::makeBreadboardSvg);		
+	}
 
-		QString svg = Perfboard::makeBreadboardSvg(modelPart->properties().value("size"));
-		if (file.open(QFile::WriteOnly)) {
-			QTextStream stream(&file);
-			stream.setCodec("UTF-8");
-			stream << svg;
-			file.close();
-			return path;
-		}
+	if (expectedFileName.contains("stripboard", Qt::CaseInsensitive)) {
+		if (expectedFileName.contains("icon")) return expectedFileName;
+
+		return getSvgFilenameAux(expectedFileName, &Stripboard::makeBreadboardSvg);		
 	}
 
 	return "";
@@ -269,6 +268,10 @@ QString PartFactory::getFzpFilename(const QString & moduleID)
 {
 	if (moduleID.endsWith(ModuleIDNames::PerfboardModuleIDName)) {
 		return getFzpFilenameAux(moduleID, &Perfboard::genFZP);
+	}
+
+	if (moduleID.endsWith(ModuleIDNames::StripboardModuleIDName)) {
+		return getFzpFilenameAux(moduleID, &Stripboard::genFZP);
 	}
 
 	if (moduleID.startsWith("generic_ic_dip")) {

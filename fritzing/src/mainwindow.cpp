@@ -62,6 +62,7 @@ $Date$
 #include "items/moduleidnames.h"
 #include "items/pinheader.h"
 #include "items/perfboard.h"
+#include "items/stripboard.h"
 #include "layerpalette.h"
 #include "items/paletteitem.h"
 #include "items/virtualwire.h"
@@ -1721,6 +1722,13 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 		if (prop.compare("size") == 0 && family.compare("Perfboard") == 0) {
 			QString size = currPropsMap.value("size");
 			generatedModuleID = Perfboard::genModuleID(currPropsMap);
+		}
+	}
+
+	if (generatedModuleID.isEmpty()) {
+		if (prop.compare("size") == 0 && family.compare("Stripboard") == 0) {
+			QString size = currPropsMap.value("size");
+			generatedModuleID = Stripboard::genModuleID(currPropsMap);
 		}
 	}
 

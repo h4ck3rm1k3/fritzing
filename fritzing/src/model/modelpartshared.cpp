@@ -87,7 +87,7 @@ ModelPartShared::ModelPartShared(QDomDocument * domDocument, const QString & pat
 					QDomElement layer = layers.firstChildElement("layer");
 					while (!layer.isNull()) {
 						ViewLayer::ViewLayerID viewLayerID = ViewLayer::viewLayerIDFromXmlString(layer.attribute("layerId"));
-						if (viewLayerID != ViewLayer::UnknownLayer) {
+						if (ViewIdentifierClass::viewHasLayer(viewIdentifier, viewLayerID)) {
 							setHasViewFor(viewIdentifier, viewLayerID);
 						}
 						layer = layer.nextSiblingElement("layer");

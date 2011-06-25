@@ -40,6 +40,7 @@ $Date$
 #include "../fsvgrenderer.h"
 #include "../dockmanager.h"
 #include "../utils/flineedit.h"
+#include "../items/moduleidnames.h"
 
 
 #define HTML_EOF "</body>\n</html>"
@@ -577,15 +578,14 @@ void HtmlInfoView::setUpIcons(ModelPart * modelPart) {
 	QSize size = NoIcon->size();
 
 	if (modelPart != NULL) {
-		pixmap0 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Icon, size);
+		if (modelPart->moduleID().endsWith(ModuleIDNames::PerfboardModuleIDName)) {
+			DebugDialog::debug("wtf");
+		}
+
+		pixmap0 = getPixmap(modelPart, ViewIdentifierClass::IconView);
 		pixmap1 = getPixmap(modelPart, ViewIdentifierClass::BreadboardView);
 		pixmap2 = getPixmap(modelPart, ViewIdentifierClass::SchematicView);
 		pixmap3 = getPixmap(modelPart, ViewIdentifierClass::PCBView);
-		if (pixmap0 == NULL) {
-			QString error;
-			ItemBase::setUpImage(modelPart, ViewIdentifierClass::IconView, ViewLayer::Icon, ViewLayer::ThroughHoleThroughTop_OneLayer, error);
-			pixmap0 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Icon, size);
-		}
 	}
 
 	QPixmap* use1 = pixmap1;
@@ -619,8 +619,6 @@ void HtmlInfoView::setUpIcons(ModelPart * modelPart) {
 	m_icon1->setPixmap(*use1);
 	m_icon2->setPixmap(*use2);
 	m_icon3->setPixmap(*use3);
-
-	if (pixmap0) delete pixmap0;
 }
 
 void HtmlInfoView::addTags(ModelPart * modelPart) {
@@ -817,8 +815,10 @@ QPixmap * HtmlInfoView::getPixmap(ModelPart * modelPart, ViewIdentifierClass::Vi
 	QString baseName = modelPart->hasBaseNameFor(viewIdentifier);
 	if (baseName.isEmpty()) return NULL;
 
-	QString filename = ItemBase::getSvgFilename(modelPart->modelPartShared(), baseName);
-	if (filename.isEmpty()) return NULL;
+	QString filename = ItemBase::getSvgFilename(modelPart, baseName);
+	if (filename.isEmpty()) {
+		return NULL;
+	}
 
 	QPixmap * cached = m_pixmaps.value(filename, NULL);
 	if (cached) {

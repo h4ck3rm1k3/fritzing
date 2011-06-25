@@ -404,9 +404,13 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastL
 						hasBaseNameFor.insert(viewIdentifier, xml.attributes().value("image").toString());
 					}
 					else if (name.compare("layer") == 0) {
-						ViewLayer::ViewLayerID viewLayerID = ViewLayer::viewLayerIDFromXmlString(xml.attributes().value("layerId").toString());
+						QString layerName = xml.attributes().value("layerId").toString();
+						ViewLayer::ViewLayerID viewLayerID = ViewLayer::viewLayerIDFromXmlString(layerName);
 						if (ViewIdentifierClass::viewHasLayer(viewIdentifier, viewLayerID)) {
 							hasViewFor.insert(viewIdentifier, viewLayerID);
+						}
+						else {
+							DebugDialog::debug(QString("missing view layer %3: vid:%1 %4 vlid:%2").arg(viewIdentifier).arg(viewLayerID).arg(moduleID).arg(layerName));
 						}
 					}
 					else if (name.compare("connectors") == 0) {
@@ -501,6 +505,9 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastL
 		type = ModelPart::Hole;
 	}
 	else if (moduleID.endsWith(ModuleIDNames::PerfboardModuleIDName)) {
+		type = ModelPart::Breadboard;
+	}
+	else if (moduleID.endsWith(ModuleIDNames::StripboardModuleIDName)) {
 		type = ModelPart::Breadboard;
 	}
 	else if (propertiesText.contains("breadboard", Qt::CaseInsensitive)) {
