@@ -369,16 +369,8 @@ void ModelPartShared::initConnectors() {
 
 }
 
-const QHash<QString, BusShared *> & ModelPartShared::buses() {
-	return m_buses;
-}
-
 ConnectorShared * ModelPartShared::getConnectorShared(const QString & id) {
 	return m_connectorSharedHash.value(id);
-}
-
-BusShared * ModelPartShared::bus(const QString & busID) {
-	return m_buses.value(busID);
 }
 
 bool ModelPartShared::ignoreTerminalPoints() {

@@ -57,6 +57,7 @@ $Date$
 #include "sketchwidget.h"
 #include "../connectors/connectoritem.h"
 #include "../items/jumperitem.h"
+#include "../items/stripboard.h"
 #include "../items/virtualwire.h"
 #include "../items/tracewire.h"
 #include "../itemdrag.h"
@@ -1787,6 +1788,7 @@ bool SketchWidget::moveByArrow(int dx, int dy, QKeyEvent * event) {
 
 
 void SketchWidget::mousePressEvent(QMouseEvent *event) {
+	
 
 	m_draggingBendpoint = false;
 	if (m_movingByArrow) return;
@@ -1865,6 +1867,9 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 	if (note != NULL)  {
 		return;
 	}
+
+	Stripbit * stripbit = dynamic_cast<Stripbit *>(item);
+	if (stripbit) return;
 
 	ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 	if (itemBase) {

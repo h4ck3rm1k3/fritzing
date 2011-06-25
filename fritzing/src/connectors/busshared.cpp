@@ -39,11 +39,11 @@ BusShared::BusShared(const QDomElement & busElement, const QHash<QString, QPoint
 		if (id.isNull()) continue;
 		if (id.isEmpty()) continue;
 				
-		ConnectorShared * stuff = connectorHash.value(id);
-		if (stuff == NULL) continue;
+		ConnectorShared * connectorShared = connectorHash.value(id);
+		if (connectorShared == NULL) continue;
 		
-		m_connectors.append(stuff);
-		stuff->setBus(this);
+		m_connectors.append(connectorShared);
+		connectorShared->setBus(this);
 		
 		connector = connector.nextSiblingElement("nodeMember");
 	}

@@ -409,9 +409,9 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastL
 						if (ViewIdentifierClass::viewHasLayer(viewIdentifier, viewLayerID)) {
 							hasViewFor.insert(viewIdentifier, viewLayerID);
 						}
-						else {
-							DebugDialog::debug(QString("missing view layer %3: vid:%1 %4 vlid:%2").arg(viewIdentifier).arg(viewLayerID).arg(moduleID).arg(layerName));
-						}
+						//else {
+							//DebugDialog::debug(QString("missing view layer %3: vid:%1 %4 vlid:%2").arg(viewIdentifier).arg(viewLayerID).arg(moduleID).arg(layerName));
+						//}
 					}
 					else if (name.compare("connectors") == 0) {
 						done = true;

@@ -36,13 +36,92 @@ $Date$
 
 Stripbit::Stripbit(const QPainterPath & path, QGraphicsItem * parent = 0) : QGraphicsPathItem(path, parent)
 {
-	setFlag(QGraphicsItem::ItemIsMovable, false);
-	setFlag(QGraphicsItem::ItemIsSelectable, false);
-
+	m_inHover = m_removed = false;
+	setAcceptsHoverEvents(true);
+	setAcceptedMouseButtons(Qt::LeftButton);
+	setFlag(QGraphicsItem::ItemIsMovable, true);
+	setFlag(QGraphicsItem::ItemIsSelectable, true);
+	setCursor(Qt::PointingHandCursor);
 }
 
 Stripbit::~Stripbit() {
 }
+
+void Stripbit::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+	qreal newOpacity = 1;
+	if (m_removed) {
+		if (m_inHover) newOpacity = 0.55;
+		else newOpacity = 0.3;
+	}
+	else {
+		if (m_inHover) newOpacity = 0.6;
+		else newOpacity = 1;
+	}
+
+	qreal opacity = painter->opacity();
+	painter->setOpacity(newOpacity);
+	QGraphicsPathItem::paint(painter, option, widget);
+	painter->setOpacity(opacity);
+
+}
+
+void Stripbit::mousePressEvent(QGraphicsSceneMouseEvent *event) 
+{
+	event->accept();
+	m_removed = !m_removed;
+	update();
+
+	DebugDialog::debug("got press");
+}
+
+void Stripbit::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+	Q_UNUSED(event);
+}
+
+void Stripbit::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+{
+	if (!event->buttons() && Qt::LeftButton) return;
+
+	DebugDialog::debug("got move");
+
+	Stripbit * other = dynamic_cast<Stripbit *>(scene()->itemAt(event->scenePos()));
+	if (!other) return;
+
+	DebugDialog::debug("got other");
+
+	if (other->removed() == m_removed) return;
+
+	DebugDialog::debug("change other");
+
+	other->setRemoved(m_removed);
+	other->update();
+}
+
+void Stripbit::hoverEnterEvent( QGraphicsSceneHoverEvent * event ) 
+{
+	Q_UNUSED(event);
+	m_inHover = true;
+	update();
+}
+
+void Stripbit::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) 
+{
+	Q_UNUSED(event);
+	m_inHover = false;
+	update();
+}
+
+void Stripbit::setRemoved(bool removed) {
+	m_removed = removed;
+}
+
+bool Stripbit::removed() {
+	return m_removed;
+}
+
+
+
 
 /////////////////////////////////////////////////////////////////////
 
@@ -132,20 +211,6 @@ void Stripboard::addedToScene()
 	pp1.addRect(w / 2, 0, w / 2, h);
 	pp1.moveTo(w, 0);
 	pp1.arcTo(r2, 90, 180);
-
-	//QPainterPath pp3;
-
-	//pp3.moveTo(w, h);
-
-	//QPainterPath pp4 = pp1.subtracted(pp3);
-
-	//pp1.moveTo(0, 0);
-	//QPainterPath pp2;
-	//pp2.addRect(w / 2, 0, w / 2, h);
-	//pp2.moveTo(w / 2, 0);
-	//QPainterPath pp3;
-	//pp3.addPath(pp1);
-	//pp3.addPath(pp2);
 
 	foreach (QGraphicsItem * item, items) {
 		ConnectorItem * ci = dynamic_cast<ConnectorItem *>(item);

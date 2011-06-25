@@ -38,7 +38,19 @@ public:
 	Stripbit(const QPainterPath & path, QGraphicsItem * parent);
 	~Stripbit();
 
+	void setRemoved(bool);
+	bool removed();
 
+	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+	void mousePressEvent(QGraphicsSceneMouseEvent *event);
+	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+	void Stripbit::hoverEnterEvent( QGraphicsSceneHoverEvent * event );
+	void Stripbit::hoverLeaveEvent( QGraphicsSceneHoverEvent * event );
+
+protected:
+	bool m_removed;
+	bool m_inHover;
 };
 
 class Stripboard : public Perfboard 

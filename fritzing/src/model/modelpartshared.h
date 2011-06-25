@@ -98,9 +98,7 @@ public:
 
 	void initConnectors();
 	void resetConnectorsInitialization();
-	const QHash<QString, class BusShared *> & buses();
 	ConnectorShared * getConnectorShared(const QString & id);
-	BusShared * bus(const QString & busID);
 	bool ignoreTerminalPoints();
 
 	void setProperty(const QString & key, const QString & value);
