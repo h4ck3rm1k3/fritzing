@@ -83,7 +83,7 @@ public:
 	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
 	void addedToScene();
 	void setProp(const QString & prop, const QString & value);
-	void reinitBuses();
+	void reinitBuses(bool triggerUndo);
 	void initCutting(Stripbit *);
 
 protected:
@@ -97,6 +97,7 @@ public:
 protected:
 	QVector<ConnectorItem *> m_lastColumn;
 	QList<class BusShared *> m_buses;
+	QString m_beforeCut;
 
 };
 

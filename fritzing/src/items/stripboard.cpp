@@ -42,23 +42,9 @@ $Date$
 
 // TODO:
 //
-//	update cursor(s) for mouse hover? and down
+//	new cursors, new hover states?
 //	disconnect and reconnect affected parts
 //	undo
-//	save and load (save in some form easily convertible to fzp bus format)
-
-/*
-    <buses>
-		<bus id="bus0">
-			<nodeMember connectorId="connector1"/>
-			<nodeMember connectorId="connector2"/>
-		</bus>
-		<bus id="bus1">
-			<nodeMember connectorId="connector3"/>
-			<nodeMember connectorId="connector4"/>
-		</bus>
-	</buses>
-*/
 
 static QCursor * SpotFaceCutterCursor = NULL;
 static QCursor * MagicWandCursor = NULL;
@@ -150,7 +136,7 @@ void Stripbit::reassignCursor(Stripbit * other)
 void Stripbit::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
 	Q_UNUSED(event);
-	dynamic_cast<Stripboard *>(this->parentItem())->reinitBuses();
+	dynamic_cast<Stripboard *>(this->parentItem())->reinitBuses(true);
 }
 
 void Stripbit::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
@@ -242,11 +228,6 @@ Stripboard::Stripboard( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifi
 }
 
 Stripboard::~Stripboard() {
-}
-
-void Stripboard::setProp(const QString & prop, const QString & value) 
-{
-	Perfboard::setProp(prop, value);
 }
 
 QString Stripboard::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi) 
@@ -358,7 +339,7 @@ void Stripboard::addedToScene()
 		if (stripbit) stripbit->setRemoved(true);
 	}
 
-	reinitBuses();
+	reinitBuses(false);
 }
 
 QString Stripboard::genModuleID(QMap<QString, QString> & currPropsMap)
@@ -374,15 +355,39 @@ QString Stripboard::makeBreadboardSvg(const QString & size)
 
 void Stripboard::initCutting(Stripbit * eventStripbit) 
 {
+	m_beforeCut.clear();
 	foreach (QGraphicsItem * item, childItems()) {
 		Stripbit * stripbit = dynamic_cast<Stripbit *>(item);
 		if (stripbit == NULL) continue;
 		
 		stripbit->reassignCursor(eventStripbit);
+		if (stripbit->removed()) {
+			m_beforeCut += (stripbit->connectorItem()->connectorSharedName() + " ");
+		}
 	}
 }
 
-void Stripboard::reinitBuses() {
+void Stripboard::reinitBuses(bool triggerUndo) 
+{
+	if (triggerUndo) {
+		QString value;
+		foreach (QGraphicsItem * item, childItems()) {
+			Stripbit * stripbit = dynamic_cast<Stripbit *>(item);
+			if (stripbit == NULL) continue;
+
+			if (stripbit->removed()) {
+				value += (stripbit->connectorItem()->connectorSharedName() + " ");
+			}
+
+		}
+
+		InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+		if (infoGraphicsView != NULL) {
+			infoGraphicsView->setProp(this, "buses", tr("buses"), m_beforeCut, value, true);
+		}
+
+		return;
+	}
 
 	int x, y;
 	getXY(x, y, m_size);
@@ -394,17 +399,19 @@ void Stripboard::reinitBuses() {
 
 	foreach (QGraphicsItem * item, childItems()) {
 		Stripbit * stripbit = dynamic_cast<Stripbit *>(item);
-		if (stripbit == NULL) continue;
+		if (stripbit == NULL) {
+			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
+			if (connectorItem == NULL) continue;
+
+			connectorItem->connector()->connectorShared()->setBus(NULL);
+			connectorItem->connector()->setBus(NULL);
+			continue;
+		}
 
 		stripbit->reassignCursor(NULL);
 		if (stripbit->connectorItem() == NULL) continue;
 
 		stripbits[stripbit->y()].append(stripbit);
-		stripbit->connectorItem()->connector()->setBus(NULL);
-	}
-
-	foreach (ConnectorItem * connectorItem, m_lastColumn) {
-		connectorItem->connector()->setBus(NULL);
 	}
 
 	QString busPropertyString;
@@ -440,4 +447,30 @@ void Stripboard::nextBus(QList<ConnectorItem *> & soFar)
 		}
 	}
 	soFar.clear();
+}
+
+void Stripboard::setProp(const QString & prop, const QString & value) 
+{
+	if (prop.compare("buses") != 0) {
+		Perfboard::setProp(prop, value);
+		return;
+	}
+
+	QHash<QString, Stripbit *> stripbitHash;
+
+	foreach (QGraphicsItem * item, childItems()) {
+		Stripbit * stripbit = dynamic_cast<Stripbit *>(item);
+		if (stripbit == NULL) continue;
+
+		stripbit->setRemoved(false);
+		stripbitHash.insert(stripbit->connectorItem()->connectorSharedName(), stripbit);
+	}
+
+	QStringList removed = value.split(" ");
+	foreach (QString name, removed) {
+		Stripbit *  stripbit = stripbitHash.value(name);
+		if (stripbit) stripbit->setRemoved(true);
+	}
+
+	reinitBuses(false);
 }
