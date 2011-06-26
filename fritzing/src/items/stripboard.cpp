@@ -42,31 +42,56 @@ $Date$
 
 // TODO:
 //
-//	cursor(s) for mouse hover? and down
+//	update cursor(s) for mouse hover? and down
 //	change bus config at mouse release
-//	disconnect/reconnect affected parts
+//	disconnect affected parts
 //	undo
+//	save and load (save in some form easily convertible to fzp bus format)
 
+/*
+    <buses>
+		<bus id="bus0">
+			<nodeMember connectorId="connector1"/>
+			<nodeMember connectorId="connector2"/>
+		</bus>
+		<bus id="bus1">
+			<nodeMember connectorId="connector3"/>
+			<nodeMember connectorId="connector4"/>
+		</bus>
+	</buses>
+*/
 
 static QCursor * SpotFaceCutterCursor = NULL;
 
 /////////////////////////////////////////////////////////////////////
 
-Stripbit::Stripbit(const QPainterPath & path, QGraphicsItem * parent = 0) : QGraphicsPathItem(path, parent)
+Stripbit::Stripbit(const QPainterPath & path, ConnectorItem * connectorItem, int x, int y, QGraphicsItem * parent = 0) 
+	: QGraphicsPathItem(path, parent)
 {
+	
 	if (SpotFaceCutterCursor == NULL) {
 		QBitmap bitmap(":resources/images/spot_face_cutter.bmp");
 		SpotFaceCutterCursor = new QCursor(bitmap, bitmap, 0, 31);
 	}
 
-	setZValue(-999);
+	setZValue(-999);			// beneath connectorItems
+	setCursor(*SpotFaceCutterCursor);
 
+	m_x = x;
+	m_y = y;
+	m_connectorItem = connectorItem;
 	m_inHover = m_removed = false;
+
 	setAcceptsHoverEvents(true);
 	setAcceptedMouseButtons(Qt::LeftButton);
 	setFlag(QGraphicsItem::ItemIsMovable, true);
 	setFlag(QGraphicsItem::ItemIsSelectable, true);
-	setCursor(*SpotFaceCutterCursor);
+
+}
+
+Stripbit::Stripbit(const Stripbit &) 
+{
+	// seems to cause compiler errors without this function declaration...
 }
 
 Stripbit::~Stripbit() {
@@ -108,6 +133,7 @@ void Stripbit::mousePressEvent(QGraphicsSceneMouseEvent *event)
 void Stripbit::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
 	Q_UNUSED(event);
+	dynamic_cast<Stripboard *>(this->parentItem())->reinitBuses();
 }
 
 void Stripbit::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
@@ -156,6 +182,23 @@ bool Stripbit::removed() {
 	return m_removed;
 }
 
+ConnectorItem * Stripbit::connectorItem() {
+	return m_connectorItem;
+}
+
+bool Stripbit::stripbitXLessThan(Stripbit * s1, Stripbit * s2)
+{
+	return s1->m_x < s2->m_x;
+}
+
+int Stripbit::y() {
+	return m_y;
+}
+
+int Stripbit::x() {
+	return m_x;
+}
+
 /////////////////////////////////////////////////////////////////////
 
 Stripboard::Stripboard( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
@@ -163,19 +206,18 @@ Stripboard::Stripboard( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifi
 {
 	if (!viewIdentifier == ViewIdentifierClass::BreadboardView) return;
 
-	QList<BusShared *> buses;
 	int x, y;
 	getXY(x, y, m_size);
 	for (int i = 0; i < y; i++) {
 		BusShared * busShared = new BusShared(QString::number(i));
-		buses.append(busShared);
+		m_buses.append(busShared);
 	}
 
 	foreach (Connector * connector, modelPart->connectors().values()) {
 		ConnectorShared * connectorShared = connector->connectorShared();
 		int cx, cy;
 		getXY(cx, cy, connectorShared->name());
-		BusShared * busShared = buses.at(cy);
+		BusShared * busShared = m_buses.at(cy);
 		busShared->addConnectorShared(connectorShared);
 	}
 
@@ -219,6 +261,7 @@ void Stripboard::addedToScene()
 
 	int x, y;
 	getXY(x, y, m_size);
+
 	ConnectorItem * ciFirst = NULL;
 	ConnectorItem * ciNext = NULL;
 	foreach (QGraphicsItem * item, items) {
@@ -263,6 +306,9 @@ void Stripboard::addedToScene()
 	pp1.moveTo(w, 0);
 	pp1.arcTo(r2, 90, 180);
 
+	m_lastColumn.fill(NULL, y);
+
+
 	foreach (QGraphicsItem * item, items) {
 		ConnectorItem * ci = dynamic_cast<ConnectorItem *>(item);
 		if (ci == NULL) continue;
@@ -271,10 +317,11 @@ void Stripboard::addedToScene()
 		getXY(cx, cy, ci->connectorSharedName());
 		if (cx >= x - 1) {
 			// don't need a stripbit after the last column
+			m_lastColumn[cy] = ci;
 			continue;
 		}
 
-		Stripbit * stripbit = new Stripbit(pp1, this);
+		Stripbit * stripbit = new Stripbit(pp1, ci, cx, cy, this);
 		stripbit->setPen(Qt::NoPen);
 		// TODO: don't hardcode this color
 		stripbit->setBrush(QColor(0xc4, 0x9c, 0x59));
@@ -282,11 +329,6 @@ void Stripboard::addedToScene()
 		stripbit->setPos(r.center().x(), r.top());
 	}
 
-}
-
-void Stripboard::changeBoardSize() 
-{
-	Perfboard::changeBoardSize();
 }
 
 QString Stripboard::genModuleID(QMap<QString, QString> & currPropsMap)
@@ -298,4 +340,58 @@ QString Stripboard::genModuleID(QMap<QString, QString> & currPropsMap)
 QString Stripboard::makeBreadboardSvg(const QString & size) 
 {
 	return Perfboard::makeBreadboardSvg(size);
+}
+
+void Stripboard::reinitBuses() {
+
+	int x, y;
+	getXY(x, y, m_size);
+
+	QVector< QList<Stripbit *> > stripbits(y, QList<Stripbit *>());
+
+	foreach (BusShared * busShared, m_buses) delete busShared;
+	m_buses.clear();
+
+	foreach (QGraphicsItem * item, childItems()) {
+		Stripbit * stripbit = dynamic_cast<Stripbit *>(item);
+		if (stripbit == NULL) continue;
+		if (stripbit->connectorItem() == NULL) continue;
+
+		stripbits[stripbit->y()].append(stripbit);
+		stripbit->connectorItem()->connector()->setBus(NULL);
+	}
+
+	foreach (ConnectorItem * connectorItem, m_lastColumn) {
+		connectorItem->connector()->setBus(NULL);
+	}
+
+	for (int ix = 0; ix < stripbits.count(); ix++) {
+		QList<Stripbit *> list = stripbits.at(ix);
+		qSort(list.begin(), list.end(), Stripbit::stripbitXLessThan);
+		QList<ConnectorItem *> soFar;
+		foreach (Stripbit * stripbit, list) {
+			soFar << stripbit->connectorItem();
+			if (stripbit->removed()) {
+				nextBus(soFar);
+			}
+		}
+		soFar.append(m_lastColumn.at(ix));
+		nextBus(soFar);
+
+	}
+
+	modelPart()->clearBuses();
+	modelPart()->initBuses();
+}
+
+void Stripboard::nextBus(QList<ConnectorItem *> & soFar)
+{
+	if (soFar.count() > 1) {
+		BusShared * busShared = new BusShared(QString::number(m_buses.count()));
+		m_buses.append(busShared);
+		foreach (ConnectorItem * connectorItem, soFar) {
+			busShared->addConnectorShared(connectorItem->connector()->connectorShared());
+		}
+	}
+	soFar.clear();
 }

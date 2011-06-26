@@ -82,10 +82,7 @@ ModelPart::~ModelPart() {
 	}
 	m_deletedConnectors.clear();
 
-	foreach (Bus * bus, m_busHash.values()) {
-		delete bus;
-	}
-	m_busHash.clear();
+	clearBuses();
 }
 
 const QString & ModelPart::moduleID() {
@@ -348,11 +345,8 @@ void ModelPart::initConnectors(bool force) {
 			m_deletedConnectors.append(connector);
 			//delete connector;
 		}
-		m_connectorHash.clear();						
-		foreach (Bus * bus, m_busHash.values()) {
-			delete bus;
-		}
-		m_busHash.clear();
+		m_connectorHash.clear();		
+		clearBuses();
 	}
 	if(m_connectorHash.count() > 0) return;		// already done
 
@@ -362,6 +356,13 @@ void ModelPart::initConnectors(bool force) {
 		m_connectorHash.insert(connectorShared->id(), connector);
 	}
 	initBuses();
+}
+
+void ModelPart::clearBuses() {
+	foreach (Bus * bus, m_busHash.values()) {
+		delete bus;
+	}
+	m_busHash.clear();
 }
 
 void ModelPart::initBuses() {

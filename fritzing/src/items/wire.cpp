@@ -760,11 +760,6 @@ FSvgRenderer * Wire::setUpConnectors(ModelPart * modelPart, ViewIdentifierClass:
 
 		connectorItem->setCircular(true);
 		//DebugDialog::debug(QString("terminal point %1 %2").arg(terminalPoint.x()).arg(terminalPoint.y()) );
-
-		Bus * bus = connectorItem->bus();
-		if (bus != NULL) {
-			addBusConnectorItem(bus, connectorItem);
-		}
 	}
 
 	return renderer;

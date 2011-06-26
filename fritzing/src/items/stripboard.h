@@ -29,28 +29,44 @@ $Date$
 
 #include <QRectF>
 #include <QPainterPath>
+#include <QGraphicsPathItem>
 
 #include "perfboard.h"
+
+class ConnectorItem;
 
 class Stripbit : public QGraphicsPathItem
 {
 public:
-	Stripbit(const QPainterPath & path, QGraphicsItem * parent);
+	Stripbit(const QPainterPath & path, ConnectorItem *, int x, int y, QGraphicsItem * parent);
+	Stripbit(const Stripbit &);			// weird compiler error without this declaration
 	~Stripbit();
 
 	void setRemoved(bool);
 	bool removed();
+	ConnectorItem * connectorItem();
+	int y();
+	int x();
 
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
-	void Stripbit::hoverEnterEvent( QGraphicsSceneHoverEvent * event );
-	void Stripbit::hoverLeaveEvent( QGraphicsSceneHoverEvent * event );
+
+
+	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
+	void hoverLeaveEvent( QGraphicsSceneHoverEvent * event );
+
+
+	static bool stripbitXLessThan(Stripbit * s1, Stripbit * s2);
 
 protected:
+	ConnectorItem * m_connectorItem;
 	bool m_removed;
 	bool m_inHover;
+	int m_x;
+	int m_y;
+
 };
 
 class Stripboard : public Perfboard 
@@ -66,15 +82,20 @@ public:
 	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
 	void addedToScene();
 	void setProp(const QString & prop, const QString & value);
+	void reinitBuses();
+
+protected:
+	void nextBus(QList<ConnectorItem *> & soFar);
 
 public:
 	static QString genFZP(const QString & moduleID);
 	static QString makeBreadboardSvg(const QString & size);
 	static QString genModuleID(QMap<QString, QString> & currPropsMap);
 
+protected:
+	QVector<ConnectorItem *> m_lastColumn;
+	QList<class BusShared *> m_buses;
 
-protected slots:
-	void changeBoardSize();
 };
 
 #endif

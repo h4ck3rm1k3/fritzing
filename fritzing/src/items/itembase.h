@@ -106,8 +106,6 @@ public:
 	virtual const QString & title();
 	bool getRatsnest();
 	const QHash<QString, QPointer<class Bus> > & buses();
-	void addBusConnectorItem(class Bus *, ConnectorItem *);
-	void clearBusConnectorItems();
 	int itemType() const;					// wanted this to return ModelPart::ItemType but couldn't figure out how to get it to compile
 	virtual bool sticky();
 	virtual void setSticky(bool);
@@ -292,7 +290,6 @@ protected:
 	int m_hoverCount;
 	bool m_hidden;
 	bool m_inactive;
-	QHash<class Bus *, QList <ConnectorItem *> * > m_busConnectorItems;
 	bool m_sticky;
 	QHash< long, QPointer<ItemBase> > m_stickyList;
 	QMenu *m_itemMenu;

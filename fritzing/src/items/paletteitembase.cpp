@@ -330,10 +330,6 @@ void PaletteItemBase::setUpConnectors(FSvgRenderer * renderer, bool ignoreTermin
 		connectorItem->setRadius(svgIdLayer->m_radius, svgIdLayer->m_strokeWidth);
 		//DebugDialog::debug(QString("terminal point %1 %2").arg(terminalPoint.x()).arg(terminalPoint.y()) );
 
-		Bus * bus = connectorItem->bus();
-		if (bus != NULL) {
-			addBusConnectorItem(bus, connectorItem);
-		}
 	}
 
 	foreach (SvgIdLayer * svgIdLayer, renderer->setUpNonConnectors()) {

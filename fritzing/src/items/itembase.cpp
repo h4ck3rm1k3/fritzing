@@ -224,17 +224,6 @@ ItemBase::~ItemBase() {
 	if (m_modelPart != NULL) {
 		m_modelPart->removeViewItem(this);
 	}
-
-	clearBusConnectorItems();
-}
-
-void ItemBase::clearBusConnectorItems()
-{
-	foreach (QList<ConnectorItem *> * list, m_busConnectorItems) {
-		delete list;
-	}
-
-	m_busConnectorItems.clear();
 }
 
 void ItemBase::setTooltip() {
@@ -763,13 +752,18 @@ const QHash<QString, QPointer<Bus> > & ItemBase::buses() {
 	return Bus::___emptyBusList___;
 }
 
-void ItemBase::addBusConnectorItem(Bus * bus, ConnectorItem * item) {
-	QList <ConnectorItem *> * busConnectorItems = m_busConnectorItems.value(bus);
-	if (busConnectorItems == NULL) {
-		busConnectorItems = new QList<ConnectorItem *>;
-		m_busConnectorItems.insert(bus, busConnectorItems);
+void ItemBase::busConnectorItems(class Bus * bus, QList<class ConnectorItem *> & items) {
+	foreach (Connector * connector, bus->connectors()) {
+		QList< QPointer<ConnectorItem> > allConnectorItems = connector->viewItems();
+		foreach (ConnectorItem * connectorItem, allConnectorItems) {
+			if (connectorItem != NULL) {
+				if (connectorItem->attachedTo() == this) {
+					items.append(connectorItem);
+				}
+			}
+		}
 	}
-	busConnectorItems->append(item);
+
 }
 
 int ItemBase::itemType() const
@@ -1078,16 +1072,6 @@ bool ItemBase::canFlipVertical() {
 
 void ItemBase::setCanFlipVertical(bool cf) {
 	m_canFlipVertical = cf;
-}
-
-void ItemBase::busConnectorItems(class Bus * bus, QList<class ConnectorItem *> & items) {
-	QList<ConnectorItem *> * busConnectorItems = m_busConnectorItems.value(bus);
-	if (busConnectorItems != NULL) {
-		foreach (ConnectorItem * connectorItem, *busConnectorItems) {
-			items.append(connectorItem);
-			//connectorItem->debugInfo("bus connector");
-		}
-	}
 }
 
 void ItemBase::clearModelPart() {

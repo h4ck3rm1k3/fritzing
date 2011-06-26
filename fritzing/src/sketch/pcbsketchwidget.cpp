@@ -1304,6 +1304,8 @@ void PCBSketchWidget::updateRoutingStatus(RoutingStatus & routingStatus, bool ma
 			continue;  
 		}
 
+		connectorItem->debugInfo("testing");
+
 		QList<ConnectorItem *> connectorItems;
 		connectorItems.append(connectorItem);
 		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::RatsnestFlag | getTraceFlag());
