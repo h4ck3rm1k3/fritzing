@@ -326,6 +326,8 @@ void Stripboard::addedToScene()
 
 	m_lastColumn.fill(NULL, y);
 
+	QHash<QString, Stripbit *> stripbitHash;
+
 	foreach (QGraphicsItem * item, items) {
 		ConnectorItem * ci = dynamic_cast<ConnectorItem *>(item);
 		if (ci == NULL) continue;
@@ -339,6 +341,7 @@ void Stripboard::addedToScene()
 		}
 
 		Stripbit * stripbit = new Stripbit(pp1, ci, cx, cy, this);
+		stripbitHash.insert(ci->connectorSharedName(), stripbit);
 		stripbit->setPen(Qt::NoPen);
 		// TODO: don't hardcode this color
 		stripbit->setBrush(QColor(0xc4, 0x9c, 0x59));
@@ -349,16 +352,13 @@ void Stripboard::addedToScene()
 	QString config = modelPart()->prop("buses").toString();
 	if (config.isEmpty()) return;
 
-
-	QDomDocument doc;
-	QString errorString;
-	int errorLine, errorColumn;
-	if (!doc.setContent(config, &errorString, &errorLine, &errorColumn)) {
-		return;
+	QStringList removed = config.split(" ");
+	foreach (QString name, removed) {
+		Stripbit *  stripbit = stripbitHash.value(name);
+		if (stripbit) stripbit->setRemoved(true);
 	}
 
-
-
+	reinitBuses();
 }
 
 QString Stripboard::genModuleID(QMap<QString, QString> & currPropsMap)
@@ -407,7 +407,7 @@ void Stripboard::reinitBuses() {
 		connectorItem->connector()->setBus(NULL);
 	}
 
-	QString busPropertyString = "<bs>";
+	QString busPropertyString;
 
 	for (int ix = 0; ix < stripbits.count(); ix++) {
 		QList<Stripbit *> list = stripbits.at(ix);
@@ -416,32 +416,28 @@ void Stripboard::reinitBuses() {
 		foreach (Stripbit * stripbit, list) {
 			soFar << stripbit->connectorItem();
 			if (stripbit->removed()) {
-				nextBus(soFar, busPropertyString);
+				busPropertyString.append(stripbit->connectorItem()->connectorSharedName() + " ");
+				nextBus(soFar);
 			}
 		}
 		soFar.append(m_lastColumn.at(ix));
-		nextBus(soFar, busPropertyString);
+		nextBus(soFar);
 
 	}
-
-	busPropertyString += "</bs>";
 
 	modelPart()->clearBuses();
 	modelPart()->initBuses();
 	modelPart()->setProp("buses",  busPropertyString);
 }
 
-void Stripboard::nextBus(QList<ConnectorItem *> & soFar, QString & busPropertyString)
+void Stripboard::nextBus(QList<ConnectorItem *> & soFar)
 {
 	if (soFar.count() > 1) {
 		BusShared * busShared = new BusShared(QString::number(m_buses.count()));
-		busPropertyString += QString("<b id='%1'>").arg(busShared->id());
 		m_buses.append(busShared);
 		foreach (ConnectorItem * connectorItem, soFar) {
 			busShared->addConnectorShared(connectorItem->connector()->connectorShared());
-			busPropertyString += QString("<c id='%1' />").arg(connectorItem->connectorSharedName());
 		}
-		busPropertyString += "</b>";
 	}
 	soFar.clear();
 }

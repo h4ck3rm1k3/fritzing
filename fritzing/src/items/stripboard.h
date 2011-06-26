@@ -87,7 +87,7 @@ public:
 	void initCutting(Stripbit *);
 
 protected:
-	void nextBus(QList<ConnectorItem *> & soFar, QString & busPropertyString);
+	void nextBus(QList<ConnectorItem *> & soFar);
 
 public:
 	static QString genFZP(const QString & moduleID);
