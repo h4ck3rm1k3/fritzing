@@ -44,6 +44,7 @@ $Date$
 #include <QLabel>
 
 
+static const int ConnectorIDJump = 1000;
 static const int MaxXDimension = 100;
 static const int MinXDimension = 5;
 static const int MaxYDimension = 50;
@@ -154,7 +155,7 @@ QString Perfboard::makeBreadboardSvg(const QString & size)
 	for (int iy = 0; iy < y; iy++) {
 		int left = 100;
 		for (int jx = 0; jx < x; jx++) {
-			middle += ConnectorTemplate.arg(left).arg(top).arg(jx).arg(iy).arg(QString::number((iy * MaxXDimension * 2) + jx));
+			middle += ConnectorTemplate.arg(left).arg(top).arg(jx).arg(iy).arg(QString::number((iy * ConnectorIDJump) + jx));
 			holes += OneHole				
 				.arg(left - radius)
 				.arg(top)
@@ -207,7 +208,7 @@ QString Perfboard::genFZP(const QString & moduleid)
 
 	for (int iy = 0; iy < y; iy++) {
 		for (int jx = 0; jx < x; jx++) {
-			middle += ConnectorFzpTemplate.arg(jx).arg(iy).arg(QString::number((iy * MaxXDimension * 2) + jx));
+			middle += ConnectorFzpTemplate.arg(jx).arg(iy).arg(QString::number((iy * ConnectorIDJump) + jx));
 		}
 	}
 
@@ -323,7 +324,7 @@ void Perfboard::changeBoardSize()
 
     InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
     if (infoGraphicsView != NULL) {
-        infoGraphicsView->swap("Perfboard", "size", m_propsMap, this);
+        infoGraphicsView->swap(modelPart()->properties().value("family"), "size", m_propsMap, this);
     }
 }
 

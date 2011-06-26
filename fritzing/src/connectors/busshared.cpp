@@ -29,6 +29,11 @@ $Date$
 #include "../debugdialog.h"
 #include "connectoritem.h"
 
+BusShared::BusShared(const QString & id)
+{
+	m_id = id;
+}
+
 BusShared::BusShared(const QDomElement & busElement, const QHash<QString, QPointer<ConnectorShared> > & connectorHash)
 {
 	m_id = busElement.attribute("id");
@@ -48,6 +53,12 @@ BusShared::BusShared(const QDomElement & busElement, const QHash<QString, QPoint
 		connector = connector.nextSiblingElement("nodeMember");
 	}
 	
+}
+
+void BusShared::addConnectorShared(ConnectorShared * connectorShared) 
+{
+	m_connectors.append(connectorShared);
+	connectorShared->setBus(this);
 }
 
 const QString & BusShared::id() {

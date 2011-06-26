@@ -31,6 +31,8 @@ $Date$
 #include "../sketch/infographicsview.h"
 #include "moduleidnames.h"
 #include "../connectors/connectoritem.h"
+#include "../connectors/busshared.h"
+#include "../connectors/connectorshared.h"
 
 #include <QCursor>
 #include <QBitmap>
@@ -40,7 +42,6 @@ $Date$
 
 // TODO:
 //
-//	set up initial bus config
 //	cursor(s) for mouse hover? and down
 //	change bus config at mouse release
 //	disconnect/reconnect affected parts
@@ -57,6 +58,8 @@ Stripbit::Stripbit(const QPainterPath & path, QGraphicsItem * parent = 0) : QGra
 		QBitmap bitmap(":resources/images/spot_face_cutter.bmp");
 		SpotFaceCutterCursor = new QCursor(bitmap, bitmap, 0, 31);
 	}
+
+	setZValue(-999);
 
 	m_inHover = m_removed = false;
 	setAcceptsHoverEvents(true);
@@ -89,11 +92,17 @@ void Stripbit::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 
 void Stripbit::mousePressEvent(QGraphicsSceneMouseEvent *event) 
 {
+	if (!event->buttons() && Qt::LeftButton) {
+		event->ignore();
+		return;
+	}
+
 	event->accept();
 	m_removed = !m_removed;
+	m_inHover = false;
 	update();
 
-	DebugDialog::debug("got press");
+	//DebugDialog::debug("got press");
 }
 
 void Stripbit::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
@@ -105,16 +114,21 @@ void Stripbit::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
 	if (!event->buttons() && Qt::LeftButton) return;
 
-	DebugDialog::debug("got move");
+	//DebugDialog::debug("got move");
 
-	Stripbit * other = dynamic_cast<Stripbit *>(scene()->itemAt(event->scenePos()));
+	Stripbit * other = NULL;
+	foreach(QGraphicsItem * item, scene()->items(event->scenePos())) {
+		other = dynamic_cast<Stripbit *>(item);
+		if (other) break;
+	}
+
 	if (!other) return;
 
-	DebugDialog::debug("got other");
+	//DebugDialog::debug("got other");
 
 	if (other->removed() == m_removed) return;
 
-	DebugDialog::debug("change other");
+	//DebugDialog::debug("change other");
 
 	other->setRemoved(m_removed);
 	other->update();
@@ -142,14 +156,30 @@ bool Stripbit::removed() {
 	return m_removed;
 }
 
-
-
-
 /////////////////////////////////////////////////////////////////////
 
 Stripboard::Stripboard( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: Perfboard(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
+	if (!viewIdentifier == ViewIdentifierClass::BreadboardView) return;
+
+	QList<BusShared *> buses;
+	int x, y;
+	getXY(x, y, m_size);
+	for (int i = 0; i < y; i++) {
+		BusShared * busShared = new BusShared(QString::number(i));
+		buses.append(busShared);
+	}
+
+	foreach (Connector * connector, modelPart->connectors().values()) {
+		ConnectorShared * connectorShared = connector->connectorShared();
+		int cx, cy;
+		getXY(cx, cy, connectorShared->name());
+		BusShared * busShared = buses.at(cy);
+		busShared->addConnectorShared(connectorShared);
+	}
+
+	modelPart->initBuses();
 }
 
 Stripboard::~Stripboard() {
@@ -164,7 +194,6 @@ QString Stripboard::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QStrin
 {
 	return Perfboard::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 }
-
 
 QString Stripboard::genFZP(const QString & moduleid)
 {

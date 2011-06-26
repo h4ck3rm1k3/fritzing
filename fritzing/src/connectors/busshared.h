@@ -38,9 +38,11 @@ class BusShared {
 	
 public:
 	BusShared(const QDomElement & busElement, const QHash<QString, QPointer<class ConnectorShared> > & connectorHash);
-	
+	BusShared(const QString & id);
+
 	const QString & id();
 	const QList<class ConnectorShared *> & connectors();
+	void addConnectorShared(class ConnectorShared *);
 	
 protected:
 	QString m_id;

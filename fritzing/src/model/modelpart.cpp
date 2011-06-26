@@ -360,7 +360,13 @@ void ModelPart::initConnectors(bool force) {
 	foreach (ConnectorShared * connectorShared, m_modelPartShared->connectorsShared()) {
 		Connector * connector = new Connector(connectorShared, this);
 		m_connectorHash.insert(connectorShared->id(), connector);
-		BusShared * busShared = connectorShared->bus();
+	}
+	initBuses();
+}
+
+void ModelPart::initBuses() {
+	foreach (Connector * connector, m_connectorHash.values()) {
+		BusShared * busShared = connector->connectorShared()->bus();
 		if (busShared != NULL) {
 			Bus * bus = m_busHash.value(busShared->id());
 			if (bus == NULL) {

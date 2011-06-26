@@ -149,6 +149,7 @@ public:
 	bool hasViewFor(ViewIdentifierClass::ViewIdentifier);
 	bool hasViewFor(ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID);
 	QString hasBaseNameFor(ViewIdentifierClass::ViewIdentifier);
+	void initBuses();
 
 public:
 	static long nextIndex();
