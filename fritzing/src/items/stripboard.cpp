@@ -44,7 +44,6 @@ $Date$
 //
 //	new cursors, new hover states?
 //	disconnect and reconnect affected parts
-//	undo
 
 static QCursor * SpotFaceCutterCursor = NULL;
 static QCursor * MagicWandCursor = NULL;
@@ -68,6 +67,7 @@ Stripbit::Stripbit(const QPainterPath & path, ConnectorItem * connectorItem, int
 	setZValue(-999);			// beneath connectorItems
 	setCursor(*SpotFaceCutterCursor);
 
+	m_right = NULL;
 	m_x = x;
 	m_y = y;
 	m_connectorItem = connectorItem;
@@ -114,11 +114,12 @@ void Stripbit::mousePressEvent(QGraphicsSceneMouseEvent *event)
 	}
 
 	event->accept();
+	dynamic_cast<Stripboard *>(this->parentItem())->initCutting(this);
 	m_removed = !m_removed;
 	m_inHover = false;
+	m_changed = true;
 	update();
 
-	dynamic_cast<Stripboard *>(this->parentItem())->initCutting(this);
 
 	//DebugDialog::debug("got press");
 }
@@ -160,6 +161,7 @@ void Stripbit::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 	//DebugDialog::debug("change other");
 
 	other->setRemoved(m_removed);
+	other->setChanged(true);
 	other->update();
 }
 
@@ -177,6 +179,14 @@ void Stripbit::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event )
 	update();
 }
 
+void Stripbit::setRight(Stripbit * right) {
+	m_right = right;
+}
+
+Stripbit * Stripbit::right() {
+	return m_right;
+}
+
 void Stripbit::setRemoved(bool removed) {
 	m_removed = removed;
 }
@@ -185,13 +195,16 @@ bool Stripbit::removed() {
 	return m_removed;
 }
 
-ConnectorItem * Stripbit::connectorItem() {
-	return m_connectorItem;
+void Stripbit::setChanged(bool changed) {
+	m_changed = changed;
 }
 
-bool Stripbit::stripbitXLessThan(Stripbit * s1, Stripbit * s2)
-{
-	return s1->m_x < s2->m_x;
+bool Stripbit::changed() {
+	return m_changed;
+}
+
+ConnectorItem * Stripbit::connectorItem() {
+	return m_connectorItem;
 }
 
 int Stripbit::y() {
@@ -288,7 +301,6 @@ void Stripboard::addedToScene()
 	if (ciFirst == NULL) return;
 	if (ciNext == NULL) return;
 
-
 	QRectF r1 = ciFirst->rect();
 	QRectF r2 = ciNext->rect();
 
@@ -306,8 +318,9 @@ void Stripboard::addedToScene()
 	pp1.arcTo(r2, 90, 180);
 
 	m_lastColumn.fill(NULL, y);
+	m_firstColumn.fill(NULL, y);
 
-	QHash<QString, Stripbit *> stripbitHash;
+	QVector< QVector<Stripbit *> > stripbits(x, QVector<Stripbit *>(y, NULL));
 
 	foreach (QGraphicsItem * item, items) {
 		ConnectorItem * ci = dynamic_cast<ConnectorItem *>(item);
@@ -322,21 +335,30 @@ void Stripboard::addedToScene()
 		}
 
 		Stripbit * stripbit = new Stripbit(pp1, ci, cx, cy, this);
-		stripbitHash.insert(ci->connectorSharedName(), stripbit);
+		stripbits[cx][cy] = stripbit;
 		stripbit->setPen(Qt::NoPen);
 		// TODO: don't hardcode this color
 		stripbit->setBrush(QColor(0xc4, 0x9c, 0x59));
 		QRectF r = ci->rect();
 		stripbit->setPos(r.center().x(), r.top());
+		if (cx == 0) m_firstColumn[cy] = stripbit;
+	}
+
+	for (int iy = 0; iy < y; iy++) {
+		for (int ix = 0; ix < x - 2; ix++) {
+			stripbits[ix][iy]->setRight(stripbits[ix + 1][iy]);
+		}
 	}
 
 	QString config = modelPart()->prop("buses").toString();
 	if (config.isEmpty()) return;
 
-	QStringList removed = config.split(" ");
+	QStringList removed = config.split(" ", QString::SkipEmptyParts);
 	foreach (QString name, removed) {
-		Stripbit *  stripbit = stripbitHash.value(name);
-		if (stripbit) stripbit->setRemoved(true);
+		int cx, cy;
+		if (getXY(cx, cy, name)) {
+			stripbits[cx][cy]->setRemoved(true);
+		}
 	}
 
 	reinitBuses(false);
@@ -361,6 +383,7 @@ void Stripboard::initCutting(Stripbit * eventStripbit)
 		if (stripbit == NULL) continue;
 		
 		stripbit->reassignCursor(eventStripbit);
+		stripbit->setChanged(false);
 		if (stripbit->removed()) {
 			m_beforeCut += (stripbit->connectorItem()->connectorSharedName() + " ");
 		}
@@ -392,8 +415,6 @@ void Stripboard::reinitBuses(bool triggerUndo)
 	int x, y;
 	getXY(x, y, m_size);
 
-	QVector< QList<Stripbit *> > stripbits(y, QList<Stripbit *>());
-
 	foreach (BusShared * busShared, m_buses) delete busShared;
 	m_buses.clear();
 
@@ -409,27 +430,23 @@ void Stripboard::reinitBuses(bool triggerUndo)
 		}
 
 		stripbit->reassignCursor(NULL);
-		if (stripbit->connectorItem() == NULL) continue;
-
-		stripbits[stripbit->y()].append(stripbit);
 	}
 
 	QString busPropertyString;
 
-	for (int ix = 0; ix < stripbits.count(); ix++) {
-		QList<Stripbit *> list = stripbits.at(ix);
-		qSort(list.begin(), list.end(), Stripbit::stripbitXLessThan);
+	foreach (Stripbit * stripbit, m_firstColumn) {
 		QList<ConnectorItem *> soFar;
-		foreach (Stripbit * stripbit, list) {
+		int ix = stripbit->x();
+		while (stripbit != NULL) {
 			soFar << stripbit->connectorItem();
 			if (stripbit->removed()) {
 				busPropertyString.append(stripbit->connectorItem()->connectorSharedName() + " ");
 				nextBus(soFar);
 			}
+			stripbit = stripbit->right();
 		}
 		soFar.append(m_lastColumn.at(ix));
 		nextBus(soFar);
-
 	}
 
 	modelPart()->clearBuses();
@@ -456,21 +473,21 @@ void Stripboard::setProp(const QString & prop, const QString & value)
 		return;
 	}
 
-	QHash<QString, Stripbit *> stripbitHash;
-
+	QStringList removed = value.split(" ", QString::SkipEmptyParts);
 	foreach (QGraphicsItem * item, childItems()) {
 		Stripbit * stripbit = dynamic_cast<Stripbit *>(item);
 		if (stripbit == NULL) continue;
 
-		stripbit->setRemoved(false);
-		stripbitHash.insert(stripbit->connectorItem()->connectorSharedName(), stripbit);
-	}
-
-	QStringList removed = value.split(" ");
-	foreach (QString name, removed) {
-		Stripbit *  stripbit = stripbitHash.value(name);
-		if (stripbit) stripbit->setRemoved(true);
+		bool remove = removed.contains(stripbit->connectorItem()->connectorSharedName());
+		stripbit->setRemoved(remove);
+		if (remove) {
+			removed.removeOne(stripbit->connectorItem()->connectorSharedName());
+		}
 	}
 
 	reinitBuses(false);
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView != NULL) {
+		infoGraphicsView->cleanUpWires(false, NULL);
+	}
 }

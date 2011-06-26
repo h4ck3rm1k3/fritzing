@@ -1922,7 +1922,7 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 
 void SketchWidget::prepMove(ItemBase * originatingItem) {
 	m_checkUnder.clear();
-	DebugDialog::debug("prep move check under = false");
+	//DebugDialog::debug("prep move check under = false");
 	QSet<Wire *> wires;
 	QList<ItemBase *> items;
 	foreach (QGraphicsItem * gitem,  this->scene()->selectedItems()) {
@@ -1934,7 +1934,7 @@ void SketchWidget::prepMove(ItemBase * originatingItem) {
 	}
 
 
-	DebugDialog::debug(QString("prep move items %1").arg(items.count()));
+	//DebugDialog::debug(QString("prep move items %1").arg(items.count()));
 
 	int originalItemsCount = items.count();
 

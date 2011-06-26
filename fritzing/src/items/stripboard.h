@@ -42,8 +42,12 @@ public:
 	Stripbit(const Stripbit &);			// weird compiler error without this declaration
 	~Stripbit();
 
+	void setRight(Stripbit *);
+	Stripbit * right();
 	void setRemoved(bool);
 	bool removed();
+	void setChanged(bool);
+	bool changed();
 	ConnectorItem * connectorItem();
 	int y();
 	int x();
@@ -53,13 +57,8 @@ public:
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
-
-
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
 	void hoverLeaveEvent( QGraphicsSceneHoverEvent * event );
-
-
-	static bool stripbitXLessThan(Stripbit * s1, Stripbit * s2);
 
 protected:
 	ConnectorItem * m_connectorItem;
@@ -67,6 +66,8 @@ protected:
 	bool m_inHover;
 	int m_x;
 	int m_y;
+	bool m_changed;
+	Stripbit * m_right;
 
 };
 
@@ -96,6 +97,7 @@ public:
 
 protected:
 	QVector<ConnectorItem *> m_lastColumn;
+	QVector<Stripbit *> m_firstColumn;
 	QList<class BusShared *> m_buses;
 	QString m_beforeCut;
 

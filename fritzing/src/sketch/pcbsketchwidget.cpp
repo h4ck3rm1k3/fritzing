@@ -1304,7 +1304,7 @@ void PCBSketchWidget::updateRoutingStatus(RoutingStatus & routingStatus, bool ma
 			continue;  
 		}
 
-		connectorItem->debugInfo("testing");
+		//connectorItem->debugInfo("testing");
 
 		QList<ConnectorItem *> connectorItems;
 		connectorItems.append(connectorItem);

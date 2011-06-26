@@ -71,7 +71,7 @@ public:
 	virtual void setIgnoreSelectionChangeEvents(bool) {}
 	virtual void getBendpointWidths(class Wire *, qreal w, qreal & w1, qreal & w2, bool & negativeOffsetRect);
 	virtual void getLabelFont(QFont &, QColor &, ViewLayer::ViewLayerSpec);
-        virtual qreal getLabelFontSizeTiny();
+    virtual qreal getLabelFontSizeTiny();
 	virtual qreal getLabelFontSizeSmall();
 	virtual qreal getLabelFontSizeMedium();
 	virtual qreal getLabelFontSizeLarge();
@@ -90,6 +90,9 @@ public:
 	virtual void setBoardLayers(int, bool redraw);
 	virtual class VirtualWire * makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, bool routed, QColor);
 	virtual void getRatsnestColor(QColor &);
+
+	virtual void cleanUpWires(bool doEmit, class CleanUpWiresCommand *);
+
 
 public slots:
 	virtual void setVoltage(qreal, bool doEmit);
