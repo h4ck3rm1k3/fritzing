@@ -191,6 +191,7 @@
         <file>resources/parts/core/10.10StripboardModuleID.fzp</file>
 	
         <file>resources/parts/svg/core/icon/iconPerfboard.svg</file>
+       <file>resources/parts/svg/core/icon/iconStripboard.svg</file>
         <file>resources/parts/svg/core/icon/wireicon.svg</file>
         <file>resources/parts/svg/core/icon/rulericon.svg</file>
         <file>resources/parts/svg/core/icon/rectangle_pcb.svg</file>

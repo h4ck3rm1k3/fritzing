@@ -17,7 +17,7 @@
   <description>A stripboard for easily prototyping circuits</description>
   <views>
     <iconView>
-      <layers image="icon/iconPerfboard.svg">
+      <layers image="icon/iconStripboard.svg">
         <layer layerId="icon"/>
       </layers>
     </iconView>

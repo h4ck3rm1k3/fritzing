@@ -44,6 +44,8 @@ $Date$
 //
 //	new cursors, new hover states?
 //	disconnect and reconnect affected parts
+//	swapping
+//	icon
 
 static QCursor * SpotFaceCutterCursor = NULL;
 static QCursor * MagicWandCursor = NULL;
@@ -254,7 +256,6 @@ QString Stripboard::genFZP(const QString & moduleid)
 	fzp.replace("perfboard", "stripboard");
 	fzp.replace("Perfboard", "Stripboard");
 	fzp.replace("stripboard.svg", "perfboard.svg");
-	fzp.replace("Stripboard.svg", "Perfboard.svg");
 	return fzp;
 }
 
