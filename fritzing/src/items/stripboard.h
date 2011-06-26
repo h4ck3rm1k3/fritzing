@@ -47,6 +47,7 @@ public:
 	ConnectorItem * connectorItem();
 	int y();
 	int x();
+	void reassignCursor(Stripbit * other);
 
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -83,9 +84,10 @@ public:
 	void addedToScene();
 	void setProp(const QString & prop, const QString & value);
 	void reinitBuses();
+	void initCutting(Stripbit *);
 
 protected:
-	void nextBus(QList<ConnectorItem *> & soFar);
+	void nextBus(QList<ConnectorItem *> & soFar, QString & busPropertyString);
 
 public:
 	static QString genFZP(const QString & moduleID);

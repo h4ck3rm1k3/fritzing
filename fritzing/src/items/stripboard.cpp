@@ -43,8 +43,7 @@ $Date$
 // TODO:
 //
 //	update cursor(s) for mouse hover? and down
-//	change bus config at mouse release
-//	disconnect affected parts
+//	disconnect and reconnect affected parts
 //	undo
 //	save and load (save in some form easily convertible to fzp bus format)
 
@@ -62,6 +61,7 @@ $Date$
 */
 
 static QCursor * SpotFaceCutterCursor = NULL;
+static QCursor * MagicWandCursor = NULL;
 
 /////////////////////////////////////////////////////////////////////
 
@@ -70,8 +70,13 @@ Stripbit::Stripbit(const QPainterPath & path, ConnectorItem * connectorItem, int
 {
 	
 	if (SpotFaceCutterCursor == NULL) {
-		QBitmap bitmap(":resources/images/spot_face_cutter.bmp");
+		QBitmap bitmap(":resources/images/cursor/spot_face_cutter.bmp");
 		SpotFaceCutterCursor = new QCursor(bitmap, bitmap, 0, 31);
+	}
+
+	if (MagicWandCursor == NULL) {
+		QBitmap bitmap(":resources/images/cursor/magic_wand.bmp");
+		MagicWandCursor = new QCursor(bitmap, bitmap, 7, 24);
 	}
 
 	setZValue(-999);			// beneath connectorItems
@@ -127,7 +132,19 @@ void Stripbit::mousePressEvent(QGraphicsSceneMouseEvent *event)
 	m_inHover = false;
 	update();
 
+	dynamic_cast<Stripboard *>(this->parentItem())->initCutting(this);
+
 	//DebugDialog::debug("got press");
+}
+
+void Stripbit::reassignCursor(Stripbit * other)
+{
+	if (other == NULL) {
+		setCursor(m_removed ? *MagicWandCursor : *SpotFaceCutterCursor);
+		return;
+	}
+
+	setCursor(other->cursor());
 }
 
 void Stripbit::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
@@ -143,7 +160,7 @@ void Stripbit::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 	//DebugDialog::debug("got move");
 
 	Stripbit * other = NULL;
-	foreach(QGraphicsItem * item, scene()->items(event->scenePos())) {
+	foreach (QGraphicsItem * item, scene()->items(event->scenePos())) {
 		other = dynamic_cast<Stripbit *>(item);
 		if (other) break;
 	}
@@ -290,6 +307,7 @@ void Stripboard::addedToScene()
 	if (ciFirst == NULL) return;
 	if (ciNext == NULL) return;
 
+
 	QRectF r1 = ciFirst->rect();
 	QRectF r2 = ciNext->rect();
 
@@ -307,7 +325,6 @@ void Stripboard::addedToScene()
 	pp1.arcTo(r2, 90, 180);
 
 	m_lastColumn.fill(NULL, y);
-
 
 	foreach (QGraphicsItem * item, items) {
 		ConnectorItem * ci = dynamic_cast<ConnectorItem *>(item);
@@ -329,6 +346,19 @@ void Stripboard::addedToScene()
 		stripbit->setPos(r.center().x(), r.top());
 	}
 
+	QString config = modelPart()->prop("buses").toString();
+	if (config.isEmpty()) return;
+
+
+	QDomDocument doc;
+	QString errorString;
+	int errorLine, errorColumn;
+	if (!doc.setContent(config, &errorString, &errorLine, &errorColumn)) {
+		return;
+	}
+
+
+
 }
 
 QString Stripboard::genModuleID(QMap<QString, QString> & currPropsMap)
@@ -340,6 +370,16 @@ QString Stripboard::genModuleID(QMap<QString, QString> & currPropsMap)
 QString Stripboard::makeBreadboardSvg(const QString & size) 
 {
 	return Perfboard::makeBreadboardSvg(size);
+}
+
+void Stripboard::initCutting(Stripbit * eventStripbit) 
+{
+	foreach (QGraphicsItem * item, childItems()) {
+		Stripbit * stripbit = dynamic_cast<Stripbit *>(item);
+		if (stripbit == NULL) continue;
+		
+		stripbit->reassignCursor(eventStripbit);
+	}
 }
 
 void Stripboard::reinitBuses() {
@@ -355,6 +395,8 @@ void Stripboard::reinitBuses() {
 	foreach (QGraphicsItem * item, childItems()) {
 		Stripbit * stripbit = dynamic_cast<Stripbit *>(item);
 		if (stripbit == NULL) continue;
+
+		stripbit->reassignCursor(NULL);
 		if (stripbit->connectorItem() == NULL) continue;
 
 		stripbits[stripbit->y()].append(stripbit);
@@ -365,6 +407,8 @@ void Stripboard::reinitBuses() {
 		connectorItem->connector()->setBus(NULL);
 	}
 
+	QString busPropertyString = "<bs>";
+
 	for (int ix = 0; ix < stripbits.count(); ix++) {
 		QList<Stripbit *> list = stripbits.at(ix);
 		qSort(list.begin(), list.end(), Stripbit::stripbitXLessThan);
@@ -372,26 +416,32 @@ void Stripboard::reinitBuses() {
 		foreach (Stripbit * stripbit, list) {
 			soFar << stripbit->connectorItem();
 			if (stripbit->removed()) {
-				nextBus(soFar);
+				nextBus(soFar, busPropertyString);
 			}
 		}
 		soFar.append(m_lastColumn.at(ix));
-		nextBus(soFar);
+		nextBus(soFar, busPropertyString);
 
 	}
 
+	busPropertyString += "</bs>";
+
 	modelPart()->clearBuses();
 	modelPart()->initBuses();
+	modelPart()->setProp("buses",  busPropertyString);
 }
 
-void Stripboard::nextBus(QList<ConnectorItem *> & soFar)
+void Stripboard::nextBus(QList<ConnectorItem *> & soFar, QString & busPropertyString)
 {
 	if (soFar.count() > 1) {
 		BusShared * busShared = new BusShared(QString::number(m_buses.count()));
+		busPropertyString += QString("<b id='%1'>").arg(busShared->id());
 		m_buses.append(busShared);
 		foreach (ConnectorItem * connectorItem, soFar) {
 			busShared->addConnectorShared(connectorItem->connector()->connectorShared());
+			busPropertyString += QString("<c id='%1' />").arg(connectorItem->connectorSharedName());
 		}
+		busPropertyString += "</b>";
 	}
 	soFar.clear();
 }
