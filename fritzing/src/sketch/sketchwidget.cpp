@@ -5257,7 +5257,7 @@ void SketchWidget::autoScrollTimeout()
 		v->setValue(m_autoScrollY + v->value());
 	}
 
-	DebugDialog::debug(QString("autoscrolling %1 %2").arg(m_autoScrollX).arg(m_autoScrollX));
+	//DebugDialog::debug(QString("autoscrolling %1 %2").arg(m_autoScrollX).arg(m_autoScrollX));
 }
 
 void SketchWidget::dragAutoScrollTimeout()
@@ -5390,7 +5390,7 @@ bool SketchWidget::checkAutoscroll(QPoint globalPos)
 	if (autoScroll) {
 		if (++m_autoScrollCount < m_autoScrollThreshold) {
 			m_autoScrollX = m_autoScrollY = 0;
-			DebugDialog::debug("in autoscrollThreshold");
+			//DebugDialog::debug("in autoscrollThreshold");
 			return true;
 		}
 

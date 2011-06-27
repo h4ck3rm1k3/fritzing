@@ -81,11 +81,6 @@ Stripbit::Stripbit(const QPainterPath & path, ConnectorItem * connectorItem, int
 
 }
 
-//Stripbit::Stripbit(const Stripbit & stripbit)
-//{
-	// seems to cause compiler errors without this function declaration...
-//}
-
 Stripbit::~Stripbit() {
 }
 
@@ -486,6 +481,19 @@ void Stripboard::reinitBuses(bool triggerUndo)
 	modelPart()->clearBuses();
 	modelPart()->initBuses();
 	modelPart()->setProp("buses",  busPropertyString);
+
+	
+	QList<ConnectorItem *> visited;
+	foreach (QGraphicsItem * item, childItems()) {
+		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
+		if (connectorItem == NULL) continue;
+		if (visited.contains(connectorItem)) continue;
+
+		connectorItem->restoreColor(true, 0, true);
+		if (connectorItem->bus()) {
+			this->busConnectorItems(connectorItem->bus(), visited);
+		}
+	}
 }
 
 void Stripboard::nextBus(QList<ConnectorItem *> & soFar)

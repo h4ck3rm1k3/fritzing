@@ -45,9 +45,9 @@ $Date$
 
 
 static const int ConnectorIDJump = 1000;
-static const int MaxXDimension = 100;
+static const int MaxXDimension = 70;
 static const int MinXDimension = 5;
-static const int MaxYDimension = 50;
+static const int MaxYDimension = 20;
 static const int MinYDimension = 5;
 
 static const QString OneHole("M%1,%2a%3,%3 0 1 %5 %4,0 %3,%3 0 1 %5 -%4,0z\n");
