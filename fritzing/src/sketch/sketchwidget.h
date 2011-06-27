@@ -435,7 +435,7 @@ signals:
 	void makeDeleteItemCommandFinalSignal(ItemBase * itemBase, bool foreign, QUndoCommand * parentCommand);
 	void warnSMDSignal(const QString &);
 	void cursorLocationSignal(qreal xinches, qreal yinches);
-	void changeBus(bool connect, QList<ConnectorItem *> &);
+	void ratsnestConnectSignal(long id, const QString & connectorID, bool connect, bool doEmit);
 
 protected slots:
 	void sketchWidget_itemAdded(ModelPart *, ViewLayer::ViewLayerSpec, const ViewGeometry &, long id, SketchWidget * dropOrigin);
@@ -469,7 +469,6 @@ protected slots:
 	void arrowTimerTimeout();
 	void makeDeleteItemCommandPrepSlot(ItemBase * itemBase, bool foreign, QUndoCommand * parentCommand);
 	void makeDeleteItemCommandFinalSlot(ItemBase * itemBase, bool foreign, QUndoCommand * parentCommand);
-	void changeBusSlot(bool connect, QList<ConnectorItem *> &);
 
 
 public slots:
@@ -493,6 +492,7 @@ public slots:
 	void resizeBoard(qreal w, qreal h, bool doEmit);
 	virtual void changeBoardLayers(int layers, bool doEmit);
 	void updateConnectors();
+	void ratsnestConnect(long id, const QString & connectorID, bool connect, bool doEmit);
 
 protected:
 	enum StatusConnectStatus {

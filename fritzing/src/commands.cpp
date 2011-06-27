@@ -707,6 +707,10 @@ CleanUpWiresCommand::CleanUpWiresCommand(SketchWidget* sketchWidget, CleanUpWire
 
 void CleanUpWiresCommand::undo()
 {
+	foreach (RatsnestConnectThing rct, m_ratsnestConnectThings) {
+		m_sketchWidget->ratsnestConnect(rct.id, rct.connectorID, !rct.connect, true);
+	}
+
 	if (m_sketchWidgets.count() > 0)  {
 		subUndo();
 	}
@@ -718,6 +722,10 @@ void CleanUpWiresCommand::undo()
 
 void CleanUpWiresCommand::redo()
 {
+	foreach (RatsnestConnectThing rct, m_ratsnestConnectThings) {
+		m_sketchWidget->ratsnestConnect(rct.id, rct.connectorID, rct.connect, true);
+	}
+
 	if (m_sketchWidgets.count() > 0) {
 		subRedo();
 	}
@@ -726,6 +734,16 @@ void CleanUpWiresCommand::redo()
 		m_sketchWidget->cleanUpWires(m_crossViewType == BaseCommand::CrossView, this);  
 	}
 }
+
+void CleanUpWiresCommand::addRatsnestConnect(long id, const QString & connectorID, bool connect)
+{
+	RatsnestConnectThing rct;
+	rct.id = id;
+	rct.connectorID = connectorID;
+	rct.connect = connect;
+	m_ratsnestConnectThings.append(rct);
+}
+
 
 void CleanUpWiresCommand::addRoutingStatus(SketchWidget * sketchWidget, const RoutingStatus & oldRoutingStatus, const RoutingStatus & newRoutingStatus)
 {

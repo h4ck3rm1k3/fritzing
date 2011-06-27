@@ -447,6 +447,13 @@ protected:
 	RoutingStatus m_newRoutingStatus;
 };
 
+struct RatsnestConnectThing
+{
+	long id;
+	QString connectorID;
+	bool connect;
+};
+
 class CleanUpWiresCommand : public BaseCommand
 {
 public:
@@ -464,6 +471,7 @@ public:
 	void setDirection(CleanUpWiresCommand::Direction);
 	void addTrace(SketchWidget * sketchWidget, Wire * wire);
 	bool hasTraces(SketchWidget *);
+	void addRatsnestConnect(long id, const QString & connectorID, bool connect);
 	CleanUpWiresCommand::Direction direction();
 
 protected:
@@ -471,6 +479,7 @@ protected:
 
 protected:
 	QSet<SketchWidget *> m_sketchWidgets;
+	QList<RatsnestConnectThing> m_ratsnestConnectThings;
 	Direction m_direction;
 };
 

@@ -6838,6 +6838,19 @@ void SketchWidget::ratsnestConnect(ItemBase * itemBase, bool connect) {
 	}
 }
 
+void SketchWidget::ratsnestConnect(long id, const QString & connectorID, bool connect, bool doEmit) {
+	if (doEmit) {
+		emit ratsnestConnectSignal(id, connectorID, connect, false);
+	}
+
+	ItemBase * itemBase = findItem(id);
+	if (itemBase == NULL) return;
+
+	ConnectorItem * connectorItem = findConnectorItem(itemBase, connectorID, itemBase->viewLayerSpec());
+	if (connectorItem == NULL) return;
+
+	ratsnestConnect(connectorItem, connect);
+}
 
 void SketchWidget::ratsnestConnect(ConnectorItem * connectorItem, bool connect) {
 	if (connect) {
@@ -7123,29 +7136,21 @@ ViewGeometry::WireFlag SketchWidget::getTraceFlag() {
 
 void SketchWidget::changeBus(ItemBase * itemBase, bool connect, const QString & oldBus, const QString & newBus, QList<ConnectorItem *> & connectorItems, const QString & message)
 {
-	emit changeBus(connect, connectorItems);
-
-	foreach(ConnectorItem * connectorItem, connectorItems) {
-		this->ratsnestConnect(connectorItem, connect);
-	}
 	QUndoCommand * parentCommand = new QUndoCommand(message);
-	new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
+	CleanUpWiresCommand * cuwc = new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
+	foreach(ConnectorItem * connectorItem, connectorItems) {
+		cuwc->addRatsnestConnect(connectorItem->attachedToID(), connectorItem->connectorSharedID(), connect);
+	}
+	
 	new SetPropCommand(this, itemBase->id(), "buses", oldBus, newBus, true, parentCommand);
-	new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
+	cuwc = new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
+	foreach(ConnectorItem * connectorItem, connectorItems) {
+		cuwc->addRatsnestConnect(connectorItem->attachedToID(), connectorItem->connectorSharedID(), connect);
+	}
+
 	m_undoStack->push(parentCommand);
 
 }
 
-void SketchWidget::changeBusSlot(bool connect, QList<ConnectorItem *> & connectorItems)
-{
-	foreach(ConnectorItem * connectorItem, connectorItems) {
-		ItemBase * itemBase = findItem(connectorItem->attachedToID());
-		if (itemBase == NULL) continue;
 
-		ConnectorItem * ci = findConnectorItem(itemBase, connectorItem->connectorSharedID(), itemBase->viewLayerSpec());
-		if (ci == NULL) continue;
-
-		this->ratsnestConnect(ci, connect);
-	}
-}
 
