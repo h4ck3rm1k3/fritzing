@@ -179,7 +179,7 @@ public:
     void updateConnectors();
 	const QString & moduleID();
 	bool moveLock();
-	void setMoveLock(bool);
+	virtual void setMoveLock(bool);
 	void debugInfo(const QString & msg);
 	virtual void addedToScene();
 	virtual bool hasPartNumberProperty();

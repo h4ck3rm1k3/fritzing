@@ -85,6 +85,7 @@ public:
 	void setProp(const QString & prop, const QString & value);
 	void reinitBuses(bool triggerUndo);
 	void initCutting(Stripbit *);
+	void setMoveLock(bool);
 
 protected:
 	void nextBus(QList<ConnectorItem *> & soFar);

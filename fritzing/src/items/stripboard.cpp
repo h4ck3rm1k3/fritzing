@@ -77,7 +77,7 @@ Stripbit::Stripbit(const QPainterPath & path, ConnectorItem * connectorItem, int
 	setAcceptsHoverEvents(true);
 	setAcceptedMouseButtons(Qt::LeftButton);
 	setFlag(QGraphicsItem::ItemIsMovable, true);
-	setFlag(QGraphicsItem::ItemIsSelectable, true);
+	setFlag(QGraphicsItem::ItemIsSelectable, false);
 
 }
 
@@ -105,6 +105,11 @@ void Stripbit::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 void Stripbit::mousePressEvent(QGraphicsSceneMouseEvent *event) 
 {
 	if (!event->buttons() && Qt::LeftButton) {
+		event->ignore();
+		return;
+	}
+
+	if (dynamic_cast<ItemBase *>(this->parentItem())->moveLock()) {
 		event->ignore();
 		return;
 	}
@@ -163,6 +168,8 @@ void Stripbit::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
 void Stripbit::hoverEnterEvent( QGraphicsSceneHoverEvent * event ) 
 {
+	if (dynamic_cast<ItemBase *>(this->parentItem())->moveLock()) return;
+
 	Q_UNUSED(event);
 	m_inHover = true;
 	update();
@@ -170,6 +177,8 @@ void Stripbit::hoverEnterEvent( QGraphicsSceneHoverEvent * event )
 
 void Stripbit::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) 
 {
+	if (dynamic_cast<ItemBase *>(this->parentItem())->moveLock()) return;
+
 	Q_UNUSED(event);
 	m_inHover = false;
 	update();
@@ -528,4 +537,16 @@ void Stripboard::setProp(const QString & prop, const QString & value)
 	}
 
 	reinitBuses(false);
+}
+
+void Stripboard::setMoveLock(bool lock) {
+	Perfboard::setMoveLock(lock);
+
+	foreach (QGraphicsItem * item, childItems()) {
+		Stripbit * stripbit = dynamic_cast<Stripbit *>(item);
+		if (stripbit == NULL) continue;
+		
+		if (lock) stripbit->unsetCursor();
+		else stripbit->reassignCursor(NULL);
+	}
 }
