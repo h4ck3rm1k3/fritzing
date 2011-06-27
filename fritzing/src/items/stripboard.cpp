@@ -81,10 +81,10 @@ Stripbit::Stripbit(const QPainterPath & path, ConnectorItem * connectorItem, int
 
 }
 
-Stripbit::Stripbit(const Stripbit &) 
-{
+//Stripbit::Stripbit(const Stripbit & stripbit)
+//{
 	// seems to cause compiler errors without this function declaration...
-}
+//}
 
 Stripbit::~Stripbit() {
 }

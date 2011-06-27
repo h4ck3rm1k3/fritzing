@@ -39,7 +39,7 @@ class Stripbit : public QGraphicsPathItem
 {
 public:
 	Stripbit(const QPainterPath & path, ConnectorItem *, int x, int y, QGraphicsItem * parent);
-	Stripbit(const Stripbit &);			// weird compiler error without this declaration
+        //Stripbit(const Stripbit &);			// weird compiler error without this declaration
 	~Stripbit();
 
 	void setRight(Stripbit *);
