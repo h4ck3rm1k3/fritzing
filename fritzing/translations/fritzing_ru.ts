@@ -148,7 +148,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Version %1.%2.%3 &lt;small&gt;(%4%5 %6)%7&lt;/small&gt;</source>
+        <source>Version %1.%2.%3 &lt;small&gt;(%4%5 %6)%7 [Qt %8]&lt;/small&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2090,10 +2090,6 @@ Please check all views for potential side-effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1 drill file export failure (5)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>silk file export failure (1)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2501,6 +2497,22 @@ Please check all views for potential side-effects.</source>
         <source>Select all via parts</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>%1 %2 %3</source>
+        <translation type="unfinished">%1 %2 %3</translation>
+    </message>
+    <message>
+        <source>drill file export failure (1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>drill export failure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>drill file export failure (5)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -2832,14 +2844,6 @@ Reason: %2 (errcode %3)</source>
         <translation type="unfinished">Основа</translation>
     </message>
     <message>
-        <source>All Parts</source>
-        <translation>Все элементы</translation>
-    </message>
-    <message>
-        <source>All User Parts</source>
-        <translation type="unfinished">Все элементы пользователя</translation>
-    </message>
-    <message>
         <source>Edit...</source>
         <translation>Редактировать...</translation>
     </message>
@@ -2942,10 +2946,6 @@ Reason: %2 (errcode %3)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>More bins</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Parts Actions</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2955,6 +2955,14 @@ Reason: %2 (errcode %3)</source>
     </message>
     <message>
         <source>loading bin %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Read-only bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This bin cannot be renamed.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4162,6 +4170,10 @@ Fritzing по-прежнему работает, но вы не сможете �
         <source>Tools</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>tiling failure: possibly due wire crossing layers bug. Wire at %1,%2 %3,%4 (in)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QShortcut</name>
@@ -4511,6 +4523,25 @@ Fritzing по-прежнему работает, но вы не сможете �
     <message>
         <source>Change note to &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Stripboard</name>
+    <message>
+        <source>Restored</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 %n strip(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>

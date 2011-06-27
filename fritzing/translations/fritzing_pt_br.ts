@@ -148,7 +148,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Version %1.%2.%3 &lt;small&gt;(%4%5 %6)%7&lt;/small&gt;</source>
+        <source>Version %1.%2.%3 &lt;small&gt;(%4%5 %6)%7 [Qt %8]&lt;/small&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2088,10 +2088,6 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
         <translation>%1 falha ao exportar arquivo (3)</translation>
     </message>
     <message>
-        <source>%1 drill file export failure (5)</source>
-        <translation>%1 falha ao exportar arquivo drill (5)</translation>
-    </message>
-    <message>
         <source>silk file export failure (1)</source>
         <translation>falha ao exportar arquivo silk (1)</translation>
     </message>
@@ -2498,6 +2494,22 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
         <source>Select all via parts</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>%1 %2 %3</source>
+        <translation type="unfinished">%1 %2 %3</translation>
+    </message>
+    <message>
+        <source>drill file export failure (1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>drill export failure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>drill file export failure (5)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -2902,14 +2914,6 @@ Razão: %2 (código do erro %3)</translation>
         <translation>Core</translation>
     </message>
     <message>
-        <source>All Parts</source>
-        <translation>Todos os Componentes</translation>
-    </message>
-    <message>
-        <source>All User Parts</source>
-        <translation>Todos os Componentes usados</translation>
-    </message>
-    <message>
         <source>Contributed Parts</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2938,10 +2942,6 @@ Razão: %2 (código do erro %3)</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>More bins</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Parts Actions</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2951,6 +2951,14 @@ Razão: %2 (código do erro %3)</translation>
     </message>
     <message>
         <source>loading bin %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Read-only bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This bin cannot be renamed.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4158,6 +4166,10 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
         <source>Tools</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>tiling failure: possibly due wire crossing layers bug. Wire at %1,%2 %3,%4 (in)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QShortcut</name>
@@ -4509,6 +4521,24 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     <message>
         <source>Change note to &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Stripboard</name>
+    <message>
+        <source>Restored</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 %n strip(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>
