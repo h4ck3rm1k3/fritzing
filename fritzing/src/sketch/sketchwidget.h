@@ -251,6 +251,8 @@ public:
 	void copyHeart(QList<ItemBase *> & bases, bool saveBoundingRects, QByteArray & itemData, QList<long> & modelIndexes);
 	void pasteHeart(QByteArray & itemData, bool seekOutsideConnections);
 	virtual ViewGeometry::WireFlag getTraceFlag();
+	void changeBus(ItemBase *, bool connec, const QString & oldBus, const QString & newBus, QList<ConnectorItem *> &, const QString & message);
+
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -433,6 +435,7 @@ signals:
 	void makeDeleteItemCommandFinalSignal(ItemBase * itemBase, bool foreign, QUndoCommand * parentCommand);
 	void warnSMDSignal(const QString &);
 	void cursorLocationSignal(qreal xinches, qreal yinches);
+	void changeBus(bool connect, QList<ConnectorItem *> &);
 
 protected slots:
 	void sketchWidget_itemAdded(ModelPart *, ViewLayer::ViewLayerSpec, const ViewGeometry &, long id, SketchWidget * dropOrigin);
@@ -466,6 +469,8 @@ protected slots:
 	void arrowTimerTimeout();
 	void makeDeleteItemCommandPrepSlot(ItemBase * itemBase, bool foreign, QUndoCommand * parentCommand);
 	void makeDeleteItemCommandFinalSlot(ItemBase * itemBase, bool foreign, QUndoCommand * parentCommand);
+	void changeBusSlot(bool connect, QList<ConnectorItem *> &);
+
 
 public slots:
 	void changeWireColor(const QString newColor);

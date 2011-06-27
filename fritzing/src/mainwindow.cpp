@@ -530,6 +530,10 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 									 slotter, SLOT(deleteTracesSlot(QSet<ItemBase *> &, QHash<ItemBase *, SketchWidget *> &, QList<long> &, bool, QUndoCommand *)),
 									 Qt::DirectConnection);
 
+	succeeded = succeeded && connect(signaller, SIGNAL(changeBus(bool, QList<ConnectorItem *> &)),
+									 slotter, SLOT(changeBusSlot(bool, QList<ConnectorItem *> &)),
+									 Qt::DirectConnection);
+
 	if (!succeeded) {
 		DebugDialog::debug("connectPair failed");
 	}

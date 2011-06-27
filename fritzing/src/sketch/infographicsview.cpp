@@ -271,6 +271,11 @@ void InfoGraphicsView::getRatsnestColor(QColor & color)
 	Q_UNUSED(color);
 }
 
-void InfoGraphicsView::cleanUpWires(bool, class CleanUpWiresCommand *) {
+void InfoGraphicsView::changeBus(ItemBase *, bool connect, const QString & oldBus, const QString & newBus, QList<ConnectorItem *> &, const QString & message)
+{
+	Q_UNUSED(connect);
+	Q_UNUSED(oldBus);
+	Q_UNUSED(newBus);
+	Q_UNUSED(message);
 }
 

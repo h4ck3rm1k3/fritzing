@@ -91,7 +91,7 @@ public:
 	virtual class VirtualWire * makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, bool routed, QColor);
 	virtual void getRatsnestColor(QColor &);
 
-	virtual void cleanUpWires(bool doEmit, class CleanUpWiresCommand *);
+	virtual void changeBus(ItemBase *, bool connec, const QString & oldBust, const QString & newBus, QList<ConnectorItem *> &, const QString & message);
 
 
 public slots:

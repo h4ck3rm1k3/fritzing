@@ -7120,3 +7120,32 @@ void SketchWidget::changeTrace(Wire * wire, ConnectorItem * from, ConnectorItem 
 ViewGeometry::WireFlag SketchWidget::getTraceFlag() {
 	return ViewGeometry::TraceFlag;
 }
+
+void SketchWidget::changeBus(ItemBase * itemBase, bool connect, const QString & oldBus, const QString & newBus, QList<ConnectorItem *> & connectorItems, const QString & message)
+{
+	emit changeBus(connect, connectorItems);
+
+	foreach(ConnectorItem * connectorItem, connectorItems) {
+		this->ratsnestConnect(connectorItem, connect);
+	}
+	QUndoCommand * parentCommand = new QUndoCommand(message);
+	new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
+	new SetPropCommand(this, itemBase->id(), "buses", oldBus, newBus, true, parentCommand);
+	new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
+	m_undoStack->push(parentCommand);
+
+}
+
+void SketchWidget::changeBusSlot(bool connect, QList<ConnectorItem *> & connectorItems)
+{
+	foreach(ConnectorItem * connectorItem, connectorItems) {
+		ItemBase * itemBase = findItem(connectorItem->attachedToID());
+		if (itemBase == NULL) continue;
+
+		ConnectorItem * ci = findConnectorItem(itemBase, connectorItem->connectorSharedID(), itemBase->viewLayerSpec());
+		if (ci == NULL) continue;
+
+		this->ratsnestConnect(ci, connect);
+	}
+}
+

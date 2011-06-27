@@ -45,7 +45,6 @@ $Date$
 //	new cursors, new hover states?
 //	disconnect and reconnect affected parts
 //	swapping
-//	icon
 
 static QCursor * SpotFaceCutterCursor = NULL;
 static QCursor * MagicWandCursor = NULL;
@@ -321,7 +320,7 @@ void Stripboard::addedToScene()
 	m_lastColumn.fill(NULL, y);
 	m_firstColumn.fill(NULL, y);
 
-	QVector< QVector<Stripbit *> > stripbits(x, QVector<Stripbit *>(y, NULL));
+	QHash<int, Stripbit *> stripbits;
 
 	foreach (QGraphicsItem * item, items) {
 		ConnectorItem * ci = dynamic_cast<ConnectorItem *>(item);
@@ -336,7 +335,7 @@ void Stripboard::addedToScene()
 		}
 
 		Stripbit * stripbit = new Stripbit(pp1, ci, cx, cy, this);
-		stripbits[cx][cy] = stripbit;
+		stripbits.insert((cy * x) + cx, stripbit);
 		stripbit->setPen(Qt::NoPen);
 		// TODO: don't hardcode this color
 		stripbit->setBrush(QColor(0xc4, 0x9c, 0x59));
@@ -347,7 +346,14 @@ void Stripboard::addedToScene()
 
 	for (int iy = 0; iy < y; iy++) {
 		for (int ix = 0; ix < x - 2; ix++) {
-			stripbits[ix][iy]->setRight(stripbits[ix + 1][iy]);
+			stripbits.value((iy * x) + ix)->setRight(stripbits.value((iy * x) + ix + 1));
+			//DebugDialog::debug(QString("stripbit %1,%2  %3,%4 %5,%6")
+				//.arg(ix)
+				//.arg(iy)
+				//.arg(stripbits.value((iy * x) + ix)->x())
+				//.arg(stripbits.value((iy * x) + ix)->y())
+				//.arg(stripbits.value((iy * x) + ix + 1)->x())
+				//.arg(stripbits.value((iy * x) + ix + 1)->y()) );
 		}
 	}
 
@@ -358,7 +364,7 @@ void Stripboard::addedToScene()
 	foreach (QString name, removed) {
 		int cx, cy;
 		if (getXY(cx, cy, name)) {
-			stripbits[cx][cy]->setRemoved(true);
+			stripbits.value(cy * x + cx)->setRemoved(true);
 		}
 	}
 
@@ -391,23 +397,50 @@ void Stripboard::initCutting(Stripbit * eventStripbit)
 	}
 }
 
+void appendConnectors(QList<ConnectorItem *> & connectorItems, ConnectorItem * connectorItem) {
+	if (connectorItem == NULL) return;
+
+	foreach (ConnectorItem * ci, connectorItem->connectedToItems()) {
+		connectorItems.append(ci);
+	}
+}
+
 void Stripboard::reinitBuses(bool triggerUndo) 
 {
 	if (triggerUndo) {
-		QString value;
+		QString afterCut;
+		QList<ConnectorItem *> affectedConnectors;
+		QList<int> visitedRows;
+		int changeCount = 0;
+		bool connect = true;
 		foreach (QGraphicsItem * item, childItems()) {
 			Stripbit * stripbit = dynamic_cast<Stripbit *>(item);
 			if (stripbit == NULL) continue;
 
 			if (stripbit->removed()) {
-				value += (stripbit->connectorItem()->connectorSharedName() + " ");
+				afterCut += (stripbit->connectorItem()->connectorSharedName() + " ");
 			}
+			if (!stripbit->changed()) continue;
 
+			changeCount++;
+			connect = !stripbit->removed();
+			if (visitedRows.contains(stripbit->y())) continue;
+
+			visitedRows.append(stripbit->y());
+			
+			stripbit = m_firstColumn.at(stripbit->y());
+			appendConnectors(affectedConnectors, m_lastColumn.at(stripbit->y()));
+			while (stripbit) {
+				appendConnectors(affectedConnectors, stripbit->connectorItem());
+				stripbit = stripbit->right();
+			}
 		}
 
 		InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 		if (infoGraphicsView != NULL) {
-			infoGraphicsView->setProp(this, "buses", tr("buses"), m_beforeCut, value, true);
+			QString changeType = (connect) ? tr("Restored") : tr("Cut") ;
+			QString changeText = tr("%1 %n strip(s)", "", changeCount).arg(changeType);
+			infoGraphicsView->changeBus(this, connect, m_beforeCut, afterCut, affectedConnectors, changeText);
 		}
 
 		return;
@@ -437,7 +470,7 @@ void Stripboard::reinitBuses(bool triggerUndo)
 
 	foreach (Stripbit * stripbit, m_firstColumn) {
 		QList<ConnectorItem *> soFar;
-		int ix = stripbit->x();
+		int iy = stripbit->y();
 		while (stripbit != NULL) {
 			soFar << stripbit->connectorItem();
 			if (stripbit->removed()) {
@@ -446,7 +479,7 @@ void Stripboard::reinitBuses(bool triggerUndo)
 			}
 			stripbit = stripbit->right();
 		}
-		soFar.append(m_lastColumn.at(ix));
+		soFar.append(m_lastColumn.at(iy));
 		nextBus(soFar);
 	}
 
@@ -487,8 +520,4 @@ void Stripboard::setProp(const QString & prop, const QString & value)
 	}
 
 	reinitBuses(false);
-	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
-	if (infoGraphicsView != NULL) {
-		infoGraphicsView->cleanUpWires(false, NULL);
-	}
 }
