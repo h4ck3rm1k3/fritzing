@@ -101,30 +101,6 @@ void Perfboard::setProp(const QString & prop, const QString & value)
     if (m_partLabel) m_partLabel->displayTextsIf();
 }
 
-QString Perfboard::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi) 
-{
-	switch (viewLayerID) {
-		case ViewLayer::Breadboard:
-			break;
-		default:
-			return Capacitor::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
-	}
-
-	QString svg = makeBreadboardSvg(m_size);
-
-	QString xmlName = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
-	SvgFileSplitter splitter;
-	bool result = splitter.splitString(svg, xmlName);
-	if (!result) {
-		return "";
-	}
-	result = splitter.normalize(dpi, xmlName, blackOnly);
-	if (!result) {
-		return "";
-	}
-	return splitter.elementString(xmlName);
-}
-
 QString Perfboard::makeBreadboardSvg(const QString & size) 
 {
 	QString BreadboardLayerTemplate = "";

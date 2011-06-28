@@ -250,6 +250,7 @@ Stripboard::~Stripboard() {
 
 QString Stripboard::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi) 
 {
+	// TODO: generate svg for the strips
 	return Perfboard::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 }
 

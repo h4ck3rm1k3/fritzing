@@ -1,4 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1.1in" height="1.1in" viewBox="0 0 1100 1100" >
+<g id="breadboardbreadboard">
 <path id="boardoutline" stroke-width="0" stroke="none" fill="#deb675" fill-opacity="1" d="M0,0L1100,0 1100,1100 0,1100z
 M82.5,100a17.5,17.5 0 1 0 35,0 17.5,17.5 0 1 0 -35,0z
 M182.5,100a17.5,17.5 0 1 0 35,0 17.5,17.5 0 1 0 -35,0z
@@ -202,5 +203,5 @@ M982.5,1000a17.5,17.5 0 1 0 35,0 17.5,17.5 0 1 0 -35,0z
 <circle fill="none" cx="800" cy="1000" connectorname="7.9" stroke="#c49c59" r="27.5" id="connector9007pin" stroke-width="20"/>
 <circle fill="none" cx="900" cy="1000" connectorname="8.9" stroke="#c49c59" r="27.5" id="connector9008pin" stroke-width="20"/>
 <circle fill="none" cx="1000" cy="1000" connectorname="9.9" stroke="#c49c59" r="27.5" id="connector9009pin" stroke-width="20"/>
-
+</g>
 </svg>
