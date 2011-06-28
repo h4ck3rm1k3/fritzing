@@ -1728,16 +1728,17 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 	QString generatedModuleID;
 
 	if (generatedModuleID.isEmpty()) {
-		if (prop.compare("size") == 0 && family.compare("Perfboard") == 0) {
-			QString size = currPropsMap.value("size");
-			generatedModuleID = Perfboard::genModuleID(currPropsMap);
-		}
-	}
-
-	if (generatedModuleID.isEmpty()) {
-		if (prop.compare("size") == 0 && family.compare("Stripboard") == 0) {
-			QString size = currPropsMap.value("size");
-			generatedModuleID = Stripboard::genModuleID(currPropsMap);
+		if (family.compare("Proto Board", Qt::CaseInsensitive) == 0) {
+			if (prop.compare("size", Qt::CaseInsensitive) == 0 || prop.compare("type", Qt::CaseInsensitive) == 0) {
+				QString size = currPropsMap.value("size");
+				QString type = currPropsMap.value("type");
+				if (type.compare("perfboard", Qt::CaseInsensitive) == 0) {
+					generatedModuleID = Perfboard::genModuleID(currPropsMap);
+				}
+				else if (type.compare("stripboard", Qt::CaseInsensitive) == 0) {
+					generatedModuleID = Stripboard::genModuleID(currPropsMap);
+				}
+			}
 		}
 	}
 

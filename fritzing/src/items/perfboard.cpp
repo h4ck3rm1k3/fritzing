@@ -220,6 +220,7 @@ bool Perfboard::collectExtraInfo(QWidget * parent, const QString & family, const
 	if (prop.compare("size", Qt::CaseInsensitive) == 0) {
 		returnProp = tr("size");
 		returnValue = m_size;
+		m_propsMap.insert("size", m_size);
 
 		int x, y;
 		getXY(x, y, m_size);
@@ -291,7 +292,6 @@ bool Perfboard::collectExtraInfo(QWidget * parent, const QString & family, const
 		connect(m_yEdit, SIGNAL(editingFinished()), this, SLOT(enableSetButton()));
 
 		frame->setLayout(vboxLayout);
-
 
 		returnWidget = frame;
 

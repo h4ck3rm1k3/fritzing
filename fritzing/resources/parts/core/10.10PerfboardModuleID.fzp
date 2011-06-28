@@ -10,7 +10,8 @@
     <tag>Perfboard</tag>
   </tags>
   <properties>
-    <property name="family">Perfboard</property>
+    <property name="family">Proto Board</property>
+     <property name="type">Perfboard</property>
     <property name="size">10.10</property>
   </properties>
   <taxonomy>prototyping.perfboard.perfboard</taxonomy>
