@@ -250,8 +250,44 @@ Stripboard::~Stripboard() {
 
 QString Stripboard::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi) 
 {
-	// TODO: generate svg for the strips
-	return Perfboard::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
+	QString svg = Perfboard::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
+	if (svg.isEmpty()) return svg;
+	if (!svg.contains("boardoutline")) return svg;
+
+	/*
+	QFile file(filename());
+	if (!file.open(QFile::ReadOnly | QFile::Text)) {
+		return svg;
+	}
+	QString originalSvg = file.readAll();
+	file.close();
+
+	QString stripSvg = originalSvg.left(svg.indexOf(">") + 1);
+	*/
+
+	QString stripSvg;
+	foreach(QGraphicsItem * item, childItems()) {
+		Stripbit * stripbit = dynamic_cast<Stripbit *>(item);
+		if (stripbit == NULL) continue;
+		if (stripbit->removed()) continue;
+
+		QPointF p = stripbit->pos();
+		QRectF r = stripbit->boundingRect();
+
+		stripSvg += QString("<path stroke='none' stroke-width='0' fill='%6' " 
+						"d='m%1,%2 %3,0 0,%4 -%3,0z m0,%4a%5,%5  0,1,0 0,-%4z  m%3,-%4a%5,%5 0,1,0 0,%4z'/>\n")
+					.arg(p.x() * dpi / FSvgRenderer::printerScale())
+					.arg(p.y() * dpi / FSvgRenderer::printerScale())
+					.arg(r.width() * dpi / FSvgRenderer::printerScale() )
+					.arg(r.height() * dpi / FSvgRenderer::printerScale())
+					.arg(r.height() * dpi * .5 / FSvgRenderer::printerScale()) 
+					.arg(blackOnly ? "black" : "#c49c59")
+				;
+	}
+
+	svg.truncate(svg.lastIndexOf("</g>"));
+
+	return svg + stripSvg + "</g>\n";
 }
 
 QString Stripboard::genFZP(const QString & moduleid)
