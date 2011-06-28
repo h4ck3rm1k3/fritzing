@@ -1728,7 +1728,7 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 	QString generatedModuleID;
 
 	if (generatedModuleID.isEmpty()) {
-		if (family.compare("Proto Board", Qt::CaseInsensitive) == 0) {
+		if (family.compare("Prototyping Board", Qt::CaseInsensitive) == 0) {
 			if (prop.compare("size", Qt::CaseInsensitive) == 0 || prop.compare("type", Qt::CaseInsensitive) == 0) {
 				QString size = currPropsMap.value("size");
 				QString type = currPropsMap.value("type");

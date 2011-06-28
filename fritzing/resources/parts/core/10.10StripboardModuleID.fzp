@@ -10,7 +10,7 @@
     <tag>Stripboard</tag>
   </tags>
   <properties>
-    <property name="family">Proto Board</property>
+    <property name="family">Prototyping Board</property>
     <property name="type">Stripboard</property>
     <property name="size">10.10</property>
   </properties>

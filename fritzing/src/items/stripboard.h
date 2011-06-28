@@ -67,7 +67,6 @@ protected:
 	int m_y;
 	bool m_changed;
 	Stripbit * m_right;
-
 };
 
 class Stripboard : public Perfboard 

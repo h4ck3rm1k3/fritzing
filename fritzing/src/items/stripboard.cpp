@@ -49,6 +49,10 @@ $Date$
 static QCursor * SpotFaceCutterCursor = NULL;
 static QCursor * MagicWandCursor = NULL;
 
+static bool ShiftDown;
+static QPointF OriginalShiftPos;
+
+
 /////////////////////////////////////////////////////////////////////
 
 Stripbit::Stripbit(const QPainterPath & path, ConnectorItem * connectorItem, int x, int y, QGraphicsItem * parent = 0) 
@@ -114,6 +118,12 @@ void Stripbit::mousePressEvent(QGraphicsSceneMouseEvent *event)
 		return;
 	}
 
+	if (event->modifiers() & Qt::ShiftModifier) {
+		DebugDialog::debug("got shift down");
+		ShiftDown = true;
+		OriginalShiftPos = event->scenePos();
+	}
+
 	event->accept();
 	dynamic_cast<Stripboard *>(this->parentItem())->initCutting(this);
 	m_removed = !m_removed;
@@ -123,16 +133,6 @@ void Stripbit::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 
 	//DebugDialog::debug("got press");
-}
-
-void Stripbit::reassignCursor(Stripbit * other)
-{
-	if (other == NULL) {
-		setCursor(m_removed ? *MagicWandCursor : *SpotFaceCutterCursor);
-		return;
-	}
-
-	setCursor(other->cursor());
 }
 
 void Stripbit::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
@@ -145,10 +145,32 @@ void Stripbit::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
 	if (!event->buttons() && Qt::LeftButton) return;
 
+	if (ShiftDown && !(event->modifiers() & Qt::ShiftModifier)) {
+		ShiftDown = false;
+	}
+
 	//DebugDialog::debug("got move");
 
 	Stripbit * other = NULL;
-	foreach (QGraphicsItem * item, scene()->items(event->scenePos())) {
+	QPointF p = event->scenePos();
+	if (ShiftDown) {
+		if (qAbs(p.x() - OriginalShiftPos.x()) >= qAbs(p.y() - OriginalShiftPos.y())) {
+			// moving along x, constrain y
+			p.setY(OriginalShiftPos.y());
+		}
+		else {
+			// moving along y, constrain x
+			p.setX(OriginalShiftPos.x());
+		}
+	}
+
+
+	if (!ShiftDown && (event->modifiers() & Qt::ShiftModifier)) {
+		ShiftDown = true;
+		OriginalShiftPos = event->scenePos();
+	}
+
+	foreach (QGraphicsItem * item, scene()->items(p)) {
 		other = dynamic_cast<Stripbit *>(item);
 		if (other) break;
 	}
@@ -182,6 +204,16 @@ void Stripbit::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event )
 	Q_UNUSED(event);
 	m_inHover = false;
 	update();
+}
+
+void Stripbit::reassignCursor(Stripbit * other)
+{
+	if (other == NULL) {
+		setCursor(m_removed ? *MagicWandCursor : *SpotFaceCutterCursor);
+		return;
+	}
+
+	setCursor(other->cursor());
 }
 
 void Stripbit::setRight(Stripbit * right) {
