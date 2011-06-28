@@ -4139,6 +4139,8 @@ void SketchWidget::prepDeleteProps(ItemBase * itemBase, long id, const QString &
 	// TODO: does this need to be generalized to the whole set of modelpart props?
 	// TODO: Ruler?
 
+	// TODO: this all belongs in PartFactory
+
 	// NOTE:  prepDeleteProps is called after a swap and assumes that the new part is closely related to the old part
 	// meaning that the properties of itemBase (which is the old part) apply to the new part (which has not yet been created)
 	// this works most of the time, but does not, for example, when a ResizableBoard is swapped for a custom board shape
@@ -4253,6 +4255,13 @@ void SketchWidget::prepDeleteOtherProps(ItemBase * itemBase, long id, const QStr
 		capacitor->getProperties(properties);
 		foreach(QString prop, properties.keys()) {
 			new SetPropCommand(this, id, prop, properties.value(prop), properties.value(prop), true, parentCommand);
+		}
+	}
+
+	if (itemBase->moduleID().endsWith(ModuleIDNames::StripboardModuleIDName)) {
+		QString buses = itemBase->modelPart()->prop("buses").toString();
+		if (!buses.isEmpty()) {
+			new SetPropCommand(this, id, "buses", buses, buses, true, parentCommand);
 		}
 	}
 
