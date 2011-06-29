@@ -594,6 +594,7 @@ protected:
 	QPointer<ItemBase> m_addedDefaultPart;
 	float m_z;
 	QTimer m_arrowTimer;
+	bool m_middleMouseIsPressed;
 
 public:
 	static ViewLayer::ViewLayerID defaultConnectorLayer(ViewIdentifierClass::ViewIdentifier viewId);

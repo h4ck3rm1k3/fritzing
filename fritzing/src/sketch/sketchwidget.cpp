@@ -42,7 +42,6 @@ $Date$
 #include <QApplication>
 #include <QDomElement>
 #include <QSettings>
-//#include <QGLWidget>
 
 #include "../items/partfactory.h"
 #include "../items/paletteitem.h"
@@ -104,6 +103,7 @@ SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, Q
 
         //setViewport(new QGLWidget);
 
+	m_middleMouseIsPressed = false;
 	m_arrowTimer.setParent(this);
 	m_arrowTimer.setInterval(AutoRepeatDelay);
 	m_arrowTimer.setSingleShot(true);
@@ -1794,10 +1794,20 @@ void SketchWidget::mousePressEvent(QMouseEvent *event)
 
 	m_movingByMouse = true;
 
+	QMouseEvent * hackEvent = NULL;
+	if (event->button() == Qt::MidButton && !spaceBarIsPressed()) {
+		m_middleMouseIsPressed = true;
+		setDragMode(QGraphicsView::ScrollHandDrag);
+		setCursor(Qt::OpenHandCursor);
+		// make the event look like a left button press to fool the underlying drag mode implementation
+		event = hackEvent = new QMouseEvent(event->type(), event->pos(), event->globalPos(), Qt::LeftButton, event->buttons() | Qt::LeftButton, event->modifiers());
+	}
+
 	m_dragBendpointWire = NULL;
 	m_spaceBarWasPressed = spaceBarIsPressed();
 	if (m_spaceBarWasPressed) {
 		InfoGraphicsView::mousePressEvent(event);
+		if (hackEvent) delete hackEvent;
 		return;
 	}
 
@@ -2554,7 +2564,23 @@ void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
 	ConnectorItem::clearEqualPotentialDisplay();
 
 	if (m_spaceBarWasPressed) {
+
+		QMouseEvent * hackEvent = NULL;
+		if (m_middleMouseIsPressed) {
+		// make the event look like a left button press to fool the underlying drag mode implementation
+			event = hackEvent = new QMouseEvent(event->type(), event->pos(), event->globalPos(), Qt::LeftButton, event->buttons() | Qt::LeftButton, event->modifiers());
+		}
+
 		InfoGraphicsView::mouseReleaseEvent(event);
+		m_spaceBarWasPressed = false;
+		if (m_middleMouseIsPressed) {
+			m_middleMouseIsPressed = false;
+			setDragMode(QGraphicsView::RubberBandDrag);
+			setCursor(Qt::ArrowCursor);		
+		}
+
+		//DebugDialog::debug("turning off spacebar was");
+		if (hackEvent) delete hackEvent;
 		return;
 	}
 
@@ -4033,7 +4059,7 @@ void SketchWidget::keyReleaseEvent(QKeyEvent * event) {
 	if (m_movingByArrow) {
 		m_autoScrollTimer.stop();
 		m_arrowTimer.start();
-		DebugDialog::debug("key release event");
+		//DebugDialog::debug("key release event");
 	}
 	else {
 		QGraphicsView::keyReleaseEvent(event);
@@ -4049,7 +4075,7 @@ void SketchWidget::arrowTimerTimeout() {
 }
 
 void SketchWidget::keyPressEvent ( QKeyEvent * event ) {
-	DebugDialog::debug("key press event");
+	//DebugDialog::debug("key press event");
 	if ((m_inFocus.length() == 0) && !m_movingByMouse) {
 		int dx = 0, dy = 0;
 		switch (event->key()) {
@@ -5211,6 +5237,8 @@ bool SketchWidget::disconnectFromFemale(ItemBase * item, QHash<long, ItemBase *>
 }
 
 void SketchWidget::spaceBarIsPressedSlot(bool isPressed) {
+	if (m_middleMouseIsPressed) return;
+
 	m_spaceBarIsPressed = isPressed;
 	if (isPressed) {
 		setDragMode(QGraphicsView::ScrollHandDrag);
@@ -5909,7 +5937,7 @@ void SketchWidget::pushCommand(QUndoCommand * command) {
 }
 
 bool SketchWidget::spaceBarIsPressed() {
-	return m_spaceBarIsPressed;
+	return m_spaceBarIsPressed || m_middleMouseIsPressed;
 }
 
 ViewLayer::ViewLayerID SketchWidget::defaultConnectorLayer(ViewIdentifierClass::ViewIdentifier viewId) {
