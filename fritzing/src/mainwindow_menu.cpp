@@ -2102,6 +2102,7 @@ void MainWindow::createTraceMenuActions() {
 
 	m_designRulesCheckAct = new QAction(tr("Design Rules Check"), this);
 	m_designRulesCheckAct->setStatusTip(tr("Select any parts that are too close together for safe board production (w/in 10 mil)"));
+	m_designRulesCheckAct->setShortcut(tr("Shift+Ctrl+D"));
 	connect(m_designRulesCheckAct, SIGNAL(triggered()), this, SLOT(designRulesCheck()));
 
 	m_autorouterSettingsAct = new QAction(tr("Autorouter settings..."), this);

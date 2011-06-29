@@ -447,6 +447,29 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 		normalizeAttribute(element, "font-size", sNewWidth, vbWidth);
 		setStrokeOrFill(element, blackOnly, "black");
 	}
+	else if (nodeName.compare("linearGradient") == 0) {
+		if (element.attribute("gradientUnits").compare("userSpaceOnUse") == 0) {
+			normalizeAttribute(element, "x1", sNewWidth, vbWidth);
+			normalizeAttribute(element, "y1", sNewWidth, vbWidth);
+			normalizeAttribute(element, "x2", sNewWidth, vbWidth);
+			normalizeAttribute(element, "y2", sNewWidth, vbWidth);
+		}
+		else {
+			DebugDialog::debug(QString("unable to handle linearGradient with gradientUnits=%1").arg(element.attribute("gradientUnits")));
+		}
+	}
+	else if (nodeName.compare("radialGradient") == 0) {
+		if (element.attribute("gradientUnits").compare("userSpaceOnUse") == 0) {
+			normalizeAttribute(element, "cx", sNewWidth, vbWidth);
+			normalizeAttribute(element, "cy", sNewWidth, vbWidth);
+			normalizeAttribute(element, "fx", sNewWidth, vbWidth);
+			normalizeAttribute(element, "fy", sNewWidth, vbWidth);
+			normalizeAttribute(element, "r", sNewWidth, vbWidth);
+		}
+		else {
+			DebugDialog::debug(QString("unable to handle radialGradient with gradientUnits=%1").arg(element.attribute("gradientUnits")));
+		}
+	}
 	else {
 		doChildren = true;
 	}
