@@ -1787,22 +1787,22 @@ bool SketchWidget::moveByArrow(int dx, int dy, QKeyEvent * event) {
 }
 
 
-void SketchWidget::mousePressEvent(QMouseEvent *event) {
-	
-
+void SketchWidget::mousePressEvent(QMouseEvent *event) 
+{
 	m_draggingBendpoint = false;
 	if (m_movingByArrow) return;
 
 	m_movingByMouse = true;
 
 	m_dragBendpointWire = NULL;
-	m_spaceBarWasPressed = m_spaceBarIsPressed;
-	if (m_spaceBarIsPressed) {
+	m_spaceBarWasPressed = spaceBarIsPressed();
+	if (m_spaceBarWasPressed) {
 		InfoGraphicsView::mousePressEvent(event);
 		return;
 	}
 
 	//setRenderHint(QPainter::Antialiasing, false);
+
 
 	clearHoldingSelectItem();
 	m_savedItems.clear();
@@ -2336,7 +2336,6 @@ bool SketchWidget::draggingWireEnd() {
 void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 	// if its just dragging a wire end do default
 	// otherwise handle all move action here
-
 
 	if (m_movingByArrow) return;
 

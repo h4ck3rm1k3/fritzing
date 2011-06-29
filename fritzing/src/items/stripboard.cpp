@@ -51,6 +51,7 @@ static QCursor * MagicWandCursor = NULL;
 
 static bool ShiftDown;
 static QPointF OriginalShiftPos;
+static bool SpaceBarWasPressed = false;
 
 
 /////////////////////////////////////////////////////////////////////
@@ -70,7 +71,6 @@ Stripbit::Stripbit(const QPainterPath & path, ConnectorItem * connectorItem, int
 	}
 
 	setZValue(-999);			// beneath connectorItems
-	setCursor(*SpotFaceCutterCursor);
 
 	m_right = NULL;
 	m_x = x;
@@ -108,6 +108,12 @@ void Stripbit::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 
 void Stripbit::mousePressEvent(QGraphicsSceneMouseEvent *event) 
 {
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView != NULL && infoGraphicsView->spaceBarIsPressed()) {
+		event->ignore();
+		return;
+	}
+		
 	if (!event->buttons() && Qt::LeftButton) {
 		event->ignore();
 		return;
@@ -192,6 +198,14 @@ void Stripbit::hoverEnterEvent( QGraphicsSceneHoverEvent * event )
 {
 	if (dynamic_cast<ItemBase *>(this->parentItem())->moveLock()) return;
 
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView != NULL && infoGraphicsView->spaceBarIsPressed()) {
+		SpaceBarWasPressed = true;
+		return;
+	}
+
+	SpaceBarWasPressed = false;
+	setCursor(m_removed ? *MagicWandCursor : *SpotFaceCutterCursor);
 	Q_UNUSED(event);
 	m_inHover = true;
 	update();
@@ -200,20 +214,12 @@ void Stripbit::hoverEnterEvent( QGraphicsSceneHoverEvent * event )
 void Stripbit::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) 
 {
 	if (dynamic_cast<ItemBase *>(this->parentItem())->moveLock()) return;
+	if (SpaceBarWasPressed) return;
 
+	unsetCursor();
 	Q_UNUSED(event);
 	m_inHover = false;
 	update();
-}
-
-void Stripbit::reassignCursor(Stripbit * other)
-{
-	if (other == NULL) {
-		setCursor(m_removed ? *MagicWandCursor : *SpotFaceCutterCursor);
-		return;
-	}
-
-	setCursor(other->cursor());
 }
 
 void Stripbit::setRight(Stripbit * right) {
@@ -455,14 +461,13 @@ QString Stripboard::makeBreadboardSvg(const QString & size)
 	return Perfboard::makeBreadboardSvg(size);
 }
 
-void Stripboard::initCutting(Stripbit * eventStripbit) 
+void Stripboard::initCutting(Stripbit *) 
 {
 	m_beforeCut.clear();
 	foreach (QGraphicsItem * item, childItems()) {
 		Stripbit * stripbit = dynamic_cast<Stripbit *>(item);
 		if (stripbit == NULL) continue;
 		
-		stripbit->reassignCursor(eventStripbit);
 		stripbit->setChanged(false);
 		if (stripbit->removed()) {
 			m_beforeCut += (stripbit->connectorItem()->connectorSharedName() + " ");
@@ -536,7 +541,6 @@ void Stripboard::reinitBuses(bool triggerUndo)
 			continue;
 		}
 
-		stripbit->reassignCursor(NULL);
 	}
 
 	QString busPropertyString;
@@ -606,16 +610,4 @@ void Stripboard::setProp(const QString & prop, const QString & value)
 	}
 
 	reinitBuses(false);
-}
-
-void Stripboard::setMoveLock(bool lock) {
-	Perfboard::setMoveLock(lock);
-
-	foreach (QGraphicsItem * item, childItems()) {
-		Stripbit * stripbit = dynamic_cast<Stripbit *>(item);
-		if (stripbit == NULL) continue;
-		
-		if (lock) stripbit->unsetCursor();
-		else stripbit->reassignCursor(NULL);
-	}
 }

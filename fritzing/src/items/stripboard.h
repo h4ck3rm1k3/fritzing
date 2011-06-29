@@ -50,7 +50,6 @@ public:
 	ConnectorItem * connectorItem();
 	int y();
 	int x();
-	void reassignCursor(Stripbit * other);
 
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -84,7 +83,6 @@ public:
 	void setProp(const QString & prop, const QString & value);
 	void reinitBuses(bool triggerUndo);
 	void initCutting(Stripbit *);
-	void setMoveLock(bool);
 
 protected:
 	void nextBus(QList<ConnectorItem *> & soFar);
