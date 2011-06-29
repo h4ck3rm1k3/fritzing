@@ -55,6 +55,26 @@ class FSizeGrip;
 
 bool sortPartList(ItemBase * b1, ItemBase * b2);
 
+class SwapTimer : public QTimer
+{
+Q_OBJECT
+
+public:
+	SwapTimer();
+
+	void setAll(const QString & family, const QString & prop, QMap<QString, QString> &  propsMap, ItemBase *);
+	const QString & family();
+	const QString & prop();
+	QMap<QString, QString> propsMap();
+	ItemBase * itemBase();
+
+protected:
+	QString m_family;
+	QString m_prop;
+	QMap<QString, QString> m_propsMap;
+	QPointer <ItemBase> m_itemBase;
+};
+
 class MainWindow : public FritzingWindow
 {
     Q_OBJECT
@@ -115,7 +135,6 @@ signals:
 
 public slots:
 	void ensureClosable();
-	void swapSelectedMap(const QString & family, const QString & prop, QMap<QString, QString> & currPropsMap, ItemBase *);
 	ModelPart* loadBundledPart(const QString &fileName, bool addToBin=true);
 	void partsEditorClosed(long id);
 	void importFilesFromPrevInstall();
@@ -288,6 +307,9 @@ protected slots:
 	void boardDeletedSlot();
 	void cursorLocationSlot(qreal, qreal);
 	void locationLabelClicked();
+	void swapSelectedDelay(const QString & family, const QString & prop, QMap<QString, QString> & currPropsMap, ItemBase *);
+	void swapSelectedTimeout();
+
 
 protected:
 	void initSketchWidget(SketchWidget *);
@@ -418,6 +440,7 @@ protected:
 	class Wire * retrieveWire();
 	void updatePartsBinMenu(QMenu * partsBinMenu, QMenu * binMenu, int skip);
 	QString getBomProps(ItemBase *);
+	void swapSelectedMap(const QString & family, const QString & prop, QMap<QString, QString> & currPropsMap, ItemBase *);
 
 
 protected:
@@ -689,7 +712,8 @@ protected:
 	QString m_bundledSketchName;
 	RoutingStatus m_routingStatus;
 	bool m_smdOneSideWarningGiven;
-	bool m_enableOrderFabButton;				
+	bool m_enableOrderFabButton;		
+	SwapTimer m_swapTimer;
 
 public:
 	static int RestartNeeded;
@@ -717,5 +741,6 @@ signals:
 	void clicked();
 
 };
+
 
 #endif
