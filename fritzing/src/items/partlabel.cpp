@@ -119,7 +119,9 @@ PartLabel::PartLabel(ItemBase * owner, QGraphicsItem * parent)
 
 	m_inactive = m_hidden = m_initialized = false;
 	m_displayKeys.append(LabelTextKey);
-	if (m_owner->hasPartNumberProperty()) m_displayKeys.append(ModelPartShared::PartNumberPropertyName);
+	if (m_owner->hasPartNumberProperty() && m_owner->viewIdentifier() != ViewIdentifierClass::PCBView) {
+		m_displayKeys.append(ModelPartShared::PartNumberPropertyName);
+	}
 
 	setFlag(QGraphicsItem::ItemIsSelectable, false);
 	setFlag(QGraphicsItem::ItemIsMovable, false);					// don't move this in the standard QGraphicsItem way
