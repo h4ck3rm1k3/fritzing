@@ -6,6 +6,7 @@ from z3c.form import validator
 
 from plone.directives import form
 from plone.namedfile.field import NamedBlobFile
+from plone.app.textfield import RichText
 
 from fritzing.fab.constraints import checkEMail, SketchFileValidator
 from fritzing.fab import _
@@ -215,9 +216,13 @@ class IFabOrders(form.Schema):
         description = _(u"Estimated delivery date of PCBs from the next production"),
         required = False)
     
-    nextProductionClosingDate= Date(
+    nextProductionClosingDate = Date(
         title = _(u"Next production closing date"),
         description = _(u"Orders must be send in before this date to be included in the next production run"),
         required = False)
+    
+    editableContent = RichText(
+        title = _(u"Order-folder text"),
+        description = _(u"The text of this fab-instance"))
 
 

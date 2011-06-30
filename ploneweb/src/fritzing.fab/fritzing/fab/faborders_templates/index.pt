@@ -11,63 +11,25 @@
   <body>
     <metal:main fill-slot="main">
       <tal:main-macro metal:define-macro="main">
-        <h1 class="documentFirstHeading">Fritzing Fab</h1>
-        <p class="documentDescription">
-          There's nothing better than turning a concept into product reality.
+        <h1 class="documentFirstHeading" tal:content="context/title | nothing">xFritzing Fab</h1>
+        <p class="documentDescription" tal:content="context/description | nothing">
+          xThere's nothing better than turning a concept into product reality.
         </p>
         <div id="content-core">
           <table class="blind">
             <tbody>
               <tr>
-                <td width="50%">
-                  <div>
-                    <p>Fritzing Fab is a service that produces a PCB out of your Fritzing design.<br/>
-                      It is the easiest and probably cheapest way to get your project produced as a professional product.
-                    </p>
-                    <h3>How it works</h3>
-                    <p>Simple: We are collecting the submitted designs and produce a bunch of them at once.
-                      That way, it stays cheap -- and easy: all you have to do is to send us your Fritzing file.
-                      The boards are manufactured by a professional board house here in Berlin.
-                    </p>
-                    <h3>What you get</h3>
-                    <ul>
-                      <li>Your Fritzing sketch as a professional PCB</li>
-                      <li>Double-sided board with sweet black print on a white board</li>
-                      <li>Quality "Made in Germany" and RoHS compliant</li>
-                    </ul>
-                    <h3>How much it costs</h3>
-                    <p>We charge per cm2, and the more cm2 the cheaper a cm2 gets.
-                      One Arduino Shield costs you 27&#x20AC;, two copies will cost 25&#x20AC; each, etc. See a complete price table.<br/>
-                      You can opt for a "sanity check" for an extra 5&#x20AC;, and have us take a closer look at your design.
-                    </p>
-                    <h3>How to get started</h3>
-                    <p>This is easier than you might think:</p>
-                    <ol>
-                      <li>1. Layout your board in Fritzing's PCB view. <a href="http://fritzing.org/learning/tutorials/designing-pcb/">Learn how.</a></li>
-                      <li>2. Go through <a href="http://fritzing.org/learning/tutorials/fritzing-fab-howto/">these checks</a> to prepare it for production. </li>
-                      <li>3. <a class="addOrderLink" tal:attributes="href string:${context/absolute_url}/++add++faborder">Submit your order</a> and hold your patience</li>
-                      <li>4. Receive your fine board and populate it with parts</li>
-                    </ol>
-                  </div>
-                  <p>
-                    <br/>
-                  </p>
-                  <p>
-                    <strong>Good luck and happy routing!</strong>
-                  </p>
-                  <p>
-                    <br/>
-                  </p>
-                  <p>
-                    P.S. While you're here, please also take a look at our 
-                    <a href="http://fritzing.org/shop/starter-kit/">Fritzing Starter Kit</a>. :)
-                  </p>
+                <td width="50%" tal:content="structure context/editableContent/output | nothing">
+                  
                 </td>
                 <td width="50%">
                   <h2>
                     <a class="addOrderLink" tal:attributes="href string:${context/absolute_url}/++add++faborder">Order now</a>
                   </h2>
-                  <p>Submit your design by the ... to receive your PCB by the ....</p>
+                  <p tal:condition="python:context.nextProductionClosingDate and context.nextProductionDelivery">
+                    Submit your layout by the <span tal:content="context/nextProductionClosingDate">...</span><br />
+                    and we will ship it on <span tal:content="context/nextProductionDelivery">...</span>.
+                  </p>
                   <div tal:condition="container/listFolderContents">
                     <h2>Your orders</h2>
                     <table class="orderTable">
