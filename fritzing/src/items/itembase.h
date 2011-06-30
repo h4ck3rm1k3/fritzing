@@ -184,6 +184,8 @@ public:
 	virtual void addedToScene();
 	virtual bool hasPartNumberProperty();
 	void collectPropsMap(QString & family, QMap<QString, QString> &);
+	virtual bool rotationAllowed();
+	virtual bool rotation45Allowed();
 
 public:
 	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth, bool & negativeOffsetRect);
@@ -223,7 +225,8 @@ public:
 	void hoverEnterConnectorItem();
 	void hoverLeaveConnectorItem();
 	virtual void connectorHover(ConnectorItem *, ItemBase *, bool hovering);
-	void clearConnectorHover();
+	virtual void clearConnectorHover();
+	virtual void hoverUpdate();
 	virtual bool filterMousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 	virtual void mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 	virtual void mouseDoubleClickConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);

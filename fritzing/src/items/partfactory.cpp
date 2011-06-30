@@ -36,6 +36,7 @@ $Date$
 #include "jumperitem.h"
 #include "resizableboard.h"
 #include "logoitem.h"
+#include "schematicframe.h"
 #include "resistor.h"
 #include "moduleidnames.h"
 #include "mysterypart.h"
@@ -49,6 +50,7 @@ $Date$
 #include "via.h"
 #include "capacitor.h"
 #include "perfboard.h"
+#include "breadboard.h"
 #include "stripboard.h"
 #include "../utils/folderutils.h"
 
@@ -83,9 +85,9 @@ ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClas
 
 		}
 		case ModelPart::Note:
-		{
 			return new Note(modelPart, viewIdentifier, viewGeometry, id, NULL);
-		}
+		case ModelPart::Breadboard:
+			return new Breadboard(modelPart, viewIdentifier, viewGeometry, id, NULL, doLabel);
 		case ModelPart::CopperFill:
 			return new GroundPlane(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 		case ModelPart::Jumper:
@@ -140,6 +142,9 @@ ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClas
 					}
 					if (moduleID.endsWith(ModuleIDNames::StripboardModuleIDName)) {
 						return new Stripboard(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
+					}
+					if (moduleID.endsWith(ModuleIDNames::SchematicFrameModuleIDName)) {
+						return new SchematicFrame(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 					}
 				}
 				QString family = modelPart->properties().value("family", "");

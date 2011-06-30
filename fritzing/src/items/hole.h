@@ -74,6 +74,9 @@ public:
 	void addedToScene();	
 	bool hasPartNumberProperty();
 	QString holeSize();
+	bool rotationAllowed();
+	bool rotation45Allowed();
+	bool canFindConnectorsUnder();
 
 public:
 	static QWidget * createHoleSettings(QWidget * parent, HoleSettings &, bool swappingEnabled, const QString & currentHoleSize);

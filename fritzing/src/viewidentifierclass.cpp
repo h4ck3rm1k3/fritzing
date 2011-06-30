@@ -103,7 +103,7 @@ void ViewIdentifierClass::initNames() {
 		bb << ViewLayer::BreadboardBreadboard << ViewLayer::Breadboard 
 			<< ViewLayer::BreadboardWire << ViewLayer::BreadboardLabel 
 			<< ViewLayer::BreadboardNote << ViewLayer::BreadboardRuler;
-		ss << ViewLayer::Schematic 
+		ss << ViewLayer::SchematicFrame << ViewLayer::Schematic 
 			<< ViewLayer::SchematicWire 
 			<< ViewLayer::SchematicTrace << ViewLayer::SchematicLabel 
 			<< ViewLayer::SchematicNote <<  ViewLayer::SchematicRuler;

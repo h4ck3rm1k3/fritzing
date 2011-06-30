@@ -18,6 +18,7 @@
 # ********************************************************************/
 
 HEADERS += \
+    src/items/breadboard.h \    
     src/items/capacitor.h \    
     src/items/clipablewire.h \
     src/items/dip.h \
@@ -41,6 +42,7 @@ HEADERS += \
     src/items/resistor.h \
     src/items/resizableboard.h \
     src/items/ruler.h \
+    src/items/schematicframe.h \
     src/items/screwterminal.h \
     src/items/stripboard.h \
     src/items/symbolpaletteitem.h \
@@ -51,6 +53,7 @@ HEADERS += \
 
 
 SOURCES += \
+    src/items/breadboard.cpp \    
     src/items/capacitor.cpp \
     src/items/clipablewire.cpp \
     src/items/dip.cpp \
@@ -74,6 +77,7 @@ SOURCES += \
     src/items/resistor.cpp \
     src/items/resizableboard.cpp \
     src/items/ruler.cpp \
+    src/items/schematicframe.cpp \
     src/items/screwterminal.cpp \
     src/items/stripboard.cpp \
     src/items/symbolpaletteitem.cpp \

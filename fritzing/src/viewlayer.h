@@ -47,6 +47,7 @@ public:
 		BreadboardLabel,
 		BreadboardNote,
 		BreadboardRuler,
+		SchematicFrame,
 		Schematic,
 		SchematicWire,
 		SchematicTrace,

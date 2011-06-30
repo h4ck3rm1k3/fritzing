@@ -189,9 +189,10 @@
         <file>resources/parts/core/hole.fzp</file>
         <file>resources/parts/core/10.10PerfboardModuleID.fzp</file>
         <file>resources/parts/core/10.10StripboardModuleID.fzp</file>
+        <file>resources/parts/core/schematic_frame.fzp</file>
 	
         <file>resources/parts/svg/core/icon/iconPerfboard.svg</file>
-       <file>resources/parts/svg/core/icon/iconStripboard.svg</file>
+        <file>resources/parts/svg/core/icon/iconStripboard.svg</file>
         <file>resources/parts/svg/core/icon/wireicon.svg</file>
         <file>resources/parts/svg/core/icon/rulericon.svg</file>
         <file>resources/parts/svg/core/icon/rectangle_pcb.svg</file>
@@ -219,10 +220,11 @@
         <file>resources/parts/svg/core/pcb/hole.svg</file>
         <file>resources/parts/svg/core/pcb/groundplane.svg</file>
         <file>resources/parts/svg/core/pcb/via.svg</file>
-
+ 
         <file>resources/parts/svg/core/schematic/ground.svg</file>
         <file>resources/parts/svg/core/schematic/cell.svg</file>
         <file>resources/parts/svg/core/schematic/power.svg</file>
+        <file>resources/parts/svg/core/schematic/frame.svg</file>
 	
 	<file>resources/styles/fritzing.qss</file>
         <file>resources/styles/partseditor.qss</file>
@@ -272,6 +274,7 @@
 	<file>resources/templates/generic_rounded_female_pin_header_bread_template.txt</file>
 	<file>resources/templates/generic_male_pin_header_bread_template.txt</file>
 	<file>resources/templates/generic_sip_bread_template.txt</file>
+	<file>resources/templates/schematic_frame_template.txt</file>
 	
     </qresource>
 </RCC>

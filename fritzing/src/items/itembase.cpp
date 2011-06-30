@@ -450,9 +450,7 @@ void ItemBase::hoverEnterConnectorItem(QGraphicsSceneHoverEvent * , ConnectorIte
 void ItemBase::hoverEnterConnectorItem() {
 	//DebugDialog::debug(QString("hover enter c %1").arg(instanceTitle()));
 	m_connectorHoverCount++;
-	if (itemType() != ModelPart::Breadboard) {
-		this->update();
-	}
+	hoverUpdate();
 }
 
 void ItemBase::hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * , ConnectorItem * ) {
@@ -465,17 +463,13 @@ void ItemBase::hoverMoveConnectorItem(QGraphicsSceneHoverEvent * , ConnectorItem
 void ItemBase::hoverLeaveConnectorItem() {
 	//DebugDialog::debug(QString("hover leave c %1").arg(instanceTitle()));
 	m_connectorHoverCount--;
-	if (itemType() != ModelPart::Breadboard) {
-		this->update();
-	}
+	hoverUpdate();
 }
 
 void ItemBase::clearConnectorHover()
 {
 	m_connectorHoverCount2 = 0;
-	if (itemType() != ModelPart::Breadboard) {
-		update();
-	}
+	hoverUpdate();
 }
 
 void ItemBase::connectorHover(ConnectorItem *, ItemBase *, bool hovering) {
@@ -488,9 +482,11 @@ void ItemBase::connectorHover(ConnectorItem *, ItemBase *, bool hovering) {
 		m_connectorHoverCount2--;
 	}
 	// DebugDialog::debug(QString("m_connectorHoverCount2 %1 %2").arg(instanceTitle()).arg(m_connectorHoverCount2));
-	if (itemType() != ModelPart::Breadboard) {
-		this->update();
-	}
+	hoverUpdate();
+}
+
+void ItemBase::hoverUpdate() {
+	this->update();
 }
 
 void ItemBase::mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *) {
@@ -642,9 +638,7 @@ void ItemBase::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
 
 	m_hoverEnterSpaceBarWasPressed = false;
 	m_hoverCount++;
-	if (itemType() != ModelPart::Breadboard) {
-		update();
-	}
+	hoverUpdate();
 	if (infoGraphicsView != NULL) {
 		infoGraphicsView->hoverEnterItem(event, this);
 	}
@@ -658,9 +652,9 @@ void ItemBase::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
 	}
 
 	m_hoverCount--;
-	if (itemType() != ModelPart::Breadboard) {
-		update();
-	}
+	hoverUpdate();
+
+
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
 		infoGraphicsView->hoverLeaveItem(event, this);
@@ -774,8 +768,7 @@ int ItemBase::itemType() const
 }
 
 void ItemBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-	if (!m_inactive && (itemType() != ModelPart::Breadboard) && (m_connectorHoverCount > 0 || m_hoverCount > 0 || m_connectorHoverCount2 > 0)) {
-		// TODO: instead of checking ModelPart::Breadboard, make breadboards a class, and override paintHover()
+	if (!m_inactive && (m_connectorHoverCount > 0 || m_hoverCount > 0 || m_connectorHoverCount2 > 0)) {
 		//DebugDialog::debug(QString("chc:%1 hc:%2 chc2:%3").arg(m_connectorHoverCount).arg(m_hoverCount).arg(m_connectorHoverCount2));
 		layerKinChief()->paintHover(painter, option, widget);
 	}
@@ -860,15 +853,6 @@ void ItemBase::setItemPos(QPointF & loc) {
 }
 
 bool ItemBase::stickyEnabled() {
-	switch (itemType()) {
-		case ModelPart::Board:
-		case ModelPart::Breadboard:
-		case ModelPart::Unknown:
-			return false;
-		default:
-			return true;
-	}
-
 	return true;
 }
 
@@ -1072,6 +1056,14 @@ bool ItemBase::canFlipVertical() {
 
 void ItemBase::setCanFlipVertical(bool cf) {
 	m_canFlipVertical = cf;
+}
+
+bool ItemBase::rotationAllowed() {
+	return true;
+}
+
+bool ItemBase::rotation45Allowed() {
+	return true;
 }
 
 void ItemBase::clearModelPart() {
@@ -1738,14 +1730,6 @@ void ItemBase::setFilename(const QString & fn) {
 }
 
 ItemBase::PluralType ItemBase::isPlural() {
-	switch (modelPart()->itemType()) {
-		case ModelPart::Breadboard:
-		case ModelPart::Board:
-			return ItemBase::Plural;
-		default:
-			break;
-	}
-
 	return ItemBase::NotSure;
 }
 

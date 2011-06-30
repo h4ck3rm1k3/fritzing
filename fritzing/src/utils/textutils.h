@@ -83,6 +83,10 @@ public:
 	static QString incrementTemplateString(const QString & templateString, int pins, qreal increment, MultiplyPinFunction, CopyPinFunction);
 	static QString standardCopyPinFunction(int pin, const QString & argString);
 	static QString standardMultiplyPinFunction(int pin, qreal increment, qreal value);
+	static QString noCopyPinFunction(int pin, const QString & argString);
+	static QString incMultiplyPinFunction(int pin, qreal increment, qreal value);
+	static qreal getViewBoxCoord(const QString & svg, int coord);
+
 
 public:
 	static const QRegExp FindWhitespace;

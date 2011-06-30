@@ -25,7 +25,7 @@ $Date$
 ********************************************************************/
 
 #ifndef LOGOITEM_H
-#define LOGOITEMD_H
+#define LOGOITEM_H
 
 #include <QRectF>
 #include <QPainterPath>

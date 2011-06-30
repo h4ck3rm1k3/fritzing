@@ -64,6 +64,7 @@ public:
 	static const QString PerfboardModuleIDName;
 	static const QString StripboardModuleIDName;
 	static const QString SpacerModuleIDName;
+	static const QString SchematicFrameModuleIDName;
 };
 
 #endif

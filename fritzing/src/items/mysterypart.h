@@ -70,11 +70,8 @@ public:
 	static QString makeBreadboardDipSvg(const QString & expectedFileName);
 
 protected:
-	static QString noCopyPinFunction(int pin, const QString & argString);
-	static QString incMultiplyPinFunction(int pin, qreal increment, qreal value);
 	static QString incCopyPinFunction(int pin, const QString & argString);
 	static QString negCopyPinFunction(int pin, const QString & argString);
-	static qreal getViewBoxCoord(const QString & svg, int coord);
 
 
 protected:

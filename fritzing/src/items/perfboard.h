@@ -50,6 +50,11 @@ public:
 	PluralType isPlural();
 	void addedToScene();
 	void setProp(const QString & prop, const QString & value);
+	void hoverUpdate();
+	void paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget); 
+	bool stickyEnabled();
+	bool canFindConnectorsUnder();
+	bool rotation45Allowed();
 
 public:
 	static QString genFZP(const QString & moduleID);

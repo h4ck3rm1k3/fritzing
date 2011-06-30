@@ -632,3 +632,15 @@ QWidget * Hole::createHoleSettings(QWidget * parent, HoleSettings & holeSettings
 
 	return frame;
 }
+
+bool Hole::rotationAllowed() {
+	return false;
+}
+
+bool Hole::rotation45Allowed() {
+	return false;
+}
+
+bool Hole::canFindConnectorsUnder() {
+	return false;
+}

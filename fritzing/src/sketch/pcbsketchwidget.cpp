@@ -655,7 +655,10 @@ bool PCBSketchWidget::canChainMultiple() {
 }
 
 void PCBSketchWidget::setNewPartVisible(ItemBase * itemBase) {
-	if (itemBase->itemType() == ModelPart::Breadboard  || itemBase->itemType() == ModelPart::Symbol) {
+	if (itemBase->itemType() == ModelPart::Breadboard  || 
+		itemBase->itemType() == ModelPart::Symbol || 
+		itemBase->moduleID().endsWith(ModuleIDNames::SchematicFrameModuleIDName)) 
+	{
 		// don't need to see the breadboard in the other views
 		// but it's there so connections can be more easily synched between views
 		itemBase->setVisible(false);
@@ -687,7 +690,7 @@ bool PCBSketchWidget::canDropModelPart(ModelPart * modelPart) {
 
 			return true;
 		default:
-			return true;
+			return !modelPart->moduleID().endsWith(ModuleIDNames::SchematicFrameModuleIDName);
 	}
 
 	return true;
@@ -1224,9 +1227,11 @@ void PCBSketchWidget::showLabelFirstTime(long itemID, bool show, bool doEmit) {
 		case ModelPart::Part:
 		case ModelPart::Jumper:
 			{
-				ViewLayer * viewLayer = m_viewLayers.value(getLabelViewLayerID(itemBase->viewLayerSpec()));
-				itemBase->showPartLabel(itemBase->isVisible(), viewLayer);
-				itemBase->partLabelSetHidden(!viewLayer->visible());
+				if (itemBase->hasPartLabel()) {
+					ViewLayer * viewLayer = m_viewLayers.value(getLabelViewLayerID(itemBase->viewLayerSpec()));
+					itemBase->showPartLabel(itemBase->isVisible(), viewLayer);
+					itemBase->partLabelSetHidden(!viewLayer->visible());
+				}
 			}
 			break;
 		default:

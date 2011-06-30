@@ -47,6 +47,8 @@ public:
 	void loadLayerKin( const LayerHash & viewLayers, ViewLayer::ViewLayerSpec viewLayerSpec);
 	void addedToScene();
 	bool hasPartNumberProperty();
+	bool rotationAllowed();
+	bool rotation45Allowed();
 
 protected:
 	void setSvg(const QString &);

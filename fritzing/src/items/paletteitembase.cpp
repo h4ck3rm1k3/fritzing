@@ -175,7 +175,7 @@ void PaletteItemBase::mousePressEvent(PaletteItemBase * originalItem, QGraphicsS
 	Q_UNUSED(originalItem);
 
 	ItemBase::mousePressEvent(event);
-	if (this->itemType() != ModelPart::Breadboard) {
+	if (canFindConnectorsUnder()) {
 		foreach (QGraphicsItem * childItem, childItems()) {
 			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
 			if (connectorItem == NULL) continue;
@@ -185,19 +185,12 @@ void PaletteItemBase::mousePressEvent(PaletteItemBase * originalItem, QGraphicsS
 	}
 }
 
+bool PaletteItemBase::canFindConnectorsUnder() {
+	return true;
+}
+
 void PaletteItemBase::findConnectorsUnder() {
-	switch (itemType()) {
-		case ModelPart::Breadboard:
-		case ModelPart::Board:
-		case ModelPart::ResizableBoard:
-		case ModelPart::Logo:
-		case ModelPart::Ruler:
-		case ModelPart::Hole:
-			// don't try to map connectors when we drag a breadboard: it's too damn slow
-			return;
-		default:
-			break;
-	}
+	if (!canFindConnectorsUnder()) return;
 
 	for (int i = 0; i < childItems().count(); i++) {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItems()[i]);

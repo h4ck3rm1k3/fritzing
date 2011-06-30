@@ -62,6 +62,8 @@ public:
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	QPainterPath shape() const;
 	bool hasPartNumberProperty();
+	bool rotationAllowed();
+	bool rotation45Allowed();
 
 protected:
 	QRectF boundingRect() const;

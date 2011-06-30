@@ -45,6 +45,10 @@ public:
 
 	QStringList collectValues(const QString & family, const QString & prop, QString & value);
 	void paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+	bool rotation45Allowed();
+	bool stickyEnabled();
+	PluralType isPlural();
+	bool canFindConnectorsUnder();
 
 public:
 	static QString oneLayerTranslated;
@@ -64,15 +68,13 @@ public:
 	virtual void resizeMM(qreal w, qreal h, const LayerHash & viewLayers);
 	void resizePixels(qreal w, qreal h, const LayerHash & viewLayers);
  	void loadLayerKin(const LayerHash & viewLayers, ViewLayer::ViewLayerSpec);
-	void setInitialSize();
+	virtual void setInitialSize();
 	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi);
 	void rotateItem(qreal degrees);
 	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
 	void saveParams();
 	void getParams(QPointF &, QSizeF &);
 	bool hasCustomSVG();
-	bool stickyEnabled();
-	PluralType isPlural();
 	void calcRotation(QTransform & rotation, QPointF center, ViewGeometry &);
 	QSizeF getSizeMM();
 	void addedToScene();
@@ -98,6 +100,14 @@ protected:
 	QStringList collectValues(const QString & family, const QString & prop, QString & value);
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	virtual bool hasGrips();
+	virtual void loadTemplates();
+	virtual qreal minWidth();
+	virtual qreal minHeight();
+	virtual ViewIdentifierClass::ViewIdentifier theViewIdentifier();
+	virtual QString makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, qreal mmW, qreal mmH, qreal milsW, qreal milsH);
+	virtual QString makeFirstLayerSvg(qreal mmW, qreal mmH, qreal milsW, qreal milsH);
+	virtual QString makeNextLayerSvg(ViewLayer::ViewLayerID, qreal mmW, qreal mmH, qreal milsW, qreal milsH);
+	virtual void resizeMMAux(qreal w, qreal h);
 
 protected:
 	class ResizeHandle * m_resizeGripTL;

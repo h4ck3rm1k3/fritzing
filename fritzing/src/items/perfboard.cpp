@@ -341,3 +341,26 @@ bool Perfboard::getXY(int & x, int & y, const QString & s)
 	y = re.cap(2).toInt(&ok);
 	return ok;
 }
+
+bool Perfboard::rotation45Allowed() {
+	return false;
+}
+
+void Perfboard::hoverUpdate()
+{
+}
+
+void Perfboard::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+	Q_UNUSED(painter);
+	Q_UNUSED(option);
+	Q_UNUSED(widget);
+}
+
+bool Perfboard::stickyEnabled() {
+	return false;
+}
+
+bool Perfboard::canFindConnectorsUnder() {
+	return false;
+}

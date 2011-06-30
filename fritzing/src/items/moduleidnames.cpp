@@ -62,4 +62,5 @@ const QString ModuleIDNames::LEDModuleIDName = "LEDModuleID";
 const QString ModuleIDNames::PerfboardModuleIDName = "PerfboardModuleID";
 const QString ModuleIDNames::StripboardModuleIDName = "StripboardModuleID";
 const QString ModuleIDNames::SpacerModuleIDName = "__spacer__";
+const QString ModuleIDNames::SchematicFrameModuleIDName = "SchematicFrameModuleID";
 

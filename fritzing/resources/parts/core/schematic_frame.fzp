@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<module moduleId="SchematicFrameModuleID" >
+ <version>4</version>
+ <author>Jonathan Cohen</author>
+ <title>Schematic Frame</title>
+ <date>2011-06-29</date>
+ <label></label>
+ <tags>
+  <tag>schematic</tag>
+  <tag>frame</tag>
+  <tag>legend</tag>
+  <tag>fritzing core</tag>
+ </tags>
+ <properties>
+  <property name="descr 1">description 1</property>
+  <property name="descr 2">description 2</property>
+   <property name="title">description 1</property>
+   <property name="doc#"></property>
+   <property name="rev">1.0</property>
+   <property name="date">2011-06-29</property>
+  <property name="sheets">1/1</property>
+  <property name="family">Schematic Frame</property>
+ </properties>
+ <taxonomy>discreteParts.schematic.frame.resizable</taxonomy>
+ <description>Document frame for schematic view</description>
+ <views>
+  <iconView>
+   <layers image="icon/schematicframe.svg" >
+    <layer layerId="icon" />
+   </layers>
+  </iconView>
+  <breadboardView>
+   <layers image="schematic/frame.svg" >
+       <layer layerId="unknown" />
+   </layers>
+  </breadboardView>
+  <schematicView>
+   <layers image="schematic/frame.svg" >
+   <layer layerId="schematicframe" />
+   </layers>
+  </schematicView>
+  <pcbView>
+   <layers image="schematic/frame.svg" >
+   <layer layerId="unknown" />
+   </layers>
+  </pcbView>
+ </views>
+ <connectors/>
+ <buses/>
+</module>

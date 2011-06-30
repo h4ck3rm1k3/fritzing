@@ -352,8 +352,6 @@ protected:
 	bool swappedGender(ConnectorItem * originalConnectorItem, Connector * newConnector);
 	void setLastPaletteItemSelected(PaletteItem * paletteItem);
 	void setLastPaletteItemSelectedIf(ItemBase * itemBase);
-	bool rotationAllowed(ItemBase *);
-	bool rotation45Allowed(ItemBase *);
 	void prepDragBendpoint(Wire *, QPoint eventPos);
 	void prepDragWire(Wire *);
 	void clickBackground(QMouseEvent *);

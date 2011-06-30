@@ -175,3 +175,12 @@ bool GroundPlane::hasPartNumberProperty()
 {
 	return false;
 }
+
+bool GroundPlane::rotationAllowed() {
+	return false;
+}
+
+bool GroundPlane::rotation45Allowed() {
+	return false;
+}
+

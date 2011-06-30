@@ -1362,3 +1362,10 @@ bool Wire::hasPartNumberProperty()
 	return false;
 }
 
+bool Wire::rotationAllowed() {
+	return false;
+}
+
+bool Wire::rotation45Allowed() {
+	return false;
+}

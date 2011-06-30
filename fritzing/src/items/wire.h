@@ -144,6 +144,9 @@ public:
 	virtual bool canSwitchLayers();
 	void paint ( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
 	bool hasPartNumberProperty();
+	bool rotationAllowed();
+	bool rotation45Allowed();
+
 
 protected slots:
 	void colorEntry(const QString & text);

@@ -771,7 +771,7 @@ bool LogoItem::stickyEnabled() {
 }
 
 ItemBase::PluralType LogoItem::isPlural() {
-	return Singular;
+	return Plural;
 }
 
 ViewLayer::ViewLayerID LogoItem::layer() {

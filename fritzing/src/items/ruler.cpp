@@ -341,3 +341,7 @@ bool Ruler::hasPartNumberProperty()
 {
 	return false;
 }
+
+bool Ruler::canFindConnectorsUnder() {
+	return false;
+}

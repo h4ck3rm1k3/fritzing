@@ -3192,12 +3192,12 @@ ItemCount SketchWidget::calcItemCount() {
 				itemCount.wireCount++;
 			}
 
-			bool rotatable = rotationAllowed(itemBase);
+			bool rotatable = itemBase->rotationAllowed();
 			if (rotatable) {
 				itemCount.selRotatable++;
 			}
 
-			rotatable = rotation45Allowed(itemBase);
+			rotatable = itemBase->rotation45Allowed();
 			if (rotatable) {
 				itemCount.sel45Rotatable++;
 			}
@@ -3658,10 +3658,10 @@ void SketchWidget::rotateX(qreal degrees)
 	new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
 
 	foreach (ItemBase * itemBase, m_savedItems) {
-		if (!rotationAllowed(itemBase)) {
+		if (!itemBase->rotationAllowed()) {
 			continue;
 		}
-		if (qAbs(degrees) == 45 && !rotation45Allowed(itemBase)) {
+		if (qAbs(degrees) == 45 && !itemBase->rotation45Allowed()) {
 			continue;
 		}
 
@@ -3754,10 +3754,10 @@ void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
 				}
 
 			default:
-				if (!rotationAllowed(itemBase)) {
+				if (!itemBase->rotationAllowed()) {
 					continue;
 				}
-				if (qAbs(degrees) == 45 && !rotation45Allowed(itemBase)) {
+				if (qAbs(degrees) == 45 && !itemBase->rotation45Allowed()) {
 					continue;
 				}
 				break;
@@ -6100,54 +6100,6 @@ void SketchWidget::resizeBoard(qreal mmW, qreal mmH, bool doEmit)
 	QUndoCommand * parentCommand = new QUndoCommand(tr("Resize ruler to %1%2").arg(mmW).arg((mmH == 0) ? "cm" : "in"));
 	new ResizeBoardCommand(this, item->id(), origw, origh, mmW, mmH, parentCommand);
 	m_undoStack->push(parentCommand);
-}
-
-bool SketchWidget::rotation45Allowed(ItemBase * itemBase) 
-{
-	switch(itemBase->itemType()) {
-		case ModelPart::Wire:
-		case ModelPart::Hole:
-		case ModelPart::Via:
-		case ModelPart::Note:
-		case ModelPart::Unknown:
-		case ModelPart::CopperFill:
-		case ModelPart::Board:
-		case ModelPart::ResizableBoard:
-		case ModelPart::Breadboard:
-			return false;
-		default:
-			return true;
-	}
-}
-
-bool SketchWidget::rotationAllowed(ItemBase * itemBase) 
-{
-	// TODO: allow breadboard and ardiuno to rotate even when connected to something
-
-	switch(itemBase->itemType()) {
-		case ModelPart::Wire:
-		case ModelPart::Note:
-		case ModelPart::Unknown:
-		case ModelPart::CopperFill:
-		case ModelPart::Via:
-		case ModelPart::Hole:
-			return false;
-
-		case ModelPart::Board:
-		case ModelPart::ResizableBoard:
-		case ModelPart::Breadboard:
-		case ModelPart::Logo:
-		case ModelPart::Ruler:
-		case ModelPart::Jumper:
-			//if (itemBase->sticky() && itemBase->stickyList().count() > 0) {
-				//return false;
-			//}
-			break;
-		default:
-			break;
-	}
-
-	return true;
 }
 
 void SketchWidget::addBendpoint(ItemBase * lastHoverEnterItem, ConnectorItem * lastHoverEnterConnectorItem, QPointF lastLocation) {

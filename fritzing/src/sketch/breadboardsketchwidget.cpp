@@ -111,7 +111,7 @@ bool BreadboardSketchWidget::canDropModelPart(ModelPart * modelPart) {
 	}
 	
 	switch (modelPart->itemType()) {
-		case  ModelPart::Board:
+		case ModelPart::Board:
 		case ModelPart::ResizableBoard:
 			return matchesLayer(modelPart);
 		case ModelPart::Logo:
@@ -122,7 +122,7 @@ bool BreadboardSketchWidget::canDropModelPart(ModelPart * modelPart) {
 		case ModelPart::Via:
 			return false;
 		default:
-			return true;
+			return !modelPart->moduleID().endsWith(ModuleIDNames::SchematicFrameModuleIDName);
 	}
 }
 

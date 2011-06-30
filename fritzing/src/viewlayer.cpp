@@ -65,6 +65,7 @@ void ViewLayer::initNames() {
 		names.insert(ViewLayer::BreadboardNote,  new StringPair("breadboardNote", QObject::tr("Notes")));
 		names.insert(ViewLayer::BreadboardRuler,  new StringPair("breadboardRuler", QObject::tr("Rulers")));
 
+		names.insert(ViewLayer::SchematicFrame,  new StringPair("schematicframe", QObject::tr("Frame")));
 		names.insert(ViewLayer::Schematic,  new StringPair("schematic", QObject::tr("Parts")));
 		names.insert(ViewLayer::SchematicWire,  new StringPair("schematicWire",QObject::tr("Nets")));
 		names.insert(ViewLayer::SchematicTrace,  new StringPair("schematicTrace",QObject::tr("Wires")));

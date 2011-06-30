@@ -24,50 +24,29 @@ $Date$
 
 ********************************************************************/
 
-#ifndef RULER_H
-#define RULER_H
-
-#include <QRectF>
-#include <QPainterPath>
-#include <QPixmap>
-#include <QVariant>
-#include <QComboBox>
-#include <QDoubleValidator>
+#ifndef BREADBOARD_H
+#define BREADBOARD_H
 
 #include "paletteitem.h"
 
-class Ruler : public PaletteItem 
+class Breadboard : public PaletteItem 
 {
 	Q_OBJECT
 
 public:
 	// after calling this constructor if you want to render the loaded svg (either from model or from file), MUST call <renderImage>
-	Ruler(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel);
-	~Ruler();
+	Breadboard(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel);
+	~Breadboard();
 
-	void resizeMM(qreal magnitude, qreal unitsFlag, const LayerHash & viewLayers);
-	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi);
-	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
-	bool hasCustomSVG();
-	bool stickyEnabled();
-    bool hasPartLabel();
 	PluralType isPlural();
-	void addedToScene();
-	bool hasPartNumberProperty();
+	void hoverUpdate();
+	void paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget); 
+	bool stickyEnabled();
 	bool canFindConnectorsUnder();
 
-public slots:
-	void widthEntry();
-	void unitsEntry(const QString &);
 
-protected:
-	QString makeSvg(qreal inches);
-	
-protected:
-	class FSvgRenderer * m_renderer;
-	QPointer<QLineEdit> m_widthEditor;
-	QPointer<QComboBox> m_unitsEditor;
-	QPointer<QDoubleValidator> m_widthValidator;
+public:
+	bool rotation45Allowed();
 };
 
 #endif

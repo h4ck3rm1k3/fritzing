@@ -921,3 +921,26 @@ QString TextUtils::standardMultiplyPinFunction(int pin, qreal increment, qreal v
 	return QString::number(value + (pin * increment));
 }
 
+
+QString TextUtils::incMultiplyPinFunction(int pin, qreal increment, qreal value) 
+{
+	return QString::number(value + ((pin + 1) * increment));
+}
+
+
+QString TextUtils::noCopyPinFunction(int, const QString & argString) 
+{ 
+	return argString; 
+}
+
+qreal TextUtils::getViewBoxCoord(const QString & svg, int coord)
+{
+	QRegExp re("viewBox=['\\\"]([^'\\\"]+)['\\\"]");
+	int ix = re.indexIn(svg);
+	if (ix < 0) return 0;
+
+	QString vb = re.cap(1);
+	QStringList coords = vb.split(" ");
+	QString c = coords.at(coord);
+	return c.toDouble();
+}

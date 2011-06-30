@@ -711,3 +711,12 @@ bool Note::hasPartNumberProperty()
 {
 	return false;
 }
+
+
+bool Note::rotationAllowed() {
+	return false;
+}
+
+bool Note::rotation45Allowed() {
+	return false;
+}

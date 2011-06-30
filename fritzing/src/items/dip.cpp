@@ -234,7 +234,7 @@ QString Dip::makeBreadboardSipSvg(const QString & expectedFileName)
 	int increment = 10;
 	qreal totalWidth = (pins * increment);
 
-	QString svg = TextUtils::incrementTemplate(":/resources/templates/generic_sip_bread_template.txt", 1, increment * (pins - 2), incMultiplyPinFunction, noCopyPinFunction);
+	QString svg = TextUtils::incrementTemplate(":/resources/templates/generic_sip_bread_template.txt", 1, increment * (pins - 2), TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction);
 
 	QString repeat("<rect id='connector%1pin' x='[13.5]' y='25.66' fill='#8C8C8C' width='3' height='4.34'/>\n"
 					"<rect id='connector%1terminal' x='[13.5]' y='27.0' fill='#8C8C8C' width='3' height='3'/>\n"
@@ -306,18 +306,18 @@ QString Dip::makeBreadboardDipSvg(const QString & expectedFileName)
 
 	// header came from a 300mil dip, so base case is spacing - (increment * 3)
 
-	header = TextUtils::incrementTemplateString(header, 1, spacing - (increment * 3), incMultiplyPinFunction, noCopyPinFunction);
-	header = header.arg(getViewBoxCoord(header, 3) / 100.0).arg(pins - 1).arg((pins / 2) - 1).arg(pins / 2);
+	header = TextUtils::incrementTemplateString(header, 1, spacing - (increment * 3), TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction);
+	header = header.arg(TextUtils::getViewBoxCoord(header, 3) / 100.0).arg(pins - 1).arg((pins / 2) - 1).arg(pins / 2);
 	header.replace("{{", "[");
 	header.replace("}}", "]");
-	header = TextUtils::incrementTemplateString(header, 1, (spacing - (increment * 3)) / 2, incMultiplyPinFunction, noCopyPinFunction);
+	header = TextUtils::incrementTemplateString(header, 1, (spacing - (increment * 3)) / 2, TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction);
 	header.replace("{", "[");
 	header.replace("}", "]");
 	header.replace(".percent.", "%");
 
-	QString svg = TextUtils::incrementTemplateString(header, 1, increment * ((pins - 4) / 2), incMultiplyPinFunction, noCopyPinFunction);
+	QString svg = TextUtils::incrementTemplateString(header, 1, increment * ((pins - 4) / 2), TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction);
 
-	repeatB = TextUtils::incrementTemplateString(repeatB, 1, spacing - (increment * 3), incMultiplyPinFunction, noCopyPinFunction);
+	repeatB = TextUtils::incrementTemplateString(repeatB, 1, spacing - (increment * 3), TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction);
 	repeatB.replace("{", "[");
 	repeatB.replace("}", "]");
 
@@ -326,5 +326,5 @@ QString Dip::makeBreadboardDipSvg(const QString & expectedFileName)
 	QString repeatBs = TextUtils::incrementTemplateString(repeatB, (pins - 4) / 2, increment, TextUtils::standardMultiplyPinFunction, incCopyPinFunction);
 
 
-	return svg.arg(getViewBoxCoord(svg, 2) / 100.0).arg(repeatTs).arg(repeatBs);
+	return svg.arg(TextUtils::getViewBoxCoord(svg, 2) / 100.0).arg(repeatTs).arg(repeatBs);
 }

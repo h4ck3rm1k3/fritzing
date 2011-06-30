@@ -24,50 +24,57 @@ $Date$
 
 ********************************************************************/
 
-#ifndef RULER_H
-#define RULER_H
+#ifndef SCHEMATIC_FRAME_H
+#define SCHEMATIC_FRAME_H
 
 #include <QRectF>
 #include <QPainterPath>
 #include <QPixmap>
 #include <QVariant>
+#include <QCheckBox>
 #include <QComboBox>
-#include <QDoubleValidator>
 
-#include "paletteitem.h"
+#include "resizableboard.h"
 
-class Ruler : public PaletteItem 
+class SchematicFrame : public ResizableBoard 
 {
 	Q_OBJECT
 
 public:
 	// after calling this constructor if you want to render the loaded svg (either from model or from file), MUST call <renderImage>
-	Ruler(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel);
-	~Ruler();
+	SchematicFrame(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel);
+	~SchematicFrame();
 
-	void resizeMM(qreal magnitude, qreal unitsFlag, const LayerHash & viewLayers);
 	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi);
 	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
-	bool hasCustomSVG();
+	QString getProperty(const QString & key);
+	bool canEditPart();
+	void setProp(const QString & prop, const QString & value);
+	bool hasPartLabel();
 	bool stickyEnabled();
-    bool hasPartLabel();
 	PluralType isPlural();
 	void addedToScene();
+	bool rotationAllowed();
+	bool rotation45Allowed();
 	bool hasPartNumberProperty();
-	bool canFindConnectorsUnder();
+	void setInitialSize();
 
-public slots:
-	void widthEntry();
-	void unitsEntry(const QString &);
+protected slots:
 
 protected:
-	QString makeSvg(qreal inches);
-	
+	bool hasGrips();
+	qreal minWidth();
+	qreal minHeight();
+	ViewIdentifierClass::ViewIdentifier theViewIdentifier();
+	void loadTemplates();
+	QString makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, qreal mmW, qreal mmH, qreal milsW, qreal milsH);
+	QString makeFirstLayerSvg(qreal mmW, qreal mmH, qreal milsW, qreal milsH);
+	QString makeNextLayerSvg(ViewLayer::ViewLayerID, qreal mmW, qreal mmH, qreal milsW, qreal milsH);
+
+
 protected:
-	class FSvgRenderer * m_renderer;
-	QPointer<QLineEdit> m_widthEditor;
-	QPointer<QComboBox> m_unitsEditor;
-	QPointer<QDoubleValidator> m_widthValidator;
 };
+
+
 
 #endif

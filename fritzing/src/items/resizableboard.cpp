@@ -97,6 +97,23 @@ QStringList Board::collectValues(const QString & family, const QString & prop, Q
 	return PaletteItem::collectValues(family, prop, value);
 }
 
+
+bool Board::rotation45Allowed() {
+	return false;
+}
+
+bool Board::stickyEnabled() {
+	return false;
+}
+
+ItemBase::PluralType Board::isPlural() {
+	return Plural;
+}
+
+bool Board::canFindConnectorsUnder() {
+	return false;
+}
+
 ///////////////////////////////////////////////////////////
 
 ResizableBoard::ResizableBoard( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
@@ -105,23 +122,11 @@ ResizableBoard::ResizableBoard( ModelPart * modelPart, ViewIdentifierClass::View
 	m_keepAspectRatio = false;
 	m_widthEditor = m_heightEditor = NULL;
 
-	if (BoardLayerTemplate.isEmpty()) {
-		QFile file(":/resources/templates/resizableBoard_boardLayerTemplate.txt");
-		file.open(QFile::ReadOnly);
-		BoardLayerTemplate = file.readAll();
-		file.close();
-	}
-	if (SilkscreenLayerTemplate.isEmpty()) {
-		QFile file(":/resources/templates/resizableBoard_silkscreenLayerTemplate.txt");
-		file.open(QFile::ReadOnly);
-		SilkscreenLayerTemplate = file.readAll();
-		file.close();
-	}
-
 	m_resizeGripTL = m_resizeGripTR = m_resizeGripBL = m_resizeGripBR = NULL;
 
 	m_silkscreenRenderer = m_renderer = NULL;
 	m_inResize = NULL;
+
 }
 
 ResizableBoard::~ResizableBoard() {
@@ -147,6 +152,7 @@ QVariant ResizableBoard::itemChange(GraphicsItemChange change, const QVariant &v
 
 
 void ResizableBoard::addedToScene() {
+	loadTemplates();
 	if (this->scene()) {
 		if (hasGrips()) {
 			m_resizeGripTL = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveTopLeft.png"), Qt::SizeFDiagCursor, this);
@@ -168,6 +174,29 @@ void ResizableBoard::addedToScene() {
 	PaletteItem::addedToScene();
 }
 
+void ResizableBoard::loadTemplates() {
+	if (BoardLayerTemplate.isEmpty()) {
+		QFile file(":/resources/templates/resizableBoard_boardLayerTemplate.txt");
+		file.open(QFile::ReadOnly);
+		BoardLayerTemplate = file.readAll();
+		file.close();
+	}
+	if (SilkscreenLayerTemplate.isEmpty()) {
+		QFile file(":/resources/templates/resizableBoard_silkscreenLayerTemplate.txt");
+		file.open(QFile::ReadOnly);
+		SilkscreenLayerTemplate = file.readAll();
+		file.close();
+	}
+}
+
+qreal ResizableBoard::minWidth() {
+	return 0.5 * FSvgRenderer::printerScale();
+}
+
+qreal ResizableBoard::minHeight() {
+	return 0.5 * FSvgRenderer::printerScale();
+}
+
 bool ResizableBoard::hasGrips() {
 	return moduleID().contains(ModuleIDNames::RectangleModuleIDName);
 }
@@ -181,9 +210,6 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 	QRectF rect = boundingRect();
 	rect.moveTopLeft(this->pos());
 
-	qreal minWidth = 0.1 * FSvgRenderer::printerScale();			// .1 inch
-	qreal minHeight = 0.1 * FSvgRenderer::printerScale();			// .1 inch
-
 	qreal oldX1 = rect.x();
 	qreal oldY1 = rect.y();
 	qreal oldX2 = oldX1+rect.width();
@@ -191,13 +217,16 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 	qreal newX = event->scenePos().x() + m_inResize->resizeOffset().x();
 	qreal newY = event->scenePos().y() + m_inResize->resizeOffset().y();
 	QRectF newR;
+	
+	qreal minW = minWidth();
+	qreal minH = minHeight();
 
 	if (m_inResize == m_resizeGripBR) {
-		if (newX - oldX1 < minWidth) {
-			newX = oldX1 + minWidth;
+		if (newX - oldX1 < minW) {
+			newX = oldX1 + minW;
 		}
-		if (newY - oldY1 < minHeight) {
-			newY = oldY1 + minHeight;
+		if (newY - oldY1 < minH) {
+			newY = oldY1 + minH;
 		}
 
 		if (m_keepAspectRatio) {
@@ -217,11 +246,11 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 		oldX2 = m_originalRect.left() + m_originalRect.width();
 		oldY2 = m_originalRect.top() + m_originalRect.height();
 
-		if (oldX2 - newX < minWidth) {
-			newX = oldX2 - minWidth;
+		if (oldX2 - newX < minW) {
+			newX = oldX2 - minW;
 		}
-		if (oldY2 - newY < minHeight) {
-			newY = oldY2 - minHeight;
+		if (oldY2 - newY < minH) {
+			newY = oldY2 - minH;
 		}
 
 		QPointF p(newX, newY);
@@ -243,13 +272,13 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 		newR.setRect(0, 0, oldX2 - newX, oldY2 - newY);
 	}
 	else if (m_inResize == m_resizeGripTR) {
-		if (newX - oldX1 < minWidth) {
-			newX = oldX1 + minWidth;
+		if (newX - oldX1 < minW) {
+			newX = oldX1 + minW;
 		}
 
 		oldY2 = m_originalRect.top() + m_originalRect.height();
-		if (oldY2 - newY < minHeight) {
-			newY = oldY2 - minHeight;
+		if (oldY2 - newY < minH) {
+			newY = oldY2 - minH;
 		}
 
 		QPointF p(oldX1, newY);
@@ -273,11 +302,11 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 	}
 	else if (m_inResize == m_resizeGripBL) {
 		oldX2 = m_originalRect.left() + m_originalRect.width();
-		if (oldX2 - newX < minWidth) {
-			newX = oldX2 - minWidth;
+		if (oldX2 - newX < minW) {
+			newX = oldX2 - minW;
 		}
-		if (newY - oldY1 < minHeight) {
-			newY = oldY1 + minHeight;
+		if (newY - oldY1 < minH) {
+			newY = oldY1 + minH;
 		}
 
 		QPointF p(newX, oldY1);
@@ -379,11 +408,15 @@ void ResizableBoard::positionGrips() {
 bool ResizableBoard::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors, QString & error)
 {
 	bool result = Board::setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, viewLayerSpec, doConnectors, error);
-	if ((viewIdentifier == ViewIdentifierClass::PCBView) && result) {
+	if ((viewIdentifier == theViewIdentifier()) && result) {
 		positionGrips();
 	}
 
 	return result;
+}
+
+ViewIdentifierClass::ViewIdentifier ResizableBoard::theViewIdentifier() {
+	return ViewIdentifierClass::PCBView;
 }
 
 void ResizableBoard::resizePixels(qreal w, qreal h, const LayerHash & viewLayers) {
@@ -409,6 +442,11 @@ void ResizableBoard::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers
 		return;
 	}
 
+	resizeMMAux(mmW, mmH);
+}
+
+
+void ResizableBoard::resizeMMAux(qreal mmW, qreal mmH) {
 
 	if (m_renderer == NULL) {
 		m_renderer = new FSvgRenderer(this);
@@ -417,7 +455,7 @@ void ResizableBoard::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers
 	qreal milsW = GraphicsUtils::mm2mils(mmW);
 	qreal milsH = GraphicsUtils::mm2mils(mmH);
 
-	QString s = makeBoardSvg(mmW, mmH, milsW, milsH);
+	QString s = makeFirstLayerSvg(mmW, mmH, milsW, milsH);
 
 	bool result = m_renderer->fastLoad(s.toUtf8());
 	if (result) {
@@ -437,12 +475,11 @@ void ResizableBoard::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers
 	positionGrips();
 
 	foreach (ItemBase * itemBase, m_layerKin) {
-		if (itemBase->viewLayerID() == ViewLayer::Silkscreen1) {
+		QString s = makeNextLayerSvg(itemBase->viewLayerID(), mmW, mmH, milsW, milsH);
+		if (!s.isEmpty()) {
 			if (m_silkscreenRenderer == NULL) {
 				m_silkscreenRenderer = new FSvgRenderer(itemBase);
 			}
-
-			s = makeSilkscreenSvg(mmW, mmH, milsW, milsH);
 			bool result = m_silkscreenRenderer->fastLoad(s.toUtf8());
 			if (result) {
 				dynamic_cast<PaletteItemBase *>(itemBase)->setSharedRendererEx(m_silkscreenRenderer);
@@ -477,18 +514,7 @@ QString ResizableBoard::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QS
 	qreal w = m_modelPart->prop("width").toDouble();
 	if (w != 0) {
 		qreal h = m_modelPart->prop("height").toDouble();
-		QString xml;
-		switch (viewLayerID) {
-			case ViewLayer::Board:
-				xml = makeBoardSvg(w, h, GraphicsUtils::mm2mils(w), GraphicsUtils::mm2mils(h));
-				break;
-			case ViewLayer::Silkscreen1:
-				xml = makeSilkscreenSvg(w, h, GraphicsUtils::mm2mils(w), GraphicsUtils::mm2mils(h));
-				break;
-			default:
-				break;
-		}
-
+		QString xml = makeLayerSvg(viewLayerID, w, h, GraphicsUtils::mm2mils(w), GraphicsUtils::mm2mils(h));
 		if (!xml.isEmpty()) {
 			QString xmlName = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
 			SvgFileSplitter splitter;
@@ -511,6 +537,30 @@ QSizeF ResizableBoard::getSizeMM() {
 	qreal w = m_modelPart->prop("width").toDouble();
 	qreal h = m_modelPart->prop("height").toDouble();
 	return QSizeF(w, h);
+}
+
+QString ResizableBoard::makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, qreal mmW, qreal mmH, qreal milsW, qreal milsH) 
+{
+	switch (viewLayerID) {
+		case ViewLayer::Board:
+			return makeBoardSvg(mmW, mmH, milsW, milsH);
+		case ViewLayer::Silkscreen1:
+			return makeSilkscreenSvg(mmW, mmH, milsW, milsH);
+			break;
+		default:
+			return "";
+	}
+}
+
+QString ResizableBoard::makeNextLayerSvg(ViewLayer::ViewLayerID viewLayerID, qreal mmW, qreal mmH, qreal milsW, qreal milsH) {
+
+	if (viewLayerID == ViewLayer::Silkscreen1) return makeSilkscreenSvg(mmW, mmH, milsW, milsH);
+
+	return "";
+}
+
+QString ResizableBoard::makeFirstLayerSvg(qreal mmW, qreal mmH, qreal milsW, qreal milsH) {
+	return makeBoardSvg(mmW, mmH, milsW, milsH);
 }
 
 QString ResizableBoard::makeBoardSvg(qreal mmW, qreal mmH, qreal milsW, qreal milsH) {
@@ -564,12 +614,7 @@ void ResizableBoard::getParams(QPointF & p, QSizeF & s) {
 }
 
 bool ResizableBoard::hasCustomSVG() {
-	switch (m_viewIdentifier) {
-		case ViewIdentifierClass::PCBView:
-			return true;
-		default:
-			return ItemBase::hasCustomSVG();
-	}
+	return theViewIdentifier() == m_viewIdentifier;
 }
 
 bool ResizableBoard::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget)
@@ -729,14 +774,6 @@ void ResizableBoard::heightEntry() {
 	if (infoGraphicsView != NULL) {
 		infoGraphicsView->resizeBoard(oldVal, newVal, true);
 	}
-}
-
-bool ResizableBoard::stickyEnabled() {
-	return false;
-}
-
-ItemBase::PluralType ResizableBoard::isPlural() {
-	return Plural;
 }
 
 void ResizableBoard::calcRotation(QTransform & rotation, QPointF center, ViewGeometry & vg2) 

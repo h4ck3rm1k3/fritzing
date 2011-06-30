@@ -82,6 +82,7 @@ protected:
 	void findConnectorsUnder();
 	void hoverEnterEvent ( QGraphicsSceneHoverEvent * event );
 	void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
+	virtual bool canFindConnectorsUnder();
 
 	virtual LayerKinPaletteItem * newLayerKinPaletteItem(
 		PaletteItemBase * chief, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,

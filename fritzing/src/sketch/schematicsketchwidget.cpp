@@ -180,6 +180,8 @@ bool SchematicSketchWidget::canDropModelPart(ModelPart * modelPart) {
 			break;
 	}
 
+	if (modelPart->moduleID().endsWith(ModuleIDNames::SchematicFrameModuleIDName)) return true;
+
 	return PCBSketchWidget::canDropModelPart(modelPart);
 }
 
