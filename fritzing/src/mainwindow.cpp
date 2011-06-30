@@ -1772,7 +1772,8 @@ void MainWindow::swapSelectedDelay(const QString & family, const QString & prop,
 void MainWindow::swapSelectedTimeout()
 {
 	if (sender() == &m_swapTimer) {
-		swapSelectedMap(m_swapTimer.family(), m_swapTimer.prop(), m_swapTimer.propsMap(), m_swapTimer.itemBase());
+                QMap<QString, QString> map =  m_swapTimer.propsMap();
+                swapSelectedMap(m_swapTimer.family(), m_swapTimer.prop(), map, m_swapTimer.itemBase());
 	}
 }
 
