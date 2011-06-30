@@ -173,8 +173,7 @@ void SchematicFrame::addedToScene()
 
 QString SchematicFrame::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi)
 {
-
-	return PaletteItemBase::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
+	return ResizableBoard::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 }
 
 bool SchematicFrame::makeLineEdit(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget) 
