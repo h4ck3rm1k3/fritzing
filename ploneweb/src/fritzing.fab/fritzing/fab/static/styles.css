@@ -1,3 +1,17 @@
+
+table.orderTable th,
+table.orderTable td,
+table.sketchesTable th,
+table.sketchesTable td,
+div.orderSummary,
+div.checkout,
+div.supportBox {
+    padding-left: 10pt;
+    padding-right: 10px;
+    padding-top: 6pt;
+    padding-bottom: 6px;
+}
+
 .align_right {
     text-align: right;
 }
@@ -5,67 +19,64 @@
 table.blind {
     border-style: none;
 }
-table.blind td {
-    padding: 2pt 0pt;
-    padding-right: 20pt;
-    vertical-align: top;
-}
 
-table.orderTable {
-}
-table.orderTable th,
-table.orderTable td {
-    padding: 4pt 8pt;
-    border: 1px solid #ddd;
-}
 table.orderTable ul {
     margin:0 !important;
     list-style: none !important;
 }
 
+table.orderTable,
 table.sketchesTable {
+    width: 100%;
+    background-color: #c2daca;
     border-collapse: separate !important;
 }
-table.sketchesTable>tbody>tr>td {
-    padding: 6pt 10pt;
-    vertical-align: bottom;
+table.orderTable tbody tr:nth-child(odd),
+table.sketchesTable tbody tr:nth-child(odd) {
+    background-color: #e1ece5;
 }
-table.sketchesTable td.sketchCell {
-    border-right: 1px dotted white;
+table.orderTable th,
+table.sketchesTable th {
+    vertical-align: top;
+}
+table.sketchesTable .sketchCell {
     padding-right: 20pt;
 }
-table.sketchesTable td.sketchCell, 
-table.sketchesTable td.priceCell {
-    border-top: 2px solid white;
-    border-bottom: 1px solid gray;
+table.sketchesTable .actionCell {
 }
-table.sketchesTable td.priceCell {
-    text-align: right;
-}
-table.sketchesTable td.sumCell {
-    background: transparent;
-    border-bottom: 3px double gray;
-}
-table.sketchesTable td.actionCell {
-    vertical-align: middle;
-}
-
-table.boardPreviewTable {
-    border-spacing: 0 !important;
-}
-table.boardPreviewTable td {
-    padding: 1pt 3pt;
-    vertical-align: middle;
+table.sketchesTable .copiesCell {
     text-align: center;
 }
-td.boardPreview {
-    vertical-align: middle;
-    background: #177537;
-    color: #fff1b3;
+table.sketchesTable .areaCell {
+}
+table.sketchesTable .checkCell {
+    text-align: center;
+}
+table.sketchesTable .priceCell {
+    text-align: right;
+}
+
+div.orderSummary {
+    background-color: #c2daca;
+}
+div.orderSummary table {
+    width: 100%;
+}
+div.orderSummary table tr:last-child td {
     font-weight: bold;
-    border-radius: 3px;
+    height: 24pt;
+    vertical-align: bottom;
 }
-.boardPreview span {
-    background: blue;
+
+div.checkout {
+    background-color: #e1ece5;
 }
+
+div.supportBox {
+    color: white;
+    background-color: #ac362b;
+}
+
+
+
 

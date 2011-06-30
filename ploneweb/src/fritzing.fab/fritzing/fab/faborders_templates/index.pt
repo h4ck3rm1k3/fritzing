@@ -15,60 +15,59 @@
         <p class="documentDescription" tal:content="context/description | nothing">
           xThere's nothing better than turning a concept into product reality.
         </p>
-        <div id="content-core">
-          <table class="blind">
-            <tbody>
-              <tr>
-                <td width="50%" tal:content="structure context/editableContent/output | nothing">
-                  
-                </td>
-                <td width="50%">
-                  <h2>
-                    <a class="addOrderLink" tal:attributes="href string:${context/absolute_url}/++add++faborder">Order now</a>
-                  </h2>
-                  <p tal:condition="python:context.nextProductionClosingDate and context.nextProductionDelivery">
-                    Submit your layout by the <span tal:content="context/nextProductionClosingDate">...</span><br />
-                    and we will ship it on <span tal:content="context/nextProductionDelivery">...</span>.
-                  </p>
-                  <div tal:condition="container/listFolderContents">
-                    <h2>Your orders</h2>
-                    <table class="orderTable">
-                      <tr tal:condition="container/listFolderContents">
-                        <th tal:condition="view/isManager">User</th>
-                        <th>Order Number</th>
-                        <th>Sketches</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                      </tr>
-                      <tr tal:repeat="item container/listFolderContents">
-                        <td tal:condition="view/isManager">
-                          <p tal:content="item/getOwner | string:error"/>
-                        </td>
-                        <td tal:content="item/id | string:error">title</td>
-                        <td>
-                          <span tal:condition="not:item/listFolderContents">no sketches</span>
-                          <ul tal:condition="item/listFolderContents">
-                            <li tal:repeat="sketch item/listFolderContents">
-                              <a tal:define="filename sketch/orderItem/filename;                                              filename_encoded python:view.encodeFilename(filename);" tal:content="filename" tal:attributes="href string:${sketch/absolute_url}/@@download/orderItem/${filename_encoded};                                                  title string:Download ${filename}"/>
-                            </li>
-                          </ul>
-                        </td>
-                        <td>
-                          <div tal:content="python:view.getStateTitle(item)">unknown</div>
-                        </td>
-                        <td>
-                          <a class="viewOrderLink" tal:condition="not:python:view.isOwner or view.isManager" tal:attributes="href string:${item/absolute_url}">view</a>
-                          <a class="viewOrderLink" tal:condition="python:view.isOwner or view.isManager" tal:attributes="href string:${item/absolute_url}">view/edit</a>
-                          <br/>
-                          <a class="deleteOrderLink" tal:condition="python:view.canDelete(item)" tal:attributes="href string:${item/absolute_url}/delete_confirmation">delete</a>
-                        </td>
-                      </tr>
-                    </table>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div id="content-core" class="row">
+          
+          <div class="cell width-2:3 position-0" tal:content="structure context/editableContent/output | nothing" />
+          
+          <div class="cell width-1:3 position-2:3">
+            <h2>
+              <a class="addOrderLink" tal:attributes="href string:${context/absolute_url}/++add++faborder">Order now</a>
+            </h2>
+            <p tal:condition="python:context.nextProductionClosingDate and context.nextProductionDelivery">
+              Submit your layout by the <span tal:content="context/nextProductionClosingDate">...</span><br />
+              and we will ship it on <span tal:content="context/nextProductionDelivery">...</span>.
+            </p>
+            <div tal:condition="container/listFolderContents">
+              <h2>Your orders</h2>
+              <table class="orderTable">
+                <thead>
+                  <tr tal:condition="container/listFolderContents">
+                    <th tal:condition="view/isManager">User</th>
+                    <th>Order Number</th>
+                    <th>Sketches</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr tal:repeat="item container/listFolderContents">
+                    <td tal:condition="view/isManager">
+                      <p tal:content="item/getOwner | string:error"/>
+                    </td>
+                    <td tal:content="item/id | string:error">title</td>
+                    <td>
+                      <span tal:condition="not:item/listFolderContents">no sketches</span>
+                      <ul tal:condition="item/listFolderContents">
+                        <li tal:repeat="sketch item/listFolderContents">
+                          <a tal:define="filename sketch/orderItem/filename;                                              filename_encoded python:view.encodeFilename(filename);" tal:content="filename" tal:attributes="href string:${sketch/absolute_url}/@@download/orderItem/${filename_encoded};                                                  title string:Download ${filename}"/>
+                        </li>
+                      </ul>
+                    </td>
+                    <td>
+                      <div tal:content="python:view.getStateTitle(item)">unknown</div>
+                    </td>
+                    <td>
+                      <a class="viewOrderLink" tal:condition="not:python:view.isOwner or view.isManager" tal:attributes="href string:${item/absolute_url}">view</a>
+                      <a class="viewOrderLink" tal:condition="python:view.isOwner or view.isManager" tal:attributes="href string:${item/absolute_url}">view/edit</a>
+                      <br/>
+                      <a class="deleteOrderLink" tal:condition="python:view.canDelete(item)" tal:attributes="href string:${item/absolute_url}/delete_confirmation">delete</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          
         </div>
       </tal:main-macro>
     </metal:main>
