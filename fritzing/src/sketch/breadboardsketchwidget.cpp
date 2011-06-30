@@ -323,7 +323,7 @@ void BreadboardSketchWidget::schematicDisconnectWireSlot(ConnectorPairHash & for
 			}
 
 			foreach (ConnectorItem * toConnectorItem, connectorHash.values(fromConnectorItem)) {
-				createWire(fromConnectorItem, toConnectorItem, ViewGeometry::NoFlag, false, BaseCommand::CrossView, parentCommand);
+				createWire(fromConnectorItem, toConnectorItem, ViewGeometry::NoFlag, BaseCommand::CrossView, parentCommand);
 			}
 		}
 	}

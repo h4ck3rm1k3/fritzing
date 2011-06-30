@@ -95,7 +95,7 @@ enum PartLabelAction {
 	PartLabelFlipHorizontal,
 	PartLabelFlipVertical,
 	PartLabelEdit,
-        PartLabelFontSizeTiny,
+    PartLabelFontSizeTiny,
 	PartLabelFontSizeSmall,
 	PartLabelFontSizeMedium,
 	PartLabelFontSizeLarge,

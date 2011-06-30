@@ -71,7 +71,7 @@ public:
 	PluralType isPlural();
 	QString retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi); 
 	bool canEditPart();
-	void addedToScene();	
+	void addedToScene(bool temporary);	
 	bool hasPartNumberProperty();
 	QString holeSize();
 	bool rotationAllowed();

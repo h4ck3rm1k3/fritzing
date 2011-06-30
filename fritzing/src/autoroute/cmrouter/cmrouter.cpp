@@ -2641,8 +2641,8 @@ void CMRouter::addToUndo(QUndoCommand * parentCommand)
 			new CheckStickyCommand(m_sketchWidget, BaseCommand::SingleView, jumperItem->id(), false, CheckStickyCommand::RemoveOnly, parentCommand);
 
 			if (connector0 != NULL && connector1 != NULL) {
-				m_sketchWidget->createWire(jumperItem->connector0(), connector0, ViewGeometry::NoFlag, false, true, BaseCommand::CrossView, parentCommand);
-				m_sketchWidget->createWire(jumperItem->connector1(), connector1, ViewGeometry::NoFlag, false, true, BaseCommand::CrossView, parentCommand);
+				m_sketchWidget->createWire(jumperItem->connector0(), connector0, ViewGeometry::NoFlag, true, BaseCommand::CrossView, parentCommand);
+				m_sketchWidget->createWire(jumperItem->connector1(), connector1, ViewGeometry::NoFlag, true, BaseCommand::CrossView, parentCommand);
 			}
 
 			continue;
@@ -2663,8 +2663,8 @@ void CMRouter::addToUndo(QUndoCommand * parentCommand)
 			new SetPropCommand(m_sketchWidget, via->id(), "hole size", via->holeSize(), via->holeSize(), true, parentCommand);
 
 			if (connector0 != NULL && connector1 != NULL) {
-				m_sketchWidget->createWire(via->connectorItem(), connector0, ViewGeometry::NoFlag, false, true, BaseCommand::CrossView, parentCommand);
-				m_sketchWidget->createWire(via->connectorItem()->getCrossLayerConnectorItem(), connector1, ViewGeometry::NoFlag, false, true, BaseCommand::CrossView, parentCommand);
+				m_sketchWidget->createWire(via->connectorItem(), connector0, ViewGeometry::NoFlag, true, BaseCommand::CrossView, parentCommand);
+				m_sketchWidget->createWire(via->connectorItem()->getCrossLayerConnectorItem(), connector1, ViewGeometry::NoFlag, true, BaseCommand::CrossView, parentCommand);
 			}
 
 			continue;

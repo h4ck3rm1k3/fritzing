@@ -576,8 +576,8 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 									 Qt::DirectConnection);
 
 
-
-		void ratsnestConnect(long id, const QString & connectorID, bool connect, bool doEmit);
+	succeeded = succeeded && connect(signaller, SIGNAL(updatePartLabelInstanceTitleSignal(long)),
+									 slotter, SLOT(updatePartLabelInstanceTitleSlot(long)));
 
 
 	if (!succeeded) {

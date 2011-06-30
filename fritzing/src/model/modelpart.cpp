@@ -40,6 +40,10 @@ long ModelPart::m_nextIndex = 0;
 const int ModelPart::indexMultiplier = 10;
 QStringList ModelPart::m_possibleFolders;
 
+static QHash<QString, int> InstanceTitleIncrements;
+static const QRegExp InstanceTitleRegExp("^(.*)(\\d+)");
+
+
 ModelPart::ModelPart(ItemType type)
 	: QObject()
 {
@@ -611,6 +615,35 @@ void ModelPart::setInstanceText(QString text) {
 
 void ModelPart::setInstanceTitle(QString title) {
 	m_instanceTitle = title;
+
+	int ix = InstanceTitleRegExp.indexIn(title);
+	QString prefix = title;
+	long count = 0;
+	if (ix >= 0) {
+		prefix = InstanceTitleRegExp.cap(1);
+		count = InstanceTitleRegExp.cap(2).toLong();
+	}
+	long current = InstanceTitleIncrements.value(prefix, 0);
+	if (count > current) {
+		InstanceTitleIncrements.insert(prefix, count);
+	}
+}
+
+QString ModelPart::getNextTitle(const QString & title) {
+	int ix = InstanceTitleRegExp.indexIn(title);
+	QString prefix = title;
+	long count = -1;
+	if (ix >= 0) {
+		prefix = InstanceTitleRegExp.cap(1);
+		count = InstanceTitleRegExp.cap(2).toLong();
+	}
+	long current = InstanceTitleIncrements.value(prefix, 0);
+	if (count > current) {
+		// already got max count
+		return title;
+	}
+
+	return QString("%1%2").arg(prefix).arg(current + 1);
 }
 
 void ModelPart::setOrderedChildren(QList<QObject*> children) {

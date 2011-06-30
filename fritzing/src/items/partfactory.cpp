@@ -86,8 +86,6 @@ ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClas
 		}
 		case ModelPart::Note:
 			return new Note(modelPart, viewIdentifier, viewGeometry, id, NULL);
-		case ModelPart::Breadboard:
-			return new Breadboard(modelPart, viewIdentifier, viewGeometry, id, NULL, doLabel);
 		case ModelPart::CopperFill:
 			return new GroundPlane(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 		case ModelPart::Jumper:
@@ -146,6 +144,11 @@ ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClas
 					if (moduleID.endsWith(ModuleIDNames::SchematicFrameModuleIDName)) {
 						return new SchematicFrame(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 					}
+					// must get the subclasses first
+					if (modelPart->itemType() == ModelPart::Breadboard) {
+						return new Breadboard(modelPart, viewIdentifier, viewGeometry, id, NULL, doLabel);
+					}
+
 				}
 				QString family = modelPart->properties().value("family", "");
 				if (family.compare("mystery part", Qt::CaseInsensitive) == 0) {

@@ -319,7 +319,7 @@ ItemBase::PluralType Ruler::isPlural() {
 }
 
 
-void Ruler::addedToScene(void)
+void Ruler::addedToScene(bool temporary)
 {
 	if (this->scene()) {
 		LayerHash viewLayers;
@@ -334,7 +334,7 @@ void Ruler::addedToScene(void)
 		}
 	}
 
-    return PaletteItem::addedToScene();
+    return PaletteItem::addedToScene(temporary);
 }
 
 bool Ruler::hasPartNumberProperty()

@@ -532,6 +532,22 @@ protected:
     QPointF m_newOffset;
 };
 
+class IncLabelTextCommand : public BaseCommand
+{
+public:
+    IncLabelTextCommand(class SketchWidget *sketchWidget, long id, QUndoCommand *parent);
+    void undo();
+    void redo();
+
+protected:
+	QString getParamString() const;
+
+protected:
+    long m_itemID;
+	bool m_firstTime;
+};
+
+
 class ChangeLabelTextCommand : public BaseCommand
 {
 public:

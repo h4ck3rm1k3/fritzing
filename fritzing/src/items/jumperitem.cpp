@@ -457,7 +457,7 @@ ItemBase::PluralType JumperItem::isPlural() {
 	return Singular;
 }
 
-void JumperItem::addedToScene() {
+void JumperItem::addedToScene(bool temporary) {
 
 	if (m_connector0 == NULL) return;
 	if (m_connector1 == NULL) return;
@@ -471,7 +471,7 @@ void JumperItem::addedToScene() {
 		cc1->setRect(m_connector1->rect());
 	}
 
-	PaletteItem::addedToScene();
+	PaletteItem::addedToScene(temporary);
 }
 
 void JumperItem::rotateItem(qreal degrees) {

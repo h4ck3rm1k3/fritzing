@@ -52,7 +52,7 @@ public:
 	bool hasPartLabel();
 	bool stickyEnabled();
 	PluralType isPlural();
-	void addedToScene();
+	void addedToScene(bool temporary);
 	bool rotationAllowed();
 	bool rotation45Allowed();
 	bool hasPartNumberProperty();

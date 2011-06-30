@@ -266,13 +266,13 @@ ConnectorItem * SymbolPaletteItem::connector1() {
 	return m_connector1;
 }
 
-void SymbolPaletteItem::addedToScene()
+void SymbolPaletteItem::addedToScene(bool temporary)
 {
 	if (this->scene()) {
 		setVoltage(m_voltage);
 	}
 
-    return PaletteItem::addedToScene();
+    return PaletteItem::addedToScene(temporary);
 }
 
 QString SymbolPaletteItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi) 

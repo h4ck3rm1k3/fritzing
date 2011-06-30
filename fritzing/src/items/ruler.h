@@ -52,7 +52,7 @@ public:
 	bool stickyEnabled();
     bool hasPartLabel();
 	PluralType isPlural();
-	void addedToScene();
+	void addedToScene(bool temporary);
 	bool hasPartNumberProperty();
 	bool canFindConnectorsUnder();
 

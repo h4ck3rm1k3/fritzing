@@ -1000,6 +1000,31 @@ QString ChangeLabelTextCommand::getParamString() const {
 
 ///////////////////////////////////////////////
 
+IncLabelTextCommand::IncLabelTextCommand(SketchWidget *sketchWidget, long id,  QUndoCommand *parent)
+	: BaseCommand(BaseCommand::CrossView, sketchWidget, parent)
+{
+    m_itemID = id;
+	m_firstTime = true;
+}
+
+void IncLabelTextCommand::undo() { 
+	// only used when creating new parts via paste
+}
+
+void IncLabelTextCommand::redo() {
+	if (m_firstTime) {
+		m_sketchWidget->incInstanceTitle(m_itemID);
+	}
+}
+
+QString IncLabelTextCommand::getParamString() const {
+	return QString("IncLabelTextCommand ") 
+		+ BaseCommand::getParamString()
+		+ QString(" id:%1") 
+			.arg(m_itemID);
+
+}///////////////////////////////////////////////
+
 ChangeNoteTextCommand::ChangeNoteTextCommand(SketchWidget *sketchWidget, long id, 
 											   const QString & oldText, const QString & newText, 
 											   QSizeF oldSize, QSizeF newSize, QUndoCommand *parent)

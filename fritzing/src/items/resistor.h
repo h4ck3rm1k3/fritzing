@@ -53,7 +53,7 @@ public:
 	bool hasCustomSVG();
 	bool canEditPart();
 	PluralType isPlural();
-	void addedToScene();
+	void addedToScene(bool temporary);
 	void setProp(const QString & prop, const QString & value);
 
 protected:

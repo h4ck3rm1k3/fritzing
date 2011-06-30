@@ -278,14 +278,14 @@ bool Perfboard::collectExtraInfo(QWidget * parent, const QString & family, const
 }
 
 
-void Perfboard::addedToScene()
+void Perfboard::addedToScene(bool temporary)
 {
 	if (this->scene()) {
 		QString temp = m_size;
 		m_size = "";
 		setProp("size", temp);
 	}
-    return Capacitor::addedToScene();
+    return Capacitor::addedToScene(temporary);
 }
 
 bool Perfboard::canEditPart() {

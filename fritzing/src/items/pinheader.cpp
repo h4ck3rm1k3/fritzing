@@ -190,13 +190,13 @@ QString PinHeader::getProperty(const QString & key) {
 	return PaletteItem::getProperty(key);
 }
 
-void PinHeader::addedToScene()
+void PinHeader::addedToScene(bool temporary)
 {
 	if (this->scene()) {
 		setForm(m_form, true);
 	}
 
-    return PaletteItem::addedToScene();
+    return PaletteItem::addedToScene(temporary);
 }
 
 ConnectorItem* PinHeader::newConnectorItem(Connector *connector) {

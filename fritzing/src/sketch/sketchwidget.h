@@ -98,7 +98,7 @@ public:
     void setUndoStack(class WaitPushUndoStack *);
     void clearSelection();
 	virtual void loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType, QUndoCommand * parentCommand, 
-									bool offsetPaste, const QRectF * boundingRect, bool seekOutsideConnections);
+									bool offsetPaste, const QRectF * boundingRect, bool seekOutsideConnections, QList<long> & newIDs);
     void changeZ(QHash<long, RealPair * >, qreal (*pairAccessor)(RealPair *) );
 	void sendToBack();
 	void sendBackward();
@@ -153,7 +153,7 @@ public:
 
 	void setInfoViewOnHover(bool infoViewOnHover);
 	PaletteModel * paletteModel();
-	virtual ItemBase * addItemAux(ModelPart *, ViewLayer::ViewLayerSpec, const ViewGeometry &, long id, PaletteItem * paletteItem, bool doConnectors, ViewIdentifierClass::ViewIdentifier);
+	virtual ItemBase * addItemAux(ModelPart *, ViewLayer::ViewLayerSpec, const ViewGeometry &, long id, PaletteItem * paletteItem, bool doConnectors, ViewIdentifierClass::ViewIdentifier, bool temporary);
 
     bool swappingEnabled(ItemBase *);
 
@@ -220,7 +220,7 @@ public:
 	virtual bool ignoreFemale();
 	virtual ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry, ViewLayer::ViewLayerSpec);
 	ItemBase * findItem(long id);
-	long createWire(ConnectorItem * from, ConnectorItem * to, ViewGeometry::WireFlags, bool addItNow, bool dontUpdate, BaseCommand::CrossViewType, QUndoCommand * parentCommand);
+	long createWire(ConnectorItem * from, ConnectorItem * to, ViewGeometry::WireFlags, bool dontUpdate, BaseCommand::CrossViewType, QUndoCommand * parentCommand);
 	int selectAllObsolete();
 	int selectAllMoveLock();
 	int selectAllItemType(ModelPart::ItemType);
@@ -266,7 +266,7 @@ protected:
 	void mouseMoveEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
     void paintEvent(QPaintEvent *);
-    PaletteItem* addPartItem(ModelPart * modelPart, ViewLayer::ViewLayerSpec, PaletteItem * paletteItem, bool doConnectors, bool & ok, ViewIdentifierClass::ViewIdentifier);
+    PaletteItem* addPartItem(ModelPart * modelPart, ViewLayer::ViewLayerSpec, PaletteItem * paletteItem, bool doConnectors, bool & ok, ViewIdentifierClass::ViewIdentifier, bool temporary);
 	void clearHoldingSelectItem();
 	bool startZChange(QList<ItemBase *> & bases);
 	void continueZChange(QList<ItemBase *> & bases, int start, int end, bool (*test)(int current, int start), int inc, const QString & text);
@@ -434,6 +434,7 @@ signals:
 	void warnSMDSignal(const QString &);
 	void cursorLocationSignal(qreal xinches, qreal yinches);
 	void ratsnestConnectSignal(long id, const QString & connectorID, bool connect, bool doEmit);
+	void updatePartLabelInstanceTitleSignal(long itemID);
 
 protected slots:
 	void sketchWidget_itemAdded(ModelPart *, ViewLayer::ViewLayerSpec, const ViewGeometry &, long id, SketchWidget * dropOrigin);
@@ -467,7 +468,7 @@ protected slots:
 	void arrowTimerTimeout();
 	void makeDeleteItemCommandPrepSlot(ItemBase * itemBase, bool foreign, QUndoCommand * parentCommand);
 	void makeDeleteItemCommandFinalSlot(ItemBase * itemBase, bool foreign, QUndoCommand * parentCommand);
-
+	void updatePartLabelInstanceTitleSlot(long itemID);
 
 public slots:
 	void changeWireColor(const QString newColor);
@@ -475,6 +476,7 @@ public slots:
  	void selectAllItems(bool state, bool doEmit);
 	void setNoteText(long itemID, const QString & newText);
 	void setInstanceTitle(long id, const QString & title, bool isUndoable, bool doEmit);
+	void incInstanceTitle(long id);
 	void showPartLabel(long id, bool showIt);
 	void checkSticky(long id, bool doEmit, bool checkCurrent, CheckStickyCommand *);
 	void resizeBoard(long id, qreal w, qreal h);

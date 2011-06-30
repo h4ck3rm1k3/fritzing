@@ -233,7 +233,8 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 		m_fileProgressDialog->setMessage(tr("loading %1 (breadboard)").arg(displayName2));
 	}
 
-	m_breadboardGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, false, NULL, false);
+	QList<long> newIDs;
+	m_breadboardGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, false, NULL, false, newIDs);
 
 	ProcessEventBlocker::processEvents();
 	if (m_fileProgressDialog) {
@@ -241,7 +242,8 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 		m_fileProgressDialog->setMessage(tr("loading %1 (pcb)").arg(displayName2));
 	}
 
-	m_pcbGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, false, NULL, false);
+	newIDs.clear();
+	m_pcbGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, false, NULL, false, newIDs);
 
 	ProcessEventBlocker::processEvents();
 	if (m_fileProgressDialog) {
@@ -249,7 +251,8 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 		m_fileProgressDialog->setMessage(tr("loading %1 (schematic)").arg(displayName2));
 	}
 
-	m_schematicGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, false, NULL, false);
+	newIDs.clear();
+	m_schematicGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, false, NULL, false, newIDs);
 
 	ProcessEventBlocker::processEvents();
 	if (m_fileProgressDialog) {
@@ -305,13 +308,20 @@ void MainWindow::pasteAux(bool pasteInPlace)
 
 		QRectF r;
 		QRectF boundingRect = boundingRects.value(m_breadboardGraphicsView->viewName(), r);
-		m_breadboardGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, parentCommand, true, pasteInPlace ? &r : &boundingRect, false);
+		QList<long> newIDs;
+		m_breadboardGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, parentCommand, true, pasteInPlace ? &r : &boundingRect, false, newIDs);
 
 		boundingRect = boundingRects.value(m_pcbGraphicsView->viewName(), r);
-		m_pcbGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, parentCommand, true, pasteInPlace ? &r : &boundingRect, false);
+		newIDs.clear();
+		m_pcbGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, parentCommand, true, pasteInPlace ? &r : &boundingRect, false, newIDs);
 
 		boundingRect = boundingRects.value(m_schematicGraphicsView->viewName(), r);
-		m_schematicGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, parentCommand, true, pasteInPlace ? &r : &boundingRect, false);
+		newIDs.clear();
+		m_schematicGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, parentCommand, true, pasteInPlace ? &r : &boundingRect, false, newIDs);
+
+		foreach (long id, newIDs) {
+			new IncLabelTextCommand(m_breadboardGraphicsView, id, parentCommand);
+		}
 
 		m_undoStack->push(parentCommand);
 	}
@@ -1757,7 +1767,7 @@ PartsEditorMainWindow* MainWindow::getPartsEditor(ModelPart *modelPart, long _id
 
 	PartsEditorMainWindow *mainPartsEditorWindow = new PartsEditorMainWindow(this);
 	if (fromItem != NULL) {
-		ItemBase * ii = m_breadboardGraphicsView->addItemAux(modelPart, fromItem->viewLayerSpec(), ViewGeometry(), ItemBase::getNextID(), NULL, true, ViewIdentifierClass::IconView);
+		ItemBase * ii = m_breadboardGraphicsView->addItemAux(modelPart, fromItem->viewLayerSpec(), ViewGeometry(), ItemBase::getNextID(), NULL, true, ViewIdentifierClass::IconView, true);
 		if (ii != NULL) {
 			m_breadboardGraphicsView->scene()->removeItem(ii);
 			if (!ii->hasCustomSVG()) {

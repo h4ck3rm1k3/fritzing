@@ -151,7 +151,7 @@ QVariant ResizableBoard::itemChange(GraphicsItemChange change, const QVariant &v
 }
 
 
-void ResizableBoard::addedToScene() {
+void ResizableBoard::addedToScene(bool temporary) {
 	loadTemplates();
 	if (this->scene()) {
 		if (hasGrips()) {
@@ -171,7 +171,7 @@ void ResizableBoard::addedToScene() {
 		}
 	}
 
-	PaletteItem::addedToScene();
+	PaletteItem::addedToScene(temporary);
 }
 
 void ResizableBoard::loadTemplates() {

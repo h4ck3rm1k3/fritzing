@@ -947,6 +947,12 @@ void ItemBase::setInstanceTitle(const QString &title) {
 	}
 }
 
+void ItemBase::updatePartLabelInstanceTitle() {
+	if (m_partLabel) {
+		m_partLabel->setPlainText(instanceTitle());
+	}
+}
+
 void ItemBase::setInstanceTitleAux(const QString &title)
 {
 	if (m_modelPart) {
@@ -997,7 +1003,7 @@ void ItemBase::setDefaultTooltip() {
 				title = defaultTitle;
 			}
 		}
-		ensureUniqueTitle(title);
+		ensureUniqueTitle(title, false);
 		setInstanceTitleTooltip(instanceTitle());
 	}
 }
@@ -1159,45 +1165,10 @@ bool ItemBase::isSwappable() {
 	return true;
 }
 
-void ItemBase::ensureUniqueTitle(QString &title) {
-	if(instanceTitle().isEmpty() || instanceTitle().isNull()) {
-		int count;
-
-		QList<QGraphicsItem*> items = scene()->items();
-		// If someone ends up with 1000 parts in the sketch, this for sure is not the best solution
-		count = getNextTitle(items, title);
-
-		title = QString(title+"%1").arg(count);
-		setInstanceTitle(title);
+void ItemBase::ensureUniqueTitle(const QString & title, bool force) {
+	if (force || instanceTitle().isEmpty() || instanceTitle().isNull()) {
+		setInstanceTitle(ModelPart::getNextTitle(title));
 	}
-}
-
-int ItemBase::getNextTitle(QList<QGraphicsItem*> & items, const QString &title) {
-	int max = 1;
-	foreach(QGraphicsItem* gitem, items) {
-		ItemBase* item = dynamic_cast<ItemBase*>(gitem);
-		if(item) {
-			QString currTitle = item->instanceTitle();
-			if(currTitle.isEmpty() || currTitle.isNull()) {
-				currTitle = item->label();
-				if(currTitle.isEmpty() || currTitle.isNull()) {
-					currTitle = title;
-				}
-			}
-
-			if(currTitle.startsWith(title)) {
-				QString helpStr = currTitle.remove(title);
-				if(!helpStr.isEmpty()) {
-					bool isInt;
-					int helpInt = helpStr.toInt(&isInt);
-					if(isInt && max <= helpInt) {
-						max = ++helpInt;
-					}
-				}
-			}
-		}
-	}
-	return max;
 }
 
 QVariant ItemBase::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant & value)
@@ -1868,8 +1839,8 @@ void ItemBase::debugInfo(const QString & msg)
 }
 
 
-void ItemBase::addedToScene() {
-	if (this->scene() && instanceTitle().isEmpty()) {
+void ItemBase::addedToScene(bool temporary) {
+	if (this->scene() && instanceTitle().isEmpty() && !temporary) {
 		setTooltip();
 	}
 }

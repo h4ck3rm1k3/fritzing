@@ -114,13 +114,13 @@ void GroundPlane::setProp(const QString & prop, const QString & value) {
 	PaletteItemBase::setProp(prop, value);
 }
 
-void GroundPlane::addedToScene() 
+void GroundPlane::addedToScene(bool temporary) 
 {
 	if (this->scene()) {
 		setSvgAux(modelPart()->prop("svg").toString());
 	}
 
-	PaletteItem::addedToScene();
+	PaletteItem::addedToScene(temporary);
 }
 
 

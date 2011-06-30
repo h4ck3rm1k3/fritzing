@@ -58,7 +58,7 @@ public:
 	virtual void reloadImage(const QString & svg, const QSizeF & aspectRatio, const QString & fileName, bool addName);
 	bool stickyEnabled();
 	PluralType isPlural();
-	void addedToScene();
+	void addedToScene(bool temporary);
 
 protected slots:
 	void prepLoadImage();

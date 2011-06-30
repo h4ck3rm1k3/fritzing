@@ -288,13 +288,13 @@ QString Resistor::pinSpacing() {
 	return m_pinSpacing;
 }
 
-void Resistor::addedToScene()
+void Resistor::addedToScene(bool temporary)
 {
 	if (this->scene()) {
 		setResistance(m_ohms, m_pinSpacing, true);
 	}
 
-    return Capacitor::addedToScene();
+    return Capacitor::addedToScene(temporary);
 }
 
 const QString & Resistor::title() {

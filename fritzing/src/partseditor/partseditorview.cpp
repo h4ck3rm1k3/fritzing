@@ -171,7 +171,10 @@ void PartsEditorView::addItemInPartsEditor(ModelPart * modelPart, SvgAndPartFile
 	emit connectorsFoundSignal(this->m_viewIdentifier,m_item->connectors());
 }
 
-ItemBase * PartsEditorView::addItemAux(ModelPart * modelPart, ViewLayer::ViewLayerSpec viewLayerSpec, const ViewGeometry &, long /*id*/, PaletteItem * paletteItemAux, bool doConnectors, ViewIdentifierClass::ViewIdentifier) {
+ItemBase * PartsEditorView::addItemAux(ModelPart * modelPart, ViewLayer::ViewLayerSpec viewLayerSpec, const ViewGeometry &, long id, PaletteItem * paletteItemAux, bool doConnectors, ViewIdentifierClass::ViewIdentifier, bool temporary) {
+	Q_UNUSED(id);
+	Q_UNUSED(temporary);
+	
 	if(paletteItemAux == NULL) {
 		paletteItemAux = newPartsEditorPaletteItem(modelPart);
 	}
@@ -812,7 +815,7 @@ void PartsEditorView::loadFromModel(PaletteModel *paletteModel, ModelPart * mode
 
 	ViewGeometry viewGeometry;
 	this->setPaletteModel(paletteModel);
-	m_item = (PartsEditorPaletteItem*) addItemAux(modelPart, defaultViewLayerSpec(), viewGeometry, ItemBase::getNextID(), NULL, true, m_viewIdentifier);
+	m_item = (PartsEditorPaletteItem*) addItemAux(modelPart, defaultViewLayerSpec(), viewGeometry, ItemBase::getNextID(), NULL, true, m_viewIdentifier, true);
 
 	fitCenterAndDeselect();
 

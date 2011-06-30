@@ -342,9 +342,9 @@ bool Stripboard::collectExtraInfo(QWidget * parent, const QString & family, cons
 	return Perfboard::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
 }
 
-void Stripboard::addedToScene()
+void Stripboard::addedToScene(bool temporary)
 {
-    Perfboard::addedToScene();
+    Perfboard::addedToScene(temporary);
 	if (this->scene() == NULL) return;
 
 	QList<QGraphicsItem *> items = childItems();

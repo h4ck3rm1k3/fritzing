@@ -157,6 +157,7 @@ public:
 	static void updateIndex(long index);
 	static const int indexMultiplier;
 	static const QStringList & possibleFolders();
+	static QString getNextTitle(const QString & candidate);
 
 signals:
 	void startSaveInstances(const QString & fileName, ModelPart *, QXmlStreamWriter &);

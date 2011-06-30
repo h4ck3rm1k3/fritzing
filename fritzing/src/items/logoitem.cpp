@@ -75,7 +75,7 @@ LogoItem::~LogoItem() {
 }
 
 
-void LogoItem::addedToScene()
+void LogoItem::addedToScene(bool temporary)
 {
 	if (this->scene()) {
 		setInitialSize();
@@ -108,7 +108,7 @@ void LogoItem::addedToScene()
 		}
 	}
 
-    return ResizableBoard::addedToScene();
+    return ResizableBoard::addedToScene(temporary);
 }
 
 

@@ -162,9 +162,9 @@ qreal SchematicFrame::minHeight() {
 	return OriginalHeight * FSvgRenderer::printerScale() / 1000;
 }
 
-void SchematicFrame::addedToScene()
+void SchematicFrame::addedToScene(bool temporary)
 {
-    ResizableBoard::addedToScene();
+    ResizableBoard::addedToScene(temporary);
 	resizeMMAux(m_modelPart->prop("width").toDouble(), m_modelPart->prop("height").toDouble());
 }
 

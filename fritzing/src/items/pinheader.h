@@ -49,7 +49,7 @@ public:
 	const QString & form();
 	bool onlyFormChanges(QMap<QString, QString> & propsMap);
 	PluralType isPlural();
-	void addedToScene();
+	void addedToScene(bool temporary);
 
 protected:
 	ConnectorItem* newConnectorItem(class Connector *connector);

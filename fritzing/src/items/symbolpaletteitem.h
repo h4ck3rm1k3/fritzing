@@ -49,7 +49,7 @@ public:
 	ConnectorItem * connector1();
 	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi);
 	PluralType isPlural();
-	void addedToScene();
+	void addedToScene(bool temporary);
 	bool hasPartNumberProperty();
 
 public:

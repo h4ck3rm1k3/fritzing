@@ -77,7 +77,7 @@ public:
 	bool hasCustomSVG();
 	void calcRotation(QTransform & rotation, QPointF center, ViewGeometry &);
 	QSizeF getSizeMM();
-	void addedToScene();
+	void addedToScene(bool temporary);
 	bool hasPartNumberProperty();
 
 public:

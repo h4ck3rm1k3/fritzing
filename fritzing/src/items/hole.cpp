@@ -304,13 +304,13 @@ QString Hole::getProperty(const QString & key) {
 	return PaletteItem::getProperty(key);
 }
 
-void Hole::addedToScene()
+void Hole::addedToScene(bool temporary)
 {
 	if (this->scene()) {
 		setHoleSize(holeSize(m_holeSettings), true);
 	}
 
-    return PaletteItem::addedToScene();
+    return PaletteItem::addedToScene(temporary);
 }
 
 bool Hole::hasCustomSVG() {

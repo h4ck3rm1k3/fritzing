@@ -181,11 +181,12 @@ public:
 	bool moveLock();
 	virtual void setMoveLock(bool);
 	void debugInfo(const QString & msg);
-	virtual void addedToScene();
+	virtual void addedToScene(bool temporary);
 	virtual bool hasPartNumberProperty();
 	void collectPropsMap(QString & family, QMap<QString, QString> &);
 	virtual bool rotationAllowed();
 	virtual bool rotation45Allowed();
+	void ensureUniqueTitle(const QString &title, bool force);
 
 public:
 	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth, bool & negativeOffsetRect);
@@ -245,6 +246,7 @@ public:
 	virtual ConnectorItem* newConnectorItem(ItemBase * layerkin, Connector *connector);
 
 	virtual void setInstanceTitle(const QString &title);
+	void updatePartLabelInstanceTitle();
 
 public slots:
 	void showPartLabel(bool show, ViewLayer *);
@@ -273,8 +275,6 @@ protected:
 	void setInstanceTitleTooltip(const QString& text);
 	virtual void setDefaultTooltip();
 	void setInstanceTitleAux(const QString & title);
-	void ensureUniqueTitle(QString &title);
-	int getNextTitle(QList<QGraphicsItem*> & items, const QString &title);
 	void saveLocAndTransform(QXmlStreamWriter & streamWriter);
 
 protected:

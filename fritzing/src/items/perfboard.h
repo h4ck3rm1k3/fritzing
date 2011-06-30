@@ -48,7 +48,7 @@ public:
 	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
 	bool canEditPart();
 	PluralType isPlural();
-	void addedToScene();
+	void addedToScene(bool temporary);
 	void setProp(const QString & prop, const QString & value);
 	void hoverUpdate();
 	void paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget); 

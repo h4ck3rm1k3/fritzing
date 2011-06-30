@@ -273,14 +273,14 @@ QString MysteryPart::chipLabel() {
 	return m_chipLabel;
 }
 
-void MysteryPart::addedToScene()
+void MysteryPart::addedToScene(bool temporary)
 {
 	if (this->scene()) {
 		setChipLabel(m_chipLabel, true);
 		setSpacing(m_spacing, true);
 	}
 
-    return PaletteItem::addedToScene();
+    return PaletteItem::addedToScene(temporary);
 }
 
 const QString & MysteryPart::title() {

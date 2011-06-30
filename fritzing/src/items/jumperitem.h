@@ -54,7 +54,7 @@ public:
 	bool inDrag();
 	void loadLayerKin( const LayerHash & viewLayers, ViewLayer::ViewLayerSpec);
 	PluralType isPlural();
-	void addedToScene();
+	void addedToScene(bool temporary);
 	void rotateItem(qreal degrees);
 	void calcRotation(QTransform & rotation, QPointF center, ViewGeometry &);
 	QPointF dragOffset();
