@@ -108,8 +108,6 @@ def sendStatusMail(context):
         ship_to = IFabOrder['shipTo'].vocabulary.getTerm(context.shipTo).title,
         )
     
-    print mail_text
-    
     try:
         host = getToolByName(context, 'MailHost')
         # send our copy:
