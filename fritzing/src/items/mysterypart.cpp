@@ -177,7 +177,7 @@ QString MysteryPart::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QStri
 		case ViewLayer::Breadboard:
 		case ViewLayer::Schematic:
 		case ViewLayer::Icon:
-			return TextUtils::replaceTextElement(svg, m_chipLabel);
+			return TextUtils::replaceTextElement(svg, "label", m_chipLabel);
 		default:
 			break;
 	}
@@ -192,7 +192,7 @@ QString MysteryPart::makeSvg(const QString & chipLabel) {
 	if (file.open(QFile::ReadOnly)) {
 		svg = file.readAll();
 		file.close();
-		return TextUtils::replaceTextElement(svg, chipLabel);
+		return TextUtils::replaceTextElement(svg, "label", chipLabel);
 	}
 
 	return "";

@@ -12,12 +12,12 @@
   <tag>fritzing core</tag>
  </tags>
  <properties>
-  <property name="descr 1">description 1</property>
-  <property name="descr 2">description 2</property>
-   <property name="title">description 1</property>
+  <property name="descr 1"></property>
+  <property name="descr 2"></property>
+   <property name="title"></property>
    <property name="doc#"></property>
-   <property name="rev">1.0</property>
-   <property name="date">2011-06-29</property>
+   <property name="rev"></property>
+   <property name="date"></property>
   <property name="sheets">1/1</property>
   <property name="family">Schematic Frame</property>
  </properties>

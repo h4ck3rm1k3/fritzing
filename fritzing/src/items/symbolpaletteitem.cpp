@@ -243,7 +243,7 @@ QString SymbolPaletteItem::makeSvg() {
 
 QString SymbolPaletteItem::replaceTextElement(QString svg) {
 	qreal v = ((int) (m_voltage * 1000)) / 1000.0;
-	return TextUtils::replaceTextElement(svg, QString::number(v) + "V");
+	return TextUtils::replaceTextElement(svg, "label", QString::number(v) + "V");
 }
 
 QString SymbolPaletteItem::getProperty(const QString & key) {

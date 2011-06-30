@@ -47,7 +47,6 @@ public:
 
 	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi);
 	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
-	QString getProperty(const QString & key);
 	bool canEditPart();
 	void setProp(const QString & prop, const QString & value);
 	bool hasPartLabel();
@@ -60,6 +59,9 @@ public:
 	void setInitialSize();
 
 protected slots:
+	void propEntry();
+	void dateTimeEntry(QDateTime);
+	void sheetsEntry(int);
 
 protected:
 	bool hasGrips();
@@ -70,6 +72,7 @@ protected:
 	QString makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, qreal mmW, qreal mmH, qreal milsW, qreal milsH);
 	QString makeFirstLayerSvg(qreal mmW, qreal mmH, qreal milsW, qreal milsH);
 	QString makeNextLayerSvg(ViewLayer::ViewLayerID, qreal mmW, qreal mmH, qreal milsW, qreal milsH);
+	bool makeLineEdit(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
 
 
 protected:

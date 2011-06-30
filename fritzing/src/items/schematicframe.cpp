@@ -24,6 +24,13 @@ $Date$
 
 ********************************************************************/
 
+// TODO:
+//
+//	export
+//	save and load
+//	fill in form
+//	direct editing (eventually)
+
 #include "schematicframe.h"
 #include "../utils/graphicsutils.h"
 #include "../utils/folderutils.h"
@@ -44,15 +51,39 @@ $Date$
 #include <QMessageBox>
 #include <QImage>
 #include <QLineEdit>
+#include <QDateTimeEdit>
+#include <QSpinBox>
+#include <QHash>
 
 static QString SchematicTemplate = "";
 static int OriginalWidth = 0;
 static int OriginalHeight = 0;
+QHash<QString, QString> FrameProps;
+static const QString DisplayFormat("dd MMM yyyy hh:mm:ss");
 
 SchematicFrame::SchematicFrame( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: ResizableBoard(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
+	if (FrameProps.count() == 0) {
+		FrameProps.insert("descr 1", "");
+		FrameProps.insert("descr 2", "");
+		FrameProps.insert("title", tr("TITLE: "));
+		FrameProps.insert("doc#", tr("Document Number: "));
+		FrameProps.insert("date", tr("Date: "));
+		FrameProps.insert("sheets", tr("Sheet:"));
+		FrameProps.insert("rev", tr(""));
+	}
 
+	foreach (QString prop, FrameProps.keys()) {
+		if (modelPart->prop(prop).toString().isEmpty()) {
+			modelPart->setProp(prop, modelPart->properties().value(prop));
+		}
+	}
+
+	if (modelPart->prop("date").toString().isEmpty()) {
+		QDateTime dt = QDateTime::currentDateTime();
+		modelPart->setProp("date", QString::number(dt.toTime_t()));
+	}
 }
 
 SchematicFrame::~SchematicFrame() {
@@ -87,13 +118,24 @@ QString SchematicFrame::makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, qreal m
 			return "";
 	}
 
+
 	if (milsW < OriginalWidth) milsW = OriginalWidth;
 	if (milsH < OriginalHeight) milsH = OriginalHeight;
 	QString svg = SchematicTemplate.arg(milsW / 1000).arg(milsH / 1000).arg(milsW).arg(milsH).arg(milsW - 8).arg(milsH - 8);
 	svg = TextUtils::incrementTemplateString(svg, 1, milsW - OriginalWidth, TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction);
 	svg.replace("{", "[");
 	svg.replace("}", "]");
-	return  TextUtils::incrementTemplateString(svg, 1, milsH - OriginalHeight, TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction);
+	svg = TextUtils::incrementTemplateString(svg, 1, milsH - OriginalHeight, TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction);
+	QHash<QString, QString> hash;
+	foreach (QString prop, FrameProps.keys()) {
+		hash.insert(prop, FrameProps.value(prop) + modelPart()->prop(prop).toString());
+	}
+	hash.insert("rev label", tr("REV:"));
+	QDateTime dt;
+	dt.setTime_t(modelPart()->prop("date").toUInt());
+	hash.insert("date", FrameProps.value("date") + dt.toString(DisplayFormat));
+
+	return TextUtils::replaceTextElements(svg, hash);
 }
 
 QString SchematicFrame::makeNextLayerSvg(ViewLayer::ViewLayerID viewLayerID, qreal mmW, qreal mmH, qreal milsW, qreal milsH) 
@@ -135,8 +177,92 @@ QString SchematicFrame::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QS
 	return PaletteItemBase::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 }
 
+bool SchematicFrame::makeLineEdit(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget) 
+{
+	Q_UNUSED(value);
+	Q_UNUSED(family);
+
+
+	returnProp = ItemBase::TranslatedPropertyNames.value(prop.toLower());
+	returnValue = modelPart()->prop(prop).toString();
+
+	QLineEdit * e1 = new QLineEdit(parent);
+	e1->setObjectName("infoViewLineEdit");
+
+	e1->setProperty("prop", QVariant(prop));
+
+	e1->setText(returnValue);
+	e1->setEnabled(swappingEnabled);
+	connect(e1, SIGNAL(editingFinished()), this, SLOT(propEntry()));
+
+	returnWidget = e1;
+	return true;
+}
+
 bool SchematicFrame::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget) 
 {
+	if (prop.compare("date", Qt::CaseInsensitive) == 0) {
+		QDateTimeEdit * dateTimeEdit = new QDateTimeEdit(QDateTime::currentDateTime(), parent);
+		QString d = modelPart()->prop("date").toString();
+		if (!d.isEmpty()) {
+			QDateTime dateTime;
+			dateTime.setTime_t(d.toUInt());
+			dateTimeEdit->setDateTime(dateTime);
+		}
+		//dateTimeEdit->setCalendarPopup(true);
+		dateTimeEdit->setDisplayFormat(DisplayFormat);
+		connect(dateTimeEdit, SIGNAL(dateTimeChanged(QDateTime)), this, SLOT(dateTimeEntry(QDateTime)));
+		dateTimeEdit->setObjectName("infoViewDateEdit");
+		dateTimeEdit->setEnabled(swappingEnabled);
+
+		returnProp = ItemBase::TranslatedPropertyNames.value(prop.toLower());
+		returnValue = modelPart()->prop(prop).toString();
+		returnWidget = dateTimeEdit;
+
+		return true;
+	}
+
+	if (prop.compare("sheets", Qt::CaseInsensitive) == 0) {
+		QFrame * frame = new QFrame(parent);
+		QSpinBox * spin1 = new QSpinBox(frame);
+		spin1->setRange(1, 999);
+		spin1->setSingleStep(1);
+		connect(spin1, SIGNAL(valueChanged(int)), this, SLOT(sheetsEntry(int)));
+		spin1->setObjectName("infoViewSpinner");
+		spin1->setProperty("role", "numerator");
+		spin1->setEnabled(swappingEnabled);
+
+		QSpinBox * spin2 = new QSpinBox(frame);
+		spin2->setRange(1, 999);
+		spin2->setSingleStep(1);
+		connect(spin2, SIGNAL(valueChanged(int)), this, SLOT(sheetsEntry(int)));
+		spin2->setObjectName("infoViewSpinner");
+		spin2->setProperty("role", "denominator");
+		spin2->setEnabled(swappingEnabled);
+
+		QLabel * label = new QLabel(parent);
+		label->setText(tr("of"));
+		label->setObjectName("infoViewLabel");
+		label->setAlignment(Qt::AlignCenter);
+
+		QHBoxLayout * hBoxLayout = new QHBoxLayout(frame);
+		hBoxLayout->addWidget(spin1);
+		hBoxLayout->addWidget(label);
+		hBoxLayout->addWidget(spin2);
+
+		frame->setLayout(hBoxLayout);
+
+		returnProp = ItemBase::TranslatedPropertyNames.value(prop.toLower());
+		returnValue = modelPart()->prop(prop).toString();
+		returnWidget = frame;
+
+		return true;
+	}
+
+	if (FrameProps.keys().contains(prop)) {
+		return makeLineEdit(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
+	}
+
 	return PaletteItem::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
 }
 
@@ -145,16 +271,15 @@ bool SchematicFrame::hasGrips() {
 }
 
 
-void SchematicFrame::setProp(const QString & prop, const QString & value) {
-
-
+void SchematicFrame::setProp(const QString & prop, const QString & value) 
+{	
 	ResizableBoard::setProp(prop, value);
-}
 
+	if (FrameProps.keys().contains(prop)) {
+		modelPart()->setProp(prop, value);
+		resizeMMAux(modelPart()->prop("width").toDouble(), modelPart()->prop("height").toDouble());
+	}
 
-QString SchematicFrame::getProperty(const QString & key) {
-
-	return PaletteItem::getProperty(key);
 }
 
 bool SchematicFrame::canEditPart() {
@@ -164,7 +289,6 @@ bool SchematicFrame::canEditPart() {
 bool SchematicFrame::hasPartLabel() {
 	return false;
 }
-
 
 bool SchematicFrame::stickyEnabled() {
 	return false;
@@ -193,5 +317,52 @@ void SchematicFrame::setInitialSize() {
 		// set the size so the infoGraphicsView will display the size as you drag
 		modelPart()->setProp("width", 25.4 * OriginalWidth / 1000); 
 		modelPart()->setProp("height", 25.4 * OriginalHeight / 1000); 
+	}
+}
+
+void SchematicFrame::propEntry() {
+	QLineEdit * edit = dynamic_cast<QLineEdit *>(sender());
+	if (edit == NULL) return;
+
+	QString prop = edit->property("prop").toString();
+	if (prop.isEmpty()) return;
+
+	QString current = modelPart()->prop(prop).toString();
+
+	if (edit->text().compare(current) == 0) return;
+
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView != NULL) {
+		infoGraphicsView->setProp(this, prop, ItemBase::TranslatedPropertyNames.value(prop), current, edit->text(), true);
+	}
+}
+
+
+void SchematicFrame::dateTimeEntry(QDateTime dateTime) {
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView != NULL) {
+		infoGraphicsView->setProp(this, "date", tr("date"), modelPart()->prop("date").toString(), QString::number(dateTime.toTime_t()), true);
+	}
+}
+
+void SchematicFrame::sheetsEntry(int value) {
+	QString role = sender()->property("role").toString();
+	QString sheets = modelPart()->prop("sheets").toString();
+	QStringList strings = sheets.split("/");
+	if (strings.count() != 2) {
+		strings.clear();
+		strings << "1" << "1";
+	}
+	if (role.compare("numerator") == 0) {
+		strings[0] = QString::number(value);
+	}
+	else if (role.compare("denominator") == 0) {
+		strings[1] = QString::number(value);
+	}
+	else return;
+
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView != NULL) {
+		infoGraphicsView->setProp(this, "sheets", tr("sheets"), modelPart()->prop("sheets").toString(), strings.at(0) + "/" + strings[1], true);
 	}
 }
