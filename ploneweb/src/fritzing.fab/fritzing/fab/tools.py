@@ -97,21 +97,24 @@ def sendStatusMail(context):
     state_id = getStateId(False, context)
     state_title = getStateTitle(False, context)
     
-    mail_subject = _(u"Your Fritzing Fab order is now %s") % state_title.lower()
+    mail_subject = _(u"Your Fritzing Fab order #%s is now %s") % (context.id, state_title.lower())
     
     mail_text = mail_template(
         to_name = to_name,
+        to_address = to_address,
         state_id = state_id,
         state_title = state_title,
         faborder = context,
         ship_to = IFabOrder['shipTo'].vocabulary.getTerm(context.shipTo).title,
         )
     
+    print mail_text
+    
     try:
         host = getToolByName(context, 'MailHost')
         # send our copy:
         host.send(
-            message = MIMEText(mail_text, 'plain', charset), 
+            MIMEText(mail_text, 'plain', charset), 
             mto = formataddr((from_name, from_address)),
             mfrom = formataddr((from_name, from_address)),
             subject = mail_subject,
@@ -120,7 +123,7 @@ def sendStatusMail(context):
         )
         # send notification for the orderer:
         host.send(
-            message = MIMEText(mail_text, 'plain', charset), 
+            MIMEText(mail_text, 'plain', charset), 
             mto = formataddr((to_name, to_address)),
             mfrom = formataddr((from_name, from_address)),
             subject = mail_subject,
