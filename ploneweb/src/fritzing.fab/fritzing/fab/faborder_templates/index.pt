@@ -136,7 +136,7 @@
                   <td class="align_right" tal:content="python: '%.2f EUR' % (context.taxes)"></td>
                 </tr>
                 <tr>
-                  <td>Shipping to <span tal:replace="view/shipToTitle" /></td>
+                  <td>Shipping to <span tal:replace="view/shipToTitle | string:unknown" /></td>
                   <td class="align_right" tal:content="python: '%.2f EUR' % (context.priceShipping)"></td>
                 </tr>
                 <tr>
