@@ -26,9 +26,6 @@ $Date$
 
 // TODO:
 //
-//	export
-//	save and load
-//	fill in form
 //	direct editing (eventually)
 
 #include "schematicframe.h"

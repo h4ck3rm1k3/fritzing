@@ -25,7 +25,7 @@
  <description>Document frame for schematic view</description>
  <views>
   <iconView>
-   <layers image="icon/schematicframe.svg" >
+   <layers image="icon/schematic_frame_icon.svg" >
     <layer layerId="icon" />
    </layers>
   </iconView>

@@ -699,6 +699,13 @@
           </iconView>
         </views>
       </instance>
+       <instance moduleIdRef="SchematicFrameModuleID" modelIndex="53" path=":/resources/parts/core/schematicframe.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
       
       <instance moduleIdRef="__spacer__" modelIndex="3" path="PCB View">
         <views>

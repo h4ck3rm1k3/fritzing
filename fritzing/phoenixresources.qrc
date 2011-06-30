@@ -208,6 +208,7 @@
         <file>resources/parts/svg/core/icon/jumpericon.svg</file>
         <file>resources/parts/svg/core/icon/hole.svg</file>
 	<file>resources/parts/svg/core/icon/via.svg</file>
+	<file>resources/parts/svg/core/icon/schematic_frame_icon.svg</file>
 	
         <file>resources/parts/svg/core/breadboard/ruler.svg</file>
         <file>resources/parts/svg/core/breadboard/wire.svg</file>
