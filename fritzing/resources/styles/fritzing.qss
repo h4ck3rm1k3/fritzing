@@ -97,15 +97,31 @@ qtoolbutton
 }
 
 #ZoomSliderMinusButton {
+	margin: 0px;
+	padding: 0px;
+	border: none;
+	background-color: rgb(255,0,0);
 	image: url(:/resources/images/icons/zoomSliderMinus.png);
 }
 #ZoomSliderMinusButton:pressed {
+	margin: 0px;
+	padding: 0px;
+	border: none;
+	background-color: rgb(255,0,0);
 	image: url(:/resources/images/icons/zoomSliderMinusPressed.png);
 }
 #ZoomSliderPlusButton {
+	margin: 0px;
+	padding: 0px;
+	border: none;
+	background-color: rgb(255,0,0);
 	image: url(:/resources/images/icons/zoomSliderPlus.png);
 }
 #ZoomSliderPlusButton:pressed {
+	margin: 0px;
+	padding: 0px;
+	border: none;
+	background-color: rgb(255,0,0);
 	image: url(:/resources/images/icons/zoomSliderPlusPressed.png);
 }
 

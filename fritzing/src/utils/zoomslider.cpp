@@ -76,7 +76,8 @@ ZoomSlider::ZoomSlider(QWidget * parent) : QFrame(parent)
 	m_minusButton = new QPushButton(this);
 	m_minusButton->setAutoRepeat(true);
 	m_minusButton->setObjectName("ZoomSliderMinusButton");
-	m_minusButton->setGeometry(soFar, 0, temp.width(), temp.height());
+        //m_minusButton->setGeometry(soFar, 0, temp.width(), temp.height());
+        m_minusButton->move(soFar, 0);
 	connect(m_minusButton, SIGNAL(clicked()), this, SLOT(minusClicked()));
 	soFar += temp.width() + 5;
 
@@ -92,7 +93,8 @@ ZoomSlider::ZoomSlider(QWidget * parent) : QFrame(parent)
 	m_plusButton = new QPushButton(this);
 	m_plusButton->setAutoRepeat(true);
 	m_plusButton->setObjectName("ZoomSliderPlusButton");
-	m_plusButton->setGeometry(soFar, 0, temp.width(), temp.height());
+        //m_plusButton->setGeometry(soFar, 0, temp.width(), temp.height());
+        m_plusButton->move(soFar, 0);
 	connect(m_plusButton, SIGNAL(clicked()), this, SLOT(plusClicked()));
 	soFar += temp.width() + 5;
 
