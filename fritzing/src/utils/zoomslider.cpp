@@ -197,7 +197,7 @@ void ZoomSlider::showEvent(QShowEvent * event)
 	if (m_firstTime) {
 		m_firstTime = false;
 		int soFar = 0;
-		m_lineEdit->move(soFar, -1);
+		m_lineEdit->move(soFar, -2);
 		soFar += m_lineEdit->width();
 		m_suffix->move(soFar, 0);
 		soFar += m_suffix->width();

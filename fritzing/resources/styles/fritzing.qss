@@ -94,18 +94,17 @@ QToolBar {
 	height: 16px;
 	max-height: 16px;
 	min-height: 16px;
-	width: 200px;
-	max-width: 200px;
-	min-width: 200px;  
+	width: 202px;
+	max-width: 202px;
+	min-width: 202px;  
 }
 
 #ZoomSliderValue {
 	margin: 0px;
 	padding: 0px;
+	border: none;
 	color: rgb(255,255,255);
 	background-color: rgb(84,24,44);
-	border-color: rgb(0,0,0);
-	border-width: 0px;
 	width: 35px;
 	max-width: 35px;
 	min-width: 35px; 
@@ -124,18 +123,18 @@ QToolBar {
 	margin: 0px;
 	padding: 0px;
 	border: none;
-	width: 25px;
-	max-width: 25px;
-	min-width: 25px;  
+	width: 26px;
+	max-width: 26px;
+	min-width: 26px;  
 	image: url(:/resources/images/icons/zoomSliderMinus.png);
 }
 #ZoomSliderMinusButton:pressed {
 	margin: 0px;
 	padding: 0px;
 	border: none;
-	width: 25px;
-	max-width: 25px;
-	min-width: 25px;  
+	width: 26px;
+	max-width: 26px;
+	min-width: 26px;  
 	image: url(:/resources/images/icons/zoomSliderMinusPressed.png);
 }
 
@@ -150,9 +149,9 @@ QToolBar {
 	margin: 0px;
 	padding: 0px;
 	border: none;
-	width: 25px;
-	max-width: 25px;
-	min-width: 25px;  
+	width: 26px;
+	max-width: 26px;
+	min-width: 26px;  
 	image: url(:/resources/images/icons/zoomSliderPlus.png);
 }
 
@@ -160,9 +159,9 @@ QToolBar {
 	margin: 0px;
 	padding: 0px;
 	border: none;
-	width: 25px;
-	max-width: 25px;
-	min-width: 25px;  
+	width: 26px;
+	max-width: 26px;
+	min-width: 26x;  
 	image: url(:/resources/images/icons/zoomSliderPlusPressed.png);
 }
 
