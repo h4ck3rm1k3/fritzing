@@ -35,6 +35,20 @@ $Date$
 #include <QPushButton>
 #include <QLabel>
 
+class ZoomLabel : public QLabel {
+        Q_OBJECT
+
+public:
+        ZoomLabel(QWidget * parent);
+        ~ZoomLabel();
+
+        void mousePressEvent (QMouseEvent * );
+
+signals:
+        void clicked();
+
+};
+
 class ZoomSlider: public QFrame {
 Q_OBJECT
 
@@ -71,8 +85,8 @@ protected:
 	//int m_indexBackup;
 	QSlider * m_slider;
 	QLineEdit * m_lineEdit;
-	QPushButton * m_plusButton;
-	QPushButton * m_minusButton;
+        ZoomLabel * m_plusButton;
+        ZoomLabel * m_minusButton;
 	QLabel * m_suffix;
 	bool m_firstTime;
 

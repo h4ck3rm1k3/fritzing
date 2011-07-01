@@ -46,6 +46,25 @@ static const int STARTING_VALUE = 100;
 static const int HEIGHT = 16;
 static const int STEP = 100;
 
+
+///////////////////////////////////////////////
+
+ZoomLabel::ZoomLabel(QWidget * parent) : QLabel(parent)
+{
+}
+
+ZoomLabel::~ZoomLabel()
+{
+}
+
+void ZoomLabel::mousePressEvent(QMouseEvent * event)
+{
+        QLabel::mousePressEvent(event);
+        emit clicked();
+}
+
+
+
 ZoomSlider::ZoomSlider(QWidget * parent) : QFrame(parent) 
 {
 	// layout doesn't seem to work: the slider appears too far down in the status bar
@@ -69,8 +88,8 @@ ZoomSlider::ZoomSlider(QWidget * parent) : QFrame(parent)
     m_suffix = new QLabel(tr("%"), this);
     m_suffix->setObjectName("ZoomSliderLabel");
 
-	m_minusButton = new QPushButton(this);
-	m_minusButton->setAutoRepeat(true);
+        m_minusButton = new ZoomLabel(this);
+        //m_minusButton->setAutoRepeat(true);
 	m_minusButton->setObjectName("ZoomSliderMinusButton");
 	connect(m_minusButton, SIGNAL(clicked()), this, SLOT(minusClicked()));
 
@@ -82,8 +101,8 @@ ZoomSlider::ZoomSlider(QWidget * parent) : QFrame(parent)
     m_slider->setTickPosition(QSlider::TicksBelow);
     m_slider->setTickInterval(500);
 
-	m_plusButton = new QPushButton(this);
-	m_plusButton->setAutoRepeat(true);
+        m_plusButton = new ZoomLabel(this);
+        //m_plusButton->setAutoRepeat(true);
 	m_plusButton->setObjectName("ZoomSliderPlusButton");
 	connect(m_plusButton, SIGNAL(clicked()), this, SLOT(plusClicked()));
 
