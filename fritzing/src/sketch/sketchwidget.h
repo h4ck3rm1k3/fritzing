@@ -252,7 +252,7 @@ public:
 	void pasteHeart(QByteArray & itemData, bool seekOutsideConnections);
 	virtual ViewGeometry::WireFlag getTraceFlag();
 	void changeBus(ItemBase *, bool connec, const QString & oldBus, const QString & newBus, QList<ConnectorItem *> &, const QString & message);
-
+	const QString & filenameIf();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -435,6 +435,7 @@ signals:
 	void cursorLocationSignal(qreal xinches, qreal yinches);
 	void ratsnestConnectSignal(long id, const QString & connectorID, bool connect, bool doEmit);
 	void updatePartLabelInstanceTitleSignal(long itemID);
+	void filenameIfSignal(QString & filename);
 
 protected slots:
 	void sketchWidget_itemAdded(ModelPart *, ViewLayer::ViewLayerSpec, const ViewGeometry &, long id, SketchWidget * dropOrigin);

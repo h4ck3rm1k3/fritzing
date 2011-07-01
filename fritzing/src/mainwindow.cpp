@@ -156,6 +156,8 @@ int MainWindow::AutosaveTimeoutMinutes = 10;   // in minutes
 bool MainWindow::AutosaveEnabled = true;
 QString MainWindow::BackupFolder;
 
+/////////////////////////////////////////////
+
 MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension())
 {
@@ -502,6 +504,10 @@ void MainWindow::connectPairs() {
 #ifndef QT_NO_DEBUG
 	succeeded = connect(m_breadboardGraphicsView, SIGNAL(cursorLocationSignal(qreal, qreal)), this, SLOT(cursorLocationSlot(qreal, qreal)));
 #endif
+
+	succeeded = connect(m_breadboardGraphicsView, SIGNAL(filenameIfSignal(QString &)), this, SLOT(filenameIfSlot(QString &)), Qt::DirectConnection);
+	succeeded = connect(m_pcbGraphicsView, SIGNAL(filenameIfSignal(QString &)), this, SLOT(filenameIfSlot(QString &)), Qt::DirectConnection);
+	succeeded = connect(m_schematicGraphicsView, SIGNAL(filenameIfSignal(QString &)), this, SLOT(filenameIfSlot(QString &)), Qt::DirectConnection);
 
 }
 
@@ -2598,5 +2604,10 @@ void MainWindow::locationLabelClicked()
 		
 	QSettings settings;
 	settings.setValue("LocationInches", QVariant(m_locationLabelInches));
+}
+
+void MainWindow::filenameIfSlot(QString & filename)
+{
+	filename = QFileInfo(fileName()).completeBaseName();
 }
 

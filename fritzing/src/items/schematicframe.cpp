@@ -65,7 +65,7 @@ SchematicFrame::SchematicFrame( ModelPart * modelPart, ViewIdentifierClass::View
 		FrameProps.insert("descr 1", "");
 		FrameProps.insert("descr 2", "");
 		FrameProps.insert("title", tr("TITLE: "));
-		FrameProps.insert("doc#", tr("Document Number: "));
+		FrameProps.insert("filename", tr("Filename: "));
 		FrameProps.insert("date", tr("Date: "));
 		FrameProps.insert("sheets", tr("Sheet:"));
 		FrameProps.insert("rev", tr(""));
@@ -81,6 +81,7 @@ SchematicFrame::SchematicFrame( ModelPart * modelPart, ViewIdentifierClass::View
 		QDateTime dt = QDateTime::currentDateTime();
 		modelPart->setProp("date", QString::number(dt.toTime_t()));
 	}
+
 }
 
 SchematicFrame::~SchematicFrame() {
@@ -164,6 +165,12 @@ qreal SchematicFrame::minHeight() {
 
 void SchematicFrame::addedToScene(bool temporary)
 {
+	if (modelPart()->prop("filename").toString().isEmpty()) {
+		InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+		if (infoGraphicsView != NULL) {
+			modelPart()->setProp("filename", infoGraphicsView->filenameIf());
+		}
+	}
     ResizableBoard::addedToScene(temporary);
 	resizeMMAux(m_modelPart->prop("width").toDouble(), m_modelPart->prop("height").toDouble());
 }

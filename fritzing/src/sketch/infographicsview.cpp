@@ -279,3 +279,7 @@ void InfoGraphicsView::changeBus(ItemBase *, bool connect, const QString & oldBu
 	Q_UNUSED(message);
 }
 
+const QString & InfoGraphicsView::filenameIf()
+{
+	return ___emptyString___;
+}

@@ -15,7 +15,7 @@
   <property name="descr 1"></property>
   <property name="descr 2"></property>
    <property name="title"></property>
-   <property name="doc#"></property>
+   <property name="filename"></property>
    <property name="rev"></property>
    <property name="date"></property>
   <property name="sheets">1/1</property>

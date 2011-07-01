@@ -692,7 +692,7 @@ PaletteItem* SketchWidget::addPartItem(ModelPart * modelPart, ViewLayer::ViewLay
 		else {
 			// nobody falls through to here now?
 
-			QMessageBox::information(dynamic_cast<QMainWindow *>(this->window()), QObject::tr("Fritzing"),
+			QMessageBox::information(qobject_cast<QMainWindow *>(this->window()), QObject::tr("Fritzing"),
 				QObject::tr("Error reading file %1: %2.").arg(modelPart->path()).arg(error) );
 
 
@@ -4613,7 +4613,7 @@ void SketchWidget::hoverEnterItem(QGraphicsSceneHoverEvent * event, ItemBase * i
 void SketchWidget::statusMessage(QString message, int timeout) 
 {
 	// TODO: eventually do the connecting from the window not from the sketch
-	QMainWindow * mainWindow = dynamic_cast<QMainWindow *>(window());
+	QMainWindow * mainWindow = qobject_cast<QMainWindow *>(window());
 	if (mainWindow == NULL) return;
 
 	if (m_statusConnectState == StatusConnectNotTried) {
@@ -7152,5 +7152,10 @@ void SketchWidget::changeBus(ItemBase * itemBase, bool connect, const QString & 
 
 }
 
-
+const QString & SketchWidget::filenameIf()
+{
+	static QString filename;
+	emit filenameIfSignal(filename);
+	return filename;
+}
 

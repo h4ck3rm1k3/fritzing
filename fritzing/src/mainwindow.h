@@ -309,6 +309,7 @@ protected slots:
 	void locationLabelClicked();
 	void swapSelectedDelay(const QString & family, const QString & prop, QMap<QString, QString> & currPropsMap, ItemBase *);
 	void swapSelectedTimeout();
+	void filenameIfSlot(QString & filename);
 
 
 protected:

@@ -339,7 +339,7 @@ void ItemBase::initNames() {
 		TranslatedPropertyNames.insert("tolerance", tr("tolerance"));
 		TranslatedPropertyNames.insert("descr 1", tr("descr 1"));
 		TranslatedPropertyNames.insert("descr 2", tr("descr 2"));
-		TranslatedPropertyNames.insert("doc#", tr("doc#"));
+		TranslatedPropertyNames.insert("filename", tr("filename"));
 		TranslatedPropertyNames.insert("title", tr("title"));
 		TranslatedPropertyNames.insert("date", tr("date"));
 		TranslatedPropertyNames.insert("rev", tr("rev"));
