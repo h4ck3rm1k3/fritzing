@@ -82,6 +82,7 @@ $Date$
 
 #include "utils/autoclosemessagebox.h"
 #include "utils/fileprogressdialog.h"
+#include "utils/clickablelabel.h"
 #include "items/resizableboard.h"
 #include "items/resistor.h"
 #include "items/symbolpaletteitem.h"
@@ -122,24 +123,6 @@ ItemBase * SwapTimer::itemBase()
 {
 	return m_itemBase;
 }
-
-
-///////////////////////////////////////////////
-
-LocationLabel::LocationLabel(QWidget * parent) : QLabel(parent)
-{
-}
-
-LocationLabel::~LocationLabel()
-{
-}
-
-void LocationLabel::mousePressEvent(QMouseEvent * event)
-{
-	QLabel::mousePressEvent(event);
-	emit clicked();
-}
-
 
 //////////////////////////////////////////////
 
@@ -205,7 +188,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	m_locationLabelInches = settings.value("LocationInches", QVariant(true)).toBool();
 	m_enableOrderFabButton = settings.value("OrderFabEnabled", QVariant(false)).toBool();
 
-	m_locationLabel = new LocationLabel(this);
+	m_locationLabel = new ClickableLabel("", this);
 	m_locationLabel->setObjectName("LocationLabel");
 	connect(m_locationLabel, SIGNAL(clicked()), this, SLOT(locationLabelClicked()));
 	m_statusBar->addPermanentWidget(m_locationLabel);

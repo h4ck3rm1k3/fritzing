@@ -729,19 +729,5 @@ protected:
 	static int CascadeFactorY;
 };
 
-class LocationLabel : public QLabel {
-	Q_OBJECT
-
-public:
-	LocationLabel(QWidget * parent);
-	~LocationLabel();
-
-	void mousePressEvent (QMouseEvent * );
-
-signals:
-	void clicked();
-
-};
-
 
 #endif

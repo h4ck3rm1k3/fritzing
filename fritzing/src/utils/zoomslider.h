@@ -34,6 +34,7 @@ $Date$
 #include <QLineEdit>
 #include <QPushButton>
 #include <QLabel>
+#include <QTimer>
 
 class ZoomLabel : public QLabel {
         Q_OBJECT
@@ -42,11 +43,27 @@ public:
         ZoomLabel(QWidget * parent);
         ~ZoomLabel();
 
-        void mousePressEvent (QMouseEvent * );
+		void setImages(const QString & normal, const QString & pressed);
+		void setAutoRepeat(bool);
+
+        void mousePressEvent(QMouseEvent *);
+        void mouseMoveEvent(QMouseEvent *);
+        void mouseReleaseEvent(QMouseEvent *);
 
 signals:
         void clicked();
 
+protected slots:
+		void repeat();
+
+protected:
+		QTimer m_timer;
+		QPixmap m_pressed;
+		QPixmap m_normal;
+		bool m_autoRepeat;
+		bool m_mouseIsDown;
+		bool m_mouseIsIn;
+		bool m_repeated;
 };
 
 class ZoomSlider: public QFrame {
@@ -85,8 +102,8 @@ protected:
 	//int m_indexBackup;
 	QSlider * m_slider;
 	QLineEdit * m_lineEdit;
-        ZoomLabel * m_plusButton;
-        ZoomLabel * m_minusButton;
+    ZoomLabel * m_plusButton;
+    ZoomLabel * m_minusButton;
 	QLabel * m_suffix;
 	bool m_firstTime;
 

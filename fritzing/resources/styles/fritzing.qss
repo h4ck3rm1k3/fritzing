@@ -119,25 +119,6 @@ QToolBar {
 	text-align: left;
 }
 
-#ZoomSliderMinusButton {
-	margin: 0px;
-	padding: 0px;
-	border: none;
-	width: 26px;
-	max-width: 26px;
-	min-width: 26px;  
-	image: url(:/resources/images/icons/zoomSliderMinus.png);
-}
-#ZoomSliderMinusButton:pressed {
-	margin: 0px;
-	padding: 0px;
-	border: none;
-	width: 26px;
-	max-width: 26px;
-	min-width: 26px;  
-	image: url(:/resources/images/icons/zoomSliderMinusPressed.png);
-}
-
 #ZoomSliderSlider {
 	height: 16px;
 	width: 100px;
@@ -145,24 +126,16 @@ QToolBar {
 	min-width: 100px; 
 }
 
-#ZoomSliderPlusButton {
-	margin: 0px;
+#ZoomSliderButton {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 5px;
+	margin-right: 5px;
 	padding: 0px;
 	border: none;
-	width: 26px;
-	max-width: 26px;
-	min-width: 26px;  
-	image: url(:/resources/images/icons/zoomSliderPlus.png);
-}
-
-#ZoomSliderPlusButton:pressed {
-	margin: 0px;
-	padding: 0px;
-	border: none;
-	width: 26px;
-	max-width: 26px;
-	min-width: 26x;  
-	image: url(:/resources/images/icons/zoomSliderPlusPressed.png);
+	width: 16px;
+	max-width: 16px;
+	min-width: 16px;  
 }
 
 /* next to the zoomslider in the status bar */
