@@ -64,6 +64,7 @@ ZoomSlider::ZoomSlider(QWidget * parent) : QFrame(parent)
 	m_lineEdit->setText(QString("%1").arg(STARTING_VALUE));
 	m_lineEdit->setValidator(new QIntValidator(MIN_VALUE, MAX_VALUE, this));
 	m_lineEdit->setAttribute(Qt::WA_MacShowFocusRect, 0);
+	m_lineEdit->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 
     m_suffix = new QLabel(tr("%"), this);
     m_suffix->setObjectName("ZoomSliderLabel");
