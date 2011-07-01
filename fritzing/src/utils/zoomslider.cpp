@@ -35,6 +35,7 @@ $Date$
 #include <limits>
 
 #include "zoomslider.h"
+#include "../debugdialog.h"
 
 qreal ZoomSlider::ZoomStep;
 QList<qreal> ZoomSlider::ZoomFactors;
@@ -50,56 +51,40 @@ ZoomSlider::ZoomSlider(QWidget * parent) : QFrame(parent)
 	// layout doesn't seem to work: the slider appears too far down in the status bar
 	// because the status bar layout is privileged for the message text
 
+	m_firstTime = true;
 	if (ZoomFactors.size() == 0) {
 		loadFactors();
 	}
 
-	this->setStyleSheet("border:0px; margin:0px; padding:0px;");
+	this->setObjectName("ZoomSliderFrame");
 
-        int soFar = 0;
 
 	m_lineEdit = new QLineEdit(this);
     m_lineEdit->setObjectName("ZoomSliderValue");
-	m_lineEdit->setGeometry(soFar, -1, 35, HEIGHT - 1);
 	m_lineEdit->setText(QString("%1").arg(STARTING_VALUE));
 	m_lineEdit->setValidator(new QIntValidator(MIN_VALUE, MAX_VALUE, this));
 	m_lineEdit->setAttribute(Qt::WA_MacShowFocusRect, 0);
-    soFar += 25 + 5;
 
-    QLabel * label = new QLabel(tr("%"), this);
-    label->setObjectName("ZoomSliderLabel");
-    label->setGeometry(soFar, 0, 20, HEIGHT);
-    label->setAlignment(Qt::AlignLeft);
-    soFar += 20 + 2;
+    m_suffix = new QLabel(tr("%"), this);
+    m_suffix->setObjectName("ZoomSliderLabel");
 
-	QPixmap temp(":/resources/images/icons/zoomSliderMinus.png");
 	m_minusButton = new QPushButton(this);
 	m_minusButton->setAutoRepeat(true);
 	m_minusButton->setObjectName("ZoomSliderMinusButton");
-        //m_minusButton->setGeometry(soFar, 0, temp.width(), temp.height());
-        m_minusButton->move(soFar, 0);
 	connect(m_minusButton, SIGNAL(clicked()), this, SLOT(minusClicked()));
-	soFar += temp.width() + 5;
 
     m_slider = new QSlider(this);
+	m_slider->setObjectName("ZoomSliderSlider");
 	m_slider->setOrientation(Qt::Horizontal);
 	m_slider->setRange(MIN_VALUE, MAX_VALUE);
 	m_slider->setValue(STARTING_VALUE);
     m_slider->setTickPosition(QSlider::TicksBelow);
     m_slider->setTickInterval(500);
-	m_slider->setGeometry(soFar, 0, 100, HEIGHT);
-	soFar += 100 + 5;
 
 	m_plusButton = new QPushButton(this);
 	m_plusButton->setAutoRepeat(true);
 	m_plusButton->setObjectName("ZoomSliderPlusButton");
-        //m_plusButton->setGeometry(soFar, 0, temp.width(), temp.height());
-        m_plusButton->move(soFar, 0);
 	connect(m_plusButton, SIGNAL(clicked()), this, SLOT(plusClicked()));
-	soFar += temp.width() + 5;
-
-	this->setFixedWidth(soFar);
-	this->setFixedHeight(HEIGHT);
 
 	connect(m_slider, SIGNAL(valueChanged(int)), this, SLOT(sliderValueChanged(int)));
 	connect(m_lineEdit, SIGNAL(textEdited(const QString &)), this, SLOT(sliderTextEdited(const QString &)));
@@ -204,4 +189,22 @@ void ZoomSlider::zoomOut () {
 	minusClicked();
 }
 
-
+void ZoomSlider::showEvent(QShowEvent * event) 
+{
+	// can't get QHLayout to work, so shoving widgets into place here
+	// because widths aren't set at constructor time
+	QFrame::showEvent(event);
+	if (m_firstTime) {
+		m_firstTime = false;
+		int soFar = 0;
+		m_lineEdit->move(soFar, -1);
+		soFar += m_lineEdit->width();
+		m_suffix->move(soFar, 0);
+		soFar += m_suffix->width();
+		m_minusButton->move(soFar, 0);
+		soFar += m_minusButton->width();
+		m_slider->move(soFar, 0);
+		soFar += m_slider->width();
+		m_plusButton->move(soFar, 0);
+	}
+}

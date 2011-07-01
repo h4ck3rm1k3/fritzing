@@ -65,7 +65,7 @@ QToolBar {
 	background-color: rgb(51,0,17);
 	color: rgb(126,54,77);
 }
-qtoolbutton
+
 #fileToolBar QToolButton,
 #editToolBar QToolButton {
 	border: 1px solid rgb(126,54,77);
@@ -85,51 +85,95 @@ qtoolbutton
 	color: rgb(51,0,17); /* doesnt work, why ??? */
 }
 
+/* ################### zoomslider #################### */
+
+#ZoomSliderFrame {
+	border:0px; 
+	margin:0px; 
+	padding:0px;
+	height: 16px;
+	max-height: 16px;
+	min-height: 16px;
+	width: 200px;
+	max-width: 200px;
+	min-width: 200px;  
+}
+
 #ZoomSliderValue {
+	margin: 0px;
+	padding: 0px;
 	color: rgb(255,255,255);
 	background-color: rgb(84,24,44);
 	border-color: rgb(0,0,0);
 	border-width: 0px;
+	width: 35px;
+	max-width: 35px;
+	min-width: 35px; 
+	text-align: right;
 }
 
 #ZoomSliderLabel {
 	color: #CCCCCC;
+	width: 15px;
+	max-width: 15px;
+	min-width: 15px;  
+	text-align: left;
 }
 
 #ZoomSliderMinusButton {
 	margin: 0px;
 	padding: 0px;
 	border: none;
-	background-color: rgb(255,0,0);
+	width: 25px;
+	max-width: 25px;
+	min-width: 25px;  
 	image: url(:/resources/images/icons/zoomSliderMinus.png);
 }
 #ZoomSliderMinusButton:pressed {
 	margin: 0px;
 	padding: 0px;
 	border: none;
-	background-color: rgb(255,0,0);
+	width: 25px;
+	max-width: 25px;
+	min-width: 25px;  
 	image: url(:/resources/images/icons/zoomSliderMinusPressed.png);
 }
+
+#ZoomSliderSlider {
+	height: 16px;
+	width: 100px;
+	max-width: 100px;
+	min-width: 100px; 
+}
+
 #ZoomSliderPlusButton {
 	margin: 0px;
 	padding: 0px;
 	border: none;
-	background-color: rgb(255,0,0);
+	width: 25px;
+	max-width: 25px;
+	min-width: 25px;  
 	image: url(:/resources/images/icons/zoomSliderPlus.png);
 }
+
 #ZoomSliderPlusButton:pressed {
 	margin: 0px;
 	padding: 0px;
 	border: none;
-	background-color: rgb(255,0,0);
+	width: 25px;
+	max-width: 25px;
+	min-width: 25px;  
 	image: url(:/resources/images/icons/zoomSliderPlusPressed.png);
 }
+
+/* next to the zoomslider in the status bar */
 
 #LocationLabel {
 	font-size: 9px;
 	font-weight: 500;
 	color: rgb(255,255,255);
 }
+
 
 /* ################### the palettes #################### */
 FDockWidget {

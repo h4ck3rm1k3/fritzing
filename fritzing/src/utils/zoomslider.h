@@ -33,6 +33,7 @@ $Date$
 #include <QSlider>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QLabel>
 
 class ZoomSlider: public QFrame {
 Q_OBJECT
@@ -57,6 +58,7 @@ protected slots:
 protected:
 	void step(int direction);
 	void sliderTextEdited(const QString & newValue, bool doEmit);
+	void showEvent(QShowEvent * event);
 	static void loadFactors();
 
 protected:
@@ -71,6 +73,8 @@ protected:
 	QLineEdit * m_lineEdit;
 	QPushButton * m_plusButton;
 	QPushButton * m_minusButton;
+	QLabel * m_suffix;
+	bool m_firstTime;
 
 public:
 	static qreal ZoomStep;
