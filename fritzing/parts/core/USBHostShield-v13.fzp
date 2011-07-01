@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='USBHostShield-v13'>
 <version>4</version>
-<date>2011-06-22</date>
+<date>2011-07-01</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Description:&amp;nbsp; &lt;/strong&gt;This new version corrects the pin out for the GPX and RESET pins. The USB Host Shield contains all of the digital logic and analog circuitry necessary to implement a full-speed USB peripheral/host controller with your Arduino. This means you could use your Arduino to interface with and control any USB slave device - thumbdrives, digital cameras, bluetooth dongles, and much more!&lt;/p&gt;

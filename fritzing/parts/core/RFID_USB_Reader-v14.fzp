@@ -1,14 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='RFID_USB_Reader-v14'>
 <version>4</version>
-<date>2011-06-22</date>
+<date>2011-07-01</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
-	&lt;strong&gt;Replacement:&lt;/strong&gt; &lt;a href=&quot;http://www.sparkfun.com/products/9963&quot;&gt;SEN-09963&lt;/a&gt;. The new revision uses SMD headers for the RFID module, and has a solder jumper which allows you to disable or enable the buzzer. This page is for reference only.&lt;/p&gt;
+	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description:&lt;/span&gt; The RFID USB Reader is a simple to use, USB to serial base unit for the ID-2, ID-12, and ID-20 readers. Simply plug a reader into the headers and attach a miniUSB cable. Open a terminal program of your choice at 9600bps 8N1, then scan your 125kHz ID tag and the unique 32-bit ID will be shown on the screen. The unit is based on a FTDI chip and comes with a read LED and buzzer.&lt;/p&gt;
 &lt;p&gt;
-	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description:&lt;/span&gt; The RFID USB Reader is a simple to use, USB to serial base unit for the ID-2, ID-12, and ID-20 readers. Simply plug a reader into the headers and attach a miniUSB cable. Open a terminal program of your choice at 9600bps 8N1, then scan your 125kHz ID tag and the unique 32-bit ID will be shown on the screen. The unit is based on a FTDI chip and comes with a read LED and buzzer.&lt;br /&gt;
+	This new revision uses SMD headers for the RFID module, and has a solder jumper which allows you to disable or enable the buzzer.&lt;br /&gt;
 	&lt;br /&gt;
-	This product does not come with the RFID reader. ID Readers are listed below.&lt;br /&gt;
+	&lt;strong&gt;Note: &lt;/strong&gt;This product does not come with the RFID reader. Check below for compatible readers.&lt;br /&gt;
 	&lt;br /&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Dimensions:&lt;/span&gt; 1.4x1.2x0.57&amp;quot;&lt;br /&gt;
 	&lt;br /&gt;
@@ -22,13 +22,15 @@
 		&lt;a classname=&quot;&quot; href=&quot;http://www.ftdichip.com/FTDrivers.htm&quot; name=&quot;&quot; target=&quot;_blank&quot;&gt;USB FTDI Drivers for Linux, MAC, and PC&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;
+	&lt;strong&gt;Replaces:&lt;/strong&gt; &lt;a href=&quot;http://www.sparkfun.com/products/8852&quot; target=&quot;_blank&quot;&gt;SEN-08852&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
 	&amp;nbsp;&lt;/p&gt;
 &lt;p&gt;
 	&amp;nbsp;&lt;/p&gt;
 &lt;p&gt;
 	&lt;object height=&quot;300&quot; width=&quot;560&quot;&gt;&lt;param name=&quot;movie&quot; value=&quot;http://www.youtube.com/v/2ioDBOOAFvM&amp;amp;hl=en_US&amp;amp;fs=1&amp;amp;rel=0&quot; /&gt;&lt;param name=&quot;allowFullScreen&quot; value=&quot;true&quot; /&gt;&lt;param name=&quot;allowscriptaccess&quot; value=&quot;always&quot; /&gt;&lt;embed allowfullscreen=&quot;true&quot; allowscriptaccess=&quot;always&quot; height=&quot;300&quot; src=&quot;http://www.youtube.com/v/2ioDBOOAFvM&amp;amp;hl=en_US&amp;amp;fs=1&amp;amp;rel=0&quot; type=&quot;application/x-shockwave-flash&quot; width=&quot;560&quot;&gt;&lt;/embed&gt;&lt;/object&gt;&lt;/p&gt;</description>
 <title>RFID USB Reader</title>
-<url>http://www.sparkfun.com/products/8852</url>
+<url>http://www.sparkfun.com/products/9963</url>
 <tags>
 <tag>RFID</tag>
 <tag>USB</tag>

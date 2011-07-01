@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='Breadboard Power Supply - SMD v12'>
 <version>4</version>
-<date>2011-06-22</date>
+<date>2011-07-01</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;b&gt;Description: &lt;/b&gt;This is a very simple board that takes a 6-12V input voltage and outputs a selectable 5V or 3.3V regulated voltage. All headers are 0.1&amp;quot; pitch for simple insertion into a breadboard.&lt;/p&gt;

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='XBee-Regulated-v12'>
 <version>4</version>
-<date>2011-06-22</date>
+<date>2011-07-01</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description:&lt;/span&gt; The XBee Explorer Regulated takes care of the 3.3V regulation, signal conditioning, and basic activity indicators (Power, RSSI and DIN/DOUT activity LEDs). It translates the 5V signals to 3.3V so that you can connect a 5V (down to 3.3V) system to any XBee module. The board was conveniently designed to mate directly with Arduino Pro boards for &lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/tutorial_info.php?tutorials_id=122&quot; name=&quot;&quot; target=&quot;_blank&quot;&gt;wireless bootloading&lt;/a&gt; and USB based configuration.&lt;br /&gt;
@@ -10,83 +10,17 @@
 	&lt;br /&gt;
 	This board comes fully populated with 3.3V regulator (16V max input), XBee socket, four status LEDs, and a diode to allow 5V systems to communicate safely with the 3.3V XBees. This board does not include and XBee module. XBee modules sold below.&lt;br /&gt;
 	&lt;br /&gt;
-	Add a couple &lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=8665&quot; name=&quot;&quot; target=&quot;_self&quot;&gt;XBees&lt;/a&gt;, and a &lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=8687&quot; name=&quot;&quot; target=&quot;_blank&quot;&gt;USB Explorer&lt;/a&gt; and you&amp;#39;ve got a great gift for that special electronics geek! For more gift ideas check out our &lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/tutorial_info.php?tutorials_id=151&quot; name=&quot;&quot; target=&quot;_blank&quot;&gt;SparkFun Gift Guide&lt;/a&gt;!&lt;br /&gt;
-	&lt;br /&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Documents:&lt;/span&gt;&lt;/p&gt;
 &lt;ul&gt;
 	&lt;li&gt;
 		&lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/datasheets/Wireless/Zigbee/XBee-Regulated-v10.pdf&quot; name=&quot;&quot; target=&quot;_blank&quot;&gt;Schematic&lt;br /&gt;
 		&lt;/a&gt;&lt;/li&gt;
 	&lt;li&gt;
+		&lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/datasheets/Wireless/Zigbee/XBee-Regulated-v12.zip&quot; name=&quot;&quot; target=&quot;_blank&quot;&gt;Eagle Files&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;
 		&lt;a href=&quot;http://www.digi.com/support/kbase/kbaseresultdetl.jsp?kb=125&quot; target=&quot;_blank&quot;&gt;X-CTU Software&lt;/a&gt;&lt;/li&gt;
 	&lt;li&gt;
-		&lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/datasheets/Wireless/Zigbee/XBee-Regulated-v12.zip&quot; name=&quot;&quot; target=&quot;_blank&quot;&gt;Eagle Files&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;
-	Wow there are a lot of XBee modules! Here&amp;#39;s a breakdown:&lt;br /&gt;
-	&lt;br /&gt;
-	&lt;span style=&quot;font-weight: bold;&quot;&gt;Series 1:&lt;/span&gt; Good point-to-point (300 ft)&lt;/p&gt;
-&lt;ul&gt;
-	&lt;li&gt;
-		&lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=8664&quot; name=&quot;&quot; target=&quot;&quot;&gt;Chip&lt;/a&gt;&lt;/li&gt;
-	&lt;li&gt;
-		&lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=8666&quot; name=&quot;&quot; target=&quot;&quot;&gt;U.FL&lt;/a&gt;&lt;/li&gt;
-	&lt;li&gt;
-		&lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=8665&quot; name=&quot;&quot; target=&quot;&quot;&gt;Wire&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;
-	&lt;span style=&quot;font-weight: bold;&quot;&gt;Series 1 High Power:&lt;/span&gt; Point-to-point and decent range (~1 mile)&lt;/p&gt;
-&lt;ul&gt;
-	&lt;li&gt;
-		&lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=8690&quot; name=&quot;&quot; target=&quot;&quot;&gt;Chip&lt;/a&gt;&lt;/li&gt;
-	&lt;li&gt;
-		&lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=8710&quot; name=&quot;&quot; target=&quot;&quot;&gt;U.FL&lt;/a&gt;&lt;/li&gt;
-	&lt;li&gt;
-		&lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=8742&quot; name=&quot;&quot; target=&quot;&quot;&gt;Wire&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;
-	&lt;span style=&quot;font-weight: bold;&quot;&gt;Series 2.5:&lt;/span&gt; Multi-point networks (300 ft)&lt;/p&gt;
-&lt;ul&gt;
-	&lt;li&gt;
-		&lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=8691&quot; name=&quot;&quot; target=&quot;&quot;&gt;Chip&lt;/a&gt;&lt;/li&gt;
-	&lt;li&gt;
-		&lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=8693&quot; name=&quot;&quot; target=&quot;&quot;&gt;U.FL&lt;/a&gt;&lt;/li&gt;
-	&lt;li&gt;
-		&lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=8695&quot; name=&quot;&quot; target=&quot;&quot;&gt;Wire&lt;/a&gt;&lt;/li&gt;
-	&lt;li&gt;
-		&lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=8692&quot; name=&quot;&quot; target=&quot;&quot;&gt;RPSMA&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;
-	&lt;span style=&quot;font-weight: bold;&quot;&gt;Series 2.5 High Power:&lt;/span&gt; Multi-point and decent range (~1 mile)&lt;/p&gt;
-&lt;ul&gt;
-	&lt;li&gt;
-		&lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=8767&quot; name=&quot;&quot; target=&quot;&quot;&gt;Chip&lt;/a&gt;&lt;/li&gt;
-	&lt;li&gt;
-		&lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=8766&quot; name=&quot;&quot; target=&quot;&quot;&gt;U.FL&lt;/a&gt;&lt;/li&gt;
-	&lt;li&gt;
-		&lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=8876&quot; name=&quot;&quot; target=&quot;&quot;&gt;Wire&lt;/a&gt;&lt;/li&gt;
-	&lt;li&gt;
-		&lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=8768&quot; name=&quot;&quot; target=&quot;&quot;&gt;RPSMA&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;
-	&lt;span style=&quot;font-weight: bold;&quot;&gt;900MHz:&lt;/span&gt; Longer range (~6 mile)&lt;/p&gt;
-&lt;ul&gt;
-	&lt;li&gt;
-		&lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=9097&quot; name=&quot;&quot; target=&quot;&quot;&gt;Wire&lt;/a&gt;&lt;/li&gt;
-	&lt;li&gt;
-		&lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=9098&quot; name=&quot;&quot; target=&quot;&quot;&gt;U.FL&lt;/a&gt;&lt;/li&gt;
-	&lt;li&gt;
-		&lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=9099&quot; name=&quot;&quot; target=&quot;&quot;&gt;RPSMA&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;
-	&lt;span style=&quot;font-weight: bold;&quot;&gt;900MHz High Power:&lt;/span&gt; Super long range (~15 mile)&lt;/p&gt;
-&lt;ul&gt;
-	&lt;li&gt;
-		&lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=9085&quot; name=&quot;&quot; target=&quot;&quot;&gt;Wire&lt;/a&gt;&lt;/li&gt;
-	&lt;li&gt;
-		&lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=9086&quot; name=&quot;&quot; target=&quot;&quot;&gt;U.FL&lt;/a&gt;&lt;/li&gt;
-	&lt;li&gt;
-		&lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=9087&quot; name=&quot;&quot; target=&quot;&quot;&gt;RPSMA&lt;/a&gt;&lt;/li&gt;
+		&lt;a href=&quot;http://www.sparkfun.com/tutorials/257&quot; target=&quot;_blank&quot;&gt;XBee Introduction and Buying Guide&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</description>
 <title>XBee Explorer Regulated</title>
 <url>http://www.sparkfun.com/products/9132</url>

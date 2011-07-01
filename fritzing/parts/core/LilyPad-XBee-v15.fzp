@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='LilyPad-XBee-v15'>
 <version>4</version>
-<date>2011-06-24</date>
+<date>2011-07-01</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description:&lt;/span&gt; The is a breakout board for the popular XBee modules. Board includes easy-to-sew tabs and all the necessary power regulation to run on the LilyPad system.&lt;br /&gt;

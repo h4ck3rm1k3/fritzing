@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='Modkit Shield-v1a'>
 <version>4</version>
-<date>2011-06-22</date>
+<date>2011-07-01</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Description:&lt;/strong&gt; The Modkit MotoProto Shield for Arduino that makes it easy to connect up to 4 sensors and control two DC motors as well as a 16X2 character LCD. The sensor jacks accept 2.5mm cables and provide access to VCC, GND, and an analog input.&lt;/p&gt;

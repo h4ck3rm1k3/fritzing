@@ -1,18 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='xbeeshield-v13'>
 <version>4</version>
-<date>2011-06-22</date>
+<date>2011-07-01</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
-	&lt;strong&gt;Replacement:&lt;/strong&gt; &lt;a href=&quot;http://www.sparkfun.com/products/9976&quot; target=&quot;_blank&quot;&gt;WRL-09976&lt;/a&gt;. The new version has some minor footprint and silkscreen revisions. This page is for reference only.&lt;/p&gt;
-&lt;p&gt;
-	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description: &lt;/span&gt;The XBee Shield simplifies the task of interfacing an XBee with your Arduino. This board mates directly with an &lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=9219&quot; name=&quot;&quot; target=&quot;_blank&quot;&gt;Arduino Pro&lt;/a&gt; or &lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=666&quot; name=&quot;&quot; target=&quot;_self&quot;&gt;USB board&lt;/a&gt;, and equips it with wireless communication capabilities using the popular XBee module. This unit works with all XBee modules including the Series 1 and Series 2.5, standard and Pro version. This is SparkFun&amp;#39;s own design and is a distant relative to the official XBee Shield from Arduino.&lt;br /&gt;
+	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description: &lt;/span&gt;This new revision fixes some minor spacing and labeling issues, but functionality remains the same.The XBee Shield simplifies the task of interfacing an XBee with your Arduino. This board mates directly with an &lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=9219&quot; name=&quot;&quot; target=&quot;_blank&quot;&gt;Arduino Pro&lt;/a&gt; or &lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=9950&quot; target=&quot;_self&quot;&gt;USB board&lt;/a&gt;, and equips it with wireless communication capabilities using the popular XBee module. This unit works with all XBee modules including the Series 1 and Series 2.5, standard and Pro version. This is SparkFun&amp;#39;s own design and is a distant relative to the official XBee Shield from Arduino.&lt;br /&gt;
 	&lt;br /&gt;
 	The serial pins (DIN and DOUT) of the XBee are connected through an SPDT switch, which allows you to select a connection to either the UART pins (D0, D1) or any digital pins on the Arduino (D2 and D3 default). Power is taken from the 5V pin of the Arduino and regulated on-board to 3.3VDC before being supplied to the XBee. The shield also takes care of level shifting on the DIN pin of the XBee.&lt;br /&gt;
 	&lt;br /&gt;
-	The board also includes LEDs to indicate power and activity on DIN, DOUT, RSSI, and DIO5 pins of the XBee. The Arduino&amp;#39;s reset button is brought out on the shield, and a 12x11 grid of 0.1&amp;quot; holes are available for prototyping. The shield does not come with headers installed; we recommend the &lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=9280&quot; name=&quot;&quot; target=&quot;_self&quot;&gt;6&lt;/a&gt; and &lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=9279&quot; name=&quot;&quot; target=&quot;_self&quot;&gt;8-pin stackable headers&lt;/a&gt;. The XBee module is also not included.&lt;/p&gt;
-&lt;p&gt;
-	&lt;strong&gt;Note:&lt;/strong&gt; If you are looking to connect an XBee to a computer directly, you might want to look at the &lt;a href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=8687&quot; target=&quot;_blank&quot;&gt;XBee Explorer&lt;/a&gt; board instead.&lt;br /&gt;
+	The board also includes LEDs to indicate power and activity on DIN, DOUT, RSSI, and DIO5 pins of the XBee. The Arduino&amp;#39;s reset button is brought out on the shield, and a 12x11 grid of 0.1&amp;quot; holes are available for prototyping. The shield does not come with headers installed; we recommend the &lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=9280&quot; name=&quot;&quot; target=&quot;_self&quot;&gt;6&lt;/a&gt; and &lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=9279&quot; name=&quot;&quot; target=&quot;_self&quot;&gt;8-pin stackable headers&lt;/a&gt;. The XBee module is also not included.&lt;br /&gt;
 	&lt;br /&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Features:&lt;/span&gt;&lt;/p&gt;
 &lt;ul&gt;
@@ -33,14 +29,14 @@
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Documents:&lt;/span&gt;&lt;/p&gt;
 &lt;ul&gt;
 	&lt;li&gt;
-		&lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/datasheets/DevTools/Arduino/xbeeshield-v12.pdf&quot; target=&quot;_blank&quot;&gt;Schematic&lt;/a&gt;&lt;/li&gt;
+		&lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/datasheets/DevTools/Arduino/xbeeshield-v13.pdf&quot; target=&quot;_blank&quot;&gt;Schematic&lt;/a&gt;&lt;/li&gt;
 	&lt;li&gt;
-		&lt;a href=&quot;http://www.sparkfun.com/datasheets/DevTools/Arduino/xbeeshield-v12.zip&quot; target=&quot;_blank&quot;&gt;Eagle Files&lt;/a&gt;&lt;/li&gt;
+		&lt;a href=&quot;http://www.sparkfun.com/datasheets/DevTools/Arduino/xbeeshield-v13.zip&quot; target=&quot;_blank&quot;&gt;Eagle Files&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;
-	&lt;strong&gt;Replaces:&lt;/strong&gt; &lt;a href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=9588&quot;&gt;WRL-09588&lt;/a&gt;&lt;/p&gt;</description>
+	&lt;strong&gt;Replaces:&lt;/strong&gt; &lt;a href=&quot;http://www.sparkfun.com/products/9841&quot;&gt;WRL-09841&lt;/a&gt;&lt;/p&gt;</description>
 <title>Arduino XBee Shield</title>
-<url>http://www.sparkfun.com/products/9841</url>
+<url>http://www.sparkfun.com/products/9976</url>
 <tags>
 <tag>Wireless</tag>
 <tag>XBee</tag>

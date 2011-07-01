@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='screwshield-v15'>
 <version>4</version>
-<date>2011-06-22</date>
+<date>2011-07-01</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Description: &lt;/strong&gt;The ScrewShield extends all pins of the Arduino out to 3.5mm pitch screw terminals. It also has a lot of the utility provided by &lt;a href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=7914&quot; target=&quot;_self&quot;&gt;Arduino Protoshield&lt;/a&gt;, including: a large prototyping space of both connected and unconnected 0.1&amp;quot; spaced through-holes, a couple 5V and GND busses, a reset button, general use push button, and a 5mm yellow LED.&lt;/p&gt;

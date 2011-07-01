@@ -1,12 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='LilyPad-Simple-v22'>
 <version>4</version>
-<date>2011-06-24</date>
+<date>2011-07-01</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
-	&lt;strong&gt;Replacement:&lt;/strong&gt; DEV-10274. The new revision removes the 6-pin ISP headers and adds a charging circuit based on the MCP73831. This page is for reference only.&lt;/p&gt;
-&lt;p&gt;
-	&lt;strong&gt;Description:&lt;/strong&gt; This is the LilyPad Arduino Simple Board. It&amp;#39;s controlled by an ATmega328 with the Arduino bootloader. It has fewer pins than the &lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=9266&quot; name=&quot;&quot; target=&quot;&quot;&gt;LilyPad Arduino Main Board&lt;/a&gt;, a built in power supply socket, and an on/off switch. Any of our LiPo batteries can be plugged right into the socket. The Simple board is designed to streamline your next sewable project by keeping things simple and giving you more room to work&amp;nbsp; and eliminating the need to sew a power supply.&lt;br /&gt;
+	&lt;strong&gt;Description:&lt;/strong&gt; This is the LilyPad Arduino Simple Board. It&amp;#39;s controlled by an ATmega328 with the Arduino bootloader. It has fewer pins than the &lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=9266&quot; name=&quot;&quot; target=&quot;&quot;&gt;LilyPad Arduino Main Board&lt;/a&gt;, a built in power supply socket, and an on/off switch. Any of our LiPo batteries can be plugged right into the socket. The Simple board is designed to streamline your next sewable project by keeping things simple and giving you more room to work&amp;nbsp; and eliminating the need to sew a power supply. This revision does away with the ISP header and adds a charging circuit based on the MCP73831 IC.&lt;br /&gt;
 	&lt;br /&gt;
 	LilyPad is a wearable e-textile technology developed by Leah Buechley and cooperatively designed by Leah and SparkFun. Each LilyPad was creatively designed to have large connecting pads to allow them to be sewn into clothing. Various input, output, power, and sensor boards are available. They&amp;#39;re even washable!&lt;br /&gt;
 	&lt;br /&gt;
@@ -27,12 +25,16 @@
 	&lt;li&gt;
 		&lt;a href=&quot;http://www.sparkfun.com/datasheets/DevTools/LilyPad/LilyPad-Simple-v22.zip&quot; target=&quot;_blank&quot;&gt;Eagle Files&lt;/a&gt;&lt;/li&gt;
 	&lt;li&gt;
+		&lt;a href=&quot;http://www.sparkfun.com/datasheets/Prototyping/Batteries/MCP73831T.pdf&quot; target=&quot;_blank&quot;&gt;Datasheet&lt;/a&gt; (MCP73831T)&lt;/li&gt;
+	&lt;li&gt;
 		&lt;a classname=&quot;&quot; href=&quot;http://web.media.mit.edu/%7Eleah/LilyPad/&quot; name=&quot;&quot; target=&quot;_blank&quot;&gt;Leah Buechley&amp;#39;s LilyPad Tutorial&lt;/a&gt;&lt;/li&gt;
 	&lt;li&gt;
 		&lt;a href=&quot;http://www.arduino.cc/en/Main/ArduinoBoardLilyPad&quot; target=&quot;_blank&quot;&gt;LilyPad Arduino Documentation&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
+&lt;/ul&gt;
+&lt;p&gt;
+	&lt;strong&gt;Replaces: &lt;/strong&gt;&lt;a 9725=&quot;&quot; href=&quot;http://&amp;lt;a href=&quot; http:=&quot;&quot; products=&quot;&quot; www.sparkfun.com=&quot;&quot;&gt;DEV-09725&lt;/a&gt;&lt;/p&gt;</description>
 <title>LilyPad Arduino Simple Board</title>
-<url>http://www.sparkfun.com/products/9725</url>
+<url>http://www.sparkfun.com/products/10274</url>
 <tags>
 <tag>Lilypad</tag>
 <tag>Arduino</tag>

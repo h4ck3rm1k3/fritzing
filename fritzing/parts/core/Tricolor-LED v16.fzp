@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='Tricolor-LED v16'>
 <version>4</version>
-<date>2011-06-24</date>
+<date>2011-07-01</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description:&lt;/span&gt; Blink any color you need! Use the Tri-Color LED board as a simple indicator, or by pulsing the red, green, and blue channels, you can create any color. Very bright output. This is a common anode design - to turn on a channel you simply need to ground one of the R/G/B pins to illuminate that channel.&lt;br /&gt;

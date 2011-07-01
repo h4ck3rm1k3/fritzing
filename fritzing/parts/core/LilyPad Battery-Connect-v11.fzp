@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='LilyPad Battery-Connect-v11'>
 <version>4</version>
-<date>2011-06-24</date>
+<date>2011-07-01</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Description:&lt;/strong&gt; The LilyPad Battery Connect simply gives you a connection point for a battery or anything else you might want to plug in to your LilyPad system. It consists of a single 2-pin JST connector on a small LilyPad board with positive and negative terminals.&lt;/p&gt;

@@ -1,28 +1,34 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='MP3 Shield-v13'>
 <version>4</version>
-<date>2011-06-22</date>
+<date>2011-07-01</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
-	&lt;strong&gt;Description: &lt;/strong&gt;The MP3 Shield wires your Arduino up to a &lt;a href=&quot;http://www.sparkfun.com/products/8892&quot;&gt;VS1053B&lt;/a&gt; MP3 audio decoder IC, providing it with the ability to decode audio files. The VS1053 is also capable of decoding Ogg Vorbis/MP3/AAC/WMA/MIDI audio and encoding IMA ADPCM and user-loadable Ogg Vorbis.&lt;/p&gt;
+	&lt;strong&gt;Description: &lt;/strong&gt;This new revision of the MP3 player shield retains the awesome MP3 decoding abilities of the last version but adds the storage functionality of the SD card shield. Now you can pull MP3 files from an SD card and play them using only one shield, effectively turning any Arduino into a fully functional stand-alone&amp;nbsp; MP3 player! The MP3 Shield still utilizes the &lt;a href=&quot;http://www.sparkfun.com/products/8892&quot;&gt;VS1053B&lt;/a&gt; MP3 audio decoder IC to decode audio files. The VS1053 is also capable of decoding Ogg Vorbis/MP3/AAC/WMA/MIDI audio and encoding IMA ADPCM and user-loadable Ogg Vorbis.&lt;/p&gt;
 &lt;p&gt;
 	The VS1053 receives its input bitstream through a serial input bus (SPI). After the stream has been decoded by the IC, the audio is sent out to both a 3.5mm stereo headphone jack, as well as a 2-pin 0.1&amp;quot; pitch header.&lt;/p&gt;
-&lt;p&gt;
-	The shield&amp;#39;s power is taken from the &amp;#39;5V&amp;#39; pin of your Arduino and regulated to both 3.3V and 1.8V to power the VS1053B.&lt;/p&gt;
 &lt;p&gt;
 	This shield comes populated with all components as shown in the images and schematic; but it does not come with headers installed. We recommend the &lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=9280&quot; name=&quot;&quot; target=&quot;_self&quot;&gt;6&lt;/a&gt; and &lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=9279&quot; name=&quot;&quot; target=&quot;_self&quot;&gt;8-pin stackable headers&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;
 	&lt;strong&gt;Documents:&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 	&lt;li&gt;
-		&lt;a href=&quot;http://www.sparkfun.com/datasheets/DevTools/Arduino/MP3_Shield-v10.pdf&quot; target=&quot;_blank&quot;&gt;Schematic&lt;/a&gt;&lt;/li&gt;
+		&lt;a href=&quot;http://dlnmh9ip6v2uc.cloudfront.net/datasheets/Dev/Arduino/Shields/MP3 Shield-v13.pdf&quot; target=&quot;_blank&quot;&gt;Schematic&lt;/a&gt;&lt;/li&gt;
 	&lt;li&gt;
-		&lt;a href=&quot;http://www.sparkfun.com/datasheets/Components/SMD/vs1053.pdf&quot; target=&quot;_blank&quot;&gt;VS1053 Datasheet&lt;/a&gt;&lt;/li&gt;
+		&lt;a href=&quot;http://dlnmh9ip6v2uc.cloudfront.net/datasheets/Dev/Arduino/Shields/MP3 Shield-v13.zip&quot; target=&quot;_blank&quot;&gt;Eagle Files&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;
+		&lt;a href=&quot;http://www.sparkfun.com/datasheets/Components/SMD/vs1053.pdf&quot; target=&quot;_blank&quot;&gt;Datasheet&lt;/a&gt; (VS1053B)&lt;/li&gt;
+	&lt;li&gt;
+		&lt;a href=&quot;http://dlnmh9ip6v2uc.cloudfront.net/datasheets/Dev/Arduino/Shields/MP3_Player_Example.pde&quot; target=&quot;_blank&quot;&gt;MP3 Player Example Code&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;
+		&lt;a href=&quot;http://dlnmh9ip6v2uc.cloudfront.net/datasheets/Dev/Arduino/Shields/MP3_Player_Files.zip&quot; target=&quot;_blank&quot;&gt;Sample MP3 Files&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;
+		&lt;a href=&quot;http://dlnmh9ip6v2uc.cloudfront.net/datasheets/Dev/Arduino/Shields/MP3_Player_Example_Control.pde&quot; target=&quot;_blank&quot;&gt;MP3 Player Control Example&lt;/a&gt;&lt;/li&gt;
 	&lt;li&gt;
 		&lt;a href=&quot;http://dlnmh9ip6v2uc.cloudfront.net/datasheets/Dev/Arduino/Shields/MP3_Shield_Example.zip&quot; target=&quot;_blank&quot;&gt;MP3 Decoding Example Sketch&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</description>
 <title>Arduino MP3 Shield</title>
-<url>http://www.sparkfun.com/products/9736</url>
+<url>http://www.sparkfun.com/products/10628</url>
 <tags>
 <tag>MP3</tag>
 <tag>Music</tag>

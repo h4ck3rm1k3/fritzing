@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='LilyPad-Button-v12'>
 <version>4</version>
-<date>2011-06-24</date>
+<date>2011-07-01</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description:&lt;/span&gt; We designed this board to give the user a very discrete button without any sharp edges. Button closes when you push it and opens when you release (momentary push button).&lt;br /&gt;

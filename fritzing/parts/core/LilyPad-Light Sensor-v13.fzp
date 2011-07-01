@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='LilyPad-Light Sensor-v13'>
 <version>4</version>
-<date>2011-06-24</date>
+<date>2011-07-01</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description:&lt;/span&gt; This is a simple to use light sensor that outputs an analog value from 0 to 5V. With exposure to daylight, this sensor will output 5V. Covering the sensor with your hand, the sensor will output 0V. In a normal indoor lighting situation, the sensor will output from 1 to 2V.&lt;br /&gt;

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='OBD-II-UART-v13'>
 <version>4</version>
-<date>2011-06-22</date>
+<date>2011-07-01</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Description:&lt;/strong&gt; This board allows you to interface with your car&amp;#39;s OBD-II bus. It provides you a serial interface using the ELM327 command set and supports all major OBD-II standards such as CAN and JBUS. The board also provides a footprint which mates directly to our FTDI Basic or a Bluetooth Mate. The DB9 connector mates with our DB9 to OBD-II cable listed below.&lt;/p&gt;

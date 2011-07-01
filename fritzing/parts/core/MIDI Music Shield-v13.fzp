@@ -1,21 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='MIDI Music Shield-v13'>
 <version>4</version>
-<date>2011-06-22</date>
+<date>2011-07-01</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Description:&lt;/strong&gt; Do you ever wish your Arduino was more musically talented? Or maybe your project could use some cool sound effects. The Musical Instrument Shield is an easy way to add great sounding MIDI sound to your next Arduino project. This board is built around the VS1053 MP3 and MIDI codec IC, wired in MIDI mode. Simply connect a speaker/stereo/pair of headphones to the 1/8&amp;quot; stereo jack on the shied and pass the proper serial commands to the IC and you&amp;#39;ll be playing music in no time!&lt;/p&gt;
 &lt;p&gt;
 	The VS1053 contains two large tonebanks including various piano, woodwinds, brass, synth, SFX and percussion sounds. The shield is also capable of playing several tones simultaneously (maximum polyphony of up to 31 sounds!). Take a look at our example code to get an idea of how easy it is to add musical zest to your next Arduino gadget.&lt;/p&gt;
 &lt;p&gt;
-	&lt;strong&gt;Note:&lt;/strong&gt; The 3.3V regulator on this shield isn&amp;#39;t properly loaded, so you may see 3.9V at the VS1053, which is not ideal. This should not cause any issues and we&amp;#39;ve found the board to work just fine under these conditions. We will be changing this for our next revision.&lt;/p&gt;
+	In this version, we&amp;#39;re using a better regulator, corrected the speaker connectors, and have the reset pin pulled high. We&amp;#39;ve also included solder jumpers for pin 3 and 4 so they&amp;#39;re selectable.&lt;/p&gt;
 &lt;p&gt;
 	&lt;strong&gt;Documents:&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 	&lt;li&gt;
-		&lt;a href=&quot;http://dlnmh9ip6v2uc.cloudfront.net/datasheets/Dev/Arduino/Shields/MIDI Music Shield-v10.pdf&quot; target=&quot;_blank&quot;&gt;Schematic&lt;/a&gt;&lt;/li&gt;
+		&lt;a href=&quot;http://dlnmh9ip6v2uc.cloudfront.net/datasheets/Dev/Arduino/Shields/MIDI Music Shield-v13.pdf&quot; target=&quot;_blank&quot;&gt;Schematic&lt;/a&gt;&lt;/li&gt;
 	&lt;li&gt;
-		&lt;a href=&quot;http://dlnmh9ip6v2uc.cloudfront.net/datasheets/Dev/Arduino/Shields/MIDI Music Shield-v10.zip&quot; target=&quot;_blank&quot;&gt;Eagle Files&lt;/a&gt;&lt;/li&gt;
+		&lt;a href=&quot;http://dlnmh9ip6v2uc.cloudfront.net/datasheets/Dev/Arduino/Shields/MIDI Music Shield-v13.zip&quot; target=&quot;_blank&quot;&gt;Eagle Files&lt;/a&gt;&lt;/li&gt;
 	&lt;li&gt;
 		&lt;a href=&quot;http://dlnmh9ip6v2uc.cloudfront.net/datasheets/Dev/Arduino/Shields/MusicIntrument_Example.pde&quot; target=&quot;_blank&quot;&gt;Example Code 1&lt;/a&gt;&lt;/li&gt;
 	&lt;li&gt;
@@ -23,9 +23,11 @@
 		&lt;/a&gt;&lt;/li&gt;
 	&lt;li&gt;
 		&lt;a href=&quot;http://www.sparkfun.com/datasheets/Components/SMD/vs1053.pdf&quot; target=&quot;_blank&quot;&gt;Datasheet&lt;/a&gt; (VS1053)&lt;/li&gt;
-&lt;/ul&gt;</description>
+&lt;/ul&gt;
+&lt;p&gt;
+	&lt;strong&gt;Replaces:&lt;/strong&gt; &lt;a href=&quot;http://www.sparkfun.com/products/10529&quot; target=&quot;_blank&quot;&gt;DEV-10529&lt;/a&gt;&lt;/p&gt;</description>
 <title>Arduino Musical Instrument Shield</title>
-<url>http://www.sparkfun.com/products/10529</url>
+<url>http://www.sparkfun.com/products/10587</url>
 <tags>
 <tag>Music</tag>
 <tag>Musical</tag>
