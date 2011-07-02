@@ -186,7 +186,7 @@ QString Dip::makeSchematicSvg(const QString & expectedFileName)
 	int border = 30;
 
 	QString header("<?xml version='1.0' encoding='UTF-8' standalone='no'?>\n"
-					"<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny'\n"
+					"<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' \n"
 					"width='1.83in' height='%1in' viewBox='0 0 1830 %2' >\n"
 					"<g id='schematic' >\n"
 					"<rect x='315' y='15' fill='none' width='1200' height='%3' stroke='#000000' stroke-linejoin='round' stroke-linecap='round' stroke-width='30' />\n"

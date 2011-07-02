@@ -409,10 +409,9 @@ QString MysteryPart::makeSchematicSvg(const QString & expectedFileName)
 	QString labelText = "?";
 
 	QString header("<?xml version='1.0' encoding='UTF-8' standalone='no'?>\n"
-					"<svg\n"
-					"xmlns:svg='http://www.w3.org/2000/svg'\n"
-					"xmlns='http://www.w3.org/2000/svg'\n"
-					"version='1.2' baseProfile='tiny'\n"
+					"<svg xmlns:svg='http://www.w3.org/2000/svg' \n"
+					"xmlns='http://www.w3.org/2000/svg' \n"
+					"version='1.2' baseProfile='tiny' \n"
 					"width='1.53in' height='%1in' viewBox='0 0 1530 %2'>\n"
 					"<g id='schematic'>\n"
 					"<rect x='315' y='15' fill='none' width='1200' height='%3' stroke='#000000' stroke-linejoin='round' stroke-linecap='round' stroke-width='30' />\n"
@@ -482,7 +481,7 @@ QString MysteryPart::makeBreadboardDipSvg(const QString & expectedFileName)
 					"<rect id='connector%1pin' x='{1.87}' y='[7.75]' fill='#8C8C8C' stroke='none' stroke-width='0' width='2.3' height='4.25'/>\n");
 
 	QString header("<?xml version='1.0' encoding='utf-8'?>\n"
-					"<svg version='1.2' baseProfile='tiny' xmlns='http://www.w3.org/2000/svg'\n"
+					"<svg version='1.2' baseProfile='tiny' xmlns='http://www.w3.org/2000/svg' \n"
 					"width='.percent.1in' height='%1in' viewBox='0 0 {16.0022} [12.0]'>\n"
 					"<g id='breadboard'>\n"
 					".percent.2\n"
@@ -534,8 +533,8 @@ QString MysteryPart::makeBreadboardSipSvg(const QString & expectedFileName)
 	int increment = 10;
 
 	QString header("<?xml version='1.0' encoding='utf-8'?>\n"
-					"<svg version='1.2' baseProfile='tiny' id='svg2' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'\n"
-					"width='%1in' height='0.27586in' viewBox='0 0 [6.0022] 27.586' xml:space='preserve'>\n"
+					"<svg version='1.2' baseProfile='tiny' id='svg2' xmlns='http://www.w3.org/2000/svg' \n"
+					"width='%1in' height='0.27586in' viewBox='0 0 [6.0022] 27.586'>\n"
 					"<g id='breadboard'>\n"
 					"<rect width='[6.0022]' x='0' y='0' height='24.17675' fill='#000000' id='upper' stroke-width='0' />\n"
 					"<rect width='[6.0022]' x='0' y='22' fill='#404040' height='3.096' id='lower' stroke-width='0' />\n"
