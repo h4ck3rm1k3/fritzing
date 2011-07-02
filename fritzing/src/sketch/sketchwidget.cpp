@@ -5851,6 +5851,7 @@ QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLaye
 				empty = false;
 			}
 		}
+		extraRenderSvgStep(itemBase, offset, dpi, printerScale, outputSVG);
 	}
 
 	outputSVG += "</svg>";
@@ -5858,6 +5859,16 @@ QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLaye
 	return outputSVG;
 
 }
+
+void SketchWidget::extraRenderSvgStep(ItemBase * itemBase, QPointF offset, qreal dpi, qreal printerScale, QString & outputSvg)
+{
+	Q_UNUSED(itemBase);
+	Q_UNUSED(offset);
+	Q_UNUSED(dpi);
+	Q_UNUSED(printerScale);
+	Q_UNUSED(outputSvg);
+}
+
 
 QString SketchWidget::makeRectSVG(QRectF r, QPointF offset, qreal dpi, qreal printerScale)
 {

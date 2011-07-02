@@ -1173,6 +1173,7 @@ void Wire::cleanup() {
 
 void Wire::getConnectedColor(ConnectorItem * connectorItem, QBrush * &brush, QPen * &pen, qreal & opacity, qreal & negativePenWidth, bool & negativeOffsetRect) {
 
+	connectorItem->setBigDot(false);
 	int count = 0;
 	bool bendpoint = true;
 	foreach (ConnectorItem * toConnectorItem, connectorItem->connectedToItems()) {
@@ -1223,6 +1224,7 @@ void Wire::getConnectedColor(ConnectorItem * connectorItem, QBrush * &brush, QPe
 		pen = &m_bendpoint2Pen;
 		negativePenWidth = m_bendpoint2Width;
 		negativeOffsetRect = m_negativeOffsetRect;
+		connectorItem->setBigDot(true);
 	}
 	else {
 		negativeOffsetRect = m_negativeOffsetRect;

@@ -399,3 +399,32 @@ qreal SchematicSketchWidget::getAutorouterTraceWidth() {
 	return getTraceWidth();
 }
 
+
+void SchematicSketchWidget::extraRenderSvgStep(ItemBase * itemBase, QPointF offset, qreal dpi, qreal printerScale, QString & outputSvg)
+{
+	TraceWire * traceWire = dynamic_cast<TraceWire *>(itemBase);
+	if (traceWire == NULL) return;
+
+	if (traceWire->connector0()->isBigDot()) {
+		qreal r = traceWire->connector0()->rect().width();
+		outputSvg += makeCircleSVG(traceWire->connector0()->sceneAdjustedTerminalPoint(NULL), r, offset, dpi, printerScale);
+	}
+	if (traceWire->connector1()->isBigDot()) {
+		qreal r = traceWire->connector0()->rect().width();
+		outputSvg += makeCircleSVG(traceWire->connector1()->sceneAdjustedTerminalPoint(NULL), r, offset, dpi, printerScale);
+	}
+
+}
+
+QString SchematicSketchWidget::makeCircleSVG(QPointF p, qreal r, QPointF offset, qreal dpi, qreal printerScale)
+{
+	qreal cx = (p.x() - offset.x()) * dpi / printerScale;
+	qreal cy = (p.y() - offset.y()) * dpi / printerScale;
+	qreal rr = r * dpi / printerScale;
+
+	QString stroke = "black";
+	return QString("<circle  fill=\"black\" cx=\"%1\" cy=\"%2\" r=\"%3\" stroke-width=\"0\" stroke=\"none\" />")
+			.arg(cx)
+			.arg(cy)
+			.arg(rr);
+}

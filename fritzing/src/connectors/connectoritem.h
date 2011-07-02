@@ -105,6 +105,8 @@ public:
 	qreal minDimension();
 	void setHybrid(bool);
 	bool isHybrid();
+	void setBigDot(bool);
+	bool isBigDot();
 
 protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
@@ -139,6 +141,7 @@ protected:
 	bool m_checkedEffectively;
 	bool m_marked;
 	bool m_hybrid;
+	bool m_bigDot;
 	
 protected:	
 	static QList<ConnectorItem *>  m_equalPotentialDisplayItems;

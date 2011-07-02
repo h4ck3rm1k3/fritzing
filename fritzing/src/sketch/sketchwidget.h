@@ -392,6 +392,7 @@ protected:
 	void alignOneToGrid(ItemBase * itemBase);
 	void showPartLabelsAux(bool show, QList<ItemBase *> & itemBases);
 	virtual void changeTrace(Wire * wire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand);
+	virtual void extraRenderSvgStep(ItemBase *, QPointF offset, qreal dpi, qreal printerScale, QString & outputSvg);
 
 protected:
 	static bool lessThan(int a, int b);

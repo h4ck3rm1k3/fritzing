@@ -86,6 +86,8 @@ protected:
 										bool updateInfoView, long modelIndex, QUndoCommand *parent);
 	ViewLayer::ViewLayerID getLabelViewLayerID(ViewLayer::ViewLayerSpec);
 	QPoint calcFixedToCenterItemOffset(const QRect & viewPortRect, const QSizeF & helpSize);
+	void extraRenderSvgStep(ItemBase *, QPointF offset, qreal dpi, qreal printerScale, QString & outputSvg);
+	QString makeCircleSVG(QPointF p, qreal r, QPointF offset, qreal dpi, qreal printerScale);
 
 
 protected:

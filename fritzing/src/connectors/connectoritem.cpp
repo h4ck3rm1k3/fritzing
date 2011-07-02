@@ -544,6 +544,14 @@ bool ConnectorItem::isHybrid() {
 	return m_hybrid;
 }
 
+void ConnectorItem::setBigDot(bool bd) {
+	m_bigDot = bd;
+}
+
+bool ConnectorItem::isBigDot() {
+	return m_bigDot;
+}
+
 void ConnectorItem::setInactive(bool inactivate) {
 	m_inactive = inactivate;
 	setHiddenOrInactive();
