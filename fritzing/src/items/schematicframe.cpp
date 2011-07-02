@@ -71,7 +71,7 @@ SchematicFrame::SchematicFrame( ModelPart * modelPart, ViewIdentifierClass::View
 		FrameProps.insert("rev", tr(""));
 	}
 
-	m_sheetsTimer.setInterval(15);
+	m_sheetsTimer.setInterval(1000);
 	m_sheetsTimer.setSingleShot(true);
 	connect(&m_sheetsTimer, SIGNAL(timeout()), this, SLOT(incSheet()));
 
