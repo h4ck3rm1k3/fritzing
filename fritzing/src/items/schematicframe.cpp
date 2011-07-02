@@ -51,10 +51,18 @@ $Date$
 #include <QDateTimeEdit>
 #include <QSpinBox>
 #include <QHash>
+#include <QFontMetrics>
+#include <QTextCursor>
+#include <QTextBlock>
+#include <QTextLayout>
+#include <QTextLine>
 
 static QString SchematicTemplate = "";
 static int OriginalWidth = 0;
 static int OriginalHeight = 0;
+static int Margin = 200;
+static qreal FontSize = 11;
+
 QHash<QString, QString> FrameProps;
 static const QString DisplayFormat("dd MMM yyyy hh:mm:ss");
 
@@ -62,18 +70,21 @@ SchematicFrame::SchematicFrame( ModelPart * modelPart, ViewIdentifierClass::View
 	: ResizableBoard(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
 	if (FrameProps.count() == 0) {
-		FrameProps.insert("descr 1", "");
-		FrameProps.insert("descr 2", "");
-		FrameProps.insert("title", tr("TITLE: "));
-		FrameProps.insert("filename", tr("Filename: "));
-		FrameProps.insert("date", tr("Date: "));
-		FrameProps.insert("sheets", tr("Sheet:"));
-		FrameProps.insert("rev", tr(""));
+		FrameProps.insert("descr", "");
+		FrameProps.insert("project", tr("Project"));
+		FrameProps.insert("filename", tr("Filename"));
+		FrameProps.insert("date", tr("Date"));
+		FrameProps.insert("sheet", tr("Sheet"));
+		FrameProps.insert("rev", tr("Rev"));
 	}
 
-	m_sheetsTimer.setInterval(1000);
-	m_sheetsTimer.setSingleShot(true);
-	connect(&m_sheetsTimer, SIGNAL(timeout()), this, SLOT(incSheet()));
+	m_sheetTimer.setInterval(1000);
+	m_sheetTimer.setSingleShot(true);
+	connect(&m_sheetTimer, SIGNAL(timeout()), this, SLOT(incSheet()));
+
+	m_dateTimer.setInterval(1000);
+	m_dateTimer.setSingleShot(true);
+	connect(&m_dateTimer, SIGNAL(timeout()), this, SLOT(incDate()));
 
 	foreach (QString prop, FrameProps.keys()) {
 		if (modelPart->prop(prop).toString().isEmpty()) {
@@ -86,13 +97,21 @@ SchematicFrame::SchematicFrame( ModelPart * modelPart, ViewIdentifierClass::View
 		modelPart->setProp("date", QString::number(dt.toTime_t()));
 	}
 
-	if (modelPart->prop("sheets").toString().isEmpty()) {
-		modelPart->setProp("sheets","1/1");
+	if (modelPart->prop("sheet").toString().isEmpty()) {
+		modelPart->setProp("sheet","1/1");
 	}
 
+	m_wrapInitialized = false;
+	m_textEdit = new QTextEdit();
+	m_textEdit->setWordWrapMode(QTextOption::WrapAtWordBoundaryOrAnywhere);
+	m_textEdit->setAcceptRichText(false);
+	m_textEdit->setLineWrapMode(QTextEdit::FixedPixelWidth);
 }
 
 SchematicFrame::~SchematicFrame() {
+	if (m_textEdit) {
+		delete m_textEdit;
+	}
 }
 
 void SchematicFrame::loadTemplates() {
@@ -109,6 +128,23 @@ void SchematicFrame::loadTemplates() {
 
 		OriginalWidth = TextUtils::getViewBoxCoord(original, 2);
 		OriginalHeight = TextUtils::getViewBoxCoord(original, 3);
+
+		QString errorStr;
+		int errorLine;
+		int errorColumn;
+
+		QDomDocument domDocument;
+		if (!domDocument.setContent(SchematicTemplate, true, &errorStr, &errorLine, &errorColumn)) {
+			return;
+		}
+
+		QDomElement root = domDocument.documentElement(); 
+		QDomElement descr =TextUtils::findElementWithAttribute(root, "id", "descr");
+		QString xString = descr.attribute("x");
+		xString = xString.mid(1, xString.length() - 2); // remove the brackets;
+		Margin = xString.toInt() * 2;
+		FontSize = descr.attribute("font-size").toDouble();
+
 	}
 }
 
@@ -117,11 +153,23 @@ QString SchematicFrame::makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, qreal m
 	Q_UNUSED(mmW);
 	Q_UNUSED(mmH);
 
+	if (SchematicTemplate.isEmpty()) return "";
+
 	switch (viewLayerID) {
 		case ViewLayer::SchematicFrame:
 			break;
 		default:
 			return "";
+	}
+
+	if (!m_wrapInitialized) {
+		m_wrapInitialized = true;
+		QFont font = m_textEdit->font();
+		font.setFamily("Droid Sans");
+		font.setWeight(QFont::Normal);
+		font.setPointSizeF(72 * FontSize / 1000);
+		m_textEdit->setFont(font);
+		m_textEdit->setLineWrapColumnOrWidth(FSvgRenderer::printerScale() * (OriginalWidth - Margin) / 1000);  
 	}
 
 
@@ -134,12 +182,31 @@ QString SchematicFrame::makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, qreal m
 	svg = TextUtils::incrementTemplateString(svg, 1, milsH - OriginalHeight, TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction);
 	QHash<QString, QString> hash;
 	foreach (QString prop, FrameProps.keys()) {
-		hash.insert(prop, FrameProps.value(prop) + modelPart()->prop(prop).toString());
+		hash.insert(prop, modelPart()->prop(prop).toString());
+		QString label = FrameProps.value(prop);
+		if (!label.isEmpty()) {
+			hash.insert(prop + " label", label);
+		}
 	}
-	hash.insert("rev label", tr("REV:"));
+
+	// figure out the width and the font
+	QString string = modelPart()->prop("descr").toString();
+	m_textEdit->setPlainText(string);
+	QTextCursor textCursor = m_textEdit->cursorForPosition(QPoint(0,0));
+	QTextLayout * textLayout = textCursor.block().layout();
+	int lc2 = textLayout->lineCount();
+	if (lc2 > 1) {
+		QTextLine textLine = textLayout->lineAt(0);
+		hash.insert("descr", string.left(textLine.textLength()));
+		textLine = textLayout->lineAt(1);
+		string = string.mid(textLine.textStart(), textLine.textLength());
+		hash.insert("descr+", string);
+	}
+
+
 	QDateTime dt;
 	dt.setTime_t(modelPart()->prop("date").toUInt());
-	hash.insert("date", FrameProps.value("date") + dt.toString(DisplayFormat));
+	hash.insert("date", dt.toString(DisplayFormat));
 
 	return TextUtils::replaceTextElements(svg, hash);
 }
@@ -233,8 +300,8 @@ bool SchematicFrame::collectExtraInfo(QWidget * parent, const QString & family, 
 		return true;
 	}
 
-	if (prop.compare("sheets", Qt::CaseInsensitive) == 0) {
-		QString value = modelPart()->prop("sheets").toString();
+	if (prop.compare("sheet", Qt::CaseInsensitive) == 0) {
+		QString value = modelPart()->prop("sheet").toString();
 		QStringList strings = value.split("/");
 		if (strings.count() != 2) {
 			strings.clear();
@@ -245,7 +312,7 @@ bool SchematicFrame::collectExtraInfo(QWidget * parent, const QString & family, 
 		spin1->setMinimum(1);
 		spin1->setMaximum(999);
 		spin1->setValue(strings[0].toInt());
-		connect(spin1, SIGNAL(valueChanged(int)), this, SLOT(sheetsEntry(int)));
+		connect(spin1, SIGNAL(valueChanged(int)), this, SLOT(sheetEntry(int)));
 		spin1->setObjectName("infoViewSpinner");
 		spin1->setProperty("role", "numerator");
 		spin1->setEnabled(swappingEnabled);
@@ -254,7 +321,7 @@ bool SchematicFrame::collectExtraInfo(QWidget * parent, const QString & family, 
 		spin2->setMinimum(1);
 		spin2->setMaximum(999);
 		spin2->setValue(strings[1].toInt());
-		connect(spin2, SIGNAL(valueChanged(int)), this, SLOT(sheetsEntry(int)));
+		connect(spin2, SIGNAL(valueChanged(int)), this, SLOT(sheetEntry(int)));
 		spin2->setObjectName("infoViewSpinner");
 		spin2->setProperty("role", "denominator");
 		spin2->setEnabled(swappingEnabled);
@@ -357,27 +424,33 @@ void SchematicFrame::propEntry() {
 	}
 }
 
-
 void SchematicFrame::dateTimeEntry(QDateTime dateTime) {
+	m_dateTimer.stop();
+	m_dateTimer.setProperty("value", dateTime.toTime_t());
+	m_dateTimer.start();
+}
+
+void SchematicFrame::incDate() {
+	int value = sender()->property("value").toInt();
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
-		infoGraphicsView->setProp(this, "date", tr("date"), modelPart()->prop("date").toString(), QString::number(dateTime.toTime_t()), true);
+		infoGraphicsView->setProp(this, "date", tr("date"), modelPart()->prop("date").toString(), QString::number(value), true);
 	}
 }
 
-void SchematicFrame::sheetsEntry(int value) {
-	m_sheetsTimer.stop();
-	m_sheetsTimer.setProperty("role", sender()->property("role").toString());
-	m_sheetsTimer.setProperty("value", value);
-	m_sheetsTimer.start();
+void SchematicFrame::sheetEntry(int value) {
+	m_sheetTimer.stop();
+	m_sheetTimer.setProperty("role", sender()->property("role").toString());
+	m_sheetTimer.setProperty("value", value);
+	m_sheetTimer.start();
 }
 
 void SchematicFrame::incSheet() 
 {
 	QString role = sender()->property("role").toString();
 	int value = sender()->property("value").toInt();
-	QString sheets = modelPart()->prop("sheets").toString();
-	QStringList strings = sheets.split("/");
+	QString sheet = modelPart()->prop("sheet").toString();
+	QStringList strings = sheet.split("/");
 	if (strings.count() != 2) {
 		strings.clear();
 		strings << "1" << "1";
@@ -392,6 +465,6 @@ void SchematicFrame::incSheet()
 
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
-		infoGraphicsView->setProp(this, "sheets", tr("sheets"), modelPart()->prop("sheets").toString(), strings.at(0) + "/" + strings[1], true);
+		infoGraphicsView->setProp(this, "sheet", tr("sheet"), modelPart()->prop("sheet").toString(), strings.at(0) + "/" + strings[1], true);
 	}
 }

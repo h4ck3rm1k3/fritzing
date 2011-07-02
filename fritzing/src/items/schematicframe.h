@@ -33,6 +33,7 @@ $Date$
 #include <QVariant>
 #include <QCheckBox>
 #include <QComboBox>
+#include <QTextEdit>
 
 #include "resizableboard.h"
 
@@ -61,8 +62,9 @@ public:
 protected slots:
 	void propEntry();
 	void dateTimeEntry(QDateTime);
-	void sheetsEntry(int);
+	void sheetEntry(int);
 	void incSheet();
+	void incDate();
 
 protected:
 	bool hasGrips();
@@ -74,7 +76,10 @@ protected:
 	QString makeFirstLayerSvg(qreal mmW, qreal mmH, qreal milsW, qreal milsH);
 	QString makeNextLayerSvg(ViewLayer::ViewLayerID, qreal mmW, qreal mmH, qreal milsW, qreal milsH);
 	bool makeLineEdit(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
-	QTimer m_sheetsTimer;
+	QTimer m_sheetTimer;
+	QTimer m_dateTimer;
+	QTextEdit * m_textEdit;
+	bool m_wrapInitialized;
 
 protected:
 };
