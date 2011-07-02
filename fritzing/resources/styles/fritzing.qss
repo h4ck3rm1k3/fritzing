@@ -368,6 +368,16 @@ HtmlInfoView {
 	margin: 0px;
 }
 
+/* the label between the two spinners in the schematic frame */
+#infoViewOfLabel {
+	font-size: 10px;
+	padding: 0px;
+	margin: 0px;
+	width: 30px;
+	min-width: 30px;
+	max-width: 30px;
+}
+
 #infoViewButton {
 	font-size: 10px;
 	/*min-width: 100px;*/

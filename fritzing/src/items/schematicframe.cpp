@@ -71,6 +71,10 @@ SchematicFrame::SchematicFrame( ModelPart * modelPart, ViewIdentifierClass::View
 		FrameProps.insert("rev", tr(""));
 	}
 
+	m_sheetsTimer.setInterval(15);
+	m_sheetsTimer.setSingleShot(true);
+	connect(&m_sheetsTimer, SIGNAL(timeout()), this, SLOT(incSheet()));
+
 	foreach (QString prop, FrameProps.keys()) {
 		if (modelPart->prop(prop).toString().isEmpty()) {
 			modelPart->setProp(prop, modelPart->properties().value(prop));
@@ -80,6 +84,10 @@ SchematicFrame::SchematicFrame( ModelPart * modelPart, ViewIdentifierClass::View
 	if (modelPart->prop("date").toString().isEmpty()) {
 		QDateTime dt = QDateTime::currentDateTime();
 		modelPart->setProp("date", QString::number(dt.toTime_t()));
+	}
+
+	if (modelPart->prop("sheets").toString().isEmpty()) {
+		modelPart->setProp("sheets","1/1");
 	}
 
 }
@@ -226,18 +234,26 @@ bool SchematicFrame::collectExtraInfo(QWidget * parent, const QString & family, 
 	}
 
 	if (prop.compare("sheets", Qt::CaseInsensitive) == 0) {
+		QString value = modelPart()->prop("sheets").toString();
+		QStringList strings = value.split("/");
+		if (strings.count() != 2) {
+			strings.clear();
+			strings << "1" << "1";
+		}
 		QFrame * frame = new QFrame(parent);
 		QSpinBox * spin1 = new QSpinBox(frame);
-		spin1->setRange(1, 999);
-		spin1->setSingleStep(1);
+		spin1->setMinimum(1);
+		spin1->setMaximum(999);
+		spin1->setValue(strings[0].toInt());
 		connect(spin1, SIGNAL(valueChanged(int)), this, SLOT(sheetsEntry(int)));
 		spin1->setObjectName("infoViewSpinner");
 		spin1->setProperty("role", "numerator");
 		spin1->setEnabled(swappingEnabled);
 
 		QSpinBox * spin2 = new QSpinBox(frame);
-		spin2->setRange(1, 999);
-		spin2->setSingleStep(1);
+		spin2->setMinimum(1);
+		spin2->setMaximum(999);
+		spin2->setValue(strings[1].toInt());
 		connect(spin2, SIGNAL(valueChanged(int)), this, SLOT(sheetsEntry(int)));
 		spin2->setObjectName("infoViewSpinner");
 		spin2->setProperty("role", "denominator");
@@ -245,13 +261,14 @@ bool SchematicFrame::collectExtraInfo(QWidget * parent, const QString & family, 
 
 		QLabel * label = new QLabel(parent);
 		label->setText(tr("of"));
-		label->setObjectName("infoViewLabel");
+		label->setObjectName("infoViewOfLabel");
 		label->setAlignment(Qt::AlignCenter);
 
 		QHBoxLayout * hBoxLayout = new QHBoxLayout(frame);
 		hBoxLayout->addWidget(spin1);
 		hBoxLayout->addWidget(label);
 		hBoxLayout->addWidget(spin2);
+		hBoxLayout->addStretch();
 
 		frame->setLayout(hBoxLayout);
 
@@ -349,7 +366,16 @@ void SchematicFrame::dateTimeEntry(QDateTime dateTime) {
 }
 
 void SchematicFrame::sheetsEntry(int value) {
+	m_sheetsTimer.stop();
+	m_sheetsTimer.setProperty("role", sender()->property("role").toString());
+	m_sheetsTimer.setProperty("value", value);
+	m_sheetsTimer.start();
+}
+
+void SchematicFrame::incSheet() 
+{
 	QString role = sender()->property("role").toString();
+	int value = sender()->property("value").toInt();
 	QString sheets = modelPart()->prop("sheets").toString();
 	QStringList strings = sheets.split("/");
 	if (strings.count() != 2) {

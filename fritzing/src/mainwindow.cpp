@@ -2591,6 +2591,6 @@ void MainWindow::locationLabelClicked()
 
 void MainWindow::filenameIfSlot(QString & filename)
 {
-	filename = QFileInfo(fileName()).completeBaseName();
+	filename = QFileInfo(fileName()).fileName();
 }
 
