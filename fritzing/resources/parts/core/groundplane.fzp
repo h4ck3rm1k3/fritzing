@@ -16,7 +16,7 @@
 <description>A copper fill</description>
 <views>
 <iconView>
-<layers image='pcb/groundplane.svg' >
+<layers image='icon/groundplane.svg' >
 <layer layerId='icon' />
 </layers>
 </iconView>

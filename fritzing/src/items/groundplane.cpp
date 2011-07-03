@@ -35,6 +35,10 @@ $Date$
 
 #include <QPainterPathStroker>
 
+// TODO: delete part if copper fill fails, and remove item from undo stack
+
+static QString IconSvg;
+
 /////////////////////////////////////////////////////////
 
 GroundPlane::GroundPlane( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel) 
@@ -73,22 +77,21 @@ QString GroundPlane::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QStri
 	QString xml = "";
 	if (viewLayerID == ViewLayer::GroundPlane0 || viewLayerID == ViewLayer::GroundPlane1) {
 		xml = modelPart()->prop("svg").toString();
-	}
 
-	if (!xml.isEmpty()) {
-		QString xmlName = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
-		SvgFileSplitter splitter;
-		bool result = splitter.splitString(xml, xmlName);
-		if (!result) {
-			return ___emptyString___;
+		if (!xml.isEmpty()) {
+			QString xmlName = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
+			SvgFileSplitter splitter;
+			bool result = splitter.splitString(xml, xmlName);
+			if (!result) {
+				return ___emptyString___;
+			}
+			result = splitter.normalize(dpi, xmlName, blackOnly);
+			if (!result) {
+				return ___emptyString___;
+			}
+			return splitter.elementString(xmlName);
 		}
-		result = splitter.normalize(dpi, xmlName, blackOnly);
-		if (!result) {
-			return ___emptyString___;
-		}
-		return splitter.elementString(xmlName);
 	}
-
 
 	return PaletteItemBase::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 }
@@ -117,9 +120,22 @@ void GroundPlane::setProp(const QString & prop, const QString & value) {
 
 void GroundPlane::addedToScene(bool temporary) 
 {
-	if (this->scene()) {
-		if (!temporary) {
-			QString svg = modelPart()->prop("svg").toString();
+	if (m_viewLayerID == ViewLayer::GroundPlane0 || m_viewLayerID == ViewLayer::GroundPlane1) {
+		if (this->scene()) {
+			QString svg;
+			if (temporary) {
+				if (IconSvg.isEmpty()) {
+					QFile f(":resources/parts/svg/core/icon/groundplane.svg");
+					if (f.open(QFile::ReadOnly)) {
+						IconSvg = f.readAll();
+						f.close();
+					}
+				}
+				svg = IconSvg;
+			}
+			else {
+				svg = modelPart()->prop("svg").toString();
+			}
 			if (!svg.isEmpty()) {
 				setSvgAux(svg);
 			}
