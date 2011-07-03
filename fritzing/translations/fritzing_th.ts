@@ -787,6 +787,34 @@ y:%2</source>
         <source>tolerance</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>descr</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>filename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rev</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sheet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>project</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>KicadModuleDialog</name>
@@ -2489,6 +2517,10 @@ Please check all views for potential side-effects.</source>
         <source>drill file export failure (5)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Shift+Ctrl+D</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -2607,7 +2639,19 @@ Reason: %2 (errcode %3)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Fritzing error: unable to write copper fill.</source>
+        <source>Fritzing error: unable to write copper fill (1).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fritzing error: unable to write copper fill (2).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to create copper fill--probably the part wasn&apos;t dropped onto the PCB.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to create copper fill--possibly the part was dropped onto something other than the PCB itself.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4120,6 +4164,10 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         <source>tiling failure: possibly due wire crossing layers bug. Wire at %1,%2 %3,%4 (in)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QShortcut</name>
@@ -4220,6 +4268,41 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     <name>Ruler</name>
     <message>
         <source>width</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SchematicFrame</name>
+    <message>
+        <source>Project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sheet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rev</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>of</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sheet</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
