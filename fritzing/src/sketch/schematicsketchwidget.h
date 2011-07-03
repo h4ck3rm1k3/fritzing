@@ -72,6 +72,8 @@ public:
 	ViewGeometry::WireFlag getTraceFlag();
 	qreal getTraceWidth();
 	qreal getAutorouterTraceWidth();
+	QString generateCopperFillUnit(ItemBase * itemBase, QPointF whereToStart);
+
 
 public slots:
 	void setVoltage(qreal voltage, bool doEmit);

@@ -1645,6 +1645,8 @@ void SketchWidget::dropItemEvent(QDropEvent *event) {
 	}
 	AddItemCommand * addItemCommand = newAddItemCommand(crossViewType, modelPart->moduleID(), defaultViewLayerSpec(), viewGeometry, fromID, true, -1, parentCommand);
 	addItemCommand->setDropOrigin(this);
+
+	new SetDropOffsetCommand(this, fromID, m_droppingOffset, parentCommand);
 	
 	new CheckStickyCommand(this, crossViewType, fromID, false, CheckStickyCommand::RemoveOnly, parentCommand);
 
@@ -7168,5 +7170,13 @@ const QString & SketchWidget::filenameIf()
 	static QString filename;
 	emit filenameIfSignal(filename);
 	return filename;
+}
+
+void SketchWidget::setItemDropOffset(long id, QPointF offset)
+{
+	ItemBase * itemBase = findItem(id);
+	if (itemBase == NULL) return;
+
+	itemBase->setDropOffset(offset);
 }
 

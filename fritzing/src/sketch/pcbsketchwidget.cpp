@@ -671,11 +671,11 @@ bool PCBSketchWidget::canDropModelPart(ModelPart * modelPart) {
 		case ModelPart::Jumper:
 		case ModelPart::Logo:
 		case ModelPart::Ruler:
+		case ModelPart::CopperFill:
 			return true;
 		case ModelPart::Wire:
 		case ModelPart::Breadboard:
 		case ModelPart::Symbol:
-		case ModelPart::CopperFill:
 			// can't drag and drop these parts in this view
 			return false;
 		case ModelPart::Board:
@@ -2543,18 +2543,18 @@ bool PCBSketchWidget::groundFill(QUndoCommand * parentCommand)
 
 	GroundPlaneGenerator gpg;
 	bool result = gpg.generateGroundPlane(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board, 1000 / 5.0  /* 1 MIL */,
-		ViewLayer::Copper0Color, "groundplane");
+											ViewLayer::Copper0Color, "groundplane");
 	if (result == false) {
-        QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to write copper fill."));
+        QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to write copper fill (1)."));
 		return false;
 	}
 
 	GroundPlaneGenerator gpg2;
 	if (boardLayers() > 1) {
 		bool result = gpg2.generateGroundPlane(boardSvg, boardImageSize, svg2, copperImageSize, exceptions, board, 1000 / 5.0  /* 1 MIL */,
-			ViewLayer::Copper1Color, "groundplane1");
+												ViewLayer::Copper1Color, "groundplane1");
 		if (result == false) {
-			QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to write copper fill."));
+			QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to write copper fill (2)."));
 			return false;
 		}
 	}
@@ -2579,5 +2579,74 @@ bool PCBSketchWidget::groundFill(QUndoCommand * parentCommand)
 
 }
 
+QString PCBSketchWidget::generateCopperFillUnit(ItemBase * itemBase, QPointF whereToStart)
+{
+	ItemBase * board = findBoard();
+    // barf an error if there's no board
+    if (!board) {
+        QMessageBox::critical(this->window(), tr("Fritzing"),
+                   tr("Your sketch does not have a board yet!  Please add a PCB in order to use copper fill."));
+        return "";
+    }
+
+	QRectF r = board->boundingRect();
+	r.moveTo(board->pos());
+	if (!r.contains(whereToStart)) {
+        QMessageBox::critical(this, tr("Fritzing"), tr("Unable to create copper fill--probably the part wasn't dropped onto the PCB."));
+		return "";
+	}
+
+	LayerList viewLayerIDs;
+	viewLayerIDs << ViewLayer::Board;
+	QSizeF boardImageSize;
+	bool empty;
+	QString boardSvg = renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, boardImageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, false, empty);
+	if (boardSvg.isEmpty()) {
+        QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to render board svg (1)."));
+		return "";
+	}
+
+	ViewLayer::ViewLayerSpec viewLayerSpec = ViewLayer::Bottom;
+	QString color = ViewLayer::Copper0Color;
+	QString gpLayerName = "groundplane";
+	if (m_boardLayers == 2 && layerIsActive(ViewLayer::Copper1)) {
+		gpLayerName += "1";
+		color = ViewLayer::Copper1Color;
+		viewLayerSpec = ViewLayer::Top;
+	}
+
+	viewLayerIDs = ViewLayer::copperLayers(viewLayerSpec);
+	QSizeF copperImageSize;
+
+	bool vis = itemBase->isVisible();
+	itemBase->setVisible(false);
+	QString svg = renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, copperImageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, true, empty);
+	itemBase->setVisible(vis);
+	if (svg.isEmpty()) {
+        QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to render copper svg (1)."));
+		return "";
+	}
+
+	QStringList exceptions;
+	exceptions << background().name();    // the color of holes in the board
+
+	GroundPlaneGenerator gpg;
+	bool result = gpg.generateGroundPlaneUnit(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board, 1000 / 5.0  /* 1 MIL */, 
+												color, gpLayerName, whereToStart);
+
+	if (result == false) {
+        QMessageBox::critical(this, tr("Fritzing"), tr("Unable to create copper fill--possibly the part was dropped onto something other than the PCB itself."));
+		return "";
+	}
+
+	itemBase->setPos(board->pos());
+	itemBase->setViewLayerID(gpLayerName, m_viewLayers);
+
+	QDomDocument doc;
+	foreach (QString newSvg, gpg.newSVGs()) {
+		TextUtils::mergeSvg(doc, newSvg, gpLayerName);
+	}
+	return TextUtils::mergeSvgFinish(doc);
+}
 
 

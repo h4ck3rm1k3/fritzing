@@ -93,6 +93,8 @@ public:
 
 	virtual void changeBus(ItemBase *, bool connec, const QString & oldBust, const QString & newBus, QList<ConnectorItem *> &, const QString & message);
 	virtual const QString & filenameIf();
+	virtual QString generateCopperFillUnit(ItemBase * itemBase, QPointF whereToStart);
+
 
 public slots:
 	virtual void setVoltage(qreal, bool doEmit);

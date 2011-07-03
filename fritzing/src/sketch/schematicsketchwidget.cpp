@@ -428,3 +428,11 @@ QString SchematicSketchWidget::makeCircleSVG(QPointF p, qreal r, QPointF offset,
 			.arg(cy)
 			.arg(rr);
 }
+
+QString SchematicSketchWidget::generateCopperFillUnit(ItemBase * itemBase, QPointF whereToStart)
+{
+	Q_UNUSED(itemBase);
+	Q_UNUSED(whereToStart);
+	return "";
+}
+

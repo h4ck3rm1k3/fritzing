@@ -253,6 +253,7 @@ public:
 	virtual ViewGeometry::WireFlag getTraceFlag();
 	void changeBus(ItemBase *, bool connec, const QString & oldBus, const QString & newBus, QList<ConnectorItem *> &, const QString & message);
 	const QString & filenameIf();
+	void setItemDropOffset(long id, QPointF offset);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

@@ -49,14 +49,20 @@ public:
 	bool hasPartNumberProperty();
 	bool rotationAllowed();
 	bool rotation45Allowed();
+	PluralType isPlural();
+	bool canEditPart();
+	void setDropOffset(QPointF offset);
+
 
 protected:
 	void setSvg(const QString &);
 	void setSvgAux(const QString &);
+	QString generateSvg();
 
 protected:
 	ConnectorItem * m_connector0;
 	class FSvgRenderer * m_renderer;
+	QPointF m_dropOffset;
 };
 
 #endif

@@ -1441,3 +1441,28 @@ QString ChangeBoardLayersCommand::getParamString() const {
 }
 
 
+///////////////////////////////////////////////
+
+SetDropOffsetCommand::SetDropOffsetCommand(SketchWidget *sketchWidget, long id,  QPointF dropOffset, QUndoCommand *parent)
+	: BaseCommand(BaseCommand::CrossView, sketchWidget, parent)
+{
+    m_itemID = id;
+	m_dropOffset = dropOffset;
+}
+
+void SetDropOffsetCommand::undo() { 
+	// only used when creating new parts
+}
+
+void SetDropOffsetCommand::redo() {
+	m_sketchWidget->setItemDropOffset(m_itemID, m_dropOffset);
+
+}
+
+QString SetDropOffsetCommand::getParamString() const {
+	return QString("SetDropOffsetCommand ") 
+		+ BaseCommand::getParamString()
+		+ QString(" id:%1 %2,%3") 
+			.arg(m_itemID).arg(m_dropOffset.x()).arg(m_dropOffset.y());
+
+}

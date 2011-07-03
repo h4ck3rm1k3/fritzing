@@ -1865,3 +1865,7 @@ void ItemBase::collectPropsMap(QString & family, QMap<QString, QString> & propsM
 		DebugDialog::debug(QString("props map %1 %2").arg(key).arg(tempValue));
 	}
 }
+
+void ItemBase::setDropOffset(QPointF) 
+{
+}

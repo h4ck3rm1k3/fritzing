@@ -94,6 +94,8 @@ public:
 	void getBendpointWidths(class Wire *, qreal w, qreal & w1, qreal & w2, bool & negativeOffsetRect);
 	qreal getSmallerTraceWidth(qreal minDim);
 	bool groundFill(QUndoCommand * parentCommand);
+	QString generateCopperFillUnit(ItemBase * itemBase, QPointF whereToStart);
+
 
 public:
 	static QSizeF jumperItemSize();

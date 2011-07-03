@@ -283,3 +283,11 @@ const QString & InfoGraphicsView::filenameIf()
 {
 	return ___emptyString___;
 }
+
+QString InfoGraphicsView::generateCopperFillUnit(ItemBase * itemBase, QPointF whereToStart)
+{
+	Q_UNUSED(itemBase);
+	Q_UNUSED(whereToStart);
+	return "";
+}
+

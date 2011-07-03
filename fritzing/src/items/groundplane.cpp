@@ -31,6 +31,7 @@ $Date$
 #include "../utils/graphicsutils.h"
 #include "../svg/svgfilesplitter.h"
 #include "../svg/groundplanegenerator.h"
+#include "../sketch/infographicsview.h"
 
 #include <QPainterPathStroker>
 
@@ -117,7 +118,12 @@ void GroundPlane::setProp(const QString & prop, const QString & value) {
 void GroundPlane::addedToScene(bool temporary) 
 {
 	if (this->scene()) {
-		setSvgAux(modelPart()->prop("svg").toString());
+		if (!temporary) {
+			QString svg = modelPart()->prop("svg").toString();
+			if (!svg.isEmpty()) {
+				setSvgAux(svg);
+			}
+		}
 	}
 
 	PaletteItem::addedToScene(temporary);
@@ -184,3 +190,31 @@ bool GroundPlane::rotation45Allowed() {
 	return false;
 }
 
+ItemBase::PluralType GroundPlane::isPlural() {
+	return Singular;
+}
+
+bool GroundPlane::canEditPart() {
+	return false;
+}
+
+QString GroundPlane::generateSvg() {
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView == NULL) return "";
+
+	QPointF q = this->boundingRect().center() + this->pos();
+	//QPointF r = this->pos() + m_dropOffset;
+	return infoGraphicsView->generateCopperFillUnit(this, q);   
+}
+
+void GroundPlane::setDropOffset(QPointF offset) 
+{
+	m_dropOffset = offset;
+	QString svg = generateSvg();
+	if (!svg.isEmpty()) {
+		setSvg(svg);
+		// resize/reposition
+
+
+	}
+}

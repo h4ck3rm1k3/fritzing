@@ -763,4 +763,20 @@ protected:
 };
 
 
+class SetDropOffsetCommand : public BaseCommand
+{
+public:
+    SetDropOffsetCommand(class SketchWidget *sketchWidget, long id, QPointF dropOffset, QUndoCommand *parent);
+    void undo();
+    void redo();
+
+protected:
+	QString getParamString() const;
+
+protected:
+    long m_itemID;
+	QPointF m_dropOffset;
+};
+
+
 #endif // COMMANDS_H

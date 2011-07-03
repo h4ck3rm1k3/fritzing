@@ -187,6 +187,7 @@ public:
 	virtual bool rotationAllowed();
 	virtual bool rotation45Allowed();
 	void ensureUniqueTitle(const QString &title, bool force);
+	virtual void setDropOffset(QPointF offset);
 
 public:
 	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth, bool & negativeOffsetRect);
