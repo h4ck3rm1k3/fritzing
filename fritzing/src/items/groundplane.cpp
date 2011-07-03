@@ -35,9 +35,19 @@ $Date$
 
 #include <QPainterPathStroker>
 
-// TODO: delete part if copper fill fails, and remove item from undo stack
+// TODO: 
+//
+//	delete part if copper fill fails, and remove item from undo stack
 //	maybe that means the generator has to kick in on the dropped item, and if it fails then
-//  there is no undo stack to worry about; if it succeeds, then copy the svg prop.
+//	there is no undo stack to worry about; if it succeeds, then copy the svg prop.
+//
+//	does single poly need a connector?
+//
+//	see whether the standard circular connector will fit somewhere inside a polygon:
+//	http://stackoverflow.com/questions/4279478/maximum-circle-inside-a-non-convex-polygon
+//	or maybe this is useful, e.g. treating the circle as a square:  
+//	http://stackoverflow.com/questions/4833802/check-if-polygon-is-inside-a-polygon
+
 
 static QString IconSvg;
 

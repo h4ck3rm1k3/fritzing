@@ -58,11 +58,12 @@ public:
 protected:
 	void splitScanLines(QList<QRect> & rects, QList< QList<int> * > & pieces);
 	void joinScanLines(QList<QRect> & rects, QList<QPolygon> & polygons);
-	QString makePolySvg(QList<QPolygon> & polygons, qreal res, qreal bWidth, qreal bHeight, qreal pixelFactor, const QString & colorString, const QString & layerName, bool makeConnector, QPointF * offset);
+	QString makePolySvg(QList<QPolygon> & polygons, qreal res, qreal bWidth, qreal bHeight, qreal pixelFactor, const QString & colorString, const QString & layerName, bool makeConnectorFlag, QPointF * offset);
 	QString makeOnePoly(const QPolygon & poly, const QString & colorString, const QString & id, int minX, int minY);
 	qreal calcArea(QPolygon & poly);
 	QImage * generateGroundPlaneAux(const QString & boardSvg, QSizeF boardImageSize, const QString & svg, QSizeF copperImageSize, QStringList & exceptions, 
 									QGraphicsItem * board, qreal res, qreal & bWidth, qreal & bHeight); 
+	void makeConnector(QList<QPolygon> & polygons, qreal res, qreal pixelFactor, const QString & colorString, int minX, int minY, QString & svg);
 
 
 protected:

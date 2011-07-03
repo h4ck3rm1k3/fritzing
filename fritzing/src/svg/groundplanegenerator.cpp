@@ -39,6 +39,7 @@ $Date$
 #include <QSvgRenderer>
 #include <QDate>
 #include <QTextStream>
+#include <qmath.h>
 
 static const int MILS = 5;			// operate on a 5 mil scale
 static const int THRESHOLD = 192;
@@ -658,7 +659,8 @@ void GroundPlaneGenerator::joinScanLines(QList<QRect> & rects, QList<QPolygon> &
 	}
 }
 
-QString GroundPlaneGenerator::makePolySvg(QList<QPolygon> & polygons, qreal res, qreal bWidth, qreal bHeight, qreal pixelFactor, const QString & colorString, const QString & layerName, bool makeConnector, QPointF * offset) 
+QString GroundPlaneGenerator::makePolySvg(QList<QPolygon> & polygons, qreal res, qreal bWidth, qreal bHeight, qreal pixelFactor, 
+										const QString & colorString, const QString & layerName, bool makeConnectorFlag, QPointF * offset) 
 {
 	int minX = 0;
 	int minY = 0;
@@ -689,49 +691,8 @@ QString GroundPlaneGenerator::makePolySvg(QList<QPolygon> & polygons, qreal res,
 		.arg(bWidth * pixelFactor)
 		.arg(bHeight * pixelFactor);
 	pSvg += QString("<g id='%1'>\n").arg(layerName);
-	if (makeConnector) {
-		QList<qreal> areas;
-		qreal divisor = res * pixelFactor * res * pixelFactor;
-		foreach (QPolygon poly, polygons) {
-			areas.append(calcArea(poly) / divisor);
-		}
-		
-		int useIndex = -1;
-		for (int i = 0; i < areas.count(); i++) {
-			if (areas.at(i) > 0.1 && areas.at(i) < 0.25) {
-				useIndex = i;
-				break;
-			}
-		}
-		if (useIndex < 0) {
-			for (int i = 0; i < areas.count(); i++) {
-				if (areas.at(i) > 0.1) {
-					useIndex = i;
-					break;
-				}
-			}
-		}
-		if (useIndex < 0) {
-			pSvg += QString("<g id='%1'>\n").arg(ConnectorName);
-			foreach (QPolygon poly, polygons) {
-				pSvg += makeOnePoly(poly, colorString, "", minX, minY);
-			}
-			pSvg += "</g>";
-		}
-		else {
-			int ix = 0;
-			for (int i = 0; i < polygons.count(); i++) {
-				if (i == useIndex) {
-					// has to appear inside a g element
-					pSvg += QString("<g id='%1'>\n").arg(ConnectorName);
-					pSvg += makeOnePoly(polygons.at(i), colorString, "", minX, minY);
-					pSvg += "</g>";
-				}
-				else {
-					pSvg += makeOnePoly(polygons.at(i), colorString, FSvgRenderer::NonConnectorName + QString::number(ix++), minX, minY);
-				}
-			}
-		}
+	if (makeConnectorFlag) {
+		makeConnector(polygons, res, pixelFactor, colorString, minX, minY, pSvg);
 	}
 	else {
 		foreach (QPolygon poly, polygons) {
@@ -742,6 +703,123 @@ QString GroundPlaneGenerator::makePolySvg(QList<QPolygon> & polygons, qreal res,
 	pSvg += "</g>\n</svg>\n";
 
 	return pSvg;
+}
+
+void GroundPlaneGenerator::makeConnector(QList<QPolygon> & polygons, qreal res, qreal pixelFactor, const QString & colorString, int minX, int minY, QString & pSvg)
+{
+
+	/*
+	static const qreal standardConnectorWidth = .075;		 // inches
+	int lw = qCeil(res * pixelFactor * standardConnectorWidth);
+
+	// first try to fit a circle in the center as a rect
+	// better would be to use medial axis, but for now...
+	foreach (QPolygon poly, polygons) {
+		QRect boundingRect = poly.boundingRect(); 
+		if (boundingRect.width() < lw) continue;
+		if (boundingRect.height() < lw) continue;
+
+		QPoint center = boundingRect.center();
+		if (!poly.containsPoint(center, Qt::OddEvenFill)) continue;
+
+		int l = center.x() - (lw / 2);
+		int r = l + lw;
+		int t = center.y() - (lw / 2);
+		int b = t + lw;
+
+		if (!poly.containsPoint(QPoint(l, t), Qt::OddEvenFill)) continue;
+		if (!poly.containsPoint(QPoint(l, b), Qt::OddEvenFill)) continue;
+		if (!poly.containsPoint(QPoint(r, t), Qt::OddEvenFill)) continue;
+		if (!poly.containsPoint(QPoint(r, b), Qt::OddEvenFill)) continue;
+
+		// all 5 points fit, so check line intersections
+
+		QLineF bline(l, b, r, b);
+		QLineF tline(l, t, r, t);
+		QLineF lline(l, t, l, b);
+		QLineF rline(r, t, t, b);
+
+		QList<QLineF> rectLines;
+		rectLines << tline << bline << lline << rline;
+
+		QList<QLineF> polyLines;
+		int count = poly.count();
+		for (int i = 0; i < count; i++) {
+			QLineF lp(poly[i], poly[(i + 1) % count]);
+			polyLines.append(lp);
+		}
+
+		bool intersected = false;
+		foreach (QLineF r, rectLines) {
+			foreach (QLineF p, polyLines) {
+				QPointF intersectionPoint;
+				if (p.intersect(r, &intersectionPoint) == QLineF::BoundedIntersection) {
+					intersected = true;
+					break;
+				}
+			}
+			if (intersected) break;
+		}
+
+		if (intersected) continue;
+
+		pSvg += QString("<circle id='%1' cx='%2' cy='%3' r='%4' fill='none' stroke='none' stroke-width='0' />\n")
+			.arg(ConnectorName)
+			.arg(center.x() - minX)
+			.arg(center.y() - minY)
+			.arg(lw / 2.0);
+
+		foreach (QPolygon poly, polygons) {
+			pSvg += makeOnePoly(poly, colorString, "", minX, minY);
+		}
+		return;
+	}
+
+	*/
+
+	// try to find a poly with an area that's big enough to click, but not so big as to get in the way
+	int useIndex = -1;
+	QList<qreal> areas;
+	qreal divisor = res * pixelFactor * res * pixelFactor;
+	foreach (QPolygon poly, polygons) {
+		areas.append(calcArea(poly) / divisor);
+	}
+		
+	for (int i = 0; i < areas.count(); i++) {
+		if (areas.at(i) > 0.1 && areas.at(i) < 0.25) {
+			useIndex = i;
+			break;
+		}
+	}
+	if (useIndex < 0) {
+		for (int i = 0; i < areas.count(); i++) {
+			if (areas.at(i) > 0.1) {
+				useIndex = i;
+				break;
+			}
+		}
+	}
+	if (useIndex < 0) {
+		pSvg += QString("<g id='%1'>\n").arg(ConnectorName);
+		foreach (QPolygon poly, polygons) {
+			pSvg += makeOnePoly(poly, colorString, "", minX, minY);
+		}
+		pSvg += "</g>";
+	}
+	else {
+		int ix = 0;
+		for (int i = 0; i < polygons.count(); i++) {
+			if (i == useIndex) {
+				// has to appear inside a g element
+				pSvg += QString("<g id='%1'>\n").arg(ConnectorName);
+				pSvg += makeOnePoly(polygons.at(i), colorString, "", minX, minY);
+				pSvg += "</g>";
+			}
+			else {
+				pSvg += makeOnePoly(polygons.at(i), colorString, FSvgRenderer::NonConnectorName + QString::number(ix++), minX, minY);
+			}
+		}
+	}
 }
 
 qreal GroundPlaneGenerator::calcArea(QPolygon & poly) {
