@@ -40,12 +40,13 @@ $Date$
 #include <QDate>
 #include <QTextStream>
 
-#define MILS 5			// operate on a 5 mil scale
+static const int MILS = 5;			// operate on a 5 mil scale
+static const int THRESHOLD = 192;
 
 QString GroundPlaneGenerator::ConnectorName = "connector0pad";
 
 //  !!!!!!!!!!!!!!!!!!!
-//  !!!!!!!!!!!!!!!!!!!  IMPORTANT NOTE:  QRect::right() and QRect::rottom() are off by one--this is a known Qt problem 
+//  !!!!!!!!!!!!!!!!!!!  IMPORTANT NOTE:  QRect::right() and QRect::bottom() are off by one--this is a known Qt problem 
 //  !!!!!!!!!!!!!!!!!!!
 //  !!!!!!!!!!!!!!!!!!!					  one workaround might be to switch to QRectF
 //  !!!!!!!!!!!!!!!!!!!
@@ -82,11 +83,11 @@ bool GroundPlaneGenerator::getBoardRects(const QString & boardSvg, QGraphicsItem
 	painter.end();
 
 #ifndef QT_NO_DEBUG
-	image.save("getBoardRects.png");
+	//image.save("getBoardRects.png");
 #endif
 
 	QColor keepaway(255,255,255);
-	int threshhold = 1;
+	int threshold = 1;
 
 	// now add keepout area to the border
 	QImage image2 = image.copy();
@@ -101,7 +102,7 @@ bool GroundPlaneGenerator::getBoardRects(const QString & boardSvg, QGraphicsItem
 		for (int x = 0; x < image.width(); x++) {
 			QRgb current = *(scanLine + x);
 			int gray = qGray(current);
-			if (gray <= threshhold) {			
+			if (gray <= threshold) {			
 				continue;
 			}
 
@@ -111,10 +112,10 @@ bool GroundPlaneGenerator::getBoardRects(const QString & boardSvg, QGraphicsItem
 	painter.end();
 
 #ifndef QT_NO_DEBUG
-	image2.save("getBoardRects2.png");
+	//image2.save("getBoardRects2.png");
 #endif
 
-	scanLines(image2, bWidth, bHeight, rects, threshhold, 1);
+	scanLines(image2, bWidth, bHeight, rects, threshold, 1);
 
 	// combine parallel equal-sized rects
 	int ix = 0;
@@ -146,13 +147,114 @@ bool GroundPlaneGenerator::getBoardRects(const QString & boardSvg, QGraphicsItem
 	return true;
 }
 
+bool GroundPlaneGenerator::generateGroundPlaneUnit(const QString & boardSvg, QSizeF boardImageSize, const QString & svg, QSizeF copperImageSize, 
+												   QStringList & exceptions, QGraphicsItem * board, qreal res, const QString & color, const QString & layerName,
+												   QPointF whereToStart) 
+{
+	qreal bWidth, bHeight;
+	QImage * image = generateGroundPlaneAux(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board, res, bWidth, bHeight);
+	if (image == NULL) return false;
+
+	QPoint s(qRound(res * (whereToStart.x() - board->pos().x()) / FSvgRenderer::printerScale()),
+			qRound(res * (whereToStart.y() - board->pos().y()) / FSvgRenderer::printerScale()));
+
+	QRgb pixel = image->pixel(s);
+	int gray = qGray(pixel);
+	if (gray <= THRESHOLD) {
+		// starting off in bad territory
+		delete image;
+		return false;
+	}
+
+	// step 1 flood fill white to red  (keep max locations)
+
+	int minY = image->height();
+	int maxY = 0;
+	int minX = image->width();
+	int maxX = 0;
+	QList<QPoint> stack;
+	stack << s;
+	while (stack.count() > 0) {
+		QPoint p = stack.takeFirst();
+		if (p.x() < 0) continue;
+		if (p.y() < 0) continue;
+		if (p.x() >= image->width()) continue;
+		if (p.y() >= image->height()) continue;
+
+		QRgb pixel = image->pixel(p);
+		if (pixel == 0xffff0000) continue;			// already been here
+
+		int gray = qGray(pixel);
+		if (gray <= THRESHOLD) continue;			// black; bail
+
+		image->setPixel(p,  0xffff0000);
+		if (p.x() > maxX) maxX = p.x();
+		if (p.x() < minX) minX = p.x();
+		if (p.y() > maxY) maxY = p.y();
+		if (p.y() < minY) minY = p.y();
+
+		stack.append(QPoint(p.x() - 1, p.y()));
+		stack.append(QPoint(p.x() + 1, p.y()));
+		stack.append(QPoint(p.x(), p.y() - 1));
+		stack.append(QPoint(p.x(), p.y() + 1));
+	}
+
+	image->save("testPoly1.png");
+
+	// step 2 replace white with black
+
+	for (int y = 0; y < image->height(); y++) {
+		QRgb* scanLine = (QRgb *) image->scanLine(y);
+		for (int x = 0; x < image->width(); x++) {
+			QRgb pixel = *(scanLine + x);
+			if (pixel == 0xffff0000) continue;
+
+			image->setPixel(x, y,  0xff000000);
+		}
+	}
+
+	image->save("testPoly2.png");
+
+	// step 3 replace red with white
+
+	for (int y = 0; y < image->height(); y++) {
+		QRgb* scanLine = (QRgb *) image->scanLine(y);
+		for (int x = 0; x < image->width(); x++) {
+			QRgb pixel = *(scanLine + x);
+			if (pixel != 0xffff0000) continue;
+
+			image->setPixel(x, y,  0xffffffff);
+		}
+	}
+
+	image->save("testPoly3.png");
+
+	scanImage(*image, bWidth, bHeight, MILS, res, color, layerName, true, 4);
+	delete image;
+	return true;
+}
+
+
 bool GroundPlaneGenerator::generateGroundPlane(const QString & boardSvg, QSizeF boardImageSize, const QString & svg, QSizeF copperImageSize, 
 												QStringList & exceptions, QGraphicsItem * board, qreal res, const QString & color, const QString & layerName) 
+{
+
+	qreal bWidth, bHeight;
+	QImage * image = generateGroundPlaneAux(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board, res, bWidth, bHeight);
+	if (image == NULL) return false;
+
+	scanImage(*image, bWidth, bHeight, MILS, res, color, layerName, true, 4);
+	delete image;
+	return true;
+}
+
+QImage * GroundPlaneGenerator::generateGroundPlaneAux(const QString & boardSvg, QSizeF boardImageSize, const QString & svg, QSizeF copperImageSize, 
+													QStringList & exceptions, QGraphicsItem * board, qreal res, qreal & bWidth, qreal & bHeight) 
 {
 	QByteArray boardByteArray;
     QString tempColor("#ffffff");
     if (!SvgFileSplitter::changeColors(boardSvg, tempColor, exceptions, boardByteArray)) {
-		return false;
+		return NULL;
 	}
 
 	/*
@@ -166,11 +268,11 @@ bool GroundPlaneGenerator::generateGroundPlane(const QString & boardSvg, QSizeF 
 
 	QByteArray copperByteArray;
 	if (!SvgFileSplitter::changeStrokeWidth(svg, 50, false, copperByteArray)) {
-		return false;
+		return NULL;
 	}
 
 	/*
-	QFile file1("testGroundFill.svg");
+	QFile file1("testGroundFillCopper.svg");
 	file1.open(QIODevice::WriteOnly);
 	QTextStream out1(&file1);
 	out1 << copperByteArray;
@@ -181,25 +283,25 @@ bool GroundPlaneGenerator::generateGroundPlane(const QString & boardSvg, QSizeF 
 	qreal svgHeight = res * qMax(boardImageSize.height(), copperImageSize.height()) / FSvgRenderer::printerScale();
 
 	QRectF br =  board->sceneBoundingRect();
-	qreal bWidth = res * br.width() / FSvgRenderer::printerScale();
-	qreal bHeight = res * br.height() / FSvgRenderer::printerScale();
-	QImage image(qMax(svgWidth, bWidth), qMax(svgHeight, bHeight), QImage::Format_RGB32);
-	image.setDotsPerMeterX(res * GraphicsUtils::InchesPerMeter);
-	image.setDotsPerMeterY(res * GraphicsUtils::InchesPerMeter);
-	image.fill(0x0);
+	bWidth = res * br.width() / FSvgRenderer::printerScale();
+	bHeight = res * br.height() / FSvgRenderer::printerScale();
+	QImage * image = new QImage(qMax(svgWidth, bWidth), qMax(svgHeight, bHeight), QImage::Format_RGB32);
+	image->setDotsPerMeterX(res * GraphicsUtils::InchesPerMeter);
+	image->setDotsPerMeterY(res * GraphicsUtils::InchesPerMeter);
+	image->fill(0x0);
 
 	QSvgRenderer renderer(boardByteArray);
 	QPainter painter;
-	painter.begin(&image);
+	painter.begin(image);
 	painter.setRenderHint(QPainter::Antialiasing);
 	renderer.render(&painter, QRectF(0, 0, res * boardImageSize.width() / FSvgRenderer::printerScale(), res * boardImageSize.height() / FSvgRenderer::printerScale()));
 	painter.end();
 
-	//image.save("testGroundFillBoard.png");
+	image->save("testGroundFillBoard.png");
 
 	// "blur" the image a little
 	QSvgRenderer renderer2(copperByteArray);
-	painter.begin(&image);
+	painter.begin(image);
 	QRectF bounds(0, 0, res * copperImageSize.width() / FSvgRenderer::printerScale(), res * copperImageSize.height() / FSvgRenderer::printerScale());
 	renderer2.render(&painter, bounds);
 	bounds.moveTo(1, 0);
@@ -220,18 +322,14 @@ bool GroundPlaneGenerator::generateGroundPlane(const QString & boardSvg, QSizeF 
 	renderer2.render(&painter, bounds);
 	painter.end();
 
-	//image.save("testGroundFill.png");
-	if (bHeight > image.height()) bHeight = image.height();
-	if (bWidth > image.width()) bWidth = image.width();
-
-	scanImage(image, bWidth, bHeight, MILS, res, color, layerName, true, 4);
-	return true;
+	image->save("testGroundFillCopper.png");
+	return image;
 }
 
 void GroundPlaneGenerator::scanImage(QImage & image, qreal bWidth, qreal bHeight, qreal pixelFactor, qreal res, const QString & colorString, const QString & layerName, bool makeConnector, int minRunSize)  
 {
 	QList<QRect> rects;
-	scanLines(image, bWidth, bHeight, rects, 192, minRunSize);
+	scanLines(image, bWidth, bHeight, rects, THRESHOLD, minRunSize);
 	QList< QList<int> * > pieces;
 	splitScanLines(rects, pieces);
 	foreach (QList<int> * piece, pieces) {
@@ -282,9 +380,9 @@ void GroundPlaneGenerator::scanImage(QImage & image, qreal bWidth, qreal bHeight
 
 }
 
-void GroundPlaneGenerator::scanLines(QImage & image, int bWidth, int bHeight, QList<QRect> & rects, int threshhold, int minRunSize)
+void GroundPlaneGenerator::scanLines(QImage & image, int bWidth, int bHeight, QList<QRect> & rects, int threshold, int minRunSize)
 {
-	// threshhold should be between 0 and 255 exclusive; smaller will include more of the svg
+	// threshold should be between 0 and 255 exclusive; smaller will include more of the svg
 	for (int y = 0; y < bHeight; y++) {
 		bool inWhite = false;
 		int whiteStart = 0;
@@ -296,7 +394,7 @@ void GroundPlaneGenerator::scanLines(QImage & image, int bWidth, int bHeight, QL
 			//}
 			int gray = qGray(current);
 			if (inWhite) {
-				if (gray > threshhold) {			// qBlue(current) == 0xff    gray > 128
+				if (gray > threshold) {			// qBlue(current) == 0xff    gray > 128
 					// another white pixel, keep moving
 					continue;
 				}
@@ -311,7 +409,7 @@ void GroundPlaneGenerator::scanLines(QImage & image, int bWidth, int bHeight, QL
 				rects.append(QRect(whiteStart, y, x - whiteStart, 1));
 			}
 			else {
-				if (gray <= threshhold) {		// qBlue(current) != 0xff				
+				if (gray <= threshold) {		// qBlue(current) != 0xff				
 					// another black pixel, keep moving
 					continue;
 				}

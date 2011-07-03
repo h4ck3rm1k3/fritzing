@@ -44,6 +44,8 @@ public:
 
 	bool generateGroundPlane(const QString & boardSvg, QSizeF boardImageSize, const QString & svg, QSizeF copperImageSize, QStringList & exceptions, 
 							 QGraphicsItem * board, qreal res, const QString & color, const QString & layerName); 
+	bool generateGroundPlaneUnit(const QString & boardSvg, QSizeF boardImageSize, const QString & svg, QSizeF copperImageSize, QStringList & exceptions, 
+							 QGraphicsItem * board, qreal res, const QString & color, const QString & layerName, QPointF whereToStart); 
 	const QStringList & newSVGs();
 	void scanImage(QImage & image, qreal bWidth, qreal bHeight, qreal pixelFactor, qreal res, const QString & colorString, const QString & layerName, bool makeConnector, int minRunSize);  
 	bool getBoardRects(const QString & boardSvg, QGraphicsItem * board, qreal res, qreal keepoutSpace, QList<QRect> & rects);
@@ -58,6 +60,9 @@ protected:
 	QString makePolySvg(QList<QPolygon> & polygons, qreal res, qreal bWidth, qreal bHeight, qreal pixelFactor, const QString & colorString, const QString & layerName, bool makeConnector);
 	QString makeOnePoly(const QPolygon & poly, const QString & colorString, const QString & id);
 	qreal calcArea(QPolygon & poly);
+	QImage * generateGroundPlaneAux(const QString & boardSvg, QSizeF boardImageSize, const QString & svg, QSizeF copperImageSize, QStringList & exceptions, 
+									QGraphicsItem * board, qreal res, qreal & bWidth, qreal & bHeight); 
+
 
 protected:
 	QStringList m_newSVGs;
