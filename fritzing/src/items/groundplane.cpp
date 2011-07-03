@@ -36,8 +36,21 @@ $Date$
 #include <QPainterPathStroker>
 
 // TODO: delete part if copper fill fails, and remove item from undo stack
+//	maybe that means the generator has to kick in on the dropped item, and if it fails then
+//  there is no undo stack to worry about; if it succeeds, then copy the svg prop.
 
 static QString IconSvg;
+
+void loadIconSvg() 
+{
+	if (IconSvg.isEmpty()) {
+		QFile f(":resources/parts/svg/core/icon/groundplane.svg");
+		if (f.open(QFile::ReadOnly)) {
+			IconSvg = f.readAll();
+			f.close();
+		}
+	}
+}
 
 /////////////////////////////////////////////////////////
 
@@ -124,13 +137,7 @@ void GroundPlane::addedToScene(bool temporary)
 		if (this->scene()) {
 			QString svg;
 			if (temporary) {
-				if (IconSvg.isEmpty()) {
-					QFile f(":resources/parts/svg/core/icon/groundplane.svg");
-					if (f.open(QFile::ReadOnly)) {
-						IconSvg = f.readAll();
-						f.close();
-					}
-				}
+				loadIconSvg();
 				svg = IconSvg;
 			}
 			else {
@@ -152,6 +159,8 @@ void GroundPlane::setSvg(const QString & svg) {
 }
 
 void GroundPlane::setSvgAux(const QString & svg) {
+	if (svg.isEmpty()) return;
+
 	QString xmlName = ViewLayer::viewLayerXmlNameFromID(m_viewLayerID);
 	SvgFileSplitter	splitter;
 	QString cpy = svg;
@@ -227,7 +236,9 @@ void GroundPlane::setDropOffset(QPointF offset)
 {
 	m_dropOffset = offset;
 	QString svg = generateSvg();
-	if (!svg.isEmpty()) {
-		setSvg(svg);
+	if (svg.isEmpty()) {
+		loadIconSvg();
+		svg = IconSvg;
 	}
+	setSvg(svg);
 }
