@@ -2559,17 +2559,19 @@ bool PCBSketchWidget::groundFill(QUndoCommand * parentCommand)
 		}
 	}
 
+	int ix = 0;
 	foreach (QString svg, gpg.newSVGs()) {
 		ViewGeometry vg;
-		vg.setLoc(board->pos());
+		vg.setLoc(board->pos() + gpg.newOffsets()[ix++]);
 		long newID = ItemBase::getNextID();
 		new AddItemCommand(this, BaseCommand::CrossView, ModuleIDNames::GroundPlaneModuleIDName, ViewLayer::GroundPlane_Bottom, vg, newID, false, -1, parentCommand);
 		new SetPropCommand(this, newID, "svg", svg, svg, true, parentCommand);
 	}
 
+	ix = 0;
 	foreach (QString svg, gpg2.newSVGs()) {
 		ViewGeometry vg;
-		vg.setLoc(board->pos());
+		vg.setLoc(board->pos() + gpg2.newOffsets()[ix++]);
 		long newID = ItemBase::getNextID();
 		new AddItemCommand(this, BaseCommand::CrossView, ModuleIDNames::GroundPlaneModuleIDName, ViewLayer::GroundPlane_Top, vg, newID, false, -1, parentCommand);
 		new SetPropCommand(this, newID, "svg", svg, svg, true, parentCommand);
@@ -2639,14 +2641,12 @@ QString PCBSketchWidget::generateCopperFillUnit(ItemBase * itemBase, QPointF whe
 		return "";
 	}
 
-	itemBase->setPos(board->pos());
+
+	itemBase->setPos(board->pos() + gpg.newOffsets()[0]);
 	itemBase->setViewLayerID(gpLayerName, m_viewLayers);
 
-	QDomDocument doc;
-	foreach (QString newSvg, gpg.newSVGs()) {
-		TextUtils::mergeSvg(doc, newSvg, gpLayerName);
-	}
-	return TextUtils::mergeSvgFinish(doc);
+
+	return gpg.newSVGs()[0];
 }
 
 

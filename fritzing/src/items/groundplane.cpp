@@ -213,8 +213,5 @@ void GroundPlane::setDropOffset(QPointF offset)
 	QString svg = generateSvg();
 	if (!svg.isEmpty()) {
 		setSvg(svg);
-		// resize/reposition
-
-
 	}
 }
