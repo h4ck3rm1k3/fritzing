@@ -166,6 +166,7 @@ void GroundPlane::setSvg(const QString & svg) {
 
 void GroundPlane::setSvgAux(const QString & svg) {
 	if (svg.isEmpty()) return;
+	if (m_viewIdentifier == ViewIdentifierClass::BreadboardView || m_viewIdentifier == ViewIdentifierClass::SchematicView) return;
 
 	QString xmlName = ViewLayer::viewLayerXmlNameFromID(m_viewLayerID);
 	SvgFileSplitter	splitter;
