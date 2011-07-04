@@ -646,8 +646,6 @@ QList<SvgIdLayer *> FSvgRenderer::setUpNonConnectors() {
 	foreach (QString nonConnectorID, m_nonConnectorInfoHash.keys()) {
 		SvgIdLayer * svgIdLayer = new SvgIdLayer();
 		svgIdLayer->m_processed = true;
-		svgIdLayer->m_hybrid = false;
-		svgIdLayer->m_radius = svgIdLayer->m_strokeWidth = 0;
 		svgIdLayer->m_svgId = nonConnectorID;
 		QRectF bounds = this->boundsOnElement(nonConnectorID);
 		if (bounds.isNull()) {

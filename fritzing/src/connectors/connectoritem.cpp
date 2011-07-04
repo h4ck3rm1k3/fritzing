@@ -58,7 +58,8 @@ static double MAX_DOUBLE = std::numeric_limits<double>::max();
 ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 	: NonConnectorItem(attachedTo)
 {
-	m_hybrid = false;
+	m_bendable = m_bigDot = m_hybrid = false;
+	m_lineItem = NULL;
 	m_marked = false;
 	m_checkedEffectively = false;
 	m_hoverEnterSpaceBarWasPressed = m_spaceBarWasPressed = false;
@@ -379,6 +380,10 @@ void ConnectorItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 	//DebugDialog::debug("in connectorItem mouseReleaseEvent");
 	clearEqualPotentialDisplay();
 
+	if (m_bendable) {
+		QGraphicsRectItem::mouseReleaseEvent(event);
+	}
+
 	if (this->m_attachedTo != NULL && m_attachedTo->acceptsMouseReleaseConnectorEvent(this, event)) {
 		m_attachedTo->mouseReleaseConnectorEvent(this, event);
 		return;
@@ -397,6 +402,22 @@ void ConnectorItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
 }
 
 void ConnectorItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
+
+	if (m_bendable) {
+		QGraphicsRectItem::mouseMoveEvent(event);
+
+		QPointF p = this->mapToParent(rect().topLeft() + m_terminalPoint);
+		if (p != m_originalPoint) {
+			m_lineItem->setLine(m_originalPoint.x(), m_originalPoint.y(), p.x(), p.y());
+			m_lineItem->setVisible(true);
+		}
+		else {
+			m_lineItem->setVisible(false);
+		}
+
+		return;
+	}
+
 	if (this->m_attachedTo != NULL && m_attachedTo->acceptsMouseMoveConnectorEvent(this, event)) {
 		m_attachedTo->mouseMoveConnectorEvent(this, event);
 		return;
@@ -429,6 +450,11 @@ void ConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 	//m_equalPotentialDisplayItems.removeAt(0);									// not sure whether to leave the clicked one in or out of the list
 	foreach (ConnectorItem * connectorItem, m_equalPotentialDisplayItems) {
 		connectorItem->showEqualPotential(true);
+	}
+
+	if (m_bendable) {
+		QGraphicsRectItem::mousePressEvent(event);
+		return;
 	}
 
 
@@ -542,6 +568,37 @@ void ConnectorItem::setHybrid(bool h) {
 
 bool ConnectorItem::isHybrid() {
 	return m_hybrid;
+}
+
+void ConnectorItem::setBendable(bool b, QColor color, qreal strokeWidth) {
+	m_bendable = b;
+	setFlag(QGraphicsItem::ItemIsMovable, b);
+	Qt::MouseButtons mb = Qt::NoButton;
+	if (b) {
+		m_originalPoint = this->mapToParent(rect().topLeft() + m_terminalPoint);
+		m_lineItem = new QGraphicsLineItem(parentItem());
+		m_lineItem->setVisible(false);
+		m_lineItem->setFlag(QGraphicsItem::ItemIsSelectable, false);
+		m_lineItem->setFlag(QGraphicsItem::ItemIsMovable, false);
+		m_lineItem->setAcceptedMouseButtons(Qt::NoButton);
+		m_lineItem->setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
+		QPen pen(color);
+		pen.setCapStyle(Qt::RoundCap);
+		pen.setWidthF(strokeWidth);
+		m_lineItem->setPen(pen);
+		mb = Qt::LeftButton;
+	}
+	else {
+		delete m_lineItem;
+		m_lineItem = NULL;
+	}
+	setAcceptedMouseButtons(mb);
+	setFlag(QGraphicsItem::ItemSendsGeometryChanges, b);
+
+}
+
+bool ConnectorItem::isBendable() {
+	return m_bendable;
 }
 
 void ConnectorItem::setBigDot(bool bd) {
@@ -1144,6 +1201,7 @@ bool ConnectorItem::isCrossLayerFrom(ConnectorItem * candidate) {
 void ConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget ) 
 {
 	if (m_hybrid) return;
+	if (doNotPaint()) return;
 
 	if (!m_checkedEffectively) {
 		if (!m_circular && m_shape.isEmpty()) {

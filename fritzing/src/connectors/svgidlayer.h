@@ -33,7 +33,6 @@ $Date$
 
 struct SvgIdLayer 
 {
-
 	QString m_svgId;
 	QString m_terminalId;
 	ViewLayer::ViewLayerID m_svgViewLayerID;
@@ -44,7 +43,11 @@ struct SvgIdLayer
 	QPointF m_point;	
 	qreal m_radius;
 	qreal m_strokeWidth;
+	bool m_bendable;
+	QString m_bendColor;
+	QString m_bendStrokeWidth;
 
+	SvgIdLayer();
 	SvgIdLayer * copyLayer();
 };
 

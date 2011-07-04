@@ -1829,6 +1829,7 @@ void SketchWidget::mousePressEvent(QMouseEvent *event)
 		}
 	}
 
+
 	QGraphicsView::mousePressEvent(event);
 
 	items = this->items(event->pos());
@@ -1886,6 +1887,11 @@ void SketchWidget::mousePressEvent(QMouseEvent *event)
 	}
 
 	if (resizingBoardPress(item)) {
+		return;
+	}
+
+	ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(wasItem);
+	if (connectorItem != NULL && connectorItem->isBendable() && (event->button() == Qt::LeftButton)) {
 		return;
 	}
 

@@ -61,6 +61,9 @@ public:
 	QPainterPath shape() const;
 
 protected:
+	bool doNotPaint();
+
+protected:
 	QPointer<ItemBase> m_attachedTo;
 	bool m_hidden;
 	bool m_inactive;

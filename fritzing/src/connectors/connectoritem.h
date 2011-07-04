@@ -31,6 +31,7 @@ $Date$
 #include "connector.h"
 
 #include <QThread>
+#include <QGraphicsLineItem>
 
 class ConnectorItem : public NonConnectorItem
 {
@@ -105,6 +106,8 @@ public:
 	qreal minDimension();
 	void setHybrid(bool);
 	bool isHybrid();
+	void setBendable(bool, QColor color, qreal strokeWidth);
+	bool isBendable();
 	void setBigDot(bool);
 	bool isBigDot();
 
@@ -141,7 +144,10 @@ protected:
 	bool m_checkedEffectively;
 	bool m_marked;
 	bool m_hybrid;
+	bool m_bendable;
 	bool m_bigDot;
+	QPointF m_originalPoint;
+	QGraphicsLineItem * m_lineItem;
 	
 protected:	
 	static QList<ConnectorItem *>  m_equalPotentialDisplayItems;

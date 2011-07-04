@@ -200,7 +200,7 @@ bool GroundPlaneGenerator::generateGroundPlaneUnit(const QString & boardSvg, QSi
 		stack.append(QPoint(p.x(), p.y() + 1));
 	}
 
-	image->save("testPoly1.png");
+	//image->save("testPoly1.png");
 
 	// step 2 replace white with black
 
@@ -214,7 +214,7 @@ bool GroundPlaneGenerator::generateGroundPlaneUnit(const QString & boardSvg, QSi
 		}
 	}
 
-	image->save("testPoly2.png");
+	//image->save("testPoly2.png");
 
 	// step 3 replace red with white
 
@@ -228,7 +228,7 @@ bool GroundPlaneGenerator::generateGroundPlaneUnit(const QString & boardSvg, QSi
 		}
 	}
 
-	image->save("testPoly3.png");
+	//image->save("testPoly3.png");
 
 	scanImage(*image, bWidth, bHeight, MILS, res, color, layerName, true, 8, true, QSizeF(.05, .05));
 	delete image;
@@ -298,7 +298,7 @@ QImage * GroundPlaneGenerator::generateGroundPlaneAux(const QString & boardSvg, 
 	renderer.render(&painter, QRectF(0, 0, res * boardImageSize.width() / FSvgRenderer::printerScale(), res * boardImageSize.height() / FSvgRenderer::printerScale()));
 	painter.end();
 
-	image->save("testGroundFillBoard.png");
+	//image->save("testGroundFillBoard.png");
 
 	// "blur" the image a little
 	QSvgRenderer renderer2(copperByteArray);
@@ -323,7 +323,7 @@ QImage * GroundPlaneGenerator::generateGroundPlaneAux(const QString & boardSvg, 
 	renderer2.render(&painter, bounds);
 	painter.end();
 
-	image->save("testGroundFillCopper.png");
+	//image->save("testGroundFillCopper.png");
 	return image;
 }
 

@@ -60,9 +60,14 @@ ItemBase * NonConnectorItem::attachedTo() {
 	return m_attachedTo;
 }
 
+bool NonConnectorItem::doNotPaint() {
+	return (m_hidden || m_inactive || !m_paint);
+}
+
+
 void NonConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget ) {
 
-	if (m_hidden || m_inactive || !m_paint) return;
+	if (doNotPaint()) return;
 
 	painter->setOpacity(m_opacity);
 

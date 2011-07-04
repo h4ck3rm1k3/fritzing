@@ -578,10 +578,6 @@ void HtmlInfoView::setUpIcons(ModelPart * modelPart) {
 	QSize size = NoIcon->size();
 
 	if (modelPart != NULL) {
-		if (modelPart->moduleID().endsWith(ModuleIDNames::PerfboardModuleIDName)) {
-			DebugDialog::debug("wtf");
-		}
-
 		pixmap0 = getPixmap(modelPart, ViewIdentifierClass::IconView);
 		pixmap1 = getPixmap(modelPart, ViewIdentifierClass::BreadboardView);
 		pixmap2 = getPixmap(modelPart, ViewIdentifierClass::SchematicView);
@@ -924,6 +920,8 @@ QHash<QString, QString> HtmlInfoView::getPartProperties(ModelPart * modelPart, I
 					properties.insert("svg", paletteItemBase->filename());
 					keys.insert(insertAt++, "svg");
 				}
+				properties.insert("class", itemBase->metaObject()->className());
+				keys.insert(insertAt++, "class");
 			}
 			else {
 				FSvgRenderer * renderer = FSvgRenderer::getByModuleID(modelPart->moduleID(), ViewLayer::Icon);

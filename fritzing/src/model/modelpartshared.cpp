@@ -32,6 +32,25 @@ $Date$
 #include <QHash>
 #include <QMessageBox>
 
+void copyPinAttributes(QDomElement & from, QDomElement & to)
+{
+	to.setAttribute("svgId", from.attribute("svgId"));
+	QString terminalId = from.attribute("terminalId");
+	if (!terminalId.isEmpty()) {
+		to.setAttribute("terminalId", terminalId);
+	}
+	QString hybrid = from.attribute("hybrid");
+	if (!hybrid.isEmpty()) {
+		to.setAttribute("hybrid", hybrid);
+	}
+	QString bendable = from.attribute("bendable");
+	if (!bendable.isEmpty()) {
+		to.setAttribute("bendable", bendable);
+	}
+}
+
+///////////////////////////////////////////////
+
 const QString ModelPartShared::PartNumberPropertyName = "part number";
 
 ModelPartShared::ModelPartShared() {
@@ -541,11 +560,7 @@ void ModelPartShared::flipSMDAnd() {
 				newPs.append(newP);
 				newP.setAttribute("layer", c0String);
 				newP.setAttribute("flipSMD", "true");
-				newP.setAttribute("svgId", p.attribute("svgId"));
-				QString terminalId = p.attribute("terminalId");
-				if (!terminalId.isEmpty()) {
-					newP.setAttribute("terminalId", terminalId);
-				}
+				copyPinAttributes(p, newP);
 			}
 			p = p.nextSiblingElement("p");
 		}
@@ -622,11 +637,7 @@ bool ModelPartShared::checkNeedsCopper1(QDomElement & copper0, QDomElement & cop
 			p = pcb.firstChildElement("p");
 			QDomElement newP = m_domDocument->createElement("p");
 			newP.setAttribute("layer", c1String);
-			newP.setAttribute("svgId", p.attribute("svgId"));
-			QString terminalId = p.attribute("terminalId");
-			if (!terminalId.isEmpty()) {
-				newP.setAttribute("svgId", terminalId);
-			}
+			copyPinAttributes(p, newP);
 			pcb.appendChild(newP);
 			m_needsCopper1 = true;
 		}

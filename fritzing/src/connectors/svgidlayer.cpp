@@ -26,6 +26,11 @@ $Date$
 
 #include "svgidlayer.h"
 
+SvgIdLayer::SvgIdLayer() {
+	m_processed = m_hybrid = m_bendable = false;
+	m_radius = m_strokeWidth = 0;
+}
+
 SvgIdLayer * SvgIdLayer::copyLayer() {
 	SvgIdLayer * toSvgIdLayer = new SvgIdLayer;
 	*toSvgIdLayer = *this;
