@@ -707,40 +707,23 @@ QString GroundPlaneGenerator::makePolySvg(QList<QPolygon> & polygons, qreal res,
 
 void GroundPlaneGenerator::makeConnector(QList<QPolygon> & polygons, qreal res, qreal pixelFactor, const QString & colorString, int minX, int minY, QString & pSvg)
 {
+	//	see whether the standard circular connector will fit somewhere inside a polygon:
+	//	http://stackoverflow.com/questions/4279478/maximum-circle-inside-a-non-convex-polygon
+	//	or maybe this is useful, e.g. treating the circle as a square:  
+	//	http://stackoverflow.com/questions/4833802/check-if-polygon-is-inside-a-polygon
 
-	/*
+	//	code presently uses a version of the Poles of Inaccessibility algorithm:
+
 	static const qreal standardConnectorWidth = .075;		 // inches
-	int lw = qCeil(res * pixelFactor * standardConnectorWidth);
-
-	// first try to fit a circle in the center as a rect
-	// better would be to use medial axis, but for now...
+	qreal targetDiameter = res * pixelFactor * standardConnectorWidth;
+	qreal targetDiameterAnd = targetDiameter * 1.25;
+	qreal targetRadius = targetDiameter / 2;
+	qreal targetRadiusAnd = targetDiameterAnd / 2;
+	qreal targetRadiusAndSquared = targetRadiusAnd * targetRadiusAnd;
 	foreach (QPolygon poly, polygons) {
 		QRect boundingRect = poly.boundingRect(); 
-		if (boundingRect.width() < lw) continue;
-		if (boundingRect.height() < lw) continue;
-
-		QPoint center = boundingRect.center();
-		if (!poly.containsPoint(center, Qt::OddEvenFill)) continue;
-
-		int l = center.x() - (lw / 2);
-		int r = l + lw;
-		int t = center.y() - (lw / 2);
-		int b = t + lw;
-
-		if (!poly.containsPoint(QPoint(l, t), Qt::OddEvenFill)) continue;
-		if (!poly.containsPoint(QPoint(l, b), Qt::OddEvenFill)) continue;
-		if (!poly.containsPoint(QPoint(r, t), Qt::OddEvenFill)) continue;
-		if (!poly.containsPoint(QPoint(r, b), Qt::OddEvenFill)) continue;
-
-		// all 5 points fit, so check line intersections
-
-		QLineF bline(l, b, r, b);
-		QLineF tline(l, t, r, t);
-		QLineF lline(l, t, l, b);
-		QLineF rline(r, t, t, b);
-
-		QList<QLineF> rectLines;
-		rectLines << tline << bline << lline << rline;
+		if (boundingRect.width() < targetDiameterAnd) continue;
+		if (boundingRect.height() < targetDiameterAnd) continue;
 
 		QList<QLineF> polyLines;
 		int count = poly.count();
@@ -749,34 +732,52 @@ void GroundPlaneGenerator::makeConnector(QList<QPolygon> & polygons, qreal res, 
 			polyLines.append(lp);
 		}
 
-		bool intersected = false;
-		foreach (QLineF r, rectLines) {
-			foreach (QLineF p, polyLines) {
-				QPointF intersectionPoint;
-				if (p.intersect(r, &intersectionPoint) == QLineF::BoundedIntersection) {
-					intersected = true;
-					break;
+		int xDivisor = qRound(boundingRect.width() / targetRadius);
+		int yDivisor = qRound(boundingRect.height() / targetRadius);
+
+		qreal dx = (boundingRect.width() - targetDiameterAnd) / xDivisor;
+		qreal dy = (boundingRect.height() - targetDiameterAnd) / yDivisor;
+		qreal x;
+		qreal y = boundingRect.top() + targetRadiusAnd - dy;
+		for (int iy = 0; iy <= yDivisor; iy++) {
+			y += dy;
+			x = boundingRect.left() + targetRadiusAnd - dx;
+			for (int ix = 0; ix <= xDivisor; ix++) {
+				x += dx;
+				if (!poly.containsPoint(QPoint(qRound(x), qRound(y)), Qt::OddEvenFill)) continue;
+
+				bool gotOne = true;
+				foreach (QLineF line, polyLines) {
+					qreal distance, dx, dy;
+					bool atEndpoint;
+					GraphicsUtils::distanceFromLine(x, y, line.p1().x(), line.p1().y(), line.p2().x(), line.p2().y(), 
+													dx, dy, distance, atEndpoint);
+					if (distance <= targetRadiusAndSquared) {
+						gotOne = false;
+						break;
+					}
 				}
+
+				if (!gotOne) continue;
+
+				foreach (QPolygon poly, polygons) {
+					pSvg += makeOnePoly(poly, colorString, "", minX, minY);
+				}
+
+				pSvg += QString("<g id='%1'><circle cx='%2' cy='%3' r='%4' fill='%5' stroke='none' stroke-width='0' /></g>\n")
+					.arg(ConnectorName)
+					.arg(x - minX)
+					.arg(y - minY)
+					.arg(targetRadius)
+					.arg(colorString);
+
+
+				return;
 			}
-			if (intersected) break;
 		}
-
-		if (intersected) continue;
-
-		pSvg += QString("<circle id='%1' cx='%2' cy='%3' r='%4' fill='none' stroke='none' stroke-width='0' />\n")
-			.arg(ConnectorName)
-			.arg(center.x() - minX)
-			.arg(center.y() - minY)
-			.arg(lw / 2.0);
-
-		foreach (QPolygon poly, polygons) {
-			pSvg += makeOnePoly(poly, colorString, "", minX, minY);
-		}
-		return;
 	}
 
-	*/
-
+	// couldn't find anything big enough above, so
 	// try to find a poly with an area that's big enough to click, but not so big as to get in the way
 	int useIndex = -1;
 	QList<qreal> areas;

@@ -43,10 +43,6 @@ $Date$
 //
 //	does single poly need a connector?
 //
-//	see whether the standard circular connector will fit somewhere inside a polygon:
-//	http://stackoverflow.com/questions/4279478/maximum-circle-inside-a-non-convex-polygon
-//	or maybe this is useful, e.g. treating the circle as a square:  
-//	http://stackoverflow.com/questions/4833802/check-if-polygon-is-inside-a-polygon
 
 
 static QString IconSvg;
