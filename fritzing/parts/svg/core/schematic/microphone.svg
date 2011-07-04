@@ -3,11 +3,11 @@
 <svg version="1.1" baseProfile="basic" id="Ebene_1"
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1.533in" height="0.672in"
 	 viewBox="0 0 110.4 48.4" xml:space="preserve">
+<g id="schematic">
 <rect id="connector0pin" x="1.2" y="23.2" fill="none" width="10" height="2"/>
 <rect id="connector1pin" x="99.2" y="23.2" fill="none" width="10" height="2"/>
 <rect id="connector0terminal" x="1.2" y="23.2" fill="none" width="2" height="2"/>
 <rect id="connector1terminal" x="107.2" y="23.2" fill="none" width="2" height="2"/>
-<g id="schematic">
 	<g id="diagram">
 		
 			<circle fill="none" stroke="#000000" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" cx="55.2" cy="24.2" r="23"/>

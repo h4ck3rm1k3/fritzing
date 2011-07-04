@@ -2,6 +2,7 @@
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
 <!-- Generator: Adobe Illustrator 14.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 43363)  -->
 <svg xmlns="http://www.w3.org/2000/svg" width="2.118in" xml:space="preserve" xmlns:xml="http://www.w3.org/XML/1998/namespace" x="0px" version="1.1" y="0px" height="5.129in" viewBox="0 0 152.499 369.359" id="svg2" enable-background="new 0 0 152.499 369.359">
+ <g  id="schematic">
  <rect  width="21.601" y="21.6" fill="none" height="2.16" id="connector0pin"/>
  <rect  width="2.16" y="21.6" fill="none" height="2.16" id="connector0terminal"/>
  <rect  width="21.601" y="43.2" fill="none" height="2.159" id="connector1pin"/>
@@ -34,7 +35,6 @@
  <rect  width="2.16" y="324.001" fill="none" height="2.158" id="connector14terminal"/>
  <rect  width="21.601" y="345.6" fill="none" height="2.16" id="connector15pin"/>
  <rect  width="2.16" y="345.6" fill="none" height="2.16" id="connector15terminal"/>
- <g  id="schematic">
   <rect  width="129.819" x="22.68" y="1.08" fill="none" height="367.199" stroke="#000000" stroke-linejoin="round" stroke-linecap="round" stroke-width="2.4"/>
   <text  font-family="'DroidSans'" id="label" transform="matrix(0 1 -1 0 90.752 168.6799)" font-size="16.92">LCD</text>
   <line  fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="round" y1="22.68" stroke-width="2.4" x1="1.08" y2="22.68" x2="21.6"/>
@@ -78,6 +78,6 @@
   <text  font-family="'DroidSans'" id="label14" transform="matrix(1 0 0 1 28.0806 327.6003)" font-size="9.36">LED+</text>
   <line  fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="round" y1="346.68" stroke-width="2.4" x1="1.08" y2="346.68" x2="21.6"/>
   <text  font-family="'DroidSans'" id="label15" transform="matrix(1 0 0 1 28.0806 349.2)" font-size="9.36">LED-</text>
- </g>
  <rect  width="79.833" x="55.08" y="17.179" fill="none" height="334.27" stroke="#000000" stroke-linejoin="round" stroke-linecap="round" stroke-width="1.4173"/>
+ </g>
 </svg>

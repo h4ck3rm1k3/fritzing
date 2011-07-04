@@ -2,6 +2,7 @@
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
 <!-- Generator: Adobe Illustrator 14.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 43363)  -->
 <svg xmlns="http://www.w3.org/2000/svg" width="3.52943in" xml:space="preserve" xmlns:xml="http://www.w3.org/XML/1998/namespace" x="0px" version="1.1" y="0px" height="5.77571in" viewBox="0 0 254.119 415.851" id="svg" enable-background="new 0.053 0.719 254.119 415.851">
+ <g xmlns="http://www.w3.org/2000/svg" id="schematic">
  <rect xmlns="http://www.w3.org/2000/svg" width="2.101" x="140.791" y="1.695" fill="none" height="10.488" id="connector60pin"/>
  <rect xmlns="http://www.w3.org/2000/svg" width="2.101" x="140.791" y="1.695" fill="none" height="1.995" id="connector60terminal"/>
  <rect xmlns="http://www.w3.org/2000/svg" width="2.099" x="126.034" y="405.107" fill="none" height="10.488" id="connector59pin"/>
@@ -124,7 +125,6 @@
  <rect xmlns="http://www.w3.org/2000/svg" width="2.098" x="98.315" y="1.695" fill="none" height="1.995" id="connector1terminal"/>
  <rect xmlns="http://www.w3.org/2000/svg" width="10.488" x="242.477" y="275.621" fill="none" height="2.1" id="connector0pin"/>
  <rect xmlns="http://www.w3.org/2000/svg" width="1.993" x="250.972" y="275.621" fill="none" height="2.1" id="connector0terminal"/>
- <g xmlns="http://www.w3.org/2000/svg" id="schematic">
   <rect xmlns="http://www.w3.org/2000/svg" width="209.276" x="22.446" y="22.931" fill="none" height="371.425" stroke="#000000" stroke-linejoin="round" stroke-linecap="round" stroke-width="2.415"/>
   <line xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="round" y1="276.837" stroke-width="2.415" x1="252.965" y2="276.837" x2="231.723"/>
   <line xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="round" y1="298.076" stroke-width="2.415" x1="252.965" y2="298.076" x2="231.723"/>

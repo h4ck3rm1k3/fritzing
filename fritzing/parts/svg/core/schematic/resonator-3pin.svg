@@ -4,13 +4,13 @@
 <svg version="1.1" id="Layer_1" xmlns:xml="http://www.w3.org/XML/1998/namespace"
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="89.65px" height="90.65px"
 	 viewBox="0 0 89.65 90.65" enable-background="new 0 0 89.65 90.65" xml:space="preserve">
+<g id="schematic">
 <rect id="connector0pin" x="1.158" y="23.33" fill="none" width="10" height="2"/>
 <rect id="connector2pin" x="78.491" y="23.33" fill="none" width="10" height="2"/>
 <rect id="connector1pin" x="43.658" y="79.252" fill="none" width="2" height="10"/>
 <rect id="connector1terminal" x="43.658" y="87.252" fill="none" width="2" height="2"/>
 <rect id="connector0terminal" x="1.158" y="23.33" fill="none" width="2" height="2"/>
 <rect id="connector2terminal" x="86.491" y="23.33" fill="none" width="2" height="2"/>
-<g id="schematic">
 	<g id="diagram">
 		
 			<line fill="none" stroke="#000000" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" x1="1.158" y1="24.33" x2="28.491" y2="24.33"/>

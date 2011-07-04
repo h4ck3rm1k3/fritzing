@@ -4,6 +4,7 @@
 <svg version="1.1" id="svg" xmlns:xml="http://www.w3.org/XML/1998/namespace"
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="215.352px"
 	 height="457.576px" viewBox="0 0 215.352 457.576" enable-background="new 0 0 215.352 457.576" xml:space="preserve">
+<g id="schematic">
 <rect id="connector29pin" x="1.15" y="74.622" fill="none" width="9.999" height="1.964"/>
 <rect id="connector29terminal" x="1.15" y="74.622" fill="none" width="2" height="1.964"/>
 <rect id="connector25pin" x="85.259" y="0.174" fill="none" width="2" height="9.826"/>
@@ -116,7 +117,6 @@
 <rect id="connector32terminal" x="212.156" y="83.998" fill="none" width="2" height="2"/>
 <rect id="connector30pin" x="1.15" y="61.122" fill="none" width="9.999" height="1.964"/>
 <rect id="connector30terminal" x="1.15" y="61.122" fill="none" width="2" height="1.964"/>
-<g id="schematic">
 	
 		<rect x="22.413" y="22.06" fill="none" stroke="#000000" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" width="170.354" height="414.261"/>
 	<path fill="none" stroke="#000000" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" d="M22.413,61.671"/>

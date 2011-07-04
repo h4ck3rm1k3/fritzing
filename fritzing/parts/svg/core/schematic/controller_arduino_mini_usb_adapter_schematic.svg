@@ -49,7 +49,6 @@
 	
 		<line fill="none" stroke="#000000" stroke-width="1.9517" stroke-linecap="round" stroke-linejoin="round" x1="107.406" y1="235.312" x2="107.406" y2="214.074"/>
 	<text transform="matrix(1 0 0 1 96.876 203.8872)" font-family="DroidSans" font-size="9.9889">GND</text>
-</g>
 <rect id="connector0pin" x="203.113" y="63.557" fill="none" width="10.488" height="2.099"/>
 <rect id="connector0terminal" x="211.607" y="63.557" fill="none" width="1.994" height="2.099"/>
 <rect id="connector1pin" x="203.12" y="84.793" fill="none" width="10.488" height="2.099"/>
@@ -96,4 +95,8 @@
 <rect id="connector21terminal" x="95.586" y="0.976" fill="none" width="2.098" height="1.995"/>
 <rect id="connector22pin" x="1.208" y="63.605" fill="none" width="10.488" height="2.099"/>
 <rect id="connector22terminal" x="1.208" y="63.605" fill="none" width="1.995" height="2.099"/>
+</g>
+
+
+
 </svg>

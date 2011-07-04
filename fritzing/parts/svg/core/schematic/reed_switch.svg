@@ -7,8 +7,10 @@
    width="0.40000001in"
    height="0.69999999in"
    id="svg2">
-  <defs
-     id="defs21" />
+
+
+  <g
+     id="schematic">
   <rect
      width="1.893"
      height="9.783"
@@ -57,8 +59,6 @@
      x="16.128"
      y="62.131001"
      id="connector3terminal" />
-  <g
-     id="schematic">
     <g
        id="g12">
       <line

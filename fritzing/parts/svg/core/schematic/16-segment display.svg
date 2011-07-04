@@ -3,6 +3,7 @@
 <svg version="1.1" baseProfile="basic" id="svg" xmlns:xml="http://www.w3.org/XML/1998/namespace"
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1.8in"
 	 height="3.28in" viewBox="0 0 129.6 236.16" xml:space="preserve">
+<g id="schematic">
 <rect id="connector0pin" x="0.001" y="20.323" fill="none" width="9.962" height="1.992"/>
 <rect id="connector0terminal" x="0.001" y="20.323" fill="none" width="1.992" height="1.992"/>
 <rect id="connector1pin" x="0.001" y="41.523" fill="none" width="9.962" height="1.992"/>
@@ -39,7 +40,6 @@
 <rect id="connector16terminal" x="125.217" y="62.704" fill="none" width="1.991" height="1.993"/>
 <rect id="connector17pin" x="117.245" y="41.522" fill="none" width="9.963" height="1.991"/>
 <rect id="connector17terminal" x="125.217" y="41.522" fill="none" width="1.991" height="1.991"/>
-<g id="schematic">
 	<line fill="none" stroke="#000000" stroke-width="2.4" stroke-linecap="round" x1="21.202" y1="21.315" x2="0.001" y2="21.315"/>
 	<line fill="none" stroke="#000000" stroke-width="2.4" stroke-linecap="round" x1="21.206" y1="42.519" x2="0.005" y2="42.519"/>
 	<line fill="none" stroke="#000000" stroke-width="2.4" stroke-linecap="round" x1="21.206" y1="63.719" x2="0.005" y2="63.719"/>

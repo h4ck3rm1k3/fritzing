@@ -2,6 +2,7 @@
 <svg version="1.2" baseProfile="tiny" id="svg2" xmlns:svg="http://www.w3.org/2000/svg"
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="120.949px"
 	 height="85.883px" viewBox="0 0 120.949 85.883" xml:space="preserve">
+<g id="schematic">
 <rect id="connector0terminal" x="11.695" y="84.796" width="0.208" height="0.208"/>
 <rect id="connector0pin" x="11.076" y="65.499" width="1.375" height="19.75"/>
 <rect id="connector1terminal" x="54.461" y="0.895" width="0.208" height="0.208"/>
@@ -10,7 +11,6 @@
 <rect id="connector2pin" x="53.857" y="65.499" width="1.375" height="19.75"/>
 <rect id="connector3terminal" x="97.258" y="84.796" width="0.209" height="0.208"/>
 <rect id="connector3pin" x="96.641" y="65.499" width="1.375" height="19.75"/>
-<g id="schematic">
 	<g id="g_x5F_b">
 		<g>
 			<path d="M107.875,33.29c0.359,0,0.689,0.193,0.869,0.509l0,0c0.178,0.312,0.174,0.695-0.012,1.005l0,0L98.207,52.443

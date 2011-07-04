@@ -3,6 +3,7 @@
 <svg version="1.1" baseProfile="basic" id="Layer_3"
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="2.985in"
 	 height="5.63in" viewBox="0 0 214.92 405.36" xml:space="preserve">
+<g id="schematic">
 <rect id="connector1pin" x="106.41" y="393.897" fill="none" width="2.099" height="10.488"/>
 <rect id="connector1terminal" x="106.41" y="402.393" fill="none" width="2.099" height="1.992"/>
 <rect id="connector2pin" x="203.165" y="63.556" fill="none" width="10.488" height="2.099"/>
@@ -47,7 +48,6 @@
 <rect id="connector26terminal" x="1.26" y="232.549" fill="none" width="1.995" height="2.099"/>
 <rect id="connector27pin" x="1.26" y="253.786" fill="none" width="10.488" height="2.098"/>
 <rect id="connector27terminal" x="1.26" y="253.786" fill="none" width="1.995" height="2.098"/>
-<g id="schematic">
 	
 		<rect x="22.446" y="22.211" fill="none" stroke="#000000" stroke-width="2.415" stroke-linecap="round" stroke-linejoin="round" width="169.971" height="360.936"/>
 	

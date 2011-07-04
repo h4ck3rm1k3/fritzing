@@ -4,6 +4,8 @@
 <svg version="1.1" id="svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="2.984in" height="5.034in" viewBox="0 0 214.814 362.426" enable-background="new 0 0 214.814 362.426"
 	 xml:space="preserve">
+
+<g id="schematic">
 <g id="graphic">
 	
 		<rect x="22.394" y="22.212" fill="none" stroke="#000000" stroke-width="2.415" stroke-linecap="round" stroke-linejoin="round" width="169.972" height="318.937"/>
@@ -92,7 +94,7 @@
 	<polygon points="3,289.811 7.706,292.527 3,295.245 	"/>
 	<polygon points="7.706,274.66 3,271.939 7.706,269.224 	"/>
 </g>
-<g id="schematic">
+
 	<rect id="connector71pin" x="203.12" y="148.503" fill="none" width="10.487" height="2.1"/>
 	<rect id="connector71terminal" x="211.615" y="148.503" fill="none" width="1.993" height="2.1"/>
 	<rect id="connector60pin" x="203.12" y="169.739" fill="none" width="10.487" height="2.099"/>

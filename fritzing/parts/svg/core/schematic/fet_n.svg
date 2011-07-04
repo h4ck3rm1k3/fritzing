@@ -29,14 +29,14 @@
 		<path d="M38.006,38.297v0.75h2.25v0.75h0.75v0.75h-0.75v0.75h-3.75v-0.75h3v-0.75h-2.25v-0.75h-0.75v-0.75h0.75v-0.75h3.75v0.75
 			H38.006z"/>
 	</g>
-</g>
-
 <rect id="connector0pin" x="3.292" y="34.083" width="8.5" height="1.584"/>
 <rect id="connector1pin" x="32.875" y="1.291" width="1.416" height="4.959"/>
 <rect id="connector1terminal" x="33.256" y="1.336" width="0.75" height="0.799"/>
 <rect id="connector0terminal" x="3.292" y="34.341" width="0.749" height="0.8"/>
 <rect id="connector2pin" x="32.891" y="36.416" width="1.416" height="4.96"/>
 <rect id="connector2terminal" x="33.271" y="40.523" width="0.75" height="0.799"/>
+</g>
+
 
 
 </svg>

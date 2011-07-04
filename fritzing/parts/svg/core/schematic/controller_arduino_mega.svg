@@ -2,6 +2,8 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Tiny//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd">
 <svg version="1.1" baseProfile="tiny" id="svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
 	 x="0px" y="0px" width="2.991in" height="9.191in" viewBox="0 0 215.385 661.804" xml:space="preserve">
+
+<g id="schematic">
 <rect id="connector0pin" x="1.15" y="75.897" fill="none" width="10" height="2"/>
 <rect id="connector0terminal" x="1.15" y="75.897" fill="none" width="2" height="2"/>
 <rect id="connector1pin" x="106.599" y="650.654" fill="none" width="2" height="10"/>
@@ -166,8 +168,6 @@
 <rect id="connector80terminal" x="85.272" y="1.155" fill="none" width="2" height="2"/>
 <rect id="connector81pin" x="85.272" y="1.155" fill="none" width="2" height="10"/>
 <rect id="connector81terminal" x="85.272" y="1.155" fill="none" width="2" height="2"/>
-
-<g id="schematic">
 	<g>
 		
 			<rect x="22.417" y="22.404" fill="none" stroke="#000000" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" width="170.382" height="616.99"/>

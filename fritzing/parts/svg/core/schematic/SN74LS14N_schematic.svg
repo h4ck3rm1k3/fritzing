@@ -60,10 +60,4 @@
   <rect width="30" x="1830" y="2100" fill="none" height="30" stroke-width="0"/>
   <text x="1440" y="2150" style="font-size:130px;text-anchor:end;fill:#000000;stroke:none;font-family:DroidSans" id="label7" font-size="130">4Y</text>
  </g>
- <flowRoot style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:Sans;font-style:normal;font-weight:normal;font-size:40px;line-height:125%;letter-spacing:0px;word-spacing:0px" id="flowRoot3040" xml:space="preserve">
-  <flowRegion id="flowRegion3042">
-   <rect width="59.308479" x="-271.52164" y="-88.036018" height="103.78983" id="rect3044"/>
-  </flowRegion>
-  <flowPara id="flowPara3046"/>
- </flowRoot>
 </svg>

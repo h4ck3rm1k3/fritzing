@@ -1,23 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <svg xmlns="http://www.w3.org/2000/svg" width="164.7" inkscape:version="0.47 r22583" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" version="1.2" height="324.70001" viewBox="0 0 1830 3607.7778" sodipodi:docname="SCH-PICAXE-20M.svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" id="svg3711">
- <metadata  id="metadata3821">
-  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-   <cc:Work xmlns:cc="http://creativecommons.org/ns#" rdf:about="" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-    <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">image/svg+xml</dc:format>
-    <dc:type xmlns:dc="http://purl.org/dc/elements/1.1/" rdf:resource="http://purl.org/dc/dcmitype/StillImage" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
-   </cc:Work>
-  </rdf:RDF>
- </metadata>
- <defs  id="defs3819">
-  <inkscape:perspective xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" inkscape:vp_x="0 : 162.35001 : 1" inkscape:vp_y="0 : 1000 : 0" inkscape:vp_z="164.7 : 162.35001 : 1" sodipodi:type="inkscape:persp3d" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" id="perspective3126" inkscape:persp3d-origin="82.349998 : 108.23334 : 1"/>
-  <inkscape:perspective xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="perspective3823"/>
-  <inkscape:perspective xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="perspective3244"/>
-  <inkscape:perspective xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="perspective5513"/>
-  <inkscape:perspective xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="perspective5513-9"/>
-  <inkscape:perspective xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" inkscape:vp_x="0 : 0.5 : 1" inkscape:vp_y="0 : 1000 : 0" inkscape:vp_z="1 : 0.5 : 1" sodipodi:type="inkscape:persp3d" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" id="perspective3140" inkscape:persp3d-origin="0.5 : 0.33333333 : 1"/>
-  <inkscape:perspective xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" inkscape:vp_x="0 : 0.5 : 1" inkscape:vp_y="0 : 1000 : 0" inkscape:vp_z="1 : 0.5 : 1" sodipodi:type="inkscape:persp3d" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" id="perspective3167" inkscape:persp3d-origin="0.5 : 0.33333333 : 1"/>
- </defs>
- <sodipodi:namedview xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" inkscape:window-height="553" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" inkscape:zoom="0.92700951" inkscape:cx="82.349998" inkscape:cy="162.35001" showgrid="false" inkscape:window-width="800" objecttolerance="10" pagecolor="#ffffff" bordercolor="#666666" inkscape:window-x="-4" inkscape:window-y="-4" inkscape:window-maximized="1" inkscape:current-layer="schematic" id="namedview3817" borderopacity="1" guidetolerance="10" gridtolerance="10"/>
+
  <g  id="schematic" transform="translate(0,277.77466)">
   <rect  width="1200" x="315" y="15" height="3300" style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-linejoin:round" id="rect3714"/>
   <g style="font-size:235px;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;stroke:none;font-family:DroidSans" id="label" font-size="235">
@@ -188,7 +171,9 @@
   <g sodipodi:linespacing="125%" style="font-size:130px;text-align:end;line-height:125%;writing-mode:lr;text-anchor:end;fill:#000000;stroke:none;font-family:DroidSans" id="label18-4" font-size="130">
    <text x="1440" sodipodi:role="line" y="724.24133" id="tspan3184">Out</text>
   </g>
- </g>
+  
+  
+ <g  transform="translate(0,277.77466)">
  <g style="font-size:130px;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans" id="label0-1-2" font-size="130">
   <text x="1604.1121" y="2941.5168" id="tspan5609">12</text>
  </g>
@@ -210,4 +195,8 @@
  <g style="font-size:130px;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans" id="label0-2-9" font-size="130">
   <text x="1595.8597" y="1452.4229" id="tspan5619">17</text>
  </g>
+ </g>
+ </g>
+ 
+
 </svg>

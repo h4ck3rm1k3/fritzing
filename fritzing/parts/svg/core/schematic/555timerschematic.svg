@@ -2,6 +2,7 @@
 <svg version="1.2" baseProfile="tiny" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
 	 x="0px" y="0px" width="1.94in" height="1.94in">
 
+<g id="schematic">
 <rect id="connector0pin" x="74.15" y="163.15" width="2" height="10"/>
 <rect id="connector1pin" x="1.15" y="122.15" width="10" height="2"/>
 <rect id="connector2pin" x="163.15" y="86.15" width="10" height="2"/>
@@ -20,7 +21,6 @@
 <rect id="connector6terminal" x="1.15" y="86.15" width="2" height="2"/>
 <rect id="connector7terminal" x="74.15" y="1.15" width="2" height="2"/>
 
-<g id="schematic">
 		<rect x="32.15" y="32.15" fill="none" stroke="#000000" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" width="110" height="110"/>
 	
 		<line fill="none" stroke="#000000" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" x1="142.15" y1="87.15" x2="173.15" y2="87.15"/>

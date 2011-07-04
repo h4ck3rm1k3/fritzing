@@ -126,7 +126,7 @@
   <polygon points="208.197,563.973 203.49,561.25 208.197,558.535 " xmlns="http://www.w3.org/2000/svg"/>
   <line fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000" stroke-linejoin="round" stroke-linecap="round" y1="395.565" stroke-width="2.415" x1="210.881" y2="395.565" x2="189.639"/>
   <text font-family="DroidSans" xmlns="http://www.w3.org/2000/svg" transform="matrix(1 0 0 1 165.0977 398.4199)" font-size="9.9889">C1</text>
- </g>
+
  <rect width="10.486" x="1.169" y="112.962" fill="none" xmlns="http://www.w3.org/2000/svg" height="2.1" id="connector53pin"/>
  <rect width="1.994" x="1.169" y="112.962" fill="none" xmlns="http://www.w3.org/2000/svg" height="2.1"/>
  <rect width="10.486" x="0.743" y="347.76" fill="none" xmlns="http://www.w3.org/2000/svg" height="2.1" id="connector52pin"/>
@@ -235,4 +235,5 @@
  <rect width="1.992" x="0.81" y="541.061" fill="none" xmlns="http://www.w3.org/2000/svg" height="2.102"/>
  <rect width="2.099" x="105.015" y="749.227" fill="none" xmlns="http://www.w3.org/2000/svg" height="10.485" id="connector0pin"/>
  <rect width="2.099" x="105.015" y="757.722" fill="none" xmlns="http://www.w3.org/2000/svg" height="1.992"/>
+  </g>
 </svg>

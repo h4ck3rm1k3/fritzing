@@ -1,18 +1,15 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
 <svg xmlns="http://www.w3.org/2000/svg" width="0.962792in" xml:space="preserve" xmlns:xml="http://www.w3.org/XML/1998/namespace" x="0px" inkscape:version="0.46" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" sodipodi:version="0.32" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" version="1.1" y="0px" height="0.846625in" viewBox="0 0 69.321 60.957" inkscape:output_extension="org.inkscape.output.svg.inkscape" docname="peltier_sensor.svg" id="svg2" enable-background="new 0 0 69.321 60.957" >
- <sodipodi:namedview xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" objecttolerance="10.0" inkscape:cx="-1.6622692" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" inkscape:pageshadow="2" inkscape:window-height="701" inkscape:cy="55.083087" bordercolor="#666666" id="base" guidetolerance="10.0" inkscape:pageopacity="0.0" inkscape:window-x="20" inkscape:window-y="42" inkscape:current-layer="svg2" pagecolor="#ffffff" showgrid="false" inkscape:zoom="3.41" inkscape:window-width="640" borderopacity="1.0" gridtolerance="10.0" />
- <defs xmlns="http://www.w3.org/2000/svg">
-  <inkscape:perspective xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" inkscape:vp_x="0 : 30.478638 : 1" inkscape:vp_y="0 : 1000 : 0" inkscape:vp_z="69.321533 : 30.478638 : 1" sodipodi:type="inkscape:persp3d" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" id="perspective15" inkscape:persp3d-origin="34.660767 : 20.319092 : 1" />
- </defs>
+
+
  <g xmlns="http://www.w3.org/2000/svg" id="schematic" >
   <line xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000000" stroke-linejoin="round" id="connector0pin" stroke-linecap="round" y1="19.401" stroke-width="2" x1="23.25" y2="19.401" x2="1" />
   <rect xmlns="http://www.w3.org/2000/svg" width="1" y="18.244" fill="none" height="2" id="connector0terminal" />
   <line xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000000" stroke-linejoin="round" id="connector1pin" stroke-linecap="round" y1="39.4" stroke-width="2" x1="23.25" y2="39.4" x2="1" />
   <rect xmlns="http://www.w3.org/2000/svg" width="1" y="38.244" fill="none" height="2" id="connector1terminal" />
   <rect xmlns="http://www.w3.org/2000/svg" width="43.957" x="24.069" y="1" fill="none" height="58.957" stroke="#000000" stroke-linejoin="round" id="box" stroke-linecap="round" stroke-width="2" />
- </g>
- <g xmlns="http://www.w3.org/2000/svg">
+  <g xmlns="http://www.w3.org/2000/svg">
   <line xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000000" stroke-linecap="round" y1="34.863" stroke-width="1.2207" x1="58.935" y2="34.863" x2="32.892" />
   <line xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000000" stroke-linecap="round" y1="34.852" stroke-width="1.2207" x1="45.695" y2="45.979" x2="39.243" />
   <line xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000000" stroke-linecap="round" y1="34.794" stroke-width="1.2207" x1="45.666" y2="46.141" x2="52.453" />
@@ -30,4 +27,6 @@
   <path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000000" stroke-linecap="round" stroke-width="1.2987" d="M50.719,30.916&#xd;&#xa;&#x9;&#x9;c0-1.948,2.337-1.948,2.337-3.896c0-1.948-2.337-1.948-2.337-3.896c0-1.948,2.337-1.948,2.337-3.896" />
   <path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000000" stroke-linecap="round" stroke-width="1.2987" d="M53.056,30.979" />
  </g>
+ </g>
+
 </svg>

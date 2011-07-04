@@ -6,17 +6,17 @@
 	 x="0px" y="0px" width="0.5in" height="0.5in"
 	 id="svg2">
 
+
+
+  <g
+     id="schematic"
+     style="display:inline">
 <rect id="connector0pin" x="3.292" y="34.083" width="8.5" height="1.584"/>
 <rect id="connector1pin" x="32.875" y="1.291" width="1.416" height="4.959"/>
 <rect id="connector1terminal" x="33.256" y="1.336" width="0.75" height="0.799"/>
 <rect id="connector0terminal" x="3.292" y="34.341" width="0.749" height="0.8"/>
 <rect id="connector2pin" x="32.891" y="36.416" width="1.416" height="4.96"/>
 <rect id="connector2terminal" x="33.271" y="40.523" width="0.75" height="0.799"/>
-
-
-  <g
-     id="schematic"
-     style="display:inline">
 
 	<g>
 		<polygon points="3.291,35.879 3.291,33.879 15.123,33.879 15.123,7.796 15.125,6.795 17.124,6.795 17.124,35.879 		"/>

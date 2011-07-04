@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.2"
    baseProfile="tiny"
    x="0px"
@@ -14,51 +9,16 @@
    width=".58in"
    height=".72in"
    id="svg2"
-   
-   
-   
    >
-  <metadata
-     id="metadata3614">
-    <rdf:RDF>
-      <cc:Work
-         rdf:about="">
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-      </cc:Work>
-    </rdf:RDF>
-  </metadata>
-  <defs
-     id="defs3612">
-    <inkscape:perspective
-       
-       
-       
-       
-       
-       id="perspective3616" />
-  </defs>
-  <sodipodi:namedview
+
+
+  <g
+     id="schematic"
+     style="display:inline"
+     transform="translate(18,0)">
      
-     
-     
-     
-     guidetolerance="10.0"
-     gridtolerance="10.0"
-     objecttolerance="10.0"
-     borderopacity="1.0"
-     bordercolor="#666666"
-     pagecolor="#ffffff"
-     id="base"
-     showgrid="false"
-     
-     
-     
-     
-     
-      />
-  <rect
+   <g  transform="translate(-18,0)">
+   <rect
      id="connector1pin"
      x="42.632999"
      y="1.237"
@@ -94,10 +54,9 @@
      y="31.268"
      width="0.68599999"
      height="0.86699998" />
-  <g
-     id="schematic"
-     style="display:inline"
-     transform="translate(18,0)">
+     </g>
+     
+     
     <g
        id="g10"
        transform="translate(-0.464,0)">

@@ -3,7 +3,7 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="215px" height="409.5px" viewBox="0 0 215 409.5" enable-background="new 0 0 215 409.5" xml:space="preserve">
-<g id="svg">
+<g id="schematic">
 	<rect id="connector30pin" x="126.893" y="1.257" fill="none" width="1.412" height="7.063"/>
 	<rect id="connector30terminal" x="126.893" y="1.257" fill="none" width="1.412" height="1.413"/>
 	<rect id="connector29pin" x="105.705" y="399.937" fill="none" width="1.413" height="7.063"/>
@@ -64,7 +64,7 @@
 	<rect id="connector1terminal" x="211.659" y="320.666" fill="none" width="1.414" height="1.414"/>
 	<rect id="connector2pin" x="206.242" y="341.858" fill="none" width="7.064" height="1.413"/>
 	<rect id="connector2terminal" x="211.892" y="341.858" fill="none" width="1.414" height="1.413"/>
-	<g id="schematic">
+	<g id="whatever">
 		
 			<rect x="22.406" y="23.155" fill="none" stroke="#000000" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" width="167.517" height="361.271"/>
 		
@@ -166,6 +166,5 @@
 		<text transform="matrix(1 0 0 1 98.363 375.0947)" font-family="'DroidSans'" font-size="9.9889">GND</text>
 	</g>
 </g>
-<g id="Layer_2">
-</g>
+
 </svg>

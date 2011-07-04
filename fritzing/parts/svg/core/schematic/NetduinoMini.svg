@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" xmlns:xml="http://www.w3.org/XML/1998/namespace" width="2.6871in" x="0px" version="1.2" y="0px" height="3.9333in" viewBox="0 0 193.468 283.199" id="svg">
+ <g  id="schematic">
  <rect  width="21.6" y="21.6" fill="none" height="2.16" id="connector0pin"/>
  <rect  width="2.16" y="21.6" fill="none" height="2.16" id="connector0terminal"/>
  <rect  width="21.6" y="43.2" fill="none" height="2.159" id="connector1pin"/>
@@ -48,8 +49,8 @@
  <rect  width="2.16" x="191.19" y="43.2" fill="none" height="2.159" id="connector22terminal"/>
  <rect  width="21.6" x="169.59" y="21.6" fill="none" height="2.16" id="connector23pin"/>
  <rect  width="2.16" x="191.19" y="21.6" fill="none" height="2.16" id="connector23terminal"/>
- <g  id="schematic">
-  <rect  width="146.91" x="22.68" y="1.08" fill="none" height="280.8" stroke="#000" stroke-linejoin="round" id="rect0" stroke-linecap="round" stroke-width="2.4"/>
+
+<rect  width="146.91" x="22.68" y="1.08" fill="none" height="280.8" stroke="#000" stroke-linejoin="round" id="rect0" stroke-linecap="round" stroke-width="2.4"/>
   <line  fill="none" stroke="#000" stroke-linejoin="round" id="line1" stroke-linecap="round" y1="22.68" x1="1.08" y2="22.68" stroke-width="2.4" x2="21.6"/>
   <line  fill="none" stroke="#000" stroke-linejoin="round" id="line2" stroke-linecap="round" y1="44.28" x1="1.08" y2="44.28" stroke-width="2.4" x2="21.6"/>
   <line  fill="none" stroke="#000" stroke-linejoin="round" id="line3" stroke-linecap="round" y1="65.88" x1="1.08" y2="65.88" stroke-width="2.4" x2="21.6"/>

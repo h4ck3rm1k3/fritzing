@@ -3,13 +3,13 @@
 <svg version="1.1" id="svg" xmlns:xml="http://www.w3.org/XML/1998/namespace"
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="0.89in"
 	 height="1.78in" viewBox="0 0 64.08 128.16" enable-background="new 0 0 64.08 128.16" xml:space="preserve">
+<g id="schematic">
 <rect id="connector2pin" x="20.454" y="1.374" width="1.88" height="9.691"/>
 <rect id="connector2terminal" x="20.965" y="1.407" width="0.856" height="0.682"/>
 <rect id="connector0pin" x="51.956" y="62.753" width="9.693" height="1.877"/>
 <rect id="connector0terminal" x="61.575" y="63.297" width="0.684" height="0.858"/>
 <rect id="connector1pin" x="20.456" y="116.415" width="1.88" height="9.693"/>
 <rect id="connector1terminal" x="21" y="126.103" width="0.857" height="0.684"/>
-<g id="schematic">
 	
 		<rect x="1.821" y="21.397" fill="none" stroke="#000000" stroke-width="2.4" stroke-linecap="round" width="39.826" height="84.77"/>
 	
