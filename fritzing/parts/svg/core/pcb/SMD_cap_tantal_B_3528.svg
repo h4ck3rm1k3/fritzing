@@ -8,10 +8,8 @@
    width="19.133858"
    height="12.047244"
    id="svg2">
-  <defs
-     id="defs4" />
-  <g
-     id="layer1">
+
+
     <g
        id="copper1">
       <rect
@@ -50,5 +48,5 @@
          id="rect3606"
          style="opacity:0.92000002;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0" />
     </g>
-  </g>
+
 </svg>

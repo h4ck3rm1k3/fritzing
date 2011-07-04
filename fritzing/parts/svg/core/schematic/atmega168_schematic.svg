@@ -3,7 +3,7 @@
 <!-- This file was created through a template.-->
 <svg xmlns="http://www.w3.org/2000/svg" width="2.42083in"  xmlns:xml="http://www.w3.org/XML/1998/namespace" x="0px" inkscape:version="0.46" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" sodipodi:version="0.32" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" version="1.2" y="0px" height="5.14306in" viewBox="0 0 174.3 370.3" baseProfile="tiny" inkscape:output_extension="org.inkscape.output.svg.inkscape" sodipodi:docname="atmega168_schematic.svg" id="Layer_1" >
 
- <g d="schematic" >
+ <g id="schematic" >
 <rect width="10" x="1.15" y="15.15" fill="none" height="2" id="connector0pin" />
  <rect width="10" x="1.15" y="41.15" fill="none" height="2" id="connector1pin" />
  <rect width="10" x="1.15" y="67.15" fill="none" height="2" id="connector2pin" />
