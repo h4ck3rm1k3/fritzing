@@ -757,6 +757,13 @@
           </iconView>
         </views>
       </instance>
+      <instance moduleIdRef="GroundPlaneModuleID" modelIndex="59" path=":/resources/parts/core/groundplane.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"/>
+          </iconView>
+        </views>
+      </instance>
 
       <instance moduleIdRef="__spacer__" modelIndex="3" path="Tools">
         <views>
