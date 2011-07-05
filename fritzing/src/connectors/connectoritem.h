@@ -110,6 +110,7 @@ public:
 	bool isBendable();
 	void setBigDot(bool);
 	bool isBigDot();
+	bool isDraggingLeg();
 	ConnectorItem * findConnectorUnder(bool useTerminalPoint, bool allowAlready, const QList<ConnectorItem *> & exclude, bool displayDragTooltip, ConnectorItem * other);
 	ConnectorItem * releaseDrag();		
 	void setLegLine(QLineF line);
@@ -154,6 +155,7 @@ protected:
 	QPointF m_originalPoint;
 	QGraphicsLineItem * m_lineItem;
 	QLineF m_oldLine;
+	bool m_draggingLeg;
 	
 protected:	
 	static QList<ConnectorItem *>  m_equalPotentialDisplayItems;

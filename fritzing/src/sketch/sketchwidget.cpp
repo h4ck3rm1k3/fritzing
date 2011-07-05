@@ -1907,7 +1907,7 @@ void SketchWidget::mousePressEvent(QMouseEvent *event)
 	}
 
 	ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(wasItem);
-	if (connectorItem != NULL && connectorItem->isBendable() && (event->button() == Qt::LeftButton)) {
+	if (connectorItem != NULL && connectorItem->isDraggingLeg()) {
 		return;
 	}
 

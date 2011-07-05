@@ -95,7 +95,7 @@ bool wireLessThan(ConnectorItem * c1, ConnectorItem * c2)
 ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 	: NonConnectorItem(attachedTo)
 {
-	m_bendable = m_bigDot = m_hybrid = false;
+	m_draggingLeg = m_bendable = m_bigDot = m_hybrid = false;
 	m_lineItem = NULL;
 	m_marked = false;
 	m_checkedEffectively = false;
@@ -417,10 +417,17 @@ void ConnectorItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 	//DebugDialog::debug("in connectorItem mouseReleaseEvent");
 	clearEqualPotentialDisplay();
 
-	if (m_bendable) {
+	if (m_bendable && m_draggingLeg) {
+		m_draggingLeg = false;
 		QGraphicsRectItem::mouseReleaseEvent(event);
 		ConnectorItem * to = releaseDrag();
 		InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+		if (to) {
+			// center endpoint in the target connectorItem
+			QPointF p = to->sceneAdjustedTerminalPoint(NULL);
+			QPointF q = m_attachedTo->mapFromScene(p) - m_originalPoint;
+			m_lineItem->setLine(0, 0, q.x(), q.y());
+		}
 		if (infoGraphicsView != NULL) {
 			infoGraphicsView->prepLegChange(this, m_oldLine, m_lineItem->line(), to);
 		}
@@ -446,7 +453,7 @@ void ConnectorItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
 
 void ConnectorItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 
-	if (m_bendable) {
+	if (m_bendable && m_draggingLeg) {
 		QGraphicsRectItem::mouseMoveEvent(event);
 
 		QPointF p = this->mapToParent(adjustedTerminalPoint());
@@ -473,6 +480,8 @@ void ConnectorItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 }
 
 void ConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
+	m_draggingLeg = false;
+
 	if (event->button() != Qt::LeftButton) {
 		QGraphicsRectItem::mousePressEvent(event);
 		return;
@@ -497,11 +506,15 @@ void ConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 	foreach (ConnectorItem * connectorItem, m_equalPotentialDisplayItems) {
 		connectorItem->showEqualPotential(true);
 	}
+	
 
 	if (m_bendable) {
-		m_oldLine = m_lineItem->line();
-		QGraphicsRectItem::mousePressEvent(event);
-		return;
+		if (!(event->modifiers() & (Qt::ControlModifier | Qt::AltModifier | Qt::MetaModifier))) {
+			m_draggingLeg = true;
+			m_oldLine = m_lineItem->line();
+			QGraphicsRectItem::mousePressEvent(event);
+			return;
+		}
 	}
 
 
@@ -519,6 +532,8 @@ int ConnectorItem::connectionsCount() {
 
 
 void ConnectorItem::attachedMoved() {
+	if (m_bendable) return;
+
 	//DebugDialog::debug("attached moved");
 	foreach (ConnectorItem * toConnector, m_connectedTo) {
 		ItemBase * itemBase = toConnector->attachedTo();
@@ -619,14 +634,27 @@ bool ConnectorItem::isHybrid() {
 
 void ConnectorItem::setBendable(QColor color, qreal strokeWidth) {
 	// assumes this is only called once, when the connector is first set up
+	// call this only after setRect and setTerminalPoint have been called
 
 	m_bendable = true;
 	setFlag(QGraphicsItem::ItemIsMovable, true);
 	setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
 	setAcceptedMouseButtons(Qt::LeftButton);
 
-	QRectF r = this->rect();
-	QPointF p = this->pos();
+	QRectF r = rect();
+	QPointF newPos = this->pos() + r.topLeft();
+	setRect(0, 0, r.width(), r.height());
+
+	qreal newx = m_terminalPoint.x() - (strokeWidth / 2);
+	if (newx < 0) newx = 0;
+	if (newx > r.width()) newx = r.width();
+	qreal newy = m_terminalPoint.y() - (strokeWidth / 2);
+	if (newy < 0) newy = 0;
+	if (newy > r.height()) newy = r.height();
+	setPos(newPos.x() + newx, newPos.y() + newy);
+	setRect(0, 0, strokeWidth, strokeWidth);
+	m_terminalPoint.setX(strokeWidth / 2);
+	m_terminalPoint.setY(strokeWidth / 2);
 
 	m_originalPoint = this->mapToParent(adjustedTerminalPoint());
 	m_lineItem = new QGraphicsLineItem(parentItem());
@@ -1586,4 +1614,8 @@ void ConnectorItem::setLegLine(QLineF line)
 	QPointF newPos = m_lineItem->pos() + line.p2() - m_terminalPoint;
 	setPos(newPos);
 	setRect(0, 0, r.width(), r.height());
+}
+
+bool ConnectorItem::isDraggingLeg() {
+	return m_draggingLeg;
 }
