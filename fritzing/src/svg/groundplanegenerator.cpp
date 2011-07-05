@@ -34,12 +34,12 @@ $Date$
 #include "../utils/textutils.h"
 #include "../items/wire.h"
 
-
 #include <QPainter>
 #include <QSvgRenderer>
 #include <QDate>
 #include <QTextStream>
 #include <qmath.h>
+#include <limits>
 
 static const int MILS = 5;			// operate on a 5 mil scale
 static const int THRESHOLD = 192;
