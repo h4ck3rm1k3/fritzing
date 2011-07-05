@@ -1146,6 +1146,32 @@ void SketchWidget::changeWire(long fromID, QLineF line, QPointF pos, bool update
 	}
 }
 
+void SketchWidget::changeLeg(long fromID, const QString & fromConnectorID, QLineF line)
+{
+	DebugDialog::debug(QString("change leg %1 %2; %3,%4,%5,%6")
+			.arg(fromID)
+			.arg(fromConnectorID)
+			.arg(line.x1())
+			.arg(line.y1())
+			.arg(line.x2())
+			.arg(line.y2()) );
+
+	ItemBase * fromItem = findItem(fromID);
+	if (fromItem == NULL) {
+		DebugDialog::debug("change leg exit 1");
+		return;
+	}
+
+	ConnectorItem * fromConnectorItem = findConnectorItem(fromItem, fromConnectorID, ViewLayer::specFromID(fromItem->viewLayerID()));
+	if (fromConnectorItem == NULL) {
+		DebugDialog::debug("change leg exit 2");
+		return;
+	}
+
+	fromConnectorItem->setLegLine(line);
+	//fromItem->updateConnections(fromConnectorItem);
+}
+
 void SketchWidget::selectItem(long id, bool state, bool updateInfoView, bool doEmit) {
 	this->clearHoldingSelectItem();
 	ItemBase * item = findItem(id);
@@ -2880,6 +2906,79 @@ void SketchWidget::sketchWidget_itemSelected(long id, bool state) {
 	}
 }
 
+void SketchWidget::prepLegChange(ConnectorItem * from,  QLineF oldLine, QLineF newLine, ConnectorItem * to) 
+{
+	this->clearHoldingSelectItem();
+	this->m_moveEventCount = 0;  // clear this so an extra MoveItemCommand isn't posted
+
+	QUndoCommand * parentCommand = new QUndoCommand();
+
+	long fromID = from->attachedToID();
+
+	QString fromConnectorID = from->connectorSharedID();
+
+	long toID = -1;
+	QString toConnectorID;
+	if (to != NULL) {
+		toID = to->attachedToID();
+		toConnectorID = to->connectorSharedID();
+	}
+
+	new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
+
+	new ChangeLegCommand(this, fromID, fromConnectorID, oldLine, newLine, parentCommand);
+
+
+	QList< QPointer<ConnectorItem> > former = from->connectedToItems();
+
+	QString prefix;
+	QString suffix;
+	if (to == NULL) {
+		if (former.count() > 0) {
+			prefix = tr("Disconnect");
+			suffix = tr("from %1").arg(former.at(0)->attachedToInstanceTitle());
+		}
+		else {
+			prefix = tr("Move leg of");
+		}
+	}
+	else {
+		prefix = tr("Connect");
+		suffix = tr("to %1").arg(to->attachedToInstanceTitle());
+	}
+
+	parentCommand->setText(QObject::tr("%1 %2,%3 %4")
+			.arg(prefix)
+			.arg(from->attachedTo()->instanceTitle())
+			.arg(from->connectorSharedName())
+			.arg(suffix) 
+			);
+
+
+		if (former.count() > 0) {
+			QList<ConnectorItem *> connectorItems;
+			connectorItems.append(from);
+			ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::TraceRatsnestFlags);
+
+			foreach (ConnectorItem * formerConnectorItem, former) {
+				extendChangeConnectionCommand(BaseCommand::CrossView, from, formerConnectorItem, 
+					ViewLayer::specFromID(from->attachedToViewLayerID()),
+					false, parentCommand);
+				from->tempRemove(formerConnectorItem, false);
+				formerConnectorItem->tempRemove(from, false);
+			}
+
+		}
+		if (to != NULL) {
+			extendChangeConnectionCommand(BaseCommand::CrossView, from, to, ViewLayer::specFromID(from->attachedToViewLayerID()), true, parentCommand);
+		}
+
+
+
+	new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
+	m_undoStack->push(parentCommand);
+
+}
 
 void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, QPointF oldPos, QPointF newPos, ConnectorItem * from, ConnectorItem * to) {
 	this->clearHoldingSelectItem();
@@ -2969,7 +3068,7 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 	}
 	else {
 		prefix = tr("Connect");
-		suffix = tr("to %1").arg(to->attachedTo()->title());
+		suffix = tr("to %1").arg(to->attachedToInstanceTitle());
 	}
 
 	parentCommand->setText(QObject::tr("%1 %2 %3").arg(prefix).arg(wire->title()).arg(suffix) );

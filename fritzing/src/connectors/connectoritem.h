@@ -111,7 +111,9 @@ public:
 	void setBigDot(bool);
 	bool isBigDot();
 	ConnectorItem * findConnectorUnder(bool useTerminalPoint, bool allowAlready, const QList<ConnectorItem *> & exclude, bool displayDragTooltip, ConnectorItem * other);
-	ConnectorItem * releaseDrag();	
+	ConnectorItem * releaseDrag();		
+	void setLegLine(QLineF line);
+
 
 protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
@@ -151,6 +153,7 @@ protected:
 	bool m_bigDot;
 	QPointF m_originalPoint;
 	QGraphicsLineItem * m_lineItem;
+	QLineF m_oldLine;
 	
 protected:	
 	static QList<ConnectorItem *>  m_equalPotentialDisplayItems;

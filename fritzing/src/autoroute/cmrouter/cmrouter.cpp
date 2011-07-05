@@ -104,6 +104,7 @@ $Date$
 #include "tile.h"
 
 #include <qmath.h>
+#include <limits>
 #include <QApplication>
 #include <QMessageBox> 
 #include <QElapsedTimer>

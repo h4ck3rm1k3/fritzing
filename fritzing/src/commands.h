@@ -270,6 +270,24 @@ protected:
     bool m_updateConnections;
 };
 
+class ChangeLegCommand : public BaseCommand
+{
+public:
+    ChangeLegCommand(class SketchWidget *sketchWidget, long fromID, const QString & fromConnectorID,
+    					QLineF oldLine, QLineF newLine,  QUndoCommand *parent);
+    void undo();
+    void redo();
+
+protected:
+	QString getParamString() const;
+
+protected:
+	QString m_fromConnectorID;
+    long m_fromID;
+    QLineF m_newLine;
+    QLineF m_oldLine;
+};
+
 class ChangeLayerCommand : public BaseCommand
 {
 public:

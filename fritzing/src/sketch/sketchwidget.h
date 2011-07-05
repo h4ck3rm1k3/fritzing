@@ -90,6 +90,7 @@ public:
     void selectItem(long id, bool state, bool updateInfoView, bool doEmit);
     void selectDeselectAllCommand(bool state);
     void changeWire(long fromID, QLineF line, QPointF pos, bool updateConnections, bool updateRatsnest);   
+    void changeLeg(long fromID, const QString & connectorID, QLineF line);   
     void cut();
     void copy();
     void setPaletteModel(PaletteModel *);
@@ -254,6 +255,8 @@ public:
 	void changeBus(ItemBase *, bool connec, const QString & oldBus, const QString & newBus, QList<ConnectorItem *> &, const QString & message);
 	const QString & filenameIf();
 	void setItemDropOffset(long id, QPointF offset);
+	void prepLegChange(ConnectorItem * from,  QLineF oldLine, QLineF newLine, ConnectorItem * to);
+
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

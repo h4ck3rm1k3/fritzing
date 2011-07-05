@@ -94,6 +94,7 @@ public:
 	virtual void changeBus(ItemBase *, bool connec, const QString & oldBust, const QString & newBus, QList<ConnectorItem *> &, const QString & message);
 	virtual const QString & filenameIf();
 	virtual QString generateCopperFillUnit(ItemBase * itemBase, QPointF whereToStart);
+	virtual void prepLegChange(ConnectorItem * from,  QLineF oldLine, QLineF newLine, ConnectorItem * to);
 
 
 public slots:

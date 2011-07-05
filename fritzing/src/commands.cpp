@@ -447,6 +447,39 @@ QString ChangeWireCommand::getParamString() const {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+ChangeLegCommand::ChangeLegCommand(SketchWidget* sketchWidget, long fromID, const QString & fromConnectorID,
+									 QLineF oldLine, QLineF newLine, QUndoCommand *parent)
+    : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
+{
+    m_fromID = fromID;
+	m_oldLine = oldLine;
+    m_newLine = newLine;
+    m_fromConnectorID = fromConnectorID;
+}
+
+void ChangeLegCommand::undo()
+{
+    m_sketchWidget->changeLeg(m_fromID, m_fromConnectorID, m_oldLine);
+}
+
+void ChangeLegCommand::redo()
+{
+    m_sketchWidget->changeLeg(m_fromID, m_fromConnectorID, m_newLine);
+}
+
+QString ChangeLegCommand::getParamString() const {
+	return QString("ChangeLegCommand ") 
+		+ BaseCommand::getParamString() + 
+		QString(" fromid:%1 fromc:%2 oldr:%3,%4,%5,%6 newr:%7,%8,%9,%10")
+		.arg(m_fromID)
+		.arg(m_fromConnectorID)
+		.arg(m_oldLine.x1()).arg(m_oldLine.y1()).arg(m_oldLine.x2()).arg(m_oldLine.y2())		
+		.arg(m_newLine.x1()).arg(m_newLine.y1()).arg(m_newLine.x2()).arg(m_newLine.y2())		
+		;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 ChangeLayerCommand::ChangeLayerCommand(SketchWidget *sketchWidget, long fromID,
 									qreal oldZ, qreal newZ, 
 									ViewLayer::ViewLayerID oldLayer, ViewLayer::ViewLayerID newLayer,

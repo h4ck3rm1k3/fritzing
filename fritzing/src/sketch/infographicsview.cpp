@@ -291,3 +291,10 @@ QString InfoGraphicsView::generateCopperFillUnit(ItemBase * itemBase, QPointF wh
 	return "";
 }
 
+void InfoGraphicsView::prepLegChange(ConnectorItem * from,  QLineF oldLine, QLineF newLine, ConnectorItem * to) 
+{
+	Q_UNUSED(from);	
+	Q_UNUSED(oldLine);	
+	Q_UNUSED(newLine);	
+	Q_UNUSED(to);
+}

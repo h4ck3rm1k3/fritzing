@@ -420,6 +420,10 @@ void ConnectorItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 	if (m_bendable) {
 		QGraphicsRectItem::mouseReleaseEvent(event);
 		ConnectorItem * to = releaseDrag();
+		InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+		if (infoGraphicsView != NULL) {
+			infoGraphicsView->prepLegChange(this, m_oldLine, m_lineItem->line(), to);
+		}
 		return;
 	}
 
@@ -445,9 +449,9 @@ void ConnectorItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 	if (m_bendable) {
 		QGraphicsRectItem::mouseMoveEvent(event);
 
-		QPointF p = this->mapToParent(rect().topLeft() + m_terminalPoint);
+		QPointF p = this->mapToParent(adjustedTerminalPoint());
 		if (p != m_originalPoint) {
-			m_lineItem->setLine(m_originalPoint.x(), m_originalPoint.y(), p.x(), p.y());
+			m_lineItem->setLine(0, 0, p.x() - m_originalPoint.x(), p.y() - m_originalPoint.y());
 			m_lineItem->setVisible(true);
 		}
 		else {
@@ -495,6 +499,7 @@ void ConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 	}
 
 	if (m_bendable) {
+		m_oldLine = m_lineItem->line();
 		QGraphicsRectItem::mousePressEvent(event);
 		return;
 	}
@@ -586,7 +591,7 @@ QPointF ConnectorItem::sceneAdjustedTerminalPoint(ConnectorItem * connectee) {
 		}
 	}
 
-	return this->mapToScene(m_terminalPoint + this->rect().topLeft());
+	return this->mapToScene(adjustedTerminalPoint());
 }
 
 bool ConnectorItem::connectedTo(ConnectorItem * connectorItem) {
@@ -613,10 +618,20 @@ bool ConnectorItem::isHybrid() {
 }
 
 void ConnectorItem::setBendable(QColor color, qreal strokeWidth) {
+	// assumes this is only called once, when the connector is first set up
+
 	m_bendable = true;
 	setFlag(QGraphicsItem::ItemIsMovable, true);
-	m_originalPoint = this->mapToParent(rect().topLeft() + m_terminalPoint);
+	setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
+	setAcceptedMouseButtons(Qt::LeftButton);
+
+	QRectF r = this->rect();
+	QPointF p = this->pos();
+
+	m_originalPoint = this->mapToParent(adjustedTerminalPoint());
 	m_lineItem = new QGraphicsLineItem(parentItem());
+	m_lineItem->setPos(m_originalPoint);
+	m_lineItem->setLine(0, 0, 0, 0);
 	m_lineItem->setVisible(false);
 	m_lineItem->setFlag(QGraphicsItem::ItemIsSelectable, false);
 	m_lineItem->setFlag(QGraphicsItem::ItemIsMovable, false);
@@ -626,8 +641,7 @@ void ConnectorItem::setBendable(QColor color, qreal strokeWidth) {
 	pen.setCapStyle(Qt::RoundCap);
 	pen.setWidthF(strokeWidth);
 	m_lineItem->setPen(pen);
-	setAcceptedMouseButtons(Qt::LeftButton);
-	setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
+
 }
 
 bool ConnectorItem::isBendable() {
@@ -1559,4 +1573,17 @@ ConnectorItem * ConnectorItem::releaseDrag() {
 	}
 	attachedTo()->clearConnectorHover();
 	return result;
+}
+
+void ConnectorItem::setLegLine(QLineF line) 
+{
+	if (!m_bendable) return;
+	if (m_lineItem == NULL) return;
+
+	m_lineItem->setLine(line);
+
+	QRectF r = rect();
+	QPointF newPos = m_lineItem->pos() + line.p2() - m_terminalPoint;
+	setPos(newPos);
+	setRect(0, 0, r.width(), r.height());
 }
