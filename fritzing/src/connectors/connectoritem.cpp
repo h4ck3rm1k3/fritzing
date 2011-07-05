@@ -33,6 +33,7 @@ $Date$
 #include <QMutex>
 #include <QMutexLocker>
 #include <QSet>
+#include <QTooltip>
 
 #include "../sketch/infographicsview.h"
 #include "../debugdialog.h"
@@ -52,6 +53,42 @@ QList<ConnectorItem *> ConnectorItem::m_equalPotentialDisplayItems;
 const QList<ConnectorItem *> ConnectorItem::emptyConnectorItemList;
 
 static double MAX_DOUBLE = std::numeric_limits<double>::max();
+
+bool wireLessThan(ConnectorItem * c1, ConnectorItem * c2)
+{
+	if (c1->connectorType() == c2->connectorType()) {
+		// if they're the same type return the topmost
+		return c1->zValue() > c2->zValue();
+	}
+	if (c1->connectorType() == Connector::Female) {
+		// choose the female first
+		return true;
+	}
+	if (c2->connectorType() == Connector::Female) {
+		// choose the female first
+		return false;
+	}
+	if (c1->connectorType() == Connector::Male) {
+		// choose the male first
+		return true;
+	}
+	if (c2->connectorType() == Connector::Male) {
+		// choose the male first
+		return false;
+	}
+	if (c1->connectorType() == Connector::Pad) {
+		// choose the pad first
+		return true;
+	}
+	if (c2->connectorType() == Connector::Pad) {
+		// choose the pad first
+		return false;
+	}
+
+	// Connector::Wire last
+	return c1->zValue() > c2->zValue();
+
+}
 
 /////////////////////////////////////////////////////////
 
@@ -382,6 +419,8 @@ void ConnectorItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 
 	if (m_bendable) {
 		QGraphicsRectItem::mouseReleaseEvent(event);
+		ConnectorItem * to = releaseDrag();
+		return;
 	}
 
 	if (this->m_attachedTo != NULL && m_attachedTo->acceptsMouseReleaseConnectorEvent(this, event)) {
@@ -414,6 +453,9 @@ void ConnectorItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 		else {
 			m_lineItem->setVisible(false);
 		}
+
+		QList<ConnectorItem *> exclude;
+		findConnectorUnder(true, true, exclude, true, this);
 
 		return;
 	}
@@ -570,31 +612,22 @@ bool ConnectorItem::isHybrid() {
 	return m_hybrid;
 }
 
-void ConnectorItem::setBendable(bool b, QColor color, qreal strokeWidth) {
-	m_bendable = b;
-	setFlag(QGraphicsItem::ItemIsMovable, b);
-	Qt::MouseButtons mb = Qt::NoButton;
-	if (b) {
-		m_originalPoint = this->mapToParent(rect().topLeft() + m_terminalPoint);
-		m_lineItem = new QGraphicsLineItem(parentItem());
-		m_lineItem->setVisible(false);
-		m_lineItem->setFlag(QGraphicsItem::ItemIsSelectable, false);
-		m_lineItem->setFlag(QGraphicsItem::ItemIsMovable, false);
-		m_lineItem->setAcceptedMouseButtons(Qt::NoButton);
-		m_lineItem->setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
-		QPen pen(color);
-		pen.setCapStyle(Qt::RoundCap);
-		pen.setWidthF(strokeWidth);
-		m_lineItem->setPen(pen);
-		mb = Qt::LeftButton;
-	}
-	else {
-		delete m_lineItem;
-		m_lineItem = NULL;
-	}
-	setAcceptedMouseButtons(mb);
-	setFlag(QGraphicsItem::ItemSendsGeometryChanges, b);
-
+void ConnectorItem::setBendable(QColor color, qreal strokeWidth) {
+	m_bendable = true;
+	setFlag(QGraphicsItem::ItemIsMovable, true);
+	m_originalPoint = this->mapToParent(rect().topLeft() + m_terminalPoint);
+	m_lineItem = new QGraphicsLineItem(parentItem());
+	m_lineItem->setVisible(false);
+	m_lineItem->setFlag(QGraphicsItem::ItemIsSelectable, false);
+	m_lineItem->setFlag(QGraphicsItem::ItemIsMovable, false);
+	m_lineItem->setAcceptedMouseButtons(Qt::NoButton);
+	m_lineItem->setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
+	QPen pen(color);
+	pen.setCapStyle(Qt::RoundCap);
+	pen.setWidthF(strokeWidth);
+	m_lineItem->setPen(pen);
+	setAcceptedMouseButtons(Qt::LeftButton);
+	setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
 }
 
 bool ConnectorItem::isBendable() {
@@ -1408,4 +1441,122 @@ void ConnectorItem::debugInfo(const QString & msg)
 qreal ConnectorItem::minDimension() {
 	QRectF r = this->boundingRect();
 	return qMin(r.width(), r.height());
+}
+
+ConnectorItem * ConnectorItem::findConnectorUnder(bool useTerminalPoint, bool allowAlready, const QList<ConnectorItem *> & exclude, bool displayDragTooltip, ConnectorItem * other)
+{
+	QList<QGraphicsItem *> items = useTerminalPoint
+		? this->scene()->items(this->sceneAdjustedTerminalPoint(NULL))
+		: this->scene()->items(mapToScene(this->rect()));
+	QList<ConnectorItem *> candidates;
+	// for the moment, take the topmost ConnectorItem that doesn't belong to me
+	foreach (QGraphicsItem * item, items) {
+		ConnectorItem * connectorItemUnder = dynamic_cast<ConnectorItem *>(item);
+		if (connectorItemUnder == NULL) continue;
+		if (connectorItemUnder->connector() == NULL) continue;			// shouldn't happen
+		if (attachedTo()->childItems().contains(connectorItemUnder)) continue;		// don't use own connectors
+		if (!this->connectionIsAllowed(connectorItemUnder)) {
+			continue;
+		}
+		if (!allowAlready) {
+			if (connectorItemUnder->connectedToItems().contains(this)) {
+				continue;		// already connected
+			}
+		}
+		if (exclude.contains(connectorItemUnder)) continue;
+
+
+		candidates.append(connectorItemUnder);
+	}
+
+	ConnectorItem * candidate = NULL;
+	if (candidates.count() == 1) {
+		candidate = candidates[0];
+	}
+	else if (candidates.count() > 0) {
+		qSort(candidates.begin(), candidates.end(), wireLessThan);
+		candidate = candidates[0];
+	}
+
+	if (m_overConnectorItem != NULL && candidate != m_overConnectorItem) {
+		m_overConnectorItem->connectorHover(NULL, false);
+	}
+	if (candidate != NULL && candidate != m_overConnectorItem) {
+		candidate->connectorHover(NULL, true);
+	}
+
+	m_overConnectorItem = candidate;
+
+	if (candidate == NULL) {
+		if (this->connectorHovering()) {
+			this->connectorHover(NULL, false);
+		}
+	}
+	else {
+		if (!this->connectorHovering()) {
+			this->connectorHover(NULL, true);
+		}
+	}
+
+	if (displayDragTooltip) {
+		displayTooltip(m_overConnectorItem, other);
+	}
+
+	return m_overConnectorItem;
+}
+
+void ConnectorItem::displayTooltip(ConnectorItem * ci, ConnectorItem * other)
+{
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView == NULL) return;
+
+	// Activate tooltip for destination connector. based on a patch submitted by bryant.mairs
+	QString text;
+	if (ci && ci->connectorHovering()) {
+		if (other) {
+			text = QString("%1: %2\n%3: %4")
+						.arg(other->attachedToInstanceTitle())
+						.arg(other->connectorSharedName())
+						.arg(ci->attachedToInstanceTitle())
+						.arg(ci->connectorSharedName());
+		}
+		else {
+			text = QString("%1: %2").arg(ci->attachedToInstanceTitle()).arg(ci->connectorSharedName());
+		}
+	}
+	else {
+		if (other) {
+			text = QString("%1: %2")
+				.arg(other->attachedToInstanceTitle())
+				.arg(other->connectorSharedName());
+		}
+	}
+    // Now use Qt's tooltip functionality to display our tooltip.
+    // The tooltip text is first cleared as only a change in tooltip
+    // text will update its position.
+    // A rect is generated to smooth out position updates.
+    // NOTE: Increasing this rect will cause the tooltip to disappear
+    // and not reappear until another pixel move after the move that
+    // disabled it.
+    QPoint sp = QCursor::pos();
+    QToolTip::showText(sp, "", infoGraphicsView);
+	if (!text.isEmpty()) {
+		QPoint q = infoGraphicsView->mapFromGlobal(sp);
+		QRect r(q.x(), q.y(), 1, 1);
+		QToolTip::showText(sp, text, infoGraphicsView, r);
+	}
+}
+
+ConnectorItem * ConnectorItem::releaseDrag() {
+	ConnectorItem * result = m_overConnectorItem;
+	if (m_overConnectorItem != NULL) {
+		m_overConnectorItem->connectorHover(NULL, false);
+
+		// clean up
+		setOverConnectorItem(NULL);
+		clearConnectorHover();
+		restoreColor(false, 0, true);
+	}
+	attachedTo()->clearConnectorHover();
+	return result;
 }

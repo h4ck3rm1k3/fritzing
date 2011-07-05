@@ -406,49 +406,11 @@ void Wire::mouseMoveEventAux(QPointF eventPos, bool shiftModifier) {
 			ends.removeOne(toConnectorItem);
 		}
 
-		ConnectorItem* ci = findConnectorUnder(whichConnectorItem,  whichConnectorItem->overConnectorItem(), false, true, ends);
-		InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
-		if (infoGraphicsView) {
-			// Activate tooltip for destination connector. based on a patch submitted by bryant.mairs
-			QString text;
-			if (ci && ci->connectorHovering()) {
-				if (otherConnectorItem->connectionsCount() > 0) {
-					ConnectorItem * originatingConnector = otherConnectorItem->connectedToItems()[0];
-					text = QString("%1: %2\n%3: %4")
-						.arg(originatingConnector->attachedToInstanceTitle())
-						.arg(originatingConnector->connectorSharedName())
-						.arg(ci->attachedToInstanceTitle())
-						.arg(ci->connectorSharedName());
-				}
-				else {
-					text = QString("%1: %2").arg(ci->attachedToInstanceTitle()).arg(ci->connectorSharedName());
-				}
-
-			}
-			else {
-				if (otherConnectorItem->connectionsCount() > 0) {
-					ConnectorItem * originatingConnector = otherConnectorItem->connectedToItems()[0];
-					text = QString("%1: %2")
-						.arg(originatingConnector->attachedToInstanceTitle())
-						.arg(originatingConnector->connectorSharedName());
-				}
-
-			}
-            // Now use Qt's tooltip functionality to display our tooltip.
-            // The tooltip text is first cleared as only a change in tooltip
-            // text will update its position.
-            // A rect is generated to smooth out position updates.
-            // NOTE: Increasing this rect will cause the tooltip to disappear
-            // and not reappear until another pixel move after the move that
-            // disabled it.
-            QPointF p = mapToScene(eventPos);
-            QPointF q = infoGraphicsView->mapFromScene(p);
-            QRect r(q.x(), q.y(), 1, 1);
-            QPointF sp = infoGraphicsView->mapToGlobal(q.toPoint());
-            QToolTip::showText(sp.toPoint(), "", infoGraphicsView);
-            QToolTip::showText(sp.toPoint(), text, infoGraphicsView, r);
+		ConnectorItem * originatingConnector = NULL;
+		if (otherConnectorItem && otherConnectorItem->connectionsCount() > 0) {
+			originatingConnector = otherConnectorItem->connectedToItems()[0];
 		}
-        whichConnectorItem->setOverConnectorItem(ci);	
+		whichConnectorItem->findConnectorUnder(false, true, ends, true, originatingConnector);
 	}
 }
 
@@ -484,16 +446,7 @@ bool Wire::releaseDrag() {
 	m_dragEnd = false;
 
 	ConnectorItem * from = (m_drag0) ? m_connector0 : m_connector1;
-	ConnectorItem * to = from->overConnectorItem();
-	if (to != NULL) {
-		to->connectorHover(this, false);
-
-		// clean up
-		from->setOverConnectorItem(NULL);
-		from->clearConnectorHover();
-		from->restoreColor(false, 0, true);
-	}
-	clearConnectorHover();
+	ConnectorItem * to = from->releaseDrag();
 
 	QLineF newLine = this->line();
 	QLineF oldLine = m_viewGeometry.line();
@@ -812,8 +765,7 @@ void Wire::findConnectorsUnder() {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItems()[i]);
 		if (connectorItem == NULL) continue;
 
-		connectorItem->setOverConnectorItem(
-				findConnectorUnder(connectorItem,  connectorItem->overConnectorItem(), true, false, ConnectorItem::emptyConnectorItemList));
+		connectorItem->findConnectorUnder(true, false, ConnectorItem::emptyConnectorItemList, false, NULL);
 	}
 }
 
@@ -1370,4 +1322,22 @@ bool Wire::rotationAllowed() {
 
 bool Wire::rotation45Allowed() {
 	return false;
+}
+
+void Wire::addedToScene(bool temporary) {
+	ItemBase::addedToScene(temporary);
+
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView == NULL) return;
+
+	bool succeeded = connect(this, SIGNAL(wireChangedSignal(Wire*, QLineF, QLineF, QPointF, QPointF, ConnectorItem *, ConnectorItem *)	),
+			infoGraphicsView, SLOT(wire_wireChanged(Wire*, QLineF, QLineF, QPointF, QPointF, ConnectorItem *, ConnectorItem *)),
+			Qt::DirectConnection);		// DirectConnection means call the slot directly like a subroutine, without waiting for a thread or queue
+	succeeded = succeeded && connect(this, SIGNAL(wireSplitSignal(Wire*, QPointF, QPointF, QLineF)),
+			infoGraphicsView, SLOT(wire_wireSplit(Wire*, QPointF, QPointF, QLineF)));
+	succeeded = succeeded && connect(this, SIGNAL(wireJoinSignal(Wire*, ConnectorItem *)),
+			infoGraphicsView, SLOT(wire_wireJoin(Wire*, ConnectorItem*)));
+	if (!succeeded) {
+		DebugDialog::debug("wire signal connect failed");
+	}
 }

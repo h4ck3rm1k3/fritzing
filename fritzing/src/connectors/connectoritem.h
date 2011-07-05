@@ -106,10 +106,12 @@ public:
 	qreal minDimension();
 	void setHybrid(bool);
 	bool isHybrid();
-	void setBendable(bool, QColor color, qreal strokeWidth);
+	void setBendable(QColor color, qreal strokeWidth);
 	bool isBendable();
 	void setBigDot(bool);
 	bool isBigDot();
+	ConnectorItem * findConnectorUnder(bool useTerminalPoint, bool allowAlready, const QList<ConnectorItem *> & exclude, bool displayDragTooltip, ConnectorItem * other);
+	ConnectorItem * releaseDrag();	
 
 protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
@@ -131,6 +133,7 @@ protected:
 	bool isEverVisible();
 	void setHiddenOrInactive();
 	bool isConnectedToPart();
+	void displayTooltip(ConnectorItem * over, ConnectorItem * other);
 
 protected:
 	QPointer<Connector> m_connector;

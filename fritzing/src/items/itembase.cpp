@@ -133,42 +133,6 @@ const qreal ItemBase::normalConnectorOpacity = 0.4;
 
 static QHash<QString, QStringList> CachedValues;
 
-bool wireLessThan(ConnectorItem * c1, ConnectorItem * c2)
-{
-	if (c1->connectorType() == c2->connectorType()) {
-		// if they're the same type return the topmost
-		return c1->zValue() > c2->zValue();
-	}
-	if (c1->connectorType() == Connector::Female) {
-		// choose the female first
-		return true;
-	}
-	if (c2->connectorType() == Connector::Female) {
-		// choose the female first
-		return false;
-	}
-	if (c1->connectorType() == Connector::Male) {
-		// choose the male first
-		return true;
-	}
-	if (c2->connectorType() == Connector::Male) {
-		// choose the male first
-		return false;
-	}
-	if (c1->connectorType() == Connector::Pad) {
-		// choose the pad first
-		return true;
-	}
-	if (c2->connectorType() == Connector::Pad) {
-		// choose the pad first
-		return false;
-	}
-
-	// Connector::Wire last
-	return c1->zValue() > c2->zValue();
-
-}
-
 ///////////////////////////////////////////////////
 
 ItemBase::ItemBase( ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu )
@@ -670,64 +634,6 @@ void ItemBase::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
 
 void ItemBase::hoverMoveEvent ( QGraphicsSceneHoverEvent *  ) {
 	//DebugDialog::debug(QString("hover move %1 %2").arg(instanceTitle()).arg(QTime::currentTime().msec()));
-}
-
-ConnectorItem * ItemBase::findConnectorUnder(ConnectorItem * connectorItemOver, ConnectorItem * lastUnderConnector, bool useTerminalPoint, bool allowAlready, const QList<ConnectorItem *> & exclude)
-{
-	QList<QGraphicsItem *> items = useTerminalPoint
-		? this->scene()->items(connectorItemOver->sceneAdjustedTerminalPoint(NULL))
-		: this->scene()->items(mapToScene(connectorItemOver->rect()));
-	QList<ConnectorItem *> candidates;
-	// for the moment, take the topmost ConnectorItem that doesn't belong to me
-	foreach (QGraphicsItem * item, items) {
-		ConnectorItem * connectorItemUnder = dynamic_cast<ConnectorItem *>(item);
-		if (connectorItemUnder == NULL) continue;
-		if (connectorItemUnder->connector() == NULL) continue;			// shouldn't happen
-		if (childItems().contains(connectorItemUnder)) continue;		// don't use own connectors
-		if (!connectorItemOver->connectionIsAllowed(connectorItemUnder)) {
-			continue;
-		}
-		if (!allowAlready) {
-			if (connectorItemUnder->connectedToItems().contains(connectorItemOver)) {
-				continue;		// already connected
-			}
-		}
-		if (exclude.contains(connectorItemUnder)) continue;
-
-
-		candidates.append(connectorItemUnder);
-	}
-
-	ConnectorItem * candidate = NULL;
-	if (candidates.count() == 1) {
-		candidate = candidates[0];
-	}
-	else if (candidates.count() > 0) {
-		qSort(candidates.begin(), candidates.end(), wireLessThan);
-		candidate = candidates[0];
-	}
-
-	if (lastUnderConnector != NULL && candidate != lastUnderConnector) {
-		lastUnderConnector->connectorHover(this, false);
-	}
-	if (candidate != NULL && candidate != lastUnderConnector) {
-		candidate->connectorHover(this, true);
-	}
-
-	lastUnderConnector = candidate;
-
-	if (candidate == NULL) {
-		if (connectorItemOver->connectorHovering()) {
-			connectorItemOver->connectorHover(NULL, false);
-		}
-	}
-	else {
-		if (!connectorItemOver->connectorHovering()) {
-			connectorItemOver->connectorHover(NULL, true);
-		}
-	}
-
-	return lastUnderConnector;
 }
 
 void ItemBase::updateConnections() {
@@ -1837,7 +1743,6 @@ void ItemBase::debugInfo(const QString & msg)
 	Q_UNUSED(msg);
 #endif
 }
-
 
 void ItemBase::addedToScene(bool temporary) {
 	if (this->scene() && instanceTitle().isEmpty() && !temporary) {

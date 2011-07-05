@@ -595,18 +595,8 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, ViewLayer::ViewLayerS
 		setWireVisible(wire);
 		wire->updateConnectors();
 
-		bool succeeded = connect(wire, SIGNAL(wireChangedSignal(Wire*, QLineF, QLineF, QPointF, QPointF, ConnectorItem *, ConnectorItem *)	),
-				this, SLOT(wire_wireChanged(Wire*, QLineF, QLineF, QPointF, QPointF, ConnectorItem *, ConnectorItem *)),
-				Qt::DirectConnection);		// DirectConnection means call the slot directly like a subroutine, without waiting for a thread or queue
-		succeeded = succeeded && connect(wire, SIGNAL(wireSplitSignal(Wire*, QPointF, QPointF, QLineF)),
-				this, SLOT(wire_wireSplit(Wire*, QPointF, QPointF, QLineF)));
-		succeeded = succeeded && connect(wire, SIGNAL(wireJoinSignal(Wire*, ConnectorItem *)),
-				this, SLOT(wire_wireJoin(Wire*, ConnectorItem*)));
-		if (!succeeded) {
-			DebugDialog::debug("wire signal connect failed");
-		}
-
 		addToScene(wire, wire->viewLayerID());
+		wire->addedToScene(temporary);
 		wire->debugInfo("add wire");
 
 		return wire;

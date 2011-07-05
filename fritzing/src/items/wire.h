@@ -146,7 +146,7 @@ public:
 	bool hasPartNumberProperty();
 	bool rotationAllowed();
 	bool rotation45Allowed();
-
+	void addedToScene(bool temporary);
 
 protected slots:
 	void colorEntry(const QString & text);
