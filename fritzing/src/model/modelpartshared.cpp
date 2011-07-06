@@ -43,9 +43,9 @@ void copyPinAttributes(QDomElement & from, QDomElement & to)
 	if (!hybrid.isEmpty()) {
 		to.setAttribute("hybrid", hybrid);
 	}
-	QString bendable = from.attribute("bendable");
+	QString bendable = from.attribute("bendableLeg");
 	if (!bendable.isEmpty()) {
-		to.setAttribute("bendable", bendable);
+		to.setAttribute("bendableLeg", bendable);
 	}
 }
 

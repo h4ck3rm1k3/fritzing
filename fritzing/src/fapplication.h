@@ -34,7 +34,6 @@ $Date$
 #include <QPointer>
 #include <QWidget>
 #include <QMutex>
-#include <QMultiHash>
 #include <QTimer>
 #include <QNetworkReply>
 

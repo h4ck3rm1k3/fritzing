@@ -76,6 +76,7 @@ $Date$
 #include <QtDebug>
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
+#include <QMultiHash>
 
 static int kBottomOfAlpha = 204;
 static QNetworkAccessManager * NetworkAccessManager = NULL;

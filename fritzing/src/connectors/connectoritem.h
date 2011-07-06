@@ -114,8 +114,8 @@ public:
 	qreal minDimension();
 	void setHybrid(bool);
 	bool isHybrid();
-	void setBendable(QColor color, qreal strokeWidth);
-	bool isBendable();
+	void setBendableLeg(QColor color, qreal strokeWidth);
+	bool hasBendableLeg();
 	void setBigDot(bool);
 	bool isBigDot();
 	bool isDraggingLeg();
@@ -123,6 +123,10 @@ public:
 	ConnectorItem * releaseDrag();		
 	void setLegLine(QLineF line);
 	QLineF sceneAdjustedLegLine(qreal & width, QString & colorString);
+	QLineF formerSceneAdjustedLegLine();
+	void prepareToStretch(bool activeStretch);
+	void stretchBy(QPointF howMuch);
+	void stretchDone();
 
 protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
@@ -158,12 +162,14 @@ protected:
 	bool m_checkedEffectively;
 	bool m_marked;
 	bool m_hybrid;
-	bool m_bendable;
+	bool m_bendableLeg;
 	bool m_bigDot;
-	QPointF m_originalPoint;
+	QPointF m_originalPointOnParent;
 	LegItem * m_legItem;
 	QLineF m_oldLine;
 	bool m_draggingLeg;
+	bool m_activeStretch;
+	QPointF m_holdPos;
 	
 protected:	
 	static QList<ConnectorItem *>  m_equalPotentialDisplayItems;

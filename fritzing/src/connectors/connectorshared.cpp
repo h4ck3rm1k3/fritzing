@@ -206,8 +206,8 @@ void ConnectorShared::loadPin(QDomElement elem, ViewIdentifierClass::ViewIdentif
 		QString layer = pinElem.attribute("layer");
 		SvgIdLayer * svgIdLayer = new SvgIdLayer;
 		svgIdLayer->m_hybrid = (pinElem.attribute("hybrid").compare("yes") == 0);
-		svgIdLayer->m_bendable = (pinElem.attribute("bendable").compare("yes") == 0);
-		if (svgIdLayer->m_bendable) {
+		svgIdLayer->m_bendableLeg = (pinElem.attribute("bendableleg").compare("yes") == 0);
+		if (svgIdLayer->m_bendableLeg) {
 			svgIdLayer->m_bendColor = pinElem.attribute("stroke");
 			svgIdLayer->m_bendStrokeWidth = pinElem.attribute("stroke-width");
 			m_hasBendableLeg = true;

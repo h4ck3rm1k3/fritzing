@@ -569,7 +569,7 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastL
 		modelPartShared->setTags(tags);
 		modelPartShared->setProperties(properties);
 		modelPartShared->setDisplayKeys(displayKeys);
-		foreach (ViewIdentifierClass::ViewIdentifier viewIdentifier, hasViewFor.keys()) {
+		foreach (ViewIdentifierClass::ViewIdentifier viewIdentifier, hasViewFor.uniqueKeys()) {
 			foreach (ViewLayer::ViewLayerID viewLayerID, hasViewFor.values(viewIdentifier)) {
 				modelPartShared->setHasViewFor(viewIdentifier, viewLayerID);
 			}

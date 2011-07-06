@@ -30,7 +30,6 @@ $Date$
 #include <QString>
 #include <QStringList>
 #include <QVariant>
-#include <QMultiHash>
 
 #include "x2svg.h"
 

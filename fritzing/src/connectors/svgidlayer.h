@@ -43,7 +43,7 @@ struct SvgIdLayer
 	QPointF m_point;	
 	qreal m_radius;
 	qreal m_strokeWidth;
-	bool m_bendable;
+	bool m_bendableLeg;
 	QString m_bendColor;
 	QString m_bendStrokeWidth;
 

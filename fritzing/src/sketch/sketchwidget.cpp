@@ -2033,6 +2033,8 @@ void SketchWidget::prepMove(ItemBase * originatingItem) {
 		categorizeDragWires(wires);
 	}
 
+	categorizeDragLegs();
+
 	foreach (ItemBase * itemBase, m_savedItems.values()) {
 		itemBase->saveGeometry();
 	}
@@ -2112,6 +2114,76 @@ struct ConnectionThing {
 	Wire * wire;
 	ConnectionStatus status[2];
 };
+
+
+void SketchWidget::categorizeDragLegs() 
+{
+	m_stretchingLegs.clear();
+	QSet<ItemBase *> passives;
+	foreach (ItemBase * itemBase, m_savedItems.values()) {
+		if (itemBase->itemType() == ModelPart::Wire) continue;
+		if (!itemBase->hasBendableLeg()) continue;
+
+		// 1. we are dragging a part with bendable legs which are attached to some part not being dragged along (i.e. a breadboard)
+		//		so we stretch those attached legs
+		// 2. a part has bendable legs attached to multiple parts, and we are only dragging some of the parts
+
+		foreach (QGraphicsItem * item, itemBase->childItems()) {
+			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
+			if (connectorItem == NULL) continue;
+			if (!connectorItem->hasBendableLeg()) continue;
+			if (connectorItem->connectionsCount() == 0) continue;
+
+			bool treatAsNormal = true;
+			foreach (ConnectorItem * toConnectorItem, connectorItem->connectedToItems()) {
+				if (toConnectorItem->attachedToItemType() == ModelPart::Wire) continue;
+				if (m_savedItems.value(toConnectorItem->attachedTo()->layerKinChief()->id(), NULL)) continue;
+					
+				treatAsNormal = false;
+				break;
+			}
+			if (treatAsNormal) continue;
+
+			if (itemBase->isSelected()) {
+				// itemBase is being dragged, but the connector doesn't come along
+				connectorItem->prepareToStretch(true);
+				m_stretchingLegs.insert(itemBase, connectorItem);
+				continue;
+			}
+
+			// itemBase has connectors stuck into multiple parts, not all of which are being dragged
+			// but we're in a loop of savedItems, so we have to treat it later
+			passives.insert(itemBase);		
+		}
+	}
+
+	foreach (ItemBase * itemBase, passives) {
+		// we're not actually dragging the itemBase
+		// one of its connectors is coming along for the ride
+		m_savedItems.remove(itemBase->id());
+		foreach (QGraphicsItem * item, itemBase->childItems()) {
+			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
+			if (connectorItem == NULL) continue;
+			if (!connectorItem->hasBendableLeg()) continue;
+			if (connectorItem->connectionsCount() == 0) continue;
+
+			foreach (ConnectorItem * toConnectorItem, connectorItem->connectedToItems()) {
+				if (toConnectorItem->attachedToItemType() == ModelPart::Wire) continue;
+				ItemBase * chief = toConnectorItem->attachedTo()->layerKinChief();
+				if (m_savedItems.value(chief->id(), NULL) == NULL) {
+					// connected to another part, so it doesn't move
+					continue;
+				}
+
+				// the connector is passively dragged along with the part it is connected to
+				// but the part it is attached to stays put
+				connectorItem->prepareToStretch(false);
+				m_stretchingLegs.insert(chief, connectorItem);
+				break;
+			}
+		}
+	}
+}
 
 void SketchWidget::categorizeDragWires(QSet<Wire *> & wires) 
 {
@@ -2551,13 +2623,16 @@ void SketchWidget::moveItems(QPoint globalPos, bool checkAutoScrollFlag)
 		}
 	}
 
-	foreach (ItemBase * item, m_savedItems) {
-		QPointF currentParentPos = item->mapToParent(item->mapFromScene(scenePos));
-		QPointF buttonDownParentPos = item->mapToParent(item->mapFromScene(m_mousePressScenePos));
-		item->setPos(item->getViewGeometry().loc() + currentParentPos - buttonDownParentPos);
+	foreach (ItemBase * itemBase, m_savedItems) {
+		QPointF currentParentPos = itemBase->mapToParent(itemBase->mapFromScene(scenePos));
+		QPointF buttonDownParentPos = itemBase->mapToParent(itemBase->mapFromScene(m_mousePressScenePos));
+		itemBase->setPos(itemBase->getViewGeometry().loc() + currentParentPos - buttonDownParentPos);
+		foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
+			connectorItem->stretchBy(currentParentPos - buttonDownParentPos);
+		}
 
-		if (m_checkUnder.contains(item)) {
-			findConnectorsUnder(item);
+		if (m_checkUnder.contains(itemBase)) {
+			findConnectorsUnder(itemBase);
 		}
 
 /*
@@ -2773,6 +2848,18 @@ bool SketchWidget::checkMoved()
 		foreach (ConnectorItem * toConnectorItem, m_moveDisconnectedFromFemale.values(fromConnectorItem)) {
 			extendChangeConnectionCommand(BaseCommand::CrossView, fromConnectorItem, toConnectorItem, ViewLayer::specFromID(fromConnectorItem->attachedToViewLayerID()), false, parentCommand);
 			gotConnection = true;
+		}
+	}
+
+
+	foreach(ItemBase * itemBase, m_stretchingLegs.keys()) {
+		foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
+			connectorItem->stretchDone();
+			QLineF oldLine = connectorItem->formerSceneAdjustedLegLine();
+			qreal w;
+			QString colorString;
+			QLineF newLine = connectorItem->sceneAdjustedLegLine(w, colorString);
+			new ChangeLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), oldLine, newLine, parentCommand);
 		}
 	}
 
@@ -5954,7 +6041,7 @@ QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLaye
 				foreach (QGraphicsItem * item, itemBase->childItems()) {
 					ConnectorItem * ci = dynamic_cast<ConnectorItem *>(item);
 					if (ci == NULL) continue;
-					if (!ci->isBendable()) continue;
+					if (!ci->hasBendableLeg()) continue;
 
 					qreal w;
 					QString colorString;

@@ -360,6 +360,7 @@ protected:
 	void prepDragWire(Wire *);
 	void clickBackground(QMouseEvent *);
 	void categorizeDragWires(QSet<Wire *> & wires);
+	void categorizeDragLegs();
 	void prepMove(ItemBase * originatingItem);
 	void initBackgroundColor();
 	QPointF calcNewLoc(ItemBase * moveBase, ItemBase * detachFrom);
@@ -602,6 +603,7 @@ protected:
 	float m_z;
 	QTimer m_arrowTimer;
 	bool m_middleMouseIsPressed;
+	QMultiHash<ItemBase *, ConnectorItem *> m_stretchingLegs;
 
 public:
 	static ViewLayer::ViewLayerID defaultConnectorLayer(ViewIdentifierClass::ViewIdentifier viewId);

@@ -321,9 +321,9 @@ void PaletteItemBase::setUpConnectors(FSvgRenderer * renderer, bool ignoreTermin
 		connectorItem->setRect(svgIdLayer->m_rect);
 		connectorItem->setTerminalPoint(svgIdLayer->m_point);
 		connectorItem->setRadius(svgIdLayer->m_radius, svgIdLayer->m_strokeWidth);
-		if (svgIdLayer->m_bendable) {
+		if (svgIdLayer->m_bendableLeg) {
 			// do setBendable after setRect and setTerminalPoint
-			connectorItem->setBendable(QColor(svgIdLayer->m_bendColor), 
+			connectorItem->setBendableLeg(QColor(svgIdLayer->m_bendColor), 
 										TextUtils::convertToInches(svgIdLayer->m_bendStrokeWidth) * FSvgRenderer::printerScale());
 		}
 
