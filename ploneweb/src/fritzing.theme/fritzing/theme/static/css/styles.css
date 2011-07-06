@@ -8,13 +8,24 @@ body {
     font-size: 11pt;
 }
 
-#fritzing-content a:link, 
-#fritzing-content a:visited {
-    color: #962320 !important;
+#fritzing-content #content a:link, 
+#fritzing-content #content a:visited {
+    display: inline-block;
+    color: #658975 !important;
+    border: none;
+    text-decoration: underline;
 }
-#fritzing-content a:link:hover {
-    color: #cc5447 !important;
-    border-bottom-color: #962320;
+#fritzing-content #content a:hover {
+    color: #2a4b3a !important;
+}
+body.template-index #fritzing-content #content-core a:link:before,
+body.template-document_view #fritzing-content #content-core a:link:before {
+    display: inline-block;
+    position: relative;
+    vertical-align: -5px;
+    margin-bottom: -5px;
+    background: white;
+    content: url(../img/texticon_link.png)" ";
 }
 
 #portal-header {
