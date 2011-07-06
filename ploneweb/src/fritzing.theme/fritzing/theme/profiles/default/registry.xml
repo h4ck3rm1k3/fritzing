@@ -10,6 +10,8 @@
         <value>
             <element>fritzing.org</element>
             <element>fritzing.org:8080</element>
+            <element>fab.fritzing.org</element>
+            <element>fab.fritzing.org:8080</element>
             <element>f.plone.local:8080</element>
         </value>
     </record>
