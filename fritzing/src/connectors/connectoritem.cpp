@@ -543,8 +543,6 @@ int ConnectorItem::connectionsCount() {
 
 
 void ConnectorItem::attachedMoved() {
-	if (m_bendableLeg) return;
-
 	//DebugDialog::debug("attached moved");
 	foreach (ConnectorItem * toConnector, m_connectedTo) {
 		ItemBase * itemBase = toConnector->attachedTo();
@@ -1662,6 +1660,7 @@ void ConnectorItem::prepareToStretch(bool activeStretch) {
 	m_activeStretch = activeStretch;
 	QPointF p = pos();
 	m_holdPos = m_attachedTo->mapToScene(p);
+	m_oldLine = m_legItem->line();
 }
 
 void ConnectorItem::stretchBy(QPointF howMuch) {
@@ -1675,7 +1674,7 @@ void ConnectorItem::stretchBy(QPointF howMuch) {
 		p2 = mfs + m_terminalPoint - m_originalPointOnParent;
 	}
 	else {
-		// the connector is connected to another part which is being dragged
+		// this connector is connected to another part which is being dragged
 		setPos(mfs + howMuch);
 		p2 = mfs + howMuch + m_terminalPoint - m_originalPointOnParent;
 	}
@@ -1683,7 +1682,9 @@ void ConnectorItem::stretchBy(QPointF howMuch) {
 
 }
 
-void ConnectorItem::stretchDone() {
+void ConnectorItem::stretchDone(QLineF & oldLine, QLineF & newLine) {
+	oldLine = m_oldLine;
+	newLine = m_legItem->line();
 }
 
 

@@ -126,7 +126,7 @@ public:
 	QLineF formerSceneAdjustedLegLine();
 	void prepareToStretch(bool activeStretch);
 	void stretchBy(QPointF howMuch);
-	void stretchDone();
+	void stretchDone(QLineF & oldLine, QLineF & newLine);
 
 protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );

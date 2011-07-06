@@ -1187,7 +1187,7 @@ void SketchWidget::changeLeg(long fromID, const QString & fromConnectorID, QLine
 	}
 
 	fromConnectorItem->setLegLine(line);
-	//fromItem->updateConnections(fromConnectorItem);
+	fromItem->updateConnections(fromConnectorItem);
 }
 
 void SketchWidget::selectItem(long id, bool state, bool updateInfoView, bool doEmit) {
@@ -2854,11 +2854,8 @@ bool SketchWidget::checkMoved()
 
 	foreach(ItemBase * itemBase, m_stretchingLegs.keys()) {
 		foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
-			connectorItem->stretchDone();
-			QLineF oldLine = connectorItem->formerSceneAdjustedLegLine();
-			qreal w;
-			QString colorString;
-			QLineF newLine = connectorItem->sceneAdjustedLegLine(w, colorString);
+			QLineF oldLine, newLine;
+			connectorItem->stretchDone(oldLine, newLine);
 			new ChangeLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), oldLine, newLine, parentCommand);
 		}
 	}

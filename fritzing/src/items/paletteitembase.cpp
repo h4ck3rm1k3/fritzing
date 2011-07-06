@@ -350,7 +350,16 @@ void PaletteItemBase::setUpConnectors(FSvgRenderer * renderer, bool ignoreTermin
 
 void PaletteItemBase::connectedMoved(ConnectorItem * from, ConnectorItem * to) {
 	if (from->connectorType() != Connector::Female) return;
-	if (m_viewIdentifier != ViewIdentifierClass::BreadboardView) return;			// these only really exist in breadboard view
+	if (m_viewIdentifier != ViewIdentifierClass::BreadboardView) return;
+
+	// female connectors really only operate in breadboard view
+
+
+	if (to->hasBendableLeg() || from->hasBendableLeg()) {
+		// bendable legs true up their own connectors, no need to position the entire part
+		// TODO: if a part has some bendable legs and some not, bailing out here might not work
+		return;
+	}
 
 	// female connectors are equivalent to sticky
 
