@@ -5836,6 +5836,15 @@ QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLaye
 		if (itemBase->isPartLabelVisible()) {
 			itemsBoundingRect |= itemBase->partLabelSceneBoundingRect();
 		}
+
+		if (itemBase->modelPart()->hasBendableLeg()) {
+			foreach (QGraphicsItem * child, itemBase->childItems()) {
+				LegItem * legItem = dynamic_cast<LegItem *>(child);
+				if (legItem == NULL) continue;
+
+				itemsBoundingRect |= legItem->sceneBoundingRect();
+			}
+		}
 	}
 
 	return renderToSVG(printerScale, partLayers, wireLayers, blackOnly, imageSize, offsetPart, dpi, flatten, fillHoles, itemBases, itemsBoundingRect, empty);
@@ -5942,6 +5951,17 @@ QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLaye
 					itemSvg = domDocument.toString();
 				}
 
+				foreach (QGraphicsItem * item, itemBase->childItems()) {
+					ConnectorItem * ci = dynamic_cast<ConnectorItem *>(item);
+					if (ci == NULL) continue;
+					if (!ci->isBendable()) continue;
+
+					qreal w;
+					QString colorString;
+					QLineF line = ci->sceneAdjustedLegLine(w, colorString);
+					outputSVG.append(makeLineSVG(line.p1() - offset, line.p2() - offset, w, colorString, dpi, printerScale, blackOnly));
+				}
+
                 QTransform t = itemBase->transform();
                 itemSvg = TextUtils::svgTransform(itemSvg, t, false, QString());
 				outputSVG.append(translateSVG(itemSvg, itemBase->scenePos() - offset, dpi, printerScale));
@@ -6003,22 +6023,28 @@ QString SketchWidget::makeRectSVG(QRectF r, QPointF offset, qreal dpi, qreal pri
 			.arg(stroke);
 }
 
-QString SketchWidget::makeWireSVG(Wire * wire, QPointF offset, qreal dpi, qreal printerScale, bool blackOnly) {
+QString SketchWidget::makeWireSVG(Wire * wire, QPointF offset, qreal dpi, qreal printerScale, bool blackOnly) 
+{
 	QLineF line = wire->getPaintLine();
 	QPointF p1 = wire->scenePos() + line.p1() - offset;
 	QPointF p2 = wire->scenePos() + line.p2() - offset;
+	return makeLineSVG(p1, p2, wire->width(), wire->hexString(), dpi, printerScale, blackOnly);
+}
+
+QString SketchWidget::makeLineSVG(QPointF p1, QPointF p2, qreal width, QString colorString, qreal dpi, qreal printerScale, bool blackOnly) 
+{
 	p1.setX(p1.x() * dpi / printerScale);
 	p1.setY(p1.y() * dpi / printerScale);
 	p2.setX(p2.x() * dpi / printerScale);
 	p2.setY(p2.y() * dpi / printerScale);
 	// TODO: use original colors, not just black
-	QString stroke = (blackOnly) ? "black" : wire->hexString();
+	QString stroke = (blackOnly) ? "black" : colorString;
 	return QString("<line style=\"stroke-linecap: round\" stroke=\"%6\" x1=\"%1\" y1=\"%2\" x2=\"%3\" y2=\"%4\" stroke-width=\"%5\" />")
 					.arg(p1.x())
 					.arg(p1.y())
 					.arg(p2.x())
 					.arg(p2.y())
-					.arg(wire->width() * dpi / printerScale)
+					.arg(width * dpi / printerScale)
 					.arg(stroke);
 }
 

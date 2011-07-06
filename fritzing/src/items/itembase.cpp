@@ -1774,3 +1774,10 @@ void ItemBase::collectPropsMap(QString & family, QMap<QString, QString> & propsM
 void ItemBase::setDropOffset(QPointF) 
 {
 }
+
+bool ItemBase::hasBendableLeg()
+{
+	if (m_modelPart == NULL) return false;
+
+	return (m_modelPart->hasBendableLeg());
+}

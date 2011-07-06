@@ -42,10 +42,12 @@ ConnectorShared::ConnectorShared()
 	m_description = "";
 	m_bus = NULL;
 	m_ercData = NULL;
+	m_hasBendableLeg = false;
 }
 
 ConnectorShared::ConnectorShared( const QDomElement & domElement )
 {
+	m_hasBendableLeg = false;
 	m_ercData = NULL;
 	m_id = domElement.attribute("id", "");
 	m_name = domElement.attribute("name", "");
@@ -208,6 +210,7 @@ void ConnectorShared::loadPin(QDomElement elem, ViewIdentifierClass::ViewIdentif
 		if (svgIdLayer->m_bendable) {
 			svgIdLayer->m_bendColor = pinElem.attribute("stroke");
 			svgIdLayer->m_bendStrokeWidth = pinElem.attribute("stroke-width");
+			m_hasBendableLeg = true;
 		}
 		svgIdLayer->m_svgId = svgId;
 		svgIdLayer->m_svgViewLayerID = ViewLayer::viewLayerIDFromXmlString(layer);
@@ -236,4 +239,8 @@ const QString & ConnectorShared::busID() {
 
 ErcData * ConnectorShared::ercData() {
 	return m_ercData;
+}
+
+bool ConnectorShared::hasBendableLeg() {
+	return m_hasBendableLeg;
 }

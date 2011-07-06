@@ -151,6 +151,7 @@ public:
 	QString hasBaseNameFor(ViewIdentifierClass::ViewIdentifier);
 	void initBuses();
 	void clearBuses();
+	bool hasBendableLeg();
 
 public:
 	static long nextIndex();

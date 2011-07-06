@@ -67,6 +67,7 @@ public:
 	void setBus(class BusShared *);
 	const QString & busID();
 	class ErcData * ercData();
+	bool hasBendableLeg();
 
 protected:
 	void loadPins(const QDomElement & domElement);
@@ -80,6 +81,7 @@ protected:
 	QString m_ercType;
 	class ErcData * m_ercData;
 	class BusShared * m_bus;
+	bool m_hasBendableLeg;
 
 	QMultiHash<ViewIdentifierClass::ViewIdentifier, SvgIdLayer*> m_pins;
 };

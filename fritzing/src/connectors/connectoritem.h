@@ -33,6 +33,14 @@ $Date$
 #include <QThread>
 #include <QGraphicsLineItem>
 
+class LegItem : public QGraphicsLineItem
+{
+
+public:
+	LegItem(QGraphicsItem * parent);
+	~LegItem();
+};
+
 class ConnectorItem : public NonConnectorItem
 {
 Q_OBJECT
@@ -114,7 +122,7 @@ public:
 	ConnectorItem * findConnectorUnder(bool useTerminalPoint, bool allowAlready, const QList<ConnectorItem *> & exclude, bool displayDragTooltip, ConnectorItem * other);
 	ConnectorItem * releaseDrag();		
 	void setLegLine(QLineF line);
-
+	QLineF sceneAdjustedLegLine(qreal & width, QString & colorString);
 
 protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
@@ -153,7 +161,7 @@ protected:
 	bool m_bendable;
 	bool m_bigDot;
 	QPointF m_originalPoint;
-	QGraphicsLineItem * m_lineItem;
+	LegItem * m_legItem;
 	QLineF m_oldLine;
 	bool m_draggingLeg;
 	

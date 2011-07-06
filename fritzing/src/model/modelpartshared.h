@@ -114,6 +114,7 @@ public:
 	void setHasViewFor(ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID);
 	QString hasBaseNameFor(ViewIdentifierClass::ViewIdentifier);
 	void setHasBaseNameFor(ViewIdentifierClass::ViewIdentifier, const QString &);
+	bool hasBendableLeg();
 
 protected:
 	void loadTagText(QDomElement parent, QString tagName, QString &field);
@@ -158,6 +159,8 @@ protected:
 
 	bool m_connectorsInitialized;
 	bool m_ignoreTerminalPoints;
+
+	bool m_hasBendableLeg;
 
 	bool m_flippedSMD;
 	bool m_partlyLoaded;
