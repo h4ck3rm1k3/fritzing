@@ -4,8 +4,37 @@
    
 */
 
+.clear {
+    clear: both;
+}
+
 body {
-    font-size: 11pt;
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 10pt !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Verdana, Arial, sans-serif;
+}
+h1, h2 {
+    
+}
+h3, h4, h5, h6 {
+    color: #962320;
+    font-size: 10pt !important;
+    margin-top: 2em;
+    margin-bottom: 0em;
+}
+
+#content-core p,
+#content-core ul,
+#content-core ol,
+#content-core dl {
+    margin-bottom: 1em;
+}
+
+img.adapt_width {
+    max-width: 100%;
 }
 
 #fritzing-content #content a:link, 
@@ -18,8 +47,10 @@ body {
 #fritzing-content #content a:hover {
     color: #2a4b3a !important;
 }
-body.template-index #fritzing-content #content-core a:link:before,
-body.template-document_view #fritzing-content #content-core a:link:before {
+body.template-index #fritzing-content #content-core p a:link:before,
+body.template-document_view #fritzing-content #content-core p a:link:before,
+body.template-index #fritzing-content #content-core li a:link:before,
+body.template-document_view #fritzing-content #content-core li a:link:before {
     display: inline-block;
     position: relative;
     vertical-align: -5px;
@@ -42,7 +73,8 @@ body.template-document_view #fritzing-content #content-core a:link:before {
 #portal-globalnav,
 #fritzing-content {
     margin: 0 auto;
-    width: 960px;
+    width: 90%;
+    max-width: 960px;
 }
 
 #logo-wrapper {
