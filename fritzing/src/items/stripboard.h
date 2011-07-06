@@ -83,6 +83,7 @@ public:
 	void setProp(const QString & prop, const QString & value);
 	void reinitBuses(bool triggerUndo);
 	void initCutting(Stripbit *);
+	void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth, bool & negativeOffsetRect);
 
 protected:
 	void nextBus(QList<ConnectorItem *> & soFar);
