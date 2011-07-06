@@ -26,6 +26,10 @@ h3, h4, h5, h6 {
     margin-bottom: 0em;
 }
 
+.important {
+    color: #962320;
+}
+
 #content-core p,
 #content-core ul,
 #content-core ol,
@@ -38,10 +42,11 @@ img.adapt_width {
 }
 
 #fritzing-content #content a:link, 
-#fritzing-content #content a:visited {
-    display: inline-block;
-    color: #658975 !important;
-    border: none;
+#fritzing-content #content a:visited,
+.overlay #content-core a:link, 
+.overlay #content-core a:visited {
+    color: #658975;
+    border: none !important;
     text-decoration: underline;
 }
 #fritzing-content #content a:hover {
