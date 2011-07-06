@@ -400,6 +400,24 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 				}
 			}
 
+			QDomElement leg = connector.firstChildElement("leg");
+			if (!leg.isNull()) {
+				qreal x = leg.attribute("x", "0").toDouble();
+				qreal y = leg.attribute("y", "0").toDouble();
+				if (x != 0 || y != 0) {
+					QLineF line(0, 0, x, y);
+					if (parentCommand) {
+						new ChangeLegCommand(this, ItemBase::getNextID(mp->modelIndex()), fromConnectorID, line, line, parentCommand);
+					}
+					else {
+						ItemBase * fromBase = newItems.value(mp->modelIndex(), NULL);
+						if (fromBase) {
+							changeLeg(fromBase->id(), fromConnectorID, line);
+						}
+					}
+				}
+			}
+
 			connector = connector.nextSiblingElement("connector");
 		}
 	}

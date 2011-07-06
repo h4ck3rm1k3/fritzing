@@ -459,10 +459,10 @@ void ConnectorItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 		QPointF p = this->mapToParent(adjustedTerminalPoint());
 		if (p != m_originalPoint) {
 			m_lineItem->setLine(0, 0, p.x() - m_originalPoint.x(), p.y() - m_originalPoint.y());
-			m_lineItem->setVisible(true);
+			//m_lineItem->setVisible(true);
 		}
 		else {
-			m_lineItem->setVisible(false);
+			//m_lineItem->setVisible(false);
 		}
 
 		QList<ConnectorItem *> exclude;
@@ -660,7 +660,8 @@ void ConnectorItem::setBendable(QColor color, qreal strokeWidth) {
 	m_lineItem = new QGraphicsLineItem(parentItem());
 	m_lineItem->setPos(m_originalPoint);
 	m_lineItem->setLine(0, 0, 0, 0);
-	m_lineItem->setVisible(false);
+	//m_lineItem->setVisible(false);
+	m_lineItem->setVisible(true);
 	m_lineItem->setFlag(QGraphicsItem::ItemIsSelectable, false);
 	m_lineItem->setFlag(QGraphicsItem::ItemIsMovable, false);
 	m_lineItem->setAcceptedMouseButtons(Qt::NoButton);
@@ -825,7 +826,6 @@ void ConnectorItem::saveInstance(QXmlStreamWriter & writer) {
 	if (m_bendable && m_lineItem != NULL) {
 		p = m_lineItem->line().p2();
 		writer.writeStartElement("leg");
-		QPointF p = this->pos();
 		writer.writeAttribute("x", QString::number(p.x()));
 		writer.writeAttribute("y", QString::number(p.y()));
 		writer.writeEndElement();
