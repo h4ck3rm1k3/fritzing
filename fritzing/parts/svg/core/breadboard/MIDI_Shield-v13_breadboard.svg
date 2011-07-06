@@ -558,20 +558,20 @@
      </g>
     </g>
    </g>
-   <rect  width="38.5512" x="132.123" y="86.8255" fill="#ffffff" height="35.1496" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="38.5512" x="132.123" y="47.2252" fill="#ffffff" height="35.1496" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="13.0393" x="61.8803" y="93.0895" fill="#ffffff" height="8.22046" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="46.715" x="0" y="21.6" fill="#ffffff" height="60.0945" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="0.878738" x="143.518" y="31.0961" fill="#ffffff" height="2.60788" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="0.878738" x="143.518" y="20.2961" fill="#ffffff" height="2.60788" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="46.715" x="0" y="82.8" fill="#ffffff" height="60.0945" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="1.152" x="49.824" y="70.992" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="1.152" x="85.824" y="49.392" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="1.152" x="49.824" y="135.792" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="1.152" x="49.824" y="88.992" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="1.152" x="150.624" y="31.392" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="1.152" x="150.624" y="20.592" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="27" x="54.36" y="61.92" fill="#ffffff" height="21.24" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="38.5512" x="132.123" y="86.8255" fill="#333333" height="35.1496" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="38.5512" x="132.123" y="47.2252" fill="#333333" height="35.1496" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="13.0393" x="61.8803" y="93.0895" fill="#333333" height="8.22046" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="46.715" x="0" y="21.6" fill="#333333" height="60.0945" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="0.878738" x="143.518" y="31.0961" fill="#333333" height="2.60788" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="0.878738" x="143.518" y="20.2961" fill="#333333" height="2.60788" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="46.715" x="0" y="82.8" fill="#333333" height="60.0945" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="1.152" x="49.824" y="70.992" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="1.152" x="85.824" y="49.392" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="1.152" x="49.824" y="135.792" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="1.152" x="49.824" y="88.992" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="1.152" x="150.624" y="31.392" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="1.152" x="150.624" y="20.592" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="27" x="54.36" y="61.92" fill="#333333" height="21.24" stroke="none" fill-opacity="1" stroke-width="0"/>
    <circle  fill="none" cx="75.6" cy="144" connectorname="3.3V" stroke="#9A916C" r="2.052" id="connector74pin" stroke-width="1.224"/>
    <circle  fill="none" cx="82.8" cy="144" connectorname="VCC" stroke="#9A916C" r="2.052" id="connector75pin" stroke-width="1.224"/>
    <circle  fill="none" cx="118.8" cy="144" connectorname="A0" stroke="#9A916C" r="2.052" id="connector76pin" stroke-width="1.224"/>

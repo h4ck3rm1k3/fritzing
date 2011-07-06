@@ -429,13 +429,13 @@
      </g>
     </g>
    </g>
-   <rect  width="14.1732" x="54.1134" y="39.7984" fill="#ffffff" height="6.80315" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="14.1732" x="54.1134" y="14.5984" fill="#ffffff" height="6.80315" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="14.1732" x="16.3134" y="64.9984" fill="#ffffff" height="6.80315" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="14.1732" x="36.1134" y="64.9984" fill="#ffffff" height="6.80315" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="0.878738" x="31.9181" y="2.29607" fill="#ffffff" height="2.60788" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="1.296" x="20.952" y="2.52" fill="#ffffff" height="2.16" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="18.72" x="23.04" y="10.8" fill="#ffffff" height="50.4" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="14.1732" x="54.1134" y="39.7984" fill="#333333" height="6.80315" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="14.1732" x="54.1134" y="14.5984" fill="#333333" height="6.80315" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="14.1732" x="16.3134" y="64.9984" fill="#333333" height="6.80315" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="14.1732" x="36.1134" y="64.9984" fill="#333333" height="6.80315" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="0.878738" x="31.9181" y="2.29607" fill="#333333" height="2.60788" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="1.296" x="20.952" y="2.52" fill="#333333" height="2.16" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="18.72" x="23.04" y="10.8" fill="#333333" height="50.4" stroke="none" fill-opacity="1" stroke-width="0"/>
    <circle  fill="none" cx="3.6" cy="90" connectorname="GND" stroke="#9A916C" r="2.052" id="connector16pin" stroke-width="1.224"/>
    <circle  fill="none" cx="3.6" cy="82.8" connectorname="5V" stroke="#9A916C" r="2.052" id="connector17pin" stroke-width="1.224"/>
    <circle  fill="none" cx="3.6" cy="68.4" connectorname="SP+" stroke="#9A916C" r="2.052" id="connector18pin" stroke-width="1.224"/>

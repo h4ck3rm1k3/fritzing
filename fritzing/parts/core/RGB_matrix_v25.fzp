@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='RGB_matrix_v25'>
 <version>4</version>
-<date>2011-07-01</date>
+<date>2011-07-06</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description:&lt;/span&gt; This is a large sized RGB LED Matrix with a backpack that has been designed to take SPI serial input and display any graphics you pass it. All the refreshing and communication control is taken care of by the backpack. It&amp;#39;s even reprogrammable! 7 software selectable colors are available!&lt;br /&gt;
@@ -50,7 +50,7 @@
 	&lt;li&gt;
 		Max width of backpack including connector pins - 1.1&amp;quot;&lt;/li&gt;
 &lt;/ul&gt;</description>
-<title>LED Matrix  Serial Interface  Red/Green/Blue</title>
+<title>LED Matrix - Serial Interface - Red/Green/Blue</title>
 <url>http://www.sparkfun.com/products/760</url>
 <tags>
 <tag>LED</tag>

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='quadstep-v12'>
 <version>4</version>
-<date>2011-07-01</date>
+<date>2011-07-06</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Description:&lt;/strong&gt; The Quadstepper motor driver board allows you to control up to 4 bipolar stepper motors simultaneously using logic level IO pins. Each motor driver has an output drive capacity of 35V and 2Amps. The board is capable of driving motors in full, half, quarter, eight, and sixteenth-step modes. The logic levels are selectable between 3.3V and 5V by way of a jumper. The bus header allows you to control all four motors with only 6 IO pins by controlling the enable (EN pins) for each motor, although each motor will be activated alone, not simultaneously. Be sure to close all of the &amp;#39;Bus Enable&amp;#39; jumpers on the back of the board in order to use the Bus header.&lt;/p&gt;

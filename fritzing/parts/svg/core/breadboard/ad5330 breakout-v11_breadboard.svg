@@ -270,7 +270,7 @@
      </g>
     </g>
    </g>
-   <rect  width="12.9044" x="22.3024" y="30.2718" fill="#ffffff" height="20.238" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="12.9044" x="22.3024" y="30.2718" fill="" height="20.238" stroke="" fill-opacity="1.9467e+69" stroke-width="1.47389e-307"/>
    <circle  fill="none" cx="54" cy="25.2" connectorname="DB7" stroke="#9A916C" r="2.052" id="connector4pin" stroke-width="1.224"/>
    <rect  width="4.104" x="51.948" y="23.148" fill="none" height="4.104" stroke="#9A916C" stroke-width="1.224"/>
    <circle  fill="none" cx="54" cy="32.4" connectorname="DB6" stroke="#9A916C" r="2.052" id="connector5pin" stroke-width="1.224"/>

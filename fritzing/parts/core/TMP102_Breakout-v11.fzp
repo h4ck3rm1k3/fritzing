@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='TMP102_Breakout-v11'>
 <version>4</version>
-<date>2011-07-01</date>
+<date>2011-07-06</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;b&gt;Description: &lt;/b&gt;This is a breakout board for the incredibly small TMP102 digital temperature sensor. The TMP102 is a digital sensor (I2C a.k.a. TWI), has a resolution of 0.0625&amp;deg;C, and is accurate up to 0.5&amp;deg;C. The sensor requires very low-current, and is loaded with features.&lt;/p&gt;
@@ -44,7 +44,7 @@
 	&lt;li&gt;
 		&lt;a href=&quot;http://bildr.org/2011/01/tmp102-arduino/&quot; target=&quot;_blank&quot;&gt;bildr blog - TMP102&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</description>
-<title>Digital Temperature Sensor Breakout  TMP102</title>
+<title>Digital Temperature Sensor Breakout - TMP102</title>
 <url>http://www.sparkfun.com/products/9418</url>
 <tags>
 <tag>Temp</tag>

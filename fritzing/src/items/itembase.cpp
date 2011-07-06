@@ -345,7 +345,7 @@ void ItemBase::saveInstance(QXmlStreamWriter & streamWriter) {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
 		if (connectorItem == NULL) continue;
 
-		if (connectorItem->connectionsCount() > 0) {
+		if (connectorItem->connectionsCount() > 0 || connectorItem->isBendable()) {
 			saveConnectorItems = true;
 			break;
 		}

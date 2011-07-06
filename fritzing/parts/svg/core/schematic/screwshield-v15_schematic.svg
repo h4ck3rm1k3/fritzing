@@ -8,7 +8,6 @@
   <text  x="107.499" y="86.2394" font-family="DroidSans" fill="#000000" text-anchor="middle" stroke="none" id="label" stroke-width="0" font-size="18">ProtoScrew</text>
   <text  x="107.499" y="107.499" font-family="DroidSans" fill="#000000" text-anchor="middle" stroke="none" id="label" stroke-width="0" font-size="18">Shield</text>
   <text  x="107.499" y="128.759" font-family="DroidSans" fill="#000000" text-anchor="middle" stroke="none" id="label" stroke-width="0" font-size="18">Kit</text>
-  <text  x="107.499" y="150.019" font-family="DroidSans" fill="#000000" text-anchor="middle" stroke="none" id="label" stroke-width="0" font-size="18">Retail</text>
   <rect  width="7.2e-06" x="107.499" y="385.077" fill="none" height="7.2e-06" stroke="none" id="connector76pin" stroke-width="0" connectorName="3.3V"/>
   <rect  width="7.2e-06" x="107.499" y="385.077" fill="none" height="7.2e-06" stroke="none" id="connector76terminal" stroke-width="0"/>
   <rect  width="7.2e-06" x="107.499" y="385.077" fill="none" height="7.2e-06" stroke="none" id="connector77pin" stroke-width="0" connectorName="3.3V"/>

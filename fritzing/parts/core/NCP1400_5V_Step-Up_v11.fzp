@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='NCP1400_5V_Step-Up_v11'>
 <version>4</version>
-<date>2011-07-01</date>
+<date>2011-07-06</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description: &lt;/span&gt;The NCP1400 is a 3.3V DC-DC converter. The breakout board will accept voltage inputs between 1 and 3 Volts (such as 1 or 2 AA batteries) and output a constant, low ripple 3.3V output capable of sourcing up to 100 mA. This board is great for supplying power to 3.3V sensors or providing 3.3V from a a single AA battery.&lt;br /&gt;
@@ -15,7 +15,7 @@
 	&lt;li&gt;
 		&lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/datasheets/Prototyping/Batteries/Voltage_Switcher-NCP1400A-D.pdf&quot; name=&quot;&quot; target=&quot;_blank&quot;&gt;Datasheet&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</description>
-<title>NCP1400 StepUp Breakout</title>
+<title>NCP1400 Step-Up Breakout</title>
 <url>http://www.sparkfun.com/products/9216</url>
 <tags>
 <tag>Power</tag>

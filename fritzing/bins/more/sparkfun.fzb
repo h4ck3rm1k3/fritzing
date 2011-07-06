@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.5.2b.02.18.4756">
- <title>Sparkfun</title>
+ <title>SparkFun</title>
  <instances>
   <instance moduleIdRef="10x2-Epaper-Breakout-Board-v11">
+   <views>
+    <iconView layer="icon">
+     <geometry x="-1" y="-1" z="-1"/>
+    </iconView>
+   </views>
+  </instance>
+  <instance moduleIdRef="5DOF-v25">
    <views>
     <iconView layer="icon">
      <geometry x="-1" y="-1" z="-1"/>
@@ -500,13 +507,6 @@
    </views>
   </instance>
   <instance moduleIdRef="xbeeshield-v13">
-   <views>
-    <iconView layer="icon">
-     <geometry x="-1" y="-1" z="-1"/>
-    </iconView>
-   </views>
-  </instance>
-  <instance moduleIdRef="5DOF-v25">
    <views>
     <iconView layer="icon">
      <geometry x="-1" y="-1" z="-1"/>

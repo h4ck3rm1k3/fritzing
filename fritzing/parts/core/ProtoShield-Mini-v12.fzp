@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='ProtoShield-Mini-v12'>
 <version>4</version>
-<date>2011-07-01</date>
+<date>2011-07-06</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Description: &lt;/strong&gt;This is a small prototyping shield for the Arduino Pro Mini. If your project requires just a little bit more space for your external circuitry, this might be a perfect addition. 38 unconnected PTHs are provided for your prototyping needs.&lt;/p&gt;

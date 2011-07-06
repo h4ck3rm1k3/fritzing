@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='canbus_shield-v12'>
 <version>4</version>
-<date>2011-07-01</date>
+<date>2011-07-06</date>
 <author>SparkFun</author>
 <description>&lt;div&gt;
 	&lt;strong&gt;Description:&lt;/strong&gt; This shield gives the Arduino CAN-Bus capability. It uses the Microchip MCP2515 CAN controller with MCP2551 CAN transceiver. CAN connection is via a standard 9-way sub-D for use with&amp;nbsp;OBDII cable. Ideal for automative CAN application. The shield also has a uSD card holder, serial LCD connector and connector for an&amp;nbsp;EM406 GPS module. Making this shield ideal for data logging application.&lt;/div&gt;
@@ -47,7 +47,7 @@
 			&lt;a href=&quot;http://www.sparkfun.com/datasheets/DevTools/Arduino/MCP2551.pdf&quot; target=&quot;_blank&quot;&gt;Datasheet &lt;/a&gt;(MCP2551)&lt;/li&gt;
 	&lt;/ul&gt;
 &lt;/div&gt;</description>
-<title>Arduino CanBus Shield</title>
+<title>Arduino Can-Bus Shield</title>
 <url>http://www.sparkfun.com/products/10039</url>
 <tags>
 <tag>Can</tag>

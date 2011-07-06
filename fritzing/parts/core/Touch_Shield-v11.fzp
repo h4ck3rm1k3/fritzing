@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='Touch_Shield-v11'>
 <version>4</version>
-<date>2011-07-01</date>
+<date>2011-07-06</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Description:&lt;/strong&gt; The MPR121 IC is a great way to build simple capacitive touch interfaces, and now it&amp;#39;s even easier to incorporate into your Arduino projects with the touch shield. The touch shield has 9 capacitive touch pads, with headers for the remaining 3 electrode connections. With this shield you can have a total of 12 touch sensitive buttons. An on-board logic level converter allows it to work with 5V and 3.3V Arduino boards. Simply solder on some header pins and stack it on to your Arduino for a convenient input device. Check below for some example code to get you started.&lt;/p&gt;

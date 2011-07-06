@@ -437,9 +437,9 @@
      </g>
     </g>
    </g>
-   <rect  width="2.60788" x="103.096" y="158.003" fill="#ffffff" height="0.878738" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="1.296" x="110.952" y="157.32" fill="#ffffff" height="2.16" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="29.827" x="13.8852" y="142.072" fill="#ffffff" height="11.0449" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="2.60788" x="103.096" y="158.003" fill="#333333" height="0.878738" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="1.296" x="110.952" y="157.32" fill="#333333" height="2.16" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="29.827" x="13.8852" y="142.072" fill="" height="11.0449" stroke="" fill-opacity="1.9467e+69" stroke-width="1.47389e-307"/>
    <circle  fill="none" cx="21.6" cy="14.4" connectorname="RX" stroke="#9A916C" r="2.052" id="connector2pin" stroke-width="1.224"/>
    <rect  width="4.104" x="19.548" y="12.348" fill="none" height="4.104" stroke="#9A916C" stroke-width="1.224"/>
    <circle  fill="none" cx="21.6" cy="21.6" connectorname="TX" stroke="#9A916C" r="2.052" id="connector3pin" stroke-width="1.224"/>

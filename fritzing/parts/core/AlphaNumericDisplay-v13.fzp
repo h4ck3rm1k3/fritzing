@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='AlphaNumericDisplay-v13'>
 <version>4</version>
-<date>2011-07-01</date>
+<date>2011-07-06</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Description:&lt;/strong&gt; The Serial Alphanumeric Display Driver allows you to communicate with alphanumeric displays over a simple SPI interface. Based on the A6282 IC, these boards work well with all of our alphanumeric displays and we have even provided a library listed below.&lt;/p&gt;

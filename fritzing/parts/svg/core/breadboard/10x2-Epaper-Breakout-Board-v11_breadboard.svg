@@ -241,14 +241,14 @@
      </g>
     </g>
    </g>
-   <rect  width="6.80315" x="36.1984" y="75.713" fill="#ffffff" height="14.1732" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="8.22046" x="35.4897" y="58.2803" fill="#ffffff" height="13.0393" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="7.37006" x="46.715" y="74.6647" fill="#ffffff" height="9.07085" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="1.152" x="21.024" y="74.592" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="1.152" x="21.024" y="85.392" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="4.11024" x="66.6482" y="19.1622" fill="#ffffff" height="55.2756" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="4.11024" x="1.24158" y="19.1622" fill="#ffffff" height="55.2756" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="8.064" x="24.768" y="81.5825" fill="#ffffff" height="3.51439" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="6.80315" x="36.1984" y="75.713" fill="#333333" height="14.1732" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="8.22046" x="35.4897" y="58.2803" fill="#333333" height="13.0393" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="7.37006" x="46.715" y="74.6647" fill="#333333" height="9.07085" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="1.152" x="21.024" y="74.592" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="1.152" x="21.024" y="85.392" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="4.11024" x="66.6482" y="19.1622" fill="#333333" height="55.2756" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="4.11024" x="1.24158" y="19.1622" fill="#333333" height="55.2756" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="8.064" x="24.768" y="81.5825" fill="" height="3.51439" stroke="" fill-opacity="1.9467e+69" stroke-width="1.47389e-307"/>
    <circle  fill="none" cx="14.4" cy="3.6" connectorname="EIO1" stroke="#9A916C" r="2.052" id="connector6pin" stroke-width="1.224"/>
    <circle  fill="none" cx="21.6" cy="3.6" connectorname="XCK" stroke="#9A916C" r="2.052" id="connector7pin" stroke-width="1.224"/>
    <circle  fill="none" cx="28.8" cy="3.6" connectorname="VCC" stroke="#9A916C" r="2.052" id="connector8pin" stroke-width="1.224"/>

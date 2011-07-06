@@ -88,7 +88,7 @@
    <circle  fill="none" cx="16.3803" cy="16.2471" connectorname="+" stroke="#9A916C" r="3.83811" id="connector8pin" stroke-width="1.44"/>
   </g>
   <g  id="battcon_20mm_4legs" stroke-width="0" transform="matrix(1, 0, 0, 1, 9.55411, 10.6084)">
-   <g  stroke-width="0" transform="matrix(0, 1, -1, 0, 61.782, -0.099)">
+   <g  stroke-width="0" transform="matrix(0, -1, 1, 0, 0.099, 61.782)">
     <g  stroke-width="0">
      <g  stroke-width="0">
       <g  stroke-width="0">

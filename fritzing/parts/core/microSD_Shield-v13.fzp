@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='microSD_Shield-v13'>
 <version>4</version>
-<date>2011-07-01</date>
+<date>2011-07-06</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Update:&lt;/strong&gt; After taking a figurative lashing from the comments section we&amp;#39;re begging for mercy by updating the microSD Shield board. All new microSD shields have a voltage converter chip on-board that converts the Arduino 5V signals to 3.3V signals in accordance with SD specifications. No more &amp;#39;blown up&amp;#39; SD cards!&lt;/p&gt;
@@ -25,7 +25,7 @@
 	&lt;li&gt;
 		&lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/Code/FAT16.zip&quot; target=&quot;_blank&quot;&gt;FAT16 Library&lt;/a&gt; (Unzip this folder in the Arduino Libraries Folder. Once unzipped you can find an example by going to File-&amp;gt;Examples-&amp;gt;FAT-&amp;gt;FAT_Example in Arduino. You must re-open Arduino after unzipping the folder.&lt;/li&gt;
 &lt;/ul&gt;</description>
-<title>Arduino microSD Shield Retail</title>
+<title>Arduino MicroSD Shield</title>
 <url>http://www.sparkfun.com/products/9802</url>
 <tags>
 <tag>microSD</tag>

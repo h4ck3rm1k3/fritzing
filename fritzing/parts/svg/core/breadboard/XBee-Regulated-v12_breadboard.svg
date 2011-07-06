@@ -459,19 +459,19 @@
      </g>
     </g>
    </g>
-   <rect  width="14.1732" x="32.2299" y="46.9984" fill="#ffffff" height="6.80315" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="14.1732" x="32.2299" y="25.3984" fill="#ffffff" height="6.80315" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="5.10236" x="58.3654" y="23.3574" fill="#ffffff" height="3.68504" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="2.60788" x="95.6124" y="21.2031" fill="#ffffff" height="0.878738" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="2.60788" x="95.6124" y="46.4031" fill="#ffffff" height="0.878738" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="2.60788" x="95.6124" y="57.2031" fill="#ffffff" height="0.878738" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="2.60788" x="95.6124" y="32.0031" fill="#ffffff" height="0.878738" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="1.152" x="81.9403" y="42.192" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="1.152" x="81.9403" y="49.392" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="1.152" x="81.9403" y="34.992" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="1.152" x="81.9403" y="27.792" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="5.69764" x="58.0677" y="51.1654" fill="#ffffff" height="5.66929" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="8.064" x="35.2845" y="38.3828" fill="#ffffff" height="3.51439" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="14.1732" x="32.2299" y="46.9984" fill="#333333" height="6.80315" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="14.1732" x="32.2299" y="25.3984" fill="#333333" height="6.80315" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="5.10236" x="58.3654" y="23.3574" fill="#333333" height="3.68504" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="2.60788" x="95.6124" y="21.2031" fill="#333333" height="0.878738" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="2.60788" x="95.6124" y="46.4031" fill="#333333" height="0.878738" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="2.60788" x="95.6124" y="57.2031" fill="#333333" height="0.878738" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="2.60788" x="95.6124" y="32.0031" fill="#333333" height="0.878738" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="1.152" x="81.9403" y="42.192" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="1.152" x="81.9403" y="49.392" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="1.152" x="81.9403" y="34.992" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="1.152" x="81.9403" y="27.792" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="5.69764" x="58.0677" y="51.1654" fill="#333333" height="5.66929" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="8.064" x="35.2845" y="38.3828" fill="" height="3.51439" stroke="" fill-opacity="1.9467e+69" stroke-width="1.47389e-307"/>
    <circle  fill="none" cx="14.1165" cy="18" connectorname="GND" stroke="#9A916C" r="1.872" id="connector8pin" stroke-width="0.864"/>
    <circle  fill="none" cx="21.3165" cy="18" connectorname="DTR" stroke="#9A916C" r="1.872" id="connector9pin" stroke-width="0.864"/>
    <circle  fill="none" cx="28.5165" cy="18" connectorname="RES1" stroke="#9A916C" r="1.872" id="connector10pin" stroke-width="0.864"/>

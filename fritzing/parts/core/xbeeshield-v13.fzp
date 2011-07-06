@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='xbeeshield-v13'>
 <version>4</version>
-<date>2011-07-01</date>
+<date>2011-07-06</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description: &lt;/span&gt;This new revision fixes some minor spacing and labeling issues, but functionality remains the same.The XBee Shield simplifies the task of interfacing an XBee with your Arduino. This board mates directly with an &lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=9219&quot; name=&quot;&quot; target=&quot;_blank&quot;&gt;Arduino Pro&lt;/a&gt; or &lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=9950&quot; target=&quot;_self&quot;&gt;USB board&lt;/a&gt;, and equips it with wireless communication capabilities using the popular XBee module. This unit works with all XBee modules including the Series 1 and Series 2.5, standard and Pro version. This is SparkFun&amp;#39;s own design and is a distant relative to the official XBee Shield from Arduino.&lt;br /&gt;

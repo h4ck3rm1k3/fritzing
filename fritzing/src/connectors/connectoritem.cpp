@@ -807,7 +807,7 @@ void ConnectorItem::writeTopLevelAttributes(QXmlStreamWriter & writer) {
 }
 
 void ConnectorItem::saveInstance(QXmlStreamWriter & writer) {
-	if (m_connectedTo.count() <= 0) {
+	if (m_connectedTo.count() <= 0 && !m_bendable) {
 		// no need to save if there's no connection
 		return;
 	}
@@ -817,9 +817,19 @@ void ConnectorItem::saveInstance(QXmlStreamWriter & writer) {
 	writeTopLevelAttributes(writer);
 
 	writer.writeStartElement("geometry");
-	writer.writeAttribute("x", QString::number(this->pos().x()));
-	writer.writeAttribute("y", QString::number(this->pos().y()));
+	QPointF p = this->pos();
+	writer.writeAttribute("x", QString::number(p.x()));
+	writer.writeAttribute("y", QString::number(p.y()));
 	writer.writeEndElement();
+
+	if (m_bendable && m_lineItem != NULL) {
+		p = m_lineItem->line().p2();
+		writer.writeStartElement("leg");
+		QPointF p = this->pos();
+		writer.writeAttribute("x", QString::number(p.x()));
+		writer.writeAttribute("y", QString::number(p.y()));
+		writer.writeEndElement();
+	}
 
 	if (m_connectedTo.count() > 0) {
 		writer.writeStartElement("connects");

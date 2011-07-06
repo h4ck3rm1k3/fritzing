@@ -665,14 +665,14 @@
      </g>
     </g>
    </g>
-   <rect  width="0.878738" x="143.603" y="128.296" fill="#ffffff" height="2.60788" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="1.152" x="60.624" y="160.992" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="1.152" x="143.424" y="132.192" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="1.152" x="96.624" y="135.792" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="6.23622" x="29.2819" y="54.7623" fill="#ffffff" height="5.67581" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="6.23622" x="43.6819" y="54.7623" fill="#ffffff" height="5.67581" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="24.48" x="99.36" y="149.4" fill="#ffffff" height="10.08" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="21.6454" x="66.96" y="149.4" fill="#ffffff" height="10.08" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="0.878738" x="143.603" y="128.296" fill="#333333" height="2.60788" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="1.152" x="60.624" y="160.992" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="1.152" x="143.424" y="132.192" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="1.152" x="96.624" y="135.792" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="6.23622" x="29.2819" y="54.7623" fill="#333333" height="5.67581" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="6.23622" x="43.6819" y="54.7623" fill="#333333" height="5.67581" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="24.48" x="99.36" y="149.4" fill="#333333" height="10.08" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="21.6454" x="66.96" y="149.4" fill="#333333" height="10.08" stroke="none" fill-opacity="1" stroke-width="0"/>
    <circle  fill="none" cx="122.4" cy="21.6" connectorname="GND" stroke="#9A916C" r="2.052" id="connector9pin" stroke-width="1.224"/>
    <circle  fill="none" cx="122.4" cy="28.8" connectorname="PSEL" stroke="#9A916C" r="2.052" id="connector10pin" stroke-width="1.224"/>
    <circle  fill="none" cx="122.4" cy="36" connectorname="BATT" stroke="#9A916C" r="2.052" id="connector11pin" stroke-width="1.224"/>

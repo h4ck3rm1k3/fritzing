@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='LilyPad-Temp-v12'>
 <version>4</version>
-<date>2011-07-01</date>
+<date>2011-07-06</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description:&lt;/span&gt; Detecting temperature changes has never been easier. The MCP9700 is a small thermistor type temperature sensor. This sensor will output 0.5V at 0 degrees C, 0.75V at 25 C, and 10mV per degree C. Doing an analog to digital conversion on the signal line will allow you to establish the local ambient temperature. Detect physical touch based on body heat and ambient conditions with this small sensor.&lt;br /&gt;

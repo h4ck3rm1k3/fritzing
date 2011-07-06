@@ -205,8 +205,8 @@
      </g>
     </g>
    </g>
-   <rect  width="14.1732" x="21.7134" y="3.79842" fill="#ffffff" height="6.80315" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="14.1732" x="21.7134" y="13.748" fill="#ffffff" height="8.50392" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="14.1732" x="21.7134" y="3.79842" fill="#333333" height="6.80315" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="14.1732" x="21.7134" y="13.748" fill="" height="8.50392" stroke="" fill-opacity="1.9467e+69" stroke-width="1.47389e-307"/>
    <circle  fill="none" cx="3.6" cy="39.6" connectorname="GND" stroke="#9A916C" r="2.052" id="connector6pin" stroke-width="1.224"/>
    <rect  width="4.104" x="1.548" y="37.548" fill="none" height="4.104" stroke="#9A916C" stroke-width="1.224"/>
    <circle  fill="none" cx="10.8" cy="39.6" connectorname="VCC" stroke="#9A916C" r="2.052" id="connector7pin" stroke-width="1.224"/>

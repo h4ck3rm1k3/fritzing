@@ -456,10 +456,10 @@
      </g>
     </g>
    </g>
-   <rect  width="14.1732" x="126.113" y="180.227" fill="#ffffff" height="28.3465" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="8.64" x="6.48" y="7.92" fill="#ffffff" height="5.76" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="8.64" x="6.48" y="15.12" fill="#ffffff" height="5.76" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="2.60788" x="117.496" y="78.7183" fill="#ffffff" height="0.878738" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="14.1732" x="126.113" y="180.227" fill="#333333" height="28.3465" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="8.64" x="6.48" y="7.92" fill="#333333" height="5.76" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="8.64" x="6.48" y="15.12" fill="#333333" height="5.76" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="2.60788" x="117.496" y="78.7183" fill="#333333" height="0.878738" stroke="none" fill-opacity="1" stroke-width="0"/>
    <circle  fill="none" cx="118.8" cy="3.6" connectorname="MIC_N" stroke="#9A916C" r="2.052" id="connector9pin" stroke-width="1.224"/>
    <circle  fill="none" cx="111.6" cy="3.6" connectorname="MIC_P" stroke="#9A916C" r="2.052" id="connector10pin" stroke-width="1.224"/>
    <circle  fill="none" cx="104.4" cy="3.6" connectorname="SPK_N" stroke="#9A916C" r="2.052" id="connector11pin" stroke-width="1.224"/>

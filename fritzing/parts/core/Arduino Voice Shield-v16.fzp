@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='Arduino Voice Shield-v16'>
 <version>4</version>
-<date>2011-07-01</date>
+<date>2011-07-06</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description: &lt;/span&gt;The VoiceBox Shield can be mounted on top of your &lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=666&quot; name=&quot;&quot; target=&quot;_self&quot;&gt;Arduino USB Board&lt;/a&gt; or &lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=9219&quot; name=&quot;&quot; target=&quot;_self&quot;&gt;Pro&lt;/a&gt;, to give it access to all capabilities of the &lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=9578&quot; name=&quot;&quot; target=&quot;_self&quot;&gt;SpeakJet&lt;/a&gt; voice and sound synthesizer. &lt;span class=&quot;description&quot;&gt;The Voice Box Shield uses the SpeakJet chip to convert serial commands into a great robot-sounding voice.&lt;/span&gt;&lt;br /&gt;

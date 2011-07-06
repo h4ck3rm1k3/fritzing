@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='audiojack_breakout-v11'>
 <version>4</version>
-<date>2011-07-01</date>
+<date>2011-07-06</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Replacement:&lt;/strong&gt; &lt;a href=&quot;http://www.sparkfun.com/products/10588&quot; target=&quot;_blank&quot;&gt;PRT-10588&lt;/a&gt;. The new revision corrects the silkscreen so that the pins are now labeled correctly. This page is for reference only.&lt;/p&gt;

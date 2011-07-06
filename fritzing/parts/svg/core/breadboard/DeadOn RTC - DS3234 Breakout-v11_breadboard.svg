@@ -114,8 +114,8 @@
      </g>
     </g>
    </g>
-   <rect  width="1.152" x="49.824" y="31.392" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="36.8504" x="10.3748" y="18.1701" fill="#ffffff" height="21.2599" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="1.152" x="49.824" y="31.392" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="36.8504" x="10.3748" y="18.1701" fill="" height="21.2599" stroke="" fill-opacity="1.9467e+69" stroke-width="1.47389e-307"/>
    <circle  fill="none" cx="7.2" cy="54" connectorname="SS" stroke="#9A916C" r="2.052" id="connector5pin" stroke-width="1.224"/>
    <circle  fill="none" cx="14.4" cy="54" connectorname="MOSI" stroke="#9A916C" r="2.052" id="connector6pin" stroke-width="1.224"/>
    <circle  fill="none" cx="21.6" cy="54" connectorname="MISO" stroke="#9A916C" r="2.052" id="connector7pin" stroke-width="1.224"/>
