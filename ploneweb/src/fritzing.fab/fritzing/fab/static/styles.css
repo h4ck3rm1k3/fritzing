@@ -1,3 +1,6 @@
+/* Fritzing Fab Styles */
+
+
 
 table.orderTable th,
 table.orderTable td,
@@ -72,11 +75,66 @@ div.checkout {
     background-color: #e1ece5;
 }
 
+.paypalCheckoutCaption {
+    line-height: 3em;
+}
+.paypalCheckoutLink {
+    float: right;
+    margin-bottom: 1.5em;
+}
+
 div.supportBox {
     color: white;
     background-color: #ac362b;
 }
 
+div.overlay {
+    width: 40em !important;
+}
+.overlay .pb-ajax>div {
+    padding: 3em;
+    width: auto;
+    background-color: #c2daca;
+}
 
+#addform div.formControls {
+    margin: 0;
+    margin-top: 3em;
+}
+#addform #form-buttons-cancel,
+#addform #form-buttons-save,
+a.addSketchLink {
+    width: 103px;
+    height: 30px;
+    color: white !important;
+    font-size: 13px;
+    text-transform: uppercase;
+    text-align: left;
+    padding-left: 34px;
+    border: none;
+}
+#addform #form-buttons-cancel:hover,
+#addform #form-buttons-save:hover {
+    color: black;
+}
+#addform #form-buttons-save {
+    margin-right: 3em;
+    background: url(button_upload.png);
+}
+#addform #form-buttons-cancel {
+    background: url(button_cancel.png);
+}
+
+a.addSketchLink {
+    display: block;
+    min-width: 67px;
+    width: auto;
+    line-height: 30px;
+    text-decoration: none !important;
+    background: url(button_add.png) no-repeat;
+}
+
+a.addOrderLink {
+}
 
 

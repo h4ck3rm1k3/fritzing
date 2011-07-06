@@ -26,7 +26,7 @@ jQuery(function($) {
     {
         subtype: 'ajax',
         filter: common_content_filter,
-        formselector: '#content-core>form',
+        formselector: '#content-core>#addform>form',
         noform: function(el) {
             return noformerrorshow(el, 'reload');
         },

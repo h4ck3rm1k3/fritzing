@@ -20,7 +20,7 @@ class ISketch(form.Schema):
     
     orderItem = NamedBlobFile(
         title = _(u"Sketch file"),
-        description = _(u"The .fzz or .fz file of your sketch"))
+        description = _(u"The .fzz file of your sketch"))
     
     copies = Int(
         title = _(u"Copies"),
