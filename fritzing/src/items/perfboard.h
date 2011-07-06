@@ -56,6 +56,10 @@ public:
 	bool canFindConnectorsUnder();
 	bool rotation45Allowed();
 
+protected:
+	virtual QString getRowLabel();
+	virtual QString getColumnLabel();
+
 public:
 	static QString genFZP(const QString & moduleID);
 	static QString makeBreadboardSvg(const QString & size);

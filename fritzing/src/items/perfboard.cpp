@@ -214,7 +214,7 @@ bool Perfboard::collectExtraInfo(QWidget * parent, const QString & family, const
 		hboxLayout1->setContentsMargins(0, 0, 0, 0);
 		hboxLayout1->setSpacing(2);
 
-		QLabel * l1 = new QLabel(tr("horizontal holes"));	
+		QLabel * l1 = new QLabel(getRowLabel());	
 		l1->setMargin(0);
 		l1->setObjectName("infoViewLabel");	
 		m_xEdit = new QLineEdit();
@@ -232,7 +232,7 @@ bool Perfboard::collectExtraInfo(QWidget * parent, const QString & family, const
 		hboxLayout2->setContentsMargins(0, 0, 0, 0);
 		hboxLayout2->setSpacing(2);
 
-		QLabel * l2 = new QLabel(tr("vertical holes"));
+		QLabel * l2 = new QLabel(getColumnLabel());
 		l2->setMargin(0);
 		l2->setObjectName("infoViewLabel");	
 		m_yEdit = new QLineEdit();
@@ -363,4 +363,12 @@ bool Perfboard::stickyEnabled() {
 
 bool Perfboard::canFindConnectorsUnder() {
 	return false;
+}
+
+QString Perfboard::getRowLabel() {
+	return tr("rows");
+}
+
+QString Perfboard::getColumnLabel() {
+	return tr("columns");
 }

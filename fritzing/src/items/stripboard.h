@@ -84,9 +84,12 @@ public:
 	void reinitBuses(bool triggerUndo);
 	void initCutting(Stripbit *);
 	void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth, bool & negativeOffsetRect);
+	void restoreRowColors(Stripbit * stripbit);
 
 protected:
 	void nextBus(QList<ConnectorItem *> & soFar);
+	QString getRowLabel();
+	QString getColumnLabel();
 
 public:
 	static QString genFZP(const QString & moduleID);

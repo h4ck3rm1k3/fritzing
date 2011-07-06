@@ -191,7 +191,9 @@ void Stripbit::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
 	other->setRemoved(m_removed);
 	other->setChanged(true);
-	other->update();
+
+	dynamic_cast<Stripboard *>(this->parentItem())->restoreRowColors(other);
+
 }
 
 void Stripbit::hoverEnterEvent( QGraphicsSceneHoverEvent * event ) 
@@ -614,5 +616,24 @@ void Stripboard::setProp(const QString & prop, const QString & value)
 
 void Stripboard::getConnectedColor(ConnectorItem * ci, QBrush * &brush, QPen * &pen, qreal & opacity, qreal & negativePenWidth, bool & negativeOffsetRect) {
 	Perfboard::getConnectedColor(ci, brush, pen, opacity, negativePenWidth, negativeOffsetRect);
-	opacity *= .75;
+	opacity *= .66667;
+}
+
+void Stripboard::restoreRowColors(Stripbit * stripbit)
+{
+	// TODO: find a quick way to update the buses (and connectorItem colors) in just the row...
+	Q_UNUSED(stripbit);
+	//int y = stripbit->y();
+	//stripbit = m_firstColumn.at(y);
+
+	//ConnectorItem * ci = m_lastColumn.at(y);
+	//ci->restoreColor(false, 0, false);
+}
+
+QString Stripboard::getRowLabel() {
+	return tr("strip length");
+}
+
+QString Stripboard::getColumnLabel() {
+	return tr("strips");
 }
