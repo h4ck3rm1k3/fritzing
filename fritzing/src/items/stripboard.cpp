@@ -72,6 +72,11 @@ Stripbit::Stripbit(const QPainterPath & path, ConnectorItem * connectorItem, int
 
 	setZValue(-999);			// beneath connectorItems
 
+	setPen(Qt::NoPen);
+	// TODO: don't hardcode this color
+	setBrush(QColor(0xbc, 0x94, 0x51));							// QColor(0xc4, 0x9c, 0x59)
+
+
 	m_right = NULL;
 	m_x = x;
 	m_y = y;
@@ -191,7 +196,7 @@ void Stripbit::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
 	other->setRemoved(m_removed);
 	other->setChanged(true);
-
+	other->update();
 	dynamic_cast<Stripboard *>(this->parentItem())->restoreRowColors(other);
 
 }
@@ -417,9 +422,6 @@ void Stripboard::addedToScene(bool temporary)
 
 		Stripbit * stripbit = new Stripbit(pp1, ci, cx, cy, this);
 		stripbits.insert((cy * x) + cx, stripbit);
-		stripbit->setPen(Qt::NoPen);
-		// TODO: don't hardcode this color
-		stripbit->setBrush(QColor(0xc4, 0x9c, 0x59));
 		QRectF r = ci->rect();
 		stripbit->setPos(r.center().x(), r.top());
 		if (cx == 0) m_firstColumn[cy] = stripbit;
