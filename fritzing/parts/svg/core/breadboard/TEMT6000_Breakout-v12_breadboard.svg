@@ -85,8 +85,8 @@
      </g>
     </g>
    </g>
-   <rect  width="1.152" x="19.584" y="4.032" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="5.55591" x="17.3537" y="10.9191" fill="#333333" height="11.3103" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="1.152" x="19.584" y="4.032" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="5.55591" x="17.3537" y="10.9191" fill="#ffffff" height="11.3103" stroke="none" fill-opacity="0.15" stroke-width="0"/>
    <circle  fill="none" cx="3.6" cy="21.6" connectorname="VCC" stroke="#9A916C" r="2.052" id="connector2pin" stroke-width="1.224"/>
    <circle  fill="none" cx="3.6" cy="14.4" connectorname="GND" stroke="#9A916C" r="2.052" id="connector3pin" stroke-width="1.224"/>
    <circle  fill="none" cx="3.6" cy="7.2" connectorname="S" stroke="#9A916C" r="2.052" id="connector4pin" stroke-width="1.224"/>

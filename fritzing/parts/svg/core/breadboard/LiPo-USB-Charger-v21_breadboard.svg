@@ -253,13 +253,13 @@
      </g>
     </g>
    </g>
-   <rect  width="9.54626" x="49.6238" y="10.44" fill="#333333" height="11.52" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="0.878738" x="53.606" y="5.89607" fill="#333333" height="2.60788" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="1.152" x="39.1118" y="27.792" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="1.152" x="28.3118" y="9.792" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="1.152" x="21.1118" y="9.792" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="8.64" x="20.9678" y="0.72" fill="#333333" height="5.76" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="8.064" x="35.6558" y="37.3028" fill="" height="3.51439" stroke="" fill-opacity="1.9467e+69" stroke-width="1.47389e-307"/>
+   <rect  width="9.54626" x="49.6238" y="10.44" fill="#ffffff" height="11.52" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="0.878738" x="53.606" y="5.89607" fill="#ffffff" height="2.60788" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="1.152" x="39.1118" y="27.792" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="1.152" x="28.3118" y="9.792" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="1.152" x="21.1118" y="9.792" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="8.64" x="20.9678" y="0.72" fill="#ffffff" height="5.76" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="8.064" x="35.6558" y="37.3028" fill="#333333" height="3.51439" stroke="none" fill-opacity="1" stroke-width="0"/>
    <circle  fill="none" cx="17.0078" cy="28.0346" connectorname="GND" stroke="#9A916C" r="1.52207" id="connector8pin" stroke-width="1.05988"/>
    <circle  fill="none" cx="17.0078" cy="22.3654" connectorname="VBAT" stroke="#9A916C" r="1.52207" id="connector9pin" stroke-width="1.05988"/>
    <circle  fill="none" cx="17.0078" cy="56.8346" connectorname="GND" stroke="#9A916C" r="1.52207" id="connector10pin" stroke-width="1.05988"/>

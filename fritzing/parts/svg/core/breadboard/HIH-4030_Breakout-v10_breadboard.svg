@@ -70,7 +70,7 @@
      </g>
     </g>
    </g>
-   <rect  width="25.2" x="20.52" y="4.32" fill="#333333" height="12.6" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="25.2" x="20.52" y="4.32" fill="#ffffff" height="12.6" stroke="none" fill-opacity="0.15" stroke-width="0"/>
    <circle  fill="none" cx="3.6" cy="3.6" connectorname="GND" stroke="#9A916C" r="2.052" id="connector0pin" stroke-width="1.224"/>
    <circle  fill="none" cx="3.6" cy="10.8" connectorname="OUT" stroke="#9A916C" r="2.052" id="connector1pin" stroke-width="1.224"/>
    <circle  fill="none" cx="3.6" cy="18" connectorname="VCC" stroke="#9A916C" r="2.052" id="connector2pin" stroke-width="1.224"/>

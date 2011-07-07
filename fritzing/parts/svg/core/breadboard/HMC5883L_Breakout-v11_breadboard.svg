@@ -156,9 +156,9 @@
      </g>
     </g>
    </g>
-   <rect  width="1.152" x="10.224" y="24.192" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="1.152" x="13.824" y="24.192" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="9.63778" x="20.3811" y="20.3811" fill="#333333" height="9.63778" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="1.152" x="10.224" y="24.192" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="1.152" x="13.824" y="24.192" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="9.63778" x="20.3811" y="20.3811" fill="#ffffff" height="9.63778" stroke="none" fill-opacity="0.15" stroke-width="0"/>
    <circle  fill="none" cx="36" cy="46.8" connectorname="GND" stroke="#9A916C" r="2.052" id="connector6pin" stroke-width="1.224"/>
    <rect  width="4.104" x="33.948" y="44.748" fill="none" height="4.104" stroke="#9A916C" stroke-width="1.224"/>
    <circle  fill="none" cx="28.8" cy="46.8" connectorname="VCC" stroke="#9A916C" r="2.052" id="connector7pin" stroke-width="1.224"/>

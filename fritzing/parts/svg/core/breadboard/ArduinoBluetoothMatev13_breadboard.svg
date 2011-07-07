@@ -208,20 +208,20 @@
    </g>
    <rect  width="14.1732" x="79.313" y="10.9984" fill="#333333" height="6.80315" stroke="none" fill-opacity="1" stroke-width="0"/>
    <rect  width="14.1732" x="79.313" y="36.1984" fill="#333333" height="6.80315" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="0.878738" x="100.403" y="38.2961" fill="#333333" height="2.60788" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="0.878738" x="100.403" y="5.89607" fill="#333333" height="2.60788" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="7.93699" x="93.2314" y="24.9165" fill="" height="2.26772" stroke="" fill-opacity="1.9467e+69" stroke-width="1.47389e-307"/>
-   <rect  width="7.93699" x="104.031" y="24.9165" fill="" height="2.26772" stroke="" fill-opacity="1.9467e+69" stroke-width="1.47389e-307"/>
-   <rect  width="1.152" x="107.424" y="38.592" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="1.152" x="107.424" y="13.392" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="1.152" x="96.624" y="16.992" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="1.152" x="96.624" y="31.392" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="1.152" x="89.424" y="6.192" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="1.152" x="107.424" y="6.192" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="1.152" x="107.424" y="16.992" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="1.152" x="107.424" y="31.392" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="1.152" x="82.224" y="6.192" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="8.064" x="82.368" y="23.9828" fill="" height="3.51439" stroke="" fill-opacity="1.9467e+69" stroke-width="1.47389e-307"/>
+   <rect  width="0.878738" x="100.403" y="38.2961" fill="#ffffff" height="2.60788" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="0.878738" x="100.403" y="5.89607" fill="#ffffff" height="2.60788" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="7.93699" x="93.2314" y="24.9165" fill="#333333" height="2.26772" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="7.93699" x="104.031" y="24.9165" fill="#333333" height="2.26772" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="1.152" x="107.424" y="38.592" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="1.152" x="107.424" y="13.392" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="1.152" x="96.624" y="16.992" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="1.152" x="96.624" y="31.392" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="1.152" x="89.424" y="6.192" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="1.152" x="107.424" y="6.192" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="1.152" x="107.424" y="16.992" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="1.152" x="107.424" y="31.392" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="1.152" x="82.224" y="6.192" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="8.064" x="82.368" y="23.9828" fill="#333333" height="3.51439" stroke="none" fill-opacity="1" stroke-width="0"/>
    <circle  fill="none" cx="122.4" cy="5.4" connectorname="RTS_5V" stroke="#9A916C" r="2.052" id="connector12pin" stroke-width="1.224"/>
    <circle  fill="none" cx="122.4" cy="12.6" connectorname="RX_5V" stroke="#9A916C" r="2.052" id="connector13pin" stroke-width="1.224"/>
    <circle  fill="none" cx="122.4" cy="19.8" connectorname="TX_5V" stroke="#9A916C" r="2.052" id="connector14pin" stroke-width="1.224"/>

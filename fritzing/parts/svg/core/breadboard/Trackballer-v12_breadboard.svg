@@ -399,20 +399,20 @@
      </g>
     </g>
    </g>
-   <rect  width="2.01203" x="45.1772" y="17.0975" fill="#333333" height="1.98113" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="1.98113" x="31.4972" y="17.6108" fill="#333333" height="2.01203" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="2.01203" x="32.0106" y="31.3217" fill="#333333" height="1.98113" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="1.98113" x="45.7214" y="30.7775" fill="#333333" height="2.01203" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="1.152" x="39.024" y="38.592" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="1.152" x="21.024" y="24.192" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="1.152" x="39.024" y="9.792" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="1.152" x="57.024" y="24.192" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="1.152" x="60.624" y="24.192" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="1.152" x="21.024" y="16.992" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="1.152" x="57.024" y="31.392" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="1.152" x="21.024" y="42.192" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="1.152" x="53.424" y="6.192" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="14.0306" x="32.5845" y="18.1848" fill="#333333" height="14.0306" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="2.01203" x="45.1772" y="17.0975" fill="#ffffff" height="1.98113" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="1.98113" x="31.4972" y="17.6108" fill="#ffffff" height="2.01203" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="2.01203" x="32.0106" y="31.3217" fill="#ffffff" height="1.98113" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="1.98113" x="45.7214" y="30.7775" fill="#ffffff" height="2.01203" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="1.152" x="39.024" y="38.592" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="1.152" x="21.024" y="24.192" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="1.152" x="39.024" y="9.792" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="1.152" x="57.024" y="24.192" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="1.152" x="60.624" y="24.192" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="1.152" x="21.024" y="16.992" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="1.152" x="57.024" y="31.392" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="1.152" x="21.024" y="42.192" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="1.152" x="53.424" y="6.192" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="14.0306" x="32.5845" y="18.1848" fill="#ffffff" height="14.0306" stroke="none" fill-opacity="0.15" stroke-width="0"/>
    <circle  fill="none" cx="75.6" cy="57.6" connectorname="VCC" stroke="#9A916C" r="2.052" id="connector10pin" stroke-width="1.224"/>
    <circle  fill="none" cx="68.4" cy="57.6" connectorname="GND" stroke="#9A916C" r="2.052" id="connector11pin" stroke-width="1.224"/>
    <circle  fill="none" cx="61.2" cy="57.6" connectorname="BTN" stroke="#9A916C" r="2.052" id="connector12pin" stroke-width="1.224"/>

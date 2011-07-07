@@ -411,14 +411,14 @@
      </g>
     </g>
    </g>
-   <rect  width="8.50392" x="56.948" y="146.948" fill="" height="8.50392" stroke="" fill-opacity="1.9467e+69" stroke-width="1.47389e-307"/>
-   <rect  width="7.93699" x="100.431" y="149.216" fill="" height="2.26772" stroke="" fill-opacity="1.9467e+69" stroke-width="1.47389e-307"/>
-   <rect  width="7.93699" x="86.0314" y="149.216" fill="" height="2.26772" stroke="" fill-opacity="1.9467e+69" stroke-width="1.47389e-307"/>
-   <rect  width="1.152" x="67.824" y="142.992" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="1.152" x="100.224" y="142.992" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="1.152" x="103.824" y="157.392" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="1.152" x="93.024" y="142.992" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
-   <rect  width="1.152" x="89.424" y="157.392" fill="#333333" height="2.016" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="8.50392" x="56.948" y="146.948" fill="#333333" height="8.50392" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="7.93699" x="100.431" y="149.216" fill="#333333" height="2.26772" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="7.93699" x="86.0314" y="149.216" fill="#333333" height="2.26772" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="1.152" x="67.824" y="142.992" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="1.152" x="100.224" y="142.992" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="1.152" x="103.824" y="157.392" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="1.152" x="93.024" y="142.992" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="1.152" x="89.424" y="157.392" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
    <circle  fill="none" cx="144" cy="144" connectorname="ELE11" stroke="#9A916C" r="2.052" id="connector24pin" stroke-width="1.224"/>
    <circle  fill="none" cx="144" cy="151.2" connectorname="ELE10" stroke="#9A916C" r="2.052" id="connector25pin" stroke-width="1.224"/>
    <circle  fill="none" cx="144" cy="158.4" connectorname="ELE9" stroke="#9A916C" r="2.052" id="connector26pin" stroke-width="1.224"/>
