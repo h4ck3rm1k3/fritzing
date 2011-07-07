@@ -7,7 +7,8 @@
 		<sketch id="AnalogInputThermistor" name="Thermistor" src="core/AnalogInputThermistor.fz"/>
 		<sketch id="AnalogInputToServo" name="Servo (with Pot)" src="core/AnalogInputToServo.fz"/>
 		<sketch id="ArduinoISP" name="Arduino ISP" src="core/ArduinoISP.fz"/>
-		<sketch id="Arduino-no-FTDI" name="Barebones Arduino" src="core/Arduino-no-FTDI.fz"/>
+		<sketch id="BarebonesArduino" name="Barebones Arduino" src="core/Arduino-no-FTDI.fz"/>
+		<sketch id="BarebonesArduinoStripboard" name="Barebones Arduino with Stripboard" src="core/Barebones Arduino (stripboard).fz"/>
 		<sketch id="Blink" name="Blink" src="core/Blink.fz"/>
 		<sketch id="Button" name="Button" src="core/Button.fz"/>
 		<sketch id="DC_motor_control" name="DC Motor" src="core/DC_motor_control.fz"/>
@@ -142,7 +143,8 @@
 				<sketch id="VoltageRegulatorSwitch"/>
 			</category>
 			<category name="Processing">
-				<sketch id="Arduino-no-FTDI"/>
+				<sketch id="BarebonesArduino"/>
+				<sketch id="BarebonesArduinoStripboard"/>
 				<sketch id="ArduinoISP"/>
 			</category>
 		</category>
