@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='quadstep-v12'>
 <version>4</version>
-<date>2011-07-06</date>
+<date>2011-07-08</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Description:&lt;/strong&gt; The Quadstepper motor driver board allows you to control up to 4 bipolar stepper motors simultaneously using logic level IO pins. Each motor driver has an output drive capacity of 35V and 2Amps. The board is capable of driving motors in full, half, quarter, eight, and sixteenth-step modes. The logic levels are selectable between 3.3V and 5V by way of a jumper. The bus header allows you to control all four motors with only 6 IO pins by controlling the enable (EN pins) for each motor, although each motor will be activated alone, not simultaneously. Be sure to close all of the &amp;#39;Bus Enable&amp;#39; jumpers on the back of the board in order to use the Bus header.&lt;/p&gt;
@@ -593,26 +593,6 @@
 <p layer='copper0' svgId='connector117pad'/><p layer='copper1' svgId='connector117pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector118' type='male' name='VIN'>
-<description>VIN</description><views>
-<breadboardView>
-<p layer='breadboard' svgId='connector118pin'/></breadboardView>
-<schematicView>
-<p layer='schematic' svgId='connector118pin' terminalId='connector118terminal'/></schematicView>
-<pcbView>
-<p layer='copper0' svgId='connector118pad'/><p layer='copper1' svgId='connector118pad'/></pcbView>
-</views>
-</connector>
-<connector id='connector119' type='male' name='GND'>
-<description>GND</description><views>
-<breadboardView>
-<p layer='breadboard' svgId='connector119pin'/></breadboardView>
-<schematicView>
-<p layer='schematic' svgId='connector119pin' terminalId='connector119terminal'/></schematicView>
-<pcbView>
-<p layer='copper0' svgId='connector119pad'/><p layer='copper1' svgId='connector119pad'/></pcbView>
-</views>
-</connector>
 <connector id='connector120' type='female' name='DIR'>
 <description>DIR</description><views>
 <breadboardView>
@@ -698,7 +678,6 @@
 <bus id='gnd'>
 <nodeMember connectorId='connector70'/>
 <nodeMember connectorId='connector71'/>
-<nodeMember connectorId='connector119'/>
 <nodeMember connectorId='connector124'/>
 </bus>
 <bus id='vout'>

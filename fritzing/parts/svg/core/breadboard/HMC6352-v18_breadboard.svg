@@ -103,7 +103,7 @@
      </g>
     </g>
    </g>
-   <rect  width="18.4252" x="12.3874" y="12.3591" fill="#ffffff" height="18.4252" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="18.4252" x="12.3874" y="12.3591" fill="#333333" height="18.4252" stroke="none" fill-opacity="1" stroke-width="0"/>
    <rect  width="1.152" x="35.424" y="27.792" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
    <rect  width="1.152" x="35.424" y="20.592" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
    <circle  fill="none" cx="10.8" cy="39.6" connectorname="GND" stroke="#9A916C" r="2.052" id="connector32pin" stroke-width="1.224"/>

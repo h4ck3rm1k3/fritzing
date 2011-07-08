@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='GPSShield-v15'>
 <version>4</version>
-<date>2011-07-06</date>
+<date>2011-07-08</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description: &lt;/span&gt;Adding GPS to your Arduino has never been easier. The multiple GPS receivers attach easily to the shield, and with the &lt;a href=&quot;http://www.sparkfun.com/tutorial/GPSQuickStart/gps_parsing_v13.pde&quot;&gt;example sketch&lt;/a&gt;, you will be able to locate your exact position within a few meters. Here&amp;#39;s where &lt;a href=&quot;http://maps.google.com/maps?q=40.06477,+-105.20997&quot; target=&quot;_blank&quot;&gt;we are&lt;/a&gt;. GPS also gives you amazingly accurate time! A &lt;a href=&quot;http://www.sparkfun.com/commerce/tutorial_info.php?tutorials_id=173&quot;&gt;GPS quickstart guide&lt;/a&gt; is available for this product.&lt;/p&gt;

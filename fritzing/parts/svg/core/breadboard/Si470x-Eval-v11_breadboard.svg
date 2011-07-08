@@ -327,8 +327,8 @@
      </g>
     </g>
    </g>
-   <rect  width="8.92915" x="42.8315" y="22.8699" fill="#ffffff" height="14.7401" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="8.92915" x="42.6897" y="5.58992" fill="#ffffff" height="14.7401" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="8.92915" x="42.8315" y="22.8699" fill="#333333" height="14.7401" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="8.92915" x="42.6897" y="5.58992" fill="#333333" height="14.7401" stroke="none" fill-opacity="1" stroke-width="0"/>
    <rect  width="1.152" x="28.6492" y="67.392" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
    <rect  width="1.152" x="35.8492" y="67.392" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
    <rect  width="1.152" x="43.0492" y="67.392" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
@@ -341,7 +341,7 @@
    <rect  width="1.152" x="43.0492" y="70.992" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
    <rect  width="1.152" x="35.8492" y="70.992" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
    <rect  width="1.152" x="28.6492" y="70.992" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="9.35431" x="24.548" y="49.3228" fill="#ffffff" height="9.35431" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="9.35431" x="24.548" y="49.3228" fill="#333333" height="9.35431" stroke="none" fill-opacity="1" stroke-width="0"/>
    <rect  width="13.3908" x="54.9297" y="16.4892" fill="#333333" height="10.2218" stroke="none" fill-opacity="1" stroke-width="0"/>
    <circle  fill="none" cx="14.8252" cy="79.2" connectorname="GPIO2" stroke="#9A916C" r="2.052" id="connector22pin" stroke-width="1.224"/>
    <rect  width="4.104" x="12.7732" y="77.148" fill="none" height="4.104" stroke="#9A916C" stroke-width="1.224"/>

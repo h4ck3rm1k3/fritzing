@@ -696,7 +696,7 @@
    <rect  width="1.296" x="42.552" y="83.327" fill="#ffffff" height="2.16" stroke="none" fill-opacity="0.15" stroke-width="0"/>
    <rect  width="8.64" x="10.08" y="157.127" fill="#ffffff" height="5.76" stroke="none" fill-opacity="0.15" stroke-width="0"/>
    <rect  width="8.64" x="31.68" y="157.127" fill="#ffffff" height="5.76" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="24.48" x="16.56" y="172.607" fill="#ffffff" height="10.08" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="24.48" x="16.56" y="172.607" fill="#333333" height="10.08" stroke="none" fill-opacity="1" stroke-width="0"/>
    <rect  width="13.6063" x="47.1969" y="76.5266" fill="#333333" height="22.9607" stroke="none" fill-opacity="1" stroke-width="0"/>
    <rect  width="11.0449" x="88.0718" y="105.495" fill="#333333" height="29.827" stroke="none" fill-opacity="1" stroke-width="0"/>
    <circle  fill="none" cx="93.6" cy="177.647" connectorname="VCC" stroke="#9A916C" r="2.052" id="connector22pin" stroke-width="1.224"/>

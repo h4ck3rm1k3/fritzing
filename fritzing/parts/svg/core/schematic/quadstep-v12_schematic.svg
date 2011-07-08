@@ -205,26 +205,20 @@
   <rect  width="21.2599" x="214.998" y="382.677" fill="none" connectorname="4-2B" height="2.4" id="connector81pin" stroke-width="0"/>
   <rect  width="2.4" x="233.858" y="382.677" fill="none" height="2.4" id="connector81terminal" stroke-width="0"/>
   <text  x="208.518" y="386.277" font-family="DroidSans" fill="#000000" text-anchor="end" stroke="none" id="label81" stroke-width="0" font-size="9.936">4-2B</text>
-  <line  fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="round" y1="1.2" stroke-width="2.4" x1="107.499" y2="21.2599" x2="107.499"/>
-  <rect  width="2.4" x="106.299" y="0" fill="none" connectorname="VIN" height="21.2599" id="connector118pin" stroke-width="0"/>
-  <rect  width="2.4" x="106.299" y="0" fill="none" height="0" id="connector118terminal" stroke-width="0"/>
-  <text  x="107.499" y="33.8599" font-family="DroidSans" fill="#000000" text-anchor="middle" stroke="none" id="label118" stroke-width="0" font-size="9.936">VIN</text>
-  <line  fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="round" y1="1.2" stroke-width="2.4" x1="128.759" y2="21.2599" x2="128.759"/>
-  <rect  width="2.4" x="127.559" y="0" fill="none" connectorname="VOUT" height="21.2599" id="connector72pin" stroke-width="0"/>
-  <rect  width="2.4" x="127.559" y="0" fill="none" height="0" id="connector72terminal" stroke-width="0"/>
-  <text  x="128.759" y="33.8599" font-family="DroidSans" fill="#000000" text-anchor="middle" stroke="none" id="label72" stroke-width="0" font-size="9.936">VOUT</text>
+  <line  fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="round" y1="1.2" stroke-width="2.4" x1="118.129" y2="21.2599" x2="118.129"/>
+  <rect  width="2.4" x="116.929" y="0" fill="none" connectorname="VOUT" height="21.2599" id="connector72pin" stroke-width="0"/>
+  <rect  width="2.4" x="116.929" y="0" fill="none" height="0" id="connector72terminal" stroke-width="0"/>
+  <text  x="118.129" y="33.8599" font-family="DroidSans" fill="#000000" text-anchor="middle" stroke="none" id="label72" stroke-width="0" font-size="9.936">VOUT</text>
   <line  fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="round" y1="916.574" stroke-width="2.4" x1="118.129" y2="936.634" x2="118.129"/>
   <rect  width="2.4" x="116.929" y="916.574" fill="none" connectorname="GND" height="21.2599" id="connector70pin" stroke-width="0"/>
   <rect  width="2.4" x="116.929" y="937.836" fill="none" height="0" id="connector70terminal" stroke-width="0"/>
   <text  x="118.129" y="910.814" font-family="DroidSans" fill="#000000" text-anchor="middle" stroke="none" id="label70" stroke-width="0" font-size="9.936">GND</text>
-  <rect  width="2.4" x="127.559" y="0" fill="none" connectorname="VOUT" height="21.2599" id="connector73pin" stroke-width="0"/>
-  <rect  width="2.4" x="127.559" y="0" fill="none" height="0" id="connector73terminal" stroke-width="0"/>
-  <rect  width="2.4" x="127.559" y="0" fill="none" connectorname="VOUT" height="21.2599" id="connector123pin" stroke-width="0"/>
-  <rect  width="2.4" x="127.559" y="0" fill="none" height="0" id="connector123terminal" stroke-width="0"/>
+  <rect  width="2.4" x="116.929" y="0" fill="none" connectorname="VOUT" height="21.2599" id="connector73pin" stroke-width="0"/>
+  <rect  width="2.4" x="116.929" y="0" fill="none" height="0" id="connector73terminal" stroke-width="0"/>
+  <rect  width="2.4" x="116.929" y="0" fill="none" connectorname="VOUT" height="21.2599" id="connector123pin" stroke-width="0"/>
+  <rect  width="2.4" x="116.929" y="0" fill="none" height="0" id="connector123terminal" stroke-width="0"/>
   <rect  width="2.4" x="116.929" y="916.574" fill="none" connectorname="GND" height="21.2599" id="connector71pin" stroke-width="0"/>
   <rect  width="2.4" x="116.929" y="937.836" fill="none" height="0" id="connector71terminal" stroke-width="0"/>
-  <rect  width="2.4" x="116.929" y="916.574" fill="none" connectorname="GND" height="21.2599" id="connector119pin" stroke-width="0"/>
-  <rect  width="2.4" x="116.929" y="937.836" fill="none" height="0" id="connector119terminal" stroke-width="0"/>
   <rect  width="2.4" x="116.929" y="916.574" fill="none" connectorname="GND" height="21.2599" id="connector124pin" stroke-width="0"/>
   <rect  width="2.4" x="116.929" y="937.836" fill="none" height="0" id="connector124terminal" stroke-width="0"/>
   <rect  width="21.2599" x="0" y="807.876" fill="none" height="2.4" id="connector126pin" stroke-width="0" connectorName="EN1"/>

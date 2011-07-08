@@ -501,20 +501,6 @@
    <circle  fill="none" cx="6.91654" cy="28.8" connectorname="GND" stroke="#9A916C" r="1.872" id="connector34pin" stroke-width="0.864"/>
    <circle  fill="none" cx="6.91654" cy="21.6" connectorname="GND" stroke="#9A916C" r="1.872" id="connector35pin" stroke-width="0.864"/>
   </g>
-  <g  id="sfe-logo-flame" stroke-width="0" transform="matrix(1, 0, 0, 1, 53.2117, 35.7166)">
-   <g  stroke-width="0" transform="matrix(0, -1, 1, 0, -1.32751, 6.68652)">
-    <g  stroke-width="0">
-     <title >element:JP2</title>
-     <g  stroke-width="0">
-      <title >package:SFE-LOGO-FLAME</title>
-      <title >polygon</title>
-     </g>
-    </g>
-    <g  stroke-width="0">
-     <path  fill="#FFFFFF" stroke-width="0" d="M4.378,1.29c0,0,0.113,0.482,-0.251,0.55C3.873,1.885,3.464,1.634,3.258,1.383c-0.255,-0.31,-0.223,-0.554,-0.024,-0.770998c0.297,-0.327,0.805003,-0.2,0.805003,-0.2S3.107,-0.406,2.136,0.263C1.273,0.858002,1.521,1.669,2.299,2.376c0.703,0.64,0.144,1.341,-0.564,1.249c-0.486,-0.062,-0.685,-0.45,-0.568,-0.69c0.102,-0.205,0.449,-0.33,0.449,-0.33s-0.4,-0.163,-0.870998,0.016C0.322,2.779,-0.027,3.129,0.001,4.004l0,4.06c0,0,0.438,-0.54,0.949997,-1.088C1.528,6.358,1.79,5.94,2.381,5.99C3.5,6.058,4.308,5.561,4.857,4.764C5.913,3.232,5.087,1.519,4.378,1.29z"/>
-    </g>
-   </g>
-  </g>
   <g  id="xbee-smd" stroke-width="0" transform="matrix(1, 0, 0, 1, 22.6369, 2.47966)">
    <g  stroke-width="0" transform="matrix(0, 1, -1, 0, 71.4371, 2.83309)">
     <rect  width="7.70198" x="4.102" y="9.60199" fill="#0F7391" height="64.667" stroke-width="0"/>

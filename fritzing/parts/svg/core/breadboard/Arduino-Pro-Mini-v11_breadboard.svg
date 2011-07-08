@@ -451,7 +451,12 @@
    <rect  width="2.60788" x="37.5761" y="86.0033" fill="#ffffff" height="0.907085" stroke="none" fill-opacity="0.15" stroke-width="0"/>
    <rect  width="0.907085" x="24.8031" y="31.0961" fill="#ffffff" height="2.60788" stroke="none" fill-opacity="0.15" stroke-width="0"/>
    <rect  width="3.68504" x="10.3974" y="33.4176" fill="#ffffff" height="10.3465" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="28.1018" x="11.1489" y="40.661" fill="#333333" height="27.39" stroke="none" fill-opacity="1" stroke-width="0"/>
+   
+   <polygon fill="#333333"  stroke="none" fill-opacity="1" stroke-width="0" 
+		points="11.1489,54.356 25.1998,40.661 39.2507,54.356 25.1998,68.051"/>
+   
+   <!-- <rect  width="28.1018" x="11.1489" y="40.661" fill="#333333" height="27.39" stroke="none" fill-opacity="1" stroke-width="0"/> -->
+   
    <rect  width="4.59439" x="22.9028" y="21.168" fill="#333333" height="8.064" stroke="none" fill-opacity="1" stroke-width="0"/>
    <circle  fill="none" cx="43.2" cy="3.6" connectorname="DTR" stroke="#9A916C" r="1.872" id="connector14pin" stroke-width="0.864"/>
    <circle  fill="none" cx="36" cy="3.6" connectorname="TXO" stroke="#9A916C" r="1.872" id="connector15pin" stroke-width="0.864"/>

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='Level-Converter-v11'>
 <version>4</version>
-<date>2011-07-06</date>
+<date>2011-07-08</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description:&lt;/span&gt; If you&amp;#39;ve ever tried to connect a 3.3V device to a 5V system, you know what a challenge it can be. The SparkFun logic level converter is a small device that safely steps down 5V signals to 3.3V and steps up 3.3V to 5V. This level converter also works with 2.8V and 1.8V devices. Each level converter has the capability of converting 4 pins on the high side to 4 pins on the low side. Two inputs and two outputs are provided for each side.&lt;br /&gt;

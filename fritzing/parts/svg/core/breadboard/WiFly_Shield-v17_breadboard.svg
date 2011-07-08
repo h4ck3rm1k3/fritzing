@@ -1022,7 +1022,7 @@
     <rect  width="76.8557" x="27.661" y="2.194" fill="#FFFFFF" height="55.122" stroke-width="0"/>
     <path  fill="#FFFFFF" stroke-width="0" d="M25.606,58.644c-0.062,0,-0.112,-0.051,-0.112,-0.112L25.494,0.999c0,-0.062,0.051,-0.112,0.112,-0.112s0.112,0.05,0.112,0.112l0,57.533C25.718,58.593,25.667,58.644,25.606,58.644z"/>
     <path  fill="#FFFFFF" stroke-width="0" d="M106.626,58.644c-0.062,0,-0.112,-0.051,-0.112,-0.112L106.514,0.999c0,-0.062,0.051,-0.112,0.112,-0.112c0.062,0,0.111,0.05,0.111,0.112l0,57.533C106.742,58.593,106.689,58.644,106.626,58.644z"/>
-    <text  x="0" y="0" fill="#606060" font-family="'OCRA'" stroke-width="0" transform="matrix(1, 0, 0, 1, 31.564, 11.6362)" font-size="6.8788">802.11b/g</text>
+    <text  x="0" y="0" fill="#606060" font-family="OCRA" stroke-width="0" transform="matrix(1, 0, 0, 1, 31.564, 11.6362)" font-size="6.8788">802.11b/g</text>
     <polyline  fill="#152A61" points="0,18.367,11.941,18.367,11.941,55.205,0,55.205" stroke="#FFFFFF" stroke-width="0.736402" stroke-miterlimit="10"/>
     <g  stroke-width="0">
      <polyline  fill="none" points="3.873,2.201,2.944,2.201,2.944,11.135,3.873,11.135" stroke="#FFFFFF" stroke-width="0.5" stroke-miterlimit="10"/>

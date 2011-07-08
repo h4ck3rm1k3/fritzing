@@ -357,8 +357,8 @@
    <rect  width="1.152" x="6.48" y="28.296" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
    <rect  width="1.152" x="21.024" y="38.592" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
    <rect  width="1.152" x="22.824" y="9" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="11.3386" x="41.1307" y="19.5307" fill="#ffffff" height="11.3386" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="11.3386" x="15.9307" y="18.1134" fill="#ffffff" height="14.1732" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="11.3386" x="41.1307" y="19.5307" fill="#333333" height="11.3386" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="11.3386" x="15.9307" y="18.1134" fill="#333333" height="14.1732" stroke="none" fill-opacity="1" stroke-width="0"/>
    <rect  width="8.064" x="2.16" y="19.0868" fill="#333333" height="3.51439" stroke="none" fill-opacity="1" stroke-width="0"/>
    <circle  fill="none" cx="61.2" cy="50.4" connectorname="XOUT" stroke="#9A916C" r="2.052" id="connector26pin" stroke-width="1.224"/>
    <circle  fill="none" cx="54" cy="50.4" connectorname="YOUT" stroke="#9A916C" r="2.052" id="connector27pin" stroke-width="1.224"/>

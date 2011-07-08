@@ -571,7 +571,7 @@
    <rect  width="1.152" x="49.824" y="88.992" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
    <rect  width="1.152" x="150.624" y="31.392" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
    <rect  width="1.152" x="150.624" y="20.592" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="27" x="54.36" y="61.92" fill="#ffffff" height="21.24" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="27" x="54.36" y="61.92" fill="#333333" height="21.24" stroke="none" fill-opacity="1" stroke-width="0"/>
    <circle  fill="none" cx="75.6" cy="144" connectorname="3.3V" stroke="#9A916C" r="2.052" id="connector74pin" stroke-width="1.224"/>
    <circle  fill="none" cx="82.8" cy="144" connectorname="VCC" stroke="#9A916C" r="2.052" id="connector75pin" stroke-width="1.224"/>
    <circle  fill="none" cx="118.8" cy="144" connectorname="A0" stroke="#9A916C" r="2.052" id="connector76pin" stroke-width="1.224"/>

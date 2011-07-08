@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='Buzzer-v15'>
 <version>4</version>
-<date>2011-07-06</date>
+<date>2011-07-08</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description:&lt;/span&gt; This is a small buzzer for the LilyPad system. Use 2 I/O pins on the LilyPad main board and create different noises based on the different frequency of I/O toggling. Loud enough to hear inside a pocket but not obtrusively loud.&lt;br /&gt;

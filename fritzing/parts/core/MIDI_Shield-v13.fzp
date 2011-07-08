@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='MIDI_Shield-v13'>
 <version>4</version>
-<date>2011-07-06</date>
+<date>2011-07-08</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description: &lt;/span&gt;The MIDI Shield board gives your Arduino access to the powerful &lt;a classname=&quot;&quot; href=&quot;http://en.wikipedia.org/wiki/Musical_Instrument_Digital_Interface&quot; name=&quot;&quot; target=&quot;_blank&quot;&gt;MIDI communication protocol&lt;/a&gt;, so you can control synthesizers, sequencers, and other musical devices. The MIDI protocol shares many similarities with standard asynchronous serial interfaces, so you can use the UART pins of your Arduino to send and receive MIDI&amp;#39;s event messages.&lt;br /&gt;

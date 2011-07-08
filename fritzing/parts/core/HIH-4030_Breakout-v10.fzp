@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='HIH-4030_Breakout-v10'>
 <version>4</version>
-<date>2011-07-06</date>
+<date>2011-07-08</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description:&lt;/span&gt; This is a breakout board for Honeywell&amp;#39;s HIH-4030 humidity sensor. The HIH-4030 measures relative humidity (%RH) and delivers it as an analog output voltage. You can connect the output of the sensor directly to an ADC on a microcontroller; and, thanks to the sensor&amp;#39;s near linear voltage output, the data is very easy to process.&lt;br /&gt;

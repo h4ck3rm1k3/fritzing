@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='RFID_USB_Reader-v14'>
 <version>4</version>
-<date>2011-07-06</date>
+<date>2011-07-08</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description:&lt;/span&gt; The RFID USB Reader is a simple to use, USB to serial base unit for the ID-2, ID-12, and ID-20 readers. Simply plug a reader into the headers and attach a miniUSB cable. Open a terminal program of your choice at 9600bps 8N1, then scan your 125kHz ID tag and the unique 32-bit ID will be shown on the screen. The unit is based on a FTDI chip and comes with a read LED and buzzer.&lt;/p&gt;

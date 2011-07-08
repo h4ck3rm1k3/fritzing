@@ -671,8 +671,8 @@
    <rect  width="1.152" x="96.624" y="135.792" fill="#ffffff" height="2.016" stroke="none" fill-opacity="0.15" stroke-width="0"/>
    <rect  width="6.23622" x="29.2819" y="54.7623" fill="#ffffff" height="5.67581" stroke="none" fill-opacity="0.15" stroke-width="0"/>
    <rect  width="6.23622" x="43.6819" y="54.7623" fill="#ffffff" height="5.67581" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="24.48" x="99.36" y="149.4" fill="#ffffff" height="10.08" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="21.6454" x="66.96" y="149.4" fill="#ffffff" height="10.08" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="24.48" x="99.36" y="149.4" fill="#333333" height="10.08" stroke="none" fill-opacity="1" stroke-width="0"/>
+   <rect  width="21.6454" x="66.96" y="149.4" fill="#333333" height="10.08" stroke="none" fill-opacity="1" stroke-width="0"/>
    <circle  fill="none" cx="122.4" cy="21.6" connectorname="GND" stroke="#9A916C" r="2.052" id="connector9pin" stroke-width="1.224"/>
    <circle  fill="none" cx="122.4" cy="28.8" connectorname="PSEL" stroke="#9A916C" r="2.052" id="connector10pin" stroke-width="1.224"/>
    <circle  fill="none" cx="122.4" cy="36" connectorname="BATT" stroke="#9A916C" r="2.052" id="connector11pin" stroke-width="1.224"/>
@@ -1038,7 +1038,7 @@
      <path  opacity="0.1" fill="#3D3D3D" stroke-width="0" d="M44.058,34.819c0.209,-0.129,0.454,-0.209,0.719,-0.209c0.267,0,0.513,0.0799999,0.723002,0.209l0.418,-0.726998c0.071,-0.126,0.032,-0.262,-0.102,-0.312c-0.313,-0.121,-0.682,-0.198,-1.038,-0.199c-0.359,0,-0.722002,0.0750002,-1.037,0.199c-0.136,0.05,-0.175,0.186,-0.103,0.312L44.058,34.819z"/>
     </g>
     <rect  width="59.698" x="1.333" opacity="0.2" y="62.502" fill="#FFFFFF" height="0.286" stroke-width="0"/>
-    <text  x="0" y="0" fill="#CCCCCC" font-family="'OCRA'" stroke-width="0" transform="matrix(-1, 0, 0, -1, 55.3147, 50.1299)" font-size="3.1981">EM-406A GPS</text>
+    <text  x="0" y="0" fill="#CCCCCC" font-family="OCRA" stroke-width="0" transform="matrix(-1, 0, 0, -1, 55.3147, 50.1299)" font-size="3.1981">EM-406A GPS</text>
     <rect  width="2.356" x="0.994003" y="23.939" fill="#F4F4F4" height="17.104" stroke-width="0"/>
    </g>
   </g>

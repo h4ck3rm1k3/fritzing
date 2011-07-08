@@ -2,6 +2,13 @@
 <module fritzingVersion="0.5.2b.02.18.4756">
  <title>SparkFun</title>
  <instances>
+  <instance moduleIdRef="LilyPad Coincell-Battery-v17">
+   <views>
+    <iconView layer="icon">
+     <geometry x="-1" y="-1" z="-1"/>
+    </iconView>
+   </views>
+  </instance>
   <instance moduleIdRef="10x2-Epaper-Breakout-Board-v11">
    <views>
     <iconView layer="icon">
@@ -213,13 +220,6 @@
    </views>
   </instance>
   <instance moduleIdRef="LilyPad Battery-Connect-v11">
-   <views>
-    <iconView layer="icon">
-     <geometry x="-1" y="-1" z="-1"/>
-    </iconView>
-   </views>
-  </instance>
-  <instance moduleIdRef="LilyPad Coincell-Battery-v17">
    <views>
     <iconView layer="icon">
      <geometry x="-1" y="-1" z="-1"/>

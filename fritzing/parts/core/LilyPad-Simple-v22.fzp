@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='LilyPad-Simple-v22'>
 <version>4</version>
-<date>2011-07-06</date>
+<date>2011-07-08</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Description:&lt;/strong&gt; This is the LilyPad Arduino Simple Board. It&amp;#39;s controlled by an ATmega328 with the Arduino bootloader. It has fewer pins than the &lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=9266&quot; name=&quot;&quot; target=&quot;&quot;&gt;LilyPad Arduino Main Board&lt;/a&gt;, a built in power supply socket, and an on/off switch. Any of our LiPo batteries can be plugged right into the socket. The Simple board is designed to streamline your next sewable project by keeping things simple and giving you more room to work&amp;nbsp; and eliminating the need to sew a power supply. This revision does away with the ISP header and adds a charging circuit based on the MCP73831 IC.&lt;br /&gt;

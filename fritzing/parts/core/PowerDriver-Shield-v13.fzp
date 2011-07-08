@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='PowerDriver-Shield-v13'>
 <version>4</version>
-<date>2011-07-06</date>
+<date>2011-07-08</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Description:&lt;/strong&gt; This shield allows you to use a computer power supply (or other power source) to use your Arduino to switch high current. With RFP30N06LE MOSFETS, you can easily control a lot of current directly from your Arduino.&lt;/p&gt;

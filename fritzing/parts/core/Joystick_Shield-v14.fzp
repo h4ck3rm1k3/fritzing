@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='Joystick_Shield-v14'>
 <version>4</version>
-<date>2011-07-06</date>
+<date>2011-07-08</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description:&lt;/span&gt; The Joystick Shield sits on top of your Arduino and turns it into a simple controller. Five momentary push buttons (4+ joystick select button) and a two-axis thumb joystick gives your Arduino functionality on the level of old &lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=8978&quot; name=&quot;&quot; target=&quot;_self&quot;&gt;Nintendo controllers&lt;/a&gt;.&lt;/p&gt;

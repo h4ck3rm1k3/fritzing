@@ -1042,7 +1042,7 @@
    <rect  width="53.3764" x="68.7118" y="66.8052" fill="#333333" height="30.5438" stroke="none" fill-opacity="1" stroke-width="0"/>
    <rect  width="24.0945" x="38.3527" y="74.9909" fill="#333333" height="14.1732" stroke="none" fill-opacity="1" stroke-width="0"/>
    <rect  width="42.5197" x="32.7401" y="6.25039" fill="#ffffff" height="33.4488" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <rect  width="19.1339" x="105.633" y="122.91" fill="#ffffff" height="19.1339" stroke="none" fill-opacity="0.15" stroke-width="0"/>
+   <rect  width="19.1339" x="105.633" y="122.91" fill="#333333" height="19.1339" stroke="none" fill-opacity="1" stroke-width="0"/>
    <circle  fill="none" cx="151.2" cy="114.477" connectorname="NC1" stroke="#9A916C" r="2.052" id="connector43pin" stroke-width="1.224"/>
    <circle  fill="none" cx="151.2" cy="107.277" connectorname="TX" stroke="#9A916C" r="2.052" id="connector44pin" stroke-width="1.224"/>
    <circle  fill="none" cx="151.2" cy="100.077" connectorname="RX-I" stroke="#9A916C" r="2.052" id="connector45pin" stroke-width="1.224"/>

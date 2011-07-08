@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='MP3 Shield-v13'>
 <version>4</version>
-<date>2011-07-06</date>
+<date>2011-07-08</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Description: &lt;/strong&gt;This new revision of the MP3 player shield retains the awesome MP3 decoding abilities of the last version but adds the storage functionality of the SD card shield. Now you can pull MP3 files from an SD card and play them using only one shield, effectively turning any Arduino into a fully functional stand-alone&amp;nbsp; MP3 player! The MP3 Shield still utilizes the &lt;a href=&quot;http://www.sparkfun.com/products/8892&quot;&gt;VS1053B&lt;/a&gt; MP3 audio decoder IC to decode audio files. The VS1053 is also capable of decoding Ogg Vorbis/MP3/AAC/WMA/MIDI audio and encoding IMA ADPCM and user-loadable Ogg Vorbis.&lt;/p&gt;

@@ -709,8 +709,6 @@
   <circle  fill="none" cx="147.373" cy="46.8" connectorname="RST2" stroke="#F7BD13" r="2.052" id="connector115pad" stroke-width="1.224"/>
   <circle  fill="none" cx="147.373" cy="39.6" connectorname="SLP2" stroke="#F7BD13" r="2.052" id="connector116pad" stroke-width="1.224"/>
   <circle  fill="none" cx="147.373" cy="32.4" connectorname="EN2" stroke="#F7BD13" r="2.052" id="connector117pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="20.6532" cy="90.36" connectorname="VIN" stroke="#F7BD13" r="2.052" id="connector118pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="20.6532" cy="97.56" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector119pad" stroke-width="1.224"/>
   <circle  fill="none" cx="161.773" cy="118.8" connectorname="DIR" stroke="#F7BD13" r="2.052" id="connector120pad" stroke-width="1.224"/>
   <rect  width="4.104" x="159.721" y="116.748" fill="none" height="4.104" stroke="#F7BD13" stroke-width="1.224"/>
   <circle  fill="none" cx="161.773" cy="111.6" connectorname="EN4" stroke="#F7BD13" r="2.052" id="connector121pad" stroke-width="1.224"/>
@@ -786,8 +784,6 @@
   <circle  fill="none" cx="147.373" cy="46.8" connectorname="RST2" stroke="#F7BD13" r="2.052" id="connector115pad" stroke-width="1.224"/>
   <circle  fill="none" cx="147.373" cy="39.6" connectorname="SLP2" stroke="#F7BD13" r="2.052" id="connector116pad" stroke-width="1.224"/>
   <circle  fill="none" cx="147.373" cy="32.4" connectorname="EN2" stroke="#F7BD13" r="2.052" id="connector117pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="20.6532" cy="90.36" connectorname="VIN" stroke="#F7BD13" r="2.052" id="connector118pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="20.6532" cy="97.56" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector119pad" stroke-width="1.224"/>
   <circle  fill="none" cx="161.773" cy="118.8" connectorname="DIR" stroke="#F7BD13" r="2.052" id="connector120pad" stroke-width="1.224"/>
   <rect  width="4.104" x="159.721" y="116.748" fill="none" height="4.104" stroke="#F7BD13" stroke-width="1.224"/>
   <circle  fill="none" cx="161.773" cy="111.6" connectorname="EN4" stroke="#F7BD13" r="2.052" id="connector121pad" stroke-width="1.224"/>

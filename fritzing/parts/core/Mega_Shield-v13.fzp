@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='Mega_Shield-v13'>
 <version>4</version>
-<date>2011-07-06</date>
+<date>2011-07-08</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description:&lt;/span&gt; The Arduino Mega now has its very own prototyping shield! The MegaShield mates with the Arduino Mega board and gives the user a prototyping area, two general LEDs, and, most important of all, the Arduino Mega reset switch is brought to the top level. The shield also works with our small breadboards if you don&amp;#39;t want to solder to the prototyping area.&lt;br /&gt;

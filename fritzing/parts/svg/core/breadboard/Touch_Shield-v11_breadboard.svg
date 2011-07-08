@@ -6,6 +6,19 @@
   <g  id="icon" stroke-width="0">
    <path  fill="#C62717" stroke="none" stroke-width="0" d="M144,169.2L7.2,169.2L0,162L0,10.8L3.6,7.2L36,7.2L43.2,0L136.8,0L144,7.2L151.2,7.2L151.2,162L144,169.2M124.92,7.2a4.68,4.68,0,1,0,9.36,0,4.68,4.68,0,1,0,-9.36,0zM2.52,151.2a4.68,4.68,0,1,0,9.36,0,4.68,4.68,0,1,0,-9.36,0zM142.56,144a1.44,1.44,0,1,0,2.88,0,1.44,1.44,0,1,0,-2.88,0zM142.56,151.2a1.44,1.44,0,1,0,2.88,0,1.44,1.44,0,1,0,-2.88,0zM142.56,158.4a1.44,1.44,0,1,0,2.88,0,1.44,1.44,0,1,0,-2.88,0zM142.56,93.6a1.44,1.44,0,1,0,2.88,0,1.44,1.44,0,1,0,-2.88,0zM142.56,86.4a1.44,1.44,0,1,0,2.88,0,1.44,1.44,0,1,0,-2.88,0zM142.56,50.4a1.44,1.44,0,1,0,2.88,0,1.44,1.44,0,1,0,-2.88,0zM142.56,43.2a1.44,1.44,0,1,0,2.88,0,1.44,1.44,0,1,0,-2.88,0zM142.56,36a1.44,1.44,0,1,0,2.88,0,1.44,1.44,0,1,0,-2.88,0zM142.56,28.8a1.44,1.44,0,1,0,2.88,0,1.44,1.44,0,1,0,-2.88,0zM142.56,21.6a1.44,1.44,0,1,0,2.88,0,1.44,1.44,0,1,0,-2.88,0zM142.56,14.4a1.44,1.44,0,1,0,2.88,0,1.44,1.44,0,1,0,-2.88,0zM5.76,126a1.44,1.44,0,1,0,2.88,0,1.44,1.44,0,1,0,-2.88,0zM5.76,28.8a1.44,1.44,0,1,0,2.88,0,1.44,1.44,0,1,0,-2.88,0zM5.76,36a1.44,1.44,0,1,0,2.88,0,1.44,1.44,0,1,0,-2.88,0zM5.76,43.2a1.44,1.44,0,1,0,2.88,0,1.44,1.44,0,1,0,-2.88,0zM5.76,50.4a1.44,1.44,0,1,0,2.88,0,1.44,1.44,0,1,0,-2.88,0zM5.76,57.6a1.44,1.44,0,1,0,2.88,0,1.44,1.44,0,1,0,-2.88,0zM5.76,64.8a1.44,1.44,0,1,0,2.88,0,1.44,1.44,0,1,0,-2.88,0zM5.76,75.6a1.44,1.44,0,1,0,2.88,0,1.44,1.44,0,1,0,-2.88,0zM5.76,82.8a1.44,1.44,0,1,0,2.88,0,1.44,1.44,0,1,0,-2.88,0zM5.76,90a1.44,1.44,0,1,0,2.88,0,1.44,1.44,0,1,0,-2.88,0zM5.76,97.2a1.44,1.44,0,1,0,2.88,0,1.44,1.44,0,1,0,-2.88,0zM5.76,104.4a1.44,1.44,0,1,0,2.88,0,1.44,1.44,0,1,0,-2.88,0zM5.76,111.6a1.44,1.44,0,1,0,2.88,0,1.44,1.44,0,1,0,-2.88,0zM142.56,79.2a1.44,1.44,0,1,0,2.88,0,1.44,1.44,0,1,0,-2.88,0zM142.56,72a1.44,1.44,0,1,0,2.88,0,1.44,1.44,0,1,0,-2.88,0zM5.76,118.8a1.44,1.44,0,1,0,2.88,0,1.44,1.44,0,1,0,-2.88,0zM142.56,100.8a1.44,1.44,0,1,0,2.88,0,1.44,1.44,0,1,0,-2.88,0zM5.76,14.4a1.44,1.44,0,1,0,2.88,0,1.44,1.44,0,1,0,-2.88,0zM5.76,21.6a1.44,1.44,0,1,0,2.88,0,1.44,1.44,0,1,0,-2.88,0zM142.56,64.8a1.44,1.44,0,1,0,2.88,0,1.44,1.44,0,1,0,-2.88,0z"/>
    <g  stroke-width="0">
+   
+<!-- adding red rects here -->
+	<rect x="18.48" y="15.28" width="35" height="35" rx="5" ry="5" fill="#d63727" stroke="none" stroke-width="0" />
+	<rect x="57.88" y="15.28" width="35" height="35" rx="5" ry="5" fill="#d63727" stroke="none" stroke-width="0" />
+	<rect x="97.28" y="15.28" width="35" height="35" rx="5" ry="5" fill="#d63727" stroke="none" stroke-width="0" />
+	<rect x="18.48" y="54.68" width="35" height="35" rx="5" ry="5" fill="#d63727" stroke="none" stroke-width="0" />
+	<rect x="57.88" y="54.68" width="35" height="35" rx="5" ry="5" fill="#d63727" stroke="none" stroke-width="0" />
+	<rect x="97.28" y="54.68" width="35" height="35" rx="5" ry="5" fill="#d63727" stroke="none" stroke-width="0" />
+	<rect x="18.48" y="94.08" width="35" height="35" rx="5" ry="5" fill="#d63727" stroke="none" stroke-width="0" />
+	<rect x="57.88" y="94.08" width="35" height="35" rx="5" ry="5" fill="#d63727" stroke="none" stroke-width="0" />
+	<rect x="97.28" y="94.08" width="35" height="35" rx="5" ry="5" fill="#d63727" stroke="none" stroke-width="0" />
+
+   
     <title >layer 21</title>
     <g  stroke-width="0">
      <title >text:ELE9</title>
@@ -408,6 +421,93 @@
        <title >text:RX</title>
        <text  x="10.8" y="15.84" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="3.3408">RX</text>
       </g>
+     </g>
+    </g>
+   </g>
+   <g  stroke-width="0">
+    <title >layer 1</title>
+    <g  stroke-width="0">
+     <title >element:C1</title>
+     <g  stroke-width="0">
+      <title >package:0402-CAP</title>
+     </g>
+    </g>
+    <g  stroke-width="0">
+     <title >element:C2</title>
+     <g  stroke-width="0">
+      <title >package:0402-CAP</title>
+     </g>
+    </g>
+    <g  stroke-width="0">
+     <title >element:IC1</title>
+     <g  stroke-width="0">
+      <title >package:QFN-20-0.4MM</title>
+     </g>
+    </g>
+    <g  stroke-width="0">
+     <title >element:JP1</title>
+     <g  stroke-width="0">
+      <title >package:SFE-NEW-WEBLOGO</title>
+     </g>
+    </g>
+    <g  stroke-width="0">
+     <title >element:JP5</title>
+     <g  stroke-width="0">
+      <title >package:1X03</title>
+     </g>
+    </g>
+    <g  stroke-width="0">
+     <title >element:Q1</title>
+     <g  stroke-width="0">
+      <title >package:SOT23-3</title>
+     </g>
+    </g>
+    <g  stroke-width="0">
+     <title >element:Q2</title>
+     <g  stroke-width="0">
+      <title >package:SOT23-3</title>
+     </g>
+    </g>
+    <g  stroke-width="0">
+     <title >element:R1</title>
+     <g  stroke-width="0">
+      <title >package:0402-RES</title>
+     </g>
+    </g>
+    <g  stroke-width="0">
+     <title >element:R2</title>
+     <g  stroke-width="0">
+      <title >package:0402-RES</title>
+     </g>
+    </g>
+    <g  stroke-width="0">
+     <title >element:R3</title>
+     <g  stroke-width="0">
+      <title >package:0402-RES</title>
+     </g>
+    </g>
+    <g  stroke-width="0">
+     <title >element:R4</title>
+     <g  stroke-width="0">
+      <title >package:0402-RES</title>
+     </g>
+    </g>
+    <g  stroke-width="0">
+     <title >element:R5</title>
+     <g  stroke-width="0">
+      <title >package:0402-RES</title>
+     </g>
+    </g>
+    <g  stroke-width="0">
+     <title >element:U$5</title>
+     <g  stroke-width="0">
+      <title >package:OSHW-LOGO</title>
+     </g>
+    </g>
+    <g  stroke-width="0">
+     <title >element:U1</title>
+     <g  stroke-width="0">
+      <title >package:DUEMILANOVE_SHIELD</title>
      </g>
     </g>
    </g>
