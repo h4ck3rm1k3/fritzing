@@ -2495,7 +2495,7 @@ bool PCBSketchWidget::groundFill(QUndoCommand * parentCommand)
 	ItemBase * board = findBoard();
     // barf an error if there's no board
     if (!board) {
-        QMessageBox::critical(this->window(), tr("Fritzing"),
+        QMessageBox::critical(NULL, tr("Fritzing"),
                    tr("Your sketch does not have a board yet!  Please add a PCB in order to use copper fill."));
         return false;
     }
@@ -2506,7 +2506,7 @@ bool PCBSketchWidget::groundFill(QUndoCommand * parentCommand)
 	bool empty;
 	QString boardSvg = renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, boardImageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, false, empty);
 	if (boardSvg.isEmpty()) {
-        QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to render board svg (1)."));
+        QMessageBox::critical(NULL, tr("Fritzing"), tr("Fritzing error: unable to render board svg (1)."));
 		return false;
 	}
 
@@ -2521,7 +2521,7 @@ bool PCBSketchWidget::groundFill(QUndoCommand * parentCommand)
 	QString svg = renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, copperImageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, true, empty);
 	showGroundTraces(true);
 	if (svg.isEmpty()) {
-        QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to render copper svg (1)."));
+        QMessageBox::critical(NULL, tr("Fritzing"), tr("Fritzing error: unable to render copper svg (1)."));
 		return false;
 	}
 
@@ -2533,7 +2533,7 @@ bool PCBSketchWidget::groundFill(QUndoCommand * parentCommand)
 		svg2 = renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, copperImageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, true, empty);
 		showGroundTraces(true);
 		if (svg2.isEmpty()) {
-			QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to render copper svg (1)."));
+			QMessageBox::critical(NULL, tr("Fritzing"), tr("Fritzing error: unable to render copper svg (1)."));
 			return false;
 		}
 	}
@@ -2545,7 +2545,7 @@ bool PCBSketchWidget::groundFill(QUndoCommand * parentCommand)
 	bool result = gpg.generateGroundPlane(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board, 1000 / 5.0  /* 1 MIL */,
 											ViewLayer::Copper0Color, "groundplane");
 	if (result == false) {
-        QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to write copper fill (1)."));
+        QMessageBox::critical(NULL, tr("Fritzing"), tr("Fritzing error: unable to write copper fill (1)."));
 		return false;
 	}
 
@@ -2554,7 +2554,7 @@ bool PCBSketchWidget::groundFill(QUndoCommand * parentCommand)
 		bool result = gpg2.generateGroundPlane(boardSvg, boardImageSize, svg2, copperImageSize, exceptions, board, 1000 / 5.0  /* 1 MIL */,
 												ViewLayer::Copper1Color, "groundplane1");
 		if (result == false) {
-			QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to write copper fill (2)."));
+			QMessageBox::critical(NULL, tr("Fritzing"), tr("Fritzing error: unable to write copper fill (2)."));
 			return false;
 		}
 	}
@@ -2586,7 +2586,7 @@ QString PCBSketchWidget::generateCopperFillUnit(ItemBase * itemBase, QPointF whe
 	ItemBase * board = findBoard();
     // barf an error if there's no board
     if (!board) {
-        QMessageBox::critical(this->window(), tr("Fritzing"),
+        QMessageBox::critical(NULL, tr("Fritzing"),
                    tr("Your sketch does not have a board yet!  Please add a PCB in order to use copper fill."));
         return "";
     }
@@ -2594,7 +2594,7 @@ QString PCBSketchWidget::generateCopperFillUnit(ItemBase * itemBase, QPointF whe
 	QRectF r = board->boundingRect();
 	r.moveTo(board->pos());
 	if (!r.contains(whereToStart)) {
-        QMessageBox::critical(this, tr("Fritzing"), tr("Unable to create copper fill--probably the part wasn't dropped onto the PCB."));
+        QMessageBox::critical(NULL, tr("Fritzing"), tr("Unable to create copper fill--probably the part wasn't dropped onto the PCB."));
 		return "";
 	}
 
@@ -2604,7 +2604,7 @@ QString PCBSketchWidget::generateCopperFillUnit(ItemBase * itemBase, QPointF whe
 	bool empty;
 	QString boardSvg = renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, boardImageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, false, empty);
 	if (boardSvg.isEmpty()) {
-        QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to render board svg (1)."));
+        QMessageBox::critical(NULL, tr("Fritzing"), tr("Fritzing error: unable to render board svg (1)."));
 		return "";
 	}
 
@@ -2625,7 +2625,7 @@ QString PCBSketchWidget::generateCopperFillUnit(ItemBase * itemBase, QPointF whe
 	QString svg = renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, copperImageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, true, empty);
 	itemBase->setVisible(vis);
 	if (svg.isEmpty()) {
-        QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to render copper svg (1)."));
+        QMessageBox::critical(NULL, tr("Fritzing"), tr("Fritzing error: unable to render copper svg (1)."));
 		return "";
 	}
 
@@ -2636,15 +2636,13 @@ QString PCBSketchWidget::generateCopperFillUnit(ItemBase * itemBase, QPointF whe
 	bool result = gpg.generateGroundPlaneUnit(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board, 1000 / 5.0  /* 1 MIL */, 
 												color, gpLayerName, whereToStart);
 
-	if (result == false) {
-        QMessageBox::critical(this, tr("Fritzing"), tr("Unable to create copper fill--possibly the part was dropped onto something other than the PCB itself."));
+	if (result == false || gpg.newSVGs().count() < 1) {
+        QMessageBox::critical(NULL, tr("Fritzing"), tr("Unable to create copper fill--possibly the part was dropped onto another part or wire rather than the actual PCB."));
 		return "";
 	}
 
-
 	itemBase->setPos(board->pos() + gpg.newOffsets()[0]);
 	itemBase->setViewLayerID(gpLayerName, m_viewLayers);
-
 
 	return gpg.newSVGs()[0];
 }

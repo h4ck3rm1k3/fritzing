@@ -27,6 +27,7 @@ $Date$
 
 #include <QSqlRecord>
 #include <QSqlError>
+#include <QMessageBox>
 
 #include "sqlitereferencemodel.h"
 #include "../debugdialog.h"
@@ -55,7 +56,7 @@ void SqliteReferenceModel::loadAll(bool fastLoad)
 	 */
 
 	if(!m_swappingEnabled) {
-		QMessageBox::warning(0,
+		QMessageBox::warning(NULL,
 			QObject::tr("Oops!"),
 			QObject::tr("Sorry, we have a problem with the swapping mechanism.\nFritzing still works, but you won't be able to change parts properties."),
 			QMessageBox::Ok);

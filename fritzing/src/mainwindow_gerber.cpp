@@ -493,12 +493,14 @@ QString MainWindow::clipToBoard(QString svgString, ItemBase * board, const QStri
 		GroundPlaneGenerator gpg;
 		gpg.scanImage(image, image.width(), image.height(), GraphicsUtils::StandardFritzingDPI / res, GraphicsUtils::StandardFritzingDPI, "#ffffff", layerName, false, 1, false, QSizeF(0, 0));
 		
-		QDomDocument doc;
-		TextUtils::mergeSvg(doc, svgString, "");
-		foreach (QString gsvg, gpg.newSVGs()) {
-			TextUtils::mergeSvg(doc, gsvg, "");
+		if (gpg.newSVGs().count() > 0) {
+			QDomDocument doc;
+			TextUtils::mergeSvg(doc, svgString, "");
+			foreach (QString gsvg, gpg.newSVGs()) {
+				TextUtils::mergeSvg(doc, gsvg, "");
+			}
+			svgString = TextUtils::mergeSvgFinish(doc);
 		}
-		svgString = TextUtils::mergeSvgFinish(doc);
 	}
 
 	return svgString;

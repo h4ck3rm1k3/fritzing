@@ -700,7 +700,7 @@ PaletteItem* SketchWidget::addPartItem(ModelPart * modelPart, ViewLayer::ViewLay
 		else {
 			// nobody falls through to here now?
 
-			QMessageBox::information(qobject_cast<QMainWindow *>(this->window()), QObject::tr("Fritzing"),
+			QMessageBox::information(NULL, QObject::tr("Fritzing"),
 				QObject::tr("Error reading file %1: %2.").arg(modelPart->path()).arg(error) );
 
 

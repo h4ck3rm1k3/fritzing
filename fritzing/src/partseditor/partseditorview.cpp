@@ -629,7 +629,7 @@ void PartsEditorView::loadFile() {
 		}
 		catch (const QString & msg) {
     		QMessageBox::warning(
-    			this,
+    			NULL,
     			tr("Conversion problem"),
     			tr("Unable to load image file: \n%1").arg(msg)
     		);
@@ -687,7 +687,7 @@ void PartsEditorView::beforeSVGLoading(const QString &filename, bool &canceled) 
     QFile file(filename);
     if(!file.open(QIODevice::ReadOnly )) {
     	QMessageBox::warning(
-    		this,
+    		NULL,
     		tr("Couldn't open svg file"),
     		tr(
     		"The file couldn't be opened. If this file defines its dimensions \n"
@@ -709,7 +709,7 @@ void PartsEditorView::beforeSVGLoading(const QString &filename, bool &canceled) 
 		file.close();
 		if(!file.open(QIODevice::WriteOnly )) {
 			QMessageBox::warning(
-				this,
+				NULL,
 				tr("Couldn't write into file"),
 				tr(
 				"This file needs to be fixed to fit fritzing needs, but it couldn't\n"
@@ -1029,9 +1029,9 @@ QString PartsEditorView::createSvgFromImage(const QString &origFilePath) {
 
 	QFile destFile(newFilePath);
 	if(!destFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-		QMessageBox::information(this, "", "file not created");
+		QMessageBox::information(NULL, "", "file not created");
 		if(!destFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-				QMessageBox::information(this, "", "file not created 2");
+				QMessageBox::information(NULL, "", "file not created 2");
 			}
 	}
 	QTextStream out(&destFile);
@@ -1233,7 +1233,7 @@ void PartsEditorView::aboutToSave(bool fakeDefaultIfNone) {
 
 				QFile file(tempFile);
 				if(!file.open(QFile::WriteOnly)) {
-					/*QMessageBox::information(this,"",
+					/*QMessageBox::information(NULL,"",
 						QString("Couldn't open file for update, after drawing connectors: '%1'")
 							.arg(tempFile)
 					);*/

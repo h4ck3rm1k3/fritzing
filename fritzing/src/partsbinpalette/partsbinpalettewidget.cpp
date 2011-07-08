@@ -536,14 +536,14 @@ bool PartsBinPaletteWidget::loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps
 bool PartsBinPaletteWidget::open(QString fileName, QObject * progressTarget) {
 	QFile file(fileName);
 	if (!file.exists()) {
-       QMessageBox::warning(this, tr("Fritzing"),
+       QMessageBox::warning(NULL, tr("Fritzing"),
                              tr("Cannot find file %1.")
                              .arg(fileName));
 		return false;
 	}
 
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
-        QMessageBox::warning(this, tr("Fritzing"),
+        QMessageBox::warning(NULL, tr("Fritzing"),
                              tr("Cannot read file %1:\n%2.")
                              .arg(fileName)
                              .arg(file.errorString()));
@@ -807,7 +807,7 @@ void PartsBinPaletteWidget::closeBin() {
 void PartsBinPaletteWidget::rename() {
 	if (!m_allowsChanges) {
 		// TODO: disable menu item instead
-		QMessageBox::warning(this, tr("Read-only bin"), tr("This bin cannot be renamed."));
+		QMessageBox::warning(NULL, tr("Read-only bin"), tr("This bin cannot be renamed."));
 		return;
 	}
 

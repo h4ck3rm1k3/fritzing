@@ -31,7 +31,6 @@ $Date$
 
 #include <QSqlDatabase>
 #include <QSqlQuery>
-#include <QMessageBox>
 #include <QApplication>
 
 #include "referencemodel.h"

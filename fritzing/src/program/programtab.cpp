@@ -575,7 +575,7 @@ void ProgramTab::sendProgram() {
 	if (m_programmerPath.isEmpty()) return;
 
 	if (isModified()) {
-		QMessageBox::information(this, QObject::tr("Fritzing"), tr("The file '%1' must be saved before it can be sent to the programmer.").arg(m_filename));
+		QMessageBox::information(NULL, QObject::tr("Fritzing"), tr("The file '%1' must be saved before it can be sent to the programmer.").arg(m_filename));
 		return;
 	}
 

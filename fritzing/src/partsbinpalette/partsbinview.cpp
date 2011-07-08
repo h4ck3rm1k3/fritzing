@@ -125,6 +125,9 @@ void PartsBinView::mousePressOnItem(const QPoint &dragStartPos, const QString &m
 	painter.end();
 	drag->setPixmap(pixmap);
 	drag->setHotSpot(hotspot);
+#else
+	Q_UNUSED(hotspot);
+	Q_UNUSED(size);
 #endif
 
 	// can set the pixmap, but can't hide it
@@ -189,7 +192,7 @@ void PartsBinView::dropEventAux(QDropEvent* event, bool justAppend) {
 		ModelPart * mp = m_refModel->retrieveModelPart(moduleID);
 		if(mp) {
 			if(m_parent->contains(moduleID)) {
-				QMessageBox::information(m_parent, QObject::tr("Part already in bin"), QObject::tr("The part that you have just added,\nis already there, we won't add it again, right?"));
+				QMessageBox::information(NULL, QObject::tr("Part already in bin"), QObject::tr("The part that you have just added,\nis already there, we won't add it again, right?"));
 			} else {
 				m_parent->addPart(mp,toIndex);
 				m_parent->setDirty();
