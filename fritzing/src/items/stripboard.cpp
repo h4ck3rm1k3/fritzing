@@ -96,12 +96,12 @@ Stripbit::~Stripbit() {
 void Stripbit::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
 	qreal newOpacity = 1;
 	if (m_removed) {
-		if (m_inHover) newOpacity = 0.55;
-		else newOpacity = 0.3;
+		if (m_inHover) newOpacity = 0.50;
+		else newOpacity = 0.00;
 	}
 	else {
-		if (m_inHover) newOpacity = 0.6;
-		else newOpacity = 1;
+		if (m_inHover) newOpacity = 0.40;
+		else newOpacity = 1.00;
 	}
 
 	qreal opacity = painter->opacity();
