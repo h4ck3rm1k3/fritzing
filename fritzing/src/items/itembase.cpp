@@ -585,7 +585,7 @@ void ItemBase::collectConnectors(QList<ConnectorItem *> & connectors) {
 	}
 }
 
-ConnectorItem * ItemBase::findConnectorItemNamed(const QString & connectorID, ViewLayer::ViewLayerSpec viewLayerSpec)  {
+ConnectorItem * ItemBase::findConnectorItemWithSharedID(const QString & connectorID, ViewLayer::ViewLayerSpec viewLayerSpec)  {
 	for (int i = 0; i < childItems().count(); i++) {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItems()[i]);
 		if (connectorItem == NULL) continue;

@@ -293,29 +293,27 @@ void PaletteItemBase::setUpConnectors(FSvgRenderer * renderer, bool ignoreTermin
 	foreach (Connector * connector, m_modelPart->connectors().values()) {
 		if (connector == NULL) continue;
 
-		SvgIdLayer * svgIdLayer = connector->fullPinInfo(m_viewIdentifier, m_viewLayerID);
-		if (svgIdLayer == NULL) continue;
+		//DebugDialog::debug(QString("id:%1 vid:%2 vlid:%3")
+		//				   .arg(connector->connectorSharedID())
+		//				   .arg(m_viewIdentifier) 
+		//				   .arg(m_viewLayerID)
+		//	);
 
-		bool result = renderer->setUpConnector(svgIdLayer, ignoreTerminalPoints);
-		if (!result) {
+
+		SvgIdLayer * svgIdLayer = connector->fullPinInfo(m_viewIdentifier, m_viewLayerID);
+		if (svgIdLayer == NULL) {
+			//DebugDialog::debug("svgidlayer fail");
 			continue;
 		}
 
-		//DebugDialog::debug(QString("<rect view=\"%6\" id=\"%1pin\" x=\"%2\" y=\"%3\" width=\"%4\" height=\"%5\" />")
-						   //.arg(connector->connectorSharedID())
-						   //.arg(connectorRect.x()).arg(connectorRect.y())
-						   //.arg(connectorRect.width()).arg(connectorRect.height())
-						   //.arg(m_viewIdentifier) );
-		//DebugDialog::debug(QString("<rect id=\"%1pterminal\" x=\"%2\" y=\"%3\" width=\"%4\" height=\"%5\" />")
-						   //.arg(connector->connectorSharedID())
-						   //.arg(connectorRect.x() + (connectorRect.width() / 2)).arg(connectorRect.y() + (connectorRect.height() /2))
-						   //.arg(0).arg(0) );
+		bool result = renderer->setUpConnector(svgIdLayer, ignoreTerminalPoints);
+		if (!result) {
+			//DebugDialog::debug("setup connector fail");
+			continue;
+		}
+
 
 		ConnectorItem * connectorItem = newConnectorItem(connector);
-
-		//DebugDialog::debug(	QString("in layer %1 with z %2")
-			//.arg(ViewLayer::viewLayerNameFromID(m_viewLayerID))
-			//.arg(this->zValue()) );
 
 		connectorItem->setHybrid(svgIdLayer->m_hybrid);
 		connectorItem->setRect(svgIdLayer->m_rect);

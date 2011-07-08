@@ -482,8 +482,8 @@ void SketchWidget::handleConnect(QDomElement & connect, ModelPart * mp, const QS
 			}
 		}
 
-		ConnectorItem * fromConnectorItem = fromBase->findConnectorItemNamed(fromConnectorID, ViewLayer::specFromID(fromViewLayerID));
-		ConnectorItem * toConnectorItem = toBase->findConnectorItemNamed(toConnectorID, ViewLayer::specFromID(toViewLayerID));
+		ConnectorItem * fromConnectorItem = fromBase->findConnectorItemWithSharedID(fromConnectorID, ViewLayer::specFromID(fromViewLayerID));
+		ConnectorItem * toConnectorItem = toBase->findConnectorItemWithSharedID(toConnectorID, ViewLayer::specFromID(toViewLayerID));
 		if (fromConnectorItem == NULL || toConnectorItem == NULL) {
 			return;
 		}
@@ -4001,7 +4001,7 @@ void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
 
 ConnectorItem * SketchWidget::findConnectorItem(ItemBase * itemBase, const QString & connectorID, ViewLayer::ViewLayerSpec viewLayerSpec) {
 
-	ConnectorItem * connectorItem = itemBase->findConnectorItemNamed(connectorID, viewLayerSpec);
+	ConnectorItem * connectorItem = itemBase->findConnectorItemWithSharedID(connectorID, viewLayerSpec);
 	if (connectorItem != NULL) return connectorItem;
 
 	DebugDialog::debug("used to seek layer kin");
@@ -4011,7 +4011,7 @@ ConnectorItem * SketchWidget::findConnectorItem(ItemBase * itemBase, const QStri
 		if (pitem == NULL) return NULL;
 
 		foreach (ItemBase * lkpi, pitem->layerKin()) {
-			connectorItem = lkpi->findConnectorItemNamed(connectorID);
+			connectorItem = lkpi->findConnectorItemWithSharedID(connectorID);
 			if (connectorItem != NULL) return connectorItem;
 		}
 

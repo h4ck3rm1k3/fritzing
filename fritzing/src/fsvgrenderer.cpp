@@ -357,7 +357,7 @@ void FSvgRenderer::calcPrinterScale() {
 	// note: calculation result depends on the svg used; if the svg size is a float, the scale will vary a little
 	// using an svg file with exactly a 1-inch width (like 'wire.svg') gives exactly a 90.0 printerscale value.
 
-	VanillaConnectorInfo.gotCircle = false;				// TODO: only needs to happen once
+	VanillaConnectorInfo.gotCircle = false;				
 	m_printerScale = 90.0;
 
 	/*
@@ -533,7 +533,10 @@ bool FSvgRenderer::setUpConnector(SvgIdLayer * svgIdLayer, bool ignoreTerminalPo
 	QRectF bounds = this->boundsOnElement(connectorID);
 	if (bounds.isNull()) {
 		svgIdLayer->m_visible = false;
-		return false;
+		// hybrids can have zero size
+		if (!svgIdLayer->m_hybrid) {
+			return false;
+		}
 	}
 
 	QSizeF defaultSizeF = this->defaultSizeF();
@@ -541,7 +544,7 @@ bool FSvgRenderer::setUpConnector(SvgIdLayer * svgIdLayer, bool ignoreTerminalPo
 	QRectF viewBox = this->viewBoxF();
 
 	ConnectorInfo * connectorInfo = getConnectorInfo(connectorID);		
-	if (connectorInfo && connectorInfo->gotCircle && (connectorInfo->radius != 0)) {
+	if (connectorInfo && connectorInfo->gotCircle) {
 		svgIdLayer->m_radius = connectorInfo->radius * defaultSizeF.width() / viewBox.width();
 		svgIdLayer->m_strokeWidth = connectorInfo->strokeWidth * defaultSizeF.width() / viewBox.width();
 		bounds = connectorInfo->bounds;
@@ -572,7 +575,7 @@ bool FSvgRenderer::setUpConnector(SvgIdLayer * svgIdLayer, bool ignoreTerminalPo
 							   r1.width() * defaultSizeF.width() / viewBox.width(), 
 							   r1.height() * defaultSizeF.height() / viewBox.height());
 
-	svgIdLayer->m_visible = true;
+	svgIdLayer->m_visible = !bounds.isNull();
 	svgIdLayer->m_point = calcTerminalPoint(svgIdLayer->m_terminalId, svgIdLayer->m_rect, ignoreTerminalPoint, viewBox, connectorInfo->terminalMatrix, true);
 	
 
@@ -663,7 +666,7 @@ QList<SvgIdLayer *> FSvgRenderer::setUpNonConnectors() {
 		QRectF viewBox = this->viewBoxF();
 
 		ConnectorInfo * connectorInfo = m_nonConnectorInfoHash.value(nonConnectorID, NULL);		
-		if (connectorInfo && connectorInfo->gotCircle && (connectorInfo->radius != 0)) {
+		if (connectorInfo && connectorInfo->gotCircle) {
 			svgIdLayer->m_radius = connectorInfo->radius * defaultSizeF.width() / viewBox.width();
 			svgIdLayer->m_strokeWidth = connectorInfo->strokeWidth * defaultSizeF.width() / viewBox.width();
 			bounds = connectorInfo->bounds;

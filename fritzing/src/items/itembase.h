@@ -100,7 +100,7 @@ public:
 	bool hidden();
 	virtual void setInactive(bool inactivate);
 	bool inactive();
-	ConnectorItem * findConnectorItemNamed(const QString & connectorID, ViewLayer::ViewLayerSpec);
+	ConnectorItem * findConnectorItemWithSharedID(const QString & connectorID, ViewLayer::ViewLayerSpec);
 	void updateConnections(ConnectorItem *);
 	virtual void updateConnections();
 	virtual const QString & title();
