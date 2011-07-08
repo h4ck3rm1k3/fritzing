@@ -33,7 +33,7 @@ $Date$
 #include <QMutex>
 #include <QMutexLocker>
 #include <QSet>
-#include <QTooltip>
+#include <QToolTip>
 
 #include "../sketch/infographicsview.h"
 #include "../debugdialog.h"
