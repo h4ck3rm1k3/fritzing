@@ -397,6 +397,7 @@ void MainWindow::createFileMenuActions() {
 	createOpenExampleMenu();
 	createCloseAction();
 	createExportActions();
+	createOrderFabAct();
 
 	QString name;
 	QString path;
@@ -556,6 +557,7 @@ void MainWindow::createOpenRecentMenu() {
 void MainWindow::updateFileMenu() {
 	updateRecentFileActions();
 	updatePartsBinMenu(m_partsBinFileMenu, m_binManager ? m_binManager->getFileMenu() : NULL, 1);
+	m_orderFabAct->setEnabled(true);
 }
 
 void MainWindow::updateRecentFileActions() {
@@ -963,6 +965,11 @@ void MainWindow::createMenus()
     m_fileMenu->addAction(m_saveAsAct);
     m_fileMenu->addAction(m_saveAsBundledAct);
     m_fileMenu->addAction(m_shareOnlineAct);
+
+	if (m_orderFabEnabled) {
+		m_fileMenu->addAction(m_orderFabAct);
+	}
+
     m_fileMenu->addSeparator();
 	m_exportMenu = m_fileMenu->addMenu(tr("&Export"));
     //m_fileMenu->addAction(m_pageSetupAct);
@@ -1107,10 +1114,6 @@ void MainWindow::createMenus()
 	m_pcbTraceMenu->addAction(m_autorouteAct);
 	m_pcbTraceMenu->addAction(m_designRulesCheckAct);
 	m_pcbTraceMenu->addAction(m_autorouterSettingsAct);
-	if (m_enableOrderFabButton) {
-		m_pcbTraceMenu->addAction(m_orderFabAct);
-		m_pcbTraceMenu->addSeparator();
-	}
 
 	m_pcbTraceMenu->addAction(m_groundFillAct);
 	m_pcbTraceMenu->addAction(m_removeGroundFillAct);
@@ -1650,7 +1653,7 @@ void MainWindow::updateTraceMenu() {
 	m_excludeFromAutorouteAct->setChecked(exChecked);
 	m_changeTraceLayerAct->setEnabled(ctlEnabled);
 	m_autorouteAct->setEnabled(arEnabled);
-	m_orderFabAct->setEnabled(arEnabled);
+	m_orderFabAct->setEnabled(true);
 	m_exportEtchablePdfAct->setEnabled(true);
 	m_exportEtchablePdfFlipAct->setEnabled(true);
 	m_exportEtchableSvgAct->setEnabled(true);
@@ -2041,9 +2044,7 @@ void MainWindow::createTraceMenuActions() {
 	m_autorouteAct->setStatusTip(tr("Autoroute..."));
 	connect(m_autorouteAct, SIGNAL(triggered()), this, SLOT(autoroute()));
 
-	m_orderFabAct = new QAction(tr("Order from Fritzing Fab"), this);
-	m_autorouteAct->setStatusTip(tr("Order from Fritzing Fab..."));
-	connect(m_orderFabAct, SIGNAL(triggered()), this, SLOT(orderFab()));
+	createOrderFabAct();
 
 	m_activeLayerBothAct = new QAction(tr("Set both copper layers clickable"), this);
 	m_activeLayerBothAct->setStatusTip(tr("Set both copper layers clickable"));
@@ -2129,6 +2130,15 @@ void MainWindow::activeLayerBoth() {
 	AutoCloseMessageBox::showMessage(this, tr("Copper Top and Copper Bottom layers are both active"));
 	updateActiveLayerButtons();
 }
+
+void MainWindow::createOrderFabAct() {
+	if (m_orderFabAct != NULL) return;
+
+	m_orderFabAct = new QAction(tr("Order a PCB..."), this);
+	m_orderFabAct->setStatusTip(tr("Order a PCB created from your sketch--from fabulous Fritzing Fab"));
+	connect(m_orderFabAct, SIGNAL(triggered()), this, SLOT(orderFab()));
+}
+
 
 void MainWindow::activeLayerTop() {
 	PCBSketchWidget * pcbSketchWidget = qobject_cast<PCBSketchWidget *>(m_currentGraphicsView);
@@ -3038,7 +3048,5 @@ void MainWindow::autorouterSettings() {
 
 void MainWindow::orderFab() 
 {
-	// TODO: some kind of checking
-
-        QDesktopServices::openUrl(QString("http://fab.fritzing.org/"));
+	QDesktopServices::openUrl(QString("http://fab.fritzing.org/"));
 }

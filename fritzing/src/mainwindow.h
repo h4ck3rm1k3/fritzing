@@ -55,6 +55,8 @@ class FSizeGrip;
 
 bool sortPartList(ItemBase * b1, ItemBase * b2);
 
+static const QString ORDERFABENABLED = "OrderFabEnabled";
+
 class SwapTimer : public QTimer
 {
 Q_OBJECT
@@ -318,6 +320,7 @@ protected:
     void createActions();
     void createFileMenuActions();
     void createExportActions();
+    void createOrderFabAct();
     void createOpenExampleMenu();
     void populateMenuFromXMLFile(
     		QMenu *parentMenu, QStringList &actionsTracker,
@@ -713,7 +716,7 @@ protected:
 	QString m_bundledSketchName;
 	RoutingStatus m_routingStatus;
 	bool m_smdOneSideWarningGiven;
-	bool m_enableOrderFabButton;		
+	bool m_orderFabEnabled;		
 	SwapTimer m_swapTimer;
 
 public:

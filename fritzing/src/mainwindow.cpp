@@ -144,6 +144,7 @@ QString MainWindow::BackupFolder;
 MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension())
 {
+	m_orderFabAct = NULL;
 	m_swapTimer.setInterval(15);
 	m_swapTimer.setParent(this);
 	m_swapTimer.setSingleShot(true);
@@ -186,7 +187,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 
 	QSettings settings;
 	m_locationLabelInches = settings.value("LocationInches", QVariant(true)).toBool();
-	m_enableOrderFabButton = settings.value("OrderFabEnabled", QVariant(false)).toBool();
+	m_orderFabEnabled = settings.value(ORDERFABENABLED, QVariant(false)).toBool();
 
 	m_locationLabel = new ClickableLabel("", this);
 	m_locationLabel->setObjectName("LocationLabel");
@@ -730,7 +731,8 @@ SketchToolButton *MainWindow::createAutorouteButton(SketchAreaWidget *parent) {
 
 SketchToolButton *MainWindow::createOrderFabButton(SketchAreaWidget *parent) {
 	SketchToolButton *orderFabButton = new SketchToolButton("Order",parent, m_orderFabAct);
-	orderFabButton->setText(tr("Order"));
+	orderFabButton->setText(tr("Order PCB"));
+	orderFabButton->setEnabledIcon();					// seems to need this to display button icon first time
 
 	return orderFabButton;
 }
@@ -808,7 +810,7 @@ QList<QWidget*> MainWindow::getButtonsForView(ViewIdentifierClass::ViewIdentifie
 				<< createActiveLayerButton(parent) 
 				<< createAutorouteButton(parent) 
 				<< createExportEtchableButton(parent);
-			if (m_enableOrderFabButton) {
+			if (m_orderFabEnabled) {
 				retval << createOrderFabButton(parent);
 			}
 			retval << createRoutingStatusLabel(parent);

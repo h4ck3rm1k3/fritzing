@@ -666,10 +666,10 @@ int FApplication::startup(bool firstRun)
 		settings.clear();
 	}
 
-	bool fabEnabled = settings.value("OrderFabEnabled", QVariant(false)).toBool();
+	bool fabEnabled = settings.value(ORDERFABENABLED, QVariant(false)).toBool();
 	if (!fabEnabled) {
 		NetworkAccessManager = new QNetworkAccessManager(this);
-		connect(NetworkAccessManager, SIGNAL(finished(QNetworkReply *)), this, SLOT(gotFab(QNetworkReply *)));
+		connect(NetworkAccessManager, SIGNAL(finished(QNetworkReply *)), this, SLOT(gotOrderFab(QNetworkReply *)));
 		NetworkAccessManager->get(QNetworkRequest(QUrl("http://fab.fritzing.org/launched")));
 	}
 
@@ -1268,10 +1268,10 @@ void FApplication::cleanupBackups() {
 	FolderUtils::releaseLockedFiles(MainWindow::BackupFolder, m_lockedFiles);
 }
 
-void FApplication::gotFab(QNetworkReply * networkReply) {
+void FApplication::gotOrderFab(QNetworkReply * networkReply) {
 	int responseCode = networkReply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
 	if (responseCode == 200) {
 		QSettings settings;
-		settings.setValue("OrderFabEnabled", QVariant(true));
+		settings.setValue(ORDERFABENABLED, QVariant(true));
 	}
 }

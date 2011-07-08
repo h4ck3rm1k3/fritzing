@@ -71,7 +71,7 @@ public slots:
 	void closeAllWindows2();
 	void loadedPart(int loaded, int total);
 	void externalProcessSlot(QString & name, QString & path, QStringList & args);
-	void gotFab(QNetworkReply *);
+	void gotOrderFab(QNetworkReply *);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
