@@ -645,153 +645,80 @@
   <line  fill="none" stroke="white" fill-opacity="1" y1="106.356" x1="0.288" y2="80.8438" stroke-width="0.576" x2="0.288"/>
  </g>
  <g  id="copper1" stroke-width="0">
-  <circle  fill="none" cx="67.0932" cy="10.8" connectorname="1-1B" stroke="#F7BD13" r="2.29039" id="connector66pad" stroke-width="1.17922"/>
-  <rect  width="4.58078" x="64.8028" y="8.50961" fill="none" height="4.58078" stroke="#F7BD13" stroke-width="1.17922"/>
-  <circle  fill="none" cx="56.164" cy="10.8" connectorname="1-1A" stroke="#F7BD13" r="2.29039" id="connector67pad" stroke-width="1.17922"/>
-  <circle  fill="none" cx="47.0772" cy="10.8" connectorname="1-2A" stroke="#F7BD13" r="2.29039" id="connector68pad" stroke-width="1.17922"/>
-  <rect  width="4.58078" x="44.7868" y="8.50961" fill="none" height="4.58078" stroke="#F7BD13" stroke-width="1.17922"/>
-  <circle  fill="none" cx="36.148" cy="10.8" connectorname="1-2B" stroke="#F7BD13" r="2.29039" id="connector69pad" stroke-width="1.17922"/>
-  <circle  fill="none" cx="147.373" cy="90" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector70pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="140.173" cy="90" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector71pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="140.173" cy="97.2" connectorname="VOUT" stroke="#F7BD13" r="2.052" id="connector72pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="147.373" cy="97.2" connectorname="VOUT" stroke="#F7BD13" r="2.052" id="connector73pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="35.2692" cy="176.4" connectorname="3-1B" stroke="#F7BD13" r="2.29039" id="connector74pad" stroke-width="1.17922"/>
-  <rect  width="4.58078" x="32.9788" y="174.11" fill="none" height="4.58078" stroke="#F7BD13" stroke-width="1.17922"/>
-  <circle  fill="none" cx="46.1985" cy="176.4" connectorname="3-1A" stroke="#F7BD13" r="2.29039" id="connector75pad" stroke-width="1.17922"/>
-  <circle  fill="none" cx="55.2132" cy="176.4" connectorname="3-2A" stroke="#F7BD13" r="2.29039" id="connector76pad" stroke-width="1.17922"/>
-  <rect  width="4.58078" x="52.9228" y="174.11" fill="none" height="4.58078" stroke="#F7BD13" stroke-width="1.17922"/>
-  <circle  fill="none" cx="66.1425" cy="176.4" connectorname="3-2B" stroke="#F7BD13" r="2.29039" id="connector77pad" stroke-width="1.17922"/>
-  <circle  fill="none" cx="80.1252" cy="176.4" connectorname="4-1B" stroke="#F7BD13" r="2.29039" id="connector78pad" stroke-width="1.17922"/>
-  <rect  width="4.58078" x="77.8349" y="174.11" fill="none" height="4.58078" stroke="#F7BD13" stroke-width="1.17922"/>
-  <circle  fill="none" cx="91.0548" cy="176.4" connectorname="4-1A" stroke="#F7BD13" r="2.29039" id="connector79pad" stroke-width="1.17922"/>
-  <circle  fill="none" cx="100.069" cy="176.4" connectorname="4-2A" stroke="#F7BD13" r="2.29039" id="connector80pad" stroke-width="1.17922"/>
-  <rect  width="4.58078" x="97.7789" y="174.11" fill="none" height="4.58078" stroke="#F7BD13" stroke-width="1.17922"/>
-  <circle  fill="none" cx="110.999" cy="176.4" connectorname="4-2B" stroke="#F7BD13" r="2.29039" id="connector81pad" stroke-width="1.17922"/>
-  <circle  fill="none" cx="111.877" cy="10.8" connectorname="2-1B" stroke="#F7BD13" r="2.29039" id="connector82pad" stroke-width="1.17922"/>
-  <rect  width="4.58078" x="109.587" y="8.50961" fill="none" height="4.58078" stroke="#F7BD13" stroke-width="1.17922"/>
-  <circle  fill="none" cx="100.948" cy="10.8" connectorname="2-1A" stroke="#F7BD13" r="2.29039" id="connector83pad" stroke-width="1.17922"/>
-  <circle  fill="none" cx="91.9332" cy="10.8" connectorname="2-2A" stroke="#F7BD13" r="2.29039" id="connector84pad" stroke-width="1.17922"/>
-  <rect  width="4.58078" x="89.6429" y="8.50961" fill="none" height="4.58078" stroke="#F7BD13" stroke-width="1.17922"/>
-  <circle  fill="none" cx="81.0043" cy="10.8" connectorname="2-2B" stroke="#F7BD13" r="2.29039" id="connector85pad" stroke-width="1.17922"/>
-  <circle  fill="none" cx="140.173" cy="82.8" connectorname="STP1" stroke="#F7BD13" r="2.052" id="connector86pad" stroke-width="1.224"/>
-  <rect  width="4.104" x="138.121" y="80.748" fill="none" height="4.104" stroke="#F7BD13" stroke-width="1.224"/>
-  <circle  fill="none" cx="140.173" cy="75.6" connectorname="DIR1" stroke="#F7BD13" r="2.052" id="connector87pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="140.173" cy="68.4" connectorname="MS11" stroke="#F7BD13" r="2.052" id="connector88pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="140.173" cy="61.2" connectorname="MS21" stroke="#F7BD13" r="2.052" id="connector89pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="140.173" cy="54" connectorname="MS31" stroke="#F7BD13" r="2.052" id="connector90pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="140.173" cy="46.8" connectorname="RST1" stroke="#F7BD13" r="2.052" id="connector91pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="140.173" cy="39.6" connectorname="SLP1" stroke="#F7BD13" r="2.052" id="connector92pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="140.173" cy="32.4" connectorname="EN1" stroke="#F7BD13" r="2.052" id="connector93pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="140.173" cy="104.4" connectorname="STP3" stroke="#F7BD13" r="2.052" id="connector94pad" stroke-width="1.224"/>
-  <rect  width="4.104" x="138.121" y="102.348" fill="none" height="4.104" stroke="#F7BD13" stroke-width="1.224"/>
-  <circle  fill="none" cx="140.173" cy="111.6" connectorname="DIR3" stroke="#F7BD13" r="2.052" id="connector95pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="140.173" cy="118.8" connectorname="MS13" stroke="#F7BD13" r="2.052" id="connector96pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="140.173" cy="126" connectorname="MS23" stroke="#F7BD13" r="2.052" id="connector97pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="140.173" cy="133.2" connectorname="MS33" stroke="#F7BD13" r="2.052" id="connector98pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="140.173" cy="140.4" connectorname="RST3" stroke="#F7BD13" r="2.052" id="connector99pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="140.173" cy="147.6" connectorname="SLP3" stroke="#F7BD13" r="2.052" id="connector100pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="140.173" cy="154.8" connectorname="EN3" stroke="#F7BD13" r="2.052" id="connector101pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="147.373" cy="104.4" connectorname="STP4" stroke="#F7BD13" r="2.052" id="connector102pad" stroke-width="1.224"/>
-  <rect  width="4.104" x="145.321" y="102.348" fill="none" height="4.104" stroke="#F7BD13" stroke-width="1.224"/>
-  <circle  fill="none" cx="147.373" cy="111.6" connectorname="DIR4" stroke="#F7BD13" r="2.052" id="connector103pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="147.373" cy="118.8" connectorname="MS14" stroke="#F7BD13" r="2.052" id="connector104pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="147.373" cy="126" connectorname="MS24" stroke="#F7BD13" r="2.052" id="connector105pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="147.373" cy="133.2" connectorname="MS34" stroke="#F7BD13" r="2.052" id="connector106pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="147.373" cy="140.4" connectorname="RST4" stroke="#F7BD13" r="2.052" id="connector107pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="147.373" cy="147.6" connectorname="SLP4" stroke="#F7BD13" r="2.052" id="connector108pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="147.373" cy="154.8" connectorname="EN4" stroke="#F7BD13" r="2.052" id="connector109pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="147.373" cy="82.8" connectorname="STP2" stroke="#F7BD13" r="2.052" id="connector110pad" stroke-width="1.224"/>
-  <rect  width="4.104" x="145.321" y="80.748" fill="none" height="4.104" stroke="#F7BD13" stroke-width="1.224"/>
-  <circle  fill="none" cx="147.373" cy="75.6" connectorname="DIR2" stroke="#F7BD13" r="2.052" id="connector111pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="147.373" cy="68.4" connectorname="MS12" stroke="#F7BD13" r="2.052" id="connector112pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="147.373" cy="61.2" connectorname="MS22" stroke="#F7BD13" r="2.052" id="connector113pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="147.373" cy="54" connectorname="MS32" stroke="#F7BD13" r="2.052" id="connector114pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="147.373" cy="46.8" connectorname="RST2" stroke="#F7BD13" r="2.052" id="connector115pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="147.373" cy="39.6" connectorname="SLP2" stroke="#F7BD13" r="2.052" id="connector116pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="147.373" cy="32.4" connectorname="EN2" stroke="#F7BD13" r="2.052" id="connector117pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="161.773" cy="118.8" connectorname="DIR" stroke="#F7BD13" r="2.052" id="connector120pad" stroke-width="1.224"/>
-  <rect  width="4.104" x="159.721" y="116.748" fill="none" height="4.104" stroke="#F7BD13" stroke-width="1.224"/>
-  <circle  fill="none" cx="161.773" cy="111.6" connectorname="EN4" stroke="#F7BD13" r="2.052" id="connector121pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="161.773" cy="104.4" connectorname="EN3" stroke="#F7BD13" r="2.052" id="connector122pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="161.773" cy="97.2" connectorname="VOUT" stroke="#F7BD13" r="2.052" id="connector123pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="161.773" cy="90" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector124pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="161.773" cy="82.8" connectorname="EN2" stroke="#F7BD13" r="2.052" id="connector125pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="161.773" cy="75.6" connectorname="EN1" stroke="#F7BD13" r="2.052" id="connector126pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="161.773" cy="68.4" connectorname="STP" stroke="#F7BD13" r="2.052" id="connector127pad" stroke-width="1.224"/>
- </g>
- <g  id="copper0" stroke-width="0">
-  <circle  fill="none" cx="67.0932" cy="10.8" connectorname="1-1B" stroke="#F7BD13" r="2.29039" id="connector66pad" stroke-width="1.17922"/>
-  <rect  width="4.58078" x="64.8028" y="8.50961" fill="none" height="4.58078" stroke="#F7BD13" stroke-width="1.17922"/>
-  <circle  fill="none" cx="56.164" cy="10.8" connectorname="1-1A" stroke="#F7BD13" r="2.29039" id="connector67pad" stroke-width="1.17922"/>
-  <circle  fill="none" cx="47.0772" cy="10.8" connectorname="1-2A" stroke="#F7BD13" r="2.29039" id="connector68pad" stroke-width="1.17922"/>
-  <rect  width="4.58078" x="44.7868" y="8.50961" fill="none" height="4.58078" stroke="#F7BD13" stroke-width="1.17922"/>
-  <circle  fill="none" cx="36.148" cy="10.8" connectorname="1-2B" stroke="#F7BD13" r="2.29039" id="connector69pad" stroke-width="1.17922"/>
-  <circle  fill="none" cx="147.373" cy="90" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector70pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="140.173" cy="90" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector71pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="140.173" cy="97.2" connectorname="VOUT" stroke="#F7BD13" r="2.052" id="connector72pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="147.373" cy="97.2" connectorname="VOUT" stroke="#F7BD13" r="2.052" id="connector73pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="35.2692" cy="176.4" connectorname="3-1B" stroke="#F7BD13" r="2.29039" id="connector74pad" stroke-width="1.17922"/>
-  <rect  width="4.58078" x="32.9788" y="174.11" fill="none" height="4.58078" stroke="#F7BD13" stroke-width="1.17922"/>
-  <circle  fill="none" cx="46.1985" cy="176.4" connectorname="3-1A" stroke="#F7BD13" r="2.29039" id="connector75pad" stroke-width="1.17922"/>
-  <circle  fill="none" cx="55.2132" cy="176.4" connectorname="3-2A" stroke="#F7BD13" r="2.29039" id="connector76pad" stroke-width="1.17922"/>
-  <rect  width="4.58078" x="52.9228" y="174.11" fill="none" height="4.58078" stroke="#F7BD13" stroke-width="1.17922"/>
-  <circle  fill="none" cx="66.1425" cy="176.4" connectorname="3-2B" stroke="#F7BD13" r="2.29039" id="connector77pad" stroke-width="1.17922"/>
-  <circle  fill="none" cx="80.1252" cy="176.4" connectorname="4-1B" stroke="#F7BD13" r="2.29039" id="connector78pad" stroke-width="1.17922"/>
-  <rect  width="4.58078" x="77.8349" y="174.11" fill="none" height="4.58078" stroke="#F7BD13" stroke-width="1.17922"/>
-  <circle  fill="none" cx="91.0548" cy="176.4" connectorname="4-1A" stroke="#F7BD13" r="2.29039" id="connector79pad" stroke-width="1.17922"/>
-  <circle  fill="none" cx="100.069" cy="176.4" connectorname="4-2A" stroke="#F7BD13" r="2.29039" id="connector80pad" stroke-width="1.17922"/>
-  <rect  width="4.58078" x="97.7789" y="174.11" fill="none" height="4.58078" stroke="#F7BD13" stroke-width="1.17922"/>
-  <circle  fill="none" cx="110.999" cy="176.4" connectorname="4-2B" stroke="#F7BD13" r="2.29039" id="connector81pad" stroke-width="1.17922"/>
-  <circle  fill="none" cx="111.877" cy="10.8" connectorname="2-1B" stroke="#F7BD13" r="2.29039" id="connector82pad" stroke-width="1.17922"/>
-  <rect  width="4.58078" x="109.587" y="8.50961" fill="none" height="4.58078" stroke="#F7BD13" stroke-width="1.17922"/>
-  <circle  fill="none" cx="100.948" cy="10.8" connectorname="2-1A" stroke="#F7BD13" r="2.29039" id="connector83pad" stroke-width="1.17922"/>
-  <circle  fill="none" cx="91.9332" cy="10.8" connectorname="2-2A" stroke="#F7BD13" r="2.29039" id="connector84pad" stroke-width="1.17922"/>
-  <rect  width="4.58078" x="89.6429" y="8.50961" fill="none" height="4.58078" stroke="#F7BD13" stroke-width="1.17922"/>
-  <circle  fill="none" cx="81.0043" cy="10.8" connectorname="2-2B" stroke="#F7BD13" r="2.29039" id="connector85pad" stroke-width="1.17922"/>
-  <circle  fill="none" cx="140.173" cy="82.8" connectorname="STP1" stroke="#F7BD13" r="2.052" id="connector86pad" stroke-width="1.224"/>
-  <rect  width="4.104" x="138.121" y="80.748" fill="none" height="4.104" stroke="#F7BD13" stroke-width="1.224"/>
-  <circle  fill="none" cx="140.173" cy="75.6" connectorname="DIR1" stroke="#F7BD13" r="2.052" id="connector87pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="140.173" cy="68.4" connectorname="MS11" stroke="#F7BD13" r="2.052" id="connector88pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="140.173" cy="61.2" connectorname="MS21" stroke="#F7BD13" r="2.052" id="connector89pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="140.173" cy="54" connectorname="MS31" stroke="#F7BD13" r="2.052" id="connector90pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="140.173" cy="46.8" connectorname="RST1" stroke="#F7BD13" r="2.052" id="connector91pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="140.173" cy="39.6" connectorname="SLP1" stroke="#F7BD13" r="2.052" id="connector92pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="140.173" cy="32.4" connectorname="EN1" stroke="#F7BD13" r="2.052" id="connector93pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="140.173" cy="104.4" connectorname="STP3" stroke="#F7BD13" r="2.052" id="connector94pad" stroke-width="1.224"/>
-  <rect  width="4.104" x="138.121" y="102.348" fill="none" height="4.104" stroke="#F7BD13" stroke-width="1.224"/>
-  <circle  fill="none" cx="140.173" cy="111.6" connectorname="DIR3" stroke="#F7BD13" r="2.052" id="connector95pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="140.173" cy="118.8" connectorname="MS13" stroke="#F7BD13" r="2.052" id="connector96pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="140.173" cy="126" connectorname="MS23" stroke="#F7BD13" r="2.052" id="connector97pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="140.173" cy="133.2" connectorname="MS33" stroke="#F7BD13" r="2.052" id="connector98pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="140.173" cy="140.4" connectorname="RST3" stroke="#F7BD13" r="2.052" id="connector99pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="140.173" cy="147.6" connectorname="SLP3" stroke="#F7BD13" r="2.052" id="connector100pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="140.173" cy="154.8" connectorname="EN3" stroke="#F7BD13" r="2.052" id="connector101pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="147.373" cy="104.4" connectorname="STP4" stroke="#F7BD13" r="2.052" id="connector102pad" stroke-width="1.224"/>
-  <rect  width="4.104" x="145.321" y="102.348" fill="none" height="4.104" stroke="#F7BD13" stroke-width="1.224"/>
-  <circle  fill="none" cx="147.373" cy="111.6" connectorname="DIR4" stroke="#F7BD13" r="2.052" id="connector103pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="147.373" cy="118.8" connectorname="MS14" stroke="#F7BD13" r="2.052" id="connector104pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="147.373" cy="126" connectorname="MS24" stroke="#F7BD13" r="2.052" id="connector105pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="147.373" cy="133.2" connectorname="MS34" stroke="#F7BD13" r="2.052" id="connector106pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="147.373" cy="140.4" connectorname="RST4" stroke="#F7BD13" r="2.052" id="connector107pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="147.373" cy="147.6" connectorname="SLP4" stroke="#F7BD13" r="2.052" id="connector108pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="147.373" cy="154.8" connectorname="EN4" stroke="#F7BD13" r="2.052" id="connector109pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="147.373" cy="82.8" connectorname="STP2" stroke="#F7BD13" r="2.052" id="connector110pad" stroke-width="1.224"/>
-  <rect  width="4.104" x="145.321" y="80.748" fill="none" height="4.104" stroke="#F7BD13" stroke-width="1.224"/>
-  <circle  fill="none" cx="147.373" cy="75.6" connectorname="DIR2" stroke="#F7BD13" r="2.052" id="connector111pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="147.373" cy="68.4" connectorname="MS12" stroke="#F7BD13" r="2.052" id="connector112pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="147.373" cy="61.2" connectorname="MS22" stroke="#F7BD13" r="2.052" id="connector113pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="147.373" cy="54" connectorname="MS32" stroke="#F7BD13" r="2.052" id="connector114pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="147.373" cy="46.8" connectorname="RST2" stroke="#F7BD13" r="2.052" id="connector115pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="147.373" cy="39.6" connectorname="SLP2" stroke="#F7BD13" r="2.052" id="connector116pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="147.373" cy="32.4" connectorname="EN2" stroke="#F7BD13" r="2.052" id="connector117pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="161.773" cy="118.8" connectorname="DIR" stroke="#F7BD13" r="2.052" id="connector120pad" stroke-width="1.224"/>
-  <rect  width="4.104" x="159.721" y="116.748" fill="none" height="4.104" stroke="#F7BD13" stroke-width="1.224"/>
-  <circle  fill="none" cx="161.773" cy="111.6" connectorname="EN4" stroke="#F7BD13" r="2.052" id="connector121pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="161.773" cy="104.4" connectorname="EN3" stroke="#F7BD13" r="2.052" id="connector122pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="161.773" cy="97.2" connectorname="VOUT" stroke="#F7BD13" r="2.052" id="connector123pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="161.773" cy="90" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector124pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="161.773" cy="82.8" connectorname="EN2" stroke="#F7BD13" r="2.052" id="connector125pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="161.773" cy="75.6" connectorname="EN1" stroke="#F7BD13" r="2.052" id="connector126pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="161.773" cy="68.4" connectorname="STP" stroke="#F7BD13" r="2.052" id="connector127pad" stroke-width="1.224"/>
+  <g  id="copper0" stroke-width="0">
+   <circle  fill="none" cx="67.0932" cy="10.8" connectorname="1-1B" stroke="#F7BD13" r="2.29039" id="connector66pad" stroke-width="1.17922"/>
+   <rect  width="4.58078" x="64.8028" y="8.50961" fill="none" height="4.58078" stroke="#F7BD13" stroke-width="1.17922"/>
+   <circle  fill="none" cx="56.164" cy="10.8" connectorname="1-1A" stroke="#F7BD13" r="2.29039" id="connector67pad" stroke-width="1.17922"/>
+   <circle  fill="none" cx="47.0772" cy="10.8" connectorname="1-2A" stroke="#F7BD13" r="2.29039" id="connector68pad" stroke-width="1.17922"/>
+   <rect  width="4.58078" x="44.7868" y="8.50961" fill="none" height="4.58078" stroke="#F7BD13" stroke-width="1.17922"/>
+   <circle  fill="none" cx="36.148" cy="10.8" connectorname="1-2B" stroke="#F7BD13" r="2.29039" id="connector69pad" stroke-width="1.17922"/>
+   <circle  fill="none" cx="147.373" cy="90" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector70pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="140.173" cy="90" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector71pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="140.173" cy="97.2" connectorname="VOUT" stroke="#F7BD13" r="2.052" id="connector72pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="147.373" cy="97.2" connectorname="VOUT" stroke="#F7BD13" r="2.052" id="connector73pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="35.2692" cy="176.4" connectorname="3-1B" stroke="#F7BD13" r="2.29039" id="connector74pad" stroke-width="1.17922"/>
+   <rect  width="4.58078" x="32.9788" y="174.11" fill="none" height="4.58078" stroke="#F7BD13" stroke-width="1.17922"/>
+   <circle  fill="none" cx="46.1985" cy="176.4" connectorname="3-1A" stroke="#F7BD13" r="2.29039" id="connector75pad" stroke-width="1.17922"/>
+   <circle  fill="none" cx="55.2132" cy="176.4" connectorname="3-2A" stroke="#F7BD13" r="2.29039" id="connector76pad" stroke-width="1.17922"/>
+   <rect  width="4.58078" x="52.9228" y="174.11" fill="none" height="4.58078" stroke="#F7BD13" stroke-width="1.17922"/>
+   <circle  fill="none" cx="66.1425" cy="176.4" connectorname="3-2B" stroke="#F7BD13" r="2.29039" id="connector77pad" stroke-width="1.17922"/>
+   <circle  fill="none" cx="80.1252" cy="176.4" connectorname="4-1B" stroke="#F7BD13" r="2.29039" id="connector78pad" stroke-width="1.17922"/>
+   <rect  width="4.58078" x="77.8349" y="174.11" fill="none" height="4.58078" stroke="#F7BD13" stroke-width="1.17922"/>
+   <circle  fill="none" cx="91.0548" cy="176.4" connectorname="4-1A" stroke="#F7BD13" r="2.29039" id="connector79pad" stroke-width="1.17922"/>
+   <circle  fill="none" cx="100.069" cy="176.4" connectorname="4-2A" stroke="#F7BD13" r="2.29039" id="connector80pad" stroke-width="1.17922"/>
+   <rect  width="4.58078" x="97.7789" y="174.11" fill="none" height="4.58078" stroke="#F7BD13" stroke-width="1.17922"/>
+   <circle  fill="none" cx="110.999" cy="176.4" connectorname="4-2B" stroke="#F7BD13" r="2.29039" id="connector81pad" stroke-width="1.17922"/>
+   <circle  fill="none" cx="111.877" cy="10.8" connectorname="2-1B" stroke="#F7BD13" r="2.29039" id="connector82pad" stroke-width="1.17922"/>
+   <rect  width="4.58078" x="109.587" y="8.50961" fill="none" height="4.58078" stroke="#F7BD13" stroke-width="1.17922"/>
+   <circle  fill="none" cx="100.948" cy="10.8" connectorname="2-1A" stroke="#F7BD13" r="2.29039" id="connector83pad" stroke-width="1.17922"/>
+   <circle  fill="none" cx="91.9332" cy="10.8" connectorname="2-2A" stroke="#F7BD13" r="2.29039" id="connector84pad" stroke-width="1.17922"/>
+   <rect  width="4.58078" x="89.6429" y="8.50961" fill="none" height="4.58078" stroke="#F7BD13" stroke-width="1.17922"/>
+   <circle  fill="none" cx="81.0043" cy="10.8" connectorname="2-2B" stroke="#F7BD13" r="2.29039" id="connector85pad" stroke-width="1.17922"/>
+   <circle  fill="none" cx="140.173" cy="82.8" connectorname="STP1" stroke="#F7BD13" r="2.052" id="connector86pad" stroke-width="1.224"/>
+   <rect  width="4.104" x="138.121" y="80.748" fill="none" height="4.104" stroke="#F7BD13" stroke-width="1.224"/>
+   <circle  fill="none" cx="140.173" cy="75.6" connectorname="DIR1" stroke="#F7BD13" r="2.052" id="connector87pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="140.173" cy="68.4" connectorname="MS11" stroke="#F7BD13" r="2.052" id="connector88pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="140.173" cy="61.2" connectorname="MS21" stroke="#F7BD13" r="2.052" id="connector89pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="140.173" cy="54" connectorname="MS31" stroke="#F7BD13" r="2.052" id="connector90pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="140.173" cy="46.8" connectorname="RST1" stroke="#F7BD13" r="2.052" id="connector91pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="140.173" cy="39.6" connectorname="SLP1" stroke="#F7BD13" r="2.052" id="connector92pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="140.173" cy="32.4" connectorname="EN1" stroke="#F7BD13" r="2.052" id="connector93pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="140.173" cy="104.4" connectorname="STP3" stroke="#F7BD13" r="2.052" id="connector94pad" stroke-width="1.224"/>
+   <rect  width="4.104" x="138.121" y="102.348" fill="none" height="4.104" stroke="#F7BD13" stroke-width="1.224"/>
+   <circle  fill="none" cx="140.173" cy="111.6" connectorname="DIR3" stroke="#F7BD13" r="2.052" id="connector95pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="140.173" cy="118.8" connectorname="MS13" stroke="#F7BD13" r="2.052" id="connector96pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="140.173" cy="126" connectorname="MS23" stroke="#F7BD13" r="2.052" id="connector97pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="140.173" cy="133.2" connectorname="MS33" stroke="#F7BD13" r="2.052" id="connector98pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="140.173" cy="140.4" connectorname="RST3" stroke="#F7BD13" r="2.052" id="connector99pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="140.173" cy="147.6" connectorname="SLP3" stroke="#F7BD13" r="2.052" id="connector100pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="140.173" cy="154.8" connectorname="EN3" stroke="#F7BD13" r="2.052" id="connector101pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="147.373" cy="104.4" connectorname="STP4" stroke="#F7BD13" r="2.052" id="connector102pad" stroke-width="1.224"/>
+   <rect  width="4.104" x="145.321" y="102.348" fill="none" height="4.104" stroke="#F7BD13" stroke-width="1.224"/>
+   <circle  fill="none" cx="147.373" cy="111.6" connectorname="DIR4" stroke="#F7BD13" r="2.052" id="connector103pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="147.373" cy="118.8" connectorname="MS14" stroke="#F7BD13" r="2.052" id="connector104pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="147.373" cy="126" connectorname="MS24" stroke="#F7BD13" r="2.052" id="connector105pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="147.373" cy="133.2" connectorname="MS34" stroke="#F7BD13" r="2.052" id="connector106pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="147.373" cy="140.4" connectorname="RST4" stroke="#F7BD13" r="2.052" id="connector107pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="147.373" cy="147.6" connectorname="SLP4" stroke="#F7BD13" r="2.052" id="connector108pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="147.373" cy="154.8" connectorname="EN4" stroke="#F7BD13" r="2.052" id="connector109pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="147.373" cy="82.8" connectorname="STP2" stroke="#F7BD13" r="2.052" id="connector110pad" stroke-width="1.224"/>
+   <rect  width="4.104" x="145.321" y="80.748" fill="none" height="4.104" stroke="#F7BD13" stroke-width="1.224"/>
+   <circle  fill="none" cx="147.373" cy="75.6" connectorname="DIR2" stroke="#F7BD13" r="2.052" id="connector111pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="147.373" cy="68.4" connectorname="MS12" stroke="#F7BD13" r="2.052" id="connector112pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="147.373" cy="61.2" connectorname="MS22" stroke="#F7BD13" r="2.052" id="connector113pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="147.373" cy="54" connectorname="MS32" stroke="#F7BD13" r="2.052" id="connector114pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="147.373" cy="46.8" connectorname="RST2" stroke="#F7BD13" r="2.052" id="connector115pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="147.373" cy="39.6" connectorname="SLP2" stroke="#F7BD13" r="2.052" id="connector116pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="147.373" cy="32.4" connectorname="EN2" stroke="#F7BD13" r="2.052" id="connector117pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="161.773" cy="118.8" connectorname="DIR" stroke="#F7BD13" r="2.052" id="connector120pad" stroke-width="1.224"/>
+   <rect  width="4.104" x="159.721" y="116.748" fill="none" height="4.104" stroke="#F7BD13" stroke-width="1.224"/>
+   <circle  fill="none" cx="161.773" cy="111.6" connectorname="EN4" stroke="#F7BD13" r="2.052" id="connector121pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="161.773" cy="104.4" connectorname="EN3" stroke="#F7BD13" r="2.052" id="connector122pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="161.773" cy="97.2" connectorname="VOUT" stroke="#F7BD13" r="2.052" id="connector123pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="161.773" cy="90" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector124pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="161.773" cy="82.8" connectorname="EN2" stroke="#F7BD13" r="2.052" id="connector125pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="161.773" cy="75.6" connectorname="EN1" stroke="#F7BD13" r="2.052" id="connector126pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="161.773" cy="68.4" connectorname="STP" stroke="#F7BD13" r="2.052" id="connector127pad" stroke-width="1.224"/>
+  </g>
  </g>
 </svg>

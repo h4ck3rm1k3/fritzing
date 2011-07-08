@@ -256,81 +256,44 @@
   <line  fill="none" stroke="white" fill-opacity="1" y1="19.6073" x1="119.254" y2="0.288" stroke-width="0.576" x2="119.254"/>
  </g>
  <g  id="copper1" stroke-width="0">
-  <circle  fill="none" cx="144" cy="91.607" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector97pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="84.407" connectorname="LED2 - D7" stroke="#F7BD13" r="2.052" id="connector89pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="116.807" connectorname="MOSI - D11" stroke="#F7BD13" r="2.052" id="connector93pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="41.2073" connectorname="TX" stroke="#F7BD13" r="2.052" id="connector101pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="70.0073" connectorname="D5" stroke="#F7BD13" r="2.052" id="connector87pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="93.6" cy="177.647" connectorname="VCC" stroke="#F7BD13" r="2.052" id="connector22pad" stroke-width="1.224"/>
-  <rect  width="4.104" x="91.548" y="175.595" fill="none" height="4.104" stroke="#F7BD13" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="102.407" connectorname="SD_CS - D9" stroke="#F7BD13" r="2.052" id="connector91pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="100.8" cy="178.367" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector23pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="131.207" connectorname="SCK - D13" stroke="#F7BD13" r="2.052" id="connector95pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="108" cy="177.647" connectorname="LCD" stroke="#F7BD13" r="2.052" id="connector24pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="120.407" connectorname="RS - RES" stroke="#F7BD13" r="2.052" id="connector99pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="100.8" cy="73.607" connectorname="VCC" stroke="#F7BD13" r="2.052" id="connector27pad" stroke-width="1.224"/>
-  <rect  width="4.104" x="98.748" y="71.5553" fill="none" height="4.104" stroke="#F7BD13" stroke-width="1.224"/>
-  <circle  fill="none" cx="108" cy="73.607" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector28pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="115.2" cy="73.607" connectorname="CANH" stroke="#F7BD13" r="2.052" id="connector29pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="122.4" cy="73.607" connectorname="CANL" stroke="#F7BD13" r="2.052" id="connector30pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="77.207" connectorname="LCD - D6" stroke="#F7BD13" r="2.052" id="connector88pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="95.207" connectorname="LED1 - D8" stroke="#F7BD13" r="2.052" id="connector90pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="109.607" connectorname="CAN_CS - D10" stroke="#F7BD13" r="2.052" id="connector92pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="124.007" connectorname="MISO - D12" stroke="#F7BD13" r="2.052" id="connector94pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="98.807" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector96pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="138.407" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector98pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="34.0073" connectorname="RX" stroke="#F7BD13" r="2.052" id="connector100pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="84.407" connectorname="+12V" stroke="#F7BD13" r="2.052" id="connector102pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="113.207" connectorname="3.3V" stroke="#F7BD13" r="2.052" id="connector75pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="106.007" connectorname="VCC" stroke="#F7BD13" r="2.052" id="connector76pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="70.0073" connectorname="A0" stroke="#F7BD13" r="2.052" id="connector77pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="62.8073" connectorname="JOY-UP - A1" stroke="#F7BD13" r="2.052" id="connector78pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="55.6073" connectorname="JOY-LEFT - A2" stroke="#F7BD13" r="2.052" id="connector79pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="48.4073" connectorname="JOY-DOWN - A3" stroke="#F7BD13" r="2.052" id="connector80pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="41.2073" connectorname="JOY-CLICK - A4" stroke="#F7BD13" r="2.052" id="connector81pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="34.0073" connectorname="JOY-RIGHT - A5" stroke="#F7BD13" r="2.052" id="connector82pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="145.607" connectorname="AREF" stroke="#F7BD13" r="2.052" id="connector83pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="48.4073" connectorname="CAN_INT - D2" stroke="#F7BD13" r="2.052" id="connector84pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="55.6073" connectorname="D3" stroke="#F7BD13" r="2.052" id="connector85pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="62.8073" connectorname="D4" stroke="#F7BD13" r="2.052" id="connector86pad" stroke-width="1.224"/>
- </g>
- <g  id="copper0" stroke-width="0">
-  <circle  fill="none" cx="144" cy="91.607" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector97pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="84.407" connectorname="LED2 - D7" stroke="#F7BD13" r="2.052" id="connector89pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="116.807" connectorname="MOSI - D11" stroke="#F7BD13" r="2.052" id="connector93pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="41.2073" connectorname="TX" stroke="#F7BD13" r="2.052" id="connector101pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="70.0073" connectorname="D5" stroke="#F7BD13" r="2.052" id="connector87pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="93.6" cy="177.647" connectorname="VCC" stroke="#F7BD13" r="2.052" id="connector22pad" stroke-width="1.224"/>
-  <rect  width="4.104" x="91.548" y="175.595" fill="none" height="4.104" stroke="#F7BD13" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="102.407" connectorname="SD_CS - D9" stroke="#F7BD13" r="2.052" id="connector91pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="100.8" cy="178.367" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector23pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="131.207" connectorname="SCK - D13" stroke="#F7BD13" r="2.052" id="connector95pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="108" cy="177.647" connectorname="LCD" stroke="#F7BD13" r="2.052" id="connector24pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="120.407" connectorname="RS - RES" stroke="#F7BD13" r="2.052" id="connector99pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="100.8" cy="73.607" connectorname="VCC" stroke="#F7BD13" r="2.052" id="connector27pad" stroke-width="1.224"/>
-  <rect  width="4.104" x="98.748" y="71.5553" fill="none" height="4.104" stroke="#F7BD13" stroke-width="1.224"/>
-  <circle  fill="none" cx="108" cy="73.607" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector28pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="115.2" cy="73.607" connectorname="CANH" stroke="#F7BD13" r="2.052" id="connector29pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="122.4" cy="73.607" connectorname="CANL" stroke="#F7BD13" r="2.052" id="connector30pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="77.207" connectorname="LCD - D6" stroke="#F7BD13" r="2.052" id="connector88pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="95.207" connectorname="LED1 - D8" stroke="#F7BD13" r="2.052" id="connector90pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="109.607" connectorname="CAN_CS - D10" stroke="#F7BD13" r="2.052" id="connector92pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="124.007" connectorname="MISO - D12" stroke="#F7BD13" r="2.052" id="connector94pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="98.807" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector96pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="138.407" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector98pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="34.0073" connectorname="RX" stroke="#F7BD13" r="2.052" id="connector100pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="84.407" connectorname="+12V" stroke="#F7BD13" r="2.052" id="connector102pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="113.207" connectorname="3.3V" stroke="#F7BD13" r="2.052" id="connector75pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="106.007" connectorname="VCC" stroke="#F7BD13" r="2.052" id="connector76pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="70.0073" connectorname="A0" stroke="#F7BD13" r="2.052" id="connector77pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="62.8073" connectorname="JOY-UP - A1" stroke="#F7BD13" r="2.052" id="connector78pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="55.6073" connectorname="JOY-LEFT - A2" stroke="#F7BD13" r="2.052" id="connector79pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="48.4073" connectorname="JOY-DOWN - A3" stroke="#F7BD13" r="2.052" id="connector80pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="41.2073" connectorname="JOY-CLICK - A4" stroke="#F7BD13" r="2.052" id="connector81pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="34.0073" connectorname="JOY-RIGHT - A5" stroke="#F7BD13" r="2.052" id="connector82pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="145.607" connectorname="AREF" stroke="#F7BD13" r="2.052" id="connector83pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="48.4073" connectorname="CAN_INT - D2" stroke="#F7BD13" r="2.052" id="connector84pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="55.6073" connectorname="D3" stroke="#F7BD13" r="2.052" id="connector85pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="62.8073" connectorname="D4" stroke="#F7BD13" r="2.052" id="connector86pad" stroke-width="1.224"/>
+  <g  id="copper0" stroke-width="0">
+   <circle  fill="none" cx="144" cy="91.607" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector97pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="7.2" cy="84.407" connectorname="LED2 - D7" stroke="#F7BD13" r="2.052" id="connector89pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="7.2" cy="116.807" connectorname="MOSI - D11" stroke="#F7BD13" r="2.052" id="connector93pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="7.2" cy="41.2073" connectorname="TX" stroke="#F7BD13" r="2.052" id="connector101pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="7.2" cy="70.0073" connectorname="D5" stroke="#F7BD13" r="2.052" id="connector87pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="93.6" cy="177.647" connectorname="VCC" stroke="#F7BD13" r="2.052" id="connector22pad" stroke-width="1.224"/>
+   <rect  width="4.104" x="91.548" y="175.595" fill="none" height="4.104" stroke="#F7BD13" stroke-width="1.224"/>
+   <circle  fill="none" cx="7.2" cy="102.407" connectorname="SD_CS - D9" stroke="#F7BD13" r="2.052" id="connector91pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="100.8" cy="178.367" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector23pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="7.2" cy="131.207" connectorname="SCK - D13" stroke="#F7BD13" r="2.052" id="connector95pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="108" cy="177.647" connectorname="LCD" stroke="#F7BD13" r="2.052" id="connector24pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="144" cy="120.407" connectorname="RS - RES" stroke="#F7BD13" r="2.052" id="connector99pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="100.8" cy="73.607" connectorname="VCC" stroke="#F7BD13" r="2.052" id="connector27pad" stroke-width="1.224"/>
+   <rect  width="4.104" x="98.748" y="71.5553" fill="none" height="4.104" stroke="#F7BD13" stroke-width="1.224"/>
+   <circle  fill="none" cx="108" cy="73.607" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector28pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="115.2" cy="73.607" connectorname="CANH" stroke="#F7BD13" r="2.052" id="connector29pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="122.4" cy="73.607" connectorname="CANL" stroke="#F7BD13" r="2.052" id="connector30pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="7.2" cy="77.207" connectorname="LCD - D6" stroke="#F7BD13" r="2.052" id="connector88pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="7.2" cy="95.207" connectorname="LED1 - D8" stroke="#F7BD13" r="2.052" id="connector90pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="7.2" cy="109.607" connectorname="CAN_CS - D10" stroke="#F7BD13" r="2.052" id="connector92pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="7.2" cy="124.007" connectorname="MISO - D12" stroke="#F7BD13" r="2.052" id="connector94pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="144" cy="98.807" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector96pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="7.2" cy="138.407" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector98pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="7.2" cy="34.0073" connectorname="RX" stroke="#F7BD13" r="2.052" id="connector100pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="144" cy="84.407" connectorname="+12V" stroke="#F7BD13" r="2.052" id="connector102pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="144" cy="113.207" connectorname="3.3V" stroke="#F7BD13" r="2.052" id="connector75pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="144" cy="106.007" connectorname="VCC" stroke="#F7BD13" r="2.052" id="connector76pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="144" cy="70.0073" connectorname="A0" stroke="#F7BD13" r="2.052" id="connector77pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="144" cy="62.8073" connectorname="JOY-UP - A1" stroke="#F7BD13" r="2.052" id="connector78pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="144" cy="55.6073" connectorname="JOY-LEFT - A2" stroke="#F7BD13" r="2.052" id="connector79pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="144" cy="48.4073" connectorname="JOY-DOWN - A3" stroke="#F7BD13" r="2.052" id="connector80pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="144" cy="41.2073" connectorname="JOY-CLICK - A4" stroke="#F7BD13" r="2.052" id="connector81pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="144" cy="34.0073" connectorname="JOY-RIGHT - A5" stroke="#F7BD13" r="2.052" id="connector82pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="7.2" cy="145.607" connectorname="AREF" stroke="#F7BD13" r="2.052" id="connector83pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="7.2" cy="48.4073" connectorname="CAN_INT - D2" stroke="#F7BD13" r="2.052" id="connector84pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="7.2" cy="55.6073" connectorname="D3" stroke="#F7BD13" r="2.052" id="connector85pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="7.2" cy="62.8073" connectorname="D4" stroke="#F7BD13" r="2.052" id="connector86pad" stroke-width="1.224"/>
+  </g>
  </g>
 </svg>

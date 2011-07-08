@@ -121,25 +121,16 @@
   <line  fill="none" stroke="white" fill-opacity="1" y1="38.6078" x1="0.288" y2="4.59212" stroke-width="0.576" x2="0.288"/>
  </g>
  <g  id="copper1" stroke-width="0">
-  <circle  fill="none" cx="14.8252" cy="79.2" connectorname="GPIO2" stroke="#F7BD13" r="2.052" id="connector22pad" stroke-width="1.224"/>
-  <rect  width="4.104" x="12.7732" y="77.148" fill="none" height="4.104" stroke="#F7BD13" stroke-width="1.224"/>
-  <circle  fill="none" cx="22.0252" cy="79.2" connectorname="GPIO1" stroke="#F7BD13" r="2.052" id="connector23pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="29.2252" cy="79.2" connectorname="!RST" stroke="#F7BD13" r="2.052" id="connector24pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="36.4252" cy="79.2" connectorname="!SEN" stroke="#F7BD13" r="2.052" id="connector25pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="43.6252" cy="79.2" connectorname="SCLK" stroke="#F7BD13" r="2.052" id="connector26pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="50.8252" cy="79.2" connectorname="SDIO" stroke="#F7BD13" r="2.052" id="connector27pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="58.0252" cy="79.2" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector28pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="65.2252" cy="79.2" connectorname="3.3V" stroke="#F7BD13" r="2.052" id="connector29pad" stroke-width="1.224"/>
- </g>
- <g  id="copper0" stroke-width="0">
-  <circle  fill="none" cx="14.8252" cy="79.2" connectorname="GPIO2" stroke="#F7BD13" r="2.052" id="connector22pad" stroke-width="1.224"/>
-  <rect  width="4.104" x="12.7732" y="77.148" fill="none" height="4.104" stroke="#F7BD13" stroke-width="1.224"/>
-  <circle  fill="none" cx="22.0252" cy="79.2" connectorname="GPIO1" stroke="#F7BD13" r="2.052" id="connector23pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="29.2252" cy="79.2" connectorname="!RST" stroke="#F7BD13" r="2.052" id="connector24pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="36.4252" cy="79.2" connectorname="!SEN" stroke="#F7BD13" r="2.052" id="connector25pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="43.6252" cy="79.2" connectorname="SCLK" stroke="#F7BD13" r="2.052" id="connector26pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="50.8252" cy="79.2" connectorname="SDIO" stroke="#F7BD13" r="2.052" id="connector27pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="58.0252" cy="79.2" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector28pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="65.2252" cy="79.2" connectorname="3.3V" stroke="#F7BD13" r="2.052" id="connector29pad" stroke-width="1.224"/>
+  <g  id="copper0" stroke-width="0">
+   <circle  fill="none" cx="14.8252" cy="79.2" connectorname="GPIO2" stroke="#F7BD13" r="2.052" id="connector22pad" stroke-width="1.224"/>
+   <rect  width="4.104" x="12.7732" y="77.148" fill="none" height="4.104" stroke="#F7BD13" stroke-width="1.224"/>
+   <circle  fill="none" cx="22.0252" cy="79.2" connectorname="GPIO1" stroke="#F7BD13" r="2.052" id="connector23pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="29.2252" cy="79.2" connectorname="!RST" stroke="#F7BD13" r="2.052" id="connector24pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="36.4252" cy="79.2" connectorname="!SEN" stroke="#F7BD13" r="2.052" id="connector25pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="43.6252" cy="79.2" connectorname="SCLK" stroke="#F7BD13" r="2.052" id="connector26pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="50.8252" cy="79.2" connectorname="SDIO" stroke="#F7BD13" r="2.052" id="connector27pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="58.0252" cy="79.2" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector28pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="65.2252" cy="79.2" connectorname="3.3V" stroke="#F7BD13" r="2.052" id="connector29pad" stroke-width="1.224"/>
+  </g>
  </g>
 </svg>

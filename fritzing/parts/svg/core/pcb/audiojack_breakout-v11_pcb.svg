@@ -59,17 +59,12 @@
   <line  fill="none" stroke="white" fill-opacity="1" y1="38.6078" x1="0.288" y2="4.59212" stroke-width="0.576" x2="0.288"/>
  </g>
  <g  id="copper1" stroke-width="0">
-  <circle  fill="none" cx="65.2252" cy="14.4" connectorname="RING_SHUNT" stroke="#F7BD13" r="2.052" id="connector1pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="65.2252" cy="21.6" connectorname="RING" stroke="#F7BD13" r="2.052" id="connector2pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="65.2252" cy="28.8" connectorname="TIP_SHUNT" stroke="#F7BD13" r="2.052" id="connector3pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="65.2252" cy="36" connectorname="TIP" stroke="#F7BD13" r="2.052" id="connector4pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="65.2252" cy="7.2" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector0pad" stroke-width="1.224"/>
- </g>
- <g  id="copper0" stroke-width="0">
-  <circle  fill="none" cx="65.2252" cy="14.4" connectorname="RING_SHUNT" stroke="#F7BD13" r="2.052" id="connector1pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="65.2252" cy="21.6" connectorname="RING" stroke="#F7BD13" r="2.052" id="connector2pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="65.2252" cy="28.8" connectorname="TIP_SHUNT" stroke="#F7BD13" r="2.052" id="connector3pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="65.2252" cy="36" connectorname="TIP" stroke="#F7BD13" r="2.052" id="connector4pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="65.2252" cy="7.2" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector0pad" stroke-width="1.224"/>
+  <g  id="copper0" stroke-width="0">
+   <circle  fill="none" cx="65.2252" cy="14.4" connectorname="RING_SHUNT" stroke="#F7BD13" r="2.052" id="connector1pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="65.2252" cy="21.6" connectorname="RING" stroke="#F7BD13" r="2.052" id="connector2pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="65.2252" cy="28.8" connectorname="TIP_SHUNT" stroke="#F7BD13" r="2.052" id="connector3pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="65.2252" cy="36" connectorname="TIP" stroke="#F7BD13" r="2.052" id="connector4pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="65.2252" cy="7.2" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector0pad" stroke-width="1.224"/>
+  </g>
  </g>
 </svg>

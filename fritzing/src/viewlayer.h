@@ -138,6 +138,9 @@ public:
 	static ViewLayer::ViewLayerSpec specFromID(ViewLayer::ViewLayerID);
 	static const QList<ViewLayer::ViewLayerID> & copperLayers(ViewLayer::ViewLayerSpec);
 	static const QList<ViewLayer::ViewLayerID> & maskLayers(ViewLayer::ViewLayerSpec);
+	static bool isCopperLayer(ViewLayer::ViewLayerID);
+	static bool isNonCopperLayer(ViewLayer::ViewLayerID viewLayerID);  // for pcb view layers only
+
 
 protected:
 	bool m_visible;

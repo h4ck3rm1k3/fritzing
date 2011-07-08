@@ -83,17 +83,12 @@
   </g>
  </g>
  <g  id="copper1" stroke-width="0">
-  <circle  fill="none" cx="43.2" cy="86.4" connectorname="SEL" stroke="#F7BD13" r="1.872" id="connector1pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="36" cy="86.4" connectorname="HORZ" stroke="#F7BD13" r="1.872" id="connector2pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="28.8" cy="86.4" connectorname="VERT" stroke="#F7BD13" r="1.872" id="connector3pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="21.6" cy="86.4" connectorname="VCC" stroke="#F7BD13" r="1.872" id="connector4pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="50.4" cy="86.4" connectorname="GND" stroke="#F7BD13" r="1.872" id="connector0pad" stroke-width="0.864"/>
- </g>
- <g  id="copper0" stroke-width="0">
-  <circle  fill="none" cx="43.2" cy="86.4" connectorname="SEL" stroke="#F7BD13" r="1.872" id="connector1pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="36" cy="86.4" connectorname="HORZ" stroke="#F7BD13" r="1.872" id="connector2pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="28.8" cy="86.4" connectorname="VERT" stroke="#F7BD13" r="1.872" id="connector3pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="21.6" cy="86.4" connectorname="VCC" stroke="#F7BD13" r="1.872" id="connector4pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="50.4" cy="86.4" connectorname="GND" stroke="#F7BD13" r="1.872" id="connector0pad" stroke-width="0.864"/>
+  <g  id="copper0" stroke-width="0">
+   <circle  fill="none" cx="43.2" cy="86.4" connectorname="SEL" stroke="#F7BD13" r="1.872" id="connector1pad" stroke-width="0.864"/>
+   <circle  fill="none" cx="36" cy="86.4" connectorname="HORZ" stroke="#F7BD13" r="1.872" id="connector2pad" stroke-width="0.864"/>
+   <circle  fill="none" cx="28.8" cy="86.4" connectorname="VERT" stroke="#F7BD13" r="1.872" id="connector3pad" stroke-width="0.864"/>
+   <circle  fill="none" cx="21.6" cy="86.4" connectorname="VCC" stroke="#F7BD13" r="1.872" id="connector4pad" stroke-width="0.864"/>
+   <circle  fill="none" cx="50.4" cy="86.4" connectorname="GND" stroke="#F7BD13" r="1.872" id="connector0pad" stroke-width="0.864"/>
+  </g>
  </g>
 </svg>

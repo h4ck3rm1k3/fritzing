@@ -57,17 +57,12 @@
   </g>
  </g>
  <g  id="copper1" stroke-width="0">
-  <circle  fill="none" cx="46.7433" cy="17.7165" connectorname="COM" stroke="#F7BD13" r="2.13278" id="connector12pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="28.3465" cy="49.6063" connectorname="XOUT" stroke="#F7BD13" r="2.13278" id="connector13pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="9.92124" cy="17.7165" connectorname="YOUT" stroke="#F7BD13" r="2.13278" id="connector14pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="28.3465" cy="7.08661" connectorname="ZOUT" stroke="#F7BD13" r="2.13278" id="connector15pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="46.7433" cy="38.9764" connectorname="5V" stroke="#F7BD13" r="2.13278" id="connector16pad" stroke-width="0.864"/>
- </g>
- <g  id="copper0" stroke-width="0">
-  <circle  fill="none" cx="46.7433" cy="17.7165" connectorname="COM" stroke="#F7BD13" r="2.13278" id="connector12pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="28.3465" cy="49.6063" connectorname="XOUT" stroke="#F7BD13" r="2.13278" id="connector13pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="9.92124" cy="17.7165" connectorname="YOUT" stroke="#F7BD13" r="2.13278" id="connector14pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="28.3465" cy="7.08661" connectorname="ZOUT" stroke="#F7BD13" r="2.13278" id="connector15pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="46.7433" cy="38.9764" connectorname="5V" stroke="#F7BD13" r="2.13278" id="connector16pad" stroke-width="0.864"/>
+  <g  id="copper0" stroke-width="0">
+   <circle  fill="none" cx="46.7433" cy="17.7165" connectorname="COM" stroke="#F7BD13" r="2.13278" id="connector12pad" stroke-width="0.864"/>
+   <circle  fill="none" cx="28.3465" cy="49.6063" connectorname="XOUT" stroke="#F7BD13" r="2.13278" id="connector13pad" stroke-width="0.864"/>
+   <circle  fill="none" cx="9.92124" cy="17.7165" connectorname="YOUT" stroke="#F7BD13" r="2.13278" id="connector14pad" stroke-width="0.864"/>
+   <circle  fill="none" cx="28.3465" cy="7.08661" connectorname="ZOUT" stroke="#F7BD13" r="2.13278" id="connector15pad" stroke-width="0.864"/>
+   <circle  fill="none" cx="46.7433" cy="38.9764" connectorname="5V" stroke="#F7BD13" r="2.13278" id="connector16pad" stroke-width="0.864"/>
+  </g>
  </g>
 </svg>

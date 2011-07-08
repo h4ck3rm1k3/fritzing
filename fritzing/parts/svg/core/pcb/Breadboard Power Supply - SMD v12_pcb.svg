@@ -152,19 +152,13 @@
   <line  fill="none" stroke="white" fill-opacity="1" y1="49.8852" x1="64.5959" y2="46.8" stroke-width="0.576" x2="64.5959"/>
  </g>
  <g  id="copper1" stroke-width="0">
-  <circle  fill="none" cx="7.2" cy="3.6" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector14pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="14.4" cy="3.6" connectorname="VCC" stroke="#F7BD13" r="2.052" id="connector15pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="142.2" cy="3.6" connectorname="VCC" stroke="#F7BD13" r="2.052" id="connector16pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="135" cy="3.6" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector17pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="93.6" cy="43.2" connectorname="VIN" stroke="#F7BD13" r="2.052" id="connector18pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="100.8" cy="43.2" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector19pad" stroke-width="1.224"/>
- </g>
- <g  id="copper0" stroke-width="0">
-  <circle  fill="none" cx="7.2" cy="3.6" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector14pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="14.4" cy="3.6" connectorname="VCC" stroke="#F7BD13" r="2.052" id="connector15pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="142.2" cy="3.6" connectorname="VCC" stroke="#F7BD13" r="2.052" id="connector16pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="135" cy="3.6" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector17pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="93.6" cy="43.2" connectorname="VIN" stroke="#F7BD13" r="2.052" id="connector18pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="100.8" cy="43.2" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector19pad" stroke-width="1.224"/>
+  <g  id="copper0" stroke-width="0">
+   <circle  fill="none" cx="7.2" cy="3.6" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector14pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="14.4" cy="3.6" connectorname="VCC" stroke="#F7BD13" r="2.052" id="connector15pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="142.2" cy="3.6" connectorname="VCC" stroke="#F7BD13" r="2.052" id="connector16pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="135" cy="3.6" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector17pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="93.6" cy="43.2" connectorname="VIN" stroke="#F7BD13" r="2.052" id="connector18pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="100.8" cy="43.2" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector19pad" stroke-width="1.224"/>
+  </g>
  </g>
 </svg>

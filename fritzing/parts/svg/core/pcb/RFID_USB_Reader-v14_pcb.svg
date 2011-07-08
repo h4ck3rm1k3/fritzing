@@ -111,25 +111,16 @@
   <line  fill="none" stroke="white" fill-opacity="1" y1="53.9716" x1="0.288" y2="32.4284" stroke-width="0.576" x2="0.288"/>
  </g>
  <g  id="copper1" stroke-width="0">
-  <circle  fill="none" cx="110.324" cy="68.4" connectorname="GNDT" stroke="#F7BD13" r="1.872" id="connector8pad" stroke-width="0.864"/>
-  <rect  width="3.744" x="108.452" y="66.528" fill="none" height="3.744" stroke="#F7BD13" stroke-width="0.864"/>
-  <circle  fill="none" cx="110.324" cy="61.2" connectorname="CP" stroke="#F7BD13" r="1.872" id="connector9pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="110.324" cy="54" connectorname="ANT2" stroke="#F7BD13" r="1.872" id="connector10pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="110.324" cy="46.8" connectorname="ANT1" stroke="#F7BD13" r="1.872" id="connector11pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="110.324" cy="39.6" connectorname="TX-O-RS232" stroke="#F7BD13" r="1.872" id="connector12pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="110.324" cy="32.4" connectorname="TX-O" stroke="#F7BD13" r="1.872" id="connector13pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="110.324" cy="25.2" connectorname="GND" stroke="#F7BD13" r="1.872" id="connector14pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="110.324" cy="18" connectorname="VCC" stroke="#F7BD13" r="1.872" id="connector15pad" stroke-width="0.864"/>
- </g>
- <g  id="copper0" stroke-width="0">
-  <circle  fill="none" cx="110.324" cy="68.4" connectorname="GNDT" stroke="#F7BD13" r="1.872" id="connector8pad" stroke-width="0.864"/>
-  <rect  width="3.744" x="108.452" y="66.528" fill="none" height="3.744" stroke="#F7BD13" stroke-width="0.864"/>
-  <circle  fill="none" cx="110.324" cy="61.2" connectorname="CP" stroke="#F7BD13" r="1.872" id="connector9pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="110.324" cy="54" connectorname="ANT2" stroke="#F7BD13" r="1.872" id="connector10pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="110.324" cy="46.8" connectorname="ANT1" stroke="#F7BD13" r="1.872" id="connector11pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="110.324" cy="39.6" connectorname="TX-O-RS232" stroke="#F7BD13" r="1.872" id="connector12pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="110.324" cy="32.4" connectorname="TX-O" stroke="#F7BD13" r="1.872" id="connector13pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="110.324" cy="25.2" connectorname="GND" stroke="#F7BD13" r="1.872" id="connector14pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="110.324" cy="18" connectorname="VCC" stroke="#F7BD13" r="1.872" id="connector15pad" stroke-width="0.864"/>
+  <g  id="copper0" stroke-width="0">
+   <circle  fill="none" cx="110.324" cy="68.4" connectorname="GNDT" stroke="#F7BD13" r="1.872" id="connector8pad" stroke-width="0.864"/>
+   <rect  width="3.744" x="108.452" y="66.528" fill="none" height="3.744" stroke="#F7BD13" stroke-width="0.864"/>
+   <circle  fill="none" cx="110.324" cy="61.2" connectorname="CP" stroke="#F7BD13" r="1.872" id="connector9pad" stroke-width="0.864"/>
+   <circle  fill="none" cx="110.324" cy="54" connectorname="ANT2" stroke="#F7BD13" r="1.872" id="connector10pad" stroke-width="0.864"/>
+   <circle  fill="none" cx="110.324" cy="46.8" connectorname="ANT1" stroke="#F7BD13" r="1.872" id="connector11pad" stroke-width="0.864"/>
+   <circle  fill="none" cx="110.324" cy="39.6" connectorname="TX-O-RS232" stroke="#F7BD13" r="1.872" id="connector12pad" stroke-width="0.864"/>
+   <circle  fill="none" cx="110.324" cy="32.4" connectorname="TX-O" stroke="#F7BD13" r="1.872" id="connector13pad" stroke-width="0.864"/>
+   <circle  fill="none" cx="110.324" cy="25.2" connectorname="GND" stroke="#F7BD13" r="1.872" id="connector14pad" stroke-width="0.864"/>
+   <circle  fill="none" cx="110.324" cy="18" connectorname="VCC" stroke="#F7BD13" r="1.872" id="connector15pad" stroke-width="0.864"/>
+  </g>
  </g>
 </svg>

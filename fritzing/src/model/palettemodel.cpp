@@ -557,9 +557,9 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastL
 		modelPartShared->setTitle(title);
 		modelPartShared->setDate(date);
 		modelPartShared->setAuthor(author);
-		if (label.isEmpty()) {
-			DebugDialog::debug(QString("empty label %1").arg(path));
-		}
+		//if (label.isEmpty()) {
+			//DebugDialog::debug(QString("empty label %1").arg(path));
+		//}
 		modelPartShared->setLabel(label);
 		modelPartShared->setDescription(description);
 		modelPartShared->setUrl(url);

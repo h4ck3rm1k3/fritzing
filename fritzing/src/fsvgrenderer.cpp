@@ -523,20 +523,19 @@ bool FSvgRenderer::setUpConnector(SvgIdLayer * svgIdLayer, bool ignoreTerminalPo
 	if (svgIdLayer == NULL) return false;
 
 	if (svgIdLayer->m_processed) {
-		return svgIdLayer->m_visible;
+		// hybrids are not visible in some views
+		return svgIdLayer->m_visible || svgIdLayer->m_hybrid;
 	}
 
 	svgIdLayer->m_processed = true;
 
 	QString connectorID = svgIdLayer->m_svgId;
 
-	QRectF bounds = this->boundsOnElement(connectorID);
-	if (bounds.isNull()) {
-		svgIdLayer->m_visible = false;
-		// hybrids can have zero size
-		if (!svgIdLayer->m_hybrid) {
-			return false;
-		}
+	QRectF bounds = this->boundsOnElement(connectorID);	
+	if (bounds.isNull() && !svgIdLayer->m_hybrid) {		// hybrids can have zero size
+		svgIdLayer->m_visible = false;		
+		DebugDialog::debug("renderer::setupconnector: null bounds");
+		return false;
 	}
 
 	QSizeF defaultSizeF = this->defaultSizeF();

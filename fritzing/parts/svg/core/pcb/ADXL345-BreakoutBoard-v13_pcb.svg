@@ -99,25 +99,16 @@
   </g>
  </g>
  <g  id="copper1" stroke-width="0">
-  <circle  fill="none" cx="3.6" cy="39.6" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector6pad" stroke-width="1.224"/>
-  <rect  width="4.104" x="1.548" y="37.548" fill="none" height="4.104" stroke="#F7BD13" stroke-width="1.224"/>
-  <circle  fill="none" cx="10.8" cy="39.6" connectorname="VCC" stroke="#F7BD13" r="2.052" id="connector7pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="18" cy="39.6" connectorname="CS" stroke="#F7BD13" r="2.052" id="connector8pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="25.2" cy="39.6" connectorname="INT1" stroke="#F7BD13" r="2.052" id="connector9pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="32.4" cy="39.6" connectorname="INT2" stroke="#F7BD13" r="2.052" id="connector10pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="39.6" cy="39.6" connectorname="SDO" stroke="#F7BD13" r="2.052" id="connector11pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="46.8" cy="39.6" connectorname="SDA" stroke="#F7BD13" r="2.052" id="connector12pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="54" cy="39.6" connectorname="SCL" stroke="#F7BD13" r="2.052" id="connector13pad" stroke-width="1.224"/>
- </g>
- <g  id="copper0" stroke-width="0">
-  <circle  fill="none" cx="3.6" cy="39.6" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector6pad" stroke-width="1.224"/>
-  <rect  width="4.104" x="1.548" y="37.548" fill="none" height="4.104" stroke="#F7BD13" stroke-width="1.224"/>
-  <circle  fill="none" cx="10.8" cy="39.6" connectorname="VCC" stroke="#F7BD13" r="2.052" id="connector7pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="18" cy="39.6" connectorname="CS" stroke="#F7BD13" r="2.052" id="connector8pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="25.2" cy="39.6" connectorname="INT1" stroke="#F7BD13" r="2.052" id="connector9pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="32.4" cy="39.6" connectorname="INT2" stroke="#F7BD13" r="2.052" id="connector10pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="39.6" cy="39.6" connectorname="SDO" stroke="#F7BD13" r="2.052" id="connector11pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="46.8" cy="39.6" connectorname="SDA" stroke="#F7BD13" r="2.052" id="connector12pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="54" cy="39.6" connectorname="SCL" stroke="#F7BD13" r="2.052" id="connector13pad" stroke-width="1.224"/>
+  <g  id="copper0" stroke-width="0">
+   <circle  fill="none" cx="3.6" cy="39.6" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector6pad" stroke-width="1.224"/>
+   <rect  width="4.104" x="1.548" y="37.548" fill="none" height="4.104" stroke="#F7BD13" stroke-width="1.224"/>
+   <circle  fill="none" cx="10.8" cy="39.6" connectorname="VCC" stroke="#F7BD13" r="2.052" id="connector7pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="18" cy="39.6" connectorname="CS" stroke="#F7BD13" r="2.052" id="connector8pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="25.2" cy="39.6" connectorname="INT1" stroke="#F7BD13" r="2.052" id="connector9pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="32.4" cy="39.6" connectorname="INT2" stroke="#F7BD13" r="2.052" id="connector10pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="39.6" cy="39.6" connectorname="SDO" stroke="#F7BD13" r="2.052" id="connector11pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="46.8" cy="39.6" connectorname="SDA" stroke="#F7BD13" r="2.052" id="connector12pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="54" cy="39.6" connectorname="SCL" stroke="#F7BD13" r="2.052" id="connector13pad" stroke-width="1.224"/>
+  </g>
  </g>
 </svg>

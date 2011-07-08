@@ -34,19 +34,13 @@
   </g>
  </g>
  <g  id="copper1" stroke-width="0">
-  <circle  fill="none" cx="122.4" cy="5.4" connectorname="RTS_5V" stroke="#F7BD13" r="2.052" id="connector12pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="122.4" cy="12.6" connectorname="RX_5V" stroke="#F7BD13" r="2.052" id="connector13pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="122.4" cy="19.8" connectorname="TX_5V" stroke="#F7BD13" r="2.052" id="connector14pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="122.4" cy="27" connectorname="VCC" stroke="#F7BD13" r="2.052" id="connector15pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="122.4" cy="34.2" connectorname="CTS_5V" stroke="#F7BD13" r="2.052" id="connector16pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="122.4" cy="41.4" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector17pad" stroke-width="1.224"/>
- </g>
- <g  id="copper0" stroke-width="0">
-  <circle  fill="none" cx="122.4" cy="5.4" connectorname="RTS_5V" stroke="#F7BD13" r="2.052" id="connector12pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="122.4" cy="12.6" connectorname="RX_5V" stroke="#F7BD13" r="2.052" id="connector13pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="122.4" cy="19.8" connectorname="TX_5V" stroke="#F7BD13" r="2.052" id="connector14pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="122.4" cy="27" connectorname="VCC" stroke="#F7BD13" r="2.052" id="connector15pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="122.4" cy="34.2" connectorname="CTS_5V" stroke="#F7BD13" r="2.052" id="connector16pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="122.4" cy="41.4" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector17pad" stroke-width="1.224"/>
+  <g  id="copper0" stroke-width="0">
+   <circle  fill="none" cx="122.4" cy="5.4" connectorname="RTS_5V" stroke="#F7BD13" r="2.052" id="connector12pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="122.4" cy="12.6" connectorname="RX_5V" stroke="#F7BD13" r="2.052" id="connector13pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="122.4" cy="19.8" connectorname="TX_5V" stroke="#F7BD13" r="2.052" id="connector14pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="122.4" cy="27" connectorname="VCC" stroke="#F7BD13" r="2.052" id="connector15pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="122.4" cy="34.2" connectorname="CTS_5V" stroke="#F7BD13" r="2.052" id="connector16pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="122.4" cy="41.4" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector17pad" stroke-width="1.224"/>
+  </g>
  </g>
 </svg>

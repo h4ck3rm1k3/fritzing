@@ -41,6 +41,11 @@ const QString ViewLayer::Silkscreen1Color = "#ffffff";
 const QString ViewLayer::Silkscreen0Color = "#bbbbcc";
 const QString ViewLayer::JumperColor = "#6699cc";
 
+static LayerList CopperBottomLayers;
+static LayerList CopperTopLayers;
+static LayerList NonCopperLayers;  // just NonCopperLayers in pcb view
+
+
 ViewLayer::ViewLayer(ViewLayerID viewLayerID, bool visible, qreal initialZ )
 {
 	m_viewLayerID = viewLayerID;
@@ -55,6 +60,18 @@ ViewLayer::~ViewLayer() {
 }
 
 void ViewLayer::initNames() {
+	if (CopperBottomLayers.isEmpty()) {
+		CopperBottomLayers << ViewLayer::GroundPlane0 << ViewLayer::Copper0 << ViewLayer::Copper0Trace;
+	}
+	if (CopperTopLayers.isEmpty()) {
+		CopperTopLayers << ViewLayer::GroundPlane1 << ViewLayer::Copper1 << ViewLayer::Copper1Trace;
+	}
+	if (NonCopperLayers.isEmpty()) {
+		NonCopperLayers << ViewLayer::Silkscreen0 << ViewLayer::Silkscreen0Label
+						<< ViewLayer::Silkscreen1 << ViewLayer::Silkscreen1Label 
+						<< ViewLayer::PartImage;
+	}
+
 	if (names.count() == 0) {
 		// xmlname, displayname
 		names.insert(ViewLayer::Icon, new StringPair("icon", QObject::tr("Icon")));
@@ -235,18 +252,19 @@ ViewLayer::ViewLayerSpec ViewLayer::specFromID(ViewLayer::ViewLayerID viewLayerI
 	}
 }
 
-const LayerList & ViewLayer::copperLayers(ViewLayer::ViewLayerSpec viewLayerSpec) {
-	static LayerList bottom;
-	static LayerList top;
-	if (bottom.isEmpty()) {
-		bottom << ViewLayer::GroundPlane0 << ViewLayer::Copper0 << ViewLayer::Copper0Trace;
-	}
-	if (top.isEmpty()) {
-		top << ViewLayer::GroundPlane1 << ViewLayer::Copper1 << ViewLayer::Copper1Trace;
-	}
-	if (viewLayerSpec == ViewLayer::Top) return top;
+bool ViewLayer::isCopperLayer(ViewLayer::ViewLayerID viewLayerID) {
+	if (CopperTopLayers.contains(viewLayerID)) return true;
+	if (CopperBottomLayers.contains(viewLayerID)) return true;
 	
-	return bottom;
+	return false;
+}
+
+
+const LayerList & ViewLayer::copperLayers(ViewLayer::ViewLayerSpec viewLayerSpec) 
+{
+	if (viewLayerSpec == ViewLayer::Top) return CopperTopLayers;
+	
+	return CopperBottomLayers;
 }
 
 const LayerList & ViewLayer::maskLayers(ViewLayer::ViewLayerSpec viewLayerSpec) {
@@ -262,3 +280,10 @@ const LayerList & ViewLayer::maskLayers(ViewLayer::ViewLayerSpec viewLayerSpec) 
 	
 	return bottom;
 }
+
+bool ViewLayer::isNonCopperLayer(ViewLayer::ViewLayerID viewLayerID) {
+	// for pcb view layers only
+	return NonCopperLayers.contains(viewLayerID);
+}
+
+ 

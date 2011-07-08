@@ -36,13 +36,10 @@
   </g>
  </g>
  <g  id="copper1" stroke-width="0">
-  <circle  fill="none" cx="9.63778" cy="39.1181" connectorname="VCC" stroke="#F7BD13" r="2.40378" id="connector2pad" stroke-width="1.44"/>
-  <circle  fill="none" cx="28.3465" cy="6.80315" connectorname="GND" stroke="#F7BD13" r="2.40378" id="connector3pad" stroke-width="1.44"/>
-  <circle  fill="none" cx="47.0551" cy="39.1181" connectorname="VO" stroke="#F7BD13" r="2.40378" id="connector4pad" stroke-width="1.44"/>
- </g>
- <g  id="copper0" stroke-width="0">
-  <circle  fill="none" cx="9.63778" cy="39.1181" connectorname="VCC" stroke="#F7BD13" r="2.40378" id="connector2pad" stroke-width="1.44"/>
-  <circle  fill="none" cx="28.3465" cy="6.80315" connectorname="GND" stroke="#F7BD13" r="2.40378" id="connector3pad" stroke-width="1.44"/>
-  <circle  fill="none" cx="47.0551" cy="39.1181" connectorname="VO" stroke="#F7BD13" r="2.40378" id="connector4pad" stroke-width="1.44"/>
+  <g  id="copper0" stroke-width="0">
+   <circle  fill="none" cx="9.63778" cy="39.1181" connectorname="VCC" stroke="#F7BD13" r="2.40378" id="connector2pad" stroke-width="1.44"/>
+   <circle  fill="none" cx="28.3465" cy="6.80315" connectorname="GND" stroke="#F7BD13" r="2.40378" id="connector3pad" stroke-width="1.44"/>
+   <circle  fill="none" cx="47.0551" cy="39.1181" connectorname="VO" stroke="#F7BD13" r="2.40378" id="connector4pad" stroke-width="1.44"/>
+  </g>
  </g>
 </svg>

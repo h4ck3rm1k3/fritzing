@@ -42,19 +42,13 @@
   <line  fill="none" stroke="white" fill-opacity="1" y1="32.3716" x1="77.6362" y2="10.8284" stroke-width="0.576" x2="77.6362"/>
  </g>
  <g  id="copper1" stroke-width="0">
-  <circle  fill="none" cx="7.2" cy="39.6" connectorname="DTR" stroke="#F7BD13" r="1.872" id="connector6pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="7.2" cy="32.4" connectorname="RXI" stroke="#F7BD13" r="1.872" id="connector7pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="7.2" cy="25.2" connectorname="TXO" stroke="#F7BD13" r="1.872" id="connector8pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="7.2" cy="18" connectorname="POWER" stroke="#F7BD13" r="1.872" id="connector9pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="7.2" cy="10.8" connectorname="CTS" stroke="#F7BD13" r="1.872" id="connector10pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="7.2" cy="3.6" connectorname="GND" stroke="#F7BD13" r="1.872" id="connector11pad" stroke-width="0.864"/>
- </g>
- <g  id="copper0" stroke-width="0">
-  <circle  fill="none" cx="7.2" cy="39.6" connectorname="DTR" stroke="#F7BD13" r="1.872" id="connector6pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="7.2" cy="32.4" connectorname="RXI" stroke="#F7BD13" r="1.872" id="connector7pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="7.2" cy="25.2" connectorname="TXO" stroke="#F7BD13" r="1.872" id="connector8pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="7.2" cy="18" connectorname="POWER" stroke="#F7BD13" r="1.872" id="connector9pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="7.2" cy="10.8" connectorname="CTS" stroke="#F7BD13" r="1.872" id="connector10pad" stroke-width="0.864"/>
-  <circle  fill="none" cx="7.2" cy="3.6" connectorname="GND" stroke="#F7BD13" r="1.872" id="connector11pad" stroke-width="0.864"/>
+  <g  id="copper0" stroke-width="0">
+   <circle  fill="none" cx="7.2" cy="39.6" connectorname="DTR" stroke="#F7BD13" r="1.872" id="connector6pad" stroke-width="0.864"/>
+   <circle  fill="none" cx="7.2" cy="32.4" connectorname="RXI" stroke="#F7BD13" r="1.872" id="connector7pad" stroke-width="0.864"/>
+   <circle  fill="none" cx="7.2" cy="25.2" connectorname="TXO" stroke="#F7BD13" r="1.872" id="connector8pad" stroke-width="0.864"/>
+   <circle  fill="none" cx="7.2" cy="18" connectorname="POWER" stroke="#F7BD13" r="1.872" id="connector9pad" stroke-width="0.864"/>
+   <circle  fill="none" cx="7.2" cy="10.8" connectorname="CTS" stroke="#F7BD13" r="1.872" id="connector10pad" stroke-width="0.864"/>
+   <circle  fill="none" cx="7.2" cy="3.6" connectorname="GND" stroke="#F7BD13" r="1.872" id="connector11pad" stroke-width="0.864"/>
+  </g>
  </g>
 </svg>

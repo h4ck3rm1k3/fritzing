@@ -239,15 +239,11 @@
   <line  fill="none" stroke="white" fill-opacity="1" y1="50.3716" x1="81.324" y2="28.8284" stroke-width="0.576" x2="81.324"/>
  </g>
  <g  id="copper1" stroke-width="0">
-  <circle  fill="none" cx="17.0078" cy="28.0346" connectorname="GND" stroke="#F7BD13" r="1.52207" id="connector8pad" stroke-width="1.05988"/>
-  <circle  fill="none" cx="17.0078" cy="22.3654" connectorname="VBAT" stroke="#F7BD13" r="1.52207" id="connector9pad" stroke-width="1.05988"/>
-  <circle  fill="none" cx="17.0078" cy="56.8346" connectorname="GND" stroke="#F7BD13" r="1.52207" id="connector10pad" stroke-width="1.05988"/>
-  <circle  fill="none" cx="17.0078" cy="51.1654" connectorname="VBAT" stroke="#F7BD13" r="1.52207" id="connector11pad" stroke-width="1.05988"/>
- </g>
- <g  id="copper0" stroke-width="0">
-  <circle  fill="none" cx="17.0078" cy="28.0346" connectorname="GND" stroke="#F7BD13" r="1.52207" id="connector8pad" stroke-width="1.05988"/>
-  <circle  fill="none" cx="17.0078" cy="22.3654" connectorname="VBAT" stroke="#F7BD13" r="1.52207" id="connector9pad" stroke-width="1.05988"/>
-  <circle  fill="none" cx="17.0078" cy="56.8346" connectorname="GND" stroke="#F7BD13" r="1.52207" id="connector10pad" stroke-width="1.05988"/>
-  <circle  fill="none" cx="17.0078" cy="51.1654" connectorname="VBAT" stroke="#F7BD13" r="1.52207" id="connector11pad" stroke-width="1.05988"/>
+  <g  id="copper0" stroke-width="0">
+   <circle  fill="none" cx="17.0078" cy="28.0346" connectorname="GND" stroke="#F7BD13" r="1.52207" id="connector8pad" stroke-width="1.05988"/>
+   <circle  fill="none" cx="17.0078" cy="22.3654" connectorname="VBAT" stroke="#F7BD13" r="1.52207" id="connector9pad" stroke-width="1.05988"/>
+   <circle  fill="none" cx="17.0078" cy="56.8346" connectorname="GND" stroke="#F7BD13" r="1.52207" id="connector10pad" stroke-width="1.05988"/>
+   <circle  fill="none" cx="17.0078" cy="51.1654" connectorname="VBAT" stroke="#F7BD13" r="1.52207" id="connector11pad" stroke-width="1.05988"/>
+  </g>
  </g>
 </svg>

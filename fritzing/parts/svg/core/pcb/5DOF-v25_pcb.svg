@@ -160,35 +160,21 @@
   </g>
  </g>
  <g  id="copper1" stroke-width="0">
-  <circle  fill="none" cx="61.2" cy="50.4" connectorname="XOUT" stroke="#F7BD13" r="2.052" id="connector26pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="54" cy="50.4" connectorname="YOUT" stroke="#F7BD13" r="2.052" id="connector27pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="46.8" cy="50.4" connectorname="ZOUT" stroke="#F7BD13" r="2.052" id="connector28pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="39.6" cy="50.4" connectorname="ST" stroke="#F7BD13" r="2.052" id="connector29pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="32.4" cy="50.4" connectorname="VREF" stroke="#F7BD13" r="2.052" id="connector30pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="25.2" cy="50.4" connectorname="YRATE" stroke="#F7BD13" r="2.052" id="connector31pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="18" cy="50.4" connectorname="XRATE" stroke="#F7BD13" r="2.052" id="connector32pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="10.8" cy="50.4" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector33pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="3.6" cy="50.4" connectorname="3.3V" stroke="#F7BD13" r="2.052" id="connector34pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="21.6" cy="3.6" connectorname="AZ" stroke="#F7BD13" r="2.052" id="connector35pad" stroke-width="1.224"/>
-  <rect  width="4.104" x="19.548" y="1.548" fill="none" height="4.104" stroke="#F7BD13" stroke-width="1.224"/>
-  <circle  fill="none" cx="28.8" cy="3.6" connectorname="PTATS" stroke="#F7BD13" r="2.052" id="connector36pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="36" cy="3.6" connectorname="Y4.5OUT" stroke="#F7BD13" r="2.052" id="connector37pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="43.2" cy="3.6" connectorname="X4.5OUT" stroke="#F7BD13" r="2.052" id="connector38pad" stroke-width="1.224"/>
- </g>
- <g  id="copper0" stroke-width="0">
-  <circle  fill="none" cx="61.2" cy="50.4" connectorname="XOUT" stroke="#F7BD13" r="2.052" id="connector26pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="54" cy="50.4" connectorname="YOUT" stroke="#F7BD13" r="2.052" id="connector27pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="46.8" cy="50.4" connectorname="ZOUT" stroke="#F7BD13" r="2.052" id="connector28pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="39.6" cy="50.4" connectorname="ST" stroke="#F7BD13" r="2.052" id="connector29pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="32.4" cy="50.4" connectorname="VREF" stroke="#F7BD13" r="2.052" id="connector30pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="25.2" cy="50.4" connectorname="YRATE" stroke="#F7BD13" r="2.052" id="connector31pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="18" cy="50.4" connectorname="XRATE" stroke="#F7BD13" r="2.052" id="connector32pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="10.8" cy="50.4" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector33pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="3.6" cy="50.4" connectorname="3.3V" stroke="#F7BD13" r="2.052" id="connector34pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="21.6" cy="3.6" connectorname="AZ" stroke="#F7BD13" r="2.052" id="connector35pad" stroke-width="1.224"/>
-  <rect  width="4.104" x="19.548" y="1.548" fill="none" height="4.104" stroke="#F7BD13" stroke-width="1.224"/>
-  <circle  fill="none" cx="28.8" cy="3.6" connectorname="PTATS" stroke="#F7BD13" r="2.052" id="connector36pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="36" cy="3.6" connectorname="Y4.5OUT" stroke="#F7BD13" r="2.052" id="connector37pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="43.2" cy="3.6" connectorname="X4.5OUT" stroke="#F7BD13" r="2.052" id="connector38pad" stroke-width="1.224"/>
+  <g  id="copper0" stroke-width="0">
+   <circle  fill="none" cx="61.2" cy="50.4" connectorname="XOUT" stroke="#F7BD13" r="2.052" id="connector26pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="54" cy="50.4" connectorname="YOUT" stroke="#F7BD13" r="2.052" id="connector27pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="46.8" cy="50.4" connectorname="ZOUT" stroke="#F7BD13" r="2.052" id="connector28pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="39.6" cy="50.4" connectorname="ST" stroke="#F7BD13" r="2.052" id="connector29pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="32.4" cy="50.4" connectorname="VREF" stroke="#F7BD13" r="2.052" id="connector30pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="25.2" cy="50.4" connectorname="YRATE" stroke="#F7BD13" r="2.052" id="connector31pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="18" cy="50.4" connectorname="XRATE" stroke="#F7BD13" r="2.052" id="connector32pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="10.8" cy="50.4" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector33pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="3.6" cy="50.4" connectorname="3.3V" stroke="#F7BD13" r="2.052" id="connector34pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="21.6" cy="3.6" connectorname="AZ" stroke="#F7BD13" r="2.052" id="connector35pad" stroke-width="1.224"/>
+   <rect  width="4.104" x="19.548" y="1.548" fill="none" height="4.104" stroke="#F7BD13" stroke-width="1.224"/>
+   <circle  fill="none" cx="28.8" cy="3.6" connectorname="PTATS" stroke="#F7BD13" r="2.052" id="connector36pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="36" cy="3.6" connectorname="Y4.5OUT" stroke="#F7BD13" r="2.052" id="connector37pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="43.2" cy="3.6" connectorname="X4.5OUT" stroke="#F7BD13" r="2.052" id="connector38pad" stroke-width="1.224"/>
+  </g>
  </g>
 </svg>

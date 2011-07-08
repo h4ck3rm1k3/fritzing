@@ -219,69 +219,38 @@
   <line  fill="none" stroke="white" fill-opacity="1" y1="177.189" x1="61.285" y2="169.2" stroke-width="0.576" x2="61.285"/>
  </g>
  <g  id="copper1" stroke-width="0">
-  <circle  fill="none" cx="144" cy="64.8" connectorname="VIN" stroke="#F7BD13" r="2.052" id="connector113pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="104.4" connectorname="MISO - D12" stroke="#F7BD13" r="2.052" id="connector105pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="75.6" connectorname="5V-MP3-RST - D8" stroke="#F7BD13" r="2.052" id="connector101pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="118.8" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector109pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="90" connectorname="D10" stroke="#F7BD13" r="2.052" id="connector103pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="79.2" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector107pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="14.4" connectorname="RX" stroke="#F7BD13" r="2.052" id="connector111pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="100.8" cy="165.6" connectorname="GBUF" stroke="#F7BD13" r="2.052" id="connector32pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="108" cy="165.6" connectorname="RIGHT" stroke="#F7BD13" r="2.052" id="connector33pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="115.2" cy="165.6" connectorname="LEFT" stroke="#F7BD13" r="2.052" id="connector34pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="82.8" connectorname="5V-SD-CS - D9" stroke="#F7BD13" r="2.052" id="connector102pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="97.2" connectorname="5V-MOSI - D11" stroke="#F7BD13" r="2.052" id="connector104pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="111.6" connectorname="5V-SCK - D13" stroke="#F7BD13" r="2.052" id="connector106pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="72" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector108pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="100.8" connectorname="ARST - RES" stroke="#F7BD13" r="2.052" id="connector110pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="21.6" connectorname="TX" stroke="#F7BD13" r="2.052" id="connector112pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="93.6" connectorname="3.3" stroke="#F7BD13" r="2.052" id="connector86pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="86.4" connectorname="VCC" stroke="#F7BD13" r="2.052" id="connector87pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="50.4" connectorname="A0" stroke="#F7BD13" r="2.052" id="connector88pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="43.2" connectorname="A1" stroke="#F7BD13" r="2.052" id="connector89pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="36" connectorname="A2" stroke="#F7BD13" r="2.052" id="connector90pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="28.8" connectorname="A3" stroke="#F7BD13" r="2.052" id="connector91pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="21.6" connectorname="A4" stroke="#F7BD13" r="2.052" id="connector92pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="14.4" connectorname="A5" stroke="#F7BD13" r="2.052" id="connector93pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="126" connectorname="AREF" stroke="#F7BD13" r="2.052" id="connector94pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="28.8" connectorname="MP3-DREQ - D2" stroke="#F7BD13" r="2.052" id="connector95pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="36" connectorname="5V-MIDI-RX - D3" stroke="#F7BD13" r="2.052" id="connector96pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="43.2" connectorname="5V-GPIO1 - D4" stroke="#F7BD13" r="2.052" id="connector97pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="50.4" connectorname="D5" stroke="#F7BD13" r="2.052" id="connector98pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="57.6" connectorname="5V-MP3-CS - D6" stroke="#F7BD13" r="2.052" id="connector99pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="64.8" connectorname="5V-MP3-DCS - D7" stroke="#F7BD13" r="2.052" id="connector100pad" stroke-width="1.224"/>
- </g>
- <g  id="copper0" stroke-width="0">
-  <circle  fill="none" cx="144" cy="64.8" connectorname="VIN" stroke="#F7BD13" r="2.052" id="connector113pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="104.4" connectorname="MISO - D12" stroke="#F7BD13" r="2.052" id="connector105pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="75.6" connectorname="5V-MP3-RST - D8" stroke="#F7BD13" r="2.052" id="connector101pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="118.8" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector109pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="90" connectorname="D10" stroke="#F7BD13" r="2.052" id="connector103pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="79.2" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector107pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="14.4" connectorname="RX" stroke="#F7BD13" r="2.052" id="connector111pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="100.8" cy="165.6" connectorname="GBUF" stroke="#F7BD13" r="2.052" id="connector32pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="108" cy="165.6" connectorname="RIGHT" stroke="#F7BD13" r="2.052" id="connector33pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="115.2" cy="165.6" connectorname="LEFT" stroke="#F7BD13" r="2.052" id="connector34pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="82.8" connectorname="5V-SD-CS - D9" stroke="#F7BD13" r="2.052" id="connector102pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="97.2" connectorname="5V-MOSI - D11" stroke="#F7BD13" r="2.052" id="connector104pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="111.6" connectorname="5V-SCK - D13" stroke="#F7BD13" r="2.052" id="connector106pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="72" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector108pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="100.8" connectorname="ARST - RES" stroke="#F7BD13" r="2.052" id="connector110pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="21.6" connectorname="TX" stroke="#F7BD13" r="2.052" id="connector112pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="93.6" connectorname="3.3" stroke="#F7BD13" r="2.052" id="connector86pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="86.4" connectorname="VCC" stroke="#F7BD13" r="2.052" id="connector87pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="50.4" connectorname="A0" stroke="#F7BD13" r="2.052" id="connector88pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="43.2" connectorname="A1" stroke="#F7BD13" r="2.052" id="connector89pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="36" connectorname="A2" stroke="#F7BD13" r="2.052" id="connector90pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="28.8" connectorname="A3" stroke="#F7BD13" r="2.052" id="connector91pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="21.6" connectorname="A4" stroke="#F7BD13" r="2.052" id="connector92pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="144" cy="14.4" connectorname="A5" stroke="#F7BD13" r="2.052" id="connector93pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="126" connectorname="AREF" stroke="#F7BD13" r="2.052" id="connector94pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="28.8" connectorname="MP3-DREQ - D2" stroke="#F7BD13" r="2.052" id="connector95pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="36" connectorname="5V-MIDI-RX - D3" stroke="#F7BD13" r="2.052" id="connector96pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="43.2" connectorname="5V-GPIO1 - D4" stroke="#F7BD13" r="2.052" id="connector97pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="50.4" connectorname="D5" stroke="#F7BD13" r="2.052" id="connector98pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="57.6" connectorname="5V-MP3-CS - D6" stroke="#F7BD13" r="2.052" id="connector99pad" stroke-width="1.224"/>
-  <circle  fill="none" cx="7.2" cy="64.8" connectorname="5V-MP3-DCS - D7" stroke="#F7BD13" r="2.052" id="connector100pad" stroke-width="1.224"/>
+  <g  id="copper0" stroke-width="0">
+   <circle  fill="none" cx="144" cy="64.8" connectorname="VIN" stroke="#F7BD13" r="2.052" id="connector113pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="7.2" cy="104.4" connectorname="MISO - D12" stroke="#F7BD13" r="2.052" id="connector105pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="7.2" cy="75.6" connectorname="5V-MP3-RST - D8" stroke="#F7BD13" r="2.052" id="connector101pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="7.2" cy="118.8" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector109pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="7.2" cy="90" connectorname="D10" stroke="#F7BD13" r="2.052" id="connector103pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="144" cy="79.2" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector107pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="7.2" cy="14.4" connectorname="RX" stroke="#F7BD13" r="2.052" id="connector111pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="100.8" cy="165.6" connectorname="GBUF" stroke="#F7BD13" r="2.052" id="connector32pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="108" cy="165.6" connectorname="RIGHT" stroke="#F7BD13" r="2.052" id="connector33pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="115.2" cy="165.6" connectorname="LEFT" stroke="#F7BD13" r="2.052" id="connector34pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="7.2" cy="82.8" connectorname="5V-SD-CS - D9" stroke="#F7BD13" r="2.052" id="connector102pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="7.2" cy="97.2" connectorname="5V-MOSI - D11" stroke="#F7BD13" r="2.052" id="connector104pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="7.2" cy="111.6" connectorname="5V-SCK - D13" stroke="#F7BD13" r="2.052" id="connector106pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="144" cy="72" connectorname="GND" stroke="#F7BD13" r="2.052" id="connector108pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="144" cy="100.8" connectorname="ARST - RES" stroke="#F7BD13" r="2.052" id="connector110pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="7.2" cy="21.6" connectorname="TX" stroke="#F7BD13" r="2.052" id="connector112pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="144" cy="93.6" connectorname="3.3" stroke="#F7BD13" r="2.052" id="connector86pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="144" cy="86.4" connectorname="VCC" stroke="#F7BD13" r="2.052" id="connector87pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="144" cy="50.4" connectorname="A0" stroke="#F7BD13" r="2.052" id="connector88pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="144" cy="43.2" connectorname="A1" stroke="#F7BD13" r="2.052" id="connector89pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="144" cy="36" connectorname="A2" stroke="#F7BD13" r="2.052" id="connector90pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="144" cy="28.8" connectorname="A3" stroke="#F7BD13" r="2.052" id="connector91pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="144" cy="21.6" connectorname="A4" stroke="#F7BD13" r="2.052" id="connector92pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="144" cy="14.4" connectorname="A5" stroke="#F7BD13" r="2.052" id="connector93pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="7.2" cy="126" connectorname="AREF" stroke="#F7BD13" r="2.052" id="connector94pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="7.2" cy="28.8" connectorname="MP3-DREQ - D2" stroke="#F7BD13" r="2.052" id="connector95pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="7.2" cy="36" connectorname="5V-MIDI-RX - D3" stroke="#F7BD13" r="2.052" id="connector96pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="7.2" cy="43.2" connectorname="5V-GPIO1 - D4" stroke="#F7BD13" r="2.052" id="connector97pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="7.2" cy="50.4" connectorname="D5" stroke="#F7BD13" r="2.052" id="connector98pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="7.2" cy="57.6" connectorname="5V-MP3-CS - D6" stroke="#F7BD13" r="2.052" id="connector99pad" stroke-width="1.224"/>
+   <circle  fill="none" cx="7.2" cy="64.8" connectorname="5V-MP3-DCS - D7" stroke="#F7BD13" r="2.052" id="connector100pad" stroke-width="1.224"/>
+  </g>
  </g>
 </svg>
