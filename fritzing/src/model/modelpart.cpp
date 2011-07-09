@@ -660,29 +660,20 @@ QString ModelPart::getNextTitle(const QString & title) {
 	if (ix >= 0) {
 		prefix = InstanceTitleRegExp.cap(1);
 	}
-
+	// TODO: if this were a sorted list, 
 	QList<ModelPart *> * modelParts = ensureInstanceTitleIncrements(prefix);
-	QBitArray bitArray(modelParts->size() + 8, false);
+	int highestSoFar = 0;
 	foreach (ModelPart * modelPart, *modelParts) {
 		QString title = modelPart->instanceTitle();
 		title.remove(0, prefix.length());
 		int count = title.toInt();			// returns zero on failure
-		if (count > bitArray.size()) {
-			bitArray.resize(bitArray.size() + 8);
-		}
-		bitArray.setBit(count - 1);
-	}
-
-	int count = 1;
-	for (int i = 0; i < bitArray.size(); i++) {
-		if (bitArray.testBit(i) == false) {
-			count = i;
-			break;
+		if (count > highestSoFar) {
+			highestSoFar = count;
 		}
 	}
 
-	DebugDialog::debug(QString("returning increment %1, %2").arg(prefix).arg(count + 1));
-	return QString("%1%2").arg(prefix).arg(count + 1);
+	DebugDialog::debug(QString("returning increment %1, %2").arg(prefix).arg(highestSoFar + 1));
+	return QString("%1%2").arg(prefix).arg(highestSoFar + 1);
 }
 
 void ModelPart::setOrderedChildren(QList<QObject*> children) {
