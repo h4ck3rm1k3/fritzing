@@ -35,14 +35,37 @@ $Date$
 #include "../items/virtualwire.h"
 
 #include <QDomElement>
+#include <QBitArray>
 
 long ModelPart::m_nextIndex = 0;
 const int ModelPart::indexMultiplier = 10;
 QStringList ModelPart::m_possibleFolders;
 
-static QHash<QString, int> InstanceTitleIncrements;
-static const QRegExp InstanceTitleRegExp("^(.*)(\\d+)");
+static QHash<QString, QList<ModelPart *>* > InstanceTitleIncrements;
+static const QRegExp InstanceTitleRegExp("^(.*[^\\d])(\\d+)$");
 
+QList<ModelPart *> * ensureInstanceTitleIncrements(const QString & prefix) {
+	QList<ModelPart *> * modelParts = InstanceTitleIncrements.value(prefix, NULL);
+	if (modelParts == NULL) {
+		modelParts =  new QList<ModelPart *>;
+		InstanceTitleIncrements.insert(prefix, modelParts);
+	}
+	return modelParts;
+}
+
+void clearOldInstanceTitle(ModelPart * modelPart, const QString & title) 
+{
+	int ix = InstanceTitleRegExp.indexIn(title);
+	if (ix >= 0) {
+		QString prefix = InstanceTitleRegExp.cap(1);
+		QList<ModelPart *> * modelParts = InstanceTitleIncrements.value(prefix, NULL);
+		if (modelParts) {
+			modelParts->removeOne(modelPart);
+		}
+	}
+}
+
+////////////////////////////////////////
 
 ModelPart::ModelPart(ItemType type)
 	: QObject()
@@ -70,6 +93,8 @@ void ModelPart::commonInit(ItemType type) {
 
 ModelPart::~ModelPart() {
 	//DebugDialog::debug(QString("deleting modelpart %1 %2").arg((long) this, 0, 16).arg(m_index));
+
+	clearOldInstanceTitle(this, m_instanceTitle);
 
 	if (m_originalModelPartShared) {
 		if (m_modelPartShared) {
@@ -614,36 +639,50 @@ void ModelPart::setInstanceText(QString text) {
 }
 
 void ModelPart::setInstanceTitle(QString title) {
+	if (title.compare(m_instanceTitle) == 0) return;
+
+	clearOldInstanceTitle(this, m_instanceTitle);
+
 	m_instanceTitle = title;
 
-	int ix = InstanceTitleRegExp.indexIn(title);
 	QString prefix = title;
-	long count = 0;
+	int ix = InstanceTitleRegExp.indexIn(title);
 	if (ix >= 0) {
 		prefix = InstanceTitleRegExp.cap(1);
-		count = InstanceTitleRegExp.cap(2).toLong();
 	}
-	long current = InstanceTitleIncrements.value(prefix, 0);
-	if (count > current) {
-		InstanceTitleIncrements.insert(prefix, count);
-	}
+	QList<ModelPart *> * modelParts = ensureInstanceTitleIncrements(prefix);
+	modelParts->append(this);
 }
 
 QString ModelPart::getNextTitle(const QString & title) {
-	int ix = InstanceTitleRegExp.indexIn(title);
 	QString prefix = title;
-	long count = -1;
+	int ix = InstanceTitleRegExp.indexIn(title);
 	if (ix >= 0) {
 		prefix = InstanceTitleRegExp.cap(1);
-		count = InstanceTitleRegExp.cap(2).toLong();
-	}
-	long current = InstanceTitleIncrements.value(prefix, 0);
-	if (count > current) {
-		// already got max count
-		return title;
 	}
 
-	return QString("%1%2").arg(prefix).arg(current + 1);
+	QList<ModelPart *> * modelParts = ensureInstanceTitleIncrements(prefix);
+	QBitArray bitArray(modelParts->size() + 8, false);
+	foreach (ModelPart * modelPart, *modelParts) {
+		QString title = modelPart->instanceTitle();
+		title.remove(0, prefix.length());
+		int count = title.toInt();			// returns zero on failure
+		if (count > bitArray.size()) {
+			bitArray.resize(bitArray.size() + 8);
+		}
+		bitArray.setBit(count - 1);
+	}
+
+	int count = 1;
+	for (int i = 0; i < bitArray.size(); i++) {
+		if (bitArray.testBit(i) == false) {
+			count = i;
+			break;
+		}
+	}
+
+	DebugDialog::debug(QString("returning increment %1, %2").arg(prefix).arg(count + 1));
+	return QString("%1%2").arg(prefix).arg(count + 1);
 }
 
 void ModelPart::setOrderedChildren(QList<QObject*> children) {
