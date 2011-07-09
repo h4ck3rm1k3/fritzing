@@ -492,6 +492,7 @@ void ResizableBoard::resizeMMAux(qreal mmW, qreal mmH) {
 }
 
 void ResizableBoard::loadLayerKin( const LayerHash & viewLayers, ViewLayer::ViewLayerSpec viewLayerSpec) {
+	loadTemplates();				
 	Board::loadLayerKin(viewLayers, viewLayerSpec);
 	qreal w = m_modelPart->prop("width").toDouble();
 	if (w != 0) {

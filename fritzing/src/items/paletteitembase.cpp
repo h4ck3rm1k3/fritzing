@@ -291,11 +291,11 @@ void PaletteItemBase::setSharedRendererEx(FSvgRenderer * renderer) {
 
 void PaletteItemBase::setUpConnectors(FSvgRenderer * renderer, bool ignoreTerminalPoints) {
 	if (m_viewIdentifier == ViewIdentifierClass::PCBView && ViewLayer::isNonCopperLayer(m_viewLayerID)) {
-		DebugDialog::debug(QString("skip connectors: %1 vid:%2 vlid:%3")
-						   .arg(this->title())
-						   .arg(m_viewIdentifier) 
-						   .arg(m_viewLayerID)
-			);
+		//DebugDialog::debug(QString("skip connectors: %1 vid:%2 vlid:%3")
+		//				   .arg(this->title())
+		//				   .arg(m_viewIdentifier) 
+		//				   .arg(m_viewLayerID)
+		//	);
 		// don't waste time
 		return;
 	}
@@ -303,11 +303,11 @@ void PaletteItemBase::setUpConnectors(FSvgRenderer * renderer, bool ignoreTermin
 	foreach (Connector * connector, m_modelPart->connectors().values()) {
 		if (connector == NULL) continue;
 
-		DebugDialog::debug(QString("id:%1 vid:%2 vlid:%3")
-						   .arg(connector->connectorSharedID())
-						   .arg(m_viewIdentifier) 
-						   .arg(m_viewLayerID)
-			);
+		//DebugDialog::debug(QString("id:%1 vid:%2 vlid:%3")
+		//				   .arg(connector->connectorSharedID())
+		//				   .arg(m_viewIdentifier) 
+		//				   .arg(m_viewLayerID)
+		//	);
 
 
 		SvgIdLayer * svgIdLayer = connector->fullPinInfo(m_viewIdentifier, m_viewLayerID);

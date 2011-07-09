@@ -260,15 +260,12 @@ bool PCBSketchWidget::createOneTrace(Wire * wire, ViewGeometry::WireFlag flag, b
 		removeWire(trace, ends, done, parentCommand);
 	}
 
-	QString colorString;
-	ConnectorItem * toConnectorItem = ends[0]->connectedToItems()[0];
-	colorString = traceColor(toConnectorItem);
+	QString colorString = traceColor(createWireViewLayerSpec(ends[0], ends[1]));
 	long newID = createWire(ends[0], ends[1], flag, false, BaseCommand::SingleView, parentCommand);
 	new WireColorChangeCommand(this, newID, colorString, colorString, getRatsnestOpacity(false), getRatsnestOpacity(false), parentCommand);
 	new WireWidthChangeCommand(this, newID, getTraceWidth(), getTraceWidth(), parentCommand);
 	return true;
 }
-
 
 void PCBSketchWidget::excludeFromAutoroute(bool exclude)
 {
@@ -2009,6 +2006,14 @@ void PCBSketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Co
 	// wire == m_connectorDragWire
 	// m_connectorDragConnector is from original wire
 
+	QList<Wire *> wires;
+	QList<ConnectorItem *> ends;
+	m_bendpointWire->collectChained(wires, ends);
+	if (ends.count() != 2) {
+		// ratsnest wires should always and only have two ends: we're screwed
+		return;
+	}
+
 	BaseCommand::CrossViewType crossViewType = BaseCommand::SingleView;
 
 	QUndoCommand * parentCommand = new QUndoCommand();
@@ -2021,57 +2026,59 @@ void PCBSketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Co
 	m_connectorDragWire->saveGeometry();
 	m_bendpointWire->saveGeometry();
 
-	ViewLayer::ViewLayerSpec viewLayerSpec = layerIsActive(ViewLayer::Copper0) ? ViewLayer::Bottom : ViewLayer::Top;
-
-	long newID1 = ItemBase::getNextID();
-	ViewGeometry vg1 = m_connectorDragWire->getViewGeometry();
-	vg1.setWireFlags(getTraceFlag());
-	new AddItemCommand(this, crossViewType, m_connectorDragWire->moduleID(), viewLayerSpec, vg1, newID1, true, -1, parentCommand);
-	new CheckStickyCommand(this, crossViewType, newID1, false, CheckStickyCommand::RemoveOnly, parentCommand);
-	new WireColorChangeCommand(this, newID1, traceColor(viewLayerSpec), traceColor(viewLayerSpec), 1.0, 1.0, parentCommand);
-	new WireWidthChangeCommand(this, newID1, getTraceWidth(), getTraceWidth(), parentCommand);
-
-	long newID2 = ItemBase::getNextID();
-	ViewGeometry vg2 = m_bendpointWire->getViewGeometry();
-	vg2.setWireFlags(getTraceFlag());
-	new AddItemCommand(this, crossViewType, m_bendpointWire->moduleID(), viewLayerSpec, vg2, newID2, true, -1, parentCommand);
-	new CheckStickyCommand(this, crossViewType, newID2, false, CheckStickyCommand::RemoveOnly, parentCommand);
-	new WireColorChangeCommand(this, newID2, traceColor(viewLayerSpec), traceColor(viewLayerSpec), 1.0, 1.0, parentCommand);
-	new WireWidthChangeCommand(this, newID2, getTraceWidth(), getTraceWidth(), parentCommand);
-
-	new ChangeConnectionCommand(this, BaseCommand::SingleView,
-									newID2, m_connectorDragConnector->connectorSharedID(),
-									newID1, m_connectorDragWire->connector0()->connectorSharedID(),
-									ViewLayer::specFromID(wire->viewLayerID()),
-									true, parentCommand);
-
-	foreach (ConnectorItem * toConnectorItem, m_bendpointWire->connector0()->connectedToItems()) {
-		new ChangeConnectionCommand(this, BaseCommand::SingleView,
-									newID2, m_bendpointWire->connector0()->connectorSharedID(),
-									toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
-									ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
-									true, parentCommand);
+	ViewLayer::ViewLayerSpec viewLayerSpec = createWireViewLayerSpec(ends[0], ends[1]);
+	if (viewLayerSpec == ViewLayer::UnknownSpec) {
+		// for now this should not be possible
+		QMessageBox::critical(NULL, tr("Fritzing"), tr("This seems like an attempt to create a trace across layers. This circumstance should not arise: please contact the developers."));
 	}
-	foreach (ConnectorItem * toConnectorItem, m_connectorDragWire->connector1()->connectedToItems()) {
+	else {
+		long newID1 = ItemBase::getNextID();
+		ViewGeometry vg1 = m_connectorDragWire->getViewGeometry();
+		vg1.setWireFlags(getTraceFlag());
+		new AddItemCommand(this, crossViewType, m_connectorDragWire->moduleID(), viewLayerSpec, vg1, newID1, true, -1, parentCommand);
+		new CheckStickyCommand(this, crossViewType, newID1, false, CheckStickyCommand::RemoveOnly, parentCommand);
+		new WireColorChangeCommand(this, newID1, traceColor(viewLayerSpec), traceColor(viewLayerSpec), 1.0, 1.0, parentCommand);
+		new WireWidthChangeCommand(this, newID1, getTraceWidth(), getTraceWidth(), parentCommand);
+
+		long newID2 = ItemBase::getNextID();
+		ViewGeometry vg2 = m_bendpointWire->getViewGeometry();
+		vg2.setWireFlags(getTraceFlag());
+		new AddItemCommand(this, crossViewType, m_bendpointWire->moduleID(), viewLayerSpec, vg2, newID2, true, -1, parentCommand);
+		new CheckStickyCommand(this, crossViewType, newID2, false, CheckStickyCommand::RemoveOnly, parentCommand);
+		new WireColorChangeCommand(this, newID2, traceColor(viewLayerSpec), traceColor(viewLayerSpec), 1.0, 1.0, parentCommand);
+		new WireWidthChangeCommand(this, newID2, getTraceWidth(), getTraceWidth(), parentCommand);
+
 		new ChangeConnectionCommand(this, BaseCommand::SingleView,
-									newID1, m_connectorDragWire->connector1()->connectorSharedID(),
-									toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
-									ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
-									true, parentCommand);
-		m_connectorDragWire->connector1()->tempRemove(toConnectorItem, false);
-		toConnectorItem->tempRemove(m_connectorDragWire->connector1(), false);
-		m_bendpointWire->connector1()->tempConnectTo(toConnectorItem, false);
-		toConnectorItem->tempConnectTo(m_bendpointWire->connector1(), false);
+										newID2, m_connectorDragConnector->connectorSharedID(),
+										newID1, m_connectorDragWire->connector0()->connectorSharedID(),
+										viewLayerSpec,					// ViewLayer::specFromID(wire->viewLayerID())
+										true, parentCommand);
+
+		foreach (ConnectorItem * toConnectorItem, m_bendpointWire->connector0()->connectedToItems()) {
+			new ChangeConnectionCommand(this, BaseCommand::SingleView,
+										newID2, m_bendpointWire->connector0()->connectorSharedID(),
+										toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
+										viewLayerSpec,					// ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID())
+										true, parentCommand);
+		}
+		foreach (ConnectorItem * toConnectorItem, m_connectorDragWire->connector1()->connectedToItems()) {
+			new ChangeConnectionCommand(this, BaseCommand::SingleView,
+										newID1, m_connectorDragWire->connector1()->connectorSharedID(),
+										toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
+										viewLayerSpec,					// ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID())
+										true, parentCommand);
+			m_connectorDragWire->connector1()->tempRemove(toConnectorItem, false);
+			toConnectorItem->tempRemove(m_connectorDragWire->connector1(), false);
+			m_bendpointWire->connector1()->tempConnectTo(toConnectorItem, false);
+			toConnectorItem->tempConnectTo(m_bendpointWire->connector1(), false);
+		}
 	}
-
-
 
 	m_bendpointWire->setPos(m_bendpointVG.loc());
 	m_bendpointWire->setLine(m_bendpointVG.line());
 	m_connectorDragConnector->tempRemove(m_connectorDragWire->connector0(), false);
 	m_connectorDragWire->connector0()->tempRemove(m_connectorDragConnector, false);
 	m_bendpointWire = NULL;			// signal that we're done
-
 
 	// remove the temporary wire
 	this->scene()->removeItem(m_connectorDragWire);
@@ -2648,3 +2655,24 @@ QString PCBSketchWidget::generateCopperFillUnit(ItemBase * itemBase, QPointF whe
 }
 
 
+bool PCBSketchWidget::connectorItemHasSpec(ConnectorItem * connectorItem, ViewLayer::ViewLayerSpec spec) {
+	if (ViewLayer::specFromID(connectorItem->attachedToViewLayerID()) == spec)  return true;
+
+	connectorItem = connectorItem->getCrossLayerConnectorItem();
+	if (connectorItem == NULL) return false;
+
+	return (ViewLayer::specFromID(connectorItem->attachedToViewLayerID()) == spec);
+}
+
+ViewLayer::ViewLayerSpec PCBSketchWidget::createWireViewLayerSpec(ConnectorItem * from, ConnectorItem * to) {
+	QList<ViewLayer::ViewLayerSpec> guesses;
+	guesses.append(layerIsActive(ViewLayer::Copper0) ? ViewLayer::Bottom : ViewLayer::Top);
+	guesses.append(layerIsActive(ViewLayer::Copper0) ? ViewLayer::Top : ViewLayer::Bottom);
+	foreach (ViewLayer::ViewLayerSpec guess, guesses) {
+		if (connectorItemHasSpec(from, guess) && connectorItemHasSpec(to, guess)) {
+			return guess;
+		}
+	}
+
+	return ViewLayer::UnknownSpec;
+}

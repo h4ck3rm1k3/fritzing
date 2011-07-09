@@ -436,3 +436,6 @@ QString SchematicSketchWidget::generateCopperFillUnit(ItemBase * itemBase, QPoin
 	return "";
 }
 
+ViewLayer::ViewLayerSpec SchematicSketchWidget::createWireViewLayerSpec(ConnectorItem * from, ConnectorItem * to) {
+	return SketchWidget::createWireViewLayerSpec(from, to);
+}

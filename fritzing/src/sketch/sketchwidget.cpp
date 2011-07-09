@@ -1050,22 +1050,28 @@ long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to,
 		.arg(m_viewIdentifier)
 		);
 
-	new AddItemCommand(this, crossViewType, ModuleIDNames::WireModuleIDName, from->attachedTo()->viewLayerSpec(), viewGeometry, newID, false, -1, parentCommand);
+	ViewLayer::ViewLayerSpec viewLayerSpec = createWireViewLayerSpec(from, to);
+
+	new AddItemCommand(this, crossViewType, ModuleIDNames::WireModuleIDName, viewLayerSpec, viewGeometry, newID, false, -1, parentCommand);
 	new CheckStickyCommand(this, crossViewType, newID, false, CheckStickyCommand::RemoveOnly, parentCommand);
 	ChangeConnectionCommand * ccc = new ChangeConnectionCommand(this, crossViewType, from->attachedToID(), from->connectorSharedID(),
 						newID, "connector0", 
-						ViewLayer::specFromID(from->attachedToViewLayerID()),
+						viewLayerSpec,							// ViewLayer::specFromID(from->attachedToViewLayerID())
 						true, parentCommand);
 	ccc->setUpdateConnections(!dontUpdate);
 	ccc = new ChangeConnectionCommand(this, crossViewType, to->attachedToID(), to->connectorSharedID(),
 						newID, "connector1", 
-						ViewLayer::specFromID(to->attachedToViewLayerID()),
+						viewLayerSpec,							// ViewLayer::specFromID(to->attachedToViewLayerID())
 						true, parentCommand);
 	ccc->setUpdateConnections(!dontUpdate);
 
 	return newID;
 }
 
+ViewLayer::ViewLayerSpec SketchWidget::createWireViewLayerSpec(ConnectorItem * from, ConnectorItem * to) {
+	Q_UNUSED(to);
+	return from->attachedToViewLayerSpec();
+}
 
 void SketchWidget::moveItem(long id, ViewGeometry & viewGeometry, bool updateRatsnest) {
 	ItemBase * pitem = findItem(id);

@@ -90,7 +90,7 @@ protected:
 	QPoint calcFixedToCenterItemOffset(const QRect & viewPortRect, const QSizeF & helpSize);
 	void extraRenderSvgStep(ItemBase *, QPointF offset, qreal dpi, qreal printerScale, QString & outputSvg);
 	QString makeCircleSVG(QPointF p, qreal r, QPointF offset, qreal dpi, qreal printerScale);
-
+	ViewLayer::ViewLayerSpec createWireViewLayerSpec(ConnectorItem * from, ConnectorItem * to);
 
 protected:
 	QTimer m_updateDotsTimer;

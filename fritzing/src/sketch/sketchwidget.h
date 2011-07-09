@@ -399,6 +399,7 @@ protected:
 	void showPartLabelsAux(bool show, QList<ItemBase *> & itemBases);
 	virtual void changeTrace(Wire * wire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand);
 	virtual void extraRenderSvgStep(ItemBase *, QPointF offset, qreal dpi, qreal printerScale, QString & outputSvg);
+	virtual ViewLayer::ViewLayerSpec createWireViewLayerSpec(ConnectorItem * from, ConnectorItem * to);
 
 protected:
 	static bool lessThan(int a, int b);
