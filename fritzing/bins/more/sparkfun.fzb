@@ -135,6 +135,13 @@
     </iconView>
    </views>
   </instance>
+ <instance moduleIdRef="EasyDriver_v44">
+   <views>
+    <iconView layer="icon">
+     <geometry x="-1" y="-1" z="-1"/>
+    </iconView>
+   </views>
+  </instance>
   <instance moduleIdRef="FTDI Basic-v13">
    <views>
     <iconView layer="icon">
