@@ -38,6 +38,8 @@ $Date$
 #define SELECTED_STYLE "background-color: white;"
 #define NON_SELECTED_STYLE "background-color: #C2C2C2;"
 
+const QColor SectionHeaderColor(80, 80, 80);
+
 #define SELECTION_THICKNESS 2
 #define HALF_SELECTION_THICKNESS 1
 #define ICON_SIZE 32
@@ -197,7 +199,7 @@ void SvgIconWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 			painter->save();
 			QRectF r = this->boundingRect();
 			QPen pen = painter->pen();
-			pen.setColor(QColor(80, 80, 80));
+			pen.setColor(SectionHeaderColor);
 			pen.setWidth(1);
 			painter->setPen(pen);
 			QFont font = painter->font();

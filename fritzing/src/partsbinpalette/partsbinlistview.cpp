@@ -36,6 +36,9 @@ $Date$
 
 #include "partsbinlistview.h"
 
+static const QColor SectionHeaderBackgroundColor(128, 128, 128);
+static const QColor SectionHeaderForegroundColor(32, 32, 32);
+
 PartsBinListView::PartsBinListView(ReferenceModel* refModel, PartsBinPaletteWidget *parent, QMenu *binMenu, QMenu *partMenu)
 	: QListWidget((QWidget*)parent), PartsBinView(refModel, parent, binMenu, partMenu)
 {
@@ -89,6 +92,8 @@ int PartsBinListView::setItemAux(ModelPart * modelPart, int position) {
 
 	QListWidgetItem * lwi = new QListWidgetItem(modelPart->title());
 	if (modelPart->itemType() == ModelPart::Space) {
+		lwi->setBackground(QBrush(SectionHeaderBackgroundColor));
+		lwi->setForeground(QBrush(SectionHeaderForegroundColor));
 		lwi->setData(Qt::UserRole, 0);
 		lwi->setFlags(0);
 		lwi->setText("        " + TranslatedCategoryNames.value(modelPart->instanceText(), modelPart->instanceText()));
