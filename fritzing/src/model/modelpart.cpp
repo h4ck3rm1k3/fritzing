@@ -73,7 +73,7 @@ ModelPart::ModelPart(ItemType type)
 	commonInit(type);
 	m_modelPartShared = NULL;
 	m_index = m_nextIndex++;
-	m_originalModelPartShared = false;
+	m_originalModelPartShared = false;  // TODO: make this a QSharedPointer
 }
 
 ModelPart::ModelPart(QDomDocument * domDocument, const QString & path, ItemType type)
@@ -81,7 +81,7 @@ ModelPart::ModelPart(QDomDocument * domDocument, const QString & path, ItemType 
 {
 	commonInit(type);
 	m_modelPartShared = new ModelPartShared(domDocument, path);
-	m_originalModelPartShared = true;
+	m_originalModelPartShared = true;		// TODO: make this a QSharedPointer
 }
 
 void ModelPart::commonInit(ItemType type) {
@@ -96,7 +96,7 @@ ModelPart::~ModelPart() {
 
 	clearOldInstanceTitle(this, m_instanceTitle);
 
-	if (m_originalModelPartShared) {
+	if (m_originalModelPartShared) {		// TODO: make this a QSharedPointer
 		if (m_modelPartShared) {
 			delete m_modelPartShared;
 		}
@@ -171,7 +171,7 @@ void ModelPart::copyStuff(ModelPart * modelPart) {
 ModelPartShared * ModelPart::modelPartShared() {
 	if(!m_modelPartShared) {
 		m_modelPartShared = new ModelPartShared();
-		m_originalModelPartShared = true;
+		m_originalModelPartShared = true;		// TODO: make this a QSharedPointer
 	}
 	return m_modelPartShared;
 }
