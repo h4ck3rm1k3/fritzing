@@ -2,7 +2,7 @@
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='EasyDriver_v44'>
 <version>4</version>
 <date>2011-07-10</date>
-<author>jonathan</author>
+<author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Replacement:&lt;/strong&gt; &lt;a href=&quot;http://www.sparkfun.com/products/10267&quot; target=&quot;_blank&quot;&gt;ROB-10267&lt;/a&gt;. The new version fixes the silkscreen error. This page is for reference only.&lt;/p&gt;
 &lt;p&gt;
@@ -48,8 +48,10 @@
 <title>EasyDriver_v44</title>
 <url>http://www.sparkfun.com/products/9402</url>
 <tags>
+<tag>Motor Driver</tag>
 </tags>
 <properties>
+<property name="family">Motor Driver</property>
 </properties>
 <views>
 <breadboardView>

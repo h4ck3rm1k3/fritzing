@@ -847,7 +847,7 @@ QString GroundPlaneGenerator::makeOnePoly(const QPolygon & poly, const QString &
 	if (!id.isEmpty()) {
 		idString = QString("id='%1'").arg(id);
 	}
-	QString polyString = QString("<polygon fill='%1' %2 points='\n").arg(colorString).arg(idString);
+	QString polyString = QString("<polygon fill='%1' stroke='none' stroke-width='0' %2 points='\n").arg(colorString).arg(idString);
 	int space = 0;
 	foreach (QPoint p, poly) {
 		polyString += QString("%1,%2 %3").arg(p.x() - minX).arg(p.y() - minY).arg((++space % 8 == 0) ?  "\n" : "");

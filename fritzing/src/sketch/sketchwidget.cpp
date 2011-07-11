@@ -584,6 +584,14 @@ ItemBase * SketchWidget::addItem(ModelPart * modelPart, ViewLayer::ViewLayerSpec
 	return newItem;
 }
 
+ItemBase * SketchWidget::addItemAuxTemp(ModelPart * modelPart, ViewLayer::ViewLayerSpec viewLayerSpec, const ViewGeometry & viewGeometry, long id, PaletteItem* partsEditorPaletteItem, bool doConnectors, ViewIdentifierClass::ViewIdentifier viewIdentifier, bool temporary)
+{
+	modelPart = m_sketchModel->addModelPart(m_sketchModel->root(), modelPart);
+	if (modelPart == NULL) return NULL;   // this is very fucked up
+
+	return addItemAux(modelPart, viewLayerSpec, viewGeometry, id, partsEditorPaletteItem, doConnectors, viewIdentifier, temporary);
+}
+
 ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, ViewLayer::ViewLayerSpec viewLayerSpec, const ViewGeometry & viewGeometry, long id, PaletteItem* partsEditorPaletteItem, bool doConnectors, ViewIdentifierClass::ViewIdentifier viewIdentifier, bool temporary)
 {
 	Q_UNUSED(partsEditorPaletteItem);
@@ -1480,7 +1488,7 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 		*/
 
 		// create temporary item for dragging
-		m_droppingItem = addItemAux(modelPart, defaultViewLayerSpec(), viewGeometry, fromID, NULL, doConnectors, m_viewIdentifier, true);
+		m_droppingItem = addItemAuxTemp(modelPart, defaultViewLayerSpec(), viewGeometry, fromID, NULL, doConnectors, m_viewIdentifier, true);
 
 		QHash<long, ItemBase *> savedItems;
 		QHash<Wire *, ConnectorItem *> savedWires;
@@ -2414,7 +2422,8 @@ void SketchWidget::prepDragBendpoint(Wire * wire, QPoint eventPos)
 	vg.setLine(newLine2);
 	long newID = ItemBase::getNextID();
 	ConnectorItem * oldConnector1 = wire->connector1();
-	m_connectorDragWire = dynamic_cast<Wire *>(addItemAux(wire->modelPart(), wire->viewLayerSpec(), vg, newID, NULL, true, m_viewIdentifier, true));
+
+	m_connectorDragWire = dynamic_cast<Wire *>(addItemAuxTemp(wire->modelPart(), wire->viewLayerSpec(), vg, newID, NULL, true, m_viewIdentifier, true));
 	ConnectorItem * newConnector1 = m_connectorDragWire->connector1();
 	foreach (ConnectorItem * toConnectorItem, oldConnector1->connectedToItems()) {
 		oldConnector1->tempRemove(toConnectorItem, false);
@@ -3808,12 +3817,13 @@ void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGrap
 	// create a temporary wire for the user to drag
 	m_connectorDragConnector = connectorItem;
 	ViewLayer::ViewLayerSpec viewLayerSpec = wireViewLayerSpec(connectorItem);
-	m_connectorDragWire = dynamic_cast<Wire *>(addItemAux(wireModel, viewLayerSpec, viewGeometry, ItemBase::getNextID(), NULL, true, m_viewIdentifier, true));
-	DebugDialog::debug(QString("creating connector drag wire %1").arg(m_connectorDragWire->isVisible()));
+	m_connectorDragWire = dynamic_cast<Wire *>(addItemAuxTemp(wireModel, viewLayerSpec, viewGeometry, ItemBase::getNextID(), NULL, true, m_viewIdentifier, true));
 	if (m_connectorDragWire == NULL) {
 		clearDragWireTempCommand();
 		return;
 	}
+
+	m_connectorDragWire->debugInfo("creating connector drag wire");
 
 	setupAutoscroll(true);
 
@@ -7102,17 +7112,7 @@ void SketchWidget::ratsnestConnect(ConnectorItem * connectorItem, bool connect) 
 		m_ratsnestUpdateDisconnect << connectorItem;
 	}
 
-	/*
-
-	DebugDialog::debug(QString("add rat '%1' id:%2 cid:%3 vid:%4 vlid:%5 con:%6")
-		.arg(connectorItem->attachedToTitle())
-		.arg(connectorItem->attachedToID())
-		.arg(connectorItem->connectorSharedID())
-		.arg(m_viewIdentifier)
-		.arg(connectorItem->attachedToViewLayerID())
-		.arg(connect)
-		);
-	*/
+	//connectorItem->debugInfo(QString("rat connect %1").arg(connect));
 }
 
 

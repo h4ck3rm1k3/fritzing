@@ -1298,15 +1298,17 @@ void PCBSketchWidget::updateRoutingStatus(RoutingStatus & routingStatus, bool ma
 		if (connectorItem == NULL) continue;
 		if (visited.contains(connectorItem)) continue;
 
+		//connectorItem->debugInfo("testing urs");
+
 		VirtualWire * vw = qobject_cast<VirtualWire *>(connectorItem->attachedTo());
 		if (vw != NULL) {
 			if (vw->connector0()->connectionsCount() == 0 || vw->connector1()->connectionsCount() == 0) {
 				ratsToDelete.append(vw);
 			}
+			visited << vw->connector0() << vw->connector1();
 			continue;  
 		}
 
-		//connectorItem->debugInfo("testing");
 
 		QList<ConnectorItem *> connectorItems;
 		connectorItems.append(connectorItem);

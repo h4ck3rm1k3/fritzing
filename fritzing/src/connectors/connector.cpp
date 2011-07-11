@@ -92,23 +92,14 @@ ConnectorShared * Connector::connectorShared() {
 }
 
 void Connector::addViewItem(ConnectorItem * item) {
-	m_connectorItems.insert(QuickHash(item->attachedToViewIdentifier(), item->attachedToViewLayerID()), item);
-	
-	/*
-	DebugDialog::debug(QString("adding connector '%1' vlid:%2 vl:%3 hex:%4 id:%5")
-		.arg(this->connectorShared()->name())
-		.arg(item->attachedToViewLayerID())
-		.arg(item->attachedTo()->viewIdentifier())
-		.arg((long) item->attachedTo(), 0, 16)
-		.arg(item->attachedTo()->id()) );
-	*/
+	//item->debugInfo(QString("add view item c:%1 ci:%2 b:%3").arg((long) this, 0, 16).arg((long) item, 0, 16).arg((long) m_bus.data(), 0, 16));
+	m_connectorItems.insert(QuickHash(item->attachedToViewIdentifier(), item->attachedToViewLayerID()), item);	
 }
 
 void Connector::removeViewItem(ConnectorItem * item) {
 
+	//DebugDialog::debug(QString("remove view item c:%1 ci:%2 b:%3").arg((long) this, 0, 16).arg((long) item, 0, 16).arg((long) m_bus.data(), 0, 16));
 	m_connectorItems.remove(QuickHash(item->attachedToViewIdentifier(), item->attachedToViewLayerID()));
-
-	//DebugDialog::debug(QString("removing view %1 %2").arg(this->connectorShared()->name()).arg(m_connectorItems.count()) );
 }
 
 void Connector::connectTo(Connector * connector) {

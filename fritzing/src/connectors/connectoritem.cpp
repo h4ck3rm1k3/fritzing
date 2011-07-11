@@ -1013,7 +1013,7 @@ void ConnectorItem::collectEqualPotential(QList<ConnectorItem *> & connectorItem
 
 	for (int i = 0; i < tempItems.count(); i++) {
 		ConnectorItem * connectorItem = tempItems[i];
-		//connectorItem->debugInfo("testing");
+		//connectorItem->debugInfo("testing eqp");
 
 		Wire * fromWire = (connectorItem->attachedToItemType() == ModelPart::Wire) ? dynamic_cast<Wire *>(connectorItem->attachedTo()) : NULL;
 		if (fromWire != NULL) {
@@ -1051,6 +1051,13 @@ void ConnectorItem::collectEqualPotential(QList<ConnectorItem *> & connectorItem
 		if (bus != NULL) {
 			QList<ConnectorItem *> busConnectedItems;
 			connectorItem->attachedTo()->busConnectorItems(bus, busConnectedItems);
+#ifndef QT_NO_DEBUG
+			if (connectorItem->attachedToItemType() == ModelPart::Wire && busConnectedItems.count() != 2) {
+				connectorItem->debugInfo("bus is missing");
+				//busConnectedItems.clear();
+				//connectorItem->attachedTo()->busConnectorItems(bus, busConnectedItems);
+			}
+#endif
 			foreach (ConnectorItem * busConnectedItem, busConnectedItems) {
 				if (!tempItems.contains(busConnectedItem)) {
 					tempItems.append(busConnectedItem);
@@ -1474,7 +1481,7 @@ void ConnectorItem::debugInfo(const QString & msg)
 {
 
 #ifndef QT_NO_DEBUG
-	DebugDialog::debug(QString("%1 cid:%2 %3 %4 id:%5 %6 vlid:%7 vid:%8 spec:%9 flg:%10 hy:%11")
+	DebugDialog::debug(QString("%1 cid:%2 %3 %4 id:%5 %6 vlid:%7 vid:%8 spec:%9 flg:%10 hy:%11 bus:%12")
 		.arg(msg)
 		.arg(this->connectorSharedID())
 		.arg(this->connectorSharedName())
@@ -1486,6 +1493,7 @@ void ConnectorItem::debugInfo(const QString & msg)
 		.arg(this->attachedToViewLayerSpec())
 		.arg(this->attachedTo()->getViewGeometry().wireFlags())
 		.arg(this->m_hybrid)
+		.arg((long) this->bus(), 0, 16)
 	);
 #else
 	Q_UNUSED(msg);

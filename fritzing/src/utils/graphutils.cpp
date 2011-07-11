@@ -44,20 +44,25 @@ $Date$
 #pragma warning(pop)					// restore warning state
 #endif
 
-bool GraphUtils::chooseRatsnestGraph(const QList<ConnectorItem *> & connectorItems, ConnectorPairHash & result) {
+bool GraphUtils::chooseRatsnestGraph(const QList<ConnectorItem *> & partConnectorItems, ConnectorPairHash & result) {
 	using namespace boost;
 	typedef adjacency_list < vecS, vecS, undirectedS, property<vertex_distance_t, double>, property < edge_weight_t, double > > Graph;
 	typedef std::pair < int, int >E;
 
-	if (connectorItems.count() < 2) return false;
+	if (partConnectorItems.count() < 2) return false;
 
-	QList <ConnectorItem *> temp = connectorItems;
+	QList <ConnectorItem *> temp(partConnectorItems);
 
-	int i = 0;
-	while (i < temp.count()) {
-		ConnectorItem * connectorItem = temp[i++];
+	//DebugDialog::debug("__________________");
+	int tix = 0;
+	while (tix < temp.count()) {
+		ConnectorItem * connectorItem = temp[tix++];
+		//connectorItem->debugInfo("check cross");
 		ConnectorItem * crossConnectorItem = connectorItem->getCrossLayerConnectorItem();
 		if (crossConnectorItem) {
+			// it doesn't matter which one  on which layer we remove
+			// when we check equal potential both of them will be returned
+			//crossConnectorItem->debugInfo("\tremove cross");
 			temp.removeOne(crossConnectorItem);
 		}
 	}
@@ -104,14 +109,14 @@ bool GraphUtils::chooseRatsnestGraph(const QList<ConnectorItem *> & connectorIte
 			//c2->debugInfo("\tc2");
 
 			if (checkWiredTo) {
-				QList<ConnectorItem *> connectorItems;
-				connectorItems.append(c1);
-				ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::NotTraceFlags);
-				wiredTo.append(connectorItems);
-				//foreach (ConnectorItem * cx, connectorItems) {
+				QList<ConnectorItem *> cwConnectorItems;
+				cwConnectorItems.append(c1);
+				ConnectorItem::collectEqualPotential(cwConnectorItems, true, ViewGeometry::NotTraceFlags);
+				wiredTo.append(cwConnectorItems);
+				//foreach (ConnectorItem * cx, cwConnectorItems) {
 					//cx->debugInfo("\t\tcx");
 				//}
-				if (connectorItems.contains(c2)) {
+				if (cwConnectorItems.contains(c2)) {
 					weights[ix++] = 0;
 					continue;
 				}

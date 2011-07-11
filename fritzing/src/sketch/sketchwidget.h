@@ -155,6 +155,7 @@ public:
 	void setInfoViewOnHover(bool infoViewOnHover);
 	PaletteModel * paletteModel();
 	virtual ItemBase * addItemAux(ModelPart *, ViewLayer::ViewLayerSpec, const ViewGeometry &, long id, PaletteItem * paletteItem, bool doConnectors, ViewIdentifierClass::ViewIdentifier, bool temporary);
+	ItemBase * addItemAuxTemp(ModelPart *, ViewLayer::ViewLayerSpec, const ViewGeometry &, long id, PaletteItem * paletteItem, bool doConnectors, ViewIdentifierClass::ViewIdentifier, bool temporary);
 
     bool swappingEnabled(ItemBase *);
 

@@ -44,10 +44,7 @@ public:
 	
 	const QString & id();
 	const QList<class Connector *> & connectors();
-	void addViewItem(class ConnectorItem *);
-	void removeViewItem(class ConnectorItem *);
 	void addConnector(class Connector *);
-	class Connector * busConnector();
 	class ModelPart * modelPart();
 	
 public:
@@ -56,10 +53,8 @@ public:
 	
 protected:
 
-	QList<class ConnectorItem *> m_connectorItems;
 	QList<class Connector *> m_connectors;
 	BusShared * m_busShared;
-	Connector * m_busConnector;
 	QPointer<class ModelPart> m_modelPart;
 };
 

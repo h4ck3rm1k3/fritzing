@@ -1770,7 +1770,7 @@ PartsEditorMainWindow* MainWindow::getPartsEditor(ModelPart *modelPart, long _id
 
 	PartsEditorMainWindow *mainPartsEditorWindow = new PartsEditorMainWindow(this);
 	if (fromItem != NULL) {
-		ItemBase * ii = m_breadboardGraphicsView->addItemAux(modelPart, fromItem->viewLayerSpec(), ViewGeometry(), ItemBase::getNextID(), NULL, true, ViewIdentifierClass::IconView, true);
+		ItemBase * ii = m_breadboardGraphicsView->addItemAuxTemp(modelPart, fromItem->viewLayerSpec(), ViewGeometry(), ItemBase::getNextID(), NULL, true, ViewIdentifierClass::IconView, true);
 		if (ii != NULL) {
 			m_breadboardGraphicsView->scene()->removeItem(ii);
 			if (!ii->hasCustomSVG()) {

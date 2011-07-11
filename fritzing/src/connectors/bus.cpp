@@ -38,8 +38,6 @@ Bus::Bus(BusShared * busShared, ModelPart * modelPart) : QObject()
 {
 	m_busShared = busShared;
 	m_modelPart = modelPart;
-	m_busConnector = NULL;
-
 }
 
 const QString & Bus::id() {
@@ -53,26 +51,9 @@ const QList<Connector *> & Bus::connectors() {
 	return m_connectors;
 }
 
-void Bus::addViewItem(ConnectorItem * item) {
-	m_connectorItems.append(item);
-}
-
-void Bus::removeViewItem(ConnectorItem * item) {
-	m_connectorItems.removeOne(item);
-}
-
 void Bus::addConnector(Connector * connector) {
 	// the list of connectors which make up the bus
 	m_connectors.append(connector);
-}
-
-Connector * Bus::busConnector() {
-	if (m_busConnector == NULL) {
-		m_busConnector = new Connector(NULL, m_modelPart);
-		m_busConnector->setBus(this);
-	}
-
-	return m_busConnector;
 }
 
 ModelPart * Bus::modelPart() {

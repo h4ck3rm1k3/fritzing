@@ -672,7 +672,7 @@ QString ModelPart::getNextTitle(const QString & title) {
 		}
 	}
 
-	DebugDialog::debug(QString("returning increment %1, %2").arg(prefix).arg(highestSoFar + 1));
+	//DebugDialog::debug(QString("returning increment %1, %2").arg(prefix).arg(highestSoFar + 1));
 	return QString("%1%2").arg(prefix).arg(highestSoFar + 1);
 }
 

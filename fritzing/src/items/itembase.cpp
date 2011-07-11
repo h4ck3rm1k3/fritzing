@@ -664,10 +664,14 @@ void ItemBase::busConnectorItems(class Bus * bus, QList<class ConnectorItem *> &
 		QList< QPointer<ConnectorItem> > allConnectorItems = connector->viewItems();
 		foreach (ConnectorItem * connectorItem, allConnectorItems) {
 			if (connectorItem != NULL) {
+				//connectorItem->debugInfo(QString("on the bus %1").arg((long) connector, 0, 16));
 				if (connectorItem->attachedTo() == this) {
 					items.append(connectorItem);
 				}
 			}
+			//else {
+				//DebugDialog::debug(QString("off the bus %1").arg((long) connector, 0, 16));
+			//}
 		}
 	}
 
