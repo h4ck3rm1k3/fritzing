@@ -1512,7 +1512,9 @@ void MainWindow::updateItemMenu() {
 		QList<QAction*> acts = m_binManager->openedBinsActions(selectedModuleID());
 		m_addToBinMenu->addActions(acts);
 	}
+
 	m_saveBundledPart->setEnabled(enabled && !selected->modelPart()->isCore());
+
 
 	// can't open wire in parts editor
 	enabled &= selected != NULL && itemBase != NULL && itemBase->canEditPart();
