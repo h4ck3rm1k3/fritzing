@@ -37,6 +37,7 @@ $Date$
 #include <limits>
 
 static QString SchematicTraceColor = "schematic black";
+static const qreal TraceHoverStrokeFactor = 3;
 
 static const qreal TraceWidthMils = 33.3333;
 
@@ -86,11 +87,11 @@ ViewLayer::ViewLayerID SchematicSketchWidget::getWireViewLayerID(const ViewGeome
 void SchematicSketchWidget::initWire(Wire * wire, int penWidth) {
 	Q_UNUSED(penWidth);
 	if (wire->getRatsnest()) {
-		wire->setPenWidth(0.5, this);
+		wire->setPenWidth(0.5, this, 0.5 * TraceHoverStrokeFactor);
 		wire->setColorString("schematicGrey", 0.7);
 	}
 	else {
-		wire->setPenWidth(getTraceWidth(), this);
+		wire->setPenWidth(getTraceWidth(), this, getTraceWidth() * TraceHoverStrokeFactor);
 		wire->setColorString("schematic black", 1.0);
 	}
 }
@@ -399,6 +400,9 @@ qreal SchematicSketchWidget::getAutorouterTraceWidth() {
 	return getTraceWidth();
 }
 
+qreal SchematicSketchWidget::getTraceStrokeWidth(qreal width) {
+	return width * TraceHoverStrokeFactor;
+}
 
 void SchematicSketchWidget::extraRenderSvgStep(ItemBase * itemBase, QPointF offset, qreal dpi, qreal printerScale, QString & outputSvg)
 {
@@ -438,4 +442,9 @@ QString SchematicSketchWidget::generateCopperFillUnit(ItemBase * itemBase, QPoin
 
 ViewLayer::ViewLayerSpec SchematicSketchWidget::createWireViewLayerSpec(ConnectorItem * from, ConnectorItem * to) {
 	return SketchWidget::createWireViewLayerSpec(from, to);
+}
+
+qreal SchematicSketchWidget::getWireStrokeWidth(qreal wireWidth)
+{
+	return wireWidth * TraceHoverStrokeFactor;
 }

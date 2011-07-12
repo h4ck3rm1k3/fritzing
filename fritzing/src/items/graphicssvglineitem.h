@@ -64,13 +64,16 @@ public:
 
 public:
 	static void qt_graphicsItem_highlightSelected(QGraphicsItem *, QPainter *painter, const QStyleOptionGraphicsItem *option, const QRectF & boundingRect, const QPainterPath & path, HighlightSelectedCallback);
-	static QPainterPath qt_graphicsItem_shapeFromPath(const QPainterPath &path, const QPen &pen, int multiplier);
+	static QPainterPath qt_graphicsItem_shapeFromPath(const QPainterPath &path, const QPen &pen, qreal shapeStrokeWidth);
+
+	static const qreal DefaultHoverStrokeWidth;
 
 protected:
 	QLineF	m_line;
 	QPen	m_pen;	
 	bool	m_hasLine;
 	QPainterPath m_shape;
+	qreal	m_hoverStrokeWidth;
 };
 
 

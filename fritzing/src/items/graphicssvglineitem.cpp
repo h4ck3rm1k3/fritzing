@@ -32,12 +32,16 @@ $Date$
 // note: copied most of this code directly from Qt's QGraphicsLineItem code
 // so it may need updated with new versions > 4.4.0
 
+const qreal GraphicsSvgLineItem::DefaultHoverStrokeWidth = 4;
+
+
 ////////////////////////////////////////
 
 GraphicsSvgLineItem::GraphicsSvgLineItem( QGraphicsItem * parent ) 
 	: QGraphicsSvgItem(parent)
 {
 	m_hasLine = false;
+	m_hoverStrokeWidth = DefaultHoverStrokeWidth;
 }
 
 GraphicsSvgLineItem::~GraphicsSvgLineItem()
@@ -144,7 +148,7 @@ QPainterPath GraphicsSvgLineItem::hoverShape() const
 				
 	    path.moveTo(m_line.p1());
 	    path.lineTo(m_line.p2());
-	    return qt_graphicsItem_shapeFromPath(path, m_pen, 4);
+	    return qt_graphicsItem_shapeFromPath(path, m_pen, m_hoverStrokeWidth);
 	}
 	
 	return QGraphicsSvgItem::shape();
@@ -164,7 +168,7 @@ QPainterPath GraphicsSvgLineItem::shape() const
 	
 	    path.moveTo(m_line.p1());
 	    path.lineTo(m_line.p2());
-	    return qt_graphicsItem_shapeFromPath(path, m_pen, 1);
+	    return qt_graphicsItem_shapeFromPath(path, m_pen, m_pen.width());
     }
 
 
@@ -206,21 +210,21 @@ const QLineF & GraphicsSvgLineItem::getPaintLine() {
 	return m_line;
 }
 
-QPainterPath GraphicsSvgLineItem::qt_graphicsItem_shapeFromPath(const QPainterPath &path, const QPen &pen, int multiplier)
+QPainterPath GraphicsSvgLineItem::qt_graphicsItem_shapeFromPath(const QPainterPath &path, const QPen &pen, qreal shapeStrokeWidth)
 {
     // We unfortunately need this hack as QPainterPathStroker will set a width of 1.0
     // if we pass a value of 0.0 to QPainterPathStroker::setWidth()
-    const qreal penWidthZero = qreal(0.00000001);
+    static const qreal penWidthZero = qreal(0.00000001);
 
     if (path == QPainterPath())
         return path;
     QPainterPathStroker ps;
     ps.setCapStyle(pen.capStyle());
     //ps.setCapStyle(Qt::FlatCap);
-    if (pen.widthF() <= 0.0)
+    if (shapeStrokeWidth <= 0.0)
         ps.setWidth(penWidthZero);
     else
-        ps.setWidth(pen.widthF() * multiplier);
+        ps.setWidth(shapeStrokeWidth);
 
     ps.setJoinStyle(pen.joinStyle());
     ps.setMiterLimit(pen.miterLimit());
@@ -314,5 +318,5 @@ bool GraphicsSvgLineItem::hasLine() {
 }
 
 void GraphicsSvgLineItem::setShape(QPainterPath & pp) {
-	m_shape = qt_graphicsItem_shapeFromPath(pp, pen(), 1);
+	m_shape = qt_graphicsItem_shapeFromPath(pp, pen(), pen().widthF());
 }

@@ -130,7 +130,7 @@ Wire::Wire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdent
 Wire::~Wire() {
 }
 
-FSvgRenderer * Wire::setUp(ViewLayer::ViewLayerID viewLayerID, const LayerHash &  viewLayers, InfoGraphicsView * infoGraphicsView ) {
+FSvgRenderer * Wire::setUp(ViewLayer::ViewLayerID viewLayerID, const LayerHash &  viewLayers, InfoGraphicsView * infoGraphicsView) {
 	ItemBase::setViewLayerID(viewLayerID, viewLayers);
 	FSvgRenderer * svgRenderer = setUpConnectors(m_modelPart, m_viewIdentifier);
 	if (svgRenderer != NULL) {
@@ -489,12 +489,12 @@ void Wire::setExtras(QDomElement & element, InfoGraphicsView * infoGraphicsView)
 	bool ok;
 	qreal w = element.attribute("width").toDouble(&ok);
 	if (ok) {
-		setWireWidth(w, infoGraphicsView);
+		setWireWidth(w, infoGraphicsView, infoGraphicsView->getWireStrokeWidth(w));
 	}
 	else {
 		w = element.attribute("mils").toDouble(&ok);
 		if (ok) {
-			setWireWidth(GraphicsUtils::mils2pixels(w, FSvgRenderer::printerScale()), infoGraphicsView);
+			setWireWidth(GraphicsUtils::mils2pixels(w, FSvgRenderer::printerScale()), infoGraphicsView, infoGraphicsView->getWireStrokeWidth(w));
 		}
 	}
 
@@ -875,11 +875,11 @@ const QColor & Wire::color() {
 	return m_pen.brush().color();
 }
 
-void Wire::setWireWidth(qreal width, InfoGraphicsView * infoGraphicsView) {
+void Wire::setWireWidth(qreal width, InfoGraphicsView * infoGraphicsView, qreal hoverStrokeWidth) {
 	if (m_pen.widthF() == width) return;
 
 	prepareGeometryChange();
-	setPenWidth(width, infoGraphicsView);
+	setPenWidth(width, infoGraphicsView, hoverStrokeWidth);
 	if (m_connector0) m_connector0->restoreColor(false, 0, false);
 	if (m_connector1) m_connector1->restoreColor(false, 0, false);
 	update();
@@ -1185,7 +1185,8 @@ void Wire::getConnectedColor(ConnectorItem * connectorItem, QBrush * &brush, QPe
 	}
 }
 
-void Wire::setPenWidth(qreal w, InfoGraphicsView * infoGraphicsView) {
+void Wire::setPenWidth(qreal w, InfoGraphicsView * infoGraphicsView, qreal hoverStrokeWidth) {
+	m_hoverStrokeWidth = hoverStrokeWidth;
 	m_pen.setWidthF(w);
 	infoGraphicsView->getBendpointWidths(this, w, m_bendpointWidth, m_bendpoint2Width, m_negativeOffsetRect);
 	m_bendpointPen.setWidthF(qAbs(m_bendpointWidth));

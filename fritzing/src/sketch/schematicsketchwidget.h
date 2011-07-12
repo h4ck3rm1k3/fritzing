@@ -72,7 +72,9 @@ public:
 	ViewGeometry::WireFlag getTraceFlag();
 	qreal getTraceWidth();
 	qreal getAutorouterTraceWidth();
+	qreal getTraceStrokeWidth(qreal width);
 	QString generateCopperFillUnit(ItemBase * itemBase, QPointF whereToStart);
+	qreal getWireStrokeWidth(qreal wireWidth);
 
 
 public slots:
@@ -91,6 +93,7 @@ protected:
 	void extraRenderSvgStep(ItemBase *, QPointF offset, qreal dpi, qreal printerScale, QString & outputSvg);
 	QString makeCircleSVG(QPointF p, qreal r, QPointF offset, qreal dpi, qreal printerScale);
 	ViewLayer::ViewLayerSpec createWireViewLayerSpec(ConnectorItem * from, ConnectorItem * to);
+
 
 protected:
 	QTimer m_updateDotsTimer;

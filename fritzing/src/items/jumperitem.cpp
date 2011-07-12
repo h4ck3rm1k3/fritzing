@@ -90,10 +90,10 @@ QPainterPath JumperItem::hoverShape() const
     p.lineTo(c1);
 	QPen pen = m_pen;
 	pen.setWidthF(1.0);
-	QPainterPath pp = qt_graphicsItem_shapeFromPath(p, pen, 4);
+	QPainterPath pp = qt_graphicsItem_shapeFromPath(p, pen, 4 * pen.widthF());
 
 	QPainterPath path = makePath();
-    QPainterPath qq = qt_graphicsItem_shapeFromPath(path, m_pen, 4);
+    QPainterPath qq = qt_graphicsItem_shapeFromPath(path, m_pen, 4 * m_pen.widthF());
 	return qq.united(pp);
 }
 

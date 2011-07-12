@@ -61,6 +61,7 @@ $Date$
 #include <QPushButton>
 #include <QMessageBox>
 
+
 static const int MAX_INT = std::numeric_limits<int>::max();
 
 static QString PCBTraceColor1 = "trace1";
@@ -601,7 +602,7 @@ ViewLayer::ViewLayerID PCBSketchWidget::getWireViewLayerID(const ViewGeometry & 
 void PCBSketchWidget::initWire(Wire * wire, int penWidth) {
 	Q_UNUSED(penWidth);
 	wire->setColorString("black", 1.0);
-	wire->setPenWidth(1, this);
+	wire->setPenWidth(1, this, 2);
 }
 
 bool PCBSketchWidget::autorouteTypePCB() {
@@ -2677,4 +2678,13 @@ ViewLayer::ViewLayerSpec PCBSketchWidget::createWireViewLayerSpec(ConnectorItem 
 	}
 
 	return ViewLayer::UnknownSpec;
+}
+
+qreal PCBSketchWidget::getTraceStrokeWidth(qreal width) {
+	return getWireStrokeWidth(width);
+}
+
+qreal PCBSketchWidget::getWireStrokeWidth(qreal wireWidth)
+{
+	return wireWidth + 6;
 }

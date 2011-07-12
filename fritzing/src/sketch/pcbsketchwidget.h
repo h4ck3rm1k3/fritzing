@@ -93,9 +93,10 @@ public:
 	virtual qreal getAutorouterTraceWidth();
 	void getBendpointWidths(class Wire *, qreal w, qreal & w1, qreal & w2, bool & negativeOffsetRect);
 	qreal getSmallerTraceWidth(qreal minDim);
+	virtual qreal getTraceStrokeWidth(qreal width);
 	bool groundFill(QUndoCommand * parentCommand);
 	QString generateCopperFillUnit(ItemBase * itemBase, QPointF whereToStart);
-
+	qreal getWireStrokeWidth(qreal wireWidth);
 
 public:
 	static QSizeF jumperItemSize();
@@ -166,7 +167,6 @@ protected:
 	void clearSmdTraces(QList<ItemBase *> & smds, 	QList<Wire *> & already, QUndoCommand * parentCommand);
 	bool connectorItemHasSpec(ConnectorItem * connectorItem, ViewLayer::ViewLayerSpec spec);
 	ViewLayer::ViewLayerSpec createWireViewLayerSpec(ConnectorItem * from, ConnectorItem * to);
-
 
 signals:
 	void subSwapSignal(SketchWidget *, ItemBase *, ViewLayer::ViewLayerSpec, QUndoCommand * parentCommand);

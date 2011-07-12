@@ -91,7 +91,7 @@ TraceWire * Autorouter::drawOneTrace(QPointF fromPos, QPointF toPos, int width, 
 
 	m_sketchWidget->setClipEnds(traceWire, false);
 	traceWire->setColorString(m_sketchWidget->traceColor(viewLayerSpec), 1.0);
-	traceWire->setWireWidth(width, m_sketchWidget);
+	traceWire->setWireWidth(width, m_sketchWidget, m_sketchWidget->getTraceStrokeWidth(width));
 
 	return traceWire;
 }

@@ -125,8 +125,8 @@ public:
 	qreal opacity();
 	void setOpacity(qreal opacity);
 	const QColor & color();
-	void setWireWidth(qreal, InfoGraphicsView *);
-	void setPenWidth(qreal width, InfoGraphicsView *);
+	void setWireWidth(qreal width, InfoGraphicsView *, qreal hoverStrokeWidth);
+	void setPenWidth(qreal width, InfoGraphicsView *, qreal hoverStrokeWidth);
 	qreal width();
 	qreal mils();
 	void setExtras(QDomElement &, InfoGraphicsView *);

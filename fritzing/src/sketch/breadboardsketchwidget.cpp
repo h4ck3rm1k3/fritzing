@@ -34,6 +34,8 @@ $Date$
 
 #include <QScrollBar>
 
+static const qreal WireHoverStrokeFactor = 4.0;
+
 BreadboardSketchWidget::BreadboardSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent)
     : SketchWidget(viewIdentifier, parent)
 {
@@ -127,7 +129,7 @@ bool BreadboardSketchWidget::canDropModelPart(ModelPart * modelPart) {
 }
 
 void BreadboardSketchWidget::initWire(Wire * wire, int penWidth) {
-	wire->setPenWidth(penWidth - 2, this);
+	wire->setPenWidth(penWidth - 2, this, (penWidth - 2) * WireHoverStrokeFactor);
 	wire->setColorString("blue", 1.0);
 }
 
@@ -210,6 +212,13 @@ QPoint BreadboardSketchWidget::calcFixedToCenterItemOffset(const QRect & viewPor
 			 30);
 	return p;
 }
+
+qreal BreadboardSketchWidget::getWireStrokeWidth(qreal wireWidth)
+{
+	return wireWidth * WireHoverStrokeFactor;
+}
+
+
 
 /*
 

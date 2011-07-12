@@ -606,6 +606,7 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, ViewLayer::ViewLayerS
 	ItemBase * newItem = PartFactory::createPart(modelPart, viewLayerSpec, viewIdentifier, viewGeometry, id, m_itemMenu, m_wireMenu, true);
 	Wire * wire = dynamic_cast<Wire *>(newItem);
 	if (wire) {
+
 		bool ratsnest = viewGeometry.getRatsnest();
 		if (ratsnest) {
 			setClipEnds((ClipableWire *) wire, true);
@@ -5288,7 +5289,7 @@ void SketchWidget::changeWireWidth(long wireId, qreal width) {
 	ItemBase *item = findItem(wireId);
 	Wire* wire = dynamic_cast<Wire*>(item);
 	if (wire) {
-		wire->setWireWidth(width, this);
+		wire->setWireWidth(width, this, getWireStrokeWidth(width));
 		updateInfoView();
 	}
 }
@@ -7408,4 +7409,3 @@ void SketchWidget::setItemDropOffset(long id, QPointF offset)
 
 	itemBase->setDropOffset(offset);
 }
-
