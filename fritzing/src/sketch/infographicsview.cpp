@@ -299,7 +299,7 @@ void InfoGraphicsView::prepLegChange(ConnectorItem * from,  QLineF oldLine, QLin
 	Q_UNUSED(to);
 }
 
-qreal InfoGraphicsView::getWireStrokeWidth(qreal wireWidth)
+qreal InfoGraphicsView::getWireStrokeWidth(Wire *, qreal wireWidth)
 {
 	return wireWidth;
 }

@@ -95,7 +95,7 @@ public:
 	virtual const QString & filenameIf();
 	virtual QString generateCopperFillUnit(ItemBase * itemBase, QPointF whereToStart);
 	virtual void prepLegChange(ConnectorItem * from,  QLineF oldLine, QLineF newLine, ConnectorItem * to);
-	virtual qreal getWireStrokeWidth(qreal wireWidth);
+	virtual qreal getWireStrokeWidth(Wire *, qreal wireWidth);
 
 
 public slots:

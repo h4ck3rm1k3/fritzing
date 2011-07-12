@@ -72,9 +72,9 @@ public:
 	ViewGeometry::WireFlag getTraceFlag();
 	qreal getTraceWidth();
 	qreal getAutorouterTraceWidth();
-	qreal getTraceStrokeWidth(qreal width);
 	QString generateCopperFillUnit(ItemBase * itemBase, QPointF whereToStart);
-	qreal getWireStrokeWidth(qreal wireWidth);
+	qreal getWireStrokeWidth(Wire *, qreal wireWidth);
+	Wire * createTempWireForDragging(Wire * fromWire, ModelPart * wireModel, ConnectorItem * connectorItem, ViewGeometry & viewGeometry, ViewLayer::ViewLayerSpec);
 
 
 public slots:

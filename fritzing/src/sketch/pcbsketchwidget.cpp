@@ -64,6 +64,8 @@ $Date$
 
 static const int MAX_INT = std::numeric_limits<int>::max();
 
+const char * PCBSketchWidget::FakeTraceProperty = "FakeTrace";
+
 static QString PCBTraceColor1 = "trace1";
 static QString PCBTraceColor = "trace";
 
@@ -2404,7 +2406,7 @@ void PCBSketchWidget::changeTrace(Wire * wire, ConnectorItem * from, ConnectorIt
 		makeDeleteItemCommand(w, BaseCommand::CrossView, parentCommand);
 	}
 
-	parentCommand->setText(QObject::tr("delete trace").arg(wire->title()) );
+	parentCommand->setText(QObject::tr("delete trace %1").arg(wire->title()) );
 
 	new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
 	m_undoStack->push(parentCommand);
@@ -2680,11 +2682,48 @@ ViewLayer::ViewLayerSpec PCBSketchWidget::createWireViewLayerSpec(ConnectorItem 
 	return ViewLayer::UnknownSpec;
 }
 
-qreal PCBSketchWidget::getTraceStrokeWidth(qreal width) {
-	return getWireStrokeWidth(width);
+qreal PCBSketchWidget::getWireStrokeWidth(Wire * wire, qreal wireWidth)
+{
+	qreal w, h;
+	wire->originalConnectorDimensions(w, h);
+	if (wireWidth < Wire::STANDARD_TRACE_WIDTH) {
+		wire->setConnectorDimensions(qMin(w, wireWidth + 1.8), qMin(w, wireWidth + 1.8));
+	}
+	else {
+		wire->setConnectorDimensions(w, h);
+	}
+
+	return wireWidth + 6;
 }
 
-qreal PCBSketchWidget::getWireStrokeWidth(qreal wireWidth)
+Wire * PCBSketchWidget::createTempWireForDragging(Wire * fromWire, ModelPart * wireModel, ConnectorItem * connectorItem, ViewGeometry & viewGeometry, ViewLayer::ViewLayerSpec spec) 
 {
-	return wireWidth + 6;
+	if (spec == ViewLayer::UnknownSpec) {
+		spec = wireViewLayerSpec(connectorItem);
+	}
+	Wire * wire =  SketchWidget::createTempWireForDragging(fromWire, wireModel, connectorItem, viewGeometry, spec);
+	if (fromWire == NULL) {
+		viewGeometry.setTrace(true);
+		wire->setColorString(traceColor(connectorItem), 1.0);
+		qreal traceWidth = getTraceWidth();
+		qreal minDim = connectorItem->minDimension();
+		if (minDim < traceWidth) {
+			traceWidth = getSmallerTraceWidth(minDim);  
+		}
+		wire->setWireWidth(traceWidth, this, getWireStrokeWidth(wire, traceWidth));
+		wire->setProperty(FakeTraceProperty, true);
+	}
+	else {
+		wire->setColorString(fromWire->colorString(), fromWire->opacity());
+		wire->setWireWidth(fromWire->width(), this, fromWire->hoverStrokeWidth());
+	}
+
+	return wire;
+}
+
+void PCBSketchWidget::prereleaseTempWireForDragging(Wire* wire)
+{
+	if (wire->property(PCBSketchWidget::FakeTraceProperty).toBool()) {
+		wire->setFlags(0);
+	}
 }

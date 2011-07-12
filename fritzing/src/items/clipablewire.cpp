@@ -158,24 +158,30 @@ const QLineF & ClipableWire::getPaintLine() {
 		return m_cachedLine;
 	}
 
+	int t0c = 0;
 	ConnectorItem* to0 = NULL;
 	foreach (ConnectorItem * toConnectorItem, m_connector0->connectedToItems()) {
 		if (toConnectorItem->attachedToItemType() != ModelPart::Wire) {
 			to0 = toConnectorItem;
 			break;
 		}
+		t0c++;
 	}
 
+	int t1c = 0;
 	ConnectorItem* to1 = NULL;
 	foreach (ConnectorItem * toConnectorItem, m_connector1->connectedToItems()) {
 		if (toConnectorItem->attachedToItemType() != ModelPart::Wire) {
 			to1 = toConnectorItem;
 			break;
 		}
+		t1c++;
 	}
 
-	if (to0 == NULL && to1 == NULL) {
-		// no need to clip; get out
+	if ((to0 == NULL && to1 == NULL) ||		// no need to clip an unconnected wire
+		(to0 == NULL && t0c == 0) ||		// dragging out a wire, no need to clip
+		(to1 == NULL && t1c == 0))			// dragging out a wire, no need to clip
+	{
 		return Wire::getPaintLine();
 	}
 

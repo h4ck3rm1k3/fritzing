@@ -2601,7 +2601,7 @@ void CMRouter::addToUndo(QUndoCommand * parentCommand)
 			m_sketchWidget->setClipEnds(wire, true);
 			wire->update();
 			if (wire->getAutoroutable()) {
-				wire->setWireWidth(StandardWireWidth, m_sketchWidget, m_sketchWidget->getTraceStrokeWidth(StandardWireWidth));
+				wire->setWireWidth(StandardWireWidth, m_sketchWidget, m_sketchWidget->getWireStrokeWidth(wire, StandardWireWidth));
 			}
 			addWireToUndo(wire, parentCommand);
 			wires.append(wire);

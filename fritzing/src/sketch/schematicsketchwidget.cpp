@@ -400,10 +400,6 @@ qreal SchematicSketchWidget::getAutorouterTraceWidth() {
 	return getTraceWidth();
 }
 
-qreal SchematicSketchWidget::getTraceStrokeWidth(qreal width) {
-	return width * TraceHoverStrokeFactor;
-}
-
 void SchematicSketchWidget::extraRenderSvgStep(ItemBase * itemBase, QPointF offset, qreal dpi, qreal printerScale, QString & outputSvg)
 {
 	TraceWire * traceWire = dynamic_cast<TraceWire *>(itemBase);
@@ -444,7 +440,22 @@ ViewLayer::ViewLayerSpec SchematicSketchWidget::createWireViewLayerSpec(Connecto
 	return SketchWidget::createWireViewLayerSpec(from, to);
 }
 
-qreal SchematicSketchWidget::getWireStrokeWidth(qreal wireWidth)
+qreal SchematicSketchWidget::getWireStrokeWidth(Wire *, qreal wireWidth)
 {
 	return wireWidth * TraceHoverStrokeFactor;
 }
+
+Wire * SchematicSketchWidget::createTempWireForDragging(Wire * fromWire, ModelPart * wireModel, ConnectorItem * connectorItem, ViewGeometry & viewGeometry, ViewLayer::ViewLayerSpec spec) 
+{
+	Wire * wire =  SketchWidget::createTempWireForDragging(fromWire, wireModel, connectorItem, viewGeometry, spec);
+	if (fromWire) {
+		wire->setColorString(fromWire->colorString(), fromWire->opacity());
+	}
+	else {
+		wire->setProperty(PCBSketchWidget::FakeTraceProperty, true);
+		viewGeometry.setSchematicTrace(true);
+		wire->setColorString(traceColor(connectorItem), 1.0);
+	}
+	return wire;
+}
+

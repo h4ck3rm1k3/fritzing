@@ -267,6 +267,10 @@ void Wire::initDragEnd(ConnectorItem * connectorItem, QPointF scenePos) {
 	if (m_drag0) {
 		m_wireDragOrigin = line.p2();
  		//DebugDialog::debug(QString("drag near origin %1 %2").arg(m_wireDragOrigin.x()).arg(m_wireDragOrigin.y()) );
+		if (line.length() == 0) {
+			m_drag0 = false;
+			connectorItem = this->otherConnector(connectorItem);
+		}
 	}
 	else {
 		m_wireDragOrigin = line.p1();
@@ -322,16 +326,8 @@ void Wire::mouseMoveEventAux(QPointF eventPos, bool shiftModifier) {
 	}
 
 	if (shiftModifier) {
-		QPointF initialPos = mapFromScene(otherConnectorItem->sceneAdjustedTerminalPoint(NULL));  
-		bool bendpoint = whichConnectorItem->connectionsCount() > 0;
-		if (bendpoint) {
-			foreach (ConnectorItem * ci, whichConnectorItem->connectedToItems()) {
-				if (ci->attachedToItemType() != ModelPart::Wire) {
-					bendpoint = false;
-					break;
-				}
-			}
-		}
+		QPointF initialPos = mapFromScene(otherConnectorItem->sceneAdjustedTerminalPoint(NULL)); 
+		bool bendpoint = isBendpoint(whichConnectorItem);
 		if (bendpoint) {
 			bendpoint = false;
 			foreach (ConnectorItem * ci, whichConnectorItem->connectedToItems()) {
@@ -363,18 +359,26 @@ void Wire::mouseMoveEventAux(QPointF eventPos, bool shiftModifier) {
 
 	}
 
-	QPointF temp = this->mapToScene(eventPos);
-	//DebugDialog::debug(QString("wire move event %1,%2  %3").arg(temp.x()).arg(temp.y()).arg(m_drag0));
-
-
 	if (m_drag0) {
-		QPointF r = this->mapToScene(eventPos);
-		QGraphicsSvgItem::setPos(r.x(), r.y());
-		this->setLine(0, 0, m_wireDragOrigin.x() - r.x() + m_viewGeometry.loc().x(),
-							m_wireDragOrigin.y() - r.y() + m_viewGeometry.loc().y() );
+		QPointF p = this->mapToScene(eventPos);
+		QGraphicsSvgItem::setPos(p.x(), p.y());
+		this->setLine(0, 0, m_wireDragOrigin.x() - p.x() + m_viewGeometry.loc().x(),
+							m_wireDragOrigin.y() - p.y() + m_viewGeometry.loc().y() );
+		//DebugDialog::debug(QString("drag0 wdo:(%1,%2) p:(%3,%4) vg:(%5,%6) l:(%7,%8)")
+		//			.arg(m_wireDragOrigin.x()).arg(m_wireDragOrigin.y())
+		//			.arg(p.x()).arg(p.y())
+		//			.arg(m_viewGeometry.loc().x()).arg(m_viewGeometry.loc().y())
+		//			.arg(line().p2().x()).arg(line().p2().y())
+		//	);
 	}
 	else {
 		this->setLine(m_wireDragOrigin.x(), m_wireDragOrigin.y(), eventPos.x(), eventPos.y());
+		//DebugDialog::debug(QString("drag1 wdo:(%1,%2) ep:(%3,%4) p:(%5,%6) l:(%7,%8)")
+		//			.arg(m_wireDragOrigin.x()).arg(m_wireDragOrigin.y())
+		//			.arg(eventPos.x()).arg(eventPos.y())
+		//			.arg(pos().x()).arg(pos().y())
+		//			.arg(line().p2().x()).arg(line().p2().y())
+		//	);
 	}
 	setConnector1Rect();
 
@@ -489,12 +493,13 @@ void Wire::setExtras(QDomElement & element, InfoGraphicsView * infoGraphicsView)
 	bool ok;
 	qreal w = element.attribute("width").toDouble(&ok);
 	if (ok) {
-		setWireWidth(w, infoGraphicsView, infoGraphicsView->getWireStrokeWidth(w));
+		setWireWidth(w, infoGraphicsView, infoGraphicsView->getWireStrokeWidth(this, w));
 	}
 	else {
 		w = element.attribute("mils").toDouble(&ok);
 		if (ok) {
-			setWireWidth(GraphicsUtils::mils2pixels(w, FSvgRenderer::printerScale()), infoGraphicsView, infoGraphicsView->getWireStrokeWidth(w));
+			qreal wpix = GraphicsUtils::mils2pixels(w, FSvgRenderer::printerScale());
+			setWireWidth(wpix, infoGraphicsView, infoGraphicsView->getWireStrokeWidth(this, wpix));
 		}
 	}
 
@@ -710,6 +715,7 @@ FSvgRenderer * Wire::setUpConnectors(ModelPart * modelPart, ViewIdentifierClass:
 		ConnectorItem * connectorItem = newConnectorItem(connector);
 		connectorItem->setRect(svgIdLayer->m_rect);
 		connectorItem->setTerminalPoint(svgIdLayer->m_point);
+		m_originalConnectorRect = svgIdLayer->m_rect;
 
 		connectorItem->setCircular(true);
 		//DebugDialog::debug(QString("terminal point %1 %2").arg(terminalPoint.x()).arg(terminalPoint.y()) );
@@ -1341,4 +1347,40 @@ void Wire::addedToScene(bool temporary) {
 	if (!succeeded) {
 		DebugDialog::debug("wire signal connect failed");
 	}
+}
+
+void Wire::setConnectorDimensions(qreal width, qreal height) 
+{
+	setConnectorDimensionsAux(connector0(), width, height);
+	setConnectorDimensionsAux(connector1(), width, height);
+}
+
+void Wire::setConnectorDimensionsAux(ConnectorItem * connectorItem, qreal width, qreal height) 
+{
+	QPointF p = connectorItem->rect().center();
+	QRectF r(p.x() - (width / 2), p.y() - (height / 2), width, height);
+	connectorItem->setRect(r);
+	connectorItem->setTerminalPoint(r.center() - r.topLeft());
+}
+
+void Wire::originalConnectorDimensions(qreal & width, qreal & height) 
+{
+	width = m_originalConnectorRect.width();
+	height = m_originalConnectorRect.height();
+}
+
+bool Wire::isBendpoint(ConnectorItem * connectorItem) {
+	if (connectorItem->connectionsCount() == 0) return false;
+
+	foreach (ConnectorItem * ci, connectorItem->connectedToItems()) {
+		if (ci->attachedToItemType() != ModelPart::Wire) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+qreal Wire::hoverStrokeWidth() {
+	return m_hoverStrokeWidth;
 }

@@ -401,6 +401,9 @@ protected:
 	virtual void changeTrace(Wire * wire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand);
 	virtual void extraRenderSvgStep(ItemBase *, QPointF offset, qreal dpi, qreal printerScale, QString & outputSvg);
 	virtual ViewLayer::ViewLayerSpec createWireViewLayerSpec(ConnectorItem * from, ConnectorItem * to);
+	virtual Wire * createTempWireForDragging(Wire * fromWire, ModelPart * wireModel, ConnectorItem * connectorItem, ViewGeometry & viewGeometry, ViewLayer::ViewLayerSpec);
+	virtual void prereleaseTempWireForDragging(Wire*);
+
 
 protected:
 	static bool lessThan(int a, int b);

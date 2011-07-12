@@ -2421,10 +2421,8 @@ void SketchWidget::prepDragBendpoint(Wire * wire, QPoint eventPos)
 	vg.setLoc(newPos);
 	QLineF newLine2(QPointF(0,0), oldLine.p2() + oldPos - newPos);
 	vg.setLine(newLine2);
-	long newID = ItemBase::getNextID();
 	ConnectorItem * oldConnector1 = wire->connector1();
-
-	m_connectorDragWire = dynamic_cast<Wire *>(addItemAuxTemp(wire->modelPart(), wire->viewLayerSpec(), vg, newID, NULL, true, m_viewIdentifier, true));
+	m_connectorDragWire = this->createTempWireForDragging(wire, wire->modelPart(), oldConnector1, vg, wire->viewLayerSpec());
 	ConnectorItem * newConnector1 = m_connectorDragWire->connector1();
 	foreach (ConnectorItem * toConnectorItem, oldConnector1->connectedToItems()) {
 		oldConnector1->tempRemove(toConnectorItem, false);
@@ -3219,6 +3217,7 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 
 void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, ConnectorItem * to)
 {
+	prereleaseTempWireForDragging(m_connectorDragWire);
 	BaseCommand::CrossViewType crossViewType = BaseCommand::CrossView;
 	if (m_bendpointWire) {
 		crossViewType = BaseCommand::SingleView;
@@ -3802,6 +3801,7 @@ void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGrap
 	m_tempDragWireCommand = m_holdingSelectItemCommand;
 	m_holdingSelectItemCommand = NULL;
 	clearHoldingSelectItem();
+	
 
 	// make sure wire layer is visible
 	ViewLayer::ViewLayerID viewLayerID = getDragWireViewLayerID(connectorItem);
@@ -3810,15 +3810,14 @@ void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGrap
 		setLayerVisible(viewLayer, true);
 	}
 
-   	ViewGeometry viewGeometry;
+
+	ViewGeometry viewGeometry;
    	QPointF p = QPointF(connectorItem->mapToScene(event->pos()));
    	viewGeometry.setLoc(p);
 	viewGeometry.setLine(QLineF(0,0,0,0));
 
-	// create a temporary wire for the user to drag
 	m_connectorDragConnector = connectorItem;
-	ViewLayer::ViewLayerSpec viewLayerSpec = wireViewLayerSpec(connectorItem);
-	m_connectorDragWire = dynamic_cast<Wire *>(addItemAuxTemp(wireModel, viewLayerSpec, viewGeometry, ItemBase::getNextID(), NULL, true, m_viewIdentifier, true));
+	m_connectorDragWire = createTempWireForDragging(NULL, wireModel, connectorItem, viewGeometry, ViewLayer::UnknownSpec);
 	if (m_connectorDragWire == NULL) {
 		clearDragWireTempCommand();
 		return;
@@ -5289,7 +5288,7 @@ void SketchWidget::changeWireWidth(long wireId, qreal width) {
 	ItemBase *item = findItem(wireId);
 	Wire* wire = dynamic_cast<Wire*>(item);
 	if (wire) {
-		wire->setWireWidth(width, this, getWireStrokeWidth(width));
+		wire->setWireWidth(width, this, getWireStrokeWidth(wire, width));
 		updateInfoView();
 	}
 }
@@ -7408,4 +7407,17 @@ void SketchWidget::setItemDropOffset(long id, QPointF offset)
 	if (itemBase == NULL) return;
 
 	itemBase->setDropOffset(offset);
+}
+
+Wire * SketchWidget::createTempWireForDragging(Wire * fromWire, ModelPart * wireModel, ConnectorItem * connectorItem, ViewGeometry & viewGeometry, ViewLayer::ViewLayerSpec spec) 
+{
+	Q_UNUSED(fromWire);
+	if (spec == ViewLayer::UnknownSpec) {
+		spec = wireViewLayerSpec(connectorItem);
+	}
+	return dynamic_cast<Wire *>(addItemAuxTemp(wireModel, spec, viewGeometry, ItemBase::getNextID(), NULL, true, m_viewIdentifier, true));
+}
+
+void SketchWidget::prereleaseTempWireForDragging(Wire*)
+{
 }

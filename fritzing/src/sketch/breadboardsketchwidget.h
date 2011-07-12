@@ -44,7 +44,7 @@ public:
 	bool ignoreFemale();
 	void addDefaultParts();
 	void showEvent(QShowEvent * event);
-	qreal getWireStrokeWidth(qreal wireWidth);
+	qreal getWireStrokeWidth(Wire *, qreal wireWidth);
 
 protected:
 	void setWireVisible(Wire * wire);

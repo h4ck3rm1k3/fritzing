@@ -213,7 +213,7 @@ QPoint BreadboardSketchWidget::calcFixedToCenterItemOffset(const QRect & viewPor
 	return p;
 }
 
-qreal BreadboardSketchWidget::getWireStrokeWidth(qreal wireWidth)
+qreal BreadboardSketchWidget::getWireStrokeWidth(Wire *, qreal wireWidth)
 {
 	return wireWidth * WireHoverStrokeFactor;
 }

@@ -147,6 +147,9 @@ public:
 	bool rotationAllowed();
 	bool rotation45Allowed();
 	void addedToScene(bool temporary);
+	void setConnectorDimensions(qreal width, qreal height);
+	void originalConnectorDimensions(qreal & width, qreal & height);
+	qreal hoverStrokeWidth();
 
 protected slots:
 	void colorEntry(const QString & text);
@@ -191,6 +194,8 @@ protected:
 	void setIgnoreSelectionChange(bool);
 	virtual void setColorFromElement(QDomElement & element);
 	void checkVisibility(ConnectorItem * onMe, ConnectorItem * onIt, bool connect);
+	void setConnectorDimensionsAux(ConnectorItem *, qreal width, qreal height);
+	bool isBendpoint(ConnectorItem * connectorItem);
 
 protected:
 	QPointF m_wireDragOrigin;
@@ -211,6 +216,7 @@ protected:
 	bool m_canChainMultiple;
 	bool m_ignoreSelectionChange;
 	bool m_markedDeleted;
+	QRectF m_originalConnectorRect;
 
 public:
 	static QStringList colorNames;
