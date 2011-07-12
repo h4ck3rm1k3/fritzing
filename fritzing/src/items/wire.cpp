@@ -267,10 +267,6 @@ void Wire::initDragEnd(ConnectorItem * connectorItem, QPointF scenePos) {
 	if (m_drag0) {
 		m_wireDragOrigin = line.p2();
  		//DebugDialog::debug(QString("drag near origin %1 %2").arg(m_wireDragOrigin.x()).arg(m_wireDragOrigin.y()) );
-		if (line.length() == 0) {
-			m_drag0 = false;
-			connectorItem = this->otherConnector(connectorItem);
-		}
 	}
 	else {
 		m_wireDragOrigin = line.p1();

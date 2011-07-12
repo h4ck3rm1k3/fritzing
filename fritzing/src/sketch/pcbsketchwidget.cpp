@@ -2701,9 +2701,9 @@ Wire * PCBSketchWidget::createTempWireForDragging(Wire * fromWire, ModelPart * w
 	if (spec == ViewLayer::UnknownSpec) {
 		spec = wireViewLayerSpec(connectorItem);
 	}
+	viewGeometry.setTrace(true);
 	Wire * wire =  SketchWidget::createTempWireForDragging(fromWire, wireModel, connectorItem, viewGeometry, spec);
 	if (fromWire == NULL) {
-		viewGeometry.setTrace(true);
 		wire->setColorString(traceColor(connectorItem), 1.0);
 		qreal traceWidth = getTraceWidth();
 		qreal minDim = connectorItem->minDimension();
@@ -2724,6 +2724,7 @@ Wire * PCBSketchWidget::createTempWireForDragging(Wire * fromWire, ModelPart * w
 void PCBSketchWidget::prereleaseTempWireForDragging(Wire* wire)
 {
 	if (wire->property(PCBSketchWidget::FakeTraceProperty).toBool()) {
-		wire->setFlags(0);
+		// make it not look like a trace, or modifyNewWireConnections will create the wrong kind of wire
+		wire->setWireFlags(0);
 	}
 }
