@@ -70,7 +70,8 @@ void VersionChecker::readData(const QHttpResponseHeader &resp)
 		return;
 	}
 
-    m_xml.addData(m_http.readAll());
+	QString temp = m_http.readAll();
+    m_xml.addData(temp);
     parseXml();
 }
 

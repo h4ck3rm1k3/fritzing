@@ -91,6 +91,8 @@ enum ConnectionStatus {
 	UNDETERMINED_
 };
 
+static const qreal CloseEnough = 0.5;  // in pixels, for swapping into the breadboard
+
 QHash<ViewIdentifierClass::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
 
 const int SketchWidget::MoveAutoScrollThreshold = 5;
@@ -5067,10 +5069,24 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 	QList<ConnectorItem *> notFound;
 	QList<ConnectorItem *> other;
 	QHash<ConnectorItem *, Connector *> found;
+	QHash<ConnectorItem *, ConnectorItem *> m2f;
 
 	foreach (ConnectorItem * fromConnectorItem, fromConnectorItems) {
 		QList<Connector *> candidates;
 		Connector * newConnector = NULL;
+
+		if (fromConnectorItem->connectorType() == Connector::Male) {
+			foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
+				if (toConnectorItem->connectorType() == Connector::Female) {
+					m2f.insert(fromConnectorItem, toConnectorItem);
+					break;
+				}
+			}
+		}
+
+		// matching by connectorid can lead to weird results because these all just usually count up from zero
+		// so only match by name and description (the latter is a bit of a hail mary)
+
 		QString fromName = fromConnectorItem->connectorSharedName();
 		QString fromDescription = fromConnectorItem->connectorSharedDescription();
 		foreach (Connector * connector, newConnectors) {
@@ -5091,11 +5107,6 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 		}
 
 		if (candidates.count() > 0) {
-			// TODO: check distances (for capacitors, for example)
-			//			use preloadSlowParts code to set up new connectors (which layers?)
-			//			skip breadboards, skip gender changes
-			//			only look at connectors with direct m/f connections
-			//			only care about single parts,
 			newConnector = candidates[0];
 			if (candidates.count() > 1) {
 				foreach (Connector * connector, candidates) {
@@ -5120,17 +5131,10 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 		}
 	}
 
-	// matching by connectorid only can lead to weird results, so commenting out this section
-	/*
-	foreach (ConnectorItem * fromConnectorItem, notFound) {
-		foreach (Connector * connector, newConnectors) {
-			if (fromConnectorItem->connectorSharedID().compare(connector->connectorSharedID(), Qt::CaseInsensitive) == 0) {	
-				newConnectors.removeOne(connector);
-				found.insert(fromConnectorItem, connector);
-			}
-		}
+	QHash<ConnectorItem *, Connector *> byWire;
+	if (master && m2f.count() > 0 && (m_viewIdentifier == ViewIdentifierClass::BreadboardView)) {
+		checkFit(newModelPart, itemBase, newID, found, notFound, m2f, byWire, parentCommand);
 	}
-	*/
 
 	fromConnectorItems.append(other);
 	foreach (ConnectorItem * fromConnectorItem, fromConnectorItems) {
@@ -5146,8 +5150,8 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 										false, parentCommand);
 
 			bool cleanup = false;
-			if (newConnector && swappedGender(fromConnectorItem, newConnector)) {
-				cleanup = toConnectorItem->connectorType() == newConnector->connectorType();
+			if (newConnector) {
+				cleanup = (byWire.value(fromConnectorItem, NULL) == newConnector) || swappedGender(fromConnectorItem, newConnector);
 			}
 			if ((newConnector == NULL) || cleanup) {
 					// clean up after disconnect
@@ -5177,6 +5181,163 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 			}
 		}
 	}
+}
+
+void SketchWidget::checkFit(ModelPart * newModelPart, ItemBase * itemBase, long newID,
+							QHash<ConnectorItem *, Connector *> & found, QList<ConnectorItem *> & notFound,
+							QHash<ConnectorItem *, ConnectorItem *> & m2f, QHash<ConnectorItem *, Connector *> & byWire, 
+							QUndoCommand * parentCommand)
+{
+	if (found.count() == 0) return;
+
+	ItemBase * tempItemBase = addItemAuxTemp(newModelPart, itemBase->viewLayerSpec(), itemBase->getViewGeometry(), newID, NULL, true, m_viewIdentifier, true);
+	if (tempItemBase == NULL) return;			// we're really screwed 
+
+	QPointF foundAnchor(std::numeric_limits<int>::max(), std::numeric_limits<int>::max());
+	QPointF newAnchor(std::numeric_limits<int>::max(), std::numeric_limits<int>::max());
+	QHash<ConnectorItem *, QPointF> foundPoints;
+	QHash<ConnectorItem *, QPointF> newPoints;
+	QHash<ConnectorItem *, ConnectorItem *> foundNews;
+	QList<ConnectorItem *> removeFromFound;
+	QList<ConnectorItem *> newConnectorItems;
+	tempItemBase->collectConnectors(newConnectorItems);
+
+	foreach (ConnectorItem * foundConnectorItem, found.keys()) {
+		if (!m2f.value(foundConnectorItem, false)) {
+			// we only care about replacing the female connectors here
+
+			continue;
+		}
+
+		Connector * connector = found.value(foundConnectorItem);
+		ConnectorItem * newConnectorItem = NULL;
+		foreach (ConnectorItem * nci, newConnectorItems) {
+			if (nci->connector()->connectorShared() == connector->connectorShared()) {
+				newConnectorItem = nci;
+				break;
+			}
+		}
+		if (newConnectorItem == NULL) {
+			removeFromFound.append(foundConnectorItem);
+		}
+		else {
+			foundNews.insert(foundConnectorItem, newConnectorItem);
+
+			QPointF lastNew = newConnectorItem->sceneAdjustedTerminalPoint(NULL);
+			if (lastNew.x() < newAnchor.x()) newAnchor.setX(lastNew.x());
+			if (lastNew.y() < newAnchor.y()) newAnchor.setY(lastNew.y());
+			newPoints.insert(newConnectorItem, lastNew);
+			QPointF lastFound = foundConnectorItem->sceneAdjustedTerminalPoint(NULL);
+			if (lastFound.x() < foundAnchor.x()) foundAnchor.setX(lastFound.x());
+			if (lastFound.y() < foundAnchor.y()) foundAnchor.setY(lastFound.y());
+			foundPoints.insert(foundConnectorItem, lastFound);
+		}
+	}
+
+	foreach (ConnectorItem * connectorItem, removeFromFound) {
+		found.remove(connectorItem);
+		notFound.append(connectorItem);
+	}
+
+	if (found.count() == 0) {
+		delete tempItemBase;
+		return;
+	}
+
+	bool allCorrespond = true;
+	foreach (ConnectorItem * foundConnectorItem, foundNews.keys()) {
+		QPointF fp = foundPoints.value(foundConnectorItem) - foundAnchor;
+		QPointF np = newPoints.value(foundNews.value(foundConnectorItem)) - newAnchor;
+		if (qAbs(fp.x() - np.x()) >= CloseEnough || qAbs(fp.y() - np.y()) >= CloseEnough) {
+			// pins can be off by a little
+			// but if even one connector is out of place, hook everything up by wires
+			allCorrespond = false;
+			break;
+		}
+	}
+
+	if (allCorrespond) {
+		if (newConnectorItems.count() == found.count()) {
+			// it's a clean swap: all connectors line up
+			delete tempItemBase;
+			return;
+		}
+	}
+
+	// there's a mismatch in terms of connector count between the swaps, 
+	// so make sure all target connections are open or to be swapped out
+	// establish the location of the new item's connectors
+
+	QHash<ConnectorItem *, ConnectorItem *> newConnections;
+
+	if (allCorrespond) {
+		QList<ConnectorItem *> alreadyFits = foundNews.values();
+		foreach (ConnectorItem * nci, newConnectorItems) {
+			if (alreadyFits.contains(nci)) continue;
+			if (nci->connectorType() != Connector::Male) continue;
+
+			// TODO: this doesn't handle all scenarios.  For example, if a part with a female connector is
+			// on top of the breadboard
+
+			QPointF p = nci->sceneAdjustedTerminalPoint(NULL) - newAnchor + foundAnchor;			// eventual position of this new connector
+			ConnectorItem * connectorUnder = NULL;
+			foreach (QGraphicsItem * item, scene()->items(p)) {
+				ConnectorItem * cu = dynamic_cast<ConnectorItem *>(item);
+				if (cu == NULL || cu == nci || cu->attachedTo() == itemBase || cu->connectorType() != Connector::Female) {
+					continue;
+				}
+
+				connectorUnder = cu;
+				break;
+			}
+
+			if (connectorUnder == NULL) {
+				// safe?
+				continue;
+			}
+
+			foreach (ConnectorItem * uct, connectorUnder->connectedToItems()) {
+				if (uct->attachedTo() == itemBase) {
+					// we're safe, itemBase is swapping out
+					continue;
+				}
+
+				// some other part is in the way
+				allCorrespond = false;
+				break;
+			}
+
+			if (!allCorrespond) break;
+
+			newConnections.insert(nci, connectorUnder);			// add a new direct connection
+
+		}
+	}
+
+	if (allCorrespond) {
+		// the extra new connectors will also fit
+		foreach (ConnectorItem * nci, newConnections.keys()) {
+			ConnectorItem * toConnectorItem = newConnections.value(nci);
+			new ChangeConnectionCommand(this, BaseCommand::CrossView,
+									newID, nci->connectorSharedID(),
+									toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
+									ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
+									true, parentCommand);
+
+
+
+		}
+
+		delete tempItemBase;
+		return;
+	}
+
+	// have to replace each found value with a wire
+	foreach (ConnectorItem * fci, found.keys()) {
+		byWire.insert(fci, found.value(fci));
+	}
+
+	delete tempItemBase;	
 }
 
 void SketchWidget::changeWireColor(const QString newColor)
