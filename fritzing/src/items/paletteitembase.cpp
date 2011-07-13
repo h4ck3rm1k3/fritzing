@@ -312,13 +312,13 @@ void PaletteItemBase::setUpConnectors(FSvgRenderer * renderer, bool ignoreTermin
 
 		SvgIdLayer * svgIdLayer = connector->fullPinInfo(m_viewIdentifier, m_viewLayerID);
 		if (svgIdLayer == NULL) {
-			DebugDialog::debug("svgidlayer fail");
+			DebugDialog::debug(QString("svgidlayer fail %1 vid:%2 vlid:%3").arg(connector->connectorSharedID(), m_viewIdentifier, m_viewLayerID));
 			continue;
 		}
 
 		bool result = renderer->setUpConnector(svgIdLayer, ignoreTerminalPoints);
 		if (!result) {
-			DebugDialog::debug("setup connector fail");
+			DebugDialog::debug(QString("setup connector fail %1 vid:%2 vlid:%3").arg(connector->connectorSharedID(), m_viewIdentifier, m_viewLayerID));
 			continue;
 		}
 

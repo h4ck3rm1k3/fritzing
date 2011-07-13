@@ -605,12 +605,12 @@ void PartsEditorView::loadFile() {
 		extras[1] = "*.mod";
 	}
 	else {
-		imageFiles = tr("Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3)");
+		imageFiles = tr("Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3)%4%5");
 	}
 
 	if (m_viewIdentifier == ViewIdentifierClass::SchematicView) {
 		extras[0] = "*.lib";
-		imageFiles = tr("Image & Footprint Files (%1 %2 %3 %4);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3);;Kicad Schematic Files (%4)");   // 
+		imageFiles = tr("Image & Footprint Files (%1 %2 %3 %4);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3);;Kicad Schematic Files (%4)%5");   // 
 	}
 
 	QString origPath = FolderUtils::getOpenFileName(this,
