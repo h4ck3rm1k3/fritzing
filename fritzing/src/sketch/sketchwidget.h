@@ -403,7 +403,7 @@ protected:
 	virtual ViewLayer::ViewLayerSpec createWireViewLayerSpec(ConnectorItem * from, ConnectorItem * to);
 	virtual Wire * createTempWireForDragging(Wire * fromWire, ModelPart * wireModel, ConnectorItem * connectorItem, ViewGeometry & viewGeometry, ViewLayer::ViewLayerSpec);
 	virtual void prereleaseTempWireForDragging(Wire*);
-	void SketchWidget::checkFit(ModelPart * newModelPart, ItemBase * itemBase, long newID,
+	void checkFit(ModelPart * newModelPart, ItemBase * itemBase, long newID,
 								QHash<ConnectorItem *, Connector *> & found, QList<ConnectorItem *> & notFound,
 								QHash<ConnectorItem *, ConnectorItem *> & m2f, QHash<ConnectorItem *, Connector *> & byWire,
 								QUndoCommand * parentCommand);
