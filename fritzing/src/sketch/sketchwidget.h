@@ -326,7 +326,7 @@ protected:
 	void addViewLayersAux(const LayerList &layers, float startZ = 1.5);
 	void tempConnectWire(Wire * wire, ConnectorItem * from, ConnectorItem * to);
 	void rotateFlip(qreal degrees, Qt::Orientations orientation);
-	virtual bool disconnectFromFemale(ItemBase * item, QHash<long, ItemBase *> & savedItems, ConnectorPairHash &, bool doCommand, QUndoCommand * parentCommand);
+	virtual bool disconnectFromFemale(ItemBase * item, QHash<long, ItemBase *> & savedItems, ConnectorPairHash &, bool doCommand, bool disconnectBendable, QUndoCommand * parentCommand);
 	void clearDragWireTempCommand();
 	bool draggingWireEnd();
 	void moveItems(QPoint globalPos, bool checkAutoScroll);

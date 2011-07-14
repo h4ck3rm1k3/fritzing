@@ -163,25 +163,6 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	m_partVersion->setObjectName("infoViewPartTitle");
 	hboxLayout->addWidget(m_partVersion);
 	
-	m_locationUnits = NULL;
-	m_location = NULL;
-
-	/*
-	hboxLayout->addSpacing(20);
-	
-	m_locationUnits = new QComboBox();
-	m_location = new QLabel();
-
-	m_locationUnits->addItem("in");
-	m_locationUnits->addItem("mm");
-	m_locationUnits->setCurrentIndex(0);
-	m_locationUnits->setVisible(false);
-	hboxLayout->addWidget(m_locationUnits);
-
-	hboxLayout->addWidget(m_location);
-	connect(m_locationUnits, SIGNAL(currentIndexChanged(int)), this, SLOT(updateLocation()));
-	*/
-
 	hboxLayout->addSpacerItem(new QSpacerItem(IconSpace, 1, QSizePolicy::Expanding));
 	iconFrame->setLayout(hboxLayout);
 	vlo->addWidget(iconFrame);
@@ -386,7 +367,6 @@ void HtmlInfoView::appendWireStuff(Wire* wire, bool swappingEnabled) {
 
 	setUpTitle(wire);
 	setUpIcons(wire->modelPart());
-	setUpLocation(swappingEnabled ? wire : NULL);
 
 	displayProps(modelPart, wire, swappingEnabled);
 	addTags(modelPart);
@@ -406,8 +386,6 @@ void HtmlInfoView::appendItemStuff(ItemBase * itemBase, ModelPart * modelPart, b
 
 	setUpTitle(itemBase);
 	setUpIcons(modelPart);
-
-	setUpLocation(swappingEnabled ? itemBase : NULL);
 
 	QString nameString;
 	if (swappingEnabled) {
@@ -492,7 +470,6 @@ void HtmlInfoView::setNullContent()
 	displayProps(NULL, NULL, false);
 	addTags(NULL);
 	viewConnectorItemInfo(NULL);
-	setUpLocation(NULL);
 	m_connFrame->setVisible(false);
 	m_propFrame->setVisible(false);
 	m_proplabel->setVisible(false);
@@ -842,45 +819,6 @@ QPixmap * HtmlInfoView::getPixmap(ModelPart * modelPart, ViewIdentifierClass::Vi
 	m_pixmaps.insert(filename, pixmap);
 
 	return pixmap;
-}
-
-void HtmlInfoView::setUpLocation(ItemBase * itemBase) {
-	if (m_location == NULL) return;
-	if (m_locationUnits == NULL) return;
-
-	if (itemBase == NULL) {
-		m_location->setText("");
-		m_locationUnits->setVisible(false);
-		return;
-	}
-
-	m_locationUnits->setVisible(true);
-	QPointF p = itemBase->pos();
-	qreal x = p.x() / FSvgRenderer::printerScale();
-	qreal y = p.y() / FSvgRenderer::printerScale();
-
-	qreal units = (m_locationUnits->currentText().compare("in") == 0) ? 1.0 : 25.4;
-
-	if (itemBase->itemType() == ModelPart::Wire) {
-		Wire * wire = qobject_cast<Wire *>(itemBase);
-		QPointF q = p + wire->line().p2();
-		m_location->setText(tr("x:%1 %2\ny:%3 %4")
-			.arg(x * units, 0, 'f', 3)
-			.arg(q.x() * units / FSvgRenderer::printerScale(), 0, 'f', 3)
-			.arg(y * units, 0, 'f', 3)
-			.arg(q.y() * units / FSvgRenderer::printerScale(), 0, 'f', 3)
-		);
-		return;
-	}
-
-	m_location->setText(tr("x:%1\ny:%2")
-		.arg(x * units, 0, 'f', 3)
-		.arg(y * units, 0, 'f', 3)
-	);
-}
-
-void HtmlInfoView::updateLocation() {
-	setUpLocation(m_currentItem);
 }
 
 QHash<QString, QString> HtmlInfoView::getPartProperties(ModelPart * modelPart, ItemBase * itemBase, bool wantDebug, QStringList & keys) 

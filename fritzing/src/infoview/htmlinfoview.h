@@ -101,10 +101,6 @@ protected slots:
 	void instanceTitleLeave();
 	void instanceTitleEditable(bool editable);
 
-public slots:
-	void updateLocation();
-
-
 protected:
 	void appendStuff(ItemBase* item, bool swappingEnabled); //finds out if it's a wire or something else
 	void appendWireStuff(Wire* wire, bool swappingEnabled);
@@ -117,7 +113,6 @@ protected:
 	void setNullContent();
 	void setUpTitle(ItemBase *);
 	void setUpIcons(ModelPart *);
-	void setUpLocation(ItemBase *);
 	void addTags(ModelPart * modelPart);
 	void partTitle(const QString & title, const QString & version, const QString & url);
 	void displayProps(ModelPart * modelPart, ItemBase * itemBase, bool swappingEnabled);
@@ -140,8 +135,6 @@ protected:
 	QLabel * m_partTitle;
 	QLabel * m_partUrl;
 	QLabel * m_partVersion;
-	QLabel * m_location;
-	QComboBox * m_locationUnits;
 	QLabel * m_tagsTextLabel;
 	QLabel * m_connDescr;
 	QLabel * m_connName;

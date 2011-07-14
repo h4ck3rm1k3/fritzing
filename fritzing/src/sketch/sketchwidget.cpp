@@ -2547,9 +2547,6 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 
 	if (draggingWireEnd()) {
 		checkAutoscroll(event->globalPos());
-		if (m_infoView) {
-			m_infoView->updateLocation();
-		}
 	}
 
 		
@@ -2635,7 +2632,7 @@ void SketchWidget::moveItems(QPoint globalPos, bool checkAutoScrollFlag)
 			if (item->itemType() == ModelPart::Wire) continue;
 
 			//DebugDialog::debug(QString("disconnecting from female %1").arg(item->instanceTitle()));
-			disconnectFromFemale(item, m_savedItems, m_moveDisconnectedFromFemale, false, NULL);
+			disconnectFromFemale(item, m_savedItems, m_moveDisconnectedFromFemale, false, false, NULL);
 		}
 	}
 
@@ -2664,10 +2661,6 @@ void SketchWidget::moveItems(QPoint globalPos, bool checkAutoScrollFlag)
 
 	foreach (Wire * wire, m_savedWires.keys()) {
 		wire->simpleConnectedMoved(m_savedWires.value(wire));
-	}
-
-	if (m_infoView != NULL) {
-		m_infoView->updateLocation();
 	}
 
 	//DebugDialog::debug(QString("done move items %1").arg(QTime::currentTime().msec()) );
@@ -3883,7 +3876,7 @@ void SketchWidget::rotateX(qreal degrees)
 		if (itemBase->itemType() != ModelPart::Wire) {
 			itemBase->calcRotation(rotation, center, vg2);
 			ConnectorPairHash connectorHash;
-			disconnectFromFemale(itemBase, m_savedItems, connectorHash, true, parentCommand);
+			disconnectFromFemale(itemBase, m_savedItems, connectorHash, true, false, parentCommand);
 			new MoveItemCommand(this, itemBase->id(), vg1, vg1, true, parentCommand);
 			new RotateItemCommand(this, itemBase->id(), degrees, parentCommand);
 			new MoveItemCommand(this, itemBase->id(), vg2, vg2, true, parentCommand);
@@ -3995,7 +3988,7 @@ void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
 	QHash<long, ItemBase *> emptyList;			// emptylist is only used for a move command
 	ConnectorPairHash connectorHash;
 	foreach (ItemBase * item, targets) {
-		disconnectFromFemale(item, emptyList, connectorHash, true, parentCommand);
+		disconnectFromFemale(item, emptyList, connectorHash, true, false, parentCommand);
 
 		if (item->sticky()) {
 			//TODO: apply transformation to stuck items
@@ -5596,7 +5589,7 @@ void SketchWidget::changeWireFlags(long wireId, ViewGeometry::WireFlags wireFlag
 	}
 }
 
-bool SketchWidget::disconnectFromFemale(ItemBase * item, QHash<long, ItemBase *> & savedItems, ConnectorPairHash & connectorHash, bool doCommand, QUndoCommand * parentCommand)
+bool SketchWidget::disconnectFromFemale(ItemBase * item, QHash<long, ItemBase *> & savedItems, ConnectorPairHash & connectorHash, bool doCommand, bool disconnectBendable, QUndoCommand * parentCommand)
 {
 	// schematic and pcb view connections are always via wires so this is a no-op.  breadboard view has its own version.
 
@@ -5605,6 +5598,7 @@ bool SketchWidget::disconnectFromFemale(ItemBase * item, QHash<long, ItemBase *>
 	Q_UNUSED(parentCommand);
 	Q_UNUSED(connectorHash);
 	Q_UNUSED(doCommand);
+	Q_UNUSED(disconnectBendable);
 	return false;
 }
 
@@ -6757,7 +6751,7 @@ void SketchWidget::disconnectAllSlot(QList<ConnectorItem *> connectorItems, QHas
 					new MoveItemCommand(this, detachee->id(), detachee->getViewGeometry(), vg, false, parentCommand);
 					QHash<long, ItemBase *> emptyList;
 					ConnectorPairHash connectorHash;
-					disconnectFromFemale(detachee, emptyList, connectorHash, true, parentCommand);
+					disconnectFromFemale(detachee, emptyList, connectorHash, true, true, parentCommand);
 					foreach (ConnectorItem * fConnectorItem, connectorHash.uniqueKeys()) {
 						if (myConnectorItems.contains(fConnectorItem)) {
 							// don't need to reconnect
@@ -7414,7 +7408,7 @@ void SketchWidget::disconnectWireSlot(QSet<ItemBase *> & foreignDeletedItems, QL
 			new MoveItemCommand(this, detachee->id(), detachee->getViewGeometry(), vg, false, parentCommand);
 			QHash<long, ItemBase *> emptyList;
 			ConnectorPairHash connectorHash;
-			disconnectFromFemale(detachee, emptyList, connectorHash, true, parentCommand);
+			disconnectFromFemale(detachee, emptyList, connectorHash, true, false, parentCommand);
 			foreach (ConnectorItem * fromConnectorItem, connectorHash.uniqueKeys()) {
 				if (detachItems.keys().contains(fromConnectorItem)) {
 					// don't need to reconnect
