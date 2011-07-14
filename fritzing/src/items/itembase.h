@@ -224,6 +224,8 @@ public:
 public:
 	virtual void hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	virtual void hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
+	virtual void hoverEnterLeg(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
+	virtual void hoverLeaveLeg(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	virtual void hoverMoveConnectorItem(QGraphicsSceneHoverEvent * event, class ConnectorItem * item);
 	void hoverEnterConnectorItem();
 	void hoverLeaveConnectorItem();

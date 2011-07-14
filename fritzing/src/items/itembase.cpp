@@ -424,6 +424,10 @@ void ItemBase::hoverEnterConnectorItem() {
 	hoverUpdate();
 }
 
+void ItemBase::hoverEnterLeg(QGraphicsSceneHoverEvent * , ConnectorItem * ) {
+	hoverUpdate();
+}
+
 void ItemBase::hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * , ConnectorItem * ) {
 	hoverLeaveConnectorItem();
 }
@@ -434,6 +438,10 @@ void ItemBase::hoverMoveConnectorItem(QGraphicsSceneHoverEvent * , ConnectorItem
 void ItemBase::hoverLeaveConnectorItem() {
 	//DebugDialog::debug(QString("hover leave c %1").arg(instanceTitle()));
 	m_connectorHoverCount--;
+	hoverUpdate();
+}
+
+void ItemBase::hoverLeaveLeg(QGraphicsSceneHoverEvent * , ConnectorItem * ) {
 	hoverUpdate();
 }
 

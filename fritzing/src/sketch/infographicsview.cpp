@@ -76,6 +76,14 @@ void InfoGraphicsView::hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event,
 	m_infoView->hoverLeaveConnectorItem(this, event, item);
 }
 
+void InfoGraphicsView::hoverEnterLeg(QGraphicsSceneHoverEvent * event, ConnectorItem * item) {
+	hoverEnterItem(event, item->attachedTo());
+}
+
+void InfoGraphicsView::hoverLeaveLeg(QGraphicsSceneHoverEvent * event, ConnectorItem * item){
+	hoverLeaveItem(event, item->attachedTo());
+}
+
 void InfoGraphicsView::setInfoView(HtmlInfoView * infoView) {
 	m_infoView = infoView;
 }

@@ -42,6 +42,7 @@ $Date$
 #include <QApplication>
 #include <QDomElement>
 #include <QSettings>
+#include <limits>
 
 #include "../items/partfactory.h"
 #include "../items/paletteitem.h"

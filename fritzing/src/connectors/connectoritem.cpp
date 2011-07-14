@@ -55,13 +55,24 @@ LegItem::LegItem(QGraphicsItem * parent) : QGraphicsLineItem(parent)
 	setFlag(QGraphicsItem::ItemIsSelectable, false);
 	setFlag(QGraphicsItem::ItemIsMovable, false);
 	setAcceptedMouseButtons(Qt::NoButton);
-	setAcceptHoverEvents(false);
+	setAcceptHoverEvents(true);
 	setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
 }
 
 LegItem::~LegItem()
 {
 }
+
+void LegItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
+	ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(parentItem());
+	if (connectorItem != NULL) connectorItem->hoverEnterLegEvent(event, this);
+}
+
+void LegItem::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
+	ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(parentItem());
+	if (connectorItem != NULL) connectorItem->hoverLeaveLegEvent(event, this);
+}
+
 
 /////////////////////////////////////////////////////////
 
@@ -192,6 +203,28 @@ void ConnectorItem::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
 	}
 	if (this->m_attachedTo != NULL) {
 		m_attachedTo->hoverLeaveConnectorItem(event, this);
+	}
+}
+
+void ConnectorItem::hoverEnterLegEvent (QGraphicsSceneHoverEvent * event, LegItem *) {
+
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView != NULL) {
+		infoGraphicsView->hoverEnterLeg(event, this);
+	}
+	if (this->m_attachedTo != NULL) {
+		m_attachedTo->hoverEnterLeg(event, this);
+	}
+}
+
+void ConnectorItem::hoverLeaveLegEvent ( QGraphicsSceneHoverEvent * event, LegItem * ) {
+
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView != NULL) {
+		infoGraphicsView->hoverLeaveLeg(event, this);
+	}
+	if (this->m_attachedTo != NULL) {
+		m_attachedTo->hoverLeaveLeg(event, this);
 	}
 }
 

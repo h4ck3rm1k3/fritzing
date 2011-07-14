@@ -39,6 +39,10 @@ class LegItem : public QGraphicsLineItem
 public:
 	LegItem(QGraphicsItem * parent);
 	~LegItem();
+
+protected:
+	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
+	void hoverLeaveEvent( QGraphicsSceneHoverEvent * event );
 };
 
 class ConnectorItem : public NonConnectorItem
@@ -127,6 +131,8 @@ public:
 	void prepareToStretch(bool activeStretch);
 	void stretchBy(QPointF howMuch);
 	void stretchDone(QLineF & oldLine, QLineF & newLine);
+	void hoverEnterLegEvent( QGraphicsSceneHoverEvent * event, LegItem * );
+	void hoverLeaveLegEvent( QGraphicsSceneHoverEvent * event, LegItem * );
 
 protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
