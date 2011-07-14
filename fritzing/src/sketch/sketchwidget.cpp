@@ -4352,6 +4352,17 @@ void SketchWidget::makeDeleteItemCommandPrepSlot(ItemBase * itemBase, bool forei
 	}
 
 	rememberSticky(itemBase, parentCommand);
+
+	if (itemBase->hasBendableLeg()) {
+		foreach (QGraphicsItem * childItem, itemBase->childItems()) {
+			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>( childItem );
+			if (connectorItem == NULL) continue;
+			if (!connectorItem->hasBendableLeg()) continue;
+
+			QLineF line = connectorItem->legLine();
+			new ChangeLegCommand(this, itemBase->id(), connectorItem->connectorSharedID(), line, line, parentCommand);
+		}
+	}
 }
 
 void SketchWidget::makeDeleteItemCommandFinalSlot(ItemBase * itemBase, bool foreign, QUndoCommand * parentCommand) 

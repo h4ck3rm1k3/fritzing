@@ -1636,6 +1636,12 @@ void ConnectorItem::setLegLine(QLineF line)
 	setRect(0, 0, r.width(), r.height());
 }
 
+QLineF ConnectorItem::legLine() {
+	if (m_legItem == NULL) return QLineF(0,0,0,0);
+
+	return m_legItem->line();
+}
+
 bool ConnectorItem::isDraggingLeg() {
 	return m_draggingLeg;
 }
@@ -1651,15 +1657,6 @@ QLineF ConnectorItem::sceneAdjustedLegLine(qreal & width, QString & colorString)
 
 	QPointF p1 = m_legItem->mapToScene(m_legItem->line().p1());
 	QPointF p2 = m_legItem->mapToScene(m_legItem->line().p2());
-
-	return QLineF(p1, p2);
-}
-
-QLineF ConnectorItem::formerSceneAdjustedLegLine() {
-	if (m_legItem == NULL) return QLineF(0,0,0,0);
-
-	QPointF p1 = m_legItem->mapToScene(m_legItem->line().p1());
-	QPointF p2 = m_holdPos;
 
 	return QLineF(p1, p2);
 }

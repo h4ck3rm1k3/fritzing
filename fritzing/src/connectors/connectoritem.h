@@ -122,8 +122,8 @@ public:
 	ConnectorItem * findConnectorUnder(bool useTerminalPoint, bool allowAlready, const QList<ConnectorItem *> & exclude, bool displayDragTooltip, ConnectorItem * other);
 	ConnectorItem * releaseDrag();		
 	void setLegLine(QLineF line);
+	QLineF legLine();
 	QLineF sceneAdjustedLegLine(qreal & width, QString & colorString);
-	QLineF formerSceneAdjustedLegLine();
 	void prepareToStretch(bool activeStretch);
 	void stretchBy(QPointF howMuch);
 	void stretchDone(QLineF & oldLine, QLineF & newLine);
