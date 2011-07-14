@@ -177,10 +177,7 @@ void PaletteItemBase::mousePressEvent(PaletteItemBase * originalItem, QGraphicsS
 
 	ItemBase::mousePressEvent(event);
 	if (canFindConnectorsUnder()) {
-		foreach (QGraphicsItem * childItem, childItems()) {
-			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
-			if (connectorItem == NULL) continue;
-
+		foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
 			connectorItem->setOverConnectorItem(NULL);
 		}
 	}
@@ -193,17 +190,13 @@ bool PaletteItemBase::canFindConnectorsUnder() {
 void PaletteItemBase::findConnectorsUnder() {
 	if (!canFindConnectorsUnder()) return;
 
-	for (int i = 0; i < childItems().count(); i++) {
-		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItems()[i]);
-		if (connectorItem == NULL) continue;
-
+	foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
 		if (connectorItem->connector()->connectorType() == Connector::Female) {
 			// also helps speed things up
 			continue;
 		}
 
 		connectorItem->findConnectorUnder(true, false, ConnectorItem::emptyConnectorItemList, false, NULL);
-
 	}
 }
 
@@ -213,9 +206,7 @@ void PaletteItemBase::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 
 bool PaletteItemBase::collectFemaleConnectees(QSet<ItemBase *> & items) {
 	bool hasMale = false;
-	foreach (QGraphicsItem * childItem, childItems()) {
-		ConnectorItem * item = dynamic_cast<ConnectorItem *>(childItem);
-		if (item == NULL) continue;
+	foreach (ConnectorItem * item, cachedConnectorItems()) {
 		if (item->connectorType() == Connector::Male) {
 			hasMale = true;
 			continue;
@@ -235,10 +226,7 @@ bool PaletteItemBase::collectFemaleConnectees(QSet<ItemBase *> & items) {
 }
 
 void PaletteItemBase::collectWireConnectees(QSet<Wire *> & wires) {
-	foreach (QGraphicsItem * childItem, childItems()) {
-		ConnectorItem * item = dynamic_cast<ConnectorItem *>(childItem);
-		if (item == NULL) continue;
-
+	foreach (ConnectorItem * item, cachedConnectorItems()) {
 		foreach (ConnectorItem * toConnectorItem, item->connectedToItems()) {
 			if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
 				if (toConnectorItem->attachedTo()->isVisible()) {
@@ -290,6 +278,8 @@ void PaletteItemBase::setSharedRendererEx(FSvgRenderer * renderer) {
 }
 
 void PaletteItemBase::setUpConnectors(FSvgRenderer * renderer, bool ignoreTerminalPoints) {
+	clearConnectorItemCache();
+
 	if (m_viewIdentifier == ViewIdentifierClass::PCBView && ViewLayer::isNonCopperLayer(m_viewLayerID)) {
 		//DebugDialog::debug(QString("skip connectors: %1 vid:%2 vlid:%3")
 		//				   .arg(this->title())

@@ -1239,10 +1239,7 @@ Plane * CMRouter::tilePlane(ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewL
 			
 			// TODO: only bother with connectors that might be electrically relevant, since parts are all we need for obstacles
 
-			foreach (QGraphicsItem * childItem, itemBase->childItems()) {
-				ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
-				if (connectorItem == NULL) continue;
-
+			foreach (ConnectorItem * connectorItem, itemBase->cachedConnectorItems()) {
 				QRectF r = itemBase->mapRectToScene(connectorItem->rect());
 				TileRect tileRect;
 				realsToTile(tileRect, r.left() - m_keepout, r.top() - m_keepout, r.right() + m_keepout, r.bottom() + m_keepout);

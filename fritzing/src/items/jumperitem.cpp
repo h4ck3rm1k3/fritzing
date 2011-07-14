@@ -122,10 +122,7 @@ bool JumperItem::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIden
 	bool result = PaletteItem::setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, viewLayerSpec, doConnectors, error);
 
 	if (doConnectors) {
-		foreach (QGraphicsItem * childItem, childItems()) {
-			ConnectorItem * item = dynamic_cast<ConnectorItem *>(childItem);
-			if (item == NULL) continue;
-
+		foreach (ConnectorItem * item, cachedConnectorItems()) {
 			item->setCircular(true);
 			if (item->connectorSharedName().contains('0')) {
 				m_connector0 = item;

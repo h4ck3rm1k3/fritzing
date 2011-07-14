@@ -1567,9 +1567,7 @@ long PCBSketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const Q
 void PCBSketchWidget::clearSmdTraces(QList<ItemBase *> & smds, 	QList<Wire *> & already, QUndoCommand * parentCommand) {
 
 	foreach (ItemBase * smd, smds) {
-		foreach (QGraphicsItem * child, smd->childItems()) {
-			ConnectorItem * ci = dynamic_cast<ConnectorItem *>(child);
-			if (ci == NULL) continue;
+		foreach (ConnectorItem * ci, smd->cachedConnectorItems()) {
 			//ci->debugInfo("smd from");
 
 			foreach (ConnectorItem * toci, ci->connectedToItems()) {

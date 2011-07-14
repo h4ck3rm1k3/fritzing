@@ -168,10 +168,7 @@ void Wire::initEnds(const ViewGeometry & vg, QRectF defaultRect, InfoGraphicsVie
 	bool gotOne = false;
 	bool gotTwo = false;
 	qreal penWidth = 1;
-	foreach (QGraphicsItem * childItem, childItems()) {
-		ConnectorItem * item = dynamic_cast<ConnectorItem *>(childItem);
-		if (item == NULL) continue;
-
+	foreach (ConnectorItem * item, cachedConnectorItems()) {
 		// check the name or is order good enough?
 
 		if (gotOne) {
@@ -691,7 +688,9 @@ void Wire::connectedMoved(ConnectorItem * from, ConnectorItem * to) {
 }
 
 
-FSvgRenderer * Wire::setUpConnectors(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+FSvgRenderer * Wire::setUpConnectors(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier) 
+{
+	clearConnectorItemCache();
 
 	QString error;
 	FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, viewIdentifier, m_viewLayerID, m_viewLayerSpec, error);
@@ -763,10 +762,7 @@ ConnectorItem * Wire::connector1() {
 }
 
 void Wire::findConnectorsUnder() {
-	for (int i = 0; i < childItems().count(); i++) {
-		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItems()[i]);
-		if (connectorItem == NULL) continue;
-
+	foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
 		connectorItem->findConnectorUnder(true, false, ConnectorItem::emptyConnectorItemList, false, NULL);
 	}
 }

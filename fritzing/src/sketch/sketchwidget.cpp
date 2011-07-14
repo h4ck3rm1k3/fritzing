@@ -906,10 +906,7 @@ bool isVirtualWireConnector(ConnectorItem * toConnectorItem) {
 
 void SketchWidget::deleteMiddle(QHash<ItemBase *, SketchWidget *> & deletedItems, QUndoCommand * parentCommand) {
 	foreach (ItemBase * itemBase, deletedItems.keys()) {
-		foreach (QGraphicsItem * graphicsItem, itemBase->childItems()) {
-			ConnectorItem * fromConnectorItem = dynamic_cast<ConnectorItem *>(graphicsItem);
-			if (fromConnectorItem == NULL) continue;
-		
+		foreach (ConnectorItem * fromConnectorItem, itemBase->cachedConnectorItems()) {
 			foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
 				deletedItems.value(itemBase)->extendChangeConnectionCommand(BaseCommand::CrossView, fromConnectorItem, toConnectorItem,
 											  ViewLayer::specFromID(fromConnectorItem->attachedToViewLayerID()),
@@ -947,10 +944,7 @@ void SketchWidget::deleteTracesSlot(QSet<ItemBase *> & deletedItems, QHash<ItemB
 
 		bool isJumper = (itemBase->itemType() == ModelPart::Jumper);
 
-		foreach (QGraphicsItem * graphicsItem, itemBase->childItems()) {
-			ConnectorItem * fromConnectorItem = dynamic_cast<ConnectorItem *>(graphicsItem);
-			if (fromConnectorItem == NULL) continue;
-
+		foreach (ConnectorItem * fromConnectorItem, itemBase->cachedConnectorItems()) {
 			QList<ConnectorItem *> connectorItems;
 			foreach (ConnectorItem * ci, fromConnectorItem->connectedToItems()) connectorItems << ci;
 			ConnectorItem * crossConnectorItem = fromConnectorItem->getCrossLayerConnectorItem();
@@ -1715,10 +1709,7 @@ void SketchWidget::dropItemEvent(QDropEvent *event) {
 
 	// jrc: 24 aug 2010: don't see why restoring color on dropped item is necessary
 	//QList<ConnectorItem *> connectorItems;
-	foreach (QGraphicsItem * childItem, m_droppingItem->childItems()) {
-		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
-		if (connectorItem == NULL) continue;
-
+	foreach (ConnectorItem * connectorItem, m_droppingItem->cachedConnectorItems()) {
 		//connectorItem->setMarked(false);
 		//connectorItems.append(connectorItem);
 		ConnectorItem * to = connectorItem->overConnectorItem();
@@ -2087,13 +2078,10 @@ void SketchWidget::findAlignmentAnchor(ItemBase * originatingItem, 	QHash<long, 
 	if (!m_alignToGrid) return;
 
 	if (originatingItem) {
-		foreach (QGraphicsItem * childItem, originatingItem->childItems()) {
-			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
-			if (connectorItem) {
+		foreach (ConnectorItem * connectorItem, originatingItem->cachedConnectorItems()) {
 				m_alignmentStartPoint = connectorItem->sceneAdjustedTerminalPoint(NULL);
 				m_alignmentItem = originatingItem;
 				return;
-			}
 		}
 		if (canAlignToTopLeft(originatingItem)) {
 			m_alignmentStartPoint = originatingItem->pos();
@@ -2103,13 +2091,10 @@ void SketchWidget::findAlignmentAnchor(ItemBase * originatingItem, 	QHash<long, 
 	}
 
 	foreach (ItemBase * itemBase, savedItems) {
-		foreach (QGraphicsItem * childItem, itemBase->childItems()) {
-			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
-			if (connectorItem) {
+		foreach (ConnectorItem * connectorItem, itemBase->cachedConnectorItems()) {
 				m_alignmentStartPoint = connectorItem->sceneAdjustedTerminalPoint(NULL);
 				m_alignmentItem = itemBase;
 				return;
-			}
 		}
 	}
 
@@ -2146,9 +2131,7 @@ void SketchWidget::categorizeDragLegs()
 		//		so we stretch those attached legs
 		// 2. a part has bendable legs attached to multiple parts, and we are only dragging some of the parts
 
-		foreach (QGraphicsItem * item, itemBase->childItems()) {
-			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
-			if (connectorItem == NULL) continue;
+		foreach (ConnectorItem * connectorItem, itemBase->cachedConnectorItems()) {
 			if (!connectorItem->hasBendableLeg()) continue;
 			if (connectorItem->connectionsCount() == 0) continue;
 
@@ -2179,9 +2162,7 @@ void SketchWidget::categorizeDragLegs()
 		// we're not actually dragging the itemBase
 		// one of its connectors is coming along for the ride
 		m_savedItems.remove(itemBase->id());
-		foreach (QGraphicsItem * item, itemBase->childItems()) {
-			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
-			if (connectorItem == NULL) continue;
+		foreach (ConnectorItem * connectorItem, itemBase->cachedConnectorItems()) {
 			if (!connectorItem->hasBendableLeg()) continue;
 			if (connectorItem->connectionsCount() == 0) continue;
 
@@ -2874,9 +2855,7 @@ bool SketchWidget::checkMoved()
 	foreach (ItemBase * item, m_savedItems) {
 		if (item->itemType() == ModelPart::Wire) continue;
 
-		QList<ConnectorItem *> connectorItems;
-		item->collectConnectors(connectorItems);
-		foreach (ConnectorItem * fromConnectorItem, connectorItems) {
+		foreach (ConnectorItem * fromConnectorItem, item->cachedConnectorItems()) {
 			ConnectorItem * toConnectorItem = fromConnectorItem->overConnectorItem();
 			if (toConnectorItem != NULL) {
 				toConnectorItem->connectorHover(item, false);
@@ -3845,7 +3824,7 @@ void SketchWidget::rotateX(qreal degrees)
 	// want the bounding rect of the original selected items, not all the items that are secondarily being rotated
 	foreach (QGraphicsItem * item, scene()->selectedItems()) {
 		itemsBoundingRect |= (item->transform() * QTransform().translate(item->x(), item->y()))
-                            .mapRect(item->boundingRect() | item->childrenBoundingRect());
+                            .mapRect(item->boundingRect() /* | item->childrenBoundingRect() */);
 	}
 
 	QPointF center = itemsBoundingRect.center();
@@ -3881,6 +3860,12 @@ void SketchWidget::rotateX(qreal degrees)
 			new MoveItemCommand(this, itemBase->id(), vg1, vg1, true, parentCommand);
 			new RotateItemCommand(this, itemBase->id(), degrees, parentCommand);
 			new MoveItemCommand(this, itemBase->id(), vg2, vg2, true, parentCommand);
+
+			foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
+				QLineF oldLine, newLine;
+				connectorItem->transformDone(rotation, center, oldLine, newLine);
+				new ChangeLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), oldLine, newLine, parentCommand);
+			}
 		}
 		else {
 			Wire * wire = qobject_cast<Wire *>(itemBase);
@@ -3895,7 +3880,7 @@ void SketchWidget::rotateX(qreal degrees)
 			new ChangeWireCommand(this, wire->id(), vg1.line(), QLineF(QPointF(0,0), d1t - d0t), vg1.loc(), d0t + center, true, true, parentCommand);
 		}
 	}
-	
+
 	foreach (Wire * wire, m_savedWires.keys()) {
 		ViewGeometry vg1 = wire->getViewGeometry();
 		ViewGeometry vg2(vg1);
@@ -4355,9 +4340,7 @@ void SketchWidget::makeDeleteItemCommandPrepSlot(ItemBase * itemBase, bool forei
 	rememberSticky(itemBase, parentCommand);
 
 	if (itemBase->hasBendableLeg()) {
-		foreach (QGraphicsItem * childItem, itemBase->childItems()) {
-			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>( childItem );
-			if (connectorItem == NULL) continue;
+		foreach (ConnectorItem * connectorItem, itemBase->cachedConnectorItems()) {
 			if (!connectorItem->hasBendableLeg()) continue;
 
 			QLineF line = connectorItem->legLine();
@@ -5065,8 +5048,7 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 	ModelPart * newModelPart = m_refModel->retrieveModelPart(newModuleID);
 	if (newModelPart == NULL) return;
 
-	QList<ConnectorItem *> fromConnectorItems;
-	itemBase->collectConnectors(fromConnectorItems);
+	QList<ConnectorItem *> fromConnectorItems(itemBase->cachedConnectorItems());
 
 	newModelPart->initConnectors();			//  make sure the connectors are set up
 	QList< QPointer<Connector> > newConnectors = newModelPart->connectors().values();
@@ -5204,8 +5186,6 @@ void SketchWidget::checkFit(ModelPart * newModelPart, ItemBase * itemBase, long 
 	QHash<ConnectorItem *, QPointF> newPoints;
 	QHash<ConnectorItem *, ConnectorItem *> foundNews;
 	QList<ConnectorItem *> removeFromFound;
-	QList<ConnectorItem *> newConnectorItems;
-	tempItemBase->collectConnectors(newConnectorItems);
 
 	foreach (ConnectorItem * foundConnectorItem, found.keys()) {
 		if (!m2f.value(foundConnectorItem, false)) {
@@ -5216,7 +5196,7 @@ void SketchWidget::checkFit(ModelPart * newModelPart, ItemBase * itemBase, long 
 
 		Connector * connector = found.value(foundConnectorItem);
 		ConnectorItem * newConnectorItem = NULL;
-		foreach (ConnectorItem * nci, newConnectorItems) {
+		foreach (ConnectorItem * nci, tempItemBase->cachedConnectorItems()) {
 			if (nci->connector()->connectorShared() == connector->connectorShared()) {
 				newConnectorItem = nci;
 				break;
@@ -5262,7 +5242,7 @@ void SketchWidget::checkFit(ModelPart * newModelPart, ItemBase * itemBase, long 
 	}
 
 	if (allCorrespond) {
-		if (newConnectorItems.count() == found.count()) {
+		if (tempItemBase->cachedConnectorItems().count() == found.count()) {
 			// it's a clean swap: all connectors line up
 			delete tempItemBase;
 			return;
@@ -5277,7 +5257,7 @@ void SketchWidget::checkFit(ModelPart * newModelPart, ItemBase * itemBase, long 
 
 	if (allCorrespond) {
 		QList<ConnectorItem *> alreadyFits = foundNews.values();
-		foreach (ConnectorItem * nci, newConnectorItems) {
+		foreach (ConnectorItem * nci, tempItemBase->cachedConnectorItems()) {
 			if (alreadyFits.contains(nci)) continue;
 			if (nci->connectorType() != Connector::Male) continue;
 
@@ -5566,10 +5546,7 @@ void SketchWidget::hideConnectors(bool hide) {
 		if (itemBase == NULL) continue;
 		if (!itemBase->isVisible()) continue;
 
-		foreach (QGraphicsItem * childItem, itemBase->childItems()) {
-			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
-			if (connectorItem == NULL) continue;
-
+		foreach (ConnectorItem * connectorItem, itemBase->cachedConnectorItems()) {
 			connectorItem->setVisible(!hide);
 		}
 	}
@@ -6105,11 +6082,10 @@ QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLaye
 		}
 
 		if (itemBase->modelPart()->hasBendableLeg()) {
-			foreach (QGraphicsItem * child, itemBase->childItems()) {
-				LegItem * legItem = dynamic_cast<LegItem *>(child);
-				if (legItem == NULL) continue;
+			foreach (ConnectorItem * connectorItem, itemBase->cachedConnectorItems()) {
+				if (!connectorItem->hasBendableLeg()) continue;
 
-				itemsBoundingRect |= legItem->sceneBoundingRect();
+				itemsBoundingRect |= connectorItem->legSceneBoundingRect();
 			}
 		}
 	}
@@ -6218,9 +6194,7 @@ QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLaye
 					itemSvg = domDocument.toString();
 				}
 
-				foreach (QGraphicsItem * item, itemBase->childItems()) {
-					ConnectorItem * ci = dynamic_cast<ConnectorItem *>(item);
-					if (ci == NULL) continue;
+				foreach (ConnectorItem * ci, itemBase->cachedConnectorItems()) {
 					if (!ci->hasBendableLeg()) continue;
 
 					qreal w;
@@ -7249,10 +7223,7 @@ bool SketchWidget::hasAnyNets() {
 }
 
 void SketchWidget::ratsnestConnect(ItemBase * itemBase, bool connect) {
-	foreach (QGraphicsItem * item, itemBase->childItems()) {
-		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
-		if (connectorItem == NULL) continue;
-		
+	foreach (ConnectorItem * connectorItem, itemBase->cachedConnectorItems()) {
 		ratsnestConnect(connectorItem, connect);
 	}
 }

@@ -76,9 +76,7 @@ bool BreadboardSketchWidget::disconnectFromFemale(ItemBase * item, QHash<long, I
 	// at the moment, I think this doesn't apply to other views
 
 	bool result = false;
-	QList<ConnectorItem *> connectorItems;
-	item->collectConnectors(connectorItems);
-	foreach (ConnectorItem * fromConnectorItem , connectorItems) {
+	foreach (ConnectorItem * fromConnectorItem, item->cachedConnectorItems()) {
 		if (!disconnectBendable && fromConnectorItem->hasBendableLeg()) continue;
 
 		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems())  {

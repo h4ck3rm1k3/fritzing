@@ -57,20 +57,14 @@ FSvgRenderer * VirtualWire::setUpConnectors(ModelPart * modelPart, ViewIdentifie
 
 void VirtualWire::hideConnectors() {
 	// m_connector0 and m_connector1 may not yet be initialized
-	foreach (QGraphicsItem * childItem, childItems()) {
-		ConnectorItem * item = dynamic_cast<ConnectorItem *>(childItem);
-		if (item == NULL) continue;	
-
+	foreach (ConnectorItem * item, cachedConnectorItems()) {
 		item->setHidden(true);
 	}
 }
 
 void VirtualWire::inactivateConnectors() {
 	// m_connector0 and m_connector1 may not yet be initialized
-	foreach (QGraphicsItem * childItem, childItems()) {
-		ConnectorItem * item = dynamic_cast<ConnectorItem *>(childItem);
-		if (item == NULL) continue;	
-
+	foreach (ConnectorItem * item, cachedConnectorItems()) {
 		item->setInactive(true);
 	}
 }

@@ -38,6 +38,7 @@ $Date$
 #include "../sketch/infographicsview.h"
 #include "../debugdialog.h"
 #include "bus.h"
+#include "legitem.h"
 #include "../items/wire.h"
 #include "../items/virtualwire.h"
 #include "../model/modelpart.h"
@@ -45,34 +46,6 @@ $Date$
 #include "../utils/graphutils.h"
 #include "../utils/ratsnestcolors.h"
 #include "ercdata.h"
-
-/////////////////////////////////////////////////////////
-
-LegItem::LegItem(QGraphicsItem * parent) : QGraphicsLineItem(parent)
-{
-	setLine(0, 0, 0, 0);
-	setVisible(true);
-	setFlag(QGraphicsItem::ItemIsSelectable, false);
-	setFlag(QGraphicsItem::ItemIsMovable, false);
-	setAcceptedMouseButtons(Qt::NoButton);
-	setAcceptHoverEvents(true);
-	setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
-}
-
-LegItem::~LegItem()
-{
-}
-
-void LegItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
-	ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(parentItem());
-	if (connectorItem != NULL) connectorItem->hoverEnterLegEvent(event, this);
-}
-
-void LegItem::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
-	ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(parentItem());
-	if (connectorItem != NULL) connectorItem->hoverLeaveLegEvent(event, this);
-}
-
 
 /////////////////////////////////////////////////////////
 
@@ -203,28 +176,6 @@ void ConnectorItem::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
 	}
 	if (this->m_attachedTo != NULL) {
 		m_attachedTo->hoverLeaveConnectorItem(event, this);
-	}
-}
-
-void ConnectorItem::hoverEnterLegEvent (QGraphicsSceneHoverEvent * event, LegItem *) {
-
-	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
-	if (infoGraphicsView != NULL) {
-		infoGraphicsView->hoverEnterLeg(event, this);
-	}
-	if (this->m_attachedTo != NULL) {
-		m_attachedTo->hoverEnterLeg(event, this);
-	}
-}
-
-void ConnectorItem::hoverLeaveLegEvent ( QGraphicsSceneHoverEvent * event, LegItem * ) {
-
-	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
-	if (infoGraphicsView != NULL) {
-		infoGraphicsView->hoverLeaveLeg(event, this);
-	}
-	if (this->m_attachedTo != NULL) {
-		m_attachedTo->hoverLeaveLeg(event, this);
 	}
 }
 
@@ -697,6 +648,7 @@ void ConnectorItem::setBendableLeg(QColor color, qreal strokeWidth) {
 	setRect(0, 0, strokeWidth, strokeWidth);
 	m_terminalPoint.setX(strokeWidth / 2);
 	m_terminalPoint.setY(strokeWidth / 2);
+	this->setCircular(true);
 
 	m_originalPointOnParent = this->mapToParent(adjustedTerminalPoint());
 	m_legItem = new LegItem(parentItem());
@@ -1725,5 +1677,29 @@ void ConnectorItem::stretchDone(QLineF & oldLine, QLineF & newLine) {
 	newLine = m_legItem->line();
 }
 
+QRectF ConnectorItem::legSceneBoundingRect() {
+	if (m_legItem == NULL) return QRectF();
 
+	return m_legItem->sceneBoundingRect();
+}
 
+void ConnectorItem::transformDone(QTransform & transform, QPointF center, QLineF & oldLine, QLineF & newLine) {
+	// part is going to have a transform applied
+
+	// assumes legItem's line.pi() is always (0, 0)
+
+	oldLine = m_oldLine;
+
+	if (m_activeStretch) {
+		// the end of the leg should remain where it started
+		// calculate where the near end of the line will be
+		QPointF p1 = transform.map(parentItem()->mapToScene(m_legItem->pos()) - center);
+		QPointF p2 = m_holdPos + m_oldLine.p2();			// scene pos of the current end of line
+		newLine = QLineF(0, 0, p2.x() - p1.x(), p2.y() - p1.y());
+	}
+	else {
+		// the end of the leg has to transform along with the part it's attached to
+		QPointF p2 = transform.map(m_holdPos - center);
+		newLine = QLineF(0, 0, p2.x() - m_holdPos.x(), p2.y() - m_holdPos.y());
+	}
+}

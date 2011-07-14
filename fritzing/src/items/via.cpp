@@ -87,10 +87,7 @@ void Via::setBoth(const QString & holeDiameter, const QString & ringThickness) {
 
 void Via::setBothConnectors(ItemBase * itemBase, SvgIdLayer * svgIdLayer) 
 {
-	foreach (QGraphicsItem * child, itemBase->childItems()) {
-		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(child);
-		if (connectorItem == NULL) continue;
-
+	foreach (ConnectorItem * connectorItem, itemBase->cachedConnectorItems()) {
 		connectorItem->setRect(svgIdLayer->m_rect);
 		connectorItem->setTerminalPoint(svgIdLayer->m_point);
 		connectorItem->setRadius(svgIdLayer->m_radius, svgIdLayer->m_strokeWidth);
@@ -124,9 +121,8 @@ bool Via::getAutoroutable() {
 }
 
 ConnectorItem * Via::connectorItem() {
-	foreach (QGraphicsItem * item, childItems()) {
-		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
-		if (connectorItem) return connectorItem;
+	foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
+		return connectorItem;
 	}
 
 	return NULL;

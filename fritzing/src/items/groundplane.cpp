@@ -72,10 +72,7 @@ bool GroundPlane::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIde
 	bool result = PaletteItem::setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, viewLayerSpec, doConnectors, error);
 
 	if (doConnectors) {
-		foreach (QGraphicsItem * childItem, childItems()) {
-			ConnectorItem * item = dynamic_cast<ConnectorItem *>(childItem);
-			if (item == NULL) continue;
-
+		foreach (ConnectorItem * item, cachedConnectorItems()) {
 			// there is only one
 			m_connector0 = item;
 			break;

@@ -33,17 +33,7 @@ $Date$
 #include <QThread>
 #include <QGraphicsLineItem>
 
-class LegItem : public QGraphicsLineItem
-{
-
-public:
-	LegItem(QGraphicsItem * parent);
-	~LegItem();
-
-protected:
-	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
-	void hoverLeaveEvent( QGraphicsSceneHoverEvent * event );
-};
+class LegItem;
 
 class ConnectorItem : public NonConnectorItem
 {
@@ -131,8 +121,8 @@ public:
 	void prepareToStretch(bool activeStretch);
 	void stretchBy(QPointF howMuch);
 	void stretchDone(QLineF & oldLine, QLineF & newLine);
-	void hoverEnterLegEvent( QGraphicsSceneHoverEvent * event, LegItem * );
-	void hoverLeaveLegEvent( QGraphicsSceneHoverEvent * event, LegItem * );
+	void transformDone(QTransform & transform, QPointF center, QLineF & oldLine, QLineF & newLine);
+	QRectF legSceneBoundingRect();
 
 protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );

@@ -95,10 +95,7 @@ SymbolPaletteItem::~SymbolPaletteItem() {
 }
 
 void SymbolPaletteItem::removeMeFromBus(qreal v) {
-	foreach (QGraphicsItem * childItem, childItems()) {
-		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
-		if (connectorItem == NULL) continue;
-
+	foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
 		qreal nv = useVoltage(connectorItem);
 		if (nv == v) {
 			//connectorItem->debugInfo(QString("remove %1").arg(useVoltage(connectorItem)));
@@ -193,11 +190,7 @@ void SymbolPaletteItem::setVoltage(qreal v) {
 
 	if (m_viewIdentifier != ViewIdentifierClass::SchematicView) return;
 
-	foreach (QGraphicsItem * childItem, childItems()) {
-		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
-		if (connectorItem == NULL) continue;
-
-
+	foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
 		if (connectorItem->isGrounded()) {
 			localGrounds.append(connectorItem);
 			//connectorItem->debugInfo("ground insert");

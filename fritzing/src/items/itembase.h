@@ -93,7 +93,6 @@ public:
 	bool topLevel();
 
 	void collectConnectors(ConnectorPairHash & connectorHash, SkipCheckFunction);
-	virtual void collectConnectors(QList<ConnectorItem *> & connectors);
 
 	virtual void busConnectorItems(class Bus * bus, QList<ConnectorItem *> & items);
 	virtual void setHidden(bool hidden);
@@ -189,6 +188,9 @@ public:
 	void ensureUniqueTitle(const QString &title, bool force);
 	virtual void setDropOffset(QPointF offset);
 	bool hasBendableLeg();
+	bool sceneEvent(QEvent *event);
+	void clearConnectorItemCache();
+	const QList<ConnectorItem *> & cachedConnectorItems();
 
 public:
 	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth, bool & negativeOffsetRect);
@@ -224,8 +226,6 @@ public:
 public:
 	virtual void hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	virtual void hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
-	virtual void hoverEnterLeg(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
-	virtual void hoverLeaveLeg(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	virtual void hoverMoveConnectorItem(QGraphicsSceneHoverEvent * event, class ConnectorItem * item);
 	void hoverEnterConnectorItem();
 	void hoverLeaveConnectorItem();
@@ -311,6 +311,7 @@ protected:
 	QString m_filename;
 	ViewLayer::ViewLayerSpec m_viewLayerSpec;
 	bool m_moveLock;
+	QList<ConnectorItem *> m_cachedConnectorItems;
 
 protected:
 	static long nextID;

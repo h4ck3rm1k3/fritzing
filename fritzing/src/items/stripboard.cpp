@@ -361,10 +361,7 @@ void Stripboard::addedToScene(bool temporary)
 
 	ConnectorItem * ciFirst = NULL;
 	ConnectorItem * ciNext = NULL;
-	foreach (QGraphicsItem * item, items) {
-		ConnectorItem * ci = dynamic_cast<ConnectorItem *>(item);
-		if (ci == NULL) continue;
-
+	foreach (ConnectorItem * ci, cachedConnectorItems()) {
 		int cx, cy;
 		getXY(cx, cy, ci->connectorSharedName());
 		if (cy == 0 && cx == 0) {
@@ -372,10 +369,7 @@ void Stripboard::addedToScene(bool temporary)
 			break;
 		}
 	}
-	foreach (QGraphicsItem * item, items) {
-		ConnectorItem * ci = dynamic_cast<ConnectorItem *>(item);
-		if (ci == NULL) continue;
-
+	foreach (ConnectorItem * ci, cachedConnectorItems()) {
 		int cx, cy;
 		getXY(cx, cy, ci->connectorSharedName());
 		if (cy == 0 && cx == 1) {
@@ -408,10 +402,7 @@ void Stripboard::addedToScene(bool temporary)
 
 	QHash<int, Stripbit *> stripbits;
 
-	foreach (QGraphicsItem * item, items) {
-		ConnectorItem * ci = dynamic_cast<ConnectorItem *>(item);
-		if (ci == NULL) continue;
-
+	foreach (ConnectorItem * ci, cachedConnectorItems()) {
 		int cx, cy;
 		getXY(cx, cy, ci->connectorSharedName());
 		if (cx >= x - 1) {
@@ -570,9 +561,7 @@ void Stripboard::reinitBuses(bool triggerUndo)
 
 	
 	QList<ConnectorItem *> visited;
-	foreach (QGraphicsItem * item, childItems()) {
-		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
-		if (connectorItem == NULL) continue;
+	foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
 		if (visited.contains(connectorItem)) continue;
 
 		connectorItem->restoreColor(true, 0, true);

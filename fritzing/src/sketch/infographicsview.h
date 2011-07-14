@@ -51,8 +51,6 @@ public:
 	void viewConnectorItemInfo(ConnectorItem * item);
 	virtual void hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	virtual void hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
-	virtual void hoverEnterLeg(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
-	virtual void hoverLeaveLeg(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 
 	void setInfoView(class HtmlInfoView *);
 	class HtmlInfoView * infoView();

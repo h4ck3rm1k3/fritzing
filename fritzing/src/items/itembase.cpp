@@ -172,10 +172,7 @@ ItemBase::~ItemBase() {
 		m_partLabel = NULL;
 	}
 
-	foreach (QGraphicsItem * childItem, childItems()) {
-		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
-		if (connectorItem == NULL) continue;
-
+	foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
 		foreach (ConnectorItem * toConnectorItem, connectorItem->connectedToItems()) {
 			toConnectorItem->tempRemove(connectorItem, true);
 		}
@@ -204,10 +201,7 @@ void ItemBase::setTooltip() {
 }
 
 void ItemBase::setConnectorTooltips() {
-	foreach (QGraphicsItem * childItem, childItems()) {
-		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
-		if (connectorItem == NULL) continue;
-
+	foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
         QString tt = QString("<b>%1</b><br />%2" + ITEMBASE_FONT_PREFIX + "%3" + ITEMBASE_FONT_SUFFIX)
                 .arg(connectorItem->connectorSharedName())
                 .arg(connectorItem->connector()->connectorShared()->description())
@@ -341,10 +335,7 @@ void ItemBase::saveInstance(QXmlStreamWriter & streamWriter) {
 	}
 
 	bool saveConnectorItems = false;
-	foreach (QGraphicsItem * childItem, childItems()) {
-		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
-		if (connectorItem == NULL) continue;
-
+	foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
 		if (connectorItem->connectionsCount() > 0 || connectorItem->hasBendableLeg()) {
 			saveConnectorItems = true;
 			break;
@@ -353,10 +344,7 @@ void ItemBase::saveInstance(QXmlStreamWriter & streamWriter) {
 
 	if (saveConnectorItems) {
 		streamWriter.writeStartElement("connectors");
-		foreach (QGraphicsItem * childItem, childItems()) {
-			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
-			if (connectorItem == NULL) continue;
-
+		foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
 			connectorItem->saveInstance(streamWriter);
 		}
 		streamWriter.writeEndElement();
@@ -424,10 +412,6 @@ void ItemBase::hoverEnterConnectorItem() {
 	hoverUpdate();
 }
 
-void ItemBase::hoverEnterLeg(QGraphicsSceneHoverEvent * , ConnectorItem * ) {
-	hoverUpdate();
-}
-
 void ItemBase::hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * , ConnectorItem * ) {
 	hoverLeaveConnectorItem();
 }
@@ -438,10 +422,6 @@ void ItemBase::hoverMoveConnectorItem(QGraphicsSceneHoverEvent * , ConnectorItem
 void ItemBase::hoverLeaveConnectorItem() {
 	//DebugDialog::debug(QString("hover leave c %1").arg(instanceTitle()));
 	m_connectorHoverCount--;
-	hoverUpdate();
-}
-
-void ItemBase::hoverLeaveLeg(QGraphicsSceneHoverEvent * , ConnectorItem * ) {
 	hoverUpdate();
 }
 
@@ -528,8 +508,8 @@ void ItemBase::setHidden(bool hide) {
 	setAcceptedMouseButtons(m_hidden || m_inactive ? Qt::NoButton : ALLMOUSEBUTTONS);
 	setAcceptHoverEvents(!(m_hidden || m_inactive));
 	update();
-	for (int i = 0; i < childItems().count(); i++) {
-		NonConnectorItem * nonconnectorItem = dynamic_cast<NonConnectorItem *>(childItems()[i]);
+	foreach (QGraphicsItem * item, childItems()) {
+		NonConnectorItem * nonconnectorItem = dynamic_cast<NonConnectorItem *>(item);
 		if (nonconnectorItem == NULL) continue;
 
 		nonconnectorItem->setHidden(hide);
@@ -542,8 +522,8 @@ void ItemBase::setInactive(bool inactivate) {
 	setAcceptedMouseButtons(m_hidden || m_inactive ? Qt::NoButton : ALLMOUSEBUTTONS);
 	setAcceptHoverEvents(!(m_hidden || m_inactive));
 	update();
-	for (int i = 0; i < childItems().count(); i++) {
-		NonConnectorItem * nonconnectorItem = dynamic_cast<NonConnectorItem *>(childItems()[i]);
+	foreach (QGraphicsItem * item, childItems()) {
+		NonConnectorItem * nonconnectorItem = dynamic_cast<NonConnectorItem *>(item);
 		if (nonconnectorItem == NULL) continue;
 
 		nonconnectorItem->setInactive(inactivate);
@@ -565,10 +545,7 @@ void ItemBase::collectConnectors(ConnectorPairHash & connectorHash, SkipCheckFun
 
 	// collect all the connectorItem pairs
 
-	foreach (QGraphicsItem * childItem, childItems()) {
-		ConnectorItem * fromConnectorItem = dynamic_cast<ConnectorItem *>( childItem );
-		if (fromConnectorItem == NULL) continue;
-
+	foreach (ConnectorItem * fromConnectorItem, cachedConnectorItems()) {
 		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
 			if (skipCheckFunction && skipCheckFunction(toConnectorItem)) continue;
 
@@ -586,18 +563,8 @@ void ItemBase::collectConnectors(ConnectorPairHash & connectorHash, SkipCheckFun
 	}
 }
 
-void ItemBase::collectConnectors(QList<ConnectorItem *> & connectors) {
-	foreach (QGraphicsItem * childItem, childItems()) {
-		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>( childItem );
-		if (connectorItem != NULL) connectors.append(connectorItem);
-	}
-}
-
 ConnectorItem * ItemBase::findConnectorItemWithSharedID(const QString & connectorID, ViewLayer::ViewLayerSpec viewLayerSpec)  {
-	for (int i = 0; i < childItems().count(); i++) {
-		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItems()[i]);
-		if (connectorItem == NULL) continue;
-
+	foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
 		if (connectorID.compare(connectorItem->connectorSharedID()) == 0) {
 			return connectorItem->chooseFromSpec(viewLayerSpec);
 		}
@@ -833,7 +800,7 @@ bool ItemBase::alreadySticking(ItemBase * itemBase) {
 
 ConnectorItem* ItemBase::newConnectorItem(Connector *connector) 
 {
-	return new ConnectorItem(connector, this);
+	return newConnectorItem(this, connector);
 }
 
 ConnectorItem* ItemBase::newConnectorItem(ItemBase * layerKin, Connector *connector) 
@@ -842,9 +809,8 @@ ConnectorItem* ItemBase::newConnectorItem(ItemBase * layerKin, Connector *connec
 }
 
 ConnectorItem * ItemBase::anyConnectorItem() {
-	foreach (QGraphicsItem * childItem, childItems()) {
-		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
-		if (connectorItem != NULL) return connectorItem;
+	foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
+		return connectorItem;
 	}
 
 	return NULL;
@@ -958,11 +924,7 @@ void ItemBase::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 }
 
 bool ItemBase::hasConnectors() {
-	foreach (QGraphicsItem * childItem, childItems()) {
-		if (dynamic_cast<ConnectorItem *>(childItem) != NULL) return true;
-	}
-
-	return false;
+	return cachedConnectorItems().count() > 0;
 }
 
 bool ItemBase::hasNonConnectors() {
@@ -1360,10 +1322,7 @@ QString ItemBase::getSvgFilename(ModelPart * modelPart, const QString & baseName
 
 void ItemBase::updateConnectionsAux() {
 	//DebugDialog::debug("update connections");
-	foreach (QGraphicsItem * childItem, childItems()) {
-		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
-		if (connectorItem == NULL) continue;
-
+	foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
 		updateConnections(connectorItem);
 	}
 }
@@ -1387,11 +1346,8 @@ QString ItemBase::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString,
 
 bool ItemBase::hasConnections()
 {
-	foreach (QGraphicsItem * item, childItems()) {
-		ConnectorItem * fromConnectorItem = dynamic_cast<ConnectorItem *>(item);
-		if (fromConnectorItem == NULL) continue;
-
-		if (fromConnectorItem->connectionsCount() > 0) return true;
+	foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
+		if (connectorItem->connectionsCount() > 0) return true;
 	}
 
 	return false;
@@ -1703,9 +1659,7 @@ void ItemBase::updateConnectors()
 
 	// assumes all connectors have previously been initialized unmarked;
 	//int count = 0;
-	foreach(QGraphicsItem * item, childItems()) {
-		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
-		if (connectorItem == NULL) continue;
+	foreach(ConnectorItem * connectorItem, cachedConnectorItems()) {
 		if (connectorItem->marked()) continue;
 
 		connectorItem->restoreColor(false, 0, false);
@@ -1746,9 +1700,8 @@ void ItemBase::debugInfo(const QString & msg)
 	);
 
 	/*
-	foreach (QGraphicsItem * item, childItems()) {
-		ConnectorItem * ci = dynamic_cast<ConnectorItem *>(item);
-		if (ci) ci->debugInfo("\t");
+	foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
+		if (connectorItem) connectorItem->debugInfo("\t");
 	}
 	*/
 #else
@@ -1793,3 +1746,27 @@ bool ItemBase::hasBendableLeg()
 
 	return (m_modelPart->hasBendableLeg());
 }
+
+
+bool ItemBase::sceneEvent(QEvent *event)
+{
+	return GraphicsSvgLineItem::sceneEvent(event);
+}
+
+const QList<ConnectorItem *> & ItemBase::cachedConnectorItems() 
+{
+	if (m_cachedConnectorItems.isEmpty()) {
+		foreach (QGraphicsItem * childItem, childItems()) {
+			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
+			if (connectorItem != NULL) m_cachedConnectorItems.append(connectorItem);
+		}
+	}
+
+	return m_cachedConnectorItems;
+}
+
+void ItemBase::clearConnectorItemCache() 
+{
+	m_cachedConnectorItems.clear();
+}
+
