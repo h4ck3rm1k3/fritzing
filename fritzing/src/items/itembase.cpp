@@ -1058,6 +1058,14 @@ QVariant ItemBase::itemChange(QGraphicsItem::GraphicsItemChange change, const QV
 			if (m_partLabel) {
 				m_partLabel->ownerSelected(value.toBool());
 			}
+			if (hasBendableLeg() && !value.toBool()) {
+				foreach (QGraphicsItem * item, childItems()) {
+					if (item->isSelected()) {
+						return QVariant(true);
+					}
+				}
+			}
+			
 			break;
 		default:
 			break;

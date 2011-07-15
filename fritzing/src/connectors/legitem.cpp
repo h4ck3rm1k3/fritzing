@@ -111,7 +111,7 @@ LegItem::LegItem(QGraphicsItem * parent) : QGraphicsLineItem(parent)
 {
 	setLine(0, 0, 0, 0);
 	setVisible(true);
-	setFlag(QGraphicsItem::ItemIsSelectable, false);
+	setFlag(QGraphicsItem::ItemIsSelectable, true);
 	setFlag(QGraphicsItem::ItemIsMovable, true);
 	setAcceptedMouseButtons(ALLMOUSEBUTTONS);
 	setAcceptHoverEvents(true);
@@ -175,3 +175,27 @@ bool LegItem::remapItemPos(QEvent *event, QGraphicsItem *item)
 	return false;
 }
 
+void LegItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+	// never draw selection outline
+	Q_UNUSED(option);
+	Q_UNUSED(widget);
+    painter->setPen(pen());
+    painter->drawLine(line());
+
+}
+
+QVariant LegItem::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant & value)
+{
+	switch (change) {
+		case QGraphicsItem::ItemSelectedChange:
+			if (value.toBool()) {
+				parentItem()->setSelected(true);
+			}
+			break;
+		default:
+			break;
+	}
+
+	return QGraphicsLineItem::itemChange(change, value);
+}

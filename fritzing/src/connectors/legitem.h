@@ -28,6 +28,7 @@ $Date$
 #define LEGITEM_H
 
 #include <QGraphicsLineItem>
+#include <QVariant>
 
 class LegItem : public QGraphicsLineItem
 {
@@ -39,6 +40,8 @@ public:
 protected:
 	bool sceneEvent(QEvent *event);
 	bool remapItemPos(QEvent *event, QGraphicsItem *item);
+	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+	QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant & value);
 
 };
 
