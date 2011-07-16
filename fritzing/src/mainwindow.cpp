@@ -186,7 +186,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	m_statusBar->setSizeGripEnabled(false);
 
 	QSettings settings;
-	m_locationLabelInches = settings.value("LocationInches", QVariant(true)).toBool();
+	m_locationLabelUnits = settings.value("LocationInches", "in").toString();
 	m_orderFabEnabled = settings.value(ORDERFABENABLED, QVariant(false)).toBool();
 
 	m_locationLabel = new ClickableLabel("", this);
@@ -2565,15 +2565,20 @@ void MainWindow::cursorLocationSlot(qreal xinches, qreal yinches)
 		QString units;
 		qreal x, y;
 
-		if (m_locationLabelInches) {
-			units = "in";
-			x = xinches;
-			y = yinches;
-		}
-		else {
+		if (m_locationLabelUnits.compare("mm") == 0) {
 			units = "mm";
 			x = xinches * 25.4;
 			y = yinches * 25.4;
+		}
+		else if (m_locationLabelUnits.compare("px") == 0) {
+			units = "px";
+			x = xinches * FSvgRenderer::printerScale();
+			y = yinches * FSvgRenderer::printerScale();
+		}
+		else {
+			units = "in";
+			x = xinches;
+			y = yinches;
 		}
 
 		m_locationLabel->setText(tr("%1 %2 %3")
@@ -2585,10 +2590,22 @@ void MainWindow::cursorLocationSlot(qreal xinches, qreal yinches)
 
 void MainWindow::locationLabelClicked()
 {
-	m_locationLabelInches = !m_locationLabelInches;
+		if (m_locationLabelUnits.compare("mm") == 0) {
+			m_locationLabelUnits = "px";
+		}
+		else if (m_locationLabelUnits.compare("px") == 0) {
+			m_locationLabelUnits = "in";
+		}
+		else if (m_locationLabelUnits.compare("in") == 0) {
+			m_locationLabelUnits = "mm";
+		}
+		else {
+			m_locationLabelUnits = "in";
+		}
+
 		
 	QSettings settings;
-	settings.setValue("LocationInches", QVariant(m_locationLabelInches));
+	settings.setValue("LocationInches", QVariant(m_locationLabelUnits));
 }
 
 void MainWindow::filenameIfSlot(QString & filename)

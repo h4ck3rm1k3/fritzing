@@ -101,10 +101,7 @@ void PartsEditorConnectorsConnectorItem::init(bool resizable) {
 
 	setFlag(QGraphicsItem::ItemIsMovable, true);
 	setFlag(QGraphicsItem::ItemIsSelectable, true);
-
-#if QT_VERSION >= 0x040600
-		this->setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
-#endif
+	this->setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
 
 	setAcceptHoverEvents(resizable);
 	m_showErrorIcon = false;

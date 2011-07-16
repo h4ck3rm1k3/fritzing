@@ -108,21 +108,26 @@ public:
 	qreal minDimension();
 	void setHybrid(bool);
 	bool isHybrid();
-	void setBendableLeg(QColor color, qreal strokeWidth);
-	bool hasBendableLeg();
 	void setBigDot(bool);
 	bool isBigDot();
 	bool isDraggingLeg();
 	ConnectorItem * findConnectorUnder(bool useTerminalPoint, bool allowAlready, const QList<ConnectorItem *> & exclude, bool displayDragTooltip, ConnectorItem * other);
-	ConnectorItem * releaseDrag();		
+	ConnectorItem * releaseDrag();	
+
+	// bendable leg functions	
+	void setBendableLeg(QColor color, qreal strokeWidth);
+	bool hasBendableLeg() const;
 	void setLegLine(QLineF line);
 	QLineF legLine();
+	QLineF parentAdjustedLegLine() const;
 	QLineF sceneAdjustedLegLine(qreal & width, QString & colorString);
+	QLineF sceneAdjustedLegLine();
 	void prepareToStretch(bool activeStretch);
 	void stretchBy(QPointF howMuch);
 	void stretchDone(QLineF & oldLine, QLineF & newLine);
 	void transformDone(QTransform & transform, QPointF center, QLineF & oldLine, QLineF & newLine);
 	QRectF legSceneBoundingRect();
+	QPen legPen() const;
 
 protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );

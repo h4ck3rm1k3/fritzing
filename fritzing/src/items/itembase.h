@@ -187,10 +187,12 @@ public:
 	virtual bool rotation45Allowed();
 	void ensureUniqueTitle(const QString &title, bool force);
 	virtual void setDropOffset(QPointF offset);
-	bool hasBendableLeg();
+	bool hasBendableLeg() const;
 	bool sceneEvent(QEvent *event);
 	void clearConnectorItemCache();
 	const QList<ConnectorItem *> & cachedConnectorItems();
+	const QList<ConnectorItem *> & cachedConnectorItemsConst() const;
+
 
 public:
 	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth, bool & negativeOffsetRect);

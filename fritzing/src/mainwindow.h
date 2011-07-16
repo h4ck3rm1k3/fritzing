@@ -701,7 +701,7 @@ protected:
 	QPointer<class FileProgressDialog> m_fileProgressDialog;
 	QPointer<class ZoomSlider> m_zoomSlider;
 	QPointer<QLabel> m_locationLabel;
-	bool m_locationLabelInches;
+	QString m_locationLabelUnits;
 
 	QByteArray m_externalProcessOutput;
 

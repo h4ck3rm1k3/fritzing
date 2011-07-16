@@ -97,19 +97,12 @@ void GraphicsSvgLineItem::setLine(const QLineF &line)
     update();
 }
 
-/*!
-    \fn void GraphicsSvgLineItem::setLine(qreal x1, qreal y1, qreal x2, qreal y2)
-    \overload
 
-    Sets the item's line to be the line between (\a x1, \a y1) and (\a
-    x2, \a y2).
+QRectF GraphicsSvgLineItem::boundingRectWithoutLegs() const
+{
+	return boundingRect();
+}
 
-    This is the same as calling \c {setLine(QLineF(x1, y1, x2, y2))}.
-*/
-
-/*!
-    \reimp
-*/
 QRectF GraphicsSvgLineItem::boundingRect() const
 {
 	if (m_hasLine) {
@@ -198,7 +191,7 @@ void GraphicsSvgLineItem::paint(QPainter *painter, const QStyleOptionGraphicsIte
 
 		// Qt's SVG renderer's defaultSize is not correct when the svg has a fractional pixel size
 		Q_UNUSED(widget);
-		renderer()->render(painter, boundingRect());
+		renderer()->render(painter, boundingRectWithoutLegs());
 
 		if (option->state & QStyle::State_Selected) {
 			qt_graphicsItem_highlightSelected(this, painter, option, boundingRect(), hoverShape(), NULL);

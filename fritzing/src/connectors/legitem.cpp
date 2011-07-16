@@ -68,13 +68,10 @@ TODO:
 
 	* click selection behavior should be as if selecting the part
 
+	* drag selection should work as normal
+
 	move behavior: freeze the leg in the current position and drag the rest of the part along
 		this may break a connection for the captured leg but not the other
-
-	hover: the legs should highlight somehow: 
-		how about a grey area like the rest of the part, but just around the legs, not filling in the whole space
-
-	drag selection should work as normal
 
 	bendable drag when part is stretched between two or more parts, 
 			some not being dragged correctly
@@ -85,7 +82,7 @@ TODO:
 		do not disconnect
 		probably needs a matrix inversion, or can I just use mapToScene & mapToParent in order to hook the legs back up?
 
-	clean up pixel turds
+	* clean up pixel turds
 
 
 	fzp just has bendable and max length in units
@@ -111,68 +108,17 @@ LegItem::LegItem(QGraphicsItem * parent) : QGraphicsLineItem(parent)
 {
 	setLine(0, 0, 0, 0);
 	setVisible(true);
-	setFlag(QGraphicsItem::ItemIsSelectable, true);
-	setFlag(QGraphicsItem::ItemIsMovable, true);
-	setAcceptedMouseButtons(ALLMOUSEBUTTONS);
-	setAcceptHoverEvents(true);
-	setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
+	setFlag(QGraphicsItem::ItemIsSelectable, false);
+	setFlag(QGraphicsItem::ItemIsMovable, false);
+	setAcceptedMouseButtons(Qt::NoButton);
+	setAcceptHoverEvents(false);
+	setFlag(QGraphicsItem::ItemSendsGeometryChanges, false);
 	this->setZValue(-999);			// keep the connector item above this
 	
 }
 
 LegItem::~LegItem()
 {
-}
-
-bool LegItem::sceneEvent(QEvent *event)
-{
-	if (remapItemPos(event, parentItem())) {
-		return ((ItemBase *) parentItem())->sceneEvent(event);
-	}
-
-	return QGraphicsLineItem::sceneEvent(event);	
-}
-
-bool LegItem::remapItemPos(QEvent *event, QGraphicsItem *item)
-{
-	// copied from QGraphicsItemPrivate::remapItemPos
-
-    switch (event->type()) {
-    case QEvent::GraphicsSceneMouseMove:
-    case QEvent::GraphicsSceneMousePress:
-    case QEvent::GraphicsSceneMouseRelease:
-    case QEvent::GraphicsSceneMouseDoubleClick: {
-        QGraphicsSceneMouseEvent *mouseEvent = static_cast<QGraphicsSceneMouseEvent *>(event);
-        mouseEvent->setPos(item->mapFromItem(this, mouseEvent->pos()));
-        mouseEvent->setLastPos(item->mapFromItem(this, mouseEvent->pos()));
-        for (int i = 0x1; i <= 0x10; i <<= 1) {
-            if (mouseEvent->buttons() & i) {
-                Qt::MouseButton button = Qt::MouseButton(i);
-                mouseEvent->setButtonDownPos(button, item->mapFromItem(this, mouseEvent->buttonDownPos(button)));
-            }
-        }
-        return true;
-    }
-    case QEvent::GraphicsSceneWheel: {
-        QGraphicsSceneWheelEvent *wheelEvent = static_cast<QGraphicsSceneWheelEvent *>(event);
-        wheelEvent->setPos(item->mapFromItem(this, wheelEvent->pos()));
-        return true;
-    }
-    case QEvent::GraphicsSceneContextMenu: {
-        QGraphicsSceneContextMenuEvent *contextEvent = static_cast<QGraphicsSceneContextMenuEvent *>(event);
-        contextEvent->setPos(item->mapFromItem(this, contextEvent->pos()));
-        return true;
-    }
-    case QEvent::GraphicsSceneHoverMove: {
-        QGraphicsSceneHoverEvent *hoverEvent = static_cast<QGraphicsSceneHoverEvent *>(event);
-        hoverEvent->setPos(item->mapFromItem(this, hoverEvent->pos()));
-        return true;
-    }
-    default:
-        break;
-    }
-
-	return false;
 }
 
 void LegItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -183,19 +129,4 @@ void LegItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     painter->setPen(pen());
     painter->drawLine(line());
 
-}
-
-QVariant LegItem::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant & value)
-{
-	switch (change) {
-		case QGraphicsItem::ItemSelectedChange:
-			if (value.toBool()) {
-				parentItem()->setSelected(true);
-			}
-			break;
-		default:
-			break;
-	}
-
-	return QGraphicsLineItem::itemChange(change, value);
 }

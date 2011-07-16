@@ -53,6 +53,7 @@ public:
     	{ setLine(QLineF(x1, y1, x2, y2)); }
 
     QRectF boundingRect() const;
+	virtual QRectF boundingRectWithoutLegs() const;
     QPainterPath shape() const;
     virtual QPainterPath hoverShape() const;
 	void setShape(QPainterPath &);

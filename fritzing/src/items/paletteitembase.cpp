@@ -55,9 +55,7 @@ PaletteItemBase::PaletteItemBase(ModelPart * modelPart, ViewIdentifierClass::Vie
  	m_blockItemSelectedChange = false;
 	this->setPos(viewGeometry.loc());
     setFlag(QGraphicsItem::ItemIsSelectable, true);
-#if QT_VERSION >= 0x040600
-	setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
-#endif
+	setFlag(QGraphicsItem::ItemSendsGeometryChanges, false);
 	setAcceptHoverEvents(true);
 
 	if (hasPartNumberProperty()) {
@@ -71,9 +69,58 @@ PaletteItemBase::PaletteItemBase(ModelPart * modelPart, ViewIdentifierClass::Vie
 	}
 }
 
+QRectF PaletteItemBase::boundingRectWithoutLegs() const
+{
+	return QRectF(0, 0, m_size.width(), m_size.height());
+}
+
 QRectF PaletteItemBase::boundingRect() const
 {
-    return QRectF(0, 0, m_size.width(), m_size.height());
+	if (!hasBendableLeg()) {
+		return QRectF(0, 0, m_size.width(), m_size.height());
+	}
+
+	qreal l = 0;
+	qreal t = 0;
+	qreal r = m_size.width();
+	qreal b = m_size.height();
+
+	foreach (ConnectorItem * connectorItem, cachedConnectorItemsConst()) {
+		if (!connectorItem->hasBendableLeg()) continue;
+
+		QLineF line = connectorItem->parentAdjustedLegLine();
+		if (line.p1().x() < l) l = line.p1().x();
+		if (line.p2().x() < l) l = line.p2().x();
+		if (line.p1().x() > r) r = line.p1().x();
+		if (line.p2().x() > r) r = line.p2().x();
+		if (line.p1().y() < t) t = line.p1().y();
+		if (line.p2().y() < t) t = line.p2().y();
+		if (line.p1().y() > b) b = line.p1().y();
+		if (line.p2().y() > b) b = line.p2().y();
+	}
+
+	return QRectF(l, t, r - l, b - t);
+}
+
+QPainterPath PaletteItemBase::hoverShape() const
+{
+	if (!hasBendableLeg()) return ItemBase::hoverShape();
+
+	QPainterPath path;
+    path.addRect(0, 0, m_size.width(), m_size.height());
+
+	foreach (ConnectorItem * connectorItem, cachedConnectorItemsConst()) {
+		if (connectorItem->hasBendableLeg()) {
+			QLineF l = connectorItem->parentAdjustedLegLine();
+			QPainterPath linePath;
+			linePath.moveTo(l.p1());
+			linePath.lineTo(l.p2());
+			QPen pen = connectorItem->legPen();
+			path.addPath(GraphicsSvgLineItem::qt_graphicsItem_shapeFromPath(linePath, pen, pen.widthF() * 2));
+		}
+	}
+
+	return path;
 }
 
 QPainterPath PaletteItemBase::shape() const
@@ -84,24 +131,21 @@ QPainterPath PaletteItemBase::shape() const
 
 	// TODO: figure out real shape of svg
     QPainterPath path;
-
-	// returns a custom shape for the now-obsolete arduino board, which allows some kind of click-thru
-	// need to clean this up...
-
-	if ((m_viewLayerID == ViewLayer::Copper0) && 
-		((itemType() == ModelPart::Board) || (itemType() == ModelPart::ResizableBoard)) && 
-		(m_modelPart->moduleID().compare("1234ABDE24_ST") == 0)) 
-	{
-		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! hack alert !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! eventually this should be replaced by someting in the actual fzp file
-		// hack for testing click through on the arduino
-		path.addRect(m_size.width() * 0.25, 0, 3 * m_size.width() / 4, m_size.height() / 10);
-		path.addRect(m_size.width() * 0.5, 9 * m_size.height() / 10, m_size.width() * 0.5, m_size.height() / 10);
-		return path;
-	}
-
     path.addRect(0, 0, m_size.width(), m_size.height());
-    return path;
+
+	if (!hasBendableLeg()) return path;
+
+	foreach (ConnectorItem * connectorItem, cachedConnectorItemsConst()) {
+		if (connectorItem->hasBendableLeg()) {
+			QLineF l = connectorItem->parentAdjustedLegLine();
+			QPainterPath linePath;
+			linePath.moveTo(l.p1());
+			linePath.lineTo(l.p2());
+			QPen pen = connectorItem->legPen();
+			path.addPath(GraphicsSvgLineItem::qt_graphicsItem_shapeFromPath(linePath, pen, pen.widthF()));
+		}
+	}
+	return path;
 }
 
 void PaletteItemBase::saveGeometry() {

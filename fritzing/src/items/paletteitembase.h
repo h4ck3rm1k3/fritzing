@@ -61,10 +61,12 @@ public:
 	virtual void mousePressEvent(PaletteItemBase * originalItem, QGraphicsSceneMouseEvent *event);
 	//bool isBuriedConnectorHit(QGraphicsSceneMouseEvent *event);
 	QRectF boundingRect() const;
+	virtual QRectF boundingRectWithoutLegs() const;
 	void setSharedRendererEx(class FSvgRenderer *);
 	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi);
 	virtual bool canEditPart();
 	QPainterPath shape() const;
+	QPainterPath hoverShape() const;
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
 	void setProp(const QString & prop, const QString & value);

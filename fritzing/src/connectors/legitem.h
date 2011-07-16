@@ -38,10 +38,7 @@ public:
 	~LegItem();
 
 protected:
-	bool sceneEvent(QEvent *event);
-	bool remapItemPos(QEvent *event, QGraphicsItem *item);
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-	QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant & value);
 
 };
 

@@ -631,7 +631,7 @@ void ConnectorItem::setBendableLeg(QColor color, qreal strokeWidth) {
 
 	m_bendableLeg = true;
 	setFlag(QGraphicsItem::ItemIsMovable, true);
-	setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
+	setFlag(QGraphicsItem::ItemSendsGeometryChanges, false);
 	setAcceptedMouseButtons(Qt::LeftButton);
 
 	QRectF r = rect();
@@ -660,7 +660,7 @@ void ConnectorItem::setBendableLeg(QColor color, qreal strokeWidth) {
 
 }
 
-bool ConnectorItem::hasBendableLeg() {
+bool ConnectorItem::hasBendableLeg() const {
 	return m_bendableLeg;
 }
 
@@ -1646,6 +1646,30 @@ QLineF ConnectorItem::sceneAdjustedLegLine(qreal & width, QString & colorString)
 	return QLineF(p1, p2);
 }
 
+QLineF ConnectorItem::sceneAdjustedLegLine() {
+	if (m_legItem == NULL) return QLineF(0,0,0,0);
+
+	QPointF p1 = m_legItem->mapToScene(m_legItem->line().p1());
+	QPointF p2 = m_legItem->mapToScene(m_legItem->line().p2());
+
+	return QLineF(p1, p2);
+}
+
+QLineF ConnectorItem::parentAdjustedLegLine() const {
+	if (m_legItem == NULL) return QLineF(0,0,0,0);
+
+	QPointF p1 = m_legItem->mapToParent(m_legItem->line().p1());
+	QPointF p2 = m_legItem->mapToParent(m_legItem->line().p2());
+
+	return QLineF(p1, p2);
+}
+
+QPen ConnectorItem::legPen() const {
+	if (m_legItem == NULL) return QPen();
+
+	return m_legItem->pen();
+}
+
 void ConnectorItem::prepareToStretch(bool activeStretch) {
 	m_activeStretch = activeStretch;
 	QPointF p = pos();
@@ -1669,7 +1693,6 @@ void ConnectorItem::stretchBy(QPointF howMuch) {
 		p2 = mfs + howMuch + m_terminalPoint - m_originalPointOnParent;
 	}
 	m_legItem->setLine(0, 0, p2.x(), p2.y());
-
 }
 
 void ConnectorItem::stretchDone(QLineF & oldLine, QLineF & newLine) {

@@ -1058,13 +1058,6 @@ QVariant ItemBase::itemChange(QGraphicsItem::GraphicsItemChange change, const QV
 			if (m_partLabel) {
 				m_partLabel->ownerSelected(value.toBool());
 			}
-			if (hasBendableLeg() && !value.toBool()) {
-				foreach (QGraphicsItem * item, childItems()) {
-					if (item->isSelected()) {
-						return QVariant(true);
-					}
-				}
-			}
 			
 			break;
 		default:
@@ -1116,7 +1109,7 @@ void ItemBase::flipItem(Qt::Orientations orientation) {
 }
 
 void ItemBase::transformItem(const QTransform & currTransf) {
-	QRectF rect = this->boundingRect();
+	QRectF rect = this->boundingRectWithoutLegs();
 	qreal x = rect.width() / 2.0;
 	qreal y = rect.height() / 2.0;
 	QTransform transf = QTransform().translate(-x, -y) * currTransf * QTransform().translate(x, y);
@@ -1654,7 +1647,7 @@ void ItemBase::calcRotation(QTransform & rotation, QPointF center, ViewGeometry 
 {
 	QPointF dp = center - pos();
 	QTransform tp = QTransform().translate(-dp.x(), -dp.y()) * rotation * QTransform().translate(dp.x(), dp.y());
-	QPointF dc = boundingRect().center();
+	QPointF dc = boundingRectWithoutLegs().center();
 	QTransform tc = QTransform().translate(-dc.x(), -dc.y()) * rotation * QTransform().translate(dc.x(), dc.y());
 	QPointF mp = tp.map(QPointF(0,0));
 	QPointF mc = tc.map(QPointF(0,0));
@@ -1748,7 +1741,7 @@ void ItemBase::setDropOffset(QPointF)
 {
 }
 
-bool ItemBase::hasBendableLeg()
+bool ItemBase::hasBendableLeg() const
 {
 	if (m_modelPart == NULL) return false;
 
@@ -1773,8 +1766,12 @@ const QList<ConnectorItem *> & ItemBase::cachedConnectorItems()
 	return m_cachedConnectorItems;
 }
 
+const QList<ConnectorItem *> & ItemBase::cachedConnectorItemsConst() const 
+{
+	return m_cachedConnectorItems;
+}
+
 void ItemBase::clearConnectorItemCache() 
 {
 	m_cachedConnectorItems.clear();
 }
-
