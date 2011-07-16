@@ -505,6 +505,11 @@ void ConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 
 	if (m_bendableLeg) {
 		if (!(event->modifiers() & (Qt::ControlModifier | Qt::AltModifier | Qt::MetaModifier))) {
+			if (attachedTo()->moveLock()) {
+				event->ignore();
+				return;
+			}
+
 			m_draggingLeg = true;
 			m_oldLine = m_legItem->line();
 			QGraphicsRectItem::mousePressEvent(event);

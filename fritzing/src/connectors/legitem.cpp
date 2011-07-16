@@ -81,14 +81,14 @@ TODO:
 
 	* bendable drag when part is stretched between two or more parts, some not being dragged correctly
 
-	swapping parts with bendable legs, can assume pins will always line up (unless legs can have diffent max distances)
+	* swapping parts with bendable legs, can assume pins will always line up (unless legs can have diffent max distances)
 		* no-no
 		* no-yes
 		* yes-no
 		yes-yes
 		original is rotated
 
-	if a part is locked, dragging the leg is disabled
+	* if a part is locked, dragging the leg is disabled
 
 	move behavior: what to do when dragging a leg?
 		need some kind of fast disconnect behavior
