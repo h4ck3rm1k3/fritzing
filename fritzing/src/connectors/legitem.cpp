@@ -72,24 +72,26 @@ TODO:
 
 	* clean up pixel turds
 
-	make sure all leg functions work when itembase is rotated
+	* rotate/flip
+		do not disconnect
+		handle this as an after-the-fact undocommand
+		should transform around center of the itemBase with no legs
 
-	move behavior: what to do when dragging a leg?
-		need some kind of fast disconnect behavior
+	* make sure all leg functions work when itembase is rotated
 
-	bendable drag when part is stretched between two or more parts, some not being dragged correctly
+	* bendable drag when part is stretched between two or more parts, some not being dragged correctly
 
 	swapping parts with bendable legs, can assume pins will always line up (unless legs can have diffent max distances)
 		* no-no
 		* no-yes
 		* yes-no
-		* yes-yes
+		yes-yes
 		original is rotated
 
-	rotate/flip
-		do not disconnect
-		handle this as an after-the-fact undocommand
-		should transform around center of the itemBase with no legs
+	if a part is locked, dragging the leg is disabled
+
+	move behavior: what to do when dragging a leg?
+		need some kind of fast disconnect behavior
 
 	fzp just has bendable and max length in units
 		put the leg definition as a line in the svg, with connectorNleg
@@ -125,7 +127,7 @@ LegItem::LegItem(QGraphicsItem * parent) : QGraphicsLineItem(parent)
 
 LegItem::~LegItem()
 {
-	//DebugDialog::debug("deleting legitem");
+	DebugDialog::debug("deleting legitem");
 }
 
 void LegItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

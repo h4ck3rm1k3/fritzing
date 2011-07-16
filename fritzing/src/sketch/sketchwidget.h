@@ -405,7 +405,7 @@ protected:
 	void checkFit(ModelPart * newModelPart, ItemBase * itemBase, long newID,
 								QHash<ConnectorItem *, Connector *> & found, QList<ConnectorItem *> & notFound,
 								QHash<ConnectorItem *, ConnectorItem *> & m2f, QHash<ConnectorItem *, Connector *> & byWire,
-								QUndoCommand * parentCommand);
+								QStringList & legs, QUndoCommand * parentCommand);
 	void changeLegAux(long fromID, const QString & fromConnectorID, QLineF line, bool reset);
 
 

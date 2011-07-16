@@ -30,8 +30,9 @@ $Date$
 #include <QGraphicsLineItem>
 #include <QVariant>
 
-class LegItem : public QGraphicsLineItem
+class LegItem : public QObject, public QGraphicsLineItem
 {
+Q_OBJECT
 
 public:
 	LegItem(QGraphicsItem * parent);

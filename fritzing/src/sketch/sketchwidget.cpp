@@ -5129,8 +5129,9 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 	}
 
 	QHash<ConnectorItem *, Connector *> byWire;
+	QStringList legs;
 	if (master && m2f.count() > 0 && (m_viewIdentifier == ViewIdentifierClass::BreadboardView)) {
-		checkFit(newModelPart, itemBase, newID, found, notFound, m2f, byWire, parentCommand);
+		checkFit(newModelPart, itemBase, newID, found, notFound, m2f, byWire, legs, parentCommand);
 	}
 
 	fromConnectorItems.append(other);
@@ -5178,12 +5179,18 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 			}
 		}
 	}
+
+	QLineF line(0,0,0,0);
+	foreach (QString connectorID, legs) {
+		// must be invoked after all the connections have been dealt with
+		new ChangeLegCommand(this, newID, connectorID, line, line, parentCommand);
+	}
 }
 
 void SketchWidget::checkFit(ModelPart * newModelPart, ItemBase * itemBase, long newID,
 							QHash<ConnectorItem *, Connector *> & found, QList<ConnectorItem *> & notFound,
 							QHash<ConnectorItem *, ConnectorItem *> & m2f, QHash<ConnectorItem *, Connector *> & byWire, 
-							QUndoCommand * parentCommand)
+							QStringList & legs, QUndoCommand * parentCommand)
 {
 	if (found.count() == 0) return;
 
@@ -5255,6 +5262,12 @@ void SketchWidget::checkFit(ModelPart * newModelPart, ItemBase * itemBase, long 
 
 	if (allCorrespond) {
 		if (tempItemBase->cachedConnectorItems().count() == found.count()) {
+			if (tempItemBase->hasBendableLeg()) {
+				foreach (ConnectorItem * connectorItem, tempItemBase->cachedConnectorItems()) {
+					legs.append(connectorItem->connectorSharedID());
+				}
+			}
+
 			// it's a clean swap: all connectors line up
 			delete tempItemBase;
 			return;
@@ -5323,6 +5336,14 @@ void SketchWidget::checkFit(ModelPart * newModelPart, ItemBase * itemBase, long 
 
 
 
+		}
+		if (tempItemBase->hasBendableLeg()) {
+			foreach (ConnectorItem * connectorItem, newConnections) {
+				legs.append(connectorItem->connectorSharedID());
+			}
+			foreach (ConnectorItem * connectorItem, foundNews.values()) {
+				legs.append(connectorItem->connectorSharedID());
+			}
 		}
 
 		delete tempItemBase;

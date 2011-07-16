@@ -34,6 +34,7 @@ $Date$
 #include "../sketch/infographicsview.h"
 #include "../connectors/connector.h"
 #include "../connectors/bus.h"
+#include "../connectors/legitem.h"
 #include "partlabel.h"
 #include "../layerattributes.h"
 #include "../fsvgrenderer.h"

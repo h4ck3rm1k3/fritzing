@@ -166,7 +166,7 @@ protected:
 	bool m_bendableLeg;
 	bool m_bigDot;
 	QPointF m_originalPointOnParent;
-	LegItem * m_legItem;
+	QPointer<LegItem> m_legItem;
 	QLineF m_oldLine;
 	bool m_draggingLeg;
 	bool m_activeStretch;
