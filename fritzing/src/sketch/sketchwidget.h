@@ -25,7 +25,6 @@ $Date$
 ********************************************************************/
 
 
-
 #ifndef SKETCHWIDGET_H
 #define SKETCHWIDGET_H
 
@@ -91,6 +90,7 @@ public:
     void selectDeselectAllCommand(bool state);
     void changeWire(long fromID, QLineF line, QPointF pos, bool updateConnections, bool updateRatsnest);   
     void changeLeg(long fromID, const QString & connectorID, QLineF line);   
+    void recalcLeg(long fromID, const QString & connectorID, QLineF line);   
     void cut();
     void copy();
     void setPaletteModel(PaletteModel *);
@@ -325,7 +325,6 @@ protected:
 
 	void addViewLayersAux(const LayerList &layers, float startZ = 1.5);
 	void tempConnectWire(Wire * wire, ConnectorItem * from, ConnectorItem * to);
-	void rotateFlip(qreal degrees, Qt::Orientations orientation);
 	virtual bool disconnectFromFemale(ItemBase * item, QHash<long, ItemBase *> & savedItems, ConnectorPairHash &, bool doCommand, bool disconnectBendable, QUndoCommand * parentCommand);
 	void clearDragWireTempCommand();
 	bool draggingWireEnd();
@@ -407,6 +406,7 @@ protected:
 								QHash<ConnectorItem *, Connector *> & found, QList<ConnectorItem *> & notFound,
 								QHash<ConnectorItem *, ConnectorItem *> & m2f, QHash<ConnectorItem *, Connector *> & byWire,
 								QUndoCommand * parentCommand);
+	void changeLegAux(long fromID, const QString & fromConnectorID, QLineF line, bool reset);
 
 
 protected:

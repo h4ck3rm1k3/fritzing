@@ -110,14 +110,15 @@ public:
 	bool isHybrid();
 	void setBigDot(bool);
 	bool isBigDot();
-	bool isDraggingLeg();
 	ConnectorItem * findConnectorUnder(bool useTerminalPoint, bool allowAlready, const QList<ConnectorItem *> & exclude, bool displayDragTooltip, ConnectorItem * other);
 	ConnectorItem * releaseDrag();	
 
 	// bendable leg functions	
+	bool isDraggingLeg();
 	void setBendableLeg(QColor color, qreal strokeWidth);
 	bool hasBendableLeg() const;
 	void setLegLine(QLineF line);
+	void resetLegLine(QLineF line);
 	QLineF legLine();
 	QLineF parentAdjustedLegLine() const;
 	QLineF sceneAdjustedLegLine(qreal & width, QString & colorString);
@@ -125,7 +126,6 @@ public:
 	void prepareToStretch(bool activeStretch);
 	void stretchBy(QPointF howMuch);
 	void stretchDone(QLineF & oldLine, QLineF & newLine);
-	void transformDone(QTransform & transform, QPointF center, QLineF & oldLine, QLineF & newLine);
 	QRectF legSceneBoundingRect();
 	QPen legPen() const;
 

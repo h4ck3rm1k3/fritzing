@@ -464,7 +464,7 @@ void ChangeLegCommand::undo()
 
 void ChangeLegCommand::redo()
 {
-    m_sketchWidget->changeLeg(m_fromID, m_fromConnectorID, m_newLine);
+    m_sketchWidget->recalcLeg(m_fromID, m_fromConnectorID, m_newLine);
 }
 
 QString ChangeLegCommand::getParamString() const {

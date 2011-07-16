@@ -1178,13 +1178,24 @@ void SketchWidget::changeWire(long fromID, QLineF line, QPointF pos, bool update
 
 void SketchWidget::changeLeg(long fromID, const QString & fromConnectorID, QLineF line)
 {
-	DebugDialog::debug(QString("change leg %1 %2; %3,%4,%5,%6")
+	changeLegAux(fromID, fromConnectorID, line, false);
+}
+
+void SketchWidget::recalcLeg(long fromID, const QString & fromConnectorID, QLineF line)
+{
+	changeLegAux(fromID, fromConnectorID, line, true);
+}
+
+void SketchWidget::changeLegAux(long fromID, const QString & fromConnectorID, QLineF line, bool reset)
+{
+	DebugDialog::debug(QString("%7 leg %1 %2; %3,%4,%5,%6")
 			.arg(fromID)
 			.arg(fromConnectorID)
 			.arg(line.x1())
 			.arg(line.y1())
 			.arg(line.x2())
-			.arg(line.y2()) );
+			.arg(line.y2()) 
+			.arg(reset ? "recalc" : "change") );
 
 	ItemBase * fromItem = findItem(fromID);
 	if (fromItem == NULL) {
@@ -1198,7 +1209,12 @@ void SketchWidget::changeLeg(long fromID, const QString & fromConnectorID, QLine
 		return;
 	}
 
-	fromConnectorItem->setLegLine(line);
+	if (reset) {
+		fromConnectorItem->resetLegLine(line);
+	}
+	else {
+		fromConnectorItem->setLegLine(line);
+	}
 	fromItem->updateConnections(fromConnectorItem);
 }
 
@@ -2842,15 +2858,6 @@ bool SketchWidget::checkMoved()
 		}
 	}
 
-
-	foreach(ItemBase * itemBase, m_stretchingLegs.keys()) {
-		foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
-			QLineF oldLine, newLine;
-			connectorItem->stretchDone(oldLine, newLine);
-			new ChangeLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), oldLine, newLine, parentCommand);
-		}
-	}
-
 	QList<ConnectorItem *> restoreConnectorItems;
 	foreach (ItemBase * item, m_savedItems) {
 		if (item->itemType() == ModelPart::Wire) continue;
@@ -2875,6 +2882,15 @@ bool SketchWidget::checkMoved()
 	foreach (ConnectorItem * connectorItem, restoreConnectorItems) {
 		if (!connectorItem->marked()) {
 			connectorItem->restoreColor(false, 0, true);
+		}
+	}
+
+	// must restore legs after connections are restored
+	foreach(ItemBase * itemBase, m_stretchingLegs.keys()) {
+		foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
+			QLineF oldLine, newLine;
+			connectorItem->stretchDone(oldLine, newLine);
+			new ChangeLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), oldLine, newLine, parentCommand);
 		}
 	}
 
@@ -3017,9 +3033,6 @@ void SketchWidget::prepLegChange(ConnectorItem * from,  QLineF oldLine, QLineF n
 
 	new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
 
-	new ChangeLegCommand(this, fromID, fromConnectorID, oldLine, newLine, parentCommand);
-
-
 	QList< QPointer<ConnectorItem> > former = from->connectedToItems();
 
 	QString prefix;
@@ -3046,25 +3059,26 @@ void SketchWidget::prepLegChange(ConnectorItem * from,  QLineF oldLine, QLineF n
 			);
 
 
-		if (former.count() > 0) {
-			QList<ConnectorItem *> connectorItems;
-			connectorItems.append(from);
-			ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::TraceRatsnestFlags);
+	if (former.count() > 0) {
+		QList<ConnectorItem *> connectorItems;
+		connectorItems.append(from);
+		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::TraceRatsnestFlags);
 
-			foreach (ConnectorItem * formerConnectorItem, former) {
-				extendChangeConnectionCommand(BaseCommand::CrossView, from, formerConnectorItem, 
-					ViewLayer::specFromID(from->attachedToViewLayerID()),
-					false, parentCommand);
-				from->tempRemove(formerConnectorItem, false);
-				formerConnectorItem->tempRemove(from, false);
-			}
-
-		}
-		if (to != NULL) {
-			extendChangeConnectionCommand(BaseCommand::CrossView, from, to, ViewLayer::specFromID(from->attachedToViewLayerID()), true, parentCommand);
+		foreach (ConnectorItem * formerConnectorItem, former) {
+			extendChangeConnectionCommand(BaseCommand::CrossView, from, formerConnectorItem, 
+				ViewLayer::specFromID(from->attachedToViewLayerID()),
+				false, parentCommand);
+			from->tempRemove(formerConnectorItem, false);
+			formerConnectorItem->tempRemove(from, false);
 		}
 
+	}
+	if (to != NULL) {
+		extendChangeConnectionCommand(BaseCommand::CrossView, from, to, ViewLayer::specFromID(from->attachedToViewLayerID()), true, parentCommand);
+	}
 
+	// change leg after connections have been restored
+	new ChangeLegCommand(this, fromID, fromConnectorID, oldLine, newLine, parentCommand);
 
 	new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
 	m_undoStack->push(parentCommand);
@@ -3823,8 +3837,11 @@ void SketchWidget::rotateX(qreal degrees)
 	QRectF itemsBoundingRect;
 	// want the bounding rect of the original selected items, not all the items that are secondarily being rotated
 	foreach (QGraphicsItem * item, scene()->selectedItems()) {
+		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+		if (itemBase == NULL) continue;
+
 		itemsBoundingRect |= (item->transform() * QTransform().translate(item->x(), item->y()))
-                            .mapRect(item->boundingRect() /* | item->childrenBoundingRect() */);
+                            .mapRect(itemBase->boundingRectWithoutLegs() /* | item->childrenBoundingRect() */);
 	}
 
 	QPointF center = itemsBoundingRect.center();
@@ -3861,11 +3878,6 @@ void SketchWidget::rotateX(qreal degrees)
 			new RotateItemCommand(this, itemBase->id(), degrees, parentCommand);
 			new MoveItemCommand(this, itemBase->id(), vg2, vg2, true, parentCommand);
 
-			foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
-				QLineF oldLine, newLine;
-				connectorItem->transformDone(rotation, center, oldLine, newLine);
-				new ChangeLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), oldLine, newLine, parentCommand);
-			}
 		}
 		else {
 			Wire * wire = qobject_cast<Wire *>(itemBase);
@@ -3880,6 +3892,16 @@ void SketchWidget::rotateX(qreal degrees)
 			new ChangeWireCommand(this, wire->id(), vg1.line(), QLineF(QPointF(0,0), d1t - d0t), vg1.loc(), d0t + center, true, true, parentCommand);
 		}
 	}
+
+	// change legs after connections have been updated
+	foreach (ItemBase * itemBase, m_stretchingLegs.keys()) {
+		foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
+			QLineF oldLine, newLine;
+			connectorItem->stretchDone(oldLine, newLine);
+			new ChangeLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), oldLine, newLine, parentCommand);
+		}
+	}
+
 
 	foreach (Wire * wire, m_savedWires.keys()) {
 		ViewGeometry vg1 = wire->getViewGeometry();
@@ -3902,30 +3924,22 @@ void SketchWidget::rotateX(qreal degrees)
 	new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
 
 	m_undoStack->push(parentCommand);
-
-	
-
-	//rotateFlip(degrees, 0);
 }
 
-
-void SketchWidget::flip(Qt::Orientations orientation) {
-	rotateFlip(0, orientation);
-}
-
-void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
+void SketchWidget::flip(Qt::Orientations orientation) 
 {
-	// note: rotateFlip is now only called for flips; rotation uses a different path
-
 	if (!this->isVisible()) return;
 
 	clearHoldingSelectItem();
+	m_savedItems.clear();
+	m_savedWires.clear();
+	prepMove(NULL);
 
 	QList <QGraphicsItem *> items = scene()->selectedItems();
 	QList <ItemBase *> targets;
 
 	for (int i = 0; i < items.size(); i++) {
-		// can't rotate wires or layerkin (layerkin rotated indirectly)
+		// can't flip layerkin (layerkin flipped indirectly)
 		ItemBase *itemBase = ItemBase::extractTopLevelItemBase(items[i]);
 		if (itemBase == NULL) continue;
 
@@ -3936,20 +3950,13 @@ void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
 			case ModelPart::Unknown:
 			case ModelPart::Via:
 			case ModelPart::Hole:
-				continue;
 			case ModelPart::Board:
 			case ModelPart::ResizableBoard:
 			case ModelPart::Breadboard:
-				if (orientation != 0) {
-					// can't flip
-					continue;
-				}
+				continue;
 
 			default:
-				if (!itemBase->rotationAllowed()) {
-					continue;
-				}
-				if (qAbs(degrees) == 45 && !itemBase->rotation45Allowed()) {
+				if (!itemBase->canFlip(orientation)) {
 					continue;
 				}
 				break;
@@ -3962,10 +3969,9 @@ void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
 		return;
 	}
 
-	QString string = tr("%3 %2 (%1)")
+	QString string = tr("Flip %2 (%1)")
 			.arg(ViewIdentifierClass::viewIdentifierName(m_viewIdentifier))
-			.arg((targets.count() == 1) ? targets[0]->title() : QString::number(targets.count()) + " items" )
-			.arg((degrees != 0) ? tr("Rotate") : tr("Flip"));
+			.arg((targets.count() == 1) ? targets[0]->title() : QString::number(targets.count()) + " items" );
 
 	QUndoCommand * parentCommand = new QUndoCommand(string);
 
@@ -3981,11 +3987,15 @@ void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
 		}
 		// TODO: if item has female connectors, then apply transform to connected items
 
-		if (degrees != 0) {
-			new RotateItemCommand(this, item->id(), degrees, parentCommand);
-		}
-		else {
-			new FlipItemCommand(this, item->id(), orientation, parentCommand);
+		new FlipItemCommand(this, item->id(), orientation, parentCommand);
+	}
+
+	// change legs after connections have been updated
+	foreach (ItemBase * itemBase, m_stretchingLegs.keys()) {
+		foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
+			QLineF oldLine, newLine;
+			connectorItem->stretchDone(oldLine, newLine);
+			new ChangeLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), oldLine, newLine, parentCommand);
 		}
 	}
 
@@ -5229,11 +5239,13 @@ void SketchWidget::checkFit(ModelPart * newModelPart, ItemBase * itemBase, long 
 		return;
 	}
 
+
 	bool allCorrespond = true;
 	foreach (ConnectorItem * foundConnectorItem, foundNews.keys()) {
 		QPointF fp = foundPoints.value(foundConnectorItem) - foundAnchor;
-		QPointF np = newPoints.value(foundNews.value(foundConnectorItem)) - newAnchor;
-		if (qAbs(fp.x() - np.x()) >= CloseEnough || qAbs(fp.y() - np.y()) >= CloseEnough) {
+		ConnectorItem * newConnectorItem = foundNews.value(foundConnectorItem);
+		QPointF np = newPoints.value(newConnectorItem) - newAnchor;
+		if (!newConnectorItem->hasBendableLeg() && (qAbs(fp.x() - np.x()) >= CloseEnough || qAbs(fp.y() - np.y()) >= CloseEnough)) {
 			// pins can be off by a little
 			// but if even one connector is out of place, hook everything up by wires
 			allCorrespond = false;
@@ -5261,8 +5273,8 @@ void SketchWidget::checkFit(ModelPart * newModelPart, ItemBase * itemBase, long 
 			if (alreadyFits.contains(nci)) continue;
 			if (nci->connectorType() != Connector::Male) continue;
 
-			// TODO: this doesn't handle all scenarios.  For example, if a part with a female connector is
-			// on top of the breadboard
+			// TODO: this doesn't handle all scenarios.  For example, if another part with a female connector is
+			// on top of the breadboard, and would be in the way
 
 			QPointF p = nci->sceneAdjustedTerminalPoint(NULL) - newAnchor + foundAnchor;			// eventual position of this new connector
 			ConnectorItem * connectorUnder = NULL;

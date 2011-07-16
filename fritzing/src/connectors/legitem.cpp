@@ -70,20 +70,26 @@ TODO:
 
 	* drag selection should work as normal
 
-	move behavior: freeze the leg in the current position and drag the rest of the part along
-		this may break a connection for the captured leg but not the other
+	* clean up pixel turds
 
-	bendable drag when part is stretched between two or more parts, 
-			some not being dragged correctly
+	make sure all leg functions work when itembase is rotated
+
+	move behavior: what to do when dragging a leg?
+		need some kind of fast disconnect behavior
+
+	bendable drag when part is stretched between two or more parts, some not being dragged correctly
 
 	swapping parts with bendable legs, can assume pins will always line up (unless legs can have diffent max distances)
+		* no-no
+		* no-yes
+		* yes-no
+		* yes-yes
+		original is rotated
 
 	rotate/flip
 		do not disconnect
-		probably needs a matrix inversion, or can I just use mapToScene & mapToParent in order to hook the legs back up?
-
-	* clean up pixel turds
-
+		handle this as an after-the-fact undocommand
+		should transform around center of the itemBase with no legs
 
 	fzp just has bendable and max length in units
 		put the leg definition as a line in the svg, with connectorNleg
@@ -119,6 +125,7 @@ LegItem::LegItem(QGraphicsItem * parent) : QGraphicsLineItem(parent)
 
 LegItem::~LegItem()
 {
+	//DebugDialog::debug("deleting legitem");
 }
 
 void LegItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

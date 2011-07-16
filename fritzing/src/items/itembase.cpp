@@ -935,6 +935,17 @@ bool ItemBase::hasNonConnectors() {
 	return false;
 }
 
+bool ItemBase::canFlip(Qt::Orientations orientations) {
+	bool result = true;
+	if (orientations & Qt::Horizontal) {
+		result = result && m_canFlipHorizontal;
+	}
+	if (orientations & Qt::Vertical) {
+		result = result && m_canFlipVertical;
+	}
+	return result;
+}
+
 bool ItemBase::canFlipHorizontal() {
 	return m_canFlipHorizontal;
 }

@@ -123,6 +123,7 @@ public:
 	bool hasConnectors();
 	bool hasNonConnectors();
 	bool hasConnections();
+	bool canFlip(Qt::Orientations);
 	bool canFlipHorizontal();
 	void setCanFlipHorizontal(bool);
 	bool canFlipVertical();

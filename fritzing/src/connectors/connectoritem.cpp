@@ -1608,6 +1608,31 @@ ConnectorItem * ConnectorItem::releaseDrag() {
 	return result;
 }
 
+
+void ConnectorItem::resetLegLine(QLineF line) 
+{
+	if (!m_bendableLeg) return;
+	if (m_legItem == NULL) return;
+
+	ConnectorItem * target = NULL;
+	foreach (ConnectorItem * connectorItem, this->m_connectedTo) {
+		if (connectorItem->connectorType() == Connector::Female) {
+			target = connectorItem;
+			break;
+		}
+	}
+
+	if (target == NULL) {
+		setLegLine(line);
+		return;
+	}
+
+	QPointF p = parentItem()->mapFromScene(target->sceneAdjustedTerminalPoint(NULL));
+	this->setPos(p - m_terminalPoint);
+	QPointF q = m_legItem->pos();
+	m_legItem->setLine(0, 0, p.x() - q.x(), p.y() - q.y());
+}
+
 void ConnectorItem::setLegLine(QLineF line) 
 {
 	if (!m_bendableLeg) return;
@@ -1706,23 +1731,3 @@ QRectF ConnectorItem::legSceneBoundingRect() {
 	return m_legItem->sceneBoundingRect();
 }
 
-void ConnectorItem::transformDone(QTransform & transform, QPointF center, QLineF & oldLine, QLineF & newLine) {
-	// part is going to have a transform applied
-
-	// assumes legItem's line.pi() is always (0, 0)
-
-	oldLine = m_oldLine;
-
-	if (m_activeStretch) {
-		// the end of the leg should remain where it started
-		// calculate where the near end of the line will be
-		QPointF p1 = transform.map(parentItem()->mapToScene(m_legItem->pos()) - center);
-		QPointF p2 = m_holdPos + m_oldLine.p2();			// scene pos of the current end of line
-		newLine = QLineF(0, 0, p2.x() - p1.x(), p2.y() - p1.y());
-	}
-	else {
-		// the end of the leg has to transform along with the part it's attached to
-		QPointF p2 = transform.map(m_holdPos - center);
-		newLine = QLineF(0, 0, p2.x() - m_holdPos.x(), p2.y() - m_holdPos.y());
-	}
-}
