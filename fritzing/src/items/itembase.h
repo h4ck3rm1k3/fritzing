@@ -189,6 +189,7 @@ public:
 	void ensureUniqueTitle(const QString &title, bool force);
 	virtual void setDropOffset(QPointF offset);
 	bool hasBendableLeg() const;
+	void killBendableLeg();
 	bool sceneEvent(QEvent *event);
 	void clearConnectorItemCache();
 	const QList<ConnectorItem *> & cachedConnectorItems();

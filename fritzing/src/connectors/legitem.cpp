@@ -39,7 +39,7 @@ $Date$
 
 TODO:
 
-	bendableleg="yes" stroke="#6D6D6D" stroke-width="0.0347in"
+	fzp hack for setting up a bendable leg:  bendableleg="yes" stroke="#6D6D6D" stroke-width="0.0347in"
 
 	* show connectors under
 
@@ -60,7 +60,7 @@ TODO:
 	* update connections needs to be smarter (has to to with connecting to wires)
 		look again at attachedMoved()
 
-	* arrow moves
+	* arrow key moves
 
 	* delete/undo delete
 
@@ -74,7 +74,7 @@ TODO:
 
 	* rotate/flip
 		do not disconnect
-		handle this as an after-the-fact undocommand
+		handle this as a post-facto undocommand
 		should transform around center of the itemBase with no legs
 
 	* make sure all leg functions work when itembase is rotated
@@ -85,19 +85,19 @@ TODO:
 		* no-no
 		* no-yes
 		* yes-no
-		yes-yes
-		original is rotated
+		* yes-yes
+		* original is rotated
 
 	* if a part is locked, dragging the leg is disabled
 
 	move behavior: what to do when dragging a leg?
-		need some kind of fast disconnect behavior
+		need some kind of fast disconnect
 
-	fzp just has bendable and max length in units
+	fzp  has "bendableleg" (and someday? "maxlength") in <p> element
 		put the leg definition as a line in the svg, with connectorNleg
 		then on loading, remove the leg, and change the viewbox height and width
+			this is tricky.  Better if the leg extends outside the viewbox, then can easily tell which end is draggable
 		then draw the leg as now
-		have to figure out which end is the anchor
 
 	lots of new parts to define
 
@@ -122,12 +122,12 @@ LegItem::LegItem(QGraphicsItem * parent) : QGraphicsLineItem(parent)
 	setAcceptHoverEvents(false);
 	setFlag(QGraphicsItem::ItemSendsGeometryChanges, false);
 	this->setZValue(-999);			// keep the connector item above this
-	
+	DebugDialog::debug(QString("new leg %1").arg((long) dynamic_cast<QGraphicsItem *>(this), 0, 16));
 }
 
 LegItem::~LegItem()
 {
-	DebugDialog::debug("deleting legitem");
+	DebugDialog::debug(QString("deleting leg %1").arg((long) dynamic_cast<QGraphicsItem *>(this), 0, 16));
 }
 
 void LegItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

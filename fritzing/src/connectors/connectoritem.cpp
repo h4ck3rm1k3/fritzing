@@ -669,6 +669,15 @@ bool ConnectorItem::hasBendableLeg() const {
 	return m_bendableLeg;
 }
 
+void ConnectorItem::killBendableLeg() {
+	// this is a hack; see the caller for explanation
+	if (m_legItem) {
+		delete m_legItem;
+		m_legItem = NULL;
+		m_bendableLeg = false;
+	}
+}
+
 void ConnectorItem::setBigDot(bool bd) {
 	m_bigDot = bd;
 }

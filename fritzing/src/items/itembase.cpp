@@ -34,7 +34,6 @@ $Date$
 #include "../sketch/infographicsview.h"
 #include "../connectors/connector.h"
 #include "../connectors/bus.h"
-#include "../connectors/legitem.h"
 #include "partlabel.h"
 #include "../layerattributes.h"
 #include "../fsvgrenderer.h"
@@ -1702,7 +1701,7 @@ void ItemBase::debugInfo(const QString & msg)
 {
 
 #ifndef QT_NO_DEBUG
-	DebugDialog::debug(QString("%1 '%2' id:%3 '%4' vlid:%5 spec:%6 flg:%7")
+	DebugDialog::debug(QString("%1 '%2' id:%3 '%4' vlid:%5 spec:%6 flg:%7 gi:%8")
 		.arg(msg)
 		.arg(this->title())
 		.arg(this->id())
@@ -1710,6 +1709,7 @@ void ItemBase::debugInfo(const QString & msg)
 		.arg(this->viewLayerID())
 		.arg(this->viewLayerSpec())
 		.arg(this->getViewGeometry().wireFlags())
+		.arg((long) dynamic_cast<QGraphicsItem *>(this), 0, 16)
 	);
 
 	/*
@@ -1787,3 +1787,13 @@ void ItemBase::clearConnectorItemCache()
 {
 	m_cachedConnectorItems.clear();
 }
+
+void ItemBase::killBendableLeg() {
+	if (!hasBendableLeg()) return;
+
+	foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
+		connectorItem->killBendableLeg();
+	}
+	prepareGeometryChange();
+}
+

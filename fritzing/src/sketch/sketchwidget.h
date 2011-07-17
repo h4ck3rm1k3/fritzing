@@ -406,6 +406,10 @@ protected:
 								QHash<ConnectorItem *, Connector *> & found, QList<ConnectorItem *> & notFound,
 								QHash<ConnectorItem *, ConnectorItem *> & m2f, QHash<ConnectorItem *, Connector *> & byWire,
 								QStringList & legs, QUndoCommand * parentCommand);
+	void checkFitAux(ItemBase * tempItemBase, ItemBase * itemBase, long newID,
+								QHash<ConnectorItem *, Connector *> & found, QList<ConnectorItem *> & notFound,
+								QHash<ConnectorItem *, ConnectorItem *> & m2f, QHash<ConnectorItem *, Connector *> & byWire,
+								QStringList & legs, QUndoCommand * parentCommand);
 	void changeLegAux(long fromID, const QString & fromConnectorID, QLineF line, bool reset);
 
 

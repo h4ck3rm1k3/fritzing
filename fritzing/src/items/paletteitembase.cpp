@@ -44,6 +44,7 @@ $Date$
 #include <QDir>
 #include <QMessageBox>
 #include <QLineEdit>
+#include <qmath.h>
 
 
 PaletteItemBase::PaletteItemBase(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu ) :
@@ -80,26 +81,10 @@ QRectF PaletteItemBase::boundingRect() const
 		return QRectF(0, 0, m_size.width(), m_size.height());
 	}
 
-	qreal l = 0;
-	qreal t = 0;
-	qreal r = m_size.width();
-	qreal b = m_size.height();
-
-	foreach (ConnectorItem * connectorItem, cachedConnectorItemsConst()) {
-		if (!connectorItem->hasBendableLeg()) continue;
-
-		QLineF line = connectorItem->parentAdjustedLegLine();
-		if (line.p1().x() < l) l = line.p1().x();
-		if (line.p2().x() < l) l = line.p2().x();
-		if (line.p1().x() > r) r = line.p1().x();
-		if (line.p2().x() > r) r = line.p2().x();
-		if (line.p1().y() < t) t = line.p1().y();
-		if (line.p2().y() < t) t = line.p2().y();
-		if (line.p1().y() > b) b = line.p1().y();
-		if (line.p2().y() > b) b = line.p2().y();
-	}
-
-	return QRectF(l, t, r - l, b - t);
+	QRectF r = hoverShape().controlPointRect();
+	DebugDialog::debug(QString("bounding rect %1 %2 %3 %4")
+						.arg(r.left()).arg(r.top()).arg(r.width()).arg(r.height()));
+	return r;
 }
 
 QPainterPath PaletteItemBase::hoverShape() const

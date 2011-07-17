@@ -128,6 +128,7 @@ public:
 	void stretchDone(QLineF & oldLine, QLineF & newLine);
 	QRectF legSceneBoundingRect();
 	QPen legPen() const;
+	void killBendableLeg();  // hack; see caller
 
 protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );

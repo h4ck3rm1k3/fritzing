@@ -791,6 +791,15 @@ void SketchWidget::deleteItem(ItemBase * itemBase, bool deleteModelPart, bool do
 	long id = itemBase->id();
 	DebugDialog::debug(QString("delete item (2) %1 %2 %3 %4").arg(id).arg(itemBase->title()).arg(m_viewIdentifier).arg((long) itemBase, 0, 16) );
 
+	// this is a hack to try to workaround a Qt 4.7 crash in QGraphicsSceneFindItemBspTreeVisitor::visit 
+	// when using a custom boundingRect, áfter deleting an item, it still appears on the visit list.
+	if (itemBase->hasBendableLeg()) {
+		DebugDialog::debug("kill bendable");
+		//itemBase->killBendableLeg();
+		//QApplication::processEvents();
+		//later = true;
+	}
+
 	if (m_infoView != NULL) {
 		m_infoView->unregisterCurrentItemIf(itemBase->id());
 	}
@@ -5197,6 +5206,15 @@ void SketchWidget::checkFit(ModelPart * newModelPart, ItemBase * itemBase, long 
 	ItemBase * tempItemBase = addItemAuxTemp(newModelPart, itemBase->viewLayerSpec(), itemBase->getViewGeometry(), newID, NULL, true, m_viewIdentifier, true);
 	if (tempItemBase == NULL) return;			// we're really screwed 
 
+	checkFitAux(tempItemBase, itemBase, newID, found, notFound, m2f, byWire, legs, parentCommand);
+	delete tempItemBase;
+}
+
+void SketchWidget::checkFitAux(ItemBase * tempItemBase, ItemBase * itemBase, long newID,
+							QHash<ConnectorItem *, Connector *> & found, QList<ConnectorItem *> & notFound,
+							QHash<ConnectorItem *, ConnectorItem *> & m2f, QHash<ConnectorItem *, Connector *> & byWire, 
+							QStringList & legs, QUndoCommand * parentCommand)
+{
 	QPointF foundAnchor(std::numeric_limits<int>::max(), std::numeric_limits<int>::max());
 	QPointF newAnchor(std::numeric_limits<int>::max(), std::numeric_limits<int>::max());
 	QHash<ConnectorItem *, QPointF> foundPoints;
@@ -5242,7 +5260,6 @@ void SketchWidget::checkFit(ModelPart * newModelPart, ItemBase * itemBase, long 
 	}
 
 	if (found.count() == 0) {
-		delete tempItemBase;
 		return;
 	}
 
@@ -5269,7 +5286,6 @@ void SketchWidget::checkFit(ModelPart * newModelPart, ItemBase * itemBase, long 
 			}
 
 			// it's a clean swap: all connectors line up
-			delete tempItemBase;
 			return;
 		}
 	}
@@ -5346,7 +5362,6 @@ void SketchWidget::checkFit(ModelPart * newModelPart, ItemBase * itemBase, long 
 			}
 		}
 
-		delete tempItemBase;
 		return;
 	}
 
@@ -5354,8 +5369,6 @@ void SketchWidget::checkFit(ModelPart * newModelPart, ItemBase * itemBase, long 
 	foreach (ConnectorItem * fci, found.keys()) {
 		byWire.insert(fci, found.value(fci));
 	}
-
-	delete tempItemBase;	
 }
 
 void SketchWidget::changeWireColor(const QString newColor)
