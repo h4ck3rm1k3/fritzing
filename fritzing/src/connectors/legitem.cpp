@@ -90,6 +90,8 @@ TODO:
 
 	* if a part is locked, dragging the leg is disabled
 
+	figure out how to make the connector longer or its clickable area bigger, or if you click on the wire within a few pixels..
+
 	bad crash when converting back to unbendable.  probably some kind of boundingRect issue...
 
 	move behavior: what to do when dragging a leg?
