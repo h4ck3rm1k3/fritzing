@@ -82,7 +82,7 @@ public:
 
 	const QList< QPointer<class ConnectorShared> > connectorsShared();
 	void setConnectorsShared(QList< QPointer<class ConnectorShared> > connectors);
-	void connectorIDs(ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID, QStringList & connectorIDs, QStringList & terminalIDs);
+	void connectorIDs(ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID, QStringList & connectorIDs, QStringList & terminalIDs, QStringList & legIDs);
 
 	const QStringList &tags();
 	void setTags(const QStringList &tags);

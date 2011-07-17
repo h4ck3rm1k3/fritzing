@@ -630,39 +630,29 @@ bool ConnectorItem::isHybrid() {
 	return m_hybrid;
 }
 
-void ConnectorItem::setBendableLeg(QColor color, qreal strokeWidth) {
+void ConnectorItem::setBendableLeg(QColor color, qreal strokeWidth, QLineF parentLine) {
 	// assumes this is only called once, when the connector is first set up
-	// call this only after setRect and setTerminalPoint have been called
 
 	m_bendableLeg = true;
 	setFlag(QGraphicsItem::ItemIsMovable, true);
 	setFlag(QGraphicsItem::ItemSendsGeometryChanges, false);
 	setAcceptedMouseButtons(Qt::LeftButton);
 
-	QRectF r = rect();
-	QPointF newPos = this->pos() + r.topLeft();
-	setRect(0, 0, r.width(), r.height());
-
-	qreal newx = m_terminalPoint.x() - (strokeWidth / 2);
-	if (newx < 0) newx = 0;
-	if (newx > r.width()) newx = r.width();
-	qreal newy = m_terminalPoint.y() - (strokeWidth / 2);
-	if (newy < 0) newy = 0;
-	if (newy > r.height()) newy = r.height();
-	setPos(newPos.x() + newx, newPos.y() + newy);
-	setRect(0, 0, strokeWidth, strokeWidth);
-	m_terminalPoint.setX(strokeWidth / 2);
-	m_terminalPoint.setY(strokeWidth / 2);
-	this->setCircular(true);
-
-	m_originalPointOnParent = this->mapToParent(adjustedTerminalPoint());
+	// p1 is always the start point closest to the body.  
+	m_originalPointOnParent = parentLine.p1();
 	m_legItem = new LegItem(parentItem());
 	m_legItem->setPos(m_originalPointOnParent);
 	QPen pen(color);
 	pen.setCapStyle(Qt::RoundCap);
 	pen.setWidthF(strokeWidth);
 	m_legItem->setPen(pen);
+	m_legItem->setLine(0, 0, parentLine.p2().x() - parentLine.p1().x(),  parentLine.p2().y() - parentLine.p1().y()); 
 
+	m_terminalPoint.setX(strokeWidth / 2);
+	m_terminalPoint.setY(strokeWidth / 2);
+	setRect(0, 0, strokeWidth, strokeWidth);
+	setPos(parentLine.p2() - m_terminalPoint);
+	this->setCircular(true);
 }
 
 bool ConnectorItem::hasBendableLeg() const {

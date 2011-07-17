@@ -56,7 +56,7 @@ PaletteItemBase::PaletteItemBase(ModelPart * modelPart, ViewIdentifierClass::Vie
  	m_blockItemSelectedChange = false;
 	this->setPos(viewGeometry.loc());
     setFlag(QGraphicsItem::ItemIsSelectable, true);
-	setFlag(QGraphicsItem::ItemSendsGeometryChanges, false);
+	setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
 	setAcceptHoverEvents(true);
 
 	if (hasPartNumberProperty()) {
@@ -348,10 +348,8 @@ void PaletteItemBase::setUpConnectors(FSvgRenderer * renderer, bool ignoreTermin
 		connectorItem->setRect(svgIdLayer->m_rect);
 		connectorItem->setTerminalPoint(svgIdLayer->m_point);
 		connectorItem->setRadius(svgIdLayer->m_radius, svgIdLayer->m_strokeWidth);
-		if (svgIdLayer->m_bendableLeg) {
-			// do setBendable after setRect and setTerminalPoint
-			connectorItem->setBendableLeg(QColor(svgIdLayer->m_bendColor), 
-										TextUtils::convertToInches(svgIdLayer->m_bendStrokeWidth) * FSvgRenderer::printerScale());
+		if (!svgIdLayer->m_legId.isEmpty()) {
+			connectorItem->setBendableLeg(QColor(svgIdLayer->m_legColor), svgIdLayer->m_legStrokeWidth, svgIdLayer->m_legLine);
 		}
 
 		//DebugDialog::debug(QString("terminal point %1 %2").arg(terminalPoint.x()).arg(terminalPoint.y()) );

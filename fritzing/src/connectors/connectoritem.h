@@ -115,7 +115,7 @@ public:
 
 	// bendable leg functions	
 	bool isDraggingLeg();
-	void setBendableLeg(QColor color, qreal strokeWidth);
+	void setBendableLeg(QColor color, qreal strokeWidth, QLineF parentLine);
 	bool hasBendableLeg() const;
 	void setLegLine(QLineF line);
 	void resetLegLine(QLineF line);

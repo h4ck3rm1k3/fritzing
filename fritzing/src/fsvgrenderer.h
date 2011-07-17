@@ -37,12 +37,16 @@ $Date$
 #include "viewlayer.h"
 
 struct ConnectorInfo {
+	bool gotCircle;
 	qreal radius;
 	qreal strokeWidth;
 	QMatrix matrix;
 	QRectF bounds;
 	QMatrix terminalMatrix;
-	bool gotCircle;
+	QMatrix legMatrix;
+	QString legColor;
+	QLineF legLine;
+	qreal legStrokeWidth;
 };
 
 typedef QHash<ViewLayer::ViewLayerID, class FSvgRenderer *> RendererHash;
@@ -53,9 +57,9 @@ public:
 	FSvgRenderer(QObject * parent = 0);
 	~FSvgRenderer();
 
-	bool loadSvg(const QString & filename, const QStringList & connectorIDs, const QStringList & terminalIDs, const QString & setColor, const QString & colorElementID, bool findNonConnectors);
+	bool loadSvg(const QString & filename, const QStringList & connectorIDs, const QStringList & terminalIDs, const QStringList & legIDs, const QString & setColor, const QString & colorElementID, bool findNonConnectors);
 	bool loadSvg(const QString & filename);
-	bool loadSvg( const QByteArray & contents, const QString & filename, const QStringList & connectorNames, const QStringList & terminalNames, const QString & setColor, const QString & colorElementID, bool findNonConnectors);     // for SvgSplitter loads
+	bool loadSvg( const QByteArray & contents, const QString & filename, const QStringList & connectorIDs, const QStringList & terminalIDs, const QStringList & legIDs, const QString & setColor, const QString & colorElementID, bool findNonConnectors);     // for SvgSplitter loads
 	bool loadSvg( const QByteArray & contents, const QString & filename);						// for SvgSplitter loads
 	bool fastLoad(const QByteArray & contents);								
 	const QString & filename();
@@ -76,15 +80,18 @@ public:
 
 protected:
 	void determineDefaultSize(QXmlStreamReader &);
-	bool loadAux (const QByteArray & contents, const QString & filename, const QStringList & connectorNames, const QStringList & terminalNames, const QString & setColor, const QString & colorElementID, bool findNonConnectors);
-	void initConnectorInfo(QDomDocument &, const QStringList & connectorIDs, const QStringList & terminalIDs);
+	bool loadAux (const QByteArray & contents, const QString & filename, const QStringList & connectorIDs, const QStringList & terminalIDs, const QStringList & legIDs, const QString & setColor, const QString & colorElementID, bool findNonConnectors);
+	bool initConnectorInfo(QDomDocument &, const QStringList & connectorIDs, const QStringList & terminalIDs, const QStringList & legIDs);
 	ConnectorInfo * initConnectorInfo(QDomElement & connectorElement);
 	bool initConnectorInfoAux(QList<QDomElement> & connectorElements, ConnectorInfo * connectorInfo);
 	void initNonConnectorInfo(QDomDocument & domDocument);
 	void initNonConnectorInfoAux(QDomElement & element);
 	void initTerminalInfoAux(QDomElement & element, const QStringList & connectorIDs, const QStringList & terminalIDs);
+	void initLegInfoAux(QDomElement & element, const QStringList & connectorIDs, const QStringList & legIDs, bool & gotOne);
 	void initConnectorInfoAux(QDomElement & element, const QStringList & connectorIDs);
-	QPointF calcTerminalPoint(const QString & terminalId, const QRectF & connectorRect, bool ignoreTerminalPoint, const QRectF & viewBox, QMatrix & terminalMatrix, bool useF);
+	QPointF calcTerminalPoint(const QString & terminalId, const QRectF & connectorRect, bool ignoreTerminalPoint, const QRectF & viewBox, QMatrix & terminalMatrix);
+	bool initLegInfoAux(QDomElement & element, ConnectorInfo * connectorInfo);
+	void calcLeg(SvgIdLayer *, const QRectF & viewBox, ConnectorInfo * connectorInfo);
 	ConnectorInfo * getConnectorInfo(const QString & connectorID);
 	void clearConnectorInfoHash(QHash<QString, ConnectorInfo *> & hash);
 

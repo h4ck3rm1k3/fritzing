@@ -795,7 +795,7 @@ void SketchWidget::deleteItem(ItemBase * itemBase, bool deleteModelPart, bool do
 	// when using a custom boundingRect, áfter deleting an item, it still appears on the visit list.
 	if (itemBase->hasBendableLeg()) {
 		DebugDialog::debug("kill bendable");
-		//itemBase->killBendableLeg();
+		itemBase->killBendableLeg();
 		//QApplication::processEvents();
 		//later = true;
 	}

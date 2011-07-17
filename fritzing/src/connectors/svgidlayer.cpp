@@ -27,7 +27,7 @@ $Date$
 #include "svgidlayer.h"
 
 SvgIdLayer::SvgIdLayer() {
-	m_processed = m_hybrid = m_bendableLeg = false;
+	m_processed = m_hybrid = false;
 	m_radius = m_strokeWidth = 0;
 }
 

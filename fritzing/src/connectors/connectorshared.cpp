@@ -150,29 +150,6 @@ void ConnectorShared::removePin(ViewIdentifierClass::ViewIdentifier layer, SvgId
 	m_pins.remove(layer, svgIdLayer);
 }
 
-const QString ConnectorShared::pin(ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID) {
-	QList<SvgIdLayer *> svgLayers = m_pins.values(viewId);
-	foreach ( SvgIdLayer * svgIdLayer, svgLayers) {
-		if (svgIdLayer->m_svgViewLayerID == viewLayerID) {
-			return svgIdLayer->m_svgId;
-		}
-	}
-
-	return ___emptyString___;
-}
-
-const QString ConnectorShared::terminal(ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID) {
-	QList<SvgIdLayer *> svgLayers = m_pins.values(viewId);
-	foreach ( SvgIdLayer * svgIdLayer, svgLayers) {
-		if (svgIdLayer->m_svgViewLayerID == viewLayerID) {
-			return svgIdLayer->m_terminalId;
-		}
-	}
-
-	return ___emptyString___;
-
-}
-
 SvgIdLayer * ConnectorShared::fullPinInfo(ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID) {
 	QList<SvgIdLayer *> svgLayers = m_pins.values(viewId);
 	foreach ( SvgIdLayer * svgIdLayer, svgLayers) {
@@ -206,18 +183,13 @@ void ConnectorShared::loadPin(QDomElement elem, ViewIdentifierClass::ViewIdentif
 		QString layer = pinElem.attribute("layer");
 		SvgIdLayer * svgIdLayer = new SvgIdLayer;
 		svgIdLayer->m_hybrid = (pinElem.attribute("hybrid").compare("yes") == 0);
-		svgIdLayer->m_bendableLeg = (pinElem.attribute("bendableleg").compare("yes") == 0);
-		if (svgIdLayer->m_bendableLeg) {
-			svgIdLayer->m_bendColor = pinElem.attribute("stroke");
-			svgIdLayer->m_bendStrokeWidth = pinElem.attribute("stroke-width");
-			m_hasBendableLeg = true;
-		}
+		svgIdLayer->m_legId = pinElem.attribute("legId");
+		m_hasBendableLeg = m_hasBendableLeg || (svgIdLayer->m_legId.length() > 0);
 		svgIdLayer->m_svgId = svgId;
 		svgIdLayer->m_svgViewLayerID = ViewLayer::viewLayerIDFromXmlString(layer);
 
-		QString terminalId = pinElem.attribute("terminalId");
 		//DebugDialog::debug(QString("svg id view layer id %1, %2").arg(svgIdLayer->m_viewLayerID).arg(layer));
-		svgIdLayer->m_terminalId = terminalId;
+		svgIdLayer->m_terminalId = pinElem.attribute("terminalId");
 		m_pins.insert(viewId, svgIdLayer);
 
 		pinElem = pinElem.nextSiblingElement("p");

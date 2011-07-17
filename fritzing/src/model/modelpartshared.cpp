@@ -47,6 +47,10 @@ void copyPinAttributes(QDomElement & from, QDomElement & to)
 	if (!bendable.isEmpty()) {
 		to.setAttribute("bendableLeg", bendable);
 	}
+	QString legId = from.attribute("legId");
+	if (!legId.isEmpty()) {
+		to.setAttribute("legId", legId);
+	}
 }
 
 ///////////////////////////////////////////////
@@ -441,10 +445,12 @@ bool ModelPartShared::needsCopper1() {
 	return m_needsCopper1;
 }
 
-void ModelPartShared::connectorIDs(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, QStringList & connectorIDs, QStringList & terminalIDs) {
-	foreach (ConnectorShared * connector, m_connectorSharedHash.values()) {
-		connectorIDs.append(connector->pin(viewIdentifier, viewLayerID));
-		terminalIDs.append(connector->terminal(viewIdentifier, viewLayerID));
+void ModelPartShared::connectorIDs(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, QStringList & connectorIDs, QStringList & terminalIDs, QStringList & legIDs) {
+	foreach (ConnectorShared * connectorShared, m_connectorSharedHash.values()) {
+		SvgIdLayer * svgIdLayer = connectorShared->fullPinInfo(viewIdentifier, viewLayerID);
+		connectorIDs.append(svgIdLayer->m_svgId);
+		terminalIDs.append(svgIdLayer->m_terminalId);
+		legIDs.append(svgIdLayer->m_legId);
 	}
 }
 

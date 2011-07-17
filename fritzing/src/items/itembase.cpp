@@ -1209,29 +1209,34 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 		else {
 			renderer = FSvgRenderer::getByFilename(filename, viewLayerID);
 			if (renderer == NULL) {
-				QStringList connectorIDs, terminalIDs;
+				QStringList connectorIDs, terminalIDs, legIDs;
 				QString setColor;
 				QString colorElementID;
-				if (viewIdentifier == ViewIdentifierClass::PCBView) {
-					colorElementID = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
-					switch (viewLayerID) {
-						case ViewLayer::Copper0:
-							modelPartShared->connectorIDs(viewIdentifier, viewLayerID, connectorIDs, terminalIDs);
-							setColor = ViewLayer::Copper0Color;
-							break;
-						case ViewLayer::Copper1:
-							modelPartShared->connectorIDs(viewIdentifier, viewLayerID, connectorIDs, terminalIDs);
-							setColor = ViewLayer::Copper1Color;
-							break;
-						case ViewLayer::Silkscreen1:
-							setColor = ViewLayer::Silkscreen1Color;
-							break;
-						case ViewLayer::Silkscreen0:
-							setColor = ViewLayer::Silkscreen0Color;
-							break;
-						default:
-							break;
-					}
+				switch (viewIdentifier) {
+					case ViewIdentifierClass::PCBView:
+						colorElementID = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
+						switch (viewLayerID) {
+							case ViewLayer::Copper0:
+								modelPartShared->connectorIDs(viewIdentifier, viewLayerID, connectorIDs, terminalIDs, legIDs);
+								setColor = ViewLayer::Copper0Color;
+								break;
+							case ViewLayer::Copper1:
+								modelPartShared->connectorIDs(viewIdentifier, viewLayerID, connectorIDs, terminalIDs, legIDs);
+								setColor = ViewLayer::Copper1Color;
+								break;
+							case ViewLayer::Silkscreen1:
+								setColor = ViewLayer::Silkscreen1Color;
+								break;
+							case ViewLayer::Silkscreen0:
+								setColor = ViewLayer::Silkscreen0Color;
+								break;
+							default:
+								break;
+						}
+						break;
+					case ViewIdentifierClass::BreadboardView:
+						modelPartShared->connectorIDs(viewIdentifier, viewLayerID, connectorIDs, terminalIDs, legIDs);
+						break;
 				}
 
 				bool gotOne = false;
@@ -1252,7 +1257,7 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 						result = svgFileSplitter.splitString(f, layerAttributes.layerName());
 					}
 					if (result) {
-						if (renderer->loadSvg(svgFileSplitter.byteArray(), filename, connectorIDs, terminalIDs, setColor, colorElementID, viewIdentifier == ViewIdentifierClass::PCBView)) {
+						if (renderer->loadSvg(svgFileSplitter.byteArray(), filename, connectorIDs, terminalIDs, legIDs, setColor, colorElementID, viewIdentifier == ViewIdentifierClass::PCBView)) {
 							gotOne = true;
 						}
 					}
@@ -1264,10 +1269,10 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 					// only one layer, just load it directly
 					bool result;
 					if (flipDoc.isNull()) {
-						result = renderer->loadSvg(filename, connectorIDs, terminalIDs, setColor, colorElementID, viewIdentifier == ViewIdentifierClass::PCBView);
+						result = renderer->loadSvg(filename, connectorIDs, terminalIDs, legIDs, setColor, colorElementID, viewIdentifier == ViewIdentifierClass::PCBView);
 					}
 					else {
-						result = renderer->loadSvg(flipDoc.toByteArray(), filename, connectorIDs, terminalIDs, setColor, colorElementID, viewIdentifier == ViewIdentifierClass::PCBView);
+						result = renderer->loadSvg(flipDoc.toByteArray(), filename, connectorIDs, terminalIDs, legIDs, setColor, colorElementID, viewIdentifier == ViewIdentifierClass::PCBView);
 					}
 					if (result) {
 						gotOne = true;
@@ -1794,6 +1799,5 @@ void ItemBase::killBendableLeg() {
 	foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
 		connectorItem->killBendableLeg();
 	}
-	prepareGeometryChange();
 }
 

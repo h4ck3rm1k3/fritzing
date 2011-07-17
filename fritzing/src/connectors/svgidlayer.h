@@ -43,9 +43,10 @@ struct SvgIdLayer
 	QPointF m_point;	
 	qreal m_radius;
 	qreal m_strokeWidth;
-	bool m_bendableLeg;
-	QString m_bendColor;
-	QString m_bendStrokeWidth;
+	QString m_legId;
+	QString m_legColor;
+	qreal m_legStrokeWidth;
+	QLineF m_legLine;
 
 	SvgIdLayer();
 	SvgIdLayer * copyLayer();

@@ -485,9 +485,8 @@ void MainWindow::connectPairs() {
 	succeeded = connect(m_pcbGraphicsView, SIGNAL(boardDeletedSignal()), this, SLOT(boardDeletedSlot()));
 
 	succeeded = connect(m_pcbGraphicsView, SIGNAL(cursorLocationSignal(qreal, qreal)), this, SLOT(cursorLocationSlot(qreal, qreal)));
-#ifndef QT_NO_DEBUG
 	succeeded = connect(m_breadboardGraphicsView, SIGNAL(cursorLocationSignal(qreal, qreal)), this, SLOT(cursorLocationSlot(qreal, qreal)));
-#endif
+	succeeded = connect(m_schematicGraphicsView, SIGNAL(cursorLocationSignal(qreal, qreal)), this, SLOT(cursorLocationSlot(qreal, qreal)));
 
 	succeeded = connect(m_breadboardGraphicsView, SIGNAL(filenameIfSignal(QString &)), this, SLOT(filenameIfSlot(QString &)), Qt::DirectConnection);
 	succeeded = connect(m_pcbGraphicsView, SIGNAL(filenameIfSignal(QString &)), this, SLOT(filenameIfSlot(QString &)), Qt::DirectConnection);

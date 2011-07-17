@@ -86,10 +86,10 @@ void FSvgRenderer::cleanup() {
 bool FSvgRenderer::loadSvg(const QString & filename) {
 	QStringList strings;
 	QString string;
-	return loadSvg(filename, strings, strings, string, string, false);
+	return loadSvg(filename, strings, strings, strings, string, string, false);
 }
 
-bool FSvgRenderer::loadSvg(const QString & filename, const QStringList & connectorIDs, const QStringList & terminalIDs, const QString & setColor, const QString & colorElementID, bool findNonConnectors) {
+bool FSvgRenderer::loadSvg(const QString & filename, const QStringList & connectorIDs, const QStringList & terminalIDs, const QStringList & legIDs, const QString & setColor, const QString & colorElementID, bool findNonConnectors) {
 	if (!QFileInfo(filename).exists() || !QFileInfo(filename).isFile()) {
 		return false;
 	}
@@ -104,7 +104,7 @@ bool FSvgRenderer::loadSvg(const QString & filename, const QStringList & connect
 
 	if (contents.length() <= 0) return false;
 
-	return loadAux(contents, filename, connectorIDs, terminalIDs, setColor, colorElementID, findNonConnectors);
+	return loadAux(contents, filename, connectorIDs, terminalIDs, legIDs, setColor, colorElementID, findNonConnectors);
 
 	/*
 
@@ -129,14 +129,14 @@ bool FSvgRenderer::loadSvg(const QString & filename, const QStringList & connect
 bool FSvgRenderer::loadSvg(const QByteArray & contents, const QString & filename) {
 	QStringList strings;
 	QString string;
-	return loadSvg(contents, filename, strings, strings, string, string, false);
+	return loadSvg(contents, filename, strings, strings, strings, string, string, false);
 }
 
-bool FSvgRenderer::loadSvg(const QByteArray & contents, const QString & filename, const QStringList & connectorIDs, const QStringList & terminalIDs, const QString & setColor, const QString & colorElementID, bool findNonConnectors) {
-	return loadAux(contents, filename, connectorIDs, terminalIDs, setColor, colorElementID, findNonConnectors);
+bool FSvgRenderer::loadSvg(const QByteArray & contents, const QString & filename, const QStringList & connectorIDs, const QStringList & terminalIDs, const QStringList & legIDs, const QString & setColor, const QString & colorElementID, bool findNonConnectors) {
+	return loadAux(contents, filename, connectorIDs, terminalIDs, legIDs, setColor, colorElementID, findNonConnectors);
 }
 
-bool FSvgRenderer::loadAux(const QByteArray & contents, const QString & filename, const QStringList & connectorIDs, const QStringList & terminalIDs, const QString & setColor, const QString & colorElementID, bool findNonConnectors) {
+bool FSvgRenderer::loadAux(const QByteArray & contents, const QString & filename, const QStringList & connectorIDs, const QStringList & terminalIDs, const QStringList & legIDs, const QString & setColor, const QString & colorElementID, bool findNonConnectors) {
 
 	QByteArray cleanContents;
 	bool cleaned = false;
@@ -183,6 +183,8 @@ bool FSvgRenderer::loadAux(const QByteArray & contents, const QString & filename
 			DebugDialog::debug(QString("renderer loadAux failed %1 %2 %3 %4").arg(filename).arg(errorStr).arg(errorLine).arg(errorColumn));
 		}
 
+		bool resetContents = false;
+
 		QDomElement root = doc.documentElement();
 		if (!setColor.isEmpty()) {
 			QDomElement element = TextUtils::findElementWithAttribute(root, "id", colorElementID);
@@ -190,14 +192,18 @@ bool FSvgRenderer::loadAux(const QByteArray & contents, const QString & filename
 				QStringList exceptions;
 				exceptions << "black" << "#000000";
 				SvgFileSplitter::fixColorRecurse(element, setColor, exceptions);
-				cleanContents = TextUtils::removeXMLEntities(doc.toString()).toUtf8();
+				resetContents = true;
 			}
 		}
 		if (connectorIDs.count() > 0) {
-			initConnectorInfo(doc, connectorIDs, terminalIDs);
+			resetContents = resetContents || initConnectorInfo(doc, connectorIDs, terminalIDs, legIDs);
 		}
 		if (findNonConnectors) {
 			initNonConnectorInfo(doc);
+		}
+
+		if (resetContents) {
+			cleanContents = TextUtils::removeXMLEntities(doc.toString()).toUtf8();
 		}
 	}
 
@@ -403,26 +409,86 @@ void FSvgRenderer::initNonConnectorInfoAux(QDomElement & element)
 	}
 }
 
-void FSvgRenderer::initConnectorInfo(QDomDocument & domDocument, const QStringList & connectorIDs, const QStringList & terminalIDs)
+bool FSvgRenderer::initConnectorInfo(QDomDocument & domDocument, const QStringList & connectorIDs, const QStringList & terminalIDs, const QStringList & legIDs)
 {
+	bool result = false;
 	clearConnectorInfoHash(m_connectorInfoHash);
 	QDomElement root = domDocument.documentElement();
 	initConnectorInfoAux(root, connectorIDs);
 	if (terminalIDs.count() > 0) {
 		initTerminalInfoAux(root, connectorIDs, terminalIDs);
 	}
+	if (legIDs.count() > 0) {
+		initLegInfoAux(root, connectorIDs, legIDs, result);
+	}
+
+	return result;
+}
+
+void FSvgRenderer::initLegInfoAux(QDomElement & element, const QStringList & connectorIDs, const QStringList & legIDs, bool & gotOne)
+{
+	QString id = element.attribute("id");
+	if (!id.isEmpty()) {
+		int ix = legIDs.indexOf(id);
+		if (ix >= 0) {
+			element.setTagName("g");			// don't want this element to actually be drawn
+			gotOne = true;
+			ConnectorInfo * connectorInfo = m_connectorInfoHash.value(connectorIDs.at(ix), NULL);
+			if (connectorInfo) {
+				connectorInfo->legMatrix = TextUtils::elementToMatrix(element);
+				connectorInfo->legColor = element.attribute("stroke");
+				connectorInfo->legLine = QLineF();
+				connectorInfo->legStrokeWidth = 0;
+				initLegInfoAux(element, connectorInfo);
+			}
+			// don't return here, might miss other legs
+		}
+	}
+
+	QDomElement child = element.firstChildElement();
+	while (!child.isNull()) {
+		initLegInfoAux(child, connectorIDs, legIDs, gotOne);
+		child = child.nextSiblingElement();
+	}
+}
+
+bool FSvgRenderer::initLegInfoAux(QDomElement & element, ConnectorInfo * connectorInfo) 
+{
+	bool ok;
+	qreal sw = element.attribute("stroke-width").toDouble(&ok);
+	if (!ok) return false;
+
+	qreal x1 = element.attribute("x1").toDouble(&ok);
+	if (!ok) return false;
+
+	qreal y1 = element.attribute("y1").toDouble(&ok);
+	if (!ok) return false;
+
+	qreal x2 = element.attribute("x2").toDouble(&ok);
+	if (!ok) return false;
+
+	qreal y2 = element.attribute("y2").toDouble(&ok);
+	if (!ok) return false;
+
+	connectorInfo->legStrokeWidth = sw;
+	connectorInfo->legLine = QLineF(x1, y1, x2, y2);
+	return true;
 }
 
 void FSvgRenderer::initTerminalInfoAux(QDomElement & element, const QStringList & connectorIDs, const QStringList & terminalIDs)
 {
 	QString id = element.attribute("id");
-	int ix = terminalIDs.indexOf(id);
-	if (ix >= 0) {
-		ConnectorInfo * connectorInfo = m_connectorInfoHash.value(connectorIDs.at(ix), NULL);
-		if (connectorInfo) {
-			connectorInfo->terminalMatrix = TextUtils::elementToMatrix(element);
+	if (!id.isEmpty()) {
+		int ix = terminalIDs.indexOf(id);
+		if (ix >= 0) {
+			ConnectorInfo * connectorInfo = m_connectorInfoHash.value(connectorIDs.at(ix), NULL);
+			if (connectorInfo) {
+				connectorInfo->terminalMatrix = TextUtils::elementToMatrix(element);
+			}
+			// don't return here, might miss other terminal ids
 		}
 	}
+
 	QDomElement child = element.firstChildElement();
 	while (!child.isNull()) {
 		initTerminalInfoAux(child, connectorIDs, terminalIDs);
@@ -433,10 +499,14 @@ void FSvgRenderer::initTerminalInfoAux(QDomElement & element, const QStringList 
 void FSvgRenderer::initConnectorInfoAux(QDomElement & element, const QStringList & connectorIDs)
 {
 	QString id = element.attribute("id");
-	if (connectorIDs.contains(id)) {
-		ConnectorInfo * connectorInfo = initConnectorInfo(element);
-		m_connectorInfoHash.insert(id, connectorInfo);
+	if (!id.isEmpty()) {
+		if (connectorIDs.contains(id)) {
+			ConnectorInfo * connectorInfo = initConnectorInfo(element);
+			m_connectorInfoHash.insert(id, connectorInfo);
+		}
+		// don't return here, might miss other connectors
 	}
+
 	QDomElement child = element.firstChildElement();
 	while (!child.isNull()) {
 		initConnectorInfoAux(child, connectorIDs);
@@ -488,10 +558,10 @@ bool FSvgRenderer::initConnectorInfoAux(QList<QDomElement> & connectorElements, 
 		//QString strokewidth("stroke-width");
 		//QString s = element.attribute("style");
 		//SvgFileSplitter::fixStyleAttribute(connectorElement, s, strokewidth);
-		sw = connectorElement.attribute("stroke-width").toDouble(&ok);
-		if (!ok) {
+		//sw = connectorElement.attribute("stroke-width").toDouble(&ok);
+		//if (!ok) {
 			return false;
-		}
+		//}
 	}
 
 	connectorInfo->gotCircle = true;
@@ -539,7 +609,6 @@ bool FSvgRenderer::setUpConnector(SvgIdLayer * svgIdLayer, bool ignoreTerminalPo
 	}
 
 	QSizeF defaultSizeF = this->defaultSizeF();
-	QSize defaultSize = this->defaultSize();
 	QRectF viewBox = this->viewBoxF();
 
 	ConnectorInfo * connectorInfo = getConnectorInfo(connectorID);		
@@ -575,29 +644,42 @@ bool FSvgRenderer::setUpConnector(SvgIdLayer * svgIdLayer, bool ignoreTerminalPo
 							   r1.height() * defaultSizeF.height() / viewBox.height());
 
 	svgIdLayer->m_visible = !bounds.isNull();
-	svgIdLayer->m_point = calcTerminalPoint(svgIdLayer->m_terminalId, svgIdLayer->m_rect, ignoreTerminalPoint, viewBox, connectorInfo->terminalMatrix, true);
+	svgIdLayer->m_point = calcTerminalPoint(svgIdLayer->m_terminalId, svgIdLayer->m_rect, ignoreTerminalPoint, viewBox, connectorInfo->terminalMatrix);
+	calcLeg(svgIdLayer, viewBox, connectorInfo);
 	
-
-	/*
-	svgIdLayer->m_point = calcTerminalPoint(svgIdLayer->m_terminalId, svgIdLayer->m_rect, ignoreTerminalPoint, viewBox, connectorInfo->terminalMatrix, false);
-	if (calcWeirdOffset) {	
-		QRectF trueRect(r1.x() * defaultSizeF.width() / viewBox.width(), 
-						r1.y() * defaultSizeF.height() / viewBox.height(), 
-						r1.width() * defaultSizeF.width() / viewBox.width(), 
-						r1.height() * defaultSizeF.height() / viewBox.height());
-		QMatrix m;
-		QPointF truePoint = calcTerminalPoint(svgIdLayer->m_terminalId, trueRect, ignoreTerminalPoint, viewBox, m, true);
-		svgIdLayer->m_weirdOffset = truePoint - svgIdLayer->m_point;
-		if (truePoint != svgIdLayer->m_point) {
-			DebugDialog::debug("difference ");
-		}
-	}
-	*/
-
 	return true;
 }
 
-QPointF FSvgRenderer::calcTerminalPoint(const QString & terminalId, const QRectF & connectorRect, bool ignoreTerminalPoint, const QRectF & viewBox, QMatrix & terminalMatrix, bool useF)
+void FSvgRenderer::calcLeg(SvgIdLayer * svgIdLayer, const QRectF & viewBox, ConnectorInfo * connectorInfo)
+{
+	if (svgIdLayer->m_legId.isEmpty()) return;
+
+	svgIdLayer->m_legStrokeWidth = connectorInfo->legStrokeWidth;
+	svgIdLayer->m_legColor = connectorInfo->legColor;
+
+	QMatrix matrix = this->matrixForElement(svgIdLayer->m_legId) * connectorInfo->legMatrix;
+	QPointF p1 = matrix.map(connectorInfo->legLine.p1());
+	QPointF p2 = matrix.map(connectorInfo->legLine.p2());
+
+	QSizeF defaultSizeF = this->defaultSizeF();
+	qreal x1 = p1.x() * defaultSizeF.width() / viewBox.width();
+	qreal y1 = p1.y() * defaultSizeF.height() / viewBox.height();
+	qreal x2 = p2.x() * defaultSizeF.width() / viewBox.width();
+	qreal y2 = p2.y() * defaultSizeF.height() / viewBox.height();
+	QPointF center = viewBox.center();
+	qreal d1 = ((x1 - center.x()) * (x1 - center.x())) + ((y1 - center.y()) * (y1 - center.y()));
+	qreal d2 = ((x2 - center.x()) * (x2 - center.x())) + ((y2 - center.y()) * (y1 - center.y()));
+
+	// find the end which is closer to the center of the viewBox (which shouldn't include the leg)
+	if (d1 <= d2) {
+		svgIdLayer->m_legLine = QLineF(x1, y1, x2, y2);
+	}
+	else {
+		svgIdLayer->m_legLine = QLineF(x2, y2, x1, y1);
+	}
+}
+
+QPointF FSvgRenderer::calcTerminalPoint(const QString & terminalId, const QRectF & connectorRect, bool ignoreTerminalPoint, const QRectF & viewBox, QMatrix & terminalMatrix)
 {
 	QPointF terminalPoint = connectorRect.center() - connectorRect.topLeft();    // default spot is centered
 	if (ignoreTerminalPoint) {
@@ -613,7 +695,6 @@ QPointF FSvgRenderer::calcTerminalPoint(const QString & terminalId, const QRectF
 	}
 
 	QSizeF defaultSizeF = this->defaultSizeF();
-	QSize defaultSize = this->defaultSize();
 	if (tBounds.width() >= defaultSizeF.width() && tBounds.height() >= defaultSizeF.height()) {
 		return terminalPoint;
 	}
@@ -629,9 +710,7 @@ QPointF FSvgRenderer::calcTerminalPoint(const QString & terminalId, const QRectF
 	QMatrix tMatrix = this->matrixForElement(terminalId) * terminalMatrix;
 	QRectF terminalRect = tMatrix.mapRect(tBounds);
 	QPointF c = terminalRect.center();
-	QPointF q = useF 
-				? QPointF(c.x() * defaultSizeF.width() / viewBox.width(), c.y() * defaultSizeF.height() / viewBox.height())
-				: QPointF(c.x() * defaultSize.width() / viewBox.width(), c.y() * defaultSize.height() / viewBox.height());
+	QPointF q(c.x() * defaultSizeF.width() / viewBox.width(), c.y() * defaultSizeF.height() / viewBox.height());
 	terminalPoint = q - connectorRect.topLeft();
 	//DebugDialog::debug(	QString("terminalagain %3 rect %1,%2 ").arg(terminalPoint.x()).
 										//arg(terminalPoint.y()).
