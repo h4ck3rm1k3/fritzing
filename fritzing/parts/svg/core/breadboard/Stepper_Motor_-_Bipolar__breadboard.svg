@@ -10,7 +10,6 @@
    version="1.0" >
   <g id="breadboard">
       <linearGradient
-       inkscape:collect="always"
        id="linearGradient4678"
        gradientUnits="userSpaceOnUse"
        x1="36"
@@ -27,7 +26,6 @@
          id="stop3295" />      
        </linearGradient>
     <linearGradient
-       inkscape:collect="always"
        id="linearGradient4682"
        gradientUnits="userSpaceOnUse"
        gradientTransform="translate(0,-76.499998)"
@@ -50,7 +48,6 @@
 </linearGradient>
 
     <linearGradient
-       inkscape:collect="always"
        id="linearGradient2811"
        gradientUnits="userSpaceOnUse"
        x1="18"
@@ -74,9 +71,7 @@
        d="M 1.78125,154.78125 L 1.78125,277.90625 L 18.40625,286.21875 L 134.65625,286.21875 L 151.21875,277.90625 L 151.21875,154.78125 L 1.78125,154.78125 z"
        id="MotorHousing"
        style="fill:#4d4d4d;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       inkscape:original="M 0 153 L 0 279 L 18 288 L 135.0625 288 L 153 279 L 153 153 L 0 153 z "
-       inkscape:radius="-1.767767"
-       sodipodi:type="inkscape:offset" />
+        />
     <path
        id="MotorHousingShade"
        style="fill:#333333;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
@@ -90,9 +85,7 @@
        d="M 18.78125,1.90625 L 1.90625,18.78125 L 1.90625,134.1875 L 18.59375,151.09375 L 134.21875,151.09375 L 151.09375,134.21875 L 151.09375,18.78125 L 134.21875,1.90625 L 18.78125,1.90625 z"
        id="CapTopShade"
        style="fill:url(#linearGradient4678);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       inkscape:original="M 18.78125 1.90625 L 1.90625 18.78125 L 1.90625 134.1875 L 18.59375 151.09375 L 134.21875 151.09375 L 151.09375 134.21875 L 151.09375 18.78125 L 134.21875 1.90625 L 18.78125 1.90625 z "
-       inkscape:radius="0"
-       sodipodi:type="inkscape:offset" />
+        />
     <path
        id="CapTopGrove"
        d="M 118.75706,40.250002 C 118.75706,51.912952 99.825897,61.378532 76.5,61.378532 C 53.174103,61.378532 34.24294,51.912952 34.24294,40.250002 C 34.24294,28.587052 53.174103,19.121472 76.5,19.121472 C 99.825897,19.121472 118.75706,28.587052 118.75706,40.250002 z"
@@ -203,7 +196,7 @@
        id="CapBevelHilite"
        style="fill:#f2f2f2;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
        d="M 0,67.500002 L 0,71.500002 L 18,80.500002 L 135,80.500002 L 153,71.500002 L 153,67.500002 L 135,76.500002 L 18,76.500002 L 0,67.500002 z M 0,148.5 L 0,152.5 L 18,161.5 L 18,157.5 L 0,148.5 z M 153,148.5 L 135,157.5 L 135,161.5 L 153,152.5 L 153,148.5 z M 22,171.49466 L 18,175.5 L 135,175.5 L 131,171.49466 L 22,171.49466 z"
-       sodipodi:nodetypes="cccccccccccccccccccccccc" />
+        />
     <path
        id="CapBevelShade"
        style="fill:#1a1a1a;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
@@ -239,12 +232,12 @@
          id="PinBase"
          d="M 54,270 L 54,279"
          style="fill:none;fill-rule:evenodd;stroke:#808000;stroke-width:3.54330707;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         sodipodi:nodetypes="cc" />
+          />
       <path
          style="fill:none;fill-rule:evenodd;stroke:#ffff00;stroke-width:0.70866144;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          d="M 54,270 L 54,279"
          id="PinHilite"
-         sodipodi:nodetypes="cc" />
+         />
     </g>
     <g
        id="CapConnectorPin1"
@@ -255,12 +248,12 @@
          id="PinBase"
          d="M 54,270 L 54,279"
          style="fill:none;fill-rule:evenodd;stroke:#808000;stroke-width:3.54330707;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         sodipodi:nodetypes="cc" />
+         />
       <path
          style="fill:none;fill-rule:evenodd;stroke:#ffff00;stroke-width:0.70866144;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          d="M 54,270 L 54,279"
          id="PinHilite"
-         sodipodi:nodetypes="cc" />
+         />
     </g>
     </g>
     <g
@@ -273,12 +266,12 @@
          id="PinBase"
          d="M 54,270 L 54,279"
          style="fill:none;fill-rule:evenodd;stroke:#808000;stroke-width:3.54330707;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         sodipodi:nodetypes="cc" />
+         />
       <path
          style="fill:none;fill-rule:evenodd;stroke:#ffff00;stroke-width:0.70866144;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          d="M 54,270 L 54,279"
          id="PinHilite"
-         sodipodi:nodetypes="cc" />
+          />
     </g>          </g>
     <g
        id="CapConnectorPin3"
@@ -289,12 +282,12 @@
          id="PinBase"
          d="M 54,270 L 54,279"
          style="fill:none;fill-rule:evenodd;stroke:#808000;stroke-width:3.54330707;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         sodipodi:nodetypes="cc" />
+         />
       <path
          style="fill:none;fill-rule:evenodd;stroke:#ffff00;stroke-width:0.70866144;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          d="M 54,270 L 54,279"
          id="PinHilite"
-         sodipodi:nodetypes="cc" />
+          />
     </g>
            </g>
     <g
@@ -306,12 +299,12 @@
          id="PinBase"
          d="M 54,270 L 54,279"
          style="fill:none;fill-rule:evenodd;stroke:#808000;stroke-width:3.54330707;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         sodipodi:nodetypes="cc" />
+          />
       <path
          style="fill:none;fill-rule:evenodd;stroke:#ffff00;stroke-width:0.70866144;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          d="M 54,270 L 54,279"
          id="PinHilite"
-         sodipodi:nodetypes="cc" />
+          />
     </g>           </g>
     <g
        id="CapConnectorPin5"
@@ -322,12 +315,12 @@
          id="PinBase"
          d="M 54,270 L 54,279"
          style="fill:none;fill-rule:evenodd;stroke:#808000;stroke-width:3.54330707;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         sodipodi:nodetypes="cc" />
+          />
       <path
          style="fill:none;fill-rule:evenodd;stroke:#ffff00;stroke-width:0.70866144;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          d="M 54,270 L 54,279"
          id="PinHilite"
-         sodipodi:nodetypes="cc" />
+          />
     </g>           </g>
   </g>
   <g
