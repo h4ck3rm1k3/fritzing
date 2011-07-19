@@ -81,10 +81,8 @@ QRectF PaletteItemBase::boundingRect() const
 		return QRectF(0, 0, m_size.width(), m_size.height());
 	}
 
-	QRectF r = shape().controlPointRect();
-	debugInfo(QString("bounding rect %1 %2 %3 %4")
-						.arg(r.left()).arg(r.top()).arg(r.width()).arg(r.height()));
-	return r;
+	//debugInfo(QString("bounding rect %1 %2 %3 %4").arg(r.left()).arg(r.top()).arg(r.width()).arg(r.height()));
+	return shape().controlPointRect();
 }
 
 QPainterPath PaletteItemBase::hoverShape() const

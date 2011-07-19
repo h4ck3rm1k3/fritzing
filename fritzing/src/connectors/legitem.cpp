@@ -97,7 +97,7 @@ TODO:
 	* figure out how to make the connector longer or its clickable area bigger, or if you click on the wire within a few pixels..
 		since it's easy to grab, no need for some kind of fast disconnect
 
-	bad crash when converting back to unbendable.  probably some kind of boundingRect issue...
+	* bad crash when converting back to unbendable.  probably some kind of boundingRect issue...
 
 	move behavior: what to do when dragging a leg?
 		

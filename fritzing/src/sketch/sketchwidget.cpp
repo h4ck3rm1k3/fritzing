@@ -792,7 +792,13 @@ void SketchWidget::deleteItem(ItemBase * itemBase, bool deleteModelPart, bool do
 	DebugDialog::debug(QString("delete item (2) %1 %2 %3 %4").arg(id).arg(itemBase->title()).arg(m_viewIdentifier).arg((long) itemBase, 0, 16) );
 
 	// this is a hack to try to workaround a Qt 4.7 crash in QGraphicsSceneFindItemBspTreeVisitor::visit 
-	// when using a custom boundingRect, áfter deleting an item, it still appears on the visit list.
+	// when using a custom boundingRect, after deleting an item, it still appears on the visit list.
+	//
+	// the problem arises because the legItems are used to calculate the boundingRect() of the item.
+	// But in the destructor, the childItems are deleted first, then the BSP tree is updated
+	// at that point, the boundingRect() will return a different value than what's in the BSP tree,
+	// which is the old value of the boundingRect before the legs were deleted.
+
 	if (itemBase->hasBendableLeg()) {
 		DebugDialog::debug("kill bendable");
 		itemBase->killBendableLeg();

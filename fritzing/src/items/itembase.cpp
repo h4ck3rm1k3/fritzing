@@ -1800,6 +1800,8 @@ void ItemBase::clearConnectorItemCache()
 void ItemBase::killBendableLeg() {
 	if (!hasBendableLeg()) return;
 
+	prepareGeometryChange();
+
 	foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
 		connectorItem->killBendableLeg();
 	}
