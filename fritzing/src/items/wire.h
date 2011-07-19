@@ -115,7 +115,6 @@ public:
 
 	bool hasFlag(ViewGeometry::WireFlag);
 	bool hasAnyFlag(ViewGeometry::WireFlags);
-	ViewGeometry::WireFlags wireFlags();
 	void setWireFlags(ViewGeometry::WireFlags);
 
 	QString colorString();

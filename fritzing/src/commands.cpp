@@ -451,6 +451,7 @@ ChangeLegCommand::ChangeLegCommand(SketchWidget* sketchWidget, long fromID, cons
 									 QLineF oldLine, QLineF newLine, QUndoCommand *parent)
     : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
+	m_firstTime = false;
     m_fromID = fromID;
 	m_oldLine = oldLine;
     m_newLine = newLine;
@@ -462,9 +463,19 @@ void ChangeLegCommand::undo()
     m_sketchWidget->changeLeg(m_fromID, m_fromConnectorID, m_oldLine);
 }
 
+void ChangeLegCommand::setFirstTime()
+{
+	m_firstTime = true;
+}
+
 void ChangeLegCommand::redo()
 {
-    m_sketchWidget->recalcLeg(m_fromID, m_fromConnectorID, m_newLine);
+	if (m_firstTime) {
+		m_firstTime = false;
+	}
+	else {
+		m_sketchWidget->recalcLeg(m_fromID, m_fromConnectorID, m_newLine);
+	}
 }
 
 QString ChangeLegCommand::getParamString() const {

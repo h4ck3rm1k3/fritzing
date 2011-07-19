@@ -1491,7 +1491,7 @@ void ConnectorItem::debugInfo(const QString & msg)
 		.arg(this->attachedToViewLayerID())
 		.arg(this->attachedToViewIdentifier())
 		.arg(this->attachedToViewLayerSpec())
-		.arg(this->attachedTo()->getViewGeometry().wireFlags())
+		.arg(this->attachedTo()->wireFlags())
 		.arg(this->m_hybrid)
 		.arg((long) this->bus(), 0, 16)
 	);

@@ -65,10 +65,12 @@ public:
 	ItemBase(class ModelPart*, ViewIdentifierClass::ViewIdentifier, const ViewGeometry &, long id, QMenu * itemMenu);
 	virtual ~ItemBase();
 
+	qint64 id() const;
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	qreal z();
 	virtual void saveGeometry() = 0;
 	ViewGeometry & getViewGeometry();
+	ViewGeometry::WireFlags wireFlags() const;
 	virtual bool itemMoved() = 0;
 	QSizeF size();
 	class ModelPart * modelPart();
@@ -87,7 +89,7 @@ public:
 	virtual void removeLayerKin();
 	ViewIdentifierClass::ViewIdentifier viewIdentifier();
 	QString & viewIdentifierName();
-	ViewLayer::ViewLayerID viewLayerID();
+	ViewLayer::ViewLayerID viewLayerID() const;
 	void setViewLayerID(ViewLayer::ViewLayerID, const LayerHash & viewLayers);
 	void setViewLayerID(const QString & layerName, const LayerHash & viewLayers);
 	bool topLevel();
@@ -102,7 +104,7 @@ public:
 	ConnectorItem * findConnectorItemWithSharedID(const QString & connectorID, ViewLayer::ViewLayerSpec);
 	void updateConnections(ConnectorItem *);
 	virtual void updateConnections();
-	virtual const QString & title();
+	virtual const QString & title() const;
 	bool getRatsnest();
 	const QHash<QString, QPointer<class Bus> > & buses();
 	int itemType() const;					// wanted this to return ModelPart::ItemType but couldn't figure out how to get it to compile
@@ -114,7 +116,7 @@ public:
 	virtual bool alreadySticking(ItemBase * itemBase);
 	virtual bool stickyEnabled();
 	ConnectorItem * anyConnectorItem();
-	const QString & instanceTitle();
+	const QString & instanceTitle() const;
 	QString label();
 	virtual void updateTooltip();
 	void setTooltip();
@@ -173,14 +175,14 @@ public:
 	const QString & filename();
 	void setFilename(const QString &);
 	virtual PluralType isPlural();
-	ViewLayer::ViewLayerSpec viewLayerSpec();
+	ViewLayer::ViewLayerSpec viewLayerSpec() const;
 	void setViewLayerSpec(ViewLayer::ViewLayerSpec);
 	virtual void calcRotation(QTransform & rotation, QPointF center, ViewGeometry &);
     void updateConnectors();
 	const QString & moduleID();
 	bool moveLock();
 	virtual void setMoveLock(bool);
-	void debugInfo(const QString & msg);
+	void debugInfo(const QString & msg) const;
 	virtual void addedToScene(bool temporary);
 	virtual bool hasPartNumberProperty();
 	void collectPropsMap(QString & family, QMap<QString, QString> &);
@@ -260,7 +262,6 @@ public slots:
 	void showPartLabel(bool show, ViewLayer *);
 	void hidePartLabel();
 	void partLabelChanged(const QString &newText);
-	qint64 id();
 	void swapEntry(const QString & text);
 
 public:
@@ -317,6 +318,7 @@ protected:
 	QString m_filename;
 	ViewLayer::ViewLayerSpec m_viewLayerSpec;
 	bool m_moveLock;
+	bool m_hasBendableLeg;
 	QList<ConnectorItem *> m_cachedConnectorItems;
 
 protected:

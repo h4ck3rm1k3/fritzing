@@ -4363,7 +4363,8 @@ void SketchWidget::makeDeleteItemCommandPrepSlot(ItemBase * itemBase, bool forei
 			if (!connectorItem->hasBendableLeg()) continue;
 
 			QLineF line = connectorItem->legLine();
-			new ChangeLegCommand(this, itemBase->id(), connectorItem->connectorSharedID(), line, line, parentCommand);
+			ChangeLegCommand * clc = new ChangeLegCommand(this, itemBase->id(), connectorItem->connectorSharedID(), line, line, parentCommand);
+			clc->setFirstTime();
 		}
 	}
 }
@@ -6127,7 +6128,7 @@ QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLaye
 			itemsBoundingRect |= itemBase->partLabelSceneBoundingRect();
 		}
 
-		if (itemBase->modelPart()->hasBendableLeg()) {
+		if (itemBase->hasBendableLeg()) {
 			foreach (ConnectorItem * connectorItem, itemBase->cachedConnectorItems()) {
 				if (!connectorItem->hasBendableLeg()) continue;
 

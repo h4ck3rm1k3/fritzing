@@ -217,6 +217,6 @@ bool ViewGeometry::hasAnyFlag(ViewGeometry::WireFlags flags) {
 }
 
 
-ViewGeometry::WireFlags ViewGeometry::wireFlags() {
+ViewGeometry::WireFlags ViewGeometry::wireFlags() const {
 	return m_wireFlags;
 }

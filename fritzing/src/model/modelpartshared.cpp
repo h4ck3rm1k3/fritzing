@@ -43,10 +43,6 @@ void copyPinAttributes(QDomElement & from, QDomElement & to)
 	if (!hybrid.isEmpty()) {
 		to.setAttribute("hybrid", hybrid);
 	}
-	QString bendable = from.attribute("bendableLeg");
-	if (!bendable.isEmpty()) {
-		to.setAttribute("bendableLeg", bendable);
-	}
 	QString legId = from.attribute("legId");
 	if (!legId.isEmpty()) {
 		to.setAttribute("legId", legId);
@@ -126,7 +122,7 @@ ModelPartShared::ModelPartShared(QDomDocument * domDocument, const QString & pat
 
 void ModelPartShared::commonInit() {
 	m_moduleID = "";
-	m_hasBendableLeg = m_flippedSMD = m_connectorsInitialized = m_ignoreTerminalPoints = m_partlyLoaded = m_needsCopper1 = false;
+	m_flippedSMD = m_connectorsInitialized = m_ignoreTerminalPoints = m_partlyLoaded = m_needsCopper1 = false;
 }
 
 ModelPartShared::~ModelPartShared() {
@@ -367,7 +363,6 @@ void ModelPartShared::initConnectors() {
 	QDomElement connector = connectors.firstChildElement("connector");
 	while (!connector.isNull()) {
 		ConnectorShared * connectorShared = new ConnectorShared(connector);
-		if (connectorShared->hasBendableLeg()) m_hasBendableLeg = true;
 		m_connectorSharedHash.insert(connectorShared->id(), connectorShared);
 
 		connector = connector.nextSiblingElement("connector");
@@ -669,7 +664,3 @@ void ModelPartShared::ensurePartNumberProperty() {
 	}
 }
 
-bool ModelPartShared::hasBendableLeg()
-{
-	return m_hasBendableLeg;
-}

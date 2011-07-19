@@ -139,7 +139,7 @@ ItemBase::ItemBase( ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier vi
 	: GraphicsSvgLineItem()
 {
 	//DebugDialog::debug(QString("itembase %1 %2").arg(id).arg((long) static_cast<QGraphicsItem *>(this), 0, 16));
-	m_moveLock = m_hoverEnterSpaceBarWasPressed = m_spaceBarWasPressed = false;
+	m_hasBendableLeg = m_moveLock = m_hoverEnterSpaceBarWasPressed = m_spaceBarWasPressed = false;
 
 	m_everVisible = true;
 
@@ -235,7 +235,7 @@ QSizeF ItemBase::size() {
 	return m_size;
 }
 
-qint64 ItemBase::id() {
+qint64 ItemBase::id() const {
  	return m_id;
 }
 
@@ -374,7 +374,7 @@ QString & ItemBase::viewIdentifierName() {
 	return ViewIdentifierClass::viewIdentifierName(m_viewIdentifier);
 }
 
-ViewLayer::ViewLayerID ItemBase::viewLayerID() {
+ViewLayer::ViewLayerID ItemBase::viewLayerID() const {
 	return m_viewLayerID;
 }
 
@@ -618,7 +618,7 @@ void ItemBase::updateConnections(ConnectorItem * item) {
 	item->attachedMoved();
 }
 
-const QString & ItemBase::title() {
+const QString & ItemBase::title() const {
 	if (m_modelPart == NULL) return ___emptyString___;
 
 	return m_modelPart->title();
@@ -822,7 +822,7 @@ ConnectorItem * ItemBase::anyConnectorItem() {
 }
 
 
-const QString & ItemBase::instanceTitle() {
+const QString & ItemBase::instanceTitle() const {
 	if (m_modelPart) {
 		return m_modelPart->instanceTitle();
 	}
@@ -1150,6 +1150,7 @@ bool ItemBase::collectFemaleConnectees(QSet<ItemBase *> & items) {
 }
 
 void ItemBase::prepareGeometryChange() {
+	debugInfo("prepare geometry change");
 	GraphicsSvgLineItem::prepareGeometryChange();
 }
 
@@ -1607,7 +1608,7 @@ ItemBase::PluralType ItemBase::isPlural() {
 	return ItemBase::NotSure;
 }
 
-ViewLayer::ViewLayerSpec ItemBase::viewLayerSpec() {
+ViewLayer::ViewLayerSpec ItemBase::viewLayerSpec() const {
 	return m_viewLayerSpec;
 }
 
@@ -1707,19 +1708,20 @@ void ItemBase::setMoveLock(bool moveLock)
 }
 
 
-void ItemBase::debugInfo(const QString & msg) 
+void ItemBase::debugInfo(const QString & msg) const
 {
 
 #ifndef QT_NO_DEBUG
-	DebugDialog::debug(QString("%1 '%2' id:%3 '%4' vlid:%5 spec:%6 flg:%7 gi:%8")
+	DebugDialog::debug(QString("%1 '%2' id:%3 '%4' vid:%9 vlid:%5 spec:%6 flg:%7 gi:%8")
 		.arg(msg)
 		.arg(this->title())
 		.arg(this->id())
 		.arg(this->instanceTitle())
 		.arg(this->viewLayerID())
 		.arg(this->viewLayerSpec())
-		.arg(this->getViewGeometry().wireFlags())
-		.arg((long) dynamic_cast<QGraphicsItem *>(this), 0, 16)
+		.arg(this->wireFlags())
+		.arg((long) dynamic_cast<const QGraphicsItem *const>(this), 0, 16)
+		.arg(m_viewIdentifier)
 	);
 
 	/*
@@ -1765,11 +1767,8 @@ void ItemBase::setDropOffset(QPointF)
 
 bool ItemBase::hasBendableLeg() const
 {
-	if (m_modelPart == NULL) return false;
-
-	return (m_modelPart->hasBendableLeg());
+	return m_hasBendableLeg;
 }
-
 
 bool ItemBase::sceneEvent(QEvent *event)
 {
@@ -1806,3 +1805,6 @@ void ItemBase::killBendableLeg() {
 	}
 }
 
+ViewGeometry::WireFlags ItemBase::wireFlags() const {
+	return m_viewGeometry.wireFlags();
+}

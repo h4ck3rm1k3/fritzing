@@ -278,6 +278,8 @@ public:
     void undo();
     void redo();
 
+	void setFirstTime();
+
 protected:
 	QString getParamString() const;
 
@@ -286,6 +288,7 @@ protected:
     long m_fromID;
     QLineF m_newLine;
     QLineF m_oldLine;
+	bool m_firstTime;
 };
 
 class ChangeLayerCommand : public BaseCommand

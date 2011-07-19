@@ -626,7 +626,7 @@ bool ModelPart::hasViewID(long id) {
 	return false;
 }
 
-const QString & ModelPart::instanceTitle() {
+const QString & ModelPart::instanceTitle() const {
 	return m_instanceTitle;
 }
 
@@ -773,9 +773,3 @@ ModelPart::ItemType ModelPart::itemType() const
 	return m_type; 
 };
 
-bool ModelPart::hasBendableLeg()
-{
-	if (m_modelPartShared == NULL) return false;
-
-	return (m_modelPartShared->hasBendableLeg());
-}

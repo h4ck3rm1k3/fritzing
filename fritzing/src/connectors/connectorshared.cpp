@@ -42,12 +42,10 @@ ConnectorShared::ConnectorShared()
 	m_description = "";
 	m_bus = NULL;
 	m_ercData = NULL;
-	m_hasBendableLeg = false;
 }
 
 ConnectorShared::ConnectorShared( const QDomElement & domElement )
 {
-	m_hasBendableLeg = false;
 	m_ercData = NULL;
 	m_id = domElement.attribute("id", "");
 	m_name = domElement.attribute("name", "");
@@ -184,7 +182,6 @@ void ConnectorShared::loadPin(QDomElement elem, ViewIdentifierClass::ViewIdentif
 		SvgIdLayer * svgIdLayer = new SvgIdLayer;
 		svgIdLayer->m_hybrid = (pinElem.attribute("hybrid").compare("yes") == 0);
 		svgIdLayer->m_legId = pinElem.attribute("legId");
-		m_hasBendableLeg = m_hasBendableLeg || (svgIdLayer->m_legId.length() > 0);
 		svgIdLayer->m_svgId = svgId;
 		svgIdLayer->m_svgViewLayerID = ViewLayer::viewLayerIDFromXmlString(layer);
 
@@ -211,8 +208,4 @@ const QString & ConnectorShared::busID() {
 
 ErcData * ConnectorShared::ercData() {
 	return m_ercData;
-}
-
-bool ConnectorShared::hasBendableLeg() {
-	return m_hasBendableLeg;
 }

@@ -1032,10 +1032,6 @@ QRgb Wire::getRgb(const QString & name) {
 	return c.rgb();
 }
 
-ViewGeometry::WireFlags Wire::wireFlags() {
-	return m_viewGeometry.wireFlags();
-}
-
 void Wire::setWireFlags(ViewGeometry::WireFlags wireFlags) {
 	m_viewGeometry.setWireFlags(wireFlags);
 }

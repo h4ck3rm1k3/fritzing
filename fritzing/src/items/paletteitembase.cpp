@@ -82,7 +82,7 @@ QRectF PaletteItemBase::boundingRect() const
 	}
 
 	QRectF r = shape().controlPointRect();
-	DebugDialog::debug(QString("bounding rect %1 %2 %3 %4")
+	debugInfo(QString("bounding rect %1 %2 %3 %4")
 						.arg(r.left()).arg(r.top()).arg(r.width()).arg(r.height()));
 	return r;
 }
@@ -414,6 +414,7 @@ void PaletteItemBase::setUpConnectors(FSvgRenderer * renderer, bool ignoreTermin
 		connectorItem->setTerminalPoint(svgIdLayer->m_point);
 		connectorItem->setRadius(svgIdLayer->m_radius, svgIdLayer->m_strokeWidth);
 		if (!svgIdLayer->m_legId.isEmpty()) {
+			m_hasBendableLeg = true;
 			connectorItem->setBendableLeg(QColor(svgIdLayer->m_legColor), svgIdLayer->m_legStrokeWidth, svgIdLayer->m_legLine);
 		}
 

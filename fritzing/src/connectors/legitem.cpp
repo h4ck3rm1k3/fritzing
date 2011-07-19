@@ -94,15 +94,18 @@ TODO:
 			this is tricky.  Better if the leg extends outside the viewbox, then can easily tell which end is draggable
 		then draw the leg as now
 
-	figure out how to make the connector longer or its clickable area bigger, or if you click on the wire within a few pixels..
+	* figure out how to make the connector longer or its clickable area bigger, or if you click on the wire within a few pixels..
+		since it's easy to grab, no need for some kind of fast disconnect
 
 	bad crash when converting back to unbendable.  probably some kind of boundingRect issue...
 
 	move behavior: what to do when dragging a leg?
 		
-	need some kind of fast disconnect
-
 	export: retrieve svg probably won't clean up the bendable <line> element
+
+	put legItem back into connector item?  
+	
+	make it a path instead of a line?
 
 	lots of new parts to define
 

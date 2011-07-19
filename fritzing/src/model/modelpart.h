@@ -129,7 +129,7 @@ public:
 	QList<SvgAndPartFilePath> getAvailableViewFiles();
 	bool hasViewID(long id);
 
-	const QString & instanceTitle();
+	const QString & instanceTitle() const;
 	const QString & instanceText();
 	void setInstanceTitle(QString);
 	void setInstanceText(QString);
@@ -151,7 +151,6 @@ public:
 	QString hasBaseNameFor(ViewIdentifierClass::ViewIdentifier);
 	void initBuses();
 	void clearBuses();
-	bool hasBendableLeg();
 
 public:
 	static long nextIndex();

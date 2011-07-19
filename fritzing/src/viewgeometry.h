@@ -95,7 +95,7 @@ public:
 	bool hasFlag(WireFlag);
 	bool hasAnyFlag(WireFlags);
 	int flagsAsInt() const;
-	ViewGeometry::WireFlags wireFlags();
+	ViewGeometry::WireFlags wireFlags() const;
 
 protected:
 	qreal m_z;
