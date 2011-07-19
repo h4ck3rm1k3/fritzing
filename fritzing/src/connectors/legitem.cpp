@@ -53,8 +53,6 @@ TODO:
 	* alt/meta/ctrl to drag out a wire
 		the leg is no longer bendable because the wire covers the drag area
 
-	export: retrieve svg probably won't clean up the bendable <line> element
-
 	* bendable drag
 
 	* update connections needs to be smarter (has to to with connecting to wires)
@@ -90,18 +88,21 @@ TODO:
 
 	* if a part is locked, dragging the leg is disabled
 
+	* fzp  has "legId" (and someday? "maxlength" or is that in the svg) in <p> element
+		put the leg definition as a line in the svg, with connectorNleg
+		then on loading, remove the leg, and change the viewbox height and width
+			this is tricky.  Better if the leg extends outside the viewbox, then can easily tell which end is draggable
+		then draw the leg as now
+
 	figure out how to make the connector longer or its clickable area bigger, or if you click on the wire within a few pixels..
 
 	bad crash when converting back to unbendable.  probably some kind of boundingRect issue...
 
 	move behavior: what to do when dragging a leg?
-		need some kind of fast disconnect
+		
+	need some kind of fast disconnect
 
-	fzp  has "legId" (and someday? "maxlength" or is that in the svg) in <p> element
-		put the leg definition as a line in the svg, with connectorNleg
-		then on loading, remove the leg, and change the viewbox height and width
-			this is tricky.  Better if the leg extends outside the viewbox, then can easily tell which end is draggable
-		then draw the leg as now
+	export: retrieve svg probably won't clean up the bendable <line> element
 
 	lots of new parts to define
 

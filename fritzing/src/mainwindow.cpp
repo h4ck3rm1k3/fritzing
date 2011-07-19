@@ -2564,6 +2564,8 @@ void MainWindow::cursorLocationSlot(qreal xinches, qreal yinches)
 		QString units;
 		qreal x, y;
 
+		m_locationLabel->setProperty("location", QSizeF(xinches, xinches));
+
 		if (m_locationLabelUnits.compare("mm") == 0) {
 			units = "mm";
 			x = xinches * 25.4;
@@ -2589,19 +2591,29 @@ void MainWindow::cursorLocationSlot(qreal xinches, qreal yinches)
 
 void MainWindow::locationLabelClicked()
 {
-		if (m_locationLabelUnits.compare("mm") == 0) {
-			m_locationLabelUnits = "px";
-		}
-		else if (m_locationLabelUnits.compare("px") == 0) {
-			m_locationLabelUnits = "in";
-		}
-		else if (m_locationLabelUnits.compare("in") == 0) {
-			m_locationLabelUnits = "mm";
+	if (m_locationLabelUnits.compare("mm") == 0) {
+		m_locationLabelUnits = "px";
+	}
+	else if (m_locationLabelUnits.compare("px") == 0) {
+		m_locationLabelUnits = "in";
+	}
+	else if (m_locationLabelUnits.compare("in") == 0) {
+		m_locationLabelUnits = "mm";
+	}
+	else {
+		m_locationLabelUnits = "in";
+	}
+
+	if (m_locationLabel) {
+		QVariant variant =  m_locationLabel->property("location");
+		if (variant.isValid()) {
+			QSizeF size = variant.toSizeF();
+			cursorLocationSlot(size.width(), size.height());
 		}
 		else {
-			m_locationLabelUnits = "in";
+			cursorLocationSlot(0, 0);
 		}
-
+	}
 		
 	QSettings settings;
 	settings.setValue("LocationInches", QVariant(m_locationLabelUnits));

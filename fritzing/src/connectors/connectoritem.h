@@ -129,6 +129,7 @@ public:
 	QRectF legSceneBoundingRect();
 	QPen legPen() const;
 	void killBendableLeg();  // hack; see caller
+	QRectF boundingRect() const;
 
 protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
@@ -151,6 +152,9 @@ protected:
 	void setHiddenOrInactive();
 	bool isConnectedToPart();
 	void displayTooltip(ConnectorItem * over, ConnectorItem * other);
+	void reposition(QPointF sceneDestPos);
+	QPainterPath shape() const;
+	QPointF calcPoint() const;
 
 protected:
 	QPointer<Connector> m_connector;

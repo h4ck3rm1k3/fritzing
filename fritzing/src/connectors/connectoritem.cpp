@@ -49,6 +49,8 @@ $Date$
 
 /////////////////////////////////////////////////////////
 
+static const qreal StandardLegConnectorLength = 9;			// pixels
+
 QList<ConnectorItem *> ConnectorItem::m_equalPotentialDisplayItems;
 
 const QList<ConnectorItem *> ConnectorItem::emptyConnectorItemList;
@@ -420,14 +422,11 @@ void ConnectorItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 
 	if (m_bendableLeg && m_draggingLeg) {
 		m_draggingLeg = false;
-		QGraphicsRectItem::mouseReleaseEvent(event);
 		ConnectorItem * to = releaseDrag();
 		InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 		if (to) {
 			// center endpoint in the target connectorItem
-			QPointF p = to->sceneAdjustedTerminalPoint(NULL);
-			QPointF q = m_attachedTo->mapFromScene(p) - m_originalPointOnParent;
-			m_legItem->setLine(0, 0, q.x(), q.y());
+			reposition(to->sceneAdjustedTerminalPoint(NULL));
 		}
 		if (infoGraphicsView != NULL) {
 			infoGraphicsView->prepLegChange(this, m_oldLine, m_legItem->line(), to);
@@ -455,10 +454,10 @@ void ConnectorItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
 void ConnectorItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 
 	if (m_bendableLeg && m_draggingLeg) {
-		QGraphicsRectItem::mouseMoveEvent(event);
+		QPointF currentParentPos = this->mapToParent(this->mapFromScene(event->scenePos()));
+        QPointF buttonDownParentPos = this->mapToParent(this->mapFromScene(event->buttonDownScenePos(Qt::LeftButton)));
 
-		QPointF p = this->mapToParent(adjustedTerminalPoint());
-		m_legItem->setLine(0, 0, p.x() - m_originalPointOnParent.x(), p.y() - m_originalPointOnParent.y());
+		reposition(m_holdPos + currentParentPos - buttonDownParentPos);
 
 		QList<ConnectorItem *> exclude;
 		findConnectorUnder(true, true, exclude, true, this);
@@ -510,6 +509,7 @@ void ConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 				return;
 			}
 
+			m_holdPos = event->scenePos();
 			m_draggingLeg = true;
 			m_oldLine = m_legItem->line();
 			QGraphicsRectItem::mousePressEvent(event);
@@ -564,7 +564,11 @@ QPointF ConnectorItem::terminalPoint() {
 }
 
 QPointF ConnectorItem::adjustedTerminalPoint() {
-	return m_terminalPoint + this->rect().topLeft();
+	if (m_legItem == NULL) {
+		return m_terminalPoint + this->rect().topLeft();
+	}
+
+	return QPointF(0, 0);
 }
 
 QPointF ConnectorItem::sceneAdjustedTerminalPoint(ConnectorItem * connectee) {
@@ -635,7 +639,7 @@ void ConnectorItem::setBendableLeg(QColor color, qreal strokeWidth, QLineF paren
 
 	m_bendableLeg = true;
 	setFlag(QGraphicsItem::ItemIsMovable, true);
-	setFlag(QGraphicsItem::ItemSendsGeometryChanges, false);
+	setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
 	setAcceptedMouseButtons(Qt::LeftButton);
 
 	// p1 is always the start point closest to the body.  
@@ -646,13 +650,10 @@ void ConnectorItem::setBendableLeg(QColor color, qreal strokeWidth, QLineF paren
 	pen.setCapStyle(Qt::RoundCap);
 	pen.setWidthF(strokeWidth);
 	m_legItem->setPen(pen);
-	m_legItem->setLine(0, 0, parentLine.p2().x() - parentLine.p1().x(),  parentLine.p2().y() - parentLine.p1().y()); 
 
-	m_terminalPoint.setX(strokeWidth / 2);
-	m_terminalPoint.setY(strokeWidth / 2);
-	setRect(0, 0, strokeWidth, strokeWidth);
-	setPos(parentLine.p2() - m_terminalPoint);
-	this->setCircular(true);
+	reposition(m_attachedTo->mapToScene(parentLine.p2()));
+
+	this->setCircular(false);
 }
 
 bool ConnectorItem::hasBendableLeg() const {
@@ -739,7 +740,6 @@ ModelPartShared * ConnectorItem::modelPartShared() {
 
 	return m_attachedTo->modelPartShared();
 }
-
 
 ModelPart * ConnectorItem::modelPart() {
 	if (m_attachedTo == NULL) return NULL;
@@ -866,7 +866,6 @@ bool ConnectorItem::wiredTo(ConnectorItem * target, ViewGeometry::WireFlags skip
 	collectEqualPotential(connectorItems, true, skipFlags);
 	return connectorItems.contains(target);
 }
-
 
 Wire * ConnectorItem::directlyWiredTo(ConnectorItem * source, ConnectorItem * target, ViewGeometry::WireFlags flags) {
 	 QList<ConnectorItem *> visited;
@@ -1286,6 +1285,18 @@ void ConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * 
 	if (m_hybrid) return;
 	if (doNotPaint()) return;
 
+	if (m_legItem) {
+		painter->setOpacity(m_opacity);
+		painter->setBrush(brush());
+		QPen pn = pen();
+		pn.setWidthF(m_legItem->pen().widthF());
+		pn.setCapStyle(Qt::RoundCap);
+		painter->setPen(pn);
+		QPointF p = calcPoint();
+		painter->drawLine(0, 0, p.x(), p.y());
+		return;
+	}
+
 	if (!m_checkedEffectively) {
 		if (!m_circular && m_shape.isEmpty()) {
 			if (this->attachedTo()->viewIdentifier() == ViewIdentifierClass::PCBView) {
@@ -1631,10 +1642,7 @@ void ConnectorItem::resetLegLine(QLineF line)
 		return;
 	}
 
-	QPointF p = parentItem()->mapFromScene(target->sceneAdjustedTerminalPoint(NULL));
-	this->setPos(p - m_terminalPoint);
-	QPointF q = m_legItem->pos();
-	m_legItem->setLine(0, 0, p.x() - q.x(), p.y() - q.y());
+	reposition(target->sceneAdjustedTerminalPoint(NULL));
 }
 
 void ConnectorItem::setLegLine(QLineF line) 
@@ -1642,12 +1650,7 @@ void ConnectorItem::setLegLine(QLineF line)
 	if (!m_bendableLeg) return;
 	if (m_legItem == NULL) return;
 
-	m_legItem->setLine(line);
-
-	QRectF r = rect();
-	QPointF newPos = m_legItem->pos() + line.p2() - m_terminalPoint;
-	setPos(newPos);
-	setRect(0, 0, r.width(), r.height());
+	reposition(m_legItem->mapToScene(line.p2()));
 }
 
 QLineF ConnectorItem::legLine() {
@@ -1707,21 +1710,18 @@ void ConnectorItem::prepareToStretch(bool activeStretch) {
 }
 
 void ConnectorItem::stretchBy(QPointF howMuch) {
+	Q_UNUSED(howMuch);
+
 	if (m_legItem == NULL) return;
 
-	QPointF mfs = m_attachedTo->mapFromScene(m_holdPos);
-	QPointF p2;
 	if (m_activeStretch) {
 		// this connector's part is being dragged
-		setPos(mfs);
-		p2 = mfs + m_terminalPoint - m_originalPointOnParent;
+		reposition(m_holdPos);
 	}
 	else {
 		// this connector is connected to another part which is being dragged
-		setPos(mfs + howMuch);
-		p2 = mfs + howMuch + m_terminalPoint - m_originalPointOnParent;
+		resetLegLine(QLineF(0, 0, 0, 0));
 	}
-	m_legItem->setLine(0, 0, p2.x(), p2.y());
 }
 
 void ConnectorItem::stretchDone(QLineF & oldLine, QLineF & newLine) {
@@ -1735,3 +1735,38 @@ QRectF ConnectorItem::legSceneBoundingRect() {
 	return m_legItem->sceneBoundingRect();
 }
 
+QRectF ConnectorItem::boundingRect() const
+{
+	if (!m_legItem) return NonConnectorItem::boundingRect();
+
+	return shape().controlPointRect();
+}
+
+QPainterPath ConnectorItem::shape() const
+{
+	if (!m_legItem) return NonConnectorItem::shape();
+
+	QPainterPath path;
+	path.moveTo(0,0);
+	QPointF p = calcPoint();
+	path.lineTo(p.x(), p.y());
+	QPen lpen = m_legItem->pen();
+
+	return GraphicsSvgLineItem::qt_graphicsItem_shapeFromPath(path, lpen, lpen.widthF());
+}
+
+void ConnectorItem::reposition(QPointF sceneDestPos)
+{
+	QPointF dest = m_attachedTo->mapFromScene(sceneDestPos);
+	setPos(dest);
+	prepareGeometryChange();
+	m_legItem->setLine(0, 0, dest.x() - m_originalPointOnParent.x(), dest.y() - m_originalPointOnParent.y());
+}
+
+QPointF ConnectorItem::calcPoint() const
+{
+	QLineF line = m_legItem->line();
+	qreal lineLen = line.length();
+	qreal len = qMin(lineLen, StandardLegConnectorLength);
+	return QPointF((line.p1().x() - line.p2().x()) * len / lineLen, (line.p1().y() - line.p2().y()) * len / lineLen);
+}

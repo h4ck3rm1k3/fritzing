@@ -91,6 +91,25 @@ QPainterPath PaletteItemBase::hoverShape() const
 {
 	if (!hasBendableLeg()) return ItemBase::hoverShape();
 
+	// TODO: figure out real shape of svg
+    QPainterPath path;
+    path.addRect(0, 0, m_size.width(), m_size.height());
+
+	if (!hasBendableLeg()) return path;
+
+	foreach (ConnectorItem * connectorItem, cachedConnectorItemsConst()) {
+		if (connectorItem->hasBendableLeg()) {
+			QLineF l = connectorItem->parentAdjustedLegLine();
+			QPainterPath linePath;
+			linePath.moveTo(l.p1());
+			linePath.lineTo(l.p2());
+			QPen pen = connectorItem->legPen();
+			path.addPath(GraphicsSvgLineItem::qt_graphicsItem_shapeFromPath(linePath, pen, pen.widthF() * 2));
+		}
+	}
+	return path;
+
+/*
 	qreal l = 0;
 	qreal t = 0;
 	qreal r = m_size.width();
@@ -112,6 +131,7 @@ QPainterPath PaletteItemBase::hoverShape() const
 	QPainterPath path;
     path.addRect(l, t, r - l, b - t);
 	return path;
+*/
 }
 
 QPainterPath PaletteItemBase::shape() const
