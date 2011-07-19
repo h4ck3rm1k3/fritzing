@@ -71,11 +71,11 @@
                   </tr>
                 </tbody>
               </table>
-              <div>
-                <a tal:attributes="href string:${navroot}/++resource++fritzing.fab/threePCBs1200.jpg">
-                  <img alt="Picture of PCBs" class="adapt_width" tal:attributes="src string:${navroot}/++resource++fritzing.fab/threePCBs368.jpg" />
-                </a>
-              </div>
+            </div>
+            <div>
+              <a tal:attributes="href string:${navroot}/++resource++fritzing.fab/threePCBs1200.jpg">
+                <img alt="Picture of PCBs" class="adapt_width" tal:attributes="src string:${navroot}/++resource++fritzing.fab/threePCBs368.jpg" />
+              </a>
             </div>
           </div>
           

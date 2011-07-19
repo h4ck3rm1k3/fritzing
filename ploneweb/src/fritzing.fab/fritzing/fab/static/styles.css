@@ -9,10 +9,7 @@ table.sketchesTable td,
 div.orderSummary,
 div.checkout,
 div.supportBox {
-    padding-left: 10pt;
-    padding-right: 10px;
-    padding-top: 6pt;
-    padding-bottom: 6px;
+    padding: 10px;
 }
 
 .align_right {
@@ -102,8 +99,7 @@ div.overlay {
     margin-top: 3em;
 }
 #addform #form-buttons-cancel,
-#addform #form-buttons-save,
-a.addSketchLink {
+#addform #form-buttons-save {
     width: 103px;
     height: 30px;
     color: white !important;
@@ -115,7 +111,7 @@ a.addSketchLink {
 }
 #addform #form-buttons-cancel:hover,
 #addform #form-buttons-save:hover {
-    color: black;
+    color: #2a4b3a !important;
 }
 #addform #form-buttons-save {
     margin-right: 3em;
@@ -125,15 +121,29 @@ a.addSketchLink {
     background: url(button_cancel.png);
 }
 
-a.addSketchLink {
-    display: block;
-    min-width: 67px;
-    width: auto;
+.genericButton {
+    display: inline-block;
+    height: 30px;
+    border: none;
+    border-left: 1px solid #80a593;
+    background: url(button_generic_bg_right.png) no-repeat top right;
+}
+.genericButton a {
+    display: inline-block;
+    min-width: 54px;
+    height: 30px;
+    border: none;
+    padding-left: 32px;
+    padding-right: 16px;
+    font-size: 13px;
     line-height: 30px;
     text-decoration: none !important;
-    background: url(button_add.png) no-repeat;
+    text-transform: uppercase;
+    color: white !important;
 }
-
+a.addSketchLink {
+    background: url(button_add_left.png) no-repeat top left;
+}
 a.addOrderLink {
 }
 

@@ -50,31 +50,31 @@
   <drop content="//*[@id='portal-searchbox']//*[contains(@class, 'searchButton')]"/>
   <drop content="//*[@id='portal-searchbox']//*[contains(@class, 'searchSection')]"/>
   <!-- 
-  main menu -->
-  <replace css:content="#portal-globalnav" css:theme="#portal-globalnav"/>
+  main menu: copy navTree from portlet -->
+  <replace css:theme="#portal-globalnav" css:content=".navTreeLevel0"/>
   <!-- 
-  copy child elements list from portlet to selected main menu item -->
-  <xsl:template match="@*|node()">
-    <xsl:copy>
-      <xsl:apply-templates select="@*|node()"/>
-    </xsl:copy>
-  </xsl:template>
-  <xsl:template match="//*[@id='portal-globalnav']//*[contains(@class, 'selected')]">
-    <li>
-      <xsl:apply-templates select="@* | *"/>
-      <ul class="subnav">
-        <xsl:for-each select="//*[contains(@class, 'navTreeLevel0')]/li">
-          <li>
-            <xsl:if test="contains(@class, 'navTreeCurrentNode')">
-              <xsl:attribute name="class">selected</xsl:attribute>
-            </xsl:if>
-            <a href="{a/@href}">
-              <xsl:apply-templates select="a/span"/>
-            </a>
-          </li>
-        </xsl:for-each>
-      </ul>
-    </li>
+  main menu: customize the copied navTree -->
+  <xsl:template match="//*[contains(@class, 'navTreeLevel0')]">
+    <ul class="fritzing-navTreeLevel0">
+      <xsl:for-each select="//*[contains(@class, 'navTreeLevel0')]/li">
+        <li>
+          <xsl:apply-templates select="@*"/>
+          <a href="{a/@href}">
+            <xsl:apply-templates select="a/span"/>
+          </a>
+          <ul class="fritzing-navTreeLevel1">
+            <xsl:for-each select="ul/li">
+              <li>
+                <xsl:apply-templates select="@*"/>
+                <a href="{a/@href}">
+                  <xsl:apply-templates select="a/span"/>
+                </a>
+              </li>
+            </xsl:for-each>
+          </ul>
+        </li>
+      </xsl:for-each>
+    </ul>
   </xsl:template>
   <!-- 
   

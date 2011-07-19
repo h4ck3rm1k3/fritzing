@@ -4,6 +4,7 @@
    
 */
 
+
 .clear {
     clear: both;
 }
@@ -75,7 +76,7 @@ body.template-document_view #fritzing-content #content-core li a:link:before {
 }
 #meta,
 #logo-wrapper,
-#portal-globalnav,
+.fritzing-navTreeLevel0,
 #fritzing-content {
     margin: 0 auto;
     width: 90%;
@@ -133,48 +134,50 @@ input#searchGadget {
     background: url(../img/searchField.png) top right no-repeat;
 }
 
-#portal-globalnav {
+.fritzing-navTreeLevel0 {
     background: #962320;
     font-size: 100%;
 }
-#portal-globalnav ul.subnav {
+.fritzing-navTreeLevel0 ul.fritzing-navTreeLevel1 {
     background: #cc5447;
     position: absolute;
 }
-#portal-globalnav li {
+.fritzing-navTreeLevel0 li {
     display: inline-block;
 }
-#portal-globalnav li > a,
-#portal-globalnav ul.subnav li > a {
-    min-width: 0;
+.fritzing-navTreeLevel0 li > a,
+.fritzing-navTreeLevel0 ul.fritzing-navTreeLevel1 li > a {
+    display: inline-block;
     border: none;
-    padding: .2em .6em;
-    color: white;
-    background: transparent;
+    padding: .2em .6em !important;
+    line-height: inherit !important;
+    text-decoration: none;
+    color: white !important;
+    background: transparent !important;
 }
-#portal-globalnav li:before,
-#portal-globalnav ul.subnav li:before {
+.fritzing-navTreeLevel0 li:before,
+.fritzing-navTreeLevel0 ul.fritzing-navTreeLevel1 li:before {
     content: "\\";
     color: white;
 }
-#portal-globalnav li:first-child:before,
-#portal-globalnav ul.subnav li:first-child:before {
+.fritzing-navTreeLevel0 li:first-child:before,
+.fritzing-navTreeLevel0 ul.fritzing-navTreeLevel1 li:first-child:before {
     content: " "; /* webkit needs a space here */
 }
-#portal-globalnav li > a:hover,
-#portal-globalnav ul.subnav li > a:hover {
+.fritzing-navTreeLevel0 li > a:hover,
+.fritzing-navTreeLevel0 ul.fritzing-navTreeLevel1 li > a:hover {
     color: white;
     text-decoration: underline;
     background: transparent;
 }
-#portal-globalnav li.selected > a,
-#portal-globalnav ul.subnav li.selected > a {
+.fritzing-navTreeLevel0 li.navTreeCurrentNode > a,
+.fritzing-navTreeLevel0 ul.fritzing-navTreeLevel1 li.navTreeCurrentNode > a {
     color: white;
     font-weight: bold;
     background: transparent;
 }
-#portal-globalnav li.selected > a:hover,
-#portal-globalnav ul.subnav li.selected > a:hover {
+.fritzing-navTreeLevel0 li.navTreeCurrentNode > a:hover,
+.fritzing-navTreeLevel0 ul.fritzing-navTreeLevel1 li.navTreeCurrentNode > a:hover {
     color: white;
     background: transparent;
 }

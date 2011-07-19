@@ -4,6 +4,44 @@ var common_jqt_config = {fixed:false,speed:'fast',mask:{color:'#fff',opacity: 0.
 jQuery.extend(jQuery.tools.overlay.conf, common_jqt_config);
 
 jQuery(function($) {
+
+    $.fn.inlineAjaxForm = function (pba) {
+        return this.each(function () {
+            // copy options so that it's not just a reference
+            // to the parameter.
+            var pbo = $.extend(true, {}, pba);
+            
+            var o = $(this);
+            
+            var form = $('<form enctype="multipart/form-data">');
+            form.load(pbo.formsrc+" "+pbo.formsel);
+            o.html(form);
+            
+            form.ajaxForm({
+                type: "POST",
+                contentType: "multipart/form-data",
+                url: pbo.formsrc,
+                context: o,
+                error: function(r) {
+                    console.log(pba.formsrc);
+                    alert("Failed to submit");
+                },
+                success: function(r) { 
+                    console.log(pba.formsrc);
+                    alert("SUCCESS");
+                },
+            })
+        });
+    };
+
+    $('.shipping_and_contact').inlineAjaxForm({
+        formsrc: window.location+"/@@edit",
+        formsel: "#form .field",
+        updatesrc: '.shipping_and_contact',
+        updatesel: ''
+    });
+
+
     // method to show error message in a noform
     // situation.
     function noformerrorshow(el, noform) {

@@ -31,9 +31,9 @@
             
         <div class="row">
           <div class="cell width-2:3 position-0">
-            <div tal:condition="not:container/listFolderContents">
+            <span class="genericButton" tal:condition="not:container/listFolderContents">
               <a class="addSketchLink" tal:attributes="href string:${context/absolute_url}/++add++sketch">Add Sketch</a>
-            </div>
+            </span>
             
             <table class="sketchesTable" tal:condition="container/listFolderContents">
               <thead>
@@ -84,9 +84,11 @@
                 </tr>
                 <tr>
                   <td class="actionCell">
-                    <a tal:condition="python:view.isStateId(context, 'open')" class="addSketchLink" href="#" tal:attributes="href string:${context/absolute_url}/++add++sketch">
-                      Add sketch
-                    </a>
+                    <span class="genericButton">
+                      <a tal:condition="python:view.isStateId(context, 'open')" class="addSketchLink" href="#" tal:attributes="href string:${context/absolute_url}/++add++sketch">
+                        Add sketch
+                      </a>
+                    </span>
                   </td>
                   <td></td>
                   <td></td>
