@@ -659,8 +659,12 @@ int ItemBase::itemType() const
 	return m_modelPart->itemType();
 }
 
+bool ItemBase::inHover() {
+	return (!m_inactive && (m_connectorHoverCount > 0 || m_hoverCount > 0 || m_connectorHoverCount2 > 0));
+}
+
 void ItemBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-	if (!m_inactive && (m_connectorHoverCount > 0 || m_hoverCount > 0 || m_connectorHoverCount2 > 0)) {
+	if (inHover()) {
 		//DebugDialog::debug(QString("chc:%1 hc:%2 chc2:%3").arg(m_connectorHoverCount).arg(m_hoverCount).arg(m_connectorHoverCount2));
 		layerKinChief()->paintHover(painter, option, widget);
 	}

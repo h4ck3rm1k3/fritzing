@@ -196,6 +196,7 @@ public:
 	void clearConnectorItemCache();
 	const QList<ConnectorItem *> & cachedConnectorItems();
 	const QList<ConnectorItem *> & cachedConnectorItemsConst() const;
+	bool inHover();
 
 
 public:
@@ -323,10 +324,6 @@ protected:
 
 protected:
 	static long nextID;
-	const static QColor hoverColor;
-	const static qreal hoverOpacity;
-	const static QColor connectorHoverColor;
-	const static qreal connectorHoverOpacity;
 	static QPointer<class ReferenceModel> referenceModel;
 
 public:
@@ -334,6 +331,10 @@ public:
 	static const QString ITEMBASE_FONT_SUFFIX;
 	static QHash<QString, QString> TranslatedPropertyNames;
 	static QString SvgFilesDir;
+	const static QColor hoverColor;
+	const static qreal hoverOpacity;
+	const static QColor connectorHoverColor;
+	const static qreal connectorHoverOpacity;
 
 public:
 	static void initNames();

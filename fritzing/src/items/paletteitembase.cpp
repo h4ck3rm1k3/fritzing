@@ -217,18 +217,6 @@ void PaletteItemBase::paintHover(QPainter *painter, const QStyleOptionGraphicsIt
 		return;
 	}
 
-	foreach (ConnectorItem * connectorItem, cachedConnectorItemsConst()) {
-		if (connectorItem->hasBendableLeg()) {
-			QLineF l = connectorItem->parentAdjustedLegLine();
-			QPainterPath linePath;
-			linePath.moveTo(l.p1());
-			linePath.lineTo(l.p2());
-			QPen pen = connectorItem->legPen();
-			QPainterPath drawPath = GraphicsSvgLineItem::qt_graphicsItem_shapeFromPath(linePath, pen, pen.widthF() * 2);
-			ItemBase::paintHover(painter, option, widget, drawPath);
-		}
-	}
-
 	QPainterPath path;
 	path.addRect(0, 0, m_size.width(), m_size.height());
 	ItemBase::paintHover(painter, option, widget, path);

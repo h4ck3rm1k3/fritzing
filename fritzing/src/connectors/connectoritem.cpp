@@ -509,7 +509,7 @@ void ConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 				return;
 			}
 
-			m_holdPos = event->scenePos();
+			m_holdPos = m_attachedTo->mapToScene(pos());
 			m_draggingLeg = true;
 			m_oldLine = m_legItem->line();
 			QGraphicsRectItem::mousePressEvent(event);
@@ -1306,7 +1306,7 @@ void ConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * 
 			pn.setCapStyle(Qt::RoundCap);
 			painter->setOpacity(1);
 			painter->setPen(pn);
-			painter->drawLine(0, 0, p.x(), p.y());
+			painter->drawLine(p.x(), p.y(), 0, 0);
 		}
 
 		QPen pn = pen();
@@ -1314,7 +1314,7 @@ void ConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * 
 		pn.setCapStyle(Qt::RoundCap);
 		painter->setOpacity(m_opacity);
 		painter->setPen(pn);
-		painter->drawLine(0, 0, p.x(), p.y());
+		painter->drawLine(p.x(), p.y(), 0, 0);
 		return;
 	}
 
@@ -1788,6 +1788,6 @@ QPointF ConnectorItem::calcPoint() const
 {
 	QLineF line = m_legItem->line();
 	qreal lineLen = line.length();
-	qreal len = qMin(lineLen, StandardLegConnectorLength);
+	qreal len = qMax(0.5, qMin(lineLen, StandardLegConnectorLength));
 	return QPointF((line.p1().x() - line.p2().x()) * len / lineLen, (line.p1().y() - line.p2().y()) * len / lineLen);
 }

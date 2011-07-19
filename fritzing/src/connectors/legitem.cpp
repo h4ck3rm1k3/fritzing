@@ -171,7 +171,17 @@ void LegItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 	// never draw selection outline
 	Q_UNUSED(option);
 	Q_UNUSED(widget);
-    painter->setPen(pen());
-    painter->drawLine(line());
 
+	painter->setPen(pen());
+	painter->drawLine(line());
+
+	ItemBase * itemBase = dynamic_cast<ItemBase *>(parentItem());
+	if (itemBase != NULL && itemBase->inHover()) {
+		QPen pn = pen();
+
+		pn.setColor((qGray(pn.color().rgb()) < 48) ? QColor(255, 255, 255) : QColor(0, 0, 0));
+		painter->setOpacity(ItemBase::hoverOpacity);
+		painter->setPen(pn);
+		painter->drawLine(line());
+	}
 }
