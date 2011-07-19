@@ -33,8 +33,6 @@ $Date$
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 
-typedef void (*HighlightSelectedCallback)(QGraphicsItem *, QPainter * painter, int step);
-
 // combines QGraphicsLineItem and QGraphicsSvgItem so all parts and wires can inherit from the same class
 
 class GraphicsSvgLineItem : public QGraphicsSvgItem
@@ -59,12 +57,13 @@ public:
 	void setShape(QPainterPath &);
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
+    virtual void paintHighlight(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
 
 	bool hasLine();
 	virtual const QLineF & getPaintLine();
 
 public:
-	static void qt_graphicsItem_highlightSelected(QGraphicsItem *, QPainter *painter, const QStyleOptionGraphicsItem *option, const QRectF & boundingRect, const QPainterPath & path, HighlightSelectedCallback);
+	static void qt_graphicsItem_highlightSelected(QPainter *painter, const QStyleOptionGraphicsItem *option, const QRectF & boundingRect, const QPainterPath & path);
 	static QPainterPath qt_graphicsItem_shapeFromPath(const QPainterPath &path, const QPen &pen, qreal shapeStrokeWidth);
 
 	static const qreal DefaultHoverStrokeWidth;

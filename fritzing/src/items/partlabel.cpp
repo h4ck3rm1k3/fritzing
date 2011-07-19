@@ -750,7 +750,7 @@ void PartLabel::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
 	}
 
 	if (m_owner->isSelected()) {
-		GraphicsSvgLineItem::qt_graphicsItem_highlightSelected(this, painter, option, boundingRect(), shape(), NULL);
+		GraphicsSvgLineItem::qt_graphicsItem_highlightSelected(painter, option, boundingRect(), shape());
     }
 
     QGraphicsSimpleTextItem::paint(painter, option, widget);

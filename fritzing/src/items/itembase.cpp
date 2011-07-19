@@ -696,16 +696,21 @@ void ItemBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 
 void ItemBase::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+	paintHover(painter, option, widget, hoverShape());
+}
+
+void ItemBase::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget, const QPainterPath & shape)
+{
 	Q_UNUSED(widget);
 	Q_UNUSED(option);
 	painter->save();
 	if (m_connectorHoverCount > 0 || m_connectorHoverCount2 > 0) {
 		painter->setOpacity(connectorHoverOpacity);
-		painter->fillPath(this->hoverShape(), QBrush(connectorHoverColor));
+		painter->fillPath(shape, QBrush(connectorHoverColor));
 	}
 	else {
 		painter->setOpacity(hoverOpacity);
-		painter->fillPath(this->hoverShape(), QBrush(hoverColor));
+		painter->fillPath(shape, QBrush(hoverColor));
 	}
 	painter->restore();
 }

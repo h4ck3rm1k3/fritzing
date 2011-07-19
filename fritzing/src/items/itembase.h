@@ -275,6 +275,8 @@ protected:
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event );
 	virtual void paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget); 
+	virtual void paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget, const QPainterPath & shape); 
+
 	QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant & value);
 
 	virtual QStringList collectValues(const QString & family, const QString & prop, QString & value);

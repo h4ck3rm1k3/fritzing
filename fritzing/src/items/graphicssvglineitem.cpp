@@ -180,7 +180,7 @@ void GraphicsSvgLineItem::paint(QPainter *painter, const QStyleOptionGraphicsIte
 	if (m_hasLine) {
 	    if (option->state & QStyle::State_Selected) {	
 			// draw this first because otherwise it seems to draw a dashed line down the middle
-	        qt_graphicsItem_highlightSelected(this, painter, option, boundingRect(), hoverShape(), NULL);
+			paintHighlight(painter, option, widget);
         }
 	    painter->setPen(m_pen);
 	    painter->drawLine(getPaintLine());			
@@ -194,9 +194,15 @@ void GraphicsSvgLineItem::paint(QPainter *painter, const QStyleOptionGraphicsIte
 		renderer()->render(painter, boundingRectWithoutLegs());
 
 		if (option->state & QStyle::State_Selected) {
-			qt_graphicsItem_highlightSelected(this, painter, option, boundingRect(), hoverShape(), NULL);
+			paintHighlight(painter, option, widget);
 		}
    	}
+}
+
+void GraphicsSvgLineItem::paintHighlight(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+	Q_UNUSED(widget);
+	qt_graphicsItem_highlightSelected(painter, option, boundingRect(), hoverShape());
 }
 
 const QLineF & GraphicsSvgLineItem::getPaintLine() {
@@ -226,8 +232,7 @@ QPainterPath GraphicsSvgLineItem::qt_graphicsItem_shapeFromPath(const QPainterPa
     return p;
 }
 
-void GraphicsSvgLineItem::qt_graphicsItem_highlightSelected(QGraphicsItem * item, QPainter *painter, const QStyleOptionGraphicsItem *option, const QRectF & boundingRect, const QPainterPath & path,
-															HighlightSelectedCallback callback)
+void GraphicsSvgLineItem::qt_graphicsItem_highlightSelected(QPainter *painter, const QStyleOptionGraphicsItem *option, const QRectF & boundingRect, const QPainterPath & path)
 {
 	/*
 	QLineF l1 = item->line();
@@ -283,9 +288,6 @@ void GraphicsSvgLineItem::qt_graphicsItem_highlightSelected(QGraphicsItem * item
 
     painter->setPen(QPen(bgcolor, penWidth, Qt::SolidLine));
     painter->setBrush(Qt::NoBrush);
-	if (callback) {
-		(*callback)(item, painter, 0);
-	}
 	if (path.isEmpty()) {
 		painter->drawRect(boundingRect.adjusted(pad, pad, -pad, -pad));
 	}
@@ -295,9 +297,6 @@ void GraphicsSvgLineItem::qt_graphicsItem_highlightSelected(QGraphicsItem * item
 
 	painter->setPen(QPen(option->palette.windowText(), 0, Qt::DashLine));
     painter->setBrush(Qt::NoBrush);
-	if (callback) {
-		(*callback)(item, painter, 1);
-	}
 	if (path.isEmpty()) {
 		painter->drawRect(boundingRect.adjusted(pad, pad, -pad, -pad));
 	}
