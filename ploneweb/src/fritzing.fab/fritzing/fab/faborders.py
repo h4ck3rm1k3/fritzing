@@ -66,6 +66,9 @@ class AddForm(dexterity.AddForm):
 
     def add(self, object):
         self.context._setObject(object.id, object)
+        o = getattr(self.context, object.id)
+        o.setExcludeFromNav(True)
+        o.reindexObject()
 
     def render(self):
         """create faborder instance and redirect to its default view
