@@ -107,7 +107,35 @@ TODO:
 	
 	make it a path instead of a line?
 
-	lots of new parts to define
+	what to do when line length is zero
+
+	hover color makes a mess when dragging leg
+
+	parts to define
+		LEDs
+		resistors
+		caps
+		diodes
+		tilt sensor
+		temperature sensor
+		light sensor
+		* reed switch
+		transistors
+		batteries
+		stepper motors
+		piezo
+		loudspeaker
+		mic
+		solenoid
+		servo
+		dc motor
+		peltier
+		distance sensor
+		FETs
+		resonator
+		inductor
+		crystal
+
 
 
 -------------------------------------------------

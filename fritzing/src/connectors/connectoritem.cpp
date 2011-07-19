@@ -1280,19 +1280,40 @@ bool ConnectorItem::isCrossLayerFrom(ConnectorItem * candidate) {
 	return !ViewLayer::canConnect(this->attachedToViewLayerID(), candidate->attachedToViewLayerID());
 }
 
+
+bool isGrey(QColor color) {
+	if (qAbs(color.red() - color.green()) > 16) return false;
+	if (qAbs(color.red() - color.blue()) > 16) return false;
+	if (qAbs(color.green() - color.blue()) > 16) return false;
+	if (color.red() < 0x60) return false;
+	if (color.red() > 0xA0) return false;
+	return true;
+}
+
 void ConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget ) 
 {
 	if (m_hybrid) return;
 	if (doNotPaint()) return;
 
 	if (m_legItem) {
-		painter->setOpacity(m_opacity);
-		painter->setBrush(brush());
-		QPen pn = pen();
-		pn.setWidthF(m_legItem->pen().widthF());
-		pn.setCapStyle(Qt::RoundCap);
-		painter->setPen(pn);
 		QPointF p = calcPoint();
+		QPen legPen = m_legItem->pen();
+		// figure out whether to draw an undercolor
+		if (!isGrey(legPen.color())) {
+			QPen pn = pen();
+			pn.setColor(0x8c8c8c);			// TODO: don't hardcode
+			pn.setWidthF(legPen.widthF());
+			pn.setCapStyle(Qt::RoundCap);
+			painter->setOpacity(1);
+			painter->setPen(pn);
+			painter->drawLine(0, 0, p.x(), p.y());
+		}
+
+		QPen pn = pen();
+		pn.setWidthF(legPen.widthF());
+		pn.setCapStyle(Qt::RoundCap);
+		painter->setOpacity(m_opacity);
+		painter->setPen(pn);
 		painter->drawLine(0, 0, p.x(), p.y());
 		return;
 	}

@@ -654,14 +654,15 @@ void FSvgRenderer::calcLeg(SvgIdLayer * svgIdLayer, const QRectF & viewBox, Conn
 {
 	if (svgIdLayer->m_legId.isEmpty()) return;
 
-	svgIdLayer->m_legStrokeWidth = connectorInfo->legStrokeWidth;
 	svgIdLayer->m_legColor = connectorInfo->legColor;
+
+	QSizeF defaultSizeF = this->defaultSizeF();
+	svgIdLayer->m_legStrokeWidth = connectorInfo->legStrokeWidth * defaultSizeF.width() / viewBox.width();
 
 	QMatrix matrix = this->matrixForElement(svgIdLayer->m_legId) * connectorInfo->legMatrix;
 	QPointF p1 = matrix.map(connectorInfo->legLine.p1());
 	QPointF p2 = matrix.map(connectorInfo->legLine.p2());
 
-	QSizeF defaultSizeF = this->defaultSizeF();
 	qreal x1 = p1.x() * defaultSizeF.width() / viewBox.width();
 	qreal y1 = p1.y() * defaultSizeF.height() / viewBox.height();
 	qreal x2 = p2.x() * defaultSizeF.width() / viewBox.width();
