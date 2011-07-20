@@ -512,7 +512,15 @@ QString PaletteItemBase::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<Q
 	if (!result) {
 		return "";
 	}
-		
+
+	if (hasBendableLeg()) {
+		foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
+			if (!connectorItem->hasBendableLeg()) continue;
+
+			splitter.gReplace(connectorItem->legID(m_viewIdentifier, m_viewLayerID));
+		}
+	}
+
 	result = splitter.normalize(dpi, xmlName, blackOnly);
 	if (!result) {
 		return "";

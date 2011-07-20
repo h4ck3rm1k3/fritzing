@@ -1791,3 +1791,9 @@ QPointF ConnectorItem::calcPoint() const
 	qreal len = qMax(0.5, qMin(lineLen, StandardLegConnectorLength));
 	return QPointF((line.p1().x() - line.p2().x()) * len / lineLen, (line.p1().y() - line.p2().y()) * len / lineLen);
 }
+
+const QString & ConnectorItem::legID(ViewIdentifierClass::ViewIdentifier viewID, ViewLayer::ViewLayerID viewLayerID) {
+	if (m_connector) return m_connector->legID(viewID, viewLayerID);
+
+	return ___emptyString___;
+}

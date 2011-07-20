@@ -130,6 +130,7 @@ public:
 	QPen legPen() const;
 	void killBendableLeg();  // hack; see caller
 	QRectF boundingRect() const;
+	const QString & legID(ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID);
 
 protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );

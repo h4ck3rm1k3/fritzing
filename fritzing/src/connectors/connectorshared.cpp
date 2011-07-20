@@ -159,6 +159,18 @@ SvgIdLayer * ConnectorShared::fullPinInfo(ViewIdentifierClass::ViewIdentifier vi
 	return NULL;
 }
 
+const QString & ConnectorShared::legID(ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID) {
+	QList<SvgIdLayer *> svgLayers = m_pins.values(viewId);
+	foreach ( SvgIdLayer * svgIdLayer, svgLayers) {
+		if (svgIdLayer->m_svgViewLayerID == viewLayerID) {
+			return svgIdLayer->m_legId;
+		}
+	}
+
+	return ___emptyString___;
+}
+
+
 void ConnectorShared::loadPins(const QDomElement & domElement) {
 	//if(m_domElement == NULL) return;
 

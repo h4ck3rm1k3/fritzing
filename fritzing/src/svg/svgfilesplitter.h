@@ -71,6 +71,7 @@ public:
 	bool load(const QString string);
 	QString toString();
 	void gWrap(const QHash<QString, QString> & attributes);
+	void gReplace(const QString & id);
 
 public:
 	static bool getSvgSizeAttributes(const QString & svg, QString & width, QString & height, QString & viewBox);

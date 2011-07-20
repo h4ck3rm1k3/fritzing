@@ -1280,3 +1280,11 @@ void SvgFileSplitter::gWrap(const QHash<QString, QString> & attributes)
 {
 	TextUtils::gWrap(m_domDocument, attributes);
 }
+
+void SvgFileSplitter::gReplace(const QString & id)
+{
+	QDomElement element = TextUtils::findElementWithAttribute(m_domDocument.documentElement(), "id", id);
+	if (element.isNull()) return;
+
+	element.setTagName("g");
+}

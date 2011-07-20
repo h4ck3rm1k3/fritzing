@@ -77,6 +77,7 @@ public:
 	void unprocess(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID);
 	struct SvgIdLayer * fullPinInfo(ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID);
 	QList< QPointer<class ConnectorItem> > viewItems();
+	const QString & legID(ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID);
 
 public:
 	static void initNames();

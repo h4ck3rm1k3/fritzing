@@ -54,6 +54,7 @@ public:
 	void setConnectorType(QString type);
 	Connector::ConnectorType connectorType();
 
+	const QString & legID(ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID);
 	const QMultiHash<ViewIdentifierClass::ViewIdentifier,SvgIdLayer *> &pins();
 	SvgIdLayer * fullPinInfo(ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID);
 	void addPin(ViewIdentifierClass::ViewIdentifier layer, QString connectorId, ViewLayer::ViewLayerID, QString terminalId);

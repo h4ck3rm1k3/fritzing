@@ -75,8 +75,6 @@ TODO:
 		handle this as a post-facto undocommand
 		should transform around center of the itemBase with no legs
 
-	* make sure all leg functions work when itembase is rotated
-
 	* bendable drag when part is stretched between two or more parts, some not being dragged correctly
 
 	* swapping parts with bendable legs, can assume pins will always line up (unless legs can have diffent max distances)
@@ -99,9 +97,14 @@ TODO:
 
 	* bad crash when converting back to unbendable.  probably some kind of boundingRect issue...
 
+	* hover color makes a mess when dragging leg
+
+	make sure all leg functions work when itembase is rotated: drag behavior is now screwed up
+
 	move behavior: what to do when dragging a leg?
 		
-	export: retrieve svg probably won't clean up the bendable <line> element
+	* export: retrieve svg probably won't clean up the bendable <line> element
+		will need to revisit this for resistors
 
 	put legItem back into connector item?  
 	
@@ -109,9 +112,7 @@ TODO:
 
 	what to do when line length is zero
 
-	hover color makes a mess when dragging leg
-
-	parts to define
+	parts to modify
 		LEDs
 		resistors
 		caps

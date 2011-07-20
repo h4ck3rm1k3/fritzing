@@ -257,3 +257,9 @@ int Connector::connectorItemCount() {
 QList< QPointer<ConnectorItem> > Connector::viewItems() {
 	return m_connectorItems.values();
 }
+
+const QString & Connector::legID(ViewIdentifierClass::ViewIdentifier viewID, ViewLayer::ViewLayerID viewLayerID) {
+	if (m_connectorShared) return m_connectorShared->legID(viewID, viewLayerID);
+
+	return ___emptyString___;
+}
