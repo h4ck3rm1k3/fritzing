@@ -179,19 +179,19 @@ class IFabOrders(form.Schema):
         title = _(u"Shipping Costs Germany"),
         description = _(u"The shipping costs for Germany in Euro"),
         min = 0.0,
-        default = 4.5)
+        default = 4.0)
     
     shippingEU = Float(
         title = _(u"Shipping Costs EU"),
         description = _(u"The shipping costs for the EU in Euro"),
         min = 0.0,
-        default = 7.0)
+        default = 6.0)
     
     shippingWorld = Float(
         title = _(u"Shipping Costs outside EU"),
         description = _(u"The shipping costs for otside of the EU in Euro"),
         min = 0.0,
-        default = 14.0)
+        default = 6.0)
     
     taxesGermany = Float(
         title = _(u"Taxes Germany"),

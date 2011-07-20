@@ -159,14 +159,16 @@ def sketchModifiedHandler(sketch, event):
             faborder.numberOfQualityChecks += 1
     
     # choose discount
-    if (faborder.area < 70):
-        faborder.pricePerSquareCm = 0.59
-    elif (faborder.area < 175):
-        faborder.pricePerSquareCm = 0.55
-    elif (faborder.area < 350):
-        faborder.pricePerSquareCm = 0.48
+    if (faborder.area < 50):
+        faborder.pricePerSquareCm = 0.70
+    elif (faborder.area < 100):
+        faborder.pricePerSquareCm = 0.60
+    elif (faborder.area < 200):
+        faborder.pricePerSquareCm = 0.50
+    elif (faborder.area < 500):
+        faborder.pricePerSquareCm = 0.40
     else:
-        faborder.pricePerSquareCm = 0.42
+        faborder.pricePerSquareCm = 0.35
     
     recalculatePrices(faborder)
 
