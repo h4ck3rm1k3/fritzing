@@ -31,6 +31,8 @@
             
         <div class="row">
           <div class="cell width-2:3 position-0">
+            <h3>Fritzing sketches</h3>
+              
             <span class="genericButton" tal:condition="not:container/listFolderContents">
               <a class="addSketchLink" tal:attributes="href string:${context/absolute_url}/++add++sketch">Add Sketch</a>
             </span>
@@ -100,31 +102,30 @@
             </table>
             
             <div tal:condition="container/listFolderContents" tal:omit-tag="">
-              <h3 tal:condition="python: view.isStateId(context, 'open')">Provide shipping and contact information</h3>
-              <h3 tal:condition="python: not view.isStateId(context, 'open')">Shipping and contact information</h3>
+              <h3>Shipping information</h3>
               
-              <div tal:condition="python: not context.shipTo">
+              <div tal:condition="python: not context.shipTo" tal:omit-tag="">
                 <p>
-                  please add your e-mail address and shipping destination to complete your order:<br />
-                  <a class="editAddressLink" href="#" tal:attributes="href string:${context/absolute_url}/edit">Add a shipping destination</a>
+                  please add your e-mail address and shipping destination to complete your order.<br />
                 </p>
               </div>
               
-              <div tal:condition="python: context.shipTo">
-                <table class="blind">
-                  <tr>
-                    <td>E-Mail: </td>
-                    <td tal:content="context/email"></td>
-                  </tr>
-                  <tr>
-                    <td>Shipping Area: </td>
-                    <td tal:content="view/shipToTitle"></td>
-                  </tr>
-                  <tr tal:condition="python:view.isStateId(context, 'open')">
-                    <td colspan="2"><a class="editAddressLink" href="#" tal:attributes="href string:${context/absolute_url}/edit">Edit</a></td>
-                  </tr>
-                </table>
+              <div tal:condition="python: context.shipTo" tal:omit-tag="">
+                <p>
+                    <strong>E-Mail: </strong><br />
+                    <span tal:content="context/email"></span>
+                </p>
+                <p>
+                    <strong>Shipping Area: </strong><br />
+                    <span tal:content="view/shipToTitle"></span>
+                </p>
               </div>
+              
+              <p>Shipping and invoice addresses will be taken from your PayPal account. You can still change it in the PayPal payment process.</p>
+              
+              <span class="genericButton">
+                <a class="editAddressLink" tal:attributes="href string:${context/absolute_url}/edit">Provide info</a>
+              </span>
               
               
 <!--          TESTING
@@ -150,7 +151,9 @@
           
           
           <div class="cell width-1:3 position-2:3">
-            <div tal:condition="container/listFolderContents" tal:omit-tag="">
+            <div tal:condition="python:(context.area > 0 and context.shipTo and context.email)" tal:omit-tag="">
+              <h3>Summary</h3>
+              
               <div class="orderSummary">
                 <table class="blind">
                   <!--
@@ -166,7 +169,7 @@
                   </tr>
                   -->
                   <tr>
-                    <td>Total Netto</td>
+                    <td>Subtotal</td>
                     <td class="align_right" tal:content="python: '%.2f EUR' % (context.priceTotalNetto)"></td>
                   </tr>
                   <tr>
@@ -183,10 +186,9 @@
                   </tr>
                 </table>
               </div>
-            
-              <div tal:condition="python:(view.isStateId(context, 'open') and context.area > 0 and context.shipTo and context.email)" tal:omit-tag="">
+              
+              <div tal:condition="python:(view.isStateId(context, 'open'))" tal:omit-tag="">
                 <div class="checkout">
-                  <p>Shipping and invoice addresses will be taken from your PayPal account. You can still change it in the PayPal payment process.</p>
                   <p>
                     <span class="paypalCheckoutCaption">PayPal Checkout:</span>
                     <a class="paypalCheckoutLink" tal:attributes="href string:${context/absolute_url}/paypal_checkout">
@@ -195,12 +197,15 @@
                   </p>
                   <div class="clear"></div>
                   <p>
-                    If you habe trouble paying with PayPal, or don‘t want to use it, please contact us.
+                    If you habe trouble paying with PayPal, or don‘t want to use it, please 
+                    <a tal:attributes="href string:mailto:${context/aq_parent/salesEmail}">contact us</a>.
                   </p>
                 </div>
-            
+                
                 <div class="supportBox">
-                  With this order, you will support the developement of Fritzing for <strong>### minutes</strong>! Thank you!
+                  With this order, you will support the development of Fritzing for 
+                  <strong><span tal:content="python: '%d' % (view.devMinutes)"></span> minutes</strong>! <br />
+                  Thank you!
                 </div>
               </div>
             </div>

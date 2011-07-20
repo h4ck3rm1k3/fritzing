@@ -144,7 +144,18 @@ div.overlay {
 a.addSketchLink {
     background: url(button_add_left.png) no-repeat top left;
 }
+a.editAddressLink {
+    padding-left: 14px;
+}
 a.addOrderLink {
+}
+
+
+/* hide unwanted stuff on popups */
+.pb-ajax .documentFirstHeading,
+.pb-ajax .discreet,
+.pb-ajax .formTabs {
+    display: none;
 }
 
 

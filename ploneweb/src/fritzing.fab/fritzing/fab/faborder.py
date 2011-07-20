@@ -37,6 +37,11 @@ class Index(grok.View):
         
         if self.context.shipTo:
             self.shipToTitle = IFabOrder['shipTo'].vocabulary.getTerm(self.context.shipTo).title
+        
+        primeCostsPerSquareCm = 0.21
+        earningsPerSquareCm = 0.7 * (self.context.pricePerSquareCm - primeCostsPerSquareCm)
+        devHourCosts = 50.0
+        self.devMinutes = (earningsPerSquareCm * self.context.area) / (devHourCosts / 60.0)
 
 
 class Edit(dexterity.EditForm):
