@@ -23,6 +23,13 @@
     </iconView>
    </views>
   </instance>
+  <instance moduleIdRef="ACS712 Low Current Sensor Board v12">
+   <views>
+    <iconView layer="icon">
+     <geometry x="-1" y="-1" z="-1"/>
+    </iconView>
+   </views>
+  </instance>
   <instance moduleIdRef="ad5330 breakout-v11">
    <views>
     <iconView layer="icon">
