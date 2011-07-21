@@ -150,7 +150,7 @@ def fromZipFile(zf, fzz):
                     h = float(property.getAttribute("value"))
             pairs.append(w)
             pairs.append(h)
-        elif id == '423120090505':           #arduino shield
+        elif id == '423120090505' or id == '423120090505_2':           #arduino shield
             pairs.append(69.215)				#width="2.725in" 
             pairs.append(53.37556)			#height="2.1014in" 
         else:
