@@ -87,7 +87,9 @@ public:
 	static QString noCopyPinFunction(int pin, const QString & argString);
 	static QString incMultiplyPinFunction(int pin, qreal increment, qreal value);
 	static qreal getViewBoxCoord(const QString & svg, int coord);
-
+	static QString makeLineSVG(QPointF p1, QPointF p2, qreal width, QString colorString, qreal dpi, qreal printerScale, bool blackOnly);
+	static QString makeRectSVG(QRectF r, QPointF offset, qreal dpi, qreal printerscale);
+	static QString makePolySVG(const QPolygonF & poly, QPointF offset, qreal width, QString colorString, qreal dpi, qreal printerScale, bool blackOnly);
 
 public:
 	static const QRegExp FindWhitespace;

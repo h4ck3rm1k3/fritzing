@@ -405,17 +405,27 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 
 			QDomElement leg = connector.firstChildElement("leg");
 			if (!leg.isNull()) {
-				qreal x = leg.attribute("x", "0").toDouble();
-				qreal y = leg.attribute("y", "0").toDouble();
-				if (x != 0 || y != 0) {
-					QLineF line(0, 0, x, y);
+				QPolygonF poly;
+				QDomElement point = leg.firstChildElement("point");
+				while (!point.isNull()) {
+					bool ok;
+					qreal x = point.attribute("x", "0").toDouble(&ok);
+					if (!ok) continue;
+
+					qreal y = point.attribute("y", "0").toDouble(&ok);
+					if (!ok) continue;
+
+					poly.append(QPointF(x, y));
+					point = point.nextSiblingElement("point");
+				}
+				if (poly.count() >  1) {
 					if (parentCommand) {
-						new ChangeLegCommand(this, ItemBase::getNextID(mp->modelIndex()), fromConnectorID, line, line, parentCommand);
+						new ChangeLegCommand(this, ItemBase::getNextID(mp->modelIndex()), fromConnectorID, poly, poly, true, parentCommand);
 					}
 					else {
 						ItemBase * fromBase = newItems.value(mp->modelIndex(), NULL);
 						if (fromBase) {
-							changeLeg(fromBase->id(), fromConnectorID, line);
+							changeLeg(fromBase->id(), fromConnectorID, poly, true);
 						}
 					}
 				}
@@ -1191,26 +1201,18 @@ void SketchWidget::changeWire(long fromID, QLineF line, QPointF pos, bool update
 	}
 }
 
-void SketchWidget::changeLeg(long fromID, const QString & fromConnectorID, QLineF line)
+void SketchWidget::changeLeg(long fromID, const QString & fromConnectorID, const QPolygonF & leg, bool relative)
 {
-	changeLegAux(fromID, fromConnectorID, line, false);
+	changeLegAux(fromID, fromConnectorID, leg, false, relative);
 }
 
-void SketchWidget::recalcLeg(long fromID, const QString & fromConnectorID, QLineF line)
+void SketchWidget::recalcLeg(long fromID, const QString & fromConnectorID, const QPolygonF & leg, bool relative)
 {
-	changeLegAux(fromID, fromConnectorID, line, true);
+	changeLegAux(fromID, fromConnectorID, leg, true, relative);
 }
 
-void SketchWidget::changeLegAux(long fromID, const QString & fromConnectorID, QLineF line, bool reset)
+void SketchWidget::changeLegAux(long fromID, const QString & fromConnectorID, const QPolygonF & leg, bool reset, bool relative)
 {
-	DebugDialog::debug(QString("%7 leg %1 %2; %3,%4,%5,%6")
-			.arg(fromID)
-			.arg(fromConnectorID)
-			.arg(line.x1())
-			.arg(line.y1())
-			.arg(line.x2())
-			.arg(line.y2()) 
-			.arg(reset ? "recalc" : "change") );
 
 	ItemBase * fromItem = findItem(fromID);
 	if (fromItem == NULL) {
@@ -1225,10 +1227,10 @@ void SketchWidget::changeLegAux(long fromID, const QString & fromConnectorID, QL
 	}
 
 	if (reset) {
-		fromConnectorItem->resetLegLine(line);
+		fromConnectorItem->resetLeg(leg, relative);
 	}
 	else {
-		fromConnectorItem->setLegLine(line);
+		fromConnectorItem->setLeg(leg, relative);
 	}
 	fromItem->updateConnections(fromConnectorItem);
 }
@@ -2586,7 +2588,7 @@ QString SketchWidget::makeMoveSVG(qreal printerScale, qreal dpi, QPointF & offse
 			outputSVG.append(makeWireSVG(wire, offset, dpi, printerScale, true));
 		}
 		else {
-			outputSVG.append(makeRectSVG(itemBase->sceneBoundingRect(), offset, dpi, printerScale));
+			outputSVG.append(TextUtils::makeRectSVG(itemBase->sceneBoundingRect(), offset, dpi, printerScale));
 		}
 	}
 	//outputSVG.append(makeRectSVG(itemsBoundingRect, offset, dpi, printerScale));
@@ -2903,9 +2905,9 @@ bool SketchWidget::checkMoved()
 	// must restore legs after connections are restored
 	foreach(ItemBase * itemBase, m_stretchingLegs.keys()) {
 		foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
-			QLineF oldLine, newLine;
-			connectorItem->stretchDone(oldLine, newLine);
-			new ChangeLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), oldLine, newLine, parentCommand);
+			QPolygonF oldLeg, newLeg;
+			connectorItem->stretchDone(oldLeg, newLeg);
+			new ChangeLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), oldLeg, newLeg, false, parentCommand);
 		}
 	}
 
@@ -3028,7 +3030,7 @@ void SketchWidget::sketchWidget_itemSelected(long id, bool state) {
 	}
 }
 
-void SketchWidget::prepLegChange(ConnectorItem * from,  QLineF oldLine, QLineF newLine, ConnectorItem * to) 
+void SketchWidget::prepLegChange(ConnectorItem * from,  const QPolygonF & oldLeg, const QPolygonF & newLeg, ConnectorItem * to) 
 {
 	this->clearHoldingSelectItem();
 	this->m_moveEventCount = 0;  // clear this so an extra MoveItemCommand isn't posted
@@ -3093,7 +3095,7 @@ void SketchWidget::prepLegChange(ConnectorItem * from,  QLineF oldLine, QLineF n
 	}
 
 	// change leg after connections have been restored
-	new ChangeLegCommand(this, fromID, fromConnectorID, oldLine, newLine, parentCommand);
+	new ChangeLegCommand(this, fromID, fromConnectorID, oldLeg, newLeg, false, parentCommand);
 
 	new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
 	m_undoStack->push(parentCommand);
@@ -3875,6 +3877,15 @@ void SketchWidget::rotateX(qreal degrees)
 
 	new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
 
+	// change legs after connections have been updated (undo direction)
+	foreach (ItemBase * itemBase, m_stretchingLegs.keys()) {
+		foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
+			QPolygonF oldLeg = connectorItem->leg();
+			ChangeLegCommand * clc = new ChangeLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), oldLeg, oldLeg, true, parentCommand);
+			clc->setUndoOnly();
+		}
+	}
+
 	foreach (ItemBase * itemBase, m_savedItems) {
 		if (!itemBase->rotationAllowed()) {
 			continue;
@@ -3908,12 +3919,13 @@ void SketchWidget::rotateX(qreal degrees)
 		}
 	}
 
-	// change legs after connections have been updated
+	// change legs after connections have been updated (redo direction)
 	foreach (ItemBase * itemBase, m_stretchingLegs.keys()) {
 		foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
-			QLineF oldLine, newLine;
-			connectorItem->stretchDone(oldLine, newLine);
-			new ChangeLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), oldLine, newLine, parentCommand);
+			QPolygonF oldLeg, newLeg;
+			connectorItem->stretchDone(oldLeg, newLeg);
+			ChangeLegCommand * clc = new ChangeLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), oldLeg, newLeg, false, parentCommand);
+			clc->setRedoOnly();
 		}
 	}
 
@@ -3992,6 +4004,15 @@ void SketchWidget::flip(Qt::Orientations orientation)
 
 	new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
 
+	// change legs after connections have been updated (undo direction)
+	foreach (ItemBase * itemBase, m_stretchingLegs.keys()) {
+		foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
+			QPolygonF oldLeg = connectorItem->leg();
+			ChangeLegCommand * clc = new ChangeLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), oldLeg, oldLeg, true, parentCommand);
+			clc->setUndoOnly();
+		}
+	}
+
 	QHash<long, ItemBase *> emptyList;			// emptylist is only used for a move command
 	ConnectorPairHash connectorHash;
 	foreach (ItemBase * item, targets) {
@@ -4005,12 +4026,13 @@ void SketchWidget::flip(Qt::Orientations orientation)
 		new FlipItemCommand(this, item->id(), orientation, parentCommand);
 	}
 
-	// change legs after connections have been updated
+	// change legs after connections have been updated (redo direction)
 	foreach (ItemBase * itemBase, m_stretchingLegs.keys()) {
 		foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
-			QLineF oldLine, newLine;
-			connectorItem->stretchDone(oldLine, newLine);
-			new ChangeLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), oldLine, newLine, parentCommand);
+			QPolygonF oldLeg, newLeg;
+			connectorItem->stretchDone(oldLeg, newLeg);
+			ChangeLegCommand * clc = new ChangeLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), oldLeg, newLeg, false, parentCommand);
+			clc->setRedoOnly();
 		}
 	}
 
@@ -4368,9 +4390,9 @@ void SketchWidget::makeDeleteItemCommandPrepSlot(ItemBase * itemBase, bool forei
 		foreach (ConnectorItem * connectorItem, itemBase->cachedConnectorItems()) {
 			if (!connectorItem->hasBendableLeg()) continue;
 
-			QLineF line = connectorItem->legLine();
-			ChangeLegCommand * clc = new ChangeLegCommand(this, itemBase->id(), connectorItem->connectorSharedID(), line, line, parentCommand);
-			clc->setFirstTime();
+			QPolygonF poly = connectorItem->leg();
+			ChangeLegCommand * clc = new ChangeLegCommand(this, itemBase->id(), connectorItem->connectorSharedID(), poly, poly, true, parentCommand);
+			clc->setUndoOnly();			
 		}
 	}
 }
@@ -5145,7 +5167,7 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 	}
 
 	QHash<ConnectorItem *, Connector *> byWire;
-	QStringList legs;
+	QHash<QString, QPolygonF> legs;
 	if (master && m2f.count() > 0 && (m_viewIdentifier == ViewIdentifierClass::BreadboardView)) {
 		checkFit(newModelPart, itemBase, newID, found, notFound, m2f, byWire, legs, parentCommand);
 	}
@@ -5196,17 +5218,17 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 		}
 	}
 
-	QLineF line(0,0,0,0);
-	foreach (QString connectorID, legs) {
+	foreach (QString connectorID, legs.keys()) {
 		// must be invoked after all the connections have been dealt with
-		new ChangeLegCommand(this, newID, connectorID, line, line, parentCommand);
+		QPolygonF poly = legs.value(connectorID);
+		new ChangeLegCommand(this, newID, connectorID, poly, poly, true, parentCommand);
 	}
 }
 
 void SketchWidget::checkFit(ModelPart * newModelPart, ItemBase * itemBase, long newID,
 							QHash<ConnectorItem *, Connector *> & found, QList<ConnectorItem *> & notFound,
 							QHash<ConnectorItem *, ConnectorItem *> & m2f, QHash<ConnectorItem *, Connector *> & byWire, 
-							QStringList & legs, QUndoCommand * parentCommand)
+							QHash<QString, QPolygonF> & legs, QUndoCommand * parentCommand)
 {
 	if (found.count() == 0) return;
 
@@ -5220,7 +5242,7 @@ void SketchWidget::checkFit(ModelPart * newModelPart, ItemBase * itemBase, long 
 void SketchWidget::checkFitAux(ItemBase * tempItemBase, ItemBase * itemBase, long newID,
 							QHash<ConnectorItem *, Connector *> & found, QList<ConnectorItem *> & notFound,
 							QHash<ConnectorItem *, ConnectorItem *> & m2f, QHash<ConnectorItem *, Connector *> & byWire, 
-							QStringList & legs, QUndoCommand * parentCommand)
+							QHash<QString, QPolygonF> & legs, QUndoCommand * parentCommand)
 {
 	QPointF foundAnchor(std::numeric_limits<int>::max(), std::numeric_limits<int>::max());
 	QPointF newAnchor(std::numeric_limits<int>::max(), std::numeric_limits<int>::max());
@@ -5288,7 +5310,7 @@ void SketchWidget::checkFitAux(ItemBase * tempItemBase, ItemBase * itemBase, lon
 		if (tempItemBase->cachedConnectorItems().count() == found.count()) {
 			if (tempItemBase->hasBendableLeg()) {
 				foreach (ConnectorItem * connectorItem, tempItemBase->cachedConnectorItems()) {
-					legs.append(connectorItem->connectorSharedID());
+					legs.insert(connectorItem->connectorSharedID(), connectorItem->leg());
 				}
 			}
 
@@ -5362,10 +5384,10 @@ void SketchWidget::checkFitAux(ItemBase * tempItemBase, ItemBase * itemBase, lon
 		}
 		if (tempItemBase->hasBendableLeg()) {
 			foreach (ConnectorItem * connectorItem, newConnections) {
-				legs.append(connectorItem->connectorSharedID());
+				legs.insert(connectorItem->connectorSharedID(), connectorItem->leg());
 			}
 			foreach (ConnectorItem * connectorItem, foundNews.values()) {
-				legs.append(connectorItem->connectorSharedID());
+				legs.insert(connectorItem->connectorSharedID(), connectorItem->leg());
 			}
 		}
 
@@ -6133,14 +6155,6 @@ QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLaye
 		if (itemBase->isPartLabelVisible()) {
 			itemsBoundingRect |= itemBase->partLabelSceneBoundingRect();
 		}
-
-		if (itemBase->hasBendableLeg()) {
-			foreach (ConnectorItem * connectorItem, itemBase->cachedConnectorItems()) {
-				if (!connectorItem->hasBendableLeg()) continue;
-
-				itemsBoundingRect |= connectorItem->legSceneBoundingRect();
-			}
-		}
 	}
 
 	return renderToSVG(printerScale, partLayers, wireLayers, blackOnly, imageSize, offsetPart, dpi, flatten, fillHoles, itemBases, itemsBoundingRect, empty);
@@ -6250,10 +6264,10 @@ QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLaye
 				foreach (ConnectorItem * ci, itemBase->cachedConnectorItems()) {
 					if (!ci->hasBendableLeg()) continue;
 
-					qreal w;
+					qreal strokeWidth;
 					QString colorString;
-					QLineF line = ci->sceneAdjustedLegLine(w, colorString);
-					outputSVG.append(makeLineSVG(line.p1() - offset, line.p2() - offset, w, colorString, dpi, printerScale, blackOnly));
+					QPolygonF poly = ci->sceneAdjustedLeg(strokeWidth, colorString);
+					outputSVG.append(TextUtils::makePolySVG(poly, offset, strokeWidth, colorString, dpi, printerScale, blackOnly));
 				}
 
                 QTransform t = itemBase->transform();
@@ -6298,48 +6312,12 @@ void SketchWidget::extraRenderSvgStep(ItemBase * itemBase, QPointF offset, qreal
 	Q_UNUSED(outputSvg);
 }
 
-
-QString SketchWidget::makeRectSVG(QRectF r, QPointF offset, qreal dpi, qreal printerScale)
-{
-	r.translate(-offset.x(), -offset.y());
-	qreal l = r.left() * dpi / printerScale;
-	qreal t = r.top() * dpi / printerScale;
-	qreal w = r.width() * dpi / printerScale;
-	qreal h = r.height() * dpi / printerScale;
-
-	QString stroke = "black";
-	return QString("<rect style=\"stroke-linecap: round\" stroke=\"%6\" x=\"%1\" y=\"%2\" width=\"%3\" height=\"%4\" stroke-width=\"%5\" fill=\"none\" />")
-			.arg(l)
-			.arg(t)
-			.arg(w)
-			.arg(h)
-			.arg(1 * dpi / printerScale)
-			.arg(stroke);
-}
-
 QString SketchWidget::makeWireSVG(Wire * wire, QPointF offset, qreal dpi, qreal printerScale, bool blackOnly) 
 {
 	QLineF line = wire->getPaintLine();
 	QPointF p1 = wire->scenePos() + line.p1() - offset;
 	QPointF p2 = wire->scenePos() + line.p2() - offset;
-	return makeLineSVG(p1, p2, wire->width(), wire->hexString(), dpi, printerScale, blackOnly);
-}
-
-QString SketchWidget::makeLineSVG(QPointF p1, QPointF p2, qreal width, QString colorString, qreal dpi, qreal printerScale, bool blackOnly) 
-{
-	p1.setX(p1.x() * dpi / printerScale);
-	p1.setY(p1.y() * dpi / printerScale);
-	p2.setX(p2.x() * dpi / printerScale);
-	p2.setY(p2.y() * dpi / printerScale);
-	// TODO: use original colors, not just black
-	QString stroke = (blackOnly) ? "black" : colorString;
-	return QString("<line style=\"stroke-linecap: round\" stroke=\"%6\" x1=\"%1\" y1=\"%2\" x2=\"%3\" y2=\"%4\" stroke-width=\"%5\" />")
-					.arg(p1.x())
-					.arg(p1.y())
-					.arg(p2.x())
-					.arg(p2.y())
-					.arg(width * dpi / printerScale)
-					.arg(stroke);
+	return TextUtils::makeLineSVG(p1, p2, wire->width(), wire->hexString(), dpi, printerScale, blackOnly);
 }
 
 void SketchWidget::addFixedToCenterItem2(SketchMainHelp * item) {

@@ -86,7 +86,6 @@ public:
 	void setBaseTooltip(const QString &);
 	void clearConnector();
 	bool connectionIsAllowed(ConnectorItem * other);
-	void prepareGeometryChange();
 	void restoreColor(bool doBuses, int busConnectedCount, bool doCross);
 	void showEqualPotential(bool show);
 	void setHoverColor();
@@ -117,20 +116,19 @@ public:
 	bool isDraggingLeg();
 	void setBendableLeg(QColor color, qreal strokeWidth, QLineF parentLine);
 	bool hasBendableLeg() const;
-	void setLegLine(QLineF line);
-	void resetLegLine(QLineF line);
-	QLineF legLine();
-	QLineF parentAdjustedLegLine() const;
-	QLineF sceneAdjustedLegLine(qreal & width, QString & colorString);
-	QLineF sceneAdjustedLegLine();
+	void setLeg(const QPolygonF &, bool relative);
+	void resetLeg(const QPolygonF &, bool relative);
+	const QPolygonF & leg();
+	QPolygonF sceneAdjustedLeg(qreal & width, QString & colorString);
+	QPolygonF sceneAdjustedLeg();
 	void prepareToStretch(bool activeStretch);
 	void stretchBy(QPointF howMuch);
-	void stretchDone(QLineF & oldLine, QLineF & newLine);
-	QRectF legSceneBoundingRect();
-	QPen legPen() const;
+	void stretchDone(QPolygonF & oldLeg, QPolygonF & newLeg);
 	void killBendableLeg();  // hack; see caller
 	QRectF boundingRect() const;
 	const QString & legID(ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID);
+	QPainterPath shape() const;
+	QPainterPath hoverShape() const;
 
 protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
@@ -154,8 +152,8 @@ protected:
 	bool isConnectedToPart();
 	void displayTooltip(ConnectorItem * over, ConnectorItem * other);
 	void reposition(QPointF sceneDestPos);
-	QPainterPath shape() const;
 	QPointF calcPoint() const;
+	QPen legPen() const;
 
 protected:
 	QPointer<Connector> m_connector;
@@ -169,14 +167,15 @@ protected:
 	bool m_checkedEffectively;
 	bool m_marked;
 	bool m_hybrid;
-	bool m_bendableLeg;
 	bool m_bigDot;
-	QPointF m_originalPointOnParent;
-	QPointer<LegItem> m_legItem;
-	QLineF m_oldLine;
+	bool m_bendableLeg;
+	QPolygonF m_oldPolygon;
 	bool m_draggingLeg;
 	bool m_activeStretch;
 	QPointF m_holdPos;
+	QPolygonF m_legPolygon;
+	qreal m_legStrokeWidth;
+	QColor m_legColor;
 	
 protected:	
 	static QList<ConnectorItem *>  m_equalPotentialDisplayItems;

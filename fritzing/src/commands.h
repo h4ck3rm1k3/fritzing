@@ -274,11 +274,12 @@ class ChangeLegCommand : public BaseCommand
 {
 public:
     ChangeLegCommand(class SketchWidget *sketchWidget, long fromID, const QString & fromConnectorID,
-    					QLineF oldLine, QLineF newLine,  QUndoCommand *parent);
+    					const QPolygonF & oldLeg, const QPolygonF & newLeg, bool relative, QUndoCommand *parent);
     void undo();
     void redo();
 
-	void setFirstTime();
+	void setUndoOnly();
+	void setRedoOnly();
 
 protected:
 	QString getParamString() const;
@@ -286,9 +287,11 @@ protected:
 protected:
 	QString m_fromConnectorID;
     long m_fromID;
-    QLineF m_newLine;
-    QLineF m_oldLine;
-	bool m_firstTime;
+    QPolygonF m_newLeg;
+    QPolygonF m_oldLeg;
+	bool m_undoOnly;
+	bool m_redoOnly;
+	bool m_relative;
 };
 
 class ChangeLayerCommand : public BaseCommand

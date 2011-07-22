@@ -999,3 +999,53 @@ qreal TextUtils::getViewBoxCoord(const QString & svg, int coord)
 	QString c = coords.at(coord);
 	return c.toDouble();
 }
+
+QString TextUtils::makeLineSVG(QPointF p1, QPointF p2, qreal width, QString colorString, qreal dpi, qreal printerScale, bool blackOnly) 
+{
+	p1.setX(p1.x() * dpi / printerScale);
+	p1.setY(p1.y() * dpi / printerScale);
+	p2.setX(p2.x() * dpi / printerScale);
+	p2.setY(p2.y() * dpi / printerScale);
+	// TODO: use original colors, not just black
+	QString stroke = (blackOnly) ? "black" : colorString;
+	return QString("<line style=\"stroke-linecap: round\" stroke=\"%6\" x1=\"%1\" y1=\"%2\" x2=\"%3\" y2=\"%4\" stroke-width=\"%5\" />")
+					.arg(p1.x())
+					.arg(p1.y())
+					.arg(p2.x())
+					.arg(p2.y())
+					.arg(width * dpi / printerScale)
+					.arg(stroke);
+}
+
+QString TextUtils::makeRectSVG(QRectF r, QPointF offset, qreal dpi, qreal printerScale)
+{
+	r.translate(-offset.x(), -offset.y());
+	qreal l = r.left() * dpi / printerScale;
+	qreal t = r.top() * dpi / printerScale;
+	qreal w = r.width() * dpi / printerScale;
+	qreal h = r.height() * dpi / printerScale;
+
+	QString stroke = "black";
+	return QString("<rect style=\"stroke-linecap: round\" stroke=\"%6\" x=\"%1\" y=\"%2\" width=\"%3\" height=\"%4\" stroke-width=\"%5\" fill=\"none\" />")
+			.arg(l)
+			.arg(t)
+			.arg(w)
+			.arg(h)
+			.arg(1 * dpi / printerScale)
+			.arg(stroke);
+}
+
+
+QString TextUtils::makePolySVG(const QPolygonF & poly, QPointF offset, qreal width, QString colorString, qreal dpi, qreal printerScale, bool blackOnly) 
+{
+	QString polyString = QString("<polygon stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='%1' stroke-width='%2' points='\n").arg(blackOnly ? "black" : colorString).arg(width);
+	int space = 0;
+	foreach (QPointF p, poly) {
+		polyString += QString("%1,%2 %3")
+			.arg((p.x() - offset.x()) * dpi / printerScale)
+			.arg((p.y() - offset.y()) * dpi / printerScale)
+			.arg((++space % 8 == 0) ?  "\n" : "");
+	}
+	polyString += "'/>\n";
+	return polyString;
+}

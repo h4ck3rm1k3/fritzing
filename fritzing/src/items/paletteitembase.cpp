@@ -97,39 +97,11 @@ QPainterPath PaletteItemBase::hoverShape() const
 
 	foreach (ConnectorItem * connectorItem, cachedConnectorItemsConst()) {
 		if (connectorItem->hasBendableLeg()) {
-			QLineF l = connectorItem->parentAdjustedLegLine();
-			QPainterPath linePath;
-			linePath.moveTo(l.p1());
-			linePath.lineTo(l.p2());
-			QPen pen = connectorItem->legPen();
-			path.addPath(GraphicsSvgLineItem::qt_graphicsItem_shapeFromPath(linePath, pen, pen.widthF() * 2));
+			path.addPath(connectorItem->mapToParent(connectorItem->hoverShape()));
 		}
 	}
 	return path;
 
-/*
-	qreal l = 0;
-	qreal t = 0;
-	qreal r = m_size.width();
-	qreal b = m_size.height();
-	foreach (ConnectorItem * connectorItem, cachedConnectorItemsConst()) {
-		if (connectorItem->hasBendableLeg()) {
-			QLineF line = connectorItem->parentAdjustedLegLine();
-			if (line.p1().x() < l) l = line.p1().x();
-			if (line.p1().x() > r) r = line.p1().x();
-			if (line.p1().y() < t) t = line.p1().y();
-			if (line.p1().y() > b) b = line.p1().y();
-			if (line.p2().x() < l) l = line.p2().x();
-			if (line.p2().x() > r) r = line.p2().x();
-			if (line.p2().y() < t) t = line.p2().y();
-			if (line.p2().y() > b) b = line.p2().y();
-		}
-	}
-
-	QPainterPath path;
-    path.addRect(l, t, r - l, b - t);
-	return path;
-*/
 }
 
 QPainterPath PaletteItemBase::shape() const
@@ -146,12 +118,7 @@ QPainterPath PaletteItemBase::shape() const
 
 	foreach (ConnectorItem * connectorItem, cachedConnectorItemsConst()) {
 		if (connectorItem->hasBendableLeg()) {
-			QLineF l = connectorItem->parentAdjustedLegLine();
-			QPainterPath linePath;
-			linePath.moveTo(l.p1());
-			linePath.lineTo(l.p2());
-			QPen pen = connectorItem->legPen();
-			path.addPath(GraphicsSvgLineItem::qt_graphicsItem_shapeFromPath(linePath, pen, pen.widthF()));
+			path.addPath(connectorItem->mapToParent(connectorItem->shape()));
 		}
 	}
 	return path;

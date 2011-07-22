@@ -1129,6 +1129,9 @@ void ItemBase::flipItem(Qt::Orientations orientation) {
 }
 
 void ItemBase::transformItem(const QTransform & currTransf) {
+	if (m_hasBendableLeg) {
+		prepareGeometryChange();
+	}
 	QRectF rect = this->boundingRectWithoutLegs();
 	qreal x = rect.width() / 2.0;
 	qreal y = rect.height() / 2.0;

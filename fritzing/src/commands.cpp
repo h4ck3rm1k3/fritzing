@@ -448,44 +448,58 @@ QString ChangeWireCommand::getParamString() const {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ChangeLegCommand::ChangeLegCommand(SketchWidget* sketchWidget, long fromID, const QString & fromConnectorID,
-									 QLineF oldLine, QLineF newLine, QUndoCommand *parent)
+									 const QPolygonF & oldLeg, const QPolygonF & newLeg, bool relative, QUndoCommand *parent)
     : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
-	m_firstTime = false;
+	m_undoOnly = m_redoOnly = false;
     m_fromID = fromID;
-	m_oldLine = oldLine;
-    m_newLine = newLine;
+	m_oldLeg = oldLeg;
+    m_newLeg = newLeg;
+	m_relative = relative;
     m_fromConnectorID = fromConnectorID;
 }
 
 void ChangeLegCommand::undo()
 {
-    m_sketchWidget->changeLeg(m_fromID, m_fromConnectorID, m_oldLine);
+	if (!m_redoOnly) {
+		m_sketchWidget->changeLeg(m_fromID, m_fromConnectorID, m_oldLeg, m_relative);
+	}
 }
 
-void ChangeLegCommand::setFirstTime()
+void ChangeLegCommand::setUndoOnly()
 {
-	m_firstTime = true;
+	m_undoOnly = true;
+}
+
+void ChangeLegCommand::setRedoOnly()
+{
+	m_redoOnly = true;
 }
 
 void ChangeLegCommand::redo()
 {
-	if (m_firstTime) {
-		m_firstTime = false;
-	}
-	else {
-		m_sketchWidget->recalcLeg(m_fromID, m_fromConnectorID, m_newLine);
+	if (!m_undoOnly) {
+		m_sketchWidget->recalcLeg(m_fromID, m_fromConnectorID, m_newLeg, m_relative);
 	}
 }
 
 QString ChangeLegCommand::getParamString() const {
+
+	QString oldLeg;
+	QString newLeg;
+	foreach (QPointF p, m_oldLeg) {
+		oldLeg += QString("(%1,%2)").arg(p.x()).arg(p.y());
+	}
+	foreach (QPointF p, m_newLeg) {
+		newLeg += QString("(%1,%2)").arg(p.x()).arg(p.y());
+	}
 	return QString("ChangeLegCommand ") 
 		+ BaseCommand::getParamString() + 
-		QString(" fromid:%1 fromc:%2 oldr:%3,%4,%5,%6 newr:%7,%8,%9,%10")
+		QString(" fromid:%1 fromc:%2 old:%3 new:%4")
 		.arg(m_fromID)
 		.arg(m_fromConnectorID)
-		.arg(m_oldLine.x1()).arg(m_oldLine.y1()).arg(m_oldLine.x2()).arg(m_oldLine.y2())		
-		.arg(m_newLine.x1()).arg(m_newLine.y1()).arg(m_newLine.x2()).arg(m_newLine.y2())		
+		.arg(oldLeg)
+		.arg(newLeg)
 		;
 }
 

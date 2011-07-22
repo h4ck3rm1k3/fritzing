@@ -89,8 +89,8 @@ public:
     void selectItem(long id, bool state, bool updateInfoView, bool doEmit);
     void selectDeselectAllCommand(bool state);
     void changeWire(long fromID, QLineF line, QPointF pos, bool updateConnections, bool updateRatsnest);   
-    void changeLeg(long fromID, const QString & connectorID, QLineF line);   
-    void recalcLeg(long fromID, const QString & connectorID, QLineF line);   
+    void changeLeg(long fromID, const QString & connectorID, const QPolygonF &, bool relative);   
+    void recalcLeg(long fromID, const QString & connectorID, const QPolygonF &, bool relative);   
     void cut();
     void copy();
     void setPaletteModel(PaletteModel *);
@@ -256,7 +256,7 @@ public:
 	void changeBus(ItemBase *, bool connec, const QString & oldBus, const QString & newBus, QList<ConnectorItem *> &, const QString & message);
 	const QString & filenameIf();
 	void setItemDropOffset(long id, QPointF offset);
-	void prepLegChange(ConnectorItem * from,  QLineF oldLine, QLineF newLine, ConnectorItem * to);
+	void prepLegChange(ConnectorItem * from,  const QPolygonF & oldLeg, const QPolygonF & newLeg, ConnectorItem * to);
 
 
 protected:
@@ -378,8 +378,6 @@ protected:
 	void copyDrop();
 	void dropItemEvent(QDropEvent *event);
 	QString makeWireSVG(Wire * wire, QPointF offset, qreal dpi, qreal printerscale, bool blackOnly);
-	QString makeLineSVG(QPointF p1, QPointF p2, qreal width, QString colorString, qreal dpi, qreal printerScale, bool blackOnly);
-	QString makeRectSVG(QRectF r, QPointF offset, qreal dpi, qreal printerscale);
 	QString makeMoveSVG(qreal printerScale, qreal dpi, QPointF & offset); 
 	void prepDeleteProps(ItemBase * itemBase, long id, const QString & newModuleID, QUndoCommand * parentCommand);
 	void prepDeleteOtherProps(ItemBase * itemBase, long id, const QString & newModuleID, QUndoCommand * parentCommand);
@@ -405,12 +403,12 @@ protected:
 	void checkFit(ModelPart * newModelPart, ItemBase * itemBase, long newID,
 								QHash<ConnectorItem *, Connector *> & found, QList<ConnectorItem *> & notFound,
 								QHash<ConnectorItem *, ConnectorItem *> & m2f, QHash<ConnectorItem *, Connector *> & byWire,
-								QStringList & legs, QUndoCommand * parentCommand);
+								QHash<QString, QPolygonF> & legs, QUndoCommand * parentCommand);
 	void checkFitAux(ItemBase * tempItemBase, ItemBase * itemBase, long newID,
 								QHash<ConnectorItem *, Connector *> & found, QList<ConnectorItem *> & notFound,
 								QHash<ConnectorItem *, ConnectorItem *> & m2f, QHash<ConnectorItem *, Connector *> & byWire,
-								QStringList & legs, QUndoCommand * parentCommand);
-	void changeLegAux(long fromID, const QString & fromConnectorID, QLineF line, bool reset);
+								QHash<QString, QPolygonF> & legs, QUndoCommand * parentCommand);
+	void changeLegAux(long fromID, const QString & fromConnectorID, const QPolygonF &, bool reset, bool relative);
 
 
 protected:
