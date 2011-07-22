@@ -203,6 +203,9 @@ void SVG2gerber::convertShapes2paths(QDomNode node){
         if(tag=="polygon"){
             path = element;
         }
+        else if(tag=="polyline"){
+            path = element;
+        }
         else if(tag=="rect"){
             path = element;
         }
@@ -281,6 +284,9 @@ int SVG2gerber::allPaths2gerber(ForWhy forWhy) {
 
     QDomNodeList polyList = m_SVGDom.elementsByTagName("polygon");
     //DebugDialog::debug("polygons to gerber: " + QString::number(polyList.length()));
+
+    QDomNodeList polyLineList = m_SVGDom.elementsByTagName("polyline");
+    DebugDialog::debug("polylines to gerber: " + QString::number(polyLineList.length()));
 
 	QDomNodeList lineList = m_SVGDom.elementsByTagName("line");
     //DebugDialog::debug("lines to gerber: " + QString::number(lineList.length()));
@@ -495,63 +501,11 @@ int SVG2gerber::allPaths2gerber(ForWhy forWhy) {
 		}
 
 		// polys - NOTE: assumes comma- or space- separated formatting
-		for(uint p = 0; p < polyList.length(); p++){
-			QDomElement polygon = polyList.item(p).toElement();
-			if (forWhy == ForOutline && totalCount > 1) {
-				if (polygon.attribute("id").compare("boardoutline", Qt::CaseInsensitive) != 0) continue;
-			}
-
-			QString temp;
-			QTextStream tempStream(&temp);
-			polygon.save(tempStream, 1);
-
-			QString points = polygon.attribute("points");
-			QStringList pointList = points.split(QRegExp("\\s+|,"), QString::SkipEmptyParts);
-
-			QString aperture;
-
-			QString pointString;
-
-			qreal startx = pointList.at(0).toDouble();
-			qreal starty = pointList.at(1).toDouble();
-			// move to start - light off
-			pointString += "X" + QString::number(flipx(startx)) + "Y" + QString::number(flipy(starty)) + "D02*\n";
-
-			// iterate through all other points - light on
-			for(int pt = 2; pt < pointList.length(); pt +=2){
-				qreal ptx = pointList.at(pt).toDouble();
-				qreal pty = pointList.at(pt+1).toDouble();
-				pointString += "X" + QString::number(flipx(ptx)) + "Y" + QString::number(flipy(pty)) + "D01*\n";
-			}
-
-			// move back to start point
-			pointString += "X" + QString::number(flipx(startx)) + "Y" + QString::number(flipy(starty)) + "D01*\n";
-
-			standardAperture(polygon, apertureMap, current_dcode, dcode_index, 0);		
-
-			bool polyFill = fillNotStroke(polygon, forWhy);
-			// set poly fill if this is actually a filled in shape
-			if (polyFill) {							
-				// start poly fill
-				m_gerber_paths += "G36*\n";
-			}
-
-			m_gerber_paths += pointString;
-
-			// stop poly fill if this is actually a filled in shape
-			if(polyFill){
-				// stop poly fill
-				m_gerber_paths += "G37*\n";
-			}
-
-			if (forWhy == ForMask) {
-				// draw the outline, G36 only does the fill
-				standardAperture(polygon, apertureMap, current_dcode, dcode_index,  polygon.attribute("stroke-width").toDouble() + (MaskClearance * 2 * 1000));
-				m_gerber_paths += pointString;
-			}
-
-			// light off
-			m_gerber_paths += "D02*\n";
+		for(uint p = 0; p < polyList.length(); p++) {
+			doPoly(polyList.item(p).toElement(), forWhy, totalCount, true, apertureMap, current_dcode, dcode_index);
+		}
+		for(uint p = 0; p < polyLineList.length(); p++) {
+			doPoly(polyLineList.item(p).toElement(), forWhy, totalCount, false, apertureMap, current_dcode, dcode_index);
 		}
 	}
 
@@ -578,13 +532,27 @@ int SVG2gerber::allPaths2gerber(ForWhy forWhy) {
         pathUserData.string = "";
 
         SvgFlattener flattener;
-        flattener.parsePath(data, slot, pathUserData, this, true);
-
+		bool invalid = false;
+		try {
+			flattener.parsePath(data, slot, pathUserData, this, true);
+		}
+		catch (const QString & msg) {
+			DebugDialog::debug("flattener.parsePath failed " + msg);
+			invalid = true;
+		}
+		catch (char const *str) {
+			DebugDialog::debug("flattener.parsePath failed " + QString(str));
+			invalid = true;
+		}
+		catch (...) {
+			DebugDialog::debug("flattener.parsePath failed");
+			invalid = true;
+		}
 		
 
         // only add paths if they contained gerber-izable path commands (NO CURVES!)
         // TODO: display some informative error for the user
-        if(pathUserData.string.contains("INVALID")) {
+        if (invalid || pathUserData.string.contains("INVALID")) {
 			invalidPathsCount++;
             continue;
 		}
@@ -625,6 +593,69 @@ int SVG2gerber::allPaths2gerber(ForWhy forWhy) {
     }
 
 	return invalidPathsCount;
+}
+
+void SVG2gerber::doPoly(QDomElement & polygon, ForWhy forWhy, int totalCount, bool closedCurve,
+					QHash<QString, QString> & apertureMap, QString & current_dcode, int & dcode_index) 
+{
+	if (forWhy == ForOutline && totalCount > 1) {
+		if (polygon.attribute("id").compare("boardoutline", Qt::CaseInsensitive) != 0) return;
+	}
+
+	//QString temp;
+	//QTextStream tempStream(&temp);
+	//polygon.save(tempStream, 1);
+
+	QString points = polygon.attribute("points");
+	QStringList pointList = points.split(QRegExp("\\s+|,"), QString::SkipEmptyParts);
+
+	QString aperture;
+
+	QString pointString;
+
+	qreal startx = pointList.at(0).toDouble();
+	qreal starty = pointList.at(1).toDouble();
+	// move to start - light off
+	pointString += "X" + QString::number(flipx(startx)) + "Y" + QString::number(flipy(starty)) + "D02*\n";
+
+	// iterate through all other points - light on
+	for(int pt = 2; pt < pointList.length(); pt +=2){
+		qreal ptx = pointList.at(pt).toDouble();
+		qreal pty = pointList.at(pt+1).toDouble();
+		pointString += "X" + QString::number(flipx(ptx)) + "Y" + QString::number(flipy(pty)) + "D01*\n";
+	}
+
+	if (closedCurve) {
+		// move back to start point
+		pointString += "X" + QString::number(flipx(startx)) + "Y" + QString::number(flipy(starty)) + "D01*\n";
+	}
+
+	standardAperture(polygon, apertureMap, current_dcode, dcode_index, 0);		
+
+	bool polyFill = fillNotStroke(polygon, forWhy);
+	// set poly fill if this is actually a filled in shape
+	if (polyFill) {							
+		// start poly fill
+		m_gerber_paths += "G36*\n";
+	}
+
+	m_gerber_paths += pointString;
+
+	// stop poly fill if this is actually a filled in shape
+	if(polyFill){
+		// stop poly fill
+		m_gerber_paths += "G37*\n";
+	}
+
+	if (forWhy == ForMask) {
+		// draw the outline, G36 only does the fill
+		standardAperture(polygon, apertureMap, current_dcode, dcode_index,  polygon.attribute("stroke-width").toDouble() + (MaskClearance * 2 * 1000));
+		m_gerber_paths += pointString;
+	}
+
+	// light off
+	m_gerber_paths += "D02*\n";
+
 }
 
 QString SVG2gerber::standardAperture(QDomElement & element, QHash<QString, QString> & apertureMap, QString & current_dcode, int & dcode_index, qreal stroke_width) {
@@ -712,10 +743,13 @@ void SVG2gerber::path2gerbCommandSlot(QChar command, bool relative, QList<double
 					case 'C':
 					case 'q':
 					case 'Q':
+					case 's':
+					case 'S':
 					case 't':
 					case 'T':
 						// TODO: implement elliptical arc, etc.
 						pathUserData->string.append("INVALID");
+						argIndex = args.count();
 						break;
 					case 'm':
 					case 'M':
@@ -772,6 +806,7 @@ void SVG2gerber::path2gerbCommandSlot(QChar command, bool relative, QList<double
 						pathUserData->pathStarting = true;
 						break;
 					default:
+						argIndex = args.count();
 						pathUserData->string.append("INVALID");
 						break;
 		}

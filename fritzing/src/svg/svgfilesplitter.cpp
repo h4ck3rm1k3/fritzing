@@ -129,9 +129,10 @@ bool SvgFileSplitter::splitString(QString & contents, const QString & elementID)
 		element.removeAttribute("id");
 	}
 
-	QString elementText;
-	QTextStream textStream(&elementText);
-	element.save(textStream, 0);
+	QDomDocument document;
+	QDomNode node = document.importNode(element, true);
+	document.appendChild(node);
+	QString elementText = document.toString();
 
 	if (!superTransforms.isEmpty()) {
 		for (int i = 0; i < superTransforms.count() - 1; i++) {
@@ -182,11 +183,11 @@ QString SvgFileSplitter::elementString(const QString & elementID) {
 	QDomElement mainElement = TextUtils::findElementWithAttribute(root, "id", elementID);
 	if (mainElement.isNull()) return ___emptyString___;
 
-	QString text;
-	QTextStream textStream(&text);
-	mainElement.save(textStream, 0);
+	QDomDocument document;
+	QDomNode node = document.importNode(mainElement, true);
+	document.appendChild(node);
 
-	return text;
+	return document.toString();
 }
 
 bool SvgFileSplitter::normalize(qreal dpi, const QString & elementID, bool blackOnly)
@@ -830,10 +831,11 @@ QVector<QVariant> SvgFileSplitter::simpleParsePath(const QString & data) {
 }
 
 
-bool SvgFileSplitter::parsePath(const QString & data, const char * slot, PathUserData & pathUserData, QObject * slotTarget, bool convertHV) {
-	QVector<QVariant> symStack = simpleParsePath(data);
+bool SvgFileSplitter::parsePath(const QString & dataString, const char * slot, PathUserData & pathUserData, QObject * slotTarget, bool convertHV) {
+	QVector<QVariant> symStack = simpleParsePath(dataString);
 
-	if (convertHV) {
+	if (convertHV && (dataString.contains("h", Qt::CaseInsensitive) || dataString.contains("v",  Qt::CaseInsensitive))) 
+	{  
 		SVGPathRunner svgPathRunner;
 		HVConvertData data;
 		data.x = data.y = data.subX = data.subY = 0;
