@@ -180,7 +180,8 @@ const QLineF & ClipableWire::getPaintLine() {
 
 	if ((to0 == NULL && to1 == NULL) ||		// no need to clip an unconnected wire
 		(to0 == NULL && t0c == 0) ||		// dragging out a wire, no need to clip
-		(to1 == NULL && t1c == 0))			// dragging out a wire, no need to clip
+		(to1 == NULL && t1c == 0) ||		// dragging out a wire, no need to clip
+		m_dragEnd)							// dragging out a wire, no need to clip
 	{
 		return Wire::getPaintLine();
 	}
