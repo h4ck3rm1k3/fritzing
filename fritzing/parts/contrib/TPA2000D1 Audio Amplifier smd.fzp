@@ -34,7 +34,7 @@
             </layers>
         </schematicView>
         <pcbView>
-            <layers image="pcb/TPA2000D1_Audio_Amplifier.svg">
+            <layers image="pcb/TPA2000D1_Audio_Amplifier smd.svg">
                 <layer layerId="copper1"/>
                 <layer layerId="silkscreen"/>
             </layers>
