@@ -502,10 +502,12 @@ int SVG2gerber::allPaths2gerber(ForWhy forWhy) {
 
 		// polys - NOTE: assumes comma- or space- separated formatting
 		for(uint p = 0; p < polyList.length(); p++) {
-			doPoly(polyList.item(p).toElement(), forWhy, totalCount, true, apertureMap, current_dcode, dcode_index);
+                        QDomElement polygon = polyList.item(p).toElement();
+                        doPoly(polygon, forWhy, totalCount, true, apertureMap, current_dcode, dcode_index);
 		}
-		for(uint p = 0; p < polyLineList.length(); p++) {
-			doPoly(polyLineList.item(p).toElement(), forWhy, totalCount, false, apertureMap, current_dcode, dcode_index);
+                for(uint p = 0; p < polyLineList.length(); p++) {
+                        QDomElement polygon = polyList.item(p).toElement();
+                        doPoly(polygon, forWhy, totalCount, false, apertureMap, current_dcode, dcode_index);
 		}
 	}
 
