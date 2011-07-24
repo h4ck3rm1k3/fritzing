@@ -151,9 +151,21 @@ protected:
 	void setHiddenOrInactive();
 	bool isConnectedToPart();
 	void displayTooltip(ConnectorItem * over, ConnectorItem * other);
-	void reposition(QPointF sceneDestPos);
+	void reposition(QPointF sceneDestPos, int draggingIndex);
 	QPointF calcPoint() const;
 	QPen legPen() const;
+	bool legMousePressEvent(QGraphicsSceneMouseEvent *event);
+	void repoly(const QPolygonF & poly, bool relative);
+	QPainterPath shapeAux(qreal width) const;
+
+	enum CursorLocation {
+		InNotFound = 0,
+		InConnector,
+		InBendpoint,
+		InSegment
+	};
+
+	CursorLocation findLocation(QPointF, int & bendpointIndex);
 
 protected:
 	QPointer<Connector> m_connector;
@@ -171,6 +183,7 @@ protected:
 	bool m_bendableLeg;
 	QPolygonF m_oldPolygon;
 	bool m_draggingLeg;
+	int m_draggingLegIndex;
 	bool m_activeStretch;
 	QPointF m_holdPos;
 	QPolygonF m_legPolygon;

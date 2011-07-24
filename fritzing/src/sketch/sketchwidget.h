@@ -599,7 +599,7 @@ protected:
 	QPointF m_alignmentStartPoint;
 	qreal m_zoom;
 	bool m_draggingBendpoint;
-	QPointer<GraphicsSvgLineItem> m_sizeItem;
+	QGraphicsLineItem * m_sizeItem;
 	int m_autoScrollThreshold;
 	bool m_clearSceneRect;
 	QPointer<ItemBase> m_moveReferenceItem;

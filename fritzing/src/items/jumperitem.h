@@ -60,11 +60,11 @@ public:
 	QPointF dragOffset();
 	void saveInstanceLocation(QXmlStreamWriter & streamWriter);
 	bool hasPartNumberProperty();
+	QRectF boundingRect() const;
 
 protected:
 	void resize();
 	QString makeSvg(ViewLayer::ViewLayerID);
-	QPainterPath makePath() const;
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
@@ -72,6 +72,8 @@ protected:
 	void rotateEnds(QTransform & rotation, QPointF & tc0, QPointF & tc1); 
 	QPointF calcPos(QPointF p0, QPointF p1);
 	void initialResize(ViewIdentifierClass::ViewIdentifier);
+	void paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+	void paintSelected(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 signals:
 	void alignMe(JumperItem *, QPointF & p); 

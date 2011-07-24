@@ -1038,7 +1038,7 @@ QString TextUtils::makeRectSVG(QRectF r, QPointF offset, qreal dpi, qreal printe
 
 QString TextUtils::makePolySVG(const QPolygonF & poly, QPointF offset, qreal width, QString colorString, qreal dpi, qreal printerScale, bool blackOnly) 
 {
-	QString polyString = QString("<polygon stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='%1' stroke-width='%2' points='\n").arg(blackOnly ? "black" : colorString).arg(width);
+	QString polyString = QString("<polyline stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='%1' stroke-width='%2' points='\n").arg(blackOnly ? "black" : colorString).arg(width);
 	int space = 0;
 	foreach (QPointF p, poly) {
 		polyString += QString("%1,%2 %3")

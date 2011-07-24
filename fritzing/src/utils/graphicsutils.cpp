@@ -138,7 +138,7 @@ qreal GraphicsUtils::pixels2ins(qreal p, qreal dpi) {
 	return p / dpi;
 }
 
-qreal GraphicsUtils::distance2(QPointF p1, QPointF p2) {
+qreal GraphicsUtils::distanceSqd(QPointF p1, QPointF p2) {
 	return ((p1.x() - p2.x()) * (p1.x() - p2.x())) + ((p1.y() - p2.y()) * (p1.y() - p2.y()));
 }
 
@@ -351,4 +351,32 @@ QString GraphicsUtils::toHtmlImage(QPixmap *pixmap, const char* format) {
 	buffer.open(QIODevice::WriteOnly);
 	pixmap->save(&buffer, format); // writes pixmap into bytes in PNG format
 	return QString("data:image/%1;base64,%2").arg(QString(format).toLower()).arg(QString(bytes.toBase64()));
+}
+
+QPainterPath GraphicsUtils::shapeFromPath(const QPainterPath &path, const QPen &pen, qreal shapeStrokeWidth, bool includeOriginalPath)
+{
+	// this function mostly copied from QGraphicsItem::qt_graphicsItem_shapeFromPath
+
+
+    // We unfortunately need this hack as QPainterPathStroker will set a width of 1.0
+    // if we pass a value of 0.0 to QPainterPathStroker::setWidth()
+    static const qreal penWidthZero = qreal(0.00000001);
+
+    if (path == QPainterPath())
+        return path;
+    QPainterPathStroker ps;
+    ps.setCapStyle(pen.capStyle());
+    //ps.setCapStyle(Qt::FlatCap);
+    if (shapeStrokeWidth <= 0.0)
+        ps.setWidth(penWidthZero);
+    else
+        ps.setWidth(shapeStrokeWidth);
+
+    ps.setJoinStyle(pen.joinStyle());
+    ps.setMiterLimit(pen.miterLimit());
+    QPainterPath p = ps.createStroke(path);
+	if (includeOriginalPath) {
+		p.addPath(path);
+	}
+    return p;
 }

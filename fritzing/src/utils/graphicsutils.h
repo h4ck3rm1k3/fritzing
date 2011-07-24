@@ -32,6 +32,8 @@ $Date$
 #include <QXmlStreamWriter>
 #include <QDomElement>
 #include <QPixmap>
+#include <QPainterPath>
+#include <QPen>
 
 class GraphicsUtils
 {
@@ -43,7 +45,7 @@ public:
 
 	static qreal pixels2mils(qreal p, qreal dpi);
 	static qreal pixels2ins(qreal p, qreal dpi);
-	static qreal distance2(QPointF p1, QPointF p2);
+	static qreal distanceSqd(QPointF p1, QPointF p2);
 	static qreal getNearestOrdinate(qreal ordinate, qreal units);
 
 	static qreal mm2mils(qreal mm);
@@ -58,6 +60,7 @@ public:
 									double wxmin, double wxmax, double wymin, double wymax, 
 									double & x11, double & y11, double & x22, double & y22);
 	static QString toHtmlImage(QPixmap *pixmap, const char* format = "PNG");
+	static QPainterPath shapeFromPath(const QPainterPath &path, const QPen &pen, qreal shapeStrokeWidth, bool includeOriginalPath);
 
 public:
 	static const int IllustratorDPI = 72;

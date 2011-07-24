@@ -52,6 +52,8 @@ public:
 	PluralType isPlural();
 	bool canEditPart();
 	void setDropOffset(QPointF offset);
+	void setShape(QPainterPath &);
+	QPainterPath shape() const;
 
 
 protected:
@@ -63,6 +65,7 @@ protected:
 	ConnectorItem * m_connector0;
 	class FSvgRenderer * m_renderer;
 	QPointF m_dropOffset;
+	QPainterPath m_shape;
 };
 
 #endif

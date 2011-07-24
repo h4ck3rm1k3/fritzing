@@ -161,7 +161,7 @@ SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, Q
     // a bit of a hack so that, when there is no scenerect set,
     // the first item dropped into the scene doesn't leap to the top left corner
     // as the scene resizes to fit the new item
-   	m_sizeItem = new GraphicsSvgLineItem();
+   	m_sizeItem = new QGraphicsLineItem();
     m_sizeItem->setLine(0, 0, rect().width(), rect().height());
 	//DebugDialog::debug(QString("initial rect %1 %2").arg(rect().width()).arg(rect().height()));
     this->scene()->addItem(m_sizeItem);
@@ -2827,6 +2827,15 @@ bool SketchWidget::checkMoved()
 
 	CleanUpWiresCommand * cuw = new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
 
+	foreach(ItemBase * itemBase, m_stretchingLegs.uniqueKeys()) {
+		foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
+			QPolygonF oldLeg, newLeg;
+			connectorItem->stretchDone(oldLeg, newLeg);
+			ChangeLegCommand * clc = new ChangeLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), oldLeg, newLeg, false, parentCommand);
+			clc->setUndoOnly();
+		}
+	}
+
 	bool gotConnection = true;
 
 	MoveItemsCommand * moveItemsCommand = new MoveItemsCommand(this, true, parentCommand);
@@ -2902,12 +2911,12 @@ bool SketchWidget::checkMoved()
 		}
 	}
 
-	// must restore legs after connections are restored
-	foreach(ItemBase * itemBase, m_stretchingLegs.keys()) {
+	// must restore legs after connections are restored (redo direction)
+	foreach(ItemBase * itemBase, m_stretchingLegs.uniqueKeys()) {
 		foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
-			QPolygonF oldLeg, newLeg;
-			connectorItem->stretchDone(oldLeg, newLeg);
-			new ChangeLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), oldLeg, newLeg, false, parentCommand);
+			QPolygonF leg = connectorItem->leg();
+			ChangeLegCommand * clc = new ChangeLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), leg, leg, true, parentCommand);
+			clc->setRedoOnly();
 		}
 	}
 
@@ -3878,7 +3887,7 @@ void SketchWidget::rotateX(qreal degrees)
 	new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
 
 	// change legs after connections have been updated (undo direction)
-	foreach (ItemBase * itemBase, m_stretchingLegs.keys()) {
+	foreach (ItemBase * itemBase, m_stretchingLegs.uniqueKeys()) {
 		foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
 			QPolygonF oldLeg = connectorItem->leg();
 			ChangeLegCommand * clc = new ChangeLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), oldLeg, oldLeg, true, parentCommand);
@@ -3920,7 +3929,7 @@ void SketchWidget::rotateX(qreal degrees)
 	}
 
 	// change legs after connections have been updated (redo direction)
-	foreach (ItemBase * itemBase, m_stretchingLegs.keys()) {
+	foreach (ItemBase * itemBase, m_stretchingLegs.uniqueKeys()) {
 		foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
 			QPolygonF oldLeg, newLeg;
 			connectorItem->stretchDone(oldLeg, newLeg);
@@ -4005,7 +4014,7 @@ void SketchWidget::flip(Qt::Orientations orientation)
 	new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
 
 	// change legs after connections have been updated (undo direction)
-	foreach (ItemBase * itemBase, m_stretchingLegs.keys()) {
+	foreach (ItemBase * itemBase, m_stretchingLegs.uniqueKeys()) {
 		foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
 			QPolygonF oldLeg = connectorItem->leg();
 			ChangeLegCommand * clc = new ChangeLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), oldLeg, oldLeg, true, parentCommand);
@@ -4027,7 +4036,7 @@ void SketchWidget::flip(Qt::Orientations orientation)
 	}
 
 	// change legs after connections have been updated (redo direction)
-	foreach (ItemBase * itemBase, m_stretchingLegs.keys()) {
+	foreach (ItemBase * itemBase, m_stretchingLegs.uniqueKeys()) {
 		foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
 			QPolygonF oldLeg, newLeg;
 			connectorItem->stretchDone(oldLeg, newLeg);

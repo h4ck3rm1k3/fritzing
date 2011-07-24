@@ -187,7 +187,6 @@ void GroundPlane::setSvgAux(const QString & svg) {
 		}
 		//QPainterPath painterPath = splitter.painterPath(FSvgRenderer::printerScale(), xmlName);
 		//this->setShape(painterPath);  
-
 	}
 }
 
@@ -246,3 +245,18 @@ void GroundPlane::setDropOffset(QPointF offset)
 	}
 	setSvg(svg);
 }
+
+void GroundPlane::setShape(QPainterPath & pp) {
+	QPen pen;
+	m_shape = GraphicsUtils::shapeFromPath(pp, pen, pen.widthF(), true);
+}
+
+QPainterPath GroundPlane::shape() const
+{
+	if (!m_shape.isEmpty()) {
+		return m_shape;
+	}
+    
+    return PaletteItemBase::shape();
+}
+

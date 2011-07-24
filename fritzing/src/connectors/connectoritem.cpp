@@ -64,17 +64,15 @@ bendable TODO:
 
 	* hover color makes a mess when dragging leg
 
-	* renderToSVG: make sure sceneBoundingRect is including legs
-
-	* put legItem back into connector item?  
+	* put legItem back into connector item
 
 	* export: retrieve svg must remove the bendable <line> element
 	
-	* make it a polygon instead of a line?
+	* make it a polygon instead of a line
 
 	* what to do when line length is zero
 
-	* click selection behavior should be as if selecting the part
+	* renderToSVG: make sure sceneBoundingRect is including legs
 
 	* delete/undo delete
 
@@ -82,30 +80,38 @@ bendable TODO:
 
 	* rotate/flip
 		do not disconnect
-		handle this as a post-facto undocommand
 		should transform around center of the itemBase with no legs
 
-	* rotate/flip undo failure
+	* leg cursor feedback
 
-	* bad crash when converting back to unbendable.  probably some kind of boundingRect issue...
+	* move behavior: what to do when dragging a leg: bendpoints
 
-	* swapping parts with bendable legs, can assume pins will always line up (unless legs can have diffent max distances)
-		* no-no
-		* no-yes
-		* yes-no
-		* yes-yes
+	click selection behavior should be as if selecting the part
+		click on leg should select part
+
+	complex bent leg fails after 2nd rotate
+
+	rotate/flip undo failure
+
+	bad crash when converting back to unbendable.  probably some kind of boundingRect issue...
+
+	swapping parts with bendable legs, can assume pins will always line up (unless legs can have diffent max distances)
+		no-no
+		no-yes
+		yes-no
+		yes-yes
 			
-	rotate bendable, swap bendable, undo: crash of the item being undone.  it's a prepViewGeometry bug
+	bendpoint undo seems weird
 
-	weird drag bug when bendable part is connected between 2 parts and the bendable part is dragged
-		within a particular area,  part body stops updating
+	rotate bendable, swap bendable, undo: crash of the item being undone.  it's a prepareGeometryChange() bug
+
+	weird bug when a bendable part has all legs connected and the part is dragged
+		within a particular region, the part body stops moving--
+		but the legs follow the phantom part until the part jumps into position
 
 	swapping when original is rotated
 		
-	when itembase is rotated leg drag behavior is screwed up
-
-	move behavior: what to do when dragging a leg?
-		bendpoints
+	when itembase is rotated leg or bendpoint drag behavior is screwed up
 				
 	export: resistors and other custom generated parts with legs (retrieve svg)
 
@@ -113,6 +119,8 @@ bendable TODO:
 		connected and not
 
 	swapping: keep bends?
+
+	bendpoints: align to grid? double-click? right-click? 90 degree?
 
 	parts to modify
 		LEDs
@@ -161,6 +169,7 @@ parts editor support
 #include <QMutexLocker>
 #include <QSet>
 #include <QToolTip>
+#include <QBitmap>
 #include <qmath.h>
 
 #include "../sketch/infographicsview.h"
@@ -217,8 +226,10 @@ bool wireLessThan(ConnectorItem * c1, ConnectorItem * c2)
 
 	// Connector::Wire last
 	return c1->zValue() > c2->zValue();
-
 }
+
+static QCursor * BendpointCursor = NULL;
+static QCursor * NewBendpointCursor = NULL;
 
 /////////////////////////////////////////////////////////
 
@@ -297,6 +308,10 @@ void ConnectorItem::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
 		return;
 	}
 
+	if (m_bendableLeg) {
+		this->setCursor(Qt::CrossCursor);
+	}
+
 	restoreColor(false, 0, true);
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
@@ -315,6 +330,24 @@ void ConnectorItem::hoverMoveEvent ( QGraphicsSceneHoverEvent * event ) {
 
 	if (this->m_attachedTo != NULL) {
 		m_attachedTo->hoverMoveConnectorItem(event, this);
+	}
+
+	if (m_bendableLeg) {
+		int bendpointIndex;
+		CursorLocation cursorLocation = findLocation(event->pos(), bendpointIndex);
+		QCursor cursor;
+		switch (cursorLocation) {
+			case InBendpoint:
+				cursor = (bendpointIndex == 0) ? Qt::CrossCursor : *BendpointCursor;
+				break;
+			case InSegment:
+				cursor = *NewBendpointCursor;
+				break;
+			default:
+				cursor = Qt::CrossCursor;
+				break;
+		}
+		setCursor(cursor);
 	}
 }
 
@@ -549,9 +582,9 @@ void ConnectorItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 		m_draggingLeg = false;
 		ConnectorItem * to = releaseDrag();
 		InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
-		if (to) {
+		if (to != NULL && m_draggingLegIndex == m_legPolygon.count() - 1) {
 			// center endpoint in the target connectorItem
-			reposition(to->sceneAdjustedTerminalPoint(NULL));
+			reposition(to->sceneAdjustedTerminalPoint(NULL), m_draggingLegIndex);
 		}
 		if (infoGraphicsView != NULL) {
 			infoGraphicsView->prepLegChange(this, m_oldPolygon, sceneAdjustedLeg(), to);
@@ -579,10 +612,10 @@ void ConnectorItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
 void ConnectorItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 
 	if (m_bendableLeg && m_draggingLeg) {
-		QPointF currentParentPos = this->mapToParent(this->mapFromScene(event->scenePos()));
-        QPointF buttonDownParentPos = this->mapToParent(this->mapFromScene(event->buttonDownScenePos(Qt::LeftButton)));
+		QPointF currentPos = event->scenePos();
+        QPointF buttonDownPos = event->buttonDownScenePos(Qt::LeftButton);
 
-		reposition(m_holdPos + currentParentPos - buttonDownParentPos);
+		reposition(m_holdPos + currentPos - buttonDownPos, m_draggingLegIndex);
 
 		QList<ConnectorItem *> exclude;
 		findConnectorUnder(true, true, exclude, true, this);
@@ -627,29 +660,7 @@ void ConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 	}
 	
 	if (m_bendableLeg) {
-		if (!(event->modifiers() & (Qt::ControlModifier | Qt::AltModifier | Qt::MetaModifier))) {
-			if (attachedTo()->moveLock()) {
-				event->ignore();
-				return;
-			}
-
-			QPainterPath path;
-			QPointF p = calcPoint();
-			path.moveTo(p);
-			path.lineTo(m_legPolygon.last());
-			QPen pen = legPen();
-			path = GraphicsSvgLineItem::qt_graphicsItem_shapeFromPath(path, pen, m_legStrokeWidth);
-			if (!path.contains(event->pos())) {
-				event->ignore();
-				return;
-			}
-
-			m_holdPos = mapToScene(m_legPolygon.last());
-			m_draggingLeg = true;
-			m_oldPolygon = sceneAdjustedLeg();
-			QGraphicsRectItem::mousePressEvent(event);
-			return;
-		}
+		if (legMousePressEvent(event)) return;
 	}
 
 
@@ -664,7 +675,6 @@ void ConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 int ConnectorItem::connectionsCount() {
 	return m_connectedTo.count();
 }
-
 
 void ConnectorItem::attachedMoved() {
 	//DebugDialog::debug("attached moved");
@@ -1398,13 +1408,13 @@ void ConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * 
 	if (m_legPolygon.count() > 1) {
 		QPen pen = legPen();
 		painter->setPen(pen);
-		painter->drawPolygon(m_legPolygon);			// draw the leg first
+		painter->drawPolyline(m_legPolygon);			// draw the leg first
 
 		if (m_attachedTo->inHover()) {
 			pen.setColor((qGray(m_legColor.rgb()) < 48) ? QColor(255, 255, 255) : QColor(0, 0, 0));
 			painter->setOpacity(ItemBase::hoverOpacity);
 			painter->setPen(pen);
-			painter->drawPolygon(m_legPolygon);	
+			painter->drawPolyline(m_legPolygon);	
 		}
 
 		QPointF p = calcPoint();
@@ -1769,19 +1779,24 @@ void ConnectorItem::resetLeg(const QPolygonF & poly, bool relative)
 		return;
 	}
 
-	reposition(target->sceneAdjustedTerminalPoint(NULL));
+	prepareGeometryChange();
+	QPointF sceneNewLast = target->sceneAdjustedTerminalPoint(NULL);
+	QPointF oldLast = m_legPolygon.last();
+
+
+	for (int i = 1; i < m_legPolygon.count(); i++) {
+		m_legPolygon.replace(i, mapFromScene(m_legPolygon.at(i) - oldLast + sceneNewLast));
+	}
+
+	update();
 }
 
 void ConnectorItem::setLeg(const QPolygonF & poly, bool relative) 
 {
 	if (!m_bendableLeg) return;
 
-	QPointF p = poly.last();
-	if (relative) {
-		p = mapToScene(p);
-	}
-
-	reposition(p);
+	repoly(poly, relative);
+	update();
 }
 
 const QPolygonF & ConnectorItem::leg() {
@@ -1829,17 +1844,22 @@ void ConnectorItem::stretchBy(QPointF howMuch) {
 
 	if (m_activeStretch) {
 		// this connector's part is being dragged
-		reposition(m_oldPolygon.last());
+		resetLeg(m_oldPolygon, false);
 	}
 	else {
 		// this connector is connected to another part which is being dragged
-		resetLeg(m_oldPolygon, false);
+		foreach (ConnectorItem * connectorItem, this->m_connectedTo) {
+			if (connectorItem->connectorType() == Connector::Female) {
+				reposition(connectorItem->sceneAdjustedTerminalPoint(NULL), m_legPolygon.count() - 1);
+				break;
+			}
+		}
 	}
 }
 
 void ConnectorItem::stretchDone(QPolygonF & oldLeg, QPolygonF & newLeg) {
 	oldLeg = m_oldPolygon;
-	newLeg = m_legPolygon;
+	newLeg = sceneAdjustedLeg();
 }
 
 QRectF ConnectorItem::boundingRect() const
@@ -1849,23 +1869,51 @@ QRectF ConnectorItem::boundingRect() const
 	return shape().controlPointRect();
 }
 
+QPainterPath ConnectorItem::hoverShape() const
+{
+	return shapeAux(2 * m_legStrokeWidth);
+}
+
 QPainterPath ConnectorItem::shape() const
+{
+	return shapeAux(m_legStrokeWidth);
+}
+
+QPainterPath ConnectorItem::shapeAux(qreal width) const
 {
 	if (m_legPolygon.count() < 2) return NonConnectorItem::shape();
 
 	QPainterPath path;
-	path.addPolygon(m_legPolygon);
+	path.moveTo(m_legPolygon.at(0));
+	for (int i = 1; i < m_legPolygon.count(); i++) {
+		path.lineTo(m_legPolygon.at(i));
+	}
+	
 	QPen pen = legPen();
 	
-	return GraphicsSvgLineItem::qt_graphicsItem_shapeFromPath(path, pen, m_legStrokeWidth);
+	return GraphicsUtils::shapeFromPath(path, pen, width, false);
 }
 
-void ConnectorItem::reposition(QPointF sceneDestPos)
+void ConnectorItem::reposition(QPointF sceneDestPos, int draggingIndex)
 {
-	QPointF dest = m_attachedTo->mapFromScene(sceneDestPos);
 	prepareGeometryChange();
-	m_legPolygon.pop_back();
-	m_legPolygon.append(dest - pos());
+	foreach (QPointF p, m_legPolygon) DebugDialog::debug(QString("point b %1 %2").arg(p.x()).arg(p.y()));
+	QPointF dest = mapFromScene(sceneDestPos);
+	m_legPolygon.replace(draggingIndex, dest);
+	foreach (QPointF p, m_legPolygon) DebugDialog::debug(QString("point a %1 %2").arg(p.x()).arg(p.y()));
+}
+
+void ConnectorItem::repoly(const QPolygonF & poly, bool relative)
+{
+	prepareGeometryChange();
+
+	foreach (QPointF p, m_legPolygon) DebugDialog::debug(QString("point b %1 %2").arg(p.x()).arg(p.y()));
+	m_legPolygon.clear();
+
+	foreach (QPointF p, poly) {
+		m_legPolygon.append(relative ? p : mapFromScene(p));
+	}
+	foreach (QPointF p, m_legPolygon) DebugDialog::debug(QString("point a %1 %2").arg(p.x()).arg(p.y()));
 }
 
 QPointF ConnectorItem::calcPoint() const
@@ -1890,6 +1938,15 @@ const QString & ConnectorItem::legID(ViewIdentifierClass::ViewIdentifier viewID,
 void ConnectorItem::setBendableLeg(QColor color, qreal strokeWidth, QLineF parentLine) {
 	// assumes this is only called once, when the connector is first set up
 
+	if (BendpointCursor == NULL) {
+		QBitmap bitmap(":resources/images/cursor/bendpoint.bmp");
+		BendpointCursor = new QCursor(bitmap, bitmap, 15, 15);
+	}
+	if (NewBendpointCursor == NULL) {
+		QBitmap bitmap(":resources/images/cursor/new_bendpoint.bmp");
+		NewBendpointCursor = new QCursor(bitmap, bitmap, 15, 15);
+	}
+
 	m_bendableLeg = true;
 	setFlag(QGraphicsItem::ItemIsMovable, true);
 	setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
@@ -1901,7 +1958,7 @@ void ConnectorItem::setBendableLeg(QColor color, qreal strokeWidth, QLineF paren
 	m_legPolygon.append(parentLine.p2() - parentLine.p1());
 	m_legStrokeWidth = strokeWidth;
 	m_legColor = color;
-	reposition(m_attachedTo->mapToScene(parentLine.p2()));
+	reposition(m_attachedTo->mapToScene(parentLine.p2()), 1);
 
 	this->setCircular(false);
 }
@@ -1929,14 +1986,85 @@ QPen ConnectorItem::legPen() const
 	return pen;
 }
 
-QPainterPath ConnectorItem::hoverShape() const
-{
-	if (!m_bendableLeg) return shape();
+bool ConnectorItem::legMousePressEvent(QGraphicsSceneMouseEvent *event) {
+	if (event->modifiers() & (Qt::ControlModifier | Qt::AltModifier | Qt::MetaModifier)) return false;
 
-	QPainterPath path;
-	path.addPolygon(m_legPolygon);
-	QPen pen = legPen();
-	
-	return GraphicsSvgLineItem::qt_graphicsItem_shapeFromPath(path, pen, 2 * m_legStrokeWidth);
+	if (attachedTo()->moveLock()) {
+		event->ignore();
+		return true;
+	}
+
+	int bendpointIndex;
+	CursorLocation cursorLocation = findLocation(event->pos(), bendpointIndex);
+	switch (cursorLocation) {
+
+		case InConnector:
+			m_holdPos = mapToScene(m_legPolygon.last());
+			m_draggingLeg = true;
+			m_draggingLegIndex = m_legPolygon.count() - 1;
+			m_oldPolygon = sceneAdjustedLeg();
+			QGraphicsRectItem::mousePressEvent(event);
+			return true;
+
+		case InSegment:
+				m_legPolygon.insert(bendpointIndex, event->pos());
+
+		case InBendpoint:
+			if (bendpointIndex == 0) {
+				// too close to the body; treat it as dragging the body
+				event->ignore();
+				return true;
+			}
+
+			m_draggingLegIndex = bendpointIndex;
+			m_holdPos = event->scenePos();
+			m_oldPolygon = sceneAdjustedLeg();
+			m_draggingLeg = true;
+			QGraphicsRectItem::mousePressEvent(event);
+			return true;
+
+		case InNotFound:
+		default:
+			event->ignore();
+			return true;
+	}
 }
 
+ConnectorItem::CursorLocation ConnectorItem::findLocation(QPointF location, int & bendpointIndex) {
+	QPainterPath path;
+	QPointF p = calcPoint();
+	path.moveTo(p);
+	path.lineTo(m_legPolygon.last());
+	QPen pen = legPen();
+	path = GraphicsUtils::shapeFromPath(path, pen, m_legStrokeWidth, false);
+	if (path.contains(location)) {
+		return InConnector;
+	}
+
+	qreal wSqd = 4 * m_legStrokeWidth * m_legStrokeWidth;			// hover distance
+	for (int i = 0; i < m_legPolygon.count() - 1; i++) {
+		QPainterPath path;
+		path.moveTo(m_legPolygon.at(i));
+		path.lineTo(m_legPolygon.at(i + 1));
+		path = GraphicsUtils::shapeFromPath(path, pen, m_legStrokeWidth, false);
+		if (path.contains(location)) {
+			qreal d = GraphicsUtils::distanceSqd(m_legPolygon.at(i), location);
+			if (d <= wSqd) {
+				bendpointIndex = i;
+				return InBendpoint;
+			}
+			else {
+				d = GraphicsUtils::distanceSqd(m_legPolygon.at(i + 1), location);
+				if (d <= wSqd) {
+					bendpointIndex = i + 1;
+					return InBendpoint;
+				}
+			}
+
+			bendpointIndex = i + 1;
+			return InSegment;
+		}
+	}
+
+	return InNotFound;
+}

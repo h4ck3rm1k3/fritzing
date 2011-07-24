@@ -76,11 +76,14 @@ public:
 
 
 	// for debugging
-	//void setLine(QLineF line);				
-	//void setLine(qreal x1, qreal y1, qreal x2, qreal y2);	
 	//void setPos(const QPointF & pos);
 	// for debugging
 
+    QLineF line() const;
+    virtual void setLine(const QLineF &line);
+    inline void setLine(qreal x1, qreal y1, qreal x2, qreal y2);
+    QPen pen() const;
+    void setPen(const QPen &pen);
 
 	void saveGeometry();
 	bool itemMoved();
@@ -142,6 +145,8 @@ public:
 	PluralType isPlural();
 	virtual bool canSwitchLayers();
 	void paint ( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
+	void paintBody(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
 	bool hasPartNumberProperty();
 	bool rotationAllowed();
 	bool rotation45Allowed();
@@ -149,6 +154,10 @@ public:
 	void setConnectorDimensions(qreal width, qreal height);
 	void originalConnectorDimensions(qreal & width, qreal & height);
 	qreal hoverStrokeWidth();
+    QPainterPath hoverShape() const;
+    QPainterPath shape() const;
+	QRectF boundingRect() const;
+	virtual const QLineF & getPaintLine();
 
 protected slots:
 	void colorEntry(const QString & text);
@@ -197,6 +206,8 @@ protected:
 	bool isBendpoint(ConnectorItem * connectorItem);
 
 protected:
+	QLineF	m_line;
+	QPen	m_pen;	
 	QPointF m_wireDragOrigin;
 	bool m_dragEnd;
 	bool m_drag0;
@@ -216,6 +227,7 @@ protected:
 	bool m_ignoreSelectionChange;
 	bool m_markedDeleted;
 	QRectF m_originalConnectorRect;
+	qreal m_hoverStrokeWidth;
 
 public:
 	static QStringList colorNames;

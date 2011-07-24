@@ -77,44 +77,60 @@ JumperItem::~JumperItem() {
 	m_renderers.clear();
 }
 
+QRectF JumperItem::boundingRect() const
+{
+    if (m_viewIdentifier != ViewIdentifierClass::PCBView) {
+        return PaletteItem::boundingRect();
+    }
+
+	return shape().controlPointRect();
+}
+
+void JumperItem::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    if (m_viewIdentifier != ViewIdentifierClass::PCBView) {
+       PaletteItem::paintHover(painter, option, widget);
+	   return;
+    }
+
+	ItemBase::paintHover(painter, option, widget, hoverShape());
+}
+
+void JumperItem::paintSelected(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    if (m_viewIdentifier != ViewIdentifierClass::PCBView) {
+       PaletteItem::paintSelected(painter, option, widget);
+	   return;
+    }
+
+	qt_graphicsItem_highlightSelected(painter, option, boundingRect(), hoverShape());
+}
+
 QPainterPath JumperItem::hoverShape() const
 {
     if (m_viewIdentifier != ViewIdentifierClass::PCBView) {
         return PaletteItem::hoverShape();
      }
 
-    QPainterPath p;
+	QPainterPath path; 
     QPointF c0 = m_connector0->rect().center();
     QPointF c1 = m_connector1->rect().center();
-    p.moveTo(c0);
-    p.lineTo(c1);
-	QPen pen = m_pen;
-	pen.setWidthF(1.0);
-	QPainterPath pp = qt_graphicsItem_shapeFromPath(p, pen, 4 * pen.widthF());
+    path.moveTo(c0);
+    path.lineTo(c1);
 
-	QPainterPath path = makePath();
-    QPainterPath qq = qt_graphicsItem_shapeFromPath(path, m_pen, 4 * m_pen.widthF());
-	return qq.united(pp);
+	QRectF rect = m_connector0->rect();
+	qreal dx = m_connectorTL.x();
+	qreal dy = m_connectorTL.y();
+	rect.adjust(-dx, -dy, dx, dy);
+
+	QPen pen;
+	pen.setCapStyle(Qt::RoundCap);
+	return GraphicsUtils::shapeFromPath(path, pen, rect.width(), false);
 }
 
 QPainterPath JumperItem::shape() const
 {
 	return hoverShape();
-}
-
-QPainterPath JumperItem::makePath() const {
-	QPainterPath path;
-	QRectF rect = m_connector0->rect();
-	qreal dx = m_connectorTL.x();
-	qreal dy = m_connectorTL.y();
-	rect.adjust(-dx, -dy, dx, dy);
-	path.addEllipse(rect);
-	rect = m_connector1->rect();
-	dx = m_connectorBR.x();
-	dy = m_connectorBR.y();
-	rect.adjust(-dx, -dy, dx, dy);
-	path.addEllipse(rect);
-	return path;
 }
 
 bool JumperItem::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors, QString & error)
@@ -301,6 +317,8 @@ void JumperItem::resize() {
 	if (m_connector0 == NULL) return;
 	if (m_connector1 == NULL) return;
 
+	prepareGeometryChange();
+
 	if (m_renderer == NULL) {
 		m_renderer = new FSvgRenderer(this);
 	}
@@ -360,6 +378,8 @@ void JumperItem::resize(QPointF p, QPointF nc0, QPointF nc1) {
 }
 
 void JumperItem::resizeAux(qreal r0x, qreal r0y, qreal r1x, qreal r1y) {
+	prepareGeometryChange();
+
 	QRectF r0 = m_connector0->rect();
 	QRectF r1 = m_connector1->rect();
 	QPointF c0 = r0.center();

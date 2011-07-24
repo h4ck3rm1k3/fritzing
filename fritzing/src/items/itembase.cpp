@@ -677,7 +677,11 @@ void ItemBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 		painter->setOpacity(InactiveOpacity);
 	}
 
-	GraphicsSvgLineItem::paint(painter, option, widget);
+	paintBody(painter, option, widget);
+
+	if (option->state & QStyle::State_Selected) {	
+		layerKinChief()->paintSelected(painter, option, widget);
+    }	
 
 	if (m_moveLock) {
 		painter->save();
@@ -698,9 +702,24 @@ void ItemBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 	}
 }
 
+void ItemBase::paintBody(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+	Q_UNUSED(option);
+	Q_UNUSED(widget);
+
+	// Qt's SVG renderer's defaultSize is not correct when the svg has a fractional pixel size
+	renderer()->render(painter, boundingRectWithoutLegs());
+}
+
 void ItemBase::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
 	paintHover(painter, option, widget, hoverShape());
+}
+
+void ItemBase::paintSelected(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+	Q_UNUSED(widget);
+	qt_graphicsItem_highlightSelected(painter, option, boundingRect(), hoverShape());
 }
 
 void ItemBase::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget, const QPainterPath & shape)
@@ -1157,7 +1176,7 @@ bool ItemBase::collectFemaleConnectees(QSet<ItemBase *> & items) {
 }
 
 void ItemBase::prepareGeometryChange() {
-	debugInfo("prepare geometry change");
+	//debugInfo("prepare geometry change");
 	GraphicsSvgLineItem::prepareGeometryChange();
 }
 
@@ -1816,4 +1835,9 @@ void ItemBase::killBendableLeg() {
 
 ViewGeometry::WireFlags ItemBase::wireFlags() const {
 	return m_viewGeometry.wireFlags();
+}
+
+QRectF ItemBase::boundingRectWithoutLegs() const
+{
+	return boundingRect();
 }

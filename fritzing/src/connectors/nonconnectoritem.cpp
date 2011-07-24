@@ -188,7 +188,7 @@ QPainterPath NonConnectorItem::shape() const
 	if (m_circular || m_effectivelyCircular) {
 		QPainterPath path;
 		path.addEllipse(rect());
-		return GraphicsSvgLineItem::qt_graphicsItem_shapeFromPath(path, pen(), pen().widthF());
+		return GraphicsUtils::shapeFromPath(path, pen(), pen().widthF(), true);
 	}
 	else if (!m_shape.isEmpty()) {
 		return m_shape;
@@ -199,5 +199,5 @@ QPainterPath NonConnectorItem::shape() const
 
 void NonConnectorItem::setShape(QPainterPath & pp) {
 	// so far only used by GroundPlane
-	m_shape = GraphicsSvgLineItem::qt_graphicsItem_shapeFromPath(pp, pen(), pen().widthF());
+	m_shape = GraphicsUtils::shapeFromPath(pp, pen(), pen().widthF(), true);
 }

@@ -69,7 +69,7 @@ public:
 	QPainterPath hoverShape() const;
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	void paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-	void paintHighlight(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+	void paintSelected(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
 	void setProp(const QString & prop, const QString & value);
 

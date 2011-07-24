@@ -58,6 +58,9 @@ QList<int> Wire::widths;
 qreal Wire::STANDARD_TRACE_WIDTH;
 qreal Wire::HALF_STANDARD_TRACE_WIDTH;
 
+const qreal DefaultHoverStrokeWidth = 4;
+
+
 ////////////////////////////////////////////////////////////
 
 bool alphaLessThan(QColor * c1, QColor * c2)
@@ -107,6 +110,7 @@ Wire * WireAction::wire() {
 Wire::Wire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu* itemMenu, bool initLabel)
 	: ItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
+	m_hoverStrokeWidth = DefaultHoverStrokeWidth;
 	m_connector0 = m_connector1 = NULL;
 	m_partLabel = initLabel ? new PartLabel(this, NULL) : NULL;
 	m_canChainMultiple = false;
@@ -211,8 +215,16 @@ void Wire::initEnds(const ViewGeometry & vg, QRectF defaultRect, InfoGraphicsVie
 	prepareGeometryChange();
 }
 
-void Wire::paint (QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget ) {
+void Wire::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget ) {
 	if (m_hidden) return;
+
+	ItemBase::paint(painter, option, widget);
+}
+
+void Wire::paintBody(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget ) 
+{
+	Q_UNUSED(option);
+	Q_UNUSED(widget);
 
 	painter->setOpacity(m_inactive ? m_opacity  / 2 : m_opacity);
 	if (!getRatsnest() && !getTrace()) {
@@ -222,7 +234,9 @@ void Wire::paint (QPainter * painter, const QStyleOptionGraphicsItem * option, Q
 		painter->drawLine(line);
 		painter->restore();
 	}
-	ItemBase::paint(painter, option, widget);
+	   
+	painter->setPen(m_pen);
+	painter->drawLine(getPaintLine());			
 }
 
 void Wire::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) 
@@ -239,6 +253,47 @@ void Wire::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option,
 		painter->fillPath(this->hoverShape(), QBrush(hoverColor));
 	}
 	painter->restore();
+}
+
+QPainterPath Wire::hoverShape() const
+{
+	QPainterPath path;
+	if (m_line == QLineF()) {
+	    return path;
+	}
+				
+	path.moveTo(m_line.p1());
+	path.lineTo(m_line.p2());
+	//DebugDialog::debug(QString("using hoverstrokewidth %1 %2").arg(m_id).arg(m_hoverStrokeWidth));
+	return GraphicsUtils::shapeFromPath(path, m_pen, m_hoverStrokeWidth, false);
+}
+
+QPainterPath Wire::shape() const
+{
+	QPainterPath path;
+	if (m_line == QLineF()) {
+	    return path;
+	}
+	
+	path.moveTo(m_line.p1());
+	path.lineTo(m_line.p2());
+	return GraphicsUtils::shapeFromPath(path, m_pen, m_pen.width(), false);
+}
+
+QRectF Wire::boundingRect() const
+{
+	if (m_pen.widthF() == 0.0) {
+	    const qreal x1 = m_line.p1().x();
+	    const qreal x2 = m_line.p2().x();
+	    const qreal y1 = m_line.p1().y();
+	    const qreal y2 = m_line.p2().y();
+	    qreal lx = qMin(x1, x2);
+	    qreal rx = qMax(x1, x2);
+	    qreal ty = qMin(y1, y2);
+	    qreal by = qMax(y1, y2);
+	    return QRectF(lx, ty, rx - lx, by - ty);
+	}
+	return hoverShape().controlPointRect();
 }
 
 void Wire::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
@@ -1181,6 +1236,7 @@ void Wire::getConnectedColor(ConnectorItem * connectorItem, QBrush * &brush, QPe
 
 void Wire::setPenWidth(qreal w, InfoGraphicsView * infoGraphicsView, qreal hoverStrokeWidth) {
 	m_hoverStrokeWidth = hoverStrokeWidth;
+	DebugDialog::debug(QString("setting hoverstrokewidth %1 %2").arg(m_id).arg(m_hoverStrokeWidth));
 	m_pen.setWidthF(w);
 	infoGraphicsView->getBendpointWidths(this, w, m_bendpointWidth, m_bendpoint2Width, m_negativeOffsetRect);
 	m_bendpointPen.setWidthF(qAbs(m_bendpointWidth));
@@ -1372,3 +1428,61 @@ bool Wire::isBendpoint(ConnectorItem * connectorItem) {
 qreal Wire::hoverStrokeWidth() {
 	return m_hoverStrokeWidth;
 }
+
+const QLineF & Wire::getPaintLine() {
+	return m_line;
+}
+
+/*!
+    Returns the item's line, or a null line if no line has been set.
+
+    \sa setLine()
+*/
+QLineF Wire::line() const
+{
+    return m_line;
+}
+
+/*!
+    Sets the item's line to be the given \a line.
+
+    \sa line()
+*/
+void Wire::setLine(const QLineF &line)
+{
+    if (m_line == line)
+        return;
+    prepareGeometryChange();
+    m_line = line;
+    update();
+}
+
+void Wire::setLine(qreal x1, qreal y1, qreal x2, qreal y2)
+{ 
+	setLine(QLineF(x1, y1, x2, y2)); 
+}
+
+/*!
+    Returns the item's pen, or a black solid 0-width pen if no pen has
+    been set.
+
+    \sa setPen()
+*/
+QPen Wire::pen() const
+{
+    return m_pen;
+}
+
+/*!
+    Sets the item's pen to \a pen. If no pen is set, the line will be painted
+    using a black solid 0-width pen.
+
+    \sa pen()
+*/
+void Wire::setPen(const QPen &pen)
+{
+    prepareGeometryChange();
+    m_pen = pen;
+    update();
+}
+

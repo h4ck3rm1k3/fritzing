@@ -100,16 +100,13 @@ QPainterPath PaletteItemBase::hoverShape() const
 			path.addPath(connectorItem->mapToParent(connectorItem->hoverShape()));
 		}
 	}
-	return path;
 
+	path.setFillRule(Qt::WindingFill);
+	return path;
 }
 
 QPainterPath PaletteItemBase::shape() const
 {
-	if (!m_shape.isEmpty()) {
-		return ItemBase::shape();
-	}
-
 	// TODO: figure out real shape of svg
     QPainterPath path;
     path.addRect(0, 0, m_size.width(), m_size.height());
@@ -121,6 +118,8 @@ QPainterPath PaletteItemBase::shape() const
 			path.addPath(connectorItem->mapToParent(connectorItem->shape()));
 		}
 	}
+
+	path.setFillRule(Qt::WindingFill);
 	return path;
 }
 
@@ -189,12 +188,12 @@ void PaletteItemBase::paintHover(QPainter *painter, const QStyleOptionGraphicsIt
 	ItemBase::paintHover(painter, option, widget, path);
 }
 
-void PaletteItemBase::paintHighlight(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void PaletteItemBase::paintSelected(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
 	if (m_hidden) return;
 
 	if (!hasBendableLeg()) {
-		ItemBase::paintHighlight(painter, option, widget);
+		ItemBase::paintSelected(painter, option, widget);
 		return;
 	}
 

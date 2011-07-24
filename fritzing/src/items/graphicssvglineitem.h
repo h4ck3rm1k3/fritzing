@@ -42,38 +42,12 @@ public:
 	GraphicsSvgLineItem(QGraphicsItem * parent = 0);
     ~GraphicsSvgLineItem();
 
-    QPen pen() const;
-    void setPen(const QPen &pen);
-
-    QLineF line() const;
-    virtual void setLine(const QLineF &line);
-    inline void setLine(qreal x1, qreal y1, qreal x2, qreal y2)
-    	{ setLine(QLineF(x1, y1, x2, y2)); }
-
     QRectF boundingRect() const;
-	virtual QRectF boundingRectWithoutLegs() const;
-    QPainterPath shape() const;
     virtual QPainterPath hoverShape() const;
-	void setShape(QPainterPath &);
-
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
-    virtual void paintHighlight(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
-
-	bool hasLine();
-	virtual const QLineF & getPaintLine();
 
 public:
 	static void qt_graphicsItem_highlightSelected(QPainter *painter, const QStyleOptionGraphicsItem *option, const QRectF & boundingRect, const QPainterPath & path);
-	static QPainterPath qt_graphicsItem_shapeFromPath(const QPainterPath &path, const QPen &pen, qreal shapeStrokeWidth);
 
-	static const qreal DefaultHoverStrokeWidth;
-
-protected:
-	QLineF	m_line;
-	QPen	m_pen;	
-	bool	m_hasLine;
-	QPainterPath m_shape;
-	qreal	m_hoverStrokeWidth;
 };
 
 

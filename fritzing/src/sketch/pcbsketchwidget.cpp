@@ -2345,7 +2345,7 @@ void PCBSketchWidget::changeTrace(Wire * wire, ConnectorItem * from, ConnectorIt
 				ViewLayer::specFromID(wire->viewLayerID()),
 				true, parentCommand);
 
-		parentCommand->setText(QObject::tr("change trace").arg(wire->title()) );
+		parentCommand->setText(QObject::tr("change trace %1").arg(wire->title()) );
 		new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
 		m_undoStack->push(parentCommand);
 		return;

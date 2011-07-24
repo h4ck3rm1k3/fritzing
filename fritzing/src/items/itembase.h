@@ -197,7 +197,7 @@ public:
 	const QList<ConnectorItem *> & cachedConnectorItems();
 	const QList<ConnectorItem *> & cachedConnectorItemsConst() const;
 	bool inHover();
-
+	virtual QRectF boundingRectWithoutLegs() const;
 
 public:
 	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth, bool & negativeOffsetRect);
@@ -278,6 +278,8 @@ protected:
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event );
 	virtual void paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget); 
 	virtual void paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget, const QPainterPath & shape); 
+    virtual void paintSelected(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+	virtual void paintBody(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 	QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant & value);
 
