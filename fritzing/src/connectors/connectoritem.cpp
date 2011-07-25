@@ -232,6 +232,9 @@ bool wireLessThan(ConnectorItem * c1, ConnectorItem * c2)
 
 static QCursor * BendpointCursor = NULL;
 static QCursor * NewBendpointCursor = NULL;
+static QCursor * MakeWireCursor = NULL;
+
+Qt::KeyboardModifiers DragWireModifiers = (Qt::ControlModifier | Qt::AltModifier | Qt::MetaModifier);
 
 /////////////////////////////////////////////////////////
 
@@ -346,7 +349,7 @@ void ConnectorItem::hoverMoveEvent ( QGraphicsSceneHoverEvent * event ) {
 				cursor = *NewBendpointCursor;
 				break;
 			case InConnector:
-				cursor = Qt::CrossCursor;
+				cursor = (event->modifiers() & DragWireModifiers) ? *MakeWireCursor : Qt::CrossCursor;
 				break;
 			default:
 				cursor = Qt::DragMoveCursor;
@@ -1944,12 +1947,14 @@ void ConnectorItem::setBendableLeg(QColor color, qreal strokeWidth, QLineF paren
 	// assumes this is only called once, when the connector is first set up
 
 	if (BendpointCursor == NULL) {
-		QBitmap bitmap(":resources/images/cursor/bendpoint.bmp");
-		BendpointCursor = new QCursor(bitmap, bitmap, 15, 15);
-	}
-	if (NewBendpointCursor == NULL) {
-		QBitmap bitmap(":resources/images/cursor/new_bendpoint.bmp");
-		NewBendpointCursor = new QCursor(bitmap, bitmap, 15, 15);
+		QBitmap bitmap1(":resources/images/cursor/bendpoint.bmp");
+		BendpointCursor = new QCursor(bitmap1, bitmap1, 15, 15);
+
+		QBitmap bitmap2(":resources/images/cursor/new_bendpoint.bmp");
+		NewBendpointCursor = new QCursor(bitmap2, bitmap2, 15, 15);
+
+		QBitmap bitmap3(":resources/images/cursor/make_wire.bmp");
+		MakeWireCursor = new QCursor(bitmap3, bitmap3, 3, 29);
 	}
 
 	m_bendableLeg = true;
@@ -1992,7 +1997,7 @@ QPen ConnectorItem::legPen() const
 }
 
 bool ConnectorItem::legMousePressEvent(QGraphicsSceneMouseEvent *event) {
-	if (event->modifiers() & (Qt::ControlModifier | Qt::AltModifier | Qt::MetaModifier)) return false;
+	if (event->modifiers() & DragWireModifiers) return false;
 
 	if (attachedTo()->moveLock()) {
 		event->ignore();
