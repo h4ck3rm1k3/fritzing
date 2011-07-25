@@ -103,7 +103,7 @@ void JumperItem::paintSelected(QPainter *painter, const QStyleOptionGraphicsItem
 	   return;
     }
 
-	qt_graphicsItem_highlightSelected(painter, option, boundingRect(), hoverShape());
+	GraphicsUtils::qt_graphicsItem_highlightSelected(painter, option, boundingRect(), hoverShape());
 }
 
 QPainterPath JumperItem::hoverShape() const

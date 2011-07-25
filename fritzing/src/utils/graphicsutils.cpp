@@ -268,8 +268,6 @@ QRectF GraphicsUtils::getRect(const QPolygonF & poly)
 
 }
 
-
-
 // based on code from http://code-heaven.blogspot.com/2009/05/c-program-for-liang-barsky-line.html
 bool GraphicsUtils::liangBarskyLineClip(double x1, double y1, double x2, double y2, double wxmin, double wxmax, double wymin, double wymax, 
 							double & x11, double & y11, double & x22, double & y22)
@@ -379,4 +377,43 @@ QPainterPath GraphicsUtils::shapeFromPath(const QPainterPath &path, const QPen &
 		p.addPath(path);
 	}
     return p;
+}
+
+void GraphicsUtils::qt_graphicsItem_highlightSelected(QPainter *painter, const QStyleOptionGraphicsItem *option, const QRectF & boundingRect, const QPainterPath & path)
+{	
+    const QRectF murect = painter->transform().mapRect(QRectF(0, 0, 1, 1));
+    if (qFuzzyCompare(qMax(murect.width(), murect.height()) + 1, 1))
+        return;
+
+    const QRectF mbrect = painter->transform().mapRect(boundingRect);
+    if (qMin(mbrect.width(), mbrect.height()) < qreal(1.0))
+        return;
+
+    qreal itemPenWidth = 1.0;
+	const qreal pad = itemPenWidth / 2;
+    const qreal penWidth = 0; // cosmetic pen
+
+    const QColor fgcolor = option->palette.windowText().color();
+    const QColor bgcolor( // ensure good contrast against fgcolor
+        fgcolor.red()   > 127 ? 0 : 255,
+        fgcolor.green() > 127 ? 0 : 255,
+        fgcolor.blue()  > 127 ? 0 : 255);
+
+    painter->setPen(QPen(bgcolor, penWidth, Qt::SolidLine));
+    painter->setBrush(Qt::NoBrush);
+	if (path.isEmpty()) {
+		painter->drawRect(boundingRect.adjusted(pad, pad, -pad, -pad));
+	}
+	else {
+		painter->drawPath(path);
+	}
+
+	painter->setPen(QPen(option->palette.windowText(), 0, Qt::DashLine));
+    painter->setBrush(Qt::NoBrush);
+	if (path.isEmpty()) {
+		painter->drawRect(boundingRect.adjusted(pad, pad, -pad, -pad));
+	}
+	else {
+		painter->drawPath(path);
+	} 
 }

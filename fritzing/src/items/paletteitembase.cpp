@@ -37,6 +37,7 @@ $Date$
 #include "partlabel.h"
 #include "../utils/focusoutcombobox.h"
 #include "../utils/textutils.h"
+#include "../utils/graphicsutils.h"
 
 #include <QBrush>
 #include <QPen>
@@ -198,7 +199,7 @@ void PaletteItemBase::paintSelected(QPainter *painter, const QStyleOptionGraphic
 	}
 
 	QRectF r(0, 0, m_size.width(), m_size.height());
-	qt_graphicsItem_highlightSelected(painter, option, r, QPainterPath());
+	GraphicsUtils::qt_graphicsItem_highlightSelected(painter, option, r, QPainterPath());
 }
 
 void PaletteItemBase::mousePressConnectorEvent(ConnectorItem * connectorItem, QGraphicsSceneMouseEvent * event) {

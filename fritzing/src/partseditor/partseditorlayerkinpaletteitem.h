@@ -45,11 +45,11 @@ protected:
 
 	void hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
 		setCursor(QCursor(Qt::OpenHandCursor));
-		GraphicsSvgLineItem::hoverEnterEvent(event);
+		QGraphicsSvgItem::hoverEnterEvent(event);
 	}
 
 	void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
-		GraphicsSvgLineItem::hoverLeaveEvent(event);
+		QGraphicsSvgItem::hoverLeaveEvent(event);
 	}
 };
 

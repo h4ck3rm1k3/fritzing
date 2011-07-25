@@ -86,6 +86,8 @@ bendable TODO:
 
 	* move behavior: what to do when dragging a leg: bendpoints
 
+	remove bendpoint: right click, double click?
+
 	subclass leg connectoritem?
 
 	click selection behavior should be as if selecting the part

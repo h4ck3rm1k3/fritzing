@@ -776,22 +776,8 @@ FSvgRenderer * Wire::setUpConnectors(ModelPart * modelPart, ViewIdentifierClass:
 
 /*
 void Wire::setPos(const QPointF & pos) {
-	GraphicsSvgLineItem::setPos(pos);
+	ItemBase::setPos(pos);
 }
-
-// helpful for debugging
-void Wire::setLine(QLineF line) {
-	GraphicsSvgLineItem::setLine(line);
-	DebugDialog::debug(QString("set line %5 %6, %7 %8, %1 %2 %3 %4").arg(line.x1()).arg(line.y1()).arg(line.x2()).arg(line.y2())
-		.arg(id()).arg(m_viewIdentifier).arg(this->pos().x()).arg(this->pos().y()) );
-}
-
-void Wire::setLine(qreal x1, qreal y1, qreal x2, qreal y2) {
-	GraphicsSvgLineItem::setLine(x1, y1, x2, y2);
-	DebugDialog::debug(QString("set line %5 %6, %7 %8, %1 %2 %3 %4").arg(x1).arg(y1).arg(x2).arg(y2)
-		.arg(id()).arg(m_viewIdentifier).arg(this->pos().x()).arg(this->pos().y()) );
-}
-
 */
 
 

@@ -136,7 +136,7 @@ static QHash<QString, QStringList> CachedValues;
 ///////////////////////////////////////////////////
 
 ItemBase::ItemBase( ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu )
-	: GraphicsSvgLineItem()
+	: QGraphicsSvgItem()
 {
 	//DebugDialog::debug(QString("itembase %1 %2").arg(id).arg((long) static_cast<QGraphicsItem *>(this), 0, 16));
 	m_hasBendableLeg = m_moveLock = m_hoverEnterSpaceBarWasPressed = m_spaceBarWasPressed = false;
@@ -719,7 +719,7 @@ void ItemBase::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *opt
 void ItemBase::paintSelected(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
 	Q_UNUSED(widget);
-	qt_graphicsItem_highlightSelected(painter, option, boundingRect(), hoverShape());
+	GraphicsUtils::qt_graphicsItem_highlightSelected(painter, option, boundingRect(), hoverShape());
 }
 
 void ItemBase::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget, const QPainterPath & shape)
@@ -747,7 +747,7 @@ void ItemBase::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 
 	//scene()->setItemIndexMethod(QGraphicsScene::NoIndex);
 	//setCacheMode(QGraphicsItem::DeviceCoordinateCache);
-	GraphicsSvgLineItem::mousePressEvent(event);
+	QGraphicsSvgItem::mousePressEvent(event);
 }
 
 void ItemBase::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
@@ -755,7 +755,7 @@ void ItemBase::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 	m_rightClickedConnector = NULL;
 	// calling parent class so that multiple selection will work
 	// haven't yet discovered any nasty side-effect
-	GraphicsSvgLineItem::mouseReleaseEvent(event);
+	QGraphicsSvgItem::mouseReleaseEvent(event);
 
 	//scene()->setItemIndexMethod(QGraphicsScene::BspTreeIndex);
 	// setCacheMode(QGraphicsItem::NoCache);
@@ -1103,7 +1103,7 @@ QVariant ItemBase::itemChange(QGraphicsItem::GraphicsItemChange change, const QV
 			break;
 	}
 
-	return GraphicsSvgLineItem::itemChange(change, value);
+	return QGraphicsSvgItem::itemChange(change, value);
 }
 
 QString ItemBase::toolTip2() {
@@ -1177,7 +1177,7 @@ bool ItemBase::collectFemaleConnectees(QSet<ItemBase *> & items) {
 
 void ItemBase::prepareGeometryChange() {
 	//debugInfo("prepare geometry change");
-	GraphicsSvgLineItem::prepareGeometryChange();
+	QGraphicsSvgItem::prepareGeometryChange();
 }
 
 void ItemBase::saveLocAndTransform(QXmlStreamWriter & streamWriter)
@@ -1798,7 +1798,7 @@ bool ItemBase::hasBendableLeg() const
 
 bool ItemBase::sceneEvent(QEvent *event)
 {
-	return GraphicsSvgLineItem::sceneEvent(event);
+	return QGraphicsSvgItem::sceneEvent(event);
 }
 
 const QList<ConnectorItem *> & ItemBase::cachedConnectorItems() 
@@ -1841,3 +1841,21 @@ QRectF ItemBase::boundingRectWithoutLegs() const
 {
 	return boundingRect();
 }
+
+QRectF ItemBase::boundingRect() const
+{    
+	FSvgRenderer * frenderer = dynamic_cast<FSvgRenderer *>(this->renderer());
+	if (frenderer == NULL) {
+		return QGraphicsSvgItem::boundingRect();
+	}
+
+	QSizeF s = frenderer->defaultSizeF();
+	QRectF r(0,0, s.width(), s.height());
+	return r;
+}
+
+QPainterPath ItemBase::hoverShape() const
+{	
+	return shape();
+}
+

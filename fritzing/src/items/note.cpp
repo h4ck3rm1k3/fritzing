@@ -25,12 +25,12 @@ $Date$
 ********************************************************************/
 
 #include "note.h"
-#include "../items/graphicssvglineitem.h"
 #include "../debugdialog.h"
 #include "../sketch/infographicsview.h"
 #include "../model/modelpart.h"
 #include "../utils/resizehandle.h"
 #include "../utils/textutils.h"
+#include "../utils/graphicsutils.h"
 
 #include <QTextFrame>
 #include <QTextFrameFormat>
@@ -286,7 +286,7 @@ void Note::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     painter->drawRect(m_rect);
 
 	if (option->state & QStyle::State_Selected) {
-		GraphicsSvgLineItem::qt_graphicsItem_highlightSelected(painter, option, boundingRect(), QPainterPath());
+		GraphicsUtils::qt_graphicsItem_highlightSelected(painter, option, boundingRect(), QPainterPath());
     }
 
 	if (m_inactive) {

@@ -32,7 +32,7 @@ $Date$
 #include <QSize>
 #include <QHash>
 #include <QGraphicsSceneHoverEvent>
-#include <QGraphicsItem>
+#include <QGraphicsSvgItem>
 #include <QPointer>
 #include <QUrl>
 #include <QMap>
@@ -42,7 +42,6 @@ $Date$
 #include "../viewlayer.h"
 #include "../viewidentifierclass.h"
 #include "../utils/misc.h"
-#include "graphicssvglineitem.h"
 
 class ConnectorItem;
 
@@ -50,7 +49,7 @@ typedef QMultiHash<ConnectorItem *, ConnectorItem *> ConnectorPairHash;
 
 typedef bool (*SkipCheckFunction)(ConnectorItem *);
 
-class ItemBase : public GraphicsSvgLineItem
+class ItemBase : public QGraphicsSvgItem
 {
 Q_OBJECT
 
@@ -198,6 +197,8 @@ public:
 	const QList<ConnectorItem *> & cachedConnectorItemsConst() const;
 	bool inHover();
 	virtual QRectF boundingRectWithoutLegs() const;
+    QRectF boundingRect() const;
+    virtual QPainterPath hoverShape() const;
 
 public:
 	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth, bool & negativeOffsetRect);

@@ -328,11 +328,11 @@ QString PartsEditorPaletteItem::xmlViewLayerID() {
 
 void PartsEditorPaletteItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
 	setCursor(QCursor(Qt::ArrowCursor));
-	GraphicsSvgLineItem::hoverEnterEvent(event);
+	QGraphicsSvgItem::hoverEnterEvent(event);
 }
 
 void PartsEditorPaletteItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
-	GraphicsSvgLineItem::hoverLeaveEvent(event);
+	QGraphicsSvgItem::hoverLeaveEvent(event);
 }
 
 void PartsEditorPaletteItem::setItemSVG(const QString & itemSVG) {

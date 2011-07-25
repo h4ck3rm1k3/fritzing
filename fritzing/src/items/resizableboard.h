@@ -31,6 +31,7 @@ $Date$
 #include <QPainterPath>
 #include <QPixmap>
 #include <QVariant>
+#include <QLineEdit>
 
 #include "paletteitem.h"
 

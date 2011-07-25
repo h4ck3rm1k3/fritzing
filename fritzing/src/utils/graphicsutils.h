@@ -28,12 +28,16 @@ $Date$
 #define GRAPHICSUTILS_H
 
 #include <QPointF>
+#include <QRectF>
 #include <QTransform>
 #include <QXmlStreamWriter>
 #include <QDomElement>
 #include <QPixmap>
 #include <QPainterPath>
 #include <QPen>
+#include <QPainter>
+#include <QStyleOptionGraphicsItem>
+#include <QPixmap>
 
 class GraphicsUtils
 {
@@ -61,6 +65,7 @@ public:
 									double & x11, double & y11, double & x22, double & y22);
 	static QString toHtmlImage(QPixmap *pixmap, const char* format = "PNG");
 	static QPainterPath shapeFromPath(const QPainterPath &path, const QPen &pen, qreal shapeStrokeWidth, bool includeOriginalPath);
+	static void qt_graphicsItem_highlightSelected(QPainter *painter, const QStyleOptionGraphicsItem *option, const QRectF & boundingRect, const QPainterPath & path);
 
 public:
 	static const int IllustratorDPI = 72;
