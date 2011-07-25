@@ -98,7 +98,9 @@ bendable TODO:
 
 	* subclass leg connectoritem?  not for the moment
 
-	remove bendpoint: right click, double click?
+	* remove bendpoint: right click, double click
+
+	* bendpoints: shift-90 degree?
 
 	click selection behavior should be as if selecting the part
 		click on leg should select part
@@ -108,8 +110,8 @@ bendable TODO:
 	copy/paste
 		connected and not
 
-	bendpoints: align to grid? double-click? right-click? 90 degree?
-
+	bendpoints: align to grid? 
+	
 	bad crash when swapping back to unbendable.  probably some kind of boundingRect issue...
 
 	swapping parts with bendable legs, can assume pins will always line up (unless legs can have diffent max distances)
@@ -655,6 +657,31 @@ void ConnectorItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 			}
 			else {
 				return;
+			}
+		}
+
+		if (event->modifiers() & Qt::ShiftModifier && m_draggingLegIndex > 0 && m_draggingLegIndex < m_legPolygon.count() - 1) {
+			bool bendpoint = false;
+			QPointF initialPos = mapToScene(m_legPolygon.at(m_draggingLegIndex - 1)); 
+			QPointF otherInitialPos = mapToScene(m_legPolygon.at(m_draggingLegIndex + 1));
+			QPointF p1(initialPos.x(), otherInitialPos.y());
+			qreal d = GraphicsUtils::distanceSqd(p1, currentPos);
+			if (d <= 144) {
+				bendpoint = true;
+				currentPos = p1;
+			}
+			else {
+				p1.setX(otherInitialPos.x());
+				p1.setY(initialPos.y());
+				d = GraphicsUtils::distanceSqd(p1, currentPos);
+				if (d <= 144) {
+					bendpoint = true;
+					currentPos = p1;
+				}				
+			}
+
+			if (!bendpoint) {
+				currentPos = GraphicsUtils::calcConstraint(initialPos, currentPos);
 			}
 		}
 

@@ -383,7 +383,7 @@ void Wire::mouseMoveEventAux(QPointF eventPos, bool shiftModifier) {
 				ConnectorItem * oci = w->otherConnector(ci);
 				QPointF otherInitialPos = mapFromScene(oci->sceneAdjustedTerminalPoint(NULL));
 				QPointF p1(initialPos.x(), otherInitialPos.y());
-				qreal d = ((p1.x() - eventPos.x()) * (p1.x() - eventPos.x())) +  ((p1.y() - eventPos.y()) * (p1.y() - eventPos.y()));
+				qreal d = GraphicsUtils::distanceSqd(p1, eventPos);
 				if (d <= 144) {
 					bendpoint = true;
 					eventPos = p1;
@@ -391,13 +391,12 @@ void Wire::mouseMoveEventAux(QPointF eventPos, bool shiftModifier) {
 				}
 				p1.setX(otherInitialPos.x());
 				p1.setY(initialPos.y());
-				d = ((p1.x() - eventPos.x()) * (p1.x() - eventPos.x())) +  ((p1.y() - eventPos.y()) * (p1.y() - eventPos.y()));
+				d = GraphicsUtils::distanceSqd(p1, eventPos);
 				if (d <= 144) {
 					bendpoint = true;
 					eventPos = p1;
 					break;
 				}				
-
 			}
 		}
 
