@@ -111,6 +111,7 @@ void PartsBinView::mousePressOnItem(const QPoint &dragStartPos, const QString &m
 
 	drag->setMimeData(mimeData);
 
+	/*
 #ifndef Q_WS_X11
 	// transparency doesn't seem to work for linux
 	QPixmap pixmap(size);
@@ -129,6 +130,10 @@ void PartsBinView::mousePressOnItem(const QPoint &dragStartPos, const QString &m
 	Q_UNUSED(hotspot);
 	Q_UNUSED(size);
 #endif
+	*/
+
+	Q_UNUSED(hotspot);
+	Q_UNUSED(size);
 
 	// can set the pixmap, but can't hide it
 	//QPixmap * pixmap = pitem->pixmap();

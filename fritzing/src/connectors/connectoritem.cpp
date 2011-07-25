@@ -86,6 +86,8 @@ bendable TODO:
 
 	* move behavior: what to do when dragging a leg: bendpoints
 
+	subclass leg connectoritem?
+
 	click selection behavior should be as if selecting the part
 		click on leg should select part
 
@@ -343,8 +345,11 @@ void ConnectorItem::hoverMoveEvent ( QGraphicsSceneHoverEvent * event ) {
 			case InSegment:
 				cursor = *NewBendpointCursor;
 				break;
-			default:
+			case InConnector:
 				cursor = Qt::CrossCursor;
+				break;
+			default:
+				cursor = Qt::DragMoveCursor;
 				break;
 		}
 		setCursor(cursor);
