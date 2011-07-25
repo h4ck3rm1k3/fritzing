@@ -420,12 +420,12 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 				}
 				if (poly.count() >  1) {
 					if (parentCommand) {
-						new ChangeLegCommand(this, ItemBase::getNextID(mp->modelIndex()), fromConnectorID, poly, poly, true, parentCommand);
+						new ChangeLegCommand(this, ItemBase::getNextID(mp->modelIndex()), fromConnectorID, poly, poly, true, "copy", parentCommand);
 					}
 					else {
 						ItemBase * fromBase = newItems.value(mp->modelIndex(), NULL);
 						if (fromBase) {
-							changeLeg(fromBase->id(), fromConnectorID, poly, true);
+							changeLeg(fromBase->id(), fromConnectorID, poly, true, "load");
 						}
 					}
 				}
@@ -1201,19 +1201,36 @@ void SketchWidget::changeWire(long fromID, QLineF line, QPointF pos, bool update
 	}
 }
 
-void SketchWidget::changeLeg(long fromID, const QString & fromConnectorID, const QPolygonF & leg, bool relative)
+void SketchWidget::rotateLeg(long fromID, const QString & fromConnectorID, const QPolygonF & leg)
 {
-	changeLegAux(fromID, fromConnectorID, leg, false, relative);
+	ItemBase * fromItem = findItem(fromID);
+	if (fromItem == NULL) {
+		DebugDialog::debug("rotate leg exit 1");
+		return;
+	}
+
+	ConnectorItem * fromConnectorItem = findConnectorItem(fromItem, fromConnectorID, ViewLayer::specFromID(fromItem->viewLayerID()));
+	if (fromConnectorItem == NULL) {
+		DebugDialog::debug("charotatenge leg exit 2");
+		return;
+	}
+
+	fromConnectorItem->rotateLeg(leg);
 }
 
-void SketchWidget::recalcLeg(long fromID, const QString & fromConnectorID, const QPolygonF & leg, bool relative)
+
+void SketchWidget::changeLeg(long fromID, const QString & fromConnectorID, const QPolygonF & leg, bool relative, const QString & why)
 {
-	changeLegAux(fromID, fromConnectorID, leg, true, relative);
+	changeLegAux(fromID, fromConnectorID, leg, false, relative, why);
 }
 
-void SketchWidget::changeLegAux(long fromID, const QString & fromConnectorID, const QPolygonF & leg, bool reset, bool relative)
+void SketchWidget::recalcLeg(long fromID, const QString & fromConnectorID, const QPolygonF & leg, bool relative, const QString & why)
 {
+	changeLegAux(fromID, fromConnectorID, leg, true, relative, why);
+}
 
+void SketchWidget::changeLegAux(long fromID, const QString & fromConnectorID, const QPolygonF & leg, bool reset, bool relative, const QString & why)
+{
 	ItemBase * fromItem = findItem(fromID);
 	if (fromItem == NULL) {
 		DebugDialog::debug("change leg exit 1");
@@ -1227,11 +1244,12 @@ void SketchWidget::changeLegAux(long fromID, const QString & fromConnectorID, co
 	}
 
 	if (reset) {
-		fromConnectorItem->resetLeg(leg, relative);
+		fromConnectorItem->resetLeg(leg, relative, why);
 	}
 	else {
-		fromConnectorItem->setLeg(leg, relative);
+		fromConnectorItem->setLeg(leg, relative, why);
 	}
+
 	fromItem->updateConnections(fromConnectorItem);
 }
 
@@ -2831,7 +2849,7 @@ bool SketchWidget::checkMoved()
 		foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
 			QPolygonF oldLeg, newLeg;
 			connectorItem->stretchDone(oldLeg, newLeg);
-			ChangeLegCommand * clc = new ChangeLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), oldLeg, newLeg, false, parentCommand);
+			ChangeLegCommand * clc = new ChangeLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), oldLeg, newLeg, false, "move", parentCommand);
 			clc->setUndoOnly();
 		}
 	}
@@ -2915,7 +2933,7 @@ bool SketchWidget::checkMoved()
 	foreach(ItemBase * itemBase, m_stretchingLegs.uniqueKeys()) {
 		foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
 			QPolygonF leg = connectorItem->leg();
-			ChangeLegCommand * clc = new ChangeLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), leg, leg, true, parentCommand);
+			ChangeLegCommand * clc = new ChangeLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), leg, leg, true, "undo move", parentCommand);
 			clc->setRedoOnly();
 		}
 	}
@@ -3104,7 +3122,7 @@ void SketchWidget::prepLegChange(ConnectorItem * from,  const QPolygonF & oldLeg
 	}
 
 	// change leg after connections have been restored
-	new ChangeLegCommand(this, fromID, fromConnectorID, oldLeg, newLeg, false, parentCommand);
+	new ChangeLegCommand(this, fromID, fromConnectorID, oldLeg, newLeg, false, "drag", parentCommand);
 
 	new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
 	m_undoStack->push(parentCommand);
@@ -3890,7 +3908,7 @@ void SketchWidget::rotateX(qreal degrees)
 	foreach (ItemBase * itemBase, m_stretchingLegs.uniqueKeys()) {
 		foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
 			QPolygonF oldLeg = connectorItem->leg();
-			ChangeLegCommand * clc = new ChangeLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), oldLeg, oldLeg, true, parentCommand);
+			ChangeLegCommand * clc = new ChangeLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), oldLeg, oldLeg, true, "undo rotate", parentCommand);
 			clc->setUndoOnly();
 		}
 	}
@@ -3933,8 +3951,7 @@ void SketchWidget::rotateX(qreal degrees)
 		foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
 			QPolygonF oldLeg, newLeg;
 			connectorItem->stretchDone(oldLeg, newLeg);
-			ChangeLegCommand * clc = new ChangeLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), oldLeg, newLeg, false, parentCommand);
-			clc->setRedoOnly();
+			new RotateLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), oldLeg, parentCommand);
 		}
 	}
 
@@ -4017,7 +4034,7 @@ void SketchWidget::flip(Qt::Orientations orientation)
 	foreach (ItemBase * itemBase, m_stretchingLegs.uniqueKeys()) {
 		foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
 			QPolygonF oldLeg = connectorItem->leg();
-			ChangeLegCommand * clc = new ChangeLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), oldLeg, oldLeg, true, parentCommand);
+			ChangeLegCommand * clc = new ChangeLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), oldLeg, oldLeg, true,"undo flip", parentCommand);
 			clc->setUndoOnly();
 		}
 	}
@@ -4040,8 +4057,7 @@ void SketchWidget::flip(Qt::Orientations orientation)
 		foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
 			QPolygonF oldLeg, newLeg;
 			connectorItem->stretchDone(oldLeg, newLeg);
-			ChangeLegCommand * clc = new ChangeLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), oldLeg, newLeg, false, parentCommand);
-			clc->setRedoOnly();
+			new RotateLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), oldLeg, parentCommand);
 		}
 	}
 
@@ -4400,7 +4416,7 @@ void SketchWidget::makeDeleteItemCommandPrepSlot(ItemBase * itemBase, bool forei
 			if (!connectorItem->hasBendableLeg()) continue;
 
 			QPolygonF poly = connectorItem->leg();
-			ChangeLegCommand * clc = new ChangeLegCommand(this, itemBase->id(), connectorItem->connectorSharedID(), poly, poly, true, parentCommand);
+			ChangeLegCommand * clc = new ChangeLegCommand(this, itemBase->id(), connectorItem->connectorSharedID(), poly, poly, true, "delete", parentCommand);
 			clc->setUndoOnly();			
 		}
 	}
@@ -5230,7 +5246,7 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 	foreach (QString connectorID, legs.keys()) {
 		// must be invoked after all the connections have been dealt with
 		QPolygonF poly = legs.value(connectorID);
-		new ChangeLegCommand(this, newID, connectorID, poly, poly, true, parentCommand);
+		new ChangeLegCommand(this, newID, connectorID, poly, poly, true, "swap", parentCommand);
 	}
 }
 

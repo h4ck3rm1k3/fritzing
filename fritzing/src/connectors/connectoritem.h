@@ -116,8 +116,9 @@ public:
 	bool isDraggingLeg();
 	void setBendableLeg(QColor color, qreal strokeWidth, QLineF parentLine);
 	bool hasBendableLeg() const;
-	void setLeg(const QPolygonF &, bool relative);
-	void resetLeg(const QPolygonF &, bool relative);
+	void rotateLeg(const QPolygonF &);
+	void setLeg(const QPolygonF &, bool relative, const QString & why);
+	void resetLeg(const QPolygonF &, bool relative, const QString & why);
 	const QPolygonF & leg();
 	QPolygonF sceneAdjustedLeg(qreal & width, QString & colorString);
 	QPolygonF sceneAdjustedLeg();

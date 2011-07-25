@@ -274,7 +274,7 @@ class ChangeLegCommand : public BaseCommand
 {
 public:
     ChangeLegCommand(class SketchWidget *sketchWidget, long fromID, const QString & fromConnectorID,
-    					const QPolygonF & oldLeg, const QPolygonF & newLeg, bool relative, QUndoCommand *parent);
+    					const QPolygonF & oldLeg, const QPolygonF & newLeg, bool relative, const QString & why, QUndoCommand *parent);
     void undo();
     void redo();
 
@@ -292,6 +292,24 @@ protected:
 	bool m_undoOnly;
 	bool m_redoOnly;
 	bool m_relative;
+	QString m_why;
+};
+
+class RotateLegCommand : public BaseCommand
+{
+public:
+    RotateLegCommand(class SketchWidget *sketchWidget, long fromID, const QString & fromConnectorID,
+    					const QPolygonF & oldLeg, QUndoCommand *parent);
+    void undo();
+    void redo();
+
+protected:
+	QString getParamString() const;
+
+protected:
+	QString m_fromConnectorID;
+    long m_fromID;
+    QPolygonF m_oldLeg;
 };
 
 class ChangeLayerCommand : public BaseCommand

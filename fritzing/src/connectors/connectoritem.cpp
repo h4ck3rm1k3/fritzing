@@ -1771,8 +1771,12 @@ ConnectorItem * ConnectorItem::releaseDrag() {
 	return result;
 }
 
+void ConnectorItem::rotateLeg(const QPolygonF & poly) 
+{
+	resetLeg(poly, false, "rotate");
+}
 
-void ConnectorItem::resetLeg(const QPolygonF & poly, bool relative) 
+void ConnectorItem::resetLeg(const QPolygonF & poly, bool relative, const QString & why) 
 {
 	if (!m_bendableLeg) return;
 
@@ -1785,24 +1789,25 @@ void ConnectorItem::resetLeg(const QPolygonF & poly, bool relative)
 	}
 
 	if (target == NULL) {
-		setLeg(poly, relative);
+		setLeg(poly, relative, why);
 		return;
 	}
 
 	prepareGeometryChange();
 	QPointF sceneNewLast = target->sceneAdjustedTerminalPoint(NULL);
-	QPointF oldLast = m_legPolygon.last();
-
+	QPointF sceneOldLast = poly.last();
 
 	for (int i = 1; i < m_legPolygon.count(); i++) {
-		m_legPolygon.replace(i, mapFromScene(m_legPolygon.at(i) - oldLast + sceneNewLast));
+		m_legPolygon.replace(i, mapFromScene(poly.at(i) - sceneOldLast + sceneNewLast));
 	}
 
 	update();
 }
 
-void ConnectorItem::setLeg(const QPolygonF & poly, bool relative) 
+void ConnectorItem::setLeg(const QPolygonF & poly, bool relative, const QString & why) 
 {
+	Q_UNUSED(why);
+
 	if (!m_bendableLeg) return;
 
 	repoly(poly, relative);
@@ -1854,7 +1859,7 @@ void ConnectorItem::stretchBy(QPointF howMuch) {
 
 	if (m_activeStretch) {
 		// this connector's part is being dragged
-		resetLeg(m_oldPolygon, false);
+		resetLeg(m_oldPolygon, false, "move");
 	}
 	else {
 		// this connector is connected to another part which is being dragged

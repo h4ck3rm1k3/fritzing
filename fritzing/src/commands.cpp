@@ -448,9 +448,10 @@ QString ChangeWireCommand::getParamString() const {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ChangeLegCommand::ChangeLegCommand(SketchWidget* sketchWidget, long fromID, const QString & fromConnectorID,
-									 const QPolygonF & oldLeg, const QPolygonF & newLeg, bool relative, QUndoCommand *parent)
+									 const QPolygonF & oldLeg, const QPolygonF & newLeg, bool relative, const QString & why, QUndoCommand *parent)
     : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
+	m_why = why;
 	m_undoOnly = m_redoOnly = false;
     m_fromID = fromID;
 	m_oldLeg = oldLeg;
@@ -462,7 +463,7 @@ ChangeLegCommand::ChangeLegCommand(SketchWidget* sketchWidget, long fromID, cons
 void ChangeLegCommand::undo()
 {
 	if (!m_redoOnly) {
-		m_sketchWidget->changeLeg(m_fromID, m_fromConnectorID, m_oldLeg, m_relative);
+		m_sketchWidget->changeLeg(m_fromID, m_fromConnectorID, m_oldLeg, m_relative, m_why);
 	}
 }
 
@@ -479,7 +480,7 @@ void ChangeLegCommand::setRedoOnly()
 void ChangeLegCommand::redo()
 {
 	if (!m_undoOnly) {
-		m_sketchWidget->recalcLeg(m_fromID, m_fromConnectorID, m_newLeg, m_relative);
+		m_sketchWidget->recalcLeg(m_fromID, m_fromConnectorID, m_newLeg, m_relative, m_why);
 	}
 }
 
@@ -495,11 +496,46 @@ QString ChangeLegCommand::getParamString() const {
 	}
 	return QString("ChangeLegCommand ") 
 		+ BaseCommand::getParamString() + 
-		QString(" fromid:%1 fromc:%2 old:%3 new:%4")
+		QString(" fromid:%1 fromc:%2 %3 old:%4 new:%5")
+		.arg(m_fromID)
+		.arg(m_fromConnectorID)
+		.arg(m_why)
+		.arg(oldLeg)
+		.arg(newLeg)
+		;
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+RotateLegCommand::RotateLegCommand(SketchWidget* sketchWidget, long fromID, const QString & fromConnectorID,
+									 const QPolygonF & oldLeg, QUndoCommand *parent)
+    : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
+{
+    m_fromID = fromID;
+	m_oldLeg = oldLeg;
+    m_fromConnectorID = fromConnectorID;
+}
+
+void RotateLegCommand::undo()
+{
+}
+
+void RotateLegCommand::redo()
+{
+	m_sketchWidget->rotateLeg(m_fromID, m_fromConnectorID, m_oldLeg);
+}
+
+QString RotateLegCommand::getParamString() const {
+
+	QString oldLeg;
+	foreach (QPointF p, m_oldLeg) {
+		oldLeg += QString("(%1,%2)").arg(p.x()).arg(p.y());
+	}
+	return QString("RotateLegCommand ") 
+		+ BaseCommand::getParamString() + 
+		QString(" fromid:%1 fromc:%2 old:%3")
 		.arg(m_fromID)
 		.arg(m_fromConnectorID)
 		.arg(oldLeg)
-		.arg(newLeg)
 		;
 }
 
