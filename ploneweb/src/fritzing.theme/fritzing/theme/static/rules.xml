@@ -11,7 +11,7 @@
   <append theme="/html/head/base" content="/html/head"/>
   <!-- 
   Drop theme styles -->
-  <drop theme="/html/head/link"/>
+  <drop css:theme="link[rel=stylesheet]"/>
   <drop theme="/html/head/style"/>
   <!-- 
   Plone CSS -->
@@ -23,6 +23,9 @@
   set class- and id-attributes as on plones body-tag-->
   <prepend content="/html/body/@class" theme="/html/body"/>
   <prepend content="/html/body/@id" theme="/html/body"/>
+  <!-- 
+  Drop favicon(s) from the content -->
+  <drop css:content="link[rel~=icon]"/>
   <!-- 
   
   
