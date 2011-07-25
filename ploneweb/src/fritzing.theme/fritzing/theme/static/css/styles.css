@@ -85,18 +85,32 @@ body.template-document_view #fritzing-content #content-core li a:link:before {
     margin-bottom: 2.4em;
 }
 
-#meta-wrapper {
+#meta-wrapper,
+#fritzing-footer-wrapper {
     width: 100%;
     background-color: #9ebea7;
     font-size: 85%;
 }
+
+#fritzing-footer-wrapper {
+    margin-top: 6.4em;
+    padding-top: 1em;
+    padding-bottom: 3.2em;
+}
+
 #meta,
 #logo-wrapper,
 .fritzing-navTreeLevel0,
-#fritzing-content {
+#fritzing-content,
+#fritzing-footer {
     margin: 0 auto;
     width: 90%;
     max-width: 908px;
+}
+
+#fritzing-footer,
+#fritzing-footer a {
+    color: white;
 }
 
 #logo-wrapper {
