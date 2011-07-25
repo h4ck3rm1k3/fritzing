@@ -116,15 +116,15 @@ public:
 	bool isDraggingLeg();
 	void setBendableLeg(QColor color, qreal strokeWidth, QLineF parentLine);
 	bool hasBendableLeg() const;
-	void rotateLeg(const QPolygonF &);
+	void rotateLeg(const QPolygonF &, bool active);
 	void setLeg(const QPolygonF &, bool relative, const QString & why);
-	void resetLeg(const QPolygonF &, bool relative, const QString & why);
+	void resetLeg(const QPolygonF &, bool relative, bool active, const QString & why);
 	const QPolygonF & leg();
 	QPolygonF sceneAdjustedLeg(qreal & width, QString & colorString);
 	QPolygonF sceneAdjustedLeg();
 	void prepareToStretch(bool activeStretch);
 	void stretchBy(QPointF howMuch);
-	void stretchDone(QPolygonF & oldLeg, QPolygonF & newLeg);
+	void stretchDone(QPolygonF & oldLeg, QPolygonF & newLeg, bool & active);
 	void killBendableLeg();  // hack; see caller
 	QRectF boundingRect() const;
 	const QString & legID(ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID);
@@ -153,6 +153,7 @@ protected:
 	bool isConnectedToPart();
 	void displayTooltip(ConnectorItem * over, ConnectorItem * other);
 	void reposition(QPointF sceneDestPos, int draggingIndex);
+	void repositionTarget();
 	QPointF calcPoint() const;
 	QPen legPen() const;
 	bool legMousePressEvent(QGraphicsSceneMouseEvent *event);

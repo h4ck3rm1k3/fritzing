@@ -90,8 +90,8 @@ public:
     void selectDeselectAllCommand(bool state);
     void changeWire(long fromID, QLineF line, QPointF pos, bool updateConnections, bool updateRatsnest);   
     void changeLeg(long fromID, const QString & connectorID, const QPolygonF &, bool relative, const QString & why);   
-    void recalcLeg(long fromID, const QString & connectorID, const QPolygonF &, bool relative, const QString & why);   
-    void rotateLeg(long fromID, const QString & connectorID, const QPolygonF &);   
+    void recalcLeg(long fromID, const QString & connectorID, const QPolygonF &, bool relative, bool active, const QString & why);   
+    void rotateLeg(long fromID, const QString & connectorID, const QPolygonF &, bool active);   
     void cut();
     void copy();
     void setPaletteModel(PaletteModel *);
@@ -409,7 +409,7 @@ protected:
 								QHash<ConnectorItem *, Connector *> & found, QList<ConnectorItem *> & notFound,
 								QHash<ConnectorItem *, ConnectorItem *> & m2f, QHash<ConnectorItem *, Connector *> & byWire,
 								QHash<QString, QPolygonF> & legs, QUndoCommand * parentCommand);
-	void changeLegAux(long fromID, const QString & fromConnectorID, const QPolygonF &, bool reset, bool relative, const QString & why);
+	void changeLegAux(long fromID, const QString & fromConnectorID, const QPolygonF &, bool reset, bool relative, bool active, const QString & why);
 
 
 protected:

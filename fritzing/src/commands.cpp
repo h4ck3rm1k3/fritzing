@@ -448,7 +448,8 @@ QString ChangeWireCommand::getParamString() const {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ChangeLegCommand::ChangeLegCommand(SketchWidget* sketchWidget, long fromID, const QString & fromConnectorID,
-									 const QPolygonF & oldLeg, const QPolygonF & newLeg, bool relative, const QString & why, QUndoCommand *parent)
+									 const QPolygonF & oldLeg, const QPolygonF & newLeg, bool relative, bool active,
+									 const QString & why, QUndoCommand *parent)
     : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
 	m_why = why;
@@ -458,6 +459,7 @@ ChangeLegCommand::ChangeLegCommand(SketchWidget* sketchWidget, long fromID, cons
     m_newLeg = newLeg;
 	m_relative = relative;
     m_fromConnectorID = fromConnectorID;
+	m_active = active;
 }
 
 void ChangeLegCommand::undo()
@@ -480,7 +482,7 @@ void ChangeLegCommand::setRedoOnly()
 void ChangeLegCommand::redo()
 {
 	if (!m_undoOnly) {
-		m_sketchWidget->recalcLeg(m_fromID, m_fromConnectorID, m_newLeg, m_relative, m_why);
+		m_sketchWidget->recalcLeg(m_fromID, m_fromConnectorID, m_newLeg, m_relative, m_active, m_why);
 	}
 }
 
@@ -507,12 +509,13 @@ QString ChangeLegCommand::getParamString() const {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 RotateLegCommand::RotateLegCommand(SketchWidget* sketchWidget, long fromID, const QString & fromConnectorID,
-									 const QPolygonF & oldLeg, QUndoCommand *parent)
+									 const QPolygonF & oldLeg, bool active, QUndoCommand *parent)
     : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
     m_fromID = fromID;
 	m_oldLeg = oldLeg;
     m_fromConnectorID = fromConnectorID;
+	m_active = active;
 }
 
 void RotateLegCommand::undo()
@@ -521,7 +524,7 @@ void RotateLegCommand::undo()
 
 void RotateLegCommand::redo()
 {
-	m_sketchWidget->rotateLeg(m_fromID, m_fromConnectorID, m_oldLeg);
+	m_sketchWidget->rotateLeg(m_fromID, m_fromConnectorID, m_oldLeg, m_active);
 }
 
 QString RotateLegCommand::getParamString() const {

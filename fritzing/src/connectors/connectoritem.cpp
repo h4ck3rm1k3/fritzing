@@ -86,16 +86,20 @@ bendable TODO:
 
 	* move behavior: what to do when dragging a leg: bendpoints
 
+	* complex bent leg fails after 2nd rotate
+
+	* rotate/flip undo failure
+
+	* when itembase is rotated leg or bendpoint drag behavior is screwed up
+
+	rotate target is not correct
+
 	remove bendpoint: right click, double click?
 
 	subclass leg connectoritem?
 
 	click selection behavior should be as if selecting the part
 		click on leg should select part
-
-	complex bent leg fails after 2nd rotate
-
-	rotate/flip undo failure
 
 	bad crash when converting back to unbendable.  probably some kind of boundingRect issue...
 
@@ -114,9 +118,7 @@ bendable TODO:
 		but the legs follow the phantom part until the part jumps into position
 
 	swapping when original is rotated
-		
-	when itembase is rotated leg or bendpoint drag behavior is screwed up
-				
+					
 	export: resistors and other custom generated parts with legs (retrieve svg)
 
 	copy/paste
@@ -1771,12 +1773,12 @@ ConnectorItem * ConnectorItem::releaseDrag() {
 	return result;
 }
 
-void ConnectorItem::rotateLeg(const QPolygonF & poly) 
+void ConnectorItem::rotateLeg(const QPolygonF & poly, bool active) 
 {
-	resetLeg(poly, false, "rotate");
+	resetLeg(poly, false, active, "rotate");
 }
 
-void ConnectorItem::resetLeg(const QPolygonF & poly, bool relative, const QString & why) 
+void ConnectorItem::resetLeg(const QPolygonF & poly, bool relative, bool active, const QString & why) 
 {
 	if (!m_bendableLeg) return;
 
@@ -1790,6 +1792,11 @@ void ConnectorItem::resetLeg(const QPolygonF & poly, bool relative, const QStrin
 
 	if (target == NULL) {
 		setLeg(poly, relative, why);
+		return;
+	}
+
+	if (!active) {
+		repositionTarget();
 		return;
 	}
 
@@ -1857,24 +1864,13 @@ void ConnectorItem::stretchBy(QPointF howMuch) {
 
 	Q_UNUSED(howMuch);
 
-	if (m_activeStretch) {
-		// this connector's part is being dragged
-		resetLeg(m_oldPolygon, false, "move");
-	}
-	else {
-		// this connector is connected to another part which is being dragged
-		foreach (ConnectorItem * connectorItem, this->m_connectedTo) {
-			if (connectorItem->connectorType() == Connector::Female) {
-				reposition(connectorItem->sceneAdjustedTerminalPoint(NULL), m_legPolygon.count() - 1);
-				break;
-			}
-		}
-	}
+	resetLeg(m_oldPolygon, false, m_activeStretch, "move");
 }
 
-void ConnectorItem::stretchDone(QPolygonF & oldLeg, QPolygonF & newLeg) {
+void ConnectorItem::stretchDone(QPolygonF & oldLeg, QPolygonF & newLeg, bool & active) {
 	oldLeg = m_oldPolygon;
 	newLeg = sceneAdjustedLeg();
+	active = m_activeStretch;
 }
 
 QRectF ConnectorItem::boundingRect() const
@@ -1907,6 +1903,17 @@ QPainterPath ConnectorItem::shapeAux(qreal width) const
 	QPen pen = legPen();
 	
 	return GraphicsUtils::shapeFromPath(path, pen, width, false);
+}
+
+void ConnectorItem::repositionTarget()
+{
+	// this connector is connected to another part which is being dragged
+	foreach (ConnectorItem * connectorItem, this->m_connectedTo) {
+		if (connectorItem->connectorType() == Connector::Female) {
+			reposition(connectorItem->sceneAdjustedTerminalPoint(NULL), m_legPolygon.count() - 1);
+			break;
+		}
+	}
 }
 
 void ConnectorItem::reposition(QPointF sceneDestPos, int draggingIndex)
