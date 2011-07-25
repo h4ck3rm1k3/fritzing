@@ -257,7 +257,7 @@ public:
 	void changeBus(ItemBase *, bool connec, const QString & oldBus, const QString & newBus, QList<ConnectorItem *> &, const QString & message);
 	const QString & filenameIf();
 	void setItemDropOffset(long id, QPointF offset);
-	void prepLegChange(ConnectorItem * from,  const QPolygonF & oldLeg, const QPolygonF & newLeg, ConnectorItem * to);
+	void prepLegChange(ConnectorItem * from,  const QPolygonF & oldLeg, const QPolygonF & newLeg, ConnectorItem * to, bool changeConnections);
 
 
 protected:

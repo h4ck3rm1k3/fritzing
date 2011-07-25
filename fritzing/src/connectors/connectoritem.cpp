@@ -94,16 +94,23 @@ bendable TODO:
 
 	* rotate target is not correct
 
-	bendpoint redo (after adding multiple bendpoints) is failing
+	* bendpoint redo (after adding multiple bendpoints) is failing
+
+	* subclass leg connectoritem?  not for the moment
 
 	remove bendpoint: right click, double click?
-
-	subclass leg connectoritem?
 
 	click selection behavior should be as if selecting the part
 		click on leg should select part
 
-	bad crash when converting back to unbendable.  probably some kind of boundingRect issue...
+	export: resistors and other custom generated parts with legs (retrieve svg)
+
+	copy/paste
+		connected and not
+
+	bendpoints: align to grid? double-click? right-click? 90 degree?
+
+	bad crash when swapping back to unbendable.  probably some kind of boundingRect issue...
 
 	swapping parts with bendable legs, can assume pins will always line up (unless legs can have diffent max distances)
 		no-no
@@ -113,20 +120,13 @@ bendable TODO:
 			
 	rotate bendable, swap bendable, undo: crash of the item being undone.  it's a prepareGeometryChange() bug
 
-	weird bug when a bendable part has all legs connected and the part is dragged
-		within a particular region, the part body stops moving--
+	update bug when a bendable part has all legs connected and the part is dragged
+		within a particular region, the part body stops updating--
 		but the legs follow the phantom part until the part jumps into position
 
 	swapping when original is rotated
 					
-	export: resistors and other custom generated parts with legs (retrieve svg)
-
-	copy/paste
-		connected and not
-
 	swapping: keep bends?
-
-	bendpoints: align to grid? double-click? right-click? 90 degree?
 
 	parts to modify
 		LEDs
@@ -176,6 +176,7 @@ parts editor support
 #include <QSet>
 #include <QToolTip>
 #include <QBitmap>
+#include <QApplication>
 #include <qmath.h>
 
 #include "../sketch/infographicsview.h"
@@ -591,15 +592,20 @@ void ConnectorItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 	clearEqualPotentialDisplay();
 
 	if (m_bendableLeg && m_draggingLeg) {
+		if (m_insertBendpointPossible) {
+			// didn't move far enough; bail
+			return;
+		}
 		m_draggingLeg = false;
 		ConnectorItem * to = releaseDrag();
 		InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
-		if (to != NULL && m_draggingLegIndex == m_legPolygon.count() - 1) {
+		bool changeConnections = m_draggingLegIndex == m_legPolygon.count() - 1;
+		if (to != NULL && changeConnections) {
 			// center endpoint in the target connectorItem
 			reposition(to->sceneAdjustedTerminalPoint(NULL), m_draggingLegIndex);
 		}
 		if (infoGraphicsView != NULL) {
-			infoGraphicsView->prepLegChange(this, m_oldPolygon, m_legPolygon, to);
+			infoGraphicsView->prepLegChange(this, m_oldPolygon, m_legPolygon, to, changeConnections);
 		}
 		return;
 	}
@@ -613,6 +619,21 @@ void ConnectorItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 }
 
 void ConnectorItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
+	if (m_bendableLeg) {
+		int bendpointIndex;
+		CursorLocation cursorLocation = findLocation(event->pos(), bendpointIndex);
+		if (cursorLocation == InBendpoint) {
+			if (bendpointIndex > 0 && bendpointIndex < m_legPolygon.count() - 1) {
+				removeBendpoint(bendpointIndex);
+			}
+		}
+		else if (cursorLocation == InSegment) {
+			insertBendpoint(event->pos(), bendpointIndex);
+		}
+
+		return;
+	}
+
 	if (this->m_attachedTo != NULL && m_attachedTo->acceptsMouseDoubleClickConnectorEvent(this, event)) {
 		m_attachedTo->mouseDoubleClickConnectorEvent(this, event);
 		return;
@@ -626,6 +647,16 @@ void ConnectorItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 	if (m_bendableLeg && m_draggingLeg) {
 		QPointF currentPos = event->scenePos();
         QPointF buttonDownPos = event->buttonDownScenePos(Qt::LeftButton);
+
+		if (m_insertBendpointPossible) {
+			if (qSqrt(GraphicsUtils::distanceSqd(currentPos, buttonDownPos)) >= QApplication::startDragDistance()) {
+				m_legPolygon.insert(m_draggingLegIndex, m_holdPos);
+				m_insertBendpointPossible = false;
+			}
+			else {
+				return;
+			}
+		}
 
 		reposition(m_holdPos + currentPos - buttonDownPos, m_draggingLegIndex);
 
@@ -1974,7 +2005,7 @@ void ConnectorItem::setBendableLeg(QColor color, qreal strokeWidth, QLineF paren
 	m_bendableLeg = true;
 	setFlag(QGraphicsItem::ItemIsMovable, true);
 	setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
-	setAcceptedMouseButtons(Qt::LeftButton);
+	setAcceptedMouseButtons(ALLMOUSEBUTTONS);
 
 	// p1 is always the start point closest to the body. 
 	setPos(parentLine.p1());
@@ -2011,6 +2042,8 @@ QPen ConnectorItem::legPen() const
 }
 
 bool ConnectorItem::legMousePressEvent(QGraphicsSceneMouseEvent *event) {
+	m_insertBendpointPossible = false;
+
 	if (event->modifiers() & DragWireModifiers) return false;
 
 	if (attachedTo()->moveLock()) {
@@ -2031,7 +2064,7 @@ bool ConnectorItem::legMousePressEvent(QGraphicsSceneMouseEvent *event) {
 			return true;
 
 		case InSegment:
-				m_legPolygon.insert(bendpointIndex, event->pos());
+			m_insertBendpointPossible = true;
 
 		case InBendpoint:
 			if (bendpointIndex == 0) {
@@ -2092,3 +2125,69 @@ ConnectorItem::CursorLocation ConnectorItem::findLocation(QPointF location, int 
 
 	return InNotFound;
 }
+
+void ConnectorItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
+{
+	if (m_hidden || m_inactive || m_hybrid) {
+		event->ignore();
+		return;
+	}
+
+	if ((acceptedMouseButtons() & Qt::RightButton) == 0) {
+		event->ignore();
+		return;
+	}
+
+	if (!m_bendableLeg) {
+		event->ignore();
+		return;
+	}
+
+	int bendpointIndex;
+	CursorLocation cursorLocation = findLocation(event->pos(), bendpointIndex);
+	if (cursorLocation == InSegment) {
+		QMenu menu;
+		menu.addAction(tr("Add bendpoint"));
+		QAction *selectedAction = menu.exec(event->screenPos());
+		if (selectedAction) {
+			insertBendpoint(event->pos(), bendpointIndex);
+		}
+		return;
+	}
+	else if (cursorLocation == InBendpoint) {
+		if (bendpointIndex > 0 && bendpointIndex < m_legPolygon.count() - 1) {
+			QMenu menu;
+			menu.addAction(tr("Remove bendpoint"));
+			QAction *selectedAction = menu.exec(event->screenPos());
+			if (selectedAction) {
+				removeBendpoint(bendpointIndex);
+			}
+			return;
+		}
+	}
+
+	event->ignore();
+	return;
+
+}
+
+void ConnectorItem::insertBendpoint(QPointF pos, int bendpointIndex) 
+{
+	m_oldPolygon = m_legPolygon;
+	m_legPolygon.insert(bendpointIndex, pos);
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView != NULL) {
+		infoGraphicsView->prepLegChange(this, m_oldPolygon, m_legPolygon, NULL, false);
+	}
+}
+
+void ConnectorItem::removeBendpoint(int bendpointIndex) 
+{
+	m_oldPolygon = m_legPolygon;
+	m_legPolygon.remove(bendpointIndex);
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView != NULL) {
+		infoGraphicsView->prepLegChange(this, m_oldPolygon, m_legPolygon, NULL, false);
+	}
+}
+

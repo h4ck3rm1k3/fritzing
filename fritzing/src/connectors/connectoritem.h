@@ -135,6 +135,7 @@ protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
 	void hoverLeaveEvent( QGraphicsSceneHoverEvent * event );
 	void hoverMoveEvent( QGraphicsSceneHoverEvent * event );
+	void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 	void setNormalColor();
 	void setConnectedColor();
 	void setUnconnectedColor();
@@ -168,6 +169,8 @@ protected:
 	};
 
 	CursorLocation findLocation(QPointF, int & bendpointIndex);
+	void insertBendpoint(QPointF pos, int bendpointIndex);
+	void removeBendpoint(int bendpointIndex);
 
 protected:
 	QPointer<Connector> m_connector;
@@ -191,6 +194,7 @@ protected:
 	QPolygonF m_legPolygon;
 	qreal m_legStrokeWidth;
 	QColor m_legColor;
+	bool m_insertBendpointPossible;
 	
 protected:	
 	static QList<ConnectorItem *>  m_equalPotentialDisplayItems;

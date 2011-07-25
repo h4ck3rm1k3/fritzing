@@ -291,12 +291,13 @@ QString InfoGraphicsView::generateCopperFillUnit(ItemBase * itemBase, QPointF wh
 	return "";
 }
 
-void InfoGraphicsView::prepLegChange(ConnectorItem * from, const QPolygonF & oldLeg, const QPolygonF & newLeg, ConnectorItem * to) 
+void InfoGraphicsView::prepLegChange(ConnectorItem * from, const QPolygonF & oldLeg, const QPolygonF & newLeg, ConnectorItem * to, bool changeConnections) 
 {
 	Q_UNUSED(from);	
 	Q_UNUSED(oldLeg);	
 	Q_UNUSED(newLeg);	
 	Q_UNUSED(to);
+	Q_UNUSED(changeConnections);
 }
 
 qreal InfoGraphicsView::getWireStrokeWidth(Wire *, qreal wireWidth)

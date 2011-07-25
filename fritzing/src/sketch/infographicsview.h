@@ -94,7 +94,7 @@ public:
 	virtual void changeBus(ItemBase *, bool connec, const QString & oldBust, const QString & newBus, QList<ConnectorItem *> &, const QString & message);
 	virtual const QString & filenameIf();
 	virtual QString generateCopperFillUnit(ItemBase * itemBase, QPointF whereToStart);
-	virtual void prepLegChange(ConnectorItem * from, const QPolygonF & oldLeg, const QPolygonF & newLeg, ConnectorItem * to);
+	virtual void prepLegChange(ConnectorItem * from, const QPolygonF & oldLeg, const QPolygonF & newLeg, ConnectorItem * to, bool changeConnections);
 	virtual qreal getWireStrokeWidth(Wire *, qreal wireWidth);
 
 
