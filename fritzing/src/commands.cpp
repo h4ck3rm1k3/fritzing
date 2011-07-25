@@ -453,7 +453,7 @@ ChangeLegCommand::ChangeLegCommand(SketchWidget* sketchWidget, long fromID, cons
     : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
 	m_why = why;
-	m_undoOnly = m_redoOnly = false;
+	m_simple = m_undoOnly = m_redoOnly = false;
     m_fromID = fromID;
 	m_oldLeg = oldLeg;
     m_newLeg = newLeg;
@@ -469,6 +469,11 @@ void ChangeLegCommand::undo()
 	}
 }
 
+void ChangeLegCommand::setSimple()
+{
+	m_simple = true;
+}
+
 void ChangeLegCommand::setUndoOnly()
 {
 	m_undoOnly = true;
@@ -482,7 +487,12 @@ void ChangeLegCommand::setRedoOnly()
 void ChangeLegCommand::redo()
 {
 	if (!m_undoOnly) {
-		m_sketchWidget->recalcLeg(m_fromID, m_fromConnectorID, m_newLeg, m_relative, m_active, m_why);
+		if (m_simple) {
+			m_sketchWidget->changeLeg(m_fromID, m_fromConnectorID, m_newLeg, m_relative, m_why);
+		}
+		else {
+			m_sketchWidget->recalcLeg(m_fromID, m_fromConnectorID, m_newLeg, m_relative, m_active, m_why);
+		}
 	}
 }
 

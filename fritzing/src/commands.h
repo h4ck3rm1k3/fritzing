@@ -280,6 +280,7 @@ public:
 
 	void setUndoOnly();
 	void setRedoOnly();
+	void setSimple();
 
 protected:
 	QString getParamString() const;
@@ -293,6 +294,7 @@ protected:
 	bool m_redoOnly;
 	bool m_relative;
 	bool m_active;
+	bool m_simple;
 	QString m_why;
 };
 

@@ -92,7 +92,9 @@ bendable TODO:
 
 	* when itembase is rotated leg or bendpoint drag behavior is screwed up
 
-	rotate target is not correct
+	* rotate target is not correct
+
+	bendpoint redo (after adding multiple bendpoints) is failing
 
 	remove bendpoint: right click, double click?
 
@@ -109,8 +111,6 @@ bendable TODO:
 		yes-no
 		yes-yes
 			
-	bendpoint undo seems weird
-
 	rotate bendable, swap bendable, undo: crash of the item being undone.  it's a prepareGeometryChange() bug
 
 	weird bug when a bendable part has all legs connected and the part is dragged
@@ -599,7 +599,7 @@ void ConnectorItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 			reposition(to->sceneAdjustedTerminalPoint(NULL), m_draggingLegIndex);
 		}
 		if (infoGraphicsView != NULL) {
-			infoGraphicsView->prepLegChange(this, m_oldPolygon, sceneAdjustedLeg(), to);
+			infoGraphicsView->prepLegChange(this, m_oldPolygon, m_legPolygon, to);
 		}
 		return;
 	}
@@ -2026,7 +2026,7 @@ bool ConnectorItem::legMousePressEvent(QGraphicsSceneMouseEvent *event) {
 			m_holdPos = mapToScene(m_legPolygon.last());
 			m_draggingLeg = true;
 			m_draggingLegIndex = m_legPolygon.count() - 1;
-			m_oldPolygon = sceneAdjustedLeg();
+			m_oldPolygon = m_legPolygon;
 			QGraphicsRectItem::mousePressEvent(event);
 			return true;
 
@@ -2042,7 +2042,7 @@ bool ConnectorItem::legMousePressEvent(QGraphicsSceneMouseEvent *event) {
 
 			m_draggingLegIndex = bendpointIndex;
 			m_holdPos = event->scenePos();
-			m_oldPolygon = sceneAdjustedLeg();
+			m_oldPolygon = m_legPolygon;
 			m_draggingLeg = true;
 			QGraphicsRectItem::mousePressEvent(event);
 			return true;

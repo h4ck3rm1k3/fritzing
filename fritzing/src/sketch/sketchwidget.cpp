@@ -3078,6 +3078,9 @@ void SketchWidget::prepLegChange(ConnectorItem * from,  const QPolygonF & oldLeg
 
 	new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
 
+	ChangeLegCommand * clc = new ChangeLegCommand(this, fromID, fromConnectorID, oldLeg, newLeg, true, true, "drag", parentCommand);
+	clc->setUndoOnly();
+
 	QList< QPointer<ConnectorItem> > former = from->connectedToItems();
 
 	QString prefix;
@@ -3123,7 +3126,9 @@ void SketchWidget::prepLegChange(ConnectorItem * from,  const QPolygonF & oldLeg
 	}
 
 	// change leg after connections have been restored
-	new ChangeLegCommand(this, fromID, fromConnectorID, oldLeg, newLeg, false, true, "drag", parentCommand);
+	clc = new ChangeLegCommand(this, fromID, fromConnectorID, oldLeg, newLeg, true, true, "drag", parentCommand);
+	clc->setRedoOnly();
+	clc->setSimple();
 
 	new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
 	m_undoStack->push(parentCommand);
