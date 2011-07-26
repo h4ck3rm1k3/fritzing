@@ -102,16 +102,16 @@ bendable TODO:
 
 	* bendpoints: shift-90 degree?
 
+	* copy/paste
+		connected and not
+
+	bendpoints: align to grid? 
+	
 	click selection behavior should be as if selecting the part
 		click on leg should select part
 
 	export: resistors and other custom generated parts with legs (retrieve svg)
 
-	copy/paste
-		connected and not
-
-	bendpoints: align to grid? 
-	
 	bad crash when swapping back to unbendable.  probably some kind of boundingRect issue...
 
 	swapping parts with bendable legs, can assume pins will always line up (unless legs can have diffent max distances)
@@ -125,10 +125,13 @@ bendable TODO:
 	update bug when a bendable part has all legs connected and the part is dragged
 		within a particular region, the part body stops updating--
 		but the legs follow the phantom part until the part jumps into position
+		disable calls to prepgeometrychange?
 
 	swapping when original is rotated
 					
 	swapping: keep bends?
+	
+	survive in parts editor
 
 	parts to modify
 		LEDs

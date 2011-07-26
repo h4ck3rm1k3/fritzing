@@ -376,6 +376,8 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 
 	QStringList alreadyConnected;
 
+	QHash<QString, QPolygonF> legs;
+
 	// now restore connections
 	foreach (ModelPart * mp, modelParts) {
 		QDomElement instance = mp->instanceDomElement();
@@ -420,18 +422,35 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 				}
 				if (poly.count() >  1) {
 					if (parentCommand) {
-						new ChangeLegCommand(this, ItemBase::getNextID(mp->modelIndex()), fromConnectorID, poly, poly, true, true, "copy", parentCommand);
+						legs.insert(QString::number(ItemBase::getNextID(mp->modelIndex())) + "." + fromConnectorID, poly);
 					}
 					else {
 						ItemBase * fromBase = newItems.value(mp->modelIndex(), NULL);
 						if (fromBase) {
-							changeLeg(fromBase->id(), fromConnectorID, poly, true, "load");
+							legs.insert(QString::number(fromBase->id()) + "." + fromConnectorID, poly);
 						}
 					}
 				}
 			}
 
 			connector = connector.nextSiblingElement("connector");
+		}
+	}
+
+	// must do legs after all connections are set up
+	foreach (QString key, legs.keys()) {
+		int ix = key.indexOf(".");
+		if (ix <= 0) continue;
+
+		QPolygonF poly = legs.value(key);
+		long id = key.left(ix).toInt();
+		QString fromConnectorID = key.remove(0, ix + 1);
+		if (parentCommand) {
+			ChangeLegCommand * clc = new ChangeLegCommand(this, id, fromConnectorID, poly, poly, true, true, "copy", parentCommand);
+			clc->setSimple();
+		}
+		else {
+			changeLeg(id, fromConnectorID, poly, true, "load");
 		}
 	}
 
