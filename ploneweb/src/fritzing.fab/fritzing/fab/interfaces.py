@@ -24,11 +24,13 @@ class ISketch(form.Schema):
     
     copies = Int(
         title = _(u"Copies"),
+        description = _(u"The more copies, the cheaper each one gets"),
         min = 1,
         default = 1)
     
     check = Bool(
-        title = _(u"Quality Check"),
+        title = _(u"Sanity Check"),
+        description = _(u"Have us check your design for an extra 5 EUR"),
         default = False)
     
     form.omitted(
@@ -65,14 +67,16 @@ class IFabOrder(form.Schema):
     
     shipTo = Choice(
         title = _(u"Shipping Area"),
+        description = _(u"Where you are located"),
         vocabulary = SimpleVocabulary([
             SimpleTerm(value = u'germany', title = _(u'Germany')),
-            SimpleTerm(value = u'eu', title = _(u'Europe (EU)')),
-            SimpleTerm(value = u'world', title = _(u'the rest of the World'))
+            SimpleTerm(value = u'eu', title = _(u'European Union (EU)')),
+            SimpleTerm(value = u'world', title = _(u'Worldwide'))
         ]))
     
     email = TextLine(
         title = _(u"E-Mail"),
+        description = _(u"Your e-mail address"),
         constraint = checkEMail)
     
     form.omitted(

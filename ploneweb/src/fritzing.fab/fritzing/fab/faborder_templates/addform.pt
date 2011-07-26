@@ -1,7 +1,7 @@
 <div id="addform" tal:define="navroot context/@@plone_portal_state/navigation_root_url">
   <p>
-    Upload your prepared <a target="_blank" tal:attributes="href string:${navroot}/fab/how-to/fab">*.fzz file</a>. <br />
-    Make sure you have checked the <a target="_blank" tal:attributes="href string:${navroot}/fab/how-to/pre-fab">PreFab instructions</a>!
+    Just upload your prepared <a target="_blank" tal:attributes="href string:${navroot}/fab/how-to/faq">*.fzz file</a>. <br />
+    Make sure you have checked the <a target="_blank" tal:attributes="href string:${navroot}/fab/how-to/pre-fab">Pre-Fab instructions</a>!<br />
   </p>
   <metal:block use-macro="context/@@ploneform-macros/titlelessform" />
 </div>
