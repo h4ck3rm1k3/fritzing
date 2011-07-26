@@ -80,7 +80,8 @@ protected:
 	int flipy(qreal y);
 	qreal flipxNoRound(qreal x);
 	qreal flipyNoRound(qreal y);
-	void doPoly(QDomElement & polygon, ForWhy forWhy, int totalCount, bool closedCurve, QHash<QString, QString> & apertureMap, QString & current_dcode, int & dcode_index);
+	void doPoly(QDomElement & polygon, ForWhy forWhy, int totalCount, bool closedCurve, 
+				QHash<QString, QString> & apertureMap, QString & current_dcode, int & dcode_index, int & outlineCount);
 
 
 

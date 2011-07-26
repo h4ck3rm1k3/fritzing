@@ -105,18 +105,6 @@ bendable TODO:
 	* copy/paste
 		connected and not
 
-	bendpoints: align to grid? 
-	
-	click selection behavior should be as if selecting the part
-		click on leg should select part
-
-	export: resistors and other custom generated parts with legs (retrieve svg)
-
-	update bug when a bendable part has all legs connected and the part is dragged
-		within a particular region, the part body stops updating--
-		but the legs follow the phantom part until the part jumps into position
-		disable calls to prepgeometrychange?
-
 	* bad crash when swapping back to unbendable.  probably some kind of boundingRect issue...
 
 	* crash: swappable, swappable, undo, redo
@@ -131,10 +119,22 @@ bendable TODO:
 
 	* swapping when original is rotated
 					
-	swapping: keep bends?
-	
 	survive in parts editor
 
+	click selection behavior should be as if selecting the part
+		click on leg should select part
+
+	export: resistors and other custom generated parts with legs (retrieve svg)
+
+	update bug when a bendable part has all legs connected and the part is dragged
+		within a particular region, the part body stops updating--
+		but the legs follow the phantom part until the part jumps into position
+		disable calls to prepgeometrychange?
+
+	swapping: keep bends?
+	
+	bendpoints: align to grid? 
+	
 	parts to modify
 		LEDs
 		resistors
@@ -159,8 +159,6 @@ bendable TODO:
 		resonator
 		inductor
 		crystal
-
-
 
 -------------------------------------------------
 

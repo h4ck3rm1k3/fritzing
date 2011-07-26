@@ -41,6 +41,7 @@ $Date$
 #include "viewlayer.h"
 #include "sketchtoolbutton.h"
 #include "program/programwindow.h"
+#include "svg/svg2gerber.h"
 #include "viewswitcher/viewswitcher.h"
 
 QT_BEGIN_NAMESPACE
@@ -430,7 +431,7 @@ protected:
 
 	bool wannaRestart();
 
-	QString clipToBoard(QString svgString, ItemBase * board, const QString & layerName);
+	QString clipToBoard(QString svgString, ItemBase * board, const QString & layerName, SVG2gerber::ForWhy);
 	int doSilk(LayerList silkLayerIDs, const QString & silkName, const QString & gerberSuffix, ItemBase * board, const QString & exportDir, bool displayMessageBoxes);
 	int doMask(LayerList maskLayerIDs, const QString & maskName, const QString & gerberSuffix, ItemBase * board, const QString & exportDir, bool displayMessageBoxes);
 	int doCopper(ItemBase * board, LayerList & viewLayerIDs, const QString & copperName, const QString & copperSuffix, const QString & exportDir, bool displayMessageBoxes);

@@ -130,7 +130,7 @@ void MainWindow::exportToGerber(const QString & exportDir, ItemBase * board, boo
 	int outlineInvalidCount = outlineGerber.convert(svgOutline, m_pcbGraphicsView->boardLayers() == 2, "contour", SVG2gerber::ForOutline, svgSize * GraphicsUtils::StandardFritzingDPI);
 	if (outlineInvalidCount > 0) {
 		outlineInvalidCount = 0;
-		svgOutline = clipToBoard(svgOutline, board, "board");
+		svgOutline = clipToBoard(svgOutline, board, "board", SVG2gerber::ForOutline);
 		outlineInvalidCount = outlineGerber.convert(svgOutline, m_pcbGraphicsView->boardLayers() == 2, "contour", SVG2gerber::ForOutline, svgSize * GraphicsUtils::StandardFritzingDPI);
 	}
 
@@ -174,7 +174,7 @@ int MainWindow::doCopper(ItemBase * board, LayerList & viewLayerIDs, const QStri
 	QXmlStreamReader streamReader(svg);
 	QSizeF svgSize = FSvgRenderer::parseForWidthAndHeight(streamReader);
 
-	svg = clipToBoard(svg, board, copperName);
+	svg = clipToBoard(svg, board, copperName, SVG2gerber::ForNormal);
 	if (svg.isEmpty()) {
 		displayMessage(tr("%1 file export failure (3)").arg(copperName), displayMessageBoxes);
 		return 0;
@@ -220,7 +220,7 @@ int MainWindow::doSilk(LayerList silkLayerIDs, const QString & silkName, const Q
 	QXmlStreamReader streamReader(svgSilk);
 	QSizeF svgSize = FSvgRenderer::parseForWidthAndHeight(streamReader);
 
-	svgSilk = clipToBoard(svgSilk, board, silkName);
+	svgSilk = clipToBoard(svgSilk, board, silkName, SVG2gerber::ForNormal);
 	if (svgSilk.isEmpty()) {
 		displayMessage(tr("silk export failure"), displayMessageBoxes);
 		return 0;
@@ -269,7 +269,7 @@ int MainWindow::doDrill(ItemBase * board, const QString & exportDir, bool displa
 	QXmlStreamReader streamReader(svgDrill);
 	QSizeF svgSize = FSvgRenderer::parseForWidthAndHeight(streamReader);
 
-	svgDrill = clipToBoard(svgDrill, board, "Copper0");
+	svgDrill = clipToBoard(svgDrill, board, "Copper0", SVG2gerber::ForDrill);
 	if (svgDrill.isEmpty()) {
 		displayMessage(tr("drill export failure"), displayMessageBoxes);
 		return 0;
@@ -340,7 +340,7 @@ int MainWindow::doMask(LayerList maskLayerIDs, const QString &maskName, const QS
 	QXmlStreamReader streamReader(svgMask);
 	QSizeF svgSize = FSvgRenderer::parseForWidthAndHeight(streamReader);
 
-	svgMask = clipToBoard(svgMask, board, maskName);
+	svgMask = clipToBoard(svgMask, board, maskName, SVG2gerber::ForMask);
 	if (svgMask.isEmpty()) {
 		displayMessage(tr("mask export failure"), displayMessageBoxes);
 		return 0;
@@ -377,7 +377,7 @@ void MainWindow::displayMessage(const QString & message, bool displayMessageBoxe
 	DebugDialog::debug(message);
 }
 
-QString MainWindow::clipToBoard(QString svgString, ItemBase * board, const QString & layerName) {
+QString MainWindow::clipToBoard(QString svgString, ItemBase * board, const QString & layerName, SVG2gerber::ForWhy forWhy) {
 	QDomDocument domDocument1;
 	QString errorStr;
 	int errorLine;
@@ -491,8 +491,13 @@ QString MainWindow::clipToBoard(QString svgString, ItemBase * board, const QStri
 		//image.save("output.png");
 
 		GroundPlaneGenerator gpg;
-		gpg.scanImage(image, image.width(), image.height(), GraphicsUtils::StandardFritzingDPI / res, GraphicsUtils::StandardFritzingDPI, "#ffffff", layerName, false, 1, false, QSizeF(0, 0), 0);
-		
+		if (forWhy == SVG2gerber::ForOutline) {
+			gpg.scanOutline(image, image.width(), image.height(), GraphicsUtils::StandardFritzingDPI / res, GraphicsUtils::StandardFritzingDPI, "#ffffff", layerName, false, 1, false, QSizeF(0, 0), 0);
+		}
+		else {
+			gpg.scanImage(image, image.width(), image.height(), GraphicsUtils::StandardFritzingDPI / res, GraphicsUtils::StandardFritzingDPI, "#ffffff", layerName, false, 1, false, QSizeF(0, 0), 0);
+		}
+
 		if (gpg.newSVGs().count() > 0) {
 			QDomDocument doc;
 			TextUtils::mergeSvg(doc, svgString, "");

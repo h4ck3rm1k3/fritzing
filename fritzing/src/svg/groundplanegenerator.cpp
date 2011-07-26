@@ -867,3 +867,98 @@ const QStringList & GroundPlaneGenerator::newSVGs() {
 const QList<QPointF> & GroundPlaneGenerator::newOffsets() {
 	return m_newOffsets;
 }
+
+void removeRedundant(QList<QPoint> & points)
+{
+	QPoint current = points.last();
+	int ix = points.count() - 2;
+	int soFar = 1;
+	while (ix > 0) {
+		if (points.at(ix).x() != current.x()) {
+			current = points.at(ix--);
+			soFar = 1;
+			continue;
+		}
+
+		if (++soFar > 2) {
+			points.removeAt(ix + 1);
+		}
+		ix--;
+	}
+}
+
+void GroundPlaneGenerator::scanOutline(QImage & image, qreal bWidth, qreal bHeight, qreal pixelFactor, qreal res, 
+									 const QString & colorString, const QString & layerName, bool makeConnector, 
+									 int minRunSize, bool makeOffset, QSizeF minAreaInches, qreal minDimensionInches)  
+{
+	QList<QPoint> leftPoints;
+	QList<QPoint> rightPoints;
+
+	// background is black
+
+	for (int y = 0; y < bHeight; y++) {
+		QRgb* scanLine = (QRgb *) image.scanLine(y);
+		bool gotLeft = false;
+		int leftx;
+		for (int x = 0; x < bWidth; x++) {
+			QRgb current = *(scanLine + x);
+			int gray = qGray(current);
+			if (gray <= THRESHOLD) {		// qBlue(current) != 0xff				
+				// another black pixel, keep moving
+				continue;
+			}
+
+			gotLeft = true;
+			leftx = x;
+			leftPoints.append(QPoint(x, y));
+			break;
+		}
+		if (gotLeft) {
+			for (int x = bWidth - 1; x >= leftx; x--) {
+				QRgb current = *(scanLine + x);
+				int gray = qGray(current);
+				if (gray <= THRESHOLD) {		// qBlue(current) != 0xff				
+					// another black pixel, keep moving
+					continue;
+				}
+
+				rightPoints.append(QPoint(x, y));
+				break;
+			}
+		}
+	}
+
+	removeRedundant(leftPoints);
+	removeRedundant(rightPoints);
+
+	QPolygon polygon;
+	foreach(QPoint p, leftPoints) {
+		polygon.append(QPoint(p.x() * pixelFactor, p.y() * pixelFactor));
+	}
+	for (int ix = rightPoints.count() - 1; ix > 0; ix--) {
+		QPoint p = rightPoints.at(ix);
+		polygon.append(QPoint(p.x() * pixelFactor, p.y() * pixelFactor));
+	}
+
+	QList<QPolygon> polygons;
+	polygons.append(polygon);
+	QPointF offset;
+	QString pSvg = makePolySvg(polygons, res, bWidth, bHeight, pixelFactor, colorString, layerName, makeConnector, makeOffset ? &offset : NULL, minAreaInches, minDimensionInches);
+	if (!pSvg.isEmpty()) {
+		m_newSVGs.append(pSvg);
+		if (makeOffset) {
+			offset *= FSvgRenderer::printerScale();
+			m_newOffsets.append(offset);			// offset now in pixels
+		}
+	}
+
+	/*
+	QFile file4("testPoly.svg");
+	file4.open(QIODevice::WriteOnly);
+	QTextStream out4(&file4);
+	out4 << pSvg;
+	file4.close();
+	*/
+
+
+}
