@@ -26,8 +26,8 @@
               <img alt="Order now" class="adapt_width" tal:attributes="src string:${navroot}/++resource++fritzing.fab/order_now.png" />
             </a>
             <p tal:condition="python:context.nextProductionClosingDate and context.nextProductionDelivery">
-              Submit your layout by the <span class="important" tal:content="context/nextProductionClosingDate">...</span><br />
-              and we will ship it on <span class="important" tal:content="context/nextProductionDelivery">...</span>.
+              Submit your layout by the <span class="important" tal:content="python:context.nextProductionClosingDate.strftime('%d. %B %Y')">...</span><br />
+              and we will ship it on <span class="important" tal:content="python:context.nextProductionDelivery.strftime('%d. %B %Y')">...</span>.
             </p>
             <div tal:condition="container/listFolderContents">
               <h2>Your orders</h2>

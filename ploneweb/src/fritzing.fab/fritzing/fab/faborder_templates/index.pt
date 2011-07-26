@@ -23,8 +23,8 @@
             <h1 tal:condition="python: not view.isStateId(context, 'open')" class="documentFirstHeading">Review your Fritzing Fab Order</h1>
             <p>Fritzing Fab is the professional PCB fabrication service of Fritzing. Quality made in Germany and RoHS compliant.</p>
             <p tal:condition="python:context.aq_parent.nextProductionClosingDate and context.aq_parent.nextProductionDelivery">
-              Submit your layout by the <span class="important" tal:content="context/aq_parent/nextProductionClosingDate">...</span> 
-              and we will ship it on <span class="important" tal:content="context/aq_parent/nextProductionDelivery">...</span>.
+              Submit your layout by the <span class="important" tal:content="python:context.nextProductionClosingDate.strftime('%d. %B %Y')">...</span> 
+              and we will ship it on <span class="important" tal:content="python:context.nextProductionDelivery.strftime('%d. %B %Y')">...</span>.
             </p>
           </div>
         </div>
