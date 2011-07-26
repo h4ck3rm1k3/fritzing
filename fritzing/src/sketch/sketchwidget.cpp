@@ -831,8 +831,6 @@ void SketchWidget::deleteItem(ItemBase * itemBase, bool deleteModelPart, bool do
 	if (itemBase->hasBendableLeg()) {
 		DebugDialog::debug("kill bendable");
 		itemBase->killBendableLeg();
-		//QApplication::processEvents();
-		//later = true;
 	}
 
 	if (m_infoView != NULL) {
@@ -5285,7 +5283,8 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 	foreach (QString connectorID, legs.keys()) {
 		// must be invoked after all the connections have been dealt with
 		QPolygonF poly = legs.value(connectorID);
-		new ChangeLegCommand(this, newID, connectorID, poly, poly, true, true, "swap", parentCommand);
+		ChangeLegCommand * clc = new ChangeLegCommand(this, newID, connectorID, poly, poly, true, true, "swap", parentCommand);
+		clc->setRedoOnly();
 	}
 }
 

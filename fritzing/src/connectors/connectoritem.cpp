@@ -112,22 +112,24 @@ bendable TODO:
 
 	export: resistors and other custom generated parts with legs (retrieve svg)
 
-	bad crash when swapping back to unbendable.  probably some kind of boundingRect issue...
-
-	swapping parts with bendable legs, can assume pins will always line up (unless legs can have diffent max distances)
-		no-no
-		no-yes
-		yes-no
-		yes-yes
-			
-	rotate bendable, swap bendable, undo: crash of the item being undone.  it's a prepareGeometryChange() bug
-
 	update bug when a bendable part has all legs connected and the part is dragged
 		within a particular region, the part body stops updating--
 		but the legs follow the phantom part until the part jumps into position
 		disable calls to prepgeometrychange?
 
-	swapping when original is rotated
+	* bad crash when swapping back to unbendable.  probably some kind of boundingRect issue...
+
+	* crash: swappable, swappable, undo, redo
+
+	* swapping parts with bendable legs, can assume pins will always line up (unless legs can have diffent max distances)
+		* no-no
+		* no-yes
+		* yes-no
+		* yes-yes
+			
+	* rotate bendable, swap bendable, undo: crash of the item being undone.  it's a prepareGeometryChange() bug
+
+	* swapping when original is rotated
 					
 	swapping: keep bends?
 	

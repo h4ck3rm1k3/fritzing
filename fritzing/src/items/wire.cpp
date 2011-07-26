@@ -1466,7 +1466,9 @@ QPen Wire::pen() const
 */
 void Wire::setPen(const QPen &pen)
 {
-    prepareGeometryChange();
+	if (pen.widthF() != m_pen.widthF()) {
+		prepareGeometryChange();
+	}
     m_pen = pen;
     update();
 }
