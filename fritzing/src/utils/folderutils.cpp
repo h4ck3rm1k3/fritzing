@@ -155,7 +155,33 @@ const QString FolderUtils::libraryPath()
 
 const QString FolderUtils::applicationDirPath() {
 	if (m_appPath.isEmpty()) {
+#ifdef Q_WS_WIN
 		return QCoreApplication::applicationDirPath();
+#else
+		// look in standard Fritzing location (applicationDirPath) then in standard linux locations
+		QStringList candidates;
+		candidates.append(QCoreApplication::applicationDirPath());
+		candidates.append("/usr/share/fritzing");
+		candidates.append("/usr/local/share/fritzing");
+		candidates.append(QDir::homePath() + "/.local/share/fritzing");
+		foreach (QString candidate, candidates) {
+			QDir dir(candidate);
+			dir.cd("parts");
+			if (!dir.exists()) continue;
+
+			dir.cdUp();
+			dir.cd("bins");
+			if (dir.exists()) {
+				m_appPath = candidate;
+				return m_appPath;
+			}
+
+		}
+
+		m_appPath = QCoreApplication::applicationDirPath();
+		DebugDialog::Debug("data folders not found");
+
+#endif
 	}
 
 	return m_appPath;

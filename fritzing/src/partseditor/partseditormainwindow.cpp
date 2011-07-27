@@ -59,8 +59,6 @@ QString PartsEditorMainWindow::FooterText;
 QString PartsEditorMainWindow::UntitledPartName;
 QString PartsEditorMainWindow::___partsEditorName___;
 
-const QString PartsEditorMainWindow::templatePath = "/docs/templates/";
-
 int PartsEditorMainWindow::UntitledPartIndex = 1;
 QPointer<PartsEditorMainWindow> PartsEditorMainWindow::m_lastOpened = NULL;
 int PartsEditorMainWindow::m_closedBeforeCount = 0;
@@ -134,14 +132,6 @@ void PartsEditorMainWindow::setup(long id, ModelPart *modelPart, bool fromTempla
 	m_paletteModel = new PaletteModel(false, false, false);
 
 	if(modelPart == NULL){
-		if (fromTemplate && !createTemplate()){
-			QMessageBox::critical(this, tr("Parts Editor"),
-	                           tr("Error! Cannot create part file.\n"),
-	                           QMessageBox::Close);
-	        // this seems hacky but maybe it's ok
-	        QTimer::singleShot(60, this, SLOT(close()));
-			return;
-		}
 		m_lastOpened = this;
 		m_updateEnabled = true;
 	} else {
@@ -459,25 +449,6 @@ QGraphicsProxyWidget *PartsEditorMainWindow::emptyViewItem(QString iconFile, QSt
 	item->setWidget(container);
 
 	return item;
-}
-
-// creates a temp directory and copies all template .fz and .svg files
-// returns false if directory can't be created
-bool PartsEditorMainWindow::createTemplate(){
-	QDir srcDir = QDir(":/resources/part-template");
-	DebugDialog::debug("template source: " + srcDir.path());
-
-	QDir randDir = createTempFolderIfNecessary();
-
-	FolderUtils::replicateDir(srcDir,randDir);
-
-	QFile tempFile(QCoreApplication::applicationDirPath() + templatePath);
-	tempFile.copy(randDir.path() + "/core/template" + FritzingPartExtension);
-
-	m_fileName = randDir.path() + "/core/template" + FritzingPartExtension;
-	DebugDialog::debug("created temp part: " + m_fileName);
-
-	return true;
 }
 
 const QDir& PartsEditorMainWindow::createTempFolderIfNecessary() {
