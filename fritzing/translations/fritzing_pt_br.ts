@@ -342,6 +342,17 @@ Note: %n parts are not located entirely on the board.</source>
     </message>
 </context>
 <context>
+    <name>ConnectorItem</name>
+    <message>
+        <source>Add bendpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove bendpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ConnectorsInfoWidget</name>
     <message>
         <source>Mismatching Connector IDs</source>
@@ -644,18 +655,6 @@ Por favor selecione outro tipo de fonte do Fritzing para o substituir:</translat
     <message>
         <source>Tags</source>
         <translation>Marcadores</translation>
-    </message>
-    <message>
-        <source>x:%1 %2
-y:%3 %4</source>
-        <translation>x:%1 %2
-y:%3 %4</translation>
-    </message>
-    <message>
-        <source>x:%1
-y:%2</source>
-        <translation>x:%1
-y:%2</translation>
     </message>
     <message>
         <source>v. %1</source>
@@ -2403,10 +2402,6 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Order</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>loading %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2491,14 +2486,6 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Order from Fritzing Fab</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Order from Fritzing Fab...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Do not autoroute</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2540,6 +2527,18 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
     </message>
     <message>
         <source>Shift+Ctrl+D</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Order PCB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Order a PCB...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Order a PCB created from your sketch--from fabulous Fritzing Fab</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2674,7 +2673,11 @@ Razão: %2 (código do erro %3)</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unable to create copper fill--possibly the part was dropped onto something other than the PCB itself.</source>
+        <source>This seems like an attempt to create a trace across layers. This circumstance should not arise: please contact the developers.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to create copper fill--possibly the part was dropped onto another part or wire rather than the actual PCB.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3041,11 +3044,6 @@ Razão: %2 (código do erro %3)</translation>
         <translation>Editor de Componentes</translation>
     </message>
     <message>
-        <source>Error! Cannot create part file.
-</source>
-        <translation>Erro! Impossível criar arquivo do componente.</translation>
-    </message>
-    <message>
         <source>Label</source>
         <translation>Etiqueta</translation>
     </message>
@@ -3194,10 +3192,6 @@ Mais informações consulte o site  http://fritzing.org/using-svg-images-new-par
         <translation>Imagem &amp; Arquivos Footprint  (%1 %2 %3 %4 %5);;Arquivos SVG (%1);;Arquivos JPEG (%2);;Arquivos PNG (%3);;Arquivos Footprintg EDA Footprint (%4);;Arquivos de Módulo Kicad (%5)</translation>
     </message>
     <message>
-        <source>Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3)</source>
-        <translation>Arquivos de Imagem (%1 %2 %3);;Arquivos SVG (%1);;Arquivos JPEG (%2);;Arquivos PNG (%3)</translation>
-    </message>
-    <message>
         <source>Conversion problem</source>
         <translation>Problema na conversão</translation>
     </message>
@@ -3216,16 +3210,20 @@ Mais informações consulte o site  http://fritzing.org/using-svg-images-new-par
         <translation>não foi possível abrir o arquivo temporário %1</translation>
     </message>
     <message>
-        <source>Image &amp; Footprint Files (%1 %2 %3 %4);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3);;Kicad Schematic Files (%4)</source>
-        <translation>Imagem &amp; Arquivos Footprint (%1 %2 %3 %4);;Arquivos SVG (%1);;Arquivos JPEG (%2);;Arquivos PNG (%3);;Arquivos Esquemático Kicad (%4)</translation>
-    </message>
-    <message>
         <source>no schematics found in %1</source>
         <translation>esquemáticos não encontrados em %1</translation>
     </message>
     <message>
         <source>schematic part</source>
         <translation>componente esquemático</translation>
+    </message>
+    <message>
+        <source>Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3)%4%5</source>
+        <translation type="unfinished">Arquivos de Imagem (%1 %2 %3);;Arquivos SVG (%1);;Arquivos JPEG (%2);;Arquivos PNG (%3) {1 %2 %3)?} {1)?} {2)?} {3)%4%5?}</translation>
+    </message>
+    <message>
+        <source>Image &amp; Footprint Files (%1 %2 %3 %4);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3);;Kicad Schematic Files (%4)%5</source>
+        <translation type="unfinished">Imagem &amp; Arquivos Footprint (%1 %2 %3 %4);;Arquivos SVG (%1);;Arquivos JPEG (%2);;Arquivos PNG (%3);;Arquivos Esquemático Kicad (%4) {1 %2 %3 %4)?} {1)?} {2)?} {3)?} {4)%5?}</translation>
     </message>
 </context>
 <context>
@@ -3274,15 +3272,15 @@ numa PCB (Placa de Circuito Impresso)?</translation>
         <translation type="unfinished">tamanho</translation>
     </message>
     <message>
-        <source>horizontal holes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>vertical holes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>set board size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rows</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>columns</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4171,14 +4169,6 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>change trace</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>delete trace</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Basic</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4216,6 +4206,22 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>Frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>change trace %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>delete trace %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 %2,%3 %4</source>
+        <translation type="unfinished">%1 %2,%3 %4</translation>
+    </message>
+    <message>
+        <source>Change leg of %1,%2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4492,10 +4498,6 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
         <translation>Criar e conectar fio</translation>
     </message>
     <message>
-        <source>%3 %2 (%1)</source>
-        <translation>%3 %2 (%1)</translation>
-    </message>
-    <message>
         <source>Rotate</source>
         <translation>Rodar</translation>
     </message>
@@ -4605,6 +4607,18 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
         <source>Change note to &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>from %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move leg of</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flip %2 (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Stripboard</name>
@@ -4622,6 +4636,14 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
             <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
+    </message>
+    <message>
+        <source>strip length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>strips</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

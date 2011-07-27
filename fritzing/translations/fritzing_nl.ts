@@ -340,6 +340,17 @@ Note: %n parts are not located entirely on the board.</source>
     </message>
 </context>
 <context>
+    <name>ConnectorItem</name>
+    <message>
+        <source>Add bendpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove bendpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ConnectorsInfoWidget</name>
     <message>
         <source>Mismatching Connector IDs</source>
@@ -641,16 +652,6 @@ Selecteer a.u.b. een Fritzing lettertype om ze te vervangen:</translation>
     <message>
         <source>Tags</source>
         <translation>Tags</translation>
-    </message>
-    <message>
-        <source>x:%1 %2
-y:%3 %4</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>x:%1
-y:%2</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>v. %1</source>
@@ -2402,10 +2403,6 @@ Controleer a.u.b. alle views voor potentiële fouten.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Order</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>loading %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2490,14 +2487,6 @@ Controleer a.u.b. alle views voor potentiële fouten.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Order from Fritzing Fab</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Order from Fritzing Fab...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Do not autoroute</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2539,6 +2528,18 @@ Controleer a.u.b. alle views voor potentiële fouten.</translation>
     </message>
     <message>
         <source>Shift+Ctrl+D</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Order PCB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Order a PCB...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Order a PCB created from your sketch--from fabulous Fritzing Fab</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2673,7 +2674,11 @@ Reden : %2 (errcode %3)</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unable to create copper fill--possibly the part was dropped onto something other than the PCB itself.</source>
+        <source>This seems like an attempt to create a trace across layers. This circumstance should not arise: please contact the developers.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to create copper fill--possibly the part was dropped onto another part or wire rather than the actual PCB.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3039,12 +3044,6 @@ Reden : %2 (errcode %3)</translation>
         <translation>componenten editor</translation>
     </message>
     <message>
-        <source>Error! Cannot create part file.
-</source>
-        <translation>Fout! Kan componenten bestand niet creëren.
-</translation>
-    </message>
-    <message>
         <source>Load icon..</source>
         <translation>Laad icoon...</translation>
     </message>
@@ -3193,10 +3192,6 @@ Meer informatie op http://fritzing.org/using-svg-images-new-parts/ </translation
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Conversion problem</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3214,15 +3209,19 @@ Meer informatie op http://fritzing.org/using-svg-images-new-parts/ </translation
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Image &amp; Footprint Files (%1 %2 %3 %4);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3);;Kicad Schematic Files (%4)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>no schematics found in %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>schematic part</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3)%4%5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Image &amp; Footprint Files (%1 %2 %3 %4);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3);;Kicad Schematic Files (%4)%5</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3272,15 +3271,15 @@ op de PCB?</translation>
         <translation type="unfinished">grootte</translation>
     </message>
     <message>
-        <source>horizontal holes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>vertical holes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>set board size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rows</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>columns</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4168,14 +4167,6 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>change trace</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>delete trace</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Basic</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4213,6 +4204,22 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
     </message>
     <message>
         <source>Frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>change trace %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>delete trace %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 %2,%3 %4</source>
+        <translation type="unfinished">%1 %2,%3 %4</translation>
+    </message>
+    <message>
+        <source>Change leg of %1,%2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4489,10 +4496,6 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
         <translation>Roteer %2 (%1)</translation>
     </message>
     <message>
-        <source>%3 %2 (%1)</source>
-        <translation>%3 %2 (%1)</translation>
-    </message>
-    <message>
         <source>Rotate</source>
         <translation>Roteer</translation>
     </message>
@@ -4598,6 +4601,18 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
         <source>Change note to &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>from %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move leg of</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flip %2 (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Stripboard</name>
@@ -4615,6 +4630,14 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
             <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
+    </message>
+    <message>
+        <source>strip length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>strips</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

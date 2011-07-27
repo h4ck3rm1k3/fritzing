@@ -336,6 +336,17 @@ Note: %n parts are not located entirely on the board.</source>
     </message>
 </context>
 <context>
+    <name>ConnectorItem</name>
+    <message>
+        <source>Add bendpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove bendpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ConnectorsInfoWidget</name>
     <message>
         <source>Mismatching Connector IDs</source>
@@ -638,18 +649,6 @@ Please select one of the Fritzing fonts to replace them:</source>
     <message>
         <source>Tags</source>
         <translation>关键词</translation>
-    </message>
-    <message>
-        <source>x:%1 %2
-y:%3 %4</source>
-        <translation>x:%1 %2
-y:%3 %4</translation>
-    </message>
-    <message>
-        <source>x:%1
-y:%2</source>
-        <translation>x:%1
-y:%2</translation>
     </message>
     <message>
         <source>v. %1</source>
@@ -2397,10 +2396,6 @@ Please check all views for potential side-effects.</source>
         <translation>为了生产</translation>
     </message>
     <message>
-        <source>Order</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>loading %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2485,14 +2480,6 @@ Please check all views for potential side-effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Order from Fritzing Fab</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Order from Fritzing Fab...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Do not autoroute</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2534,6 +2521,18 @@ Please check all views for potential side-effects.</source>
     </message>
     <message>
         <source>Shift+Ctrl+D</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Order PCB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Order a PCB...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Order a PCB created from your sketch--from fabulous Fritzing Fab</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2667,7 +2666,11 @@ Reason: %2 (errcode %3)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unable to create copper fill--possibly the part was dropped onto something other than the PCB itself.</source>
+        <source>This seems like an attempt to create a trace across layers. This circumstance should not arise: please contact the developers.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to create copper fill--possibly the part was dropped onto another part or wire rather than the actual PCB.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3034,12 +3037,6 @@ Reason: %2 (errcode %3)</source>
         <translation>元件编辑器</translation>
     </message>
     <message>
-        <source>Error! Cannot create part file.
-</source>
-        <translation>出错了！不能写入元件文件.
-</translation>
-    </message>
-    <message>
         <source>Load icon..</source>
         <translation>载入图标..</translation>
     </message>
@@ -3185,10 +3182,6 @@ Fritzing和这种svg文件不兼容。请检查你的权限并重试。
         <translation>图形和器件封装文件(%1 %2 %3 %4 %5);;SVG 文件 (%1);;JPEG 文件 (%2);;PNG 文件 (%3);;gEDA器件封装文件 (%4);;Kicad Module 文件 (%5)</translation>
     </message>
     <message>
-        <source>Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3)</source>
-        <translation>图形文件 (%1 %2 %3);;SVG 文件 (%1);;JPEG 文件 (%2);;PNG 文件 (%3)</translation>
-    </message>
-    <message>
         <source>Conversion problem</source>
         <translation>转换问题</translation>
     </message>
@@ -3207,16 +3200,20 @@ Fritzing和这种svg文件不兼容。请检查你的权限并重试。
         <translation>不能打开临时文件%1</translation>
     </message>
     <message>
-        <source>Image &amp; Footprint Files (%1 %2 %3 %4);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3);;Kicad Schematic Files (%4)</source>
-        <translation>图形和器件封装文件(%1 %2 %3 %4);;SVG文件 (%1);;JPEG文件 (%2);;PNG文件 (%3);;Kicad Schematic 文件 (%4)</translation>
-    </message>
-    <message>
         <source>no schematics found in %1</source>
         <translation>在%1中未找到原理图</translation>
     </message>
     <message>
         <source>schematic part</source>
         <translation>原理图元件</translation>
+    </message>
+    <message>
+        <source>Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3)%4%5</source>
+        <translation type="unfinished">图形文件 (%1 %2 %3);;SVG 文件 (%1);;JPEG 文件 (%2);;PNG 文件 (%3) {1 %2 %3)?} {1)?} {2)?} {3)%4%5?}</translation>
+    </message>
+    <message>
+        <source>Image &amp; Footprint Files (%1 %2 %3 %4);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3);;Kicad Schematic Files (%4)%5</source>
+        <translation type="unfinished">图形和器件封装文件(%1 %2 %3 %4);;SVG文件 (%1);;JPEG文件 (%2);;PNG文件 (%3);;Kicad Schematic 文件 (%4) {1 %2 %3 %4)?} {1)?} {2)?} {3)?} {4)%5?}</translation>
     </message>
 </context>
 <context>
@@ -3265,15 +3262,15 @@ the PCB view?</source>
         <translation type="unfinished">大小</translation>
     </message>
     <message>
-        <source>horizontal holes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>vertical holes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>set board size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rows</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>columns</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4163,14 +4160,6 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>change trace</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>delete trace</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Basic</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4208,6 +4197,22 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     </message>
     <message>
         <source>Frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>change trace %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>delete trace %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 %2,%3 %4</source>
+        <translation type="unfinished">%1 %2,%3 %4</translation>
+    </message>
+    <message>
+        <source>Change leg of %1,%2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4484,10 +4489,6 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
         <translation>旋转%2 (%1)</translation>
     </message>
     <message>
-        <source>%3 %2 (%1)</source>
-        <translation>%3 %2 (%1)</translation>
-    </message>
-    <message>
         <source>Rotate</source>
         <translation>旋转</translation>
     </message>
@@ -4591,6 +4592,18 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
         <source>Change note to &apos;%2&apos;</source>
         <translation>改变注释为&apos;%2&apos;</translation>
     </message>
+    <message>
+        <source>from %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move leg of</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flip %2 (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Stripboard</name>
@@ -4607,6 +4620,14 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
+    </message>
+    <message>
+        <source>strip length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>strips</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
