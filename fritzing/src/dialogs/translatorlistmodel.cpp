@@ -78,8 +78,11 @@ TranslatorListModel::TranslatorListModel(QFileInfoList & fileInfoList, QObject* 
 		ushort t10[] = { 0x0E44, 0x0E17, 0x0E22, 0 };
 		m_languages.insert("thai", tr("Thai - %1").arg(QString::fromUtf16(t10)));
 
+		ushort t11[] = { 0x0395, 0x03BB, 0x03BB, 0x03B7, 0x03BD, 0x03B9, 0x03BA, 0x03AC, 0};
+		m_languages.insert("greek", tr("Greek - %1").arg(QString::fromUtf16(t11)));
+
         // More languages written in their own language can be found
-        // at http://www.mozilla.com/en-US/firefox/all.html
+        // at http://www.mozilla.com/en-US/firefox/all.html 
 
 		// recipe for translating from mozilla strings into source code via windows:
 		//		1. copy the string from the mozilla page into wordpad and save it as a unicode text file
