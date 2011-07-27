@@ -55,13 +55,16 @@ QList< QPointer<ModelPart> > * ensureInstanceTitleIncrements(const QString & pre
 
 void clearOldInstanceTitle(ModelPart * modelPart, const QString & title) 
 {
+	//DebugDialog::debug(QString("clearing title:%1 ix:%2").arg(title).arg(modelPart->modelIndex()));
+	QString prefix = title;
 	int ix = InstanceTitleRegExp.indexIn(title);
 	if (ix >= 0) {
-		QString prefix = InstanceTitleRegExp.cap(1);
-		QList< QPointer<ModelPart> > * modelParts = InstanceTitleIncrements.value(prefix, NULL);
-		if (modelParts) {
-			modelParts->removeOne(modelPart);
-		}
+		prefix = InstanceTitleRegExp.cap(1);
+	}
+	QList< QPointer<ModelPart> > * modelParts = InstanceTitleIncrements.value(prefix, NULL);
+	if (modelParts) {
+		modelParts->removeOne(modelPart);
+		//DebugDialog::debug(QString("\tc:%1").arg(modelParts->count()));
 	}
 }
 
@@ -652,6 +655,7 @@ void ModelPart::setInstanceTitle(QString title) {
 	}
 	QList<QPointer<ModelPart> > * modelParts = ensureInstanceTitleIncrements(prefix);
 	modelParts->append(this);
+	//DebugDialog::debug(QString("adding title:%1 ix:%2 c:%3").arg(title).arg(modelIndex()).arg(modelParts->count()));
 }
 
 QString ModelPart::getNextTitle(const QString & title) {

@@ -1221,7 +1221,7 @@ void Wire::getConnectedColor(ConnectorItem * connectorItem, QBrush * &brush, QPe
 
 void Wire::setPenWidth(qreal w, InfoGraphicsView * infoGraphicsView, qreal hoverStrokeWidth) {
 	m_hoverStrokeWidth = hoverStrokeWidth;
-	DebugDialog::debug(QString("setting hoverstrokewidth %1 %2").arg(m_id).arg(m_hoverStrokeWidth));
+	//DebugDialog::debug(QString("setting hoverstrokewidth %1 %2").arg(m_id).arg(m_hoverStrokeWidth));
 	m_pen.setWidthF(w);
 	infoGraphicsView->getBendpointWidths(this, w, m_bendpointWidth, m_bendpoint2Width, m_negativeOffsetRect);
 	m_bendpointPen.setWidthF(qAbs(m_bendpointWidth));
