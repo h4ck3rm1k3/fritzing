@@ -179,7 +179,7 @@ const QString FolderUtils::applicationDirPath() {
 		}
 
 		m_appPath = QCoreApplication::applicationDirPath();
-		DebugDialog::Debug("data folders not found");
+                DebugDialog::debug("data folders not found");
 
 #endif
 	}

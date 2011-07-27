@@ -1269,6 +1269,8 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 					case ViewIdentifierClass::BreadboardView:
 						modelPartShared->connectorIDs(viewIdentifier, viewLayerID, connectorIDs, terminalIDs, legIDs);
 						break;
+                                        default:
+                                                break;
 				}
 
 				bool gotOne = false;
