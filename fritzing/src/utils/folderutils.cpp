@@ -165,13 +165,11 @@ const QString FolderUtils::applicationDirPath() {
 		candidates.append("/usr/local/share/fritzing");
 		candidates.append(QDir::homePath() + "/.local/share/fritzing");
 		foreach (QString candidate, candidates) {
+                        //DebugDialog::debug(QString("candidate:%1").arg(candidate));
 			QDir dir(candidate);
-			dir.cd("parts");
-			if (!dir.exists()) continue;
+                        if (!dir.exists("parts")) continue;
 
-			dir.cdUp();
-			dir.cd("bins");
-			if (dir.exists()) {
+                        if (dir.exists("bins")) {
 				m_appPath = candidate;
 				return m_appPath;
 			}
