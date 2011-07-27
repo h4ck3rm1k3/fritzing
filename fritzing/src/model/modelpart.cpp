@@ -41,13 +41,13 @@ long ModelPart::m_nextIndex = 0;
 const int ModelPart::indexMultiplier = 10;
 QStringList ModelPart::m_possibleFolders;
 
-static QHash<QString, QList<ModelPart *>* > InstanceTitleIncrements;
+static QHash<QString, QList< QPointer<ModelPart> >* > InstanceTitleIncrements;
 static const QRegExp InstanceTitleRegExp("^(.*[^\\d])(\\d+)$");
 
-QList<ModelPart *> * ensureInstanceTitleIncrements(const QString & prefix) {
-	QList<ModelPart *> * modelParts = InstanceTitleIncrements.value(prefix, NULL);
+QList< QPointer<ModelPart> > * ensureInstanceTitleIncrements(const QString & prefix) {
+	QList< QPointer<ModelPart> > * modelParts = InstanceTitleIncrements.value(prefix, NULL);
 	if (modelParts == NULL) {
-		modelParts =  new QList<ModelPart *>;
+		modelParts =  new QList< QPointer<ModelPart> >;
 		InstanceTitleIncrements.insert(prefix, modelParts);
 	}
 	return modelParts;
@@ -58,7 +58,7 @@ void clearOldInstanceTitle(ModelPart * modelPart, const QString & title)
 	int ix = InstanceTitleRegExp.indexIn(title);
 	if (ix >= 0) {
 		QString prefix = InstanceTitleRegExp.cap(1);
-		QList<ModelPart *> * modelParts = InstanceTitleIncrements.value(prefix, NULL);
+		QList< QPointer<ModelPart> > * modelParts = InstanceTitleIncrements.value(prefix, NULL);
 		if (modelParts) {
 			modelParts->removeOne(modelPart);
 		}
@@ -650,7 +650,7 @@ void ModelPart::setInstanceTitle(QString title) {
 	if (ix >= 0) {
 		prefix = InstanceTitleRegExp.cap(1);
 	}
-	QList<ModelPart *> * modelParts = ensureInstanceTitleIncrements(prefix);
+	QList<QPointer<ModelPart> > * modelParts = ensureInstanceTitleIncrements(prefix);
 	modelParts->append(this);
 }
 
@@ -661,15 +661,25 @@ QString ModelPart::getNextTitle(const QString & title) {
 		prefix = InstanceTitleRegExp.cap(1);
 	}
 	// TODO: if this were a sorted list, 
-	QList<ModelPart *> * modelParts = ensureInstanceTitleIncrements(prefix);
+	QList<QPointer<ModelPart> > * modelParts = ensureInstanceTitleIncrements(prefix);
 	int highestSoFar = 0;
+	bool gotNull = false;
 	foreach (ModelPart * modelPart, *modelParts) {
+		if (modelPart == NULL) {
+			gotNull = true;
+			continue;
+		}
+
 		QString title = modelPart->instanceTitle();
 		title.remove(0, prefix.length());
 		int count = title.toInt();			// returns zero on failure
 		if (count > highestSoFar) {
 			highestSoFar = count;
 		}
+	}
+
+	if (gotNull) {
+		modelParts->removeAll(NULL);
 	}
 
 	//DebugDialog::debug(QString("returning increment %1, %2").arg(prefix).arg(highestSoFar + 1));
