@@ -161,7 +161,7 @@ void ProgramWindow::initLanguages() {
 		}
 		else {
 			QString name = Syntaxer::parseForName(fileInfo.absoluteFilePath());
-			if (!name.isEmpty()  && !name.contains("arduino", Qt::CaseInsensitive)) {		// Arduino is not really available
+			if (!name.isEmpty()) {		// Arduino is not really available      && !name.contains("arduino", Qt::CaseInsensitive)
 				m_languages.insert(name, fileInfo.absoluteFilePath());
 			}
 		}

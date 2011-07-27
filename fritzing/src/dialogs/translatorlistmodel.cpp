@@ -40,36 +40,42 @@ TranslatorListModel::TranslatorListModel(QFileInfoList & fileInfoList, QObject* 
         m_languages.insert("french", tr("French - %1").arg("Français"));
         m_languages.insert("german", tr("German - %1").arg("Deutsch"));
         m_languages.insert("spanish", tr("Spanish - %1").arg("Español"));
+
 		ushort t1[] = { 0x65e5, 0x672c, 0x8a9e, 0 };
 		m_languages.insert("japanese", tr("Japanese - %1").arg(QString::fromUtf16(t1)));
+
         m_languages.insert("portuguese_portugal", tr("Portuguese (European)- %1").arg("Português (Europeu)"));
         m_languages.insert("portuguese_brazil", tr("Portuguese (Brazilian) - %1").arg("Português (do Brasil)"));
         m_languages.insert("hungarian", tr("Hungarian - %1").arg("Magyar"));
         m_languages.insert("estonian", tr("Estonian - %1").arg("Eesti keel"));
-
-// put in extras so if someone does a new translation, we won't have to recompile
         m_languages.insert("dutch", tr("Dutch - %1").arg("Nederlands"));
+
 		ushort t2[] = { 0x0420, 0x0443, 0x0441, 0x0441, 0x043a, 0x0438, 0x0439, 0 };
         m_languages.insert("russian", tr("Russian - %1").arg(QString::fromUtf16(t2)));
+
         m_languages.insert("italian", tr("Italian - %1").arg("Italiano"));
+
  		ushort t3[] = { 0x05e2, 0x05d1, 0x05e8, 0x05d9, 0x05ea, 0 };
         m_languages.insert("hebrew", tr("Hebrew - %1").arg(QString::fromUtf16(t3)));
+
 		ushort t4[] = { 0x0639, 0x0631, 0x0628, 0x064a, 0 };
         m_languages.insert("arabic", tr("Arabic - %1").arg(QString::fromUtf16(t4)));
+
 		ushort t5[] = { 0x0939, 0x093f, 0x0928, 0x094d, 0x0926, 0x0940, 0x0020, 0x0028, 0x092d, 0x093e, 0x0930, 0x0924, 0x0029, 0 };
         m_languages.insert("hindi", tr("Hindi - %1").arg(QString::fromUtf16(t5)));
 
 		ushort t6[] = { 0x4e2d, 0x6587, 0x0020, 0x0028, 0x7b80, 0x4f53, 0x0029, 0 };
         m_languages.insert("chinese_china", tr("Chinese (Simplified) - %1").arg(QString::fromUtf16(t6)));
+
         ushort t7[] = { 0x6b63, 0x9ad4, 0x4e2d, 0x6587, 0x0020, 0x0028, 0x7e41, 0x9ad4, 0x0029, 0 };
         m_languages.insert("chinese_taiwan", tr("Chinese (Traditional) - %1").arg(QString::fromUtf16(t7)));
+
         m_languages.insert("polish", tr("Polish - %1").arg("Polski"));
 
 		ushort t8[] = { 0x010C, 0x65, 0x0161, 0x74, 0x69, 0x6E, 0x61, 0 };
         m_languages.insert("czech", tr("Czech - %1").arg(QString::fromUtf16(t8)));
 
 		m_languages.insert("turkish", tr("Turkish - %1").arg("Türkçe"));
-
 		m_languages.insert("swedish", tr("Swedish - %1").arg("Svenska"));
 
 		ushort t9[] = { 0x52,  0x6F, 0x6D, 0xE2, 0x6E, 0x0103, 0 };
