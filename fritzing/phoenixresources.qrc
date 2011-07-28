@@ -280,6 +280,7 @@
 	<file>resources/templates/generic_male_pin_header_bread_template.txt</file>
 	<file>resources/templates/generic_sip_bread_template.txt</file>
 	<file>resources/templates/schematic_frame_template.txt</file>
+	<file>resources/templates/screw_terminal_bread_template.txt</file>
 	
     </qresource>
 </RCC>

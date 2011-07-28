@@ -1317,7 +1317,7 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 				}
 				if (!gotOne) {
 					delete renderer;
-					error = tr("unable to create renderer for svg").arg(filename);
+					error = tr("unable to create renderer for svg %1").arg(filename);
 					renderer = NULL;
 				}
 			}

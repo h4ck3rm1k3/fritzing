@@ -40,7 +40,7 @@ $Date$
 
 
 static const int MinPins = 2;
-static const int MaxPins = 12;
+static const int MaxPins = 20;
 static QHash<QString, QString> Spacings;
 
 ScrewTerminal::ScrewTerminal( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
@@ -61,6 +61,14 @@ QStringList ScrewTerminal::collectValues(const QString & family, const QString &
 		}
 		
 		return values;
+	}
+
+	if (prop.compare("pin spacing", Qt::CaseInsensitive) == 0) {
+		QStringList values;
+		value = modelPart()->properties().value("pin spacing");
+
+		initSpacings();		
+		return Spacings.values();
 	}
 
 	return PaletteItem::collectValues(family, prop, value);
@@ -102,8 +110,111 @@ QString ScrewTerminal::genModuleID(QMap<QString, QString> & currPropsMap)
 void ScrewTerminal::initSpacings() {
 	if (Spacings.count() == 0) {
 		Spacings.insert("3.5mm", "0.137in (3.5mm)");
+		Spacings.insert("5.0mm", "0.197in (5.0mm)");
 		Spacings.insert("100mil", "0.1in (2.54mm)");
 		Spacings.insert("200mil", "0.2in (5.08mm)");
 		Spacings.insert("300mil", "0.3in (7.62mm)");
 	}
 }
+
+QString ScrewTerminal::makeBreadboardSvg(const QString & expectedFileName) 
+{
+	QStringList pieces = expectedFileName.split("_");
+	if (pieces.count() != 5) return "";
+
+	int pins = pieces.at(2).toInt();
+	qreal increment = 0.1;  // inches
+	qreal incrementPoints = 100;
+
+	QString header("<?xml version='1.0' encoding='UTF-8' standalone='no'?>\n"
+					"<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' width='%1in' height='0.17in' viewBox='0 0 [100] 170' >\n"
+					"<g id='breadboard' >\n"
+					"<polygon id='background' fill='#254E89' points='[96.012],39.9487 [96.012],0 0,0 0,39.9487 3.98829,39.9487 3.98829,72.4061 0,72.4061 0,157.607 [96.012],157.607 [96.012],72.4061 [100],72.4061 [100],39.9487' />\n"
+					"<rect id='upperstripe' width='[92.745]' x='1.75594' y='2.38169' fill='#456DAB' height='5.76036' stroke-width='0' />\n"
+					"<rect id='lowerrect' width='[96.012]' x='0' y='86.1147' fill='#123C66' height='71.4784' stroke-width='0' />\n");
+
+
+	QString svg = TextUtils::incrementTemplateString(header.arg(increment * pins), 1, incrementPoints * (pins - 1), TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction);
+	svg += TextUtils::incrementTemplate(":/resources/templates/screw_terminal_bread_template.txt",
+										pins, incrementPoints, TextUtils::standardMultiplyPinFunction, TextUtils::standardCopyPinFunction);
+	svg += "</g>\n</svg>";
+
+	return svg;
+}
+
+
+QString ScrewTerminal::makeSchematicSvg(const QString & expectedFileName) 
+{
+	QStringList pieces = expectedFileName.split("_");
+	if (pieces.count() != 5) return "";
+
+	int pins = pieces.at(2).toInt();
+	qreal increment = 0.27;				// inches
+	qreal incrementPoints = 19.439;		// 72 dpi
+
+
+	QString header("<?xml version='1.0' encoding='utf-8'?>\n"
+					"<svg version='1.1' baseProfile='basic' id='svg2' xmlns:svg='http://www.w3.org/2000/svg'\n"
+					"xmlns='http://www.w3.org/2000/svg'  x='0px' y='0px' width='0.87in'\n"
+					"height='%1in' viewBox='0 0 62.641 [19.439]' xml:space='preserve'>\n"
+					"<g id='schematic'>\n");
+
+	QString repeat("<line id='connector%1pin' fill='none' stroke='#000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' x1='0.998' y1='[9.723]' x2='17.845' y2='[9.723]'/>\n"
+					"<rect id='connector%1terminal' x='0' y='[8.725]' width='0.998' height='1.997'/>\n"
+					"<circle fill='none' stroke-width='2' stroke='#000000' cx='52.9215' cy='[9.723]' r='8.7195' />\n"
+					"<line id='line' fill='none' stroke='#000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' x1='43.202' y1='[9.723]' x2='16.452' y2='[9.723]'/>\n");
+
+	QString svg = TextUtils::incrementTemplateString(header.arg(increment * pins), 1, incrementPoints * (pins - 1), TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction);
+	svg += TextUtils::incrementTemplateString(repeat, pins, incrementPoints, TextUtils::standardMultiplyPinFunction, TextUtils::standardCopyPinFunction);
+	svg += "</g>\n</svg>";
+
+	return svg;
+}
+
+QString ScrewTerminal::makePcbSvg(const QString & expectedFileName) 
+{
+	QStringList pieces = expectedFileName.split("_");
+	if (pieces.count() != 5) return "";
+
+	int pins = pieces.at(2).toInt();
+	bool ok;
+	qreal spacing = TextUtils::convertToInches(pieces.at(3), &ok, false);
+	if (!ok) return "";
+
+	qreal dpi  = 1000;
+	qreal width = spacing < 0.15 ? 0.256 : 0.48;
+	qreal verticalX = spacing < 0.15 ? 0.196 : 0.38;
+	qreal centerX = (verticalX * dpi / 2) + 10;
+	qreal initialY = (spacing * dpi / 2) + 25;
+
+	QString header("<?xml version='1.0' encoding='UTF-8'?>\n"
+					"<svg baseProfile='tiny' version='1.2' height='%3in' width='%1in' viewBox='0 0 %2 [40.0]' >\n"
+					"<g id='silkscreen'>\n"
+					"<line id='vertical-left' stroke='white' stroke-width='10' x1='20' x2='20' y1='20' y2='[30.0]'/>\n"
+					"<line id='bottom' stroke='white' stroke-width='10' x1='20' x2='%4' y1='[30.0]' y2='[30.0]'/>\n"
+					"<line id='vertical-right' stroke='white' stroke-width='10' x1='%4' x2='%4' y1='[30.0]' y2='20'/>\n"
+					"<line id='top' stroke='white' stroke-width='10' x1='%4' x2='20' y1='20' y2='20'/>\n"
+					"<line id='mid-vertical' stroke='white' stroke-width='5' x1='%5' x2='%5' y1='[30.0]' y2='20'/>\n"
+					"</g>\n"
+					"<g id='copper1'>\n"
+					"<g id='copper0'>\n"
+					"<rect width='55' height='55' x='%6' y='%7' fill='none' stroke='rgb(255, 191, 0)' stroke-width='20' />\n");
+
+	QString repeat("<circle cx='%1' cy='%2' fill='none' id='connector%3pin' r='27.5' stroke='rgb(255, 191, 0)' stroke-width='20'/>\n");
+
+	header = header.arg(width)
+					.arg(width * dpi)
+					.arg(pins * spacing + 0.04)
+					.arg((width - 0.02) * dpi)
+					.arg(verticalX * dpi)
+					.arg(centerX - 27.5)
+					.arg(initialY - 27.5);
+	QString svg = TextUtils::incrementTemplateString(header, 1, pins * dpi * spacing, TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction);
+	for (int i = 0; i < pins; i++) {
+		svg += repeat.arg(centerX).arg(initialY + (i * dpi * spacing)).arg(i);
+	}
+
+	svg += "</g>\n</g>\n</svg>\n";
+	return svg;
+}
+

@@ -180,6 +180,18 @@ QString PartFactory::getSvgFilename(ModelPart * modelPart, const QString & expec
 		return getSvgFilenameAux(expectedFileName, &MysteryPart::makeBreadboardSvg);
 	}
 
+	if (expectedFileName.startsWith("breadboard/screw_terminal_", Qt::CaseInsensitive)) {
+		return getSvgFilenameAux(expectedFileName, &ScrewTerminal::makeBreadboardSvg);
+	}
+
+	if (expectedFileName.startsWith("schematic/screw_terminal_", Qt::CaseInsensitive)) {
+		return getSvgFilenameAux(expectedFileName, &ScrewTerminal::makeSchematicSvg);
+	}
+
+	if (expectedFileName.startsWith("pcb/screw_terminal_", Qt::CaseInsensitive)) {
+		return getSvgFilenameAux(expectedFileName, &ScrewTerminal::makePcbSvg);
+	}
+
 	if (expectedFileName.startsWith("breadboard/generic_sip_", Qt::CaseInsensitive)) {
 		return getSvgFilenameAux(expectedFileName, &Dip::makeBreadboardSvg);
 	}

@@ -44,6 +44,9 @@ public:
 public:
 	static QString genFZP(const QString & moduleid);
 	static QString genModuleID(QMap<QString, QString> & currPropsMap);
+	static QString makeBreadboardSvg(const QString & expectedFileName);
+	static QString makeSchematicSvg(const QString & expectedFileName);
+	static QString makePcbSvg(const QString & expectedFileName);
 
 protected:
 	static void initSpacings();
