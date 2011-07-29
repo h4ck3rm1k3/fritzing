@@ -36,7 +36,7 @@ struct SvgIdLayer
 	QString m_svgId;
 	QString m_terminalId;
 	ViewLayer::ViewLayerID m_svgViewLayerID;
-	bool m_visible;
+	bool m_svgVisible;
 	bool m_hybrid;
 	bool m_processed;
 	QRectF m_rect;		

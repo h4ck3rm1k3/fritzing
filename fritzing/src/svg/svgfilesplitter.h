@@ -98,7 +98,7 @@ protected:
 	static void changeStrokeWidth(QDomElement & element, qreal delta, bool absolute);
 	static void fixStyleAttribute(QDomElement & element);
 	static bool shiftAttribute(QDomElement & element, const char * attributeName, qreal d);
-	static void setStrokeOrFill(QDomElement & element, bool doIt, const QString & color);
+	static void setStrokeOrFill(QDomElement & element, bool doIt, const QString & color, bool force);
 
 protected slots:
 	void normalizeCommandSlot(QChar command, bool relative, QList<double> & args, void * userData);

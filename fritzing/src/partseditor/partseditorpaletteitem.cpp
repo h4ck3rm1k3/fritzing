@@ -200,7 +200,7 @@ void PartsEditorPaletteItem::setConnector(const QString &id, Connector *connecto
 	Q_UNUSED(connector);
 }
 
-bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors, QString & error)
+bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors, LayerAttributes & layerAttributes, QString & error)
 {
 	Q_UNUSED(viewLayerSpec);
 	Q_UNUSED(error);
@@ -213,7 +213,6 @@ bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ViewIdentifierCla
 
 	if (m_svgStrings == NULL) {
 		// TODO Mariano: Copied from paletteitembase::setUpImage (extract what's in common)
-		LayerAttributes layerAttributes;
 		if (modelPartShared->domDocument() ) {
 			bool result = layerAttributes.getSvgElementID(modelPartShared->domDocument(), viewIdentifier, viewLayerID);
 			if (!result) return false;
@@ -251,14 +250,14 @@ bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ViewIdentifierCla
 		renderer = FSvgRenderer::getByFilename(fn, viewLayerID);
 		if (renderer == NULL) {
 			renderer = new FSvgRenderer();
-			bool loaded = false;
+			QByteArray loaded;
 			if (!m_itemSVG.isEmpty()) {
 				loaded = renderer->loadSvg(m_itemSVG.toUtf8(), m_svgStrings->absolutePath());
 			}
-			if (!loaded) {
+			if (loaded.isEmpty()) {
 				loaded = renderer->loadSvg(m_svgStrings->absolutePath());
 			}
-			if (!loaded) {
+			if (loaded.isEmpty()) {
 				QMessageBox::information( NULL, QObject::tr("Fritzing"),
 						QObject::tr("The file %1 is not a Fritzing file (7).").arg(m_svgStrings->absolutePath()));
 				delete renderer;

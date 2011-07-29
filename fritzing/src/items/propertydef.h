@@ -41,6 +41,7 @@ struct PropertyDef {
 	bool editable;
 	QList<qreal> menuItems;
 	QStringList sMenuItems;
+	QHash<QString, QString> adjuncts;
 	QStringList suffixes;
 };
 

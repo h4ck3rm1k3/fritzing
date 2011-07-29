@@ -33,6 +33,8 @@ $Date$
 #include "../utils/misc.h"
 #include "../fsvgrenderer.h"
 #include "../items/moduleidnames.h"
+#include "../layerattributes.h"
+
 #include "partsbinview.h"
 
 #define SELECTED_STYLE "background-color: white;"
@@ -106,7 +108,8 @@ SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ViewIdentifierClass::ViewIde
 		setFlags(QGraphicsItem::ItemIsSelectable);
 
 		QString error;
-		FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, viewIdentifier, ViewLayer::Icon, ViewLayer::ThroughHoleThroughTop_OneLayer, error);
+		LayerAttributes layerAttributes;
+		FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, viewIdentifier, ViewLayer::Icon, ViewLayer::ThroughHoleThroughTop_OneLayer, layerAttributes, error);
 		if (renderer && m_itemBase) {
 			m_itemBase->setFilename(renderer->filename());
 		}

@@ -46,6 +46,7 @@ $Date$
 #include "partlabel.h"
 #include "../model/modelpart.h"
 #include "../utils/graphicsutils.h"
+#include "../layerattributes.h"
 
 #include <stdlib.h>
 
@@ -747,7 +748,8 @@ FSvgRenderer * Wire::setUpConnectors(ModelPart * modelPart, ViewIdentifierClass:
 	clearConnectorItemCache();
 
 	QString error;
-	FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, viewIdentifier, m_viewLayerID, m_viewLayerSpec, error);
+	LayerAttributes layerAttributes;
+	FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, viewIdentifier, m_viewLayerID, m_viewLayerSpec, layerAttributes, error);
 	if (renderer == NULL) {
 		return NULL;
 	}

@@ -134,8 +134,6 @@ void MainWindow::exportToGerber(const QString & exportDir, ItemBase * board, boo
 		outlineInvalidCount = outlineGerber.convert(svgOutline, m_pcbGraphicsView->boardLayers() == 2, "contour", SVG2gerber::ForOutline, svgSize * GraphicsUtils::StandardFritzingDPI);
 	}
 
-	doDrill(board, exportDir, displayMessageBoxes);
-
     // contour / board outline
     QString contourFile = exportDir + "/" +
                           QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)
@@ -148,6 +146,8 @@ void MainWindow::exportToGerber(const QString & exportDir, ItemBase * board, boo
 
     QTextStream contourStream(&contourOut);
     contourStream << outlineGerber.getGerber();
+
+	doDrill(board, exportDir, displayMessageBoxes);
 
 	if (outlineInvalidCount > 0 || silkInvalidCount > 0 || copperInvalidCount > 0 || maskInvalidCount) {
 		QString s;
@@ -492,6 +492,15 @@ QString MainWindow::clipToBoard(QString svgString, ItemBase * board, const QStri
 
 		GroundPlaneGenerator gpg;
 		if (forWhy == SVG2gerber::ForOutline) {
+			int tinyWidth = source.width() / FSvgRenderer::printerScale();
+			int tinyHeight = source.height() / FSvgRenderer::printerScale();
+			QRectF tinyTarget(0, 0, tinyWidth, tinyHeight);
+			QImage tinyImage(tinyWidth, tinyHeight, QImage::Format_RGB32);
+			QPainter painter;
+			painter.begin(&tinyImage);
+			renderer.render(&painter, tinyTarget);
+			painter.end();
+			tinyImage.invertPixels();				// need white pixels on a black background for GroundPlaneGenerator
 			gpg.scanOutline(image, image.width(), image.height(), GraphicsUtils::StandardFritzingDPI / res, GraphicsUtils::StandardFritzingDPI, "#ffffff", layerName, false, 1, false, QSizeF(0, 0), 0);
 		}
 		else {

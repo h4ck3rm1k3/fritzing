@@ -443,9 +443,14 @@ bool ModelPartShared::needsCopper1() {
 void ModelPartShared::connectorIDs(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, QStringList & connectorIDs, QStringList & terminalIDs, QStringList & legIDs) {
 	foreach (ConnectorShared * connectorShared, m_connectorSharedHash.values()) {
 		SvgIdLayer * svgIdLayer = connectorShared->fullPinInfo(viewIdentifier, viewLayerID);
-		connectorIDs.append(svgIdLayer->m_svgId);
-		terminalIDs.append(svgIdLayer->m_terminalId);
-		legIDs.append(svgIdLayer->m_legId);
+		if (svgIdLayer == NULL) {
+			continue;
+		}
+		else {
+			connectorIDs.append(svgIdLayer->m_svgId);
+			terminalIDs.append(svgIdLayer->m_terminalId);
+			legIDs.append(svgIdLayer->m_legId);
+		}
 	}
 }
 

@@ -30,7 +30,6 @@ $Date$
 #include "../sketch/infographicsview.h"
 #include "../commands.h"
 #include "../utils/textutils.h"
-#include "../layerattributes.h"
 #include "partlabel.h"
 
 #include <QDomNodeList>

@@ -57,10 +57,10 @@ public:
 	FSvgRenderer(QObject * parent = 0);
 	~FSvgRenderer();
 
-	bool loadSvg(const QString & filename, const QStringList & connectorIDs, const QStringList & terminalIDs, const QStringList & legIDs, const QString & setColor, const QString & colorElementID, bool findNonConnectors);
-	bool loadSvg(const QString & filename);
-	bool loadSvg( const QByteArray & contents, const QString & filename, const QStringList & connectorIDs, const QStringList & terminalIDs, const QStringList & legIDs, const QString & setColor, const QString & colorElementID, bool findNonConnectors);     // for SvgSplitter loads
-	bool loadSvg( const QByteArray & contents, const QString & filename);						// for SvgSplitter loads
+	QByteArray loadSvg(const QString & filename, const QStringList & connectorIDs, const QStringList & terminalIDs, const QStringList & legIDs, const QString & setColor, const QString & colorElementID, bool findNonConnectors);
+	QByteArray loadSvg(const QString & filename);
+	QByteArray loadSvg( const QByteArray & contents, const QString & filename, const QStringList & connectorIDs, const QStringList & terminalIDs, const QStringList & legIDs, const QString & setColor, const QString & colorElementID, bool findNonConnectors);     // for SvgSplitter loads
+	QByteArray loadSvg( const QByteArray & contents, const QString & filename);						// for SvgSplitter loads
 	bool fastLoad(const QByteArray & contents);								
 	const QString & filename();
 	QSizeF defaultSizeF();
@@ -80,7 +80,7 @@ public:
 
 protected:
 	void determineDefaultSize(QXmlStreamReader &);
-	bool loadAux (const QByteArray & contents, const QString & filename, const QStringList & connectorIDs, const QStringList & terminalIDs, const QStringList & legIDs, const QString & setColor, const QString & colorElementID, bool findNonConnectors);
+	QByteArray loadAux (const QByteArray & contents, const QString & filename, const QStringList & connectorIDs, const QStringList & terminalIDs, const QStringList & legIDs, const QString & setColor, const QString & colorElementID, bool findNonConnectors);
 	bool initConnectorInfo(QDomDocument &, const QStringList & connectorIDs, const QStringList & terminalIDs, const QStringList & legIDs);
 	ConnectorInfo * initConnectorInfo(QDomElement & connectorElement);
 	bool initConnectorInfoAux(QList<QDomElement> & connectorElements, ConnectorInfo * connectorInfo);

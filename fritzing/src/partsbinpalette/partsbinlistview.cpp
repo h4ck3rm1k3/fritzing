@@ -33,6 +33,7 @@ $Date$
 #include "../fsvgrenderer.h"
 #include "../itemdrag.h"
 #include "../items/partfactory.h"
+#include "../layerattributes.h"
 
 #include "partsbinlistview.h"
 
@@ -102,7 +103,8 @@ int PartsBinListView::setItemAux(ModelPart * modelPart, int position) {
 		ItemBase * itemBase = PartFactory::createPart(modelPart, ViewLayer::ThroughHoleThroughTop_OneLayer, ViewIdentifierClass::IconView, ViewGeometry(), ItemBase::getNextID(), NULL, NULL, false);
 		lwi->setData(Qt::UserRole, qVariantFromValue( itemBase ) );
 		QString error;
-		FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, ViewIdentifierClass::IconView, ViewLayer::Icon, itemBase->viewLayerSpec(), error);
+		LayerAttributes layerAttributes;
+		FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, ViewIdentifierClass::IconView, ViewLayer::Icon, itemBase->viewLayerSpec(), layerAttributes, error);
 		if (renderer != NULL) {
 			if (itemBase) {
 				itemBase->setFilename(renderer->filename());

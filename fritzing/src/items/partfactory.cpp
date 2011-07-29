@@ -52,6 +52,7 @@ $Date$
 #include "perfboard.h"
 #include "breadboard.h"
 #include "stripboard.h"
+#include "led.h"
 #include "../utils/folderutils.h"
 
 static QString PartFactoryFolderPath;
@@ -131,6 +132,9 @@ ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClas
 					}
 					if (moduleID.endsWith(ModuleIDNames::InductorModuleIDName)) {
 						return new Capacitor(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
+					}
+					if (moduleID.endsWith(ModuleIDNames::ColorLEDModuleIDName)) {
+						return new LED(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 					}
 					if (moduleID.endsWith(ModuleIDNames::LEDModuleIDName)) {
 						return new Capacitor(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);

@@ -33,7 +33,6 @@ $Date$
 #include "../sketch/infographicsview.h"
 #include "../svg/svgfilesplitter.h"
 #include "../commands.h"
-#include "../layerattributes.h"
 #include "moduleidnames.h"
 #include "partlabel.h"
 

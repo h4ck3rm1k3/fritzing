@@ -33,7 +33,7 @@ $Date$
 #include "partlabel.h"
 #include "../commands.h"
 #include "../connectors/connectoritem.h"
-
+#include "../layerattributes.h"
 
 #include <QGraphicsSceneMouseEvent>
 #include <QSvgRenderer>
@@ -61,7 +61,8 @@ PaletteItem::~PaletteItem() {
 }
 
 bool PaletteItem::renderImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, bool doConnectors, QString & error) {
-	bool result = setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, this->viewLayerSpec(), doConnectors, error);
+	LayerAttributes layerAttributes; 
+	bool result = setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, this->viewLayerSpec(), doConnectors, layerAttributes, error);
 
 	m_syncMoved = this->pos();
 	return result;
@@ -442,7 +443,8 @@ void PaletteItem::resetImage(InfoGraphicsView * infoGraphicsView) {
 	}
 
 	QString error;
-	this->setUpImage(modelPart(), this->viewIdentifier(), infoGraphicsView->viewLayers(), this->viewLayerID(), this->viewLayerSpec(), true, error);
+	LayerAttributes layerAttributes;
+	this->setUpImage(modelPart(), this->viewIdentifier(), infoGraphicsView->viewLayers(), this->viewLayerID(), this->viewLayerSpec(), true, layerAttributes, error);
 	
 	foreach (ItemBase * layerKin, m_layerKin) {
 		resetKinImage(layerKin, infoGraphicsView);
@@ -455,7 +457,8 @@ void PaletteItem::resetKinImage(ItemBase * layerKin, InfoGraphicsView * infoGrap
 		connector->unprocess(layerKin->viewIdentifier(), layerKin->viewLayerID());
 	}
 	QString error;
-	qobject_cast<PaletteItemBase *>(layerKin)->setUpImage(modelPart(), layerKin->viewIdentifier(), infoGraphicsView->viewLayers(), layerKin->viewLayerID(), layerKin->viewLayerSpec(), true, error);
+	LayerAttributes layerAttributes;
+	qobject_cast<PaletteItemBase *>(layerKin)->setUpImage(modelPart(), layerKin->viewIdentifier(), infoGraphicsView->viewLayers(), layerKin->viewLayerID(), layerKin->viewLayerSpec(), true, layerAttributes, error);
 }
 
 QString PaletteItem::genFZP(const QString & moduleid, const QString & templateName, int minPins, int maxPins, int steps)

@@ -48,6 +48,9 @@ public:
 	bool getSvgElementID(QDomDocument * , ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID );
 	bool canFlipHorizontal();
 	bool canFlipVertical();
+	const QByteArray & loaded();
+	void clearLoaded();
+	void setLoaded(const QByteArray &);
 
 public:
 	static QDomElement getSvgElementLayers(QDomDocument * doc, ViewIdentifierClass::ViewIdentifier viewIdentifier );
@@ -62,6 +65,7 @@ protected:
 	bool m_sticky;
 	bool m_canFlipHorizontal;
 	bool m_canFlipVertical;
+	QByteArray m_loaded;
 };
 
 #endif

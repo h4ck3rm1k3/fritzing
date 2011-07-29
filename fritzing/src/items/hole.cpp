@@ -31,7 +31,6 @@ $Date$
 #include "../svg/svgfilesplitter.h"
 #include "../commands.h"
 #include "../utils/textutils.h"
-#include "../layerattributes.h"
 #include "../viewlayer.h"
 #include "partlabel.h"
 #include "../connectors/nonconnectoritem.h"
@@ -210,8 +209,8 @@ ItemBase * Hole::setBothSvg(const QString & holeDiameter, const QString & ringTh
 
 	QString setColor;
 	QStringList noIDs;
-	bool result = m_renderer->loadSvg(svg.toLatin1(), m_filename, connectorIDs, noIDs,  noIDs, "", "", true);
-	if (result) {
+	QByteArray result = m_renderer->loadSvg(svg.toLatin1(), m_filename, connectorIDs, noIDs,  noIDs, "", "", true);
+	if (!result.isEmpty()) {
 		setSharedRendererEx(m_renderer);
 	}
 
@@ -231,7 +230,7 @@ ItemBase * Hole::setBothSvg(const QString & holeDiameter, const QString & ringTh
 		}
 
 		result = m_otherLayerRenderer->loadSvg(osvg.toLatin1(), m_filename, noIDs, noIDs,  noIDs, "", "", true);
-		if (result) {
+		if (!result.isEmpty()) {
 			qobject_cast<PaletteItemBase *>(otherLayer)->setSharedRendererEx(m_otherLayerRenderer);
 		}
 	}

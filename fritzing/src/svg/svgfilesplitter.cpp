@@ -357,7 +357,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 	if (nodeName.compare("g") == 0) {
 		fixStyleAttribute(element);
 		normalizeAttribute(element, "stroke-width", sNewWidth, vbWidth);
-		setStrokeOrFill(element, blackOnly, "black");
+		setStrokeOrFill(element, blackOnly, "black", false);
 		doChildren = true;
 	}
 	else if (nodeName.compare("circle") == 0) {
@@ -366,7 +366,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 		normalizeAttribute(element, "cy", sNewHeight, vbHeight);
 		normalizeAttribute(element, "r", sNewWidth, vbWidth);
 		normalizeAttribute(element, "stroke-width", sNewWidth, vbWidth);
-		setStrokeOrFill(element, blackOnly, "black");
+		setStrokeOrFill(element, blackOnly, "black", false);
 	}
 	else if (nodeName.compare("line") == 0) {
 		fixStyleAttribute(element);
@@ -375,7 +375,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 		normalizeAttribute(element, "x2", sNewWidth, vbWidth);
 		normalizeAttribute(element, "y2", sNewHeight, vbHeight);
 		normalizeAttribute(element, "stroke-width", sNewWidth, vbWidth);
-		setStrokeOrFill(element, blackOnly, "black");
+		setStrokeOrFill(element, blackOnly, "black", false);
 	}
 	else if (nodeName.compare("rect") == 0) {
 		fixStyleAttribute(element);
@@ -392,7 +392,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 		if (!element.attribute("ry").isEmpty()) {
 			normalizeAttribute(element, "ry", sNewHeight, vbHeight);
 		}
-		setStrokeOrFill(element, blackOnly, "black");
+		setStrokeOrFill(element, blackOnly, "black", false);
 	}
 	else if (nodeName.compare("ellipse") == 0) {
 		fixStyleAttribute(element);
@@ -401,7 +401,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 		normalizeAttribute(element, "rx", sNewWidth, vbWidth);
 		normalizeAttribute(element, "ry", sNewHeight, vbHeight);
 		normalizeAttribute(element, "stroke-width", sNewWidth, vbWidth);
-		setStrokeOrFill(element, blackOnly, "black");
+		setStrokeOrFill(element, blackOnly, "black", false);
 	}
 	else if (nodeName.compare("polygon") == 0 || nodeName.compare("polyline") == 0) {
 		fixStyleAttribute(element);
@@ -420,12 +420,12 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 				element.setAttribute("points", pathUserData.string);
 			}
 		}
-		setStrokeOrFill(element, blackOnly, "black");
+		setStrokeOrFill(element, blackOnly, "black", false);
 	}
 	else if (nodeName.compare("path") == 0) {
 		fixStyleAttribute(element);
 		normalizeAttribute(element, "stroke-width", sNewWidth, vbWidth);
-		setStrokeOrFill(element, blackOnly, "black");
+		setStrokeOrFill(element, blackOnly, "black", false);
 		QString data = element.attribute("d").trimmed();
 		if (!data.isEmpty()) {
 			const char * slot = SLOT(normalizeCommandSlot(QChar, bool, QList<double> &, void *));
@@ -446,7 +446,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 		normalizeAttribute(element, "y", sNewHeight, vbHeight);
 		normalizeAttribute(element, "stroke-width", sNewWidth, vbWidth);
 		normalizeAttribute(element, "font-size", sNewWidth, vbWidth);
-		setStrokeOrFill(element, blackOnly, "black");
+		setStrokeOrFill(element, blackOnly, "black", false);
 	}
 	else if (nodeName.compare("linearGradient") == 0) {
 		if (element.attribute("gradientUnits").compare("userSpaceOnUse") == 0) {
@@ -1031,14 +1031,14 @@ void SvgFileSplitter::convertHVSlot(QChar command, bool relative, QList<double> 
 	}
 }
 
-void SvgFileSplitter::setStrokeOrFill(QDomElement & element, bool blackOnly, const QString & color)
+void SvgFileSplitter::setStrokeOrFill(QDomElement & element, bool blackOnly, const QString & color, bool force)
 {
 	if (!blackOnly) return;
 
 	// if stroke attribute is not empty make it black
 	// if fill attribute is not empty and not "none" make it black
 	QString stroke = element.attribute("stroke");
-	if (!stroke.isEmpty()) {
+	if (!stroke.isEmpty() || force) {
 		if (stroke.compare("none") != 0) {
 			element.setAttribute("stroke", color);
 		}
@@ -1063,28 +1063,37 @@ void SvgFileSplitter::fixStyleAttributeRecurse(QDomElement & element) {
 void SvgFileSplitter::fixColorRecurse(QDomElement & element, const QString & newColor, const QStringList & exceptions) {
 	fixStyleAttribute(element);
 	bool gotException = false;
+	QString s = element.attribute("stroke");
+	QString f = element.attribute("fill");
+	QString id = element.attribute("id");
 	foreach (QString e, exceptions) {
-		QString s = element.attribute("stroke");
-		QString f = element.attribute("fill");
 		if (s.isEmpty()) {
 			if (f.isEmpty()) {
-				gotException = true;			// not really, but saves a little extra processing time
 			}
 			else {
-				gotException = exceptions.contains(f);
+				if (exceptions.contains(f)) {
+					gotException = true;
+					break;
+				}
 			}
 		}
 		else {		
 			if (f.isEmpty()) {
-				gotException = exceptions.contains(s);
+				if (exceptions.contains(s)) {
+					gotException = true;
+					break;
+				}
 			}
 			else {
-				gotException = exceptions.contains(s) && exceptions.contains(f);
+				if (exceptions.contains(s) && exceptions.contains(f)) {
+					gotException = true;
+					break;
+				}
 			}
 		}
 	}
 	if (!gotException) {
-		setStrokeOrFill(element, true, newColor);
+		setStrokeOrFill(element, true, newColor, !id.isEmpty()); 
 	}
 
 	QDomElement childElement = element.firstChildElement();

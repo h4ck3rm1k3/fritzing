@@ -1187,12 +1187,6 @@ void ItemBase::saveLocAndTransform(QXmlStreamWriter & streamWriter)
 	GraphicsUtils::saveTransform(streamWriter, m_viewGeometry.transform());
 }
 
-FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, QString & error)
-{
-	LayerAttributes layerAttributes;
-	return setUpImage(modelPart, viewIdentifier, viewLayerID, viewLayerSpec, layerAttributes, error);
-}
-
 FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, LayerAttributes & layerAttributes, QString & error)
 {
 #ifndef QT_NO_DEBUG
@@ -1291,7 +1285,8 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 						result = svgFileSplitter.splitString(f, layerAttributes.layerName());
 					}
 					if (result) {
-						if (renderer->loadSvg(svgFileSplitter.byteArray(), filename, connectorIDs, terminalIDs, legIDs, setColor, colorElementID, viewIdentifier == ViewIdentifierClass::PCBView)) {
+						QByteArray bytes = renderer->loadSvg(svgFileSplitter.byteArray(), filename, connectorIDs, terminalIDs, legIDs, setColor, colorElementID, viewIdentifier == ViewIdentifierClass::PCBView);
+						if (!bytes.isEmpty()) {
 							gotOne = true;
 						}
 					}
@@ -1301,14 +1296,13 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 //					DebugDialog::debug(QString("set up image elapsed (2.3) %1").arg(t.elapsed()) );
 //#endif
 					// only one layer, just load it directly
-					bool result;
 					if (flipDoc.isNull()) {
-						result = renderer->loadSvg(filename, connectorIDs, terminalIDs, legIDs, setColor, colorElementID, viewIdentifier == ViewIdentifierClass::PCBView);
+						layerAttributes.setLoaded(renderer->loadSvg(filename, connectorIDs, terminalIDs, legIDs, setColor, colorElementID, viewIdentifier == ViewIdentifierClass::PCBView));
 					}
 					else {
-						result = renderer->loadSvg(flipDoc.toByteArray(), filename, connectorIDs, terminalIDs, legIDs, setColor, colorElementID, viewIdentifier == ViewIdentifierClass::PCBView);
+						layerAttributes.setLoaded(renderer->loadSvg(flipDoc.toByteArray(), filename, connectorIDs, terminalIDs, legIDs, setColor, colorElementID, viewIdentifier == ViewIdentifierClass::PCBView));
 					}
-					if (result) {
+					if (!layerAttributes.loaded().isEmpty()) {
 						gotOne = true;
 					}
 //#ifndef QT_NO_DEBUG

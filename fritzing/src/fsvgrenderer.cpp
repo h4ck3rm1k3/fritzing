@@ -83,26 +83,26 @@ void FSvgRenderer::cleanup() {
 	m_deleted.clear();
 }
 
-bool FSvgRenderer::loadSvg(const QString & filename) {
+QByteArray FSvgRenderer::loadSvg(const QString & filename) {
 	QStringList strings;
 	QString string;
 	return loadSvg(filename, strings, strings, strings, string, string, false);
 }
 
-bool FSvgRenderer::loadSvg(const QString & filename, const QStringList & connectorIDs, const QStringList & terminalIDs, const QStringList & legIDs, const QString & setColor, const QString & colorElementID, bool findNonConnectors) {
+QByteArray FSvgRenderer::loadSvg(const QString & filename, const QStringList & connectorIDs, const QStringList & terminalIDs, const QStringList & legIDs, const QString & setColor, const QString & colorElementID, bool findNonConnectors) {
 	if (!QFileInfo(filename).exists() || !QFileInfo(filename).isFile()) {
-		return false;
+		return QByteArray();
 	}
 
     QFile file(filename);
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
-		return false;
+		return QByteArray();
 	}
 
 	QByteArray contents = file.readAll();
 	file.close();
 
-	if (contents.length() <= 0) return false;
+	if (contents.length() <= 0) return QByteArray();
 
 	return loadAux(contents, filename, connectorIDs, terminalIDs, legIDs, setColor, colorElementID, findNonConnectors);
 
@@ -126,17 +126,17 @@ bool FSvgRenderer::loadSvg(const QString & filename, const QStringList & connect
 
 }
 
-bool FSvgRenderer::loadSvg(const QByteArray & contents, const QString & filename) {
+QByteArray FSvgRenderer::loadSvg(const QByteArray & contents, const QString & filename) {
 	QStringList strings;
 	QString string;
 	return loadSvg(contents, filename, strings, strings, strings, string, string, false);
 }
 
-bool FSvgRenderer::loadSvg(const QByteArray & contents, const QString & filename, const QStringList & connectorIDs, const QStringList & terminalIDs, const QStringList & legIDs, const QString & setColor, const QString & colorElementID, bool findNonConnectors) {
+QByteArray FSvgRenderer::loadSvg(const QByteArray & contents, const QString & filename, const QStringList & connectorIDs, const QStringList & terminalIDs, const QStringList & legIDs, const QString & setColor, const QString & colorElementID, bool findNonConnectors) {
 	return loadAux(contents, filename, connectorIDs, terminalIDs, legIDs, setColor, colorElementID, findNonConnectors);
 }
 
-bool FSvgRenderer::loadAux(const QByteArray & contents, const QString & filename, const QStringList & connectorIDs, const QStringList & terminalIDs, const QStringList & legIDs, const QString & setColor, const QString & colorElementID, bool findNonConnectors) {
+QByteArray FSvgRenderer::loadAux(const QByteArray & contents, const QString & filename, const QStringList & connectorIDs, const QStringList & terminalIDs, const QStringList & legIDs, const QString & setColor, const QString & colorElementID, bool findNonConnectors) {
 
 	QByteArray cleanContents;
 	bool cleaned = false;
@@ -240,8 +240,10 @@ bool FSvgRenderer::loadAux(const QByteArray & contents, const QString & filename
 	bool result = QSvgRenderer::load(cleanContents);
 	if (result) {
 		m_filename = filename;
+		return cleanContents;
 	}
-	return result;
+
+	return QByteArray();
 }
 
 bool FSvgRenderer::fastLoad(const QByteArray & contents) {
@@ -594,7 +596,7 @@ bool FSvgRenderer::setUpConnector(SvgIdLayer * svgIdLayer, bool ignoreTerminalPo
 
 	if (svgIdLayer->m_processed) {
 		// hybrids are not visible in some views
-		return svgIdLayer->m_visible || svgIdLayer->m_hybrid;
+		return svgIdLayer->m_svgVisible || svgIdLayer->m_hybrid;
 	}
 
 	svgIdLayer->m_processed = true;
@@ -603,7 +605,7 @@ bool FSvgRenderer::setUpConnector(SvgIdLayer * svgIdLayer, bool ignoreTerminalPo
 
 	QRectF bounds = this->boundsOnElement(connectorID);	
 	if (bounds.isNull() && !svgIdLayer->m_hybrid) {		// hybrids can have zero size
-		svgIdLayer->m_visible = false;		
+		svgIdLayer->m_svgVisible = false;		
 		DebugDialog::debug("renderer::setupconnector: null bounds");
 		return false;
 	}
@@ -643,7 +645,10 @@ bool FSvgRenderer::setUpConnector(SvgIdLayer * svgIdLayer, bool ignoreTerminalPo
 							   r1.width() * defaultSizeF.width() / viewBox.width(), 
 							   r1.height() * defaultSizeF.height() / viewBox.height());
 
-	svgIdLayer->m_visible = !bounds.isNull();
+	svgIdLayer->m_svgVisible = !bounds.isNull();
+	//if (!svgIdLayer->m_svgVisible) {
+		//DebugDialog::debug("not vis");
+	//}
 	svgIdLayer->m_point = calcTerminalPoint(svgIdLayer->m_terminalId, svgIdLayer->m_rect, ignoreTerminalPoint, viewBox, connectorInfo->terminalMatrix);
 	calcLeg(svgIdLayer, viewBox, connectorInfo);
 	
@@ -758,7 +763,7 @@ QList<SvgIdLayer *> FSvgRenderer::setUpNonConnectors() {
 		QRectF r1 = matrix0.mapRect(bounds);
 		svgIdLayer->m_rect.setRect(r1.x() * defaultSize.width() / viewBox.width(), r1.y() * defaultSize.height() / viewBox.height(), r1.width() * defaultSize.width() / viewBox.width(), r1.height() * defaultSize.height() / viewBox.height());
 		svgIdLayer->m_point = svgIdLayer->m_rect.center() - svgIdLayer->m_rect.topLeft();
-		svgIdLayer->m_visible = true;
+		svgIdLayer->m_svgVisible = true;
 
 		list.append(svgIdLayer);
 	}

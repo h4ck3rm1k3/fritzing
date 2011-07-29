@@ -32,6 +32,7 @@ $Date$
 #include "../svg/svgfilesplitter.h"
 #include "../commands.h"
 #include "moduleidnames.h"
+#include "../layerattributes.h"
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -405,9 +406,9 @@ void ResizableBoard::positionGrips() {
 	m_resizeGripTL->setPos(-dx, -dy);
 }
 
-bool ResizableBoard::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors, QString & error)
+bool ResizableBoard::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors, LayerAttributes & layerAttributes, QString & error)
 {
-	bool result = Board::setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, viewLayerSpec, doConnectors, error);
+	bool result = Board::setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, viewLayerSpec, doConnectors, layerAttributes, error);
 	if ((viewIdentifier == theViewIdentifier()) && result) {
 		positionGrips();
 	}
@@ -426,7 +427,8 @@ void ResizableBoard::resizePixels(qreal w, qreal h, const LayerHash & viewLayers
 void ResizableBoard::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers) {
 	if (mmW == 0 || mmH == 0) {
 		QString error;
-		setUpImage(modelPart(), m_viewIdentifier, viewLayers, m_viewLayerID, m_viewLayerSpec, true, error);
+		LayerAttributes layerAttributes;
+		setUpImage(modelPart(), m_viewIdentifier, viewLayers, m_viewLayerID, m_viewLayerSpec, true, layerAttributes, error);
 		modelPart()->setProp("height", QVariant());
 		modelPart()->setProp("width", QVariant());
 		// do the layerkin

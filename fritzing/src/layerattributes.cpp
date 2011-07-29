@@ -140,3 +140,15 @@ bool LayerAttributes::canFlipVertical() {
 	return m_canFlipVertical;
 }
 
+const QByteArray & LayerAttributes::loaded() {
+	return m_loaded;
+}
+
+void LayerAttributes::clearLoaded() {
+	m_loaded.clear();
+}
+
+void LayerAttributes::setLoaded(const QByteArray & loaded) {
+	m_loaded = loaded;
+}
+

@@ -27,6 +27,7 @@ HEADERS += \
     src/items/itembase.h \
     src/items/jumperitem.h \
     src/items/layerkinpaletteitem.h \
+    src/items/led.h \
     src/items/logoitem.h \
     src/items/moduleidnames.h \
     src/items/mysterypart.h \
@@ -61,6 +62,7 @@ SOURCES += \
     src/items/itembase.cpp \
     src/items/jumperitem.cpp \
     src/items/layerkinpaletteitem.cpp \
+    src/items/led.cpp \
     src/items/logoitem.cpp \
     src/items/moduleidnames.cpp \
     src/items/mysterypart.cpp \

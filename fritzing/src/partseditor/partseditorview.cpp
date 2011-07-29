@@ -1205,7 +1205,8 @@ void PartsEditorView::setMismatching(ViewIdentifierClass::ViewIdentifier viewId,
 void PartsEditorView::aboutToSave(bool fakeDefaultIfNone) {
 	if(m_item) {
 		FSvgRenderer renderer;
-		if(renderer.loadSvg(m_item->flatSvgFilePath())) {
+		QByteArray bytes = renderer.loadSvg(m_item->flatSvgFilePath());
+		if (!bytes.isEmpty()) {
 			QRectF svgViewBox = renderer.viewBoxF();
 			QSizeF sceneViewBox = renderer.defaultSizeF();
 			QDomDocument *svgDom = m_item->svgDom();

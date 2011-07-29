@@ -74,6 +74,10 @@ void PropertyDefMaster::loadPropertyDefs() {
 			else {
 				propertyDef->sMenuItems.append(val);
 			}
+			QString adjunct = menuItem.attribute("adjunct");
+			if (!adjunct.isEmpty()) {
+				propertyDef->adjuncts.insert(val, adjunct);
+			}
 			menuItem = menuItem.nextSiblingElement("menuItem");
 		}
 		QDomElement suffixElement = propertyElement.firstChildElement("suffix");

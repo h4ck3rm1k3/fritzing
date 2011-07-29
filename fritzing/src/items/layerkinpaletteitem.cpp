@@ -27,6 +27,7 @@ $Date$
 #include "layerkinpaletteitem.h"
 #include "../sketch/infographicsview.h"
 #include "../debugdialog.h"
+#include "../layerattributes.h"
 
 LayerKinPaletteItem::LayerKinPaletteItem(PaletteItemBase * chief, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu* itemMenu)
 	: PaletteItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu)
@@ -40,7 +41,8 @@ LayerKinPaletteItem::LayerKinPaletteItem(PaletteItemBase * chief, ModelPart * mo
 void LayerKinPaletteItem::init(ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, const LayerHash & viewLayers) {
 	m_viewLayerSpec = viewLayerSpec;
 	QString error;
-	m_ok = setUpImage(m_modelPart, m_viewIdentifier, viewLayers, viewLayerID, m_viewLayerSpec, true, error);
+	LayerAttributes layerAttributes;
+	m_ok = setUpImage(m_modelPart, m_viewIdentifier, viewLayers, viewLayerID, m_viewLayerSpec, true, layerAttributes, error);
 	//DebugDialog::debug(QString("lk accepts hover %1 %2 %3 %4 %5").arg(title()).arg(m_viewIdentifier).arg(m_id).arg(viewLayerID).arg(this->acceptHoverEvents()));
 }
 

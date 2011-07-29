@@ -82,9 +82,7 @@ bool Capacitor::collectExtraInfo(QWidget * parent, const QString & family, const
 						propertyDef->sMenuItems.append(current);
 					}
 				}
-				foreach(QString s, propertyDef->sMenuItems) {
-					focusOutComboBox->addItem(s);
-				}
+				focusOutComboBox->addItems(propertyDef->sMenuItems);
 			}
 			if (!current.isEmpty()) {
 				int ix = focusOutComboBox->findText(current);
