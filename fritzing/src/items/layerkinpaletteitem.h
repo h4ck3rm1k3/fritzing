@@ -36,7 +36,7 @@ Q_OBJECT
 
 public:       
 	LayerKinPaletteItem(PaletteItemBase * chief, ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu);
-	void setOffset(qreal x, qreal y);
+	void setOffset(double x, double y);
 	ItemBase * layerKinChief();
 	bool ok();
 	void setHidden(bool hidden);
@@ -53,7 +53,7 @@ public:
 	bool alreadySticking(ItemBase * itemBase);
 	bool stickyEnabled();
 	void resetID();
-	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi);
+	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi);
 
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);

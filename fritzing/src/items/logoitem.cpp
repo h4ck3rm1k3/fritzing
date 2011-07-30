@@ -112,7 +112,7 @@ void LogoItem::addedToScene(bool temporary)
 }
 
 
-QString LogoItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi)
+QString LogoItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi)
 {
 	if (viewLayerID == layer() ) {
 		QString svg = modelPart()->prop("shape").toString();
@@ -191,8 +191,8 @@ bool LogoItem::collectExtraInfo(QWidget * parent, const QString & family, const 
 
 	if (prop.compare("shape", Qt::CaseInsensitive) == 0) {
 		returnProp = tr("shape");
-		qreal w = qRound(m_modelPart->prop("width").toDouble() * 10) / 10.0;	// truncate to 1 decimal point
-		qreal h = qRound(m_modelPart->prop("height").toDouble() * 10) / 10.0;  // truncate to 1 decimal point
+		double w = qRound(m_modelPart->prop("width").toDouble() * 10) / 10.0;	// truncate to 1 decimal point
+		double h = qRound(m_modelPart->prop("height").toDouble() * 10) / 10.0;  // truncate to 1 decimal point
 
 		QVBoxLayout * vboxLayout = NULL;
 		QFrame * frame = NULL;
@@ -414,8 +414,8 @@ void LogoItem::loadImage(const QString & fileName, bool addName)
 		QString viewBox = root.attribute("viewBox");
 		if (viewBox.isEmpty()) {
 			bool ok1, ok2;
-			qreal w = TextUtils::convertToInches(root.attribute("width"), &ok1, isIllustrator) * FSvgRenderer::printerScale();
-			qreal h = TextUtils::convertToInches(root.attribute("height"), &ok2, isIllustrator) * FSvgRenderer::printerScale();
+			double w = TextUtils::convertToInches(root.attribute("width"), &ok1, isIllustrator) * FSvgRenderer::printerScale();
+			double h = TextUtils::convertToInches(root.attribute("height"), &ok2, isIllustrator) * FSvgRenderer::printerScale();
 			if (!ok1 || !ok2) {
 				unableToLoad(fileName);
 				return;
@@ -452,7 +452,7 @@ void LogoItem::loadImage(const QString & fileName, bool addName)
 		}
 
 		GroundPlaneGenerator gpg;
-		qreal res = image.dotsPerMeterX() / GraphicsUtils::InchesPerMeter;
+		double res = image.dotsPerMeterX() / GraphicsUtils::InchesPerMeter;
 		gpg.scanImage(image, image.width(), image.height(), 1, res, colorString(), layerName(), false, 1, false, QSizeF(0, 0), 0);
 		QStringList newSvgs = gpg.newSVGs();
 		if (newSvgs.count() < 1) {
@@ -478,7 +478,7 @@ void LogoItem::loadImage(const QString & fileName, bool addName)
 	reloadImage(svg, QSizeF(0, 0), fileName, addName);
 }
 
-void LogoItem::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers) {
+void LogoItem::resizeMM(double mmW, double mmH, const LayerHash & viewLayers) {
 	Q_UNUSED(viewLayers);
 
 	if (mmW == 0 || mmH == 0) {
@@ -497,8 +497,8 @@ void LogoItem::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers) {
 		m_renderer = new FSvgRenderer(this);
 	}
 
-	qreal inW = GraphicsUtils::mm2mils(mmW) / 1000;
-	qreal inH = GraphicsUtils::mm2mils(mmH) / 1000;
+	double inW = GraphicsUtils::mm2mils(mmW) / 1000;
+	double inH = GraphicsUtils::mm2mils(mmH) / 1000;
 
 	// TODO: deal with aspect ratio
 
@@ -690,8 +690,8 @@ void LogoItem::widthEntry() {
 	QLineEdit * edit = dynamic_cast<QLineEdit *>(sender());
 	if (edit == NULL) return;
 
-	qreal w = edit->text().toDouble();
-	qreal h = m_modelPart->prop("height").toDouble();
+	double w = edit->text().toDouble();
+	double h = m_modelPart->prop("height").toDouble();
 	if (m_keepAspectRatio) {
 		h = w * m_aspectRatio.height() / m_aspectRatio.width();
 	}
@@ -706,8 +706,8 @@ void LogoItem::heightEntry() {
 	QLineEdit * edit = dynamic_cast<QLineEdit *>(sender());
 	if (edit == NULL) return;
 
-	qreal w = m_modelPart->prop("width").toDouble();
-	qreal h = edit->text().toDouble();
+	double w = m_modelPart->prop("width").toDouble();
+	double h = edit->text().toDouble();
 	if (m_keepAspectRatio) {
 		w = h * m_aspectRatio.width() / m_aspectRatio.height();
 	}

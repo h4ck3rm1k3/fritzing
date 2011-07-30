@@ -1683,7 +1683,7 @@ void MainWindow::zoomOut() {
 void MainWindow::fitInWindow() {
 	if (m_currentGraphicsView == NULL) return;
 
-	qreal newZoom = m_currentGraphicsView->fitInWindow();
+	double newZoom = m_currentGraphicsView->fitInWindow();
 	m_zoomSlider->setValue(newZoom);
 }
 

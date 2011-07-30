@@ -82,7 +82,7 @@ protected:
 	void init(PartsEditorConnectorsConnectorItem *parent, bool visible, const QPointF &point, bool centered);
 	void initPixmapHash();
 	void setCrossPos();
-	qreal currentScale();
+	double currentScale();
 
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget=0);
 

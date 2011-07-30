@@ -115,9 +115,9 @@ static const int MaximumProgress = 1000;
 static const int TILEFACTOR = 1000;
 static int TileStandardWireWidth = 0;
 static int TileHalfStandardWireWidth = 0;
-static qreal StandardWireWidth = 0;
-static qreal HalfStandardWireWidth = 0;
-static const qreal CloseEnough = 0.5;
+static double StandardWireWidth = 0;
+static double HalfStandardWireWidth = 0;
+static const double CloseEnough = 0.5;
 static const int GridEntryAlpha = 128;
 
 //static qint64 seedNextTime = 0;
@@ -127,7 +127,7 @@ static const int DefaultMaxCycles = 10;
 
 const int Segment::NotSet = std::numeric_limits<int>::min();
 
-static inline qreal dot(const QPointF & p1, const QPointF & p2)
+static inline double dot(const QPointF & p1, const QPointF & p2)
 {
 	return (p1.x() * p2.x()) + (p1.y() * p2.y());
 }
@@ -188,7 +188,7 @@ static inline void infoTileRect(const QString & message, const TileRect & tileRe
 	);
 }
 
-inline int fasterRealToTile(qreal x) {
+inline int fasterRealToTile(double x) {
         return qRound(x * TILEFACTOR);
 }
 
@@ -231,7 +231,7 @@ static inline int manhattan(TileRect & tr1, TileRect & tr2) {
 
 static inline GridEntry * TiGetGridEntry(Tile * tile) { return dynamic_cast<GridEntry *>(TiGetClient(tile)); }
 
-void realsToTile(TileRect & tileRect, qreal l, qreal t, qreal r, qreal b) {
+void realsToTile(TileRect & tileRect, double l, double t, double r, double b) {
         tileRect.xmini = fasterRealToTile(l);
         tileRect.ymini = fasterRealToTile(t);
         tileRect.xmaxi = fasterRealToTile(r);
@@ -242,8 +242,8 @@ void qrectToTile(QRectF & rect, TileRect & tileRect) {
 	realsToTile(tileRect, rect.left(), rect.top(), rect.right(), rect.bottom());
 }
 
-inline qreal tileToReal(int x) {
-	return x / ((qreal) TILEFACTOR);
+inline double tileToReal(int x) {
+	return x / ((double) TILEFACTOR);
 }
 
 void tileRectToQRect(TileRect & tileRect, QRectF & rect) {
@@ -1607,33 +1607,33 @@ void CMRouter::tileWires(QList<Wire *> & wires, QList<Tile *> & alreadyTiled, Ti
 	foreach (Wire * wire, wires) {
 		QPointF p1 = wire->pos();
 		QPointF p2 = wire->line().p2() + p1;
-		qreal dx = qAbs(p1.x() - p2.x());
-		qreal dy = qAbs(p1.y() - p2.y());
+		double dx = qAbs(p1.x() - p2.x());
+		double dy = qAbs(p1.y() - p2.y());
 		if (dx < CloseEnough) {
 			// vertical line
-			qreal x = qMin(p1.x(), p2.x()) - (wire->width() / 2) - m_keepout;
-			qreal y = qMin(p1.y(), p2.y()) - m_keepout;			
+			double x = qMin(p1.x(), p2.x()) - (wire->width() / 2) - m_keepout;
+			double y = qMin(p1.y(), p2.y()) - m_keepout;			
 			wireRects.insert(wire, QRectF(x, y, wire->width() + dx + m_keepout + m_keepout, dy + m_keepout + m_keepout));
 			qobject_cast<TraceWire *>(wire)->setWireDirection(TraceWire::Vertical);
 		}
 		else if (dy < CloseEnough) {
 			// horizontal line
-			qreal y = qMin(p1.y(), p2.y()) - (wire->width() / 2) - m_keepout;
-			qreal x = qMin(p1.x(), p2.x()) - m_keepout;
+			double y = qMin(p1.y(), p2.y()) - (wire->width() / 2) - m_keepout;
+			double x = qMin(p1.x(), p2.x()) - m_keepout;
 			wireRects.insert(wire, QRectF(x, y, qMax(p1.x(), p2.x()) - x + m_keepout + m_keepout, wire->width() + dy + m_keepout + m_keepout));
 			qobject_cast<TraceWire *>(wire)->setWireDirection(TraceWire::Horizontal);
 		}
 		else {
-			qreal factor = (eliminateThin ? StandardWireWidth : 1);
-			qreal w = (dx + m_keepout + m_keepout) / factor;
-			qreal h = (dy + m_keepout + m_keepout) / factor;
+			double factor = (eliminateThin ? StandardWireWidth : 1);
+			double w = (dx + m_keepout + m_keepout) / factor;
+			double h = (dy + m_keepout + m_keepout) / factor;
 			QImage image(w, h, QImage::Format_RGB32);
 			image.fill(0xff000000);
 			QPainter painter(&image);
 			painter.setRenderHint(QPainter::Antialiasing);
 			painter.scale(1 / factor, 1 / factor);
-			qreal tx = m_keepout;
-			qreal ty = m_keepout;
+			double tx = m_keepout;
+			double ty = m_keepout;
 			if (p2.x() < p1.x()) tx += dx;
 			if (p2.y() < p1.y()) ty += dy;
 			painter.translate(tx, ty);
@@ -1739,10 +1739,10 @@ void CMRouter::hookUpWires(QList<PathUnit *> & fullPath, QList<Wire *> & wires) 
 
 	QList<Tile *> alreadyTiled;
 	tileWires(wires, alreadyTiled, m_sketchWidget->autorouteTypePCB() ? Tile::OBSTACLE : Tile::SCHEMATICWIRESPACE, CMRouter::ClipAllOverlaps, true);
-	qreal l = std::numeric_limits<int>::max();
-	qreal t = std::numeric_limits<int>::max();
-	qreal r = std::numeric_limits<int>::min();
-	qreal b = std::numeric_limits<int>::min();
+	double l = std::numeric_limits<int>::max();
+	double t = std::numeric_limits<int>::max();
+	double r = std::numeric_limits<int>::min();
+	double b = std::numeric_limits<int>::min();
 	foreach (Wire * w, wires) {
 		viewLayerIDs.insert(w->viewLayerID());
 		QPointF p1 = w->pos();
@@ -1848,7 +1848,7 @@ bool CMRouter::findShortcut(TileRect & tileRect, bool useX, bool targetGreater, 
 	}
 
 	bool success = false;
-	qreal result;
+	double result;
 	if (targetGreater) {
 		result = std::numeric_limits<int>::min();
 	}
@@ -2072,10 +2072,10 @@ bool CMRouter::checkProposed(const QPointF & proposed, const QPointF & p1, const
 
 	QList<Tile *> alreadyTiled;
 	TileRect tileRect;
-	qreal x = proposed.x() - HalfStandardWireWidth;
+	double x = proposed.x() - HalfStandardWireWidth;
 	realsToTile(tileRect, x, qMin(p1.y(), p3.y()), x + StandardWireWidth, qMax(p1.y(), p3.y()));
 	TiSrArea(NULL, thePlane, &tileRect, simpleList, &alreadyTiled);
-	qreal y = proposed.y() - HalfStandardWireWidth;
+	double y = proposed.y() - HalfStandardWireWidth;
 	realsToTile(tileRect, qMin(p1.x(), p3.x()), y, qMax(p1.x(), p3.x()), y + StandardWireWidth);
 	TiSrArea(NULL, thePlane, &tileRect, simpleList, &alreadyTiled);
 	foreach (Tile * tile, alreadyTiled) {
@@ -2760,7 +2760,7 @@ void CMRouter::doCancel(QUndoCommand * parentCommand) {
 
 void CMRouter::updateProgress(int num, int denom) 
 {
-	emit setProgressValue((int) MaximumProgress * (m_currentProgressPart + (num / (qreal) denom)) / (qreal) m_maximumProgressPart);
+	emit setProgressValue((int) MaximumProgress * (m_currentProgressPart + (num / (double) denom)) / (double) m_maximumProgressPart);
 }
 
 Tile * CMRouter::addTile(NonConnectorItem * nci, Tile::TileType type, Plane * thePlane, QList<Tile *> & alreadyTiled, CMRouter::OverlapType overlapType) 
@@ -3686,16 +3686,16 @@ bool CMRouter::insideV(const QPointF & check, const QPointF & vertex)
 	QPointF v2 = check - vertex;
 
 	// Compute dot products
-	qreal dot00 = dot(v0, v0);
-	qreal dot01 = dot(v0, v1);
-	qreal dot02 = dot(v0, v2);
-	qreal dot11 = dot(v1, v1);
-	qreal dot12 = dot(v1, v2);
+	double dot00 = dot(v0, v0);
+	double dot01 = dot(v0, v1);
+	double dot02 = dot(v0, v2);
+	double dot11 = dot(v1, v1);
+	double dot12 = dot(v1, v2);
 
 	// Compute barycentric coordinates
-	qreal invDenom = 1 / (dot00 * dot11 - dot01 * dot01);
-	qreal u = (dot11 * dot02 - dot01 * dot12) * invDenom;
-	qreal v = (dot00 * dot12 - dot01 * dot02) * invDenom;
+	double invDenom = 1 / (dot00 * dot11 - dot01 * dot01);
+	double u = (dot11 * dot02 - dot01 * dot12) * invDenom;
+	double v = (dot00 * dot12 - dot01 * dot02) * invDenom;
 
 	// Check if point is in or on triangle
 	return (u >= 0) && (v >= 0) && (u + v <= 1);
@@ -3707,7 +3707,7 @@ bool CMRouter::goodEnough(CompletePath & completePath) {
         for ( ; sourcePathUnit->parent; sourcePathUnit = sourcePathUnit->parent) ;
         for ( ; destPathUnit->parent; destPathUnit = destPathUnit->parent) ;
 	int bestCost = manhattan(sourcePathUnit->minCostRect, destPathUnit->minCostRect);
-	return completePath.sourceCost < ((qreal) bestCost) * 1.05;
+	return completePath.sourceCost < ((double) bestCost) * 1.05;
 }
 
 void CMRouter::listCompletePath(CompletePath & completePath, QList<PathUnit *> & fullPath) {
@@ -3807,7 +3807,7 @@ void CMRouter::tracePath(CompletePath & completePath)
 
 	cleanPoints(allPoints, first->plane);
 
-	qreal wireWidth = minWireWidth(completePath);
+	double wireWidth = minWireWidth(completePath);
 		 
 	QList<Wire *> wires;
 	for (int i = 0; i < allPoints.count() - 1; i++) {
@@ -4197,7 +4197,7 @@ TileRect CMRouter::boardRect() {
 	return m_tileMaxRect;
 }
 
-int CMRouter::realToTile(qreal x) {
+int CMRouter::realToTile(double x) {
 	return qRound(x * TILEFACTOR);
 }
 
@@ -4208,7 +4208,7 @@ void CMRouter::tileToQRect(Tile * tile, QRectF & rect) {
 }
 
 void CMRouter::getViaSize(int & tWidthNeeded, int & tHeightNeeded) {
-	qreal ringThickness, holeSize;
+	double ringThickness, holeSize;
 	m_sketchWidget->getViaSize(ringThickness, holeSize);
 	tHeightNeeded = tWidthNeeded = fasterRealToTile(ringThickness + ringThickness + holeSize + m_keepout + m_keepout);
 }
@@ -4217,10 +4217,10 @@ Via * CMRouter::makeVia(PathUnit * pathUnit) {
 	TileRect nearestSpace = m_nearestSpaces.value(pathUnit);
 	int tWidthNeeded, tHeightNeeded;
 	getViaSize(tWidthNeeded, tHeightNeeded);
-	qreal tHalfWidth = tWidthNeeded / 2.0;
-	qreal tHalfHeight = tHeightNeeded / 2.0;
-	qreal cx = (pathUnit->minCostRect.xmaxi + pathUnit->minCostRect.xmini) / 2.0; 
-	qreal cy = (pathUnit->minCostRect.ymaxi + pathUnit->minCostRect.ymini) / 2.0; 
+	double tHalfWidth = tWidthNeeded / 2.0;
+	double tHalfHeight = tHeightNeeded / 2.0;
+	double cx = (pathUnit->minCostRect.xmaxi + pathUnit->minCostRect.xmini) / 2.0; 
+	double cy = (pathUnit->minCostRect.ymaxi + pathUnit->minCostRect.ymini) / 2.0; 
 	if (cx < nearestSpace.xmini + tHalfWidth) cx = nearestSpace.xmini + tHalfWidth;
 	if (cx > nearestSpace.xmaxi - tHalfWidth) cx = nearestSpace.xmaxi - tHalfWidth;
 	if (cy < nearestSpace.ymini + tHalfHeight) cy = nearestSpace.ymini + tHalfHeight;
@@ -4236,7 +4236,7 @@ Via * CMRouter::makeVia(PathUnit * pathUnit) {
 	//DebugDialog::debug(QString("back from adding via %1").arg((long) itemBase, 0, 16));
 	Via * via = dynamic_cast<Via *>(itemBase);
 	via->setAutoroutable(true);
-	qreal ringThickness, holeSize;
+	double ringThickness, holeSize;
 	m_sketchWidget->getViaSize(ringThickness, holeSize);
 	via->setHoleSize(QString("%1in,%2in")
 						.arg(holeSize / FSvgRenderer::printerScale())
@@ -4250,8 +4250,8 @@ Via * CMRouter::makeVia(PathUnit * pathUnit) {
 	return via;
 }
 
-qreal CMRouter::minWireWidth(CompletePath & completePath) {
-	qreal wireWidth = StandardWireWidth;
+double CMRouter::minWireWidth(CompletePath & completePath) {
+	double wireWidth = StandardWireWidth;
 	if (completePath.source) {
 		if (completePath.source->connectorItem) {
 			if (completePath.source->connectorItem->minDimension() < wireWidth) {
@@ -4280,14 +4280,14 @@ qreal CMRouter::minWireWidth(CompletePath & completePath) {
 	return wireWidth;
 }
 
-void CMRouter::setUpWidths(qreal width)
+void CMRouter::setUpWidths(double width)
 {
 	StandardWireWidth = width;
     TileStandardWireWidth = fasterRealToTile(StandardWireWidth);						
 	HalfStandardWireWidth = StandardWireWidth / 2;										
     TileHalfStandardWireWidth = fasterRealToTile(HalfStandardWireWidth);
 }
-void CMRouter::setKeepout(qreal keepout)
+void CMRouter::setKeepout(double keepout)
 {
 	m_keepout = keepout;
 }
@@ -4297,10 +4297,10 @@ void CMRouter::fixWidths()
 {
 	if (!m_sketchWidget->autorouteTypePCB()) return;
 
-	qreal minDim = std::numeric_limits<int>::max();
+	double minDim = std::numeric_limits<int>::max();
 	foreach (QList<ConnectorItem *> * list, m_allPartConnectorItems) {
 		foreach (ConnectorItem * connectorItem, *list) {
-			qreal md = connectorItem->minDimension();
+			double md = connectorItem->minDimension();
 			if (md < minDim) minDim = md;
 		}
 	}

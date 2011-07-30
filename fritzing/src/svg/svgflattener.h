@@ -40,10 +40,10 @@ public:
     void unRotateChild(QDomElement & element,QMatrix transform);
 
 public:
-	static void flipSMDSvg(const QString & filename, const QString & svg, QDomDocument & flipDoc, const QString & elementID, const QString & altElementID, qreal printerScale);
+	static void flipSMDSvg(const QString & filename, const QString & svg, QDomDocument & flipDoc, const QString & elementID, const QString & altElementID, double printerScale);
 
 protected:
-	static void flipSMDElement(QDomDocument & domDocument, QSvgRenderer & renderer, QDomElement & element, const QString & att, QDomElement altAtt, const QString & altElementID, qreal printerScale);
+	static void flipSMDElement(QDomDocument & domDocument, QSvgRenderer & renderer, QDomElement & element, const QString & att, QDomElement altAtt, const QString & altElementID, double printerScale);
     static bool hasOtherTransform(QDomElement & element);
     static bool hasTranslate(QDomElement & element);
 

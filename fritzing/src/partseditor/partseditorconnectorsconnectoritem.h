@@ -48,8 +48,8 @@ public:
 	void updateTerminalPoint();
 	TerminalPointItem *terminalPointItem();
 
-	qreal minWidth();
-	qreal minHeight();
+	double minWidth();
+	double minHeight();
 
 	QRectF mappedRect();
 
@@ -59,7 +59,7 @@ public:
 
 protected slots:
 	void isResizableSlot(bool & resizable);
-	void resizeSlot(qreal x1, qreal y1, qreal x2, qreal y2);
+	void resizeSlot(double x1, double y1, double x2, double y2);
 	void createTerminalPoint();
 
 protected:
@@ -67,7 +67,7 @@ protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 
-	void resizeRect(qreal x, qreal y, qreal width, qreal height);
+	void resizeRect(double x, double y, double width, double height);
 	void setResizable(bool resizable);
 
 	void showErrorIcon(bool showIt);
@@ -77,11 +77,11 @@ protected:
 	void drawDottedRect(QPainter *painter, const QColor &color1, const QColor &color2, const QRectF &rect);
 	QPen drawDottedLine(
 		Qt::Orientations orientation, QPainter *painter, const QPen &pen1, const QPen &pen2,
-		qreal pos1, qreal pos2, qreal fixedAxis, const QPen &lastUsedPen = QPen()
+		double pos1, double pos2, double fixedAxis, const QPen &lastUsedPen = QPen()
 	);
 	QPen drawDottedLineAux(
 		Qt::Orientations orientation, QPainter *painter, const QPen &firstPen, const QPen &secondPen,
-		qreal pos, qreal fixedAxis, qreal dotSize, int dotCount
+		double pos, double fixedAxis, double dotSize, int dotCount
 	);
 
 	void informChange();
@@ -107,8 +107,8 @@ protected:
 	bool m_resized;
 	QPointF m_initialPos;
 
-	static qreal MinWidth;
-	static qreal MinHeight;
+	static double MinWidth;
+	static double MinHeight;
 };
 
 #endif /* PARTSEDITORCONNECTORSCONNECTORITEM_H_ */

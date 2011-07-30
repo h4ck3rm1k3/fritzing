@@ -99,7 +99,7 @@ void TerminalPointItem::setMovable(bool movable) {
 	m_cross->setFlag(QGraphicsItem::ItemIsMovable, movable);
 }
 
-qreal TerminalPointItem::currentScale() {
+double TerminalPointItem::currentScale() {
 	if(scene()) {
 		ZoomableGraphicsView *sw = dynamic_cast<ZoomableGraphicsView*>(scene()->parent());
 		if(sw) {

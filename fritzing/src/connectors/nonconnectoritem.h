@@ -53,9 +53,9 @@ public:
 	const QString & attachedToTitle();
 	const QString & attachedToInstanceTitle();
 	void setCircular(bool);
-	void setRadius(qreal radius, qreal strokeWidth);
-	qreal radius();
-	qreal strokeWidth();
+	void setRadius(double radius, double strokeWidth);
+	double radius();
+	double strokeWidth();
 	void setShape(QPainterPath &);
 	void paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
 	QPainterPath shape() const;
@@ -68,13 +68,13 @@ protected:
 	bool m_hidden;
 	bool m_inactive;
 	bool m_paint;
-	qreal m_opacity;
+	double m_opacity;
 	bool m_circular;
 	bool m_effectivelyCircular;
 	bool m_effectivelyRectangular;
-	qreal m_radius;
-	qreal m_strokeWidth;
-	qreal m_negativePenWidth;
+	double m_radius;
+	double m_strokeWidth;
+	double m_negativePenWidth;
 	bool m_negativeOffsetRect;
 	QPainterPath m_shape;
 	

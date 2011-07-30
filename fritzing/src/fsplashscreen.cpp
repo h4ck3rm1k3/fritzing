@@ -67,7 +67,7 @@ int FSplashScreen::showPixmap(const QPixmap & pixmap, QPoint point)
 	return m_pixmaps.count() - 1;
 }
 
-void FSplashScreen::showProgress(int index, qreal progress) {
+void FSplashScreen::showProgress(int index, double progress) {
 	if (index < 0) return;
 	if (index >= m_pixmaps.count()) return;
 

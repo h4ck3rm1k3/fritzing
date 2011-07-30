@@ -45,7 +45,7 @@ public:
 	void resize(QPointF pos, QPointF c0, QPointF c1);
 	void resize(QPointF p0, QPointF p1);   
 	QSizeF footprintSize();
-	QString retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi);
+	QString retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi);
 	bool getAutoroutable();
 	void setAutoroutable(bool);
 	class ConnectorItem * connector0();
@@ -55,7 +55,7 @@ public:
 	void loadLayerKin( const LayerHash & viewLayers, ViewLayer::ViewLayerSpec);
 	PluralType isPlural();
 	void addedToScene(bool temporary);
-	void rotateItem(qreal degrees);
+	void rotateItem(double degrees);
 	void calcRotation(QTransform & rotation, QPointF center, ViewGeometry &);
 	QPointF dragOffset();
 	void saveInstanceLocation(QXmlStreamWriter & streamWriter);
@@ -68,7 +68,7 @@ protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
-	void resizeAux(qreal r0x, qreal r0y, qreal r1x, qreal r1y);
+	void resizeAux(double r0x, double r0y, double r1x, double r1y);
 	void rotateEnds(QTransform & rotation, QPointF & tc0, QPointF & tc1); 
 	QPointF calcPos(QPointF p0, QPointF p1);
 	void initialResize(ViewIdentifierClass::ViewIdentifier);

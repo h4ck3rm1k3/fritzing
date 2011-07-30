@@ -284,14 +284,14 @@ QString PinHeader::makePcbSvg(const QString & expectedFileName)
 	pcbLayerTemplate = file.readAll();
 	file.close();
 
-	qreal outerBorder = 15;
-	qreal innerBorder = outerBorder / 2;
-	qreal silkStrokeWidth = 10;
-	qreal radius = 27.5;
-	qreal copperStrokeWidth = 20;
-	qreal totalWidth = (outerBorder * 2) + (silkStrokeWidth * 2) + (innerBorder * 2) + (radius * 2) + copperStrokeWidth;
-	qreal center = totalWidth / 2;
-	qreal spacing =TextUtils::convertToInches(spacingString) * 1000; 
+	double outerBorder = 15;
+	double innerBorder = outerBorder / 2;
+	double silkStrokeWidth = 10;
+	double radius = 27.5;
+	double copperStrokeWidth = 20;
+	double totalWidth = (outerBorder * 2) + (silkStrokeWidth * 2) + (innerBorder * 2) + (radius * 2) + copperStrokeWidth;
+	double center = totalWidth / 2;
+	double spacing =TextUtils::convertToInches(spacingString) * 1000; 
 
 	QString middle;
 
@@ -308,7 +308,7 @@ QString PinHeader::makePcbSvg(const QString & expectedFileName)
 					.arg(copperStrokeWidth);
 	}
 
-	qreal totalHeight = totalWidth + (pins * spacing) - spacing;
+	double totalHeight = totalWidth + (pins * spacing) - spacing;
 
 	QString svg = pcbLayerTemplate
 					.arg(totalWidth / 1000)
@@ -340,8 +340,8 @@ QString PinHeader::makeSchematicSvg(const QString & expectedFileName)
 
 	int pins = pieces.at(4).toInt();
 	QString form = pieces.at(1);
-	qreal unitHeight = 0.27;  // inches
-	qreal unitHeightPoints = unitHeight * 72;
+	double unitHeight = 0.27;  // inches
+	double unitHeightPoints = unitHeight * 72;
 
 	QString header("<?xml version='1.0' encoding='utf-8'?>\n"
 				"<svg version='1.2' baseProfile='tiny' id='svg2' xmlns:svg='http://www.w3.org/2000/svg' "
@@ -371,8 +371,8 @@ QString PinHeader::makeBreadboardSvg(const QString & expectedFileName)
 	QString form = pieces.at(1);
 
 	int pins = pieces.at(pinIndex).toInt();
-	qreal unitHeight = 0.1;  // inches
-	qreal unitHeightPoints = unitHeight * 10000;
+	double unitHeight = 0.1;  // inches
+	double unitHeightPoints = unitHeight * 10000;
 
 	QString header("<?xml version='1.0' encoding='utf-8'?>\n"
 				"<svg version='1.2' baseProfile='tiny' id='svg2' xmlns:svg='http://www.w3.org/2000/svg' "

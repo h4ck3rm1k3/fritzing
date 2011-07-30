@@ -191,10 +191,10 @@ public:
 	bool initBoard(ItemBase * board, Plane *, QList<Tile *> & alreadyTiled);
 	Tile * insertTile(Plane* thePlane, QRectF &tileRect, QList<Tile *> &alreadyTiled, QGraphicsItem *, Tile::TileType type, CMRouter::OverlapType);
 	TileRect boardRect();
-	void setKeepout(qreal);
+	void setKeepout(double);
 
 public:
-    static int realToTile(qreal);
+    static int realToTile(double);
 	static void tileToQRect(Tile * tile, QRectF & rect);
 
 public slots:
@@ -292,8 +292,8 @@ protected:
     class Via * makeVia(PathUnit * pathUnit);
 	bool orderingImproved(Ordering * currentOrdering, Ordering * bestOrdering);
 	ConnectorItem * findViaConnector(ConnectorItem * viaConnectorItem);
-	qreal minWireWidth(CompletePath & completePath);
-	void setUpWidths(qreal width);
+	double minWireWidth(CompletePath & completePath);
+	void setUpWidths(double width);
 	void fixWidths();
 
 protected:
@@ -317,7 +317,7 @@ protected:
 	QSet<ConnectorItem *> m_offBoardConnectors;
 	QHash<PathUnit *, TileRect> m_nearestSpaces;
 	bool m_hasOverlaps;
-	qreal m_keepout;
+	double m_keepout;
 	QString m_error;
 };
 

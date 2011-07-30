@@ -65,15 +65,15 @@ Ruler::Ruler( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIde
 Ruler::~Ruler() {
 }
 
-void Ruler::resizeMM(qreal magnitude, qreal unitsFlag, const LayerHash & viewLayers) {
+void Ruler::resizeMM(double magnitude, double unitsFlag, const LayerHash & viewLayers) {
 
 	// note this really isn't resizeMM but resizeUnits
 
 	Q_UNUSED(viewLayers);
 
-	qreal w = TextUtils::convertToInches(modelPart()->prop("width").toString());
+	double w = TextUtils::convertToInches(modelPart()->prop("width").toString());
 	QString units((unitsFlag == IndexCm) ? "cm" : "in");
-	qreal newW = TextUtils::convertToInches(QString::number(magnitude) + units);
+	double newW = TextUtils::convertToInches(QString::number(magnitude) + units);
 	if (w == newW) return;
 
 	QString s = makeSvg(newW);
@@ -91,9 +91,9 @@ void Ruler::resizeMM(qreal magnitude, qreal unitsFlag, const LayerHash & viewLay
 
 }
 
-QString Ruler::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi) 
+QString Ruler::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi) 
 {
-	qreal w = TextUtils::convertToInches(m_modelPart->prop("width").toString());
+	double w = TextUtils::convertToInches(m_modelPart->prop("width").toString());
 	if (w != 0) {
 		QString xml;
 		switch (viewLayerID) {
@@ -124,19 +124,19 @@ QString Ruler::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QS
 	return PaletteItemBase::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 }
 
-QString Ruler::makeSvg(qreal inches) {
-	qreal cm = 1 / 2.54;
-	qreal offset = 0.125;
-	qreal mmW = inches * 25.4;
+QString Ruler::makeSvg(double inches) {
+	double cm = 1 / 2.54;
+	double offset = 0.125;
+	double mmW = inches * 25.4;
 	QString svg = TextUtils::makeSVGHeader(FSvgRenderer::printerScale(), GraphicsUtils::StandardFritzingDPI, (inches + offset + offset) * FSvgRenderer::printerScale(), FSvgRenderer::printerScale());
 	svg += "<g font-family='DroidSans' text-anchor='middle' font-size='100' stroke-width='1px' stroke='black'>";
 	int counter = 0;
 	for (int i = 0; i <= qCeil(mmW); i++) {
-		qreal h = cm / 4;
-		qreal x = (offset + (i / 25.4)) * 1000;
+		double h = cm / 4;
+		double x = (offset + (i / 25.4)) * 1000;
 		if (i % 10 == 0) {
 			h = cm / 2;
-			qreal y = (h + .1) * 1000;
+			double y = (h + .1) * 1000;
 			svg += QString("<text x='%1' y='%2'>%3</text>")
 					.arg(x)
 					.arg(y)
@@ -154,11 +154,11 @@ QString Ruler::makeSvg(qreal inches) {
 	}
 	counter = 0;
 	for (int i = 0; i <= inches * 16; i++) {
-		qreal h = 0.125;
-		qreal x = (offset + (i / 16.0)) * 1000;
+		double h = 0.125;
+		double x = (offset + (i / 16.0)) * 1000;
 		if (i % 16 == 0) {
 			h = .125 +  (3.0 / 16);
-			qreal y = 1000 - ((h + .015) * 1000);
+			double y = 1000 - ((h + .015) * 1000);
 			svg += QString("<text x='%1' y='%2'>%3</text>")
 					.arg(x)
 					.arg(y)
@@ -179,9 +179,9 @@ QString Ruler::makeSvg(qreal inches) {
 	}
 
 	for (int i = 0; i <= inches * 10; i++) {
-		qreal x = (offset + (i / 10.0)) * 1000;
-		qreal h = .125 + (3.0 / 16);
-		qreal h2 = h - (cm / 4);
+		double x = (offset + (i / 10.0)) * 1000;
+		double h = .125 + (3.0 / 16);
+		double h2 = h - (cm / 4);
 		if (i % 10 != 0) {
 			if (i % 5 == 0) {
 				h2 = .125 +  (2.0 / 16);
@@ -292,7 +292,7 @@ void Ruler::widthEntry() {
 }
 
 void Ruler::unitsEntry(const QString & units) {
-	qreal inches = TextUtils::convertToInches(modelPart()->prop("width").toString());
+	double inches = TextUtils::convertToInches(modelPart()->prop("width").toString());
 	if (units == "in") {
 		modelPart()->setProp("width", QString::number(inches) + "in");
 		m_widthEditor->setText(QString::number(inches));
@@ -325,7 +325,7 @@ void Ruler::addedToScene(bool temporary)
 		LayerHash viewLayers;
 		QString w = modelPart()->prop("width").toString();
 		modelPart()->setProp("width", "");							// makes sure resizeMM will do the work
-		qreal inches = TextUtils::convertToInches(w);
+		double inches = TextUtils::convertToInches(w);
 		if (w.endsWith("cm")) {
 			resizeMM(inches * 2.54, IndexCm, viewLayers);
 		}

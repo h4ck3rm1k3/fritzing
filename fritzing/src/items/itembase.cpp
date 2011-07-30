@@ -56,9 +56,9 @@ $Date$
 /////////////////////////////////
 
 static QRegExp NumberMatcher;
-static QHash<QString, qreal> NumberMatcherValues;
+static QHash<QString, double> NumberMatcherValues;
 
-static const qreal InactiveOpacity = 0.4;
+static const double InactiveOpacity = 0.4;
 
 bool numberValueLessThan(QString v1, QString v2)
 {
@@ -108,9 +108,9 @@ QList<ItemBase *> ItemBase::emptyList;
 QString ItemBase::SvgFilesDir = "svg";
 
 const QColor ItemBase::hoverColor(0,0,0);
-const qreal ItemBase::hoverOpacity = .20;
+const double ItemBase::hoverOpacity = .20;
 const QColor ItemBase::connectorHoverColor(0,0,255);
-const qreal ItemBase::connectorHoverOpacity = .40;
+const double ItemBase::connectorHoverOpacity = .40;
 
 const QColor StandardConnectedColor(0, 255, 0);
 const QColor StandardUnconnectedColor(255, 0, 0);
@@ -129,7 +129,7 @@ QBrush ItemBase::unconnectedBrush(StandardUnconnectedColor);
 QBrush ItemBase::chosenBrush(QColor(255,0,0));
 QBrush ItemBase::equalPotentialBrush(QColor(255,255,0));
 
-const qreal ItemBase::normalConnectorOpacity = 0.4;
+const double ItemBase::normalConnectorOpacity = 0.4;
 
 static QHash<QString, QStringList> CachedValues;
 
@@ -243,7 +243,7 @@ void ItemBase::resetID() {
 	m_id = m_modelPart->modelIndex() * ModelPart::indexMultiplier;
 }
 
-qreal ItemBase::z() {
+double ItemBase::z() {
 	return getViewGeometry().z();
 }
 
@@ -1064,7 +1064,7 @@ void ItemBase::partLabelMoved(QPointF oldPos, QPointF oldOffset, QPointF newPos,
 	}
 }
 
-void ItemBase::rotateFlipPartLabel(qreal degrees, Qt::Orientations orientation)
+void ItemBase::rotateFlipPartLabel(double degrees, Qt::Orientations orientation)
 {
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
@@ -1073,7 +1073,7 @@ void ItemBase::rotateFlipPartLabel(qreal degrees, Qt::Orientations orientation)
 }
 
 
-void ItemBase::doRotateFlipPartLabel(qreal degrees, Qt::Orientations orientation)
+void ItemBase::doRotateFlipPartLabel(double degrees, Qt::Orientations orientation)
 {
 	if (m_partLabel) {
 		m_partLabel->rotateFlipLabel(degrees, orientation);
@@ -1127,7 +1127,7 @@ ItemBase * ItemBase::layerKinChief() {
 	return this;
 }
 
-void ItemBase::rotateItem(qreal degrees) {
+void ItemBase::rotateItem(double degrees) {
 	transformItem(QTransform().rotate(degrees));
 }
 
@@ -1152,8 +1152,8 @@ void ItemBase::transformItem(const QTransform & currTransf) {
 		prepareGeometryChange();
 	}
 	QRectF rect = this->boundingRectWithoutLegs();
-	qreal x = rect.width() / 2.0;
-	qreal y = rect.height() / 2.0;
+	double x = rect.width() / 2.0;
+	double y = rect.height() / 2.0;
 	QTransform transf = QTransform().translate(-x, -y) * currTransf * QTransform().translate(x, y);
 	getViewGeometry().setTransform(getViewGeometry().transform()*transf);
 	this->setTransform(getViewGeometry().transform());
@@ -1382,7 +1382,7 @@ ItemBase * ItemBase::lowerConnectorLayerVisible(ItemBase * itemBase) {
 void ItemBase::figureHover() {
 }
 
-QString ItemBase::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi)
+QString ItemBase::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi)
 {
 	Q_UNUSED(viewLayerID);
 	Q_UNUSED(svgHash);
@@ -1400,7 +1400,7 @@ bool ItemBase::hasConnections()
 	return false;
 }
 
-void ItemBase::getConnectedColor(ConnectorItem *, QBrush * &brush, QPen * &pen, qreal & opacity, qreal & negativePenWidth, bool & negativeOffsetRect) {
+void ItemBase::getConnectedColor(ConnectorItem *, QBrush * &brush, QPen * &pen, double & opacity, double & negativePenWidth, bool & negativeOffsetRect) {
 	brush = &connectedBrush;
 	pen = &connectedPen;
 	opacity = 0.2;
@@ -1408,7 +1408,7 @@ void ItemBase::getConnectedColor(ConnectorItem *, QBrush * &brush, QPen * &pen, 
 	negativeOffsetRect = true;
 }
 
-void ItemBase::getNormalColor(ConnectorItem *, QBrush * &brush, QPen * &pen, qreal & opacity, qreal & negativePenWidth, bool & negativeOffsetRect) {
+void ItemBase::getNormalColor(ConnectorItem *, QBrush * &brush, QPen * &pen, double & opacity, double & negativePenWidth, bool & negativeOffsetRect) {
 	brush = &normalBrush;
 	pen = &normalPen;
 	opacity = normalConnectorOpacity;
@@ -1416,7 +1416,7 @@ void ItemBase::getNormalColor(ConnectorItem *, QBrush * &brush, QPen * &pen, qre
 	negativeOffsetRect = true;
 }
 
-void ItemBase::getUnconnectedColor(ConnectorItem *, QBrush * &brush, QPen * &pen, qreal & opacity, qreal & negativePenWidth, bool & negativeOffsetRect) {
+void ItemBase::getUnconnectedColor(ConnectorItem *, QBrush * &brush, QPen * &pen, double & opacity, double & negativePenWidth, bool & negativeOffsetRect) {
 	brush = &unconnectedBrush;
 	pen = &unconnectedPen;
         opacity = 0.3;
@@ -1424,7 +1424,7 @@ void ItemBase::getUnconnectedColor(ConnectorItem *, QBrush * &brush, QPen * &pen
 	negativeOffsetRect = true;
 }
 
-void ItemBase::getChosenColor(ConnectorItem *, QBrush * &brush, QPen * &pen, qreal & opacity, qreal & negativePenWidth, bool & negativeOffsetRect) {
+void ItemBase::getChosenColor(ConnectorItem *, QBrush * &brush, QPen * &pen, double & opacity, double & negativePenWidth, bool & negativeOffsetRect) {
 	brush = &chosenBrush;
 	pen = &chosenPen;
 	opacity = normalConnectorOpacity;
@@ -1432,7 +1432,7 @@ void ItemBase::getChosenColor(ConnectorItem *, QBrush * &brush, QPen * &pen, qre
 	negativeOffsetRect = true;
 }
 
-void ItemBase::getHoverColor(ConnectorItem *, QBrush * &brush, QPen * &pen, qreal & opacity, qreal & negativePenWidth, bool & negativeOffsetRect) {
+void ItemBase::getHoverColor(ConnectorItem *, QBrush * &brush, QPen * &pen, double & opacity, double & negativePenWidth, bool & negativeOffsetRect) {
 	brush = &hoverBrush;
 	pen = &hoverPen;
 	opacity = normalConnectorOpacity;
@@ -1440,7 +1440,7 @@ void ItemBase::getHoverColor(ConnectorItem *, QBrush * &brush, QPen * &pen, qrea
 	negativeOffsetRect = true;
 }
 
-void ItemBase::getEqualPotentialColor(ConnectorItem *, QBrush * &brush, QPen * &pen, qreal & opacity, qreal & negativePenWidth, bool & negativeOffsetRect) {
+void ItemBase::getEqualPotentialColor(ConnectorItem *, QBrush * &brush, QPen * &pen, double & opacity, double & negativePenWidth, bool & negativeOffsetRect) {
 	brush = &equalPotentialBrush;
 	pen = &equalPotentialPen;
 	opacity = 1.0;
@@ -1448,8 +1448,8 @@ void ItemBase::getEqualPotentialColor(ConnectorItem *, QBrush * &brush, QPen * &
 	negativeOffsetRect = true;
 }
 
-void ItemBase::slamZ(qreal newZ) {
-	qreal z = qFloor(m_viewGeometry.z()) + newZ;
+void ItemBase::slamZ(double newZ) {
+	double z = qFloor(m_viewGeometry.z()) + newZ;
 	m_viewGeometry.setZ(z);
 	setZValue(z);
 }
@@ -1596,7 +1596,7 @@ QStringList ItemBase::collectValues(const QString & family, const QString & prop
 			break;
 		}
 
-		qreal n = TextUtils::convertFromPowerPrefix(NumberMatcher.cap(1) + NumberMatcher.cap(5), "");
+		double n = TextUtils::convertFromPowerPrefix(NumberMatcher.cap(1) + NumberMatcher.cap(5), "");
 		NumberMatcherValues.insert(opt, n);
 	}
 	if (ok) {
@@ -1646,7 +1646,7 @@ ViewLayer::ViewLayerID ItemBase::partLabelViewLayerID() {
 	return m_partLabel->viewLayerID();
 }
 
-QString ItemBase::makePartLabelSvg(bool blackOnly, qreal dpi, qreal printerScale) {
+QString ItemBase::makePartLabelSvg(bool blackOnly, double dpi, double printerScale) {
 	if (m_partLabel == NULL) return "";
 	if (!m_partLabel->initialized()) return "";
 	return m_partLabel->makeSvg(blackOnly, dpi, printerScale);

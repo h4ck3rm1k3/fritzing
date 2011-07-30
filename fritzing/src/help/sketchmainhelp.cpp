@@ -34,7 +34,7 @@ $Date$
 #include "sketchmainhelp.h"
 #include "../utils/expandinglabel.h"
 
-qreal SketchMainHelp::OpacityLevel = 0.5;
+double SketchMainHelp::OpacityLevel = 0.5;
 
 SketchMainHelpCloseButton::SketchMainHelpCloseButton(const QString &imagePath, QWidget *parent)
 	:QLabel(parent)

@@ -94,7 +94,7 @@ Stripbit::~Stripbit() {
 }
 
 void Stripbit::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-	qreal newOpacity = 1;
+	double newOpacity = 1;
 	if (m_removed) {
 		if (m_inHover) newOpacity = 0.50;
 		else newOpacity = 0.00;
@@ -104,7 +104,7 @@ void Stripbit::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 		else newOpacity = 1.00;
 	}
 
-	qreal opacity = painter->opacity();
+	double opacity = painter->opacity();
 	painter->setOpacity(newOpacity);
 	QGraphicsPathItem::paint(painter, option, widget);
 	painter->setOpacity(opacity);
@@ -293,7 +293,7 @@ Stripboard::Stripboard( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifi
 Stripboard::~Stripboard() {
 }
 
-QString Stripboard::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi) 
+QString Stripboard::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi) 
 {
 	QString svg = Perfboard::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 	if (svg.isEmpty()) return svg;
@@ -384,8 +384,8 @@ void Stripboard::addedToScene(bool temporary)
 	QRectF r1 = ciFirst->rect();
 	QRectF r2 = ciNext->rect();
 
-	qreal h = r1.height();
-	qreal w = r2.center().x() - r1.center().x();
+	double h = r1.height();
+	double w = r2.center().x() - r1.center().x();
 
 	r1.moveTo(-(r1.width() / 2), 0);
 	r2.moveTo(w - (r2.width() / 2), 0);
@@ -605,7 +605,7 @@ void Stripboard::setProp(const QString & prop, const QString & value)
 	reinitBuses(false);
 }
 
-void Stripboard::getConnectedColor(ConnectorItem * ci, QBrush * &brush, QPen * &pen, qreal & opacity, qreal & negativePenWidth, bool & negativeOffsetRect) {
+void Stripboard::getConnectedColor(ConnectorItem * ci, QBrush * &brush, QPen * &pen, double & opacity, double & negativePenWidth, bool & negativeOffsetRect) {
 	Perfboard::getConnectedColor(ci, brush, pen, opacity, negativePenWidth, negativeOffsetRect);
 	opacity *= .66667;
 }

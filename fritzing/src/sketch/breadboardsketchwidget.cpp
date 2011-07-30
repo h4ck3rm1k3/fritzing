@@ -34,7 +34,7 @@ $Date$
 
 #include <QScrollBar>
 
-static const qreal WireHoverStrokeFactor = 4.0;
+static const double WireHoverStrokeFactor = 4.0;
 
 BreadboardSketchWidget::BreadboardSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent)
     : SketchWidget(viewIdentifier, parent)
@@ -215,7 +215,7 @@ QPoint BreadboardSketchWidget::calcFixedToCenterItemOffset(const QRect & viewPor
 	return p;
 }
 
-qreal BreadboardSketchWidget::getWireStrokeWidth(Wire *, qreal wireWidth)
+double BreadboardSketchWidget::getWireStrokeWidth(Wire *, double wireWidth)
 {
 	return wireWidth * WireHoverStrokeFactor;
 }

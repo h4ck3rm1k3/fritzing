@@ -123,7 +123,7 @@ void InfoGraphicsView::partLabelMoved(ItemBase * itemBase, QPointF oldPos, QPoin
 	Q_UNUSED(newOffset);
 }
 
-void InfoGraphicsView::rotateFlipPartLabel(ItemBase * itemBase, qreal degrees, Qt::Orientations flipDirection) {
+void InfoGraphicsView::rotateFlipPartLabel(ItemBase * itemBase, double degrees, Qt::Orientations flipDirection) {
 	Q_UNUSED(itemBase);
 	Q_UNUSED(degrees);
 	Q_UNUSED(flipDirection);
@@ -154,7 +154,7 @@ void InfoGraphicsView::initWire(Wire *, int penWidth) {
 }
 
 
-void InfoGraphicsView::getBendpointWidths(class Wire *, qreal w, qreal & w1, qreal & w2, bool & negativeOffsetRect) {
+void InfoGraphicsView::getBendpointWidths(class Wire *, double w, double & w1, double & w2, bool & negativeOffsetRect) {
 	Q_UNUSED(w);
 	Q_UNUSED(w1);
 	Q_UNUSED(w2);
@@ -164,19 +164,19 @@ void InfoGraphicsView::getBendpointWidths(class Wire *, qreal w, qreal & w1, qre
 void InfoGraphicsView::getLabelFont(QFont &, QColor &, ViewLayer::ViewLayerSpec) {
 }
 
-qreal InfoGraphicsView::getLabelFontSizeTiny() {
+double InfoGraphicsView::getLabelFontSizeTiny() {
         return 5;
 }
 
-qreal InfoGraphicsView::getLabelFontSizeSmall() {
+double InfoGraphicsView::getLabelFontSizeSmall() {
 	return 7;
 }
 
-qreal InfoGraphicsView::getLabelFontSizeMedium() {
+double InfoGraphicsView::getLabelFontSizeMedium() {
 	return 9;
 }
 
-qreal InfoGraphicsView::getLabelFontSizeLarge() {
+double InfoGraphicsView::getLabelFontSizeLarge() {
 	return 14;
 }
 
@@ -184,13 +184,13 @@ bool InfoGraphicsView::hasBigDots() {
 	return false;
 }
 
-void InfoGraphicsView::setVoltage(qreal v, bool doEmit) {
+void InfoGraphicsView::setVoltage(double v, bool doEmit) {
 	if (doEmit) {
 		emit setVoltageSignal(v, false);
 	}
 }
 
-void InfoGraphicsView::resizeBoard(qreal w, qreal h, bool doEmit) {
+void InfoGraphicsView::resizeBoard(double w, double h, bool doEmit) {
 	Q_UNUSED(w);
 	Q_UNUSED(h);
 	Q_UNUSED(doEmit);
@@ -304,7 +304,7 @@ void InfoGraphicsView::prepLegChange(ConnectorItem * from, const QPolygonF & old
 	Q_UNUSED(changeConnections);
 }
 
-qreal InfoGraphicsView::getWireStrokeWidth(Wire *, qreal wireWidth)
+double InfoGraphicsView::getWireStrokeWidth(Wire *, double wireWidth)
 {
 	return wireWidth;
 }

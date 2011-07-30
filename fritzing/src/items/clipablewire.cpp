@@ -395,7 +395,7 @@ void ClipableWire::dispatchHoverAux(bool inInner, Wire * inWire)
 bool ClipableWire::insideInnerCircle(ConnectorItem * connectorItem, QPointF scenePos) 
 {
 	QPointF localPos = connectorItem->mapFromScene(scenePos);
-	qreal rad = connectorItem->radius();
+	double rad = connectorItem->radius();
 	if (rad <= 0) return false;
 
 	rad -= ((connectorItem->strokeWidth() / 2.0));			// shrink it a little bit

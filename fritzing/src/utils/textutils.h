@@ -34,7 +34,7 @@ $Date$
 #include <QTransform>
 
 typedef QString (*CopyPinFunction)(int pin, const QString & argString);
-typedef QString (*MultiplyPinFunction)(int pin, qreal increment, qreal value);
+typedef QString (*MultiplyPinFunction)(int pin, double increment, double value);
 
 
 class TextUtils
@@ -44,11 +44,11 @@ public:
 	static QSet<QString> getRegexpCaptures(const QString &pattern, const QString &textToSearchIn);
 	static QDomElement findElementWithAttribute(QDomElement element, const QString & attributeName, const QString & attributeValue);
 	static void findElementsWithAttribute(QDomElement & element, const QString & att, QList<QDomElement> & elements);
-	static qreal convertToInches(const QString & string, bool * ok, bool isIllustrator);
-	static qreal convertToInches(const QString & string);
-	static QString convertToPowerPrefix(qreal);
-	static qreal convertFromPowerPrefix(const QString & val, const QString & symbol);
-	static qreal convertFromPowerPrefixU(QString & val, const QString & symbol);
+	static double convertToInches(const QString & string, bool * ok, bool isIllustrator);
+	static double convertToInches(const QString & string);
+	static QString convertToPowerPrefix(double);
+	static double convertFromPowerPrefix(const QString & val, const QString & symbol);
+	static double convertFromPowerPrefixU(QString & val, const QString & symbol);
 
 	static QString replaceTextElement(const QString & svg, const QString & id, const QString &  newValue);
 	static QString replaceTextElements(const QString & svg, const QHash<QString, QString> &);
@@ -56,7 +56,7 @@ public:
     static QString mergeSvg(const QString & svg1, const QString & svg2, const QString & id, bool flip);
 	static QString mergeSvgFinish(QDomDocument & doc);
 	static bool mergeSvg(QDomDocument & doc1, const QString & svg, const QString & id);
-	static QString makeSVGHeader(qreal printerscale, qreal dpi, qreal width, qreal height);
+	static QString makeSVGHeader(double printerscale, double dpi, double width, double height);
 	static bool isIllustratorFile(const QString &fileContent);
 	static bool isIllustratorFile(const QByteArray &fileContent);
 	static bool isIllustratorDoc(const QDomDocument & doc);
@@ -68,28 +68,28 @@ public:
 	static void setSVGTransform(QDomElement &, QMatrix &);
 	static QString svgMatrix(QMatrix &);
 	static QString svgTransform(const QString & svg, QTransform & transform, bool translate, const QString extra);
-	static bool getSvgSizes(QDomDocument & doc, qreal & sWidth, qreal & sHeight, qreal & vbWidth, qreal & vbHeight);
+	static bool getSvgSizes(QDomDocument & doc, double & sWidth, double & sHeight, double & vbWidth, double & vbHeight);
 	static bool findText(QDomNode & node, QString & text);
 	static QString stripNonValidXMLCharacters(const QString & str); 
 	static QString escapeAnd(const QString &);
 	static QMatrix elementToMatrix(QDomElement & element);
 	static QMatrix transformStringToMatrix(const QString & transform);
-    static QList<qreal> getTransformFloats(QDomElement & element);
-	static QList<qreal> getTransformFloats(const QString & transform);
+    static QList<double> getTransformFloats(QDomElement & element);
+	static QList<double> getTransformFloats(const QString & transform);
 	static QString removeXMLNS(QString svgContent);
 	static void gWrap(QDomDocument & domDocument, const QHash<QString, QString> & attributes);
 	static bool tspanRemove(QString &svg);
 	static void slamStrokeAndFill(QDomElement &, const QString & stroke, const QString & fill);
-	static QString incrementTemplate(const QString & filename, int pins, qreal unitIncrement, MultiplyPinFunction, CopyPinFunction);
-	static QString incrementTemplateString(const QString & templateString, int pins, qreal increment, MultiplyPinFunction, CopyPinFunction);
+	static QString incrementTemplate(const QString & filename, int pins, double unitIncrement, MultiplyPinFunction, CopyPinFunction);
+	static QString incrementTemplateString(const QString & templateString, int pins, double increment, MultiplyPinFunction, CopyPinFunction);
 	static QString standardCopyPinFunction(int pin, const QString & argString);
-	static QString standardMultiplyPinFunction(int pin, qreal increment, qreal value);
+	static QString standardMultiplyPinFunction(int pin, double increment, double value);
 	static QString noCopyPinFunction(int pin, const QString & argString);
-	static QString incMultiplyPinFunction(int pin, qreal increment, qreal value);
-	static qreal getViewBoxCoord(const QString & svg, int coord);
-	static QString makeLineSVG(QPointF p1, QPointF p2, qreal width, QString colorString, qreal dpi, qreal printerScale, bool blackOnly);
-	static QString makeRectSVG(QRectF r, QPointF offset, qreal dpi, qreal printerscale);
-	static QString makePolySVG(const QPolygonF & poly, QPointF offset, qreal width, QString colorString, qreal dpi, qreal printerScale, bool blackOnly);
+	static QString incMultiplyPinFunction(int pin, double increment, double value);
+	static double getViewBoxCoord(const QString & svg, int coord);
+	static QString makeLineSVG(QPointF p1, QPointF p2, double width, QString colorString, double dpi, double printerScale, bool blackOnly);
+	static QString makeRectSVG(QRectF r, QPointF offset, double dpi, double printerscale);
+	static QString makePolySVG(const QPolygonF & poly, QPointF offset, double width, QString colorString, double dpi, double printerScale, bool blackOnly);
 
 public:
 	static const QRegExp FindWhitespace;

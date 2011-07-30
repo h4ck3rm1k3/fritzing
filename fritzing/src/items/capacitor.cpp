@@ -66,12 +66,12 @@ bool Capacitor::collectExtraInfo(QWidget * parent, const QString & family, const
 		
 			if (propertyDef->numeric) {
 				if (!current.isEmpty()) {
-					qreal val = TextUtils::convertFromPowerPrefixU(current, propertyDef->symbol);
+					double val = TextUtils::convertFromPowerPrefixU(current, propertyDef->symbol);
 					if (!propertyDef->menuItems.contains(val)) {
 						propertyDef->menuItems.append(val);
 					}
 				}
-				foreach(qreal q, propertyDef->menuItems) {
+				foreach(double q, propertyDef->menuItems) {
 					QString s = TextUtils::convertToPowerPrefix(q) + propertyDef->symbol;
 					focusOutComboBox->addItem(s);
 				}
@@ -131,7 +131,7 @@ void Capacitor::propertyEntry(const QString & text) {
 		if (m_comboBoxes.value(propertyDef) == focusOutComboBox) {
 			QString utext = text;
 			if (propertyDef->numeric) {
-				qreal val = TextUtils::convertFromPowerPrefixU(utext, propertyDef->symbol);
+				double val = TextUtils::convertFromPowerPrefixU(utext, propertyDef->symbol);
 				if (!propertyDef->menuItems.contains(val)) {
 					// info view is redrawn, so combobox is recreated, so the new item is added to the combo box menu
 					propertyDef->menuItems.append(val);

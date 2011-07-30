@@ -59,7 +59,7 @@ GroundPlaneGenerator::GroundPlaneGenerator()
 GroundPlaneGenerator::~GroundPlaneGenerator() {
 }
 
-bool GroundPlaneGenerator::getBoardRects(const QString & boardSvg, QGraphicsItem * board, qreal res, qreal keepoutSpace, QList<QRect> & rects)
+bool GroundPlaneGenerator::getBoardRects(const QString & boardSvg, QGraphicsItem * board, double res, double keepoutSpace, QList<QRect> & rects)
 {
 	QByteArray boardByteArray;
     QString tempColor("#000000");
@@ -69,8 +69,8 @@ bool GroundPlaneGenerator::getBoardRects(const QString & boardSvg, QGraphicsItem
 	}
 
 	QRectF br = board->sceneBoundingRect();
-	qreal bWidth = res * br.width() / FSvgRenderer::printerScale();
-	qreal bHeight = res * br.height() / FSvgRenderer::printerScale();
+	double bWidth = res * br.width() / FSvgRenderer::printerScale();
+	double bHeight = res * br.height() / FSvgRenderer::printerScale();
 	QImage image(bWidth, bHeight, QImage::Format_RGB32);
 	image.setDotsPerMeterX(res * GraphicsUtils::InchesPerMeter);
 	image.setDotsPerMeterY(res * GraphicsUtils::InchesPerMeter);
@@ -149,10 +149,10 @@ bool GroundPlaneGenerator::getBoardRects(const QString & boardSvg, QGraphicsItem
 }
 
 bool GroundPlaneGenerator::generateGroundPlaneUnit(const QString & boardSvg, QSizeF boardImageSize, const QString & svg, QSizeF copperImageSize, 
-												   QStringList & exceptions, QGraphicsItem * board, qreal res, const QString & color, const QString & layerName,
+												   QStringList & exceptions, QGraphicsItem * board, double res, const QString & color, const QString & layerName,
 												   QPointF whereToStart) 
 {
-	qreal bWidth, bHeight;
+	double bWidth, bHeight;
 	QImage * image = generateGroundPlaneAux(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board, res, bWidth, bHeight);
 	if (image == NULL) return false;
 
@@ -237,10 +237,10 @@ bool GroundPlaneGenerator::generateGroundPlaneUnit(const QString & boardSvg, QSi
 
 
 bool GroundPlaneGenerator::generateGroundPlane(const QString & boardSvg, QSizeF boardImageSize, const QString & svg, QSizeF copperImageSize, 
-												QStringList & exceptions, QGraphicsItem * board, qreal res, const QString & color, const QString & layerName) 
+												QStringList & exceptions, QGraphicsItem * board, double res, const QString & color, const QString & layerName) 
 {
 
-	qreal bWidth, bHeight;
+	double bWidth, bHeight;
 	QImage * image = generateGroundPlaneAux(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board, res, bWidth, bHeight);
 	if (image == NULL) return false;
 
@@ -250,7 +250,7 @@ bool GroundPlaneGenerator::generateGroundPlane(const QString & boardSvg, QSizeF 
 }
 
 QImage * GroundPlaneGenerator::generateGroundPlaneAux(const QString & boardSvg, QSizeF boardImageSize, const QString & svg, QSizeF copperImageSize, 
-													QStringList & exceptions, QGraphicsItem * board, qreal res, qreal & bWidth, qreal & bHeight) 
+													QStringList & exceptions, QGraphicsItem * board, double res, double & bWidth, double & bHeight) 
 {
 	QByteArray boardByteArray;
     QString tempColor("#ffffff");
@@ -280,8 +280,8 @@ QImage * GroundPlaneGenerator::generateGroundPlaneAux(const QString & boardSvg, 
 	file1.close();
 	*/
 
-	qreal svgWidth = res * qMax(boardImageSize.width(), copperImageSize.width()) / FSvgRenderer::printerScale();
-	qreal svgHeight = res * qMax(boardImageSize.height(), copperImageSize.height()) / FSvgRenderer::printerScale();
+	double svgWidth = res * qMax(boardImageSize.width(), copperImageSize.width()) / FSvgRenderer::printerScale();
+	double svgHeight = res * qMax(boardImageSize.height(), copperImageSize.height()) / FSvgRenderer::printerScale();
 
 	QRectF br =  board->sceneBoundingRect();
 	bWidth = res * br.width() / FSvgRenderer::printerScale();
@@ -327,9 +327,9 @@ QImage * GroundPlaneGenerator::generateGroundPlaneAux(const QString & boardSvg, 
 	return image;
 }
 
-void GroundPlaneGenerator::scanImage(QImage & image, qreal bWidth, qreal bHeight, qreal pixelFactor, qreal res, 
+void GroundPlaneGenerator::scanImage(QImage & image, double bWidth, double bHeight, double pixelFactor, double res, 
 									 const QString & colorString, const QString & layerName, bool makeConnector, 
-									 int minRunSize, bool makeOffset, QSizeF minAreaInches, qreal minDimensionInches)  
+									 int minRunSize, bool makeOffset, QSizeF minAreaInches, double minDimensionInches)  
 {
 	QList<QRect> rects;
 	scanLines(image, bWidth, bHeight, rects, THRESHOLD, minRunSize);
@@ -663,9 +663,9 @@ void GroundPlaneGenerator::joinScanLines(QList<QRect> & rects, QList<QPolygon> &
 	}
 }
 
-QString GroundPlaneGenerator::makePolySvg(QList<QPolygon> & polygons, qreal res, qreal bWidth, qreal bHeight, qreal pixelFactor, 
+QString GroundPlaneGenerator::makePolySvg(QList<QPolygon> & polygons, double res, double bWidth, double bHeight, double pixelFactor, 
 										const QString & colorString, const QString & layerName, bool makeConnectorFlag, QPointF * offset, 
-										QSizeF minAreaInches, qreal minDimensionInches) 
+										QSizeF minAreaInches, double minDimensionInches) 
 {
 	int minX = 0;
 	int minY = 0;
@@ -718,7 +718,7 @@ QString GroundPlaneGenerator::makePolySvg(QList<QPolygon> & polygons, qreal res,
 	return pSvg;
 }
 
-void GroundPlaneGenerator::makeConnector(QList<QPolygon> & polygons, qreal res, qreal pixelFactor, const QString & colorString, int minX, int minY, QString & pSvg)
+void GroundPlaneGenerator::makeConnector(QList<QPolygon> & polygons, double res, double pixelFactor, const QString & colorString, int minX, int minY, QString & pSvg)
 {
 	//	see whether the standard circular connector will fit somewhere inside a polygon:
 	//	http://stackoverflow.com/questions/4279478/maximum-circle-inside-a-non-convex-polygon
@@ -727,12 +727,12 @@ void GroundPlaneGenerator::makeConnector(QList<QPolygon> & polygons, qreal res, 
 
 	//	code presently uses a version of the Poles of Inaccessibility algorithm:
 
-	static const qreal standardConnectorWidth = .075;		 // inches
-	qreal targetDiameter = res * pixelFactor * standardConnectorWidth;
-	qreal targetDiameterAnd = targetDiameter * 1.25;
-	qreal targetRadius = targetDiameter / 2;
-	qreal targetRadiusAnd = targetDiameterAnd / 2;
-	qreal targetRadiusAndSquared = targetRadiusAnd * targetRadiusAnd;
+	static const double standardConnectorWidth = .075;		 // inches
+	double targetDiameter = res * pixelFactor * standardConnectorWidth;
+	double targetDiameterAnd = targetDiameter * 1.25;
+	double targetRadius = targetDiameter / 2;
+	double targetRadiusAnd = targetDiameterAnd / 2;
+	double targetRadiusAndSquared = targetRadiusAnd * targetRadiusAnd;
 	foreach (QPolygon poly, polygons) {
 		QRect boundingRect = poly.boundingRect(); 
 		if (boundingRect.width() < targetDiameterAnd) continue;
@@ -748,10 +748,10 @@ void GroundPlaneGenerator::makeConnector(QList<QPolygon> & polygons, qreal res, 
 		int xDivisor = qRound(boundingRect.width() / targetRadius);
 		int yDivisor = qRound(boundingRect.height() / targetRadius);
 
-		qreal dx = (boundingRect.width() - targetDiameterAnd) / xDivisor;
-		qreal dy = (boundingRect.height() - targetDiameterAnd) / yDivisor;
-		qreal x;
-		qreal y = boundingRect.top() + targetRadiusAnd - dy;
+		double dx = (boundingRect.width() - targetDiameterAnd) / xDivisor;
+		double dy = (boundingRect.height() - targetDiameterAnd) / yDivisor;
+		double x;
+		double y = boundingRect.top() + targetRadiusAnd - dy;
 		for (int iy = 0; iy <= yDivisor; iy++) {
 			y += dy;
 			x = boundingRect.left() + targetRadiusAnd - dx;
@@ -761,7 +761,7 @@ void GroundPlaneGenerator::makeConnector(QList<QPolygon> & polygons, qreal res, 
 
 				bool gotOne = true;
 				foreach (QLineF line, polyLines) {
-					qreal distance, dx, dy;
+					double distance, dx, dy;
 					bool atEndpoint;
 					GraphicsUtils::distanceFromLine(x, y, line.p1().x(), line.p1().y(), line.p2().x(), line.p2().y(), 
 													dx, dy, distance, atEndpoint);
@@ -793,8 +793,8 @@ void GroundPlaneGenerator::makeConnector(QList<QPolygon> & polygons, qreal res, 
 	// couldn't find anything big enough above, so
 	// try to find a poly with an area that's big enough to click, but not so big as to get in the way
 	int useIndex = -1;
-	QList<qreal> areas;
-	qreal divisor = res * pixelFactor * res * pixelFactor;
+	QList<double> areas;
+	double divisor = res * pixelFactor * res * pixelFactor;
 	foreach (QPolygon poly, polygons) {
 		areas.append(calcArea(poly) / divisor);
 	}
@@ -836,8 +836,8 @@ void GroundPlaneGenerator::makeConnector(QList<QPolygon> & polygons, qreal res, 
 	}
 }
 
-qreal GroundPlaneGenerator::calcArea(QPolygon & poly) {
-	qreal total = 0;
+double GroundPlaneGenerator::calcArea(QPolygon & poly) {
+	double total = 0;
 	for (int ix = 0; ix < poly.count(); ix++) {
 		QPoint p0 = poly.at(ix);
 		QPoint p1 = poly.at((ix + 1) % poly.count());
@@ -887,9 +887,9 @@ void removeRedundant(QList<QPoint> & points)
 	}
 }
 
-void GroundPlaneGenerator::scanOutline(QImage & image, qreal bWidth, qreal bHeight, qreal pixelFactor, qreal res, 
+void GroundPlaneGenerator::scanOutline(QImage & image, double bWidth, double bHeight, double pixelFactor, double res, 
 									 const QString & colorString, const QString & layerName, bool makeConnector, 
-									 int minRunSize, bool makeOffset, QSizeF minAreaInches, qreal minDimensionInches)  
+									 int minRunSize, bool makeOffset, QSizeF minAreaInches, double minDimensionInches)  
 {
 	QList<QPoint> leftPoints;
 	QList<QPoint> rightPoints;

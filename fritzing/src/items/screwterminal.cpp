@@ -122,8 +122,8 @@ QString ScrewTerminal::makeBreadboardSvg(const QString & expectedFileName)
 	if (pieces.count() != 5) return "";
 
 	int pins = pieces.at(2).toInt();
-	qreal increment = 0.1;  // inches
-	qreal incrementPoints = 100;
+	double increment = 0.1;  // inches
+	double incrementPoints = 100;
 
 	QString header("<?xml version='1.0' encoding='UTF-8' standalone='no'?>\n"
 					"<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' width='%1in' height='0.17in' viewBox='0 0 [100] 170' >\n"
@@ -148,8 +148,8 @@ QString ScrewTerminal::makeSchematicSvg(const QString & expectedFileName)
 	if (pieces.count() != 5) return "";
 
 	int pins = pieces.at(2).toInt();
-	qreal increment = 0.27;				// inches
-	qreal incrementPoints = 19.439;		// 72 dpi
+	double increment = 0.27;				// inches
+	double incrementPoints = 19.439;		// 72 dpi
 
 
 	QString header("<?xml version='1.0' encoding='utf-8'?>\n"
@@ -177,14 +177,14 @@ QString ScrewTerminal::makePcbSvg(const QString & expectedFileName)
 
 	int pins = pieces.at(2).toInt();
 	bool ok;
-	qreal spacing = TextUtils::convertToInches(pieces.at(3), &ok, false);
+	double spacing = TextUtils::convertToInches(pieces.at(3), &ok, false);
 	if (!ok) return "";
 
-	qreal dpi  = 1000;
-	qreal width = spacing < 0.15 ? 0.256 : 0.48;
-	qreal verticalX = spacing < 0.15 ? 0.196 : 0.38;
-	qreal centerX = (verticalX * dpi / 2) + 10;
-	qreal initialY = (spacing * dpi / 2) + 25;
+	double dpi  = 1000;
+	double width = spacing < 0.15 ? 0.256 : 0.48;
+	double verticalX = spacing < 0.15 ? 0.196 : 0.38;
+	double centerX = (verticalX * dpi / 2) + 10;
+	double initialY = (spacing * dpi / 2) + 25;
 
 	QString header("<?xml version='1.0' encoding='UTF-8'?>\n"
 					"<svg baseProfile='tiny' version='1.2' height='%3in' width='%1in' viewBox='0 0 %2 [40.0]' >\n"

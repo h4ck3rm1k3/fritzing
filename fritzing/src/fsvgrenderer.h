@@ -38,15 +38,15 @@ $Date$
 
 struct ConnectorInfo {
 	bool gotCircle;
-	qreal radius;
-	qreal strokeWidth;
+	double radius;
+	double strokeWidth;
 	QMatrix matrix;
 	QRectF bounds;
 	QMatrix terminalMatrix;
 	QMatrix legMatrix;
 	QString legColor;
 	QLineF legLine;
-	qreal legStrokeWidth;
+	double legStrokeWidth;
 };
 
 typedef QHash<ViewLayer::ViewLayerID, class FSvgRenderer *> RendererHash;
@@ -73,7 +73,7 @@ public:
 	static FSvgRenderer * getByFilename(const QString & filename, ViewLayer::ViewLayerID);
 	static QPixmap * getPixmap(const QString & moduleID, ViewLayer::ViewLayerID viewLayerID, QSize size);
 	static void calcPrinterScale();
-	static qreal printerScale();
+	static double printerScale();
 	static void cleanup();
 	static QSizeF parseForWidthAndHeight(QXmlStreamReader &);
 	static void removeFromHash(const QString &moduleId, const QString filename);
@@ -102,7 +102,7 @@ protected:
 	QHash<QString, ConnectorInfo *> m_nonConnectorInfoHash;
 
 protected:
-	static qreal m_printerScale;
+	static double m_printerScale;
 	static QHash<QString, RendererHash * > m_filenameRendererHash;
 	static QHash<QString, RendererHash * > m_moduleIDRendererHash;
 	static QSet<RendererHash *> m_deleted;

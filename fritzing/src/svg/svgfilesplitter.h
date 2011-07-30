@@ -40,12 +40,12 @@ $Date$
 struct PathUserData {
 	QString string;
     QMatrix transform;
-	qreal sNewWidth;
-	qreal sNewHeight;
-	qreal vbWidth; 
-	qreal vbHeight;
-	qreal x;
-	qreal y;
+	double sNewWidth;
+	double sNewHeight;
+	double vbWidth; 
+	double vbHeight;
+	double x;
+	double y;
 	bool pathStarting;
 	QPainterPath * painterPath;
 };
@@ -59,13 +59,13 @@ public:
 	bool splitString(QString & contents, const QString & elementID);
 	const QByteArray & byteArray();
 	const QDomDocument & domDocument();
-	bool normalize(qreal dpi, const QString & elementID, bool blackOnly);
-	QString shift(qreal x, qreal y, const QString & elementID, bool shiftTransforms);
+	bool normalize(double dpi, const QString & elementID, bool blackOnly);
+	QString shift(double x, double y, const QString & elementID, bool shiftTransforms);
 	QString elementString(const QString & elementID);
     virtual bool parsePath(const QString & data, const char * slot, PathUserData &, QObject * slotTarget, bool convertHV);
 	QVector<QVariant> simpleParsePath(const QString & data);
-	QPainterPath painterPath(qreal dpi, const QString & elementID);			// note: only partially implemented
-	void shiftChild(QDomElement & element, qreal x, qreal y, bool shiftTransforms);
+	QPainterPath painterPath(double dpi, const QString & elementID);			// note: only partially implemented
+	void shiftChild(QDomElement & element, double x, double y, bool shiftTransforms);
 	bool load(const QString * filename);
 	bool load(QFile *);
 	bool load(const QString string);
@@ -75,7 +75,7 @@ public:
 
 public:
 	static bool getSvgSizeAttributes(const QString & svg, QString & width, QString & height, QString & viewBox);
-	static bool changeStrokeWidth(const QString & svg, qreal delta, bool absolute, QByteArray &);
+	static bool changeStrokeWidth(const QString & svg, double delta, bool absolute, QByteArray &);
 	static bool changeColors(const QString & svg, QString & toColor, QStringList & exceptions, QByteArray &);
 	static void changeColors(QDomElement & element, QString & toColor, QStringList & exceptions);
 	static void fixStyleAttributeRecurse(QDomElement & element);
@@ -84,20 +84,20 @@ public:
 
 protected:
 	void normalizeChild(QDomElement & childElement, 
-						qreal sNewWidth, qreal sNewHeight,
-						qreal vbWidth, qreal vbHeight, bool blackOnly);
-	bool normalizeAttribute(QDomElement & element, const char * attributeName, qreal num, qreal denom);
+						double sNewWidth, double sNewHeight,
+						double vbWidth, double vbHeight, bool blackOnly);
+	bool normalizeAttribute(QDomElement & element, const char * attributeName, double num, double denom);
 	void painterPathChild(QDomElement & element, QPainterPath & ppath);			// note: only partially implemented
 	void normalizeTranslation(QDomElement & element, 
-							qreal sNewWidth, qreal sNewHeight,
-							qreal vbWidth, qreal vbHeight);
-	bool shiftTranslation(QDomElement & element, qreal x, qreal y);
+							double sNewWidth, double sNewHeight,
+							double vbWidth, double vbHeight);
+	bool shiftTranslation(QDomElement & element, double x, double y);
 	void standardArgs(bool relative, bool starting, QList<double> & args, PathUserData * pathUserData);
 
 protected:
-	static void changeStrokeWidth(QDomElement & element, qreal delta, bool absolute);
+	static void changeStrokeWidth(QDomElement & element, double delta, bool absolute);
 	static void fixStyleAttribute(QDomElement & element);
-	static bool shiftAttribute(QDomElement & element, const char * attributeName, qreal d);
+	static bool shiftAttribute(QDomElement & element, const char * attributeName, double d);
 	static void setStrokeOrFill(QDomElement & element, bool doIt, const QString & color, bool force);
 
 protected slots:

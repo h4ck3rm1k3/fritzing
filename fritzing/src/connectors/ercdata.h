@@ -37,13 +37,13 @@ public:
 	ValidReal();
 
 	bool isValid();
-	qreal value();
-	void setValue(qreal);
+	double value();
+	void setValue(double);
 	bool setValue(const QString &);
 
 protected:
 	bool m_ok;
-	qreal m_value;
+	double m_value;
 
 };
 

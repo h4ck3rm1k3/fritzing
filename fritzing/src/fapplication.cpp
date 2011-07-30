@@ -109,8 +109,8 @@ int FApplication::RestartNeeded = 9999;
 QSet<QString> InstalledFonts::InstalledFontsList;
 QMultiHash<QString, QString> InstalledFonts::InstalledFontsNameMapper;   // family name to filename; SVG files seem to have to use filename
 
-static const qreal LoadProgressStart = 0.085;
-static const qreal LoadProgressEnd = 0.6;
+static const double LoadProgressStart = 0.085;
+static const double LoadProgressEnd = 0.6;
 
 //////////////////////////
 

@@ -76,8 +76,8 @@ protected:
 	int m_binLoadingIndex;
 	int m_binLoadingStart;
 	int m_binLoadingChunk;
-	qreal m_binLoadingInc;
-	qreal m_binLoadingValue;
+	double m_binLoadingInc;
+	double m_binLoadingValue;
 };
 
 

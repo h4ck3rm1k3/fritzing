@@ -62,19 +62,19 @@ public:
 	virtual void hidePartLabel(ItemBase * item);
 	virtual void noteChanged(ItemBase *, const QString &oldText, const QString & newText, QSizeF oldSize, QSizeF newSize);
 	virtual void partLabelMoved(ItemBase *, QPointF oldPos, QPointF oldOffset, QPointF newPos, QPointF newOffset);
-	virtual void rotateFlipPartLabel(ItemBase *, qreal degrees, Qt::Orientations flipDirection);
+	virtual void rotateFlipPartLabel(ItemBase *, double degrees, Qt::Orientations flipDirection);
 	virtual void noteSizeChanged(ItemBase * itemBase, const QRectF & oldRect, const QRectF & newRect);
 
 	virtual bool spaceBarIsPressed(); 
 	virtual void initWire(class Wire *, int penWidth);
 
 	virtual void setIgnoreSelectionChangeEvents(bool) {}
-	virtual void getBendpointWidths(class Wire *, qreal w, qreal & w1, qreal & w2, bool & negativeOffsetRect);
+	virtual void getBendpointWidths(class Wire *, double w, double & w1, double & w2, bool & negativeOffsetRect);
 	virtual void getLabelFont(QFont &, QColor &, ViewLayer::ViewLayerSpec);
-    virtual qreal getLabelFontSizeTiny();
-	virtual qreal getLabelFontSizeSmall();
-	virtual qreal getLabelFontSizeMedium();
-	virtual qreal getLabelFontSizeLarge();
+    virtual double getLabelFontSizeTiny();
+	virtual double getLabelFontSizeSmall();
+	virtual double getLabelFontSizeMedium();
+	virtual double getLabelFontSizeLarge();
 	virtual bool hasBigDots();
 	virtual void setResistance(QString resistance, QString pinSpacing);
 	virtual void setProp(ItemBase *, const QString & propName, const QString & translatedPropName, const QString & oldValue, const QString & newValue, bool redraw);
@@ -96,16 +96,16 @@ public:
 	virtual QString generateCopperFillUnit(ItemBase * itemBase, QPointF whereToStart);
 	virtual void prepLegChange(ConnectorItem * from, const QPolygonF & oldLeg, const QPolygonF & newLeg, ConnectorItem * to, bool changeConnections);
 	virtual void prepLegSelection(ItemBase *);
-	virtual qreal getWireStrokeWidth(Wire *, qreal wireWidth);
+	virtual double getWireStrokeWidth(Wire *, double wireWidth);
 
 
 public slots:
-	virtual void setVoltage(qreal, bool doEmit);
-	virtual void resizeBoard(qreal w, qreal h, bool doEmit);
+	virtual void setVoltage(double, bool doEmit);
+	virtual void resizeBoard(double w, double h, bool doEmit);
 	virtual void setInstanceTitle(long id, const QString & title, bool isUndoable, bool doEmit);
 
 signals:
-	void setVoltageSignal(qreal, bool doEmit);
+	void setVoltageSignal(double, bool doEmit);
 	void swapSignal(const QString & family, const QString & prop, QMap<QString, QString> & propsMap, ItemBase *);
 
 public:

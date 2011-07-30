@@ -81,7 +81,7 @@ protected slots:
 	void contentsChangeSlot(int position, int charsAdded, int charsRemoved);
 	void contentsChangedSlot();
 	void linkDialog();
-	void handleZoomChangedSlot(qreal scale);
+	void handleZoomChangedSlot(double scale);
 	void handleMousePressSlot(QGraphicsSceneMouseEvent * event, class ResizeHandle * resizeHandle);
 
 public:

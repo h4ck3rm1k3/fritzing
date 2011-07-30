@@ -92,7 +92,7 @@ public:
 	void moveItem(long id, const QPointF & p, bool updateRatsnest);
 	void updateWire(long id, const QString & connectorID, bool updateRatsnest);
 
-    void rotateItem(long id, qreal degrees);
+    void rotateItem(long id, double degrees);
     void transformItem(long id, const QMatrix &);
     void flipItem(long id, Qt::Orientations orientation);
     void selectItem(long id, bool state, bool updateInfoView, bool doEmit);
@@ -110,13 +110,13 @@ public:
     void clearSelection();
 	virtual void loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType, QUndoCommand * parentCommand, 
 									bool offsetPaste, const QRectF * boundingRect, bool seekOutsideConnections, QList<long> & newIDs);
-    void changeZ(QHash<long, RealPair * >, qreal (*pairAccessor)(RealPair *) );
+    void changeZ(QHash<long, RealPair * >, double (*pairAccessor)(RealPair *) );
 	void sendToBack();
 	void sendBackward();
 	void bringForward();
 	void bringToFront();
-	qreal fitInWindow();
-	void rotateX(qreal degrees);
+	double fitInWindow();
+	void rotateX(double degrees);
 	void flip(Qt::Orientations orientation);
 	void addBendpoint(ItemBase * lastHoverEnterItem, ConnectorItem * lastHoverEnterConnectorItem, QPointF lastLocation);
 
@@ -174,8 +174,8 @@ public:
 	void addSchematicViewLayers();
 	void addBreadboardViewLayers();
 
-	void changeWireColor(long wireId, const QString& color, qreal opacity);
-	void changeWireWidth(long wireId, qreal width);
+	void changeWireColor(long wireId, const QString& color, double opacity);
+	void changeWireWidth(long wireId, double width);
 	void changeWireFlags(long wireId, ViewGeometry::WireFlags wireFlags);
 	void setIgnoreSelectionChangeEvents(bool);
 	void hideConnectors(bool hide);
@@ -199,18 +199,18 @@ public:
 	void updateInfoView();
 	virtual void setCurrent(bool current);
 	void partLabelMoved(ItemBase *, QPointF oldPos, QPointF oldOffset, QPointF newPos, QPointF newOffset);
-	void rotateFlipPartLabel(ItemBase *, qreal degrees, Qt::Orientations flipDirection);
-	void rotateFlipPartLabel(long itemID, qreal degrees, Qt::Orientations flipDirection);
+	void rotateFlipPartLabel(ItemBase *, double degrees, Qt::Orientations flipDirection);
+	void rotateFlipPartLabel(long itemID, double degrees, Qt::Orientations flipDirection);
 	void showPartLabels(bool show);
 	void hidePartLabel(ItemBase * item);
 	void noteSizeChanged(ItemBase * itemBase, const QSizeF & oldSize, const QSizeF & newSize);
 	void resizeNote(long itemID, const QSizeF & );
 	class SelectItemCommand* stackSelectionState(bool pushIt, QUndoCommand * parentCommand);
-	QString renderToSVG(qreal printerScale, const LayerList & partLayers, const LayerList & wireLayers, 
-						bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, qreal dpi, 
+	QString renderToSVG(double printerScale, const LayerList & partLayers, const LayerList & wireLayers, 
+						bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, double dpi, 
 						bool selectedItems, bool flatten, bool fillHoles, bool & empty);
-	QString renderToSVG(qreal printerScale, const LayerList & partLayers, const LayerList & wireLayers, 
-								  bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, qreal dpi, 
+	QString renderToSVG(double printerScale, const LayerList & partLayers, const LayerList & wireLayers, 
+								  bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, double dpi, 
 								  bool flatten, bool fillHoles, 
 								  QList<ItemBase *> & itemBases, QRectF itemsBoundingRect, bool & empty);
 
@@ -225,7 +225,7 @@ public:
 	virtual void tidyWires();
 	const QString & getShortName();
 	virtual void setClipEnds(class ClipableWire *, bool);
-	void getBendpointWidths(class Wire *, qreal w, qreal & w1, qreal & w2, bool & negativeOffsetRect);
+	void getBendpointWidths(class Wire *, double w, double & w1, double & w2, bool & negativeOffsetRect);
 	virtual bool includeSymbols();
 	void disconnectAll();
 	virtual bool canDisconnectAll();
@@ -245,8 +245,8 @@ public:
 
 	void alignToGrid(bool);
 	bool alignedToGrid();
-	void saveZoom(qreal);
-	qreal retrieveZoom();
+	void saveZoom(double);
+	double retrieveZoom();
 	void initGrid();
 	virtual double defaultGridSizeInches();
 	void clearPasteOffset();
@@ -254,7 +254,7 @@ public:
 	void addFixedToCenterItem2(class SketchMainHelp *item);
 	void collectAllNets(QHash<class ConnectorItem *, int> & indexer, QList< QList<class ConnectorItem *>* > & allPartConnectorItems, bool includeSingletons, bool bothSides);
 	virtual bool routeBothSides();
-	virtual void changeLayer(long id, qreal z, ViewLayer::ViewLayerID viewLayerID);
+	virtual void changeLayer(long id, double z, ViewLayer::ViewLayerID viewLayerID);
 	void ratsnestConnect(ConnectorItem * connectorItem, bool connect);
 	void ratsnestConnect(ItemBase *, bool connect);
 	virtual void addDefaultParts();
@@ -388,8 +388,8 @@ protected:
 	void copyAux(QList<ItemBase *> & bases, bool saveBoundingRects);
 	void copyDrop();
 	void dropItemEvent(QDropEvent *event);
-	QString makeWireSVG(Wire * wire, QPointF offset, qreal dpi, qreal printerscale, bool blackOnly);
-	QString makeMoveSVG(qreal printerScale, qreal dpi, QPointF & offset); 
+	QString makeWireSVG(Wire * wire, QPointF offset, double dpi, double printerscale, bool blackOnly);
+	QString makeMoveSVG(double printerScale, double dpi, QPointF & offset); 
 	void prepDeleteProps(ItemBase * itemBase, long id, const QString & newModuleID, QUndoCommand * parentCommand);
 	void prepDeleteOtherProps(ItemBase * itemBase, long id, const QString & newModuleID, QUndoCommand * parentCommand);
 	ViewLayer::ViewLayerSpec getViewLayerSpec(ModelPart * modelPart, QDomElement & instance, QDomElement & view, ViewGeometry &);
@@ -407,7 +407,7 @@ protected:
 	void alignOneToGrid(ItemBase * itemBase);
 	void showPartLabelsAux(bool show, QList<ItemBase *> & itemBases);
 	virtual void changeTrace(Wire * wire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand);
-	virtual void extraRenderSvgStep(ItemBase *, QPointF offset, qreal dpi, qreal printerScale, QString & outputSvg);
+	virtual void extraRenderSvgStep(ItemBase *, QPointF offset, double dpi, double printerScale, QString & outputSvg);
 	virtual ViewLayer::ViewLayerSpec createWireViewLayerSpec(ConnectorItem * from, ConnectorItem * to);
 	virtual Wire * createTempWireForDragging(Wire * fromWire, ModelPart * wireModel, ConnectorItem * connectorItem, ViewGeometry & viewGeometry, ViewLayer::ViewLayerSpec);
 	virtual void prereleaseTempWireForDragging(Wire*);
@@ -461,7 +461,7 @@ signals:
 	void makeDeleteItemCommandPrepSignal(ItemBase * itemBase, bool foreign, QUndoCommand * parentCommand);
 	void makeDeleteItemCommandFinalSignal(ItemBase * itemBase, bool foreign, QUndoCommand * parentCommand);
 	void warnSMDSignal(const QString &);
-	void cursorLocationSignal(qreal xinches, qreal yinches);
+	void cursorLocationSignal(double xinches, double yinches);
 	void ratsnestConnectSignal(long id, const QString & connectorID, bool connect, bool doEmit);
 	void updatePartLabelInstanceTitleSignal(long itemID);
 	void filenameIfSignal(QString & filename);
@@ -509,7 +509,7 @@ public slots:
 	void incInstanceTitle(long id);
 	void showPartLabel(long id, bool showIt);
 	void checkSticky(long id, bool doEmit, bool checkCurrent, CheckStickyCommand *);
-	void resizeBoard(long id, qreal w, qreal h);
+	void resizeBoard(long id, double w, double h);
 	void resizeJumperItem(long id, QPointF pos, QPointF c0, QPointF c1);
 	void disconnectAllSlot(QList<ConnectorItem *>, QHash<ItemBase *, SketchWidget *> & itemsToDelete, QUndoCommand * parentCommand);
 	void setResistance(long itemID, QString resistance, QString pinSpacing, bool doEmit);
@@ -519,7 +519,7 @@ public slots:
 	void setSpacing(const QString & spacing);
 	void setForm(const QString & form);
 	virtual void showLabelFirstTime(long itemID, bool show, bool doEmit);
-	void resizeBoard(qreal w, qreal h, bool doEmit);
+	void resizeBoard(double w, double h, bool doEmit);
 	virtual void changeBoardLayers(int layers, bool doEmit);
 	void updateConnectors();
 	void ratsnestConnect(long id, const QString & connectorID, bool connect, bool doEmit);
@@ -608,7 +608,7 @@ protected:
 	double m_gridSizeInches;
 	QPointer<ItemBase> m_alignmentItem;
 	QPointF m_alignmentStartPoint;
-	qreal m_zoom;
+	double m_zoom;
 	bool m_draggingBendpoint;
 	QPointer<SizeItem> m_sizeItem;
 	int m_autoScrollThreshold;

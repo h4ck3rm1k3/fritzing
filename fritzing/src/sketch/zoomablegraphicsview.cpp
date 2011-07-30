@@ -114,7 +114,7 @@ void ZoomableGraphicsView::wheelEvent(QWheelEvent* event) {
 
 	int numSteps = event->delta() / 8;
 	if (doZoom) {
-		qreal delta = ((qreal) event->delta() / 120) * ZoomSlider::ZoomStep;
+		double delta = ((double) event->delta() / 120) * ZoomSlider::ZoomStep;
 		if (delta == 0) return;
 
 		// Scroll zooming relative to the current size
@@ -130,8 +130,8 @@ void ZoomableGraphicsView::wheelEvent(QWheelEvent* event) {
 	}
 }
 
-void ZoomableGraphicsView::relativeZoom(qreal step, bool centerOnCursor) {
-	qreal tempSize = m_scaleValue + step;
+void ZoomableGraphicsView::relativeZoom(double step, bool centerOnCursor) {
+	double tempSize = m_scaleValue + step;
 	if (tempSize < m_minScaleValue) {
 		m_scaleValue = m_minScaleValue;
 		emit zoomOutOfRange(m_scaleValue);
@@ -142,7 +142,7 @@ void ZoomableGraphicsView::relativeZoom(qreal step, bool centerOnCursor) {
 		emit zoomOutOfRange(m_scaleValue);
 		return;
 	}
-	qreal tempScaleValue = tempSize/100;
+	double tempScaleValue = tempSize/100;
 
 	m_scaleValue = tempSize;
 
@@ -164,11 +164,11 @@ void ZoomableGraphicsView::relativeZoom(qreal step, bool centerOnCursor) {
 	emit zoomChanged(m_scaleValue);
 }
 
-void ZoomableGraphicsView::absoluteZoom(qreal percent) {
+void ZoomableGraphicsView::absoluteZoom(double percent) {
 	relativeZoom(percent-m_scaleValue, false);
 }
 
-qreal ZoomableGraphicsView::currentZoom() {
+double ZoomableGraphicsView::currentZoom() {
 	return m_scaleValue;
 }
 

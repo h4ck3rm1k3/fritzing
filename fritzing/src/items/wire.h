@@ -81,7 +81,7 @@ public:
 
     QLineF line() const;
     virtual void setLine(const QLineF &line);
-    inline void setLine(qreal x1, qreal y1, qreal x2, qreal y2);
+    inline void setLine(double x1, double y1, double x2, double y2);
     QPen pen() const;
     void setPen(const QPen &pen);
 
@@ -122,15 +122,15 @@ public:
 
 	QString colorString();
 	QString hexString();
-	void setColorString(QString, qreal opacity);
-	virtual void setColor(const QColor &, qreal opacity);
-	qreal opacity();
-	void setOpacity(qreal opacity);
+	void setColorString(QString, double opacity);
+	virtual void setColor(const QColor &, double opacity);
+	double opacity();
+	void setOpacity(double opacity);
 	const QColor & color();
-	void setWireWidth(qreal width, InfoGraphicsView *, qreal hoverStrokeWidth);
-	void setPenWidth(qreal width, InfoGraphicsView *, qreal hoverStrokeWidth);
-	qreal width();
-	qreal mils();
+	void setWireWidth(double width, InfoGraphicsView *, double hoverStrokeWidth);
+	void setPenWidth(double width, InfoGraphicsView *, double hoverStrokeWidth);
+	double width();
+	double mils();
 	void setExtras(QDomElement &, InfoGraphicsView *);
 	Wire * findTraced(ViewGeometry::WireFlags flags, QList<ConnectorItem *>  & ends);
 	bool draggingEnd();
@@ -151,9 +151,9 @@ public:
 	bool rotationAllowed();
 	bool rotation45Allowed();
 	void addedToScene(bool temporary);
-	void setConnectorDimensions(qreal width, qreal height);
-	void originalConnectorDimensions(qreal & width, qreal & height);
-	qreal hoverStrokeWidth();
+	void setConnectorDimensions(double width, double height);
+	void originalConnectorDimensions(double & width, double & height);
+	double hoverStrokeWidth();
     QPainterPath hoverShape() const;
     QPainterPath shape() const;
 	QRectF boundingRect() const;
@@ -163,8 +163,8 @@ protected slots:
 	void colorEntry(const QString & text);
 
 public:
-	static qreal STANDARD_TRACE_WIDTH;
-	static qreal HALF_STANDARD_TRACE_WIDTH;
+	static double STANDARD_TRACE_WIDTH;
+	static double HALF_STANDARD_TRACE_WIDTH;
 
 public:
 	static void initNames();
@@ -196,13 +196,13 @@ protected:
 	void calcNewLine(ConnectorItem * from, ConnectorItem * to, QPointF & p1, QPointF & p2);
 	void collectDirectWires(ConnectorItem * connectorItem, QList<Wire *> & wires);
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
-	void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth, bool & negativeOffsetRect);
+	void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, double & opacity, double & negativePenWidth, bool & negativeOffsetRect);
 	bool connectionIsAllowed(ConnectorItem *);
 	bool releaseDrag();
 	void setIgnoreSelectionChange(bool);
 	virtual void setColorFromElement(QDomElement & element);
 	void checkVisibility(ConnectorItem * onMe, ConnectorItem * onIt, bool connect);
-	void setConnectorDimensionsAux(ConnectorItem *, qreal width, qreal height);
+	void setConnectorDimensionsAux(ConnectorItem *, double width, double height);
 	bool isBendpoint(ConnectorItem * connectorItem);
 
 protected:
@@ -219,15 +219,15 @@ protected:
 	QBrush m_shadowBrush;
 	QPen m_bendpointPen;
 	QPen m_bendpoint2Pen;
-	qreal m_bendpointWidth;
-	qreal m_bendpoint2Width;
+	double m_bendpointWidth;
+	double m_bendpoint2Width;
 	bool m_negativeOffsetRect;
-	qreal m_opacity;
+	double m_opacity;
 	bool m_canChainMultiple;
 	bool m_ignoreSelectionChange;
 	bool m_markedDeleted;
 	QRectF m_originalConnectorRect;
-	qreal m_hoverStrokeWidth;
+	double m_hoverStrokeWidth;
 
 public:
 	static QStringList colorNames;

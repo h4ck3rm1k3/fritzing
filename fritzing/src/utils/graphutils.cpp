@@ -79,7 +79,7 @@ bool GraphUtils::chooseRatsnestGraph(const QList<ConnectorItem *> & partConnecto
 	E * edges = new E[num_edges];
 	double * weights = new double[num_edges];
 	int ix = 0;
-	QVector< QVector<qreal> > reverseWeights(num_nodes, QVector<qreal>(num_nodes, 0));
+	QVector< QVector<double> > reverseWeights(num_nodes, QVector<double>(num_nodes, 0));
 	for (int i = 0; i < num_nodes; i++) {
 		ConnectorItem * c1 = temp.at(i);
 		//c1->debugInfo("c1");

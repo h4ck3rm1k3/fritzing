@@ -232,8 +232,8 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 			// now convert to pdf
 			QSvgRenderer svgRenderer;
 			svgRenderer.load(svg.toLatin1());
-			qreal trueWidth = imageSize.width() / FSvgRenderer::printerScale();
-			qreal trueHeight = imageSize.height() / FSvgRenderer::printerScale();
+			double trueWidth = imageSize.width() / FSvgRenderer::printerScale();
+			double trueHeight = imageSize.height() / FSvgRenderer::printerScale();
 			QRectF target(0, 0, trueWidth * res, trueHeight * res);
 
 			QSizeF psize((target.width() + printer.paperRect().width() - printer.width()) / res, 
@@ -488,7 +488,7 @@ void MainWindow::exportAux(QString fileName, QImage::Format format, bool removeB
 
 void MainWindow::printAux(QPrinter &printer, bool removeBackground, bool paginate) {
 	int res = printer.resolution();
-	qreal scale2 = res / FSvgRenderer::printerScale();
+	double scale2 = res / FSvgRenderer::printerScale();
 	DebugDialog::debug(QString("p.w:%1 p.h:%2 pager.w:%3 pager.h:%4 paperr.w:%5 paperr.h:%6 source.w:%7 source.h:%8")
 		.arg(printer.width())
 		.arg(printer.height())
@@ -825,7 +825,7 @@ void MainWindow::exportToEagle() {
 	*/
 }
 
-void MainWindow::exportSvg(qreal res, bool selectedItems, bool flatten) {
+void MainWindow::exportSvg(double res, bool selectedItems, bool flatten) {
 	QString path = defaultSaveFolder();
 	QString fileExt;
 	QString fileName = FolderUtils::getSaveFileName(this,
@@ -868,7 +868,7 @@ void MainWindow::exportSvg(qreal res, bool selectedItems, bool flatten) {
 
 }
 
-void MainWindow::exportSvgWatermark(QString & svg, qreal res)
+void MainWindow::exportSvgWatermark(QString & svg, double res)
 {
 	QFile file(":/resources/images/watermark_fritzing_outline.svg");
 	if (!file.open(QFile::ReadOnly)) return;

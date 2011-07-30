@@ -70,7 +70,7 @@ QVariant LayerKinPaletteItem::itemChange(GraphicsItemChange change, const QVaria
     return PaletteItemBase::itemChange(change, value);
 }
 
-void LayerKinPaletteItem::setOffset(qreal x, qreal y) {
+void LayerKinPaletteItem::setOffset(double x, double y) {
 	m_offset.setX(x);
 	m_offset.setY(y);
 	this->setPos(this->pos() + m_offset);
@@ -157,7 +157,7 @@ void LayerKinPaletteItem::resetID() {
 	m_id += offset;
 }
 
-QString LayerKinPaletteItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi) 
+QString LayerKinPaletteItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi) 
 {
 	return m_layerKinChief->retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 }

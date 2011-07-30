@@ -43,14 +43,14 @@ public:
 	ConnectorRectangle(QGraphicsItem* owner, bool withHandlers = true);
 	~ConnectorRectangle();
 	QGraphicsItem *owner();
-	void resizeRect(qreal x1, qreal y1, qreal x2, qreal y2);
+	void resizeRect(double x1, double y1, double x2, double y2);
 	bool isResizable();
 
 	void resizingStarted();
 	void resizingFinished();
 
-	qreal currentScale();
-	void setMinSize(qreal minWidth, qreal minHeight);
+	double currentScale();
+	void setMinSize(double minWidth, double minHeight);
 
 	void setHandlersVisible(bool visible);
 	QRectF handlerRect(Qt::Corner corner);
@@ -58,7 +58,7 @@ public:
 	void paint(QPainter *painter);
 
 signals:
-	void resizeSignal(qreal x1, qreal y1, qreal x2, qreal y2);
+	void resizeSignal(double x1, double y1, double x2, double y2);
 	void isResizableSignal(bool & resizable);
 
 protected:
@@ -73,13 +73,13 @@ protected:
 	CornerHandler *m_bottomLeftHandler;
 	QList<CornerHandler*> m_cornerHandlers;
 
-	qreal m_minWidth;
-	qreal m_minHeight;
+	double m_minWidth;
+	double m_minHeight;
 
 	bool m_firstPaint;
 
 public:
-	static qreal ErrorIconSize;
+	static double ErrorIconSize;
 };
 
 #endif /* CONNECTORRECTANGLE_H_ */

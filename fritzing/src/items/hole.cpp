@@ -252,10 +252,10 @@ void Hole::setBothNonConnectors(ItemBase * itemBase, SvgIdLayer * svgIdLayer) {
 
 QString Hole::makeSvg(const QString & holeDiameter, const QString & ringThickness, ViewLayer::ViewLayerID viewLayerID) 
 {
-	qreal hd = TextUtils::convertToInches(holeDiameter) * GraphicsUtils::StandardFritzingDPI;
-	qreal rt = TextUtils::convertToInches(ringThickness) * GraphicsUtils::StandardFritzingDPI;
+	double hd = TextUtils::convertToInches(holeDiameter) * GraphicsUtils::StandardFritzingDPI;
+	double rt = TextUtils::convertToInches(ringThickness) * GraphicsUtils::StandardFritzingDPI;
 
-	qreal wInches = (hd + rt + rt) / GraphicsUtils::StandardFritzingDPI;
+	double wInches = (hd + rt + rt) / GraphicsUtils::StandardFritzingDPI;
 	QString svg = TextUtils::makeSVGHeader(1, GraphicsUtils::StandardFritzingDPI, wInches, wInches);
 
 	QString setColor;
@@ -325,7 +325,7 @@ ItemBase::PluralType Hole::isPlural() {
 	return Plural;
 }
 
-QString Hole::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi) 
+QString Hole::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi) 
 {
 	if (m_viewIdentifier != ViewIdentifierClass::PCBView || 
 		(viewLayerID != ViewLayer::Copper0 && viewLayerID != ViewLayer::Copper1)) 
@@ -422,8 +422,8 @@ void Hole::changeUnits(const QString & units)
 
 QString Hole::changeUnits(const QString & units, HoleSettings & holeSettings) 
 {
-	qreal hd = TextUtils::convertToInches(holeSettings.holeDiameter);
-	qreal rt = TextUtils::convertToInches(holeSettings.ringThickness);
+	double hd = TextUtils::convertToInches(holeSettings.holeDiameter);
+	double rt = TextUtils::convertToInches(holeSettings.ringThickness);
 	QString newVal;
 	if (units == "in") {
 		newVal = QString("%1in,%2in").arg(hd).arg(rt);
@@ -453,20 +453,20 @@ void Hole::updateValidators(HoleSettings & holeSettings)
 	QPointF hdRange = holeSettings.holeDiameterRange(holeSettings.ringThickness);
 	QPointF rtRange = holeSettings.ringThicknessRange(holeSettings.holeDiameter);
 
-	qreal multiplier = (units == "mm") ? 25.4 : 1.0;
+	double multiplier = (units == "mm") ? 25.4 : 1.0;
 	holeSettings.diameterValidator->setRange(hdRange.x() * multiplier, hdRange.y() * multiplier, 3);
 	holeSettings.thicknessValidator->setRange(rtRange.x() * multiplier, rtRange.y() * multiplier, 3);
 }
 
 
 QPointF Hole::ringThicknessRange(const QString & holeDiameter) {
-	qreal hd = TextUtils::convertToInches(holeDiameter);
+	double hd = TextUtils::convertToInches(holeDiameter);
 	QPointF p(hd > 0 ? 0 : .001, 1.0);
 	return p;
 }
 
 QPointF Hole::holeDiameterRange(const QString & ringThickness) {
-	qreal rt = TextUtils::convertToInches(ringThickness);
+	double rt = TextUtils::convertToInches(ringThickness);
 	QPointF p(rt > 0 ? 0 : .001, 1.0);
 	return p;
 }
@@ -484,8 +484,8 @@ void Hole::updateEditTexts(HoleSettings & holeSettings) {
 	if (holeSettings.thicknessEdit == NULL) return;
 	if (holeSettings.unitsComboBox == NULL) return;
 
-	qreal hd = TextUtils::convertToInches(holeSettings.holeDiameter);
-	qreal rt = TextUtils::convertToInches(holeSettings.ringThickness);
+	double hd = TextUtils::convertToInches(holeSettings.holeDiameter);
+	double rt = TextUtils::convertToInches(holeSettings.ringThickness);
 
 	QString newVal;
 	if (holeSettings.unitsComboBox->currentText() == "in") {

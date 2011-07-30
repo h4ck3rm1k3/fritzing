@@ -34,12 +34,12 @@ $Date$
 struct PropertyDef {
 	QString name;
 	QString symbol;
-	qreal minValue;
-	qreal maxValue;
+	double minValue;
+	double maxValue;
 	QString defaultValue;
 	bool numeric;
 	bool editable;
-	QList<qreal> menuItems;
+	QList<double> menuItems;
 	QStringList sMenuItems;
 	QHash<QString, QString> adjuncts;
 	QStringList suffixes;

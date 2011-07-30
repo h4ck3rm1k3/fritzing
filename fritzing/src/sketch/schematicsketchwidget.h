@@ -42,13 +42,13 @@ public:
 	ViewLayer::ViewLayerID getDragWireViewLayerID(ConnectorItem *);
 	void initWire(Wire *, int penWidth);
 	bool autorouteTypePCB();
-	qreal getKeepout();
+	double getKeepout();
 	void tidyWires();
 	void ensureTraceLayersVisible();
 	void ensureTraceLayerVisible();
 	bool usesJumperItem();
 	void setClipEnds(ClipableWire * vw, bool);
-	void getBendpointWidths(class Wire *, qreal w, qreal & w1, qreal & w2, bool & negativeOffsetRect);
+	void getBendpointWidths(class Wire *, double w, double & w1, double & w2, bool & negativeOffsetRect);
 	void getLabelFont(QFont &, QColor &, ViewLayer::ViewLayerSpec);
 	void setNewPartVisible(ItemBase *);
 	bool canDropModelPart(ModelPart * modelPart); 
@@ -70,28 +70,28 @@ public:
 	bool sameElectricalLayer2(ViewLayer::ViewLayerID, ViewLayer::ViewLayerID);
 	bool acceptsTrace(const ViewGeometry &);
 	ViewGeometry::WireFlag getTraceFlag();
-	qreal getTraceWidth();
-	qreal getAutorouterTraceWidth();
+	double getTraceWidth();
+	double getAutorouterTraceWidth();
 	QString generateCopperFillUnit(ItemBase * itemBase, QPointF whereToStart);
-	qreal getWireStrokeWidth(Wire *, qreal wireWidth);
+	double getWireStrokeWidth(Wire *, double wireWidth);
 	Wire * createTempWireForDragging(Wire * fromWire, ModelPart * wireModel, ConnectorItem * connectorItem, ViewGeometry & viewGeometry, ViewLayer::ViewLayerSpec);
 
 
 public slots:
-	void setVoltage(qreal voltage, bool doEmit);
+	void setVoltage(double voltage, bool doEmit);
 
 protected slots:
 	void updateBigDots();
 
 protected:
-	qreal getRatsnestOpacity(bool);
+	double getRatsnestOpacity(bool);
 	AddItemCommand * newAddItemCommand(BaseCommand::CrossViewType crossViewType, 
 										QString moduleID, ViewLayer::ViewLayerSpec, ViewGeometry & viewGeometry, qint64 id, 
 										bool updateInfoView, long modelIndex, QUndoCommand *parent);
 	ViewLayer::ViewLayerID getLabelViewLayerID(ViewLayer::ViewLayerSpec);
 	QPoint calcFixedToCenterItemOffset(const QRect & viewPortRect, const QSizeF & helpSize);
-	void extraRenderSvgStep(ItemBase *, QPointF offset, qreal dpi, qreal printerScale, QString & outputSvg);
-	QString makeCircleSVG(QPointF p, qreal r, QPointF offset, qreal dpi, qreal printerScale);
+	void extraRenderSvgStep(ItemBase *, QPointF offset, double dpi, double printerScale, QString & outputSvg);
+	QString makeCircleSVG(QPointF p, double r, QPointF offset, double dpi, double printerScale);
 	ViewLayer::ViewLayerSpec createWireViewLayerSpec(ConnectorItem * from, ConnectorItem * to);
 
 

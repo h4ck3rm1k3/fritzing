@@ -306,7 +306,7 @@ QString MoveItemsCommand::getParamString() const {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-RotateItemCommand::RotateItemCommand(SketchWidget* sketchWidget, long itemID, qreal degrees, QUndoCommand *parent)
+RotateItemCommand::RotateItemCommand(SketchWidget* sketchWidget, long itemID, double degrees, QUndoCommand *parent)
     : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
     m_itemID = itemID;
@@ -555,7 +555,7 @@ QString RotateLegCommand::getParamString() const {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ChangeLayerCommand::ChangeLayerCommand(SketchWidget *sketchWidget, long fromID,
-									qreal oldZ, qreal newZ, 
+									double oldZ, double newZ, 
 									ViewLayer::ViewLayerID oldLayer, ViewLayer::ViewLayerID newLayer,
     								QUndoCommand *parent)
     : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
@@ -719,7 +719,7 @@ ChangeZCommand::~ChangeZCommand() {
 	m_triplets.clear();
 }
 
-void ChangeZCommand::addTriplet(long id, qreal oldZ, qreal newZ) {
+void ChangeZCommand::addTriplet(long id, double oldZ, double newZ) {
 	m_triplets.insert(id, new RealPair (oldZ, newZ));
 }
 
@@ -733,11 +733,11 @@ void ChangeZCommand::redo()
    m_sketchWidget->changeZ(m_triplets, second);
 }
 
-qreal ChangeZCommand::first(RealPair * pair) {
+double ChangeZCommand::first(RealPair * pair) {
 	return pair->first;
 }
 
-qreal ChangeZCommand::second(RealPair * pair) {
+double ChangeZCommand::second(RealPair * pair) {
 	return pair->second;
 }
 
@@ -920,7 +920,7 @@ QString CleanUpWiresCommand::getParamString() const {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-WireColorChangeCommand::WireColorChangeCommand(SketchWidget* sketchWidget, long wireId, const QString &oldColor, const QString &newColor, qreal oldOpacity, qreal newOpacity, QUndoCommand *parent)
+WireColorChangeCommand::WireColorChangeCommand(SketchWidget* sketchWidget, long wireId, const QString &oldColor, const QString &newColor, double oldOpacity, double newOpacity, QUndoCommand *parent)
 : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
 	m_wireId = wireId;
@@ -948,7 +948,7 @@ QString WireColorChangeCommand::getParamString() const {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-WireWidthChangeCommand::WireWidthChangeCommand(SketchWidget* sketchWidget, long wireId, qreal oldWidth, qreal newWidth, QUndoCommand *parent)
+WireWidthChangeCommand::WireWidthChangeCommand(SketchWidget* sketchWidget, long wireId, double oldWidth, double newWidth, QUndoCommand *parent)
 : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
 	m_wireId = wireId;
@@ -1211,7 +1211,7 @@ QString ChangeNoteTextCommand::getParamString() const {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-RotateFlipLabelCommand::RotateFlipLabelCommand(SketchWidget* sketchWidget, long itemID, qreal degrees, Qt::Orientations orientation, QUndoCommand *parent)
+RotateFlipLabelCommand::RotateFlipLabelCommand(SketchWidget* sketchWidget, long itemID, double degrees, Qt::Orientations orientation, QUndoCommand *parent)
     : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
     m_itemID = itemID;
@@ -1268,7 +1268,7 @@ QString ResizeNoteCommand::getParamString() const {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-ResizeBoardCommand::ResizeBoardCommand(SketchWidget * sketchWidget, long itemID, qreal oldWidth, qreal oldHeight, qreal newWidth, qreal newHeight, QUndoCommand * parent)
+ResizeBoardCommand::ResizeBoardCommand(SketchWidget * sketchWidget, long itemID, double oldWidth, double oldHeight, double newWidth, double newHeight, QUndoCommand * parent)
 : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
 	m_itemID = itemID;

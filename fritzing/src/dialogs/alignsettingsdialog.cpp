@@ -34,7 +34,7 @@ $Date$
 #include <QPushButton>
 #include <QSettings>
 
-AlignSettingsDialog::AlignSettingsDialog(const QString & viewName, qreal defaultSize, QWidget *parent) : QDialog(parent) 
+AlignSettingsDialog::AlignSettingsDialog(const QString & viewName, double defaultSize, QWidget *parent) : QDialog(parent) 
 {
 	m_defaultSize = defaultSize;
 	m_viewName = viewName;

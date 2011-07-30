@@ -164,7 +164,7 @@ void ResizableBoard::addedToScene(bool temporary) {
 			connect(m_resizeGripBL, SIGNAL(mousePressSignal(QGraphicsSceneMouseEvent *, ResizeHandle *)), this, SLOT(handleMousePressSlot(QGraphicsSceneMouseEvent *, ResizeHandle *)));
 			m_resizeGripBR = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveBottomRight.png"), Qt::SizeFDiagCursor, this);
 			connect(m_resizeGripBR, SIGNAL(mousePressSignal(QGraphicsSceneMouseEvent *, ResizeHandle *)), this, SLOT(handleMousePressSlot(QGraphicsSceneMouseEvent *, ResizeHandle *)));
-			connect(m_resizeGripTL, SIGNAL(zoomChangedSignal(qreal)), this, SLOT(handleZoomChangedSlot(qreal)));
+			connect(m_resizeGripTL, SIGNAL(zoomChangedSignal(double)), this, SLOT(handleZoomChangedSlot(double)));
 		}
 		if (m_resizeGripBL) {
 			setInitialSize();
@@ -190,11 +190,11 @@ void ResizableBoard::loadTemplates() {
 	}
 }
 
-qreal ResizableBoard::minWidth() {
+double ResizableBoard::minWidth() {
 	return 0.5 * FSvgRenderer::printerScale();
 }
 
-qreal ResizableBoard::minHeight() {
+double ResizableBoard::minHeight() {
 	return 0.5 * FSvgRenderer::printerScale();
 }
 
@@ -211,16 +211,16 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 	QRectF rect = boundingRect();
 	rect.moveTopLeft(this->pos());
 
-	qreal oldX1 = rect.x();
-	qreal oldY1 = rect.y();
-	qreal oldX2 = oldX1+rect.width();
-	qreal oldY2 = oldY1+rect.height();
-	qreal newX = event->scenePos().x() + m_inResize->resizeOffset().x();
-	qreal newY = event->scenePos().y() + m_inResize->resizeOffset().y();
+	double oldX1 = rect.x();
+	double oldY1 = rect.y();
+	double oldX2 = oldX1+rect.width();
+	double oldY2 = oldY1+rect.height();
+	double newX = event->scenePos().x() + m_inResize->resizeOffset().x();
+	double newY = event->scenePos().y() + m_inResize->resizeOffset().y();
 	QRectF newR;
 	
-	qreal minW = minWidth();
-	qreal minH = minHeight();
+	double minW = minWidth();
+	double minH = minHeight();
 
 	if (m_inResize == m_resizeGripBR) {
 		if (newX - oldX1 < minW) {
@@ -231,8 +231,8 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 		}
 
 		if (m_keepAspectRatio) {
-			qreal w = (newY - oldY1) * m_aspectRatio.width() / m_aspectRatio.height();
-			qreal h = (newX - oldX1) * m_aspectRatio.height() / m_aspectRatio.width();
+			double w = (newY - oldY1) * m_aspectRatio.width() / m_aspectRatio.height();
+			double h = (newX - oldX1) * m_aspectRatio.height() / m_aspectRatio.width();
 			if (qAbs(w + oldX1 - newX) <= qAbs(h + oldY1 - newY)) {
 				newX = oldX1 + w;
 			}
@@ -260,8 +260,8 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 		}
 
 		if (m_keepAspectRatio) {
-			qreal w = (oldY2 - newY) * m_aspectRatio.width() / m_aspectRatio.height();
-			qreal h = (oldX2 - newX) * m_aspectRatio.height() / m_aspectRatio.width();
+			double w = (oldY2 - newY) * m_aspectRatio.width() / m_aspectRatio.height();
+			double h = (oldX2 - newX) * m_aspectRatio.height() / m_aspectRatio.width();
 			if (qAbs(w + newX - oldX2) <= qAbs(h + newY - oldY2)) {
 				oldX2 = newX + w;
 			}
@@ -288,8 +288,8 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 		}
 
 		if (m_keepAspectRatio) {
-			qreal w = (oldY2 - newY) * m_aspectRatio.width() / m_aspectRatio.height();
-			qreal h = (newX - oldX1) * m_aspectRatio.height() / m_aspectRatio.width();
+			double w = (oldY2 - newY) * m_aspectRatio.width() / m_aspectRatio.height();
+			double h = (newX - oldX1) * m_aspectRatio.height() / m_aspectRatio.width();
 			if (qAbs(w + newX - oldX1) <= qAbs(h + newY - oldY2)) {
 				newX = oldX1 + w;
 			}
@@ -316,8 +316,8 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 		}
 
 		if (m_keepAspectRatio) {
-			qreal w = (newY - oldY1) * m_aspectRatio.width() / m_aspectRatio.height();
-			qreal h = (oldX2 - newX) * m_aspectRatio.height() / m_aspectRatio.width();
+			double w = (newY - oldY1) * m_aspectRatio.width() / m_aspectRatio.height();
+			double h = (oldX2 - newX) * m_aspectRatio.height() / m_aspectRatio.width();
 			if (qAbs(w + oldX2 - newX) <= qAbs(h + oldY1 - newY)) {
 				oldX2 = newX + w;
 			}
@@ -382,7 +382,7 @@ void ResizableBoard::handleMousePressSlot(QGraphicsSceneMouseEvent * event, Resi
 	}
 }
 
-void ResizableBoard::handleZoomChangedSlot(qreal scale) {
+void ResizableBoard::handleZoomChangedSlot(double scale) {
 	Q_UNUSED(scale);
 	positionGrips();
 }
@@ -393,12 +393,12 @@ void ResizableBoard::positionGrips() {
 	// TODO:  figure out how to position these on a rotated board
 
 	QSizeF sz = this->boundingRect().size();
-	qreal scale = m_resizeGripBL->currentScale();
+	double scale = m_resizeGripBL->currentScale();
 
 	// assuming all the handles are the same size, offset to the center
 	QSizeF hsz = m_resizeGripBL->boundingRect().size();
-	qreal dx = hsz.width() / (scale * 2);
-	qreal dy = hsz.height() / (scale * 2);
+	double dx = hsz.width() / (scale * 2);
+	double dy = hsz.height() / (scale * 2);
 
 	m_resizeGripBR->setPos(sz.width() - dx, sz.height() - dy);
 	m_resizeGripBL->setPos(-dx, sz.height() - dy);
@@ -420,11 +420,11 @@ ViewIdentifierClass::ViewIdentifier ResizableBoard::theViewIdentifier() {
 	return ViewIdentifierClass::PCBView;
 }
 
-void ResizableBoard::resizePixels(qreal w, qreal h, const LayerHash & viewLayers) {
+void ResizableBoard::resizePixels(double w, double h, const LayerHash & viewLayers) {
 	resizeMM(GraphicsUtils::pixels2mm(w, FSvgRenderer::printerScale()), GraphicsUtils::pixels2mm(h, FSvgRenderer::printerScale()), viewLayers);
 }
 
-void ResizableBoard::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers) {
+void ResizableBoard::resizeMM(double mmW, double mmH, const LayerHash & viewLayers) {
 	if (mmW == 0 || mmH == 0) {
 		QString error;
 		LayerAttributes layerAttributes;
@@ -448,14 +448,14 @@ void ResizableBoard::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers
 }
 
 
-void ResizableBoard::resizeMMAux(qreal mmW, qreal mmH) {
+void ResizableBoard::resizeMMAux(double mmW, double mmH) {
 
 	if (m_renderer == NULL) {
 		m_renderer = new FSvgRenderer(this);
 	}
 
-	qreal milsW = GraphicsUtils::mm2mils(mmW);
-	qreal milsH = GraphicsUtils::mm2mils(mmH);
+	double milsW = GraphicsUtils::mm2mils(mmW);
+	double milsH = GraphicsUtils::mm2mils(mmH);
 
 	QString s = makeFirstLayerSvg(mmW, mmH, milsW, milsH);
 
@@ -496,14 +496,14 @@ void ResizableBoard::resizeMMAux(qreal mmW, qreal mmH) {
 void ResizableBoard::loadLayerKin( const LayerHash & viewLayers, ViewLayer::ViewLayerSpec viewLayerSpec) {
 	loadTemplates();				
 	Board::loadLayerKin(viewLayers, viewLayerSpec);
-	qreal w = m_modelPart->prop("width").toDouble();
+	double w = m_modelPart->prop("width").toDouble();
 	if (w != 0) {
 		resizeMM(w, m_modelPart->prop("height").toDouble(), viewLayers);
 	}
 }
 
 void ResizableBoard::setInitialSize() {
-	qreal w = m_modelPart->prop("width").toDouble();
+	double w = m_modelPart->prop("width").toDouble();
 	if (w == 0) {
 		// set the size so the infoGraphicsView will display the size as you drag
 		QSizeF sz = this->boundingRect().size();
@@ -512,11 +512,11 @@ void ResizableBoard::setInitialSize() {
 	}
 }
 
-QString ResizableBoard::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi)
+QString ResizableBoard::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi)
 {
-	qreal w = m_modelPart->prop("width").toDouble();
+	double w = m_modelPart->prop("width").toDouble();
 	if (w != 0) {
-		qreal h = m_modelPart->prop("height").toDouble();
+		double h = m_modelPart->prop("height").toDouble();
 		QString xml = makeLayerSvg(viewLayerID, w, h, GraphicsUtils::mm2mils(w), GraphicsUtils::mm2mils(h));
 		if (!xml.isEmpty()) {
 			QString xmlName = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
@@ -537,12 +537,12 @@ QString ResizableBoard::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QS
 }
 
 QSizeF ResizableBoard::getSizeMM() {
-	qreal w = m_modelPart->prop("width").toDouble();
-	qreal h = m_modelPart->prop("height").toDouble();
+	double w = m_modelPart->prop("width").toDouble();
+	double h = m_modelPart->prop("height").toDouble();
 	return QSizeF(w, h);
 }
 
-QString ResizableBoard::makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, qreal mmW, qreal mmH, qreal milsW, qreal milsH) 
+QString ResizableBoard::makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, double mmW, double mmH, double milsW, double milsH) 
 {
 	switch (viewLayerID) {
 		case ViewLayer::Board:
@@ -555,32 +555,32 @@ QString ResizableBoard::makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, qreal m
 	}
 }
 
-QString ResizableBoard::makeNextLayerSvg(ViewLayer::ViewLayerID viewLayerID, qreal mmW, qreal mmH, qreal milsW, qreal milsH) {
+QString ResizableBoard::makeNextLayerSvg(ViewLayer::ViewLayerID viewLayerID, double mmW, double mmH, double milsW, double milsH) {
 
 	if (viewLayerID == ViewLayer::Silkscreen1) return makeSilkscreenSvg(mmW, mmH, milsW, milsH);
 
 	return "";
 }
 
-QString ResizableBoard::makeFirstLayerSvg(qreal mmW, qreal mmH, qreal milsW, qreal milsH) {
+QString ResizableBoard::makeFirstLayerSvg(double mmW, double mmH, double milsW, double milsH) {
 	return makeBoardSvg(mmW, mmH, milsW, milsH);
 }
 
-QString ResizableBoard::makeBoardSvg(qreal mmW, qreal mmH, qreal milsW, qreal milsH) {
+QString ResizableBoard::makeBoardSvg(double mmW, double mmH, double milsW, double milsH) {
 	return BoardLayerTemplate
 		.arg(mmW).arg(mmH)			
 		.arg(milsW).arg(milsH)
 		.arg(milsW - LineThickness).arg(milsH - LineThickness);
 }
 
-QString ResizableBoard::makeSilkscreenSvg(qreal mmW, qreal mmH, qreal milsW, qreal milsH) {
+QString ResizableBoard::makeSilkscreenSvg(double mmW, double mmH, double milsW, double milsH) {
 	return SilkscreenLayerTemplate
 		.arg(mmW).arg(mmH)
 		.arg(milsW).arg(milsH)
 		.arg(milsW - LineThickness).arg(milsH - LineThickness);
 }
 
-void ResizableBoard::rotateItem(qreal degrees) {
+void ResizableBoard::rotateItem(double degrees) {
 	// TODO: this hack only works for 90 degree rotations
 	// eventually need to make this work for other angles
 	// what gets screwed up is the drag handles
@@ -592,8 +592,8 @@ void ResizableBoard::rotateItem(qreal degrees) {
 			QPointF c = r.center();
 			ViewGeometry vg;
 			vg.setLoc(QPointF(c.x() - (r.height() / 2.0), c.y() - (r.width() / 2.0)));	
-			qreal w = m_modelPart->prop("width").toDouble();
-			qreal h = m_modelPart->prop("height").toDouble();
+			double w = m_modelPart->prop("width").toDouble();
+			double h = m_modelPart->prop("height").toDouble();
 			LayerHash viewLayers;
 			resizeMM(h, w, viewLayers);
 			moveItem(vg);
@@ -605,8 +605,8 @@ void ResizableBoard::rotateItem(qreal degrees) {
 }
 
 void ResizableBoard::saveParams() {
-	qreal w = modelPart()->prop("width").toDouble();
-	qreal h = modelPart()->prop("height").toDouble();
+	double w = modelPart()->prop("width").toDouble();
+	double h = modelPart()->prop("height").toDouble();
 	m_boardSize = QSizeF(w, h);
 	m_boardPos = pos();
 }
@@ -640,12 +640,12 @@ bool ResizableBoard::collectExtraInfo(QWidget * parent, const QString & family, 
 			vboxLayout->setContentsMargins(0, 3, 0, 0);
 
 			QRectF r = this->boundingRect();
-			qreal w = qRound(GraphicsUtils::pixels2mm(r.width(), FSvgRenderer::printerScale()) * 100) / 100.0;
+			double w = qRound(GraphicsUtils::pixels2mm(r.width(), FSvgRenderer::printerScale()) * 100) / 100.0;
 			QLabel * l1 = new QLabel(tr("width: %1mm").arg(w));	
 			l1->setMargin(0);
 			l1->setObjectName("infoViewLabel");		
 
-			qreal h = qRound(GraphicsUtils::pixels2mm(r.height(), FSvgRenderer::printerScale()) * 100) / 100.0;
+			double h = qRound(GraphicsUtils::pixels2mm(r.height(), FSvgRenderer::printerScale()) * 100) / 100.0;
 			QLabel * l2 = new QLabel(tr("height: %1mm").arg(h));
 			l2->setMargin(0);
 			l2->setObjectName("infoViewLabel");		
@@ -661,8 +661,8 @@ bool ResizableBoard::collectExtraInfo(QWidget * parent, const QString & family, 
 			return true;
 		}
 
-		qreal w = qRound(m_modelPart->prop("width").toDouble() * 10) / 10.0;	// truncate to 1 decimal point
-		qreal h = qRound(m_modelPart->prop("height").toDouble() * 10) / 10.0;  // truncate to 1 decimal point
+		double w = qRound(m_modelPart->prop("width").toDouble() * 10) / 10.0;	// truncate to 1 decimal point
+		double h = qRound(m_modelPart->prop("height").toDouble() * 10) / 10.0;  // truncate to 1 decimal point
 
 		QFrame * frame = new QFrame();
 		QVBoxLayout * vboxLayout = new QVBoxLayout();

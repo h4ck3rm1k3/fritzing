@@ -54,12 +54,12 @@ void X2Svg::initLimits() {
 	m_minY = MAX_INT;
 }
 
-void X2Svg::checkXLimit(qreal x) {
+void X2Svg::checkXLimit(double x) {
 	if (x < m_minX) m_minX = x;
 	if (x > m_maxX) m_maxX = x;
 }
 
-void X2Svg::checkYLimit(qreal y) {
+void X2Svg::checkYLimit(double y) {
 	if (y < m_minY) m_minY = y;
 	if (y > m_maxY) m_maxY = y;
 }

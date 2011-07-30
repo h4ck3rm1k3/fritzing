@@ -48,7 +48,7 @@ LED::LED( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentif
 LED::~LED() {
 }
 
-QString LED::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi) 
+QString LED::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi) 
 {
 	switch (viewLayerID) {
 		case ViewLayer::Breadboard:

@@ -45,7 +45,7 @@ class GraphicsFlowLayout : public QGraphicsLinearLayout {
 		void widgetEvent(QEvent * e);
 		int doLayout(const QRectF &rect);
 
-		qreal m_lastWidth;
+		double m_lastWidth;
 };
 
 #endif /* GRAPHICSFLOWLAYOUT_H_ */

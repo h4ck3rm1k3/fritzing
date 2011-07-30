@@ -93,12 +93,12 @@ ZoomControls::ZoomControls(ZoomableGraphicsView *view, QWidget *parent)
 {
 	m_zoomLabel = new QLabel(this);
 	m_zoomLabel->setFixedWidth(35);
-	connect(view, SIGNAL(zoomChanged(qreal)),this,SLOT(updateLabel(qreal)));
+	connect(view, SIGNAL(zoomChanged(double)),this,SLOT(updateLabel(double)));
 	m_boxLayout->insertWidget(1,m_zoomLabel); // in the middle
 	m_boxLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding,QSizePolicy::Minimum)); // at the beginning
 	updateLabel(view->currentZoom());
 }
 
-void ZoomControls::updateLabel(qreal zoom) {
+void ZoomControls::updateLabel(double zoom) {
 	m_zoomLabel->setText(QString("%1%").arg((int)zoom));
 }

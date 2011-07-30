@@ -104,7 +104,7 @@ enum ConnectionStatus {
 	UNDETERMINED_
 };
 
-static const qreal CloseEnough = 0.5;  // in pixels, for swapping into the breadboard
+static const double CloseEnough = 0.5;  // in pixels, for swapping into the breadboard
 
 QHash<ViewIdentifierClass::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
 
@@ -233,7 +233,7 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 	setIgnoreSelectionChangeEvents(true);
 
 	QString viewName = ViewIdentifierClass::viewIdentifierXmlName(m_viewIdentifier);
-	QMultiMap<qreal, ItemBase *> zmap;
+	QMultiMap<double, ItemBase *> zmap;
 
 	QPointF sceneCenter = mapToScene(viewport()->rect().center());
 
@@ -306,8 +306,8 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 					viewGeometry.offset((20 * m_pasteCount) + m_pasteOffset.x(), (20 * m_pasteCount) + m_pasteOffset.y());
 				}
 				else if (boundingRect && !boundingRect->isNull()) {
-					qreal dx = viewGeometry.loc().x() - boundingRect->left() + sceneCorner.x() + (20 * m_pasteCount);
-					qreal dy = viewGeometry.loc().y() - boundingRect->top() + sceneCorner.y() + (20 * m_pasteCount);
+					double dx = viewGeometry.loc().x() - boundingRect->left() + sceneCorner.x() + (20 * m_pasteCount);
+					double dy = viewGeometry.loc().y() - boundingRect->top() + sceneCorner.y() + (20 * m_pasteCount);
 					viewGeometry.setLoc(QPointF(dx, dy));
 				}
 			}
@@ -317,9 +317,9 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 			
 			if (mp->itemType() == ModelPart::ResizableBoard) {
 				bool ok;
-				qreal w = mp->prop("width").toDouble(&ok);
+				double w = mp->prop("width").toDouble(&ok);
 				if (ok) {
-					qreal h = mp->prop("height").toDouble(&ok);
+					double h = mp->prop("height").toDouble(&ok);
 					if (ok) {
 						new ResizeBoardCommand(this, newID, w, h, w, h, parentCommand);
 					}
@@ -341,7 +341,7 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 			if (!labelGeometry.isNull()) {
 				QDomElement clone = labelGeometry.cloneNode(true).toElement();
 				bool ok;
-				qreal x = clone.attribute("x").toDouble(&ok);
+				double x = clone.attribute("x").toDouble(&ok);
 				if (ok) {
 					if (m_pasteOffset.x() == 0 && m_pasteOffset.y() == 0) {
 						int dx = (boundingRect) ? boundingRect->left() : 0;
@@ -352,7 +352,7 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 					}
 					clone.setAttribute("x", QString::number(x));
 				}
-				qreal y = clone.attribute("y").toDouble(&ok);
+				double y = clone.attribute("y").toDouble(&ok);
 				if (ok) {
 					if (m_pasteOffset.x() == 0 && m_pasteOffset.y() == 0) {
 						int dy = boundingRect ? boundingRect->top() : 0;
@@ -378,7 +378,7 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 	}
 
 	if (zmap.count() > 0) {
-		qreal z = 0.5;
+		double z = 0.5;
 		foreach (ItemBase * itemBase, zmap.values()) {
 			itemBase->slamZ(z);
 			z += ViewLayer::getZIncrement();
@@ -425,10 +425,10 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 				QDomElement point = leg.firstChildElement("point");
 				while (!point.isNull()) {
 					bool ok;
-					qreal x = point.attribute("x", "0").toDouble(&ok);
+					double x = point.attribute("x", "0").toDouble(&ok);
 					if (!ok) continue;
 
-					qreal y = point.attribute("y", "0").toDouble(&ok);
+					double y = point.attribute("y", "0").toDouble(&ok);
 					if (!ok) continue;
 
 					poly.append(QPointF(x, y));
@@ -566,7 +566,7 @@ void SketchWidget::addWireExtras(long newID, QDomElement & view, QUndoCommand * 
 
 	QString colorString = extras.attribute("color");
 	if (!colorString.isEmpty()) {
-		qreal op = extras.attribute("opacity").toDouble(&ok);
+		double op = extras.attribute("opacity").toDouble(&ok);
 		if (!ok) {
 			op = 1.0;
 		}
@@ -1173,7 +1173,7 @@ void SketchWidget::updateWire(long id, const QString & connectorID, bool updateR
 	wire->simpleConnectedMoved(connectorItem);
 }
 
-void SketchWidget::rotateItem(long id, qreal degrees) {
+void SketchWidget::rotateItem(long id, double degrees) {
 	//DebugDialog::debug(QString("rotating %1 %2").arg(id).arg(degrees) );
 
 	if (!isVisible()) return;
@@ -2147,8 +2147,8 @@ void SketchWidget::alignLoc(QPointF & loc, const QPointF startPoint, const QPoin
 	// applied to loc, which is the location of the item being dragged
 
 	QPointF newPos = startPoint + newLoc - originalLoc;
-	qreal ny = GraphicsUtils::getNearestOrdinate(newPos.y(), gridSizeInches() * FSvgRenderer::printerScale());
-	qreal nx = GraphicsUtils::getNearestOrdinate(newPos.x(), gridSizeInches() * FSvgRenderer::printerScale());
+	double ny = GraphicsUtils::getNearestOrdinate(newPos.y(), gridSizeInches() * FSvgRenderer::printerScale());
+	double nx = GraphicsUtils::getNearestOrdinate(newPos.x(), gridSizeInches() * FSvgRenderer::printerScale());
 	loc.setX(loc.x() + nx - newPos.x());
 	loc.setY(loc.y() + ny - newPos.y());
 }
@@ -2617,7 +2617,7 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 	QGraphicsView::mouseMoveEvent(event);
 }
 
-QString SketchWidget::makeMoveSVG(qreal printerScale, qreal dpi, QPointF & offset) 
+QString SketchWidget::makeMoveSVG(double printerScale, double dpi, QPointF & offset) 
 {
 
 	QRectF itemsBoundingRect;
@@ -2625,8 +2625,8 @@ QString SketchWidget::makeMoveSVG(qreal printerScale, qreal dpi, QPointF & offse
 		itemsBoundingRect |= itemBase->sceneBoundingRect();
 	}
 
-	qreal width = itemsBoundingRect.width();
-	qreal height = itemsBoundingRect.height();
+	double width = itemsBoundingRect.width();
+	double height = itemsBoundingRect.height();
 	offset = itemsBoundingRect.topLeft();
 
 	QString outputSVG = TextUtils::makeSVGHeader(printerScale, dpi, width, height);
@@ -3669,7 +3669,7 @@ void SketchWidget::bringToFront() {
 	continueZChangeMax(bases, 0, bases.size(), lessThan, 1, text);
 }
 
-qreal SketchWidget::fitInWindow() {
+double SketchWidget::fitInWindow() {
 
 	QRectF itemsRect;
 	foreach(QGraphicsItem * item, scene()->items()) {
@@ -3684,8 +3684,8 @@ qreal SketchWidget::fitInWindow() {
 
 	//fitInView(itemsRect.x(), itemsRect.y(), itemsRect.width(), itemsRect.height(), Qt::KeepAspectRatio);
 
-	qreal wRelation = (viewRect.width() - this->verticalScrollBar()->width() - 5)  / itemsRect.width();
-	qreal hRelation = (viewRect.height() - this->horizontalScrollBar()->height() - 5) / itemsRect.height();
+	double wRelation = (viewRect.width() - this->verticalScrollBar()->width() - 5)  / itemsRect.width();
+	double hRelation = (viewRect.height() - this->horizontalScrollBar()->height() - 5) / itemsRect.height();
 
 	DebugDialog::debug(QString("scen rect: w%1 h%2").arg(itemsRect.width()).arg(itemsRect.height()));
 	DebugDialog::debug(QString("view rect: w%1 h%2").arg(viewRect.width()).arg(viewRect.height()));
@@ -3779,9 +3779,9 @@ void SketchWidget::continueZChangeAux(QList<ItemBase *> & bases, const QString &
 	ChangeZCommand * changeZCommand = new ChangeZCommand(this, NULL);
 
 	ViewLayer::ViewLayerID lastViewLayerID = ViewLayer::UnknownLayer;
-	qreal z = 0;
+	double z = 0;
 	for (int i = 0; i < bases.size(); i++) {
-		qreal oldZ = bases[i]->getViewGeometry().z();
+		double oldZ = bases[i]->getViewGeometry().z();
 		if (bases[i]->viewLayerID() != lastViewLayerID) {
 			lastViewLayerID = bases[i]->viewLayerID();
 			z = qFloor(oldZ);
@@ -3844,7 +3844,7 @@ bool SketchWidget::greaterThan(int a, int b) {
 	return a > b;
 }
 
-void SketchWidget::changeZ(QHash<long, RealPair * > triplets, qreal (*pairAccessor)(RealPair *) ) {
+void SketchWidget::changeZ(QHash<long, RealPair * > triplets, double (*pairAccessor)(RealPair *) ) {
 
 	// TODO: replace scene->items
 	const QList<QGraphicsItem *> items = scene()->items();
@@ -3856,7 +3856,7 @@ void SketchWidget::changeZ(QHash<long, RealPair * > triplets, qreal (*pairAccess
 		RealPair * pair = triplets[itemBase->id()];
 		if (pair == NULL) continue;
 
-		qreal newZ = pairAccessor(pair);
+		double newZ = pairAccessor(pair);
 		DebugDialog::debug(QString("change z %1 %2").arg(itemBase->id()).arg(newZ));
 		items[i]->setZValue(newZ);
 
@@ -3938,7 +3938,7 @@ void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGrap
 	}
 }
 
-void SketchWidget::rotateX(qreal degrees) 
+void SketchWidget::rotateX(double degrees) 
 {
 	clearHoldingSelectItem();
 	m_savedItems.clear();
@@ -5544,10 +5544,10 @@ void SketchWidget::changeWireColor(const QString newColor)
 void SketchWidget::changeWireWidthMils(const QString newWidthStr)
 {
 	bool ok = false;
-	qreal newWidth = newWidthStr.toDouble(&ok);
+	double newWidth = newWidthStr.toDouble(&ok);
 	if (!ok) return;
 
-	qreal trueWidth = FSvgRenderer::printerScale() * newWidth / 1000.0;
+	double trueWidth = FSvgRenderer::printerScale() * newWidth / 1000.0;
 
 	QList <Wire *> wires;
 	foreach (QGraphicsItem * item, scene()->selectedItems()) {
@@ -5591,7 +5591,7 @@ void SketchWidget::changeWireWidthMils(const QString newWidthStr)
 	m_undoStack->push(parentCommand);
 }
 
-void SketchWidget::changeWireColor(long wireId, const QString& color, qreal opacity) {
+void SketchWidget::changeWireColor(long wireId, const QString& color, double opacity) {
 	ItemBase *item = findItem(wireId);
 	Wire* wire = dynamic_cast<Wire*>(item);
 	if (wire) {
@@ -5600,7 +5600,7 @@ void SketchWidget::changeWireColor(long wireId, const QString& color, qreal opac
 	}
 }
 
-void SketchWidget::changeWireWidth(long wireId, qreal width) {
+void SketchWidget::changeWireWidth(long wireId, double width) {
 	ItemBase *item = findItem(wireId);
 	Wire* wire = dynamic_cast<Wire*>(item);
 	if (wire) {
@@ -6149,14 +6149,14 @@ void SketchWidget::partLabelMoved(ItemBase * itemBase, QPointF oldPos, QPointF o
 }
 
 
-void SketchWidget::rotateFlipPartLabel(ItemBase * itemBase, qreal degrees, Qt::Orientations flipDirection) {
+void SketchWidget::rotateFlipPartLabel(ItemBase * itemBase, double degrees, Qt::Orientations flipDirection) {
 	RotateFlipLabelCommand * command = new RotateFlipLabelCommand(this, itemBase->id(), degrees, flipDirection, NULL);
 	command->setText(tr("%1 label '%2'").arg((degrees != 0) ? tr("Rotate") : tr("Flip")).arg(itemBase->title()));
 	m_undoStack->push(command);
 }
 
 
-void SketchWidget::rotateFlipPartLabel(long itemID, qreal degrees, Qt::Orientations flipDirection) {
+void SketchWidget::rotateFlipPartLabel(long itemID, double degrees, Qt::Orientations flipDirection) {
 	ItemBase * itemBase = findItem(itemID);
 	if (itemBase == NULL) return;
 
@@ -6216,8 +6216,8 @@ void SketchWidget::resizeNote(long itemID, const QSizeF & size)
 	note->setSize(size);
 }
 
-QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLayers, const LayerList & wireLayers, 
-								  bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, qreal dpi, 
+QString SketchWidget::renderToSVG(double printerScale, const LayerList & partLayers, const LayerList & wireLayers, 
+								  bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, double dpi, 
 								  bool selectedItems, bool flatten, bool fillHoles, bool & empty)
 {
 
@@ -6255,7 +6255,7 @@ QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLaye
 	return renderToSVG(printerScale, partLayers, wireLayers, blackOnly, imageSize, offsetPart, dpi, flatten, fillHoles, itemBases, itemsBoundingRect, empty);
 }
 
-QString translateSVG(QString & svg, QPointF loc, qreal dpi, qreal printerScale) {
+QString translateSVG(QString & svg, QPointF loc, double dpi, double printerScale) {
 	loc.setX(loc.x() * dpi / printerScale);
 	loc.setY(loc.y() * dpi / printerScale);
 	if (loc.x() != 0 || loc.y() != 0) {
@@ -6267,8 +6267,8 @@ QString translateSVG(QString & svg, QPointF loc, qreal dpi, qreal printerScale) 
 	return svg;
 }
 
-QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLayers, const LayerList & wireLayers, 
-								  bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, qreal dpi, bool flatten,
+QString SketchWidget::renderToSVG(double printerScale, const LayerList & partLayers, const LayerList & wireLayers, 
+								  bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, double dpi, bool flatten,
 								  bool fillHoles,
 								  QList<ItemBase *> & itemBases, QRectF itemsBoundingRect,
 								  bool & empty)
@@ -6276,8 +6276,8 @@ QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLaye
 	Q_UNUSED(fillHoles);
 	empty = true;
 
-	qreal width = itemsBoundingRect.width();
-	qreal height = itemsBoundingRect.height();
+	double width = itemsBoundingRect.width();
+	double height = itemsBoundingRect.height();
 	QPointF offset = itemsBoundingRect.topLeft();
 
 	if (offsetPart) {
@@ -6359,7 +6359,7 @@ QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLaye
 				foreach (ConnectorItem * ci, itemBase->cachedConnectorItems()) {
 					if (!ci->hasBendableLeg()) continue;
 
-					qreal strokeWidth;
+					double strokeWidth;
 					QString colorString;
 					QPolygonF poly = ci->sceneAdjustedLeg(strokeWidth, colorString);
 					outputSVG.append(TextUtils::makePolySVG(poly, offset, strokeWidth, colorString, dpi, printerScale, blackOnly));
@@ -6398,7 +6398,7 @@ QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLaye
 
 }
 
-void SketchWidget::extraRenderSvgStep(ItemBase * itemBase, QPointF offset, qreal dpi, qreal printerScale, QString & outputSvg)
+void SketchWidget::extraRenderSvgStep(ItemBase * itemBase, QPointF offset, double dpi, double printerScale, QString & outputSvg)
 {
 	Q_UNUSED(itemBase);
 	Q_UNUSED(offset);
@@ -6407,7 +6407,7 @@ void SketchWidget::extraRenderSvgStep(ItemBase * itemBase, QPointF offset, qreal
 	Q_UNUSED(outputSvg);
 }
 
-QString SketchWidget::makeWireSVG(Wire * wire, QPointF offset, qreal dpi, qreal printerScale, bool blackOnly) 
+QString SketchWidget::makeWireSVG(Wire * wire, QPointF offset, double dpi, double printerScale, bool blackOnly) 
 {
 	QLineF line = wire->getPaintLine();
 	QPointF p1 = wire->scenePos() + line.p1() - offset;
@@ -6586,7 +6586,7 @@ void SketchWidget::setProp(long itemID, const QString & prop, const QString & va
 }
 
 // called from ResizeBoardCommand
-void SketchWidget::resizeBoard(long itemID, qreal mmW, qreal mmH) {
+void SketchWidget::resizeBoard(long itemID, double mmW, double mmH) {
 	ItemBase * item = findItem(itemID);
 	if (item == NULL) return;
 
@@ -6606,7 +6606,7 @@ void SketchWidget::resizeBoard(long itemID, qreal mmW, qreal mmH) {
 
 }
 
-void SketchWidget::resizeBoard(qreal mmW, qreal mmH, bool doEmit)
+void SketchWidget::resizeBoard(double mmW, double mmH, bool doEmit)
 {
 	Q_UNUSED(doEmit);
 	Q_UNUSED(mmH);
@@ -6626,8 +6626,8 @@ void SketchWidget::resizeBoard(qreal mmW, qreal mmH, bool doEmit)
 	QString orig = item->modelPart()->prop("width").toString();
 	QString temp = orig;
 	temp.chop(2);
-	qreal origw = temp.toDouble();
-	qreal origh = orig.endsWith("cm") ? 0 : 1;
+	double origw = temp.toDouble();
+	double origh = orig.endsWith("cm") ? 0 : 1;
 	QUndoCommand * parentCommand = new QUndoCommand(tr("Resize ruler to %1%2").arg(mmW).arg((mmH == 0) ? "cm" : "in"));
 	new ResizeBoardCommand(this, item->id(), origw, origh, mmW, mmH, parentCommand);
 	m_undoStack->push(parentCommand);
@@ -6737,7 +6737,7 @@ const QString & SketchWidget::getShortName() {
 	return m_shortName;
 }
 
-void SketchWidget::getBendpointWidths(Wire * wire, qreal width, qreal & bendpointWidth, qreal & bendpoint2Width, bool & negativeOffsetRect) {
+void SketchWidget::getBendpointWidths(Wire * wire, double width, double & bendpointWidth, double & bendpoint2Width, bool & negativeOffsetRect) {
 	Q_UNUSED(wire);
 	Q_UNUSED(width);
 	bendpoint2Width = bendpointWidth = -1;
@@ -6899,7 +6899,7 @@ QPointF SketchWidget::calcNewLoc(ItemBase * moveBase, ItemBase * detachFrom)
 	QRectF r = moveBase->boundingRect();
 	pos.setX(pos.x() + (r.width() / 2.0));
 	pos.setY(pos.y() + (r.height() / 2.0));
-	qreal d[4];
+	double d[4];
 	d[0] = qAbs(pos.y() - dr.top());
 	d[1] = qAbs(pos.y() - dr.bottom());
 	d[2] = qAbs(pos.x() - dr.left());
@@ -7120,11 +7120,11 @@ bool SketchWidget::canAlignToTopLeft(ItemBase *)
 	return false;
 }
 
-void SketchWidget::saveZoom(qreal zoom) {
+void SketchWidget::saveZoom(double zoom) {
 	m_zoom = zoom;
 }
 
-qreal SketchWidget::retrieveZoom() {
+double SketchWidget::retrieveZoom() {
 	return m_zoom;
 }
 
@@ -7135,7 +7135,7 @@ void SketchWidget::initGrid() {
 	QString szString = settings.value(QString("%1GridSize").arg(viewName()), "").toString();
 	if (!szString.isEmpty()) {
 		bool ok;
-		qreal temp = TextUtils::convertToInches(szString, &ok, false);
+		double temp = TextUtils::convertToInches(szString, &ok, false);
 		if (ok) {
 			m_gridSizeInches = temp;
 		}
@@ -7322,7 +7322,7 @@ void SketchWidget::copyBoundingRectsSlot(QHash<QString, QRectF> & boundingRects)
 	boundingRects.insert(m_viewName, itemsBoundingRect);
 }
 
-void SketchWidget::changeLayer(long id, qreal z, ViewLayer::ViewLayerID viewLayerID) {
+void SketchWidget::changeLayer(long id, double z, ViewLayer::ViewLayerID viewLayerID) {
 	Q_UNUSED(id);
 	Q_UNUSED(z);
 	Q_UNUSED(viewLayerID);

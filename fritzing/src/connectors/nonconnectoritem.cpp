@@ -35,8 +35,8 @@ $Date$
 #include "../debugdialog.h"
 #include "../utils/graphicsutils.h"
 
-//static const qreal EffectiveAdjustment = 1.25;
-static const qreal EffectiveAdjustmentFactor = 5.0 / 15.0;
+//static const double EffectiveAdjustment = 1.25;
+static const double EffectiveAdjustmentFactor = 5.0 / 15.0;
 
 /////////////////////////////////////////////////////////
 
@@ -102,7 +102,7 @@ void NonConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem
 		{
 			// for parts
 			QRectF r = rect();
-			qreal delta = .66 * m_strokeWidth;
+			double delta = .66 * m_strokeWidth;
 			painter->setPen(pen());
 			painter->drawEllipse(r.adjusted(delta, delta, -delta, -delta));
 		}
@@ -116,14 +116,14 @@ void NonConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem
 		painter->setBrush(brush());  
 		painter->setPen(pen());
 		QRectF r = rect();
-		qreal delta = r.width() * EffectiveAdjustmentFactor;
+		double delta = r.width() * EffectiveAdjustmentFactor;
 		painter->drawEllipse(r.adjusted(delta, delta, -delta, -delta));
 	}
 	else if (m_effectivelyRectangular) {
 		painter->setBrush(brush());  
 		painter->setPen(pen());
 		QRectF r = rect();
-		qreal delta = qMin(r.width(), r.height()) * EffectiveAdjustmentFactor;
+		double delta = qMin(r.width(), r.height()) * EffectiveAdjustmentFactor;
 		painter->drawRect(r.adjusted(delta, delta, -delta, -delta));
 	}
 	else {
@@ -169,17 +169,17 @@ void NonConnectorItem::setCircular(bool circular) {
 	m_circular = circular;
 }
 
-void NonConnectorItem::setRadius(qreal radius, qreal strokeWidth) {
+void NonConnectorItem::setRadius(double radius, double strokeWidth) {
 	m_radius = radius;
 	m_strokeWidth = strokeWidth;
 	m_circular = (m_radius > 0);
 }
 
-qreal NonConnectorItem::radius() {
+double NonConnectorItem::radius() {
 	return m_radius;
 }
 
-qreal NonConnectorItem::strokeWidth() {
+double NonConnectorItem::strokeWidth() {
 	return m_strokeWidth;
 }
 

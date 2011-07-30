@@ -35,8 +35,8 @@ class X2Svg
 public:
 	X2Svg();
 
-	void checkXLimit(qreal x);
-	void checkYLimit(qreal y);
+	void checkXLimit(double x);
+	void checkYLimit(double y);
 
 protected:
 	QString offsetMin(const QString & svg);
@@ -44,10 +44,10 @@ protected:
 	QString unquote(const QString &);
 
 protected:
-	qreal m_maxX;
-	qreal m_maxY;
-	qreal m_minX;
-	qreal m_minY;
+	double m_maxX;
+	double m_maxY;
+	double m_minX;
+	double m_minY;
 	QString m_attribute;
 	QString m_comment;
 };

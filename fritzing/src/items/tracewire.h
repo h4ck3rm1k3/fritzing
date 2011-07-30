@@ -42,7 +42,7 @@ public:
 
 public:
 	static TraceWire * getTrace(ConnectorItem *);
-	static class QComboBox * createWidthComboBox(qreal currentMils, QWidget * parent);
+	static class QComboBox * createWidthComboBox(double currentMils, QWidget * parent);
 	static int widthEntry(const QString & text, QObject * sender);
 
 public:

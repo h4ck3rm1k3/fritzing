@@ -170,7 +170,7 @@ void MysteryPart::setChipLabel(QString chipLabel, bool force) {
 
 }
 
-QString MysteryPart::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi) 
+QString MysteryPart::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi) 
 {
 	QString svg = PaletteItem::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 	switch (viewLayerID) {
@@ -401,7 +401,7 @@ QString MysteryPart::makeSchematicSvg(const QString & expectedFileName)
 
 	int pins = pieces.at(2).toInt();
 	int increment = 300;
-	qreal totalHeight = (pins * increment) + 330;
+	double totalHeight = (pins * increment) + 330;
 	int border = 30;
 	int textOffset = 50;
 	int repeatTextOffset = 50;
@@ -469,7 +469,7 @@ QString MysteryPart::makeBreadboardDipSvg(const QString & expectedFileName)
 	if (pieces.count() != 6) return "";
 
 	int pins = pieces.at(2).toInt();
-	qreal spacing = TextUtils::convertToInches(pieces.at(4)) * 100;
+	double spacing = TextUtils::convertToInches(pieces.at(4)) * 100;
 
 
 	int increment = 10;

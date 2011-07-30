@@ -119,8 +119,8 @@ QPainterPath JumperItem::hoverShape() const
     path.lineTo(c1);
 
 	QRectF rect = m_connector0->rect();
-	qreal dx = m_connectorTL.x();
-	qreal dy = m_connectorTL.y();
+	double dx = m_connectorTL.x();
+	double dy = m_connectorTL.y();
 	rect.adjust(-dx, -dy, dx, dy);
 
 	QPen pen;
@@ -160,16 +160,16 @@ void JumperItem::initialResize(ViewIdentifierClass::ViewIdentifier viewIdentifie
 	if (viewIdentifier != ViewIdentifierClass::PCBView) return;
 
 	bool ok;
-	qreal r0x = m_modelPart->prop("r0x").toDouble(&ok);
+	double r0x = m_modelPart->prop("r0x").toDouble(&ok);
 	if (!ok) return;
 
-	qreal r0y = m_modelPart->prop("r0y").toDouble(&ok);
+	double r0y = m_modelPart->prop("r0y").toDouble(&ok);
 	if (!ok) return;
 					
-	qreal r1x = m_modelPart->prop("r1x").toDouble(&ok);
+	double r1x = m_modelPart->prop("r1x").toDouble(&ok);
 	if (!ok) return;
 						
-	qreal r1y = m_modelPart->prop("r1y").toDouble(&ok);
+	double r1y = m_modelPart->prop("r1y").toDouble(&ok);
 	if (!ok) return;
 							
 	resizeAux(GraphicsUtils::mils2pixels(r0x, FSvgRenderer::printerScale()), 
@@ -183,8 +183,8 @@ void JumperItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
 	m_dragItem = NULL;
 	QRectF rect = m_connector0->rect();
-	qreal dx = m_connectorTL.x();
-	qreal dy = m_connectorTL.y();
+	double dx = m_connectorTL.x();
+	double dy = m_connectorTL.y();
 	rect.adjust(-dx, -dy, dx, dy);
 	if (rect.contains(event->pos())) {
 		m_dragItem = m_connector0;
@@ -252,15 +252,15 @@ QString JumperItem::makeSvg(ViewLayer::ViewLayerID viewLayerID)
 	QRectF r0 = m_connector0->rect();
 	QRectF r1 = m_connector1->rect();
 	QRectF r = r0.united(r1);
-	qreal w = GraphicsUtils::pixels2ins(r.width() + m_connectorTL.x() + m_connectorBR.x(), FSvgRenderer::printerScale());
-	qreal h = GraphicsUtils::pixels2ins(r.height() + m_connectorTL.y() + m_connectorBR.y(), FSvgRenderer::printerScale());
+	double w = GraphicsUtils::pixels2ins(r.width() + m_connectorTL.x() + m_connectorBR.x(), FSvgRenderer::printerScale());
+	double h = GraphicsUtils::pixels2ins(r.height() + m_connectorTL.y() + m_connectorBR.y(), FSvgRenderer::printerScale());
 
 	QPointF r0c = r0.center();
 	QPointF r1c = r1.center();
-	qreal r0x = GraphicsUtils::pixels2mils(r0c.x(), FSvgRenderer::printerScale());
-	qreal r0y = GraphicsUtils::pixels2mils(r0c.y(), FSvgRenderer::printerScale());
-	qreal r1x = GraphicsUtils::pixels2mils(r1c.x(), FSvgRenderer::printerScale());
-	qreal r1y = GraphicsUtils::pixels2mils(r1c.y(), FSvgRenderer::printerScale());
+	double r0x = GraphicsUtils::pixels2mils(r0c.x(), FSvgRenderer::printerScale());
+	double r0y = GraphicsUtils::pixels2mils(r0c.y(), FSvgRenderer::printerScale());
+	double r1x = GraphicsUtils::pixels2mils(r1c.x(), FSvgRenderer::printerScale());
+	double r1y = GraphicsUtils::pixels2mils(r1c.y(), FSvgRenderer::printerScale());
 
 	modelPart()->setProp("r0x", r0x);
 	modelPart()->setProp("r0y", r0y);
@@ -282,7 +282,7 @@ QString JumperItem::makeSvg(ViewLayer::ViewLayerID viewLayerID)
 		case ViewLayer::Silkscreen0:
 		case ViewLayer::Silkscreen1:
 			{
-			qreal radius = r0.width() / 2.0;
+			double radius = r0.width() / 2.0;
 			GraphicsUtils::shortenLine(r0c, r1c, radius, radius);
 			r0x = GraphicsUtils::pixels2mils(r0c.x(), FSvgRenderer::printerScale());
 			r0y = GraphicsUtils::pixels2mils(r0c.y(), FSvgRenderer::printerScale());
@@ -377,7 +377,7 @@ void JumperItem::resize(QPointF p, QPointF nc0, QPointF nc1) {
 	setPos(p);
 }
 
-void JumperItem::resizeAux(qreal r0x, qreal r0y, qreal r1x, qreal r1y) {
+void JumperItem::resizeAux(double r0x, double r0y, double r1x, double r1y) {
 	prepareGeometryChange();
 
 	QRectF r0 = m_connector0->rect();
@@ -404,7 +404,7 @@ QSizeF JumperItem::footprintSize() {
 	return r0.size();
 }
 
-QString JumperItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi) 
+QString JumperItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi) 
 {
 	QString xml = "";
 	switch (viewLayerID) {
@@ -491,7 +491,7 @@ void JumperItem::addedToScene(bool temporary) {
 	PaletteItem::addedToScene(temporary);
 }
 
-void JumperItem::rotateItem(qreal degrees) {
+void JumperItem::rotateItem(double degrees) {
 	QPointF tc0, tc1;
 	QTransform rotation;
 	rotation.rotate(degrees);

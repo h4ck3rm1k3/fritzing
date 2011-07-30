@@ -32,8 +32,8 @@ $Date$
 #include "../debugdialog.h"
 
 
-qreal PartsEditorConnectorsConnectorItem::MinWidth = 1;
-qreal PartsEditorConnectorsConnectorItem::MinHeight = MinWidth;
+double PartsEditorConnectorsConnectorItem::MinWidth = 1;
+double PartsEditorConnectorsConnectorItem::MinHeight = MinWidth;
 
 #define NON_DEFINED_TERMINAL_POINT QPointF(-1,-1)
 
@@ -83,7 +83,7 @@ TerminalPointItem* PartsEditorConnectorsConnectorItem::newTerminalPointItem() {
 	return terminalPointItem;
 }
 
-void PartsEditorConnectorsConnectorItem::resizeRect(qreal x, qreal y, qreal width, qreal height) {
+void PartsEditorConnectorsConnectorItem::resizeRect(double x, double y, double width, double height) {
 	m_resized = true;
 
 	setRect(x,y,width,height);
@@ -115,8 +115,8 @@ void PartsEditorConnectorsConnectorItem::init(bool resizable) {
 		m_handlers = new ConnectorRectangle(this);
 		m_handlers->setMinSize(MinWidth, MinHeight);
 
-		connect(m_handlers, SIGNAL(resizeSignal(qreal, qreal, qreal, qreal)),
-				this, SLOT(resizeSlot(qreal, qreal, qreal, qreal)));
+		connect(m_handlers, SIGNAL(resizeSignal(double, double, double, double)),
+				this, SLOT(resizeSlot(double, double, double, double)));
 
 		// isResizableSignal MUST be connected with Qt::DirectConnection
 		connect(m_handlers, SIGNAL(isResizableSignal(bool &)),
@@ -171,10 +171,10 @@ void PartsEditorConnectorsConnectorItem::drawDottedRect(QPainter *painter, const
 	QPen pen1(color1);
 	QPen pen2(color2);
 
-	qreal x1 = rect.x();
-	qreal y1 = rect.y();
-	qreal x2 = x1+rect.width();
-	qreal y2 = y1+rect.height();
+	double x1 = rect.x();
+	double y1 = rect.y();
+	double x2 = x1+rect.width();
+	double y2 = y1+rect.height();
 
 	QPen lastPen = drawDottedLine(Qt::Horizontal,painter,pen1,pen2,x1,x2,y1);
 	lastPen = drawDottedLine(Qt::Vertical,painter,pen2,pen1,y1,y2,x1,lastPen);
@@ -185,11 +185,11 @@ void PartsEditorConnectorsConnectorItem::drawDottedRect(QPainter *painter, const
 
 QPen PartsEditorConnectorsConnectorItem::drawDottedLine(
 		Qt::Orientations orientation, QPainter *painter, const QPen &pen1, const QPen &pen2,
-		qreal pos1, qreal pos2, qreal fixedAxis, const QPen &lastUsedPen
+		double pos1, double pos2, double fixedAxis, const QPen &lastUsedPen
 ) {
-	qreal dotSize = 1.5;
-	qreal lineSize = pos2-pos1;
-	qreal aux = pos1;
+	double dotSize = 1.5;
+	double lineSize = pos2-pos1;
+	double aux = pos1;
 	int dotCount = 0;
 
 	QPen firstPen;
@@ -224,7 +224,7 @@ QPen PartsEditorConnectorsConnectorItem::drawDottedLine(
 
 QPen PartsEditorConnectorsConnectorItem::drawDottedLineAux(
 		Qt::Orientations orientation, QPainter *painter, const QPen &firstPen, const QPen &secondPen,
-		qreal pos, qreal fixedAxis, qreal dotSize, int dotCount
+		double pos, double fixedAxis, double dotSize, int dotCount
 ) {
 	QPen currentPen = dotCount%2 == 0? firstPen: secondPen;
 	painter->setPen(currentPen);
@@ -262,11 +262,11 @@ void PartsEditorConnectorsConnectorItem::setTerminalPoint(QPointF point) {
 	m_terminalPointItem = new TerminalPointItem(this,m_showingTerminalPoint,point);
 }
 
-qreal PartsEditorConnectorsConnectorItem::minWidth() {
+double PartsEditorConnectorsConnectorItem::minWidth() {
 	return MinWidth;
 }
 
-qreal PartsEditorConnectorsConnectorItem::minHeight() {
+double PartsEditorConnectorsConnectorItem::minHeight() {
 	return MinHeight;
 }
 
@@ -335,7 +335,7 @@ void PartsEditorConnectorsConnectorItem::isResizableSlot(bool & resizable) {
 	resizable = m_resizable && !isShowingTerminalPoint();
 }
 
-void PartsEditorConnectorsConnectorItem::resizeSlot(qreal x, qreal y, qreal width, qreal height) {
+void PartsEditorConnectorsConnectorItem::resizeSlot(double x, double y, double width, double height) {
 	prepareGeometryChange();
 	resizeRect(x, y, width, height);
 }

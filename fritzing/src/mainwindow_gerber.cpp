@@ -415,7 +415,7 @@ QString MainWindow::clipToBoard(QString svgString, ItemBase * board, const QStri
         QDomElement e2 = domDocument2.documentElement();
         TextUtils::collectLeaves(e2, transformCount2, leaves2);
 
-	qreal res = GraphicsUtils::StandardFritzingDPI;
+	double res = GraphicsUtils::StandardFritzingDPI;
 	QRectF source = board->boundingRect();
 	int twidth = res * source.width() / FSvgRenderer::printerScale();
 	int theight = res * source.height() / FSvgRenderer::printerScale();

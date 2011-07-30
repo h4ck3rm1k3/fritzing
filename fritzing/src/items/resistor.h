@@ -43,7 +43,7 @@ public:
 	Resistor(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel);
 	~Resistor();
 
-	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi);
+	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi);
 	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
 	QString getProperty(const QString & key);
 	void setResistance(QString resistance, QString pinSpacing, bool force);
@@ -67,7 +67,7 @@ public slots:
 	void resistanceEntry(const QString & text);
 
 public:
-	static qreal toOhms(const QString & ohmsString, void * data);
+	static double toOhms(const QString & ohmsString, void * data);
 
 protected:
 	class FSvgRenderer * m_renderer;

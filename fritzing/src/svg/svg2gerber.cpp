@@ -30,7 +30,7 @@ $Date$
 #include <QTextStream>
 #include <qmath.h>
 
-static const qreal MaskClearance = 0.003;  // 3 mils clearance
+static const double MaskClearance = 0.003;  // 3 mils clearance
 
 bool fillNotStroke(QDomElement & element, SVG2gerber::ForWhy forWhy) {
 	if (forWhy == SVG2gerber::ForOutline) return false;
@@ -319,13 +319,13 @@ int SVG2gerber::allPaths2gerber(ForWhy forWhy) {
 
 		outlineCount++;
 
-        qreal centerx = circle.attribute("cx").toDouble();
-        qreal centery = circle.attribute("cy").toDouble();
-        qreal r = circle.attribute("r").toDouble();
+        double centerx = circle.attribute("cx").toDouble();
+        double centery = circle.attribute("cy").toDouble();
+        double r = circle.attribute("r").toDouble();
 		if (r == 0) continue;
 
-        qreal stroke_width = circle.attribute("stroke-width").toDouble();
-		qreal hole = ((2*r) - stroke_width)/1000;
+        double stroke_width = circle.attribute("stroke-width").toDouble();
+		double hole = ((2*r) - stroke_width)/1000;
 
 		if (forWhy == ForDrill) {
 			QString drill_cx = QString::number(flipxNoRound(centerx) / 1000, 'f');				// drill file seems to be in inches
@@ -353,7 +353,7 @@ int SVG2gerber::allPaths2gerber(ForWhy forWhy) {
 
         QString fill = circle.attribute("fill");
 
-        qreal diam = ((2*r) + stroke_width)/1000;
+        double diam = ((2*r) + stroke_width)/1000;
 		if (forWhy == ForMask) {
 			diam += 2 * MaskClearance;
 		}
@@ -407,25 +407,25 @@ int SVG2gerber::allPaths2gerber(ForWhy forWhy) {
 
 			QString aperture;
 
-			qreal width = rect.attribute("width").toDouble();
-			qreal height = rect.attribute("height").toDouble();
+			double width = rect.attribute("width").toDouble();
+			double height = rect.attribute("height").toDouble();
 
 			if (width == 0) continue;
 			if (height == 0) continue;
 
-			qreal x = rect.attribute("x").toDouble();
-			qreal y = rect.attribute("y").toDouble();
-			qreal centerx = x + (width/2);
-			qreal centery = y + (height/2);
+			double x = rect.attribute("x").toDouble();
+			double y = rect.attribute("y").toDouble();
+			double centerx = x + (width/2);
+			double centery = y + (height/2);
 			QString cx = QString::number(flipx(centerx));
 			QString cy = QString::number(flipy(centery));
 			QString fill = rect.attribute("fill");
-			qreal stroke_width = rect.attribute("stroke-width").toDouble();
+			double stroke_width = rect.attribute("stroke-width").toDouble();
 
-			qreal totalx = (width + stroke_width)/1000;
-			qreal totaly = (height + stroke_width)/1000;
-			qreal holex = (width - stroke_width)/1000;
-			qreal holey = (height - stroke_width)/1000;
+			double totalx = (width + stroke_width)/1000;
+			double totaly = (height + stroke_width)/1000;
+			double holex = (width - stroke_width)/1000;
+			double holey = (height - stroke_width)/1000;
 
 			if (forWhy == ForMask) {
 				totalx += 2 * MaskClearance;
@@ -477,10 +477,10 @@ int SVG2gerber::allPaths2gerber(ForWhy forWhy) {
 
 			// Note: should be no forWhy == ForMask cases 
 
-			qreal x1 = line.attribute("x1").toDouble();
-			qreal y1 = line.attribute("y1").toDouble();
-			qreal x2 = line.attribute("x2").toDouble();
-			qreal y2 = line.attribute("y2").toDouble();
+			double x1 = line.attribute("x1").toDouble();
+			double y1 = line.attribute("y1").toDouble();
+			double x2 = line.attribute("x2").toDouble();
+			double y2 = line.attribute("y2").toDouble();
 
 			standardAperture(line, apertureMap, current_dcode, dcode_index, 0);
 
@@ -626,15 +626,15 @@ void SVG2gerber::doPoly(QDomElement & polygon, ForWhy forWhy, int totalCount, bo
 
 	QString pointString;
 
-	qreal startx = pointList.at(0).toDouble();
-	qreal starty = pointList.at(1).toDouble();
+	double startx = pointList.at(0).toDouble();
+	double starty = pointList.at(1).toDouble();
 	// move to start - light off
 	pointString += "X" + QString::number(flipx(startx)) + "Y" + QString::number(flipy(starty)) + "D02*\n";
 
 	// iterate through all other points - light on
 	for(int pt = 2; pt < pointList.length(); pt +=2){
-		qreal ptx = pointList.at(pt).toDouble();
-		qreal pty = pointList.at(pt+1).toDouble();
+		double ptx = pointList.at(pt).toDouble();
+		double pty = pointList.at(pt+1).toDouble();
 		pointString += "X" + QString::number(flipx(ptx)) + "Y" + QString::number(flipy(pty)) + "D01*\n";
 	}
 
@@ -671,7 +671,7 @@ void SVG2gerber::doPoly(QDomElement & polygon, ForWhy forWhy, int totalCount, bo
 
 }
 
-QString SVG2gerber::standardAperture(QDomElement & element, QHash<QString, QString> & apertureMap, QString & current_dcode, int & dcode_index, qreal stroke_width) {
+QString SVG2gerber::standardAperture(QDomElement & element, QHash<QString, QString> & apertureMap, QString & current_dcode, int & dcode_index, double stroke_width) {
 	if (stroke_width == 0) {
 		stroke_width = element.attribute("stroke-width").toDouble();
 	}
@@ -709,11 +709,11 @@ void SVG2gerber::handleOblongPath(QDomElement & path, int & dcode_index) {
 	QDomElement nextLine = nextPath.nextSiblingElement("line");
 	if (nextLine.isNull()) return;
 				
-	qreal diameter = parent.attribute("stroke-width").toDouble();
-	qreal cx1 = nextLine.attribute("x1").toDouble();
-	qreal cy1 = nextLine.attribute("y1").toDouble();
-	qreal cx2 = nextLine.attribute("x2").toDouble();
-	qreal cy2 = nextLine.attribute("y2").toDouble();
+	double diameter = parent.attribute("stroke-width").toDouble();
+	double cx1 = nextLine.attribute("x1").toDouble();
+	double cy1 = nextLine.attribute("y1").toDouble();
+	double cx2 = nextLine.attribute("x2").toDouble();
+	double cy2 = nextLine.attribute("y2").toDouble();
 
 	QString drill_aperture = QString("C%1").arg(diameter / 1000, 0, 'f') + "\n";
 	if (!m_gerber_header.contains(drill_aperture)) {
@@ -827,22 +827,22 @@ void SVG2gerber::path2gerbCommandSlot(QChar command, bool relative, QList<double
 }
 
 
-int SVG2gerber::flipx(qreal x)
+int SVG2gerber::flipx(double x)
 {
 	return qRound(x);
 }
 
-int SVG2gerber::flipy(qreal y)
+int SVG2gerber::flipy(double y)
 {
 	return qRound(m_boardSize.height() - y);
 }
 
-qreal SVG2gerber::flipxNoRound(qreal x)
+double SVG2gerber::flipxNoRound(double x)
 {
 	return x;
 }
 
-qreal SVG2gerber::flipyNoRound(qreal y)
+double SVG2gerber::flipyNoRound(double y)
 {
 	return m_boardSize.height() - y;
 }

@@ -40,32 +40,32 @@ public:
 
 	ConnectorItem* newConnectorItem(class Connector *connector);
 	void busConnectorItems(class Bus * bus, QList<ConnectorItem *> & items);
-	qreal voltage();
+	double voltage();
 	void setProp(const QString & prop, const QString & value);
-	void setVoltage(qreal);
+	void setVoltage(double);
 	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
 	QString getProperty(const QString & key);
 	ConnectorItem * connector0();
 	ConnectorItem * connector1();
-	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi);
+	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi);
 	PluralType isPlural();
 	void addedToScene(bool temporary);
 	bool hasPartNumberProperty();
 
 public:
-	static qreal DefaultVoltage;
+	static double DefaultVoltage;
 
 public slots:
 	void voltageEntry(const QString & text);
 
 protected:
-	void removeMeFromBus(qreal voltage);
-	qreal useVoltage(ConnectorItem * connectorItem);
+	void removeMeFromBus(double voltage);
+	double useVoltage(ConnectorItem * connectorItem);
 	QString makeSvg();
 	QString replaceTextElement(QString svg);
 
 protected:
-	qreal m_voltage;
+	double m_voltage;
 	QPointer<ConnectorItem> m_connector0;
 	QPointer<ConnectorItem> m_connector1;
 	bool m_voltageReference;

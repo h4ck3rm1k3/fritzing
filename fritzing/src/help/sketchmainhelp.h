@@ -103,7 +103,7 @@ protected:
 	QPixmap * m_pixmap;
 
 public:
-	static qreal OpacityLevel;
+	static double OpacityLevel;
 };
 
 #endif /* SKETCHMAINHELP_H_ */

@@ -100,14 +100,14 @@ public:
 	static const QString JumperColor;
 
 protected:
-	static qreal zIncrement;
+	static double zIncrement;
 	static QHash<ViewLayerID, StringPair *> names;
 	static QMultiHash<ViewLayerID, ViewLayerID> alternatives;
 	static QMultiHash<ViewLayerID, ViewLayerID> unconnectables;
 	static QHash<QString, ViewLayerID> xmlHash;
 
 public:
-	ViewLayer(ViewLayerID, bool visible, qreal initialZ);
+	ViewLayer(ViewLayerID, bool visible, double initialZ);
 	~ViewLayer();
 
 	void setAction(QAction *);
@@ -115,14 +115,14 @@ public:
 	QString & displayName();
 	bool visible();
 	void setVisible(bool);
-	qreal nextZ();
+	double nextZ();
 	ViewLayerID viewLayerID();
-	qreal incrementZ(qreal);
+	double incrementZ(double);
 	ViewLayer * parentLayer();
 	void setParentLayer(ViewLayer *);
 	const QList<ViewLayer *> & childLayers();
-	bool alreadyInLayer(qreal z);
-	void resetNextZ(qreal z);
+	bool alreadyInLayer(double z);
+	void resetNextZ(double z);
 	void setActive(bool);
 	bool isActive();
 
@@ -131,7 +131,7 @@ public:
 	static const QString & viewLayerNameFromID(ViewLayerID);
 	static const QString & viewLayerXmlNameFromID(ViewLayerID);
 	static void initNames();
-	static qreal getZIncrement();
+	static double getZIncrement();
 	static void cleanup();
 	static QList<ViewLayerID> findAlternativeLayers(ViewLayerID);
 	static bool canConnect(ViewLayerID, ViewLayerID);
@@ -146,8 +146,8 @@ protected:
 	bool m_visible;
 	ViewLayerID m_viewLayerID;
 	QAction* m_action;
-	qreal m_nextZ;
-	qreal m_initialZ;
+	double m_nextZ;
+	double m_initialZ;
 	QList<ViewLayer *> m_childLayers;
 	ViewLayer * m_parentLayer;
 	bool m_active;

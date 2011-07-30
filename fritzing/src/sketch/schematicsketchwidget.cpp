@@ -37,9 +37,9 @@ $Date$
 #include <limits>
 
 static QString SchematicTraceColor = "schematic black";
-static const qreal TraceHoverStrokeFactor = 3;
+static const double TraceHoverStrokeFactor = 3;
 
-static const qreal TraceWidthMils = 33.3333;
+static const double TraceWidthMils = 33.3333;
 
 bool sameGround(ConnectorItem * c1, ConnectorItem * c2) 
 {
@@ -119,7 +119,7 @@ void SchematicSketchWidget::ensureTraceLayerVisible() {
 	ensureLayerVisible(ViewLayer::SchematicTrace);
 }
 
-qreal SchematicSketchWidget::getRatsnestOpacity(bool routed) {
+double SchematicSketchWidget::getRatsnestOpacity(bool routed) {
 	return (routed ? 0.1 : 0.7);
 }
 
@@ -131,7 +131,7 @@ void SchematicSketchWidget::setClipEnds(ClipableWire * vw, bool) {
 	vw->setClipEnds(false);
 }
 
-void SchematicSketchWidget::getBendpointWidths(Wire * wire, qreal width, qreal & bendpointWidth, qreal & bendpoint2Width, bool & negativeOffsetRect) 
+void SchematicSketchWidget::getBendpointWidths(Wire * wire, double width, double & bendpointWidth, double & bendpoint2Width, bool & negativeOffsetRect) 
 {
 	Q_UNUSED(wire);
 	bendpointWidth = -width - 1;
@@ -233,7 +233,7 @@ AddItemCommand * SchematicSketchWidget::newAddItemCommand(BaseCommand::CrossView
 														  long modelIndex, QUndoCommand *parent)
 {
 	AddItemCommand* addItemCommand = SketchWidget::newAddItemCommand(crossViewType, moduleID, viewLayerSpec, viewGeometry, id, updateInfoView, modelIndex, parent);
-	qreal v = 0;
+	double v = 0;
 	bool gotV = false;
 	if (moduleID.compare(ModuleIDNames::GroundModuleIDName) == 0) {
 		gotV = true;
@@ -286,7 +286,7 @@ AddItemCommand * SchematicSketchWidget::newAddItemCommand(BaseCommand::CrossView
 	return addItemCommand;
 }
 
-void SchematicSketchWidget::setVoltage(qreal v, bool doEmit)
+void SchematicSketchWidget::setVoltage(double v, bool doEmit)
 {
 	Q_UNUSED(doEmit);
 
@@ -380,7 +380,7 @@ bool SchematicSketchWidget::sameElectricalLayer2(ViewLayer::ViewLayerID, ViewLay
 	return true;
 }
 
-qreal SchematicSketchWidget::getKeepout() {
+double SchematicSketchWidget::getKeepout() {
 	return 0.1 * FSvgRenderer::printerScale();
 }
 
@@ -392,35 +392,35 @@ ViewGeometry::WireFlag SchematicSketchWidget::getTraceFlag() {
 	return ViewGeometry::SchematicTraceFlag;
 }
 
-qreal SchematicSketchWidget::getTraceWidth() {
+double SchematicSketchWidget::getTraceWidth() {
 	return FSvgRenderer::printerScale() * TraceWidthMils / 1000;
 }
 
-qreal SchematicSketchWidget::getAutorouterTraceWidth() {
+double SchematicSketchWidget::getAutorouterTraceWidth() {
 	return getTraceWidth();
 }
 
-void SchematicSketchWidget::extraRenderSvgStep(ItemBase * itemBase, QPointF offset, qreal dpi, qreal printerScale, QString & outputSvg)
+void SchematicSketchWidget::extraRenderSvgStep(ItemBase * itemBase, QPointF offset, double dpi, double printerScale, QString & outputSvg)
 {
 	TraceWire * traceWire = dynamic_cast<TraceWire *>(itemBase);
 	if (traceWire == NULL) return;
 
 	if (traceWire->connector0()->isBigDot()) {
-		qreal r = traceWire->connector0()->rect().width();
+		double r = traceWire->connector0()->rect().width();
 		outputSvg += makeCircleSVG(traceWire->connector0()->sceneAdjustedTerminalPoint(NULL), r, offset, dpi, printerScale);
 	}
 	if (traceWire->connector1()->isBigDot()) {
-		qreal r = traceWire->connector0()->rect().width();
+		double r = traceWire->connector0()->rect().width();
 		outputSvg += makeCircleSVG(traceWire->connector1()->sceneAdjustedTerminalPoint(NULL), r, offset, dpi, printerScale);
 	}
 
 }
 
-QString SchematicSketchWidget::makeCircleSVG(QPointF p, qreal r, QPointF offset, qreal dpi, qreal printerScale)
+QString SchematicSketchWidget::makeCircleSVG(QPointF p, double r, QPointF offset, double dpi, double printerScale)
 {
-	qreal cx = (p.x() - offset.x()) * dpi / printerScale;
-	qreal cy = (p.y() - offset.y()) * dpi / printerScale;
-	qreal rr = r * dpi / printerScale;
+	double cx = (p.x() - offset.x()) * dpi / printerScale;
+	double cy = (p.y() - offset.y()) * dpi / printerScale;
+	double rr = r * dpi / printerScale;
 
 	QString stroke = "black";
 	return QString("<circle  fill=\"black\" cx=\"%1\" cy=\"%2\" r=\"%3\" stroke-width=\"0\" stroke=\"none\" />")
@@ -440,7 +440,7 @@ ViewLayer::ViewLayerSpec SchematicSketchWidget::createWireViewLayerSpec(Connecto
 	return SketchWidget::createWireViewLayerSpec(from, to);
 }
 
-qreal SchematicSketchWidget::getWireStrokeWidth(Wire *, qreal wireWidth)
+double SchematicSketchWidget::getWireStrokeWidth(Wire *, double wireWidth)
 {
 	return wireWidth * TraceHoverStrokeFactor;
 }

@@ -61,7 +61,7 @@ static QString SchematicTemplate = "";
 static int OriginalWidth = 0;
 static int OriginalHeight = 0;
 static int Margin = 200;
-static qreal FontSize = 11;
+static double FontSize = 11;
 
 QHash<QString, QString> FrameProps;
 static const QString DisplayFormat("dd MMM yyyy hh:mm:ss");
@@ -148,7 +148,7 @@ void SchematicFrame::loadTemplates() {
 	}
 }
 
-QString SchematicFrame::makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, qreal mmW, qreal mmH, qreal milsW, qreal milsH) 
+QString SchematicFrame::makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, double mmW, double mmH, double milsW, double milsH) 
 {
 	Q_UNUSED(mmW);
 	Q_UNUSED(mmH);
@@ -211,7 +211,7 @@ QString SchematicFrame::makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, qreal m
 	return TextUtils::replaceTextElements(svg, hash);
 }
 
-QString SchematicFrame::makeNextLayerSvg(ViewLayer::ViewLayerID viewLayerID, qreal mmW, qreal mmH, qreal milsW, qreal milsH) 
+QString SchematicFrame::makeNextLayerSvg(ViewLayer::ViewLayerID viewLayerID, double mmW, double mmH, double milsW, double milsH) 
 {
 	Q_UNUSED(mmW);
 	Q_UNUSED(mmH);
@@ -222,7 +222,7 @@ QString SchematicFrame::makeNextLayerSvg(ViewLayer::ViewLayerID viewLayerID, qre
 	return "";
 }
 
-QString SchematicFrame::makeFirstLayerSvg(qreal mmW, qreal mmH, qreal milsW, qreal milsH) {
+QString SchematicFrame::makeFirstLayerSvg(double mmW, double mmH, double milsW, double milsH) {
 	return makeLayerSvg(ViewLayer::SchematicFrame, mmW, mmH, milsW, milsH);
 }
 
@@ -230,11 +230,11 @@ ViewIdentifierClass::ViewIdentifier SchematicFrame::theViewIdentifier() {
 	return ViewIdentifierClass::SchematicView;
 }
 
-qreal SchematicFrame::minWidth() {
+double SchematicFrame::minWidth() {
 	return OriginalWidth * FSvgRenderer::printerScale() / 1000;
 }
 
-qreal SchematicFrame::minHeight() {
+double SchematicFrame::minHeight() {
 	return OriginalHeight * FSvgRenderer::printerScale() / 1000;
 }
 
@@ -250,7 +250,7 @@ void SchematicFrame::addedToScene(bool temporary)
 	resizeMMAux(m_modelPart->prop("width").toDouble(), m_modelPart->prop("height").toDouble());
 }
 
-QString SchematicFrame::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi)
+QString SchematicFrame::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi)
 {
 	return ResizableBoard::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 }
@@ -399,7 +399,7 @@ bool SchematicFrame::hasPartNumberProperty()
 }
 
 void SchematicFrame::setInitialSize() {
-	qreal w = m_modelPart->prop("width").toDouble();
+	double w = m_modelPart->prop("width").toDouble();
 	if (w == 0) {
 		// set the size so the infoGraphicsView will display the size as you drag
 		modelPart()->setProp("width", 25.4 * OriginalWidth / 1000); 

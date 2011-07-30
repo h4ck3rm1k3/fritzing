@@ -49,7 +49,7 @@ void SvgFlattener::flattenChildren(QDomElement &element){
 
     //do translate
     if(hasTranslate(element)){
-		QList<qreal> params = TextUtils::getTransformFloats(element);
+		QList<double> params = TextUtils::getTransformFloats(element);
 		if(params.size() > 1) {
             shiftChild(element, params.at(0), params.at(1), false);
 			//DebugDialog::debug(QString("translating %1 %2").arg(params.at(0)).arg(params.at(1)));
@@ -76,12 +76,12 @@ void SvgFlattener::unRotateChild(QDomElement & element, QMatrix transform) {
 
     if(!element.hasChildNodes()) {
 
-		qreal scale = qMin(qAbs(transform.m11()), qAbs(transform.m22()));
+		double scale = qMin(qAbs(transform.m11()), qAbs(transform.m22()));
 		if (scale != 1 && transform.m21() == 0 && transform.m12() == 0) {
 			QString sw = element.attribute("stroke-width");
 			if (!sw.isEmpty()) {
 				bool ok;
-				qreal strokeWidth = sw.toDouble(&ok);
+				double strokeWidth = sw.toDouble(&ok);
 				if (ok) {
 					element.setAttribute("stroke-width", QString::number(strokeWidth * scale));
 				}
@@ -200,8 +200,8 @@ void SvgFlattener::rotateCommandSlot(QChar command, bool relative, QList<double>
     PathUserData * pathUserData = (PathUserData *) userData;
 
     pathUserData->string.append(command);
-    qreal x;
-    qreal y;
+    double x;
+    double y;
 	QPointF point;
 
 	for (int i = 0; i < args.count(); ) {
@@ -261,7 +261,7 @@ void SvgFlattener::rotateCommandSlot(QChar command, bool relative, QList<double>
 	}
 }
 
-void SvgFlattener::flipSMDSvg(const QString & filename, const QString & svg, QDomDocument & domDocument, const QString & elementID, const QString & altElementID, qreal printerScale) {
+void SvgFlattener::flipSMDSvg(const QString & filename, const QString & svg, QDomDocument & domDocument, const QString & elementID, const QString & altElementID, double printerScale) {
 	QString errorStr;
 	int errorLine;
 	int errorColumn;
@@ -303,7 +303,7 @@ void SvgFlattener::flipSMDSvg(const QString & filename, const QString & svg, QDo
 #endif
 }
 
-void SvgFlattener::flipSMDElement(QDomDocument & domDocument, QSvgRenderer & renderer, QDomElement & element, const QString & att, QDomElement altElement, const QString & altAtt, qreal printerScale) 
+void SvgFlattener::flipSMDElement(QDomDocument & domDocument, QSvgRenderer & renderer, QDomElement & element, const QString & att, QDomElement altElement, const QString & altAtt, double printerScale) 
 {
 	Q_UNUSED(printerScale);
 	Q_UNUSED(att);

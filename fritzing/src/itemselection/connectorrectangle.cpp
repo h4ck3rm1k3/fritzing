@@ -31,7 +31,7 @@ $Date$
 #include "../debugdialog.h"
 
 
-qreal ConnectorRectangle::ErrorIconSize = 6;
+double ConnectorRectangle::ErrorIconSize = 6;
 
 ConnectorRectangle::ConnectorRectangle(QGraphicsItem* owner, bool withHandlers)
 : QObject()
@@ -66,10 +66,10 @@ void ConnectorRectangle::setHandlersVisible(bool visible) {
 	}
 }
 
-void ConnectorRectangle::resizeRect(qreal x1, qreal y1, qreal x2, qreal y2) {
+void ConnectorRectangle::resizeRect(double x1, double y1, double x2, double y2) {
 
-	qreal width = x2-x1 < m_minWidth ? m_minWidth : x2-x1;
-	qreal height = y2-y1 < m_minHeight ? m_minHeight : y2-y1;
+	double width = x2-x1 < m_minWidth ? m_minWidth : x2-x1;
+	double height = y2-y1 < m_minHeight ? m_minHeight : y2-y1;
 
 	QRectF rect = owner()->boundingRect();
 	if(width != rect.width() && height != rect.height()) {
@@ -132,7 +132,7 @@ void ConnectorRectangle::setHandlerRect(CornerHandler* handler) {
 
 QRectF ConnectorRectangle::handlerRect(Qt::Corner corner) {
 	QRectF rect = m_owner->boundingRect();
-	qreal scale = currentScale();
+	double scale = currentScale();
 	//DebugDialog::debug(QString("scale %1").arg(scale));
 	QPointF offset(CornerHandler::Size/scale,CornerHandler::Size/scale);
 	QPointF cornerPoint;
@@ -157,13 +157,13 @@ QRectF ConnectorRectangle::handlerRect(Qt::Corner corner) {
 
 QRectF ConnectorRectangle::errorIconRect() {
 	QRectF rect = m_owner->boundingRect();
-	qreal scale = currentScale();
+	double scale = currentScale();
 	QPointF offset(ErrorIconSize/scale,ErrorIconSize/scale);
 	QPointF cornerPoint = rect.topLeft()-offset;
 	return QRectF(cornerPoint-offset,cornerPoint+offset);
 }
 
-qreal ConnectorRectangle::currentScale() {
+double ConnectorRectangle::currentScale() {
 	if(m_owner->scene()) {
 		ZoomableGraphicsView *sw = dynamic_cast<ZoomableGraphicsView*>(m_owner->scene()->parent());
 		if(sw) {
@@ -178,7 +178,7 @@ QGraphicsItem *ConnectorRectangle::owner() {
 }
 
 
-void ConnectorRectangle::setMinSize(qreal minWidth, qreal minHeight) {
+void ConnectorRectangle::setMinSize(double minWidth, double minHeight) {
 	m_minWidth = minWidth;
 	m_minHeight = minHeight;
 }

@@ -72,8 +72,8 @@ Q_OBJECT
 public:
 	ZoomSlider(QWidget * parent=0);
 
-	void setValue(qreal);
-	qreal value();
+	void setValue(double);
+	double value();
 
 	void zoomOut();
 	void zoomIn();
@@ -96,7 +96,7 @@ protected:
 	//int itemIndex(QString value);
 	//void updateBackupFields();
 
-	static QList<qreal> ZoomFactors;
+	static QList<double> ZoomFactors;
 	//bool m_userStillWriting;
 	//QString m_valueBackup;
 	//int m_indexBackup;
@@ -108,10 +108,10 @@ protected:
 	bool m_firstTime;
 
 public:
-	static qreal ZoomStep;
+	static double ZoomStep;
 
 signals:
-	void zoomChanged(qreal newZoom);
+	void zoomChanged(double newZoom);
 };
 
 #endif /* ZOOMSLIDER_H_ */

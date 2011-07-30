@@ -28,7 +28,7 @@ $Date$
 #include "debugdialog.h"
 #include <qmath.h>
 
-qreal ViewLayer::zIncrement = 0.00001;  // 0.000000001;
+double ViewLayer::zIncrement = 0.00001;  // 0.000000001;
 
 QHash<ViewLayer::ViewLayerID, StringPair * > ViewLayer::names;
 QMultiHash<ViewLayer::ViewLayerID, ViewLayer::ViewLayerID> ViewLayer::alternatives;
@@ -46,7 +46,7 @@ static LayerList CopperTopLayers;
 static LayerList NonCopperLayers;  // just NonCopperLayers in pcb view
 
 
-ViewLayer::ViewLayer(ViewLayerID viewLayerID, bool visible, qreal initialZ )
+ViewLayer::ViewLayer(ViewLayerID viewLayerID, bool visible, double initialZ )
 {
 	m_viewLayerID = viewLayerID;
 	m_visible = visible;
@@ -153,8 +153,8 @@ void ViewLayer::setVisible(bool visible) {
 	}
 }
 
-qreal ViewLayer::nextZ() {
-	qreal temp = m_nextZ;
+double ViewLayer::nextZ() {
+	double temp = m_nextZ;
 	m_nextZ += zIncrement;
 	return temp;
 }
@@ -167,11 +167,11 @@ ViewLayer::ViewLayerID ViewLayer::viewLayerID() {
 	return m_viewLayerID;
 }
 
-qreal ViewLayer::incrementZ(qreal z) {
+double ViewLayer::incrementZ(double z) {
 	return (z + zIncrement);
 }
 
-qreal ViewLayer::getZIncrement() {
+double ViewLayer::getZIncrement() {
 	return zIncrement;
 }
 
@@ -204,7 +204,7 @@ const QList<ViewLayer *> & ViewLayer::childLayers() {
 	return m_childLayers;
 }
 
-bool ViewLayer::alreadyInLayer(qreal z) {
+bool ViewLayer::alreadyInLayer(double z) {
 	return (z >= m_initialZ && z <= m_nextZ);
 }
 
@@ -215,7 +215,7 @@ void ViewLayer::cleanup() {
 	names.clear();
 }
 
-void ViewLayer::resetNextZ(qreal z) {
+void ViewLayer::resetNextZ(double z) {
 	m_nextZ = qFloor(m_initialZ) + z - floor(z);
 }
 

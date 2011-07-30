@@ -63,17 +63,17 @@ protected:
 	void setWireFlag(bool setting, WireFlag flag);
 
 public:
-	void setZ(qreal);
-	qreal z() const;
+	void setZ(double);
+	double z() const;
 	void setLoc(QPointF);
 	QPointF loc() const;
 	void setLine(QLineF);
 	QLineF line() const;
-	void offset(qreal x, qreal y);
+	void offset(double x, double y);
 	bool selected();
 	void setSelected(bool);
 	QRectF rect() const;
-	void setRect(qreal x, qreal y, qreal width, qreal height);
+	void setRect(double x, double y, double width, double height);
 	void setRect(const QRectF &);
 	void setTransform(QTransform);
 	QTransform transform() const;
@@ -98,7 +98,7 @@ public:
 	ViewGeometry::WireFlags wireFlags() const;
 
 protected:
-	qreal m_z;
+	double m_z;
 	QPointF m_loc;
 	QLineF m_line;
 	QRectF m_rect;

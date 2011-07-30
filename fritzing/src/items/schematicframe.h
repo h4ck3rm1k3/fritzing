@@ -46,7 +46,7 @@ public:
 	SchematicFrame(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel);
 	~SchematicFrame();
 
-	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi);
+	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi);
 	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
 	bool canEditPart();
 	void setProp(const QString & prop, const QString & value);
@@ -68,13 +68,13 @@ protected slots:
 
 protected:
 	bool hasGrips();
-	qreal minWidth();
-	qreal minHeight();
+	double minWidth();
+	double minHeight();
 	ViewIdentifierClass::ViewIdentifier theViewIdentifier();
 	void loadTemplates();
-	QString makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, qreal mmW, qreal mmH, qreal milsW, qreal milsH);
-	QString makeFirstLayerSvg(qreal mmW, qreal mmH, qreal milsW, qreal milsH);
-	QString makeNextLayerSvg(ViewLayer::ViewLayerID, qreal mmW, qreal mmH, qreal milsW, qreal milsH);
+	QString makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, double mmW, double mmH, double milsW, double milsH);
+	QString makeFirstLayerSvg(double mmW, double mmH, double milsW, double milsH);
+	QString makeNextLayerSvg(ViewLayer::ViewLayerID, double mmW, double mmH, double milsW, double milsH);
 	bool makeLineEdit(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
 	QTimer m_sheetTimer;
 	QTimer m_dateTimer;

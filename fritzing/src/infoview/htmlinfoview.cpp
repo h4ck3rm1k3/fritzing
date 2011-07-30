@@ -80,7 +80,7 @@ QSize TagLabel::sizeHint() const
 	if (t.isEmpty()) return hint;
 
 	QFontMetricsF fm(this->font());
-	qreal textWidth = fm.width(t);
+	double textWidth = fm.width(t);
 
 	QWidget * w = this->window();
 	QPoint pos(0,0);
@@ -806,8 +806,8 @@ QPixmap * HtmlInfoView::getPixmap(ModelPart * modelPart, ViewIdentifierClass::Vi
 	QPainter painter(pixmap);
 	// preserve aspect ratio
 	QSize def = renderer.defaultSize();
-	qreal newW = size.width();
-	qreal newH = newW * def.height() / def.width();
+	double newW = size.width();
+	double newH = newW * def.height() / def.width();
 	if (newH > size.height()) {
 		newH = size.height();
 		newW = newH * def.width() / def.height();

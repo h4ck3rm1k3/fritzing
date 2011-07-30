@@ -37,8 +37,8 @@ $Date$
 #include "zoomslider.h"
 #include "../debugdialog.h"
 
-qreal ZoomSlider::ZoomStep;
-QList<qreal> ZoomSlider::ZoomFactors;
+double ZoomSlider::ZoomStep;
+QList<double> ZoomSlider::ZoomFactors;
 
 static const int MIN_VALUE = 10;
 static const int MAX_VALUE = 2010;
@@ -207,13 +207,13 @@ void ZoomSlider::loadFactors() {
 }
 
 
-void ZoomSlider::setValue(qreal value) {
+void ZoomSlider::setValue(double value) {
 	QString newText = QString("%1").arg(qRound(value));
 	m_lineEdit->setText(newText);
 	sliderTextEdited(newText, false);
 }
 
-qreal ZoomSlider::value() {
+double ZoomSlider::value() {
 	return m_lineEdit->text().toDouble();
 }
 
@@ -227,10 +227,10 @@ void ZoomSlider::plusClicked() {
 
 void ZoomSlider::step(int direction) {
 	int minIndex = 0;
-	qreal minDiff = std::numeric_limits<double>::max();
-	qreal v = value();
+	double minDiff = std::numeric_limits<double>::max();
+	double v = value();
 	for (int i = 0; i < ZoomFactors.count(); i++) {
-		qreal f = ZoomFactors[i];
+		double f = ZoomFactors[i];
 		if (qAbs(f - v) < minDiff) {
 			minDiff = qAbs(f - v);
 			minIndex = i;

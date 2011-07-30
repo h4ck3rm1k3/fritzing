@@ -66,12 +66,12 @@ public:
 	~ResizableBoard();
 
 	bool setUpImage(ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, ViewLayer::ViewLayerSpec, bool doConnectors, LayerAttributes &, QString & error);
-	virtual void resizeMM(qreal w, qreal h, const LayerHash & viewLayers);
-	void resizePixels(qreal w, qreal h, const LayerHash & viewLayers);
+	virtual void resizeMM(double w, double h, const LayerHash & viewLayers);
+	void resizePixels(double w, double h, const LayerHash & viewLayers);
  	void loadLayerKin(const LayerHash & viewLayers, ViewLayer::ViewLayerSpec);
 	virtual void setInitialSize();
-	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi);
-	void rotateItem(qreal degrees);
+	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi);
+	void rotateItem(double degrees);
 	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
 	void saveParams();
 	void getParams(QPointF &, QSizeF &);
@@ -90,25 +90,25 @@ public slots:
 
 protected slots:
 	void handleMousePressSlot(QGraphicsSceneMouseEvent * event, class ResizeHandle * resizeHandle);
-	void handleZoomChangedSlot(qreal scale);
+	void handleZoomChangedSlot(double scale);
 
 protected:
 	void positionGrips();
 	void mouseMoveEvent ( QGraphicsSceneMouseEvent * event );
 	void mouseReleaseEvent ( QGraphicsSceneMouseEvent * event );
-	QString makeBoardSvg(qreal mmW, qreal mmH, qreal milsW, qreal milsH);
-	QString makeSilkscreenSvg(qreal mmW, qreal mmH, qreal milsW, qreal milsH);
+	QString makeBoardSvg(double mmW, double mmH, double milsW, double milsH);
+	QString makeSilkscreenSvg(double mmW, double mmH, double milsW, double milsH);
 	QStringList collectValues(const QString & family, const QString & prop, QString & value);
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	virtual bool hasGrips();
 	virtual void loadTemplates();
-	virtual qreal minWidth();
-	virtual qreal minHeight();
+	virtual double minWidth();
+	virtual double minHeight();
 	virtual ViewIdentifierClass::ViewIdentifier theViewIdentifier();
-	virtual QString makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, qreal mmW, qreal mmH, qreal milsW, qreal milsH);
-	virtual QString makeFirstLayerSvg(qreal mmW, qreal mmH, qreal milsW, qreal milsH);
-	virtual QString makeNextLayerSvg(ViewLayer::ViewLayerID, qreal mmW, qreal mmH, qreal milsW, qreal milsH);
-	virtual void resizeMMAux(qreal w, qreal h);
+	virtual QString makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, double mmW, double mmH, double milsW, double milsH);
+	virtual QString makeFirstLayerSvg(double mmW, double mmH, double milsW, double milsH);
+	virtual QString makeNextLayerSvg(ViewLayer::ViewLayerID, double mmW, double mmH, double milsW, double milsH);
+	virtual void resizeMMAux(double w, double h);
 
 protected:
 	class ResizeHandle * m_resizeGripTL;

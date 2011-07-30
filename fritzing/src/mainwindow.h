@@ -219,9 +219,9 @@ protected slots:
 	void openInPartsEditor();
 	void openPartsEditor(PaletteItem *);
 
-	void updateZoomSlider(qreal zoom);
-	void updateZoomOptionsNoMatterWhat(qreal zoom);
-	void updateViewZoom(qreal newZoom);
+	void updateZoomSlider(double zoom);
+	void updateZoomOptionsNoMatterWhat(double zoom);
+	void updateViewZoom(double newZoom);
 
 	void loadPart(const QString &newPartPath, long partsEditorId, bool connectorsChanged);
 
@@ -308,7 +308,7 @@ protected slots:
 	void autorouterSettings();
 	void warnSMDReally();
 	void boardDeletedSlot();
-	void cursorLocationSlot(qreal, qreal);
+	void cursorLocationSlot(double, double);
 	void locationLabelClicked();
 	void swapSelectedDelay(const QString & family, const QString & prop, QMap<QString, QString> & currPropsMap, ItemBase *);
 	void swapSelectedTimeout();
@@ -355,8 +355,8 @@ protected:
 	void exportToGerber();
     void exportBOM();
     void exportNetlist();
-    void exportSvg(qreal res, bool selectedItems, bool flatten);
-	void exportSvgWatermark(QString & svg, qreal res);
+    void exportSvg(double res, bool selectedItems, bool flatten);
+	void exportSvgWatermark(QString & svg, double res);
 	void exportEtchable(bool wantPDF, bool wantSVG, bool flip);
 
 	QList<QWidget*> getButtonsForView(ViewIdentifierClass::ViewIdentifier viewId);

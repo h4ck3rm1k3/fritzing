@@ -40,8 +40,8 @@ public:
         I586,
         I686,
         X86_64,
-        PPC,
-        PPC64
+        MPPC,
+        MPPC64
     };
 
     QtSystemInfo(QObject *parent = 0);

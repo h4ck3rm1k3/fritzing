@@ -66,7 +66,7 @@ public:
 
 	qint64 id() const;
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-	qreal z();
+	double z();
 	virtual void saveGeometry() = 0;
 	ViewGeometry & getViewGeometry();
 	ViewGeometry::WireFlags wireFlags() const;
@@ -81,7 +81,7 @@ public:
 	virtual void writeGeometry(QXmlStreamWriter &);
 	virtual void moveItem(ViewGeometry &) = 0;
 	virtual void setItemPos(QPointF & pos);
-	virtual void rotateItem(qreal degrees);
+	virtual void rotateItem(double degrees);
 	virtual void flipItem(Qt::Orientations orientation);
 	void transformItem(const QTransform &);
 	virtual void transformItem2(const QMatrix &);
@@ -138,9 +138,9 @@ public:
 	void movePartLabel(QPointF newPos, QPointF newOffset);												// coming down from the command object
 	void partLabelMoved(QPointF oldPos, QPointF oldOffset, QPointF newPos, QPointF newOffset);			// coming up from the label
 	void partLabelSetHidden(bool hide);
-	void rotateFlipPartLabel(qreal degrees, Qt::Orientations);				// coming up from the label
-	void doRotateFlipPartLabel(qreal degrees, Qt::Orientations);			// coming down from the command object
-	QString makePartLabelSvg(bool blackOnly, qreal dpi, qreal printerScale);
+	void rotateFlipPartLabel(double degrees, Qt::Orientations);				// coming up from the label
+	void doRotateFlipPartLabel(double degrees, Qt::Orientations);			// coming down from the command object
+	QString makePartLabelSvg(bool blackOnly, double dpi, double printerScale);
 	QPointF partLabelScenePos();
 	QRectF partLabelSceneBoundingRect();
 	bool isSwappable();
@@ -157,8 +157,8 @@ public:
 	void hoverMoveEvent( QGraphicsSceneHoverEvent * event );
     void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 	virtual void figureHover();
-	virtual QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi);
-	virtual void slamZ(qreal newZ);
+	virtual QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi);
+	virtual void slamZ(double newZ);
 	bool isEverVisible();
 	void setEverVisible(bool);
 	virtual bool connectionIsAllowed(ConnectorItem *);
@@ -201,12 +201,12 @@ public:
     virtual QPainterPath hoverShape() const;
 
 public:
-	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth, bool & negativeOffsetRect);
-	virtual void getUnconnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth, bool & negativeOffsetRect);
-	virtual void getNormalColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth, bool & negativeOffsetRect);
-	virtual void getChosenColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth, bool & negativeOffsetRect);
-	virtual void getHoverColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth, bool & negativeOffsetRect);
-	virtual void getEqualPotentialColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth, bool & negativeOffsetRect);
+	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, double & opacity, double & negativePenWidth, bool & negativeOffsetRect);
+	virtual void getUnconnectedColor(ConnectorItem *, QBrush * &, QPen * &, double & opacity, double & negativePenWidth, bool & negativeOffsetRect);
+	virtual void getNormalColor(ConnectorItem *, QBrush * &, QPen * &, double & opacity, double & negativePenWidth, bool & negativeOffsetRect);
+	virtual void getChosenColor(ConnectorItem *, QBrush * &, QPen * &, double & opacity, double & negativePenWidth, bool & negativeOffsetRect);
+	virtual void getHoverColor(ConnectorItem *, QBrush * &, QPen * &, double & opacity, double & negativePenWidth, bool & negativeOffsetRect);
+	virtual void getEqualPotentialColor(ConnectorItem *, QBrush * &, QPen * &, double & opacity, double & negativePenWidth, bool & negativeOffsetRect);
 
 protected:
 	static QPen normalPen;
@@ -221,7 +221,7 @@ protected:
 	static QBrush unconnectedBrush;
 	static QBrush chosenBrush;
 	static QBrush equalPotentialBrush;
-	static const qreal normalConnectorOpacity;
+	static const double normalConnectorOpacity;
 
 public:
 	static QColor connectedColor();
@@ -334,9 +334,9 @@ public:
 	static QHash<QString, QString> TranslatedPropertyNames;
 	static QString SvgFilesDir;
 	const static QColor hoverColor;
-	const static qreal hoverOpacity;
+	const static double hoverOpacity;
 	const static QColor connectorHoverColor;
-	const static qreal connectorHoverOpacity;
+	const static double connectorHoverOpacity;
 
 public:
 	static void initNames();

@@ -49,7 +49,7 @@ public:
 	void addLayerKin(class LayerKinPaletteItem * lkpi);
 	const QList<class ItemBase *> & layerKin();
  	virtual void loadLayerKin(const LayerHash & viewLayers, ViewLayer::ViewLayerSpec);
-	void rotateItem(qreal degrees);
+	void rotateItem(double degrees);
 	void flipItem(Qt::Orientations orientation);
 	void moveItem(ViewGeometry & viewGeometry);
 	void transformItem2(const QMatrix &);
@@ -73,7 +73,7 @@ public:
 	void mousePressEvent(PaletteItemBase * originalItem, QGraphicsSceneMouseEvent *);
 	ItemBase * lowerConnectorLayerVisible(ItemBase *);
 	void resetID();
-	void slamZ(qreal z);
+	void slamZ(double z);
 	void resetImage(class InfoGraphicsView *);
 	void resetKinImage(ItemBase * layerKin, InfoGraphicsView * infoGraphicsView);
 

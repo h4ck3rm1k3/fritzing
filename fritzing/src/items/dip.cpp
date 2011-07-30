@@ -146,14 +146,14 @@ QString Dip::makePcbSvg(const QString & expectedFileName)
 					"<g id='copper1'><g id='copper0'>\n"
 					"<rect fill='none' height='55' stroke='rgb(255, 191, 0)' stroke-width='20' width='55' x='32.5' y='32.5'/>\n");
 
-	qreal outerBorder = 10;
-	qreal silkSplitTop = 100;
-	qreal offsetX = 60;
-	qreal offsetY = 60;
-	qreal spacing = TextUtils::convertToInches(spacingString) * 1000; 
-	qreal totalWidth = 120 + spacing;
-	qreal totalHeight = (100 * pins / 2) + (outerBorder * 2);
-	qreal center = totalWidth / 2;
+	double outerBorder = 10;
+	double silkSplitTop = 100;
+	double offsetX = 60;
+	double offsetY = 60;
+	double spacing = TextUtils::convertToInches(spacingString) * 1000; 
+	double totalWidth = 120 + spacing;
+	double totalHeight = (100 * pins / 2) + (outerBorder * 2);
+	double center = totalWidth / 2;
 
 	QString svg = header.arg(totalWidth / 1000).arg(totalHeight / 1000).arg(totalWidth).arg(totalHeight)
 							.arg(totalHeight - outerBorder).arg(totalWidth - outerBorder)
@@ -182,7 +182,7 @@ QString Dip::makeSchematicSvg(const QString & expectedFileName)
 
 	int pins = pieces.at(3).toInt();
 	int increment = 300;
-	qreal totalHeight = (pins * increment / 2) + 330;
+	double totalHeight = (pins * increment / 2) + 330;
 	int border = 30;
 
 	QString header("<?xml version='1.0' encoding='UTF-8' standalone='no'?>\n"
@@ -232,7 +232,7 @@ QString Dip::makeBreadboardSipSvg(const QString & expectedFileName)
 
 	int pins = pieces.at(2).toInt();
 	int increment = 10;
-	qreal totalWidth = (pins * increment);
+	double totalWidth = (pins * increment);
 
 	QString svg = TextUtils::incrementTemplate(":/resources/templates/generic_sip_bread_template.txt", 1, increment * (pins - 2), TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction);
 
@@ -256,7 +256,7 @@ QString Dip::makeBreadboardDipSvg(const QString & expectedFileName)
 
 	int pins = pieces.at(3).toInt();
 	int increment = 10;
-	qreal spacing = TextUtils::convertToInches(pieces.at(4)) * 100;
+	double spacing = TextUtils::convertToInches(pieces.at(4)) * 100;
 
 	QString repeatB("<rect id='connector%1pin' x='{13.5}' y='[28.66]' fill='#8C8C8C' width='3' height='4.34'/>\n"
 					"<rect id='connector%1terminal' x='{13.5}' y='[30.0]' fill='#8C8C8C' width='3' height='3'/>\n"

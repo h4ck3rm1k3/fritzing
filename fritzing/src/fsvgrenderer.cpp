@@ -42,7 +42,7 @@ QHash<QString, RendererHash *> FSvgRenderer::m_moduleIDRendererHash;
 QHash<QString, RendererHash * > FSvgRenderer::m_filenameRendererHash;
 QSet<RendererHash * > FSvgRenderer::m_deleted;
 
-qreal FSvgRenderer::m_printerScale = 90.0;
+double FSvgRenderer::m_printerScale = 90.0;
 
 static ConnectorInfo VanillaConnectorInfo;
 
@@ -279,8 +279,8 @@ QPixmap * FSvgRenderer::getPixmap(const QString & moduleID, ViewLayer::ViewLayer
 		QPainter painter(pixmap);
 		// preserve aspect ratio
 		QSizeF def = renderer->defaultSizeF();
-		qreal newW = size.width();
-		qreal newH = newW * def.height() / def.width();
+		double newW = size.width();
+		double newH = newW * def.height() / def.width();
 		if (newH > size.height()) {
 			newH = size.height();
 			newW = newH * def.width() / def.height();
@@ -331,10 +331,10 @@ QSizeF FSvgRenderer::parseForWidthAndHeight(QXmlStreamReader & xml)
 				QString ws = xml.attributes().value("width").toString();
 				QString hs = xml.attributes().value("height").toString();
 				bool ok;
-				qreal w = TextUtils::convertToInches(ws, &ok, isIllustrator);
+				double w = TextUtils::convertToInches(ws, &ok, isIllustrator);
 				if (!ok) return size;
 
-				qreal h = TextUtils::convertToInches(hs, &ok, isIllustrator);
+				double h = TextUtils::convertToInches(hs, &ok, isIllustrator);
 				if (!ok) return size;
 
 				size.setWidth(w);
@@ -380,13 +380,13 @@ void FSvgRenderer::calcPrinterScale() {
 	QSizeF size = parseForWidthAndHeight(xml);
 	if (size.width() <= 0) return;
 
-	qreal pscale = b.width() / size.width();
+	double pscale = b.width() / size.width();
 	DebugDialog::debug(QString("printerscale %1").arg(pscale));
 
 	*/
 }
 
-qreal FSvgRenderer::printerScale() {
+double FSvgRenderer::printerScale() {
 	return m_printerScale;
 }
 
@@ -457,19 +457,19 @@ void FSvgRenderer::initLegInfoAux(QDomElement & element, const QStringList & con
 bool FSvgRenderer::initLegInfoAux(QDomElement & element, ConnectorInfo * connectorInfo) 
 {
 	bool ok;
-	qreal sw = element.attribute("stroke-width").toDouble(&ok);
+	double sw = element.attribute("stroke-width").toDouble(&ok);
 	if (!ok) return false;
 
-	qreal x1 = element.attribute("x1").toDouble(&ok);
+	double x1 = element.attribute("x1").toDouble(&ok);
 	if (!ok) return false;
 
-	qreal y1 = element.attribute("y1").toDouble(&ok);
+	double y1 = element.attribute("y1").toDouble(&ok);
 	if (!ok) return false;
 
-	qreal x2 = element.attribute("x2").toDouble(&ok);
+	double x2 = element.attribute("x2").toDouble(&ok);
 	if (!ok) return false;
 
-	qreal y2 = element.attribute("y2").toDouble(&ok);
+	double y2 = element.attribute("y2").toDouble(&ok);
 	if (!ok) return false;
 
 	connectorInfo->legStrokeWidth = sw;
@@ -546,16 +546,16 @@ bool FSvgRenderer::initConnectorInfoAux(QList<QDomElement> & connectorElements, 
 	}
 
 	bool ok;
-	qreal cx = connectorElement.attribute("cx").toDouble(&ok);
+	double cx = connectorElement.attribute("cx").toDouble(&ok);
 	if (!ok) return false;
 
-	qreal cy = connectorElement.attribute("cy").toDouble(&ok);
+	double cy = connectorElement.attribute("cy").toDouble(&ok);
 	if (!ok) return false;
 
-	qreal r = connectorElement.attribute("r").toDouble(&ok);
+	double r = connectorElement.attribute("r").toDouble(&ok);
 	if (!ok) return false;
 
-	qreal sw = connectorElement.attribute("stroke-width").toDouble(&ok);	
+	double sw = connectorElement.attribute("stroke-width").toDouble(&ok);	
 	if (!ok) {
 		//QString strokewidth("stroke-width");
 		//QString s = element.attribute("style");
@@ -668,13 +668,13 @@ void FSvgRenderer::calcLeg(SvgIdLayer * svgIdLayer, const QRectF & viewBox, Conn
 	QPointF p1 = matrix.map(connectorInfo->legLine.p1());
 	QPointF p2 = matrix.map(connectorInfo->legLine.p2());
 
-	qreal x1 = p1.x() * defaultSizeF.width() / viewBox.width();
-	qreal y1 = p1.y() * defaultSizeF.height() / viewBox.height();
-	qreal x2 = p2.x() * defaultSizeF.width() / viewBox.width();
-	qreal y2 = p2.y() * defaultSizeF.height() / viewBox.height();
+	double x1 = p1.x() * defaultSizeF.width() / viewBox.width();
+	double y1 = p1.y() * defaultSizeF.height() / viewBox.height();
+	double x2 = p2.x() * defaultSizeF.width() / viewBox.width();
+	double y2 = p2.y() * defaultSizeF.height() / viewBox.height();
 	QPointF center = viewBox.center();
-	qreal d1 = ((x1 - center.x()) * (x1 - center.x())) + ((y1 - center.y()) * (y1 - center.y()));
-	qreal d2 = ((x2 - center.x()) * (x2 - center.x())) + ((y2 - center.y()) * (y1 - center.y()));
+	double d1 = ((x1 - center.x()) * (x1 - center.x())) + ((y1 - center.y()) * (y1 - center.y()));
+	double d2 = ((x2 - center.x()) * (x2 - center.x())) + ((y2 - center.y()) * (y1 - center.y()));
 
 	// find the end which is closer to the center of the viewBox (which shouldn't include the leg)
 	if (d1 <= d2) {

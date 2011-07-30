@@ -195,7 +195,7 @@ void Resistor::setResistance(QString resistance, QString pinSpacing, bool force)
     if (m_partLabel) m_partLabel->displayTextsIf();
 }
 
-QString Resistor::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi) 
+QString Resistor::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi) 
 {
 	switch (viewLayerID) {
 		case ViewLayer::Breadboard:
@@ -221,7 +221,7 @@ QString Resistor::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString,
 }
 
 QString Resistor::makeBreadboardSvg(const QString & resistance) {
-	qreal ohms = TextUtils::convertFromPowerPrefix(resistance, OhmSymbol);
+	double ohms = TextUtils::convertFromPowerPrefix(resistance, OhmSymbol);
 	QString sohms = QString::number(ohms, 'e', 3);
 	int firstband = sohms.at(0).toAscii() - '0';
 	int secondband = sohms.at(2).toAscii() - '0';

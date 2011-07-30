@@ -50,7 +50,7 @@ public:
 	void showEvent(QShowEvent * event);
 	void initWire(Wire *, int penWidth);
 	virtual bool autorouteTypePCB();
-	virtual qreal getKeepout();
+	virtual double getKeepout();
 	virtual const QString & traceColor(ConnectorItem *);
 	virtual const QString & traceColor(ViewLayer::ViewLayerSpec);
 	virtual void ensureTraceLayersVisible();
@@ -60,14 +60,14 @@ public:
 	virtual bool usesJumperItem();
 	void setClipEnds(class ClipableWire *, bool);
 	void showGroundTraces(bool show);
-        virtual qreal getLabelFontSizeTiny();
-	virtual qreal getLabelFontSizeSmall();
-	virtual qreal getLabelFontSizeMedium();
-	virtual qreal getLabelFontSizeLarge();
+        virtual double getLabelFontSizeTiny();
+	virtual double getLabelFontSizeSmall();
+	virtual double getLabelFontSizeMedium();
+	virtual double getLabelFontSizeLarge();
 	ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry, ViewLayer::ViewLayerSpec);
 	ItemBase * findBoard();
-	qreal getRatsnestOpacity(Wire *);
-	virtual qreal getRatsnestOpacity(bool);
+	double getRatsnestOpacity(Wire *);
+	virtual double getRatsnestOpacity(bool);
 	void updateRoutingStatus(RoutingStatus &, bool manual);
 	void setBoardLayers(int, bool redraw);
 	long setUpSwap(ItemBase *, long newModelIndex, const QString & newModuleID, ViewLayer::ViewLayerSpec, bool doEmit, bool noFinalChangeWiresCommand, QUndoCommand * parentCommand);
@@ -78,7 +78,7 @@ public:
 	virtual bool sameElectricalLayer(ViewLayer::ViewLayerID, ViewLayer::ViewLayerID);
 	virtual bool sameElectricalLayer2(ViewLayer::ViewLayerID, ViewLayer::ViewLayerID);
 	void changeTraceLayer();
-	void changeLayer(long id, qreal z, ViewLayer::ViewLayerID viewLayerID);
+	void changeLayer(long id, double z, ViewLayer::ViewLayerID viewLayerID);
 	void deleteSelected(Wire *);
 	void jumperItemHack();
 	VirtualWire * makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, bool routed, QColor color);
@@ -87,22 +87,22 @@ public:
 	bool acceptsTrace(const ViewGeometry & viewGeometry);
 	ItemBase * placePartDroppedInOtherView(ModelPart *, ViewLayer::ViewLayerSpec, const ViewGeometry & viewGeometry, long id, SketchWidget * dropOrigin);
 	void autorouterSettings();
-	void getViaSize(qreal & ringThickness, qreal & holeSize);
+	void getViaSize(double & ringThickness, double & holeSize);
     void deleteItem(ItemBase *, bool deleteModelPart, bool doEmit, bool later);
-	virtual qreal getTraceWidth();
-	virtual qreal getAutorouterTraceWidth();
-	void getBendpointWidths(class Wire *, qreal w, qreal & w1, qreal & w2, bool & negativeOffsetRect);
-	qreal getSmallerTraceWidth(qreal minDim);
+	virtual double getTraceWidth();
+	virtual double getAutorouterTraceWidth();
+	void getBendpointWidths(class Wire *, double w, double & w1, double & w2, bool & negativeOffsetRect);
+	double getSmallerTraceWidth(double minDim);
 	bool groundFill(QUndoCommand * parentCommand);
 	QString generateCopperFillUnit(ItemBase * itemBase, QPointF whereToStart);
-	qreal getWireStrokeWidth(Wire *, qreal wireWidth);
+	double getWireStrokeWidth(Wire *, double wireWidth);
 
 public:
 	static QSizeF jumperItemSize();
 	static void getDefaultViaSize(QString & ringThickness, QString & holeSize);
 
 public slots:
-	void resizeBoard(qreal w, qreal h, bool doEmit);
+	void resizeBoard(double w, double h, bool doEmit);
 	void showLabelFirstTime(long itemID, bool show, bool doEmit);
 	void changeBoardLayers(int layers, bool doEmit);
 

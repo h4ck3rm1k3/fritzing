@@ -62,7 +62,7 @@ protected:
 
 public:
 	static QHash<Qt::Corner,QPixmap> pixmapHash;
-	static qreal Size;
+	static double Size;
 };
 
 #endif /* CORNERHANDLER_H_ */

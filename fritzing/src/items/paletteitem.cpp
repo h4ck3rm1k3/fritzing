@@ -213,7 +213,7 @@ const QList<class ItemBase *> & PaletteItem::layerKin()
 	return m_layerKin;
 }
 
-void PaletteItem::rotateItem(qreal degrees) {
+void PaletteItem::rotateItem(double degrees) {
 	PaletteItemBase::rotateItem(degrees);
 	for (int i = 0; i < m_layerKin.count(); i++) {
 		m_layerKin[i]->rotateItem(degrees);
@@ -430,7 +430,7 @@ void PaletteItem::resetID() {
 	}
 }
 
-void PaletteItem::slamZ(qreal z) {
+void PaletteItem::slamZ(double z) {
 	PaletteItemBase::slamZ(z);
 	foreach (ItemBase * lkpi, m_layerKin) {
 		lkpi->slamZ(z);

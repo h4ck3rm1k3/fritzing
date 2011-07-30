@@ -100,11 +100,11 @@ public:
 	void clearRatsnestDisplay(QList<ConnectorItem *> & connectorItems);
 	bool marked();
 	void setMarked(bool);
-	qreal calcClipRadius();
+	double calcClipRadius();
 	bool isEffectivelyCircular();
 	void paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
     void debugInfo(const QString & msg);
-	qreal minDimension();
+	double minDimension();
 	void setHybrid(bool);
 	bool isHybrid();
 	void setBigDot(bool);
@@ -114,13 +114,13 @@ public:
 
 	// bendable leg functions	
 	bool isDraggingLeg();
-	void setBendableLeg(QColor color, qreal strokeWidth, QLineF parentLine);
+	void setBendableLeg(QColor color, double strokeWidth, QLineF parentLine);
 	bool hasBendableLeg() const;
 	void rotateLeg(const QPolygonF &, bool active);
 	void setLeg(const QPolygonF &, bool relative, const QString & why);
 	void resetLeg(const QPolygonF &, bool relative, bool active, const QString & why);
 	const QPolygonF & leg();
-	QPolygonF sceneAdjustedLeg(qreal & width, QString & colorString);
+	QPolygonF sceneAdjustedLeg(double & width, QString & colorString);
 	QPolygonF sceneAdjustedLeg();
 	void prepareToStretch(bool activeStretch);
 	void stretchBy(QPointF howMuch);
@@ -159,7 +159,7 @@ protected:
 	QPen legPen() const;
 	bool legMousePressEvent(QGraphicsSceneMouseEvent *event);
 	void repoly(const QPolygonF & poly, bool relative);
-	QPainterPath shapeAux(qreal width) const;
+	QPainterPath shapeAux(double width) const;
 
 	enum CursorLocation {
 		InNotFound = 0,
@@ -192,7 +192,7 @@ protected:
 	bool m_activeStretch;
 	QPointF m_holdPos;
 	QPolygonF m_legPolygon;
-	qreal m_legStrokeWidth;
+	double m_legStrokeWidth;
 	QColor m_legColor;
 	bool m_insertBendpointPossible;
 	

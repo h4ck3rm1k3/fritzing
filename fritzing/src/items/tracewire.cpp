@@ -49,7 +49,7 @@ TraceWire::~TraceWire()
 {
 }
 
-QComboBox * TraceWire::createWidthComboBox(qreal m, QWidget * parent) 
+QComboBox * TraceWire::createWidthComboBox(double m, QWidget * parent) 
 {
 	QComboBox * comboBox = new FocusOutComboBox(parent);  // new QComboBox(parent);
 	comboBox->setEditable(true);

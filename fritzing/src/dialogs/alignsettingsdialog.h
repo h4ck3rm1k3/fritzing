@@ -37,7 +37,7 @@ class AlignSettingsDialog : public QDialog
 Q_OBJECT
 
 public:
-	AlignSettingsDialog(const QString & viewName, qreal defaultSize, QWidget *parent = 0);
+	AlignSettingsDialog(const QString & viewName, double defaultSize, QWidget *parent = 0);
 	~AlignSettingsDialog();
 
 protected slots:
@@ -50,7 +50,7 @@ protected:
 	QDoubleValidator * m_validator;
 	QRadioButton * m_mmButton;
 	QRadioButton * m_inButton;
-	qreal m_defaultSize;
+	double m_defaultSize;
 	QString m_viewName;
 
 };

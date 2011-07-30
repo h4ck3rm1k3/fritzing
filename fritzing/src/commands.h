@@ -176,7 +176,7 @@ protected:
 class RotateItemCommand : public BaseCommand
 {
 public:
-    RotateItemCommand(class SketchWidget *sketchWidget, long id, qreal degrees, QUndoCommand *parent);
+    RotateItemCommand(class SketchWidget *sketchWidget, long id, double degrees, QUndoCommand *parent);
     void undo();
     void redo();
 
@@ -185,7 +185,7 @@ protected:
 
 protected:
     long m_itemID;
-    qreal m_degrees;
+    double m_degrees;
 };
 
 class FlipItemCommand : public BaseCommand
@@ -320,7 +320,7 @@ class ChangeLayerCommand : public BaseCommand
 {
 public:
     ChangeLayerCommand(class SketchWidget *sketchWidget, long fromID,
-					  qreal oldZ, qreal newZ, 
+					  double oldZ, double newZ, 
 					  ViewLayer::ViewLayerID oldLayer, ViewLayer::ViewLayerID newLayer,
     				  QUndoCommand *parent);
     void undo();
@@ -331,8 +331,8 @@ protected:
 
 protected:
     long m_fromID;
-    qreal m_newZ;
-    qreal m_oldZ;
+    double m_newZ;
+    double m_oldZ;
 	ViewLayer::ViewLayerID m_newLayer;
     ViewLayer::ViewLayerID m_oldLayer;
 };
@@ -384,7 +384,7 @@ public:
     ChangeZCommand(class SketchWidget *sketchWidget, QUndoCommand *parent);
 	~ChangeZCommand();
 
-    void addTriplet(long id, qreal oldZ, qreal newZ);
+    void addTriplet(long id, double oldZ, double newZ);
     void undo();
     void redo();
 
@@ -392,8 +392,8 @@ protected:
 	QString getParamString() const;
 
 protected:
-    static qreal first(RealPair *);
-    static qreal second(RealPair *);
+    static double first(RealPair *);
+    static double second(RealPair *);
 
 protected:
     QHash<long, RealPair *> m_triplets;
@@ -442,7 +442,7 @@ public:
 	WireColorChangeCommand(
 		SketchWidget* sketchWidget,
 		long wireId, const QString &oldColor, const QString &newColor,
-		qreal oldOpacity, qreal newOpacity,
+		double oldOpacity, double newOpacity,
 		QUndoCommand *parent=0);
     void undo();
     void redo();
@@ -455,8 +455,8 @@ protected:
 	long m_wireId;
 	QString m_oldColor;
 	QString m_newColor;
-	qreal m_oldOpacity;
-	qreal m_newOpacity;
+	double m_oldOpacity;
+	double m_newOpacity;
 };
 
 
@@ -465,7 +465,7 @@ class WireWidthChangeCommand : public BaseCommand
 public:
 	WireWidthChangeCommand(
 		SketchWidget* sketchWidget,
-		long wireId, qreal oldWidth, qreal newWidth,
+		long wireId, double oldWidth, double newWidth,
 		QUndoCommand *parent);
     void undo();
     void redo();
@@ -475,8 +475,8 @@ protected:
 
 protected:
 	long m_wireId;
-	qreal m_oldWidth;
-	qreal m_newWidth;
+	double m_oldWidth;
+	double m_newWidth;
 };
 
 class RoutingStatusCommand : public BaseCommand 
@@ -638,7 +638,7 @@ protected:
 class RotateFlipLabelCommand : public BaseCommand
 {
 public:
-	RotateFlipLabelCommand(class SketchWidget *sketchWidget, long id, qreal degrees, Qt::Orientations, QUndoCommand *parent);
+	RotateFlipLabelCommand(class SketchWidget *sketchWidget, long id, double degrees, Qt::Orientations, QUndoCommand *parent);
     void undo();
     void redo();
 
@@ -647,7 +647,7 @@ protected:
 
 protected:
     long m_itemID;
-    qreal m_degrees;
+    double m_degrees;
 	Qt::Orientations m_orientation;
 };
 
@@ -670,7 +670,7 @@ protected:
 class ResizeBoardCommand : public BaseCommand
 {
 public:
-	ResizeBoardCommand(class SketchWidget *, long itemID, qreal oldWidth, qreal oldHeight, qreal newWidth, qreal newHeight, QUndoCommand * parent);
+	ResizeBoardCommand(class SketchWidget *, long itemID, double oldWidth, double oldHeight, double newWidth, double newHeight, QUndoCommand * parent);
 	void undo();
 	void redo();
 
@@ -678,10 +678,10 @@ protected:
 	QString getParamString() const;
 
 protected:
-	qreal m_oldWidth;
-	qreal m_oldHeight;
-	qreal m_newWidth;
-	qreal m_newHeight;
+	double m_oldWidth;
+	double m_oldHeight;
+	double m_newWidth;
+	double m_newHeight;
 	long m_itemID;
 };
 

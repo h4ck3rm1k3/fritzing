@@ -68,8 +68,8 @@ class Helper : public QObject {
 		bool m_stillWaitingFirstDrop;
 		bool m_stillWaitingFirstViewSwitch;
 
-		qreal m_prevVScroolW;
-		qreal m_prevHScroolH;
+		double m_prevVScroolW;
+		double m_prevHScroolH;
 
 	protected:
 		static QString BreadboardHelpText;

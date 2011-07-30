@@ -107,7 +107,7 @@ enum PartLabelAction {
 
 static QMultiHash<long, PartLabel *> AllPartLabels;
 static const QString LabelTextKey = "";
-static const qreal InactiveOpacity = 0.4;
+static const double InactiveOpacity = 0.4;
 
 ///////////////////////////////////////////
 
@@ -361,16 +361,16 @@ void PartLabel::restoreLabel(QDomElement & labelGeometry, ViewLayer::ViewLayerID
 	setVisible(labelGeometry.attribute("visible").compare("true") == 0);
 	QPointF p = pos();
 	bool ok = false;
-	qreal x = labelGeometry.attribute("x").toDouble(&ok);
+	double x = labelGeometry.attribute("x").toDouble(&ok);
 	if (ok) p.setX(x);
-	qreal y = labelGeometry.attribute("y").toDouble(&ok);
+	double y = labelGeometry.attribute("y").toDouble(&ok);
 	if (ok) p.setY(y);
 	setPos(p);
 	x = labelGeometry.attribute("xOffset").toDouble(&ok);
 	if (ok) m_offset.setX(x);
 	y = labelGeometry.attribute("yOffset").toDouble(&ok);
 	if (ok) m_offset.setY(y);
-	qreal z = labelGeometry.attribute("z").toDouble(&ok);
+	double z = labelGeometry.attribute("z").toDouble(&ok);
 	if (ok) this->setZValue(z);
 
 	//ignore the textColor attribute so the labels are always set from standard colors
@@ -378,7 +378,7 @@ void PartLabel::restoreLabel(QDomElement & labelGeometry, ViewLayer::ViewLayerID
 	//c.setNamedColor(labelGeometry.attribute("textColor"));
 	//setBrush(QBrush(c));
 
-	qreal fs = labelGeometry.attribute("fontSize").toDouble(&ok);
+	double fs = labelGeometry.attribute("fontSize").toDouble(&ok);
 	if (!ok) {
 		InfoGraphicsView *infographics = InfoGraphicsView::getInfoGraphicsView(this);
 		if (infographics != NULL) {
@@ -528,7 +528,7 @@ void PartLabel::initMenu()
 	}
 }
 
-void PartLabel::rotateFlipLabel(qreal degrees, Qt::Orientations orientation) {
+void PartLabel::rotateFlipLabel(double degrees, Qt::Orientations orientation) {
 	if (degrees != 0) {
 		transformLabel(QTransform().rotate(degrees));
 	}
@@ -550,8 +550,8 @@ void PartLabel::rotateFlipLabel(qreal degrees, Qt::Orientations orientation) {
 void PartLabel::transformLabel(QTransform currTransf) 
 {
 	QRectF rect = this->boundingRect();
-	qreal x = rect.width() / 2.0;
-	qreal y = rect.height() / 2.0;
+	double x = rect.width() / 2.0;
+	double y = rect.height() / 2.0;
 	QTransform transf = transform() * QTransform().translate(-x, -y) * currTransf * QTransform().translate(x, y);
 	setTransform(transf);
 }
@@ -671,7 +671,7 @@ void PartLabel::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 }
 
 void PartLabel::rotateFlip(int action) {
-	qreal degrees = 0;
+	double degrees = 0;
 	Qt::Orientations orientation = 0;
 	switch (action) {
 		case PartLabelRotate45CW:
@@ -764,7 +764,7 @@ void PartLabel::setFontSize(int action) {
 	InfoGraphicsView *infographics = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infographics == NULL) return;
 
-	qreal fs = 0;
+	double fs = 0;
 	switch (action) {
                 case PartLabelFontSizeTiny:
                         fs = infographics->getLabelFontSizeTiny();
@@ -820,12 +820,12 @@ QString mapToSVGStyle(QFont::Style style) {
 	}
 }
 
-QString PartLabel::makeSvg(bool blackOnly, qreal dpi, qreal printerScale) {
+QString PartLabel::makeSvg(bool blackOnly, double dpi, double printerScale) {
 	if (this->text().isEmpty()) return "";
 
 	QFont f = font();
 	QFontMetricsF fm(f);
-	qreal y = fm.ascent();
+	double y = fm.ascent();
 	
 	QString svg = QString("<g font-size='%1' font-style='%2' font-weight='%3' fill='%4' font-family=\"'%5'\" id='%6' fill-opacity='1' stroke='none' >")
 		.arg(f.pointSizeF() * dpi / 72)

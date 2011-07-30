@@ -449,7 +449,7 @@ LayerKinPaletteItem *PaletteItemBase::newLayerKinPaletteItem(PaletteItemBase * c
 	return lk;
 }
 
-QString PaletteItemBase::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi) 
+QString PaletteItemBase::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi) 
 {
 	QString xmlName = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
 	QString path = filename();
@@ -551,7 +551,7 @@ void PaletteItemBase::setPos(const QPointF & pos) {
 	DebugDialog::debug(QString("set pos %1 %2, %3").arg(this->id()).arg(pos.x()).arg(pos.y()) );
 }
 
-void PaletteItemBase::setPos(qreal x, qreal y) {
+void PaletteItemBase::setPos(double x, double y) {
 	ItemBase::setPos(x, y);
 }
 

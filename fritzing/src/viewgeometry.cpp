@@ -68,11 +68,11 @@ ViewGeometry::ViewGeometry(QDomElement & geometry) {
 	GraphicsUtils::loadTransform(geometry.firstChildElement("transform"), m_transform);
 }
 
-void ViewGeometry::setZ(qreal z) {
+void ViewGeometry::setZ(double z) {
 	m_z = z;
 }
 
-qreal ViewGeometry::z() const {
+double ViewGeometry::z() const {
 	return m_z ;
 }
 
@@ -92,7 +92,7 @@ QLineF ViewGeometry::line() const {
 	return m_line;
 }
 
-void ViewGeometry::offset(qreal x, qreal y) {
+void ViewGeometry::offset(double x, double y) {
 	m_loc.setX(x + m_loc.x());
 	m_loc.setY(y + m_loc.y());
 }
@@ -109,7 +109,7 @@ QRectF ViewGeometry::rect() const {
 	return m_rect;
 }
 
-void ViewGeometry::setRect(qreal x, qreal y, qreal width, qreal height) 
+void ViewGeometry::setRect(double x, double y, double width, double height) 
 {
 	m_rect.setRect(x, y, width, height);
 }

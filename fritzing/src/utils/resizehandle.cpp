@@ -63,7 +63,7 @@ QVariant ResizeHandle::itemChange(GraphicsItemChange change, const QVariant &val
 			if (scene()) {
 				ZoomableGraphicsView *sw = dynamic_cast<ZoomableGraphicsView*>(scene()->parent());
 				if (sw) {
-					connect(sw, SIGNAL(zoomChanged(qreal)), this, SLOT(zoomChangedSlot(qreal)));
+					connect(sw, SIGNAL(zoomChanged(double)), this, SLOT(zoomChangedSlot(double)));
 				}
 
 			}
@@ -75,11 +75,11 @@ QVariant ResizeHandle::itemChange(GraphicsItemChange change, const QVariant &val
     return QGraphicsPixmapItem::itemChange(change, value);
 }
 
-void ResizeHandle::zoomChangedSlot(qreal scale) {
+void ResizeHandle::zoomChangedSlot(double scale) {
 	emit zoomChangedSignal(scale);
 }
 
-qreal ResizeHandle::currentScale() {
+double ResizeHandle::currentScale() {
 	if(scene()) {
 		ZoomableGraphicsView *sw = dynamic_cast<ZoomableGraphicsView*>(scene()->parent());
 		if(sw) {

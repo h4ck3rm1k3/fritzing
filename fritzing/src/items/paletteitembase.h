@@ -63,7 +63,7 @@ public:
 	QRectF boundingRect() const;
 	QRectF boundingRectWithoutLegs() const;
 	void setSharedRendererEx(class FSvgRenderer *);
-	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi);
+	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi);
 	virtual bool canEditPart();
 	QPainterPath shape() const;
 	QPainterPath hoverShape() const;
@@ -77,7 +77,7 @@ public:
 	/*
 	// for debugging
 	void setPos(const QPointF & pos);
-	void setPos(qreal x, qreal y);
+	void setPos(double x, double y);
 	*/
 
 protected:

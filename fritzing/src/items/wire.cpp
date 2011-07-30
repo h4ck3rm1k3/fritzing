@@ -56,10 +56,10 @@ QHash<QString, QString> Wire::colorTrans;
 QStringList Wire::colorNames;
 QHash<int, QString> Wire::widthTrans;
 QList<int> Wire::widths;
-qreal Wire::STANDARD_TRACE_WIDTH;
-qreal Wire::HALF_STANDARD_TRACE_WIDTH;
+double Wire::STANDARD_TRACE_WIDTH;
+double Wire::HALF_STANDARD_TRACE_WIDTH;
 
-const qreal DefaultHoverStrokeWidth = 4;
+const double DefaultHoverStrokeWidth = 4;
 
 
 ////////////////////////////////////////////////////////////
@@ -172,7 +172,7 @@ void Wire::moveItem(ViewGeometry & viewGeometry) {
 void Wire::initEnds(const ViewGeometry & vg, QRectF defaultRect, InfoGraphicsView * infoGraphicsView) {
 	bool gotOne = false;
 	bool gotTwo = false;
-	qreal penWidth = 1;
+	double penWidth = 1;
 	foreach (ConnectorItem * item, cachedConnectorItems()) {
 		// check the name or is order good enough?
 
@@ -284,14 +284,14 @@ QPainterPath Wire::shape() const
 QRectF Wire::boundingRect() const
 {
 	if (m_pen.widthF() == 0.0) {
-	    const qreal x1 = m_line.p1().x();
-	    const qreal x2 = m_line.p2().x();
-	    const qreal y1 = m_line.p1().y();
-	    const qreal y2 = m_line.p2().y();
-	    qreal lx = qMin(x1, x2);
-	    qreal rx = qMax(x1, x2);
-	    qreal ty = qMin(y1, y2);
-	    qreal by = qMax(y1, y2);
+	    const double x1 = m_line.p1().x();
+	    const double x2 = m_line.p2().x();
+	    const double y1 = m_line.p1().y();
+	    const double y2 = m_line.p2().y();
+	    double lx = qMin(x1, x2);
+	    double rx = qMax(x1, x2);
+	    double ty = qMin(y1, y2);
+	    double by = qMax(y1, y2);
 	    return QRectF(lx, ty, rx - lx, by - ty);
 	}
 	return hoverShape().controlPointRect();
@@ -384,7 +384,7 @@ void Wire::mouseMoveEventAux(QPointF eventPos, bool shiftModifier) {
 				ConnectorItem * oci = w->otherConnector(ci);
 				QPointF otherInitialPos = mapFromScene(oci->sceneAdjustedTerminalPoint(NULL));
 				QPointF p1(initialPos.x(), otherInitialPos.y());
-				qreal d = GraphicsUtils::distanceSqd(p1, eventPos);
+				double d = GraphicsUtils::distanceSqd(p1, eventPos);
 				if (d <= 144) {
 					bendpoint = true;
 					eventPos = p1;
@@ -539,14 +539,14 @@ void Wire::setExtras(QDomElement & element, InfoGraphicsView * infoGraphicsView)
 	if (element.isNull()) return;
 
 	bool ok;
-	qreal w = element.attribute("width").toDouble(&ok);
+	double w = element.attribute("width").toDouble(&ok);
 	if (ok) {
 		setWireWidth(w, infoGraphicsView, infoGraphicsView->getWireStrokeWidth(this, w));
 	}
 	else {
 		w = element.attribute("mils").toDouble(&ok);
 		if (ok) {
-			qreal wpix = GraphicsUtils::mils2pixels(w, FSvgRenderer::printerScale());
+			double wpix = GraphicsUtils::mils2pixels(w, FSvgRenderer::printerScale());
 			setWireWidth(wpix, infoGraphicsView, infoGraphicsView->getWireStrokeWidth(this, wpix));
 		}
 	}
@@ -559,7 +559,7 @@ void Wire::setColorFromElement(QDomElement & element) {
 	if (colorString.isNull() || colorString.isEmpty()) return;
 
 	bool ok;
-	qreal op = element.attribute("opacity").toDouble(&ok);
+	double op = element.attribute("opacity").toDouble(&ok);
 	if (!ok) {
 		op = 1.0;
 	}
@@ -894,7 +894,7 @@ bool Wire::getNormal() {
 	return m_viewGeometry.getNormal();
 }
 
-void Wire::setColor(const QColor & color, qreal op) {
+void Wire::setColor(const QColor & color, double op) {
 	m_pen.setBrush(QBrush(color));
 	m_opacity = op;
 	m_colorName = color.name();
@@ -915,7 +915,7 @@ const QColor & Wire::color() {
 	return m_pen.brush().color();
 }
 
-void Wire::setWireWidth(qreal width, InfoGraphicsView * infoGraphicsView, qreal hoverStrokeWidth) {
+void Wire::setWireWidth(double width, InfoGraphicsView * infoGraphicsView, double hoverStrokeWidth) {
 	if (m_pen.widthF() == width) return;
 
 	prepareGeometryChange();
@@ -925,15 +925,15 @@ void Wire::setWireWidth(qreal width, InfoGraphicsView * infoGraphicsView, qreal 
 	update();
 }
 
-qreal Wire::width() {
+double Wire::width() {
 	return m_pen.widthF();
 }
 
-qreal Wire::mils() {
+double Wire::mils() {
 	return 1000 * m_pen.widthF() / FSvgRenderer::printerScale();
 }
 
-void Wire::setColorString(QString colorName, qreal op) {
+void Wire::setColorString(QString colorName, double op) {
 	// sets a color using the name (.e. "red")
 	// note: colorName is associated with a Fritzing color, not a Qt color
 
@@ -1078,11 +1078,11 @@ void Wire::setWireFlags(ViewGeometry::WireFlags wireFlags) {
 	m_viewGeometry.setWireFlags(wireFlags);
 }
 
-qreal Wire::opacity() {
+double Wire::opacity() {
 	return m_opacity;
 }
 
-void Wire::setOpacity(qreal opacity) {
+void Wire::setOpacity(double opacity) {
 	m_opacity = opacity;
 	this->update();
 }
@@ -1159,7 +1159,7 @@ QVariant Wire::itemChange(GraphicsItemChange change, const QVariant &value)
 void Wire::cleanup() {
 }
 
-void Wire::getConnectedColor(ConnectorItem * connectorItem, QBrush * &brush, QPen * &pen, qreal & opacity, qreal & negativePenWidth, bool & negativeOffsetRect) {
+void Wire::getConnectedColor(ConnectorItem * connectorItem, QBrush * &brush, QPen * &pen, double & opacity, double & negativePenWidth, bool & negativeOffsetRect) {
 
 	connectorItem->setBigDot(false);
 	int count = 0;
@@ -1221,7 +1221,7 @@ void Wire::getConnectedColor(ConnectorItem * connectorItem, QBrush * &brush, QPe
 	}
 }
 
-void Wire::setPenWidth(qreal w, InfoGraphicsView * infoGraphicsView, qreal hoverStrokeWidth) {
+void Wire::setPenWidth(double w, InfoGraphicsView * infoGraphicsView, double hoverStrokeWidth) {
 	m_hoverStrokeWidth = hoverStrokeWidth;
 	//DebugDialog::debug(QString("setting hoverstrokewidth %1 %2").arg(m_id).arg(m_hoverStrokeWidth));
 	m_pen.setWidthF(w);
@@ -1380,13 +1380,13 @@ void Wire::addedToScene(bool temporary) {
 	}
 }
 
-void Wire::setConnectorDimensions(qreal width, qreal height) 
+void Wire::setConnectorDimensions(double width, double height) 
 {
 	setConnectorDimensionsAux(connector0(), width, height);
 	setConnectorDimensionsAux(connector1(), width, height);
 }
 
-void Wire::setConnectorDimensionsAux(ConnectorItem * connectorItem, qreal width, qreal height) 
+void Wire::setConnectorDimensionsAux(ConnectorItem * connectorItem, double width, double height) 
 {
 	QPointF p = connectorItem->rect().center();
 	QRectF r(p.x() - (width / 2), p.y() - (height / 2), width, height);
@@ -1394,7 +1394,7 @@ void Wire::setConnectorDimensionsAux(ConnectorItem * connectorItem, qreal width,
 	connectorItem->setTerminalPoint(r.center() - r.topLeft());
 }
 
-void Wire::originalConnectorDimensions(qreal & width, qreal & height) 
+void Wire::originalConnectorDimensions(double & width, double & height) 
 {
 	width = m_originalConnectorRect.width();
 	height = m_originalConnectorRect.height();
@@ -1412,7 +1412,7 @@ bool Wire::isBendpoint(ConnectorItem * connectorItem) {
 	return true;
 }
 
-qreal Wire::hoverStrokeWidth() {
+double Wire::hoverStrokeWidth() {
 	return m_hoverStrokeWidth;
 }
 
@@ -1444,7 +1444,7 @@ void Wire::setLine(const QLineF &line)
     update();
 }
 
-void Wire::setLine(qreal x1, qreal y1, qreal x2, qreal y2)
+void Wire::setLine(double x1, double y1, double x2, double y2)
 { 
 	setLine(QLineF(x1, y1, x2, y2)); 
 }

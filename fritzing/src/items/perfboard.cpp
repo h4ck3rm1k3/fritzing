@@ -123,7 +123,7 @@ QString Perfboard::makeBreadboardSvg(const QString & size)
 
 	QString middle;
 	QString holes;
-	qreal radius = 17.5;
+	double radius = 17.5;
 	int sweepflag = 0;
 
 	int top = 100;

@@ -146,8 +146,9 @@ bendable TODO:
 		** light sensor
 		** reed switch
 		transistors
-		batteries
 		** 2aa battery
+		** 4aaa battery
+		9v battery
 		stepper motors
 		piezo
 		loudspeaker
@@ -199,7 +200,7 @@ parts editor support
 
 /////////////////////////////////////////////////////////
 
-static const qreal StandardLegConnectorLength = 9;			// pixels
+static const double StandardLegConnectorLength = 9;			// pixels
 
 QList<ConnectorItem *> ConnectorItem::m_equalPotentialDisplayItems;
 
@@ -679,7 +680,7 @@ void ConnectorItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 			QPointF initialPos = mapToScene(m_legPolygon.at(m_draggingLegIndex - 1)); 
 			QPointF otherInitialPos = mapToScene(m_legPolygon.at(m_draggingLegIndex + 1));
 			QPointF p1(initialPos.x(), otherInitialPos.y());
-			qreal d = GraphicsUtils::distanceSqd(p1, currentPos);
+			double d = GraphicsUtils::distanceSqd(p1, currentPos);
 			if (d <= 144) {
 				bendpoint = true;
 				currentPos = p1;
@@ -1496,7 +1497,7 @@ void ConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * 
 
 		if (m_legPolygon.count() > 2) {
 			// now draw bendpoint indicators
-			qreal halfWidth = pen.widthF() / 2;
+			double halfWidth = pen.widthF() / 2;
 			painter->setPen(Qt::NoPen);
 			QColor c =  addColor(m_legColor, (qGray(m_legColor.rgb()) < 64) ? 80 : -64);
 			painter->setBrush(c);
@@ -1693,13 +1694,13 @@ void ConnectorItem::setMarked(bool m) {
 	m_marked = m;
 }
 
-qreal ConnectorItem::calcClipRadius() {
+double ConnectorItem::calcClipRadius() {
 	if (m_circular) {
 		return radius() - (strokeWidth() / 2.0);
 	}
 
 	if (m_effectivelyCircular) {
-		qreal rad = rect().width() / 2;
+		double rad = rect().width() / 2;
 		return rad - (rad / 5);
 	}
 
@@ -1733,7 +1734,7 @@ void ConnectorItem::debugInfo(const QString & msg)
 #endif
 }
 
-qreal ConnectorItem::minDimension() {
+double ConnectorItem::minDimension() {
 	QRectF r = this->boundingRect();
 	return qMin(r.width(), r.height());
 }
@@ -1917,7 +1918,7 @@ bool ConnectorItem::isDraggingLeg() {
 	return m_draggingLeg;
 }
 
-QPolygonF ConnectorItem::sceneAdjustedLeg(qreal & width, QString & colorString) {
+QPolygonF ConnectorItem::sceneAdjustedLeg(double & width, QString & colorString) {
 	if (!m_bendableLeg) return QPolygonF();
 
 	width = m_legStrokeWidth;
@@ -1978,7 +1979,7 @@ QPainterPath ConnectorItem::shape() const
 	return shapeAux(m_legStrokeWidth);
 }
 
-QPainterPath ConnectorItem::shapeAux(qreal width) const
+QPainterPath ConnectorItem::shapeAux(double width) const
 {
 	if (m_legPolygon.count() < 2) return NonConnectorItem::shape();
 
@@ -2034,10 +2035,10 @@ QPointF ConnectorItem::calcPoint() const
 
 	QPointF p1 =  m_legPolygon.last();
 	QPointF p2 = m_legPolygon.at(m_legPolygon.count() - 2);
-	qreal dx = p1.x() - p2.x();
-	qreal dy = p1.y() - p2.y();
-	qreal lineLen = qSqrt((dx * dx) + (dy * dy));
-	qreal len = qMax(0.5, qMin(lineLen, StandardLegConnectorLength));
+	double dx = p1.x() - p2.x();
+	double dy = p1.y() - p2.y();
+	double lineLen = qSqrt((dx * dx) + (dy * dy));
+	double len = qMax(0.5, qMin(lineLen, StandardLegConnectorLength));
 	return QPointF(p1 - QPointF(dx * len / lineLen, dy * len / lineLen));
 }
 
@@ -2047,7 +2048,7 @@ const QString & ConnectorItem::legID(ViewIdentifierClass::ViewIdentifier viewID,
 	return ___emptyString___;
 }
 
-void ConnectorItem::setBendableLeg(QColor color, qreal strokeWidth, QLineF parentLine) {
+void ConnectorItem::setBendableLeg(QColor color, double strokeWidth, QLineF parentLine) {
 	// assumes this is only called once, when the connector is first set up
 
 	if (BendpointCursor == NULL) {
@@ -2163,14 +2164,14 @@ ConnectorItem::CursorLocation ConnectorItem::findLocation(QPointF location, int 
 		return InConnector;
 	}
 
-	qreal wSqd = 4 * m_legStrokeWidth * m_legStrokeWidth;			// hover distance
+	double wSqd = 4 * m_legStrokeWidth * m_legStrokeWidth;			// hover distance
 	for (int i = 0; i < m_legPolygon.count() - 1; i++) {
 		QPainterPath path;
 		path.moveTo(m_legPolygon.at(i));
 		path.lineTo(m_legPolygon.at(i + 1));
 		path = GraphicsUtils::shapeFromPath(path, pen, m_legStrokeWidth, false);
 		if (path.contains(location)) {
-			qreal d = GraphicsUtils::distanceSqd(m_legPolygon.at(i), location);
+			double d = GraphicsUtils::distanceSqd(m_legPolygon.at(i), location);
 			if (d <= wSqd) {
 				bendpointIndex = i;
 				return InBendpoint;

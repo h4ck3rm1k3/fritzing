@@ -606,7 +606,7 @@ bool ModelPartShared::checkNeedsCopper1(QDomElement & copper0, QDomElement & cop
 	if (!m_replacedby.isEmpty()) return false;
 
 	bool ok;
-	qreal versionNumber = m_version.toDouble(&ok);
+	double versionNumber = m_version.toDouble(&ok);
 	if (ok) {
 		if (versionNumber >= 4.0) return false;
 	}

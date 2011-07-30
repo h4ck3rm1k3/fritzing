@@ -55,7 +55,7 @@ public:
 		void mousePressEvent(QMouseEvent *event);
 
 		ZoomableGraphicsView *m_owner;
-		qreal m_step;
+		double m_step;
 		ZoomButton::ZoomType m_type;
 };
 
@@ -79,7 +79,7 @@ class ZoomControls : public ZoomControlsPrivate {
 		ZoomControls(ZoomableGraphicsView *view, QWidget *parent);
 
 	protected slots:
-		void updateLabel(qreal zoom);
+		void updateLabel(double zoom);
 
 	protected:
 		QLabel *m_zoomLabel;

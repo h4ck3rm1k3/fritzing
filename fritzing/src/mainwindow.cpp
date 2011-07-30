@@ -195,7 +195,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	m_statusBar->addPermanentWidget(m_locationLabel);
 
 	m_zoomSlider = new ZoomSlider(m_statusBar);
-	connect(m_zoomSlider, SIGNAL(zoomChanged(qreal)), this, SLOT(updateViewZoom(qreal)));
+	connect(m_zoomSlider, SIGNAL(zoomChanged(double)), this, SLOT(updateViewZoom(double)));
 	m_statusBar->addPermanentWidget(m_zoomSlider);
 
 
@@ -484,9 +484,9 @@ void MainWindow::connectPairs() {
 
 	succeeded = connect(m_pcbGraphicsView, SIGNAL(boardDeletedSignal()), this, SLOT(boardDeletedSlot()));
 
-	succeeded = connect(m_pcbGraphicsView, SIGNAL(cursorLocationSignal(qreal, qreal)), this, SLOT(cursorLocationSlot(qreal, qreal)));
-	succeeded = connect(m_breadboardGraphicsView, SIGNAL(cursorLocationSignal(qreal, qreal)), this, SLOT(cursorLocationSlot(qreal, qreal)));
-	succeeded = connect(m_schematicGraphicsView, SIGNAL(cursorLocationSignal(qreal, qreal)), this, SLOT(cursorLocationSlot(qreal, qreal)));
+	succeeded = connect(m_pcbGraphicsView, SIGNAL(cursorLocationSignal(double, double)), this, SLOT(cursorLocationSlot(double, double)));
+	succeeded = connect(m_breadboardGraphicsView, SIGNAL(cursorLocationSignal(double, double)), this, SLOT(cursorLocationSlot(double, double)));
+	succeeded = connect(m_schematicGraphicsView, SIGNAL(cursorLocationSignal(double, double)), this, SLOT(cursorLocationSlot(double, double)));
 
 	succeeded = connect(m_breadboardGraphicsView, SIGNAL(filenameIfSignal(QString &)), this, SLOT(filenameIfSlot(QString &)), Qt::DirectConnection);
 	succeeded = connect(m_pcbGraphicsView, SIGNAL(filenameIfSignal(QString &)), this, SLOT(filenameIfSlot(QString &)), Qt::DirectConnection);
@@ -543,8 +543,8 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 	succeeded = succeeded && connect(signaller, SIGNAL(setInstanceTitleSignal(long, const QString &, bool, bool )),
 									 slotter, SLOT(setInstanceTitle(long, const QString &, bool, bool )));
 
-	succeeded = succeeded && connect(signaller, SIGNAL(setVoltageSignal(qreal, bool )),
-									 slotter, SLOT(setVoltage(qreal, bool )));
+	succeeded = succeeded && connect(signaller, SIGNAL(setVoltageSignal(double, bool )),
+									 slotter, SLOT(setVoltage(double, bool )));
 
 	succeeded = succeeded && connect(signaller, SIGNAL(showLabelFirstTimeSignal(long, bool, bool )),
 									 slotter, SLOT(showLabelFirstTime(long, bool, bool )));
@@ -629,8 +629,8 @@ void MainWindow::setCurrentFile(const QString &fileName, bool addToRecent, bool 
 
 void MainWindow::createZoomOptions(SketchAreaWidget* parent) {
 
-    connect(parent->graphicsView(), SIGNAL(zoomChanged(qreal)), this, SLOT(updateZoomSlider(qreal)));
-    connect(parent->graphicsView(), SIGNAL(zoomOutOfRange(qreal)), this, SLOT(updateZoomOptionsNoMatterWhat(qreal)));
+    connect(parent->graphicsView(), SIGNAL(zoomChanged(double)), this, SLOT(updateZoomSlider(double)));
+    connect(parent->graphicsView(), SIGNAL(zoomOutOfRange(double)), this, SLOT(updateZoomOptionsNoMatterWhat(double)));
 }
 
 void MainWindow::createToolBars() {
@@ -821,7 +821,7 @@ QList<QWidget*> MainWindow::getButtonsForView(ViewIdentifierClass::ViewIdentifie
 	return retval;
 }
 
-void MainWindow::updateZoomSlider(qreal zoom) {
+void MainWindow::updateZoomSlider(double zoom) {
 	m_zoomSlider->setValue(zoom);
 }
 
@@ -829,11 +829,11 @@ SketchAreaWidget *MainWindow::currentSketchArea() {
 	return dynamic_cast<SketchAreaWidget*>(m_currentGraphicsView->parent());
 }
 
-void MainWindow::updateZoomOptionsNoMatterWhat(qreal zoom) {
+void MainWindow::updateZoomOptionsNoMatterWhat(double zoom) {
 	m_zoomSlider->setValue(zoom);
 }
 
-void MainWindow::updateViewZoom(qreal newZoom) {
+void MainWindow::updateViewZoom(double newZoom) {
 	m_comboboxChanged = true;
 	if(m_currentGraphicsView) m_currentGraphicsView->absoluteZoom(newZoom);
 }
@@ -2078,7 +2078,7 @@ bool MainWindow::loadCustomBoardShape()
 	}
 
 	bool ok;
-	qreal w = TextUtils::convertToInches(wStr, &ok, isIllustrator);
+	double w = TextUtils::convertToInches(wStr, &ok, isIllustrator);
 	if (!ok) {
 		QMessageBox::warning(
 			this,
@@ -2088,7 +2088,7 @@ bool MainWindow::loadCustomBoardShape()
 		return false;
 	}
 
-	qreal h = TextUtils::convertToInches(hStr, &ok, isIllustrator);
+	double h = TextUtils::convertToInches(hStr, &ok, isIllustrator);
 	if (!ok) {
 		QMessageBox::warning(
 			this,
@@ -2558,11 +2558,11 @@ void MainWindow::boardDeletedSlot()
 	activeLayerBottom();
 }
 
-void MainWindow::cursorLocationSlot(qreal xinches, qreal yinches)
+void MainWindow::cursorLocationSlot(double xinches, double yinches)
 {
 	if (m_locationLabel) {
 		QString units;
-		qreal x, y;
+		double x, y;
 
 		m_locationLabel->setProperty("location", QSizeF(xinches, xinches));
 

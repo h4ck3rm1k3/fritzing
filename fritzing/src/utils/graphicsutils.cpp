@@ -32,7 +32,7 @@ $Date$
 #include <qmath.h>
 
 
-const qreal GraphicsUtils::InchesPerMeter = 39.370078;
+const double GraphicsUtils::InchesPerMeter = 39.370078;
 
 
 void GraphicsUtils::distanceFromLine(double cx, double cy, double ax, double ay, double bx, double by, 
@@ -81,7 +81,7 @@ void GraphicsUtils::distanceFromLine(double cx, double cy, double ax, double ay,
 
 struct PD {
 	QPointF p;
-	qreal d;
+	double d;
 };
 
 bool pdLessThan(PD* pd1, PD* pd2) {
@@ -103,7 +103,7 @@ QPointF GraphicsUtils::calcConstraint(QPointF initial, QPointF current) {
 	pd->d = (current.x() - initial.x()) * (current.x() - initial.x());
 	pds.append(pd);
 
-	qreal dx, dy, d;
+	double dx, dy, d;
 	bool atEndpoint;
 
 	QLineF plus45(initial.x() - 10000, initial.y() - 10000, initial.x() + 10000, initial.y() + 10000);
@@ -130,28 +130,28 @@ QPointF GraphicsUtils::calcConstraint(QPointF initial, QPointF current) {
 	return result;
 }
 
-qreal GraphicsUtils::pixels2mils(qreal p, qreal dpi) {
+double GraphicsUtils::pixels2mils(double p, double dpi) {
 	return p * 1000.0 / dpi;
 }
 
-qreal GraphicsUtils::pixels2ins(qreal p, qreal dpi) {
+double GraphicsUtils::pixels2ins(double p, double dpi) {
 	return p / dpi;
 }
 
-qreal GraphicsUtils::distanceSqd(QPointF p1, QPointF p2) {
+double GraphicsUtils::distanceSqd(QPointF p1, QPointF p2) {
 	return ((p1.x() - p2.x()) * (p1.x() - p2.x())) + ((p1.y() - p2.y()) * (p1.y() - p2.y()));
 }
 
 
-qreal GraphicsUtils::mm2mils(qreal mm) {
+double GraphicsUtils::mm2mils(double mm) {
 	return (mm / 25.4 * 1000);
 }
 
-qreal GraphicsUtils::pixels2mm(qreal p, qreal dpi) {
+double GraphicsUtils::pixels2mm(double p, double dpi) {
 	return (p / dpi * 25.4);
 }
 
-qreal GraphicsUtils::mils2pixels(qreal m, qreal dpi) {
+double GraphicsUtils::mils2pixels(double m, double dpi) {
 	return (dpi * m / 1000);
 }
 
@@ -175,17 +175,17 @@ bool GraphicsUtils::loadTransform(const QDomElement & transformElement, QTransfo
 {
 	if (transformElement.isNull()) return false;
 
-	qreal m11 = transform.m11();
-	qreal m12 = transform.m12();
-	qreal m13 = transform.m13();
-	qreal m21 = transform.m21();
-	qreal m22 = transform.m22();
-	qreal m23 = transform.m23();
-	qreal m31 = transform.m31();
-	qreal m32 = transform.m32();
-	qreal m33 = transform.m33();
+	double m11 = transform.m11();
+	double m12 = transform.m12();
+	double m13 = transform.m13();
+	double m21 = transform.m21();
+	double m22 = transform.m22();
+	double m23 = transform.m23();
+	double m31 = transform.m31();
+	double m32 = transform.m32();
+	double m33 = transform.m33();
 	bool ok;
-	qreal temp;
+	double temp;
 
 	temp = transformElement.attribute("m11").toDouble(&ok);
 	if (ok) m11 = temp;
@@ -210,19 +210,19 @@ bool GraphicsUtils::loadTransform(const QDomElement & transformElement, QTransfo
 	return true;
 }
 
-qreal GraphicsUtils::getNearestOrdinate(qreal ordinate, qreal units) {
-	qreal lo = qFloor(ordinate / units) * units;
-	qreal hi = qCeil(ordinate / units) * units;
+double GraphicsUtils::getNearestOrdinate(double ordinate, double units) {
+	double lo = qFloor(ordinate / units) * units;
+	double hi = qCeil(ordinate / units) * units;
 	return (qAbs(lo - ordinate) <= qAbs(hi - ordinate)) ? lo : hi;
 }
 
-void GraphicsUtils::shortenLine(QPointF & p1, QPointF & p2, qreal d1, qreal d2) {
-	qreal angle1 = atan2(p2.y() - p1.y(), p2.x() - p1.x());
-	qreal angle2 = angle1 - M_PI;  
-	qreal dx1 = d1 * cos(angle1);
-	qreal dy1 = d1 * sin(angle1);
-	qreal dx2 = d2 * cos(angle2);
-	qreal dy2 = d2 * sin(angle2);
+void GraphicsUtils::shortenLine(QPointF & p1, QPointF & p2, double d1, double d2) {
+	double angle1 = atan2(p2.y() - p1.y(), p2.x() - p1.x());
+	double angle2 = angle1 - M_PI;  
+	double dx1 = d1 * cos(angle1);
+	double dy1 = d1 * sin(angle1);
+	double dx2 = d2 * cos(angle2);
+	double dy2 = d2 * sin(angle2);
 	p1.setX(p1.x() + dx1);
 	p1.setY(p1.y() + dy1);
 	p2.setX(p2.x() + dx2);
@@ -251,7 +251,7 @@ bool GraphicsUtils::isRect(const QPolygonF & poly) {
 QRectF GraphicsUtils::getRect(const QPolygonF & poly) 
 {
 	// assumes poly is known to be a rect
-	qreal minX, maxX, minY, maxY;
+	double minX, maxX, minY, maxY;
 
 	minX = maxX = poly.at(0).x();
 	minY = maxY = poly.at(0).y();
@@ -272,14 +272,14 @@ QRectF GraphicsUtils::getRect(const QPolygonF & poly)
 bool GraphicsUtils::liangBarskyLineClip(double x1, double y1, double x2, double y2, double wxmin, double wxmax, double wymin, double wymax, 
 							double & x11, double & y11, double & x22, double & y22)
 {
-	qreal p1 = -(x2 - x1 ); 
-	qreal q1 = x1 - wxmin;
-	qreal p2 = ( x2 - x1 ); 
-	qreal q2 = wxmax - x1;
-	qreal p3 = - ( y2 - y1 ); 
-	qreal q3 = y1 - wymin;
-	qreal p4 = ( y2 - y1 ); 
-	qreal q4 = wymax - y1;
+	double p1 = -(x2 - x1 ); 
+	double q1 = x1 - wxmin;
+	double p2 = ( x2 - x1 ); 
+	double q2 = wxmax - x1;
+	double p3 = - ( y2 - y1 ); 
+	double q3 = y1 - wymin;
+	double p4 = ( y2 - y1 ); 
+	double q4 = wymax - y1;
 
 	x11 = x1;
 	y11 = y1;
@@ -351,14 +351,14 @@ QString GraphicsUtils::toHtmlImage(QPixmap *pixmap, const char* format) {
 	return QString("data:image/%1;base64,%2").arg(QString(format).toLower()).arg(QString(bytes.toBase64()));
 }
 
-QPainterPath GraphicsUtils::shapeFromPath(const QPainterPath &path, const QPen &pen, qreal shapeStrokeWidth, bool includeOriginalPath)
+QPainterPath GraphicsUtils::shapeFromPath(const QPainterPath &path, const QPen &pen, double shapeStrokeWidth, bool includeOriginalPath)
 {
 	// this function mostly copied from QGraphicsItem::qt_graphicsItem_shapeFromPath
 
 
     // We unfortunately need this hack as QPainterPathStroker will set a width of 1.0
     // if we pass a value of 0.0 to QPainterPathStroker::setWidth()
-    static const qreal penWidthZero = qreal(0.00000001);
+    static const double penWidthZero = double(0.00000001);
 
     if (path == QPainterPath())
         return path;
@@ -386,12 +386,12 @@ void GraphicsUtils::qt_graphicsItem_highlightSelected(QPainter *painter, const Q
         return;
 
     const QRectF mbrect = painter->transform().mapRect(boundingRect);
-    if (qMin(mbrect.width(), mbrect.height()) < qreal(1.0))
+    if (qMin(mbrect.width(), mbrect.height()) < double(1.0))
         return;
 
-    qreal itemPenWidth = 1.0;
-	const qreal pad = itemPenWidth / 2;
-    const qreal penWidth = 0; // cosmetic pen
+    double itemPenWidth = 1.0;
+	const double pad = itemPenWidth / 2;
+    const double penWidth = 0; // cosmetic pen
 
     const QColor fgcolor = option->palette.windowText().color();
     const QColor bgcolor( // ensure good contrast against fgcolor

@@ -407,9 +407,9 @@ bool PCBSketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * 
 		long newID = makeModifiedWire(fromConnectorItem, toConnectorItem, BaseCommand::SingleView, flags, parentCommand);
 		QString tc = traceColor(fromConnectorItem);
 		new WireColorChangeCommand(this, newID, tc, tc, 1.0, 1.0, parentCommand);
-		qreal traceWidth = getTraceWidth();
+		double traceWidth = getTraceWidth();
 		if (autorouteTypePCB()) {
-			qreal minDim = qMin(fromConnectorItem->minDimension(), toConnectorItem->minDimension());
+			double minDim = qMin(fromConnectorItem->minDimension(), toConnectorItem->minDimension());
 			if (minDim < traceWidth) {
 				traceWidth = getSmallerTraceWidth(minDim);  
 			}
@@ -743,11 +743,11 @@ bool PCBSketchWidget::doRatsnestOnCopy()
 	return true;
 }
 
-qreal PCBSketchWidget::getRatsnestOpacity(Wire * wire) {
+double PCBSketchWidget::getRatsnestOpacity(Wire * wire) {
 	return getRatsnestOpacity(wire->getRouted());
 }
 
-qreal PCBSketchWidget::getRatsnestOpacity(bool routed) {
+double PCBSketchWidget::getRatsnestOpacity(bool routed) {
 	return (routed ? 0.2 : 1.0);
 }
 
@@ -792,7 +792,7 @@ VirtualWire * PCBSketchWidget::makeOneRatsnestWire(ConnectorItem * source, Conne
 		wire->setVisible(false);
 	}
 
-	qreal opacity = getRatsnestOpacity(routed);
+	double opacity = getRatsnestOpacity(routed);
 	wire->setColor(color, opacity);
 
 	return wire;
@@ -948,7 +948,7 @@ ConnectorItem * PCBSketchWidget::lookForNewBreadboardConnection(ConnectorItem * 
 	
 	newBreadboard = NULL;
 	QList<ItemBase *> breadboards;
-	qreal maxY = 0;
+	double maxY = 0;
 	foreach (QGraphicsItem * item, scene()->items()) {
 		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 		if (itemBase == NULL) continue;
@@ -958,7 +958,7 @@ ConnectorItem * PCBSketchWidget::lookForNewBreadboardConnection(ConnectorItem * 
 			break;
 		}
 
-		qreal y = itemBase->pos().y() + itemBase->size().height();
+		double y = itemBase->pos().y() + itemBase->size().height();
 		if (y > maxY) {
 			maxY = y;
 		}
@@ -1162,23 +1162,23 @@ void PCBSketchWidget::makeWiresChangeConnectionCommands(const QList<Wire *> & wi
 	}
 }
 
-qreal PCBSketchWidget::getLabelFontSizeTiny() {
+double PCBSketchWidget::getLabelFontSizeTiny() {
         return 3;
 }
 
-qreal PCBSketchWidget::getLabelFontSizeSmall() {
+double PCBSketchWidget::getLabelFontSizeSmall() {
 	return 5;
 }
 
-qreal PCBSketchWidget::getLabelFontSizeMedium() {
+double PCBSketchWidget::getLabelFontSizeMedium() {
 	return 7;
 }
 
-qreal PCBSketchWidget::getLabelFontSizeLarge() {
+double PCBSketchWidget::getLabelFontSizeLarge() {
 	return 12;
 }
 
-void PCBSketchWidget::resizeBoard(qreal mmW, qreal mmH, bool doEmit)
+void PCBSketchWidget::resizeBoard(double mmW, double mmH, bool doEmit)
 {
 	Q_UNUSED(doEmit);
 
@@ -1193,13 +1193,13 @@ void PCBSketchWidget::resizeBoard(qreal mmW, qreal mmH, bool doEmit)
 			return SketchWidget::resizeBoard(mmW, mmH, doEmit);
 	}
 
-	qreal origw = item->modelPart()->prop("width").toDouble();
-	qreal origh = item->modelPart()->prop("height").toDouble();
+	double origw = item->modelPart()->prop("width").toDouble();
+	double origh = item->modelPart()->prop("height").toDouble();
 
 	if (mmH == 0 || mmW == 0) {
 		dynamic_cast<ResizableBoard *>(item)->setInitialSize();
-		qreal w = item->modelPart()->prop("width").toDouble();
-		qreal h = item->modelPart()->prop("height").toDouble();
+		double w = item->modelPart()->prop("width").toDouble();
+		double h = item->modelPart()->prop("height").toDouble();
 		if (origw == w && origh == h) {
 			// no change
 			return;
@@ -1821,7 +1821,7 @@ void PCBSketchWidget::changeTraceLayer() {
 	m_undoStack->push(parentCommand);
 }
 
-void PCBSketchWidget::changeLayer(long id, qreal z, ViewLayer::ViewLayerID viewLayerID) {
+void PCBSketchWidget::changeLayer(long id, double z, ViewLayer::ViewLayerID viewLayerID) {
 	ItemBase * itemBase = findItem(id);
 	if (itemBase == NULL) return;
 
@@ -1876,8 +1876,8 @@ void PCBSketchWidget::alignJumperItem(JumperItem * jumperItem, QPointF & loc) {
 	if (!m_alignToGrid) return;
 
 	QPointF newPos = loc - m_jumperDragOffset - m_alignmentStartPoint;
-	qreal ny = GraphicsUtils::getNearestOrdinate(newPos.y(), gridSizeInches() * FSvgRenderer::printerScale());
-	qreal nx = GraphicsUtils::getNearestOrdinate(newPos.x(), gridSizeInches() * FSvgRenderer::printerScale());
+	double ny = GraphicsUtils::getNearestOrdinate(newPos.y(), gridSizeInches() * FSvgRenderer::printerScale());
+	double nx = GraphicsUtils::getNearestOrdinate(newPos.x(), gridSizeInches() * FSvgRenderer::printerScale());
 	loc.setX(loc.x() + nx - newPos.x());
 	loc.setY(loc.y() + ny - newPos.y());
 }
@@ -2143,7 +2143,7 @@ QSizeF PCBSketchWidget::jumperItemSize() {
 	return m_jumperItemSize;
 }
 
-qreal PCBSketchWidget::getKeepout() {
+double PCBSketchWidget::getKeepout() {
 	return 0.015 * FSvgRenderer::printerScale();  // mils converted to pixels
 }
 
@@ -2174,8 +2174,8 @@ int placeBestFit(Tile * tile, UserData userData) {
 		return 0;
 	}
 
-	qreal bestArea = ((qreal) (bestPlace->bestTileRect.xmaxi - bestPlace->bestTileRect.xmini)) * (bestPlace->bestTileRect.ymaxi - bestPlace->bestTileRect.ymini);
-	qreal area =  ((qreal) (tileRect.xmaxi - tileRect.xmini)) * (tileRect.ymaxi - tileRect.ymini);
+	double bestArea = ((double) (bestPlace->bestTileRect.xmaxi - bestPlace->bestTileRect.xmini)) * (bestPlace->bestTileRect.ymaxi - bestPlace->bestTileRect.ymini);
+	double area =  ((double) (tileRect.xmaxi - tileRect.xmini)) * (tileRect.ymaxi - tileRect.ymini);
 	if (area < bestArea) {
 		bestPlace->bestTile = tile;
 		bestPlace->bestTileRect = tileRect;
@@ -2246,11 +2246,11 @@ void PCBSketchWidget::autorouterSettings() {
 	dialog.exec();
 }
 
-void PCBSketchWidget::getViaSize(qreal & ringThickness, qreal & holeSize) {
+void PCBSketchWidget::getViaSize(double & ringThickness, double & holeSize) {
 	QString ringThicknessStr, holeSizeStr;
 	getDefaultViaSize(ringThicknessStr, holeSizeStr);
-	qreal rt = TextUtils::convertToInches(ringThicknessStr);
-	qreal hs = TextUtils::convertToInches(holeSizeStr);
+	double rt = TextUtils::convertToInches(ringThicknessStr);
+	double hs = TextUtils::convertToInches(holeSizeStr);
 	ringThickness = rt * FSvgRenderer::printerScale();
 	holeSize = hs * FSvgRenderer::printerScale();
 }
@@ -2478,24 +2478,24 @@ void PCBSketchWidget::deleteItem(ItemBase * itemBase, bool deleteModelPart, bool
 	}
 }
 
-qreal PCBSketchWidget::getTraceWidth() {
+double PCBSketchWidget::getTraceWidth() {
 	return Wire::STANDARD_TRACE_WIDTH;
 }
 
-qreal PCBSketchWidget::getAutorouterTraceWidth() {
+double PCBSketchWidget::getAutorouterTraceWidth() {
 	QSettings settings;
 	int traceWidthMils = settings.value(AutorouterSettingsDialog::AutorouteTraceWidth, QString::number(GraphicsUtils::pixels2mils(getTraceWidth(), FSvgRenderer::printerScale()))).toInt();
 	return FSvgRenderer::printerScale() * traceWidthMils / 1000;
 }
 
-void PCBSketchWidget::getBendpointWidths(Wire * wire, qreal width, qreal & bendpointWidth, qreal & bendpoint2Width, bool & negativeOffsetRect) 
+void PCBSketchWidget::getBendpointWidths(Wire * wire, double width, double & bendpointWidth, double & bendpoint2Width, bool & negativeOffsetRect) 
 {
 	Q_UNUSED(wire);
 	bendpointWidth = bendpoint2Width = (width / -2);
 	negativeOffsetRect = false;
 }
 
-qreal PCBSketchWidget::getSmallerTraceWidth(qreal minDim) {
+double PCBSketchWidget::getSmallerTraceWidth(double minDim) {
 	int mils = qMax((int) GraphicsUtils::pixels2mils(minDim, FSvgRenderer::printerScale()) - 1, TraceWire::MinTraceWidthMils);
 	return GraphicsUtils::mils2pixels(mils, FSvgRenderer::printerScale());
 }
@@ -2680,9 +2680,9 @@ ViewLayer::ViewLayerSpec PCBSketchWidget::createWireViewLayerSpec(ConnectorItem 
 	return ViewLayer::UnknownSpec;
 }
 
-qreal PCBSketchWidget::getWireStrokeWidth(Wire * wire, qreal wireWidth)
+double PCBSketchWidget::getWireStrokeWidth(Wire * wire, double wireWidth)
 {
-	qreal w, h;
+	double w, h;
 	wire->originalConnectorDimensions(w, h);
 	if (wireWidth < Wire::STANDARD_TRACE_WIDTH) {
 		wire->setConnectorDimensions(qMin(w, wireWidth + 1.8), qMin(w, wireWidth + 1.8));
@@ -2703,8 +2703,8 @@ Wire * PCBSketchWidget::createTempWireForDragging(Wire * fromWire, ModelPart * w
 	Wire * wire =  SketchWidget::createTempWireForDragging(fromWire, wireModel, connectorItem, viewGeometry, spec);
 	if (fromWire == NULL) {
 		wire->setColorString(traceColor(connectorItem), 1.0);
-		qreal traceWidth = getTraceWidth();
-		qreal minDim = connectorItem->minDimension();
+		double traceWidth = getTraceWidth();
+		double minDim = connectorItem->minDimension();
 		if (minDim < traceWidth) {
 			traceWidth = getSmallerTraceWidth(minDim);  
 		}

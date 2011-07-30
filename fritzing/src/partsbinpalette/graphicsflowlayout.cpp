@@ -53,9 +53,9 @@ int GraphicsFlowLayout::heightForWidth(int width) {
 
 
 int GraphicsFlowLayout::doLayout(const QRectF &rect) {
-	qreal x = rect.x();
-	qreal y = rect.y();
-	qreal lineHeight = 0;
+	double x = rect.x();
+	double y = rect.y();
+	double lineHeight = 0;
 
 	for(int i=0; i < count(); i++) {
 		QGraphicsLayoutItem* item = itemAt(i);

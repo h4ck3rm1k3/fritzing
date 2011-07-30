@@ -233,8 +233,8 @@ void PartsEditorView::fitCenterAndDeselect() {
 		QRectF viewRect = rect();
 		QRectF itemsRect = scene()->itemsBoundingRect();
 
-		qreal wRelation = viewRect.width()  / itemsRect.width();
-		qreal hRelation = viewRect.height() / itemsRect.height();
+		double wRelation = viewRect.width()  / itemsRect.width();
+		double hRelation = viewRect.height() / itemsRect.height();
 
 		if(wRelation < hRelation) {
 			m_scaleValue = (wRelation * 100);
@@ -1165,7 +1165,7 @@ void PartsEditorView::setItemProperties() {
 		//m_item->setFlag(QGraphicsItem::ItemClipsChildrenToShape, true);
 		myItem()->highlightConnectors(m_lastSelectedConnId);
 
-		qreal size = 500; // just make sure the user get enough space to play
+		double size = 500; // just make sure the user get enough space to play
 		setSceneRect(0,0,size,size);
 
 
@@ -1468,7 +1468,7 @@ void PartsEditorView::addNewTerminalPoints(
 			QRectF tpointRect(tp->mappedPoint(), QPointF(0,0));
 			QRectF svgTpRect = mapFromSceneToSvg(tpointRect,sceneViewBox,svgViewBox);
 
-			qreal halfTPSize = 0.001; // a tiny rectangle
+			double halfTPSize = 0.001; // a tiny rectangle
 			svgTpRect.setSize(QSizeF(halfTPSize*2,halfTPSize*2));
 
 			addRectToSvg(svgDom,connId+"terminal",svgTpRect, connectorsLayerId);
@@ -1502,13 +1502,13 @@ bool PartsEditorView::removeConnectorsIfNeeded(QDomElement &docElem) {
 }
 
 QRectF PartsEditorView::mapFromSceneToSvg(const QRectF &itemRect, const QSizeF &sceneViewBox, const QRectF &svgViewBox) {
-	qreal relationW = svgViewBox.width() / sceneViewBox.width();
-	qreal relationH = svgViewBox.height() / sceneViewBox.height();
+	double relationW = svgViewBox.width() / sceneViewBox.width();
+	double relationH = svgViewBox.height() / sceneViewBox.height();
 
-	qreal x = itemRect.x() * relationW;
-	qreal y = itemRect.y() * relationH;
-	qreal width = itemRect.width() * relationW;
-	qreal height = itemRect.height() * relationH;
+	double x = itemRect.x() * relationW;
+	double y = itemRect.y() * relationH;
+	double width = itemRect.width() * relationW;
+	double height = itemRect.height() * relationH;
 
 	return QRectF(x,y,width,height);
 }
@@ -1623,22 +1623,22 @@ void PartsEditorView::drawBackground(QPainter *painter, const QRectF &rect) {
 
 	QRectF itemRect = m_item->mapToScene(m_item->boundingRect()).boundingRect();
 	painter->drawRect(itemRect);
-	qreal itemTop = itemRect.top();
-	qreal itemLeft = itemRect.left();
+	double itemTop = itemRect.top();
+	double itemLeft = itemRect.left();
 
 	QVarLengthArray<QLineF, 100> lines;
 
-	for (qreal x = itemLeft; x < rect.right(); x += gridSize) {
+	for (double x = itemLeft; x < rect.right(); x += gridSize) {
 		lines.append(QLineF(x, rect.top(), x, rect.bottom()));
 	}
-	for (qreal x = itemLeft-gridSize; x > rect.left(); x -= gridSize) {
+	for (double x = itemLeft-gridSize; x > rect.left(); x -= gridSize) {
 		lines.append(QLineF(x, rect.top(), x, rect.bottom()));
 	}
 
-	for (qreal y = itemTop; y < rect.bottom(); y += gridSize) {
+	for (double y = itemTop; y < rect.bottom(); y += gridSize) {
 		lines.append(QLineF(rect.left(), y, rect.right(), y));
 	}
-	for (qreal y = itemTop-gridSize; y > rect.top(); y -= gridSize) {
+	for (double y = itemTop-gridSize; y > rect.top(); y -= gridSize) {
 		lines.append(QLineF(rect.left(), y, rect.right(), y));
 	}
 
@@ -1960,8 +1960,8 @@ void PartsEditorView::ensureFixedToCenterItems() {
 }
 
 void PartsEditorView::ensureFixedToCenter(QGraphicsItem* item) {
-	qreal x = (width()-fixedItemWidth(item))/2;
-	qreal y = (height()-fixedItemHeight(item))/2;
+	double x = (width()-fixedItemWidth(item))/2;
+	double y = (height()-fixedItemHeight(item))/2;
 
 	QPointF pos = mapToScene(x,y);
 
@@ -1979,7 +1979,7 @@ void PartsEditorView::removeIfFixedPos(QGraphicsItem *item) {
 }
 
 
-qreal PartsEditorView::fixedItemWidth(QGraphicsItem* item) {
+double PartsEditorView::fixedItemWidth(QGraphicsItem* item) {
 	QGraphicsProxyWidget* gWidget = dynamic_cast<QGraphicsProxyWidget*>(item);
 	if(gWidget) {
 		return gWidget->widget()->width();
@@ -1988,7 +1988,7 @@ qreal PartsEditorView::fixedItemWidth(QGraphicsItem* item) {
 	}
 }
 
-qreal PartsEditorView::fixedItemHeight(QGraphicsItem* item) {
+double PartsEditorView::fixedItemHeight(QGraphicsItem* item) {
 	QGraphicsProxyWidget* gWidget = dynamic_cast<QGraphicsProxyWidget*>(item);
 	if(gWidget) {
 		return gWidget->widget()->height();

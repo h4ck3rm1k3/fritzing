@@ -41,11 +41,11 @@ struct SvgIdLayer
 	bool m_processed;
 	QRectF m_rect;		
 	QPointF m_point;	
-	qreal m_radius;
-	qreal m_strokeWidth;
+	double m_radius;
+	double m_strokeWidth;
 	QString m_legId;
 	QString m_legColor;
-	qreal m_legStrokeWidth;
+	double m_legStrokeWidth;
 	QLineF m_legLine;
 
 	SvgIdLayer();

@@ -51,7 +51,7 @@ const QString TextUtils::MicroSymbol = QString::fromUtf16(&MicroSymbolCode, 1);
 const QString TextUtils::AdobeIllustratorIdentifier = "Generator: Adobe Illustrator";
 
 QList<QString> PowerPrefixes;
-QList<qreal> PowerPrefixValues;
+QList<double> PowerPrefixValues;
 const QString TextUtils::PowerPrefixesString = QString("pnmkMGTu\\x%1").arg(MicroSymbolCode, 4, 16, QChar('0'));
 
 void TextUtils::findElementsWithAttribute(QDomElement & element, const QString & att, QList<QDomElement> & elements) {
@@ -94,9 +94,9 @@ QSet<QString> TextUtils::getRegexpCaptures(const QString &pattern, const QString
 	return captures;
 }
 
-qreal TextUtils::convertToInches(const QString & s, bool * ok, bool isIllustrator) {
+double TextUtils::convertToInches(const QString & s, bool * ok, bool isIllustrator) {
 	QString string = s;
-	qreal divisor = 1.0;
+	double divisor = 1.0;
 	if (string.endsWith("cm", Qt::CaseInsensitive)) {
 		divisor = 2.54;
 		string.chop(2);
@@ -122,7 +122,7 @@ qreal TextUtils::convertToInches(const QString & s, bool * ok, bool isIllustrato
 	}
 
 	bool fine;
-	qreal result = string.toDouble(&fine);
+	double result = string.toDouble(&fine);
 	if (!fine) {
 		if (ok) *ok = false;
 		return 0;
@@ -294,7 +294,7 @@ QString TextUtils::mergeSvg(const QString & svg1, const QString & svg2, const QS
 		QDomElement svg = doc1.documentElement();
 		QString viewBox = svg.attribute("viewBox");
 		QStringList coords = viewBox.split(" ", QString::SkipEmptyParts);
-		qreal width = coords[2].toDouble();
+		double width = coords[2].toDouble();
 		QMatrix matrix;
 		matrix.translate(width / 2, 0);
 		matrix.scale(-1, 1);
@@ -307,10 +307,10 @@ QString TextUtils::mergeSvg(const QString & svg1, const QString & svg2, const QS
 	return mergeSvgFinish(doc1);
 }
 
-QString TextUtils::makeSVGHeader(qreal printerScale, qreal dpi, qreal width, qreal height) {
+QString TextUtils::makeSVGHeader(double printerScale, double dpi, double width, double height) {
 
-	qreal trueWidth = width / printerScale;
-	qreal trueHeight = height / printerScale;
+	double trueWidth = width / printerScale;
+	double trueHeight = height / printerScale;
 
 	return 
 		QString("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n%5"
@@ -477,7 +477,7 @@ bool TextUtils::pxToInches(QDomElement &elem, const QString &attrName, bool isIl
 	QString attrValue = elem.attribute(attrName);
 	if(attrValue.endsWith("px")) {
 		bool ok;
-		qreal value = TextUtils::convertToInches(attrValue, &ok, isIllustrator);
+		double value = TextUtils::convertToInches(attrValue, &ok, isIllustrator);
 		if(ok) {
 			QString newValue = QString("%1in").arg(value);
 			elem.setAttribute(attrName,newValue);
@@ -511,7 +511,7 @@ QString TextUtils::svgTransform(const QString & svg, QTransform & transform, boo
 			.arg(extras);
 }
 
-bool TextUtils::getSvgSizes(QDomDocument & doc, qreal & sWidth, qreal & sHeight, qreal & vbWidth, qreal & vbHeight) 
+bool TextUtils::getSvgSizes(QDomDocument & doc, double & sWidth, double & sHeight, double & vbWidth, double & vbHeight) 
 {
 	bool isIllustrator = isIllustratorDoc(doc);
 
@@ -535,12 +535,12 @@ bool TextUtils::getSvgSizes(QDomDocument & doc, qreal & sWidth, qreal & sHeight,
 	if (!sviewboxStr.isEmpty()) {
 		QStringList strings = sviewboxStr.split(" ");
 		if (strings.size() == 4) {
-			qreal tempWidth = strings[2].toDouble(&vbWidthOK);
+			double tempWidth = strings[2].toDouble(&vbWidthOK);
 			if (vbWidthOK) {
 				vbWidth = tempWidth;
 			}
 
-			qreal tempHeight= strings[3].toDouble(&vbHeightOK);
+			double tempHeight= strings[3].toDouble(&vbHeightOK);
 			if (vbHeightOK) {
 				vbHeight = tempHeight;
 			}
@@ -577,9 +577,9 @@ bool TextUtils::findText(QDomNode & node, QString & text) {
 	return false;
 }
 
-qreal TextUtils::convertToInches(const QString & string) {
+double TextUtils::convertToInches(const QString & string) {
 	bool ok; 
-	qreal retval = TextUtils::convertToInches(string, &ok, false);
+	double retval = TextUtils::convertToInches(string, &ok, false);
 	if (!ok) return 0;
 
 	return retval;
@@ -675,7 +675,7 @@ bool TextUtils::addCopper1(const QString & filename, QDomDocument & domDocument,
 
 }
 
-QString TextUtils::convertToPowerPrefix(qreal q) {
+QString TextUtils::convertToPowerPrefix(double q) {
 	initPowerPrefixes();
 
 	for (int i = 0; i < PowerPrefixes.count(); i++) {
@@ -688,17 +688,17 @@ QString TextUtils::convertToPowerPrefix(qreal q) {
 	return QString::number(q);
 }
 
-qreal TextUtils::convertFromPowerPrefixU(QString & val, const QString & symbol) 
+double TextUtils::convertFromPowerPrefixU(QString & val, const QString & symbol) 
 {
 	val.replace('u', MicroSymbol);
 	return convertFromPowerPrefix(val, symbol);
 }
 
-qreal TextUtils::convertFromPowerPrefix(const QString & val, const QString & symbol) 
+double TextUtils::convertFromPowerPrefix(const QString & val, const QString & symbol) 
 {
 	initPowerPrefixes();
 
-	qreal multiplier = 1;
+	double multiplier = 1;
 	QString temp = val;
 	if (temp.endsWith(symbol)) {
 		temp.chop(symbol.length());
@@ -749,7 +749,7 @@ QMatrix TextUtils::elementToMatrix(QDomElement & element) {
 QMatrix TextUtils::transformStringToMatrix(const QString & transform) {
 
 	// doesn't handle multiple transform attributes
-	QList<qreal> floats = getTransformFloats(transform);
+	QList<double> floats = getTransformFloats(transform);
 
 	if (transform.startsWith("translate")) {
 		return QMatrix().translate(floats[0], (floats.length() > 1) ? floats[1] : 0);
@@ -778,12 +778,12 @@ QMatrix TextUtils::transformStringToMatrix(const QString & transform) {
 	return QMatrix();
 }
 
-QList<qreal> TextUtils::getTransformFloats(QDomElement & element){
+QList<double> TextUtils::getTransformFloats(QDomElement & element){
 	return getTransformFloats(element.attribute("transform"));
 }
 
-QList<qreal> TextUtils::getTransformFloats(const QString & transform){
-    QList<qreal> list;
+QList<double> TextUtils::getTransformFloats(const QString & transform){
+    QList<double> list;
     int pos = 0;
 
 	while ((pos = TextUtils::floatingPointMatcher.indexIn(transform, pos)) != -1) {
@@ -924,10 +924,10 @@ struct MatchThing
 {
 	int pos;
 	int len;
-	qreal val;
+	double val;
 };
 
-QString TextUtils::incrementTemplate(const QString & filename, int pins, qreal increment, MultiplyPinFunction multiFun, CopyPinFunction copyFun) 
+QString TextUtils::incrementTemplate(const QString & filename, int pins, double increment, MultiplyPinFunction multiFun, CopyPinFunction copyFun) 
 {
 	QFile file(filename);
 	file.open(QFile::ReadOnly);
@@ -937,7 +937,7 @@ QString TextUtils::incrementTemplate(const QString & filename, int pins, qreal i
 	return incrementTemplateString(templateString, pins, increment, multiFun, copyFun);
 }
 
-QString TextUtils::incrementTemplateString(const QString & templateString, int pins, qreal increment, MultiplyPinFunction multiFun, CopyPinFunction copyFun)
+QString TextUtils::incrementTemplateString(const QString & templateString, int pins, double increment, MultiplyPinFunction multiFun, CopyPinFunction copyFun)
 {
 	QString string;
 
@@ -971,13 +971,13 @@ QString TextUtils::standardCopyPinFunction(int pin, const QString & argString)
 	return argString.arg(pin);
 }
 
-QString TextUtils::standardMultiplyPinFunction(int pin, qreal increment, qreal value)
+QString TextUtils::standardMultiplyPinFunction(int pin, double increment, double value)
 {
 	return QString::number(value + (pin * increment));
 }
 
 
-QString TextUtils::incMultiplyPinFunction(int pin, qreal increment, qreal value) 
+QString TextUtils::incMultiplyPinFunction(int pin, double increment, double value) 
 {
 	return QString::number(value + ((pin + 1) * increment));
 }
@@ -988,7 +988,7 @@ QString TextUtils::noCopyPinFunction(int, const QString & argString)
 	return argString; 
 }
 
-qreal TextUtils::getViewBoxCoord(const QString & svg, int coord)
+double TextUtils::getViewBoxCoord(const QString & svg, int coord)
 {
 	QRegExp re("viewBox=['\\\"]([^'\\\"]+)['\\\"]");
 	int ix = re.indexIn(svg);
@@ -1000,7 +1000,7 @@ qreal TextUtils::getViewBoxCoord(const QString & svg, int coord)
 	return c.toDouble();
 }
 
-QString TextUtils::makeLineSVG(QPointF p1, QPointF p2, qreal width, QString colorString, qreal dpi, qreal printerScale, bool blackOnly) 
+QString TextUtils::makeLineSVG(QPointF p1, QPointF p2, double width, QString colorString, double dpi, double printerScale, bool blackOnly) 
 {
 	p1.setX(p1.x() * dpi / printerScale);
 	p1.setY(p1.y() * dpi / printerScale);
@@ -1017,13 +1017,13 @@ QString TextUtils::makeLineSVG(QPointF p1, QPointF p2, qreal width, QString colo
 					.arg(stroke);
 }
 
-QString TextUtils::makeRectSVG(QRectF r, QPointF offset, qreal dpi, qreal printerScale)
+QString TextUtils::makeRectSVG(QRectF r, QPointF offset, double dpi, double printerScale)
 {
 	r.translate(-offset.x(), -offset.y());
-	qreal l = r.left() * dpi / printerScale;
-	qreal t = r.top() * dpi / printerScale;
-	qreal w = r.width() * dpi / printerScale;
-	qreal h = r.height() * dpi / printerScale;
+	double l = r.left() * dpi / printerScale;
+	double t = r.top() * dpi / printerScale;
+	double w = r.width() * dpi / printerScale;
+	double h = r.height() * dpi / printerScale;
 
 	QString stroke = "black";
 	return QString("<rect style=\"stroke-linecap: round\" stroke=\"%6\" x=\"%1\" y=\"%2\" width=\"%3\" height=\"%4\" stroke-width=\"%5\" fill=\"none\" />")
@@ -1036,7 +1036,7 @@ QString TextUtils::makeRectSVG(QRectF r, QPointF offset, qreal dpi, qreal printe
 }
 
 
-QString TextUtils::makePolySVG(const QPolygonF & poly, QPointF offset, qreal width, QString colorString, qreal dpi, qreal printerScale, bool blackOnly) 
+QString TextUtils::makePolySVG(const QPolygonF & poly, QPointF offset, double width, QString colorString, double dpi, double printerScale, bool blackOnly) 
 {
 	QString polyString = QString("<polyline stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='%1' stroke-width='%2' points='\n").arg(blackOnly ? "black" : colorString).arg(width);
 	int space = 0;

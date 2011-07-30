@@ -34,11 +34,11 @@ bool ValidReal::isValid() {
 	return m_ok;
 }
 
-qreal ValidReal::value() {
+double ValidReal::value() {
 	return m_value;
 }
 
-void ValidReal::setValue(qreal v) {
+void ValidReal::setValue(double v) {
 	m_value = v;
 	m_ok = true;
 }

@@ -41,10 +41,10 @@ $Date$
 #define VOLTAGE_HASH_CONVERSION 1000000
 #define FROMVOLTAGE(v) ((long) (v * VOLTAGE_HASH_CONVERSION))
 
-static QMultiHash<long, QPointer<ConnectorItem> > localVoltages;			// Qt doesn't do Hash keys with qreal
+static QMultiHash<long, QPointer<ConnectorItem> > localVoltages;			// Qt doesn't do Hash keys with double
 static QList< QPointer<ConnectorItem> > localGrounds;
-static QList<qreal> Voltages;
-qreal SymbolPaletteItem::DefaultVoltage = 5;
+static QList<double> Voltages;
+double SymbolPaletteItem::DefaultVoltage = 5;
 
 SymbolPaletteItem::SymbolPaletteItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
@@ -63,7 +63,7 @@ SymbolPaletteItem::SymbolPaletteItem( ModelPart * modelPart, ViewIdentifierClass
 	}
 
 	bool ok;
-	qreal temp = modelPart->prop("voltage").toDouble(&ok);
+	double temp = modelPart->prop("voltage").toDouble(&ok);
 	if (ok) {
 		m_voltage = temp;
 	}
@@ -94,9 +94,9 @@ SymbolPaletteItem::~SymbolPaletteItem() {
 	}
 }
 
-void SymbolPaletteItem::removeMeFromBus(qreal v) {
+void SymbolPaletteItem::removeMeFromBus(double v) {
 	foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
-		qreal nv = useVoltage(connectorItem);
+		double nv = useVoltage(connectorItem);
 		if (nv == v) {
 			//connectorItem->debugInfo(QString("remove %1").arg(useVoltage(connectorItem)));
 
@@ -166,7 +166,7 @@ void SymbolPaletteItem::busConnectorItems(Bus * bus, QList<class ConnectorItem *
 	}
 }
 
-qreal SymbolPaletteItem::voltage() {
+double SymbolPaletteItem::voltage() {
 	return m_voltage;
 }
 
@@ -179,7 +179,7 @@ void SymbolPaletteItem::setProp(const QString & prop, const QString & value) {
 	PaletteItem::setProp(prop, value);
 }
 
-void SymbolPaletteItem::setVoltage(qreal v) {
+void SymbolPaletteItem::setVoltage(double v) {
 	removeMeFromBus(m_voltage);
 
 	m_voltage = v;
@@ -235,7 +235,7 @@ QString SymbolPaletteItem::makeSvg() {
 }
 
 QString SymbolPaletteItem::replaceTextElement(QString svg) {
-	qreal v = ((int) (m_voltage * 1000)) / 1000.0;
+	double v = ((int) (m_voltage * 1000)) / 1000.0;
 	return TextUtils::replaceTextElement(svg, "label", QString::number(v) + "V");
 }
 
@@ -247,7 +247,7 @@ QString SymbolPaletteItem::getProperty(const QString & key) {
 	return PaletteItem::getProperty(key);
 }
 
-qreal SymbolPaletteItem::useVoltage(ConnectorItem * connectorItem) {
+double SymbolPaletteItem::useVoltage(ConnectorItem * connectorItem) {
 	return (connectorItem->connectorSharedName().compare("GND", Qt::CaseInsensitive) == 0) ? 0 : m_voltage;
 }
 
@@ -268,7 +268,7 @@ void SymbolPaletteItem::addedToScene(bool temporary)
     return PaletteItem::addedToScene(temporary);
 }
 
-QString SymbolPaletteItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi) 
+QString SymbolPaletteItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi) 
 {
 	QString svg = PaletteItem::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 	if (m_voltageReference) {
@@ -292,7 +292,7 @@ bool SymbolPaletteItem::collectExtraInfo(QWidget * parent, const QString & famil
 		FocusOutComboBox * edit = new FocusOutComboBox(parent);
 		edit->setEnabled(swappingEnabled);
 		int ix = 0;
-		foreach (qreal v, Voltages) {
+		foreach (double v, Voltages) {
 			edit->addItem(QString::number(v));
 			if (v == m_voltage) {
 				edit->setCurrentIndex(ix);

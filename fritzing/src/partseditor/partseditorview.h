@@ -222,8 +222,8 @@ class PartsEditorView : public SketchWidget {
 
 		void clearFixedItems();
 		void removeIfFixedPos(QGraphicsItem *item);
-		qreal fixedItemWidth(QGraphicsItem* item);
-		qreal fixedItemHeight(QGraphicsItem* item);
+		double fixedItemWidth(QGraphicsItem* item);
+		double fixedItemHeight(QGraphicsItem* item);
 		void deleteItem(ItemBase *, bool deleteModelPart, bool doEmit, bool later);
 
 

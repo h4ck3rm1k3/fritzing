@@ -74,7 +74,7 @@ const int Note::initialMinWidth = 140;
 const int Note::initialMinHeight = 45;
 const int borderWidth = 3;
 
-const qreal InactiveOpacity = 0.5;
+const double InactiveOpacity = 0.5;
 
 QString Note::initialTextString;
 
@@ -222,7 +222,7 @@ Note::Note( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdent
 	QPixmap pixmap(":/resources/images/icons/noteResizeGrip.png");
 	m_resizeGrip = new ResizeHandle(pixmap, Qt::SizeFDiagCursor, this);
 	connect(m_resizeGrip, SIGNAL(mousePressSignal(QGraphicsSceneMouseEvent *, ResizeHandle *)), this, SLOT(handleMousePressSlot(QGraphicsSceneMouseEvent *, ResizeHandle *)));
-	connect(m_resizeGrip, SIGNAL(zoomChangedSignal(qreal)), this, SLOT(handleZoomChangedSlot(qreal)));
+	connect(m_resizeGrip, SIGNAL(zoomChangedSignal(double)), this, SLOT(handleZoomChangedSlot(double)));
 
 	m_graphicsTextItem = new NoteGraphicsTextItem();
 	QFont font("Droid Sans", 9, QFont::Normal);
@@ -309,7 +309,7 @@ QPainterPath Note::shape() const
 void Note::positionGrip() {
 	QSizeF gripSize = m_resizeGrip->boundingRect().size();
 	QSizeF sz = this->boundingRect().size(); 
-	qreal scale = m_resizeGrip->currentScale();
+	double scale = m_resizeGrip->currentScale();
 	QPointF offset((gripSize.width() + borderWidth - 1) / scale, (gripSize.height() + borderWidth - 1) / scale);
 	QPointF p(sz.width(), sz.height());
 	m_resizeGrip->setPos(p - offset);
@@ -339,8 +339,8 @@ void Note::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 	}
 
 	if (m_inResize) {
-		qreal minWidth = emptyMinWidth;
-		qreal minHeight = emptyMinHeight;
+		double minWidth = emptyMinWidth;
+		double minHeight = emptyMinHeight;
 		QSizeF gripSize = m_resizeGrip->boundingRect().size();
 		QSizeF minSize = m_graphicsTextItem->document()->size() + gripSize + gripSize;
 		if (minSize.height() > minHeight) minHeight = minSize.height();
@@ -348,10 +348,10 @@ void Note::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 		QRectF rect = boundingRect();
 		rect.moveTopLeft(this->pos());
 
-		qreal oldX1 = rect.x();
-		qreal oldY1 = rect.y();
-		qreal newX = event->scenePos().x() + m_inResize->resizeOffset().x();
-		qreal newY = event->scenePos().y() + m_inResize->resizeOffset().y();
+		double oldX1 = rect.x();
+		double oldY1 = rect.y();
+		double newX = event->scenePos().x() + m_inResize->resizeOffset().x();
+		double newY = event->scenePos().y() + m_inResize->resizeOffset().y();
 		QRectF newR;
 
 		if (newX - oldX1 < minWidth) {
@@ -680,7 +680,7 @@ void Note::linkDialog() {
 	}
 }
 
-void Note::handleZoomChangedSlot(qreal scale) {
+void Note::handleZoomChangedSlot(double scale) {
 	Q_UNUSED(scale);
 	positionGrip();
 }

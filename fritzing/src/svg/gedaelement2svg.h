@@ -45,7 +45,7 @@ protected:
 	QString convertPin(QVector<QVariant> & stack, int ix, int argCount, bool mils, QString & pinID);
 	QString convertPad(QVector<QVariant> & stack, int ix, int argCount, bool mils, QString & pinID);
 	QString convertArc(QVector<QVariant> & stack, int ix, int argCount, bool mils);
-	void fixQuad(int quad, qreal & px, qreal & py);
+	void fixQuad(int quad, double & px, double & py);
 	int reflectQuad(int angle, int & quad);
 	QString getPinID(QString & number, QString & name, bool isPad);
 	QString makeCopper(QStringList ids, QHash<QString, QString> &, const QString & filename);

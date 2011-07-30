@@ -560,13 +560,13 @@ QString KicadSchematic2Svg::convertArc(const QString & line)
 	int x = s[1].toInt();
 	int y = -s[2].toInt();					// KiCad flips y-axis w.r.t. svg
 	int r = s[3].toInt();
-	qreal startAngle = (s[4].toInt() % 3600) / 10.0;
-	qreal endAngle = (s[5].toInt() % 3600) / 10.0;
+	double startAngle = (s[4].toInt() % 3600) / 10.0;
+	double endAngle = (s[5].toInt() % 3600) / 10.0;
 
-	qreal x1 = s[10].toInt();
-	qreal y1 = -s[11].toInt();					// KiCad flips y-axis w.r.t. svg
-	qreal x2 = s[12].toInt();
-	qreal y2 = -s[13].toInt();					// KiCad flips y-axis w.r.t. svg
+	double x1 = s[10].toInt();
+	double y1 = -s[11].toInt();					// KiCad flips y-axis w.r.t. svg
+	double x2 = s[12].toInt();
+	double y2 = -s[13].toInt();					// KiCad flips y-axis w.r.t. svg
 
 	if (calcPoints) {
 		x1 = x + (r * cos(startAngle * M_PI / 180.0));
@@ -576,7 +576,7 @@ QString KicadSchematic2Svg::convertArc(const QString & line)
 	}
 
 	// kicad arcs will always sweep < 180, kicad uses multiple arcs for > 180 sweeps
-	qreal diffAngle = endAngle - startAngle;
+	double diffAngle = endAngle - startAngle;
 	if (diffAngle > 180) diffAngle -= 360;
 	else if (diffAngle < -180) diffAngle += 360;
 

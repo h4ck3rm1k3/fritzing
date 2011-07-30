@@ -206,7 +206,7 @@ int GedaElement2Svg::countArgs(QVector<QVariant> & stack, int ix) {
 
 QString GedaElement2Svg::convertPin(QVector<QVariant> & stack, int ix, int argCount, bool mils, QString & pinID)
 {
-	qreal drill = 0;
+	double drill = 0;
 	QString name;
 	QString number;
 
@@ -239,7 +239,7 @@ QString GedaElement2Svg::convertPin(QVector<QVariant> & stack, int ix, int argCo
 
 	int cx = stack[ix + 1].toInt();
 	int cy = stack[ix + 2].toInt();
-	qreal r = stack[ix + 3].toInt() / 2.0;
+	double r = stack[ix + 3].toInt() / 2.0;
 	drill /= 2.0;
 
 	if (mils) {
@@ -255,7 +255,7 @@ QString GedaElement2Svg::convertPin(QVector<QVariant> & stack, int ix, int argCo
 	checkYLimit(cy - r);
 	checkYLimit(cy + r);
 
-	qreal w = r - drill;
+	double w = r - drill;
 
 	// TODO: what if multiple pins have the same id--need to clear or increment the other ids. also put the pins on a bus?
 	// TODO:  if the pin has a name, post it up to the fz as the connector name
@@ -322,7 +322,7 @@ QString GedaElement2Svg::convertPad(QVector<QVariant> & stack, int ix, int argCo
 		thickness *= 100;
 	}
 
-	qreal halft = thickness / 2.0;
+	double halft = thickness / 2.0;
 
 	// don't know which of the coordinates is larger so check them all
 	checkXLimit(x1 - halft);
@@ -363,8 +363,8 @@ QString GedaElement2Svg::convertArc(QVector<QVariant> & stack, int ix, int argCo
 
 	int x = stack[ix + 1].toInt();
 	int y = stack[ix + 2].toInt();
-	qreal w = stack[ix + 3].toInt();
-	qreal h = stack[ix + 4].toInt();
+	double w = stack[ix + 3].toInt();
+	double h = stack[ix + 4].toInt();
 
 	// In PCB, an angle of zero points left (negative X direction), and 90 degrees points down (positive Y direction)
 	int startAngle = (stack[ix + 5].toInt()) + 180;
@@ -382,7 +382,7 @@ QString GedaElement2Svg::convertArc(QVector<QVariant> & stack, int ix, int argCo
 		thickness *= 100;
 	}
 
-	qreal halft = thickness / 2.0;
+	double halft = thickness / 2.0;
 	checkXLimit(x - w - halft);
 	checkXLimit(x + w + halft);
 	checkYLimit(y - h - halft);
@@ -411,14 +411,14 @@ QString GedaElement2Svg::convertArc(QVector<QVariant> & stack, int ix, int argCo
 
 	int quad = 0;
 	int startAngleQ1 = reflectQuad(startAngle, quad);
-	qreal q = atan(w * tan(2 * M_PI * startAngleQ1 / 360.0) / h);
-	qreal px = w * cos(q);
-	qreal py = -h * sin(q);
+	double q = atan(w * tan(2 * M_PI * startAngleQ1 / 360.0) / h);
+	double px = w * cos(q);
+	double py = -h * sin(q);
 	fixQuad(quad, px, py);
 	int endAngleQ1 = reflectQuad(startAngle + deltaAngle, quad);
 	q = atan(w * tan(2 * M_PI * endAngleQ1 / 360.0) / h);
-	qreal qx = w * cos(q);
-	qreal qy = -h * sin(q);
+	double qx = w * cos(q);
+	double qy = -h * sin(q);
 	fixQuad(quad, qx, qy);
 
 	QString arc = QString("<path fill='none' stroke-width='%1' stroke='white' d='M%2,%3a%4,%5 0 %6,%7 %8,%9' />")
@@ -435,7 +435,7 @@ QString GedaElement2Svg::convertArc(QVector<QVariant> & stack, int ix, int argCo
 	return arc;
 }
 
-void GedaElement2Svg::fixQuad(int quad, qreal & px, qreal & py) {
+void GedaElement2Svg::fixQuad(int quad, double & px, double & py) {
 	switch (quad) {
 		case 0:
 			break;

@@ -41,14 +41,14 @@ $Date$
 static QString findStyle("%1[\\s]*:[\\s]*([^;]*)[;]?");
 
 struct HVConvertData {
-	qreal x;
-	qreal y;
-	qreal subX;
-	qreal subY;
+	double x;
+	double y;
+	double subX;
+	double subY;
 	QString path;
 };
 
-void appendPair(QString & path, qreal a1, qreal a2) {
+void appendPair(QString & path, double a1, double a2) {
 	path.append(QString::number(a1));
 	path.append(',');
 	path.append(QString::number(a2));
@@ -190,7 +190,7 @@ QString SvgFileSplitter::elementString(const QString & elementID) {
 	return document.toString();
 }
 
-bool SvgFileSplitter::normalize(qreal dpi, const QString & elementID, bool blackOnly)
+bool SvgFileSplitter::normalize(double dpi, const QString & elementID, bool blackOnly)
 {
 	// get the viewbox and the width and height
 	// then normalize them
@@ -200,7 +200,7 @@ bool SvgFileSplitter::normalize(qreal dpi, const QString & elementID, bool black
 	QDomElement root = m_domDocument.documentElement();
 	if (root.isNull()) return false;
 
-	qreal sWidth, sHeight, vbWidth, vbHeight;
+	double sWidth, sHeight, vbWidth, vbHeight;
 	if (!TextUtils::getSvgSizes(m_domDocument, sWidth, sHeight, vbWidth, vbHeight)) return false;
 
 	root.setAttribute("width", QString("%1in").arg(sWidth));
@@ -219,7 +219,7 @@ bool SvgFileSplitter::normalize(qreal dpi, const QString & elementID, bool black
 	return true;
 }
 
-QPainterPath SvgFileSplitter::painterPath(qreal dpi, const QString & elementID)
+QPainterPath SvgFileSplitter::painterPath(double dpi, const QString & elementID)
 {
 	// only partially implemented because so far we only use this for polygons generated for the groundplane
 
@@ -248,32 +248,32 @@ void SvgFileSplitter::painterPathChild(QDomElement & element, QPainterPath & ppa
 	// only partially implemented
 
 	if (element.nodeName().compare("circle") == 0) {
-		qreal cx = element.attribute("cx").toDouble();
-		qreal cy = element.attribute("cy").toDouble();
-		qreal r = element.attribute("r").toDouble();
-		qreal stroke = element.attribute("stroke-width").toDouble();
+		double cx = element.attribute("cx").toDouble();
+		double cy = element.attribute("cy").toDouble();
+		double r = element.attribute("r").toDouble();
+		double stroke = element.attribute("stroke-width").toDouble();
 		ppath.addEllipse(QRectF(cx - r - (stroke / 2), cy - r - (stroke / 2), (r * 2) + stroke, (r * 2) + stroke));
 	}
 	else if (element.nodeName().compare("line") == 0) {
 
 		/*
-		qreal x1 = element.attribute("x1").toDouble();
-		qreal y1 = element.attribute("y1").toDouble();
-		qreal x2 = element.attribute("x2").toDouble();
-		qreal y2 = element.attribute("y2").toDouble();
-		qreal stroke = element.attribute("stroke-width").toDouble();
+		double x1 = element.attribute("x1").toDouble();
+		double y1 = element.attribute("y1").toDouble();
+		double x2 = element.attribute("x2").toDouble();
+		double y2 = element.attribute("y2").toDouble();
+		double stroke = element.attribute("stroke-width").toDouble();
 
 		// treat as parallel lines stroke width apart?
 		*/
 	}
 	else if (element.nodeName().compare("rect") == 0) {
-		qreal width = element.attribute("width").toDouble();
-		qreal height = element.attribute("height").toDouble();
-		qreal x = element.attribute("x").toDouble();
-		qreal y = element.attribute("y").toDouble();
-		qreal stroke = element.attribute("stroke-width").toDouble();
-		qreal rx = element.attribute("rx").toDouble();
-		qreal ry = element.attribute("ry").toDouble();
+		double width = element.attribute("width").toDouble();
+		double height = element.attribute("height").toDouble();
+		double x = element.attribute("x").toDouble();
+		double y = element.attribute("y").toDouble();
+		double stroke = element.attribute("stroke-width").toDouble();
+		double rx = element.attribute("rx").toDouble();
+		double ry = element.attribute("ry").toDouble();
 		if (rx != 0 || ry != 0) { 
 			ppath.addRoundedRect(x - (stroke / 2), y - (stroke / 2), width + stroke, height + stroke, rx, ry);
 		}
@@ -282,11 +282,11 @@ void SvgFileSplitter::painterPathChild(QDomElement & element, QPainterPath & ppa
 		}
 	}
 	else if (element.nodeName().compare("ellipse") == 0) {
-		qreal cx = element.attribute("cx").toDouble();
-		qreal cy = element.attribute("cy").toDouble();
-		qreal rx = element.attribute("rx").toDouble();
-		qreal ry = element.attribute("ry").toDouble();
-		qreal stroke = element.attribute("stroke-width").toDouble();
+		double cx = element.attribute("cx").toDouble();
+		double cy = element.attribute("cy").toDouble();
+		double rx = element.attribute("rx").toDouble();
+		double ry = element.attribute("ry").toDouble();
+		double stroke = element.attribute("stroke-width").toDouble();
 		ppath.addEllipse(QRectF(cx - rx - (stroke / 2), cy - ry - (stroke / 2), (rx * 2) + stroke, (ry * 2) + stroke));
 	}
 	else if (element.nodeName().compare("polygon") == 0 || element.nodeName().compare("polyline") == 0) {
@@ -327,8 +327,8 @@ void SvgFileSplitter::painterPathChild(QDomElement & element, QPainterPath & ppa
 }
 
 void SvgFileSplitter::normalizeTranslation(QDomElement & element,
-											qreal sNewWidth, qreal sNewHeight,
-											qreal vbWidth, qreal vbHeight)
+											double sNewWidth, double sNewHeight,
+											double vbWidth, double vbHeight)
 {
 	QString attr = element.attribute("transform");
 	if (attr.isEmpty()) return;
@@ -336,8 +336,8 @@ void SvgFileSplitter::normalizeTranslation(QDomElement & element,
 	QMatrix matrix = TextUtils::elementToMatrix(element);
 	if (matrix.dx() == 0 && matrix.dy() == 0) return;
 
-	qreal dx = matrix.dx() * sNewWidth / vbWidth;
-	qreal dy = matrix.dy() * sNewHeight / vbHeight;
+	double dx = matrix.dx() * sNewWidth / vbWidth;
+	double dy = matrix.dy() * sNewHeight / vbHeight;
 	if (dx == 0 && dy == 0) return;
 
 	matrix.setMatrix(matrix.m11(), matrix.m12(), matrix.m21(), matrix.m22(), dx, dy);
@@ -347,8 +347,8 @@ void SvgFileSplitter::normalizeTranslation(QDomElement & element,
 
 
 void SvgFileSplitter::normalizeChild(QDomElement & element,
-									 qreal sNewWidth, qreal sNewHeight,
-									 qreal vbWidth, qreal vbHeight, bool blackOnly)
+									 double sNewWidth, double sNewHeight,
+									 double vbWidth, double vbHeight, bool blackOnly)
 {
 	normalizeTranslation(element, sNewWidth, sNewHeight, vbWidth, vbHeight);
 
@@ -484,14 +484,14 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 	}
 }
 
-bool SvgFileSplitter::normalizeAttribute(QDomElement & element, const char * attributeName, qreal num, qreal denom)
+bool SvgFileSplitter::normalizeAttribute(QDomElement & element, const char * attributeName, double num, double denom)
 {
-	qreal n = element.attribute(attributeName).toDouble() * num / denom;
+	double n = element.attribute(attributeName).toDouble() * num / denom;
 	element.setAttribute(attributeName, QString::number(n));
 	return true;
 }
 
-QString SvgFileSplitter::shift(qreal x, qreal y, const QString & elementID, bool shiftTransforms)
+QString SvgFileSplitter::shift(double x, double y, const QString & elementID, bool shiftTransforms)
 {
 	QDomElement root = m_domDocument.documentElement();
 
@@ -512,7 +512,7 @@ QString SvgFileSplitter::shift(qreal x, qreal y, const QString & elementID, bool
 
 }
 
-bool SvgFileSplitter::shiftTranslation(QDomElement & element, qreal x, qreal y)
+bool SvgFileSplitter::shiftTranslation(QDomElement & element, double x, double y)
 {
 	QString attr = element.attribute("transform");
 	if (attr.isEmpty()) return false;
@@ -520,9 +520,9 @@ bool SvgFileSplitter::shiftTranslation(QDomElement & element, qreal x, qreal y)
 	QMatrix m0 = TextUtils::elementToMatrix(element);
 
 	bool ok1, ok2, ok3;
-	qreal _x = element.attribute("_x").toDouble(&ok1);
-	qreal _y = element.attribute("_y").toDouble(&ok2);
-	qreal _r = element.attribute("_r").toDouble(&ok3);
+	double _x = element.attribute("_x").toDouble(&ok1);
+	double _y = element.attribute("_y").toDouble(&ok2);
+	double _r = element.attribute("_r").toDouble(&ok3);
 	if (ok1 && ok2 && ok3) {
 		QMatrix mx = QMatrix().translate(-_x - x, -_y - y) * QMatrix().rotate(_r) * QMatrix().translate(_x + x, _y + y);
 		TextUtils::setSVGTransform(element, mx);
@@ -535,13 +535,13 @@ bool SvgFileSplitter::shiftTranslation(QDomElement & element, qreal x, qreal y)
 	// calculate the original cx and cy and retranslate (there must be an easier way)
 	// and this doesn't seem to work...
 
-	qreal sinTheta = m0.m21();
-	qreal cosTheta = m0.m11();
-	qreal cosThetaMinusOne = cosTheta - 1;
+	double sinTheta = m0.m21();
+	double cosTheta = m0.m11();
+	double cosThetaMinusOne = cosTheta - 1;
 
-	qreal cx = (m0.dx() + (sinTheta * m0.dy() / cosThetaMinusOne)) / 
+	double cx = (m0.dx() + (sinTheta * m0.dy() / cosThetaMinusOne)) / 
 			    (cosThetaMinusOne + (sinTheta * sinTheta / cosThetaMinusOne));
-	qreal cy = (m0.dy() - (sinTheta * cx)) / cosThetaMinusOne;
+	double cy = (m0.dy() - (sinTheta * cx)) / cosThetaMinusOne;
 
 	cx += x;
 	cy += y;
@@ -554,7 +554,7 @@ bool SvgFileSplitter::shiftTranslation(QDomElement & element, qreal x, qreal y)
 }
 
 
-void SvgFileSplitter::shiftChild(QDomElement & element, qreal x, qreal y, bool shiftTransforms)
+void SvgFileSplitter::shiftChild(QDomElement & element, double x, double y, bool shiftTransforms)
 {
 	if (shiftTransforms) {
 		shiftTranslation(element, x, y);
@@ -856,7 +856,7 @@ void SvgFileSplitter::convertHVSlot(QChar command, bool relative, QList<double> 
 	Q_UNUSED(relative);
 	HVConvertData * data = (HVConvertData *) userData;
 
-	qreal x, y;
+	double x, y;
 	switch(command.toAscii()) {
 		case 'M':
 			data->path.append(command);
@@ -1161,7 +1161,7 @@ bool SvgFileSplitter::getSvgSizeAttributes(const QString & svg, QString & width,
 	return false;
 }
 
-bool SvgFileSplitter::changeStrokeWidth(const QString & svg, qreal delta, bool absolute, QByteArray & byteArray) {
+bool SvgFileSplitter::changeStrokeWidth(const QString & svg, double delta, bool absolute, QByteArray & byteArray) {
 	QString errorStr;
 	int errorLine;
 	int errorColumn;
@@ -1186,9 +1186,9 @@ bool SvgFileSplitter::changeStrokeWidth(const QString & svg, qreal delta, bool a
 	return true;
 }
 
-void SvgFileSplitter::changeStrokeWidth(QDomElement & element, qreal delta, bool absolute) {
+void SvgFileSplitter::changeStrokeWidth(QDomElement & element, double delta, bool absolute) {
 	bool ok;
-	qreal sw = element.attribute("stroke-width").toDouble(&ok);
+	double sw = element.attribute("stroke-width").toDouble(&ok);
 	if (ok) {
 		element.setAttribute("stroke-width", QString::number((absolute) ? delta : sw + delta));
 	}
@@ -1251,9 +1251,9 @@ void SvgFileSplitter::changeColors(QDomElement & element, QString & toColor, QSt
 	}
 }
 
-bool SvgFileSplitter::shiftAttribute(QDomElement & element, const char * attributeName, qreal d)
+bool SvgFileSplitter::shiftAttribute(QDomElement & element, const char * attributeName, double d)
 {
-	qreal n = element.attribute(attributeName).toDouble() + d;
+	double n = element.attribute(attributeName).toDouble() + d;
 	element.setAttribute(attributeName, QString::number(n));
 	return true;
 }

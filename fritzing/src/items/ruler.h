@@ -45,8 +45,8 @@ public:
 	Ruler(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel);
 	~Ruler();
 
-	void resizeMM(qreal magnitude, qreal unitsFlag, const LayerHash & viewLayers);
-	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi);
+	void resizeMM(double magnitude, double unitsFlag, const LayerHash & viewLayers);
+	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi);
 	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
 	bool hasCustomSVG();
 	bool stickyEnabled();
@@ -61,7 +61,7 @@ public slots:
 	void unitsEntry(const QString &);
 
 protected:
-	QString makeSvg(qreal inches);
+	QString makeSvg(double inches);
 	
 protected:
 	class FSvgRenderer * m_renderer;

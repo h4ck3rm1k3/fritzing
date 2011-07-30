@@ -57,8 +57,8 @@ protected:
     QString m_drill_slots;
 	QSizeF m_boardSize;
 
-    qreal m_pathstart_x;
-    qreal m_pathstart_y;
+    double m_pathstart_x;
+    double m_pathstart_y;
 
 protected:
 
@@ -75,11 +75,11 @@ protected:
     int allPaths2gerber(ForWhy);
     QString path2gerber(QDomElement);
 	void handleOblongPath(QDomElement & path, int & dcode_index);
-	QString standardAperture(QDomElement & element, QHash<QString, QString> & apertureMap, QString & current_dcode, int & dcode_index, qreal stroke_width);
-	int flipx(qreal x);
-	int flipy(qreal y);
-	qreal flipxNoRound(qreal x);
-	qreal flipyNoRound(qreal y);
+	QString standardAperture(QDomElement & element, QHash<QString, QString> & apertureMap, QString & current_dcode, int & dcode_index, double stroke_width);
+	int flipx(double x);
+	int flipy(double y);
+	double flipxNoRound(double x);
+	double flipyNoRound(double y);
 	void doPoly(QDomElement & polygon, ForWhy forWhy, int totalCount, bool closedCurve, 
 				QHash<QString, QString> & apertureMap, QString & current_dcode, int & dcode_index, int & outlineCount);
 
