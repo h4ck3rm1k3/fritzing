@@ -3,11 +3,17 @@
 <svg version="1.1" baseProfile="basic" id="Layer_1"
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="0.63in"
 	 height="0.11in" viewBox="0 0 45.002 8.004" xml:space="preserve">
-<rect id="connector0pin" x="0" y="2.937" fill="none" width="4.358" height="2.129"/>
-<rect id="connector1pin" x="40.642" y="2.936" fill="none" width="4.36" height="2.13"/>
-<rect id="connector0terminal" x="0" y="2.937" fill="none" width="0.4" height="2.129"/>
-<rect id="connector1terminal" x="44.601" y="2.937" fill="none" width="0.396" height="2.129"/>
 <g id="breadboard">
+	<rect id="connector0pin" x="0" y="2.937" fill="none" width="4.358" height="2.129"/>
+	<rect id="connector1pin" x="40.642" y="2.936" fill="none" width="4.36" height="2.13"/>
+	<rect id="connector0terminal" x="0" y="2.937" fill="none" width="0.4" height="2.129"/>
+	<rect id="connector1terminal" x="44.601" y="2.937" fill="none" width="0.396" height="2.129"/>
+	<line  id="connector0leg" stroke-linecap="round" x1="0" y1="4.062" x2="3" y2="4.062" stroke="#6D6D6D" fill="none" stroke-width="2.5" />
+	<line  id="connector1leg" stroke-linecap="round" x1="45.002" y1="4.062" x2="42.002" y2="4.062" stroke="#6D6D6D" fill="none" stroke-width="2.5" />
+
+
+	<line fill="none" stroke="#6D6D6D" stroke-width="2.5" x1="6.232" y1="4.062" x2="3" y2="4.062"/>
+	<line fill="none" stroke="#6D6D6D" stroke-width="2.5" x1="42.002" y1="4.062" x2="39.017" y2="4.062"/>
 	<g>
 		<path fill="#96CCAB" d="M39.017,5.917c0,0.567-1.195,1.521-2.767,0.76c-0.66,0.322-1.479,1.328-2.61,1.328H11.471
 			c-1.13,0-1.953-1.006-2.613-1.328C7.291,7.44,6.216,6.489,6.216,5.917v-3.83c0-0.57,1.074-1.521,2.642-0.76
@@ -37,8 +43,6 @@
 			c0-0.154,0.126-0.279,0.28-0.279c0,0,0,0,0.001,0l21.06,0.08c0.153,0,0.278,0.126,0.278,0.281
 			C33.469,2.489,33.344,2.614,33.187,2.614L33.187,2.614z"/>
 	</g>
-	<line fill="none" stroke="#6D6D6D" stroke-width="2.5" x1="6.232" y1="4.062" x2="0" y2="4.062"/>
-	<line fill="none" stroke="#6D6D6D" stroke-width="2.5" x1="45.002" y1="4.062" x2="39.017" y2="4.062"/>
 	<g>
 		<g>
 			<g>

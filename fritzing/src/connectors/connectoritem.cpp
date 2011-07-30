@@ -135,16 +135,17 @@ bendable TODO:
 	bendpoints: align to grid? 
 	
 	parts to modify
-		LEDs  (obsolete most colors)
+		* LEDs (obsolete 5 colors and 15 SMD versions)
 		resistors
 		caps
 		diodes
-		tilt sensor
-		temperature sensor
-		light sensor
-		reed switch
+		** tilt sensor
+		** temperature sensor
+		** light sensor
+		** reed switch
 		transistors
 		batteries
+		** 2aa battery
 		stepper motors
 		piezo
 		loudspeaker
