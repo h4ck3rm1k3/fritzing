@@ -246,6 +246,15 @@ static QCursor * MakeWireCursor = NULL;
 
 Qt::KeyboardModifiers DragWireModifiers = (Qt::ControlModifier | Qt::AltModifier | Qt::MetaModifier);
 
+QColor addColor(QColor & color, int offset)
+{
+    QColor rgb = color.toRgb();
+	rgb.setRgb(qMax(0, qMin(rgb.red() + offset, 255)), qMax(0, qMin(rgb.green() + offset, 255)),qMax(0, qMin(rgb.blue() + offset, 255)));
+
+    // convert back to same color spec as original color
+    return rgb.convertTo(color.spec());
+}
+
 /////////////////////////////////////////////////////////
 
 ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
@@ -1482,6 +1491,17 @@ void ConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * 
 		QPen pen = legPen();
 		painter->setPen(pen);
 		painter->drawPolyline(m_legPolygon);			// draw the leg first
+
+		if (m_legPolygon.count() > 2) {
+			// now draw bendpoint indicators
+			qreal halfWidth = pen.widthF() / 2;
+			painter->setPen(Qt::NoPen);
+			QColor c =  addColor(m_legColor, (qGray(m_legColor.rgb()) < 64) ? 80 : -64);
+			painter->setBrush(c);
+			for (int i = 1; i < m_legPolygon.count() - 1; i++) {
+				painter->drawEllipse(m_legPolygon.at(i), halfWidth, halfWidth); 
+			}
+		}
 
 		if (m_attachedTo->inHover()) {
 			pen.setColor((qGray(m_legColor.rgb()) < 48) ? QColor(255, 255, 255) : QColor(0, 0, 0));
