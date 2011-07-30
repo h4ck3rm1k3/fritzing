@@ -118,6 +118,8 @@ bendable TODO:
 	* rotate bendable, swap bendable, undo: crash of the item being undone.  it's a prepareGeometryChange() bug
 
 	* swapping when original is rotated
+
+	crash swapping 3v battery for 4.8 when 3v is rotated 45
 					
 	* click selection behavior should be as if selecting the part
 		click on leg should select part
@@ -138,17 +140,18 @@ bendable TODO:
 	
 	parts to modify
 		* LEDs (obsolete 5 colors and 15 SMD versions)
+		RGB LEDs
 		resistors
 		caps
+		transistors
 		** diodes
 		** tilt sensor
 		** temperature sensor
 		** light sensor
 		** reed switch
-		transistors
 		** 2aa battery
 		** 4aaa battery
-		9v battery
+		** 9v battery
 		stepper motors
 		piezo
 		loudspeaker
@@ -159,9 +162,9 @@ bendable TODO:
 		peltier
 		distance sensor
 		FETs
-		resonator
-		inductor
-		** crystal + ceramic resonators
+		** resonator
+		** inductor
+		** crystal
 
 -------------------------------------------------
 

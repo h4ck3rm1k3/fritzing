@@ -2,11 +2,16 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.2" baseProfile="tiny" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
 	 x="0px" y="0px" width="0.428319444in" height="0.176222222in" viewBox="0 0 30.839 12.688" enable-background="new 0 0 30.839 12.688" xml:space="preserve">
-<rect id="connector0terminal" x="0.005" y="6.89" fill="#B23820" width="2.49" height="2.498"/>
-<rect id="connector1terminal" x="28.349" y="6.89" fill="#B23820" width="2.49" height="2.498"/>
-<rect id="connector0pin" y="6.862" fill="#B23820" width="3.56" height="2.5"/>
-<rect id="connector1pin" x="26.848" y="6.888" fill="#B23820" width="3.989" height="2.5"/>
 <g id="breadboard">
+	<rect id="connector0terminal" x="0.005" y="6.89" fill="none" width="2.49" height="2.498"/>
+	<rect id="connector1terminal" x="28.349" y="6.89" fill="none" width="2.49" height="2.498"/>
+	<rect id="connector0pin" y="6.862" fill="none" width="3.56" height="2.5"/>
+	<rect id="connector1pin" x="26.848" y="6.888" fill="none" width="3.989" height="2.5"/>
+	
+	<line  id="connector0leg" stroke-linecap="round" x1="1.25" y1="8.129" x2="2.05" y2="8.129" stroke="#B23820" fill="none" stroke-width="2.5" />
+	<line  id="connector1leg" stroke-linecap="round" x1="29.589" y1="8.144" x2="26.534" y2="8.144" stroke="#B23820" fill="none" stroke-width="2.5" />
+
+	
 	<path fill="none" stroke="#752119" stroke-width="2.5" stroke-linecap="round" d="M7.428,1.301
 		C9.275,0.63,11.18,6.684,9.196,11.438"/>
 	<path fill="none" stroke="#752119" stroke-width="2.5" stroke-linecap="round" d="M11.216,1.301
@@ -16,11 +21,13 @@
 	<path fill="none" stroke="#752119" stroke-width="2.5" stroke-linecap="round" d="M18.751,1.301
 		c1.847-0.671,3.75,5.383,1.767,10.137"/>
 	<path fill="none" stroke="#752119" stroke-width="2.5" stroke-linecap="round" d="M22.541,1.301c1.391,0,1.85,1.331,2.114,4.501
-		c0.062,0.729,0.25,2.343,1.882,2.343c2.838,0,3.053-0.016,3.053-0.016"/>
+		c0.062,0.729,0.25,2.343,1.882,2.343"/>
+		
 	<path fill="none" stroke="#B23820" stroke-width="2.5" stroke-linecap="round" d="M25.333,7.698
-		c0.273,0.268,0.656,0.446,1.201,0.446c2.838,0,3.053-0.016,3.053-0.016"/>
+		c0.273,0.268,0.656,0.446,1.201,0.446"/>
+		
 	<path fill="none" stroke="#B23820" stroke-width="2.5" stroke-linecap="round" d="M7.429,1.301
-		c-0.71,0.565-1.205,1.588-1.377,4.587C5.896,6.926,5.613,8.129,3.548,8.129c-1.948,0-2.298,0-2.298,0"/>
+		c-0.71,0.565-1.205,1.588-1.377,4.587C5.896,6.926,5.613,8.129,3.548,8.129c-1.948,0-1.098,0-1.098,0"/>
 	<path fill="none" stroke="#B23820" stroke-width="2.5" stroke-linecap="round" d="M9.089,11.438
 		C8.733,6.515,9.657,2.597,11.216,1.301"/>
 	<g opacity="0.3">
