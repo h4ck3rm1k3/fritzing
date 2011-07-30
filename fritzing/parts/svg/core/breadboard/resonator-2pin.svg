@@ -2,16 +2,19 @@
 <!-- Generator: Adobe Illustrator 14.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 43363)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns:svg="http://www.w3.org/2000/svg"
-	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18.688px"
-	 height="34.652px" viewBox="0 0 18.688 34.652" enable-background="new 0 0 18.688 34.652" xml:space="preserve">
-<rect id="connector1terminal" x="15.437" y="34.029" fill="none" width="2.159" height="0.721"/>
-<rect id="connector1pin" x="15.437" y="27.549" fill="none" width="2.159" height="7.201"/>
-<rect id="connector0terminal" x="1.036" y="34.029" fill="none" width="2.158" height="0.721"/>
-<rect id="connector0pin" x="1.036" y="27.549" fill="none" width="2.158" height="7.201"/>
+	 xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="0.25956in"
+	 height="0.3243194in" viewBox="0 0 18.688 23.351" >
 <g id="breadboard">
+	<rect id="connector1terminal" x="15.437" y="34.029" fill="none" width="2.159" height="0.721"/>
+	<rect id="connector1pin" x="15.437" y="27.549" fill="none" width="2.159" height="7.201"/>
+	<rect id="connector0terminal" x="1.036" y="34.029" fill="none" width="2.158" height="0.721"/>
+	<rect id="connector0pin" x="1.036" y="27.549" fill="none" width="2.158" height="7.201"/>
+	<line  id="connector0leg" stroke-linecap="round" x1="2.115" y1="23.351" x2="2.115" y2="33.483" stroke="#8C8C8C" fill="none" stroke-width="2.158" />
+	<line  id="connector1leg" stroke-linecap="round" x1="16.515" y1="23.351" x2="16.515" y2="33.483" stroke="#8C8C8C" fill="none" stroke-width="2.158" />
+
 	<g>
-		<path fill="#8C8C8C" d="M1.036,20.351V34.75h2.158V20.351l0,0H1.036z"/>
-		<path fill="#8C8C8C" d="M17.594,20.349L17.594,20.349l-2.157,0.002h0.005h-0.004V34.75h2.159V20.351L17.594,20.349z"/>
+		<path fill="#8C8C8C" d="M1.036,20.351v3h2.158v-3H1.036z"/>
+		<path fill="#8C8C8C" d="M17.594,20.351v3h-2.158v-3H1.036z"/>
 		<rect x="1.036" y="18.172" fill="#8C8C8C" width="3.541" height="3.223"/>
 		<rect x="14.055" y="18.172" fill="#8C8C8C" width="3.541" height="3.223"/>
 		<path fill="#CC7720" d="M18.289,16.785c-0.066,1.051-0.816,2.197-0.816,2.197c-0.438,0.125-1.187,0.02-2.813,0.063

@@ -126,6 +126,8 @@ bendable TODO:
 		within a particular region, the part body stops updating--
 		but the legs follow the phantom part until the part jumps into position
 
+	when dragging to breadboard from parts bin, don't get final alignment to breadboard
+
 	survival in parts editor
 
 	export: resistors and other custom generated parts with legs (retrieve svg)
@@ -138,7 +140,7 @@ bendable TODO:
 		* LEDs (obsolete 5 colors and 15 SMD versions)
 		resistors
 		caps
-		diodes
+		** diodes
 		** tilt sensor
 		** temperature sensor
 		** light sensor
@@ -158,7 +160,7 @@ bendable TODO:
 		FETs
 		resonator
 		inductor
-		crystal
+		** crystal + ceramic resonators
 
 -------------------------------------------------
 

@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 14.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 43363)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="29.879px" height="7.2px" viewBox="0 0 29.879 7.2" enable-background="new 0 0 29.879 7.2" xml:space="preserve">
-<g id="svg" xmlns:xml="http://www.w3.org/XML/1998/namespace">
-	<rect id="connector0pin" x="0.011" y="2.583" fill="none" width="4.291" height="2.094"/>
-	<rect id="connector0terminal" x="0.416" y="2.583" fill="none" width="0.379" height="2.094"/>
-	<rect id="connector1pin" x="25.576" y="2.583" fill="none" width="4.291" height="2.094"/>
-	<rect id="connector1terminal" x="29.188" y="2.583" fill="none" width="0.34" height="2.094"/>
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+	 width="0.414986in" height="0.1in" viewBox="0 0 29.879 7.2" >
 	<g id="breadboard">
-		<rect id="rect7" x="0.034" y="2.583" fill="#8C8C8C" width="29.833" height="2.094"/>
+		<rect id="connector0pin" x="0.011" y="2.583" fill="none" width="4.291" height="2.094"/>
+		<rect id="connector0terminal" x="0.416" y="2.583" fill="none" width="0.379" height="2.094"/>
+		<rect id="connector1pin" x="25.576" y="2.583" fill="none" width="4.291" height="2.094"/>
+		<rect id="connector1terminal" x="29.188" y="2.583" fill="none" width="0.34" height="2.094"/>
+		
+		<line  id="connector0leg" stroke-linecap="round" x1="1.047" y1="3.63" x2="2.094" y2="3.63" stroke="#8C8C8C" fill="none" stroke-width="2.094" />
+		<line  id="connector1leg" stroke-linecap="round" x1="27.785" y1="3.63" x2="28.832" y2="3.63" stroke="#8C8C8C" fill="none" stroke-width="2.094" />
+		
+		<rect id="rect7" x="2.094" y="2.583" fill="#8C8C8C" width="25.691" height="2.094"/>
 		<g>
 			<path id="Body_1_" fill="#1A1A1A" d="M9.159,0H7.002c-0.475,0-0.393,7.193,0,7.193h2.157c0.396,0,11.114,0,11.508,0h2.158
 				c0.515,0,0.558-7.193,0-7.193h-2.158C20.27,0,9.553,0,9.159,0z"/>
@@ -22,5 +25,4 @@
 				c0.721,0,1.67,0,2.393,0C23.076,6.471,22.969,7.192,22.822,7.194z"/>
 		</g>
 	</g>
-</g>
 </svg>
