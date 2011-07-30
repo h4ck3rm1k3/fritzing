@@ -1176,7 +1176,9 @@ bool ItemBase::collectFemaleConnectees(QSet<ItemBase *> & items) {
 }
 
 void ItemBase::prepareGeometryChange() {
-	//debugInfo("prepare geometry change");
+	// made public so it can be invoked from outside ItemBase class
+
+	//debugInfo("itembase prepare geometry change");
 	QGraphicsSvgItem::prepareGeometryChange();
 }
 

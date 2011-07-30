@@ -119,17 +119,16 @@ bendable TODO:
 
 	* swapping when original is rotated
 					
-	survive in parts editor
-
-	click selection behavior should be as if selecting the part
+	* click selection behavior should be as if selecting the part
 		click on leg should select part
 
-	export: resistors and other custom generated parts with legs (retrieve svg)
-
-	update bug when a bendable part has all legs connected and the part is dragged
+	* update bug when a bendable part has all legs connected and the part is dragged
 		within a particular region, the part body stops updating--
 		but the legs follow the phantom part until the part jumps into position
-		disable calls to prepgeometrychange?
+
+	survival in parts editor
+
+	export: resistors and other custom generated parts with legs (retrieve svg)
 
 	swapping: keep bends?
 	
@@ -1881,6 +1880,7 @@ void ConnectorItem::resetLeg(const QPolygonF & poly, bool relative, bool active,
 		return;
 	}
 
+	//DebugDialog::debug("connectorItem prepareGeometryChange 1");
 	prepareGeometryChange();
 	QPointF sceneNewLast = target->sceneAdjustedTerminalPoint(NULL);
 	QPointF sceneOldLast = poly.last();
@@ -1946,6 +1946,10 @@ void ConnectorItem::stretchBy(QPointF howMuch) {
 	Q_UNUSED(howMuch);
 
 	resetLeg(m_oldPolygon, false, m_activeStretch, "move");
+
+	// if update isn't called here then legs repaint, but body doesn't
+	// so you get a weird "headless" effect
+	m_attachedTo->update();
 }
 
 void ConnectorItem::stretchDone(QPolygonF & oldLeg, QPolygonF & newLeg, bool & active) {
@@ -1999,24 +2003,26 @@ void ConnectorItem::repositionTarget()
 
 void ConnectorItem::reposition(QPointF sceneDestPos, int draggingIndex)
 {
+	//DebugDialog::debug("connectorItem prepareGeometryChange 2");
 	prepareGeometryChange();
-	foreach (QPointF p, m_legPolygon) DebugDialog::debug(QString("point b %1 %2").arg(p.x()).arg(p.y()));
+	//foreach (QPointF p, m_legPolygon) DebugDialog::debug(QString("point b %1 %2").arg(p.x()).arg(p.y()));
 	QPointF dest = mapFromScene(sceneDestPos);
 	m_legPolygon.replace(draggingIndex, dest);
-	foreach (QPointF p, m_legPolygon) DebugDialog::debug(QString("point a %1 %2").arg(p.x()).arg(p.y()));
+	//foreach (QPointF p, m_legPolygon) DebugDialog::debug(QString("point a %1 %2").arg(p.x()).arg(p.y()));
 }
 
 void ConnectorItem::repoly(const QPolygonF & poly, bool relative)
 {
+	//DebugDialog::debug("connectorItem prepareGeometryChange 3");
 	prepareGeometryChange();
 
-	foreach (QPointF p, m_legPolygon) DebugDialog::debug(QString("point b %1 %2").arg(p.x()).arg(p.y()));
+	//foreach (QPointF p, m_legPolygon) DebugDialog::debug(QString("point b %1 %2").arg(p.x()).arg(p.y()));
 	m_legPolygon.clear();
 
 	foreach (QPointF p, poly) {
 		m_legPolygon.append(relative ? p : mapFromScene(p));
 	}
-	foreach (QPointF p, m_legPolygon) DebugDialog::debug(QString("point a %1 %2").arg(p.x()).arg(p.y()));
+	//foreach (QPointF p, m_legPolygon) DebugDialog::debug(QString("point a %1 %2").arg(p.x()).arg(p.y()));
 }
 
 QPointF ConnectorItem::calcPoint() const
@@ -2100,6 +2106,12 @@ bool ConnectorItem::legMousePressEvent(QGraphicsSceneMouseEvent *event) {
 		event->ignore();
 		return true;
 	}
+
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView != NULL) {
+		infoGraphicsView->prepLegSelection(this->attachedTo());
+	}
+
 
 	int bendpointIndex;
 	CursorLocation cursorLocation = findLocation(event->pos(), bendpointIndex);

@@ -358,6 +358,7 @@ public:
     int id() const;
 	bool mergeWith(const QUndoCommand *other);
 	void copyUndo(SelectItemCommand * sother);
+	void copyRedo(SelectItemCommand * sother);
 	void setSelectItemType(SelectItemType);
 	bool updated();
 	void setUpdated(bool);

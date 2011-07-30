@@ -3089,12 +3089,30 @@ void SketchWidget::sketchWidget_itemSelected(long id, bool state) {
 	}
 }
 
-void SketchWidget::prepLegChange(ConnectorItem * from,  const QPolygonF & oldLeg, const QPolygonF & newLeg, ConnectorItem * to, bool changeConnections) 
+
+void SketchWidget::prepLegSelection(ItemBase * itemBase) 
 {
 	this->clearHoldingSelectItem();
 	this->m_moveEventCount = 0;  // clear this so an extra MoveItemCommand isn't posted
 
+	if (itemBase->isSelected()) return;
+
+	m_holdingSelectItemCommand = stackSelectionState(false, NULL);
+	itemBase->setSelected(true);
+}
+
+void SketchWidget::prepLegChange(ConnectorItem * from,  const QPolygonF & oldLeg, const QPolygonF & newLeg, ConnectorItem * to, bool changeConnections) 
+{
+	this->m_moveEventCount = 0;  // clear this so an extra MoveItemCommand isn't posted
+
 	QUndoCommand * parentCommand = new QUndoCommand();
+
+	if (m_holdingSelectItemCommand) {
+		SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
+		selectItemCommand->copyUndo(m_holdingSelectItemCommand);
+		selectItemCommand->copyRedo(m_holdingSelectItemCommand);
+		clearHoldingSelectItem();
+	}
 
 	long fromID = from->attachedToID();
 

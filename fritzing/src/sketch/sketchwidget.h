@@ -267,6 +267,7 @@ public:
 	const QString & filenameIf();
 	void setItemDropOffset(long id, QPointF offset);
 	void prepLegChange(ConnectorItem * from,  const QPolygonF & oldLeg, const QPolygonF & newLeg, ConnectorItem * to, bool changeConnections);
+	void prepLegSelection(ItemBase *);
 
 
 protected:

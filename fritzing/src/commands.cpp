@@ -613,6 +613,13 @@ void SelectItemCommand::copyUndo(SelectItemCommand * sother) {
   	}
 }
 
+void SelectItemCommand::copyRedo(SelectItemCommand * sother) {
+   	this->m_redoIDs.clear();
+   	for (int i = 0; i < sother->m_redoIDs.size(); i++) {
+   		this->m_redoIDs.append(sother->m_redoIDs[i]);
+  	}
+}
+
 void SelectItemCommand::clearRedo() {
 	m_redoIDs.clear();
 }

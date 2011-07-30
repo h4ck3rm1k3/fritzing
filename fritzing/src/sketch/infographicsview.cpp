@@ -291,6 +291,10 @@ QString InfoGraphicsView::generateCopperFillUnit(ItemBase * itemBase, QPointF wh
 	return "";
 }
 
+void InfoGraphicsView::prepLegSelection(ItemBase *) 
+{
+}
+
 void InfoGraphicsView::prepLegChange(ConnectorItem * from, const QPolygonF & oldLeg, const QPolygonF & newLeg, ConnectorItem * to, bool changeConnections) 
 {
 	Q_UNUSED(from);	
