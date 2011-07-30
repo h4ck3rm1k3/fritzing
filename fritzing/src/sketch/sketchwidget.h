@@ -65,6 +65,15 @@ struct ItemCount {
 	int wireCount;
 };
 
+class SizeItem : public QObject, public QGraphicsLineItem
+{
+	Q_OBJECT
+	
+public:
+	SizeItem();
+	~SizeItem();
+};
+
 class SketchWidget : public InfoGraphicsView
 {
 	Q_OBJECT
@@ -600,7 +609,7 @@ protected:
 	QPointF m_alignmentStartPoint;
 	qreal m_zoom;
 	bool m_draggingBendpoint;
-	QGraphicsLineItem * m_sizeItem;
+	QPointer<SizeItem> m_sizeItem;
 	int m_autoScrollThreshold;
 	bool m_clearSceneRect;
 	QPointer<ItemBase> m_moveReferenceItem;

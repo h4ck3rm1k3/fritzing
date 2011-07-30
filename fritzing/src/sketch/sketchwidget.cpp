@@ -85,6 +85,18 @@ $Date$
 #include "../items/capacitor.h"
 #include "../lib/ff/flow.h"
 
+/////////////////////////////////////////////////////////////////////
+
+SizeItem::SizeItem() : QGraphicsLineItem(), QObject()
+{
+}
+
+SizeItem::~SizeItem()
+{
+}
+
+/////////////////////////////////////////////////////////////////////
+
 enum ConnectionStatus {
 	IN_,
 	OUT_,
@@ -99,6 +111,8 @@ QHash<ViewIdentifierClass::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
 const int SketchWidget::MoveAutoScrollThreshold = 5;
 const int SketchWidget::DragAutoScrollThreshold = 10;
 const int AutoRepeatDelay = 750;
+
+/////////////////////////////////////////////////////////////////////
 
 SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
@@ -161,7 +175,7 @@ SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, Q
     // a bit of a hack so that, when there is no scenerect set,
     // the first item dropped into the scene doesn't leap to the top left corner
     // as the scene resizes to fit the new item
-   	m_sizeItem = new QGraphicsLineItem();
+   	m_sizeItem = new SizeItem();
     m_sizeItem->setLine(0, 0, rect().width(), rect().height());
 	//DebugDialog::debug(QString("initial rect %1 %2").arg(rect().width()).arg(rect().height()));
     this->scene()->addItem(m_sizeItem);

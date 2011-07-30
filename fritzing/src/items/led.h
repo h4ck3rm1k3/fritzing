@@ -50,14 +50,17 @@ public:
 	void addedToScene(bool temporary);
 	void setProp(const QString & prop, const QString & value);
  	bool setUpImage(ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, ViewLayer::ViewLayerSpec, bool doConnectors, LayerAttributes &, QString & error);
+	const QString & title();
 
 protected:
 	void setColor(const QString & color);
 	void slamColor(QDomElement & element, const QString & colorString);
-	QString getColorSVG(const QString & color);
+	QString getColorSVG(const QString & color, ViewLayer::ViewLayerID);
 
 protected:
 	class FSvgRenderer * m_renderer;
+	QString m_title;
+
 };
 
 #endif

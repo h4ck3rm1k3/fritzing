@@ -136,7 +136,7 @@ bendable TODO:
 	bendpoints: align to grid? 
 	
 	parts to modify
-		LEDs
+		LEDs  (obsolete most colors)
 		resistors
 		caps
 		diodes

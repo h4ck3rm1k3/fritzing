@@ -37,6 +37,7 @@ $Date: 2011-07-01 02:37:01 +0200 (Fri, 01 Jul 2011) $
 #include "partlabel.h"
 
 static QString BreadboardSvg;
+static QString IconSvg;
 
 LED::LED( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: Capacitor(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
@@ -51,12 +52,13 @@ QString LED::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QStr
 {
 	switch (viewLayerID) {
 		case ViewLayer::Breadboard:
+		case ViewLayer::Icon:
 			break;
 		default:
 			return Capacitor::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 	}
 
-	QString svg = getColorSVG(modelPart()->prop("color").toString());
+	QString svg = getColorSVG(modelPart()->prop("color").toString(), viewLayerID);
 	if (svg.isEmpty()) return "";
 
 	QString xmlName = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
@@ -84,6 +86,7 @@ void LED::addedToScene(bool temporary)
 bool LED::hasCustomSVG() {
 	switch (m_viewIdentifier) {
 		case ViewIdentifierClass::BreadboardView:
+		case ViewIdentifierClass::IconView:
 			return true;
 		default:
 			return ItemBase::hasCustomSVG();
@@ -125,6 +128,7 @@ void LED::setColor(const QString & color)
 {
 	switch (m_viewLayerID) {
 		case ViewLayer::Breadboard:
+		case ViewLayer::Icon:
 			break;
 		default:
 			return;
@@ -134,19 +138,19 @@ void LED::setColor(const QString & color)
 		m_renderer = new FSvgRenderer(this);
 	}
 
-	bool result = m_renderer->fastLoad(getColorSVG(color).toUtf8());
+	bool result = m_renderer->fastLoad(getColorSVG(color, m_viewLayerID).toUtf8());
 	if (result) {
 		setSharedRendererEx(m_renderer);
 	}
 }
 
-QString LED::getColorSVG(const QString & color) 
+QString LED::getColorSVG(const QString & color, ViewLayer::ViewLayerID viewLayerID) 
 {
 	QString errorStr;
 	int errorLine;
 	int errorColumn;
 	QDomDocument domDocument;
-	if (!domDocument.setContent(BreadboardSvg, &errorStr, &errorLine, &errorColumn)) {
+	if (!domDocument.setContent(viewLayerID == ViewLayer::Breadboard ? BreadboardSvg : IconSvg, &errorStr, &errorLine, &errorColumn)) {
 		return "";
 	}
 
@@ -167,9 +171,16 @@ QString LED::getColorSVG(const QString & color)
 bool LED::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors, LayerAttributes & layerAttributes, QString & error)
 {
 	bool result = Capacitor::setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, viewLayerSpec, doConnectors, layerAttributes, error);
-	if (viewIdentifier == ViewIdentifierClass::BreadboardView && BreadboardSvg.isEmpty() && result) {
+	if (viewLayerID == ViewLayer::Breadboard && BreadboardSvg.isEmpty() && result) {
 		BreadboardSvg = QString(layerAttributes.loaded());
+	}
+	else if (viewLayerID == ViewLayer::Icon && IconSvg.isEmpty() && result) {
+		IconSvg = QString(layerAttributes.loaded());
 	}
 	return result;
 }
 
+const QString & LED::title() {
+	m_title = modelPart()->prop("color").toString() + " LED";
+	return m_title;
+}
