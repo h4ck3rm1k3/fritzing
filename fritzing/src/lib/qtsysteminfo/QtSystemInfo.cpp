@@ -57,9 +57,9 @@ public:
             else if (m_architectureName == "x86_64")
                 m_architecture = QtSystemInfo::X86_64;
             else if (m_architectureName == "ppc")
-                m_architecture = QtSystemInfo::PPC;
+                m_architecture = QtSystemInfo::MPPC;
             else if (m_architectureName == "ppc64")
-                m_architecture = QtSystemInfo::PPC64;
+                m_architecture = QtSystemInfo::MPPC64;
         }
     }
 

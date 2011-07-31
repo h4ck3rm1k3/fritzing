@@ -87,7 +87,7 @@ $Date$
 
 /////////////////////////////////////////////////////////////////////
 
-SizeItem::SizeItem() : QGraphicsLineItem(), QObject()
+SizeItem::SizeItem()
 {
 }
 
