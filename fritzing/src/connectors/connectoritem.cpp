@@ -142,12 +142,12 @@ bendable TODO:
 	
 	parts to modify
 		* LEDs (obsolete 5 colors and 15 SMD versions)
+			maintain color when switching from obsolete
 		RGB LEDs
-		transistors
-		* resistors
-		* tantalum caps
-		* electrolytic caps
-		* ceramic caps
+		** resistors
+		** tantalum caps
+		** electrolytic caps
+		** ceramic caps
 		** diodes
 		** tilt sensor
 		** temperature sensor
@@ -165,7 +165,9 @@ bendable TODO:
 		dc motor
 		peltier
 		distance sensor
-		FETs
+		** transistors
+		** FETs
+		** voltage regulator
 		** resonator
 		** inductor
 		** crystal
