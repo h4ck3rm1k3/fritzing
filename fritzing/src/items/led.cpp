@@ -164,7 +164,8 @@ QString LED::getColorSVG(const QString & color, ViewLayer::ViewLayerID viewLayer
 
 	if (colorString.isEmpty()) return "";
 
-	slamColor(domDocument.documentElement(), colorString);
+	QDomElement root = domDocument.documentElement();
+	slamColor(root, colorString);
 	return domDocument.toString();
 }
 
