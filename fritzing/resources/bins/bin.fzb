@@ -315,7 +315,7 @@
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="7d0bc366bcac9395c747f3a92e2ff843" modelIndex="28" path="parts/core/stepper_motor_bipolar.fzp">
+        <instance moduleIdRef="7d0bc366bcac9395c747f3a92e2ff843leg" modelIndex="28" path="parts/core/stepper_motor_bipolar.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>

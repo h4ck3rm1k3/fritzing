@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.2.2.b.03.04.2550" moduleId="a22e371d3e8c77a58fdfe4dd2799c449leg">
-<version>4</version>
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.2.2.b.03.04.2550" moduleId="a22e371d3e8c77a58fdfe4dd2799c449">
+<version replacedby="a22e371d3e8c77a58fdfe4dd2799c449leg">4</version>
     <author>Peter Boman</author>
     <title>Stepper Motor - Unipolar</title>
     <label>M</label>
@@ -9,13 +9,13 @@
         <tag>Stepper Motor</tag>
     </tags>
     <properties>
-        <property name="family">Stepper Motor</property>
+        <property name="family">obsolete Stepper Motor</property>
         <property name="Stepper Type">Unipolar</property>
     </properties>
     <description>A basic unipolar stepper motor</description>
     <views>
         <breadboardView>
-            <layers image="breadboard/Stepper_Motor_Unipolar_breadboard_leg.svg">
+            <layers image="breadboard/Stepper_Motor_-_Unipolar__breadboard.svg">
                 <layer layerId="breadboard"/>
             </layers>
         </breadboardView>
@@ -41,7 +41,7 @@
             <description>Terminal &quot;B&quot; - Coil Pair 2</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector3pin" legId="connector3leg"/>
+                    <p layer="breadboard" svgId="connector3pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector3pin" terminalId="connector3terminal"/>
@@ -55,7 +55,7 @@
             <description>Common Tap - Coil Pair 2</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector4pin" legId="connector4leg"/>
+                    <p layer="breadboard" svgId="connector4pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector4pin" terminalId="connector4terminal"/>
@@ -69,7 +69,7 @@
             <description>Terminal &quot;D&quot; - Coil Pair 2</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector5pin" legId="connector5leg"/>
+                    <p layer="breadboard" svgId="connector5pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector5pin" terminalId="connector5terminal"/>
@@ -83,7 +83,7 @@
             <description>Terminal &quot;A&quot; - Coil Pair 1</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector0pin" legId="connector0leg"/>
+                    <p layer="breadboard" svgId="connector0pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector0pin" terminalId="connector0terminal"/>
@@ -97,7 +97,7 @@
             <description>Common Tap - Coil Pair 1</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector1pin" legId="connector1leg"/>
+                    <p layer="breadboard" svgId="connector1pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector1pin" terminalId="connector1terminal"/>
@@ -111,7 +111,7 @@
             <description>Terminal &quot;C&quot; - Coil Pair 1</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector2pin" legId="connector2leg"/>
+                    <p layer="breadboard" svgId="connector2pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector2pin" terminalId="connector2terminal"/>
