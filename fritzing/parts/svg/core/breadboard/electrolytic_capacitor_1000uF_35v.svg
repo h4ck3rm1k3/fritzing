@@ -2,18 +2,23 @@
 <!-- This document was made in 100dpi, i.e. 100 svg units should represent 1 inch of the part in the real world-->
 <!-- This particular 1000 microFarad capacitor is measuring 13 mm diameter by 21 mm in height -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Layer_1" xmlns:svg="http://www.w3.org/2000/svg"
-	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="0.51183in"
-	 height="1.01261in" viewBox="0 0 51.183 101.261" xml:space="preserve">
+<svg version="1.1"  xmlns:svg="http://www.w3.org/2000/svg"
+	 xmlns="http://www.w3.org/2000/svg"  x="0" y="0" width="0.51183in"
+	 height="0.98261in" viewBox="0 0 51.183 98.261" >
 	
-<rect id="connector0terminal" x="19.139" y="100.261" fill="none" width="3" height="1"/>
-<rect id="connector1terminal" x="29.139" y="100.261" fill="none" width="3" height="1"/>
-<rect id="connector1pin" x="29.139" y="93.261" fill="none" width="3" height="8"/>
-<rect id="connector0pin" x="19.139" y="93.261" fill="none" width="3" height="8"/>
 <g id="breadboard">
 	<g>
-		<rect x="19.139" y="76.261" fill="#8C8C8C" width="3" height="25"/>
-		<rect x="29.139" y="76.261" fill="#8C8C8C" width="3" height="25"/>
+		<rect id="connector0terminal" x="19.139" y="100.261" fill="none" width="3" height="1"/>
+		<rect id="connector1terminal" x="29.139" y="100.261" fill="none" width="3" height="1"/>
+		<rect id="connector1pin" x="29.139" y="93.261" fill="none" width="3" height="8"/>
+		<rect id="connector0pin" x="19.139" y="93.261" fill="none" width="3" height="8"/>
+
+		<line  id="connector0leg" stroke-linecap="round" x1="20.639" y1="98.261" x2="20.639" y2="101.261" stroke="#8C8C8C" fill="none" stroke-width="3" />
+		<line  id="connector1leg" stroke-linecap="round" x1="30.639" y1="98.261" x2="30.639" y2="101.261" stroke="#8C8C8C" fill="none" stroke-width="3" />
+
+
+		<rect x="19.139" y="76.261" fill="#8C8C8C" width="3" height="22"/>
+		<rect x="29.139" y="76.261" fill="#8C8C8C" width="3" height="22"/>
 		<ellipse fill="#0D0033" cx="25.594" cy="76.258" rx="25.589" ry="17.913"/>
 		<rect y="72.607" fill="#0D0033" width="51.162" height="3.653"/>
 		<ellipse fill="#100040" cx="25.594" cy="73.358" rx="25.589" ry="17.914"/>

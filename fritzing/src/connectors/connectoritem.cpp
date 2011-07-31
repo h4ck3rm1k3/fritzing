@@ -137,13 +137,17 @@ bendable TODO:
 	swapping: keep bends?
 	
 	bendpoints: align to grid? 
+
+	resistor: leg y-coordinate is slightly off 
 	
 	parts to modify
 		* LEDs (obsolete 5 colors and 15 SMD versions)
 		RGB LEDs
-		resistors
-		caps
 		transistors
+		* resistors
+		* tantalum caps
+		* electrolytic caps
+		* ceramic caps
 		** diodes
 		** tilt sensor
 		** temperature sensor

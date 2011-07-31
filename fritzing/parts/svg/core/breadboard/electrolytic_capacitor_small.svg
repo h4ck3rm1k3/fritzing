@@ -3,17 +3,24 @@
 <!-- This small electrolytic capacitor is measuring 5 mm diameter by 11.2 mm in height -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns:svg="http://www.w3.org/2000/svg"
-	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="0.19686in"
-	 height="0.62266in" viewBox="0 0 19.686 62.266" xml:space="preserve">
+	 xmlns="http://www.w3.org/2000/svg"  x="0px" y="0px" width="0.19686in"
+	 height="0.48266in" viewBox="0 0 19.686 48.266" >
 	
-<rect id="connector0terminal" x="3.39" y="61.266" fill="none" width="3" height="1"/>
-<rect id="connector1terminal" x="13.39" y="61.266" fill="none" width="3" height="1"/>
-<rect id="connector1pin" x="13.39" y="55.19" fill="none" width="3" height="7.075"/>
-<rect id="connector0pin" x="3.39" y="55.19" fill="none" width="3" height="7.075"/>
 <g id="breadboard">
 	<g>
-		<rect x="3.39" y="37.266" fill="#8C8C8C" width="3" height="25"/>
-		<rect x="13.39" y="37.266" fill="#8C8C8C" width="3" height="25"/>
+		<rect id="connector0terminal" x="3.39" y="61.266" fill="none" width="3" height="1"/>
+		<rect id="connector1terminal" x="13.39" y="61.266" fill="none" width="3" height="1"/>
+		<rect id="connector1pin" x="13.39" y="55.19" fill="none" width="3" height="7.075"/>
+		<rect id="connector0pin" x="3.39" y="55.19" fill="none" width="3" height="7.075"/>
+		
+		<line  id="connector0leg" stroke-linecap="round" x1="4.89" y1="48.266" x2="4.89" y2="62.266" stroke="#8C8C8C" fill="none" stroke-width="3" />
+		<line  id="connector1leg" stroke-linecap="round" x1="14.89" y1="48.266" x2="14.89" y2="62.266" stroke="#8C8C8C" fill="none" stroke-width="3" />
+
+
+		<rect x="3.39" y="37.266" fill="#8C8C8C" width="3" height="11"/>
+		<rect x="13.39" y="37.266" fill="#8C8C8C" width="3" height="11"/>
+		
+		
 		<ellipse fill="#0D0033" cx="9.844" cy="37.266" rx="9.842" ry="6.889"/>
 		<rect y="35.861" fill="#0D0033" width="19.679" height="1.404"/>
 		<ellipse fill="#100040" cx="9.844" cy="36.15" rx="9.842" ry="6.891"/>
