@@ -52,7 +52,7 @@
             <description>Pin0</description>
             <views>
                 <breadboardView>
-                    <p svgId="connector0pin" layer="breadboard" terminalId="connector0terminal" />
+                    <p svgId="connector0pin" layer="breadboard" terminalId="connector0terminal" legId="connector0leg"/>
                 </breadboardView>
                 <schematicView>
                     <p svgId="connector0pin" layer="schematic"  terminalId="connector0terminal" />
@@ -67,7 +67,7 @@
             <description>Pin 1</description>
             <views>
                 <breadboardView>
-                    <p svgId="connector1pin" layer="breadboard" terminalId="connector1terminal" />
+                    <p svgId="connector1pin" layer="breadboard" terminalId="connector1terminal"  legId="connector1leg"/>
                 </breadboardView>
                 <schematicView>
                     <p svgId="connector1pin" layer="schematic" terminalId="connector1terminal" />

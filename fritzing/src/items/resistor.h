@@ -55,13 +55,15 @@ public:
 	PluralType isPlural();
 	void addedToScene(bool temporary);
 	void setProp(const QString & prop, const QString & value);
+ 	bool setUpImage(ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, ViewLayer::ViewLayerSpec, bool doConnectors, LayerAttributes &, QString & error);
 
 protected:
-	QString makeBreadboardSvg(const QString & ohms);
+	QString makeSvg(const QString & ohms, ViewLayer::ViewLayerID viewLayerID);
 	void updateResistances(QString r);
 	ConnectorItem* newConnectorItem(class Connector *connector);
 	ConnectorItem* newConnectorItem(ItemBase * layerkin, Connector *connector);
 	QStringList collectValues(const QString & family, const QString & prop, QString & value);
+	void setBands(QDomElement & element, int firstband, int secondband, int thirdband, const QString & tolerance);
 
 public slots:
 	void resistanceEntry(const QString & text);

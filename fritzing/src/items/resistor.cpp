@@ -40,14 +40,14 @@ $Date$
 #include <qmath.h>
 #include <QRegExpValidator>
 
-static QString BreadboardLayerTemplate = "";
+static QString BreadboardSvg;
+static QString IconSvg;
 static QStringList Resistances;
 static QHash<QString, QString> PinSpacings;
 static QHash<int, QColor> ColorBands;
 static QString OhmSymbol(QChar(0x03A9));
 static QString PlusMinusSymbol(QChar(0x0B1));
 static QHash<QString, QColor> Tolerances;
-
 
 // TODO
 //	save into parts bin
@@ -106,13 +106,6 @@ Resistor::Resistor( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier v
 		Tolerances.insert(PlusMinusSymbol + "20%", QColor(0xdb, 0xb4, 0x77));
 	}
 
-	if (BreadboardLayerTemplate.isEmpty()) {
-		QFile file(":/resources/templates/resistor_breadboardLayerTemplate.txt");
-		file.open(QFile::ReadOnly);
-		BreadboardLayerTemplate = file.readAll();
-		file.close();
-	}
-
 	m_ohms = modelPart->prop("resistance").toString();
 	if (m_ohms.isEmpty()) {
 		m_ohms = modelPart->properties().value("resistance", "220");
@@ -147,7 +140,7 @@ void Resistor::setResistance(QString resistance, QString pinSpacing, bool force)
 				if (m_renderer == NULL) {
 					m_renderer = new FSvgRenderer(this);
 				}
-				QString svg = makeBreadboardSvg(resistance);
+				QString svg = makeSvg(resistance, m_viewLayerID);
 				//DebugDialog::debug(svg);
 				bool result = m_renderer->fastLoad(svg.toUtf8());
 				if (result) {
@@ -205,7 +198,7 @@ QString Resistor::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString,
 			return Capacitor::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 	}
 
-	QString svg = makeBreadboardSvg(m_ohms);
+	QString svg = makeSvg(m_ohms, viewLayerID);
 
 	QString xmlName = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
 	SvgFileSplitter splitter;
@@ -220,7 +213,7 @@ QString Resistor::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString,
 	return splitter.elementString(xmlName);
 }
 
-QString Resistor::makeBreadboardSvg(const QString & resistance) {
+QString Resistor::makeSvg(const QString & resistance, ViewLayer::ViewLayerID viewLayerID) {
 	double ohms = TextUtils::convertFromPowerPrefix(resistance, OhmSymbol);
 	QString sohms = QString::number(ohms, 'e', 3);
 	int firstband = sohms.at(0).toAscii() - '0';
@@ -230,12 +223,44 @@ QString Resistor::makeBreadboardSvg(const QString & resistance) {
 
 	QString tolerance = modelPart()->prop("tolerance").toString();
 
-	return BreadboardLayerTemplate
-		.arg(ColorBands.value(firstband, Qt::black).name())
-		.arg(ColorBands.value(secondband, Qt::black).name())
-		.arg(ColorBands.value(thirdband, Qt::black).name())
-		.arg(Tolerances.value(tolerance, QColor(173, 159, 78)).name())
-		;
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+	QDomDocument domDocument;
+	if (!domDocument.setContent(viewLayerID == ViewLayer::Breadboard ? BreadboardSvg : IconSvg, &errorStr, &errorLine, &errorColumn)) {
+		return "";
+	}
+	 
+	QDomElement root = domDocument.documentElement();
+	setBands(root, firstband, secondband, thirdband, tolerance);
+	return domDocument.toString();
+
+}
+
+void Resistor::setBands(QDomElement & element, int firstband, int secondband, int thirdband, const QString & tolerance)
+{
+
+	QString id = element.attribute("id");
+	if (!id.isEmpty()) {
+		if (id.compare("band_1_st") == 0) {
+			element.setAttribute("fill", ColorBands.value(firstband, Qt::black).name());
+		}
+		else if (id.compare("band_2_nd") == 0) {
+			element.setAttribute("fill", ColorBands.value(secondband, Qt::black).name());
+		}
+		else if (id.compare("band_3_rd_multiplier") == 0) {
+			element.setAttribute("fill", ColorBands.value(thirdband, Qt::black).name());
+		}
+		else if (id.compare("gold_band") == 0) {
+			element.setAttribute("fill", Tolerances.value(tolerance, QColor(173, 159, 78)).name());
+		}		
+	}
+
+	QDomElement child = element.firstChildElement();
+	while (!child.isNull()) {
+		setBands(child, firstband, secondband, thirdband, tolerance);
+		child = child.nextSiblingElement();
+	}
 }
 
 bool Resistor::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget)
@@ -335,7 +360,7 @@ bool Resistor::hasCustomSVG() {
 }
 
 bool Resistor::canEditPart() {
-	return false;
+	return true;
 }
 
 QStringList Resistor::collectValues(const QString & family, const QString & prop, QString & value) {
@@ -370,3 +395,16 @@ void Resistor::setProp(const QString & prop, const QString & value)
 		setResistance(m_ohms, m_pinSpacing, true);
 	}
 }
+
+bool Resistor::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors, LayerAttributes & layerAttributes, QString & error)
+{
+	bool result = Capacitor::setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, viewLayerSpec, doConnectors, layerAttributes, error);
+	if (viewLayerID == ViewLayer::Breadboard && BreadboardSvg.isEmpty() && result) {
+		BreadboardSvg = QString(layerAttributes.loaded());
+	}
+	else if (viewLayerID == ViewLayer::Icon && IconSvg.isEmpty() && result) {
+		IconSvg = QString(layerAttributes.loaded());
+	}
+	return result;
+}
+

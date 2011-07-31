@@ -258,7 +258,6 @@
         <file>resources/templates/resizableBoard_boardLayerTemplate.txt</file>
         <file>resources/templates/resizableBoard_silkscreenLayerTemplate.txt</file>
         <file>resources/templates/resizableBoard_fzpTemplate.txt</file>
-        <file>resources/templates/resistor_breadboardLayerTemplate.txt</file>
 	<file>resources/templates/bom.html</file>
 	<file>resources/templates/bom_row.html</file>
 	<file>resources/templates/perfboard_boardLayerTemplate.txt</file>

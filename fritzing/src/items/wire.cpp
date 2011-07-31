@@ -24,6 +24,22 @@ $Date$
 
 ********************************************************************/
 
+/* 
+
+curvy To Do
+
+	undo/redo
+	save/load
+	make-straight function
+	export
+	gerber
+	autorouter warning in PCB view
+	bendable legs
+	modify parameters (tension, unit area)?
+*/
+
+/////////////////////////////////////////////////////////////////
+
 #include "wire.h"
 
 #include <QLineF>
