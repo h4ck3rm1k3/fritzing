@@ -162,7 +162,7 @@ bendable TODO:
 		mic
 		solenoid
 		** servo
-		dc motor
+		** dc motor
 		peltier
 		distance sensor
 		** transistors

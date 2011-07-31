@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.6b.08.14.3340" moduleId="1000FADF10011leg">
-    <version>4</version>
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.6b.08.14.3340" moduleId="1000FADF10011">
+    <version replacedby="1000FADF10011leg">4</version>
     <author>Brendan Howell/Dirk van Osterbosch/Lionel Michel</author>
     <title>DC Motor</title>
     <label>M</label>
@@ -11,7 +11,7 @@
         <tag>fritzing core</tag>
     </tags>
     <properties>
-        <property name="family">DC Motor</property>
+        <property name="family">obsolete DC Motor</property>
     </properties>
     <description>Your standard DC Motor</description>
     <views>
@@ -21,7 +21,7 @@
             </layers>
         </iconView>
         <breadboardView>
-            <layers image="breadboard/dc_motor_leg.svg">
+            <layers image="breadboard/dc_motor.svg">
                 <layer layerId="breadboard"/>
             </layers>
         </breadboardView>
@@ -42,7 +42,7 @@
             <description>Pin 1</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector0pin" terminalId="connector0terminal" legId="connector0leg"/>
+                    <p layer="breadboard" svgId="connector0pin" terminalId="connector0terminal"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector0pin" terminalId="connector0terminal"/>
@@ -56,7 +56,7 @@
             <description>Pin 2</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector1pin" terminalId="connector1terminal" legId="connector1leg"/>
+                    <p layer="breadboard" svgId="connector1pin" terminalId="connector1terminal"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector1pin" terminalId="connector1terminal"/>
