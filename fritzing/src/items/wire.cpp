@@ -111,6 +111,7 @@ Wire * WireAction::wire() {
 Wire::Wire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu* itemMenu, bool initLabel)
 	: ItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
+	m_canHaveControlPoints = true;
 	m_hoverStrokeWidth = DefaultHoverStrokeWidth;
 	m_connector0 = m_connector1 = NULL;
 	m_partLabel = initLabel ? new PartLabel(this, NULL) : NULL;
@@ -129,7 +130,7 @@ Wire::Wire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdent
 
 	setPos(m_viewGeometry.loc());
 
-	m_dragEnd = false;
+	m_dragControl = m_dragEnd = false;
 }
 
 Wire::~Wire() {
@@ -227,17 +228,35 @@ void Wire::paintBody(QPainter * painter, const QStyleOptionGraphicsItem * option
 	Q_UNUSED(option);
 	Q_UNUSED(widget);
 
+	QPainterPath painterPath;
+	if (m_controlPoints.count() > 1) {
+		QLineF line = this->line();
+		painterPath.moveTo(line.p1());
+		painterPath.cubicTo(m_controlPoints.at(0), m_controlPoints.at(1), line.p2());
+	}
+
+
 	painter->setOpacity(m_inactive ? m_opacity  / 2 : m_opacity);
 	if (!getRatsnest() && !getTrace()) {
 		painter->save();
 		painter->setPen(m_shadowPen);
-		QLineF line = this->line();
-		painter->drawLine(line);
+		if (painterPath.isEmpty()) {
+			QLineF line = this->line();
+			painter->drawLine(line);
+		}
+		else {
+			painter->drawPath(painterPath);
+		}
 		painter->restore();
 	}
 	   
 	painter->setPen(m_pen);
-	painter->drawLine(getPaintLine());			
+	if (painterPath.isEmpty()) {
+		painter->drawLine(getPaintLine());	
+	}
+	else {
+		painter->drawPath(painterPath);
+	}
 }
 
 void Wire::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) 
@@ -245,7 +264,7 @@ void Wire::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option,
 	Q_UNUSED(widget);
 	Q_UNUSED(option);
 	painter->save();
-	if ((m_connectorHoverCount > 0 && !m_dragEnd) || m_connectorHoverCount2 > 0) {
+	if ((m_connectorHoverCount > 0 && !(m_dragEnd || m_dragControl)) || m_connectorHoverCount2 > 0) {
 		painter->setOpacity(.50);
 		painter->fillPath(this->hoverShape(), QBrush(connectorHoverColor));
 	}
@@ -258,27 +277,30 @@ void Wire::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option,
 
 QPainterPath Wire::hoverShape() const
 {
+	return shapeAux(m_hoverStrokeWidth);
+}
+
+QPainterPath Wire::shape() const
+{
+	return shapeAux(m_pen.widthF());
+}
+
+QPainterPath Wire::shapeAux(double width) const
+{
 	QPainterPath path;
 	if (m_line == QLineF()) {
 	    return path;
 	}
 				
 	path.moveTo(m_line.p1());
-	path.lineTo(m_line.p2());
-	//DebugDialog::debug(QString("using hoverstrokewidth %1 %2").arg(m_id).arg(m_hoverStrokeWidth));
-	return GraphicsUtils::shapeFromPath(path, m_pen, m_hoverStrokeWidth, false);
-}
-
-QPainterPath Wire::shape() const
-{
-	QPainterPath path;
-	if (m_line == QLineF()) {
-	    return path;
+	if (m_controlPoints.count() > 1) {
+		path.cubicTo(m_controlPoints.at(0), m_controlPoints.at(1), m_line.p2());
 	}
-	
-	path.moveTo(m_line.p1());
-	path.lineTo(m_line.p2());
-	return GraphicsUtils::shapeFromPath(path, m_pen, m_pen.width(), false);
+	else {
+		path.lineTo(m_line.p2());
+	}
+	//DebugDialog::debug(QString("using hoverstrokewidth %1 %2").arg(m_id).arg(m_hoverStrokeWidth));
+	return GraphicsUtils::shapeFromPath(path, m_pen, width, false);
 }
 
 QRectF Wire::boundingRect() const
@@ -311,12 +333,32 @@ void Wire::mousePressEvent(QGraphicsSceneMouseEvent *event)
 	ItemBase::mousePressEvent(event);
 }
 
+
+void Wire::initDragControl(QPointF scenePos) {
+	m_dragControl = true;
+	m_dragEnd = false;
+
+	QPointF p0 = connector0()->sceneAdjustedTerminalPoint(NULL);
+	QPointF p1 = connector1()->sceneAdjustedTerminalPoint(NULL);
+	double d0 = GraphicsUtils::distanceSqd(scenePos, p0);
+	double d1 =  GraphicsUtils::distanceSqd(scenePos, p1);
+	m_dragControlIndex = (d0 <= d1) ? 0 : 1;
+	if (m_controlPoints.count() < 2) {
+		m_controlPoints.clear();
+		m_controlPoints.append(mapFromScene(p0));
+		m_controlPoints.append(mapFromScene(p1));
+		m_controlPoints.append(QPointF(0,0));
+		m_controlPoints.append(QPointF(1,1));
+	}
+}
+
 void Wire::initDragEnd(ConnectorItem * connectorItem, QPointF scenePos) {
 	Q_UNUSED(scenePos);
 	saveGeometry();
 	QLineF line = this->line();
 	m_drag0 = (connectorItem == m_connector0);
 	m_dragEnd = true;
+	m_dragControl = false;
 	if (m_drag0) {
 		m_wireDragOrigin = line.p2();
  		//DebugDialog::debug(QString("drag near origin %1 %2").arg(m_wireDragOrigin.x()).arg(m_wireDragOrigin.y()) );
@@ -346,16 +388,22 @@ void Wire::mouseReleaseConnectorEvent(ConnectorItem * connectorItem, QGraphicsSc
 }
 
 void Wire::mouseMoveConnectorEvent(ConnectorItem * connectorItem, QGraphicsSceneMouseEvent * event) {
-	mouseMoveEventAux(this->mapFromItem(connectorItem, event->pos()), (event->modifiers() & Qt::ShiftModifier) != 0);
+	mouseMoveEventAux(this->mapFromItem(connectorItem, event->pos()), event->modifiers());
 }
 
 
 void Wire::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
-	mouseMoveEventAux(event->pos(), (event->modifiers() & Qt::ShiftModifier) != 0);
+	mouseMoveEventAux(event->pos(), event->modifiers());
 }
 
-void Wire::mouseMoveEventAux(QPointF eventPos, bool shiftModifier) {
+void Wire::mouseMoveEventAux(QPointF eventPos, Qt::KeyboardModifiers modifiers) {
 	if (m_spaceBarWasPressed) {
+		return;
+	}
+
+	if (m_dragControl) {
+		dragControl(eventPos, modifiers);
+		update();
 		return;
 	}
 
@@ -374,7 +422,7 @@ void Wire::mouseMoveEventAux(QPointF eventPos, bool shiftModifier) {
 		otherConnectorItem = m_connector0;
 	}
 
-	if (shiftModifier) {
+	if ((modifiers & Qt::ShiftModifier) != 0) {
 		QPointF initialPos = mapFromScene(otherConnectorItem->sceneAdjustedTerminalPoint(NULL)); 
 		bool bendpoint = isBendpoint(whichConnectorItem);
 		if (bendpoint) {
@@ -493,7 +541,13 @@ void Wire::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 }
 
 bool Wire::releaseDrag() {
-	if (m_dragEnd == false) return false;
+	if (m_dragEnd == false && m_dragControl == false) return false;
+
+	if (m_dragControl) {
+		m_dragControl = false;
+		ungrabMouse();
+		return true;
+	}
 
 	m_dragEnd = false;
 
@@ -1088,7 +1142,7 @@ void Wire::setOpacity(double opacity) {
 }
 
 bool Wire::draggingEnd() {
-	return m_dragEnd;
+	return m_dragEnd || m_dragControl;
 }
 
 void Wire::setCanChainMultiple(bool can) {
@@ -1475,3 +1529,101 @@ void Wire::setPen(const QPen &pen)
     update();
 }
 
+bool Wire::canHaveControlPoints() {
+	return m_canHaveControlPoints && (m_viewIdentifier == ViewIdentifierClass::BreadboardView);
+}
+
+double B0 (double t){
+  return (1-t)*(1-t)*(1-t);
+}
+double B1 (double t){
+  return  3*t* (1-t)*(1-t);
+}
+double B2 (double t){
+  return 3*t*t* (1-t);
+}
+double B3 (double t){
+  return t*t*t;
+}
+
+void Wire::dragControl(QPointF eventPos, Qt::KeyboardModifiers)
+{
+	// see: Cubic Bezier (Nearly) Through Two Given Points at http://www.flong.com/texts/code/shapers_bez/
+
+	double tx = m_line.p2().x() - m_line.p1().x();
+	double ty = m_line.p2().y() - m_line.p1().y();
+	double dx = eventPos.x() - m_line.p1().x();
+	double dy = eventPos.y() - m_line.p1().y();
+
+	// map points to unit square
+	double lx = qMax(0.0, qMin(1.0, dx / tx));
+	double ly = qMax(0.0, qMin(1.0, dy / ty));
+
+	double a, b, c, d;
+	if (m_dragControlIndex == 0) {
+		a = lx;
+		b = ly;
+		c = m_controlPoints.at(3).x();
+		d = m_controlPoints.at(3).y();
+		m_controlPoints.replace(2, QPointF(lx, ly));
+	}
+	else {
+		a = m_controlPoints.at(2).x();
+		b = m_controlPoints.at(2).y();
+		c = lx;
+		d = ly;
+		m_controlPoints.replace(3, QPointF(lx, ly));
+	}
+
+	double epsilon = 0.00001;
+	double min_param_a = 0.0 + epsilon;
+	double max_param_a = 1.0 - epsilon;
+	double min_param_b = 0.0 + epsilon;
+	double max_param_b = 1.0 - epsilon;
+	a = qMax(min_param_a, qMin(max_param_a, a));
+	b = qMax(min_param_b, qMin(max_param_b, b));
+
+	double x0 = 0;  
+	double y0 = 0;
+	double x4 = a;  
+	double y4 = b;
+	double x5 = c;  
+	double y5 = d;
+	double x3 = 1;  
+	double y3 = 1;
+	double x1,y1,x2,y2; // to be solved.
+
+	// arbitrary but reasonable 
+	// t-values for interior control points
+	double t1 = 0.3;
+	double t2 = 0.7;
+
+	double B0t1 = B0(t1);
+	double B1t1 = B1(t1);
+	double B2t1 = B2(t1);
+	double B3t1 = B3(t1);
+	double B0t2 = B0(t2);
+	double B1t2 = B1(t2);
+	double B2t2 = B2(t2);
+	double B3t2 = B3(t2);
+
+	double ccx = x4 - x0*B0t1 - x3*B3t1;
+	double ccy = y4 - y0*B0t1 - y3*B3t1;
+	double ffx = x5 - x0*B0t2 - x3*B3t2;
+	double ffy = y5 - y0*B0t2 - y3*B3t2;
+
+	x2 = (ccx - (ffx*B1t1)/B1t2) / (B2t1 - (B1t1*B2t2)/B1t2);
+	y2 = (ccy - (ffy*B1t1)/B1t2) / (B2t1 - (B1t1*B2t2)/B1t2);
+	x1 = (ccx - x2*B2t1) / B1t1;
+	y1 = (ccy - y2*B2t1) / B1t1;
+
+	x1 = qMax(0+epsilon, qMin(1-epsilon, x1));
+	x2 = qMax(0+epsilon, qMin(1-epsilon, x2));
+
+	x1 = m_line.p1().x() + (x1 * tx);
+	x2 = m_line.p1().x() + (x2 * tx);
+	y1 = m_line.p1().y() + (y1 * ty);
+	y2 = m_line.p1().y() + (y2 * ty);
+	m_controlPoints.replace(0, QPointF(x1, y1));
+	m_controlPoints.replace(1, QPointF(x2, y2));
+}

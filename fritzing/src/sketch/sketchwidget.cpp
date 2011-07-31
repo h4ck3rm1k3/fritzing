@@ -2028,6 +2028,7 @@ void SketchWidget::mousePressEvent(QMouseEvent *event)
 				return;
 			}
 			else {
+				m_dragControlPoint = ((event->modifiers() & Qt::ControlModifier) != 0) && wire->canHaveControlPoints();
 				m_dragBendpointWire = wire;
 				m_dragBendpointPos = event->pos();
 				return;	
@@ -2470,12 +2471,19 @@ void SketchWidget::prepDragWire(Wire * wire)
 	setupAutoscroll(true);
 }
 
-void SketchWidget::prepDragBendpoint(Wire * wire, QPoint eventPos) 
+void SketchWidget::prepDragBendpoint(Wire * wire, QPoint eventPos, bool dragControlPoint) 
 {
 	m_bendpointWire = wire;
 	wire->saveGeometry();
 	ViewGeometry vg = m_bendpointVG = wire->getViewGeometry();
 	QPointF newPos = mapToScene(eventPos); 
+
+	if (dragControlPoint) {
+		setupAutoscroll(true);
+		wire->initDragControl(newPos);
+		wire->grabMouse();
+		return;
+	}
 
 	QPointF oldPos = wire->pos();
 	QLineF oldLine = wire->line();
@@ -2543,7 +2551,7 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 	emit cursorLocationSignal(sp.x() / FSvgRenderer::printerScale(), sp.y() / FSvgRenderer::printerScale());
 
 	if (m_dragBendpointWire != NULL) {
-		prepDragBendpoint(m_dragBendpointWire, m_dragBendpointPos);
+		prepDragBendpoint(m_dragBendpointWire, m_dragBendpointPos, m_dragControlPoint);
 		m_dragBendpointWire = NULL;
 		m_draggingBendpoint = true;
 		this->m_alignmentStartPoint = mapToScene(m_dragBendpointPos);		// not sure this will be correct...

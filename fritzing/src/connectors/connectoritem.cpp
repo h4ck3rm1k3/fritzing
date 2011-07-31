@@ -152,7 +152,7 @@ bendable TODO:
 		** 2aa battery
 		** 4aaa battery
 		** 9v battery
-		stepper motors
+		** stepper motors
 		piezo
 		loudspeaker
 		mic

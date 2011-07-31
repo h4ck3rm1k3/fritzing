@@ -367,7 +367,7 @@ protected:
 	bool swappedGender(ConnectorItem * originalConnectorItem, Connector * newConnector);
 	void setLastPaletteItemSelected(PaletteItem * paletteItem);
 	void setLastPaletteItemSelectedIf(ItemBase * itemBase);
-	void prepDragBendpoint(Wire *, QPoint eventPos);
+	void prepDragBendpoint(Wire *, QPoint eventPos, bool dragControlPoint);
 	void prepDragWire(Wire *);
 	void clickBackground(QMouseEvent *);
 	void categorizeDragWires(QSet<Wire *> & wires);
@@ -595,6 +595,7 @@ protected:
 	QPointer<ItemBase> m_lastHoverEnterItem;
 	QString m_shortName;
 	QPointer<Wire> m_dragBendpointWire;
+	bool m_dragControlPoint;
 	QPoint m_dragBendpointPos;
 	QColor m_standardBackgroundColor;
 	StatusConnectStatus m_statusConnectState;

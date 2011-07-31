@@ -94,6 +94,7 @@ public:
 	void hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, class ConnectorItem * item);
 
 	void initDragEnd(ConnectorItem * dragEnd, QPointF scenePos);
+	void initDragControl(QPointF scenePos);
 	void connectedMoved(ConnectorItem * from, ConnectorItem * to);
 	void setLineAnd(QLineF line, QPointF pos, bool useLine);
 	ConnectorItem * otherConnector(ConnectorItem *);
@@ -158,6 +159,7 @@ public:
     QPainterPath shape() const;
 	QRectF boundingRect() const;
 	virtual const QLineF & getPaintLine();
+	bool canHaveControlPoints();
 
 protected slots:
 	void colorEntry(const QString & text);
@@ -175,7 +177,8 @@ protected:
 	void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
-	void mouseMoveEventAux(QPointF eventPos, bool shiftModifier);
+	void mouseMoveEventAux(QPointF eventPos, Qt::KeyboardModifiers);
+	void dragControl(QPointF eventPos, Qt::KeyboardModifiers);
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget); 
 	void initEnds(const ViewGeometry &, QRectF defaultRect, class InfoGraphicsView *);
@@ -204,12 +207,15 @@ protected:
 	void checkVisibility(ConnectorItem * onMe, ConnectorItem * onIt, bool connect);
 	void setConnectorDimensionsAux(ConnectorItem *, double width, double height);
 	bool isBendpoint(ConnectorItem * connectorItem);
+	QPainterPath shapeAux(double width) const;
 
 protected:
 	QLineF	m_line;
 	QPen	m_pen;	
 	QPointF m_wireDragOrigin;
 	bool m_dragEnd;
+	bool m_dragControl;
+	int m_dragControlIndex;
 	bool m_drag0;
 	QPointer<class ConnectorItem> m_connectorHover;
 	QPointer<class ConnectorItem> m_connector0;
@@ -228,6 +234,8 @@ protected:
 	bool m_markedDeleted;
 	QRectF m_originalConnectorRect;
 	double m_hoverStrokeWidth;
+	bool m_canHaveControlPoints;
+	QPolygonF m_controlPoints;
 
 public:
 	static QStringList colorNames;
