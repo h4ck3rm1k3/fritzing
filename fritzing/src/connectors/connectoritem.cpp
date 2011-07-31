@@ -128,11 +128,11 @@ bendable TODO:
 		within a particular region, the part body stops updating--
 		but the legs follow the phantom part until the part jumps into position
 
+	* export: resistors and other custom generated parts with legs (retrieve svg)
+
 	when dragging to breadboard from parts bin, don't get final alignment to breadboard
 
 	survival in parts editor
-
-	export: resistors and other custom generated parts with legs (retrieve svg)
 
 	swapping: keep bends?
 	
@@ -161,7 +161,7 @@ bendable TODO:
 		loudspeaker
 		mic
 		solenoid
-		servo
+		** servo
 		dc motor
 		peltier
 		distance sensor

@@ -308,7 +308,7 @@
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="3234DBDC80" modelIndex="27" path="parts/core/basic_servo.fzp">
+        <instance moduleIdRef="3234DBDC80leg" modelIndex="27" path="parts/core/servo.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
