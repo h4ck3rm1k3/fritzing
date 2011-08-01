@@ -6,7 +6,7 @@
  <date>2011-01-11</date>
  <tags>
   <tag>LED</tag>
-  <tag>Blue LED</tag>
+  <tag>Red LED</tag>
   <tag>indicator</tag>
   <tag>fritzing core</tag>
  <tag>SMD</tag></tags>
@@ -47,7 +47,7 @@
    <description>cathode pin</description>
    <views>
     <breadboardView>
-     <p layer="breadboard" svgId="connector0pin" terminalId="connector0terminal"/>
+     <p layer="breadboard" svgId="connector0pin" legId="connector0leg"/>
     </breadboardView>
     <schematicView>
      <p layer="schematic" svgId="connector0pin" terminalId="connector0terminal"/>
@@ -61,7 +61,7 @@
    <description>anode pin</description>
    <views>
     <breadboardView>
-     <p layer="breadboard" svgId="connector1pin" terminalId="connector1terminal"/>
+     <p layer="breadboard" svgId="connector1pin" legId="connector1leg"/>
     </breadboardView>
     <schematicView>
      <p layer="schematic" svgId="connector1pin" terminalId="connector1terminal"/>
