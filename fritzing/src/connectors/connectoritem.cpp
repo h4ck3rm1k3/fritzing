@@ -143,7 +143,7 @@ bendable TODO:
 	parts to modify
 		* LEDs (obsolete 5 colors and 15 SMD versions)
 			maintain color when switching from obsolete
-		RGB LEDs
+		** RGB LEDs
 		** resistors
 		** tantalum caps
 		** electrolytic caps

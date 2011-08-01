@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.1.beta.1407" moduleId="3915BBEC34LEDModuleID">
- <version>4</version>
+ <version replacedby="5mmColorLEDModuleID">4</version>
  <author>Stefan Hermann</author>
  <title>green LED - 5mm</title>
  <label>LED</label>
@@ -12,7 +12,7 @@
  </tags>
  <properties>
   <property name="package">5 mm [THT]</property>
-  <property name="family">LED</property>
+  <property name="family">obsolete_LED</property>
   <property name="color" showInLabel="yes">green</property>
   <property name="current" showInLabel="yes"></property>
  </properties>

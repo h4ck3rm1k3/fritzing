@@ -1,30 +1,30 @@
-<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.1.beta.1396" moduleId="603YellowLEDModuleID">
- <version>4</version>
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.1.beta.1396" moduleId="1206WhiteLEDModuleID">
+ <version replacedby="1206ColorLEDModuleID">4</version>
  <author>Mr.T</author>
- <title>yellow smd LED</title>
+ <title>white smd LED</title>
  <label>LED</label>
  <date>2011-01-11</date>
  <tags>
   <tag>LED</tag>
-  <tag>yellow LED</tag>
+  <tag>white LED</tag>
   <tag>indicator</tag>
   <tag>fritzing core</tag>
  <tag>SMD</tag></tags>
  <properties>
-  <property name="package">0603 [SMD]</property>
-  <property name="family">LED</property>
-  <property name="color" showInLabel="yes">yellow</property>
+  <property name="package">1206 [SMD]</property>
+  <property name="family">obsolete_LED</property>
+  <property name="color" showInLabel="yes">white</property>
     <property name="current" showInLabel="yes"/>
  </properties>
- <description>A generic yellow LED (~1.8V)</description>
+ <description>A generic white LED (~1.8V)</description>
  <views>
   <iconView>
-   <layers image="icon/LED-yellow-5mmicon.svg">
+   <layers image="icon/LED-white-5mmicon.svg">
     <layer layerId="icon"/>
    </layers>
   </iconView>
   <breadboardView fliphorizontal="true" flipvertical="true">
-   <layers image="breadboard/LED-5mm-yellow.svg">
+   <layers image="breadboard/LED-5mm-white.svg">
     <layer layerId="breadboard"/>
    </layers>
   </breadboardView>
@@ -34,7 +34,7 @@
    </layers>
   </schematicView>
   <pcbView>
-   <layers image="pcb/SMD_LED_0603.svg">
+   <layers image="pcb/SMD_LED_1206.svg">
     <layer layerId="keepout"/>
     <layer layerId="soldermask"/>
     <layer layerId="silkscreen"/>

@@ -446,6 +446,7 @@ protected:
 	void updatePartsBinMenu(QMenu * partsBinMenu, QMenu * binMenu, int skip);
 	QString getBomProps(ItemBase *);
 	void swapSelectedMap(const QString & family, const QString & prop, QMap<QString, QString> & currPropsMap, ItemBase *);
+	ModelPart * findReplacedby(ModelPart * originalModelPart);
 
 
 protected:

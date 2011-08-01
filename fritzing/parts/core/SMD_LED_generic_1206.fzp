@@ -1,22 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.1.beta.1396" moduleId="1206RedLEDModuleID">
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.1.beta.1396" moduleId="1206ColorLEDModuleID">
  <version>4</version>
  <author>Mr.T</author>
- <title>red smd LED</title>
+ <title>Blue smd LED</title>
  <label>LED</label>
  <date>2011-01-11</date>
  <tags>
   <tag>LED</tag>
-  <tag>red LED</tag>
+  <tag>Blue LED</tag>
   <tag>indicator</tag>
   <tag>fritzing core</tag>
  <tag>SMD</tag></tags>
  <properties>
   <property name="package">1206 [SMD]</property>
   <property name="family">LED</property>
-  <property name="color" showInLabel="yes">red</property>
-  <property name="current" showInLabel="yes"/>
-  </properties>
- <description>A generic red LED (~1.8V)</description>
+  <property name="color" showInLabel="yes">Red (633nm)</property>
+     <property name="current" showInLabel="yes"/>
+     </properties>
+ <description>A generic blue LED (~1.8V)</description>
  <views>
   <iconView>
    <layers image="icon/LED-red-5mmicon.svg">
@@ -24,7 +24,7 @@
    </layers>
   </iconView>
   <breadboardView fliphorizontal="true" flipvertical="true">
-   <layers image="breadboard/LED-5mm-red.svg">
+   <layers image="breadboard/LED-5mm-red-draggable.svg">
     <layer layerId="breadboard"/>
    </layers>
   </breadboardView>

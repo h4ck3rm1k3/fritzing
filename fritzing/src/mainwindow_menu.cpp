@@ -2804,6 +2804,25 @@ void MainWindow::selectAllObsolete() {
         }
 }
 
+ModelPart * MainWindow::findReplacedby(ModelPart * originalModelPart) {
+	ModelPart * newModelPart = originalModelPart;
+	while (true) {
+		QString newModuleID = newModelPart->replacedby();
+		if (newModuleID.isEmpty()) {
+			return ((newModelPart == originalModelPart) ? NULL : newModelPart);
+		}
+
+		ModelPart * tempModelPart = this->m_refModel->retrieveModelPart(newModuleID);
+		if (tempModelPart == NULL) {
+			// something's screwy
+			return NULL;
+		}
+
+		newModelPart = tempModelPart;
+	}
+}
+
+
 void MainWindow::swapObsolete() {
 
 	QSet<ItemBase *> itemBases;
@@ -2822,28 +2841,18 @@ void MainWindow::swapObsolete() {
         int count = 0;
 
 	foreach (ItemBase * itemBase, itemBases) {
-		QString newModuleID = itemBase->modelPart()->replacedby();
-		if (newModuleID.isEmpty()) {
+		ModelPart * newModelPart = findReplacedby(itemBase->modelPart());
+		if (newModelPart == NULL) {
 			QMessageBox::information(
 				this,
 				tr("Sorry!"),
-				tr( "No new part found for %1.\n").arg(itemBase->title())
-			);
-			continue;
-		}
-
-		ModelPart * mp = this->m_refModel->retrieveModelPart(newModuleID);
-		if (mp == NULL) {
-			QMessageBox::information(
-				this,
-				tr("Sorry!"),
-				tr( "Unknown module id for %1.\n").arg(itemBase->title())
+				tr( "unable to find replacement for %1.\n").arg(itemBase->title())
 			);
 			continue;
 		}
 
 		count++;
-		long newID = swapSelectedAuxAux(itemBase, newModuleID, itemBase->viewLayerSpec(), parentCommand);
+		long newID = swapSelectedAuxAux(itemBase, newModelPart->moduleID(), itemBase->viewLayerSpec(), parentCommand);
 		if (itemBase->modelPart()) {
 			// special case for swapping old resistors.
 			QString resistance = itemBase->modelPart()->properties().value("resistance", "");
@@ -2859,6 +2868,32 @@ void MainWindow::swapObsolete() {
 			if (!resistance.isEmpty() && !footprint.isEmpty()) {
 				new SetResistanceCommand(m_currentGraphicsView, newID, resistance, resistance, footprint, footprint, parentCommand);
 			}
+
+			// special case for swapping LEDs
+			if (newModelPart->moduleID().contains(ModuleIDNames::ColorLEDModuleIDName)) {
+				QString oldColor = itemBase->modelPart()->properties().value("color");
+				QString newColor;
+				if (oldColor.contains("red", Qt::CaseInsensitive)) {
+					newColor = "Red (633nm)";
+				}
+				else if (oldColor.contains("blue", Qt::CaseInsensitive)) {
+					newColor = "Blue (430nm)";
+				}
+				else if (oldColor.contains("yellow", Qt::CaseInsensitive)) {
+					newColor = "Yellow (585nm)";
+				}
+				else if (oldColor.contains("green", Qt::CaseInsensitive)) {
+					newColor = "Green (555nm)";
+				}
+				else if (oldColor.contains("white", Qt::CaseInsensitive)) {
+					newColor = "White (4500K)";
+				}
+
+				if (newColor.length() > 0) {
+					new SetPropCommand(m_currentGraphicsView, newID, "color", newColor, newColor, true, parentCommand);
+				}
+			}
+
 		}
 	}
 
