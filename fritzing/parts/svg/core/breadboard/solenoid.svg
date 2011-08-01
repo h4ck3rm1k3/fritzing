@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Basic//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-basic.dtd">
-<svg version="1.1" baseProfile="basic" id="svg2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-	 x="0px" y="0px" width="0.657in" height="1.679in" viewBox="0 0 47.369 120.917" xml:space="preserve">
-<rect id="connector0pin" x="19.013" y="117.764" fill="#919191" width="2.141" height="3.15"/>
-<rect id="connector1pin" x="26.234" y="117.763" fill="#919191" width="2.16" height="3.15"/>
-<rect id="connector0terminal" x="19.013" y="120.514" fill="#919191" width="2.141" height="0.402"/>
-<rect id="connector1terminal" x="26.234" y="120.513" fill="#919191" width="2.16" height="0.402"/>
+<svg version="1.1" baseProfile="basic" id="svg2" xmlns="http://www.w3.org/2000/svg" 
+	 x="0px" y="0px" width="0.657in" height="1.56451in" viewBox="0 0 47.369 112.672" >   
 <g id="breadboard">
+	<rect id="connector0pin" x="19.013" y="111" fill="none" width="1" height="1"/>
+	<rect id="connector1pin" x="26.234" y="111" fill="none" width="1" height="1"/>
+	<rect id="connector0terminal" x="19.013" y="111" fill="none" width="1" height="0.402"/>
+	<rect id="connector1terminal" x="26.234" y="111" fill="none" width="1" height="0.402"/>
+
+	<line  id="connector0leg" stroke-linecap="round" x1="20.083" y1="112.672" x2="20.083" y2="120.917" stroke="#000000" fill="none" stroke-width="3" />
+	<line  id="connector1leg" stroke-linecap="round" x1="27.314" y1="112.672" x2="27.314" y2="120.917" stroke="#FF0000" fill="none" stroke-width="3" />
+
 	<path fill="none" stroke="#000000" stroke-width="3" d="M20.083,102.305v10.367"/>
-	<path fill="none" stroke="#FF0000" stroke-width="3" d="M27.314,102.305c0,0,0,6.125,0,10.367"/>
+	<path fill="none" stroke="#FF0000" stroke-width="3" d="M27.314,102.305v10.367"/>
+	
 	<polyline fill="#726038" points="2,39.462 2,102.305 45.369,102.305 45.369,39.462 	"/>
 	<path fill="none" stroke="#E5C76C" stroke-width="4" d="M2,39.462V99.47c0,1.56,1.275,2.835,2.834,2.835h37.701
 		c1.559,0,2.834-1.275,2.834-2.835V39.462"/>
@@ -31,7 +36,5 @@
 	<rect x="23.685" y="0.321" opacity="0.51" fill="#FFFFFF" width="1.649" height="30.881"/>
 	<circle fill="#A3A3A3" cx="23.685" cy="3.149" r="1.466"/>
 	<circle opacity="0.2" fill="#727272" cx="23.685" cy="3.149" r="1.28"/>
-	<rect id="aa" x="18.583" y="112.671" fill="#8C8C8C" width="3" height="8.245"/>
-	<rect id="bb" x="25.814" y="112.671" fill="#8C8C8C" width="3" height="8.245"/>
 </g>
 </svg>

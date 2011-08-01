@@ -160,9 +160,9 @@ bendable TODO:
 		** servo
 		** dc motor
 		** piezo
-		loudspeaker
+		** loudspeaker
 		** mic
-		solenoid
+		** solenoid
 		** peltier
 		** distance sensor
 		** transistors
