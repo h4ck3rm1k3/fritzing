@@ -1,4 +1,5 @@
 import urllib
+import re
 
 from zope.app.component.hooks import getSite
 
@@ -90,9 +91,12 @@ def sendStatusMail(context):
     
     from_address = faborders.salesEmail
     from_name = "Fritzing Fab"
+    to_address = context.email
     user  = context.getOwner()
-    to_address = user.getProperty('email')
     to_name = user.getProperty('fullname')
+    # we expect a name to contain non-whitespace characters:
+    if not re.search('\S', to_name):
+        to_name = u"%s" % user
     
     state_id = getStateId(False, context)
     state_title = getStateTitle(False, context)
