@@ -3,8 +3,7 @@
 <svg version="1.2" baseProfile="tiny" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
 	 x="0px" y="0px" width="0.428319444in" height="0.176222222in" viewBox="0 0 30.839 12.688" enable-background="new 0 0 30.839 12.688" xml:space="preserve">
 <g id="breadboard">
-	<rect id="connector0terminal" x="0.005" y="6.89" fill="none" width="2.49" height="2.498"/>
-	<rect id="connector1terminal" x="28.349" y="6.89" fill="none" width="2.49" height="2.498"/>
+
 	<rect id="connector0pin" y="6.862" fill="none" width="3.56" height="2.5"/>
 	<rect id="connector1pin" x="26.848" y="6.888" fill="none" width="3.989" height="2.5"/>
 	

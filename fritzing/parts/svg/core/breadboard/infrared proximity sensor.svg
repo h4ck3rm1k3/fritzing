@@ -6,9 +6,6 @@
   <rect width="1" x="44.368" y="35" fill="none" height="1" id="connector0pin" />
  <rect width="1" x="51.531" y="35" fill="none" height="1" id="connector1pin" />
  <rect width="1" x="58.682" y="35" fill="none" height="1" id="connector2pin" />
- <rect width="1" x="44.746" y="35" fill="none" height="0.404" id="connector0terminal" />
- <rect width="1" x="51.906" y="35" fill="none" height="0.404" id="connector1terminal" />
- <rect width="1" x="59.057" y="35" fill="none" height="0.404" id="connector2terminal" />
  
 <line  id="connector0leg" stroke-linecap="round" x1="45.872" y1="36.608" x2="45.872" y2=" 40.956" stroke="#FFFF00" fill="none" stroke-width="3" />
 <line  id="connector1leg" stroke-linecap="round" x1="53.031" y1="36.608" x2="53.031" y2=" 40.956" stroke="#020000" fill="none" stroke-width="3" />

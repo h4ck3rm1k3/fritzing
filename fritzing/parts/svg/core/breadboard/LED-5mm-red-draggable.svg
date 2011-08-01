@@ -5,12 +5,12 @@
 	 >
 
 <g id="breadboard">
-	<rect id="connector0pin" x="4.793" y="65.307" fill="none" width="2.989" height="9.442"/>
-	<rect id="connector1pin" x="14.793" y="65.307" fill="none" width="2.992" height="9.442"/>
-	<rect id="connector0terminal" x="4.793" y="74.192" fill="none" width="2.989" height="0.562"/>
-	<rect id="connector1terminal" x="14.794" y="74.192" fill="none" width="2.991" height="0.562"/>
+	<rect id="connector0pin" x="4.793" y="35.307" fill="none" width="2.989" height="1"/>
+	<rect id="connector1pin" x="14.793" y="35.307" fill="none" width="2.992" height="1"/>
+
 	<line  id="connector0leg" stroke-linecap="round" x1="6.287" y1="40.565" x2="6.287" y2="74.754" stroke="#8C8C8C" fill="none" stroke-width="2.988" />
 	<line  id="connector1leg" stroke-linecap="round" x1="16.29" y1="40.565" x2="16.29" y2="74.754" stroke="#8C8C8C" fill="none" stroke-width="2.988" />
+
 	<rect x="4.793" y="26.916" fill="#8C8C8C" width="2.988" height="13.649"/>
 	<path fill="#8C8C8C" d="M17.784,40.565c0-1.63-1.479-2.92-2.9-4.155c-0.578-0.51-1.666-1.391-1.666-1.979v-7.598h-3.002v8.028
 		c0,1.47,1.316,2.609,2.703,3.817c0.617,0.522,1.873,1.736,1.873,2.458"/>

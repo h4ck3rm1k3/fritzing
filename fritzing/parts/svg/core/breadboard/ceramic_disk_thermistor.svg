@@ -13,33 +13,20 @@
 <rect
      id="connector0pin"
      x="0"
-     y="32.75"
-     fill="none"
-     width="3"
-     height="10" />
-     <rect
-     id="connector0terminal"
-     x="0"
-     y="41.75"
+     y="12.75"
      fill="none"
      width="3"
      height="1" />
-     <rect
-     id="connector1terminal"
-     x="20"
-     y="41.75"
-     fill="none"
-     width="3"
-     height="1" />
+
      <rect
      id="connector1pin"
      x="20"
-     y="32.75"
+     y="12.75"
      fill="none"
      width="3"
-     height="10" />
+     height="1" />
      
- 	<line  id="connector0leg" stroke-linecap="round" x1="1.5" y1="22.998" x2="1.5" y2="41.25" stroke="#8C8C8C"  fill="none" stroke-width="3" />
+	<line  id="connector0leg" stroke-linecap="round" x1="1.5" y1="22.998" x2="1.5" y2="41.25" stroke="#8C8C8C"  fill="none" stroke-width="3" />
 	<line  id="connector1leg" stroke-linecap="round" x1="21.5" y1="22.998" x2="21.5" y2="41.25" stroke="#8C8C8C"  fill="none" stroke-width="3" />
 
 

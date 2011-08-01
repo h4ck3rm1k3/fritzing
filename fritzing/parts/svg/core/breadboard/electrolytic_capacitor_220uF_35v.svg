@@ -7,10 +7,8 @@
 	 height="0.59901in" viewBox="0 0 31.495 59.901" >
 	
 <g id="breadboard">
-	<rect id="connector0terminal" x="9.296" y="68.901" fill="none" width="3" height="1"/>
-	<rect id="connector1terminal" x="19.296" y="68.901" fill="none" width="3" height="1"/>
-	<rect id="connector1pin" x="19.296" y="61.901" fill="none" width="3" height="8"/>
-	<rect id="connector0pin" x="9.296" y="61.901" fill="none" width="3" height="8"/>
+	<rect id="connector1pin" x="19.296" y="51.901" fill="none" width="3" height="1"/>
+	<rect id="connector0pin" x="9.296" y="51.901" fill="none" width="3" height="1"/>
 	<line  id="connector0leg" stroke-linecap="round" x1="10.796" y1="59.901" x2="10.796" y2="69.901" stroke="#8C8C8C" fill="none" stroke-width="3" />
 	<line  id="connector1leg" stroke-linecap="round" x1="20.796" y1="59.901" x2="20.796" y2="69.901" stroke="#8C8C8C" fill="none" stroke-width="3" />
 

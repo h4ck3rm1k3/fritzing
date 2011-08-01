@@ -7,10 +7,6 @@
 	<rect id="connector1pin" x="7.199" y="22" fill="none" width="1" height="1"/>
 	<rect id="connector2pin" x="14.399" y="22" fill="none" width="1" height="1"/>
 	<rect id="connector3pin" x="21.598" y="22" fill="none" width="1" height="1"/>
-	<rect id="connector0terminal" y="22" fill="none" width="1" height="0.403"/>
-	<rect id="connector1terminal" x="7.201" y="22" fill="none" width="1" height="0.403"/>
-	<rect id="connector2terminal" x="14.399" y="22" fill="none" width="1" height="0.403"/>
-	<rect id="connector3terminal" x="21.6" y="22" fill="none" width="1" height="0.403"/>
 	
 	<line  id="connector0leg" stroke-linecap="round" x1="1.08" y1="32.55" x2="1.08" y2="53.55" stroke="#8C8C8C" fill="none" stroke-width="2.16" />
 	<line  id="connector1leg" stroke-linecap="round" x1="8.28" y1="32.55" x2="8.28" y2="53.55" stroke="#8C8C8C" fill="none" stroke-width="2.16" />

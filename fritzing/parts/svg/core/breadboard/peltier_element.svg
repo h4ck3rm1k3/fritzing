@@ -8,8 +8,6 @@
 <g id="breadboard" transform="translate(115.90235,-16.373002)">
 	<rect id="connector0pin" x="-92.91935" y="93.765" fill="none" width="1" height="1"/>
 	<rect id="connector1pin" x="-85.72835" y="93.765" fill="none" width="1" height="1"/>
-	<rect id="connector0terminal" x="-92.92435" y="93.765" fill="none" width="1" height="1"/>
-	<rect id="connector1terminal" x="-85.72835" y="93.765" fill="none" width="1" height="1"/>
 	
 	<line  id="connector0leg" stroke-linecap="round" x1="-91.41935" y1="93.765" x2="-91.41935" y2="102.053002" stroke="#000000" fill="none" stroke-width="3" />
 	<line  id="connector1leg" stroke-linecap="round" x1="-84.22835" y1="93.765" x2="-84.22835" y2="102.053002" stroke="#FF0000" fill="none" stroke-width="3" />

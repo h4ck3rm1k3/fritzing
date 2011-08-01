@@ -4,9 +4,6 @@
 	 height="0.62317in" viewBox="0 0 36.998 62.317" >
 
 <g id="breadboard">
-	<rect id="connector0terminal" x="7.501" y="60" fill="none" width="3" height="1"/>
-	<rect id="connector1terminal" x="17.499" y="60" fill="none" width="3" height="1"/>
-	<rect id="connector2terminal" x="27.497" y="60" fill="none" width="3" height="1"/>
 	<rect id="connector0pin" x="7.501" y="60" fill="none" width="3" height="1"/>
 	<rect id="connector1pin" x="17.499" y="60" fill="none" width="3" height="1"/>
 	<rect id="connector2pin" x="27.497" y="60" fill="none" width="3" height="1"/>

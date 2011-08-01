@@ -6,8 +6,6 @@
 <g id="breadboard">
 	<rect id="connector0pin" x="34.984" y="109" fill="#919191" width="1" height=".2"/>
 	<rect id="connector1pin" x="42.203" y="109" fill="#919191" width="1" height=".2"/>
-	<rect id="connector0terminal" x="34.984" y="109" fill="#919191" width="1" height="0.402"/>
-	<rect id="connector1terminal" x="42.203" y="109" fill="#919191" width="1" height="0.402"/>
 	
 	<line  id="connector0leg" stroke-linecap="round" x1="36.073" y1="110.255" x2="36.073" y2="118.512" stroke="#000000" fill="none" stroke-width="3" />
 	<line  id="connector1leg" stroke-linecap="round" x1="43.301" y1="110.255" x2="43.301" y2="118.512" stroke="#ff0000" fill="none" stroke-width="3" />

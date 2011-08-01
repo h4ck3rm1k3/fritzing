@@ -5,18 +5,12 @@
  <g id="breadboard" >
  
  <rect width="1" x="14.286" y="23" fill="none" height="1" id="connector5pin" />
- <rect width="1" x="14.286" y="23" fill="none" height="0.396" id="connector5terminal" />
  <rect width="1" x="7.143" y="23" fill="none" height="1" id="connector4pin" />
- <rect width="1" x="7.143" y="23" fill="none" height="0.396" id="connector4terminal" />
  <rect width="1" y="23" fill="none" height="1" id="connector3pin" />
- <rect width="1" y="23" fill="none" height="0.396" id="connector3terminal" />
  
  <rect width="1" x="14.278" y="45" fill="none" height="1" id="connector2pin" />
- <rect width="1" x="14.278" y="45" fill="none" height="0.396" id="connector2terminal" />
  <rect width="1" x="7.122" y="45" fill="none" height="1" id="connector1pin" />
- <rect width="1" x="7.122" y="45" fill="none" height="0.396" id="connector1terminal" />
  <rect width="1" y="45" fill="none" height="1" id="connector0pin" />
- <rect width="1" y="45" fill="none" height="0.396" id="connector0terminal" />
  
 <line  id="connector5leg" stroke-linecap="round" x1="15.437" y1="24.76" x2="15.437" y2="27.153" stroke="#8C8C8C" fill="none" stroke-width="2" />
 <line  id="connector4leg" stroke-linecap="round" x1="8.198" y1="24.76" x2="8.198" y2="27.153" stroke="#8C8C8C" fill="none" stroke-width="2" />

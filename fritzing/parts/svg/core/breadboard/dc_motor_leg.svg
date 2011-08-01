@@ -8,8 +8,6 @@
 
 	<rect id="connector0pin" x="19.321" y="12.551" fill="#8C8C8C" width="1" height="1"/>
 	<rect id="connector1pin" x="19.221" y="43.257" fill="#8C8C8C" width="1" height="1"/>
-	<rect id="connector0terminal" x="19.321" y="12.551" fill="#8C8C8C" width="1" height="0.56"/>
-	<rect id="connector1terminal" x="19.221" y="43.257" fill="#8C8C8C" width="1" height="0.56"/>
 
 	<g>
 		<rect x="107.157" y="25.221" fill="#878787" width="12.975" height="4.562"/>

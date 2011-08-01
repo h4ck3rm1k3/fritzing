@@ -3,10 +3,8 @@
 <!-- Generator: Adobe Illustrator 14.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 43363)  -->
 <svg width="0.337889in" x="0px" version="1.2" y="0px" xmlns="http://www.w3.org/2000/svg" height="0.151833in" viewBox="0 0 24.328 10.932" baseProfile="tiny" >
  <g  id="breadboard" >
- <rect width="2.159" x="0.284" y="4.284" fill="none"  height="6.646" id="connector0pin" />
- <rect width="2.157" x="21.885" y="4.284" fill="none"  height="6.646" id="connector1pin" />
- <rect width="0.002" x="1.279103956638777" y="9.09578524361303" fill="none" height="0.002" id="connector0terminal" />
- <rect width="0.002" x="23.02990709215366" y="9.061900587247223" fill="none" height="0.002" id="connector1terminal" />
+ <rect width="1" x="0.284" y="4.284" fill="none"  height="1" id="connector0pin" />
+ <rect width="1" x="21.885" y="4.284" fill="none"  height="1" id="connector1pin" />
  <line  id="connector0leg" stroke-linecap="round" x1="1.05" y1="5.42" x2="1.05" y2="9.882" stroke="#8C8C8C" fill="none" stroke-width="2.1" />
  <line  id="connector1leg" stroke-linecap="round" x1="23.278" y1="5.42" x2="23.278" y2="9.882" stroke="#8C8C8C" fill="none" stroke-width="2.1" />
 

@@ -8,9 +8,6 @@
 	<rect id="connector0pin" x="0" y="23" fill="none" width="2.16" height="1"/>
 	<rect id="connector1pin" x="7.181" y="23" fill="none" width="2.16" height="1"/>
 	<rect id="connector2pin" x="14.367" y="23" fill="none" width="2.16" height="1"/>
-	<rect id="connector0terminal" x="0" y="23" fill="none" width="2.16" height="0.402"/>
-	<rect id="connector1terminal" x="7.181" y="23" fill="3none" width="2.16" height="0.402"/>
-	<rect id="connector2terminal" x="14.367" y="23" fill="none" width="2.16" height="0.402"/>
 	
 	<line  id="connector0leg" stroke-linecap="round" x1="1.08" y1="24.08" x2="1.08" y2="31.259" stroke="#8C8C8C" fill="none" stroke-width="2.16" />
 	<line  id="connector1leg" stroke-linecap="round" x1="8.261" y1="24.08" x2="8.261" y2="31.259" stroke="#8C8C8C" fill="none" stroke-width="2.16" />

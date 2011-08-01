@@ -8,10 +8,9 @@
 	
 <g id="breadboard">
 	<g>
-		<rect id="connector0terminal" x="3.39" y="61.266" fill="none" width="3" height="1"/>
-		<rect id="connector1terminal" x="13.39" y="61.266" fill="none" width="3" height="1"/>
-		<rect id="connector1pin" x="13.39" y="55.19" fill="none" width="3" height="7.075"/>
-		<rect id="connector0pin" x="3.39" y="55.19" fill="none" width="3" height="7.075"/>
+
+		<rect id="connector1pin" x="13.39" y="45.19" fill="none" width="3" height="1"/>
+		<rect id="connector0pin" x="3.39" y="45.19" fill="none" width="3" height="1"/>
 		
 		<line  id="connector0leg" stroke-linecap="round" x1="4.89" y1="48.266" x2="4.89" y2="62.266" stroke="#8C8C8C" fill="none" stroke-width="3" />
 		<line  id="connector1leg" stroke-linecap="round" x1="14.89" y1="48.266" x2="14.89" y2="62.266" stroke="#8C8C8C" fill="none" stroke-width="3" />

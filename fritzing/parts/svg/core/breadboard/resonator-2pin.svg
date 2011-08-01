@@ -5,10 +5,9 @@
 	 xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="0.25956in"
 	 height="0.3243194in" viewBox="0 0 18.688 23.351" >
 <g id="breadboard">
-	<rect id="connector1terminal" x="15.437" y="34.029" fill="none" width="2.159" height="0.721"/>
-	<rect id="connector1pin" x="15.437" y="27.549" fill="none" width="2.159" height="7.201"/>
-	<rect id="connector0terminal" x="1.036" y="34.029" fill="none" width="2.158" height="0.721"/>
-	<rect id="connector0pin" x="1.036" y="27.549" fill="none" width="2.158" height="7.201"/>
+	<rect id="connector1pin" x="15.437" y="17.549" fill="none" width="2.159" height="1"/>
+	<rect id="connector0pin" x="1.036" y="17.549" fill="none" width="2.158" height="1"/>
+
 	<line  id="connector0leg" stroke-linecap="round" x1="2.115" y1="23.351" x2="2.115" y2="33.483" stroke="#8C8C8C" fill="none" stroke-width="2.158" />
 	<line  id="connector1leg" stroke-linecap="round" x1="16.515" y1="23.351" x2="16.515" y2="33.483" stroke="#8C8C8C" fill="none" stroke-width="2.158" />
 
