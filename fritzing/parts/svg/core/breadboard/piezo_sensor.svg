@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.2" baseProfile="tiny" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1.09in"
-	 height="1.06in" viewBox="0 0 78.585 76.002" xml:space="preserve">
+<svg version="1.2" baseProfile="tiny" id="Layer_1" xmlns="http://www.w3.org/2000/svg"  x="0" y="0" width="1.09in"
+	 height="0.93970in" viewBox="0 0 78.585 67.749" >  
 <g id="breadboard">
-<rect id="connector0pin" x="34.194" y="67.748" fill="#8C8C8C" width="2.999" height="8.256"/>
-<rect id="connector1pin" x="41.392" y="67.748" fill="#8C8C8C" width="3" height="8.256"/>
-<rect id="connector0terminal" x="34.194" y="75.444" fill="#8C8C8C" width="2.999" height="0.561"/>
-<rect id="connector1terminal" x="41.392" y="75.444" fill="#8C8C8C" width="3" height="0.561"/>
+	<rect id="connector0pin" x="34.194" y="66" fill="none" width="1" height="1"/>
+	<rect id="connector1pin" x="41.392" y="66" fill="none" width="1" height="1"/>
+	<rect id="connector0terminal" x="34.194" y="66" fill="none" width="1" height="0.561"/>
+	<rect id="connector1terminal" x="41.392" y="66" fill="none" width="1" height="0.561"/>
+	
+	<line  id="connector0leg" stroke-linecap="round" x1="35.687" y1="67.749" x2="35.687" y2="76.004" stroke="#000000" fill="none" stroke-width="3" />
+	<line  id="connector1leg" stroke-linecap="round" x1="42.928" y1="67.749" x2="42.928" y2="76.004" stroke="#FF0000" fill="none" stroke-width="3" />
+
+	
 	<path fill="none" stroke="#000000" stroke-width="3" d="M35.687,53.132v14.617"/>
-	<path fill="none" stroke="#FF0000" stroke-width="3" d="M42.928,53.132c0,0,0,10.369,0,14.617"/>
+	<path fill="none" stroke="#FF0000" stroke-width="3" d="M42.928,53.132v14.617"/>
+	
+	
 	<g>
 		<path d="M3.684,23.018C1.907,23.44,0,25.81,0,28.368c0,2.558,1.779,4.867,3.684,5.35c1.906,0.48,10.304,2.602,10.304,2.602V20.416
 			L3.684,23.018z M5.494,30.423c-1.136,0-2.056-0.921-2.056-2.056c0-1.136,0.92-2.058,2.056-2.058c1.136,0,2.056,0.921,2.056,2.058

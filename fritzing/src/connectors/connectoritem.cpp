@@ -159,12 +159,12 @@ bendable TODO:
 		** stepper motors
 		** servo
 		** dc motor
-		piezo
+		** piezo
 		loudspeaker
 		** mic
 		solenoid
 		** peltier
-		distance sensor
+		** distance sensor
 		** transistors
 		** FETs
 		** voltage regulator

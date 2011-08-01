@@ -1,14 +1,19 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1 Basic//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-basic.dtd'>
 <!-- Generator: Adobe Illustrator 14.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 43363)  -->
-<svg xmlns="http://www.w3.org/2000/svg" width="1.47297in" xml:space="preserve" xmlns:xml="http://www.w3.org/XML/1998/namespace" x="0px" version="1.1" y="0px" height="0.568833in" viewBox="0 0 106.054 40.956" baseProfile="basic" id="Ebene_1" >
+<svg xmlns="http://www.w3.org/2000/svg" width="1.47297in" x="0" version="1.2" y="0" height="0.508444in" viewBox="0 0 106.054 36.608" baseProfile="tiny" > 
  <g id="breadboard" >
-  <rect width="3" x="44.368" y="36.608" fill="#8C8C8C" height="4.305" id="connector0pin" />
- <rect width="3" x="51.531" y="36.608" fill="#8C8C8C" height="4.348" id="connector1pin" />
- <rect width="3" x="58.682" y="36.608" fill="#8C8C8C" height="4.348" id="connector2pin" />
- <rect width="2.132" x="44.746" y="40.508" fill="#8C8C8C" height="0.404" id="connector0terminal" />
- <rect width="2.16" x="51.906" y="40.551" fill="#8C8C8C" height="0.404" id="connector1terminal" />
- <rect width="2.16" x="59.057" y="40.551" fill="#8C8C8C" height="0.404" id="connector2terminal" />
+  <rect width="1" x="44.368" y="35" fill="none" height="1" id="connector0pin" />
+ <rect width="1" x="51.531" y="35" fill="none" height="1" id="connector1pin" />
+ <rect width="1" x="58.682" y="35" fill="none" height="1" id="connector2pin" />
+ <rect width="1" x="44.746" y="35" fill="none" height="0.404" id="connector0terminal" />
+ <rect width="1" x="51.906" y="35" fill="none" height="0.404" id="connector1terminal" />
+ <rect width="1" x="59.057" y="35" fill="none" height="0.404" id="connector2terminal" />
+ 
+<line  id="connector0leg" stroke-linecap="round" x1="45.872" y1="36.608" x2="45.872" y2=" 40.956" stroke="#FFFF00" fill="none" stroke-width="3" />
+<line  id="connector1leg" stroke-linecap="round" x1="53.031" y1="36.608" x2="53.031" y2=" 40.956" stroke="#020000" fill="none" stroke-width="3" />
+<line  id="connector2leg" stroke-linecap="round" x1="60.182" y1="36.608" x2="60.182" y2=" 40.956" stroke="#FF0000" fill="none" stroke-width="3" />
+
  <g>
    <g>
     <g>
