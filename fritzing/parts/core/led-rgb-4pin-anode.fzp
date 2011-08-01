@@ -12,7 +12,7 @@
     <properties>
         <property name="package">5 mm [THT]</property>
         <property name="family">LED</property>
-        <property name="color">RGB</property>
+        <property name="rgb">RGB</property>
 	<property name="current"></property>
 	<property name="polarity">common anode</property>
 	<property name="pin order">rgb</property>

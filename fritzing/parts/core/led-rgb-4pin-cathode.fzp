@@ -16,7 +16,7 @@
         <property name="pin order">rgb</property>
         <property name="polarity">common cathode</property>
         <property name="current"></property>
-        <property name="color">RGB</property>
+        <property name="rgb">RGB</property>
         <property name="part number"></property>
     </properties>
     <description>A 5mm tri-color LED with red, green and blue inside.</description>
