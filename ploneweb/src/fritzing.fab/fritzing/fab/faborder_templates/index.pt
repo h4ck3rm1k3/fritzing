@@ -120,13 +120,13 @@
               
               <p>Shipping and invoice addresses will be taken from your PayPal account. You can still change it in the PayPal payment process.</p>
               
-              <span class="genericButton">
-              <div tal:condition="python: not context.shipTo" tal:omit-tag="">
-                 <a class="editAddressLink" tal:attributes="href string:${context/absolute_url}/edit">Provide info</a>
-              </div>
-              <div tal:condition="python: context.shipTo" tal:omit-tag="">
-                 <a class="editAddressLink" tal:attributes="href string:${context/absolute_url}/edit">Change info</a>
-              </div>
+              <span class="genericButton" tal:condition="python:view.isStateId(context, 'open')">
+                <div tal:condition="python: not context.shipTo" tal:omit-tag="">
+                   <a class="editAddressLink" tal:attributes="href string:${context/absolute_url}/edit">Provide info</a>
+                </div>
+                <div tal:condition="python: context.shipTo" tal:omit-tag="">
+                   <a class="editAddressLink" tal:attributes="href string:${context/absolute_url}/edit">Change info</a>
+                </div>
               </span>
               
               
