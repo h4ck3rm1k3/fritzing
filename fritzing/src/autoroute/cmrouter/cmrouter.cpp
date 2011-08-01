@@ -107,7 +107,7 @@ $Date$
 #include <limits>
 #include <QApplication>
 #include <QMessageBox> 
-#include <QElapsedTimer>
+//#include <QElapsedTimer>			// forces a dependency on qt 4.7
 #include <QSettings>
 #include <QCryptographicHash>
 
