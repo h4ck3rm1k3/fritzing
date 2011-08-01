@@ -53,6 +53,17 @@ publish your works under the same license.  A credit can be as simple as
 "this image was created with Fritzing."
 
 
+BUILDING FRITZING
+This section is mostly for Linux users. Fritzing is built using the Qt Framework, 
+so build instructions follow the model for Qt applications.  The easiest approach 
+is to download the QT SDK and use the QtCreator IDE.  You can also build natively 
+using the following steps (qmake is a tool supplied by Qt):
+	qmake
+	make
+	make install
+
+Fritzing requires Qt 4.6 and up, and the Qt-sqlite and Qt-jpeg plugins.
+
 
 (c) 2007-2011 Fachhochschule Potsdam
 design.fh-potsdam.de
