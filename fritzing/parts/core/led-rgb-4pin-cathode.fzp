@@ -52,7 +52,7 @@
             <description>anode pin for blue LED</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector3pin" terminalId="connector3terminal"/>
+                    <p layer="breadboard" svgId="connector3pin" terminalId="connector3terminal" legId="connector3leg"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector2pin" terminalId="connector2terminal"/>
@@ -67,7 +67,7 @@
             <description>anode pin for red LED</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector0pin" terminalId="connector0terminal"/>
+                    <p layer="breadboard" svgId="connector0pin" terminalId="connector0terminal" legId="connector0leg"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector0pin" terminalId="connector0terminal"/>
@@ -82,7 +82,7 @@
             <description>cathode pin for every color, connect to GND</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector1pin" terminalId="connector1terminal"/>
+                    <p layer="breadboard" svgId="connector1pin" terminalId="connector1terminal" legId="connector1leg"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector1pin" terminalId="connector1terminal"/>
@@ -97,7 +97,7 @@
             <description>anode pin for green LED</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector2pin" terminalId="connector2terminal"/>
+                    <p layer="breadboard" svgId="connector2pin" terminalId="connector2terminal" legId="connector2leg"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector3pin" terminalId="connector3terminal"/>

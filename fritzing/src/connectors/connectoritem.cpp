@@ -172,6 +172,12 @@ bendable TODO:
 		** inductor
 		** crystal
 
+		<path
+			style="fill:none;fill-rule:evenodd;stroke:#c8ab37;stroke-width:3.54330707;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+			d="M 256.20728,390.8502 C 256.20728,390.8502 256.20728,381.58878 256.20728,381.58878"
+			id="FourWire3End" />
+
+
 -------------------------------------------------
 
 bendable drag with snap-disconnect after a certain length is reached
