@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Basic//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-basic.dtd">
-<svg version="1.1" baseProfile="basic" id="svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-	 x="0px" y="0px" width="0.4875in" height="0.462in" viewBox="0 0 35.1 33.283" xml:space="preserve">
-<rect id="connector0pin" x="12.605" y="30.131" fill="#919191" width="2.141" height="3.15"/>
-<rect id="connector1pin" x="19.829" y="30.13" fill="#919191" width="2.16" height="3.15"/>
-<rect id="connector0terminal" x="12.605" y="32.881" fill="#919191" width="2.141" height="0.402"/>
-<rect id="connector1terminal" x="19.829" y="32.88" fill="#919191" width="2.16" height="0.402"/>
+<svg version="1.1" baseProfile="basic" xmlns="http://www.w3.org/2000/svg" 
+	 x="0" y="0" width="0.4875in" height="0.0.34776389in" viewBox="0 0 35.1 25.039" >
 <g id="breadboard">
-	<rect id="bb" x="12.457" y="25.038" fill="#8B8B8B" width="2.996" height="8.245"/>
-	<rect id="aa" x="19.647" y="25.038" fill="#8B8B8B" width="2.996" height="8.245"/>
+	<rect id="connector0pin" x="13.949" y="14.672" fill="none" width="1" height="1"/>
+	<rect id="connector1pin" x="21.18" y="14.672" fill="none" width="1" height="1"/>
+	<rect id="connector0terminal" x="13.949" y="14.672" fill="none" width="1" height="0.402"/>
+	<rect id="connector1terminal" x="21.18" y="14.672" fill="none" width="1" height="0.402"/>
+	
+	<line  id="connector0leg" stroke-linecap="round" x1="13.949" y1="25.039" x2="13.949" y2="33.283" stroke="#000000" fill="none" stroke-width="3" />
+	<line  id="connector1leg" stroke-linecap="round" x1="21.18" y1="25.039" x2="21.18" y2="33.283" stroke="#FF0000" fill="none" stroke-width="3" />
+	
 	<path fill="none" stroke="#000000" stroke-width="3" d="M13.949,14.672v10.367"/>
 	<path fill="none" stroke="#FF0000" stroke-width="3" d="M21.18,14.672c0,0,0,6.125,0,10.367"/>
 	<ellipse fill="#8B8B8B" cx="17.55" cy="4.066" rx="17.55" ry="4.065"/>

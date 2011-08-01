@@ -157,13 +157,13 @@ bendable TODO:
 		** 4aaa battery
 		** 9v battery
 		** stepper motors
-		piezo
-		loudspeaker
-		mic
-		solenoid
 		** servo
 		** dc motor
-		peltier
+		piezo
+		loudspeaker
+		** mic
+		solenoid
+		** peltier
 		distance sensor
 		** transistors
 		** FETs

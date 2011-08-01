@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Basic//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-basic.dtd">
 <svg version="1.1" baseProfile="basic"
-	 id="Layer_1" xmlns:svg="http://www.w3.org/2000/svg" sodipodi:docname="peltier_sensor.svg" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:cc="http://creativecommons.org/ns#" sodipodi:version="0.32" inkscape:version="0.46" inkscape:output_extension="org.inkscape.output.svg.inkscape"
-	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="0.78in" height="1.19in"
-	 viewBox="0 0 56.16 85.68" xml:space="preserve">
+	 xmlns:svg="http://www.w3.org/2000/svg"    
+	 xmlns="http://www.w3.org/2000/svg"  x="0" y="0" width="0.78in" height="1.0749167in"
+	 viewBox="0 0 56.16 77.394" > 85.68
 
 <g id="breadboard" transform="translate(115.90235,-16.373002)">
-<rect id="connector0pin" x="-92.91935" y="93.765" fill="#8C8C8C" width="2.99" height="8.286"/>
-<rect id="connector1pin" x="-85.72835" y="93.765" fill="#8C8C8C" width="2.99" height="8.286"/>
-<rect id="connector0terminal" x="-92.92435" y="101.495002" fill="#8C8C8C" width="2.989" height="0.558"/>
-<rect id="connector1terminal" x="-85.72835" y="101.495002" fill="#8C8C8C" width="2.99" height="0.558"/>
+	<rect id="connector0pin" x="-92.91935" y="93.765" fill="none" width="1" height="1"/>
+	<rect id="connector1pin" x="-85.72835" y="93.765" fill="none" width="1" height="1"/>
+	<rect id="connector0terminal" x="-92.92435" y="93.765" fill="none" width="1" height="1"/>
+	<rect id="connector1terminal" x="-85.72835" y="93.765" fill="none" width="1" height="1"/>
+	
+	<line  id="connector0leg" stroke-linecap="round" x1="-91.41935" y1="93.765" x2="-91.41935" y2="102.053002" stroke="#000000" fill="none" stroke-width="3" />
+	<line  id="connector1leg" stroke-linecap="round" x1="-84.22835" y1="93.765" x2="-84.22835" y2="102.053002" stroke="#FF0000" fill="none" stroke-width="3" />
+
 	<g id="g8">
 		<rect id="rect10" x="-115.902" y="16.373" fill="#D2F3FF" width="56.031" height="55.856"/>
 		<rect id="rect12" x="-115.902" y="72.232" fill="#717170" width="56.031" height="1.951"/>
@@ -30,13 +34,9 @@
 			<rect id="rect40" x="-112.022" y="74.183" fill="#474747" width="3.049" height="4.234"/>
 		</g>
 	</g>
-	<g id="g42">
-		<path id="path44" fill="none" stroke="#000000" stroke-width="3" d="M-110.487,81.134c0,1.989,1.385,4.281,5.017,4.281
-			l9.041,0.001c3.633,0,5.018,2.291,5.018,4.281c0,1.89,0,4.065,0,4.065"/>
-	</g>
-	<g id="g46">
-		<path id="path48" fill="none" stroke="#FF0000" stroke-width="3" d="M-84.232,93.765c0,0,0-2.179,0-4.065
+	<path id="path44" fill="none" stroke="#000000" stroke-width="3" d="M-110.487,81.134c0,1.989,1.385,4.281,5.017,4.281
+		l9.041,0.001c3.633,0,5.018,2.291,5.018,4.281c0,1.89,0,4.065,0,4.065"/>
+	<path id="path48" fill="none" stroke="#FF0000" stroke-width="3" d="M-84.232,93.765c0,0,0-2.179,0-4.065
 			c0-1.99,1.386-4.281,5.018-4.281l8.892-0.001c3.633,0,5.017-2.292,5.017-4.281"/>
-	</g>
 </g>
 </svg>
