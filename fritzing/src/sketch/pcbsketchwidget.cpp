@@ -2090,9 +2090,9 @@ void PCBSketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Co
 	m_undoStack->push(parentCommand);
 }
 
-void PCBSketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos, QLineF oldLine) {
+void PCBSketchWidget::wireSplitSlot(Wire* wire, QPointF newPos, QPointF oldPos, QLineF oldLine) {
 	if (!wire->getRatsnest()) {
-		SketchWidget::wire_wireSplit(wire, newPos, oldPos, oldLine);
+		SketchWidget::wireSplitSlot(wire, newPos, oldPos, oldLine);
 	}
 
 	createTrace(wire);

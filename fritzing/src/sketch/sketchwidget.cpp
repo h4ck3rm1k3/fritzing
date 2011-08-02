@@ -181,7 +181,7 @@ SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, Q
     this->scene()->addItem(m_sizeItem);
     m_sizeItem->setVisible(false);
 	
-	connect(this->scene(), SIGNAL(selectionChanged()), this, SLOT(scene_selectionChanged()));
+	connect(this->scene(), SIGNAL(selectionChanged()), this, SLOT(selectionChangedSlot()));
 
 	connect(QApplication::clipboard(),SIGNAL(changed(QClipboard::Mode)),this,SLOT(restartPasteCount()));
     restartPasteCount(); // the first time
@@ -421,19 +421,7 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 
 			QDomElement leg = connector.firstChildElement("leg");
 			if (!leg.isNull()) {
-				QPolygonF poly;
-				QDomElement point = leg.firstChildElement("point");
-				while (!point.isNull()) {
-					bool ok;
-					double x = point.attribute("x", "0").toDouble(&ok);
-					if (!ok) continue;
-
-					double y = point.attribute("y", "0").toDouble(&ok);
-					if (!ok) continue;
-
-					poly.append(QPointF(x, y));
-					point = point.nextSiblingElement("point");
-				}
+				QPolygonF poly = TextUtils::polygonFromElement(leg);
 				if (poly.count() >  1) {
 					if (parentCommand) {
 						legs.insert(QString::number(ItemBase::getNextID(mp->modelIndex())) + "." + fromConnectorID, poly);
@@ -571,6 +559,11 @@ void SketchWidget::addWireExtras(long newID, QDomElement & view, QUndoCommand * 
 			op = 1.0;
 		}
 		new WireColorChangeCommand(this, newID, colorString, colorString, op, op, parentCommand);
+	}
+
+	QPolygonF poly = TextUtils::polygonFromElement(extras.firstChildElement("curve"));
+	if (poly.count() > 1) {
+		new ChangeWireCurveCommand(this, newID, poly, poly, parentCommand);
 	}
 }
 
@@ -3001,7 +2994,7 @@ void SketchWidget::setSketchModel(SketchModel * sketchModel) {
 	m_sketchModel = sketchModel;
 }
 
-void SketchWidget::sketchWidget_itemAdded(ModelPart * modelPart, ViewLayer::ViewLayerSpec viewLayerSpec, const ViewGeometry & viewGeometry, long id, SketchWidget * dropOrigin) {
+void SketchWidget::itemAddedSlot(ModelPart * modelPart, ViewLayer::ViewLayerSpec viewLayerSpec, const ViewGeometry & viewGeometry, long id, SketchWidget * dropOrigin) {
 	if (dropOrigin != NULL && dropOrigin != this) {
 		placePartDroppedInOtherView(modelPart, viewLayerSpec, viewGeometry, id, dropOrigin);
 	}
@@ -3026,14 +3019,14 @@ ItemBase * SketchWidget::placePartDroppedInOtherView(ModelPart * modelPart, View
 	return itemBase;
 }
 
-void SketchWidget::sketchWidget_itemDeleted(long id) {
+void SketchWidget::itemDeletedSlot(long id) {
 	ItemBase * pitem = findItem(id);
 	if (pitem != NULL) {
 		deleteItem(pitem, false, false, false);
 	}
 }
 
-void SketchWidget::scene_selectionChanged() {
+void SketchWidget::selectionChangedSlot() {
 	if (m_ignoreSelectionChangeEvents > 0) {
 		return;
 	}
@@ -3080,11 +3073,11 @@ void SketchWidget::clearSelection() {
 	emit clearSelectionSignal();
 }
 
-void SketchWidget::sketchWidget_clearSelection() {
+void SketchWidget::clearSelectionSlot() {
 	this->scene()->clearSelection();
 }
 
-void SketchWidget::sketchWidget_itemSelected(long id, bool state) {
+void SketchWidget::itemSelectedSlot(long id, bool state) {
 	ItemBase * item = findItem(id);
 	//DebugDialog::debug(QString("got item selected signal %1 %2 %3 %4").arg(id).arg(state).arg(item != NULL).arg(m_viewIdentifier));
 	if (item != NULL) {
@@ -3204,7 +3197,7 @@ void SketchWidget::prepLegChange(ConnectorItem * from,  const QPolygonF & oldLeg
 	m_undoStack->push(parentCommand);
 }
 
-void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, QPointF oldPos, QPointF newPos, ConnectorItem * from, ConnectorItem * to) {
+void SketchWidget::wireChangedSlot(Wire* wire, const QLineF & oldLine, const QLineF & newLine, QPointF oldPos, QPointF newPos, ConnectorItem * from, ConnectorItem * to) {
 	this->clearHoldingSelectItem();
 	this->m_moveEventCount = 0;  // clear this so an extra MoveItemCommand isn't posted
 
@@ -4202,7 +4195,7 @@ void SketchWidget::setWireMenu(QMenu* wireMenu){
 	m_wireMenu = wireMenu;
 }
 
-void SketchWidget::sketchWidget_wireConnected(long fromID, QString fromConnectorID, long toID, QString toConnectorID) {
+void SketchWidget::wireConnectedSlot(long fromID, QString fromConnectorID, long toID, QString toConnectorID) {
 	ItemBase * fromItem = findItem(fromID);
 	if (fromItem == NULL) return;
 
@@ -4261,7 +4254,7 @@ void SketchWidget::sketchWidget_wireConnected(long fromID, QString fromConnector
 
 }
 
-void SketchWidget::sketchWidget_wireDisconnected(long fromID, QString fromConnectorID) {
+void SketchWidget::wireDisconnectedSlot(long fromID, QString fromConnectorID) {
 	DebugDialog::debug(QString("got wire disconnected"));
 	ItemBase * fromItem = findItem(fromID);
 	if (fromItem == NULL) return;
@@ -4373,7 +4366,7 @@ void SketchWidget::tempConnectWire(Wire * wire, ConnectorItem * from, ConnectorI
 	connector1->tempConnectTo(to, false);
 }
 
-void SketchWidget::sketchWidget_changeConnection(long fromID, QString fromConnectorID,
+void SketchWidget::changeConnectionSlot(long fromID, QString fromConnectorID,
 												 long toID, QString toConnectorID,
 												 ViewLayer::ViewLayerSpec viewLayerSpec, 
 												 bool connect, bool updateConnections)
@@ -4823,7 +4816,7 @@ void SketchWidget::stickyScoop(ItemBase * stickyOne, bool checkCurrent, CheckSti
 	}
 }
 
-void SketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos, QLineF oldLine) {
+void SketchWidget::wireSplitSlot(Wire* wire, QPointF newPos, QPointF oldPos, const QLineF & oldLine) {
 	if (!canChainWire(wire)) return;
 
 	this->clearHoldingSelectItem();
@@ -4879,7 +4872,7 @@ void SketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos, QL
 	m_undoStack->push(parentCommand);
 }
 
-void SketchWidget::wire_wireJoin(Wire* wire, ConnectorItem * clickedConnectorItem) {
+void SketchWidget::wireJoinSlot(Wire* wire, ConnectorItem * clickedConnectorItem) {
 	// if (!canChainWire(wire)) return;  // can't join a wire in some views (for now)
 
 	this->clearHoldingSelectItem();
@@ -5079,7 +5072,7 @@ void SketchWidget::cleanUpWires(bool doEmit, CleanUpWiresCommand * command) {
 	}
 }
 
-void SketchWidget::sketchWidget_cleanUpWires(CleanUpWiresCommand * command) {
+void SketchWidget::cleanUpWiresSlot(CleanUpWiresCommand * command) {
 	RoutingStatus routingStatus;
 	updateRoutingStatus(command, routingStatus, false);
 }
@@ -6645,13 +6638,13 @@ void SketchWidget::addBendpoint(ItemBase * lastHoverEnterItem, ConnectorItem * l
 	if (lastHoverEnterConnectorItem) {
 		Wire * wire = dynamic_cast<Wire *>(lastHoverEnterConnectorItem->attachedTo());
 		if (wire != NULL) {
-			wire_wireJoin(wire, lastHoverEnterConnectorItem);
+			wireJoinSlot(wire, lastHoverEnterConnectorItem);
 		}
 	}
 	else if (lastHoverEnterItem) {
 		Wire * wire = dynamic_cast<Wire *>(lastHoverEnterItem);
 		if (wire != NULL) {
-			wire_wireSplit(wire, lastLocation, wire->pos(), wire->line());
+			wireSplitSlot(wire, lastLocation, wire->pos(), wire->line());
 		}
 	}
 }
@@ -7692,4 +7685,21 @@ Wire * SketchWidget::createTempWireForDragging(Wire * fromWire, ModelPart * wire
 
 void SketchWidget::prereleaseTempWireForDragging(Wire*)
 {
+}
+
+void SketchWidget::wireChangedCurveSlot(Wire* wire, const QPolygonF & oldPoly, const QPolygonF & newPoly) {
+	this->clearHoldingSelectItem();
+	this->m_moveEventCount = 0;  // clear this so an extra MoveItemCommand isn't posted
+
+	ChangeWireCurveCommand * cwcc = new ChangeWireCurveCommand(this, wire->id(), oldPoly, newPoly, NULL);
+	cwcc->setText("Change wire curvature");
+	cwcc->setFirstTime();
+	m_undoStack->push(cwcc);
+}
+
+void SketchWidget::changeWireCurve(long id, const QPolygonF & poly) {
+	Wire * wire = qobject_cast<Wire *>(findItem(id));
+	if (wire == NULL) return;
+
+	wire->changeCurve(poly);
 }

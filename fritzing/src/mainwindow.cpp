@@ -498,31 +498,31 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 {
 
 	bool succeeded = connect(signaller, SIGNAL(itemAddedSignal(ModelPart *, ViewLayer::ViewLayerSpec, const ViewGeometry &, long, SketchWidget *)),
-							 slotter, SLOT(sketchWidget_itemAdded(ModelPart *, ViewLayer::ViewLayerSpec, const ViewGeometry &, long, SketchWidget *)));
+							 slotter, SLOT(itemAddedSlot(ModelPart *, ViewLayer::ViewLayerSpec, const ViewGeometry &, long, SketchWidget *)));
 
 	succeeded = succeeded && connect(signaller, SIGNAL(itemDeletedSignal(long)),
-									 slotter, SLOT(sketchWidget_itemDeleted(long)),
+									 slotter, SLOT(itemDeletedSlot(long)),
 									 Qt::DirectConnection);
 
 	succeeded = succeeded && connect(signaller, SIGNAL(clearSelectionSignal()),
-									 slotter, SLOT(sketchWidget_clearSelection()));
+									 slotter, SLOT(clearSelectionSlot()));
 
 	succeeded = succeeded && connect(signaller, SIGNAL(itemSelectedSignal(long, bool)),
-									 slotter, SLOT(sketchWidget_itemSelected(long, bool)));
+									 slotter, SLOT(itemSelectedSlot(long, bool)));
 	succeeded = succeeded && connect(signaller, SIGNAL(selectAllItemsSignal(bool, bool)),
 									 slotter, SLOT(selectAllItems(bool, bool)));
 	succeeded = succeeded && connect(signaller, SIGNAL(wireDisconnectedSignal(long, QString)),
-									 slotter, SLOT(sketchWidget_wireDisconnected(long,  QString)));
+									 slotter, SLOT(wireDisconnectedSlot(long,  QString)));
 	succeeded = succeeded && connect(signaller, SIGNAL(wireConnectedSignal(long,  QString, long,  QString)),
-									 slotter, SLOT(sketchWidget_wireConnected(long, QString, long, QString)));
+									 slotter, SLOT(wireConnectedSlot(long, QString, long, QString)));
 	succeeded = succeeded && connect(signaller, SIGNAL(changeConnectionSignal(long,  QString, long,  QString, ViewLayer::ViewLayerSpec, bool, bool)),
-									 slotter, SLOT(sketchWidget_changeConnection(long, QString, long, QString, ViewLayer::ViewLayerSpec, bool, bool)));
+									 slotter, SLOT(changeConnectionSlot(long, QString, long, QString, ViewLayer::ViewLayerSpec, bool, bool)));
 	succeeded = succeeded && connect(signaller, SIGNAL(copyBoundingRectsSignal(QHash<QString, QRectF> &)),
 													   slotter, SLOT(copyBoundingRectsSlot(QHash<QString, QRectF> &)),
 									 Qt::DirectConnection);
 
 	succeeded = succeeded && connect(signaller, SIGNAL(cleanUpWiresSignal(CleanUpWiresCommand *)),
-									 slotter, SLOT(sketchWidget_cleanUpWires(CleanUpWiresCommand *)) );
+									 slotter, SLOT(cleanUpWiresSlot(CleanUpWiresCommand *)) );
 
 	succeeded = succeeded && connect(signaller, SIGNAL(checkStickySignal(long, bool, bool, CheckStickyCommand *)),
 									 slotter, SLOT(checkSticky(long, bool, bool, CheckStickyCommand *)) );

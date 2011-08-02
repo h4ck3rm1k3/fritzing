@@ -268,6 +268,7 @@ public:
 	void setItemDropOffset(long id, QPointF offset);
 	void prepLegChange(ConnectorItem * from,  const QPolygonF & oldLeg, const QPolygonF & newLeg, ConnectorItem * to, bool changeConnections);
 	void prepLegSelection(ItemBase *);
+	void changeWireCurve(long id, const QPolygonF & poly);
 
 
 protected:
@@ -467,23 +468,24 @@ signals:
 	void filenameIfSignal(QString & filename);
 
 protected slots:
-	void sketchWidget_itemAdded(ModelPart *, ViewLayer::ViewLayerSpec, const ViewGeometry &, long id, SketchWidget * dropOrigin);
-	void sketchWidget_itemDeleted(long id);
-	void sketchWidget_clearSelection();
-	void sketchWidget_itemSelected(long id, bool state);
-	void scene_selectionChanged();
-	void wire_wireChanged(class Wire*, QLineF oldLine, QLineF newLine, QPointF oldPos, QPointF newPos, ConnectorItem * from, ConnectorItem * to);
-	virtual void wire_wireSplit(class Wire*, QPointF newPos, QPointF oldPos, QLineF oldLine);
-	void wire_wireJoin(class Wire*, ConnectorItem * clickedConnectorItem);
+	void itemAddedSlot(ModelPart *, ViewLayer::ViewLayerSpec, const ViewGeometry &, long id, SketchWidget * dropOrigin);
+	void itemDeletedSlot(long id);
+	void clearSelectionSlot();
+	void itemSelectedSlot(long id, bool state);
+	void selectionChangedSlot();
+	void wireChangedSlot(class Wire*, const QLineF & oldLine, const QLineF & newLine, QPointF oldPos, QPointF newPos, ConnectorItem * from, ConnectorItem * to);
+	void wireChangedCurveSlot(class Wire*, const QPolygonF & oldPoly, const QPolygonF & newPoly);
+	virtual void wireSplitSlot(class Wire*, QPointF newPos, QPointF oldPos, const QLineF & oldLine);
+	void wireJoinSlot(class Wire*, ConnectorItem * clickedConnectorItem);
 	void toggleLayerVisibility();
-	void sketchWidget_wireConnected(long fromID, QString fromConnectorID, long toID, QString toConnectorID);
-	void sketchWidget_wireDisconnected(long fromID, QString fromConnectorID);
-	void sketchWidget_changeConnection(long fromID, QString fromConnectorID, long toID, QString toConnectorID, ViewLayer::ViewLayerSpec, bool connect, bool updateConnections);
+	void wireConnectedSlot(long fromID, QString fromConnectorID, long toID, QString toConnectorID);
+	void wireDisconnectedSlot(long fromID, QString fromConnectorID);
+	void changeConnectionSlot(long fromID, QString fromConnectorID, long toID, QString toConnectorID, ViewLayer::ViewLayerSpec, bool connect, bool updateConnections);
 	void navigatorScrollChange(double x, double y);
 	void restartPasteCount();
 	void dragIsDoneSlot(class ItemDrag *);
 	void statusMessage(QString message, int timeout = 0);
-	void sketchWidget_cleanUpWires(CleanUpWiresCommand *);
+	void cleanUpWiresSlot(CleanUpWiresCommand *);
 	void updateInfoViewSlot();
 	void spaceBarIsPressedSlot(bool);
 	void autoScrollTimeout();

@@ -251,7 +251,7 @@ class ChangeWireCommand : public BaseCommand
 {
 public:
     ChangeWireCommand(class SketchWidget *sketchWidget, long fromID,
-    					QLineF oldLine, QLineF newLine, QPointF oldPos, QPointF newPos,
+    					const QLineF & oldLine, const QLineF & newLine, QPointF oldPos, QPointF newPos,
     					bool updateConnections, bool updateRatsnest,
     					QUndoCommand *parent);
     void undo();
@@ -268,6 +268,26 @@ protected:
     QPointF m_newPos;
     QPointF m_oldPos;
     bool m_updateConnections;
+};
+
+class ChangeWireCurveCommand : public BaseCommand
+{
+public:
+    ChangeWireCurveCommand(class SketchWidget *sketchWidget, long fromID,
+    					const QPolygonF & oldPoly, const QPolygonF & newPoly,
+    					QUndoCommand *parent);
+    void undo();
+    void redo();
+	void setFirstTime();
+
+protected:
+	QString getParamString() const;
+
+protected:
+    long m_fromID;
+    QPolygonF m_newPoly;
+    QPolygonF m_oldPoly;
+    bool m_firstTime;
 };
 
 class ChangeLegCommand : public BaseCommand

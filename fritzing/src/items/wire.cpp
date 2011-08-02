@@ -28,14 +28,28 @@ $Date$
 
 curvy To Do
 
-	undo/redo
+	* undo/redo
+
 	save/load
+
 	make-straight function
+
 	export
+
 	gerber
+
 	autorouter warning in PCB view
+
 	bendable legs
+		undo/redo
+		save/load
+		export
+		make straight function
+
 	modify parameters (tension, unit area)?
+
+	* pixel turds
+
 */
 
 /////////////////////////////////////////////////////////////////
@@ -62,6 +76,7 @@ curvy To Do
 #include "partlabel.h"
 #include "../model/modelpart.h"
 #include "../utils/graphicsutils.h"
+#include "../utils/textutils.h"
 #include "../layerattributes.h"
 
 #include <stdlib.h>
@@ -76,6 +91,8 @@ double Wire::STANDARD_TRACE_WIDTH;
 double Wire::HALF_STANDARD_TRACE_WIDTH;
 
 const double DefaultHoverStrokeWidth = 4;
+
+static QPolygonF UndoControlPolygon;
 
 
 ////////////////////////////////////////////////////////////
@@ -364,6 +381,11 @@ void Wire::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 
 void Wire::initDragControl(QPointF scenePos) {
+	UndoControlPolygon.clear();
+	foreach (QPointF p, m_controlPoints) {
+		UndoControlPolygon.append(p);
+	}
+
 	m_dragControl = true;
 	m_dragEnd = false;
 
@@ -386,6 +408,7 @@ void Wire::initDragControl(QPointF scenePos) {
 							);
 
 	m_dragControlIndex = (d0 <= d1) ? 0 : 1;
+
 	if (m_controlPoints.count() < 2) {
 		m_controlPoints.clear();
 		m_controlPoints.append(mapFromScene(p0));
@@ -445,6 +468,7 @@ void Wire::mouseMoveEventAux(QPointF eventPos, Qt::KeyboardModifiers modifiers) 
 	}
 
 	if (m_dragControl) {
+		prepareGeometryChange();
 		dragControl(eventPos, modifiers);
 		update();
 		return;
@@ -589,6 +613,9 @@ bool Wire::releaseDrag() {
 	if (m_dragControl) {
 		m_dragControl = false;
 		ungrabMouse();
+		if (UndoControlPolygon != m_controlPoints) {
+			emit wireChangedCurveSignal(this, UndoControlPolygon, m_controlPoints);
+		}
 		return true;
 	}
 
@@ -628,6 +655,16 @@ void Wire::writeGeometry(QXmlStreamWriter & streamWriter) {
 	streamWriter.writeAttribute("mils", QString::number(mils()));
 	streamWriter.writeAttribute("color", m_pen.brush().color().name());
 	streamWriter.writeAttribute("opacity", QString::number(m_opacity));
+	if (m_controlPoints.count() > 1) {
+		streamWriter.writeStartElement("curve");
+		foreach (QPointF p, m_controlPoints) {
+			streamWriter.writeStartElement("point");
+			streamWriter.writeAttribute("x", QString::number(p.x()));
+			streamWriter.writeAttribute("y", QString::number(p.y()));
+			streamWriter.writeEndElement();
+		}
+		streamWriter.writeEndElement();
+	}
 	streamWriter.writeEndElement();
 }
 
@@ -649,6 +686,13 @@ void Wire::setExtras(QDomElement & element, InfoGraphicsView * infoGraphicsView)
 	}
 
 	setColorFromElement(element);
+	QPolygonF poly = TextUtils::polygonFromElement(element.firstChildElement("curve"));
+	if (poly.count() > 1) {
+		prepareGeometryChange();
+		m_controlPoints.clear();
+		foreach (QPointF p, poly) m_controlPoints.append(p);
+	}
+
 }
 
 void Wire::setColorFromElement(QDomElement & element) {
@@ -1465,13 +1509,16 @@ void Wire::addedToScene(bool temporary) {
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView == NULL) return;
 
-	bool succeeded = connect(this, SIGNAL(wireChangedSignal(Wire*, QLineF, QLineF, QPointF, QPointF, ConnectorItem *, ConnectorItem *)	),
-			infoGraphicsView, SLOT(wire_wireChanged(Wire*, QLineF, QLineF, QPointF, QPointF, ConnectorItem *, ConnectorItem *)),
+	bool succeeded = connect(this, SIGNAL(wireChangedSignal(Wire*, const QLineF & , const QLineF & , QPointF, QPointF, ConnectorItem *, ConnectorItem *)	),
+			infoGraphicsView, SLOT(wireChangedSlot(Wire*, const QLineF & , const QLineF & , QPointF, QPointF, ConnectorItem *, ConnectorItem *)),
 			Qt::DirectConnection);		// DirectConnection means call the slot directly like a subroutine, without waiting for a thread or queue
-	succeeded = succeeded && connect(this, SIGNAL(wireSplitSignal(Wire*, QPointF, QPointF, QLineF)),
-			infoGraphicsView, SLOT(wire_wireSplit(Wire*, QPointF, QPointF, QLineF)));
+	succeeded = connect(this, SIGNAL(wireChangedCurveSignal(Wire*, const QPolygonF &, const QPolygonF &)),
+			infoGraphicsView, SLOT(wireChangedCurveSlot(Wire*, const QPolygonF &, const QPolygonF &)),
+			Qt::DirectConnection);		// DirectConnection means call the slot directly like a subroutine, without waiting for a thread or queue
+	succeeded = succeeded && connect(this, SIGNAL(wireSplitSignal(Wire*, QPointF, QPointF, const QLineF & )),
+			infoGraphicsView, SLOT(wireSplitSlot(Wire*, QPointF, QPointF, const QLineF & )));
 	succeeded = succeeded && connect(this, SIGNAL(wireJoinSignal(Wire*, ConnectorItem *)),
-			infoGraphicsView, SLOT(wire_wireJoin(Wire*, ConnectorItem*)));
+			infoGraphicsView, SLOT(wireJoinSlot(Wire*, ConnectorItem*)));
 	if (!succeeded) {
 		DebugDialog::debug("wire signal connect failed");
 	}
@@ -1675,4 +1722,14 @@ void Wire::dragControl(QPointF eventPos, Qt::KeyboardModifiers)
 	else {
 		m_controlPoints.replace(1, QPointF(x2, y2));
 	}
+}
+
+void Wire::changeCurve(const QPolygonF & poly)
+{
+	prepareGeometryChange();
+	m_controlPoints.clear();
+	foreach (QPointF p, poly) {
+		m_controlPoints.append(p);
+	}
+	update();
 }

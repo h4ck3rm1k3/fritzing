@@ -409,7 +409,7 @@ QString ChangeConnectionCommand::getParamString() const {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ChangeWireCommand::ChangeWireCommand(SketchWidget* sketchWidget, long fromID,
-									 QLineF oldLine, QLineF newLine, QPointF oldPos, QPointF newPos, 
+									 const QLineF & oldLine, const QLineF & newLine, QPointF oldPos, QPointF newPos, 
 									 bool updateConnections, bool updateRatsnest,
 									 QUndoCommand *parent)
     : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
@@ -442,6 +442,57 @@ QString ChangeWireCommand::getParamString() const {
 		.arg(m_newPos.x()).arg(m_newPos.y())
 		.arg(m_oldLine.x1()).arg(m_oldLine.y1()).arg(m_oldLine.x2()).arg(m_oldLine.y2())		
 		.arg(m_newLine.x1()).arg(m_newLine.y1()).arg(m_newLine.x2()).arg(m_newLine.y2())		
+		;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+ChangeWireCurveCommand::ChangeWireCurveCommand(SketchWidget* sketchWidget, long fromID,
+									 const QPolygonF & oldPoly, const QPolygonF & newPoly, 
+									 QUndoCommand *parent)
+    : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
+{
+	m_firstTime = false;
+    m_fromID = fromID;
+	m_oldPoly = oldPoly;
+    m_newPoly = newPoly;
+}
+
+void ChangeWireCurveCommand::undo()
+{
+    m_sketchWidget->changeWireCurve(m_fromID, m_oldPoly);
+}
+
+void ChangeWireCurveCommand::redo()
+{
+	if (m_firstTime) {
+		m_firstTime = false;
+	}
+	else {
+		m_sketchWidget->changeWireCurve(m_fromID, m_newPoly);
+	}
+}
+
+void ChangeWireCurveCommand::setFirstTime() {
+	m_firstTime = true;
+}
+
+QString ChangeWireCurveCommand::getParamString() const {
+	QString oldPoly;
+	QString newPoly;
+	foreach (QPointF p, m_oldPoly) {
+		oldPoly += QString("(%1,%2)").arg(p.x()).arg(p.y());
+	}
+	foreach (QPointF p, m_newPoly) {
+		newPoly += QString("(%1,%2)").arg(p.x()).arg(p.y());
+	}
+
+	return QString("ChangeWireCurveCommand ") 
+		+ BaseCommand::getParamString() + 
+		QString(" fromid:%1 oldp:%2 newp:%3")
+		.arg(m_fromID)
+		.arg(oldPoly)
+		.arg(newPoly)
 		;
 }
 

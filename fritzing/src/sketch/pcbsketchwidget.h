@@ -182,7 +182,7 @@ protected:
 
 protected slots:
 	void alignJumperItem(class JumperItem *, QPointF &);
-	void wire_wireSplit(class Wire*, QPointF newPos, QPointF oldPos, QLineF oldLine);
+	void wireSplitSlot(class Wire*, QPointF newPos, QPointF oldPos, QLineF oldLine);
 
 protected:
 	RoutingStatus m_routingStatus;
