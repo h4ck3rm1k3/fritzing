@@ -161,6 +161,9 @@ public:
 	virtual const QLineF & getPaintLine();
 	bool canHaveControlPoints();
 	void changeCurve(const QPolygonF &);
+	bool isCurved();
+	const QPolygonF & curve();
+	QPolygonF sceneControlPoints(QPointF offset);
 
 protected slots:
 	void colorEntry(const QString & text);
@@ -250,7 +253,7 @@ protected:
 
 signals:
 	void wireChangedSignal(Wire* me, const QLineF & oldLine, const QLineF & newLine, QPointF oldPos, QPointF newPos, ConnectorItem * from, ConnectorItem * to);
-	void wireChangedCurveSignal(Wire* me, const QPolygonF & oldPoly, const QPolygonF & newPoly);
+	void wireChangedCurveSignal(Wire* me, const QPolygonF & oldPoly, const QPolygonF & newPoly, bool triggerFirstTime);
 	void wireSplitSignal(Wire* me, QPointF newPos, QPointF oldPos, const QLineF & oldLine);
 	void wireJoinSignal(Wire* me, ConnectorItem * clickedConnectorItem);
 };

@@ -6260,7 +6260,7 @@ QString translateSVG(QString & svg, QPointF loc, double dpi, double printerScale
 	loc.setX(loc.x() * dpi / printerScale);
 	loc.setY(loc.y() * dpi / printerScale);
 	if (loc.x() != 0 || loc.y() != 0) {
-		svg = QString("<g transform=\"translate(%1,%2)\" >%3</g>")
+		svg = QString("<g transform='translate(%1,%2)' >%3</g>")
 			.arg(loc.x())
 			.arg(loc.y())
 			.arg(svg);
@@ -6410,10 +6410,16 @@ void SketchWidget::extraRenderSvgStep(ItemBase * itemBase, QPointF offset, doubl
 
 QString SketchWidget::makeWireSVG(Wire * wire, QPointF offset, double dpi, double printerScale, bool blackOnly) 
 {
-	QLineF line = wire->getPaintLine();
-	QPointF p1 = wire->scenePos() + line.p1() - offset;
-	QPointF p2 = wire->scenePos() + line.p2() - offset;
-	return TextUtils::makeLineSVG(p1, p2, wire->width(), wire->hexString(), dpi, printerScale, blackOnly);
+	if (wire->isCurved()) {
+		QPolygonF poly = wire->sceneControlPoints(offset);
+		return TextUtils::makeCubicBezierSVG(poly, wire->width(), wire->hexString(), dpi, printerScale, blackOnly);
+	}
+	else {
+		QLineF line = wire->getPaintLine();
+		QPointF p1 = wire->scenePos() + line.p1() - offset;
+		QPointF p2 = wire->scenePos() + line.p2() - offset;
+		return TextUtils::makeLineSVG(p1, p2, wire->width(), wire->hexString(), dpi, printerScale, blackOnly);
+	}
 }
 
 void SketchWidget::addFixedToCenterItem2(SketchMainHelp * item) {
@@ -6647,6 +6653,24 @@ void SketchWidget::addBendpoint(ItemBase * lastHoverEnterItem, ConnectorItem * l
 			wireSplitSlot(wire, lastLocation, wire->pos(), wire->line());
 		}
 	}
+}
+
+void SketchWidget::flattenCurve(ItemBase * lastHoverEnterItem, ConnectorItem * lastHoverEnterConnectorItem, QPointF lastLocation) {
+	Q_UNUSED(lastLocation);
+	Wire * wire = NULL;
+	if (lastHoverEnterConnectorItem) {
+		wire = dynamic_cast<Wire *>(lastHoverEnterConnectorItem->attachedTo());
+	}
+
+	if (wire == NULL && lastHoverEnterItem) {
+		wire = dynamic_cast<Wire *>(lastHoverEnterItem);
+	}
+
+	if (wire != NULL) {
+		QPolygonF poly;
+		wireChangedCurveSlot(wire, wire->curve(), poly, true);
+	}
+
 }
 
 ConnectorItem * SketchWidget::lastHoverEnterConnectorItem() {
@@ -7687,13 +7711,15 @@ void SketchWidget::prereleaseTempWireForDragging(Wire*)
 {
 }
 
-void SketchWidget::wireChangedCurveSlot(Wire* wire, const QPolygonF & oldPoly, const QPolygonF & newPoly) {
+void SketchWidget::wireChangedCurveSlot(Wire* wire, const QPolygonF & oldPoly, const QPolygonF & newPoly, bool triggerFirstTime) {
 	this->clearHoldingSelectItem();
 	this->m_moveEventCount = 0;  // clear this so an extra MoveItemCommand isn't posted
 
 	ChangeWireCurveCommand * cwcc = new ChangeWireCurveCommand(this, wire->id(), oldPoly, newPoly, NULL);
 	cwcc->setText("Change wire curvature");
-	cwcc->setFirstTime();
+	if (!triggerFirstTime) {
+		cwcc->setFirstTime();
+	}
 	m_undoStack->push(cwcc);
 }
 

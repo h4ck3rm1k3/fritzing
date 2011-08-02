@@ -313,11 +313,11 @@ QString TextUtils::makeSVGHeader(double printerScale, double dpi, double width, 
 	double trueHeight = height / printerScale;
 
 	return 
-		QString("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n%5"
-							 "<svg xmlns:svg=\"http://www.w3.org/2000/svg\" xmlns=\"http://www.w3.org/2000/svg\" "
-							 "version=\"1.2\" baseProfile=\"tiny\" "
-							 "x=\"0in\" y=\"0in\" width=\"%1in\" height=\"%2in\" "
-							 "viewBox=\"0 0 %3 %4\" >\n"
+		QString("<?xml version='1.0' encoding='UTF-8' standalone='no'?>\n%5"
+							 "<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' "
+							 "version='1.2' baseProfile='tiny' "
+							 "x='0in' y='0in' width='%1in' height='%2in' "
+							 "viewBox='0 0 %3 %4' >\n"
 							 )
 						.arg(trueWidth)
 						.arg(trueHeight)
@@ -500,7 +500,7 @@ void TextUtils::setSVGTransform(QDomElement & element, QMatrix & matrix)
 QString TextUtils::svgTransform(const QString & svg, QTransform & transform, bool translate, const QString extras) {
 	if (transform.isIdentity()) return svg;
 
-	return QString("<g transform=\"matrix(%1,%2,%3,%4,%5,%6)\" %8 >%7</g>")
+	return QString("<g transform='matrix(%1,%2,%3,%4,%5,%6)' %8 >%7</g>")
 			.arg(transform.m11())
 			.arg(transform.m12())
 			.arg(transform.m21())
@@ -1006,9 +1006,9 @@ QString TextUtils::makeLineSVG(QPointF p1, QPointF p2, double width, QString col
 	p1.setY(p1.y() * dpi / printerScale);
 	p2.setX(p2.x() * dpi / printerScale);
 	p2.setY(p2.y() * dpi / printerScale);
-	// TODO: use original colors, not just black
+
 	QString stroke = (blackOnly) ? "black" : colorString;
-	return QString("<line style=\"stroke-linecap: round\" stroke=\"%6\" x1=\"%1\" y1=\"%2\" x2=\"%3\" y2=\"%4\" stroke-width=\"%5\" />")
+	return QString("<line stroke-linecap='round' stroke='%6' x1='%1' y1='%2' x2='%3' y2='%4' stroke-width='%5' />")
 					.arg(p1.x())
 					.arg(p1.y())
 					.arg(p2.x())
@@ -1016,6 +1016,24 @@ QString TextUtils::makeLineSVG(QPointF p1, QPointF p2, double width, QString col
 					.arg(width * dpi / printerScale)
 					.arg(stroke);
 }
+
+QString TextUtils::makeCubicBezierSVG(const QPolygonF & poly, double width, QString colorString, double dpi, double printerScale, bool blackOnly) 
+{
+	QString stroke = (blackOnly) ? "black" : colorString;
+	return QString("<path stroke-linecap='round' fill='none' stroke-width='%1' stroke='%2' d='M%3,%4C%5,%6, %7,%8 %9,%10' />")
+					.arg(width * dpi / printerScale)
+					.arg(stroke)
+					.arg(poly.at(0).x() * dpi / printerScale)
+					.arg(poly.at(0).y() * dpi / printerScale)
+					.arg(poly.at(1).x() * dpi / printerScale)
+					.arg(poly.at(1).y() * dpi / printerScale)
+					.arg(poly.at(2).x() * dpi / printerScale)
+					.arg(poly.at(2).y() * dpi / printerScale)
+					.arg(poly.at(3).x() * dpi / printerScale)
+					.arg(poly.at(3).y() * dpi / printerScale)
+					;
+}
+
 
 QString TextUtils::makeRectSVG(QRectF r, QPointF offset, double dpi, double printerScale)
 {
@@ -1026,7 +1044,7 @@ QString TextUtils::makeRectSVG(QRectF r, QPointF offset, double dpi, double prin
 	double h = r.height() * dpi / printerScale;
 
 	QString stroke = "black";
-	return QString("<rect style=\"stroke-linecap: round\" stroke=\"%6\" x=\"%1\" y=\"%2\" width=\"%3\" height=\"%4\" stroke-width=\"%5\" fill=\"none\" />")
+	return QString("<rect stroke-linecap='round' stroke='%6' x='%1' y='%2' width='%3' height='%4' stroke-width='%5' fill='none' />")
 			.arg(l)
 			.arg(t)
 			.arg(w)

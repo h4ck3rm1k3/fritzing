@@ -775,6 +775,10 @@ void MainWindow::createPartMenuActions() {
 	m_addBendpointAct->setStatusTip(tr("Add a bendpoint to the selected wire"));
 	connect(m_addBendpointAct, SIGNAL(triggered()), this, SLOT(addBendpoint()));
 
+	m_flattenCurveAct = new BendpointAction(tr("Straighten Curve"), this);
+	m_flattenCurveAct->setStatusTip(tr("Straighten the curve of the selected wire"));
+	connect(m_flattenCurveAct, SIGNAL(triggered()), this, SLOT(flattenCurve()));
+
     m_selectAllObsoleteAct = new QAction(tr("Select outdated parts"), this);
     m_selectAllObsoleteAct->setStatusTip(tr("Select outdated parts"));
 	connect(m_selectAllObsoleteAct, SIGNAL(triggered()), this, SLOT(selectAllObsolete()));
@@ -1293,6 +1297,7 @@ void MainWindow::updateWireMenu() {
 	bool ctlOK = false;
 
 	if (wire != NULL) {
+		
 		if (wire->getRatsnest()) {
 			QList<ConnectorItem *> ends;
 			Wire * jt = wire->findTraced(m_currentGraphicsView->getTraceFlag(), ends);
@@ -2297,10 +2302,13 @@ bool MainWindow::alreadyOpen(const QString & fileName) {
 
 void MainWindow::enableAddBendpointAct(QGraphicsItem * graphicsItem) {
 	m_addBendpointAct->setEnabled(false);
+	m_flattenCurveAct->setEnabled(false);
 
 	Wire * wire = dynamic_cast<Wire *>(graphicsItem);
 	if (wire == NULL) return;
 	if (wire->getRatsnest()) return;
+
+	m_flattenCurveAct->setEnabled(wire->isCurved());
 
 	BendpointAction * bendpointAction = qobject_cast<BendpointAction *>(m_addBendpointAct);
 	FGraphicsScene * scene = qobject_cast<FGraphicsScene *>(graphicsItem->scene());
@@ -2337,6 +2345,16 @@ void MainWindow::addBendpoint()
 										bendpointAction->lastHoverEnterConnectorItem(),
 										bendpointAction->lastLocation());
 }
+
+void MainWindow::flattenCurve()
+{
+	BendpointAction * bendpointAction = qobject_cast<BendpointAction *>(m_addBendpointAct);
+
+	m_currentGraphicsView->flattenCurve(bendpointAction->lastHoverEnterItem(),
+										bendpointAction->lastHoverEnterConnectorItem(),
+										bendpointAction->lastLocation());
+}
+
 
 void MainWindow::importFilesFromPrevInstall() {
 	QString prevInstallPath = QFileDialog::getExistingDirectory(
@@ -2478,6 +2496,8 @@ QMenu *MainWindow::breadboardWireMenu() {
 	menu->addAction(m_deleteWireAct);
 	menu->addSeparator();
 	menu->addAction(m_addBendpointAct);
+	menu->addAction(m_flattenCurveAct);
+
 #ifndef QT_NO_DEBUG
 	menu->addSeparator();
 	menu->addAction(m_infoViewOnHoverAction);
@@ -2500,6 +2520,8 @@ QMenu *MainWindow::pcbWireMenu() {
 	//menu->addAction(m_updateNetAct);
 	menu->addSeparator();
 	menu->addAction(m_addBendpointAct);
+	menu->addAction(m_flattenCurveAct);
+
 #ifndef QT_NO_DEBUG
 	menu->addSeparator();
 	menu->addAction(m_infoViewOnHoverAction);

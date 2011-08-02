@@ -28,27 +28,40 @@ $Date$
 
 curvy To Do
 
+	* pixel turds
+
 	* undo/redo
 
-	save/load
+	* save/load
 
-	make-straight function
+	* copy/paste
 
-	export
+	* make-straight function
+
+	* export
+
+	curvy to begin with?
+
+	turn curvature on/off per view
+
+	bendable legs
+		undo/redo
+		save/load
+		copy/paste
+		export
+		make straight function
+
+---------------------------------------------------------
+
+later:
+
+	clippable wire
 
 	gerber
 
 	autorouter warning in PCB view
 
-	bendable legs
-		undo/redo
-		save/load
-		export
-		make straight function
-
 	modify parameters (tension, unit area)?
-
-	* pixel turds
 
 */
 
@@ -614,7 +627,7 @@ bool Wire::releaseDrag() {
 		m_dragControl = false;
 		ungrabMouse();
 		if (UndoControlPolygon != m_controlPoints) {
-			emit wireChangedCurveSignal(this, UndoControlPolygon, m_controlPoints);
+			emit wireChangedCurveSignal(this, UndoControlPolygon, m_controlPoints, false);
 		}
 		return true;
 	}
@@ -1512,8 +1525,8 @@ void Wire::addedToScene(bool temporary) {
 	bool succeeded = connect(this, SIGNAL(wireChangedSignal(Wire*, const QLineF & , const QLineF & , QPointF, QPointF, ConnectorItem *, ConnectorItem *)	),
 			infoGraphicsView, SLOT(wireChangedSlot(Wire*, const QLineF & , const QLineF & , QPointF, QPointF, ConnectorItem *, ConnectorItem *)),
 			Qt::DirectConnection);		// DirectConnection means call the slot directly like a subroutine, without waiting for a thread or queue
-	succeeded = connect(this, SIGNAL(wireChangedCurveSignal(Wire*, const QPolygonF &, const QPolygonF &)),
-			infoGraphicsView, SLOT(wireChangedCurveSlot(Wire*, const QPolygonF &, const QPolygonF &)),
+	succeeded = connect(this, SIGNAL(wireChangedCurveSignal(Wire*, const QPolygonF &, const QPolygonF &, bool)),
+			infoGraphicsView, SLOT(wireChangedCurveSlot(Wire*, const QPolygonF &, const QPolygonF &, bool)),
 			Qt::DirectConnection);		// DirectConnection means call the slot directly like a subroutine, without waiting for a thread or queue
 	succeeded = succeeded && connect(this, SIGNAL(wireSplitSignal(Wire*, QPointF, QPointF, const QLineF & )),
 			infoGraphicsView, SLOT(wireSplitSlot(Wire*, QPointF, QPointF, const QLineF & )));
@@ -1732,4 +1745,21 @@ void Wire::changeCurve(const QPolygonF & poly)
 		m_controlPoints.append(p);
 	}
 	update();
+}
+
+bool Wire::isCurved() {
+	return m_controlPoints.count() > 1;
+}
+
+const QPolygonF & Wire::curve() {
+	return m_controlPoints;
+}
+
+QPolygonF Wire::sceneControlPoints(QPointF offset) {
+	QPolygonF poly;
+	poly.append(m_line.p1() + pos() - offset);
+	poly.append(m_controlPoints.at(0) + pos() - offset);
+	poly.append(m_controlPoints.at(1) + pos() - offset);
+	poly.append(m_line.p2() + pos() - offset);
+	return poly;
 }

@@ -315,7 +315,7 @@ void PCBSketchWidget::selectAllExcludedTraces()
 		}
 	}
 
-	QUndoCommand * parentCommand = new QUndoCommand(QObject::tr("Select all traces marked \"Don't autoroute\""));
+	QUndoCommand * parentCommand = new QUndoCommand(QObject::tr("Select all traces marked 'Don't autoroute'"));
 
 	stackSelectionState(false, parentCommand);
 	SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);

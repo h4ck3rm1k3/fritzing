@@ -119,6 +119,7 @@ public:
 	void rotateX(double degrees);
 	void flip(Qt::Orientations orientation);
 	void addBendpoint(ItemBase * lastHoverEnterItem, ConnectorItem * lastHoverEnterConnectorItem, QPointF lastLocation);
+	void flattenCurve(ItemBase * lastHoverEnterItem, ConnectorItem * lastHoverEnterConnectorItem, QPointF lastLocation);
 
 	virtual void deleteSelected(Wire *);
 	PaletteItem *getSelectedPart();
@@ -474,7 +475,7 @@ protected slots:
 	void itemSelectedSlot(long id, bool state);
 	void selectionChangedSlot();
 	void wireChangedSlot(class Wire*, const QLineF & oldLine, const QLineF & newLine, QPointF oldPos, QPointF newPos, ConnectorItem * from, ConnectorItem * to);
-	void wireChangedCurveSlot(class Wire*, const QPolygonF & oldPoly, const QPolygonF & newPoly);
+	void wireChangedCurveSlot(class Wire*, const QPolygonF & oldPoly, const QPolygonF & newPoly, bool triggerFirstTime);
 	virtual void wireSplitSlot(class Wire*, QPointF newPos, QPointF oldPos, const QLineF & oldLine);
 	void wireJoinSlot(class Wire*, ConnectorItem * clickedConnectorItem);
 	void toggleLayerVisibility();

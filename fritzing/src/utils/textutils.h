@@ -88,6 +88,7 @@ public:
 	static QString incMultiplyPinFunction(int pin, double increment, double value);
 	static double getViewBoxCoord(const QString & svg, int coord);
 	static QString makeLineSVG(QPointF p1, QPointF p2, double width, QString colorString, double dpi, double printerScale, bool blackOnly);
+	static QString makeCubicBezierSVG(const QPolygonF & controlPoints, double width, QString colorString, double dpi, double printerScale, bool blackOnly);
 	static QString makeRectSVG(QRectF r, QPointF offset, double dpi, double printerscale);
 	static QString makePolySVG(const QPolygonF & poly, QPointF offset, double width, QString colorString, double dpi, double printerScale, bool blackOnly);
 	static QPolygonF polygonFromElement(QDomElement & element);
