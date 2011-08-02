@@ -249,6 +249,19 @@ void Wire::paintBody(QPainter * painter, const QStyleOptionGraphicsItem * option
 		QLineF line = this->line();
 		painterPath.moveTo(line.p1());
 		painterPath.cubicTo(m_controlPoints.at(0), m_controlPoints.at(1), line.p2());
+		DebugDialog::debug(QString("c0x:%1,c0y:%2 c1x:%3,c1y:%4 p0x:%5,p0y:%6 p1x:%7,p1y:%8 px:%9,py:%10")
+							.arg(m_controlPoints.at(0).x())
+							.arg(m_controlPoints.at(0).y())
+							.arg(m_controlPoints.at(1).x())
+							.arg(m_controlPoints.at(1).y())
+							.arg(m_line.p1().x())
+							.arg(m_line.p1().y())
+							.arg(m_line.p2().x())
+							.arg(m_line.p2().y())
+							.arg(pos().x())
+							.arg(pos().y())
+
+							);
 	}
 
 
@@ -358,6 +371,20 @@ void Wire::initDragControl(QPointF scenePos) {
 	QPointF p1 = connector1()->sceneAdjustedTerminalPoint(NULL);
 	double d0 = GraphicsUtils::distanceSqd(scenePos, p0);
 	double d1 =  GraphicsUtils::distanceSqd(scenePos, p1);
+
+	DebugDialog::debug(QString("idc: c0x:%1,c0y:%2 c1x:%3,c1y:%4 p0x:%5,p0y:%6 p1x:%7,p1y:%8 px:%9,px:%10")
+							.arg(p0.x())
+							.arg(p0.y())
+							.arg(p1.x())
+							.arg(p1.y())
+							.arg(m_line.p1().x())
+							.arg(m_line.p1().y())
+							.arg(m_line.p2().x())
+							.arg(m_line.p2().y())
+							.arg(pos().x())
+							.arg(pos().y())
+							);
+
 	m_dragControlIndex = (d0 <= d1) ? 0 : 1;
 	if (m_controlPoints.count() < 2) {
 		m_controlPoints.clear();
@@ -1572,8 +1599,20 @@ void Wire::dragControl(QPointF eventPos, Qt::KeyboardModifiers)
 	double dy = eventPos.y() - m_line.p1().y();
 
 	// map points to unit square
-	double lx = qMax(0.0, qMin(1.0, dx / tx));
-	double ly = qMax(0.0, qMin(1.0, dy / ty));
+	double lx = dx / tx;
+	double ly = dy / ty;
+
+	DebugDialog::debug(QString("ix:%1 lx:%2 lx:%3 p0x:%4,p0y:%5 p1x:%6,p1y:%7 px:%8,py:%9")
+							.arg(m_dragControlIndex)
+							.arg(lx).arg(ly)
+							.arg(m_line.p1().x())
+							.arg(m_line.p1().y())
+							.arg(m_line.p2().x())
+							.arg(m_line.p1().y())
+							.arg(pos().x())
+							.arg(pos().y())
+
+							);
 
 	double a, b, c, d;
 	if (m_dragControlIndex == 0) {
@@ -1590,14 +1629,6 @@ void Wire::dragControl(QPointF eventPos, Qt::KeyboardModifiers)
 		d = ly;
 		m_controlPoints.replace(3, QPointF(lx, ly));
 	}
-
-	double epsilon = 0.00001;
-	double min_param_a = 0.0 + epsilon;
-	double max_param_a = 1.0 - epsilon;
-	double min_param_b = 0.0 + epsilon;
-	double max_param_b = 1.0 - epsilon;
-	a = qMax(min_param_a, qMin(max_param_a, a));
-	b = qMax(min_param_b, qMin(max_param_b, b));
 
 	double x0 = 0;  
 	double y0 = 0;
@@ -1633,13 +1664,15 @@ void Wire::dragControl(QPointF eventPos, Qt::KeyboardModifiers)
 	x1 = (ccx - x2*B2t1) / B1t1;
 	y1 = (ccy - y2*B2t1) / B1t1;
 
-	x1 = qMax(0+epsilon, qMin(1-epsilon, x1));
-	x2 = qMax(0+epsilon, qMin(1-epsilon, x2));
-
 	x1 = m_line.p1().x() + (x1 * tx);
 	x2 = m_line.p1().x() + (x2 * tx);
 	y1 = m_line.p1().y() + (y1 * ty);
 	y2 = m_line.p1().y() + (y2 * ty);
-	m_controlPoints.replace(0, QPointF(x1, y1));
-	m_controlPoints.replace(1, QPointF(x2, y2));
+
+	if (m_dragControlIndex == 0) {
+		m_controlPoints.replace(0, QPointF(x1, y1));
+	}
+	else {
+		m_controlPoints.replace(1, QPointF(x2, y2));
+	}
 }

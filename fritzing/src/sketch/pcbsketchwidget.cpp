@@ -2475,6 +2475,7 @@ void PCBSketchWidget::deleteItem(ItemBase * itemBase, bool deleteModelPart, bool
 	if (boardDeleted) {
 		ItemBase * board = findBoard();
 		if (board == NULL) {
+			// no board found, so set to single-layer by default
 			changeBoardLayers(1, true);
 			emit boardDeletedSignal();
 		}
