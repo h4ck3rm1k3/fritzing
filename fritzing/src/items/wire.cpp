@@ -40,7 +40,8 @@ curvy To Do
 
 	* export
 
-	curvy to begin with?
+	curvy to begin with? would have to vary with some function of angle and distance
+		could convert control points to t values?
 
 	turn curvature on/off per view
 
@@ -90,6 +91,7 @@ later:
 #include "../model/modelpart.h"
 #include "../utils/graphicsutils.h"
 #include "../utils/textutils.h"
+#include "../utils/bezier.h"
 #include "../layerattributes.h"
 
 #include <stdlib.h>
@@ -105,7 +107,7 @@ double Wire::HALF_STANDARD_TRACE_WIDTH;
 
 const double DefaultHoverStrokeWidth = 4;
 
-static QPolygonF UndoControlPolygon;
+static Bezier UndoBezier;
 
 
 ////////////////////////////////////////////////////////////
@@ -157,7 +159,8 @@ Wire * WireAction::wire() {
 Wire::Wire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu* itemMenu, bool initLabel)
 	: ItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
-	m_canHaveControlPoints = true;
+	m_bezier = NULL;
+	m_canHaveCurve = true;
 	m_hoverStrokeWidth = DefaultHoverStrokeWidth;
 	m_connector0 = m_connector1 = NULL;
 	m_partLabel = initLabel ? new PartLabel(this, NULL) : NULL;
@@ -176,10 +179,13 @@ Wire::Wire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdent
 
 	setPos(m_viewGeometry.loc());
 
-	m_dragControl = m_dragEnd = false;
+	m_dragCurve = m_dragEnd = false;
 }
 
 Wire::~Wire() {
+	if (m_bezier) {
+		delete m_bezier;
+	}
 }
 
 FSvgRenderer * Wire::setUp(ViewLayer::ViewLayerID viewLayerID, const LayerHash &  viewLayers, InfoGraphicsView * infoGraphicsView) {
@@ -275,10 +281,12 @@ void Wire::paintBody(QPainter * painter, const QStyleOptionGraphicsItem * option
 	Q_UNUSED(widget);
 
 	QPainterPath painterPath;
-	if (m_controlPoints.count() > 1) {
+	if (m_bezier && !m_bezier->isEmpty()) {
 		QLineF line = this->line();
 		painterPath.moveTo(line.p1());
-		painterPath.cubicTo(m_controlPoints.at(0), m_controlPoints.at(1), line.p2());
+		painterPath.cubicTo(m_bezier->cp0(), m_bezier->cp1(), line.p2());
+		
+		/*
 		DebugDialog::debug(QString("c0x:%1,c0y:%2 c1x:%3,c1y:%4 p0x:%5,p0y:%6 p1x:%7,p1y:%8 px:%9,py:%10")
 							.arg(m_controlPoints.at(0).x())
 							.arg(m_controlPoints.at(0).y())
@@ -292,6 +300,7 @@ void Wire::paintBody(QPainter * painter, const QStyleOptionGraphicsItem * option
 							.arg(pos().y())
 
 							);
+		*/
 	}
 
 
@@ -323,7 +332,7 @@ void Wire::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option,
 	Q_UNUSED(widget);
 	Q_UNUSED(option);
 	painter->save();
-	if ((m_connectorHoverCount > 0 && !(m_dragEnd || m_dragControl)) || m_connectorHoverCount2 > 0) {
+	if ((m_connectorHoverCount > 0 && !(m_dragEnd || m_dragCurve)) || m_connectorHoverCount2 > 0) {
 		painter->setOpacity(.50);
 		painter->fillPath(this->hoverShape(), QBrush(connectorHoverColor));
 	}
@@ -352,11 +361,11 @@ QPainterPath Wire::shapeAux(double width) const
 	}
 				
 	path.moveTo(m_line.p1());
-	if (m_controlPoints.count() > 1) {
-		path.cubicTo(m_controlPoints.at(0), m_controlPoints.at(1), m_line.p2());
+	if (m_bezier == NULL || m_bezier->isEmpty()) {
+		path.lineTo(m_line.p2());
 	}
 	else {
-		path.lineTo(m_line.p2());
+		path.cubicTo(m_bezier->cp0(), m_bezier->cp1(), m_line.p2());
 	}
 	//DebugDialog::debug(QString("using hoverstrokewidth %1 %2").arg(m_id).arg(m_hoverStrokeWidth));
 	return GraphicsUtils::shapeFromPath(path, m_pen, width, false);
@@ -393,42 +402,23 @@ void Wire::mousePressEvent(QGraphicsSceneMouseEvent *event)
 }
 
 
-void Wire::initDragControl(QPointF scenePos) {
-	UndoControlPolygon.clear();
-	foreach (QPointF p, m_controlPoints) {
-		UndoControlPolygon.append(p);
+void Wire::initDragCurve(QPointF scenePos) {
+	if (m_bezier == NULL) {
+		m_bezier = new Bezier();
 	}
 
-	m_dragControl = true;
+	UndoBezier = *m_bezier;
+
+	m_dragCurve = true;
 	m_dragEnd = false;
 
-	QPointF p0 = connector0()->sceneAdjustedTerminalPoint(NULL);
-	QPointF p1 = connector1()->sceneAdjustedTerminalPoint(NULL);
-	double d0 = GraphicsUtils::distanceSqd(scenePos, p0);
-	double d1 =  GraphicsUtils::distanceSqd(scenePos, p1);
-
-	DebugDialog::debug(QString("idc: c0x:%1,c0y:%2 c1x:%3,c1y:%4 p0x:%5,p0y:%6 p1x:%7,p1y:%8 px:%9,px:%10")
-							.arg(p0.x())
-							.arg(p0.y())
-							.arg(p1.x())
-							.arg(p1.y())
-							.arg(m_line.p1().x())
-							.arg(m_line.p1().y())
-							.arg(m_line.p2().x())
-							.arg(m_line.p2().y())
-							.arg(pos().x())
-							.arg(pos().y())
-							);
-
-	m_dragControlIndex = (d0 <= d1) ? 0 : 1;
-
-	if (m_controlPoints.count() < 2) {
-		m_controlPoints.clear();
-		m_controlPoints.append(mapFromScene(p0));
-		m_controlPoints.append(mapFromScene(p1));
-		m_controlPoints.append(QPointF(0,0));
-		m_controlPoints.append(QPointF(1,1));
+	if (m_bezier->isEmpty()) {
+		QPointF p0 = connector0()->sceneAdjustedTerminalPoint(NULL);
+		QPointF p1 = connector1()->sceneAdjustedTerminalPoint(NULL);
+		m_bezier->initToEnds(mapFromScene(p0), mapFromScene(p1));
 	}
+
+	m_dragCurveIndex = m_bezier->findControlIndex(mapFromScene(scenePos));
 }
 
 void Wire::initDragEnd(ConnectorItem * connectorItem, QPointF scenePos) {
@@ -437,7 +427,7 @@ void Wire::initDragEnd(ConnectorItem * connectorItem, QPointF scenePos) {
 	QLineF line = this->line();
 	m_drag0 = (connectorItem == m_connector0);
 	m_dragEnd = true;
-	m_dragControl = false;
+	m_dragCurve = false;
 	if (m_drag0) {
 		m_wireDragOrigin = line.p2();
  		//DebugDialog::debug(QString("drag near origin %1 %2").arg(m_wireDragOrigin.x()).arg(m_wireDragOrigin.y()) );
@@ -480,9 +470,9 @@ void Wire::mouseMoveEventAux(QPointF eventPos, Qt::KeyboardModifiers modifiers) 
 		return;
 	}
 
-	if (m_dragControl) {
+	if (m_dragCurve) {
 		prepareGeometryChange();
-		dragControl(eventPos, modifiers);
+		dragCurve(eventPos, modifiers);
 		update();
 		return;
 	}
@@ -621,13 +611,13 @@ void Wire::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 }
 
 bool Wire::releaseDrag() {
-	if (m_dragEnd == false && m_dragControl == false) return false;
+	if (m_dragEnd == false && m_dragCurve == false) return false;
 
-	if (m_dragControl) {
-		m_dragControl = false;
+	if (m_dragCurve) {
+		m_dragCurve = false;
 		ungrabMouse();
-		if (UndoControlPolygon != m_controlPoints) {
-			emit wireChangedCurveSignal(this, UndoControlPolygon, m_controlPoints, false);
+		if (UndoBezier != *m_bezier) {
+			emit wireChangedCurveSignal(this, UndoBezier, *m_bezier, false);
 		}
 		return true;
 	}
@@ -668,16 +658,7 @@ void Wire::writeGeometry(QXmlStreamWriter & streamWriter) {
 	streamWriter.writeAttribute("mils", QString::number(mils()));
 	streamWriter.writeAttribute("color", m_pen.brush().color().name());
 	streamWriter.writeAttribute("opacity", QString::number(m_opacity));
-	if (m_controlPoints.count() > 1) {
-		streamWriter.writeStartElement("curve");
-		foreach (QPointF p, m_controlPoints) {
-			streamWriter.writeStartElement("point");
-			streamWriter.writeAttribute("x", QString::number(p.x()));
-			streamWriter.writeAttribute("y", QString::number(p.y()));
-			streamWriter.writeEndElement();
-		}
-		streamWriter.writeEndElement();
-	}
+	if (m_bezier) m_bezier->write(streamWriter);
 	streamWriter.writeEndElement();
 }
 
@@ -699,11 +680,11 @@ void Wire::setExtras(QDomElement & element, InfoGraphicsView * infoGraphicsView)
 	}
 
 	setColorFromElement(element);
-	QPolygonF poly = TextUtils::polygonFromElement(element.firstChildElement("curve"));
-	if (poly.count() > 1) {
+	Bezier bezier = Bezier::fromElement(element.firstChildElement("bezier"));
+	if (!bezier.isEmpty()) {
 		prepareGeometryChange();
-		m_controlPoints.clear();
-		foreach (QPointF p, poly) m_controlPoints.append(p);
+		m_bezier = new Bezier;
+		*m_bezier = bezier;
 	}
 
 }
@@ -1242,7 +1223,7 @@ void Wire::setOpacity(double opacity) {
 }
 
 bool Wire::draggingEnd() {
-	return m_dragEnd || m_dragControl;
+	return m_dragEnd || m_dragCurve;
 }
 
 void Wire::setCanChainMultiple(bool can) {
@@ -1525,8 +1506,8 @@ void Wire::addedToScene(bool temporary) {
 	bool succeeded = connect(this, SIGNAL(wireChangedSignal(Wire*, const QLineF & , const QLineF & , QPointF, QPointF, ConnectorItem *, ConnectorItem *)	),
 			infoGraphicsView, SLOT(wireChangedSlot(Wire*, const QLineF & , const QLineF & , QPointF, QPointF, ConnectorItem *, ConnectorItem *)),
 			Qt::DirectConnection);		// DirectConnection means call the slot directly like a subroutine, without waiting for a thread or queue
-	succeeded = connect(this, SIGNAL(wireChangedCurveSignal(Wire*, const QPolygonF &, const QPolygonF &, bool)),
-			infoGraphicsView, SLOT(wireChangedCurveSlot(Wire*, const QPolygonF &, const QPolygonF &, bool)),
+	succeeded = connect(this, SIGNAL(wireChangedCurveSignal(Wire*, const Bezier &, const Bezier &, bool)),
+			infoGraphicsView, SLOT(wireChangedCurveSlot(Wire*, const Bezier &, const Bezier &, bool)),
 			Qt::DirectConnection);		// DirectConnection means call the slot directly like a subroutine, without waiting for a thread or queue
 	succeeded = succeeded && connect(this, SIGNAL(wireSplitSignal(Wire*, QPointF, QPointF, const QLineF & )),
 			infoGraphicsView, SLOT(wireSplitSlot(Wire*, QPointF, QPointF, const QLineF & )));
@@ -1632,134 +1613,39 @@ void Wire::setPen(const QPen &pen)
     update();
 }
 
-bool Wire::canHaveControlPoints() {
-	return m_canHaveControlPoints && (m_viewIdentifier == ViewIdentifierClass::BreadboardView);
+bool Wire::canHaveCurve() {
+	return m_canHaveCurve && (m_viewIdentifier == ViewIdentifierClass::BreadboardView);
 }
 
-double B0 (double t){
-  return (1-t)*(1-t)*(1-t);
-}
-double B1 (double t){
-  return  3*t* (1-t)*(1-t);
-}
-double B2 (double t){
-  return 3*t*t* (1-t);
-}
-double B3 (double t){
-  return t*t*t;
-}
-
-void Wire::dragControl(QPointF eventPos, Qt::KeyboardModifiers)
+void Wire::dragCurve(QPointF eventPos, Qt::KeyboardModifiers)
 {
-	// see: Cubic Bezier (Nearly) Through Two Given Points at http://www.flong.com/texts/code/shapers_bez/
-
-	double tx = m_line.p2().x() - m_line.p1().x();
-	double ty = m_line.p2().y() - m_line.p1().y();
-	double dx = eventPos.x() - m_line.p1().x();
-	double dy = eventPos.y() - m_line.p1().y();
-
-	// map points to unit square
-	double lx = dx / tx;
-	double ly = dy / ty;
-
-	DebugDialog::debug(QString("ix:%1 lx:%2 lx:%3 p0x:%4,p0y:%5 p1x:%6,p1y:%7 px:%8,py:%9")
-							.arg(m_dragControlIndex)
-							.arg(lx).arg(ly)
-							.arg(m_line.p1().x())
-							.arg(m_line.p1().y())
-							.arg(m_line.p2().x())
-							.arg(m_line.p1().y())
-							.arg(pos().x())
-							.arg(pos().y())
-
-							);
-
-	double a, b, c, d;
-	if (m_dragControlIndex == 0) {
-		a = lx;
-		b = ly;
-		c = m_controlPoints.at(3).x();
-		d = m_controlPoints.at(3).y();
-		m_controlPoints.replace(2, QPointF(lx, ly));
-	}
-	else {
-		a = m_controlPoints.at(2).x();
-		b = m_controlPoints.at(2).y();
-		c = lx;
-		d = ly;
-		m_controlPoints.replace(3, QPointF(lx, ly));
-	}
-
-	double x0 = 0;  
-	double y0 = 0;
-	double x4 = a;  
-	double y4 = b;
-	double x5 = c;  
-	double y5 = d;
-	double x3 = 1;  
-	double y3 = 1;
-	double x1,y1,x2,y2; // to be solved.
-
-	// arbitrary but reasonable 
-	// t-values for interior control points
-	double t1 = 0.3;
-	double t2 = 0.7;
-
-	double B0t1 = B0(t1);
-	double B1t1 = B1(t1);
-	double B2t1 = B2(t1);
-	double B3t1 = B3(t1);
-	double B0t2 = B0(t2);
-	double B1t2 = B1(t2);
-	double B2t2 = B2(t2);
-	double B3t2 = B3(t2);
-
-	double ccx = x4 - x0*B0t1 - x3*B3t1;
-	double ccy = y4 - y0*B0t1 - y3*B3t1;
-	double ffx = x5 - x0*B0t2 - x3*B3t2;
-	double ffy = y5 - y0*B0t2 - y3*B3t2;
-
-	x2 = (ccx - (ffx*B1t1)/B1t2) / (B2t1 - (B1t1*B2t2)/B1t2);
-	y2 = (ccy - (ffy*B1t1)/B1t2) / (B2t1 - (B1t1*B2t2)/B1t2);
-	x1 = (ccx - x2*B2t1) / B1t1;
-	y1 = (ccy - y2*B2t1) / B1t1;
-
-	x1 = m_line.p1().x() + (x1 * tx);
-	x2 = m_line.p1().x() + (x2 * tx);
-	y1 = m_line.p1().y() + (y1 * ty);
-	y2 = m_line.p1().y() + (y2 * ty);
-
-	if (m_dragControlIndex == 0) {
-		m_controlPoints.replace(0, QPointF(x1, y1));
-	}
-	else {
-		m_controlPoints.replace(1, QPointF(x2, y2));
-	}
+	m_bezier->recalc(m_dragCurveIndex, eventPos);
 }
 
-void Wire::changeCurve(const QPolygonF & poly)
+void Wire::changeCurve(const Bezier * bezier)
 {
 	prepareGeometryChange();
-	m_controlPoints.clear();
-	foreach (QPointF p, poly) {
-		m_controlPoints.append(p);
-	}
+	if (m_bezier == NULL) m_bezier = new Bezier;
+	*m_bezier = *bezier;
 	update();
 }
 
 bool Wire::isCurved() {
-	return m_controlPoints.count() > 1;
+	return (m_bezier != NULL) && !m_bezier->isEmpty();
 }
 
-const QPolygonF & Wire::curve() {
-	return m_controlPoints;
+const Bezier * Wire::curve() {
+	return m_bezier;
 }
 
-QPolygonF Wire::sceneControlPoints(QPointF offset) {
+QPolygonF Wire::sceneCurve(QPointF offset) {
 	QPolygonF poly;
+	if (m_bezier == NULL) return poly;
+	if (m_bezier->isEmpty()) return poly;
+
 	poly.append(m_line.p1() + pos() - offset);
-	poly.append(m_controlPoints.at(0) + pos() - offset);
-	poly.append(m_controlPoints.at(1) + pos() - offset);
+	poly.append(m_bezier->cp0() + pos() - offset);
+	poly.append(m_bezier->cp1() + pos() - offset);
 	poly.append(m_line.p2() + pos() - offset);
 	return poly;
 }

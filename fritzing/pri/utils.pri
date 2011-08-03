@@ -24,6 +24,7 @@ src/utils/abstractimagebutton.h \
 src/utils/abstractstatesbutton.h \
 src/utils/autoclosemessagebox.h \
 src/utils/bendpointaction.h \
+src/utils/bezier.h \
 src/utils/boundedregexpvalidator.h \
 src/utils/bundler.h \
 src/utils/clickablelabel.h \
@@ -46,6 +47,7 @@ src/utils/zoomslider.h
 SOURCES += \
 src/utils/autoclosemessagebox.cpp \
 src/utils/bendpointaction.cpp \
+src/utils/bezier.cpp \
 src/utils/clickablelabel.cpp \
 src/utils/expandinglabel.cpp \
 src/utils/fileprogressdialog.cpp \

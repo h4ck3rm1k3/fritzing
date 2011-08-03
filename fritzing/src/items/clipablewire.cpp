@@ -142,7 +142,7 @@ register int	line_flag ;
 ClipableWire::ClipableWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool initLabel ) 
 	: Wire(modelPart, viewIdentifier,  viewGeometry,  id, itemMenu, initLabel)
 {
-	m_canHaveControlPoints = false;
+	m_canHaveCurve = false;
 	m_clipEnds = false;
 	m_trackHoverItem = NULL;
 	m_justFilteredEvent = NULL;

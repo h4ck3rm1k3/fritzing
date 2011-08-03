@@ -32,6 +32,7 @@ $Date$
 #include "items/wire.h"
 #include "connectors/connectoritem.h"
 #include "items/moduleidnames.h"
+#include "utils/bezier.h"
 
 int SelectItemCommand::selectItemCommandID = 3;
 int ChangeNoteTextCommand::changeNoteTextCommandID = 5;
@@ -448,19 +449,23 @@ QString ChangeWireCommand::getParamString() const {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ChangeWireCurveCommand::ChangeWireCurveCommand(SketchWidget* sketchWidget, long fromID,
-									 const QPolygonF & oldPoly, const QPolygonF & newPoly, 
+									 const Bezier & oldBezier, const Bezier & newBezier, 
 									 QUndoCommand *parent)
     : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
 	m_firstTime = false;
     m_fromID = fromID;
-	m_oldPoly = oldPoly;
-    m_newPoly = newPoly;
+
+	m_oldBezier = new Bezier;
+    m_newBezier = new Bezier;
+
+	*m_newBezier = newBezier;
+	*m_oldBezier = oldBezier;
 }
 
 void ChangeWireCurveCommand::undo()
 {
-    m_sketchWidget->changeWireCurve(m_fromID, m_oldPoly);
+    m_sketchWidget->changeWireCurve(m_fromID, m_oldBezier);
 }
 
 void ChangeWireCurveCommand::redo()
@@ -469,7 +474,7 @@ void ChangeWireCurveCommand::redo()
 		m_firstTime = false;
 	}
 	else {
-		m_sketchWidget->changeWireCurve(m_fromID, m_newPoly);
+		m_sketchWidget->changeWireCurve(m_fromID, m_newBezier);
 	}
 }
 
@@ -478,21 +483,19 @@ void ChangeWireCurveCommand::setFirstTime() {
 }
 
 QString ChangeWireCurveCommand::getParamString() const {
-	QString oldPoly;
-	QString newPoly;
-	foreach (QPointF p, m_oldPoly) {
-		oldPoly += QString("(%1,%2)").arg(p.x()).arg(p.y());
-	}
-	foreach (QPointF p, m_newPoly) {
-		newPoly += QString("(%1,%2)").arg(p.x()).arg(p.y());
-	}
+	QString oldBezier;
+	QString newBezier;
+	oldBezier += QString("(%1,%2)").arg(m_oldBezier->cp0().x()).arg(m_oldBezier->cp0().y());
+	oldBezier += QString("(%1,%2)").arg(m_oldBezier->cp1().x()).arg(m_oldBezier->cp1().y());
+	newBezier += QString("(%1,%2)").arg(m_newBezier->cp0().x()).arg(m_newBezier->cp0().y());
+	newBezier += QString("(%1,%2)").arg(m_newBezier->cp1().x()).arg(m_newBezier->cp1().y());
 
 	return QString("ChangeWireCurveCommand ") 
 		+ BaseCommand::getParamString() + 
 		QString(" fromid:%1 oldp:%2 newp:%3")
 		.arg(m_fromID)
-		.arg(oldPoly)
-		.arg(newPoly)
+		.arg(oldBezier)
+		.arg(newBezier)
 		;
 }
 

@@ -94,7 +94,7 @@ public:
 	void hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, class ConnectorItem * item);
 
 	void initDragEnd(ConnectorItem * dragEnd, QPointF scenePos);
-	void initDragControl(QPointF scenePos);
+	void initDragCurve(QPointF scenePos);
 	void connectedMoved(ConnectorItem * from, ConnectorItem * to);
 	void setLineAnd(QLineF line, QPointF pos, bool useLine);
 	ConnectorItem * otherConnector(ConnectorItem *);
@@ -115,7 +115,6 @@ public:
 	void setNormal(bool);
 	bool getNormal();
 	bool getTrace();
-
 
 	bool hasFlag(ViewGeometry::WireFlag);
 	bool hasAnyFlag(ViewGeometry::WireFlags);
@@ -159,11 +158,11 @@ public:
     QPainterPath shape() const;
 	QRectF boundingRect() const;
 	virtual const QLineF & getPaintLine();
-	bool canHaveControlPoints();
-	void changeCurve(const QPolygonF &);
+	bool canHaveCurve();
+	void changeCurve(const class Bezier *);
 	bool isCurved();
-	const QPolygonF & curve();
-	QPolygonF sceneControlPoints(QPointF offset);
+	const class Bezier * curve();
+	QPolygonF sceneCurve(QPointF offset);
 
 protected slots:
 	void colorEntry(const QString & text);
@@ -182,7 +181,7 @@ protected:
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 	void mouseMoveEventAux(QPointF eventPos, Qt::KeyboardModifiers);
-	void dragControl(QPointF eventPos, Qt::KeyboardModifiers);
+	void dragCurve(QPointF eventPos, Qt::KeyboardModifiers);
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget); 
 	void initEnds(const ViewGeometry &, QRectF defaultRect, class InfoGraphicsView *);
@@ -218,8 +217,8 @@ protected:
 	QPen	m_pen;	
 	QPointF m_wireDragOrigin;
 	bool m_dragEnd;
-	bool m_dragControl;
-	int m_dragControlIndex;
+	bool m_dragCurve;
+	int m_dragCurveIndex;
 	bool m_drag0;
 	QPointer<class ConnectorItem> m_connectorHover;
 	QPointer<class ConnectorItem> m_connector0;
@@ -238,8 +237,8 @@ protected:
 	bool m_markedDeleted;
 	QRectF m_originalConnectorRect;
 	double m_hoverStrokeWidth;
-	bool m_canHaveControlPoints;
-	QPolygonF m_controlPoints;
+	bool m_canHaveCurve;
+	class Bezier * m_bezier;
 
 public:
 	static QStringList colorNames;
@@ -253,7 +252,7 @@ protected:
 
 signals:
 	void wireChangedSignal(Wire* me, const QLineF & oldLine, const QLineF & newLine, QPointF oldPos, QPointF newPos, ConnectorItem * from, ConnectorItem * to);
-	void wireChangedCurveSignal(Wire* me, const QPolygonF & oldPoly, const QPolygonF & newPoly, bool triggerFirstTime);
+	void wireChangedCurveSignal(Wire* me, const Bezier & oldPoly, const Bezier & newPoly, bool triggerFirstTime);
 	void wireSplitSignal(Wire* me, QPointF newPos, QPointF oldPos, const QLineF & oldLine);
 	void wireJoinSignal(Wire* me, ConnectorItem * clickedConnectorItem);
 };

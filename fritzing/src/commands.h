@@ -274,7 +274,7 @@ class ChangeWireCurveCommand : public BaseCommand
 {
 public:
     ChangeWireCurveCommand(class SketchWidget *sketchWidget, long fromID,
-    					const QPolygonF & oldPoly, const QPolygonF & newPoly,
+    					const class Bezier & oldBezier, const class Bezier & newBezier,
     					QUndoCommand *parent);
     void undo();
     void redo();
@@ -285,8 +285,8 @@ protected:
 
 protected:
     long m_fromID;
-    QPolygonF m_newPoly;
-    QPolygonF m_oldPoly;
+    class Bezier * m_newBezier;
+    class Bezier * m_oldBezier;
     bool m_firstTime;
 };
 

@@ -269,7 +269,7 @@ public:
 	void setItemDropOffset(long id, QPointF offset);
 	void prepLegChange(ConnectorItem * from,  const QPolygonF & oldLeg, const QPolygonF & newLeg, ConnectorItem * to, bool changeConnections);
 	void prepLegSelection(ItemBase *);
-	void changeWireCurve(long id, const QPolygonF & poly);
+	void changeWireCurve(long id, const Bezier *);
 
 
 protected:
@@ -369,7 +369,7 @@ protected:
 	bool swappedGender(ConnectorItem * originalConnectorItem, Connector * newConnector);
 	void setLastPaletteItemSelected(PaletteItem * paletteItem);
 	void setLastPaletteItemSelectedIf(ItemBase * itemBase);
-	void prepDragBendpoint(Wire *, QPoint eventPos, bool dragControlPoint);
+	void prepDragBendpoint(Wire *, QPoint eventPos, bool dragCurve);
 	void prepDragWire(Wire *);
 	void clickBackground(QMouseEvent *);
 	void categorizeDragWires(QSet<Wire *> & wires);
@@ -475,7 +475,7 @@ protected slots:
 	void itemSelectedSlot(long id, bool state);
 	void selectionChangedSlot();
 	void wireChangedSlot(class Wire*, const QLineF & oldLine, const QLineF & newLine, QPointF oldPos, QPointF newPos, ConnectorItem * from, ConnectorItem * to);
-	void wireChangedCurveSlot(class Wire*, const QPolygonF & oldPoly, const QPolygonF & newPoly, bool triggerFirstTime);
+	void wireChangedCurveSlot(class Wire*, const Bezier & oldPoly, const Bezier & Bezier, bool triggerFirstTime);
 	virtual void wireSplitSlot(class Wire*, QPointF newPos, QPointF oldPos, const QLineF & oldLine);
 	void wireJoinSlot(class Wire*, ConnectorItem * clickedConnectorItem);
 	void toggleLayerVisibility();
@@ -598,7 +598,7 @@ protected:
 	QPointer<ItemBase> m_lastHoverEnterItem;
 	QString m_shortName;
 	QPointer<Wire> m_dragBendpointWire;
-	bool m_dragControlPoint;
+	bool m_dragCurve;
 	QPoint m_dragBendpointPos;
 	QColor m_standardBackgroundColor;
 	StatusConnectStatus m_statusConnectState;

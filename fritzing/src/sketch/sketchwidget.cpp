@@ -74,6 +74,7 @@ $Date$
 #include "../items/resizableboard.h"
 #include "../utils/graphicsutils.h"
 #include "../utils/textutils.h"
+#include "../utils/bezier.h"
 #include "../fsvgrenderer.h"
 #include "../items/resistor.h"
 #include "../items/mysterypart.h"
@@ -561,9 +562,9 @@ void SketchWidget::addWireExtras(long newID, QDomElement & view, QUndoCommand * 
 		new WireColorChangeCommand(this, newID, colorString, colorString, op, op, parentCommand);
 	}
 
-	QPolygonF poly = TextUtils::polygonFromElement(extras.firstChildElement("curve"));
-	if (poly.count() > 1) {
-		new ChangeWireCurveCommand(this, newID, poly, poly, parentCommand);
+	Bezier bezier = Bezier::fromElement(extras.firstChildElement("bezier"));
+	if (!bezier.isEmpty()) {
+		new ChangeWireCurveCommand(this, newID, bezier, bezier, parentCommand);
 	}
 }
 
@@ -2021,7 +2022,7 @@ void SketchWidget::mousePressEvent(QMouseEvent *event)
 				return;
 			}
 			else {
-				m_dragControlPoint = ((event->modifiers() & Qt::ControlModifier) != 0) && wire->canHaveControlPoints();
+				m_dragCurve = ((event->modifiers() & Qt::ControlModifier) != 0) && wire->canHaveCurve();
 				m_dragBendpointWire = wire;
 				m_dragBendpointPos = event->pos();
 				return;	
@@ -2464,16 +2465,16 @@ void SketchWidget::prepDragWire(Wire * wire)
 	setupAutoscroll(true);
 }
 
-void SketchWidget::prepDragBendpoint(Wire * wire, QPoint eventPos, bool dragControlPoint) 
+void SketchWidget::prepDragBendpoint(Wire * wire, QPoint eventPos, bool dragCurve) 
 {
 	m_bendpointWire = wire;
 	wire->saveGeometry();
 	ViewGeometry vg = m_bendpointVG = wire->getViewGeometry();
 	QPointF newPos = mapToScene(eventPos); 
 
-	if (dragControlPoint) {
+	if (dragCurve) {
 		setupAutoscroll(true);
-		wire->initDragControl(newPos);
+		wire->initDragCurve(newPos);
 		wire->grabMouse();
 		return;
 	}
@@ -2544,7 +2545,7 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 	emit cursorLocationSignal(sp.x() / FSvgRenderer::printerScale(), sp.y() / FSvgRenderer::printerScale());
 
 	if (m_dragBendpointWire != NULL) {
-		prepDragBendpoint(m_dragBendpointWire, m_dragBendpointPos, m_dragControlPoint);
+		prepDragBendpoint(m_dragBendpointWire, m_dragBendpointPos, m_dragCurve);
 		m_dragBendpointWire = NULL;
 		m_draggingBendpoint = true;
 		this->m_alignmentStartPoint = mapToScene(m_dragBendpointPos);		// not sure this will be correct...
@@ -6411,7 +6412,7 @@ void SketchWidget::extraRenderSvgStep(ItemBase * itemBase, QPointF offset, doubl
 QString SketchWidget::makeWireSVG(Wire * wire, QPointF offset, double dpi, double printerScale, bool blackOnly) 
 {
 	if (wire->isCurved()) {
-		QPolygonF poly = wire->sceneControlPoints(offset);
+		QPolygonF poly = wire->sceneCurve(offset);
 		return TextUtils::makeCubicBezierSVG(poly, wire->width(), wire->hexString(), dpi, printerScale, blackOnly);
 	}
 	else {
@@ -6667,8 +6668,9 @@ void SketchWidget::flattenCurve(ItemBase * lastHoverEnterItem, ConnectorItem * l
 	}
 
 	if (wire != NULL) {
-		QPolygonF poly;
-		wireChangedCurveSlot(wire, wire->curve(), poly, true);
+		Bezier newB;
+		Bezier oldB = *wire->curve();
+		wireChangedCurveSlot(wire, oldB, newB, true);
 	}
 
 }
@@ -7711,11 +7713,11 @@ void SketchWidget::prereleaseTempWireForDragging(Wire*)
 {
 }
 
-void SketchWidget::wireChangedCurveSlot(Wire* wire, const QPolygonF & oldPoly, const QPolygonF & newPoly, bool triggerFirstTime) {
+void SketchWidget::wireChangedCurveSlot(Wire* wire, const Bezier & oldB, const Bezier & newB, bool triggerFirstTime) {
 	this->clearHoldingSelectItem();
 	this->m_moveEventCount = 0;  // clear this so an extra MoveItemCommand isn't posted
 
-	ChangeWireCurveCommand * cwcc = new ChangeWireCurveCommand(this, wire->id(), oldPoly, newPoly, NULL);
+	ChangeWireCurveCommand * cwcc = new ChangeWireCurveCommand(this, wire->id(), oldB, newB, NULL);
 	cwcc->setText("Change wire curvature");
 	if (!triggerFirstTime) {
 		cwcc->setFirstTime();
@@ -7723,9 +7725,9 @@ void SketchWidget::wireChangedCurveSlot(Wire* wire, const QPolygonF & oldPoly, c
 	m_undoStack->push(cwcc);
 }
 
-void SketchWidget::changeWireCurve(long id, const QPolygonF & poly) {
+void SketchWidget::changeWireCurve(long id, const Bezier * bezier) {
 	Wire * wire = qobject_cast<Wire *>(findItem(id));
 	if (wire == NULL) return;
 
-	wire->changeCurve(poly);
+	wire->changeCurve(bezier);
 }

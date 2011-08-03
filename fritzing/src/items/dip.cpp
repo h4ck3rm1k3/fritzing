@@ -69,7 +69,7 @@ bool Dip::otherPropsChange(const QMap<QString, QString> & propsMap) {
 
 const QStringList & Dip::spacings() {
 	if (Spacings.count() == 0) {
-		Spacings << "300mil" << "400mil" << "500mil" << "600mil" << "900mil";
+		Spacings << "300mil" << "400mil" << "600mil" << "900mil";
 	}
 
 	return Spacings;
