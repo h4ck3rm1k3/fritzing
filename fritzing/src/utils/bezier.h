@@ -48,13 +48,19 @@ public:
 	void write(QXmlStreamWriter &);
 	bool operator==(const Bezier &) const;
 	bool operator!=(const Bezier &) const;
-	void recalc(int controlIndex, QPointF p);
+	void recalc(QPointF p);
 	void initToEnds(QPointF cp0, QPointF cp1); 
 	double xFromT(double t);
 	double yFromT(double t);
 	void split(double t, Bezier & left, Bezier & right);
-	int findControlIndex(QPointF fromPoint);
+	void initControlIndex(QPointF fromPoint);
+	double computeCubicCurveLength(double z, int n);
 
+protected:
+	double cubicF(double t);
+
+
+public:
 	static Bezier fromElement(QDomElement & element);
 
 protected:
@@ -64,6 +70,7 @@ protected:
 	QPointF m_cp1;
 	double m_length;
 	bool m_isEmpty;
+	bool m_drag_cp0;
 };
 
 #endif

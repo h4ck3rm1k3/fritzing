@@ -45,13 +45,6 @@ curvy To Do
 
 	turn curvature on/off per view
 
-	bendable legs
-		undo/redo
-		save/load
-		copy/paste
-		export
-		make straight function
-
 ---------------------------------------------------------
 
 later:
@@ -418,7 +411,7 @@ void Wire::initDragCurve(QPointF scenePos) {
 		m_bezier->initToEnds(mapFromScene(p0), mapFromScene(p1));
 	}
 
-	m_dragCurveIndex = m_bezier->findControlIndex(mapFromScene(scenePos));
+	m_bezier->initControlIndex(mapFromScene(scenePos));
 }
 
 void Wire::initDragEnd(ConnectorItem * connectorItem, QPointF scenePos) {
@@ -1619,7 +1612,7 @@ bool Wire::canHaveCurve() {
 
 void Wire::dragCurve(QPointF eventPos, Qt::KeyboardModifiers)
 {
-	m_bezier->recalc(m_dragCurveIndex, eventPos);
+	m_bezier->recalc(eventPos);
 }
 
 void Wire::changeCurve(const Bezier * bezier)

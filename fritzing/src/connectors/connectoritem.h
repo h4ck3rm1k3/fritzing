@@ -155,7 +155,7 @@ protected:
 	void displayTooltip(ConnectorItem * over, ConnectorItem * other);
 	void reposition(QPointF sceneDestPos, int draggingIndex);
 	void repositionTarget();
-	QPointF calcPoint() const;
+	QPointF calcConnectorEnd();
 	QPen legPen() const;
 	bool legMousePressEvent(QGraphicsSceneMouseEvent *event);
 	void repoly(const QPolygonF & poly, bool relative);
@@ -171,6 +171,9 @@ protected:
 	CursorLocation findLocation(QPointF, int & bendpointIndex);
 	void insertBendpoint(QPointF pos, int bendpointIndex);
 	void removeBendpoint(int bendpointIndex);
+	void clearCurves();
+	void paintLeg(QPainter * painter);
+	void paintLeg(QPainter * painter, bool hasCurves);
 
 protected:
 	QPointer<Connector> m_connector;
@@ -188,13 +191,16 @@ protected:
 	bool m_bendableLeg;
 	QPolygonF m_oldPolygon;
 	bool m_draggingLeg;
+	bool m_draggingCurve;
 	int m_draggingLegIndex;
 	bool m_activeStretch;
 	QPointF m_holdPos;
 	QPolygonF m_legPolygon;
+	QVector<class Bezier *> m_legCurves;
 	double m_legStrokeWidth;
 	QColor m_legColor;
 	bool m_insertBendpointPossible;
+	QPointF m_connectorEnd;
 	
 protected:	
 	static QList<ConnectorItem *>  m_equalPotentialDisplayItems;

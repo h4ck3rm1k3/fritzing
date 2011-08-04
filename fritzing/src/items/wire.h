@@ -218,7 +218,6 @@ protected:
 	QPointF m_wireDragOrigin;
 	bool m_dragEnd;
 	bool m_dragCurve;
-	int m_dragCurveIndex;
 	bool m_drag0;
 	QPointer<class ConnectorItem> m_connectorHover;
 	QPointer<class ConnectorItem> m_connector0;

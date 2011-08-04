@@ -130,6 +130,16 @@ bendable TODO:
 
 	* export: resistors and other custom generated parts with legs (retrieve svg)
 
+	curve: undo/redo
+
+	curve: save/load
+
+	curve: copy/paste
+		
+	curve:export
+		
+	curve: make straight function
+
 	when dragging to breadboard from parts bin, don't get final alignment to breadboard
 
 	survival in parts editor
@@ -211,9 +221,12 @@ parts editor support
 #include "../utils/graphicsutils.h"
 #include "../utils/graphutils.h"
 #include "../utils/ratsnestcolors.h"
+#include "../utils/bezier.h"
 #include "ercdata.h"
 
 /////////////////////////////////////////////////////////
+
+static Bezier UndoBezier;
 
 static const double StandardLegConnectorLength = 9;			// pixels
 
@@ -262,7 +275,7 @@ static QCursor * BendpointCursor = NULL;
 static QCursor * NewBendpointCursor = NULL;
 static QCursor * MakeWireCursor = NULL;
 
-Qt::KeyboardModifiers DragWireModifiers = (Qt::ControlModifier | Qt::AltModifier | Qt::MetaModifier);
+Qt::KeyboardModifiers DragWireModifiers = (Qt::AltModifier | Qt::MetaModifier);
 
 QColor addColor(QColor & color, int offset)
 {
@@ -278,7 +291,7 @@ QColor addColor(QColor & color, int offset)
 ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 	: NonConnectorItem(attachedTo)
 {
-	m_draggingLeg = m_bendableLeg = m_bigDot = m_hybrid = false;
+	m_draggingCurve = m_draggingLeg = m_bendableLeg = m_bigDot = m_hybrid = false;
 	m_marked = false;
 	m_checkedEffectively = false;
 	m_hoverEnterSpaceBarWasPressed = m_spaceBarWasPressed = false;
@@ -308,6 +321,7 @@ ConnectorItem::~ConnectorItem() {
 	if (this->connector() != NULL) {
 		this->connector()->removeViewItem(this);
 	}
+	clearCurves();
 }
 
 void ConnectorItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
@@ -628,8 +642,15 @@ void ConnectorItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 			// didn't move far enough; bail
 			return;
 		}
+
 		m_draggingLeg = false;
 		ConnectorItem * to = releaseDrag();
+
+		if (m_draggingCurve) {
+			m_draggingCurve = false;
+			return;
+		}
+
 		InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 		bool changeConnections = m_draggingLegIndex == m_legPolygon.count() - 1;
 		if (to != NULL && changeConnections) {
@@ -677,12 +698,23 @@ void ConnectorItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
 void ConnectorItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 
 	if (m_bendableLeg && m_draggingLeg) {
+		if (m_draggingCurve) {
+			Bezier * bezier = m_legCurves.at(m_draggingLegIndex);
+			if (bezier != NULL && !bezier->isEmpty()) {
+				prepareGeometryChange();
+				bezier->recalc(event->pos());
+				update();
+				return;
+			}
+		}
+
 		QPointF currentPos = event->scenePos();
         QPointF buttonDownPos = event->buttonDownScenePos(Qt::LeftButton);
 
 		if (m_insertBendpointPossible) {
 			if (qSqrt(GraphicsUtils::distanceSqd(currentPos, buttonDownPos)) >= QApplication::startDragDistance()) {
 				m_legPolygon.insert(m_draggingLegIndex, m_holdPos);
+				m_legCurves.insert(m_draggingLegIndex, NULL);
 				m_insertBendpointPossible = false;
 			}
 			else {
@@ -732,7 +764,7 @@ void ConnectorItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 }
 
 void ConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
-	m_draggingLeg = false;
+	m_draggingCurve = m_draggingLeg = false;
 
 	if (event->button() != Qt::LeftButton) {
 		QGraphicsRectItem::mousePressEvent(event);
@@ -762,7 +794,6 @@ void ConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 	if (m_bendableLeg) {
 		if (legMousePressEvent(event)) return;
 	}
-
 
 	if (this->m_attachedTo != NULL && m_attachedTo->acceptsMousePressConnectorEvent(this, event)) {
 		m_attachedTo->mousePressConnectorEvent(this, event);
@@ -1034,6 +1065,15 @@ void ConnectorItem::saveInstance(QXmlStreamWriter & writer) {
 			writer.writeEndElement();
 		}
 		writer.writeEndElement();
+		foreach (Bezier* bezier, m_legCurves) {
+			if (bezier == NULL) {
+				writer.writeStartElement("bezier");
+				writer.writeEndElement();
+			}
+			else {
+				bezier->write(writer);
+			}
+		}
 	}
 
 	if (m_connectedTo.count() > 0) {
@@ -1500,49 +1540,13 @@ bool isGrey(QColor color) {
 	return true;
 }
 
-void ConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget ) 
+void ConnectorItem::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget) 
 {
 	if (m_hybrid) return;
 	if (doNotPaint()) return;
 
 	if (m_legPolygon.count() > 1) {
-		QPen pen = legPen();
-		painter->setPen(pen);
-		painter->drawPolyline(m_legPolygon);			// draw the leg first
-
-		if (m_legPolygon.count() > 2) {
-			// now draw bendpoint indicators
-			double halfWidth = pen.widthF() / 2;
-			painter->setPen(Qt::NoPen);
-			QColor c =  addColor(m_legColor, (qGray(m_legColor.rgb()) < 64) ? 80 : -64);
-			painter->setBrush(c);
-			for (int i = 1; i < m_legPolygon.count() - 1; i++) {
-				painter->drawEllipse(m_legPolygon.at(i), halfWidth, halfWidth); 
-			}
-		}
-
-		if (m_attachedTo->inHover()) {
-			pen.setColor((qGray(m_legColor.rgb()) < 48) ? QColor(255, 255, 255) : QColor(0, 0, 0));
-			painter->setOpacity(ItemBase::hoverOpacity);
-			painter->setPen(pen);
-			painter->drawPolyline(m_legPolygon);	
-		}
-
-		QPointF p = calcPoint();
-		if (!isGrey(m_legColor)) {
-			// draw an undercolor so the connectorColor will be visible on top of the leg color
-			pen.setColor(0x8c8c8c);			// TODO: don't hardcode color
-			painter->setOpacity(1);
-			painter->setPen(pen);
-			painter->drawLine(p, m_legPolygon.last());		
-		}
-
-		pen = this->pen();
-		pen.setWidthF(m_legStrokeWidth);
-		pen.setCapStyle(Qt::RoundCap);
-		painter->setOpacity(m_opacity);
-		painter->setPen(pen);
-		painter->drawLine(p, m_legPolygon.last());			// draw the connector
+		paintLeg(painter);
 		return;
 	}
 
@@ -1559,6 +1563,79 @@ void ConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * 
 
 	NonConnectorItem::paint(painter, option, widget);
 }
+
+void ConnectorItem::paintLeg(QPainter * painter) 
+{
+	QPen pen = legPen();
+	painter->setPen(pen);
+
+	bool hasCurves = false;
+	foreach (Bezier * bezier, m_legCurves) {
+		if (bezier != NULL && !bezier->isEmpty()) {
+			hasCurves = true;
+			break;
+		}
+	}
+
+	// draw the leg first
+	paintLeg(painter, hasCurves);
+
+	if (m_legPolygon.count() > 2) {
+		// now draw bendpoint indicators
+		double halfWidth = pen.widthF() / 2;
+		painter->setPen(Qt::NoPen);
+		QColor c =  addColor(m_legColor, (qGray(m_legColor.rgb()) < 64) ? 80 : -64);
+		painter->setBrush(c);
+		for (int i = 1; i < m_legPolygon.count() - 1; i++) {
+			painter->drawEllipse(m_legPolygon.at(i), halfWidth, halfWidth); 
+		}
+	}
+
+	if (m_attachedTo->inHover()) {
+		pen.setColor((qGray(m_legColor.rgb()) < 48) ? QColor(255, 255, 255) : QColor(0, 0, 0));
+		painter->setOpacity(ItemBase::hoverOpacity);
+		painter->setPen(pen);
+
+		paintLeg(painter, hasCurves);	
+	}
+
+	if (!isGrey(m_legColor)) {
+		// draw an undercolor so the connectorColor will be visible on top of the leg color
+		pen.setColor(0x8c8c8c);			// TODO: don't hardcode color
+		painter->setOpacity(1);
+		painter->setPen(pen);
+		painter->drawLine(m_connectorEnd, m_legPolygon.last());		
+	}
+
+	pen = this->pen();
+	pen.setWidthF(m_legStrokeWidth);
+	pen.setCapStyle(Qt::RoundCap);
+	painter->setOpacity(m_opacity);
+	painter->setPen(pen);
+	painter->drawLine(m_connectorEnd, m_legPolygon.last());			// draw the connector
+}
+
+void ConnectorItem::paintLeg(QPainter * painter, bool hasCurves) 
+{
+	if (hasCurves) {
+		for (int i = 0; i < m_legPolygon.count() -1; i++) {
+			Bezier * bezier = m_legCurves.at(i);
+			if (bezier && !bezier->isEmpty()) {
+				QPainterPath path;
+				path.moveTo(m_legPolygon.at(i));
+				path.cubicTo(bezier->cp0(), bezier->cp1(), m_legPolygon.at(i + 1));
+				painter->drawPath(path);
+			}
+			else {
+				painter->drawLine(m_legPolygon.at(i), m_legPolygon.at(i + 1));
+			}
+		}
+	}
+	else {
+		painter->drawPolyline(m_legPolygon);
+	}
+}
+
 
 ConnectorItem * ConnectorItem::chooseFromSpec(ViewLayer::ViewLayerSpec viewLayerSpec) {
 	ConnectorItem * crossConnectorItem = getCrossLayerConnectorItem();
@@ -1908,6 +1985,7 @@ void ConnectorItem::resetLeg(const QPolygonF & poly, bool relative, bool active,
 		m_legPolygon.replace(i, mapFromScene(poly.at(i) - sceneOldLast + sceneNewLast));
 	}
 
+	calcConnectorEnd();
 	update();
 }
 
@@ -2001,7 +2079,13 @@ QPainterPath ConnectorItem::shapeAux(double width) const
 	QPainterPath path;
 	path.moveTo(m_legPolygon.at(0));
 	for (int i = 1; i < m_legPolygon.count(); i++) {
-		path.lineTo(m_legPolygon.at(i));
+		Bezier * bezier = m_legCurves.at(i - 1);
+		if (bezier != NULL && !bezier->isEmpty()) {
+			path.cubicTo(bezier->cp0(), bezier->cp1(), m_legPolygon.at(i));
+		}
+		else {
+			path.lineTo(m_legPolygon.at(i));
+		}
 	}
 	
 	QPen pen = legPen();
@@ -2028,6 +2112,7 @@ void ConnectorItem::reposition(QPointF sceneDestPos, int draggingIndex)
 	QPointF dest = mapFromScene(sceneDestPos);
 	m_legPolygon.replace(draggingIndex, dest);
 	//foreach (QPointF p, m_legPolygon) DebugDialog::debug(QString("point a %1 %2").arg(p.x()).arg(p.y()));
+	calcConnectorEnd();
 }
 
 void ConnectorItem::repoly(const QPolygonF & poly, bool relative)
@@ -2037,16 +2122,22 @@ void ConnectorItem::repoly(const QPolygonF & poly, bool relative)
 
 	//foreach (QPointF p, m_legPolygon) DebugDialog::debug(QString("point b %1 %2").arg(p.x()).arg(p.y()));
 	m_legPolygon.clear();
+	clearCurves();
 
 	foreach (QPointF p, poly) {
 		m_legPolygon.append(relative ? p : mapFromScene(p));
+		m_legCurves.append(NULL);
 	}
 	//foreach (QPointF p, m_legPolygon) DebugDialog::debug(QString("point a %1 %2").arg(p.x()).arg(p.y()));
+	calcConnectorEnd();
 }
 
-QPointF ConnectorItem::calcPoint() const
+QPointF ConnectorItem::calcConnectorEnd()
 {
-	if (m_legPolygon.count() < 2) return QPointF(0,0);
+	if (m_legPolygon.count() < 2) {
+		m_connectorEnd = QPointF(0,0);
+		return m_connectorEnd;
+	}
 
 	QPointF p1 =  m_legPolygon.last();
 	QPointF p2 = m_legPolygon.at(m_legPolygon.count() - 2);
@@ -2054,7 +2145,8 @@ QPointF ConnectorItem::calcPoint() const
 	double dy = p1.y() - p2.y();
 	double lineLen = qSqrt((dx * dx) + (dy * dy));
 	double len = qMax(0.5, qMin(lineLen, StandardLegConnectorLength));
-	return QPointF(p1 - QPointF(dx * len / lineLen, dy * len / lineLen));
+	m_connectorEnd = QPointF(p1 - QPointF(dx * len / lineLen, dy * len / lineLen));
+	return m_connectorEnd;
 }
 
 const QString & ConnectorItem::legID(ViewIdentifierClass::ViewIdentifier viewID, ViewLayer::ViewLayerID viewLayerID) {
@@ -2086,6 +2178,8 @@ void ConnectorItem::setBendableLeg(QColor color, double strokeWidth, QLineF pare
 	setPos(parentLine.p1());
 	m_legPolygon.append(QPointF(0,0));
 	m_legPolygon.append(parentLine.p2() - parentLine.p1());
+	m_legCurves.append(NULL);
+	m_legCurves.append(NULL);
 	m_legStrokeWidth = strokeWidth;
 	m_legColor = color;
 	reposition(m_attachedTo->mapToScene(parentLine.p2()), 1);
@@ -2102,6 +2196,7 @@ void ConnectorItem::killBendableLeg() {
 	prepareGeometryChange();
 	m_bendableLeg = false;
 	m_legPolygon.clear();
+	clearCurves();
 }
 
 QPen ConnectorItem::legPen() const
@@ -2131,7 +2226,6 @@ bool ConnectorItem::legMousePressEvent(QGraphicsSceneMouseEvent *event) {
 		infoGraphicsView->prepLegSelection(this->attachedTo());
 	}
 
-
 	int bendpointIndex;
 	CursorLocation cursorLocation = findLocation(event->pos(), bendpointIndex);
 	switch (cursorLocation) {
@@ -2145,7 +2239,28 @@ bool ConnectorItem::legMousePressEvent(QGraphicsSceneMouseEvent *event) {
 			return true;
 
 		case InSegment:
-			m_insertBendpointPossible = true;
+			if (event->modifiers() & Qt::ControlModifier) {
+				m_draggingLegIndex = bendpointIndex - 1;
+				Bezier * bezier = m_legCurves.at(m_draggingLegIndex);
+				if (bezier == NULL) {
+					bezier = new Bezier();
+					m_legCurves.replace(m_draggingLegIndex, bezier);
+				}
+
+				UndoBezier = *bezier;
+				if (bezier->isEmpty()) {
+					QPointF p0 = m_legPolygon.at(m_draggingLegIndex);
+					QPointF p1 = m_legPolygon.at(m_draggingLegIndex + 1);
+					bezier->initToEnds(p0, p1);
+				}
+
+				bezier->initControlIndex(event->pos());
+				m_draggingCurve = m_draggingLeg = true;
+				return true;
+			}
+			else {
+				m_insertBendpointPossible = true;
+			}
 
 		case InBendpoint:
 			if (bendpointIndex == 0) {
@@ -2170,8 +2285,7 @@ bool ConnectorItem::legMousePressEvent(QGraphicsSceneMouseEvent *event) {
 
 ConnectorItem::CursorLocation ConnectorItem::findLocation(QPointF location, int & bendpointIndex) {
 	QPainterPath path;
-	QPointF p = calcPoint();
-	path.moveTo(p);
+	path.moveTo(m_connectorEnd);
 	path.lineTo(m_legPolygon.last());
 	QPen pen = legPen();
 	path = GraphicsUtils::shapeFromPath(path, pen, m_legStrokeWidth, false);
@@ -2183,7 +2297,13 @@ ConnectorItem::CursorLocation ConnectorItem::findLocation(QPointF location, int 
 	for (int i = 0; i < m_legPolygon.count() - 1; i++) {
 		QPainterPath path;
 		path.moveTo(m_legPolygon.at(i));
-		path.lineTo(m_legPolygon.at(i + 1));
+		Bezier * bezier = m_legCurves.at(i);
+		if (bezier != NULL && !bezier->isEmpty()) {
+			path.cubicTo(bezier->cp0(), bezier->cp1(), m_legPolygon.at(i + 1));
+		}
+		else {
+			path.lineTo(m_legPolygon.at(i + 1));
+		}
 		path = GraphicsUtils::shapeFromPath(path, pen, m_legStrokeWidth, false);
 		if (path.contains(location)) {
 			double d = GraphicsUtils::distanceSqd(m_legPolygon.at(i), location);
@@ -2256,19 +2376,32 @@ void ConnectorItem::insertBendpoint(QPointF pos, int bendpointIndex)
 {
 	m_oldPolygon = m_legPolygon;
 	m_legPolygon.insert(bendpointIndex, pos);
+	m_legCurves.insert(bendpointIndex, NULL);
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
 		infoGraphicsView->prepLegChange(this, m_oldPolygon, m_legPolygon, NULL, false);
 	}
+	calcConnectorEnd();
 }
 
 void ConnectorItem::removeBendpoint(int bendpointIndex) 
 {
 	m_oldPolygon = m_legPolygon;
 	m_legPolygon.remove(bendpointIndex);
+	Bezier * bezier = m_legCurves.at(bendpointIndex);
+	if (bezier != NULL) delete bezier;
+	m_legCurves.remove(bendpointIndex);
+
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
 		infoGraphicsView->prepLegChange(this, m_oldPolygon, m_legPolygon, NULL, false);
 	}
+	calcConnectorEnd();
 }
 
+void ConnectorItem::clearCurves()
+{
+	foreach (Bezier * bezier, m_legCurves) {
+		if (bezier != NULL) delete bezier;
+	}
+}
