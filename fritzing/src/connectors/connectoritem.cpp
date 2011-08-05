@@ -131,6 +131,7 @@ rubberBand TODO:
 	* export: resistors and other custom generated parts with legs (retrieve svg)
 
 	curve: undo/redo
+		at mouse release curve is killed
 
 	* curve: save/load
 
@@ -144,8 +145,8 @@ rubberBand TODO:
 
 	* curve: fix connector click region
 
-	curve: connector region is not following when dragging connector, at mouse release curve is killed
-
+	* curve: connector region is not following when dragging connector
+	
 	when dragging to breadboard from parts bin, don't get final alignment to breadboard
 
 	survival in parts editor
@@ -157,7 +158,7 @@ rubberBand TODO:
 	resistor: leg y-coordinate is slightly off 
 	
 	parts to modify
-		* LEDs (obsolete 5 colors and 15 SMD versions)
+		** LEDs (obsolete 5 colors and 15 SMD versions)
 			maintain color when switching from obsolete
 		** RGB LEDs
 		** resistors
@@ -2194,10 +2195,10 @@ QPointF ConnectorItem::calcConnectorEnd()
 		return m_connectorEnd;
 	}
 
-	QPointF p1 =  m_legPolygon.last();
-	QPointF p2 = m_legPolygon.at(m_legPolygon.count() - 2);
-	double dx = p1.x() - p2.x();
-	double dy = p1.y() - p2.y();
+	QPointF p1 = m_legPolygon.last();
+	QPointF p0 = m_legPolygon.at(m_legPolygon.count() - 2);
+	double dx = p1.x() - p0.x();
+	double dy = p1.y() - p0.y();
 	double lineLen = qSqrt((dx * dx) + (dy * dy));
 	double len = qMax(0.5, qMin(lineLen, StandardLegConnectorLength));
 
@@ -2207,9 +2208,11 @@ QPointF ConnectorItem::calcConnectorEnd()
 		return m_connectorEnd;
 	}
 
+	bezier->set_endpoints(p0, p1);
+
 	double blen = bezier->computeCubicCurveLength(1.0, 24);
 	if (blen < StandardLegConnectorLength) {
-		m_connectorEnd = p2;
+		m_connectorEnd = p0;
 		return m_connectorEnd;
 	}
 
@@ -2539,9 +2542,6 @@ void ConnectorItem::changeLegCurve(int index, const Bezier *newBezier)
 	}
 
 	*bezier = *newBezier;
-	QPointF p0 = m_legPolygon.at(index);
-	QPointF p1 = m_legPolygon.at(index + 1);
-	bezier->set_endpoints(p0, p1);
 	calcConnectorEnd();
 	update();
 }
@@ -2554,7 +2554,6 @@ void ConnectorItem::addLegBendpoint(int index, QPointF p, const class Bezier * b
 		Bezier * newBezier = new Bezier;
 		*newBezier = *bezier;
 		m_legCurves.replace(index, newBezier);
-		newBezier->set_endpoints(p, m_legPolygon.at(index + 1));
 	} 
 
 	calcConnectorEnd();

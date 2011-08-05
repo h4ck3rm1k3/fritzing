@@ -244,7 +244,6 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 		sceneCorner.setY(sceneCenter.y() - (boundingRect->height() / 2));
 	}
 
-	
 	// make parts
 	foreach (ModelPart * mp, modelParts) {
 		QDomElement instance = mp->instanceDomElement();

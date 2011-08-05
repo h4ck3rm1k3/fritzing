@@ -1086,7 +1086,7 @@ bool ItemBase::isSwappable() {
 
 void ItemBase::ensureUniqueTitle(const QString & title, bool force) {
 	if (force || instanceTitle().isEmpty() || instanceTitle().isNull()) {
-		setInstanceTitle(ModelPart::getNextTitle(title));
+		setInstanceTitle(modelPart()->getNextTitle(title));
 	}
 }
 

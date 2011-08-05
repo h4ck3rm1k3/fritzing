@@ -41,32 +41,12 @@ long ModelPart::m_nextIndex = 0;
 const int ModelPart::indexMultiplier = 10;
 QStringList ModelPart::m_possibleFolders;
 
-static QHash<QString, QList< QPointer<ModelPart> >* > InstanceTitleIncrements;
+typedef QHash<QString, ModelPartList*> InstanceTitleIncrementHash;
+static QHash<QObject *, InstanceTitleIncrementHash *> AllInstanceTitleIncrements; 
+InstanceTitleIncrementHash NullInstanceTitleIncrements;
+
 static const QRegExp InstanceTitleRegExp("^(.*[^\\d])(\\d+)$");
 
-QList< QPointer<ModelPart> > * ensureInstanceTitleIncrements(const QString & prefix) {
-	QList< QPointer<ModelPart> > * modelParts = InstanceTitleIncrements.value(prefix, NULL);
-	if (modelParts == NULL) {
-		modelParts =  new QList< QPointer<ModelPart> >;
-		InstanceTitleIncrements.insert(prefix, modelParts);
-	}
-	return modelParts;
-}
-
-void clearOldInstanceTitle(ModelPart * modelPart, const QString & title) 
-{
-	//DebugDialog::debug(QString("clearing title:%1 ix:%2").arg(title).arg(modelPart->modelIndex()));
-	QString prefix = title;
-	int ix = InstanceTitleRegExp.indexIn(title);
-	if (ix >= 0) {
-		prefix = InstanceTitleRegExp.cap(1);
-	}
-	QList< QPointer<ModelPart> > * modelParts = InstanceTitleIncrements.value(prefix, NULL);
-	if (modelParts) {
-		modelParts->removeOne(modelPart);
-		//DebugDialog::debug(QString("\tc:%1").arg(modelParts->count()));
-	}
-}
 
 ////////////////////////////////////////
 
@@ -97,7 +77,16 @@ void ModelPart::commonInit(ItemType type) {
 ModelPart::~ModelPart() {
 	//DebugDialog::debug(QString("deleting modelpart %1 %2").arg((long) this, 0, 16).arg(m_index));
 
-	clearOldInstanceTitle(this, m_instanceTitle);
+	clearOldInstanceTitle(m_instanceTitle);
+
+	InstanceTitleIncrementHash * itih = AllInstanceTitleIncrements.value(this);
+	if (itih) {
+		AllInstanceTitleIncrements.remove(this);
+		foreach (ModelPartList * list, itih->values()) {
+			delete list;
+		}
+		delete itih;
+	}
 
 	if (m_originalModelPartShared) {		// TODO: make this a QSharedPointer
 		if (m_modelPartShared) {
@@ -641,10 +630,57 @@ void ModelPart::setInstanceText(QString text) {
 	m_instanceText = text;
 }
 
+void ModelPart::clearOldInstanceTitle(const QString & title) 
+{
+	InstanceTitleIncrementHash * itih = NULL;
+	if (parent() == NULL) {
+		itih = &NullInstanceTitleIncrements;
+	}
+	else {
+		itih = AllInstanceTitleIncrements.value(parent(), NULL);
+	}
+
+	if (itih == NULL) return;
+
+	//DebugDialog::debug(QString("clearing title:%1 ix:%2").arg(title).arg(modelPart->modelIndex()));
+	QString prefix = title;
+	int ix = InstanceTitleRegExp.indexIn(title);
+	if (ix >= 0) {
+		prefix = InstanceTitleRegExp.cap(1);
+	}
+	ModelPartList * modelParts = itih->value(prefix, NULL);
+	if (modelParts) {
+		modelParts->removeOne(this);
+		//DebugDialog::debug(QString("\tc:%1").arg(modelParts->count()));
+	}
+}
+
+ModelPartList * ModelPart::ensureInstanceTitleIncrements(const QString & prefix) 
+{
+	InstanceTitleIncrementHash * itih = NULL;
+	if (parent() == NULL) {
+		itih = &NullInstanceTitleIncrements;
+	}
+	else {
+		itih = AllInstanceTitleIncrements.value(parent(), NULL);
+		if (itih == NULL) {
+			itih = new InstanceTitleIncrementHash;
+			AllInstanceTitleIncrements.insert(parent(), itih);
+		}
+	}
+
+	ModelPartList * modelParts = itih->value(prefix, NULL);
+	if (modelParts == NULL) {
+		modelParts =  new ModelPartList;
+		itih->insert(prefix, modelParts);
+	}
+	return modelParts;
+}
+
 void ModelPart::setInstanceTitle(QString title) {
 	if (title.compare(m_instanceTitle) == 0) return;
 
-	clearOldInstanceTitle(this, m_instanceTitle);
+	clearOldInstanceTitle(m_instanceTitle);
 
 	m_instanceTitle = title;
 
@@ -652,9 +688,9 @@ void ModelPart::setInstanceTitle(QString title) {
 	int ix = InstanceTitleRegExp.indexIn(title);
 	if (ix >= 0) {
 		prefix = InstanceTitleRegExp.cap(1);
+		ModelPartList * modelParts = ensureInstanceTitleIncrements(prefix);
+		modelParts->append(this);
 	}
-	QList<QPointer<ModelPart> > * modelParts = ensureInstanceTitleIncrements(prefix);
-	modelParts->append(this);
 	//DebugDialog::debug(QString("adding title:%1 ix:%2 c:%3").arg(title).arg(modelIndex()).arg(modelParts->count()));
 }
 
@@ -664,8 +700,21 @@ QString ModelPart::getNextTitle(const QString & title) {
 	if (ix >= 0) {
 		prefix = InstanceTitleRegExp.cap(1);
 	}
+	else {
+		bool allDigits = true;
+		foreach (QChar c, title) {
+			if (!c.isDigit()) {
+				allDigits = false;
+				break;
+			}
+		}
+		if (allDigits) {
+			return title;
+		}
+	}
+
 	// TODO: if this were a sorted list, 
-	QList<QPointer<ModelPart> > * modelParts = ensureInstanceTitleIncrements(prefix);
+	ModelPartList * modelParts = ensureInstanceTitleIncrements(prefix);
 	int highestSoFar = 0;
 	bool gotNull = false;
 	foreach (ModelPart * modelPart, *modelParts) {

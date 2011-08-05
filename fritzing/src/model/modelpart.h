@@ -133,6 +133,7 @@ public:
 	const QString & instanceText();
 	void setInstanceTitle(QString);
 	void setInstanceText(QString);
+	QString getNextTitle(const QString & candidate);
 
 	void setOrderedChildren(QList<QObject*> children);
 	void setProp(const QString & name, const QVariant & value);
@@ -157,7 +158,6 @@ public:
 	static void updateIndex(long index);
 	static const int indexMultiplier;
 	static const QStringList & possibleFolders();
-	static QString getNextTitle(const QString & candidate);
 
 signals:
 	void startSaveInstances(const QString & fileName, ModelPart *, QXmlStreamWriter &);
@@ -171,6 +171,8 @@ protected:
 	QString inWhichFolder(const QString &partspath, const QString &imagepath);
 	void commonInit(ItemType type);
 	void saveInstance(QXmlStreamWriter & streamWriter);
+	QList< QPointer<ModelPart> > * ensureInstanceTitleIncrements(const QString & prefix);
+	void clearOldInstanceTitle(const QString & title);
 
 protected:
 	QList< QPointer<class ItemBase> > m_viewItems;
@@ -201,6 +203,6 @@ protected:
 };
 
 Q_DECLARE_METATYPE( ModelPart* );			// so we can stash them in a QVariant
-
+typedef QList< QPointer<ModelPart> > ModelPartList;
 
 #endif
