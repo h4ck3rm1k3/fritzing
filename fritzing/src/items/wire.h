@@ -170,6 +170,7 @@ protected slots:
 public:
 	static double STANDARD_TRACE_WIDTH;
 	static double HALF_STANDARD_TRACE_WIDTH;
+	static double THIN_TRACE_WIDTH;
 
 public:
 	static void initNames();

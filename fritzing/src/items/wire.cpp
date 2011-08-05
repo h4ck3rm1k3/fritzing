@@ -97,6 +97,7 @@ QHash<int, QString> Wire::widthTrans;
 QList<int> Wire::widths;
 double Wire::STANDARD_TRACE_WIDTH;
 double Wire::HALF_STANDARD_TRACE_WIDTH;
+double Wire::THIN_TRACE_WIDTH;
 
 const double DefaultHoverStrokeWidth = 4;
 
@@ -1112,6 +1113,7 @@ void Wire::initNames() {
 	widthTrans.insert(widths[2], tr("thick (32 mil)"));
 	widthTrans.insert(widths[3], tr("extra thick (48 mil)"));
 
+	THIN_TRACE_WIDTH = GraphicsUtils::mils2pixels(widths[0], FSvgRenderer::printerScale());
 	STANDARD_TRACE_WIDTH = GraphicsUtils::mils2pixels(widths[1], FSvgRenderer::printerScale());
 	HALF_STANDARD_TRACE_WIDTH = STANDARD_TRACE_WIDTH / 2.0;
 
