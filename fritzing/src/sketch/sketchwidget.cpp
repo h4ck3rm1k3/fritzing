@@ -578,7 +578,8 @@ void SketchWidget::addWireExtras(long newID, QDomElement & view, QUndoCommand * 
 		new WireColorChangeCommand(this, newID, colorString, colorString, op, op, parentCommand);
 	}
 
-	Bezier bezier = Bezier::fromElement(extras.firstChildElement("bezier"));
+	QDomElement bElement = extras.firstChildElement("bezier");
+	Bezier bezier = Bezier::fromElement(bElement);
 	if (!bezier.isEmpty()) {
 		new ChangeWireCurveCommand(this, newID, bezier, bezier, parentCommand);
 	}

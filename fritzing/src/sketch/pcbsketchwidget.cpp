@@ -2689,7 +2689,7 @@ double PCBSketchWidget::getWireStrokeWidth(Wire * wire, double wireWidth)
 	double w, h;
 	wire->originalConnectorDimensions(w, h);
 	if (wireWidth < Wire::STANDARD_TRACE_WIDTH) {
-		wire->setConnectorDimensions(qMin(w, wireWidth + 1.8), qMin(w, wireWidth + 1.8));
+		wire->setConnectorDimensions(qMin(w, wireWidth + 1.5), qMin(w, wireWidth + 1.5));
 	}
 	else {
 		wire->setConnectorDimensions(w, h);
