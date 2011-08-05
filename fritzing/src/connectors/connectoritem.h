@@ -204,6 +204,7 @@ protected:
 	QColor m_legColor;
 	bool m_insertBendpointPossible;
 	QPointF m_connectorEnd;
+	double m_connectorT;
 	
 protected:	
 	static QList<ConnectorItem *>  m_equalPotentialDisplayItems;

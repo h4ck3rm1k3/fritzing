@@ -139,7 +139,6 @@ Bezier::Bezier()
 	m_isEmpty = true;
 }
 
-
 bool Bezier::isEmpty() const
 {
 	return m_isEmpty;
@@ -158,6 +157,16 @@ QPointF Bezier::cp0() const
 QPointF Bezier::cp1() const
 {
 	return m_cp1;
+}
+
+QPointF Bezier::endpoint0() const
+{
+	return m_endpoint0;
+}
+
+QPointF Bezier::endpoint1() const
+{
+	return m_endpoint1;
 }
 
 void Bezier::set_cp0(QPointF cp0)

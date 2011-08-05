@@ -41,6 +41,8 @@ public:
 
 	QPointF cp0() const;
 	QPointF cp1() const;
+	QPointF endpoint0() const;
+	QPointF endpoint1() const;
 	void set_cp0(QPointF);
 	void set_cp1(QPointF);
 	void set_endpoints(QPointF, QPointF);

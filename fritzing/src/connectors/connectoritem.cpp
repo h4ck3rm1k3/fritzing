@@ -140,7 +140,11 @@ rubberBand TODO:
 		
 	* curve: make straight function
 
-	curve: fix connector indicator
+	* curve: fix connector indicator
+
+	* curve: fix connector click region
+
+	curve: connector region is not following when dragging connector, at mouse release curve is killed
 
 	when dragging to breadboard from parts bin, don't get final alignment to breadboard
 
@@ -1591,7 +1595,7 @@ void ConnectorItem::paintLeg(QPainter * painter)
 	paintLeg(painter, hasCurves);
 
 	if (m_legPolygon.count() > 2) {
-		// now draw bendpoint indicators
+		// draw bendpoint indicators
 		double halfWidth = pen.widthF() / 2;
 		painter->setPen(Qt::NoPen);
 		QColor c =  addColor(m_legColor, (qGray(m_legColor.rgb()) < 64) ? 80 : -64);
@@ -1602,6 +1606,7 @@ void ConnectorItem::paintLeg(QPainter * painter)
 	}
 
 	if (m_attachedTo->inHover()) {
+		// hover highlight
 		pen.setColor((qGray(m_legColor.rgb()) < 48) ? QColor(255, 255, 255) : QColor(0, 0, 0));
 		painter->setOpacity(ItemBase::hoverOpacity);
 		painter->setPen(pen);
@@ -1609,12 +1614,27 @@ void ConnectorItem::paintLeg(QPainter * painter)
 		paintLeg(painter, hasCurves);	
 	}
 
+	Bezier * bezier = m_legCurves.at(m_legCurves.count() - 2);
+	bool connectorIsCurved = (bezier != NULL && !bezier->isEmpty());
+	Bezier left, right;
+	QPainterPath path;
+	if (connectorIsCurved) {
+		bezier->split(m_connectorT, left, right);
+		path.moveTo(right.endpoint0());
+		path.cubicTo(right.cp0(), right.cp1(), right.endpoint1());
+	}
+
 	if (!isGrey(m_legColor)) {
 		// draw an undercolor so the connectorColor will be visible on top of the leg color
 		pen.setColor(0x8c8c8c);			// TODO: don't hardcode color
 		painter->setOpacity(1);
 		painter->setPen(pen);
-		painter->drawLine(m_connectorEnd, m_legPolygon.last());		
+		if (connectorIsCurved) {
+			painter->drawPath(path);
+		}
+		else {
+			painter->drawLine(m_connectorEnd, m_legPolygon.last());		
+		}
 	}
 
 	pen = this->pen();
@@ -1622,7 +1642,12 @@ void ConnectorItem::paintLeg(QPainter * painter)
 	pen.setCapStyle(Qt::RoundCap);
 	painter->setOpacity(m_opacity);
 	painter->setPen(pen);
-	painter->drawLine(m_connectorEnd, m_legPolygon.last());			// draw the connector
+	if (connectorIsCurved) {
+		painter->drawPath(path);
+	}
+	else {
+		painter->drawLine(m_connectorEnd, m_legPolygon.last());		
+	}
 }
 
 void ConnectorItem::paintLeg(QPainter * painter, bool hasCurves) 
@@ -2194,7 +2219,7 @@ QPointF ConnectorItem::calcConnectorEnd()
 	double t = 1.0 - (StandardLegConnectorLength / blen);
 	while (true) {
 		double l = bezier->computeCubicCurveLength(t, 24);
-		if (qAbs(blen - StandardLegConnectorLength - l) < .000001) {
+		if (qAbs(blen - StandardLegConnectorLength - l) < .0001) {
 			break;
 		}
 
@@ -2210,6 +2235,7 @@ QPointF ConnectorItem::calcConnectorEnd()
 		}
 	}
 	m_connectorEnd = QPointF(bezier->xFromT(t), bezier->yFromT(t));
+	m_connectorT = t;
 	return m_connectorEnd;
 }
 
@@ -2349,8 +2375,18 @@ bool ConnectorItem::legMousePressEvent(QGraphicsSceneMouseEvent *event) {
 
 ConnectorItem::CursorLocation ConnectorItem::findLocation(QPointF location, int & bendpointIndex) {
 	QPainterPath path;
-	path.moveTo(m_connectorEnd);
-	path.lineTo(m_legPolygon.last());
+	Bezier * bezier = m_legCurves.at(m_legCurves.count() - 2);
+	if (bezier == NULL || bezier->isEmpty()) {
+		path.moveTo(m_connectorEnd);
+		path.lineTo(m_legPolygon.last());
+	}
+	else {
+		Bezier left, right;
+		bezier->split(m_connectorT, left, right);
+		path.moveTo(right.endpoint0());
+		path.cubicTo(right.cp0(), right.cp1(), right.endpoint1());
+	}
+
 	QPen pen = legPen();
 	path = GraphicsUtils::shapeFromPath(path, pen, m_legStrokeWidth, false);
 	if (path.contains(location)) {
