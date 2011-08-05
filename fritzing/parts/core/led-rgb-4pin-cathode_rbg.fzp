@@ -28,7 +28,7 @@ Pin order: red - com. cathode - blue - green</description>
             </layers>
         </iconView>
         <breadboardView>
-            <layers image="breadboard/led-rgb-4pin-anode.svg">
+            <layers image="breadboard/led-rgb-4pin-anode-leg.svg">
                 <layer layerId="breadboard"/>
             </layers>
         </breadboardView>

@@ -25,7 +25,7 @@
    </layers>
   </iconView>
   <breadboardView fliphorizontal="true" flipvertical="true">
-   <layers image="breadboard/ceramic_disk_thermistor.svg">
+   <layers image="breadboard/ceramic_disk_thermistor_leg.svg">
     <layer layerId="breadboard"/>
    </layers>
   </breadboardView>

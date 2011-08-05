@@ -24,7 +24,7 @@
             </layers>
         </iconView>
         <breadboardView>
-            <layers image="breadboard/crystal.svg">
+            <layers image="breadboard/crystal_leg.svg">
                 <layer layerId="breadboard"/>
             </layers>
         </breadboardView>

@@ -23,7 +23,7 @@
             </layers>
         </iconView>
         <breadboardView>
-            <layers image="breadboard/resonator-3pin.svg">
+            <layers image="breadboard/resonator-3pin-leg.svg">
                 <layer layerId="breadboard"/>
             </layers>
         </breadboardView>

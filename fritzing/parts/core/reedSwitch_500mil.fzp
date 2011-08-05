@@ -20,7 +20,7 @@
             </layers>
         </iconView>
         <breadboardView fliphorizontal="true" flipvertical="true">
-            <layers image="breadboard/reed_switch.svg">
+            <layers image="breadboard/reed_switch_leg.svg">
                 <layer layerId="breadboard"/>
             </layers>
         </breadboardView>

@@ -24,7 +24,7 @@
    </layers>
   </iconView>
   <breadboardView fliphorizontal="true" flipvertical="true">
-   <layers image="breadboard/ceramic_capacitor_blue.svg">
+   <layers image="breadboard/ceramic_capacitor_blue_leg.svg">
     <layer layerId="breadboard"/>
    </layers>
   </breadboardView>

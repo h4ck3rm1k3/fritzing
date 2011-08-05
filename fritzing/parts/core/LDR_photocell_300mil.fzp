@@ -24,7 +24,7 @@
             </layers>
         </iconView>
         <breadboardView>
-            <layers image="breadboard/basic_ldr.svg">
+            <layers image="breadboard/ldr.svg">
                 <layer layerId="breadboard"/>
             </layers>
         </breadboardView>

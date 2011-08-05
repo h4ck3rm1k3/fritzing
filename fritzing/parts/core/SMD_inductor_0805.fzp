@@ -22,7 +22,7 @@
             </layers>
         </iconView>
         <breadboardView>
-            <layers image="breadboard/inductor.svg">
+            <layers image="breadboard/inductor_leg.svg">
                 <layer layerId="breadboard"/>
             </layers>
         </breadboardView>

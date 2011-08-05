@@ -24,7 +24,7 @@
    </layers>
   </iconView>
   <breadboardView>
-   <layers image="breadboard/basic_transistor_pnp.svg">
+   <layers image="breadboard/transistor_pnp.svg">
     <layer layerId="breadboard"/>
    </layers>
   </breadboardView>

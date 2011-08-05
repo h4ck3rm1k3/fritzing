@@ -24,7 +24,7 @@
             </layers>
         </iconView>
         <breadboardView>
-            <layers image="breadboard/led-rgb-6pin.svg">
+            <layers image="breadboard/led-rgb-6pin-leg.svg">
                 <layer layerId="breadboard"/>
             </layers>
         </breadboardView>
