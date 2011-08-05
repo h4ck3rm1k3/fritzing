@@ -673,7 +673,8 @@ void Wire::setExtras(QDomElement & element, InfoGraphicsView * infoGraphicsView)
 	}
 
 	setColorFromElement(element);
-	Bezier bezier = Bezier::fromElement(element.firstChildElement("bezier"));
+	QDomElement bElement = element.firstChildElement("bezier");
+	Bezier bezier = Bezier::fromElement(bElement);
 	if (!bezier.isEmpty()) {
 		prepareGeometryChange();
 		m_bezier = new Bezier;
