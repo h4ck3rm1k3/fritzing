@@ -237,6 +237,7 @@ protected slots:
 	void createTrace();
 	void excludeFromAutoroute();
 	void selectAllTraces();
+	void selectAllCopperFill();
 	void updateRoutingStatus();
 	void selectAllExcludedTraces();
 	void selectAllJumperItems();
@@ -645,6 +646,7 @@ protected:
 	QAction *m_excludeFromAutorouteAct;
 	class WireAction *m_excludeFromAutorouteWireAct;
 	QAction *m_selectAllTracesAct;
+	QAction *m_selectAllCopperFillAct;
 	QAction *m_updateRoutingStatusAct;
 	QAction *m_selectAllExcludedTracesAct;
 	QAction *m_selectAllJumperItemsAct;

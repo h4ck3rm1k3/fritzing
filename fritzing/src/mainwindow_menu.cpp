@@ -1138,6 +1138,7 @@ void MainWindow::createMenus()
 	m_pcbTraceMenu->addAction(m_selectAllExcludedTracesAct);
 	m_pcbTraceMenu->addAction(m_selectAllJumperItemsAct);
 	m_pcbTraceMenu->addAction(m_selectAllViasAct);
+	m_pcbTraceMenu->addAction(m_selectAllCopperFillAct);
 
 	m_schematicTraceMenu = menuBar()->addMenu(tr("&Diagram"));
 	m_schematicTraceMenu->addAction(m_autorouteAct);
@@ -1666,6 +1667,7 @@ void MainWindow::updateTraceMenu() {
 	m_exportEtchableSvgAct->setEnabled(true);
 	m_exportEtchableSvgFlipAct->setEnabled(true);
 	m_selectAllTracesAct->setEnabled(tEnabled);
+	m_selectAllCopperFillAct->setEnabled(gfrEnabled);
 	m_selectAllExcludedTracesAct->setEnabled(tEnabled);
 	m_selectAllJumperItemsAct->setEnabled(jiEnabled);
 	m_selectAllViasAct->setEnabled(viaEnabled);
@@ -2090,6 +2092,10 @@ void MainWindow::createTraceMenuActions() {
 	m_selectAllTracesAct->setStatusTip(tr("Select all trace wires"));
 	connect(m_selectAllTracesAct, SIGNAL(triggered()), this, SLOT(selectAllTraces()));
 
+	m_selectAllCopperFillAct = new QAction(tr("Select All CopperFill"), this);
+	m_selectAllCopperFillAct->setStatusTip(tr("Select all copper fill items"));
+	connect(m_selectAllCopperFillAct, SIGNAL(triggered()), this, SLOT(selectAllCopperFill()));
+
 	m_updateRoutingStatusAct = new QAction(tr("Force Update Routing Status and Ratsnests"), this);
 	m_updateRoutingStatusAct->setStatusTip(tr("Recalculate routing status and ratsnest wires (in case the auto-update isn't working correctly)"));
 	connect(m_updateRoutingStatusAct, SIGNAL(triggered()), this, SLOT(updateRoutingStatus()));
@@ -2245,6 +2251,10 @@ void MainWindow::selectAllExcludedTraces() {
 
 void MainWindow::selectAllJumperItems() {
 	m_currentGraphicsView->selectAllItemType(ModelPart::Jumper);
+}
+
+void MainWindow::selectAllCopperFill() {
+	m_currentGraphicsView->selectAllItemType(ModelPart::CopperFill);
 }
 
 void MainWindow::selectAllVias() {
