@@ -78,7 +78,7 @@ QRectF PaletteItemBase::boundingRectWithoutLegs() const
 
 QRectF PaletteItemBase::boundingRect() const
 {
-	if (!hasBendableLeg()) {
+	if (!hasRubberBandLeg()) {
 		return QRectF(0, 0, m_size.width(), m_size.height());
 	}
 
@@ -88,16 +88,16 @@ QRectF PaletteItemBase::boundingRect() const
 
 QPainterPath PaletteItemBase::hoverShape() const
 {
-	if (!hasBendableLeg()) return ItemBase::hoverShape();
+	if (!hasRubberBandLeg()) return ItemBase::hoverShape();
 
 	// TODO: figure out real shape of svg
     QPainterPath path;
     path.addRect(0, 0, m_size.width(), m_size.height());
 
-	if (!hasBendableLeg()) return path;
+	if (!hasRubberBandLeg()) return path;
 
 	foreach (ConnectorItem * connectorItem, cachedConnectorItemsConst()) {
-		if (connectorItem->hasBendableLeg()) {
+		if (connectorItem->hasRubberBandLeg()) {
 			path.addPath(connectorItem->mapToParent(connectorItem->hoverShape()));
 		}
 	}
@@ -112,10 +112,10 @@ QPainterPath PaletteItemBase::shape() const
     QPainterPath path;
     path.addRect(0, 0, m_size.width(), m_size.height());
 
-	if (!hasBendableLeg()) return path;
+	if (!hasRubberBandLeg()) return path;
 
 	foreach (ConnectorItem * connectorItem, cachedConnectorItemsConst()) {
-		if (connectorItem->hasBendableLeg()) {
+		if (connectorItem->hasRubberBandLeg()) {
 			path.addPath(connectorItem->mapToParent(connectorItem->shape()));
 		}
 	}
@@ -179,7 +179,7 @@ void PaletteItemBase::paintHover(QPainter *painter, const QStyleOptionGraphicsIt
 {
 	if (m_hidden) return;
 
-	if (!hasBendableLeg()) {
+	if (!hasRubberBandLeg()) {
 		ItemBase::paintHover(painter, option, widget);
 		return;
 	}
@@ -193,7 +193,7 @@ void PaletteItemBase::paintSelected(QPainter *painter, const QStyleOptionGraphic
 {
 	if (m_hidden) return;
 
-	if (!hasBendableLeg()) {
+	if (!hasRubberBandLeg()) {
 		ItemBase::paintSelected(painter, option, widget);
 		return;
 	}
@@ -366,8 +366,8 @@ void PaletteItemBase::setUpConnectors(FSvgRenderer * renderer, bool ignoreTermin
 		connectorItem->setTerminalPoint(svgIdLayer->m_point);
 		connectorItem->setRadius(svgIdLayer->m_radius, svgIdLayer->m_strokeWidth);
 		if (!svgIdLayer->m_legId.isEmpty()) {
-			m_hasBendableLeg = true;
-			connectorItem->setBendableLeg(QColor(svgIdLayer->m_legColor), svgIdLayer->m_legStrokeWidth, svgIdLayer->m_legLine);
+			m_hasRubberBandLeg = true;
+			connectorItem->setRubberBandLeg(QColor(svgIdLayer->m_legColor), svgIdLayer->m_legStrokeWidth, svgIdLayer->m_legLine);
 		}
 
 		//DebugDialog::debug(QString("terminal point %1 %2").arg(terminalPoint.x()).arg(terminalPoint.y()) );
@@ -398,9 +398,9 @@ void PaletteItemBase::connectedMoved(ConnectorItem * from, ConnectorItem * to) {
 	// female connectors really only operate in breadboard view
 
 
-	if (to->hasBendableLeg() || from->hasBendableLeg()) {
-		// bendable legs true up their own connectors, no need to position the entire part
-		// TODO: if a part has some bendable legs and some not, bailing out here might not work
+	if (to->hasRubberBandLeg() || from->hasRubberBandLeg()) {
+		// rubberBand legs true up their own connectors, no need to position the entire part
+		// TODO: if a part has some rubberBand legs and some not, bailing out here might not work
 		return;
 	}
 
@@ -479,9 +479,9 @@ QString PaletteItemBase::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<Q
 		return "";
 	}
 
-	if (hasBendableLeg()) {
+	if (hasRubberBandLeg()) {
 		foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
-			if (!connectorItem->hasBendableLeg()) continue;
+			if (!connectorItem->hasRubberBandLeg()) continue;
 
 			splitter.gReplace(connectorItem->legID(m_viewIdentifier, m_viewLayerID));
 		}

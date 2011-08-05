@@ -304,6 +304,21 @@ void InfoGraphicsView::prepLegChange(ConnectorItem * from, const QPolygonF & old
 	Q_UNUSED(changeConnections);
 }
 
+void InfoGraphicsView::prepLegCurveChange(ConnectorItem * from, int index, const class Bezier *, const class Bezier *, bool triggerFirstTime) 
+{
+	Q_UNUSED(from);	
+	Q_UNUSED(index);
+	Q_UNUSED(triggerFirstTime);
+}
+
+void InfoGraphicsView::prepLegBendpointChange(ConnectorItem *, int oldCount, int newCount, int index, QPointF, const class Bezier *, bool triggerFirstTime)
+{
+	Q_UNUSED(triggerFirstTime);
+	Q_UNUSED(index);
+	Q_UNUSED(oldCount);
+	Q_UNUSED(newCount);
+}
+
 double InfoGraphicsView::getWireStrokeWidth(Wire *, double wireWidth)
 {
 	return wireWidth;

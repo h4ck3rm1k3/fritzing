@@ -172,6 +172,12 @@ void Bezier::set_cp1(QPointF cp1)
 	m_isEmpty = false;
 }
 
+void Bezier::set_endpoints(QPointF ep0, QPointF ep1)
+{
+	m_endpoint0 = ep0;
+	m_endpoint1 = ep1;
+}
+
 Bezier Bezier::fromElement(QDomElement & element) 
 {
 	Bezier bezier;
@@ -233,29 +239,28 @@ void Bezier::recalc(QPointF p)
 	// http://www.flong.com/texts/code/shapers_bez/
 	// http://www.lemoda.net/maths/bezier-length/index.html,
 
-	// arbitrary but reasonable 
-	// t-values for interior control points
+	// arbitrary but reasonable t-values for interior control points
 	double t0 = 0.3;
 	double t1 = 0.7;
 
 	if (m_drag_cp0) {
-		double x = (p.x() - m_endPoint0.x() * B0(t0) - m_cp1.x() * B2(t0) - m_endPoint1.x() * B3(t0)) / B1(t0);
-		double y = (p.y() - m_endPoint0.y() * B0(t0) - m_cp1.y() * B2(t0) - m_endPoint1.y() * B3(t0)) / B1(t0);
+		double x = (p.x() - m_endpoint0.x() * B0(t0) - m_cp1.x() * B2(t0) - m_endpoint1.x() * B3(t0)) / B1(t0);
+		double y = (p.y() - m_endpoint0.y() * B0(t0) - m_cp1.y() * B2(t0) - m_endpoint1.y() * B3(t0)) / B1(t0);
 		m_cp0 = QPointF(x, y);
 	}
 	else {
-		double x = (p.x() - m_endPoint0.x() * B0(t1) - m_cp0.x() * B1(t1) - m_endPoint1.x() * B3(t1)) /  B2(t1);
-		double y = (p.y() - m_endPoint0.y() * B0(t1) - m_cp0.y() * B1(t1) - m_endPoint1.y() * B3(t1)) /  B2(t1);
+		double x = (p.x() - m_endpoint0.x() * B0(t1) - m_cp0.x() * B1(t1) - m_endpoint1.x() * B3(t1)) /  B2(t1);
+		double y = (p.y() - m_endpoint0.y() * B0(t1) - m_cp0.y() * B1(t1) - m_endpoint1.y() * B3(t1)) /  B2(t1);
 		m_cp1 = QPointF(x, y);
 	}
 	
 	/*
 	DebugDialog::debug(QString("ix:%1 p0x:%2,p0y:%3 p1x:%4,p1y:%5 px:%6,py:%7")
 							.arg(m_drag_cp0)
-							.arg(m_endPoint0.x())
-							.arg(m_endPoint0.y())
-							.arg(m_endPoint1.x())
-							.arg(m_endPoint1.y())
+							.arg(m_endpoint0.x())
+							.arg(m_endpoint0.y())
+							.arg(m_endpoint1.x())
+							.arg(m_endpoint1.y())
 							.arg(p.x())
 							.arg(p.y())
 							);
@@ -266,8 +271,8 @@ void Bezier::recalc(QPointF p)
 
 void Bezier::initToEnds(QPointF cp0, QPointF cp1) 
 {
-	m_endPoint0 = m_cp0 = cp0;
-	m_endPoint1 = m_cp1 = cp1;
+	m_endpoint0 = m_cp0 = cp0;
+	m_endpoint1 = m_cp1 = cp1;
 	m_isEmpty = false;
 }
 
@@ -275,49 +280,46 @@ double Bezier::xFromT(double t)
 {
     // http://www.lemoda.net/maths/bezier-length/index.html
 
-    return m_endPoint0.x() * B0(t) + m_cp0.x() * B1(t) + m_cp1.x() * B2(t) + m_endPoint1.x() * B3(t);
+    return m_endpoint0.x() * B0(t) + m_cp0.x() * B1(t) + m_cp1.x() * B2(t) + m_endpoint1.x() * B3(t);
+}
+
+double Bezier::xFromTPrime(double t)
+{
+	return base3(t, m_endpoint0.x(), m_cp0.x(), m_cp1.x(), m_endpoint1.x());
+
 }
 
 double Bezier::yFromT(double t)
 {
     // http://www.lemoda.net/maths/bezier-length/index.html
 
-    return m_endPoint0.y() * B0(t) + m_cp0.y() * B1(t) + m_cp1.y() * B2(t) + m_endPoint1.y() * B3(t);
+    return m_endpoint0.y() * B0(t) + m_cp0.y() * B1(t) + m_cp1.y() * B2(t) + m_endpoint1.y() * B3(t);
 }
 
 void Bezier::split(double t, Bezier & left, Bezier & right)
 {
-	// http://steve.hollasch.net/cgindex/curves/cbezarclen.html
+	// http://processingjs.nihongoresources.com/bezierinfo/sketchsource.php?sketch=CubicDeCasteljau
 
-	// t ranges from 0 to 1
+	// interpolate from 4 to 3 points
+	QPointF p5((1-t)*m_endpoint0.x() + t*m_cp0.x(), (1-t)*m_endpoint0.y() + t*m_cp0.y());
+	QPointF p6((1-t)*m_cp0.x() + t*m_cp1.x(), (1-t)*m_cp0.y() + t*m_cp1.y());
+	QPointF p7((1-t)*m_cp1.x() + t*m_endpoint1.x(), (1-t)*m_cp1.y() + t*m_endpoint1.y());
 
-    int   i, j;                             
-    QPointF   vtemp[4][4];                      /* Triangle Matrix */
-    
-    /* Copy control points  */
+	// interpolate from 3 to 2 points
+	QPointF p8((1-t)*p5.x() + t*p6.x(), (1-t)*p5.y() + t*p6.y());
+	QPointF p9((1-t)*p6.x() + t*p7.x(), (1-t)*p6.y() + t*p7.y());
 
-	vtemp[0][0] = m_endPoint0;
-	vtemp[0][1] = m_cp0;
-	vtemp[0][2] = m_cp1;
-	vtemp[0][3] = m_endPoint1;
-       
-    /* Triangle computation */
-    for (i = 1; i <= 3; i++) {  
-		for (j =0 ; j <= 3 - i; j++) {
-			vtemp[i][j].setX(t * vtemp[i-1][j].x() + (1 - t) * vtemp[i-1][j+1].x());
-			vtemp[i][j].setY(t * vtemp[i-1][j].y() + (1 - t) * vtemp[i-1][j+1].y());
-		}                                      
-    }                                       
-    
-    left.m_endPoint0 = vtemp[0][0];
-    left.m_cp0 = vtemp[1][0];
-    left.m_cp1 = vtemp[2][0];
-    left.m_endPoint1 = vtemp[3][0];
-      
-    right.m_endPoint0 = vtemp[3][0];
-    right.m_cp0 = vtemp[2][1];
-    right.m_cp1 = vtemp[1][2];
-    right.m_endPoint1 = vtemp[0][3];
+	// interpolate from 2 points to 1 point
+	QPointF p10((1-t)*p8.x() + t*p9.x(), (1-t)*p8.y() + t*p9.y());
+
+	// we now have all the values we need to build the subcurves
+	left.m_endpoint0 = m_endpoint0;
+	left.m_cp0 = p5;
+	left.m_cp1 = p8;
+	right.m_endpoint0 = left.m_endpoint1 = p10;
+	right.m_cp0 = p9;
+	right.m_cp1 = p7;
+	right.m_endpoint1 = m_endpoint1;
 } 
 
 void Bezier::initControlIndex(QPointF p)
@@ -345,8 +347,8 @@ double Bezier::computeCubicCurveLength(double z, int n)
 
 double Bezier::cubicF(double t)
 {
-  double xbase = base3(t, m_endPoint0.x(), m_cp0.x(), m_cp1.x(), m_endPoint1.x());
-  double ybase = base3(t, m_endPoint0.y(), m_cp0.y(), m_cp1.y(), m_endPoint1.y());
+  double xbase = base3(t, m_endpoint0.x(), m_cp0.x(), m_cp1.x(), m_endpoint1.x());
+  double ybase = base3(t, m_endpoint0.y(), m_cp0.y(), m_cp1.y(), m_endpoint1.y());
   double combined = xbase*xbase + ybase*ybase;
   return qSqrt(combined);
 }

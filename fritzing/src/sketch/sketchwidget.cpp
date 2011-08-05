@@ -391,7 +391,7 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 
 	QStringList alreadyConnected;
 
-	QHash<QString, QPolygonF> legs;
+	QHash<QString, QDomElement> legs;
 
 	// now restore connections
 	foreach (ModelPart * mp, modelParts) {
@@ -421,17 +421,14 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 			}
 
 			QDomElement leg = connector.firstChildElement("leg");
-			if (!leg.isNull()) {
-				QPolygonF poly = TextUtils::polygonFromElement(leg);
-				if (poly.count() >  1) {
-					if (parentCommand) {
-						legs.insert(QString::number(ItemBase::getNextID(mp->modelIndex())) + "." + fromConnectorID, poly);
-					}
-					else {
-						ItemBase * fromBase = newItems.value(mp->modelIndex(), NULL);
-						if (fromBase) {
-							legs.insert(QString::number(fromBase->id()) + "." + fromConnectorID, poly);
-						}
+			if (!leg.isNull() && !leg.firstChildElement("point").isNull()) {
+				if (parentCommand) {
+					legs.insert(QString::number(ItemBase::getNextID(mp->modelIndex())) + "." + fromConnectorID, leg);
+				}
+				else {
+					ItemBase * fromBase = newItems.value(mp->modelIndex(), NULL);
+					if (fromBase) {
+						legs.insert(QString::number(fromBase->id()) + "." + fromConnectorID, leg);
 					}
 				}
 			}
@@ -445,15 +442,35 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 		int ix = key.indexOf(".");
 		if (ix <= 0) continue;
 
-		QPolygonF poly = legs.value(key);
+		QDomElement leg = legs.value(key);
 		long id = key.left(ix).toInt();
 		QString fromConnectorID = key.remove(0, ix + 1);
+
+		QPolygonF poly = TextUtils::polygonFromElement(leg);
+		if (poly.count() < 2) continue;
+
 		if (parentCommand) {
 			ChangeLegCommand * clc = new ChangeLegCommand(this, id, fromConnectorID, poly, poly, true, true, "copy", parentCommand);
 			clc->setSimple();
 		}
 		else {
 			changeLeg(id, fromConnectorID, poly, true, "load");
+		}
+
+		QDomElement bElement = leg.firstChildElement("bezier");
+		int bIndex = 0;
+		while (!bElement.isNull()) {
+			Bezier bezier = Bezier::fromElement(bElement);
+			if (!bezier.isEmpty()) {
+				if (parentCommand) {
+					new ChangeLegCurveCommand(this, id, fromConnectorID, bIndex, &bezier, &bezier, parentCommand);
+				}
+				else {
+					changeLegCurve(id, fromConnectorID, bIndex, &bezier);
+				}
+			}
+			bElement = bElement.nextSiblingElement("bezier");
+			bIndex++;
 		}
 	}
 
@@ -836,9 +853,9 @@ void SketchWidget::deleteItem(ItemBase * itemBase, bool deleteModelPart, bool do
 	// at that point, the boundingRect() will return a different value than what's in the BSP tree,
 	// which is the old value of the boundingRect before the legs were deleted.
 
-	if (itemBase->hasBendableLeg()) {
-		DebugDialog::debug("kill bendable");
-		itemBase->killBendableLeg();
+	if (itemBase->hasRubberBandLeg()) {
+		DebugDialog::debug("kill rubberBand");
+		itemBase->killRubberBandLeg();
 	}
 
 	if (m_infoView != NULL) {
@@ -2202,14 +2219,14 @@ void SketchWidget::categorizeDragLegs()
 	QSet<ItemBase *> passives;
 	foreach (ItemBase * itemBase, m_savedItems.values()) {
 		if (itemBase->itemType() == ModelPart::Wire) continue;
-		if (!itemBase->hasBendableLeg()) continue;
+		if (!itemBase->hasRubberBandLeg()) continue;
 
-		// 1. we are dragging a part with bendable legs which are attached to some part not being dragged along (i.e. a breadboard)
+		// 1. we are dragging a part with rubberBand legs which are attached to some part not being dragged along (i.e. a breadboard)
 		//		so we stretch those attached legs
-		// 2. a part has bendable legs attached to multiple parts, and we are only dragging some of the parts
+		// 2. a part has rubberBand legs attached to multiple parts, and we are only dragging some of the parts
 
 		foreach (ConnectorItem * connectorItem, itemBase->cachedConnectorItems()) {
-			if (!connectorItem->hasBendableLeg()) continue;
+			if (!connectorItem->hasRubberBandLeg()) continue;
 			if (connectorItem->connectionsCount() == 0) continue;
 
 			bool treatAsNormal = true;
@@ -2240,7 +2257,7 @@ void SketchWidget::categorizeDragLegs()
 		// one of its connectors is coming along for the ride
 		m_savedItems.remove(itemBase->id());
 		foreach (ConnectorItem * connectorItem, itemBase->cachedConnectorItems()) {
-			if (!connectorItem->hasBendableLeg()) continue;
+			if (!connectorItem->hasRubberBandLeg()) continue;
 			if (connectorItem->connectionsCount() == 0) continue;
 
 			foreach (ConnectorItem * toConnectorItem, connectorItem->connectedToItems()) {
@@ -3197,6 +3214,58 @@ void SketchWidget::prepLegChange(ConnectorItem * from,  const QPolygonF & oldLeg
 
 	m_undoStack->push(parentCommand);
 }
+
+void SketchWidget::prepLegCurveChange(ConnectorItem * from, int index, const class Bezier * oldB, const class Bezier * newB, bool triggerFirstTime) 
+{
+	this->m_moveEventCount = 0;  // clear this so an extra MoveItemCommand isn't posted
+
+	QUndoCommand * parentCommand = new QUndoCommand(tr("Change leg curvature for %1.").arg(from->attachedToInstanceTitle()));
+
+	if (m_holdingSelectItemCommand) {
+		SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
+		selectItemCommand->copyUndo(m_holdingSelectItemCommand);
+		selectItemCommand->copyRedo(m_holdingSelectItemCommand);
+		clearHoldingSelectItem();
+	}
+
+	long fromID = from->attachedToID();
+
+	QString fromConnectorID = from->connectorSharedID();
+
+	ChangeLegCurveCommand * clcc = new ChangeLegCurveCommand(this, fromID, fromConnectorID, index, oldB, newB, parentCommand);
+	if (!triggerFirstTime) {
+		clcc->setFirstTime();
+	}
+
+	m_undoStack->push(parentCommand);
+}
+
+void SketchWidget::prepLegBendpointChange(ConnectorItem * from, int oldCount, int newCount, int index, QPointF p, const class Bezier * bezier, bool triggerFirstTime)
+{
+	this->m_moveEventCount = 0;  // clear this so an extra MoveItemCommand isn't posted
+
+	QUndoCommand * parentCommand = new QUndoCommand(tr("Change leg bendpoint for %1.").arg(from->attachedToInstanceTitle()));
+
+	if (m_holdingSelectItemCommand) {
+		SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
+		selectItemCommand->copyUndo(m_holdingSelectItemCommand);
+		selectItemCommand->copyRedo(m_holdingSelectItemCommand);
+		clearHoldingSelectItem();
+	}
+
+	long fromID = from->attachedToID();
+
+	QString fromConnectorID = from->connectorSharedID();
+
+	ChangeLegBendpointCommand * clbc = new ChangeLegBendpointCommand(this, fromID, fromConnectorID, oldCount, newCount, index, p, bezier, parentCommand);
+	if (!triggerFirstTime) {
+		clbc->setFirstTime();
+	}
+
+	m_undoStack->push(parentCommand);
+}
+
+
 
 void SketchWidget::wireChangedSlot(Wire* wire, const QLineF & oldLine, const QLineF & newLine, QPointF oldPos, QPointF newPos, ConnectorItem * from, ConnectorItem * to) {
 	this->clearHoldingSelectItem();
@@ -4482,9 +4551,9 @@ void SketchWidget::makeDeleteItemCommandPrepSlot(ItemBase * itemBase, bool forei
 
 	rememberSticky(itemBase, parentCommand);
 
-	if (itemBase->hasBendableLeg()) {
+	if (itemBase->hasRubberBandLeg()) {
 		foreach (ConnectorItem * connectorItem, itemBase->cachedConnectorItems()) {
-			if (!connectorItem->hasBendableLeg()) continue;
+			if (!connectorItem->hasRubberBandLeg()) continue;
 
 			QPolygonF poly = connectorItem->leg();
 			ChangeLegCommand * clc = new ChangeLegCommand(this, itemBase->id(), connectorItem->connectorSharedID(), poly, poly, true, true, "delete", parentCommand);
@@ -5395,7 +5464,7 @@ void SketchWidget::checkFitAux(ItemBase * tempItemBase, ItemBase * itemBase, lon
 		QPointF fp = foundPoints.value(foundConnectorItem) - foundAnchor;
 		ConnectorItem * newConnectorItem = foundNews.value(foundConnectorItem);
 		QPointF np = newPoints.value(newConnectorItem) - newAnchor;
-		if (!newConnectorItem->hasBendableLeg() && (qAbs(fp.x() - np.x()) >= CloseEnough || qAbs(fp.y() - np.y()) >= CloseEnough)) {
+		if (!newConnectorItem->hasRubberBandLeg() && (qAbs(fp.x() - np.x()) >= CloseEnough || qAbs(fp.y() - np.y()) >= CloseEnough)) {
 			// pins can be off by a little
 			// but if even one connector is out of place, hook everything up by wires
 			allCorrespond = false;
@@ -5405,7 +5474,7 @@ void SketchWidget::checkFitAux(ItemBase * tempItemBase, ItemBase * itemBase, lon
 
 	if (allCorrespond) {
 		if (tempItemBase->cachedConnectorItems().count() == found.count()) {
-			if (tempItemBase->hasBendableLeg()) {
+			if (tempItemBase->hasRubberBandLeg()) {
 				foreach (ConnectorItem * connectorItem, tempItemBase->cachedConnectorItems()) {
 					legs.insert(connectorItem->connectorSharedID(), connectorItem->leg());
 				}
@@ -5479,7 +5548,7 @@ void SketchWidget::checkFitAux(ItemBase * tempItemBase, ItemBase * itemBase, lon
 
 
 		}
-		if (tempItemBase->hasBendableLeg()) {
+		if (tempItemBase->hasRubberBandLeg()) {
 			foreach (ConnectorItem * connectorItem, newConnections) {
 				legs.insert(connectorItem->connectorSharedID(), connectorItem->leg());
 			}
@@ -5750,7 +5819,7 @@ void SketchWidget::changeWireFlags(long wireId, ViewGeometry::WireFlags wireFlag
 	}
 }
 
-bool SketchWidget::disconnectFromFemale(ItemBase * item, QHash<long, ItemBase *> & savedItems, ConnectorPairHash & connectorHash, bool doCommand, bool disconnectBendable, QUndoCommand * parentCommand)
+bool SketchWidget::disconnectFromFemale(ItemBase * item, QHash<long, ItemBase *> & savedItems, ConnectorPairHash & connectorHash, bool doCommand, bool disconnectRubberBand, QUndoCommand * parentCommand)
 {
 	// schematic and pcb view connections are always via wires so this is a no-op.  breadboard view has its own version.
 
@@ -5759,7 +5828,7 @@ bool SketchWidget::disconnectFromFemale(ItemBase * item, QHash<long, ItemBase *>
 	Q_UNUSED(parentCommand);
 	Q_UNUSED(connectorHash);
 	Q_UNUSED(doCommand);
-	Q_UNUSED(disconnectBendable);
+	Q_UNUSED(disconnectRubberBand);
 	return false;
 }
 
@@ -6359,12 +6428,9 @@ QString SketchWidget::renderToSVG(double printerScale, const LayerList & partLay
 				}
 
 				foreach (ConnectorItem * ci, itemBase->cachedConnectorItems()) {
-					if (!ci->hasBendableLeg()) continue;
+					if (!ci->hasRubberBandLeg()) continue;
 
-					double strokeWidth;
-					QString colorString;
-					QPolygonF poly = ci->sceneAdjustedLeg(strokeWidth, colorString);
-					outputSVG.append(TextUtils::makePolySVG(poly, offset, strokeWidth, colorString, dpi, printerScale, blackOnly));
+					outputSVG.append(ci->makeLegSvg(offset, dpi, printerScale, blackOnly));
 				}
 
                 QTransform t = itemBase->transform();
@@ -7730,4 +7796,37 @@ void SketchWidget::changeWireCurve(long id, const Bezier * bezier) {
 	if (wire == NULL) return;
 
 	wire->changeCurve(bezier);
+}
+
+
+void SketchWidget::changeLegCurve(long id, const QString & connectorID, int index, const Bezier * bezier) {
+	ItemBase * itemBase = findItem(id);
+	if (itemBase == NULL) return;
+
+	ConnectorItem * connectorItem = findConnectorItem(itemBase, connectorID, ViewLayer::specFromID(itemBase->viewLayerID()));
+	if (connectorItem == NULL) return;
+
+	connectorItem->changeLegCurve(index, bezier);
+}
+
+void SketchWidget::addLegBendpoint(long id, const QString & connectorID, int index, QPointF p, const class Bezier * bezier)
+{
+	ItemBase * itemBase = findItem(id);
+	if (itemBase == NULL) return;
+
+	ConnectorItem * connectorItem = findConnectorItem(itemBase, connectorID, ViewLayer::specFromID(itemBase->viewLayerID()));
+	if (connectorItem == NULL) return;
+
+	connectorItem->addLegBendpoint(index, p, bezier);
+}
+
+void SketchWidget::removeLegBendpoint(long id, const QString & connectorID, int index)
+{
+	ItemBase * itemBase = findItem(id);
+	if (itemBase == NULL) return;
+
+	ConnectorItem * connectorItem = findConnectorItem(itemBase, connectorID, ViewLayer::specFromID(itemBase->viewLayerID()));
+	if (connectorItem == NULL) return;
+
+	connectorItem->removeLegBendpoint(index);
 }

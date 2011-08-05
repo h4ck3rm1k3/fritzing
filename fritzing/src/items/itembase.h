@@ -189,8 +189,8 @@ public:
 	virtual bool rotation45Allowed();
 	void ensureUniqueTitle(const QString &title, bool force);
 	virtual void setDropOffset(QPointF offset);
-	bool hasBendableLeg() const;
-	void killBendableLeg();
+	bool hasRubberBandLeg() const;
+	void killRubberBandLeg();
 	bool sceneEvent(QEvent *event);
 	void clearConnectorItemCache();
 	const QList<ConnectorItem *> & cachedConnectorItems();
@@ -321,7 +321,7 @@ protected:
 	QString m_filename;
 	ViewLayer::ViewLayerSpec m_viewLayerSpec;
 	bool m_moveLock;
-	bool m_hasBendableLeg;
+	bool m_hasRubberBandLeg;
 	QList<ConnectorItem *> m_cachedConnectorItems;
 
 protected:

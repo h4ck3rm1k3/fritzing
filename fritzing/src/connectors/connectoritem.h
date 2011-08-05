@@ -112,24 +112,27 @@ public:
 	ConnectorItem * findConnectorUnder(bool useTerminalPoint, bool allowAlready, const QList<ConnectorItem *> & exclude, bool displayDragTooltip, ConnectorItem * other);
 	ConnectorItem * releaseDrag();	
 
-	// bendable leg functions	
+	// rubberBand leg functions	
 	bool isDraggingLeg();
-	void setBendableLeg(QColor color, double strokeWidth, QLineF parentLine);
-	bool hasBendableLeg() const;
+	void setRubberBandLeg(QColor color, double strokeWidth, QLineF parentLine);
+	bool hasRubberBandLeg() const;
 	void rotateLeg(const QPolygonF &, bool active);
 	void setLeg(const QPolygonF &, bool relative, const QString & why);
 	void resetLeg(const QPolygonF &, bool relative, bool active, const QString & why);
 	const QPolygonF & leg();
-	QPolygonF sceneAdjustedLeg(double & width, QString & colorString);
+	QString makeLegSvg(QPointF offset, double dpi, double printerScale, bool blackOnly);
 	QPolygonF sceneAdjustedLeg();
 	void prepareToStretch(bool activeStretch);
 	void stretchBy(QPointF howMuch);
 	void stretchDone(QPolygonF & oldLeg, QPolygonF & newLeg, bool & active);
-	void killBendableLeg();  // hack; see caller
+	void killRubberBandLeg();  // hack; see caller
 	QRectF boundingRect() const;
 	const QString & legID(ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID);
 	QPainterPath shape() const;
 	QPainterPath hoverShape() const;
+	void changeLegCurve(int index, const class Bezier *);
+	void addLegBendpoint(int index, QPointF, const class Bezier *);
+	void removeLegBendpoint(int index);
 
 protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
@@ -188,7 +191,7 @@ protected:
 	bool m_marked;
 	bool m_hybrid;
 	bool m_bigDot;
-	bool m_bendableLeg;
+	bool m_rubberBandLeg;
 	QPolygonF m_oldPolygon;
 	bool m_draggingLeg;
 	bool m_draggingCurve;

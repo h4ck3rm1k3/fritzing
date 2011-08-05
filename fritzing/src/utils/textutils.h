@@ -92,6 +92,8 @@ public:
 	static QString makeRectSVG(QRectF r, QPointF offset, double dpi, double printerscale);
 	static QString makePolySVG(const QPolygonF & poly, QPointF offset, double width, QString colorString, double dpi, double printerScale, bool blackOnly);
 	static QPolygonF polygonFromElement(QDomElement & element);
+	static QString pointToSvgString(QPointF p, QPointF offset, double dpi, double printerScale);
+
 
 public:
 	static const QRegExp FindWhitespace;

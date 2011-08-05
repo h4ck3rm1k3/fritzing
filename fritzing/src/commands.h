@@ -290,6 +290,53 @@ protected:
     bool m_firstTime;
 };
 
+
+class ChangeLegCurveCommand : public BaseCommand
+{
+public:
+    ChangeLegCurveCommand(class SketchWidget *sketchWidget, long fromID, const QString & fromConnectorID, int index,
+    					const class Bezier * oldBezier, const class Bezier * newBezier,
+    					QUndoCommand *parent);
+    void undo();
+    void redo();
+	void setFirstTime();
+
+protected:
+	QString getParamString() const;
+
+protected:
+    long m_fromID;
+    class Bezier * m_newBezier;
+    class Bezier * m_oldBezier;
+    bool m_firstTime;
+	QString m_fromConnectorID;
+	int m_index;
+};
+
+class ChangeLegBendpointCommand : public BaseCommand
+{
+public:
+    ChangeLegBendpointCommand(class SketchWidget *sketchWidget, long fromID, const QString & fromConnectorID,
+    					int oldCount, int newCount, int index, QPointF pos, const class Bezier *, QUndoCommand *parent);
+    void undo();
+    void redo();
+	void setFirstTime();
+
+protected:
+	QString getParamString() const;
+
+protected:
+    long m_fromID;
+    class Bezier * m_bezier;
+    class Bezier * m_oldBezier;
+    bool m_firstTime;
+	QString m_fromConnectorID;
+	int m_index;
+	int m_oldCount;
+	int m_newCount;
+	QPointF m_pos;
+};
+
 class ChangeLegCommand : public BaseCommand
 {
 public:

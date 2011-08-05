@@ -43,6 +43,7 @@ public:
 	QPointF cp1() const;
 	void set_cp0(QPointF);
 	void set_cp1(QPointF);
+	void set_endpoints(QPointF, QPointF);
 	bool isEmpty() const;
 	void clear();
 	void write(QXmlStreamWriter &);
@@ -51,6 +52,7 @@ public:
 	void recalc(QPointF p);
 	void initToEnds(QPointF cp0, QPointF cp1); 
 	double xFromT(double t);
+	double xFromTPrime(double t);
 	double yFromT(double t);
 	void split(double t, Bezier & left, Bezier & right);
 	void initControlIndex(QPointF fromPoint);
@@ -64,8 +66,8 @@ public:
 	static Bezier fromElement(QDomElement & element);
 
 protected:
-	QPointF m_endPoint0;
-	QPointF m_endPoint1;
+	QPointF m_endpoint0;
+	QPointF m_endpoint1;
 	QPointF m_cp0;
 	QPointF m_cp1;
 	double m_length;

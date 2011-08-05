@@ -501,6 +501,124 @@ QString ChangeWireCurveCommand::getParamString() const {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+ChangeLegCurveCommand::ChangeLegCurveCommand(SketchWidget* sketchWidget, long fromID, const QString & connectorID, int index,
+									 const Bezier * oldBezier, const Bezier * newBezier, QUndoCommand *parent)
+    : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
+{
+	m_firstTime = false;
+    m_fromID = fromID;
+
+	m_oldBezier = new Bezier;
+    m_newBezier = new Bezier;
+
+	*m_newBezier = *newBezier;
+	*m_oldBezier = *oldBezier;
+
+	m_fromConnectorID = connectorID;
+	m_index = index;
+}
+
+void ChangeLegCurveCommand::undo()
+{
+    m_sketchWidget->changeLegCurve(m_fromID, m_fromConnectorID, m_index,  m_oldBezier);
+}
+
+void ChangeLegCurveCommand::redo()
+{
+	if (m_firstTime) {
+		m_firstTime = false;
+	}
+	else {
+		m_sketchWidget->changeLegCurve(m_fromID, m_fromConnectorID, m_index, m_newBezier);
+	}
+}
+
+void ChangeLegCurveCommand::setFirstTime() {
+	m_firstTime = true;
+}
+
+QString ChangeLegCurveCommand::getParamString() const {
+	QString oldBezier;
+	QString newBezier;
+	oldBezier += QString("(%1,%2)").arg(m_oldBezier->cp0().x()).arg(m_oldBezier->cp0().y());
+	oldBezier += QString("(%1,%2)").arg(m_oldBezier->cp1().x()).arg(m_oldBezier->cp1().y());
+	newBezier += QString("(%1,%2)").arg(m_newBezier->cp0().x()).arg(m_newBezier->cp0().y());
+	newBezier += QString("(%1,%2)").arg(m_newBezier->cp1().x()).arg(m_newBezier->cp1().y());
+
+	return QString("ChangeLegCurveCommand ") 
+		+ BaseCommand::getParamString() + 
+		QString(" fromid:%1 oldp:%2 newp:%3")
+		.arg(m_fromID)
+		.arg(oldBezier)
+		.arg(newBezier)
+		;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+ChangeLegBendpointCommand::ChangeLegBendpointCommand(SketchWidget* sketchWidget, long fromID, const QString & connectorID, 
+									int oldCount, int newCount, int index, QPointF pos,
+									const Bezier * bezier, QUndoCommand *parent)
+    : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
+{
+	m_firstTime = false;
+    m_fromID = fromID;
+
+	m_bezier = new Bezier;
+
+	*m_bezier = *bezier;
+
+	m_fromConnectorID = connectorID;
+	m_index = index;
+	m_oldCount = oldCount;
+	m_newCount = newCount;
+	m_pos = pos;
+}
+
+void ChangeLegBendpointCommand::undo()
+{
+		if (m_newCount < m_oldCount) {
+			m_sketchWidget->addLegBendpoint(m_fromID, m_fromConnectorID, m_index, m_pos, m_bezier);
+		}
+		else {
+			m_sketchWidget->removeLegBendpoint(m_fromID, m_fromConnectorID, m_index);
+		}
+}
+
+void ChangeLegBendpointCommand::redo()
+{
+	if (m_firstTime) {
+		m_firstTime = false;
+	}
+	else {
+		if (m_newCount > m_oldCount) {
+			m_sketchWidget->addLegBendpoint(m_fromID, m_fromConnectorID, m_index, m_pos, m_bezier);
+		}
+		else {
+			m_sketchWidget->removeLegBendpoint(m_fromID, m_fromConnectorID, m_index);
+		}
+	}
+}
+
+void ChangeLegBendpointCommand::setFirstTime() {
+	m_firstTime = true;
+}
+
+QString ChangeLegBendpointCommand::getParamString() const {
+	QString bezier;
+	bezier += QString("(%1,%2)").arg(m_bezier->cp0().x()).arg(m_bezier->cp0().y());
+	bezier += QString("(%1,%2)").arg(m_bezier->cp1().x()).arg(m_bezier->cp1().y());
+
+	return QString("ChangeLegBendpointCommand ") 
+		+ BaseCommand::getParamString() + 
+		QString(" fromid:%1 newp:%2")
+		.arg(m_fromID)
+		.arg(bezier)
+		;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 ChangeLegCommand::ChangeLegCommand(SketchWidget* sketchWidget, long fromID, const QString & fromConnectorID,
 									 const QPolygonF & oldLeg, const QPolygonF & newLeg, bool relative, bool active,
 									 const QString & why, QUndoCommand *parent)

@@ -268,8 +268,13 @@ public:
 	const QString & filenameIf();
 	void setItemDropOffset(long id, QPointF offset);
 	void prepLegChange(ConnectorItem * from,  const QPolygonF & oldLeg, const QPolygonF & newLeg, ConnectorItem * to, bool changeConnections);
+	void prepLegCurveChange(ConnectorItem * from, int index, const class Bezier * oldB, const class Bezier * newB, bool triggerFirstTime);
+	void prepLegBendpointChange(ConnectorItem * from, int oldCount, int newCount, int index, QPointF pos, const class Bezier *, bool triggerFirstTime);
 	void prepLegSelection(ItemBase *);
 	void changeWireCurve(long id, const Bezier *);
+	void changeLegCurve(long id, const QString & connectorID, int index, const Bezier *);
+	void addLegBendpoint(long id, const QString & connectorID, int index, QPointF, const class Bezier *);
+	void removeLegBendpoint(long id, const QString & connectorID, int index);
 
 
 protected:
@@ -338,7 +343,7 @@ protected:
 
 	void addViewLayersAux(const LayerList &layers, float startZ = 1.5);
 	void tempConnectWire(Wire * wire, ConnectorItem * from, ConnectorItem * to);
-	virtual bool disconnectFromFemale(ItemBase * item, QHash<long, ItemBase *> & savedItems, ConnectorPairHash &, bool doCommand, bool disconnectBendable, QUndoCommand * parentCommand);
+	virtual bool disconnectFromFemale(ItemBase * item, QHash<long, ItemBase *> & savedItems, ConnectorPairHash &, bool doCommand, bool disconnectRubberBand, QUndoCommand * parentCommand);
 	void clearDragWireTempCommand();
 	bool draggingWireEnd();
 	void moveItems(QPoint globalPos, bool checkAutoScroll);

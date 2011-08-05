@@ -69,7 +69,7 @@ void BreadboardSketchWidget::addViewLayers() {
 	addBreadboardViewLayers();
 }
 
-bool BreadboardSketchWidget::disconnectFromFemale(ItemBase * item, QHash<long, ItemBase *> & savedItems, ConnectorPairHash & connectorHash, bool doCommand, bool disconnectBendable, QUndoCommand * parentCommand)
+bool BreadboardSketchWidget::disconnectFromFemale(ItemBase * item, QHash<long, ItemBase *> & savedItems, ConnectorPairHash & connectorHash, bool doCommand, bool disconnectRubberBand, QUndoCommand * parentCommand)
 {
 	// if item is attached to a virtual wire or a female connector in breadboard view
 	// then disconnect it
@@ -77,10 +77,10 @@ bool BreadboardSketchWidget::disconnectFromFemale(ItemBase * item, QHash<long, I
 
 	bool result = false;
 	foreach (ConnectorItem * fromConnectorItem, item->cachedConnectorItems()) {
-		if (!disconnectBendable && fromConnectorItem->hasBendableLeg()) continue;
+		if (!disconnectRubberBand && fromConnectorItem->hasRubberBandLeg()) continue;
 
 		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems())  {
-			if (!disconnectBendable && toConnectorItem->hasBendableLeg()) continue;
+			if (!disconnectRubberBand && toConnectorItem->hasRubberBandLeg()) continue;
 
 			if (toConnectorItem->connectorType() == Connector::Female) {
 				if (savedItems.keys().contains(toConnectorItem->attachedTo()->layerKinChief()->id())) {

@@ -95,6 +95,8 @@ public:
 	virtual const QString & filenameIf();
 	virtual QString generateCopperFillUnit(ItemBase * itemBase, QPointF whereToStart);
 	virtual void prepLegChange(ConnectorItem * from, const QPolygonF & oldLeg, const QPolygonF & newLeg, ConnectorItem * to, bool changeConnections);
+	virtual void prepLegCurveChange(ConnectorItem * from, int index, const class Bezier * oldB, const class Bezier * newB, bool triggerFirstTime);
+	virtual void prepLegBendpointChange(ConnectorItem * from, int oldCount, int newCount, int index, QPointF pos, const class Bezier *, bool triggerFirstTime);
 	virtual void prepLegSelection(ItemBase *);
 	virtual double getWireStrokeWidth(Wire *, double wireWidth);
 

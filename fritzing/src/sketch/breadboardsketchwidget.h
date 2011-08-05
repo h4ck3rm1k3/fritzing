@@ -51,7 +51,7 @@ protected:
 	bool collectFemaleConnectees(ItemBase *, QSet<ItemBase *> &);
 	void findConnectorsUnder(ItemBase * item);
 	bool checkUnder();
-	bool disconnectFromFemale(ItemBase * item, QHash<long, ItemBase *> & savedItems, ConnectorPairHash &, bool doCommand, bool disconnectBendable, QUndoCommand * parentCommand);
+	bool disconnectFromFemale(ItemBase * item, QHash<long, ItemBase *> & savedItems, ConnectorPairHash &, bool doCommand, bool disconnectRubberBand, QUndoCommand * parentCommand);
 	BaseCommand::CrossViewType wireSplitCrossView();
 	bool canDropModelPart(ModelPart * modelPart); 
 	/*

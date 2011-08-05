@@ -1081,3 +1081,12 @@ QPolygonF TextUtils::polygonFromElement(QDomElement & element)
 	return poly;
 }
 
+QString TextUtils::pointToSvgString(QPointF p, QPointF offset, double dpi, double printerScale)
+{
+	QString point;
+	point += QString::number((p.x() - offset.x()) * dpi / printerScale);
+	point += ",";
+	point += QString::number((p.y() - offset.y()) * dpi / printerScale);
+	return point;
+}
+

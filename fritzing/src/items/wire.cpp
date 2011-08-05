@@ -678,6 +678,9 @@ void Wire::setExtras(QDomElement & element, InfoGraphicsView * infoGraphicsView)
 		prepareGeometryChange();
 		m_bezier = new Bezier;
 		*m_bezier = bezier;
+		QPointF p0 = connector0()->sceneAdjustedTerminalPoint(NULL);
+		QPointF p1 = connector1()->sceneAdjustedTerminalPoint(NULL);
+		m_bezier->set_endpoints(mapFromScene(p0), mapFromScene(p1));
 	}
 
 }

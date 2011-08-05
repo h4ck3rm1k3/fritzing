@@ -139,7 +139,7 @@ ItemBase::ItemBase( ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier vi
 	: QGraphicsSvgItem()
 {
 	//DebugDialog::debug(QString("itembase %1 %2").arg(id).arg((long) static_cast<QGraphicsItem *>(this), 0, 16));
-	m_hasBendableLeg = m_moveLock = m_hoverEnterSpaceBarWasPressed = m_spaceBarWasPressed = false;
+	m_hasRubberBandLeg = m_moveLock = m_hoverEnterSpaceBarWasPressed = m_spaceBarWasPressed = false;
 
 	m_everVisible = true;
 
@@ -336,7 +336,7 @@ void ItemBase::saveInstance(QXmlStreamWriter & streamWriter) {
 
 	bool saveConnectorItems = false;
 	foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
-		if (connectorItem->connectionsCount() > 0 || connectorItem->hasBendableLeg()) {
+		if (connectorItem->connectionsCount() > 0 || connectorItem->hasRubberBandLeg()) {
 			saveConnectorItems = true;
 			break;
 		}
@@ -1148,7 +1148,7 @@ void ItemBase::flipItem(Qt::Orientations orientation) {
 }
 
 void ItemBase::transformItem(const QTransform & currTransf) {
-	if (m_hasBendableLeg) {
+	if (m_hasRubberBandLeg) {
 		prepareGeometryChange();
 	}
 	QRectF rect = this->boundingRectWithoutLegs();
@@ -1789,9 +1789,9 @@ void ItemBase::setDropOffset(QPointF)
 {
 }
 
-bool ItemBase::hasBendableLeg() const
+bool ItemBase::hasRubberBandLeg() const
 {
-	return m_hasBendableLeg;
+	return m_hasRubberBandLeg;
 }
 
 bool ItemBase::sceneEvent(QEvent *event)
@@ -1821,13 +1821,13 @@ void ItemBase::clearConnectorItemCache()
 	m_cachedConnectorItems.clear();
 }
 
-void ItemBase::killBendableLeg() {
-	if (!hasBendableLeg()) return;
+void ItemBase::killRubberBandLeg() {
+	if (!hasRubberBandLeg()) return;
 
 	prepareGeometryChange();
 
 	foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
-		connectorItem->killBendableLeg();
+		connectorItem->killRubberBandLeg();
 	}
 }
 
