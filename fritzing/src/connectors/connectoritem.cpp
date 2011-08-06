@@ -2123,10 +2123,13 @@ void ConnectorItem::stretchDone(QPolygonF & oldLeg, QPolygonF & newLeg, bool & a
 	active = m_activeStretch;
 }
 
-void ConnectorItem::moveDone(int & index, QPointF & oldPos, QPointF & newPos) {
-	index = (m_activeStretch) ? 1 : m_legPolygon.count() - 1;
-	oldPos = m_oldPolygon.at(index);
-	newPos = mapToScene(m_legPolygon.at(index));
+void ConnectorItem::moveDone(int & index0, QPointF & oldPos0, QPointF & newPos0, int & index1, QPointF & oldPos1, QPointF & newPos1) {
+	index0 = (m_activeStretch) ? 1 : m_legPolygon.count() - 1;
+	oldPos0 = m_oldPolygon.at(index0);
+	newPos0 = mapToScene(m_legPolygon.at(index0));
+	index1 = m_legPolygon.count() - 1;
+	oldPos1 = m_oldPolygon.at(index1);
+	newPos1 = mapToScene(m_legPolygon.at(index1));
 }
 
 QRectF ConnectorItem::boundingRect() const

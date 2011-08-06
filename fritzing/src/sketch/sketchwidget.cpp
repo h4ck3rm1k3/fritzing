@@ -2897,11 +2897,15 @@ bool SketchWidget::checkMoved()
 
 	foreach(ItemBase * itemBase, m_stretchingLegs.uniqueKeys()) {
 		foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
-			int index;
-			QPointF oldPos, newPos;
-			connectorItem->moveDone(index, oldPos, newPos);
-			MoveLegBendpointCommand * mlbc = new MoveLegBendpointCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), index, oldPos, newPos, parentCommand);
+			int index0, index1;
+			QPointF oldPos0, newPos0, oldPos1, newPos1;
+			connectorItem->moveDone(index0, oldPos0, newPos0, index1, oldPos1, newPos1);
+			MoveLegBendpointCommand * mlbc = new MoveLegBendpointCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), index0, oldPos0, newPos0, parentCommand);
 			mlbc->setUndoOnly();
+			if (index0 != index1) {
+				mlbc = new MoveLegBendpointCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), index1, oldPos1, newPos1, parentCommand);
+				mlbc->setUndoOnly();
+			}
 		}
 	}
 
@@ -2983,11 +2987,15 @@ bool SketchWidget::checkMoved()
 	// must restore legs after connections are restored (redo direction)
 	foreach(ItemBase * itemBase, m_stretchingLegs.uniqueKeys()) {
 		foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
-			int index;
-			QPointF oldPos, newPos;
-			connectorItem->moveDone(index, oldPos, newPos);
-			MoveLegBendpointCommand * mlbc = new MoveLegBendpointCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), index, oldPos, newPos, parentCommand);
+			int index0, index1;
+			QPointF oldPos0, newPos0, oldPos1, newPos1;
+			connectorItem->moveDone(index0, oldPos0, newPos0, index1, oldPos1, newPos1);
+			MoveLegBendpointCommand * mlbc = new MoveLegBendpointCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), index0, oldPos0, newPos0, parentCommand);
 			mlbc->setRedoOnly();
+			if (index0 != index1) {
+				mlbc = new MoveLegBendpointCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), index1, oldPos1, newPos1, parentCommand);
+				mlbc->setRedoOnly();
+			}
 		}
 	}
 

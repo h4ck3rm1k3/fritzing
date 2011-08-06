@@ -125,7 +125,7 @@ public:
 	void prepareToStretch(bool activeStretch);
 	void stretchBy(QPointF howMuch);
 	void stretchDone(QPolygonF & oldLeg, QPolygonF & newLeg, bool & active);
-	void moveDone(int & index, QPointF & oldPos, QPointF & newPos);
+	void moveDone(int & index0, QPointF & oldPos0, QPointF & newPos0, int & index1, QPointF & oldPos1, QPointF & newPos1);
 	void killRubberBandLeg();  // hack; see caller
 	QRectF boundingRect() const;
 	const QString & legID(ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID);
