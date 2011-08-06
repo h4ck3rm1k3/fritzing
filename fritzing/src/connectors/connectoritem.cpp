@@ -681,7 +681,7 @@ void ConnectorItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 			reposition(to->sceneAdjustedTerminalPoint(NULL), m_draggingLegIndex);
 		}
 		if (infoGraphicsView != NULL) {
-			infoGraphicsView->prepLegBendpointMove(this, m_draggingLegIndex, m_oldPolygon.at(m_draggingLegIndex), m_legPolygon.at(m_draggingLegIndex), to, changeConnections);
+			infoGraphicsView->prepLegBendpointMove(this, m_draggingLegIndex, mapToScene(m_oldPolygon.at(m_draggingLegIndex)), mapToScene(m_legPolygon.at(m_draggingLegIndex)), to, changeConnections);
 		}
 		return;
 	}
@@ -1591,8 +1591,8 @@ void ConnectorItem::paint(QPainter * painter, const QStyleOptionGraphicsItem * o
 
 void ConnectorItem::paintLeg(QPainter * painter) 
 {
-	QPen pen = legPen();
-	painter->setPen(pen);
+	QPen lpen = legPen();
+	painter->setPen(lpen);
 
 	bool hasCurves = false;
 	foreach (Bezier * bezier, m_legCurves) {
@@ -1607,24 +1607,26 @@ void ConnectorItem::paintLeg(QPainter * painter)
 
 	if (m_legPolygon.count() > 2) {
 		// draw bendpoint indicators
-		double halfWidth = pen.widthF() / 2;
+		double halfWidth = lpen.widthF() / 2;
 		painter->setPen(Qt::NoPen);
 		QColor c =  addColor(m_legColor, (qGray(m_legColor.rgb()) < 64) ? 80 : -64);
 		painter->setBrush(c);
 		for (int i = 1; i < m_legPolygon.count() - 1; i++) {
 			painter->drawEllipse(m_legPolygon.at(i), halfWidth, halfWidth); 
 		}
+		painter->setBrush(Qt::NoBrush);
 	}
 
 	if (m_attachedTo->inHover()) {
 		// hover highlight
-		pen.setColor((qGray(m_legColor.rgb()) < 48) ? QColor(255, 255, 255) : QColor(0, 0, 0));
+		lpen.setColor((qGray(m_legColor.rgb()) < 48) ? QColor(255, 255, 255) : QColor(0, 0, 0));
 		painter->setOpacity(ItemBase::hoverOpacity);
-		painter->setPen(pen);
+		painter->setPen(lpen);
 
 		paintLeg(painter, hasCurves);	
 	}
 
+	// now draw the connector
 	Bezier * bezier = m_legCurves.at(m_legCurves.count() - 2);
 	bool connectorIsCurved = (bezier != NULL && !bezier->isEmpty());
 	Bezier left, right;
@@ -1637,9 +1639,9 @@ void ConnectorItem::paintLeg(QPainter * painter)
 
 	if (!isGrey(m_legColor)) {
 		// draw an undercolor so the connectorColor will be visible on top of the leg color
-		pen.setColor(0x8c8c8c);			// TODO: don't hardcode color
+		lpen.setColor(0x8c8c8c);			// TODO: don't hardcode color
 		painter->setOpacity(1);
-		painter->setPen(pen);
+		painter->setPen(lpen);
 		if (connectorIsCurved) {
 			painter->drawPath(path);
 		}
@@ -1648,7 +1650,7 @@ void ConnectorItem::paintLeg(QPainter * painter)
 		}
 	}
 
-	pen = this->pen();
+	QPen pen = this->pen();
 	pen.setWidthF(m_legStrokeWidth);
 	pen.setCapStyle(Qt::RoundCap);
 	painter->setOpacity(m_opacity);
@@ -2123,8 +2125,8 @@ void ConnectorItem::stretchDone(QPolygonF & oldLeg, QPolygonF & newLeg, bool & a
 
 void ConnectorItem::moveDone(int & index, QPointF & oldPos, QPointF & newPos) {
 	index = (m_activeStretch) ? 1 : m_legPolygon.count() - 1;
-	oldPos = mapFromScene(m_oldPolygon.at(index));
-	newPos = m_legPolygon.at(index);
+	oldPos = m_oldPolygon.at(index);
+	newPos = mapToScene(m_legPolygon.at(index));
 }
 
 QRectF ConnectorItem::boundingRect() const
@@ -2590,7 +2592,7 @@ void ConnectorItem::removeLegBendpoint(int index)
 
 void ConnectorItem::moveLegBendpoint(int index, QPointF p)
 {
-	m_legPolygon.replace(index, p);
+	m_legPolygon.replace(index, mapFromScene(p));
 	calcConnectorEnd();
 	update();
 }
