@@ -2897,11 +2897,11 @@ bool SketchWidget::checkMoved()
 
 	foreach(ItemBase * itemBase, m_stretchingLegs.uniqueKeys()) {
 		foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
-			QPolygonF oldLeg, newLeg;
-			bool active;
-			connectorItem->stretchDone(oldLeg, newLeg, active);
-			ChangeLegCommand * clc = new ChangeLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), oldLeg, newLeg, false, active, "move", parentCommand);
-			clc->setUndoOnly();
+			int index;
+			QPointF oldPos, newPos;
+			connectorItem->moveDone(index, oldPos, newPos);
+			MoveLegBendpointCommand * mlbc = new MoveLegBendpointCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), index, oldPos, newPos, parentCommand);
+			mlbc->setUndoOnly();
 		}
 	}
 
@@ -2983,9 +2983,11 @@ bool SketchWidget::checkMoved()
 	// must restore legs after connections are restored (redo direction)
 	foreach(ItemBase * itemBase, m_stretchingLegs.uniqueKeys()) {
 		foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
-			QPolygonF leg = connectorItem->leg();
-			ChangeLegCommand * clc = new ChangeLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), leg, leg, true, true, "undo move", parentCommand);
-			clc->setRedoOnly();
+			int index;
+			QPointF oldPos, newPos;
+			connectorItem->moveDone(index, oldPos, newPos);
+			MoveLegBendpointCommand * mlbc = new MoveLegBendpointCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), index, oldPos, newPos, parentCommand);
+			mlbc->setRedoOnly();
 		}
 	}
 
@@ -3120,7 +3122,7 @@ void SketchWidget::prepLegSelection(ItemBase * itemBase)
 	itemBase->setSelected(true);
 }
 
-void SketchWidget::prepLegChange(ConnectorItem * from,  const QPolygonF & oldLeg, const QPolygonF & newLeg, ConnectorItem * to, bool changeConnections) 
+void SketchWidget::prepLegBendpointMove(ConnectorItem * from, int index, QPointF oldPos, QPointF newPos, ConnectorItem * to, bool changeConnections)
 {
 	this->m_moveEventCount = 0;  // clear this so an extra MoveItemCommand isn't posted
 
@@ -3148,8 +3150,8 @@ void SketchWidget::prepLegChange(ConnectorItem * from,  const QPolygonF & oldLeg
 		new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
 	}
 
-	ChangeLegCommand * clc = new ChangeLegCommand(this, fromID, fromConnectorID, oldLeg, newLeg, true, true, "drag", parentCommand);
-	clc->setUndoOnly();
+	MoveLegBendpointCommand * mlbc = new MoveLegBendpointCommand(this, fromID, fromConnectorID, index, oldPos, newPos, parentCommand);
+	mlbc->setUndoOnly();
 
 	if (changeConnections) {
 		QList< QPointer<ConnectorItem> > former = from->connectedToItems();
@@ -3204,9 +3206,9 @@ void SketchWidget::prepLegChange(ConnectorItem * from,  const QPolygonF & oldLeg
 	}
 
 	// change leg after connections have been restored
-	clc = new ChangeLegCommand(this, fromID, fromConnectorID, oldLeg, newLeg, true, true, "drag", parentCommand);
-	clc->setRedoOnly();
-	clc->setSimple();
+	mlbc = new MoveLegBendpointCommand(this, fromID, fromConnectorID, index, oldPos, newPos, parentCommand);
+	mlbc->setRedoOnly();
+
 
 	if (changeConnections) {
 		new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
@@ -4557,7 +4559,9 @@ void SketchWidget::makeDeleteItemCommandPrepSlot(ItemBase * itemBase, bool forei
 
 			QPolygonF poly = connectorItem->leg();
 			ChangeLegCommand * clc = new ChangeLegCommand(this, itemBase->id(), connectorItem->connectorSharedID(), poly, poly, true, true, "delete", parentCommand);
-			clc->setUndoOnly();			
+			clc->setUndoOnly();	
+
+			// TODO: beziers here
 		}
 	}
 }
@@ -7830,3 +7834,15 @@ void SketchWidget::removeLegBendpoint(long id, const QString & connectorID, int 
 
 	connectorItem->removeLegBendpoint(index);
 }
+
+void SketchWidget::moveLegBendpoint(long id, const QString & connectorID, int index, QPointF p)
+{
+	ItemBase * itemBase = findItem(id);
+	if (itemBase == NULL) return;
+
+	ConnectorItem * connectorItem = findConnectorItem(itemBase, connectorID, ViewLayer::specFromID(itemBase->viewLayerID()));
+	if (connectorItem == NULL) return;
+
+	connectorItem->moveLegBendpoint(index, p);
+}
+

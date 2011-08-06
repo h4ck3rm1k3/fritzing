@@ -290,6 +290,56 @@ protected:
     bool m_firstTime;
 };
 
+class ChangeLegCommand : public BaseCommand
+{
+public:
+    ChangeLegCommand(class SketchWidget *sketchWidget, long fromID, const QString & fromConnectorID,
+    					const QPolygonF & oldLeg, const QPolygonF & newLeg, bool relative, bool active, const QString & why, QUndoCommand *parent);
+    void undo();
+    void redo();
+
+	void setUndoOnly();
+	void setRedoOnly();
+	void setSimple();
+
+protected:
+	QString getParamString() const;
+
+protected:
+	QString m_fromConnectorID;
+    long m_fromID;
+    QPolygonF m_newLeg;
+    QPolygonF m_oldLeg;
+	bool m_undoOnly;
+	bool m_redoOnly;
+	bool m_relative;
+	bool m_active;
+	bool m_simple;
+	QString m_why;
+};
+
+class MoveLegBendpointCommand : public BaseCommand
+{
+public:
+    MoveLegBendpointCommand(class SketchWidget *sketchWidget, long fromID, const QString & fromConnectorID,
+    						 int index, QPointF oldPos, QPointF newPos, QUndoCommand *parent);
+    void undo();
+    void redo();
+
+	void setUndoOnly();
+	void setRedoOnly();
+
+protected:
+	QString getParamString() const;
+
+protected:
+	QString m_fromConnectorID;
+    long m_fromID;
+    QPointF m_newPos;
+    QPointF m_oldPos;
+	bool m_undoOnly;
+	bool m_redoOnly;
+};
 
 class ChangeLegCurveCommand : public BaseCommand
 {
@@ -335,34 +385,6 @@ protected:
 	int m_oldCount;
 	int m_newCount;
 	QPointF m_pos;
-};
-
-class ChangeLegCommand : public BaseCommand
-{
-public:
-    ChangeLegCommand(class SketchWidget *sketchWidget, long fromID, const QString & fromConnectorID,
-    					const QPolygonF & oldLeg, const QPolygonF & newLeg, bool relative, bool active, const QString & why, QUndoCommand *parent);
-    void undo();
-    void redo();
-
-	void setUndoOnly();
-	void setRedoOnly();
-	void setSimple();
-
-protected:
-	QString getParamString() const;
-
-protected:
-	QString m_fromConnectorID;
-    long m_fromID;
-    QPolygonF m_newLeg;
-    QPolygonF m_oldLeg;
-	bool m_undoOnly;
-	bool m_redoOnly;
-	bool m_relative;
-	bool m_active;
-	bool m_simple;
-	QString m_why;
 };
 
 class RotateLegCommand : public BaseCommand

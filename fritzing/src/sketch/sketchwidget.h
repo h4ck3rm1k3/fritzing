@@ -267,7 +267,7 @@ public:
 	void changeBus(ItemBase *, bool connec, const QString & oldBus, const QString & newBus, QList<ConnectorItem *> &, const QString & message);
 	const QString & filenameIf();
 	void setItemDropOffset(long id, QPointF offset);
-	void prepLegChange(ConnectorItem * from,  const QPolygonF & oldLeg, const QPolygonF & newLeg, ConnectorItem * to, bool changeConnections);
+	void prepLegBendpointMove(ConnectorItem * from, int index, QPointF oldPos, QPointF newPos, ConnectorItem * to, bool changeConnections);
 	void prepLegCurveChange(ConnectorItem * from, int index, const class Bezier * oldB, const class Bezier * newB, bool triggerFirstTime);
 	void prepLegBendpointChange(ConnectorItem * from, int oldCount, int newCount, int index, QPointF pos, const class Bezier *, bool triggerFirstTime);
 	void prepLegSelection(ItemBase *);
@@ -275,6 +275,7 @@ public:
 	void changeLegCurve(long id, const QString & connectorID, int index, const Bezier *);
 	void addLegBendpoint(long id, const QString & connectorID, int index, QPointF, const class Bezier *);
 	void removeLegBendpoint(long id, const QString & connectorID, int index);
+	void moveLegBendpoint(long id, const QString & connectorID, int index, QPointF);
 
 
 protected:

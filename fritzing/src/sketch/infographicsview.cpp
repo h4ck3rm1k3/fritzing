@@ -295,11 +295,12 @@ void InfoGraphicsView::prepLegSelection(ItemBase *)
 {
 }
 
-void InfoGraphicsView::prepLegChange(ConnectorItem * from, const QPolygonF & oldLeg, const QPolygonF & newLeg, ConnectorItem * to, bool changeConnections) 
+void InfoGraphicsView::prepLegBendpointMove(ConnectorItem * from, int index, QPointF oldPos, QPointF newPos, ConnectorItem * to, bool changeConnections)
 {
 	Q_UNUSED(from);	
-	Q_UNUSED(oldLeg);	
-	Q_UNUSED(newLeg);	
+	Q_UNUSED(index);
+	Q_UNUSED(oldPos);	
+	Q_UNUSED(newPos);	
 	Q_UNUSED(to);
 	Q_UNUSED(changeConnections);
 }

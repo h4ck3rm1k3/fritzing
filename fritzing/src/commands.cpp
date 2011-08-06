@@ -501,6 +501,131 @@ QString ChangeWireCurveCommand::getParamString() const {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+ChangeLegCommand::ChangeLegCommand(SketchWidget* sketchWidget, long fromID, const QString & fromConnectorID,
+									 const QPolygonF & oldLeg, const QPolygonF & newLeg, bool relative, bool active,
+									 const QString & why, QUndoCommand *parent)
+    : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
+{
+	m_why = why;
+	m_simple = m_undoOnly = m_redoOnly = false;
+    m_fromID = fromID;
+	m_oldLeg = oldLeg;
+    m_newLeg = newLeg;
+	m_relative = relative;
+    m_fromConnectorID = fromConnectorID;
+	m_active = active;
+}
+
+void ChangeLegCommand::undo()
+{
+	if (!m_redoOnly) {
+		m_sketchWidget->changeLeg(m_fromID, m_fromConnectorID, m_oldLeg, m_relative, m_why);
+	}
+}
+
+void ChangeLegCommand::setSimple()
+{
+	m_simple = true;
+}
+
+void ChangeLegCommand::setUndoOnly()
+{
+	m_undoOnly = true;
+}
+
+void ChangeLegCommand::setRedoOnly()
+{
+	m_redoOnly = true;
+}
+
+void ChangeLegCommand::redo()
+{
+	if (!m_undoOnly) {
+		if (m_simple) {
+			m_sketchWidget->changeLeg(m_fromID, m_fromConnectorID, m_newLeg, m_relative, m_why);
+		}
+		else {
+			m_sketchWidget->recalcLeg(m_fromID, m_fromConnectorID, m_newLeg, m_relative, m_active, m_why);
+		}
+	}
+}
+
+QString ChangeLegCommand::getParamString() const {
+
+	QString oldLeg;
+	QString newLeg;
+	foreach (QPointF p, m_oldLeg) {
+		oldLeg += QString("(%1,%2)").arg(p.x()).arg(p.y());
+	}
+	foreach (QPointF p, m_newLeg) {
+		newLeg += QString("(%1,%2)").arg(p.x()).arg(p.y());
+	}
+	return QString("ChangeLegCommand ") 
+		+ BaseCommand::getParamString() + 
+		QString(" fromid:%1 fromc:%2 %3 old:%4 new:%5")
+		.arg(m_fromID)
+		.arg(m_fromConnectorID)
+		.arg(m_why)
+		.arg(oldLeg)
+		.arg(newLeg)
+		;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+MoveLegBendpointCommand::MoveLegBendpointCommand(SketchWidget* sketchWidget, long fromID, const QString & fromConnectorID,
+												int index, QPointF oldPos, QPointF newPos, QUndoCommand *parent)
+    : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
+{
+	m_undoOnly = m_redoOnly = false;
+    m_fromID = fromID;
+	m_oldPos = oldPos;
+    m_newPos = newPos;
+    m_fromConnectorID = fromConnectorID;
+	m_index = index;
+}
+
+void MoveLegBendpointCommand::undo()
+{
+	if (!m_redoOnly) {
+		m_sketchWidget->moveLegBendpoint(m_fromID, m_fromConnectorID, m_index, m_oldPos);
+	}
+}
+
+void MoveLegBendpointCommand::setUndoOnly()
+{
+	m_undoOnly = true;
+}
+
+void MoveLegBendpointCommand::setRedoOnly()
+{
+	m_redoOnly = true;
+}
+
+void MoveLegBendpointCommand::redo()
+{
+	if (!m_undoOnly) {
+		m_sketchWidget->moveLegBendpoint(m_fromID, m_fromConnectorID, m_index, m_newPos);
+	}
+}
+
+QString MoveLegBendpointCommand::getParamString() const {
+
+	return QString("MoveLegBendpointCommand ") 
+		+ BaseCommand::getParamString() + 
+		QString(" fromid:%1 fromc:%2 ix:%3 old:%4,%5 new:%6,%7")
+		.arg(m_fromID)
+		.arg(m_fromConnectorID)
+		.arg(m_index)
+		.arg(m_oldPos.x())
+		.arg(m_oldPos.y())
+		.arg(m_newPos.x())
+		.arg(m_newPos.y())
+		;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 ChangeLegCurveCommand::ChangeLegCurveCommand(SketchWidget* sketchWidget, long fromID, const QString & connectorID, int index,
 									 const Bezier * oldBezier, const Bezier * newBezier, QUndoCommand *parent)
     : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
@@ -617,77 +742,6 @@ QString ChangeLegBendpointCommand::getParamString() const {
 		;
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-ChangeLegCommand::ChangeLegCommand(SketchWidget* sketchWidget, long fromID, const QString & fromConnectorID,
-									 const QPolygonF & oldLeg, const QPolygonF & newLeg, bool relative, bool active,
-									 const QString & why, QUndoCommand *parent)
-    : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
-{
-	m_why = why;
-	m_simple = m_undoOnly = m_redoOnly = false;
-    m_fromID = fromID;
-	m_oldLeg = oldLeg;
-    m_newLeg = newLeg;
-	m_relative = relative;
-    m_fromConnectorID = fromConnectorID;
-	m_active = active;
-}
-
-void ChangeLegCommand::undo()
-{
-	if (!m_redoOnly) {
-		m_sketchWidget->changeLeg(m_fromID, m_fromConnectorID, m_oldLeg, m_relative, m_why);
-	}
-}
-
-void ChangeLegCommand::setSimple()
-{
-	m_simple = true;
-}
-
-void ChangeLegCommand::setUndoOnly()
-{
-	m_undoOnly = true;
-}
-
-void ChangeLegCommand::setRedoOnly()
-{
-	m_redoOnly = true;
-}
-
-void ChangeLegCommand::redo()
-{
-	if (!m_undoOnly) {
-		if (m_simple) {
-			m_sketchWidget->changeLeg(m_fromID, m_fromConnectorID, m_newLeg, m_relative, m_why);
-		}
-		else {
-			m_sketchWidget->recalcLeg(m_fromID, m_fromConnectorID, m_newLeg, m_relative, m_active, m_why);
-		}
-	}
-}
-
-QString ChangeLegCommand::getParamString() const {
-
-	QString oldLeg;
-	QString newLeg;
-	foreach (QPointF p, m_oldLeg) {
-		oldLeg += QString("(%1,%2)").arg(p.x()).arg(p.y());
-	}
-	foreach (QPointF p, m_newLeg) {
-		newLeg += QString("(%1,%2)").arg(p.x()).arg(p.y());
-	}
-	return QString("ChangeLegCommand ") 
-		+ BaseCommand::getParamString() + 
-		QString(" fromid:%1 fromc:%2 %3 old:%4 new:%5")
-		.arg(m_fromID)
-		.arg(m_fromConnectorID)
-		.arg(m_why)
-		.arg(oldLeg)
-		.arg(newLeg)
-		;
-}
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 RotateLegCommand::RotateLegCommand(SketchWidget* sketchWidget, long fromID, const QString & fromConnectorID,

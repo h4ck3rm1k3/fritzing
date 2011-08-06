@@ -125,6 +125,7 @@ public:
 	void prepareToStretch(bool activeStretch);
 	void stretchBy(QPointF howMuch);
 	void stretchDone(QPolygonF & oldLeg, QPolygonF & newLeg, bool & active);
+	void moveDone(int & index, QPointF & oldPos, QPointF & newPos);
 	void killRubberBandLeg();  // hack; see caller
 	QRectF boundingRect() const;
 	const QString & legID(ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID);
@@ -133,6 +134,7 @@ public:
 	void changeLegCurve(int index, const class Bezier *);
 	void addLegBendpoint(int index, QPointF, const class Bezier *);
 	void removeLegBendpoint(int index);
+	void moveLegBendpoint(int index, QPointF);
 
 protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );

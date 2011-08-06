@@ -665,13 +665,23 @@ void ConnectorItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 			return;
 		}
 
+		if (m_oldPolygon.count() < m_legPolygon.count()) {
+			// we inserted a bendpoint
+			InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+			if (infoGraphicsView != NULL) {
+				Bezier bezier;
+				infoGraphicsView->prepLegBendpointChange(this, m_oldPolygon.count(), m_legPolygon.count(), m_draggingLegIndex, m_legPolygon.at(m_draggingLegIndex), &bezier, false);
+			}
+			return;
+		}
+
 		bool changeConnections = m_draggingLegIndex == m_legPolygon.count() - 1;
 		if (to != NULL && changeConnections) {
 			// center endpoint in the target connectorItem
 			reposition(to->sceneAdjustedTerminalPoint(NULL), m_draggingLegIndex);
 		}
 		if (infoGraphicsView != NULL) {
-			infoGraphicsView->prepLegChange(this, m_oldPolygon, m_legPolygon, to, changeConnections);
+			infoGraphicsView->prepLegBendpointMove(this, m_draggingLegIndex, m_oldPolygon.at(m_draggingLegIndex), m_legPolygon.at(m_draggingLegIndex), to, changeConnections);
 		}
 		return;
 	}
@@ -2111,6 +2121,12 @@ void ConnectorItem::stretchDone(QPolygonF & oldLeg, QPolygonF & newLeg, bool & a
 	active = m_activeStretch;
 }
 
+void ConnectorItem::moveDone(int & index, QPointF & oldPos, QPointF & newPos) {
+	index = (m_activeStretch) ? 1 : m_legPolygon.count() - 1;
+	oldPos = mapFromScene(m_oldPolygon.at(index));
+	newPos = m_legPolygon.at(index);
+}
+
 QRectF ConnectorItem::boundingRect() const
 {
 	if (m_legPolygon.count() < 2) return NonConnectorItem::boundingRect();
@@ -2567,6 +2583,14 @@ void ConnectorItem::removeLegBendpoint(int index)
 	Bezier * bezier = m_legCurves.at(index);
 	if (bezier) delete bezier;
 	m_legCurves.remove(index);
+	calcConnectorEnd();
+	update();
+}
+
+
+void ConnectorItem::moveLegBendpoint(int index, QPointF p)
+{
+	m_legPolygon.replace(index, p);
 	calcConnectorEnd();
 	update();
 }
