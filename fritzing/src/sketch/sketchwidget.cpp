@@ -2894,20 +2894,7 @@ bool SketchWidget::checkMoved()
 	}
 
 	CleanUpWiresCommand * cuw = new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
-
-	foreach(ItemBase * itemBase, m_stretchingLegs.uniqueKeys()) {
-		foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
-			int index0, index1;
-			QPointF oldPos0, newPos0, oldPos1, newPos1;
-			connectorItem->moveDone(index0, oldPos0, newPos0, index1, oldPos1, newPos1);
-			MoveLegBendpointCommand * mlbc = new MoveLegBendpointCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), index0, oldPos0, newPos0, parentCommand);
-			mlbc->setUndoOnly();
-			if (index0 != index1) {
-				mlbc = new MoveLegBendpointCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), index1, oldPos1, newPos1, parentCommand);
-				mlbc->setUndoOnly();
-			}
-		}
-	}
+	moveLegBendpoints(true, parentCommand);
 
 	bool gotConnection = true;
 
@@ -2985,19 +2972,7 @@ bool SketchWidget::checkMoved()
 	}
 
 	// must restore legs after connections are restored (redo direction)
-	foreach(ItemBase * itemBase, m_stretchingLegs.uniqueKeys()) {
-		foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
-			int index0, index1;
-			QPointF oldPos0, newPos0, oldPos1, newPos1;
-			connectorItem->moveDone(index0, oldPos0, newPos0, index1, oldPos1, newPos1);
-			MoveLegBendpointCommand * mlbc = new MoveLegBendpointCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), index0, oldPos0, newPos0, parentCommand);
-			mlbc->setRedoOnly();
-			if (index0 != index1) {
-				mlbc = new MoveLegBendpointCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), index1, oldPos1, newPos1, parentCommand);
-				mlbc->setRedoOnly();
-			}
-		}
-	}
+	moveLegBendpoints(false, parentCommand);
 
 	clearTemporaries();
 
@@ -4053,13 +4028,7 @@ void SketchWidget::rotateX(double degrees)
 	new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
 
 	// change legs after connections have been updated (undo direction)
-	foreach (ItemBase * itemBase, m_stretchingLegs.uniqueKeys()) {
-		foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
-			QPolygonF oldLeg = connectorItem->leg();
-			ChangeLegCommand * clc = new ChangeLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), oldLeg, oldLeg, true, true, "undo rotate", parentCommand);
-			clc->setUndoOnly();
-		}
-	}
+	moveLegBendpoints(true, parentCommand);
 
 	foreach (ItemBase * itemBase, m_savedItems) {
 		if (!itemBase->rotationAllowed()) {
@@ -4103,7 +4072,6 @@ void SketchWidget::rotateX(double degrees)
 			new RotateLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), oldLeg, active, parentCommand);
 		}
 	}
-
 
 	foreach (Wire * wire, m_savedWires.keys()) {
 		ViewGeometry vg1 = wire->getViewGeometry();
@@ -4180,13 +4148,7 @@ void SketchWidget::flip(Qt::Orientations orientation)
 	new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
 
 	// change legs after connections have been updated (undo direction)
-	foreach (ItemBase * itemBase, m_stretchingLegs.uniqueKeys()) {
-		foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
-			QPolygonF oldLeg = connectorItem->leg();
-			ChangeLegCommand * clc = new ChangeLegCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), oldLeg, oldLeg, true, true, "undo flip", parentCommand);
-			clc->setUndoOnly();
-		}
-	}
+	moveLegBendpoints(true, parentCommand);
 
 	QHash<long, ItemBase *> emptyList;			// emptylist is only used for a move command
 	ConnectorPairHash connectorHash;
@@ -4564,6 +4526,17 @@ void SketchWidget::makeDeleteItemCommandPrepSlot(ItemBase * itemBase, bool forei
 	if (itemBase->hasRubberBandLeg()) {
 		foreach (ConnectorItem * connectorItem, itemBase->cachedConnectorItems()) {
 			if (!connectorItem->hasRubberBandLeg()) continue;
+
+			// backwards order: curves then polys, since these will be trigged by undo
+			QVector<Bezier *> beziers = connectorItem->beziers();
+			for (int i = 0; i < beziers.count() - 1; i++) {
+				Bezier * bezier = beziers.at(i);
+				if (bezier == NULL) continue;
+				if (bezier->isEmpty()) continue;
+
+				ChangeLegCurveCommand * clcc = new ChangeLegCurveCommand(this, itemBase->id(), connectorItem->connectorSharedID(), i, bezier, bezier, parentCommand);
+				clcc->setUndoOnly();
+			}
 
 			QPolygonF poly = connectorItem->leg();
 			ChangeLegCommand * clc = new ChangeLegCommand(this, itemBase->id(), connectorItem->connectorSharedID(), poly, poly, true, true, "delete", parentCommand);
@@ -7854,3 +7827,21 @@ void SketchWidget::moveLegBendpoint(long id, const QString & connectorID, int in
 	connectorItem->moveLegBendpoint(index, p);
 }
 
+void SketchWidget::moveLegBendpoints(bool undoOnly, QUndoCommand * parentCommand) 
+{
+	foreach (ItemBase * itemBase, m_stretchingLegs.uniqueKeys()) {
+		foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
+			int index0, index1;
+			QPointF oldPos0, newPos0, oldPos1, newPos1;
+			connectorItem->moveDone(index0, oldPos0, newPos0, index1, oldPos1, newPos1);
+			MoveLegBendpointCommand * mlbc = new MoveLegBendpointCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), index0, oldPos0, newPos0, parentCommand);
+			if (undoOnly) mlbc->setUndoOnly();
+			else mlbc->setRedoOnly();
+			if (index0 != index1) {
+				mlbc = new MoveLegBendpointCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), index1, oldPos1, newPos1, parentCommand);
+				if (undoOnly) mlbc->setUndoOnly();
+				else mlbc->setRedoOnly();
+			}
+		}
+	}
+}

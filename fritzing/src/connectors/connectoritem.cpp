@@ -2592,10 +2592,14 @@ void ConnectorItem::removeLegBendpoint(int index)
 	update();
 }
 
-
 void ConnectorItem::moveLegBendpoint(int index, QPointF p)
 {
 	m_legPolygon.replace(index, mapFromScene(p));
 	calcConnectorEnd();
 	update();
+}
+
+const QVector<Bezier *> & ConnectorItem::beziers()
+{
+	return m_legCurves;
 }

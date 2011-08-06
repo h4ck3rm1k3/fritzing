@@ -350,6 +350,7 @@ public:
     void undo();
     void redo();
 	void setFirstTime();
+	void setUndoOnly();
 
 protected:
 	QString getParamString() const;
@@ -359,6 +360,7 @@ protected:
     class Bezier * m_newBezier;
     class Bezier * m_oldBezier;
     bool m_firstTime;
+	bool m_undoOnly;
 	QString m_fromConnectorID;
 	int m_index;
 };

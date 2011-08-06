@@ -428,6 +428,7 @@ protected:
 								QHash<ConnectorItem *, ConnectorItem *> & m2f, QHash<ConnectorItem *, Connector *> & byWire,
 								QHash<QString, QPolygonF> & legs, QUndoCommand * parentCommand);
 	void changeLegAux(long fromID, const QString & fromConnectorID, const QPolygonF &, bool reset, bool relative, bool active, const QString & why);
+	void moveLegBendpoints(bool undoOnly, QUndoCommand * parentCommand);
 
 
 protected:

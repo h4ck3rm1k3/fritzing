@@ -630,7 +630,7 @@ ChangeLegCurveCommand::ChangeLegCurveCommand(SketchWidget* sketchWidget, long fr
 									 const Bezier * oldBezier, const Bezier * newBezier, QUndoCommand *parent)
     : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
-	m_firstTime = false;
+	m_undoOnly = m_firstTime = false;
     m_fromID = fromID;
 
 	m_oldBezier = new Bezier;
@@ -653,13 +653,17 @@ void ChangeLegCurveCommand::redo()
 	if (m_firstTime) {
 		m_firstTime = false;
 	}
-	else {
+	else if (!m_undoOnly) {
 		m_sketchWidget->changeLegCurve(m_fromID, m_fromConnectorID, m_index, m_newBezier);
 	}
 }
 
 void ChangeLegCurveCommand::setFirstTime() {
 	m_firstTime = true;
+}
+
+void ChangeLegCurveCommand::setUndoOnly() {
+	m_undoOnly = true;
 }
 
 QString ChangeLegCurveCommand::getParamString() const {

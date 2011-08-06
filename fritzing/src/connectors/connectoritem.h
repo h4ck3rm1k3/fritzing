@@ -135,6 +135,7 @@ public:
 	void addLegBendpoint(int index, QPointF, const class Bezier *);
 	void removeLegBendpoint(int index);
 	void moveLegBendpoint(int index, QPointF);
+	const QVector<class Bezier *> & beziers();
 
 protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
