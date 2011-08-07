@@ -123,6 +123,7 @@ public:
 
 	QString colorString();
 	QString hexString();
+	QString shadowHexString();
 	void setColorString(QString, double opacity);
 	virtual void setColor(const QColor &, double opacity);
 	double opacity();
@@ -131,6 +132,7 @@ public:
 	void setWireWidth(double width, InfoGraphicsView *, double hoverStrokeWidth);
 	void setPenWidth(double width, InfoGraphicsView *, double hoverStrokeWidth);
 	double width();
+	double shadowWidth();
 	double mils();
 	void setExtras(QDomElement &, InfoGraphicsView *);
 	Wire * findTraced(ViewGeometry::WireFlags flags, QList<ConnectorItem *>  & ends);
@@ -164,6 +166,7 @@ public:
 	bool isCurved();
 	const class Bezier * curve();
 	QPolygonF sceneCurve(QPointF offset);
+	bool hasShadow();
 
 protected slots:
 	void colorEntry(const QString & text);

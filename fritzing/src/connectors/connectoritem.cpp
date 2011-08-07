@@ -236,7 +236,7 @@ parts editor support
 
 static Bezier UndoBezier;
 
-static const double StandardLegConnectorLength = 5;			// pixels
+static const double StandardLegConnectorLength = 6;			// pixels
 
 QList<ConnectorItem *> ConnectorItem::m_equalPotentialDisplayItems;
 

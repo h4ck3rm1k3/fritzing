@@ -299,7 +299,7 @@ void Wire::paintBody(QPainter * painter, const QStyleOptionGraphicsItem * option
 
 
 	painter->setOpacity(m_inactive ? m_opacity  / 2 : m_opacity);
-	if (!getRatsnest() && !getTrace()) {
+	if (hasShadow()) {
 		painter->save();
 		painter->setPen(m_shadowPen);
 		if (painterPath.isEmpty()) {
@@ -1077,6 +1077,10 @@ double Wire::width() {
 	return m_pen.widthF();
 }
 
+double Wire::shadowWidth() {
+	return m_shadowPen.widthF();
+}
+
 double Wire::mils() {
 	return 1000 * m_pen.widthF() / FSvgRenderer::printerScale();
 }
@@ -1113,6 +1117,10 @@ void Wire::setColorString(QString colorName, double op) {
 
 QString Wire::hexString() {
 	return m_pen.brush().color().name();
+}
+
+QString Wire::shadowHexString() {
+	return m_shadowPen.brush().color().name();
 }
 
 QString Wire::colorString() {
@@ -1662,4 +1670,10 @@ QPolygonF Wire::sceneCurve(QPointF offset) {
 	poly.append(m_bezier->cp1() + pos() - offset);
 	poly.append(m_line.p2() + pos() - offset);
 	return poly;
+}
+
+bool Wire::hasShadow() {
+	if (getRatsnest()) return false;
+	if (getTrace()) return false;
+	return m_pen.widthF() != m_shadowPen.widthF();
 }

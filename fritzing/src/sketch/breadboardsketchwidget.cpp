@@ -220,7 +220,12 @@ double BreadboardSketchWidget::getWireStrokeWidth(Wire *, double wireWidth)
 	return wireWidth * WireHoverStrokeFactor;
 }
 
-
+void BreadboardSketchWidget::getBendpointWidths(Wire * wire, double width, double & bendpointWidth, double & bendpoint2Width, bool & negativeOffsetRect) {
+	Q_UNUSED(wire);
+	Q_UNUSED(width);
+	bendpoint2Width = bendpointWidth = -1;
+	negativeOffsetRect = true;
+}
 
 /*
 

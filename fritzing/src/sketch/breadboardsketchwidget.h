@@ -45,6 +45,7 @@ public:
 	void addDefaultParts();
 	void showEvent(QShowEvent * event);
 	double getWireStrokeWidth(Wire *, double wireWidth);
+	void getBendpointWidths(class Wire *, double w, double & w1, double & w2, bool & negativeOffsetRect);
 
 protected:
 	void setWireVisible(Wire * wire);
