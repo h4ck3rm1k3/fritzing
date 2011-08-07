@@ -449,18 +449,21 @@ QString ChangeWireCommand::getParamString() const {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ChangeWireCurveCommand::ChangeWireCurveCommand(SketchWidget* sketchWidget, long fromID,
-									 const Bezier & oldBezier, const Bezier & newBezier, 
+									 const Bezier * oldBezier, const Bezier * newBezier, 
 									 QUndoCommand *parent)
     : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
 	m_firstTime = false;
     m_fromID = fromID;
-
-	m_oldBezier = new Bezier;
-    m_newBezier = new Bezier;
-
-	*m_newBezier = newBezier;
-	*m_oldBezier = oldBezier;
+	m_oldBezier = m_newBezier = NULL;
+	if (oldBezier) {
+		m_oldBezier = new Bezier;
+		m_oldBezier->copy(oldBezier);
+	}
+	if (m_newBezier) {
+		m_newBezier = new Bezier;
+		m_newBezier->copy(newBezier);
+	}
 }
 
 void ChangeWireCurveCommand::undo()
@@ -485,10 +488,14 @@ void ChangeWireCurveCommand::setFirstTime() {
 QString ChangeWireCurveCommand::getParamString() const {
 	QString oldBezier;
 	QString newBezier;
-	oldBezier += QString("(%1,%2)").arg(m_oldBezier->cp0().x()).arg(m_oldBezier->cp0().y());
-	oldBezier += QString("(%1,%2)").arg(m_oldBezier->cp1().x()).arg(m_oldBezier->cp1().y());
-	newBezier += QString("(%1,%2)").arg(m_newBezier->cp0().x()).arg(m_newBezier->cp0().y());
-	newBezier += QString("(%1,%2)").arg(m_newBezier->cp1().x()).arg(m_newBezier->cp1().y());
+	if (m_oldBezier) {
+		oldBezier += QString("(%1,%2)").arg(m_oldBezier->cp0().x()).arg(m_oldBezier->cp0().y());
+		oldBezier += QString("(%1,%2)").arg(m_oldBezier->cp1().x()).arg(m_oldBezier->cp1().y());
+	}
+	if (m_newBezier) {
+		newBezier += QString("(%1,%2)").arg(m_newBezier->cp0().x()).arg(m_newBezier->cp0().y());
+		newBezier += QString("(%1,%2)").arg(m_newBezier->cp1().x()).arg(m_newBezier->cp1().y());
+	}
 
 	return QString("ChangeWireCurveCommand ") 
 		+ BaseCommand::getParamString() + 
@@ -632,12 +639,15 @@ ChangeLegCurveCommand::ChangeLegCurveCommand(SketchWidget* sketchWidget, long fr
 {
 	m_undoOnly = m_firstTime = false;
     m_fromID = fromID;
-
-	m_oldBezier = new Bezier;
-    m_newBezier = new Bezier;
-
-	*m_newBezier = *newBezier;
-	*m_oldBezier = *oldBezier;
+	m_oldBezier = m_newBezier = NULL;
+	if (oldBezier) {
+		m_oldBezier = new Bezier;
+		m_oldBezier->copy(oldBezier);
+	}
+	if (newBezier) {
+		m_newBezier = new Bezier;
+		m_newBezier->copy(newBezier);
+	}
 
 	m_fromConnectorID = connectorID;
 	m_index = index;
@@ -669,10 +679,14 @@ void ChangeLegCurveCommand::setUndoOnly() {
 QString ChangeLegCurveCommand::getParamString() const {
 	QString oldBezier;
 	QString newBezier;
-	oldBezier += QString("(%1,%2)").arg(m_oldBezier->cp0().x()).arg(m_oldBezier->cp0().y());
-	oldBezier += QString("(%1,%2)").arg(m_oldBezier->cp1().x()).arg(m_oldBezier->cp1().y());
-	newBezier += QString("(%1,%2)").arg(m_newBezier->cp0().x()).arg(m_newBezier->cp0().y());
-	newBezier += QString("(%1,%2)").arg(m_newBezier->cp1().x()).arg(m_newBezier->cp1().y());
+	if (m_oldBezier) {
+		oldBezier += QString("(%1,%2)").arg(m_oldBezier->cp0().x()).arg(m_oldBezier->cp0().y());
+		oldBezier += QString("(%1,%2)").arg(m_oldBezier->cp1().x()).arg(m_oldBezier->cp1().y());
+	}
+	if (m_newBezier) {
+		newBezier += QString("(%1,%2)").arg(m_newBezier->cp0().x()).arg(m_newBezier->cp0().y());
+		newBezier += QString("(%1,%2)").arg(m_newBezier->cp1().x()).arg(m_newBezier->cp1().y());
+	}
 
 	return QString("ChangeLegCurveCommand ") 
 		+ BaseCommand::getParamString() + 
@@ -687,15 +701,24 @@ QString ChangeLegCurveCommand::getParamString() const {
 
 ChangeLegBendpointCommand::ChangeLegBendpointCommand(SketchWidget* sketchWidget, long fromID, const QString & connectorID, 
 									int oldCount, int newCount, int index, QPointF pos,
-									const Bezier * bezier, QUndoCommand *parent)
+									const Bezier * bezier0, const Bezier * bezier1, const Bezier * bezier2, QUndoCommand *parent)
     : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
 	m_firstTime = false;
     m_fromID = fromID;
-
-	m_bezier = new Bezier;
-
-	*m_bezier = *bezier;
+	m_bezier0 = m_bezier1 = m_bezier2 = NULL;
+	if (bezier0 != NULL) {
+		m_bezier0 = new Bezier;
+		m_bezier0->copy(bezier0);
+	}
+	if (bezier1 != NULL) {
+		m_bezier1 = new Bezier;
+		m_bezier1->copy(bezier1);
+	}
+	if (bezier2 != NULL) {
+		m_bezier2 = new Bezier;
+		m_bezier2->copy(bezier2);
+	}
 
 	m_fromConnectorID = connectorID;
 	m_index = index;
@@ -707,10 +730,10 @@ ChangeLegBendpointCommand::ChangeLegBendpointCommand(SketchWidget* sketchWidget,
 void ChangeLegBendpointCommand::undo()
 {
 		if (m_newCount < m_oldCount) {
-			m_sketchWidget->addLegBendpoint(m_fromID, m_fromConnectorID, m_index, m_pos, m_bezier);
+			m_sketchWidget->addLegBendpoint(m_fromID, m_fromConnectorID, m_index, m_pos, m_bezier0, m_bezier1);
 		}
 		else {
-			m_sketchWidget->removeLegBendpoint(m_fromID, m_fromConnectorID, m_index);
+			m_sketchWidget->removeLegBendpoint(m_fromID, m_fromConnectorID, m_index, m_bezier0);
 		}
 }
 
@@ -721,10 +744,10 @@ void ChangeLegBendpointCommand::redo()
 	}
 	else {
 		if (m_newCount > m_oldCount) {
-			m_sketchWidget->addLegBendpoint(m_fromID, m_fromConnectorID, m_index, m_pos, m_bezier);
+			m_sketchWidget->addLegBendpoint(m_fromID, m_fromConnectorID, m_index, m_pos, m_bezier1, m_bezier2);
 		}
 		else {
-			m_sketchWidget->removeLegBendpoint(m_fromID, m_fromConnectorID, m_index);
+			m_sketchWidget->removeLegBendpoint(m_fromID, m_fromConnectorID, m_index, m_bezier2);
 		}
 	}
 }
@@ -735,8 +758,10 @@ void ChangeLegBendpointCommand::setFirstTime() {
 
 QString ChangeLegBendpointCommand::getParamString() const {
 	QString bezier;
-	bezier += QString("(%1,%2)").arg(m_bezier->cp0().x()).arg(m_bezier->cp0().y());
-	bezier += QString("(%1,%2)").arg(m_bezier->cp1().x()).arg(m_bezier->cp1().y());
+	if (m_bezier0) {
+		bezier += QString("(%1,%2)").arg(m_bezier0->cp0().x()).arg(m_bezier0->cp0().y());
+		bezier += QString("(%1,%2)").arg(m_bezier0->cp1().x()).arg(m_bezier0->cp1().y());
+	}
 
 	return QString("ChangeLegBendpointCommand ") 
 		+ BaseCommand::getParamString() + 

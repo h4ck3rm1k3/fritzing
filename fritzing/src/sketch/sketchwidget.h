@@ -269,12 +269,12 @@ public:
 	void setItemDropOffset(long id, QPointF offset);
 	void prepLegBendpointMove(ConnectorItem * from, int index, QPointF oldPos, QPointF newPos, ConnectorItem * to, bool changeConnections);
 	void prepLegCurveChange(ConnectorItem * from, int index, const class Bezier * oldB, const class Bezier * newB, bool triggerFirstTime);
-	void prepLegBendpointChange(ConnectorItem * from, int oldCount, int newCount, int index, QPointF pos, const class Bezier *, bool triggerFirstTime);
+	void prepLegBendpointChange(ConnectorItem * from, int oldCount, int newCount, int index, QPointF pos, const class Bezier *, const class Bezier *, const class Bezier *, bool triggerFirstTime);
 	void prepLegSelection(ItemBase *);
 	void changeWireCurve(long id, const Bezier *);
 	void changeLegCurve(long id, const QString & connectorID, int index, const Bezier *);
-	void addLegBendpoint(long id, const QString & connectorID, int index, QPointF, const class Bezier *);
-	void removeLegBendpoint(long id, const QString & connectorID, int index);
+	void addLegBendpoint(long id, const QString & connectorID, int index, QPointF, const class Bezier *, const class Bezier *);
+	void removeLegBendpoint(long id, const QString & connectorID, int index, const class Bezier *);
 	void moveLegBendpoint(long id, const QString & connectorID, int index, QPointF);
 
 
@@ -482,7 +482,7 @@ protected slots:
 	void itemSelectedSlot(long id, bool state);
 	void selectionChangedSlot();
 	void wireChangedSlot(class Wire*, const QLineF & oldLine, const QLineF & newLine, QPointF oldPos, QPointF newPos, ConnectorItem * from, ConnectorItem * to);
-	void wireChangedCurveSlot(class Wire*, const Bezier & oldPoly, const Bezier & Bezier, bool triggerFirstTime);
+	void wireChangedCurveSlot(class Wire*, const Bezier * oldB, const Bezier * newB, bool triggerFirstTime);
 	virtual void wireSplitSlot(class Wire*, QPointF newPos, QPointF oldPos, const QLineF & oldLine);
 	void wireJoinSlot(class Wire*, ConnectorItem * clickedConnectorItem);
 	void toggleLayerVisibility();

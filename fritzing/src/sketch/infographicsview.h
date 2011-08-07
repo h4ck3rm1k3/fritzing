@@ -96,7 +96,7 @@ public:
 	virtual QString generateCopperFillUnit(ItemBase * itemBase, QPointF whereToStart);
 	virtual void prepLegBendpointMove(ConnectorItem * from, int index, QPointF oldPos, QPointF newPos, ConnectorItem * to, bool changeConnections);
 	virtual void prepLegCurveChange(ConnectorItem * from, int index, const class Bezier * oldB, const class Bezier * newB, bool triggerFirstTime);
-	virtual void prepLegBendpointChange(ConnectorItem * from, int oldCount, int newCount, int index, QPointF pos, const class Bezier *, bool triggerFirstTime);
+	virtual void prepLegBendpointChange(ConnectorItem * from, int oldCount, int newCount, int index, QPointF pos, const class Bezier *, const class Bezier *, const class Bezier *, bool triggerFirstTime);
 	virtual void prepLegSelection(ItemBase *);
 	virtual double getWireStrokeWidth(Wire *, double wireWidth);
 

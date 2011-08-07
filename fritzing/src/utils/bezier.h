@@ -59,6 +59,7 @@ public:
 	void split(double t, Bezier & left, Bezier & right);
 	void initControlIndex(QPointF fromPoint);
 	double computeCubicCurveLength(double z, int n);
+	void copy(const Bezier *);
 
 protected:
 	double cubicF(double t);
@@ -72,7 +73,6 @@ protected:
 	QPointF m_endpoint1;
 	QPointF m_cp0;
 	QPointF m_cp1;
-	double m_length;
 	bool m_isEmpty;
 	bool m_drag_cp0;
 };

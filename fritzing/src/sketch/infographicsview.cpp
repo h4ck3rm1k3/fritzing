@@ -312,7 +312,7 @@ void InfoGraphicsView::prepLegCurveChange(ConnectorItem * from, int index, const
 	Q_UNUSED(triggerFirstTime);
 }
 
-void InfoGraphicsView::prepLegBendpointChange(ConnectorItem *, int oldCount, int newCount, int index, QPointF, const class Bezier *, bool triggerFirstTime)
+void InfoGraphicsView::prepLegBendpointChange(ConnectorItem *, int oldCount, int newCount, int index, QPointF, const class Bezier *, const class Bezier *, const class Bezier *, bool triggerFirstTime)
 {
 	Q_UNUSED(triggerFirstTime);
 	Q_UNUSED(index);

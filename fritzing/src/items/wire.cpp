@@ -401,7 +401,7 @@ void Wire::initDragCurve(QPointF scenePos) {
 		m_bezier = new Bezier();
 	}
 
-	UndoBezier = *m_bezier;
+	UndoBezier.copy(m_bezier);
 
 	m_dragCurve = true;
 	m_dragEnd = false;
@@ -611,7 +611,7 @@ bool Wire::releaseDrag() {
 		m_dragCurve = false;
 		ungrabMouse();
 		if (UndoBezier != *m_bezier) {
-			emit wireChangedCurveSignal(this, UndoBezier, *m_bezier, false);
+			emit wireChangedCurveSignal(this, &UndoBezier, m_bezier, false);
 		}
 		return true;
 	}
@@ -679,7 +679,7 @@ void Wire::setExtras(QDomElement & element, InfoGraphicsView * infoGraphicsView)
 	if (!bezier.isEmpty()) {
 		prepareGeometryChange();
 		m_bezier = new Bezier;
-		*m_bezier = bezier;
+		m_bezier->copy(&bezier);
 		QPointF p0 = connector0()->sceneAdjustedTerminalPoint(NULL);
 		QPointF p1 = connector1()->sceneAdjustedTerminalPoint(NULL);
 		m_bezier->set_endpoints(mapFromScene(p0), mapFromScene(p1));
@@ -1505,8 +1505,8 @@ void Wire::addedToScene(bool temporary) {
 	bool succeeded = connect(this, SIGNAL(wireChangedSignal(Wire*, const QLineF & , const QLineF & , QPointF, QPointF, ConnectorItem *, ConnectorItem *)	),
 			infoGraphicsView, SLOT(wireChangedSlot(Wire*, const QLineF & , const QLineF & , QPointF, QPointF, ConnectorItem *, ConnectorItem *)),
 			Qt::DirectConnection);		// DirectConnection means call the slot directly like a subroutine, without waiting for a thread or queue
-	succeeded = connect(this, SIGNAL(wireChangedCurveSignal(Wire*, const Bezier &, const Bezier &, bool)),
-			infoGraphicsView, SLOT(wireChangedCurveSlot(Wire*, const Bezier &, const Bezier &, bool)),
+	succeeded = connect(this, SIGNAL(wireChangedCurveSignal(Wire*, const Bezier *, const Bezier *, bool)),
+			infoGraphicsView, SLOT(wireChangedCurveSlot(Wire*, const Bezier *, const Bezier *, bool)),
 			Qt::DirectConnection);		// DirectConnection means call the slot directly like a subroutine, without waiting for a thread or queue
 	succeeded = succeeded && connect(this, SIGNAL(wireSplitSignal(Wire*, QPointF, QPointF, const QLineF & )),
 			infoGraphicsView, SLOT(wireSplitSlot(Wire*, QPointF, QPointF, const QLineF & )));
@@ -1625,7 +1625,7 @@ void Wire::changeCurve(const Bezier * bezier)
 {
 	prepareGeometryChange();
 	if (m_bezier == NULL) m_bezier = new Bezier;
-	*m_bezier = *bezier;
+	m_bezier->copy(bezier);
 	update();
 }
 

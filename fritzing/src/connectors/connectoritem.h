@@ -132,8 +132,8 @@ public:
 	QPainterPath shape() const;
 	QPainterPath hoverShape() const;
 	void changeLegCurve(int index, const class Bezier *);
-	void addLegBendpoint(int index, QPointF, const class Bezier *);
-	void removeLegBendpoint(int index);
+	void addLegBendpoint(int index, QPointF, const class Bezier *, const class Bezier *);
+	void removeLegBendpoint(int index, const class Bezier *);
 	void moveLegBendpoint(int index, QPointF);
 	const QVector<class Bezier *> & beziers();
 
@@ -176,10 +176,13 @@ protected:
 
 	CursorLocation findLocation(QPointF, int & bendpointIndex);
 	void insertBendpoint(QPointF pos, int bendpointIndex);
+	Bezier * insertBendpointAux(QPointF p, int bendpointIndex);
+
 	void removeBendpoint(int bendpointIndex);
 	void clearCurves();
 	void paintLeg(QPainter * painter);
 	void paintLeg(QPainter * painter, bool hasCurves);
+	void replaceBezier(int index, const Bezier * newBezier);
 
 protected:
 	QPointer<Connector> m_connector;

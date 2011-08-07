@@ -24,8 +24,6 @@ $Date$
 
 ********************************************************************/
 
-
-
 #ifndef COMMANDS_H
 #define COMMANDS_H
 
@@ -38,6 +36,8 @@ $Date$
 #include "routingstatus.h"
 #include "utils/misc.h"
 #include "items/itembase.h"
+
+/////////////////////////////////////////////
 
 class BaseCommand : public QUndoCommand
 {
@@ -78,6 +78,8 @@ protected:
 	int m_index;
 };
 
+/////////////////////////////////////////////
+
 class AddDeleteItemCommand : public BaseCommand
 {
 public:
@@ -99,6 +101,8 @@ protected:
 	ViewLayer::ViewLayerSpec m_viewLayerSpec;
 };
 
+/////////////////////////////////////////////
+
 class AddItemCommand : public AddDeleteItemCommand
 {
 public:
@@ -119,6 +123,8 @@ protected:
 	RestoreIndexesCommand * m_restoreIndexesCommand;
 };
 
+/////////////////////////////////////////////
+
 class DeleteItemCommand : public AddDeleteItemCommand
 {
 public:
@@ -130,6 +136,8 @@ protected:
 	QString getParamString() const;
 
 };
+
+/////////////////////////////////////////////
 
 class MoveItemCommand : public BaseCommand
 {
@@ -148,6 +156,7 @@ protected:
     ViewGeometry m_new;
 };
 
+/////////////////////////////////////////////
 
 struct MoveItemThing {
 	long id;
@@ -173,6 +182,8 @@ protected:
 	QList<MoveItemThing> m_items;
 };
 
+/////////////////////////////////////////////
+
 class RotateItemCommand : public BaseCommand
 {
 public:
@@ -187,6 +198,8 @@ protected:
     long m_itemID;
     double m_degrees;
 };
+
+/////////////////////////////////////////////
 
 class FlipItemCommand : public BaseCommand
 {
@@ -204,6 +217,8 @@ protected:
     Qt::Orientations m_orientation;
 };
 
+/////////////////////////////////////////////
+
 class TransformItemCommand : public BaseCommand
 {
 
@@ -220,6 +235,8 @@ protected:
     QMatrix m_oldMatrix;
     QMatrix m_newMatrix;
 };
+
+/////////////////////////////////////////////
 
 class ChangeConnectionCommand : public BaseCommand
 {
@@ -247,6 +264,8 @@ protected:
 
 };
 
+/////////////////////////////////////////////
+
 class ChangeWireCommand : public BaseCommand
 {
 public:
@@ -270,11 +289,13 @@ protected:
     bool m_updateConnections;
 };
 
+/////////////////////////////////////////////
+
 class ChangeWireCurveCommand : public BaseCommand
 {
 public:
     ChangeWireCurveCommand(class SketchWidget *sketchWidget, long fromID,
-    					const class Bezier & oldBezier, const class Bezier & newBezier,
+    					const class Bezier * oldBezier, const class Bezier * newBezier,
     					QUndoCommand *parent);
     void undo();
     void redo();
@@ -289,6 +310,8 @@ protected:
     class Bezier * m_oldBezier;
     bool m_firstTime;
 };
+
+/////////////////////////////////////////////
 
 class ChangeLegCommand : public BaseCommand
 {
@@ -318,6 +341,8 @@ protected:
 	QString m_why;
 };
 
+/////////////////////////////////////////////
+
 class MoveLegBendpointCommand : public BaseCommand
 {
 public:
@@ -340,6 +365,8 @@ protected:
 	bool m_undoOnly;
 	bool m_redoOnly;
 };
+
+/////////////////////////////////////////////
 
 class ChangeLegCurveCommand : public BaseCommand
 {
@@ -365,11 +392,14 @@ protected:
 	int m_index;
 };
 
+/////////////////////////////////////////////
+
 class ChangeLegBendpointCommand : public BaseCommand
 {
 public:
     ChangeLegBendpointCommand(class SketchWidget *sketchWidget, long fromID, const QString & fromConnectorID,
-    					int oldCount, int newCount, int index, QPointF pos, const class Bezier *, QUndoCommand *parent);
+    					int oldCount, int newCount, int index, QPointF pos, 
+						const class Bezier *, const class Bezier *, const class Bezier *, QUndoCommand *parent);
     void undo();
     void redo();
 	void setFirstTime();
@@ -379,8 +409,9 @@ protected:
 
 protected:
     long m_fromID;
-    class Bezier * m_bezier;
-    class Bezier * m_oldBezier;
+    class Bezier * m_bezier0;
+    class Bezier * m_bezier1;
+    class Bezier * m_bezier2;
     bool m_firstTime;
 	QString m_fromConnectorID;
 	int m_index;
@@ -388,6 +419,8 @@ protected:
 	int m_newCount;
 	QPointF m_pos;
 };
+
+/////////////////////////////////////////////
 
 class RotateLegCommand : public BaseCommand
 {
@@ -406,6 +439,8 @@ protected:
     QPolygonF m_oldLeg;
 	bool m_active;
 };
+
+/////////////////////////////////////////////
 
 class ChangeLayerCommand : public BaseCommand
 {
@@ -427,6 +462,8 @@ protected:
 	ViewLayer::ViewLayerID m_newLayer;
     ViewLayer::ViewLayerID m_oldLayer;
 };
+
+/////////////////////////////////////////////
 
 class SelectItemCommand : public BaseCommand
 {
@@ -468,6 +505,7 @@ protected:
     static int selectItemCommandID;
 };
 
+/////////////////////////////////////////////
 
 class ChangeZCommand : public BaseCommand
 {
@@ -496,6 +534,8 @@ struct StickyThing {
 	long fromID;
 	long toID;
 };
+
+/////////////////////////////////////////////
 
 class CheckStickyCommand : public BaseCommand
 {
@@ -526,6 +566,7 @@ protected:
 	CheckType m_checkType;
 };
 
+/////////////////////////////////////////////
 
 class WireColorChangeCommand : public BaseCommand
 {
@@ -550,6 +591,7 @@ protected:
 	double m_newOpacity;
 };
 
+/////////////////////////////////////////////
 
 class WireWidthChangeCommand : public BaseCommand
 {
@@ -570,6 +612,8 @@ protected:
 	double m_newWidth;
 };
 
+/////////////////////////////////////////////
+
 class RoutingStatusCommand : public BaseCommand 
 {
 public:
@@ -584,6 +628,8 @@ protected:
 	RoutingStatus m_oldRoutingStatus;
 	RoutingStatus m_newRoutingStatus;
 };
+
+/////////////////////////////////////////////
 
 struct RatsnestConnectThing
 {
@@ -621,6 +667,8 @@ protected:
 	Direction m_direction;
 };
 
+/////////////////////////////////////////////
+
 class RestoreLabelCommand : public BaseCommand
 {
 public:
@@ -635,6 +683,8 @@ protected:
     long m_itemID;
     QDomElement m_element;
 };
+
+/////////////////////////////////////////////
 
 class ShowLabelFirstTimeCommand : public BaseCommand
 {
@@ -651,6 +701,8 @@ protected:
     bool m_oldVis;
     bool m_newVis;
 };
+
+/////////////////////////////////////////////
 
 class MoveLabelCommand : public BaseCommand
 {
@@ -670,6 +722,8 @@ protected:
     QPointF m_newOffset;
 };
 
+/////////////////////////////////////////////
+
 class IncLabelTextCommand : public BaseCommand
 {
 public:
@@ -685,6 +739,7 @@ protected:
 	bool m_firstTime;
 };
 
+/////////////////////////////////////////////
 
 class ChangeLabelTextCommand : public BaseCommand
 {
@@ -701,6 +756,8 @@ protected:
     QString m_oldText;
     QString m_newText;
 };
+
+/////////////////////////////////////////////
 
 class ChangeNoteTextCommand : public BaseCommand
 {
@@ -726,6 +783,8 @@ protected:
 	static int changeNoteTextCommandID;
 };
 
+/////////////////////////////////////////////
+
 class RotateFlipLabelCommand : public BaseCommand
 {
 public:
@@ -742,6 +801,8 @@ protected:
 	Qt::Orientations m_orientation;
 };
 
+/////////////////////////////////////////////
+
 class ResizeNoteCommand : public BaseCommand
 {
 public:
@@ -757,6 +818,8 @@ protected:
     QSizeF m_oldSize;
 	QSizeF m_newSize;
 };
+
+/////////////////////////////////////////////
 
 class ResizeBoardCommand : public BaseCommand
 {
@@ -776,6 +839,8 @@ protected:
 	long m_itemID;
 };
 
+/////////////////////////////////////////////
+
 class SketchBackgroundColorChangeCommand : public BaseCommand
 {
 public:
@@ -790,6 +855,8 @@ protected:
 	QString m_oldColor;
 	QString m_newColor;
 };
+
+/////////////////////////////////////////////
 
 class SetResistanceCommand : public BaseCommand
 {
@@ -809,6 +876,8 @@ protected:
 	long m_itemID;
 };
 
+/////////////////////////////////////////////
+
 class SetPropCommand : public BaseCommand
 {
 public:
@@ -826,6 +895,8 @@ protected:
 	QString m_newValue;
 	long m_itemID;
 };
+
+/////////////////////////////////////////////
 
 class ResizeJumperItemCommand : public BaseCommand
 {
@@ -847,6 +918,8 @@ protected:
 	long m_itemID;
 };
 
+/////////////////////////////////////////////
+
 class ShowLabelCommand : public BaseCommand
 {
 public:
@@ -864,6 +937,7 @@ protected:
 
 };
 
+/////////////////////////////////////////////
 
 class LoadLogoImageCommand : public BaseCommand
 {
@@ -884,6 +958,7 @@ protected:
 	bool m_addName;
 };
 
+/////////////////////////////////////////////
 
 class ChangeBoardLayersCommand : public BaseCommand
 {
@@ -900,6 +975,7 @@ protected:
     int m_newLayers;
 };
 
+/////////////////////////////////////////////
 
 class SetDropOffsetCommand : public BaseCommand
 {
@@ -916,5 +992,6 @@ protected:
 	QPointF m_dropOffset;
 };
 
+/////////////////////////////////////////////
 
 #endif // COMMANDS_H

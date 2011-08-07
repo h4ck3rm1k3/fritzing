@@ -252,7 +252,7 @@ protected:
 
 signals:
 	void wireChangedSignal(Wire* me, const QLineF & oldLine, const QLineF & newLine, QPointF oldPos, QPointF newPos, ConnectorItem * from, ConnectorItem * to);
-	void wireChangedCurveSignal(Wire* me, const Bezier & oldPoly, const Bezier & newPoly, bool triggerFirstTime);
+	void wireChangedCurveSignal(Wire* me, const Bezier * oldB, const Bezier * newB, bool triggerFirstTime);
 	void wireSplitSignal(Wire* me, QPointF newPos, QPointF oldPos, const QLineF & oldLine);
 	void wireJoinSignal(Wire* me, ConnectorItem * clickedConnectorItem);
 };

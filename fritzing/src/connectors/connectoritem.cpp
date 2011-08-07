@@ -669,8 +669,8 @@ void ConnectorItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 			// we inserted a bendpoint
 			InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 			if (infoGraphicsView != NULL) {
-				Bezier bezier;
-				infoGraphicsView->prepLegBendpointChange(this, m_oldPolygon.count(), m_legPolygon.count(), m_draggingLegIndex, m_legPolygon.at(m_draggingLegIndex), &bezier, false);
+				infoGraphicsView->prepLegBendpointChange(this, m_oldPolygon.count(), m_legPolygon.count(), m_draggingLegIndex, m_legPolygon.at(m_draggingLegIndex), 
+									&UndoBezier, m_legCurves.at(m_draggingLegIndex -1), m_legCurves.at(m_draggingLegIndex), false);
 			}
 			return;
 		}
@@ -737,8 +737,7 @@ void ConnectorItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 
 		if (m_insertBendpointPossible) {
 			if (qSqrt(GraphicsUtils::distanceSqd(currentPos, buttonDownPos)) >= QApplication::startDragDistance()) {
-				m_legPolygon.insert(m_draggingLegIndex, m_holdPos);
-				m_legCurves.insert(m_draggingLegIndex, NULL);
+				insertBendpointAux(m_holdPos, m_draggingLegIndex);
 				m_insertBendpointPossible = false;
 			}
 			else {
@@ -2361,7 +2360,7 @@ bool ConnectorItem::legMousePressEvent(QGraphicsSceneMouseEvent *event) {
 					m_legCurves.replace(m_draggingLegIndex, bezier);
 				}
 
-				UndoBezier = *bezier;
+				UndoBezier.copy(bezier);
 				if (bezier->isEmpty()) {
 					QPointF p0 = m_legPolygon.at(m_draggingLegIndex);
 					QPointF p1 = m_legPolygon.at(m_draggingLegIndex + 1);
@@ -2472,19 +2471,19 @@ void ConnectorItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 	CursorLocation cursorLocation = findLocation(event->pos(), bendpointIndex);
 	if (cursorLocation == InSegment) {
 		QMenu menu;
-		QAction * action = menu.addAction(tr("Add bendpoint"));
-		action->setData(1);
+		QAction * addAction = menu.addAction(tr("Add bendpoint"));
+		addAction->setData(1);
 		Bezier * bezier = m_legCurves.at(bendpointIndex - 1);
 		if (bezier != NULL && !bezier->isEmpty()) {
-			action = menu.addAction(tr("Straighten curve"));
-			action->setData(2);
+			QAction * straightenAction = menu.addAction(tr("Straighten curve"));
+			straightenAction->setData(2);
 		}
 		QAction *selectedAction = menu.exec(event->screenPos());
 		if (selectedAction) {
-			if (action->data().toInt() == 1) {
+			if (selectedAction->data().toInt() == 1) {
 				insertBendpoint(event->pos(), bendpointIndex);
 			}
-			else if (action->data().toInt() == 2) {
+			else if (selectedAction->data().toInt() == 2) {
 				InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 				if (infoGraphicsView != NULL) {
 					Bezier newBezier;
@@ -2508,37 +2507,104 @@ void ConnectorItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 
 	event->ignore();
 	return;
-
 }
 
 void ConnectorItem::insertBendpoint(QPointF p, int bendpointIndex) 
 {
+	prepareGeometryChange();
+
 	m_oldPolygon = m_legPolygon;
-	m_legPolygon.insert(bendpointIndex, p);
-	m_legCurves.insert(bendpointIndex, NULL);
+	insertBendpointAux(p, bendpointIndex);
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
-		Bezier bezier;
-		infoGraphicsView->prepLegBendpointChange(this, m_oldPolygon.count(), m_legPolygon.count(), bendpointIndex, p, &bezier, false);
+		infoGraphicsView->prepLegBendpointChange(this, m_oldPolygon.count(), m_legPolygon.count(), bendpointIndex, p, 
+							&UndoBezier, m_legCurves.at(bendpointIndex - 1), m_legCurves.at(bendpointIndex), false);
 	}
 	calcConnectorEnd();
 	update();
 }
 
+Bezier * ConnectorItem::insertBendpointAux(QPointF p, int bendpointIndex)
+{
+	UndoBezier.clear();
+	m_legPolygon.insert(bendpointIndex, p);
+	m_legCurves.insert(bendpointIndex, NULL);
+	Bezier * bezier = m_legCurves.at(bendpointIndex - 1);
+	if (bezier == NULL || bezier->isEmpty()) return NULL;
+
+	QPointF p0 = m_legPolygon.at(bendpointIndex - 1);
+	QPointF p1 = m_legPolygon.at(bendpointIndex + 1);
+	bezier->set_endpoints(p0, p1);
+	UndoBezier.copy(bezier);
+
+	double bestT = 0;
+	double lastDistance = std::numeric_limits<int>::max();
+	double blen = bezier->computeCubicCurveLength(1.0, 24);
+	double increment = 1.0 / blen;
+	double minD =  m_legStrokeWidth * m_legStrokeWidth;
+	for (double t = 0; t <= 1; t += increment) {
+		double x = bezier->xFromT(t);
+		double y = bezier->yFromT(t);
+		double d = GraphicsUtils::distanceSqd(p, QPointF(x, y));
+		if (d >= lastDistance) {
+			if (d > minD) continue;
+
+			break;
+		}
+
+		bestT = t;
+		lastDistance = d;
+	}
+
+	Bezier left, right;
+	bezier->split(bestT, left, right);
+	replaceBezier(bendpointIndex - 1, &left);
+	replaceBezier(bendpointIndex, &right);
+	return NULL;
+}
+
 void ConnectorItem::removeBendpoint(int bendpointIndex) 
 {
+	prepareGeometryChange();
+
+	Bezier b0, b1, b2;
+	b0.copy(m_legCurves.at(bendpointIndex - 1));
+	b1.copy(m_legCurves.at(bendpointIndex));
+
 	m_oldPolygon = m_legPolygon;
 	QPointF p = m_legPolygon.at(bendpointIndex);
 	m_legPolygon.remove(bendpointIndex);
+
+	if (b0.isEmpty() && b1.isEmpty()) {
+	}
+	else {
+		QPointF p0 = m_legPolygon.at(bendpointIndex - 1);
+		QPointF p1 = m_legPolygon.at(bendpointIndex);
+		if (b0.isEmpty()) {
+			b2.set_cp0(p0);
+			b2.set_cp1(b1.cp1());
+		}
+		else if (b1.isEmpty()) {
+			b2.set_cp1(p1);
+			b2.set_cp0(b0.cp0());
+		}
+		else {
+			b2.set_cp0(b0.cp0());
+			b2.set_cp1(b1.cp1());
+		}
+	}
+
+	replaceBezier(bendpointIndex - 1, &b2);
+	
 	Bezier * bezier = m_legCurves.at(bendpointIndex);
 	m_legCurves.remove(bendpointIndex);
+	if (bezier) delete bezier;
 
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
-		infoGraphicsView->prepLegBendpointChange(this, m_oldPolygon.count(), m_legPolygon.count(), bendpointIndex, p, bezier, false);
+		infoGraphicsView->prepLegBendpointChange(this, m_oldPolygon.count(), m_legPolygon.count(), bendpointIndex, p, &b0, &b1, &b2, false);
 	}
 
-	if (bezier != NULL) delete bezier;
 
 	calcConnectorEnd();
 	update();
@@ -2556,38 +2622,33 @@ void ConnectorItem::changeLegCurve(int index, const Bezier *newBezier)
 {
 	prepareGeometryChange();
 
-	Bezier * bezier = m_legCurves.at(index);
-	if (bezier == NULL) {
-		bezier = new Bezier();
-		m_legCurves.replace(index, bezier);
-	}
-
-	*bezier = *newBezier;
+	replaceBezier(index, newBezier);
 	calcConnectorEnd();
 	update();
 }
 
-void ConnectorItem::addLegBendpoint(int index, QPointF p, const class Bezier * bezier)
+void ConnectorItem::addLegBendpoint(int index, QPointF p, const Bezier * bezierLeft, const Bezier * bezierRight)
 {
+	prepareGeometryChange();
+
 	m_legPolygon.insert(index, p);
 	m_legCurves.insert(index, NULL);
-	if (bezier != NULL && !bezier->isEmpty()) {
-		Bezier * newBezier = new Bezier;
-		*newBezier = *bezier;
-		m_legCurves.replace(index, newBezier);
-	} 
-
+	replaceBezier(index - 1, bezierLeft);
+	replaceBezier(index, bezierRight);
 	calcConnectorEnd();
 	update();
 
 }
 
-void ConnectorItem::removeLegBendpoint(int index)
+void ConnectorItem::removeLegBendpoint(int index, const Bezier * newBezier)
 {
+	prepareGeometryChange();
+
 	m_legPolygon.remove(index);
 	Bezier * bezier = m_legCurves.at(index);
 	if (bezier) delete bezier;
 	m_legCurves.remove(index);
+	replaceBezier(index - 1, newBezier);
 	calcConnectorEnd();
 	update();
 }
@@ -2603,3 +2664,22 @@ const QVector<Bezier *> & ConnectorItem::beziers()
 {
 	return m_legCurves;
 }
+
+void ConnectorItem::replaceBezier(int index, const Bezier * newBezier)
+{
+	Bezier * bezier = m_legCurves.at(index);
+	if (bezier == NULL && newBezier == NULL) {
+	}
+	else if (bezier && newBezier) {
+		bezier->copy(newBezier);
+	}
+	else if (newBezier) {
+		bezier = new Bezier;
+		m_legCurves.replace(index , bezier);
+		bezier->copy(newBezier);
+	}
+	else if (bezier) {
+		bezier->clear();
+	}
+}
+

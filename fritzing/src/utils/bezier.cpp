@@ -127,7 +127,6 @@ double Cvalues[25][24] = {
 
 Bezier::Bezier(QPointF cp0, QPointF cp1)
 {
-	m_length = 0;
 	m_cp0 = cp0;
 	m_cp1 = cp1;
 	m_isEmpty = false;
@@ -135,7 +134,6 @@ Bezier::Bezier(QPointF cp0, QPointF cp1)
 
 Bezier::Bezier()
 {
-	m_length = 0;
 	m_isEmpty = true;
 }
 
@@ -329,6 +327,7 @@ void Bezier::split(double t, Bezier & left, Bezier & right)
 	right.m_cp0 = p9;
 	right.m_cp1 = p7;
 	right.m_endpoint1 = m_endpoint1;
+	left.m_isEmpty = right.m_isEmpty = false;
 } 
 
 void Bezier::initControlIndex(QPointF p)
@@ -362,3 +361,17 @@ double Bezier::cubicF(double t)
   return qSqrt(combined);
 }
 
+void Bezier::copy(const Bezier * other)
+{
+	if (other == NULL) {
+		m_isEmpty = true;
+		return;
+	}
+
+	m_cp0 = other->m_cp0;
+	m_cp1 = other->m_cp1;
+	m_endpoint0 = other->m_endpoint0;
+	m_endpoint1 = other->m_endpoint1;
+	m_isEmpty = other->m_isEmpty;
+	m_drag_cp0 = other->m_drag_cp0;
+}

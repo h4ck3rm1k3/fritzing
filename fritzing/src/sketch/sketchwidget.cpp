@@ -581,7 +581,7 @@ void SketchWidget::addWireExtras(long newID, QDomElement & view, QUndoCommand * 
 	QDomElement bElement = extras.firstChildElement("bezier");
 	Bezier bezier = Bezier::fromElement(bElement);
 	if (!bezier.isEmpty()) {
-		new ChangeWireCurveCommand(this, newID, bezier, bezier, parentCommand);
+		new ChangeWireCurveCommand(this, newID, &bezier, &bezier, parentCommand);
 	}
 }
 
@@ -3225,7 +3225,8 @@ void SketchWidget::prepLegCurveChange(ConnectorItem * from, int index, const cla
 	m_undoStack->push(parentCommand);
 }
 
-void SketchWidget::prepLegBendpointChange(ConnectorItem * from, int oldCount, int newCount, int index, QPointF p, const class Bezier * bezier, bool triggerFirstTime)
+void SketchWidget::prepLegBendpointChange(ConnectorItem * from, int oldCount, int newCount, int index, QPointF p, 
+					const class Bezier * bezier0, const class Bezier * bezier1, const class Bezier * bezier2, bool triggerFirstTime)
 {
 	this->m_moveEventCount = 0;  // clear this so an extra MoveItemCommand isn't posted
 
@@ -3242,7 +3243,7 @@ void SketchWidget::prepLegBendpointChange(ConnectorItem * from, int oldCount, in
 
 	QString fromConnectorID = from->connectorSharedID();
 
-	ChangeLegBendpointCommand * clbc = new ChangeLegBendpointCommand(this, fromID, fromConnectorID, oldCount, newCount, index, p, bezier, parentCommand);
+	ChangeLegBendpointCommand * clbc = new ChangeLegBendpointCommand(this, fromID, fromConnectorID, oldCount, newCount, index, p, bezier0, bezier1, bezier2, parentCommand);
 	if (!triggerFirstTime) {
 		clbc->setFirstTime();
 	}
@@ -6719,9 +6720,7 @@ void SketchWidget::flattenCurve(ItemBase * lastHoverEnterItem, ConnectorItem * l
 	}
 
 	if (wire != NULL) {
-		Bezier newB;
-		Bezier oldB = *wire->curve();
-		wireChangedCurveSlot(wire, oldB, newB, true);
+		wireChangedCurveSlot(wire, wire->curve(), NULL, true);
 	}
 
 }
@@ -7764,7 +7763,7 @@ void SketchWidget::prereleaseTempWireForDragging(Wire*)
 {
 }
 
-void SketchWidget::wireChangedCurveSlot(Wire* wire, const Bezier & oldB, const Bezier & newB, bool triggerFirstTime) {
+void SketchWidget::wireChangedCurveSlot(Wire* wire, const Bezier * oldB, const Bezier * newB, bool triggerFirstTime) {
 	this->clearHoldingSelectItem();
 	this->m_moveEventCount = 0;  // clear this so an extra MoveItemCommand isn't posted
 
@@ -7794,7 +7793,7 @@ void SketchWidget::changeLegCurve(long id, const QString & connectorID, int inde
 	connectorItem->changeLegCurve(index, bezier);
 }
 
-void SketchWidget::addLegBendpoint(long id, const QString & connectorID, int index, QPointF p, const class Bezier * bezier)
+void SketchWidget::addLegBendpoint(long id, const QString & connectorID, int index, QPointF p, const class Bezier * bezierLeft, const class Bezier * bezierRight)
 {
 	ItemBase * itemBase = findItem(id);
 	if (itemBase == NULL) return;
@@ -7802,10 +7801,10 @@ void SketchWidget::addLegBendpoint(long id, const QString & connectorID, int ind
 	ConnectorItem * connectorItem = findConnectorItem(itemBase, connectorID, ViewLayer::specFromID(itemBase->viewLayerID()));
 	if (connectorItem == NULL) return;
 
-	connectorItem->addLegBendpoint(index, p, bezier);
+	connectorItem->addLegBendpoint(index, p, bezierLeft, bezierRight);
 }
 
-void SketchWidget::removeLegBendpoint(long id, const QString & connectorID, int index)
+void SketchWidget::removeLegBendpoint(long id, const QString & connectorID, int index, const class Bezier * bezierCombined)
 {
 	ItemBase * itemBase = findItem(id);
 	if (itemBase == NULL) return;
@@ -7813,7 +7812,7 @@ void SketchWidget::removeLegBendpoint(long id, const QString & connectorID, int 
 	ConnectorItem * connectorItem = findConnectorItem(itemBase, connectorID, ViewLayer::specFromID(itemBase->viewLayerID()));
 	if (connectorItem == NULL) return;
 
-	connectorItem->removeLegBendpoint(index);
+	connectorItem->removeLegBendpoint(index, bezierCombined);
 }
 
 void SketchWidget::moveLegBendpoint(long id, const QString & connectorID, int index, QPointF p)
