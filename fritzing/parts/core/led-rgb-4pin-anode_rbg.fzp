@@ -42,28 +42,10 @@ Pin order: red - com. anode - blue - green</description>
                 <layer layerId="copper0"/>
                 <layer layerId="copper1"/>
                 <layer layerId="silkscreen"/>
-                <layer layerId="unknown"/>
-                <layer layerId="unknown"/>
-                <layer layerId="unknown"/>
             </layers>
         </pcbView>
     </views>
     <connectors>
-        <connector id="connector3" type="male" name="green cathode">
-            <description>cathode pin for green LED</description>
-            <views>
-                <breadboardView>
-                    <p layer="breadboard" svgId="connector3pin"  legId="connector3leg"/>
-                </breadboardView>
-                <schematicView>
-                    <p layer="schematic" svgId="connector2pin" terminalId="connector2terminal"/>
-                </schematicView>
-                <pcbView>
-                    <p layer="copper1" svgId="connector3pad"/>
-                    <p layer="copper0" svgId="connector3pad"/>
-                </pcbView>
-            </views>
-        </connector>
         <connector id="connector0" type="male" name="red cathode">
             <description>cathode pin for red LED</description>
             <views>
@@ -109,5 +91,20 @@ Pin order: red - com. anode - blue - green</description>
                 </pcbView>
             </views>
         </connector>
-    </connectors>
+         <connector id="connector3" type="male" name="green cathode">
+            <description>cathode pin for green LED</description>
+            <views>
+                <breadboardView>
+                    <p layer="breadboard" svgId="connector3pin"  legId="connector3leg"/>
+                </breadboardView>
+                <schematicView>
+                    <p layer="schematic" svgId="connector2pin" terminalId="connector2terminal"/>
+                </schematicView>
+                <pcbView>
+                    <p layer="copper1" svgId="connector3pad"/>
+                    <p layer="copper0" svgId="connector3pad"/>
+                </pcbView>
+            </views>
+        </connector>
+   </connectors>
 </module>

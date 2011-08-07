@@ -213,6 +213,7 @@
 	<file>resources/parts/svg/core/icon/via.svg</file>
 	<file>resources/parts/svg/core/icon/schematic_frame_icon.svg</file>
 	<file>resources/parts/svg/core/icon/groundplane.svg</file>
+	<file>resources/parts/svg/core/icon/note.svg</file>
 	
         <file>resources/parts/svg/core/breadboard/ruler.svg</file>
         <file>resources/parts/svg/core/breadboard/wire.svg</file>

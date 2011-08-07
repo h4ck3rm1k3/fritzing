@@ -53,16 +53,20 @@ public:
 	bool operator!=(const Bezier &) const;
 	void recalc(QPointF p);
 	void initToEnds(QPointF cp0, QPointF cp1); 
-	double xFromT(double t);
-	double xFromTPrime(double t);
-	double yFromT(double t);
-	void split(double t, Bezier & left, Bezier & right);
+	double xFromT(double t) const;
+	double xFromTPrime(double t) const;
+	double yFromT(double t) const;
+	void split(double t, Bezier & left, Bezier & right) const;
 	void initControlIndex(QPointF fromPoint);
-	double computeCubicCurveLength(double z, int n);
+	double computeCubicCurveLength(double z, int n) const;
 	void copy(const Bezier *);
+	double findSplit(QPointF p, double minDistance) const;
+	void translateToZero();
+	void translate(QPointF);
+	Bezier join(const Bezier * other) const;
 
 protected:
-	double cubicF(double t);
+	double cubicF(double t) const;
 
 
 public:

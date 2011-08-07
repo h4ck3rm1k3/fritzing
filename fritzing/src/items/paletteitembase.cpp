@@ -393,21 +393,14 @@ void PaletteItemBase::setUpConnectors(FSvgRenderer * renderer, bool ignoreTermin
 
 void PaletteItemBase::connectedMoved(ConnectorItem * from, ConnectorItem * to) {
 	if (from->connectorType() != Connector::Female) return;
-	if (m_viewIdentifier != ViewIdentifierClass::BreadboardView) return;
 
 	// female connectors really only operate in breadboard view
-
-
-	if (to->hasRubberBandLeg() || from->hasRubberBandLeg()) {
-		// rubberBand legs true up their own connectors, no need to position the entire part
-		// TODO: if a part has some rubberBand legs and some not, bailing out here might not work
-		return;
-	}
-
-	// female connectors are equivalent to sticky
+	if (m_viewIdentifier != ViewIdentifierClass::BreadboardView) return;
 
 	QPointF fromTerminalPoint = from->sceneAdjustedTerminalPoint(to);
 	QPointF toTerminalPoint = to->sceneAdjustedTerminalPoint(from);
+
+	if (fromTerminalPoint == toTerminalPoint) return;
 
 	this->setPos(this->pos() + fromTerminalPoint - toTerminalPoint);
 	updateConnections();

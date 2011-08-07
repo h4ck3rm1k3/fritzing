@@ -666,12 +666,13 @@ int FApplication::startup(bool firstRun)
 		settings.clear();
 	}
 
-	bool fabEnabled = settings.value(ORDERFABENABLED, QVariant(false)).toBool();
-	if (!fabEnabled) {
+	//bool fabEnabled = settings.value(ORDERFABENABLED, QVariant(false)).toBool();
+	//if (!fabEnabled) {
 		NetworkAccessManager = new QNetworkAccessManager(this);
 		connect(NetworkAccessManager, SIGNAL(finished(QNetworkReply *)), this, SLOT(gotOrderFab(QNetworkReply *)));
-		NetworkAccessManager->get(QNetworkRequest(QUrl("http://fab.fritzing.org/launched")));
-	}
+
+		NetworkAccessManager->get(QNetworkRequest(QUrl(QString("http://fab.fritzing.org/launched%1").arg(makeRequestParamsString()))));
+	//}
 
 	splash.showProgress(m_progressIndex, LoadProgressEnd);
 
@@ -865,27 +866,9 @@ void FApplication::checkForUpdates(bool atUserRequest)
 		}
 	}
 
-	if (settings.value("pid").isNull()) {
-		settings.setValue("pid", FolderUtils::getRandText());
-	}
-
-	QtSystemInfo systemInfo(this);
-	QString siVersion(QUrl::toPercentEncoding(Version::versionString()));
-	QString siSystemName(QUrl::toPercentEncoding(systemInfo.systemName()));
-	QString siSystemVersion(QUrl::toPercentEncoding(systemInfo.systemVersion()));
-	QString siKernelName(QUrl::toPercentEncoding(systemInfo.kernelName()));
-	QString siKernelVersion(QUrl::toPercentEncoding(systemInfo.kernelVersion()));
-	QString siArchitecture(QUrl::toPercentEncoding(systemInfo.architectureName()));
-    QString atom = QString("http://fritzing.org/download/feed/atom/%1/?pid=%2&version=%3&sysname=%4&kernname=%5&kernversion=%6&arch=%7&sysversion=%8")
+    QString atom = QString("http://fritzing.org/download/feed/atom/%1/%2")
 		.arg(PLATFORM_NAME)
-		.arg(settings.value("pid").toString())
-		.arg(siVersion)
-		.arg(siSystemName)
-		.arg(siKernelName)
-		.arg(siKernelVersion)
-		.arg(siArchitecture)
-		.arg(siSystemVersion)
-		;
+		.arg(makeRequestParamsString());
     DebugDialog::debug(atom);
     versionChecker->setUrl(atom);
 	m_updateDialog->setAtUserRequest(atUserRequest);
@@ -1274,4 +1257,28 @@ void FApplication::gotOrderFab(QNetworkReply * networkReply) {
 		QSettings settings;
 		settings.setValue(ORDERFABENABLED, QVariant(true));
 	}
+}
+
+QString FApplication::makeRequestParamsString() {
+	QSettings settings;
+	if (settings.value("pid").isNull()) {
+		settings.setValue("pid", FolderUtils::getRandText());
+	}
+
+	QtSystemInfo systemInfo(this);
+	QString siVersion(QUrl::toPercentEncoding(Version::versionString()));
+	QString siSystemName(QUrl::toPercentEncoding(systemInfo.systemName()));
+	QString siSystemVersion(QUrl::toPercentEncoding(systemInfo.systemVersion()));
+	QString siKernelName(QUrl::toPercentEncoding(systemInfo.kernelName()));
+	QString siKernelVersion(QUrl::toPercentEncoding(systemInfo.kernelVersion()));
+	QString siArchitecture(QUrl::toPercentEncoding(systemInfo.architectureName()));
+    QString string = QString("?pid=%1&version=%2&sysname=%3&kernname=%4&kernversion=%5arch=%6&sysversion=%7")
+		.arg(settings.value("pid").toString())
+		.arg(siVersion)
+		.arg(siSystemName)
+		.arg(siKernelName)
+		.arg(siKernelVersion)
+		.arg(siArchitecture)
+		.arg(siSystemVersion);
+	return string;
 }

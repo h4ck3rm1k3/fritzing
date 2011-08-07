@@ -236,7 +236,7 @@ parts editor support
 
 static Bezier UndoBezier;
 
-static const double StandardLegConnectorLength = 9;			// pixels
+static const double StandardLegConnectorLength = 5;			// pixels
 
 QList<ConnectorItem *> ConnectorItem::m_equalPotentialDisplayItems;
 
@@ -299,6 +299,9 @@ QColor addColor(QColor & color, int offset)
 ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 	: NonConnectorItem(attachedTo)
 {
+	// initialize m_connectorT, otherwise will trigger qWarning("QLine::unitVector: New line does not have unit length");
+	// TODO: figure out why paint is being called with m_connectorT not initialized
+	m_connectorT = 0;
 	m_draggingCurve = m_draggingLeg = m_rubberBandLeg = m_bigDot = m_hybrid = false;
 	m_marked = false;
 	m_checkedEffectively = false;
@@ -411,7 +414,7 @@ void ConnectorItem::hoverMoveEvent ( QGraphicsSceneHoverEvent * event ) {
 				cursor = (event->modifiers() & DragWireModifiers) ? *MakeWireCursor : Qt::CrossCursor;
 				break;
 			default:
-				cursor = Qt::DragMoveCursor;
+				cursor = Qt::ArrowCursor;
 				break;
 		}
 		setCursor(cursor);
@@ -835,10 +838,6 @@ void ConnectorItem::attachedMoved() {
 	foreach (ConnectorItem * toConnector, m_connectedTo) {
 		ItemBase * itemBase = toConnector->attachedTo();
 		if (itemBase == NULL) continue;
-		if (itemBase->parentItem()) {
-			// part of a group so don't move it separately
-			continue;
-		}
 
 		itemBase->connectedMoved(this, toConnector);
 	}
@@ -2537,27 +2536,9 @@ Bezier * ConnectorItem::insertBendpointAux(QPointF p, int bendpointIndex)
 	bezier->set_endpoints(p0, p1);
 	UndoBezier.copy(bezier);
 
-	double bestT = 0;
-	double lastDistance = std::numeric_limits<int>::max();
-	double blen = bezier->computeCubicCurveLength(1.0, 24);
-	double increment = 1.0 / blen;
-	double minD =  m_legStrokeWidth * m_legStrokeWidth;
-	for (double t = 0; t <= 1; t += increment) {
-		double x = bezier->xFromT(t);
-		double y = bezier->yFromT(t);
-		double d = GraphicsUtils::distanceSqd(p, QPointF(x, y));
-		if (d >= lastDistance) {
-			if (d > minD) continue;
-
-			break;
-		}
-
-		bestT = t;
-		lastDistance = d;
-	}
-
+	double t = bezier->findSplit(p, m_legStrokeWidth);
 	Bezier left, right;
-	bezier->split(bestT, left, right);
+	bezier->split(t, left, right);
 	replaceBezier(bendpointIndex - 1, &left);
 	replaceBezier(bendpointIndex, &right);
 	return NULL;
@@ -2567,33 +2548,21 @@ void ConnectorItem::removeBendpoint(int bendpointIndex)
 {
 	prepareGeometryChange();
 
-	Bezier b0, b1, b2;
+	Bezier b0, b1;
 	b0.copy(m_legCurves.at(bendpointIndex - 1));
+	QPointF p0 = m_legPolygon.at(bendpointIndex - 1);
+	QPointF p1 = m_legPolygon.at(bendpointIndex);
+	b0.set_endpoints(p0, p1);
 	b1.copy(m_legCurves.at(bendpointIndex));
+	p0 = m_legPolygon.at(bendpointIndex);
+	p1 = m_legPolygon.at(bendpointIndex + 1);
+	b0.set_endpoints(p0, p1);
 
 	m_oldPolygon = m_legPolygon;
 	QPointF p = m_legPolygon.at(bendpointIndex);
 	m_legPolygon.remove(bendpointIndex);
 
-	if (b0.isEmpty() && b1.isEmpty()) {
-	}
-	else {
-		QPointF p0 = m_legPolygon.at(bendpointIndex - 1);
-		QPointF p1 = m_legPolygon.at(bendpointIndex);
-		if (b0.isEmpty()) {
-			b2.set_cp0(p0);
-			b2.set_cp1(b1.cp1());
-		}
-		else if (b1.isEmpty()) {
-			b2.set_cp1(p1);
-			b2.set_cp0(b0.cp0());
-		}
-		else {
-			b2.set_cp0(b0.cp0());
-			b2.set_cp1(b1.cp1());
-		}
-	}
-
+	Bezier b2 = b0.join(&b1);
 	replaceBezier(bendpointIndex - 1, &b2);
 	
 	Bezier * bezier = m_legCurves.at(bendpointIndex);

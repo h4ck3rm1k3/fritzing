@@ -395,7 +395,6 @@ void Wire::mousePressEvent(QGraphicsSceneMouseEvent *event)
 	ItemBase::mousePressEvent(event);
 }
 
-
 void Wire::initDragCurve(QPointF scenePos) {
 	if (m_bezier == NULL) {
 		m_bezier = new Bezier();
@@ -413,6 +412,22 @@ void Wire::initDragCurve(QPointF scenePos) {
 	}
 
 	m_bezier->initControlIndex(mapFromScene(scenePos));
+}
+
+bool Wire::initNewBendpoint(QPointF scenePos, Bezier & left, Bezier & right) {
+	if (m_bezier == NULL || m_bezier->isEmpty()) {
+		UndoBezier.clear();
+		return false;
+	}
+
+	QPointF p0 = connector0()->sceneAdjustedTerminalPoint(NULL);
+	QPointF p1 = connector1()->sceneAdjustedTerminalPoint(NULL);
+	m_bezier->set_endpoints(mapFromScene(p0), mapFromScene(p1));
+	UndoBezier.copy(m_bezier);
+
+	double t = m_bezier->findSplit(mapFromScene(scenePos), m_pen.widthF());
+	m_bezier->split(t, left, right);
+	return true;
 }
 
 void Wire::initDragEnd(ConnectorItem * connectorItem, QPointF scenePos) {

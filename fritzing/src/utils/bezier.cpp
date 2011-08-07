@@ -28,6 +28,7 @@ $Date$
 #include "graphicsutils.h"
 #include "../debugdialog.h"
 #include <qmath.h>
+#include <limits>
 
 /////////////////////////////////////////////
 
@@ -283,27 +284,27 @@ void Bezier::initToEnds(QPointF cp0, QPointF cp1)
 	m_isEmpty = false;
 }
 
-double Bezier::xFromT(double t)
+double Bezier::xFromT(double t) const
 {
     // http://www.lemoda.net/maths/bezier-length/index.html
 
     return m_endpoint0.x() * B0(t) + m_cp0.x() * B1(t) + m_cp1.x() * B2(t) + m_endpoint1.x() * B3(t);
 }
 
-double Bezier::xFromTPrime(double t)
+double Bezier::xFromTPrime(double t) const
 {
 	return base3(t, m_endpoint0.x(), m_cp0.x(), m_cp1.x(), m_endpoint1.x());
 
 }
 
-double Bezier::yFromT(double t)
+double Bezier::yFromT(double t) const
 {
     // http://www.lemoda.net/maths/bezier-length/index.html
 
     return m_endpoint0.y() * B0(t) + m_cp0.y() * B1(t) + m_cp1.y() * B2(t) + m_endpoint1.y() * B3(t);
 }
 
-void Bezier::split(double t, Bezier & left, Bezier & right)
+void Bezier::split(double t, Bezier & left, Bezier & right) const
 {
 	// http://processingjs.nihongoresources.com/bezierinfo/sketchsource.php?sketch=CubicDeCasteljau
 
@@ -340,7 +341,7 @@ void Bezier::initControlIndex(QPointF p)
 /**
  * Gauss quadrature for cubic Bezier curves
  */
-double Bezier::computeCubicCurveLength(double z, int n)
+double Bezier::computeCubicCurveLength(double z, int n) const
 {
 	// http://processingjs.nihongoresources.com/bezierinfo/sketchsource.php?sketch=cubicGaussQuadrature
 
@@ -353,7 +354,7 @@ double Bezier::computeCubicCurveLength(double z, int n)
 	return z2 * sum;
 }
 
-double Bezier::cubicF(double t)
+double Bezier::cubicF(double t) const
 {
   double xbase = base3(t, m_endpoint0.x(), m_cp0.x(), m_cp1.x(), m_endpoint1.x());
   double ybase = base3(t, m_endpoint0.y(), m_cp0.y(), m_cp1.y(), m_endpoint1.y());
@@ -374,4 +375,68 @@ void Bezier::copy(const Bezier * other)
 	m_endpoint1 = other->m_endpoint1;
 	m_isEmpty = other->m_isEmpty;
 	m_drag_cp0 = other->m_drag_cp0;
+}
+
+double Bezier::findSplit(QPointF p, double minDistance) const
+{
+	double bestT = 0;
+	double lastDistance = std::numeric_limits<int>::max();
+	double blen = computeCubicCurveLength(1.0, 24);
+	double increment = 1.0 / blen;
+	double minDSqd = minDistance * minDistance;
+	for (double t = 0; t <= 1; t += increment) {
+		double x = xFromT(t);
+		double y = yFromT(t);
+		double d = GraphicsUtils::distanceSqd(p, QPointF(x, y));
+		if (d >= lastDistance) {
+			if (d > minDSqd) continue;
+
+			break;
+		}
+
+		bestT = t;
+		lastDistance = d;
+	}
+	
+	return bestT;
+}
+
+void Bezier::translateToZero() {
+	m_cp0 -= m_endpoint0;
+	m_cp1 -= m_endpoint0;
+	m_endpoint1 -= m_endpoint0;
+	m_endpoint0 -= m_endpoint0;
+}
+
+void Bezier::translate(QPointF p) {
+	m_cp0 += p;
+	m_cp1 += p;
+	m_endpoint1 += p;
+	m_endpoint0 += p;
+}
+
+Bezier Bezier::join(const Bezier * other) const
+{
+	Bezier bezier;
+	bool otherIsEmpty = (other == NULL || other->isEmpty());
+
+	if (isEmpty() && otherIsEmpty) {
+		return bezier;
+	}
+	else {
+		if (isEmpty()) {
+			bezier.set_cp0(m_endpoint0);
+			bezier.set_cp1(other->cp1());
+		}
+		else if (other->isEmpty()) {
+			bezier.set_cp1(other->m_endpoint1);
+			bezier.set_cp0(cp0());
+		}
+		else {
+			bezier.set_cp0(cp0());
+			bezier.set_cp1(other->cp1());
+		}
+	}
+
+	return bezier;
 }

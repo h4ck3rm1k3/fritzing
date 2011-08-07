@@ -187,7 +187,9 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 
 	QSettings settings;
 	m_locationLabelUnits = settings.value("LocationInches", "in").toString();
-	m_orderFabEnabled = settings.value(ORDERFABENABLED, QVariant(false)).toBool();
+
+	// leave the m_orderFabEnabled check in case we turn off the fab button in the future
+	m_orderFabEnabled = true; // settings.value(ORDERFABENABLED, QVariant(false)).toBool();
 
 	m_locationLabel = new ClickableLabel("", this);
 	m_locationLabel->setObjectName("LocationLabel");
@@ -796,7 +798,17 @@ QList<QWidget*> MainWindow::getButtonsForView(ViewIdentifierClass::ViewIdentifie
 		case ViewIdentifierClass::PCBView: parent = m_pcbWidget; break;
 		default: return retval;
 	}
-	retval << createShareButton(parent) << createNoteButton(parent) << createRotateButton(parent);
+	retval << createShareButton(parent);
+
+	switch(viewId) {
+		case ViewIdentifierClass::BreadboardView:
+		case ViewIdentifierClass::SchematicView:
+			retval << createNoteButton(parent);
+		default: 
+			break;
+	}
+	
+	retval << createRotateButton(parent);
 	switch (viewId) {
 		case ViewIdentifierClass::BreadboardView:
 			retval << createFlipButton(parent); 

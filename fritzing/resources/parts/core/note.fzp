@@ -17,7 +17,7 @@
  <views>
   <defaultUnits>cmil</defaultUnits>
   <iconView>
-   <layers >
+   <layers  image="icon/note.svg">
     <layer layerId="icon" />
    </layers>
   </iconView>

@@ -209,7 +209,12 @@ Note::Note( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdent
 
     setFlag(QGraphicsItem::ItemIsSelectable, true);
 
-	m_rect.setRect(0, 0, viewGeometry.rect().width(), viewGeometry.rect().height());
+	if (viewGeometry.rect().width() == 0 || viewGeometry.rect().height() == 0) {
+		m_rect.setRect(0, 0, Note::initialMinWidth, Note::initialMinHeight);
+	}
+	else {
+		m_rect.setRect(0, 0, viewGeometry.rect().width(), viewGeometry.rect().height());
+	}
 	m_pen.setWidth(borderWidth);
 	m_pen.setCosmetic(true);
 	m_pen.setBrush(QColor(0xff, 0xd5, 0x0e));
@@ -505,7 +510,6 @@ void Note::setText(const QString & text, bool check) {
 	}
 }
 
-
 QString Note::text() {
 	return m_graphicsTextItem->document()->toHtml();
 }
@@ -711,7 +715,6 @@ bool Note::hasPartNumberProperty()
 {
 	return false;
 }
-
 
 bool Note::rotationAllowed() {
 	return false;

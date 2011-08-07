@@ -95,6 +95,7 @@ public:
 
 	void initDragEnd(ConnectorItem * dragEnd, QPointF scenePos);
 	void initDragCurve(QPointF scenePos);
+	bool initNewBendpoint(QPointF scenePos, class Bezier & left, class Bezier & right);
 	void connectedMoved(ConnectorItem * from, ConnectorItem * to);
 	void setLineAnd(QLineF line, QPointF pos, bool useLine);
 	ConnectorItem * otherConnector(ConnectorItem *);

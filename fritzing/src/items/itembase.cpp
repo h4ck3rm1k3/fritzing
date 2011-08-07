@@ -614,8 +614,8 @@ void ItemBase::hoverMoveEvent ( QGraphicsSceneHoverEvent *  ) {
 void ItemBase::updateConnections() {
 }
 
-void ItemBase::updateConnections(ConnectorItem * item) {
-	item->attachedMoved();
+void ItemBase::updateConnections(ConnectorItem * connectorItem) {
+	connectorItem->attachedMoved();
 }
 
 const QString & ItemBase::title() const {

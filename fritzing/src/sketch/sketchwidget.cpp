@@ -1602,8 +1602,11 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 	if (m_droppingWire) {
 		viewLayerID = getWireViewLayerID(m_droppingItem->getViewGeometry(), m_droppingItem->viewLayerSpec());
 	}
-	else if(modelPart->tags().contains("ruler",Qt::CaseInsensitive)) {
+	else if(modelPart->moduleID().compare(ModuleIDNames::RulerModuleIDName)) {
 		viewLayerID = getRulerViewLayerID();
+	}
+	else if(modelPart->moduleID().compare(ModuleIDNames::NoteModuleIDName)) {
+		viewLayerID = getNoteViewLayerID();
 	}
 	else {
 		viewLayerID = getPartViewLayerID();
@@ -1776,6 +1779,7 @@ void SketchWidget::dropItemEvent(QDropEvent *event) {
 	switch (modelPart->itemType()) {
 		case ModelPart::Ruler:
 		case ModelPart::Logo:
+		case ModelPart::Note:
 			// rulers and logos are local to a particular view
 			crossViewType = BaseCommand::SingleView;
 			break;
@@ -2498,16 +2502,23 @@ void SketchWidget::prepDragBendpoint(Wire * wire, QPoint eventPos, bool dragCurv
 
 	QPointF oldPos = wire->pos();
 	QLineF oldLine = wire->line();
+	Bezier left, right;
+	bool curved = wire->initNewBendpoint(newPos, left, right);
 	//DebugDialog::debug(QString("oldpos"), oldPos);
 	//DebugDialog::debug(QString("oldline p1"), oldLine.p1());
 	//DebugDialog::debug(QString("oldline p2"), oldLine.p2());
 	QLineF newLine(oldLine.p1(), newPos - oldPos);
 	wire->setLine(newLine);
+	if (curved) wire->changeCurve(&left);
 	vg.setLoc(newPos);
 	QLineF newLine2(QPointF(0,0), oldLine.p2() + oldPos - newPos);
 	vg.setLine(newLine2);
 	ConnectorItem * oldConnector1 = wire->connector1();
 	m_connectorDragWire = this->createTempWireForDragging(wire, wire->modelPart(), oldConnector1, vg, wire->viewLayerSpec());
+	if (curved) {
+		right.translateToZero();
+		m_connectorDragWire->changeCurve(&right);
+	}
 	ConnectorItem * newConnector1 = m_connectorDragWire->connector1();
 	foreach (ConnectorItem * toConnectorItem, oldConnector1->connectedToItems()) {
 		oldConnector1->tempRemove(toConnectorItem, false);
@@ -2523,7 +2534,6 @@ void SketchWidget::prepDragBendpoint(Wire * wire, QPoint eventPos, bool dragCurv
 
 	m_connectorDragWire->initDragEnd(m_connectorDragWire->connector0(), newPos);
 	m_connectorDragWire->grabMouse();
-
 }
 
 bool SketchWidget::collectFemaleConnectees(ItemBase * itemBase, QSet<ItemBase *> & items) {
@@ -4981,17 +4991,34 @@ void SketchWidget::wireJoinSlot(Wire* wire, ConnectorItem * clickedConnectorItem
 	toWire->saveGeometry();
 	makeDeleteItemCommand(toWire, crossView, parentCommand);
 
+	Bezier b0, b1;
 	QLineF newLine;
 	QPointF newPos;
 	if (otherConnector == toWire->connector1()) {
 		newPos = wire->pos();
 		newLine = QLineF(QPointF(0,0), toWire->pos() - wire->pos() + toWire->line().p2());
+		b0.copy(wire->curve());
+		b1.copy(toWire->curve());
+		b0.set_endpoints(wire->line().p1(), wire->line().p2());
+		b1.set_endpoints(toWire->line().p1(), toWire->line().p2());
+		b1.translate(toWire->pos() - wire->pos());
+
 	}
 	else {
 		newPos = toWire->pos();
 		newLine = QLineF(QPointF(0,0), wire->pos() - toWire->pos() + wire->line().p2());
+		b0.copy(toWire->curve());
+		b1.copy(wire->curve());
+		b0.set_endpoints(toWire->line().p1(), toWire->line().p2());
+		b1.set_endpoints(wire->line().p1(), wire->line().p2());
+		b1.translate(wire->pos() - toWire->pos());
 	}
 	new ChangeWireCommand(this, wire->id(), wire->line(), newLine, wire->pos(), newPos, true, false, parentCommand);
+	Bezier joinBezier = b0.join(&b1);
+	if (!joinBezier.isEmpty()) {
+		new ChangeWireCurveCommand(this, wire->id(), wire->curve(), &joinBezier, parentCommand);
+	}
+
 
 	m_undoStack->push(parentCommand);
 }
@@ -5350,6 +5377,7 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 											toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
 											ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
 											true, parentCommand);
+
 			}
 
 			if (cleanup && master) {
@@ -5530,8 +5558,6 @@ void SketchWidget::checkFitAux(ItemBase * tempItemBase, ItemBase * itemBase, lon
 									toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
 									ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
 									true, parentCommand);
-
-
 
 		}
 		if (tempItemBase->hasRubberBandLeg()) {

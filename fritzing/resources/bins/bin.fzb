@@ -772,6 +772,14 @@
           </iconView>
         </views>
       </instance>
+      
+      <instance moduleIdRef="NoteModuleID" modelIndex="60" path=":/resources/parts/core/note.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
 
       <instance moduleIdRef="RulerModuleID" modelIndex="60" path=":/resources/parts/core/cmRuler.fzp">
             <views>

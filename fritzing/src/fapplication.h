@@ -98,6 +98,7 @@ protected:
 	void initFilesToLoad();
 	void initBackups();
 	void cleanupBackups();
+	QString makeRequestParamsString();
 
 protected:
 	bool m_spaceBarIsPressed;
