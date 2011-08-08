@@ -27,6 +27,7 @@ $Date$
 #include "bezierdisplay.h"
 #include "../viewlayer.h"
 #include "../debugdialog.h"
+#include "../processeventblocker.h"
 #include "graphicsutils.h"
 
 #include <QPen>
@@ -40,7 +41,7 @@ BezierDisplay::BezierDisplay()
 
 BezierDisplay::~BezierDisplay()
 {
-	DebugDialog::debug("removing bezier display");
+	//DebugDialog::debug("removing bezier display");
 	if (m_item0) {
 		m_item0->scene()->removeItem(m_item0);
 		delete m_item0;
@@ -54,7 +55,7 @@ BezierDisplay::~BezierDisplay()
 
 void BezierDisplay::initDisplay(QGraphicsItem * master, Bezier *bezier)
 {
-	DebugDialog::debug("adding bezier display");
+	//DebugDialog::debug("adding bezier display");
 		
 	static int activeColor =   0x00c080;
 	static int inactiveColor = 0xa00000;
@@ -84,7 +85,7 @@ void BezierDisplay::initDisplay(QGraphicsItem * master, Bezier *bezier)
 	master->scene()->addItem(m_item1);
 
 	updateDisplay(master, bezier);
-	QApplication::processEvents();
+	ProcessEventBlocker::processEvents();
 }
 
 void BezierDisplay::updateDisplay(QGraphicsItem * master, Bezier *bezier)
