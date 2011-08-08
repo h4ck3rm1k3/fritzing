@@ -227,9 +227,14 @@ public:
 	static bool isGrounded(ConnectorItem * c1, ConnectorItem * c2);
 	static void collectConnectorNames(QList<ConnectorItem *> & connectorItems, QStringList & connectorNames);
 	static class Wire * directlyWiredTo(ConnectorItem * source, ConnectorItem * target, ViewGeometry::WireFlags flags);
+	static void initCursors();
 
 public:
 	static const QList<ConnectorItem *> emptyConnectorItemList;
+	static QCursor * BendpointCursor;
+	static QCursor * NewBendpointCursor;
+	static QCursor * MakeWireCursor;
+	static QCursor * MakeCurveCursor;
 };
 
 #endif

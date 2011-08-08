@@ -281,10 +281,10 @@ bool wireLessThan(ConnectorItem * c1, ConnectorItem * c2)
 	return c1->zValue() > c2->zValue();
 }
 
-static QCursor * BendpointCursor = NULL;
-static QCursor * NewBendpointCursor = NULL;
-static QCursor * MakeWireCursor = NULL;
-static QCursor * MakeCurveCursor = NULL;
+QCursor * ConnectorItem::BendpointCursor = NULL;
+QCursor * ConnectorItem::NewBendpointCursor = NULL;
+QCursor * ConnectorItem::MakeWireCursor = NULL;
+QCursor * ConnectorItem::MakeCurveCursor = NULL;
 
 Qt::KeyboardModifiers DragWireModifiers = (Qt::AltModifier | Qt::MetaModifier);
 
@@ -2268,19 +2268,7 @@ const QString & ConnectorItem::legID(ViewIdentifierClass::ViewIdentifier viewID,
 void ConnectorItem::setRubberBandLeg(QColor color, double strokeWidth, QLineF parentLine) {
 	// assumes this is only called once, when the connector is first set up
 
-	if (BendpointCursor == NULL) {
-		QBitmap bitmap1(":resources/images/cursor/bendpoint.bmp");
-		BendpointCursor = new QCursor(bitmap1, bitmap1, 15, 15);
-
-		QBitmap bitmap2(":resources/images/cursor/new_bendpoint.bmp");
-		NewBendpointCursor = new QCursor(bitmap2, bitmap2, 15, 15);
-
-		QBitmap bitmap3(":resources/images/cursor/make_wire.bmp");
-		MakeWireCursor = new QCursor(bitmap3, bitmap3, 3, 29);
-
-		QBitmap bitmap4(":resources/images/cursor/curve.bmp");
-		MakeCurveCursor = new QCursor(bitmap4, bitmap4, 15, 15);
-	}
+	initCursors();
 
 	m_rubberBandLeg = true;
 	setFlag(QGraphicsItem::ItemIsMovable, true);
@@ -2694,4 +2682,21 @@ void ConnectorItem::updateLegCursor(QPointF p, Qt::KeyboardModifiers modifiers)
 			break;
 	}
 	setCursor(cursor);
+}
+
+void ConnectorItem::initCursors()
+{
+	if (BendpointCursor == NULL) {
+		QBitmap bitmap1(":resources/images/cursor/bendpoint.bmp");
+		BendpointCursor = new QCursor(bitmap1, bitmap1, 15, 15);
+
+		QBitmap bitmap2(":resources/images/cursor/new_bendpoint.bmp");
+		NewBendpointCursor = new QCursor(bitmap2, bitmap2, 15, 15);
+
+		QBitmap bitmap3(":resources/images/cursor/make_wire.bmp");
+		MakeWireCursor = new QCursor(bitmap3, bitmap3, 3, 29);
+
+		QBitmap bitmap4(":resources/images/cursor/curve.bmp");
+		MakeCurveCursor = new QCursor(bitmap4, bitmap4, 15, 15);
+	}
 }

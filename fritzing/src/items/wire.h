@@ -216,6 +216,10 @@ protected:
 	void setConnectorDimensionsAux(ConnectorItem *, double width, double height);
 	bool isBendpoint(ConnectorItem * connectorItem);
 	QPainterPath shapeAux(double width) const;
+	void hoverLeaveEvent( QGraphicsSceneHoverEvent * event );
+	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
+	bool eventFilter(QObject * object, QEvent * event);
+	void updateCursor(Qt::KeyboardModifiers);
 
 protected:
 	QLineF	m_line;

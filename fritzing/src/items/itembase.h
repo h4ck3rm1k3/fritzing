@@ -152,8 +152,8 @@ public:
 	virtual void resetID();
 	void updateConnectionsAux();
 	virtual ItemBase * lowerConnectorLayerVisible(ItemBase *);
-	virtual void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
-	virtual void hoverLeaveEvent( QGraphicsSceneHoverEvent * event );
+	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
+	void hoverLeaveEvent( QGraphicsSceneHoverEvent * event );
 	void hoverMoveEvent( QGraphicsSceneHoverEvent * event );
     void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 	virtual void figureHover();

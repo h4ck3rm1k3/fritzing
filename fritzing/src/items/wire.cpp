@@ -74,6 +74,7 @@ later:
 #include <QSet>
 #include <QComboBox>
 #include <QToolTip>
+#include <QApplication>
 
 #include "../debugdialog.h"
 #include "../sketch/infographicsview.h"
@@ -727,12 +728,27 @@ void Wire::setColorFromElement(QDomElement & element) {
 void Wire::hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event , ConnectorItem * item) {
 	m_connectorHover = item;
 	ItemBase::hoverEnterConnectorItem(event, item);
+	updateCursor(event->modifiers());
 }
 
 void Wire::hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item) {
+	item->setCursor(Qt::CrossCursor);
 	m_connectorHover = NULL;
 	ItemBase::hoverLeaveConnectorItem(event, item);
+	updateCursor(event->modifiers());
 }
+
+void Wire::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
+	ItemBase::hoverEnterEvent(event);
+	QApplication::instance()->installEventFilter(this);
+	updateCursor(event->modifiers());
+}
+
+void Wire::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
+	QApplication::instance()->removeEventFilter(this);
+	ItemBase::hoverLeaveEvent(event);
+}
+
 
 void Wire::connectionChange(ConnectorItem * onMe, ConnectorItem * onIt, bool connect) {
 	checkVisibility(onMe, onIt, connect);
@@ -1138,6 +1154,8 @@ QString Wire::colorString() {
 
 void Wire::initNames() {
 	if (colors.count() > 0) return;
+
+	ConnectorItem::initCursors();
 
 	widths << 16 << 24 << 32 << 48;
 	widthTrans.insert(widths[0], tr("thin (16 mil)"));
@@ -1685,4 +1703,43 @@ bool Wire::hasShadow() {
 	if (getRatsnest()) return false;
 	if (getTrace()) return false;
 	return m_pen.widthF() != m_shadowPen.widthF();
+}
+
+bool Wire::eventFilter(QObject * object, QEvent * event)
+{
+	Q_UNUSED(object);
+	if (!(m_dragEnd || m_dragCurve)) {
+		if (event->type() == QEvent::KeyPress || event->type() == QEvent::KeyRelease) {
+			InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);;
+			if (infoGraphicsView) {
+				QPoint p = infoGraphicsView->mapFromGlobal(QCursor::pos());
+				QPointF r = infoGraphicsView->mapToScene(p);
+				QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+				// DebugDialog::debug(QString("got key event %1").arg(keyEvent->modifiers()));
+				updateCursor(keyEvent->modifiers());
+			}
+		}
+	}
+
+	return false;
+}
+
+void Wire::updateCursor(Qt::KeyboardModifiers modifiers)
+{
+	if (m_connectorHover) {
+		if (isBendpoint(m_connectorHover)) {
+			m_connectorHover->setCursor(*ConnectorItem::BendpointCursor);
+		}
+		else {
+			m_connectorHover->setCursor(Qt::CrossCursor);
+		}
+	}
+	else {
+		if (modifiers && Qt::ControlModifier) {
+			setCursor(*ConnectorItem::MakeCurveCursor);
+		}
+		else {
+			setCursor(*ConnectorItem::NewBendpointCursor);
+		}
+	}
 }
