@@ -43,6 +43,7 @@ int BaseCommand::nextIndex = 0;
 BaseCommand::BaseCommand(BaseCommand::CrossViewType crossViewType, SketchWidget* sketchWidget, QUndoCommand *parent)
 	: QUndoCommand(parent)
 {
+	m_undoOnly = m_redoOnly = false;
 	m_crossViewType = crossViewType;
 	m_sketchWidget = sketchWidget;
 	m_parentCommand = parent;
@@ -70,6 +71,15 @@ SketchWidget* BaseCommand::sketchWidget() const {
 
 QString BaseCommand::getDebugString() const {
 	return QString("%1 %2").arg(getParamString()).arg(text());
+}
+
+void BaseCommand::setUndoOnly() {
+	m_undoOnly = true;
+}
+
+void BaseCommand::setRedoOnly()
+{
+	m_redoOnly = true;
 }
 
 QString BaseCommand::getParamString() const {
@@ -460,7 +470,7 @@ ChangeWireCurveCommand::ChangeWireCurveCommand(SketchWidget* sketchWidget, long 
 		m_oldBezier = new Bezier;
 		m_oldBezier->copy(oldBezier);
 	}
-	if (m_newBezier) {
+	if (newBezier) {
 		m_newBezier = new Bezier;
 		m_newBezier->copy(newBezier);
 	}
@@ -468,16 +478,20 @@ ChangeWireCurveCommand::ChangeWireCurveCommand(SketchWidget* sketchWidget, long 
 
 void ChangeWireCurveCommand::undo()
 {
-    m_sketchWidget->changeWireCurve(m_fromID, m_oldBezier);
+	if (!m_redoOnly) {
+		m_sketchWidget->changeWireCurve(m_fromID, m_oldBezier);
+	}
 }
 
 void ChangeWireCurveCommand::redo()
 {
-	if (m_firstTime) {
-		m_firstTime = false;
-	}
-	else {
-		m_sketchWidget->changeWireCurve(m_fromID, m_newBezier);
+	if (!m_undoOnly) {
+		if (m_firstTime) {
+			m_firstTime = false;
+		}
+		else {
+			m_sketchWidget->changeWireCurve(m_fromID, m_newBezier);
+		}
 	}
 }
 
@@ -514,7 +528,7 @@ ChangeLegCommand::ChangeLegCommand(SketchWidget* sketchWidget, long fromID, cons
     : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
 	m_why = why;
-	m_simple = m_undoOnly = m_redoOnly = false;
+	m_simple = false;
     m_fromID = fromID;
 	m_oldLeg = oldLeg;
     m_newLeg = newLeg;
@@ -533,16 +547,6 @@ void ChangeLegCommand::undo()
 void ChangeLegCommand::setSimple()
 {
 	m_simple = true;
-}
-
-void ChangeLegCommand::setUndoOnly()
-{
-	m_undoOnly = true;
-}
-
-void ChangeLegCommand::setRedoOnly()
-{
-	m_redoOnly = true;
 }
 
 void ChangeLegCommand::redo()
@@ -584,7 +588,6 @@ MoveLegBendpointCommand::MoveLegBendpointCommand(SketchWidget* sketchWidget, lon
 												int index, QPointF oldPos, QPointF newPos, QUndoCommand *parent)
     : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
-	m_undoOnly = m_redoOnly = false;
     m_fromID = fromID;
 	m_oldPos = oldPos;
     m_newPos = newPos;
@@ -597,16 +600,6 @@ void MoveLegBendpointCommand::undo()
 	if (!m_redoOnly) {
 		m_sketchWidget->moveLegBendpoint(m_fromID, m_fromConnectorID, m_index, m_oldPos);
 	}
-}
-
-void MoveLegBendpointCommand::setUndoOnly()
-{
-	m_undoOnly = true;
-}
-
-void MoveLegBendpointCommand::setRedoOnly()
-{
-	m_redoOnly = true;
 }
 
 void MoveLegBendpointCommand::redo()
@@ -637,7 +630,7 @@ ChangeLegCurveCommand::ChangeLegCurveCommand(SketchWidget* sketchWidget, long fr
 									 const Bezier * oldBezier, const Bezier * newBezier, QUndoCommand *parent)
     : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
-	m_undoOnly = m_firstTime = false;
+	m_firstTime = false;
     m_fromID = fromID;
 	m_oldBezier = m_newBezier = NULL;
 	if (oldBezier) {
@@ -670,10 +663,6 @@ void ChangeLegCurveCommand::redo()
 
 void ChangeLegCurveCommand::setFirstTime() {
 	m_firstTime = true;
-}
-
-void ChangeLegCurveCommand::setUndoOnly() {
-	m_undoOnly = true;
 }
 
 QString ChangeLegCurveCommand::getParamString() const {

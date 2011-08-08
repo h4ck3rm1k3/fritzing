@@ -165,6 +165,7 @@ public:
 	void changeCurve(const class Bezier *);
 	bool isCurved();
 	const class Bezier * curve();
+	const class Bezier * undoCurve();
 	QPolygonF sceneCurve(QPointF offset);
 	bool hasShadow();
 

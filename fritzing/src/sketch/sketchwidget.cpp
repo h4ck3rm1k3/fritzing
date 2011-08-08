@@ -3455,6 +3455,8 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Conne
 	}
 
 	if (m_bendpointWire) {
+		ChangeWireCurveCommand * cwcc = new ChangeWireCurveCommand(this, m_bendpointWire->id(), m_bendpointWire->undoCurve(), m_bendpointWire->curve(), parentCommand);
+		cwcc->setUndoOnly();
 		new ChangeWireCommand(this, m_bendpointWire->id(), m_bendpointVG.line(), m_bendpointWire->line(), m_bendpointVG.loc(), m_bendpointWire->pos(), true, false, parentCommand);		
 		foreach (ConnectorItem * toConnectorItem, wire->connector1()->connectedToItems()) {
 			toConnectorItem->tempRemove(wire->connector1(), false);
@@ -3471,6 +3473,7 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Conne
 										true, parentCommand);
 		}
 
+
 		m_connectorDragConnector->tempRemove(wire->connector0(), false);
 		wire->connector0()->tempRemove(m_connectorDragConnector, false);
 		new ChangeConnectionCommand(this, BaseCommand::SingleView,
@@ -3478,6 +3481,10 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Conne
 										wire->id(), wire->connector0()->connectorSharedID(),
 										ViewLayer::specFromID(wire->viewLayerID()),
 										true, parentCommand);
+
+		new ChangeWireCurveCommand(this, wire->id(), NULL, wire->curve(), parentCommand);
+		cwcc = new ChangeWireCurveCommand(this, m_bendpointWire->id(), m_bendpointWire->undoCurve(), m_bendpointWire->curve(), parentCommand);
+		cwcc->setRedoOnly();
 
 		SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
 		selectItemCommand->addRedo(m_bendpointWire->id());
@@ -4971,6 +4978,12 @@ void SketchWidget::wireJoinSlot(Wire* wire, ConnectorItem * clickedConnectorItem
 
 	BaseCommand::CrossViewType crossView = BaseCommand::CrossView; // wireSplitCrossView();
 
+	ChangeWireCurveCommand * cwcc = new ChangeWireCurveCommand(this, wire->id(), wire->curve(), NULL, parentCommand);
+	cwcc->setUndoOnly();
+	cwcc = new ChangeWireCurveCommand(this, toWire->id(), toWire->curve(), NULL, parentCommand);
+	cwcc->setUndoOnly();
+
+
 	// disconnect the wires
 	new ChangeConnectionCommand(this, crossView, wire->id(), clickedConnectorItem->connectorSharedID(),
 								toWire->id(), toConnectorItem->connectorSharedID(), 
@@ -5017,7 +5030,8 @@ void SketchWidget::wireJoinSlot(Wire* wire, ConnectorItem * clickedConnectorItem
 	new ChangeWireCommand(this, wire->id(), wire->line(), newLine, wire->pos(), newPos, true, false, parentCommand);
 	Bezier joinBezier = b0.join(&b1);
 	if (!joinBezier.isEmpty()) {
-		new ChangeWireCurveCommand(this, wire->id(), wire->curve(), &joinBezier, parentCommand);
+		ChangeWireCurveCommand * cwcc = new ChangeWireCurveCommand(this, wire->id(), wire->curve(), &joinBezier, parentCommand);
+		cwcc->setRedoOnly();
 	}
 
 

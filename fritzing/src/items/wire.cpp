@@ -1687,6 +1687,10 @@ const Bezier * Wire::curve() {
 	return m_bezier;
 }
 
+const Bezier * Wire::undoCurve() {
+	return &UndoBezier;
+}
+
 QPolygonF Wire::sceneCurve(QPointF offset) {
 	QPolygonF poly;
 	if (m_bezier == NULL) return poly;

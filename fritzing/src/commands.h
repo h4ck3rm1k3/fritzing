@@ -64,6 +64,8 @@ public:
 	void subUndo(int index);
 	void subRedo(int index);
 	int index() const;
+	void setUndoOnly();
+	void setRedoOnly();
 
 protected:
 	virtual QString getParamString() const;
@@ -76,6 +78,8 @@ protected:
 	QList<BaseCommand *> m_commands;
 	QUndoCommand * m_parentCommand;
 	int m_index;
+	bool m_undoOnly;
+	bool m_redoOnly;
 };
 
 /////////////////////////////////////////////
@@ -321,8 +325,6 @@ public:
     void undo();
     void redo();
 
-	void setUndoOnly();
-	void setRedoOnly();
 	void setSimple();
 
 protected:
@@ -333,8 +335,6 @@ protected:
     long m_fromID;
     QPolygonF m_newLeg;
     QPolygonF m_oldLeg;
-	bool m_undoOnly;
-	bool m_redoOnly;
 	bool m_relative;
 	bool m_active;
 	bool m_simple;
@@ -351,9 +351,6 @@ public:
     void undo();
     void redo();
 
-	void setUndoOnly();
-	void setRedoOnly();
-
 protected:
 	QString getParamString() const;
 
@@ -362,8 +359,6 @@ protected:
     long m_fromID;
     QPointF m_newPos;
     QPointF m_oldPos;
-	bool m_undoOnly;
-	bool m_redoOnly;
 };
 
 /////////////////////////////////////////////
@@ -377,7 +372,6 @@ public:
     void undo();
     void redo();
 	void setFirstTime();
-	void setUndoOnly();
 
 protected:
 	QString getParamString() const;
@@ -387,7 +381,6 @@ protected:
     class Bezier * m_newBezier;
     class Bezier * m_oldBezier;
     bool m_firstTime;
-	bool m_undoOnly;
 	QString m_fromConnectorID;
 	int m_index;
 };
