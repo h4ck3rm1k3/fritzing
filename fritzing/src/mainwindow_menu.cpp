@@ -1510,7 +1510,7 @@ void MainWindow::updateItemMenu() {
 		else if (selCount > 1) break;
 	}
 
-	PaletteItem *selected = dynamic_cast<PaletteItem *>(itemBase);
+	PaletteItem *selected = qobject_cast<PaletteItem *>(itemBase);
 	bool enabled = (selCount == 1) && (selected != NULL);
 	m_addToBinMenu->setEnabled(enabled);
 	m_addToBinMenu->clear();

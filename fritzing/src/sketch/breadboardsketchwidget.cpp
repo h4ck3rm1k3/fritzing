@@ -293,7 +293,7 @@ void BreadboardSketchWidget::schematicDisconnectWireSlot(ConnectorPairHash & for
 
 							QList<Wire *> chained;
 							QList<ConnectorItem *> ends;
-							Wire * tempWire = dynamic_cast<Wire *>(cto->attachedTo());
+							Wire * tempWire = qobject_cast<Wire *>(cto->attachedTo());
 							tempWire->collectChained(chained, ends);
 							if (ends.contains(fromConnectorItem) || ends.contains(toConnectorItem)) {
 								// is this good enough or do we need more confirmation that it's the right wire?
@@ -316,7 +316,7 @@ void BreadboardSketchWidget::schematicDisconnectWireSlot(ConnectorPairHash & for
 	/*
 	foreach (PaletteItemBase * detachee, detachItems.keys()) {
 		ItemBase * detachFrom = detachItems.value(detachee);
-		QPointF newPos = calcNewLoc(detachee, dynamic_cast<PaletteItemBase *>(detachFrom));
+		QPointF newPos = calcNewLoc(detachee, qobject_cast<PaletteItemBase *>(detachFrom));
 
 		// delete connections
 		// add wires and connections for undisconnected connectors
@@ -355,7 +355,7 @@ void BreadboardSketchWidget::translateToLocalItems(ConnectorPairHash & foreignMo
 		ItemBase * fromItemBase = findItem(fromItemID);
 		if (fromItemBase == NULL) continue;
 
-		PaletteItemBase * paletteItemBase = dynamic_cast<PaletteItemBase *>(fromItemBase);
+		PaletteItemBase * paletteItemBase = qobject_cast<PaletteItemBase *>(fromItemBase);
 		if (paletteItemBase == NULL) {
 			// shouldn't be here: want parts not wires
 			continue;

@@ -158,10 +158,10 @@ bool BinManager::beforeClosing() {
 	bool retval = true;
 
 	for(int i=0; i < m_stackWidget->count(); i++) {
-		StackTabWidget *tw = dynamic_cast<StackTabWidget*>(m_stackWidget->widget(i));
+		StackTabWidget *tw = qobject_cast<StackTabWidget*>(m_stackWidget->widget(i));
 		if(tw) {
 			for(int j=0; j < tw->count(); j++) {
-				PartsBinPaletteWidget *bin = dynamic_cast<PartsBinPaletteWidget*>(tw->widget(j));
+				PartsBinPaletteWidget *bin = qobject_cast<PartsBinPaletteWidget*>(tw->widget(j));
 				if(bin) {
 					setAsCurrentTab(bin);
 					retval = retval && bin->beforeClosing();
@@ -391,7 +391,7 @@ PartsBinPaletteWidget* BinManager::newBin() {
 }
 
 void BinManager::currentChanged(StackTabWidget *tw, int index) {
-	PartsBinPaletteWidget *bin = dynamic_cast<PartsBinPaletteWidget*>(tw->widget(index));
+	PartsBinPaletteWidget *bin = qobject_cast<PartsBinPaletteWidget*>(tw->widget(index));
 	if(bin) setAsCurrentBin(bin);
 }
 
@@ -442,7 +442,7 @@ void BinManager::closeBinIn(StackTabWidget* tb, int index) {
 }
 
 PartsBinPaletteWidget* BinManager::getBin(StackTabWidget* tb, int index) {
-	return dynamic_cast<PartsBinPaletteWidget*>(tb->widget(index));
+	return qobject_cast<PartsBinPaletteWidget*>(tb->widget(index));
 }
 
 PartsBinPaletteWidget* BinManager::currentBin(StackTabWidget* tb) {
@@ -459,11 +459,11 @@ void BinManager::saveStateAndGeometry() {
 	settings.remove("bins"); // clean up previous state
 	settings.beginGroup("bins");
 	for(int i=m_stackWidget->count()-1; i >= 0; i--) {
-		StackTabWidget *tw = dynamic_cast<StackTabWidget*>(m_stackWidget->widget(i));
+		StackTabWidget *tw = qobject_cast<StackTabWidget*>(m_stackWidget->widget(i));
 		if(tw) {
 			bool groupBegan = false;
 			for(int j=tw->count()-1; j >= 0; j--) {
-				PartsBinPaletteWidget *bin = dynamic_cast<PartsBinPaletteWidget*>(tw->widget(j));
+				PartsBinPaletteWidget *bin = qobject_cast<PartsBinPaletteWidget*>(tw->widget(j));
 				if(bin) {
 					if(!groupBegan) {
 						settings.beginGroup(QString("%1").arg(i));

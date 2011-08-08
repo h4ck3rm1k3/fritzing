@@ -484,7 +484,7 @@ void ResizableBoard::resizeMMAux(double mmW, double mmH) {
 			}
 			bool result = m_silkscreenRenderer->fastLoad(s.toUtf8());
 			if (result) {
-				dynamic_cast<PaletteItemBase *>(itemBase)->setSharedRendererEx(m_silkscreenRenderer);
+				qobject_cast<PaletteItemBase *>(itemBase)->setSharedRendererEx(m_silkscreenRenderer);
 				itemBase->modelPart()->setProp("width", mmW);
 				itemBase->modelPart()->setProp("height", mmH);
 			}
@@ -750,7 +750,7 @@ QStringList ResizableBoard::collectValues(const QString & family, const QString 
 }
 
 void ResizableBoard::widthEntry() {
-	QLineEdit * edit = dynamic_cast<QLineEdit *>(sender());
+	QLineEdit * edit = qobject_cast<QLineEdit *>(sender());
 	if (edit == NULL) return;
 
 	double newVal = edit->text().toDouble();
@@ -765,7 +765,7 @@ void ResizableBoard::widthEntry() {
 }
 
 void ResizableBoard::heightEntry() {
-	QLineEdit * edit = dynamic_cast<QLineEdit *>(sender());
+	QLineEdit * edit = qobject_cast<QLineEdit *>(sender());
 	if (edit == NULL) return;
 
 	double newVal = edit->text().toDouble();

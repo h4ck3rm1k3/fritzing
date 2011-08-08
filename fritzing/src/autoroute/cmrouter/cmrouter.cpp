@@ -2486,7 +2486,7 @@ void CMRouter::initUndo(QUndoCommand * parentCommand)
 			foreach (ConnectorItem * ci, jumperItem->connector0()->connectedToItems()) both.append(ci);
 			foreach (ConnectorItem * ci, jumperItem->connector1()->connectedToItems()) both.append(ci);
 			foreach (ConnectorItem * connectorItem, both) {
-				TraceWire * w = dynamic_cast<TraceWire *>(connectorItem->attachedTo());
+				TraceWire * w = qobject_cast<TraceWire *>(connectorItem->attachedTo());
 				if (w == NULL) continue;
 
 				QList<Wire *> wires;
@@ -2513,7 +2513,7 @@ void CMRouter::initUndo(QUndoCommand * parentCommand)
 			foreach (ConnectorItem * ci, via->connectorItem()->connectedToItems()) both.append(ci);
 			foreach (ConnectorItem * ci, via->connectorItem()->getCrossLayerConnectorItem()->connectedToItems()) both.append(ci);
 			foreach (ConnectorItem * connectorItem, both) {
-				TraceWire * w = dynamic_cast<TraceWire *>(connectorItem->attachedTo());
+				TraceWire * w = qobject_cast<TraceWire *>(connectorItem->attachedTo());
 				if (w == NULL) continue;
 
 				QList<Wire *> wires;
@@ -4234,7 +4234,7 @@ Via * CMRouter::makeVia(PathUnit * pathUnit) {
 										m_specHash.value(pathUnit->plane), BaseCommand::CrossView, viewGeometry, newID, -1, NULL, NULL);
 
 	//DebugDialog::debug(QString("back from adding via %1").arg((long) itemBase, 0, 16));
-	Via * via = dynamic_cast<Via *>(itemBase);
+	Via * via = qobject_cast<Via *>(itemBase);
 	via->setAutoroutable(true);
 	double ringThickness, holeSize;
 	m_sketchWidget->getViaSize(ringThickness, holeSize);

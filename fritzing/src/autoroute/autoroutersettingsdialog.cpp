@@ -241,7 +241,7 @@ void AutorouterSettingsDialog::changeUnits(const QString & units)
 void AutorouterSettingsDialog::changeDiameter() 
 {
 	if (Hole::changeDiameter(m_holeSettings, sender())) {
-		QLineEdit * edit = dynamic_cast<QLineEdit *>(sender());
+		QLineEdit * edit = qobject_cast<QLineEdit *>(sender());
 		changeHoleSize(edit->text() + m_holeSettings.unitsComboBox->currentText() + "," + m_holeSettings.ringThickness);
 	}
 }
@@ -249,7 +249,7 @@ void AutorouterSettingsDialog::changeDiameter()
 void AutorouterSettingsDialog::changeThickness() 
 {
 	if (Hole::changeThickness(m_holeSettings, sender())) {
-		QLineEdit * edit = dynamic_cast<QLineEdit *>(sender());
+		QLineEdit * edit = qobject_cast<QLineEdit *>(sender());
 		changeHoleSize(m_holeSettings.holeDiameter + "," + edit->text() + m_holeSettings.unitsComboBox->currentText());
 	}	
 }

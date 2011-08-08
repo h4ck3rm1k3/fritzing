@@ -1002,11 +1002,11 @@ void ProgramWindow::sendProgram() {
 }
 
 ProgramTab * ProgramWindow::currentWidget() {
-	return dynamic_cast<ProgramTab *>(m_tabWidget->currentWidget());
+	return qobject_cast<ProgramTab *>(m_tabWidget->currentWidget());
 }
 
 ProgramTab * ProgramWindow::indexWidget(int index) {
-	return dynamic_cast<ProgramTab *>(m_tabWidget->widget(index));
+	return qobject_cast<ProgramTab *>(m_tabWidget->widget(index));
 }
 
 bool ProgramWindow::alreadyHasProgram(const QString & filename) {

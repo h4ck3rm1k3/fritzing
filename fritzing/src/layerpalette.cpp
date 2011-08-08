@@ -128,7 +128,7 @@ void LayerPalette::updateLayerPalette(LayerHash & viewLayers, LayerList & keys)
 }
 
 void LayerPalette::setLayerVisibility(bool) {
-	ViewLayerCheckBox * cb = dynamic_cast<ViewLayerCheckBox *>(sender());
+	ViewLayerCheckBox * cb = qobject_cast<ViewLayerCheckBox *>(sender());
 	if (cb == NULL) return;
 
 	cb->viewLayer()->action()->trigger();

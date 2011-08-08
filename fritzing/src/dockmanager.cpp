@@ -234,7 +234,7 @@ void DockManager::keepMargins() {
 
 void DockManager::removeMargin(FDockWidget* dock) {
 	if(dock) {
-		TripleNavigator *tn = dynamic_cast<TripleNavigator*>(dock->widget());
+		TripleNavigator *tn = qobject_cast<TripleNavigator*>(dock->widget());
 		if(tn) {
 			tn->showBottomMargin(false);
 		} else {
@@ -249,10 +249,10 @@ void DockManager::addTopMargin(FDockWidget* dock) {
 
 void DockManager::addBottomMargin(FDockWidget* dock) {
 	if(dock) {
-		TripleNavigator *tn = dynamic_cast<TripleNavigator*>(dock->widget());
+		TripleNavigator *tn = qobject_cast<TripleNavigator*>(dock->widget());
 		if(tn) {
 			tn->showBottomMargin(true);
-		} else if(dynamic_cast<BinManager*>(dock->widget())) {
+		} else if(qobject_cast<BinManager*>(dock->widget())) {
 			// already has enought space
 		} else {
 			dockMarginAux(dock, "bottomMostDock", dock->widget()->styleSheet());

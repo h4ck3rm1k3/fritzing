@@ -118,7 +118,7 @@ ProgramTab::ProgramTab(QString & filename, QWidget *parent) : QFrame(parent)
 {
 	m_tabWidget = NULL;
 	while (parent != NULL) {
-		QTabWidget * tabWidget = dynamic_cast<QTabWidget *>(parent);
+		QTabWidget * tabWidget = qobject_cast<QTabWidget *>(parent);
 		if (tabWidget) {
 			m_tabWidget = tabWidget;
 			break;

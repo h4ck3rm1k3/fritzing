@@ -870,7 +870,7 @@ QPointF ConnectorItem::adjustedTerminalPoint() {
 QPointF ConnectorItem::sceneAdjustedTerminalPoint(ConnectorItem * connectee) {
 
 	if ((connectee != NULL) && !m_circular && !m_shape.isEmpty() && (connectee->attachedToItemType() == ModelPart::Wire)) {
-		Wire * wire = dynamic_cast<Wire *>(connectee->attachedTo());
+		Wire * wire = qobject_cast<Wire *>(connectee->attachedTo());
 		if ((wire != NULL) && !wire->getRatsnest()) {
 			QPointF anchor = wire->otherConnector(connectee)->sceneAdjustedTerminalPoint(NULL);
 			double newX = 0, newY = 0, newDistance = MAX_DOUBLE;
@@ -1171,7 +1171,7 @@ Wire * ConnectorItem::directlyWiredToAux(ConnectorItem * source, ConnectorItem *
 
 			if (toItem->itemType() != ModelPart::Wire) continue;
 
-			Wire * wire = dynamic_cast<Wire *>(toItem);
+			Wire * wire = qobject_cast<Wire *>(toItem);
 			if (!wire->hasAnyFlag(flags)) continue;
 
 			ConnectorItem * otherEnd = wire->otherConnector(toConnectorItem);
@@ -1278,7 +1278,7 @@ void ConnectorItem::collectEqualPotential(QList<ConnectorItem *> & connectorItem
 		ConnectorItem * connectorItem = tempItems[i];
 		//connectorItem->debugInfo("testing eqp");
 
-		Wire * fromWire = (connectorItem->attachedToItemType() == ModelPart::Wire) ? dynamic_cast<Wire *>(connectorItem->attachedTo()) : NULL;
+		Wire * fromWire = (connectorItem->attachedToItemType() == ModelPart::Wire) ? qobject_cast<Wire *>(connectorItem->attachedTo()) : NULL;
 		if (fromWire != NULL) {
 			if (fromWire->hasAnyFlag(skipFlags)) {
 				// don't add this kind of wire

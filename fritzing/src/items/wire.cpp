@@ -515,7 +515,7 @@ void Wire::mouseMoveEventAux(QPointF eventPos, Qt::KeyboardModifiers modifiers) 
 		if (bendpoint) {
 			bendpoint = false;
 			foreach (ConnectorItem * ci, whichConnectorItem->connectedToItems()) {
-				Wire * w = dynamic_cast<Wire *>(ci->attachedTo());
+				Wire * w = qobject_cast<Wire *>(ci->attachedTo());
 				ConnectorItem * oci = w->otherConnector(ci);
 				QPointF otherInitialPos = mapFromScene(oci->sceneAdjustedTerminalPoint(NULL));
 				QPointF p1(initialPos.x(), otherInitialPos.y());
@@ -567,7 +567,7 @@ void Wire::mouseMoveEventAux(QPointF eventPos, Qt::KeyboardModifiers modifiers) 
 
 	bool chained = false;
 	foreach (ConnectorItem * toConnectorItem, whichConnectorItem->connectedToItems()) {
-		Wire * chainedWire = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
+		Wire * chainedWire = qobject_cast<Wire *>(toConnectorItem->attachedTo());
 		if (chainedWire == NULL) continue;
 
 		chainedWire->simpleConnectedMoved(whichConnectorItem, toConnectorItem);
@@ -995,7 +995,7 @@ void Wire::collectChained(ConnectorItem * connectorItem, QList<Wire *> & chained
 	if (connectorItem == NULL) return;
 
 	foreach (ConnectorItem * connectedToItem, connectorItem->connectedToItems()) {
-		Wire * wire = dynamic_cast<Wire *>(connectedToItem->attachedTo());
+		Wire * wire = qobject_cast<Wire *>(connectedToItem->attachedTo());
 		if (wire == NULL) {
 			if (!ends.contains(connectedToItem)) {
 				ends.append(connectedToItem);
@@ -1020,7 +1020,7 @@ void Wire::collectWires(QList<Wire *> & wires) {
 void Wire::collectWiresAux(QList<Wire *> & wires, ConnectorItem * start) {
 	foreach (ConnectorItem * toConnectorItem, start->connectedToItems()) {
 		if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
-			dynamic_cast<Wire *>(toConnectorItem->attachedTo())->collectWires(wires);
+			qobject_cast<Wire *>(toConnectorItem->attachedTo())->collectWires(wires);
 		}
 	}
 
@@ -1301,7 +1301,7 @@ void Wire::collectDirectWires(ConnectorItem * connectorItem, QList<Wire *> & wir
 	ConnectorItem * toConnectorItem = connectorItem->connectedToItems()[0];
 	if (toConnectorItem->attachedToItemType() != ModelPart::Wire) return;
 
-	Wire * nextWire = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
+	Wire * nextWire = qobject_cast<Wire *>(toConnectorItem->attachedTo());
 	if (wires.contains(nextWire)) return;
 
 	wires.append(nextWire);
@@ -1358,7 +1358,7 @@ void Wire::getConnectedColor(ConnectorItem * connectorItem, QBrush * &brush, QPe
 					int c = 0;
 					foreach (ConnectorItem * totoConnectorItem, toConnectorItem->connectedToItems()) {
 						if (totoConnectorItem->attachedToItemType() == ModelPart::Wire) {
-							Wire * w = dynamic_cast<Wire *>(totoConnectorItem->attachedTo());
+							Wire * w = qobject_cast<Wire *>(totoConnectorItem->attachedTo());
 							if (w && w->getTrace()) {
 								c++;
 							}
@@ -1418,7 +1418,7 @@ void Wire::setPenWidth(double w, InfoGraphicsView * infoGraphicsView, double hov
 bool Wire::connectionIsAllowed(ConnectorItem * to) {
 	if (!ItemBase::connectionIsAllowed(to)) return false;
 
-	Wire * w = dynamic_cast<Wire *>(to->attachedTo());
+	Wire * w = qobject_cast<Wire *>(to->attachedTo());
 	if (w == NULL) return true;
 
 	if (w->getRatsnest()) return false;
@@ -1490,7 +1490,7 @@ bool Wire::collectExtraInfo(QWidget * parent, const QString & family, const QStr
 void Wire::colorEntry(const QString & text) {
 	Q_UNUSED(text);
 
-	QComboBox * comboBox = dynamic_cast<QComboBox *>(sender());
+	QComboBox * comboBox = qobject_cast<QComboBox *>(sender());
 	if (comboBox == NULL) return;
 
 	QString color = comboBox->itemData(comboBox->currentIndex()).toString();

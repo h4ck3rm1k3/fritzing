@@ -266,12 +266,12 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 		// use a function of the model index to ensure the same parts have the same ID across views
 		long newID = ItemBase::getNextID(mp->modelIndex());
 		if (parentCommand == NULL) {
-			ItemBase * item = addItemAux(mp, viewLayerSpec, viewGeometry, newID, NULL, true, m_viewIdentifier, false);
-			if (item != NULL) {
-				zmap.insert(viewGeometry.z() - qFloor(viewGeometry.z()), item);   
+			ItemBase * itemBase = addItemAux(mp, viewLayerSpec, viewGeometry, newID, NULL, true, m_viewIdentifier, false);
+			if (itemBase != NULL) {
+				zmap.insert(viewGeometry.z() - qFloor(viewGeometry.z()), itemBase);   
 				bool gotOne = false;
 				if (!gotOne) {
-					PaletteItem * paletteItem = dynamic_cast<PaletteItem *>(item);
+					PaletteItem * paletteItem = qobject_cast<PaletteItem *>(itemBase);
 					if (paletteItem != NULL) {
 						// wires don't have transforms
 						paletteItem->setTransforms();
@@ -279,7 +279,7 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 					}
 				}
 				if (!gotOne) {
-					Wire * wire = dynamic_cast<Wire *>(item);
+					Wire * wire = qobject_cast<Wire *>(itemBase);
 					if (wire != NULL) {
 						QDomElement extras = view.firstChildElement("wireExtras");
 						wire->setExtras(extras, this);
@@ -287,7 +287,7 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 					}
 				}
 				if (!gotOne) {
-					Note * note = dynamic_cast<Note *>(item);
+					Note * note = qobject_cast<Note *>(itemBase);
 					if (note != NULL) {
 						note->setText(mp->instanceText(), true);
 						gotOne = true;
@@ -295,8 +295,8 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 				}
 
 				// use the modelIndex from mp, not from the newly created item, because we're mapping from the modelIndex in the xml file
-				newItems.insert(mp->modelIndex(), item);
-				item->restorePartLabel(labelGeometry, getLabelViewLayerID(item->viewLayerSpec()));
+				newItems.insert(mp->modelIndex(), itemBase);
+				itemBase->restorePartLabel(labelGeometry, getLabelViewLayerID(itemBase->viewLayerSpec()));
 			}
 		}
 		else {
@@ -661,7 +661,7 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, ViewLayer::ViewLayerS
 	}
 
 	ItemBase * newItem = PartFactory::createPart(modelPart, viewLayerSpec, viewIdentifier, viewGeometry, id, m_itemMenu, m_wireMenu, true);
-	Wire * wire = dynamic_cast<Wire *>(newItem);
+	Wire * wire = qobject_cast<Wire *>(newItem);
 	if (wire) {
 
 		bool ratsnest = viewGeometry.getRatsnest();
@@ -2097,7 +2097,7 @@ void SketchWidget::prepMove(ItemBase * originatingItem) {
 		ItemBase * itemBase = items[i];
 		if (itemBase->itemType() == ModelPart::Wire) {
 			if (itemBase->isVisible()) {
-				wires.insert(dynamic_cast<Wire *>(itemBase));
+				wires.insert(qobject_cast<Wire *>(itemBase));
 			}
 			continue;
 		}
@@ -2110,7 +2110,7 @@ void SketchWidget::prepMove(ItemBase * originatingItem) {
 			foreach(ItemBase * sitemBase, chief->stickyList()) {
 				if (sitemBase->isVisible()) {
 					if (sitemBase->itemType() == ModelPart::Wire) {
-						wires.insert(dynamic_cast<Wire *>(sitemBase));
+						wires.insert(qobject_cast<Wire *>(sitemBase));
 					}
 					else {
 						m_savedItems.insert(sitemBase->layerKinChief()->id(), sitemBase);
@@ -2556,7 +2556,7 @@ bool SketchWidget::draggingWireEnd() {
 		if (connectorItem == NULL) return false;
 		if (connectorItem->attachedToItemType() != ModelPart::Wire) return false;
 
-		wire = dynamic_cast<Wire *>(connectorItem->attachedTo());
+		wire = qobject_cast<Wire *>(connectorItem->attachedTo());
 	}
 
 	return wire->draggingEnd();
@@ -2662,7 +2662,7 @@ QString SketchWidget::makeMoveSVG(double printerScale, double dpi, QPointF & off
 	QString outputSVG = TextUtils::makeSVGHeader(printerScale, dpi, width, height);
 
 	foreach (ItemBase * itemBase, m_savedItems.values()) {
-		Wire * wire = dynamic_cast<Wire *>(itemBase);
+		Wire * wire = qobject_cast<Wire *>(itemBase);
 		if (wire != NULL) {
 			outputSVG.append(makeWireSVG(wire, offset, dpi, printerScale, true));
 		}
@@ -3305,7 +3305,7 @@ void SketchWidget::wireChangedSlot(Wire* wire, const QLineF & oldLine, const QLi
 
 	bool chained = false;
 	foreach (ConnectorItem * toConnectorItem, from->connectedToItems()) {
-		Wire * toWire = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
+		Wire * toWire = qobject_cast<Wire *>(toConnectorItem->attachedTo());
 		if (toWire) {
 			chained = true;
 			break;
@@ -3321,7 +3321,7 @@ void SketchWidget::wireChangedSlot(Wire* wire, const QLineF & oldLine, const QLi
 	new CheckStickyCommand(this, BaseCommand::SingleView, fromID, false, CheckStickyCommand::RedoOnly, parentCommand);
 
 	foreach (ConnectorItem * toConnectorItem, from->connectedToItems()) {
-		Wire * toWire = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
+		Wire * toWire = qobject_cast<Wire *>(toConnectorItem->attachedTo());
 		if (toWire == NULL) continue;
 
 		rememberSticky(toWire, parentCommand);
@@ -4207,7 +4207,7 @@ ConnectorItem * SketchWidget::findConnectorItem(ItemBase * itemBase, const QStri
 	DebugDialog::debug("used to seek layer kin");
 	/*
 	if (seekLayerKin) {
-		PaletteItem * pitem = dynamic_cast<PaletteItem *>(itemBase);
+		PaletteItem * pitem = qobject_cast<PaletteItem *>(itemBase);
 		if (pitem == NULL) return NULL;
 
 		foreach (ItemBase * lkpi, pitem->layerKin()) {
@@ -4260,7 +4260,7 @@ void SketchWidget::wireConnectedSlot(long fromID, QString fromConnectorID, long 
 	ItemBase * fromItem = findItem(fromID);
 	if (fromItem == NULL) return;
 
-	Wire* wire = dynamic_cast<Wire *>(fromItem);
+	Wire* wire = qobject_cast<Wire *>(fromItem);
 	if (wire == NULL) return;
 
 	ConnectorItem * fromConnectorItem = findConnectorItem(fromItem, fromConnectorID, ViewLayer::specFromID(wire->viewLayerID()));
@@ -4320,7 +4320,7 @@ void SketchWidget::wireDisconnectedSlot(long fromID, QString fromConnectorID) {
 	ItemBase * fromItem = findItem(fromID);
 	if (fromItem == NULL) return;
 
-	Wire* wire = dynamic_cast<Wire *>(fromItem);
+	Wire* wire = qobject_cast<Wire *>(fromItem);
 	if (wire == NULL) return;
 
 	ConnectorItem * fromConnectorItem = findConnectorItem(fromItem, fromConnectorID, ViewLayer::specFromID(wire->viewLayerID()));
@@ -4528,7 +4528,7 @@ void SketchWidget::makeDeleteItemCommandPrepSlot(ItemBase * itemBase, bool forei
 		slc->add(itemBase->id(), true, true);
 	}
 
-	Note * note = dynamic_cast<Note *>(itemBase);
+	Note * note = qobject_cast<Note *>(itemBase);
 	if (note != NULL) {
 		new ChangeNoteTextCommand(this, note->id(), note->text(), note->text(), QSizeF(), QSizeF(), parentCommand);
 	}
@@ -4593,7 +4593,7 @@ void SketchWidget::prepDeleteProps(ItemBase * itemBase, long id, const QString &
 	switch (mp->itemType()) {
 		case ModelPart::Wire:
 			{
-				Wire * wire = dynamic_cast<Wire *>(itemBase);
+				Wire * wire = qobject_cast<Wire *>(itemBase);
 				new WireWidthChangeCommand(this, id, wire->width(), wire->width(), parentCommand);
 				new WireColorChangeCommand(this, id, wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), parentCommand);
 			}
@@ -4601,7 +4601,7 @@ void SketchWidget::prepDeleteProps(ItemBase * itemBase, long id, const QString &
 		
 		case ModelPart::ResizableBoard:
 			{
-				ResizableBoard * brd = dynamic_cast<ResizableBoard *>(itemBase);
+				ResizableBoard * brd = qobject_cast<ResizableBoard *>(itemBase);
 				if (brd) {
 					brd->saveParams();
 					QPointF p;
@@ -4615,7 +4615,7 @@ void SketchWidget::prepDeleteProps(ItemBase * itemBase, long id, const QString &
 
 		case ModelPart::Logo:
 			{
-				LogoItem * logo = dynamic_cast<LogoItem *>(itemBase);
+				LogoItem * logo = qobject_cast<LogoItem *>(itemBase);
 				logo->saveParams();
 				QPointF p;
 				QSizeF sz;
@@ -4635,7 +4635,7 @@ void SketchWidget::prepDeleteProps(ItemBase * itemBase, long id, const QString &
 
 		case ModelPart::Jumper:
 			{
-				JumperItem * jumper = dynamic_cast<JumperItem *>(itemBase);
+				JumperItem * jumper = qobject_cast<JumperItem *>(itemBase);
 				jumper->saveParams();
 				QPointF p;
 				QPointF c0, c1;
@@ -4657,14 +4657,14 @@ void SketchWidget::prepDeleteProps(ItemBase * itemBase, long id, const QString &
 			break;
 	}
 
-	Resistor * resistor =  dynamic_cast<Resistor *>(itemBase);
+	Resistor * resistor =  qobject_cast<Resistor *>(itemBase);
 	if (resistor != NULL) {
 		new SetResistanceCommand(this, id, resistor->resistance(), resistor->resistance(), resistor->pinSpacing(), resistor->pinSpacing(), parentCommand);
 		prepDeleteOtherProps(itemBase, id, newModuleID, parentCommand);
 		return;
 	}
 
-	MysteryPart * mysteryPart = dynamic_cast<MysteryPart *>(itemBase);
+	MysteryPart * mysteryPart = qobject_cast<MysteryPart *>(itemBase);
 	if (mysteryPart != NULL) {
 		new SetPropCommand(this, id, "chip label", mysteryPart->chipLabel(), mysteryPart->chipLabel(), true, parentCommand);
 		new SetPropCommand(this, id, "spacing", mysteryPart->spacing(), mysteryPart->spacing(), true, parentCommand);
@@ -4672,7 +4672,7 @@ void SketchWidget::prepDeleteProps(ItemBase * itemBase, long id, const QString &
 		return;
 	}
 
-	PinHeader * pinHeader = dynamic_cast<PinHeader *>(itemBase);
+	PinHeader * pinHeader = qobject_cast<PinHeader *>(itemBase);
 	if (pinHeader != NULL) {
 		new SetPropCommand(this, id, "form", pinHeader->form(), pinHeader->form(), true, parentCommand);
 		prepDeleteOtherProps(itemBase, id, newModuleID, parentCommand);
@@ -4680,7 +4680,7 @@ void SketchWidget::prepDeleteProps(ItemBase * itemBase, long id, const QString &
 	}
 
 
-	Hole * hole = dynamic_cast<Hole *>(itemBase);
+	Hole * hole = qobject_cast<Hole *>(itemBase);
 	if (hole != NULL) {
 		new SetPropCommand(this, id, "hole size", hole->holeSize(), hole->holeSize(), true, parentCommand);
 		prepDeleteOtherProps(itemBase, id, newModuleID, parentCommand);
@@ -4959,7 +4959,7 @@ void SketchWidget::wireJoinSlot(Wire* wire, ConnectorItem * clickedConnectorItem
 	ConnectorItem * toConnectorItem = clickedConnectorItem->connectedToItems()[0];
 	if (toConnectorItem == NULL) return;
 
-	Wire * toWire = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
+	Wire * toWire = qobject_cast<Wire *>(toConnectorItem->attachedTo());
 	if (toWire == NULL) return;
 
 	if (wire->id() > toWire->id()) {
@@ -5086,7 +5086,7 @@ void SketchWidget::hoverLeaveItem(QGraphicsSceneHoverEvent * event, ItemBase * i
 		InfoGraphicsView::hoverLeaveItem(event, item);
 	}
 
-	if (canChainWire(dynamic_cast<Wire *>(item))) {
+	if (canChainWire(qobject_cast<Wire *>(item))) {
 		statusMessage(QString());
 	}
 }
@@ -5691,7 +5691,7 @@ void SketchWidget::changeWireWidthMils(const QString newWidthStr)
 
 void SketchWidget::changeWireColor(long wireId, const QString& color, double opacity) {
 	ItemBase *item = findItem(wireId);
-	Wire* wire = dynamic_cast<Wire*>(item);
+	Wire* wire = qobject_cast<Wire*>(item);
 	if (wire) {
 		wire->setColorString(color, opacity);
 		updateInfoView();
@@ -5700,7 +5700,7 @@ void SketchWidget::changeWireColor(long wireId, const QString& color, double opa
 
 void SketchWidget::changeWireWidth(long wireId, double width) {
 	ItemBase *item = findItem(wireId);
-	Wire* wire = dynamic_cast<Wire*>(item);
+	Wire* wire = qobject_cast<Wire*>(item);
 	if (wire) {
 		wire->setWireWidth(width, this, getWireStrokeWidth(wire, width));
 		updateInfoView();
@@ -5841,7 +5841,7 @@ void SketchWidget::restoreLayerVisibility()
 void SketchWidget::changeWireFlags(long wireId, ViewGeometry::WireFlags wireFlags)
 {
 	ItemBase *item = findItem(wireId);
-	if(Wire* wire = dynamic_cast<Wire*>(item)) {
+	if(Wire* wire = qobject_cast<Wire*>(item)) {
 		wire->setWireFlags(wireFlags);
 	}
 }
@@ -6156,7 +6156,7 @@ void SketchWidget::setNoteText(long itemID, const QString & newText) {
 	ItemBase * itemBase = findItem(itemID);
 	if (itemBase == NULL) return;
 
-	Note * note = dynamic_cast<Note *>(itemBase);
+	Note * note = qobject_cast<Note *>(itemBase);
 	if (note == NULL) return;
 
 	note->setText(newText, false);
@@ -6308,7 +6308,7 @@ void SketchWidget::noteSizeChanged(ItemBase * itemBase, const QSizeF & oldSize, 
 
 void SketchWidget::resizeNote(long itemID, const QSizeF & size)
 {
-	Note * note = dynamic_cast<Note *>(findItem(itemID));
+	Note * note = qobject_cast<Note *>(findItem(itemID));
 	if (note == NULL) return;
 
 	note->setSize(size);
@@ -6476,7 +6476,7 @@ QString SketchWidget::renderToSVG(double printerScale, const LayerList & partLay
 		}
 		else {
 			foreach (ViewLayer::ViewLayerID viewLayerID, wireLayers) {
-				Wire * wire = dynamic_cast<Wire *>(itemBase);
+				Wire * wire = qobject_cast<Wire *>(itemBase);
 				if (wire == NULL) continue;
 				if (wire->viewLayerID() != viewLayerID) continue;
 
@@ -6605,7 +6605,7 @@ void SketchWidget::setLastPaletteItemSelected(PaletteItem * paletteItem)
 
 void SketchWidget::setLastPaletteItemSelectedIf(ItemBase * itemBase)
 {
-	PaletteItem * paletteItem = dynamic_cast<PaletteItem *>(itemBase);
+	PaletteItem * paletteItem = qobject_cast<PaletteItem *>(itemBase);
 	if (paletteItem == NULL) return;
 
 	setLastPaletteItemSelected(paletteItem);
@@ -6615,7 +6615,7 @@ void SketchWidget::setSpacing(const QString & spacing) {
 	PaletteItem * item = getSelectedPart();
 	if (item == NULL) return;
 
-	MysteryPart * mysteryPart = dynamic_cast<MysteryPart *>(item);
+	MysteryPart * mysteryPart = qobject_cast<MysteryPart *>(item);
 	if (mysteryPart == NULL) return;
 
 	SetPropCommand * cmd = new SetPropCommand(this, item->id(), "spacing", mysteryPart->spacing(), spacing, true, NULL);
@@ -6627,7 +6627,7 @@ void SketchWidget::setForm(const QString & form) {
 	PaletteItem * item = getSelectedPart();
 	if (item == NULL) return;
 
-	PinHeader * pinHeader = dynamic_cast<PinHeader *>(item);
+	PinHeader * pinHeader = qobject_cast<PinHeader *>(item);
 	if (pinHeader == NULL) return;
 
 	SetPropCommand * cmd = new SetPropCommand(this, item->id(), "form", pinHeader->form(), form, true, NULL);
@@ -6644,7 +6644,7 @@ void SketchWidget::setResistance(QString resistance, QString pinSpacing)
 
 	if (!modelPart->moduleID().endsWith(ModuleIDNames::ResistorModuleIDName)) return;
 
-	Resistor * resistor = dynamic_cast<Resistor *>(item);
+	Resistor * resistor = qobject_cast<Resistor *>(item);
 	if (resistor == NULL) return;
 
 	if (resistance.isEmpty()) {
@@ -6664,7 +6664,7 @@ void SketchWidget::setResistance(long itemID, QString resistance, QString pinSpa
 	ItemBase * item = findItem(itemID);
 	if (item == NULL) return;
 
-	Resistor * ritem = dynamic_cast<Resistor *>(item);
+	Resistor * ritem = qobject_cast<Resistor *>(item);
 	if (ritem == NULL) return;
 
 	ritem->setResistance(resistance, pinSpacing, false);
@@ -6703,15 +6703,15 @@ void SketchWidget::resizeBoard(long itemID, double mmW, double mmH) {
 
 	switch (item->itemType()) {
 		case ModelPart::ResizableBoard:
-			dynamic_cast<ResizableBoard *>(item)->resizeMM(mmW, mmH, m_viewLayers);
+			qobject_cast<ResizableBoard *>(item)->resizeMM(mmW, mmH, m_viewLayers);
 			return;
 
 		case ModelPart::Logo:
-			dynamic_cast<LogoItem *>(item)->resizeMM(mmW, mmH, m_viewLayers);
+			qobject_cast<LogoItem *>(item)->resizeMM(mmW, mmH, m_viewLayers);
 			return;
 
 		case ModelPart::Ruler:
-			dynamic_cast<Ruler *>(item)->resizeMM(mmW, mmH, m_viewLayers);
+			qobject_cast<Ruler *>(item)->resizeMM(mmW, mmH, m_viewLayers);
 			return;
 	}
 
@@ -6746,13 +6746,13 @@ void SketchWidget::resizeBoard(double mmW, double mmH, bool doEmit)
 
 void SketchWidget::addBendpoint(ItemBase * lastHoverEnterItem, ConnectorItem * lastHoverEnterConnectorItem, QPointF lastLocation) {
 	if (lastHoverEnterConnectorItem) {
-		Wire * wire = dynamic_cast<Wire *>(lastHoverEnterConnectorItem->attachedTo());
+		Wire * wire = qobject_cast<Wire *>(lastHoverEnterConnectorItem->attachedTo());
 		if (wire != NULL) {
 			wireJoinSlot(wire, lastHoverEnterConnectorItem);
 		}
 	}
 	else if (lastHoverEnterItem) {
-		Wire * wire = dynamic_cast<Wire *>(lastHoverEnterItem);
+		Wire * wire = qobject_cast<Wire *>(lastHoverEnterItem);
 		if (wire != NULL) {
 			wireSplitSlot(wire, lastLocation, wire->pos(), wire->line());
 		}
@@ -6763,11 +6763,11 @@ void SketchWidget::flattenCurve(ItemBase * lastHoverEnterItem, ConnectorItem * l
 	Q_UNUSED(lastLocation);
 	Wire * wire = NULL;
 	if (lastHoverEnterConnectorItem) {
-		wire = dynamic_cast<Wire *>(lastHoverEnterConnectorItem->attachedTo());
+		wire = qobject_cast<Wire *>(lastHoverEnterConnectorItem->attachedTo());
 	}
 
 	if (wire == NULL && lastHoverEnterItem) {
-		wire = dynamic_cast<Wire *>(lastHoverEnterItem);
+		wire = qobject_cast<Wire *>(lastHoverEnterItem);
 	}
 
 	if (wire != NULL) {
@@ -7083,7 +7083,7 @@ void SketchWidget::resizeJumperItem(long itemID, QPointF pos, QPointF c0, QPoint
 
 	if (item->itemType() != ModelPart::Jumper) return;
 
-	dynamic_cast<JumperItem *>(item)->resize(pos, c0, c1);
+	qobject_cast<JumperItem *>(item)->resize(pos, c0, c1);
 }
 
 
@@ -7807,7 +7807,7 @@ Wire * SketchWidget::createTempWireForDragging(Wire * fromWire, ModelPart * wire
 	if (spec == ViewLayer::UnknownSpec) {
 		spec = wireViewLayerSpec(connectorItem);
 	}
-	return dynamic_cast<Wire *>(addItemAuxTemp(wireModel, spec, viewGeometry, ItemBase::getNextID(), NULL, true, m_viewIdentifier, true));
+	return qobject_cast<Wire *>(addItemAuxTemp(wireModel, spec, viewGeometry, ItemBase::getNextID(), NULL, true, m_viewIdentifier, true));
 }
 
 void SketchWidget::prereleaseTempWireForDragging(Wire*)

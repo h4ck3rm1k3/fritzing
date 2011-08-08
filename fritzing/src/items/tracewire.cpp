@@ -109,7 +109,7 @@ void TraceWire::widthEntry(const QString & text) {
 
 int TraceWire::widthEntry(const QString & text, QObject * sender) {
 
-	QComboBox * comboBox = dynamic_cast<QComboBox *>(sender);
+	QComboBox * comboBox = qobject_cast<QComboBox *>(sender);
 	if (comboBox == NULL) return 0;
 
 	int w = comboBox->itemData(comboBox->currentIndex()).toInt();
@@ -165,7 +165,7 @@ TraceWire::WireDirection TraceWire::wireDirection() {
 
 TraceWire * TraceWire::getTrace(ConnectorItem * connectorItem)
 {
-	return dynamic_cast<TraceWire *>(connectorItem->attachedTo());
+	return qobject_cast<TraceWire *>(connectorItem->attachedTo());
 }
 
 void TraceWire::setSchematic(bool schematic) {

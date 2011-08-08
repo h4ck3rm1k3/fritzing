@@ -273,7 +273,7 @@ bool Ruler::collectExtraInfo(QWidget * parent, const QString & family, const QSt
 }
 
 void Ruler::widthEntry() {
-	QLineEdit * edit = dynamic_cast<QLineEdit *>(sender());
+	QLineEdit * edit = qobject_cast<QLineEdit *>(sender());
 	if (edit == NULL) return;
 
 	QString t = edit->text();

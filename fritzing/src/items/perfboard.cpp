@@ -308,7 +308,7 @@ ItemBase::PluralType Perfboard::isPlural() {
 }
 
 void Perfboard::enableSetButton() {
-	QLineEdit * edit = dynamic_cast<QLineEdit *>(sender());
+	QLineEdit * edit = qobject_cast<QLineEdit *>(sender());
 	if (edit == NULL) return;
 
 	int x, y;

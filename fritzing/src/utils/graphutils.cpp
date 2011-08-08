@@ -210,7 +210,7 @@ bool GraphUtils::scoreOneNet(QList<ConnectorItem *> & partConnectorItems, Routin
 				continue;
 			}
 
-			Wire * wire = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
+			Wire * wire = qobject_cast<Wire *>(toConnectorItem->attachedTo());
 			if (wire == NULL) continue;
 
 			if (!wire->getTrace()) continue;

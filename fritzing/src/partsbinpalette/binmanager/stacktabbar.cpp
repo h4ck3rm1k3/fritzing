@@ -73,7 +73,7 @@ void StackTabBar::dragMoveEvent(QDragMoveEvent* event) {
 	const QMimeData *m = event->mimeData();
 	int index = tabAt(event->pos());
     if ((event->source() != this) && mimeIsAction(m,"part-reordering")) {
-		PartsBinPaletteWidget* bin = dynamic_cast<PartsBinPaletteWidget*>(m_parent->widget(index));
+		PartsBinPaletteWidget* bin = qobject_cast<PartsBinPaletteWidget*>(m_parent->widget(index));
 		if(bin && bin->allowsChanges()) {
 			event->acceptProposedAction();
 			setCurrentIndex(index);
@@ -86,7 +86,7 @@ void StackTabBar::dropEvent(QDropEvent* event) {
 
 	const QMimeData *m = event->mimeData();
     if(mimeIsAction(m, "part-reordering")) {
-		PartsBinPaletteWidget* bin = dynamic_cast<PartsBinPaletteWidget*>(m_parent->widget(toIndex));
+		PartsBinPaletteWidget* bin = qobject_cast<PartsBinPaletteWidget*>(m_parent->widget(toIndex));
 		if(bin && bin->allowsChanges()) {
 			bin->currentView()->dropEventAux(event,true);
 		}
@@ -100,7 +100,7 @@ void StackTabBar::showContextMenu(const QPoint &point)
 	if (point.isNull()) return;
  
 	int tabIndex = this->tabAt(point);
-	PartsBinPaletteWidget* bin = dynamic_cast<PartsBinPaletteWidget*>(m_parent->widget(tabIndex));
+	PartsBinPaletteWidget* bin = qobject_cast<PartsBinPaletteWidget*>(m_parent->widget(tabIndex));
 	if (bin == NULL) return;
 
 	setCurrentIndex(tabIndex);

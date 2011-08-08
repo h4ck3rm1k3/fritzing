@@ -346,7 +346,7 @@ void JumperItem::resize() {
 					s = makeSvg(itemBase->viewLayerID());
 					bool result = renderer->fastLoad(s.toUtf8());
 					if (result) {
-						dynamic_cast<PaletteItemBase *>(itemBase)->setSharedRendererEx(renderer);
+						qobject_cast<PaletteItemBase *>(itemBase)->setSharedRendererEx(renderer);
 					}
                 }
 				break;

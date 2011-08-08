@@ -118,7 +118,7 @@ void Autorouter::expand(ConnectorItem * originalConnectorItem, QList<ConnectorIt
 	for (int i = 0; i < connectorItems.count(); i++) { 
 		ConnectorItem * fromConnectorItem = connectorItems[i];
 		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
-			TraceWire * traceWire = dynamic_cast<TraceWire *>(toConnectorItem->attachedTo());
+			TraceWire * traceWire = qobject_cast<TraceWire *>(toConnectorItem->attachedTo());
 			if (traceWire == NULL) continue;
 			if (visited.contains(traceWire)) continue;
 

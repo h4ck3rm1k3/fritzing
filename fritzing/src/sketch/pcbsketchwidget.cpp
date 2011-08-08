@@ -718,7 +718,7 @@ bool PCBSketchWidget::bothEndsConnectedAux(Wire * wire, ViewGeometry::WireFlags 
 
 		if (toConnectorItem->attachedToItemType() != ModelPart::Wire) continue;
 
-		Wire * w = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
+		Wire * w = qobject_cast<Wire *>(toConnectorItem->attachedTo());
 		ViewGeometry::WireFlags wflag = w->wireFlags() & (ViewGeometry::RatsnestFlag | getTraceFlag());
 		if (wflag != flag) continue;
 
@@ -785,7 +785,7 @@ VirtualWire * PCBSketchWidget::makeOneRatsnestWire(ConnectorItem * source, Conne
 	 */
 
 	ItemBase * newItemBase = addItem(m_paletteModel->retrieveModelPart(ModuleIDNames::WireModuleIDName), source->attachedTo()->viewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);		
-	VirtualWire * wire = dynamic_cast<VirtualWire *>(newItemBase);
+	VirtualWire * wire = qobject_cast<VirtualWire *>(newItemBase);
 	tempConnectWire(wire, source, dest);
 
 	if (!source->attachedTo()->isVisible() || !dest->attachedTo()->isVisible()) {
@@ -810,7 +810,7 @@ void PCBSketchWidget::makeRatsnestViewGeometry(ViewGeometry & viewGeometry, Conn
 
 ConnectorItem * PCBSketchWidget::lookForBreadboardConnection(ConnectorItem * connectorItem) 
 {
-	Wire * wire = dynamic_cast<Wire *>(connectorItem->attachedTo());
+	Wire * wire = qobject_cast<Wire *>(connectorItem->attachedTo());
 	QList<ConnectorItem *> ends;
 	if (wire != NULL) {
 		QList<Wire *> wires;
@@ -999,7 +999,7 @@ ConnectorItem * PCBSketchWidget::findEmptyBus(ItemBase * breadboard) {
 
 ConnectorItem * PCBSketchWidget::findNearestPartConnectorItem(ConnectorItem * fromConnectorItem) {
 	// find the nearest part to fromConnectorItem
-	Wire * wire = dynamic_cast<Wire *>(fromConnectorItem->attachedTo());
+	Wire * wire = qobject_cast<Wire *>(fromConnectorItem->attachedTo());
 	if (wire == NULL) return NULL;
 
 	QList<ConnectorItem *> ends;
@@ -1054,7 +1054,7 @@ int PCBSketchWidget::calcDistanceAux(ConnectorItem * from, ConnectorItem * to, i
 	foreach (ConnectorItem * toConnectorItem, from->connectedToItems()) {
 		if (toConnectorItem->attachedToItemType() != ModelPart::Wire) continue;
 
-		Wire * w = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
+		Wire * w = qobject_cast<Wire *>(toConnectorItem->attachedTo());
 		if (distanceWires.contains(w)) continue;
 
 		bool fromConnector0;

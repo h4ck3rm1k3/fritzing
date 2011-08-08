@@ -408,7 +408,7 @@ void SchematicFrame::setInitialSize() {
 }
 
 void SchematicFrame::propEntry() {
-	QLineEdit * edit = dynamic_cast<QLineEdit *>(sender());
+	QLineEdit * edit = qobject_cast<QLineEdit *>(sender());
 	if (edit == NULL) return;
 
 	QString prop = edit->property("prop").toString();

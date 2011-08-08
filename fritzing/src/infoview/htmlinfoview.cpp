@@ -335,7 +335,7 @@ void HtmlInfoView::hoverLeaveConnectorItem(InfoGraphicsView *igv, QGraphicsScene
 }
 
 void HtmlInfoView::appendStuff(ItemBase* item, bool swappingEnabled) {
-	Wire *wire = dynamic_cast<Wire*>(item);
+	Wire *wire = qobject_cast<Wire*>(item);
 	if (wire) {
 		appendWireStuff(wire, swappingEnabled);
 	} else {
@@ -478,7 +478,7 @@ void HtmlInfoView::setNullContent()
 }
 
 void HtmlInfoView::setInstanceTitle() {
-	FLineEdit * edit = dynamic_cast<FLineEdit *>(sender());
+	FLineEdit * edit = qobject_cast<FLineEdit *>(sender());
 	if (edit == NULL) return;
 	if (!edit->isEnabled()) return;
 	if (m_infoGraphicsView == NULL) return;
@@ -489,21 +489,21 @@ void HtmlInfoView::setInstanceTitle() {
 }
 
 void HtmlInfoView::instanceTitleEnter() {
-	FLineEdit * edit = dynamic_cast<FLineEdit *>(sender());
+	FLineEdit * edit = qobject_cast<FLineEdit *>(sender());
 	if (edit->isEnabled()) {
 		setInstanceTitleColors(edit, QColor(0xeb, 0xeb, 0xee), QColor(0x00, 0x00, 0x00)); //c8c8c8, 575757
 	}
 }
 
 void HtmlInfoView::instanceTitleLeave() {
-	FLineEdit * edit = dynamic_cast<FLineEdit *>(sender());
+	FLineEdit * edit = qobject_cast<FLineEdit *>(sender());
 	if (edit->isEnabled()) {
 		setInstanceTitleColors(edit, QColor(0xd2, 0xd2, 0xd7), QColor(0x00, 0x00, 0x00)); //b3b3b3, 575757
 	}
 }
 
 void HtmlInfoView::instanceTitleEditable(bool editable) {
-	FLineEdit * edit = dynamic_cast<FLineEdit *>(sender());
+	FLineEdit * edit = qobject_cast<FLineEdit *>(sender());
 	if (editable) {
 		setInstanceTitleColors(edit, QColor(0xff, 0xff, 0xff), QColor(0x00, 0x00, 0x00)); //fcfcfc, 000000
 	}

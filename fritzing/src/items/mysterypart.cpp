@@ -300,7 +300,7 @@ bool MysteryPart::hasCustomSVG() {
 }
 
 void MysteryPart::chipLabelEntry() {
-	QLineEdit * edit = dynamic_cast<QLineEdit *>(sender());
+	QLineEdit * edit = qobject_cast<QLineEdit *>(sender());
 	if (edit == NULL) return;
 
 	if (edit->text().compare(this->chipLabel()) == 0) return;

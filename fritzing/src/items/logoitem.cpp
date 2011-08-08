@@ -623,7 +623,7 @@ bool LogoItem::hasPartLabel() {
 }
 
 void LogoItem::logoEntry() {
-	QLineEdit * edit = dynamic_cast<QLineEdit *>(sender());
+	QLineEdit * edit = qobject_cast<QLineEdit *>(sender());
 	if (edit == NULL) return;
 
 	if (edit->text().compare(this->logo()) == 0) return;
@@ -687,7 +687,7 @@ QString LogoItem::hackSvg(const QString & svg, const QString & logo)
 }
 
 void LogoItem::widthEntry() {
-	QLineEdit * edit = dynamic_cast<QLineEdit *>(sender());
+	QLineEdit * edit = qobject_cast<QLineEdit *>(sender());
 	if (edit == NULL) return;
 
 	double w = edit->text().toDouble();
@@ -703,7 +703,7 @@ void LogoItem::widthEntry() {
 }
 
 void LogoItem::heightEntry() {
-	QLineEdit * edit = dynamic_cast<QLineEdit *>(sender());
+	QLineEdit * edit = qobject_cast<QLineEdit *>(sender());
 	if (edit == NULL) return;
 
 	double w = m_modelPart->prop("width").toDouble();

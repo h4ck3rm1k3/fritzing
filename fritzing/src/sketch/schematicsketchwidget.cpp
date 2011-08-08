@@ -202,7 +202,7 @@ void SchematicSketchWidget::updateBigDots()
 		if (connectorItem == NULL) continue;
 		if (connectorItem->attachedToItemType() != ModelPart::Wire) continue;
 
-		TraceWire * traceWire = dynamic_cast<TraceWire *>(connectorItem->attachedTo());
+		TraceWire * traceWire = qobject_cast<TraceWire *>(connectorItem->attachedTo());
 		if (traceWire == NULL) continue;
 
 		//DebugDialog::debug(QString("update big dot %1 %2").arg(traceWire->id()).arg(connectorItem->connectorSharedID()));
@@ -252,7 +252,7 @@ AddItemCommand * SchematicSketchWidget::newAddItemCommand(BaseCommand::CrossView
 	}
 
 	// create the item temporarily, only in order to call makeModifiedWire, then delete it
-	SymbolPaletteItem * newSymbol = dynamic_cast<SymbolPaletteItem *>(addItem(moduleID, viewLayerSpec, BaseCommand::SingleView, viewGeometry, id, modelIndex, NULL));
+	SymbolPaletteItem * newSymbol = qobject_cast<SymbolPaletteItem *>(addItem(moduleID, viewLayerSpec, BaseCommand::SingleView, viewGeometry, id, modelIndex, NULL));
 	
 	foreach (QGraphicsItem * item, scene()->items()) {
 		SymbolPaletteItem * symbol = dynamic_cast<SymbolPaletteItem *>(item);
@@ -308,7 +308,7 @@ void SchematicSketchWidget::setVoltage(double v, bool doEmit)
 
 	QList<Wire *> done;
 	foreach (ConnectorItem * toConnectorItem, sitem->connector0()->connectedToItems()) {
-		Wire * w = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
+		Wire * w = qobject_cast<Wire *>(toConnectorItem->attachedTo());
 		if (w == NULL) continue;
 		if (done.contains(w)) continue;
 
@@ -402,7 +402,7 @@ double SchematicSketchWidget::getAutorouterTraceWidth() {
 
 void SchematicSketchWidget::extraRenderSvgStep(ItemBase * itemBase, QPointF offset, double dpi, double printerScale, QString & outputSvg)
 {
-	TraceWire * traceWire = dynamic_cast<TraceWire *>(itemBase);
+	TraceWire * traceWire = qobject_cast<TraceWire *>(itemBase);
 	if (traceWire == NULL) return;
 
 	if (traceWire->connector0()->isBigDot()) {

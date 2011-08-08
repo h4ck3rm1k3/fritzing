@@ -1003,7 +1003,7 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 	int count = 0;
 	foreach (QWidget *widget, QApplication::topLevelWidgets()) {
 		if (widget == this) continue;
-		if (dynamic_cast<QMainWindow *>(widget) == NULL) continue;
+		if (qobject_cast<QMainWindow *>(widget) == NULL) continue;
 
 		count++;
 	}
@@ -1054,7 +1054,7 @@ void MainWindow::acceptAlienFiles() {
 void MainWindow::saveDocks()
 {
 	for (int i = 0; i < children().count(); i++) {
-		FDockWidget * dock = dynamic_cast<FDockWidget *>(children()[i]);
+		FDockWidget * dock = qobject_cast<FDockWidget *>(children()[i]);
 		if (dock == NULL) continue;
 
 		//DebugDialog::debug(QString("saving dock %1").arg(dock->windowTitle()));
@@ -1069,7 +1069,7 @@ void MainWindow::saveDocks()
 
 void MainWindow::restoreDocks() {
 	for (int i = 0; i < children().count(); i++) {
-		FDockWidget * dock = dynamic_cast<FDockWidget *>(children()[i]);
+		FDockWidget * dock = qobject_cast<FDockWidget *>(children()[i]);
 		if (dock == NULL) continue;
 
 		// DebugDialog::debug(QString("restoring dock %1").arg(dock->windowTitle()));
@@ -1904,7 +1904,7 @@ bool MainWindow::swapSpecial(QMap<QString, QString> & currPropsMap) {
 	QString pinSpacing, resistance, layers;
 	foreach (QString key, currPropsMap.keys()) {
 		if (key.compare("shape", Qt::CaseInsensitive) == 0) {
-			ResizableBoard * board = dynamic_cast<ResizableBoard *>(itemBase);
+			ResizableBoard * board = qobject_cast<ResizableBoard *>(itemBase);
 			if (board == NULL) continue;
 
 			QString value = currPropsMap.value(key, "");
@@ -1919,7 +1919,7 @@ bool MainWindow::swapSpecial(QMap<QString, QString> & currPropsMap) {
 		}
 
 		if (key.compare("layers", Qt::CaseInsensitive) == 0) {
-			Board * board = dynamic_cast<Board *>(itemBase);
+			Board * board = qobject_cast<Board *>(itemBase);
 			if (board == NULL) continue;
 
 			if (board->itemType() != ModelPart::Board && board->itemType() != ModelPart::ResizableBoard) continue;
@@ -1936,7 +1936,7 @@ bool MainWindow::swapSpecial(QMap<QString, QString> & currPropsMap) {
 		}
 
 		if (key.compare("form", Qt::CaseInsensitive) == 0) {
-			PinHeader * pinHeader = dynamic_cast<PinHeader *>(itemBase);
+			PinHeader * pinHeader = qobject_cast<PinHeader *>(itemBase);
 			if (pinHeader == NULL) continue;
 
 			if (pinHeader->onlyFormChanges(currPropsMap)) {
@@ -1948,7 +1948,7 @@ bool MainWindow::swapSpecial(QMap<QString, QString> & currPropsMap) {
 		}
 
 		if (key.compare("spacing", Qt::CaseInsensitive) == 0) {
-			MysteryPart * mysteryPart = dynamic_cast<MysteryPart *>(itemBase);
+			MysteryPart * mysteryPart = qobject_cast<MysteryPart *>(itemBase);
 			if (mysteryPart == NULL) continue;
 
 			if (mysteryPart->onlySpacingChanges(currPropsMap)) {
@@ -1975,7 +1975,7 @@ bool MainWindow::swapSpecial(QMap<QString, QString> & currPropsMap) {
 	}
 
 	if (!resistance.isEmpty() || !pinSpacing.isEmpty()) {
-		Resistor * resistor = dynamic_cast<Resistor *>(itemBase);
+		Resistor * resistor = qobject_cast<Resistor *>(itemBase);
 		if (resistor != NULL) {
 			m_currentGraphicsView->setResistance(resistance, pinSpacing);
 			return true;

@@ -46,7 +46,7 @@ StackTabWidget::StackTabWidget(StackWidget *parent) : QTabWidget(parent) {
 }
 
 StackTabBar *StackTabWidget::stackTabBar() {
-	return dynamic_cast<StackTabBar*>(tabBar());
+	return qobject_cast<StackTabBar*>(tabBar());
 }
 
 void StackTabWidget::informCurrentChanged(int index) {

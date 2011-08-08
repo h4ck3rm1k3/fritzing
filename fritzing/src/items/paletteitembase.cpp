@@ -277,7 +277,7 @@ void PaletteItemBase::collectWireConnectees(QSet<Wire *> & wires) {
 		foreach (ConnectorItem * toConnectorItem, item->connectedToItems()) {
 			if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
 				if (toConnectorItem->attachedTo()->isVisible()) {
-					wires.insert(dynamic_cast<Wire *>(toConnectorItem->attachedTo()));
+					wires.insert(qobject_cast<Wire *>(toConnectorItem->attachedTo()));
 				}
 			}
 		}

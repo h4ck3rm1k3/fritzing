@@ -92,7 +92,7 @@ double ResizeHandle::currentScale() {
 void ResizeHandle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
 	if(scene()) {
-        FGraphicsScene * fscene = dynamic_cast<FGraphicsScene *>(scene());
+        FGraphicsScene * fscene = qobject_cast<FGraphicsScene *>(scene());
         if (fscene != NULL && fscene->displayHandles()) {
             QGraphicsPixmapItem::paint(painter, option, widget);
 		}

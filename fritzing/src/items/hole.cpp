@@ -377,14 +377,14 @@ bool Hole::collectExtraInfo(QWidget * parent, const QString & family, const QStr
 void Hole::changeThickness() 
 {
 	if (changeThickness(m_holeSettings, sender())) {
-		QLineEdit * edit = dynamic_cast<QLineEdit *>(sender());
+		QLineEdit * edit = qobject_cast<QLineEdit *>(sender());
 		changeHoleSize(m_holeSettings.holeDiameter + "," + edit->text() + m_holeSettings.unitsComboBox->currentText());
 	}	
 }
 
 bool Hole::changeThickness(HoleSettings & holeSettings, QObject * sender) 
 {
-	QLineEdit * edit = dynamic_cast<QLineEdit *>(sender);
+	QLineEdit * edit = qobject_cast<QLineEdit *>(sender);
 	if (edit == NULL) return false;
 
 	double newValue = edit->text().toDouble();
@@ -397,14 +397,14 @@ bool Hole::changeThickness(HoleSettings & holeSettings, QObject * sender)
 void Hole::changeDiameter() 
 {
 	if (changeDiameter(m_holeSettings, sender())) {
-		QLineEdit * edit = dynamic_cast<QLineEdit *>(sender());
+		QLineEdit * edit = qobject_cast<QLineEdit *>(sender());
 		changeHoleSize(edit->text() + m_holeSettings.unitsComboBox->currentText() + "," + m_holeSettings.ringThickness);
 	}
 }
 
 bool Hole::changeDiameter(HoleSettings & holeSettings, QObject * sender) 
 {
-	QLineEdit * edit = dynamic_cast<QLineEdit *>(sender);
+	QLineEdit * edit = qobject_cast<QLineEdit *>(sender);
 	if (edit == NULL) return false;
 
 	double newValue = edit->text().toDouble();
