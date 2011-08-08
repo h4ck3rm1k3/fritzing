@@ -416,7 +416,7 @@ void Wire::initDragCurve(QPointF scenePos) {
 		m_bezier->set_endpoints(mapFromScene(p0), mapFromScene(p1));
 	}
 
-	m_bezier->initControlIndex(mapFromScene(scenePos));
+	m_bezier->initControlIndex(mapFromScene(scenePos), m_pen.widthF());
 	TheBezierDisplay = new BezierDisplay;
 	TheBezierDisplay->initDisplay(this, m_bezier);
 }

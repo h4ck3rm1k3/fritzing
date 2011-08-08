@@ -57,7 +57,7 @@ public:
 	double xFromTPrime(double t) const;
 	double yFromT(double t) const;
 	void split(double t, Bezier & left, Bezier & right) const;
-	void initControlIndex(QPointF fromPoint);
+	void initControlIndex(QPointF fromPoint, double width);
 	double computeCubicCurveLength(double z, int n) const;
 	void copy(const Bezier *);
 	double findSplit(QPointF p, double minDistance) const;

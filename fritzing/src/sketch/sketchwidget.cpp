@@ -2572,8 +2572,9 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 	emit cursorLocationSignal(sp.x() / FSvgRenderer::printerScale(), sp.y() / FSvgRenderer::printerScale());
 
 	if (m_dragBendpointWire != NULL) {
-		prepDragBendpoint(m_dragBendpointWire, m_dragBendpointPos, m_dragCurve);
+		Wire * tempWire = m_dragBendpointWire;
 		m_dragBendpointWire = NULL;
+		prepDragBendpoint(tempWire, m_dragBendpointPos, m_dragCurve);
 		m_draggingBendpoint = true;
 		this->m_alignmentStartPoint = mapToScene(m_dragBendpointPos);		// not sure this will be correct...
 		return;

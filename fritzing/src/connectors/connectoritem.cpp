@@ -2355,7 +2355,7 @@ bool ConnectorItem::legMousePressEvent(QGraphicsSceneMouseEvent *event) {
 					bezier->initToEnds(p0, p1);
 				}
 
-				bezier->initControlIndex(event->pos());
+				bezier->initControlIndex(event->pos(), m_legStrokeWidth);
 				m_draggingCurve = m_draggingLeg = true;
 				TheBezierDisplay = new BezierDisplay;
 				TheBezierDisplay->initDisplay(this, bezier);

@@ -331,11 +331,14 @@ void Bezier::split(double t, Bezier & left, Bezier & right) const
 	left.m_isEmpty = right.m_isEmpty = false;
 } 
 
-void Bezier::initControlIndex(QPointF p)
+void Bezier::initControlIndex(QPointF p, double width)
 {
-	double d0 = GraphicsUtils::distanceSqd(p, m_cp0);
-	double d1 = GraphicsUtils::distanceSqd(p, m_cp1);
-	m_drag_cp0 = (d0 <= d1);
+	double t = findSplit(p, width);
+	double totalLen = computeCubicCurveLength(1, 24);
+	double len = computeCubicCurveLength(t, 24);
+	//double d0 = GraphicsUtils::distanceSqd(p, m_cp0);
+	//double d1 = GraphicsUtils::distanceSqd(p, m_cp1);
+	m_drag_cp0 = (len <= totalLen / 2);
 }
 
 /**
