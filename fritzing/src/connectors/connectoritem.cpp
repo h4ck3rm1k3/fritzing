@@ -284,6 +284,7 @@ bool wireLessThan(ConnectorItem * c1, ConnectorItem * c2)
 static QCursor * BendpointCursor = NULL;
 static QCursor * NewBendpointCursor = NULL;
 static QCursor * MakeWireCursor = NULL;
+static QCursor * MakeCurveCursor = NULL;
 
 Qt::KeyboardModifiers DragWireModifiers = (Qt::AltModifier | Qt::MetaModifier);
 
@@ -2276,6 +2277,9 @@ void ConnectorItem::setRubberBandLeg(QColor color, double strokeWidth, QLineF pa
 
 		QBitmap bitmap3(":resources/images/cursor/make_wire.bmp");
 		MakeWireCursor = new QCursor(bitmap3, bitmap3, 3, 29);
+
+		QBitmap bitmap4(":resources/images/cursor/curve.bmp");
+		MakeCurveCursor = new QCursor(bitmap4, bitmap4, 15, 15);
 	}
 
 	m_rubberBandLeg = true;
@@ -2680,7 +2684,7 @@ void ConnectorItem::updateLegCursor(QPointF p, Qt::KeyboardModifiers modifiers)
 			cursor = (bendpointIndex == 0) ? Qt::CrossCursor : *BendpointCursor;
 			break;
 		case InSegment:
-			cursor = *NewBendpointCursor;
+			cursor = (modifiers & Qt::ControlModifier) ? *MakeCurveCursor : *NewBendpointCursor;
 			break;
 		case InConnector:
 			cursor = (modifiers & DragWireModifiers) ? *MakeWireCursor : Qt::CrossCursor;

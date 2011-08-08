@@ -45,6 +45,7 @@
         <file>resources/images/splitterHandle.png</file>
 	
         <file>resources/images/cursor/spot_face_cutter.bmp</file>
+        <file>resources/images/cursor/curve.bmp</file>
         <file>resources/images/cursor/bendpoint.bmp</file>
         <file>resources/images/cursor/new_bendpoint.bmp</file>
         <file>resources/images/cursor/magic_wand.bmp</file>
