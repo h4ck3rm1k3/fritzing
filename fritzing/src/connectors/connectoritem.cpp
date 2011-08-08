@@ -235,6 +235,8 @@ parts editor support
 /////////////////////////////////////////////////////////
 
 static Bezier UndoBezier;
+static QGraphicsLineItem * ControlPointItem0 = NULL;
+static QGraphicsLineItem * ControlPointItem1 = NULL;
 
 static const double StandardLegConnectorLength = 6;			// pixels
 
@@ -359,14 +361,18 @@ void ConnectorItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
 		return;
 	}
 
+
 	m_hoverEnterSpaceBarWasPressed = false;
 	setHoverColor();
 	if (infoGraphicsView != NULL) {
 		infoGraphicsView->hoverEnterConnectorItem(event, this);
+		if (m_rubberBandLeg) QApplication::instance()->installEventFilter(this);
+
 	}
 	if (this->m_attachedTo != NULL) {
 		m_attachedTo->hoverEnterConnectorItem(event, this);
 	}
+
 }
 
 void ConnectorItem::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
@@ -375,15 +381,17 @@ void ConnectorItem::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
 		return;
 	}
 
-	if (m_rubberBandLeg) {
-		this->setCursor(Qt::CrossCursor);
-	}
-
 	restoreColor(false, 0, true);
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
 		infoGraphicsView->hoverLeaveConnectorItem(event, this);
+		if (m_rubberBandLeg) QApplication::instance()->removeEventFilter(this);
 	}
+
+	if (m_rubberBandLeg) {
+		this->setCursor(Qt::CrossCursor);
+	}
+
 	if (this->m_attachedTo != NULL) {
 		m_attachedTo->hoverLeaveConnectorItem(event, this);
 	}
@@ -400,24 +408,7 @@ void ConnectorItem::hoverMoveEvent ( QGraphicsSceneHoverEvent * event ) {
 	}
 
 	if (m_rubberBandLeg) {
-		int bendpointIndex;
-		CursorLocation cursorLocation = findLocation(event->pos(), bendpointIndex);
-		QCursor cursor;
-		switch (cursorLocation) {
-			case InBendpoint:
-				cursor = (bendpointIndex == 0) ? Qt::CrossCursor : *BendpointCursor;
-				break;
-			case InSegment:
-				cursor = *NewBendpointCursor;
-				break;
-			case InConnector:
-				cursor = (event->modifiers() & DragWireModifiers) ? *MakeWireCursor : Qt::CrossCursor;
-				break;
-			default:
-				cursor = Qt::ArrowCursor;
-				break;
-		}
-		setCursor(cursor);
+		updateLegCursor(event->pos(), event->modifiers());
 	}
 }
 
@@ -661,6 +652,9 @@ void ConnectorItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 
 		if (m_draggingCurve) {
 			m_draggingCurve = false;
+			if (ControlPointItem0) delete ControlPointItem0;
+			if (ControlPointItem1) delete ControlPointItem1;
+			ControlPointItem0 = ControlPointItem1 = NULL;
 			if (infoGraphicsView != NULL) {
 				infoGraphicsView->prepLegCurveChange(this, m_draggingLegIndex, &UndoBezier, m_legCurves.at(m_draggingLegIndex), false);
 			}
@@ -731,6 +725,7 @@ void ConnectorItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 				bezier->recalc(event->pos());
 				calcConnectorEnd();
 				update();
+				updateControlPointItems();
 				return;
 			}
 		}
@@ -2368,6 +2363,18 @@ bool ConnectorItem::legMousePressEvent(QGraphicsSceneMouseEvent *event) {
 
 				bezier->initControlIndex(event->pos());
 				m_draggingCurve = m_draggingLeg = true;
+				QPen pen;
+				pen.setWidth(0);
+				pen.setColor(QColor(0x80ff0000));
+				ControlPointItem0 = new QGraphicsLineItem();
+				ControlPointItem0->setPen(pen);
+				ControlPointItem0->setPos(0, 0);
+				scene()->addItem(ControlPointItem0);
+				ControlPointItem1 = new QGraphicsLineItem();
+				ControlPointItem1->setPen(pen);
+				ControlPointItem1->setPos(0, 0);
+				scene()->addItem(ControlPointItem1);
+				updateControlPointItems();
 				return true;
 			}
 			else {
@@ -2652,3 +2659,59 @@ void ConnectorItem::replaceBezier(int index, const Bezier * newBezier)
 	}
 }
 
+bool ConnectorItem::eventFilter(QObject * object, QEvent * event)
+{
+	Q_UNUSED(object);
+	if (m_rubberBandLeg && !m_draggingLeg) {
+		if (event->type() == QEvent::KeyPress || event->type() == QEvent::KeyRelease) {
+			InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);;
+			if (infoGraphicsView) {
+				QPoint p = infoGraphicsView->mapFromGlobal(QCursor::pos());
+				QPointF r = infoGraphicsView->mapToScene(p);
+				QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+				// DebugDialog::debug(QString("got key event %1").arg(keyEvent->modifiers()));
+				updateLegCursor(mapFromScene(r), keyEvent->modifiers());
+			}
+		}
+	}
+
+	return false;
+}
+
+void ConnectorItem::updateLegCursor(QPointF p, Qt::KeyboardModifiers modifiers)
+{
+	int bendpointIndex;
+	CursorLocation cursorLocation = findLocation(p, bendpointIndex);
+	QCursor cursor;
+	switch (cursorLocation) {
+		case InBendpoint:
+			cursor = (bendpointIndex == 0) ? Qt::CrossCursor : *BendpointCursor;
+			break;
+		case InSegment:
+			cursor = *NewBendpointCursor;
+			break;
+		case InConnector:
+			cursor = (modifiers & DragWireModifiers) ? *MakeWireCursor : Qt::CrossCursor;
+			break;
+		default:
+			cursor = Qt::ArrowCursor;
+			break;
+	}
+	setCursor(cursor);
+}
+
+void ConnectorItem::updateControlPointItems()
+{
+	if (ControlPointItem0 == NULL) return;
+	if (ControlPointItem1 == NULL) return;
+
+	Bezier * bezier = m_legCurves.at(m_draggingLegIndex);
+	if (bezier == NULL || bezier->isEmpty()) {
+		ControlPointItem0->setVisible(false);
+		ControlPointItem1->setVisible(false);
+		return;
+	}
+
+	ControlPointItem0->setLine(QLineF(mapToScene(bezier->endpoint0()), mapToScene(bezier->cp0())));
+	ControlPointItem1->setLine(QLineF(mapToScene(bezier->endpoint1()), mapToScene(bezier->cp1())));
+}

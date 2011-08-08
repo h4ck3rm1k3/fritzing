@@ -183,6 +183,9 @@ protected:
 	void paintLeg(QPainter * painter);
 	void paintLeg(QPainter * painter, bool hasCurves);
 	void replaceBezier(int index, const Bezier * newBezier);
+	bool eventFilter(QObject * object, QEvent * event);
+	void updateLegCursor(QPointF p, Qt::KeyboardModifiers modifiers);
+	void updateControlPointItems();
 
 protected:
 	QPointer<Connector> m_connector;
