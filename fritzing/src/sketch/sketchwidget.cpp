@@ -4542,6 +4542,15 @@ void SketchWidget::makeDeleteItemCommandPrepSlot(ItemBase * itemBase, bool forei
 
 	rememberSticky(itemBase, parentCommand);
 
+	Wire * wire = qobject_cast<Wire *>(itemBase);
+	if (wire) {
+		const Bezier * bezier = wire->curve();
+		if (bezier && !bezier->isEmpty()) {
+			ChangeWireCurveCommand * cwcc = new ChangeWireCurveCommand(this, itemBase->id(), bezier, NULL, parentCommand);
+			cwcc->setUndoOnly();
+		}
+	}
+
 	if (itemBase->hasRubberBandLeg()) {
 		foreach (ConnectorItem * connectorItem, itemBase->cachedConnectorItems()) {
 			if (!connectorItem->hasRubberBandLeg()) continue;
