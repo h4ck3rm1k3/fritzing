@@ -85,6 +85,7 @@ later:
 #include "../utils/graphicsutils.h"
 #include "../utils/textutils.h"
 #include "../utils/bezier.h"
+#include "../utils/bezierdisplay.h"
 #include "../layerattributes.h"
 
 #include <stdlib.h>
@@ -102,7 +103,7 @@ double Wire::THIN_TRACE_WIDTH;
 const double DefaultHoverStrokeWidth = 4;
 
 static Bezier UndoBezier;
-
+static BezierDisplay * TheBezierDisplay = NULL;
 
 ////////////////////////////////////////////////////////////
 
@@ -405,13 +406,18 @@ void Wire::initDragCurve(QPointF scenePos) {
 	m_dragCurve = true;
 	m_dragEnd = false;
 
+	QPointF p0 = connector0()->sceneAdjustedTerminalPoint(NULL);
+	QPointF p1 = connector1()->sceneAdjustedTerminalPoint(NULL);
 	if (m_bezier->isEmpty()) {
-		QPointF p0 = connector0()->sceneAdjustedTerminalPoint(NULL);
-		QPointF p1 = connector1()->sceneAdjustedTerminalPoint(NULL);
 		m_bezier->initToEnds(mapFromScene(p0), mapFromScene(p1));
+	}
+	else {
+		m_bezier->set_endpoints(mapFromScene(p0), mapFromScene(p1));
 	}
 
 	m_bezier->initControlIndex(mapFromScene(scenePos));
+	TheBezierDisplay = new BezierDisplay;
+	TheBezierDisplay->initDisplay(this, m_bezier);
 }
 
 bool Wire::initNewBendpoint(QPointF scenePos, Bezier & left, Bezier & right) {
@@ -483,6 +489,7 @@ void Wire::mouseMoveEventAux(QPointF eventPos, Qt::KeyboardModifiers modifiers) 
 		prepareGeometryChange();
 		dragCurve(eventPos, modifiers);
 		update();
+		if (TheBezierDisplay) TheBezierDisplay->updateDisplay(this, m_bezier);
 		return;
 	}
 
@@ -623,6 +630,8 @@ bool Wire::releaseDrag() {
 	if (m_dragEnd == false && m_dragCurve == false) return false;
 
 	if (m_dragCurve) {
+		delete TheBezierDisplay;
+		TheBezierDisplay = NULL;
 		m_dragCurve = false;
 		ungrabMouse();
 		if (UndoBezier != *m_bezier) {

@@ -440,3 +440,8 @@ Bezier Bezier::join(const Bezier * other) const
 
 	return bezier;
 }
+
+bool Bezier::drag0()
+{
+	return m_drag_cp0;
+}

@@ -230,13 +230,13 @@ parts editor support
 #include "../utils/textutils.h"
 #include "../utils/ratsnestcolors.h"
 #include "../utils/bezier.h"
+#include "../utils/bezierdisplay.h"
 #include "ercdata.h"
 
 /////////////////////////////////////////////////////////
 
 static Bezier UndoBezier;
-static QGraphicsLineItem * ControlPointItem0 = NULL;
-static QGraphicsLineItem * ControlPointItem1 = NULL;
+static BezierDisplay * TheBezierDisplay = NULL;
 
 static const double StandardLegConnectorLength = 6;			// pixels
 
@@ -652,9 +652,11 @@ void ConnectorItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 
 		if (m_draggingCurve) {
 			m_draggingCurve = false;
-			if (ControlPointItem0) delete ControlPointItem0;
-			if (ControlPointItem1) delete ControlPointItem1;
-			ControlPointItem0 = ControlPointItem1 = NULL;
+			if (TheBezierDisplay) {
+				delete TheBezierDisplay;
+				TheBezierDisplay = NULL;
+			}
+
 			if (infoGraphicsView != NULL) {
 				infoGraphicsView->prepLegCurveChange(this, m_draggingLegIndex, &UndoBezier, m_legCurves.at(m_draggingLegIndex), false);
 			}
@@ -725,7 +727,7 @@ void ConnectorItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 				bezier->recalc(event->pos());
 				calcConnectorEnd();
 				update();
-				updateControlPointItems();
+				if (TheBezierDisplay) TheBezierDisplay->updateDisplay(this, bezier);
 				return;
 			}
 		}
@@ -2363,18 +2365,8 @@ bool ConnectorItem::legMousePressEvent(QGraphicsSceneMouseEvent *event) {
 
 				bezier->initControlIndex(event->pos());
 				m_draggingCurve = m_draggingLeg = true;
-				QPen pen;
-				pen.setWidth(0);
-				pen.setColor(QColor(0x80ff0000));
-				ControlPointItem0 = new QGraphicsLineItem();
-				ControlPointItem0->setPen(pen);
-				ControlPointItem0->setPos(0, 0);
-				scene()->addItem(ControlPointItem0);
-				ControlPointItem1 = new QGraphicsLineItem();
-				ControlPointItem1->setPen(pen);
-				ControlPointItem1->setPos(0, 0);
-				scene()->addItem(ControlPointItem1);
-				updateControlPointItems();
+				TheBezierDisplay = new BezierDisplay;
+				TheBezierDisplay->initDisplay(this, bezier);
 				return true;
 			}
 			else {
@@ -2698,20 +2690,4 @@ void ConnectorItem::updateLegCursor(QPointF p, Qt::KeyboardModifiers modifiers)
 			break;
 	}
 	setCursor(cursor);
-}
-
-void ConnectorItem::updateControlPointItems()
-{
-	if (ControlPointItem0 == NULL) return;
-	if (ControlPointItem1 == NULL) return;
-
-	Bezier * bezier = m_legCurves.at(m_draggingLegIndex);
-	if (bezier == NULL || bezier->isEmpty()) {
-		ControlPointItem0->setVisible(false);
-		ControlPointItem1->setVisible(false);
-		return;
-	}
-
-	ControlPointItem0->setLine(QLineF(mapToScene(bezier->endpoint0()), mapToScene(bezier->cp0())));
-	ControlPointItem1->setLine(QLineF(mapToScene(bezier->endpoint1()), mapToScene(bezier->cp1())));
 }

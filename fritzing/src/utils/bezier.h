@@ -64,6 +64,7 @@ public:
 	void translateToZero();
 	void translate(QPointF);
 	Bezier join(const Bezier * other) const;
+	bool drag0();
 
 protected:
 	double cubicF(double t) const;
