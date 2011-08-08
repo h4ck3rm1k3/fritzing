@@ -25,6 +25,8 @@ $Date$
 ********************************************************************/
 
 #include "bezierdisplay.h"
+#include "../viewlayer.h"
+#include "graphicsutils.h"
 
 #include <QPen>
 #include <QGraphicsScene>
@@ -43,22 +45,31 @@ BezierDisplay::~BezierDisplay()
 
 void BezierDisplay::initDisplay(QGraphicsItem * master, Bezier *bezier)
 {
-	static int activeColor = 0x80ff0000;
-	static int inactiveColor = 0x800000ff;
+	static int activeColor =   0x00c080;
+	static int inactiveColor = 0xa00000;
 
 	QPen pen;
 	pen.setWidth(0);
+
+	QGraphicsItem * parent = master;
+	while (parent->parentItem()) {
+		parent = master->parentItem();
+	}
+
+	double z = parent->zValue() - (ViewLayer::getZIncrement() / 2);
 	
 	m_item0 = new QGraphicsLineItem();
 	pen.setColor(QColor(bezier->drag0() ? activeColor : inactiveColor));
 	m_item0->setPen(pen);
 	m_item0->setPos(0, 0);
+	m_item0->setZValue(z);
 	master->scene()->addItem(m_item0);
 
 	m_item1 = new QGraphicsLineItem();
 	pen.setColor(QColor(bezier->drag0() == false ? activeColor : inactiveColor));
 	m_item1->setPen(pen);
 	m_item1->setPos(0, 0);
+	m_item1->setZValue(z);
 	master->scene()->addItem(m_item1);
 
 	updateDisplay(master, bezier);
@@ -76,8 +87,19 @@ void BezierDisplay::updateDisplay(QGraphicsItem * master, Bezier *bezier)
 		return;
 	}
 
-	m_item0->setLine(QLineF(master->mapToScene(bezier->endpoint0()), master->mapToScene(bezier->cp0())));
-	m_item1->setLine(QLineF(master->mapToScene(bezier->endpoint1()), master->mapToScene(bezier->cp1())));
+	QRectF sr = master->scene()->sceneRect();
+	double x1, y1, x2, y2;
+
+	QPointF p0 = master->mapToScene(bezier->endpoint0());
+	QPointF p1 = master->mapToScene(bezier->cp0());
+	GraphicsUtils::liangBarskyLineClip(p0.x(), p0.y(), p1.x(), p1.y(), sr.left(), sr.right(), sr.top(), sr.bottom(), x1, y1, x2, y2);
+	m_item0->setLine(x1, y1, x2, y2);
+
+	p0 = master->mapToScene(bezier->endpoint1());
+	p1 = master->mapToScene(bezier->cp1());
+	GraphicsUtils::liangBarskyLineClip(p0.x(), p0.y(), p1.x(), p1.y(), sr.left(), sr.right(), sr.top(), sr.bottom(), x1, y1, x2, y2);
+	m_item1->setLine(x1, y1, x2, y2);
+
 	m_item0->setVisible(true);
 	m_item1->setVisible(true);
 }
