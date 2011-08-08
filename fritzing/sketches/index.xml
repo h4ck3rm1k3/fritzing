@@ -22,6 +22,7 @@
 		<sketch id="Optocoupler" name="Optocoupler" src="core/Optocoupler.fz"/>
 		<sketch id="Photocell" name="Photocell" src="core/Photocell.fz"/>
 		<sketch id="Parking" name="Parking Assistant (Infrared)" src="core/Parking-Assistant.fz"/>
+		<sketch id="CurvyParking" name="Curvy Parking Assistant (Infrared)" src="core/Curvy-Parking-Assistant.fz"/>
 		<sketch id="Relay" name="Relay" src="core/Relay.fz"/>
 		<sketch id="RGB_LED" name="Colored Light (RGB LED)" src="core/RGB-LED.fz"/>
 		<sketch id="Color-Fader" name="Color Fader (RGB LED)" src="core/color-fader.fz"/>
@@ -61,6 +62,7 @@
 					<sketch id="Touch_Switch"/>
 					<sketch id="Photocell"/>
 					<sketch id="Parking"/>
+					<sketch id="CurvyParking"/>
 					<sketch id="AnalogInputThermistor"/>
 					<sketch id="AnalogInputOutput"/>
 				</category>
@@ -80,6 +82,7 @@
 				</category>
 				<category name="Proximity">
 					<sketch id="Parking"/>
+					<sketch id="CurvyParking"/>
 					<sketch id="Photocell"/>
 				</category>
 				<category name="Rotary">
@@ -103,6 +106,7 @@
 					<sketch id="Blink"/>
 					<sketch id="Loop"/>
 					<sketch id="Parking"/>
+					<sketch id="CurvyParking"/>
 					<sketch id="TrafficLight"/>
 					<sketch id="RGB_LED"/>
 					<sketch id="Color-Fader"/>
