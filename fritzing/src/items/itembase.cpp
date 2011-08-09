@@ -1856,4 +1856,3 @@ QPainterPath ItemBase::hoverShape() const
 {	
 	return shape();
 }
-

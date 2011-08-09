@@ -1156,6 +1156,12 @@ void SketchWidget::moveItem(long id, ViewGeometry & viewGeometry, bool updateRat
 	}
 }
 
+void SketchWidget::simpleMoveItem(long id, QPointF p) {
+	ItemBase * pitem = findItem(id);
+	if (pitem != NULL) {
+		pitem->setItemPos(p);
+	}
+}
 
 void SketchWidget::moveItem(long id, const QPointF & p, bool updateRatsnest) {
 	ItemBase * pitem = findItem(id);
@@ -5370,8 +5376,9 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 
 	QHash<ConnectorItem *, Connector *> byWire;
 	QHash<QString, QPolygonF> legs;
+	QHash<QString, ConnectorItem *> formerLegs;
 	if (master && m2f.count() > 0 && (m_viewIdentifier == ViewIdentifierClass::BreadboardView)) {
-		checkFit(newModelPart, itemBase, newID, found, notFound, m2f, byWire, legs, parentCommand);
+		checkFit(newModelPart, itemBase, newID, found, notFound, m2f, byWire, legs, formerLegs, parentCommand);
 	}
 
 	fromConnectorItems.append(other);
@@ -5421,38 +5428,61 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 		}
 	}
 
+	// changeConnection calls PaletteItemBase::connectedMoved which repositions the new part
+	// so slam in the desired position
+	new SimpleMoveItemCommand(this, newID, itemBase->getViewGeometry().loc(), itemBase->getViewGeometry().loc(), parentCommand);
+
 	foreach (QString connectorID, legs.keys()) {
 		// must be invoked after all the connections have been dealt with
 		QPolygonF poly = legs.value(connectorID);
+
+		ConnectorItem * connectorItem = formerLegs.value(connectorID, NULL);
+		if (connectorItem && connectorItem->hasRubberBandLeg()) {
+			poly = connectorItem->leg();
+		}
+
 		ChangeLegCommand * clc = new ChangeLegCommand(this, newID, connectorID, poly, poly, true, true, "swap", parentCommand);
 		clc->setRedoOnly();
+
+		if (connectorItem && connectorItem->hasRubberBandLeg()) {
+			QVector<Bezier *> beziers = connectorItem->beziers();
+			for (int i = 0; i < beziers.count() - 1; i++) {
+				Bezier * bezier = beziers.at(i);
+				if (bezier == NULL) continue;
+				if (bezier->isEmpty()) continue;
+
+				ChangeLegCurveCommand * clcc = new ChangeLegCurveCommand(this, newID, connectorID, i, bezier, bezier, parentCommand);
+				clcc->setRedoOnly();
+			}
+		}
 	}
 }
 
 void SketchWidget::checkFit(ModelPart * newModelPart, ItemBase * itemBase, long newID,
 							QHash<ConnectorItem *, Connector *> & found, QList<ConnectorItem *> & notFound,
 							QHash<ConnectorItem *, ConnectorItem *> & m2f, QHash<ConnectorItem *, Connector *> & byWire, 
-							QHash<QString, QPolygonF> & legs, QUndoCommand * parentCommand)
+							QHash<QString, QPolygonF> & legs, QHash<QString, ConnectorItem *> & formerLegs, QUndoCommand * parentCommand)
 {
 	if (found.count() == 0) return;
 
 	ItemBase * tempItemBase = addItemAuxTemp(newModelPart, itemBase->viewLayerSpec(), itemBase->getViewGeometry(), newID, NULL, true, m_viewIdentifier, true);
 	if (tempItemBase == NULL) return;			// we're really screwed 
 
-	checkFitAux(tempItemBase, itemBase, newID, found, notFound, m2f, byWire, legs, parentCommand);
+	checkFitAux(tempItemBase, itemBase, newID, found, notFound, m2f, byWire, legs, formerLegs, parentCommand);
 	delete tempItemBase;
 }
 
 void SketchWidget::checkFitAux(ItemBase * tempItemBase, ItemBase * itemBase, long newID,
 							QHash<ConnectorItem *, Connector *> & found, QList<ConnectorItem *> & notFound,
 							QHash<ConnectorItem *, ConnectorItem *> & m2f, QHash<ConnectorItem *, Connector *> & byWire, 
-							QHash<QString, QPolygonF> & legs, QUndoCommand * parentCommand)
+							QHash<QString, QPolygonF> & legs, QHash<QString, ConnectorItem *> & formerLegs, QUndoCommand * parentCommand)
 {
 	QPointF foundAnchor(std::numeric_limits<int>::max(), std::numeric_limits<int>::max());
 	QPointF newAnchor(std::numeric_limits<int>::max(), std::numeric_limits<int>::max());
 	QHash<ConnectorItem *, QPointF> foundPoints;
 	QHash<ConnectorItem *, QPointF> newPoints;
 	QHash<ConnectorItem *, ConnectorItem *> foundNews;
+	QHash<ConnectorItem *, ConnectorItem *> newFounds;
 	QList<ConnectorItem *> removeFromFound;
 
 	foreach (ConnectorItem * foundConnectorItem, found.keys()) {
@@ -5475,6 +5505,7 @@ void SketchWidget::checkFitAux(ItemBase * tempItemBase, ItemBase * itemBase, lon
 		}
 		else {
 			foundNews.insert(foundConnectorItem, newConnectorItem);
+			newFounds.insert(newConnectorItem, foundConnectorItem);
 
 			QPointF lastNew = newConnectorItem->sceneAdjustedTerminalPoint(NULL);
 			if (lastNew.x() < newAnchor.x()) newAnchor.setX(lastNew.x());
@@ -5515,6 +5546,7 @@ void SketchWidget::checkFitAux(ItemBase * tempItemBase, ItemBase * itemBase, lon
 			if (tempItemBase->hasRubberBandLeg()) {
 				foreach (ConnectorItem * connectorItem, tempItemBase->cachedConnectorItems()) {
 					legs.insert(connectorItem->connectorSharedID(), connectorItem->leg());
+					formerLegs.insert(connectorItem->connectorSharedID(), newFounds.value(connectorItem, NULL));
 				}
 			}
 
@@ -5588,8 +5620,9 @@ void SketchWidget::checkFitAux(ItemBase * tempItemBase, ItemBase * itemBase, lon
 			foreach (ConnectorItem * connectorItem, newConnections) {
 				legs.insert(connectorItem->connectorSharedID(), connectorItem->leg());
 			}
-			foreach (ConnectorItem * connectorItem, foundNews.values()) {
-				legs.insert(connectorItem->connectorSharedID(), connectorItem->leg());
+			foreach (ConnectorItem * newConnectorItem, newFounds.keys()) {
+				legs.insert(newConnectorItem->connectorSharedID(), newConnectorItem->leg());
+				formerLegs.insert(newConnectorItem->connectorSharedID(), newFounds.value(newConnectorItem, NULL));
 			}
 		}
 

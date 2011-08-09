@@ -162,6 +162,24 @@ protected:
 
 /////////////////////////////////////////////
 
+class SimpleMoveItemCommand : public BaseCommand
+{
+public:
+    SimpleMoveItemCommand(class SketchWidget *sketchWidget, long id, QPointF & oldP, QPointF & newP, QUndoCommand *parent);
+    void undo();
+    void redo();
+
+protected:
+	QString getParamString() const;
+
+protected:
+    long m_itemID;
+    QPointF m_old;
+    QPointF m_new;
+};
+
+/////////////////////////////////////////////
+
 struct MoveItemThing {
 	long id;
 	QPointF oldPos;

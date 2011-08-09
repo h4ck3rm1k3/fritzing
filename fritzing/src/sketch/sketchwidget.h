@@ -88,6 +88,7 @@ public:
 	ItemBase * addItem(const QString & moduleID, ViewLayer::ViewLayerSpec, BaseCommand::CrossViewType, const ViewGeometry &, long id, long modelIndex, AddDeleteItemCommand * originatingCommand);
     void deleteItem(long id, bool deleteModelPart, bool doEmit, bool later);
     virtual void deleteItem(ItemBase *, bool deleteModelPart, bool doEmit, bool later);
+    void simpleMoveItem(long id, QPointF);
     void moveItem(long id, ViewGeometry &, bool updateRatsnest);
 	void moveItem(long id, const QPointF & p, bool updateRatsnest);
 	void updateWire(long id, const QString & connectorID, bool updateRatsnest);
@@ -424,11 +425,11 @@ protected:
 	void checkFit(ModelPart * newModelPart, ItemBase * itemBase, long newID,
 								QHash<ConnectorItem *, Connector *> & found, QList<ConnectorItem *> & notFound,
 								QHash<ConnectorItem *, ConnectorItem *> & m2f, QHash<ConnectorItem *, Connector *> & byWire,
-								QHash<QString, QPolygonF> & legs, QUndoCommand * parentCommand);
+								QHash<QString, QPolygonF> & legs, 	QHash<QString, ConnectorItem *> & formerLegs, QUndoCommand * parentCommand);
 	void checkFitAux(ItemBase * tempItemBase, ItemBase * itemBase, long newID,
 								QHash<ConnectorItem *, Connector *> & found, QList<ConnectorItem *> & notFound,
 								QHash<ConnectorItem *, ConnectorItem *> & m2f, QHash<ConnectorItem *, Connector *> & byWire,
-								QHash<QString, QPolygonF> & legs, QUndoCommand * parentCommand);
+								QHash<QString, QPolygonF> & legs, QHash<QString, ConnectorItem *> & formerLegs, QUndoCommand * parentCommand);
 	void changeLegAux(long fromID, const QString & fromConnectorID, const QPolygonF &, bool reset, bool relative, bool active, const QString & why);
 	void moveLegBendpoints(bool undoOnly, QUndoCommand * parentCommand);
 

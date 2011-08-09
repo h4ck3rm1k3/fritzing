@@ -266,6 +266,38 @@ QString MoveItemCommand::getParamString() const {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+SimpleMoveItemCommand::SimpleMoveItemCommand(SketchWidget* sketchWidget, long itemID, QPointF & oldP, QPointF & newP, QUndoCommand *parent)
+    : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
+{
+    m_itemID = itemID;
+    m_old = oldP;
+    m_new = newP;
+}
+
+void SimpleMoveItemCommand::undo()
+{
+    m_sketchWidget->simpleMoveItem(m_itemID, m_old);
+}
+
+void SimpleMoveItemCommand::redo()
+{
+    m_sketchWidget->simpleMoveItem(m_itemID, m_new);
+}
+
+QString SimpleMoveItemCommand::getParamString() const {
+	return QString("SimpleMoveItemCommand ") 
+		+ BaseCommand::getParamString() + 
+		QString(" id:%1 old.x:%2 old.y:%3 new.x:%4 new.y:%5")
+		.arg(m_itemID)
+		.arg(m_old.x())
+		.arg(m_old.y())
+		.arg(m_new.x())
+		.arg(m_new.y())		
+		;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 MoveItemsCommand::MoveItemsCommand(SketchWidget* sketchWidget, bool updateRatsnest, QUndoCommand *parent)
     : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
