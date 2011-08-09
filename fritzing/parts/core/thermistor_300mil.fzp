@@ -12,7 +12,8 @@
   <tag>heat sensor</tag>
  </tags>
  <properties>
-  <property name="family">Thermistor</property>
+  <property name="family">temperature sensor</property>
+  <property name="type">thermistor</property>
   <property name="Resistance at 25°">10k&#937;</property>
   <property name="Thermistor Type" showInLabel="yes">NTC</property>
  <property name="package">THT</property></properties>
