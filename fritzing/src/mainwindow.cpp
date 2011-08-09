@@ -2636,3 +2636,9 @@ void MainWindow::filenameIfSlot(QString & filename)
 	filename = QFileInfo(fileName()).fileName();
 }
 
+QList<SketchWidget *> MainWindow::sketchWidgets() 
+{
+	QList<SketchWidget *> list;
+	list << m_breadboardGraphicsView << m_schematicGraphicsView << m_pcbGraphicsView;
+	return list;
+}

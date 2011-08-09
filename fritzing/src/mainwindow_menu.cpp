@@ -64,7 +64,6 @@ $Date$
 #include "items/moduleidnames.h"
 #include "navigator/miniviewcontainer.h"
 #include "utils/zoomslider.h"
-#include "dialogs/alignsettingsdialog.h"
 #include "layerpalette.h"
 #include "program/programwindow.h"
 #include "utils/autoclosemessagebox.h"
@@ -834,14 +833,6 @@ void MainWindow::createViewMenuActions() {
 	m_alignToGridAct->setCheckable(true);
 	connect(m_alignToGridAct, SIGNAL(triggered()), this, SLOT(alignToGrid()));
 
-	m_alignToGridSettingsAct = new QAction(tr("Set Grid Size..."), this);
-	m_alignToGridSettingsAct->setStatusTip(tr("Set the size of the grid to align to"));
-	connect(m_alignToGridSettingsAct, SIGNAL(triggered()), this, SLOT(alignToGridSettings()));
-
-	m_setBackgroundColorAct = new QAction(tr("Set Background Color ..."), this);
-	m_setBackgroundColorAct->setStatusTip(tr("Set the background color for the current view"));
-	connect(m_setBackgroundColorAct, SIGNAL(triggered()), this, SLOT(setBackgroundColor()));
-
 	m_showBreadboardAct = new QAction(tr("&Show Breadboard"), this);
 	m_showBreadboardAct->setShortcut(tr("Ctrl+1"));
 	m_showBreadboardAct->setStatusTip(tr("Show the breadboard view"));
@@ -1092,11 +1083,8 @@ void MainWindow::createMenus()
 	m_viewMenu->addSeparator();
 
     m_viewMenu->addAction(m_alignToGridAct);
-    m_viewMenu->addAction(m_alignToGridSettingsAct);
 	m_viewMenu->addSeparator();
 
-    m_viewMenu->addAction(m_setBackgroundColorAct);
-    m_viewMenu->addSeparator();
     m_viewMenu->addAction(m_showBreadboardAct);
     m_viewMenu->addAction(m_showSchematicAct);
     m_viewMenu->addAction(m_showPCBAct);
@@ -2617,31 +2605,6 @@ QString MainWindow::constructFileName(const QString & differentiator, const QStr
 	return filename + suffix;
 }
 
-void MainWindow::setBackgroundColor() {
-	if (m_currentGraphicsView == NULL) return;
-
-	QColor bc = m_currentGraphicsView->background();
-	QColor sc = m_currentGraphicsView->standardBackground();
-
-	QString text = tr("%1 Background").arg(m_currentGraphicsView->viewName());
-	SetColorDialog setColorDialog(text, bc, sc, true, this);
-	int result = setColorDialog.exec();
-	if (result == QDialog::Rejected) return;
-
-	if (setColorDialog.isPrefsColor()) {
-		QSettings settings;
-		settings.setValue(QString("%1BackgroundColor").arg(m_currentGraphicsView->getShortName()), setColorDialog.selectedColor().name());
-	}
-	
-	QString oldColor = m_currentGraphicsView->background().name();
-	QString newColor = setColorDialog.selectedColor().name();
-
-	SketchBackgroundColorChangeCommand * cmd = 
-		new SketchBackgroundColorChangeCommand(m_currentGraphicsView, oldColor, newColor);
-	cmd->setText(tr("Change background color for %1 from %2 to %3").arg(m_currentGraphicsView->viewName()).arg(oldColor).arg(newColor));
-	m_undoStack->push(cmd);
-}
-
 void MainWindow::startSaveInstancesSlot(const QString & fileName, ModelPart *, QXmlStreamWriter & streamWriter) {
 	
 	if (m_backingUp) {
@@ -2950,16 +2913,6 @@ void MainWindow::alignToGrid() {
 	if (m_currentGraphicsView == NULL) return;
 
 	m_currentGraphicsView->alignToGrid(m_alignToGridAct->isChecked());
-}
-
-void MainWindow::alignToGridSettings() {
-	if (m_currentGraphicsView == NULL) return;
-
-	AlignSettingsDialog asd(m_currentGraphicsView->viewName(), m_currentGraphicsView->defaultGridSizeInches(), this);
-	int result = asd.exec();
-	if (result == QDialog::Accepted) {
-		m_currentGraphicsView->initGrid();
-	}
 }
 
 void MainWindow::openProgramWindow() {

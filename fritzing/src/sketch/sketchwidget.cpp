@@ -6924,11 +6924,17 @@ void SketchWidget::initBackgroundColor() {
 
 	QSettings settings;
 	QString colorName = settings.value(QString("%1BackgroundColor").arg(getShortName())).toString();
-	if (colorName.isEmpty()) return;
+	if (!colorName.isEmpty()) {
+		QColor color;
+		color.setNamedColor(colorName);
+		setBackground(color);
+	}
 
-	QColor color;
-	color.setNamedColor(colorName);
-	setBackground(color);
+	m_curvyWires = true;
+	QString curvy = settings.value(QString("%1CurvyWires").arg(getShortName())).toString();
+	if (!curvy.isEmpty()) {
+		m_curvyWires = (curvy.compare("0") == 0);
+	}
 }
 
 bool SketchWidget::includeSymbols() {
@@ -7936,4 +7942,14 @@ void SketchWidget::moveLegBendpoints(bool undoOnly, QUndoCommand * parentCommand
 			}
 		}
 	}
+}
+
+bool SketchWidget::curvyWires()
+{
+	return m_curvyWires;
+}
+
+void SketchWidget::setCurvyWires(bool curvyWires)
+{
+	m_curvyWires = curvyWires;
 }

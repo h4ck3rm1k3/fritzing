@@ -121,6 +121,7 @@ public:
 	void setCurrentFile(const QString &fileName, bool addToRecent, bool recovered, const QString & backupName);
 	void setRecovered(bool);
 	void setReportMissingModules(bool);
+	QList<SketchWidget *> sketchWidgets();
 
 public:
 	static void initNames();
@@ -167,8 +168,6 @@ protected slots:
     void actualSize();
 	void hundredPercentSize();
     void alignToGrid();
-	void alignToGridSettings();
-	void setBackgroundColor();
     void showBreadboardView();
     void showSchematicView();
     void showPCBView();
@@ -610,8 +609,6 @@ protected:
     QAction *m_actualSizeAct;
     QAction *m_100PercentSizeAct;
     QAction *m_alignToGridAct;
-    QAction *m_alignToGridSettingsAct;
-    QAction *m_setBackgroundColorAct;
     QAction *m_showBreadboardAct;
     QAction *m_showSchematicAct;
     QAction *m_showPCBAct;

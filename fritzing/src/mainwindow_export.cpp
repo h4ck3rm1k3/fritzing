@@ -63,7 +63,6 @@ $Date$
 #include "items/moduleidnames.h"
 #include "navigator/miniviewcontainer.h"
 #include "utils/zoomslider.h"
-#include "dialogs/alignsettingsdialog.h"
 #include "layerpalette.h"
 #include "program/programwindow.h"
 #include "utils/autoclosemessagebox.h"

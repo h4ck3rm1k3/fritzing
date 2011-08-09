@@ -852,23 +852,6 @@ protected:
 
 /////////////////////////////////////////////
 
-class SketchBackgroundColorChangeCommand : public BaseCommand
-{
-public:
-	SketchBackgroundColorChangeCommand(SketchWidget* sketchWidget, const QString &oldColor, const QString &newColor, QUndoCommand *parent=0);
-    void undo();
-    void redo();
-
-protected:
-	QString getParamString() const;
-
-protected:
-	QString m_oldColor;
-	QString m_newColor;
-};
-
-/////////////////////////////////////////////
-
 class SetResistanceCommand : public BaseCommand
 {
 public:

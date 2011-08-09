@@ -1603,35 +1603,6 @@ QString TransformItemCommand::getParamString() const {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-SketchBackgroundColorChangeCommand::SketchBackgroundColorChangeCommand(SketchWidget* sketchWidget, const QString &oldColor, const QString &newColor, QUndoCommand *parent)
-: BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
-{
-	m_oldColor = oldColor;
-	m_newColor = newColor;
-}
-
-void SketchBackgroundColorChangeCommand::undo() {
-	QColor color;
-	color.setNamedColor(m_oldColor);
-	m_sketchWidget->setBackground(color);
-}
-
-void SketchBackgroundColorChangeCommand::redo() {
-	QColor color;
-	color.setNamedColor(m_newColor);
-	m_sketchWidget->setBackground(color);
-}
-
-QString SketchBackgroundColorChangeCommand::getParamString() const {
-	return QString("SketchBackgroundColorChangeCommand ") 
-		+ BaseCommand::getParamString()
-		+ QString(" viewid:%1 oldcolor:%2 newcolor:%3" ) 
-			.arg(m_sketchWidget->viewIdentifier()).arg(m_oldColor).arg(m_newColor);
-
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 SetResistanceCommand::SetResistanceCommand(SketchWidget * sketchWidget, long itemID, QString oldResistance, QString newResistance, QString oldPinSpacing, QString newPinSpacing, QUndoCommand * parent)
 : BaseCommand(BaseCommand::CrossView, sketchWidget, parent)
 {

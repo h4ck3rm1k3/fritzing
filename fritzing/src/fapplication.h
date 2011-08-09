@@ -99,6 +99,7 @@ protected:
 	void initBackups();
 	void cleanupBackups();
 	QString makeRequestParamsString();
+	void updatePrefs(class PrefsDialog & prefsDialog);
 
 protected:
 	bool m_spaceBarIsPressed;

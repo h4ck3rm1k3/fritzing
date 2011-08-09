@@ -277,7 +277,8 @@ public:
 	void addLegBendpoint(long id, const QString & connectorID, int index, QPointF, const class Bezier *, const class Bezier *);
 	void removeLegBendpoint(long id, const QString & connectorID, int index, const class Bezier *);
 	void moveLegBendpoint(long id, const QString & connectorID, int index, QPointF);
-
+	bool curvyWires();
+	void setCurvyWires(bool);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -640,6 +641,7 @@ protected:
 	QTimer m_arrowTimer;
 	bool m_middleMouseIsPressed;
 	QMultiHash<ItemBase *, ConnectorItem *> m_stretchingLegs;
+	bool m_curvyWires;
 
 public:
 	static ViewLayer::ViewLayerID defaultConnectorLayer(ViewIdentifierClass::ViewIdentifier viewId);

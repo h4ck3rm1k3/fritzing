@@ -756,37 +756,92 @@ void FApplication::preferences() {
 		language = QLocale::system().name();
 	}
 
-	PrefsDialog prefsDialog(language, list, NULL);			// TODO: use the topmost MainWindow as parent
+	MainWindow * mainWindow = NULL;
+	foreach (QWidget * widget, m_orderedTopLevelWidgets) {
+		mainWindow = (MainWindow *) widget;
+		break;
+	}
+
+	if (mainWindow == NULL) return;			// shouldn't happen (maybe on the mac)
+
+	PrefsDialog prefsDialog(language, NULL);			// TODO: use the topmost MainWindow as parent
+	int ix = 0;
+	foreach (SketchWidget * sketchWidget, mainWindow->sketchWidgets()) {
+		prefsDialog.initViewInfo(ix++,  sketchWidget->viewName(), sketchWidget->getShortName(), 
+									sketchWidget->defaultGridSizeInches(), 
+									sketchWidget->background(), sketchWidget->standardBackground(),
+									sketchWidget->curvyWires());
+	}
+
+	prefsDialog.initLayout(list);
 	if (QDialog::Accepted == prefsDialog.exec()) {
-		if (prefsDialog.cleared()) {
-			settings.clear();
+		updatePrefs(prefsDialog);
+	}
+}
+
+void FApplication::updatePrefs(PrefsDialog & prefsDialog)
+{
+	QSettings settings;
+
+	if (prefsDialog.cleared()) {
+		settings.clear();
+		return;
+	}
+
+	QHash<QString, QString> hash = prefsDialog.settings();
+	foreach (QString key, hash.keys()) {
+		settings.setValue(key, hash.value(key));
+		if (key.compare("connectedColor") == 0) {
+			QColor c(hash.value(key));
+			ItemBase::setConnectedColor(c);
+			foreach (QWidget * widget, m_orderedTopLevelWidgets) {
+				((MainWindow *) widget)->redrawSketch();
+			}
 		}
-		else {
-			QHash<QString, QString> hash = prefsDialog.settings();
-			foreach (QString key, hash.keys()) {
-				settings.setValue(key, hash.value(key));
-				if (key.compare("connectedColor") == 0) {
-					QColor c(hash.value(key));
-					ItemBase::setConnectedColor(c);
-					foreach (QWidget * widget, m_orderedTopLevelWidgets) {
-						((MainWindow *) widget)->redrawSketch();
+		else if (key.compare("unconnectedColor") == 0) {
+			QColor c(hash.value(key));
+			ItemBase::setUnconnectedColor(c);
+			foreach (QWidget * widget, m_orderedTopLevelWidgets) {
+				((MainWindow *) widget)->redrawSketch();
+			}
+		}
+		else if (key.compare("wheelMapping") == 0) {
+			ZoomableGraphicsView::setWheelMapping((ZoomableGraphicsView::WheelMapping) hash.value(key).toInt());
+		}
+		else if (key.compare("autosavePeriod") == 0) {
+			MainWindow::setAutosavePeriod(hash.value(key).toInt());
+		}
+		else if (key.compare("autosaveEnabled") == 0) {
+			MainWindow::setAutosaveEnabled(hash.value(key).toInt());
+		}
+		else if (key.contains("gridsize", Qt::CaseInsensitive)) {
+			foreach (QWidget * widget, m_orderedTopLevelWidgets) {
+				foreach (SketchWidget * sketchWidget, ((MainWindow *) widget)->sketchWidgets()) {
+					if (key.contains(sketchWidget->viewName())) {
+						sketchWidget->initGrid();
 					}
 				}
-				else if (key.compare("unconnectedColor") == 0) {
-					QColor c(hash.value(key));
-					ItemBase::setUnconnectedColor(c);
-					foreach (QWidget * widget, m_orderedTopLevelWidgets) {
-						((MainWindow *) widget)->redrawSketch();
+			}
+		}
+		else if (key.contains("curvy", Qt::CaseInsensitive)) {
+			foreach (QWidget * widget, m_orderedTopLevelWidgets) {
+				foreach (SketchWidget * sketchWidget, ((MainWindow *) widget)->sketchWidgets()) {
+					if (key.contains(sketchWidget->getShortName())) {
+						sketchWidget->setCurvyWires(hash.value(key).compare("0") != 0);
 					}
 				}
-				else if (key.compare("wheelMapping") == 0) {
-					ZoomableGraphicsView::setWheelMapping((ZoomableGraphicsView::WheelMapping) hash.value(key).toInt());
-				}
-				else if (key.compare("autosavePeriod") == 0) {
-					MainWindow::setAutosavePeriod(hash.value(key).toInt());
-				}
-				else if (key.compare("autosaveEnabled") == 0) {
-					MainWindow::setAutosaveEnabled(hash.value(key).toInt());
+			}
+		}
+	}
+
+	hash = prefsDialog.tempSettings();
+	foreach (QString key, hash.keys()) {
+		if (key.contains("background", Qt::CaseInsensitive)) {
+			foreach (QWidget * widget, m_orderedTopLevelWidgets) {
+				foreach (SketchWidget * sketchWidget, ((MainWindow *) widget)->sketchWidgets()) {
+					if (key.contains(sketchWidget->getShortName())) {
+						sketchWidget->setBackground(hash.value(key));
+					}
 				}
 			}
 		}
