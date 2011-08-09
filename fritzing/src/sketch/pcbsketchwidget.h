@@ -96,6 +96,7 @@ public:
 	bool groundFill(QUndoCommand * parentCommand);
 	QString generateCopperFillUnit(ItemBase * itemBase, QPointF whereToStart);
 	double getWireStrokeWidth(Wire *, double wireWidth);
+	bool curvyWiresIndicated(Qt::KeyboardModifiers);
 
 public:
 	static QSizeF jumperItemSize();

@@ -185,6 +185,7 @@ protected:
 	void replaceBezier(int index, const Bezier * newBezier);
 	bool eventFilter(QObject * object, QEvent * event);
 	void updateLegCursor(QPointF p, Qt::KeyboardModifiers modifiers);
+	bool curvyWiresIndicated(Qt::KeyboardModifiers);
 
 protected:
 	QPointer<Connector> m_connector;

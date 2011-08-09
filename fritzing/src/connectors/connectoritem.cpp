@@ -2340,7 +2340,7 @@ bool ConnectorItem::legMousePressEvent(QGraphicsSceneMouseEvent *event) {
 			return true;
 
 		case InSegment:
-			if (event->modifiers() & Qt::ControlModifier) {
+			if (curvyWiresIndicated(event->modifiers())) {
 				m_draggingLegIndex = bendpointIndex - 1;
 				Bezier * bezier = m_legCurves.at(m_draggingLegIndex);
 				if (bezier == NULL) {
@@ -2672,7 +2672,7 @@ void ConnectorItem::updateLegCursor(QPointF p, Qt::KeyboardModifiers modifiers)
 			cursor = (bendpointIndex == 0) ? Qt::CrossCursor : *BendpointCursor;
 			break;
 		case InSegment:
-			cursor = (modifiers & Qt::ControlModifier) ? *MakeCurveCursor : *NewBendpointCursor;
+			cursor = curvyWiresIndicated(modifiers) ? *MakeCurveCursor : *NewBendpointCursor;
 			break;
 		case InConnector:
 			cursor = (modifiers & DragWireModifiers) ? *MakeWireCursor : Qt::CrossCursor;
@@ -2700,3 +2700,14 @@ void ConnectorItem::initCursors()
 		MakeCurveCursor = new QCursor(bitmap4, bitmap4, 15, 15);
 	}
 }
+
+bool ConnectorItem::curvyWiresIndicated(Qt::KeyboardModifiers modifiers)
+{
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView == NULL) return true;
+
+	return infoGraphicsView->curvyWiresIndicated(modifiers);
+}
+
+
+	

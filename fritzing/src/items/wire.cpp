@@ -1739,7 +1739,8 @@ void Wire::updateCursor(Qt::KeyboardModifiers modifiers)
 		}
 	}
 	else {
-		if (modifiers && Qt::ControlModifier) {
+		InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);;
+		if (infoGraphicsView == NULL || infoGraphicsView->curvyWiresIndicated(modifiers)) {
 			setCursor(*ConnectorItem::MakeCurveCursor);
 		}
 		else {

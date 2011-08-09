@@ -325,3 +325,7 @@ double InfoGraphicsView::getWireStrokeWidth(Wire *, double wireWidth)
 	return wireWidth;
 }
 
+bool InfoGraphicsView::curvyWiresIndicated(Qt::KeyboardModifiers)
+{
+	return true;
+}

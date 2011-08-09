@@ -99,6 +99,7 @@ public:
 	virtual void prepLegBendpointChange(ConnectorItem * from, int oldCount, int newCount, int index, QPointF pos, const class Bezier *, const class Bezier *, const class Bezier *, bool triggerFirstTime);
 	virtual void prepLegSelection(ItemBase *);
 	virtual double getWireStrokeWidth(Wire *, double wireWidth);
+	virtual bool curvyWiresIndicated(Qt::KeyboardModifiers);
 
 
 public slots:

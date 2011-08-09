@@ -2049,7 +2049,7 @@ void SketchWidget::mousePressEvent(QMouseEvent *event)
 				return;
 			}
 			else {
-				m_dragCurve = ((event->modifiers() & Qt::ControlModifier) != 0) && wire->canHaveCurve();
+				m_dragCurve = curvyWiresIndicated(event->modifiers()) && wire->canHaveCurve();
 				m_dragBendpointWire = wire;
 				m_dragBendpointPos = event->pos();
 				return;	
@@ -7952,4 +7952,13 @@ bool SketchWidget::curvyWires()
 void SketchWidget::setCurvyWires(bool curvyWires)
 {
 	m_curvyWires = curvyWires;
+}
+
+bool SketchWidget::curvyWiresIndicated(Qt::KeyboardModifiers modifiers)
+{
+	if (m_curvyWires) {
+		return ((modifiers & Qt::ControlModifier) == 0);
+	}
+
+	return ((modifiers & Qt::ControlModifier) != 0);
 }

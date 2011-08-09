@@ -2733,3 +2733,8 @@ void PCBSketchWidget::prereleaseTempWireForDragging(Wire* wire)
 		wire->setWireFlags(0);
 	}
 }
+
+bool PCBSketchWidget::curvyWiresIndicated(Qt::KeyboardModifiers)
+{
+	return false;
+}

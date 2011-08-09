@@ -279,6 +279,7 @@ public:
 	void moveLegBendpoint(long id, const QString & connectorID, int index, QPointF);
 	bool curvyWires();
 	void setCurvyWires(bool);
+	bool curvyWiresIndicated(Qt::KeyboardModifiers);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
