@@ -5430,7 +5430,8 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 
 	// changeConnection calls PaletteItemBase::connectedMoved which repositions the new part
 	// so slam in the desired position
-	new SimpleMoveItemCommand(this, newID, itemBase->getViewGeometry().loc(), itemBase->getViewGeometry().loc(), parentCommand);
+        QPointF p = itemBase->getViewGeometry().loc();
+        new SimpleMoveItemCommand(this, newID, p, p, parentCommand);
 
 	foreach (QString connectorID, legs.keys()) {
 		// must be invoked after all the connections have been dealt with
