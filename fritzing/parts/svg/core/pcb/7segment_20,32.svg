@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 14.0.0, SVG Export Plug-In  -->
+<!DOCTYPE svg [
+	<!ENTITY ns_flows "http://ns.adobe.com/Flows/1.0/">
+]>
+<svg version="1.2" baseProfile="tiny"
+	 xmlns="http://www.w3.org/2000/svg" 
+	 x="0px" y="0px" width="58px" height="80px" viewBox="0 0 58 80" xml:space="preserve">
+<g id="copper0"><g id="copper1">
+<circle id="connector35pad_1_" fill="none" stroke="#F7BD13" stroke-width="1.224" cx="6.745" cy="14.098" r="2.052"/>
+<rect x="4.693" y="12.045" fill="none" stroke="#F7BD13" stroke-width="1.224" width="4.104" height="4.104"/>
+<circle id="connector36pad_9_" fill="none" stroke="#F7BD13" stroke-width="1.224" cx="6.745" cy="21.297" r="2.052"/>
+<circle id="connector37pad_3_" fill="none" stroke="#F7BD13" stroke-width="1.224" cx="6.745" cy="28.498" r="2.052"/>
+<circle id="connector38pad_9_" fill="none" stroke="#F7BD13" stroke-width="1.224" cx="6.745" cy="35.697" r="2.052"/>
+<circle id="connector38pad_8_" fill="none" stroke="#F7BD13" stroke-width="1.224" cx="6.748" cy="42.817" r="2.052"/>
+<circle id="connector36pad_8_" fill="none" stroke="#F7BD13" stroke-width="1.224" cx="49.93" cy="35.669" r="2.052"/>
+<circle id="connector37pad_2_" fill="none" stroke="#F7BD13" stroke-width="1.224" cx="49.93" cy="42.87" r="2.052"/>
+<circle id="connector38pad_7_" fill="none" stroke="#F7BD13" stroke-width="1.224" cx="49.93" cy="50.069" r="2.052"/>
+<circle id="connector38pad_6_" fill="none" stroke="#F7BD13" stroke-width="1.224" cx="49.933" cy="57.189" r="2.052"/>
+<circle id="connector36pad_7_" fill="none" stroke="#F7BD13" stroke-width="1.224" cx="49.96" cy="28.445" r="2.052"/>
+<path fill="#9B9B9B" d="M56.443,0.25v78.02H0.25V0.25H56.443 M56.693,0H0v78.52h56.693V0L56.693,0z"/>
+<circle id="connector38pad_5_" fill="none" stroke="#F7BD13" stroke-width="1.224" cx="6.744" cy="50.058" r="2.052"/>
+<circle id="connector36pad_6_" fill="none" stroke="#F7BD13" stroke-width="1.224" cx="49.947" cy="14.058" r="2.052"/>
+<circle id="connector36pad_5_" fill="none" stroke="#F7BD13" stroke-width="1.224" cx="49.929" cy="64.457" r="2.052"/>
+</g></g>
+</svg>
