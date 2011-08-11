@@ -283,6 +283,8 @@ QVariant PartsEditorConnectorsConnectorItem::itemChange(GraphicsItemChange chang
 
 
 void PartsEditorConnectorsConnectorItem::informChange() {
+	if (scene() == NULL) return;
+
 	if(m_inFileDefined && !m_geometryHasChangedAlLeastOnce) {
 		PartsEditorView *gv = dynamic_cast<PartsEditorView*>(scene()->parent());
 		if(gv) {
