@@ -827,7 +827,7 @@ void FApplication::updatePrefs(PrefsDialog & prefsDialog)
 			foreach (QWidget * widget, m_orderedTopLevelWidgets) {
 				foreach (SketchWidget * sketchWidget, ((MainWindow *) widget)->sketchWidgets()) {
 					if (key.contains(sketchWidget->getShortName())) {
-						sketchWidget->setCurvyWires(hash.value(key).compare("0") != 0);
+						sketchWidget->setCurvyWires(hash.value(key).compare("1") == 0);
 					}
 				}
 			}

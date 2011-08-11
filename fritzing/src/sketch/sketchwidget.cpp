@@ -118,9 +118,8 @@ const int AutoRepeatDelay = 750;
 SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
 {
-
-        //setViewport(new QGLWidget);
-
+    //setViewport(new QGLWidget);
+	m_curvyWires = false;
 	m_middleMouseIsPressed = false;
 	m_arrowTimer.setParent(this);
 	m_arrowTimer.setInterval(AutoRepeatDelay);
@@ -6931,10 +6930,10 @@ void SketchWidget::initBackgroundColor() {
 		setBackground(color);
 	}
 
-	m_curvyWires = true;
+	m_curvyWires = false;
 	QString curvy = settings.value(QString("%1CurvyWires").arg(getShortName())).toString();
 	if (!curvy.isEmpty()) {
-		m_curvyWires = (curvy.compare("0") == 0);
+		m_curvyWires = (curvy.compare("1") == 0);
 	}
 }
 

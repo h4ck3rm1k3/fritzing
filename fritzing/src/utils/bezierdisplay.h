@@ -28,6 +28,7 @@ $Date$
 #define BEZIERDISPLAY_H
 
 #include <QGraphicsLineItem>
+#include <QGraphicsEllipseItem>
 #include "bezier.h"
 
 class BezierDisplay {
@@ -40,8 +41,10 @@ public:
 	void updateDisplay(QGraphicsItem * master, Bezier *);
 
 protected:
-	QGraphicsLineItem * m_item0;
-	QGraphicsLineItem * m_item1;
+	QGraphicsLineItem * m_itemL0;
+	QGraphicsLineItem * m_itemL1;
+	QGraphicsEllipseItem * m_itemE0;
+	QGraphicsEllipseItem * m_itemE1;
 };
 
 #endif

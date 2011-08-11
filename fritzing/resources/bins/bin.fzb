@@ -552,6 +552,13 @@
                 </iconView>
             </views>
         </instance>
+	<instance moduleIdRef="proto_shield_v6MEGA" modelIndex="48" path="parts/core/proto_shield_v6MEGA.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
       
       <instance moduleIdRef="__spacer__" modelIndex="3" path="Microcontroller">
         <views>
