@@ -164,37 +164,6 @@
     </message>
 </context>
 <context>
-    <name>AlignSettingsDialog</name>
-    <message>
-        <source>Set the grid size for %1 only.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Grid Size:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>in</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>mm</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Restore Default</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="unfinished">OK</translation>
-    </message>
-</context>
-<context>
     <name>AutorouteProgressDialog</name>
     <message>
         <source>Cancel</source>
@@ -347,6 +316,10 @@ Note: %n parts are not located entirely on the board.</source>
     </message>
     <message>
         <source>Remove bendpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Straighten curve</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -737,10 +710,6 @@ Por favor seleccione um dos tipos de letra do Fritzing para o substituir:</trans
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>unable to create renderer for svg</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>capacitance</source>
         <translation type="unfinished"></translation>
     </message>
@@ -822,6 +791,10 @@ Por favor seleccione um dos tipos de letra do Fritzing para o substituir:</trans
     </message>
     <message>
         <source>project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unable to create renderer for svg %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1857,24 +1830,8 @@ Estamos a trabalhar para evitar esta mensagem, e apenas deixar-te escolher entre
         <translation>Desligar todos os fios ligados a este conector</translation>
     </message>
     <message>
-        <source>Set Background Color ...</source>
-        <translation>Definir a cor de fundo ...</translation>
-    </message>
-    <message>
-        <source>Set the background color for the current view</source>
-        <translation>Definir a cor do fundo para a vista actual</translation>
-    </message>
-    <message>
         <source>Display some handy Fritzing tips and tricks</source>
         <translation>Mostra algumas dicas e truques &quot;habilidosos&quot;</translation>
-    </message>
-    <message>
-        <source>%1 Background</source>
-        <translation>Fundo %1</translation>
-    </message>
-    <message>
-        <source>Change background color for %1 from %2 to %3</source>
-        <translation>Mudar a cor do fundo de %1 de %2 para %3</translation>
     </message>
     <message>
         <source>Share</source>
@@ -1951,11 +1908,6 @@ Do you want to restart now?</source>
         <translation>Exportar o componente nesta vista em 1000 dpi SVG Achatado</translation>
     </message>
     <message>
-        <source>No new part found for %1.
-</source>
-        <translation>Não foram encontrados componentes para %1.</translation>
-    </message>
-    <message>
         <source>Select outdated parts</source>
         <translation>Seleccione os componentes desactualizados</translation>
     </message>
@@ -1979,11 +1931,6 @@ Todos os seus componentes estão actualizados.</translation>
             <numerusform>Foram encontradas %n componentes desactualizados. Quer actualizar esses componentes?</numerusform>
             <numerusform></numerusform>
         </translation>
-    </message>
-    <message>
-        <source>Unknown module id for %1.
-</source>
-        <translation>Identificação do módulo%1 é desconhecida.</translation>
     </message>
     <message>
         <source>Successfully updated %1 part(s).
@@ -2041,14 +1988,6 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
     </message>
     <message>
         <source>Align items to grid when dragging</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Set Grid Size...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Set the size of the grid to align to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2536,6 +2475,27 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
     </message>
     <message>
         <source>Order a PCB created from your sketch--from fabulous Fritzing Fab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Straighten Curve</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Straighten the curve of the selected wire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select All CopperFill</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all copper fill items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unable to find replacement for %1.
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3354,6 +3314,53 @@ Alt or %1 key = scroll
 shift key swaps scroll axis</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Align-to-Grid size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set the grid size for %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grid Size:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>in</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restore Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Background color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 background Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Curvy vs. straight wires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When you mouse-down and drag on a wire or the leg of a part (as opposed to a connector or a bendpoint) do you want to change the curvature of the wire (or leg) or drag out a new bendpoint?
+
+This checkbox sets the default behavior. You can switch back to the non-default behavior by holding down the Control key (Mac: Command key) when you drag.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProgramTab</name>
@@ -3748,10 +3755,6 @@ shift key swaps scroll axis</source>
         <translation>Seleccionar Tudo %1</translation>
     </message>
     <message>
-        <source>Select all traces marked &quot;Don&apos;t autoroute&quot;</source>
-        <translation>Seleccionar todos os traços marcados como &quot;Não autoencaminhar (Autoroute)&quot;</translation>
-    </message>
-    <message>
         <source>Preferences</source>
         <translation>Preferências</translation>
     </message>
@@ -3909,10 +3912,6 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>Select all jumpers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Grid Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4217,6 +4216,10 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>Change leg of %1,%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all traces marked &apos;Don&apos;t autoroute&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4610,6 +4613,14 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
         <source>Flip %2 (%1)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Change leg curvature for %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change leg bendpoint for %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Stripboard</name>
@@ -4726,6 +4737,14 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
         <source>&lt;li&gt;To display different properties in a part label, rotate it, or change the font, right-click the label.&lt;/li&gt;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&lt;li&gt;In Breadboard view, to add a curve to a wire or rubber-band leg, drag with the Control (Mac: Command) key down.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;li&gt;In Breadboard view, to drag out a wire from the end of a rubber-band leg, drag with the Alt (Linux: Meta) key down.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TraceWire</name>
@@ -4826,6 +4845,10 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>Thai - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Greek - %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

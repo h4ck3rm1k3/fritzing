@@ -164,37 +164,6 @@
     </message>
 </context>
 <context>
-    <name>AlignSettingsDialog</name>
-    <message>
-        <source>Set the grid size for %1 only.</source>
-        <translation>设置网格大小为 %1 only.</translation>
-    </message>
-    <message>
-        <source>Grid Size:</source>
-        <translation>网格大小:</translation>
-    </message>
-    <message>
-        <source>in</source>
-        <translation>in</translation>
-    </message>
-    <message>
-        <source>mm</source>
-        <translation>mm</translation>
-    </message>
-    <message>
-        <source>Restore Default</source>
-        <translation>恢复默认值</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>取消</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation>确定</translation>
-    </message>
-</context>
-<context>
     <name>AutorouteProgressDialog</name>
     <message>
         <source>Cancel</source>
@@ -343,6 +312,10 @@ Note: %n parts are not located entirely on the board.</source>
     </message>
     <message>
         <source>Remove bendpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Straighten curve</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -734,10 +707,6 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation>文件%1未找到</translation>
     </message>
     <message>
-        <source>unable to create renderer for svg</source>
-        <translation>不能创建svg的渲染</translation>
-    </message>
-    <message>
         <source>capacitance</source>
         <translation>电容</translation>
     </message>
@@ -819,6 +788,10 @@ Please select one of the Fritzing fonts to replace them:</source>
     </message>
     <message>
         <source>project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unable to create renderer for svg %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1641,14 +1614,6 @@ We&apos;re working to avoid this message, and only let you choose between proper
         <translation>Shift+Ctrl+0</translation>
     </message>
     <message>
-        <source>Set Background Color ...</source>
-        <translation>设置背景色...</translation>
-    </message>
-    <message>
-        <source>Set the background color for the current view</source>
-        <translation>为当前视图设置背景色</translation>
-    </message>
-    <message>
         <source>&amp;Show Breadboard</source>
         <translation>显示面包板(&amp;S)</translation>
     </message>
@@ -1925,14 +1890,6 @@ We&apos;re working to avoid this message, and only let you choose between proper
         <translation>连线颜色(&amp;W)</translation>
     </message>
     <message>
-        <source>%1 Background</source>
-        <translation>%1背景</translation>
-    </message>
-    <message>
-        <source>Change background color for %1 from %2 to %3</source>
-        <translation>为%1改变背景色，从%2到%3</translation>
-    </message>
-    <message>
         <source>Export Normalized SVG</source>
         <translation>导出为标准的SVG</translation>
     </message>
@@ -1947,12 +1904,6 @@ We&apos;re working to avoid this message, and only let you choose between proper
     <message>
         <source>Export 1000 dpi Flattened SVG of this part in this view</source>
         <translation>导出为1000 dpi在此视图中元件的SVG图像</translation>
-    </message>
-    <message>
-        <source>No new part found for %1.
-</source>
-        <translation>未发现新元件 %1.
-</translation>
     </message>
     <message>
         <source>Select outdated parts</source>
@@ -1977,11 +1928,6 @@ All your parts are up-to-date.</source>
         <translation>
             <numerusform>找到 %n 个过期元件。现在想更新他们么?</numerusform>
         </translation>
-    </message>
-    <message>
-        <source>Unknown module id for %1.
-</source>
-        <translation>未知模块id 为 %1.</translation>
     </message>
     <message>
         <source>Successfully updated %1 part(s).
@@ -2040,14 +1986,6 @@ Please check all views for potential side-effects.</source>
     <message>
         <source>Align items to grid when dragging</source>
         <translation>拖动时对齐至网格</translation>
-    </message>
-    <message>
-        <source>Set Grid Size...</source>
-        <translation>设置网格大小...</translation>
-    </message>
-    <message>
-        <source>Set the size of the grid to align to</source>
-        <translation>设置网格大小并对齐</translation>
     </message>
     <message>
         <source>Open programming window</source>
@@ -2533,6 +2471,27 @@ Please check all views for potential side-effects.</source>
     </message>
     <message>
         <source>Order a PCB created from your sketch--from fabulous Fritzing Fab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Straighten Curve</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Straighten the curve of the selected wire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select All CopperFill</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all copper fill items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unable to find replacement for %1.
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3349,6 +3308,53 @@ Alt or %1 key = scroll
 shift key swaps scroll axis</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Align-to-Grid size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set the grid size for %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grid Size:</source>
+        <translation type="unfinished">网格大小:</translation>
+    </message>
+    <message>
+        <source>in</source>
+        <translation type="unfinished">in</translation>
+    </message>
+    <message>
+        <source>mm</source>
+        <translation type="unfinished">mm</translation>
+    </message>
+    <message>
+        <source>Restore Default</source>
+        <translation type="unfinished">恢复默认值</translation>
+    </message>
+    <message>
+        <source>Background color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 background Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Curvy vs. straight wires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When you mouse-down and drag on a wire or the leg of a part (as opposed to a connector or a bendpoint) do you want to change the curvature of the wire (or leg) or drag out a new bendpoint?
+
+This checkbox sets the default behavior. You can switch back to the non-default behavior by holding down the Control key (Mac: Command key) when you drag.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProgramTab</name>
@@ -3769,10 +3775,6 @@ is already there, we won&apos;t add it again, right?</source>
         <translation>pcb</translation>
     </message>
     <message>
-        <source>Select all traces marked &quot;Don&apos;t autoroute&quot;</source>
-        <translation>选择所有标记&quot;不自动布线&quot;的引导线</translation>
-    </message>
-    <message>
         <source>Oops!</source>
         <translation>哦哦哦!</translation>
     </message>
@@ -3905,10 +3907,6 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     <message>
         <source>Select all jumpers</source>
         <translation>选择所有跳线</translation>
-    </message>
-    <message>
-        <source>Grid Size</source>
-        <translation>网格大小</translation>
     </message>
     <message>
         <source>files</source>
@@ -4213,6 +4211,10 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     </message>
     <message>
         <source>Change leg of %1,%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all traces marked &apos;Don&apos;t autoroute&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4604,6 +4606,14 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
         <source>Flip %2 (%1)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Change leg curvature for %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change leg bendpoint for %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Stripboard</name>
@@ -4719,6 +4729,14 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
         <source>&lt;li&gt;To display different properties in a part label, rotate it, or change the font, right-click the label.&lt;/li&gt;</source>
         <translation>&lt;li&gt;要在元件标签中显示不同的属性，转动它或者改变字体，右击此标签。&lt;/li&gt;</translation>
     </message>
+    <message>
+        <source>&lt;li&gt;In Breadboard view, to add a curve to a wire or rubber-band leg, drag with the Control (Mac: Command) key down.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;li&gt;In Breadboard view, to drag out a wire from the end of a rubber-band leg, drag with the Alt (Linux: Meta) key down.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TraceWire</name>
@@ -4820,6 +4838,10 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     <message>
         <source>Thai - %1</source>
         <translation>泰国语 - %1</translation>
+    </message>
+    <message>
+        <source>Greek - %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
