@@ -67,7 +67,7 @@ bool PartsEditorMainWindow::m_closeAfterSaving = true;
 #ifdef QT_NO_DEBUG
 	#define CORE_EDITION_ENABLED false
 #else
-	#define CORE_EDITION_ENABLED true
+	#define CORE_EDITION_ENABLED false
 #endif
 
 
@@ -474,7 +474,7 @@ const QDir& PartsEditorMainWindow::createTempFolderIfNecessary() {
 
 bool PartsEditorMainWindow::save() {
 	if(validateMinRequirements() && wannaSaveAfterWarning(false)) {
-		bool result = FritzingWindow::save();
+		bool result = (m_saveButton->isEnabled()) ? FritzingWindow::save() : saveAs();
 		if(result) {
 			m_cancelCloseButton->setText(tr("close"));
 			if(m_closeAfterSaving) close();
