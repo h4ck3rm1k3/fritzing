@@ -199,6 +199,8 @@ public:
 	virtual QRectF boundingRectWithoutLegs() const;
     QRectF boundingRect() const;
     virtual QPainterPath hoverShape() const;
+	bool rubberBandLegEnabled();
+	void setRubberBandLegEnabled(bool);
 
 public:
 	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, double & opacity, double & negativePenWidth, bool & negativeOffsetRect);
@@ -323,6 +325,7 @@ protected:
 	bool m_moveLock;
 	bool m_hasRubberBandLeg;
 	QList<ConnectorItem *> m_cachedConnectorItems;
+	bool m_rubberBandLegEnabled;
 
 protected:
 	static long nextID;

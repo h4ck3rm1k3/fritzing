@@ -557,7 +557,7 @@ bool PartsBinPaletteWidget::open(QString fileName, QObject * progressTarget) {
     	saveAsLastBin();
     	m_isDirty = false;
     } else if(fileName.endsWith(FritzingBundledBinExtension)) {
-    	m_manager->mainWindow()->loadBundledNonAtomicEntity(fileName,this,false);
+    	m_manager->mainWindow()->loadBundledNonAtomicEntity(fileName,this,false, false);
     }
 
     return true;
@@ -989,3 +989,5 @@ void PartsBinPaletteWidget::updateBinPartsMenu() {
 	m_removePartAction->setEnabled(enabled && allowsChanges());
 	m_importPartAction->setEnabled(true);
 }
+
+

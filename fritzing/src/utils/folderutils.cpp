@@ -199,15 +199,21 @@ const QStringList & FolderUtils::userDataStoreFolders() {
 }
 
 void FolderUtils::setOpenSaveFolder(const QString& path) {
+	setOpenSaveFolderAux(path);
+	QSettings settings;
+	settings.setValue("openSaveFolder", m_openSaveFolder);
+}
+
+void FolderUtils::setOpenSaveFolderAux(const QString& path) 
+{
 	QFileInfo fileInfo(path);
 	if(fileInfo.isDir()) {
 		m_openSaveFolder = path;
 	} else {
 		m_openSaveFolder = fileInfo.path().remove(fileInfo.fileName());
 	}
-	QSettings settings;
-	settings.setValue("openSaveFolder", m_openSaveFolder);
 }
+
 
 const QString FolderUtils::openSaveFolder() {
 	if(m_openSaveFolder == ___emptyString___) {

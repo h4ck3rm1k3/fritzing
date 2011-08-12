@@ -486,15 +486,25 @@ int FApplication::serviceStartup() {
 		return -1;
 	}
 
-	int loaded = 0;
-	MainWindow * mainWindow = loadWindows(loaded);
-	m_started = true;
+	QDir dir(m_outputFolder);
+	QString s = dir.absolutePath();
+	QStringList filters;
+	filters << "*" + FritzingBundleExtension;
+	QStringList filenames = dir.entryList(filters, QDir::Files);
+	foreach (QString filename, filenames) {
+		QString filepath = dir.absoluteFilePath(filename);
+		int loaded = 0;
+		MainWindow * mainWindow = loadWindows(loaded);
+		m_started = true;
 
-	if (loaded == 0) {
-		return -1;
+		FolderUtils::setOpenSaveFolderAux(m_outputFolder);
+		if (mainWindow->loadWhich(filepath, false, false, true)) {
+			mainWindow->exportToGerber(m_outputFolder, NULL, false);
+		}
+
+		mainWindow->setCloseSilently(true);
+		mainWindow->close();
 	}
-
-	mainWindow->exportToGerber(m_outputFolder, NULL, false);
 
 	return 0;
 }
@@ -729,7 +739,7 @@ void FApplication::finish()
 
 void FApplication::loadNew(QString path) {
 	MainWindow * mw = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, path, true);
-	if (!mw->loadWhich(path, false, true)) {
+	if (!mw->loadWhich(path, false, true, false)) {
 		mw->close();
 	}
 	mw->clearFileProgressDialog();
@@ -738,7 +748,7 @@ void FApplication::loadNew(QString path) {
 void FApplication::loadOne(MainWindow * mw, QString path, int loaded) {
 	if (loaded == 0) {
 		mw->showFileProgressDialog(path);
-		mw->loadWhich(path, true, true);
+		mw->loadWhich(path, true, true, false);
 	}
 	else {
 		loadNew(path);
@@ -1176,7 +1186,7 @@ void FApplication::loadSomething(bool firstRun, const QString & prevVersion) {
         foreach (QString filename, m_filesToLoad) {
             DebugDialog::debug(QString("Loading non-service file %1").arg(filename));
             MainWindow *mainWindow = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, filename, true);
-            mainWindow->loadWhich(filename, true, true);
+            mainWindow->loadWhich(filename, true, true, false);
             sketchesToLoad << mainWindow;
         }
 	}

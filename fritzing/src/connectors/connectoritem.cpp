@@ -238,7 +238,9 @@ parts editor support
 static Bezier UndoBezier;
 static BezierDisplay * TheBezierDisplay = NULL;
 
-static const double StandardLegConnectorLength = 6;			// pixels
+static const double StandardLegConnectorDrawEnabledLength = 5;		// pixels
+static const double StandardLegConnectorDetectLength = 9;			// pixels
+
 
 QList<ConnectorItem *> ConnectorItem::m_equalPotentialDisplayItems;
 
@@ -2205,11 +2207,11 @@ void ConnectorItem::repoly(const QPolygonF & poly, bool relative)
 	calcConnectorEnd();
 }
 
-QPointF ConnectorItem::calcConnectorEnd()
+void ConnectorItem::calcConnectorEnd()
 {
 	if (m_legPolygon.count() < 2) {
 		m_connectorEnd = QPointF(0,0);
-		return m_connectorEnd;
+		return;
 	}
 
 	QPointF p1 = m_legPolygon.last();
@@ -2217,33 +2219,33 @@ QPointF ConnectorItem::calcConnectorEnd()
 	double dx = p1.x() - p0.x();
 	double dy = p1.y() - p0.y();
 	double lineLen = qSqrt((dx * dx) + (dy * dy));
-	double len = qMax(0.5, qMin(lineLen, StandardLegConnectorLength));
+	double len = qMax(0.5, qMin(lineLen, StandardLegConnectorDetectLength));
 
 	Bezier * bezier = m_legCurves.at(m_legCurves.count() - 2);
 	if (bezier == NULL || bezier->isEmpty()) {
 		m_connectorEnd = QPointF(p1 - QPointF(dx * len / lineLen, dy * len / lineLen));
-		return m_connectorEnd;
+		return;
 	}
 
 	bezier->set_endpoints(p0, p1);
 
 	double blen = bezier->computeCubicCurveLength(1.0, 24);
-	if (blen < StandardLegConnectorLength) {
+	if (blen < StandardLegConnectorDetectLength) {
 		m_connectorEnd = p0;
-		return m_connectorEnd;
+		return;
 	}
 
 	// use binary search to find a value for t
 	double tmax = 1.0;
 	double tmin = 0;
-	double t = 1.0 - (StandardLegConnectorLength / blen);
+	double t = 1.0 - (StandardLegConnectorDetectLength / blen);
 	while (true) {
 		double l = bezier->computeCubicCurveLength(t, 24);
-		if (qAbs(blen - StandardLegConnectorLength - l) < .0001) {
+		if (qAbs(blen - StandardLegConnectorDetectLength - l) < .0001) {
 			break;
 		}
 
-		if (blen - StandardLegConnectorLength - l > 0) {
+		if (blen - StandardLegConnectorDetectLength - l > 0) {
 			// too short
 			tmin = t;
 			t = (t + tmax) / 2;
@@ -2256,7 +2258,6 @@ QPointF ConnectorItem::calcConnectorEnd()
 	}
 	m_connectorEnd = QPointF(bezier->xFromT(t), bezier->yFromT(t));
 	m_connectorT = t;
-	return m_connectorEnd;
 }
 
 const QString & ConnectorItem::legID(ViewIdentifierClass::ViewIdentifier viewID, ViewLayer::ViewLayerID viewLayerID) {
@@ -2710,4 +2711,3 @@ bool ConnectorItem::curvyWiresIndicated(Qt::KeyboardModifiers modifiers)
 }
 
 
-	

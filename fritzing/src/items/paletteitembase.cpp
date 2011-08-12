@@ -88,8 +88,6 @@ QRectF PaletteItemBase::boundingRect() const
 
 QPainterPath PaletteItemBase::hoverShape() const
 {
-	if (!hasRubberBandLeg()) return ItemBase::hoverShape();
-
 	// TODO: figure out real shape of svg
     QPainterPath path;
     path.addRect(0, 0, m_size.width(), m_size.height());

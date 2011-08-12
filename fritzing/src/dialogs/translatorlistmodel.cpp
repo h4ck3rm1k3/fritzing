@@ -87,6 +87,9 @@ TranslatorListModel::TranslatorListModel(QFileInfoList & fileInfoList, QObject* 
 		ushort t11[] = { 0x0395, 0x03BB, 0x03BB, 0x03B7, 0x03BD, 0x03B9, 0x03BA, 0x03AC, 0};
 		m_languages.insert("greek", tr("Greek - %1").arg(QString::fromUtf16(t11)));
 
+		ushort t12[] = { 0x0411, 0x044A, 0x043B, 0x0433, 0x0430, 0x0440, 0x0441, 0x043A, 0x0438, 0 };
+		m_languages.insert("bulgarian", tr("Bulgarian - %1").arg(QString::fromUtf16(t12)));
+
         // More languages written in their own language can be found
         // at http://www.mozilla.com/en-US/firefox/all.html 
 

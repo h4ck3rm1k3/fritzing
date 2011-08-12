@@ -87,7 +87,7 @@ public:
 	~MainWindow();
 
     void load(const QString & fileName, bool setAsLastOpened, bool addToRecent, const QString & displayName);
-	bool loadWhich(const QString & fileName, bool setAsLastOpened, bool addToRecent);
+	bool loadWhich(const QString & fileName, bool setAsLastOpened, bool addToRecent, bool dontAsk);
 	void notClosableForAWhile();
 	QAction *raiseWindowAction();
 	QSizeGrip *sizeGrip();
@@ -103,6 +103,7 @@ public:
 	void setFileProgressPath(const QString & path);
 	void clearFileProgressDialog();
 	class FileProgressDialog * fileProgressDialog();
+	void fileProgressDialogSetBinLoadingCount(int);
 
 	const QString &selectedModuleID();
 
@@ -115,13 +116,14 @@ public:
 	// fritzing, then this functions may help with the bundle tasks
 	// on the complex entities: sketches, bins, modules (?)
 	void saveBundledNonAtomicEntity(QString &filename, const QString &extension, Bundler *bundler, const QList<ModelPart*> &partsToSave);
-	void loadBundledNonAtomicEntity(const QString &filename, Bundler *bundler, bool addToBin);
+	void loadBundledNonAtomicEntity(const QString &filename, Bundler *bundler, bool addToBin, bool dontAsk);
 	
 	void exportToGerber(const QString & exportDir, ItemBase * board, bool displayMessageBoxes);
 	void setCurrentFile(const QString &fileName, bool addToRecent, bool recovered, const QString & backupName);
 	void setRecovered(bool);
 	void setReportMissingModules(bool);
 	QList<SketchWidget *> sketchWidgets();
+	void setCloseSilently(bool);
 
 public:
 	static void initNames();
@@ -246,7 +248,7 @@ protected slots:
 	void shareOnline();
 	void saveBundledPart(const QString &moduleId=___emptyString___);
 	void saveBundledAux(ModelPart *mp, const QDir &destFolder);
-	void loadBundledSketch(const QString &fileName);
+	void loadBundledSketch(const QString &fileName, bool dontAsk);
 	void loadBundledPart();
 
 	void binSaved(bool hasAlienParts);
@@ -375,7 +377,7 @@ protected:
 
 	QList<ModelPart*> moveToPartsFolder(QDir &unzipDir, MainWindow* mw, bool addToBin=true);
 	bool loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps);
-	bool preloadBundledAux(QDir &unzipDir);
+	bool preloadBundledAux(QDir &unzipDir, bool dontAsk);
 	void copyToSvgFolder(const QFileInfo& file, const QString &destFolder = "contrib");
 	ModelPart* copyToPartsFolder(const QFileInfo& file, bool addToBin=true, const QString &destFolder="contrib");
 
@@ -721,6 +723,7 @@ protected:
 	bool m_smdOneSideWarningGiven;
 	bool m_orderFabEnabled;		
 	SwapTimer m_swapTimer;
+	bool m_closeSilently;
 
 public:
 	static int RestartNeeded;

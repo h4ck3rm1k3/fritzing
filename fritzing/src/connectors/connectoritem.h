@@ -161,7 +161,7 @@ protected:
 	void displayTooltip(ConnectorItem * over, ConnectorItem * other);
 	void reposition(QPointF sceneDestPos, int draggingIndex);
 	void repositionTarget();
-	QPointF calcConnectorEnd();
+	void calcConnectorEnd();
 	QPen legPen() const;
 	bool legMousePressEvent(QGraphicsSceneMouseEvent *event);
 	void repoly(const QPolygonF & poly, bool relative);

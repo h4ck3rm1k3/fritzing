@@ -486,7 +486,7 @@ void BinManager::restoreStateAndGeometry() {
 	if(settings.childGroups().size()==0) { // first time? open core and my_parts then
 		StackTabWidget *tw = new StackTabWidget(m_stackWidget);
 
-		m_mainWindow->fileProgressDialog()->setBinLoadingCount(2);
+		m_mainWindow->fileProgressDialogSetBinLoadingCount(2);
 
 		PartsBinPaletteWidget* core = newBin();
 		core->load(BinManager::CorePartsBinLocation, m_mainWindow->fileProgressDialog());
@@ -504,7 +504,7 @@ void BinManager::restoreStateAndGeometry() {
 			settings.beginGroup(g);
 
 			StackTabWidget *tw = new StackTabWidget(m_stackWidget);
-			m_mainWindow->fileProgressDialog()->setBinLoadingCount(settings.childKeys().count());
+			m_mainWindow->fileProgressDialogSetBinLoadingCount(settings.childKeys().count());
 			foreach(QString k, settings.childKeys()) {
 				PartsBinPaletteWidget* bin = newBin();
 				QString filename = settings.value(k).toString();

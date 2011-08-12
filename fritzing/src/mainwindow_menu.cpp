@@ -151,12 +151,12 @@ void MainWindow::load() {
     file.close();
 
     MainWindow* mw = newMainWindow(m_paletteModel, m_refModel, fileName, true);
-	mw->loadWhich(fileName, true, true);
+	mw->loadWhich(fileName, true, true, false);
     mw->clearFileProgressDialog();
 	closeIfEmptySketch(mw);
 }
 
-bool MainWindow::loadWhich(const QString & fileName, bool setAsLastOpened, bool addToRecent)
+bool MainWindow::loadWhich(const QString & fileName, bool setAsLastOpened, bool addToRecent, bool dontAsk)
 {
 	if (!QFileInfo(fileName).exists()) {
 		QMessageBox::warning(NULL, tr("Fritzing"), tr("File '%1' not found").arg(fileName));
@@ -168,7 +168,7 @@ bool MainWindow::loadWhich(const QString & fileName, bool setAsLastOpened, bool 
     	load(fileName, setAsLastOpened, addToRecent, "");
 		result = true;
     } else if(fileName.endsWith(FritzingBundleExtension)) {
-    	loadBundledSketch(fileName);
+    	loadBundledSketch(fileName, dontAsk);
 		result = true;
     } else if (
     		fileName.endsWith(FritzingBinExtension)

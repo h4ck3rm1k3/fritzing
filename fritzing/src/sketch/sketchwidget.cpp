@@ -2228,7 +2228,7 @@ void SketchWidget::categorizeDragLegs()
 	QSet<ItemBase *> passives;
 	foreach (ItemBase * itemBase, m_savedItems.values()) {
 		if (itemBase->itemType() == ModelPart::Wire) continue;
-		if (!itemBase->hasRubberBandLeg()) continue;
+		if (!itemBase->rubberBandLegEnabled()) continue;
 
 		// 1. we are dragging a part with rubberBand legs which are attached to some part not being dragged along (i.e. a breadboard)
 		//		so we stretch those attached legs

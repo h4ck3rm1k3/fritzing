@@ -144,6 +144,7 @@ QString MainWindow::BackupFolder;
 MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension())
 {
+	m_closeSilently = false;
 	m_orderFabAct = NULL;
 	m_swapTimer.setInterval(15);
 	m_swapTimer.setParent(this);
@@ -973,14 +974,16 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 		}
 	}
 
-	bool whatWithAliens = whatToDoWithAlienFiles();
-	if(!beforeClosing() || !whatWithAliens ||!m_binManager->beforeClosing()) {
-		event->ignore();
-		return;
-	}
+	if (!m_closeSilently) {
+		bool whatWithAliens = whatToDoWithAlienFiles();
+		if(!beforeClosing() || !whatWithAliens ||!m_binManager->beforeClosing()) {
+			event->ignore();
+			return;
+		}
 
-	if(whatWithAliens && m_binManager->hasAlienParts()) {
-		m_binManager->createIfMyPartsNotExists();
+		if(whatWithAliens && m_binManager->hasAlienParts()) {
+			m_binManager->createIfMyPartsNotExists();
+		}
 	}
 
 
@@ -1247,11 +1250,11 @@ void MainWindow::saveBundledNonAtomicEntity(QString &filename, const QString &ex
 	FolderUtils::rmdir(dirToRemove);
 }
 
-void MainWindow::loadBundledSketch(const QString &fileName) {
-	loadBundledNonAtomicEntity(fileName, this, /*addToBin*/true);
+void MainWindow::loadBundledSketch(const QString &fileName, bool dontAsk) {
+	loadBundledNonAtomicEntity(fileName, this, /*addToBin*/true, dontAsk);
 }
 
-void MainWindow::loadBundledNonAtomicEntity(const QString &fileName, Bundler* bundler, bool addToBin) {
+void MainWindow::loadBundledNonAtomicEntity(const QString &fileName, Bundler* bundler, bool addToBin, bool dontAsk) {
 	QDir destFolder = QDir::temp();
 
 	FolderUtils::createFolderAnCdIntoIt(destFolder, FolderUtils::getRandText());
@@ -1270,7 +1273,7 @@ void MainWindow::loadBundledNonAtomicEntity(const QString &fileName, Bundler* bu
 
 	QDir unzipDir(unzipDirPath);
 
-	if (bundler->preloadBundledAux(unzipDir)) {
+	if (bundler->preloadBundledAux(unzipDir, dontAsk)) {
 		QList<ModelPart*> mps = moveToPartsFolder(unzipDir,this,addToBin);
 		// the bundled itself
 		bundler->loadBundledAux(unzipDir,mps);
@@ -1279,7 +1282,7 @@ void MainWindow::loadBundledNonAtomicEntity(const QString &fileName, Bundler* bu
 	FolderUtils::rmdir(unzipDirPath);
 }
 
-bool MainWindow::preloadBundledAux(QDir &unzipDir) 
+bool MainWindow::preloadBundledAux(QDir &unzipDir, bool dontAsk) 
 {
 	QStringList namefilters;
 	namefilters << "*"+FritzingSketchExtension;
@@ -1287,31 +1290,37 @@ bool MainWindow::preloadBundledAux(QDir &unzipDir)
 	if (entryInfoList.count() == 0) return false;
 
 	QFileInfo sketchInfo = entryInfoList[0];
-	QString sketchName = defaultSaveFolder() + "/" + sketchInfo.fileName();
-
 	QStringList linkedProgramFiles;
-	if (!hasLinkedProgramFiles(sketchInfo.filePath(), linkedProgramFiles)) {
-		QString fileExt;
-		sketchName = 
-			FolderUtils::getSaveFileName(
-				this,
-				tr("Please specify a location for the archived sketch"),
-				sketchName,
-				tr("Fritzing File (*%1)").arg(FritzingSketchExtension),
-				&fileExt
-			);
-		if (sketchName.isEmpty()) return false;
+
+	QString sketchName = defaultSaveFolder() + "/" + sketchInfo.fileName();
+	hasLinkedProgramFiles(sketchInfo.filePath(), linkedProgramFiles);
+
+	if (dontAsk) {
 	}
 	else {
-		// ask the user for a folder to store the sketch and program files
-		QString path = QFileDialog::getExistingDirectory(
-							this,
-							tr("Please choose a folder to save the archived sketch and program files"),
-							defaultSaveFolder(),
-							QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-		if (path.isEmpty()) return false;
+		if (linkedProgramFiles.isEmpty()) {
+			QString fileExt;
+			sketchName = 
+				FolderUtils::getSaveFileName(
+					this,
+					tr("Please specify a location for the archived sketch"),
+					sketchName,
+					tr("Fritzing File (*%1)").arg(FritzingSketchExtension),
+					&fileExt
+				);
+			if (sketchName.isEmpty()) return false;
+		}
+		else {
+			// ask the user for a folder to store the sketch and program files
+			QString path = QFileDialog::getExistingDirectory(
+								this,
+								tr("Please choose a folder to save the archived sketch and program files"),
+								defaultSaveFolder(),
+								QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+			if (path.isEmpty()) return false;
 
-		sketchName = path + "/" + sketchInfo.fileName();
+			sketchName = path + "/" + sketchInfo.fileName();
+		}
 	}
 
 	if (QFile(sketchName).exists()) {
@@ -2641,4 +2650,16 @@ QList<SketchWidget *> MainWindow::sketchWidgets()
 	QList<SketchWidget *> list;
 	list << m_breadboardGraphicsView << m_schematicGraphicsView << m_pcbGraphicsView;
 	return list;
+}
+
+void MainWindow::fileProgressDialogSetBinLoadingCount(int count)
+{
+	if (m_fileProgressDialog) {
+		m_fileProgressDialog->setBinLoadingCount(count);
+	}
+}
+
+void MainWindow::setCloseSilently(bool cs)
+{
+	m_closeSilently = cs;
 }
