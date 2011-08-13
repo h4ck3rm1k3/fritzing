@@ -186,6 +186,8 @@ protected:
 	bool eventFilter(QObject * object, QEvent * event);
 	void updateLegCursor(QPointF p, Qt::KeyboardModifiers modifiers);
 	bool curvyWiresIndicated(Qt::KeyboardModifiers);
+	double findT(Bezier * bezier, double blen, double length);
+
 
 protected:
 	QPointer<Connector> m_connector;
@@ -212,8 +214,10 @@ protected:
 	double m_legStrokeWidth;
 	QColor m_legColor;
 	bool m_insertBendpointPossible;
-	QPointF m_connectorEnd;
-	double m_connectorT;
+	QPointF m_connectorDetectEnd;
+	QPointF m_connectorDrawEnd;
+	double m_connectorDrawT;
+	double m_connectorDetectT;
 	
 protected:	
 	static QList<ConnectorItem *>  m_equalPotentialDisplayItems;

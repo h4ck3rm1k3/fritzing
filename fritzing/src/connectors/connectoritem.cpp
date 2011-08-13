@@ -241,7 +241,6 @@ static BezierDisplay * TheBezierDisplay = NULL;
 static const double StandardLegConnectorDrawEnabledLength = 5;		// pixels
 static const double StandardLegConnectorDetectLength = 9;			// pixels
 
-
 QList<ConnectorItem *> ConnectorItem::m_equalPotentialDisplayItems;
 
 const QList<ConnectorItem *> ConnectorItem::emptyConnectorItemList;
@@ -306,7 +305,7 @@ ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 {
 	// initialize m_connectorT, otherwise will trigger qWarning("QLine::unitVector: New line does not have unit length");
 	// TODO: figure out why paint is being called with m_connectorT not initialized
-	m_connectorT = 0;
+	m_connectorDetectT = m_connectorDrawT = 0;
 	m_draggingCurve = m_draggingLeg = m_rubberBandLeg = m_bigDot = m_hybrid = false;
 	m_marked = false;
 	m_checkedEffectively = false;
@@ -1630,7 +1629,7 @@ void ConnectorItem::paintLeg(QPainter * painter)
 	Bezier left, right;
 	QPainterPath path;
 	if (connectorIsCurved) {
-		bezier->split(m_connectorT, left, right);
+		bezier->split(m_connectorDrawT, left, right);
 		path.moveTo(right.endpoint0());
 		path.cubicTo(right.cp0(), right.cp1(), right.endpoint1());
 	}
@@ -1644,7 +1643,7 @@ void ConnectorItem::paintLeg(QPainter * painter)
 			painter->drawPath(path);
 		}
 		else {
-			painter->drawLine(m_connectorEnd, m_legPolygon.last());		
+			painter->drawLine(m_connectorDrawEnd, m_legPolygon.last());		
 		}
 	}
 
@@ -1657,7 +1656,7 @@ void ConnectorItem::paintLeg(QPainter * painter)
 		painter->drawPath(path);
 	}
 	else {
-		painter->drawLine(m_connectorEnd, m_legPolygon.last());		
+		painter->drawLine(m_connectorDrawEnd, m_legPolygon.last());		
 	}
 }
 
@@ -2210,7 +2209,7 @@ void ConnectorItem::repoly(const QPolygonF & poly, bool relative)
 void ConnectorItem::calcConnectorEnd()
 {
 	if (m_legPolygon.count() < 2) {
-		m_connectorEnd = QPointF(0,0);
+		m_connectorDrawEnd = m_connectorDetectEnd = QPointF(0,0);
 		return;
 	}
 
@@ -2219,33 +2218,40 @@ void ConnectorItem::calcConnectorEnd()
 	double dx = p1.x() - p0.x();
 	double dy = p1.y() - p0.y();
 	double lineLen = qSqrt((dx * dx) + (dy * dy));
-	double len = qMax(0.5, qMin(lineLen, StandardLegConnectorDetectLength));
+	double drawlen = qMax(0.5, qMin(lineLen, StandardLegConnectorDrawEnabledLength));
+	double detectlen = qMax(0.5, qMin(lineLen, StandardLegConnectorDetectLength));
 
 	Bezier * bezier = m_legCurves.at(m_legCurves.count() - 2);
 	if (bezier == NULL || bezier->isEmpty()) {
-		m_connectorEnd = QPointF(p1 - QPointF(dx * len / lineLen, dy * len / lineLen));
+		m_connectorDrawEnd = QPointF(p1 - QPointF(dx * drawlen / lineLen, dy * drawlen / lineLen));
+		m_connectorDetectEnd = QPointF(p1 - QPointF(dx * detectlen / lineLen, dy * detectlen / lineLen));
 		return;
 	}
 
 	bezier->set_endpoints(p0, p1);
-
+	m_connectorDetectT = m_connectorDrawT = 0;
 	double blen = bezier->computeCubicCurveLength(1.0, 24);
 	if (blen < StandardLegConnectorDetectLength) {
-		m_connectorEnd = p0;
 		return;
 	}
 
+	m_connectorDetectT = findT(bezier, blen, StandardLegConnectorDetectLength);
+	m_connectorDrawT = findT(bezier, blen, StandardLegConnectorDrawEnabledLength);
+}
+
+double ConnectorItem::findT(Bezier * bezier, double blen, double length)
+{
 	// use binary search to find a value for t
 	double tmax = 1.0;
 	double tmin = 0;
-	double t = 1.0 - (StandardLegConnectorDetectLength / blen);
+	double t = 1.0 - (length / blen);
 	while (true) {
 		double l = bezier->computeCubicCurveLength(t, 24);
-		if (qAbs(blen - StandardLegConnectorDetectLength - l) < .0001) {
-			break;
+		if (qAbs(blen - length - l) < .0001) {
+			return t;
 		}
 
-		if (blen - StandardLegConnectorDetectLength - l > 0) {
+		if (blen - length - l > 0) {
 			// too short
 			tmin = t;
 			t = (t + tmax) / 2;
@@ -2256,8 +2262,7 @@ void ConnectorItem::calcConnectorEnd()
 			t = (t + tmin) / 2;
 		}
 	}
-	m_connectorEnd = QPointF(bezier->xFromT(t), bezier->yFromT(t));
-	m_connectorT = t;
+	return t;
 }
 
 const QString & ConnectorItem::legID(ViewIdentifierClass::ViewIdentifier viewID, ViewLayer::ViewLayerID viewLayerID) {
@@ -2391,12 +2396,12 @@ ConnectorItem::CursorLocation ConnectorItem::findLocation(QPointF location, int 
 	QPainterPath path;
 	Bezier * bezier = m_legCurves.at(m_legCurves.count() - 2);
 	if (bezier == NULL || bezier->isEmpty()) {
-		path.moveTo(m_connectorEnd);
+		path.moveTo(m_connectorDetectEnd);
 		path.lineTo(m_legPolygon.last());
 	}
 	else {
 		Bezier left, right;
-		bezier->split(m_connectorT, left, right);
+		bezier->split(m_connectorDetectT, left, right);
 		path.moveTo(right.endpoint0());
 		path.cubicTo(right.cp0(), right.cp1(), right.endpoint1());
 	}
