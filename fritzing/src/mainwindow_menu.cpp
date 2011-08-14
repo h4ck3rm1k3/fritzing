@@ -1921,51 +1921,23 @@ void MainWindow::notYetImplemented(QString action) {
 void MainWindow::rotateIncCW() {
 	if (m_currentGraphicsView == NULL) return;
 
-	if (m_currentGraphicsView == m_schematicGraphicsView) {
-		rotate90cw();
-		return;
-	}
-
-	bool ok45 = false;
-	foreach (QGraphicsItem * item,  m_currentGraphicsView->scene()->selectedItems()) {
-		ItemBase * itemBase = ItemBase::extractTopLevelItemBase(item);
-		if (itemBase != NULL && itemBase->rotation45Allowed()) {
-			ok45 = true;
-			break;
-		}
-	}
-
-	if (ok45) {
+	if (m_rotate45cwAct->isEnabled()) {
 		rotate45cw();
-		return;
 	}
-
-	rotate90cw();
+	else if (m_rotate90cwAct->isEnabled()) {
+		rotate90cw();
+	}
 }
 
 void MainWindow::rotateIncCCW() {
 	if (m_currentGraphicsView == NULL) return;
 
-	if (m_currentGraphicsView == m_schematicGraphicsView) {
-		rotate90ccw();
-		return;
-	}
-
-	bool ok45 = false;
-	foreach (QGraphicsItem * item,  m_currentGraphicsView->scene()->selectedItems()) {
-		ItemBase * itemBase = ItemBase::extractTopLevelItemBase(item);
-		if (itemBase != NULL && itemBase->rotation45Allowed()) {
-			ok45 = true;
-			break;
-		}
-	}
-
-	if (ok45) {
+	if (m_rotate45ccwAct->isEnabled()) {
 		rotate45ccw();
-		return;
 	}
-
-	rotate90ccw();
+	else if (m_rotate90ccwAct->isEnabled()) {
+		rotate90ccw();
+	}
 }
 
 void MainWindow::rotate90cw() {
