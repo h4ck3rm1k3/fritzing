@@ -40,7 +40,7 @@ $Date$
 #include "utils/folderutils.h"
 #include "items/logoitem.h"
 
-static QRegExp AaCc("[aAcC]");
+static QRegExp AaCc("[aAcCqQtTsS]");
 
 ////////////////////////////////////////////
 
@@ -397,6 +397,14 @@ QString MainWindow::clipToBoard(QString svgString, ItemBase * board, const QStri
 
 	// gerber can't handle ellipses that are rotated, so cull them all
     if (TextUtils::squashElement(domDocument1, "ellipse", "", QRegExp())) {
+		anyConverted = true;
+    }
+
+    if (TextUtils::squashElement(domDocument1, "rect", "rx", QRegExp())) {
+		anyConverted = true;
+    }
+
+    if (TextUtils::squashElement(domDocument1, "rect", "ry", QRegExp())) {
 		anyConverted = true;
     }
 

@@ -410,6 +410,14 @@ int SVG2gerber::allPaths2gerber(ForWhy forWhy) {
 			double width = rect.attribute("width").toDouble();
 			double height = rect.attribute("height").toDouble();
 
+			double rx = rect.attribute("rx", "0").toDouble();
+			double ry = rect.attribute("ry", "0").toDouble();
+			if (rx != 0 || ry != 0) {
+				// not sure how to do rounded rects in gerber
+				invalidPathsCount++;
+				continue;
+			}
+
 			if (width == 0) continue;
 			if (height == 0) continue;
 
