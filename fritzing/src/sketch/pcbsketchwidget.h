@@ -169,6 +169,7 @@ protected:
 	ViewLayer::ViewLayerSpec createWireViewLayerSpec(ConnectorItem * from, ConnectorItem * to);
 	Wire * createTempWireForDragging(Wire * fromWire, ModelPart * wireModel, ConnectorItem * connectorItem, ViewGeometry & viewGeometry, ViewLayer::ViewLayerSpec);
 	void prereleaseTempWireForDragging(Wire*);
+	void rotatePartLabels(double degrees, QTransform &, QPointF center, QUndoCommand * parentCommand);
 
 signals:
 	void subSwapSignal(SketchWidget *, ItemBase *, ViewLayer::ViewLayerSpec, QUndoCommand * parentCommand);

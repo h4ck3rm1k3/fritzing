@@ -75,7 +75,7 @@ public:
 	QString generateCopperFillUnit(ItemBase * itemBase, QPointF whereToStart);
 	double getWireStrokeWidth(Wire *, double wireWidth);
 	Wire * createTempWireForDragging(Wire * fromWire, ModelPart * wireModel, ConnectorItem * connectorItem, ViewGeometry & viewGeometry, ViewLayer::ViewLayerSpec);
-
+	void rotatePartLabels(double degrees, QTransform &, QPointF center, QUndoCommand * parentCommand);
 
 public slots:
 	void setVoltage(double voltage, bool doEmit);

@@ -34,6 +34,7 @@ $Date$
 #include "../waitpushundostack.h"
 #include "../connectors/connectoritem.h"
 #include "../items/moduleidnames.h"
+#include "../items/partlabel.h"
 #include "../help/sketchmainhelp.h"
 #include "../utils/ratsnestcolors.h"
 #include "../fsvgrenderer.h"
@@ -2737,4 +2738,34 @@ void PCBSketchWidget::prereleaseTempWireForDragging(Wire* wire)
 bool PCBSketchWidget::curvyWiresIndicated(Qt::KeyboardModifiers)
 {
 	return false;
+}
+
+void PCBSketchWidget::rotatePartLabels(double degrees, QTransform & transform, QPointF center, QUndoCommand * parentCommand)
+{
+	ItemBase * board = NULL;
+	foreach (ItemBase * itemBase, m_savedItems.values()) {
+		if (itemBase->itemType() == ModelPart::ResizableBoard || itemBase->itemType() == ModelPart::Board) {
+			board = itemBase->layerKinChief();
+			break;
+		}
+	}
+
+	if (board == NULL) return;
+
+	QRectF bbr = board->sceneBoundingRect();
+
+	foreach (QGraphicsItem * item, scene()->items()) {
+		PartLabel * partLabel = dynamic_cast<PartLabel *>(item);
+		if (partLabel == NULL) continue;
+		if (!partLabel->isVisible()) continue;
+		if (!bbr.intersects(partLabel->sceneBoundingRect())) continue;
+
+		QPointF offset = partLabel->pos() - partLabel->owner()->pos();
+		new MoveLabelCommand(this, partLabel->owner()->id(), partLabel->pos(), offset, partLabel->pos(), offset, parentCommand);
+		new RotateFlipLabelCommand(this, partLabel->owner()->id(), degrees, 0, parentCommand);
+		QPointF p = GraphicsUtils::calcRotation(transform, center, partLabel->pos(), partLabel->boundingRect().center());
+		ViewGeometry vg;
+		partLabel->owner()->calcRotation(transform, center, vg);
+		new MoveLabelCommand(this, partLabel->owner()->id(), p, p - vg.loc(), p, p - vg.loc(), parentCommand);
+	}
 }

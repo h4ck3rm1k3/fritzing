@@ -417,3 +417,13 @@ void GraphicsUtils::qt_graphicsItem_highlightSelected(QPainter *painter, const Q
 		painter->drawPath(path);
 	} 
 }
+
+QPointF GraphicsUtils::calcRotation(QTransform & rotation, QPointF rCenter, QPointF p, QPointF pCenter) 
+{
+	QPointF dp = rCenter - p;
+	QTransform tp = QTransform().translate(-dp.x(), -dp.y()) * rotation * QTransform().translate(dp.x(), dp.y());
+	QTransform tc = QTransform().translate(-pCenter.x(), -pCenter.y()) * rotation * QTransform().translate(pCenter.x(), pCenter.y());
+	QPointF mp = tp.map(QPointF(0,0));
+	QPointF mc = tc.map(QPointF(0,0));
+	return (p + mp - mc);
+}

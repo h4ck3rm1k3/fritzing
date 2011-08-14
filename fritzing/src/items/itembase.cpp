@@ -1691,13 +1691,7 @@ bool ItemBase::fixCopper1(ModelPart * modelPart, const QString & filename, ViewL
 
 void ItemBase::calcRotation(QTransform & rotation, QPointF center, ViewGeometry & vg2) 
 {
-	QPointF dp = center - pos();
-	QTransform tp = QTransform().translate(-dp.x(), -dp.y()) * rotation * QTransform().translate(dp.x(), dp.y());
-	QPointF dc = boundingRectWithoutLegs().center();
-	QTransform tc = QTransform().translate(-dc.x(), -dc.y()) * rotation * QTransform().translate(dc.x(), dc.y());
-	QPointF mp = tp.map(QPointF(0,0));
-	QPointF mc = tc.map(QPointF(0,0));
-	vg2.setLoc(vg2.loc() + mp - mc);
+	vg2.setLoc(GraphicsUtils::calcRotation(rotation, center, pos(), boundingRectWithoutLegs().center()));
 }
 
 void ItemBase::updateConnectors()

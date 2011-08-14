@@ -4054,7 +4054,9 @@ void SketchWidget::rotateX(double degrees)
 	// change legs after connections have been updated (undo direction)
 	moveLegBendpoints(true, parentCommand);
 
-	foreach (ItemBase * itemBase, m_savedItems) {
+	rotatePartLabels(degrees, rotation, center, parentCommand);
+
+	foreach (ItemBase * itemBase, m_savedItems.values()) {
 		if (itemBase->itemType() != ModelPart::Wire) {
 			if (!itemBase->rotationAllowed()) continue;
 			if (qAbs(degrees) == 45 && !itemBase->rotation45Allowed()) continue;
@@ -4115,6 +4117,13 @@ void SketchWidget::rotateX(double degrees)
 	new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
 
 	m_undoStack->push(parentCommand);
+}
+
+void SketchWidget::rotatePartLabels(double degrees, QTransform &, QPointF center, QUndoCommand * parentCommand)
+{
+	Q_UNUSED(center);
+	Q_UNUSED(degrees);
+	Q_UNUSED(parentCommand);
 }
 
 void SketchWidget::flip(Qt::Orientations orientation) 
