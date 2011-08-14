@@ -41,6 +41,7 @@ $Date$
 #include <QTimer>
 #include <QStackedWidget>
 #include <QXmlStreamReader>
+#include <QShortcut>
 
 #include "mainwindow.h"
 #include "debugdialog.h"
@@ -217,6 +218,11 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	m_tabWidget->setObjectName("sketch_tabs");
 
 	setCentralWidget(m_tabWidget);
+
+	QShortcut * shortcut = new QShortcut(QKeySequence(tr("Ctrl+R", "Rotate Clockwise")), this);
+	connect(shortcut, SIGNAL(activated()), this, SLOT(rotateIncCW()));
+	shortcut = new QShortcut(QKeySequence(tr("Shift+Ctrl+R", "Rotate Counterclockwise")), this);
+	connect(shortcut, SIGNAL(activated()), this, SLOT(rotateIncCCW()));
 
 	connect(this, SIGNAL(changeActivationSignal(bool, QWidget *)), qApp, SLOT(changeActivation(bool, QWidget *)), Qt::DirectConnection);
 	connect(this, SIGNAL(destroyed(QObject *)), qApp, SLOT(topLevelWidgetDestroyed(QObject *)));
@@ -898,20 +904,6 @@ void MainWindow::tabWidget_currentChanged(int index) {
 		this,
 		SLOT(updateTransformationActions())
 	);
-
-	static QKeySequence zeroSequence(0);
-	if (m_currentGraphicsView == m_schematicGraphicsView) {
-		m_rotate90ccwAct->setShortcut(tr("Alt+Ctrl+R"));
-		m_rotate90cwAct->setShortcut(tr("Ctrl+R"));
-		m_rotate45ccwAct->setShortcut(zeroSequence);
-		m_rotate45cwAct->setShortcut(zeroSequence);
-	}
-	else {
-		m_rotate45ccwAct->setShortcut(tr("Alt+Ctrl+R"));
-		m_rotate45cwAct->setShortcut(tr("Ctrl+R"));
-		m_rotate90ccwAct->setShortcut(zeroSequence);
-		m_rotate90cwAct->setShortcut(zeroSequence);
-	}
 
 	updateActiveLayerButtons();
 

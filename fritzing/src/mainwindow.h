@@ -209,6 +209,8 @@ protected slots:
 	void rotate180();
 	void rotate45ccw();
 	void rotate45cw();
+	void rotateIncCCW();
+	void rotateIncCW();
 	void flipHorizontal();
 	void flipVertical();
 	void showAllLayers();

@@ -682,27 +682,25 @@ void MainWindow::createPartMenuActions() {
 	connect(m_exportNormalizedFlattenedSvgAction, SIGNAL(triggered()), this, SLOT(exportNormalizedFlattenedSVG()));
 #endif
 
-	m_rotate90cwAct = new QAction(tr("&Rotate 90\x00B0 Clockwise"), this);
-	m_rotate90cwAct->setShortcut(tr("Ctrl+R"));
+	m_rotate45cwAct = new QAction(tr("Rotate 45\x00B0 Clockwise"), this);
+	m_rotate45cwAct->setStatusTip(tr("Rotate current selection 45 degrees clockwise"));
+	connect(m_rotate45cwAct, SIGNAL(triggered()), this, SLOT(rotate45cw()));
+
+	m_rotate90cwAct = new QAction(tr("Rotate 90\x00B0 Clockwise"), this);
 	m_rotate90cwAct->setStatusTip(tr("Rotate the selected parts by 90 degrees clockwise"));
 	connect(m_rotate90cwAct, SIGNAL(triggered()), this, SLOT(rotate90cw()));
 
-	m_rotate180Act = new QAction(tr("&Rotate 180\x00B0"), this);
+	m_rotate180Act = new QAction(tr("Rotate 180\x00B0"), this);
 	m_rotate180Act->setStatusTip(tr("Rotate the selected parts by 180 degrees"));
 	connect(m_rotate180Act, SIGNAL(triggered()), this, SLOT(rotate180()));
 
-	m_rotate90ccwAct = new QAction(tr("&Rotate 90\x00B0 Counter Clockwise"), this);
-	m_rotate90ccwAct->setShortcut(tr("Alt+Ctrl+R"));
+	m_rotate90ccwAct = new QAction(tr("Rotate 90\x00B0 Counter Clockwise"), this);
 	m_rotate90ccwAct->setStatusTip(tr("Rotate current selection 90 degrees counter clockwise"));
 	connect(m_rotate90ccwAct, SIGNAL(triggered()), this, SLOT(rotate90ccw()));
 
-	m_rotate45ccwAct = new QAction(tr("&Rotate 45\x00B0 Counter Clockwise"), this);
+	m_rotate45ccwAct = new QAction(tr("Rotate 45\x00B0 Counter Clockwise"), this);
 	m_rotate45ccwAct->setStatusTip(tr("Rotate current selection 45 degrees counter clockwise"));
 	connect(m_rotate45ccwAct, SIGNAL(triggered()), this, SLOT(rotate45ccw()));
-
-	m_rotate45cwAct = new QAction(tr("&Rotate 45\x00B0 Clockwise"), this);
-	m_rotate45cwAct->setStatusTip(tr("Rotate current selection 45 degrees clockwise"));
-	connect(m_rotate45cwAct, SIGNAL(triggered()), this, SLOT(rotate45cw()));
 
 	m_flipHorizontalAct = new QAction(tr("&Flip Horizontal"), this);
 	m_flipHorizontalAct->setStatusTip(tr("Flip current selection horizontally"));
@@ -1920,6 +1918,55 @@ void MainWindow::notYetImplemented(QString action) {
 				tr("Sorry, \"%1\" has not been implemented yet").arg(action));
 }
 
+void MainWindow::rotateIncCW() {
+	if (m_currentGraphicsView == NULL) return;
+
+	if (m_currentGraphicsView == m_schematicGraphicsView) {
+		rotate90cw();
+		return;
+	}
+
+	bool ok45 = false;
+	foreach (QGraphicsItem * item,  m_currentGraphicsView->scene()->selectedItems()) {
+		ItemBase * itemBase = ItemBase::extractTopLevelItemBase(item);
+		if (itemBase != NULL && itemBase->rotation45Allowed()) {
+			ok45 = true;
+			break;
+		}
+	}
+
+	if (ok45) {
+		rotate45cw();
+		return;
+	}
+
+	rotate90cw();
+}
+
+void MainWindow::rotateIncCCW() {
+	if (m_currentGraphicsView == NULL) return;
+
+	if (m_currentGraphicsView == m_schematicGraphicsView) {
+		rotate90ccw();
+		return;
+	}
+
+	bool ok45 = false;
+	foreach (QGraphicsItem * item,  m_currentGraphicsView->scene()->selectedItems()) {
+		ItemBase * itemBase = ItemBase::extractTopLevelItemBase(item);
+		if (itemBase != NULL && itemBase->rotation45Allowed()) {
+			ok45 = true;
+			break;
+		}
+	}
+
+	if (ok45) {
+		rotate45ccw();
+		return;
+	}
+
+	rotate90ccw();
+}
 
 void MainWindow::rotate90cw() {
 	if (m_currentGraphicsView == NULL) return;

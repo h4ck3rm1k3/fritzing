@@ -4055,16 +4055,12 @@ void SketchWidget::rotateX(double degrees)
 	moveLegBendpoints(true, parentCommand);
 
 	foreach (ItemBase * itemBase, m_savedItems) {
-		if (!itemBase->rotationAllowed()) {
-			continue;
-		}
-		if (qAbs(degrees) == 45 && !itemBase->rotation45Allowed()) {
-			continue;
-		}
-
-		ViewGeometry vg1 = itemBase->getViewGeometry();
-		ViewGeometry vg2(vg1);
 		if (itemBase->itemType() != ModelPart::Wire) {
+			if (!itemBase->rotationAllowed()) continue;
+			if (qAbs(degrees) == 45 && !itemBase->rotation45Allowed()) continue;
+
+			ViewGeometry vg1 = itemBase->getViewGeometry();
+			ViewGeometry vg2(vg1);
 			itemBase->calcRotation(rotation, center, vg2);
 			ConnectorPairHash connectorHash;
 			disconnectFromFemale(itemBase, m_savedItems, connectorHash, true, false, parentCommand);
@@ -4083,6 +4079,7 @@ void SketchWidget::rotateX(double degrees)
 			QPointF d1 = p1 - center;
 			QPointF d1t = rotation.map(d1);
 
+			ViewGeometry vg1 = itemBase->getViewGeometry();
 			new ChangeWireCommand(this, wire->id(), vg1.line(), QLineF(QPointF(0,0), d1t - d0t), vg1.loc(), d0t + center, true, true, parentCommand);
 		}
 	}
