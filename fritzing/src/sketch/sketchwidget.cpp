@@ -6385,6 +6385,9 @@ QString SketchWidget::renderToSVG(double printerScale, const LayerList & partLay
 				continue;
 			default:
 				if (!partLayers.contains(itemBase->viewLayerID())) {
+					if (itemBase == itemBase->layerKinChief() && itemBase->isPartLabelVisible()) {
+						break;
+					}
 					continue;
 				}
 		}
