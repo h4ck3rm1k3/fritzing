@@ -62,12 +62,14 @@ Stripbit::Stripbit(const QPainterPath & path, ConnectorItem * connectorItem, int
 	
 	if (SpotFaceCutterCursor == NULL) {
 		QBitmap bitmap(":resources/images/cursor/spot_face_cutter.bmp");
-		SpotFaceCutterCursor = new QCursor(bitmap, bitmap, 0, 31);
+		QBitmap bitmapm(":resources/images/cursor/spot_face_cutter_mask.bmp");
+		SpotFaceCutterCursor = new QCursor(bitmap, bitmapm, 0, 0);
 	}
 
 	if (MagicWandCursor == NULL) {
 		QBitmap bitmap(":resources/images/cursor/magic_wand.bmp");
-		MagicWandCursor = new QCursor(bitmap, bitmap, 7, 24);
+		QBitmap bitmapm(":resources/images/cursor/magic_wand_mask.bmp");
+		MagicWandCursor = new QCursor(bitmap, bitmapm, 0, 0);
 	}
 
 	setZValue(-999);			// beneath connectorItems

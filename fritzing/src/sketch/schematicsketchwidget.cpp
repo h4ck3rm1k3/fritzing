@@ -142,6 +142,8 @@ void SchematicSketchWidget::getBendpointWidths(Wire * wire, double width, double
 void SchematicSketchWidget::getLabelFont(QFont & font, QColor & color, ViewLayer::ViewLayerSpec) {
 	font.setFamily("Droid Sans");
 	font.setPointSize(9);
+	font.setBold(false);
+	font.setItalic(false);
 	color.setAlpha(255);
 	color.setRgb(0);
 }

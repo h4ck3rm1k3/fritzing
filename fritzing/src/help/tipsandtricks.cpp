@@ -51,7 +51,8 @@ TipsAndTricks::TipsAndTricks(QWidget *parent)
 tr("<html><body>") +
 tr("<h3>Fritzing Tips and Tricks</h3>") +
 tr("<ul>") +
-tr("<li>In Breadboard view, to add a curve to a wire or rubber-band leg, drag with the Control (Mac: Command) key down.</li>") +
+tr("<li>In Breadboard view, to drag a part with rubber-band legs while keeping it connected to the breadboard, hold the Alt (Linux: Meta) key down when you start dragging.</li>") +
+tr("<li>In Breadboard view, to add a curve to a wire or rubber-band leg, drag with the Control (Mac: Command) key down.  You can set whether curvy wires are the default in Preferences.</li>") +
 tr("<li>In Breadboard view, to drag out a wire from the end of a rubber-band leg, drag with the Alt (Linux: Meta) key down.</li>") +
 tr("<li>To drag the canvas, hold down the space bar and drag it with the mouse.</li>") +
 tr("<li>To toggle the visibility of layer in a view, go to the view menu and choose one of the view layer items.  Or open up the <b>Layers</b> palette from the <b>Window</b> menu.</li>") +

@@ -27,7 +27,7 @@ $Date$
 #ifndef PARTLABEL_H
 #define PARTLABEL_H
 
-#include <QGraphicsSimpleTextItem>
+#include <QGraphicsSvgItem>
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 #include <QWidget>
@@ -41,16 +41,16 @@ $Date$
 
 #include "../viewlayer.h"
 
-class PartLabel : public QObject, public QGraphicsSimpleTextItem
+class PartLabel : public QGraphicsSvgItem
 {
 	Q_OBJECT
 public:
 	PartLabel(class ItemBase * owner, QGraphicsItem * parent = 0 );   // itembase is not the parent
 	~PartLabel();
 
+	void setPlainText(const QString & text);
 	void showLabel(bool showIt, ViewLayer *);
 	QPainterPath shape() const;
-	void setPlainText(const QString & text);
 	bool initialized();
 	void ownerMoved(QPointF newPos);
 	void setHidden(bool hide);
@@ -85,6 +85,8 @@ protected:
 	void setLabelDisplay(const QString & key);
 	void setHiddenOrInactive();
 	void partLabelHide();
+	void resetSvg();
+	QString makeSvgAux(bool blackOnly, double dpi, double printerScale, double & w, double & h);
 
 protected:
 	QPointer<class ItemBase> m_owner;
@@ -99,13 +101,17 @@ protected:
 	bool m_inactive;
 	QMenu m_menu;
 	QString m_text;
+	QString m_displayText;
 	QStringList m_displayKeys;
-        QAction * m_tinyAct;
+    QAction * m_tinyAct;
 	QAction * m_smallAct;
 	QAction * m_mediumAct;
 	QAction * m_largeAct;
 	QAction * m_labelAct;
 	QList<QAction *> m_displayActs;
+	QColor m_color;
+	QFont m_font;
+	QSvgRenderer * m_renderer;
 };
 
 #endif

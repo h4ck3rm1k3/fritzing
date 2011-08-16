@@ -33,18 +33,16 @@ $Date$
 #include "../utils/graphicsutils.h"
 #include "../utils/textutils.h"
 #include "../installedfonts.h"
+#include "../fsvgrenderer.h"
 
 #include <QGraphicsScene>
-#include <QTextDocument>
-#include <QTextFrameFormat>
-#include <QTextFrame>
-#include <QStyle>
 #include <QMenu>
 #include <QApplication>
 #include <QInputDialog>
 #include <QFontMetricsF>
 #include <QStringList>
 #include <QFont>
+#include <QSvgRenderer>
 
 // TODO:
 //		** selection: coordinate with part selection: it's a layerkin
@@ -112,10 +110,12 @@ static const double InactiveOpacity = 0.4;
 ///////////////////////////////////////////
 
 PartLabel::PartLabel(ItemBase * owner, QGraphicsItem * parent)
-	: QGraphicsSimpleTextItem(parent)
+	: QGraphicsSvgItem(parent)
 {
+	m_renderer = NULL;
 	m_owner = owner;
 	m_spaceBarWasPressed = false;
+	m_text = m_displayText = "";
 
 	m_inactive = m_hidden = m_initialized = false;
 	m_displayKeys.append(LabelTextKey);
@@ -156,11 +156,10 @@ void PartLabel::showLabel(bool showIt, ViewLayer * viewLayer) {
 			}
 		}
 
-		m_owner->scene()->addItem(this);
 		this->setZValue(viewLayer->nextZ());
 		m_viewLayerID = viewLayer->viewLayerID();
 		QRectF obr = m_owner->boundingRect();
-		QRectF tbr = QGraphicsSimpleTextItem::boundingRect();
+		QRectF tbr = QGraphicsSvgItem::boundingRect();
 		QPointF initial = (flipped) 
 			? m_owner->pos() + QPointF(-tbr.width(), -tbr.height())
 			: m_owner->pos() + QPointF(obr.width(), -tbr.height());
@@ -170,6 +169,10 @@ void PartLabel::showLabel(bool showIt, ViewLayer * viewLayer) {
 		if (flipped) {
 			transformLabel(QTransform().scale(-1,1));
 		}
+		m_owner->scene()->addItem(this);
+		setUpText();
+		setPlainText(m_owner->instanceTitle());
+
 	}
 
 	setVisible(showIt);
@@ -228,7 +231,7 @@ void PartLabel::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 		return;
 	}
 
-	QGraphicsSimpleTextItem::mouseMoveEvent(event);
+	QGraphicsSvgItem::mouseMoveEvent(event);
 }
 
 void PartLabel::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
@@ -248,7 +251,7 @@ void PartLabel::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 		m_owner->partLabelMoved(m_initialPosition, m_initialOffset, pos(), m_offset);
 	}
 
-	QGraphicsSimpleTextItem::mouseReleaseEvent(event);
+	QGraphicsSvgItem::mouseReleaseEvent(event);
 }
 
 
@@ -286,7 +289,8 @@ void PartLabel::displayTexts() {
 		text = "?";					// make sure there's something visible
 	}
 
-	QGraphicsSimpleTextItem::setText(text);
+	m_displayText = text;
+	resetSvg();
 }
 
 bool PartLabel::initialized() {
@@ -342,8 +346,8 @@ void PartLabel::saveInstance(QXmlStreamWriter & streamWriter) {
 	streamWriter.writeAttribute("z", QString::number(zValue()));
 	streamWriter.writeAttribute("xOffset", QString::number(m_offset.x()));
 	streamWriter.writeAttribute("yOffset", QString::number(m_offset.y()));
-	streamWriter.writeAttribute("textColor", brush().color().name());
-	streamWriter.writeAttribute("fontSize", QString::number(font().pointSizeF()));
+	streamWriter.writeAttribute("textColor", m_color.name());
+	streamWriter.writeAttribute("fontSize", QString::number(m_font.pointSizeF()));
 	GraphicsUtils::saveTransform(streamWriter, transform());
 	foreach (QString key, m_displayKeys) {
 		streamWriter.writeStartElement("displayKey");
@@ -378,18 +382,17 @@ void PartLabel::restoreLabel(QDomElement & labelGeometry, ViewLayer::ViewLayerID
 	//c.setNamedColor(labelGeometry.attribute("textColor"));
 	//setBrush(QBrush(c));
 
+	setUpText();
 	double fs = labelGeometry.attribute("fontSize").toDouble(&ok);
 	if (!ok) {
 		InfoGraphicsView *infographics = InfoGraphicsView::getInfoGraphicsView(this);
 		if (infographics != NULL) {
-                        fs = infographics->getLabelFontSizeMedium();
+            fs = infographics->getLabelFontSizeMedium();
 			ok = true;
 		}
 	}
 	if (ok) {
-		QFont font = this->font();
-		font.setPointSizeF(fs);
-		this->setFont(font);
+		m_font.setPointSizeF(fs);
 	}
 
 	m_displayKeys.clear();
@@ -559,11 +562,7 @@ void PartLabel::transformLabel(QTransform currTransf)
 void PartLabel::setUpText() {
 	InfoGraphicsView *infographics = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infographics != NULL) {
-		QFont font;
-		QColor color;
-		infographics->getLabelFont(font, color, m_owner->viewLayerSpec());
-		setBrush(QBrush(color));
-		setFont(font);		
+		infographics->getLabelFont(m_font, m_color, m_owner->viewLayerSpec());
 	}
 }
 
@@ -572,16 +571,13 @@ QVariant PartLabel::itemChange(QGraphicsItem::GraphicsItemChange change, const Q
 	switch (change) {
 		case QGraphicsItem::ItemSceneHasChanged:
 			if (this->scene()) {
-				setUpText();
-				setPlainText(m_owner->instanceTitle());
-
 			}
 			break;
 		default:
 			break;
 	}
 
-	return QGraphicsSimpleTextItem::itemChange(change, value);
+	return QGraphicsSvgItem::itemChange(change, value);
 }
 
 void PartLabel::ownerSelected(bool selected) 
@@ -611,20 +607,19 @@ void PartLabel::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 		displayAct->setChecked(m_displayKeys.contains(data));
 	}
 
-        m_tinyAct->setChecked(false);
+    m_tinyAct->setChecked(false);
 	m_smallAct->setChecked(false);
 	m_mediumAct->setChecked(false);
 	m_largeAct->setChecked(false);
 	InfoGraphicsView *infographics = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infographics != NULL) {
-		QFont font = this->font();
-		int fs = font.pointSize();
-                if (fs == infographics->getLabelFontSizeTiny()) {
-                        m_tinyAct->setChecked(true);
+		int fs = m_font.pointSize();
+		if (fs == infographics->getLabelFontSizeTiny()) {
+			m_tinyAct->setChecked(true);
 		}
-                else if (fs == infographics->getLabelFontSizeSmall()) {
-                        m_smallAct->setChecked(true);
-                }
+		else if (fs == infographics->getLabelFontSizeSmall()) {
+            m_smallAct->setChecked(true);
+        }
 		else if (fs == infographics->getLabelFontSizeMedium()) {
 			m_mediumAct->setChecked(true);
 		}
@@ -660,6 +655,7 @@ void PartLabel::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 		case PartLabelFontSizeMedium:
 		case PartLabelFontSizeLarge:
 			setFontSize(action);
+			resetSvg();
 			break;
 		case PartLabelDisplayLabelText:
 			setLabelDisplay(LabelTextKey);
@@ -753,7 +749,7 @@ void PartLabel::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
 		GraphicsUtils::qt_graphicsItem_highlightSelected(painter, option, boundingRect(), shape());
     }
 
-    QGraphicsSimpleTextItem::paint(painter, option, widget);
+    QGraphicsSvgItem::paint(painter, option, widget);
 
 	if (m_inactive) {
 		painter->restore();
@@ -766,9 +762,9 @@ void PartLabel::setFontSize(int action) {
 
 	double fs = 0;
 	switch (action) {
-                case PartLabelFontSizeTiny:
-                        fs = infographics->getLabelFontSizeTiny();
-                        break;
+        case PartLabelFontSizeTiny:
+            fs = infographics->getLabelFontSizeTiny();
+            break;
 		case PartLabelFontSizeSmall:
 			fs = infographics->getLabelFontSizeSmall();
 			break;
@@ -781,9 +777,8 @@ void PartLabel::setFontSize(int action) {
 		default:
 			return;
 	}
-	QFont font = this->font();
-	font.setPointSize(fs);
-	setFont(font);
+	m_font.setPointSize(fs);
+
 }
 
 void PartLabel::setLabelDisplay(const QString & key) {
@@ -796,19 +791,27 @@ void PartLabel::setLabelDisplay(const QString & key) {
 	displayTexts();
 }
 
-int mapToSVGWeight(int w) {
-	int v = 400;
+QString mapToSVGWeight(int w) {
+	int percent = 50;
 	switch (w) {
-		case QFont::Light: v = 25; break;
-		case QFont::Normal:	v = 50; break;
-		case QFont::DemiBold: v = 63; break;
-		case QFont::Bold: v = 75; break;
-		case QFont::Black: v = 87; break;
+		case QFont::Light: 
+			percent = 25; 
+			break;
+		case QFont::Normal:	
+			return "normal";    // 50
+		case QFont::DemiBold: 
+			percent = 63;
+			break;
+		case QFont::Bold: 
+			return "bold";		// 75
+		case QFont::Black: 
+			percent = 87; 
+			break;
 		default:
-			return v;
+			return "normal";
 	}
 
-	return (qRound(8 * v / 100.0) * 100) + 100;
+	return QString::number((qRound(8 * percent / 100.0) * 100) + 100);   // 	normal | bold | bolder | lighter | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | inherit
 }
 
 QString mapToSVGStyle(QFont::Style style) {
@@ -821,30 +824,60 @@ QString mapToSVGStyle(QFont::Style style) {
 }
 
 QString PartLabel::makeSvg(bool blackOnly, double dpi, double printerScale) {
-	if (this->text().isEmpty()) return "";
+	double w, h;
+	return makeSvgAux(blackOnly, dpi, printerScale, w, h);
+}
 
-	QFont f = font();
-	QFontMetricsF fm(f);
+
+QString PartLabel::makeSvgAux(bool blackOnly, double dpi, double printerScale, double & w, double & h) {
+
+	if (m_displayText.isEmpty()) return "";
+
+	QFontMetricsF fm(m_font);
 	double y = fm.ascent();
 	
 	QString svg = QString("<g font-size='%1' font-style='%2' font-weight='%3' fill='%4' font-family=\"'%5'\" id='%6' fill-opacity='1' stroke='none' >")
-		.arg(f.pointSizeF() * dpi / 72)
-		.arg(mapToSVGStyle(f.style()))
-		.arg(mapToSVGWeight(f.weight()))
-		.arg(blackOnly ? "#000000" : brush().color().name())
-		.arg(InstalledFonts::InstalledFontsNameMapper.value(f.family()))
+		.arg(m_font.pointSizeF() * dpi / 72)
+		.arg(mapToSVGStyle(m_font.style()))
+		.arg(mapToSVGWeight(m_font.weight()))
+		.arg(blackOnly ? "#000000" : m_color.name())
+		.arg(InstalledFonts::InstalledFontsNameMapper.value(m_font.family()))
 		.arg(ViewLayer::viewLayerXmlNameFromID(m_viewLayerID)
 		);
 
-	QStringList texts = text().split("\n");
+	w = 0;
+	QStringList texts = m_displayText.split("\n");
 	foreach (QString t, texts) {
 		svg += QString("<text x='0' y='%1'>%2</text>")
 			.arg(y * dpi / printerScale)
 			.arg(TextUtils::stripNonValidXMLCharacters(TextUtils::escapeAnd(t)));
 		y += fm.height();
+		w = qMax(w, fm.width(t));
 	}
 
 	svg += "</g>";
     QTransform t = transform();
+
+	h = y - fm.height() + fm.descent();
     return TextUtils::svgTransform(svg, t, false, QString());
+}
+
+void PartLabel::resetSvg()
+{
+	double w, h;
+	QString innerSvg = makeSvgAux(false, 1000, FSvgRenderer::printerScale(), w, h);
+	if (innerSvg.isEmpty()) return;
+
+	QString svg = TextUtils::makeSVGHeader(FSvgRenderer::printerScale(), 1000, w, h) + innerSvg + "\n</svg>";
+
+	if (m_renderer == NULL) {
+		m_renderer = new QSvgRenderer(this);
+	}
+
+
+	// using renderer()->load() doesn't seem to work, so keep a separate shared renderer as a workaround
+	bool loaded = m_renderer->load(svg.toUtf8());
+	if (loaded) {
+		setSharedRenderer(m_renderer);
+	}
 }

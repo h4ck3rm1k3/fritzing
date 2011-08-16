@@ -138,6 +138,8 @@ void BreadboardSketchWidget::initWire(Wire * wire, int penWidth) {
 void BreadboardSketchWidget::getLabelFont(QFont & font, QColor & color, ViewLayer::ViewLayerSpec) {
 	font.setFamily("Droid Sans");
 	font.setPointSize(9);
+	font.setBold(false);
+	font.setItalic(false);
 	color.setAlpha(255);
 	color.setRgb(0);
 }

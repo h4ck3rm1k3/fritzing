@@ -51,14 +51,14 @@ BezierDisplay::~BezierDisplay()
 		m_itemL1->scene()->removeItem(m_itemL1);
 		delete m_itemL1;
 	}
-	if (m_itemE0) {
-		m_itemE0->scene()->removeItem(m_itemE0);
-		delete m_itemE0;
-	}
-	if (m_itemE1) {
-		m_itemE1->scene()->removeItem(m_itemE1);
-		delete m_itemE1;
-	}
+	//if (m_itemE0) {
+	//	m_itemE0->scene()->removeItem(m_itemE0);
+	//	delete m_itemE0;
+	//}
+	//if (m_itemE1) {
+	//	m_itemE1->scene()->removeItem(m_itemE1);
+	//	delete m_itemE1;
+	//}
 }
 
 void BezierDisplay::initDisplay(QGraphicsItem * master, Bezier *bezier)
@@ -86,11 +86,11 @@ void BezierDisplay::initDisplay(QGraphicsItem * master, Bezier *bezier)
 	m_itemL0->setZValue(z);
 	master->scene()->addItem(m_itemL0);
 
-	m_itemE0 = new QGraphicsEllipseItem();
-	m_itemE0->setPen(pen);
-	m_itemE0->setPos(0, 0);
-	m_itemE0->setZValue(z);
-	master->scene()->addItem(m_itemE0);
+	//m_itemE0 = new QGraphicsEllipseItem();
+	//m_itemE0->setPen(pen);
+	//m_itemE0->setPos(0, 0);
+	//m_itemE0->setZValue(z);
+	//master->scene()->addItem(m_itemE0);
 
 	m_itemL1 = new QGraphicsLineItem();
 	pen.setColor(QColor(bezier->drag0() == false ? activeColor : inactiveColor));
@@ -99,11 +99,11 @@ void BezierDisplay::initDisplay(QGraphicsItem * master, Bezier *bezier)
 	m_itemL1->setZValue(z);
 	master->scene()->addItem(m_itemL1);
 
-	m_itemE1 = new QGraphicsEllipseItem();
-	m_itemE1->setPen(pen);
-	m_itemE1->setPos(0, 0);
-	m_itemE1->setZValue(z);
-	master->scene()->addItem(m_itemE1);
+	//m_itemE1 = new QGraphicsEllipseItem();
+	//m_itemE1->setPen(pen);
+	//m_itemE1->setPos(0, 0);
+	//m_itemE1->setZValue(z);
+	//master->scene()->addItem(m_itemE1);
 
 	updateDisplay(master, bezier);
 	ProcessEventBlocker::processEvents();
@@ -113,14 +113,14 @@ void BezierDisplay::updateDisplay(QGraphicsItem * master, Bezier *bezier)
 {
 	if (m_itemL0 == NULL) return;
 	if (m_itemL1 == NULL) return;
-	if (m_itemE0 == NULL) return;
-	if (m_itemE1 == NULL) return;
+	//if (m_itemE0 == NULL) return;
+	//if (m_itemE1 == NULL) return;
 
 	if (bezier == NULL || bezier->isEmpty()) {
 		m_itemL0->setVisible(false);
 		m_itemL1->setVisible(false);
-		m_itemE0->setVisible(false);
-		m_itemE1->setVisible(false);
+		//m_itemE0->setVisible(false);
+		//m_itemE1->setVisible(false);
 		return;
 	}
 
@@ -135,29 +135,29 @@ void BezierDisplay::updateDisplay(QGraphicsItem * master, Bezier *bezier)
 	QPointF p1 = master->mapToScene(bezier->cp0());
 	GraphicsUtils::liangBarskyLineClip(p0.x(), p0.y(), p1.x(), p1.y(), sr.left(), sr.right(), sr.top(), sr.bottom(), x1, y1, x2, y2);
 	m_itemL0->setLine(x1, y1, x2, y2);
-	if (GraphicsUtils::distanceSqd(bezier->endpoint0(), bezier->cp0()) > minDSqd) {
-		m_itemE0->setVisible(false);
-	}
-	else {
-		QRectF r(master->mapToScene(bezier->endpoint0()), QSizeF(0,0));
-		r.adjust(-radius, -radius, radius, radius);
-		m_itemE0->setRect(r);
-		m_itemE0->setVisible(true);
-	}
+	//if (GraphicsUtils::distanceSqd(bezier->endpoint0(), bezier->cp0()) > minDSqd) {
+		//m_itemE0->setVisible(false);
+	//}
+	//else {
+		//QRectF r(master->mapToScene(bezier->endpoint0()), QSizeF(0,0));
+		//r.adjust(-radius, -radius, radius, radius);
+		//m_itemE0->setRect(r);
+		//m_itemE0->setVisible(true);
+	//}
 
 	p0 = master->mapToScene(bezier->endpoint1());
 	p1 = master->mapToScene(bezier->cp1());
 	GraphicsUtils::liangBarskyLineClip(p0.x(), p0.y(), p1.x(), p1.y(), sr.left(), sr.right(), sr.top(), sr.bottom(), x1, y1, x2, y2);
 	m_itemL1->setLine(x1, y1, x2, y2);
-	if (GraphicsUtils::distanceSqd(bezier->endpoint1(), bezier->cp1()) > minDSqd) {
-		m_itemE1->setVisible(false);
-	}
-	else {
-		QRectF r(master->mapToScene(bezier->endpoint1()), QSizeF(0,0));
-		r.adjust(-radius, -radius, radius, radius);
-		m_itemE1->setRect(r);
-		m_itemE1->setVisible(true);
-	}
+	//if (GraphicsUtils::distanceSqd(bezier->endpoint1(), bezier->cp1()) > minDSqd) {
+	//	m_itemE1->setVisible(false);
+	//}
+	//else {
+	//	QRectF r(master->mapToScene(bezier->endpoint1()), QSizeF(0,0));
+	//	r.adjust(-radius, -radius, radius, radius);
+	//	m_itemE1->setRect(r);
+	//	m_itemE1->setVisible(true);
+	//}
 
 	m_itemL0->setVisible(true);
 	m_itemL1->setVisible(true);
