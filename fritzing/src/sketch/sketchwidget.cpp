@@ -1898,7 +1898,7 @@ bool SketchWidget::moveByArrow(int dx, int dy, QKeyEvent * event) {
 		}
 
 		if (!draggingWire) {
-			prepMove(NULL);
+			prepMove(NULL, (event->modifiers() & altOrMetaModifier()) != 0);
 		}
 		if (m_savedItems.count() == 0) return false;
 
@@ -2060,7 +2060,7 @@ void SketchWidget::mousePressEvent(QMouseEvent *event)
 		return;
 	}
 
-	prepMove(itemBase ? itemBase : dynamic_cast<ItemBase *>(item->parentItem()));
+	prepMove(itemBase ? itemBase : dynamic_cast<ItemBase *>(item->parentItem()), (event->modifiers() & altOrMetaModifier()) != 0);
 
 	if (m_alignToGrid && (itemBase == NULL) && (event->modifiers() == Qt::NoModifier)) {
 		Wire * wire = dynamic_cast<Wire *>(item->parentItem());
@@ -2080,7 +2080,7 @@ void SketchWidget::mousePressEvent(QMouseEvent *event)
 
 }
 
-void SketchWidget::prepMove(ItemBase * originatingItem) {
+void SketchWidget::prepMove(ItemBase * originatingItem, bool rubberBandLegEnabled) {
 	m_checkUnder.clear();
 	//DebugDialog::debug("prep move check under = false");
 	QSet<Wire *> wires;
@@ -2145,7 +2145,7 @@ void SketchWidget::prepMove(ItemBase * originatingItem) {
 		categorizeDragWires(wires);
 	}
 
-	categorizeDragLegs();
+	categorizeDragLegs(rubberBandLegEnabled);
 
 	foreach (ItemBase * itemBase, m_savedItems.values()) {
 		itemBase->saveGeometry();
@@ -2222,13 +2222,15 @@ struct ConnectionThing {
 };
 
 
-void SketchWidget::categorizeDragLegs() 
+void SketchWidget::categorizeDragLegs(bool rubberBandLegEnabled) 
 {
 	m_stretchingLegs.clear();
+	if (!rubberBandLegEnabled) return;
+
 	QSet<ItemBase *> passives;
 	foreach (ItemBase * itemBase, m_savedItems.values()) {
 		if (itemBase->itemType() == ModelPart::Wire) continue;
-		if (!itemBase->rubberBandLegEnabled()) continue;
+		if (!itemBase->hasRubberBandLeg()) continue;
 
 		// 1. we are dragging a part with rubberBand legs which are attached to some part not being dragged along (i.e. a breadboard)
 		//		so we stretch those attached legs
@@ -4018,12 +4020,12 @@ void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGrap
 	}
 }
 
-void SketchWidget::rotateX(double degrees) 
+void SketchWidget::rotateX(double degrees, bool rubberBandEnabled) 
 {
 	clearHoldingSelectItem();
 	m_savedItems.clear();
 	m_savedWires.clear();
-	prepMove(NULL);
+	prepMove(NULL, rubberBandEnabled);
 
 	QRectF itemsBoundingRect;
 	// want the bounding rect of the original selected items, not all the items that are secondarily being rotated
@@ -4126,14 +4128,14 @@ void SketchWidget::rotatePartLabels(double degrees, QTransform &, QPointF center
 	Q_UNUSED(parentCommand);
 }
 
-void SketchWidget::flip(Qt::Orientations orientation) 
+void SketchWidget::flipX(Qt::Orientations orientation, bool rubberBandEnabled) 
 {
 	if (!this->isVisible()) return;
 
 	clearHoldingSelectItem();
 	m_savedItems.clear();
 	m_savedWires.clear();
-	prepMove(NULL);
+	prepMove(NULL, rubberBandEnabled);
 
 	QList <QGraphicsItem *> items = scene()->selectedItems();
 	QList <ItemBase *> targets;

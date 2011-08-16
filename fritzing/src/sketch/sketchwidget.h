@@ -117,8 +117,8 @@ public:
 	void bringForward();
 	void bringToFront();
 	double fitInWindow();
-	void rotateX(double degrees);
-	void flip(Qt::Orientations orientation);
+	void rotateX(double degrees, bool rubberBandEnabled);
+	void flipX(Qt::Orientations orientation, bool rubberBandEnabled);
 	void addBendpoint(ItemBase * lastHoverEnterItem, ConnectorItem * lastHoverEnterConnectorItem, QPointF lastLocation);
 	void flattenCurve(ItemBase * lastHoverEnterItem, ConnectorItem * lastHoverEnterConnectorItem, QPointF lastLocation);
 
@@ -382,8 +382,8 @@ protected:
 	void prepDragWire(Wire *);
 	void clickBackground(QMouseEvent *);
 	void categorizeDragWires(QSet<Wire *> & wires);
-	void categorizeDragLegs();
-	void prepMove(ItemBase * originatingItem);
+	void categorizeDragLegs(bool rubberBandEnabled);
+	void prepMove(ItemBase * originatingItem, bool rubberBandEnabled);
 	void initBackgroundColor();
 	QPointF calcNewLoc(ItemBase * moveBase, ItemBase * detachFrom);
 	long findPartOrWire(long itemID);

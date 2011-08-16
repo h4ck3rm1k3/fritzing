@@ -1929,6 +1929,17 @@ void MainWindow::rotateIncCW() {
 	}
 }
 
+void MainWindow::rotateIncCWRubberBand() {
+	if (m_currentGraphicsView == NULL) return;
+
+	if (m_rotate45cwAct->isEnabled()) {
+		m_currentGraphicsView->rotateX(45, true);
+	}
+	else if (m_rotate90cwAct->isEnabled()) {
+		m_currentGraphicsView->rotateX(90, true);
+	}
+}
+
 void MainWindow::rotateIncCCW() {
 	if (m_currentGraphicsView == NULL) return;
 
@@ -1940,42 +1951,53 @@ void MainWindow::rotateIncCCW() {
 	}
 }
 
+void MainWindow::rotateIncCCWRubberBand() {
+	if (m_currentGraphicsView == NULL) return;
+
+	if (m_rotate45ccwAct->isEnabled()) {
+		m_currentGraphicsView->rotateX(-45, true);
+	}
+	else if (m_rotate90ccwAct->isEnabled()) {
+		m_currentGraphicsView->rotateX(-90, true);
+	}
+}
+
 void MainWindow::rotate90cw() {
 	if (m_currentGraphicsView == NULL) return;
 
-	m_currentGraphicsView->rotateX(90);
+	m_currentGraphicsView->rotateX(90, false);
 }
 
 void MainWindow::rotate90ccw() {
 	if (m_currentGraphicsView == NULL) return;
 
-	m_currentGraphicsView->rotateX(-90);
+	m_currentGraphicsView->rotateX(-90, false);
 }
 
 void MainWindow::rotate45ccw() {
 	if (m_currentGraphicsView == NULL) return;
 
-	m_currentGraphicsView->rotateX(-45);
+	m_currentGraphicsView->rotateX(-45, false);
 }
 
 void MainWindow::rotate45cw() {
 	if (m_currentGraphicsView == NULL) return;
 
-	m_currentGraphicsView->rotateX(45);
+	m_currentGraphicsView->rotateX(45, false);
 }
 
 void MainWindow::rotate180() {
 	if (m_currentGraphicsView == NULL) return;
 
-	m_currentGraphicsView->rotateX(180);
+	m_currentGraphicsView->rotateX(180, false);
 }
 
 void MainWindow::flipHorizontal() {
-	m_currentGraphicsView->flip(Qt::Horizontal);
+	m_currentGraphicsView->flipX(Qt::Horizontal, false);
 }
 
 void MainWindow::flipVertical() {
-	m_currentGraphicsView->flip(Qt::Vertical);
+	m_currentGraphicsView->flipX(Qt::Vertical, false);
 }
 
 void MainWindow::sendToBack() {
@@ -3091,3 +3113,4 @@ void MainWindow::orderFab()
 {
 	QDesktopServices::openUrl(QString("http://fab.fritzing.org/"));
 }
+

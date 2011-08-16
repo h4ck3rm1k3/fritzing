@@ -139,7 +139,7 @@ ItemBase::ItemBase( ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier vi
 	: QGraphicsSvgItem()
 {
 	//DebugDialog::debug(QString("itembase %1 %2").arg(id).arg((long) static_cast<QGraphicsItem *>(this), 0, 16));
-	m_rubberBandLegEnabled = m_hasRubberBandLeg = m_moveLock = m_hoverEnterSpaceBarWasPressed = m_spaceBarWasPressed = false;
+	m_hasRubberBandLeg = m_moveLock = m_hoverEnterSpaceBarWasPressed = m_spaceBarWasPressed = false;
 
 	m_everVisible = true;
 
@@ -1851,11 +1851,4 @@ QPainterPath ItemBase::hoverShape() const
 	return shape();
 }
 
-void ItemBase::setRubberBandLegEnabled(bool enabled)
-{
-	m_rubberBandLegEnabled = enabled;
-}
 
-bool ItemBase::rubberBandLegEnabled() {
-	return m_hasRubberBandLeg && m_rubberBandLegEnabled;
-}

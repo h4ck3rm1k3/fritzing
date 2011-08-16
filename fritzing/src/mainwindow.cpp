@@ -221,8 +221,17 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 
 	QShortcut * shortcut = new QShortcut(QKeySequence(tr("Ctrl+R", "Rotate Clockwise")), this);
 	connect(shortcut, SIGNAL(activated()), this, SLOT(rotateIncCW()));
+	shortcut = new QShortcut(QKeySequence(tr("Alt+Ctrl+R", "Rotate Clockwise")), this);
+	connect(shortcut, SIGNAL(activated()), this, SLOT(rotateIncCWRubberBand()));
+	shortcut = new QShortcut(QKeySequence(tr("Meta+Ctrl+R", "Rotate Clockwise")), this);
+	connect(shortcut, SIGNAL(activated()), this, SLOT(rotateIncCWRubberBand()));
+
 	shortcut = new QShortcut(QKeySequence(tr("Shift+Ctrl+R", "Rotate Counterclockwise")), this);
 	connect(shortcut, SIGNAL(activated()), this, SLOT(rotateIncCCW()));
+	shortcut = new QShortcut(QKeySequence(tr("Alt+Shift+Ctrl+R", "Rotate Counterclockwise")), this);
+	connect(shortcut, SIGNAL(activated()), this, SLOT(rotateIncCCWRubberBand()));
+	shortcut = new QShortcut(QKeySequence(tr("Meta+Shift+Ctrl+R", "Rotate Counterclockwise")), this);
+	connect(shortcut, SIGNAL(activated()), this, SLOT(rotateIncCCWRubberBand()));
 
 	connect(this, SIGNAL(changeActivationSignal(bool, QWidget *)), qApp, SLOT(changeActivation(bool, QWidget *)), Qt::DirectConnection);
 	connect(this, SIGNAL(destroyed(QObject *)), qApp, SLOT(topLevelWidgetDestroyed(QObject *)));

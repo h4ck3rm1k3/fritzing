@@ -211,6 +211,8 @@ protected slots:
 	void rotate45cw();
 	void rotateIncCCW();
 	void rotateIncCW();
+	void rotateIncCCWRubberBand();
+	void rotateIncCWRubberBand();
 	void flipHorizontal();
 	void flipVertical();
 	void showAllLayers();
@@ -318,7 +320,6 @@ protected slots:
 	void swapSelectedDelay(const QString & family, const QString & prop, QMap<QString, QString> & currPropsMap, ItemBase *);
 	void swapSelectedTimeout();
 	void filenameIfSlot(QString & filename);
-
 
 protected:
 	void initSketchWidget(SketchWidget *);
