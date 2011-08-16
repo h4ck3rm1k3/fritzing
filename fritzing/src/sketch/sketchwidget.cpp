@@ -119,7 +119,7 @@ SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, Q
     : InfoGraphicsView(parent)
 {
     //setViewport(new QGLWidget);
-	m_curvyWires = false;
+	m_rubberBandLegWasEnabled = m_curvyWires = false;
 	m_middleMouseIsPressed = false;
 	m_arrowTimer.setParent(this);
 	m_arrowTimer.setInterval(AutoRepeatDelay);
@@ -1666,7 +1666,7 @@ void SketchWidget::dragMoveEvent(QDragMoveEvent *event)
 				m_globalPos.setY(p.y());
 			}
 
-			moveItems(m_globalPos, true);
+			moveItems(m_globalPos, true, m_rubberBandLegWasEnabled);
 			m_moveEventCount++;
 		}
 		else {
@@ -1874,6 +1874,7 @@ SelectItemCommand* SketchWidget::stackSelectionState(bool pushIt, QUndoCommand *
 }
 
 bool SketchWidget::moveByArrow(int dx, int dy, QKeyEvent * event) {
+	bool rubberBandLegEnabled = false;
 	DebugDialog::debug(QString("move by arrow %1").arg(event->isAutoRepeat()));
 	if (!event->isAutoRepeat()) {
 		m_dragBendpointWire = NULL;
@@ -1898,7 +1899,8 @@ bool SketchWidget::moveByArrow(int dx, int dy, QKeyEvent * event) {
 		}
 
 		if (!draggingWire) {
-			prepMove(NULL, (event->modifiers() & altOrMetaModifier()) != 0);
+			rubberBandLegEnabled = (event->modifiers() & altOrMetaModifier()) != 0;
+			prepMove(NULL, rubberBandLegEnabled);
 		}
 		if (m_savedItems.count() == 0) return false;
 
@@ -1924,7 +1926,7 @@ bool SketchWidget::moveByArrow(int dx, int dy, QKeyEvent * event) {
 
 	QPoint globalPos = mapFromScene(m_mousePressScenePos + QPoint(m_arrowTotalX, m_arrowTotalY));
 	globalPos = mapToGlobal(globalPos);
-	moveItems(globalPos, false);
+	moveItems(globalPos, false, rubberBandLegEnabled);
 	m_moveEventCount++;
 	return true;
 }
@@ -2081,6 +2083,7 @@ void SketchWidget::mousePressEvent(QMouseEvent *event)
 }
 
 void SketchWidget::prepMove(ItemBase * originatingItem, bool rubberBandLegEnabled) {
+	m_rubberBandLegWasEnabled = rubberBandLegEnabled;
 	m_checkUnder.clear();
 	//DebugDialog::debug("prep move check under = false");
 	QSet<Wire *> wires;
@@ -2702,7 +2705,7 @@ QString SketchWidget::makeMoveSVG(double printerScale, double dpi, QPointF & off
 
 
 
-void SketchWidget::moveItems(QPoint globalPos, bool checkAutoScrollFlag)
+void SketchWidget::moveItems(QPoint globalPos, bool checkAutoScrollFlag, bool rubberBandLegEnabled)
 {
 	if (checkAutoScrollFlag) {
 		bool result = checkAutoscroll(globalPos);
@@ -2733,7 +2736,7 @@ void SketchWidget::moveItems(QPoint globalPos, bool checkAutoScrollFlag)
 			if (item->itemType() == ModelPart::Wire) continue;
 
 			//DebugDialog::debug(QString("disconnecting from female %1").arg(item->instanceTitle()));
-			disconnectFromFemale(item, m_savedItems, m_moveDisconnectedFromFemale, false, false, NULL);
+			disconnectFromFemale(item, m_savedItems, m_moveDisconnectedFromFemale, false, rubberBandLegEnabled, NULL);
 		}
 	}
 
@@ -4020,12 +4023,12 @@ void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGrap
 	}
 }
 
-void SketchWidget::rotateX(double degrees, bool rubberBandEnabled) 
+void SketchWidget::rotateX(double degrees, bool rubberBandLegEnabled) 
 {
 	clearHoldingSelectItem();
 	m_savedItems.clear();
 	m_savedWires.clear();
-	prepMove(NULL, rubberBandEnabled);
+	prepMove(NULL, rubberBandLegEnabled);
 
 	QRectF itemsBoundingRect;
 	// want the bounding rect of the original selected items, not all the items that are secondarily being rotated
@@ -4067,7 +4070,7 @@ void SketchWidget::rotateX(double degrees, bool rubberBandEnabled)
 			ViewGeometry vg2(vg1);
 			itemBase->calcRotation(rotation, center, vg2);
 			ConnectorPairHash connectorHash;
-			disconnectFromFemale(itemBase, m_savedItems, connectorHash, true, false, parentCommand);
+			disconnectFromFemale(itemBase, m_savedItems, connectorHash, true, rubberBandLegEnabled, parentCommand);
 			new MoveItemCommand(this, itemBase->id(), vg1, vg1, true, parentCommand);
 			new RotateItemCommand(this, itemBase->id(), degrees, parentCommand);
 			new MoveItemCommand(this, itemBase->id(), vg2, vg2, true, parentCommand);
@@ -4128,14 +4131,14 @@ void SketchWidget::rotatePartLabels(double degrees, QTransform &, QPointF center
 	Q_UNUSED(parentCommand);
 }
 
-void SketchWidget::flipX(Qt::Orientations orientation, bool rubberBandEnabled) 
+void SketchWidget::flipX(Qt::Orientations orientation, bool rubberBandLegEnabled) 
 {
 	if (!this->isVisible()) return;
 
 	clearHoldingSelectItem();
 	m_savedItems.clear();
 	m_savedWires.clear();
-	prepMove(NULL, rubberBandEnabled);
+	prepMove(NULL, rubberBandLegEnabled);
 
 	QList <QGraphicsItem *> items = scene()->selectedItems();
 	QList <ItemBase *> targets;
@@ -4185,7 +4188,7 @@ void SketchWidget::flipX(Qt::Orientations orientation, bool rubberBandEnabled)
 	QHash<long, ItemBase *> emptyList;			// emptylist is only used for a move command
 	ConnectorPairHash connectorHash;
 	foreach (ItemBase * item, targets) {
-		disconnectFromFemale(item, emptyList, connectorHash, true, false, parentCommand);
+		disconnectFromFemale(item, emptyList, connectorHash, true, rubberBandLegEnabled, parentCommand);
 
 		if (item->sticky()) {
 			//TODO: apply transformation to stuck items
@@ -5896,7 +5899,7 @@ void SketchWidget::changeWireFlags(long wireId, ViewGeometry::WireFlags wireFlag
 	}
 }
 
-bool SketchWidget::disconnectFromFemale(ItemBase * item, QHash<long, ItemBase *> & savedItems, ConnectorPairHash & connectorHash, bool doCommand, bool disconnectRubberBand, QUndoCommand * parentCommand)
+bool SketchWidget::disconnectFromFemale(ItemBase * item, QHash<long, ItemBase *> & savedItems, ConnectorPairHash & connectorHash, bool doCommand, bool rubberBandLegEnabled, QUndoCommand * parentCommand)
 {
 	// schematic and pcb view connections are always via wires so this is a no-op.  breadboard view has its own version.
 
@@ -5905,7 +5908,7 @@ bool SketchWidget::disconnectFromFemale(ItemBase * item, QHash<long, ItemBase *>
 	Q_UNUSED(parentCommand);
 	Q_UNUSED(connectorHash);
 	Q_UNUSED(doCommand);
-	Q_UNUSED(disconnectRubberBand);
+	Q_UNUSED(rubberBandLegEnabled);
 	return false;
 }
 
@@ -5979,7 +5982,7 @@ void SketchWidget::dragAutoScrollTimeout()
 void SketchWidget::moveAutoScrollTimeout()
 {
 	autoScrollTimeout();
-	moveItems(m_globalPos, true);
+	moveItems(m_globalPos, true, m_rubberBandLegWasEnabled);
 }
 
 const QString &SketchWidget::selectedModuleID() {
@@ -7001,6 +7004,8 @@ void SketchWidget::disconnectAll() {
 
 void SketchWidget::disconnectAllSlot(QList<ConnectorItem *> connectorItems, QHash<ItemBase *, SketchWidget *> & itemsToDelete, QUndoCommand * parentCommand)
 {
+	// (jc 2011 Aug 16): this code is not hooked up and my last recollection is that it wasn't working
+
 	QList<ConnectorItem *> myConnectorItems;
 	foreach (ConnectorItem * ci, connectorItems) {
 		ItemBase * itemBase = findItem(ci->attachedToID());
@@ -7049,7 +7054,7 @@ void SketchWidget::disconnectAllSlot(QList<ConnectorItem *> connectorItems, QHas
 					new MoveItemCommand(this, detachee->id(), detachee->getViewGeometry(), vg, false, parentCommand);
 					QHash<long, ItemBase *> emptyList;
 					ConnectorPairHash connectorHash;
-					disconnectFromFemale(detachee, emptyList, connectorHash, true, true, parentCommand);
+					disconnectFromFemale(detachee, emptyList, connectorHash, true, false, parentCommand);
 					foreach (ConnectorItem * fConnectorItem, connectorHash.uniqueKeys()) {
 						if (myConnectorItems.contains(fConnectorItem)) {
 							// don't need to reconnect

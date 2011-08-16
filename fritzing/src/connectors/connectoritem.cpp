@@ -2021,6 +2021,12 @@ void ConnectorItem::resetLeg(const QPolygonF & poly, bool relative, bool active,
 		return;
 	}
 
+	if (why.compare("swap") == 0) {
+		setLeg(poly, relative, why);
+		repositionTarget();
+		return;
+	}
+
 	//DebugDialog::debug("connectorItem prepareGeometryChange 1");
 	prepareGeometryChange();
 	QPointF sceneNewLast = target->sceneAdjustedTerminalPoint(NULL);

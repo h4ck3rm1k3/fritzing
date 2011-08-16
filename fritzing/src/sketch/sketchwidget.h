@@ -117,8 +117,8 @@ public:
 	void bringForward();
 	void bringToFront();
 	double fitInWindow();
-	void rotateX(double degrees, bool rubberBandEnabled);
-	void flipX(Qt::Orientations orientation, bool rubberBandEnabled);
+	void rotateX(double degrees, bool rubberBandLegEnabled);
+	void flipX(Qt::Orientations orientation, bool rubberBandLegEnabled);
 	void addBendpoint(ItemBase * lastHoverEnterItem, ConnectorItem * lastHoverEnterConnectorItem, QPointF lastLocation);
 	void flattenCurve(ItemBase * lastHoverEnterItem, ConnectorItem * lastHoverEnterConnectorItem, QPointF lastLocation);
 
@@ -347,10 +347,10 @@ protected:
 
 	void addViewLayersAux(const LayerList &layers, float startZ = 1.5);
 	void tempConnectWire(Wire * wire, ConnectorItem * from, ConnectorItem * to);
-	virtual bool disconnectFromFemale(ItemBase * item, QHash<long, ItemBase *> & savedItems, ConnectorPairHash &, bool doCommand, bool disconnectRubberBand, QUndoCommand * parentCommand);
+	virtual bool disconnectFromFemale(ItemBase * item, QHash<long, ItemBase *> & savedItems, ConnectorPairHash &, bool doCommand, bool rubberBandLegEnabled, QUndoCommand * parentCommand);
 	void clearDragWireTempCommand();
 	bool draggingWireEnd();
-	void moveItems(QPoint globalPos, bool checkAutoScroll);
+	void moveItems(QPoint globalPos, bool checkAutoScroll, bool rubberBandLegEnabled);
 	virtual ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerSpec, QDomElement & layers, QString & layerName);
 	virtual BaseCommand::CrossViewType wireSplitCrossView();
 	virtual bool canChainMultiple();
@@ -382,8 +382,8 @@ protected:
 	void prepDragWire(Wire *);
 	void clickBackground(QMouseEvent *);
 	void categorizeDragWires(QSet<Wire *> & wires);
-	void categorizeDragLegs(bool rubberBandEnabled);
-	void prepMove(ItemBase * originatingItem, bool rubberBandEnabled);
+	void categorizeDragLegs(bool rubberBandLegEnabled);
+	void prepMove(ItemBase * originatingItem, bool rubberBandLegEnabled);
 	void initBackgroundColor();
 	QPointF calcNewLoc(ItemBase * moveBase, ItemBase * detachFrom);
 	long findPartOrWire(long itemID);
@@ -644,6 +644,7 @@ protected:
 	bool m_middleMouseIsPressed;
 	QMultiHash<ItemBase *, ConnectorItem *> m_stretchingLegs;
 	bool m_curvyWires;
+	bool m_rubberBandLegWasEnabled;
 
 public:
 	static ViewLayer::ViewLayerID defaultConnectorLayer(ViewIdentifierClass::ViewIdentifier viewId);

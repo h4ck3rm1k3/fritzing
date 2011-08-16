@@ -858,7 +858,7 @@ QString PartLabel::makeSvgAux(bool blackOnly, double dpi, double printerScale, d
 	svg += "</g>";
     QTransform t = transform();
 
-	h = y - fm.height() + fm.descent();
+	h = y + fm.descent() - fm.height() + fm.lineSpacing();
     return TextUtils::svgTransform(svg, t, false, QString());
 }
 
