@@ -2694,16 +2694,20 @@ void ConnectorItem::initCursors()
 {
 	if (BendpointCursor == NULL) {
 		QBitmap bitmap1(":resources/images/cursor/bendpoint.bmp");
-		BendpointCursor = new QCursor(bitmap1, bitmap1, 15, 15);
+		QBitmap bitmap1m(":resources/images/cursor/bendpoint_mask.bmp");
+		BendpointCursor = new QCursor(bitmap1, bitmap1m.isNull() ? bitmap1 : bitmap1m, 15, 15);
 
 		QBitmap bitmap2(":resources/images/cursor/new_bendpoint.bmp");
-		NewBendpointCursor = new QCursor(bitmap2, bitmap2, 15, 15);
+		QBitmap bitmap2m(":resources/images/cursor/new_bendpoint_mask.bmp");
+		NewBendpointCursor = new QCursor(bitmap2, bitmap2m.isNull() ? bitmap2 : bitmap2m, 15, 15);
 
 		QBitmap bitmap3(":resources/images/cursor/make_wire.bmp");
-		MakeWireCursor = new QCursor(bitmap3, bitmap3, 3, 29);
+		QBitmap bitmap3m(":resources/images/cursor/make_wire_mask.bmp");
+		MakeWireCursor = new QCursor(bitmap3, bitmap3m.isNull() ? bitmap3 : bitmap3m, 3, 29);
 
 		QBitmap bitmap4(":resources/images/cursor/curve.bmp");
-		MakeCurveCursor = new QCursor(bitmap4, bitmap4, 15, 15);
+		QBitmap bitmap4m(":resources/images/cursor/curve_mask.bmp");
+		MakeCurveCursor = new QCursor(bitmap4, bitmap4m.isNull() ? bitmap4 : bitmap4m, 0, 0);
 	}
 }
 
