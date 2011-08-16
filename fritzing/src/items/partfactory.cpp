@@ -150,7 +150,7 @@ ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClas
 					}
 					// must get the subclasses first
 					if (modelPart->itemType() == ModelPart::Breadboard) {
-						return new Breadboard(modelPart, viewIdentifier, viewGeometry, id, NULL, doLabel);
+						return new Breadboard(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 					}
 
 				}
