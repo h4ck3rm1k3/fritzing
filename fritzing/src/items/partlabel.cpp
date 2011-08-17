@@ -865,7 +865,7 @@ QString PartLabel::makeSvgAux(bool blackOnly, double dpi, double printerScale, d
 	h = y + fm.descent() - fm.height() + fm.lineSpacing();
 	h = br.height();
 	w = br.width();
-	DebugDialog::debug(QString("final:%1 %2").arg(w).arg(h));
+	DebugDialog::debug(QString("final:%1 %2 %3").arg(w).arg(h).arg(m_font.toString()));
     return TextUtils::svgTransform(svg, t, false, QString());
 }
 
