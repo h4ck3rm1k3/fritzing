@@ -51,7 +51,6 @@ $Date$
 #include <QDateTimeEdit>
 #include <QSpinBox>
 #include <QHash>
-#include <QFontMetrics>
 #include <QTextCursor>
 #include <QTextBlock>
 #include <QTextLayout>

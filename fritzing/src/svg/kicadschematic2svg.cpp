@@ -285,8 +285,8 @@ QString KicadSchematic2Svg::convertField(const QString & xString, const QString 
 		anchor = "end";
 	}
 
-	QFontMetrics metrics(font);
-	QRect bri = metrics.boundingRect(text);
+	QFontMetricsF metrics(font);
+	QRectF bri = metrics.boundingRect(text);
 
 	// convert back to 1000 dpi
 	QRectF brf(0, 0,
