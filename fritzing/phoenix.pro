@@ -42,8 +42,8 @@ win32 {
     LIBS += setupapi.lib
 }
 macx {
-	MOC_DIR = build/moc
-        CONFIG += x86 x86_64 # ppc x86_64
+        MOC_DIR = build/moc
+        CONFIG +=  x86_64 # ppc x86_64 x86
 	QMAKE_INFO_PLIST = FritzingInfo.plist
 	#DEFINES += QT_NO_DEBUG   		# uncomment this for xcode
         LIBS += /usr/lib/libz.dylib

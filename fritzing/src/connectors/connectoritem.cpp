@@ -2722,8 +2722,8 @@ void ConnectorItem::initCursors()
 		QBitmap bitmap3m(":resources/images/cursor/make_wire_mask.bmp");
 		MakeWireCursor = new QCursor(bitmap3, bitmap3m, 0, 0);
 
-		QBitmap bitmap4(":resources/images/cursor/curve.bmp");
-		QBitmap bitmap4m(":resources/images/cursor/curve_mask.bmp");
+                QBitmap bitmap4(":resources/images/cursor/curve.bmp");
+                QBitmap bitmap4m(":resources/images/cursor/curve_mask.bmp");
 		MakeCurveCursor = new QCursor(bitmap4, bitmap4m, 0, 0);
 	}
 }

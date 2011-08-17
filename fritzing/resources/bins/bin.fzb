@@ -200,7 +200,7 @@
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="TMP36_THT" modelIndex="21" path="parts/core/tmp36l.fzp">
+        <instance moduleIdRef="LM35_THT" modelIndex="21" path="parts/core/lm35.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
