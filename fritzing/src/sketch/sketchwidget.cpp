@@ -1038,7 +1038,7 @@ void SketchWidget::deleteTracesSlot(QSet<ItemBase *> & deletedItems, QHash<ItemB
 	}
 }
 
-void SketchWidget::extendChangeConnectionCommand(BaseCommand::CrossViewType crossView,
+ChangeConnectionCommand * SketchWidget::extendChangeConnectionCommand(BaseCommand::CrossViewType crossView,
 												 long fromID, const QString & fromConnectorID,
 												 long toID, const QString & toConnectorID,
 												 ViewLayer::ViewLayerSpec viewLayerSpec,
@@ -1046,24 +1046,24 @@ void SketchWidget::extendChangeConnectionCommand(BaseCommand::CrossViewType cros
 {
 	ItemBase * fromItem = findItem(fromID);
 	if (fromItem == NULL) {
-		return;  // for now
+		return NULL;  // for now
 	}
 
 	ItemBase * toItem = findItem(toID);
 	if (toItem == NULL) {
-		return;		// for now
+		return NULL;		// for now
 	}
 
 	ConnectorItem * fromConnectorItem = findConnectorItem(fromItem, fromConnectorID, viewLayerSpec);
-	if (fromConnectorItem == NULL) return; // for now
+	if (fromConnectorItem == NULL) return NULL; // for now
 
 	ConnectorItem * toConnectorItem = findConnectorItem(toItem, toConnectorID, viewLayerSpec);
-	if (toConnectorItem == NULL) return; // for now
+	if (toConnectorItem == NULL) return NULL; // for now
 
-	extendChangeConnectionCommand(crossView, fromConnectorItem, toConnectorItem, viewLayerSpec, connect, parentCommand);
+	return extendChangeConnectionCommand(crossView, fromConnectorItem, toConnectorItem, viewLayerSpec, connect, parentCommand);
 }
 
-void SketchWidget::extendChangeConnectionCommand(BaseCommand::CrossViewType crossView,
+ChangeConnectionCommand * SketchWidget::extendChangeConnectionCommand(BaseCommand::CrossViewType crossView,
 												 ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem,
 												 ViewLayer::ViewLayerSpec viewLayerSpec,
 												 bool connect, QUndoCommand * parentCommand)
@@ -1080,15 +1080,15 @@ void SketchWidget::extendChangeConnectionCommand(BaseCommand::CrossViewType cros
 
 	ItemBase * fromItem = fromConnectorItem->attachedTo();
 	if (fromItem == NULL) {
-		return;  // for now
+		return  NULL;  // for now
 	}
 
 	ItemBase * toItem = toConnectorItem->attachedTo();
 	if (toItem == NULL) {
-		return;		// for now
+		return NULL;		// for now
 	}
 
-	new ChangeConnectionCommand(this, crossView,
+	return new ChangeConnectionCommand(this, crossView,
 								fromItem->id(), fromConnectorItem->connectorSharedID(),
 								toItem->id(), toConnectorItem->connectorSharedID(),
 								viewLayerSpec, connect, parentCommand);
@@ -3190,16 +3190,18 @@ void SketchWidget::prepLegBendpointMove(ConnectorItem * from, int index, QPointF
 			ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::TraceRatsnestFlags);
 
 			foreach (ConnectorItem * formerConnectorItem, former) {
-				extendChangeConnectionCommand(BaseCommand::CrossView, from, formerConnectorItem, 
-					ViewLayer::specFromID(from->attachedToViewLayerID()),
-					false, parentCommand);
+				ChangeConnectionCommand * ccc = extendChangeConnectionCommand(BaseCommand::CrossView, from, formerConnectorItem, 
+												ViewLayer::specFromID(from->attachedToViewLayerID()),
+												false, parentCommand);
+				ccc->setUpdateConnections(false);
 				from->tempRemove(formerConnectorItem, false);
 				formerConnectorItem->tempRemove(from, false);
 			}
 
 		}
 		if (to != NULL) {
-			extendChangeConnectionCommand(BaseCommand::CrossView, from, to, ViewLayer::specFromID(from->attachedToViewLayerID()), true, parentCommand);
+			ChangeConnectionCommand * ccc = extendChangeConnectionCommand(BaseCommand::CrossView, from, to, ViewLayer::specFromID(from->attachedToViewLayerID()), true, parentCommand);
+			ccc->setUpdateConnections(false);
 		}
 	}
 	else {

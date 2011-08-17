@@ -321,11 +321,11 @@ protected:
 	void deleteAux(QSet<ItemBase *> & deletedItems, QUndoCommand * parentCommand, bool doPush);
 	void deleteMiddle(QHash<ItemBase *, SketchWidget *> & otherDeletedItems, QUndoCommand * parentCommand);
 
-	void extendChangeConnectionCommand(BaseCommand::CrossViewType, long fromID, const QString & fromConnectorID,
+	ChangeConnectionCommand * extendChangeConnectionCommand(BaseCommand::CrossViewType, long fromID, const QString & fromConnectorID,
 									   long toID, const QString & toConnectorID,
 									   ViewLayer::ViewLayerSpec,
 									   bool connect, QUndoCommand * parent);
-	void extendChangeConnectionCommand(BaseCommand::CrossViewType, ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem,
+	ChangeConnectionCommand * extendChangeConnectionCommand(BaseCommand::CrossViewType, ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem,
 										ViewLayer::ViewLayerSpec,
 										bool connect, QUndoCommand * parentCommand);
 

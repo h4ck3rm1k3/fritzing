@@ -1157,7 +1157,9 @@ void ItemBase::transformItem(const QTransform & currTransf) {
 	QTransform transf = QTransform().translate(-x, -y) * currTransf * QTransform().translate(x, y);
 	getViewGeometry().setTransform(getViewGeometry().transform()*transf);
 	this->setTransform(getViewGeometry().transform());
-	updateConnections();
+	if (!m_hasRubberBandLeg) {
+		updateConnections();
+	}
 	update();
 }
 
