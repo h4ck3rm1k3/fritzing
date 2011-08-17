@@ -51,6 +51,7 @@ $Date$
 #include <QSet>
 #include <QSettings>
 #include <QComboBox>
+#include <QBitmap>
 #include <qmath.h>
 
 /////////////////////////////////
@@ -158,7 +159,7 @@ ItemBase::ItemBase( ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier vi
 	m_sticky = false;
 	m_canFlipHorizontal = m_canFlipVertical = false;
 
-	setCursor(Qt::ArrowCursor);
+	setCursor(*ConnectorItem::MoveCursor);
 
    	m_viewGeometry.set(viewGeometry);
 	setAcceptHoverEvents ( true );
@@ -265,6 +266,8 @@ void ItemBase::initNames() {
 	if (NumberMatcher.isEmpty()) {
 		NumberMatcher.setPattern(QString("(([0-9]+(\\.[0-9]*)?)|\\.[0-9]+)([\\s]*([") + TextUtils::PowerPrefixesString + "]))?");
 	}
+
+	ConnectorItem::initCursors();
 
 	if (TranslatedPropertyNames.count() == 0) {
 		TranslatedPropertyNames.insert("family", tr("family"));
@@ -451,7 +454,7 @@ void ItemBase::hoverUpdate() {
 void ItemBase::mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *) {
 }
 
-void ItemBase::mouseDoubleClickConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *) {
+void ItemBase::mouseDoubleClickConnectorEvent(ConnectorItem *) {
 }
 
 void ItemBase::mouseMoveConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *) {
@@ -1853,4 +1856,7 @@ QPainterPath ItemBase::hoverShape() const
 	return shape();
 }
 
-
+const QCursor * ItemBase::getCursor(Qt::KeyboardModifiers)
+{
+	return ConnectorItem::MoveCursor;
+}

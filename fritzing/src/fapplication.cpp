@@ -254,8 +254,6 @@ bool FApplication::init() {
 
 	Q_INIT_RESOURCE(phoenixresources);
 
-	qRegisterMetaType<ViewGeometry>("ViewGeometry");
-
 	MainWindow::initNames();
 	FSvgRenderer::calcPrinterScale();
 	ViewIdentifierClass::initNames();

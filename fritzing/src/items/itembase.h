@@ -37,6 +37,7 @@ $Date$
 #include <QUrl>
 #include <QMap>
 #include <QTimer>
+#include <QCursor>
 
 #include "../viewgeometry.h"
 #include "../viewlayer.h"
@@ -199,6 +200,7 @@ public:
 	virtual QRectF boundingRectWithoutLegs() const;
     QRectF boundingRect() const;
     virtual QPainterPath hoverShape() const;
+	virtual const QCursor * getCursor(Qt::KeyboardModifiers);
 
 public:
 	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, double & opacity, double & negativePenWidth, bool & negativeOffsetRect);
@@ -242,7 +244,7 @@ public:
 	virtual void hoverUpdate();
 	virtual bool filterMousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 	virtual void mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
-	virtual void mouseDoubleClickConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
+	virtual void mouseDoubleClickConnectorEvent(ConnectorItem *);
 	virtual void mouseMoveConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 	virtual void mouseReleaseConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 	virtual bool acceptsMousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);

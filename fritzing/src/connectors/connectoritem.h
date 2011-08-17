@@ -136,6 +136,7 @@ public:
 	void removeLegBendpoint(int index, const class Bezier *);
 	void moveLegBendpoint(int index, QPointF);
 	const QVector<class Bezier *> & beziers();
+	bool isBendpoint();
 
 protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
@@ -186,9 +187,9 @@ protected:
 	void replaceBezier(int index, const Bezier * newBezier);
 	bool eventFilter(QObject * object, QEvent * event);
 	void updateLegCursor(QPointF p, Qt::KeyboardModifiers modifiers);
+	void updateWireCursor(Qt::KeyboardModifiers modifiers);
 	bool curvyWiresIndicated(Qt::KeyboardModifiers);
 	double findT(Bezier * bezier, double blen, double length);
-
 
 protected:
 	QPointer<Connector> m_connector;
@@ -241,6 +242,10 @@ public:
 	static QCursor * NewBendpointCursor;
 	static QCursor * MakeWireCursor;
 	static QCursor * MakeCurveCursor;
+	static QCursor * RubberbandCursor;
+	static QCursor * MoveCursor;	
 };
+
+Q_DECLARE_METATYPE(ConnectorItem*);
 
 #endif

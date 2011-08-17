@@ -728,25 +728,26 @@ void Wire::setColorFromElement(QDomElement & element) {
 void Wire::hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event , ConnectorItem * item) {
 	m_connectorHover = item;
 	ItemBase::hoverEnterConnectorItem(event, item);
-	updateCursor(event->modifiers());
 }
 
 void Wire::hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item) {
-	item->setCursor(Qt::CrossCursor);
 	m_connectorHover = NULL;
 	ItemBase::hoverLeaveConnectorItem(event, item);
-	updateCursor(event->modifiers());
 }
 
 void Wire::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
 	ItemBase::hoverEnterEvent(event);
 	QApplication::instance()->installEventFilter(this);
+	QApplication::setOverrideCursor(cursor());
+	DebugDialog::debug("---wire set override cursor");
 	updateCursor(event->modifiers());
 }
 
 void Wire::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
 	QApplication::instance()->removeEventFilter(this);
 	ItemBase::hoverLeaveEvent(event);
+	DebugDialog::debug("------wire restore override cursor");
+	QApplication::restoreOverrideCursor();
 }
 
 
@@ -770,8 +771,7 @@ void Wire::connectionChange(ConnectorItem * onMe, ConnectorItem * onIt, bool con
 	}
 }
 
-void Wire::mouseDoubleClickConnectorEvent(ConnectorItem * connectorItem, QGraphicsSceneMouseEvent * event) {
-	Q_UNUSED(event);
+void Wire::mouseDoubleClickConnectorEvent(ConnectorItem * connectorItem) {
 	int chained = 0;
 	foreach (ConnectorItem * toConnectorItem, connectorItem->connectedToItems()) {
 		if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
@@ -782,7 +782,11 @@ void Wire::mouseDoubleClickConnectorEvent(ConnectorItem * connectorItem, QGraphi
 		}
 	}
 
+
 	if (chained == 1) {
+		// near as I can tell, this is to eliminate the overrides from the connectorItem and then from the wire itself
+		QApplication::restoreOverrideCursor();
+		QApplication::restoreOverrideCursor();
 		emit wireJoinSignal(this, connectorItem);
 	}
 }
@@ -1154,8 +1158,6 @@ QString Wire::colorString() {
 
 void Wire::initNames() {
 	if (colors.count() > 0) return;
-
-	ConnectorItem::initCursors();
 
 	widths << 16 << 24 << 32 << 48;
 	widthTrans.insert(widths[0], tr("thin (16 mil)"));
@@ -1588,15 +1590,7 @@ void Wire::originalConnectorDimensions(double & width, double & height)
 }
 
 bool Wire::isBendpoint(ConnectorItem * connectorItem) {
-	if (connectorItem->connectionsCount() == 0) return false;
-
-	foreach (ConnectorItem * ci, connectorItem->connectedToItems()) {
-		if (ci->attachedToItemType() != ModelPart::Wire) {
-			return false;
-		}
-	}
-
-	return true;
+	return connectorItem->isBendpoint();
 }
 
 double Wire::hoverStrokeWidth() {
@@ -1731,20 +1725,48 @@ bool Wire::eventFilter(QObject * object, QEvent * event)
 void Wire::updateCursor(Qt::KeyboardModifiers modifiers)
 {
 	if (m_connectorHover) {
-		if (isBendpoint(m_connectorHover)) {
-			m_connectorHover->setCursor(*ConnectorItem::BendpointCursor);
+		return;
+	}
+
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	bool segment = false;
+	int totalConnections = 0;
+	foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
+		totalConnections += connectorItem->connectionsCount();
+	}
+	if (totalConnections == 2 && modifiers & altOrMetaModifier()) {
+		segment = true;
+		foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
+			if (connectorItem->connectionsCount() != 1) {
+				segment = false;
+				break;
+			}
+
+			ConnectorItem * toConnectorItem = connectorItem->connectedToItems().at(0);
+			if (toConnectorItem->attachedToItemType() != ModelPart::Wire) {
+				segment = false;
+				break;
+			}
 		}
-		else {
-			m_connectorHover->setCursor(Qt::CrossCursor);
-		}
+	}
+		
+	if (segment) {
+		// dragging a segment of wire between bounded by two other wires
+		QApplication::changeOverrideCursor(*ConnectorItem::RubberbandCursor);
+	}
+	else if (totalConnections == 0) {
+		// only in breadboard view
+		QApplication::changeOverrideCursor(*ConnectorItem::MoveCursor);
+	}
+	else if (infoGraphicsView != NULL && infoGraphicsView->curvyWiresIndicated(modifiers)) {
+		QApplication::changeOverrideCursor(*ConnectorItem::MakeCurveCursor);
 	}
 	else {
-		InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);;
-		if (infoGraphicsView == NULL || infoGraphicsView->curvyWiresIndicated(modifiers)) {
-			setCursor(*ConnectorItem::MakeCurveCursor);
-		}
-		else {
-			setCursor(*ConnectorItem::NewBendpointCursor);
-		}
+		QApplication::changeOverrideCursor(*ConnectorItem::NewBendpointCursor);
 	}
+}
+
+bool Wire::canChainMultiple()
+{
+	return m_canChainMultiple;
 }

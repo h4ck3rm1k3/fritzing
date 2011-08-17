@@ -168,6 +168,7 @@ public:
 	const class Bezier * undoCurve();
 	QPolygonF sceneCurve(QPointF offset);
 	bool hasShadow();
+	bool canChainMultiple();
 
 protected slots:
 	void colorEntry(const QString & text);
@@ -193,7 +194,7 @@ protected:
 	void initEnds(const ViewGeometry &, QRectF defaultRect, class InfoGraphicsView *);
 	void connectionChange(ConnectorItem * onMe, ConnectorItem * onIt, bool connect);
 	void mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
-	void mouseDoubleClickConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
+	void mouseDoubleClickConnectorEvent(ConnectorItem *);
 	void mouseMoveConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 	void mouseReleaseConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 	bool acceptsMouseDoubleClickConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);

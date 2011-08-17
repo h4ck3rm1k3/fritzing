@@ -45,6 +45,8 @@ $Date$
 #include <QDir>
 #include <QMessageBox>
 #include <QLineEdit>
+#include <QApplication>
+#include <QEvent>
 #include <qmath.h>
 
 
@@ -412,8 +414,52 @@ void PaletteItemBase::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
 	}
 
 	ItemBase::hoverEnterEvent(event);
+	if (event->isAccepted()) {
+		if (hasRubberBandLeg()) {
+			DebugDialog::debug("---pab set override cursor");
+			QApplication::setOverrideCursor(cursor());
+
+			bool connected = false;
+			foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
+				if (connectorItem->connectionsCount() > 0) {
+					connected = true;
+					break;
+				}
+			}
+			if (connected) {
+				QApplication::instance()->installEventFilter(this);
+			}
+		}
+	}
 }
 
+void PaletteItemBase::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
+	if (hasRubberBandLeg()) {
+		QApplication::instance()->removeEventFilter(this);
+		DebugDialog::debug("------pab restore override cursor");
+		QApplication::restoreOverrideCursor();
+	}
+
+	ItemBase::hoverLeaveEvent(event);
+}
+
+bool PaletteItemBase::eventFilter(QObject * object, QEvent * event)
+{
+	Q_UNUSED(object);
+	if (hasRubberBandLeg()) {
+		if (event->type() == QEvent::KeyPress || event->type() == QEvent::KeyRelease) {
+			QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+			if (keyEvent->modifiers() & altOrMetaModifier()) {
+				QApplication::changeOverrideCursor(*ConnectorItem::RubberbandCursor);
+			}
+			else {
+				QApplication::changeOverrideCursor(*ConnectorItem::MoveCursor);
+			}
+		}
+	}
+
+	return false;
+}
 
 void PaletteItemBase::contextMenuEvent(QGraphicsSceneContextMenuEvent *event) {
 	if (lowerConnectorLayerVisible(this)) {
@@ -532,6 +578,22 @@ void PaletteItemBase::partPropertyEntry() {
 	if (infoGraphicsView != NULL) {
 		infoGraphicsView->setProp(this, ModelPartShared::PartNumberPropertyName, "", m_modelPart->prop(ModelPartShared::PartNumberPropertyName).toString(), lineEdit->text(), true);
 	}
+}
+
+
+const QCursor * PaletteItemBase::getCursor(Qt::KeyboardModifiers modifiers)
+{
+	if (hasRubberBandLeg()) {
+		if ((modifiers & altOrMetaModifier())) {
+			foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
+				if (connectorItem->connectionsCount() > 0) {
+					return ConnectorItem::RubberbandCursor;
+				}
+			}
+		}
+	}
+
+	return ConnectorItem::MoveCursor;
 }
 
 

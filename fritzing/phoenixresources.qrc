@@ -56,6 +56,10 @@
         <file>resources/images/cursor/magic_wand_mask.bmp</file>
         <file>resources/images/cursor/make_wire.bmp</file>
         <file>resources/images/cursor/make_wire_mask.bmp</file>
+        <file>resources/images/cursor/part_move.bmp</file>
+        <file>resources/images/cursor/part_move_mask.bmp</file>
+        <file>resources/images/cursor/rubberband_move.bmp</file>
+        <file>resources/images/cursor/rubberband_move_mask.bmp</file>
 	
         <file>resources/images/icons/partsBinOpenEnabled_icon.png</file>
         <file>resources/images/icons/partsBinOpenPressed_icon.png</file>

@@ -72,7 +72,7 @@ public:
 	void paintSelected(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
 	void setProp(const QString & prop, const QString & value);
-
+	const QCursor * getCursor(Qt::KeyboardModifiers);
 
 	/*
 	// for debugging
@@ -85,8 +85,10 @@ protected:
     void setUpConnectors(FSvgRenderer *, bool ignoreTerminalPoints);
 	void findConnectorsUnder();
 	void hoverEnterEvent ( QGraphicsSceneHoverEvent * event );
+	void hoverLeaveEvent ( QGraphicsSceneHoverEvent * event );
 	void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 	virtual bool canFindConnectorsUnder();
+	bool eventFilter(QObject * object, QEvent * event);
 
 	virtual LayerKinPaletteItem * newLayerKinPaletteItem(
 		PaletteItemBase * chief, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,
