@@ -30,7 +30,7 @@ $Date$
 
 #include "zoomablegraphicsview.h"
 #include "../utils/zoomslider.h"
-
+#include "../utils/misc.h"
 
 
 ZoomableGraphicsView::WheelMapping ZoomableGraphicsView::m_wheelMapping =
@@ -70,7 +70,7 @@ void ZoomableGraphicsView::wheelEvent(QWheelEvent* event) {
 	bool doVertical = false;
 
 	bool control = event->modifiers() & Qt::ControlModifier;
-	bool alt = event->modifiers() & Qt::AltModifier;
+	bool alt = event->modifiers() & altOrMetaModifier();
 	bool shift = event->modifiers() & Qt::ShiftModifier;
 
 	switch (m_wheelMapping) {

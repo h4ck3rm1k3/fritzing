@@ -287,8 +287,6 @@ QCursor * ConnectorItem::NewBendpointCursor = NULL;
 QCursor * ConnectorItem::MakeWireCursor = NULL;
 QCursor * ConnectorItem::MakeCurveCursor = NULL;
 
-Qt::KeyboardModifiers DragWireModifiers = (Qt::AltModifier | Qt::MetaModifier);
-
 QColor addColor(QColor & color, int offset)
 {
     QColor rgb = color.toRgb();
@@ -699,13 +697,17 @@ void ConnectorItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
 	if (m_rubberBandLeg) {
 		int bendpointIndex;
 		CursorLocation cursorLocation = findLocation(event->pos(), bendpointIndex);
-		if (cursorLocation == InBendpoint) {
-			if (bendpointIndex > 0 && bendpointIndex < m_legPolygon.count() - 1) {
-				removeBendpoint(bendpointIndex);
-			}
-		}
-		else if (cursorLocation == InSegment) {
-			insertBendpoint(event->pos(), bendpointIndex);
+		switch (cursorLocation) {
+			case InBendpoint:
+				if (bendpointIndex < m_legPolygon.count() - 1) {
+					removeBendpoint(bendpointIndex);
+				}
+				break;
+			case InSegment:
+				insertBendpoint(event->pos(), bendpointIndex);
+				break;
+			default:
+				break;
 		}
 
 		return;
@@ -2327,8 +2329,6 @@ QPen ConnectorItem::legPen() const
 bool ConnectorItem::legMousePressEvent(QGraphicsSceneMouseEvent *event) {
 	m_insertBendpointPossible = false;
 
-	if (event->modifiers() & DragWireModifiers) return false;
-
 	if (attachedTo()->moveLock()) {
 		event->ignore();
 		return true;
@@ -2344,6 +2344,8 @@ bool ConnectorItem::legMousePressEvent(QGraphicsSceneMouseEvent *event) {
 	switch (cursorLocation) {
 
 		case InConnector:
+			if (event->modifiers() & altOrMetaModifier()) return false;
+
 			m_holdPos = mapToScene(m_legPolygon.last());
 			m_draggingLeg = true;
 			m_draggingLegIndex = m_legPolygon.count() - 1;
@@ -2376,14 +2378,9 @@ bool ConnectorItem::legMousePressEvent(QGraphicsSceneMouseEvent *event) {
 			else {
 				m_insertBendpointPossible = true;
 			}
+			// must continue on to InBendpoint
 
 		case InBendpoint:
-			if (bendpointIndex == 0) {
-				// too close to the body; treat it as dragging the body
-				event->ignore();
-				return true;
-			}
-
 			m_draggingLegIndex = bendpointIndex;
 			m_holdPos = event->scenePos();
 			m_oldPolygon = m_legPolygon;
@@ -2391,6 +2388,7 @@ bool ConnectorItem::legMousePressEvent(QGraphicsSceneMouseEvent *event) {
 			QGraphicsRectItem::mousePressEvent(event);
 			return true;
 
+		case InOrigin:
 		case InNotFound:
 		default:
 			event->ignore();
@@ -2434,6 +2432,10 @@ ConnectorItem::CursorLocation ConnectorItem::findLocation(QPointF location, int 
 			double d = GraphicsUtils::distanceSqd(m_legPolygon.at(i), location);
 			if (d <= wSqd) {
 				bendpointIndex = i;
+				if (i == 0) {
+					return InOrigin;
+				}
+
 				return InBendpoint;
 			}
 			else {
@@ -2471,40 +2473,46 @@ void ConnectorItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 
 	int bendpointIndex;
 	CursorLocation cursorLocation = findLocation(event->pos(), bendpointIndex);
-	if (cursorLocation == InSegment) {
-		QMenu menu;
-		QAction * addAction = menu.addAction(tr("Add bendpoint"));
-		addAction->setData(1);
-		Bezier * bezier = m_legCurves.at(bendpointIndex - 1);
-		if (bezier != NULL && !bezier->isEmpty()) {
-			QAction * straightenAction = menu.addAction(tr("Straighten curve"));
-			straightenAction->setData(2);
-		}
-		QAction *selectedAction = menu.exec(event->screenPos());
-		if (selectedAction) {
-			if (selectedAction->data().toInt() == 1) {
-				insertBendpoint(event->pos(), bendpointIndex);
+	switch (cursorLocation) {
+		case InSegment:
+		{
+			QMenu menu;
+			QAction * addAction = menu.addAction(tr("Add bendpoint"));
+			addAction->setData(1);
+			Bezier * bezier = m_legCurves.at(bendpointIndex - 1);
+			if (bezier != NULL && !bezier->isEmpty()) {
+				QAction * straightenAction = menu.addAction(tr("Straighten curve"));
+				straightenAction->setData(2);
 			}
-			else if (selectedAction->data().toInt() == 2) {
-				InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
-				if (infoGraphicsView != NULL) {
-					Bezier newBezier;
-					infoGraphicsView->prepLegCurveChange(this, bendpointIndex - 1,bezier, &newBezier, true);
+			QAction *selectedAction = menu.exec(event->screenPos());
+			if (selectedAction) {
+				if (selectedAction->data().toInt() == 1) {
+					insertBendpoint(event->pos(), bendpointIndex);
+				}
+				else if (selectedAction->data().toInt() == 2) {
+					InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+					if (infoGraphicsView != NULL) {
+						Bezier newBezier;
+						infoGraphicsView->prepLegCurveChange(this, bendpointIndex - 1,bezier, &newBezier, true);
+					}
 				}
 			}
 		}
 		return;
-	}
-	else if (cursorLocation == InBendpoint) {
-		if (bendpointIndex > 0 && bendpointIndex < m_legPolygon.count() - 1) {
-			QMenu menu;
-			menu.addAction(tr("Remove bendpoint"));
-			QAction *selectedAction = menu.exec(event->screenPos());
-			if (selectedAction) {
-				removeBendpoint(bendpointIndex);
+
+		case InBendpoint:
+			if (bendpointIndex < m_legPolygon.count() - 1) {
+				QMenu menu;
+				menu.addAction(tr("Remove bendpoint"));
+				QAction *selectedAction = menu.exec(event->screenPos());
+				if (selectedAction) {
+					removeBendpoint(bendpointIndex);
+				}
+				return;
 			}
-			return;
-		}
+
+		default:
+			break;
 	}
 
 	event->ignore();
@@ -2680,14 +2688,17 @@ void ConnectorItem::updateLegCursor(QPointF p, Qt::KeyboardModifiers modifiers)
 	CursorLocation cursorLocation = findLocation(p, bendpointIndex);
 	QCursor cursor;
 	switch (cursorLocation) {
+		case InOrigin:
+			cursor = Qt::ArrowCursor;
+			break;
 		case InBendpoint:
-			cursor = (bendpointIndex == 0) ? Qt::CrossCursor : *BendpointCursor;
+			cursor = *BendpointCursor;
 			break;
 		case InSegment:
 			cursor = curvyWiresIndicated(modifiers) ? *MakeCurveCursor : *NewBendpointCursor;
 			break;
 		case InConnector:
-			cursor = (modifiers & DragWireModifiers) ? *MakeWireCursor : Qt::CrossCursor;
+			cursor = (modifiers & altOrMetaModifier()) ? *MakeWireCursor : Qt::CrossCursor;
 			break;
 		default:
 			cursor = Qt::ArrowCursor;

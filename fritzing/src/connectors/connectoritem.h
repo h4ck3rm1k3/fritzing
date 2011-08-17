@@ -171,6 +171,7 @@ protected:
 		InNotFound = 0,
 		InConnector,
 		InBendpoint,
+		InOrigin,
 		InSegment
 	};
 
