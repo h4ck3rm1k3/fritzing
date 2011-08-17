@@ -835,6 +835,7 @@ QString PartLabel::makeSvgAux(bool blackOnly, double dpi, double printerScale, d
 
 	QFontMetricsF fm(m_font);
 	double y = fm.ascent();
+	DebugDialog::debug(QString("initial y:%1").arg(y));
 	
 	QString svg = QString("<g font-size='%1' font-style='%2' font-weight='%3' fill='%4' font-family=\"'%5'\" id='%6' fill-opacity='1' stroke='none' >")
 		.arg(m_font.pointSizeF() * dpi / 72)
@@ -853,12 +854,14 @@ QString PartLabel::makeSvgAux(bool blackOnly, double dpi, double printerScale, d
 			.arg(TextUtils::stripNonValidXMLCharacters(TextUtils::escapeAnd(t)));
 		y += fm.height();
 		w = qMax(w, fm.width(t));
+		DebugDialog::debug(QString("\t%1, %2").arg(w).arg(y));
 	}
 
 	svg += "</g>";
     QTransform t = transform();
 
 	h = y + fm.descent() - fm.height() + fm.lineSpacing();
+	DebugDialog::debug(QString("final y:%1").arg(h));
     return TextUtils::svgTransform(svg, t, false, QString());
 }
 
