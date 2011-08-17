@@ -2278,8 +2278,8 @@ void SketchWidget::categorizeDragLegs(bool rubberBandLegEnabled)
 				if (toConnectorItem->attachedToItemType() == ModelPart::Wire) continue;
 				ItemBase * chief = toConnectorItem->attachedTo()->layerKinChief();
 				if (m_savedItems.value(chief->id(), NULL) == NULL) {
-					// connected to another part, so it doesn't move
-					continue;
+					// connected to another part
+					// treat it as passive as well
 				}
 
 				// the connector is passively dragged along with the part it is connected to
@@ -4094,8 +4094,10 @@ void SketchWidget::rotateX(double degrees, bool rubberBandLegEnabled)
 	}
 
 	// change legs after connections have been updated (redo direction)
+	QList<ConnectorItem *> connectorItems;
 	foreach (ItemBase * itemBase, m_stretchingLegs.uniqueKeys()) {
 		foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
+			connectorItems.append(connectorItem);
 			QPolygonF oldLeg, newLeg;
 			bool active;
 			connectorItem->stretchDone(oldLeg, newLeg, active);
@@ -7946,20 +7948,26 @@ void SketchWidget::moveLegBendpoints(bool undoOnly, QUndoCommand * parentCommand
 {
 	foreach (ItemBase * itemBase, m_stretchingLegs.uniqueKeys()) {
 		foreach (ConnectorItem * connectorItem, m_stretchingLegs.values(itemBase)) {
-			int index0, index1;
-			QPointF oldPos0, newPos0, oldPos1, newPos1;
-			connectorItem->moveDone(index0, oldPos0, newPos0, index1, oldPos1, newPos1);
-			MoveLegBendpointCommand * mlbc = new MoveLegBendpointCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), index0, oldPos0, newPos0, parentCommand);
-			if (undoOnly) mlbc->setUndoOnly();
-			else mlbc->setRedoOnly();
-			if (index0 != index1) {
-				mlbc = new MoveLegBendpointCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), index1, oldPos1, newPos1, parentCommand);
-				if (undoOnly) mlbc->setUndoOnly();
-				else mlbc->setRedoOnly();
-			}
+			moveLegBendpointsAux(connectorItem, undoOnly, parentCommand);
 		}
 	}
 }
+
+void SketchWidget::moveLegBendpointsAux(ConnectorItem * connectorItem, bool undoOnly, QUndoCommand * parentCommand) 
+{
+	int index0, index1;
+	QPointF oldPos0, newPos0, oldPos1, newPos1;
+	connectorItem->moveDone(index0, oldPos0, newPos0, index1, oldPos1, newPos1);
+	MoveLegBendpointCommand * mlbc = new MoveLegBendpointCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), index0, oldPos0, newPos0, parentCommand);
+	if (undoOnly) mlbc->setUndoOnly();
+	else mlbc->setRedoOnly();
+	if (index0 != index1) {
+		mlbc = new MoveLegBendpointCommand(this, connectorItem->attachedToID(), connectorItem->connectorSharedID(), index1, oldPos1, newPos1, parentCommand);
+		if (undoOnly) mlbc->setUndoOnly();
+		else mlbc->setRedoOnly();
+	}
+}
+
 
 bool SketchWidget::curvyWires()
 {
