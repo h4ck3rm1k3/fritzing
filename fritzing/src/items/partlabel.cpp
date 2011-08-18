@@ -833,8 +833,9 @@ QString PartLabel::makeSvgAux(bool blackOnly, double dpi, double printerScale, d
 
 	if (m_displayText.isEmpty()) return "";
 
-	QFontMetricsF fm(m_font);
-	double y = fm.ascent();
+	//QFontMetricsF fm(m_font);
+	double pixels = m_font.pointSizeF() * printerScale / 72;
+	double y = pixels * 2 / 3;
 	DebugDialog::debug(QString("initial y:%1").arg(y));
 	
 	QString svg = QString("<g font-size='%1' font-style='%2' font-weight='%3' fill='%4' font-family=\"'%5'\" id='%6' fill-opacity='1' stroke='none' >")
@@ -852,8 +853,8 @@ QString PartLabel::makeSvgAux(bool blackOnly, double dpi, double printerScale, d
 		svg += QString("<text x='0' y='%1'>%2</text>")
 			.arg(y * dpi / printerScale)
 			.arg(TextUtils::stripNonValidXMLCharacters(TextUtils::escapeAnd(t)));
-		y += fm.height();
-		w = qMax(w, fm.width(t));
+		y += pixels;
+		w = qMax(w, t.length() * pixels);
 		DebugDialog::debug(QString("\t%1, %2").arg(w).arg(y));
 	}
 
@@ -861,10 +862,10 @@ QString PartLabel::makeSvgAux(bool blackOnly, double dpi, double printerScale, d
     QTransform t = transform();
 
 	QRectF br;
-	br = fm.boundingRect(br, Qt::AlignLeft | Qt::AlignTop, m_displayText);
-	h = y + fm.descent() - fm.height() + fm.lineSpacing();
-	h = br.height();
-	w = br.width();
+	//br = fm.boundingRect(br, Qt::AlignLeft | Qt::AlignTop, m_displayText);
+	h = y - (pixels / 3);
+	//h = br.height();
+	//w = br.width();
 	DebugDialog::debug(QString("final:%1 %2 %3").arg(w).arg(h).arg(m_font.toString()));
     return TextUtils::svgTransform(svg, t, false, QString());
 }
