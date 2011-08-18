@@ -830,11 +830,10 @@ QString PartLabel::makeSvg(bool blackOnly, double dpi, double printerScale) {
 }
 
 
-QString PartLabel::makeSvgAux(bool blackOnly, double dpi, double printerScale, double & w, double & h) {
-
+QString PartLabel::makeSvgAux(bool blackOnly, double dpi, double printerScale, double & w, double & h) 
+{
 	if (m_displayText.isEmpty()) return "";
 
-	//QFontMetricsF fm(m_font);
 	double pixels = m_font.pointSizeF() * printerScale / 72;
 	double y = pixels * 0.75;
 	DebugDialog::debug(QString("initial y:%1").arg(y));
@@ -862,11 +861,17 @@ QString PartLabel::makeSvgAux(bool blackOnly, double dpi, double printerScale, d
 	svg += "</g>";
     QTransform t = transform();
 
-	QRectF br;
-	//br = fm.boundingRect(br, Qt::AlignLeft | Qt::AlignTop, m_displayText);
 	h = y - (pixels / 2);
-	//h = br.height();
-	//w = br.width();
+
+	QFontInfo fontInfo(m_font);
+	DebugDialog::debug(QString("%1 match:%2 ps:%3 sty:%4 w:%5")
+		.arg(fontInfo.family())
+		.arg(fontInfo.exactMatch())
+		.arg(fontInfo.pointSizeF())
+		.arg(fontInfo.style())
+		.arg(fontInfo.weight())
+		);
+
 	DebugDialog::debug(QString("final:%1 %2 %3").arg(w).arg(h).arg(m_font.toString()));
     return TextUtils::svgTransform(svg, t, false, QString());
 }
