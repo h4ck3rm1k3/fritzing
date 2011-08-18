@@ -158,6 +158,11 @@ void PartLabel::showLabel(bool showIt, ViewLayer * viewLayer) {
 
 		this->setZValue(viewLayer->nextZ());
 		m_viewLayerID = viewLayer->viewLayerID();
+		m_owner->scene()->addItem(this);
+		setUpText();
+		setPlainText(m_owner->instanceTitle());
+		m_initialized = true;
+
 		QRectF obr = m_owner->boundingRect();
 		QRectF tbr = QGraphicsSvgItem::boundingRect();
 		QPointF initial = (flipped) 
@@ -165,13 +170,9 @@ void PartLabel::showLabel(bool showIt, ViewLayer * viewLayer) {
 			: m_owner->pos() + QPointF(obr.width(), -tbr.height());
 		this->setPos(initial);
 		m_offset = initial - m_owner->pos();
-		m_initialized = true;
 		if (flipped) {
 			transformLabel(QTransform().scale(-1,1));
 		}
-		m_owner->scene()->addItem(this);
-		setUpText();
-		setPlainText(m_owner->instanceTitle());
 
 	}
 
@@ -835,7 +836,7 @@ QString PartLabel::makeSvgAux(bool blackOnly, double dpi, double printerScale, d
 
 	//QFontMetricsF fm(m_font);
 	double pixels = m_font.pointSizeF() * printerScale / 72;
-	double y = pixels * 2 / 3;
+	double y = pixels * 0.75;
 	DebugDialog::debug(QString("initial y:%1").arg(y));
 	
 	QString svg = QString("<g font-size='%1' font-style='%2' font-weight='%3' fill='%4' font-family=\"'%5'\" id='%6' fill-opacity='1' stroke='none' >")
@@ -854,7 +855,7 @@ QString PartLabel::makeSvgAux(bool blackOnly, double dpi, double printerScale, d
 			.arg(y * dpi / printerScale)
 			.arg(TextUtils::stripNonValidXMLCharacters(TextUtils::escapeAnd(t)));
 		y += pixels;
-		w = qMax(w, t.length() * pixels);
+		w = qMax(w, t.length() * pixels * 0.75);
 		DebugDialog::debug(QString("\t%1, %2").arg(w).arg(y));
 	}
 
@@ -863,7 +864,7 @@ QString PartLabel::makeSvgAux(bool blackOnly, double dpi, double printerScale, d
 
 	QRectF br;
 	//br = fm.boundingRect(br, Qt::AlignLeft | Qt::AlignTop, m_displayText);
-	h = y - (pixels / 3);
+	h = y - (pixels / 2);
 	//h = br.height();
 	//w = br.width();
 	DebugDialog::debug(QString("final:%1 %2 %3").arg(w).arg(h).arg(m_font.toString()));
