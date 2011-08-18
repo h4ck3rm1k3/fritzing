@@ -41,7 +41,6 @@ $Date$
 #include "items/via.h"
 #include "fsvgrenderer.h"
 #include "items/note.h"
-#include "svg/svg2gerber.h"
 #include "eagle/fritzing2eagle.h"
 #include "sketch/breadboardsketchwidget.h"
 #include "sketch/schematicsketchwidget.h"
@@ -66,6 +65,7 @@ $Date$
 #include "layerpalette.h"
 #include "program/programwindow.h"
 #include "utils/autoclosemessagebox.h"
+#include "svg/gerbergenerator.h"
 #include "processeventblocker.h"
 
 static QString eagleActionType = ".eagle";
@@ -1127,13 +1127,9 @@ void MainWindow::exportNetlist() {
 
 }
 
-
-
 FileProgressDialog * MainWindow::exportProgress() {
 	return (new FileProgressDialog("Exporting...", 0, this));
 }
-
-
 
 void MainWindow::exportNormalizedSVG() {
 	exportSvg(GraphicsUtils::StandardFritzingDPI, true, false);
@@ -1167,5 +1163,33 @@ QString MainWindow::getBomProps(ItemBase * itemBase)
 	if (pString.length() > 2) pString.chop(2);
 
 	return pString;
+}
+
+void MainWindow::exportToGerber() {
+
+    //NOTE: this assumes just one board per sketch
+
+    // grab the list of parts
+    ItemBase * board = m_pcbGraphicsView->findBoard();
+    // barf an error if there's no board
+    if (!board) {
+        QMessageBox::critical(this, tr("Fritzing"),
+                   tr("Your sketch does not have a board yet!  Please add a PCB in order to export to Gerber."));
+        return;
+    }
+
+    QString exportDir = QFileDialog::getExistingDirectory(this, tr("Choose a folder for exporting"),
+                                             defaultSaveFolder(),
+                                             QFileDialog::ShowDirsOnly
+                                             | QFileDialog::DontResolveSymlinks);
+
+	if (exportDir.isEmpty()) return;
+
+	FolderUtils::setOpenSaveFolder(exportDir);
+	GerberGenerator::exportToGerber(m_fileName, exportDir, board, m_pcbGraphicsView, true);
+}
+
+void MainWindow::exportToGerber(const QString & exportDir) {
+	GerberGenerator::exportToGerber(m_fileName, exportDir, NULL, m_pcbGraphicsView, false);
 }
 

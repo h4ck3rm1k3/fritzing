@@ -41,7 +41,6 @@ $Date$
 #include "items/via.h"
 #include "fsvgrenderer.h"
 #include "items/note.h"
-#include "svg/svg2gerber.h"
 #include "eagle/fritzing2eagle.h"
 #include "sketch/breadboardsketchwidget.h"
 #include "sketch/schematicsketchwidget.h"

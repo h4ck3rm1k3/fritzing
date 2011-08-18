@@ -363,7 +363,7 @@ void ConnectorItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
 		return;
 	}
 
-	DebugDialog::debug("---CI set override cursor");
+	//DebugDialog::debug("---CI set override cursor");
 	QApplication::setOverrideCursor(cursor());
 	bool setDefaultCursor = true;
 	m_hoverEnterSpaceBarWasPressed = false;
@@ -415,7 +415,7 @@ void ConnectorItem::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
 		m_attachedTo->hoverLeaveConnectorItem(event, this);
 	}
 
-	DebugDialog::debug("------CI restore override cursor");
+	//DebugDialog::debug("------CI restore override cursor");
 	QApplication::restoreOverrideCursor();
 }
 

@@ -836,7 +836,7 @@ QString PartLabel::makeSvgAux(bool blackOnly, double dpi, double printerScale, d
 
 	double pixels = m_font.pointSizeF() * printerScale / 72;
 	double y = pixels * 0.75;
-	DebugDialog::debug(QString("initial y:%1").arg(y));
+	//DebugDialog::debug(QString("initial y:%1").arg(y));
 	
 	QString svg = QString("<g font-size='%1' font-style='%2' font-weight='%3' fill='%4' font-family=\"'%5'\" id='%6' fill-opacity='1' stroke='none' >")
 		.arg(m_font.pointSizeF() * dpi / 72)
@@ -855,7 +855,7 @@ QString PartLabel::makeSvgAux(bool blackOnly, double dpi, double printerScale, d
 			.arg(TextUtils::stripNonValidXMLCharacters(TextUtils::escapeAnd(t)));
 		y += pixels;
 		w = qMax(w, t.length() * pixels * 0.75);
-		DebugDialog::debug(QString("\t%1, %2").arg(w).arg(y));
+		//DebugDialog::debug(QString("\t%1, %2").arg(w).arg(y));
 	}
 
 	svg += "</g>";
@@ -864,15 +864,15 @@ QString PartLabel::makeSvgAux(bool blackOnly, double dpi, double printerScale, d
 	h = y - (pixels / 2);
 
 	QFontInfo fontInfo(m_font);
-	DebugDialog::debug(QString("%1 match:%2 ps:%3 sty:%4 w:%5")
-		.arg(fontInfo.family())
-		.arg(fontInfo.exactMatch())
-		.arg(fontInfo.pointSizeF())
-		.arg(fontInfo.style())
-		.arg(fontInfo.weight())
-		);
+	//DebugDialog::debug(QString("%1 match:%2 ps:%3 sty:%4 w:%5")
+	//	.arg(fontInfo.family())
+	//	.arg(fontInfo.exactMatch())
+	//	.arg(fontInfo.pointSizeF())
+	//	.arg(fontInfo.style())
+	//	.arg(fontInfo.weight())
+	//	);
 
-	DebugDialog::debug(QString("final:%1 %2 %3").arg(w).arg(h).arg(m_font.toString()));
+	//DebugDialog::debug(QString("final:%1 %2 %3").arg(w).arg(h).arg(m_font.toString()));
     return TextUtils::svgTransform(svg, t, false, QString());
 }
 

@@ -416,7 +416,7 @@ void PaletteItemBase::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
 	ItemBase::hoverEnterEvent(event);
 	if (event->isAccepted()) {
 		if (hasRubberBandLeg()) {
-			DebugDialog::debug("---pab set override cursor");
+			//DebugDialog::debug("---pab set override cursor");
 			QApplication::setOverrideCursor(cursor());
 
 			bool connected = false;
@@ -436,7 +436,7 @@ void PaletteItemBase::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
 void PaletteItemBase::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
 	if (hasRubberBandLeg()) {
 		QApplication::instance()->removeEventFilter(this);
-		DebugDialog::debug("------pab restore override cursor");
+		//DebugDialog::debug("------pab restore override cursor");
 		QApplication::restoreOverrideCursor();
 	}
 

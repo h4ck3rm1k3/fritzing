@@ -739,14 +739,14 @@ void Wire::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
 	ItemBase::hoverEnterEvent(event);
 	QApplication::instance()->installEventFilter(this);
 	QApplication::setOverrideCursor(cursor());
-	DebugDialog::debug("---wire set override cursor");
+	//DebugDialog::debug("---wire set override cursor");
 	updateCursor(event->modifiers());
 }
 
 void Wire::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
 	QApplication::instance()->removeEventFilter(this);
 	ItemBase::hoverLeaveEvent(event);
-	DebugDialog::debug("------wire restore override cursor");
+	//DebugDialog::debug("------wire restore override cursor");
 	QApplication::restoreOverrideCursor();
 }
 

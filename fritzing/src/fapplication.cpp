@@ -51,6 +51,7 @@ $Date$
 #include "svg/gedaelement2svg.h"
 #include "svg/kicadmodule2svg.h"
 #include "svg/kicadschematic2svg.h"
+#include "svg/gerbergenerator.h"
 #include "installedfonts.h"
 #include "items/pinheader.h"
 #include "items/partfactory.h"
@@ -497,7 +498,7 @@ int FApplication::serviceStartup() {
 
 		FolderUtils::setOpenSaveFolderAux(m_outputFolder);
 		if (mainWindow->loadWhich(filepath, false, false, true)) {
-			mainWindow->exportToGerber(m_outputFolder, NULL, false);
+			mainWindow->exportToGerber(m_outputFolder);
 		}
 
 		mainWindow->setCloseSilently(true);

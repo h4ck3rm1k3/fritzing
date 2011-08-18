@@ -118,12 +118,12 @@ public:
 	void saveBundledNonAtomicEntity(QString &filename, const QString &extension, Bundler *bundler, const QList<ModelPart*> &partsToSave);
 	void loadBundledNonAtomicEntity(const QString &filename, Bundler *bundler, bool addToBin, bool dontAsk);
 	
-	void exportToGerber(const QString & exportDir, ItemBase * board, bool displayMessageBoxes);
 	void setCurrentFile(const QString &fileName, bool addToRecent, bool recovered, const QString & backupName);
 	void setRecovered(bool);
 	void setReportMissingModules(bool);
 	QList<SketchWidget *> sketchWidgets();
 	void setCloseSilently(bool);
+	void exportToGerber(const QString & outputDir);
 
 public:
 	static void initNames();
@@ -437,12 +437,6 @@ protected:
 
 	bool wannaRestart();
 
-	QString clipToBoard(QString svgString, ItemBase * board, const QString & layerName, SVG2gerber::ForWhy);
-	int doSilk(LayerList silkLayerIDs, const QString & silkName, const QString & gerberSuffix, ItemBase * board, const QString & exportDir, bool displayMessageBoxes);
-	int doMask(LayerList maskLayerIDs, const QString & maskName, const QString & gerberSuffix, ItemBase * board, const QString & exportDir, bool displayMessageBoxes);
-	int doCopper(ItemBase * board, LayerList & viewLayerIDs, const QString & copperName, const QString & copperSuffix, const QString & exportDir, bool displayMessageBoxes);
-	int doDrill(ItemBase * board, const QString & exportDir, bool displayMessageBoxes);
-	void displayMessage(const QString & message, bool displayMessageBoxes);
 	void updateActiveLayerButtons();
 	bool hasLinkedProgramFiles(const QString & filename, QStringList & linkedProgramFiles);
 	void pasteAux(bool pasteInPlace);
