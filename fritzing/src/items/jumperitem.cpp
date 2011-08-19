@@ -51,7 +51,7 @@ JumperItem::JumperItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifi
 		Colors.insert(ViewLayer::Copper0, ViewLayer::Copper0Color);
 		Colors.insert(ViewLayer::Copper1, ViewLayer::Copper1Color);
 		Colors.insert(ViewLayer::PartImage, ViewLayer::JumperColor);
-		Colors.insert(ViewLayer::Silkscreen0, ViewLayer::Silkscreen0Color);
+		//Colors.insert(ViewLayer::Silkscreen0, ViewLayer::Silkscreen0Color);
 		Colors.insert(ViewLayer::Silkscreen1, ViewLayer::Silkscreen1Color);
 	}
 
@@ -279,18 +279,18 @@ QString JumperItem::makeSvg(ViewLayer::ViewLayerID viewLayerID)
 				.arg(ViewLayer::viewLayerXmlNameFromID(viewLayerID))
 				.arg(Colors.value(viewLayerID));
 
-		case ViewLayer::Silkscreen0:
+		//case ViewLayer::Silkscreen0:
 		case ViewLayer::Silkscreen1:
 			{
-			double radius = r0.width() / 2.0;
-			GraphicsUtils::shortenLine(r0c, r1c, radius, radius);
-			r0x = GraphicsUtils::pixels2mils(r0c.x(), FSvgRenderer::printerScale());
-			r0y = GraphicsUtils::pixels2mils(r0c.y(), FSvgRenderer::printerScale());
-			r1x = GraphicsUtils::pixels2mils(r1c.x(), FSvgRenderer::printerScale());
-			r1y = GraphicsUtils::pixels2mils(r1c.y(), FSvgRenderer::printerScale());
+				double radius = r0.width() / 2.0;
+				GraphicsUtils::shortenLine(r0c, r1c, radius, radius);
+				r0x = GraphicsUtils::pixels2mils(r0c.x(), FSvgRenderer::printerScale());
+				r0y = GraphicsUtils::pixels2mils(r0c.y(), FSvgRenderer::printerScale());
+				r1x = GraphicsUtils::pixels2mils(r1c.x(), FSvgRenderer::printerScale());
+				r1y = GraphicsUtils::pixels2mils(r1c.y(), FSvgRenderer::printerScale());
 			}
 			
-			thickness = 10;
+			thickness = 8;
 		case ViewLayer::PartImage:
 			return JumperWireLayerTemplate
 				.arg(w).arg(h)
@@ -335,7 +335,7 @@ void JumperItem::resize() {
 			case ViewLayer::PartImage:
 			case ViewLayer::Copper1:
 			case ViewLayer::Silkscreen1:
-			case ViewLayer::Silkscreen0:
+			//case ViewLayer::Silkscreen0:
                 {
 					FSvgRenderer * renderer = m_renderers.value(itemBase->viewLayerID(), NULL);
 					if (renderer == NULL) {
@@ -411,7 +411,7 @@ QString JumperItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QStrin
 		case ViewLayer::Copper0:
 		case ViewLayer::Copper1:
 		case ViewLayer::PartImage:
-		case ViewLayer::Silkscreen0:
+		//case ViewLayer::Silkscreen0:
 		case ViewLayer::Silkscreen1:
 			xml = makeSvg(viewLayerID);
         default:

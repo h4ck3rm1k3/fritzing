@@ -149,7 +149,7 @@ int GerberGenerator::doCopper(ItemBase * board, PCBSketchWidget * sketchWidget, 
 	QXmlStreamReader streamReader(svg);
 	QSizeF svgSize = FSvgRenderer::parseForWidthAndHeight(streamReader);
 
-	svg = clipToBoard(svg, board, copperName, SVG2gerber::ForNormal);
+	svg = clipToBoard(svg, board, copperName, SVG2gerber::ForCopper);
 	if (svg.isEmpty()) {
 		displayMessage(QObject::tr("%1 file export failure (3)").arg(copperName), displayMessageBoxes);
 		return 0;
@@ -157,7 +157,7 @@ int GerberGenerator::doCopper(ItemBase * board, PCBSketchWidget * sketchWidget, 
 
     // create copper gerber from svg
     SVG2gerber copperGerber;
-	int copperInvalidCount = copperGerber.convert(svg, sketchWidget->boardLayers() == 2, copperName, SVG2gerber::ForNormal, svgSize * GraphicsUtils::StandardFritzingDPI);
+	int copperInvalidCount = copperGerber.convert(svg, sketchWidget->boardLayers() == 2, copperName, SVG2gerber::ForCopper, svgSize * GraphicsUtils::StandardFritzingDPI);
 
     QString copperFile = exportDir + "/" +
                           QFileInfo(filename).fileName().remove(FritzingSketchExtension)
@@ -201,7 +201,7 @@ int GerberGenerator::doSilk(LayerList silkLayerIDs, const QString & silkName, co
 	QXmlStreamReader streamReader(svgSilk);
 	QSizeF svgSize = FSvgRenderer::parseForWidthAndHeight(streamReader);
 
-	svgSilk = clipToBoard(svgSilk, board, silkName, SVG2gerber::ForNormal);
+	svgSilk = clipToBoard(svgSilk, board, silkName, SVG2gerber::ForSilk);
 	if (svgSilk.isEmpty()) {
 		displayMessage(QObject::tr("silk export failure"), displayMessageBoxes);
 		return 0;
@@ -216,7 +216,7 @@ int GerberGenerator::doSilk(LayerList silkLayerIDs, const QString & silkName, co
 
     // create silk gerber from svg
     SVG2gerber silkGerber;
-	int silkInvalidCount = silkGerber.convert(svgSilk, sketchWidget->boardLayers() == 2, silkName, SVG2gerber::ForNormal, svgSize * GraphicsUtils::StandardFritzingDPI);
+	int silkInvalidCount = silkGerber.convert(svgSilk, sketchWidget->boardLayers() == 2, silkName, SVG2gerber::ForSilk, svgSize * GraphicsUtils::StandardFritzingDPI);
 
     QString silkFile = exportDir + "/" +
                           QFileInfo(filename).fileName().remove(FritzingSketchExtension)

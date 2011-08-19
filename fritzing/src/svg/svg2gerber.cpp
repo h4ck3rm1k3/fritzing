@@ -358,7 +358,7 @@ int SVG2gerber::allPaths2gerber(ForWhy forWhy) {
 			diam += 2 * MaskClearance;
 		}
 
-        if(false && fill=="none" && forWhy != ForMask){
+        if (forWhy != ForCopper && fill=="none" && forWhy != ForMask){
 			aperture = QString("C,%1X%2").arg(diam, 0, 'f').arg(hole);
         }
         else {
@@ -441,7 +441,7 @@ int SVG2gerber::allPaths2gerber(ForWhy forWhy) {
 			}
 
 
-			if(false && fill=="none" && forWhy != ForMask) {
+			if(forWhy != ForCopper && fill=="none" && forWhy != ForMask) {
 				aperture = QString("R,%1X%2X%3X%4").arg(totalx, 0, 'f').arg(totaly, 0, 'f').arg(holex, 0, 'f').arg(holey, 0, 'f');
 			}
 			else {

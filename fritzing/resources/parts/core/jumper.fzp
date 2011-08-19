@@ -37,7 +37,7 @@
      <layer layerId="copper1" />
      <layer layerId="partimage" />
      <layer layerId="silkscreen" />
-     <layer layerId="silkscreen0" />
+     <!-- <layer layerId="silkscreen0" /> -->
    </layers>
   </pcbView>
  </views>

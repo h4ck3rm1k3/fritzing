@@ -41,7 +41,8 @@ public:
 
 public:
 	enum ForWhy {
-		ForNormal,
+		ForCopper,
+		ForSilk,
 		ForOutline,
 		ForMask,
 		ForDrill
