@@ -43,7 +43,10 @@ public:
 	const QString & id();
 	const QList<class ConnectorShared *> & connectors();
 	void addConnectorShared(class ConnectorShared *);
-	
+
+protected:
+	void initConnector(QDomElement & connector, const QHash<QString, QPointer<class ConnectorShared> > & connectorHash);
+
 protected:
 	QString m_id;
 	QList<class ConnectorShared *> m_connectors;

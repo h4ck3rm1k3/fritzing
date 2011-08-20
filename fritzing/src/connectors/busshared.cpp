@@ -40,19 +40,22 @@ BusShared::BusShared(const QDomElement & busElement, const QHash<QString, QPoint
 	
 	QDomElement connector = busElement.firstChildElement("nodeMember");
 	while (!connector.isNull()) {
-		QString id = connector.attribute("connectorId");
-		if (id.isNull()) continue;
-		if (id.isEmpty()) continue;
-				
-		ConnectorShared * connectorShared = connectorHash.value(id);
-		if (connectorShared == NULL) continue;
-		
-		m_connectors.append(connectorShared);
-		connectorShared->setBus(this);
-		
+		initConnector(connector, connectorHash);		
 		connector = connector.nextSiblingElement("nodeMember");
 	}
-	
+}
+
+void BusShared::initConnector(QDomElement & connector, const QHash<QString, QPointer<ConnectorShared> > & connectorHash)
+{
+	QString id = connector.attribute("connectorId");
+	if (id.isNull()) return;
+	if (id.isEmpty()) return;
+				
+	ConnectorShared * connectorShared = connectorHash.value(id);
+	if (connectorShared == NULL) return;
+		
+	m_connectors.append(connectorShared);
+	connectorShared->setBus(this);
 }
 
 void BusShared::addConnectorShared(ConnectorShared * connectorShared) 
