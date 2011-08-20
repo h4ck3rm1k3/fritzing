@@ -52,7 +52,10 @@ void BusShared::initConnector(QDomElement & connector, const QHash<QString, QPoi
 	if (id.isEmpty()) return;
 				
 	ConnectorShared * connectorShared = connectorHash.value(id);
-	if (connectorShared == NULL) return;
+	if (connectorShared == NULL) {
+		DebugDialog::debug(QString("no connector is found for bus nodeMember %1").arg(id));
+		return;
+	}
 		
 	m_connectors.append(connectorShared);
 	connectorShared->setBus(this);
