@@ -109,6 +109,22 @@
             </views>
         </connector>
 
+				<connector id="connector5" name="common anode" type="male">
+            <description>common anode</description>
+            <views>
+                <breadboardView>
+                    <p layer="breadboard" svgId="connector5pin" terminalId="connector5terminal"/>
+                </breadboardView>
+                <schematicView>
+                    <p layer="schematic" svgId="connector5pin" terminalId="connector5terminal"/>
+                </schematicView>
+                <pcbView>
+                    <p layer="copper1" svgId="connector5pin"/>
+                    <p layer="copper0" svgId="connector5pin"/>
+                </pcbView>
+            </views>
+        </connector>
+
         <connector id="connector9" name="Segment DP" type="male">
             <description>Segment DP</description>
             <views>

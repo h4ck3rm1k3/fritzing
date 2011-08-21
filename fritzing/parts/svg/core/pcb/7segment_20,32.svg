@@ -9,7 +9,7 @@
    <circle  fill="none" cx="6.745" cy="21.297" stroke="#F7BD13" id="connector2pin" r="2.052" stroke-width="1.224"/>
    <circle  fill="none" cx="6.745" cy="28.498" stroke="#F7BD13" id="connector3pin" r="2.052" stroke-width="1.224"/>
    <circle  fill="none" cx="6.745" cy="35.697" stroke="#F7BD13" id="connector4pin" r="2.052" stroke-width="1.224"/>
-   <circle  fill="none" cx="6.748" cy="42.817" stroke="#F7BD13" id="connector5pad" r="2.052" stroke-width="1.224"/>
+   <circle  fill="none" cx="6.748" cy="42.817" stroke="#F7BD13" id="connector5pin" r="2.052" stroke-width="1.224"/>
    <circle  fill="none" cx="49.93" cy="35.669" stroke="#F7BD13" id="connector13pin" r="2.052" stroke-width="1.224"/>
    <circle  fill="none" cx="49.93" cy="42.87" stroke="#F7BD13" id="connector12pin" r="2.052" stroke-width="1.224"/>
    <circle  fill="none" cx="49.93" cy="50.069" stroke="#F7BD13" id="connector11pin" r="2.052" stroke-width="1.224"/>
