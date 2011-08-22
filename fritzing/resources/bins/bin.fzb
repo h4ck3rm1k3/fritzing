@@ -259,7 +259,7 @@
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="f2341c24e2a6d9182a55c653b6bbefed" modelIndex="24" path="parts/core/7-segment_display.fzp">
+        <instance moduleIdRef="7segment10an" modelIndex="24" path="parts/core/7segment_9,9_an.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
