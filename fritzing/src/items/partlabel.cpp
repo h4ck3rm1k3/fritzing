@@ -384,6 +384,7 @@ void PartLabel::restoreLabel(QDomElement & labelGeometry, ViewLayer::ViewLayerID
 	//setBrush(QBrush(c));
 
 	setUpText();
+	m_initialized = true;
 	double fs = labelGeometry.attribute("fontSize").toDouble(&ok);
 	if (!ok) {
 		InfoGraphicsView *infographics = InfoGraphicsView::getInfoGraphicsView(this);
@@ -407,6 +408,8 @@ void PartLabel::restoreLabel(QDomElement & labelGeometry, ViewLayer::ViewLayerID
 		m_displayKeys.append(LabelTextKey);
 		if (m_owner->hasPartNumberProperty()) m_displayKeys.append(ModelPartShared::PartNumberPropertyName);
 	}
+
+	resetSvg();
 
 	QTransform t;
 	if (GraphicsUtils::loadTransform(labelGeometry.firstChildElement("transform"), t)) {
@@ -887,7 +890,6 @@ void PartLabel::resetSvg()
 	if (m_renderer == NULL) {
 		m_renderer = new QSvgRenderer(this);
 	}
-
 
 	// using renderer()->load() doesn't seem to work, so keep a separate shared renderer as a workaround
 	bool loaded = m_renderer->load(svg.toUtf8());

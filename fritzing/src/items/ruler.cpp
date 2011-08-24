@@ -85,7 +85,7 @@ void Ruler::resizeMM(double magnitude, double unitsFlag, const LayerHash & viewL
 	bool result = m_renderer->fastLoad(s.toUtf8());
 	if (result) {
 		setSharedRendererEx(m_renderer);
-		modelPart()->setProp("width", QString::number(magnitude) + units);
+        modelPart()->setProp("width", QVariant(QString::number(magnitude) + units));
 	}
 	//	DebugDialog::debug(QString("fast load result %1 %2").arg(result).arg(s));
 
@@ -263,7 +263,7 @@ bool Ruler::collectExtraInfo(QWidget * parent, const QString & family, const QSt
 		connect(e1, SIGNAL(editingFinished()), this, SLOT(widthEntry()));
 		connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(unitsEntry(const QString &)));
 
-		returnValue = temp + units;
+        returnValue = temp + QString::number(units);
 		returnWidget = frame;
 
 		return true;
@@ -294,12 +294,12 @@ void Ruler::widthEntry() {
 void Ruler::unitsEntry(const QString & units) {
 	double inches = TextUtils::convertToInches(modelPart()->prop("width").toString());
 	if (units == "in") {
-		modelPart()->setProp("width", QString::number(inches) + "in");
+        modelPart()->setProp("width", QVariant(QString::number(inches) + "in"));
 		m_widthEditor->setText(QString::number(inches));
 		m_widthValidator->setTop(20);
 	}
 	else {
-		modelPart()->setProp("width", QString::number(inches * 2.54) + "cm");
+        modelPart()->setProp("width", QVariant(QString::number(inches * 2.54) + "cm"));
 		m_widthEditor->setText(QString::number(inches * 2.54));
 		m_widthValidator->setTop(20 * 2.54);
 	}

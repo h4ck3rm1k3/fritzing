@@ -2413,7 +2413,7 @@ void MainWindow::importFilesFromPrevInstall() {
 	// replicate dirs
 	QStringList foldersToCopy = FolderUtils::getUserDataStoreFolders();
 	foreach(QString folder, foldersToCopy) {
-		FolderUtils::replicateDir(prevInstallPath+folder, userDataPath+folder);
+        FolderUtils::replicateDir(QDir(prevInstallPath+folder), QDir(userDataPath+folder));
 	}
 
 	// cleanup old bins

@@ -142,8 +142,8 @@ QString MainWindow::BackupFolder;
 
 /////////////////////////////////////////////
 
-MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
-	FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension())
+MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel, QWidget * parent) :
+    FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension(), parent)
 {
 	m_closeSilently = false;
 	m_orderFabAct = NULL;
@@ -240,8 +240,10 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 			Qt::DirectConnection);
 }
 
-void MainWindow::init() {
-	m_restarting = false;
+void MainWindow::init(PaletteModel * paletteModel, ReferenceModel *refModel) {
+    m_paletteModel = paletteModel;
+    m_refModel = refModel;
+    m_restarting = false;
 
 	if (m_fileProgressDialog) {
 		m_fileProgressDialog->setValue(2);
@@ -2220,12 +2222,12 @@ void MainWindow::addDefaultParts() {
 }
 
 MainWindow * MainWindow::newMainWindow(PaletteModel * paletteModel, ReferenceModel *refModel, const QString & displayPath, bool showProgress) {
-	MainWindow * mw = new MainWindow(paletteModel, refModel);
+    MainWindow * mw = new MainWindow(paletteModel, refModel, NULL);
 	if (showProgress) {
 		mw->showFileProgressDialog(displayPath);
 	}
 
-	mw->init();
+    mw->init(paletteModel, refModel);
 
 	return mw;
 }

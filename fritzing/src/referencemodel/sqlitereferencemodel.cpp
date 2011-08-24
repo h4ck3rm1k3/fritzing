@@ -248,7 +248,7 @@ QStringList SqliteReferenceModel::getPossibleMatches(const Part *examplePart, co
 			"SELECT * FROM properties prop \n"
 			"WHERE prop.part_id = part.id %1 \n"
 		") ";
-	dbgQueryStr = dbgQueryStr.arg((propertyName.isEmpty()) ? "" : "AND prop.name = "+propertyName+"  AND prop.value = "+propertyValue); 
+    dbgQueryStr = dbgQueryStr.arg((propertyName.isEmpty()) ? QString("") : QString("AND prop.name = ")+propertyName+"  AND prop.value = "+propertyValue);
 	QSqlQuery query;
 	query.prepare(queryStr);
 

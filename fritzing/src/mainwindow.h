@@ -82,7 +82,7 @@ class MainWindow : public FritzingWindow
 {
     Q_OBJECT
 public:
-    MainWindow(class PaletteModel *, ReferenceModel *refModel);
+    MainWindow(class PaletteModel *, ReferenceModel *refModel, QWidget * parent);
     MainWindow(QFile & fileToLoad);
 	~MainWindow();
 
@@ -98,7 +98,7 @@ public:
 	class PartsEditorMainWindow* getPartsEditor(ModelPart *modelPart, long id, ItemBase * fromItem, class PartsBinPaletteWidget* requester);
 	ModelPart *loadPartFromFile(const QString& newPartPath, bool connectorsChanged=false);
 	void addDefaultParts();
-	void init();
+    void init(class PaletteModel *, ReferenceModel *refModel);
 	void showFileProgressDialog(const QString & path);
 	void setFileProgressPath(const QString & path);
 	void clearFileProgressDialog();

@@ -1185,8 +1185,13 @@ void MainWindow::exportToGerber() {
 
 	if (exportDir.isEmpty()) return;
 
+	FileProgressDialog * fileProgressDialog = exportProgress();
+
 	FolderUtils::setOpenSaveFolder(exportDir);
 	GerberGenerator::exportToGerber(m_fileName, exportDir, board, m_pcbGraphicsView, true);
+	m_statusBar->showMessage(tr("Sketch exported to Gerber"), 2000);
+
+	delete fileProgressDialog;
 }
 
 void MainWindow::exportToGerber(const QString & exportDir) {
