@@ -35,6 +35,8 @@
     
     {% if not openid %}
     <div id="basic-form" class="right-form">
+    
+	{% comment %}
         <fieldset>
         <legend>{% trans "Or sign in with your OpenID" %}</legend>
         <form class="login" action="/openid/register/" method="POST">
@@ -45,6 +47,7 @@
             <p>{% blocktrans %}Not OpenID enabled?  <a href="http://openid.net/get/" target="_blank">Get started now.</a>{% endblocktrans %}</p>
         </form>
         </fieldset>
+	{% endcomment %}
         <p>{% blocktrans %}If you have any trouble logging in to your account, contact us at <a href="mailto:{{ contact_email }}">{{ contact_email }}</a>.{% endblocktrans %}</p>
     </div>
     {% endif %}

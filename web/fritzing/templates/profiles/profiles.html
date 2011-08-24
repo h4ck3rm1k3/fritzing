@@ -9,21 +9,25 @@
 {% block body %}
     <h1>{% trans "Member" %}</h1>
     
-    {% autopaginate users %}
-        
-	<dl>
-    {% for user in users %}
-		<dt><a href="{% url profile_detail user.username %}">{{ user }}</a></dt>
-		{% if user.first_name or user.last_name or user.get_profile.location %}
-			<dd>
-				{{ user.first_name}} {{ user.last_name}}
-				{% if user.get_profile.location %}
-					({{ user.get_profile.location }})
-				{% endif %}
-			</dd>
-		{% endif %}                
-    {% endfor %}
-    </dl>
+	{% if user.is_authenticated %}
+		{% autopaginate users %}
+
+		<dl>
+		{% for user in users %}
+			<dt><a href="{% url profile_detail user.username %}">{{ user }}</a></dt>
+			{% if user.first_name or user.last_name or user.get_profile.location %}
+				<dd>
+					{{ user.first_name}} {{ user.last_name}}
+					{% if user.get_profile.location %}
+						({{ user.get_profile.location }})
+					{% endif %}
+				</dd>
+			{% endif %}
+		{% endfor %}
+		</dl>
+		{% paginate %}
+	{% else %}
+		<p>{% trans "Please login to see your fellow members of this community." %}</p>
+	{% endif %}
     
-    {% paginate %}
 {% endblock %}

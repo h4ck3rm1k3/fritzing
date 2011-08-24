@@ -18,6 +18,26 @@
                 <form class="signupform" id="signup_form" method="post" action="{% url acct_signup %}">
                     <table width="300px">
                         {{ form.as_table }}
+			
+		
+		<tr>
+			<td>Are you human?</td>
+			<td>			
+			    <script type="text/javascript" src="http://api.recaptcha.net/challenge?k=6LcaaccSAAAAADOm22SykxPQ43AciVF-cQqytrB7">
+			    </script>
+			    
+			    <noscript>
+			    <iframe src="http://api.recaptcha.net/noscript?k=6LcaaccSAAAAADOm22SykxPQ43AciVF-cQqytrB7"
+			    height="300" width="500" frameborder="0"></iframe><br>
+			    <textarea name="recaptcha_challenge_field" rows="3" cols="40">
+			    </textarea>
+			    <input type="hidden" name="recaptcha_response_field" 
+			    value="manual_challenge">
+			    </noscript>
+			<td>
+		    </tr>
+			
+			
                         <tr><td></td><td><input type="submit" value="{% trans "Sign Up &raquo;" %}" class="button" /></td></tr>
                     </table>
                 </form>
@@ -27,7 +47,10 @@
                 <div class="right-form">
                     <p>{% blocktrans %}If you have any trouble creating your account, contact us at <a href="mailto:{{ contact_email }}">{{ contact_email }}</a>.{% endblocktrans %}</p>
                     {% url acct_login as acct_login_url %}
-                    <p>{% blocktrans %}If you have OpenID, <a href="{{ acct_login_url }}">log in</a> using that to begin using this site with OpenID right away.{% endblocktrans %}</p></div>
+		{% comment %}
+                    <p>{% blocktrans %}If you have OpenID, <a href="{{ acct_login_url }}">log in</a> using that to begin using this site with OpenID right away.{% endblocktrans %}</p>
+		{% endcomment %}
+	       </div>
             {% endif %}
         </fieldset>
         </div>
