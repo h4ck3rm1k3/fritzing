@@ -6539,6 +6539,16 @@ QString SketchWidget::renderToSVG(double printerScale, const LayerList & partLay
 				if (wire == NULL) continue;
 				if (wire->viewLayerID() != viewLayerID) continue;
 
+				//if (wire->getTrace()) {
+				//	DebugDialog::debug(QString("trace %1 %2,%3 %4,%5")
+				//		.arg(wire->id()) 
+				//		.arg(wire->line().p1().x())
+				//		.arg(wire->line().p1().y())
+				//		.arg(wire->line().p2().x())
+				//		.arg(wire->line().p2().y())
+				//		);
+				//}
+
 				outputSVG.append(makeWireSVG(wire, offset, dpi, printerScale, blackOnly));
 				empty = false;
 			}
