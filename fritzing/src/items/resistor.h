@@ -67,6 +67,7 @@ protected:
 
 public slots:
 	void resistanceEntry(const QString & text);
+        void resistanceEntryAux();
 
 public:
 	static double toOhms(const QString & ohmsString, void * data);
