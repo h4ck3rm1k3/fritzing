@@ -2176,15 +2176,6 @@ void MainWindow::activeLayerBoth() {
 	updateActiveLayerButtons();
 }
 
-void MainWindow::createOrderFabAct() {
-	if (m_orderFabAct != NULL) return;
-
-	m_orderFabAct = new QAction(tr("Order a PCB..."), this);
-	m_orderFabAct->setStatusTip(tr("Order a PCB created from your sketch--from fabulous Fritzing Fab"));
-	connect(m_orderFabAct, SIGNAL(triggered()), this, SLOT(orderFab()));
-}
-
-
 void MainWindow::activeLayerTop() {
 	PCBSketchWidget * pcbSketchWidget = qobject_cast<PCBSketchWidget *>(m_currentGraphicsView);
 	if (pcbSketchWidget == NULL) return;
@@ -2203,6 +2194,36 @@ void MainWindow::activeLayerBottom() {
 	pcbSketchWidget->setLayerActive(ViewLayer::Copper0, true);
 	AutoCloseMessageBox::showMessage(this, tr("Copper Bottom layer is active"));
 	updateActiveLayerButtons();
+}
+
+void MainWindow::toggleActiveLayer() 
+{
+	PCBSketchWidget * pcbSketchWidget = qobject_cast<PCBSketchWidget *>(m_currentGraphicsView);
+	if (pcbSketchWidget == NULL) return;
+
+	int index = activeLayerIndex();
+	switch (index) {
+		case 0:
+			activeLayerBottom();
+			return;
+		case 1:
+			activeLayerTop();
+			return;
+		case 2:
+			activeLayerBoth();
+			return;
+		default:
+			return;
+	}
+}
+
+
+void MainWindow::createOrderFabAct() {
+	if (m_orderFabAct != NULL) return;
+
+	m_orderFabAct = new QAction(tr("Order a PCB..."), this);
+	m_orderFabAct->setStatusTip(tr("Order a PCB created from your sketch--from fabulous Fritzing Fab"));
+	connect(m_orderFabAct, SIGNAL(triggered()), this, SLOT(orderFab()));
 }
 
 void MainWindow::autoroute() {

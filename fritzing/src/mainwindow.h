@@ -239,6 +239,7 @@ protected slots:
 	void activeLayerTop();
 	void activeLayerBottom();
 	void activeLayerBoth();
+	void toggleActiveLayer();
 	void createTrace();
 	void excludeFromAutoroute();
 	void selectAllTraces();
@@ -438,6 +439,7 @@ protected:
 	bool wannaRestart();
 
 	void updateActiveLayerButtons();
+	int activeLayerIndex();
 	bool hasLinkedProgramFiles(const QString & filename, QStringList & linkedProgramFiles);
 	void pasteAux(bool pasteInPlace);
 

@@ -233,6 +233,10 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel, QW
 	shortcut = new QShortcut(QKeySequence(tr("Meta+Shift+Ctrl+R", "Rotate Counterclockwise")), this);
 	connect(shortcut, SIGNAL(activated()), this, SLOT(rotateIncCCWRubberBand()));
 
+	shortcut = new QShortcut(QKeySequence(tr("Shift+Ctrl+Tab", "Toggle Active Layer")), this);
+	connect(shortcut, SIGNAL(activated()), this, SLOT(toggleActiveLayer()));
+
+
 	connect(this, SIGNAL(changeActivationSignal(bool, QWidget *)), qApp, SLOT(changeActivation(bool, QWidget *)), Qt::DirectConnection);
 	connect(this, SIGNAL(destroyed(QObject *)), qApp, SLOT(topLevelWidgetDestroyed(QObject *)));
 	connect(this, SIGNAL(externalProcessSignal(QString &, QString &, QStringList &)),
@@ -2321,22 +2325,8 @@ void MainWindow::changeBoardLayers(int layers, bool doEmit) {
 }
 
 void MainWindow::updateActiveLayerButtons() {
-	bool enabled = false;
-	int index = 0;
-	if (m_currentGraphicsView->boardLayers() == 2) {
-		bool copper0Visible = m_currentGraphicsView->layerIsActive(ViewLayer::Copper0);
-		bool copper1Visible = m_currentGraphicsView->layerIsActive(ViewLayer::Copper1);
-		if (copper0Visible && copper1Visible) {
-			index = 0;
-		}
-		else if (copper1Visible) {
-			index = 2;
-		}
-		else if (copper0Visible) {
-			index = 1;
-		}
-		enabled = true;
-	}
+	int index = activeLayerIndex();
+	bool enabled = index >= 0;
 
 	m_activeLayerButtonWidget->setCurrentIndex(index);
 	m_activeLayerButtonWidget->setVisible(enabled);
@@ -2348,6 +2338,26 @@ void MainWindow::updateActiveLayerButtons() {
 	QList<QAction *> actions;
 	actions << m_activeLayerBothAct << m_activeLayerBottomAct << m_activeLayerTopAct;
 	setActionsIcons(index, actions);
+}
+
+
+int MainWindow::activeLayerIndex() 
+{
+	if (m_currentGraphicsView->boardLayers() == 2) {
+		bool copper0Visible = m_currentGraphicsView->layerIsActive(ViewLayer::Copper0);
+		bool copper1Visible = m_currentGraphicsView->layerIsActive(ViewLayer::Copper1);
+		if (copper0Visible && copper1Visible) {
+			return 0;
+		}
+		else if (copper1Visible) {
+			return 2;
+		}
+		else if (copper0Visible) {
+			return 1;
+		}
+	}
+
+	return -1;
 }
 
 /**
