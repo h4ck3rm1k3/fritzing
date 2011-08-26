@@ -2079,20 +2079,24 @@ void MainWindow::hideShowTraceMenu() {
 void MainWindow::createTraceMenuActions() {
 	m_autorouteAct = new QAction(tr("&Autoroute"), this);
 	m_autorouteAct->setStatusTip(tr("Autoroute..."));
+	m_autorouteAct->setShortcut(tr("Shift+Ctrl+A"));
 	connect(m_autorouteAct, SIGNAL(triggered()), this, SLOT(autoroute()));
 
 	createOrderFabAct();
 
 	m_activeLayerBothAct = new QAction(tr("Set both copper layers clickable"), this);
 	m_activeLayerBothAct->setStatusTip(tr("Set both copper layers clickable"));
+	m_activeLayerBothAct->setShortcut(tr("Shift+Ctrl+3"));
 	connect(m_activeLayerBothAct, SIGNAL(triggered()), this, SLOT(activeLayerBoth()));
 
 	m_activeLayerTopAct = new QAction(tr("Set copper top layer clickable"), this);
 	m_activeLayerTopAct->setStatusTip(tr("Set copper top layer clickable"));
+	m_activeLayerTopAct->setShortcut(tr("Shift+Ctrl+2"));
 	connect(m_activeLayerTopAct, SIGNAL(triggered()), this, SLOT(activeLayerTop()));
 
 	m_activeLayerBottomAct = new QAction(tr("Set copper bottom layer clickable"), this);
 	m_activeLayerBottomAct->setStatusTip(tr("Set copper bottom layer clickable"));
+	m_activeLayerBottomAct->setShortcut(tr("Shift+Ctrl+1"));
 	connect(m_activeLayerBottomAct, SIGNAL(triggered()), this, SLOT(activeLayerBottom()));
 
 	m_createTraceAct = new QAction(tr("&Create Trace from Selected Wire(s)"), this);
