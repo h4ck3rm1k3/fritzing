@@ -38,6 +38,7 @@ $Date$
 #include "../utils/focusoutcombobox.h"
 #include "../utils/textutils.h"
 #include "../utils/graphicsutils.h"
+#include "../utils/cursormaster.h"
 
 #include <QBrush>
 #include <QPen>
@@ -417,7 +418,7 @@ void PaletteItemBase::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
 	if (event->isAccepted()) {
 		if (hasRubberBandLeg()) {
 			//DebugDialog::debug("---pab set override cursor");
-			QApplication::setOverrideCursor(cursor());
+			CursorMaster::instance()->addCursor(this, cursor());
 
 			bool connected = false;
 			foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
@@ -437,7 +438,7 @@ void PaletteItemBase::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
 	if (hasRubberBandLeg()) {
 		QApplication::instance()->removeEventFilter(this);
 		//DebugDialog::debug("------pab restore override cursor");
-		QApplication::restoreOverrideCursor();
+		CursorMaster::instance()->removeCursor(this);
 	}
 
 	ItemBase::hoverLeaveEvent(event);
@@ -450,10 +451,10 @@ bool PaletteItemBase::eventFilter(QObject * object, QEvent * event)
 		if (event->type() == QEvent::KeyPress || event->type() == QEvent::KeyRelease) {
 			QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
 			if (keyEvent->modifiers() & altOrMetaModifier()) {
-				QApplication::changeOverrideCursor(*ConnectorItem::RubberbandCursor);
+				CursorMaster::instance()->addCursor(this, *CursorMaster::RubberbandCursor);
 			}
 			else {
-				QApplication::changeOverrideCursor(*ConnectorItem::MoveCursor);
+				CursorMaster::instance()->addCursor(this, *CursorMaster::MoveCursor);
 			}
 		}
 	}
@@ -587,13 +588,13 @@ const QCursor * PaletteItemBase::getCursor(Qt::KeyboardModifiers modifiers)
 		if ((modifiers & altOrMetaModifier())) {
 			foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
 				if (connectorItem->connectionsCount() > 0) {
-					return ConnectorItem::RubberbandCursor;
+					return CursorMaster::RubberbandCursor;
 				}
 			}
 		}
 	}
 
-	return ConnectorItem::MoveCursor;
+	return CursorMaster::MoveCursor;
 }
 
 

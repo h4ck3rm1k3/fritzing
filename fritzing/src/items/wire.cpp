@@ -87,6 +87,7 @@ later:
 #include "../utils/textutils.h"
 #include "../utils/bezier.h"
 #include "../utils/bezierdisplay.h"
+#include "../utils/cursormaster.h"
 #include "../layerattributes.h"
 
 #include <stdlib.h>
@@ -738,7 +739,7 @@ void Wire::hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorIt
 void Wire::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
 	ItemBase::hoverEnterEvent(event);
 	QApplication::instance()->installEventFilter(this);
-	QApplication::setOverrideCursor(cursor());
+	CursorMaster::instance()->addCursor(this, cursor());
 	//DebugDialog::debug("---wire set override cursor");
 	updateCursor(event->modifiers());
 }
@@ -747,7 +748,7 @@ void Wire::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
 	QApplication::instance()->removeEventFilter(this);
 	ItemBase::hoverLeaveEvent(event);
 	//DebugDialog::debug("------wire restore override cursor");
-	QApplication::restoreOverrideCursor();
+	CursorMaster::instance()->removeCursor(this);
 }
 
 
@@ -785,8 +786,6 @@ void Wire::mouseDoubleClickConnectorEvent(ConnectorItem * connectorItem) {
 
 	if (chained == 1) {
 		// near as I can tell, this is to eliminate the overrides from the connectorItem and then from the wire itself
-		QApplication::restoreOverrideCursor();
-		QApplication::restoreOverrideCursor();
 		emit wireJoinSignal(this, connectorItem);
 	}
 }
@@ -1752,17 +1751,17 @@ void Wire::updateCursor(Qt::KeyboardModifiers modifiers)
 		
 	if (segment) {
 		// dragging a segment of wire between bounded by two other wires
-		QApplication::changeOverrideCursor(*ConnectorItem::RubberbandCursor);
+		CursorMaster::instance()->addCursor(this, *CursorMaster::RubberbandCursor);
 	}
 	else if (totalConnections == 0) {
 		// only in breadboard view
-		QApplication::changeOverrideCursor(*ConnectorItem::MoveCursor);
+		CursorMaster::instance()->addCursor(this, *CursorMaster::MoveCursor);
 	}
 	else if (infoGraphicsView != NULL && infoGraphicsView->curvyWiresIndicated(modifiers)) {
-		QApplication::changeOverrideCursor(*ConnectorItem::MakeCurveCursor);
+		CursorMaster::instance()->addCursor(this, *CursorMaster::MakeCurveCursor);
 	}
 	else {
-		QApplication::changeOverrideCursor(*ConnectorItem::NewBendpointCursor);
+		CursorMaster::instance()->addCursor(this, *CursorMaster::NewBendpointCursor);
 	}
 }
 

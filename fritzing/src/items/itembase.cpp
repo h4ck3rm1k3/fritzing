@@ -42,6 +42,7 @@ $Date$
 #include "../utils/folderutils.h"
 #include "../utils/textutils.h"
 #include "../utils/graphicsutils.h"
+#include "../utils/cursormaster.h"
 #include "../utils/familypropertycombobox.h"
 #include "../referencemodel/referencemodel.h"
 
@@ -159,7 +160,7 @@ ItemBase::ItemBase( ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier vi
 	m_sticky = false;
 	m_canFlipHorizontal = m_canFlipVertical = false;
 
-	setCursor(*ConnectorItem::MoveCursor);
+	setCursor(*CursorMaster::MoveCursor);
 
    	m_viewGeometry.set(viewGeometry);
 	setAcceptHoverEvents ( true );
@@ -266,8 +267,6 @@ void ItemBase::initNames() {
 	if (NumberMatcher.isEmpty()) {
 		NumberMatcher.setPattern(QString("(([0-9]+(\\.[0-9]*)?)|\\.[0-9]+)([\\s]*([") + TextUtils::PowerPrefixesString + "]))?");
 	}
-
-	ConnectorItem::initCursors();
 
 	if (TranslatedPropertyNames.count() == 0) {
 		TranslatedPropertyNames.insert("family", tr("family"));
@@ -1859,5 +1858,5 @@ QPainterPath ItemBase::hoverShape() const
 
 const QCursor * ItemBase::getCursor(Qt::KeyboardModifiers)
 {
-	return ConnectorItem::MoveCursor;
+	return CursorMaster::MoveCursor;
 }

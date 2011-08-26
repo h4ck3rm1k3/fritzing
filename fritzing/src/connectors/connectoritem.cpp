@@ -231,6 +231,7 @@ parts editor support
 #include "../utils/ratsnestcolors.h"
 #include "../utils/bezier.h"
 #include "../utils/bezierdisplay.h"
+#include "../utils/cursormaster.h"
 #include "ercdata.h"
 
 /////////////////////////////////////////////////////////
@@ -282,13 +283,6 @@ bool wireLessThan(ConnectorItem * c1, ConnectorItem * c2)
 	return c1->zValue() > c2->zValue();
 }
 
-QCursor * ConnectorItem::BendpointCursor = NULL;
-QCursor * ConnectorItem::NewBendpointCursor = NULL;
-QCursor * ConnectorItem::MakeWireCursor = NULL;
-QCursor * ConnectorItem::MakeCurveCursor = NULL;
-QCursor * ConnectorItem::RubberbandCursor = NULL;
-QCursor * ConnectorItem::MoveCursor = NULL;
-
 QColor addColor(QColor & color, int offset)
 {
     QColor rgb = color.toRgb();
@@ -317,7 +311,7 @@ ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 		connector->addViewItem(this);
 	}
     setAcceptHoverEvents(true);
-    this->setCursor((attachedTo && attachedTo->itemType() == ModelPart::Wire) ? Qt::CrossCursor : *MakeWireCursor);
+    this->setCursor((attachedTo && attachedTo->itemType() == ModelPart::Wire) ? Qt::CrossCursor : *CursorMaster::MakeWireCursor);
 
 	//DebugDialog::debug(QString("%1 attached to %2")
 			//.arg(this->connector()->connectorShared()->id())
@@ -364,7 +358,7 @@ void ConnectorItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
 	}
 
 	//DebugDialog::debug("---CI set override cursor");
-	QApplication::setOverrideCursor(cursor());
+	CursorMaster::instance()->addCursor(this, cursor());
 	bool setDefaultCursor = true;
 	m_hoverEnterSpaceBarWasPressed = false;
 	setHoverColor();
@@ -385,7 +379,7 @@ void ConnectorItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
 		m_attachedTo->hoverEnterConnectorItem(event, this);
 	}
 
-	if (setDefaultCursor) QApplication::changeOverrideCursor(*MakeWireCursor);
+	if (setDefaultCursor) CursorMaster::instance()->addCursor(this, *CursorMaster::MakeWireCursor);
 }
 
 void ConnectorItem::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
@@ -403,12 +397,15 @@ void ConnectorItem::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
 		}
 	}
 
+	CursorMaster::instance()->removeCursor(this);
+
+
 	if (this->attachedToItemType() == ModelPart::Wire) {
 		QApplication::instance()->removeEventFilter(this);
 		this->setCursor(Qt::CrossCursor);
 	}
 	else if (m_rubberBandLeg) {
-		this->setCursor(*MakeWireCursor);
+		this->setCursor(*CursorMaster::MakeWireCursor);
 	}
 
 	if (this->m_attachedTo != NULL) {
@@ -416,7 +413,7 @@ void ConnectorItem::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
 	}
 
 	//DebugDialog::debug("------CI restore override cursor");
-	QApplication::restoreOverrideCursor();
+	CursorMaster::instance()->removeCursor(this);
 }
 
 void ConnectorItem::hoverMoveEvent ( QGraphicsSceneHoverEvent * event ) {
@@ -977,7 +974,7 @@ void ConnectorItem::setHiddenOrInactive() {
 	}
 	else {
 		this->setAcceptedMouseButtons(ALLMOUSEBUTTONS);
-		this->setCursor(attachedToItemType() == ModelPart::Wire ? Qt::CrossCursor : *MakeWireCursor);
+		this->setCursor(attachedToItemType() == ModelPart::Wire ? Qt::CrossCursor : *CursorMaster::MakeWireCursor);
 		setAcceptHoverEvents(true);
 	}
 	this->update();
@@ -2714,16 +2711,16 @@ void ConnectorItem::updateWireCursor(Qt::KeyboardModifiers modifiers)
 {
 	QCursor cursor = Qt::CrossCursor;
 	if (isBendpoint()) {
-		cursor = *ConnectorItem::BendpointCursor;
+		cursor = *CursorMaster::BendpointCursor;
 		if (modifiers & altOrMetaModifier()) {
 			Wire * wire = qobject_cast<Wire *>(attachedTo());
 			if (wire != NULL && wire->canChainMultiple()) {
-				cursor = *ConnectorItem::MakeWireCursor;
+				cursor = *CursorMaster::MakeWireCursor;
 			}
 		}
 	}
 
-	QApplication::changeOverrideCursor(cursor);
+	CursorMaster::instance()->addCursor(this, cursor);
 }
 
 void ConnectorItem::updateLegCursor(QPointF p, Qt::KeyboardModifiers modifiers)
@@ -2736,48 +2733,19 @@ void ConnectorItem::updateLegCursor(QPointF p, Qt::KeyboardModifiers modifiers)
 			cursor = *attachedTo()->getCursor(modifiers);
 			break;
 		case InBendpoint:
-			cursor = *BendpointCursor;
+			cursor = *CursorMaster::BendpointCursor;
 			break;
 		case InSegment:
-			cursor = curvyWiresIndicated(modifiers) ? *MakeCurveCursor : *NewBendpointCursor;
+			cursor = curvyWiresIndicated(modifiers) ? *CursorMaster::MakeCurveCursor : *CursorMaster::NewBendpointCursor;
 			break;
 		case InConnector:
-			cursor = (modifiers & altOrMetaModifier()) ? *MakeWireCursor : Qt::CrossCursor;
+			cursor = (modifiers & altOrMetaModifier()) ? *CursorMaster::MakeWireCursor : Qt::CrossCursor;
 			break;
 		default:
 			cursor = Qt::ArrowCursor;
 			break;
 	}
-	QApplication::changeOverrideCursor(cursor);
-}
-
-void ConnectorItem::initCursors()
-{
-	if (BendpointCursor == NULL) {
-		QBitmap bitmap1(":resources/images/cursor/bendpoint.bmp");
-		QBitmap bitmap1m(":resources/images/cursor/bendpoint_mask.bmp");
-		BendpointCursor = new QCursor(bitmap1, bitmap1m, 0, 0);
-
-		QBitmap bitmap2(":resources/images/cursor/new_bendpoint.bmp");
-		QBitmap bitmap2m(":resources/images/cursor/new_bendpoint_mask.bmp");
-		NewBendpointCursor = new QCursor(bitmap2, bitmap2m, 0, 0);
-
-		QBitmap bitmap3(":resources/images/cursor/make_wire.bmp");
-		QBitmap bitmap3m(":resources/images/cursor/make_wire_mask.bmp");
-		MakeWireCursor = new QCursor(bitmap3, bitmap3m, 0, 0);
-
-		QBitmap bitmap4(":resources/images/cursor/curve.bmp");
-		QBitmap bitmap4m(":resources/images/cursor/curve_mask.bmp");
-		MakeCurveCursor = new QCursor(bitmap4, bitmap4m, 0, 0);
-
-		QBitmap bitmap5(":resources/images/cursor/rubberband_move.bmp");
-		QBitmap bitmap5m(":resources/images/cursor/rubberband_move_mask.bmp");
-		RubberbandCursor = new QCursor(bitmap5, bitmap5m, 0, 0);
-
-		QBitmap bitmap6(":resources/images/cursor/part_move.bmp");
-		QBitmap bitmap6m(":resources/images/cursor/part_move_mask.bmp");
-		MoveCursor = new QCursor(bitmap6, bitmap6m, 0, 0);
-	}
+	CursorMaster::instance()->addCursor(this, cursor);
 }
 
 bool ConnectorItem::curvyWiresIndicated(Qt::KeyboardModifiers modifiers)

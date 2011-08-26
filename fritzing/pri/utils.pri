@@ -29,6 +29,7 @@ src/utils/bezierdisplay.h \
 src/utils/boundedregexpvalidator.h \
 src/utils/bundler.h \
 src/utils/clickablelabel.h \
+src/utils/cursormaster.h \
 src/utils/expandinglabel.h \
 src/utils/familypropertycombobox.h \
 src/utils/fileprogressdialog.h \
@@ -51,6 +52,7 @@ src/utils/bendpointaction.cpp \
 src/utils/bezier.cpp \
 src/utils/bezierdisplay.cpp \
 src/utils/clickablelabel.cpp \
+src/utils/cursormaster.cpp \
 src/utils/expandinglabel.cpp \
 src/utils/fileprogressdialog.cpp \
 src/utils/flineedit.cpp \

@@ -47,6 +47,7 @@ $Date$
 #include "items/moduleidnames.h"
 #include "partsbinpalette/searchlineedit.h"
 #include "utils/ratsnestcolors.h"
+#include "utils/cursormaster.h"
 #include "infoview/htmlinfoview.h"
 #include "svg/gedaelement2svg.h"
 #include "svg/kicadmodule2svg.h"
@@ -269,6 +270,7 @@ bool FApplication::init() {
 	RatsnestColors::initNames();
 	SvgIconWidget::initNames();
 	PinHeader::initNames();
+	CursorMaster::initCursors();
 	return true;
 }
 
