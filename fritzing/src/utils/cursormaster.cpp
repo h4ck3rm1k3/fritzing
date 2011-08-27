@@ -38,6 +38,7 @@ QCursor * CursorMaster::MakeWireCursor = NULL;
 QCursor * CursorMaster::MakeCurveCursor = NULL;
 QCursor * CursorMaster::RubberbandCursor = NULL;
 QCursor * CursorMaster::MoveCursor = NULL;
+QCursor * CursorMaster::BendlegCursor = NULL;
 
 CursorMaster CursorMaster::TheCursorMaster;
 static QList<QObject *> Associates;
@@ -72,6 +73,10 @@ void CursorMaster::initCursors()
 		QBitmap bitmap6(":resources/images/cursor/part_move.bmp");
 		QBitmap bitmap6m(":resources/images/cursor/part_move_mask.bmp");
 		MoveCursor = new QCursor(bitmap6, bitmap6m, 0, 0);
+
+		QBitmap bitmap7(":resources/images/cursor/bendleg.bmp");
+		QBitmap bitmap7m(":resources/images/cursor/bendleg_mask.bmp");
+		BendlegCursor = new QCursor(bitmap7, bitmap7m, 0, 0);
 	}
 }
 

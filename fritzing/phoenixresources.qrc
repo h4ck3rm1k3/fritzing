@@ -50,6 +50,8 @@
         <file>resources/images/cursor/curve_mask.bmp</file>
         <file>resources/images/cursor/bendpoint.bmp</file>
         <file>resources/images/cursor/bendpoint_mask.bmp</file>
+        <file>resources/images/cursor/bendleg.bmp</file>
+        <file>resources/images/cursor/bendleg_mask.bmp</file>
         <file>resources/images/cursor/new_bendpoint.bmp</file>
         <file>resources/images/cursor/new_bendpoint_mask.bmp</file>
         <file>resources/images/cursor/magic_wand.bmp</file>

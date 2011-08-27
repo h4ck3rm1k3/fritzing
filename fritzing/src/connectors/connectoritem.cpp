@@ -2739,7 +2739,7 @@ void ConnectorItem::updateLegCursor(QPointF p, Qt::KeyboardModifiers modifiers)
 			cursor = curvyWiresIndicated(modifiers) ? *CursorMaster::MakeCurveCursor : *CursorMaster::NewBendpointCursor;
 			break;
 		case InConnector:
-			cursor = (modifiers & altOrMetaModifier()) ? *CursorMaster::MakeWireCursor : Qt::CrossCursor;
+			cursor = (modifiers & altOrMetaModifier()) ? *CursorMaster::MakeWireCursor : *CursorMaster::BendlegCursor;
 			break;
 		default:
 			cursor = Qt::ArrowCursor;
