@@ -621,6 +621,11 @@ bool FSvgRenderer::setUpConnector(SvgIdLayer * svgIdLayer, bool ignoreTerminalPo
 	}
 
 	// matrixForElement only grabs parent matrices, not any transforms in the element itself
+	if (connectorInfo->matrix.dx() != 0 || connectorInfo->matrix.dy() != 0 ) {
+		// translation would already appear in the bounds: I think this is an inconsistency in Qt
+		// but so far it seems only to have occurred with the generated SMD ICs
+		connectorInfo->matrix.translate(-connectorInfo->matrix.dx(), -connectorInfo->matrix.dy()); 
+	}
 	QMatrix matrix0 = connectorInfo->matrix * this->matrixForElement(connectorID);  
 
 	/*DebugDialog::debug(QString("identity matrix %11 %1 %2, viewbox: %3 %4 %5 %6, bounds: %7 %8 %9 %10, size: %12 %13").arg(m_modelPart->title()).arg(connectorSharedID())
