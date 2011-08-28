@@ -53,11 +53,11 @@
 	<text transform="matrix(1 0 0 1 39.6001 36.1794)" fill="#FFFFFF" font-family="'OCRAStd'" font-size="4">R-</text>
 	<text transform="matrix(1 0 0 1 12.4746 22.1423)" fill="#FFFFFF" font-family="'OCRAStd'" font-size="4">B+</text>
 	<text transform="matrix(1 0 0 1 12.4746 36.1794)" fill="#FFFFFF" font-family="'OCRAStd'" font-size="4">B-</text>
-</g>
 <polygon id="connector6" fill="none" points="9.493,32.938 14.371,41.386 10.41,43.674 7.899,39.326 5.532,35.225 "/>
 <polygon id="connector5" fill="none" points="23.719,46.784 33.475,46.784 33.475,51.358 29.346,51.358 23.719,51.358 "/>
 <polygon id="connector4" fill="none" points="42.824,41.385 47.701,32.934 51.665,35.222 49.427,39.097 46.787,43.672 "/>
 <polygon id="connector3" fill="none" points="46.784,11.404 49.888,16.78 51.664,19.855 47.702,22.142 42.823,13.692 "/>
 <polygon id="connector2" fill="none" points="23.718,3.721 29.221,3.721 33.475,3.721 33.475,8.296 23.718,8.296 "/>
 <polygon id="connector1" fill="none" points="5.53,19.855 7.984,15.604 10.409,11.405 14.371,13.693 9.492,22.142 "/>
+</g>
 </svg>
