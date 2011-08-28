@@ -123,11 +123,43 @@ QString LogoItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString,
 			if (!result) {
 				return "";
 			}
+
+			double scaleX = 1;
+			double scaleY = 1;
+			if (m_hasLogo) {
+				QDomDocument doc = splitter.domDocument();
+				QDomElement root = doc.documentElement();
+				QDomElement g = root.firstChildElement("g");
+				QDomElement text = g.firstChildElement("text");
+
+				// TODO: this is really a hack and resizing should change a scale factor rather than the <text> coordinates
+				// but it's not clear how to deal with existing sketches
+	
+				QString viewBox = root.attribute("viewBox");
+				double w = TextUtils::convertToInches(root.attribute("width"));
+				double h = TextUtils::convertToInches(root.attribute("height"));
+				QStringList coords = viewBox.split(" ", QString::SkipEmptyParts);
+				double sx = w / coords.at(2).toDouble();
+				double sy = h / coords.at(3).toDouble();
+				if (qAbs(sx - sy) > .001) {
+					// change vertical dpi to match horizontal dpi
+					// y coordinate is really intended in relation to font size so leave it be
+					scaleY = sy / sx;
+					root.setAttribute("viewBox", QString("0 0 %1 %2").arg(coords.at(2)).arg(h / sx));
+				}
+			}
+
 			result = splitter.normalize(dpi, xmlName, blackOnly);
 			if (!result) {
 				return "";
 			}
-			return splitter.elementString(xmlName);
+
+			QString string = splitter.elementString(xmlName);
+			if (scaleY == 1) return string;
+
+			QTransform t;
+			t.scale(scaleX, scaleY);
+			return TextUtils::svgTransform(string, t, false, "");
 		}
 	}
 
