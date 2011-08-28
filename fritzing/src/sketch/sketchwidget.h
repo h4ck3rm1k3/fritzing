@@ -237,6 +237,7 @@ public:
 	long createWire(ConnectorItem * from, ConnectorItem * to, ViewGeometry::WireFlags, bool dontUpdate, BaseCommand::CrossViewType, QUndoCommand * parentCommand);
 	int selectAllObsolete();
 	int selectAllMoveLock();
+	void setMoveLock(long id, bool lock);
 	int selectAllItemType(ModelPart::ItemType);
 	bool partLabelsVisible();
 	void restorePartLabel(long itemID, QDomElement & element);

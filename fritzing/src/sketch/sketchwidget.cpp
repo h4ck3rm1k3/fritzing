@@ -254,8 +254,11 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 		QDomElement view = views.firstChildElement(viewName);
 		if (view.isNull()) continue;
 
+		bool locked = view.attribute("locked", "").compare("true") == 0;
+
 		QDomElement geometry = view.firstChildElement("geometry");
-		if (geometry.isNull()) continue;;
+		if (geometry.isNull()) continue;
+
 		ViewGeometry viewGeometry(geometry);
 
 		QDomElement labelGeometry = view.firstChildElement("titleGeometry");
@@ -267,6 +270,9 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 		if (parentCommand == NULL) {
 			ItemBase * itemBase = addItemAux(mp, viewLayerSpec, viewGeometry, newID, NULL, true, m_viewIdentifier, false);
 			if (itemBase != NULL) {
+				if (locked) {
+					itemBase->setMoveLock(true);
+				}
 				zmap.insert(viewGeometry.z() - qFloor(viewGeometry.z()), itemBase);   
 				bool gotOne = false;
 				if (!gotOne) {
@@ -335,6 +341,10 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 				int units = w2.endsWith("cm") ? 0 : 1;
 				new ResizeBoardCommand(this, newID, w.toDouble(), units, w.toDouble(), units, parentCommand);
 				mp->setProp("width", "");		// ResizeBoardCommand won't execute if the width property is already set
+			}
+
+			if (locked) {
+				new MoveLockCommand(this, newID, true, true, parentCommand);
 			}
 
 			if (!labelGeometry.isNull()) {
@@ -7996,4 +8006,10 @@ bool SketchWidget::curvyWiresIndicated(Qt::KeyboardModifiers modifiers)
 	}
 
 	return ((modifiers & Qt::ControlModifier) != 0);
+}
+
+void SketchWidget::setMoveLock(long id, bool lock)
+{
+	ItemBase * itemBase = findItem(id);
+	if (itemBase) itemBase->setMoveLock(lock);
 }

@@ -80,7 +80,8 @@ int GraphicsFlowLayout::doLayout(const QRectF &rect) {
 		item->setGeometry(QRectF(QPoint(x, y), item->preferredSize()));
 
 		x = nextX;
-		lineHeight = qMax(lineHeight, item->preferredSize().height());
+		// item->preferredSize().height() returns qreal, armel compiler complains
+		lineHeight = qMax(lineHeight, (double) item->preferredSize().height());
 	}
 
 	m_lastWidth = rect.width();

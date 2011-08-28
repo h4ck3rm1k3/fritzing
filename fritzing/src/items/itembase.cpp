@@ -330,6 +330,9 @@ void ItemBase::initNames() {
 void ItemBase::saveInstance(QXmlStreamWriter & streamWriter) {
 	streamWriter.writeStartElement(ViewIdentifierClass::viewIdentifierXmlName(m_viewIdentifier));
 	streamWriter.writeAttribute("layer", ViewLayer::viewLayerXmlNameFromID(m_viewLayerID));
+	if (m_moveLock) {
+		streamWriter.writeAttribute("locked", "true");
+	}
 	this->saveGeometry();
 	writeGeometry(streamWriter);
 	if (m_partLabel) {

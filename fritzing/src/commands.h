@@ -735,6 +735,24 @@ protected:
 
 /////////////////////////////////////////////
 
+class MoveLockCommand : public BaseCommand
+{
+public:
+    MoveLockCommand(class SketchWidget *sketchWidget, long id, bool oldLock, bool newLock, QUndoCommand *parent);
+    void undo();
+    void redo();
+
+protected:
+	QString getParamString() const;
+
+protected:
+    long m_itemID;
+    bool m_oldLock;
+    bool m_newLock;
+};
+
+/////////////////////////////////////////////
+
 class IncLabelTextCommand : public BaseCommand
 {
 public:

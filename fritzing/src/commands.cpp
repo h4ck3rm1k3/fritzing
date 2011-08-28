@@ -1362,6 +1362,37 @@ QString MoveLabelCommand::getParamString() const {
 
 ///////////////////////////////////////////////
 
+MoveLockCommand::MoveLockCommand(SketchWidget *sketchWidget, long id, bool oldLock, bool newLock, QUndoCommand *parent)
+    : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
+{
+    m_itemID = id;
+    m_oldLock = oldLock;
+    m_newLock = newLock;
+}
+
+void MoveLockCommand::undo()
+{
+    m_sketchWidget->setMoveLock(m_itemID, m_oldLock);
+}
+
+void MoveLockCommand::redo()
+{
+    m_sketchWidget->setMoveLock(m_itemID, m_newLock);
+}
+
+
+QString MoveLockCommand::getParamString() const {
+	return QString("MoveLockCommand ") 
+		+ BaseCommand::getParamString()
+		+ QString(" id:%1 o:%2 n:%3") 
+			.arg(m_itemID)
+			.arg(m_oldLock)
+			.arg(m_newLock);
+
+}
+
+///////////////////////////////////////////////
+
 ChangeLabelTextCommand::ChangeLabelTextCommand(SketchWidget *sketchWidget, long id, 
 											   const QString & oldText, const QString & newText, 
 											   QUndoCommand *parent)
