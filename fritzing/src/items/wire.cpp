@@ -738,14 +738,12 @@ void Wire::hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorIt
 
 void Wire::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
 	ItemBase::hoverEnterEvent(event);
-	QApplication::instance()->installEventFilter(this);
 	CursorMaster::instance()->addCursor(this, cursor());
 	//DebugDialog::debug("---wire set override cursor");
 	updateCursor(event->modifiers());
 }
 
 void Wire::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
-	QApplication::instance()->removeEventFilter(this);
 	ItemBase::hoverLeaveEvent(event);
 	//DebugDialog::debug("------wire restore override cursor");
 	CursorMaster::instance()->removeCursor(this);
@@ -1702,23 +1700,17 @@ bool Wire::hasShadow() {
 	return m_pen.widthF() != m_shadowPen.widthF();
 }
 
-bool Wire::eventFilter(QObject * object, QEvent * event)
+void Wire::cursorKeyEvent(Qt::KeyboardModifiers modifiers)
 {
-	Q_UNUSED(object);
-	if (!(m_dragEnd || m_dragCurve)) {
-		if (event->type() == QEvent::KeyPress || event->type() == QEvent::KeyRelease) {
-			InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);;
-			if (infoGraphicsView) {
-				QPoint p = infoGraphicsView->mapFromGlobal(QCursor::pos());
-				QPointF r = infoGraphicsView->mapToScene(p);
-				QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
-				// DebugDialog::debug(QString("got key event %1").arg(keyEvent->modifiers()));
-				updateCursor(keyEvent->modifiers());
-			}
-		}
-	}
+	if (m_dragEnd || m_dragCurve) return;
 
-	return false;
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);;
+	if (infoGraphicsView) {
+		QPoint p = infoGraphicsView->mapFromGlobal(QCursor::pos());
+		QPointF r = infoGraphicsView->mapToScene(p);
+		// DebugDialog::debug(QString("got key event %1").arg(keyEvent->modifiers()));
+		updateCursor(modifiers);
+	}
 }
 
 void Wire::updateCursor(Qt::KeyboardModifiers modifiers)

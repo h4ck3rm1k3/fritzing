@@ -75,6 +75,7 @@ $Date$
 #include "../utils/graphicsutils.h"
 #include "../utils/textutils.h"
 #include "../utils/bezier.h"
+#include "../utils/cursormaster.h"
 #include "../fsvgrenderer.h"
 #include "../items/resistor.h"
 #include "../items/mysterypart.h"
@@ -2614,6 +2615,8 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 
 				QDrag * drag = new QDrag(this);
 				drag->setMimeData(mimeData);
+				//QBitmap bitmap = *CursorMaster::MoveCursor->bitmap();
+				//drag->setDragCursor(bitmap, Qt::MoveAction);
 
 				QPointF offset;
 				QString svg = makeMoveSVG(FSvgRenderer::printerScale(),  GraphicsUtils::StandardFritzingDPI, offset);

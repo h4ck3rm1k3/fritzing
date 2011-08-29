@@ -33,10 +33,11 @@ $Date$
 
 #include "../model/modelpart.h"
 #include "itembase.h"
+#include "../utils/cursormaster.h"
 
 class LayerKinPaletteItem;
 
-class PaletteItemBase : public ItemBase
+class PaletteItemBase : public ItemBase, public CursorKeyListener
 {
 	Q_OBJECT
 
@@ -73,6 +74,7 @@ public:
 	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
 	void setProp(const QString & prop, const QString & value);
 	const QCursor * getCursor(Qt::KeyboardModifiers);
+	void cursorKeyEvent(Qt::KeyboardModifiers modifiers);
 
 	/*
 	// for debugging
@@ -88,7 +90,6 @@ protected:
 	void hoverLeaveEvent ( QGraphicsSceneHoverEvent * event );
 	void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 	virtual bool canFindConnectorsUnder();
-	bool eventFilter(QObject * object, QEvent * event);
 
 	virtual LayerKinPaletteItem * newLayerKinPaletteItem(
 		PaletteItemBase * chief, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,

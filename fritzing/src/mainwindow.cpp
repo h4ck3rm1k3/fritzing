@@ -399,13 +399,13 @@ void MainWindow::init(PaletteModel * paletteModel, ReferenceModel *refModel) {
 	}
 
 	QSettings settings;
-	m_viewSwitcherDock->prestorePreference();
+    m_viewSwitcherDock->prestorePreference();
 	if(!settings.value("main/state").isNull()) {
 		restoreState(settings.value("main/state").toByteArray());
 		restoreGeometry(settings.value("main/geometry").toByteArray());
 	}
-	m_viewSwitcherDock->restorePreference();
-	m_viewSwitcherDock->setViewSwitcher(m_viewSwitcher);
+    m_viewSwitcherDock->restorePreference();
+    m_viewSwitcherDock->setViewSwitcher(m_viewSwitcher);
 
 	setMinimumSize(0,0);
 	m_tabWidget->setMinimumWidth(500);
@@ -419,14 +419,14 @@ void MainWindow::init(PaletteModel * paletteModel, ReferenceModel *refModel) {
 
 	m_setUpDockManagerTimer.setSingleShot(true);
 	connect(&m_setUpDockManagerTimer, SIGNAL(timeout()), m_dockManager, SLOT(keepMargins()));
-	m_setUpDockManagerTimer.start(1000);
+    m_setUpDockManagerTimer.start(1000);
 
 	if (m_fileProgressDialog) {
 		m_fileProgressDialog->setValue(98);
 	}
 
-	m_pcbGraphicsView->jumperItemHack();
-	
+    m_pcbGraphicsView->jumperItemHack();
+
 }
 
 MainWindow::~MainWindow()

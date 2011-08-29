@@ -427,16 +427,12 @@ void PaletteItemBase::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
 					break;
 				}
 			}
-			if (connected) {
-				QApplication::instance()->installEventFilter(this);
-			}
 		}
 	}
 }
 
 void PaletteItemBase::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
 	if (hasRubberBandLeg()) {
-		QApplication::instance()->removeEventFilter(this);
 		//DebugDialog::debug("------pab restore override cursor");
 		CursorMaster::instance()->removeCursor(this);
 	}
@@ -444,22 +440,18 @@ void PaletteItemBase::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
 	ItemBase::hoverLeaveEvent(event);
 }
 
-bool PaletteItemBase::eventFilter(QObject * object, QEvent * event)
+void PaletteItemBase::cursorKeyEvent(Qt::KeyboardModifiers modifiers)
 {
-	Q_UNUSED(object);
 	if (hasRubberBandLeg()) {
-		if (event->type() == QEvent::KeyPress || event->type() == QEvent::KeyRelease) {
-			QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
-			if (keyEvent->modifiers() & altOrMetaModifier()) {
-				CursorMaster::instance()->addCursor(this, *CursorMaster::RubberbandCursor);
-			}
-			else {
-				CursorMaster::instance()->addCursor(this, *CursorMaster::MoveCursor);
-			}
+		QCursor cursor;
+		if (modifiers & altOrMetaModifier()) {
+			cursor = *CursorMaster::RubberbandCursor;
 		}
+		else {
+			cursor = *CursorMaster::MoveCursor;
+		}
+		CursorMaster::instance()->addCursor(this, cursor);
 	}
-
-	return false;
 }
 
 void PaletteItemBase::contextMenuEvent(QGraphicsSceneContextMenuEvent *event) {

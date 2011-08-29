@@ -31,6 +31,8 @@ $Date$
 #include <QApplication>
 #include <QBitmap>
 #include <QString>
+#include <QKeyEvent>
+#include <QEvent>
 
 QCursor * CursorMaster::BendpointCursor = NULL;
 QCursor * CursorMaster::NewBendpointCursor = NULL;
@@ -41,7 +43,7 @@ QCursor * CursorMaster::MoveCursor = NULL;
 QCursor * CursorMaster::BendlegCursor = NULL;
 
 CursorMaster CursorMaster::TheCursorMaster;
-static QList<QObject *> Associates;
+static QList<QObject *> Listeners;
 
 CursorMaster::CursorMaster() : QObject()
 {
@@ -77,6 +79,8 @@ void CursorMaster::initCursors()
 		QBitmap bitmap7(":resources/images/cursor/bendleg.bmp");
 		QBitmap bitmap7m(":resources/images/cursor/bendleg_mask.bmp");
 		BendlegCursor = new QCursor(bitmap7, bitmap7m, 0, 0);
+
+		QApplication::instance()->installEventFilter(instance());
 	}
 }
 
@@ -85,35 +89,56 @@ CursorMaster * CursorMaster::instance()
 	return &TheCursorMaster;
 }
 
-void CursorMaster::addCursor(QObject * associate, const QCursor & cursor)
+void CursorMaster::addCursor(QObject * object, const QCursor & cursor)
 {
-	if (associate == NULL) return;
+	if (object == NULL) return;
 
-	if (Associates.contains(associate)) {
-		DebugDialog::debug(QString("changing cursor %1").arg((long) associate));
+	if (Listeners.contains(object)) {
+		if (Listeners.first() != object) {
+			Listeners.removeOne(object);
+			Listeners.push_front(object);
+		}
+		DebugDialog::debug(QString("changing cursor %1").arg((long) object));
 		QApplication::changeOverrideCursor(cursor);
 		return;
 	}
 
-	Associates.append(associate);
-	connect(associate, SIGNAL(destroyed(QObject *)), this, SLOT(deleteCursor(QObject *)));
+	Listeners.push_front(object);
+	connect(object, SIGNAL(destroyed(QObject *)), this, SLOT(deleteCursor(QObject *)));
 	QApplication::setOverrideCursor(cursor);
-	DebugDialog::debug(QString("addding cursor %1").arg((long) associate));
+	DebugDialog::debug(QString("addding cursor %1").arg((long) object));
 }
 
-void CursorMaster::removeCursor(QObject * associate)
+void CursorMaster::removeCursor(QObject * object)
 {
-	if (associate == NULL) return;
+	if (object == NULL) return;
 
-	if (Associates.contains(associate)) {
-		disconnect(associate, SIGNAL(destroyed(QObject *)), this, SLOT(deleteCursor(QObject *)));
-		Associates.removeOne(associate);
+	if (Listeners.contains(object)) {
+		disconnect(object, SIGNAL(destroyed(QObject *)), this, SLOT(deleteCursor(QObject *)));
+		Listeners.removeOne(object);
 		QApplication::restoreOverrideCursor();
-		DebugDialog::debug(QString("removing cursor %1").arg((long) associate));
+		DebugDialog::debug(QString("removing cursor %1").arg((long) object));
 	}
 }
 
-void CursorMaster::deleteCursor(QObject * associate)
+void CursorMaster::deleteCursor(QObject * object)
 {
-	removeCursor(associate);
+	removeCursor(object);
 }
+
+bool CursorMaster::eventFilter(QObject * object, QEvent * event)
+{
+	Q_UNUSED(object);
+	if (event->type() == QEvent::KeyPress || event->type() == QEvent::KeyRelease) {
+		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+		foreach (QObject * listener, Listeners) {
+			if (listener) {
+				dynamic_cast<CursorKeyListener *>(listener)->cursorKeyEvent(keyEvent->modifiers());
+				break;
+			}
+		}
+	}
+
+	return false;
+}
+

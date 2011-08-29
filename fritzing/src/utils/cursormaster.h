@@ -30,6 +30,12 @@ $Date$
 #include <QCursor>
 #include <QObject>
 
+class CursorKeyListener 
+{
+	public:
+		virtual void cursorKeyEvent(Qt::KeyboardModifiers) = 0;
+};
+
 class CursorMaster : public QObject {
 Q_OBJECT
 
@@ -40,8 +46,11 @@ public:
 	static CursorMaster * instance();
 	static void initCursors();
 
-	void addCursor(QObject * associate, const QCursor & cursor);
-	void removeCursor(QObject * associate);
+	void addCursor(QObject * listener, const QCursor & cursor);
+	void removeCursor(QObject * listener);
+
+protected:
+    bool eventFilter(QObject *obj, QEvent *event);
 
 protected slots:
 	void deleteCursor(QObject *);

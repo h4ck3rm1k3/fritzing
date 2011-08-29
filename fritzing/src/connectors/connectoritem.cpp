@@ -311,7 +311,7 @@ ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 		connector->addViewItem(this);
 	}
     setAcceptHoverEvents(true);
-    this->setCursor((attachedTo && attachedTo->itemType() == ModelPart::Wire) ? Qt::CrossCursor : *CursorMaster::MakeWireCursor);
+    this->setCursor((attachedTo && attachedTo->itemType() == ModelPart::Wire) ? *CursorMaster::BendpointCursor : *CursorMaster::MakeWireCursor);
 
 	//DebugDialog::debug(QString("%1 attached to %2")
 			//.arg(this->connector()->connectorShared()->id())
@@ -365,14 +365,12 @@ void ConnectorItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
 	if (infoGraphicsView != NULL) {
 		infoGraphicsView->hoverEnterConnectorItem(event, this);
 		if (m_rubberBandLeg) {
-			QApplication::instance()->installEventFilter(this);
 			updateLegCursor(event->pos(), event->modifiers());
 			setDefaultCursor = false;
 		}
 	}
 	if (this->m_attachedTo != NULL) {
 		if (this->attachedToItemType() == ModelPart::Wire) {
-			QApplication::instance()->installEventFilter(this);
 			updateWireCursor(event->modifiers());
 			setDefaultCursor = false;
 		}
@@ -392,21 +390,9 @@ void ConnectorItem::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
 		infoGraphicsView->hoverLeaveConnectorItem(event, this);
-		if (m_rubberBandLeg) {
-			QApplication::instance()->removeEventFilter(this);
-		}
 	}
 
 	CursorMaster::instance()->removeCursor(this);
-
-
-	if (this->attachedToItemType() == ModelPart::Wire) {
-		QApplication::instance()->removeEventFilter(this);
-		this->setCursor(Qt::CrossCursor);
-	}
-	else if (m_rubberBandLeg) {
-		this->setCursor(*CursorMaster::MakeWireCursor);
-	}
 
 	if (this->m_attachedTo != NULL) {
 		m_attachedTo->hoverLeaveConnectorItem(event, this);
@@ -974,7 +960,7 @@ void ConnectorItem::setHiddenOrInactive() {
 	}
 	else {
 		this->setAcceptedMouseButtons(ALLMOUSEBUTTONS);
-		this->setCursor(attachedToItemType() == ModelPart::Wire ? Qt::CrossCursor : *CursorMaster::MakeWireCursor);
+		this->setCursor(attachedToItemType() == ModelPart::Wire ? *CursorMaster::BendpointCursor : *CursorMaster::MakeWireCursor);
 		setAcceptHoverEvents(true);
 	}
 	this->update();
@@ -2679,41 +2665,35 @@ void ConnectorItem::replaceBezier(int index, const Bezier * newBezier)
 	}
 }
 
-bool ConnectorItem::eventFilter(QObject * object, QEvent * event)
+void ConnectorItem::cursorKeyEvent(Qt::KeyboardModifiers modifiers)
 {
-	Q_UNUSED(object);
 	if (m_rubberBandLeg) {
-		if (!m_draggingLeg) {
-			if (event->type() == QEvent::KeyPress || event->type() == QEvent::KeyRelease) {
-				InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);;
-				if (infoGraphicsView) {
-					QPoint p = infoGraphicsView->mapFromGlobal(QCursor::pos());
-					QPointF r = infoGraphicsView->mapToScene(p);
-					QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
-					// DebugDialog::debug(QString("got key event %1").arg(keyEvent->modifiers()));
-					updateLegCursor(mapFromScene(r), keyEvent->modifiers());
-				}
-			}
+		if (m_draggingLeg) return;
+
+		InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);;
+		if (infoGraphicsView) {
+			QPoint p = infoGraphicsView->mapFromGlobal(QCursor::pos());
+			QPointF r = infoGraphicsView->mapToScene(p);
+			// DebugDialog::debug(QString("got key event %1").arg(keyEvent->modifiers()));
+			updateLegCursor(mapFromScene(r), modifiers);
 		}
 	}
 	else if (attachedToItemType() == ModelPart::Wire) {
-		if (event->type() == QEvent::KeyPress || event->type() == QEvent::KeyRelease) {
-			QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
-			updateWireCursor(keyEvent->modifiers());
-		}
+		updateWireCursor(modifiers);
 	}
-
-	return false;
 }
 
 void ConnectorItem::updateWireCursor(Qt::KeyboardModifiers modifiers)
 {
-	QCursor cursor = Qt::CrossCursor;
+	DebugDialog::debug("uwc");
+	QCursor cursor = *CursorMaster::BendpointCursor;
 	if (isBendpoint()) {
-		cursor = *CursorMaster::BendpointCursor;
+		DebugDialog::debug("uwc bend");
 		if (modifiers & altOrMetaModifier()) {
+			DebugDialog::debug("uwc alt");
 			Wire * wire = qobject_cast<Wire *>(attachedTo());
 			if (wire != NULL && wire->canChainMultiple()) {
+				DebugDialog::debug("uwc make wire");
 				cursor = *CursorMaster::MakeWireCursor;
 			}
 		}

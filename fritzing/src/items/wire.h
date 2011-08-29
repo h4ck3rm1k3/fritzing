@@ -39,6 +39,7 @@ $Date$
 #include <QMenu>
 
 #include "itembase.h"
+#include "../utils/cursormaster.h"
 
 class WireMenu : public QMenu {
 	Q_OBJECT
@@ -66,7 +67,7 @@ protected:
 	Wire * m_wire;
 };
 
-class Wire : public ItemBase
+class Wire : public ItemBase, public CursorKeyListener
 {
 Q_OBJECT
 
@@ -169,6 +170,7 @@ public:
 	QPolygonF sceneCurve(QPointF offset);
 	bool hasShadow();
 	bool canChainMultiple();
+	void cursorKeyEvent(Qt::KeyboardModifiers modifiers);
 
 protected slots:
 	void colorEntry(const QString & text);
@@ -220,7 +222,6 @@ protected:
 	QPainterPath shapeAux(double width) const;
 	void hoverLeaveEvent( QGraphicsSceneHoverEvent * event );
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
-	bool eventFilter(QObject * object, QEvent * event);
 	void updateCursor(Qt::KeyboardModifiers);
 
 protected:

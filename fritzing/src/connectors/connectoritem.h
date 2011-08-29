@@ -29,13 +29,14 @@ $Date$
 
 #include "nonconnectoritem.h"
 #include "connector.h"
+#include "../utils/cursormaster.h"
 
 #include <QThread>
 #include <QGraphicsLineItem>
 
 class LegItem;
 
-class ConnectorItem : public NonConnectorItem
+class ConnectorItem : public NonConnectorItem, public CursorKeyListener
 {
 Q_OBJECT
 
@@ -137,6 +138,7 @@ public:
 	void moveLegBendpoint(int index, QPointF);
 	const QVector<class Bezier *> & beziers();
 	bool isBendpoint();
+	void cursorKeyEvent(Qt::KeyboardModifiers modifiers);
 
 protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
@@ -185,7 +187,6 @@ protected:
 	void paintLeg(QPainter * painter);
 	void paintLeg(QPainter * painter, bool hasCurves);
 	void replaceBezier(int index, const Bezier * newBezier);
-	bool eventFilter(QObject * object, QEvent * event);
 	void updateLegCursor(QPointF p, Qt::KeyboardModifiers modifiers);
 	void updateWireCursor(Qt::KeyboardModifiers modifiers);
 	bool curvyWiresIndicated(Qt::KeyboardModifiers);
