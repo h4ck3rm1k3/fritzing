@@ -116,6 +116,7 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	m_partTitle = NULL;
 	m_partUrl = NULL;
 	m_partVersion = NULL;
+	m_lockCheckbox = NULL;
 	m_connDescr = NULL;
 	m_tagsTextLabel = NULL;
 	m_lastSwappingEnabled = false;
@@ -133,6 +134,7 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 
 	m_titleEdit = new FLineEdit(mainFrame);
 	m_titleEdit->setObjectName("instanceTitleEditor");
+	m_titleEdit->setToolTip(tr("Change the part label here"));
 
 	connect(m_titleEdit, SIGNAL(editingFinished()), this, SLOT(setInstanceTitle()));
 	connect(m_titleEdit, SIGNAL(mouseEnter()), this, SLOT(instanceTitleEnter()));
@@ -156,12 +158,29 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	hboxLayout->setContentsMargins(0, 0, 0, 0);
 	hboxLayout->addSpacing(IconSpace);
 	m_icon1 = addLabel(hboxLayout, NoIcon);
+	m_icon1->setToolTip(tr("Part breadboard view image"));
 	m_icon2 = addLabel(hboxLayout, NoIcon);
+	m_icon2->setToolTip(tr("Part schematic view image"));
 	m_icon3 = addLabel(hboxLayout, NoIcon);
+	m_icon3->setToolTip(tr("Part pcb view image"));
 
+	QVBoxLayout * versionLayout = new QVBoxLayout();
+
+	QHBoxLayout * subVersionLayout = new QHBoxLayout();
 	m_partVersion = new QLabel();
 	m_partVersion->setObjectName("infoViewPartTitle");
-	hboxLayout->addWidget(m_partVersion);
+	m_partVersion->setToolTip(tr("Part version number"));
+	subVersionLayout->addWidget(m_partVersion, 0, Qt::AlignLeft);
+	subVersionLayout->addStretch(1);
+	versionLayout->addLayout(subVersionLayout);
+	
+	m_lockCheckbox = new QCheckBox(tr("Locked"));
+	m_lockCheckbox->setObjectName("infoViewLockCheckbox");
+	m_lockCheckbox->setToolTip(tr("Change the locked state of the part in this view.  A locked part can't be moved"));
+	connect(m_lockCheckbox, SIGNAL(clicked(bool)), this, SLOT(changeLock(bool)));
+	versionLayout->addWidget(m_lockCheckbox);
+
+	hboxLayout->addLayout(versionLayout);
 	
 	hboxLayout->addSpacerItem(new QSpacerItem(IconSpace, 1, QSizePolicy::Expanding));
 	iconFrame->setLayout(hboxLayout);
@@ -364,6 +383,7 @@ void HtmlInfoView::appendWireStuff(Wire* wire, bool swappingEnabled) {
 		 nameString = modelPart->description();
 	}
 	partTitle(nameString, modelPart->version(), modelPart->url());
+	m_lockCheckbox->setVisible(false);
 
 	setUpTitle(wire);
 	setUpIcons(wire->modelPart());
@@ -395,6 +415,8 @@ void HtmlInfoView::appendItemStuff(ItemBase * itemBase, ModelPart * modelPart, b
 		nameString = modelPart->description();
 	}
 	partTitle(nameString, modelPart->version(), modelPart->url());
+	m_lockCheckbox->setVisible(true);
+	m_lockCheckbox->setChecked(itemBase->moveLock());
 
 	displayProps(modelPart, itemBase, swappingEnabled);
 	addTags(modelPart);
@@ -466,6 +488,7 @@ void HtmlInfoView::setNullContent()
 {
 	setUpTitle(NULL);
 	partTitle("", "", "");
+	m_lockCheckbox->setVisible(false);
 	setUpIcons(NULL);
 	displayProps(NULL, NULL, false);
 	addTags(NULL);
@@ -881,4 +904,12 @@ QHash<QString, QString> HtmlInfoView::getPartProperties(ModelPart * modelPart, I
 	}
 
 	return properties;
+}
+
+void HtmlInfoView::changeLock(bool lockState)
+{
+	if (m_currentItem == NULL) return;
+	if (m_currentItem->itemType() == ModelPart::Wire) return;
+
+	m_currentItem->setMoveLock(lockState);
 }

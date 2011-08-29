@@ -1593,15 +1593,14 @@ void ConnectorItem::paint(QPainter * painter, const QStyleOptionGraphicsItem * o
 		return;
 	}
 
-	if (!m_checkedEffectively) {
+	if (m_effectively == EffectivelyUnknown) {
 		if (!m_circular && m_shape.isEmpty()) {
 			if (this->attachedTo()->viewIdentifier() == ViewIdentifierClass::PCBView) {
 				QRectF r = rect();
-				m_effectivelyCircular = qAbs(r.width() - r.height()) < 0.01;
-				m_effectivelyRectangular = !m_effectivelyCircular;
+				if (qAbs(r.width() - r.height()) < 0.01) m_effectively = EffectivelyCircular;
+				else m_effectively = EffectivelyRectangular;
 			}
 		}
-		m_checkedEffectively = true;
 	}
 
 	NonConnectorItem::paint(painter, option, widget);
@@ -1857,7 +1856,7 @@ double ConnectorItem::calcClipRadius() {
 		return radius() - (strokeWidth() / 2.0);
 	}
 
-	if (m_effectivelyCircular) {
+	if (m_effectively == EffectivelyCircular) {
 		double rad = rect().width() / 2;
 		return rad - (rad / 5);
 	}
@@ -1866,7 +1865,7 @@ double ConnectorItem::calcClipRadius() {
 }
 
 bool ConnectorItem::isEffectivelyCircular() {
-	return m_circular || m_effectivelyCircular;
+	return m_circular || m_effectively == EffectivelyCircular;
 }
 
 void ConnectorItem::debugInfo(const QString & msg) 

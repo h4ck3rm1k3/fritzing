@@ -42,8 +42,8 @@ static const double EffectiveAdjustmentFactor = 5.0 / 15.0;
 
 NonConnectorItem::NonConnectorItem(ItemBase * attachedTo) : QGraphicsRectItem(attachedTo)
 {
+	m_effectively = EffectivelyUnknown;
 	m_radius = m_strokeWidth = 0;
-	m_effectivelyCircular = m_effectivelyRectangular = m_circular = false;
 	m_inactive = m_hidden = false;
 	m_attachedTo = attachedTo;
     setAcceptHoverEvents(false);
@@ -112,14 +112,14 @@ void NonConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem
 		painter->setPen(pen());
 		painter->drawPath(m_shape);
 	}
-	else if (m_effectivelyCircular) {
+	else if (m_effectively == EffectivelyCircular) {
 		painter->setBrush(brush());  
 		painter->setPen(pen());
 		QRectF r = rect();
 		double delta = r.width() * EffectiveAdjustmentFactor;
 		painter->drawEllipse(r.adjusted(delta, delta, -delta, -delta));
 	}
-	else if (m_effectivelyRectangular) {
+	else if (m_effectively == EffectivelyRectangular) {
 		painter->setBrush(brush());  
 		painter->setPen(pen());
 		QRectF r = rect();
@@ -185,7 +185,7 @@ double NonConnectorItem::strokeWidth() {
 
 QPainterPath NonConnectorItem::shape() const
 {
-	if (m_circular || m_effectivelyCircular) {
+	if (m_circular || m_effectively == EffectivelyCircular) {
 		QPainterPath path;
 		path.addEllipse(rect());
 		return GraphicsUtils::shapeFromPath(path, pen(), pen().widthF(), true);

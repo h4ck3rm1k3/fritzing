@@ -38,6 +38,7 @@ $Date$
 #include <QGridLayout>
 #include <QVBoxLayout>
 #include <QComboBox>
+#include <QCheckBox>
 
 #include "../items/itembase.h"
 #include "../items/wire.h"
@@ -100,6 +101,7 @@ protected slots:
 	void instanceTitleEnter();
 	void instanceTitleLeave();
 	void instanceTitleEditable(bool editable);
+	void changeLock(bool);
 
 protected:
 	void appendStuff(ItemBase* item, bool swappingEnabled); //finds out if it's a wire or something else
@@ -144,9 +146,10 @@ protected:
 	QLabel * m_connLabel;
 	QFrame * m_connFrame;
 	QFrame * m_propFrame;
+	QCheckBox * m_lockCheckbox;
 	QGridLayout * m_propLayout;
 	QList <PropThing *> m_propThings;
-        QPointer<class InfoGraphicsView> m_pendingInfoGraphicsView;
+    QPointer<class InfoGraphicsView> m_pendingInfoGraphicsView;
 	QPointer<ItemBase> m_pendingItemBase;
 	bool m_pendingSwappingEnabled;
 

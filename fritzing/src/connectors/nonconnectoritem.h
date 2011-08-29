@@ -63,6 +63,13 @@ public:
 protected:
 	bool doNotPaint();
 
+	enum Effectively {
+		EffectivelyCircular = 1,
+		EffectivelyRectangular,
+		EffectivelyPolygonal,
+		EffectivelyUnknown
+	};
+
 protected:
 	QPointer<ItemBase> m_attachedTo;
 	bool m_hidden;
@@ -70,8 +77,7 @@ protected:
 	bool m_paint;
 	double m_opacity;
 	bool m_circular;
-	bool m_effectivelyCircular;
-	bool m_effectivelyRectangular;
+	Effectively m_effectively;
 	double m_radius;
 	double m_strokeWidth;
 	double m_negativePenWidth;
