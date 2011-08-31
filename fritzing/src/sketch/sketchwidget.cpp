@@ -302,7 +302,9 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 
 				// use the modelIndex from mp, not from the newly created item, because we're mapping from the modelIndex in the xml file
 				newItems.insert(mp->modelIndex(), itemBase);
-				itemBase->restorePartLabel(labelGeometry, getLabelViewLayerID(itemBase->viewLayerSpec()));
+				if (itemBase->itemType() != ModelPart::Wire) {
+					itemBase->restorePartLabel(labelGeometry, getLabelViewLayerID(itemBase->viewLayerSpec()));
+				}
 			}
 		}
 		else {
@@ -691,7 +693,7 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, ViewLayer::ViewLayerS
 
 		addToScene(wire, wire->viewLayerID());
 		wire->addedToScene(temporary);
-		wire->debugInfo("add wire");
+		//wire->debugInfo("add wire");
 
 		return wire;
 	}
@@ -706,7 +708,7 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, ViewLayer::ViewLayerS
 
 	bool ok;
 	addPartItem(modelPart, viewLayerSpec, (PaletteItem *) newItem, doConnectors, ok, viewIdentifier, temporary);
-	newItem->debugInfo("add part");
+	//newItem->debugInfo("add part");
 	setNewPartVisible(newItem);
 	newItem->updateConnectors();
 	return newItem;
@@ -6385,7 +6387,19 @@ void SketchWidget::resizeNote(long itemID, const QSizeF & size)
 }
 
 QString SketchWidget::renderToSVG(double printerScale, const LayerList & partLayers, const LayerList & wireLayers, 
-								  bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, double dpi, 
+								  bool blackOnly, QSizeF & imageSize, ItemBase * board, double dpi, 
+								  bool selectedItems, bool flatten, bool fillHoles, bool & empty)
+{
+	QRectF offsetRect;
+	if (board) {
+		offsetRect = board->sceneBoundingRect();
+	}
+	return renderToSVG(printerScale, partLayers, wireLayers, blackOnly, imageSize, offsetRect, dpi, selectedItems, flatten, fillHoles, empty);
+}
+
+
+QString SketchWidget::renderToSVG(double printerScale, const LayerList & partLayers, const LayerList & wireLayers, 
+								  bool blackOnly, QSizeF & imageSize, QRectF & offsetRect, double dpi, 
 								  bool selectedItems, bool flatten, bool fillHoles, bool & empty)
 {
 
@@ -6423,7 +6437,7 @@ QString SketchWidget::renderToSVG(double printerScale, const LayerList & partLay
 		}
 	}
 
-	return renderToSVG(printerScale, partLayers, wireLayers, blackOnly, imageSize, offsetPart, dpi, flatten, fillHoles, itemBases, itemsBoundingRect, empty);
+	return renderToSVG(printerScale, partLayers, wireLayers, blackOnly, imageSize, offsetRect, dpi, flatten, fillHoles, itemBases, itemsBoundingRect, empty);
 }
 
 QString translateSVG(QString & svg, QPointF loc, double dpi, double printerScale) {
@@ -6439,9 +6453,8 @@ QString translateSVG(QString & svg, QPointF loc, double dpi, double printerScale
 }
 
 QString SketchWidget::renderToSVG(double printerScale, const LayerList & partLayers, const LayerList & wireLayers, 
-								  bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, double dpi, bool flatten,
-								  bool fillHoles,
-								  QList<ItemBase *> & itemBases, QRectF itemsBoundingRect,
+								  bool blackOnly, QSizeF & imageSize, QRectF & offsetRect, double dpi, bool flatten,
+								  bool fillHoles, QList<ItemBase *> & itemBases, QRectF itemsBoundingRect,
 								  bool & empty)
 {
 	Q_UNUSED(fillHoles);
@@ -6451,11 +6464,10 @@ QString SketchWidget::renderToSVG(double printerScale, const LayerList & partLay
 	double height = itemsBoundingRect.height();
 	QPointF offset = itemsBoundingRect.topLeft();
 
-	if (offsetPart) {
-		QRectF r = offsetPart->sceneBoundingRect();
-		offset = r.topLeft();
-		width = r.width();
-		height = r.height();
+	if (!offsetRect.isEmpty()) {
+		offset = offsetRect.topLeft();
+		width = offsetRect.width();
+		height = offsetRect.height();
 	}
 
 	imageSize.setWidth(width);

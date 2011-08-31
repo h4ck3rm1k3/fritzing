@@ -51,6 +51,10 @@ public:
 	int startup(bool firstRun);
 	int serviceStartup();
 	void finish();
+	void loadReferenceModel();
+	void registerFonts();
+	bool loadBin(QString binToOpen);
+	class MainWindow * loadWindows(int & loaded);
 
 public:
 	static bool spaceBarIsPressed();
@@ -84,13 +88,11 @@ protected:
 	void clearModels();
     void copyBin(const QString & source, const QString & dest);
     bool notify(QObject *receiver, QEvent *e);
-	class MainWindow * loadWindows(int & loaded);
-	void loadReferenceModel();
-	void registerFonts();
-	bool loadBin(QString binToOpen);
 	void runGedaService();
 	void runKicadFootprintService();
 	void runKicadSchematicService();
+	void runGerberService();
+	void runPanelizerService();
 	QList<class MainWindow *> recoverBackups();
 	QList<MainWindow *> loadLastOpenSketch();
 	void doLoadPrevious(MainWindow *);
@@ -100,6 +102,15 @@ protected:
 	void cleanupBackups();
 	QString makeRequestParamsString();
 	void updatePrefs(class PrefsDialog & prefsDialog);
+
+	enum ServiceType {
+		PanelizerService = 1,
+		GerberService,
+		GedaService,
+		KicadSchematicService,
+		KicadFootprintService,
+		NoService
+	};
 
 protected:
 	bool m_spaceBarIsPressed;
@@ -119,14 +130,11 @@ protected:
 	QStringList m_externalProcessArgs;
 	QString m_externalProcessName;
 	QString m_externalProcessPath;
-	bool m_runAsService;
-	bool m_gerberService;
-	bool m_gedaService;
-	bool m_kicadFootprintService;
-	bool m_kicadSchematicService;
+	ServiceType m_serviceType;
 	int m_progressIndex;
 	class FSplashScreen * m_splash;
 	QString m_outputFolder;
+	QString m_panelFilename;
 	QHash<QString, class QtLockedFile *> m_lockedFiles;
 
 public:

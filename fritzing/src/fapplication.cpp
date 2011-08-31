@@ -48,6 +48,7 @@ $Date$
 #include "partsbinpalette/searchlineedit.h"
 #include "utils/ratsnestcolors.h"
 #include "utils/cursormaster.h"
+#include "utils/textutils.h"
 #include "infoview/htmlinfoview.h"
 #include "svg/gedaelement2svg.h"
 #include "svg/kicadmodule2svg.h"
@@ -60,6 +61,7 @@ $Date$
 #include "lib/qtlockedfile/qtlockedfile.h"
 #include "lib/qtsysteminfo/QtSystemInfo.h"
 #include "processeventblocker.h"
+#include "autoroute/cmrouter/panelizer.h"
 
 // dependency injection :P
 #include "referencemodel/sqlitereferencemodel.h"
@@ -118,7 +120,7 @@ static const double LoadProgressEnd = 0.6;
 
 FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 {
-	MainWindow::RestartNeeded = RestartNeeded;
+	MainWindow::RestartNeeded = FApplication::RestartNeeded;
 	m_spaceBarIsPressed = false;
 	m_mousePressed = false;
 	m_referenceModel = NULL;
@@ -126,11 +128,7 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 	m_started = false;
 	m_updateDialog = NULL;
 	m_lastTopmostWindow = NULL;
-	m_runAsService = false;
-	m_gerberService = false;
-	m_gedaService = false;
-	m_kicadFootprintService = false;
-	m_kicadSchematicService = false;
+	m_serviceType = NoService;
 
 	m_arguments = arguments();
 }
@@ -140,6 +138,8 @@ bool FApplication::init() {
 	//foreach (QString argument, m_arguments) {
 		//DebugDialog::debug(QString("argument %1").arg(argument));
 	//}
+
+	m_serviceType = NoService;
 
 	QList<int> toRemove;
 	for (int i = 0; i < m_arguments.length(); i++) {
@@ -158,62 +158,60 @@ bool FApplication::init() {
 		{
 			FolderUtils::setApplicationPath(m_arguments[i + 1]);
 			// delete these so we don't try to process them as files later
-			toRemove << i;
-			toRemove << i + 1;
+			toRemove << i << i + 1;
 		}
 
 		if ((m_arguments[i].compare("-geda", Qt::CaseInsensitive) == 0) ||
 			(m_arguments[i].compare("--geda", Qt::CaseInsensitive) == 0)) {
-			m_runAsService = true;
-			m_gedaService = true;
+			m_serviceType = GedaService;
 			m_outputFolder = m_arguments[i + 1];
-			toRemove << i;
-			toRemove << i + 1;
+			toRemove << i << i + 1;
 		}
 
 		if ((m_arguments[i].compare("-kicad", Qt::CaseInsensitive) == 0) ||
 			(m_arguments[i].compare("--kicad", Qt::CaseInsensitive) == 0)) {
-			m_runAsService = true;
-			m_kicadFootprintService = true;
+			m_serviceType = KicadFootprintService;
 			m_outputFolder = m_arguments[i + 1];
-			toRemove << i;
-			toRemove << i + 1;
+			toRemove << i << i + 1;
 		}
 
 		if ((m_arguments[i].compare("-kicadschematic", Qt::CaseInsensitive) == 0) ||
 			(m_arguments[i].compare("--kicadschematic", Qt::CaseInsensitive) == 0)) {
-			m_runAsService = true;
-			m_kicadSchematicService = true;
+			m_serviceType = KicadSchematicService;
 			m_outputFolder = m_arguments[i + 1];
-			toRemove << i;
-			toRemove << i + 1;
+			toRemove << i << i + 1;
 		}
 
 		if ((m_arguments[i].compare("-g", Qt::CaseInsensitive) == 0) ||
 			(m_arguments[i].compare("-gerber", Qt::CaseInsensitive) == 0)||
 			(m_arguments[i].compare("--gerber", Qt::CaseInsensitive) == 0)) {
-			m_runAsService = true;
-			m_gerberService = true;
+			m_serviceType = GerberService;
 			m_outputFolder = m_arguments[i + 1];
-			toRemove << i;
+			toRemove << i << i + 1;
+		}
+
+		if ((m_arguments[i].compare("-p", Qt::CaseInsensitive) == 0) ||
+			(m_arguments[i].compare("-panel", Qt::CaseInsensitive) == 0)||
+			(m_arguments[i].compare("--panel", Qt::CaseInsensitive) == 0)) {
+			m_serviceType = PanelizerService;
+			m_panelFilename = m_arguments[i + 1];
+			m_outputFolder = ".";					// otherwise program will bail out
+			toRemove << i << i + 1;
 		}
 
 		if (m_arguments[i].compare("-ep", Qt::CaseInsensitive) == 0) {
 			m_externalProcessPath = m_arguments[i + 1];
-			toRemove << i;
-			toRemove << (i + 1);
+			toRemove << i << i + 1;
 		}
 
 		if (m_arguments[i].compare("-eparg", Qt::CaseInsensitive) == 0) {
 			m_externalProcessArgs << m_arguments[i + 1];
-			toRemove << i;
-			toRemove << (i + 1);
+			toRemove << i << i + 1;
 		}
 
 		if (m_arguments[i].compare("-epname", Qt::CaseInsensitive) == 0) {
 			m_externalProcessName = m_arguments[i + 1];
-			toRemove << i;
-			toRemove << (i + 1);
+			toRemove << i << i + 1;
 		}
 
 	}
@@ -239,7 +237,7 @@ bool FApplication::init() {
 
 	// tell app where to search for plugins (jpeg export and sql lite)
 	m_libPath = FolderUtils::getLibraryPath();
-	addLibraryPath(m_libPath);	
+	QApplication::addLibraryPath(m_libPath);	
 
 	/*QFile file("libpath.txt");
 	if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
@@ -395,7 +393,7 @@ bool FApplication::findTranslator(const QString & translationsPath) {
 
     bool loaded = m_translator.load(QString("fritzing_") + suffix, translationsPath);
 	if (loaded) {
-		this->installTranslator(&m_translator);
+		QApplication::installTranslator(&m_translator);
 	}
 
 	return loaded;
@@ -462,29 +460,42 @@ int FApplication::serviceStartup() {
 		return -1;
 	}
 
-	if (m_gedaService) {
-		runGedaService();
-		return 0;
-	}
-	else if (m_kicadFootprintService) {
-		runKicadFootprintService();
-		return 0;
-	}
-	else if (m_kicadSchematicService) {
-		runKicadSchematicService();
-		return 0;
-	}
+	switch (m_serviceType) {
+		case GedaService:
+			runGedaService();
+			return 0;
+	
+		case KicadFootprintService:
+			runKicadFootprintService();
+			return 0;
 
-	if (!m_gerberService) {
-		return 0;
-	}
+		case KicadSchematicService:
+			runKicadSchematicService();
+			return 0;
 
+		case GerberService:
+			runGerberService();
+			return 0;
+
+		case PanelizerService:
+			runPanelizerService();
+			return 0;
+
+		default:
+			DebugDialog::debug("unknown service");
+			return -1;
+	}
+}
+
+
+void FApplication::runGerberService()
+{
 	createUserDataStoreFolderStructure();
 
 	registerFonts();
 	loadReferenceModel();
 	if (!loadBin("")) {
-		return -1;
+		return;
 	}
 
 	QDir dir(m_outputFolder);
@@ -506,8 +517,6 @@ int FApplication::serviceStartup() {
 		mainWindow->setCloseSilently(true);
 		mainWindow->close();
 	}
-
-	return 0;
 }
 
 void FApplication::runGedaService() {
@@ -1077,7 +1086,7 @@ which is really not intended for hundreds of widgets.
 
     bool did_close = true;
     QWidget *w;
-    while((w = activeModalWidget()) && did_close) {
+    while((w = QApplication::activeModalWidget()) && did_close) {
         if(!w->isVisible())
             break;
         did_close = w->close();
@@ -1111,14 +1120,12 @@ which is really not intended for hundreds of widgets.
 }
 
 bool FApplication::runAsService() {
-	return ((FApplication *) qApp)->m_runAsService;
+	return ((FApplication *) qApp)->m_serviceType != NoService;
 }
 
 void FApplication::loadedPart(int loaded, int total) {
 	if (total == 0) return;
 	if (m_splash == NULL) return;
-
-
 
 	m_splash->showProgress(m_progressIndex, LoadProgressStart + ((LoadProgressEnd - LoadProgressStart) * loaded / (double) total));
 }
@@ -1348,3 +1355,10 @@ QString FApplication::makeRequestParamsString() {
 		.arg(siSystemVersion);
 	return string;
 }
+
+void FApplication::runPanelizerService()
+{
+	m_started = true;
+	Panelizer::panelize(this, m_panelFilename);
+}
+

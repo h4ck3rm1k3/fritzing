@@ -63,6 +63,7 @@ public:
 	static void releaseLockedFiles(const QString & folder, QHash<QString, class QtLockedFile *> & lockedFiles);
 	static void checkLockedFiles(const QString & prefix, QFileInfoList & backupList, QStringList & filters, QHash<QString, class QtLockedFile *> & lockedFiles, bool recurse);
 	static void cleanup();
+	static void collectFiles(const QDir & parent, QStringList & filters, QStringList & files);
 
 protected:
 	FolderUtils();

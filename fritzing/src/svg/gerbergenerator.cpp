@@ -69,16 +69,13 @@ void GerberGenerator::exportToGerber(const QString & filename, const QString & e
 		maskInvalidCount += doMask(maskLayerIDs, "Mask1", "_maskTop.gts", board, sketchWidget, filename, exportDir, displayMessageBoxes);
 	}
 
-    LayerList silkLayerIDs;
-    silkLayerIDs << ViewLayer::Silkscreen1  << ViewLayer::Silkscreen1Label;
+    LayerList silkLayerIDs = ViewLayer::silkLayers(ViewLayer::Top);
 	int silkInvalidCount = doSilk(silkLayerIDs, "Silk1", "_silkTop.gto", board, sketchWidget, filename, exportDir, displayMessageBoxes);
-    silkLayerIDs.clear();
-    silkLayerIDs << ViewLayer::Silkscreen0  << ViewLayer::Silkscreen0Label;
+    silkLayerIDs = ViewLayer::silkLayers(ViewLayer::Bottom);
 	silkInvalidCount += doSilk(silkLayerIDs, "Silk0", "_silkBottom.gbo", board, sketchWidget, filename, exportDir, displayMessageBoxes);
 
     // now do it for the outline/contour
-    LayerList outlineLayerIDs;
-    outlineLayerIDs << ViewLayer::Board;
+    LayerList outlineLayerIDs = ViewLayer::outlineLayers();
 	QSizeF imageSize;
 	bool empty;
 	QString svgOutline = sketchWidget->renderToSVG(FSvgRenderer::printerScale(), outlineLayerIDs, outlineLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, false, empty);
@@ -100,7 +97,7 @@ void GerberGenerator::exportToGerber(const QString & filename, const QString & e
         return;
     }
 
-    // create copper0 gerber from svg
+    // create outline gerber from svg
     SVG2gerber outlineGerber;
 	int outlineInvalidCount = outlineGerber.convert(svgOutline, sketchWidget->boardLayers() == 2, "contour", SVG2gerber::ForOutline, svgSize * GraphicsUtils::StandardFritzingDPI);
 	if (outlineInvalidCount > 0) {

@@ -2676,3 +2676,7 @@ void MainWindow::setCloseSilently(bool cs)
 {
 	m_closeSilently = cs;
 }
+
+PCBSketchWidget * MainWindow::pcbView() {
+	return m_pcbGraphicsView;
+}

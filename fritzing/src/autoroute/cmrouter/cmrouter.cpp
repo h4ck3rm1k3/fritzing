@@ -102,6 +102,7 @@ $Date$
 #include "../../fsvgrenderer.h"
 
 #include "tile.h"
+#include "tileutils.h"
 
 #include <qmath.h>
 #include <limits>
@@ -112,7 +113,6 @@ $Date$
 #include <QCryptographicHash>
 
 static const int MaximumProgress = 1000;
-static const int TILEFACTOR = 1000;
 static int TileStandardWireWidth = 0;
 static int TileHalfStandardWireWidth = 0;
 static double StandardWireWidth = 0;
@@ -188,35 +188,6 @@ static inline void infoTileRect(const QString & message, const TileRect & tileRe
 	);
 }
 
-inline int fasterRealToTile(double x) {
-        return qRound(x * TILEFACTOR);
-}
-
-void tileRotate90(TileRect & tileRect, TileRect & tileRect90)
-{
-	// x' = x*cos - y*sin
-	// y' = x*sin + y*cos
-	// where cos90 = 0 and sin90 = 1 (effectively clockwise)
-
-	// rotate top right corner of rect
-	tileRect90.xmini = -tileRect.ymaxi;
-	tileRect90.ymini = tileRect.xmini;
-
-	// swap width and height
-	tileRect90.xmaxi = tileRect90.xmini + (tileRect.ymaxi - tileRect.ymini);
-	tileRect90.ymaxi = tileRect90.ymini + (tileRect.xmaxi - tileRect.xmini);
-}
-
-void tileUnrotate90(TileRect & tileRect90, TileRect & tileRect)
-{
-	tileRect.xmini = tileRect90.ymini;
-	tileRect.ymaxi = -tileRect90.xmini;
-
-	// swap width and height
-	tileRect.xmaxi = tileRect.xmini + (tileRect90.ymaxi - tileRect90.ymini);
-	tileRect.ymini = tileRect.ymaxi - (tileRect90.xmaxi - tileRect90.xmini);
-}
-
 static inline int manhattan(TileRect & tr1, TileRect & tr2) {
 	int dx =  qAbs(tr1.xmaxi - tr2.xmaxi);
 	dx = qMin(qAbs(tr1.xmaxi - tr2.xmini), dx);
@@ -230,25 +201,6 @@ static inline int manhattan(TileRect & tr1, TileRect & tr2) {
 }
 
 static inline GridEntry * TiGetGridEntry(Tile * tile) { return dynamic_cast<GridEntry *>(TiGetClient(tile)); }
-
-void realsToTile(TileRect & tileRect, double l, double t, double r, double b) {
-        tileRect.xmini = fasterRealToTile(l);
-        tileRect.ymini = fasterRealToTile(t);
-        tileRect.xmaxi = fasterRealToTile(r);
-        tileRect.ymaxi = fasterRealToTile(b);
-}
-
-void qrectToTile(QRectF & rect, TileRect & tileRect) {
-	realsToTile(tileRect, rect.left(), rect.top(), rect.right(), rect.bottom());
-}
-
-inline double tileToReal(int x) {
-	return x / ((double) TILEFACTOR);
-}
-
-void tileRectToQRect(TileRect & tileRect, QRectF & rect) {
-	rect.setCoords(tileToReal(tileRect.xmini), tileToReal(tileRect.ymini), tileToReal(tileRect.xmaxi), tileToReal(tileRect.ymaxi));
-}
 
 void extendToBounds(TileRect & from, TileRect & to) {
 	// bail if it already extends to or past the bounds
@@ -513,8 +465,6 @@ CMRouter::CMRouter(PCBSketchWidget * sketchWidget) : Autorouter(sketchWidget)
 	m_unionPlane = m_union90Plane = NULL;
 	m_board = NULL;
 
-	m_matrix90.rotate(90);
-
 	if (sketchWidget->autorouteTypePCB()) {
 		m_board = sketchWidget->findBoard();
 	}
@@ -528,7 +478,9 @@ CMRouter::CMRouter(PCBSketchWidget * sketchWidget) : Autorouter(sketchWidget)
 		m_maxRect.adjust(-m_maxRect.width() / 2, -m_maxRect.height() / 2, m_maxRect.width() / 2, m_maxRect.height() / 2);
 	}
 
-	m_maxRect90 = m_matrix90.mapRect(m_maxRect);
+	QMatrix matrix90;
+	matrix90.rotate(90);
+	m_maxRect90 = matrix90.mapRect(m_maxRect);
 
 	qrectToTile(m_maxRect, m_tileMaxRect); 
 	qrectToTile(m_maxRect90, m_tileMaxRect90); 
@@ -4195,16 +4147,6 @@ void CMRouter::computeMD5(Ordering * ordering) {
 
 TileRect CMRouter::boardRect() {
 	return m_tileMaxRect;
-}
-
-int CMRouter::realToTile(double x) {
-	return qRound(x * TILEFACTOR);
-}
-
-void CMRouter::tileToQRect(Tile * tile, QRectF & rect) {
-	TileRect tileRect;
-	TiToRect(tile, &tileRect);
-	tileRectToQRect(tileRect, rect);
 }
 
 void CMRouter::getViaSize(int & tWidthNeeded, int & tHeightNeeded) {

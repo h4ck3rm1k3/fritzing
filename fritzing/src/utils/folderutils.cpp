@@ -511,6 +511,22 @@ bool FolderUtils::checkLockedFilesAux(const QDir & parent, QStringList & filters
 	return false;
 }
 
+void FolderUtils::collectFiles(const QDir & parent, QStringList & filters, QStringList & files)
+{
+	QFileInfoList fileInfoList = parent.entryInfoList(filters, QDir::Files | QDir::Hidden | QDir::NoSymLinks);
+	foreach (QFileInfo fileInfo, fileInfoList) {
+		files.append(fileInfo.absoluteFilePath());
+	}
+
+	QFileInfoList dirList = parent.entryInfoList(QDir::AllDirs | QDir::NoDotAndDotDot | QDir::Hidden | QDir::NoSymLinks);
+	foreach (QFileInfo dirInfo, dirList) {
+		QDir dir(dirInfo.filePath());
+		//DebugDialog::debug(QString("looking in backup dir %1").arg(dir.absolutePath()));
+
+		collectFiles(dir, filters, files);
+	}
+}
+
 void FolderUtils::checkLockedFiles(const QString & prefix, QFileInfoList & backupList, QStringList & filters, QHash<QString, class QtLockedFile *> & lockedFiles, bool recurse)
 {
 	QDir backupDir(FolderUtils::getUserDataStorePath(prefix));

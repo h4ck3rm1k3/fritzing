@@ -47,6 +47,8 @@ $Date$
 #include "../utils/graphutils.h"
 #include "../processeventblocker.h"
 #include "../autoroute/cmrouter/cmrouter.h"
+#include "../autoroute/cmrouter/tileutils.h"
+#include "../autoroute/cmrouter/panelizer.h"
 #include "../autoroute/autoroutersettingsdialog.h"
 #include "../svg/groundplanegenerator.h"
 
@@ -2154,39 +2156,6 @@ bool PCBSketchWidget::acceptsTrace(const ViewGeometry & viewGeometry) {
 	return !viewGeometry.getSchematicTrace();
 }
 
-struct BestPlace
-{
-	Tile * bestTile;
-	TileRect bestTileRect;
-	int width;
-	int height;
-};
-
-int placeBestFit(Tile * tile, UserData userData) {
-	if (TiGetType(tile) != Tile::SPACE) return 0;
-
-	BestPlace * bestPlace = (BestPlace *) userData;
-	TileRect tileRect;
-	TiToRect(tile, &tileRect);
-	if (tileRect.xmaxi - tileRect.xmini < bestPlace->width) return 0;
-	if (tileRect.ymaxi - tileRect.ymini < bestPlace->height) return 0;
-
-	if (bestPlace->bestTile == NULL) {
-		bestPlace->bestTile = tile;
-		bestPlace->bestTileRect = tileRect;
-		return 0;
-	}
-
-	double bestArea = ((double) (bestPlace->bestTileRect.xmaxi - bestPlace->bestTileRect.xmini)) * (bestPlace->bestTileRect.ymaxi - bestPlace->bestTileRect.ymini);
-	double area =  ((double) (tileRect.xmaxi - tileRect.xmini)) * (tileRect.ymaxi - tileRect.ymini);
-	if (area < bestArea) {
-		bestPlace->bestTile = tile;
-		bestPlace->bestTileRect = tileRect;
-	}
-
-	return 0;
-}
-
 ItemBase * PCBSketchWidget::placePartDroppedInOtherView(ModelPart * modelPart, ViewLayer::ViewLayerSpec viewLayerSpec, const ViewGeometry & viewGeometry, long id, SketchWidget * dropOrigin) 
 {
 	ItemBase * newItem = SketchWidget::placePartDroppedInOtherView(modelPart, viewLayerSpec, viewGeometry, id, dropOrigin);
@@ -2228,14 +2197,19 @@ ItemBase * PCBSketchWidget::placePartDroppedInOtherView(ModelPart * modelPart, V
 
 	TileRect tileBoardRect = router.boardRect();
 	BestPlace bestPlace;
+	bestPlace.rotate90 = false;
 	bestPlace.bestTile = NULL;
-	bestPlace.width = CMRouter::realToTile(newItem->boundingRect().width());
-	bestPlace.height = CMRouter::realToTile(newItem->boundingRect().height());
-	TiSrArea(NULL, plane, &tileBoardRect, placeBestFit, &bestPlace);
+	bestPlace.width = realToTile(newItem->boundingRect().width());
+	bestPlace.height = realToTile(newItem->boundingRect().height());
+	TiSrArea(NULL, plane, &tileBoardRect, Panelizer::placeBestFit, &bestPlace);
 	if (bestPlace.bestTile != NULL) {
 		QRectF r;
-		CMRouter::tileToQRect(bestPlace.bestTile, r);
+		tileToQRect(bestPlace.bestTile, r);
 		newItem->setPos(r.topLeft());
+		if (bestPlace.rotate90) {
+			newItem->rotate(90);
+			newItem->setPos(r.topLeft());
+		}
 		alignOneToGrid(newItem);
 	}
 	router.drcClean();

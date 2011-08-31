@@ -124,6 +124,7 @@ public:
 	QList<SketchWidget *> sketchWidgets();
 	void setCloseSilently(bool);
 	void exportToGerber(const QString & outputDir);
+	class PCBSketchWidget * pcbView();
 
 public:
 	static void initNames();
@@ -147,6 +148,7 @@ public slots:
 	void acceptAlienFiles();
 	void statusMessage(QString message, int timeout);
 	void warnSMD(const QString & moduleID);
+    void showPCBView();
 
 protected slots:
 	void load();
@@ -172,7 +174,6 @@ protected slots:
     void alignToGrid();
     void showBreadboardView();
     void showSchematicView();
-    void showPCBView();
 	void showPartsBinIconView();
 	void showPartsBinListView();
     void updateEditMenu();

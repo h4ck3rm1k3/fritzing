@@ -82,7 +82,7 @@ ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClas
 				traceWire->setSchematic(viewIdentifier == ViewIdentifierClass::SchematicView);
 				return traceWire;
 			}
-			return new Wire(modelPart, viewIdentifier, viewGeometry, id, wireMenu, true);
+			return new Wire(modelPart, viewIdentifier, viewGeometry, id, wireMenu, false);
 
 		}
 		case ModelPart::Note:

@@ -193,10 +193,6 @@ public:
 	TileRect boardRect();
 	void setKeepout(double);
 
-public:
-    static int realToTile(double);
-	static void tileToQRect(Tile * tile, QRectF & rect);
-
 public slots:
 	void setMaxCycles(int);
 
@@ -301,7 +297,6 @@ protected:
 	TileRect m_tileMaxRect;
 	QRectF m_maxRect90;
 	TileRect m_tileMaxRect90;
-	QMatrix m_matrix90;
 	TileRect m_overlappingTileRect;
 	QList<PathUnit *> m_pathUnits;
 	LayerList m_viewLayerIDs;
