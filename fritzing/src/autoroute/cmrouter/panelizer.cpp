@@ -336,7 +336,8 @@ void Panelizer::collectFiles(QDomElement & path, QHash<QString, QString> & fzzFi
 		}
 
 		QStringList filepaths;
-		FolderUtils::collectFiles(dir, QStringList("*" + FritzingBundleExtension), filepaths);
+                QStringList filters("*" + FritzingBundleExtension);
+                FolderUtils::collectFiles(dir, filters, filepaths);
 		foreach (QString filepath, filepaths) {
 			QFileInfo fileInfo(filepath);
 
