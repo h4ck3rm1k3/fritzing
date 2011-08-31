@@ -2680,3 +2680,8 @@ void MainWindow::setCloseSilently(bool cs)
 PCBSketchWidget * MainWindow::pcbView() {
 	return m_pcbGraphicsView;
 }
+
+void MainWindow::noBackup()
+{
+	m_autosaveTimer.stop();
+}

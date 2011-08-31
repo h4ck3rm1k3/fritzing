@@ -202,7 +202,7 @@ QString SqliteReferenceModel::retrieveModuleId(const Part *examplePart, const QS
 			if(query.next()) {
 				moduleId =  query.value(0).toString(); //grab the first
 			}
-			DebugDialog::debug("SQLITE: found: "+moduleId);
+			//DebugDialog::debug("SQLITE: found: "+moduleId);
 			query.clear();
 		} else {
 			moduleId = ___emptyString___;
@@ -480,7 +480,7 @@ qlonglong SqliteReferenceModel::partId(QString moduleID) {
 		if(query.next()) {
 			partId =  query.value(0).toULongLong(); //grab the first
 		}
-		DebugDialog::debug(QString("SQLITE: found: %1").arg(partId));
+		//DebugDialog::debug(QString("SQLITE: found: %1").arg(partId));
 		query.clear();
 	} else {
 		DebugDialog::debug(

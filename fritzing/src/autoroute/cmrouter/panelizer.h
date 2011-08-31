@@ -34,7 +34,20 @@ $Date$
 #include "../../items/itembase.h"
 #include "tile.h"
 
+
+struct PlanePair
+{
+	Plane * thePlane;
+	Plane * thePlane90;
+	TileRect tilePanelRect;
+	TileRect tilePanelRect90;
+	QStringList svgs;
+	QString svg;
+	int index;
+};
+
 struct PanelItem {
+	// per window
 	QString boardName;
 	QString path;
 	MainWindow * window;
@@ -42,14 +55,17 @@ struct PanelItem {
 	int maxOptional;
 	QSizeF boardSizeInches;
 	ItemBase * board;
+
+	// per instance
 	double x, y;
 	bool rotate90;
+	PlanePair * planePair;
 
 	PanelItem() {
 	}
 
 	PanelItem(PanelItem * from) {
-		this->boardName = from->boardName ;
+		this->boardName = from->boardName;
 		this->path = from->path;
 		this->window = from->window;
 		this->required = from->required;
@@ -66,14 +82,6 @@ struct BestPlace
 	int width;
 	int height;
 	bool rotate90;
-};
-
-struct PlanePair
-{
-	Plane * thePlane;
-	Plane * thePlane90;
-	TileRect tilePanelRect;
-	TileRect tilePanelRect90;
 };
 
 struct PanelParams
@@ -93,12 +101,15 @@ public:
 	static int placeBestFit(Tile * tile, UserData userData);
 
 protected:
-	static bool initPanelParams(QDomElement & root, PanelParams & panelParams);
-	static void makePlanePair(PanelParams &, PlanePair &);
+	static bool initPanelParams(QDomElement & root, PanelParams &);
+	static PlanePair * makePlanePair(PanelParams &);
 	static void collectFiles(QDomElement & path, QHash<QString, QString> & fzzFilePaths);
 	static bool checkBoards(QDomElement & board, QHash<QString, QString> & fzzFilePaths);
-	static bool openWindows(QDomElement & board, QHash<QString, QString> & fzzFilePaths, class FApplication *, const QString & outputFolder, QHash<QString, PanelItem *> & refPanelItems);
-	static void bestFit(QList<PanelItem *> insertPanelItems, PanelParams & panelParams, PlanePair & planePair, QString & svg);
+	static bool openWindows(QDomElement & board, QHash<QString, QString> & fzzFilePaths, class FApplication *, PanelParams &, QHash<QString, PanelItem *> & refPanelItems);
+	static void bestFit(QList<PanelItem *> & insertPanelItems, PanelParams &, QList<PlanePair *> &);
+	static bool bestFitOne(PanelItem * panelItem, PanelParams & panelParams, QList<PlanePair *> & planePairs, bool createNew);
+	static void addOptional(int optionalCount, QHash<QString, PanelItem *> & refPanelItems, QList<PanelItem *> & insertPanelItems, PanelParams &, QList<PlanePair *> &);
+
 };
 
 #endif

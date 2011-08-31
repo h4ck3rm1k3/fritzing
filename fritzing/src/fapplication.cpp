@@ -507,6 +507,7 @@ void FApplication::runGerberService()
 		QString filepath = dir.absoluteFilePath(filename);
 		int loaded = 0;
 		MainWindow * mainWindow = loadWindows(loaded);
+		mainWindow->noBackup();
 		m_started = true;
 
 		FolderUtils::setOpenSaveFolderAux(m_outputFolder);

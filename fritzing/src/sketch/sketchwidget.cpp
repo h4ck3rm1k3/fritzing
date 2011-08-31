@@ -1234,6 +1234,7 @@ void SketchWidget::flipItem(long id, Qt::Orientations orientation) {
 
 void SketchWidget::changeWire(long fromID, QLineF line, QPointF pos, bool updateConnections, bool updateRatsnest)
 {
+	/*
 	DebugDialog::debug(QString("change wire %1; %2,%3,%4,%5; %6,%7; %8")
 			.arg(fromID)
 			.arg(line.x1())
@@ -1243,6 +1244,8 @@ void SketchWidget::changeWire(long fromID, QLineF line, QPointF pos, bool update
 			.arg(pos.x())
 			.arg(pos.y())
 			.arg(updateConnections) );
+	*/
+
 	ItemBase * fromItem = findItem(fromID);
 	if (fromItem == NULL) return;
 
@@ -4079,32 +4082,48 @@ void SketchWidget::rotateX(double degrees, bool rubberBandLegEnabled)
 	rotatePartLabels(degrees, rotation, center, parentCommand);
 
 	foreach (ItemBase * itemBase, m_savedItems.values()) {
-		if (itemBase->itemType() != ModelPart::Wire) {
-			if (!itemBase->rotationAllowed()) continue;
-			if (qAbs(degrees) == 45 && !itemBase->rotation45Allowed()) continue;
+		switch (itemBase->itemType()) {
+			case ModelPart::Via:
+			case ModelPart::Hole:
+				{
+					QPointF p = itemBase->sceneBoundingRect().center();
+					QPointF d = p - center;
+					QPointF dt = rotation.map(d) + center;
+					ViewGeometry vg1 = itemBase->getViewGeometry();
+					ViewGeometry vg2(vg1);
+					vg2.setLoc(vg1.loc() + dt - p);
+					new MoveItemCommand(this, itemBase->id(), vg1, vg2, true, parentCommand);
+				}
+				break;
 
-			ViewGeometry vg1 = itemBase->getViewGeometry();
-			ViewGeometry vg2(vg1);
-			itemBase->calcRotation(rotation, center, vg2);
-			ConnectorPairHash connectorHash;
-			disconnectFromFemale(itemBase, m_savedItems, connectorHash, true, rubberBandLegEnabled, parentCommand);
-			new MoveItemCommand(this, itemBase->id(), vg1, vg1, true, parentCommand);
-			new RotateItemCommand(this, itemBase->id(), degrees, parentCommand);
-			new MoveItemCommand(this, itemBase->id(), vg2, vg2, true, parentCommand);
+			case ModelPart::Wire:
+				{
+					Wire * wire = qobject_cast<Wire *>(itemBase);
+					QPointF p0 = wire->connector0()->sceneAdjustedTerminalPoint(NULL);
+					QPointF d0 = p0 - center;
+					QPointF d0t = rotation.map(d0);
 
-		}
-		else {
-			Wire * wire = qobject_cast<Wire *>(itemBase);
-			QPointF p0 = wire->connector0()->sceneAdjustedTerminalPoint(NULL);
-			QPointF d0 = p0 - center;
-			QPointF d0t = rotation.map(d0);
+					QPointF p1 = wire->connector1()->sceneAdjustedTerminalPoint(NULL);
+					QPointF d1 = p1 - center;
+					QPointF d1t = rotation.map(d1);
 
-			QPointF p1 = wire->connector1()->sceneAdjustedTerminalPoint(NULL);
-			QPointF d1 = p1 - center;
-			QPointF d1t = rotation.map(d1);
+					ViewGeometry vg1 = itemBase->getViewGeometry();
+					new ChangeWireCommand(this, wire->id(), vg1.line(), QLineF(QPointF(0,0), d1t - d0t), vg1.loc(), d0t + center, true, true, parentCommand);
+				}
+				break;
 
-			ViewGeometry vg1 = itemBase->getViewGeometry();
-			new ChangeWireCommand(this, wire->id(), vg1.line(), QLineF(QPointF(0,0), d1t - d0t), vg1.loc(), d0t + center, true, true, parentCommand);
+			default:
+				{
+					ViewGeometry vg1 = itemBase->getViewGeometry();
+					ViewGeometry vg2(vg1);
+					itemBase->calcRotation(rotation, center, vg2);
+					ConnectorPairHash connectorHash;
+					disconnectFromFemale(itemBase, m_savedItems, connectorHash, true, rubberBandLegEnabled, parentCommand);
+					new MoveItemCommand(this, itemBase->id(), vg1, vg1, true, parentCommand);
+					new RotateItemCommand(this, itemBase->id(), degrees, parentCommand);
+					new MoveItemCommand(this, itemBase->id(), vg2, vg2, true, parentCommand);
+				}
+				break;
 		}
 	}
 

@@ -125,6 +125,7 @@ public:
 	void setCloseSilently(bool);
 	void exportToGerber(const QString & outputDir);
 	class PCBSketchWidget * pcbView();
+	void noBackup();
 
 public:
 	static void initNames();

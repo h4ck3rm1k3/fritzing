@@ -39,10 +39,19 @@ $Date$
 #include <QDomDocument>
 #include <QDomElement>
 #include <QDir>
+#include <qmath.h>
 
 bool areaGreaterThan(PanelItem * p1, PanelItem * p2)
 {
 	return p1->boardSizeInches.width() * p1->boardSizeInches.height() > p2->boardSizeInches.width() * p2->boardSizeInches.height();
+}
+
+bool rotateGreaterThan(PanelItem * p1, PanelItem * p2)
+{
+	Q_UNUSED(p2);
+	if (!p1->rotate90) return true;
+
+	return false;
 }
 
 void checkRotate(BestPlace * bestPlace, bool normalFit, bool rotateFit, int w, int h) {
@@ -64,6 +73,8 @@ void checkRotate(BestPlace * bestPlace, bool normalFit, bool rotateFit, int w, i
 	double b = qMax(b1, b2);
 	bestPlace->rotate90 = (a < b);
 }
+
+static int PlanePairIndex = 0;
 
 /////////////////////////////////////////////////////////////////////////////////
 
@@ -125,38 +136,39 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 
 	QHash<QString, PanelItem *> refPanelItems;
 	board = boards.firstChildElement("board");
-	if (!openWindows(board, fzzFilePaths, app, panelParams.outputFolder, refPanelItems)) return;
+	if (!openWindows(board, fzzFilePaths, app, panelParams, refPanelItems)) return;
 
-	// use the total area to initially allocate a set of PlanePairs
 	QList<PanelItem *> insertPanelItems;
+	int optionalCount = 0;
 	foreach (PanelItem * panelItem, refPanelItems.values()) {
 		for (int i = 0; i < panelItem->required; i++) {
 			PanelItem * copy = new PanelItem(panelItem);
 			insertPanelItems.append(copy);
 		}
+		optionalCount += panelItem->maxOptional;
 	}
 
-	PlanePair planePair;
-	makePlanePair(panelParams, planePair);
-
-	// this svg just for debugging
-	QString svg = TextUtils::makeSVGHeader(1, 1000, panelParams.panelWidth, panelParams.panelHeight);
+	QList<PlanePair *> planePairs;
+	planePairs << makePlanePair(panelParams);
 
 	qSort(insertPanelItems.begin(), insertPanelItems.end(), areaGreaterThan);
 
-	bestFit(insertPanelItems, panelParams, planePair, svg);
+	bestFit(insertPanelItems, panelParams, planePairs);
 
-	// deal with optional pool
+	addOptional(optionalCount, refPanelItems, insertPanelItems, panelParams, planePairs);
 
-	svg += "</svg>";
-
-	QFile outfile("panelizer.svg");
-	if (outfile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-		QTextStream out(&outfile);
-		out << svg;
-		outfile.close();
+	foreach (PlanePair * planePair, planePairs) {
+		QFile outfile(QString("%1.debug.%2.svg").arg(panelParams.prefix).arg(planePair->index));
+		if (outfile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+			QTextStream out(&outfile);
+			out << planePair->svg;
+			out << "</svg>";
+			outfile.close();
+		}
 	}
 
+	// so we only have to rotate once
+	qSort(insertPanelItems.begin(), insertPanelItems.end(), rotateGreaterThan);
 
 	QList<LayerList> layerList;
 	layerList << ViewLayer::silkLayers(ViewLayer::Top)
@@ -167,67 +179,91 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 		<< ViewLayer::maskLayers(ViewLayer::Bottom)
 		<< ViewLayer::outlineLayers();
 
-	QStringList svgs;
-	for (int i = 0; i < layerList.count(); i++) {
-		svgs << TextUtils::makeSVGHeader(1, 1000, panelParams.panelWidth, panelParams.panelHeight);
+	QHash<QString, bool> rotated;
+	foreach(PanelItem * panelItem, refPanelItems.values()) {
+		rotated.insert(panelItem->path, false);
 	}
 
-	foreach (PanelItem * panelItem, insertPanelItems) {
-		QRectF offsetRect;
-		
-		if (panelItem->rotate90) {
-			panelItem->window->pcbView()->scene()->clearSelection();
-			panelItem->board->setSelected(true);
-			panelItem->window->pcbView()->rotateX(90, false);
+	foreach (PlanePair * planePair, planePairs) {
+		for (int i = 0; i < layerList.count(); i++) {
+			planePair->svgs << TextUtils::makeSVGHeader(1, 1000, panelParams.panelWidth, panelParams.panelHeight);
 		}
 
-		offsetRect = panelItem->board->sceneBoundingRect();
-		offsetRect.moveTo(offsetRect.left() - (panelItem->x * FSvgRenderer::printerScale()), offsetRect.top() - (panelItem->y * FSvgRenderer::printerScale()));
+		foreach (PanelItem * panelItem, insertPanelItems) {
+			if (panelItem->planePair != planePair) continue;
 
-		QSizeF imageSize;
-		bool empty;
+			QRectF offsetRect;
+			if (panelItem->rotate90 && !rotated.value(panelItem->path)) {
+				// rotate only once, subsequent instances will not need further rotations
+				rotated.insert(panelItem->path, true);
+				panelItem->window->pcbView()->selectAllItems(true, false);
+				panelItem->window->pcbView()->rotateX(90, false);
+			}
 
-		for (int i = 0; i < svgs.count(); i++) {
-			QString one = panelItem->window->pcbView()->renderToSVG(FSvgRenderer::printerScale(), layerList.at(i), layerList.at(i), true, imageSize, offsetRect, 1000, false, false, false, empty);
-			int left = one.indexOf("<svg");
-			left = one.indexOf(">", left + 1);
-			int right = one.lastIndexOf("<");
-			svgs.replace(i, svgs.at(i) + one.mid(left + 1, right - left - 1));
+			offsetRect = panelItem->board->sceneBoundingRect();
+			offsetRect.moveTo(offsetRect.left() - (panelItem->x * FSvgRenderer::printerScale()), offsetRect.top() - (panelItem->y * FSvgRenderer::printerScale()));
+
+			QSizeF imageSize;
+			bool empty;
+
+			for (int i = 0; i < planePair->svgs.count(); i++) {
+				QString one = panelItem->window->pcbView()->renderToSVG(FSvgRenderer::printerScale(), layerList.at(i), layerList.at(i), true, imageSize, offsetRect, 1000, false, false, false, empty);
+				int left = one.indexOf("<svg");
+				left = one.indexOf(">", left + 1);
+				int right = one.lastIndexOf("<");
+				planePair->svgs.replace(i, planePair->svgs.at(i) + one.mid(left + 1, right - left - 1));
+			}
+
 		}
 
-		if (panelItem->rotate90) {
-			panelItem->window->pcbView()->rotateX(-90, false);
+		for (int i = 0; i < planePair->svgs.count(); i++) {
+			QFile outfile(QString("%1.%2.%3.svg").arg(panelParams.prefix).arg(planePair->index).arg(i));
+			if (outfile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+				QTextStream out(&outfile);
+				out << planePair->svgs.at(i);
+				out << "</svg>";
+				outfile.close();
+			}
 		}
 
-	}
-
-	for (int i = 0; i < svgs.count(); i++) {
-		QFile outfile(QString("panelizer%1.svg").arg(i));
-		if (outfile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-			QTextStream out(&outfile);
-			out << svgs.at(i);
-			out << "</svg>";
-			outfile.close();
-		}
 	}
 }
 
-void Panelizer::bestFit(QList<PanelItem *> insertPanelItems, PanelParams & panelParams, PlanePair & planePair, QString & svg)
+void Panelizer::bestFit(QList<PanelItem *> & insertPanelItems, PanelParams & panelParams, QList<PlanePair *> & planePairs)
 {
 	foreach (PanelItem * panelItem, insertPanelItems) {
-		BestPlace bestPlace;
-		bestPlace.bestTile = NULL;
-		bestPlace.rotate90 = false;
-		bestPlace.width = realToTile(panelItem->boardSizeInches.width() + (panelParams.panelSpacing / 2));
-		bestPlace.height = realToTile(panelItem->boardSizeInches.height() + (panelParams.panelSpacing / 2));
-		TiSrArea(NULL, planePair.thePlane, &planePair.tilePanelRect, placeBestFit, &bestPlace);
-		if (bestPlace.bestTile == NULL) {
-			TiSrArea(NULL, planePair.thePlane90, &planePair.tilePanelRect90, placeBestFit, &bestPlace);
-			if (bestPlace.bestTile == NULL) {
-				DebugDialog::debug(QString("ran out of room placing %1").arg(panelItem->boardName));
-				svg += QString("<!-- unable to place %1 -->\n").arg(panelItem->boardName);
+		bestFitOne(panelItem, panelParams, planePairs, true);
+	}
+}
 
-				// TODO: check next plane
+bool Panelizer::bestFitOne(PanelItem * panelItem, PanelParams & panelParams, QList<PlanePair *> & planePairs, bool createNew)
+{
+	DebugDialog::debug(QString("panel %1").arg(panelItem->boardName));
+	BestPlace bestPlace;
+	bestPlace.bestTile = NULL;
+	bestPlace.rotate90 = false;
+	bestPlace.width = realToTile(panelItem->boardSizeInches.width() + (panelParams.panelSpacing / 2));
+	bestPlace.height = realToTile(panelItem->boardSizeInches.height() + (panelParams.panelSpacing / 2));
+	int ppix = 0;
+	while (ppix < planePairs.count()) {
+		PlanePair *  planePair = planePairs.at(ppix);
+		TiSrArea(NULL, planePair->thePlane, &planePair->tilePanelRect, placeBestFit, &bestPlace);
+		if (bestPlace.bestTile == NULL) {
+			TiSrArea(NULL, planePair->thePlane90, &planePair->tilePanelRect90, placeBestFit, &bestPlace);
+			if (bestPlace.bestTile == NULL) {
+				if (++ppix < planePairs.count()) {
+					// try next panel
+					continue;
+				}
+
+				if (!createNew) {
+					return false;
+				}
+
+				// create next panel
+				planePair = makePlanePair(panelParams);
+				planePairs << planePair;
+				DebugDialog::debug(QString("ran out of room placing %1").arg(panelItem->boardName));
 				continue;
 			}
 
@@ -240,6 +276,7 @@ void Panelizer::bestFit(QList<PanelItem *> insertPanelItems, PanelParams & panel
 		panelItem->x = tileToReal(bestPlace.bestTileRect.xmini);
 		panelItem->y = tileToReal(bestPlace.bestTileRect.ymini);
 		panelItem->rotate90 = bestPlace.rotate90;
+		panelItem->planePair = planePair;
 
 		TileRect tileRect;
 		tileRect.xmini = bestPlace.bestTileRect.xmini;
@@ -260,27 +297,37 @@ void Panelizer::bestFit(QList<PanelItem *> insertPanelItems, PanelParams & panel
 			h = panelItem->boardSizeInches.width();
 		}
 
-		svg += QString("<rect x='%1' y='%2' width='%3' height='%4' stroke='none' fill='red'/>\n")
+		planePair->svg += QString("<rect x='%1' y='%2' width='%3' height='%4' stroke='none' fill='red'/>\n")
 			.arg(panelItem->x * 1000)
 			.arg(panelItem->y * 1000)
 			.arg(1000 * w)
 			.arg(1000 * h);
-		svg += QString("<text x='%1' y='%2' anchor='middle' font-family='DroidSans' stroke='none' fill='#000000' text-anchor='middle' font-size='85'>%3</text>\n")
+		planePair->svg += QString("<text x='%1' y='%2' anchor='middle' font-family='DroidSans' stroke='none' fill='#000000' text-anchor='middle' font-size='85'>%3</text>\n")
 			.arg(1000 * (panelItem->x + (w / 2)))
 			.arg(1000 * (panelItem->y + (h  / 2)))
 			.arg(QFileInfo(panelItem->path).completeBaseName());
 
 
-		TiInsertTile(planePair.thePlane, &tileRect, NULL, Tile::OBSTACLE);
+		TiInsertTile(planePair->thePlane, &tileRect, NULL, Tile::OBSTACLE);
 		TileRect tileRect90;
 		tileRotate90(tileRect, tileRect90);
-		TiInsertTile(planePair.thePlane90, &tileRect90, NULL, Tile::OBSTACLE);
+		TiInsertTile(planePair->thePlane90, &tileRect90, NULL, Tile::OBSTACLE);
+
+		return true;
 	}
+
+	DebugDialog::debug("bestFitOne should never reach here");
+	return false;
 }
 
-
-void Panelizer::makePlanePair(PanelParams & panelParams, PlanePair & planePair)
+PlanePair * Panelizer::makePlanePair(PanelParams & panelParams)
 {
+	PlanePair * planePair = new PlanePair;
+
+	// for debugging
+	planePair->svg = TextUtils::makeSVGHeader(1, 1000, panelParams.panelWidth, panelParams.panelHeight);
+	planePair->index = PlanePairIndex++;
+
 	Tile * bufferTile = TiAlloc();
 	TiSetType(bufferTile, Tile::BUFFER);
 	TiSetBody(bufferTile, NULL);
@@ -291,13 +338,13 @@ void Panelizer::makePlanePair(PanelParams & panelParams, PlanePair & planePair)
     SETLEFT(bufferTile, fasterRealToTile(panelRect.left() - 10));
     SETYMIN(bufferTile, fasterRealToTile(panelRect.top() - 10));		
 
-	planePair.thePlane = TiNewPlane(bufferTile);
+	planePair->thePlane = TiNewPlane(bufferTile);
 
     SETRIGHT(bufferTile, fasterRealToTile(panelRect.right() + 10));
 	SETYMAX(bufferTile, fasterRealToTile(panelRect.bottom() + 10));		
 
-	qrectToTile(panelRect, planePair.tilePanelRect);
-	TiInsertTile(planePair.thePlane, &planePair.tilePanelRect, NULL, Tile::SPACE); 
+	qrectToTile(panelRect, planePair->tilePanelRect);
+	TiInsertTile(planePair->thePlane, &planePair->tilePanelRect, NULL, Tile::SPACE); 
 
 	QMatrix matrix90;
 	matrix90.rotate(90);
@@ -310,13 +357,15 @@ void Panelizer::makePlanePair(PanelParams & panelParams, PlanePair & planePair)
     SETLEFT(bufferTile90, fasterRealToTile(panelRect90.left() - 10));
     SETYMIN(bufferTile90, fasterRealToTile(panelRect90.top() - 10));		
 
-	planePair.thePlane90 = TiNewPlane(bufferTile90);
+	planePair->thePlane90 = TiNewPlane(bufferTile90);
 
     SETRIGHT(bufferTile90, fasterRealToTile(panelRect.right() + 10));
 	SETYMAX(bufferTile90, fasterRealToTile(panelRect.bottom() + 10));		
 
-	qrectToTile(panelRect90, planePair.tilePanelRect90);
-	TiInsertTile(planePair.thePlane90, &planePair.tilePanelRect90, NULL, Tile::SPACE); 
+	qrectToTile(panelRect90, planePair->tilePanelRect90);
+	TiInsertTile(planePair->thePlane90, &planePair->tilePanelRect90, NULL, Tile::SPACE); 
+
+	return planePair;
 }
 
 void Panelizer::collectFiles(QDomElement & path, QHash<QString, QString> & fzzFilePaths)
@@ -336,8 +385,8 @@ void Panelizer::collectFiles(QDomElement & path, QHash<QString, QString> & fzzFi
 		}
 
 		QStringList filepaths;
-                QStringList filters("*" + FritzingBundleExtension);
-                FolderUtils::collectFiles(dir, filters, filepaths);
+        QStringList filters("*" + FritzingBundleExtension);
+        FolderUtils::collectFiles(dir, filters, filepaths);
 		foreach (QString filepath, filepaths) {
 			QFileInfo fileInfo(filepath);
 
@@ -377,15 +426,16 @@ bool Panelizer::checkBoards(QDomElement & board, QHash<QString, QString> & fzzFi
 	return true;
 }
 
-bool Panelizer::openWindows(QDomElement & board, QHash<QString, QString> & fzzFilePaths, FApplication * app, const QString & outputFolder, QHash<QString, PanelItem *> & refPanelItems)
+bool Panelizer::openWindows(QDomElement & board, QHash<QString, QString> & fzzFilePaths, FApplication * app, PanelParams & panelParams, QHash<QString, PanelItem *> & refPanelItems)
 {
 	while (!board.isNull()) {
 		QString boardName = board.attribute("name");
 		QString path = fzzFilePaths.value(boardName, "");
 		int loaded = 0;
 		MainWindow * mainWindow = app->loadWindows(loaded);
+		mainWindow->noBackup();
 
-		FolderUtils::setOpenSaveFolderAux(outputFolder);
+		FolderUtils::setOpenSaveFolderAux(panelParams.outputFolder);
 		if (!mainWindow->loadWhich(path, false, false, true)) {
 			DebugDialog::debug(QString("failed to load '%1'").arg(path));
 			return false;
@@ -415,6 +465,29 @@ bool Panelizer::openWindows(QDomElement & board, QHash<QString, QString> & fzzFi
 		else {
 			panelItem->boardSizeInches = boardSize / FSvgRenderer::printerScale();
 		}
+
+		bool tooBig = false;
+		if (panelItem->boardSizeInches.width() >= panelParams.panelWidth) {
+			tooBig = panelItem->boardSizeInches.width() >= panelParams.panelHeight;
+			if (!tooBig) {
+				tooBig = panelItem->boardSizeInches.height() >= panelParams.panelWidth;
+			}
+		}
+
+		if (!tooBig) {
+			if (panelItem->boardSizeInches.height() >= panelParams.panelHeight) {
+				tooBig = panelItem->boardSizeInches.height() >= panelParams.panelWidth;
+				if (!tooBig) {
+					tooBig = panelItem->boardSizeInches.width() >= panelParams.panelHeight;
+				}
+			}
+		}
+
+		if (tooBig) {
+			DebugDialog::debug(QString("board is too big for panel '%1'").arg(path));
+			return false;
+		}
+
 
 		refPanelItems.insert(boardName, panelItem);
 		mainWindow->setCloseSilently(true);
@@ -506,3 +579,31 @@ int Panelizer::placeBestFit(Tile * tile, UserData userData) {
 	return 0;
 }
 
+void Panelizer::addOptional(int optionalCount, QHash<QString, PanelItem *> & refPanelItems, QList<PanelItem *> & insertPanelItems, PanelParams & panelParams, QList<PlanePair *> & planePairs)
+{
+	while (optionalCount > 0) {
+		int ix = qFloor(qrand() * optionalCount / (double) RAND_MAX);
+		int soFar = 0;
+		foreach (PanelItem * panelItem, refPanelItems.values()) {
+			if (panelItem->maxOptional == 0) continue;
+
+			if (ix >= soFar && ix < soFar + panelItem->maxOptional) {
+				PanelItem * copy = new PanelItem(panelItem);
+				if (bestFitOne(copy, panelParams, planePairs, false)) {
+					// got one
+					panelItem->maxOptional--;
+					optionalCount--;
+					insertPanelItems.append(copy);
+				}
+				else {
+					// don't bother trying this one again
+					optionalCount -= panelItem->maxOptional;
+					panelItem->maxOptional = 0;
+				}
+				break;
+			}
+
+			soFar += panelItem->maxOptional;
+		}
+	}
+}
