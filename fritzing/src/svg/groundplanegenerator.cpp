@@ -230,7 +230,7 @@ bool GroundPlaneGenerator::generateGroundPlaneUnit(const QString & boardSvg, QSi
 
 	//image->save("testPoly3.png");
 
-	scanImage(*image, bWidth, bHeight, MILS, res, color, layerName, true, 8, true, QSizeF(.05, .05), 1 / FSvgRenderer::printerScale());
+	scanImage(*image, bWidth, bHeight, MILS, res, color, layerName, true, 8, true, QSizeF(.05, .05), 1 / FSvgRenderer::printerScale(), QPointF(0,0));
 	delete image;
 	return true;
 }
@@ -244,7 +244,7 @@ bool GroundPlaneGenerator::generateGroundPlane(const QString & boardSvg, QSizeF 
 	QImage * image = generateGroundPlaneAux(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board, res, bWidth, bHeight);
 	if (image == NULL) return false;
 
-	scanImage(*image, bWidth, bHeight, MILS, res, color, layerName, true, 8, true, QSizeF(.05, .05), 1 / FSvgRenderer::printerScale());
+	scanImage(*image, bWidth, bHeight, MILS, res, color, layerName, true, 8, true, QSizeF(.05, .05), 1 / FSvgRenderer::printerScale(), QPointF(0,0));
 	delete image;
 	return true;
 }
@@ -329,7 +329,7 @@ QImage * GroundPlaneGenerator::generateGroundPlaneAux(const QString & boardSvg, 
 
 void GroundPlaneGenerator::scanImage(QImage & image, double bWidth, double bHeight, double pixelFactor, double res, 
 									 const QString & colorString, const QString & layerName, bool makeConnector, 
-									 int minRunSize, bool makeOffset, QSizeF minAreaInches, double minDimensionInches)  
+									 int minRunSize, bool makeOffset, QSizeF minAreaInches, double minDimensionInches, QPointF polygonOffset)  
 {
 	QList<QRect> rects;
 	scanLines(image, bWidth, bHeight, rects, THRESHOLD, minRunSize);
@@ -346,7 +346,7 @@ void GroundPlaneGenerator::scanImage(QImage & image, double bWidth, double bHeig
 		// note: there is always one
 		joinScanLines(newRects, polygons);
 		QPointF offset;
-		QString pSvg = makePolySvg(polygons, res, bWidth, bHeight, pixelFactor, colorString, layerName, makeConnector, makeOffset ? &offset : NULL, minAreaInches, minDimensionInches);
+		QString pSvg = makePolySvg(polygons, res, bWidth, bHeight, pixelFactor, colorString, layerName, makeConnector, makeOffset ? &offset : NULL, minAreaInches, minDimensionInches, polygonOffset);
 		if (pSvg.isEmpty()) continue;
 
 		m_newSVGs.append(pSvg);
@@ -665,7 +665,7 @@ void GroundPlaneGenerator::joinScanLines(QList<QRect> & rects, QList<QPolygon> &
 
 QString GroundPlaneGenerator::makePolySvg(QList<QPolygon> & polygons, double res, double bWidth, double bHeight, double pixelFactor, 
 										const QString & colorString, const QString & layerName, bool makeConnectorFlag, QPointF * offset, 
-										QSizeF minAreaInches, double minDimensionInches) 
+										QSizeF minAreaInches, double minDimensionInches, QPointF polygonOffset) 
 {
 	int minX = 0;
 	int minY = 0;
@@ -703,7 +703,11 @@ QString GroundPlaneGenerator::makePolySvg(QList<QPolygon> & polygons, double res
 		.arg(bHeight / res)
 		.arg(bWidth * pixelFactor)
 		.arg(bHeight * pixelFactor);
-	pSvg += QString("<g id='%1'>\n").arg(layerName);
+	QString transform;
+	if (polygonOffset.x() != 0 || polygonOffset.y() != 0) {
+		transform = QString("transform='translate(%1, %2)'").arg(polygonOffset.x()).arg(polygonOffset.y());
+	}
+	pSvg += QString("<g id='%1' %2>\n").arg(layerName).arg(transform);
 	if (makeConnectorFlag) {
 		makeConnector(polygons, res, pixelFactor, colorString, minX, minY, pSvg);
 	}
@@ -943,7 +947,7 @@ void GroundPlaneGenerator::scanOutline(QImage & image, double bWidth, double bHe
 	QList<QPolygon> polygons;
 	polygons.append(polygon);
 	QPointF offset;
-	QString pSvg = makePolySvg(polygons, res, bWidth, bHeight, pixelFactor, colorString, layerName, makeConnector, makeOffset ? &offset : NULL, minAreaInches, minDimensionInches);
+	QString pSvg = makePolySvg(polygons, res, bWidth, bHeight, pixelFactor, colorString, layerName, makeConnector, makeOffset ? &offset : NULL, minAreaInches, minDimensionInches, QPointF(0, 0));
 	if (!pSvg.isEmpty()) {
 		m_newSVGs.append(pSvg);
 		if (makeOffset) {

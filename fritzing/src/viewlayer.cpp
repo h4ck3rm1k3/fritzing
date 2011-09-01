@@ -304,6 +304,15 @@ const LayerList & ViewLayer::outlineLayers() {
 	return layerList;
 }
 
+const LayerList & ViewLayer::drillLayers() {
+	static LayerList layerList;
+	if (layerList.isEmpty()) {
+		layerList << ViewLayer::Copper0;
+	}
+	
+	return layerList;
+}
+
 bool ViewLayer::isNonCopperLayer(ViewLayer::ViewLayerID viewLayerID) {
 	// for pcb view layers only
 	return NonCopperLayers.contains(viewLayerID);

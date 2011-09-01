@@ -37,6 +37,18 @@ class GerberGenerator
 
 public:
 	static void exportToGerber(const QString & filename, const QString & exportDir, class ItemBase * board, class PCBSketchWidget *, bool displayMessageBoxes);
+	static QString clipToBoard(QString svgString, QRectF & boardRect, const QString & layerName, SVG2gerber::ForWhy);
+	static int doEnd(const QString & svg, int boardLayers, const QString & layerName, SVG2gerber::ForWhy forWhy, QSizeF svgSize, 
+						const QString & exportDir, const QString & prefix, const QString & suffix, bool displayMessageBoxes);
+
+public:
+	static const QString SilkTopSuffix;
+	static const QString SilkBottomSuffix;
+	static const QString CopperTopSuffix;
+	static const QString CopperBottomSuffix;
+	static const QString MaskTopSuffix;
+	static const QString MaskBottomSuffix;
+	static const QString DrillSuffix;
 
 protected:
 	static int doSilk(LayerList silkLayerIDs, const QString & silkName, const QString & gerberSuffix, ItemBase * board, PCBSketchWidget * sketchWidget, const QString & filename, const QString & exportDir, bool displayMessageBoxes);

@@ -485,7 +485,7 @@ void LogoItem::loadImage(const QString & fileName, bool addName)
 
 		GroundPlaneGenerator gpg;
 		double res = image.dotsPerMeterX() / GraphicsUtils::InchesPerMeter;
-		gpg.scanImage(image, image.width(), image.height(), 1, res, colorString(), layerName(), false, 1, false, QSizeF(0, 0), 0);
+		gpg.scanImage(image, image.width(), image.height(), 1, res, colorString(), layerName(), false, 1, false, QSizeF(0, 0), 0, QPointF(0, 0));
 		QStringList newSvgs = gpg.newSVGs();
 		if (newSvgs.count() < 1) {
 			QMessageBox::information(

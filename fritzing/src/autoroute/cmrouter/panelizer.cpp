@@ -33,6 +33,7 @@ $Date$
 #include "../../items/resizableboard.h"
 #include "../../fsvgrenderer.h"
 #include "../../fapplication.h"
+#include "../../svg/gerbergenerator.h"
 #include "tileutils.h"
 
 #include <QFile>
@@ -40,6 +41,7 @@ $Date$
 #include <QDomElement>
 #include <QDir>
 #include <qmath.h>
+#include <limits>
 
 bool areaGreaterThan(PanelItem * p1, PanelItem * p2)
 {
@@ -54,24 +56,15 @@ bool rotateGreaterThan(PanelItem * p1, PanelItem * p2)
 	return false;
 }
 
-void checkRotate(BestPlace * bestPlace, bool normalFit, bool rotateFit, int w, int h) {
-	if (!normalFit) {
-		bestPlace->rotate90 = true;
-		return;
-	}
-	
-	if (!rotateFit) {
-		bestPlace->rotate90 = false;
-		return;
+int allSpaces(Tile * tile, UserData userData) {
+	QList<Tile*> * tiles = (QList<Tile*> *) userData;
+	if (TiGetType(tile) == Tile::SPACE) {
+		tiles->append(tile);
+		return 0;
 	}
 
-	double a1 = (w - bestPlace->width) * (bestPlace->height);
-	double a2 = (h - bestPlace->height) * w;
-	double a = qMax(a1, a2);
-	double b1 = (w - bestPlace->height) * (bestPlace->width);
-	double b2 = (h - bestPlace->width) * w;
-	double b = qMax(b1, b2);
-	bestPlace->rotate90 = (a < b);
+	tiles->clear();
+	return 1;			// stop the search
 }
 
 static int PlanePairIndex = 0;
@@ -158,7 +151,7 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 	addOptional(optionalCount, refPanelItems, insertPanelItems, panelParams, planePairs);
 
 	foreach (PlanePair * planePair, planePairs) {
-		QFile outfile(QString("%1.debug.%2.svg").arg(panelParams.prefix).arg(planePair->index));
+		QFile outfile(QString("%1.panel_%2.debug.svg").arg(panelParams.prefix).arg(planePair->index));
 		if (outfile.open(QIODevice::WriteOnly | QIODevice::Text)) {
 			QTextStream out(&outfile);
 			out << planePair->svg;
@@ -170,14 +163,30 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 	// so we only have to rotate once
 	qSort(insertPanelItems.begin(), insertPanelItems.end(), rotateGreaterThan);
 
-	QList<LayerList> layerList;
-	layerList << ViewLayer::silkLayers(ViewLayer::Top)
-		<< ViewLayer::silkLayers(ViewLayer::Bottom)
-		<< ViewLayer::copperLayers(ViewLayer::Top)
-		<< ViewLayer::copperLayers(ViewLayer::Bottom)
-		<< ViewLayer::maskLayers(ViewLayer::Top)
-		<< ViewLayer::maskLayers(ViewLayer::Bottom)
-		<< ViewLayer::outlineLayers();
+	struct LayerThing {
+		LayerList layerList;
+		QString name;
+		SVG2gerber::ForWhy forWhy;
+		QString suffix;
+
+		LayerThing(const QString & n, LayerList ll, SVG2gerber::ForWhy fw, const QString & s) {
+			layerList = ll;
+			name = n;
+			forWhy = fw;
+			suffix = s;
+		}
+
+	};
+
+	QList<LayerThing> layerThingList;
+	layerThingList.append(LayerThing("silk_top", ViewLayer::silkLayers(ViewLayer::Top), SVG2gerber::ForSilk, GerberGenerator::SilkTopSuffix));
+	layerThingList.append(LayerThing("silk_bottom", ViewLayer::silkLayers(ViewLayer::Bottom), SVG2gerber::ForSilk, GerberGenerator::SilkBottomSuffix));
+	layerThingList.append(LayerThing("copper_top", ViewLayer::copperLayers(ViewLayer::Top), SVG2gerber::ForCopper, GerberGenerator::CopperTopSuffix));
+	layerThingList.append(LayerThing("copper_bottom", ViewLayer::copperLayers(ViewLayer::Bottom), SVG2gerber::ForCopper, GerberGenerator::CopperBottomSuffix));
+	layerThingList.append(LayerThing("mask_top", ViewLayer::maskLayers(ViewLayer::Top), SVG2gerber::ForMask, GerberGenerator:: MaskTopSuffix));
+	layerThingList.append(LayerThing("mask_bottom", ViewLayer::maskLayers(ViewLayer::Bottom), SVG2gerber::ForMask, GerberGenerator::MaskBottomSuffix));
+	layerThingList.append(LayerThing("drill", ViewLayer::drillLayers(), SVG2gerber::ForDrill, GerberGenerator::DrillSuffix));
+	//layerThingList.append(LayerThing("outline", ViewLayer::outlineLayers(), SVG2gerber::ForOutline));
 
 	QHash<QString, bool> rotated;
 	foreach(PanelItem * panelItem, refPanelItems.values()) {
@@ -185,47 +194,69 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 	}
 
 	foreach (PlanePair * planePair, planePairs) {
-		for (int i = 0; i < layerList.count(); i++) {
+		for (int i = 0; i < layerThingList.count(); i++) {
 			planePair->svgs << TextUtils::makeSVGHeader(1, 1000, panelParams.panelWidth, panelParams.panelHeight);
 		}
 
 		foreach (PanelItem * panelItem, insertPanelItems) {
 			if (panelItem->planePair != planePair) continue;
 
-			QRectF offsetRect;
-			if (panelItem->rotate90 && !rotated.value(panelItem->path)) {
-				// rotate only once, subsequent instances will not need further rotations
-				rotated.insert(panelItem->path, true);
-				panelItem->window->pcbView()->selectAllItems(true, false);
-				panelItem->window->pcbView()->rotateX(90, false);
+			try {
+				QRectF offsetRect;
+				if (panelItem->rotate90 && !rotated.value(panelItem->path)) {
+					// rotate only once, subsequent instances will not need further rotations
+					rotated.insert(panelItem->path, true);
+					panelItem->window->pcbView()->selectAllItems(true, false);
+					panelItem->window->pcbView()->rotateX(90, false);
+				}
+
+				offsetRect = panelItem->board->sceneBoundingRect();
+				offsetRect.moveTo(offsetRect.left() - (panelItem->x * FSvgRenderer::printerScale()), offsetRect.top() - (panelItem->y * FSvgRenderer::printerScale()));
+
+				QRectF clipRect = offsetRect;
+				clipRect.moveTo(panelItem->x * FSvgRenderer::printerScale(), panelItem->y * FSvgRenderer::printerScale());
+
+				QSizeF imageSize;
+				bool empty;
+
+				for (int i = 0; i < planePair->svgs.count(); i++) {
+					QString one = panelItem->window->pcbView()->renderToSVG(FSvgRenderer::printerScale(), layerThingList.at(i).layerList, layerThingList.at(i).layerList, true, imageSize, offsetRect, 1000, false, false, false, empty);
+					one = GerberGenerator::clipToBoard(one, clipRect, layerThingList.at(i).name, layerThingList.at(i).forWhy);
+					if (one.isEmpty()) continue;
+
+					int left = one.indexOf("<svg");
+					left = one.indexOf(">", left + 1);
+					int right = one.lastIndexOf("<");
+					planePair->svgs.replace(i, planePair->svgs.at(i) + one.mid(left + 1, right - left - 1));
+				}
 			}
-
-			offsetRect = panelItem->board->sceneBoundingRect();
-			offsetRect.moveTo(offsetRect.left() - (panelItem->x * FSvgRenderer::printerScale()), offsetRect.top() - (panelItem->y * FSvgRenderer::printerScale()));
-
-			QSizeF imageSize;
-			bool empty;
-
-			for (int i = 0; i < planePair->svgs.count(); i++) {
-				QString one = panelItem->window->pcbView()->renderToSVG(FSvgRenderer::printerScale(), layerList.at(i), layerList.at(i), true, imageSize, offsetRect, 1000, false, false, false, empty);
-				int left = one.indexOf("<svg");
-				left = one.indexOf(">", left + 1);
-				int right = one.lastIndexOf("<");
-				planePair->svgs.replace(i, planePair->svgs.at(i) + one.mid(left + 1, right - left - 1));
+			catch (const char * msg) {
+				DebugDialog::debug(QString("panelizer error %1 %2").arg(panelItem->boardName).arg(msg));
+			}
+			catch (const QString & msg) {
+				DebugDialog::debug(QString("panelizer error %1 %2").arg(panelItem->boardName).arg(msg));
+			}
+			catch (...) {
+				DebugDialog::debug(QString("panelizer error %1").arg(panelItem->boardName));
 			}
 
 		}
 
 		for (int i = 0; i < planePair->svgs.count(); i++) {
-			QFile outfile(QString("%1.%2.%3.svg").arg(panelParams.prefix).arg(planePair->index).arg(i));
+			if (planePair->svgs.at(i).isEmpty()) continue;
+
+			QFile outfile(QString("%1.panel_%2.%3.svg").arg(panelParams.prefix).arg(planePair->index).arg(layerThingList.at(i).name));
 			if (outfile.open(QIODevice::WriteOnly | QIODevice::Text)) {
 				QTextStream out(&outfile);
 				out << planePair->svgs.at(i);
 				out << "</svg>";
 				outfile.close();
 			}
-		}
 
+			QString prefix = QString("%1.panel_%2").arg(panelParams.prefix).arg(planePair->index);
+			QSizeF svgSize(panelParams.panelWidth, panelParams.panelHeight);
+			GerberGenerator::doEnd(planePair->svgs.at(i), 2, layerThingList.at(i).name, layerThingList.at(i).forWhy, svgSize, panelParams.outputFolder, prefix, layerThingList.at(i).suffix, false);
+		}
 	}
 }
 
@@ -239,55 +270,69 @@ void Panelizer::bestFit(QList<PanelItem *> & insertPanelItems, PanelParams & pan
 bool Panelizer::bestFitOne(PanelItem * panelItem, PanelParams & panelParams, QList<PlanePair *> & planePairs, bool createNew)
 {
 	DebugDialog::debug(QString("panel %1").arg(panelItem->boardName));
-	BestPlace bestPlace;
-	bestPlace.bestTile = NULL;
-	bestPlace.rotate90 = false;
-	bestPlace.width = realToTile(panelItem->boardSizeInches.width() + (panelParams.panelSpacing / 2));
-	bestPlace.height = realToTile(panelItem->boardSizeInches.height() + (panelParams.panelSpacing / 2));
+	BestPlace bestPlace1, bestPlace2;
+	bestPlace1.bestTile = bestPlace2.bestTile = NULL;
+	bestPlace1.rotate90 = bestPlace2.rotate90 = false;
+	bestPlace1.width = bestPlace2.width = realToTile(panelItem->boardSizeInches.width() + panelParams.panelSpacing);
+	bestPlace1.height = bestPlace2.height = realToTile(panelItem->boardSizeInches.height() + panelParams.panelSpacing);
+	bestPlace1.bestArea = bestPlace2.bestArea = std::numeric_limits<double>::max();
 	int ppix = 0;
 	while (ppix < planePairs.count()) {
 		PlanePair *  planePair = planePairs.at(ppix);
-		TiSrArea(NULL, planePair->thePlane, &planePair->tilePanelRect, placeBestFit, &bestPlace);
-		if (bestPlace.bestTile == NULL) {
-			TiSrArea(NULL, planePair->thePlane90, &planePair->tilePanelRect90, placeBestFit, &bestPlace);
-			if (bestPlace.bestTile == NULL) {
-				if (++ppix < planePairs.count()) {
-					// try next panel
-					continue;
-				}
+		bestPlace1.plane = planePair->thePlane;
+		bestPlace2.plane = planePair->thePlane90;
 
-				if (!createNew) {
-					return false;
-				}
-
-				// create next panel
-				planePair = makePlanePair(panelParams);
-				planePairs << planePair;
-				DebugDialog::debug(QString("ran out of room placing %1").arg(panelItem->boardName));
+		TiSrArea(NULL, planePair->thePlane, &planePair->tilePanelRect, placeBestFit, &bestPlace1);
+		if (bestPlace1.bestTile == NULL) {
+			TiSrArea(NULL, planePair->thePlane90, &planePair->tilePanelRect90, placeBestFit, &bestPlace2);
+		}
+		if (bestPlace1.bestTile == NULL && bestPlace2.bestTile == NULL ) {
+			if (++ppix < planePairs.count()) {
+				// try next panel
 				continue;
 			}
 
-			TileRect tileRect;
-			tileUnrotate90(bestPlace.bestTileRect, tileRect);
-			bestPlace.bestTileRect = tileRect;
-			bestPlace.rotate90 = !bestPlace.rotate90;
+			if (!createNew) {
+				return false;
+			}
+
+			// create next panel
+			planePair = makePlanePair(panelParams);
+			planePairs << planePair;
+			DebugDialog::debug(QString("ran out of room placing %1").arg(panelItem->boardName));
+			continue;
 		}
 
-		panelItem->x = tileToReal(bestPlace.bestTileRect.xmini);
-		panelItem->y = tileToReal(bestPlace.bestTileRect.ymini);
-		panelItem->rotate90 = bestPlace.rotate90;
+		bool use2 = false;
+		if (bestPlace1.bestTile == NULL) {
+			use2 = true;
+		}
+		else if (bestPlace2.bestTile == NULL) {
+		}
+		else {
+			use2 = bestPlace2.bestArea < bestPlace1.bestArea;
+		}
+
+		if (use2) {
+			tileUnrotate90(bestPlace2.bestTileRect, bestPlace1.bestTileRect);
+			bestPlace1.rotate90 = !bestPlace2.rotate90;
+		}
+
+		panelItem->x = tileToReal(bestPlace1.bestTileRect.xmini);
+		panelItem->y = tileToReal(bestPlace1.bestTileRect.ymini);
+		panelItem->rotate90 = bestPlace1.rotate90;
 		panelItem->planePair = planePair;
 
 		TileRect tileRect;
-		tileRect.xmini = bestPlace.bestTileRect.xmini;
-		tileRect.ymini = bestPlace.bestTileRect.ymini;
-		if (bestPlace.rotate90) {
-			tileRect.xmaxi = tileRect.xmini + bestPlace.height;
-			tileRect.ymaxi = tileRect.ymini + bestPlace.width;
+		tileRect.xmini = bestPlace1.bestTileRect.xmini;
+		tileRect.ymini = bestPlace1.bestTileRect.ymini;
+		if (bestPlace1.rotate90) {
+			tileRect.xmaxi = tileRect.xmini + bestPlace1.height;
+			tileRect.ymaxi = tileRect.ymini + bestPlace1.width;
 		}
 		else {
-			tileRect.ymaxi = tileRect.ymini + bestPlace.height;
-			tileRect.xmaxi = tileRect.xmini + bestPlace.width;
+			tileRect.ymaxi = tileRect.ymini + bestPlace1.height;
+			tileRect.xmaxi = tileRect.xmini + bestPlace1.width;
 		}
 
 		qreal w = panelItem->boardSizeInches.width();
@@ -550,30 +595,112 @@ int Panelizer::placeBestFit(Tile * tile, UserData userData) {
 	TiToRect(tile, &tileRect);
 	int w = tileRect.xmaxi - tileRect.xmini;
 	int h = tileRect.ymaxi - tileRect.ymini;
-	bool normalFit = false;
-	bool rotateFit = false;
-	if (w >= bestPlace->width && h >= bestPlace->height) {
-		normalFit = true;
-	}
-	if (h >= bestPlace->width && w >= bestPlace->height) {
-		rotateFit = true;
-	}
-	
-	if (!(normalFit || rotateFit)) return 0;
-
-	if (bestPlace->bestTile == NULL) {
-		bestPlace->bestTile = tile;
-		bestPlace->bestTileRect = tileRect;
-		checkRotate(bestPlace, normalFit, rotateFit, w, h);
+	if (bestPlace->width > w && bestPlace->height > w) {
 		return 0;
 	}
 
-	double bestArea = ((double) (bestPlace->bestTileRect.xmaxi - bestPlace->bestTileRect.xmini)) * (bestPlace->bestTileRect.ymaxi - bestPlace->bestTileRect.ymini);
-	double area =  (double) w * h;
-	if (area < bestArea) {
-		bestPlace->bestTile = tile;
-		bestPlace->bestTileRect = tileRect;
-		checkRotate(bestPlace, normalFit, rotateFit, w, h);
+	int fitCount = 0;
+	bool normalFit = false;
+	bool rotateFit = false;
+	bool normalExtendedFit = false;
+	bool rotateExtendedFit = false;
+	double normalExtendedBottom = 0;
+	double rotateExtendedBottom = 0;
+	double normalExtendedArea = std::numeric_limits<double>::max();
+	double rotateExtendedArea = std::numeric_limits<double>::max();
+	if (w >= bestPlace->width && h >= bestPlace->height) {
+		normalFit = true;
+		fitCount++;
+	}
+	if (h >= bestPlace->width && w >= bestPlace->height) {
+		rotateFit = true;
+		fitCount++;
+	}
+
+	if (!normalFit && w >= bestPlace->width) {
+		// see if adjacent tiles below are open
+		TileRect temp;
+		temp.xmini = tileRect.xmini;
+		temp.xmaxi = temp.xmini + bestPlace->width;
+		temp.ymini = tileRect.ymini;
+		temp.ymaxi = temp.ymini + bestPlace->height;
+		QList<Tile*> spaces;
+		TiSrArea(tile, bestPlace->plane, &temp, allSpaces, &spaces);
+		if (spaces.count()) {
+			normalExtendedFit = true;
+			fitCount++;
+			normalExtendedArea = 0;
+			foreach (Tile * t, spaces) {
+				TiToRect(t, &temp);
+				if (temp.ymaxi > normalExtendedBottom) normalExtendedBottom = temp.ymaxi;
+				normalExtendedArea += (double) (temp.xmaxi - temp.xmini) * (temp.ymaxi - temp.ymini);
+			}
+		}
+	}
+
+	if (!rotateFit && w >= bestPlace->height) {
+		// see if adjacent tiles below are open
+		TileRect temp;
+		temp.xmini = tileRect.xmini;
+		temp.xmaxi = temp.xmini + bestPlace->height;
+		temp.ymini = tileRect.ymini;
+		temp.ymaxi = temp.ymini + bestPlace->width;
+		QList<Tile*> spaces;
+		TiSrArea(tile, bestPlace->plane, &temp, allSpaces, &spaces);
+		if (spaces.count()) {
+			rotateExtendedFit = true;
+			fitCount++;
+			rotateExtendedArea = 0;
+			foreach (Tile * t, spaces) {
+				TiToRect(t, &temp);
+				if (temp.ymaxi > rotateExtendedBottom) rotateExtendedBottom = temp.ymaxi;
+				rotateExtendedArea += (double) (temp.xmaxi - temp.xmini) * (temp.ymaxi - temp.ymini);
+			}
+		}
+	}
+
+	if (fitCount == 0) return 0;
+
+	double areas[4];
+	areas[0] = (normalFit) ? w * h : std::numeric_limits<double>::max();
+	areas[1] = (rotateFit) ? w * h : std::numeric_limits<double>::max();
+	areas[2] = normalExtendedArea;
+	areas[3] = rotateExtendedArea;
+	
+	int result = -1;
+	for (int i = 0; i < 4; i++) {
+		if (areas[i] < bestPlace->bestArea) {
+			result = i;
+			break;
+		}
+	}
+	if (result < 0) return 0;			// current bestArea is better
+
+	bestPlace->bestTile = tile;
+	bestPlace->bestTileRect = tileRect;
+	if (fitCount == 1 || (bestPlace->width == bestPlace->height)) {
+		if (normalFit || normalExtendedFit) {
+			bestPlace->rotate90 = false;
+		}
+		else {
+			bestPlace->rotate90 = true;
+		}
+		bestPlace->bestArea = areas[result];
+		return 0;
+	}
+
+	double a1 = (w - bestPlace->width) * (bestPlace->height);
+	double a2 = (h - bestPlace->height) * w;
+	double a = qMax(a1, a2);
+	double b1 = (w - bestPlace->height) * (bestPlace->width);
+	double b2 = (h - bestPlace->width) * w;
+	double b = qMax(b1, b2);
+	bestPlace->rotate90 = (a < b);
+	if (bestPlace->rotate90) {
+		bestPlace->bestArea = rotateFit ? areas[1] : areas[3];
+	}
+	else {
+		bestPlace->bestArea =normalFit ? areas[0] : areas[2];
 	}
 
 	return 0;

@@ -81,7 +81,9 @@ struct BestPlace
 	TileRect bestTileRect;
 	int width;
 	int height;
+	double bestArea;
 	bool rotate90;
+	Plane* plane;
 };
 
 struct PanelParams
