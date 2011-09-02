@@ -50,13 +50,19 @@ void SvgFlattener::flattenChildren(QDomElement &element){
     //do translate
     if(hasTranslate(element)){
 		QList<double> params = TextUtils::getTransformFloats(element);
-		if(params.size() > 1) {
+		if (params.size() == 2) {
             shiftChild(element, params.at(0), params.at(1), false);
 			//DebugDialog::debug(QString("translating %1 %2").arg(params.at(0)).arg(params.at(1)));
 		}
-		else {
+		else if (params.size() == 6) {
+            shiftChild(element, params.at(4), params.at(5), false);
+		}
+		else if (params.size() == 1) {
             shiftChild(element, params.at(0), 0, false);
 			//DebugDialog::debug(QString("translating %1").arg(params.at(0)));
+		}
+		else {
+			DebugDialog::debug("weird transform found");
 		}
     }
     else if(hasOtherTransform(element)) {
@@ -174,14 +180,19 @@ void SvgFlattener::unRotateChild(QDomElement & element, QMatrix transform) {
 
 }
 
-bool SvgFlattener::hasTranslate(QDomElement & element){
-    bool rtn = false;
+bool SvgFlattener::hasTranslate(QDomElement & element)
+{
+	QString transform = element.attribute("transform");
+	if (transform.isEmpty()) return false;
+    if (transform.startsWith("translate")) return true;
 
-    if(element.hasAttribute("transform")){
-        rtn = element.attribute("transform").startsWith("translate");
+    if (transform.startsWith("matrix")) {
+		QMatrix matrix = TextUtils::transformStringToMatrix(transform);
+		matrix.translate(-matrix.dx(), -matrix.dy());
+		if (matrix.isIdentity()) return true;
     }
 
-    return rtn;
+    return false;
 }
 
 bool SvgFlattener::hasOtherTransform(QDomElement & element)

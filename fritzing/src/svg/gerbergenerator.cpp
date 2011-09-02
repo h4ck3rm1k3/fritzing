@@ -48,6 +48,7 @@ const QString GerberGenerator::CopperBottomSuffix = "_copperBottom.gbl";
 const QString GerberGenerator::MaskTopSuffix = "_maskTop.gts";
 const QString GerberGenerator::MaskBottomSuffix = "_maskBottom.gbs";
 const QString GerberGenerator::DrillSuffix = "_drill.txt";
+const QString GerberGenerator::OutlineSuffix = "_contour.gm1";
 
 
 ////////////////////////////////////////////
@@ -118,7 +119,7 @@ void GerberGenerator::exportToGerber(const QString & filename, const QString & e
     // contour / board outline
     QString contourFile = exportDir + "/" +
                           QFileInfo(filename).fileName().remove(FritzingSketchExtension)
-                          + "_contour.gm1";
+                          + OutlineSuffix;
     QFile contourOut(contourFile);
 	if (!contourOut.open(QIODevice::WriteOnly | QIODevice::Text)) {
 		displayMessage(QObject::tr("outline file export failure (2)"), displayMessageBoxes);
