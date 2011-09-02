@@ -67,12 +67,26 @@ int allSpaces(Tile * tile, UserData userData) {
 	return 1;			// stop the search
 }
 
+int allObstacles(Tile * tile, UserData userData) {
+	if (TiGetType(tile) == Tile::OBSTACLE) {
+		QList<Tile*> * obstacles = (QList<Tile*> *) userData;
+		obstacles->append(tile);
+
+	}
+
+	return 0;
+}
+
 static int PlanePairIndex = 0;
+
+static double Worst = std::numeric_limits<double>::max() / 4;
 
 /////////////////////////////////////////////////////////////////////////////////
 
 void Panelizer::panelize(FApplication * app, const QString & panelFilename) 
 {
+	DebugDialog::debug("alive in here 6");
+
 	QFile file(panelFilename);
 
 	QString errorStr;
@@ -94,6 +108,9 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 	PanelParams panelParams;
 	if (!initPanelParams(root, panelParams)) return;
 
+	DebugDialog::debug("alive in here 9");
+
+
 	QDomElement boards = root.firstChildElement("boards");
 	QDomElement board = boards.firstChildElement("board");
 	if (board.isNull()) {
@@ -114,9 +131,14 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 		DebugDialog::debug(QString("no fzz files found in paths"));
 		return;
 	}
+
+	DebugDialog::debug("alive in here 10");
+
 	
 	board = boards.firstChildElement("board");
 	if (!checkBoards(board, fzzFilePaths)) return;
+
+	DebugDialog::debug("alive in here 7");
 
 	app->createUserDataStoreFolderStructure();
 
@@ -145,6 +167,8 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 	planePairs << makePlanePair(panelParams);
 
 	qSort(insertPanelItems.begin(), insertPanelItems.end(), areaGreaterThan);
+
+	DebugDialog::debug("alive in here after crash");
 
 	bestFit(insertPanelItems, panelParams, planePairs);
 
@@ -275,7 +299,7 @@ bool Panelizer::bestFitOne(PanelItem * panelItem, PanelParams & panelParams, QLi
 	bestPlace1.rotate90 = bestPlace2.rotate90 = false;
 	bestPlace1.width = bestPlace2.width = realToTile(panelItem->boardSizeInches.width() + panelParams.panelSpacing);
 	bestPlace1.height = bestPlace2.height = realToTile(panelItem->boardSizeInches.height() + panelParams.panelSpacing);
-	bestPlace1.bestArea = bestPlace2.bestArea = std::numeric_limits<double>::max();
+	bestPlace1.bestArea = bestPlace2.bestArea = Worst;
 	int ppix = 0;
 	while (ppix < planePairs.count()) {
 		PlanePair *  planePair = planePairs.at(ppix);
@@ -310,6 +334,7 @@ bool Panelizer::bestFitOne(PanelItem * panelItem, PanelParams & panelParams, QLi
 		else if (bestPlace2.bestTile == NULL) {
 		}
 		else {
+			// never actually get here
 			use2 = bestPlace2.bestArea < bestPlace1.bestArea;
 		}
 
@@ -600,24 +625,25 @@ int Panelizer::placeBestFit(Tile * tile, UserData userData) {
 	}
 
 	int fitCount = 0;
-	bool normalFit = false;
-	bool rotateFit = false;
-	bool normalExtendedFit = false;
-	bool rotateExtendedFit = false;
-	double normalExtendedBottom = 0;
-	double rotateExtendedBottom = 0;
-	double normalExtendedArea = std::numeric_limits<double>::max();
-	double rotateExtendedArea = std::numeric_limits<double>::max();
+	bool fit[4];
+	double area[4];
+	for (int i = 0; i < 4; i++) {
+		fit[i] = false;
+		area[i] = Worst;
+	}
+
 	if (w >= bestPlace->width && h >= bestPlace->height) {
-		normalFit = true;
+		fit[0] = true;
+		area[0] = w * h;
 		fitCount++;
 	}
 	if (h >= bestPlace->width && w >= bestPlace->height) {
-		rotateFit = true;
+		fit[1] = true;
+		area[1] = w * h;
 		fitCount++;
 	}
 
-	if (!normalFit && w >= bestPlace->width) {
+	if (!fit[0] && w >= bestPlace->width) {
 		// see if adjacent tiles below are open
 		TileRect temp;
 		temp.xmini = tileRect.xmini;
@@ -627,18 +653,13 @@ int Panelizer::placeBestFit(Tile * tile, UserData userData) {
 		QList<Tile*> spaces;
 		TiSrArea(tile, bestPlace->plane, &temp, allSpaces, &spaces);
 		if (spaces.count()) {
-			normalExtendedFit = true;
+			fit[2] = true;
 			fitCount++;
-			normalExtendedArea = 0;
-			foreach (Tile * t, spaces) {
-				TiToRect(t, &temp);
-				if (temp.ymaxi > normalExtendedBottom) normalExtendedBottom = temp.ymaxi;
-				normalExtendedArea += (double) (temp.xmaxi - temp.xmini) * (temp.ymaxi - temp.ymini);
-			}
+			area[2] = w * bestPlace->height;
 		}
 	}
 
-	if (!rotateFit && w >= bestPlace->height) {
+	if (!fit[1] && w >= bestPlace->height) {
 		// see if adjacent tiles below are open
 		TileRect temp;
 		temp.xmini = tileRect.xmini;
@@ -648,28 +669,17 @@ int Panelizer::placeBestFit(Tile * tile, UserData userData) {
 		QList<Tile*> spaces;
 		TiSrArea(tile, bestPlace->plane, &temp, allSpaces, &spaces);
 		if (spaces.count()) {
-			rotateExtendedFit = true;
+			fit[3] = true;
 			fitCount++;
-			rotateExtendedArea = 0;
-			foreach (Tile * t, spaces) {
-				TiToRect(t, &temp);
-				if (temp.ymaxi > rotateExtendedBottom) rotateExtendedBottom = temp.ymaxi;
-				rotateExtendedArea += (double) (temp.xmaxi - temp.xmini) * (temp.ymaxi - temp.ymini);
-			}
+			area[3] = w * bestPlace->width;
 		}
 	}
 
 	if (fitCount == 0) return 0;
-
-	double areas[4];
-	areas[0] = (normalFit) ? w * h : std::numeric_limits<double>::max();
-	areas[1] = (rotateFit) ? w * h : std::numeric_limits<double>::max();
-	areas[2] = normalExtendedArea;
-	areas[3] = rotateExtendedArea;
 	
 	int result = -1;
 	for (int i = 0; i < 4; i++) {
-		if (areas[i] < bestPlace->bestArea) {
+		if (area[i] < bestPlace->bestArea) {
 			result = i;
 			break;
 		}
@@ -679,30 +689,84 @@ int Panelizer::placeBestFit(Tile * tile, UserData userData) {
 	bestPlace->bestTile = tile;
 	bestPlace->bestTileRect = tileRect;
 	if (fitCount == 1 || (bestPlace->width == bestPlace->height)) {
-		if (normalFit || normalExtendedFit) {
+		if (fit[0] || fit[2]) {
 			bestPlace->rotate90 = false;
 		}
 		else {
 			bestPlace->rotate90 = true;
 		}
-		bestPlace->bestArea = areas[result];
+		bestPlace->bestArea = area[result];
 		return 0;
 	}
 
-	double a1 = (w - bestPlace->width) * (bestPlace->height);
-	double a2 = (h - bestPlace->height) * w;
-	double a = qMax(a1, a2);
-	double b1 = (w - bestPlace->height) * (bestPlace->width);
-	double b2 = (h - bestPlace->width) * w;
-	double b = qMax(b1, b2);
-	bestPlace->rotate90 = (a < b);
-	if (bestPlace->rotate90) {
-		bestPlace->bestArea = rotateFit ? areas[1] : areas[3];
-	}
-	else {
-		bestPlace->bestArea =normalFit ? areas[0] : areas[2];
+	if (TiGetType(BL(tile)) == Tile::BUFFER) {
+		// this is a leftmost tile
+		// select for creating the biggest area after putting in the tile;
+		double a1 = (w - bestPlace->width) * (bestPlace->height);
+		double a2 = (h - bestPlace->height) * w;
+		double a = qMax(a1, a2);
+		double b1 = (w - bestPlace->height) * (bestPlace->width);
+		double b2 = (h - bestPlace->width) * w;
+		double b = qMax(b1, b2);
+		bestPlace->rotate90 = (a < b);
+		if (bestPlace->rotate90) {
+			bestPlace->bestArea = fit[1] ? area[1] : area[3];
+		}
+		else {
+			bestPlace->bestArea = fit[0] ? area[0] : area[2];
+		}
+
+		return 0;
 	}
 
+	TileRect temp;
+	temp.xmini = 0;
+	temp.xmaxi = tileRect.xmini - 1;
+	temp.ymini = tileRect.ymini;
+	temp.ymaxi = tileRect.ymaxi;
+	QList<Tile*> obstacles;
+	TiSrArea(tile, bestPlace->plane, &temp, allObstacles, &obstacles);
+	int maxBottom = 0;
+	foreach (Tile * obstacle, obstacles) {
+		if (YMAX(obstacle) > maxBottom) maxBottom = YMAX(obstacle);
+	}
+
+	if (tileRect.ymini + bestPlace->width <= maxBottom && tileRect.ymini + bestPlace->height <= maxBottom) {
+		// use the max length 
+		if (bestPlace->width >= bestPlace->height) {
+			bestPlace->rotate90 = true;
+			bestPlace->bestArea = fit[1] ? area[1] : area[3];
+		}
+		else {
+			bestPlace->rotate90 = false;
+			bestPlace->bestArea = fit[0] ? area[0] : area[2];
+		}
+
+		return 0;
+	}
+
+	if (tileRect.ymini + bestPlace->width > maxBottom && tileRect.ymini + bestPlace->height > maxBottom) {
+		// use the min length
+		if (bestPlace->width <= bestPlace->height) {
+			bestPlace->rotate90 = true;
+			bestPlace->bestArea = fit[1] ? area[1] : area[3];
+		}
+		else {
+			bestPlace->rotate90 = false;
+			bestPlace->bestArea = fit[0] ? area[0] : area[2];
+		}
+
+		return 0;
+	}
+
+	if (tileRect.ymini + bestPlace->width <= maxBottom) {
+		bestPlace->rotate90 = true;
+		bestPlace->bestArea = fit[1] ? area[1] : area[3];
+		return 0;
+	}
+
+	bestPlace->rotate90 = false;
+	bestPlace->bestArea = fit[0] ? area[0] : area[2];
 	return 0;
 }
 

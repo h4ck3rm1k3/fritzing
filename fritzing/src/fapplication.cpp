@@ -195,7 +195,7 @@ bool FApplication::init() {
 			(m_arguments[i].compare("--panel", Qt::CaseInsensitive) == 0)) {
 			m_serviceType = PanelizerService;
 			m_panelFilename = m_arguments[i + 1];
-			m_outputFolder = ".";					// otherwise program will bail out
+			m_outputFolder = " ";					// otherwise program will bail out
 			toRemove << i << i + 1;
 		}
 
@@ -269,6 +269,7 @@ bool FApplication::init() {
 	SvgIconWidget::initNames();
 	PinHeader::initNames();
 	CursorMaster::initCursors();
+
 	return true;
 }
 
@@ -1358,7 +1359,7 @@ QString FApplication::makeRequestParamsString() {
 }
 
 void FApplication::runPanelizerService()
-{
+{	
 	m_started = true;
 	Panelizer::panelize(this, m_panelFilename);
 }
