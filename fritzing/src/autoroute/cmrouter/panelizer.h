@@ -107,7 +107,7 @@ protected:
 	static PlanePair * makePlanePair(PanelParams &);
 	static void collectFiles(QDomElement & path, QHash<QString, QString> & fzzFilePaths);
 	static bool checkBoards(QDomElement & board, QHash<QString, QString> & fzzFilePaths);
-	static bool openWindows(QDomElement & board, QHash<QString, QString> & fzzFilePaths, class FApplication *, PanelParams &, QHash<QString, PanelItem *> & refPanelItems);
+	static bool openWindows(QDomElement & board, QHash<QString, QString> & fzzFilePaths, class FApplication *, PanelParams &, QDir & fzDir, QHash<QString, PanelItem *> & refPanelItems);
 	static void bestFit(QList<PanelItem *> & insertPanelItems, PanelParams &, QList<PlanePair *> &);
 	static bool bestFitOne(PanelItem * panelItem, PanelParams & panelParams, QList<PlanePair *> & planePairs, bool createNew);
 	static void addOptional(int optionalCount, QHash<QString, PanelItem *> & refPanelItems, QList<PanelItem *> & insertPanelItems, PanelParams &, QList<PlanePair *> &);

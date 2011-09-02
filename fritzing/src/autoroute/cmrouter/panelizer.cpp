@@ -107,6 +107,31 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 	PanelParams panelParams;
 	if (!initPanelParams(root, panelParams)) return;
 
+	QDir outputDir(panelParams.outputFolder);
+	outputDir.mkdir("svg");
+	outputDir.mkdir("gerber");
+	outputDir.mkdir("fz");
+
+	QDir svgDir(outputDir);
+	svgDir.cd("svg");
+	if (!svgDir.exists()) {
+		DebugDialog::debug(QString("unable to create svg folder in '%1'").arg(panelParams.outputFolder));
+		return;
+	}
+
+	QDir gerberDir(outputDir);
+	gerberDir.cd("gerber");
+	if (!gerberDir.exists()) {
+		DebugDialog::debug(QString("unable to create gerber folder in '%1'").arg(panelParams.outputFolder));
+		return;
+	}
+
+	QDir fzDir(outputDir);
+	fzDir.cd("fz");
+	if (!fzDir.exists()) {
+		DebugDialog::debug(QString("unable to create fz folder in '%1'").arg(panelParams.outputFolder));
+		return;
+	}
 
 	QDomElement boards = root.firstChildElement("boards");
 	QDomElement board = boards.firstChildElement("board");
@@ -133,14 +158,8 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 	if (!checkBoards(board, fzzFilePaths)) return;
 
 	app->createUserDataStoreFolderStructure();
-
 	app->registerFonts();
-
-	DebugDialog::debug("alive in here 9");
-
 	app->loadReferenceModel();
-
-	DebugDialog::debug("alive in here 10");
 
 	if (!app->loadBin("")) {
 		DebugDialog::debug(QString("load bin failed"));
@@ -149,7 +168,7 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 
 	QHash<QString, PanelItem *> refPanelItems;
 	board = boards.firstChildElement("board");
-	if (!openWindows(board, fzzFilePaths, app, panelParams, refPanelItems)) return;
+	if (!openWindows(board, fzzFilePaths, app, panelParams, fzDir, refPanelItems)) return;
 
 	QList<PanelItem *> insertPanelItems;
 	int optionalCount = 0;
@@ -165,16 +184,12 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 	planePairs << makePlanePair(panelParams);
 
 	qSort(insertPanelItems.begin(), insertPanelItems.end(), areaGreaterThan);
-
-	DebugDialog::debug("alive in here no crash");
-
 	bestFit(insertPanelItems, panelParams, planePairs);
 
 	addOptional(optionalCount, refPanelItems, insertPanelItems, panelParams, planePairs);
 
-	QDir outputDir(panelParams.outputFolder);
 	foreach (PlanePair * planePair, planePairs) {
-		QString fname = outputDir.absoluteFilePath(QString("%1.panel_%2.layout.svg").arg(panelParams.prefix).arg(planePair->index));
+		QString fname = svgDir.absoluteFilePath(QString("%1.panel_%2.layout.svg").arg(panelParams.prefix).arg(planePair->index));
 		QFile outfile(fname);
 		if (outfile.open(QIODevice::WriteOnly | QIODevice::Text)) {
 			QTextStream out(&outfile);
@@ -226,7 +241,6 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 			if (panelItem->planePair != planePair) continue;
 
 			try {
-				QRectF offsetRect;
 				if (panelItem->rotate90 && !rotated.value(panelItem->path)) {
 					// rotate only once, subsequent instances will not need further rotations
 					rotated.insert(panelItem->path, true);
@@ -272,18 +286,19 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 		for (int i = 0; i < planePair->svgs.count(); i++) {
 			if (planePair->svgs.at(i).isEmpty()) continue;
 
-			QString fname = outputDir.absoluteFilePath(QString("%1.panel_%2.%3.svg").arg(panelParams.prefix).arg(planePair->index).arg(layerThingList.at(i).name));
+			planePair->svgs.replace(i, planePair->svgs.at(i) + "</svg>");
+
+			QString fname = svgDir.absoluteFilePath(QString("%1.panel_%2.%3.svg").arg(panelParams.prefix).arg(planePair->index).arg(layerThingList.at(i).name));
 			QFile outfile(fname);
 			if (outfile.open(QIODevice::WriteOnly | QIODevice::Text)) {
 				QTextStream out(&outfile);
 				out << planePair->svgs.at(i);
-				out << "</svg>";
 				outfile.close();
 			}
 
 			QString prefix = QString("%1.panel_%2").arg(panelParams.prefix).arg(planePair->index);
 			QSizeF svgSize(panelParams.panelWidth, panelParams.panelHeight);
-			GerberGenerator::doEnd(planePair->svgs.at(i), 2, layerThingList.at(i).name, layerThingList.at(i).forWhy, svgSize, panelParams.outputFolder, prefix, layerThingList.at(i).suffix, false);
+			GerberGenerator::doEnd(planePair->svgs.at(i), 2, layerThingList.at(i).name, layerThingList.at(i).forWhy, svgSize, gerberDir.absolutePath(), prefix, layerThingList.at(i).suffix, false);
 		}
 	}
 }
@@ -297,7 +312,7 @@ void Panelizer::bestFit(QList<PanelItem *> & insertPanelItems, PanelParams & pan
 
 bool Panelizer::bestFitOne(PanelItem * panelItem, PanelParams & panelParams, QList<PlanePair *> & planePairs, bool createNew)
 {
-	DebugDialog::debug(QString("panel %1").arg(panelItem->boardName));
+	//DebugDialog::debug(QString("panel %1").arg(panelItem->boardName));
 	BestPlace bestPlace1, bestPlace2;
 	bestPlace1.bestTile = bestPlace2.bestTile = NULL;
 	bestPlace1.rotate90 = bestPlace2.rotate90 = false;
@@ -501,7 +516,7 @@ bool Panelizer::checkBoards(QDomElement & board, QHash<QString, QString> & fzzFi
 	return true;
 }
 
-bool Panelizer::openWindows(QDomElement & board, QHash<QString, QString> & fzzFilePaths, FApplication * app, PanelParams & panelParams, QHash<QString, PanelItem *> & refPanelItems)
+bool Panelizer::openWindows(QDomElement & board, QHash<QString, QString> & fzzFilePaths, FApplication * app, PanelParams & panelParams, QDir & fzDir, QHash<QString, PanelItem *> & refPanelItems)
 {
 	while (!board.isNull()) {
 		QString boardName = board.attribute("name");
@@ -510,7 +525,8 @@ bool Panelizer::openWindows(QDomElement & board, QHash<QString, QString> & fzzFi
 		MainWindow * mainWindow = app->loadWindows(loaded);
 		mainWindow->noBackup();
 
-		FolderUtils::setOpenSaveFolderAux(panelParams.outputFolder);
+		FolderUtils::setOpenSaveFolderAux(fzDir.absolutePath());
+
 		if (!mainWindow->loadWhich(path, false, false, true)) {
 			DebugDialog::debug(QString("failed to load '%1'").arg(path));
 			return false;

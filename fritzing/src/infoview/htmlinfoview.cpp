@@ -660,7 +660,7 @@ void HtmlInfoView::displayProps(ModelPart * modelPart, ItemBase * itemBase, bool
 {
 	bool repeatPossible = (modelPart == m_lastPropsModelPart && itemBase == m_lastPropsItemBase && swappingEnabled == m_lastPropsSwappingEnabled);
 	if (repeatPossible && modelPart == NULL && itemBase == NULL) {
-		DebugDialog::debug("display props bail");
+		//DebugDialog::debug("display props bail");
 		return;
 	}
 

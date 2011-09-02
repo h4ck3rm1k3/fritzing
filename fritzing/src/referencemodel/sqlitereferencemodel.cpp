@@ -41,7 +41,6 @@ SqliteReferenceModel::SqliteReferenceModel() {
 
 void SqliteReferenceModel::loadAll(bool fastLoad)
 {
-	DebugDialog::debug("start load all");
 	initParts(fastLoad);
 
 	int tries = 0;
@@ -477,7 +476,7 @@ qlonglong SqliteReferenceModel::partId(QString moduleID) {
 	query.bindValue(":moduleID",moduleID);
 
 	if(query.exec()) {
-		DebugDialog::debug("SQLITE: retrieving id: "+moduleID);
+		//DebugDialog::debug("SQLITE: retrieving id: "+moduleID);
 		if(query.next()) {
 			partId =  query.value(0).toULongLong(); //grab the first
 		}

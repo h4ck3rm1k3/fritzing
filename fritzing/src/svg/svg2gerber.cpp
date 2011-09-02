@@ -63,7 +63,7 @@ int SVG2gerber::convert(const QString & svgStr, bool doubleSided, const QString 
     int errorColumn;
     bool result = m_SVGDom.setContent(svgStr, &errorStr, &errorLine, &errorColumn);
     if (!result) {
-        DebugDialog::debug(QString("gerber svg failed %1 %2 %3 %4").arg(svgStr).arg(errorStr).arg(errorLine).arg(errorColumn));
+        DebugDialog::debug(QString("gerber svg failed %2 %3 %4 %1").arg(svgStr).arg(errorStr).arg(errorLine).arg(errorColumn));
     }
 
 #ifndef QT_NO_DEBUG

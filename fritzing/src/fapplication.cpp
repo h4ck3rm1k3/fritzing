@@ -129,6 +129,7 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 	m_updateDialog = NULL;
 	m_lastTopmostWindow = NULL;
 	m_serviceType = NoService;
+	m_splash = NULL;
 
 	m_arguments = arguments();
 }
@@ -725,6 +726,7 @@ int FApplication::startup(bool firstRun)
 	splash.showProgress(m_progressIndex, 0.99);
 	ProcessEventBlocker::processEvents();
 
+	m_splash = NULL;
 	return 0;
 }
 
@@ -1033,7 +1035,7 @@ void FApplication::changeActivation(bool activate, QWidget * originator) {
 }
 
 void FApplication::updateActivation() {
-	DebugDialog::debug("updating activation");
+	//DebugDialog::debug("updating activation");
 
 	FritzingWindow * prior = m_lastTopmostWindow; 
 	m_lastTopmostWindow = NULL;
@@ -1042,7 +1044,7 @@ void FApplication::updateActivation() {
 	}
 
 	if (prior == m_lastTopmostWindow) {
-		DebugDialog::debug("done updating activation");
+		//DebugDialog::debug("done updating activation");
 		return;
 	}
 
@@ -1059,7 +1061,7 @@ void FApplication::updateActivation() {
 		//DebugDialog::debug("restoring active window");
 	}
 
-	DebugDialog::debug("done 2 updating activation");
+	//DebugDialog::debug("done 2 updating activation");
 
 }
 
@@ -1134,6 +1136,7 @@ void FApplication::loadedPart(int loaded, int total) {
 	if (total == 0) return;
 	if (m_splash == NULL) return;
 
+	DebugDialog::debug(QString("loaded %1 %2").arg(loaded).arg(total));
 	m_splash->showProgress(m_progressIndex, LoadProgressStart + ((LoadProgressEnd - LoadProgressStart) * loaded / (double) total));
 }
 
