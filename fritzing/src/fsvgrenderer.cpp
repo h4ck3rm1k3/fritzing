@@ -196,7 +196,8 @@ QByteArray FSvgRenderer::loadAux(const QByteArray & contents, const QString & fi
 			}
 		}
 		if (connectorIDs.count() > 0) {
-			resetContents = resetContents || initConnectorInfo(doc, connectorIDs, terminalIDs, legIDs);
+			bool init =  initConnectorInfo(doc, connectorIDs, terminalIDs, legIDs);
+			resetContents = resetContents || init;
 		}
 		if (findNonConnectors) {
 			initNonConnectorInfo(doc);
@@ -401,7 +402,7 @@ void FSvgRenderer::initNonConnectorInfoAux(QDomElement & element)
 {
 	QString id = element.attribute("id");
 	if (id.startsWith(NonConnectorName, Qt::CaseInsensitive)) {
-		ConnectorInfo * connectorInfo = initConnectorInfo(element);
+		ConnectorInfo * connectorInfo = initConnectorInfoStruct(element);
 		m_nonConnectorInfoHash.insert(id, connectorInfo);
 	}
 	QDomElement child = element.firstChildElement();
@@ -503,7 +504,7 @@ void FSvgRenderer::initConnectorInfoAux(QDomElement & element, const QStringList
 	QString id = element.attribute("id");
 	if (!id.isEmpty()) {
 		if (connectorIDs.contains(id)) {
-			ConnectorInfo * connectorInfo = initConnectorInfo(element);
+			ConnectorInfo * connectorInfo = initConnectorInfoStruct(element);
 			m_connectorInfoHash.insert(id, connectorInfo);
 		}
 		// don't return here, might miss other connectors
@@ -516,7 +517,7 @@ void FSvgRenderer::initConnectorInfoAux(QDomElement & element, const QStringList
 	}
 }
 
-ConnectorInfo * FSvgRenderer::initConnectorInfo(QDomElement & connectorElement) {
+ConnectorInfo * FSvgRenderer::initConnectorInfoStruct(QDomElement & connectorElement) {
 	ConnectorInfo * connectorInfo = new ConnectorInfo();
 	connectorInfo->radius = connectorInfo->strokeWidth = 0;
 	connectorInfo->gotCircle = false;
@@ -524,38 +525,34 @@ ConnectorInfo * FSvgRenderer::initConnectorInfo(QDomElement & connectorElement) 
 	if (connectorElement.isNull()) return connectorInfo;
 
 	connectorInfo->matrix = TextUtils::elementToMatrix(connectorElement);
-	QList<QDomElement> stack;
-	stack.append(connectorElement);
-	initConnectorInfoAux(stack, connectorInfo);
+	initConnectorInfoStructAux(connectorElement, connectorInfo);
 	return connectorInfo;
 }
 
-bool FSvgRenderer::initConnectorInfoAux(QList<QDomElement> & connectorElements, ConnectorInfo * connectorInfo) 
+bool FSvgRenderer::initConnectorInfoStructAux(QDomElement & element, ConnectorInfo * connectorInfo) 
 {
-	if (connectorElements.isEmpty()) return false;
-
-	QDomElement connectorElement = connectorElements.takeFirst();
 	// right now we only handle circles
-	if (connectorElement.nodeName().compare("circle") != 0) {
-		QDomElement element = connectorElement.firstChildElement();
-		while (!element.isNull()) {
-			connectorElements.append(element);
-			element = element.nextSiblingElement();
+	if (element.nodeName().compare("circle") != 0) {
+		QDomElement child = element.firstChildElement();
+		while (!child.isNull()) {
+			if (initConnectorInfoStructAux(child, connectorInfo)) return true;
+
+			child = child.nextSiblingElement();
 		}
-		return initConnectorInfoAux(connectorElements, connectorInfo);
+		return false;
 	}
 
 	bool ok;
-	double cx = connectorElement.attribute("cx").toDouble(&ok);
+	double cx = element.attribute("cx").toDouble(&ok);
 	if (!ok) return false;
 
-	double cy = connectorElement.attribute("cy").toDouble(&ok);
+	double cy = element.attribute("cy").toDouble(&ok);
 	if (!ok) return false;
 
-	double r = connectorElement.attribute("r").toDouble(&ok);
+	double r = element.attribute("r").toDouble(&ok);
 	if (!ok) return false;
 
-	double sw = connectorElement.attribute("stroke-width").toDouble(&ok);	
+	double sw = element.attribute("stroke-width").toDouble(&ok);	
 	if (!ok) {
 		//QString strokewidth("stroke-width");
 		//QString s = element.attribute("style");
@@ -566,6 +563,7 @@ bool FSvgRenderer::initConnectorInfoAux(QList<QDomElement> & connectorElements, 
 		//}
 	}
 
+	//DebugDialog::debug("got a circle");
 	connectorInfo->gotCircle = true;
 	connectorInfo->bounds.setRect(cx - r - (sw / 2.0), cy - r - (sw / 2.0), (r * 2) + sw, (r * 2) + sw);
 	connectorInfo->radius = r;
