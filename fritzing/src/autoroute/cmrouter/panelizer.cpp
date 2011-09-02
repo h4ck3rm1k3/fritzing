@@ -92,6 +92,8 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 	int errorLine;
 	int errorColumn;
 
+	DebugDialog::setEnabled(true);
+
 	QDomDocument domDocument;
 	if (!domDocument.setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
 		DebugDialog::debug(QString("Unable to parse '%1': '%2' line:%3 column:%4").arg(panelFilename).arg(errorStr).arg(errorLine).arg(errorColumn));
@@ -241,9 +243,10 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 			if (panelItem->planePair != planePair) continue;
 
 			try {
-				if (panelItem->rotate90 && !rotated.value(panelItem->path)) {
-					// rotate only once, subsequent instances will not need further rotations
-					rotated.insert(panelItem->path, true);
+				if ((panelItem->rotate90 && !rotated.value(panelItem->path)) || (panelItem->rotate90 == false && rotated.value(panelItem->path)))
+				{
+					// try to minimize rotations by keeping state
+					rotated.insert(panelItem->path, !rotated.value(panelItem->path));
 					panelItem->window->pcbView()->selectAllItems(true, false);
 					panelItem->window->pcbView()->rotateX(90, false);
 				}
