@@ -428,7 +428,7 @@ QString MysteryPart::makeSchematicSvg(const QString & expectedFileName)
 	}
 
 	QString svg = header
-		.arg(totalHeight / 1000)
+		.arg(totalHeight / GraphicsUtils::StandardFritzingDPI)
 		.arg(totalHeight)
 		.arg(totalHeight - border)
 		.arg((totalHeight / 2) + textOffset)

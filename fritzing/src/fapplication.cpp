@@ -421,7 +421,6 @@ void FApplication::loadReferenceModel() {
 	ItemBase::setReferenceModel(m_referenceModel);
 	connect(m_referenceModel, SIGNAL(loadedPart(int, int)), this, SLOT(loadedPart(int, int)));
 	m_referenceModel->loadAll(true);								// this is very slow
-	//DebugDialog::debug("after new current reference model");
 	m_paletteBinModel = new PaletteModel(true, false, false);
 	//DebugDialog::debug("after new palette model");
 }
@@ -1034,7 +1033,7 @@ void FApplication::changeActivation(bool activate, QWidget * originator) {
 }
 
 void FApplication::updateActivation() {
-	// DebugDialog::debug("updating activation");
+	DebugDialog::debug("updating activation");
 
 	FritzingWindow * prior = m_lastTopmostWindow; 
 	m_lastTopmostWindow = NULL;
@@ -1042,7 +1041,10 @@ void FApplication::updateActivation() {
 		m_lastTopmostWindow = qobject_cast<FritzingWindow *>(m_orderedTopLevelWidgets.at(0));
 	}
 
-	if (prior == m_lastTopmostWindow) return;
+	if (prior == m_lastTopmostWindow) {
+		DebugDialog::debug("done updating activation");
+		return;
+	}
 
 	//DebugDialog::debug(QString("last:%1, new:%2").arg((long) prior, 0, 16).arg((long) m_lastTopmostWindow.data(), 0, 16));
 
@@ -1056,6 +1058,9 @@ void FApplication::updateActivation() {
 		lastTopmostMainWindow->restoreDocks();
 		//DebugDialog::debug("restoring active window");
 	}
+
+	DebugDialog::debug("done 2 updating activation");
+
 }
 
 void FApplication::topLevelWidgetDestroyed(QObject * object) {

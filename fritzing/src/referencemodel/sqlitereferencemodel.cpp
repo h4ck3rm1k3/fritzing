@@ -41,6 +41,7 @@ SqliteReferenceModel::SqliteReferenceModel() {
 
 void SqliteReferenceModel::loadAll(bool fastLoad)
 {
+	DebugDialog::debug("start load all");
 	initParts(fastLoad);
 
 	int tries = 0;

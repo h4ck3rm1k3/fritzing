@@ -133,10 +133,10 @@ QString Ruler::makeSvg(double inches) {
 	int counter = 0;
 	for (int i = 0; i <= qCeil(mmW); i++) {
 		double h = cm / 4;
-		double x = (offset + (i / 25.4)) * 1000;
+		double x = (offset + (i / 25.4)) * GraphicsUtils::StandardFritzingDPI;
 		if (i % 10 == 0) {
 			h = cm / 2;
-			double y = (h + .1) * 1000;
+			double y = (h + .1) * GraphicsUtils::StandardFritzingDPI;
 			svg += QString("<text x='%1' y='%2'>%3</text>")
 					.arg(x)
 					.arg(y)
@@ -150,15 +150,15 @@ QString Ruler::makeSvg(double inches) {
 		}
 		svg += QString("<line x1='%1' y1='0' x2='%1' y2='%2' />\n")
 			.arg(x)
-			.arg(h * 1000);
+			.arg(h * GraphicsUtils::StandardFritzingDPI);
 	}
 	counter = 0;
 	for (int i = 0; i <= inches * 16; i++) {
 		double h = 0.125;
-		double x = (offset + (i / 16.0)) * 1000;
+		double x = (offset + (i / 16.0)) * GraphicsUtils::StandardFritzingDPI;
 		if (i % 16 == 0) {
 			h = .125 +  (3.0 / 16);
-			double y = 1000 - ((h + .015) * 1000);
+			double y = 1000 - ((h + .015) * GraphicsUtils::StandardFritzingDPI);
 			svg += QString("<text x='%1' y='%2'>%3</text>")
 					.arg(x)
 					.arg(y)
@@ -175,11 +175,11 @@ QString Ruler::makeSvg(double inches) {
 		}
 		svg += QString("<line x1='%1' y1='%2' x2='%1' y2='1000' />\n")
 			.arg(x)
-			.arg(1000 - (h * 1000));
+			.arg(1000 - (h * GraphicsUtils::StandardFritzingDPI));
 	}
 
 	for (int i = 0; i <= inches * 10; i++) {
-		double x = (offset + (i / 10.0)) * 1000;
+		double x = (offset + (i / 10.0)) * GraphicsUtils::StandardFritzingDPI;
 		double h = .125 + (3.0 / 16);
 		double h2 = h - (cm / 4);
 		if (i % 10 != 0) {
@@ -188,14 +188,14 @@ QString Ruler::makeSvg(double inches) {
 			}
 			svg += QString("<line x1='%1' y1='%2' x2='%1' y2='%3' />\n")
 				.arg(x)
-				.arg(1000 - (h * 1000))
-				.arg(1000 - (h2 * 1000));
+				.arg(1000 - (h * GraphicsUtils::StandardFritzingDPI))
+				.arg(1000 - (h2 * GraphicsUtils::StandardFritzingDPI));
 		}
 	}
 
 	svg += "<g font-size='40'>\n";
-	svg += QString("<text x='%1' y='%2'>1/10</text>").arg((1000 * offset / 2.0) + 7).arg(780);
-	svg += QString("<text x='%1' y='%2'>1/16</text>").arg((1000 * offset / 2.0) + 7).arg(990);
+	svg += QString("<text x='%1' y='%2'>1/10</text>").arg((GraphicsUtils::StandardFritzingDPI * offset / 2.0) + 7).arg(780);
+	svg += QString("<text x='%1' y='%2'>1/16</text>").arg((GraphicsUtils::StandardFritzingDPI * offset / 2.0) + 7).arg(990);
 	svg += "</g>";
 
 

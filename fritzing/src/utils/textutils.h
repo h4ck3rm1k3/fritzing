@@ -79,7 +79,7 @@ public:
 	static QString removeXMLNS(QString svgContent);
 	static void gWrap(QDomDocument & domDocument, const QHash<QString, QString> & attributes);
 	static bool tspanRemove(QString &svg);
-	static void slamStrokeAndFill(QDomElement &, const QString & stroke, const QString & fill);
+	static void slamStrokeAndFill(QDomElement &, const QString & stroke, const QString & strokeWidth, const QString & fill);
 	static QString incrementTemplate(const QString & filename, int pins, double unitIncrement, MultiplyPinFunction, CopyPinFunction);
 	static QString incrementTemplateString(const QString & templateString, int pins, double increment, MultiplyPinFunction, CopyPinFunction);
 	static QString standardCopyPinFunction(int pin, const QString & argString);
@@ -104,6 +104,7 @@ public:
 	static const QString CreatedWithFritzingString;
 	static const QString CreatedWithFritzingXmlComment;
 	static void collectLeaves(QDomElement & element, int & index, QVector<QDomElement> & leaves);
+	static void collectLeaves(QDomElement & element, QList<QDomElement> & leaves);
 	static const QRegExp floatingPointMatcher;
 	static const QString RegexFloatDetector;
 	static const QString AdobeIllustratorIdentifier;

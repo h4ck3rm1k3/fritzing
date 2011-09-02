@@ -294,9 +294,6 @@ int SVG2gerber::allPaths2gerber(ForWhy forWhy) {
 	QDomNodeList pathList = m_SVGDom.elementsByTagName("path");
     //DebugDialog::debug("paths to gerber: " + QString::number(pathList.length()));
 
-	int totalCount = circleList.count() + rectList.count() + polyList.count() + lineList.count() + pathList.count();
-	int outlineCount = 0;
-
     // if this is the board outline, use it as the contour
     if (forWhy == ForOutline) {
         //DebugDialog::debug("drawing board outline");
@@ -313,19 +310,13 @@ int SVG2gerber::allPaths2gerber(ForWhy forWhy) {
 			continue;
 		}
 
-		if (forWhy == ForOutline && totalCount > 1) {
-			if (circle.attribute("id").compare("boardoutline", Qt::CaseInsensitive) != 0) continue;
-		}
-
-		outlineCount++;
-
         double centerx = circle.attribute("cx").toDouble();
         double centery = circle.attribute("cy").toDouble();
         double r = circle.attribute("r").toDouble();
 		if (r == 0) continue;
 
         double stroke_width = circle.attribute("stroke-width").toDouble();
-		double hole = ((2*r) - stroke_width)/1000;
+		double hole = ((2*r) - stroke_width) / 1000;
 
 		if (forWhy == ForDrill) {
 			QString drill_cx = QString::number(flipxNoRound(centerx) / 1000, 'f');				// drill file seems to be in inches
@@ -401,9 +392,6 @@ int SVG2gerber::allPaths2gerber(ForWhy forWhy) {
 		// rects
 		for(uint j = 0; j < rectList.length(); j++){
 			QDomElement rect = rectList.item(j).toElement();
-			if (forWhy == ForOutline && totalCount > 1) {
-				if (rect.attribute("id").compare("boardoutline", Qt::CaseInsensitive) != 0) continue;
-			}
 
 			QString aperture;
 
@@ -468,7 +456,6 @@ int SVG2gerber::allPaths2gerber(ForWhy forWhy) {
 			else {
 				// draw 4 lines
 
-				outlineCount++;
 				standardAperture(rect, apertureMap, current_dcode, dcode_index, 0);
 				m_gerber_paths += "X" + QString::number(flipx(x)) + "Y" + QString::number(flipy(y)) + "D02*\n";
 				m_gerber_paths += "X" + QString::number(flipx(x+width)) + "Y" + QString::number(flipy(y)) + "D01*\n";
@@ -500,8 +487,6 @@ int SVG2gerber::allPaths2gerber(ForWhy forWhy) {
 				}
 			}
 
-			outlineCount++;
-
 			//go to start - light off
 			m_gerber_paths += "X" + QString::number(flipx(x1)) + "Y" + QString::number(flipy(y1)) + "D02*\n";
 			//go to end point - light on
@@ -514,22 +499,17 @@ int SVG2gerber::allPaths2gerber(ForWhy forWhy) {
 		// polys - NOTE: assumes comma- or space- separated formatting
 		for(uint p = 0; p < polyList.length(); p++) {
                         QDomElement polygon = polyList.item(p).toElement();
-                        doPoly(polygon, forWhy, totalCount, true, apertureMap, current_dcode, dcode_index, outlineCount);
+                        doPoly(polygon, forWhy, true, apertureMap, current_dcode, dcode_index);
 		}
                 for(uint p = 0; p < polyLineList.length(); p++) {
                         QDomElement polygon = polyList.item(p).toElement();
-                        doPoly(polygon, forWhy, totalCount, false, apertureMap, current_dcode, dcode_index, outlineCount);
+                        doPoly(polygon, forWhy, false, apertureMap, current_dcode, dcode_index);
 		}
 	}
 
     // paths - NOTE: this assumes circular aperture
     for(uint n = 0; n < pathList.length(); n++){
         QDomElement path = pathList.item(n).toElement();
-		if (forWhy == ForOutline && totalCount > 1) {
-			if (path.attribute("id").compare("boardoutline", Qt::CaseInsensitive) != 0) continue;
-		}
-
-		outlineCount++;
 
 		if (forWhy == ForDrill) {
 			handleOblongPath(path, dcode_index);
@@ -605,23 +585,14 @@ int SVG2gerber::allPaths2gerber(ForWhy forWhy) {
     if (forWhy == ForOutline) {
         // add circular aperture with 0 width
         m_gerber_header += "%ADD10C,0.008*%\n";
-		if (outlineCount != 1) {
-			// if we can't find one and only one svg element as the board outline, then go to plan b
-			invalidPathsCount++;
-		}
     }
 
 	return invalidPathsCount;
 }
 
-void SVG2gerber::doPoly(QDomElement & polygon, ForWhy forWhy, int totalCount, bool closedCurve,
-					QHash<QString, QString> & apertureMap, QString & current_dcode, int & dcode_index, int & outlineCount) 
+void SVG2gerber::doPoly(QDomElement & polygon, ForWhy forWhy, bool closedCurve,
+					QHash<QString, QString> & apertureMap, QString & current_dcode, int & dcode_index) 
 {
-	if (forWhy == ForOutline && totalCount > 1) {
-		if (polygon.attribute("id").compare("boardoutline", Qt::CaseInsensitive) != 0) return;
-	}
-
-	outlineCount++;
 
 	//QString temp;
 	//QTextStream tempStream(&temp);

@@ -49,6 +49,7 @@ const QString GerberGenerator::MaskTopSuffix = "_maskTop.gts";
 const QString GerberGenerator::MaskBottomSuffix = "_maskBottom.gbs";
 const QString GerberGenerator::DrillSuffix = "_drill.txt";
 const QString GerberGenerator::OutlineSuffix = "_contour.gm1";
+const QString GerberGenerator::MagicBoardOutlineID = "boardoutline";
 
 
 ////////////////////////////////////////////
@@ -94,27 +95,15 @@ void GerberGenerator::exportToGerber(const QString & filename, const QString & e
         return;
     }
 
+	svgOutline = cleanOutline(svgOutline);
+	svgOutline = clipToBoard(svgOutline, board, "board", SVG2gerber::ForOutline);
+
 	QXmlStreamReader streamReader(svgOutline);
 	QSizeF svgSize = FSvgRenderer::parseForWidthAndHeight(streamReader);
-
-	QDomDocument domDocument;
-	QString errorStr;
-	int errorLine;
-	int errorColumn;
-    bool result = domDocument.setContent(svgOutline, &errorStr, &errorLine, &errorColumn);
-    if (!result) {
-		displayMessage(QObject::tr("outline file export failure (1)"), displayMessageBoxes);
-        return;
-    }
 
     // create outline gerber from svg
     SVG2gerber outlineGerber;
 	int outlineInvalidCount = outlineGerber.convert(svgOutline, sketchWidget->boardLayers() == 2, "contour", SVG2gerber::ForOutline, svgSize * GraphicsUtils::StandardFritzingDPI);
-	if (outlineInvalidCount > 0) {
-		outlineInvalidCount = 0;
-		svgOutline = clipToBoard(svgOutline, board, "board", SVG2gerber::ForOutline);
-		outlineInvalidCount = outlineGerber.convert(svgOutline, sketchWidget->boardLayers() == 2, "contour", SVG2gerber::ForOutline, svgSize * GraphicsUtils::StandardFritzingDPI);
-	}
 
     // contour / board outline
     QString contourFile = exportDir + "/" +
@@ -487,4 +476,35 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 	}
 
 	return svgString;
+}
+
+QString GerberGenerator::cleanOutline(const QString & outlineSvg)
+{
+	QDomDocument doc;
+	doc.setContent(outlineSvg);
+	QList<QDomElement> leaves;
+    QDomElement root = doc.documentElement();
+    TextUtils::collectLeaves(root, leaves);
+
+	if (leaves.count() == 0) return "";
+	if (leaves.count() == 1) return outlineSvg;
+
+	if (leaves.count() > 1) {
+		for (int i = 0; i < leaves.count(); i++) {
+			QDomElement leaf = leaves.at(i);
+			if (leaf.attribute("id", "").compare(MagicBoardOutlineID) == 0) {
+				for (int j = 0; j < leaves.count(); j++) {
+					if (i != j) {
+						leaves.at(j).parentNode().removeChild(leaves.at(j));
+					}
+				}
+
+				return doc.toString();
+			}
+		}
+	}
+
+	if (leaves.count() == 0) return "";
+
+	return outlineSvg;
 }

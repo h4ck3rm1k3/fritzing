@@ -38,8 +38,10 @@ class GerberGenerator
 public:
 	static void exportToGerber(const QString & filename, const QString & exportDir, class ItemBase * board, class PCBSketchWidget *, bool displayMessageBoxes);
 	static QString clipToBoard(QString svgString, QRectF & boardRect, const QString & layerName, SVG2gerber::ForWhy);
+	static QString clipToBoard(QString svgString, ItemBase * board, const QString & layerName, SVG2gerber::ForWhy);
 	static int doEnd(const QString & svg, int boardLayers, const QString & layerName, SVG2gerber::ForWhy forWhy, QSizeF svgSize, 
 						const QString & exportDir, const QString & prefix, const QString & suffix, bool displayMessageBoxes);
+	static QString cleanOutline(const QString & svgOutline);
 
 public:
 	static const QString SilkTopSuffix;
@@ -50,13 +52,13 @@ public:
 	static const QString MaskBottomSuffix;
 	static const QString DrillSuffix;
 	static const QString OutlineSuffix;
+	static const QString MagicBoardOutlineID;
 
 protected:
 	static int doSilk(LayerList silkLayerIDs, const QString & silkName, const QString & gerberSuffix, ItemBase * board, PCBSketchWidget * sketchWidget, const QString & filename, const QString & exportDir, bool displayMessageBoxes);
 	static int doMask(LayerList maskLayerIDs, const QString & maskName, const QString & gerberSuffix, ItemBase * board, PCBSketchWidget * sketchWidget, const QString & filename, const QString & exportDir, bool displayMessageBoxes);
 	static int doCopper(ItemBase * board, PCBSketchWidget * sketchWidget, LayerList & viewLayerIDs, const QString & copperName, const QString & copperSuffix, const QString & filename, const QString & exportDir, bool displayMessageBoxes);
 	static int doDrill(ItemBase * board, PCBSketchWidget * sketchWidget, const QString & filename, const QString & exportDir, bool displayMessageBoxes);
-	static QString clipToBoard(QString svgString, ItemBase * board, const QString & layerName, SVG2gerber::ForWhy);
 	static void displayMessage(const QString & message, bool displayMessageBoxes);
 
 };

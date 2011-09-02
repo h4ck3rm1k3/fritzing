@@ -28,6 +28,7 @@ $Date$
 #include "../../debugdialog.h"
 #include "../../sketch/pcbsketchwidget.h"
 #include "../../utils/textutils.h"
+#include "../../utils/graphicsutils.h"
 #include "../../utils/folderutils.h"
 #include "../../utils/folderutils.h"
 #include "../../items/resizableboard.h"
@@ -85,8 +86,6 @@ static double Worst = std::numeric_limits<double>::max() / 4;
 
 void Panelizer::panelize(FApplication * app, const QString & panelFilename) 
 {
-	DebugDialog::debug("alive in here 6");
-
 	QFile file(panelFilename);
 
 	QString errorStr;
@@ -107,8 +106,6 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 
 	PanelParams panelParams;
 	if (!initPanelParams(root, panelParams)) return;
-
-	DebugDialog::debug("alive in here 9");
 
 
 	QDomElement boards = root.firstChildElement("boards");
@@ -131,19 +128,20 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 		DebugDialog::debug(QString("no fzz files found in paths"));
 		return;
 	}
-
-	DebugDialog::debug("alive in here 10");
-
 	
 	board = boards.firstChildElement("board");
 	if (!checkBoards(board, fzzFilePaths)) return;
 
-	DebugDialog::debug("alive in here 7");
-
 	app->createUserDataStoreFolderStructure();
 
 	app->registerFonts();
+
+	DebugDialog::debug("alive in here 9");
+
 	app->loadReferenceModel();
+
+	DebugDialog::debug("alive in here 10");
+
 	if (!app->loadBin("")) {
 		DebugDialog::debug(QString("load bin failed"));
 		return;
@@ -168,14 +166,16 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 
 	qSort(insertPanelItems.begin(), insertPanelItems.end(), areaGreaterThan);
 
-	DebugDialog::debug("alive in here after crash");
+	DebugDialog::debug("alive in here no crash");
 
 	bestFit(insertPanelItems, panelParams, planePairs);
 
 	addOptional(optionalCount, refPanelItems, insertPanelItems, panelParams, planePairs);
 
+	QDir outputDir(panelParams.outputFolder);
 	foreach (PlanePair * planePair, planePairs) {
-		QFile outfile(QString("%1.panel_%2.debug.svg").arg(panelParams.prefix).arg(planePair->index));
+		QString fname = outputDir.absoluteFilePath(QString("%1.panel_%2.layout.svg").arg(panelParams.prefix).arg(planePair->index));
+		QFile outfile(fname);
 		if (outfile.open(QIODevice::WriteOnly | QIODevice::Text)) {
 			QTextStream out(&outfile);
 			out << planePair->svg;
@@ -210,8 +210,8 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 	layerThingList.append(LayerThing("mask_top", ViewLayer::maskLayers(ViewLayer::Top), SVG2gerber::ForMask, GerberGenerator:: MaskTopSuffix));
 	layerThingList.append(LayerThing("mask_bottom", ViewLayer::maskLayers(ViewLayer::Bottom), SVG2gerber::ForMask, GerberGenerator::MaskBottomSuffix));
 	layerThingList.append(LayerThing("drill", ViewLayer::drillLayers(), SVG2gerber::ForDrill, GerberGenerator::DrillSuffix));
-	//layerThingList.append(LayerThing("outline", ViewLayer::outlineLayers(), SVG2gerber::ForOutline));
-
+	layerThingList.append(LayerThing("outline", ViewLayer::outlineLayers(), SVG2gerber::ForOutline, GerberGenerator::OutlineSuffix));  
+	  
 	QHash<QString, bool> rotated;
 	foreach(PanelItem * panelItem, refPanelItems.values()) {
 		rotated.insert(panelItem->path, false);
@@ -219,7 +219,7 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 
 	foreach (PlanePair * planePair, planePairs) {
 		for (int i = 0; i < layerThingList.count(); i++) {
-			planePair->svgs << TextUtils::makeSVGHeader(1, 1000, panelParams.panelWidth, panelParams.panelHeight);
+			planePair->svgs << TextUtils::makeSVGHeader(1, GraphicsUtils::StandardFritzingDPI, panelParams.panelWidth, panelParams.panelHeight);
 		}
 
 		foreach (PanelItem * panelItem, insertPanelItems) {
@@ -234,24 +234,27 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 					panelItem->window->pcbView()->rotateX(90, false);
 				}
 
-				offsetRect = panelItem->board->sceneBoundingRect();
-				offsetRect.moveTo(offsetRect.left() - (panelItem->x * FSvgRenderer::printerScale()), offsetRect.top() - (panelItem->y * FSvgRenderer::printerScale()));
-
-				QRectF clipRect = offsetRect;
-				clipRect.moveTo(panelItem->x * FSvgRenderer::printerScale(), panelItem->y * FSvgRenderer::printerScale());
-
 				QSizeF imageSize;
 				bool empty;
 
 				for (int i = 0; i < planePair->svgs.count(); i++) {
-					QString one = panelItem->window->pcbView()->renderToSVG(FSvgRenderer::printerScale(), layerThingList.at(i).layerList, layerThingList.at(i).layerList, true, imageSize, offsetRect, 1000, false, false, false, empty);
-					one = GerberGenerator::clipToBoard(one, clipRect, layerThingList.at(i).name, layerThingList.at(i).forWhy);
+					QString one = panelItem->window->pcbView()->renderToSVG(FSvgRenderer::printerScale(), layerThingList.at(i).layerList, layerThingList.at(i).layerList, true, imageSize, panelItem->board, GraphicsUtils::StandardFritzingDPI, false, false, false, empty);
+					
+					if (layerThingList.at(i).forWhy == SVG2gerber::ForOutline) {
+						one = GerberGenerator::cleanOutline(one);
+					}
+					
+					one = GerberGenerator::clipToBoard(one, panelItem->board, layerThingList.at(i).name, layerThingList.at(i).forWhy);
 					if (one.isEmpty()) continue;
 
 					int left = one.indexOf("<svg");
 					left = one.indexOf(">", left + 1);
 					int right = one.lastIndexOf("<");
-					planePair->svgs.replace(i, planePair->svgs.at(i) + one.mid(left + 1, right - left - 1));
+					one = QString("<g transform='translate(%1,%2)'>\n").arg(panelItem->x * GraphicsUtils::StandardFritzingDPI).arg(panelItem->y * GraphicsUtils::StandardFritzingDPI) + 
+									one.mid(left + 1, right - left - 1) + 
+									"</g>\n";
+
+					planePair->svgs.replace(i, planePair->svgs.at(i) + one);
 				}
 			}
 			catch (const char * msg) {
@@ -269,7 +272,8 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 		for (int i = 0; i < planePair->svgs.count(); i++) {
 			if (planePair->svgs.at(i).isEmpty()) continue;
 
-			QFile outfile(QString("%1.panel_%2.%3.svg").arg(panelParams.prefix).arg(planePair->index).arg(layerThingList.at(i).name));
+			QString fname = outputDir.absoluteFilePath(QString("%1.panel_%2.%3.svg").arg(panelParams.prefix).arg(planePair->index).arg(layerThingList.at(i).name));
+			QFile outfile(fname);
 			if (outfile.open(QIODevice::WriteOnly | QIODevice::Text)) {
 				QTextStream out(&outfile);
 				out << planePair->svgs.at(i);
@@ -368,13 +372,13 @@ bool Panelizer::bestFitOne(PanelItem * panelItem, PanelParams & panelParams, QLi
 		}
 
 		planePair->svg += QString("<rect x='%1' y='%2' width='%3' height='%4' stroke='none' fill='red'/>\n")
-			.arg(panelItem->x * 1000)
-			.arg(panelItem->y * 1000)
-			.arg(1000 * w)
-			.arg(1000 * h);
+			.arg(panelItem->x * GraphicsUtils::StandardFritzingDPI)
+			.arg(panelItem->y * GraphicsUtils::StandardFritzingDPI)
+			.arg(GraphicsUtils::StandardFritzingDPI * w)
+			.arg(GraphicsUtils::StandardFritzingDPI * h);
 		planePair->svg += QString("<text x='%1' y='%2' anchor='middle' font-family='DroidSans' stroke='none' fill='#000000' text-anchor='middle' font-size='85'>%3</text>\n")
-			.arg(1000 * (panelItem->x + (w / 2)))
-			.arg(1000 * (panelItem->y + (h  / 2)))
+			.arg(GraphicsUtils::StandardFritzingDPI * (panelItem->x + (w / 2)))
+			.arg(GraphicsUtils::StandardFritzingDPI * (panelItem->y + (h  / 2)))
 			.arg(QFileInfo(panelItem->path).completeBaseName());
 
 
@@ -395,7 +399,7 @@ PlanePair * Panelizer::makePlanePair(PanelParams & panelParams)
 	PlanePair * planePair = new PlanePair;
 
 	// for debugging
-	planePair->svg = TextUtils::makeSVGHeader(1, 1000, panelParams.panelWidth, panelParams.panelHeight);
+	planePair->svg = TextUtils::makeSVGHeader(1, GraphicsUtils::StandardFritzingDPI, panelParams.panelWidth, panelParams.panelHeight);
 	planePair->index = PlanePairIndex++;
 
 	Tile * bufferTile = TiAlloc();
@@ -471,6 +475,7 @@ bool Panelizer::checkBoards(QDomElement & board, QHash<QString, QString> & fzzFi
 {
 	while (!board.isNull()) {
 		QString boardname = board.attribute("name");
+		//DebugDialog::debug(QString("board %1").arg(boardname));
 		bool ok;
 		int test = board.attribute("requiredCount", "").toInt(&ok);
 		if (!ok) {

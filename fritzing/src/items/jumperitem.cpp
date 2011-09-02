@@ -274,7 +274,7 @@ QString JumperItem::makeSvg(ViewLayer::ViewLayerID viewLayerID)
 		case ViewLayer::Copper1:
 			return Copper0LayerTemplate
 				.arg(w).arg(h)
-				.arg(w * 1000).arg(h * 1000)			
+				.arg(w * GraphicsUtils::StandardFritzingDPI).arg(h * GraphicsUtils::StandardFritzingDPI)			
 				.arg(r0x).arg(r0y).arg(r1x).arg(r1y)
 				.arg(ViewLayer::viewLayerXmlNameFromID(viewLayerID))
 				.arg(Colors.value(viewLayerID));

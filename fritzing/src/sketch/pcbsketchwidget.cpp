@@ -2533,7 +2533,7 @@ bool PCBSketchWidget::groundFill(QUndoCommand * parentCommand)
 	exceptions << background().name();    // the color of holes in the board
 
 	GroundPlaneGenerator gpg;
-	bool result = gpg.generateGroundPlane(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board, 1000 / 5.0  /* 1 MIL */,
+	bool result = gpg.generateGroundPlane(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board, GraphicsUtils::StandardFritzingDPI / 5.0  /* 1 MIL */,
 											ViewLayer::Copper0Color, "groundplane");
 	if (result == false) {
         QMessageBox::critical(NULL, tr("Fritzing"), tr("Fritzing error: unable to write copper fill (1)."));
@@ -2542,7 +2542,7 @@ bool PCBSketchWidget::groundFill(QUndoCommand * parentCommand)
 
 	GroundPlaneGenerator gpg2;
 	if (boardLayers() > 1) {
-		bool result = gpg2.generateGroundPlane(boardSvg, boardImageSize, svg2, copperImageSize, exceptions, board, 1000 / 5.0  /* 1 MIL */,
+		bool result = gpg2.generateGroundPlane(boardSvg, boardImageSize, svg2, copperImageSize, exceptions, board, GraphicsUtils::StandardFritzingDPI / 5.0  /* 1 MIL */,
 												ViewLayer::Copper1Color, "groundplane1");
 		if (result == false) {
 			QMessageBox::critical(NULL, tr("Fritzing"), tr("Fritzing error: unable to write copper fill (2)."));
@@ -2624,7 +2624,7 @@ QString PCBSketchWidget::generateCopperFillUnit(ItemBase * itemBase, QPointF whe
 	exceptions << background().name();    // the color of holes in the board
 
 	GroundPlaneGenerator gpg;
-	bool result = gpg.generateGroundPlaneUnit(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board, 1000 / 5.0  /* 1 MIL */, 
+	bool result = gpg.generateGroundPlaneUnit(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board, GraphicsUtils::StandardFritzingDPI / 5.0  /* 1 MIL */, 
 												color, gpLayerName, whereToStart);
 
 	if (result == false || gpg.newSVGs().count() < 1) {

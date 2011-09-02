@@ -26,6 +26,7 @@ $Date$
 
 #include "kicadschematic2svg.h"
 #include "../utils/textutils.h"
+#include "../utils/graphicsutils.h"
 #include "../version/version.h"
 #include "../debugdialog.h"
 #include "../viewlayer.h"
@@ -199,7 +200,7 @@ QString KicadSchematic2Svg::convert(const QString & filename, const QString & de
 
 	contents += "</g>\n";
 
-	QString svg = TextUtils::makeSVGHeader(1000, 1000, m_maxX - m_minX, m_maxY - m_minY) 
+	QString svg = TextUtils::makeSVGHeader(GraphicsUtils::StandardFritzingDPI, GraphicsUtils::StandardFritzingDPI, m_maxX - m_minX, m_maxY - m_minY) 
 					+ m_title + m_description + metadata + offsetMin(contents) + "</svg>";
 
 	return svg;
@@ -260,7 +261,7 @@ QString KicadSchematic2Svg::convertField(const QString & xString, const QString 
 	QFont font;
 	font.setFamily("OCRA");
 	font.setWeight(QFont::Normal);
-	font.setPointSizeF(72 * fontSize / 1000.0);
+	font.setPointSizeF(72.0 * fontSize / GraphicsUtils::StandardFritzingDPI);
 
 	QString style;
 	if (vjustify.contains("I")) {
@@ -290,8 +291,8 @@ QString KicadSchematic2Svg::convertField(const QString & xString, const QString 
 
 	// convert back to 1000 dpi
 	QRectF brf(0, 0,
-			   bri.width() * 1000 / FSvgRenderer::printerScale(), 
-			   bri.height() * 1000 / FSvgRenderer::printerScale());
+			   bri.width() * GraphicsUtils::StandardFritzingDPI / FSvgRenderer::printerScale(), 
+			   bri.height() * GraphicsUtils::StandardFritzingDPI / FSvgRenderer::printerScale());
 
 	if (anchor == "start") {
 		brf.translate(x, y - (brf.height() / 2));

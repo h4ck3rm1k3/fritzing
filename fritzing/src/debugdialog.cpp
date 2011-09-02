@@ -39,7 +39,7 @@ DebugDialog* DebugDialog::singleton = NULL;
 QFile DebugDialog::m_file;
 
 #ifdef QT_NO_DEBUG
-bool DebugDialog::m_enabled = false;
+bool DebugDialog::m_enabled = true;
 #else
 bool DebugDialog::m_enabled = true;
 #endif

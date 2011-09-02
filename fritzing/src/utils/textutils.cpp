@@ -739,6 +739,19 @@ void TextUtils::collectLeaves(QDomElement & element, int & index, QVector<QDomEl
 	}
 }
 
+void TextUtils::collectLeaves(QDomElement & element, QList<QDomElement> & leaves) {
+	if (element.hasChildNodes()) {
+		QDomElement c = element.firstChildElement();
+		while (!c.isNull()) {
+			collectLeaves(c, leaves);
+			c = c.nextSiblingElement();
+		}
+	}
+	else {
+		leaves.append(element);
+	}
+}
+
 QMatrix TextUtils::elementToMatrix(QDomElement & element) {
 	QString transform = element.attribute("transform");
 	if (transform.isEmpty()) return QMatrix();
@@ -902,19 +915,21 @@ QDomElement TextUtils::copyText(QDomDocument & svgDom, QDomElement & parent, QDo
 	return ___emptyElement___;
 }
 
-void TextUtils::slamStrokeAndFill(QDomElement & element, const QString & stroke, const QString & fill)
+void TextUtils::slamStrokeAndFill(QDomElement & element, const QString & stroke, const QString & strokeWidth, const QString & fill)
 {
 	// assumes style elements have been normalized already
 	QString strokeAtt = element.attribute("stroke");
 	QString fillAtt = element.attribute("fill");
-	if (!strokeAtt.isEmpty() || !fillAtt.isEmpty()) {
+	QString strokeWidthAtt = element.attribute("stroke-width");
+	if (!strokeAtt.isEmpty() || !fillAtt.isEmpty() || !strokeWidthAtt.isEmpty()) {
 		element.setAttribute("stroke", stroke);
 		element.setAttribute("fill", fill);
+		element.setAttribute("stroke-width", strokeWidth);
 	}
 
 	QDomElement child = element.firstChildElement();
 	while (!child.isNull()) {
-		slamStrokeAndFill(child, stroke, fill);
+		slamStrokeAndFill(child, stroke, strokeWidth, fill);
 		child = child.nextSiblingElement();
 	}
 }

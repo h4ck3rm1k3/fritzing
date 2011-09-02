@@ -882,10 +882,10 @@ QString PartLabel::makeSvgAux(bool blackOnly, double dpi, double printerScale, d
 void PartLabel::resetSvg()
 {
 	double w, h;
-	QString innerSvg = makeSvgAux(false, 1000, FSvgRenderer::printerScale(), w, h);
+	QString innerSvg = makeSvgAux(false, GraphicsUtils::StandardFritzingDPI, FSvgRenderer::printerScale(), w, h);
 	if (innerSvg.isEmpty()) return;
 
-	QString svg = TextUtils::makeSVGHeader(FSvgRenderer::printerScale(), 1000, w, h) + innerSvg + "\n</svg>";
+	QString svg = TextUtils::makeSVGHeader(FSvgRenderer::printerScale(), GraphicsUtils::StandardFritzingDPI, w, h) + innerSvg + "\n</svg>";
 
 	if (m_renderer == NULL) {
 		m_renderer = new QSvgRenderer(this);

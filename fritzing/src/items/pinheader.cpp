@@ -291,7 +291,7 @@ QString PinHeader::makePcbSvg(const QString & expectedFileName)
 	double copperStrokeWidth = 20;
 	double totalWidth = (outerBorder * 2) + (silkStrokeWidth * 2) + (innerBorder * 2) + (radius * 2) + copperStrokeWidth;
 	double center = totalWidth / 2;
-	double spacing =TextUtils::convertToInches(spacingString) * 1000; 
+	double spacing =TextUtils::convertToInches(spacingString) * GraphicsUtils::StandardFritzingDPI; 
 
 	QString middle;
 
@@ -311,8 +311,8 @@ QString PinHeader::makePcbSvg(const QString & expectedFileName)
 	double totalHeight = totalWidth + (pins * spacing) - spacing;
 
 	QString svg = pcbLayerTemplate
-					.arg(totalWidth / 1000)
-					.arg(totalHeight / 1000)
+					.arg(totalWidth / GraphicsUtils::StandardFritzingDPI)
+					.arg(totalHeight / GraphicsUtils::StandardFritzingDPI)
 					.arg(totalWidth)
 					.arg(totalHeight)
 					.arg(totalWidth - outerBorder - (silkStrokeWidth / 2))

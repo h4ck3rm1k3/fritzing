@@ -26,6 +26,7 @@ $Date$
 
 #include "dip.h"
 #include "../utils/textutils.h"
+#include "../utils/graphicsutils.h"
 
 static QStringList Spacings;
 
@@ -150,12 +151,12 @@ QString Dip::makePcbSvg(const QString & expectedFileName)
 	double silkSplitTop = 100;
 	double offsetX = 60;
 	double offsetY = 60;
-	double spacing = TextUtils::convertToInches(spacingString) * 1000; 
+	double spacing = TextUtils::convertToInches(spacingString) * GraphicsUtils::StandardFritzingDPI; 
 	double totalWidth = 120 + spacing;
 	double totalHeight = (100 * pins / 2) + (outerBorder * 2);
 	double center = totalWidth / 2;
 
-	QString svg = header.arg(totalWidth / 1000).arg(totalHeight / 1000).arg(totalWidth).arg(totalHeight)
+	QString svg = header.arg(totalWidth / GraphicsUtils::StandardFritzingDPI).arg(totalHeight / GraphicsUtils::StandardFritzingDPI).arg(totalWidth).arg(totalHeight)
 							.arg(totalHeight - outerBorder).arg(totalWidth - outerBorder)
 							.arg(center - (silkSplitTop / 2)).arg(center + (silkSplitTop / 2));
 

@@ -166,9 +166,9 @@ QString SchematicFrame::makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, double 
 		QFont font = m_textEdit->font();
 		font.setFamily("Droid Sans");
 		font.setWeight(QFont::Normal);
-		font.setPointSizeF(72 * FontSize / 1000);
+		font.setPointSizeF(72.0 * FontSize / GraphicsUtils::StandardFritzingDPI);
 		m_textEdit->setFont(font);
-		m_textEdit->setLineWrapColumnOrWidth(FSvgRenderer::printerScale() * (OriginalWidth - Margin) / 1000);  
+		m_textEdit->setLineWrapColumnOrWidth(FSvgRenderer::printerScale() * (OriginalWidth - Margin) / GraphicsUtils::StandardFritzingDPI);  
 	}
 
 
@@ -230,11 +230,11 @@ ViewIdentifierClass::ViewIdentifier SchematicFrame::theViewIdentifier() {
 }
 
 double SchematicFrame::minWidth() {
-	return OriginalWidth * FSvgRenderer::printerScale() / 1000;
+	return OriginalWidth * FSvgRenderer::printerScale() / GraphicsUtils::StandardFritzingDPI;
 }
 
 double SchematicFrame::minHeight() {
-	return OriginalHeight * FSvgRenderer::printerScale() / 1000;
+	return OriginalHeight * FSvgRenderer::printerScale() / GraphicsUtils::StandardFritzingDPI;
 }
 
 void SchematicFrame::addedToScene(bool temporary)
@@ -401,8 +401,8 @@ void SchematicFrame::setInitialSize() {
 	double w = m_modelPart->prop("width").toDouble();
 	if (w == 0) {
 		// set the size so the infoGraphicsView will display the size as you drag
-		modelPart()->setProp("width", 25.4 * OriginalWidth / 1000); 
-		modelPart()->setProp("height", 25.4 * OriginalHeight / 1000); 
+		modelPart()->setProp("width", 25.4 * OriginalWidth / GraphicsUtils::StandardFritzingDPI); 
+		modelPart()->setProp("height", 25.4 * OriginalHeight / GraphicsUtils::StandardFritzingDPI); 
 	}
 }
 

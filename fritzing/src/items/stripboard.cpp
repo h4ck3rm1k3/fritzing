@@ -27,6 +27,7 @@ $Date$
 #include "stripboard.h"
 #include "../utils/graphicsutils.h"
 #include "../utils/textutils.h"
+#include "../svg/gerbergenerator.h"
 #include "../fsvgrenderer.h"
 #include "../sketch/infographicsview.h"
 #include "moduleidnames.h"
@@ -299,7 +300,7 @@ QString Stripboard::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QStrin
 {
 	QString svg = Perfboard::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 	if (svg.isEmpty()) return svg;
-	if (!svg.contains("boardoutline")) return svg;
+	if (!svg.contains(GerberGenerator::MagicBoardOutlineID)) return svg;
 
 	/*
 	QFile file(filename());
