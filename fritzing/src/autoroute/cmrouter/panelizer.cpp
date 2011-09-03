@@ -82,6 +82,21 @@ static int PlanePairIndex = 0;
 
 static double Worst = std::numeric_limits<double>::max() / 4;
 
+struct LayerThing {
+    LayerList layerList;
+    QString name;
+    SVG2gerber::ForWhy forWhy;
+    QString suffix;
+
+    LayerThing(const QString & n, LayerList ll, SVG2gerber::ForWhy fw, const QString & s) {
+            layerList = ll;
+            name = n;
+            forWhy = fw;
+            suffix = s;
+    }
+
+};
+
 /////////////////////////////////////////////////////////////////////////////////
 
 void Panelizer::panelize(FApplication * app, const QString & panelFilename) 
@@ -203,21 +218,6 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 
 	// so we only have to rotate once
 	qSort(insertPanelItems.begin(), insertPanelItems.end(), rotateGreaterThan);
-
-	struct LayerThing {
-		LayerList layerList;
-		QString name;
-		SVG2gerber::ForWhy forWhy;
-		QString suffix;
-
-		LayerThing(const QString & n, LayerList ll, SVG2gerber::ForWhy fw, const QString & s) {
-			layerList = ll;
-			name = n;
-			forWhy = fw;
-			suffix = s;
-		}
-
-	};
 
 	QList<LayerThing> layerThingList;
 	layerThingList.append(LayerThing("silk_top", ViewLayer::silkLayers(ViewLayer::Top), SVG2gerber::ForSilk, GerberGenerator::SilkTopSuffix));

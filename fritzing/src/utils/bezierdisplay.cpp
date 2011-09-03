@@ -124,9 +124,9 @@ void BezierDisplay::updateDisplay(QGraphicsItem * master, Bezier *bezier)
 		return;
 	}
 
-	static double minD = 5;
-	static double radius = 6;
-	static double minDSqd = minD * minD;
+        //static double minD = 5;
+        //static double radius = 6;
+        //static double minDSqd = minD * minD;
 
 	QRectF sr = master->scene()->sceneRect();
 	double x1, y1, x2, y2;
