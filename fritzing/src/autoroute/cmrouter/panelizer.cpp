@@ -136,6 +136,8 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 		return;
 	}
 
+	DebugDialog::debug(QString("svg folder '%1'\n").arg(svgDir.absolutePath()));
+
 	QDir gerberDir(outputDir);
 	gerberDir.cd("gerber");
 	if (!gerberDir.exists()) {
@@ -143,12 +145,17 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 		return;
 	}
 
+	DebugDialog::debug(QString("gerber folder '%1'\n").arg(gerberDir.absolutePath()));
+
 	QDir fzDir(outputDir);
 	fzDir.cd("fz");
 	if (!fzDir.exists()) {
 		DebugDialog::debug(QString("unable to create fz folder in '%1'").arg(panelParams.outputFolder));
 		return;
 	}
+
+	DebugDialog::debug(QString("fz folder '%1'\n").arg(fzDir.absolutePath()));
+
 
 	QDomElement boards = root.firstChildElement("boards");
 	QDomElement board = boards.firstChildElement("board");
