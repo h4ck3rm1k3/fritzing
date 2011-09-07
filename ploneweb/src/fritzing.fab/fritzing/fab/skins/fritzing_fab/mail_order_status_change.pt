@@ -9,7 +9,7 @@ Dear <span tal:replace="options/to_name" />,
 
 We would like to thank you for placing your order with Fritzing Fab. We hope that you will be satisfied and have fun with your PCB.
 
-Your order will ship on <span tal:replace="python:options['delivery_date'].strftime('%B %d')" />.
+Your order will ship on <span tal:replace="options/delivery_date" />.
 
 Below you will find an overview of your order. If you have any questions or concerns, please do not hesitate to contact us.
 
