@@ -203,7 +203,7 @@ class AddForm(dexterity.AddForm):
         sketch.title = data['orderItem'].filename
         sketch.orderItem = data['orderItem']
         sketch.copies = data['copies']
-        sketch.check = data['check']
+        sketch.check = True
         return sketch
     
     def add(self, object):

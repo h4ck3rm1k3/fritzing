@@ -28,10 +28,11 @@ class ISketch(form.Schema):
         min = 1,
         default = 1)
     
+    form.omitted('check')
     check = Bool(
-        title = _(u"Sanity Check"),
-        description = _(u"Have us check your design for an extra 5 EUR"),
-        default = False)
+        title = _(u"File Check"),
+        description = _(u"Have us check your design for an extra 4 EUR"),
+        default = True)
     
     form.omitted(
         'width', 

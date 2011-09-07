@@ -61,7 +61,7 @@ def encodeFilename(self, filename):
 
 def recalculatePrices(faborder):
     faborder.priceNetto = faborder.area * faborder.pricePerSquareCm
-    faborder.priceQualityChecksNetto = faborder.numberOfQualityChecks * 5.0
+    faborder.priceQualityChecksNetto = faborder.numberOfQualityChecks * 4.0
     faborder.priceTotalNetto = faborder.priceNetto + faborder.priceQualityChecksNetto
     
     # shipping and taxes
