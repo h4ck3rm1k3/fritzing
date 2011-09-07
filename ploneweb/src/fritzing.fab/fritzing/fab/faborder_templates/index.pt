@@ -44,7 +44,7 @@
                   <th class="actionCell"></th>
                   <th class="copiesCell">Copies</th>
                   <th class="areaCell">cm²</th>
-                  <th class="checkCell">Sanity Check</th>
+                  <!--<th class="checkCell">Quick Check</th>-->
                   <th class="priceCell">Price</th>
                 </tr>
               </thead>
@@ -69,16 +69,18 @@
                     <span tal:content="sketch/copies | nothing"></span>
                   </td>
                   <td class="areaCell">
-                    <span tal:content="python: '%.2f' % (sketch.width*sketch.height)"></span> cm²<br />
+                    <span tal:content="python: '%.2f' % (sketch.copies * sketch.area)"></span> cm²<br />
                     <span tal:content="python: '%.2f' % (context.pricePerSquareCm)"></span> EUR/cm²
                   </td>
+		<!--
                   <td class="checkCell">
                     <span tal:condition="sketch/check">yes</span>
                     <span tal:condition="not: sketch/check">no</span>
                   </td>
+		  -->
                   <td class="priceCell">
                     <div tal:content="python: '%.2f EUR' % (sketch.copies * sketch.area * context.pricePerSquareCm)"></div>
-                    <div tal:condition="sketch/check">5.00 EUR</div>
+                    <div>+ Checking 4.00 EUR</div>
                   </td>
                 </tr>
                 <tr>
@@ -92,7 +94,7 @@
                   <td></td>
                   <td></td>
                   <td></td>
-                  <td></td>
+                  <!--<td></td>-->
                   <td></td>
                 </tr>
               </tbody>
