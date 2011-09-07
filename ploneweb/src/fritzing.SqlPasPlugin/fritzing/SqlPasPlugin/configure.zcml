@@ -31,7 +31,7 @@
      />
 
   <include package="z3c.saconfig" file="meta.zcml" />
-  <db:engine name="pas" url="mysql://fritzing_db_user:8Qk2mTG4@localhost/fritzing_django?charset=utf8" echo="echo" />
+  <db:engine name="pas" url="mysql://root:root@localhost/fritzing_django?charset=utf8" echo="echo" />
   <db:session name="fritzing.SqlPasPlugin" engine="pas" />
 
 </configure>
