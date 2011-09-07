@@ -36,7 +36,7 @@ Shipping to <span tal:replace="options/ship_to" />:
 
 Total:
     <span tal:replace="python: '%.2f&nbsp;EUR' % (options['faborder'].priceTotalBrutto)" />
-</span>
+</span></span>
 <span tal:omit-tag="" tal:condition="python: options['state_id'] == 'completed'">
 Dear <span tal:replace="options/to_name" />,
 
