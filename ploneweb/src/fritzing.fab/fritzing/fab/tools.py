@@ -100,6 +100,7 @@ def sendStatusMail(context):
     
     state_id = getStateId(False, context)
     state_title = getStateTitle(False, context)
+    delivery_date = faborders.nextProductionDelivery
     
     mail_subject = _(u"Your Fritzing Fab order #%s is now %s") % (context.id, state_title.lower())
     
@@ -108,6 +109,7 @@ def sendStatusMail(context):
         to_address = to_address,
         state_id = state_id,
         state_title = state_title,
+        delivery_date = delivery_date,
         faborder = context,
         ship_to = IFabOrder['shipTo'].vocabulary.getTerm(context.shipTo).title,
         )

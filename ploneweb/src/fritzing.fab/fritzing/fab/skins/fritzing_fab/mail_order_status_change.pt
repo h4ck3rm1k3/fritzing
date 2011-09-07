@@ -4,18 +4,22 @@
                   times string:&times;;
                   sup2 string:&sup2;;
                   ">
+<span tal:omit-tag="" tal:condition="python: options['state_id'] == 'in_process'"
+>Dear <span tal:replace="options/to_name" />,
 
-Dear <span tal:replace="options/to_name" />,
+We would like to thank you for placing your order with Fritzing Fab. We hope that you will be satisfied and have fun with your PCB.
 
-<span tal:omit-tag="" tal:condition="python: options['state_id'] == 'in_process'">thank you for your order! We will contact you shortly.</span><span tal:omit-tag="" tal:condition="python: options['state_id'] == 'completed'">your PCBs are ready and will be send to you.</span>
+Your order will ship on <span tal:replace="python:options.delivery_date.strftime('%B %d')" />.
 
-Cheers!
-The Fritzing team
+Below you will find an overview of your order. If you have any questions or concerns, please do not hesitate to contact us.
 
+Best regards,
+Your Fritzing team
 
-Review your order: 
+- - - - - - - - - - - - - - - 
+
+Please review your order: 
 <span tal:replace="python: options['faborder'].absolute_url()"/>
-
 
 Order #<span tal:replace="options/faborder/id" /> by <span tal:replace="options/to_name" /> (<span tal:replace="options/to_address" />) summary:
 
@@ -38,6 +42,27 @@ Shipping to <span tal:replace="options/ship_to" />:
 
 Total:
     <span tal:replace="python: '%.2f&nbsp;EUR' % (options['faborder'].priceTotalBrutto)" />
+</span>
+<span tal:omit-tag="" tal:condition="python: options['state_id'] == 'completed'"
+>Dear <span tal:replace="options/to_name" />,
 
+Your order has just been shipped! It will be with you very soon.
+
+We would be delighted to see some pictures of the project you are building. Did you know about the project gallery at http://fritzing.org/projects ? It's an easy way to share your project with everyone, including photos, diagrams, and source files.
+
+As we are eager to improve our service, we are very interested in your feedback. Just reply to this email (best in English or German).
+
+Thank you for using Fritzing Fab -- you are actively supporting further development of the Fritzing software!
+
+Best regards,
+
+Your Fritzing Team
+
+
+- - - - - - - - - - - - - - - 
+
+Here's your order again: 
+<span tal:replace="python: options['faborder'].absolute_url()"/>
+</span>
 
 </tal:root>
