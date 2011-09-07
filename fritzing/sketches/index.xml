@@ -30,6 +30,7 @@
 		<sketch id="Shift_Register2" name="Shift Register (double-sided)" src="core/Shift_Register_double_sided.fz"/>
 		<sketch id="Stepper_Motor" name="Stepper Motor" src="core/Stepper_Motor.fz"/>
 		<sketch id="Stepper_Motor2" name="Stepper Motor (double-sided)" src="core/Stepper_Motor_double_sided.fz"/>
+		<sketch id="TemperaturSensorLM35" name="Temperatur Sensing" src="core/TemperaturSensorLM35.fz"/>
 		<sketch id="TiltSwitch" name="Tilt Switch" src="core/TiltSwitch.fz"/>
 		<sketch id="Touch_Switch" name="Touch Switch" src="core/TouchSwitch.fz"/>
 		<sketch id="TrafficLight" name="Traffic Light" src="core/TrafficLight.fz"/>
@@ -64,6 +65,7 @@
 					<sketch id="Parking"/>
 					<sketch id="CurvyParking"/>
 					<sketch id="AnalogInputThermistor"/>
+					<sketch id="TemperaturSensorLM35"/>
 					<sketch id="AnalogInputOutput"/>
 				</category>
 				<category name="Output">
@@ -163,6 +165,7 @@
 			<sketch id="Loop"/>
 			<sketch id="Button"/>
 			<sketch id="Melody"/>
+			<sketch id="TemperaturSensorLM35"/>
 		</category>
 	</categories>
 </fritzing-sketches>
