@@ -4,8 +4,8 @@
                   times string:&times;;
                   sup2 string:&sup2;;
                   ">
-<span tal:omit-tag="" tal:condition="python: options['state_id'] == 'in_process'"
->Dear <span tal:replace="options/to_name" />,
+<span tal:omit-tag="" tal:condition="python: options['state_id'] == 'in_process'">
+Dear <span tal:replace="options/to_name" />,
 
 We would like to thank you for placing your order with Fritzing Fab. We hope that you will be satisfied and have fun with your PCB.
 
@@ -37,8 +37,8 @@ Shipping to <span tal:replace="options/ship_to" />:
 Total:
     <span tal:replace="python: '%.2f&nbsp;EUR' % (options['faborder'].priceTotalBrutto)" />
 </span>
-<span tal:omit-tag="" tal:condition="python: options['state_id'] == 'completed'"
->Dear <span tal:replace="options/to_name" />,
+<span tal:omit-tag="" tal:condition="python: options['state_id'] == 'completed'">
+Dear <span tal:replace="options/to_name" />,
 
 Your order has just been shipped! It will be with you very soon.
 
