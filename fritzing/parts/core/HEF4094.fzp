@@ -3,25 +3,35 @@
     <author>Sorki</author>
     <title>HEF4094</title>
     <label>HEF4094</label>
+
     <date>2011-08-30</date>
-    <tags/>
-    <properties>
-        <property name="family"></property>
-        <property name="part number">HEF4094</property>
+		<tags>
+        <tag>DIP</tag>
+        <tag>TTL</tag>
+        <tag>Logic IC</tag>
+        <tag>HEF</tag>
+        <tag>Shift Register</tag>
+    </tags>
+
+		<properties>
+        <property name="family">Shift Register</property>
+        <property name="type">HEF4094</property>
+        <property name="package">DIP16 [THT]</property>
     </properties>
-    <description>(Identical part HCF4094)
-
-The HEF4094 is an 8-stage serial shift register. It has a storage latch associated with each stage for strobing data from the serial input to parallel buffered 3-state outputs. 
-The parallel outputs may be connected directly to common bus lines. 
-
-Data is shifted on positive-going clock transitions. The data in each shift register stage is transferred to the storage register when the strobe input is HIGH. Data in the storage register appears at the outputs whenever the output enable signal is HIGH.
-
-Two serial outputs are available for cascading a number of HEF4094 devices. 
-Serial data is available at QS on positive-going clock edges to allow high-speed operation in cascaded systems with a fast clock rise time. The same serial data is available at Q'S on the next negative going clock edge. This is used for cascading HEF4094 devices when the clock has a slow rise time.
-
-It operates over a recommended VDD power supply range of 3 V to 15 V referenced to VSS (usually ground). Unused inputs must be connected to VDD, VSS, or another input. 
-
-
+
+    <description>(Identical part HCF4094)
+
+The HEF4094 is an 8-stage serial shift register. It has a storage latch associated with each stage for strobing data from the serial input to parallel buffered 3-state outputs. 
+
+The parallel outputs may be connected directly to common bus lines. 
+
+Data is shifted on positive-going clock transitions. The data in each shift register stage is transferred to the storage register when the strobe input is HIGH. Data in the storage register appears at the outputs whenever the output enable signal is HIGH.
+
+Two serial outputs are available for cascading a number of HEF4094 devices. 
+
+Serial data is available at QS on positive-going clock edges to allow high-speed operation in cascaded systems with a fast clock rise time. The same serial data is available at Q'S on the next negative going clock edge. This is used for cascading HEF4094 devices when the clock has a slow rise time.
+
+It operates over a recommended VDD power supply range of 3 V to 15 V referenced to VSS (usually ground). Unused inputs must be connected to VDD, VSS, or another input. 
 </description>
     <views>
         <iconView>
@@ -55,7 +65,7 @@ It operates over a recommended VDD power supply range of 3 V to 15 V referenced 
                     <p layer="breadboard" svgId="connector15pin" terminalId="connector15terminal"/>
                 </breadboardView>
                 <schematicView>
-                    <p layer="schematic" svgId="connector15pin"/>
+                    <p layer="schematic" svgId="connector15pin" terminalId="connector15terminal"/>
                 </schematicView>
                 <pcbView>
                     <p layer="copper1" svgId="connector15pin"/>

@@ -13,7 +13,7 @@
         <tag>Logic Gates</tag>
     </tags>
     <properties>
-        <property name="family">7400 series IC</property>
+			<property name="family">Shift Register</property>
         <property name="type">SN74LS14N</property>
     <property name="package">DIP14 [THT]</property>
     </properties>
