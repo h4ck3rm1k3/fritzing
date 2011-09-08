@@ -443,7 +443,11 @@ int SVG2gerber::allPaths2gerber(ForWhy forWhy) {
 				dcode_index++;
 			}
 
-			if (forWhy != ForOutline) {
+			bool doLines = false;
+			if (forWhy == ForOutline) doLines = true;
+			else if (forWhy == ForSilk && fill == "none") doLines = true;
+
+			if (!doLines) {
 				QString dcode = apertureMap[aperture];
 				if(current_dcode != dcode){
 					//switch to correct aperture
