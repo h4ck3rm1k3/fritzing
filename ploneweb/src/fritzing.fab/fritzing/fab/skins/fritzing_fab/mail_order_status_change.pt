@@ -4,28 +4,30 @@
                   times string:&times;;
                   sup2 string:&sup2;;
                   ">
-<span tal:omit-tag="" tal:condition="python: options['state_id'] == 'in_process'">
-Dear <span tal:replace="options/to_name" />,
+<span tal:omit-tag="" tal:condition="python: options['state_id'] == 'in_process'"
+>Dear <span tal:replace="options/to_name" />,
 
-We would like to thank you for placing your order with Fritzing Fab. We hope that you will be satisfied and have fun with your PCB.
+Thank you for placing your order with Fritzing Fab. We hope that you will be satisfied and have fun with your PCB.
 
 Your order will ship on <span tal:replace="options/delivery_date" />.
 
 Below you will find an overview of your order. If you have any questions or concerns, please do not hesitate to contact us.
 
 Best regards,
+
 Your Fritzing team
 
 - - - - - - - - - - - - - - - 
 
-Please review your order: 
+Please review your order #<span tal:replace="options/faborder/id" />:
 <span tal:replace="python: options['faborder'].absolute_url()"/>
 
-Order #<span tal:replace="options/faborder/id" /> by <span tal:replace="options/to_name" /> (<span tal:replace="options/to_address" />) summary:
+by <span tal:replace="options/to_name" /> (<span tal:replace="options/to_address" />)
 
 <span tal:omit-tag="" tal:repeat="item options/faborder/listFolderContents"><span tal:replace="item/copies" /><span tal:replace="structure nbsp"/><span tal:replace="structure times"/> <span tal:replace="item/orderItem/filename" />
     <span tal:replace="python: '%.2f' % (item.height)" /><span tal:replace="structure nbsp"/><span tal:replace="structure times"/> <span tal:replace="python: '%.2f' % (item.width)" /><span tal:replace="structure nbsp"/>cm<span tal:replace="structure nbsp"/>= <span tal:replace="python: '%.2f' % (item.area)" /><span tal:replace="structure nbsp"/>cm<span tal:replace="structure sup2"/>
     <span tal:replace="python: '%.2f' % (item.copies * item.area * item.pricePerSquareCm)" /><span tal:replace="structure nbsp"/>EUR
+    4.00 EUR Checking
 
 Subtotal:
     <span tal:replace="python: '%.2f&nbsp;EUR' % (options['faborder'].priceTotalNetto)" />
@@ -36,13 +38,12 @@ Shipping to <span tal:replace="options/ship_to" />:
 
 Total:
     <span tal:replace="python: '%.2f&nbsp;EUR' % (options['faborder'].priceTotalBrutto)" />
-</span></span>
-<span tal:omit-tag="" tal:condition="python: options['state_id'] == 'completed'">
-Dear <span tal:replace="options/to_name" />,
+</span></span><span tal:omit-tag="" tal:condition="python: options['state_id'] == 'completed'"
+>Dear <span tal:replace="options/to_name" />,
 
 Your order has just been shipped! It will be with you very soon.
 
-We would be delighted to see some pictures of the project you are building. Did you know about the project gallery at http://fritzing.org/projects ? It's an easy way to share your project with everyone, including photos, diagrams, and source files.
+We would be delighted to see some pictures of the project you are building. Did you know about the project gallery at http://fritzing.org/projects ? It's an easy way to share your project with everyone, with photos, diagrams, source files and a link to your homepage.
 
 As we are eager to improve our service, we are very interested in your feedback. Just reply to this email (best in English or German).
 
@@ -51,7 +52,6 @@ Thank you for using Fritzing Fab -- you are actively supporting further developm
 Best regards,
 
 Your Fritzing Team
-
 
 - - - - - - - - - - - - - - - 
 
