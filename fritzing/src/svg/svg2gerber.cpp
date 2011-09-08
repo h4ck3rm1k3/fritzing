@@ -502,7 +502,7 @@ int SVG2gerber::allPaths2gerber(ForWhy forWhy) {
                         doPoly(polygon, forWhy, true, apertureMap, current_dcode, dcode_index);
 		}
                 for(uint p = 0; p < polyLineList.length(); p++) {
-                        QDomElement polygon = polyList.item(p).toElement();
+                        QDomElement polygon = polyLineList.item(p).toElement();
                         doPoly(polygon, forWhy, false, apertureMap, current_dcode, dcode_index);
 		}
 	}

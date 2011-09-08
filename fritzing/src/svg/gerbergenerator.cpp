@@ -127,7 +127,7 @@ void GerberGenerator::exportToGerber(const QString & filename, const QString & e
 		if (copperInvalidCount > 0) s += QObject::tr("copper layer(s), ");
 		if (maskInvalidCount > 0) s += QObject::tr("mask layer(s), ");
 		s.chop(2);
-		displayMessage(QObject::tr("Unable to translate svg curves in ").arg(s), displayMessageBoxes);
+		displayMessage(QObject::tr("Unable to translate svg curves in %1").arg(s), displayMessageBoxes);
 	}
 
 }

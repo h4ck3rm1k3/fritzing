@@ -1136,7 +1136,7 @@ void FApplication::loadedPart(int loaded, int total) {
 	if (total == 0) return;
 	if (m_splash == NULL) return;
 
-	DebugDialog::debug(QString("loaded %1 %2").arg(loaded).arg(total));
+	//DebugDialog::debug(QString("loaded %1 %2").arg(loaded).arg(total));
 	m_splash->showProgress(m_progressIndex, LoadProgressStart + ((LoadProgressEnd - LoadProgressStart) * loaded / (double) total));
 }
 
