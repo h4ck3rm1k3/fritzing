@@ -409,7 +409,7 @@ void PartLabel::restoreLabel(QDomElement & labelGeometry, ViewLayer::ViewLayerID
 		if (m_owner->hasPartNumberProperty()) m_displayKeys.append(ModelPartShared::PartNumberPropertyName);
 	}
 
-	resetSvg();
+	displayTexts();
 
 	QTransform t;
 	if (GraphicsUtils::loadTransform(labelGeometry.firstChildElement("transform"), t)) {
