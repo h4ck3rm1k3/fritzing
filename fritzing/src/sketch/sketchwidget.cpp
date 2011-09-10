@@ -647,7 +647,9 @@ ItemBase * SketchWidget::addItem(ModelPart * modelPart, ViewLayer::ViewLayerSpec
 	}
 
 	if (doEmit && crossViewType == BaseCommand::CrossView) {
+		//DebugDialog::debug(QString("emit item added"));
 		emit itemAddedSignal(modelPart, viewLayerSpec, viewGeometry, id, originatingCommand ? originatingCommand->dropOrigin() : NULL);
+		//DebugDialog::debug(QString("after emit item added"));
 	}
 
 	return newItem;
@@ -765,6 +767,7 @@ PaletteItem* SketchWidget::addPartItem(ModelPart * modelPart, ViewLayer::ViewLay
 	if(viewLayerID != ViewLayer::UnknownLayer) {
 		QString error;
 		if (paletteItem->renderImage(modelPart, viewIdentifier, m_viewLayers, viewLayerID, doConnectors, error)) {
+			//DebugDialog::debug(QString("addPartItem %1").arg(viewIdentifier));
 			addToScene(paletteItem, paletteItem->viewLayerID());
 			paletteItem->loadLayerKin(m_viewLayers, viewLayerSpec);
 			foreach (ItemBase * lkpi, paletteItem->layerKin()) {
@@ -772,7 +775,7 @@ PaletteItem* SketchWidget::addPartItem(ModelPart * modelPart, ViewLayer::ViewLay
 				lkpi->setHidden(!layerIsVisible(lkpi->viewLayerID()));
 				lkpi->setInactive(!layerIsActive(lkpi->viewLayerID()));
 			}
-
+			//DebugDialog::debug(QString("after layerkin %1").arg(viewIdentifier));
 			ok = true;
 		}
 		else {
