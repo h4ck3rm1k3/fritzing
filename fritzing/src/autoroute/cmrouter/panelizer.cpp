@@ -684,9 +684,13 @@ int Panelizer::placeBestFit(Tile * tile, UserData userData) {
 		QList<Tile*> spaces;
 		TiSrArea(tile, bestPlace->plane, &temp, allSpaces, &spaces);
 		if (spaces.count()) {
+			int y = temp.ymaxi;
+			foreach (Tile * t, spaces) {
+				if (YMAX(t) > y) y = YMAX(t);			// find the bottom of the lowest open tile
+			}
 			fit[2] = true;
 			fitCount++;
-			area[2] = w * bestPlace->height;
+			area[2] = w * (y - temp.ymini);
 		}
 	}
 
@@ -700,9 +704,13 @@ int Panelizer::placeBestFit(Tile * tile, UserData userData) {
 		QList<Tile*> spaces;
 		TiSrArea(tile, bestPlace->plane, &temp, allSpaces, &spaces);
 		if (spaces.count()) {
+			int y = temp.ymaxi;
+			foreach (Tile * t, spaces) {
+				if (YMAX(t) > y) y = YMAX(t);			// find the bottom of the lowest open tile
+			}
 			fit[3] = true;
 			fitCount++;
-			area[3] = w * bestPlace->width;
+			area[3] = w * (y - temp.ymini);
 		}
 	}
 

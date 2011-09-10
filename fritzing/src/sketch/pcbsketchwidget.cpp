@@ -2201,6 +2201,7 @@ ItemBase * PCBSketchWidget::placePartDroppedInOtherView(ModelPart * modelPart, V
 	bestPlace.bestTile = NULL;
 	bestPlace.width = realToTile(newItem->boundingRect().width());
 	bestPlace.height = realToTile(newItem->boundingRect().height());
+	bestPlace.plane = plane;
 	TiSrArea(NULL, plane, &tileBoardRect, Panelizer::placeBestFit, &bestPlace);
 	if (bestPlace.bestTile != NULL) {
 		QRectF r;
