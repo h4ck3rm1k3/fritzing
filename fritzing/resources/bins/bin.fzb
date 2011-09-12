@@ -277,6 +277,7 @@
                 </iconView>
             </views>
         </instance>
+
         <instance moduleIdRef="c8994c24e2a6d9182a55c653b6bbefed" modelIndex="24" path="parts/core/16-segment_display.fzp">
             <views>
                 <iconView layer="icon">
@@ -284,6 +285,15 @@
                 </iconView>
             </views>
         </instance>
+
+				<instance moduleIdRef="LED_Matrix_Kingbright_TA07-11" modelIndex="24" path="parts/core/LED_Matrix_Kingbright_TA07-11.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
+
         <instance moduleIdRef="4ceb5916759d88ffdf4d1b2960ab825c" modelIndex="24" path="parts/core/lcd-screen.fzp">
             <views>
                 <iconView layer="icon">
@@ -406,6 +416,13 @@
             </views>
         </instance>
       <instance moduleIdRef="1a7828b6466fac9fd042221e931124c4" modelIndex="36" path="parts/core/74HC595.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"/>
+          </iconView>
+        </views>
+      </instance>
+	<instance moduleIdRef="HEF4094" modelIndex="36" path="parts/core/HEF4094.fzp">
         <views>
           <iconView layer="icon">
             <geometry z="-1" x="-1" y="-1"/>
