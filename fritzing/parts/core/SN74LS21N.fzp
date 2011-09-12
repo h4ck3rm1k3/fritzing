@@ -13,7 +13,7 @@
         <tag>Logic Gates</tag>
     </tags>
     <properties>
-<property name="family">Shift Register</property>
+        <property name="family">74xx Series</property>
         <property name="type">SN74LS21N</property>
     <property name="package">DIP14 [THT]</property>
     </properties>

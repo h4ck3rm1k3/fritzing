@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.6.3b.08.16.5401" moduleId="89009b46171eb6a039eddfd73fae210a">
+<module fritzingVersion="0.6.3b.08.16.5401" moduleId="HEF4094">
     <author>Sorki</author>
     <title>HEF4094</title>
     <label>HEF4094</label>
@@ -14,7 +14,7 @@
     </tags>
 
 		<properties>
-        <property name="family">Shift Register</property>
+        <property name="family">4000 series</property>
         <property name="type">HEF4094</property>
         <property name="package">DIP16 [THT]</property>
     </properties>
