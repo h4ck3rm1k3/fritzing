@@ -221,6 +221,9 @@ void SVG2gerber::convertShapes2paths(QDomNode node){
         else if((tag=="path") || (tag=="svg:path")){
             path = element;
         }
+		else if (tag == "g") {
+			// no op
+		}
         else {
             DebugDialog::debug("svg2gerber ignoring SVG element: " + tag);
         }
@@ -286,7 +289,7 @@ int SVG2gerber::allPaths2gerber(ForWhy forWhy) {
     //DebugDialog::debug("polygons to gerber: " + QString::number(polyList.length()));
 
     QDomNodeList polyLineList = m_SVGDom.elementsByTagName("polyline");
-    DebugDialog::debug("polylines to gerber: " + QString::number(polyLineList.length()));
+    //DebugDialog::debug("polylines to gerber: " + QString::number(polyLineList.length()));
 
 	QDomNodeList lineList = m_SVGDom.elementsByTagName("line");
     //DebugDialog::debug("lines to gerber: " + QString::number(lineList.length()));

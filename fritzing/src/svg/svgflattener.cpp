@@ -164,6 +164,9 @@ void SvgFlattener::unRotateChild(QDomElement & element, QMatrix transform) {
             element.setAttribute("x2", p2.x());
             element.setAttribute("y2", p2.y());
         }
+		else if (tag == "g") {
+			// no op
+		}
         else {
             DebugDialog::debug("Warning! Can't rotate element: " + tag);
 		}

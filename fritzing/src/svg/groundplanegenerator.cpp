@@ -895,15 +895,16 @@ void GroundPlaneGenerator::scanOutline(QImage & image, double bWidth, double bHe
 									 const QString & colorString, const QString & layerName, bool makeConnector, 
 									 int minRunSize, bool makeOffset, QSizeF minAreaInches, double minDimensionInches)  
 {
-	QList<QPoint> leftPoints;
-	QList<QPoint> rightPoints;
+	QList<QPoint> points;
 
 	// background is black
 
+	
+	int currentX, currentY;
+	bool gotSomething;
+
 	for (int y = 0; y < bHeight; y++) {
 		QRgb* scanLine = (QRgb *) image.scanLine(y);
-		bool gotLeft = false;
-		int leftx;
 		for (int x = 0; x < bWidth; x++) {
 			QRgb current = *(scanLine + x);
 			int gray = qGray(current);
@@ -912,35 +913,37 @@ void GroundPlaneGenerator::scanOutline(QImage & image, double bWidth, double bHe
 				continue;
 			}
 
-			gotLeft = true;
-			leftx = x;
-			leftPoints.append(QPoint(x, y));
+			currentX = x;
+			currentY = y;
+			points.append(QPoint(currentX, currentY));
+			gotSomething = true;
 			break;
 		}
-		if (gotLeft) {
-			for (int x = bWidth - 1; x >= leftx; x--) {
-				QRgb current = *(scanLine + x);
-				int gray = qGray(current);
-				if (gray <= THRESHOLD) {		// qBlue(current) != 0xff				
-					// another black pixel, keep moving
-					continue;
-				}
-
-				rightPoints.append(QPoint(x, y));
-				break;
-			}
-		}
+		if (gotSomething) break;
 	}
 
-	removeRedundant(leftPoints);
-	removeRedundant(rightPoints);
+	if (!gotSomething) return;
+
+	while (true) {
+		if (tryNextPoint(currentX, currentY + 1, image, points));
+		else if (tryNextPoint(currentX + 1, currentY, image, points));
+		else if (tryNextPoint(currentX, currentY - 1, image, points));
+		else if (tryNextPoint(currentX - 1, currentY, image, points));
+		else if (tryNextPoint(currentX + 1, currentY + 1, image, points));
+		else if (tryNextPoint(currentX - 1, currentY + 1, image, points));
+		else if (tryNextPoint(currentX + 1, currentY - 1, image, points));
+		else if (tryNextPoint(currentX - 1, currentY - 1, image, points));
+		else break;
+
+		QPoint p = points.last();
+		currentX = p.x();
+		currentY = p.y();
+	}
+
+	removeRedundant(points);
 
 	QPolygon polygon;
-	foreach(QPoint p, leftPoints) {
-		polygon.append(QPoint(p.x() * pixelFactor, p.y() * pixelFactor));
-	}
-	for (int ix = rightPoints.count() - 1; ix > 0; ix--) {
-		QPoint p = rightPoints.at(ix);
+	foreach(QPoint p, points) {
 		polygon.append(QPoint(p.x() * pixelFactor, p.y() * pixelFactor));
 	}
 
@@ -966,3 +969,90 @@ void GroundPlaneGenerator::scanOutline(QImage & image, double bWidth, double bHe
 
 
 }
+
+bool GroundPlaneGenerator::tryNextPoint(int x, int y, QImage & image, QList<QPoint> & points)
+{
+	if (x < 0) return false;
+	if (y < 0) return false;
+	if (x >= image.width()) return false;
+	if (y >= image.height()) return false;
+
+	foreach (QPoint p, points) {
+		if (p.x() == x && p.y() == y) {
+			// already visited
+			return false;
+		}
+
+		if (qAbs(p.x() - x) > 3 && qAbs(p.y() - y) > 3) {
+			// too far away from the start of the polygon
+			break;
+		}
+	}
+
+
+	for (int i = points.count() - 1; i >= 0; i--) {
+		QPoint p = points.at(i);
+		if (p.x() == x && p.y() == y) {
+			// already visited
+			return false;
+		}
+
+		if (qAbs(p.x() - x) > 3 && qAbs(p.y() - y) > 3) {
+			// too far away from from the current point
+			break;
+		}
+	}
+
+	QRgb pixel = image.pixel(x, y);
+	if (qGray(pixel) <= THRESHOLD) {						
+		// empty pixel, not on the border
+		return false;
+	}
+
+	if (x + 1 == image.width()) {
+		points.append(QPoint(x, y));
+		return true;
+	}
+
+	pixel = image.pixel(x + 1, y);
+	if (qGray(pixel) <= THRESHOLD) {						
+		points.append(QPoint(x, y));
+		return true;
+	}
+
+	if (y + 1 == image.height()) {
+		points.append(QPoint(x, y));
+		return true;
+	}
+
+	pixel = image.pixel(x, y + 1);
+	if (qGray(pixel) <= THRESHOLD) {						
+		points.append(QPoint(x, y));
+		return true;
+	}
+
+	if (x - 1  < 0) {
+		points.append(QPoint(x, y));
+		return true;
+	}
+
+	pixel = image.pixel(x - 1, y);
+	if (qGray(pixel) <= THRESHOLD) {						
+		points.append(QPoint(x, y));
+		return true;
+	}
+
+	if (y - 1  < 0) {
+		points.append(QPoint(x, y));
+		return true;
+	}
+
+	pixel = image.pixel(x, y - 1);
+	if (qGray(pixel) <= THRESHOLD) {						
+		points.append(QPoint(x, y));
+		return true;
+	}
+
+	return false;
+}
+

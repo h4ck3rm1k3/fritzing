@@ -69,7 +69,7 @@ protected:
 	QImage * generateGroundPlaneAux(const QString & boardSvg, QSizeF boardImageSize, const QString & svg, QSizeF copperImageSize, QStringList & exceptions, 
 									QGraphicsItem * board, double res, double & bWidth, double & bHeight); 
 	void makeConnector(QList<QPolygon> & polygons, double res, double pixelFactor, const QString & colorString, int minX, int minY, QString & svg);
-
+	bool tryNextPoint(int x, int y, QImage & image, QList<QPoint> & points);
 
 protected:
 	QStringList m_newSVGs;

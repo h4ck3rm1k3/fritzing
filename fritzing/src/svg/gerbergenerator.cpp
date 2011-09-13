@@ -374,6 +374,7 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 	int theight = sourceRes.height();
 
 	svgString = TextUtils::removeXMLEntities(domDocument1.toString());
+
 	QXmlStreamReader reader(svgString);
 	QSvgRenderer renderer(&reader);
 	bool anyClipped = false;
@@ -394,7 +395,19 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 		}	
 	}
 
+	if (forWhy == SVG2gerber::ForOutline) {
+		// make one big polygon.  Assume there are no holes in the board
+
+		if (anyConverted || leaves1.count() > 1) {
+			anyClipped = true;
+			foreach (QDomElement l, leaves1) {
+				l.setTagName("g");
+			}
+		}
+	}
+
 	if (anyClipped) {
+		// svg has been changed by clipping process so get the string again
 		svgString = TextUtils::removeXMLEntities(domDocument1.toString());
 	}
 
@@ -450,15 +463,15 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 
 		GroundPlaneGenerator gpg;
 		if (forWhy == SVG2gerber::ForOutline) {
-			int tinyWidth = boardRect.width();
-			int tinyHeight = boardRect.height();
-			QRectF tinyTarget(0, 0, tinyWidth, tinyHeight);
-			QImage tinyImage(tinyWidth, tinyHeight, QImage::Format_RGB32);
-			QPainter painter;
-			painter.begin(&tinyImage);
-			renderer.render(&painter, tinyTarget);
-			painter.end();
-			tinyImage.invertPixels();				// need white pixels on a black background for GroundPlaneGenerator
+		//	int tinyWidth = boardRect.width();
+		//	int tinyHeight = boardRect.height();
+		//	QRectF tinyTarget(0, 0, tinyWidth, tinyHeight);
+		//	QImage tinyImage(tinyWidth, tinyHeight, QImage::Format_RGB32);
+		//	QPainter painter;
+		//	painter.begin(&tinyImage);
+		//	renderer.render(&painter, tinyTarget);
+		//	painter.end();
+		//	tinyImage.invertPixels();				// need white pixels on a black background for GroundPlaneGenerator
 			gpg.scanOutline(image, image.width(), image.height(), GraphicsUtils::StandardFritzingDPI / res, GraphicsUtils::StandardFritzingDPI, "#000000", layerName, false, 1, false, QSizeF(0, 0), 0);
 		}
 		else {
