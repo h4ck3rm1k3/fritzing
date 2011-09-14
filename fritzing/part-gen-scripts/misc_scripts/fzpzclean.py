@@ -1,5 +1,5 @@
 # usage:
-#	fzpzclean.py -f [fzpz directory] -d [output directory]
+#	fzpzclean.py -f [fzpz directory] -d [output directory] -o [core | contrib | user]
 #	 unzip fzpz files into the output directory and remove all the guids from the filenames and internal names.
 
 
@@ -14,7 +14,7 @@ import getopt, sys, os, os.path, re, zipfile
 def usage():
     print """
 usage:
-    fzpzclean.py -f [fzpz directory] -d [output directory]
+    fzpzclean.py -f [fzpz directory] -d [output directory] -o [core | contrib | user]
     unzip fzpz files into the output directory and remove all the guids from the filenames and internal names.
     """
     
@@ -22,7 +22,7 @@ usage:
            
 def main():
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "hf:d:", ["help", "fzpzs", "directory"])
+        opts, args = getopt.getopt(sys.argv[1:], "hf:d:o:", ["help", "fzpzs", "directory", "output"])
     except getopt.GetoptError, err:
         # print help information and exit:
         print str(err) # will print something like "option -a not recognized"
@@ -30,6 +30,7 @@ def main():
         sys.exit(2)
     inputdir = None
     outputdir = None
+    outputPrefix = None
     
     for o, a in opts:
         #print o
@@ -38,6 +39,8 @@ def main():
             inputdir = a
         elif o in ("-d", "--directory"):
             outputdir = a
+        elif o in ("-o", "--output"):
+            outputPrefix = a
         elif o in ("-h", "--help"):
             usage()
             sys.exit(2)
@@ -45,6 +48,10 @@ def main():
             assert False, "unhandled option"
     
     if(not(inputdir)):
+        usage()
+        sys.exit(2)
+
+    if(not(outputPrefix)):
         usage()
         sys.exit(2)
 
@@ -62,7 +69,7 @@ def main():
                 zf = zipfile.ZipFile(file)
 
                 # create directory structure to house files
-                createstructure(file, outputdir)
+                createstructure(file, outputdir, outputPrefix)
 
                 # extract files to directory structure
                 for i, name in enumerate(zf.namelist()):
@@ -75,16 +82,16 @@ def main():
                                 subdir = None
                                 fzp = 0
                                 if outname.endswith('.fzp'):
-                                        subdir = 'contrib'
+                                        subdir = outputPrefix
                                         fzp = 1;
                                 elif outname.find('icon') >= 0:
-                                        subdir = 'svg/contrib/icon'
+                                        subdir = 'svg/' + outputPrefix + '/icon'
                                 elif outname.find('pcb') >= 0:
-                                        subdir = 'svg/contrib/pcb'
+                                        subdir = 'svg/' + outputPrefix + '/pcb'
                                 elif outname.find('schem') >= 0:
-                                        subdir = 'svg/contrib/schematic'
+                                        subdir = 'svg/' + outputPrefix + '/schematic'
                                 elif outname.find('bread') >= 0:
-                                        subdir = 'svg/contrib/breadboard'
+                                        subdir = 'svg/' + outputPrefix + '/breadboard'
                                 outname = re.sub('__((icon)|(breadboard)|(schematic)|(pcb))', '', outname)
                                 outfile = open(os.path.join(outputdir, subdir, outname), 'wb')
                                 
@@ -101,9 +108,9 @@ def main():
                                 outfile.close()
 
         
-def createstructure(file, dir):
+def createstructure(file, dir, outputPrefix):
     # makedirs(listdirs(file), dir)
-    dirs = ['contrib', 'svg/contrib/icon', 'svg/contrib/breadboard', 'svg/contrib/schematic', 'svg\contrib\pcb']
+    dirs = [outputPrefix, 'svg/' + outputPrefix + '/icon', 'svg/' + outputPrefix + '/breadboard', 'svg/' + outputPrefix + '/schematic', 'svg/' + outputPrefix + '/pcb']
     makedirs(dirs, dir)
 
 
