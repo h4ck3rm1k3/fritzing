@@ -436,6 +436,13 @@
     </iconView>
    </views>
   </instance>
+  <instance moduleIdRef="Real_Time_Clock_Module___DS1307_RTC_Breakout_Board">
+   <views>
+    <iconView layer="icon">
+     <geometry x="-1" y="-1" z="-1"/>
+    </iconView>
+   </views>
+  </instance>
   <instance moduleIdRef="RFID_USB_Reader-v14">
    <views>
     <iconView layer="icon">

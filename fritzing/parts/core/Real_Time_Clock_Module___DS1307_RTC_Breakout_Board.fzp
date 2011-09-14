@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.6.3b.08.16.5401" moduleId="82b4b4ae598ef0adb75784e1099e7a90">
+<module fritzingVersion="0.6.3b.08.16.5401" moduleId="Real_Time_Clock_Module___DS1307_RTC_Breakout_Board">
     <author>Mike</author>
     <title>Real Time Clock Module - DS1307 RTC Breakout Board</title>
     <date>2011-09-07</date>
@@ -13,27 +13,258 @@
         <property name="family">Real Time Clock Breakout</property>
         <property name="part number"></property>
     </properties>
-    <description>This a custom designed module for the DS1307 Real Time Clock. The module comes fully assembled and pre-programmed with the current time (ok, so it's our current time - MST). The included Lithium coin cell battery (CR1225 41mAh) will run the module for a minimum of 9 years (17 years typical) without external 5V power. The DS1307 is accessed via the I2C protocol. We've written a test-bed to program the modules. This test-bed code should give you some insight on how to interface the module to any microcontroller using our example software I2C and BCD routines.
-Features:
-Two wire I2C interface 
-Hour : Minutes : Seconds AM/PM 
-Day Month, Date - Year 
-Leap year compensation 
-Accurate calendar up to year 2100 
-Battery backup included 
-1Hz output pin 
-56 Bytes of Non-volatile memory available to user
-Dimensions: 0.75x0.75&quot; (20x20mm)
-
-Documents:
-RTC Module Schematic 
-RTC Module Dimensional Drawing 
-DS1307 Datasheet 
-Wiring Example
-Software: 
-Example 16F88 code 
-Arduino Tutorial. Thanks John Vaughters! 
-Arduino Tutorial in Portuguese. Thanks Daniel Gonçalves! 
+    <description>This a custom designed module for the DS1307 Real Time Clock. The module comes fully assembled and pre-programmed with the current time (ok, so it's our current time - MST). The included Lithium coin cell battery (CR1225 41mAh) will run the module for a minimum of 9 years (17 years typical) without external 5V power. The DS1307 is accessed via the I2C protocol. We've written a test-bed to program the modules. This test-bed code should give you some insight on how to interface the module to any microcontroller using our example software I2C and BCD routines.
+
+
+
+
+
+
+
+
+
+
+
+Features:
+
+
+
+
+
+
+
+
+
+
+
+Two wire I2C interface 
+
+
+
+
+
+
+
+
+
+
+
+Hour : Minutes : Seconds AM/PM 
+
+
+
+
+
+
+
+
+
+
+
+Day Month, Date - Year 
+
+
+
+
+
+
+
+
+
+
+
+Leap year compensation 
+
+
+
+
+
+
+
+
+
+
+
+Accurate calendar up to year 2100 
+
+
+
+
+
+
+
+
+
+
+
+Battery backup included 
+
+
+
+
+
+
+
+
+
+
+
+1Hz output pin 
+
+
+
+
+
+
+
+
+
+
+
+56 Bytes of Non-volatile memory available to user
+
+
+
+
+
+
+
+
+
+
+
+Dimensions: 0.75x0.75&quot; (20x20mm)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Documents:
+
+
+
+
+
+
+
+
+
+
+
+RTC Module Schematic 
+
+
+
+
+
+
+
+
+
+
+
+RTC Module Dimensional Drawing 
+
+
+
+
+
+
+
+
+
+
+
+DS1307 Datasheet 
+
+
+
+
+
+
+
+
+
+
+
+Wiring Example
+
+
+
+
+
+
+
+
+
+
+
+Software: 
+
+
+
+
+
+
+
+
+
+
+
+Example 16F88 code 
+
+
+
+
+
+
+
+
+
+
+
+Arduino Tutorial. Thanks John Vaughters! 
+
+
+
+
+
+
+
+
+
+
+
+Arduino Tutorial in Portuguese. Thanks Daniel Gonçalves! 
+
+
+
+
+
+
+
+
+
+
+
 Bildr Tutorial</description>
     <views>
         <breadboardView>
