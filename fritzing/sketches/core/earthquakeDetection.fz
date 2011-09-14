@@ -6,7 +6,7 @@
         <view name="pcbView" backgroundColor="#a0a8b3"/>
     </views>
     <instances>
-        <instance moduleIdRef="4321DEAB24_ST" modelIndex="46483" path="/Users/stefanhermann/Documents/Fritzing/Fritzing/parts/core/arduino.fzp">
+        <instance moduleIdRef="4321DEAB24_ST" modelIndex="46483" path="/Users/stefanhermann/Desktop/fritzing.2011.09.11.cocoa/parts/core/arduino.fzp">
             <title>Arduino1</title>
             <views>
                 <breadboardView layer="breadboardbreadboard">
@@ -71,7 +71,7 @@
                 </schematicView>
             </views>
         </instance>
-        <instance moduleIdRef="8abf6496b5d466c7a1893c17a296a676" modelIndex="46485" path="/Users/stefanhermann/Documents/Fritzing/Fritzing/parts/core/piezo sensor.fzp">
+        <instance moduleIdRef="8abf6496b5d466c7a1893c17a296a676" modelIndex="46485" path="/Users/stefanhermann/Desktop/fritzing.2011.09.11.cocoa/parts/core/piezo sensor.fzp">
             <title>J1</title>
             <views>
                 <breadboardView layer="breadboard">
@@ -155,8 +155,7 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Droid Sans'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Piezoelectric speakers are frequently used as beepers in watches and other electronic devices. In this project, a piezo speaker is used to detect impacts.&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://fritzing.org/projects/earthcrake-detection/&quot;&gt;&lt;span style=&quot; color:#0000ff;&quot;&gt;Earthcrake Detection&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://fritzing.org/projects/earthcrake-detection/&quot;&gt;&lt;span style=&quot; color:#0000ff;&quot;&gt;earthquake detection&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</text>
             <views>
                 <breadboardView layer="breadboardNote">
@@ -164,7 +163,7 @@ p, li { white-space: pre-wrap; }
                 </breadboardView>
             </views>
         </instance>
-        <instance moduleIdRef="BreadboardModuleID" modelIndex="887923" path="/Users/stefanhermann/Documents/Fritzing/Fritzing/parts/core/breadboard.fzp">
+        <instance moduleIdRef="BreadboardModuleID" modelIndex="887923" path="/Users/stefanhermann/Desktop/fritzing.2011.09.11.cocoa/parts/core/breadboard.fzp">
             <title>Breadboard1</title>
             <views>
                 <breadboardView layer="breadboardbreadboard">
@@ -672,7 +671,7 @@ p, li { white-space: pre-wrap; }
                 </schematicView>
             </views>
         </instance>
-        <instance moduleIdRef="xc307sadf951b6bdd0d67c0d2ad67eabZenerDiodeModuleID" modelIndex="889411" path="/Users/stefanhermann/Documents/Fritzing/Fritzing/parts/core/diode_zener_0_5w_3_6v_300mil.fzp">
+        <instance moduleIdRef="xc307sadf951b6bdd0d67c0d2ad67eabZenerDiodeModuleID" modelIndex="889411" path="/Users/stefanhermann/Desktop/fritzing.2011.09.11.cocoa/parts/core/diode_zener_0_5w_3_6v_300mil.fzp">
             <property name="part number" value="1N4732A"/>
             <property name="breakdown voltage" value="5.1V"/>
             <title>D1</title>
@@ -784,7 +783,7 @@ p, li { white-space: pre-wrap; }
                 </breadboardView>
             </views>
         </instance>
-        <instance moduleIdRef="ResistorModuleID" modelIndex="889444" path="/Users/stefanhermann/Documents/Fritzing/Fritzing/parts/core/resistor.fzp">
+        <instance moduleIdRef="ResistorModuleID" modelIndex="889444" path="/Users/stefanhermann/Desktop/fritzing.2011.09.11.cocoa/parts/core/resistor.fzp">
             <property name="tolerance" value="±5%"/>
             <property name="resistance" value="1M"/>
             <property name="pin spacing" value="400 mil"/>
@@ -1611,7 +1610,7 @@ p, li { white-space: pre-wrap; }
                 </pcbView>
             </views>
         </instance>
-        <instance moduleIdRef="423120090505_2" modelIndex="889966" path="/Users/stefanhermann/Documents/Fritzing/Fritzing/parts/core/pcb-arduino-shield_two_layer.fzp">
+        <instance moduleIdRef="423120090505_2" modelIndex="889966" path="/Users/stefanhermann/Desktop/fritzing.2011.09.11.cocoa/parts/core/pcb-arduino-shield_two_layer.fzp">
             <title>PCB2</title>
             <views>
                 <pcbView layer="silkscreen">
