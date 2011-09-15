@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 14.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 43363)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="svg2" xmlns:xml="http://www.w3.org/XML/1998/namespace"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="43.167px" height="47px"
+	 viewBox="0 0 43.167 47" enable-background="new 0 0 43.167 47" xml:space="preserve">
+<rect id="connector0pin" x="13.104" y="39.385" fill="none" width="2.834" height="2.5"/>
+<rect id="connector0terminal" x="13.811" y="39.501" fill="none" width="1.418" height="2.269"/>
+<rect id="connector1pin" x="20.313" y="39.464" fill="none" width="2.835" height="2.25"/>
+<rect id="connector1terminal" x="21.021" y="39.568" fill="none" width="1.418" height="2.041"/>
+<rect id="connector2pin" x="27.625" y="39.589" fill="none" width="2.836" height="2.25"/>
+<rect id="connector2terminal" x="28.333" y="39.693" fill="none" width="1.418" height="2.041"/>
+<g id="breadboard">
+	<path stroke="#000000" stroke-width="0.8826" d="M36.091,36.334c0,1.564-1.271,2.835-2.834,2.835H10.342
+		c-1.565,0-2.834-1.271-2.834-2.835V8.838c0-1.564,1.269-2.835,2.834-2.835h22.916c1.564,0,2.834,1.271,2.834,2.835V36.334
+		L36.091,36.334z"/>
+	<rect x="6.341" y="20.378" fill="#CCCCCC" width="30.833" height="4.416"/>
+	<rect x="28.076" y="39.16" fill="#CCCCCC" width="1.734" height="2.666"/>
+	<rect x="20.875" y="39.16" fill="#CCCCCC" width="1.735" height="2.666"/>
+	<rect x="13.675" y="39.16" fill="#CCCCCC" width="1.735" height="2.666"/>
+	<path fill="none" stroke="#000000" stroke-width="0.8826" d="M35.371,34.895c0,1.565-1.269,2.836-2.834,2.836H9.622
+		c-1.565,0-2.834-1.271-2.834-2.836V7.398c0-1.564,1.269-2.834,2.834-2.834h22.915c1.564,0,2.834,1.27,2.834,2.834V34.895
+		L35.371,34.895z"/>
+	<polygon fill="#CCCCCC" points="36.591,9.919 36.591,35.253 35.871,33.814 6.288,33.814 6.288,8.48 35.871,8.48 	"/>
+	<polygon fill="#ABABAB" points="37.175,20.378 37.175,24.794 36.455,23.355 6.288,23.273 6.274,24.773 5.621,23.355 5.621,18.939 
+		36.455,18.939 	"/>
+	<path fill="#ABABAB" d="M35.156,34.652c0,1.539-1.246,2.785-2.785,2.785H9.86c-1.538,0-2.785-1.246-2.785-2.785V7.641
+		c0-1.537,1.247-2.785,2.785-2.785h22.511c1.537,0,2.784,1.248,2.784,2.785L35.156,34.652L35.156,34.652z"/>
+	<circle cx="32.275" cy="34.392" r="0.917"/>
+	<circle cx="9.954" cy="34.392" r="0.917"/>
+	<circle cx="32.275" cy="7.75" r="0.917"/>
+	<circle cx="9.954" cy="7.75" r="0.917"/>
+	<circle fill="#878787" stroke="#777777" cx="21.083" cy="21.125" r="8.125"/>
+	<circle fill="#878787" cx="21.083" cy="21.125" r="6.5"/>
+	<circle fill="#3A3A3A" cx="20.364" cy="19.685" r="6.5"/>
+	<polygon fill="#3A3A3A" points="11.62,16.731 14.751,22.886 26.317,17.074 23.283,11.061 	"/>
+	<path fill="#595959" d="M18.259,23.231l7.149-7.957c0.122,0.496,0.109,0.963,0.109,1.498c0,3.59-2.91,6.502-6.501,6.502
+		C18.76,23.275,18.508,23.26,18.259,23.231z"/>
+	<path fill="#3A3A3A" d="M18.253,23.272c-3.275-0.335-5.831-3.105-5.831-6.469c0-3.59,2.91-6.5,6.5-6.5
+		c3.122,0,5.728,2.198,6.357,5.13L18.253,23.272z"/>
+	<path fill="#3A3A3A" d="M16.813,20.392c-3.275-0.335-5.831-3.105-5.831-6.469c0-3.59,2.91-6.5,6.5-6.5
+		c3.122,0,5.729,2.198,6.357,5.13L16.813,20.392z"/>
+	<polygon fill="#828282" points="16.813,20.392 18.259,23.231 25.41,15.275 23.955,12.456 	"/>
+</g>
+</svg>
