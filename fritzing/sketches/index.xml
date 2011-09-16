@@ -11,6 +11,7 @@
 		<sketch id="BarebonesArduinoStripboard" name="Barebones Arduino with Stripboard" src="core/Barebones Arduino (stripboard).fz"/>
 		<sketch id="Blink" name="Blink" src="core/Blink.fz"/>
 		<sketch id="Button" name="Button" src="core/Button.fz"/>
+		<sketch id="Countdown" name="Countdown" src="core/Countdown.fz"/>		
 		<sketch id="DC_motor_control" name="DC Motor" src="core/DC_motor_control.fz"/>
 		<sketch id="Knock" name="Knock (Piezo)" src="core/Knock.fz"/>
 		<sketch id="LCD" name="Liquid Crystal Display" src="core/LiquidCrystalDisplay.fz"/>
@@ -169,7 +170,12 @@
 			<sketch id="TemperaturSensorLM35"/>
 			<sketch id="earthquakeDetection"/>
       <separator />
-      <url name="See the Fritzing Starter Kit" href="http://fritzing.org/shop/starter-kit/" />
+      <url name="Get your own Fritzing Starter Kit" href="http://fritzing.org/shop/starter-kit/" />
+		</category>
+		<category name="Extention Kit">
+			<sketch id="Countdown"/>
+			<separator />
+      <url name="Get your own Extention Kit" href="http://fritzing.org/shop/starter-kit/" />			
 		</category>
 	</categories>
 </fritzing-sketches>
