@@ -168,6 +168,8 @@
 			<sketch id="Melody"/>
 			<sketch id="TemperaturSensorLM35"/>
 			<sketch id="earthquakeDetection"/>
+      <separator />
+      <url name="See the Fritzing Starter Kit" href="http://fritzing.org/shop/starter-kit/" />
 		</category>
 	</categories>
 </fritzing-sketches>

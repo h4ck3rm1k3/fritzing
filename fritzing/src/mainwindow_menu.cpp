@@ -423,15 +423,11 @@ void MainWindow::createFileMenuActions() {
 void MainWindow::createOpenExampleMenu() {
 	m_openExampleMenu = new QMenu(tr("&Open Example"), this);
 	QString folderPath = FolderUtils::getApplicationSubFolderPath("sketches")+"/";
-	populateMenuFromXMLFile(m_openExampleMenu, m_openExampleActions, folderPath, "index.xml"/*, "fritzing-sketches", "sketch", "category"*/);
+	populateMenuFromXMLFile(m_openExampleMenu, m_openExampleActions, folderPath, "index.xml");
 }
 
-void MainWindow::populateMenuFromXMLFile(
-		QMenu *parentMenu, QStringList &actionsTracker,
-		const QString &folderPath, const QString &indexFileName/*,
-		const QString &rootNode, const QString &indexNode,
-		const QString &submenuNode*/
-) {
+void MainWindow::populateMenuFromXMLFile(QMenu *parentMenu, QStringList &actionsTracker, const QString &folderPath, const QString &indexFileName) 
+{
 	QDomDocument dom;
 	QFile file(folderPath+indexFileName);
 	dom.setContent(&file);
@@ -440,10 +436,9 @@ void MainWindow::populateMenuFromXMLFile(
 	QDomElement indexDomElem = domElem.firstChildElement("sketches");
 	QDomElement taxonomyDomElem = domElem.firstChildElement("categories");
 
-	QHash<QString, struct SketchDescriptor *> index = indexAvailableElements(indexDomElem,folderPath, actionsTracker);
+	QHash<QString, struct SketchDescriptor *> index = indexAvailableElements(indexDomElem, folderPath, actionsTracker);
 	QList<SketchDescriptor *> sketchDescriptors(index.values());
 	qSort(sketchDescriptors.begin(), sketchDescriptors.end(), sortSketchDescriptors);
-
 
 	if (sketchDescriptors.size() > 0) {
 		// set up the "all" category
@@ -456,7 +451,7 @@ void MainWindow::populateMenuFromXMLFile(
 			all.appendChild(sketch);
 		}
 	}
-	populateMenuWithIndex(index,parentMenu,taxonomyDomElem);
+	populateMenuWithIndex(index, parentMenu, taxonomyDomElem);
 	foreach (SketchDescriptor * sketchDescriptor, index.values()) {
 		delete sketchDescriptor;
 	}
@@ -487,9 +482,9 @@ void MainWindow::populateMenuWithIndex(const QHash<QString, struct SketchDescrip
 	// note: the <sketch> element here is not the same as the <sketch> element in indexAvailableElements()
 	QDomElement e = domElem.firstChildElement();
 	while(!e.isNull()) {
-		if(e.nodeName() == "sketch") {
+		if (e.nodeName() == "sketch") {
 			QString id = e.attribute("id");
-			if(!id.isEmpty()) {
+			if (!id.isEmpty()) {
 				if(index[id]) {
 					SketchDescriptor * sketchDescriptor = index[id];
 					parentMenu->addAction(sketchDescriptor->action);
@@ -500,11 +495,20 @@ void MainWindow::populateMenuWithIndex(const QHash<QString, struct SketchDescrip
 				}
 			}
 		} 
-		else if(e.nodeName() == "category") {
+		else if (e.nodeName() == "category") {
 			QString name = e.attribute("name");
 			QMenu * currMenu = new QMenu(name, parentMenu);
 			parentMenu->addMenu(currMenu);
 			populateMenuWithIndex(index, currMenu, e);
+		}
+		else if (e.nodeName() == "separator") {
+			parentMenu->addSeparator();
+		}
+		else if (e.nodeName() == "url") {
+			QAction * action = new QAction(e.attribute("name"), this);
+			action->setData(e.attribute("href"));
+			connect(action, SIGNAL(triggered()), this, SLOT(openURL()));
+			parentMenu->addAction(action);
 		}
 		e = e.nextSiblingElement();
 	}
@@ -2035,6 +2039,16 @@ void MainWindow::hideAllLayers() {
 
 	m_currentGraphicsView->setAllLayersVisible(false);
 	updateLayerMenu();
+}
+
+void MainWindow::openURL() {
+	QAction *action = qobject_cast<QAction *>(sender());
+	if (action == NULL) return;
+
+	QString href = action->data().toString();
+	if (href.isEmpty()) return;
+
+	QDesktopServices::openUrl(href);
 }
 
 void MainWindow::openRecentOrExampleFile() {

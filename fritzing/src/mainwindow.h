@@ -323,6 +323,7 @@ protected slots:
 	void swapSelectedDelay(const QString & family, const QString & prop, QMap<QString, QString> & currPropsMap, ItemBase *);
 	void swapSelectedTimeout();
 	void filenameIfSlot(QString & filename);
+	void openURL();
 
 protected:
 	void initSketchWidget(SketchWidget *);
@@ -332,12 +333,7 @@ protected:
     void createExportActions();
     void createOrderFabAct();
     void createOpenExampleMenu();
-    void populateMenuFromXMLFile(
-    		QMenu *parentMenu, QStringList &actionsTracker,
-    		const QString &folderPath, const QString &indexFileName/*,
-    		const QString &rootNode, const QString &indexNode,
-    		const QString &submenuNode*/
-    );
+    void populateMenuFromXMLFile(QMenu *parentMenu, QStringList &actionsTracker, const QString &folderPath, const QString &indexFileName);
     QHash<QString, struct SketchDescriptor *> indexAvailableElements(QDomElement &domElem, const QString &srcPrefix, QStringList & actionsTracker);
     void populateMenuWithIndex(const QHash<QString, struct SketchDescriptor *> &, QMenu * parentMenu, QDomElement &domElem);
     void populateMenuFromFolderContent(QMenu *parentMenu, const QString &path);
