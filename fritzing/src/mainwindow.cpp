@@ -1191,23 +1191,26 @@ void MainWindow::saveBundledSketch() {
 	bool prevSaveBtnState = m_saveAct->isEnabled();
 	saveBundledNonAtomicEntity(
 		m_fileName, FritzingBundleExtension, this,
-		m_sketchModel->root()->getAllNonCoreParts()
+		m_sketchModel->root()->getAllNonCoreParts(), true
 	);
 	m_saveAct->setEnabled(prevSaveBtnState);
 	setWindowModified(wasModified);
 	setTitle();
 }
 
-void MainWindow::saveBundledNonAtomicEntity(QString &filename, const QString &extension, Bundler *bundler, const QList<ModelPart*> &partsToSave) {
+void MainWindow::saveAsShareable(const QString & path)
+{
+	QString filename = path;
+	saveBundledNonAtomicEntity(filename, FritzingBundleExtension, this, m_sketchModel->root()->getAllNonCoreParts(), false);
+}
+
+
+void MainWindow::saveBundledNonAtomicEntity(QString &filename, const QString &extension, Bundler *bundler, const QList<ModelPart*> &partsToSave, bool askForFilename) {
 	QString fileExt;
 	QString path = defaultSaveFolder() + "/" + QFileInfo(filename).fileName()+"z";
-	QString bundledFileName = FolderUtils::getSaveFileName(
-			this,
-			tr("Specify a file name"),
-			path,
-			tr("Fritzing (*%1)").arg(extension),
-			&fileExt
-		  );
+	QString bundledFileName = askForFilename 
+		? FolderUtils::getSaveFileName(this, tr("Specify a file name"), path, tr("Fritzing (*%1)").arg(extension), &fileExt)
+		: filename;
 
 	if (bundledFileName.isEmpty()) return; // Cancel pressed
 

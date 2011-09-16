@@ -32,9 +32,11 @@ $Date$
 #include "../../utils/folderutils.h"
 #include "../../utils/folderutils.h"
 #include "../../items/resizableboard.h"
+#include "../../items/logoitem.h"
 #include "../../fsvgrenderer.h"
 #include "../../fapplication.h"
 #include "../../svg/gerbergenerator.h"
+#include "../../autoroute/cmrouter/cmrouter.h"
 #include "tileutils.h"
 
 #include <QFile>
@@ -334,9 +336,10 @@ bool Panelizer::bestFitOne(PanelItem * panelItem, PanelParams & panelParams, QLi
 		PlanePair *  planePair = planePairs.at(ppix);
 		bestPlace1.plane = planePair->thePlane;
 		bestPlace2.plane = planePair->thePlane90;
-
+		bestPlace1.maxRect = planePair->tilePanelRect;
 		TiSrArea(NULL, planePair->thePlane, &planePair->tilePanelRect, placeBestFit, &bestPlace1);
 		if (bestPlace1.bestTile == NULL) {
+			bestPlace2.maxRect = planePair->tilePanelRect90;
 			TiSrArea(NULL, planePair->thePlane90, &planePair->tilePanelRect90, placeBestFit, &bestPlace2);
 		}
 		if (bestPlace1.bestTile == NULL && bestPlace2.bestTile == NULL ) {
@@ -681,16 +684,18 @@ int Panelizer::placeBestFit(Tile * tile, UserData userData) {
 		temp.xmaxi = temp.xmini + bestPlace->width;
 		temp.ymini = tileRect.ymini;
 		temp.ymaxi = temp.ymini + bestPlace->height;
-		QList<Tile*> spaces;
-		TiSrArea(tile, bestPlace->plane, &temp, allSpaces, &spaces);
-		if (spaces.count()) {
-			int y = temp.ymaxi;
-			foreach (Tile * t, spaces) {
-				if (YMAX(t) > y) y = YMAX(t);			// find the bottom of the lowest open tile
+		if (temp.ymaxi < bestPlace->maxRect.ymaxi) {
+			QList<Tile*> spaces;
+			TiSrArea(tile, bestPlace->plane, &temp, allSpaces, &spaces);
+			if (spaces.count()) {
+				int y = temp.ymaxi;
+				foreach (Tile * t, spaces) {
+					if (YMAX(t) > y) y = YMAX(t);			// find the bottom of the lowest open tile
+				}
+				fit[2] = true;
+				fitCount++;
+				area[2] = (w * (y - temp.ymini)) - (bestPlace->width * bestPlace->height);
 			}
-			fit[2] = true;
-			fitCount++;
-			area[2] = (w * (y - temp.ymini)) - (bestPlace->width * bestPlace->height);
 		}
 	}
 
@@ -701,16 +706,18 @@ int Panelizer::placeBestFit(Tile * tile, UserData userData) {
 		temp.xmaxi = temp.xmini + bestPlace->height;
 		temp.ymini = tileRect.ymini;
 		temp.ymaxi = temp.ymini + bestPlace->width;
-		QList<Tile*> spaces;
-		TiSrArea(tile, bestPlace->plane, &temp, allSpaces, &spaces);
-		if (spaces.count()) {
-			int y = temp.ymaxi;
-			foreach (Tile * t, spaces) {
-				if (YMAX(t) > y) y = YMAX(t);			// find the bottom of the lowest open tile
+		if (temp.ymaxi < bestPlace->maxRect.ymaxi) {
+			QList<Tile*> spaces;
+			TiSrArea(tile, bestPlace->plane, &temp, allSpaces, &spaces);
+			if (spaces.count()) {
+				int y = temp.ymaxi;
+				foreach (Tile * t, spaces) {
+					if (YMAX(t) > y) y = YMAX(t);			// find the bottom of the lowest open tile
+				}
+				fit[3] = true;
+				fitCount++;
+				area[3] = (w * (y - temp.ymini)) - (bestPlace->width * bestPlace->height);
 			}
-			fit[3] = true;
-			fitCount++;
-			area[3] = (w * (y - temp.ymini)) - (bestPlace->width * bestPlace->height);
 		}
 	}
 
@@ -761,7 +768,7 @@ int Panelizer::placeBestFit(Tile * tile, UserData userData) {
 	}
 
 	TileRect temp;
-	temp.xmini = 0;
+	temp.xmini = bestPlace->maxRect.xmini;
 	temp.xmaxi = tileRect.xmini - 1;
 	temp.ymini = tileRect.ymini;
 	temp.ymaxi = tileRect.ymaxi;
@@ -838,4 +845,180 @@ void Panelizer::addOptional(int optionalCount, QHash<QString, PanelItem *> & ref
 			soFar += panelItem->maxOptional;
 		}
 	}
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+
+void Panelizer::inscribe(FApplication * app, const QString & panelFilename) 
+{
+	QFile file(panelFilename);
+
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+
+	DebugDialog::setEnabled(true);
+
+	QDomDocument domDocument;
+	if (!domDocument.setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
+		DebugDialog::debug(QString("Unable to parse '%1': '%2' line:%3 column:%4").arg(panelFilename).arg(errorStr).arg(errorLine).arg(errorColumn));
+		return;
+	}
+
+	QDomElement root = domDocument.documentElement();
+	if (root.isNull() || root.tagName() != "panelizer") {
+		DebugDialog::debug(QString("root element is not 'panelizer'"));
+		return;
+	}
+
+	PanelParams panelParams;
+	if (!initPanelParams(root, panelParams)) return;
+
+	QDir outputDir = QDir::temp();
+	QDir fzDir(outputDir);
+	fzDir.cd("fz");
+	if (!fzDir.exists()) {
+		DebugDialog::debug(QString("unable to create fz folder in '%1'").arg(panelParams.outputFolder));
+		return;
+	}
+
+	DebugDialog::debug(QString("fz folder '%1'\n").arg(fzDir.absolutePath()));
+
+
+	QDomElement boards = root.firstChildElement("boards");
+	QDomElement board = boards.firstChildElement("board");
+	if (board.isNull()) {
+		DebugDialog::debug(QString("no <board> elements found"));
+		return;
+	}
+
+	QHash<QString, QString> fzzFilePaths;
+	QDomElement paths = root.firstChildElement("paths");
+	QDomElement path = paths.firstChildElement("path");
+	if (path.isNull()) {
+		DebugDialog::debug(QString("no <path> elements found"));
+		return;
+	}
+
+	collectFiles(path, fzzFilePaths);
+	if (fzzFilePaths.count() == 0) {
+		DebugDialog::debug(QString("no fzz files found in paths"));
+		return;
+	}
+	
+	board = boards.firstChildElement("board");
+	if (!checkBoards(board, fzzFilePaths)) return;
+
+	app->createUserDataStoreFolderStructure();
+	app->registerFonts();
+	app->loadReferenceModel();
+
+	if (!app->loadBin("")) {
+		DebugDialog::debug(QString("load bin failed"));
+		return;
+	}
+
+	QHash<QString, PanelItem *> refPanelItems;
+	board = boards.firstChildElement("board");
+	while (!board.isNull()) {
+		MainWindow * mainWindow = inscribeBoard(board, fzzFilePaths, app, panelParams, fzDir);
+		if (mainWindow) {
+			mainWindow->setCloseSilently(true);
+			mainWindow->close();
+		}
+		board = board.nextSiblingElement("board");
+	}
+
+	// TODO: delete temp fz folder
+
+
+}
+
+MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QString> & fzzFilePaths, FApplication * app, PanelParams & panelParams, QDir & fzDir)
+{
+	QString boardName = board.attribute("name");
+
+	if (board.attribute("inscription").isEmpty()) return NULL;
+
+	QString path = fzzFilePaths.value(boardName, "");
+	if (board.attribute("inscriptionHeight").isEmpty()) {
+		DebugDialog::debug(QString("missing inscriptionHeight '%1'").arg(path));
+		return NULL;
+	}
+
+	bool ok;
+	double inscriptionHeight = TextUtils::convertToInches(board.attribute("inscriptionHeight"), &ok, false);
+	if (!ok) {
+		DebugDialog::debug(QString("bad inscriptionHeight '%1'").arg(path));
+		return NULL;
+	}
+
+	int loaded = 0;
+	MainWindow * mainWindow = app->loadWindows(loaded);
+	mainWindow->noBackup();
+
+	FolderUtils::setOpenSaveFolderAux(fzDir.absolutePath());
+
+	if (!mainWindow->loadWhich(path, false, false, true)) {
+		DebugDialog::debug(QString("failed to load '%1'").arg(path));
+		return mainWindow;
+	}
+
+	mainWindow->showPCBView();
+		
+	ItemBase * boardItem = mainWindow->pcbView()->findBoard();
+	if (boardItem == NULL) {
+		DebugDialog::debug(QString("no board found in '%1'").arg(path));
+		return mainWindow;
+	}
+
+	mainWindow->removeGroundFill();
+
+	CMRouter router(mainWindow->pcbView());
+	QList<Tile *> alreadyTiled;
+	router.drc(CMRouter::ClipAllOverlaps, CMRouter::ClipAllOverlaps, true, true);
+	CopperLogoItem * logoItem = qobject_cast<CopperLogoItem *>(mainWindow->pcbView()->addCopperLogoItem(ViewLayer::Bottom));
+	logoItem->setLogo(board.attribute("inscription"), true);
+	logoItem->setHeight(inscriptionHeight * 25.4);
+	logoItem->setProp("inscription", "true");
+	QSizeF size = logoItem->size();
+
+	// TODO: look for borders first, then look for the worst fit
+	// TODO: use 90
+	// TODO: use copper top
+	// TODO: delete description if already exists
+
+	BestPlace bestPlace;
+	bestPlace.maxRect = router.boardRect();
+	bestPlace.rotate90 = false;
+	bestPlace.bestTile = NULL;
+	bestPlace.width = realToTile(logoItem->boundingRect().width());
+	bestPlace.height = realToTile(logoItem->boundingRect().height());
+	bestPlace.plane = router.getPlane(ViewLayer::Copper0Trace);
+	bestPlace.bestArea = Worst;
+	if (bestPlace.plane == NULL) {
+		DebugDialog::debug(QString("error tiling plane in %1\n").arg(path));
+		return mainWindow;
+	}
+
+
+	TiSrArea(NULL, bestPlace.plane, &bestPlace.maxRect, Panelizer::placeBestFit, &bestPlace);
+	if (bestPlace.bestTile != NULL) {
+		QRectF rect;
+		tileToQRect(bestPlace.bestTile, rect);
+		logoItem->setPos(rect.left(), rect.top());
+		if (bestPlace.rotate90) {
+			logoItem->rotate(90);
+			logoItem->setPos(rect.left(), rect.top());
+		}
+		mainWindow->groundFill();
+		mainWindow->saveAsShareable(path);
+	}
+	else {
+		DebugDialog::debug(QString("\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"
+									"unable to place inscription in %1\n"
+									"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n").arg(path));
+	}
+
+	return mainWindow;
 }

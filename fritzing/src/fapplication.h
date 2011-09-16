@@ -93,6 +93,7 @@ protected:
 	void runKicadSchematicService();
 	void runGerberService();
 	void runPanelizerService();
+	void runInscriptionService();
 	QList<class MainWindow *> recoverBackups();
 	QList<MainWindow *> loadLastOpenSketch();
 	void doLoadPrevious(MainWindow *);
@@ -105,6 +106,7 @@ protected:
 
 	enum ServiceType {
 		PanelizerService = 1,
+		InscriptionService,
 		GerberService,
 		GedaService,
 		KicadSchematicService,

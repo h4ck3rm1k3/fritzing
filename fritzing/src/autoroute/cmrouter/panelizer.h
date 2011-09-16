@@ -79,6 +79,7 @@ struct BestPlace
 {
 	Tile * bestTile;
 	TileRect bestTileRect;
+	TileRect maxRect;
 	int width;
 	int height;
 	double bestArea;
@@ -100,6 +101,7 @@ class Panelizer
 {
 public:
 	static void panelize(class FApplication *, const QString & panelFilename);
+	static void inscribe(class FApplication *, const QString & panelFilename);
 	static int placeBestFit(Tile * tile, UserData userData);
 
 protected:
@@ -111,7 +113,7 @@ protected:
 	static void bestFit(QList<PanelItem *> & insertPanelItems, PanelParams &, QList<PlanePair *> &);
 	static bool bestFitOne(PanelItem * panelItem, PanelParams & panelParams, QList<PlanePair *> & planePairs, bool createNew);
 	static void addOptional(int optionalCount, QHash<QString, PanelItem *> & refPanelItems, QList<PanelItem *> & insertPanelItems, PanelParams &, QList<PlanePair *> &);
-
+	static class MainWindow * inscribeBoard(QDomElement & board, QHash<QString, QString> & fzzFilePaths, FApplication * app, PanelParams & panelParams, QDir & fzDir);
 };
 
 #endif

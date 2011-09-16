@@ -883,7 +883,7 @@ bool CMRouter::drc(CMRouter::OverlapType overlapType, CMRouter::OverlapType wire
 
 	QList<Tile *> alreadyTiled;
 	try {
-		Plane * plane = tilePlane(m_viewLayerIDs.at(0), ViewLayer::Bottom, alreadyTiled, overlapType, wireOverlapType, eliminateThin);
+		tilePlane(m_viewLayerIDs.at(0), ViewLayer::Bottom, alreadyTiled, overlapType, wireOverlapType, eliminateThin);
 		if (m_hasOverlaps) {
 			gotBad = true;
 			m_hasOverlaps = false;
@@ -894,7 +894,7 @@ bool CMRouter::drc(CMRouter::OverlapType overlapType, CMRouter::OverlapType wire
 		}
 
 		if (m_bothSidesNow) {
-			plane = tilePlane(m_viewLayerIDs.at(1), ViewLayer::Top, alreadyTiled, overlapType, wireOverlapType, eliminateThin);
+			tilePlane(m_viewLayerIDs.at(1), ViewLayer::Top, alreadyTiled, overlapType, wireOverlapType, eliminateThin);
 			if (m_hasOverlaps) {
 				gotBad = true;
 				//return false;
@@ -4251,3 +4251,9 @@ void CMRouter::fixWidths()
 		setUpWidths(m_sketchWidget->getSmallerTraceWidth(minDim));
 	}
 }
+
+Plane * CMRouter::getPlane(ViewLayer::ViewLayerID viewLayerID)
+{
+	return m_planeHash.value(viewLayerID, NULL);
+}
+

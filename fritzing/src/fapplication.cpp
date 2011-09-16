@@ -200,6 +200,15 @@ bool FApplication::init() {
 			toRemove << i << i + 1;
 		}
 
+		if ((m_arguments[i].compare("-i", Qt::CaseInsensitive) == 0) ||
+			(m_arguments[i].compare("-inscription", Qt::CaseInsensitive) == 0)||
+			(m_arguments[i].compare("--inscription", Qt::CaseInsensitive) == 0)) {
+			m_serviceType = InscriptionService;
+			m_panelFilename = m_arguments[i + 1];
+			m_outputFolder = " ";					// otherwise program will bail out
+			toRemove << i << i + 1;
+		}
+
 		if (m_arguments[i].compare("-ep", Qt::CaseInsensitive) == 0) {
 			m_externalProcessPath = m_arguments[i + 1];
 			toRemove << i << i + 1;
@@ -480,6 +489,10 @@ int FApplication::serviceStartup() {
 
 		case PanelizerService:
 			runPanelizerService();
+			return 0;
+
+		case InscriptionService:
+			runInscriptionService();
 			return 0;
 
 		default:
@@ -1370,5 +1383,11 @@ void FApplication::runPanelizerService()
 {	
 	m_started = true;
 	Panelizer::panelize(this, m_panelFilename);
+}
+
+void FApplication::runInscriptionService()
+{	
+	m_started = true;
+	Panelizer::inscribe(this, m_panelFilename);
 }
 

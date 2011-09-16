@@ -2126,6 +2126,15 @@ void PCBSketchWidget::jumperItemHack() {
 	}
 }
 
+ItemBase * PCBSketchWidget::addCopperLogoItem(ViewLayer::ViewLayerSpec viewLayerSpec) 
+{
+	long newID = ItemBase::getNextID();
+	ViewGeometry viewGeometry;
+	viewGeometry.setLoc(QPointF(0, 0));
+	QString moduleID = (viewLayerSpec == ViewLayer::Bottom) ? ModuleIDNames::Copper0LogoTextModuleIDName : ModuleIDNames::Copper1LogoTextModuleIDName;
+	return addItem(paletteModel()->retrieveModelPart(moduleID), viewLayerSpec, BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
+}
+
 void PCBSketchWidget::updateNet(Wire * wire) {
 	if (wire == NULL) return;
 
@@ -2195,14 +2204,14 @@ ItemBase * PCBSketchWidget::placePartDroppedInOtherView(ModelPart * modelPart, V
 		router.insertTile(plane, s, alreadyTiled, NULL, Tile::OBSTACLE, CMRouter::IgnoreAllOverlaps);
 	}
 
-	TileRect tileBoardRect = router.boardRect();
 	BestPlace bestPlace;
+	bestPlace.maxRect = router.boardRect();
 	bestPlace.rotate90 = false;
 	bestPlace.bestTile = NULL;
 	bestPlace.width = realToTile(newItem->boundingRect().width());
 	bestPlace.height = realToTile(newItem->boundingRect().height());
 	bestPlace.plane = plane;
-	TiSrArea(NULL, plane, &tileBoardRect, Panelizer::placeBestFit, &bestPlace);
+	TiSrArea(NULL, plane, &bestPlace.maxRect, Panelizer::placeBestFit, &bestPlace);
 	if (bestPlace.bestTile != NULL) {
 		QRectF r;
 		tileToQRect(bestPlace.bestTile, r);

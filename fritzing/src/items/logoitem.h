@@ -59,6 +59,7 @@ public:
 	bool stickyEnabled();
 	PluralType isPlural();
 	void addedToScene(bool temporary);
+	void setHeight(double h);
 
 protected slots:
 	void prepLoadImage();

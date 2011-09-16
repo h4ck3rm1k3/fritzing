@@ -97,6 +97,7 @@ public:
 	QString generateCopperFillUnit(ItemBase * itemBase, QPointF whereToStart);
 	double getWireStrokeWidth(Wire *, double wireWidth);
 	bool curvyWiresIndicated(Qt::KeyboardModifiers);
+	ItemBase * addCopperLogoItem(ViewLayer::ViewLayerSpec viewLayerSpec);
 
 public:
 	static QSizeF jumperItemSize();

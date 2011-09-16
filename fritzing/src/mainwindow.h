@@ -115,8 +115,10 @@ public:
 	// if we consider a part as the smallest ("atomic") entity inside
 	// fritzing, then this functions may help with the bundle tasks
 	// on the complex entities: sketches, bins, modules (?)
-	void saveBundledNonAtomicEntity(QString &filename, const QString &extension, Bundler *bundler, const QList<ModelPart*> &partsToSave);
+	void saveBundledNonAtomicEntity(QString &filename, const QString &extension, Bundler *bundler, const QList<ModelPart*> &partsToSave, bool askForFilename);
 	void loadBundledNonAtomicEntity(const QString &filename, Bundler *bundler, bool addToBin, bool dontAsk);
+	void saveAsShareable(const QString & path);
+
 	
 	void setCurrentFile(const QString &fileName, bool addToRecent, bool recovered, const QString & backupName);
 	void setRecovered(bool);
@@ -150,6 +152,8 @@ public slots:
 	void statusMessage(QString message, int timeout);
 	void warnSMD(const QString & moduleID);
     void showPCBView();
+	void groundFill();
+	void removeGroundFill();
 
 protected slots:
 	void load();
@@ -272,8 +276,6 @@ protected slots:
 	void reportBug();
 	void enableDebug();
 	void tidyWires();
-	void groundFill();
-	void removeGroundFill();
 	void changeWireColor(bool checked);
 
 	void startSaveInstancesSlot(const QString & fileName, ModelPart *, QXmlStreamWriter &);

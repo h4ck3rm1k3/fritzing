@@ -738,8 +738,12 @@ void LogoItem::heightEntry() {
 	QLineEdit * edit = qobject_cast<QLineEdit *>(sender());
 	if (edit == NULL) return;
 
+	setHeight(edit->text().toDouble());
+}
+
+void LogoItem::setHeight(double h)
+{
 	double w = m_modelPart->prop("width").toDouble();
-	double h = edit->text().toDouble();
 	if (m_keepAspectRatio) {
 		w = h * m_aspectRatio.width() / m_aspectRatio.height();
 	}
