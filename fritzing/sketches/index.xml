@@ -28,16 +28,14 @@
 		<sketch id="RGB_LED" name="Colored Light (RGB LED)" src="core/RGB-LED.fz"/>
 		<sketch id="Color-Fader" name="Color Fader (RGB LED)" src="core/color-fader.fz"/>
 		<sketch id="Shift_Register" name="Shift Register" src="core/Shift_Register.fz"/>
-		<sketch id="Shift_Register2" name="Shift Register (double-sided)" src="core/Shift_Register_double_sided.fz"/>
+		<sketch id="Shift_Register_2x" name="Shift Register 2x" src="core/Shift_Register_2x.fz"/>
 		<sketch id="Stepper_Motor" name="Stepper Motor" src="core/Stepper_Motor.fz"/>
-		<sketch id="Stepper_Motor2" name="Stepper Motor (double-sided)" src="core/Stepper_Motor_double_sided.fz"/>
 		<sketch id="TemperaturSensorLM35" name="Temperatur Sensing" src="core/TemperaturSensorLM35.fz"/>
 		<sketch id="earthquakeDetection" name="Earthquake Detection" src="core/earthquakeDetection.fz"/>		
 		<sketch id="TiltSwitch" name="Tilt Switch" src="core/TiltSwitch.fz"/>
 		<sketch id="Touch_Switch" name="Touch Switch" src="core/TouchSwitch.fz"/>
 		<sketch id="TrafficLight" name="Traffic Light" src="core/TrafficLight.fz"/>
 		<sketch id="VirtualColorMixer" name="Virtual Color Mixer" src="core/VirtualColorMixer.fz"/>
-		<sketch id="VirtualColorMixer2" name="Virtual Color Mixer (double-sided)" src="core/VirtualColorMixer_double_sided.fz"/>
 		<sketch id="VoltageRegulator" name="Voltage Regulator" src="core/VoltageRegulator_7800series.fz"/>
 		<sketch id="VoltageRegulatorSwitch" name="Voltage Regulator with Switch" src="core/VoltageRegulator_with_switch.fz"/>
 		<sketch id="Window_Alarm" name="Window Alarm" src="core/Window_Alarm.fz"/>
@@ -50,7 +48,7 @@
 					<sketch id="Loop"/>
 					<sketch id="TrafficLight"/>
 					<sketch id="Shift_Register"/>
-					<sketch id="Shift_Register2"/>
+					<sketch id="Shift_Register_2x"/>
 				</category>
 				<category name="Input">
 					<sketch id="Button"/>
@@ -115,7 +113,7 @@
 					<sketch id="RGB_LED"/>
 					<sketch id="Color-Fader"/>
 					<sketch id="Shift_Register"/>
-					<sketch id="Shift_Register2"/>
+					<sketch id="Shift_Register_2x"/>
 					<sketch id="AnalogInputOutput"/>
 				</category>
 				<category name="Display">
@@ -127,7 +125,6 @@
 					<sketch id="AnalogInputToServo"/>
 					<sketch id="DC_motor_control"/>
 					<sketch id="Stepper_Motor"/>
-					<sketch id="Stepper_Motor2"/>
 				</category>
 			</category>
 			<category name="Sound">
@@ -138,14 +135,13 @@
 			<category name="Communication">
 				<sketch id="MidiDrumKit"/>
 				<sketch id="VirtualColorMixer"/>
-				<sketch id="VirtualColorMixer2"/>
 			</category>
 			<category name="Power">
 				<sketch id="npnPowerTransistor"/>
 				<sketch id="Op_Amp"/>
 				<sketch id="Relay"/>
 				<sketch id="Shift_Register"/>
-				<sketch id="Shift_Register2"/>
+				<sketch id="Shift_Register_2x"/>
 				<sketch id="Optocoupler"/>
 				<sketch id="VoltageRegulator"/>
 				<sketch id="VoltageRegulatorSwitch"/>
@@ -172,10 +168,12 @@
       <separator />
       <url name="Get your own Fritzing Starter Kit" href="http://fritzing.org/shop/starter-kit/" />
 		</category>
-		<category name="Extention Kit">
+		<category name="Fritzing Extension Kit">
 			<sketch id="Countdown"/>
+			<sketch id="Shift_Register"/>
+			<sketch id="Shift_Register_2x"/>
 			<separator />
-      <url name="Get your own Extention Kit" href="http://fritzing.org/shop/starter-kit/" />			
+      <url name="Get your own Fritzing Extension Kit" href="http://fritzing.org/shop/starter-kit/" />			
 		</category>
 	</categories>
 </fritzing-sketches>
