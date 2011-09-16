@@ -665,12 +665,12 @@ int Panelizer::placeBestFit(Tile * tile, UserData userData) {
 
 	if (w >= bestPlace->width && h >= bestPlace->height) {
 		fit[0] = true;
-		area[0] = w * h;
+		area[0] = (w * h) - (bestPlace->width * bestPlace->height);
 		fitCount++;
 	}
 	if (h >= bestPlace->width && w >= bestPlace->height) {
 		fit[1] = true;
-		area[1] = w * h;
+		area[1] = (w * h) - (bestPlace->width * bestPlace->height);
 		fitCount++;
 	}
 
@@ -690,7 +690,7 @@ int Panelizer::placeBestFit(Tile * tile, UserData userData) {
 			}
 			fit[2] = true;
 			fitCount++;
-			area[2] = w * (y - temp.ymini);
+			area[2] = (w * (y - temp.ymini)) - (bestPlace->width * bestPlace->height);
 		}
 	}
 
@@ -710,11 +710,13 @@ int Panelizer::placeBestFit(Tile * tile, UserData userData) {
 			}
 			fit[3] = true;
 			fitCount++;
-			area[3] = w * (y - temp.ymini);
+			area[3] = (w * (y - temp.ymini)) - (bestPlace->width * bestPlace->height);
 		}
 	}
 
 	if (fitCount == 0) return 0;
+
+	// area is white space remaining after board has been inserteds
 	
 	int result = -1;
 	for (int i = 0; i < 4; i++) {

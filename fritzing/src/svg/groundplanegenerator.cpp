@@ -64,6 +64,7 @@ bool GroundPlaneGenerator::getBoardRects(const QString & boardSvg, QGraphicsItem
 	QByteArray boardByteArray;
     QString tempColor("#000000");
 	QStringList exceptions;
+	exceptions << "none" << "";
     if (!SvgFileSplitter::changeColors(boardSvg, tempColor, exceptions, boardByteArray)) {
 		return false;
 	}
@@ -298,7 +299,9 @@ QImage * GroundPlaneGenerator::generateGroundPlaneAux(const QString & boardSvg, 
 	renderer.render(&painter, QRectF(0, 0, res * boardImageSize.width() / FSvgRenderer::printerScale(), res * boardImageSize.height() / FSvgRenderer::printerScale()));
 	painter.end();
 
-	//image->save("testGroundFillBoard.png");
+#ifndef QT_NO_DEBUG
+	image->save("testGroundFillBoard.png");
+#endif
 
 	// "blur" the image a little
 	QSvgRenderer renderer2(copperByteArray);

@@ -2540,7 +2540,7 @@ bool PCBSketchWidget::groundFill(QUndoCommand * parentCommand)
 	}
 
 	QStringList exceptions;
-	exceptions << background().name();    // the color of holes in the board
+	exceptions << "none" << "" << background().name();    // the color of holes in the board
 
 	GroundPlaneGenerator gpg;
 	bool result = gpg.generateGroundPlane(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board, GraphicsUtils::StandardFritzingDPI / 5.0  /* 1 MIL */,
@@ -2631,7 +2631,7 @@ QString PCBSketchWidget::generateCopperFillUnit(ItemBase * itemBase, QPointF whe
 	}
 
 	QStringList exceptions;
-	exceptions << background().name();    // the color of holes in the board
+	exceptions << "none" << "" << background().name();    // the color of holes in the board
 
 	GroundPlaneGenerator gpg;
 	bool result = gpg.generateGroundPlaneUnit(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board, GraphicsUtils::StandardFritzingDPI / 5.0  /* 1 MIL */, 
