@@ -71,7 +71,7 @@ void Ruler::resizeMM(double magnitude, double unitsFlag, const LayerHash & viewL
 
 	Q_UNUSED(viewLayers);
 
-	double w = TextUtils::convertToInches(modelPart()->prop("width").toString());
+	double w = TextUtils::convertToInches(prop("width"));
 	QString units((unitsFlag == IndexCm) ? "cm" : "in");
 	double newW = TextUtils::convertToInches(QString::number(magnitude) + units);
 	if (w == newW) return;
@@ -277,7 +277,7 @@ void Ruler::widthEntry() {
 	if (edit == NULL) return;
 
 	QString t = edit->text();
-	QString w = modelPart()->prop("width").toString();
+	QString w = prop("width");
 	w.chop(2);
 	if (t.compare(w) == 0) {
 		return;
@@ -292,7 +292,7 @@ void Ruler::widthEntry() {
 }
 
 void Ruler::unitsEntry(const QString & units) {
-	double inches = TextUtils::convertToInches(modelPart()->prop("width").toString());
+	double inches = TextUtils::convertToInches(prop("width"));
 	if (units == "in") {
         modelPart()->setProp("width", QVariant(QString::number(inches) + "in"));
 		m_widthEditor->setText(QString::number(inches));
@@ -303,7 +303,7 @@ void Ruler::unitsEntry(const QString & units) {
 		m_widthEditor->setText(QString::number(inches * 2.54));
 		m_widthValidator->setTop(20 * 2.54);
 	}
-	DefaultWidth = modelPart()->prop("width").toString();
+	DefaultWidth = prop("width");
 }
 
 bool Ruler::stickyEnabled() {
@@ -323,7 +323,7 @@ void Ruler::addedToScene(bool temporary)
 {
 	if (this->scene()) {
 		LayerHash viewLayers;
-		QString w = modelPart()->prop("width").toString();
+		QString w = prop("width");
 		modelPart()->setProp("width", "");							// makes sure resizeMM will do the work
 		double inches = TextUtils::convertToInches(w);
 		if (w.endsWith("cm")) {

@@ -2172,7 +2172,7 @@ bool MainWindow::loadCustomBoardShape()
 	// %7 = time string
 	// %8 = layers
 
-	QString layers = itemBase->modelPart()->prop("layers").toString();
+	QString layers = itemBase->prop("layers");
 	if (layers.isEmpty()) {
 		layers = itemBase->modelPart()->properties().value("layers", "1");
 	}

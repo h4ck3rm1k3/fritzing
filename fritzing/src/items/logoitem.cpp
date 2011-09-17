@@ -82,7 +82,7 @@ void LogoItem::addedToScene(bool temporary)
 		m_aspectRatio.setWidth(this->boundingRect().width());
 		m_aspectRatio.setHeight(this->boundingRect().height());
 		m_originalFilename = filename();
-		QString shape = modelPart()->prop("shape").toString();
+		QString shape = prop("shape");
 		if (!shape.isEmpty()) {
 					
 			m_aspectRatio = modelPart()->prop("aspectratio").toSizeF();
@@ -115,7 +115,7 @@ void LogoItem::addedToScene(bool temporary)
 QString LogoItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi)
 {
 	if (viewLayerID == layer() ) {
-		QString svg = modelPart()->prop("shape").toString();
+		QString svg =prop("shape");
 		if (!svg.isEmpty()) {
 			QString xmlName = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
 			SvgFileSplitter splitter;
@@ -350,7 +350,7 @@ void LogoItem::prepLoadImageAux(const QString & fileName, bool addName)
 {
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
-		infoGraphicsView->loadLogoImage(this->id(), modelPart()->prop("shape").toString(), m_aspectRatio, modelPart()->prop("lastfilename").toString(), fileName, addName);
+		infoGraphicsView->loadLogoImage(this->id(), prop("shape"), m_aspectRatio, prop("lastfilename"), fileName, addName);
 	}
 }
 
@@ -390,7 +390,7 @@ void LogoItem::reloadImage(const QString & svg, const QSizeF & aspectRatio, cons
 	}
 	else {
 		// restore previous (not sure whether this is necessary)
-		m_renderer->fastLoad(modelPart()->prop("shape").toString().toUtf8());
+		m_renderer->fastLoad(prop("shape").toUtf8());
 		setSharedRendererEx(m_renderer);
 		unableToLoad(fileName);
 	}
@@ -534,7 +534,7 @@ void LogoItem::resizeMM(double mmW, double mmH, const LayerHash & viewLayers) {
 
 	// TODO: deal with aspect ratio
 
-	QString svg = modelPart()->prop("shape").toString();
+	QString svg = prop("shape");
 	if (svg.isEmpty()) return;
 
 	QString errorStr;
@@ -786,7 +786,7 @@ void LogoItem::setFileNameItems() {
 
 	int ix = 0;
 	foreach (QString name, getImageNames()) {
-		if (modelPart()->prop("lastfilename").toString().contains(name)) {
+		if (prop("lastfilename").contains(name)) {
 			m_fileNameComboBox->setCurrentIndex(ix);
 			return;
 		}
@@ -794,7 +794,7 @@ void LogoItem::setFileNameItems() {
 	}
 
 	foreach (QString name, getNewImageNames()) {
-		if (modelPart()->prop("lastfilename").toString().contains(name)) {
+		if (prop("lastfilename").contains(name)) {
 			m_fileNameComboBox->setCurrentIndex(ix);
 			return;
 		}

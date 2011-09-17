@@ -99,6 +99,82 @@ struct LayerThing {
 
 };
 
+int roomOn(Tile * tile, TileRect & tileRect, BestPlace * bestPlace)
+{
+	int w = tileRect.xmaxi - tileRect.xmini;
+	int h = tileRect.ymaxi - tileRect.ymini;
+	if (bestPlace->width <= w && bestPlace->height <= h) {
+		bestPlace->bestTile = tile;
+		return 1;
+	}
+
+	TileRect temp;
+	temp.xmini = tileRect.xmini;
+	temp.xmaxi = temp.xmini + bestPlace->width;
+	temp.ymini = tileRect.ymini;
+	temp.ymaxi = temp.ymini + bestPlace->height;
+	QList<Tile*> spaces;
+	TiSrArea(tile, bestPlace->plane, &temp, allSpaces, &spaces);
+	if (spaces.count()) {
+		bestPlace->bestTile = tile;
+		return 1;
+	}
+
+	return 0;
+}
+
+int roomOnTop(Tile * tile, UserData userData) 
+{
+	if (TiGetType(tile) != Tile::SPACE) return 0;
+
+	BestPlace * bestPlace = (BestPlace *) userData;
+	TileRect tileRect;
+	TiToRect(tile, &tileRect);
+
+	if (tileRect.ymini != bestPlace->maxRect.ymini) return 0;
+
+	return roomOn(tile, tileRect, bestPlace);
+}
+
+int roomOnBottom(Tile * tile, UserData userData) 
+{
+	if (TiGetType(tile) != Tile::SPACE) return 0;
+
+	BestPlace * bestPlace = (BestPlace *) userData;
+	TileRect tileRect;
+	TiToRect(tile, &tileRect);
+
+	if (tileRect.ymaxi != bestPlace->maxRect.ymaxi) return 0;
+
+	return roomOn(tile, tileRect, bestPlace);
+}
+
+int roomOnLeft(Tile * tile, UserData userData) 
+{
+	if (TiGetType(tile) != Tile::SPACE) return 0;
+
+	BestPlace * bestPlace = (BestPlace *) userData;
+	TileRect tileRect;
+	TiToRect(tile, &tileRect);
+
+	if (tileRect.xmini != bestPlace->maxRect.xmini) return 0;
+
+	return roomOn(tile, tileRect, bestPlace);
+}
+
+int roomOnRight(Tile * tile, UserData userData) 
+{
+	if (TiGetType(tile) != Tile::SPACE) return 0;
+
+	BestPlace * bestPlace = (BestPlace *) userData;
+	TileRect tileRect;
+	TiToRect(tile, &tileRect);
+
+	if (tileRect.xmaxi != bestPlace->maxRect.xmaxi) return 0;
+
+	return roomOn(tile, tileRect, bestPlace);
+}
+
 /////////////////////////////////////////////////////////////////////////////////
 
 void Panelizer::panelize(FApplication * app, const QString & panelFilename) 
@@ -918,10 +994,9 @@ void Panelizer::inscribe(FApplication * app, const QString & panelFilename)
 		return;
 	}
 
-	QHash<QString, PanelItem *> refPanelItems;
 	board = boards.firstChildElement("board");
 	while (!board.isNull()) {
-		MainWindow * mainWindow = inscribeBoard(board, fzzFilePaths, app, panelParams, fzDir);
+		MainWindow * mainWindow = inscribeBoard(board, fzzFilePaths, app, fzDir);
 		if (mainWindow) {
 			mainWindow->setCloseSilently(true);
 			mainWindow->close();
@@ -934,7 +1009,7 @@ void Panelizer::inscribe(FApplication * app, const QString & panelFilename)
 
 }
 
-MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QString> & fzzFilePaths, FApplication * app, PanelParams & panelParams, QDir & fzDir)
+MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QString> & fzzFilePaths, FApplication * app, QDir & fzDir)
 {
 	QString boardName = board.attribute("name");
 
@@ -974,26 +1049,42 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
 
 	mainWindow->removeGroundFill();
 
+	QList<QGraphicsItem *> toDelete;
+	foreach (QGraphicsItem * item, mainWindow->pcbView()->scene()->items()) {
+		CopperLogoItem * cli = dynamic_cast<CopperLogoItem *>(item);
+		if (cli == NULL) continue;
+
+		if (cli->modelPart()->prop("inscription") == "true") {
+			toDelete.append(cli);
+		}
+	}
+
+	foreach (QGraphicsItem * item, toDelete) {
+		DebugDialog::debug("deleting prior inscription");
+		delete item;
+	}
+
 	CMRouter router(mainWindow->pcbView());
 	QList<Tile *> alreadyTiled;
 	router.drc(CMRouter::ClipAllOverlaps, CMRouter::ClipAllOverlaps, true, true);
 	CopperLogoItem * logoItem = qobject_cast<CopperLogoItem *>(mainWindow->pcbView()->addCopperLogoItem(ViewLayer::Bottom));
 	logoItem->setLogo(board.attribute("inscription"), true);
 	logoItem->setHeight(inscriptionHeight * 25.4);
-	logoItem->setProp("inscription", "true");
+	logoItem->modelPart()->setProperty("inscription", QVariant("true"));
 	QSizeF size = logoItem->size();
 
-	// TODO: look for borders first, then look for the worst fit
 	// TODO: use 90
 	// TODO: use copper top
 	// TODO: delete description if already exists
 
+	qreal logoWidth = logoItem->boundingRect().width();
+	qreal logoHeight = logoItem->boundingRect().height();
 	BestPlace bestPlace;
 	bestPlace.maxRect = router.boardRect();
 	bestPlace.rotate90 = false;
 	bestPlace.bestTile = NULL;
-	bestPlace.width = realToTile(logoItem->boundingRect().width());
-	bestPlace.height = realToTile(logoItem->boundingRect().height());
+	bestPlace.width = realToTile(logoWidth);
+	bestPlace.height = realToTile(logoHeight);
 	bestPlace.plane = router.getPlane(ViewLayer::Copper0Trace);
 	bestPlace.bestArea = Worst;
 	if (bestPlace.plane == NULL) {
@@ -1001,15 +1092,44 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
 		return mainWindow;
 	}
 
+	TileRect searchRect = bestPlace.maxRect;
+	searchRect.ymaxi = searchRect.ymini + size.height();
+	TiSrArea(NULL, bestPlace.plane, &searchRect, roomOnTop, &bestPlace);
+	if (bestPlace.bestTile == NULL) {
+		searchRect = bestPlace.maxRect;
+		searchRect.ymini = searchRect.ymaxi - size.height();
+		TiSrArea(NULL, bestPlace.plane, &searchRect, roomOnBottom, &bestPlace);
+	}
+	if (bestPlace.bestTile == NULL) {
+		searchRect = bestPlace.maxRect;
+		searchRect.xmaxi = searchRect.xmini + size.width();
+		bestPlace.height = realToTile(logoWidth);
+		bestPlace.width = realToTile(logoHeight);
+		bestPlace.rotate90 = true;
+		TiSrArea(NULL, bestPlace.plane, &searchRect, roomOnLeft, &bestPlace);
+	}
+	if (bestPlace.bestTile == NULL) {
+		searchRect = bestPlace.maxRect;
+		searchRect.xmini = searchRect.xmaxi - size.width();
+		bestPlace.rotate90 = true;
+		TiSrArea(NULL, bestPlace.plane, &searchRect, roomOnRight, &bestPlace);
+	}
+	if (bestPlace.bestTile == NULL) {
+		bestPlace.rotate90 = false;
+		bestPlace.width = realToTile(logoWidth);
+		bestPlace.height = realToTile(logoHeight);
+		TiSrArea(NULL, bestPlace.plane, &bestPlace.maxRect, Panelizer::placeBestFit, &bestPlace);
+	}
 
-	TiSrArea(NULL, bestPlace.plane, &bestPlace.maxRect, Panelizer::placeBestFit, &bestPlace);
 	if (bestPlace.bestTile != NULL) {
 		QRectF rect;
 		tileToQRect(bestPlace.bestTile, rect);
 		logoItem->setPos(rect.left(), rect.top());
 		if (bestPlace.rotate90) {
-			logoItem->rotate(90);
-			logoItem->setPos(rect.left(), rect.top());
+			mainWindow->pcbView()->selectAllItems(false, false);
+			logoItem->setSelected(true);
+			logoItem->setPos(rect.left() - (logoWidth / 2) + (logoHeight / 2), rect.top() + (logoWidth / 2) - (logoHeight / 2));
+			mainWindow->pcbView()->rotateX(90, false);
 		}
 		mainWindow->groundFill();
 		mainWindow->saveAsShareable(path);

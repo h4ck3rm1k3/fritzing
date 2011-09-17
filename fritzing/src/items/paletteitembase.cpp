@@ -562,7 +562,6 @@ void PaletteItemBase::setProp(const QString & prop, const QString & value)
 	ItemBase::setProp(prop, value);
 }
 
-
 void PaletteItemBase::partPropertyEntry() {
 	QLineEdit * lineEdit = qobject_cast<QLineEdit *>(sender());
 	if (lineEdit == NULL) return;

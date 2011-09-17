@@ -1530,6 +1530,13 @@ void ItemBase::setProp(const QString & prop, const QString & value) {
 	Q_UNUSED(value);
 }
 
+QString ItemBase::prop(const QString & p)
+{
+	if (m_modelPart == NULL) return "";
+
+	return m_modelPart->prop(p).toString();
+}
+
 bool ItemBase::isObsolete() {
 	if (modelPart() == NULL) return false;
 

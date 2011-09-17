@@ -180,16 +180,16 @@ QString SchematicFrame::makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, double 
 	svg.replace("}", "]");
 	svg = TextUtils::incrementTemplateString(svg, 1, milsH - OriginalHeight, TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction);
 	QHash<QString, QString> hash;
-	foreach (QString prop, FrameProps.keys()) {
-		hash.insert(prop, modelPart()->prop(prop).toString());
-		QString label = FrameProps.value(prop);
+	foreach (QString propp, FrameProps.keys()) {
+		hash.insert(propp, prop(propp));
+		QString label = FrameProps.value(propp);
 		if (!label.isEmpty()) {
-			hash.insert(prop + " label", label);
+			hash.insert(propp + " label", label);
 		}
 	}
 
 	// figure out the width and the font
-	QString string = modelPart()->prop("descr").toString();
+	QString string = prop("descr");
 	m_textEdit->setPlainText(string);
 	QTextCursor textCursor = m_textEdit->cursorForPosition(QPoint(0,0));
 	QTextLayout * textLayout = textCursor.block().layout();
@@ -239,7 +239,7 @@ double SchematicFrame::minHeight() {
 
 void SchematicFrame::addedToScene(bool temporary)
 {
-	if (modelPart()->prop("filename").toString().isEmpty()) {
+	if (prop("filename").isEmpty()) {
 		InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 		if (infoGraphicsView != NULL) {
 			modelPart()->setProp("filename", infoGraphicsView->filenameIf());
@@ -254,19 +254,19 @@ QString SchematicFrame::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QS
 	return ResizableBoard::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 }
 
-bool SchematicFrame::makeLineEdit(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget) 
+bool SchematicFrame::makeLineEdit(QWidget * parent, const QString & family, const QString & propp, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget) 
 {
 	Q_UNUSED(value);
 	Q_UNUSED(family);
 
 
-	returnProp = ItemBase::TranslatedPropertyNames.value(prop.toLower());
-	returnValue = modelPart()->prop(prop).toString();
+	returnProp = ItemBase::TranslatedPropertyNames.value(propp.toLower());
+	returnValue = prop(propp);
 
 	QLineEdit * e1 = new QLineEdit(parent);
 	e1->setObjectName("infoViewLineEdit");
 
-	e1->setProperty("prop", QVariant(prop));
+	e1->setProperty("prop", QVariant(propp));
 
 	e1->setText(returnValue);
 	e1->setEnabled(swappingEnabled);
@@ -276,11 +276,11 @@ bool SchematicFrame::makeLineEdit(QWidget * parent, const QString & family, cons
 	return true;
 }
 
-bool SchematicFrame::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget) 
+bool SchematicFrame::collectExtraInfo(QWidget * parent, const QString & family, const QString & propp, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget) 
 {
-	if (prop.compare("date", Qt::CaseInsensitive) == 0) {
+	if (propp.compare("date", Qt::CaseInsensitive) == 0) {
 		QDateTimeEdit * dateTimeEdit = new QDateTimeEdit(QDateTime::currentDateTime(), parent);
-		QString d = modelPart()->prop("date").toString();
+		QString d = prop("date");
 		if (!d.isEmpty()) {
 			QDateTime dateTime;
 			dateTime.setTime_t(d.toUInt());
@@ -292,15 +292,15 @@ bool SchematicFrame::collectExtraInfo(QWidget * parent, const QString & family, 
 		dateTimeEdit->setObjectName("infoViewDateEdit");
 		dateTimeEdit->setEnabled(swappingEnabled);
 
-		returnProp = ItemBase::TranslatedPropertyNames.value(prop.toLower());
-		returnValue = modelPart()->prop(prop).toString();
+		returnProp = ItemBase::TranslatedPropertyNames.value(propp.toLower());
+		returnValue = prop(propp);
 		returnWidget = dateTimeEdit;
 
 		return true;
 	}
 
-	if (prop.compare("sheet", Qt::CaseInsensitive) == 0) {
-		QString value = modelPart()->prop("sheet").toString();
+	if (propp.compare("sheet", Qt::CaseInsensitive) == 0) {
+		QString value = prop("sheet");
 		QStringList strings = value.split("/");
 		if (strings.count() != 2) {
 			strings.clear();
@@ -338,18 +338,18 @@ bool SchematicFrame::collectExtraInfo(QWidget * parent, const QString & family, 
 
 		frame->setLayout(hBoxLayout);
 
-		returnProp = ItemBase::TranslatedPropertyNames.value(prop.toLower());
-		returnValue = modelPart()->prop(prop).toString();
+		returnProp = ItemBase::TranslatedPropertyNames.value(propp.toLower());
+		returnValue = prop(propp);
 		returnWidget = frame;
 
 		return true;
 	}
 
-	if (FrameProps.keys().contains(prop)) {
-		return makeLineEdit(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
+	if (FrameProps.keys().contains(propp)) {
+		return makeLineEdit(parent, family, propp, value, swappingEnabled, returnProp, returnValue, returnWidget);
 	}
 
-	return PaletteItem::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
+	return PaletteItem::collectExtraInfo(parent, family, propp, value, swappingEnabled, returnProp, returnValue, returnWidget);
 }
 
 bool SchematicFrame::hasGrips() {
@@ -410,16 +410,16 @@ void SchematicFrame::propEntry() {
 	QLineEdit * edit = qobject_cast<QLineEdit *>(sender());
 	if (edit == NULL) return;
 
-	QString prop = edit->property("prop").toString();
-	if (prop.isEmpty()) return;
+	QString propp = edit->property("prop").toString();
+	if (propp.isEmpty()) return;
 
-	QString current = modelPart()->prop(prop).toString();
+	QString current = prop(propp);
 
 	if (edit->text().compare(current) == 0) return;
 
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
-		infoGraphicsView->setProp(this, prop, ItemBase::TranslatedPropertyNames.value(prop), current, edit->text(), true);
+		infoGraphicsView->setProp(this, propp, ItemBase::TranslatedPropertyNames.value(propp), current, edit->text(), true);
 	}
 }
 
@@ -433,7 +433,7 @@ void SchematicFrame::incDate() {
 	int value = sender()->property("value").toInt();
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
-		infoGraphicsView->setProp(this, "date", tr("date"), modelPart()->prop("date").toString(), QString::number(value), true);
+		infoGraphicsView->setProp(this, "date", tr("date"), prop("date"), QString::number(value), true);
 	}
 }
 
@@ -448,7 +448,7 @@ void SchematicFrame::incSheet()
 {
 	QString role = sender()->property("role").toString();
 	int value = sender()->property("value").toInt();
-	QString sheet = modelPart()->prop("sheet").toString();
+	QString sheet = prop("sheet");
 	QStringList strings = sheet.split("/");
 	if (strings.count() != 2) {
 		strings.clear();
@@ -464,6 +464,6 @@ void SchematicFrame::incSheet()
 
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
-		infoGraphicsView->setProp(this, "sheet", tr("sheet"), modelPart()->prop("sheet").toString(), strings.at(0) + "/" + strings[1], true);
+		infoGraphicsView->setProp(this, "sheet", tr("sheet"), prop("sheet"), strings.at(0) + "/" + strings[1], true);
 	}
 }

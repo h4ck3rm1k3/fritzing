@@ -92,7 +92,7 @@ QString GroundPlane::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QStri
 {
 	QString xml = "";
 	if (viewLayerID == ViewLayer::GroundPlane0 || viewLayerID == ViewLayer::GroundPlane1) {
-		xml = modelPart()->prop("svg").toString();
+		xml = prop("svg");
 
 		if (!xml.isEmpty()) {
 			QString xmlName = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
@@ -144,7 +144,7 @@ void GroundPlane::addedToScene(bool temporary)
 				svg = IconSvg;
 			}
 			else {
-				svg = modelPart()->prop("svg").toString();
+				svg = prop("svg");
 			}
 			if (!svg.isEmpty()) {
 				setSvgAux(svg);
@@ -191,7 +191,7 @@ void GroundPlane::setSvgAux(const QString & svg) {
 }
 
 QString GroundPlane::svg() {
-	return modelPart()->prop("svg").toString();
+	return prop("svg");
 }
 
 bool GroundPlane::hasPartLabel() {

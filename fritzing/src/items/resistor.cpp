@@ -128,7 +128,7 @@ Resistor::~Resistor() {
 
 void Resistor::setResistance(QString resistance, QString pinSpacing, bool force) {
 
-	QString tolerance = modelPart()->prop("tolerance").toString();
+	QString tolerance = prop("tolerance");
 
 	if (resistance.endsWith(OhmSymbol)) {
 		resistance.chop(1);
@@ -221,7 +221,7 @@ QString Resistor::makeSvg(const QString & resistance, ViewLayer::ViewLayerID vie
 	int temp = (firstband * 10) + secondband;
 	int thirdband = (temp == 0) ? 0 : log10(ohms / temp);
 
-	QString tolerance = modelPart()->prop("tolerance").toString();
+	QString tolerance = prop("tolerance");
 
 	QString errorStr;
 	int errorLine;

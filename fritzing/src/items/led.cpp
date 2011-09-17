@@ -58,7 +58,7 @@ QString LED::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QStr
 			return Capacitor::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 	}
 
-	QString svg = getColorSVG(modelPart()->prop("color").toString(), viewLayerID);
+	QString svg = getColorSVG(prop("color"), viewLayerID);
 	if (svg.isEmpty()) return "";
 
 	QString xmlName = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
@@ -77,7 +77,7 @@ QString LED::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QStr
 void LED::addedToScene(bool temporary)
 {
 	if (this->scene()) {
-		setColor(modelPart()->prop("color").toString());
+		setColor(prop("color"));
 	}
 
     return Capacitor::addedToScene(temporary);
@@ -182,6 +182,6 @@ bool LED::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier 
 }
 
 const QString & LED::title() {
-	m_title = modelPart()->prop("color").toString() + " LED";
+	m_title = prop("color") + " LED";
 	return m_title;
 }

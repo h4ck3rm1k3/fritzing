@@ -169,6 +169,7 @@ public:
 	virtual bool canEditPart();
 	virtual bool hasCustomSVG();
 	virtual void setProp(const QString & prop, const QString & value);
+	QString prop(const QString & p);
 	bool isObsolete();
 	void prepareProps();
 	void resetValues(const QString & family, const QString & prop);

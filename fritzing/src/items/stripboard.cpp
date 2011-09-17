@@ -434,7 +434,7 @@ void Stripboard::addedToScene(bool temporary)
 		}
 	}
 
-	QString config = modelPart()->prop("buses").toString();
+	QString config = prop("buses");
 	if (config.isEmpty()) return;
 
 	QStringList removed = config.split(" ", QString::SkipEmptyParts);

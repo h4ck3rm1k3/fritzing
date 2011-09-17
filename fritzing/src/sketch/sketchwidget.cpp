@@ -4687,13 +4687,13 @@ void SketchWidget::prepDeleteProps(ItemBase * itemBase, long id, const QString &
 				QSizeF sz;
 				logo->getParams(p, sz);
 				new ResizeBoardCommand(this, id, sz.width(), sz.height(), sz.width(), sz.height(), parentCommand);
-				QString logoProp = logo->modelPart()->prop("logo").toString();
-				QString shapeProp = logo->modelPart()->prop("shape").toString();
+				QString logoProp = logo->prop("logo");
+				QString shapeProp = logo->prop("shape");
 				if (!logoProp.isEmpty()) {
 					new SetPropCommand(this, id, "logo", logoProp, logoProp, true, parentCommand);
 				}
 				else if (!shapeProp.isEmpty()) {
-					new LoadLogoImageCommand(this, id, shapeProp, logo->modelPart()->prop("aspectratio").toSizeF(), logo->modelPart()->prop("lastfilename").toString(), "", false, parentCommand);
+					new LoadLogoImageCommand(this, id, shapeProp, logo->modelPart()->prop("aspectratio").toSizeF(), logo->prop("lastfilename"), "", false, parentCommand);
 				}
 				prepDeleteOtherProps(itemBase, id, newModuleID, parentCommand);
 			}
@@ -4768,7 +4768,7 @@ void SketchWidget::prepDeleteOtherProps(ItemBase * itemBase, long id, const QStr
 	}
 
 	if (itemBase->moduleID().endsWith(ModuleIDNames::StripboardModuleIDName)) {
-		QString buses = itemBase->modelPart()->prop("buses").toString();
+		QString buses = itemBase->prop("buses");
 		if (!buses.isEmpty()) {
 			new SetPropCommand(this, id, "buses", buses, buses, true, parentCommand);
 		}
@@ -6850,7 +6850,7 @@ void SketchWidget::resizeBoard(double mmW, double mmH, bool doEmit)
 			return;
 	}
 
-	QString orig = item->modelPart()->prop("width").toString();
+	QString orig = item->prop("width");
 	QString temp = orig;
 	temp.chop(2);
 	double origw = temp.toDouble();
