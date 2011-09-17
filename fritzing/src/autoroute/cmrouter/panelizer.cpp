@@ -123,6 +123,17 @@ int roomOn(Tile * tile, TileRect & tileRect, BestPlace * bestPlace)
 	return 0;
 }
 
+int roomAnywhere(Tile * tile, UserData userData) 
+{
+	if (TiGetType(tile) != Tile::SPACE) return 0;
+
+	BestPlace * bestPlace = (BestPlace *) userData;
+	TileRect tileRect;
+	TiToRect(tile, &tileRect);
+
+	return roomOn(tile, tileRect, bestPlace);
+}
+
 int roomOnTop(Tile * tile, UserData userData) 
 {
 	if (TiGetType(tile) != Tile::SPACE) return 0;
@@ -1066,69 +1077,84 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
 
 	CMRouter router(mainWindow->pcbView());
 	QList<Tile *> alreadyTiled;
+	router.setKeepout(mainWindow->pcbView()->getKeepout());
 	router.drc(CMRouter::ClipAllOverlaps, CMRouter::ClipAllOverlaps, true, true);
 	CopperLogoItem * logoItem = qobject_cast<CopperLogoItem *>(mainWindow->pcbView()->addCopperLogoItem(ViewLayer::Bottom));
 	logoItem->setLogo(board.attribute("inscription"), true);
 	logoItem->setHeight(inscriptionHeight * 25.4);
 	logoItem->modelPart()->setProperty("inscription", QVariant("true"));
-	QSizeF size = logoItem->size();
+	QSizeF size(logoItem->size().width() + mainWindow->pcbView()->getKeepout(), logoItem->size().height() + mainWindow->pcbView()->getKeepout());
+	
+	LayerList layerList;
+	layerList << ViewLayer::Copper0Trace;
+	layerList << ViewLayer::Copper1Trace;
 
-	// TODO: use 90
-	// TODO: use copper top
-	// TODO: delete description if already exists
-
-	qreal logoWidth = logoItem->boundingRect().width();
-	qreal logoHeight = logoItem->boundingRect().height();
 	BestPlace bestPlace;
 	bestPlace.maxRect = router.boardRect();
-	bestPlace.rotate90 = false;
 	bestPlace.bestTile = NULL;
-	bestPlace.width = realToTile(logoWidth);
-	bestPlace.height = realToTile(logoHeight);
-	bestPlace.plane = router.getPlane(ViewLayer::Copper0Trace);
-	bestPlace.bestArea = Worst;
-	if (bestPlace.plane == NULL) {
-		DebugDialog::debug(QString("error tiling plane in %1\n").arg(path));
-		return mainWindow;
-	}
 
-	TileRect searchRect = bestPlace.maxRect;
-	searchRect.ymaxi = searchRect.ymini + size.height();
-	TiSrArea(NULL, bestPlace.plane, &searchRect, roomOnTop, &bestPlace);
-	if (bestPlace.bestTile == NULL) {
+	foreach (ViewLayer::ViewLayerID viewLayerID, layerList) {
+		bestPlace.rotate90 = false;
+		bestPlace.width = realToTile(size.width());
+		bestPlace.height = realToTile(size.height());
+		bestPlace.plane = router.getPlane(viewLayerID);
+		if (bestPlace.plane == NULL) {
+			DebugDialog::debug(QString("error tiling plane in %1\n").arg(path));
+			return mainWindow;
+		}
+
+		TileRect searchRect = bestPlace.maxRect;
+		searchRect.ymaxi = searchRect.ymini + realToTile(size.height());
+		TiSrArea(NULL, bestPlace.plane, &searchRect, roomOnTop, &bestPlace);
+		if (bestPlace.bestTile != NULL) break;
+
 		searchRect = bestPlace.maxRect;
-		searchRect.ymini = searchRect.ymaxi - size.height();
+		searchRect.ymini = searchRect.ymaxi - realToTile(size.height());
 		TiSrArea(NULL, bestPlace.plane, &searchRect, roomOnBottom, &bestPlace);
-	}
-	if (bestPlace.bestTile == NULL) {
+		if (bestPlace.bestTile != NULL) break;
+
 		searchRect = bestPlace.maxRect;
-		searchRect.xmaxi = searchRect.xmini + size.width();
-		bestPlace.height = realToTile(logoWidth);
-		bestPlace.width = realToTile(logoHeight);
+		searchRect.xmaxi = searchRect.xmini + realToTile(size.width());
+		bestPlace.height = realToTile(size.width());
+		bestPlace.width = realToTile(size.height());
 		bestPlace.rotate90 = true;
 		TiSrArea(NULL, bestPlace.plane, &searchRect, roomOnLeft, &bestPlace);
-	}
-	if (bestPlace.bestTile == NULL) {
+		if (bestPlace.bestTile != NULL) break;
+
 		searchRect = bestPlace.maxRect;
-		searchRect.xmini = searchRect.xmaxi - size.width();
+		searchRect.xmini = searchRect.xmaxi - realToTile(size.width());
 		bestPlace.rotate90 = true;
 		TiSrArea(NULL, bestPlace.plane, &searchRect, roomOnRight, &bestPlace);
-	}
-	if (bestPlace.bestTile == NULL) {
+		if (bestPlace.bestTile != NULL) break;
+
 		bestPlace.rotate90 = false;
-		bestPlace.width = realToTile(logoWidth);
-		bestPlace.height = realToTile(logoHeight);
-		TiSrArea(NULL, bestPlace.plane, &bestPlace.maxRect, Panelizer::placeBestFit, &bestPlace);
+		bestPlace.width = realToTile(size.width());
+		bestPlace.height = realToTile(size.height());
+		TiSrArea(NULL, bestPlace.plane, &bestPlace.maxRect, roomAnywhere, &bestPlace);
+		if (bestPlace.bestTile != NULL) break;
+
+		bestPlace.rotate90 = true;
+		bestPlace.height = realToTile(size.width());
+		bestPlace.width = realToTile(size.height());
+		TiSrArea(NULL, bestPlace.plane, &bestPlace.maxRect, roomAnywhere, &bestPlace);
+		if (bestPlace.bestTile != NULL) break;
 	}
 
 	if (bestPlace.bestTile != NULL) {
+		if (bestPlace.plane == router.getPlane(ViewLayer::Copper1Trace)) {
+			delete logoItem;
+			logoItem = qobject_cast<CopperLogoItem *>(mainWindow->pcbView()->addCopperLogoItem(ViewLayer::Top));
+			logoItem->setLogo(board.attribute("inscription"), true);
+			logoItem->setHeight(inscriptionHeight * 25.4);
+			logoItem->modelPart()->setProperty("inscription", QVariant("true"));
+		}
 		QRectF rect;
 		tileToQRect(bestPlace.bestTile, rect);
 		logoItem->setPos(rect.left(), rect.top());
 		if (bestPlace.rotate90) {
 			mainWindow->pcbView()->selectAllItems(false, false);
 			logoItem->setSelected(true);
-			logoItem->setPos(rect.left() - (logoWidth / 2) + (logoHeight / 2), rect.top() + (logoWidth / 2) - (logoHeight / 2));
+			logoItem->setPos(rect.left() - (size.width() / 2) + (size.height() / 2), rect.top() + (size.width() / 2) - (size.height() / 2));
 			mainWindow->pcbView()->rotateX(90, false);
 		}
 		mainWindow->groundFill();
