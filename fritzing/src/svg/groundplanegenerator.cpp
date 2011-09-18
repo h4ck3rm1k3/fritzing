@@ -231,7 +231,7 @@ bool GroundPlaneGenerator::generateGroundPlaneUnit(const QString & boardSvg, QSi
 
 	//image->save("testPoly3.png");
 
-	scanImage(*image, bWidth, bHeight, MILS, res, color, layerName, true, 8, true, QSizeF(.05, .05), 1 / FSvgRenderer::printerScale(), QPointF(0,0));
+	scanImage(*image, bWidth, bHeight, MILS, res, color, layerName, true, res / 50, true, QSizeF(.05, .05), 1 / FSvgRenderer::printerScale(), QPointF(0,0));
 	delete image;
 	return true;
 }
@@ -245,7 +245,13 @@ bool GroundPlaneGenerator::generateGroundPlane(const QString & boardSvg, QSizeF 
 	QImage * image = generateGroundPlaneAux(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board, res, bWidth, bHeight);
 	if (image == NULL) return false;
 
-	scanImage(*image, bWidth, bHeight, MILS, res, color, layerName, true, 8, true, QSizeF(.05, .05), 1 / FSvgRenderer::printerScale(), QPointF(0,0));
+	for (double m = 0; m < .002; m += (1.0 / res)) {
+		QList<QPoint> points;
+		collectBorderPoints(*image, points);
+		foreach (QPoint p, points) image->setPixel(p, 0);
+	}
+
+	scanImage(*image, bWidth, bHeight, MILS, res, color, layerName, true, res / 25, true, QSizeF(.05, .05), 1 / FSvgRenderer::printerScale(), QPointF(0,0));
 	delete image;
 	return true;
 }
@@ -302,7 +308,7 @@ QImage * GroundPlaneGenerator::generateGroundPlaneAux(const QString & boardSvg, 
 #ifndef QT_NO_DEBUG
 	image->save("testGroundFillBoard.png");
 #endif
-
+	
 	// "blur" the image a little
 	QSvgRenderer renderer2(copperByteArray);
 	painter.begin(image);
@@ -894,21 +900,16 @@ void removeRedundant(QList<QPoint> & points)
 	}
 }
 
-void GroundPlaneGenerator::scanOutline(QImage & image, double bWidth, double bHeight, double pixelFactor, double res, 
-									 const QString & colorString, const QString & layerName, bool makeConnector, 
-									 int minRunSize, bool makeOffset, QSizeF minAreaInches, double minDimensionInches)  
+void GroundPlaneGenerator::collectBorderPoints(QImage & image, QList<QPoint> & points)
 {
-	QList<QPoint> points;
-
 	// background is black
 
-	
 	int currentX, currentY;
 	bool gotSomething;
 
-	for (int y = 0; y < bHeight; y++) {
+	for (int y = 0; y < image.height(); y++) {
 		QRgb* scanLine = (QRgb *) image.scanLine(y);
-		for (int x = 0; x < bWidth; x++) {
+		for (int x = 0; x < image.width(); x++) {
 			QRgb current = *(scanLine + x);
 			int gray = qGray(current);
 			if (gray <= THRESHOLD) {		// qBlue(current) != 0xff				
@@ -942,6 +943,16 @@ void GroundPlaneGenerator::scanOutline(QImage & image, double bWidth, double bHe
 		currentX = p.x();
 		currentY = p.y();
 	}
+}
+
+void GroundPlaneGenerator::scanOutline(QImage & image, double bWidth, double bHeight, double pixelFactor, double res, 
+									 const QString & colorString, const QString & layerName, bool makeConnector, 
+									 int minRunSize, bool makeOffset, QSizeF minAreaInches, double minDimensionInches)  
+{
+	QList<QPoint> points;
+
+	collectBorderPoints(image, points);
+	if (points.count() == 0) return;
 
 	removeRedundant(points);
 
