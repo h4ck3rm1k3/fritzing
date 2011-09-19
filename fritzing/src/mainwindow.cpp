@@ -717,7 +717,7 @@ ExpandingLabel * MainWindow::createRoutingStatusLabel(SketchAreaWidget * parent)
 
 SketchToolButton *MainWindow::createRotateButton(SketchAreaWidget *parent) {
 	QList<QAction*> rotateMenuActions;
-	rotateMenuActions << m_rotate45ccwAct << m_rotate90ccwAct << m_rotate180Act << m_rotate90cwAct << m_rotate45cwAct;
+	rotateMenuActions << m_rotate45ccwAct << m_rotate90ccwAct << m_rotate180Act << m_rotate90cwAct << m_rotate45cwAct << m_freeRotateAct;
 	SketchToolButton * rotateButton = new SketchToolButton("Rotate",parent, rotateMenuActions);
 	rotateButton->setDefaultAction(m_rotate90ccwAct);
 	rotateButton->setText(tr("Rotate"));

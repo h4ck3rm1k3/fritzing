@@ -210,6 +210,7 @@ protected slots:
 	void sendBackward();
 	void bringForward();
 	void bringToFront();
+	void freeRotate();
 	void rotate90cw();
 	void rotate90ccw();
 	void rotate180();
@@ -578,6 +579,7 @@ protected:
 
 
 	QMenu *m_rotateMenu;
+	QAction *m_freeRotateAct;
 	QAction *m_rotate90cwAct;
 	QAction *m_rotate180Act;
 	QAction *m_rotate90ccwAct;
