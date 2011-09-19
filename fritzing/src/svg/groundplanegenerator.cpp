@@ -919,6 +919,7 @@ void GroundPlaneGenerator::collectBorderPoints(QImage & image, QList<QPoint> & p
 
 			currentX = x;
 			currentY = y;
+			DebugDialog::debug(QString("first point %1 %2").arg(currentX).arg(currentY));
 			points.append(QPoint(currentX, currentY));
 			gotSomething = true;
 			break;
@@ -926,7 +927,10 @@ void GroundPlaneGenerator::collectBorderPoints(QImage & image, QList<QPoint> & p
 		if (gotSomething) break;
 	}
 
-	if (!gotSomething) return;
+	if (!gotSomething) {
+		DebugDialog::debug("first border point not found");
+		return;
+	}
 
 	while (true) {
 		if (tryNextPoint(currentX, currentY + 1, image, points));
@@ -952,7 +956,10 @@ void GroundPlaneGenerator::scanOutline(QImage & image, double bWidth, double bHe
 	QList<QPoint> points;
 
 	collectBorderPoints(image, points);
-	if (points.count() == 0) return;
+	if (points.count() == 0) {
+		DebugDialog::debug("no border points");
+		return;
+	}
 
 	removeRedundant(points);
 
@@ -980,8 +987,6 @@ void GroundPlaneGenerator::scanOutline(QImage & image, double bWidth, double bHe
 	out4 << pSvg;
 	file4.close();
 	*/
-
-
 }
 
 bool GroundPlaneGenerator::tryNextPoint(int x, int y, QImage & image, QList<QPoint> & points)

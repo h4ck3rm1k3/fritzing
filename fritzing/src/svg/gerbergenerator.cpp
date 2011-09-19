@@ -104,19 +104,9 @@ void GerberGenerator::exportToGerber(const QString & filename, const QString & e
     // create outline gerber from svg
     SVG2gerber outlineGerber;
 	int outlineInvalidCount = outlineGerber.convert(svgOutline, sketchWidget->boardLayers() == 2, "contour", SVG2gerber::ForOutline, svgSize * GraphicsUtils::StandardFritzingDPI);
-
-    // contour / board outline
-    QString contourFile = exportDir + "/" +
-                          QFileInfo(filename).fileName().remove(FritzingSketchExtension)
-                          + OutlineSuffix;
-    QFile contourOut(contourFile);
-	if (!contourOut.open(QIODevice::WriteOnly | QIODevice::Text)) {
-		displayMessage(QObject::tr("outline file export failure (2)"), displayMessageBoxes);
-		return;
-	}
-
-    QTextStream contourStream(&contourOut);
-    contourStream << outlineGerber.getGerber();
+	
+	DebugDialog::debug(QString("outline output: %1").arg(outlineGerber.getGerber()));
+	saveEnd("contour", exportDir, filename, OutlineSuffix, displayMessageBoxes, outlineGerber);
 
 	doDrill(board, sketchWidget, filename, exportDir, displayMessageBoxes);
 
@@ -283,19 +273,26 @@ int GerberGenerator::doEnd(const QString & svg, int boardLayers, const QString &
     SVG2gerber gerber;
 	int invalidCount = gerber.convert(svg, boardLayers == 2, layerName, forWhy, svgSize);
 
+	saveEnd(layerName, exportDir, prefix, suffix, displayMessageBoxes, gerber);
+
+	return invalidCount;
+}
+
+bool GerberGenerator::saveEnd(const QString & layerName, const QString & exportDir, const QString & prefix, const QString & suffix, bool displayMessageBoxes, SVG2gerber & gerber)
+{
     QString outname = exportDir + "/" +  QFileInfo(prefix).fileName().remove(FritzingSketchExtension) + suffix;
     QFile out(outname);
 	if (!out.open(QIODevice::WriteOnly | QIODevice::Text)) {
 		displayMessage(QObject::tr("%1 file export failure (2)").arg(layerName), displayMessageBoxes);
-		return 0;
+		return false;
 	}
 
     QTextStream stream(&out);
     stream << gerber.getGerber();
 	stream.flush();
 	out.close();
+	return true;
 
-	return invalidCount;
 }
 
 void GerberGenerator::displayMessage(const QString & message, bool displayMessageBoxes) {

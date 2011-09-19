@@ -98,7 +98,7 @@ void CursorMaster::addCursor(QObject * object, const QCursor & cursor)
 			Listeners.removeOne(object);
 			Listeners.push_front(object);
 		}
-		DebugDialog::debug(QString("changing cursor %1").arg((long) object));
+		//DebugDialog::debug(QString("changing cursor %1").arg((long) object));
 		QApplication::changeOverrideCursor(cursor);
 		return;
 	}
@@ -106,7 +106,7 @@ void CursorMaster::addCursor(QObject * object, const QCursor & cursor)
 	Listeners.push_front(object);
 	connect(object, SIGNAL(destroyed(QObject *)), this, SLOT(deleteCursor(QObject *)));
 	QApplication::setOverrideCursor(cursor);
-	DebugDialog::debug(QString("addding cursor %1").arg((long) object));
+	//DebugDialog::debug(QString("addding cursor %1").arg((long) object));
 }
 
 void CursorMaster::removeCursor(QObject * object)
@@ -117,7 +117,7 @@ void CursorMaster::removeCursor(QObject * object)
 		disconnect(object, SIGNAL(destroyed(QObject *)), this, SLOT(deleteCursor(QObject *)));
 		Listeners.removeOne(object);
 		QApplication::restoreOverrideCursor();
-		DebugDialog::debug(QString("removing cursor %1").arg((long) object));
+		//DebugDialog::debug(QString("removing cursor %1").arg((long) object));
 	}
 }
 
