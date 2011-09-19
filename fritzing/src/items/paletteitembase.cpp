@@ -398,6 +398,16 @@ void PaletteItemBase::connectedMoved(ConnectorItem * from, ConnectorItem * to) {
 	// female connectors really only operate in breadboard view
 	if (m_viewIdentifier != ViewIdentifierClass::BreadboardView) return;
 
+	QTransform t = this->transform();
+	if (t.isRotating()) {
+		// map a square and see if it's a diamond
+		QRectF test(0, 0, 10, 10);
+		QRectF result = t.mapRect(test);
+		if (result.width() != test.width() || result.height() != test.height()) {
+			return;
+		}
+	}
+
 	QPointF fromTerminalPoint = from->sceneAdjustedTerminalPoint(to);
 	QPointF toTerminalPoint = to->sceneAdjustedTerminalPoint(from);
 
