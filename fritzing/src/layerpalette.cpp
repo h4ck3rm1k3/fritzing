@@ -97,7 +97,7 @@ void LayerPalette::resetLayout(LayerHash & viewLayers, LayerList & keys) {
 	int ix = 0;
 	foreach (ViewLayer::ViewLayerID key, keys) {
 		ViewLayer * viewLayer = viewLayers.value(key);
-		if (viewLayer->parentLayer()) continue;
+		//if (viewLayer->parentLayer()) continue;
 
 		ViewLayerCheckBox * cb = m_checkBoxes[ix++];
 		cb->setText(viewLayer->action()->text());
@@ -119,7 +119,7 @@ void LayerPalette::updateLayerPalette(LayerHash & viewLayers, LayerList & keys)
 	int ix = 0;
 	foreach (ViewLayer::ViewLayerID key, keys) {
 		ViewLayer * viewLayer = viewLayers.value(key);
-		if (viewLayer->parentLayer()) continue;
+		//if (viewLayer->parentLayer()) continue;
 
 		ViewLayerCheckBox * cb = m_checkBoxes[ix++];
 		cb->setChecked(viewLayer->action()->isChecked());

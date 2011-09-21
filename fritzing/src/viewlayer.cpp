@@ -94,10 +94,10 @@ void ViewLayer::initNames() {
 		names.insert(ViewLayer::Ratsnest, new StringPair("ratsnest", QObject::tr("Rat's nest")));
 		names.insert(ViewLayer::Silkscreen1,  new StringPair("silkscreen", QObject::tr("Silkscreen Top")));			// really should be silkscreen1
 		names.insert(ViewLayer::Silkscreen1Label,  new StringPair("silkscreenLabel", QObject::tr("Silkscreen Top (Part Labels)")));
-		names.insert(ViewLayer::GroundPlane0,  new StringPair("groundplane", QObject::tr("Ground Plane Bottom")));
+		names.insert(ViewLayer::GroundPlane0,  new StringPair("groundplane", QObject::tr("Copper Fill Bottom")));
 		names.insert(ViewLayer::Copper0,  new StringPair("copper0", QObject::tr("Copper Bottom")));
 		names.insert(ViewLayer::Copper0Trace,  new StringPair("copper0trace", QObject::tr("Copper Bottom Trace")));
-		names.insert(ViewLayer::GroundPlane1,  new StringPair("groundplane1", QObject::tr("Ground Plane Top")));
+		names.insert(ViewLayer::GroundPlane1,  new StringPair("groundplane1", QObject::tr("Copper Fill Top")));
 		names.insert(ViewLayer::Copper1,  new StringPair("copper1", QObject::tr("Copper Top")));
 		names.insert(ViewLayer::Copper1Trace,  new StringPair("copper1trace", QObject::tr("Copper Top Trace")));
 		names.insert(ViewLayer::Silkscreen0,  new StringPair("silkscreen0", QObject::tr("Silkscreen Bottom")));
