@@ -183,7 +183,7 @@
 	          </views>
 	      </connector>
 
-			 <connector id="connector9" name="B2out" type="male">
+			 <connector id="connector9" name="B2out" type="female">
 	          <description>Motor 2 B out</description>
 	          <views>
 	              <breadboardView>
@@ -199,7 +199,7 @@
 	          </views>
 	      </connector>
 
-			 <connector id="connector10" name="A2out" type="male">
+			 <connector id="connector10" name="A2out" type="female">
 	          <description>Motor 2 A out</description>
 	          <views>
 	              <breadboardView>
@@ -215,7 +215,7 @@
 	          </views>
 	      </connector>
 
-			 <connector id="connector11" name="B1out" type="male">
+			 <connector id="connector11" name="B1out" type="female">
 	          <description>Motor 1 B out</description>
 	          <views>
 	              <breadboardView>
@@ -231,7 +231,7 @@
 	          </views>
 	      </connector>
 
-			 <connector id="connector12" name="A1out" type="male">
+			 <connector id="connector12" name="A1out" type="female">
 	          <description>Motor 1 A out</description>
 	          <views>
 	              <breadboardView>
