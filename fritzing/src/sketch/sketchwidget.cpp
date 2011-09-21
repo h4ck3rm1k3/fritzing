@@ -3558,7 +3558,7 @@ void SketchWidget::setAllLayersVisible(bool visible) {
 	for (int i = 0; i < keys.count(); i++) {
 		ViewLayer * viewLayer = m_viewLayers.value(keys[i]);
 		if (viewLayer != NULL && viewLayer->action()->isEnabled()) {
-			setLayerVisible(viewLayer, visible);
+			setLayerVisible(viewLayer, visible, true);
 		}
 	}
 }
@@ -3661,10 +3661,10 @@ bool SketchWidget::layerIsActive(ViewLayer::ViewLayerID viewLayerID) {
 	return viewLayer->isActive();
 }
 
-void SketchWidget::setLayerVisible(ViewLayer::ViewLayerID viewLayerID, bool vis) {
+void SketchWidget::setLayerVisible(ViewLayer::ViewLayerID viewLayerID, bool vis, bool doChildLayers) {
 	ViewLayer * viewLayer = m_viewLayers.value(viewLayerID);
 	if (viewLayer) {
-		setLayerVisible(viewLayer, vis);
+		setLayerVisible(viewLayer, vis, doChildLayers);
 	}
 }
 
@@ -3675,18 +3675,20 @@ void SketchWidget::toggleLayerVisibility() {
 	ViewLayer * viewLayer = action->data().value<ViewLayer *>();
 	if (viewLayer == NULL) return;
 
-	setLayerVisible(viewLayer, !viewLayer->visible());
+	setLayerVisible(viewLayer, !viewLayer->visible(), viewLayer->includeChildLayers());
 }
 
-void SketchWidget::setLayerVisible(ViewLayer * viewLayer, bool visible) {
+void SketchWidget::setLayerVisible(ViewLayer * viewLayer, bool visible, bool doChildLayers) {
 
 	LayerList viewLayerIDs;
 	viewLayerIDs.append(viewLayer->viewLayerID());
 
 	viewLayer->setVisible(visible);
-	foreach (ViewLayer * childLayer, viewLayer->childLayers()) {
-		childLayer->setVisible(visible);
-		viewLayerIDs.append(childLayer->viewLayerID());
+	if (doChildLayers) {
+		foreach (ViewLayer * childLayer, viewLayer->childLayers()) {
+			childLayer->setVisible(visible);
+			viewLayerIDs.append(childLayer->viewLayerID());
+		}
 	}
 
 	// TODO: replace scene()->items()
@@ -4015,7 +4017,7 @@ void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGrap
 	ViewLayer::ViewLayerID viewLayerID = getDragWireViewLayerID(connectorItem);
 	ViewLayer * viewLayer = m_viewLayers.value(viewLayerID);
 	if (viewLayer != NULL && !viewLayer->visible()) {
-		setLayerVisible(viewLayer, true);
+		setLayerVisible(viewLayer, true, true);
 	}
 
 
@@ -5928,7 +5930,7 @@ void SketchWidget::saveLayerVisibility()
 void SketchWidget::restoreLayerVisibility()
 {
 	foreach (ViewLayer::ViewLayerID viewLayerID, m_viewLayerVisibility.keys()) {
-		setLayerVisible(m_viewLayers.value(viewLayerID),  m_viewLayerVisibility.value(viewLayerID));
+		setLayerVisible(m_viewLayers.value(viewLayerID),  m_viewLayerVisibility.value(viewLayerID), false);
 	}
 }
 
@@ -5982,7 +5984,7 @@ void SketchWidget::ensureLayerVisible(ViewLayer::ViewLayerID viewLayerID)
 	if (viewLayer == NULL) return;
 
 	if (!viewLayer->visible()) {
-		setLayerVisible(viewLayer, true);
+		setLayerVisible(viewLayer, true, true);
 	}
 }
 

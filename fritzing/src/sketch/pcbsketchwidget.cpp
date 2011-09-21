@@ -1477,7 +1477,7 @@ void PCBSketchWidget::setBoardLayers(int layers, bool redraw) {
 			layer->action()->setEnabled(layers == 2);
 			layer->setVisible(layers == 2);
 			if (redraw) {
-				setLayerVisible(layer, layers == 2);
+				setLayerVisible(layer, layers == 2, true);
 				if (layers == 2) {
 					layer->action()->setChecked(true);
 				}

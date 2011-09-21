@@ -54,6 +54,8 @@ ViewLayer::ViewLayer(ViewLayerID viewLayerID, bool visible, double initialZ )
 	m_initialZ = m_nextZ = initialZ;	
 	m_parentLayer = NULL;
 	m_active = true;
+	m_includeChildLayers = true;
+
 }
 
 ViewLayer::~ViewLayer() {
@@ -318,4 +320,11 @@ bool ViewLayer::isNonCopperLayer(ViewLayer::ViewLayerID viewLayerID) {
 	return NonCopperLayers.contains(viewLayerID);
 }
 
- 
+
+bool ViewLayer::includeChildLayers() {
+	return m_includeChildLayers;
+} 
+
+void ViewLayer::setIncludeChildLayers(bool incl) {
+	m_includeChildLayers = incl;
+}

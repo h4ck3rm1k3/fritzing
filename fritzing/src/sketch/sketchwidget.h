@@ -127,8 +127,8 @@ public:
 
     void addViewLayer(ViewLayer *);
     void setAllLayersVisible(bool visible);
-    void setLayerVisible(ViewLayer * viewLayer, bool visible);
-	void setLayerVisible(ViewLayer::ViewLayerID viewLayerID, bool visible);
+    void setLayerVisible(ViewLayer * viewLayer, bool visible, bool doChildLayers);
+	void setLayerVisible(ViewLayer::ViewLayerID viewLayerID, bool visible, bool doChildLayers);
     void setLayerActive(ViewLayer * viewLayer, bool active);
 	void setLayerActive(ViewLayer::ViewLayerID viewLayerID, bool active);
     bool layerIsVisible(ViewLayer::ViewLayerID);

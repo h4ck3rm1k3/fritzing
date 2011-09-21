@@ -131,7 +131,10 @@ void LayerPalette::setLayerVisibility(bool) {
 	ViewLayerCheckBox * cb = qobject_cast<ViewLayerCheckBox *>(sender());
 	if (cb == NULL) return;
 
+	// want to toggle layer individually in this case
+	cb->viewLayer()->setIncludeChildLayers(false);
 	cb->viewLayer()->action()->trigger();
+	cb->viewLayer()->setIncludeChildLayers(true);
 }
 
 void LayerPalette::setShowAllLayersAction(QAction * action) 

@@ -125,6 +125,8 @@ public:
 	void resetNextZ(double z);
 	void setActive(bool);
 	bool isActive();
+	bool includeChildLayers();
+	void setIncludeChildLayers(bool);
 
 public:
 	static ViewLayerID viewLayerIDFromXmlString(const QString &);
@@ -154,6 +156,7 @@ protected:
 	QList<ViewLayer *> m_childLayers;
 	ViewLayer * m_parentLayer;
 	bool m_active;
+	bool m_includeChildLayers;
 
 };
 
