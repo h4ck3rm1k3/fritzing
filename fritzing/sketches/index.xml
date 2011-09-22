@@ -17,6 +17,7 @@
 		<sketch id="LCD" name="Liquid Crystal Display" src="core/LiquidCrystalDisplay.fz"/>
 		<sketch id="Loop" name="Loop" src="core/Loop.fz"/>
 		<sketch id="Melody" name="Melody" src="core/Melody.fz"/>
+		<sketch id="Mood-Light" name="Mood-Light" src="core/Mood-Light.fz"/>
 		<sketch id="MidiDrumKit" name="Midi Drum Kit" src="core/MidiDrumKit.fz"/>
 		<sketch id="npnPowerTransistor" name="NPN Power Transistor" src="core/npnPowerTransistor.fz"/>
 		<sketch id="Op_Amp" name="Operation Amplifier" src="core/Op-amp.fz"/>
@@ -73,6 +74,7 @@
 					<sketch id="Melody"/>
 					<sketch id="Window_Alarm"/>
 					<sketch id="RGB_LED"/>
+					<sketch id="Mood-Light"/>
 				</category>
 			</category>
 			<category name="Sensors">
@@ -174,6 +176,7 @@
 			<sketch id="Countdown"/>
 			<sketch id="Shift_Register"/>
 			<sketch id="Shift_Register_2x"/>
+			<sketch id="Mood-Light"/>
 			<separator />
       <url name="Get your own Fritzing Extension Kit" href="http://fritzing.org/shop/starter-kit/" />			
 		</category>
