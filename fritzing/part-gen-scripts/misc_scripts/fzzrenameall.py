@@ -80,8 +80,19 @@ def main():
         zf = zipfile.ZipFile(os.path.join(outputDir, fromBaseName))
         zf.extractall(tempDir)
     
-        fromFzName = os.path.splitext(fromBaseName)[0] + ".fz"
+        #fromFzName = os.path.splitext(fromBaseName)[0] + ".fz"
+	
+	
+	
+	for i, name in enumerate(zf.namelist()):
+		if name.endswith(".fz"):
+			fromFzName = name
+			break
+	
+	
         toFzName = os.path.splitext(toBaseName)[0] + ".fz"
+	
+	print "renaming", fromFzName, toFzName
     
         os.rename(os.path.join(tempDir, fromFzName), os.path.join(tempDir, toFzName))
     
