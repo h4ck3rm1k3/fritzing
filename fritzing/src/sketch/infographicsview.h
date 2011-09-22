@@ -100,7 +100,7 @@ public:
 	virtual void prepLegSelection(ItemBase *);
 	virtual double getWireStrokeWidth(Wire *, double wireWidth);
 	virtual bool curvyWiresIndicated(Qt::KeyboardModifiers);
-
+	virtual void triggerRotate(ItemBase *, double degrees);
 
 public slots:
 	virtual void setVoltage(double, bool doEmit);

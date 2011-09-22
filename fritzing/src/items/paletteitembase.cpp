@@ -50,11 +50,15 @@ $Date$
 #include <QEvent>
 #include <qmath.h>
 
+static QPointF RotationCenter;
+static QPointF RotationAxis;
+static QTransform OriginalTransform;
+
 
 PaletteItemBase::PaletteItemBase(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu ) :
 	ItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
-	m_syncSelected = false;
+	m_inRotation = m_syncSelected = false;
 	m_offset.setX(0);
 	m_offset.setY(0);
  	m_blockItemSelectedChange = false;
@@ -223,11 +227,66 @@ void PaletteItemBase::mousePressEvent(PaletteItemBase * originalItem, QGraphicsS
 {
 	Q_UNUSED(originalItem);
 
+	m_inRotation = false;
+
+	QPointF corner;
+	if (freeRotationAllowed(event->modifiers()) && inRotationLocation(event->scenePos(), event->modifiers(), corner)) {
+		this->saveGeometry();
+		m_inRotation = true;
+		RotationCenter = mapToScene(this->boundingRectWithoutLegs().center());
+		RotationAxis = event->scenePos();
+		OriginalTransform = this->transform();
+		return;
+	}
+
 	ItemBase::mousePressEvent(event);
 	if (canFindConnectorsUnder()) {
 		foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
 			connectorItem->setOverConnectorItem(NULL);
 		}
+	}
+}
+
+void PaletteItemBase::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+{
+	if (!m_inRotation) {
+		ItemBase::mouseMoveEvent(event);
+		return;
+	}
+
+	double originalAngle = atan2(OriginalTransform.m12(), OriginalTransform.m11()) * 180 / M_PI;
+	double a1 = atan2(RotationAxis.y() - RotationCenter.y(), RotationAxis.x() - RotationCenter.x());
+	double a2 = atan2(event->scenePos().y() - RotationCenter.y(), event->scenePos().x() - RotationCenter.x());
+
+	double deltaAngle = (a2 - a1) * 180 / M_PI;
+	//DebugDialog::debug(QString("original:%1 delta:%2").arg(originalAngle).arg(deltaAngle));
+	double nearest = qRound((originalAngle + deltaAngle) / 45) * 45;
+	if (qAbs(originalAngle + deltaAngle - nearest) < 5) {
+		deltaAngle = nearest - originalAngle;
+		//DebugDialog::debug(QString("\tdelta angle %1").arg(deltaAngle));
+	}
+
+	m_viewGeometry.setTransform(OriginalTransform);
+	rotateItem(deltaAngle);
+	QTransform t = transform();
+
+}
+
+void PaletteItemBase::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+	if (!m_inRotation) {
+		ItemBase::mouseReleaseEvent(event);
+		return;
+	}
+
+	m_inRotation = false;
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView) {
+		double originalAngle = atan2(OriginalTransform.m12(), OriginalTransform.m11()) * 180 / M_PI;
+		double currentAngle = atan2(transform().m12(), transform().m11()) * 180 / M_PI;
+		rotateItem(originalAngle - currentAngle);		// put it back; undo command will redo it
+		saveGeometry();
+		infoGraphicsView->triggerRotate(this->layerKinChief(), currentAngle - originalAngle);
 	}
 }
 
@@ -246,10 +305,6 @@ void PaletteItemBase::findConnectorsUnder() {
 
 		connectorItem->findConnectorUnder(true, false, ConnectorItem::emptyConnectorItemList, false, NULL);
 	}
-}
-
-void PaletteItemBase::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
-	ItemBase::mouseReleaseEvent(event);
 }
 
 bool PaletteItemBase::collectFemaleConnectees(QSet<ItemBase *> & items) {
@@ -441,11 +496,26 @@ void PaletteItemBase::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
 	}
 }
 
+void PaletteItemBase::hoverMoveEvent ( QGraphicsSceneHoverEvent * event ) {
+	if (!freeRotationAllowed(event->modifiers())) return;
+
+	QPointF returnPoint;
+	bool inCorner = inRotationLocation(event->scenePos(), event->modifiers(), returnPoint);
+
+	if (inCorner) {
+		CursorMaster::instance()->addCursor(this, *CursorMaster::RotateCursor);
+	}
+	else {
+		CursorMaster::instance()->addCursor(this, cursor());
+	}
+}
+
 void PaletteItemBase::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
 	if (hasRubberBandLeg()) {
 		//DebugDialog::debug("------pab restore override cursor");
-		CursorMaster::instance()->removeCursor(this);
 	}
+
+	CursorMaster::instance()->removeCursor(this);
 
 	ItemBase::hoverLeaveEvent(event);
 }
@@ -596,6 +666,40 @@ const QCursor * PaletteItemBase::getCursor(Qt::KeyboardModifiers modifiers)
 	}
 
 	return CursorMaster::MoveCursor;
+}
+
+bool PaletteItemBase::freeRotationAllowed(Qt::KeyboardModifiers modifiers) {
+	if ((modifiers & altOrMetaModifier()) == 0) return false;
+	if (!this->rotation45Allowed()) return false;
+	if (!this->isSelected()) return false;
+
+	return true;
+}
+
+bool PaletteItemBase::inRotationLocation(QPointF scenePos, Qt::KeyboardModifiers modifiers, QPointF & returnPoint)
+{
+	if (!freeRotationAllowed(modifiers)) return false;
+	if (m_viewIdentifier != ViewIdentifierClass::BreadboardView) return false;
+
+	QRectF r = this->boundingRectWithoutLegs();
+	QPolygonF polygon;
+	polygon.append(mapToScene(r.topLeft()));
+	polygon.append(mapToScene(r.topRight()));
+	polygon.append(mapToScene(r.bottomRight()));
+	polygon.append(mapToScene(r.bottomLeft()));
+	foreach (QPointF p, polygon) {
+		double dsqd = GraphicsUtils::distanceSqd(p, scenePos);
+		if (dsqd < 4) {
+			returnPoint = p;
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool PaletteItemBase::inRotation() {
+	return m_inRotation;
 }
 
 

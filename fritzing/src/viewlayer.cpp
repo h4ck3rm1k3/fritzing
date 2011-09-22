@@ -328,3 +328,4 @@ bool ViewLayer::includeChildLayers() {
 void ViewLayer::setIncludeChildLayers(bool incl) {
 	m_includeChildLayers = incl;
 }
+

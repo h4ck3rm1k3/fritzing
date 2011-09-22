@@ -612,10 +612,6 @@ void ItemBase::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
 	}
 }
 
-void ItemBase::hoverMoveEvent ( QGraphicsSceneHoverEvent *  ) {
-	//DebugDialog::debug(QString("hover move %1 %2").arg(instanceTitle()).arg(QTime::currentTime().msec()));
-}
-
 void ItemBase::updateConnections() {
 }
 

@@ -284,6 +284,7 @@ public:
 	bool curvyWires();
 	void setCurvyWires(bool);
 	bool curvyWiresIndicated(Qt::KeyboardModifiers);
+	void triggerRotate(ItemBase *, double degrees);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

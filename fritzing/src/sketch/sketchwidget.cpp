@@ -1977,7 +1977,6 @@ void SketchWidget::mousePressEvent(QMouseEvent *event)
 
 	//setRenderHint(QPainter::Antialiasing, false);
 
-
 	clearHoldingSelectItem();
 	m_savedItems.clear();
 	m_savedWires.clear();
@@ -1995,7 +1994,6 @@ void SketchWidget::mousePressEvent(QMouseEvent *event)
 		}
 	}
 
-
 	QGraphicsView::mousePressEvent(event);
 
 	items = this->items(event->pos());
@@ -2005,6 +2003,11 @@ void SketchWidget::mousePressEvent(QMouseEvent *event)
 			item = gitem;
 			break;
 		}
+	}
+
+	foreach (QGraphicsItem * gItem, items) {
+		PaletteItemBase * paletteItemBase = dynamic_cast<PaletteItemBase *>(gItem);
+		if (paletteItemBase && paletteItemBase->inRotation()) return;
 	}
 
 	if (item != wasItem) {
@@ -8051,4 +8054,11 @@ void SketchWidget::setMoveLock(long id, bool lock)
 {
 	ItemBase * itemBase = findItem(id);
 	if (itemBase) itemBase->setMoveLock(lock);
+}
+
+void SketchWidget::triggerRotate(ItemBase * itemBase, double degrees)
+{
+	RotateItemCommand * ric = new RotateItemCommand(this, itemBase->id(), degrees, NULL);
+	ric->setText(tr("Rotate %1").arg(itemBase->instanceTitle()));
+	m_undoStack->push(ric);
 }

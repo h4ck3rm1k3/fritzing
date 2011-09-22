@@ -75,6 +75,7 @@ public:
 	void setProp(const QString & prop, const QString & value);
 	const QCursor * getCursor(Qt::KeyboardModifiers);
 	void cursorKeyEvent(Qt::KeyboardModifiers modifiers);
+	bool inRotation();
 
 	/*
 	// for debugging
@@ -83,13 +84,17 @@ public:
 	*/
 
 protected:
+	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     void setUpConnectors(FSvgRenderer *, bool ignoreTerminalPoints);
 	void findConnectorsUnder();
 	void hoverEnterEvent ( QGraphicsSceneHoverEvent * event );
 	void hoverLeaveEvent ( QGraphicsSceneHoverEvent * event );
+	void hoverMoveEvent( QGraphicsSceneHoverEvent * event );
 	void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 	virtual bool canFindConnectorsUnder();
+	bool inRotationLocation(QPointF scenePos, Qt::KeyboardModifiers modifiers, QPointF & returnPoint);
+	bool freeRotationAllowed(Qt::KeyboardModifiers modifiers);
 
 	virtual LayerKinPaletteItem * newLayerKinPaletteItem(
 		PaletteItemBase * chief, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,
@@ -106,6 +111,7 @@ protected:
  	bool m_syncSelected;
  	QPointF m_syncMoved;
  	bool m_svg;
+	bool m_inRotation;
 };
 
 

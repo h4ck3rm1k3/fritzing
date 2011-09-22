@@ -41,6 +41,7 @@ QCursor * CursorMaster::MakeCurveCursor = NULL;
 QCursor * CursorMaster::RubberbandCursor = NULL;
 QCursor * CursorMaster::MoveCursor = NULL;
 QCursor * CursorMaster::BendlegCursor = NULL;
+QCursor * CursorMaster::RotateCursor = NULL;
 
 CursorMaster CursorMaster::TheCursorMaster;
 static QList<QObject *> Listeners;
@@ -79,6 +80,10 @@ void CursorMaster::initCursors()
 		QBitmap bitmap7(":resources/images/cursor/bendleg.bmp");
 		QBitmap bitmap7m(":resources/images/cursor/bendleg_mask.bmp");
 		BendlegCursor = new QCursor(bitmap7, bitmap7m, 0, 0);
+
+		QBitmap bitmap8(":resources/images/cursor/rotate.bmp");
+		QBitmap bitmap8m(":resources/images/cursor/rotate_mask.bmp");
+		RotateCursor = new QCursor(bitmap8, bitmap8m, 15, 15);
 
 		QApplication::instance()->installEventFilter(instance());
 	}

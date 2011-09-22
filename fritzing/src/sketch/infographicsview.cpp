@@ -329,3 +329,8 @@ bool InfoGraphicsView::curvyWiresIndicated(Qt::KeyboardModifiers)
 {
 	return true;
 }
+
+void InfoGraphicsView::triggerRotate(ItemBase *, double degrees)
+{
+	Q_UNUSED(degrees);
+}
