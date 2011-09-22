@@ -64,6 +64,9 @@ def main():
     boardNodes = boards.getElementsByTagName("board")
     for board in boardNodes:
         originalName = board.getAttribute("originalName")
+	if originalName == None:
+		continue
+		
         if len(originalName) == 0:
             continue
             
