@@ -310,25 +310,28 @@ QImage * GroundPlaneGenerator::generateGroundPlaneAux(const QString & boardSvg, 
 #endif
 	
 	// "blur" the image a little
+
+	double blurBy = 3;
+
 	QSvgRenderer renderer2(copperByteArray);
 	painter.begin(image);
 	QRectF bounds(0, 0, res * copperImageSize.width() / FSvgRenderer::printerScale(), res * copperImageSize.height() / FSvgRenderer::printerScale());
 	renderer2.render(&painter, bounds);
-	bounds.moveTo(1, 0);
+	bounds.moveTo(blurBy, 0);
 	renderer2.render(&painter, bounds);
-	bounds.moveTo(-1, 0);
+	bounds.moveTo(-blurBy, 0);
 	renderer2.render(&painter, bounds);
-	bounds.moveTo(0, 1);
+	bounds.moveTo(0, blurBy);
 	renderer2.render(&painter, bounds);
-	bounds.moveTo(0, -1);
+	bounds.moveTo(0, -blurBy);
 	renderer2.render(&painter, bounds);
-	bounds.moveTo(1, 1);
+	bounds.moveTo(blurBy, blurBy);
 	renderer2.render(&painter, bounds);
-	bounds.moveTo(-1, -1);
+	bounds.moveTo(-blurBy, -blurBy);
 	renderer2.render(&painter, bounds);
-	bounds.moveTo(-1, 1);
+	bounds.moveTo(-blurBy, blurBy);
 	renderer2.render(&painter, bounds);
-	bounds.moveTo(1, -1);
+	bounds.moveTo(blurBy, -blurBy);
 	renderer2.render(&painter, bounds);
 	painter.end();
 

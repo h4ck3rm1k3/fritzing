@@ -631,6 +631,34 @@ Por favor selecione outro tipo de fonte do Fritzing para o substituir:</translat
         <source>v. %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Change the part label here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Part breadboard view image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Part schematic view image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Part pcb view image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Part version number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Locked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change the locked state of the part in this view.  A locked part can&apos;t be moved</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ItemBase</name>
@@ -1301,32 +1329,12 @@ Por favor selecione outro tipo de fonte do Fritzing para o substituir:</translat
         <translation>Actualizar a informação de visualização</translation>
     </message>
     <message>
-        <source>&amp;Rotate 90° Clockwise</source>
-        <translation>&amp;Girar 90º no sentido Horário</translation>
-    </message>
-    <message>
-        <source>Ctrl+R</source>
-        <translation>Ctrl+R</translation>
-    </message>
-    <message>
         <source>Rotate the selected parts by 90 degrees clockwise</source>
         <translation>Girar os componentes selecionados 90º no sentido Horário</translation>
     </message>
     <message>
-        <source>&amp;Rotate 180°</source>
-        <translation>&amp;Girar 180º</translation>
-    </message>
-    <message>
         <source>Rotate the selected parts by 180 degrees</source>
         <translation>Girar os componentes selecionados 180 graus</translation>
-    </message>
-    <message>
-        <source>&amp;Rotate 90° Counter Clockwise</source>
-        <translation>&amp;Girar 90º no sentido Anti-Horário</translation>
-    </message>
-    <message>
-        <source>Alt+Ctrl+R</source>
-        <translation>Alt+Ctrl+R</translation>
     </message>
     <message>
         <source>Rotate current selection 90 degrees counter clockwise</source>
@@ -2032,44 +2040,8 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
         <translation>Voltando a &apos;%1&apos;</translation>
     </message>
     <message>
-        <source>outline file export failure (1)</source>
-        <translation>falha de exportação-do arquivo esboço(1)</translation>
-    </message>
-    <message>
-        <source>outline file export failure (2)</source>
-        <translation>falha de exportação-do arquivo esboço(2)</translation>
-    </message>
-    <message>
-        <source>%1 file export failure (1)</source>
-        <translation>%1 falha ao exportar arquivo (1)</translation>
-    </message>
-    <message>
-        <source>%1 file export failure (2)</source>
-        <translation>%1 falha ao exportar arquivo (2)</translation>
-    </message>
-    <message>
-        <source>%1 file export failure (3)</source>
-        <translation>%1 falha ao exportar arquivo (3)</translation>
-    </message>
-    <message>
-        <source>silk file export failure (1)</source>
-        <translation>falha ao exportar arquivo silk (1)</translation>
-    </message>
-    <message>
-        <source>silk file export failure (2)</source>
-        <translation>falha ao exportar arquivo silk (2)</translation>
-    </message>
-    <message>
-        <source>&amp;Rotate 45° Counter Clockwise</source>
-        <translation>&amp;Girar 45º no sentido Anti-Horário {45°?}</translation>
-    </message>
-    <message>
         <source>Rotate current selection 45 degrees counter clockwise</source>
         <translation>Girar seleção atual 45 graus sentido anti-horário</translation>
-    </message>
-    <message>
-        <source>&amp;Rotate 45° Clockwise</source>
-        <translation>&amp;Girar 45º no sentido Horário {45°?}</translation>
     </message>
     <message>
         <source>Rotate current selection 45 degrees clockwise</source>
@@ -2201,10 +2173,6 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
     <message>
         <source>Recalculate routing status and ratsnest wires (in case the auto-update isn&apos;t working correctly)</source>
         <translation>Recalcular status de roteamento e fios do emaranhado (no caso da atualização automática não funcionar corretamente)</translation>
-    </message>
-    <message>
-        <source>silk export failure</source>
-        <translation>falha ao exportar silk</translation>
     </message>
     <message>
         <source>Lock Part</source>
@@ -2387,42 +2355,6 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>outline is empty</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>the board outline layer, </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>silkscreen layer(s), </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>copper layer(s), </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>mask layer(s), </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unable to translate svg curves in </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>mask file export failure (1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>mask export failure</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>mask file export failure (2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Do not autoroute</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2449,18 +2381,6 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
     <message>
         <source>%1 %2 %3</source>
         <translation type="unfinished">%1 %2 %3</translation>
-    </message>
-    <message>
-        <source>drill file export failure (1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>drill export failure</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>drill file export failure (5)</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Shift+Ctrl+D</source>
@@ -2497,6 +2417,97 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
     <message>
         <source>unable to find replacement for %1.
 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+R</source>
+        <comment>Rotate Clockwise</comment>
+        <translation type="unfinished">Ctrl+R</translation>
+    </message>
+    <message>
+        <source>Alt+Ctrl+R</source>
+        <comment>Rotate Clockwise</comment>
+        <translation type="unfinished">Alt+Ctrl+R</translation>
+    </message>
+    <message>
+        <source>Meta+Ctrl+R</source>
+        <comment>Rotate Clockwise</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shift+Ctrl+R</source>
+        <comment>Rotate Counterclockwise</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alt+Shift+Ctrl+R</source>
+        <comment>Rotate Counterclockwise</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Meta+Shift+Ctrl+R</source>
+        <comment>Rotate Counterclockwise</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shift+Ctrl+Tab</source>
+        <comment>Toggle Active Layer</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sketch exported to Gerber</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Free Rotate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotate the selected part</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotate 45° Clockwise</source>
+        <translation type="unfinished">Rodar 90º no sentido Horário {45°?}</translation>
+    </message>
+    <message>
+        <source>Rotate 90° Clockwise</source>
+        <translation type="unfinished">Rodar 90º no sentido Horário</translation>
+    </message>
+    <message>
+        <source>Rotate 180°</source>
+        <translation type="unfinished">Rodar 180º</translation>
+    </message>
+    <message>
+        <source>Rotate 90° Counter Clockwise</source>
+        <translation type="unfinished">Rodar 90º no sentido Anti-Horário</translation>
+    </message>
+    <message>
+        <source>Rotate 45° Counter Clockwise</source>
+        <translation type="unfinished">Rodar 90º no sentido Anti-Horário {45°?}</translation>
+    </message>
+    <message>
+        <source>Shift+Ctrl+A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shift+Ctrl+3</source>
+        <translation type="unfinished">Shift+Ctrl+3</translation>
+    </message>
+    <message>
+        <source>Shift+Ctrl+2</source>
+        <translation type="unfinished">Shift+Ctrl+2</translation>
+    </message>
+    <message>
+        <source>Shift+Ctrl+1</source>
+        <translation type="unfinished">Shift+Ctrl+1</translation>
+    </message>
+    <message>
+        <source>Enter rotation value in degrees</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rotation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4086,14 +4097,6 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
         <translation>furos sem cobre não implementado</translation>
     </message>
     <message>
-        <source>Ground Plane Bottom</source>
-        <translation>Ground Plane Inferior</translation>
-    </message>
-    <message>
-        <source>Ground Plane Top</source>
-        <translation>Ground Plane Superior Superior</translation>
-    </message>
-    <message>
         <source>Unable to parse copper: %1 %2 %3</source>
         <translation>Impossível analisar cobre: %1 %2 %3</translation>
     </message>
@@ -4223,6 +4226,74 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>Select all traces marked &apos;Don&apos;t autoroute&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>outline is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>the board outline layer, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>silkscreen layer(s), </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>copper layer(s), </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mask layer(s), </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to translate svg curves in %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 file export failure (1)</source>
+        <translation type="unfinished">%1 falha ao exportar arquivo (1)</translation>
+    </message>
+    <message>
+        <source>%1 file export failure (3)</source>
+        <translation type="unfinished">%1 falha ao exportar arquivo (3)</translation>
+    </message>
+    <message>
+        <source>silk file export failure (1)</source>
+        <translation type="unfinished">falha ao exportar arquivo silk (1)</translation>
+    </message>
+    <message>
+        <source>silk export failure</source>
+        <translation type="unfinished">falha ao exportar silk</translation>
+    </message>
+    <message>
+        <source>drill file export failure (1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>drill export failure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mask file export failure (1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 file export failure (2)</source>
+        <translation type="unfinished">%1 falha ao exportar arquivo (2)</translation>
+    </message>
+    <message>
+        <source>mask export failure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copper Fill Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copper Fill Top</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4628,6 +4699,10 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
         <source>Change leg bendpoint for %1.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Rotate %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Stripboard</name>
@@ -4745,11 +4820,15 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
         <translation>&lt;li&gt;Para mostrar diferentes propriedades no rótulo do componente, gire-o ou mude a fonte, clique-direito no rótulo.&lt;/li&gt;</translation>
     </message>
     <message>
-        <source>&lt;li&gt;In Breadboard view, to add a curve to a wire or rubber-band leg, drag with the Control (Mac: Command) key down.&lt;/li&gt;</source>
+        <source>&lt;li&gt;In Breadboard view, to drag out a wire from the end of a rubber-band leg, drag with the Alt (Linux: Meta) key down.&lt;/li&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;li&gt;In Breadboard view, to drag out a wire from the end of a rubber-band leg, drag with the Alt (Linux: Meta) key down.&lt;/li&gt;</source>
+        <source>&lt;li&gt;In Breadboard view, to drag a part with rubber-band legs while keeping it connected to the breadboard, hold the Alt (Linux: Meta) key down when you start dragging.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;li&gt;In Breadboard view, to add a curve to a wire or rubber-band leg, drag with the Control (Mac: Command) key down.  You can set whether curvy wires are the default in Preferences.&lt;/li&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4856,6 +4935,10 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>Greek - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bulgarian - %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -622,6 +622,34 @@ Please select one of the Fritzing fonts to replace them:</source>
         <source>v. %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Change the part label here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Part breadboard view image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Part schematic view image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Part pcb view image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Part version number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Locked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change the locked state of the part in this view.  A locked part can&apos;t be moved</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ItemBase</name>
@@ -1440,31 +1468,11 @@ We&apos;re working to avoid this message, and only let you choose between proper
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Rotate 90° Clockwise</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Rotate the selected parts by 90 degrees clockwise</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Rotate 180°</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Rotate the selected parts by 180 degrees</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Rotate 90° Counter Clockwise</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alt+Ctrl+R</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2016,43 +2024,7 @@ Please check all views for potential side-effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>outline file export failure (1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>outline file export failure (2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 file export failure (1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 file export failure (2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 file export failure (3)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>silk file export failure (1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>silk file export failure (2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Rotate 45° Counter Clockwise</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Rotate current selection 45 degrees counter clockwise</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Rotate 45° Clockwise</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2183,10 +2155,6 @@ Please check all views for potential side-effects.</source>
     </message>
     <message>
         <source>Recalculate routing status and ratsnest wires (in case the auto-update isn&apos;t working correctly)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>silk export failure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2370,42 +2338,6 @@ Please check all views for potential side-effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>outline is empty</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>the board outline layer, </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>silkscreen layer(s), </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>copper layer(s), </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>mask layer(s), </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unable to translate svg curves in </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>mask file export failure (1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>mask export failure</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>mask file export failure (2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Do not autoroute</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2431,18 +2363,6 @@ Please check all views for potential side-effects.</source>
     </message>
     <message>
         <source>%1 %2 %3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>drill file export failure (1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>drill export failure</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>drill file export failure (5)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2480,6 +2400,97 @@ Please check all views for potential side-effects.</source>
     <message>
         <source>unable to find replacement for %1.
 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+R</source>
+        <comment>Rotate Clockwise</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alt+Ctrl+R</source>
+        <comment>Rotate Clockwise</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Meta+Ctrl+R</source>
+        <comment>Rotate Clockwise</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shift+Ctrl+R</source>
+        <comment>Rotate Counterclockwise</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alt+Shift+Ctrl+R</source>
+        <comment>Rotate Counterclockwise</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Meta+Shift+Ctrl+R</source>
+        <comment>Rotate Counterclockwise</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shift+Ctrl+Tab</source>
+        <comment>Toggle Active Layer</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sketch exported to Gerber</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Free Rotate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotate the selected part</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotate 45° Clockwise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotate 90° Clockwise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotate 180°</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotate 90° Counter Clockwise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotate 45° Counter Clockwise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shift+Ctrl+A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shift+Ctrl+3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shift+Ctrl+2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shift+Ctrl+1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter rotation value in degrees</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rotation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4040,14 +4051,6 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ground Plane Bottom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ground Plane Top</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Unable to parse copper: %1 %2 %3</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4177,6 +4180,74 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     </message>
     <message>
         <source>Select all traces marked &apos;Don&apos;t autoroute&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>outline is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>the board outline layer, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>silkscreen layer(s), </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>copper layer(s), </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mask layer(s), </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to translate svg curves in %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 file export failure (1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 file export failure (3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>silk file export failure (1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>silk export failure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>drill file export failure (1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>drill export failure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mask file export failure (1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 file export failure (2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mask export failure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copper Fill Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copper Fill Top</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4576,6 +4647,10 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         <source>Change leg bendpoint for %1.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Rotate %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Stripboard</name>
@@ -4692,11 +4767,15 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;li&gt;In Breadboard view, to add a curve to a wire or rubber-band leg, drag with the Control (Mac: Command) key down.&lt;/li&gt;</source>
+        <source>&lt;li&gt;In Breadboard view, to drag out a wire from the end of a rubber-band leg, drag with the Alt (Linux: Meta) key down.&lt;/li&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;li&gt;In Breadboard view, to drag out a wire from the end of a rubber-band leg, drag with the Alt (Linux: Meta) key down.&lt;/li&gt;</source>
+        <source>&lt;li&gt;In Breadboard view, to drag a part with rubber-band legs while keeping it connected to the breadboard, hold the Alt (Linux: Meta) key down when you start dragging.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;li&gt;In Breadboard view, to add a curve to a wire or rubber-band leg, drag with the Control (Mac: Command) key down.  You can set whether curvy wires are the default in Preferences.&lt;/li&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4803,6 +4882,10 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     </message>
     <message>
         <source>Greek - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bulgarian - %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

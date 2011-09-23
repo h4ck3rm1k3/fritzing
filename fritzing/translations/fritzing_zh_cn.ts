@@ -627,6 +627,34 @@ Please select one of the Fritzing fonts to replace them:</source>
         <source>v. %1</source>
         <translation>v. %1</translation>
     </message>
+    <message>
+        <source>Change the part label here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Part breadboard view image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Part schematic view image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Part pcb view image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Part version number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Locked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change the locked state of the part in this view.  A locked part can&apos;t be moved</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ItemBase</name>
@@ -1422,32 +1450,12 @@ We&apos;re working to avoid this message, and only let you choose between proper
         <translation>鼠标悬停时更新信息视图</translation>
     </message>
     <message>
-        <source>&amp;Rotate 90° Clockwise</source>
-        <translation>顺时针旋转90°(&amp;R)</translation>
-    </message>
-    <message>
-        <source>Ctrl+R</source>
-        <translation>Ctrl+R</translation>
-    </message>
-    <message>
         <source>Rotate the selected parts by 90 degrees clockwise</source>
         <translation>将选择的元件顺时针旋转90度</translation>
     </message>
     <message>
-        <source>&amp;Rotate 180°</source>
-        <translation>旋转180°(&amp;R)</translation>
-    </message>
-    <message>
         <source>Rotate the selected parts by 180 degrees</source>
         <translation>将选择的元件旋转180度</translation>
-    </message>
-    <message>
-        <source>&amp;Rotate 90° Counter Clockwise</source>
-        <translation>逆时针旋转90°(&amp;R)</translation>
-    </message>
-    <message>
-        <source>Alt+Ctrl+R</source>
-        <translation>Alt+Ctrl+R</translation>
     </message>
     <message>
         <source>Rotate current selection 90 degrees counter clockwise</source>
@@ -2028,44 +2036,8 @@ Please check all views for potential side-effects.</source>
         <translation>备份&apos;%1&apos;中</translation>
     </message>
     <message>
-        <source>outline file export failure (1)</source>
-        <translation>轮廓线文件导出失败(1)</translation>
-    </message>
-    <message>
-        <source>outline file export failure (2)</source>
-        <translation>轮廓线文件导出失败(2)</translation>
-    </message>
-    <message>
-        <source>%1 file export failure (1)</source>
-        <translation>%1文件导出失败(1)</translation>
-    </message>
-    <message>
-        <source>%1 file export failure (2)</source>
-        <translation>%1文件导出失败(2)</translation>
-    </message>
-    <message>
-        <source>%1 file export failure (3)</source>
-        <translation>%1文件导出失败(3)</translation>
-    </message>
-    <message>
-        <source>silk file export failure (1)</source>
-        <translation>silk文件导出失败(1)</translation>
-    </message>
-    <message>
-        <source>silk file export failure (2)</source>
-        <translation>silk文件导出失败(2)</translation>
-    </message>
-    <message>
-        <source>&amp;Rotate 45° Counter Clockwise</source>
-        <translation>逆时针旋转45°(&amp;R)</translation>
-    </message>
-    <message>
         <source>Rotate current selection 45 degrees counter clockwise</source>
         <translation>逆时针旋转当前选择45度</translation>
-    </message>
-    <message>
-        <source>&amp;Rotate 45° Clockwise</source>
-        <translation>顺时针旋转45°(&amp;R)</translation>
     </message>
     <message>
         <source>Rotate current selection 45 degrees clockwise</source>
@@ -2196,10 +2168,6 @@ Please check all views for potential side-effects.</source>
     <message>
         <source>Recalculate routing status and ratsnest wires (in case the auto-update isn&apos;t working correctly)</source>
         <translation>重新计算布线状态和覆铜线(在自动更新不能正确工作的情况下)</translation>
-    </message>
-    <message>
-        <source>silk export failure</source>
-        <translation>丝印导出错误</translation>
     </message>
     <message>
         <source>Lock Part</source>
@@ -2382,42 +2350,6 @@ Please check all views for potential side-effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>outline is empty</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>the board outline layer, </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>silkscreen layer(s), </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>copper layer(s), </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>mask layer(s), </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unable to translate svg curves in </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>mask file export failure (1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>mask export failure</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>mask file export failure (2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Do not autoroute</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2444,18 +2376,6 @@ Please check all views for potential side-effects.</source>
     <message>
         <source>%1 %2 %3</source>
         <translation type="unfinished">%1 %2 %3</translation>
-    </message>
-    <message>
-        <source>drill file export failure (1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>drill export failure</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>drill file export failure (5)</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Shift+Ctrl+D</source>
@@ -2492,6 +2412,97 @@ Please check all views for potential side-effects.</source>
     <message>
         <source>unable to find replacement for %1.
 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+R</source>
+        <comment>Rotate Clockwise</comment>
+        <translation type="unfinished">Ctrl+R</translation>
+    </message>
+    <message>
+        <source>Alt+Ctrl+R</source>
+        <comment>Rotate Clockwise</comment>
+        <translation type="unfinished">Alt+Ctrl+R</translation>
+    </message>
+    <message>
+        <source>Meta+Ctrl+R</source>
+        <comment>Rotate Clockwise</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shift+Ctrl+R</source>
+        <comment>Rotate Counterclockwise</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alt+Shift+Ctrl+R</source>
+        <comment>Rotate Counterclockwise</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Meta+Shift+Ctrl+R</source>
+        <comment>Rotate Counterclockwise</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shift+Ctrl+Tab</source>
+        <comment>Toggle Active Layer</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sketch exported to Gerber</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Free Rotate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotate the selected part</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotate 45° Clockwise</source>
+        <translation type="unfinished">顺时针旋转 90° {45°?}</translation>
+    </message>
+    <message>
+        <source>Rotate 90° Clockwise</source>
+        <translation type="unfinished">顺时针旋转 90°</translation>
+    </message>
+    <message>
+        <source>Rotate 180°</source>
+        <translation type="unfinished">旋转 180°</translation>
+    </message>
+    <message>
+        <source>Rotate 90° Counter Clockwise</source>
+        <translation type="unfinished">逆时针旋转90度</translation>
+    </message>
+    <message>
+        <source>Rotate 45° Counter Clockwise</source>
+        <translation type="unfinished">逆时针旋转90度 {45°?}</translation>
+    </message>
+    <message>
+        <source>Shift+Ctrl+A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shift+Ctrl+3</source>
+        <translation type="unfinished">Shift+Ctrl+3</translation>
+    </message>
+    <message>
+        <source>Shift+Ctrl+2</source>
+        <translation type="unfinished">Shift+Ctrl+2</translation>
+    </message>
+    <message>
+        <source>Shift+Ctrl+1</source>
+        <translation type="unfinished">Shift+Ctrl+1</translation>
+    </message>
+    <message>
+        <source>Enter rotation value in degrees</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rotation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4078,14 +4089,6 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
         <translation>非铜孔还未实现</translation>
     </message>
     <message>
-        <source>Ground Plane Bottom</source>
-        <translation>底层地</translation>
-    </message>
-    <message>
-        <source>Ground Plane Top</source>
-        <translation>顶层地</translation>
-    </message>
-    <message>
         <source>Unable to parse copper: %1 %2 %3</source>
         <translation>不能解析铜层：%1 %2 %3</translation>
     </message>
@@ -4215,6 +4218,74 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     </message>
     <message>
         <source>Select all traces marked &apos;Don&apos;t autoroute&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>outline is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>the board outline layer, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>silkscreen layer(s), </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>copper layer(s), </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mask layer(s), </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to translate svg curves in %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 file export failure (1)</source>
+        <translation type="unfinished">%1文件导出失败(1)</translation>
+    </message>
+    <message>
+        <source>%1 file export failure (3)</source>
+        <translation type="unfinished">%1文件导出失败(3)</translation>
+    </message>
+    <message>
+        <source>silk file export failure (1)</source>
+        <translation type="unfinished">silk文件导出失败(1)</translation>
+    </message>
+    <message>
+        <source>silk export failure</source>
+        <translation type="unfinished">丝印导出错误</translation>
+    </message>
+    <message>
+        <source>drill file export failure (1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>drill export failure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mask file export failure (1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 file export failure (2)</source>
+        <translation type="unfinished">%1文件导出失败(2)</translation>
+    </message>
+    <message>
+        <source>mask export failure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copper Fill Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copper Fill Top</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4614,6 +4685,10 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
         <source>Change leg bendpoint for %1.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Rotate %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Stripboard</name>
@@ -4730,11 +4805,15 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
         <translation>&lt;li&gt;要在元件标签中显示不同的属性，转动它或者改变字体，右击此标签。&lt;/li&gt;</translation>
     </message>
     <message>
-        <source>&lt;li&gt;In Breadboard view, to add a curve to a wire or rubber-band leg, drag with the Control (Mac: Command) key down.&lt;/li&gt;</source>
+        <source>&lt;li&gt;In Breadboard view, to drag out a wire from the end of a rubber-band leg, drag with the Alt (Linux: Meta) key down.&lt;/li&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;li&gt;In Breadboard view, to drag out a wire from the end of a rubber-band leg, drag with the Alt (Linux: Meta) key down.&lt;/li&gt;</source>
+        <source>&lt;li&gt;In Breadboard view, to drag a part with rubber-band legs while keeping it connected to the breadboard, hold the Alt (Linux: Meta) key down when you start dragging.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;li&gt;In Breadboard view, to add a curve to a wire or rubber-band leg, drag with the Control (Mac: Command) key down.  You can set whether curvy wires are the default in Preferences.&lt;/li&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4841,6 +4920,10 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     </message>
     <message>
         <source>Greek - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bulgarian - %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
