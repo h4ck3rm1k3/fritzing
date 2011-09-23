@@ -83,7 +83,7 @@ void CursorMaster::initCursors()
 
 		QBitmap bitmap8(":resources/images/cursor/rotate.bmp");
 		QBitmap bitmap8m(":resources/images/cursor/rotate_mask.bmp");
-		RotateCursor = new QCursor(bitmap8, bitmap8m, 15, 15);
+		RotateCursor = new QCursor(bitmap8, bitmap8m, 0, 0);
 
 		QApplication::instance()->installEventFilter(instance());
 	}
