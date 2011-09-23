@@ -493,21 +493,14 @@ void PaletteItemBase::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
 				}
 			}
 		}
+
+		checkFreeRotation(event->modifiers(), event->scenePos());
 	}
+
 }
 
 void PaletteItemBase::hoverMoveEvent ( QGraphicsSceneHoverEvent * event ) {
-	if (!freeRotationAllowed(event->modifiers())) return;
-
-	QPointF returnPoint;
-	bool inCorner = inRotationLocation(event->scenePos(), event->modifiers(), returnPoint);
-
-	if (inCorner) {
-		CursorMaster::instance()->addCursor(this, *CursorMaster::RotateCursor);
-	}
-	else {
-		CursorMaster::instance()->addCursor(this, cursor());
-	}
+	checkFreeRotation(event->modifiers(), event->scenePos());
 }
 
 void PaletteItemBase::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
@@ -522,6 +515,9 @@ void PaletteItemBase::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
 
 void PaletteItemBase::cursorKeyEvent(Qt::KeyboardModifiers modifiers)
 {
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	QPoint p = infoGraphicsView->mapFromGlobal(QCursor::pos());
+	checkFreeRotation(modifiers, infoGraphicsView->mapToScene(p));
 	if (hasRubberBandLeg()) {
 		QCursor cursor;
 		if (modifiers & altOrMetaModifier()) {
@@ -702,6 +698,20 @@ bool PaletteItemBase::inRotation() {
 	return m_inRotation;
 }
 
+void PaletteItemBase::checkFreeRotation(Qt::KeyboardModifiers modifiers, QPointF scenePos)
+{
+	if (!freeRotationAllowed(modifiers)) return;
+
+	QPointF returnPoint;
+	bool inCorner = inRotationLocation(scenePos, modifiers, returnPoint);
+
+	if (inCorner) {
+		CursorMaster::instance()->addCursor(this, *CursorMaster::RotateCursor);
+	}
+	else {
+		CursorMaster::instance()->addCursor(this, cursor());
+	}
+}
 
 /*
 
