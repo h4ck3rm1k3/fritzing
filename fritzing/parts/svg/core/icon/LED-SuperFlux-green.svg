@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 14.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 43363)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="32px" height="32px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve">
+<polyline opacity="0.24" enable-background="new    " points="2.6,3.001 27.291,3.011 30.528,6.251 30.522,30.926 2.6,30.926 
+	2.6,3.238 "/>
+<polyline opacity="0.5" fill="#CCCCCC" enable-background="new    " points="1.44,1.839 26.133,1.85 29.373,5.088 29.37,6.929 
+	29.365,29.764 1.44,29.764 1.44,2.076 "/>
+<g id="breadboard">
+	<g>
+		<rect id="connector3terminal" x="4.93" y="6.49" fill="#8C8C8C" width="4.654" height="2.33"/>
+		<rect id="connector2terminal" x="23.547" y="6.493" fill="#8C8C8C" width="4.654" height="2.329"/>
+		<rect id="connector1terminal" x="23.547" y="25.108" fill="#8C8C8C" width="4.654" height="2.329"/>
+		<rect id="connector0terminal" x="4.93" y="25.108" fill="#8C8C8C" width="4.654" height="2.329"/>
+		<rect id="connector3pin" x="4.93" y="6.49" fill="#8C8C8C" width="4.654" height="2.33"/>
+		<rect id="connector2pin" x="23.547" y="6.493" fill="#8C8C8C" width="4.654" height="2.329"/>
+		<rect id="connector1pin" x="23.547" y="25.108" fill="#8C8C8C" width="4.654" height="2.329"/>
+		<rect id="connector0pin" x="4.93" y="25.108" fill="#8C8C8C" width="4.654" height="2.329"/>
+		<rect x="4.93" y="6.49" fill="#8C8C8C" width="4.654" height="2.33"/>
+		<rect x="23.547" y="6.493" fill="#8C8C8C" width="4.654" height="2.329"/>
+		<rect x="23.547" y="25.108" fill="#8C8C8C" width="4.654" height="2.329"/>
+		<rect x="4.93" y="25.108" fill="#8C8C8C" width="4.654" height="2.329"/>
+		<circle fill="#8C8C8C" cx="16.566" cy="16.921" r="4.61"/>
+		<path fill="#8C8C8C" d="M8.42,9.983V7.656H6.094l0.479,7.553l2.327,1.163v1.165h1.164v-2.328C10.063,15.208,8.42,9.983,8.42,9.983
+			z M7.839,13.473c-0.323,0-0.582-0.259-0.582-0.58c0-0.323,0.261-0.583,0.582-0.583s0.581,0.26,0.581,0.583
+			C8.42,13.213,8.16,13.473,7.839,13.473z"/>
+		<path fill="#8C8C8C" d="M8.899,17.537l-2.327,1.161l-0.479,7.574h2.328v-3.49l1.641-2.92v-2.328H8.899V17.537z M7.839,21.62
+			c-0.323,0-0.582-0.261-0.582-0.581c0-0.323,0.261-0.581,0.582-0.581s0.581,0.258,0.581,0.581C8.42,21.357,8.16,21.62,7.839,21.62z
+			"/>
+		<path fill="#8C8C8C" d="M20.535,17.537l-2.327,2.326l6.502,2.921v3.489h2.328l-0.686-7.574L20.535,17.537z M25.292,21.62
+			c-0.323,0-0.582-0.261-0.582-0.581c0-0.323,0.263-0.581,0.582-0.581c0.32,0,0.581,0.258,0.581,0.581
+			C25.873,21.357,25.612,21.62,25.292,21.62z"/>
+		<path fill="#8C8C8C" d="M24.71,7.656v3.489l-6.502,2.9l2.327,2.327l5.817-1.163l0.686-7.553H24.71z M25.292,13.474
+			c-0.323,0-0.582-0.258-0.582-0.582c0-0.321,0.263-0.581,0.582-0.581c0.32,0,0.581,0.26,0.581,0.581
+			C25.873,13.216,25.612,13.474,25.292,13.474z"/>
+	</g>
+	<circle fill="#00FF00" cx="15.299" cy="16.956" r="1.745"/>
+	
+		<circle opacity="0.5" fill="#00FF00" stroke="#FFFFFF" stroke-width="0.6464" enable-background="new    " cx="15.549" cy="15.947" r="9.162"/>
+	<path opacity="0.6" fill="#FFFFFF" enable-background="new    " d="M14.208,10.435c0.429-0.104,0.879-0.159,1.341-0.159
+		c0.392,0,0.773,0.037,1.142,0.115l0.47-2.282c-0.521-0.106-1.061-0.162-1.612-0.162c-0.586,0-1.507,0.108-2.057,0.228
+		L14.208,10.435z M11.915,8.82c-2.591,1.324-4.363,4.018-4.363,7.127c0,0.535,0.053,1.058,0.153,1.564l2.273-0.511
+		c-0.065-0.341-0.098-0.691-0.098-1.052c0-2.132,1.177-3.993,2.919-4.961L11.915,8.82z"/>
+	<polygon opacity="0.24" enable-background="new    " points="1.44,29.764 2.6,30.926 30.522,30.926 30.528,6.251 29.373,5.088 
+		29.365,29.764 	"/>
+</g>
+</svg>

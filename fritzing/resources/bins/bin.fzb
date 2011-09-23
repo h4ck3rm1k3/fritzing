@@ -289,6 +289,14 @@
             </views>
         </instance>
 
+				<instance moduleIdRef="LED_Matrix_Kingbright_TA07-11" modelIndex="24" path="parts/core/LED_Matrix_Kingbright_TA07-11.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
+
         <instance moduleIdRef="c8994c24e2a6d9182a55c653b6bbefed" modelIndex="24" path="parts/core/16-segment_display.fzp">
             <views>
                 <iconView layer="icon">

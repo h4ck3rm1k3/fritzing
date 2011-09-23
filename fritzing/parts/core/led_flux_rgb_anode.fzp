@@ -20,7 +20,7 @@
     <description>A full color SuperFlux LED.</description>
     <views>
         <iconView>
-            <layers image="icon/LED-SuperFlux.svg">
+            <layers image="icon/LED-SuperFlux-rgb.svg">
                 <layer layerId="icon"/>
             </layers>
         </iconView>

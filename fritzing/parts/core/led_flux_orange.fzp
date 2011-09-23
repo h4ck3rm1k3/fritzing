@@ -19,7 +19,7 @@
     <description>A SuperFlux LED.</description>
     <views>
         <iconView>
-            <layers image="icon/LED-SuperFlux.svg">
+            <layers image="icon/LED-SuperFlux-orange.svg">
                 <layer layerId="icon"/>
             </layers>
         </iconView>
