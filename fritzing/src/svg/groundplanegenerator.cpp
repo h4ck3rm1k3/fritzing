@@ -151,10 +151,10 @@ bool GroundPlaneGenerator::getBoardRects(const QString & boardSvg, QGraphicsItem
 
 bool GroundPlaneGenerator::generateGroundPlaneUnit(const QString & boardSvg, QSizeF boardImageSize, const QString & svg, QSizeF copperImageSize, 
 												   QStringList & exceptions, QGraphicsItem * board, double res, const QString & color, const QString & layerName,
-												   QPointF whereToStart) 
+												   QPointF whereToStart, double blurBy) 
 {
 	double bWidth, bHeight;
-	QImage * image = generateGroundPlaneAux(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board, res, bWidth, bHeight);
+	QImage * image = generateGroundPlaneAux(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board, res, bWidth, bHeight, blurBy);
 	if (image == NULL) return false;
 
 	QPoint s(qRound(res * (whereToStart.x() - board->pos().x()) / FSvgRenderer::printerScale()),
@@ -238,11 +238,12 @@ bool GroundPlaneGenerator::generateGroundPlaneUnit(const QString & boardSvg, QSi
 
 
 bool GroundPlaneGenerator::generateGroundPlane(const QString & boardSvg, QSizeF boardImageSize, const QString & svg, QSizeF copperImageSize, 
-												QStringList & exceptions, QGraphicsItem * board, double res, const QString & color, const QString & layerName) 
+												QStringList & exceptions, QGraphicsItem * board, double res, const QString & color, const QString & layerName,
+												double blurBy) 
 {
 
 	double bWidth, bHeight;
-	QImage * image = generateGroundPlaneAux(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board, res, bWidth, bHeight);
+	QImage * image = generateGroundPlaneAux(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board, res, bWidth, bHeight, blurBy);
 	if (image == NULL) return false;
 
 	for (double m = 0; m < .002; m += (1.0 / res)) {
@@ -257,7 +258,7 @@ bool GroundPlaneGenerator::generateGroundPlane(const QString & boardSvg, QSizeF 
 }
 
 QImage * GroundPlaneGenerator::generateGroundPlaneAux(const QString & boardSvg, QSizeF boardImageSize, const QString & svg, QSizeF copperImageSize, 
-													QStringList & exceptions, QGraphicsItem * board, double res, double & bWidth, double & bHeight) 
+													QStringList & exceptions, QGraphicsItem * board, double res, double & bWidth, double & bHeight, double blurBy) 
 {
 	QByteArray boardByteArray;
     QString tempColor("#ffffff");
@@ -311,8 +312,6 @@ QImage * GroundPlaneGenerator::generateGroundPlaneAux(const QString & boardSvg, 
 	
 	// "blur" the image a little
 
-	double blurBy = 3;
-
 	QSvgRenderer renderer2(copperByteArray);
 	painter.begin(image);
 	QRectF bounds(0, 0, res * copperImageSize.width() / FSvgRenderer::printerScale(), res * copperImageSize.height() / FSvgRenderer::printerScale());
@@ -335,7 +334,7 @@ QImage * GroundPlaneGenerator::generateGroundPlaneAux(const QString & boardSvg, 
 	renderer2.render(&painter, bounds);
 	painter.end();
 
-	//image->save("testGroundFillCopper.png");
+	image->save("testGroundFillCopper.png");
 	return image;
 }
 

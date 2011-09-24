@@ -43,9 +43,9 @@ public:
 	~GroundPlaneGenerator();
 
 	bool generateGroundPlane(const QString & boardSvg, QSizeF boardImageSize, const QString & svg, QSizeF copperImageSize, QStringList & exceptions, 
-							 QGraphicsItem * board, double res, const QString & color, const QString & layerName); 
+							 QGraphicsItem * board, double res, const QString & color, const QString & layerName, double blurBy); 
 	bool generateGroundPlaneUnit(const QString & boardSvg, QSizeF boardImageSize, const QString & svg, QSizeF copperImageSize, QStringList & exceptions, 
-							 QGraphicsItem * board, double res, const QString & color, const QString & layerName, QPointF whereToStart); 
+							 QGraphicsItem * board, double res, const QString & color, const QString & layerName, QPointF whereToStart, double blurBy); 
 	void scanImage(QImage & image, double bWidth, double bHeight, double pixelFactor, double res, 
 					const QString & colorString, const QString & layerName, bool makeConnector, 
 					int minRunSize, bool makeOffset, QSizeF minAreaInches, double minDimensionInches, QPointF offsetPolygons);  
@@ -67,7 +67,7 @@ protected:
 	QString makeOnePoly(const QPolygon & poly, const QString & colorString, const QString & id, int minX, int minY);
 	double calcArea(QPolygon & poly);
 	QImage * generateGroundPlaneAux(const QString & boardSvg, QSizeF boardImageSize, const QString & svg, QSizeF copperImageSize, QStringList & exceptions, 
-									QGraphicsItem * board, double res, double & bWidth, double & bHeight); 
+									QGraphicsItem * board, double res, double & bWidth, double & bHeight, double blurBy); 
 	void makeConnector(QList<QPolygon> & polygons, double res, double pixelFactor, const QString & colorString, int minX, int minY, QString & svg);
 	bool tryNextPoint(int x, int y, QImage & image, QList<QPoint> & points);
 	void collectBorderPoints(QImage & image, QList<QPoint> & points);
