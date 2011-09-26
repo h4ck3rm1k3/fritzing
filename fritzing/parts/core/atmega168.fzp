@@ -12,13 +12,14 @@
         <tag>through-hole</tag>
     </tags>
     <properties>
-        <property name="version">atmega168-20PU</property>
-        <property name="family">Microcontroller (AVR)</property>
+        <property name="version">Atmega168-20PU</property>
+        <property name="family">Microcontroller</property>
+				<property name="type">Atmel AVR</property>
    		<property name="package">DIP28 [THT]</property></properties>
     <description>Atmel ATmega168 microcontroller.  The hardware hacker favorite.</description>
     <views>
         <iconView>
-            <layers image="icon/atmega168_icon.svg">
+            <layers image="icon/microcontroller.svg">
                 <layer layerId="icon"/>
             </layers>
         </iconView>

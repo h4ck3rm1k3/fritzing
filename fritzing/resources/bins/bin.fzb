@@ -571,6 +571,13 @@
           </iconView>
         </views>
       </instance>
+      <instance moduleIdRef="DB25F" modelIndex="46" path="parts/core/DB25F.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
         <instance moduleIdRef="5e3b9f7a14a1627168e700bfc9a03b3c" modelIndex="43" path="parts/core/USB connector.fzp">
             <views>
                 <iconView layer="icon">
