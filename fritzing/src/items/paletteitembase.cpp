@@ -705,7 +705,7 @@ bool PaletteItemBase::inRotationLocation(QPointF scenePos, Qt::KeyboardModifiers
 	polygon.append(mapToScene(r.bottomLeft()));
 	foreach (QPointF p, polygon) {
 		double dsqd = GraphicsUtils::distanceSqd(p, scenePos);
-		if (dsqd < 4) {
+		if (dsqd < 9) {
 			returnPoint = p;
 			return true;
 		}
