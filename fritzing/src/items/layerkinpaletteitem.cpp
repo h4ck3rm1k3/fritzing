@@ -100,6 +100,7 @@ void LayerKinPaletteItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 	m_layerKinChief->mousePressEvent(this, event);
 }
 
+/*
 void LayerKinPaletteItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) 
 {
 	if (m_layerKinChief->inRotation()) {
@@ -115,6 +116,7 @@ void LayerKinPaletteItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 		//m_layerKinChief->mouseReleaseEvent(event);
 	}
 }
+*/
 
 void LayerKinPaletteItem::setHidden(bool hide) {
 	ItemBase::setHidden(hide);

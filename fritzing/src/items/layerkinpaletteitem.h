@@ -59,8 +59,8 @@ protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	void updateConnections();
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
-	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
-	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+	//void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+	//void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 	ConnectorItem* newConnectorItem(class Connector *connector);
 
 protected:
