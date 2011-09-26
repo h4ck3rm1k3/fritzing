@@ -687,10 +687,6 @@ void MainWindow::createPartMenuActions() {
 #endif
 
 
-	m_freeRotateAct = new QAction(tr("Free Rotate"), this);
-	m_freeRotateAct->setStatusTip(tr("Rotate the selected part"));
-	connect(m_freeRotateAct, SIGNAL(triggered()), this, SLOT(freeRotate()));
-
 	m_rotate45cwAct = new QAction(tr("Rotate 45\x00B0 Clockwise"), this);
 	m_rotate45cwAct->setStatusTip(tr("Rotate current selection 45 degrees clockwise"));
 	connect(m_rotate45cwAct, SIGNAL(triggered()), this, SLOT(rotate45cw()));
@@ -1069,7 +1065,6 @@ void MainWindow::createMenus()
 	m_rotateMenu->addAction(m_rotate180Act);
 	m_rotateMenu->addAction(m_rotate90ccwAct);
 	m_rotateMenu->addAction(m_rotate45ccwAct);
-	m_rotateMenu->addAction(m_freeRotateAct);
 
 	m_zOrderMenu->addAction(m_bringToFrontAct);
 	m_zOrderMenu->addAction(m_bringForwardAct);
@@ -1396,7 +1391,6 @@ void MainWindow::updatePartMenu() {
 	bool renable45 = (itemCount.sel45Rotatable > 0);
 
 	//DebugDialog::debug(QString("enable rotate (2) %1").arg(enable));
-	m_freeRotateAct->setEnabled(enable && renable && itemCount.selCount == 1 && m_currentGraphicsView == m_breadboardGraphicsView); 
 
 	m_rotate90cwAct->setEnabled(renable && enable);
 	m_rotate180Act->setEnabled(renable && enable);
@@ -1453,7 +1447,6 @@ void MainWindow::updateTransformationActions() {
 	bool enable = (itemCount.selRotatable > 0);
 
 	//DebugDialog::debug(QString("enable rotate (1) %1").arg(enable));
-	m_freeRotateAct->setEnabled(enable && itemCount.itemsCount == 1 && m_currentGraphicsView == m_breadboardGraphicsView);
 
 	m_rotate90cwAct->setEnabled(enable);
 	m_rotate180Act->setEnabled(enable);
@@ -3167,10 +3160,3 @@ void MainWindow::orderFab()
 	QDesktopServices::openUrl(QString("http://fab.fritzing.org/"));
 }
 
-void MainWindow::freeRotate() {
-	bool ok;
-	double	d = QInputDialog::getDouble (this, tr("Enter rotation value in degrees"), tr("rotation"), 0, -360.0, 360.0, 3, &ok);
-	if (!ok) return;
-
-	m_currentGraphicsView->rotateX(d, true);
-}

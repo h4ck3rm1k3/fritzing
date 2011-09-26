@@ -260,16 +260,36 @@ void PaletteItemBase::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
 	double deltaAngle = (a2 - a1) * 180 / M_PI;
 	//DebugDialog::debug(QString("original:%1 delta:%2").arg(originalAngle).arg(deltaAngle));
-	double nearest = qRound((originalAngle + deltaAngle) / 45) * 45;
-	if (qAbs(originalAngle + deltaAngle - nearest) < 5) {
-		deltaAngle = nearest - originalAngle;
-		//DebugDialog::debug(QString("\tdelta angle %1").arg(deltaAngle));
+	switch (m_viewIdentifier) {
+		case ViewIdentifierClass::BreadboardView:
+		case ViewIdentifierClass::PCBView:
+			{
+				double nearest = qRound((originalAngle + deltaAngle) / 45) * 45;
+				if (qAbs(originalAngle + deltaAngle - nearest) < 6) {
+					deltaAngle = nearest - originalAngle;
+					//DebugDialog::debug(QString("\tdelta angle %1").arg(deltaAngle));
+				}
+			}
+			break;
+		case ViewIdentifierClass::SchematicView:
+			{
+				double nearest = qRound((originalAngle + deltaAngle) / 90) * 90;
+				deltaAngle = nearest - originalAngle;
+			}
+			break;
+		default:
+			return;
 	}
 
-	m_viewGeometry.setTransform(OriginalTransform);
-	rotateItem(deltaAngle);
-	QTransform t = transform();
+	ItemBase * chief = layerKinChief();
+	// restore viewGeometry to original angle
+	chief->getViewGeometry().setTransform(OriginalTransform);
+	foreach (ItemBase * itemBase, chief->layerKin()) {
+		itemBase->getViewGeometry().setTransform(OriginalTransform);
+	}
 
+	DebugDialog::debug(QString("rotating item %1 %2 %3 %4").arg(QTime::currentTime().toString("HH:mm:ss.zzz")).arg(deltaAngle).arg(originalAngle).arg((long) this, 0, 16));
+	chief->rotateItem(deltaAngle);
 }
 
 void PaletteItemBase::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
@@ -666,16 +686,15 @@ const QCursor * PaletteItemBase::getCursor(Qt::KeyboardModifiers modifiers)
 
 bool PaletteItemBase::freeRotationAllowed(Qt::KeyboardModifiers modifiers) {
 	if ((modifiers & altOrMetaModifier()) == 0) return false;
-	if (!this->rotation45Allowed()) return false;
-	if (!this->isSelected()) return false;
+	if (!isSelected()) return false;
 
-	return true;
+	return rotation45Allowed();
 }
 
 bool PaletteItemBase::inRotationLocation(QPointF scenePos, Qt::KeyboardModifiers modifiers, QPointF & returnPoint)
 {
 	if (!freeRotationAllowed(modifiers)) return false;
-	if (m_viewIdentifier != ViewIdentifierClass::BreadboardView) return false;
+	if (m_viewIdentifier == ViewIdentifierClass::SchematicView) return false;
 
 	QRectF r = this->boundingRectWithoutLegs();
 	QPolygonF polygon;

@@ -1130,6 +1130,7 @@ ItemBase * ItemBase::layerKinChief() {
 }
 
 void ItemBase::rotateItem(double degrees) {
+	DebugDialog::debug(QString("\trotating item %1 %2").arg(degrees).arg((long) this, 0, 16));
 	transformItem(QTransform().rotate(degrees));
 }
 
@@ -1150,6 +1151,8 @@ void ItemBase::flipItem(Qt::Orientations orientation) {
 }
 
 void ItemBase::transformItem(const QTransform & currTransf) {
+	DebugDialog::debug(QString("\ttransform item %1").arg((long) this, 0, 16));
+
 	if (m_hasRubberBandLeg) {
 		prepareGeometryChange();
 	}

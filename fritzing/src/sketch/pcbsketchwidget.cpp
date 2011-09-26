@@ -2553,7 +2553,7 @@ bool PCBSketchWidget::groundFill(QUndoCommand * parentCommand)
 
 	GroundPlaneGenerator gpg;
 	bool result = gpg.generateGroundPlane(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board, GraphicsUtils::StandardFritzingDPI / 2.0  /* 2 MIL */,
-											ViewLayer::Copper0Color, "groundplane", 3.0);
+											ViewLayer::Copper0Color, "groundplane", 3.5);
 	if (result == false) {
         QMessageBox::critical(NULL, tr("Fritzing"), tr("Fritzing error: unable to write copper fill (1)."));
 		return false;
@@ -2562,7 +2562,7 @@ bool PCBSketchWidget::groundFill(QUndoCommand * parentCommand)
 	GroundPlaneGenerator gpg2;
 	if (boardLayers() > 1) {
 		bool result = gpg2.generateGroundPlane(boardSvg, boardImageSize, svg2, copperImageSize, exceptions, board, GraphicsUtils::StandardFritzingDPI / 2.0  /* 2 MIL */,
-												ViewLayer::Copper1Color, "groundplane1", 3.0);
+												ViewLayer::Copper1Color, "groundplane1", 3.5);
 		if (result == false) {
 			QMessageBox::critical(NULL, tr("Fritzing"), tr("Fritzing error: unable to write copper fill (2)."));
 			return false;
@@ -2644,7 +2644,7 @@ QString PCBSketchWidget::generateCopperFillUnit(ItemBase * itemBase, QPointF whe
 
 	GroundPlaneGenerator gpg;
 	bool result = gpg.generateGroundPlaneUnit(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board, GraphicsUtils::StandardFritzingDPI / 2.0  /* 2 MIL */, 
-												color, gpLayerName, whereToStart, 3.0);
+												color, gpLayerName, whereToStart, 3.5);
 
 	if (result == false || gpg.newSVGs().count() < 1) {
         QMessageBox::critical(NULL, tr("Fritzing"), tr("Unable to create copper fill--possibly the part was dropped onto another part or wire rather than the actual PCB."));

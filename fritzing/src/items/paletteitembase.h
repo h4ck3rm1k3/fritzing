@@ -60,6 +60,8 @@ public:
 	bool collectFemaleConnectees(QSet<ItemBase *> & items);
 	void collectWireConnectees(QSet<class Wire *> & wires);
 	virtual void mousePressEvent(PaletteItemBase * originalItem, QGraphicsSceneMouseEvent *event);
+	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 	//bool isBuriedConnectorHit(QGraphicsSceneMouseEvent *event);
 	QRectF boundingRect() const;
 	QRectF boundingRectWithoutLegs() const;
@@ -84,8 +86,6 @@ public:
 	*/
 
 protected:
-	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
-	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     void setUpConnectors(FSvgRenderer *, bool ignoreTerminalPoints);
 	void findConnectorsUnder();
 	void hoverEnterEvent ( QGraphicsSceneHoverEvent * event );
