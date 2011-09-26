@@ -685,7 +685,8 @@ const QCursor * PaletteItemBase::getCursor(Qt::KeyboardModifiers modifiers)
 }
 
 bool PaletteItemBase::freeRotationAllowed(Qt::KeyboardModifiers modifiers) {
-	if ((modifiers & altOrMetaModifier()) == 0) return false;
+	Q_UNUSED(modifiers);
+	//if ((modifiers & altOrMetaModifier()) == 0) return false;
 	if (!isSelected()) return false;
 
 	return rotation45Allowed();
