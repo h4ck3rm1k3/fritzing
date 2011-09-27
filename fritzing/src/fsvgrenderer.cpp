@@ -147,7 +147,11 @@ QByteArray FSvgRenderer::loadAux(const QByteArray & contents, const QString & fi
 			// if svg has both Illustrator and Inkscape crap then converting back and forth between strings and QDomDocument
 			// in FixPixelDimensionsIn() can result in invalid xml
 			TextUtils::cleanSodipodi(string);
-			DebugDialog::debug("Illustrator and inkscape:" + filename);
+#ifndef QT_NO_DEBUG
+			if (!filename.contains("icon", Qt::CaseInsensitive)) {
+				DebugDialog::debug("Illustrator and inkscape:" + filename);
+			}
+#endif
 		}
 
 		//DebugDialog::debug("Illustrator " + filename);

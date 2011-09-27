@@ -2685,15 +2685,15 @@ void ConnectorItem::cursorKeyEvent(Qt::KeyboardModifiers modifiers)
 
 void ConnectorItem::updateWireCursor(Qt::KeyboardModifiers modifiers)
 {
-	DebugDialog::debug("uwc");
+	//DebugDialog::debug("uwc");
 	QCursor cursor = *CursorMaster::BendpointCursor;
 	if (isBendpoint()) {
-		DebugDialog::debug("uwc bend");
+		//DebugDialog::debug("uwc bend");
 		if (modifiers & altOrMetaModifier()) {
 			DebugDialog::debug("uwc alt");
 			Wire * wire = qobject_cast<Wire *>(attachedTo());
 			if (wire != NULL && wire->canChainMultiple()) {
-				DebugDialog::debug("uwc make wire");
+				//DebugDialog::debug("uwc make wire");
 				cursor = *CursorMaster::MakeWireCursor;
 			}
 		}
