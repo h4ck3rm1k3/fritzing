@@ -61,6 +61,40 @@ unix {
 	}
 	LIBS += -lz
     }
+    
+	isEmpty(PREFIX) {
+		PREFIX = /usr
+	}
+	BINDIR = $$PREFIX/bin
+	DATADIR =$$PREFIX/share
+
+	target.path =$$BINDIR
+
+	desktop.path = $$DATADIR/applications
+	desktop.files += fritzing.desktop
+
+	manpage.path = $$DATADIR/man/man1
+	manpage.files += fritzing.1
+
+	icon.path = $$DATADIR/icons
+	icon.extra = install -D -m 0644 resources/images/fritzing_icon.png $(INSTALL_ROOT)$$DATADIR/icons/fritzing.png
+
+	parts.path = $$DATADIR/fritzing/parts
+	parts.files += parts
+
+	sketches.path = $$DATADIR/fritzing/sketches
+	sketches.files += sketches
+
+	bins.path = $$DATADIR/fritzing/bins
+	bins.files += bins
+
+	translations.path = $$DATADIR/fritzing/translations
+	translations.extra = find translations -name "*.qm" -size -128c -execdir cp -pr {} $(INSTALL_ROOT)$$DATADIR/fritzing/translations \\;
+
+	syntax.path = $$DATADIR/fritzing/translations/syntax
+	syntax.files += translations/syntax/*.xml
+
+	INSTALLS += target desktop manpage icon parts sketches bins translations syntax
 }
 		
 ICON = resources/images/fritzing_icon.icns
