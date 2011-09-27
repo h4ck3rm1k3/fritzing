@@ -89,7 +89,7 @@ unix {
 	bins.files += bins
 
 	translations.path = $$DATADIR/fritzing/translations
-	translations.extra = find translations -name "*.qm" -size -128c -execdir cp -pr {} $(INSTALL_ROOT)$$DATADIR/fritzing/translations \\;
+	translations.extra = find translations -name "*.qm" -size -128c -exec cp -pr {} $(INSTALL_ROOT)$$DATADIR/fritzing/translations \\;
 
 	syntax.path = $$DATADIR/fritzing/translations/syntax
 	syntax.files += translations/syntax/*.xml
