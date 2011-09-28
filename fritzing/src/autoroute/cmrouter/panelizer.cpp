@@ -1090,7 +1090,7 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
 				ModelPart * modelPart = referenceModel->retrieveModelPart(newModuleID);
 				if (modelPart) {
 					QString newShape = modelPart->properties().value("shape", "");
-					if (modelPart->prop("shape").toString() == boardItem->prop("shape")) {
+					if (shape == newShape) {
 						mainWindow->swapSelectedAux(boardItem, newModuleID);
 						mainWindow->changeBoardLayers(2, true);
 						swapped = true;
