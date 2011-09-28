@@ -128,6 +128,7 @@ public:
 	void exportToGerber(const QString & outputDir);
 	class PCBSketchWidget * pcbView();
 	void noBackup();
+	void swapSelectedAux(ItemBase * itemBase, const QString & moduleID);
 
 public:
 	static void initNames();
@@ -154,6 +155,7 @@ public slots:
     void showPCBView();
 	void groundFill();
 	void removeGroundFill();
+	void changeBoardLayers(int layers, bool doEmit);
 
 protected slots:
 	void load();
@@ -304,7 +306,6 @@ protected slots:
 	void updateLayerMenuSlot();
 	bool save();
 	bool saveAs();
-	void changeBoardLayers(int layers, bool doEmit);
     void backupSketch();
 	void undoStackCleanChanged(bool isClean);
 	void autosaveNeeded(int index = 0);
@@ -424,7 +425,6 @@ protected:
 	bool alreadyOpen(const QString & fileName);
 	bool loadCustomBoardShape();
 	void svgMissingLayer(const QString & layername, const QString & path);
-	void swapSelectedAux(ItemBase * itemBase, const QString & moduleID);
 	long swapSelectedAuxAux(ItemBase * itemBase, const QString & moduleID, ViewLayer::ViewLayerSpec viewLayerSpec, QUndoCommand * parentCommand);
 	bool swapSpecial(QMap<QString, QString> & currPropsMap);
 

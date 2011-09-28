@@ -51,7 +51,7 @@ public:
 	int startup(bool firstRun);
 	int serviceStartup();
 	void finish();
-	void loadReferenceModel();
+	class ReferenceModel * loadReferenceModel();
 	void registerFonts();
 	bool loadBin(QString binToOpen);
 	class MainWindow * loadWindows(int & loaded);

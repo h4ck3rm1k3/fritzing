@@ -37,6 +37,7 @@ $Date$
 #include "../../fapplication.h"
 #include "../../svg/gerbergenerator.h"
 #include "../../autoroute/cmrouter/cmrouter.h"
+#include "../../referencemodel/referencemodel.h"
 #include "tileutils.h"
 
 #include <QFile>
@@ -998,7 +999,7 @@ void Panelizer::inscribe(FApplication * app, const QString & panelFilename)
 
 	app->createUserDataStoreFolderStructure();
 	app->registerFonts();
-	app->loadReferenceModel();
+	ReferenceModel * referenceModel = app->loadReferenceModel();
 
 	if (!app->loadBin("")) {
 		DebugDialog::debug(QString("load bin failed"));
@@ -1007,7 +1008,7 @@ void Panelizer::inscribe(FApplication * app, const QString & panelFilename)
 
 	board = boards.firstChildElement("board");
 	while (!board.isNull()) {
-		MainWindow * mainWindow = inscribeBoard(board, fzzFilePaths, app, fzDir);
+		MainWindow * mainWindow = inscribeBoard(board, fzzFilePaths, app, fzDir, referenceModel);
 		if (mainWindow) {
 			mainWindow->setCloseSilently(true);
 			mainWindow->close();
@@ -1020,7 +1021,7 @@ void Panelizer::inscribe(FApplication * app, const QString & panelFilename)
 
 }
 
-MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QString> & fzzFilePaths, FApplication * app, QDir & fzDir)
+MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QString> & fzzFilePaths, FApplication * app, QDir & fzDir, ReferenceModel * referenceModel)
 {
 	QString boardName = board.attribute("name");
 
@@ -1073,6 +1074,35 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
 	foreach (QGraphicsItem * item, toDelete) {
 		DebugDialog::debug("deleting prior inscription");
 		delete item;
+	}
+
+	if (mainWindow->pcbView()->boardLayers() == 1) {
+		bool swapped = false;
+		QMultiHash<QString, QString> properties = boardItem->modelPart()->properties();
+		QString family = properties.value("family", "");
+		QString shape = properties.value("shape", "");
+		if (!shape.isEmpty() && !family.isEmpty()) {
+			QMultiHash<QString, QString> ps;
+			ps.insert("layers", "2");
+			ps.insert("shape", shape);
+			QString newModuleID = referenceModel->retrieveModuleId(family, ps, "layers", true); 
+			if (!newModuleID.isEmpty()) {
+				ModelPart * modelPart = referenceModel->retrieveModelPart(newModuleID);
+				if (modelPart) {
+					QString newShape = modelPart->properties().value("shape", "");
+					if (modelPart->prop("shape").toString() == boardItem->prop("shape")) {
+						mainWindow->swapSelectedAux(boardItem, newModuleID);
+						mainWindow->changeBoardLayers(2, true);
+						swapped = true;
+					}
+				}
+			}
+		}
+		if (!swapped) {
+			DebugDialog::debug(QString("\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"
+									"unable to convert to double-sided board %1\n"
+									"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n").arg(path));
+		}
 	}
 
 	CMRouter router(mainWindow->pcbView());

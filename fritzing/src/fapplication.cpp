@@ -426,13 +426,14 @@ void FApplication::registerFonts() {
 	*/	
 }
 
-void FApplication::loadReferenceModel() {
+ReferenceModel * FApplication::loadReferenceModel() {
 	m_referenceModel = new CurrentReferenceModel();	
 	ItemBase::setReferenceModel(m_referenceModel);
 	connect(m_referenceModel, SIGNAL(loadedPart(int, int)), this, SLOT(loadedPart(int, int)));
 	m_referenceModel->loadAll(true);								// this is very slow
 	m_paletteBinModel = new PaletteModel(true, false, false);
 	//DebugDialog::debug("after new palette model");
+	return m_referenceModel;
 }
 
 bool FApplication::loadBin(QString binToOpen) {
