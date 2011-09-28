@@ -79,17 +79,17 @@ unix {
 	icon.path = $$DATADIR/icons
 	icon.extra = install -D -m 0644 resources/images/fritzing_icon.png $(INSTALL_ROOT)$$DATADIR/icons/fritzing.png
 
-	parts.path = $$DATADIR/fritzing/parts
+	parts.path = $$DATADIR/fritzing/
 	parts.files += parts
 
-	sketches.path = $$DATADIR/fritzing/sketches
+	sketches.path = $$DATADIR/fritzing/
 	sketches.files += sketches
 
-	bins.path = $$DATADIR/fritzing/bins
+	bins.path = $$DATADIR/fritzing/
 	bins.files += bins
 
 	translations.path = $$DATADIR/fritzing/translations
-	translations.extra = find translations -name "*.qm" -size -128c -exec cp -pr {} $(INSTALL_ROOT)$$DATADIR/fritzing/translations \\;
+	translations.extra = find translations -name "*.qm" -size 128c -exec cp -pr {} $(INSTALL_ROOT)$$DATADIR/fritzing/translations \\;
 
 	syntax.path = $$DATADIR/fritzing/translations/syntax
 	syntax.files += translations/syntax/*.xml
