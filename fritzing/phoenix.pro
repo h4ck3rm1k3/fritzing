@@ -66,7 +66,10 @@ unix {
 		PREFIX = /usr
 	}
 	BINDIR = $$PREFIX/bin
-	DATADIR =$$PREFIX/share
+	DATADIR = $$PREFIX/share
+	PKGDATADIR = $$DATADIR/fritzing
+
+	DEFINES += DATADIR=\\\"$$DATADIR\\\" PKGDATADIR=\\\"$$PKGDATADIR\\\"
 
 	target.path =$$BINDIR
 
@@ -79,19 +82,19 @@ unix {
 	icon.path = $$DATADIR/icons
 	icon.extra = install -D -m 0644 resources/images/fritzing_icon.png $(INSTALL_ROOT)$$DATADIR/icons/fritzing.png
 
-	parts.path = $$DATADIR/fritzing/
+	parts.path = $$PKGDATADIR
 	parts.files += parts
 
-	sketches.path = $$DATADIR/fritzing/
+	sketches.path = $$PKGDATADIR
 	sketches.files += sketches
 
-	bins.path = $$DATADIR/fritzing/
+	bins.path = $$PKGDATADIR
 	bins.files += bins
 
-	translations.path = $$DATADIR/fritzing/translations
-	translations.extra = find translations -name "*.qm" -size 128c -exec cp -pr {} $(INSTALL_ROOT)$$DATADIR/fritzing/translations \\;
+	translations.path = $$PKGDATADIR/translations
+	translations.extra = find translations -name "*.qm" -size 128c -exec cp -pr {} $(INSTALL_ROOT)$$PKGDATADIR/translations \\;
 
-	syntax.path = $$DATADIR/fritzing/translations/syntax
+	syntax.path = $$PKGDATADIR/translations/syntax
 	syntax.files += translations/syntax/*.xml
 
 	INSTALLS += target desktop manpage icon parts sketches bins translations syntax

@@ -161,8 +161,12 @@ const QString FolderUtils::applicationDirPath() {
 		// look in standard Fritzing location (applicationDirPath) then in standard linux locations
 		QStringList candidates;
 		candidates.append(QCoreApplication::applicationDirPath());
+#ifdef PKGDATADIR
+		candidates.append(QLatin1String(PKGDATADIR));
+#else
 		candidates.append("/usr/share/fritzing");
 		candidates.append("/usr/local/share/fritzing");
+#endif
 		candidates.append(QDir::homePath() + "/.local/share/fritzing");
 		foreach (QString candidate, candidates) {
                         //DebugDialog::debug(QString("candidate:%1").arg(candidate));
