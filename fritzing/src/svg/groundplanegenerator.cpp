@@ -347,7 +347,10 @@ QImage * GroundPlaneGenerator::generateGroundPlaneAux(const QString & boardSvg, 
 	renderer2.render(&painter, bounds);
 	painter.end();
 
+#ifndef QT_NO_DEBUG
 	image->save("testGroundFillCopper.png");
+#endif
+
 	return image;
 }
 
