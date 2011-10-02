@@ -2460,14 +2460,6 @@ Controleer a.u.b. alle views voor potentiële fouten.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Free Rotate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rotate the selected part</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Rotate 45° Clockwise</source>
         <translation type="unfinished">Roteer 90° wijzerzin {45°?}</translation>
     </message>
@@ -2502,14 +2494,6 @@ Controleer a.u.b. alle views voor potentiële fouten.</translation>
     <message>
         <source>Shift+Ctrl+1</source>
         <translation type="unfinished">Shift+Ctrl+1</translation>
-    </message>
-    <message>
-        <source>Enter rotation value in degrees</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>rotation</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

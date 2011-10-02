@@ -2457,14 +2457,6 @@ Please check all views for potential side-effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Free Rotate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rotate the selected part</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Rotate 45° Clockwise</source>
         <translation type="unfinished">時計方向に回転90° {45°?}</translation>
     </message>
@@ -2499,14 +2491,6 @@ Please check all views for potential side-effects.</source>
     <message>
         <source>Shift+Ctrl+1</source>
         <translation type="unfinished">Shift+Ctrl+1</translation>
-    </message>
-    <message>
-        <source>Enter rotation value in degrees</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>rotation</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

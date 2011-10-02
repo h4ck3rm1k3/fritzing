@@ -2458,14 +2458,6 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Free Rotate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rotate the selected part</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Rotate 45° Clockwise</source>
         <translation type="unfinished">Rodar 90º no sentido Horário {45°?}</translation>
     </message>
@@ -2500,14 +2492,6 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
     <message>
         <source>Shift+Ctrl+1</source>
         <translation type="unfinished">Shift+Ctrl+1</translation>
-    </message>
-    <message>
-        <source>Enter rotation value in degrees</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>rotation</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

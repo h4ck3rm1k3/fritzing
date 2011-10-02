@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="el_GR">
+<TS version="2.0" language="hi_IN">
 <context>
     <name>AboutBox</name>
     <message>
@@ -1131,6 +1131,48 @@ Please select one of the Fritzing fonts to replace them:</source>
 <context>
     <name>MainWindow</name>
     <message>
+        <location filename="../src/mainwindow.cpp" line="222"/>
+        <source>Ctrl+R</source>
+        <comment>Rotate Clockwise</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="224"/>
+        <source>Alt+Ctrl+R</source>
+        <comment>Rotate Clockwise</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="226"/>
+        <source>Meta+Ctrl+R</source>
+        <comment>Rotate Clockwise</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="229"/>
+        <source>Shift+Ctrl+R</source>
+        <comment>Rotate Counterclockwise</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="231"/>
+        <source>Alt+Shift+Ctrl+R</source>
+        <comment>Rotate Counterclockwise</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="233"/>
+        <source>Meta+Shift+Ctrl+R</source>
+        <comment>Rotate Counterclockwise</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="236"/>
+        <source>Shift+Ctrl+Tab</source>
+        <comment>Toggle Active Layer</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/mainwindow.cpp" line="723"/>
         <location filename="../src/mainwindow_menu.cpp" line="1049"/>
         <source>Rotate</source>
@@ -1186,48 +1228,6 @@ Please select one of the Fritzing fonts to replace them:</source>
         <location filename="../src/mainwindow.cpp" line="878"/>
         <location filename="../src/mainwindow_export.cpp" line="125"/>
         <source>Ready</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="222"/>
-        <source>Ctrl+R</source>
-        <comment>Rotate Clockwise</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="224"/>
-        <source>Alt+Ctrl+R</source>
-        <comment>Rotate Clockwise</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="226"/>
-        <source>Meta+Ctrl+R</source>
-        <comment>Rotate Clockwise</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="229"/>
-        <source>Shift+Ctrl+R</source>
-        <comment>Rotate Counterclockwise</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="231"/>
-        <source>Alt+Shift+Ctrl+R</source>
-        <comment>Rotate Counterclockwise</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="233"/>
-        <source>Meta+Shift+Ctrl+R</source>
-        <comment>Rotate Counterclockwise</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="236"/>
-        <source>Shift+Ctrl+Tab</source>
-        <comment>Toggle Active Layer</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2196,8 +2196,28 @@ We&apos;re working to avoid this message, and only let you choose between proper
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/mainwindow_menu.cpp" line="690"/>
+        <source>Rotate 45° Clockwise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow_menu.cpp" line="691"/>
+        <source>Rotate current selection 45 degrees clockwise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow_menu.cpp" line="694"/>
+        <source>Rotate 90° Clockwise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/mainwindow_menu.cpp" line="695"/>
         <source>Rotate the selected parts by 90 degrees clockwise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow_menu.cpp" line="698"/>
+        <source>Rotate 180°</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2206,18 +2226,23 @@ We&apos;re working to avoid this message, and only let you choose between proper
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/mainwindow_menu.cpp" line="702"/>
+        <source>Rotate 90° Counter Clockwise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/mainwindow_menu.cpp" line="703"/>
         <source>Rotate current selection 90 degrees counter clockwise</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="707"/>
-        <source>Rotate current selection 45 degrees counter clockwise</source>
+        <location filename="../src/mainwindow_menu.cpp" line="706"/>
+        <source>Rotate 45° Counter Clockwise</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="691"/>
-        <source>Rotate current selection 45 degrees clockwise</source>
+        <location filename="../src/mainwindow_menu.cpp" line="707"/>
+        <source>Rotate current selection 45 degrees counter clockwise</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2509,39 +2534,8 @@ We&apos;re working to avoid this message, and only let you choose between proper
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2927"/>
-        <source>unable to find replacement for %1.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow_menu.cpp" line="839"/>
         <source>&amp;Show Breadboard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow_menu.cpp" line="690"/>
-        <source>Rotate 45° Clockwise</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow_menu.cpp" line="694"/>
-        <source>Rotate 90° Clockwise</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow_menu.cpp" line="698"/>
-        <source>Rotate 180°</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow_menu.cpp" line="702"/>
-        <source>Rotate 90° Counter Clockwise</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow_menu.cpp" line="706"/>
-        <source>Rotate 45° Counter Clockwise</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3036,16 +3030,6 @@ We&apos;re working to avoid this message, and only let you choose between proper
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2242"/>
-        <source>Order a PCB...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2243"/>
-        <source>Order a PCB created from your sketch--from fabulous Fritzing Fab</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow_menu.cpp" line="2203"/>
         <source>Copper Top layer is active</source>
         <translation type="unfinished"></translation>
@@ -3053,6 +3037,16 @@ We&apos;re working to avoid this message, and only let you choose between proper
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2213"/>
         <source>Copper Bottom layer is active</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow_menu.cpp" line="2242"/>
+        <source>Order a PCB...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow_menu.cpp" line="2243"/>
+        <source>Order a PCB created from your sketch--from fabulous Fritzing Fab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3118,6 +3112,12 @@ All your parts are up-to-date.</source>
             <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow_menu.cpp" line="2927"/>
+        <source>unable to find replacement for %1.
+</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2983"/>
@@ -4990,6 +4990,82 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/svg/gerbergenerator.cpp" line="94"/>
+        <source>outline is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/svg/gerbergenerator.cpp" line="115"/>
+        <source>the board outline layer, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/svg/gerbergenerator.cpp" line="116"/>
+        <source>silkscreen layer(s), </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/svg/gerbergenerator.cpp" line="117"/>
+        <source>copper layer(s), </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/svg/gerbergenerator.cpp" line="118"/>
+        <source>mask layer(s), </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/svg/gerbergenerator.cpp" line="120"/>
+        <source>Unable to translate svg curves in %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/svg/gerbergenerator.cpp" line="131"/>
+        <source>%1 file export failure (1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/svg/gerbergenerator.cpp" line="140"/>
+        <source>%1 file export failure (3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/svg/gerbergenerator.cpp" line="154"/>
+        <source>silk file export failure (1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/svg/gerbergenerator.cpp" line="174"/>
+        <source>silk export failure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/svg/gerbergenerator.cpp" line="197"/>
+        <source>drill file export failure (1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/svg/gerbergenerator.cpp" line="211"/>
+        <source>drill export failure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/svg/gerbergenerator.cpp" line="234"/>
+        <source>mask file export failure (1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/svg/gerbergenerator.cpp" line="253"/>
+        <location filename="../src/svg/gerbergenerator.cpp" line="286"/>
+        <source>%1 file export failure (2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/svg/gerbergenerator.cpp" line="262"/>
+        <source>mask export failure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/svg/kicadmodule2svg.cpp" line="126"/>
         <source>footprint %1 not found in %2</source>
         <translation type="unfinished"></translation>
@@ -5242,11 +5318,6 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="104"/>
-        <source>Rat&apos;s nest</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/viewlayer.cpp" line="96"/>
         <source>Silkscreen Top</source>
         <translation type="unfinished"></translation>
@@ -5262,11 +5333,6 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="101"/>
-        <source>Copper Fill Top</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/viewlayer.cpp" line="99"/>
         <source>Copper Bottom</source>
         <translation type="unfinished"></translation>
@@ -5277,6 +5343,11 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/viewlayer.cpp" line="101"/>
+        <source>Copper Fill Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/viewlayer.cpp" line="102"/>
         <source>Copper Top</source>
         <translation type="unfinished"></translation>
@@ -5284,6 +5355,11 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     <message>
         <location filename="../src/viewlayer.cpp" line="103"/>
         <source>Copper Top Trace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/viewlayer.cpp" line="104"/>
+        <source>Rat&apos;s nest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5304,82 +5380,6 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     <message>
         <location filename="../src/viewlayer.cpp" line="118"/>
         <source>Unknown Layer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/svg/gerbergenerator.cpp" line="94"/>
-        <source>outline is empty</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/svg/gerbergenerator.cpp" line="115"/>
-        <source>the board outline layer, </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/svg/gerbergenerator.cpp" line="116"/>
-        <source>silkscreen layer(s), </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/svg/gerbergenerator.cpp" line="117"/>
-        <source>copper layer(s), </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/svg/gerbergenerator.cpp" line="118"/>
-        <source>mask layer(s), </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/svg/gerbergenerator.cpp" line="120"/>
-        <source>Unable to translate svg curves in %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/svg/gerbergenerator.cpp" line="131"/>
-        <source>%1 file export failure (1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/svg/gerbergenerator.cpp" line="140"/>
-        <source>%1 file export failure (3)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/svg/gerbergenerator.cpp" line="154"/>
-        <source>silk file export failure (1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/svg/gerbergenerator.cpp" line="174"/>
-        <source>silk export failure</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/svg/gerbergenerator.cpp" line="197"/>
-        <source>drill file export failure (1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/svg/gerbergenerator.cpp" line="211"/>
-        <source>drill export failure</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/svg/gerbergenerator.cpp" line="234"/>
-        <source>mask file export failure (1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/svg/gerbergenerator.cpp" line="253"/>
-        <location filename="../src/svg/gerbergenerator.cpp" line="286"/>
-        <source>%1 file export failure (2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/svg/gerbergenerator.cpp" line="262"/>
-        <source>mask export failure</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
