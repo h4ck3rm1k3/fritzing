@@ -2508,7 +2508,7 @@ void MainWindow::groundFill()
 	}
 }
 
-void MainWindow::removeGroundFill() {
+void MainWindow::removeGroundFill(bool force) {
 	QSet<ItemBase *> toDelete;
 	foreach (QGraphicsItem * item, m_pcbGraphicsView->scene()->items()) {
 		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
@@ -2521,9 +2521,57 @@ void MainWindow::removeGroundFill() {
 
 	if (toDelete.count() <= 0) return;
 
+	QSet<Wire *> wiresToDelete;
+	foreach (ItemBase * itemBase, toDelete) {
+		foreach (ConnectorItem * fromConnectorItem, itemBase->cachedConnectorItems()) {
+			foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
+				if (toConnectorItem->attachedToItemType() != ModelPart::Wire) continue;
+				
+				Wire * wire = qobject_cast<Wire *>(toConnectorItem->attachedTo());
+				if (wire == NULL) continue;
+
+				if (!wire->getTrace()) continue;
+
+				QList<Wire *> wires;
+				QList<ConnectorItem *> ends;
+				wire->collectChained(wires, ends);
+				foreach (Wire * w, wires) {
+					wiresToDelete.insert(w);
+				}
+			}
+		}
+	}
+
+	if (wiresToDelete.count() > 0) {
+		DebugDialog::debug("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"
+							"Wires attached to copper fill\n"
+							"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+		if (!force) {
+			QMessageBox::StandardButton answer = QMessageBox::question(
+                    this,
+                    tr("Copper Fill Traces"),
+                    tr("There are traces connected to copper fill which will also be removed. Proceed?"),
+                    QMessageBox::Yes | QMessageBox::No,
+                    QMessageBox::Yes
+            );
+            // TODO: make button texts translatable
+            if (answer != QMessageBox::Yes) {
+                    return;
+            }		
+		}
+
+	}
+
 	QUndoCommand * parentCommand = new QUndoCommand(tr("Remove copper fill"));
 
 	new CleanUpWiresCommand(m_pcbGraphicsView, CleanUpWiresCommand::UndoOnly, parentCommand);
+
+	foreach (Wire * wire, wiresToDelete) {
+		toDelete.insert(wire);
+	}
+
+	QList<Wire *> wires = wiresToDelete.toList();
+	m_pcbGraphicsView->makeWiresChangeConnectionCommands(wires, parentCommand);
 
 	foreach (ItemBase * itemBase, toDelete) {
 		m_pcbGraphicsView->makeDeleteItemCommand(itemBase, BaseCommand::CrossView, parentCommand);

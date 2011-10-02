@@ -285,6 +285,7 @@ public:
 	void setCurvyWires(bool);
 	bool curvyWiresIndicated(Qt::KeyboardModifiers);
 	void triggerRotate(ItemBase *, double degrees);
+	void makeWiresChangeConnectionCommands(const QList<Wire *> & wires, QUndoCommand * parentCommand);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

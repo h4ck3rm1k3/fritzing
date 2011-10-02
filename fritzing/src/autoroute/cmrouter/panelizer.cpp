@@ -1059,7 +1059,7 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
 		return mainWindow;
 	}
 
-	mainWindow->removeGroundFill();
+	mainWindow->removeGroundFill(true);
 
 	QList<QGraphicsItem *> toDelete;
 	foreach (QGraphicsItem * item, mainWindow->pcbView()->scene()->items()) {

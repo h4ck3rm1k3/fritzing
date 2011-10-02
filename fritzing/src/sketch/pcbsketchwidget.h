@@ -147,7 +147,6 @@ protected:
 	void getLabelFont(QFont &, QColor &, ViewLayer::ViewLayerSpec);
 	void connectSymbolPrep(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, ConnectorItem * & target1, ConnectorItem * & target2);
 	void connectSymbols(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, QUndoCommand * parentCommand);
-	void makeWiresChangeConnectionCommands(const QList<Wire *> & wires, QUndoCommand * parentCommand);
 	double defaultGridSizeInches();
 	ViewLayer::ViewLayerID getLabelViewLayerID(ViewLayer::ViewLayerSpec);
 	ViewLayer::ViewLayerSpec wireViewLayerSpec(ConnectorItem *);

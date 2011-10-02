@@ -154,7 +154,7 @@ public slots:
 	void warnSMD(const QString & moduleID);
     void showPCBView();
 	void groundFill();
-	void removeGroundFill();
+	void removeGroundFill(bool force = false);
 	void changeBoardLayers(int layers, bool doEmit);
 
 protected slots:

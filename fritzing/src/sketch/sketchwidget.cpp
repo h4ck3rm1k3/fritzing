@@ -8062,3 +8062,26 @@ void SketchWidget::triggerRotate(ItemBase * itemBase, double degrees)
 	ric->setText(tr("Rotate %1").arg(itemBase->instanceTitle()));
 	m_undoStack->push(ric);
 }
+
+void SketchWidget::makeWiresChangeConnectionCommands(const QList<Wire *> & wires, QUndoCommand * parentCommand)
+{
+	QStringList alreadyList;
+	foreach (Wire * wire, wires) {
+		QList<ConnectorItem *> wireConnectorItems;
+		wireConnectorItems << wire->connector0() << wire->connector1();
+		foreach (ConnectorItem * fromConnectorItem, wireConnectorItems) {
+			foreach(ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
+				QString already = ((fromConnectorItem->attachedToID() <= toConnectorItem->attachedToID()) ? QString("%1.%2.%3.%4") : QString("%3.%4.%1.%2"))
+					.arg(fromConnectorItem->attachedToID()).arg(fromConnectorItem->connectorSharedID())
+					.arg(toConnectorItem->attachedToID()).arg(toConnectorItem->connectorSharedID());
+				if (alreadyList.contains(already)) continue;
+
+				alreadyList.append(already);
+
+				extendChangeConnectionCommand(BaseCommand::SingleView, fromConnectorItem, toConnectorItem,
+											ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
+											false, parentCommand);
+			}
+		}
+	}
+}
