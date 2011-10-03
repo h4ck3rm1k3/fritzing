@@ -318,9 +318,12 @@ void PaletteItemBase::findConnectorsUnder() {
 	if (!canFindConnectorsUnder()) return;
 
 	foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
-		if (connectorItem->connector()->connectorType() == Connector::Female) {
-			// also helps speed things up
-			continue;
+		switch (connectorItem->connector()->connectorType()) {
+			case Connector::Female:
+			case Connector::Pad:
+				continue;
+			default:
+				break;
 		}
 
 		connectorItem->findConnectorUnder(true, false, ConnectorItem::emptyConnectorItemList, false, NULL);

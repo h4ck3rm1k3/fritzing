@@ -82,7 +82,6 @@ public:
 	bool chained();
 	void saveInstance(QXmlStreamWriter & );
 	void writeConnector(QXmlStreamWriter & writer, const QString & elementName);
-	bool maleToFemale(ConnectorItem * other);
 	bool wiredTo(ConnectorItem *, ViewGeometry::WireFlags skipFlags);
 	void setBaseTooltip(const QString &);
 	void clearConnector();

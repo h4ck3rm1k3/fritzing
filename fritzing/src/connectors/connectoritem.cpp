@@ -1135,14 +1135,6 @@ void ConnectorItem::writeOtherElements(QXmlStreamWriter & writer) {
 	Q_UNUSED(writer);
 }
 
-bool ConnectorItem::maleToFemale(ConnectorItem * other) {
-	
-	if (this->connectorType() == Connector::Male && other->connectorType() == Connector::Female) return true;
-	if (this->connectorType() == Connector::Female && other->connectorType() == Connector::Male) return true;
-
-	return false;
-}
-
 bool ConnectorItem::wiredTo(ConnectorItem * target, ViewGeometry::WireFlags skipFlags) {
 	QList<ConnectorItem *> connectorItems;
 	connectorItems.append(this);
