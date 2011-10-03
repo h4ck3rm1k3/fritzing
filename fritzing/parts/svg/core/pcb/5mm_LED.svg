@@ -6,6 +6,7 @@
 <g id="copper0">
 	<g id="copper1">
 		<circle  id="connector1pad" cx="10.9845" cy="13.292" fill="none"  r="2.126" stroke="#F7BD13" stroke-width="1.4173"/>
+		<rect stroke="#F7BD13" stroke-width="1.4173" fill="none"  x="8.8585" y="11.166" width="4.252" height="4.252" />
 		<circle id="connector0pad" cx="10.9845" cy="4.433" fill="none"  r="2.126" stroke="#F7BD13" stroke-width="1.4173"/>
 	</g>
 </g>
