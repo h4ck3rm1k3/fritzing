@@ -229,7 +229,7 @@ ItemBase * Hole::setBothSvg(const QString & holeDiameter, const QString & ringTh
 			m_otherLayerRenderer = new FSvgRenderer(this);
 		}
 
-		result = m_otherLayerRenderer->loadSvg(osvg.toLatin1(), m_filename, noIDs, noIDs,  noIDs, "", "", true);
+		result = m_otherLayerRenderer->loadSvg(osvg.toLatin1(), m_filename, connectorIDs, noIDs,  noIDs, "", "", true);
 		if (!result.isEmpty()) {
 			qobject_cast<PaletteItemBase *>(otherLayer)->setSharedRendererEx(m_otherLayerRenderer);
 		}
