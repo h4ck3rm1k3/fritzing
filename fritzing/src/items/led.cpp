@@ -36,8 +36,8 @@ $Date: 2011-07-01 02:37:01 +0200 (Fri, 01 Jul 2011) $
 #include "moduleidnames.h"
 #include "partlabel.h"
 
-static QString BreadboardSvg;
-static QString IconSvg;
+static QHash<QString, QString> BreadboardSvg;
+static QHash<QString, QString> IconSvg;
 
 LED::LED( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: Capacitor(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
@@ -150,7 +150,7 @@ QString LED::getColorSVG(const QString & color, ViewLayer::ViewLayerID viewLayer
 	int errorLine;
 	int errorColumn;
 	QDomDocument domDocument;
-	if (!domDocument.setContent(viewLayerID == ViewLayer::Breadboard ? BreadboardSvg : IconSvg, &errorStr, &errorLine, &errorColumn)) {
+	if (!domDocument.setContent(viewLayerID == ViewLayer::Breadboard ? BreadboardSvg.value(moduleID()) : IconSvg.value(moduleID()), &errorStr, &errorLine, &errorColumn)) {
 		return "";
 	}
 
@@ -172,11 +172,11 @@ QString LED::getColorSVG(const QString & color, ViewLayer::ViewLayerID viewLayer
 bool LED::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors, LayerAttributes & layerAttributes, QString & error)
 {
 	bool result = Capacitor::setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, viewLayerSpec, doConnectors, layerAttributes, error);
-	if (viewLayerID == ViewLayer::Breadboard && BreadboardSvg.isEmpty() && result) {
-		BreadboardSvg = QString(layerAttributes.loaded());
+	if (viewLayerID == ViewLayer::Breadboard && BreadboardSvg.value(moduleID()).isEmpty() && result) {
+		BreadboardSvg.insert(moduleID(), QString(layerAttributes.loaded()));
 	}
 	else if (viewLayerID == ViewLayer::Icon && IconSvg.isEmpty() && result) {
-		IconSvg = QString(layerAttributes.loaded());
+		IconSvg.insert(moduleID(), QString(layerAttributes.loaded()));
 	}
 	return result;
 }

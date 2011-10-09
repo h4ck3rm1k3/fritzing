@@ -62,6 +62,7 @@ public:
 	static const QString InductorModuleIDName;
 	static const QString LEDModuleIDName;
 	static const QString ColorLEDModuleIDName;
+	static const QString ColorFluxLEDModuleIDName;
 	static const QString PerfboardModuleIDName;
 	static const QString StripboardModuleIDName;
 	static const QString SpacerModuleIDName;

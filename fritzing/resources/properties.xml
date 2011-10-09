@@ -90,6 +90,16 @@
 	<menuItem value="White (8000K)"  adjunct="#ffecfe"/>
 </property>
 
+<property name="color" symbol="" minValue="" maxValue="" defaultValue="Blue" numeric="no" editable="no">
+   	<suffix suffix="LEDSuperfluxAnodeModuleID"/>
+	<menuItem value="Red"  adjunct="#ff0000"/>  
+	<menuItem value="Yellow"  adjunct="#ffff00"/> 
+	<menuItem value="Green"  adjunct="#00ff00"/> 
+	<menuItem value="Blue"  adjunct="#0000ff"/>  
+	<menuItem value="White"  adjunct="#ffffff"/> 
+	<menuItem value="Orange"  adjunct="#ffc200"/> 
+</property>
+
 <property name="breakdown voltage" symbol="V" minValue="2" maxValue="30" defaultValue="3.6" numeric="yes" editable="yes">
    	<suffix suffix="ZenerDiodeModuleID"/>
 	<menuItem value="2" />
