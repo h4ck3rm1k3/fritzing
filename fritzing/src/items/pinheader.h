@@ -60,12 +60,14 @@ public:
 	static QString FemaleFormString;
 	static QString FemaleRoundedFormString;
 	static QString MaleFormString;
+	static QString ShroudedFormString;
 	static void initNames();
 	static QString genFZP(const QString & moduleid);
 	static QString genModuleID(QMap<QString, QString> & currPropsMap);
 	static QString makePcbSvg(const QString & expectedFileName);
 	static QString makeSchematicSvg(const QString & expectedFileName);
 	static QString makeBreadboardSvg(const QString & expectedFileName);
+	static QString makeBreadboardShroudSvg(int pins);
 	static QString findForm(const QString & filename);
 
 protected:

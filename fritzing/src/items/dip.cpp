@@ -35,11 +35,6 @@ static int MaxSipPins = 64;
 static int MinDipPins = 4;
 static int MaxDipPins = 64;
 
-static int Pins;
-QString negIncCopyPinFunction(int pin, const QString & argString) 
-{ 
-	return argString.arg(Pins - (pin + 3)); 
-}
 
 Dip::Dip( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: MysteryPart(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
@@ -235,7 +230,7 @@ QString Dip::makeBreadboardSipSvg(const QString & expectedFileName)
 	int increment = 10;
 	double totalWidth = (pins * increment);
 
-	QString svg = TextUtils::incrementTemplate(":/resources/templates/generic_sip_bread_template.txt", 1, increment * (pins - 2), TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction);
+	QString svg = TextUtils::incrementTemplate(":/resources/templates/generic_sip_bread_template.txt", 1, increment * (pins - 2), TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction, NULL);
 
 	QString repeat("<rect id='connector%1pin' x='[13.5]' y='25.66' fill='#8C8C8C' width='3' height='4.34'/>\n"
 					"<rect id='connector%1terminal' x='[13.5]' y='27.0' fill='#8C8C8C' width='3' height='3'/>\n"
@@ -243,7 +238,7 @@ QString Dip::makeBreadboardSipSvg(const QString & expectedFileName)
 
 	QString repeats;
 	if (pins > 2) {
-		repeats = TextUtils::incrementTemplateString(repeat, pins - 2, increment, TextUtils::standardMultiplyPinFunction, incCopyPinFunction);
+		repeats = TextUtils::incrementTemplateString(repeat, pins - 2, increment, TextUtils::standardMultiplyPinFunction, TextUtils::incCopyPinFunction, NULL);
 	}
 
 	return svg.arg(totalWidth / 100).arg(pins - 1).arg(repeats);
@@ -307,24 +302,26 @@ QString Dip::makeBreadboardDipSvg(const QString & expectedFileName)
 
 	// header came from a 300mil dip, so base case is spacing - (increment * 3)
 
-	header = TextUtils::incrementTemplateString(header, 1, spacing - (increment * 3), TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction);
+	header = TextUtils::incrementTemplateString(header, 1, spacing - (increment * 3), TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction, NULL);
 	header = header.arg(TextUtils::getViewBoxCoord(header, 3) / 100.0).arg(pins - 1).arg((pins / 2) - 1).arg(pins / 2);
 	header.replace("{{", "[");
 	header.replace("}}", "]");
-	header = TextUtils::incrementTemplateString(header, 1, (spacing - (increment * 3)) / 2, TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction);
+	header = TextUtils::incrementTemplateString(header, 1, (spacing - (increment * 3)) / 2, TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction, NULL);
 	header.replace("{", "[");
 	header.replace("}", "]");
 	header.replace(".percent.", "%");
 
-	QString svg = TextUtils::incrementTemplateString(header, 1, increment * ((pins - 4) / 2), TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction);
+	QString svg = TextUtils::incrementTemplateString(header, 1, increment * ((pins - 4) / 2), TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction, NULL);
 
-	repeatB = TextUtils::incrementTemplateString(repeatB, 1, spacing - (increment * 3), TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction);
+	repeatB = TextUtils::incrementTemplateString(repeatB, 1, spacing - (increment * 3), TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction, NULL);
 	repeatB.replace("{", "[");
 	repeatB.replace("}", "]");
 
-	NoExcusePins = pins - 1;
-	QString repeatTs = TextUtils::incrementTemplateString(repeatT, (pins - 4) / 2, increment, TextUtils::standardMultiplyPinFunction, negCopyPinFunction);
-	QString repeatBs = TextUtils::incrementTemplateString(repeatB, (pins - 4) / 2, increment, TextUtils::standardMultiplyPinFunction, incCopyPinFunction);
+	int userData[2];
+	userData[0] = pins - 1;
+	userData[1] = 1;
+	QString repeatTs = TextUtils::incrementTemplateString(repeatT, (pins - 4) / 2, increment, TextUtils::standardMultiplyPinFunction, TextUtils::negIncCopyPinFunction, userData);
+	QString repeatBs = TextUtils::incrementTemplateString(repeatB, (pins - 4) / 2, increment, TextUtils::standardMultiplyPinFunction, TextUtils::incCopyPinFunction, NULL);
 
 
 	return svg.arg(TextUtils::getViewBoxCoord(svg, 2) / 100.0).arg(repeatTs).arg(repeatBs);

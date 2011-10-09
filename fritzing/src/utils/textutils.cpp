@@ -942,17 +942,17 @@ struct MatchThing
 	double val;
 };
 
-QString TextUtils::incrementTemplate(const QString & filename, int pins, double increment, MultiplyPinFunction multiFun, CopyPinFunction copyFun) 
+QString TextUtils::incrementTemplate(const QString & filename, int pins, double increment, MultiplyPinFunction multiFun, CopyPinFunction copyFun, void * userData) 
 {
 	QFile file(filename);
 	file.open(QFile::ReadOnly);
 	QString templateString = file.readAll();
 	file.close();
 
-	return incrementTemplateString(templateString, pins, increment, multiFun, copyFun);
+	return incrementTemplateString(templateString, pins, increment, multiFun, copyFun, userData);
 }
 
-QString TextUtils::incrementTemplateString(const QString & templateString, int pins, double increment, MultiplyPinFunction multiFun, CopyPinFunction copyFun)
+QString TextUtils::incrementTemplateString(const QString & templateString, int pins, double increment, MultiplyPinFunction multiFun, CopyPinFunction copyFun, void * userData)
 {
 	QString string;
 
@@ -975,13 +975,13 @@ QString TextUtils::incrementTemplateString(const QString & templateString, int p
 			MatchThing * mt = &matchThings[j];
 			argCopy.replace(mt->pos, mt->len, (*multiFun)(i, increment, mt->val));   
 		}
-		string += (*copyFun)(i, argCopy);
+		string += (*copyFun)(i, argCopy, userData);
 	}
 
 	return string;
 }
 
-QString TextUtils::standardCopyPinFunction(int pin, const QString & argString)
+QString TextUtils::standardCopyPinFunction(int pin, const QString & argString, void *)
 {
 	return argString.arg(pin);
 }
@@ -997,10 +997,21 @@ QString TextUtils::incMultiplyPinFunction(int pin, double increment, double valu
 	return QString::number(value + ((pin + 1) * increment));
 }
 
+QString TextUtils::incCopyPinFunction(int pin, const QString & argString, void *) 
+{ 
+	return argString.arg(pin + 1); 
+}
 
-QString TextUtils::noCopyPinFunction(int, const QString & argString) 
+QString TextUtils::noCopyPinFunction(int, const QString & argString, void *) 
 { 
 	return argString; 
+}
+
+QString TextUtils::negIncCopyPinFunction(int pin, const QString & argString, void * userData) 
+{ 
+	int pins = *((int *) userData);
+	int offset = *(((int *) userData) + 1);
+	return argString.arg(pins - (pin + offset)); 
 }
 
 double TextUtils::getViewBoxCoord(const QString & svg, int coord)

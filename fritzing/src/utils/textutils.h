@@ -33,7 +33,7 @@ $Date$
 #include <QMatrix>
 #include <QTransform>
 
-typedef QString (*CopyPinFunction)(int pin, const QString & argString);
+typedef QString (*CopyPinFunction)(int pin, const QString & argString, void * userData);
 typedef QString (*MultiplyPinFunction)(int pin, double increment, double value);
 
 
@@ -80,12 +80,14 @@ public:
 	static void gWrap(QDomDocument & domDocument, const QHash<QString, QString> & attributes);
 	static bool tspanRemove(QString &svg);
 	static void slamStrokeAndFill(QDomElement &, const QString & stroke, const QString & strokeWidth, const QString & fill);
-	static QString incrementTemplate(const QString & filename, int pins, double unitIncrement, MultiplyPinFunction, CopyPinFunction);
-	static QString incrementTemplateString(const QString & templateString, int pins, double increment, MultiplyPinFunction, CopyPinFunction);
-	static QString standardCopyPinFunction(int pin, const QString & argString);
+	static QString incrementTemplate(const QString & filename, int pins, double unitIncrement, MultiplyPinFunction, CopyPinFunction, void * userData);
+	static QString incrementTemplateString(const QString & templateString, int pins, double increment, MultiplyPinFunction, CopyPinFunction, void * userData);
+	static QString standardCopyPinFunction(int pin, const QString & argString, void * userData);
 	static QString standardMultiplyPinFunction(int pin, double increment, double value);
-	static QString noCopyPinFunction(int pin, const QString & argString);
+	static QString noCopyPinFunction(int pin, const QString & argString, void * userData);
 	static QString incMultiplyPinFunction(int pin, double increment, double value);
+	static QString incCopyPinFunction(int pin, const QString & argString, void * userData);
+	static QString negIncCopyPinFunction(int pin, const QString & argString, void * userData);
 	static double getViewBoxCoord(const QString & svg, int coord);
 	static QString makeLineSVG(QPointF p1, QPointF p2, double width, QString colorString, double dpi, double printerScale, bool blackOnly);
 	static QString makeCubicBezierSVG(const QPolygonF & controlPoints, double width, QString colorString, double dpi, double printerScale, bool blackOnly);

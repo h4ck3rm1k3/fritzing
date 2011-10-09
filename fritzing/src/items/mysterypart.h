@@ -70,11 +70,6 @@ public:
 	static QString makeBreadboardDipSvg(const QString & expectedFileName);
 
 protected:
-	static QString incCopyPinFunction(int pin, const QString & argString);
-	static QString negCopyPinFunction(int pin, const QString & argString);
-
-
-protected:
 	QString makeSvg(const QString & chipLabel);
 	ConnectorItem* newConnectorItem(class Connector *connector);
 	ConnectorItem* newConnectorItem(ItemBase * layerkin, Connector *connector);

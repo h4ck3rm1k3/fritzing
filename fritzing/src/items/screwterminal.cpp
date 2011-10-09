@@ -133,9 +133,9 @@ QString ScrewTerminal::makeBreadboardSvg(const QString & expectedFileName)
 					"<rect id='lowerrect' width='[96.012]' x='0' y='86.1147' fill='#123C66' height='71.4784' stroke-width='0' />\n");
 
 
-	QString svg = TextUtils::incrementTemplateString(header.arg(increment * pins), 1, incrementPoints * (pins - 1), TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction);
+	QString svg = TextUtils::incrementTemplateString(header.arg(increment * pins), 1, incrementPoints * (pins - 1), TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction, NULL);
 	svg += TextUtils::incrementTemplate(":/resources/templates/screw_terminal_bread_template.txt",
-										pins, incrementPoints, TextUtils::standardMultiplyPinFunction, TextUtils::standardCopyPinFunction);
+										pins, incrementPoints, TextUtils::standardMultiplyPinFunction, TextUtils::standardCopyPinFunction, NULL);
 	svg += "</g>\n</svg>";
 
 	return svg;
@@ -163,8 +163,8 @@ QString ScrewTerminal::makeSchematicSvg(const QString & expectedFileName)
 					"<circle fill='none' stroke-width='2' stroke='#000000' cx='52.9215' cy='[9.723]' r='8.7195' />\n"
 					"<line id='line' fill='none' stroke='#000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' x1='43.202' y1='[9.723]' x2='16.452' y2='[9.723]'/>\n");
 
-	QString svg = TextUtils::incrementTemplateString(header.arg(increment * pins), 1, incrementPoints * (pins - 1), TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction);
-	svg += TextUtils::incrementTemplateString(repeat, pins, incrementPoints, TextUtils::standardMultiplyPinFunction, TextUtils::standardCopyPinFunction);
+	QString svg = TextUtils::incrementTemplateString(header.arg(increment * pins), 1, incrementPoints * (pins - 1), TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction, NULL);
+	svg += TextUtils::incrementTemplateString(repeat, pins, incrementPoints, TextUtils::standardMultiplyPinFunction, TextUtils::standardCopyPinFunction, NULL);
 	svg += "</g>\n</svg>";
 
 	return svg;
@@ -208,7 +208,7 @@ QString ScrewTerminal::makePcbSvg(const QString & expectedFileName)
 					.arg(verticalX * dpi)
 					.arg(centerX - 27.5)
 					.arg(initialY - 27.5);
-	QString svg = TextUtils::incrementTemplateString(header, 1, pins * dpi * spacing, TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction);
+	QString svg = TextUtils::incrementTemplateString(header, 1, pins * dpi * spacing, TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction, NULL);
 	for (int i = 0; i < pins; i++) {
 		svg += repeat.arg(centerX).arg(initialY + (i * dpi * spacing)).arg(i);
 	}

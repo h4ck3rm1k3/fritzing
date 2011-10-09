@@ -175,10 +175,10 @@ QString SchematicFrame::makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, double 
 	if (milsW < OriginalWidth) milsW = OriginalWidth;
 	if (milsH < OriginalHeight) milsH = OriginalHeight;
 	QString svg = SchematicTemplate.arg(milsW / 1000).arg(milsH / 1000).arg(milsW).arg(milsH).arg(milsW - 8).arg(milsH - 8);
-	svg = TextUtils::incrementTemplateString(svg, 1, milsW - OriginalWidth, TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction);
+	svg = TextUtils::incrementTemplateString(svg, 1, milsW - OriginalWidth, TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction, NULL);
 	svg.replace("{", "[");
 	svg.replace("}", "]");
-	svg = TextUtils::incrementTemplateString(svg, 1, milsH - OriginalHeight, TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction);
+	svg = TextUtils::incrementTemplateString(svg, 1, milsH - OriginalHeight, TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction, NULL);
 	QHash<QString, QString> hash;
 	foreach (QString propp, FrameProps.keys()) {
 		hash.insert(propp, prop(propp));
