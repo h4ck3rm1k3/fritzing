@@ -46,6 +46,7 @@ QString PinHeader::FemaleRoundedFormString;
 QString PinHeader::MaleFormString;
 QString PinHeader::ShroudedFormString;
 static int MinPins = 1;
+static int MinShroudPins = 2;
 static int MaxPins = 64;
 static QHash<QString, QString> Spacings;
 
@@ -89,6 +90,29 @@ void PinHeader::setForm(QString form, bool force) {
 	if (!force && m_form.compare(form) == 0) return;
 
 	switch (this->m_viewIdentifier) {
+		case ViewIdentifierClass::PCBView:
+			if (form.contains("shroud")) {
+				InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+				if (infoGraphicsView == NULL) break;
+
+				// hack the dom element and call setUpImage
+				FSvgRenderer::removeFromHash(moduleID(), "");
+				QDomElement element = LayerAttributes::getSvgElementLayers(modelPart()->domDocument(), m_viewIdentifier);
+				if (element.isNull()) break;
+
+				QString filename = element.attribute("image");
+				if (filename.isEmpty()) break;
+
+				filename.replace("jumper", "shroud");
+				element.setAttribute("image", filename);
+
+				m_changingForm = true;
+				resetImage(infoGraphicsView);
+				m_changingForm = false;
+				
+				updateConnections();
+			}
+			break;
 		case ViewIdentifierClass::BreadboardView:
 		case ViewIdentifierClass::SchematicView:
 			{
@@ -168,7 +192,14 @@ QStringList PinHeader::collectValues(const QString & family, const QString & pro
 		QStringList values;
 		value = modelPart()->properties().value("pins");
 
-		for (int i = MinPins; i <= MaxPins; i++) {
+		int step = 1;
+		int minP = MinPins;
+		if (m_form.contains("shroud")) {
+			minP = MinShroudPins;
+			step = 2;
+		}
+
+		for (int i = minP; i <= MaxPins; i += step) {
 			values << QString::number(i);
 		}
 		
@@ -178,9 +209,15 @@ QStringList PinHeader::collectValues(const QString & family, const QString & pro
 	if (prop.compare("pin spacing", Qt::CaseInsensitive) == 0) {
 		initSpacings();
 		QStringList values;
-		value = modelPart()->properties().value("pin spacing");
 
-		values = Spacings.values();
+		value = modelPart()->properties().value("pin spacing");
+		if (m_form.contains("shroud")) {
+			values.clear();
+			values.append(value);
+		}
+		else {
+			values = Spacings.values();
+		}
 		
 		return values;
 	}
@@ -283,6 +320,10 @@ QString PinHeader::makePcbSvg(const QString & expectedFileName)
 
 	int pins = pieces.at(1).toInt();
 	QString spacingString = pieces.at(2);
+
+	if (expectedFileName.contains("shroud")) {
+		return makePcbShroudSvg(pins);
+	}
 
 	static QString pcbLayerTemplate = "";
 
@@ -477,3 +518,44 @@ QString PinHeader::makeBreadboardShroudSvg(int pins)
 
 	return svg.arg(TextUtils::getViewBoxCoord(svg, 2) / 1000.0).arg(repeatTs).arg(repeatBs);
 }
+
+QString PinHeader::makePcbShroudSvg(int pins) 
+{
+	QString header("<?xml version='1.0' encoding='utf-8'?>\n"
+					"<svg version='1.2' baseProfile='tiny' xmlns='http://www.w3.org/2000/svg' \n"
+					"x='0in' y='0in' width='0.3542in' height='%1in' viewBox='0 0 3542 [3952]'>"
+					"<g id='copper0' >\n"					
+					"<g id='copper1' >\n"
+					"%2\n"
+					"%3\n"
+					"</g>\n"
+					"</g>\n"
+					"<g id='silkscreen' >\n"					
+					"<rect x='40' y='40' width='3462' height='[3872]' fill='none' stroke='#ffffff' stroke-width='80'/>\n"	
+					"<path d='m473,{1150} 0,-{677} 2596,0 0,[3076] -2596,0 0,-{677}' fill='none' stroke='#ffffff' stroke-width='80'/>\n"	
+					"<rect x='40' y='{1150}' width='550' height='1652' fill='none' stroke='#ffffff' stroke-width='80'/>\n"	
+					"</g>\n"
+					"</svg>\n"
+				);
+
+
+	QString repeatL = "<circle id='connector%1pin' cx='1221' cy='[1976]' stroke='#ff9400' r='285' fill='none' stroke-width='170'/>\n";
+	QString repeatR = "<circle id='connector%1pin' cx='2221' cy='[1976]' stroke='#ff9400' r='285' fill='none' stroke-width='170'/>\n";
+
+
+	double increment = 1000;  // 0.1in
+
+	QString svg = TextUtils::incrementTemplateString(header, 1, increment * (pins - 2) / 2, TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction, NULL);
+	svg.replace("{", "[");
+	svg.replace("}", "]");
+	svg = TextUtils::incrementTemplateString(svg, 1, increment * (pins - 2) / 4, TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction, NULL);
+
+	int userData[2];
+	userData[0] = pins;
+	userData[1] = 1;
+	QString repeatLs = TextUtils::incrementTemplateString(repeatR, pins / 2, increment, TextUtils::standardMultiplyPinFunction, TextUtils::negIncCopyPinFunction, userData);
+	QString repeatRs = TextUtils::incrementTemplateString(repeatL, pins / 2, increment, TextUtils::standardMultiplyPinFunction, TextUtils::standardCopyPinFunction, NULL);
+
+	return svg.arg(TextUtils::getViewBoxCoord(svg, 3) / 10000.0).arg(repeatLs).arg(repeatRs);
+}
+

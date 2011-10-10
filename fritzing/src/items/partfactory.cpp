@@ -223,6 +223,10 @@ QString PartFactory::getSvgFilename(ModelPart * modelPart, const QString & expec
 		return getSvgFilenameAux(expectedFileName, &PinHeader::makePcbSvg);
 	}
 
+	if (expectedFileName.startsWith("pcb/shroud_", Qt::CaseInsensitive)) {
+		return getSvgFilenameAux(expectedFileName, &PinHeader::makePcbSvg);
+	}
+
 	if (expectedFileName.contains("pin_header", Qt::CaseInsensitive)) {
 		if (expectedFileName.contains("schematic", Qt::CaseInsensitive)) {
 			return getSvgFilenameAux(expectedFileName, &PinHeader::makeSchematicSvg);
