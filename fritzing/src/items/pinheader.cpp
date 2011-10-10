@@ -49,6 +49,7 @@ static int MinPins = 1;
 static int MinShroudPins = 2;
 static int MaxPins = 64;
 static QHash<QString, QString> Spacings;
+static QString ShroudSpacing;
 
 
 PinHeader::PinHeader( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
@@ -271,9 +272,23 @@ const QStringList & PinHeader::forms() {
 }
 
 bool PinHeader::onlyFormChanges(QMap<QString, QString> & propsMap) {
-	if (propsMap.value("form", "").compare(m_form) == 0) return false;
+	QString newForm = propsMap.value("form", "");
+	if (newForm.compare(m_form) == 0) return false;
 
-	if (modelPart()->properties().value("pins", "").compare(propsMap.value("pins", "")) != 0) return false;
+	QString newPins = propsMap.value("pins", "");
+	if (newForm.contains("shroud")) {
+		int pins = newPins.toInt();
+		if (pins % 2 == 1) {
+			return false;
+		}
+
+		QString pinSpacing = propsMap.value("pin spacing", "");
+		if (pinSpacing.compare(ShroudSpacing) != 0) {
+			return false;	
+		}
+	}
+
+	if (modelPart()->properties().value("pins", "").compare(newPins) != 0) return false;
 
 	return true;
 }
@@ -301,6 +316,14 @@ QString PinHeader::genModuleID(QMap<QString, QString> & currPropsMap)
 	QString pins = currPropsMap.value("pins");
 	QString spacing = currPropsMap.value("pin spacing");
 	QString form = currPropsMap.value("form");
+
+	if (form.contains("shroud")) {
+		int p = pins.toInt();
+		if (p % 2 == 1) {
+			pins = QString::number(p + 1);
+		}
+		spacing = ShroudSpacing;
+	}
 
 	foreach (QString key, Spacings.keys()) {
 		if (Spacings.value(key).compare(spacing, Qt::CaseInsensitive) == 0) {
@@ -375,7 +398,8 @@ QString PinHeader::makePcbSvg(const QString & expectedFileName)
 
 void PinHeader::initSpacings() {
 	if (Spacings.count() == 0) {
-		Spacings.insert("100mil", "0.1in (2.54mm)");
+		ShroudSpacing = "0.1in (2.54mm)";
+		Spacings.insert("100mil", ShroudSpacing);
 		Spacings.insert("200mil", "0.2in (5.08mm)");
 	}
 }
