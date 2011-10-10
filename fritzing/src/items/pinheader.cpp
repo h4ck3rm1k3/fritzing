@@ -550,6 +550,7 @@ QString PinHeader::makePcbShroudSvg(int pins)
 					"x='0in' y='0in' width='0.3542in' height='%1in' viewBox='0 0 3542 [3952]'>"
 					"<g id='copper0' >\n"					
 					"<g id='copper1' >\n"
+					"<rect x='936' y='1691' width='570' height='570' stroke='#ff9400' r='285' fill='none' stroke-width='170'/>\n"
 					"%2\n"
 					"%3\n"
 					"</g>\n"
