@@ -1525,8 +1525,9 @@ bool ItemBase::hasCustomSVG() {
 }
 
 void ItemBase::setProp(const QString & prop, const QString & value) {
-	Q_UNUSED(prop);
-	Q_UNUSED(value);
+	if (!m_modelPart) return;
+
+	m_modelPart->setProp(prop, value);
 }
 
 QString ItemBase::prop(const QString & p)

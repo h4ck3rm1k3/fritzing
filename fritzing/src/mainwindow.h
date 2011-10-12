@@ -155,6 +155,7 @@ public slots:
     void showPCBView();
 	void groundFill();
 	void removeGroundFill(bool force = false);
+	void copperFill();
 	void changeBoardLayers(int layers, bool doEmit);
 
 protected slots:
@@ -449,7 +450,7 @@ protected:
 	QString getBomProps(ItemBase *);
 	void swapSelectedMap(const QString & family, const QString & prop, QMap<QString, QString> & currPropsMap, ItemBase *);
 	ModelPart * findReplacedby(ModelPart * originalModelPart);
-
+	void groundFillAux(bool fillGroundTraces);
 
 protected:
 	static void removeActionsStartingAt(QMenu *menu, int start=0);
@@ -651,6 +652,7 @@ protected:
 	QAction *m_selectAllViasAct;
 	QAction *m_groundFillAct;
 	QAction *m_removeGroundFillAct;
+	QAction *m_copperFillAct;
 	QAction *m_designRulesCheckAct;
 	QAction *m_autorouterSettingsAct;
 	QAction *m_tidyWiresAct;

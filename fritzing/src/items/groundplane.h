@@ -56,6 +56,12 @@ public:
 	QPainterPath shape() const;
 
 
+public:
+	static QString fillTypeIndividual;
+	static QString fillTypeGround;
+	static QString fillTypePlain;	
+	static QString fillTypeNone;
+
 protected:
 	void setSvg(const QString &);
 	void setSvgAux(const QString &);

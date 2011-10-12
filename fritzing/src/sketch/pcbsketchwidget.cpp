@@ -2477,7 +2477,7 @@ double PCBSketchWidget::getSmallerTraceWidth(double minDim) {
 	return GraphicsUtils::mils2pixels(mils, FSvgRenderer::printerScale());
 }
 
-bool PCBSketchWidget::groundFill(QUndoCommand * parentCommand)
+bool PCBSketchWidget::groundFill(bool fillGroundTraces, QUndoCommand * parentCommand)
 {
 	ItemBase * board = findBoard();
     // barf an error if there's no board
@@ -2502,9 +2502,7 @@ bool PCBSketchWidget::groundFill(QUndoCommand * parentCommand)
 	QSizeF copperImageSize;
 
 	// hide ground traces so the ground plane will intersect them
-	// TODO: make this a parameter...
-
-	showGroundTraces(false);
+	showGroundTraces(!fillGroundTraces);
 	QString svg = renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, copperImageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, true, empty);
 	showGroundTraces(true);
 	if (svg.isEmpty()) {
@@ -2516,7 +2514,7 @@ bool PCBSketchWidget::groundFill(QUndoCommand * parentCommand)
 	if (boardLayers() > 1) {
 		viewLayerIDs.clear();
 		viewLayerIDs << ViewLayer::Copper1 << ViewLayer::Copper1Trace;
-		showGroundTraces(false);
+		showGroundTraces(!fillGroundTraces);
 		svg2 = renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, copperImageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, true, empty);
 		showGroundTraces(true);
 		if (svg2.isEmpty()) {
@@ -2546,6 +2544,9 @@ bool PCBSketchWidget::groundFill(QUndoCommand * parentCommand)
 		}
 	}
 
+
+	QString fillType = (fillGroundTraces) ? GroundPlane::fillTypeGround : GroundPlane::fillTypePlain;
+
 	int ix = 0;
 	foreach (QString svg, gpg.newSVGs()) {
 		ViewGeometry vg;
@@ -2553,6 +2554,7 @@ bool PCBSketchWidget::groundFill(QUndoCommand * parentCommand)
 		long newID = ItemBase::getNextID();
 		new AddItemCommand(this, BaseCommand::CrossView, ModuleIDNames::GroundPlaneModuleIDName, ViewLayer::GroundPlane_Bottom, vg, newID, false, -1, parentCommand);
 		new SetPropCommand(this, newID, "svg", svg, svg, true, parentCommand);
+		new SetPropCommand(this, newID, "fillType", fillType, fillType, false, parentCommand);
 	}
 
 	ix = 0;
@@ -2562,6 +2564,7 @@ bool PCBSketchWidget::groundFill(QUndoCommand * parentCommand)
 		long newID = ItemBase::getNextID();
 		new AddItemCommand(this, BaseCommand::CrossView, ModuleIDNames::GroundPlaneModuleIDName, ViewLayer::GroundPlane_Top, vg, newID, false, -1, parentCommand);
 		new SetPropCommand(this, newID, "svg", svg, svg, true, parentCommand);
+		new SetPropCommand(this, newID, "fillType", fillType, fillType, false, parentCommand);
 	}
 
 	return true;
@@ -2740,4 +2743,32 @@ void PCBSketchWidget::rotatePartLabels(double degrees, QTransform & transform, Q
 		partLabel->owner()->calcRotation(transform, center, vg);
 		new MoveLabelCommand(this, partLabel->owner()->id(), p, p - vg.loc(), p, p - vg.loc(), parentCommand);
 	}
+}
+
+QString PCBSketchWidget::characterizeGroundFill() {
+	QString result = GroundPlane::fillTypeNone;
+	foreach (QGraphicsItem * item, scene()->items()) {
+		GroundPlane * gp = dynamic_cast<GroundPlane *>(item);
+		if (gp == NULL) continue;
+
+		QString fillType = gp->prop("fillType");
+		if (fillType.isEmpty()) {
+			// old style fill with no property
+			fillType = GroundPlane::fillTypeGround;
+		}
+
+		if (fillType == GroundPlane::fillTypeGround) {
+			// assumes multiple fill types are not possible
+			return fillType;
+		}
+
+		if (fillType == GroundPlane::fillTypePlain) {
+			// assumes multiple fill types are not possible
+			return fillType;
+		}
+	}
+
+	// return individual or none
+
+	return result;
 }

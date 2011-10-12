@@ -64,9 +64,9 @@ def main():
     boardNodes = boards.getElementsByTagName("board")
     for board in boardNodes:
         originalName = board.getAttribute("originalName")
-	if originalName == None:
-		continue
-		
+        if originalName == None:
+            continue
+        
         if len(originalName) == 0:
             continue
             
@@ -76,6 +76,10 @@ def main():
             print "missing name element in board", fromName, board
             return
             
+        if fromBaseName == toBaseName:
+            # no need to rename
+            continue
+            
         tempDir = outputDir + "/" + "___temp___"
         shutil.rmtree(tempDir, 1)
         os.mkdir(tempDir)
@@ -84,18 +88,16 @@ def main():
         zf.extractall(tempDir)
     
         #fromFzName = os.path.splitext(fromBaseName)[0] + ".fz"
-	
-	
-	
-	for i, name in enumerate(zf.namelist()):
-		if name.endswith(".fz"):
-			fromFzName = name
-			break
-	
-	
+    
+        for i, name in enumerate(zf.namelist()):
+            if name.endswith(".fz"):
+                fromFzName = name
+                break
+        
+        
         toFzName = os.path.splitext(toBaseName)[0] + ".fz"
-	
-	print "renaming", fromFzName, toFzName
+    
+        print "renaming", fromFzName, toFzName
     
         os.rename(os.path.join(tempDir, fromFzName), os.path.join(tempDir, toFzName))
     

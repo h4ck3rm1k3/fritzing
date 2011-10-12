@@ -33,6 +33,7 @@ $Date$
 #include "../../utils/folderutils.h"
 #include "../../items/resizableboard.h"
 #include "../../items/logoitem.h"
+#include "../../items/groundplane.h"
 #include "../../fsvgrenderer.h"
 #include "../../fapplication.h"
 #include "../../svg/gerbergenerator.h"
@@ -1025,7 +1026,9 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
 {
 	QString boardName = board.attribute("name");
 
-	if (board.attribute("inscription").isEmpty()) return NULL;
+	if (board.attribute("inscription").isEmpty()) {
+		return NULL;
+	}
 
 	QString path = fzzFilePaths.value(boardName, "");
 	if (board.attribute("inscriptionHeight").isEmpty()) {
@@ -1059,7 +1062,29 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
 		return mainWindow;
 	}
 
-	mainWindow->removeGroundFill(true);
+	QString fillType = mainWindow->pcbView()->characterizeGroundFill();
+	if (fillType == GroundPlane::fillTypeGround || fillType == GroundPlane::fillTypePlain) { 
+		mainWindow->removeGroundFill(true);
+	}
+	else if (fillType == GroundPlane::fillTypeIndividual) {
+		DebugDialog::debug(QString("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+									"individual ground fill--better check %1"
+									"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!").arg(path));
+	}
+
+
+	// TODO: eventually make it optional to add copper fill to these items
+	//if (board.attribute("inscription").isEmpty()) {
+		//if (fillType == GroundPlane::fillTypeGround) {
+		//	mainWindow->groundFill();
+		//}
+		//else {
+		//	mainWindow->copperFill();
+		//}
+
+		//mainWindow->saveAsShareable(path);
+		//return NULL;
+	//}
 
 	QList<QGraphicsItem *> toDelete;
 	foreach (QGraphicsItem * item, mainWindow->pcbView()->scene()->items()) {
@@ -1187,7 +1212,13 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
 			logoItem->setPos(rect.left() - (size.width() / 2) + (size.height() / 2), rect.top() + (size.width() / 2) - (size.height() / 2));
 			mainWindow->pcbView()->rotateX(90, false);
 		}
-		mainWindow->groundFill();
+		if (fillType == GroundPlane::fillTypeGround) {
+			mainWindow->groundFill();
+		}
+		else {
+			mainWindow->copperFill();
+		}
+
 		mainWindow->saveAsShareable(path);
 	}
 	else {

@@ -1110,8 +1110,11 @@ void MainWindow::createMenus()
 	m_pcbTraceMenu->addAction(m_designRulesCheckAct);
 	m_pcbTraceMenu->addAction(m_autorouterSettingsAct);
 
-	m_pcbTraceMenu->addAction(m_groundFillAct);
-	m_pcbTraceMenu->addAction(m_removeGroundFillAct);
+	QMenu * groundFillMenu = m_pcbTraceMenu->addMenu(tr("Ground Fill"));
+
+	groundFillMenu->addAction(m_copperFillAct);
+	groundFillMenu->addAction(m_groundFillAct);
+	groundFillMenu->addAction(m_removeGroundFillAct);
 	//m_pcbTraceMenu->addAction(m_updateRoutingStatusAct);
 	m_pcbTraceMenu->addSeparator();
 
@@ -1666,6 +1669,7 @@ void MainWindow::updateTraceMenu() {
 	m_selectAllViasAct->setEnabled(viaEnabled);
 	m_tidyWiresAct->setEnabled(twEnabled);
 	m_groundFillAct->setEnabled(gfEnabled);
+	m_copperFillAct->setEnabled(gfEnabled);
 	m_removeGroundFillAct->setEnabled(gfrEnabled);
 	m_designRulesCheckAct->setEnabled(true);
 	m_autorouterSettingsAct->setEnabled(m_currentGraphicsView == m_pcbGraphicsView);
@@ -2166,9 +2170,13 @@ void MainWindow::createTraceMenuActions() {
 	m_tidyWiresAct->setStatusTip(tr("Tidy selected wires"));
 	connect(m_tidyWiresAct, SIGNAL(triggered()), this, SLOT(tidyWires()));
 
-	m_groundFillAct = new QAction(tr("Copper Fill"), this);
-	m_groundFillAct->setStatusTip(tr("Fill empty regions of the copper layer"));
+	m_groundFillAct = new QAction(tr("Ground Fill"), this);
+	m_groundFillAct->setStatusTip(tr("Fill empty regions of the copper layer--fill will include all traces connected to a GROUND"));
 	connect(m_groundFillAct, SIGNAL(triggered()), this, SLOT(groundFill()));
+
+	m_copperFillAct = new QAction(tr("Copper Fill"), this);
+	m_copperFillAct->setStatusTip(tr("Fill empty regions of the copper layer--not including traces connected to a GROUND"));
+	connect(m_copperFillAct, SIGNAL(triggered()), this, SLOT(copperFill()));
 
 	m_removeGroundFillAct = new QAction(tr("Remove Copper Fill"), this);
 	m_removeGroundFillAct->setStatusTip(tr("Remove the copper fill"));
@@ -2488,7 +2496,16 @@ void MainWindow::tidyWires() {
 	m_currentGraphicsView->tidyWires();
 }
 
+void MainWindow::copperFill() {
+	groundFillAux(false);
+}
+
 void MainWindow::groundFill()
+{
+	groundFillAux(true);
+}
+
+void MainWindow::groundFillAux(bool fillGroundTraces)
 {
 	// TODO:
 	//		what about leftover temp files from crashes?
@@ -2500,7 +2517,7 @@ void MainWindow::groundFill()
 
 	FileProgressDialog fileProgress("Generating copper fill...", 0, this);
 	QUndoCommand * parentCommand = new QUndoCommand(tr("Copper Fill"));
-	if (m_pcbGraphicsView->groundFill(parentCommand)) {
+	if (m_pcbGraphicsView->groundFill(fillGroundTraces, parentCommand)) {
 		m_undoStack->push(parentCommand);
 	}
 	else {

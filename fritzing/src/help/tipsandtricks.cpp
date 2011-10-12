@@ -51,6 +51,7 @@ TipsAndTricks::TipsAndTricks(QWidget *parent)
 tr("<html><body>") +
 tr("<h3>Fritzing Tips and Tricks</h3>") +
 tr("<ul>") +
+tr("<li>If you can't find a part in the Parts Bin, the Generic IC is your friend.  Drag it onto your sketch, then use the widgets in the Inspector to: choose from among 25 different through-hole and SMD packages; change the pin label; and--for DIPs and SIPs--change the number of pins.</li>") +
 tr("<li>In Breadboard view, to drag a part with rubber-band legs while keeping it connected to the breadboard, hold the Alt (Linux: Meta) key down when you start dragging.</li>") +
 tr("<li>In Breadboard view, to add a curve to a wire or rubber-band leg, drag with the Control (Mac: Command) key down.  You can set whether curvy wires are the default in Preferences.</li>") +
 tr("<li>In Breadboard view, to drag out a wire from the end of a rubber-band leg, drag with the Alt (Linux: Meta) key down.</li>") +

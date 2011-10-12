@@ -44,6 +44,11 @@ $Date$
 //	does single poly need a connector?
 //
 
+QString GroundPlane::fillTypeIndividual = "individual";
+QString GroundPlane::fillTypeGround = "ground";
+QString GroundPlane::fillTypePlain = "plain";
+QString GroundPlane::fillTypeNone = "none";
+
 
 static QString IconSvg;
 
@@ -238,6 +243,7 @@ QString GroundPlane::generateSvg() {
 void GroundPlane::setDropOffset(QPointF offset) 
 {
 	m_dropOffset = offset;
+	modelPart()->setProp("fillType", fillTypeIndividual);
 	QString svg = generateSvg();
 	if (svg.isEmpty()) {
 		loadIconSvg();

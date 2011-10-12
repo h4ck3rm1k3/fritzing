@@ -91,10 +91,12 @@ def main():
     countIndex = 0
     orderNumberIndex = 0
     filenameIndex = 0
+    optionalIndex = 0
     try:
         countIndex = fields.index("count")
         orderNumberIndex = fields.index("order-nr")
         filenameIndex = fields.index("Filename")
+        optionalIndex = fields.index("count optional")
     except:
         print "file", fromName, "missing 'count', 'order-nr' or 'Filename' field"
         return
@@ -125,8 +127,14 @@ def main():
             else:
                 print "file", fromName, "unexpected format 4"
                 return
-                
-    
+             
+
+        optional = 0
+        try:
+            optional = int(values[optionalIndex])
+        except ValueError:
+            pass
+
         filename = values[filenameIndex]
         if len(filename) == 0:
             continue
@@ -136,13 +144,16 @@ def main():
             continue
         
         try:
-            count= int(values[countIndex])
+            count = int(values[countIndex])
         except ValueError:
             print "file", fromName, "invalid count"
             return
             
         print filename, orderNumber, count
-        xml = "<board name='{0}_{1}_{2}' requiredCount='{1}' maxOptionalCount='0' inscription='{0}' inscriptionHeight='2mm' originalName='{2}' />\n".format(orderNumber, count, filename)
+        xml =  "<board name='{0}_{1}_{2}' requiredCount='{1}' maxOptionalCount='{3}' inscription='{0}' inscriptionHeight='2mm' originalName='{2}' />\n"
+        if orderNumber == "products":
+            xml =  "<board name='{2}' requiredCount='{1}' maxOptionalCount='{3}' inscription='' inscriptionHeight='2mm' originalName='{2}' />\n"
+        xml = xml.format(orderNumber, count, filename, optional)
         lines.append(xml)
     
     
@@ -152,6 +163,11 @@ def main():
     outfile.write("<panelizer width='550mm' height='330mm' spacing='6mm' border='0mm' outputFolder='{0}' prefix='{1}'>\n".format(outputDir, today.strftime("%Y.%m.%d")))
     outfile.write("<paths>\n")
     outfile.write("<path>{0}</path>\n".format(outputDir))
+    productDir = outputDir
+    productDir = os.path.split(productDir)[0]
+    productDir = os.path.split(productDir)[0]
+    productDir = os.path.join(productDir, "products")
+    outfile.write("<path>{0}</path>\n".format(productDir))
     outfile.write("</paths>\n")
     outfile.write("<boards>\n")    
     for l in lines:
