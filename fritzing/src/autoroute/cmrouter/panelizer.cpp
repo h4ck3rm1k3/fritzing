@@ -464,7 +464,7 @@ bool Panelizer::bestFitOne(PanelItem * panelItem, PanelParams & panelParams, QLi
 			bestPlace1.rotate90 = !bestPlace2.rotate90;
 		}
 
-		panelItem->x = tileToReal(bestPlace1.bestTileRect.xmini);
+		panelItem->x = tileToReal(bestPlace1.bestTileRect.xmini) ;
 		panelItem->y = tileToReal(bestPlace1.bestTileRect.ymini);
 		panelItem->rotate90 = bestPlace1.rotate90;
 		panelItem->planePair = planePair;
@@ -523,8 +523,8 @@ PlanePair * Panelizer::makePlanePair(PanelParams & panelParams)
 	TiSetType(bufferTile, Tile::BUFFER);
 	TiSetBody(bufferTile, NULL);
 
-	QRectF panelRect(0, 0, panelParams.panelWidth + (panelParams.panelSpacing /2) - panelParams.panelBorder, 
-							panelParams.panelHeight + (panelParams.panelSpacing / 2) - panelParams.panelBorder);
+	QRectF panelRect(0, 0, panelParams.panelWidth + panelParams.panelSpacing - panelParams.panelBorder, 
+							panelParams.panelHeight + panelParams.panelSpacing - panelParams.panelBorder);
 
     SETLEFT(bufferTile, fasterRealToTile(panelRect.left() - 10));
     SETYMIN(bufferTile, fasterRealToTile(panelRect.top() - 10));		
