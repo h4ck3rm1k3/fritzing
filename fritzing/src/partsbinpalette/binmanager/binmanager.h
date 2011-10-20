@@ -31,6 +31,7 @@ $Date$
 #include <QStackedWidget>
 #include <QTabWidget>
 #include <QMenu>
+#include <QLabel>
 
 class ModelPart;
 class PaletteModel;

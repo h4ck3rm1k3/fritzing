@@ -191,6 +191,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		class PartsBinListView *m_listView;
 
 		QFrame *m_footer;
+		QLabel * m_binLabel;
 
 		ImageButton *m_showIconViewButton;
 		ImageButton *m_showListViewButton;

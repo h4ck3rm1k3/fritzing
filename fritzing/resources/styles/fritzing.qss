@@ -466,6 +466,11 @@ dark grey:		rgb(126,126,126);
 	font-size: 11px;
 }*/
 
+
+#partsBinLabel {
+	background-color: rgb(255,255,255);
+}
+
 PartsBinIconView {
 	padding: 2px;
 }
@@ -495,7 +500,6 @@ PartsBinPaletteWidget InfoGraphicsView {
 
 /* trying to get rid of the line across the top of the tabs */
 PartsBinPaletteWidget,
-StackWidget,
 StackTabWidget,
 StackTabWidget::pane,
 StackTabBar {

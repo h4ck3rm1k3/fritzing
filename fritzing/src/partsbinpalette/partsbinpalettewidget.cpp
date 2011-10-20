@@ -75,6 +75,10 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 	setupButtons();
 	setupFooter();
 
+	m_binLabel = new QLabel(this);
+	m_binLabel->setObjectName("partsBinLabel");
+	m_binLabel->setWordWrap(false);
+
 	m_iconView = new PartsBinIconView(m_refModel, this, m_binContextMenu, m_partContextMenu);
 	m_iconView->setInfoView(infoView);
 
@@ -104,6 +108,8 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 	m_addPartToMeAction = new QAction(m_title,this);
 	connect(m_addPartToMeAction, SIGNAL(triggered()),this, SLOT(addSketchPartToMe()));
 
+	m_binLabel->setText(m_title);
+
 	installEventFilter(this);
 }
 
@@ -127,6 +133,7 @@ void PartsBinPaletteWidget::setTitle(const QString &title) {
 		m_title = title;
 		m_addPartToMeAction->setText(title);
 		m_manager->updateTitle(this, title);
+		m_binLabel->setText(title);
 	}
 }
 
@@ -189,6 +196,7 @@ void PartsBinPaletteWidget::setView(PartsBinView *view) {
 	QVBoxLayout *lo = new QVBoxLayout(this);
 	lo->setMargin(3);
 	lo->setSpacing(0);
+	lo->addWidget(m_binLabel);
 	lo->addWidget(dynamic_cast<QWidget*>(m_currentView));
 	lo->addWidget(m_footer);
 }
@@ -257,6 +265,7 @@ void PartsBinPaletteWidget::afterModelSetted(PaletteModel *model) {
 void PartsBinPaletteWidget::grabTitle(PaletteModel *model) {
 	m_title = model->root()->modelPartShared()->title();
 	m_addPartToMeAction->setText(m_title);
+	m_binLabel->setText(m_title);
 }
 
 void PartsBinPaletteWidget::addPart(ModelPart *modelPart, int position) {

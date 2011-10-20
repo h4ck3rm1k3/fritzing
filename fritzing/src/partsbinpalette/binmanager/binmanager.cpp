@@ -76,7 +76,6 @@ BinManager::BinManager(class ReferenceModel *refModel, class HtmlInfoView *infoV
 
 	QVBoxLayout *lo = new QVBoxLayout(this);
 
-
 	m_stackTabWidget = new StackTabWidget(this);   
 	m_stackTabWidget->setTabPosition(QTabWidget::West);
 	lo->addWidget(m_stackTabWidget);
