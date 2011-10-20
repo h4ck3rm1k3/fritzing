@@ -37,7 +37,7 @@ $Date$
 class StackTabWidget : public QTabWidget {
 	Q_OBJECT
 	public:
-		StackTabWidget(class StackWidget *parent);
+		StackTabWidget(QWidget *parent);
 		class StackTabBar *stackTabBar();
 
 	public slots:

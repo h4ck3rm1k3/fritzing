@@ -72,18 +72,22 @@ BinManager::BinManager(class ReferenceModel *refModel, class HtmlInfoView *infoV
 	m_mainWindow = parent;
 	m_currentBin = NULL;
 
-	m_stackWidget = new StackWidget(this);
-	m_stackWidget->setAcceptDrops(true);
-
 	m_unsavedBinsCount = 0;
 
 	QVBoxLayout *lo = new QVBoxLayout(this);
-	lo->addWidget(m_stackWidget);
+
+
+	m_stackTabWidget = new StackTabWidget(this);   
+	m_stackTabWidget->setTabPosition(QTabWidget::West);
+	lo->addWidget(m_stackTabWidget);
+
 	lo->setMargin(0);
 	lo->setSpacing(0);
 	setMaximumHeight(500);
 
 	restoreStateAndGeometry();
+
+	connectTabWidget(m_stackTabWidget);
 }
 
 BinManager::~BinManager() {
@@ -91,20 +95,14 @@ BinManager::~BinManager() {
 }
 
 void BinManager::addBin(PartsBinPaletteWidget* bin) {
-	StackTabWidget *tb = new StackTabWidget(m_stackWidget);
-	tb->addTab(bin,bin->title());
-	m_stackWidget->addWidget(tb);
-	registerBin(bin,tb);
-	connectTabWidget(tb);
+	m_stackTabWidget->addTab(bin,bin->title());
+	registerBin(bin, m_stackTabWidget);
 	setAsCurrentBin(bin);
 }
 
 void BinManager::registerBin(PartsBinPaletteWidget* bin, StackTabWidget *tb) {
 	bin->setTabWidget(tb);
-	if(!m_tabWidgets.values().contains(tb)) {
-		connectTabWidget(tb);
-	}
-	m_tabWidgets[bin] = tb;
+
 	if(bin->fileName() != ___emptyString___) {
 		m_openedBins[bin->fileName()] = bin;
 	}
@@ -138,7 +136,6 @@ void BinManager::insertBin(PartsBinPaletteWidget* bin, int index, StackTabWidget
 	registerBin(bin,tb);
 	tb->insertTab(index,bin,bin->title());
 	tb->setCurrentIndex(index);
-	m_tabWidgets[bin] = tb;
 }
 
 void BinManager::loadFromModel(PaletteModel *model) {
@@ -157,19 +154,16 @@ void BinManager::setPaletteModel(PaletteModel *model) {
 bool BinManager::beforeClosing() {
 	bool retval = true;
 
-	for(int i=0; i < m_stackWidget->count(); i++) {
-		StackTabWidget *tw = qobject_cast<StackTabWidget*>(m_stackWidget->widget(i));
-		if(tw) {
-			for(int j=0; j < tw->count(); j++) {
-				PartsBinPaletteWidget *bin = qobject_cast<PartsBinPaletteWidget*>(tw->widget(j));
-				if(bin) {
-					setAsCurrentTab(bin);
-					retval = retval && bin->beforeClosing();
-					if(!retval) break;
-				}
-			}
+	for(int j=0; j < m_stackTabWidget->count(); j++) {
+		PartsBinPaletteWidget *bin = qobject_cast<PartsBinPaletteWidget*>(m_stackTabWidget->widget(j));
+		if(bin) {
+			setAsCurrentTab(bin);
+			retval = retval && bin->beforeClosing();
+			if(!retval) break;
 		}
 	}
+
+
 	if(retval) {
 		saveStateAndGeometry();
 	}
@@ -178,7 +172,7 @@ bool BinManager::beforeClosing() {
 }
 
 void BinManager::setAsCurrentTab(PartsBinPaletteWidget* bin) {
-	m_tabWidgets[bin]->setCurrentWidget(bin);
+	m_stackTabWidget->setCurrentWidget(bin);
 }
 
 
@@ -218,14 +212,15 @@ PartsBinPaletteWidget* BinManager::getOrOpenBin(const QString & binLocation, con
             binLocation:
             createIfBinNotExists(binLocation, binTemplateLocation);
 
-        partsBin = openBinIn(m_tabWidgets.values()[0], fileToOpen);
+        partsBin = openBinIn(m_stackTabWidget, fileToOpen);
 	}
 
     return partsBin;
 }
 
 PartsBinPaletteWidget* BinManager::findBin(const QString & binLocation) {
-	foreach(PartsBinPaletteWidget* bin, m_tabWidgets.keys()) {
+	for (int i = 0; i < m_stackTabWidget->count(); i++) {
+		PartsBinPaletteWidget* bin = (PartsBinPaletteWidget *) m_stackTabWidget->widget(i);
         if(bin->fileName() == binLocation) {
             return bin;
 		}
@@ -286,19 +281,17 @@ void BinManager::setDirtyTab(PartsBinPaletteWidget* w, bool dirty) {
 	}
 	*/
 	w->setWindowModified(dirty);
-	QTabWidget* tw = m_tabWidgets[w];
-	if(tw) {
-		int tabIdx = tw->indexOf(w);
-		tw->setTabText(tabIdx, w->title()+(dirty? " *": ""));
+	if(m_stackTabWidget) {
+		int tabIdx = m_stackTabWidget->indexOf(w);
+		m_stackTabWidget->setTabText(tabIdx, w->title()+(dirty? " *": ""));
 	} else {
 		qWarning() << tr("BinManager::setDirtyTab: Couldn't set the bin '%1' as dirty").arg(w->title());
 	}
 }
 
 void BinManager::updateTitle(PartsBinPaletteWidget* w, const QString& newTitle) {
-	QTabWidget* tw = m_tabWidgets[w];
-	if(tw) {
-		tw->setTabText(tw->indexOf(w), newTitle+" *");
+	if(m_stackTabWidget) {
+		m_stackTabWidget->setTabText(m_stackTabWidget->indexOf(w), newTitle+" *");
 		setDirtyTab(w);
 	}
 }
@@ -327,8 +320,8 @@ PartsBinPaletteWidget* BinManager::openBinIn(StackTabWidget* tb, QString fileNam
 	bool createNewOne = false;
 	if(m_openedBins.contains(fileName)) {
 		bin = m_openedBins[fileName];
-		if(m_tabWidgets[bin]) {
-			m_tabWidgets[bin]->setCurrentWidget(bin);
+		if(m_stackTabWidget) {
+			m_stackTabWidget->setCurrentWidget(bin);
 		} else {
 			m_openedBins.remove(fileName);
 			createNewOne = true;
@@ -400,15 +393,15 @@ void BinManager::setAsCurrentBin(PartsBinPaletteWidget* bin) {
 		if(m_currentBin != bin) {
 			QString style = m_mainWindow->styleSheet();
 			StackTabBar *currTabBar = NULL;
-			if(m_currentBin && m_tabWidgets[m_currentBin]) {
-				currTabBar = m_tabWidgets[m_currentBin]->stackTabBar();
+			if(m_currentBin && m_stackTabWidget) {
+				currTabBar = m_stackTabWidget->stackTabBar();
 				currTabBar->setProperty("current","false");
 				currTabBar->setStyleSheet("");
 				currTabBar->setStyleSheet(style);
 			}
-			if(m_tabWidgets[bin]) {
+			if(m_stackTabWidget) {
 				m_currentBin = bin;
-				currTabBar = m_tabWidgets[m_currentBin]->stackTabBar();
+				currTabBar = m_stackTabWidget->stackTabBar();
 				currTabBar->setProperty("current","true");
 				currTabBar->setStyleSheet("");
 				currTabBar->setStyleSheet(style);
@@ -429,15 +422,7 @@ void BinManager::closeBinIn(StackTabWidget* tb, int index) {
 	PartsBinPaletteWidget *w = getBin(tb, realIndex);
 	if(w && w->beforeClosing()) {
 		tb->removeTab(realIndex);
-		m_tabWidgets.remove(w);
 		m_openedBins.remove(w->fileName());
-
-		bool emptyTabWidget = tb->count() == 0;
-		if(emptyTabWidget && m_stackWidget->count() == 3) { // only the two separators
-			openCoreBinIn(tb);
-		} else if(emptyTabWidget) {
-			m_stackWidget->removeWidget(tb);
-		}
 	}
 }
 
@@ -458,25 +443,22 @@ void BinManager::saveStateAndGeometry() {
 	QSettings settings;
 	settings.remove("bins"); // clean up previous state
 	settings.beginGroup("bins");
-	for(int i=m_stackWidget->count()-1; i >= 0; i--) {
-		StackTabWidget *tw = qobject_cast<StackTabWidget*>(m_stackWidget->widget(i));
-		if(tw) {
-			bool groupBegan = false;
-			for(int j=tw->count()-1; j >= 0; j--) {
-				PartsBinPaletteWidget *bin = qobject_cast<PartsBinPaletteWidget*>(tw->widget(j));
-				if(bin) {
-					if(!groupBegan) {
-						settings.beginGroup(QString("%1").arg(i));
-						groupBegan = true;
-					}
-					settings.setValue(QString("%1").arg(j),bin->fileName());
-				}
+
+	bool groupBegan = false;
+	for(int j=m_stackTabWidget->count()-1; j >= 0; j--) {
+		PartsBinPaletteWidget *bin = qobject_cast<PartsBinPaletteWidget*>(m_stackTabWidget->widget(j));
+		if(bin) {
+			if(!groupBegan) {
+				settings.beginGroup(QString("%1").arg(0));
+				groupBegan = true;
 			}
-			if(groupBegan) {
-				settings.endGroup();
-			}
+			settings.setValue(QString("%1").arg(j),bin->fileName());
 		}
 	}
+	if(groupBegan) {
+		settings.endGroup();
+	}
+
 	settings.endGroup();
 }
 
@@ -484,40 +466,33 @@ void BinManager::restoreStateAndGeometry() {
 	QSettings settings;
 	settings.beginGroup("bins");
 	if(settings.childGroups().size()==0) { // first time? open core and my_parts then
-		StackTabWidget *tw = new StackTabWidget(m_stackWidget);
-
 		m_mainWindow->fileProgressDialogSetBinLoadingCount(2);
 
 		PartsBinPaletteWidget* core = newBin();
 		core->load(BinManager::CorePartsBinLocation, m_mainWindow->fileProgressDialog());
-		tw->addTab(core,core->title());
-		registerBin(core,tw);
+		m_stackTabWidget->addTab(core,core->title());
+		registerBin(core,m_stackTabWidget);
 
 		PartsBinPaletteWidget* myParts = newBin();
 		myParts->open(MyPartsBinLocation, m_mainWindow->fileProgressDialog());
-		tw->addTab(myParts,myParts->title());
-		registerBin(myParts,tw);
-
-		m_stackWidget->addWidget(tw);
+		m_stackTabWidget->addTab(myParts,myParts->title());
+		registerBin(myParts,m_stackTabWidget);
 	} else {
 		foreach(QString g, settings.childGroups()) {
 			settings.beginGroup(g);
 
-			StackTabWidget *tw = new StackTabWidget(m_stackWidget);
 			m_mainWindow->fileProgressDialogSetBinLoadingCount(settings.childKeys().count());
 			foreach(QString k, settings.childKeys()) {
 				PartsBinPaletteWidget* bin = newBin();
 				QString filename = settings.value(k).toString();
 				if(QFileInfo(filename).exists() && bin->open(filename, m_mainWindow->fileProgressDialog())) {
-					bin->setTabWidget(tw);
-					tw->addTab(bin,bin->title());
-					registerBin(bin,tw);
+					bin->setTabWidget(m_stackTabWidget);
+					m_stackTabWidget->addTab(bin,bin->title());
+					registerBin(bin,m_stackTabWidget);
 				} else {
 					delete bin;
 				}
 			}
-			m_stackWidget->addWidget(tw);
-
 			settings.endGroup();
 		}
 	}
@@ -566,7 +541,7 @@ void BinManager::editSelectedPartFrom(PartsBinPaletteWidget* bin) {
 }
 
 void BinManager::dockedInto(FDockWidget* dock) {
-	m_stackWidget->setDock(dock);
+	Q_UNUSED(dock);
 }
 
 bool BinManager::isTabReorderingEvent(QDropEvent* event) {
@@ -581,9 +556,9 @@ const QString &BinManager::getSelectedModuleIDFromSketch() {
 
 QList<QAction*> BinManager::openedBinsActions(const QString &moduleId) {
 	QMap<QString,QAction*> titlesAndActions; // QMap sorts values by key
-	QList<PartsBinPaletteWidget*> bins = m_tabWidgets.keys();
 
-	foreach(PartsBinPaletteWidget* b, bins) {
+	for (int i = 0; i < m_stackTabWidget->count(); i++) {
+		PartsBinPaletteWidget* b = (PartsBinPaletteWidget *) m_stackTabWidget->widget(i);
 		QAction *act = b->addPartToMeAction();
 		act->setEnabled(!b->contains(moduleId));
 		titlesAndActions[b->title()] = act;
@@ -593,7 +568,9 @@ QList<QAction*> BinManager::openedBinsActions(const QString &moduleId) {
 }
 
 void BinManager::openBin(const QString &filename) {
-	m_tabWidgets.keys()[0]->openNewBin(filename);
+	if (m_stackTabWidget->count() > 0) {
+		((PartsBinPaletteWidget *) m_stackTabWidget->widget(0))->openNewBin(filename);
+	}
 }
 
 MainWindow* BinManager::mainWindow() {
@@ -695,15 +672,9 @@ void BinManager::showSearch() {
 }
 
 PartsBinPaletteWidget * BinManager::determineTopmostBin() {
-	if (m_stackWidget == NULL) return NULL;
+	if (m_stackTabWidget == NULL) return NULL;
 
-	// why would there ever be more than one StackTabWidget?
-	for (int i = 0; i < m_stackWidget->count(); i++) {
-		StackTabWidget *stb = qobject_cast<StackTabWidget*>(m_stackWidget->widget(i));
-		return qobject_cast<PartsBinPaletteWidget *>(stb->currentWidget());
-	}
-
-	return NULL;
+	return qobject_cast<PartsBinPaletteWidget *>(m_stackTabWidget->currentWidget());
 }
 
 

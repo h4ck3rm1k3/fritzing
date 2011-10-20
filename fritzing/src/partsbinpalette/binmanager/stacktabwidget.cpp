@@ -27,11 +27,10 @@ $Date$
 #include <QMouseEvent>
 
 #include "stacktabwidget.h"
-#include "stackwidget.h"
 #include "stacktabbar.h"
 #include "../../debugdialog.h"
 
-StackTabWidget::StackTabWidget(StackWidget *parent) : QTabWidget(parent) {
+StackTabWidget::StackTabWidget(QWidget *parent) : QTabWidget(parent) {
 	setTabBar(new StackTabBar(this));
 
 

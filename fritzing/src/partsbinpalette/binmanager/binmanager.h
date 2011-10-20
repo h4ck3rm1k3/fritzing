@@ -32,8 +32,6 @@ $Date$
 #include <QTabWidget>
 #include <QMenu>
 
-#include "stackwidget.h"
-
 class ModelPart;
 class PaletteModel;
 class MainWindow;
@@ -48,7 +46,7 @@ class BinManager : public QFrame {
 		void setPaletteModel(PaletteModel *model);
 
 		void addBin(class PartsBinPaletteWidget* bin);
-		void insertBin(PartsBinPaletteWidget* bin, int index, StackTabWidget* tb);
+		void insertBin(PartsBinPaletteWidget* bin, int index, class StackTabWidget* tb);
 		void addPart(ModelPart *modelPart, int position = -1);
 		void addToMyPart(ModelPart *modelPart);
 
@@ -126,10 +124,9 @@ protected:
 		WaitPushUndoStack *m_undoStack;
 
 		MainWindow *m_mainWindow;
-		StackWidget *m_stackWidget;
 		PartsBinPaletteWidget *m_currentBin;
+		StackTabWidget* m_stackTabWidget;
 
-		QHash<PartsBinPaletteWidget*,StackTabWidget*> m_tabWidgets;
 		QHash<QString /*filename*/,PartsBinPaletteWidget*> m_openedBins;
 		int m_unsavedBinsCount;
 		QString m_defaultSaveFolder;
