@@ -269,28 +269,6 @@ const QStringList & PinHeader::forms() {
 	return Forms;
 }
 
-bool PinHeader::onlyFormChanges(QMap<QString, QString> & propsMap) {
-	QString newForm = propsMap.value("form", "");
-	if (newForm.compare(m_form) == 0) return false;
-
-	QString newPins = propsMap.value("pins", "");
-	if (newForm.contains("shrouded")) {
-		int pins = newPins.toInt();
-		if (pins % 2 == 1) {
-			return false;
-		}
-
-		QString pinSpacing = propsMap.value("pin spacing", "");
-		if (pinSpacing.compare(ShroudedSpacing) != 0) {
-			return false;	
-		}
-	}
-
-	if (modelPart()->properties().value("pins", "").compare(newPins) != 0) return false;
-
-	return true;
-}
-
 ItemBase::PluralType PinHeader::isPlural() {
 	return Plural;
 }
@@ -299,21 +277,32 @@ QString PinHeader::genFZP(const QString & moduleid)
 {
 	initSpacings();
 	QStringList pieces = moduleid.split("_");
-	if (pieces.count() != 6) return "";
+	if (pieces.count() != 6 && pieces.count() != 7) return "";
 
-	QString spacing = pieces.at(5);
-	QString formWord = pieces.at(1);
+	QString spacing = pieces.at(pieces.count() - 1);
 
 	QString result = PaletteItem::genFZP(moduleid, "generic_female_pin_header_fzpTemplate", MinPins, MaxPins, 1); 
 	result.replace(".percent.", "%");
 	QString form = MaleFormString;
-	if (formWord.contains("female")) {
-		FemaleFormString;
+	QString formWord = "male";
+	QString formText = formWord;
+	QString formSchematic = formWord;
+	if (moduleid.contains("rounded")) {
+		form = FemaleRoundedFormString;
+		formWord = "rounded_female";
+		formText = "rounded female";
+		formSchematic = "female";
 	}
-	else if (formWord.contains("shrouded")) {
+	else if (moduleid.contains("female")) {
+		form = FemaleFormString;
+		formSchematic = formText = formWord = "female";
+	}
+	else if (moduleid.contains("shrouded")) {
 		form = ShroudedFormString;
+		formText = formWord = "shrouded";
+		formSchematic = "male";
 	}
-	return result.arg(Spacings.value(spacing, "")).arg(spacing).arg(form).arg(formWord); 
+	return result.arg(Spacings.value(spacing, "")).arg(spacing).arg(form).arg(formWord).arg(formText).arg(formSchematic); 
 }
 
 QString PinHeader::genModuleID(QMap<QString, QString> & currPropsMap)
@@ -321,9 +310,9 @@ QString PinHeader::genModuleID(QMap<QString, QString> & currPropsMap)
 	initSpacings();
 	QString pins = currPropsMap.value("pins");
 	QString spacing = currPropsMap.value("pin spacing");
+	if (spacing.isEmpty()) spacing = ShroudedSpacing;
 	QString form = currPropsMap.value("form");
 	QString formWord = "male";
-
 	if (form.contains("shrouded")) {
 		int p = pins.toInt();
 		if (p < MinShroudedPins) {
@@ -334,6 +323,9 @@ QString PinHeader::genModuleID(QMap<QString, QString> & currPropsMap)
 		}
 		spacing = ShroudedSpacing;
 		formWord = "shrouded";
+	}
+	else if (form.contains("rounded")) {
+		formWord ="rounded_female";
 	}
 	else if (form.contains("female")) {
 		formWord = "female";
@@ -454,10 +446,9 @@ QString PinHeader::makeBreadboardSvg(const QString & expectedFileName)
 
 	int pinIndex = 4;
 	if (pieces.count() == 8) pinIndex++;
-	QString form = pieces.at(1);
 
 	int pins = pieces.at(pinIndex).toInt();
-	if (form.contains("shrouded")) {
+	if (expectedFileName.contains("shrouded")) {
 		return makeBreadboardShroudedSvg(pins);
 	}
 
@@ -471,11 +462,11 @@ QString PinHeader::makeBreadboardSvg(const QString & expectedFileName)
 				"<g id='breadboard' >\n");
 
 	QString fileForm;
-	if (form.contains("round")) {
+	if (expectedFileName.contains("round")) {
 		fileForm = "rounded_female";
 		header += "<rect fill='#404040' width='%2' height='1000'/>\n";
 	}
-	else if (form.contains("female")) {
+	else if (expectedFileName.contains("female")) {
 		fileForm = "female";
 		header += "<rect fill='#404040' width='%2' height='1000'/>\n";
 	}

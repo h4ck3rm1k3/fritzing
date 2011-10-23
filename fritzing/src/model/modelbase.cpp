@@ -441,7 +441,7 @@ bool ModelBase::genFZP(const QString & moduleID, ModelBase * refModel) {
 	if (path.isEmpty()) return false;
 
 	ModelPart* mp = refModel->addPart(path, true, true);
-	mp->setCore(true);
+	if (mp) mp->setCore(true);
 	return mp != NULL;
 }
 

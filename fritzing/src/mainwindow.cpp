@@ -1825,18 +1825,10 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 				generatedModuleID = ScrewTerminal::genModuleID(currPropsMap);
 			}
 
-			if (itemBase->moduleID().startsWith("generic_female_pin_header_", Qt::CaseInsensitive)) {
+			PinHeader * pinHeader = qobject_cast<PinHeader *>(itemBase);
+			if (pinHeader) {
 				generatedModuleID = PinHeader::genModuleID(currPropsMap);
 			}
-
-			if (itemBase->moduleID().startsWith("generic_male_pin_header_", Qt::CaseInsensitive)) {
-				generatedModuleID = PinHeader::genModuleID(currPropsMap);
-			}
-
-			if (itemBase->moduleID().startsWith("generic_shrouded_pin_header_", Qt::CaseInsensitive)) {
-				generatedModuleID = PinHeader::genModuleID(currPropsMap);
-			}
-
 		}
 	}
 
@@ -1857,17 +1849,10 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 		}
 	}
 
-
-
 	if (generatedModuleID.isEmpty()) {
 		if (prop.compare("pins") == 0) {
-			if (itemBase->moduleID().startsWith("generic_female_pin_header_", Qt::CaseInsensitive)) {
-				generatedModuleID = PinHeader::genModuleID(currPropsMap);
-			}
-			else if (itemBase->moduleID().startsWith("generic_male_pin_header_", Qt::CaseInsensitive)) {
-				generatedModuleID = PinHeader::genModuleID(currPropsMap);
-			}
-			else if (itemBase->moduleID().startsWith("generic_shrouded_pin_header_", Qt::CaseInsensitive)) {
+			PinHeader * pinHeader = qobject_cast<PinHeader *>(itemBase);
+			if (pinHeader) {
 				generatedModuleID = PinHeader::genModuleID(currPropsMap);
 			}
 			else if (itemBase->moduleID().startsWith("screw_terminal_", Qt::CaseInsensitive)) {
@@ -1882,6 +1867,15 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 			else if (itemBase->moduleID().startsWith("mystery_part_", Qt::CaseInsensitive)) 
 			{
 				generatedModuleID = MysteryPart::genModuleID(currPropsMap);
+			}
+		}
+	}
+
+	if (generatedModuleID.isEmpty()) {
+		if (prop.compare("form") == 0) {
+			PinHeader * pinHeader = qobject_cast<PinHeader *>(itemBase);
+			if (pinHeader) {
+				generatedModuleID = PinHeader::genModuleID(currPropsMap);
 			}
 		}
 	}
@@ -1966,18 +1960,6 @@ bool MainWindow::swapSpecial(QMap<QString, QString> & currPropsMap) {
 				layers = "2";
 				continue;
 			}
-		}
-
-		if (key.compare("form", Qt::CaseInsensitive) == 0) {
-			PinHeader * pinHeader = qobject_cast<PinHeader *>(itemBase);
-			if (pinHeader == NULL) continue;
-
-			if (pinHeader->onlyFormChanges(currPropsMap)) {
-				m_currentGraphicsView->setForm(currPropsMap.value(key));
-				return true;
-			}
-
-			continue;
 		}
 
 		if (key.compare("spacing", Qt::CaseInsensitive) == 0) {

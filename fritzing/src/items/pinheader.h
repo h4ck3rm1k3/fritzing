@@ -47,7 +47,6 @@ public:
 	void setProp(const QString & prop, const QString & value);
 	void setForm(QString form, bool force);
 	const QString & form();
-	bool onlyFormChanges(QMap<QString, QString> & propsMap);
 	PluralType isPlural();
 	void addedToScene(bool temporary);
 

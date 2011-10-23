@@ -4745,7 +4745,8 @@ void SketchWidget::prepDeleteProps(ItemBase * itemBase, long id, const QString &
 
 	PinHeader * pinHeader = qobject_cast<PinHeader *>(itemBase);
 	if (pinHeader != NULL) {
-		new SetPropCommand(this, id, "form", pinHeader->form(), pinHeader->form(), true, parentCommand);
+		// deal with old-style pin headers (pre 0.6.4)
+		new SetPropCommand(this, id, "form", pinHeader->form(), PinHeader::findForm(newModuleID), true, parentCommand);
 		prepDeleteOtherProps(itemBase, id, newModuleID, parentCommand);
 		return;
 	}

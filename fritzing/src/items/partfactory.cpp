@@ -317,15 +317,7 @@ QString PartFactory::getFzpFilename(const QString & moduleID)
 		return getFzpFilenameAux(moduleID, &Dip::genSipFZP);
 	}
 
-	if (moduleID.startsWith("generic_female_pin_header_")) {
-		return getFzpFilenameAux(moduleID, &PinHeader::genFZP);
-	}
-
-	if (moduleID.startsWith("generic_male_pin_header_")) {
-		return getFzpFilenameAux(moduleID, &PinHeader::genFZP);
-	}
-
-	if (moduleID.startsWith("generic_shrouded_pin_header_")) {
+	if (moduleID.contains("_pin_header_") && moduleID.startsWith("generic_")) {
 		return getFzpFilenameAux(moduleID, &PinHeader::genFZP);
 	}
 
@@ -396,7 +388,6 @@ ModelPart * PartFactory::fixObsoleteModuleID(QDomDocument & domDocument, QDomEle
 	}
 
 	if (moduleIDRef.startsWith("generic_rounded_female")) {
-		moduleIDRef.replace("rounded_female", "female");
 		ModelPart * modelPart = referenceModel->retrieveModelPart(moduleIDRef);
 		if (modelPart != NULL) {
 			instance.setAttribute("moduleIdRef", moduleIDRef);
