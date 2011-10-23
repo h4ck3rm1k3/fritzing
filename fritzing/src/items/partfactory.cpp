@@ -223,7 +223,7 @@ QString PartFactory::getSvgFilename(ModelPart * modelPart, const QString & expec
 		return getSvgFilenameAux(expectedFileName, &PinHeader::makePcbSvg);
 	}
 
-	if (expectedFileName.startsWith("pcb/shroud_", Qt::CaseInsensitive)) {
+	if (expectedFileName.startsWith("pcb/shrouded_", Qt::CaseInsensitive)) {
 		return getSvgFilenameAux(expectedFileName, &PinHeader::makePcbSvg);
 	}
 
@@ -321,6 +321,14 @@ QString PartFactory::getFzpFilename(const QString & moduleID)
 		return getFzpFilenameAux(moduleID, &PinHeader::genFZP);
 	}
 
+	if (moduleID.startsWith("generic_male_pin_header_")) {
+		return getFzpFilenameAux(moduleID, &PinHeader::genFZP);
+	}
+
+	if (moduleID.startsWith("generic_shrouded_pin_header_")) {
+		return getFzpFilenameAux(moduleID, &PinHeader::genFZP);
+	}
+
 	if (moduleID.startsWith("mystery_part")) {
 		if (moduleID.contains("dip", Qt::CaseInsensitive)) {
 			return getFzpFilenameAux(moduleID, &MysteryPart::genDipFZP);
@@ -376,7 +384,6 @@ ModelPart * PartFactory::fixObsoleteModuleID(QDomDocument & domDocument, QDomEle
 	}
 
 	if (moduleIDRef.startsWith("generic_male")) {
-		moduleIDRef.replace("male", "female");
 		ModelPart * modelPart = referenceModel->retrieveModelPart(moduleIDRef);
 		if (modelPart != NULL) {
 			instance.setAttribute("moduleIdRef", moduleIDRef);

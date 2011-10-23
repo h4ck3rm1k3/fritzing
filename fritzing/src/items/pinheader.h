@@ -65,10 +65,10 @@ public:
 	static QString genFZP(const QString & moduleid);
 	static QString genModuleID(QMap<QString, QString> & currPropsMap);
 	static QString makePcbSvg(const QString & expectedFileName);
-	static QString makePcbShroudSvg(int pins);
+	static QString makePcbShroudedSvg(int pins);
 	static QString makeSchematicSvg(const QString & expectedFileName);
 	static QString makeBreadboardSvg(const QString & expectedFileName);
-	static QString makeBreadboardShroudSvg(int pins);
+	static QString makeBreadboardShroudedSvg(int pins);
 	static QString findForm(const QString & filename);
 
 protected:

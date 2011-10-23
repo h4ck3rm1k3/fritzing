@@ -558,6 +558,14 @@
           </iconView>
         </views>
       </instance>
+      
+      <instance moduleIdRef="generic_shrouded_pin_header_10_100mil" modelIndex="45" path="parts/core/generic_shrouded_pin_header_10_100mil.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
 
       <instance moduleIdRef="screw_terminal_2_100mil" modelIndex="46" path="parts/core/screw_terminal_2_100mil.fzp">
         <views>

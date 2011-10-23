@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.2.2.b.03.04.2550" moduleId="generic_female_pin_header_%1_.percent.2">
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.2.2.b.03.04.2550" moduleId="generic_.percent.4_pin_header_%1_.percent.2">
     <version>4</version>
     <author>Fritzing Part-o-matic</author>
-    <title>Generic female header - %1 pins</title>
+    <title>Generic .percent.4 header - %1 pins</title>
     <label>J</label>
     <date>2009-10-23</date>
     <tags/>
@@ -11,10 +11,10 @@
         <property name="Form">.percent.3</property>
         <property name="Pin Spacing">.percent.1</property>
     <property name="package">THT</property></properties>
-    <description>Generic female header</description>
+    <description>Generic .percent.4 header</description>
     <views>
         <iconView>
-            <layers image="icon/generic_female_header.svg">
+            <layers image="icon/generic_.percent.4_header.svg">
                 <layer layerId="icon"/>
             </layers>
         </iconView>
