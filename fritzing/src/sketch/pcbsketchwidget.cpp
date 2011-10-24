@@ -2194,17 +2194,9 @@ ItemBase * PCBSketchWidget::placePartDroppedInOtherView(ModelPart * modelPart, V
 		tileToQRect(bestPlace.bestTile, r);
 		ItemBase * chief = newItem->layerKinChief();
 		chief->setPos(r.topLeft());
-		DebugDialog::debug(QString("placing part %1").arg(bestPlace.rotate90), r);
+		DebugDialog::debug(QString("placing part with rotation:%1").arg(bestPlace.rotate90), r);
 		if (bestPlace.rotate90) {
-			chief->rotate(90);
-			chief->setPos(r.topLeft());
-		}
-		foreach (ItemBase * lkpi, chief->layerKin()) {
-			lkpi->setPos(r.topLeft());
-			if (bestPlace.rotate90) {
-				lkpi->rotate(90);
-				lkpi->setPos(r.topLeft());
-			}
+			chief->rotateItem(90);
 		}
 		alignOneToGrid(newItem);
 	}

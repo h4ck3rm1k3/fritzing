@@ -234,8 +234,14 @@ void PaletteItemBase::mousePressEvent(PaletteItemBase * originalItem, QGraphicsS
 		this->saveGeometry();
 		m_inRotation = true;
 		RotationCenter = mapToScene(this->boundingRectWithoutLegs().center());
-		RotationAxis = event->scenePos();
+		RotationAxis = event->scenePos(); 
 		OriginalTransform = this->transform();
+		DebugDialog::debug(QString("c:%1,%2 a:%3,%4 t:%5,%6,%7,%8 %9,%10")
+			.arg(RotationCenter.x()).arg(RotationCenter.y())
+			.arg(RotationAxis.x()).arg(RotationAxis.y())
+			.arg(OriginalTransform.m11()).arg(OriginalTransform.m12()).arg(OriginalTransform.m21()).arg(OriginalTransform.m22())
+			.arg(OriginalTransform.dx()).arg(OriginalTransform.dy())
+			);
 		return;
 	}
 
@@ -288,7 +294,7 @@ void PaletteItemBase::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 		itemBase->getViewGeometry().setTransform(OriginalTransform);
 	}
 
-	DebugDialog::debug(QString("rotating item %1 %2 %3 %4").arg(QTime::currentTime().toString("HH:mm:ss.zzz")).arg(deltaAngle).arg(originalAngle).arg((long) this, 0, 16));
+	DebugDialog::debug(QString("rotating item %1 da:%2 oa:%3 %4").arg(QTime::currentTime().toString("HH:mm:ss.zzz")).arg(deltaAngle).arg(originalAngle).arg((long) this, 0, 16));
 	chief->rotateItem(deltaAngle);
 }
 
