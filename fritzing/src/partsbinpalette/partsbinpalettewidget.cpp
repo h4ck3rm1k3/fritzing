@@ -69,7 +69,7 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 
 	Q_UNUSED(undoStack);
 
-	m_undoStack = new WaitPushUndoStack(this);PartsBinPaletteWidget::
+	m_undoStack = new WaitPushUndoStack(this);
 	connect(m_undoStack, SIGNAL(cleanChanged(bool)), this, SLOT(undoStackCleanChanged(bool)) );
 
 	setupButtons();
