@@ -178,8 +178,8 @@ FDockWidget {
 
 FDockWidget::title {
 	height: 10px;
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
+	/*border-top-left-radius: 5px;*/
+	/*border-top-right-radius: 5px;*/
 	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                      stop: 0 #ededed, stop: 1.0 #ccc);
 	border-top: 1px #e3e3e3 solid;
@@ -451,24 +451,12 @@ dark grey:		rgb(126,126,126);
 
 /***************** Parts Bin *****************/
 
-/*#partsBinTitle {
-	border: 1px solid #CECECE;
-	border-top-left-radius: 8px;
-	border-top-right-radius: 8px;
-	margin: 0px;
-	padding: 0px;
-}
-
-#partsBinTitle QLabel {
-	margin: 0px 1px 0px 1px;
-	font-weight: bold;
-	color: #575757;
-	font-size: 11px;
-}*/
-
-
 #partsBinLabel {
-	background-color: rgb(255,255,255);
+	background-color: rgb(164,164,164);
+	font-size: 11px;
+	color: #474747;
+	font-weight: bold;
+	text-transform: uppercase;
 }
 
 PartsBinIconView {
@@ -498,19 +486,21 @@ PartsBinPaletteWidget InfoGraphicsView {
 	border: none;
 }
 
-/* trying to get rid of the line across the top of the tabs */
+
 PartsBinPaletteWidget,
 StackTabWidget,
 StackTabWidget::pane,
 StackTabBar {
+	/* trying to get rid of the line 
+	across the top of the tabs */
 	border: none;
 }
 
 StackTabBar::tab {
-    margin: 0px 2px 0px 0px;
-    padding: 2px;
+    margin: 0px 0px 0px 0px;
+    padding: 0px;
 	
-    /*min-height: 1.7em;*/
+    /*
 	min-width: 2.5em;
 	max-width: 2.5em;
 	min-height: 3.0em;
@@ -518,7 +508,12 @@ StackTabBar::tab {
 	text-align: center;
 
     border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
+    border-top-right-radius: 4px;*/
+	
+	min-width: 32px;
+	max-width: 32px;
+	min-height: 32px;
+	max-height: 32px;
 	border: 0;
 	background: rgb(164,164,164);
 
