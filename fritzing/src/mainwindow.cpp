@@ -1892,7 +1892,7 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 		return;
 	}
 
-	if ((prop.compare("package", Qt::CaseSensitive) != 0) && swapSpecial(currPropsMap)) {
+	if ((prop.compare("package", Qt::CaseSensitive) != 0) && swapSpecial(prop, currPropsMap)) {
 		return;
 	}
 
@@ -1926,7 +1926,7 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 	swapSelectedAux(itemBase, moduleID);
 }
 
-bool MainWindow::swapSpecial(QMap<QString, QString> & currPropsMap) {
+bool MainWindow::swapSpecial(const QString & theProp, QMap<QString, QString> & currPropsMap) {
 	ItemBase * itemBase = m_infoView->currentItem();
 	QString pinSpacing, resistance, layers;
 	foreach (QString key, currPropsMap.keys()) {
@@ -1990,6 +1990,11 @@ bool MainWindow::swapSpecial(QMap<QString, QString> & currPropsMap) {
 	}
 
 	if (!resistance.isEmpty() || !pinSpacing.isEmpty()) {
+		if (theProp.contains("band", Qt::CaseInsensitive)) {
+			// swap 4band for 5band or vice versa.
+			return false;
+		}
+
 		Resistor * resistor = qobject_cast<Resistor *>(itemBase);
 		if (resistor != NULL) {
 			m_currentGraphicsView->setResistance(resistance, pinSpacing);

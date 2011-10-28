@@ -427,7 +427,7 @@ protected:
 	bool loadCustomBoardShape();
 	void svgMissingLayer(const QString & layername, const QString & path);
 	long swapSelectedAuxAux(ItemBase * itemBase, const QString & moduleID, ViewLayer::ViewLayerSpec viewLayerSpec, QUndoCommand * parentCommand);
-	bool swapSpecial(QMap<QString, QString> & currPropsMap);
+	bool swapSpecial(const QString & prop, QMap<QString, QString> & currPropsMap);
 
 	void enableAddBendpointAct(QGraphicsItem *);
 	class FileProgressDialog * exportProgress();
