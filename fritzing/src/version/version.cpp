@@ -25,7 +25,7 @@ $Date$
 ********************************************************************/
 										
 #include "version.h"			
-
+											
 #include <QString>
 #include <QStringList>
 			

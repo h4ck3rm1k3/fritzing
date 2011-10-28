@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.1.1201" moduleId="ResistorModuleID">
+<module fritzingVersion="0.1.1201" moduleId="5BandResistorModuleID">
     <version>4</version>
     <title>220 &#8486; Resistor</title>
     <label>R</label>
@@ -9,26 +9,27 @@
         <tag>Resistor</tag>
         <tag>basic resistor</tag>
         <tag>fritzing core</tag>
+        <tag>5 band</tag>
     </tags>
     <properties>
         <property name="Resistance" showInLabel="yes">220</property>
         <property name="family">Resistor</property>
       <property name="power" showInLabel="yes"></property>
       <property name="Pin Spacing">400 mil</property>
-      <property name="package">THT</property>      
-      <property name="bands">4</property>
+      <property name="package">THT</property>
+      <property name="bands">5</property>
       <property name="tolerance" showInLabel="yes">&#177;5%</property>
     </properties>
     <taxonomy>discreteParts.resistor.220</taxonomy>
-    <description>A generic resistor (0.25W)</description>
+    <description>A generic 5-band resistor (0.25W)</description>
     <views>
         <iconView>
-            <layers image="icon/resistor_icon_220.svg" >   
+            <layers image="icon/resistor_5bands.svg" >   
                 <layer layerId="icon" />
             </layers>
         </iconView>
         <breadboardView>
-            <layers image="breadboard/resistor_220.svg">
+            <layers image="breadboard/resistor_5bands.svg">
                 <layer layerId="breadboard" />
             </layers>
         </breadboardView>

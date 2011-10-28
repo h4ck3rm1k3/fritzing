@@ -40,8 +40,8 @@ $Date$
 #include <qmath.h>
 #include <QRegExpValidator>
 
-static QString BreadboardSvg;
-static QString IconSvg;
+static QHash<QString, QString> BreadboardSvgs;
+static QHash<QString, QString> IconSvgs;
 static QStringList Resistances;
 static QHash<QString, QString> PinSpacings;
 static QHash<int, QColor> ColorBands;
@@ -214,12 +214,18 @@ QString Resistor::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString,
 }
 
 QString Resistor::makeSvg(const QString & resistance, ViewLayer::ViewLayerID viewLayerID) {
+
+	QString moduleID = this->moduleID();
 	double ohms = TextUtils::convertFromPowerPrefix(resistance, OhmSymbol);
 	QString sohms = QString::number(ohms, 'e', 3);
 	int firstband = sohms.at(0).toAscii() - '0';
 	int secondband = sohms.at(2).toAscii() - '0';
+	int thirdband = sohms.at(3).toAscii() - '0';
 	int temp = (firstband * 10) + secondband;
-	int thirdband = (temp == 0) ? 0 : log10(ohms / temp);
+	if (moduleID.contains("5Band")) {
+		temp = (temp * 10) + thirdband;
+	}
+	int multiplier = (temp == 0) ? 0 : log10(ohms / temp);
 
 	QString tolerance = prop("tolerance");
 
@@ -227,17 +233,17 @@ QString Resistor::makeSvg(const QString & resistance, ViewLayer::ViewLayerID vie
 	int errorLine;
 	int errorColumn;
 	QDomDocument domDocument;
-	if (!domDocument.setContent(viewLayerID == ViewLayer::Breadboard ? BreadboardSvg : IconSvg, &errorStr, &errorLine, &errorColumn)) {
+	if (!domDocument.setContent(viewLayerID == ViewLayer::Breadboard ? BreadboardSvgs.value(moduleID) : IconSvgs.value(moduleID), &errorStr, &errorLine, &errorColumn)) {
 		return "";
 	}
 	 
 	QDomElement root = domDocument.documentElement();
-	setBands(root, firstband, secondband, thirdband, tolerance);
+	setBands(root, firstband, secondband, thirdband, multiplier, tolerance);
 	return domDocument.toString();
 
 }
 
-void Resistor::setBands(QDomElement & element, int firstband, int secondband, int thirdband, const QString & tolerance)
+void Resistor::setBands(QDomElement & element, int firstband, int secondband, int thirdband, int multiplier, const QString & tolerance)
 {
 
 	QString id = element.attribute("id");
@@ -248,8 +254,11 @@ void Resistor::setBands(QDomElement & element, int firstband, int secondband, in
 		else if (id.compare("band_2_nd") == 0) {
 			element.setAttribute("fill", ColorBands.value(secondband, Qt::black).name());
 		}
-		else if (id.compare("band_3_rd_multiplier") == 0) {
+		else if (id.compare("band_3") == 0) {
 			element.setAttribute("fill", ColorBands.value(thirdband, Qt::black).name());
+		}
+		else if (id.compare("band_rd_multiplier") == 0) {
+			element.setAttribute("fill", ColorBands.value(multiplier, Qt::black).name());
 		}
 		else if (id.compare("gold_band") == 0) {
 			element.setAttribute("fill", Tolerances.value(tolerance, QColor(173, 159, 78)).name());
@@ -258,7 +267,7 @@ void Resistor::setBands(QDomElement & element, int firstband, int secondband, in
 
 	QDomElement child = element.firstChildElement();
 	while (!child.isNull()) {
-		setBands(child, firstband, secondband, thirdband, tolerance);
+		setBands(child, firstband, secondband, thirdband, multiplier, tolerance);
 		child = child.nextSiblingElement();
 	}
 }
@@ -413,11 +422,11 @@ void Resistor::setProp(const QString & prop, const QString & value)
 bool Resistor::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors, LayerAttributes & layerAttributes, QString & error)
 {
 	bool result = Capacitor::setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, viewLayerSpec, doConnectors, layerAttributes, error);
-	if (viewLayerID == ViewLayer::Breadboard && BreadboardSvg.isEmpty() && result) {
-		BreadboardSvg = QString(layerAttributes.loaded());
+	if (viewLayerID == ViewLayer::Breadboard && BreadboardSvgs.value(modelPart->moduleID(), "").isEmpty() && result) {
+		BreadboardSvgs.insert(modelPart->moduleID(), QString(layerAttributes.loaded()));
 	}
-	else if (viewLayerID == ViewLayer::Icon && IconSvg.isEmpty() && result) {
-		IconSvg = QString(layerAttributes.loaded());
+	else if (viewLayerID == ViewLayer::Icon && IconSvgs.value(modelPart->moduleID(), "").isEmpty() && result) {
+		IconSvgs.insert(modelPart->moduleID(), QString(layerAttributes.loaded()));
 	}
 	return result;
 }

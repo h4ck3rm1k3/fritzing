@@ -63,7 +63,7 @@ protected:
 	ConnectorItem* newConnectorItem(class Connector *connector);
 	ConnectorItem* newConnectorItem(ItemBase * layerkin, Connector *connector);
 	QStringList collectValues(const QString & family, const QString & prop, QString & value);
-	void setBands(QDomElement & element, int firstband, int secondband, int thirdband, const QString & tolerance);
+	void setBands(QDomElement & element, int firstband, int secondband, int thirdband, int multiplier, const QString & tolerance);
 
 public slots:
 	void resistanceEntry(const QString & text);
