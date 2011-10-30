@@ -130,7 +130,7 @@ void StackTabBar::paintEvent(QPaintEvent *event)
     {
         QStyleOptionTabV2 option;
         initStyleOption(&option, i);
-        //printf("tab text: %s\n", option.text.toLatin1().data());
+		option.shape = RoundedNorth;
 		option.text = "";
         painter.drawControl(QStyle::CE_TabBarTab, option);
     }
