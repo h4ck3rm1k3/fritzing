@@ -74,6 +74,8 @@ public:
 	void setDate(QDate date);
 	const QString & dateAsStr();
 	void setDate(QString date);
+	QIcon * icon();
+	void setIcon(const QString & filename);
 
 	const QString & path();
 	void setPath(QString path);
@@ -142,6 +144,8 @@ protected:
 	QString m_url;
 	QString m_date;
 	QString m_replacedby;
+
+	QIcon * m_icon;
 
 	QString m_path;
 	QString m_taxonomy;

@@ -99,6 +99,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		bool currentViewIsIconView();
 		QMenu * getFileMenu();		
 		QMenu * getPartMenu();
+		QIcon icon();
 
 	public slots:
 		void addPartCommand(const QString& moduleID);
@@ -232,6 +233,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		bool m_saveQuietly;
 
 		FileProgressDialog * m_loadingProgressDialog;
+		QIcon * m_icon;
 
 	public:
 		static QString Title;

@@ -94,7 +94,7 @@ BinManager::~BinManager() {
 }
 
 void BinManager::addBin(PartsBinPaletteWidget* bin) {
-	m_stackTabWidget->addTab(bin,bin->title());
+	m_stackTabWidget->addTab(bin, bin->icon(), bin->title());
 	registerBin(bin, m_stackTabWidget);
 	setAsCurrentBin(bin);
 }
@@ -133,7 +133,7 @@ void BinManager::connectTabWidget(StackTabWidget *tw) {
 
 void BinManager::insertBin(PartsBinPaletteWidget* bin, int index, StackTabWidget* tb) {
 	registerBin(bin,tb);
-	tb->insertTab(index,bin,bin->title());
+	tb->insertTab(index, bin, bin->icon(), bin->title());
 	tb->setCurrentIndex(index);
 }
 
@@ -280,7 +280,7 @@ void BinManager::setDirtyTab(PartsBinPaletteWidget* w, bool dirty) {
 	}
 	*/
 	w->setWindowModified(dirty);
-	if(m_stackTabWidget) {
+	if(m_stackTabWidget != NULL) {
 		int tabIdx = m_stackTabWidget->indexOf(w);
 		m_stackTabWidget->setTabText(tabIdx, w->title()+(dirty? " *": ""));
 	} else {
@@ -289,9 +289,12 @@ void BinManager::setDirtyTab(PartsBinPaletteWidget* w, bool dirty) {
 }
 
 void BinManager::updateTitle(PartsBinPaletteWidget* w, const QString& newTitle) {
-	if(m_stackTabWidget) {
+	if(m_stackTabWidget != NULL) {
 		m_stackTabWidget->setTabText(m_stackTabWidget->indexOf(w), newTitle+" *");
 		setDirtyTab(w);
+	}
+	else {
+		qWarning() << tr("BinManager::updateTitle: Couldn't set the bin '%1' as dirty").arg(w->title());
 	}
 }
 
@@ -469,12 +472,12 @@ void BinManager::restoreStateAndGeometry() {
 
 		PartsBinPaletteWidget* core = newBin();
 		core->load(BinManager::CorePartsBinLocation, m_mainWindow->fileProgressDialog());
-		m_stackTabWidget->addTab(core,core->title());
+		m_stackTabWidget->addTab(core, core->icon(), core->title());
 		registerBin(core,m_stackTabWidget);
 
 		PartsBinPaletteWidget* myParts = newBin();
 		myParts->open(MyPartsBinLocation, m_mainWindow->fileProgressDialog());
-		m_stackTabWidget->addTab(myParts,myParts->title());
+		m_stackTabWidget->addTab(myParts, myParts->icon(), myParts->title());
 		registerBin(myParts,m_stackTabWidget);
 	} else {
 		foreach(QString g, settings.childGroups()) {
@@ -486,7 +489,7 @@ void BinManager::restoreStateAndGeometry() {
 				QString filename = settings.value(k).toString();
 				if(QFileInfo(filename).exists() && bin->open(filename, m_mainWindow->fileProgressDialog())) {
 					bin->setTabWidget(m_stackTabWidget);
-					m_stackTabWidget->addTab(bin,bin->title());
+					m_stackTabWidget->addTab(bin, bin->icon(), bin->title());
 					registerBin(bin,m_stackTabWidget);
 				} else {
 					delete bin;
@@ -557,10 +560,10 @@ QList<QAction*> BinManager::openedBinsActions(const QString &moduleId) {
 	QMap<QString,QAction*> titlesAndActions; // QMap sorts values by key
 
 	for (int i = 0; i < m_stackTabWidget->count(); i++) {
-		PartsBinPaletteWidget* b = (PartsBinPaletteWidget *) m_stackTabWidget->widget(i);
-		QAction *act = b->addPartToMeAction();
-		act->setEnabled(!b->contains(moduleId));
-		titlesAndActions[b->title()] = act;
+		PartsBinPaletteWidget* pppw = (PartsBinPaletteWidget *) m_stackTabWidget->widget(i);
+		QAction *act = pppw->addPartToMeAction();
+		act->setEnabled(!pppw->contains(moduleId));
+		titlesAndActions[pppw->title()] = act;
 	}
 
 	return titlesAndActions.values();
@@ -593,7 +596,7 @@ void BinManager::search(const QString & searchText) {
 
     searchBin->removeParts();
     foreach (ModelPart * modelPart, modelParts) {
-        DebugDialog::debug(modelPart->title());
+        //DebugDialog::debug(modelPart->title());
         this->addPartTo(searchBin, modelPart);
     }
 

@@ -32,6 +32,9 @@ $Date$
 
 #include <QMessageBox>
 
+
+/////////////////////////////////////////////////
+
 ModelBase::ModelBase( bool makeRoot )
 {
 	m_reportMissingModules = true;
@@ -44,7 +47,6 @@ ModelBase::~ModelBase() {
 		delete m_root;
 	}
 }
-
 
 ModelPart * ModelBase::root() {
 	return m_root;
@@ -113,6 +115,17 @@ bool ModelBase::load(const QString & fileName, ModelBase * refModel, QList<Model
 	if (!title.isNull()) {
 		this->root()->modelPartShared()->setTitle(title.text());
 	}
+
+	QString iconFilename = root.attribute("icon");
+	if (iconFilename.isEmpty()) {
+		// deal with legacy bins
+		iconFilename = title.text() + ".png";
+	}
+
+	if (!iconFilename.isEmpty()) {
+		this->root()->modelPartShared()->setIcon(iconFilename);
+	}
+
 
     QDomElement views = root.firstChildElement("views");
 	emit loadedViews(this, views);

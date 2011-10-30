@@ -39,6 +39,7 @@ class StackTabBar : public QTabBar {
 		void dragEnterEvent(QDragEnterEvent* event);
         void dragMoveEvent(QDragMoveEvent* event);
 		void dropEvent(QDropEvent* event);
+		void paintEvent(QPaintEvent *event);
 
 		bool mimeIsAction(const class QMimeData* m, const QString& action);
 

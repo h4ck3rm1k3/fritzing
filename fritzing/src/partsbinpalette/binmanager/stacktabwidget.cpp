@@ -31,8 +31,9 @@ $Date$
 #include "../../debugdialog.h"
 
 StackTabWidget::StackTabWidget(QWidget *parent) : QTabWidget(parent) {
-	setTabBar(new StackTabBar(this));
+	setElideMode(Qt::ElideRight);
 
+	setTabBar(new StackTabBar(this));
 
 	connect(
 		this, SIGNAL(currentChanged(int)),

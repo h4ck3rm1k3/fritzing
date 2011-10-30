@@ -52,6 +52,7 @@ $Date$
 PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoView *infoView, WaitPushUndoStack *undoStack, BinManager* manager) :
 	QFrame(manager)
 {
+	m_icon = NULL;
 	m_searchLineEdit = NULL;
 	m_saveQuietly = false;
 
@@ -264,6 +265,7 @@ void PartsBinPaletteWidget::afterModelSetted(PaletteModel *model) {
 
 void PartsBinPaletteWidget::grabTitle(PaletteModel *model) {
 	m_title = model->root()->modelPartShared()->title();
+	m_icon = model->root()->modelPartShared()->icon();
 	m_addPartToMeAction->setText(m_title);
 	m_binLabel->setText(m_title);
 }
@@ -999,4 +1001,9 @@ void PartsBinPaletteWidget::updateBinPartsMenu() {
 	m_importPartAction->setEnabled(true);
 }
 
+QIcon PartsBinPaletteWidget::icon() {
+	static QIcon emptyIcon;
+	if (m_icon) return *m_icon;
 
+	return emptyIcon;
+}

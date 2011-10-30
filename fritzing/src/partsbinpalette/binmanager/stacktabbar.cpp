@@ -28,6 +28,8 @@ $Date$
 #include <QApplication>
 #include <QMouseEvent>
 #include <QMenu>
+#include <QStylePainter>
+#include <QStyleOptionTabV2>
 
 #include "stacktabbar.h"
 #include "stacktabwidget.h"
@@ -45,6 +47,7 @@ StackTabBar::StackTabBar(StackTabWidget *parent) : QTabBar(parent) {
 	setProperty("current","false");
 	setExpanding(false);
 	setElideMode(Qt::ElideRight);
+	setIconSize(QSize(32, 32));
 
 	setContextMenuPolicy(Qt::CustomContextMenu);
  
@@ -118,3 +121,17 @@ void StackTabBar::showContextMenu(const QPoint &point)
 	menu.exec(this->mapToGlobal(point));
 }
 
+
+void StackTabBar::paintEvent(QPaintEvent *event)
+{    
+    QStylePainter painter(this);
+
+    for(int i = 0; i < this->count(); ++i)
+    {
+        QStyleOptionTabV2 option;
+        initStyleOption(&option, i);
+        //printf("tab text: %s\n", option.text.toLatin1().data());
+		option.text = "";
+        painter.drawControl(QStyle::CE_TabBarTab, option);
+    }
+}
