@@ -75,10 +75,7 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 
 	setupButtons();
 	setupFooter();
-
-	m_binLabel = new QLabel(this);
-	m_binLabel->setObjectName("partsBinLabel");
-	m_binLabel->setWordWrap(false);
+	setupHeader();
 
 	m_iconView = new PartsBinIconView(m_refModel, this, m_binContextMenu, m_partContextMenu);
 	m_iconView->setInfoView(infoView);
@@ -142,6 +139,27 @@ void PartsBinPaletteWidget::setTabWidget(StackTabWidget *tabWidget) {
 	m_tabWidget = tabWidget;
 }
 
+void PartsBinPaletteWidget::setupHeader()
+{
+	m_binLabel = new QLabel(this);
+	m_binLabel->setObjectName("partsBinLabel");
+	m_binLabel->setWordWrap(false);
+
+	m_header = new QFrame(this);
+	m_header->setObjectName("partsBinHeader");
+	QHBoxLayout * hbl = new QHBoxLayout();
+	hbl->addWidget(m_binLabel);
+
+	QLabel * label = new QLabel("");
+	QPixmap pixmap(":resources/images/icons/binMenu.png");
+	label->setPixmap(pixmap);
+	label->setMinimumSize(pixmap.size());
+	label->setMaximumSize(pixmap.size());
+	hbl->addWidget(label);
+
+	m_header->setLayout(hbl);
+}
+
 void PartsBinPaletteWidget::setupFooter() {
 	m_footer = new QFrame(this);
 	m_footer->setObjectName("partsBinFooter");
@@ -193,13 +211,15 @@ void PartsBinPaletteWidget::setView(PartsBinView *view) {
 		m_showIconViewButton->setDisabledIcon();
 	}
 
-	delete layout();
-	QVBoxLayout *lo = new QVBoxLayout(this);
-	lo->setMargin(3);
-	lo->setSpacing(0);
-	lo->addWidget(m_binLabel);
-	lo->addWidget(dynamic_cast<QWidget*>(m_currentView));
-	lo->addWidget(m_footer);
+	QVBoxLayout *vbl = new QVBoxLayout(this);
+	vbl->setMargin(3);
+	vbl->setSpacing(0);
+
+	vbl->addWidget(m_header);
+	vbl->addWidget(dynamic_cast<QWidget*>(m_currentView));
+	vbl->addWidget(m_footer);
+
+	this->setLayout(vbl);
 }
 
 void PartsBinPaletteWidget::toIconView() {

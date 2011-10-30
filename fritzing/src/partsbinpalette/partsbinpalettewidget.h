@@ -150,6 +150,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		bool eventFilter(QObject *obj, QEvent *event);
 
 		void setupFooter();
+		void setupHeader();
 		void setupButtons();
 
 		void grabTitle(PaletteModel *model);
@@ -192,6 +193,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		class PartsBinListView *m_listView;
 
 		QFrame *m_footer;
+		QFrame *m_header;
 		QLabel * m_binLabel;
 
 		ImageButton *m_showIconViewButton;

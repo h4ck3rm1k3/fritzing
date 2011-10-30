@@ -124,6 +124,8 @@ void StackTabBar::showContextMenu(const QPoint &point)
 
 void StackTabBar::paintEvent(QPaintEvent *event)
 {    
+	Q_UNUSED(event);
+
     QStylePainter painter(this);
 
     for(int i = 0; i < this->count(); ++i)

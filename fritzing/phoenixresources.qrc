@@ -166,6 +166,7 @@
 	<file>resources/images/icons/parts_plural_v3_plur.png</file>
 	<file>resources/images/icons/parts_plural_v3_sing.png</file>
 	<file>resources/images/icons/asterisk.png</file>
+	<file>resources/images/icons/binMenu.png</file>
 	
 	<file>resources/images/itemselection/cornerHandlerActiveBottomLeft.png</file>
         <file>resources/images/itemselection/cornerHandlerActiveBottomRight.png</file>
