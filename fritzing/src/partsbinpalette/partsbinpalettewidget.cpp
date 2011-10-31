@@ -49,6 +49,19 @@ $Date$
 #include "../utils/fileprogressdialog.h"
 #include "../utils/folderutils.h"
 
+///////////////////////////////////////////////
+
+PopupButton::PopupButton(const QString & text) : QLabel(text)
+{
+}
+
+void PopupButton::mousePressEvent(QMouseEvent * event) 
+{
+	emit mousePressed(event);
+}
+
+//////////////////////////////////////////////
+
 PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoView *infoView, WaitPushUndoStack *undoStack, BinManager* manager) :
 	QFrame(manager)
 {
@@ -150,12 +163,13 @@ void PartsBinPaletteWidget::setupHeader()
 	QHBoxLayout * hbl = new QHBoxLayout();
 	hbl->addWidget(m_binLabel);
 
-	QLabel * label = new QLabel("");
+	PopupButton * label = new PopupButton("");
 	QPixmap pixmap(":resources/images/icons/binMenu.png");
 	label->setPixmap(pixmap);
 	label->setMinimumSize(pixmap.size());
 	label->setMaximumSize(pixmap.size());
 	hbl->addWidget(label);
+	connect(label, SIGNAL(mousePressed(QMouseEvent *)), this, SLOT(prepPopup(QMouseEvent *)));
 
 	m_header->setLayout(hbl);
 }
@@ -1027,3 +1041,11 @@ QIcon PartsBinPaletteWidget::icon() {
 
 	return emptyIcon;
 }
+
+void PartsBinPaletteWidget::prepPopup(QMouseEvent * event) {
+	QLabel * label = qobject_cast<QLabel *>(sender());
+	if (label == NULL) return;
+
+	m_fileMenu->exec(label->mapToGlobal(event->pos()));
+}
+

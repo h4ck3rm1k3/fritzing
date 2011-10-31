@@ -52,6 +52,18 @@ protected:
 	}
 };
 
+
+class PopupButton : public QLabel {
+	Q_OBJECT
+
+public:
+	PopupButton(const QString & text);
+	void mousePressEvent(QMouseEvent *);
+
+signals:
+	void mousePressed(QMouseEvent *);
+};
+
 class PartsBinPaletteWidget : public QFrame, public Bundler {
 	Q_OBJECT
 
@@ -133,6 +145,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		void search();
         void clickedSearch();
 		void focusSearchAfter();
+		void prepPopup(QMouseEvent *);
 
 	signals:
 		void saved(bool hasPartsFromBundled);
