@@ -608,7 +608,7 @@ Bitte wähle eine der Fritzing-Schriftarten, um sie zu ersetzen:</translation>
     <message>
         <location filename="../src/fritzingwindow.cpp" line="75"/>
         <source>Ctrl+W</source>
-        <translation>Ctrl+W</translation>
+        <translation type="unfinished">Strg+W</translation>
     </message>
     <message>
         <location filename="../src/fritzingwindow.cpp" line="76"/>
@@ -653,7 +653,7 @@ Bitte wähle eine der Fritzing-Schriftarten, um sie zu ersetzen:</translation>
     <message>
         <location filename="../src/fritzingwindow.cpp" line="233"/>
         <source>Ctrl+D</source>
-        <translation>Ctrl+D</translation>
+        <translation type="unfinished">Strg+D</translation>
     </message>
     <message>
         <location filename="../src/fritzingwindow.cpp" line="214"/>
@@ -758,7 +758,7 @@ Bitte wähle eine der Fritzing-Schriftarten, um sie zu ersetzen:</translation>
     <message>
         <location filename="../src/infoview/htmlinfoview.cpp" line="137"/>
         <source>Change the part label here</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bauteilbezeichnung hier änden</translation>
     </message>
     <message>
         <location filename="../src/infoview/htmlinfoview.cpp" line="161"/>
@@ -778,17 +778,17 @@ Bitte wähle eine der Fritzing-Schriftarten, um sie zu ersetzen:</translation>
     <message>
         <location filename="../src/infoview/htmlinfoview.cpp" line="172"/>
         <source>Part version number</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bauteilversionsnummer</translation>
     </message>
     <message>
         <location filename="../src/infoview/htmlinfoview.cpp" line="177"/>
         <source>Locked</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Gesperrt</translation>
     </message>
     <message>
         <location filename="../src/infoview/htmlinfoview.cpp" line="179"/>
         <source>Change the locked state of the part in this view.  A locked part can&apos;t be moved</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Den Sperrzustand des Bauteils in dieser Ansicht ändern.  Ein gesperrtes Bauteil kann nicht bewegt werden</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/infoview/htmlinfoview.cpp" line="335"/>
@@ -954,27 +954,27 @@ Bitte wähle eine der Fritzing-Schriftarten, um sie zu ersetzen:</translation>
     <message>
         <location filename="../src/items/itembase.cpp" line="300"/>
         <source>descr</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Beschreibung</translation>
     </message>
     <message>
         <location filename="../src/items/itembase.cpp" line="301"/>
         <source>filename</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dateiname</translation>
     </message>
     <message>
         <location filename="../src/items/itembase.cpp" line="302"/>
         <source>title</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Titel</translation>
     </message>
     <message>
         <location filename="../src/items/itembase.cpp" line="303"/>
         <source>date</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Datum</translation>
     </message>
     <message>
         <location filename="../src/items/itembase.cpp" line="304"/>
         <source>rev</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Revision</translation>
     </message>
     <message>
         <location filename="../src/items/itembase.cpp" line="305"/>
@@ -984,7 +984,7 @@ Bitte wähle eine der Fritzing-Schriftarten, um sie zu ersetzen:</translation>
     <message>
         <location filename="../src/items/itembase.cpp" line="306"/>
         <source>project</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Projekt</translation>
     </message>
     <message>
         <location filename="../src/items/itembase.cpp" line="312"/>
@@ -1014,7 +1014,7 @@ Bitte wähle eine der Fritzing-Schriftarten, um sie zu ersetzen:</translation>
     <message>
         <location filename="../src/items/itembase.cpp" line="1323"/>
         <source>unable to create renderer for svg %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Der Renderer für das SVG %1 konnte nicht erstellt werden</translation>
     </message>
 </context>
 <context>
@@ -1141,7 +1141,7 @@ Bitte wähle eine der Fritzing-Schriftarten, um sie zu ersetzen:</translation>
         <location filename="../src/mainwindow.cpp" line="723"/>
         <location filename="../src/mainwindow_menu.cpp" line="1049"/>
         <source>Rotate</source>
-        <translation>Rotieren</translation>
+        <translation type="unfinished">Drehen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="732"/>
@@ -1176,7 +1176,7 @@ Bitte wähle eine der Fritzing-Schriftarten, um sie zu ersetzen:</translation>
     <message>
         <location filename="../src/mainwindow.cpp" line="801"/>
         <source>Export for PCB</source>
-        <translation>Exportieren</translation>
+        <translation type="unfinished">Für Leiterplatte exportieren</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="878"/>
@@ -1345,48 +1345,54 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
         <location filename="../src/mainwindow.cpp" line="222"/>
         <source>Ctrl+R</source>
         <comment>Rotate Clockwise</comment>
-        <translation type="unfinished">Ctrl+R</translation>
+        <translatorcomment>Im Uhrzeigersinn drehen</translatorcomment>
+        <translation type="unfinished">Strg+R</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="224"/>
         <source>Alt+Ctrl+R</source>
         <comment>Rotate Clockwise</comment>
-        <translation type="unfinished">Alt+Ctrl+R</translation>
+        <translatorcomment>Im Uhrzeigersinn drehen</translatorcomment>
+        <translation type="unfinished">Alt+Strg+R</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="226"/>
         <source>Meta+Ctrl+R</source>
         <comment>Rotate Clockwise</comment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Im Uhrzeigersinn drehen</translatorcomment>
+        <translation type="unfinished">Meta+Strg+R</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="229"/>
         <source>Shift+Ctrl+R</source>
         <comment>Rotate Counterclockwise</comment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Gegen den Uhrzeigersinn drehen</translatorcomment>
+        <translation type="unfinished">Umschalttaste+Strg+R</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="231"/>
         <source>Alt+Shift+Ctrl+R</source>
         <comment>Rotate Counterclockwise</comment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Gegen den Uhrzeigersinn drehen</translatorcomment>
+        <translation type="unfinished">Alt+Umschalttaste+Strg+R</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="233"/>
         <source>Meta+Shift+Ctrl+R</source>
         <comment>Rotate Counterclockwise</comment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Gegen den Uhrzeigersinn drehen</translatorcomment>
+        <translation type="unfinished">Meta+Umschalttaste+Strg+R</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="236"/>
         <source>Shift+Ctrl+Tab</source>
         <comment>Toggle Active Layer</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Umschalttaste+Strg+Tab</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="757"/>
         <source>Order PCB</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Leiterplatte bestellen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1915"/>
@@ -1574,7 +1580,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="391"/>
         <source>Ctrl+O</source>
-        <translation>Ctrl+O</translation>
+        <translation type="unfinished">Strg+O</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="392"/>
@@ -1609,7 +1615,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_export.cpp" line="710"/>
         <source>Save a Bill of Materials (BoM)/Shopping List as text</source>
-        <translation>Einkaufs- bzw. Materialliste (BoM) als Textdatei speichern</translation>
+        <translation type="unfinished">Einkaufs- bzw. Stückliste (BoM) als Textdatei speichern</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="545"/>
@@ -1645,7 +1651,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="386"/>
         <source>Ctrl+N</source>
-        <translation>Ctrl+N</translation>
+        <translation type="unfinished">Strg+N</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_export.cpp" line="664"/>
@@ -1655,7 +1661,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_export.cpp" line="665"/>
         <source>Ctrl+S</source>
-        <translation>Ctrl+S</translation>
+        <translation type="unfinished">Strg+S</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_export.cpp" line="666"/>
@@ -1671,7 +1677,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_export.cpp" line="670"/>
         <source>Shift+Ctrl+S</source>
-        <translation>Shift+Ctrl+S</translation>
+        <translation type="unfinished">Umschalttaste+Strg+S</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_export.cpp" line="674"/>
@@ -1681,7 +1687,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_export.cpp" line="675"/>
         <source>Alt+Ctrl+S</source>
-        <translation>Alt+Ctrl+S</translation>
+        <translation type="unfinished">Alt+Strg+S</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_export.cpp" line="676"/>
@@ -1726,7 +1732,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_export.cpp" line="708"/>
         <source>List of parts (&amp;Bill of Materials)...</source>
-        <translation>Materialliste (BoM)...</translation>
+        <translation type="unfinished">Stückliste (&amp;BoM)...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_export.cpp" line="713"/>
@@ -1766,22 +1772,22 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_export.cpp" line="729"/>
         <source>Export the current sketch to PDF for DIY PCB production (photoresist)</source>
-        <translation>Aktuellen Entwurf als PDF für DIY PCB  exportieren (Fotoresist-Methode)</translation>
+        <translation type="unfinished">Aktuellen Entwurf als PDF für Selbstbau-Leiterplatten exportieren (Fotoresist-Methode)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_export.cpp" line="735"/>
         <source>Export the current sketch to PDF for DIY PCB production (tone transfer)</source>
-        <translation>Aktuellen Entwurf als PDF für DIY PCB  exportieren (Toner-Transfer-Methode)</translation>
+        <translation type="unfinished">Aktuellen Entwurf als PDF für Selbstbau-Leiterplatten exportieren (Toner-Transfer-Methode)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_export.cpp" line="741"/>
         <source>Export the current sketch to SVG for DIY PCB production (photoresist)</source>
-        <translation>Aktuellen Entwurf als SVG für DIY PCB  exportieren (Fotoresist-Methode)</translation>
+        <translation type="unfinished">Aktuellen Entwurf als SVG für Selbstbau-Leiterplatten exportieren (Fotoresist-Methode)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_export.cpp" line="747"/>
         <source>Export the current sketch to SVG for DIY PCB production (tone transfer)</source>
-        <translation>Aktuellen Entwurf als SVG für DIY PCB  exportieren (Toner-Transfer-Methode)</translation>
+        <translation type="unfinished">Aktuellen Entwurf als SVG für Selbstbau-Leiterplatten exportieren (Toner-Transfer-Methode)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_export.cpp" line="757"/>
@@ -1791,7 +1797,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_export.cpp" line="758"/>
         <source>Ctrl+P</source>
-        <translation>Ctrl+P</translation>
+        <translation type="unfinished">Strg+P</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_export.cpp" line="759"/>
@@ -1801,7 +1807,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_export.cpp" line="1192"/>
         <source>Sketch exported to Gerber</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Entwurf wurde als Gerber exportiert</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="411"/>
@@ -1821,12 +1827,12 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="417"/>
         <source>Ctrl+Q</source>
-        <translation>Ctrl+Q</translation>
+        <translation type="unfinished">Strg+Q</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="418"/>
         <source>Quit the application</source>
-        <translation>Fritzing beenden </translation>
+        <translation type="unfinished">Programm beenden</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="447"/>
@@ -1851,7 +1857,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="600"/>
         <source>Ctrl+X</source>
-        <translation>Ctrl+X</translation>
+        <translation type="unfinished">Strg+X</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="601"/>
@@ -1866,7 +1872,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="605"/>
         <source>Ctrl+C</source>
-        <translation>Ctrl+C</translation>
+        <translation type="unfinished">Strg+C</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="606"/>
@@ -1881,7 +1887,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="610"/>
         <source>Ctrl+V</source>
-        <translation>Ctrl+V</translation>
+        <translation type="unfinished">Strg+V</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="611"/>
@@ -1907,7 +1913,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
         <location filename="../src/mainwindow.cpp" line="2572"/>
         <location filename="../src/mainwindow_menu.cpp" line="619"/>
         <source>Ctrl+D</source>
-        <translation>Ctrl+D</translation>
+        <translation type="unfinished">Strg+D</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="620"/>
@@ -1932,7 +1938,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="636"/>
         <source>Ctrl+A</source>
-        <translation>Ctrl+A</translation>
+        <translation type="unfinished">Strg+A</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="637"/>
@@ -1963,7 +1969,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="656"/>
         <source>Alt+Ctrl+N</source>
-        <translation>Alt+Ctrl+N</translation>
+        <translation type="unfinished">Alt+Strg+N</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="657"/>
@@ -1973,12 +1979,12 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="661"/>
         <source>Ctrl+Return</source>
-        <translation>Ctrl+Return</translation>
+        <translation type="unfinished">Strg+Eingabetaste</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="662"/>
         <source>Open the old parts editor</source>
-        <translation>Im alten Bauteile-Editor öffnen...</translation>
+        <translation type="unfinished">Alten Bauteile-Editor öffnen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="665"/>
@@ -2029,7 +2035,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
         <location filename="../src/mainwindow_menu.cpp" line="746"/>
         <source>Lock Part</source>
         <translatorcomment>Abschließen/Verriegeln</translatorcomment>
-        <translation>Sperren</translation>
+        <translation type="unfinished">Bauteil sperren</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="747"/>
@@ -2049,12 +2055,12 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="780"/>
         <source>Straighten Curve</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Biegung begradigen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="781"/>
         <source>Straighten the curve of the selected wire</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Biegung des ausgewählten Drahtes begradigen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="796"/>
@@ -2111,52 +2117,53 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
         <location filename="../src/mainwindow_menu.cpp" line="2927"/>
         <source>unable to find replacement for %1.
 </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Konnte keinen Ersatz für %1 finden.
+</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="695"/>
         <source>Rotate the selected parts by 90 degrees clockwise</source>
-        <translation>Auswahl um 90° im Uhrzeigersinn rotieren</translation>
+        <translation type="unfinished">Auswahl um 90° im Uhrzeigersinn drehen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="699"/>
         <source>Rotate the selected parts by 180 degrees</source>
-        <translation>Auswahl um 180° rotieren</translation>
+        <translation type="unfinished">Auswahl um 180° drehen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="703"/>
         <source>Rotate current selection 90 degrees counter clockwise</source>
-        <translation>Auswahl um 90° gegen den Uhrzeigersinn rotieren</translation>
+        <translation type="unfinished">Auswahl um 90° gegen den Uhrzeigersinn drehen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="707"/>
         <source>Rotate current selection 45 degrees counter clockwise</source>
-        <translation>Auswahl um 45° gegen den Uhrzeigersinn rotieren</translation>
+        <translation type="unfinished">Auswahl um 45° gegen den Uhrzeigersinn drehen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="691"/>
         <source>Rotate current selection 45 degrees clockwise</source>
-        <translation>Auswahl um 45° gegen im Uhrzeigersinn rotieren</translation>
+        <translation type="unfinished">Auswahl um 45° gegen im Uhrzeigersinn drehen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="694"/>
         <source>Rotate 90° Clockwise</source>
-        <translation type="unfinished">&amp;Rotieren um 90° im Uhrzeigersinn</translation>
+        <translation type="unfinished">Um 90° im Uhrzeigersinn drehen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="698"/>
         <source>Rotate 180°</source>
-        <translation type="unfinished">&amp;Rotieren um 180°</translation>
+        <translation type="unfinished">Um 180° drehen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="702"/>
         <source>Rotate 90° Counter Clockwise</source>
-        <translation type="unfinished">&amp;Rotieren um 90° gegen den Uhrzeigersinn</translation>
+        <translation type="unfinished">Um 90° gegen den Uhrzeigersinn drehen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="706"/>
         <source>Rotate 45° Counter Clockwise</source>
-        <translation type="unfinished">&amp;Rotieren um 45° gegen den Uhrzeigersinn</translation>
+        <translation type="unfinished">Um 45° gegen den Uhrzeigersinn drehen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="710"/>
@@ -2186,7 +2193,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="719"/>
         <source>Shift+Ctrl+]</source>
-        <translation>Shift+Ctrl+]</translation>
+        <translation type="unfinished">Umschalttaste+Strg+]</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="720"/>
@@ -2201,7 +2208,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="726"/>
         <source>Ctrl+]</source>
-        <translation>Ctrl+]</translation>
+        <translation type="unfinished">Strg+]</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="727"/>
@@ -2216,7 +2223,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="733"/>
         <source>Ctrl+[</source>
-        <translation>Ctrl+[</translation>
+        <translation type="unfinished">Strg+[</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="734"/>
@@ -2231,7 +2238,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="740"/>
         <source>Shift+Ctrl+[</source>
-        <translation>Shift+Ctrl+[</translation>
+        <translation type="unfinished">Umschalttaste+Strg+[</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="741"/>
@@ -2327,7 +2334,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2100"/>
         <source>Shift+Ctrl+A</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Umschalttaste+Strg+A</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2105"/>
@@ -2338,7 +2345,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2107"/>
         <source>Shift+Ctrl+3</source>
-        <translation type="unfinished">Shift+Ctrl+3</translation>
+        <translation type="unfinished">Umschalttaste+Strg+3</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2110"/>
@@ -2349,7 +2356,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2112"/>
         <source>Shift+Ctrl+2</source>
-        <translation type="unfinished">Shift+Ctrl+2</translation>
+        <translation type="unfinished">Umschalttaste+Strg+2</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2115"/>
@@ -2360,7 +2367,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2117"/>
         <source>Shift+Ctrl+1</source>
-        <translation type="unfinished">Shift+Ctrl+1</translation>
+        <translation type="unfinished">Umschalttaste+Strg+1</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2130"/>
@@ -2405,7 +2412,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2179"/>
         <source>Shift+Ctrl+D</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Umschalttaste+Strg+D</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2182"/>
@@ -2415,7 +2422,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2183"/>
         <source>Set autorouting parameters...</source>
-        <translation>Einstellungen für den Autorouter setzen</translation>
+        <translation type="unfinished">Autorouting-Einstellungen festlegen...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2193"/>
@@ -2425,12 +2432,12 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2242"/>
         <source>Order a PCB...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Leiterplatte bestellen...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2243"/>
         <source>Order a PCB created from your sketch--from fabulous Fritzing Fab</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Eine Leiterplatte bestellen, welche aus deinem Entwurf erstellt wurde--von der fabelhaften Fritzing Fab</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2203"/>
@@ -2445,7 +2452,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2256"/>
         <source>Autorouting Progress...</source>
-        <translation>Autorouting-Fortschritt</translation>
+        <translation type="unfinished">Autorouting-Fortschritt...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2795"/>
@@ -2501,7 +2508,7 @@ Please check all views for potential side-effects.</source>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="792"/>
         <source>Open programming window</source>
-        <translation>Programmier-Fenster öffnen</translation>
+        <translation type="unfinished">Programmierfenster öffnen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="793"/>
@@ -2511,7 +2518,7 @@ Please check all views for potential side-effects.</source>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="804"/>
         <source>Ctrl++</source>
-        <translation>Ctrl++</translation>
+        <translation type="unfinished">Strg++</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="805"/>
@@ -2521,7 +2528,7 @@ Please check all views for potential side-effects.</source>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="811"/>
         <source>Ctrl+=</source>
-        <translation>Ctrl+=</translation>
+        <translation type="unfinished">Strg+=</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="815"/>
@@ -2531,7 +2538,7 @@ Please check all views for potential side-effects.</source>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="816"/>
         <source>Ctrl+-</source>
-        <translation>Ctrl+-</translation>
+        <translation type="unfinished">Strg+-</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="817"/>
@@ -2546,7 +2553,7 @@ Please check all views for potential side-effects.</source>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="821"/>
         <source>Ctrl+0</source>
-        <translation>Ctrl+0</translation>
+        <translation type="unfinished">Strg+0</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="822"/>
@@ -2561,7 +2568,7 @@ Please check all views for potential side-effects.</source>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="830"/>
         <source>Shift+Ctrl+0</source>
-        <translation>Shift+Ctrl+0</translation>
+        <translation type="unfinished">Umschalttaste+Strg+0</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="839"/>
@@ -2571,7 +2578,7 @@ Please check all views for potential side-effects.</source>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="840"/>
         <source>Ctrl+1</source>
-        <translation>Ctrl+1</translation>
+        <translation type="unfinished">Strg+1</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="841"/>
@@ -2586,7 +2593,7 @@ Please check all views for potential side-effects.</source>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="845"/>
         <source>Ctrl+2</source>
-        <translation>Ctrl+2</translation>
+        <translation type="unfinished">Strg+2</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="846"/>
@@ -2601,12 +2608,12 @@ Please check all views for potential side-effects.</source>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="850"/>
         <source>Ctrl+3</source>
-        <translation>Ctrl+3</translation>
+        <translation type="unfinished">Strg+3</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="851"/>
         <source>Show the PCB view</source>
-        <translation>Leiterplatte-Ansicht anzeigen</translation>
+        <translation type="unfinished">Leiterplattenansicht anzeigen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="865"/>
@@ -2616,7 +2623,7 @@ Please check all views for potential side-effects.</source>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="866"/>
         <source>Ctrl+M</source>
-        <translation>Ctrl+M</translation>
+        <translation type="unfinished">Strg+M</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="867"/>
@@ -2631,7 +2638,7 @@ Please check all views for potential side-effects.</source>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="886"/>
         <source>Ctrl+?</source>
-        <translation>Ctrl+?</translation>
+        <translation type="unfinished">Strg+?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="887"/>
@@ -2676,7 +2683,7 @@ Please check all views for potential side-effects.</source>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="939"/>
         <source>&amp;Import parts and bins from old version...</source>
-        <translation>Dateien aus alter Version importieren...</translation>
+        <translation type="unfinished">Bauteile und Sortimente aus alter Version &amp;importieren...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="940"/>
@@ -2801,7 +2808,7 @@ Please check all views for potential side-effects.</source>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2567"/>
         <source>&amp;Wire Color</source>
-        <translation>&amp; Kabelfarbe</translation>
+        <translation type="unfinished">&amp;Drahtfarbe</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="660"/>
@@ -2812,7 +2819,7 @@ Please check all views for potential side-effects.</source>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="690"/>
         <source>Rotate 45° Clockwise</source>
-        <translation type="unfinished">&amp;Rotieren um 45° im Uhrzeigersinn </translation>
+        <translation type="unfinished">Um 45° im Uhrzeigersinn drehen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="784"/>
@@ -3004,7 +3011,7 @@ Please check all views for potential side-effects.</source>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="763"/>
         <source>&amp;Show part label</source>
-        <translation>Beschriftung anzeigen</translation>
+        <translation type="unfinished">&amp;Bauteilbezeichnung anzeigen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="764"/>
@@ -3107,7 +3114,7 @@ Please check all views for potential side-effects.</source>
     <message>
         <location filename="../src/mainwindow_export.cpp" line="767"/>
         <source>This will soon provide an export of your Fritzing sketch to the EAGLE layout software. If you&apos;d like to have more exports to your favourite EDA tool, please let us know, or contribute.</source>
-        <translation>An dieser Stelle gibt es bald einen Export zur EAGLE Layout software. Wenn Du mehr Exportmöglichkeiten wünschst, sag uns Bescheid, oder hilf mit!</translation>
+        <translation type="unfinished">An dieser Stelle gibt es bald einen Export zur EAGLE Layout Software. Wenn Du mehr Exportmöglichkeiten wünschst, sag uns Bescheid, oder hilf mit.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1902"/>
@@ -3163,7 +3170,7 @@ We&apos;re working to avoid this message, and only let you choose between proper
     <message>
         <location filename="../src/partseditor/mismatchingconnectorwidget.cpp" line="64"/>
         <source>fix this!</source>
-        <translation>Reparieren</translation>
+        <translation type="unfinished">Reparieren!</translation>
     </message>
 </context>
 <context>
@@ -3357,7 +3364,7 @@ Ursache: %2 (Fehlercode %3)</translation>
     <message>
         <location filename="../src/items/partlabel.cpp" line="445"/>
         <source>Flip/Rotate</source>
-        <translation>Umdrehen/Rotieren</translation>
+        <translation type="unfinished">Umdrehen/Drehen</translation>
     </message>
     <message>
         <location filename="../src/items/partlabel.cpp" line="446"/>
@@ -3367,72 +3374,72 @@ Ursache: %2 (Fehlercode %3)</translation>
     <message>
         <location filename="../src/items/partlabel.cpp" line="451"/>
         <source>Rotate 45° Clockwise</source>
-        <translation>&amp;Rotieren um 45° im Uhrzeigersinn </translation>
+        <translation type="unfinished">Um 45° im Uhrzeigersinn drehen</translation>
     </message>
     <message>
         <location filename="../src/items/partlabel.cpp" line="453"/>
         <source>Rotate the label by 45 degrees clockwise</source>
-        <translation>Beschriftung um 45° im Uhrzeigersinn rotieren</translation>
+        <translation type="unfinished">Beschriftung um 45° im Uhrzeigersinn drehen</translation>
     </message>
     <message>
         <location filename="../src/items/partlabel.cpp" line="456"/>
         <source>Rotate 90° Clockwise</source>
-        <translation>&amp;Rotieren um 90° im Uhrzeigersinn</translation>
+        <translation type="unfinished">Um 90° im Uhrzeigersinn drehen</translation>
     </message>
     <message>
         <location filename="../src/items/partlabel.cpp" line="458"/>
         <source>Rotate the label by 90 degrees clockwise</source>
-        <translation>Beschriftung um 90° im Uhrzeigersinn rotieren</translation>
+        <translation type="unfinished">Beschriftung um 90° im Uhrzeigersinn drehen</translation>
     </message>
     <message>
         <location filename="../src/items/partlabel.cpp" line="461"/>
         <source>Rotate 135° Clockwise</source>
-        <translation>&amp;Rotieren um 135° im Uhrzeigersinn</translation>
+        <translation type="unfinished">Um 135° im Uhrzeigersinn drehen</translation>
     </message>
     <message>
         <location filename="../src/items/partlabel.cpp" line="463"/>
         <source>Rotate the label by 135 degrees clockwise</source>
-        <translation>Beschriftung um 135° im Uhrzeigersinn rotieren </translation>
+        <translation type="unfinished">Beschriftung um 135° im Uhrzeigersinn drehen</translation>
     </message>
     <message>
         <location filename="../src/items/partlabel.cpp" line="466"/>
         <source>Rotate 180°</source>
-        <translation>&amp;Rotieren um 180°</translation>
+        <translation type="unfinished">Um 180° drehen</translation>
     </message>
     <message>
         <location filename="../src/items/partlabel.cpp" line="468"/>
         <source>Rotate the label by 180 degrees</source>
-        <translation>Beschriftung um 180° rotieren</translation>
+        <translation type="unfinished">Beschriftung um 180° drehen</translation>
     </message>
     <message>
         <location filename="../src/items/partlabel.cpp" line="471"/>
         <source>Rotate 135° Counter Clockwise</source>
-        <translation>&amp;Rotieren um 135° gegen den Uhrzeigersinn </translation>
+        <translation type="unfinished">Um 135° gegen den Uhrzeigersinn drehen</translation>
     </message>
     <message>
         <location filename="../src/items/partlabel.cpp" line="473"/>
         <source>Rotate the label by 135 degrees counter clockwise</source>
-        <translation>Beschriftung um 135° gegen den Uhrzeigersinn rotieren </translation>
+        <translation type="unfinished">Beschriftung um 135° gegen den Uhrzeigersinn drehen</translation>
     </message>
     <message>
         <location filename="../src/items/partlabel.cpp" line="476"/>
         <source>Rotate 90° Counter Clockwise</source>
-        <translation>&amp;Rotieren um 90° gegen den Uhrzeigersinn</translation>
+        <translation type="unfinished">Um 90° gegen den Uhrzeigersinn drehen</translation>
     </message>
     <message>
         <location filename="../src/items/partlabel.cpp" line="478"/>
         <source>Rotate current selection 90 degrees counter clockwise</source>
-        <translation>Beschriftung um 90° gegen den Uhrzeigersinn rotieren</translation>
+        <translation type="unfinished">Derzeitige Auswahl um 90° gegen den Uhrzeigersinn drehen</translation>
     </message>
     <message>
         <location filename="../src/items/partlabel.cpp" line="481"/>
         <source>Rotate 45° Counter Clockwise</source>
-        <translation>&amp;Rotieren um 45° gegen den Uhrzeigersinn</translation>
+        <translation type="unfinished">Um 45° gegen den Uhrzeigersinn drehen</translation>
     </message>
     <message>
         <location filename="../src/items/partlabel.cpp" line="483"/>
         <source>Rotate the label by 45 degrees counter clockwise</source>
-        <translation>Beschriftung um 45° gegen den Uhrzeigersinn rotieren </translation>
+        <translation type="unfinished">Beschriftung um 45° gegen den Uhrzeigersinn drehen</translation>
     </message>
     <message>
         <location filename="../src/items/partlabel.cpp" line="486"/>
@@ -3679,7 +3686,7 @@ Ursache: %2 (Fehlercode %3)</translation>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="643"/>
         <source>Ctrl+D</source>
-        <translation>Ctrl+D</translation>
+        <translation type="unfinished">Strg+D</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="644"/>
@@ -3709,12 +3716,12 @@ Ursache: %2 (Fehlercode %3)</translation>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="810"/>
         <source>Read-only bin</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Schreibgeschütztes Sortiment</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="810"/>
         <source>This bin cannot be renamed.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dieses Sortiment kann nicht umbenannt werden.</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="818"/>
@@ -3916,17 +3923,17 @@ Bitte gib einen anderen Dateinamen an.</translation>
     <message>
         <location filename="../src/partseditor/partseditorview.cpp" line="603"/>
         <source>Image &amp; Footprint Files (%1 %2 %3 %4 %5);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3);;gEDA Footprint Files (%4);;Kicad Module Files (%5)</source>
-        <translation>Bild- &amp; Footprint-Dateien (%1 %2 %3 %4 %5);;SVG (%1);;JPEG (%2);;PNG (%3);;gEDA (%4);;Kicad Module (%5)</translation>
+        <translation type="unfinished">Bild- &amp; Footprint-Dateien (%1 %2 %3 %4 %5);;SVG-Dateien (%1);;JPEG-Dateien (%2);;PNG-Dateien (%3);;gEDA-Footprintdateien (%4);;Kicad-Moduldateien (%5)</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partseditorview.cpp" line="608"/>
         <source>Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3)%4%5</source>
-        <translation type="unfinished">Bilder (%1 %2 %3);;SVG (%1);;JPEG (%2);;PNG (%3) {1 %2 %3)?} {1)?} {2)?} {3)%4%5?}</translation>
+        <translation type="unfinished">Bild-Dateien (%1 %2 %3);;SVG-Dateien (%1);;JPEG-Dateien (%2);;PNG-Dateien (%3)%4%5</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partseditorview.cpp" line="613"/>
         <source>Image &amp; Footprint Files (%1 %2 %3 %4);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3);;Kicad Schematic Files (%4)%5</source>
-        <translation type="unfinished">Bild- &amp; Symbol-Dateien (%1 %2 %3 %4);;SVG (%1);;JPEG (%2);;PNG (%3);;Kicad Schematic (%5) {1 %2 %3 %4)?} {1)?} {2)?} {3)?} {4)%5?}</translation>
+        <translation type="unfinished">Bild- &amp; Footprint-Dateien (%1 %2 %3 %4);;SVG-Dateien (%1);;JPEG-Dateien (%2);;PNG-Dateien (%3);;Kicad-Schaltplandateien (%4)%5</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partseditorview.cpp" line="633"/>
@@ -3968,8 +3975,8 @@ Fritzing is not compatible with this kind of svg files. Please
 check your permissions, and try again.
 
 More information at http://fritzing.org/using-svg-images-new-parts/</source>
-        <translation>Diese Datei muss repariert werden, um mit Fritzing zu funktionieren, konnte aber nicht verändert werden.
-Bitte überprüfe die Lese-/Schreibeberechtigungen für diese Datei und versuche es nochmal.
+        <translation type="unfinished">Diese Datei muss repariert werden, um mit Fritzing zu funktionieren, allerdings konnte diese nicht verändert werden.
+Bitte überprüfe die Lese-/Schreibberechtigungen für diese Datei und versuche es nochmal.
 
 Mehr Informationen zu kompatiblen Dateiformaten findest Du auf der Fritzing-Website.</translation>
     </message>
@@ -4054,12 +4061,12 @@ Ansicht aus?</translation>
     <message>
         <location filename="../src/items/perfboard.cpp" line="368"/>
         <source>rows</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Reihen</translation>
     </message>
     <message>
         <location filename="../src/items/perfboard.cpp" line="372"/>
         <source>columns</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Spalten</translation>
     </message>
     <message>
         <location filename="../src/items/perfboard.cpp" line="259"/>
@@ -4099,7 +4106,7 @@ Ansicht aus?</translation>
     <message>
         <location filename="../src/dialogs/prefsdialog.cpp" line="83"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Allgemein</translation>
     </message>
     <message>
         <location filename="../src/dialogs/prefsdialog.cpp" line="99"/>
@@ -4174,12 +4181,12 @@ Mausrad + Alt + Umschalt-Taste = horizontaler Bildlauf</translation>
     <message>
         <location filename="../src/dialogs/prefsdialog.cpp" line="411"/>
         <source>Align-to-Grid size</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">An der Rasterweite ausrichten</translation>
     </message>
     <message>
         <location filename="../src/dialogs/prefsdialog.cpp" line="415"/>
         <source>Set the grid size for %1.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Rasterweite festlegen für %1.</translation>
     </message>
     <message>
         <location filename="../src/dialogs/prefsdialog.cpp" line="422"/>
@@ -4204,17 +4211,17 @@ Mausrad + Alt + Umschalt-Taste = horizontaler Bildlauf</translation>
     <message>
         <location filename="../src/dialogs/prefsdialog.cpp" line="525"/>
         <source>Background color</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hintergrundfarbe</translation>
     </message>
     <message>
         <location filename="../src/dialogs/prefsdialog.cpp" line="547"/>
         <source>%1 background Color</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 Hintergrundfarbe</translation>
     </message>
     <message>
         <location filename="../src/dialogs/prefsdialog.cpp" line="573"/>
         <source>Curvy vs. straight wires</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kurvige vs. gerade Drähte</translation>
     </message>
     <message>
         <location filename="../src/dialogs/prefsdialog.cpp" line="576"/>
@@ -4318,7 +4325,7 @@ This checkbox sets the default behavior. You can switch back to the non-default 
     <message>
         <location filename="../src/program/programwindow.cpp" line="211"/>
         <source>Ctrl+N</source>
-        <translation>Ctrl+N</translation>
+        <translation type="unfinished">Strg+N</translation>
     </message>
     <message>
         <location filename="../src/program/programwindow.cpp" line="212"/>
@@ -4333,7 +4340,7 @@ This checkbox sets the default behavior. You can switch back to the non-default 
     <message>
         <location filename="../src/program/programwindow.cpp" line="217"/>
         <source>Ctrl+O</source>
-        <translation>Ctrl+O</translation>
+        <translation type="unfinished">Strg+O</translation>
     </message>
     <message>
         <location filename="../src/program/programwindow.cpp" line="218"/>
@@ -4348,7 +4355,7 @@ This checkbox sets the default behavior. You can switch back to the non-default 
     <message>
         <location filename="../src/program/programwindow.cpp" line="225"/>
         <source>Ctrl+S</source>
-        <translation>Ctrl+S</translation>
+        <translation type="unfinished">Strg+S</translation>
     </message>
     <message>
         <location filename="../src/program/programwindow.cpp" line="226"/>
@@ -4358,7 +4365,7 @@ This checkbox sets the default behavior. You can switch back to the non-default 
     <message>
         <location filename="../src/program/programwindow.cpp" line="230"/>
         <source>Rename</source>
-        <translation>Umbenennen...</translation>
+        <translation type="unfinished">Umbenennen</translation>
     </message>
     <message>
         <location filename="../src/program/programwindow.cpp" line="231"/>
@@ -4383,7 +4390,7 @@ This checkbox sets the default behavior. You can switch back to the non-default 
     <message>
         <location filename="../src/program/programwindow.cpp" line="243"/>
         <source>Ctrl+W</source>
-        <translation>Ctrl+W</translation>
+        <translation type="unfinished">Strg+W</translation>
     </message>
     <message>
         <location filename="../src/program/programwindow.cpp" line="244"/>
@@ -4398,7 +4405,7 @@ This checkbox sets the default behavior. You can switch back to the non-default 
     <message>
         <location filename="../src/program/programwindow.cpp" line="251"/>
         <source>Ctrl+P</source>
-        <translation>Ctrl+P</translation>
+        <translation type="unfinished">Strg+P</translation>
     </message>
     <message>
         <location filename="../src/program/programwindow.cpp" line="252"/>
@@ -4413,7 +4420,7 @@ This checkbox sets the default behavior. You can switch back to the non-default 
     <message>
         <location filename="../src/program/programwindow.cpp" line="259"/>
         <source>Ctrl+Q</source>
-        <translation>Ctrl+Q</translation>
+        <translation type="unfinished">Strg+Q</translation>
     </message>
     <message>
         <location filename="../src/program/programwindow.cpp" line="260"/>
@@ -4428,12 +4435,12 @@ This checkbox sets the default behavior. You can switch back to the non-default 
     <message>
         <location filename="../src/program/programwindow.cpp" line="267"/>
         <source>Undo</source>
-        <translation>&amp;Rückgängig</translation>
+        <translation type="unfinished">Rückgängig</translation>
     </message>
     <message>
         <location filename="../src/program/programwindow.cpp" line="273"/>
         <source>Redo</source>
-        <translation>&amp;Wiederherstellen</translation>
+        <translation type="unfinished">Wiederherstellen</translation>
     </message>
     <message>
         <location filename="../src/program/programwindow.cpp" line="281"/>
@@ -4443,7 +4450,7 @@ This checkbox sets the default behavior. You can switch back to the non-default 
     <message>
         <location filename="../src/program/programwindow.cpp" line="282"/>
         <source>Ctrl+X</source>
-        <translation>Ctrl+P</translation>
+        <translation type="unfinished">Strg+P</translation>
     </message>
     <message>
         <location filename="../src/program/programwindow.cpp" line="283"/>
@@ -4458,7 +4465,7 @@ This checkbox sets the default behavior. You can switch back to the non-default 
     <message>
         <location filename="../src/program/programwindow.cpp" line="289"/>
         <source>Ctrl+C</source>
-        <translation>Ctrl+C</translation>
+        <translation type="unfinished">Strg+C</translation>
     </message>
     <message>
         <location filename="../src/program/programwindow.cpp" line="290"/>
@@ -4473,7 +4480,7 @@ This checkbox sets the default behavior. You can switch back to the non-default 
     <message>
         <location filename="../src/program/programwindow.cpp" line="296"/>
         <source>Ctrl+V</source>
-        <translation>Ctrl+V</translation>
+        <translation type="unfinished">Strg+V</translation>
     </message>
     <message>
         <location filename="../src/program/programwindow.cpp" line="297"/>
@@ -4488,7 +4495,7 @@ This checkbox sets the default behavior. You can switch back to the non-default 
     <message>
         <location filename="../src/program/programwindow.cpp" line="305"/>
         <source>Ctrl+A</source>
-        <translation>Ctrl+A</translation>
+        <translation type="unfinished">Strg+A</translation>
     </message>
     <message>
         <location filename="../src/program/programwindow.cpp" line="306"/>
@@ -4663,7 +4670,7 @@ This checkbox sets the default behavior. You can switch back to the non-default 
     <message>
         <location filename="../src/viewidentifierclass.cpp" line="98"/>
         <source>pcb view</source>
-        <translation>Leiterplatte-Ansicht</translation>
+        <translation type="unfinished">Leiterplattenansicht</translation>
     </message>
     <message>
         <location filename="../src/fapplication.cpp" line="900"/>
@@ -4756,7 +4763,7 @@ This checkbox sets the default behavior. You can switch back to the non-default 
         <location filename="../src/partsbinpalette/partsbinview.cpp" line="51"/>
         <location filename="../src/sketch/pcbsketchwidget.cpp" line="121"/>
         <source>PCB View</source>
-        <translation>Leiterplatte-Ansicht</translation>
+        <translation type="unfinished">Leiterplattenansicht</translation>
     </message>
     <message>
         <location filename="../src/sketch/schematicsketchwidget.cpp" line="55"/>
@@ -4999,7 +5006,7 @@ Versuche, Fritzing neu zu starten. Falls das Problem bestehen bleibt, wende Dich
     <message>
         <location filename="../src/dialogs/prefsdialog.cpp" line="253"/>
         <source>Please note that a new language setting will not take effect until the next time you run Fritzing.</source>
-        <translation>(Änderung wird erst nach einem Neustart von Fritzing wirksam)</translation>
+        <translation type="unfinished">Eine neue Spracheinstellung wird erst nach einem Neustart von Fritzing wirksam.</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="83"/>
@@ -5742,12 +5749,12 @@ im Sortiment.</translation>
     <message>
         <location filename="../src/sketch/sketchwidget.cpp" line="4076"/>
         <source>Rotate %2 (%1)</source>
-        <translation>Rotieren %2 (%1)</translation>
+        <translation type="unfinished">Drehen %2 (%1)</translation>
     </message>
     <message>
         <location filename="../src/sketch/sketchwidget.cpp" line="6351"/>
         <source>Rotate</source>
-        <translation>Rotieren</translation>
+        <translation type="unfinished">Drehen</translation>
     </message>
     <message>
         <location filename="../src/sketch/sketchwidget.cpp" line="6351"/>
@@ -5928,7 +5935,6 @@ im Sortiment.</translation>
         <source>%1 %n strip(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
-            <numerusform></numerusform>
         </translation>
     </message>
     <message>
@@ -6106,7 +6112,7 @@ im Sortiment.</translation>
     <message>
         <location filename="../src/dialogs/translatorlistmodel.cpp" line="50"/>
         <source>Estonian - %1</source>
-        <translation>Estländiisch - %1</translation>
+        <translation type="unfinished">Estnisch - %1</translation>
     </message>
     <message>
         <location filename="../src/dialogs/translatorlistmodel.cpp" line="51"/>
