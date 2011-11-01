@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.4.3b.0.0" icon="Core.png">
-	<title>Core</title>
+	<title>Core Parts</title>
     <instances>
           <instance moduleIdRef="__spacer__" modelIndex="3" path="Basic">
         <views>
