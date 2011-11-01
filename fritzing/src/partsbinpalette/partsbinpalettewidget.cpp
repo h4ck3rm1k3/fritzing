@@ -161,9 +161,12 @@ void PartsBinPaletteWidget::setupHeader()
 	m_header = new QFrame(this);
 	m_header->setObjectName("partsBinHeader");
 	QHBoxLayout * hbl = new QHBoxLayout();
+        hbl->setSpacing(0);
+        hbl->setMargin(0);
 	hbl->addWidget(m_binLabel);
 
 	PopupButton * label = new PopupButton("");
+        label->setObjectName("partsBinMenuButton");
 	QPixmap pixmap(":resources/images/icons/binMenu.png");
 	label->setPixmap(pixmap);
 	label->setMinimumSize(pixmap.size());

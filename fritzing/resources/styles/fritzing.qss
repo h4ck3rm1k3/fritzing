@@ -451,12 +451,24 @@ dark grey:		rgb(126,126,126);
 
 /***************** Parts Bin *****************/
 
+#partsBinHeader {
+  margin: 0;
+  padding: 2px;
+}
+
 #partsBinLabel {
-	background-color: rgb(164,164,164);
+	background-color: rgb(175,175,180);
 	font-size: 11px;
 	color: #474747;
 	font-weight: bold;
 	text-transform: uppercase;
+	padding: 0;
+	margin: 0;
+}
+
+#partsBinMenuButton {
+  margin: 0;
+  padding: 0;
 }
 
 PartsBinIconView {
@@ -465,7 +477,7 @@ PartsBinIconView {
 
 PartsBinListView {
 	selection-background-color: #BEBEBE;
-	background-color: rgb(164,164,164);
+	background-color: rgb(175,175,180);
 	border: 0;
 	border-bottom: 1px solid #D0D0D0;
 }
@@ -482,7 +494,7 @@ PartsBinIconView
 PartsBinPaletteWidget,
 PartsBinPaletteWidget SimpleEditableLabelWidget,
 PartsBinPaletteWidget InfoGraphicsView {
-	background-color: rgb(164,164,164);
+	background-color: rgb(175,175,180);
 	border: none;
 }
 
@@ -515,7 +527,7 @@ StackTabBar::tab {
 	min-height: 32px;
 	max-height: 32px;
 	border: 0;
-	background: rgb(164,164,164);
+	background: rgb(175,175,180);
 
 	font-weight: 600;
 }
