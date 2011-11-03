@@ -31,6 +31,7 @@ $Date$
 #include <QFrame>
 #include <QToolButton>
 #include <QLineEdit>
+#include <QStackedWidget>
 
 #include "../model/palettemodel.h"
 #include "../model/modelpart.h"
@@ -52,18 +53,6 @@ protected:
 	}
 };
 
-
-class PopupButton : public QLabel {
-	Q_OBJECT
-
-public:
-	PopupButton(const QString & text);
-	void mousePressEvent(QMouseEvent *);
-
-signals:
-	void mousePressed(QMouseEvent *);
-};
-
 class PartsBinPaletteWidget : public QFrame, public Bundler {
 	Q_OBJECT
 
@@ -74,8 +63,6 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		QSize sizeHint() const;
 		QString title() const;
 		void setTitle(const QString &title);
-
-		void setTabWidget(class StackTabWidget *tabWidget);
 
 		void loadFromModel(PaletteModel *model);
 		void setPaletteModel(PaletteModel *model, bool clear=false);
@@ -109,48 +96,28 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		bool open(QString fileName, QObject * progressTarget);
 
 		bool currentViewIsIconView();
-		QMenu * getFileMenu();		
-		QMenu * getPartMenu();
 		QIcon icon();
+		void saveBundledBin();
 
 	public slots:
 		void addPartCommand(const QString& moduleID);
-		void removePartCommand(const QString& moduleID);
 		void removeAlienParts();
 		void itemMoved();
 		void saveAsLastBin();
-		void rename();
-		void openNewBin(const QString &filename = ___emptyString___);
 		void toIconView();
 		void toListView();
-		void updateBinPartsMenu();
-		void updateBinFileMenu();
+		bool save();
+		bool saveAs();
 
 	protected slots:
-		bool save();
-		bool removeSelected();
-		bool saveAs();
-		void saveBundledBin();
 		void undoStackCleanChanged(bool isClean);
-		void newBin();
-		void openCoreBin();
-		void openContribBin();
-		void openUserBin();
-		void closeBin();
-		void newPart();
-		void importPart();
-		void editSelected();
-		void exportSelected();
 		void addSketchPartToMe();
 		void search();
-        void clickedSearch();
 		void focusSearchAfter();
-		void prepPopup(QMouseEvent *);
 
 	signals:
 		void saved(bool hasPartsFromBundled);
 		void fileNameUpdated(PartsBinPaletteWidget*, const QString &newFileName, const QString &oldFilename);
-		void savePartAsBundled(const QString &moduleId);
 		void focused(PartsBinPaletteWidget*);
 
 	protected:
@@ -162,9 +129,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		void mousePressEvent(QMouseEvent *event);
 		bool eventFilter(QObject *obj, QEvent *event);
 
-		void setupFooter();
 		void setupHeader();
-		void setupButtons();
 
 		void grabTitle(PaletteModel *model);
 
@@ -172,20 +137,12 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		bool saveAsAux(const QString &filename);
 
 		void afterModelSetted(PaletteModel *model);
-		bool isOverFooter(QDropEvent* event);
 
-		void createBinMenu();
-		void createOpenBinMenu();
-		void createPartMenu();
-		void createContextMenus();
 		QToolButton* newToolButton(const QString& btnObjName, const QString& imgPath = ___emptyString___, const QString &text = ___emptyString___);
-		QAction* newTitleAction(const QString &text);
 
 		bool loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps);
 
 		void setFilename(const QString &filename);
-		void collectBins(QDir & dir, QMenu * toMenu);
-		QString getBinName(const QFileInfo &info);
 
 	protected:
 		PaletteModel *m_model;
@@ -205,43 +162,15 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		class PartsBinIconView *m_iconView;
 		class PartsBinListView *m_listView;
 
-		QFrame *m_footer;
 		QFrame *m_header;
 		QLabel * m_binLabel;
 
-		ImageButton *m_showIconViewButton;
-		ImageButton *m_showListViewButton;
-
 		class SearchLineEdit * m_searchLineEdit;
 
-		QMenu *m_binContextMenu;
-		QToolButton *m_binMenuButton;
-		QAction *m_newBinAction;
-		QMenu *m_fileMenu;		
-		QMenu *m_openBinMenu;
-		QAction *m_openBinAction;
-		QAction *m_openCoreBinAction;
-		QAction *m_openContribBinAction;
-		QAction *m_closeBinAction;
-		QAction *m_saveAction;
-		QAction *m_saveAsAction;
-		QAction *m_saveAsBundledAction;
-		QAction *m_renameAction;
-
-		QAction *m_addPartToMeAction;
-
-		QMenu *m_partContextMenu;
-		QToolButton *m_partMenuButton;
-		QMenu *m_partMenu;	
-		QAction *m_newPartAction;
-		QAction *m_importPartAction;
-		QAction *m_editPartAction;
-		QAction *m_exportPartAction;
-		QAction *m_removePartAction;
+		QToolButton * m_combinedBinMenuButton;
 
 		WaitPushUndoStack *m_undoStack;
 		BinManager *m_manager;
-		StackTabWidget *m_tabWidget;
 
 		QStringList m_alienParts;
 		bool m_allowsChanges;
@@ -249,6 +178,9 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 
 		FileProgressDialog * m_loadingProgressDialog;
 		QIcon * m_icon;
+		QAction *m_addPartToMeAction;
+		QStackedWidget * m_stackedWidget;
+		QStackedWidget * m_searchStackedWidget;
 
 	public:
 		static QString Title;

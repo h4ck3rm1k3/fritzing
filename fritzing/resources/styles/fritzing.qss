@@ -456,6 +456,10 @@ dark grey:		rgb(126,126,126);
   padding: 2px;
 }
 
+SearchLineEdit,  #searchStackWidget {
+	max-height: 20px;
+}
+
 #partsBinLabel {
 	background-color: rgb(175,175,180);
 	font-size: 11px;
@@ -489,7 +493,7 @@ PartsBinIconView
 	border-bottom: 1px solid #D0D0D0;
 }
 
-#partsBinFooter,
+#partsBinHeader,
 #partsBinContainer,
 PartsBinPaletteWidget,
 PartsBinPaletteWidget SimpleEditableLabelWidget,
@@ -555,13 +559,8 @@ StackTabBar[current="true"]::tab:selected {
 	font-size: 10px;
 }
 
-#titleAction {
-	font-size: 10px;
-	color: #666;
-}
-
-#partsBinBinMenu, #partsBinPartMenu,
-#partsBinBinMenu:pressed, #partsBinPartMenu:pressed {
+#partsBinCombinedMenu
+#partsBinCombinedMenu:pressed {
 	margin: 0;
 	margin-top: 2px;
 	margin-left: 2px;
@@ -574,35 +573,13 @@ StackTabBar[current="true"]::tab:selected {
 	background-repeat: no-repeat;
 }
 
-#partsBinBinMenu, #partsBinBinMenu:pressed {
-	margin-top: 3px;
+#partsBinCombinedMenu {
+	background-image: url(:/resources/images/icons/partsBinCombinedMenu_icon.png);
 }
 
-#partsBinBinMenu {
-	background-image: url(:/resources/images/icons/partsBinMenu_icon.png);
+#partsBinCombinedMenu:pressed {
+	background-image: url(:/resources/images/icons/partsBinCombinedMenuPressed_icon.png);
 }
-
-#partsBinPartMenu {
-	background-image: url(:/resources/images/icons/partsBinAddPart_icon.png);
-}
-
-#partsBinBinMenu:pressed {
-	background-image: url(:/resources/images/icons/partsBinMenuPressed_icon.png);
-}
-
-
-#partsBinPartMenu:pressed {
-	background-image: url(:/resources/images/icons/partsBinAddPartPressed_icon.png);
-}
-
-
-#partsBinBinMenu::menu-arrow,
-#partsBinBinMenu::menu-arrow:open,
-#partsBinPartMenu::menu-arrow,
-#partsBinPartMenu::menu-arrow:open {
-	image: url(':/resources/images/icons/partsBinToolButtonArrow.png');
-}
-
 
 /**************** sketch area widgets ****************/
 

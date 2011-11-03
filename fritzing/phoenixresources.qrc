@@ -80,10 +80,6 @@
         <file>resources/images/icons/partsBinListViewEnabled_icon.png</file>
         <file>resources/images/icons/partsBinListViewDisabled_icon.png</file>
         <file>resources/images/icons/partsBinListViewPressed_icon.png</file>
-        <file>resources/images/icons/partsBinMenu_icon.png</file>
-        <file>resources/images/icons/partsBinMenuPressed_icon.png</file>
-        <file>resources/images/icons/partsBinAddPart_icon.png</file>
-        <file>resources/images/icons/partsBinAddPartPressed_icon.png</file>
         <file>resources/images/icons/partsBinToolButtonArrow.png</file>
         <file>resources/images/icons/partsBinExportPartEnabled_icon.png</file>
         <file>resources/images/icons/partsBinExportPartDisabled_icon.png</file>
@@ -166,7 +162,8 @@
 	<file>resources/images/icons/parts_plural_v3_plur.png</file>
 	<file>resources/images/icons/parts_plural_v3_sing.png</file>
 	<file>resources/images/icons/asterisk.png</file>
-	<file>resources/images/icons/binMenu.png</file>
+	<file>resources/images/icons/partsBinCombinedMenu_icon.png</file>
+	<file>resources/images/icons/partsBinCombinedMenuPressed_icon.png</file>
 	
 	<file>resources/images/itemselection/cornerHandlerActiveBottomLeft.png</file>
         <file>resources/images/itemselection/cornerHandlerActiveBottomRight.png</file>
@@ -272,12 +269,15 @@
 
         <file>resources/bins/icons/Arduino.png</file>
         <file>resources/bins/icons/Core.png</file>
+        <file>resources/bins/icons/Core Parts.png</file>
         <file>resources/bins/icons/Custom1.png</file>
         <file>resources/bins/icons/Mine.png</file>
+        <file>resources/bins/icons/My Parts.png</file>
         <file>resources/bins/icons/PICAXE.png</file>
         <file>resources/bins/icons/Search.png</file>
         <file>resources/bins/icons/Snootlab.png</file>
         <file>resources/bins/icons/SparkFun.png</file>
+        <file>resources/bins/icons/Contributed.png</file>
 
 	<file>resources/templates/jumper_copper0LayerTemplate.txt</file>
         <file>resources/templates/jumper_jumperwiresLayerTemplate.txt</file>

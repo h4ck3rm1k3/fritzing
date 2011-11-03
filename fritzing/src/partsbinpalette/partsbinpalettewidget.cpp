@@ -31,11 +31,9 @@ $Date$
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QSettings>
-#include <QInputDialog>
 #include <QWidgetAction>
 
 #include "partsbinpalettewidget.h"
-#include "binmanager/stacktabwidget.h"
 #include "partsbincommands.h"
 #include "partsbiniconview.h"
 #include "partsbinlistview.h"
@@ -49,16 +47,6 @@ $Date$
 #include "../utils/fileprogressdialog.h"
 #include "../utils/folderutils.h"
 
-///////////////////////////////////////////////
-
-PopupButton::PopupButton(const QString & text) : QLabel(text)
-{
-}
-
-void PopupButton::mousePressEvent(QMouseEvent * event) 
-{
-	emit mousePressed(event);
-}
 
 //////////////////////////////////////////////
 
@@ -74,7 +62,6 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 	setAcceptDrops(true);
 	setAllowsChanges(true);
 
-	m_tabWidget = NULL;
 	m_manager = manager;
 
 	m_refModel = refModel;
@@ -86,15 +73,24 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 	m_undoStack = new WaitPushUndoStack(this);
 	connect(m_undoStack, SIGNAL(cleanChanged(bool)), this, SLOT(undoStackCleanChanged(bool)) );
 
-	setupButtons();
-	setupFooter();
 	setupHeader();
 
-	m_iconView = new PartsBinIconView(m_refModel, this, m_binContextMenu, m_partContextMenu);
+	m_iconView = new PartsBinIconView(m_refModel, this, m_manager->binContextMenu(), m_manager->partContextMenu());
 	m_iconView->setInfoView(infoView);
 
-	m_listView = new PartsBinListView(m_refModel, this, m_binContextMenu, m_partContextMenu);
+	m_listView = new PartsBinListView(m_refModel, this, m_manager->binContextMenu(), m_manager->partContextMenu());
 	m_listView->setInfoView(infoView);
+
+	m_stackedWidget = new QStackedWidget(this);
+	m_stackedWidget->addWidget(m_iconView);
+	m_stackedWidget->addWidget(m_listView);
+
+	QVBoxLayout * vbl = new QVBoxLayout(this);
+	vbl->setMargin(3);
+	vbl->setSpacing(0);
+	vbl->addWidget(m_header);
+	vbl->addWidget(m_stackedWidget);
+	this->setLayout(vbl);
 
 	setObjectName("partsBinContainer");
 	toIconView();
@@ -105,21 +101,18 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 	connect(m_listView, SIGNAL(currentRowChanged(int)), m_iconView, SLOT(setSelected(int)));
 	connect(m_iconView, SIGNAL(selectionChanged(int)), m_listView, SLOT(setSelected(int)));
 
-	connect(m_listView, SIGNAL(currentRowChanged(int)), this, SLOT(updateBinPartsMenu()));
-	connect(m_iconView, SIGNAL(selectionChanged(int)), this, SLOT(updateBinPartsMenu()));
-
-	//connect(m_listView, SIGNAL(clicked()), this, SLOT(updateButtonStates()));
-	//connect(m_iconView, SIGNAL(clicked()(int)), this, SLOT(updateButtonStates()));
+	connect(m_listView, SIGNAL(currentRowChanged(int)), m_manager, SLOT(updateBinCombinedMenu()));
+	connect(m_iconView, SIGNAL(selectionChanged(int)), m_manager, SLOT(updateBinCombinedMenu()));
 
 	connect(m_listView, SIGNAL(informItemMoved(int,int)), m_iconView, SLOT(itemMoved(int,int)));
 	connect(m_iconView, SIGNAL(informItemMoved(int,int)), m_listView, SLOT(itemMoved(int,int)));
 	connect(m_listView, SIGNAL(informItemMoved(int,int)), this, SLOT(itemMoved()));
 	connect(m_iconView, SIGNAL(informItemMoved(int,int)), this, SLOT(itemMoved()));
 
+	m_binLabel->setText(m_title);
+
 	m_addPartToMeAction = new QAction(m_title,this);
 	connect(m_addPartToMeAction, SIGNAL(triggered()),this, SLOT(addSketchPartToMe()));
-
-	m_binLabel->setText(m_title);
 
 	installEventFilter(this);
 }
@@ -142,101 +135,51 @@ QString PartsBinPaletteWidget::title() const {
 void PartsBinPaletteWidget::setTitle(const QString &title) {
 	if(m_title != title) {
 		m_title = title;
-		m_addPartToMeAction->setText(title);
-		m_manager->updateTitle(this, title);
 		m_binLabel->setText(title);
 	}
 }
 
-void PartsBinPaletteWidget::setTabWidget(StackTabWidget *tabWidget) {
-	m_tabWidget = tabWidget;
-}
-
 void PartsBinPaletteWidget::setupHeader()
 {
+	m_combinedBinMenuButton = newToolButton("partsBinCombinedMenu");
+	m_combinedBinMenuButton->setMenu(m_manager->combinedMenu());
+
+
 	m_binLabel = new QLabel(this);
 	m_binLabel->setObjectName("partsBinLabel");
 	m_binLabel->setWordWrap(false);
 
+	m_searchLineEdit = new SearchLineEdit(this);
+    m_searchLineEdit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+	connect(m_searchLineEdit, SIGNAL(returnPressed()), this, SLOT(search()));
+
+	m_searchStackedWidget = new QStackedWidget(this);
+	m_searchStackedWidget->setObjectName("searchStackedWidget");
+	m_searchStackedWidget->addWidget(m_binLabel);
+	m_searchStackedWidget->addWidget(m_searchLineEdit);
+
 	m_header = new QFrame(this);
 	m_header->setObjectName("partsBinHeader");
 	QHBoxLayout * hbl = new QHBoxLayout();
-        hbl->setSpacing(0);
-        hbl->setMargin(0);
-	hbl->addWidget(m_binLabel);
+    hbl->setSpacing(0);
+    hbl->setMargin(0);
 
-	PopupButton * label = new PopupButton("");
-        label->setObjectName("partsBinMenuButton");
-	QPixmap pixmap(":resources/images/icons/binMenu.png");
-	label->setPixmap(pixmap);
-	label->setMinimumSize(pixmap.size());
-	label->setMaximumSize(pixmap.size());
-	hbl->addWidget(label);
-	connect(label, SIGNAL(mousePressed(QMouseEvent *)), this, SLOT(prepPopup(QMouseEvent *)));
+	hbl->addWidget(m_searchStackedWidget);
+	hbl->addWidget(m_combinedBinMenuButton);
 
 	m_header->setLayout(hbl);
-}
-
-void PartsBinPaletteWidget::setupFooter() {
-	m_footer = new QFrame(this);
-	m_footer->setObjectName("partsBinFooter");
-
-	QFrame *leftButtons = new QFrame(m_footer);
-	QHBoxLayout *leftLayout = new QHBoxLayout(leftButtons);
-	leftLayout->setMargin(0);
-    leftLayout->setSpacing(0);
-	leftLayout->addWidget(m_showIconViewButton);
-	leftLayout->addWidget(m_showListViewButton);
-
-	QFrame *rightButtons = new QFrame(m_footer);
-	QHBoxLayout *rightLayout = new QHBoxLayout(rightButtons);
-	rightLayout->setDirection(QBoxLayout::RightToLeft);
-	rightLayout->setMargin(0);
-    rightLayout->setSpacing(0);
-	rightLayout->addWidget(m_binMenuButton);
-	rightLayout->addWidget(m_partMenuButton);
-
-	QHBoxLayout *footerLayout = new QHBoxLayout(m_footer);
-	footerLayout->setSpacing(0);
-    footerLayout->setMargin(0);
-	footerLayout->addWidget(leftButtons);
-
-    footerLayout->addSpacing(8);
-	m_searchLineEdit = new SearchLineEdit(m_footer);
-
-    m_searchLineEdit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-	connect(m_searchLineEdit, SIGNAL(returnPressed()), this, SLOT(search()));
-    connect(m_searchLineEdit, SIGNAL(clicked()), this, SLOT(clickedSearch()));
-	footerLayout->addWidget(m_searchLineEdit);
-
-    footerLayout->addSpacing(2);
-
-	footerLayout->addWidget(rightButtons);
 }
 
 void PartsBinPaletteWidget::setView(PartsBinView *view) {
 	m_currentView = view;
 	if(m_currentView == m_iconView) {
-		m_iconView->show();
-		m_showIconViewButton->setEnabledIcon();
-		m_listView->hide();
-		m_showListViewButton->setDisabledIcon();
+		m_stackedWidget->setCurrentIndex(0);
+		m_manager->updateViewChecks(true);
 	} else if(m_currentView == m_listView) {
-		m_listView->show();
-		m_showListViewButton->setEnabledIcon();
-		m_iconView->hide();
-		m_showIconViewButton->setDisabledIcon();
+		m_stackedWidget->setCurrentIndex(1);
+		m_manager->updateViewChecks(false);
 	}
 
-	QVBoxLayout *vbl = new QVBoxLayout(this);
-	vbl->setMargin(3);
-	vbl->setSpacing(0);
-
-	vbl->addWidget(m_header);
-	vbl->addWidget(dynamic_cast<QWidget*>(m_currentView));
-	vbl->addWidget(m_footer);
-
-	this->setLayout(vbl);
 }
 
 void PartsBinPaletteWidget::toIconView() {
@@ -318,22 +261,6 @@ void PartsBinPaletteWidget::addPart(ModelPart *modelPart, int position) {
 	}
 }
 
-
-void PartsBinPaletteWidget::setupButtons() {
-	m_showIconViewButton = new ImageButton("IconView",this);
-	m_showIconViewButton->setToolTip(tr("Show as icons"));
-	connect(m_showIconViewButton,SIGNAL(clicked()),this,SLOT(toIconView()));
-
-	m_showListViewButton = new ImageButton("ListView",this);
-	m_showListViewButton->setToolTip(tr("Show as list"));
-	connect(m_showListViewButton,SIGNAL(clicked()),this,SLOT(toListView()));
-
-	// TODO: these could probably be static or moved up to the binManager...
-	createBinMenu();
-	createPartMenu();
-	createContextMenus();
-}
-
 QToolButton* PartsBinPaletteWidget::newToolButton(const QString& btnObjName, const QString& imgPath, const QString &text) {
 	QToolButton *toolBtn = new QToolButton(this);
 	toolBtn->setObjectName(btnObjName);
@@ -349,179 +276,9 @@ QToolButton* PartsBinPaletteWidget::newToolButton(const QString& btnObjName, con
 	return toolBtn;
 }
 
-QAction* PartsBinPaletteWidget::newTitleAction(const QString &text) {
-	QWidgetAction *act = new QWidgetAction(this);
-	QWidget* w = new QLabel(text,this);
-	w->setObjectName("titleAction");
-	act->setDefaultWidget(w);
-	act->setDisabled(true);
-	return act;
-}
 
-void PartsBinPaletteWidget::createBinMenu() {
-	m_binMenuButton = newToolButton("partsBinBinMenu");
-	createOpenBinMenu();
-	m_newBinAction = new QAction(tr("New..."), this);
-	m_closeBinAction = new QAction(tr("Close"),this);
-	m_saveAction = new QAction(tr("Save"),this);
-	m_saveAsAction = new QAction(tr("Save As..."),this);
-	m_saveAsBundledAction = new QAction(tr("Export Bin..."),this);
-	m_renameAction = new QAction(tr("Rename..."),this);
 
-	connect(m_newBinAction, SIGNAL(triggered()),this, SLOT(newBin()));
-	connect(m_closeBinAction, SIGNAL(triggered()),this, SLOT(closeBin()));
-	connect(m_saveAction, SIGNAL(triggered()),this, SLOT(save()));
-	connect(m_saveAsAction, SIGNAL(triggered()),this, SLOT(saveAs()));
-	connect(m_saveAsBundledAction, SIGNAL(triggered()),this, SLOT(saveBundledBin()));
-	connect(m_renameAction, SIGNAL(triggered()),this, SLOT(rename()));
 
-	m_fileMenu = new QMenu(tr("Parts Bin Actions"), this);
-	m_fileMenu->addAction(newTitleAction(tr("Bin")));
-	m_fileMenu->addAction(m_newBinAction);
-	m_fileMenu->addMenu(m_openBinMenu);
-	m_fileMenu->addSeparator();
-	m_fileMenu->addAction(m_closeBinAction);
-	m_fileMenu->addAction(m_saveAction);
-	m_fileMenu->addAction(m_saveAsAction);
-	m_fileMenu->addAction(m_saveAsBundledAction);
-	m_fileMenu->addAction(m_renameAction);
-	m_binMenuButton->setMenu(m_fileMenu);
-
-	connect(m_fileMenu, SIGNAL(aboutToShow()), this, SLOT(updateBinFileMenu()));
-
-}
-
-void PartsBinPaletteWidget::createOpenBinMenu() {
-	m_openBinMenu = new QMenu(tr("Open"),this);
-
-	m_openBinAction = new QAction(tr("From file..."),this);
-	m_openCoreBinAction = new QAction(tr("Core"),this);
-	m_openContribBinAction = new QAction(tr("Contributed Parts"),this);
-
-	connect(m_openBinAction, SIGNAL(triggered()),this, SLOT(openNewBin()));
-	connect(m_openCoreBinAction, SIGNAL(triggered()),this, SLOT(openCoreBin()));
-	connect(m_openContribBinAction, SIGNAL(triggered()),this, SLOT(openContribBin()));
-
-	m_openBinMenu->addAction(m_openCoreBinAction);
-	m_openBinMenu->addSeparator();
-
-	QDir userBinsDir(FolderUtils::getUserDataStorePath("bins"));
-	collectBins(userBinsDir, m_openBinMenu);
-
-	//QMenu * moreMenu = m_openBinMenu->addMenu(tr("More bins"));
-	m_openBinMenu->addSeparator();
-
-	QDir dir(FolderUtils::getApplicationSubFolderPath("bins"));
-	dir.cd("more");
-	collectBins(dir, m_openBinMenu);
-
-	m_openBinMenu->addSeparator();
-	m_openBinMenu->addAction(m_openBinAction);
-
-}
-
-void PartsBinPaletteWidget::collectBins(QDir & dir, QMenu * menu) {
-	QHash<QString,QString> binsInfo;
-
-	QStringList filters;
-	filters << "*"+FritzingBinExtension;
-	QFileInfoList files = dir.entryInfoList(filters);
-	foreach(QFileInfo info, files) {
-		QString binName = getBinName(info);
-		binsInfo[info.filePath()] = binName;
-	}
-
-	foreach(QString binFile, binsInfo.keys()) {
-		//if (binFile.compare(BinManager::ContribPartsBinLocation) == 0) continue;   // if we want to place this on some other menu
-		if (binFile.endsWith("nonCoreParts.fzb")) continue;			// was the "all my parts bin"
-
-		QAction *action = new QAction(binsInfo[binFile],this);
-		action->setData(binFile);
-		connect(action, SIGNAL(triggered()),this, SLOT(openUserBin()));
-		menu->addAction(action);
-	}
-
-}
-
-QString PartsBinPaletteWidget::getBinName(const QFileInfo &info) {
-	QString binTitle = "";
-
-	// TODO: use xmlStreamReader instead of reading the whole file
-
-	QFile binFile(info.filePath());
-	if (binFile.open(QFile::ReadOnly | QFile::Text)) {
-		QString content(binFile.readAll());
-		QRegExp regexp("<title>(.+)</title>");
-
-		if (regexp.indexIn(content) >= 0) {
-			binTitle = regexp.cap(1);
-		}
-	}
-
-	if(binTitle != ___emptyString___) {
-		return binTitle;
-	} else {
-		return info.fileName();
-	}
-}
-
-void PartsBinPaletteWidget::openUserBin() {
-	QAction *action = qobject_cast<QAction *>(sender());
-	if (action) {
-		openNewBin(action->data().toString());
-	}
-}
-
-void PartsBinPaletteWidget::createPartMenu() {
-	m_partMenuButton = newToolButton("partsBinPartMenu");
-
-	m_newPartAction = new QAction(tr("New..."), this);
-	m_importPartAction = new QAction(tr("Import Part..."),this);
-	m_editPartAction = new QAction(tr("Edit..."),this);
-	m_exportPartAction = new QAction(tr("Export Part..."),this);
-	m_removePartAction = new QAction(tr("Remove"),this);
-
-	connect(m_newPartAction, SIGNAL(triggered()),this, SLOT(newPart()));
-	connect(m_importPartAction, SIGNAL(triggered()),this, SLOT(importPart()));
-	connect(m_editPartAction, SIGNAL(triggered()),this, SLOT(editSelected()));
-	connect(m_exportPartAction, SIGNAL(triggered()),this, SLOT(exportSelected()));
-	connect(m_removePartAction, SIGNAL(triggered()),this, SLOT(removeSelected()));
-
-	m_partMenu = new QMenu(tr("Parts Actions"), this);
-	connect(m_partMenu, SIGNAL(aboutToShow()), this, SLOT(updateBinPartsMenu()));
-	m_partMenu->addAction(newTitleAction(tr("Part")));
-	m_partMenu->addAction(m_newPartAction);
-	m_partMenu->addAction(m_importPartAction);
-	m_partMenu->addSeparator();
-	m_partMenu->addAction(m_editPartAction);
-	m_partMenu->addAction(m_exportPartAction);
-	m_partMenu->addAction(m_removePartAction);
-	m_partMenuButton->setMenu(m_partMenu);
-}
-
-void PartsBinPaletteWidget::createContextMenus() {
-	m_binContextMenu = new QMenu(this);
-	m_binContextMenu->addAction(m_closeBinAction);
-	m_binContextMenu->addAction(m_saveAction);
-	m_binContextMenu->addAction(m_saveAsAction);
-	m_binContextMenu->addAction(m_saveAsBundledAction);
-	m_binContextMenu->addAction(m_renameAction);
-	connect(m_binContextMenu, SIGNAL(aboutToShow()), this, SLOT(updateBinFileMenu()));
-
-	m_partContextMenu = new QMenu(this);
-	connect(m_partContextMenu, SIGNAL(aboutToShow()), this, SLOT(updateBinPartsMenu()));
-	m_partContextMenu->addAction(m_editPartAction);
-	m_partContextMenu->addAction(m_exportPartAction);
-	m_partContextMenu->addAction(m_removePartAction);
-}
-
-bool PartsBinPaletteWidget::removeSelected() {
-	if(selected()) {
-		QString modId = selected()->moduleID();
-		removePartCommand(modId);
-		return true;
-	} else return false;
-}
 
 bool PartsBinPaletteWidget::save() {
 	bool result = true;
@@ -530,7 +287,6 @@ bool PartsBinPaletteWidget::save() {
 	} else {
 		saveAsAux(m_fileName);
 	}
-	if(result) m_manager->setDirtyTab(this,false);
 	return result;
 }
 
@@ -637,12 +393,13 @@ void PartsBinPaletteWidget::load(const QString &filename, QObject * progressTarg
 
 	if (!result) {
 		QMessageBox::warning(NULL, QObject::tr("Fritzing"), QObject::tr("Friting cannot load the parts bin"));
-		return;
 	}
-	setPaletteModel(paletteBinModel,true);
-	m_canDeleteModel = true;					// since we just created this model, we can delete it later
-	if (oldModel) {
-		delete oldModel;
+	else {
+		setPaletteModel(paletteBinModel,true);
+		m_canDeleteModel = true;					// since we just created this model, we can delete it later
+		if (oldModel) {
+			delete oldModel;
+		}
 	}
 
 	if (progressTarget) {
@@ -668,7 +425,6 @@ void PartsBinPaletteWidget::undoStackCleanChanged(bool isClean) {
 bool PartsBinPaletteWidget::currentBinIsCore() {
     return m_fileName == BinManager::CorePartsBinLocation;
 }
-
 
 bool PartsBinPaletteWidget::beforeClosing() {
 	bool retval;
@@ -805,100 +561,13 @@ void PartsBinPaletteWidget::addPartCommand(const QString& moduleID) {
 	}
 }
 
-void PartsBinPaletteWidget::removePartCommand(const QString& moduleID) {
-	/*QString partTitle = m_refModel->partTitle(moduleID);
-	if(partTitle == ___emptyString___) partTitle = moduleID;
-
-	QUndoCommand *parentCmd = new QUndoCommand(tr("\"%1\" removed from the bin").arg(partTitle));
-
-	int index = m_listView->position(moduleID);
-	new PartsBinRemoveCommand(this, moduleID, index, parentCmd);
-	m_undoStack->push(parentCmd);*/
-
-	QMessageBox::StandardButton answer = QMessageBox::question(
-		this,
-		tr("Remove from bin"),
-		tr("Do you really want to remove the selected part from the bin?"),
-		QMessageBox::Yes | QMessageBox::No,
-		QMessageBox::Yes
-	);
-	// TODO: make button texts translatable
-	if(answer == QMessageBox::Yes) {
-		m_undoStack->push(new QUndoCommand("Parts bin: part removed"));
-		removePart(moduleID);
-	}
-
-	setDirty();
-}
-
-void PartsBinPaletteWidget::newBin() {
-	m_manager->newBinIn(m_tabWidget);
-}
-
-void PartsBinPaletteWidget::openNewBin(const QString &filename) {
-	m_manager->openBinIn(m_tabWidget,filename);
-}
-
-void PartsBinPaletteWidget::openCoreBin() {
-	m_manager->openCoreBinIn(m_tabWidget);
-}
-
-void PartsBinPaletteWidget::openContribBin() {
-	openNewBin(BinManager::ContribPartsBinLocation);
-}
-
-void PartsBinPaletteWidget::closeBin() {
-	m_manager->closeBinIn(m_tabWidget);
-}
-
-
-void PartsBinPaletteWidget::rename() {
-	if (!m_allowsChanges) {
-		// TODO: disable menu item instead
-		QMessageBox::warning(NULL, tr("Read-only bin"), tr("This bin cannot be renamed."));
-		return;
-	}
-
-	bool ok;
-	QString newTitle = QInputDialog::getText(
-		this,
-		tr("Rename bin"),
-		tr("Please choose a name for the bin:"),
-		QLineEdit::Normal,
-		m_title,
-		&ok
-	);
-	if(ok) {
-		setTitle(newTitle);
-	}
-}
-
-void PartsBinPaletteWidget::newPart() {
-	m_manager->newPartTo(this);
-}
-
-void PartsBinPaletteWidget::importPart() {
-	m_manager->importPartTo(this);
-}
-
-void PartsBinPaletteWidget::editSelected() {
-	m_manager->editSelectedPartFrom(this);
-}
-
-void PartsBinPaletteWidget::exportSelected() {
-	ModelPart *mp = selected();
-	if(mp) {
-		emit savePartAsBundled(mp->moduleID());
-	}
-}
-
 void PartsBinPaletteWidget::itemMoved() {
 	m_orderHasChanged = true;
 	m_manager->setDirtyTab(this);
 }
 
 void PartsBinPaletteWidget::setDirty(bool dirty) {
-	m_manager->setDirtyTab(this,dirty);
+	m_manager->setDirtyTab(this, dirty);
 	m_isDirty = dirty;
 }
 
@@ -921,14 +590,6 @@ bool PartsBinPaletteWidget::eventFilter(QObject *obj, QEvent *event) {
 
 PartsBinView *PartsBinPaletteWidget::currentView() {
 	return m_currentView;
-}
-
-bool PartsBinPaletteWidget::isOverFooter(QDropEvent* event) {
-	QRect mappedFooterRect(
-		m_footer->pos(),
-		m_footer->rect().size()
-	);
-	return mappedFooterRect.contains(event->pos());
 }
 
 void PartsBinPaletteWidget::dragEnterEvent(QDragEnterEvent *event) {
@@ -963,6 +624,9 @@ void PartsBinPaletteWidget::addSketchPartToMe() {
 
 void PartsBinPaletteWidget::setFilename(const QString &filename) {
 	m_fileName = filename;
+	if (m_fileName.compare(BinManager::SearchBinLocation) == 0) {
+		m_searchStackedWidget->setCurrentIndex(1);
+	}
 	bool acceptIt = !currentBinIsCore();
 	setAcceptDrops(acceptIt);
 	m_iconView->setAcceptDrops(acceptIt);
@@ -977,10 +641,6 @@ void PartsBinPaletteWidget::search() {
 	if (searchText.isEmpty()) return;
 
     m_manager->search(searchText);
-}
-
-void PartsBinPaletteWidget::clickedSearch() {
-    m_manager->clickedSearch(this);
 }
 
 bool PartsBinPaletteWidget::allowsChanges() {
@@ -1015,29 +675,6 @@ bool PartsBinPaletteWidget::currentViewIsIconView() {
 	return (m_currentView == m_iconView);
 }
 
-QMenu * PartsBinPaletteWidget::getFileMenu() {
-	return m_fileMenu;
-}
-
-QMenu * PartsBinPaletteWidget::getPartMenu() {
-	return m_partMenu;
-}
-
-void PartsBinPaletteWidget::updateBinFileMenu() {
-	m_saveAction->setEnabled(m_allowsChanges);
-	m_renameAction->setEnabled(m_allowsChanges);
-	m_closeBinAction->setEnabled(m_tabWidget->count() > 1);
-}
-
-void PartsBinPaletteWidget::updateBinPartsMenu() {
-	ModelPart *mp = selected();
-	bool enabled = (mp != NULL);
-	m_editPartAction->setEnabled(enabled);
-	m_exportPartAction->setEnabled(enabled && !mp->isCore());
-	m_removePartAction->setEnabled(enabled && allowsChanges());
-	m_importPartAction->setEnabled(true);
-}
-
 QIcon PartsBinPaletteWidget::icon() {
 	static QIcon emptyIcon;
 	if (m_icon) return *m_icon;
@@ -1045,10 +682,4 @@ QIcon PartsBinPaletteWidget::icon() {
 	return emptyIcon;
 }
 
-void PartsBinPaletteWidget::prepPopup(QMouseEvent * event) {
-	QLabel * label = qobject_cast<QLabel *>(sender());
-	if (label == NULL) return;
-
-	m_fileMenu->exec(label->mapToGlobal(event->pos()));
-}
 

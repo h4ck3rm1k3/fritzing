@@ -136,6 +136,7 @@ void DockManager::createDockWindows()
 	m_mainWindow->m_tripleNavigator->addView(m_mainWindow->m_miniViewContainerSchematic, tr("Schematic"));
 	m_mainWindow->m_tripleNavigator->addView(m_mainWindow->m_miniViewContainerPCB, tr("PCB"));
 	m_mainWindow->m_navigatorDock = makeDock(tr("Navigator"), m_mainWindow->m_tripleNavigator, NavigatorMinHeight, NavigatorDefaultHeight);
+	m_mainWindow->m_navigatorDock->hide();
 
     makeDock(tr("Layers"), m_mainWindow->m_layerPalette, DockMinWidth, DockMinHeight)->hide();
     m_mainWindow->m_undoView->setMinimumSize(DockMinWidth, DockMinHeight);

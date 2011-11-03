@@ -32,6 +32,7 @@ $Date$
 #include <QTabWidget>
 #include <QMenu>
 #include <QLabel>
+#include <QDir>
 
 class ModelPart;
 class PaletteModel;
@@ -47,7 +48,7 @@ class BinManager : public QFrame {
 		void setPaletteModel(PaletteModel *model);
 
 		void addBin(class PartsBinPaletteWidget* bin);
-		void insertBin(PartsBinPaletteWidget* bin, int index, class StackTabWidget* tb);
+		void insertBin(PartsBinPaletteWidget* bin, int index);
 		void addPart(ModelPart *modelPart, int position = -1);
 		void addToMyPart(ModelPart *modelPart);
 
@@ -66,11 +67,10 @@ class BinManager : public QFrame {
 		void setDirtyTab(PartsBinPaletteWidget* w, bool dirty=true);
 		void updateTitle(PartsBinPaletteWidget* w, const QString& newTitle);
 
-		PartsBinPaletteWidget* newBinIn(StackTabWidget* tb);
 		void openBin(const QString &fileName);
-		PartsBinPaletteWidget* openBinIn(StackTabWidget* tb, QString fileName="");
-		PartsBinPaletteWidget* openCoreBinIn(StackTabWidget* tb);
-		void closeBinIn(StackTabWidget* tb, int index=-1);
+		PartsBinPaletteWidget* openBinIn(QString fileName="");
+		PartsBinPaletteWidget* openCoreBinIn();
+		void closeBinIn(int index=-1);
 
 		void addPartTo(PartsBinPaletteWidget* bin, ModelPart* mp);
 		void newPartTo(PartsBinPaletteWidget* bin);
@@ -84,38 +84,59 @@ class BinManager : public QFrame {
 
 		MainWindow* mainWindow();
         void search(const QString & searchText);
-        PartsBinPaletteWidget * clickedSearch(PartsBinPaletteWidget *);
 		bool currentViewIsIconView();
+		void updateViewChecks(bool iconView);
+		QMenu * binContextMenu();
+		QMenu * partContextMenu();
+		QMenu * combinedMenu();
+
+	signals:
+		void savePartAsBundled(const QString &moduleId);
+
+
+	public slots:
+		void updateBinCombinedMenu();
 		void toIconView();
 		void toListView();
-		QMenu * getFileMenu();
-		QMenu * getPartMenu();
-		void showSearch();
-		void updateBinPartsMenu();
-		void updateBinFileMenu();
 
 	protected slots:
 		void updateFileName(PartsBinPaletteWidget* bin, const QString &newFileName, const QString &oldFilename);
 		void setAsCurrentBin(PartsBinPaletteWidget* bin);
-		void currentChanged(StackTabWidget*,int);
-		void tabCloseRequested(StackTabWidget*,int);
+		void currentChanged(int);
+		void tabCloseRequested(int);
+		PartsBinPaletteWidget* newBinIn();
+		void openNewBin();
+		void closeBin();
+		void newPart();
+		void importPart();
+		void editSelected();
+		void saveBin();
+		void saveBinAs();
+		void renameBin();
+		void exportSelected();
+		bool removeSelected();
+		void saveBundledBin();
 
 	protected:
 		void createMenu();
 		PartsBinPaletteWidget* newBin();
-		void registerBin(PartsBinPaletteWidget* bin, StackTabWidget *tb);
-		PartsBinPaletteWidget* getBin(StackTabWidget* tb, int index);
-		PartsBinPaletteWidget* currentBin(StackTabWidget* tb);
+		void registerBin(PartsBinPaletteWidget* bin);
+		PartsBinPaletteWidget* getBin(int index);
+		PartsBinPaletteWidget* currentBin();
 		void saveStateAndGeometry();
 		void restoreStateAndGeometry();
 		void setAsCurrentTab(PartsBinPaletteWidget* bin);
         PartsBinPaletteWidget* getOrOpenMyPartsBin();
         PartsBinPaletteWidget* getOrOpenSearchBin();
         PartsBinPaletteWidget* getOrOpenBin(const QString & dest, const QString & source);
-        void connectTabWidget(StackTabWidget *tw);
+        void connectTabWidget();
 		void addPartAux(PartsBinPaletteWidget *bin, ModelPart *modelPart, int position = -1);
-		PartsBinPaletteWidget * determineTopmostBin();
 		PartsBinPaletteWidget* findBin(const QString & binLocation);
+		void createCombinedMenu();
+		void createContextMenus();
+		void loadAllBins();
+		void loadBins(QDir &);
+		QString getBinName(const QFileInfo &info);
 
 protected:
 		ReferenceModel *m_refModel;
@@ -126,11 +147,33 @@ protected:
 
 		MainWindow *m_mainWindow;
 		PartsBinPaletteWidget *m_currentBin;
-		StackTabWidget* m_stackTabWidget;
+		class StackTabWidget* m_stackTabWidget;
 
 		QHash<QString /*filename*/,PartsBinPaletteWidget*> m_openedBins;
 		int m_unsavedBinsCount;
 		QString m_defaultSaveFolder;
+
+		QMenu *m_binContextMenu;
+		QMenu *m_combinedMenu;		
+
+		QAction *m_newBinAction;
+		QAction *m_openBinAction;
+		QAction *m_closeBinAction;
+		QAction *m_saveBinAction;
+		QAction *m_saveBinAsAction;
+		QAction *m_saveBinAsBundledAction;
+		QAction *m_renameBinAction;
+
+		QAction *m_showListViewAction;
+		QAction *m_showIconViewAction;
+
+		QMenu *m_partContextMenu;
+		QMenu *m_partMenu;	
+		QAction *m_newPartAction;
+		QAction *m_importPartAction;
+		QAction *m_editPartAction;
+		QAction *m_exportPartAction;
+		QAction *m_removePartAction;
 
 	protected:
 		static QString StandardBinStyle;

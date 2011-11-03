@@ -317,7 +317,6 @@ protected slots:
 	void updateNet();
 	void selectMoveLock();
 	void moveLock();
-	void searchPartsBin();
 	void showNavigator();
 	void autorouterSettings();
 	void warnSMDReally();
@@ -446,7 +445,6 @@ protected:
 
 	void routingStatusLabelMouse(QMouseEvent*, bool show);
 	class Wire * retrieveWire();
-	void updatePartsBinMenu(QMenu * partsBinMenu, QMenu * binMenu, int skip);
 	QString getBomProps(ItemBase *);
 	void swapSelectedMap(const QString & family, const QString & prop, QMap<QString, QString> & currPropsMap, ItemBase *);
 	ModelPart * findReplacedby(ModelPart * originalModelPart);
@@ -514,7 +512,6 @@ protected:
 	QMenu *m_openRecentFileMenu;
     QAction *m_openRecentFileActs[MaxRecentFiles];
 	QMenu *m_openExampleMenu;
-	QMenu * m_partsBinFileMenu;
 	QAction *m_saveAct;
 	QAction *m_saveAsAct;
 	QAction *m_pageSetupAct;
@@ -574,8 +571,6 @@ protected:
 	QAction *m_exportNormalizedFlattenedSvgAction;
     QAction *m_openInPartsEditorAct;
     QMenu *m_addToBinMenu;
-	QMenu * m_partsBinPartMenu;
-	QAction *m_partsBinSearchAct;
 
 
 	QMenu *m_rotateMenu;

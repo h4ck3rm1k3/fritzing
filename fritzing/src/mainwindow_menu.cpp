@@ -559,7 +559,6 @@ void MainWindow::createOpenRecentMenu() {
 
 void MainWindow::updateFileMenu() {
 	updateRecentFileActions();
-	updatePartsBinMenu(m_partsBinFileMenu, m_binManager ? m_binManager->getFileMenu() : NULL, 1);
 	m_orderFabAct->setEnabled(true);
 }
 
@@ -792,11 +791,6 @@ void MainWindow::createPartMenuActions() {
     m_openProgramWindowAct = new QAction(tr("Open programming window"), this);
     m_openProgramWindowAct->setStatusTip(tr("Open microcontroller programming window"));
 	connect(m_openProgramWindowAct, SIGNAL(triggered()), this, SLOT(openProgramWindow()));
-
-	m_partsBinSearchAct = new QAction(tr("Search parts bin"), this);
-    m_partsBinSearchAct->setStatusTip(tr("Search for a part in the parts bin"));
-	connect(m_partsBinSearchAct, SIGNAL(triggered()), this, SLOT(searchPartsBin()));
-
 }
 
 void MainWindow::createViewMenuActions() {
@@ -943,19 +937,11 @@ void MainWindow::createHelpMenuActions() {
 
 void MainWindow::createMenus()
 {
-	m_partsBinFileMenu = new QMenu(tr("Parts Bin"), this);
-	m_partsBinFileMenu->setEnabled(false);
-	m_partsBinPartMenu = new QMenu(tr("Parts Bin"), this);
-	m_partsBinPartMenu->setEnabled(false);
-
     m_fileMenu = menuBar()->addMenu(tr("&File"));
     m_fileMenu->addAction(m_newAct);
     m_fileMenu->addAction(m_openAct);
     m_fileMenu->addMenu(m_openRecentFileMenu);
     m_fileMenu->addMenu(m_openExampleMenu);
-
-    m_fileMenu->addSeparator();
-	m_fileMenu->addMenu(m_partsBinFileMenu);
 
     m_fileMenu->addSeparator();
     m_fileMenu->addAction(m_closeAct);
@@ -1039,9 +1025,6 @@ void MainWindow::createMenus()
 	m_partMenu->addSeparator();
 	m_partMenu->addAction(m_openInPartsEditorAct);
 	m_partMenu->addAction(m_saveBundledPart);
-
-	m_partMenu->addSeparator();
-	m_partMenu->addMenu(m_partsBinPartMenu);
 
 	m_partMenu->addSeparator();
 	m_partMenu->addAction(m_flipHorizontalAct);
@@ -1404,12 +1387,6 @@ void MainWindow::updatePartMenu() {
 	m_flipHorizontalAct->setEnabled(enable && (itemCount.selHFlipable > 0) && (m_currentGraphicsView != m_pcbGraphicsView));
 	m_flipVerticalAct->setEnabled(enable && (itemCount.selVFlipable > 0) && (m_currentGraphicsView != m_pcbGraphicsView));
 
-	updatePartsBinMenu(m_partsBinPartMenu, m_binManager ? m_binManager->getPartMenu() : NULL, 4);
-	if (m_binManager) {
-		m_partsBinPartMenu->addAction(m_partsBinSearchAct);
-	}
-
-
 	updateItemMenu();
 	updateEditMenu();
 
@@ -1421,26 +1398,6 @@ void MainWindow::updatePartMenu() {
 	m_selectAllObsoleteAct->setEnabled(true);
 	m_swapObsoleteAct->setEnabled(itemCount.obsoleteCount > 0);
 	m_openProgramWindowAct->setEnabled(true);
-}
-
-void MainWindow::updatePartsBinMenu(QMenu * partsBinMenu, QMenu * binMenu, int skip) 
-{
-	partsBinMenu->clear();
-	if (binMenu) {
-		partsBinMenu->setEnabled(true);
-		m_binManager->updateBinPartsMenu();
-		m_binManager->updateBinFileMenu();
-		foreach (QAction * action, binMenu->actions()) {
-			if (--skip >= 0) {
-				continue;
-			}
-
-			partsBinMenu->addAction(action);
-		}
-	}
-	else {
-		partsBinMenu->setEnabled(false);
-	}
 }
 
 void MainWindow::updateTransformationActions() {
@@ -3208,10 +3165,6 @@ void MainWindow::moveLock()
 void MainWindow::selectMoveLock()
 {
 	m_currentGraphicsView->selectAllMoveLock();
-}
-
-void  MainWindow::searchPartsBin() {
-	if (m_binManager) m_binManager->showSearch();
 }
 
 void MainWindow::autorouterSettings() {
