@@ -89,6 +89,7 @@ class BinManager : public QFrame {
 		QMenu * binContextMenu();
 		QMenu * partContextMenu();
 		QMenu * combinedMenu();
+		void setTabIcon(PartsBinPaletteWidget* w, QIcon *);
 
 	signals:
 		void savePartAsBundled(const QString &moduleId);

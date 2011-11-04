@@ -392,9 +392,9 @@ void PartsBinPaletteWidget::load(const QString &filename, QWidget * progressTarg
 
 	bool deleteWhenDone = false;
         if (progressTarget != NULL) {
-            DebugDialog::debug("open progress " + filename);
+        DebugDialog::debug("open progress " + filename);
 		deleteWhenDone = true;
-                m_loadingProgressDialog = new FileProgressDialog(tr("Loading..."), 200, progressTarget == this, progressTarget);
+        m_loadingProgressDialog = new FileProgressDialog(tr("Loading..."), 200, progressTarget == this, progressTarget);
 		m_loadingProgressDialog->setBinLoadingChunk(200);
 		m_loadingProgressDialog->setBinLoadingCount(1);
 		m_loadingProgressDialog->setMessage(tr("loading bin %1").arg(QFileInfo(filename).baseName()));
@@ -422,14 +422,14 @@ void PartsBinPaletteWidget::load(const QString &filename, QWidget * progressTarg
 	}
 
 	if (progressTarget) {
-            DebugDialog::debug("close progress " + filename);
+        DebugDialog::debug("close progress " + filename);
 		disconnect(paletteBinModel, SIGNAL(loadingInstances(ModelBase *, QDomElement &)), progressTarget, SLOT(loadingInstancesSlot(ModelBase *, QDomElement &)));
 		disconnect(paletteBinModel, SIGNAL(loadingInstance(ModelBase *, QDomElement &)), progressTarget, SLOT(loadingInstanceSlot(ModelBase *, QDomElement &)));
 		disconnect(m_iconView, SIGNAL(settingItem()), progressTarget, SLOT(settingItemSlot()));
 		disconnect(m_listView, SIGNAL(settingItem()), progressTarget, SLOT(settingItemSlot()));
 		if (deleteWhenDone) {
-                    m_loadingProgressDialog->close();
-                    delete m_loadingProgressDialog;
+			m_loadingProgressDialog->close();
+			delete m_loadingProgressDialog;
 		}
 		m_loadingProgressDialog = NULL;
 	}
@@ -729,8 +729,23 @@ QMenu * PartsBinPaletteWidget::binContextMenu()
 }
 
 void PartsBinPaletteWidget::changeIconColor() {
-	QColor initial;
+	// TODO: use the icon that's already there
+	QImage image(":resources/bins/icons/" + CustomIconName);
+	QColor initial(image.pixel(image.width() / 2, image.height() / 2));
 	QColor color = QColorDialog::getColor(initial, this, tr("Select a color for this icon"), 0 );
 	if (!color.isValid()) return;
 
+	for (int y = 0; y < image.height(); y++) {
+		for (int x = 0; x < image.width(); x++) {
+			if (image.pixel(x, y) == initial.rgb()) {
+				image.setPixel(x, y, color.rgb());
+			}
+		}
+	}
+
+	delete m_icon;
+	m_icon = new QIcon(QPixmap::fromImage(image));
+	m_manager->setTabIcon(this, m_icon);
+	setDirty();
 }
+
