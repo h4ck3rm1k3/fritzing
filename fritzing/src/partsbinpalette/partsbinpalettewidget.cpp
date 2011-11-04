@@ -735,10 +735,12 @@ void PartsBinPaletteWidget::changeIconColor() {
 	QColor color = QColorDialog::getColor(initial, this, tr("Select a color for this icon"), 0 );
 	if (!color.isValid()) return;
 
+	QRgb match = initial.rgba();
 	for (int y = 0; y < image.height(); y++) {
 		for (int x = 0; x < image.width(); x++) {
-			if (image.pixel(x, y) == initial.rgb()) {
-				image.setPixel(x, y, color.rgb());
+			QRgb rgb = image.pixel(x, y);
+			if (qRed(rgb) == qRed(match) && qBlue(rgb) == qBlue(match) && qGreen(rgb) == qGreen(match)) {
+				image.setPixel(x, y, (color.rgb() & 0xffffff) | (qAlpha(rgb) << 24));
 			}
 		}
 	}
