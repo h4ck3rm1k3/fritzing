@@ -98,6 +98,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		bool currentViewIsIconView();
 		QIcon icon();
 		void saveBundledBin();
+		QMenu * binContextMenu();
 
 	public slots:
 		void addPartCommand(const QString& moduleID);
@@ -108,6 +109,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		void toListView();
 		bool save();
 		bool saveAs();
+		void changeIconColor();
 
 	protected slots:
 		void undoStackCleanChanged(bool isClean);

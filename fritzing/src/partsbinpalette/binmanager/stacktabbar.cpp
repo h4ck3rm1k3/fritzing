@@ -108,17 +108,11 @@ void StackTabBar::showContextMenu(const QPoint &point)
 
 	setCurrentIndex(tabIndex);
 
-
-	//QMenu * binMenu = bin->getFileMenu();
-	//if (binMenu == NULL) return;
-
-	//QMenu * partMenu = bin->getPartMenu();
-	//if (partMenu == NULL) return;
-
-	//QMenu menu;
-	//menu.addMenu(partMenu);
-	//menu.addMenu(binMenu);
-	//menu.exec(this->mapToGlobal(point));
+	QMenu * contextMenu = bin->binContextMenu();
+	if (contextMenu) {
+		contextMenu->exec(this->mapToGlobal(point));
+	}
+	delete contextMenu;
 }
 
 

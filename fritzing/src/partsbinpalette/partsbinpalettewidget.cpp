@@ -32,6 +32,7 @@ $Date$
 #include <QMessageBox>
 #include <QSettings>
 #include <QWidgetAction>
+#include <QColorDialog>
 
 #include "partsbinpalettewidget.h"
 #include "partsbincommands.h"
@@ -46,6 +47,9 @@ $Date$
 #include "../infoview/htmlinfoview.h"
 #include "../utils/fileprogressdialog.h"
 #include "../utils/folderutils.h"
+
+
+static QString CustomIconName = "Custom1.png";
 
 //////////////////////////////////////////////
 
@@ -251,8 +255,9 @@ void PartsBinPaletteWidget::grabTitle(PaletteModel *model) {
 		iconFilename = temp;
 	}
 	else if (iconFilename.isEmpty()) {
-		iconFilename = "Custom1.png";
+		iconFilename = CustomIconName;
 	}
+	model->root()->modelPartShared()->setIcon(iconFilename);
 
 	QString path = ":resources/bins/icons/" + iconFilename;
 	QFile file(path);
@@ -418,7 +423,9 @@ void PartsBinPaletteWidget::load(const QString &filename, QObject * progressTarg
 		disconnect(paletteBinModel, SIGNAL(loadingInstance(ModelBase *, QDomElement &)), progressTarget, SLOT(loadingInstanceSlot(ModelBase *, QDomElement &)));
 		disconnect(m_iconView, SIGNAL(settingItem()), progressTarget, SLOT(settingItemSlot()));
 		disconnect(m_listView, SIGNAL(settingItem()), progressTarget, SLOT(settingItemSlot()));
-		delete m_loadingProgressDialog;
+		if (progressTarget == this) {
+			delete m_loadingProgressDialog;
+		}
 		m_loadingProgressDialog = NULL;
 	}
 
@@ -693,4 +700,32 @@ QIcon PartsBinPaletteWidget::icon() {
 	return emptyIcon;
 }
 
+QMenu * PartsBinPaletteWidget::binContextMenu()
+{
+	QMenu * menu = m_manager->binContextMenu();
+	if (menu == NULL) return NULL;
 
+	QMenu * newMenu = new QMenu();
+	foreach (QAction * action, menu->actions()) {
+		newMenu->addAction(action);
+	}
+
+	// TODO: need to enable/disable actions based on this bin
+
+	QString iconFilename = m_model->root()->modelPartShared()->icon();
+	if (iconFilename.compare(CustomIconName) == 0) {
+		newMenu->addSeparator();
+		QAction * action = new QAction(tr("Change icon color..."), newMenu);
+		action->setToolTip(tr("Change the color of the icon for this bin."));
+		connect(action, SIGNAL(triggered()), this, SLOT(changeIconColor()));
+		newMenu->addAction(action);
+	}
+	return newMenu;
+}
+
+void PartsBinPaletteWidget::changeIconColor() {
+	QColor initial;
+	QColor color = QColorDialog::getColor(initial, this, tr("Select a color for this icon"), 0 );
+	if (!color.isValid()) return;
+
+}
