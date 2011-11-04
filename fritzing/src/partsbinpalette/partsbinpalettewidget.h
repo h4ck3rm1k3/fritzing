@@ -80,7 +80,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		void addNewPart(ModelPart *modelPart);
         void removePart(const QString& moduleID);
         void removeParts();
-        void load(const QString& filename, QObject * progressTarget);
+        void load(const QString& filename, QWidget * progressTarget);
 
 		bool contains(const QString &moduleID);
 		void setDirty(bool dirty=true);
@@ -93,7 +93,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		void setAllowsChanges(bool);
 		void focusSearch();
 		void setSaveQuietly(bool);
-		bool open(QString fileName, QObject * progressTarget);
+                bool open(QString fileName, QWidget * progressTarget);
 
 		bool currentViewIsIconView();
 		QIcon icon();

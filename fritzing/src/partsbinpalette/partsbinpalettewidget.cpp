@@ -197,7 +197,7 @@ void PartsBinPaletteWidget::toListView() {
 }
 
 bool PartsBinPaletteWidget::saveAsAux(const QString &filename) {
-	FileProgressDialog progress("Saving...", 0, this);
+        FileProgressDialog progress("Saving...", 0, true, this);
 
 	QString oldFilename = m_fileName;
 	setFilename(filename);
@@ -352,7 +352,7 @@ bool PartsBinPaletteWidget::loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps
 }
 
 
-bool PartsBinPaletteWidget::open(QString fileName, QObject * progressTarget) {
+bool PartsBinPaletteWidget::open(QString fileName, QWidget * progressTarget) {
 	QFile file(fileName);
 	if (!file.exists()) {
        QMessageBox::warning(NULL, tr("Fritzing"),
@@ -383,18 +383,18 @@ bool PartsBinPaletteWidget::open(QString fileName, QObject * progressTarget) {
 }
 
 
-void PartsBinPaletteWidget::load(const QString &filename, QObject * progressTarget) {
+void PartsBinPaletteWidget::load(const QString &filename, QWidget * progressTarget) {
 	// TODO deleting this local palette reference model deletes modelPartShared held by the palette bin modelParts
 	//PaletteModel * paletteReferenceModel = new PaletteModel(true, true);
 
 	PaletteModel * oldModel = (m_canDeleteModel) ? m_model : NULL;
 	PaletteModel * paletteBinModel = new PaletteModel(true, false, false);
 
-
 	bool deleteWhenDone = false;
-	if (progressTarget == this) {
+        if (progressTarget != NULL) {
+            DebugDialog::debug("open progress " + filename);
 		deleteWhenDone = true;
-		progressTarget = m_loadingProgressDialog = new FileProgressDialog(tr("Loading..."), 200, this);
+                m_loadingProgressDialog = new FileProgressDialog(tr("Loading..."), 200, progressTarget == this, progressTarget);
 		m_loadingProgressDialog->setBinLoadingChunk(200);
 		m_loadingProgressDialog->setBinLoadingCount(1);
 		m_loadingProgressDialog->setMessage(tr("loading bin %1").arg(QFileInfo(filename).baseName()));
@@ -422,12 +422,14 @@ void PartsBinPaletteWidget::load(const QString &filename, QObject * progressTarg
 	}
 
 	if (progressTarget) {
+            DebugDialog::debug("close progress " + filename);
 		disconnect(paletteBinModel, SIGNAL(loadingInstances(ModelBase *, QDomElement &)), progressTarget, SLOT(loadingInstancesSlot(ModelBase *, QDomElement &)));
 		disconnect(paletteBinModel, SIGNAL(loadingInstance(ModelBase *, QDomElement &)), progressTarget, SLOT(loadingInstanceSlot(ModelBase *, QDomElement &)));
 		disconnect(m_iconView, SIGNAL(settingItem()), progressTarget, SLOT(settingItemSlot()));
 		disconnect(m_listView, SIGNAL(settingItem()), progressTarget, SLOT(settingItemSlot()));
 		if (deleteWhenDone) {
-			delete m_loadingProgressDialog;
+                    m_loadingProgressDialog->close();
+                    delete m_loadingProgressDialog;
 		}
 		m_loadingProgressDialog = NULL;
 	}

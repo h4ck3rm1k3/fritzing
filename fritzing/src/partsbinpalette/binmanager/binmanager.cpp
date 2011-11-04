@@ -475,13 +475,13 @@ void BinManager::restoreStateAndGeometry() {
 	QSettings settings;
 	settings.beginGroup("bins");
 	if(settings.childGroups().size()==0) { // first time? open core and my_parts then
-		m_mainWindow->fileProgressDialogSetBinLoadingCount(2);
+                //m_mainWindow->fileProgressDialogSetBinLoadingCount(2);
 
 		QStringList locations;
 		locations << CorePartsBinLocation << MyPartsBinLocation << SearchBinLocation;
 		foreach (QString location, locations) {
 			PartsBinPaletteWidget* bin = newBin();
-			bin->load(location, m_mainWindow->fileProgressDialog());
+                        bin->load(location, m_mainWindow->fileProgressDialog());
 			m_stackTabWidget->addTab(bin, bin->icon(), bin->title());
 			registerBin(bin);
 		}
@@ -489,11 +489,11 @@ void BinManager::restoreStateAndGeometry() {
 		foreach(QString g, settings.childGroups()) {
 			settings.beginGroup(g);
 
-			m_mainWindow->fileProgressDialogSetBinLoadingCount(settings.childKeys().count());
+                        //m_mainWindow->fileProgressDialogSetBinLoadingCount(settings.childKeys().count());
 			foreach(QString k, settings.childKeys()) {
 				PartsBinPaletteWidget* bin = newBin();
 				QString filename = settings.value(k).toString();
-				if(QFileInfo(filename).exists() && bin->open(filename, m_mainWindow->fileProgressDialog())) {
+                                if(QFileInfo(filename).exists() && bin->open(filename,  m_mainWindow->fileProgressDialog())) {
 					m_stackTabWidget->addTab(bin, bin->icon(), bin->title());
 					registerBin(bin);
 				} else {

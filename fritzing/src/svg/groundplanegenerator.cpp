@@ -921,7 +921,7 @@ void GroundPlaneGenerator::collectBorderPoints(QImage & image, QList<QPoint> & p
 {
 	// background is black
 
-	int currentX, currentY;
+        int currentX = 0, currentY = 0;
 	bool gotSomething = false;
 
 	for (int y = 0; y < image.height(); y++) {

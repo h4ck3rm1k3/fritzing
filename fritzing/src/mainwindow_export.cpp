@@ -1128,7 +1128,7 @@ void MainWindow::exportNetlist() {
 }
 
 FileProgressDialog * MainWindow::exportProgress() {
-	return (new FileProgressDialog("Exporting...", 0, this));
+        return (new FileProgressDialog("Exporting...", 0, true, this));
 }
 
 void MainWindow::exportNormalizedSVG() {

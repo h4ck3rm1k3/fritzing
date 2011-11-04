@@ -41,10 +41,10 @@ $Date$
 
 /////////////////////////////////////
 
-FileProgressDialog::FileProgressDialog(const QString & title, int initialMaximum, QWidget * parent) : QDialog(parent)
+FileProgressDialog::FileProgressDialog(const QString & title, int initialMaximum, bool modal, QWidget * parent) : QDialog(parent)
 {
 	init(title, initialMaximum);
-	setModal(true);
+        setModal(modal);
 	show();
 	ProcessEventBlocker::processEvents();
 }

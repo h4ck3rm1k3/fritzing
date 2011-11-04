@@ -1214,7 +1214,7 @@ void MainWindow::saveBundledNonAtomicEntity(QString &filename, const QString &ex
 
 	if (bundledFileName.isEmpty()) return; // Cancel pressed
 
-	FileProgressDialog progress("Saving...", 0, this);
+        FileProgressDialog progress("Saving...", 0, true, this);
 
 	if(!alreadyHasExtension(bundledFileName, extension)) {
 		bundledFileName += extension;
@@ -2259,7 +2259,7 @@ FileProgressDialog * MainWindow::fileProgressDialog()
 }
 
 void MainWindow::showFileProgressDialog(const QString & path) {
-	m_fileProgressDialog = new FileProgressDialog(tr("Loading..."), 200, this);
+        m_fileProgressDialog = new FileProgressDialog(tr("Loading..."), 200, true, this);
 	m_fileProgressDialog->setBinLoadingChunk(50);
 	if (!path.isEmpty()) {
 		setFileProgressPath(QFileInfo(path).fileName());
