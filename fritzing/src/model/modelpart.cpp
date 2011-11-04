@@ -193,6 +193,9 @@ void ModelPart::saveInstances(const QString & fileName, QXmlStreamWriter & strea
 		streamWriter.writeStartDocument();
     	streamWriter.writeStartElement("module");
 		streamWriter.writeAttribute("fritzingVersion", Version::versionString());
+		if (modelPartShared() && !modelPartShared()->icon().isEmpty()) {
+			streamWriter.writeAttribute("icon", modelPartShared()->icon());
+		}
 		QString title = this->title();
 		if(!title.isNull() && !title.isEmpty()) {
 			streamWriter.writeTextElement("title",title);

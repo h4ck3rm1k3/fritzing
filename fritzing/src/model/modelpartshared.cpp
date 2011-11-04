@@ -123,7 +123,6 @@ ModelPartShared::ModelPartShared(QDomDocument * domDocument, const QString & pat
 void ModelPartShared::commonInit() {
 	m_moduleID = "";
 	m_flippedSMD = m_connectorsInitialized = m_ignoreTerminalPoints = m_partlyLoaded = m_needsCopper1 = false;
-	m_icon = NULL;
 }
 
 ModelPartShared::~ModelPartShared() {
@@ -201,16 +200,12 @@ void ModelPartShared::setTitle(QString title) {
 	m_title = title;
 }
 
-QIcon * ModelPartShared::icon() {
+const QString & ModelPartShared::icon() {
 	return m_icon;
 }
 
 void ModelPartShared::setIcon(const QString & filename) {
-	QString path = QString(":/resources/bins/icons/%1").arg(filename);
-	QFile file(path);
-	if (!file.exists()) return;
-
-	m_icon = new QIcon(path);
+	m_icon = filename;
 }
 
 const QString & ModelPartShared::label() {

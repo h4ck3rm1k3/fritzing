@@ -46,6 +46,7 @@ bool PaletteModel::CreateContribPartsBinFile = true;
 
 static bool JustAppendAllPartsInstances = false;
 static bool FirstTime = true;
+static bool FirstTimeWrite = true;
 
 QString PaletteModel::AllPartsBinFilePath = ___emptyString___;
 QString PaletteModel::NonCorePartsBinFilePath = ___emptyString___;
@@ -265,6 +266,13 @@ void PaletteModel::writeCommonBinInstance(const QString &moduleID, const QString
 
 void PaletteModel::writeCommonBinAux(const QString &textToWrite, QIODevice::OpenMode openMode, bool doIt, const QString &filename) {
 	if(!doIt) return;
+
+	if (FirstTimeWrite) {
+		FirstTimeWrite = false;
+		QFileInfo info(filename);
+		QDir dir = info.absoluteDir();
+		dir.mkpath(info.absolutePath());
+	}
 
 	QFile file(filename);
 	if (file.open(openMode | QFile::Text)) {

@@ -59,6 +59,7 @@ QString BinManager::CorePartsBinLocation;
 QString BinManager::StandardBinStyle = "background-color: gray;";
 QString BinManager::CurrentBinStyle = "background-color: black;";
 
+QHash<QString, QString> BinManager::StandardBinIcons;
 
 BinManager::BinManager(class ReferenceModel *refModel, class HtmlInfoView *infoView, WaitPushUndoStack *undoStack, MainWindow* parent)
 	: QFrame(parent)
@@ -593,6 +594,11 @@ void BinManager::initNames() {
     BinManager::SearchBinTemplateLocation =":/resources/bins/search.fzb";
 	BinManager::ContribPartsBinLocation = FolderUtils::getUserDataStorePath("bins")+"/contribParts.fzb";
     BinManager::CorePartsBinLocation = ":/resources/bins/bin.fzb";
+
+	StandardBinIcons.insert(BinManager::MyPartsBinLocation, "Mine.png");
+	StandardBinIcons.insert(BinManager::SearchBinLocation, "Search.png");
+	StandardBinIcons.insert(BinManager::ContribPartsBinLocation, "Contrib.png");
+	StandardBinIcons.insert(BinManager::CorePartsBinLocation, "Core.png");
 }
 
 void BinManager::search(const QString & searchText) {

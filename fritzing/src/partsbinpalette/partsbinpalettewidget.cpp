@@ -47,7 +47,6 @@ $Date$
 #include "../utils/fileprogressdialog.h"
 #include "../utils/folderutils.h"
 
-
 //////////////////////////////////////////////
 
 PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoView *infoView, WaitPushUndoStack *undoStack, BinManager* manager) :
@@ -175,7 +174,8 @@ void PartsBinPaletteWidget::setView(PartsBinView *view) {
 	if(m_currentView == m_iconView) {
 		m_stackedWidget->setCurrentIndex(0);
 		m_manager->updateViewChecks(true);
-	} else if(m_currentView == m_listView) {
+	} 
+	else {
 		m_stackedWidget->setCurrentIndex(1);
 		m_manager->updateViewChecks(false);
 	}
@@ -245,7 +245,21 @@ void PartsBinPaletteWidget::afterModelSetted(PaletteModel *model) {
 
 void PartsBinPaletteWidget::grabTitle(PaletteModel *model) {
 	m_title = model->root()->modelPartShared()->title();
-	m_icon = model->root()->modelPartShared()->icon();
+	QString iconFilename = model->root()->modelPartShared()->icon();
+	QString temp = BinManager::StandardBinIcons.value(m_fileName, "");
+	if (!temp.isEmpty()) {
+		iconFilename = temp;
+	}
+	else if (iconFilename.isEmpty()) {
+		iconFilename = "Custom1.png";
+	}
+
+	QString path = ":resources/bins/icons/" + iconFilename;
+	QFile file(path);
+	if (file.exists()) {
+		m_icon = new QIcon(path);
+	}
+
 	m_addPartToMeAction->setText(m_title);
 	m_binLabel->setText(m_title);
 }
@@ -275,10 +289,6 @@ QToolButton* PartsBinPaletteWidget::newToolButton(const QString& btnObjName, con
 	toolBtn->setArrowType(Qt::NoArrow);
 	return toolBtn;
 }
-
-
-
-
 
 bool PartsBinPaletteWidget::save() {
 	bool result = true;
@@ -395,6 +405,7 @@ void PartsBinPaletteWidget::load(const QString &filename, QObject * progressTarg
 		QMessageBox::warning(NULL, QObject::tr("Fritzing"), QObject::tr("Friting cannot load the parts bin"));
 	}
 	else {
+		m_fileName = filename;
 		setPaletteModel(paletteBinModel,true);
 		m_canDeleteModel = true;					// since we just created this model, we can delete it later
 		if (oldModel) {

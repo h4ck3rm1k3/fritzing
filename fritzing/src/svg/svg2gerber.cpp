@@ -224,6 +224,12 @@ void SVG2gerber::convertShapes2paths(QDomNode node){
 		else if (tag == "g") {
 			// no op
 		}
+		else if (tag == "#comment") {
+			// no op
+		}
+		else if (tag == "#text") {
+			// no op
+		}
         else {
             DebugDialog::debug("svg2gerber ignoring SVG element: " + tag);
         }

@@ -269,15 +269,13 @@
 
         <file>resources/bins/icons/Arduino.png</file>
         <file>resources/bins/icons/Core.png</file>
-        <file>resources/bins/icons/Core Parts.png</file>
         <file>resources/bins/icons/Custom1.png</file>
         <file>resources/bins/icons/Mine.png</file>
-        <file>resources/bins/icons/My Parts.png</file>
         <file>resources/bins/icons/PICAXE.png</file>
         <file>resources/bins/icons/Search.png</file>
         <file>resources/bins/icons/Snootlab.png</file>
         <file>resources/bins/icons/SparkFun.png</file>
-        <file>resources/bins/icons/Contributed.png</file>
+        <file>resources/bins/icons/Contrib.png</file>
 
 	<file>resources/templates/jumper_copper0LayerTemplate.txt</file>
         <file>resources/templates/jumper_jumperwiresLayerTemplate.txt</file>

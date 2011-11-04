@@ -294,7 +294,7 @@ void PaletteItemBase::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 		itemBase->getViewGeometry().setTransform(OriginalTransform);
 	}
 
-	DebugDialog::debug(QString("rotating item %1 da:%2 oa:%3 %4").arg(QTime::currentTime().toString("HH:mm:ss.zzz")).arg(deltaAngle).arg(originalAngle).arg((long) this, 0, 16));
+	//DebugDialog::debug(QString("rotating item %1 da:%2 oa:%3 %4").arg(QTime::currentTime().toString("HH:mm:ss.zzz")).arg(deltaAngle).arg(originalAngle).arg((long) this, 0, 16));
 	chief->rotateItem(deltaAngle);
 }
 

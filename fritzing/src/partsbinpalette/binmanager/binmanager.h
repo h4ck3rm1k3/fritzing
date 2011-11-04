@@ -187,6 +187,7 @@ protected:
         static QString SearchBinLocation;
         static QString SearchBinTemplateLocation;
 		static QString ContribPartsBinLocation;
+		static QHash<QString, QString> StandardBinIcons;
 		static bool isTabReorderingEvent(QDropEvent* event);
 		static void initNames();
 };
