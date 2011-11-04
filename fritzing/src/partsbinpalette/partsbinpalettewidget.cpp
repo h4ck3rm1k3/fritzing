@@ -33,6 +33,8 @@ $Date$
 #include <QSettings>
 #include <QWidgetAction>
 #include <QColorDialog>
+#include <QBuffer>
+#include <QSvgGenerator>
 
 #include "partsbinpalettewidget.h"
 #include "partsbincommands.h"
@@ -47,9 +49,15 @@ $Date$
 #include "../infoview/htmlinfoview.h"
 #include "../utils/fileprogressdialog.h"
 #include "../utils/folderutils.h"
+#include "../utils/textutils.h"
 
 
 static QString CustomIconName = "Custom1.png";
+
+
+inline bool isSvg(const QString & string) {
+	return string.startsWith("<?xml") && string.contains("svg");
+}
 
 //////////////////////////////////////////////
 
@@ -249,24 +257,41 @@ void PartsBinPaletteWidget::afterModelSetted(PaletteModel *model) {
 
 void PartsBinPaletteWidget::grabTitle(PaletteModel *model) {
 	m_title = model->root()->modelPartShared()->title();
+	m_addPartToMeAction->setText(m_title);
+	m_binLabel->setText(m_title);
+
 	QString iconFilename = model->root()->modelPartShared()->icon();
 	QString temp = BinManager::StandardBinIcons.value(m_fileName, "");
 	if (!temp.isEmpty()) {
 		iconFilename = temp;
+		model->root()->modelPartShared()->setIcon(iconFilename);
 	}
 	else if (iconFilename.isEmpty()) {
 		iconFilename = CustomIconName;
+		model->root()->modelPartShared()->setIcon(iconFilename);
 	}
-	model->root()->modelPartShared()->setIcon(iconFilename);
-
-	QString path = ":resources/bins/icons/" + iconFilename;
-	QFile file(path);
-	if (file.exists()) {
-		m_icon = new QIcon(path);
+	
+	if (isSvg(iconFilename)) {
+		// convert to image
+		int w = TextUtils::getViewBoxCoord(iconFilename, 2);
+		int h = TextUtils::getViewBoxCoord(iconFilename, 3);
+		QImage image(w, h, QImage::Format_RGB32);
+		QRectF target(0, 0, w, h);
+		QSvgRenderer renderer(iconFilename.toUtf8());
+		QPainter painter;
+		painter.begin(&image);
+		renderer.render(&painter, target);
+		painter.end();	
+		image.save("test icon.png");
+		m_icon = new QIcon(QPixmap::fromImage(image));
 	}
-
-	m_addPartToMeAction->setText(m_title);
-	m_binLabel->setText(m_title);
+	else {
+		QString path = ":resources/bins/icons/" + iconFilename;
+		QFile file(path);
+		if (file.exists()) {
+			m_icon = new QIcon(path);
+		}
+	}
 }
 
 void PartsBinPaletteWidget::addPart(ModelPart *modelPart, int position) {
@@ -391,10 +416,10 @@ void PartsBinPaletteWidget::load(const QString &filename, QWidget * progressTarg
 	PaletteModel * paletteBinModel = new PaletteModel(true, false, false);
 
 	bool deleteWhenDone = false;
-        if (progressTarget != NULL) {
+    if (progressTarget != NULL) {
         DebugDialog::debug("open progress " + filename);
 		deleteWhenDone = true;
-        m_loadingProgressDialog = new FileProgressDialog(tr("Loading..."), 200, progressTarget == this, progressTarget);
+        progressTarget = m_loadingProgressDialog = new FileProgressDialog(tr("Loading..."), 200, progressTarget == this, progressTarget);
 		m_loadingProgressDialog->setBinLoadingChunk(200);
 		m_loadingProgressDialog->setBinLoadingCount(1);
 		m_loadingProgressDialog->setMessage(tr("loading bin %1").arg(QFileInfo(filename).baseName()));
@@ -718,7 +743,7 @@ QMenu * PartsBinPaletteWidget::binContextMenu()
 	// TODO: need to enable/disable actions based on this bin
 
 	QString iconFilename = m_model->root()->modelPartShared()->icon();
-	if (iconFilename.compare(CustomIconName) == 0) {
+	if (iconFilename.compare(CustomIconName) == 0 || isSvg(iconFilename)) {
 		newMenu->addSeparator();
 		QAction * action = new QAction(tr("Change icon color..."), newMenu);
 		action->setToolTip(tr("Change the color of the icon for this bin."));
@@ -729,7 +754,6 @@ QMenu * PartsBinPaletteWidget::binContextMenu()
 }
 
 void PartsBinPaletteWidget::changeIconColor() {
-	// TODO: use the icon that's already there
 	QImage image(":resources/bins/icons/" + CustomIconName);
 	QColor initial(image.pixel(image.width() / 2, image.height() / 2));
 	QColor color = QColorDialog::getColor(initial, this, tr("Select a color for this icon"), 0 );
@@ -749,5 +773,18 @@ void PartsBinPaletteWidget::changeIconColor() {
 	m_icon = new QIcon(QPixmap::fromImage(image));
 	m_manager->setTabIcon(this, m_icon);
 	setDirty();
+
+	QSvgGenerator svgGenerator;
+	svgGenerator.setResolution(90);
+	QBuffer buffer;
+	svgGenerator.setOutputDevice(&buffer);
+	QSize sz = image.size();
+    svgGenerator.setSize(sz);
+	svgGenerator.setViewBox(QRect(0, 0, sz.width(), sz.height()));
+	QPainter svgPainter(&svgGenerator);
+	svgPainter.drawImage(QPoint(0,0), image);
+	svgPainter.end();
+	QString svg(buffer.buffer());
+	m_model->root()->modelPartShared()->setIcon(svg);
 }
 
