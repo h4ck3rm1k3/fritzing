@@ -390,7 +390,10 @@ void PartsBinPaletteWidget::load(const QString &filename, QObject * progressTarg
 	PaletteModel * oldModel = (m_canDeleteModel) ? m_model : NULL;
 	PaletteModel * paletteBinModel = new PaletteModel(true, false, false);
 
+
+	bool deleteWhenDone = false;
 	if (progressTarget == this) {
+		deleteWhenDone = true;
 		progressTarget = m_loadingProgressDialog = new FileProgressDialog(tr("Loading..."), 200, this);
 		m_loadingProgressDialog->setBinLoadingChunk(200);
 		m_loadingProgressDialog->setBinLoadingCount(1);
@@ -423,7 +426,7 @@ void PartsBinPaletteWidget::load(const QString &filename, QObject * progressTarg
 		disconnect(paletteBinModel, SIGNAL(loadingInstance(ModelBase *, QDomElement &)), progressTarget, SLOT(loadingInstanceSlot(ModelBase *, QDomElement &)));
 		disconnect(m_iconView, SIGNAL(settingItem()), progressTarget, SLOT(settingItemSlot()));
 		disconnect(m_listView, SIGNAL(settingItem()), progressTarget, SLOT(settingItemSlot()));
-		if (progressTarget == this) {
+		if (deleteWhenDone) {
 			delete m_loadingProgressDialog;
 		}
 		m_loadingProgressDialog = NULL;
