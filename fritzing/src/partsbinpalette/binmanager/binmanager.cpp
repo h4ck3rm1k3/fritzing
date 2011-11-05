@@ -267,6 +267,9 @@ void BinManager::addToMyPart(ModelPart *modelPart) {
 
 void BinManager::addPartAux(PartsBinPaletteWidget *bin, ModelPart *modelPart, int position) {
 	if(bin) {
+		if (bin->fastLoaded()) {
+			bin->load(bin->fileName(), bin, false);
+		}
 		bin->addPart(modelPart, position);
 		setDirtyTab(bin);
 	}
