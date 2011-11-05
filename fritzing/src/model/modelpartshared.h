@@ -74,8 +74,6 @@ public:
 	void setDate(QDate date);
 	const QString & dateAsStr();
 	void setDate(QString date);
-	const QString & icon();
-	void setIcon(const QString & filename);
 
 	const QString & path();
 	void setPath(QString path);
@@ -145,8 +143,6 @@ protected:
 	QString m_date;
 	QString m_replacedby;
 
-	QString m_icon;
-
 	QString m_path;
 	QString m_taxonomy;
 
@@ -166,6 +162,21 @@ protected:
 	bool m_flippedSMD;
 	bool m_partlyLoaded;
 	bool m_needsCopper1;				// for converting pre-two-layer parts
+};
+
+class ModelPartSharedRoot : public ModelPartShared
+{
+	Q_OBJECT
+public:
+	const QString & icon();
+	void setIcon(const QString & filename);
+	const QString & searchTerm();
+	void setSearchTerm(const QString & searchTerm);
+
+protected:
+	QString m_icon;
+	QString m_searchTerm;
+
 };
 
 

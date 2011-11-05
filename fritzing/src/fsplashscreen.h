@@ -29,6 +29,7 @@ $Date$
 
 #include <QSplashScreen>
 #include <QPainter>
+#include <QHash>
 
 struct MessageThing {
 	QString message;
@@ -43,23 +44,26 @@ struct PixmapThing {
 };
 
 class FSplashScreen : public QSplashScreen {
+	Q_OBJECT
 public:
 	FSplashScreen(const QPixmap & pixmap = QPixmap(), Qt::WindowFlags f = 0);
 	~FSplashScreen();
+
+	void showMessage(const QString &message, const QString & id, int alignment = Qt::AlignLeft);
+	int showPixmap(const QPixmap &pixmap, const QString & id);
+	void showProgress(int index, double progress);			// progress is from 0.0 to 1.0;
 
 protected:
 	void drawContents ( QPainter * painter );
 
 public slots:
-	void showMessage(const QString &message, QRect rect, int alignment = Qt::AlignLeft, const QColor &color = Qt::black);
-	int showPixmap(const QPixmap &pixmap, QPoint point);
-	void showProgress(int index, double progress);			// progress is from 0.0 to 1.0;
+	void displaySlice();
 
 protected:
     QPixmap m_pixmap;
 	QList<MessageThing *> m_messages;
 	QList<PixmapThing *> m_pixmaps;
-
+	QHash<QString, MessageThing *> m_items;
 };
 
 #endif

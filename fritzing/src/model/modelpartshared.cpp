@@ -51,6 +51,24 @@ void copyPinAttributes(QDomElement & from, QDomElement & to)
 
 ///////////////////////////////////////////////
 
+const QString & ModelPartSharedRoot::icon() {
+	return m_icon;
+}
+
+void ModelPartSharedRoot::setIcon(const QString & filename) {
+	m_icon = filename;
+}
+
+const QString & ModelPartSharedRoot::searchTerm() {
+	return m_searchTerm;
+}
+
+void ModelPartSharedRoot::setSearchTerm(const QString & searchTerm) {
+	m_searchTerm = searchTerm;
+}
+
+///////////////////////////////////////////////
+
 const QString ModelPartShared::PartNumberPropertyName = "part number";
 
 ModelPartShared::ModelPartShared() {
@@ -198,14 +216,6 @@ const QString & ModelPartShared::title() {
 
 void ModelPartShared::setTitle(QString title) {
 	m_title = title;
-}
-
-const QString & ModelPartShared::icon() {
-	return m_icon;
-}
-
-void ModelPartShared::setIcon(const QString & filename) {
-	m_icon = filename;
 }
 
 const QString & ModelPartShared::label() {

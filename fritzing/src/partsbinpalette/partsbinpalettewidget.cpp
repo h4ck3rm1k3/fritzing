@@ -53,10 +53,10 @@ $Date$
 
 
 static QString CustomIconName = "Custom1.png";
+static QString CustomIconTitle = "Fritzing Custom Icon";
 
-
-inline bool isSvg(const QString & string) {
-	return string.startsWith("<?xml") && string.contains("svg");
+inline bool isCustomSvg(const QString & string) {
+	return string.startsWith("<?xml") && string.contains(CustomIconTitle);
 }
 
 //////////////////////////////////////////////
@@ -205,13 +205,14 @@ void PartsBinPaletteWidget::toListView() {
 }
 
 bool PartsBinPaletteWidget::saveAsAux(const QString &filename) {
-        FileProgressDialog progress("Saving...", 0, true, this);
+    FileProgressDialog progress("Saving...", 0, true, this);
 
 	QString oldFilename = m_fileName;
 	setFilename(filename);
 	QString title = this->title();
 	if(!title.isNull() && !title.isEmpty()) {
-		m_model->root()->modelPartShared()->setTitle(title);
+		ModelPartSharedRoot * root = m_model->rootModelPartShared();
+		if (root) root->setTitle(title);
 	}
 
 	if(m_orderHasChanged) {
@@ -256,22 +257,25 @@ void PartsBinPaletteWidget::afterModelSetted(PaletteModel *model) {
 }
 
 void PartsBinPaletteWidget::grabTitle(PaletteModel *model) {
-	m_title = model->root()->modelPartShared()->title();
+	ModelPartSharedRoot * root = model->rootModelPartShared();
+	if (!root) return;
+
+	m_title = root->title();
 	m_addPartToMeAction->setText(m_title);
 	m_binLabel->setText(m_title);
 
-	QString iconFilename = model->root()->modelPartShared()->icon();
+	QString iconFilename = root->icon();
 	QString temp = BinManager::StandardBinIcons.value(m_fileName, "");
 	if (!temp.isEmpty()) {
 		iconFilename = temp;
-		model->root()->modelPartShared()->setIcon(iconFilename);
+		root->setIcon(iconFilename);
 	}
 	else if (iconFilename.isEmpty()) {
 		iconFilename = CustomIconName;
-		model->root()->modelPartShared()->setIcon(iconFilename);
+		root->setIcon(iconFilename);
 	}
 	
-	if (isSvg(iconFilename)) {
+	if (isCustomSvg(iconFilename)) {
 		// convert to image
 		int w = TextUtils::getViewBoxCoord(iconFilename, 2);
 		int h = TextUtils::getViewBoxCoord(iconFilename, 3);
@@ -742,13 +746,16 @@ QMenu * PartsBinPaletteWidget::binContextMenu()
 
 	// TODO: need to enable/disable actions based on this bin
 
-	QString iconFilename = m_model->root()->modelPartShared()->icon();
-	if (iconFilename.compare(CustomIconName) == 0 || isSvg(iconFilename)) {
-		newMenu->addSeparator();
-		QAction * action = new QAction(tr("Change icon color..."), newMenu);
-		action->setToolTip(tr("Change the color of the icon for this bin."));
-		connect(action, SIGNAL(triggered()), this, SLOT(changeIconColor()));
-		newMenu->addAction(action);
+	ModelPartSharedRoot * root = m_model->rootModelPartShared();
+	if (root) {
+		QString iconFilename = root->icon();
+		if (iconFilename.compare(CustomIconName) == 0 || isCustomSvg(iconFilename)) {
+			newMenu->addSeparator();
+			QAction * action = new QAction(tr("Change icon color..."), newMenu);
+			action->setToolTip(tr("Change the color of the icon for this bin."));
+			connect(action, SIGNAL(triggered()), this, SLOT(changeIconColor()));
+			newMenu->addAction(action);
+		}
 	}
 	return newMenu;
 }
@@ -774,17 +781,22 @@ void PartsBinPaletteWidget::changeIconColor() {
 	m_manager->setTabIcon(this, m_icon);
 	setDirty();
 
-	QSvgGenerator svgGenerator;
-	svgGenerator.setResolution(90);
-	QBuffer buffer;
-	svgGenerator.setOutputDevice(&buffer);
-	QSize sz = image.size();
-    svgGenerator.setSize(sz);
-	svgGenerator.setViewBox(QRect(0, 0, sz.width(), sz.height()));
-	QPainter svgPainter(&svgGenerator);
-	svgPainter.drawImage(QPoint(0,0), image);
-	svgPainter.end();
-	QString svg(buffer.buffer());
-	m_model->root()->modelPartShared()->setIcon(svg);
+	ModelPartSharedRoot * root = m_model->rootModelPartShared();
+
+	if (root) {
+		QSvgGenerator svgGenerator;
+		svgGenerator.setResolution(90);
+		svgGenerator.setTitle(CustomIconTitle);
+		QBuffer buffer;
+		svgGenerator.setOutputDevice(&buffer);
+		QSize sz = image.size();
+		svgGenerator.setSize(sz);
+		svgGenerator.setViewBox(QRect(0, 0, sz.width(), sz.height()));
+		QPainter svgPainter(&svgGenerator);
+		svgPainter.drawImage(QPoint(0,0), image);
+		svgPainter.end();
+		QString svg(buffer.buffer());
+		root->setIcon(svg);
+	}
 }
 

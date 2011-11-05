@@ -39,7 +39,11 @@ ModelBase::ModelBase( bool makeRoot )
 {
 	m_reportMissingModules = true;
 	m_referenceModel = NULL;
-	m_root = (makeRoot) ? new ModelPart() : NULL;
+	m_root = NULL;
+	if (makeRoot) {
+		m_root = new ModelPart();
+		m_root->setModelPartShared(new ModelPartSharedRoot());
+	}
 }
 
 ModelBase::~ModelBase() {
@@ -111,9 +115,13 @@ bool ModelBase::load(const QString & fileName, ModelBase * refModel, QList<Model
 		checkForRats = !Version::greaterThan(versionThingRats, versionThingFz);
 	}
 
+	ModelPartSharedRoot * modelPartSharedRoot = this->rootModelPartShared();
+
     QDomElement title = root.firstChildElement("title");
 	if (!title.isNull()) {
-		this->root()->modelPartShared()->setTitle(title.text());
+		if (modelPartSharedRoot) {
+			modelPartSharedRoot->setTitle(title.text());
+		}
 	}
 
 	QString iconFilename = root.attribute("icon");
@@ -123,7 +131,9 @@ bool ModelBase::load(const QString & fileName, ModelBase * refModel, QList<Model
 	}
 
 	if (!iconFilename.isEmpty()) {
-		this->root()->modelPartShared()->setIcon(iconFilename);
+		if (modelPartSharedRoot) {
+			modelPartSharedRoot->setIcon(iconFilename);
+		}
 	}
 
 
@@ -458,4 +468,8 @@ bool ModelBase::genFZP(const QString & moduleID, ModelBase * refModel) {
 	return mp != NULL;
 }
 
+ModelPartSharedRoot * ModelBase::rootModelPartShared() {
+	if (m_root == NULL) return NULL;
 
+	return m_root->modelPartSharedRoot();
+}

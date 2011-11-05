@@ -26,12 +26,59 @@ $Date$
 
 #include "fsplashscreen.h"
 #include "utils/misc.h"
+#include "debugdialog.h"
 
 #include <QTextDocument>
 #include <QTextCursor>
+#include <QTimer>
+
+#include <time.h>
 
 FSplashScreen::FSplashScreen(const QPixmap & pixmap, Qt::WindowFlags f ) : QSplashScreen(pixmap, f)
 {
+	QFile file(":/resources/images/splash/splash.xml");
+    if (!file.open(QFile::ReadOnly | QFile::Text)) {
+        DebugDialog::debug("unable to load splash.xml: " + file.errorString());
+        return;
+    }
+
+    QString errorStr;
+    int errorLine;
+    int errorColumn;
+    QDomDocument domDocument;
+
+    if (!domDocument.setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
+		DebugDialog::debug(QString("unable to parse splash.xml: %1 %2 %3").arg(errorStr).arg(errorLine).arg(errorColumn));
+		return;
+	}
+
+	QDomElement root = domDocument.documentElement();
+	int sliceDelay = root.attribute("sliceDelaySeconds", "0").toInt();
+	if (sliceDelay > 0) {
+		QTimer::singleShot(sliceDelay * 1000, this, SLOT(displaySlice()));
+	}
+
+	QDomElement item = root.firstChildElement("item");
+	while (!item.isNull()) {
+		QString id = item.attribute("id");
+		if (!id.isEmpty()) {
+			int x = item.attribute("x", "0").toInt();
+			int y = item.attribute("y", "0").toInt();
+			int width = item.attribute("width", "0").toInt();
+			int height = item.attribute("height", "0").toInt();
+			QString colorName = item.attribute("color");
+			MessageThing * messageThing = new MessageThing();
+			messageThing->rect.setCoords(x, y, x + width, y + height);
+			if (colorName.isEmpty()) {
+				messageThing->color = QColor(0, 0, 0);
+			}
+			else {
+				messageThing->color.setNamedColor(colorName);
+			}
+			m_items.insert(id, messageThing);
+		}
+		item = item.nextSiblingElement("item");
+	}
 }
 
 FSplashScreen::~FSplashScreen() {
@@ -44,22 +91,28 @@ FSplashScreen::~FSplashScreen() {
 }
 
 
-void FSplashScreen::showMessage(const QString &message, QRect rect, int alignment, const QColor &color)
+void FSplashScreen::showMessage(const QString &message, const QString & id, int alignment)
 {
+	MessageThing * itemMessageThing = m_items.value(id);
+	if (itemMessageThing == NULL) return;
+
 	MessageThing * messageThing = new MessageThing;
 	messageThing->alignment = alignment;
-	messageThing->color = color;
-	messageThing->rect = rect;
+	messageThing->color = itemMessageThing->color;
+	messageThing->rect = itemMessageThing->rect;;
 	messageThing->message = message;
 	m_messages.append(messageThing);
 	repaint();
 }
 
 
-int FSplashScreen::showPixmap(const QPixmap & pixmap, QPoint point)
+int FSplashScreen::showPixmap(const QPixmap & pixmap, const QString & id)
 {
+	MessageThing * itemMessageThing = m_items.value(id);
+	if (itemMessageThing == NULL) return -1;
+
 	PixmapThing * pixmapThing = new PixmapThing;
-	pixmapThing->rect = QRect(point, QPoint(-1,-1));
+	pixmapThing->rect = QRect(itemMessageThing->rect.topLeft(), pixmap.size());
 	pixmapThing->pixmap = pixmap;
 	m_pixmaps.append(pixmapThing);
 	repaint();
@@ -86,6 +139,7 @@ void FSplashScreen::drawContents ( QPainter * painter )
 	// pixmaps first, since they go beneath text
 	foreach (PixmapThing * pixmapThing, m_pixmaps) {
 		painter->drawPixmap(pixmapThing->rect, pixmapThing->pixmap);
+		//DebugDialog::debug(QString("pixmapthing %1 %2").arg(pixmapThing->pixmap.width()).arg(pixmapThing->pixmap.height()), pixmapThing->rect);
 	}
 
 	foreach (MessageThing * messageThing, m_messages) {
@@ -111,5 +165,32 @@ void FSplashScreen::drawContents ( QPainter * painter )
 			painter->drawText(messageThing->rect, messageThing->alignment, messageThing->message);
 		}
 	}
+}
+
+void FSplashScreen::displaySlice()
+{
+	QString fname = ":/resources/images/splash/fab_slice%1.png";
+	int highest = 0;
+	for (int i = 1; i < 100; i++) {
+		QFileInfo info(fname.arg(i));
+		if (info.exists()) {
+			highest = i;
+		}
+		else break;
+	}
+
+	if (highest == 0) return;
+
+	QPixmap bar(":/resources/images/splash/fab_logo_bar.png");
+	if (bar.isNull()) return;
+
+	srand ( time(NULL) );
+	int ix = (rand() % highest) + 1;
+
+	QPixmap slice(fname.arg(ix));
+	if (slice.isNull()) return;
+
+	showPixmap(bar, "logoBar");
+	showPixmap(slice, "slice");
 }
 

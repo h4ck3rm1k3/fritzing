@@ -82,7 +82,6 @@ $Date$
 #include <QNetworkRequest>
 #include <QMultiHash>
 
-static int kBottomOfAlpha = 204;
 static QNetworkAccessManager * NetworkAccessManager = NULL;
 
 #ifdef LINUX_32
@@ -654,12 +653,12 @@ void FApplication::runKicadSchematicService() {
 
 int FApplication::startup(bool firstRun)
 {
-	QPixmap pixmap(":/resources/images/splash_2010.png");
+	QPixmap pixmap(":/resources/images/splash/splash_screen_start.png");
 	FSplashScreen splash(pixmap);
 	m_splash = &splash;
 	ProcessEventBlocker::processEvents();								// seems to need this (sometimes?) to display the splash screen
 
-	initSplash(splash, pixmap);
+	initSplash(splash);
 	ProcessEventBlocker::processEvents();
 
 	// DebugDialog::debug("Data Location: "+QDesktopServices::storageLocation(QDesktopServices::DataLocation));
@@ -667,7 +666,7 @@ int FApplication::startup(bool firstRun)
 	if(firstRun) {		
 		registerFonts();
 
-		splash.showProgress(m_progressIndex, LoadProgressStart);
+		if (m_progressIndex >= 0) splash.showProgress(m_progressIndex, LoadProgressStart);
 		ProcessEventBlocker::processEvents();
 
 		#ifdef Q_WS_WIN
@@ -710,13 +709,13 @@ int FApplication::startup(bool firstRun)
 		NetworkAccessManager->get(QNetworkRequest(QUrl(QString("http://fab.fritzing.org/launched%1").arg(makeRequestParamsString()))));
 	//}
 
-	splash.showProgress(m_progressIndex, LoadProgressEnd);
+	if (m_progressIndex >= 0) splash.showProgress(m_progressIndex, LoadProgressEnd);
 
 	createUserDataStoreFolderStructure();
 
 	//DebugDialog::debug("after createUserDataStoreFolderStructure");
 
-	splash.showProgress(m_progressIndex, 0.65);
+	if (m_progressIndex >= 0) splash.showProgress(m_progressIndex, 0.65);
 	ProcessEventBlocker::processEvents();
 
 	if (!loadBin(settings.value("lastBin").toString())) {
@@ -725,19 +724,19 @@ int FApplication::startup(bool firstRun)
 		return -1;
 	}
 
-	splash.showProgress(m_progressIndex, 0.825);
+	if (m_progressIndex >= 0) splash.showProgress(m_progressIndex, 0.825);
 	ProcessEventBlocker::processEvents();
 
 	m_updateDialog = new UpdateDialog();
 	connect(m_updateDialog, SIGNAL(enableAgainSignal(bool)), this, SLOT(enableCheckUpdates(bool)));
 	checkForUpdates(false);
 
-	splash.showProgress(m_progressIndex, 0.875);
+	if (m_progressIndex >= 0) splash.showProgress(m_progressIndex, 0.875);
 
 	loadSomething(firstRun, prevVersion);
 	m_started = true;
 
-	splash.showProgress(m_progressIndex, 0.99);
+	if (m_progressIndex >= 0) splash.showProgress(m_progressIndex, 0.99);
 	ProcessEventBlocker::processEvents();
 
 	m_splash = NULL;
@@ -885,25 +884,22 @@ void FApplication::updatePrefs(PrefsDialog & prefsDialog)
 	}
 }
 
-void FApplication::initSplash(FSplashScreen & splash, QPixmap & pixmap) {
-	QPixmap logo(":/resources/images/fhp_logo_small.png");
-	QPixmap progress(":/resources/images/splash_progressbar.png");
+void FApplication::initSplash(FSplashScreen & splash) {
+	QPixmap logo(":/resources/images/splash/fhp_logo_small.png");
+	QPixmap progress(":/resources/images/splash/splash_progressbar.png");
 
-	m_progressIndex = splash.showPixmap(progress, QPoint(0, pixmap.height() - progress.height()));
-	splash.showProgress(m_progressIndex, 0);
+	m_progressIndex = splash.showPixmap(progress, "progress");
+	if (m_progressIndex >= 0) splash.showProgress(m_progressIndex, 0);
 
 	// put this above the progress indicator
-	splash.showPixmap(logo, QPoint(5, pixmap.height() - 12));
+	splash.showPixmap(logo, "fhpLogo");
 
-	QColor w(0xea, 0xf4, 0xed);
-	QRect r1(45, kBottomOfAlpha, pixmap.width() - 45, 20);
 	QString msg1 = QObject::tr("<font face='Lucida Grande, Tahoma, Sans Serif' size='2' color='#eaf4ed'>"
 							   "&#169; 2007-%1 Fachhochschule Potsdam"
 							   "</font>")
-	.arg(Version::year());
-	splash.showMessage(msg1, r1, Qt::AlignLeft | Qt::AlignTop, w);
+							.arg(Version::year());
+	splash.showMessage(msg1, "fhpText", Qt::AlignLeft | Qt::AlignTop);
 
-	QRect r2(0, kBottomOfAlpha, pixmap.width() - 12, 20);
 	QString macBuildType;
 #ifdef Q_WS_MAC
 #ifdef QT_MAC_USE_COCOA
@@ -921,7 +917,7 @@ void FApplication::initSplash(FSplashScreen & splash, QPixmap & pixmap) {
 						.arg(Version::modifier())
 						.arg(Version::shortDate())
 						.arg(macBuildType);
-	splash.showMessage(msg2, r2, Qt::AlignRight | Qt::AlignTop, w);
+	splash.showMessage(msg2, "versionText", Qt::AlignRight | Qt::AlignTop);
     splash.show();
 }
 
@@ -1151,7 +1147,7 @@ void FApplication::loadedPart(int loaded, int total) {
 	if (m_splash == NULL) return;
 
 	//DebugDialog::debug(QString("loaded %1 %2").arg(loaded).arg(total));
-	m_splash->showProgress(m_progressIndex, LoadProgressStart + ((LoadProgressEnd - LoadProgressStart) * loaded / (double) total));
+	if (m_progressIndex >= 0) m_splash->showProgress(m_progressIndex, LoadProgressStart + ((LoadProgressEnd - LoadProgressStart) * loaded / (double) total));
 }
 
 void FApplication::externalProcessSlot(QString &name, QString &path, QStringList &args) {

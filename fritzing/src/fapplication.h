@@ -83,7 +83,7 @@ protected:
 	bool findTranslator(const QString & translationsPath);
 	void loadNew(QString path);
 	void loadOne(class MainWindow *, QString path, int loaded);
-	void initSplash(class FSplashScreen & splash, QPixmap & pixmap);
+	void initSplash(class FSplashScreen & splash);
 	void registerFont(const QString &fontFile, bool reallyRegister);
 	void clearModels();
     void copyBin(const QString & source, const QString & dest);

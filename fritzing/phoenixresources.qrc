@@ -6,9 +6,18 @@
         <file>resources/properties.xml</file>
         <file>resources/vias.xml</file>
 	 
-        <file>resources/images/splash_2010.png</file>
-        <file>resources/images/fhp_logo_small.png</file>
-        <file>resources/images/splash_progressbar.png</file>
+        <file>resources/images/splash/fhp_logo_small.png</file>
+        <file>resources/images/splash/splash_progressbar.png</file>
+        <file>resources/images/splash/fab_logo_bar.png</file>
+        <file>resources/images/splash/fab_slice1.png</file>
+        <file>resources/images/splash/fab_slice2.png</file>
+        <file>resources/images/splash/fab_slice3.png</file>
+        <file>resources/images/splash/fab_slice4.png</file>
+        <file>resources/images/splash/fab_slice5.png</file>
+        <file>resources/images/splash/fab_slice6.png</file>
+        <file>resources/images/splash/splash_screen_start.png</file>
+        <file>resources/images/splash/splash.xml</file>
+
         <file>resources/images/AboutBoxLogoShield.png</file>
         <file>resources/images/aboutbox_CC.png</file>
         <file>resources/images/aboutbox_FHP.png</file>

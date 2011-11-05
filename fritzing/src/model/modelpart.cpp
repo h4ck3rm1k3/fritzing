@@ -168,6 +168,10 @@ ModelPartShared * ModelPart::modelPartShared() {
 	return m_modelPartShared;
 }
 
+ModelPartSharedRoot * ModelPart::modelPartSharedRoot() {
+	return qobject_cast<ModelPartSharedRoot *>(m_modelPartShared);
+}
+
 void ModelPart::setModelPartShared(ModelPartShared * modelPartShared) {
 	m_modelPartShared = modelPartShared;
 }
@@ -193,8 +197,9 @@ void ModelPart::saveInstances(const QString & fileName, QXmlStreamWriter & strea
 		streamWriter.writeStartDocument();
     	streamWriter.writeStartElement("module");
 		streamWriter.writeAttribute("fritzingVersion", Version::versionString());
-		if (modelPartShared() && !modelPartShared()->icon().isEmpty()) {
-			streamWriter.writeAttribute("icon", modelPartShared()->icon());
+		ModelPartSharedRoot * root = modelPartSharedRoot();
+		if (root && !root->icon().isEmpty()) {
+			streamWriter.writeAttribute("icon", root->icon());
 		}
 		QString title = this->title();
 		if(!title.isNull() && !title.isEmpty()) {

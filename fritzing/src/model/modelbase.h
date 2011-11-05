@@ -39,6 +39,7 @@ public:
 	virtual ~ModelBase();
 
 	ModelPart * root();
+	ModelPartSharedRoot * rootModelPartShared();
 	virtual ModelPart* retrieveModelPart(const QString & moduleID);
 	virtual ModelPart * addModelPart(ModelPart * parent, ModelPart * copyChild);
 	virtual bool load(const QString & fileName, ModelBase* refModel, QList<ModelPart *> & modelParts);

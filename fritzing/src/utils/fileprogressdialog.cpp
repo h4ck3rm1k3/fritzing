@@ -44,8 +44,12 @@ $Date$
 FileProgressDialog::FileProgressDialog(const QString & title, int initialMaximum, bool modal, QWidget * parent) : QDialog(parent)
 {
 	init(title, initialMaximum);
-        setModal(modal);
+    setModal(modal);
+
 	show();
+	QRect r = this->geometry();
+	r.adjust(0, 135, 0, 135);
+	this->setGeometry(r);
 	ProcessEventBlocker::processEvents();
 }
 
