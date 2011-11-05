@@ -5,7 +5,7 @@
         <file>resources/ratsnestcolors.xml</file>
         <file>resources/properties.xml</file>
         <file>resources/vias.xml</file>
-	 
+	
         <file>resources/images/splash/fhp_logo_small.png</file>
         <file>resources/images/splash/splash_progressbar.png</file>
         <file>resources/images/splash/fab_logo_bar.png</file>
