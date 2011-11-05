@@ -29,6 +29,7 @@ $Date$
 #define STACKTABBAR_H_
 
 #include <QTabBar>
+#include <QTimer>
 
 class StackTabBar : public QTabBar {
 	Q_OBJECT
@@ -37,17 +38,22 @@ class StackTabBar : public QTabBar {
 
 	protected:
 		void dragEnterEvent(QDragEnterEvent* event);
+		void dragLeaveEvent(QDragLeaveEvent* event);
         void dragMoveEvent(QDragMoveEvent* event);
 		void dropEvent(QDropEvent* event);
 		void paintEvent(QPaintEvent *event);
 
 		bool mimeIsAction(const class QMimeData* m, const QString& action);
 
-		protected slots:
-			void showContextMenu(const QPoint &point);
+	public slots:
+		void setIndex();
+
+	protected slots:
+		void showContextMenu(const QPoint &point);
 
 	protected:
 		class StackTabWidget* m_parent;
+		QTimer m_dragMoveTimer;
 };
 
 #endif /* STACKTABBAR_H_ */

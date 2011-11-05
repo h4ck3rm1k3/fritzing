@@ -445,7 +445,9 @@ void PartsBinPaletteWidget::load(const QString &filename, QWidget * progressTarg
         progressTarget = m_loadingProgressDialog = new FileProgressDialog(tr("Loading..."), 200, progressTarget == this, progressTarget);
 		m_loadingProgressDialog->setBinLoadingChunk(200);
 		m_loadingProgressDialog->setBinLoadingCount(1);
-		m_loadingProgressDialog->setMessage(tr("loading bin %1").arg(QFileInfo(filename).baseName()));
+		QString name = m_title;
+		if (name.isEmpty()) name = QFileInfo(filename).baseName();
+		m_loadingProgressDialog->setMessage(tr("loading bin '%1'").arg(name));
 		m_loadingProgressDialog->show();
 	}
 	

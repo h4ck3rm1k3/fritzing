@@ -53,6 +53,9 @@ StackTabBar::StackTabBar(StackTabWidget *parent) : QTabBar(parent) {
  
 	connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), SLOT(showContextMenu(const QPoint &)));
 
+	m_dragMoveTimer.setSingleShot(true);
+	m_dragMoveTimer.setInterval(250);
+	connect(&m_dragMoveTimer, SIGNAL(timeout()), this, SLOT(setIndex()));
 }
 
 bool StackTabBar::mimeIsAction(const QMimeData* m, const QString& action) {
@@ -72,6 +75,11 @@ void StackTabBar::dragEnterEvent(QDragEnterEvent* event) {
 	}
 }
 
+void StackTabBar::dragLeaveEvent(QDragLeaveEvent *event) {
+	Q_UNUSED(event);
+	m_dragMoveTimer.stop();
+}
+
 void StackTabBar::dragMoveEvent(QDragMoveEvent* event) {
 	const QMimeData *m = event->mimeData();
 	int index = tabAt(event->pos());
@@ -79,7 +87,11 @@ void StackTabBar::dragMoveEvent(QDragMoveEvent* event) {
 		PartsBinPaletteWidget* bin = qobject_cast<PartsBinPaletteWidget*>(m_parent->widget(index));
 		if(bin && bin->allowsChanges()) {
 			event->acceptProposedAction();
-			setCurrentIndex(index);
+			m_dragMoveTimer.setProperty("index", index);
+			if (!m_dragMoveTimer.isActive()) {
+				m_dragMoveTimer.start();
+			}
+			//DebugDialog::debug(QString("setting index %1").arg(index));
 		}
 	}
 }
@@ -130,4 +142,14 @@ void StackTabBar::paintEvent(QPaintEvent *event)
 		option.text = "";
         painter.drawControl(QStyle::CE_TabBarTab, option);
     }
+}
+
+void StackTabBar::setIndex() {
+	if (sender() == NULL) return;
+
+	bool ok = false;
+	int index = sender()->property("index").toInt(&ok);
+	if (!ok) return;
+
+	setCurrentIndex(index);
 }
