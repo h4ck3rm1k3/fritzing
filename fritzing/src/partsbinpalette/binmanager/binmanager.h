@@ -68,7 +68,7 @@ class BinManager : public QFrame {
 		void updateTitle(PartsBinPaletteWidget* w, const QString& newTitle);
 
 		void openBin(const QString &fileName);
-		PartsBinPaletteWidget* openBinIn(QString fileName="");
+		PartsBinPaletteWidget* openBinIn(QString fileName, bool fastLoad);
 		PartsBinPaletteWidget* openCoreBinIn();
 		void closeBinIn(int index=-1);
 
@@ -137,7 +137,6 @@ class BinManager : public QFrame {
 		void createContextMenus();
 		void loadAllBins();
 		void loadBins(QDir &);
-		QString getBinName(const QFileInfo &info);
 
 protected:
 		ReferenceModel *m_refModel;

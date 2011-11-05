@@ -93,6 +93,7 @@ BinManager::BinManager(class ReferenceModel *refModel, class HtmlInfoView *infoV
 
 	restoreStateAndGeometry();
 	loadAllBins();
+	openCoreBinIn();
 
 	connectTabWidget();
 }
@@ -218,7 +219,7 @@ PartsBinPaletteWidget* BinManager::getOrOpenBin(const QString & binLocation, con
             binLocation:
             createIfBinNotExists(binLocation, binTemplateLocation);
 
-        partsBin = openBinIn(fileToOpen);
+        partsBin = openBinIn(fileToOpen, false);
 	}
 
     return partsBin;
@@ -309,12 +310,12 @@ PartsBinPaletteWidget* BinManager::newBinIn() {
 	PartsBinPaletteWidget* bin = newBin();
 	bin->setPaletteModel(new PaletteModel(true, false, false),true);
 	bin->setTitle(tr("New bin (%1)").arg(++m_unsavedBinsCount));
-	insertBin(bin, m_stackTabWidget->currentIndex());
+	insertBin(bin, m_stackTabWidget->count());
 	renameBin();
 	return bin;
 }
 
-PartsBinPaletteWidget* BinManager::openBinIn(QString fileName) {
+PartsBinPaletteWidget* BinManager::openBinIn(QString fileName, bool fastLoad) {
 	if(fileName.isNull() || fileName.isEmpty()) {
 		fileName = QFileDialog::getOpenFileName(
 				this,
@@ -341,9 +342,9 @@ PartsBinPaletteWidget* BinManager::openBinIn(QString fileName) {
 
 	if(createNewOne) {
 		bin = newBin();
-		if(bin->open(fileName, bin)) {
+		if(bin->open(fileName, bin, fastLoad)) {
 			m_openedBins[fileName] = bin;
-			insertBin(bin, m_stackTabWidget->currentIndex()+1);
+			insertBin(bin, m_stackTabWidget->count());
 
 			// to force the user to take a decision of what to do with the imported parts
 			if(fileName.endsWith(FritzingBundledBinExtension)) {
@@ -353,7 +354,9 @@ PartsBinPaletteWidget* BinManager::openBinIn(QString fileName) {
 			}
 		}
 	}
-	setAsCurrentBin(bin);
+	if (!fastLoad) {
+		setAsCurrentBin(bin);
+	}
 	return bin;
 }
 
@@ -365,8 +368,8 @@ PartsBinPaletteWidget* BinManager::openCoreBinIn() {
 	else {
 		bin = newBin();
 		bin->setAllowsChanges(false);
-		bin->load(BinManager::CorePartsBinLocation, bin);
-		insertBin(bin, m_stackTabWidget->currentIndex()+1);
+		bin->load(BinManager::CorePartsBinLocation, bin, false);
+		insertBin(bin, 0);
 	}
 	setAsCurrentBin(bin);
 	return bin;
@@ -394,30 +397,35 @@ void BinManager::currentChanged(int index) {
 }
 
 void BinManager::setAsCurrentBin(PartsBinPaletteWidget* bin) {
-	if(bin) {
-		if(m_currentBin != bin) {
-			if (bin->fileName().compare(SearchBinLocation) == 0) {
-				bin->focusSearch();
-			}
-
-			QString style = m_mainWindow->styleSheet();
-			StackTabBar *currTabBar = NULL;
-			if(m_currentBin && m_stackTabWidget) {
-				currTabBar = m_stackTabWidget->stackTabBar();
-				currTabBar->setProperty("current","false");
-				currTabBar->setStyleSheet("");
-				currTabBar->setStyleSheet(style);
-			}
-			if(m_stackTabWidget) {
-				m_currentBin = bin;
-				currTabBar = m_stackTabWidget->stackTabBar();
-				currTabBar->setProperty("current","true");
-				currTabBar->setStyleSheet("");
-				currTabBar->setStyleSheet(style);
-			}
-		}
-	} else {
+	if (bin == NULL) {
 		qWarning() << tr("Cannot set a NULL bin as the current one");
+		return;
+	}
+
+	if (bin->fastLoaded()) {
+		bin->load(bin->fileName(), bin, false);
+	}
+
+	if (m_currentBin == bin) return;
+
+	if (bin->fileName().compare(SearchBinLocation) == 0) {
+		bin->focusSearch();
+	}
+
+	QString style = m_mainWindow->styleSheet();
+	StackTabBar *currTabBar = NULL;
+	if(m_currentBin && m_stackTabWidget) {
+		currTabBar = m_stackTabWidget->stackTabBar();
+		currTabBar->setProperty("current","false");
+		currTabBar->setStyleSheet("");
+		currTabBar->setStyleSheet(style);
+	}
+	if(m_stackTabWidget) {
+		m_currentBin = bin;
+		currTabBar = m_stackTabWidget->stackTabBar();
+		currTabBar->setProperty("current","true");
+		currTabBar->setStyleSheet("");
+		currTabBar->setStyleSheet(style);
 	}
 }
 
@@ -478,10 +486,10 @@ void BinManager::restoreStateAndGeometry() {
         //m_mainWindow->fileProgressDialogSetBinLoadingCount(2);
 
 		QStringList locations;
-		locations << CorePartsBinLocation << MyPartsBinLocation << SearchBinLocation;
+		locations << CorePartsBinLocation << SearchBinLocation << MyPartsBinLocation;
 		foreach (QString location, locations) {
 			PartsBinPaletteWidget* bin = newBin();
-            bin->load(location, m_mainWindow->fileProgressDialog());
+            bin->load(location, m_mainWindow->fileProgressDialog(), true);
 			m_stackTabWidget->addTab(bin, bin->icon(), bin->title());
 			registerBin(bin);
 		}
@@ -493,7 +501,7 @@ void BinManager::restoreStateAndGeometry() {
 			foreach(QString k, settings.childKeys()) {
 				PartsBinPaletteWidget* bin = newBin();
 				QString filename = settings.value(k).toString();
-                if(QFileInfo(filename).exists() && bin->open(filename,  m_mainWindow->fileProgressDialog())) {
+                if(QFileInfo(filename).exists() && bin->open(filename, m_mainWindow->fileProgressDialog(), true)) {
 					m_stackTabWidget->addTab(bin, bin->icon(), bin->title());
 					registerBin(bin);
 				} else {
@@ -504,10 +512,6 @@ void BinManager::restoreStateAndGeometry() {
 		}
 	}
 
-	PartsBinPaletteWidget * bin = currentBin();
-	if (bin != NULL && bin->fileName().compare(SearchBinLocation) == 0) {
-		bin->focusSearch();
-	}
 }
 
 void BinManager::tabCloseRequested(int index) {
@@ -580,7 +584,7 @@ QList<QAction*> BinManager::openedBinsActions(const QString &moduleId) {
 }
 
 void BinManager::openBin(const QString &filename) {
-	openBinIn(filename);
+	openBinIn(filename, false);
 }
 
 MainWindow* BinManager::mainWindow() {
@@ -747,7 +751,7 @@ void BinManager::createContextMenus() {
 }
 
 void BinManager::openNewBin() {
-	openBinIn("");
+	openBinIn("", false);
 }
 
 void BinManager::closeBin() {
@@ -889,32 +893,9 @@ void BinManager::loadBins(QDir & dir) {
 	filters << "*"+FritzingBinExtension;
 	QFileInfoList files = dir.entryInfoList(filters);
 	foreach(QFileInfo info, files) {
-		QString binName = getBinName(info);
 		if (!m_openedBins.contains(info.absoluteFilePath())) {
-			openBinIn(info.absoluteFilePath());
+			openBinIn(info.absoluteFilePath(), true);
 		}
-	}
-}
-
-QString BinManager::getBinName(const QFileInfo &info) {
-	QString binTitle = "";
-
-	// TODO: use xmlStreamReader instead of reading the whole file
-
-	QFile binFile(info.filePath());
-	if (binFile.open(QFile::ReadOnly | QFile::Text)) {
-		QString content(binFile.readAll());
-		QRegExp regexp("<title>(.+)</title>");
-
-		if (regexp.indexIn(content) >= 0) {
-			binTitle = regexp.cap(1);
-		}
-	}
-
-	if(binTitle != ___emptyString___) {
-		return binTitle;
-	} else {
-		return info.fileName();
 	}
 }
 

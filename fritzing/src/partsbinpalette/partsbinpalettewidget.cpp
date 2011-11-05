@@ -67,6 +67,8 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 	m_icon = NULL;
 	m_searchLineEdit = NULL;
 	m_saveQuietly = false;
+	m_fastLoaded = false;
+	m_model = NULL;
 
 	m_loadingProgressDialog = NULL;
 
@@ -260,26 +262,31 @@ void PartsBinPaletteWidget::grabTitle(PaletteModel *model) {
 	ModelPartSharedRoot * root = model->rootModelPartShared();
 	if (!root) return;
 
-	m_title = root->title();
+	QString iconFilename = root->icon();
+	grabTitle(root->title(), iconFilename);
+	root->setIcon(iconFilename);
+}
+
+void PartsBinPaletteWidget::grabTitle(const QString & title, QString & iconFilename)
+{
+	m_title = title;
 	m_addPartToMeAction->setText(m_title);
 	m_binLabel->setText(m_title);
 
-	QString iconFilename = root->icon();
 	QString temp = BinManager::StandardBinIcons.value(m_fileName, "");
 	if (!temp.isEmpty()) {
 		iconFilename = temp;
-		root->setIcon(iconFilename);
 	}
 	else if (iconFilename.isEmpty()) {
 		iconFilename = CustomIconName;
-		root->setIcon(iconFilename);
 	}
 	
 	if (isCustomSvg(iconFilename)) {
 		// convert to image
 		int w = TextUtils::getViewBoxCoord(iconFilename, 2);
 		int h = TextUtils::getViewBoxCoord(iconFilename, 3);
-		QImage image(w, h, QImage::Format_RGB32);
+		QImage image(w, h, QImage::Format_ARGB32);
+		image.fill(0);
 		QRectF target(0, 0, w, h);
 		QSvgRenderer renderer(iconFilename.toUtf8());
 		QPainter painter;
@@ -369,7 +376,7 @@ bool PartsBinPaletteWidget::loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps
 	QStringList namefilters;
 	namefilters << "*"+FritzingBinExtension;
 
-	this->load(unzipDir.entryInfoList(namefilters)[0].filePath(), this);
+	this->load(unzipDir.entryInfoList(namefilters)[0].filePath(), this, false);
 	foreach(ModelPart* mp, mps) {
 		if(mp->isAlien()) { // double check
 			m_alienParts << mp->moduleID();
@@ -381,7 +388,7 @@ bool PartsBinPaletteWidget::loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps
 }
 
 
-bool PartsBinPaletteWidget::open(QString fileName, QWidget * progressTarget) {
+bool PartsBinPaletteWidget::open(QString fileName, QWidget * progressTarget, bool fastLoad) {
 	QFile file(fileName);
 	if (!file.exists()) {
        QMessageBox::warning(NULL, tr("Fritzing"),
@@ -401,7 +408,7 @@ bool PartsBinPaletteWidget::open(QString fileName, QWidget * progressTarget) {
     file.close();
 
     if(fileName.endsWith(FritzingBinExtension)) {
-    	load(fileName, progressTarget);
+    	load(fileName, progressTarget, fastLoad);
     	saveAsLastBin();
     	m_isDirty = false;
     } else if(fileName.endsWith(FritzingBundledBinExtension)) {
@@ -411,11 +418,21 @@ bool PartsBinPaletteWidget::open(QString fileName, QWidget * progressTarget) {
     return true;
 }
 
-
-void PartsBinPaletteWidget::load(const QString &filename, QWidget * progressTarget) {
+void PartsBinPaletteWidget::load(const QString &filename, QWidget * progressTarget, bool fastLoad) {
 	// TODO deleting this local palette reference model deletes modelPartShared held by the palette bin modelParts
 	//PaletteModel * paletteReferenceModel = new PaletteModel(true, true);
 
+	if (fastLoad) {
+		QString binName, iconName;
+		if (getBinName(filename, binName, iconName)) {
+			m_fileName = filename;
+			grabTitle(binName, iconName);
+			m_fastLoaded = true;
+		}
+		return;
+	}
+
+	m_fastLoaded = false;
 	PaletteModel * oldModel = (m_canDeleteModel) ? m_model : NULL;
 	PaletteModel * paletteBinModel = new PaletteModel(true, false, false);
 
@@ -800,3 +817,32 @@ void PartsBinPaletteWidget::changeIconColor() {
 	}
 }
 
+bool PartsBinPaletteWidget::getBinName(const QString & filename, QString & binName, QString & iconName) {
+	QFile file(filename);
+	file.open(QFile::ReadOnly);
+	QXmlStreamReader xml(&file);
+	xml.setNamespaceProcessing(false);
+
+	while (!xml.atEnd()) {
+        switch (xml.readNext()) {
+        case QXmlStreamReader::StartElement:
+			if (xml.name().toString().compare("module") == 0) {
+				iconName = xml.attributes().value("icon").toString();
+			}
+			else if (xml.name().toString().compare("title") == 0) {
+				binName = xml.readElementText();
+				return true;
+			}
+			break;
+			
+		default:
+			break;
+		}
+	}
+
+	return false;
+}
+
+bool PartsBinPaletteWidget::fastLoaded() {
+	return m_fastLoaded;
+}

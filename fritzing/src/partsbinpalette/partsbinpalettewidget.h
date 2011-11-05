@@ -80,7 +80,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		void addNewPart(ModelPart *modelPart);
         void removePart(const QString& moduleID);
         void removeParts();
-        void load(const QString& filename, QWidget * progressTarget);
+        void load(const QString& filename, QWidget * progressTarget, bool fastLoad);
 
 		bool contains(const QString &moduleID);
 		void setDirty(bool dirty=true);
@@ -93,12 +93,13 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		void setAllowsChanges(bool);
 		void focusSearch();
 		void setSaveQuietly(bool);
-                bool open(QString fileName, QWidget * progressTarget);
+        bool open(QString fileName, QWidget * progressTarget, bool fastLoad);
 
 		bool currentViewIsIconView();
 		QIcon icon();
 		void saveBundledBin();
 		QMenu * binContextMenu();
+		bool fastLoaded();
 
 	public slots:
 		void addPartCommand(const QString& moduleID);
@@ -134,6 +135,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		void setupHeader();
 
 		void grabTitle(PaletteModel *model);
+		void grabTitle(const QString & title, QString & iconFilename);
 
 		void setView(class PartsBinView *view);
 		bool saveAsAux(const QString &filename);
@@ -145,6 +147,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		bool loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps);
 
 		void setFilename(const QString &filename);
+		bool getBinName(const QString & filename, QString & binName, QString & binIcon);
 
 	protected:
 		PaletteModel *m_model;
@@ -183,6 +186,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		QAction *m_addPartToMeAction;
 		QStackedWidget * m_stackedWidget;
 		QStackedWidget * m_searchStackedWidget;
+		bool m_fastLoaded;
 
 	public:
 		static QString Title;
