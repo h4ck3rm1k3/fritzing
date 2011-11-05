@@ -126,7 +126,6 @@ bool ModelBase::load(const QString & fileName, ModelBase * refModel, QList<Model
 
 	QString iconFilename = root.attribute("icon");
 	if (iconFilename.isEmpty()) {
-		// deal with legacy bins
 		iconFilename = title.text() + ".png";
 	}
 
@@ -134,6 +133,11 @@ bool ModelBase::load(const QString & fileName, ModelBase * refModel, QList<Model
 		if (modelPartSharedRoot) {
 			modelPartSharedRoot->setIcon(iconFilename);
 		}
+	}
+
+	QString searchTerm = root.attribute("search");
+	if (!searchTerm.isEmpty() && modelPartSharedRoot != NULL) {
+		modelPartSharedRoot->setSearchTerm(searchTerm);
 	}
 
 

@@ -198,8 +198,13 @@ void ModelPart::saveInstances(const QString & fileName, QXmlStreamWriter & strea
     	streamWriter.writeStartElement("module");
 		streamWriter.writeAttribute("fritzingVersion", Version::versionString());
 		ModelPartSharedRoot * root = modelPartSharedRoot();
-		if (root && !root->icon().isEmpty()) {
-			streamWriter.writeAttribute("icon", root->icon());
+		if (root) {
+			if (!root->icon().isEmpty()) {
+				streamWriter.writeAttribute("icon", root->icon());
+			}
+			if (!root->searchTerm().isEmpty()) {
+				streamWriter.writeAttribute("search", root->searchTerm());
+			}
 		}
 		QString title = this->title();
 		if(!title.isNull() && !title.isEmpty()) {

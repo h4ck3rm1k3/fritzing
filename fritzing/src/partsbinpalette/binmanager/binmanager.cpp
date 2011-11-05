@@ -163,7 +163,7 @@ bool BinManager::beforeClosing() {
 
 	for(int j=0; j < m_stackTabWidget->count(); j++) {
 		PartsBinPaletteWidget *bin = qobject_cast<PartsBinPaletteWidget*>(m_stackTabWidget->widget(j));
-		if(bin) {
+		if (bin && !bin->fastLoaded()) {
 			setAsCurrentTab(bin);
 			retval = retval && bin->beforeClosing();
 			if(!retval) break;

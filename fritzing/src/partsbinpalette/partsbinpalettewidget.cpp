@@ -265,6 +265,8 @@ void PartsBinPaletteWidget::grabTitle(PaletteModel *model) {
 	QString iconFilename = root->icon();
 	grabTitle(root->title(), iconFilename);
 	root->setIcon(iconFilename);
+
+	m_searchLineEdit->setText(root->searchTerm());
 }
 
 void PartsBinPaletteWidget::grabTitle(const QString & title, QString & iconFilename)
@@ -708,6 +710,11 @@ void PartsBinPaletteWidget::search() {
 
 	QString searchText = edit->text();
 	if (searchText.isEmpty()) return;
+
+	ModelPartSharedRoot * root = m_model->rootModelPartShared();
+	if (root) {
+		root->setSearchTerm(searchText);
+	}
 
     m_manager->search(searchText);
 }
