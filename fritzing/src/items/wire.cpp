@@ -1464,11 +1464,14 @@ bool Wire::collectExtraInfo(QWidget * parent, const QString & family, const QStr
 			QString englishCurrColor = colorString();
 			foreach(QString transColorName, Wire::colorNames) {
 				QString englishColorName = Wire::colorTrans.value(transColorName);
-				comboBox->addItem(transColorName, QVariant(englishColorName));
-				if (englishColorName.compare(englishCurrColor, Qt::CaseInsensitive) == 0) {
-					comboBox->setCurrentIndex(ix);
+				bool ok = (this->m_viewIdentifier != ViewIdentifierClass::SchematicView || englishColorName.compare("white", Qt::CaseInsensitive) != 0);
+				if (ok) {
+					comboBox->addItem(transColorName, QVariant(englishColorName));
+					if (englishColorName.compare(englishCurrColor, Qt::CaseInsensitive) == 0) {
+						comboBox->setCurrentIndex(ix);
+					}
+					ix++;
 				}
-				ix++;
 			}
 
 			connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(colorEntry(const QString &)));
