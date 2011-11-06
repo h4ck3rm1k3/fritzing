@@ -148,10 +148,10 @@ bool FritzingWindow::saveAs(const QString & filename, bool readOnly) {
 
 	}
 
-        FileProgressDialog progress("Saving...", 0, true, this);
+    FileProgressDialog progress("Saving...", 0, this);
 
 	QStringList extensions = getExtensions();
-        bool hasExtension = false;
+    bool hasExtension = false;
 	foreach (QString extension, extensions) {
 		if(alreadyHasExtension(newFilename, extension)) {
 			hasExtension = true;

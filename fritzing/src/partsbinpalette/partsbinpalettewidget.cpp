@@ -207,7 +207,7 @@ void PartsBinPaletteWidget::toListView() {
 }
 
 bool PartsBinPaletteWidget::saveAsAux(const QString &filename) {
-    FileProgressDialog progress("Saving...", 0, true, this);
+    FileProgressDialog progress("Saving...", 0, this);
 
 	QString oldFilename = m_fileName;
 	setFilename(filename);
@@ -442,7 +442,7 @@ void PartsBinPaletteWidget::load(const QString &filename, QWidget * progressTarg
     if (progressTarget != NULL) {
         DebugDialog::debug("open progress " + filename);
 		deleteWhenDone = true;
-        progressTarget = m_loadingProgressDialog = new FileProgressDialog(tr("Loading..."), 200, progressTarget == this, progressTarget);
+        progressTarget = m_loadingProgressDialog = new FileProgressDialog(tr("Loading..."), 200, progressTarget);
 		m_loadingProgressDialog->setBinLoadingChunk(200);
 		m_loadingProgressDialog->setBinLoadingCount(1);
 		QString name = m_title;

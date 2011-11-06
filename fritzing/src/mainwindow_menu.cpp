@@ -2472,7 +2472,7 @@ void MainWindow::groundFillAux(bool fillGroundTraces)
 
 	if (m_pcbGraphicsView == NULL) return;
 
-        FileProgressDialog fileProgress("Generating copper fill...", 0, true, this);
+    FileProgressDialog fileProgress("Generating copper fill...", 0, this);
 	QUndoCommand * parentCommand = new QUndoCommand(tr("Copper Fill"));
 	if (m_pcbGraphicsView->groundFill(fillGroundTraces, parentCommand)) {
 		m_undoStack->push(parentCommand);

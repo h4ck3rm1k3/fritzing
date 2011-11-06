@@ -38,18 +38,30 @@ $Date$
 #include <QCloseEvent>
 #include <QApplication>
 #include <QDesktopWidget>
+#include <QSplashScreen>
 
 /////////////////////////////////////
 
-FileProgressDialog::FileProgressDialog(const QString & title, int initialMaximum, bool modal, QWidget * parent) : QDialog(parent)
+FileProgressDialog::FileProgressDialog(const QString & title, int initialMaximum, QWidget * parent) : QDialog(parent)
 {
+	QSplashScreen *splash = NULL;
+	foreach (QWidget *widget, QApplication::topLevelWidgets()) {
+        splash = qobject_cast<QSplashScreen *>(widget);
+		if (splash) {
+			break;
+		}
+	}
+
 	init(title, initialMaximum);
-    setModal(modal);
+    setModal(splash == NULL);			// OS X Lion doesn't seem to like modal dialogs during splash time
 
 	show();
-	QRect r = this->geometry();
-	r.adjust(0, 135, 0, 135);
-	this->setGeometry(r);
+	if (splash) {
+		int offset = (splash->height() / 2) + (this->height() / 2);
+		QRect r = this->geometry();
+		r.adjust(0, offset, 0, offset);
+		this->setGeometry(r);
+	}
 	ProcessEventBlocker::processEvents();
 }
 
@@ -61,8 +73,11 @@ FileProgressDialog::FileProgressDialog(QWidget *parent) : QDialog(parent)
 void FileProgressDialog::init(const QString & title, int initialMaximum)
 {
 	Qt::WindowFlags flags = windowFlags();
+	flags |= Qt::CustomizeWindowHint;
 	flags ^= Qt::WindowCloseButtonHint;
+	flags ^= Qt::WindowSystemMenuHint;
 	flags ^= Qt::WindowContextHelpButtonHint;
+	//flags ^= Qt::WindowTitleHint;
 	setWindowFlags(flags);
 
 	this->setWindowTitle(title);
