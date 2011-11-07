@@ -79,7 +79,7 @@ public:
 	void copyNew(ModelPart *);
 	void copyStuff(ModelPart * modelPart);
 	ModelPartShared * modelPartShared();
-	ModelPartSharedRoot * ModelPart::modelPartSharedRoot();
+        ModelPartSharedRoot * modelPartSharedRoot();
 	void setModelPartShared(ModelPartShared *modelPartShared);
 	void saveInstances(const QString & fileName, QXmlStreamWriter & streamWriter, bool startDocument);
 	void saveAsPart(QXmlStreamWriter & streamWriter, bool startDocument);
