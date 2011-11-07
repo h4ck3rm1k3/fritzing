@@ -1029,7 +1029,16 @@ void Wire::collectWiresAux(QList<Wire *> & wires, ConnectorItem * start) {
 
 bool Wire::stickyEnabled()
 {
-	return (connector0()->connectionsCount() <= 0) && (connector1()->connectionsCount() <= 0);
+	QList<Wire *> wires;
+	QList<ConnectorItem *> ends;
+	this->collectChained(wires, ends);
+	foreach (ConnectorItem * connector, ends) {
+		if (connector->connectionsCount() > 0) {
+			return false;
+		}
+	}
+
+	return true;
 }
 
 bool Wire::getTrace() {

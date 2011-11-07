@@ -2373,7 +2373,26 @@ void SketchWidget::categorizeDragWires(QSet<Wire *> & wires)
 			}
 			if (ct->status[i] != UNDETERMINED_) continue;
 
-			// if it's not connected at either end and not stuck
+			// it's not connected and not stuck
+
+			if (ct->wire->getTrace()) {
+				// this is a bug.  traces should be connected at both ends. Pretend that the unconnected end is connected to something
+				DebugDialog::debug(QString("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"
+											"Trace %1 connector %2 is unconnected\n"
+											"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+								.arg(ct->wire->id()).arg(i));
+				QPointF p = from.at(i)->sceneAdjustedTerminalPoint(NULL);
+				foreach (QGraphicsItem * item,  scene()->items(p)) {
+					ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+					if (itemBase == NULL) continue;
+
+					ct->status[i] = m_savedItems.keys().contains(itemBase->layerKinChief()->id()) ? IN_ : OUT_;
+					changed = true;
+					break;
+				}
+			}
+			if (ct->status[i] != UNDETERMINED_) continue;
+
 			if (from.at(i)->connectionsCount() == 0) {
 				changed = true;
 				ct->status[i] = FREE_;

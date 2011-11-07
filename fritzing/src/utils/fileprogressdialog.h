@@ -39,7 +39,7 @@ Q_OBJECT
 
 public:
 	FileProgressDialog(QWidget *parent = 0);
-        FileProgressDialog(const QString & title, int initialMaximum, QWidget *parent);
+    FileProgressDialog(const QString & title, int initialMaximum, QWidget *parent);
 	~FileProgressDialog();
 
 	int value();

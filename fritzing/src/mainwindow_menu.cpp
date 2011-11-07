@@ -1912,10 +1912,10 @@ void MainWindow::rotateIncCCW() {
 	if (m_currentGraphicsView == NULL) return;
 
 	if (m_rotate45ccwAct->isEnabled()) {
-		rotate45ccw();
+		m_currentGraphicsView->rotateX(315, true);
 	}
 	else if (m_rotate90ccwAct->isEnabled()) {
-		rotate90ccw();
+		m_currentGraphicsView->rotateX(270, true);
 	}
 }
 
@@ -1923,10 +1923,10 @@ void MainWindow::rotateIncCCWRubberBand() {
 	if (m_currentGraphicsView == NULL) return;
 
 	if (m_rotate45ccwAct->isEnabled()) {
-		m_currentGraphicsView->rotateX(-45, true);
+		m_currentGraphicsView->rotateX(315, true);
 	}
 	else if (m_rotate90ccwAct->isEnabled()) {
-		m_currentGraphicsView->rotateX(-90, true);
+		m_currentGraphicsView->rotateX(270, true);
 	}
 }
 
@@ -1939,13 +1939,13 @@ void MainWindow::rotate90cw() {
 void MainWindow::rotate90ccw() {
 	if (m_currentGraphicsView == NULL) return;
 
-	m_currentGraphicsView->rotateX(-90, false);
+	m_currentGraphicsView->rotateX(270, false);
 }
 
 void MainWindow::rotate45ccw() {
 	if (m_currentGraphicsView == NULL) return;
 
-	m_currentGraphicsView->rotateX(-45, false);
+	m_currentGraphicsView->rotateX(315, false);
 }
 
 void MainWindow::rotate45cw() {

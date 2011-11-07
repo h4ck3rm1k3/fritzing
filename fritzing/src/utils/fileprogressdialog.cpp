@@ -57,8 +57,10 @@ FileProgressDialog::FileProgressDialog(const QString & title, int initialMaximum
 
 	show();
 	if (splash) {
-		int offset = (splash->height() / 2) + (this->height() / 2);
+		QRect sr = splash->geometry();
 		QRect r = this->geometry();
+		QRect fr = this->frameGeometry();
+		int offset = sr.bottom() - r.top() + (fr.height() - r.height());
 		r.adjust(0, offset, 0, offset);
 		this->setGeometry(r);
 	}
