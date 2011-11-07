@@ -586,7 +586,7 @@ void ResizableBoard::rotateItem(double degrees) {
 	// what gets screwed up is the drag handles
 
 	if (moduleID().contains(ModuleIDNames::RectangleModuleIDName)) {
-		if (degrees == 90 || degrees == -90) {
+		if (degrees == 90 || degrees == -90 || degrees == 270 || degrees == -270) {
 			QRectF r = this->boundingRect();
 			r.moveTopLeft(pos());
 			QPointF c = r.center();
@@ -786,17 +786,22 @@ void ResizableBoard::calcRotation(QTransform & rotation, QPointF center, ViewGeo
 		QRectF r = boundingRect();
 		//QPointF test(center.x() - (r.height() / 2.0), center.y() - (r.width() / 2.0));
 		QPointF p0 = pos();
-		if (rotation.m12() == 1) {			// degrees == 90
+		double angle = atan2(rotation.m12(), rotation.m11()) * 180 / M_PI;
+		if (angle < 0) angle += 360;
+		if (qAbs(angle - 90) < 1) {			// degrees == 90
 			p0 += r.bottomLeft();
 		}
-		else if (rotation.m12() == 1) {		// degrees == -90
+		else if (qAbs(angle - 270) < 1) {		// degrees == -90
 			p0 += r.topRight();
 		}
-		else if (rotation.m12() == 0) {		// degrees == 180
+		else if (qAbs(angle - 180) < 1) {		// degrees == 180
 			p0 += r.bottomRight();
+		}
+		else if (qAbs(angle - 0) < 1) {
 		}
 		else {
 			// we're screwed: only multiples of 90 for now.
+			DebugDialog::debug(QString("non-90 degree rotation for board %1").arg(angle));
 		}
 		QPointF d0 = p0 - center;
 		QPointF d0t = rotation.map(d0);
