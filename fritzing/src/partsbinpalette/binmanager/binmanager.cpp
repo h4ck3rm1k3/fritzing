@@ -215,11 +215,11 @@ PartsBinPaletteWidget* BinManager::getOrOpenBin(const QString & binLocation, con
     PartsBinPaletteWidget* partsBin = findBin(binLocation);
 
     if(!partsBin) {
-        QString fileToOpen = QFileInfo(binLocation).exists()?
-            binLocation:
-            createIfBinNotExists(binLocation, binTemplateLocation);
-
+        QString fileToOpen = QFileInfo(binLocation).exists() ? binLocation : createIfBinNotExists(binLocation, binTemplateLocation);
         partsBin = openBinIn(fileToOpen, false);
+	}
+	if (partsBin != NULL && partsBin->fastLoaded()) {
+		partsBin->load(partsBin->fileName(), partsBin, false);
 	}
 
     return partsBin;
