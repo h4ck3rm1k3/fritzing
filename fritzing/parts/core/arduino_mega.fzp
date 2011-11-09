@@ -16,7 +16,7 @@
     <description>The biggest, baddest Arduino board yet.</description>
     <views>
         <iconView>
-            <layers image="icon/arduino_diecimila.svg">
+            <layers image="icon/controller_arduino_mega.svg">
                 <layer layerId="icon"/>
             </layers>
         </iconView>

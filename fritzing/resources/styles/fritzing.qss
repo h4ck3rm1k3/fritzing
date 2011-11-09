@@ -473,6 +473,7 @@ SearchLineEdit,  #searchStackWidget {
 #partsBinMenuButton {
   margin: 0;
   padding: 0;
+  
 }
 
 PartsBinIconView {
@@ -575,10 +576,13 @@ StackTabBar[current="true"]::tab:selected {
 
 #partsBinCombinedMenu {
 	background-image: url(:/resources/images/icons/partsBinCombinedMenu_icon.png);
+	background-repeat: no-repeat;
+	border: none;
 }
 
 #partsBinCombinedMenu:pressed {
 	background-image: url(:/resources/images/icons/partsBinCombinedMenuPressed_icon.png);
+	background-repeat: no-repeat;
 }
 
 /**************** sketch area widgets ****************/
