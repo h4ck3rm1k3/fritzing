@@ -620,6 +620,13 @@
     </iconView>
    </views>
   </instance>
+  <instance moduleIdRef="ThermalPrinter">
+   <views>
+    <iconView layer="icon">
+     <geometry x="-1" y="-1" z="-1"/>
+    </iconView>
+   </views>
+  </instance>
 
   
   
