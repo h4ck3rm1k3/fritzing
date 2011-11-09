@@ -168,8 +168,10 @@ void PartsBinPaletteWidget::setupHeader()
 
 	m_searchStackedWidget = new QStackedWidget(this);
 	m_searchStackedWidget->setObjectName("searchStackedWidget");
+
 	m_searchStackedWidget->addWidget(m_binLabel);
 	m_searchStackedWidget->addWidget(m_searchLineEdit);
+
 
 	m_header = new QFrame(this);
 	m_header->setObjectName("partsBinHeader");

@@ -454,10 +454,13 @@ dark grey:		rgb(126,126,126);
 #partsBinHeader {
   margin: 0;
   padding: 2px;
+  max-height: 20px;
+  height: 20px;
 }
 
 SearchLineEdit,  #searchStackWidget {
 	max-height: 20px;
+	height: 20px;
 }
 
 #partsBinLabel {
