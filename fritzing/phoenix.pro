@@ -92,7 +92,7 @@ unix {
 	bins.files += bins
 
 	translations.path = $$PKGDATADIR/translations
-	translations.extra = find translations -name "*.qm" -size 128c -exec cp -pr {} $(INSTALL_ROOT)$$PKGDATADIR/translations \\;
+	translations.extra = find translations -name "*.qm" -size +128c -exec cp -pr {} $(INSTALL_ROOT)$$PKGDATADIR/translations \\;
 
 	syntax.path = $$PKGDATADIR/translations/syntax
 	syntax.files += translations/syntax/*.xml
