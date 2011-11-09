@@ -6,15 +6,19 @@
   <line  fill="none" stroke="#32BF4F" id="connector4leg" stroke-linecap="round" y1="6.5" stroke-width="3" x1="131.024" y2="1.5" x2="131.024"/>
   <path  fill="none" stroke="#32BF4F" stroke-width="3" d="M131.024,15.943V6.5"/>
   <rect  width="2.997" x="129.532" y="5.513" fill="none" height="1.257" id="connector4pin"/>
+  
   <line  fill="none" stroke="#FFFF00" id="connector3leg" stroke-linecap="round" y1="6.5" stroke-width="3" x1="123.826" y2="1.5" x2="123.826"/>
   <path  fill="none" stroke="#FFFF00" stroke-width="3" d="M123.826,15.943V6.5"/>
   <rect  width="3" x="122.332" y="5.513" fill="none" height="1.257" id="connector3pin"/>
+  
   <line  fill="none" stroke="#000000" id="connector2leg" stroke-linecap="round" y1="6.5" stroke-width="3" x1="116.565" y2="1.5" x2="116.565"/>
   <path  fill="none" stroke="#000000" stroke-width="3" d="M116.564,15.943V6.5"/>
   <rect  width="3" x="115.07" y="5.513" fill="none" height="1.257" id="connector2pin"/>
+  
   <line  fill="none" stroke="#FF0000" id="connector1leg" stroke-linecap="round" y1="6.5" stroke-width="3" x1="199.521" y2="1.5" x2="199.521"/>
   <path  fill="none" stroke="#FF0000" stroke-width="3" d="M199.52,15.943V6.5"/>
   <rect  width="3" x="198.025" y="5.513" fill="none" height="1.257" id="connector1pin"/>
+  
   <line  fill="none" stroke="#000000" id="connector0leg" stroke-linecap="round" y1="6.5" stroke-width="3" x1="192.379" y2="1.5" x2="192.379"/>
   <path  fill="none" stroke="#000000" stroke-width="3" d="M192.379,15.943l0.016-9.443"/>
   <rect  width="2.997" x="190.888" y="5.513" fill="none" height="1.257" id="connector0pin"/>

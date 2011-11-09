@@ -98,7 +98,7 @@
             <description>RXD</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector3pin"/>
+                    <p layer="breadboard" svgId="connector3pin" legId="connector3leg"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector3pin" terminalId="connector3terminal"/>
@@ -113,7 +113,7 @@
             <description>TXD</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector4pin"/>
+                    <p layer="breadboard" svgId="connector4pin" legId="connector4leg"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector4pin" terminalId="connector4terminal"/>
@@ -128,7 +128,7 @@
             <description>Ground</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector0pin"/>
+                    <p layer="breadboard" svgId="connector0pin" legId="connector0leg"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector0pin" terminalId="connector0terminal"/>
@@ -143,7 +143,7 @@
             <description>5-9V</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector1pin"/>
+                    <p layer="breadboard" svgId="connector1pin" legId="connector1leg"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector1pin" terminalId="connector1terminal"/>
@@ -158,7 +158,7 @@
             <description>Ground</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector2pin"/>
+                    <p layer="breadboard" svgId="connector2pin" legId="connector2leg"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector2pin" terminalId="connector2terminal"/>
