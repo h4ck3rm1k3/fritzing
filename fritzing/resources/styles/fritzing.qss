@@ -458,6 +458,15 @@ dark grey:		rgb(126,126,126);
   height: 20px;
 }
 
+#partsBinHeaderSeparator {
+	/* none of these work 
+	/*
+	color: rgb(40,0,0);
+	background-color: rgb(40,0,0);
+	border-color: rgb(40,0,0);
+	*/
+}
+
 SearchLineEdit,  #searchStackWidget {
 	max-height: 20px;
 	height: 20px;

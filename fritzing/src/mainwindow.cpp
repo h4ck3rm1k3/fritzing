@@ -1507,13 +1507,19 @@ void MainWindow::saveBundledAux(ModelPart *mp, const QDir &destFolder) {
 	QString partPath = mp->modelPartShared()->path();
 	QFile file(partPath);
 	file.copy(destFolder.path()+"/"+ZIP_PART+QFileInfo(partPath).fileName());
-	QList<SvgAndPartFilePath> views = mp->getAvailableViewFiles();
-	foreach(SvgAndPartFilePath view, views) {
-		if(view.coreContribOrUser() != "core") {
-			QFile file(view.concat());
-			QString svgRelativePath = view.relativePath();
-			file.copy(destFolder.path()+"/"+ZIP_SVG+svgRelativePath.replace("/","."));
-		}
+
+	QList<ViewIdentifierClass::ViewIdentifier> identifiers;
+	identifiers << ViewIdentifierClass::IconView << ViewIdentifierClass::BreadboardView << ViewIdentifierClass::SchematicView << ViewIdentifierClass::PCBView;
+	foreach (ViewIdentifierClass::ViewIdentifier viewIdentifier, identifiers) {
+		QString basename = mp->hasBaseNameFor(viewIdentifier);
+		if (basename.isEmpty()) continue;
+
+		QString filename = ItemBase::getSvgFilename(mp, basename);
+		if (filename.isEmpty()) continue;
+
+		QFile file(filename);
+		basename.replace("/", ".");
+		file.copy(destFolder.path()+"/"+ZIP_SVG+basename);
 	}
 }
 

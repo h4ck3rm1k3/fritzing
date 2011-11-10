@@ -585,44 +585,6 @@ QList<ModelPart*> ModelPart::getAllNonCoreParts() {
 	return retval;
 }
 
-QList<SvgAndPartFilePath> ModelPart::getAvailableViewFiles() {
-	QDomElement viewsElems = modelPartShared()->domDocument()->documentElement().firstChildElement("views");
-	QHash<ViewIdentifierClass::ViewIdentifier, SvgAndPartFilePath> viewImages;
-
-	grabImagePath(viewImages, viewsElems, ViewIdentifierClass::IconView);
-	grabImagePath(viewImages, viewsElems, ViewIdentifierClass::BreadboardView);
-	grabImagePath(viewImages, viewsElems, ViewIdentifierClass::SchematicView);
-	grabImagePath(viewImages, viewsElems, ViewIdentifierClass::PCBView);
-
-	return viewImages.values();
-}
-
-void ModelPart::grabImagePath(QHash<ViewIdentifierClass::ViewIdentifier, SvgAndPartFilePath> &viewImages, QDomElement &viewsElems, ViewIdentifierClass::ViewIdentifier viewId) {
-	QDomElement viewElem = viewsElems.firstChildElement(ViewIdentifierClass::viewIdentifierXmlName(viewId));
-	if(!viewElem.isNull()) {
-		QString partspath = FolderUtils::getUserDataStorePath("parts")+"/svg";
-		QDomElement layerElem = viewElem.firstChildElement("layers");
-		if (!layerElem.isNull()) {
-			QString imagepath = layerElem.attribute("image");
-			QString folderinparts = inWhichFolder(partspath, imagepath);
-			if(folderinparts != ___emptyString___) {
-				SvgAndPartFilePath st(partspath,folderinparts,imagepath);
-				viewImages[viewId] = st;
-			}
-		}
-	}
-}
-
-QString ModelPart::inWhichFolder(const QString &partspath, const QString &imagepath) {
-	QStringList pf = possibleFolders();
-	for(int i=0; i < pf.size(); i++) {
-		if (QFileInfo( partspath+"/"+pf[i]+"/"+imagepath ).exists()) {
-			return pf[i];
-		}
-	}
-	return ___emptyString___;
-}
-
 bool ModelPart::hasViewID(long id) {
 	foreach (ItemBase * item, m_viewItems) {
 		if (item->id() == id) return true;

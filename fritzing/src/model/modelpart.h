@@ -127,7 +127,6 @@ public:
 
 	QList<ModelPart*> getAllParts();
 	QList<ModelPart*> getAllNonCoreParts();
-	QList<SvgAndPartFilePath> getAvailableViewFiles();
 	bool hasViewID(long id);
 
 	const QString & instanceTitle() const;
@@ -168,8 +167,6 @@ protected:
 	void writeNestedTag(QXmlStreamWriter & streamWriter, QString tagName, const QStringList &values, QString childTag);
 	void writeNestedTag(QXmlStreamWriter & streamWriter, QString tagName, const QHash<QString,QString> &values, QString childTag, QString attrName);
 
-	void grabImagePath(QHash<ViewIdentifierClass::ViewIdentifier, SvgAndPartFilePath> &viewImages, QDomElement &viewsElems, ViewIdentifierClass::ViewIdentifier viewId);
-	QString inWhichFolder(const QString &partspath, const QString &imagepath);
 	void commonInit(ItemType type);
 	void saveInstance(QXmlStreamWriter & streamWriter);
 	QList< QPointer<ModelPart> > * ensureInstanceTitleIncrements(const QString & prefix);
