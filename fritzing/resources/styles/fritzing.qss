@@ -459,12 +459,7 @@ dark grey:		rgb(126,126,126);
 }
 
 #partsBinHeaderSeparator {
-	/* none of these work 
-	/*
-	color: rgb(40,0,0);
-	background-color: rgb(40,0,0);
-	border-color: rgb(40,0,0);
-	*/
+	border: 1px solid #707070;
 }
 
 SearchLineEdit,  #searchStackWidget {

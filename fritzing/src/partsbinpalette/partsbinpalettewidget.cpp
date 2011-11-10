@@ -99,23 +99,15 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 	m_stackedWidget->addWidget(m_listView);
 
 	QVBoxLayout * vbl = new QVBoxLayout(this);
-	vbl->setMargin(0);
-	vbl->setSpacing(0);
+        vbl->setMargin(3);
+        vbl->setSpacing(0);
 	vbl->addWidget(m_header);
 
 	QFrame * separator = new QFrame();
 	separator->setMaximumHeight(1);
 	separator->setObjectName("partsBinHeaderSeparator");
-	separator->setFrameShape(QFrame::HLine);
-	separator->setFrameShadow(QFrame::Plain);
-
-	// these don't work to set color
-	QPalette palette = separator->palette();
-	palette.setColor(QPalette::Window, QColor(40, 0, 0));
-	palette.setColor(QPalette::Base, QColor(40, 0, 0));
-	palette.setColor(QPalette::Shadow, QColor(40, 0, 0));
-	palette.setColor(QPalette::Mid, QColor(40, 0, 0));
-	separator->setPalette(palette);
+        separator->setFrameShape(QFrame::HLine);
+        separator->setFrameShadow(QFrame::Plain);
 
 	vbl->addWidget(separator);
 
