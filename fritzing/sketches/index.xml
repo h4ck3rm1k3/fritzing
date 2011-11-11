@@ -170,7 +170,7 @@
       <separator />
       <url name="Get your own Fritzing Starter Kit" href="http://fritzing.org/shop/starter-kit/" />
 		</category>
-		<category name="Fritzing Extension Kit">
+		<!--<category name="Fritzing Extension Kit">
 			<sketch id="555TouchSwitch"/>
 			<sketch id="BarebonesArduino"/>
 			<sketch id="Countdown"/>
@@ -179,6 +179,6 @@
 			<sketch id="Mood-Light"/>
 			<separator />
       <url name="Get your own Fritzing Extension Kit" href="http://fritzing.org/shop/starter-kit/" />			
-		</category>
+		</category>-->
 	</categories>
 </fritzing-sketches>
