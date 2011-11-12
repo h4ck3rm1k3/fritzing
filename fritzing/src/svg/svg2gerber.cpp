@@ -45,7 +45,7 @@ bool fillNotStroke(QDomElement & element, SVG2gerber::ForWhy forWhy) {
 	if (stroke.compare("none") == 0) return true;
 
 	// both fill and stroke
-	return false;
+	return true;
 }
 
 //TODO: currently only supports one board per sketch (i.e. multiple board outlines will mess you up)
