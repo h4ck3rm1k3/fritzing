@@ -45,6 +45,8 @@ bool fillNotStroke(QDomElement & element, SVG2gerber::ForWhy forWhy) {
 	if (stroke.compare("none") == 0) return true;
 
 	// both fill and stroke
+
+	// note: this originally returned 'false' which suggests there may be some parts that will surprise us next time they are exported to gerber
 	return true;
 }
 
