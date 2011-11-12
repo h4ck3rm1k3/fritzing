@@ -189,7 +189,7 @@ void PaletteModel::loadParts(bool fastLoad) {
 void PaletteModel::writeCommonBinsHeader() {
 	writeCommonBinsHeaderAux(CreateAllPartsBinFile, AllPartsBinFilePath, "All Parts");
 	writeCommonBinsHeaderAux(CreateNonCorePartsBinFile, NonCorePartsBinFilePath, "All my parts");
-	writeCommonBinsHeaderAux(CreateContribPartsBinFile, ContribPartsBinFilePath, "Contributed");
+	writeCommonBinsHeaderAux(CreateContribPartsBinFile, ContribPartsBinFilePath, "Contributed Parts");
 }
 
 void PaletteModel::writeCommonBinsHeaderAux(bool doIt, const QString &filename, const QString &binName) {

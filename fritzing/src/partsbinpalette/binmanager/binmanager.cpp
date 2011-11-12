@@ -36,7 +36,6 @@ $Date$
 #include "stacktabwidget.h"
 #include "stacktabbar.h"
 
-#include "../partsbinpalettewidget.h"
 #include "../../model/modelpart.h"
 #include "../../mainwindow.h"
 #include "../../model/palettemodel.h"
@@ -46,7 +45,46 @@ $Date$
 #include "../../utils/folderutils.h"
 #include "../../utils/fileprogressdialog.h"
 #include "../../referencemodel/referencemodel.h"
+#include "../partsbinpalettewidget.h"
 
+///////////////////////////////////////////////////////////
+
+QString BinLocation::toString(BinLocation::Location location) {
+	switch (location) {
+	case BinLocation::User:
+			return "user";
+	case BinLocation::More:
+			return "more";
+	case BinLocation::Resource:
+			return "resource";
+	case BinLocation::Outside:
+	default:
+		return "outside";
+	}
+}
+
+BinLocation::Location BinLocation::fromString(const QString & locationString) {
+	if (locationString.compare("user", Qt::CaseInsensitive) == 0) return BinLocation::User;
+	if (locationString.compare("resource", Qt::CaseInsensitive) == 0) return BinLocation::Resource;
+	if (locationString.compare("more", Qt::CaseInsensitive) == 0) return BinLocation::More;
+	return BinLocation::Outside;
+}
+
+BinLocation::Location BinLocation::findLocation(const QString & filename) 
+{
+	if (filename.startsWith(":")) {
+		return BinLocation::Resource;
+	}
+	else if (filename.startsWith(FolderUtils::getUserDataStorePath("bins"))) {
+		return BinLocation::User;
+	}
+	else if (filename.startsWith(FolderUtils::getApplicationSubFolderPath("bins") + "/more")) {
+		return BinLocation::More;
+	}
+
+	return BinLocation::Outside;
+}
+///////////////////////////////////////////////////////////
 
 QString BinManager::Title;
 QString BinManager::MyPartsBinLocation;
@@ -91,8 +129,17 @@ BinManager::BinManager(class ReferenceModel *refModel, class HtmlInfoView *infoV
 	createCombinedMenu();
 	createContextMenus();
 
-	restoreStateAndGeometry();
-	loadAllBins();
+	QList<BinLocation *> actualLocations;
+	findAllBins(actualLocations);
+	restoreStateAndGeometry(actualLocations);
+	foreach (BinLocation * location, actualLocations) {
+		PartsBinPaletteWidget* bin = newBin();
+        bin->load(location->path, m_mainWindow->fileProgressDialog(), true);
+		m_stackTabWidget->addTab(bin, bin->icon(), bin->title());
+		m_stackTabWidget->stackTabBar()->setTabToolTip(m_stackTabWidget->count() - 1, bin->title());
+		registerBin(bin);
+		delete location;
+	}
 	openCoreBinIn();
 
 	connectTabWidget();
@@ -464,57 +511,180 @@ void BinManager::saveStateAndGeometry() {
 	settings.remove("bins"); // clean up previous state
 	settings.beginGroup("bins");
 
-	bool groupBegan = false;
-	for(int j=m_stackTabWidget->count()-1; j >= 0; j--) {
+	for(int j = m_stackTabWidget->count() - 1; j >= 0; j--) {
 		PartsBinPaletteWidget *bin = qobject_cast<PartsBinPaletteWidget*>(m_stackTabWidget->widget(j));
-		if(bin) {
-			if(!groupBegan) {
-				settings.beginGroup(QString("%1").arg(0));
-				groupBegan = true;
-			}
-			settings.setValue(QString("%1").arg(j),bin->fileName());
+		if (bin) {
+			settings.beginGroup(QString::number(j));
+			settings.setValue("location", BinLocation::toString(bin->location()));
+			settings.setValue("title", bin->title());
+			settings.setValue("path", bin->fileName());
+			settings.endGroup();
 		}
-	}
-	if(groupBegan) {
-		settings.endGroup();
 	}
 
 	settings.endGroup();
 }
 
-void BinManager::restoreStateAndGeometry() {
+void BinManager::restoreStateAndGeometry(QList<BinLocation *> & actualLocations) {
+	QList<BinLocation *> theoreticalLocations;
+
 	QSettings settings;
 	settings.beginGroup("bins");
-	if(settings.childGroups().size()==0) { // first time? open core and my_parts then
-        //m_mainWindow->fileProgressDialogSetBinLoadingCount(2);
-
-		QStringList locations;
-		locations << CorePartsBinLocation << SearchBinLocation << MyPartsBinLocation;
-		foreach (QString location, locations) {
-			PartsBinPaletteWidget* bin = newBin();
-            bin->load(location, m_mainWindow->fileProgressDialog(), true);
-			m_stackTabWidget->addTab(bin, bin->icon(), bin->title());
-			registerBin(bin);
-		}
-	} else {
-		foreach(QString g, settings.childGroups()) {
-			settings.beginGroup(g);
-
-            //m_mainWindow->fileProgressDialogSetBinLoadingCount(settings.childKeys().count());
-			foreach(QString k, settings.childKeys()) {
-				PartsBinPaletteWidget* bin = newBin();
-				QString filename = settings.value(k).toString();
-                if(QFileInfo(filename).exists() && bin->open(filename, m_mainWindow->fileProgressDialog(), true)) {
-					m_stackTabWidget->addTab(bin, bin->icon(), bin->title());
-					registerBin(bin);
-				} else {
-					delete bin;
-				}
-			}
+	int size = settings.childGroups().size();
+	if (size == 0) { 
+		// first time
+		readTheoreticalLocations(theoreticalLocations);
+	} 
+	else {
+		for (int i = 0; i < size; ++i) {
+			settings.beginGroup(QString::number(i));
+			BinLocation  * location = new BinLocation;
+			location->location = BinLocation::fromString(settings.value("location").toString());
+			location->path = settings.value("path").toString();
+			location->title = settings.value("title").toString();
+			theoreticalLocations.append(location);
 			settings.endGroup();
 		}
 	}
 
+	foreach (BinLocation * location, actualLocations) {
+		location->marked = false;
+	}
+	foreach (BinLocation * tLocation, theoreticalLocations) {
+		foreach (BinLocation * aLocation, actualLocations) {
+			if (aLocation->title.compare(tLocation->title) == 0 && aLocation->location == tLocation->location) {
+				aLocation->marked = true;
+				break;
+			}
+		}
+	}
+
+	QList<BinLocation *> tempLocations(actualLocations);
+	actualLocations.clear();
+
+	foreach (BinLocation * tLocation, theoreticalLocations) {
+		bool gotOne = false;
+
+		for (int ix = 0; ix < tempLocations.count(); ix++) {
+			BinLocation  * aLocation = tempLocations[ix];
+			if (aLocation->title.compare(tLocation->title) == 0 && aLocation->location == tLocation->location) {
+				gotOne = true;
+				actualLocations.append(aLocation);
+				tempLocations.removeAt(ix);
+				break;
+			}
+		}
+		if (gotOne) continue;
+
+		if (tLocation->title == "___*___") {
+			for (int ix = 0; ix < tempLocations.count(); ix++) {
+				BinLocation * aLocation = tempLocations[ix];
+				if (!aLocation->marked && aLocation->location == tLocation->location) {
+					gotOne = true;
+					actualLocations.append(aLocation);
+					tempLocations.removeAt(ix);
+					break;
+				}
+			}
+		}
+		if (gotOne) continue;
+
+		if (!tLocation->path.isEmpty()) {
+			QFileInfo info(tLocation->path);
+			if (info.exists()) {
+				actualLocations.append(tLocation);
+			}		
+		}
+	}
+
+	foreach (BinLocation * binLocation, theoreticalLocations) {
+		delete binLocation;
+	}
+
+	// catch the leftovers
+	actualLocations.append(tempLocations);
+
+}
+
+void BinManager::readTheoreticalLocations(QList<BinLocation *> & theoreticalLocations) 
+{
+	QFile file(":/resources/bins/order.xml");
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+	QDomDocument domDocument;
+
+	if (!domDocument.setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
+		DebugDialog::debug(QString("unable to parse order.xml: %1 %2 %3").arg(errorStr).arg(errorLine).arg(errorColumn));
+		return;
+	}
+
+	QDomElement bin = domDocument.documentElement().firstChildElement("bin");
+	while (!bin.isNull()) {
+		BinLocation * location = new BinLocation;
+		location->title = bin.attribute("title", "");
+		location->location = BinLocation::fromString(bin.attribute("location", ""));
+		theoreticalLocations.append(location);
+		bin = bin.nextSiblingElement("bin");
+	}
+}
+
+void BinManager::findAllBins(QList<BinLocation *> & locations) 
+{
+	BinLocation * location = new BinLocation;
+	location->location = BinLocation::Resource;
+	location->path = CorePartsBinLocation;
+	QString icon;
+	getBinTitle(location->path, location->title, icon);
+	locations.append(location);
+
+	QDir userBinsDir(FolderUtils::getUserDataStorePath("bins"));
+	findBins(userBinsDir, locations, BinLocation::User);
+
+	QDir dir(FolderUtils::getApplicationSubFolderPath("bins"));
+	dir.cd("more");
+	findBins(dir, locations, BinLocation::More);
+}
+
+void BinManager::findBins(QDir & dir, QList<BinLocation *> & locations, BinLocation::Location loc) {
+
+	QStringList filters;
+	filters << "*"+FritzingBinExtension;
+	QFileInfoList files = dir.entryInfoList(filters);
+	foreach(QFileInfo info, files) {
+		BinLocation * location = new BinLocation;
+		location->path = info.absoluteFilePath();
+		location->location = loc;
+		QString icon;
+		getBinTitle(location->path, location->title, icon);
+		locations.append(location);
+	}
+}
+
+bool BinManager::getBinTitle(const QString & filename, QString & binName, QString & iconName) {
+	QFile file(filename);
+	file.open(QFile::ReadOnly);
+	QXmlStreamReader xml(&file);
+	xml.setNamespaceProcessing(false);
+
+	while (!xml.atEnd()) {
+        switch (xml.readNext()) {
+        case QXmlStreamReader::StartElement:
+			if (xml.name().toString().compare("module") == 0) {
+				iconName = xml.attributes().value("icon").toString();
+			}
+			else if (xml.name().toString().compare("title") == 0) {
+				binName = xml.readElementText();
+				return true;
+			}
+			break;
+			
+		default:
+			break;
+		}
+	}
+
+	return false;
 }
 
 void BinManager::tabCloseRequested(int index) {
@@ -794,6 +964,7 @@ void BinManager::renameBin() {
 	);
 	if(ok) {
 		bin->setTitle(newTitle);
+		m_stackTabWidget->stackTabBar()->setTabToolTip(m_stackTabWidget->currentIndex(), newTitle);
 		bin->addPartToMeAction()->setText(newTitle);
 		updateTitle(bin, newTitle);
 	}
@@ -880,28 +1051,6 @@ void BinManager::saveBundledBin() {
 	bin->saveBundledBin();
 }
 
-void BinManager::loadAllBins() 
-{
-	QDir userBinsDir(FolderUtils::getUserDataStorePath("bins"));
-	loadBins(userBinsDir);
-
-	QDir dir(FolderUtils::getApplicationSubFolderPath("bins"));
-	dir.cd("more");
-	loadBins(dir);
-}
-
-void BinManager::loadBins(QDir & dir) {
-
-	QStringList filters;
-	filters << "*"+FritzingBinExtension;
-	QFileInfoList files = dir.entryInfoList(filters);
-	foreach(QFileInfo info, files) {
-		if (!m_openedBins.contains(info.absoluteFilePath())) {
-			openBinIn(info.absoluteFilePath(), true);
-		}
-	}
-}
-
 void BinManager::setTabIcon(PartsBinPaletteWidget* w, QIcon * icon) 
 {
 	if (m_stackTabWidget != NULL) {
@@ -909,3 +1058,4 @@ void BinManager::setTabIcon(PartsBinPaletteWidget* w, QIcon * icon)
 		m_stackTabWidget->setTabIcon(tabIdx, *icon);
 	}
 }
+

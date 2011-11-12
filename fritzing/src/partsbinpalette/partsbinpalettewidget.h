@@ -39,19 +39,7 @@ $Date$
 #include "../utils/abstractimagebutton.h"
 #include "../utils/fileprogressdialog.h"
 #include "../utils/bundler.h"
-
-class ImageButton : public AbstractImageButton {
-public:
-	ImageButton(const QString &imageName, QWidget *parent=0, bool hasStates=true)
-		: AbstractImageButton(parent)
-	{
-		setupIcons(imageName, hasStates);
-	};
-protected:
-	QString imagePrefix() {
-		return ":/resources/images/icons/partsBin";
-	}
-};
+#include "binmanager/binmanager.h"
 
 class PartsBinPaletteWidget : public QFrame, public Bundler {
 	Q_OBJECT
@@ -65,7 +53,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		void setTitle(const QString &title);
 
 		void loadFromModel(PaletteModel *model);
-		void setPaletteModel(PaletteModel *model, bool clear=false);
+		void setPaletteModel(PaletteModel *model, bool clear = false);
 
 		void addPart(ModelPart *modelPart, int position = -1);
 
@@ -100,6 +88,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		void saveBundledBin();
 		QMenu * binContextMenu();
 		bool fastLoaded();
+		BinLocation::Location location();
 
 	public slots:
 		void addPartCommand(const QString& moduleID);
@@ -147,7 +136,6 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		bool loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps);
 
 		void setFilename(const QString &filename);
-		bool getBinName(const QString & filename, QString & binName, QString & binIcon);
 
 	protected:
 		PaletteModel *m_model;
@@ -187,6 +175,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		QStackedWidget * m_stackedWidget;
 		QStackedWidget * m_searchStackedWidget;
 		bool m_fastLoaded;
+		BinLocation::Location m_location;
 
 	public:
 		static QString Title;

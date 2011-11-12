@@ -338,7 +338,7 @@ void PartFactory::initFolder()
 	FolderUtils::initLockedFiles("partfactory", PartFactoryFolderPath, LockedFiles);
 	QFileInfoList backupList;
 	QStringList filters;
-	filters << "*.fzp" << "*.svg";
+	filters << ("*" + FritzingPartExtension) << "*.svg";
 	FolderUtils::checkLockedFiles("partfactory", backupList, filters, LockedFiles, true);
 	QDir dir(PartFactoryFolderPath);
 	dir.mkdir("core");

@@ -41,7 +41,6 @@ $Date$
 #include "partsbiniconview.h"
 #include "partsbinlistview.h"
 #include "simpleeditablelabelwidget.h"
-#include "binmanager/binmanager.h"
 #include "searchlineedit.h"
 #include "../utils/misc.h"
 #include "../debugdialog.h"
@@ -99,16 +98,15 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 	m_stackedWidget->addWidget(m_listView);
 
 	QVBoxLayout * vbl = new QVBoxLayout(this);
-        vbl->setMargin(3);
-        vbl->setSpacing(0);
+    vbl->setMargin(3);
+    vbl->setSpacing(0);
 	vbl->addWidget(m_header);
 
 	QFrame * separator = new QFrame();
 	separator->setMaximumHeight(1);
 	separator->setObjectName("partsBinHeaderSeparator");
-        separator->setFrameShape(QFrame::HLine);
-        separator->setFrameShadow(QFrame::Plain);
-
+    separator->setFrameShape(QFrame::HLine);
+    separator->setFrameShadow(QFrame::Plain);
 	vbl->addWidget(separator);
 
 	vbl->addWidget(m_stackedWidget);
@@ -163,9 +161,8 @@ void PartsBinPaletteWidget::setTitle(const QString &title) {
 
 void PartsBinPaletteWidget::setupHeader()
 {
-	m_combinedBinMenuButton = newToolButton("partsBinCombinedMenu");
+	m_combinedBinMenuButton = newToolButton("partsBinCombinedMenuButton");
 	m_combinedBinMenuButton->setMenu(m_manager->combinedMenu());
-
 
 	m_binLabel = new QLabel(this);
 	m_binLabel->setObjectName("partsBinLabel");
@@ -237,6 +234,8 @@ bool PartsBinPaletteWidget::saveAsAux(const QString &filename) {
 	}
 
 	m_undoStack->setClean();
+
+	m_location = BinLocation::findLocation(filename);
 
 	saveAsLastBin();
 	if(oldFilename != m_fileName) {
@@ -331,12 +330,13 @@ void PartsBinPaletteWidget::addPart(ModelPart *modelPart, int position) {
 QToolButton* PartsBinPaletteWidget::newToolButton(const QString& btnObjName, const QString& imgPath, const QString &text) {
 	QToolButton *toolBtn = new QToolButton(this);
 	toolBtn->setObjectName(btnObjName);
-	if(text != ___emptyString___) {
+	toolBtn->setToolButtonStyle(Qt::ToolButtonIconOnly);
+	if (text != ___emptyString___) {
 		toolBtn->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 		toolBtn->setText(text);
 	}
 	toolBtn->setPopupMode(QToolButton::InstantPopup);
-	if(imgPath != ___emptyString___) {
+	if (imgPath != ___emptyString___) {
 		toolBtn->setIcon(QIcon(imgPath));
 	}
 	toolBtn->setArrowType(Qt::NoArrow);
@@ -434,9 +434,11 @@ void PartsBinPaletteWidget::load(const QString &filename, QWidget * progressTarg
 	// TODO deleting this local palette reference model deletes modelPartShared held by the palette bin modelParts
 	//PaletteModel * paletteReferenceModel = new PaletteModel(true, true);
 
+	m_location = BinLocation::findLocation(filename);
+
 	if (fastLoad) {
 		QString binName, iconName;
-		if (getBinName(filename, binName, iconName)) {
+		if (BinManager::getBinTitle(filename, binName, iconName)) {
 			m_fileName = filename;
 			grabTitle(binName, iconName);
 			m_fastLoaded = true;
@@ -836,32 +838,11 @@ void PartsBinPaletteWidget::changeIconColor() {
 	}
 }
 
-bool PartsBinPaletteWidget::getBinName(const QString & filename, QString & binName, QString & iconName) {
-	QFile file(filename);
-	file.open(QFile::ReadOnly);
-	QXmlStreamReader xml(&file);
-	xml.setNamespaceProcessing(false);
-
-	while (!xml.atEnd()) {
-        switch (xml.readNext()) {
-        case QXmlStreamReader::StartElement:
-			if (xml.name().toString().compare("module") == 0) {
-				iconName = xml.attributes().value("icon").toString();
-			}
-			else if (xml.name().toString().compare("title") == 0) {
-				binName = xml.readElementText();
-				return true;
-			}
-			break;
-			
-		default:
-			break;
-		}
-	}
-
-	return false;
-}
-
 bool PartsBinPaletteWidget::fastLoaded() {
 	return m_fastLoaded;
 }
+
+BinLocation::Location PartsBinPaletteWidget::location() {
+	return m_location;
+}
+

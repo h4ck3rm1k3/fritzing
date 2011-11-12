@@ -37,6 +37,26 @@ $Date$
 class ModelPart;
 class PaletteModel;
 class MainWindow;
+class PartsBinPaletteWidget;
+
+struct BinLocation {
+	enum Location {
+		Resource,
+		More,
+		User,
+		Outside,
+		Any
+	};
+
+	QString path;
+	QString title;
+	Location location;
+	bool marked;
+
+	static QString toString(BinLocation::Location location);
+	static BinLocation::Location findLocation(const QString & filename);
+	static BinLocation::Location fromString(const QString & locationString);
+};
 
 class BinManager : public QFrame {
 	Q_OBJECT
@@ -47,7 +67,7 @@ class BinManager : public QFrame {
 		void loadFromModel(PaletteModel *model);
 		void setPaletteModel(PaletteModel *model);
 
-		void addBin(class PartsBinPaletteWidget* bin);
+		void addBin(PartsBinPaletteWidget* bin);
 		void insertBin(PartsBinPaletteWidget* bin, int index);
 		void addPart(ModelPart *modelPart, int position = -1);
 		void addToMyPart(ModelPart *modelPart);
@@ -124,8 +144,6 @@ class BinManager : public QFrame {
 		void registerBin(PartsBinPaletteWidget* bin);
 		PartsBinPaletteWidget* getBin(int index);
 		PartsBinPaletteWidget* currentBin();
-		void saveStateAndGeometry();
-		void restoreStateAndGeometry();
 		void setAsCurrentTab(PartsBinPaletteWidget* bin);
         PartsBinPaletteWidget* getOrOpenMyPartsBin();
         PartsBinPaletteWidget* getOrOpenSearchBin();
@@ -135,8 +153,12 @@ class BinManager : public QFrame {
 		PartsBinPaletteWidget* findBin(const QString & binLocation);
 		void createCombinedMenu();
 		void createContextMenus();
-		void loadAllBins();
-		void loadBins(QDir &);
+		void saveStateAndGeometry();
+		void restoreStateAndGeometry(QList<BinLocation *> & actualLocations);
+		void findAllBins(QList<BinLocation *> & actualLocations);
+		void findBins(QDir &, QList<BinLocation *> & actualLocations, BinLocation::Location);
+		void readTheoreticalLocations(QList<BinLocation *> & theoreticalLocations);
+
 
 protected:
 		ReferenceModel *m_refModel;
@@ -188,8 +210,10 @@ protected:
         static QString SearchBinTemplateLocation;
 		static QString ContribPartsBinLocation;
 		static QHash<QString, QString> StandardBinIcons;
+
 		static bool isTabReorderingEvent(QDropEvent* event);
 		static void initNames();
+		static bool getBinTitle(const QString & filename, QString & binTitle, QString & binIcon);
 };
 
 #endif /* BINMANAGER_H_ */

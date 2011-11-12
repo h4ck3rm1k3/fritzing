@@ -567,8 +567,8 @@ StackTabBar[current="true"]::tab:selected {
 	font-size: 10px;
 }
 
-#partsBinCombinedMenu
-#partsBinCombinedMenu:pressed {
+#partsBinCombinedMenuButton
+#partsBinCombinedMenuButton:pressed {
 	margin: 0;
 	margin-top: 2px;
 	margin-left: 2px;
@@ -581,15 +581,20 @@ StackTabBar[current="true"]::tab:selected {
 	background-repeat: no-repeat;
 }
 
-#partsBinCombinedMenu {
+#partsBinCombinedMenuButton {
 	background-image: url(:/resources/images/icons/partsBinCombinedMenu_icon.png);
 	background-repeat: no-repeat;
 	border: none;
 }
 
-#partsBinCombinedMenu:pressed {
+#partsBinCombinedMenuButton:pressed {
 	background-image: url(:/resources/images/icons/partsBinCombinedMenuPressed_icon.png);
 	background-repeat: no-repeat;
+}
+
+
+#partsBinCombinedMenuButton::menu-indicator {
+     image: url();
 }
 
 /**************** sketch area widgets ****************/
