@@ -33,6 +33,12 @@ $Date$
 #include <QString>
 #include <QKeyEvent>
 #include <QEvent>
+#include <QGraphicsItem>
+#include <QGraphicsPixmapItem>
+#include <QGraphicsScene>
+#include <QGraphicsView>
+#include <QGraphicsSceneMouseEvent>
+#include <QTimer>
 
 QCursor * CursorMaster::BendpointCursor = NULL;
 QCursor * CursorMaster::NewBendpointCursor = NULL;
@@ -43,8 +49,12 @@ QCursor * CursorMaster::MoveCursor = NULL;
 QCursor * CursorMaster::BendlegCursor = NULL;
 QCursor * CursorMaster::RotateCursor = NULL;
 
+//static QTimer timer;
+
 CursorMaster CursorMaster::TheCursorMaster;
 static QList<QObject *> Listeners;
+
+static QHash<QGraphicsScene *, QGraphicsPixmapItem *> CursorItems;
 
 CursorMaster::CursorMaster() : QObject()
 {
@@ -53,6 +63,10 @@ CursorMaster::CursorMaster() : QObject()
 void CursorMaster::initCursors()
 {
 	if (BendpointCursor == NULL) {
+		//timer.setSingleShot(true);
+		//timer.setInterval(0);
+		//connect(&timer, SIGNAL(timeout()), &TheCursorMaster, SLOT(moveCursor()));
+
 		QBitmap bitmap1(":resources/images/cursor/bendpoint.bmp");
 		QBitmap bitmap1m(":resources/images/cursor/bendpoint_mask.bmp");
 		BendpointCursor = new QCursor(bitmap1, bitmap1m, 0, 0);
@@ -98,6 +112,37 @@ void CursorMaster::addCursor(QObject * object, const QCursor & cursor)
 {
 	if (object == NULL) return;
 
+
+	/*
+	QGraphicsItem * item = dynamic_cast<QGraphicsItem *>(object);
+	if (item == NULL) return;
+
+	QGraphicsScene * scene = item->scene();
+	if (scene == NULL) return;
+
+	QGraphicsView * view = dynamic_cast<QGraphicsView *>(scene->parent());
+	if (view == NULL) return;
+
+	QGraphicsPixmapItem * pixmapItem = CursorItems.value(scene, NULL);
+	if (pixmapItem == NULL) {
+		pixmapItem = new QGraphicsPixmapItem();
+		pixmapItem->setZValue(10000);			// always on top
+		pixmapItem->setVisible(true);
+		pixmapItem->setAcceptedMouseButtons(0);
+		pixmapItem->setAcceptDrops(false);
+		pixmapItem->setAcceptTouchEvents(false);
+		pixmapItem->setAcceptHoverEvents(false);
+		pixmapItem->setEnabled(false);
+		pixmapItem->setFlags(QGraphicsItem::ItemIgnoresTransformations);
+		CursorItems.insert(scene, pixmapItem);
+		scene->addItem(pixmapItem);
+		scene->installEventFilter(this);
+	}
+
+	pixmapItem->setPixmap(*cursor.mask());
+	pixmapItem->setPos(view->mapToScene(view->mapFromGlobal(QCursor::pos())) + cursor.hotSpot());
+	*/
+
 	if (Listeners.contains(object)) {
 		if (Listeners.first() != object) {
 			Listeners.removeOne(object);
@@ -124,6 +169,20 @@ void CursorMaster::removeCursor(QObject * object)
 		QApplication::restoreOverrideCursor();
 		//DebugDialog::debug(QString("removing cursor %1").arg((long) object));
 	}
+
+
+	/*
+	QGraphicsItem * item = dynamic_cast<QGraphicsItem *>(object);
+	if (item == NULL) return;
+
+	QGraphicsScene * scene = item->scene();
+	if (scene == NULL) return;
+
+	QGraphicsPixmapItem * pixmapItem = CursorItems.value(scene, NULL);
+	if (pixmapItem == NULL) return;
+
+	pixmapItem->hide();
+	*/
 }
 
 void CursorMaster::deleteCursor(QObject * object)
@@ -133,17 +192,63 @@ void CursorMaster::deleteCursor(QObject * object)
 
 bool CursorMaster::eventFilter(QObject * object, QEvent * event)
 {
-	Q_UNUSED(object);
-	if (event->type() == QEvent::KeyPress || event->type() == QEvent::KeyRelease) {
-		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
-		foreach (QObject * listener, Listeners) {
-			if (listener) {
-				dynamic_cast<CursorKeyListener *>(listener)->cursorKeyEvent(keyEvent->modifiers());
-				break;
+	QApplication * application = NULL;
+	//QGraphicsScene * scene = NULL;
+
+	switch (event->type()) {
+		case QEvent::KeyPress:
+		case QEvent::KeyRelease:
+			application = dynamic_cast<QApplication *>(object);
+			if (application) {
+				QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+				foreach (QObject * listener, Listeners) {
+					if (listener) {
+						dynamic_cast<CursorKeyListener *>(listener)->cursorKeyEvent(keyEvent->modifiers());
+						break;
+					}
+				}
 			}
-		}
+			break;
+/*
+		case QEvent::GraphicsSceneMouseMove:
+			
+			scene = dynamic_cast<QGraphicsScene *>(object);
+			if (scene) {
+				QGraphicsPixmapItem * pixmapItem = CursorItems.value(scene, NULL);
+				if (pixmapItem) {
+					timer.setProperty("loc", ((QGraphicsSceneMouseEvent *) event)->scenePos());
+					timer.setUserData(1, (QObjectUserData *) pixmapItem);
+				}
+			}
+			break;
+
+		case QEvent::Leave:
+			scene = dynamic_cast<QGraphicsScene *>(object);
+			if (scene) {
+				QGraphicsPixmapItem * pixmapItem = CursorItems.value(scene, NULL);
+				if (pixmapItem) {
+					//DebugDialog::debug("pos", ((QGraphicsSceneMouseEvent *) event)->scenePos());
+					pixmapItem->hide();
+				}
+			}
+			break;
+*/
+		default:
+			break;
 	}
+	
 
 	return false;
 }
 
+void CursorMaster::moveCursor() {
+	//QObject * t = sender();
+	//if (t == NULL) return;
+
+	//QPointF p = t->property("loc").toPointF();
+	//QGraphicsPixmapItem * item = (QGraphicsPixmapItem *) t->userData(1);
+
+	//DebugDialog::debug("move", p);
+	//item->setPos(p);   // + cursor->hotspot
+	//item->show();
+}

@@ -60,6 +60,9 @@ public:
 public slots:
 	void chipLabelEntry();
 
+protected slots:
+	void setChipLabelTimeout();
+
 public:
 	static QString genSipFZP(const QString & moduleid);
 	static QString genDipFZP(const QString & moduleid);
@@ -77,6 +80,7 @@ protected:
 	virtual bool isDIP();
 	virtual bool otherPropsChange(const QMap<QString, QString> & propsMap);
 	virtual const QStringList & spacings();
+	void setChipLabelDelay(QString chipLabel, bool force);
 
 	static int NoExcusePins;
 
@@ -86,6 +90,7 @@ protected:
 	QString m_title;
 	bool m_changingSpacing;
 	QString m_spacing;
+	QTimer m_timer;
 };
 
 #endif

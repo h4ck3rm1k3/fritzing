@@ -47,12 +47,16 @@ static const int MaxSipPins = 64;
 static const int MinDipPins = 4;
 static const int MaxDipPins = 64;
 
+
 // TODO
 //	save into parts bin
 
 MysteryPart::MysteryPart( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
+	m_timer.setInterval(10);
+	m_timer.setSingleShot(true);
+	connect(&m_timer, SIGNAL(timeout()), this, SLOT(setChipLabelTimeout()));
 	m_changingSpacing = false;
 	m_chipLabel = modelPart->prop("chip label").toString();
 	if (m_chipLabel.isEmpty()) {
@@ -73,7 +77,7 @@ MysteryPart::~MysteryPart() {
 
 void MysteryPart::setProp(const QString & prop, const QString & value) {
 	if (prop.compare("chip label", Qt::CaseInsensitive) == 0) {
-		setChipLabel(value, false);
+		setChipLabelDelay(value, false);
 		return;
 	}
 
@@ -116,7 +120,7 @@ void MysteryPart::setSpacing(QString spacing, bool force) {
 
 				if (m_viewIdentifier == ViewIdentifierClass::BreadboardView) {
 					if (modelPart()->properties().value("chip label", "").compare(m_chipLabel) != 0) {
-						setChipLabel(m_chipLabel, true);
+						setChipLabelDelay(m_chipLabel, true);
 					}
 				}
 
@@ -133,6 +137,21 @@ void MysteryPart::setSpacing(QString spacing, bool force) {
 	updateTooltip();
     if (m_partLabel) m_partLabel->displayTextsIf();
 
+}
+
+void MysteryPart::setChipLabelDelay(QString chipLabel, bool force) {
+	m_timer.setProperty("chipLabel", chipLabel);
+	m_timer.setProperty("force", force);
+	m_timer.start();
+}
+
+void MysteryPart::setChipLabelTimeout() {
+	QObject * s = sender();
+	if (s == NULL) return;
+
+	bool force = s->property("force").toBool();
+	QString label = s->property("chipLabel").toString();
+	setChipLabel(label, force);
 }
 
 void MysteryPart::setChipLabel(QString chipLabel, bool force) {

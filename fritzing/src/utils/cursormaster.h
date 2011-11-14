@@ -54,6 +54,7 @@ protected:
 
 protected slots:
 	void deleteCursor(QObject *);
+	void moveCursor();
 
 public:
 	static QCursor * BendpointCursor;
