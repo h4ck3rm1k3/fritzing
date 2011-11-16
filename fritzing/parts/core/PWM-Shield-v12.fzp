@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='PWM-Shield-v12'>
 <version>4</version>
-<date>2011-10-27</date>
+<date>2011-11-16</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Description:&lt;/strong&gt; This is the Arduino shield version of our TLC5940 Breakout. The PWM Shield will allow you to generate up to 16 PWM signals from your Arduino by utilizing the power of the TLC5940 IC. All 16 PWM channels are broken out to standard 0.1&amp;quot; headers, which run alongside convenient voltage and ground rails. Because the IC can be daisy-chained, output headers are broken out on one side of the shield and can be connected to our TLC5940 Breakout to further expand your PWM capabilities.&amp;nbsp;&lt;/p&gt;
@@ -613,6 +613,26 @@
 <p layer='copper0' svgId='connector60pad'/><p layer='copper1' svgId='connector60pad'/></pcbView>
 </views>
 </connector>
+<connector id='connector61' type='male' name='VIN'>
+<description>VIN</description><views>
+<breadboardView>
+<p layer='breadboard' svgId='connector61pin'/></breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector61pin' terminalId='connector61terminal'/></schematicView>
+<pcbView>
+<p layer='copper0' svgId='connector61pad'/><p layer='copper1' svgId='connector61pad'/></pcbView>
+</views>
+</connector>
+<connector id='connector62' type='male' name='GND'>
+<description>GND</description><views>
+<breadboardView>
+<p layer='breadboard' svgId='connector62pin'/></breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector62pin' terminalId='connector62terminal'/></schematicView>
+<pcbView>
+<p layer='copper0' svgId='connector62pad'/><p layer='copper1' svgId='connector62pad'/></pcbView>
+</views>
+</connector>
 <connector id='connector63' type='male' name='GND'>
 <description>GND</description><views>
 <breadboardView>
@@ -631,6 +651,26 @@
 <p layer='schematic' svgId='connector64pin' terminalId='connector64terminal'/></schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector64pad'/><p layer='copper1' svgId='connector64pad'/></pcbView>
+</views>
+</connector>
+<connector id='connector65' type='male' name='GND'>
+<description>GND</description><views>
+<breadboardView>
+<p layer='breadboard' svgId='connector65pin'/></breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector65pin' terminalId='connector65terminal'/></schematicView>
+<pcbView>
+<p layer='copper0' svgId='connector65pad'/><p layer='copper1' svgId='connector65pad'/></pcbView>
+</views>
+</connector>
+<connector id='connector66' type='male' name='VIN'>
+<description>VIN</description><views>
+<breadboardView>
+<p layer='breadboard' svgId='connector66pin'/></breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector66pin' terminalId='connector66terminal'/></schematicView>
+<pcbView>
+<p layer='copper0' svgId='connector66pad'/><p layer='copper1' svgId='connector66pad'/></pcbView>
 </views>
 </connector>
 <connector id='connector122' type='male' name='3.3V'>
@@ -923,7 +963,9 @@
 <nodeMember connectorId='connector52'/>
 <nodeMember connectorId='connector55'/>
 <nodeMember connectorId='connector58'/>
+<nodeMember connectorId='connector62'/>
 <nodeMember connectorId='connector63'/>
+<nodeMember connectorId='connector65'/>
 <nodeMember connectorId='connector143'/>
 <nodeMember connectorId='connector144'/>
 <nodeMember connectorId='connector145'/>
@@ -946,6 +988,11 @@
 <nodeMember connectorId='connector53'/>
 <nodeMember connectorId='connector56'/>
 <nodeMember connectorId='connector59'/>
+</bus>
+<bus id='vin'>
+<nodeMember connectorId='connector61'/>
+<nodeMember connectorId='connector64'/>
+<nodeMember connectorId='connector66'/>
 </bus>
 <bus id='gsclk'>
 <nodeMember connectorId='connector36'/>

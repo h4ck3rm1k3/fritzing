@@ -175,9 +175,9 @@
   <rect  width="2.4" x="106.299" y="0" fill="none" height="0" id="connector7terminal" stroke-width="0"/>
   <text  x="107.499" y="33.8599" font-family="DroidSans" fill="#000000" text-anchor="middle" stroke="none" id="label7" stroke-width="0" font-size="9.936">VCC</text>
   <line  fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="round" y1="1.2" stroke-width="2.4" x1="128.759" y2="21.2599" x2="128.759"/>
-  <rect  width="2.4" x="127.559" y="0" fill="none" connectorname="VIN" height="21.2599" id="connector64pin" stroke-width="0"/>
-  <rect  width="2.4" x="127.559" y="0" fill="none" height="0" id="connector64terminal" stroke-width="0"/>
-  <text  x="128.759" y="33.8599" font-family="DroidSans" fill="#000000" text-anchor="middle" stroke="none" id="label64" stroke-width="0" font-size="9.936">VIN</text>
+  <rect  width="2.4" x="127.559" y="0" fill="none" connectorname="VIN" height="21.2599" id="connector61pin" stroke-width="0"/>
+  <rect  width="2.4" x="127.559" y="0" fill="none" height="0" id="connector61terminal" stroke-width="0"/>
+  <text  x="128.759" y="33.8599" font-family="DroidSans" fill="#000000" text-anchor="middle" stroke="none" id="label61" stroke-width="0" font-size="9.936">VIN</text>
   <line  fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="round" y1="618.936" stroke-width="2.4" x1="118.129" y2="638.995" x2="118.129"/>
   <rect  width="2.4" x="116.929" y="618.936" fill="none" connectorname="GND" height="21.2599" id="connector6pin" stroke-width="0"/>
   <rect  width="2.4" x="116.929" y="640.195" fill="none" height="0" id="connector6terminal" stroke-width="0"/>
@@ -214,6 +214,10 @@
   <rect  width="2.4" x="106.299" y="0" fill="none" height="0" id="connector56terminal" stroke-width="0"/>
   <rect  width="2.4" x="106.299" y="0" fill="none" connectorname="VCC" height="21.2599" id="connector59pin" stroke-width="0"/>
   <rect  width="2.4" x="106.299" y="0" fill="none" height="0" id="connector59terminal" stroke-width="0"/>
+  <rect  width="2.4" x="127.559" y="0" fill="none" connectorname="VIN" height="21.2599" id="connector64pin" stroke-width="0"/>
+  <rect  width="2.4" x="127.559" y="0" fill="none" height="0" id="connector64terminal" stroke-width="0"/>
+  <rect  width="2.4" x="127.559" y="0" fill="none" connectorname="VIN" height="21.2599" id="connector66pin" stroke-width="0"/>
+  <rect  width="2.4" x="127.559" y="0" fill="none" height="0" id="connector66terminal" stroke-width="0"/>
   <rect  width="2.4" x="116.929" y="618.936" fill="none" connectorname="GND" height="21.2599" id="connector143pin" stroke-width="0"/>
   <rect  width="2.4" x="116.929" y="640.195" fill="none" height="0" id="connector143terminal" stroke-width="0"/>
   <rect  width="2.4" x="116.929" y="618.936" fill="none" connectorname="GND" height="21.2599" id="connector144pin" stroke-width="0"/>
@@ -254,6 +258,10 @@
   <rect  width="2.4" x="116.929" y="640.195" fill="none" height="0" id="connector58terminal" stroke-width="0"/>
   <rect  width="2.4" x="116.929" y="618.936" fill="none" connectorname="GND" height="21.2599" id="connector63pin" stroke-width="0"/>
   <rect  width="2.4" x="116.929" y="640.195" fill="none" height="0" id="connector63terminal" stroke-width="0"/>
+  <rect  width="2.4" x="116.929" y="618.936" fill="none" connectorname="GND" height="21.2599" id="connector62pin" stroke-width="0"/>
+  <rect  width="2.4" x="116.929" y="640.195" fill="none" height="0" id="connector62terminal" stroke-width="0"/>
+  <rect  width="2.4" x="116.929" y="618.936" fill="none" connectorname="GND" height="21.2599" id="connector65pin" stroke-width="0"/>
+  <rect  width="2.4" x="116.929" y="640.195" fill="none" height="0" id="connector65terminal" stroke-width="0"/>
   <rect  width="21.2599" x="214.998" y="63.7795" fill="none" connectorname="SCLK" height="2.4" id="connector142pin" stroke-width="0"/>
   <rect  width="2.4" x="233.858" y="63.7795" fill="none" height="2.4" id="connector142terminal" stroke-width="0"/>
   <rect  width="21.2599" x="214.998" y="127.559" fill="none" connectorname="BLANK" height="2.4" id="connector139pin" stroke-width="0"/>
