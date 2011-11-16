@@ -38,7 +38,7 @@ class PartsBinPaletteWidget;
 class PartsBinView {
 
 	public:
-		PartsBinView(ReferenceModel *refModel, PartsBinPaletteWidget *parent, QMenu *binMenu, QMenu *partMenu);
+		PartsBinView(ReferenceModel *refModel, PartsBinPaletteWidget *parent);
 		virtual ~PartsBinView() {};				// removes compiler warnings
 
 		virtual void setPaletteModel(PaletteModel * model, bool clear = false);
@@ -81,9 +81,6 @@ class PartsBinView {
 
 		QHash<QString /*moduleId*/,ModelPart*> m_partHash;
 		bool m_infoViewOnHover;
-
-		QMenu *m_binMenu;
-		QMenu *m_partMenu;
 
 		QPoint m_dragStartPos;
 };

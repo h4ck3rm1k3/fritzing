@@ -1024,17 +1024,19 @@ void BinManager::updateViewChecks(bool iconView) {
 	}
 }
 
-QMenu * BinManager::binContextMenu() {
-	return m_binContextMenu;
-}
-
 QMenu * BinManager::binContextMenu(PartsBinPaletteWidget * bin) {
 	updateBinCombinedMenu(bin);
 	return m_binContextMenu;
 }
 
-QMenu * BinManager::partContextMenu() {
+QMenu * BinManager::partContextMenu(PartsBinPaletteWidget * bin) {
+	updateBinCombinedMenu(bin);
 	return m_partContextMenu;
+}
+
+QMenu * BinManager::combinedMenu(PartsBinPaletteWidget * bin) {
+	updateBinCombinedMenu(bin);
+	return m_combinedMenu;
 }
 
 QMenu * BinManager::combinedMenu() {

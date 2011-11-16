@@ -37,7 +37,7 @@ $Date$
 
 QHash<QString, QString> PartsBinView::TranslatedCategoryNames;
 
-PartsBinView::PartsBinView(ReferenceModel *refModel, PartsBinPaletteWidget *parent, QMenu *binMenu, QMenu *partMenu) {
+PartsBinView::PartsBinView(ReferenceModel *refModel, PartsBinPaletteWidget *parent) {
 	if (TranslatedCategoryNames.count() == 0) {
 		TranslatedCategoryNames.insert("Basic", QObject::tr("Basic"));
 		TranslatedCategoryNames.insert("Input", QObject::tr("Input"));
@@ -50,17 +50,18 @@ PartsBinView::PartsBinView(ReferenceModel *refModel, PartsBinPaletteWidget *pare
 		TranslatedCategoryNames.insert("Schematic View", QObject::tr("Schematic View"));
 		TranslatedCategoryNames.insert("PCB View", QObject::tr("PCB View"));
 		TranslatedCategoryNames.insert("Tools",  QObject::tr("Tools"));
+		TranslatedCategoryNames.insert("Shields",  QObject::tr("Shields"));
+		TranslatedCategoryNames.insert("LilyPad",  QObject::tr("LilyPad"));
+		TranslatedCategoryNames.insert("Other",  QObject::tr("Other"));
+		TranslatedCategoryNames.insert("Sensors",  QObject::tr("Sensors"));
 	}
 
 	m_refModel = refModel;
 	m_parent = parent;
-
-	m_binMenu  = binMenu;
-	m_partMenu = partMenu;
 }
 
 void PartsBinView::setPaletteModel(PaletteModel * model, bool clear) {
-	if(clear) {
+	if (clear) {
 		doClear();
 	}
 

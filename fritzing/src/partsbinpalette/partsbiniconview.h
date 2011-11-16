@@ -43,7 +43,7 @@ class PartsBinIconView : public InfoGraphicsView, public PartsBinView
 {
 	Q_OBJECT
 	public:
-		PartsBinIconView(ReferenceModel* refModel, PartsBinPaletteWidget *parent, QMenu *binMenu, QMenu *partMenu);
+		PartsBinIconView(ReferenceModel* refModel, PartsBinPaletteWidget *parent);
 		void loadFromModel(class PaletteModel *);
 		void setPaletteModel(class PaletteModel *model, bool clear=false);
 		void addPart(ModelPart * model, int position = -1);

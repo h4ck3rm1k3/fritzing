@@ -37,11 +37,12 @@ $Date$
 #include "svgiconwidget.h"
 #include "../model/palettemodel.h"
 #include "../items/partfactory.h"
+#include "partsbinpalettewidget.h"
 
 #define ICON_SPACING 2
 
-PartsBinIconView::PartsBinIconView(ReferenceModel* refModel, PartsBinPaletteWidget *parent, QMenu *binMenu, QMenu *partMenu)
-    : InfoGraphicsView((QWidget*)parent), PartsBinView(refModel, parent, binMenu, partMenu)
+PartsBinIconView::PartsBinIconView(ReferenceModel* refModel, PartsBinPaletteWidget *parent)
+    : InfoGraphicsView((QWidget*)parent), PartsBinView(refModel, parent)
 {
 	setAcceptWheelEvents(false);
     setFrameStyle(QFrame::Raised | QFrame::StyledPanel);
@@ -412,9 +413,9 @@ void PartsBinIconView::showContextMenu(const QPoint& pos) {
 	if(it) {
 		scene()->clearSelection();
 		it->setSelected(true);
-		menu = m_partMenu;
+		menu = m_parent->partContextMenu();
 	} else {
-		menu = m_binMenu;
+		menu = m_parent->combinedMenu();
 	}
     menu->exec(mapToGlobal(pos));
 }

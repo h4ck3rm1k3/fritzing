@@ -34,14 +34,15 @@ $Date$
 #include "../itemdrag.h"
 #include "../items/partfactory.h"
 #include "../layerattributes.h"
+#include "partsbinpalettewidget.h"
 
 #include "partsbinlistview.h"
 
 static const QColor SectionHeaderBackgroundColor(128, 128, 128);
 static const QColor SectionHeaderForegroundColor(32, 32, 32);
 
-PartsBinListView::PartsBinListView(ReferenceModel* refModel, PartsBinPaletteWidget *parent, QMenu *binMenu, QMenu *partMenu)
-	: QListWidget((QWidget*)parent), PartsBinView(refModel, parent, binMenu, partMenu)
+PartsBinListView::PartsBinListView(ReferenceModel* refModel, PartsBinPaletteWidget *parent)
+	: QListWidget((QWidget *) parent), PartsBinView(refModel, parent)
 {
 	m_infoView = NULL;
 	m_hoverItem = NULL;
@@ -357,9 +358,9 @@ void PartsBinListView::showContextMenu(const QPoint& pos) {
 	if(it) {
 		clearSelection();
 		it->setSelected(true);
-		menu = m_partMenu;
+		menu = m_parent->partContextMenu();
 	} else {
-		menu = m_binMenu;
+		menu = m_parent->combinedMenu();
 	}
     menu->exec(mapToGlobal(pos));
 }

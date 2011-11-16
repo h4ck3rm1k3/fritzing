@@ -86,8 +86,10 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 
 		bool currentViewIsIconView();
 		QIcon icon();
-		void saveBundledBin();
+		void saveBundledBin();	
+		QMenu * combinedMenu();
 		QMenu * binContextMenu();
+		QMenu * partContextMenu();
 		bool fastLoaded();
 		BinLocation::Location location();
 

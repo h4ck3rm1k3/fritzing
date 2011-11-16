@@ -87,10 +87,10 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 
 	setupHeader();
 
-	m_iconView = new PartsBinIconView(m_refModel, this, m_manager->binContextMenu(), m_manager->partContextMenu());
+	m_iconView = new PartsBinIconView(m_refModel, this);
 	m_iconView->setInfoView(infoView);
 
-	m_listView = new PartsBinListView(m_refModel, this, m_manager->binContextMenu(), m_manager->partContextMenu());
+	m_listView = new PartsBinListView(m_refModel, this);
 	m_listView->setInfoView(infoView);
 
 	m_stackedWidget = new QStackedWidget(this);
@@ -770,6 +770,16 @@ QIcon PartsBinPaletteWidget::icon() {
 	if (m_icon) return *m_icon;
 
 	return emptyIcon;
+}
+
+QMenu * PartsBinPaletteWidget::combinedMenu()
+{
+	return m_manager->combinedMenu(this);
+}
+
+QMenu * PartsBinPaletteWidget::partContextMenu()
+{
+	return m_manager->partContextMenu(this);
 }
 
 QMenu * PartsBinPaletteWidget::binContextMenu()

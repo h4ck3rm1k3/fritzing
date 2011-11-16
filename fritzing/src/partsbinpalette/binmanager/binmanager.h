@@ -106,9 +106,9 @@ class BinManager : public QFrame {
         void search(const QString & searchText);
 		bool currentViewIsIconView();
 		void updateViewChecks(bool iconView);
-		QMenu * binContextMenu();
 		QMenu * binContextMenu(PartsBinPaletteWidget *);
-		QMenu * partContextMenu();
+		QMenu * partContextMenu(PartsBinPaletteWidget *);
+		QMenu * combinedMenu(PartsBinPaletteWidget *);
 		QMenu * combinedMenu();
 		void setTabIcon(PartsBinPaletteWidget* w, QIcon *);
 
