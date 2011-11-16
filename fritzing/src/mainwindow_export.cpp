@@ -160,37 +160,20 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 	QString extFmt = (wantPDF) ? fileExtFormats.value(pdfActionType) : fileExtFormats.value(svgActionType);
 	QString fileExt;
 
-	if (m_pcbGraphicsView->boardLayers() == 1) {
-		QString fileName = FolderUtils::getSaveFileName(this,
-			tr("Export PDF or SVG for etchable PCB production..."),
-			path+"/"+constructFileName("etch", suffix),
-			extFmt,
-			&fileExt
-		);
 
-		if (fileName.isEmpty()) {
-			return; //Cancel pressed
-		}
+	QString exportDir = QFileDialog::getExistingDirectory(this, tr("Choose a folder for exporting"),
+												defaultSaveFolder(),
+												QFileDialog::ShowDirsOnly
+												| QFileDialog::DontResolveSymlinks);
+	if (exportDir.isEmpty()) return;
 
-		if(!alreadyHasExtension(fileName, suffix)) {
-			fileName += suffix;
-		}
-
-		fileNames.append(fileName);
+	FolderUtils::setOpenSaveFolder(exportDir);
+	fileNames.append(exportDir + "/" + constructFileName("etch_copper_bottom", suffix));
+	if (m_pcbGraphicsView->boardLayers() > 1) {
+		fileNames.append(exportDir + "/" + constructFileName("etch_copper_top", suffix));
 	}
-	else {
-		QString exportDir = QFileDialog::getExistingDirectory(this, tr("Choose a folder for exporting"),
-												 defaultSaveFolder(),
-												 QFileDialog::ShowDirsOnly
-												 | QFileDialog::DontResolveSymlinks);
-		if (exportDir.isEmpty()) return;
-
-		FolderUtils::setOpenSaveFolder(exportDir);
-		fileNames.append(exportDir + "/" + constructFileName("etch_bottom", suffix));
-		fileNames.append(exportDir + "/" + constructFileName("etch_top", suffix));
-		fileExt = extFmt;
-	}
-
+	fileNames.append(exportDir + "/" + constructFileName("etch_silk_top", suffix));
+	fileExt = extFmt;
 	
 	FileProgressDialog * fileProgressDialog = exportProgress();
 
@@ -199,11 +182,14 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 	for (int ix = 0; ix < fileNames.count(); ix++) {
 		QString fileName = fileNames[ix];
 		LayerList viewLayerIDs;
-		if (ix == 0) {
+		if (fileName.contains("copper") && fileName.contains("bottom")) {
 			viewLayerIDs << ViewLayer::GroundPlane0 << ViewLayer::Copper0 << ViewLayer::Copper0Trace;
 		}
-		else {
+		else if (fileName.contains("copper") && fileName.contains("top")) {
 			viewLayerIDs << ViewLayer::GroundPlane1 << ViewLayer::Copper1 << ViewLayer::Copper1Trace;
+		}
+		else if (fileName.contains("silk") && fileName.contains("top")) {
+			viewLayerIDs << ViewLayer::Silkscreen1 << ViewLayer::Silkscreen1Label;
 		}
 
 		QSizeF imageSize;

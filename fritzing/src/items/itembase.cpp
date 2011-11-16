@@ -1682,11 +1682,11 @@ QRectF ItemBase::partLabelSceneBoundingRect() {
 bool ItemBase::getFlipDoc(ModelPart * modelPart, const QString & filename, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, QDomDocument & flipDoc)
 {
 	if (viewLayerSpec == ViewLayer::ThroughHoleThroughTop_OneLayer) {
-		if ((viewLayerID == ViewLayer::Copper0) && modelPart->flippedSMD() && (viewLayerSpec == ViewLayer::ThroughHoleThroughTop_OneLayer)) {
+		if ((viewLayerID == ViewLayer::Copper0) && modelPart->flippedSMD()) {
 			SvgFlattener::flipSMDSvg(filename, "", flipDoc, ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper1), ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper0), FSvgRenderer::printerScale());
 			return true;
 		}
-		else if ((viewLayerID == ViewLayer::Silkscreen0) && modelPart->flippedSMD() && (viewLayerSpec == ViewLayer::ThroughHoleThroughTop_OneLayer)) {
+		else if ((viewLayerID == ViewLayer::Silkscreen0) && modelPart->flippedSMD()) {
 			SvgFlattener::flipSMDSvg(filename, "", flipDoc, ViewLayer::viewLayerXmlNameFromID(ViewLayer::Silkscreen1), ViewLayer::viewLayerXmlNameFromID(ViewLayer::Silkscreen0), FSvgRenderer::printerScale());
 			return true;
 		}
