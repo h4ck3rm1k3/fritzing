@@ -121,8 +121,8 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 	connect(m_listView, SIGNAL(currentRowChanged(int)), m_iconView, SLOT(setSelected(int)));
 	connect(m_iconView, SIGNAL(selectionChanged(int)), m_listView, SLOT(setSelected(int)));
 
-	connect(m_listView, SIGNAL(currentRowChanged(int)), m_manager, SLOT(updateBinCombinedMenu()));
-	connect(m_iconView, SIGNAL(selectionChanged(int)), m_manager, SLOT(updateBinCombinedMenu()));
+	connect(m_listView, SIGNAL(currentRowChanged(int)), m_manager, SLOT(updateBinCombinedMenuCurrent()));
+	connect(m_iconView, SIGNAL(selectionChanged(int)), m_manager, SLOT(updateBinCombinedMenuCurrent()));
 
 	connect(m_listView, SIGNAL(informItemMoved(int,int)), m_iconView, SLOT(itemMoved(int,int)));
 	connect(m_iconView, SIGNAL(informItemMoved(int,int)), m_listView, SLOT(itemMoved(int,int)));
@@ -774,7 +774,7 @@ QIcon PartsBinPaletteWidget::icon() {
 
 QMenu * PartsBinPaletteWidget::binContextMenu()
 {
-	QMenu * menu = m_manager->binContextMenu();
+	QMenu * menu = m_manager->binContextMenu(this);
 	if (menu == NULL) return NULL;
 
 	QMenu * newMenu = new QMenu();
@@ -846,3 +846,19 @@ BinLocation::Location PartsBinPaletteWidget::location() {
 	return m_location;
 }
 
+bool PartsBinPaletteWidget::canClose() {
+	switch (m_location) {
+	case BinLocation::User:
+		if (m_fileName.compare(BinManager::SearchBinLocation) == 0) return false;
+		if (m_fileName.compare(BinManager::ContribPartsBinLocation) == 0) return false;
+		if (m_fileName.compare(BinManager::MyPartsBinLocation) == 0) return false;	
+		return true;
+	case BinLocation::More:
+		return false;
+	case BinLocation::Resource:
+		return false;
+	case BinLocation::Outside:
+	default:
+		return true;
+	}
+}

@@ -480,9 +480,6 @@ void BinManager::setAsCurrentBin(PartsBinPaletteWidget* bin) {
 }
 
 void BinManager::closeBinIn(int index) {
-	// TODO: disable close tab if there is only one tab open
-	// or find some way to enable opening a bin
-
 	if (m_stackTabWidget->count() == 1) return;
 
 	int realIndex = index == -1? m_stackTabWidget->currentIndex(): index;
@@ -814,13 +811,18 @@ void BinManager::toListView() {
 	bin->toListView();
 }
 
-void BinManager::updateBinCombinedMenu() {
+void BinManager::updateBinCombinedMenuCurrent() {
 	PartsBinPaletteWidget * bin = currentBin();
 	if (bin == NULL) return;
 
+	updateBinCombinedMenu(bin);
+}
+
+void BinManager::updateBinCombinedMenu(PartsBinPaletteWidget * bin) {
 	m_saveBinAction->setEnabled(bin->allowsChanges());
-	m_renameBinAction->setEnabled(bin->allowsChanges());
-	m_closeBinAction->setEnabled(m_stackTabWidget->count() > 1);
+	m_renameBinAction->setEnabled(bin->canClose());
+	m_closeBinAction->setEnabled(bin->canClose());
+	m_deleteBinAction->setEnabled(bin->canClose());
 	ModelPart *mp = bin->selected();
 	bool enabled = (mp != NULL);
 	m_editPartAction->setEnabled(enabled);
@@ -844,6 +846,10 @@ void BinManager::createCombinedMenu()
 	m_closeBinAction = new QAction(tr("Close Bin"), this);
 	m_closeBinAction->setToolTip(tr("Close parts bin"));
 	connect(m_closeBinAction, SIGNAL(triggered()),this, SLOT(closeBin()));
+
+	m_deleteBinAction = new QAction(tr("Delete Bin"), this);
+	m_deleteBinAction->setToolTip(tr("Delete parts bin"));
+	connect(m_deleteBinAction, SIGNAL(triggered()),this, SLOT(deleteBin()));
 
 	m_saveBinAction = new QAction(tr("Save Bin"), this);
 	m_saveBinAction->setToolTip(tr("Save parts bin"));
@@ -875,6 +881,7 @@ void BinManager::createCombinedMenu()
 	m_combinedMenu->addAction(m_openBinAction);
 	m_combinedMenu->addSeparator();
 	m_combinedMenu->addAction(m_closeBinAction);
+	m_combinedMenu->addAction(m_deleteBinAction);
 	m_combinedMenu->addAction(m_saveBinAction);
 	m_combinedMenu->addAction(m_saveBinAsAction);
 	m_combinedMenu->addAction(m_saveBinAsBundledAction);
@@ -895,7 +902,7 @@ void BinManager::createCombinedMenu()
 	connect(m_exportPartAction, SIGNAL(triggered()),this, SLOT(exportSelected()));
 	connect(m_removePartAction, SIGNAL(triggered()),this, SLOT(removeSelected()));
 
-	connect(m_combinedMenu, SIGNAL(aboutToShow()), this, SLOT(updateBinCombinedMenu()));
+	connect(m_combinedMenu, SIGNAL(aboutToShow()), this, SLOT(updateBinCombinedMenuCurrent()));
 
 	m_combinedMenu->addSeparator();
 	m_combinedMenu->addAction(m_newPartAction);
@@ -910,14 +917,15 @@ void BinManager::createCombinedMenu()
 void BinManager::createContextMenus() {
 	m_binContextMenu = new QMenu(this);
 	m_binContextMenu->addAction(m_closeBinAction);
+	m_binContextMenu->addAction(m_deleteBinAction);
 	m_binContextMenu->addAction(m_saveBinAction);
 	m_binContextMenu->addAction(m_saveBinAsAction);
 	m_binContextMenu->addAction(m_saveBinAsBundledAction);
 	m_binContextMenu->addAction(m_renameBinAction);
-	connect(m_binContextMenu, SIGNAL(aboutToShow()), this, SLOT(updateBinCombinedMenu()));
+	connect(m_binContextMenu, SIGNAL(aboutToShow()), this, SLOT(updateBinCombinedMenuIndex()));
 
 	m_partContextMenu = new QMenu(this);
-	connect(m_partContextMenu, SIGNAL(aboutToShow()), this, SLOT(updateBinCombinedMenu()));
+	connect(m_partContextMenu, SIGNAL(aboutToShow()), this, SLOT(updateBinCombinedMenuIndex()));
 	m_partContextMenu->addAction(m_editPartAction);
 	m_partContextMenu->addAction(m_exportPartAction);
 	m_partContextMenu->addAction(m_removePartAction);
@@ -928,7 +936,26 @@ void BinManager::openNewBin() {
 }
 
 void BinManager::closeBin() {
-	closeBinIn();
+	closeBinIn(-1);
+}
+
+void BinManager::deleteBin() {
+	PartsBinPaletteWidget * bin = currentBin();
+	if (bin == NULL) return;
+
+	QMessageBox::StandardButton answer = QMessageBox::question(
+		this,
+		tr("Delete bin"),
+		tr("Do you really want to delete bin '%1'?  This action cannot be undone.").arg(bin->title()),
+		QMessageBox::Yes | QMessageBox::No,
+		QMessageBox::No
+	);
+	// TODO: make button texts translatable
+	if (answer != QMessageBox::Yes) return;
+
+	QString filename = bin->fileName();
+	closeBinIn(-1);
+	QFile::remove(filename);
 }
 
 void BinManager::newPart() {
@@ -998,6 +1025,11 @@ void BinManager::updateViewChecks(bool iconView) {
 }
 
 QMenu * BinManager::binContextMenu() {
+	return m_binContextMenu;
+}
+
+QMenu * BinManager::binContextMenu(PartsBinPaletteWidget * bin) {
+	updateBinCombinedMenu(bin);
 	return m_binContextMenu;
 }
 

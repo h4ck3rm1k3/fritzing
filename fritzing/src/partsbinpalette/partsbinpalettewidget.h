@@ -59,6 +59,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 
 		bool currentBinIsCore();
 		bool beforeClosing();
+		bool canClose();
 
 		ModelPart * selected();
 		bool hasAlienParts();

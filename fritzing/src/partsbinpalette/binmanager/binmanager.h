@@ -90,7 +90,7 @@ class BinManager : public QFrame {
 		void openBin(const QString &fileName);
 		PartsBinPaletteWidget* openBinIn(QString fileName, bool fastLoad);
 		PartsBinPaletteWidget* openCoreBinIn();
-		void closeBinIn(int index=-1);
+		void closeBinIn(int index);
 
 		void addPartTo(PartsBinPaletteWidget* bin, ModelPart* mp);
 		void newPartTo(PartsBinPaletteWidget* bin);
@@ -107,6 +107,7 @@ class BinManager : public QFrame {
 		bool currentViewIsIconView();
 		void updateViewChecks(bool iconView);
 		QMenu * binContextMenu();
+		QMenu * binContextMenu(PartsBinPaletteWidget *);
 		QMenu * partContextMenu();
 		QMenu * combinedMenu();
 		void setTabIcon(PartsBinPaletteWidget* w, QIcon *);
@@ -116,7 +117,7 @@ class BinManager : public QFrame {
 
 
 	public slots:
-		void updateBinCombinedMenu();
+		void updateBinCombinedMenuCurrent();					
 		void toIconView();
 		void toListView();
 
@@ -128,6 +129,7 @@ class BinManager : public QFrame {
 		PartsBinPaletteWidget* newBinIn();
 		void openNewBin();
 		void closeBin();
+		void deleteBin();
 		void newPart();
 		void importPart();
 		void editSelected();
@@ -158,7 +160,7 @@ class BinManager : public QFrame {
 		void findAllBins(QList<BinLocation *> & actualLocations);
 		void findBins(QDir &, QList<BinLocation *> & actualLocations, BinLocation::Location);
 		void readTheoreticalLocations(QList<BinLocation *> & theoreticalLocations);
-
+		void updateBinCombinedMenu(PartsBinPaletteWidget * bin);
 
 protected:
 		ReferenceModel *m_refModel;
@@ -181,6 +183,7 @@ protected:
 		QAction *m_newBinAction;
 		QAction *m_openBinAction;
 		QAction *m_closeBinAction;
+		QAction *m_deleteBinAction;
 		QAction *m_saveBinAction;
 		QAction *m_saveBinAsAction;
 		QAction *m_saveBinAsBundledAction;
