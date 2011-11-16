@@ -3,12 +3,24 @@
 <version>4</version>
 <date>2011-10-06</date>
 <author>jonathan</author>
-<description></description>
+<description>AVR 8-bit microcontroller.</description>
 <title>mega2560</title>
 <tags>
+        <tag>AVR</tag>
+        <tag>ATmega</tag>
+        <tag>ATmega2560</tag>
+        <tag>IC</tag>
+        <tag>Microcontroller</tag>
+        <tag>Atmel</tag>
+        <tag>SMD</tag>
 </tags>
 <properties>
+	<property name="version">Atmega2560</property>
+	<property name="family">Microcontroller</property>
+	<property name="type">Atmel AVR</property>
+	<property name="package">SMD</property>
 </properties>
+
 <views>
 <breadboardView>
 <layers image='breadboard/mega2560_breadboard.svg'>
