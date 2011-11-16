@@ -477,12 +477,6 @@ SearchLineEdit,  #searchStackWidget {
 	margin: 0;
 }
 
-#partsBinMenuButton {
-  margin: 0;
-  padding: 0;
-  
-}
-
 PartsBinIconView {
 	padding: 2px;
 }
@@ -592,6 +586,10 @@ StackTabBar[current="true"]::tab:selected {
 	background-repeat: no-repeat;
 }
 
+#partsBinCombinedMenuButton:hover {
+	background-image: url(:/resources/images/icons/partsBinCombinedMenuHover_icon.png);
+	background-repeat: no-repeat;
+}
 
 #partsBinCombinedMenuButton::menu-indicator {
      image: url();
