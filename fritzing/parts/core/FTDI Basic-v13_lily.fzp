@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<module fritzingVersion='0.5.2b.02.18.4756' moduleId='FTDI Basic-v13'>
+<module fritzingVersion='0.5.2b.02.18.4756' moduleId='FTDI Basic-v13_lily'>
 <version>4</version>
-<date>2011-07-08</date>
+<date>2011-11-16</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
-	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description:&lt;/span&gt; This is the newest revision of our &lt;a href=&quot;http://www.sparkfun.com/commerce/product_info.php?products_id=9115&quot;&gt;FTDI Basic&lt;/a&gt;. We now use a SMD 6-pin header on the bottom, which makes it smaller and more compact. Functionality has remained the same.&lt;/p&gt;
+	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description:&lt;/span&gt; This is the LilyPad revision of our &lt;a href=&quot;http://www.sparkfun.com/products/9716&quot;&gt;FTDI Basic&lt;/a&gt;. It is the same as our other FTDI Basic, but has a purple LilyPad board which is half the thickness.&lt;/p&gt;
 &lt;p&gt;
 	This is a basic breakout board for the FTDI FT232RL USB to serial IC. The pinout of this board matches the FTDI cable to work with official Arduino and cloned 5V Arduino boards. It can also be used for general serial applications. The major difference with this board is that it brings out the DTR pin as opposed to the RTS pin of the FTDI cable. The DTR pin allows an Arduino target to auto-reset when a new Sketch is downloaded. This is a really nice feature to have and allows a sketch to be downloaded without having to hit the reset button. This board will auto reset any Arduino board that has the reset pin brought out to a 6-pin connector.&lt;br /&gt;
 	&lt;br /&gt;
@@ -14,19 +14,22 @@
 	&lt;br /&gt;
 	This board was designed to decrease the cost of Arduino development and increase ease of use (the auto-reset feature rocks!). Our Arduino Pro boards and LilyPads use this type of connector.&lt;br /&gt;
 	&lt;br /&gt;
-	One of the nice features of this board is a jumper on the back of the board that allows the board to be configured to either 3.3V or 5V (both power output and IO level). This board ship default to 5V, but you can cut the default trace and add a solder jumper if you need to switch to 3.3V.&lt;br /&gt;
+	One of the nice features of this board is a jumper on the back of the board that allows the board to be configured to either 3.3V or 5V (both power output and IO level). This board ship as 5V, but you can cut the default trace and add a solder jumper if you need to switch to 3.3V.&lt;/p&gt;
+&lt;p&gt;
+	&lt;strong&gt;Note:&lt;/strong&gt; A portion of this sale is given back to Dr. Leah Buechley for continued development and education of e-textiles.&lt;br /&gt;
 	&lt;br /&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Documents: &lt;/span&gt;&lt;/p&gt;
 &lt;ul&gt;
 	&lt;li&gt;
-		&lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/datasheets/DevTools/Arduino/FTDI%20Basic-v21-5V.pdf&quot; target=&quot;_blank&quot;&gt;Schematic&lt;/a&gt;&lt;/li&gt;
+		&lt;a classname=&quot;&quot; href=&quot;http://www.sparkfun.com/datasheets/DevTools/LilyPad/LilyPad%20FTDI%20Basic-v21-5V.pdf&quot; target=&quot;_blank&quot;&gt;Schematic&lt;/a&gt;&lt;/li&gt;
 	&lt;li&gt;
-		&lt;a href=&quot;http://www.sparkfun.com/datasheets/DevTools/Arduino/FTDI Basic-v21-5V.zip&quot; target=&quot;_blank&quot;&gt;Eagle Files&lt;/a&gt;&lt;/li&gt;
+		&lt;a href=&quot;http://www.sparkfun.com/datasheets/DevTools/LilyPad/LilyPad FTDI Basic-v21-5V.zip&quot; target=&quot;_blank&quot;&gt;Eagle Files&lt;/a&gt;&lt;/li&gt;
 	&lt;li&gt;
 		&lt;a href=&quot;http://www.google.com/url?sa=t&amp;amp;ct=res&amp;amp;cd=1&amp;amp;url=http%3A%2F%2Fwww.ftdichip.com%2FFTDrivers.htm&amp;amp;ei=D7WlSMGOJKOKiAGx-82BDQ&amp;amp;usg=AFQjCNE2pWdUmKFsw6OAb9hwsC8CtftzFQ&amp;amp;sig2=HQApwDh2F68V38PkMHy6jg&quot; target=&quot;_blank&quot;&gt;FTDI Drivers&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
+&lt;/ul&gt;
+</description>
 <title>FTDI Basic Programmer</title>
-<url>http://www.sparkfun.com/products/9716</url>
+<url>http://www.sparkfun.com/products/10275</url>
 <tags>
 <tag>Serial</tag>
 <tag>Programmer</tag>
@@ -36,28 +39,28 @@
 <properties>
 <property name='family'>FTDI</property>
 <property name='voltage'>5V</property>
-<property name='type'>Basic</property>
+<property name='type'>Basic LilyPad</property>
 </properties>
 <views>
 <breadboardView>
-<layers image='breadboard/FTDI Basic-v13_breadboard.svg'>
+<layers image='breadboard/FTDI Basic-v13_lily_breadboard.svg'>
 <layer layerId='breadboard'/>
 </layers>
 </breadboardView>
 <schematicView>
-<layers image='schematic/FTDI Basic-v13_schematic.svg'>
+<layers image='schematic/FTDI Basic-v13_lily_schematic.svg'>
 <layer layerId='schematic'/>
 </layers>
 </schematicView>
 <pcbView>
-<layers image='pcb/FTDI Basic-v13_pcb.svg'>
+<layers image='pcb/FTDI Basic-v13_lily_pcb.svg'>
 <layer layerId='copper1'/>
 <layer layerId='silkscreen'/>
 <layer layerId='copper0'/>
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/FTDI Basic-v13_breadboard.svg'>
+<layers image='breadboard/FTDI Basic-v13_lily_breadboard.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>
