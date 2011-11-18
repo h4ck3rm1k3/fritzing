@@ -17,6 +17,7 @@
         <property name="output current">1A</property>
         <property name="manufacturer">Fairchild</property>
         <property name="part number">KA78R05</property>
+        <property name="package">TO-220F-4L</property>
     </properties>
     <description>A low-dropout or LDO regulator is a DC linear voltage regulator which can operate with a very small input–output differential voltage. The advantages of a low dropout voltage include a lower minimum operating voltage, higher efficiency operation and lower heat dissipation. [Wikipedia]</description>
     <views>
