@@ -301,6 +301,20 @@
           </iconView>
         </views>
    </instance>
+  <instance moduleIdRef="Mainboard-v18">
+   <views>
+    <iconView layer="icon">
+     <geometry x="-1" y="-1" z="-1"/>
+    </iconView>
+   </views>
+  </instance>
+   <instance moduleIdRef="LilyPad-Simple-v22">
+   <views>
+    <iconView layer="icon">
+     <geometry x="-1" y="-1" z="-1"/>
+    </iconView>
+   </views>
+  </instance>
   <instance moduleIdRef="LilyPad Coincell-Battery-v17">
    <views>
     <iconView layer="icon">
@@ -350,13 +364,7 @@
     </iconView>
    </views>
   </instance>
-  <instance moduleIdRef="LilyPad-Simple-v22">
-   <views>
-    <iconView layer="icon">
-     <geometry x="-1" y="-1" z="-1"/>
-    </iconView>
-   </views>
-  </instance>
+
   <instance moduleIdRef="LilyPad-slide-switch13">
    <views>
     <iconView layer="icon">
@@ -392,13 +400,7 @@
     </iconView>
    </views>
   </instance>
-  <instance moduleIdRef="Mainboard-v18">
-   <views>
-    <iconView layer="icon">
-     <geometry x="-1" y="-1" z="-1"/>
-    </iconView>
-   </views>
-  </instance>
+  
       <instance moduleIdRef="PowerSupply-Lipo-v14">
    <views>
     <iconView layer="icon">
