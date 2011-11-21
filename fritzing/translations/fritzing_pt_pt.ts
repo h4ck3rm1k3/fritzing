@@ -220,10 +220,6 @@
         <translation>Novo compartimento (%1)</translation>
     </message>
     <message>
-        <source>Select a Fritzing file to open</source>
-        <translation>Seleccione um ficheiron Fritzing para abrir</translation>
-    </message>
-    <message>
         <source>Select a part to import</source>
         <translation>Seleccone um componente para importar</translation>
     </message>
@@ -242,6 +238,150 @@
     <message>
         <source>Cannot set a NULL bin as the current one</source>
         <translation>Não é possível definir um compartimento - NULL como o actual</translation>
+    </message>
+    <message>
+        <source>BinManager::updateTitle: Couldn&apos;t set the bin &apos;%1&apos; as dirty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a Fritzing Parts Bin file to open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bin</source>
+        <translation type="unfinished">Compartimento</translation>
+    </message>
+    <message>
+        <source>New Bin...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create a new parts bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Bin...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open a parts bin from a file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close Bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close parts bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete Bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete parts bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save Bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save parts bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save Bin As...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save parts bin as...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export Bin...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save parts bin in compressed format...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename Bin...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename parts bin...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Bin in List View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display parts as a list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Bin in Icon View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display parts as icons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New Part...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import Part...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Part...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export Part...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove Part</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you really want to delete bin &apos;%1&apos;?  This action cannot be undone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Read-only bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This bin cannot be renamed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename bin</source>
+        <translation type="unfinished">Renomear compartimento</translation>
+    </message>
+    <message>
+        <source>Please choose a name for the bin:</source>
+        <translation type="unfinished">Por favor seleccione um nome para o compartimento:</translation>
+    </message>
+    <message>
+        <source>Remove from bin</source>
+        <translation type="unfinished">Remover do compartimento</translation>
+    </message>
+    <message>
+        <source>Do you really want to remove &apos;%1&apos; from the bin?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1884,10 +2024,6 @@ Do you want to restart now?</source>
         <translation>Preenchimento em cobre</translation>
     </message>
     <message>
-        <source>Fill empty regions of the copper layer</source>
-        <translation>Preencher as regiões livres com uma camada de cobre</translation>
-    </message>
-    <message>
         <source>Remove Copper Fill</source>
         <translation>Remover camada de cobre</translation>
     </message>
@@ -2190,14 +2326,6 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Search parts bin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Search for a part in the parts bin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Show Parts Bin Icon View</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2214,10 +2342,6 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Parts Bin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Donate to Fritzing</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2227,10 +2351,6 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
     </message>
     <message>
         <source>Export for PCB</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Export PDF or SVG for etchable PCB production...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2492,6 +2612,26 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
     <message>
         <source>Shift+Ctrl+1</source>
         <translation type="unfinished">Shift+Ctrl+1</translation>
+    </message>
+    <message>
+        <source>Ground Fill</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fill empty regions of the copper layer--fill will include all traces connected to a GROUND</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fill empty regions of the copper layer--not including traces connected to a GROUND</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copper Fill Traces</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>There are traces connected to copper fill which will also be removed. Proceed?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2795,14 +2935,6 @@ Razão: %2 (código do erro %3)</translation>
         <translation>Compartimento sem nome</translation>
     </message>
     <message>
-        <source>Show as icons</source>
-        <translation>Mostrar como ícones</translation>
-    </message>
-    <message>
-        <source>Show as list</source>
-        <translation>Mostrar como uma lista</translation>
-    </message>
-    <message>
         <source>Specify a file name</source>
         <translation>Especifique um nome de ficheiro</translation>
     </message>
@@ -2823,38 +2955,6 @@ Razão: %2 (código do erro %3)</translation>
     <message>
         <source>Save</source>
         <translation>Guardar</translation>
-    </message>
-    <message>
-        <source>New...</source>
-        <translation>Novo...</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation>Fechar</translation>
-    </message>
-    <message>
-        <source>Save As...</source>
-        <translation>Guardar Como...</translation>
-    </message>
-    <message>
-        <source>Rename...</source>
-        <translation>Renomear...</translation>
-    </message>
-    <message>
-        <source>Bin</source>
-        <translation>Compartimento</translation>
-    </message>
-    <message>
-        <source>Edit...</source>
-        <translation>Editar...</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Retirar</translation>
-    </message>
-    <message>
-        <source>Part</source>
-        <translation>Componente</translation>
     </message>
     <message>
         <source>Fritzing Bin (*%1)</source>
@@ -2881,40 +2981,8 @@ Razão: %2 (código do erro %3)</translation>
         <translation>Você realmente quer adicionar o componente seleccionado ao compartimento?</translation>
     </message>
     <message>
-        <source>Remove from bin</source>
-        <translation>Remover do compartimento</translation>
-    </message>
-    <message>
-        <source>Do you really want to remove the selected part from the bin?</source>
-        <translation>Você realmente quer remover o componente seleccionado ao compartimento?</translation>
-    </message>
-    <message>
-        <source>Please choose a name for the bin:</source>
-        <translation>Por favor seleccione um nome para o compartimento:</translation>
-    </message>
-    <message>
-        <source>Rename bin</source>
-        <translation>Renomear compartimento</translation>
-    </message>
-    <message>
         <source>Do you want to save the changes you made in the bin &quot;%1&quot;?</source>
         <translation>Quer gravar as alterações efectuadas no compartimento &quot;%1&quot;?</translation>
-    </message>
-    <message>
-        <source>Open</source>
-        <translation>Abrir</translation>
-    </message>
-    <message>
-        <source>From file...</source>
-        <translation>Do ficheiro...</translation>
-    </message>
-    <message>
-        <source>Core</source>
-        <translation>Core</translation>
-    </message>
-    <message>
-        <source>Contributed Parts</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Save bin &quot;%1&quot;</source>
@@ -2925,39 +2993,23 @@ Razão: %2 (código do erro %3)</translation>
         <translation type="unfinished">Cancelar</translation>
     </message>
     <message>
-        <source>Export Bin...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Import Part...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Export Part...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Parts Bin Actions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Parts Actions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>loading bin %1</source>
+        <source>loading bin &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Read-only bin</source>
+        <source>Change icon color...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This bin cannot be renamed.</source>
+        <source>Change the color of the icon for this bin.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a color for this icon</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4277,6 +4329,22 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
         <source>Copper Fill Top</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Shields</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LilyPad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sensors</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QShortcut</name>
@@ -4806,6 +4874,10 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>&lt;li&gt;In Breadboard view, to add a curve to a wire or rubber-band leg, drag with the Control (Mac: Command) key down.  You can set whether curvy wires are the default in Preferences.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;li&gt;If you can&apos;t find a part in the Parts Bin, the Generic IC is your friend.  Drag it onto your sketch, then use the widgets in the Inspector to: choose from among 25 different through-hole and SMD packages; change the pin label; and--for DIPs and SIPs--change the number of pins.&lt;/li&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

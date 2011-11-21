@@ -224,10 +224,6 @@
         <translation>新建库(%1)</translation>
     </message>
     <message>
-        <source>Select a Fritzing file to open</source>
-        <translation>选择要打开的Fritzing文件</translation>
-    </message>
-    <message>
         <source>Fritzing Bin Files (*%1 *%2);;Fritzing Bin (*%1);;Fritzing Shareable Bin (*%2)</source>
         <translation>Fritzing Bin文件(*%1 *%2);;Fritzing Bin (*%1);;Fritzing可分享Bin (*%2)</translation>
     </message>
@@ -242,6 +238,150 @@
     <message>
         <source>External Part (*%1)</source>
         <translation>外部元件 (*%1)</translation>
+    </message>
+    <message>
+        <source>BinManager::updateTitle: Couldn&apos;t set the bin &apos;%1&apos; as dirty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a Fritzing Parts Bin file to open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bin</source>
+        <translation type="unfinished">元件</translation>
+    </message>
+    <message>
+        <source>New Bin...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create a new parts bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Bin...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open a parts bin from a file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close Bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close parts bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete Bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete parts bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save Bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save parts bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save Bin As...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save parts bin as...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export Bin...</source>
+        <translation type="unfinished">导出库...</translation>
+    </message>
+    <message>
+        <source>Save parts bin in compressed format...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename Bin...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename parts bin...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Bin in List View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display parts as a list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Bin in Icon View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display parts as icons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New Part...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import Part...</source>
+        <translation type="unfinished">导入元件...</translation>
+    </message>
+    <message>
+        <source>Edit Part...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export Part...</source>
+        <translation type="unfinished">导出元件...</translation>
+    </message>
+    <message>
+        <source>Remove Part</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you really want to delete bin &apos;%1&apos;?  This action cannot be undone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Read-only bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This bin cannot be renamed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename bin</source>
+        <translation type="unfinished">重命名库</translation>
+    </message>
+    <message>
+        <source>Please choose a name for the bin:</source>
+        <translation type="unfinished">请为库选择一个名字:</translation>
+    </message>
+    <message>
+        <source>Remove from bin</source>
+        <translation type="unfinished">从库中移除</translation>
+    </message>
+    <message>
+        <source>Do you really want to remove &apos;%1&apos; from the bin?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1858,10 +1998,6 @@ We&apos;re working to avoid this message, and only let you choose between proper
         <translation>覆铜</translation>
     </message>
     <message>
-        <source>Fill empty regions of the copper layer</source>
-        <translation>为空白区域添加铜层</translation>
-    </message>
-    <message>
         <source>Remove Copper Fill</source>
         <translation>移除覆铜</translation>
     </message>
@@ -2186,14 +2322,6 @@ Please check all views for potential side-effects.</source>
         <translation>选择所有不能移动元件</translation>
     </message>
     <message>
-        <source>Search parts bin</source>
-        <translation>搜索元件库</translation>
-    </message>
-    <message>
-        <source>Search for a part in the parts bin</source>
-        <translation>从元件库中搜索元件</translation>
-    </message>
-    <message>
         <source>Show Parts Bin Icon View</source>
         <translation>显示元件库图标视图</translation>
     </message>
@@ -2210,10 +2338,6 @@ Please check all views for potential side-effects.</source>
         <translation>在列表视图中显示元件库</translation>
     </message>
     <message>
-        <source>Parts Bin</source>
-        <translation>元件库</translation>
-    </message>
-    <message>
         <source>Donate to Fritzing</source>
         <translation>捐赠Fritzing</translation>
     </message>
@@ -2224,10 +2348,6 @@ Please check all views for potential side-effects.</source>
     <message>
         <source>Export for PCB</source>
         <translation>导出为PCB</translation>
-    </message>
-    <message>
-        <source>Export PDF or SVG for etchable PCB production...</source>
-        <translation>为蚀刻PCB制作导出PDF或SVG...</translation>
     </message>
     <message>
         <source>Export the current sketch to PDF for DIY PCB production (photoresist)</source>
@@ -2488,6 +2608,26 @@ Please check all views for potential side-effects.</source>
     <message>
         <source>Shift+Ctrl+1</source>
         <translation type="unfinished">Shift+Ctrl+1</translation>
+    </message>
+    <message>
+        <source>Ground Fill</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fill empty regions of the copper layer--fill will include all traces connected to a GROUND</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fill empty regions of the copper layer--not including traces connected to a GROUND</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copper Fill Traces</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>There are traces connected to copper fill which will also be removed. Proceed?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2790,60 +2930,8 @@ Reason: %2 (errcode %3)</source>
         <translation>未命名元件</translation>
     </message>
     <message>
-        <source>Show as icons</source>
-        <translation>图表显示</translation>
-    </message>
-    <message>
-        <source>Show as list</source>
-        <translation>列表显示</translation>
-    </message>
-    <message>
-        <source>New...</source>
-        <translation>新建...</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation>关闭</translation>
-    </message>
-    <message>
         <source>Save</source>
         <translation>保存</translation>
-    </message>
-    <message>
-        <source>Save As...</source>
-        <translation>另存为...</translation>
-    </message>
-    <message>
-        <source>Rename...</source>
-        <translation>重命名...</translation>
-    </message>
-    <message>
-        <source>Bin</source>
-        <translation>元件</translation>
-    </message>
-    <message>
-        <source>Open</source>
-        <translation>打开</translation>
-    </message>
-    <message>
-        <source>From file...</source>
-        <translation>从文件...</translation>
-    </message>
-    <message>
-        <source>Core</source>
-        <translation>核心库</translation>
-    </message>
-    <message>
-        <source>Edit...</source>
-        <translation>编辑...</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>移除</translation>
-    </message>
-    <message>
-        <source>Part</source>
-        <translation>元件</translation>
     </message>
     <message>
         <source>Specify a file name</source>
@@ -2892,26 +2980,6 @@ Reason: %2 (errcode %3)</source>
         <translation>确定将所选元件加入到元件库中么?</translation>
     </message>
     <message>
-        <source>Remove from bin</source>
-        <translation>从库中移除</translation>
-    </message>
-    <message>
-        <source>Do you really want to remove the selected part from the bin?</source>
-        <translation>确定从库中移除选择的元件么?</translation>
-    </message>
-    <message>
-        <source>Rename bin</source>
-        <translation>重命名库</translation>
-    </message>
-    <message>
-        <source>Please choose a name for the bin:</source>
-        <translation>请为库选择一个名字:</translation>
-    </message>
-    <message>
-        <source>Contributed Parts</source>
-        <translation>已分配元件</translation>
-    </message>
-    <message>
         <source>Save bin &quot;%1&quot;</source>
         <translation>保存元件库&quot;%1&quot;</translation>
     </message>
@@ -2920,39 +2988,23 @@ Reason: %2 (errcode %3)</source>
         <translation>取消</translation>
     </message>
     <message>
-        <source>Export Bin...</source>
-        <translation>导出库...</translation>
-    </message>
-    <message>
-        <source>Import Part...</source>
-        <translation>导入元件...</translation>
-    </message>
-    <message>
-        <source>Export Part...</source>
-        <translation>导出元件...</translation>
-    </message>
-    <message>
-        <source>Parts Bin Actions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Parts Actions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>loading bin %1</source>
+        <source>loading bin &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Read-only bin</source>
+        <source>Change icon color...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This bin cannot be renamed.</source>
+        <source>Change the color of the icon for this bin.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a color for this icon</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4272,6 +4324,22 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
         <source>Copper Fill Top</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Shields</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LilyPad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sensors</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QShortcut</name>
@@ -4798,6 +4866,10 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     </message>
     <message>
         <source>&lt;li&gt;In Breadboard view, to add a curve to a wire or rubber-band leg, drag with the Control (Mac: Command) key down.  You can set whether curvy wires are the default in Preferences.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;li&gt;If you can&apos;t find a part in the Parts Bin, the Generic IC is your friend.  Drag it onto your sketch, then use the widgets in the Inspector to: choose from among 25 different through-hole and SMD packages; change the pin label; and--for DIPs and SIPs--change the number of pins.&lt;/li&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
