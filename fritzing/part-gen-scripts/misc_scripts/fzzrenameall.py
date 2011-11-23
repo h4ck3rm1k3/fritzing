@@ -84,8 +84,13 @@ def main():
         shutil.rmtree(tempDir, 1)
         os.mkdir(tempDir)
     
-        zf = zipfile.ZipFile(os.path.join(outputDir, fromBaseName))
-        zf.extractall(tempDir)
+        zf = None
+        try:
+            zf = zipfile.ZipFile(os.path.join(outputDir, fromBaseName))
+            zf.extractall(tempDir)
+        except:
+            print "unable to unzip", os.path.join(outputDir, fromBaseName)
+            continue
     
         #fromFzName = os.path.splitext(fromBaseName)[0] + ".fz"
     
