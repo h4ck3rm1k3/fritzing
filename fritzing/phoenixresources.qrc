@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
- 
+
         <file>resources/zoomfactors.txt</file>
         <file>resources/ratsnestcolors.xml</file>
         <file>resources/properties.xml</file>

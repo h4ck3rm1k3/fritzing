@@ -8,5 +8,6 @@
 	<bin title="Parallax" location="more" />
 	<bin title="Picaxe" location="more" />
 	<bin title="SparkFun" location="more" />
+	<bin title="Snootlab" location="more" />
 	<bin title="Contributed Parts" location="user" />
 </order>

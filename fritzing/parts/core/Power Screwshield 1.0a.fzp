@@ -4652,6 +4652,30 @@
 <nodeMember connectorId='connector241'/>
 <nodeMember connectorId='connector247'/>
 <nodeMember connectorId='connector279'/>
+<nodeMember connectorId='connector126'/>
+<nodeMember connectorId='connector126'/>
+<nodeMember connectorId='connector127'/>
+<nodeMember connectorId='connector128'/>
+<nodeMember connectorId='connector129'/>
+<nodeMember connectorId='connector130'/>
+<nodeMember connectorId='connector131'/>
+<nodeMember connectorId='connector132'/>
+<nodeMember connectorId='connector133'/>
+<nodeMember connectorId='connector134'/>
+<nodeMember connectorId='connector135'/>
+<nodeMember connectorId='connector136'/>
+<nodeMember connectorId='connector137'/>
+<nodeMember connectorId='connector138'/>
+<nodeMember connectorId='connector139'/>
+<nodeMember connectorId='connector140'/>
+<nodeMember connectorId='connector141'/>
+<nodeMember connectorId='connector142'/>
+<nodeMember connectorId='connector143'/>
+<nodeMember connectorId='connector144'/>
+<nodeMember connectorId='connector145'/>
+<nodeMember connectorId='connector146'/>
+<nodeMember connectorId='connector147'/>
+<nodeMember connectorId='connector160'/>
 </bus>
 <bus id='vin'>
 <nodeMember connectorId='connector21'/>
@@ -4763,30 +4787,6 @@
 <nodeMember connectorId='connector71'/>
 <nodeMember connectorId='connector272'/>
 </bus>
-<bus id='vcc'>
-<nodeMember connectorId='connector126'/>
-<nodeMember connectorId='connector127'/>
-<nodeMember connectorId='connector128'/>
-<nodeMember connectorId='connector129'/>
-<nodeMember connectorId='connector130'/>
-<nodeMember connectorId='connector131'/>
-<nodeMember connectorId='connector132'/>
-<nodeMember connectorId='connector133'/>
-<nodeMember connectorId='connector134'/>
-<nodeMember connectorId='connector135'/>
-<nodeMember connectorId='connector136'/>
-<nodeMember connectorId='connector137'/>
-<nodeMember connectorId='connector138'/>
-<nodeMember connectorId='connector139'/>
-<nodeMember connectorId='connector140'/>
-<nodeMember connectorId='connector141'/>
-<nodeMember connectorId='connector142'/>
-<nodeMember connectorId='connector143'/>
-<nodeMember connectorId='connector144'/>
-<nodeMember connectorId='connector145'/>
-<nodeMember connectorId='connector146'/>
-<nodeMember connectorId='connector147'/>
-</bus>
 <bus id='+12v'>
 <nodeMember connectorId='connector232'/>
 <nodeMember connectorId='connector233'/>
@@ -4799,102 +4799,102 @@
 <nodeMember connectorId='connector240'/>
 <nodeMember connectorId='connector244'/>
 </bus>
-<bus id='bus_0'>
+<bus id='bus_1'>
 <nodeMember connectorId='connector539'/>
 <nodeMember connectorId='connector540'/>
 <nodeMember connectorId='connector354'/>
 </bus>
-<bus id='bus_1'>
+<bus id='bus_2'>
 <nodeMember connectorId='connector541'/>
 <nodeMember connectorId='connector542'/>
 <nodeMember connectorId='connector343'/>
 </bus>
-<bus id='bus_2'>
+<bus id='bus_3'>
 <nodeMember connectorId='connector543'/>
 <nodeMember connectorId='connector544'/>
 <nodeMember connectorId='connector332'/>
 </bus>
-<bus id='bus_3'>
+<bus id='bus_4'>
 <nodeMember connectorId='connector545'/>
 <nodeMember connectorId='connector546'/>
 <nodeMember connectorId='connector321'/>
 </bus>
-<bus id='bus_4'>
+<bus id='bus_5'>
 <nodeMember connectorId='connector547'/>
 <nodeMember connectorId='connector548'/>
 <nodeMember connectorId='connector310'/>
 </bus>
-<bus id='bus_5'>
+<bus id='bus_6'>
 <nodeMember connectorId='connector549'/>
 <nodeMember connectorId='connector550'/>
 <nodeMember connectorId='connector299'/>
 </bus>
-<bus id='bus_6'>
+<bus id='bus_7'>
 <nodeMember connectorId='connector551'/>
 <nodeMember connectorId='connector552'/>
 <nodeMember connectorId='connector294'/>
 </bus>
-<bus id='bus_7'>
+<bus id='bus_8'>
 <nodeMember connectorId='connector553'/>
 <nodeMember connectorId='connector554'/>
 <nodeMember connectorId='connector293'/>
 </bus>
-<bus id='bus_8'>
+<bus id='bus_9'>
 <nodeMember connectorId='connector555'/>
 <nodeMember connectorId='connector556'/>
 <nodeMember connectorId='connector292'/>
 </bus>
-<bus id='bus_9'>
+<bus id='bus_10'>
 <nodeMember connectorId='connector557'/>
 <nodeMember connectorId='connector558'/>
 <nodeMember connectorId='connector291'/>
 </bus>
-<bus id='bus_10'>
+<bus id='bus_11'>
 <nodeMember connectorId='connector559'/>
 <nodeMember connectorId='connector560'/>
 <nodeMember connectorId='connector290'/>
 </bus>
-<bus id='bus_11'>
+<bus id='bus_12'>
 <nodeMember connectorId='connector561'/>
 <nodeMember connectorId='connector562'/>
 <nodeMember connectorId='connector289'/>
 </bus>
-<bus id='bus_12'>
+<bus id='bus_13'>
 <nodeMember connectorId='connector563'/>
 <nodeMember connectorId='connector564'/>
 <nodeMember connectorId='connector288'/>
 </bus>
-<bus id='bus_13'>
+<bus id='bus_14'>
 <nodeMember connectorId='connector565'/>
 <nodeMember connectorId='connector566'/>
 <nodeMember connectorId='connector287'/>
 </bus>
-<bus id='bus_14'>
+<bus id='bus_15'>
 <nodeMember connectorId='connector567'/>
 <nodeMember connectorId='connector568'/>
 <nodeMember connectorId='connector286'/>
 </bus>
-<bus id='bus_15'>
+<bus id='bus_16'>
 <nodeMember connectorId='connector569'/>
 <nodeMember connectorId='connector570'/>
 <nodeMember connectorId='connector285'/>
 </bus>
-<bus id='bus_16'>
+<bus id='bus_17'>
 <nodeMember connectorId='connector571'/>
 <nodeMember connectorId='connector572'/>
 <nodeMember connectorId='connector284'/>
 </bus>
-<bus id='bus_17'>
+<bus id='bus_18'>
 <nodeMember connectorId='connector573'/>
 <nodeMember connectorId='connector574'/>
 <nodeMember connectorId='connector283'/>
 </bus>
-<bus id='bus_18'>
+<bus id='bus_19'>
 <nodeMember connectorId='connector575'/>
 <nodeMember connectorId='connector576'/>
 <nodeMember connectorId='connector281'/>
 </bus>
-<bus id='bus_19'>
+<bus id='bus_20'>
 <nodeMember connectorId='connector577'/>
 <nodeMember connectorId='connector578'/>
 <nodeMember connectorId='connector280'/>
