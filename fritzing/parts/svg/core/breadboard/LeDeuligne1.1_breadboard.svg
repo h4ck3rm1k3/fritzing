@@ -6330,7 +6330,7 @@
     <g  stroke-width="0">
      <title >text:GND</title>
      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 153, 152.82)">
-      <g  stroke-width="0" transform="rotate(-90)">
+      <g  stroke-width="0" transform="rotate(270)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">GND</text>
       </g>
      </g>
@@ -6338,7 +6338,7 @@
     <g  stroke-width="0">
      <title >text:HD44780 - 16x2 LCD (80x36)</title>
      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 8.64, 108.36)">
-      <g  stroke-width="0" transform="rotate(-90)">
+      <g  stroke-width="0" transform="rotate(270)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="3.3408">HD44780 - 16x2 LCD (80x36)</text>
       </g>
      </g>
@@ -6346,7 +6346,7 @@
     <g  stroke-width="0">
      <title >text:D0</title>
      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 217.98, 16.38)">
-      <g  stroke-width="0" transform="rotate(-90)">
+      <g  stroke-width="0" transform="rotate(270)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="3.3408">D0</text>
       </g>
      </g>
@@ -6358,7 +6358,7 @@
     <g  stroke-width="0">
      <title >text:GND</title>
      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 160.2, 152.82)">
-      <g  stroke-width="0" transform="rotate(-90)">
+      <g  stroke-width="0" transform="rotate(270)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">GND</text>
       </g>
      </g>
@@ -6366,7 +6366,7 @@
     <g  stroke-width="0">
      <title >text:Vin</title>
      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 167.4, 152.46)">
-      <g  stroke-width="0" transform="rotate(-90)">
+      <g  stroke-width="0" transform="rotate(270)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">Vin</text>
       </g>
      </g>
@@ -6374,7 +6374,7 @@
     <g  stroke-width="0">
      <title >text:5V</title>
      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 145.8, 151.38)">
-      <g  stroke-width="0" transform="rotate(-90)">
+      <g  stroke-width="0" transform="rotate(270)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">5V</text>
       </g>
      </g>
@@ -6382,7 +6382,7 @@
     <g  stroke-width="0">
      <title >text:3V3</title>
      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 138.6, 152.82)">
-      <g  stroke-width="0" transform="rotate(-90)">
+      <g  stroke-width="0" transform="rotate(270)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">3V3</text>
       </g>
      </g>
@@ -6390,7 +6390,7 @@
     <g  stroke-width="0">
      <title >text:RST</title>
      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 131.4, 152.82)">
-      <g  stroke-width="0" transform="rotate(-90)">
+      <g  stroke-width="0" transform="rotate(270)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">RST</text>
       </g>
      </g>
@@ -6398,7 +6398,7 @@
     <g  stroke-width="0">
      <title >text:A0</title>
      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 181.8, 151.38)">
-      <g  stroke-width="0" transform="rotate(-90)">
+      <g  stroke-width="0" transform="rotate(270)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">A0</text>
       </g>
      </g>
@@ -6406,7 +6406,7 @@
     <g  stroke-width="0">
      <title >text:A1</title>
      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 189, 151.38)">
-      <g  stroke-width="0" transform="rotate(-90)">
+      <g  stroke-width="0" transform="rotate(270)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">A1</text>
       </g>
      </g>
@@ -6414,7 +6414,7 @@
     <g  stroke-width="0">
      <title >text:A2</title>
      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 196.2, 151.38)">
-      <g  stroke-width="0" transform="rotate(-90)">
+      <g  stroke-width="0" transform="rotate(270)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">A2</text>
       </g>
      </g>
@@ -6422,7 +6422,7 @@
     <g  stroke-width="0">
      <title >text:A3</title>
      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 203.4, 151.38)">
-      <g  stroke-width="0" transform="rotate(-90)">
+      <g  stroke-width="0" transform="rotate(270)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">A3</text>
       </g>
      </g>
@@ -6430,7 +6430,7 @@
     <g  stroke-width="0">
      <title >text:A4</title>
      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 210.6, 151.38)">
-      <g  stroke-width="0" transform="rotate(-90)">
+      <g  stroke-width="0" transform="rotate(270)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">A4</text>
       </g>
      </g>
@@ -6438,7 +6438,7 @@
     <g  stroke-width="0">
      <title >text:A5</title>
      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 217.8, 151.38)">
-      <g  stroke-width="0" transform="rotate(-90)">
+      <g  stroke-width="0" transform="rotate(270)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">A5</text>
       </g>
      </g>
@@ -6446,7 +6446,7 @@
     <g  stroke-width="0">
      <title >text:D1</title>
      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 210.78, 16.38)">
-      <g  stroke-width="0" transform="rotate(-90)">
+      <g  stroke-width="0" transform="rotate(270)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="3.3408">D1</text>
       </g>
      </g>
@@ -6454,7 +6454,7 @@
     <g  stroke-width="0">
      <title >text:D2</title>
      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 203.58, 16.38)">
-      <g  stroke-width="0" transform="rotate(-90)">
+      <g  stroke-width="0" transform="rotate(270)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="3.3408">D2</text>
       </g>
      </g>
@@ -6462,7 +6462,7 @@
     <g  stroke-width="0">
      <title >text:D3</title>
      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 196.38, 16.38)">
-      <g  stroke-width="0" transform="rotate(-90)">
+      <g  stroke-width="0" transform="rotate(270)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="3.3408">D3</text>
       </g>
      </g>
@@ -6470,7 +6470,7 @@
     <g  stroke-width="0">
      <title >text:D4</title>
      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 189.18, 16.38)">
-      <g  stroke-width="0" transform="rotate(-90)">
+      <g  stroke-width="0" transform="rotate(270)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="3.3408">D4</text>
       </g>
      </g>
@@ -6478,7 +6478,7 @@
     <g  stroke-width="0">
      <title >text:D5</title>
      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 181.98, 16.38)">
-      <g  stroke-width="0" transform="rotate(-90)">
+      <g  stroke-width="0" transform="rotate(270)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="3.3408">D5</text>
       </g>
      </g>
@@ -6486,7 +6486,7 @@
     <g  stroke-width="0">
      <title >text:D6</title>
      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 174.78, 16.38)">
-      <g  stroke-width="0" transform="rotate(-90)">
+      <g  stroke-width="0" transform="rotate(270)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="3.3408">D6</text>
       </g>
      </g>
@@ -6494,7 +6494,7 @@
     <g  stroke-width="0">
      <title >text:D7</title>
      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 167.58, 16.38)">
-      <g  stroke-width="0" transform="rotate(-90)">
+      <g  stroke-width="0" transform="rotate(270)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="3.3408">D7</text>
       </g>
      </g>
@@ -6509,7 +6509,7 @@
     </g>
     <g  stroke-width="0">
      <title >text:Contrast</title>
-     <text  x="67.7701" y="142.268" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">Contrast</text>
+     <text  x="67.7701" y="146.52" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">Contrast</text>
     </g>
     <g  stroke-width="0">
      <title >text:Reset</title>
@@ -6517,160 +6517,160 @@
     </g>
     <g  stroke-width="0">
      <title >text:D8</title>
-     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 156.42, 12.2179)">
-      <g  stroke-width="0" transform="rotate(72)">
+     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 156.42, 16.4699)">
+      <g  stroke-width="0" transform="rotate(288)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="3.3408">D8</text>
       </g>
      </g>
     </g>
     <g  stroke-width="0">
      <title >text:D9</title>
-     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 149.22, 12.2179)">
-      <g  stroke-width="0" transform="rotate(72)">
+     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 149.22, 16.4699)">
+      <g  stroke-width="0" transform="rotate(288)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="3.3408">D9</text>
       </g>
      </g>
     </g>
     <g  stroke-width="0">
      <title >text:10</title>
-     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 142.02, 12.2179)">
-      <g  stroke-width="0" transform="rotate(72)">
+     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 142.02, 16.4699)">
+      <g  stroke-width="0" transform="rotate(288)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="3.3408">10</text>
       </g>
      </g>
     </g>
     <g  stroke-width="0">
      <title >text:11</title>
-     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 134.82, 12.2179)">
-      <g  stroke-width="0" transform="rotate(72)">
+     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 134.82, 16.4699)">
+      <g  stroke-width="0" transform="rotate(288)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="3.3408">11</text>
       </g>
      </g>
     </g>
     <g  stroke-width="0">
      <title >text:12</title>
-     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 127.62, 12.2179)">
-      <g  stroke-width="0" transform="rotate(72)">
+     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 127.62, 16.4699)">
+      <g  stroke-width="0" transform="rotate(288)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="3.3408">12</text>
       </g>
      </g>
     </g>
     <g  stroke-width="0">
      <title >text:13</title>
-     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 120.42, 12.2179)">
-      <g  stroke-width="0" transform="rotate(72)">
+     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 120.42, 16.4699)">
+      <g  stroke-width="0" transform="rotate(288)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="3.3408">13</text>
       </g>
      </g>
     </g>
     <g  stroke-width="0">
      <title >text:GD</title>
-     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 113.22, 12.2179)">
-      <g  stroke-width="0" transform="rotate(72)">
+     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 113.22, 16.4699)">
+      <g  stroke-width="0" transform="rotate(288)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="3.3408">GD</text>
       </g>
      </g>
     </g>
     <g  stroke-width="0">
      <title >text:AR</title>
-     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 106.02, 12.2179)">
-      <g  stroke-width="0" transform="rotate(72)">
+     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 106.02, 16.4699)">
+      <g  stroke-width="0" transform="rotate(288)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="3.3408">AR</text>
       </g>
      </g>
     </g>
     <g  stroke-width="0">
      <title >text:RST</title>
-     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 129.218, 162.05)">
-      <g  stroke-width="0" transform="rotate(30)">
+     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 127.8, 168.57)">
+      <g  stroke-width="0" transform="rotate(330)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="3.3408">RST</text>
       </g>
      </g>
     </g>
     <g  stroke-width="0">
      <title >text:3V3</title>
-     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 136.418, 162.05)">
-      <g  stroke-width="0" transform="rotate(30)">
+     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 135, 168.57)">
+      <g  stroke-width="0" transform="rotate(330)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="3.3408">3V3</text>
       </g>
      </g>
     </g>
     <g  stroke-width="0">
      <title >text:5V</title>
-     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 143.618, 164.318)">
-      <g  stroke-width="0" transform="rotate(30)">
+     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 142.2, 168.57)">
+      <g  stroke-width="0" transform="rotate(330)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="3.3408">5V</text>
       </g>
      </g>
     </g>
     <g  stroke-width="0">
      <title >text:GND</title>
-     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 150.818, 162.05)">
-      <g  stroke-width="0" transform="rotate(30)">
+     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 149.4, 168.57)">
+      <g  stroke-width="0" transform="rotate(330)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="3.3408">GND</text>
       </g>
      </g>
     </g>
     <g  stroke-width="0">
      <title >text:GND</title>
-     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 158.018, 162.05)">
-      <g  stroke-width="0" transform="rotate(30)">
+     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 156.6, 168.57)">
+      <g  stroke-width="0" transform="rotate(330)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="3.3408">GND</text>
       </g>
      </g>
     </g>
     <g  stroke-width="0">
      <title >text:Vin</title>
-     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 165.218, 162.901)">
-      <g  stroke-width="0" transform="rotate(30)">
+     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 163.8, 168.57)">
+      <g  stroke-width="0" transform="rotate(330)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="3.3408">Vin</text>
       </g>
      </g>
     </g>
     <g  stroke-width="0">
      <title >text:A0</title>
-     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 180.068, 163.868)">
-      <g  stroke-width="0" transform="rotate(30)">
+     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 178.65, 168.12)">
+      <g  stroke-width="0" transform="rotate(330)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="3.3408">A0</text>
       </g>
      </g>
     </g>
     <g  stroke-width="0">
      <title >text:A1</title>
-     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 187.268, 163.868)">
-      <g  stroke-width="0" transform="rotate(30)">
+     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 185.85, 168.12)">
+      <g  stroke-width="0" transform="rotate(330)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="3.3408">A1</text>
       </g>
      </g>
     </g>
     <g  stroke-width="0">
      <title >text:A2</title>
-     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 194.468, 163.868)">
-      <g  stroke-width="0" transform="rotate(30)">
+     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 193.05, 168.12)">
+      <g  stroke-width="0" transform="rotate(330)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="3.3408">A2</text>
       </g>
      </g>
     </g>
     <g  stroke-width="0">
      <title >text:A3</title>
-     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 201.668, 163.868)">
-      <g  stroke-width="0" transform="rotate(30)">
+     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 200.25, 168.12)">
+      <g  stroke-width="0" transform="rotate(330)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="3.3408">A3</text>
       </g>
      </g>
     </g>
     <g  stroke-width="0">
      <title >text:A4</title>
-     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 208.868, 163.868)">
-      <g  stroke-width="0" transform="rotate(30)">
+     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 207.45, 168.12)">
+      <g  stroke-width="0" transform="rotate(330)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="3.3408">A4</text>
       </g>
      </g>
     </g>
     <g  stroke-width="0">
      <title >text:A5</title>
-     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 216.068, 163.868)">
-      <g  stroke-width="0" transform="rotate(30)">
+     <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 214.65, 168.12)">
+      <g  stroke-width="0" transform="rotate(330)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="3.3408">A5</text>
       </g>
      </g>
@@ -6715,7 +6715,7 @@
      <g  stroke-width="0">
       <title >text:IC2</title>
       <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 126.067, 103.731)">
-       <g  stroke-width="0" transform="rotate(45)">
+       <g  stroke-width="0" transform="rotate(-45)">
         <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="end" stroke="none" stroke-width="0" font-size="5.8464">IC2</text>
        </g>
       </g>
@@ -6841,7 +6841,7 @@
      <g  stroke-width="0">
       <title >text:R7</title>
       <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 129.359, 123.341)">
-       <g  stroke-width="0" transform="rotate(45)">
+       <g  stroke-width="0" transform="rotate(315)">
         <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">R7</text>
        </g>
       </g>
@@ -6855,7 +6855,7 @@
      <g  stroke-width="0">
       <title >text:R8</title>
       <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 139.68, 93.24)">
-       <g  stroke-width="0" transform="rotate(-90)">
+       <g  stroke-width="0" transform="rotate(270)">
         <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">R8</text>
        </g>
       </g>
@@ -6895,7 +6895,7 @@
      <g  stroke-width="0">
       <title >text:T1</title>
       <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 163.8, 84.6)">
-       <g  stroke-width="0" transform="rotate(-90)">
+       <g  stroke-width="0" transform="rotate(270)">
         <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">T1</text>
        </g>
       </g>
@@ -6988,9 +6988,9 @@
      <title >element:IC2</title>
      <g  stroke-width="0">
       <title >text:MCP2300X/P</title>
-      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 119.346, 97.7825)">
-       <g  stroke-width="0" transform="rotate(-135)">
-        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="5.8464">MCP2300X/P</text>
+      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 119.346, 103.629)">
+       <g  stroke-width="0" transform="rotate(45)">
+        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="end" stroke="none" stroke-width="0" font-size="5.8464">MCP2300X/P</text>
        </g>
       </g>
      </g>
@@ -7129,7 +7129,7 @@
      <g  stroke-width="0">
       <title >text:1k</title>
       <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 129.738, 113.702)">
-       <g  stroke-width="0" transform="rotate(45)">
+       <g  stroke-width="0" transform="rotate(315)">
         <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">1k</text>
        </g>
       </g>
@@ -7143,7 +7143,7 @@
      <g  stroke-width="0">
       <title >text:2K</title>
       <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 145.8, 87.408)">
-       <g  stroke-width="0" transform="rotate(-90)">
+       <g  stroke-width="0" transform="rotate(270)">
         <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">2K</text>
        </g>
       </g>
@@ -7157,7 +7157,7 @@
      <g  stroke-width="0">
       <title >text:10</title>
       <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 152.784, 60.48)">
-       <g  stroke-width="0" transform="rotate(-90)">
+       <g  stroke-width="0" transform="rotate(270)">
         <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">10</text>
        </g>
       </g>
@@ -7186,7 +7186,7 @@
      <g  stroke-width="0">
       <title >text:2N2222</title>
       <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 183.6, 84.6)">
-       <g  stroke-width="0" transform="rotate(-90)">
+       <g  stroke-width="0" transform="rotate(270)">
         <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">2N2222</text>
        </g>
       </g>
@@ -7468,154 +7468,158 @@
    <polygon  fill="#595959" points="42.016,6.016,40.991,4.993,38.208,4.993,37.184,6.016" stroke-width="0"/>
    <polygon  fill="#373737" points="37.182,6.016,38.208,4.991,38.208,2.209,37.182,1.184" stroke-width="0"/>
   </g>
-  <path  fill="#1F7A34" stroke-width="0" d="M0,0l0,102.047l226.771,0L226.771,0L0,0zM113.028,2.081c0.767002,0,1.388,0.621,1.388,1.387c0,0.767002,-0.621,1.388,-1.388,1.388c-0.766001,0,-1.387,-0.621,-1.387,-1.388C111.642,2.702,112.264,2.081,113.028,2.081zM41.029,2.081c0.767002,0,1.388,0.621,1.388,1.387c0,0.767002,-0.621,1.388,-1.388,1.388c-0.766001,0,-1.387,-0.621,-1.387,-1.388C39.643,2.702,40.265,2.081,41.029,2.081zM33.83,2.081c0.768002,0,1.387,0.621,1.387,1.387c0,0.767002,-0.619,1.388,-1.387,1.388c-0.767002,0,-1.388,-0.621,-1.388,-1.388C32.442,2.702,33.063,2.081,33.83,2.081zM6.542,3.736c1.576,0,2.854,1.277,2.854,2.854S8.11901,9.44402,6.542,9.44402S3.688,8.16602,3.688,6.59S4.966,3.736,6.542,3.736zM6.545,98.339c-1.574,0,-2.854,-1.277,-2.854,-2.854c0,-1.574,1.278,-2.854,2.854,-2.854c1.576,0,2.854,1.277,2.854,2.854C9.39701,97.061,8.12102,98.339,6.545,98.339zM19.43,4.854c-0.768002,0,-1.389,-0.621,-1.389,-1.388c0,-0.766001,0.621,-1.387,1.389,-1.387c0.766001,0,1.387,0.621,1.387,1.387C20.816,4.233,20.194,4.854,19.43,4.854zM25.243,3.468c0,-0.766001,0.62,-1.387,1.387,-1.387c0.768002,0,1.389,0.621,1.389,1.387c0,0.767002,-0.621,1.388,-1.389,1.388C25.863,4.856,25.243,4.233,25.243,3.468zM43.219,89.8402L26.886,89.8402l0,-4.815l16.333,0L43.219,89.8402zM43.219,17.023L26.886,17.023l0,-4.815l16.333,0L43.219,17.023zM48.229,4.854c-0.768002,0,-1.389,-0.621,-1.389,-1.388c0,-0.766001,0.621,-1.387,1.389,-1.387c0.767002,0,1.388,0.621,1.388,1.387C49.616,4.233,48.995,4.854,48.229,4.854zM55.43,4.854c-0.768002,0,-1.389,-0.621,-1.389,-1.388c0,-0.766001,0.621,-1.387,1.389,-1.387c0.766001,0,1.387,0.621,1.387,1.387C56.816,4.233,56.194,4.854,55.43,4.854zM62.63,4.854c-0.767002,0,-1.387,-0.621,-1.387,-1.388c0,-0.766001,0.62,-1.387,1.387,-1.387c0.768002,0,1.389,0.621,1.389,1.387C64.017,4.233,63.396,4.854,62.63,4.854zM69.83,4.854c-0.767002,0,-1.388,-0.621,-1.388,-1.388c0,-0.766001,0.621,-1.387,1.388,-1.387c0.768002,0,1.387,0.621,1.387,1.387C71.217,4.233,70.596,4.854,69.83,4.854zM77.0278,4.854c-0.766001,0,-1.387,-0.621,-1.387,-1.388c0,-0.766001,0.621,-1.387,1.387,-1.387c0.767002,0,1.388,0.621,1.388,1.387C78.4159,4.233,77.7953,4.854,77.0278,4.854zM84.2292,4.854c-0.768002,0,-1.389,-0.621,-1.389,-1.388c0,-0.766001,0.621,-1.387,1.389,-1.387c0.767002,0,1.388,0.621,1.388,1.387C85.6159,4.233,84.9953,4.854,84.2292,4.854zM91.4299,4.854c-0.768002,0,-1.389,-0.621,-1.389,-1.388c0,-0.766001,0.621,-1.387,1.389,-1.387c0.766001,0,1.387,0.621,1.387,1.387C92.8159,4.233,92.1938,4.854,91.4299,4.854zM98.6299,4.854c-0.767002,0,-1.387,-0.621,-1.387,-1.388c0,-0.766001,0.62,-1.387,1.387,-1.387c0.768002,0,1.389,0.621,1.389,1.387C100.017,4.233,99.396,4.854,98.6299,4.854zM104.441,3.468c0,-0.766001,0.621,-1.387,1.388,-1.387c0.768002,0,1.387,0.621,1.387,1.387c0,0.767002,-0.619,1.388,-1.387,1.388C105.062,4.856,104.441,4.233,104.441,3.468zM121.553,89.8402l-16.334,0l0,-4.815l16.334,0L121.553,89.8402zM121.553,17.023l-16.334,0l0,-4.815l16.334,0L121.553,17.023zM120.229,4.854c-0.768002,0,-1.389,-0.621,-1.389,-1.388c0,-0.766001,0.621,-1.387,1.389,-1.387c0.767002,0,1.388,0.621,1.388,1.387C121.616,4.233,120.995,4.854,120.229,4.854zM127.43,4.854c-0.768002,0,-1.389,-0.621,-1.389,-1.388c0,-0.766001,0.621,-1.387,1.389,-1.387c0.766001,0,1.387,0.621,1.387,1.387C128.816,4.233,128.195,4.854,127.43,4.854zM199.885,89.8402l-16.33,0l0,-4.815l16.33,0L199.885,89.8402zM199.885,17.023l-16.33,0l0,-4.815l16.33,0L199.885,17.023zM220.208,3.731c1.576,0,2.854,1.276,2.854,2.854s-1.276,2.854,-2.854,2.854s-2.854,-1.276,-2.854,-2.854S218.631,3.731,220.208,3.731zM220.208,98.3398c-1.576,0,-2.854,-1.276,-2.854,-2.854c0,-1.574,1.275,-2.854,2.854,-2.854s2.854,1.278,2.854,2.854C223.062,97.0618,221.784,98.3398,220.208,98.3398z"/>
-  <g  stroke-width="0">
-   <path  fill="#CFCFCF" stroke-width="0" d="M1.581,6.59c0,2.737,2.225,4.961,4.96,4.961c2.742,0,4.961,-2.224,4.961,-4.961c0,-2.74,-2.219,-4.96,-4.961,-4.96C3.804,1.63,1.581,3.849,1.581,6.59z"/>
-  </g>
-  <g  stroke-width="0">
+  <g  id="tuxgr_16x2_r2_oval" stroke-width="0" transform="matrix(1, 0, 0, 1, 2.43071, 28.1397)">
    <g  stroke-width="0">
-    <path  fill="#CFCFCF" stroke-width="0" d="M225.168,95.4857c0,-2.736,-2.224,-4.961,-4.961,-4.961c-2.742,0,-4.961,2.225,-4.961,4.961c0,2.74,2.219,4.959,4.961,4.959C222.945,100.445,225.168,98.2289,225.168,95.4857z"/>
+    <path  fill="#1F7A34" stroke-width="0" d="M0,0l0,102.047l226.771,0L226.771,0L0,0zM113.028,2.081c0.767002,0,1.388,0.621,1.388,1.387c0,0.767002,-0.621,1.388,-1.388,1.388c-0.766001,0,-1.387,-0.621,-1.387,-1.388C111.642,2.702,112.264,2.081,113.028,2.081zM41.029,2.081c0.767002,0,1.388,0.621,1.388,1.387c0,0.767002,-0.621,1.388,-1.388,1.388c-0.766001,0,-1.387,-0.621,-1.387,-1.388C39.643,2.702,40.265,2.081,41.029,2.081zM33.83,2.081c0.768002,0,1.387,0.621,1.387,1.387c0,0.767002,-0.619,1.388,-1.387,1.388c-0.767002,0,-1.388,-0.621,-1.388,-1.388C32.442,2.702,33.063,2.081,33.83,2.081zM6.542,3.736c1.576,0,2.854,1.277,2.854,2.854S8.11901,9.44402,6.542,9.44402S3.688,8.16602,3.688,6.59S4.966,3.736,6.542,3.736zM6.545,98.339c-1.574,0,-2.854,-1.277,-2.854,-2.854c0,-1.574,1.278,-2.854,2.854,-2.854c1.576,0,2.854,1.277,2.854,2.854C9.39701,97.061,8.12102,98.339,6.545,98.339zM19.43,4.854c-0.768002,0,-1.389,-0.621,-1.389,-1.388c0,-0.766001,0.621,-1.387,1.389,-1.387c0.766001,0,1.387,0.621,1.387,1.387C20.816,4.233,20.194,4.854,19.43,4.854zM25.243,3.468c0,-0.766001,0.62,-1.387,1.387,-1.387c0.768002,0,1.389,0.621,1.389,1.387c0,0.767002,-0.621,1.388,-1.389,1.388C25.863,4.856,25.243,4.233,25.243,3.468zM43.219,89.8402L26.886,89.8402l0,-4.815l16.333,0L43.219,89.8402zM43.219,17.023L26.886,17.023l0,-4.815l16.333,0L43.219,17.023zM48.229,4.854c-0.768002,0,-1.389,-0.621,-1.389,-1.388c0,-0.766001,0.621,-1.387,1.389,-1.387c0.767002,0,1.388,0.621,1.388,1.387C49.616,4.233,48.995,4.854,48.229,4.854zM55.43,4.854c-0.768002,0,-1.389,-0.621,-1.389,-1.388c0,-0.766001,0.621,-1.387,1.389,-1.387c0.766001,0,1.387,0.621,1.387,1.387C56.816,4.233,56.194,4.854,55.43,4.854zM62.63,4.854c-0.767002,0,-1.387,-0.621,-1.387,-1.388c0,-0.766001,0.62,-1.387,1.387,-1.387c0.768002,0,1.389,0.621,1.389,1.387C64.017,4.233,63.396,4.854,62.63,4.854zM69.83,4.854c-0.767002,0,-1.388,-0.621,-1.388,-1.388c0,-0.766001,0.621,-1.387,1.388,-1.387c0.768002,0,1.387,0.621,1.387,1.387C71.217,4.233,70.596,4.854,69.83,4.854zM77.0278,4.854c-0.766001,0,-1.387,-0.621,-1.387,-1.388c0,-0.766001,0.621,-1.387,1.387,-1.387c0.767002,0,1.388,0.621,1.388,1.387C78.4159,4.233,77.7953,4.854,77.0278,4.854zM84.2292,4.854c-0.768002,0,-1.389,-0.621,-1.389,-1.388c0,-0.766001,0.621,-1.387,1.389,-1.387c0.767002,0,1.388,0.621,1.388,1.387C85.6159,4.233,84.9953,4.854,84.2292,4.854zM91.4299,4.854c-0.768002,0,-1.389,-0.621,-1.389,-1.388c0,-0.766001,0.621,-1.387,1.389,-1.387c0.766001,0,1.387,0.621,1.387,1.387C92.8159,4.233,92.1938,4.854,91.4299,4.854zM98.6299,4.854c-0.767002,0,-1.387,-0.621,-1.387,-1.388c0,-0.766001,0.62,-1.387,1.387,-1.387c0.768002,0,1.389,0.621,1.389,1.387C100.017,4.233,99.396,4.854,98.6299,4.854zM104.441,3.468c0,-0.766001,0.621,-1.387,1.388,-1.387c0.768002,0,1.387,0.621,1.387,1.387c0,0.767002,-0.619,1.388,-1.387,1.388C105.062,4.856,104.441,4.233,104.441,3.468zM121.553,89.8402l-16.334,0l0,-4.815l16.334,0L121.553,89.8402zM121.553,17.023l-16.334,0l0,-4.815l16.334,0L121.553,17.023zM120.229,4.854c-0.768002,0,-1.389,-0.621,-1.389,-1.388c0,-0.766001,0.621,-1.387,1.389,-1.387c0.767002,0,1.388,0.621,1.388,1.387C121.616,4.233,120.995,4.854,120.229,4.854zM127.43,4.854c-0.768002,0,-1.389,-0.621,-1.389,-1.388c0,-0.766001,0.621,-1.387,1.389,-1.387c0.766001,0,1.387,0.621,1.387,1.387C128.816,4.233,128.195,4.854,127.43,4.854zM199.885,89.8402l-16.33,0l0,-4.815l16.33,0L199.885,89.8402zM199.885,17.023l-16.33,0l0,-4.815l16.33,0L199.885,17.023zM220.208,3.731c1.576,0,2.854,1.276,2.854,2.854s-1.276,2.854,-2.854,2.854s-2.854,-1.276,-2.854,-2.854S218.631,3.731,220.208,3.731zM220.208,98.3398c-1.576,0,-2.854,-1.276,-2.854,-2.854c0,-1.574,1.275,-2.854,2.854,-2.854s2.854,1.278,2.854,2.854C223.062,97.0618,221.784,98.3398,220.208,98.3398z"/>
+    <g  stroke-width="0">
+     <path  fill="#CFCFCF" stroke-width="0" d="M1.581,6.59c0,2.737,2.225,4.961,4.96,4.961c2.742,0,4.961,-2.224,4.961,-4.961c0,-2.74,-2.219,-4.96,-4.961,-4.96C3.804,1.63,1.581,3.849,1.581,6.59z"/>
+    </g>
+    <g  stroke-width="0">
+     <g  stroke-width="0">
+      <path  fill="#CFCFCF" stroke-width="0" d="M225.168,95.4857c0,-2.736,-2.224,-4.961,-4.961,-4.961c-2.742,0,-4.961,2.225,-4.961,4.961c0,2.74,2.219,4.959,4.961,4.959C222.945,100.445,225.168,98.2289,225.168,95.4857z"/>
+     </g>
+    </g>
+    <g  stroke-width="0">
+     <g  stroke-width="0">
+      <path  fill="#CFCFCF" stroke-width="0" d="M1.584,95.4842c0,2.738,2.225,4.961,4.96,4.961c2.742,0,4.961,-2.223,4.961,-4.961c0,-2.739,-2.219,-4.959,-4.961,-4.959C3.807,90.5249,1.584,92.7439,1.584,95.4842z"/>
+     </g>
+    </g>
+    <path  fill="#303030" stroke-width="0" d="M217.562,65.271c-0.733003,0,-1.336,-0.603,-1.336,-1.336L216.226,38.113c0,-0.733997,0.603,-1.338,1.336,-1.338l0.058,0L217.62,16.726l0,-0.698l-0.699,0l-2.049,-2.049l0,-0.713l-0.713,0L12.61,13.266l-0.713,0l0,0.713L9.85003,16.027l-0.7,0l0,0.698l0,20.05l0.058,0c0.733997,0,1.337,0.604,1.337,1.338l0,25.822c0,0.733003,-0.603,1.336,-1.337,1.336L9.14998,65.271L9.14998,85.32l0,0.699l0.7,0l2.049,2.049l0,0.713l0.713,0L214.16,88.781l0.713,0l0,-0.713l2.049,-2.049l0.699,0L217.621,85.32L217.621,65.271L217.562,65.271z"/>
+    <g  stroke-width="0">
+     <path  fill="#87AD34" stroke-width="0" d="M208.663,71.382c0,2.206,-1.806,4.012,-4.013,4.012L22.12,75.3941c-2.206,0,-4.012,-1.806,-4.012,-4.012L18.108,30.665c0,-2.206,1.806,-4.012,4.012,-4.012l182.53,0c2.207,0,4.013,1.806,4.013,4.012L208.663,71.382z"/>
+     <g  opacity="0.2" stroke-width="0">
+      <path  fill="#22420D" stroke-width="0" d="M208.654,30.646L208.654,71.4c0,-0.006,0.003,-0.012,0.003,-0.02L208.657,30.665C208.657,30.658,208.654,30.652,208.654,30.646zM22.12,26.654c-2.205,0,-4.012,1.807,-4.012,4.012l0,40.717c0,2.205,1.807,4.012,4.012,4.012l2.325,0c-2.206,0,-4.011,-1.807,-4.011,-4.012L20.434,32.003c0,-2.206,1.805,-4.011,4.011,-4.011L207.61,27.992c-0.733997,-0.813002,-1.786,-1.339,-2.964,-1.339L22.12,26.653z"/>
+     </g>
+    </g>
+    <g  stroke-width="0">
+     <path  fill="#1A1A1A" stroke-width="0" d="M210.357,18.618c0,-0.734998,-0.604,-1.336,-1.336,-1.336L17.75,17.282c-0.733003,0,-1.336,0.602,-1.336,1.336l0,0.735998c0,0.733997,0.604,1.336,1.336,1.336l191.271,0c0.732002,0,1.336,-0.603,1.336,-1.336L210.357,18.618L210.357,18.618z"/>
+     <path  fill="#424242" stroke-width="0" d="M209.689,19.812c0,-0.483,-0.434,-0.879998,-0.957002,-0.879998L18.117,18.932c-0.526,0,-0.957002,0.396,-0.957002,0.879998s0.431,0.879998,0.957002,0.879998l190.615,0C209.258,20.691,209.689,20.295,209.689,19.812z"/>
+    </g>
+    <g  stroke-width="0">
+     <path  fill="#1A1A1A" stroke-width="0" d="M210.357,82.057c0,-0.733997,-0.604,-1.336,-1.336,-1.336L17.75,80.7206c-0.733003,0,-1.336,0.602,-1.336,1.336l0,0.735998c0,0.732002,0.604,1.336,1.336,1.336l191.271,0c0.732002,0,1.336,-0.604,1.336,-1.336L210.357,82.057L210.357,82.057z"/>
+     <path  fill="#424242" stroke-width="0" d="M209.689,83.2507c0,-0.482,-0.434,-0.879998,-0.957002,-0.879998L18.117,82.3709c-0.526,0,-0.957002,0.396,-0.957002,0.879998c0,0.483,0.431,0.878998,0.957002,0.878998l190.615,0C209.258,84.1298,209.689,83.7338,209.689,83.2507z"/>
+    </g>
+    <g  stroke-width="0">
+     <line  stroke-opacity="0.2" fill="none" stroke="#F2F2F2" stroke-linecap="round" y1="16.173" stroke-width="0.2358" x1="9.93701" y2="14.06" x2="12.05"/>
+     <line  stroke-opacity="0.2" fill="none" stroke="#F2F2F2" stroke-linecap="round" y1="87.9768" stroke-width="0.2358" x1="12.071" y2="85.8629" x2="9.95897"/>
+    </g>
+    <g  stroke-width="0">
+     <line  stroke-opacity="0.2" fill="none" stroke="#F2F2F2" stroke-linecap="round" y1="16.173" stroke-width="0.2358" x1="216.822" y2="14.06" x2="214.709"/>
+     <line  stroke-opacity="0.2" fill="none" stroke="#F2F2F2" stroke-linecap="round" y1="87.9768" stroke-width="0.2358" x1="214.688" y2="85.8629" x2="216.801"/>
+    </g>
+    <path  stroke-opacity="0.4" fill="none" stroke="#1A1A1A" stroke-width="1.415" d="M208.657,71.382c0,2.205,-1.806,4.012,-4.011,4.012L22.12,75.3941c-2.205,0,-4.012,-1.807,-4.012,-4.012L18.108,30.665c0,-2.205,1.807,-4.012,4.012,-4.012l182.526,0c2.205,0,4.01,1.807,4.01,4.012L208.657,71.382L208.657,71.382z"/>
+    <g  stroke-width="0">
+     <path  fill="#CFCFCF" stroke-width="0" d="M215.247,6.585c0,2.736,2.225,4.961,4.961,4.961c2.742,0,4.961,-2.225,4.961,-4.961c0,-2.74,-2.219,-4.96,-4.961,-4.96C217.469,1.625,215.247,3.844,215.247,6.585z"/>
+    </g>
+    <g  stroke-width="0">
+     <path  fill="#9A916C" stroke-width="0" d="M17.02,0l0,4.75c0,1.33,1.078,2.41,2.41,2.41c1.33,0,2.408,-1.08,2.408,-2.41L21.838,0L17.02,0z"/>
+    </g>
+    <g  stroke-width="0">
+     <path  fill="#9A916C" stroke-width="0" d="M24.22,0l0,4.75c0,1.33,1.076,2.41,2.408,2.41c1.33,0,2.41,-1.08,2.41,-2.41L29.038,0L24.22,0z"/>
+    </g>
+    <g  stroke-width="0">
+     <path  fill="#9A916C" stroke-width="0" d="M31.42,0l0,4.75c0,1.33,1.078,2.41,2.41,2.41c1.33,0,2.409,-1.08,2.409,-2.41L36.239,0L31.42,0z"/>
+    </g>
+    <g  stroke-width="0">
+     <path  fill="#9A916C" stroke-width="0" d="M38.62,0l0,4.75c0,1.33,1.077,2.41,2.409,2.41c1.33,0,2.41,-1.08,2.41,-2.41L43.439,0L38.62,0z"/>
+    </g>
+    <g  stroke-width="0">
+     <path  fill="#9A916C" stroke-width="0" d="M45.818,0l0,4.75c0,1.33,1.078,2.41,2.41,2.41c1.33,0,2.41,-1.08,2.41,-2.41L50.638,0L45.818,0z"/>
+    </g>
+    <g  stroke-width="0">
+     <path  fill="#9A916C" stroke-width="0" d="M53.02,0l0,4.75c0,1.33,1.078,2.41,2.41,2.41c1.33,0,2.408,-1.08,2.408,-2.41L57.838,0L53.02,0z"/>
+    </g>
+    <g  stroke-width="0">
+     <path  fill="#9A916C" stroke-width="0" d="M60.22,0l0,4.75c0,1.33,1.076,2.41,2.408,2.41c1.33,0,2.41,-1.08,2.41,-2.41L65.038,0L60.22,0z"/>
+    </g>
+    <g  stroke-width="0">
+     <path  fill="#9A916C" stroke-width="0" d="M67.42,0l0,4.75c0,1.33,1.078,2.41,2.41,2.41c1.33,0,2.409,-1.08,2.409,-2.41L72.239,0L67.42,0z"/>
+    </g>
+    <g  stroke-width="0">
+     <path  fill="#9A916C" stroke-width="0" d="M74.6194,0l0,4.75c0,1.33,1.077,2.41,2.409,2.41c1.33,0,2.41,-1.08,2.41,-2.41L79.4383,0L74.6194,0z"/>
+    </g>
+    <g  stroke-width="0">
+     <path  fill="#9A916C" stroke-width="0" d="M81.8179,0l0,4.75c0,1.33,1.078,2.41,2.41,2.41c1.33,0,2.41,-1.08,2.41,-2.41L86.6383,0L81.8179,0z"/>
+    </g>
+    <g  stroke-width="0">
+     <path  fill="#9A916C" stroke-width="0" d="M89.0201,0l0,4.75c0,1.33,1.078,2.41,2.41,2.41c1.33,0,2.408,-1.08,2.408,-2.41L93.8383,0L89.0201,0z"/>
+    </g>
+    <g  stroke-width="0">
+     <path  fill="#9A916C" stroke-width="0" d="M96.2201,0l0,4.75c0,1.33,1.076,2.41,2.408,2.41c1.33,0,2.41,-1.08,2.41,-2.41L101.038,0L96.2201,0z"/>
+    </g>
+    <g  stroke-width="0">
+     <path  fill="#9A916C" stroke-width="0" d="M103.419,0l0,4.75c0,1.33,1.078,2.41,2.41,2.41c1.33,0,2.409,-1.08,2.409,-2.41L108.238,0L103.419,0z"/>
+    </g>
+    <g  stroke-width="0">
+     <path  fill="#9A916C" stroke-width="0" d="M110.619,0l0,4.75c0,1.33,1.077,2.41,2.409,2.41c1.33,0,2.411,-1.08,2.411,-2.41L115.439,0L110.619,0z"/>
+    </g>
+    <g  stroke-width="0">
+     <path  fill="#9A916C" stroke-width="0" d="M117.818,0l0,4.75c0,1.33,1.078,2.41,2.41,2.41c1.33,0,2.41,-1.08,2.41,-2.41L122.638,0L117.818,0z"/>
+    </g>
+    <g  stroke-width="0">
+     <path  fill="#9A916C" stroke-width="0" d="M125.02,0l0,4.75c0,1.33,1.078,2.41,2.41,2.41c1.328,0,2.408,-1.08,2.408,-2.41L129.838,0L125.02,0z"/>
+    </g>
+    <g  stroke-width="0">
+     <rect  width="10.026" x="27.79" y="51.37" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
+     <rect  width="10.026" x="38.534" y="51.37" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
+     <rect  width="10.027" x="49.277" y="51.37" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
+     <rect  width="10.026" x="60.021" y="51.37" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
+     <rect  width="10.025" x="70.768" y="51.37" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
+     <rect  width="10.025" x="81.5119" y="51.37" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
+     <rect  width="10.027" x="92.2558" y="51.37" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
+     <rect  width="10.026" x="103" y="51.37" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
+     <rect  width="10.027" x="113.744" y="51.37" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
+     <rect  width="10.027" x="124.488" y="51.37" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
+     <rect  width="10.025" x="135.232" y="51.37" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
+     <rect  width="10.025" x="145.977" y="51.37" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
+     <rect  width="10.025" x="156.721" y="51.37" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
+     <rect  width="10.027" x="167.465" y="51.37" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
+     <rect  width="10.026" x="178.209" y="51.37" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
+     <rect  width="10.026" x="188.954" y="51.37" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
+     <rect  width="10.026" x="27.79" y="34.154" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
+     <rect  width="10.026" x="38.534" y="34.154" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
+     <rect  width="10.027" x="49.277" y="34.154" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
+     <rect  width="10.026" x="60.021" y="34.154" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
+     <rect  width="10.025" x="70.768" y="34.154" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
+     <rect  width="10.025" x="81.5119" y="34.154" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
+     <rect  width="10.027" x="92.2558" y="34.154" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
+     <rect  width="10.026" x="103" y="34.154" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
+     <rect  width="10.027" x="113.744" y="34.154" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
+     <rect  width="10.027" x="124.488" y="34.154" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
+     <rect  width="10.025" x="135.232" y="34.154" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
+     <rect  width="10.025" x="145.977" y="34.154" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
+     <rect  width="10.025" x="156.721" y="34.154" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
+     <rect  width="10.027" x="167.465" y="34.154" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
+     <rect  width="10.026" x="178.209" y="34.154" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
+     <rect  width="10.026" x="188.954" y="34.154" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
+    </g>
+    <g  stroke-width="0">
+     <path  fill="#606060" stroke-width="0" d="M9.45403,65.223L9.45403,86.0198l0.27,0L9.72403,65.168C9.639,65.203,9.54403,65.205,9.45403,65.223z"/>
+     <path  fill="#606060" stroke-width="0" d="M9.72202,36.881L9.72202,16.026L9.45403,16.026l0,20.801C9.54403,36.844,9.639,36.846,9.72202,36.881z"/>
+    </g>
+    <rect  width="202.97" x="11.899" y="13.572" fill="#606060" height="0.268" stroke-width="0"/>
+    <rect  width="202.97" x="11.899" y="13.27" fill="#212121" height="0.305" stroke-width="0"/>
+    <g  stroke-width="0">
+     <path  fill="#212121" stroke-width="0" d="M9.20801,36.775c0.0869998,0,0.164,0.035,0.247,0.052L9.45497,16.026L9.15098,16.026l0,20.75L9.20801,36.775L9.20801,36.775z"/>
+     <path  fill="#212121" stroke-width="0" d="M9.20801,65.271L9.15098,65.271L9.15098,86.0198l0.304,0L9.45497,65.223C9.37202,65.238,9.29498,65.271,9.20801,65.271z"/>
+    </g>
+    <rect  width="202.97" x="11.899" y="88.4801" fill="#212121" height="0.304" stroke-width="0"/>
+    <rect  width="202.97" x="11.899" y="88.2151" fill="#606060" height="0.269" stroke-width="0"/>
+    <g  stroke-width="0">
+     <path  fill="#212121" stroke-width="0" d="M217.562,65.271c-0.0889999,0,-0.166,-0.033,-0.25,-0.051l0,20.8l0.306,0L217.618,65.271L217.562,65.271z"/>
+     <path  fill="#212121" stroke-width="0" d="M217.562,36.775l0.056,0l0,-20.75l-0.306,0l0,20.802C217.396,36.811,217.474,36.775,217.562,36.775z"/>
+    </g>
+    <g  stroke-width="0">
+     <path  fill="#606060" stroke-width="0" d="M217.049,65.168L217.049,86.0198l0.268,0L217.317,65.223C217.226,65.205,217.131,65.203,217.049,65.168z"/>
+     <path  fill="#606060" stroke-width="0" d="M217.314,36.827L217.314,16.027l-0.268,0l0,20.854C217.131,36.846,217.226,36.844,217.314,36.827z"/>
+    </g>
+    <path  fill="#9C9C9C" stroke-width="0" d="M2.521,9.46901c0.156,0.218,0.315,0.434,0.513,0.629s0.412,0.357,0.63,0.514l6.901,-6.899c-0.157,-0.218,-0.319,-0.435,-0.517,-0.63C9.85399,2.886,9.63799,2.724,9.41998,2.568L2.521,9.46901z"/>
+    <path  fill="#9C9C9C" stroke-width="0" d="M216.186,9.46901c0.154,0.218,0.315,0.434,0.514,0.629c0.195,0.195,0.411,0.357,0.629,0.514l6.901,-6.899c-0.157,-0.218,-0.319,-0.435,-0.517,-0.63c-0.194,-0.195,-0.41,-0.357,-0.63,-0.515L216.186,9.46901z"/>
+    <path  fill="#9C9C9C" stroke-width="0" d="M2.521,98.3628c0.156,0.22,0.315,0.435,0.513,0.63c0.196,0.195,0.412,0.357,0.63,0.515l6.901,-6.898c-0.157,-0.219,-0.319,-0.435,-0.517,-0.631c-0.194,-0.194,-0.409,-0.356,-0.629,-0.515L2.521,98.3628z"/>
+    <path  fill="#9C9C9C" stroke-width="0" d="M216.186,98.3628c0.154,0.22,0.315,0.435,0.514,0.63c0.195,0.195,0.411,0.357,0.629,0.515l6.901,-6.898c-0.157,-0.219,-0.319,-0.435,-0.517,-0.631c-0.194,-0.194,-0.41,-0.356,-0.63,-0.515L216.186,98.3628z"/>
+    <g  id="Ebene_2" stroke-width="0"/>
    </g>
   </g>
-  <g  stroke-width="0">
-   <g  stroke-width="0">
-    <path  fill="#CFCFCF" stroke-width="0" d="M1.584,95.4842c0,2.738,2.225,4.961,4.96,4.961c2.742,0,4.961,-2.223,4.961,-4.961c0,-2.739,-2.219,-4.959,-4.961,-4.959C3.807,90.5249,1.584,92.7439,1.584,95.4842z"/>
-   </g>
-  </g>
-  <path  fill="#303030" stroke-width="0" d="M217.562,65.271c-0.733003,0,-1.336,-0.603,-1.336,-1.336L216.226,38.113c0,-0.733997,0.603,-1.338,1.336,-1.338l0.058,0L217.62,16.726l0,-0.698l-0.699,0l-2.049,-2.049l0,-0.713l-0.713,0L12.61,13.266l-0.713,0l0,0.713L9.85003,16.027l-0.7,0l0,0.698l0,20.05l0.058,0c0.733997,0,1.337,0.604,1.337,1.338l0,25.822c0,0.733003,-0.603,1.336,-1.337,1.336L9.14998,65.271L9.14998,85.32l0,0.699l0.7,0l2.049,2.049l0,0.713l0.713,0L214.16,88.781l0.713,0l0,-0.713l2.049,-2.049l0.699,0L217.621,85.32L217.621,65.271L217.562,65.271z"/>
-  <g  stroke-width="0">
-   <path  fill="#87AD34" stroke-width="0" d="M208.663,71.382c0,2.206,-1.806,4.012,-4.013,4.012L22.12,75.3941c-2.206,0,-4.012,-1.806,-4.012,-4.012L18.108,30.665c0,-2.206,1.806,-4.012,4.012,-4.012l182.53,0c2.207,0,4.013,1.806,4.013,4.012L208.663,71.382z"/>
-   <g  opacity="0.2" stroke-width="0">
-    <path  fill="#22420D" stroke-width="0" d="M208.654,30.646L208.654,71.4c0,-0.006,0.003,-0.012,0.003,-0.02L208.657,30.665C208.657,30.658,208.654,30.652,208.654,30.646zM22.12,26.654c-2.205,0,-4.012,1.807,-4.012,4.012l0,40.717c0,2.205,1.807,4.012,4.012,4.012l2.325,0c-2.206,0,-4.011,-1.807,-4.011,-4.012L20.434,32.003c0,-2.206,1.805,-4.011,4.011,-4.011L207.61,27.992c-0.733997,-0.813002,-1.786,-1.339,-2.964,-1.339L22.12,26.653z"/>
-   </g>
-  </g>
-  <g  stroke-width="0">
-   <path  fill="#1A1A1A" stroke-width="0" d="M210.357,18.618c0,-0.734998,-0.604,-1.336,-1.336,-1.336L17.75,17.282c-0.733003,0,-1.336,0.602,-1.336,1.336l0,0.735998c0,0.733997,0.604,1.336,1.336,1.336l191.271,0c0.732002,0,1.336,-0.603,1.336,-1.336L210.357,18.618L210.357,18.618z"/>
-   <path  fill="#424242" stroke-width="0" d="M209.689,19.812c0,-0.483,-0.434,-0.879998,-0.957002,-0.879998L18.117,18.932c-0.526,0,-0.957002,0.396,-0.957002,0.879998s0.431,0.879998,0.957002,0.879998l190.615,0C209.258,20.691,209.689,20.295,209.689,19.812z"/>
-  </g>
-  <g  stroke-width="0">
-   <path  fill="#1A1A1A" stroke-width="0" d="M210.357,82.057c0,-0.733997,-0.604,-1.336,-1.336,-1.336L17.75,80.7206c-0.733003,0,-1.336,0.602,-1.336,1.336l0,0.735998c0,0.732002,0.604,1.336,1.336,1.336l191.271,0c0.732002,0,1.336,-0.604,1.336,-1.336L210.357,82.057L210.357,82.057z"/>
-   <path  fill="#424242" stroke-width="0" d="M209.689,83.2507c0,-0.482,-0.434,-0.879998,-0.957002,-0.879998L18.117,82.3709c-0.526,0,-0.957002,0.396,-0.957002,0.879998c0,0.483,0.431,0.878998,0.957002,0.878998l190.615,0C209.258,84.1298,209.689,83.7338,209.689,83.2507z"/>
-  </g>
-  <g  stroke-width="0">
-   <line  stroke-opacity="0.2" fill="none" stroke="#F2F2F2" stroke-linecap="round" y1="16.173" stroke-width="0.2358" x1="9.93701" y2="14.06" x2="12.05"/>
-   <line  stroke-opacity="0.2" fill="none" stroke="#F2F2F2" stroke-linecap="round" y1="87.9768" stroke-width="0.2358" x1="12.071" y2="85.8629" x2="9.95897"/>
-  </g>
-  <g  stroke-width="0">
-   <line  stroke-opacity="0.2" fill="none" stroke="#F2F2F2" stroke-linecap="round" y1="16.173" stroke-width="0.2358" x1="216.822" y2="14.06" x2="214.709"/>
-   <line  stroke-opacity="0.2" fill="none" stroke="#F2F2F2" stroke-linecap="round" y1="87.9768" stroke-width="0.2358" x1="214.688" y2="85.8629" x2="216.801"/>
-  </g>
-  <path  stroke-opacity="0.4" fill="none" stroke="#1A1A1A" stroke-width="1.415" d="M208.657,71.382c0,2.205,-1.806,4.012,-4.011,4.012L22.12,75.3941c-2.205,0,-4.012,-1.807,-4.012,-4.012L18.108,30.665c0,-2.205,1.807,-4.012,4.012,-4.012l182.526,0c2.205,0,4.01,1.807,4.01,4.012L208.657,71.382L208.657,71.382z"/>
-  <g  stroke-width="0">
-   <path  fill="#CFCFCF" stroke-width="0" d="M215.247,6.585c0,2.736,2.225,4.961,4.961,4.961c2.742,0,4.961,-2.225,4.961,-4.961c0,-2.74,-2.219,-4.96,-4.961,-4.96C217.469,1.625,215.247,3.844,215.247,6.585z"/>
-  </g>
-  <g  stroke-width="0">
-   <path  fill="#9A916C" stroke-width="0" d="M17.02,0l0,4.75c0,1.33,1.078,2.41,2.41,2.41c1.33,0,2.408,-1.08,2.408,-2.41L21.838,0L17.02,0z"/>
-  </g>
-  <g  stroke-width="0">
-   <path  fill="#9A916C" stroke-width="0" d="M24.22,0l0,4.75c0,1.33,1.076,2.41,2.408,2.41c1.33,0,2.41,-1.08,2.41,-2.41L29.038,0L24.22,0z"/>
-  </g>
-  <g  stroke-width="0">
-   <path  fill="#9A916C" stroke-width="0" d="M31.42,0l0,4.75c0,1.33,1.078,2.41,2.41,2.41c1.33,0,2.409,-1.08,2.409,-2.41L36.239,0L31.42,0z"/>
-  </g>
-  <g  stroke-width="0">
-   <path  fill="#9A916C" stroke-width="0" d="M38.62,0l0,4.75c0,1.33,1.077,2.41,2.409,2.41c1.33,0,2.41,-1.08,2.41,-2.41L43.439,0L38.62,0z"/>
-  </g>
-  <g  stroke-width="0">
-   <path  fill="#9A916C" stroke-width="0" d="M45.818,0l0,4.75c0,1.33,1.078,2.41,2.41,2.41c1.33,0,2.41,-1.08,2.41,-2.41L50.638,0L45.818,0z"/>
-  </g>
-  <g  stroke-width="0">
-   <path  fill="#9A916C" stroke-width="0" d="M53.02,0l0,4.75c0,1.33,1.078,2.41,2.41,2.41c1.33,0,2.408,-1.08,2.408,-2.41L57.838,0L53.02,0z"/>
-  </g>
-  <g  stroke-width="0">
-   <path  fill="#9A916C" stroke-width="0" d="M60.22,0l0,4.75c0,1.33,1.076,2.41,2.408,2.41c1.33,0,2.41,-1.08,2.41,-2.41L65.038,0L60.22,0z"/>
-  </g>
-  <g  stroke-width="0">
-   <path  fill="#9A916C" stroke-width="0" d="M67.42,0l0,4.75c0,1.33,1.078,2.41,2.41,2.41c1.33,0,2.409,-1.08,2.409,-2.41L72.239,0L67.42,0z"/>
-  </g>
-  <g  stroke-width="0">
-   <path  fill="#9A916C" stroke-width="0" d="M74.6194,0l0,4.75c0,1.33,1.077,2.41,2.409,2.41c1.33,0,2.41,-1.08,2.41,-2.41L79.4383,0L74.6194,0z"/>
-  </g>
-  <g  stroke-width="0">
-   <path  fill="#9A916C" stroke-width="0" d="M81.8179,0l0,4.75c0,1.33,1.078,2.41,2.41,2.41c1.33,0,2.41,-1.08,2.41,-2.41L86.6383,0L81.8179,0z"/>
-  </g>
-  <g  stroke-width="0">
-   <path  fill="#9A916C" stroke-width="0" d="M89.0201,0l0,4.75c0,1.33,1.078,2.41,2.41,2.41c1.33,0,2.408,-1.08,2.408,-2.41L93.8383,0L89.0201,0z"/>
-  </g>
-  <g  stroke-width="0">
-   <path  fill="#9A916C" stroke-width="0" d="M96.2201,0l0,4.75c0,1.33,1.076,2.41,2.408,2.41c1.33,0,2.41,-1.08,2.41,-2.41L101.038,0L96.2201,0z"/>
-  </g>
-  <g  stroke-width="0">
-   <path  fill="#9A916C" stroke-width="0" d="M103.419,0l0,4.75c0,1.33,1.078,2.41,2.41,2.41c1.33,0,2.409,-1.08,2.409,-2.41L108.238,0L103.419,0z"/>
-  </g>
-  <g  stroke-width="0">
-   <path  fill="#9A916C" stroke-width="0" d="M110.619,0l0,4.75c0,1.33,1.077,2.41,2.409,2.41c1.33,0,2.411,-1.08,2.411,-2.41L115.439,0L110.619,0z"/>
-  </g>
-  <g  stroke-width="0">
-   <path  fill="#9A916C" stroke-width="0" d="M117.818,0l0,4.75c0,1.33,1.078,2.41,2.41,2.41c1.33,0,2.41,-1.08,2.41,-2.41L122.638,0L117.818,0z"/>
-  </g>
-  <g  stroke-width="0">
-   <path  fill="#9A916C" stroke-width="0" d="M125.02,0l0,4.75c0,1.33,1.078,2.41,2.41,2.41c1.328,0,2.408,-1.08,2.408,-2.41L129.838,0L125.02,0z"/>
-  </g>
-  <g  stroke-width="0">
-   <rect  width="10.026" x="27.79" y="51.37" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
-   <rect  width="10.026" x="38.534" y="51.37" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
-   <rect  width="10.027" x="49.277" y="51.37" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
-   <rect  width="10.026" x="60.021" y="51.37" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
-   <rect  width="10.025" x="70.768" y="51.37" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
-   <rect  width="10.025" x="81.5119" y="51.37" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
-   <rect  width="10.027" x="92.2558" y="51.37" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
-   <rect  width="10.026" x="103" y="51.37" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
-   <rect  width="10.027" x="113.744" y="51.37" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
-   <rect  width="10.027" x="124.488" y="51.37" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
-   <rect  width="10.025" x="135.232" y="51.37" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
-   <rect  width="10.025" x="145.977" y="51.37" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
-   <rect  width="10.025" x="156.721" y="51.37" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
-   <rect  width="10.027" x="167.465" y="51.37" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
-   <rect  width="10.026" x="178.209" y="51.37" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
-   <rect  width="10.026" x="188.954" y="51.37" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
-   <rect  width="10.026" x="27.79" y="34.154" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
-   <rect  width="10.026" x="38.534" y="34.154" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
-   <rect  width="10.027" x="49.277" y="34.154" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
-   <rect  width="10.026" x="60.021" y="34.154" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
-   <rect  width="10.025" x="70.768" y="34.154" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
-   <rect  width="10.025" x="81.5119" y="34.154" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
-   <rect  width="10.027" x="92.2558" y="34.154" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
-   <rect  width="10.026" x="103" y="34.154" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
-   <rect  width="10.027" x="113.744" y="34.154" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
-   <rect  width="10.027" x="124.488" y="34.154" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
-   <rect  width="10.025" x="135.232" y="34.154" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
-   <rect  width="10.025" x="145.977" y="34.154" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
-   <rect  width="10.025" x="156.721" y="34.154" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
-   <rect  width="10.027" x="167.465" y="34.154" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
-   <rect  width="10.026" x="178.209" y="34.154" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
-   <rect  width="10.026" x="188.954" y="34.154" fill="#1A1A1A" height="16.521" fill-opacity="0.1" stroke-width="0"/>
-  </g>
-  <g  stroke-width="0">
-   <path  fill="#606060" stroke-width="0" d="M9.45403,65.223L9.45403,86.0198l0.27,0L9.72403,65.168C9.639,65.203,9.54403,65.205,9.45403,65.223z"/>
-   <path  fill="#606060" stroke-width="0" d="M9.72202,36.881L9.72202,16.026L9.45403,16.026l0,20.801C9.54403,36.844,9.639,36.846,9.72202,36.881z"/>
-  </g>
-  <rect  width="202.97" x="11.899" y="13.572" fill="#606060" height="0.268" stroke-width="0"/>
-  <rect  width="202.97" x="11.899" y="13.27" fill="#212121" height="0.305" stroke-width="0"/>
-  <g  stroke-width="0">
-   <path  fill="#212121" stroke-width="0" d="M9.20801,36.775c0.0869998,0,0.164,0.035,0.247,0.052L9.45497,16.026L9.15098,16.026l0,20.75L9.20801,36.775L9.20801,36.775z"/>
-   <path  fill="#212121" stroke-width="0" d="M9.20801,65.271L9.15098,65.271L9.15098,86.0198l0.304,0L9.45497,65.223C9.37202,65.238,9.29498,65.271,9.20801,65.271z"/>
-  </g>
-  <rect  width="202.97" x="11.899" y="88.4801" fill="#212121" height="0.304" stroke-width="0"/>
-  <rect  width="202.97" x="11.899" y="88.2151" fill="#606060" height="0.269" stroke-width="0"/>
-  <g  stroke-width="0">
-   <path  fill="#212121" stroke-width="0" d="M217.562,65.271c-0.0889999,0,-0.166,-0.033,-0.25,-0.051l0,20.8l0.306,0L217.618,65.271L217.562,65.271z"/>
-   <path  fill="#212121" stroke-width="0" d="M217.562,36.775l0.056,0l0,-20.75l-0.306,0l0,20.802C217.396,36.811,217.474,36.775,217.562,36.775z"/>
-  </g>
-  <g  stroke-width="0">
-   <path  fill="#606060" stroke-width="0" d="M217.049,65.168L217.049,86.0198l0.268,0L217.317,65.223C217.226,65.205,217.131,65.203,217.049,65.168z"/>
-   <path  fill="#606060" stroke-width="0" d="M217.314,36.827L217.314,16.027l-0.268,0l0,20.854C217.131,36.846,217.226,36.844,217.314,36.827z"/>
-  </g>
-  <path  fill="#9C9C9C" stroke-width="0" d="M2.521,9.46901c0.156,0.218,0.315,0.434,0.513,0.629s0.412,0.357,0.63,0.514l6.901,-6.899c-0.157,-0.218,-0.319,-0.435,-0.517,-0.63C9.85399,2.886,9.63799,2.724,9.41998,2.568L2.521,9.46901z"/>
-  <path  fill="#9C9C9C" stroke-width="0" d="M216.186,9.46901c0.154,0.218,0.315,0.434,0.514,0.629c0.195,0.195,0.411,0.357,0.629,0.514l6.901,-6.899c-0.157,-0.218,-0.319,-0.435,-0.517,-0.63c-0.194,-0.195,-0.41,-0.357,-0.63,-0.515L216.186,9.46901z"/>
-  <path  fill="#9C9C9C" stroke-width="0" d="M2.521,98.3628c0.156,0.22,0.315,0.435,0.513,0.63c0.196,0.195,0.412,0.357,0.63,0.515l6.901,-6.898c-0.157,-0.219,-0.319,-0.435,-0.517,-0.631c-0.194,-0.194,-0.409,-0.356,-0.629,-0.515L2.521,98.3628z"/>
-  <path  fill="#9C9C9C" stroke-width="0" d="M216.186,98.3628c0.154,0.22,0.315,0.435,0.514,0.63c0.195,0.195,0.411,0.357,0.629,0.515l6.901,-6.898c-0.157,-0.219,-0.319,-0.435,-0.517,-0.631c-0.194,-0.194,-0.41,-0.356,-0.63,-0.515L216.186,98.3628z"/>
-  <g  id="Ebene_2" stroke-width="0"/>
   <g  id="b3f-10xx" stroke-width="0" transform="matrix(1, 0, 0, 1, 99.1634, 140.039)">
    <g  stroke-width="0" transform="matrix(-1, 0, 0, -1, 17.641, 23.608)">
     <g  stroke-width="0">

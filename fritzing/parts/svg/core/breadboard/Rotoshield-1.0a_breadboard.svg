@@ -39,7 +39,7 @@
     <g  stroke-width="0">
      <title >text:5V</title>
      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 190.8, 76.5)">
-      <g  stroke-width="0" transform="rotate(-90)">
+      <g  stroke-width="0" transform="rotate(270)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">5V</text>
       </g>
      </g>
@@ -47,7 +47,7 @@
     <g  stroke-width="0">
      <title >text:I/O</title>
      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 141.3, 77.4)">
-      <g  stroke-width="0" transform="rotate(-90)">
+      <g  stroke-width="0" transform="rotate(270)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">I/O</text>
       </g>
      </g>
@@ -2311,7 +2311,7 @@
     <g  stroke-width="0">
      <title >text:RST</title>
      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 95.3158, 138.637)">
-      <g  stroke-width="0" transform="rotate(-90)">
+      <g  stroke-width="0" transform="rotate(270)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">RST</text>
       </g>
      </g>
@@ -2451,7 +2451,7 @@
     <g  stroke-width="0">
      <title >text:3V3</title>
      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 102.516, 134.137)">
-      <g  stroke-width="0" transform="rotate(-90)">
+      <g  stroke-width="0" transform="rotate(270)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">3V3</text>
       </g>
      </g>
@@ -2459,7 +2459,7 @@
     <g  stroke-width="0">
      <title >text:5V</title>
      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 109.716, 138.637)">
-      <g  stroke-width="0" transform="rotate(-90)">
+      <g  stroke-width="0" transform="rotate(270)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">5V</text>
       </g>
      </g>
@@ -2467,7 +2467,7 @@
     <g  stroke-width="0">
      <title >text:GND</title>
      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 116.916, 138.637)">
-      <g  stroke-width="0" transform="rotate(-90)">
+      <g  stroke-width="0" transform="rotate(270)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">GND</text>
       </g>
      </g>
@@ -2475,7 +2475,7 @@
     <g  stroke-width="0">
      <title >text:GND</title>
      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 124.116, 138.637)">
-      <g  stroke-width="0" transform="rotate(-90)">
+      <g  stroke-width="0" transform="rotate(270)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">GND</text>
       </g>
      </g>
@@ -2483,7 +2483,7 @@
     <g  stroke-width="0">
      <title >text:Vin</title>
      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 131.316, 138.637)">
-      <g  stroke-width="0" transform="rotate(-90)">
+      <g  stroke-width="0" transform="rotate(270)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">Vin</text>
       </g>
      </g>
@@ -2491,7 +2491,7 @@
     <g  stroke-width="0">
      <title >text:0</title>
      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 145.716, 138.637)">
-      <g  stroke-width="0" transform="rotate(-90)">
+      <g  stroke-width="0" transform="rotate(270)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">0</text>
       </g>
      </g>
@@ -2499,7 +2499,7 @@
     <g  stroke-width="0">
      <title >text:1</title>
      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 152.916, 138.637)">
-      <g  stroke-width="0" transform="rotate(-90)">
+      <g  stroke-width="0" transform="rotate(270)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">1</text>
       </g>
      </g>
@@ -2507,7 +2507,7 @@
     <g  stroke-width="0">
      <title >text:2</title>
      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 160.116, 138.637)">
-      <g  stroke-width="0" transform="rotate(-90)">
+      <g  stroke-width="0" transform="rotate(270)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">2</text>
       </g>
      </g>
@@ -2515,7 +2515,7 @@
     <g  stroke-width="0">
      <title >text:3</title>
      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 167.316, 138.637)">
-      <g  stroke-width="0" transform="rotate(-90)">
+      <g  stroke-width="0" transform="rotate(270)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">3</text>
       </g>
      </g>
@@ -2523,7 +2523,7 @@
     <g  stroke-width="0">
      <title >text:4x</title>
      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 174.516, 138.637)">
-      <g  stroke-width="0" transform="rotate(-90)">
+      <g  stroke-width="0" transform="rotate(270)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">4x</text>
       </g>
      </g>
@@ -2531,7 +2531,7 @@
     <g  stroke-width="0">
      <title >text:5x</title>
      <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 181.716, 138.637)">
-      <g  stroke-width="0" transform="rotate(-90)">
+      <g  stroke-width="0" transform="rotate(270)">
        <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">5x</text>
       </g>
      </g>
@@ -2578,7 +2578,7 @@
      <g  stroke-width="0">
       <title >text:C1</title>
       <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 128.52, 46.62)">
-       <g  stroke-width="0" transform="rotate(-90)">
+       <g  stroke-width="0" transform="rotate(270)">
         <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">C1</text>
        </g>
       </g>
@@ -2606,7 +2606,7 @@
      <g  stroke-width="0">
       <title >text:C3</title>
       <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 45.9, 46.26)">
-       <g  stroke-width="0" transform="rotate(-90)">
+       <g  stroke-width="0" transform="rotate(270)">
         <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">C3</text>
        </g>
       </g>
@@ -2620,7 +2620,7 @@
      <g  stroke-width="0">
       <title >text:C4</title>
       <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 45.9, 108.36)">
-       <g  stroke-width="0" transform="rotate(-90)">
+       <g  stroke-width="0" transform="rotate(270)">
         <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">C4</text>
        </g>
       </g>
@@ -2634,7 +2634,7 @@
      <g  stroke-width="0">
       <title >text:C5</title>
       <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 55.98, 86.04)">
-       <g  stroke-width="0" transform="rotate(-90)">
+       <g  stroke-width="0" transform="rotate(270)">
         <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">C5</text>
        </g>
       </g>
@@ -2648,7 +2648,7 @@
      <g  stroke-width="0">
       <title >text:C6</title>
       <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 55.98, 67.14)">
-       <g  stroke-width="0" transform="rotate(-90)">
+       <g  stroke-width="0" transform="rotate(270)">
         <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">C6</text>
        </g>
       </g>
@@ -2662,7 +2662,7 @@
      <g  stroke-width="0">
       <title >text:C7</title>
       <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 128.52, 106.92)">
-       <g  stroke-width="0" transform="rotate(-90)">
+       <g  stroke-width="0" transform="rotate(270)">
         <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">C7</text>
        </g>
       </g>
@@ -2676,7 +2676,7 @@
      <g  stroke-width="0">
       <title >text:C8</title>
       <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 148.32, 93.42)">
-       <g  stroke-width="0" transform="rotate(-90)">
+       <g  stroke-width="0" transform="rotate(270)">
         <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">C8</text>
        </g>
       </g>
@@ -2700,7 +2700,7 @@
      <g  stroke-width="0">
       <title >text:C10</title>
       <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 151.02, 107.82)">
-       <g  stroke-width="0" transform="rotate(-90)">
+       <g  stroke-width="0" transform="rotate(270)">
         <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">C10</text>
        </g>
       </g>
@@ -2728,7 +2728,7 @@
      <g  stroke-width="0">
       <title >text:C12</title>
       <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 128.52, 25.92)">
-       <g  stroke-width="0" transform="rotate(-90)">
+       <g  stroke-width="0" transform="rotate(270)">
         <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">C12</text>
        </g>
       </g>
@@ -2854,7 +2854,7 @@
      <g  stroke-width="0">
       <title >text:L3</title>
       <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 186.3, 27)">
-       <g  stroke-width="0" transform="rotate(-90)">
+       <g  stroke-width="0" transform="rotate(270)">
         <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="3.3408">L3</text>
        </g>
       </g>
@@ -2938,7 +2938,7 @@
      <g  stroke-width="0">
       <title >text:R4</title>
       <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 45.72, 122.544)">
-       <g  stroke-width="0" transform="rotate(-90)">
+       <g  stroke-width="0" transform="rotate(270)">
         <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">R4</text>
        </g>
       </g>
@@ -2952,7 +2952,7 @@
      <g  stroke-width="0">
       <title >text:R5</title>
       <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 123.12, 114.444)">
-       <g  stroke-width="0" transform="rotate(-90)">
+       <g  stroke-width="0" transform="rotate(270)">
         <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">R5</text>
        </g>
       </g>
@@ -3000,7 +3000,7 @@
      <g  stroke-width="0">
       <title >text:R9</title>
       <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 119.52, 61.344)">
-       <g  stroke-width="0" transform="rotate(-90)">
+       <g  stroke-width="0" transform="rotate(270)">
         <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">R9</text>
        </g>
       </g>
@@ -3050,7 +3050,7 @@
      <g  stroke-width="0">
       <title >text:R14</title>
       <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 185.4, 37.8)">
-       <g  stroke-width="0" transform="rotate(-90)">
+       <g  stroke-width="0" transform="rotate(270)">
         <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="3.3408">R14</text>
        </g>
       </g>
@@ -3138,7 +3138,7 @@
      <g  stroke-width="0">
       <title >text:X1</title>
       <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 156.6, 111.6)">
-       <g  stroke-width="0" transform="rotate(-90)">
+       <g  stroke-width="0" transform="rotate(270)">
         <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">X1</text>
        </g>
       </g>
@@ -3152,7 +3152,7 @@
      <g  stroke-width="0">
       <title >text:X2</title>
       <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 156.6, 131.442)">
-       <g  stroke-width="0" transform="rotate(-90)">
+       <g  stroke-width="0" transform="rotate(270)">
         <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">X2</text>
        </g>
       </g>
@@ -3166,7 +3166,7 @@
      <g  stroke-width="0">
       <title >text:X3</title>
       <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 156.6, 43.2)">
-       <g  stroke-width="0" transform="rotate(-90)">
+       <g  stroke-width="0" transform="rotate(270)">
         <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">X3</text>
        </g>
       </g>
@@ -3180,7 +3180,7 @@
      <g  stroke-width="0">
       <title >text:X4</title>
       <g  stroke-width="0" transform="matrix(1, 0, 0, 1, 156.6, 63.0426)">
-       <g  stroke-width="0" transform="rotate(-90)">
+       <g  stroke-width="0" transform="rotate(270)">
         <text  x="0" y="0" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="4.176">X4</text>
        </g>
       </g>

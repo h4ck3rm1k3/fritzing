@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='Memoire-1.0'>
 <version>4</version>
-<date>2011-11-23</date>
+<date>2011-11-25</date>
 <author>Snootlab</author>
 <description>	&lt;div id=&quot;idTab1&quot; class=&quot;rte&quot;&gt;&lt;p&gt;SD log shield with RTC and a square pads prototyping area for Arduino&lt;/p&gt;
 
