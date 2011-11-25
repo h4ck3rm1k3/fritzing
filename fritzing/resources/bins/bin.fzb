@@ -542,6 +542,16 @@
                 </iconView>
             </views>
         </instance>
+       <instance moduleIdRef="fuse_with_handler_cff5" modelIndex="41" path="parts/core/Fuse_with_Handler.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
+	
+	
+	
 	
 	<instance moduleIdRef="__spacer__" modelIndex="3" path="Connection">
         <views>
