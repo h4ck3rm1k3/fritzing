@@ -32,21 +32,41 @@ $Date: 2011-08-10 00:15:35 +0200 (Wed, 10 Aug 2011) $
 #include <QVBoxLayout>
 #include <QGridLayout>
 #include <QLabel>
-#include <QLineEdit>
 #include <QScrollArea>
-#include <QPushButton>
+#include <QKeyEvent>
 
 // TODO:
 //
-//		undo
-//		disable save and save-as until first undoable change
-//		swap 
+//		nice to update schematic view with new pin labels
 //		how does an edit work?
 
-PinLabelDialog::PinLabelDialog(const QStringList & labels, bool singleRow, const QString & chipLabel, QWidget *parent)
+
+
+PinLabelUndoCommand::PinLabelUndoCommand(PinLabelDialog * pinLabelDialog, int index, QLineEdit * lineEdit, const QString & previous, const QString & next) : QUndoCommand() 
+{
+	m_pinLabelDialog = pinLabelDialog;
+	m_previous = previous;
+	m_next = next;
+	m_index = index;
+	m_lineEdit = lineEdit;
+}
+
+void PinLabelUndoCommand::undo() {
+	m_pinLabelDialog->setLabelText(m_index, m_lineEdit, m_previous);
+}
+
+void PinLabelUndoCommand::redo() {
+	m_pinLabelDialog->setLabelText(m_index, m_lineEdit, m_next);
+}
+
+/////////////////////////////////////////////////////////
+
+PinLabelDialog::PinLabelDialog(const QStringList & labels, bool singleRow, const QString & chipLabel, bool isCore, QWidget *parent)
 	: QDialog(parent)
 {
+	m_isCore = isCore;
 	m_labels = labels;
+	m_doSaveAs = false;
 	this->setWindowTitle(QObject::tr("Pin Label Editor"));
 
 	QVBoxLayout * vLayout = new QVBoxLayout(this);
@@ -65,8 +85,7 @@ PinLabelDialog::PinLabelDialog(const QStringList & labels, bool singleRow, const
 	QLabel * label = new QLabel("<html><body>" +
 								tr("<p><h2>Pin Label Editor</h2></p>") +
 								tr("<p>Click on a label next to a pin to rename that pin.") + " " +
-								tr("You can use the tab key to go through the labels.") + " " +
-								tr("You can also use Ctrl/Cmd-Z for Undo.</p>") +
+								tr("You can use the tab key to move through the labels in order.</p>") +
 								tr("<p>Save vs. Save As...</p>") +		
 								"</body></html>");
 	label->setMaximumWidth(150);
@@ -84,9 +103,32 @@ PinLabelDialog::PinLabelDialog(const QStringList & labels, bool singleRow, const
 	scrollArea->setWidget(frame);	
 
 	QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Save | QDialogButtonBox::SaveAll | QDialogButtonBox::Cancel);
-	buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
-	buttonBox->button(QDialogButtonBox::Save)->setText(tr("Save"));
-	buttonBox->button(QDialogButtonBox::SaveAll)->setText(tr("Save as new part"));
+	
+	QPushButton * cancelButton = buttonBox->button(QDialogButtonBox::Cancel);
+	cancelButton->setText(tr("Cancel"));
+	cancelButton->setDefault(false);
+	
+	m_saveButton = buttonBox->button(QDialogButtonBox::Save);
+	m_saveButton->setText(tr("Save"));
+	m_saveButton->setEnabled(false);
+	m_saveButton->setDefault(false);
+
+	m_saveAsButton = buttonBox->button(QDialogButtonBox::SaveAll);
+	m_saveAsButton->setText(tr("Save as new part"));
+	m_saveAsButton->setEnabled(false);
+	m_saveAsButton->setDefault(false);
+
+	m_undoButton = new QPushButton(tr("Undo"));
+	m_undoButton->setEnabled(false);
+	m_undoButton->setDefault(false);
+
+	m_redoButton = new QPushButton(tr("Redo"));
+	m_redoButton->setEnabled(false);
+	m_redoButton->setDefault(false);
+
+
+    buttonBox->addButton(m_undoButton, QDialogButtonBox::ResetRole);
+    buttonBox->addButton(m_redoButton, QDialogButtonBox::ResetRole);
 
     connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
@@ -94,6 +136,12 @@ PinLabelDialog::PinLabelDialog(const QStringList & labels, bool singleRow, const
 	vLayout->addWidget(scrollArea);
 	vLayout->addWidget(buttonBox);
 	this->setLayout(vLayout);
+
+	connect(buttonBox, SIGNAL(clicked(QAbstractButton *)), this, SLOT(buttonClicked(QAbstractButton *)));
+	connect(&m_undoStack, SIGNAL(canRedoChanged(bool)), this, SLOT(undoChanged(bool)));
+	connect(&m_undoStack, SIGNAL(canUndoChanged(bool)), this, SLOT(undoChanged(bool)));
+	connect(&m_undoStack, SIGNAL(cleanChanged(bool)), this, SLOT(undoChanged(bool)));
+
 }
 
 PinLabelDialog::~PinLabelDialog()
@@ -170,6 +218,7 @@ void PinLabelDialog::makeOnePinEntry(int index, const QString & text, Qt::Alignm
 	lEdit->setAlignment(alignment);
 	lEdit->setText(text);
 	lEdit->setProperty("index", index);
+	lEdit->setProperty("prev", text);
 	connect(lEdit, SIGNAL(editingFinished()), this, SLOT(labelChanged()));
 
 	if (alignment == Qt::AlignLeft) {
@@ -195,9 +244,70 @@ void PinLabelDialog::labelChanged() {
 	if (index < 0) return;
 	if (index >= m_labels.count()) return;
 
-	m_labels.replace(index, lineEdit->text());
+	PinLabelUndoCommand * pluc = new PinLabelUndoCommand(this, index, lineEdit, lineEdit->property("prev").toString(), lineEdit->text());
+	lineEdit->setProperty("prev", lineEdit->text());
+
+	m_undoStack.push(pluc);
 }
 
 const QStringList & PinLabelDialog::labels() {
 	return m_labels;
+}
+
+void PinLabelDialog::setLabelText(int index, QLineEdit * lineEdit, const QString & text) 
+{
+	m_labels.replace(index, text);
+	lineEdit->setText(text);
+	lineEdit->setProperty("prev", text);
+}
+
+void PinLabelDialog::buttonClicked(QAbstractButton * button) {
+	if (button == m_saveButton) {
+		m_doSaveAs = false;
+	}
+	else if (button == m_saveAsButton) {
+		m_doSaveAs = true;
+	}
+	else if (button == m_undoButton) {
+		m_undoStack.undo();
+	}
+	else if (button == m_redoButton) {
+		m_undoStack.redo();
+	}
+}
+
+bool PinLabelDialog::doSaveAs() {
+	return m_doSaveAs;
+}
+
+void PinLabelDialog::undoChanged(bool) {
+	bool redo = false;
+	bool undo = false;
+	bool save = false;
+	bool saveAs = false;
+
+	if (m_undoStack.canUndo()) {
+		save = undo = true;
+		saveAs = undo && !m_isCore;
+	}
+	if (m_undoStack.canRedo()) {
+		redo = true;
+	}
+
+	m_saveAsButton->setEnabled(saveAs);
+	m_saveButton->setEnabled(save);
+	m_undoButton->setEnabled(undo);
+	m_redoButton->setEnabled(redo);
+}
+
+void PinLabelDialog::keyPressEvent(QKeyEvent *e)
+{
+	switch (e->key()) {
+		case Qt::Key_Escape:
+		case Qt::Key_Enter:
+		case Qt::Key_Return:
+			return;
+		default:
+			QDialog::keyPressEvent(e);
+	}
 }

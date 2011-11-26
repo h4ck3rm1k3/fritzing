@@ -33,27 +33,60 @@ $Date: 2011-08-10 00:15:35 +0200 (Wed, 10 Aug 2011) $
 #include <QFrame>
 #include <QStringList>
 #include <QGridLayout>
+#include <QUndoStack>
+#include <QUndoCommand>
+#include <QLineEdit>
+#include <QPushButton>
 
 class PinLabelDialog : public QDialog
 {
 	Q_OBJECT
 
 public:
-	PinLabelDialog(const QStringList & labels, bool singleRow, const QString & chipLabel, QWidget *parent = 0);
+	PinLabelDialog(const QStringList & labels, bool singleRow, const QString & chipLabel, bool isCore, QWidget *parent = 0);
 	~PinLabelDialog();
 
 	const QStringList & labels();
+	void setLabelText(int index, QLineEdit *, const QString & text);
+	bool doSaveAs();
 
 protected slots:
 	void labelChanged();
+	void buttonClicked(QAbstractButton *);
+	void undoChanged(bool);
 
 protected:
 	QFrame * initLabels(const QStringList & labels, bool singleRow, const QString & chipLabel);
 	void makeOnePinEntry(int index, const QString & label, Qt::Alignment alignment, int row, QGridLayout *);
-
+	void keyPressEvent(QKeyEvent *e);
 
 protected:
+	bool m_isCore;
 	QStringList m_labels;
+	QUndoStack m_undoStack;
+	QPushButton * m_saveButton;
+	QPushButton * m_saveAsButton;
+	QPushButton * m_undoButton;
+	QPushButton * m_redoButton;
+	bool m_doSaveAs;
+
+};
+
+class PinLabelUndoCommand : public QUndoCommand {
+
+public:
+	PinLabelUndoCommand(PinLabelDialog *, int index, QLineEdit *, const QString & previous, const QString & next);
+	
+	void undo();
+	void redo();
+
+protected:
+	QString m_previous;
+	QString m_next;
+	PinLabelDialog * m_pinLabelDialog;
+	int m_index;
+	QLineEdit * m_lineEdit;
+
 };
 
 #endif 

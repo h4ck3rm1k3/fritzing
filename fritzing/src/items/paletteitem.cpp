@@ -608,7 +608,7 @@ void PaletteItem::openPinLabelDialog() {
 		chipLabel = instanceTitle();
 	}
 
-	PinLabelDialog pinLabelDialog(labels, isSingleRow(sortedConnectorItems), chipLabel);
+	PinLabelDialog pinLabelDialog(labels, isSingleRow(sortedConnectorItems), chipLabel, modelPart()->isCore(), NULL);
 	int result = pinLabelDialog.exec();
 	if (result != QDialog::Accepted) return;
 
