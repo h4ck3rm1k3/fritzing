@@ -627,7 +627,7 @@ void PaletteItem::openPinLabelDialog() {
 		return;
 	}
 
-	QString moduleID = FolderUtils::getRandText();
+	QString moduleID = pinLabelDialog.doSaveAs() ? FolderUtils::getRandText() : this->moduleID();
 
 	QDomElement root = domDocument.documentElement();
 	root.setAttribute("moduleId", moduleID);

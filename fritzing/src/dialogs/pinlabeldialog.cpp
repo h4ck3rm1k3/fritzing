@@ -38,7 +38,7 @@ $Date: 2011-08-10 00:15:35 +0200 (Wed, 10 Aug 2011) $
 // TODO:
 //
 //		nice to update schematic view with new pin labels
-//		how does an edit work?
+//		how does save (i.e. edit) work?
 
 
 
@@ -287,8 +287,8 @@ void PinLabelDialog::undoChanged(bool) {
 	bool saveAs = false;
 
 	if (m_undoStack.canUndo()) {
-		save = undo = true;
-		saveAs = undo && !m_isCore;
+		saveAs = undo = true;
+		save = undo && !m_isCore;
 	}
 	if (m_undoStack.canRedo()) {
 		redo = true;

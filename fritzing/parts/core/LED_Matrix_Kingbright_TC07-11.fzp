@@ -15,9 +15,9 @@
         <property name="family">LED Display</property>
         <property name="processor">Dot Matrix</property>
         <property name="variant">5x7 18mm</property>
-				<property name="common">anode</property>
+				<property name="common">cathode</property>
     </properties>
-    <description>Dot Matrix LED Display (Kingbright TA07-11).</description>
+    <description>Dot Matrix LED Display (Kingbright TC07-11).</description>
     <views>
         <iconView>
             <layers image="icon/LED_Matrix_Kingbright.svg">
