@@ -306,14 +306,6 @@
             </views>
         </instance>
 
-				<instance moduleIdRef="LED_Matrix_Kingbright_TA07-11" modelIndex="24" path="parts/core/LED_Matrix_Kingbright_TA07-11.fzp">
-            <views>
-                <iconView layer="icon">
-                    <geometry z="-1" x="-1" y="-1"/>
-                </iconView>
-            </views>
-        </instance>
-
         <instance moduleIdRef="LCD-GDM1602K" modelIndex="24" path="parts/core/lcd-GDM1602K.fzp">
             <views>
                 <iconView layer="icon">
