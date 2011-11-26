@@ -481,8 +481,8 @@ bool Panelizer::bestFitOne(PanelItem * panelItem, PanelParams & panelParams, QLi
 			tileRect.xmaxi = tileRect.xmini + bestPlace1.width;
 		}
 
-		qreal w = panelItem->boardSizeInches.width();
-		qreal h = panelItem->boardSizeInches.height();
+		double w = panelItem->boardSizeInches.width();
+		double h = panelItem->boardSizeInches.height();
 		if (panelItem->rotate90) {
 			w = h;
 			h = panelItem->boardSizeInches.width();

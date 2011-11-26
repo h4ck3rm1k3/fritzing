@@ -14,6 +14,7 @@
   <property name="pins">8</property>
   <property name="spacing">300mil</property>
   <property name="chip label">IC</property>
+ <property name='editable pin labels'>true</property>
  </properties>
  <taxonomy>part.dip.8.pins</taxonomy>
  <description>A DIP stand-in part for whatever IC you want.  With 8 pins on a 300 mil dual inline package (DIP) footprint.</description>

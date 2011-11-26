@@ -18,11 +18,13 @@
 # ********************************************************************/
 
 HEADERS += src/dialogs/prefsdialog.h \
-	src/dialogs/setcolordialog.h \
+	src/dialogs/pinlabeldialog.h \
 	src/dialogs/recoverydialog.h \
+	src/dialogs/setcolordialog.h \
 	src/dialogs/translatorlistmodel.h
  
 SOURCES += src/dialogs/prefsdialog.cpp \
-	src/dialogs/setcolordialog.cpp \
+	src/dialogs/pinlabeldialog.cpp \
 	src/dialogs/recoverydialog.cpp \
+	src/dialogs/setcolordialog.cpp \
 	src/dialogs/translatorlistmodel.cpp

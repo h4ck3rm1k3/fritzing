@@ -35,6 +35,7 @@ static int MaxSipPins = 64;
 static int MinDipPins = 4;
 static int MaxDipPins = 64;
 
+//////////////////////////////////////////////////
 
 Dip::Dip( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: MysteryPart(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
@@ -50,6 +51,7 @@ bool Dip::collectExtraInfo(QWidget * parent, const QString & family, const QStri
 	if (prop.compare("chip label", Qt::CaseInsensitive) == 0) {
 		returnProp = tr("chip label");
 	}
+
 	return result;
 }
 

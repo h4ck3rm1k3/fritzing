@@ -12,6 +12,7 @@
 <property name='package'>SO16</property>
 <property name='family'>Generic IC</property>
 <property name='chip label'>SO16</property>
+<property name='editable pin labels'>true</property>
 </properties>
 <views>
 <breadboardView>

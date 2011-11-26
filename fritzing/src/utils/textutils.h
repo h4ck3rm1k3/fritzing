@@ -95,7 +95,8 @@ public:
 	static QString makePolySVG(const QPolygonF & poly, QPointF offset, double width, QString colorString, double dpi, double printerScale, bool blackOnly);
 	static QPolygonF polygonFromElement(QDomElement & element);
 	static QString pointToSvgString(QPointF p, QPointF offset, double dpi, double printerScale);
-
+	static void replaceChildText(QDomDocument & doc, QDomNode & node, const QString & text);
+	static void replaceElementChildText(QDomDocument & doc, QDomElement & root, const QString & elementName, const QString & text);
 
 public:
 	static const QRegExp FindWhitespace;

@@ -2207,7 +2207,6 @@ bool MainWindow::loadCustomBoardShape()
 	file2.close();
 
 	loadPart(userPartsFolderPath + moduleID + FritzingPartExtension, -1, false);
-
 	swapSelectedAux(itemBase, moduleID);
 
 	itemBase->resetValues(itemBase->modelPart()->properties().value("family", "").toLower(), "shape");
@@ -2695,3 +2694,12 @@ void MainWindow::noBackup()
 {
 	m_autosaveTimer.stop();
 }
+
+
+void MainWindow::swapOne(ItemBase * itemBase, const QString & moduleID) {
+	QString userPartsFolderPath = FolderUtils::getUserDataStorePath("parts")+"/user/";
+
+	loadPart(userPartsFolderPath + moduleID + FritzingPartExtension, -1, false);
+	swapSelectedAux(itemBase, moduleID);
+}
+

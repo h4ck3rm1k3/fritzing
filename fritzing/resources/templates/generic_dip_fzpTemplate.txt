@@ -14,7 +14,8 @@
   <property name="pins">%1</property>
   <property name="spacing">300mil</property>
   <property name="chip label">IC</property>
- </properties>
+ <property name='editable pin labels'>true</property>
+</properties>
  <taxonomy>part.dip.%1.pins</taxonomy>
  <description>A DIP stand-in part for whatever IC you want.  With %1 pins on a 300 mil dual inline package (DIP) footprint.</description>
  <views>

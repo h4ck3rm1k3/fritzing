@@ -14,7 +14,8 @@
   <property name="pins">%1</property>
   <property name="spacing">300mil</property>
   <property name="chip label">IC</property>
- </properties>
+ <property name='editable pin labels'>true</property>
+</properties>
  <taxonomy>part.sip.%1.pins</taxonomy>
  <description>A SIP stand-in part for whatever you want.  With %1 pins on a 300 mil single inline package (SIP) footprint.</description>
  <views>

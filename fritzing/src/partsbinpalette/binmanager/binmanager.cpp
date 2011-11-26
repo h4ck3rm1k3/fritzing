@@ -922,10 +922,8 @@ void BinManager::createContextMenus() {
 	m_binContextMenu->addAction(m_saveBinAsAction);
 	m_binContextMenu->addAction(m_saveBinAsBundledAction);
 	m_binContextMenu->addAction(m_renameBinAction);
-	connect(m_binContextMenu, SIGNAL(aboutToShow()), this, SLOT(updateBinCombinedMenuIndex()));
 
 	m_partContextMenu = new QMenu(this);
-	connect(m_partContextMenu, SIGNAL(aboutToShow()), this, SLOT(updateBinCombinedMenuIndex()));
 	m_partContextMenu->addAction(m_editPartAction);
 	m_partContextMenu->addAction(m_exportPartAction);
 	m_partContextMenu->addAction(m_removePartAction);

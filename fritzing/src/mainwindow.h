@@ -157,6 +157,7 @@ public slots:
 	void removeGroundFill(bool force = false);
 	void copperFill();
 	void changeBoardLayers(int layers, bool doEmit);
+	void swapOne(ItemBase * itemBase, const QString & moduleID);
 
 protected slots:
 	void load();

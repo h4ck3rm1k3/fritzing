@@ -34,6 +34,9 @@ $Date$
 #include "../commands.h"
 #include "../connectors/connectoritem.h"
 #include "../layerattributes.h"
+#include "../dialogs/pinlabeldialog.h"
+#include "../utils/folderutils.h"
+#include "../utils/textutils.h"
 
 #include <QGraphicsSceneMouseEvent>
 #include <QSvgRenderer>
@@ -42,6 +45,57 @@ $Date$
 #include <QDomElement>
 #include <QDir>
 #include <QMessageBox>
+#include <QPushButton>
+#include <QVBoxLayout>
+#include <QRegExp>
+#include <limits>
+
+/////////////////////////////////////////////////
+
+static bool ByIDParseSuccessful = true;
+static QRegExp IntegerFinder("\\d+");
+
+
+int findNumber(const QString & string) {
+	int ix = string.indexOf(IntegerFinder);
+	if (ix < 0) {
+		return -1;
+	}
+
+	int result = IntegerFinder.cap(0).toInt();
+	int length = IntegerFinder.cap(0).length();
+
+	int jx = string.lastIndexOf(IntegerFinder);
+	if (jx >= ix + length) {
+		return -1;
+	}
+
+	return result;
+}
+
+bool byID(ConnectorItem * c1, ConnectorItem * c2)
+{
+	int i1 = findNumber(c1->connectorSharedID());
+	if (i1 < 0) {
+		ByIDParseSuccessful = false;
+		return true;
+	}
+	int i2 = findNumber(c2->connectorSharedID());
+	if (i2 < 0) {
+		ByIDParseSuccessful = false;
+		return true;
+	}
+
+	if (i2 == i1 && c1 != c2) {
+		// should not be two connectors with the same number
+		ByIDParseSuccessful = false;
+		return true;
+	}
+
+	return i1 <= i2;
+}
+
+/////////////////////////////////////////////////
 
 PaletteItem::PaletteItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu)
@@ -500,4 +554,141 @@ QString PaletteItem::genFZP(const QString & moduleid, const QString & templateNa
 	}
 
 	return FzpTemplate.arg(count).arg(middle);
+}
+
+bool PaletteItem::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget)
+{
+	if (prop.compare("editable pin labels", Qt::CaseInsensitive) == 0 && value.compare("true") == 0) {
+		returnProp = "";
+		returnValue = value;
+
+		QPushButton * button = new QPushButton(tr("Edit Pin Labels"));
+		button->setObjectName("infoViewButton");
+		connect(button, SIGNAL(pressed()), this, SLOT(openPinLabelDialog()));
+		button->setEnabled(swappingEnabled);
+
+		returnWidget = button;
+
+		return true;
+	}
+
+	return PaletteItemBase::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
+}
+
+void PaletteItem::openPinLabelDialog() {
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView == NULL) {
+		QMessageBox::warning(
+			NULL,
+			tr("Fritzing"),
+			tr("Unable to proceed; unable to find top level view.")
+		);		
+		return;	
+	}
+
+	QStringList labels;
+	QList<ConnectorItem *> sortedConnectorItems(this->cachedConnectorItems());
+	ByIDParseSuccessful = true;
+	qSort(sortedConnectorItems.begin(), sortedConnectorItems.end(), byID);
+	if (!ByIDParseSuccessful || sortedConnectorItems.count() == 0) {
+		QMessageBox::warning(
+			NULL,
+			tr("Fritzing"),
+			tr("Unable to proceed; part connectors do no have standard IDs.")
+		);		
+		return;
+	}
+
+	foreach (ConnectorItem * connectorItem, sortedConnectorItems) {
+		labels.append(connectorItem->connectorSharedName());
+	}
+
+	QString chipLabel = modelPart()->prop("chip label").toString();
+	if (chipLabel.isEmpty()) {
+		chipLabel = instanceTitle();
+	}
+
+	PinLabelDialog pinLabelDialog(labels, isSingleRow(sortedConnectorItems), chipLabel);
+	int result = pinLabelDialog.exec();
+	if (result != QDialog::Accepted) return;
+
+	QFile file(modelPart()->path());
+
+	QDomDocument domDocument;
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+	if (!domDocument.setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
+		QMessageBox::warning(
+			NULL,
+			tr("Fritzing"),
+			tr("Unable to parse own fzp file.  Nothing was saved.")
+		);	
+		return;
+	}
+
+	QString moduleID = FolderUtils::getRandText();
+
+	QDomElement root = domDocument.documentElement();
+	root.setAttribute("moduleId", moduleID);
+	TextUtils::replaceElementChildText(domDocument, root, "author", getenvUser());
+	TextUtils::replaceElementChildText(domDocument, root, "date", QDate::currentDate().toString(Qt::ISODate));
+
+	QStringList newLabels = pinLabelDialog.labels();
+	if (newLabels.count() != sortedConnectorItems.count()) {
+		QMessageBox::warning(
+			NULL,
+			tr("Fritzing"),
+			tr("Label mismatch.  Nothing was saved.")
+		);	
+		return;
+	}
+
+	QDomElement connectors = root.firstChildElement("connectors");
+
+	for (int i = 0; i < newLabels.count(); i++) {
+		ConnectorItem * connectorItem = sortedConnectorItems.at(i);
+		QDomElement connector = TextUtils::findElementWithAttribute(connectors, "id", connectorItem->connectorSharedID());
+		connector.setAttribute("name", newLabels.at(i));
+	}
+
+	QString userPartsFolderPath = FolderUtils::getUserDataStorePath("parts")+"/user/";
+	QFile file2(userPartsFolderPath + moduleID + FritzingPartExtension);
+	file2.open(QIODevice::WriteOnly);
+	QTextStream out2(&file2);
+	out2.setCodec("UTF-8");
+	out2 << domDocument.toString();
+	file2.close();
+
+	connect(this, SIGNAL(pinLabelSwap(ItemBase *, const QString &)), infoGraphicsView->window(), SLOT(swapOne(ItemBase *, const QString &)));
+	emit pinLabelSwap(this, moduleID);
+	disconnect(this, SIGNAL(pinLabelSwap(ItemBase *, const QString &)), infoGraphicsView->window(), SLOT(swapOne(ItemBase *, const QString &)));
+}
+
+bool PaletteItem::isSingleRow(QList<ConnectorItem *> & connectorItems) {
+	if (connectorItems.count() == 2) {
+		// no way to tell? so default to double
+		return false;
+	}
+	else if (connectorItems.count() % 2 == 0) {
+		QPointF p = connectorItems.at(0)->sceneAdjustedTerminalPoint(NULL);
+		double slope = 0;
+		for (int i = 1; i < connectorItems.count(); i++) { 
+			QPointF q = connectorItems.at(i)->sceneAdjustedTerminalPoint(NULL);
+			if (p == q) continue;
+			
+			double newSlope = q.x() == p.x() ? std::numeric_limits<double>::max() : (q.y()  - p.y()) / (q.x() - p.x());
+			if (i == 1) {
+				slope = newSlope;
+			}
+			else {
+				double d = qAbs(newSlope - slope);
+				if (d != 0 && d / qMax(qAbs(slope), qAbs(newSlope)) > 0.01) {
+					return false;
+				}
+			}
+		}
+	}
+
+	return true;
 }

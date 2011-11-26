@@ -76,10 +76,17 @@ public:
 	void slamZ(double z);
 	void resetImage(class InfoGraphicsView *);
 	void resetKinImage(ItemBase * layerKin, InfoGraphicsView * infoGraphicsView);
+	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
+
 
 public:
 	static QString genFZP(const QString & moduleid, const QString & templateName, int minPins, int maxPins, int steps);
 
+signals:
+	void pinLabelSwap(ItemBase *, const QString & moduleID);
+
+protected slots:
+	void openPinLabelDialog();
 
 protected:
 	void syncKinSelection(bool selected, PaletteItemBase * originator);
@@ -87,6 +94,7 @@ protected:
 	void updateConnections();
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void figureHover();
+	bool isSingleRow(QList<ConnectorItem *> & connectorItems);
 
 protected:
  	QList<class ItemBase *> m_layerKin;

@@ -51,7 +51,6 @@ public:
 	static QString makeBreadboardSipSvg(const QString & expectedFileName);
 	static QString makeBreadboardDipSvg(const QString & expectedFileName);
 
-
 protected:
 	bool isDIP();
 	bool otherPropsChange(const QMap<QString, QString> & propsMap);

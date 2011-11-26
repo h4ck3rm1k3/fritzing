@@ -171,25 +171,8 @@ QString TextUtils::replaceTextElement(const QString & svg, const QString & id, c
 
 		if (node.attribute("id").compare(id) != 0) continue;
 
-		node.normalize();
-
-		bool gotText = false;
-		QDomNodeList childList = node.childNodes();
-		for (int j = 0; j < childList.count(); j++) {
-			QDomNode child = childList.item(i);
-			if (child.isText()) {
-				gotText = true;
-				child.setNodeValue(newValue);
-				return doc.toString();
-			}
-		}
-
-		if (!gotText) {
-			QDomText t = doc.createTextNode(newValue);
-			node.appendChild(t);
-			return doc.toString();
-		}
-
+		replaceChildText(doc, node, newValue);
+		return doc.toString();
 	}
 		
 	return svg;
@@ -211,25 +194,8 @@ QString TextUtils::replaceTextElements(const QString & svg, const QHash<QString,
 		foreach (QString id, hash.keys()) {
 			if (node.attribute("id").compare(id) != 0) continue;
 
-			node.normalize();
-
-			bool gotText = false;
-			QDomNodeList childList = node.childNodes();
-			for (int j = 0; j < childList.count(); j++) {
-				QDomNode child = childList.item(i);
-				if (child.isText()) {
-					gotText = true;
-					changed = true;
-					child.setNodeValue(hash.value(id));
-					break;
-				}
-			}
-
-			if (!gotText) {
-				changed = true;
-				QDomText t = doc.createTextNode(hash.value(id));
-				node.appendChild(t);
-			}
+			replaceChildText(doc, node, hash.value(id));
+			changed = true;
 			break;
 		}
 	}
@@ -237,6 +203,32 @@ QString TextUtils::replaceTextElements(const QString & svg, const QHash<QString,
 	if (!changed) return svg;
 
 	return doc.toString();
+}
+
+
+void TextUtils::replaceElementChildText(QDomDocument & doc, QDomElement & root, const QString & elementName, const QString & text) {
+	QDomElement element = root.firstChildElement(elementName);
+	if (element.isNull()) {
+		doc.createElement(elementName);
+		root.appendChild(element);
+	}
+	replaceChildText(doc, element, text);
+}
+
+void TextUtils::replaceChildText(QDomDocument & doc, QDomNode & node, const QString & text) {
+	node.normalize();
+
+	QDomNodeList childList = node.childNodes();
+	for (int j = 0; j < childList.count(); j++) {
+		QDomNode child = childList.item(j);
+		if (child.isText()) {
+			child.setNodeValue(text);
+			return;
+		}
+	}
+
+	QDomText t = doc.createTextNode(text);
+	node.appendChild(t);
 }
 
 bool TextUtils::mergeSvg(QDomDocument & doc1, const QString & svg, const QString & id) 
