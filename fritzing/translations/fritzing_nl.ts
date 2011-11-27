@@ -2776,6 +2776,33 @@ Reden : %2 (errcode %3)</translation>
     </message>
 </context>
 <context>
+    <name>PaletteItem</name>
+    <message>
+        <source>Edit Pin Labels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fritzing</source>
+        <translation type="unfinished">Fritzing</translation>
+    </message>
+    <message>
+        <source>Unable to proceed; unable to find top level view.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to proceed; part connectors do no have standard IDs.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to parse own fzp file.  Nothing was saved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Label mismatch.  Nothing was saved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PartLabel</name>
     <message>
         <source>Edit</source>
@@ -3286,6 +3313,37 @@ op de PCB?</translation>
     <message>
         <source>columns</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PinLabelDialog</name>
+    <message>
+        <source>&lt;p&gt;&lt;h2&gt;Pin Label Editor&lt;/h2&gt;&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;Click on a label next to a pin number to rename that pin.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can use the tab key to move through the labels in order.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save as new part</source>
+        <translation type="unfinished">Opslaan als nieuw ondereel</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished">Ongedaan maken</translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation type="unfinished">Terug gedaan maken</translation>
     </message>
 </context>
 <context>
@@ -4344,6 +4402,10 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
     </message>
     <message>
         <source>Sensors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pin Label Editor</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

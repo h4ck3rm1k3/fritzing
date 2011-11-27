@@ -416,42 +416,42 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="948"/>
+        <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="946"/>
         <source>Delete bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="949"/>
+        <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="947"/>
         <source>Do you really want to delete bin &apos;%1&apos;?  This action cannot be undone.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="979"/>
+        <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="977"/>
         <source>Read-only bin</source>
         <translation type="unfinished">Schreibgeschütztes Sortiment</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="979"/>
+        <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="977"/>
         <source>This bin cannot be renamed.</source>
         <translation type="unfinished">Dieses Sortiment kann nicht umbenannt werden.</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="986"/>
+        <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="984"/>
         <source>Rename bin</source>
         <translation type="unfinished">Sortiment umbenennen</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="987"/>
+        <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="985"/>
         <source>Please choose a name for the bin:</source>
         <translation type="unfinished">Wähle einen Namen für dieses Sortiment:</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="1055"/>
+        <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="1053"/>
         <source>Remove from bin</source>
         <translation type="unfinished">Bauteil vom Sortiment entfernen</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="1056"/>
+        <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="1054"/>
         <source>Do you really want to remove &apos;%1&apos; from the bin?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -644,7 +644,7 @@ um die Verbindung zu reparieren</translation>
 <context>
     <name>Dip</name>
     <message>
-        <location filename="../src/items/dip.cpp" line="51"/>
+        <location filename="../src/items/dip.cpp" line="52"/>
         <source>chip label</source>
         <translation>Chip-Beschriftung</translation>
     </message>
@@ -1386,7 +1386,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1212"/>
-        <location filename="../src/mainwindow.cpp" line="2483"/>
+        <location filename="../src/mainwindow.cpp" line="2482"/>
         <source>Fritzing (*%1)</source>
         <translation>Fritzing (*%1)</translation>
     </message>
@@ -1402,7 +1402,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
         <location filename="../src/mainwindow.cpp" line="2133"/>
         <location filename="../src/mainwindow.cpp" line="2153"/>
         <location filename="../src/mainwindow.cpp" line="2167"/>
-        <location filename="../src/mainwindow.cpp" line="2221"/>
+        <location filename="../src/mainwindow.cpp" line="2220"/>
         <location filename="../src/mainwindow_export.cpp" line="470"/>
         <location filename="../src/mainwindow_export.cpp" line="512"/>
         <location filename="../src/mainwindow_export.cpp" line="599"/>
@@ -1482,32 +1482,32 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
         <translation>Sorry, Fritzing kann diese SVG-Datei nicht speichern.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2569"/>
+        <location filename="../src/mainwindow.cpp" line="2568"/>
         <source>Using SMD parts</source>
         <translation>Benutzen von SMD-Bauteilen</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2570"/>
+        <location filename="../src/mainwindow.cpp" line="2569"/>
         <source>When using SMD parts, a double-sided board is usually desired. On the default single-sided board, SMD parts will end up on the back of the board.</source>
         <translation>Zur Nutzung von SMD-Bauteilen benötigt man üblicherweise eine zweiseitige Leiterplatte. Auf einer einseitigen Leiterplatte würden die SMD-Bauteile auf der Unterseite landen.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2572"/>
+        <location filename="../src/mainwindow.cpp" line="2571"/>
         <source>Do you want to swap to a double-sided board now?</source>
         <translation>Möchtest Du jetz zu einer zweiseitigen Leiterplatte wechseln?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2577"/>
+        <location filename="../src/mainwindow.cpp" line="2576"/>
         <source>Swap</source>
         <translation>Wechseln</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2578"/>
+        <location filename="../src/mainwindow.cpp" line="2577"/>
         <source>Don&apos;t Swap</source>
         <translation>Nicht wechseln</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2629"/>
+        <location filename="../src/mainwindow.cpp" line="2628"/>
         <source>%1 %2 %3</source>
         <translation type="unfinished">%1 %2 %3</translation>
     </message>
@@ -1615,27 +1615,27 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
         <translation>Sorry, Fritzing kann diese Bauteil-Vorlage nicht laden.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2222"/>
+        <location filename="../src/mainwindow.cpp" line="2221"/>
         <source>Svg %1 is missing a &apos;%2&apos; layer. For more information on how to create a custom board shape, see the tutorial at &lt;a href=&apos;http://fritzing.org/learning/tutorials/designing-pcb/pcb-custom-shape/&apos;&gt;http://fritzing.org/learning/tutorials/designing-pcb/pcb-custom-shape/&lt;/a&gt;.</source>
         <translation>Der SVG-Datei %1 fehlt eine &apos;%2&apos;-Ebene. Um mehr darüber zu lernen, wie man eine eigene Leiterplattenform erstellt, schau Dir die &lt;a href=&apos;http://fritzing.org/learning/tutorials/designing-pcb/pcb-custom-shape/&apos;&gt;Anleitung&lt;/a&gt; an.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2259"/>
+        <location filename="../src/mainwindow.cpp" line="2258"/>
         <source>loading %1</source>
         <translation>Lade %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2268"/>
+        <location filename="../src/mainwindow.cpp" line="2267"/>
         <source>Loading...</source>
         <translation>Lade...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2274"/>
+        <location filename="../src/mainwindow.cpp" line="2273"/>
         <source>new sketch</source>
         <translation>Neuer Entwurf</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2390"/>
+        <location filename="../src/mainwindow.cpp" line="2389"/>
         <source>Backing up &apos;%1&apos;</source>
         <translation>&apos;%1&apos; wird gesichert</translation>
     </message>
@@ -2085,7 +2085,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
         <translation>&amp;Duplizieren</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2579"/>
+        <location filename="../src/mainwindow.cpp" line="2578"/>
         <location filename="../src/mainwindow_menu.cpp" line="618"/>
         <source>Ctrl+D</source>
         <translation type="unfinished">Strg+D</translation>
@@ -3510,6 +3510,42 @@ Ursache: %2 (Fehlercode %3)</translation>
     </message>
 </context>
 <context>
+    <name>PaletteItem</name>
+    <message>
+        <location filename="../src/items/paletteitem.cpp" line="565"/>
+        <source>Edit Pin Labels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/items/paletteitem.cpp" line="583"/>
+        <location filename="../src/items/paletteitem.cpp" line="596"/>
+        <location filename="../src/items/paletteitem.cpp" line="624"/>
+        <location filename="../src/items/paletteitem.cpp" line="641"/>
+        <source>Fritzing</source>
+        <translation type="unfinished">Fritzing</translation>
+    </message>
+    <message>
+        <location filename="../src/items/paletteitem.cpp" line="584"/>
+        <source>Unable to proceed; unable to find top level view.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/items/paletteitem.cpp" line="597"/>
+        <source>Unable to proceed; part connectors do no have standard IDs.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/items/paletteitem.cpp" line="625"/>
+        <source>Unable to parse own fzp file.  Nothing was saved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/items/paletteitem.cpp" line="642"/>
+        <source>Label mismatch.  Nothing was saved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PartLabel</name>
     <message>
         <location filename="../src/items/partlabel.cpp" line="434"/>
@@ -4135,6 +4171,44 @@ Ansicht aus?</translation>
         <location filename="../src/items/perfboard.cpp" line="259"/>
         <source>set board size</source>
         <translation>Leiterplattengröße</translation>
+    </message>
+</context>
+<context>
+    <name>PinLabelDialog</name>
+    <message>
+        <location filename="../src/dialogs/pinlabeldialog.cpp" line="87"/>
+        <source>&lt;p&gt;&lt;h2&gt;Pin Label Editor&lt;/h2&gt;&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/pinlabeldialog.cpp" line="88"/>
+        <source>&lt;p&gt;Click on a label next to a pin number to rename that pin.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/pinlabeldialog.cpp" line="89"/>
+        <source>You can use the tab key to move through the labels in order.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/pinlabeldialog.cpp" line="108"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Abbrechen</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/pinlabeldialog.cpp" line="112"/>
+        <source>Save as new part</source>
+        <translation type="unfinished">Als neues Bauteil speichern</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/pinlabeldialog.cpp" line="116"/>
+        <source>Undo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/pinlabeldialog.cpp" line="120"/>
+        <source>Redo</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5503,6 +5577,11 @@ im Sortiment.</translation>
         <location filename="../src/svg/gerbergenerator.cpp" line="262"/>
         <source>mask export failure</source>
         <translation type="unfinished">Fehler beim Exportieren der Lötstoppmasken-Datei</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/pinlabeldialog.cpp" line="71"/>
+        <source>Pin Label Editor</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
