@@ -37,7 +37,7 @@ $Date: 2011-08-10 00:15:35 +0200 (Wed, 10 Aug 2011) $
 
 // TODO:
 //
-//		nice to update schematic view with new pin labels
+//		would be nice to update schematic view with new pin labels
 //
 //		reasons for not doing save:
 //			undo would require a lot of work to implement and would require saving the old dom document
