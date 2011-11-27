@@ -2868,89 +2868,173 @@
    <circle  fill="none" cx="89.28" cy="61.2" connectorname="GND" stroke="#9A916C" r="2.052" id="connector42pin" stroke-width="1.224"/>
    <circle  fill="none" cx="82.08" cy="61.2" connectorname="AREF" stroke="#9A916C" r="2.052" id="connector43pin" stroke-width="1.224"/>
    <circle  fill="none" cx="108" cy="183.6" connectorname="RESET" stroke="#9A916C" r="1.872" id="connector44pin" stroke-width="0.864"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m106.128,179.294,3.744,0,0,8.6112,-3.744,0,0,-8.6112M106.128,183.6a1.872,1.872,0,1,0,3.744,0,1.872,1.872,0,1,0,-3.744,0z"/>
    <circle  fill="none" cx="115.2" cy="183.6" connectorname="3.3V" stroke="#9A916C" r="1.872" id="connector45pin" stroke-width="0.864"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m113.328,179.294,3.744,0,0,8.6112,-3.744,0,0,-8.6112M113.328,183.6a1.872,1.872,0,1,0,3.744,0,1.872,1.872,0,1,0,-3.744,0z"/>
    <circle  fill="none" cx="122.4" cy="183.6" connectorname="5V" stroke="#9A916C" r="1.872" id="connector46pin" stroke-width="0.864"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m120.528,179.294,3.744,0,0,8.6112,-3.744,0,0,-8.6112M120.528,183.6a1.872,1.872,0,1,0,3.744,0,1.872,1.872,0,1,0,-3.744,0z"/>
    <circle  fill="none" cx="129.6" cy="183.6" connectorname="GND" stroke="#9A916C" r="1.872" id="connector47pin" stroke-width="0.864"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m127.728,179.294,3.744,0,0,8.6112,-3.744,0,0,-8.6112M127.728,183.6a1.872,1.872,0,1,0,3.744,0,1.872,1.872,0,1,0,-3.744,0z"/>
    <circle  fill="none" cx="136.8" cy="183.6" connectorname="GND" stroke="#9A916C" r="1.872" id="connector48pin" stroke-width="0.864"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m134.928,179.294,3.744,0,0,8.6112,-3.744,0,0,-8.6112M134.928,183.6a1.872,1.872,0,1,0,3.744,0,1.872,1.872,0,1,0,-3.744,0z"/>
    <circle  fill="none" cx="144" cy="183.6" connectorname="VIN" stroke="#9A916C" r="1.872" id="connector49pin" stroke-width="0.864"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m142.128,179.294,3.744,0,0,8.6112,-3.744,0,0,-8.6112M142.128,183.6a1.872,1.872,0,1,0,3.744,0,1.872,1.872,0,1,0,-3.744,0z"/>
    <circle  fill="none" cx="158.4" cy="183.6" connectorname="A0" stroke="#9A916C" r="1.872" id="connector50pin" stroke-width="0.864"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m156.528,179.294,3.744,0,0,8.6112,-3.744,0,0,-8.6112M156.528,183.6a1.872,1.872,0,1,0,3.744,0,1.872,1.872,0,1,0,-3.744,0z"/>
    <circle  fill="none" cx="165.6" cy="183.6" connectorname="A1" stroke="#9A916C" r="1.872" id="connector51pin" stroke-width="0.864"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m163.728,179.294,3.744,0,0,8.6112,-3.744,0,0,-8.6112M163.728,183.6a1.872,1.872,0,1,0,3.744,0,1.872,1.872,0,1,0,-3.744,0z"/>
    <circle  fill="none" cx="172.8" cy="183.6" connectorname="A2" stroke="#9A916C" r="1.872" id="connector52pin" stroke-width="0.864"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m170.928,179.294,3.744,0,0,8.6112,-3.744,0,0,-8.6112M170.928,183.6a1.872,1.872,0,1,0,3.744,0,1.872,1.872,0,1,0,-3.744,0z"/>
    <circle  fill="none" cx="180" cy="183.6" connectorname="A3" stroke="#9A916C" r="1.872" id="connector53pin" stroke-width="0.864"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m178.128,179.294,3.744,0,0,8.6112,-3.744,0,0,-8.6112M178.128,183.6a1.872,1.872,0,1,0,3.744,0,1.872,1.872,0,1,0,-3.744,0z"/>
    <circle  fill="none" cx="187.2" cy="183.6" connectorname="A4" stroke="#9A916C" r="1.872" id="connector54pin" stroke-width="0.864"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m185.328,179.294,3.744,0,0,8.6112,-3.744,0,0,-8.6112M185.328,183.6a1.872,1.872,0,1,0,3.744,0,1.872,1.872,0,1,0,-3.744,0z"/>
    <circle  fill="none" cx="194.4" cy="183.6" connectorname="A5" stroke="#9A916C" r="1.872" id="connector55pin" stroke-width="0.864"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m192.528,179.294,3.744,0,0,8.6112,-3.744,0,0,-8.6112M192.528,183.6a1.872,1.872,0,1,0,3.744,0,1.872,1.872,0,1,0,-3.744,0z"/>
    <circle  fill="none" cx="194.4" cy="46.8" connectorname="RX" stroke="#9A916C" r="1.872" id="connector56pin" stroke-width="0.864"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m192.528,42.4944,3.744,0,0,8.6112,-3.744,0,0,-8.6112M192.528,46.8a1.872,1.872,0,1,0,3.744,0,1.872,1.872,0,1,0,-3.744,0z"/>
    <circle  fill="none" cx="187.2" cy="46.8" connectorname="TX" stroke="#9A916C" r="1.872" id="connector57pin" stroke-width="0.864"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m185.328,42.4944,3.744,0,0,8.6112,-3.744,0,0,-8.6112M185.328,46.8a1.872,1.872,0,1,0,3.744,0,1.872,1.872,0,1,0,-3.744,0z"/>
    <circle  fill="none" cx="180" cy="46.8" connectorname="D2" stroke="#9A916C" r="1.872" id="connector58pin" stroke-width="0.864"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m178.128,42.4944,3.744,0,0,8.6112,-3.744,0,0,-8.6112M178.128,46.8a1.872,1.872,0,1,0,3.744,0,1.872,1.872,0,1,0,-3.744,0z"/>
    <circle  fill="none" cx="172.8" cy="46.8" connectorname="D3" stroke="#9A916C" r="1.872" id="connector59pin" stroke-width="0.864"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m170.928,42.4944,3.744,0,0,8.6112,-3.744,0,0,-8.6112M170.928,46.8a1.872,1.872,0,1,0,3.744,0,1.872,1.872,0,1,0,-3.744,0z"/>
    <circle  fill="none" cx="165.6" cy="46.8" connectorname="D4" stroke="#9A916C" r="1.872" id="connector60pin" stroke-width="0.864"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m163.728,42.4944,3.744,0,0,8.6112,-3.744,0,0,-8.6112M163.728,46.8a1.872,1.872,0,1,0,3.744,0,1.872,1.872,0,1,0,-3.744,0z"/>
    <circle  fill="none" cx="158.4" cy="46.8" connectorname="D5" stroke="#9A916C" r="1.872" id="connector61pin" stroke-width="0.864"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m156.528,42.4944,3.744,0,0,8.6112,-3.744,0,0,-8.6112M156.528,46.8a1.872,1.872,0,1,0,3.744,0,1.872,1.872,0,1,0,-3.744,0z"/>
    <circle  fill="none" cx="151.2" cy="46.8" connectorname="D6" stroke="#9A916C" r="1.872" id="connector62pin" stroke-width="0.864"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m149.328,42.4944,3.744,0,0,8.6112,-3.744,0,0,-8.6112M149.328,46.8a1.872,1.872,0,1,0,3.744,0,1.872,1.872,0,1,0,-3.744,0z"/>
    <circle  fill="none" cx="144" cy="46.8" connectorname="D7" stroke="#9A916C" r="1.872" id="connector63pin" stroke-width="0.864"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m142.128,42.4944,3.744,0,0,8.6112,-3.744,0,0,-8.6112M142.128,46.8a1.872,1.872,0,1,0,3.744,0,1.872,1.872,0,1,0,-3.744,0z"/>
    <circle  fill="none" cx="132.48" cy="46.8" connectorname="D8" stroke="#9A916C" r="1.872" id="connector64pin" stroke-width="0.864"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m130.608,42.4944,3.744,0,0,8.6112,-3.744,0,0,-8.6112M130.608,46.8a1.872,1.872,0,1,0,3.744,0,1.872,1.872,0,1,0,-3.744,0z"/>
    <circle  fill="none" cx="125.28" cy="46.8" connectorname="D9" stroke="#9A916C" r="1.872" id="connector65pin" stroke-width="0.864"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m123.408,42.4944,3.744,0,0,8.6112,-3.744,0,0,-8.6112M123.408,46.8a1.872,1.872,0,1,0,3.744,0,1.872,1.872,0,1,0,-3.744,0z"/>
    <circle  fill="none" cx="118.08" cy="46.8" connectorname="D10" stroke="#9A916C" r="1.872" id="connector66pin" stroke-width="0.864"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m116.208,42.4944,3.744,0,0,8.6112,-3.744,0,0,-8.6112M116.208,46.8a1.872,1.872,0,1,0,3.744,0,1.872,1.872,0,1,0,-3.744,0z"/>
    <circle  fill="none" cx="110.88" cy="46.8" connectorname="D11" stroke="#9A916C" r="1.872" id="connector67pin" stroke-width="0.864"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m109.008,42.4944,3.744,0,0,8.6112,-3.744,0,0,-8.6112M109.008,46.8a1.872,1.872,0,1,0,3.744,0,1.872,1.872,0,1,0,-3.744,0z"/>
    <circle  fill="none" cx="103.68" cy="46.8" connectorname="D12" stroke="#9A916C" r="1.872" id="connector68pin" stroke-width="0.864"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m101.808,42.4944,3.744,0,0,8.6112,-3.744,0,0,-8.6112M101.808,46.8a1.872,1.872,0,1,0,3.744,0,1.872,1.872,0,1,0,-3.744,0z"/>
    <circle  fill="none" cx="96.48" cy="46.8" connectorname="D13" stroke="#9A916C" r="1.872" id="connector69pin" stroke-width="0.864"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m94.608,42.4944,3.744,0,0,8.6112,-3.744,0,0,-8.6112M94.608,46.8a1.872,1.872,0,1,0,3.744,0,1.872,1.872,0,1,0,-3.744,0z"/>
    <circle  fill="none" cx="89.28" cy="46.8" connectorname="GND" stroke="#9A916C" r="1.872" id="connector70pin" stroke-width="0.864"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m87.408,42.4944,3.744,0,0,8.6112,-3.744,0,0,-8.6112M87.408,46.8a1.872,1.872,0,1,0,3.744,0,1.872,1.872,0,1,0,-3.744,0z"/>
    <circle  fill="none" cx="82.08" cy="46.8" connectorname="AREF" stroke="#9A916C" r="1.872" id="connector71pin" stroke-width="0.864"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m80.208,42.4944,3.744,0,0,8.6112,-3.744,0,0,-8.6112M80.208,46.8a1.872,1.872,0,1,0,3.744,0,1.872,1.872,0,1,0,-3.744,0z"/>
    <circle  fill="none" cx="21.6" cy="158.4" connectorname="GND" stroke="#9A916C" r="2.07666" id="connector100pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m19.5233,156.324,6.22999,0,0,4.15332,-6.22999,0,0,-4.15332M19.5233,158.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0zz"/>
    <circle  fill="none" cx="50.4" cy="72" connectorname="VCC" stroke="#9A916C" r="2.07666" id="connector126pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m48.3233,69.9233,6.22999,0,0,4.15332,-6.22999,0,0,-4.15332M48.3233,72a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0zz"/>
    <circle  fill="none" cx="57.6" cy="72" connectorname="VCC" stroke="#9A916C" r="2.07666" id="connector127pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m52.8237,69.9233,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M55.5233,72a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="64.8" cy="72" connectorname="VCC" stroke="#9A916C" r="2.07666" id="connector128pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m60.0237,69.9233,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M62.7233,72a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="72" cy="72" connectorname="VCC" stroke="#9A916C" r="2.07666" id="connector129pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m67.2237,69.9233,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M69.9233,72a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="79.2" cy="72" connectorname="VCC" stroke="#9A916C" r="2.07666" id="connector130pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m74.4235,69.9233,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M77.1235,72a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="86.4" cy="72" connectorname="VCC" stroke="#9A916C" r="2.07666" id="connector131pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m81.6235,69.9233,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M84.3235,72a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="93.6" cy="72" connectorname="VCC" stroke="#9A916C" r="2.07666" id="connector132pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m88.8235,69.9233,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M91.5235,72a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="100.8" cy="72" connectorname="VCC" stroke="#9A916C" r="2.07666" id="connector133pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m96.0235,69.9233,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M98.7235,72a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="108" cy="72" connectorname="VCC" stroke="#9A916C" r="2.07666" id="connector134pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m103.224,69.9233,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M105.924,72a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="115.2" cy="72" connectorname="VCC" stroke="#9A916C" r="2.07666" id="connector135pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m110.424,69.9233,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M113.124,72a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="122.4" cy="72" connectorname="VCC" stroke="#9A916C" r="2.07666" id="connector136pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m117.624,69.9233,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M120.324,72a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="129.6" cy="72" connectorname="VCC" stroke="#9A916C" r="2.07666" id="connector137pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m124.824,69.9233,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M127.524,72a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="136.8" cy="72" connectorname="VCC" stroke="#9A916C" r="2.07666" id="connector138pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m132.024,69.9233,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M134.724,72a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="144" cy="72" connectorname="VCC" stroke="#9A916C" r="2.07666" id="connector139pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m139.224,69.9233,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M141.924,72a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="151.2" cy="72" connectorname="VCC" stroke="#9A916C" r="2.07666" id="connector140pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m146.424,69.9233,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M149.124,72a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="158.4" cy="72" connectorname="VCC" stroke="#9A916C" r="2.07666" id="connector141pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m153.624,69.9233,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M156.324,72a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="165.6" cy="72" connectorname="VCC" stroke="#9A916C" r="2.07666" id="connector142pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m160.824,69.9233,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M163.524,72a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="172.8" cy="72" connectorname="VCC" stroke="#9A916C" r="2.07666" id="connector143pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m168.024,69.9233,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M170.724,72a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="180" cy="72" connectorname="VCC" stroke="#9A916C" r="2.07666" id="connector144pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m175.224,69.9233,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M177.924,72a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="187.2" cy="72" connectorname="VCC" stroke="#9A916C" r="2.07666" id="connector145pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m182.424,69.9233,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M185.124,72a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="194.4" cy="72" connectorname="VCC" stroke="#9A916C" r="2.07666" id="connector146pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m189.624,69.9233,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M192.324,72a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="201.6" cy="72" connectorname="VCC" stroke="#9A916C" r="2.07666" id="connector147pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m197.446,69.9233,6.22999,0,0,4.15332,-6.22999,0,0,-4.15332M199.524,72a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0zz"/>
    <circle  fill="none" cx="79.2" cy="158.4" connectorname="GND" stroke="#9A916C" r="2.07666" id="connector148pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m77.1235,154.246,4.15332,0,0,6.22999,-4.15332,0,0,-6.22999M77.1235,158.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0zz"/>
    <circle  fill="none" cx="79.2" cy="151.2" connectorname="GND" stroke="#9A916C" r="2.07666" id="connector149pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m77.1235,146.424,4.15332,0,0,9.55267,-4.15332,0,0,-9.55267M77.1235,151.2a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="79.2" cy="144" connectorname="GND" stroke="#9A916C" r="2.07666" id="connector150pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m77.1235,139.224,4.15332,0,0,9.55267,-4.15332,0,0,-9.55267M77.1235,144a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="79.2" cy="136.8" connectorname="GND" stroke="#9A916C" r="2.07666" id="connector151pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m77.1235,132.024,4.15332,0,0,9.55267,-4.15332,0,0,-9.55267M77.1235,136.8a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="79.2" cy="129.6" connectorname="GND" stroke="#9A916C" r="2.07666" id="connector152pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m77.1235,124.824,4.15332,0,0,9.55267,-4.15332,0,0,-9.55267M77.1235,129.6a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="79.2" cy="122.4" connectorname="GND" stroke="#9A916C" r="2.07666" id="connector153pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m77.1235,117.624,4.15332,0,0,9.55267,-4.15332,0,0,-9.55267M77.1235,122.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="79.2" cy="115.2" connectorname="GND" stroke="#9A916C" r="2.07666" id="connector154pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m77.1235,110.424,4.15332,0,0,9.55267,-4.15332,0,0,-9.55267M77.1235,115.2a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="79.2" cy="108" connectorname="GND" stroke="#9A916C" r="2.07666" id="connector155pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m77.1235,103.224,4.15332,0,0,9.55267,-4.15332,0,0,-9.55267M77.1235,108a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="79.2" cy="100.8" connectorname="GND" stroke="#9A916C" r="2.07666" id="connector156pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m77.1235,96.0235,4.15332,0,0,9.55267,-4.15332,0,0,-9.55267M77.1235,100.8a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="79.2" cy="93.6" connectorname="GND" stroke="#9A916C" r="2.07666" id="connector157pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m77.1235,88.8235,4.15332,0,0,9.55267,-4.15332,0,0,-9.55267M77.1235,93.6a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="79.2" cy="86.4" connectorname="GND" stroke="#9A916C" r="2.07666" id="connector158pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m77.1235,81.6235,4.15332,0,0,9.55267,-4.15332,0,0,-9.55267M77.1235,86.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="79.2" cy="79.2" connectorname="GND" stroke="#9A916C" r="2.07666" id="connector159pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m77.1235,77.1235,4.15332,0,0,6.22999,-4.15332,0,0,-6.22999M77.1235,79.2a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0zz"/>
    <circle  fill="none" cx="72" cy="72" connectorname="5V" stroke="#9A916C" r="2.07666" id="connector160pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m69.9233,69.9233,4.15332,0,0,6.22999,-4.15332,0,0,-6.22999M69.9233,72a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0zz"/>
    <circle  fill="none" cx="72" cy="79.2" connectorname="5V" stroke="#9A916C" r="2.07666" id="connector161pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m69.9233,74.4235,4.15332,0,0,9.55267,-4.15332,0,0,-9.55267M69.9233,79.2a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="72" cy="86.4" connectorname="5V" stroke="#9A916C" r="2.07666" id="connector162pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m69.9233,81.6235,4.15332,0,0,9.55267,-4.15332,0,0,-9.55267M69.9233,86.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="72" cy="93.6" connectorname="5V" stroke="#9A916C" r="2.07666" id="connector163pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m69.9233,88.8235,4.15332,0,0,9.55267,-4.15332,0,0,-9.55267M69.9233,93.6a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="72" cy="100.8" connectorname="5V" stroke="#9A916C" r="2.07666" id="connector164pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m69.9233,96.0235,4.15332,0,0,9.55267,-4.15332,0,0,-9.55267M69.9233,100.8a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="72" cy="108" connectorname="5V" stroke="#9A916C" r="2.07666" id="connector165pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m69.9233,103.224,4.15332,0,0,9.55267,-4.15332,0,0,-9.55267M69.9233,108a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="72" cy="115.2" connectorname="5V" stroke="#9A916C" r="2.07666" id="connector166pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m69.9233,110.424,4.15332,0,0,9.55267,-4.15332,0,0,-9.55267M69.9233,115.2a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="72" cy="122.4" connectorname="5V" stroke="#9A916C" r="2.07666" id="connector167pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m69.9233,117.624,4.15332,0,0,9.55267,-4.15332,0,0,-9.55267M69.9233,122.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="72" cy="129.6" connectorname="5V" stroke="#9A916C" r="2.07666" id="connector168pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m69.9233,124.824,4.15332,0,0,9.55267,-4.15332,0,0,-9.55267M69.9233,129.6a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="72" cy="136.8" connectorname="5V" stroke="#9A916C" r="2.07666" id="connector169pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m69.9233,132.024,4.15332,0,0,9.55267,-4.15332,0,0,-9.55267M69.9233,136.8a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="72" cy="144" connectorname="5V" stroke="#9A916C" r="2.07666" id="connector170pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m69.9233,139.224,4.15332,0,0,9.55267,-4.15332,0,0,-9.55267M69.9233,144a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="72" cy="151.2" connectorname="5V" stroke="#9A916C" r="2.07666" id="connector171pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m69.9233,147.046,4.15332,0,0,6.22999,-4.15332,0,0,-6.22999M69.9233,151.2a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0zz"/>
    <circle  fill="none" cx="50.4" cy="36" connectorname="+12V" stroke="#9A916C" r="2.07666" id="connector232pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m48.3233,33.9233,6.22999,0,0,4.15332,-6.22999,0,0,-4.15332M48.3233,36a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0zz"/>
    <circle  fill="none" cx="57.6" cy="36" connectorname="+12V" stroke="#9A916C" r="2.07666" id="connector233pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m52.8237,33.9233,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M55.5233,36a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="64.8" cy="36" connectorname="+12V" stroke="#9A916C" r="2.07666" id="connector234pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m60.6467,33.9233,6.22999,0,0,4.15332,-6.22999,0,0,-4.15332M62.7233,36a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0zz"/>
    <circle  fill="none" cx="36" cy="36" connectorname="+12V" stroke="#9A916C" r="2.07666" id="connector235pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m33.9233,33.9233,6.22999,0,0,4.15332,-6.22999,0,0,-4.15332M33.9233,36a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0zz"/>
    <circle  fill="none" cx="43.2" cy="36" connectorname="+12V" stroke="#9A916C" r="2.07666" id="connector236pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m38.4237,33.9233,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M41.1233,36a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="50.4" cy="36" connectorname="+12V" stroke="#9A916C" r="2.07666" id="connector237pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m46.2467,33.9233,6.22999,0,0,4.15332,-6.22999,0,0,-4.15332M48.3233,36a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0zz"/>
    <circle  fill="none" cx="36" cy="36" connectorname="+12V" stroke="#9A916C" r="2.07666" id="connector238pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m31.8467,33.9233,6.22999,0,0,4.15332,-6.22999,0,0,-4.15332M33.9233,36a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0zz"/>
    <circle  fill="none" cx="28.8" cy="36" connectorname="+12V" stroke="#9A916C" r="2.07666" id="connector239pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m24.0237,33.9233,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M26.7233,36a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="21.6" cy="36" connectorname="+12V" stroke="#9A916C" r="2.07666" id="connector240pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m19.5233,33.9233,6.22999,0,0,4.15332,-6.22999,0,0,-4.15332M19.5233,36a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0zz"/>
    <circle  fill="none" cx="36.9" cy="21.6" connectorname="5V" stroke="#9A916C" r="2.26772" id="connector241pin" stroke-width="1.13386"/>
    <rect  width="4.53543" x="34.6323" y="19.3323" fill="none" height="4.53543" stroke="#9A916C" stroke-width="1.13386"/>
    <circle  fill="none" cx="26.9788" cy="21.6" connectorname="GND" stroke="#9A916C" r="2.26772" id="connector242pin" stroke-width="1.13386"/>
@@ -2996,7 +3080,9 @@
    <rect  width="4.53543" x="60.4346" y="19.3323" fill="none" height="4.53543" stroke="#9A916C" stroke-width="1.13386"/>
    <circle  fill="none" cx="52.7811" cy="21.6" connectorname="AREF" stroke="#9A916C" r="2.26772" id="connector272pin" stroke-width="1.13386"/>
    <circle  fill="none" cx="36" cy="193.5" connectorname="GND" stroke="#9A916C" r="2.90551" id="connector274pin" stroke-width="1.55905"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m33.0945,186.818,5.81103,0,0,13.3654,-5.81103,0,0,-13.3654M33.0945,193.5a2.90551,2.90551,0,1,0,5.81103,0,2.90551,2.90551,0,1,0,-5.81103,0z"/>
    <circle  fill="none" cx="50.4" cy="193.5" connectorname="GND" stroke="#9A916C" r="2.90551" id="connector275pin" stroke-width="1.55905"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m47.4945,186.818,5.81103,0,0,13.3654,-5.81103,0,0,-13.3654M47.4945,193.5a2.90551,2.90551,0,1,0,5.81103,0,2.90551,2.90551,0,1,0,-5.81103,0z"/>
    <circle  fill="none" cx="88.2" cy="190.8" connectorname="5V" stroke="#9A916C" r="1.63559" id="connector279pin" stroke-width="1.00346"/>
    <rect  width="3.27118" x="86.5642" y="189.164" fill="none" height="3.27118" stroke="#9A916C" stroke-width="1.00346"/>
    <circle  fill="none" cx="86.4" cy="151.2" connectorname="N$1" stroke="#9A916C" r="2.07666" id="connector280pin" stroke-width="1.31868"/>
@@ -3470,69 +3556,133 @@
    <circle  fill="none" cx="72" cy="64.8" connectorname="N$313" stroke="#9A916C" r="2.07666" id="connector514pin" stroke-width="1.31868"/>
    <rect  width="4.15332" x="69.9233" y="62.7233" fill="none" height="4.15332" stroke="#9A916C" stroke-width="1.31868"/>
    <circle  fill="none" cx="28.8" cy="158.4" connectorname="2" stroke="#9A916C" r="2.07666" id="connector515pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m24.0237,156.324,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M26.7233,158.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="36" cy="158.4" connectorname="3" stroke="#9A916C" r="2.07666" id="connector516pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m31.2237,156.324,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M33.9233,158.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="43.2" cy="158.4" connectorname="4" stroke="#9A916C" r="2.07666" id="connector517pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m38.4237,156.324,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M41.1233,158.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="50.4" cy="158.4" connectorname="5" stroke="#9A916C" r="2.07666" id="connector518pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m45.6237,156.324,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M48.3233,158.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="57.6" cy="158.4" connectorname="6" stroke="#9A916C" r="2.07666" id="connector519pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m52.8237,156.324,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M55.5233,158.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="64.8" cy="158.4" connectorname="7" stroke="#9A916C" r="2.07666" id="connector520pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m60.0237,156.324,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M62.7233,158.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="72" cy="158.4" connectorname="8" stroke="#9A916C" r="2.07666" id="connector521pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m67.2237,156.324,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M69.9233,158.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="86.4" cy="158.4" connectorname="10" stroke="#9A916C" r="2.07666" id="connector522pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m81.6235,156.324,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M84.3235,158.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="93.6" cy="158.4" connectorname="11" stroke="#9A916C" r="2.07666" id="connector523pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m88.8235,156.324,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M91.5235,158.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="100.8" cy="158.4" connectorname="12" stroke="#9A916C" r="2.07666" id="connector524pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m96.0235,156.324,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M98.7235,158.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="108" cy="158.4" connectorname="13" stroke="#9A916C" r="2.07666" id="connector525pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m103.224,156.324,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M105.924,158.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="115.2" cy="158.4" connectorname="14" stroke="#9A916C" r="2.07666" id="connector526pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m110.424,156.324,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M113.124,158.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="122.4" cy="158.4" connectorname="15" stroke="#9A916C" r="2.07666" id="connector527pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m117.624,156.324,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M120.324,158.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="129.6" cy="158.4" connectorname="16" stroke="#9A916C" r="2.07666" id="connector528pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m124.824,156.324,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M127.524,158.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="136.8" cy="158.4" connectorname="17" stroke="#9A916C" r="2.07666" id="connector529pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m132.024,156.324,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M134.724,158.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="144" cy="158.4" connectorname="18" stroke="#9A916C" r="2.07666" id="connector530pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m139.224,156.324,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M141.924,158.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="151.2" cy="158.4" connectorname="19" stroke="#9A916C" r="2.07666" id="connector531pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m146.424,156.324,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M149.124,158.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="158.4" cy="158.4" connectorname="20" stroke="#9A916C" r="2.07666" id="connector532pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m153.624,156.324,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M156.324,158.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="165.6" cy="158.4" connectorname="21" stroke="#9A916C" r="2.07666" id="connector533pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m160.824,156.324,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M163.524,158.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="172.8" cy="158.4" connectorname="22" stroke="#9A916C" r="2.07666" id="connector534pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m168.024,156.324,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M170.724,158.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="180" cy="158.4" connectorname="23" stroke="#9A916C" r="2.07666" id="connector535pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m175.224,156.324,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M177.924,158.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="187.2" cy="158.4" connectorname="24" stroke="#9A916C" r="2.07666" id="connector536pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m182.424,156.324,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M185.124,158.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="194.4" cy="158.4" connectorname="25" stroke="#9A916C" r="2.07666" id="connector537pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m189.624,156.324,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M192.324,158.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="201.6" cy="158.4" connectorname="26" stroke="#9A916C" r="2.07666" id="connector538pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m197.446,156.324,6.22999,0,0,4.15332,-6.22999,0,0,-4.15332M199.524,158.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0zz"/>
    <circle  fill="none" cx="57.6" cy="86.4" connectorname="2" stroke="#9A916C" r="2.07666" id="connector539pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m52.8237,84.3235,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M55.5233,86.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="50.4" cy="86.4" connectorname="3" stroke="#9A916C" r="2.07666" id="connector540pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m48.3233,84.3235,6.22999,0,0,4.15332,-6.22999,0,0,-4.15332M48.3233,86.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0zz"/>
    <circle  fill="none" cx="57.6" cy="93.6" connectorname="2" stroke="#9A916C" r="2.07666" id="connector541pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m52.8237,91.5235,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M55.5233,93.6a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="50.4" cy="93.6" connectorname="3" stroke="#9A916C" r="2.07666" id="connector542pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m48.3233,91.5235,6.22999,0,0,4.15332,-6.22999,0,0,-4.15332M48.3233,93.6a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0zz"/>
    <circle  fill="none" cx="57.6" cy="100.8" connectorname="2" stroke="#9A916C" r="2.07666" id="connector543pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m52.8237,98.7235,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M55.5233,100.8a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="50.4" cy="100.8" connectorname="3" stroke="#9A916C" r="2.07666" id="connector544pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m48.3233,98.7235,6.22999,0,0,4.15332,-6.22999,0,0,-4.15332M48.3233,100.8a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0zz"/>
    <circle  fill="none" cx="57.6" cy="108" connectorname="2" stroke="#9A916C" r="2.07666" id="connector545pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m52.8237,105.924,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M55.5233,108a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="50.4" cy="108" connectorname="3" stroke="#9A916C" r="2.07666" id="connector546pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m48.3233,105.924,6.22999,0,0,4.15332,-6.22999,0,0,-4.15332M48.3233,108a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0zz"/>
    <circle  fill="none" cx="57.6" cy="115.2" connectorname="2" stroke="#9A916C" r="2.07666" id="connector547pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m52.8237,113.124,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M55.5233,115.2a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="50.4" cy="115.2" connectorname="3" stroke="#9A916C" r="2.07666" id="connector548pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m48.3233,113.124,6.22999,0,0,4.15332,-6.22999,0,0,-4.15332M48.3233,115.2a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0zz"/>
    <circle  fill="none" cx="57.6" cy="122.4" connectorname="2" stroke="#9A916C" r="2.07666" id="connector549pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m52.8237,120.324,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M55.5233,122.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="50.4" cy="122.4" connectorname="3" stroke="#9A916C" r="2.07666" id="connector550pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m48.3233,120.324,6.22999,0,0,4.15332,-6.22999,0,0,-4.15332M48.3233,122.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0zz"/>
    <circle  fill="none" cx="57.6" cy="129.6" connectorname="2" stroke="#9A916C" r="2.07666" id="connector551pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m52.8237,127.524,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M55.5233,129.6a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="50.4" cy="129.6" connectorname="3" stroke="#9A916C" r="2.07666" id="connector552pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m48.3233,127.524,6.22999,0,0,4.15332,-6.22999,0,0,-4.15332M48.3233,129.6a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0zz"/>
    <circle  fill="none" cx="57.6" cy="136.8" connectorname="2" stroke="#9A916C" r="2.07666" id="connector553pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m52.8237,134.724,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M55.5233,136.8a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="50.4" cy="136.8" connectorname="3" stroke="#9A916C" r="2.07666" id="connector554pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m48.3233,134.724,6.22999,0,0,4.15332,-6.22999,0,0,-4.15332M48.3233,136.8a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0zz"/>
    <circle  fill="none" cx="57.6" cy="144" connectorname="2" stroke="#9A916C" r="2.07666" id="connector555pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m52.8237,141.924,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M55.5233,144a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="50.4" cy="144" connectorname="3" stroke="#9A916C" r="2.07666" id="connector556pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m48.3233,141.924,6.22999,0,0,4.15332,-6.22999,0,0,-4.15332M48.3233,144a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0zz"/>
    <circle  fill="none" cx="57.6" cy="151.2" connectorname="2" stroke="#9A916C" r="2.07666" id="connector557pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m52.8237,149.124,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M55.5233,151.2a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="50.4" cy="151.2" connectorname="3" stroke="#9A916C" r="2.07666" id="connector558pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m48.3233,149.124,6.22999,0,0,4.15332,-6.22999,0,0,-4.15332M48.3233,151.2a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0zz"/>
    <circle  fill="none" cx="93.6" cy="86.4" connectorname="2" stroke="#9A916C" r="2.07666" id="connector559pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m88.8235,84.3235,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M91.5235,86.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="100.8" cy="86.4" connectorname="3" stroke="#9A916C" r="2.07666" id="connector560pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m96.6463,84.3235,6.22999,0,0,4.15332,-6.22999,0,0,-4.15332M98.7235,86.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0zz"/>
    <circle  fill="none" cx="93.6" cy="93.6" connectorname="2" stroke="#9A916C" r="2.07666" id="connector561pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m88.8235,91.5235,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M91.5235,93.6a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="100.8" cy="93.6" connectorname="3" stroke="#9A916C" r="2.07666" id="connector562pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m96.6463,91.5235,6.22999,0,0,4.15332,-6.22999,0,0,-4.15332M98.7235,93.6a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0zz"/>
    <circle  fill="none" cx="93.6" cy="100.8" connectorname="2" stroke="#9A916C" r="2.07666" id="connector563pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m88.8235,98.7235,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M91.5235,100.8a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="100.8" cy="100.8" connectorname="3" stroke="#9A916C" r="2.07666" id="connector564pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m96.6463,98.7235,6.22999,0,0,4.15332,-6.22999,0,0,-4.15332M98.7235,100.8a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0zz"/>
    <circle  fill="none" cx="93.6" cy="108" connectorname="2" stroke="#9A916C" r="2.07666" id="connector565pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m88.8235,105.924,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M91.5235,108a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="100.8" cy="108" connectorname="3" stroke="#9A916C" r="2.07666" id="connector566pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m96.6463,105.924,6.22999,0,0,4.15332,-6.22999,0,0,-4.15332M98.7235,108a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0zz"/>
    <circle  fill="none" cx="93.6" cy="115.2" connectorname="2" stroke="#9A916C" r="2.07666" id="connector567pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m88.8235,113.124,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M91.5235,115.2a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="100.8" cy="115.2" connectorname="3" stroke="#9A916C" r="2.07666" id="connector568pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m96.6463,113.124,6.22999,0,0,4.15332,-6.22999,0,0,-4.15332M98.7235,115.2a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0zz"/>
    <circle  fill="none" cx="93.6" cy="122.4" connectorname="2" stroke="#9A916C" r="2.07666" id="connector569pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m88.8235,120.324,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M91.5235,122.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="100.8" cy="122.4" connectorname="3" stroke="#9A916C" r="2.07666" id="connector570pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m96.6463,120.324,6.22999,0,0,4.15332,-6.22999,0,0,-4.15332M98.7235,122.4a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0zz"/>
    <circle  fill="none" cx="93.6" cy="129.6" connectorname="2" stroke="#9A916C" r="2.07666" id="connector571pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m88.8235,127.524,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M91.5235,129.6a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="100.8" cy="129.6" connectorname="3" stroke="#9A916C" r="2.07666" id="connector572pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m96.6463,127.524,6.22999,0,0,4.15332,-6.22999,0,0,-4.15332M98.7235,129.6a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0zz"/>
    <circle  fill="none" cx="93.6" cy="136.8" connectorname="2" stroke="#9A916C" r="2.07666" id="connector573pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m88.8235,134.724,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M91.5235,136.8a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="100.8" cy="136.8" connectorname="3" stroke="#9A916C" r="2.07666" id="connector574pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m96.6463,134.724,6.22999,0,0,4.15332,-6.22999,0,0,-4.15332M98.7235,136.8a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0zz"/>
    <circle  fill="none" cx="93.6" cy="144" connectorname="2" stroke="#9A916C" r="2.07666" id="connector575pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m88.8235,141.924,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M91.5235,144a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="100.8" cy="144" connectorname="3" stroke="#9A916C" r="2.07666" id="connector576pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m96.6463,141.924,6.22999,0,0,4.15332,-6.22999,0,0,-4.15332M98.7235,144a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0zz"/>
    <circle  fill="none" cx="93.6" cy="151.2" connectorname="2" stroke="#9A916C" r="2.07666" id="connector577pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m88.8235,149.124,9.55267,0,0,4.15332,-9.55267,0,0,-4.15332M91.5235,151.2a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0z"/>
    <circle  fill="none" cx="100.8" cy="151.2" connectorname="3" stroke="#9A916C" r="2.07666" id="connector578pin" stroke-width="1.31868"/>
+   <path  fill="#9A916C" stroke="none" stroke-width="0" d="m96.6463,149.124,6.22999,0,0,4.15332,-6.22999,0,0,-4.15332M98.7235,151.2a2.07666,2.07666,0,1,0,4.15332,0,2.07666,2.07666,0,1,0,-4.15332,0zz"/>
   </g>
   <g  id="1x06_stack" stroke-width="0" transform="matrix(1, 0, 0, 1, 104.412, 179.986)">
    <rect  width="43.2" x="0" y="0" fill="#404040" height="7.199" stroke-width="0"/>
