@@ -54,6 +54,7 @@ protected slots:
 	void labelChanged();
 	void buttonClicked(QAbstractButton *);
 	void undoChanged(bool);
+	void labelEdited(const QString &) ;
 
 protected:
 	QFrame * initLabels(const QStringList & labels, bool singleRow, const QString & chipLabel);
@@ -64,7 +65,6 @@ protected:
 	bool m_isCore;
 	QStringList m_labels;
 	QUndoStack m_undoStack;
-	QPushButton * m_saveButton;
 	QPushButton * m_saveAsButton;
 	QPushButton * m_undoButton;
 	QPushButton * m_redoButton;

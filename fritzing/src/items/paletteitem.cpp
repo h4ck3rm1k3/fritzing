@@ -614,11 +614,11 @@ void PaletteItem::openPinLabelDialog() {
 
 	QFile file(modelPart()->path());
 
-	QDomDocument domDocument;
+	QDomDocument * domDocument = new QDomDocument();
 	QString errorStr;
 	int errorLine;
 	int errorColumn;
-	if (!domDocument.setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
+	if (!domDocument->setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
 		QMessageBox::warning(
 			NULL,
 			tr("Fritzing"),
@@ -629,10 +629,10 @@ void PaletteItem::openPinLabelDialog() {
 
 	QString moduleID = pinLabelDialog.doSaveAs() ? FolderUtils::getRandText() : this->moduleID();
 
-	QDomElement root = domDocument.documentElement();
+	QDomElement root = domDocument->documentElement();
 	root.setAttribute("moduleId", moduleID);
-	TextUtils::replaceElementChildText(domDocument, root, "author", getenvUser());
-	TextUtils::replaceElementChildText(domDocument, root, "date", QDate::currentDate().toString(Qt::ISODate));
+	TextUtils::replaceElementChildText(*domDocument, root, "author", getenvUser());
+	TextUtils::replaceElementChildText(*domDocument, root, "date", QDate::currentDate().toString(Qt::ISODate));
 
 	QStringList newLabels = pinLabelDialog.labels();
 	if (newLabels.count() != sortedConnectorItems.count()) {
@@ -657,8 +657,18 @@ void PaletteItem::openPinLabelDialog() {
 	file2.open(QIODevice::WriteOnly);
 	QTextStream out2(&file2);
 	out2.setCodec("UTF-8");
-	out2 << domDocument.toString();
+	out2 << domDocument->toString();
 	file2.close();
+
+	if (pinLabelDialog.doSaveAs()) {
+		delete domDocument;
+	}
+	else {
+		// this never happens
+		m_modelPart->modelPartShared()->setDomDocument(domDocument);
+		m_modelPart->modelPartShared()->resetConnectorsInitialization();
+		m_modelPart->initConnectors(true);
+	}
 
 	connect(this, SIGNAL(pinLabelSwap(ItemBase *, const QString &)), infoGraphicsView->window(), SLOT(swapOne(ItemBase *, const QString &)));
 	emit pinLabelSwap(this, moduleID);

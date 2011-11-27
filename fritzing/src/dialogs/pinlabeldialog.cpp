@@ -38,9 +38,10 @@ $Date: 2011-08-10 00:15:35 +0200 (Wed, 10 Aug 2011) $
 // TODO:
 //
 //		nice to update schematic view with new pin labels
-//		how does save (i.e. edit) work?
-
-
+//
+//		reasons for not doing save:
+//			undo would require a lot of work to implement and would require saving the old dom document
+//			every instance of the part in all open documents would have to be updated
 
 PinLabelUndoCommand::PinLabelUndoCommand(PinLabelDialog * pinLabelDialog, int index, QLineEdit * lineEdit, const QString & previous, const QString & next) : QUndoCommand() 
 {
@@ -66,7 +67,7 @@ PinLabelDialog::PinLabelDialog(const QStringList & labels, bool singleRow, const
 {
 	m_isCore = isCore;
 	m_labels = labels;
-	m_doSaveAs = false;
+	m_doSaveAs = true;
 	this->setWindowTitle(QObject::tr("Pin Label Editor"));
 
 	QVBoxLayout * vLayout = new QVBoxLayout(this);
@@ -84,9 +85,8 @@ PinLabelDialog::PinLabelDialog(const QStringList & labels, bool singleRow, const
 
 	QLabel * label = new QLabel("<html><body>" +
 								tr("<p><h2>Pin Label Editor</h2></p>") +
-								tr("<p>Click on a label next to a pin to rename that pin.") + " " +
+								tr("<p>Click on a label next to a pin number to rename that pin.") + " " +
 								tr("You can use the tab key to move through the labels in order.</p>") +
-								tr("<p>Save vs. Save As...</p>") +		
 								"</body></html>");
 	label->setMaximumWidth(150);
 	label->setWordWrap(true);
@@ -102,18 +102,13 @@ PinLabelDialog::PinLabelDialog(const QStringList & labels, bool singleRow, const
 
 	scrollArea->setWidget(frame);	
 
-	QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Save | QDialogButtonBox::SaveAll | QDialogButtonBox::Cancel);
+	QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Save | QDialogButtonBox::Cancel);
 	
 	QPushButton * cancelButton = buttonBox->button(QDialogButtonBox::Cancel);
 	cancelButton->setText(tr("Cancel"));
 	cancelButton->setDefault(false);
 	
-	m_saveButton = buttonBox->button(QDialogButtonBox::Save);
-	m_saveButton->setText(tr("Save"));
-	m_saveButton->setEnabled(false);
-	m_saveButton->setDefault(false);
-
-	m_saveAsButton = buttonBox->button(QDialogButtonBox::SaveAll);
+	m_saveAsButton = buttonBox->button(QDialogButtonBox::Save);
 	m_saveAsButton->setText(tr("Save as new part"));
 	m_saveAsButton->setEnabled(false);
 	m_saveAsButton->setDefault(false);
@@ -125,7 +120,6 @@ PinLabelDialog::PinLabelDialog(const QStringList & labels, bool singleRow, const
 	m_redoButton = new QPushButton(tr("Redo"));
 	m_redoButton->setEnabled(false);
 	m_redoButton->setDefault(false);
-
 
     buttonBox->addButton(m_undoButton, QDialogButtonBox::ResetRole);
     buttonBox->addButton(m_redoButton, QDialogButtonBox::ResetRole);
@@ -220,6 +214,7 @@ void PinLabelDialog::makeOnePinEntry(int index, const QString & text, Qt::Alignm
 	lEdit->setProperty("index", index);
 	lEdit->setProperty("prev", text);
 	connect(lEdit, SIGNAL(editingFinished()), this, SLOT(labelChanged()));
+	connect(lEdit, SIGNAL(textEdited(const QString &)), this, SLOT(labelEdited(const QString &)));
 
 	if (alignment == Qt::AlignLeft) {
 		label->setAlignment(Qt::AlignRight);
@@ -250,6 +245,11 @@ void PinLabelDialog::labelChanged() {
 	m_undoStack.push(pluc);
 }
 
+void PinLabelDialog::labelEdited(const QString &) 
+{
+	m_saveAsButton->setEnabled(true);
+}
+
 const QStringList & PinLabelDialog::labels() {
 	return m_labels;
 }
@@ -262,13 +262,8 @@ void PinLabelDialog::setLabelText(int index, QLineEdit * lineEdit, const QString
 }
 
 void PinLabelDialog::buttonClicked(QAbstractButton * button) {
-	if (button == m_saveButton) {
-		m_doSaveAs = false;
-	}
-	else if (button == m_saveAsButton) {
-		m_doSaveAs = true;
-	}
-	else if (button == m_undoButton) {
+
+	if (button == m_undoButton) {
 		m_undoStack.undo();
 	}
 	else if (button == m_redoButton) {
@@ -280,22 +275,20 @@ bool PinLabelDialog::doSaveAs() {
 	return m_doSaveAs;
 }
 
-void PinLabelDialog::undoChanged(bool) {
+void PinLabelDialog::undoChanged(bool) 
+{
 	bool redo = false;
 	bool undo = false;
-	bool save = false;
 	bool saveAs = false;
 
 	if (m_undoStack.canUndo()) {
 		saveAs = undo = true;
-		save = undo && !m_isCore;
 	}
 	if (m_undoStack.canRedo()) {
 		redo = true;
 	}
 
 	m_saveAsButton->setEnabled(saveAs);
-	m_saveButton->setEnabled(save);
 	m_undoButton->setEnabled(undo);
 	m_redoButton->setEnabled(redo);
 }
