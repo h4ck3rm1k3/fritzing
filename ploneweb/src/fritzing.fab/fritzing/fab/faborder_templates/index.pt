@@ -25,7 +25,7 @@
             <p tal:condition="python:context.aq_parent.nextProductionClosingDate and context.aq_parent.nextProductionDelivery">
               If you submit your sketch by <span class="important" tal:content="python:context.nextProductionClosingDate.strftime('%B %d, %Y')">...</span>, 
               we will ship the PCB to you on <span class="important" tal:content="python:context.nextProductionDelivery.strftime('%B %d, %Y')">...</span>.<br />
-              Note, submitted orders must be completed (paid for) by 16:00 Berlin time on <span class="important" tal:content="python:context.nextProductionClosingDate.strftime('%B %d, %Y')">
+              Note, submitted orders must be completed (paid for) by 16:00 Berlin time on <span class="important" tal:content="python:context.nextProductionClosingDate.strftime('%B %d, %Y')" />
             </p>
           </div>
         </div>
