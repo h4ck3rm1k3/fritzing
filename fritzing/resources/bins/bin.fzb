@@ -625,6 +625,13 @@
                 </iconView>
             </views>
         </instance>
+	<instance moduleIdRef="WIZ820io" modelIndex="48" path="parts/core/WIZ820io.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
       
       <instance moduleIdRef="__spacer__" modelIndex="3" path="Microcontroller">
         <views>
