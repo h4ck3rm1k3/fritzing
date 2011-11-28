@@ -27,7 +27,8 @@
             </a>
             <p tal:condition="python:context.nextProductionClosingDate and context.nextProductionDelivery">
               Submit your layout by <span class="important" tal:content="python:context.nextProductionClosingDate.strftime('%B %d, %Y')">...</span><br />
-              and we will ship it on <span class="important" tal:content="python:context.nextProductionDelivery.strftime('%B %d, %Y')">...</span>.
+              and we will ship it on <span class="important" tal:content="python:context.nextProductionDelivery.strftime('%B %d, %Y')">...</span>.<br /><br />
+              Submission deadline is <span class="important">16:00 Berlin time</span> on <span class="important" tal:content="python:context.nextProductionClosingDate.strftime('%B %d, %Y')">...</span>.
             </p>
             <div tal:condition="container/listFolderContents">
               <h2>Your orders</h2>
