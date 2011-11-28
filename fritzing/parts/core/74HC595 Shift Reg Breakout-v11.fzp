@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='74HC595 Shift Reg Breakout-v11'>
 <version>4</version>
-<date>2011-10-27</date>
+<date>2011-11-28</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Description:&lt;/strong&gt; This is a breakout for the SOIC version of the 74HC595 shift register IC. Clock in data and latch it to free up IO pins on your micro. All pins from the IC are broken out to standard 0.1&amp;quot; spaced headers. The Serial in and out pins are on opposite sides of the board with the remaining pins carried over so that multiple shift register boards can be chained together.&lt;/p&gt;
@@ -58,7 +58,7 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector0' type='male' name='QA'>
+<connector id='connector0' type='female' name='QA'>
 <description>QA</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pin'/></breadboardView>
@@ -68,7 +68,7 @@
 <p layer='copper0' svgId='connector0pad'/><p layer='copper1' svgId='connector0pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector1' type='male' name='QB'>
+<connector id='connector1' type='female' name='QB'>
 <description>QB</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pin'/></breadboardView>
@@ -78,7 +78,7 @@
 <p layer='copper0' svgId='connector1pad'/><p layer='copper1' svgId='connector1pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector2' type='male' name='QC'>
+<connector id='connector2' type='female' name='QC'>
 <description>QC</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pin'/></breadboardView>
@@ -88,7 +88,7 @@
 <p layer='copper0' svgId='connector2pad'/><p layer='copper1' svgId='connector2pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector3' type='male' name='QD'>
+<connector id='connector3' type='female' name='QD'>
 <description>QD</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pin'/></breadboardView>
@@ -98,7 +98,7 @@
 <p layer='copper0' svgId='connector3pad'/><p layer='copper1' svgId='connector3pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector4' type='male' name='QE'>
+<connector id='connector4' type='female' name='QE'>
 <description>QE</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pin'/></breadboardView>
@@ -108,7 +108,7 @@
 <p layer='copper0' svgId='connector4pad'/><p layer='copper1' svgId='connector4pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector5' type='male' name='QF'>
+<connector id='connector5' type='female' name='QF'>
 <description>QF</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector5pin'/></breadboardView>
@@ -118,7 +118,7 @@
 <p layer='copper0' svgId='connector5pad'/><p layer='copper1' svgId='connector5pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector6' type='male' name='QG'>
+<connector id='connector6' type='female' name='QG'>
 <description>QG</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pin'/></breadboardView>
@@ -128,7 +128,7 @@
 <p layer='copper0' svgId='connector6pad'/><p layer='copper1' svgId='connector6pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector7' type='male' name='QH'>
+<connector id='connector7' type='female' name='QH'>
 <description>QH</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pin'/></breadboardView>
@@ -138,7 +138,7 @@
 <p layer='copper0' svgId='connector7pad'/><p layer='copper1' svgId='connector7pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector8' type='male' name='VCC'>
+<connector id='connector8' type='female' name='VCC'>
 <description>VCC</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector8pin'/></breadboardView>
@@ -148,7 +148,7 @@
 <p layer='copper0' svgId='connector8pad'/><p layer='copper1' svgId='connector8pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector9' type='male' name='GND'>
+<connector id='connector9' type='female' name='GND'>
 <description>GND</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector9pin'/></breadboardView>
@@ -158,7 +158,7 @@
 <p layer='copper0' svgId='connector9pad'/><p layer='copper1' svgId='connector9pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector10' type='male' name='/RESET'>
+<connector id='connector10' type='female' name='/RESET'>
 <description>/RESET</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pin'/></breadboardView>
@@ -168,7 +168,7 @@
 <p layer='copper0' svgId='connector10pad'/><p layer='copper1' svgId='connector10pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector11' type='male' name='/OUTPUT_ENABLE'>
+<connector id='connector11' type='female' name='/OUTPUT_ENABLE'>
 <description>/OUTPUT_ENABLE</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector11pin'/></breadboardView>
@@ -178,7 +178,7 @@
 <p layer='copper0' svgId='connector11pad'/><p layer='copper1' svgId='connector11pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector12' type='male' name='CLOCK'>
+<connector id='connector12' type='female' name='CLOCK'>
 <description>CLOCK</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector12pin'/></breadboardView>
@@ -188,7 +188,7 @@
 <p layer='copper0' svgId='connector12pad'/><p layer='copper1' svgId='connector12pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector13' type='male' name='LATCH_CLOCK'>
+<connector id='connector13' type='female' name='LATCH_CLOCK'>
 <description>LATCH_CLOCK</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector13pin'/></breadboardView>
@@ -198,7 +198,7 @@
 <p layer='copper0' svgId='connector13pad'/><p layer='copper1' svgId='connector13pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector14' type='male' name='SERIAL_IN'>
+<connector id='connector14' type='female' name='SERIAL_IN'>
 <description>SERIAL_IN</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector14pin'/></breadboardView>
@@ -208,7 +208,7 @@
 <p layer='copper0' svgId='connector14pad'/><p layer='copper1' svgId='connector14pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector15' type='male' name='VCC'>
+<connector id='connector15' type='female' name='VCC'>
 <description>VCC</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector15pin'/></breadboardView>
@@ -218,7 +218,7 @@
 <p layer='copper0' svgId='connector15pad'/><p layer='copper1' svgId='connector15pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector16' type='male' name='GND'>
+<connector id='connector16' type='female' name='GND'>
 <description>GND</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector16pin'/></breadboardView>
@@ -228,7 +228,7 @@
 <p layer='copper0' svgId='connector16pad'/><p layer='copper1' svgId='connector16pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector17' type='male' name='/RESET'>
+<connector id='connector17' type='female' name='/RESET'>
 <description>/RESET</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector17pin'/></breadboardView>
@@ -238,7 +238,7 @@
 <p layer='copper0' svgId='connector17pad'/><p layer='copper1' svgId='connector17pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector18' type='male' name='/OUTPUT_ENABLE'>
+<connector id='connector18' type='female' name='/OUTPUT_ENABLE'>
 <description>/OUTPUT_ENABLE</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector18pin'/></breadboardView>
@@ -248,7 +248,7 @@
 <p layer='copper0' svgId='connector18pad'/><p layer='copper1' svgId='connector18pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector19' type='male' name='CLOCK'>
+<connector id='connector19' type='female' name='CLOCK'>
 <description>CLOCK</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector19pin'/></breadboardView>
@@ -258,7 +258,7 @@
 <p layer='copper0' svgId='connector19pad'/><p layer='copper1' svgId='connector19pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector20' type='male' name='LATCH_CLOCK'>
+<connector id='connector20' type='female' name='LATCH_CLOCK'>
 <description>LATCH_CLOCK</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector20pin'/></breadboardView>
@@ -268,7 +268,7 @@
 <p layer='copper0' svgId='connector20pad'/><p layer='copper1' svgId='connector20pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector21' type='male' name='SERIAL_OUT'>
+<connector id='connector21' type='female' name='SERIAL_OUT'>
 <description>SERIAL_OUT</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector21pin'/></breadboardView>
