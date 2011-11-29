@@ -32,7 +32,8 @@
             <layers image="pcb/jumper_%1_.percent.2_pcb.svg">
                 <layer layerId="copper0"/>
                 <layer layerId="silkscreen"/>
-            <layer layerId="copper1"/></layers>
+	      <layer layerId="copper1"/>
+	</layers>
         </pcbView>
     </views>
     <connectors>

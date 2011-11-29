@@ -41,10 +41,14 @@ $Date$
 //////////////////////////////////////////////////
 
 static QStringList Forms;
+
 QString PinHeader::FemaleFormString;
 QString PinHeader::FemaleRoundedFormString;
 QString PinHeader::MaleFormString;
 QString PinHeader::ShroudedFormString;
+QString PinHeader::FemaleSMDFormString;
+QString PinHeader::MaleSMDFormString;
+
 static int MinPins = 1;
 static int MinShroudedPins = 8;
 static int MaxPins = 64;
@@ -68,12 +72,13 @@ PinHeader::PinHeader( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier
 PinHeader::~PinHeader() {
 }
 
-
 void PinHeader::initNames() {
 	if (FemaleFormString.isEmpty()) {
 		FemaleFormString = FemaleSymbolString + " (female)";
+		FemaleSMDFormString = FemaleSymbolString + " (SMD female)";
 		FemaleRoundedFormString = FemaleSymbolString + " (female rounded)";
 		MaleFormString = MaleSymbolString + " (male)";
+		MaleSMDFormString = MaleSymbolString + " (SMD male)";
 		ShroudedFormString = MaleSymbolString + " (shrouded male)";
 	}
 }
@@ -113,6 +118,8 @@ void PinHeader::setForm(QString form, bool force) {
 				
 				updateConnections();
 			}
+			else if (form.contains("smd")) {
+			}
 			break;
 		case ViewIdentifierClass::BreadboardView:
 		case ViewIdentifierClass::SchematicView:
@@ -139,17 +146,17 @@ void PinHeader::setForm(QString form, bool force) {
 				QString prefix = filename.left(gix);
 				QString suffix = filename.remove(0, pix);
 
-				if (form.contains("(male)", Qt::CaseInsensitive)) {
-					filename = prefix + "male" + suffix;
-				}
-				else if (form.contains("rounded", Qt::CaseInsensitive)) {
+				if (form.contains("rounded", Qt::CaseInsensitive)) {
 					filename = prefix + ((this->m_viewIdentifier == ViewIdentifierClass::SchematicView) ? "female" : "rounded_female") + suffix;
 				}
-				else if (form.contains("(female)", Qt::CaseInsensitive)) {
+				else if (form.contains("female", Qt::CaseInsensitive)) {
 					filename = prefix + "female" + suffix;
 				}
 				else if (form.contains("shrouded", Qt::CaseInsensitive)) {
 					filename = prefix + "shrouded" + suffix;
+				}
+				else if (form.contains("(male)", Qt::CaseInsensitive)) {
+					filename = prefix + "male" + suffix;
 				}
 				else {
 					break;
@@ -264,7 +271,7 @@ const QString & PinHeader::form() {
 
 const QStringList & PinHeader::forms() {
 	if (Forms.count() == 0) {
-		Forms << FemaleFormString << FemaleRoundedFormString << MaleFormString << ShroudedFormString;
+		Forms << FemaleFormString << FemaleRoundedFormString << MaleFormString << ShroudedFormString << FemaleSMDFormString << MaleSMDFormString;
 	}
 	return Forms;
 }
@@ -281,7 +288,7 @@ QString PinHeader::genFZP(const QString & moduleid)
 
 	QString spacing = pieces.at(pieces.count() - 1);
 
-	QString result = PaletteItem::genFZP(moduleid, "generic_female_pin_header_fzpTemplate", MinPins, MaxPins, 1); 
+	QString result = PaletteItem::genFZP(moduleid, "generic_female_pin_header_fzpTemplate", MinPins, MaxPins, 1, moduleid.contains("smd")); 
 	result.replace(".percent.", "%");
 	QString form = MaleFormString;
 	QString formWord = "male";
@@ -294,15 +301,35 @@ QString PinHeader::genFZP(const QString & moduleid)
 		formSchematic = "female";
 	}
 	else if (moduleid.contains("female")) {
-		form = FemaleFormString;
-		formSchematic = formText = formWord = "female";
+		if (moduleid.contains("smd")) {
+			form = FemaleSMDFormString;
+			formWord = "smd_female";
+			formText = "SMD female";
+			formSchematic = "female";
+		}
+		else {
+			form = FemaleFormString;
+			formSchematic = formText = formWord = "female";
+		}
 	}
 	else if (moduleid.contains("shrouded")) {
 		form = ShroudedFormString;
 		formText = formWord = "shrouded";
 		formSchematic = "male";
 	}
-	return result.arg(Spacings.value(spacing, "")).arg(spacing).arg(form).arg(formWord).arg(formText).arg(formSchematic); 
+	else if (moduleid.contains("smd")) {
+		form = MaleSMDFormString;
+		formWord = "smd_male";
+		formText = "SMD male";
+		formSchematic = "male";
+	}
+
+	result = result.arg(Spacings.value(spacing, "")).arg(spacing).arg(form).arg(formWord).arg(formText).arg(formSchematic); 
+	if (moduleid.contains("smd")) {
+		result.replace("jumper", "smd_sr_pin_header");
+	}
+
+	return result;
 }
 
 QString PinHeader::genModuleID(QMap<QString, QString> & currPropsMap)
@@ -328,7 +355,15 @@ QString PinHeader::genModuleID(QMap<QString, QString> & currPropsMap)
 		formWord ="rounded_female";
 	}
 	else if (form.contains("female")) {
-		formWord = "female";
+		if (form.contains("smd", Qt::CaseInsensitive)) {
+			formWord = "smd_female";
+		}
+		else {
+			formWord = "female";
+		}
+	}
+	else if (form.contains("smd", Qt::CaseInsensitive)) {
+		formWord = "smd_male";
 	}
 
 	foreach (QString key, Spacings.keys()) {
@@ -343,6 +378,10 @@ QString PinHeader::genModuleID(QMap<QString, QString> & currPropsMap)
 QString PinHeader::makePcbSvg(const QString & expectedFileName) 
 {
 	initSpacings();
+
+	if (expectedFileName.contains("smd")) {
+		return makePcbSMDSvg(expectedFileName);
+	}
 
 	QStringList pieces = expectedFileName.split("_");
 	if (pieces.count() != 4) return "";
@@ -368,7 +407,7 @@ QString PinHeader::makePcbSvg(const QString & expectedFileName)
 	double copperStrokeWidth = 20;
 	double totalWidth = (outerBorder * 2) + (silkStrokeWidth * 2) + (innerBorder * 2) + (radius * 2) + copperStrokeWidth;
 	double center = totalWidth / 2;
-	double spacing =TextUtils::convertToInches(spacingString) * GraphicsUtils::StandardFritzingDPI; 
+	double spacing = TextUtils::convertToInches(spacingString) * GraphicsUtils::StandardFritzingDPI; 
 
 	QString middle;
 
@@ -409,7 +448,6 @@ void PinHeader::initSpacings() {
 		Spacings.insert("200mil", "0.2in (5.08mm)");
 	}
 }
-
 
 QString PinHeader::makeSchematicSvg(const QString & expectedFileName) 
 {
@@ -487,8 +525,12 @@ QString PinHeader::makeBreadboardSvg(const QString & expectedFileName)
 QString  PinHeader::findForm(const QString & filename)
 {
 	if (filename.contains("rounded")) return FemaleRoundedFormString;
-	if (filename.contains("female")) return FemaleFormString;
+	if (filename.contains("female")) {
+		if (filename.contains("smd")) return FemaleSMDFormString;
+		return FemaleFormString;
+	}
 	if (filename.contains("shrouded")) return ShroudedFormString;
+	if (filename.contains("smd")) return MaleSMDFormString;
 	return MaleFormString;
 }
 
@@ -587,5 +629,43 @@ QString PinHeader::makePcbShroudedSvg(int pins)
 	QString repeatRs = TextUtils::incrementTemplateString(repeatL, pins / 2, increment, TextUtils::standardMultiplyPinFunction, TextUtils::standardCopyPinFunction, NULL);
 
 	return svg.arg(TextUtils::getViewBoxCoord(svg, 3) / 10000.0).arg(repeatLs).arg(repeatRs);
+}
+
+
+
+QString PinHeader::makePcbSMDSvg(const QString & expectedFileName) 
+{
+	QStringList pieces = expectedFileName.split("_");
+	if (pieces.count() != 7) return "";
+
+	int pins = pieces.at(4).toInt();
+	QString spacingString = pieces.at(5);
+
+	double spacing = TextUtils::convertToInches(spacingString) * GraphicsUtils::StandardFritzingDPI;   
+
+	QString header("<?xml version='1.0' encoding='utf-8'?>\n"
+				"<svg version='1.2' baseProfile='tiny' xmlns:svg='http://www.w3.org/2000/svg' "
+				"xmlns='http://www.w3.org/2000/svg'  x='0in' y='0in' width='%1in' "
+				"height='0.2834646in' viewBox='0 0 %2 283.4646'>\n"
+				"<g id='silkscreen' >\n"
+				"<rect x='2' y='86.708672' width='%3' height='102.047256' fill='none' stroke='#ffffff' stroke-width='4' stroke-opacity='1'/>\n"
+				"</g>\n"
+				"<g id='copper1'>\n");
+
+	
+	double baseWidth = 152.7559;			// mils
+	double totalWidth = baseWidth + ((pins - 1) * spacing);
+
+	QString svg = header.arg(totalWidth  / GraphicsUtils::StandardFritzingDPI).arg(totalWidth).arg(totalWidth - 4);
+
+	double x = 51.18110;
+	for (int i = 0; i < pins; i++) {
+		double y = (i % 2 == 0) ? 0 : 141.823;
+		svg += QString("<rect id='connector%1pin' x='%2' y='%3' width='51.18110' height='141.823' fill='#f7bf13' fill-opacity='1' stroke='none' stroke-width='0'/>\n").arg(i).arg(x).arg(y);
+		x += spacing;
+	}
+
+	svg += "</g>\n</svg>";
+	return svg;
 }
 

@@ -382,12 +382,12 @@ ItemBase::PluralType MysteryPart::isPlural() {
 
 QString MysteryPart::genSipFZP(const QString & moduleid)
 {
-	return PaletteItem::genFZP(moduleid, "mystery_part_sipFzpTemplate", MinSipPins, MaxSipPins, 1);
+	return PaletteItem::genFZP(moduleid, "mystery_part_sipFzpTemplate", MinSipPins, MaxSipPins, 1, false);
 }
 
 QString MysteryPart::genDipFZP(const QString & moduleid)
 {
-	return PaletteItem::genFZP(moduleid, "mystery_part_dipFzpTemplate", MinDipPins, MaxDipPins, 2);
+	return PaletteItem::genFZP(moduleid, "mystery_part_dipFzpTemplate", MinDipPins, MaxDipPins, 2, false);
 }
 
 QString MysteryPart::genModuleID(QMap<QString, QString> & currPropsMap)

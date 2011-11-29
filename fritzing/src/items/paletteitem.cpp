@@ -515,22 +515,26 @@ void PaletteItem::resetKinImage(ItemBase * layerKin, InfoGraphicsView * infoGrap
 	qobject_cast<PaletteItemBase *>(layerKin)->setUpImage(modelPart(), layerKin->viewIdentifier(), infoGraphicsView->viewLayers(), layerKin->viewLayerID(), layerKin->viewLayerSpec(), true, layerAttributes, error);
 }
 
-QString PaletteItem::genFZP(const QString & moduleid, const QString & templateName, int minPins, int maxPins, int steps)
+QString PaletteItem::genFZP(const QString & moduleid, const QString & templateName, int minPins, int maxPins, int steps, bool smd)
 {
 	QString FzpTemplate = "";
 	QString ConnectorFzpTemplate = "";
 
-	if (FzpTemplate.isEmpty()) {
-		QFile file(QString(":/resources/templates/%1.txt").arg(templateName));
-		file.open(QFile::ReadOnly);
-		FzpTemplate = file.readAll();
-		file.close();
+
+	QFile file1(QString(":/resources/templates/%1.txt").arg(templateName));
+	file1.open(QFile::ReadOnly);
+	FzpTemplate = file1.readAll();
+	file1.close();
+	if (smd) {
+		FzpTemplate.replace("<layer layerId=\"copper0\"/>", "");
 	}
-	if (ConnectorFzpTemplate.isEmpty()) {
-		QFile file(":/resources/templates/generic_sip_connectorFzpTemplate.txt");
-		file.open(QFile::ReadOnly);
-		ConnectorFzpTemplate = file.readAll();
-		file.close();
+
+	QFile file2(":/resources/templates/generic_sip_connectorFzpTemplate.txt");
+	file2.open(QFile::ReadOnly);
+	ConnectorFzpTemplate = file2.readAll();
+	file2.close();
+	if (smd) {
+		ConnectorFzpTemplate.replace("<p layer=\"copper0\" svgId=\"connector%1pin\"/>", "");
 	}
 
 	QStringList ss = moduleid.split("_");

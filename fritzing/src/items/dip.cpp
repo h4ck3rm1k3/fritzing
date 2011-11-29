@@ -75,12 +75,12 @@ const QStringList & Dip::spacings() {
 
 QString Dip::genSipFZP(const QString & moduleid)
 {
-	return PaletteItem::genFZP(moduleid, "generic_sip_fzpTemplate", MinSipPins, MaxSipPins, 1);
+	return PaletteItem::genFZP(moduleid, "generic_sip_fzpTemplate", MinSipPins, MaxSipPins, 1, false);
 }
 
 QString Dip::genDipFZP(const QString & moduleid)
 {
-	return PaletteItem::genFZP(moduleid, "generic_dip_fzpTemplate", MinDipPins, MaxDipPins, 2);
+	return PaletteItem::genFZP(moduleid, "generic_dip_fzpTemplate", MinDipPins, MaxDipPins, 2, false);
 }
 
 QStringList Dip::collectValues(const QString & family, const QString & prop, QString & value) {

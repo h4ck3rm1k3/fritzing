@@ -135,6 +135,7 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	m_titleEdit = new FLineEdit(mainFrame);
 	m_titleEdit->setObjectName("instanceTitleEditor");
 	m_titleEdit->setToolTip(tr("Change the part label here"));
+	m_titleEdit->setAlignment(Qt::AlignLeft);
 
 	connect(m_titleEdit, SIGNAL(editingFinished()), this, SLOT(setInstanceTitle()));
 	connect(m_titleEdit, SIGNAL(mouseEnter()), this, SLOT(instanceTitleEnter()));
@@ -168,7 +169,7 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 
 	QHBoxLayout * subVersionLayout = new QHBoxLayout();
 	m_partVersion = new QLabel();
-	m_partVersion->setObjectName("infoViewPartTitle");
+	m_partVersion->setObjectName("infoViewPartVersion");
 	m_partVersion->setToolTip(tr("Part version number"));
 	subVersionLayout->addWidget(m_partVersion, 0, Qt::AlignLeft);
 	subVersionLayout->addStretch(1);
@@ -562,6 +563,8 @@ void HtmlInfoView::setUpTitle(ItemBase * itemBase)
 		m_titleEdit->setEnabled(false);
 		m_titleEdit->setText("");
 	}
+	// helps keep it left aligned?
+	m_titleEdit->setCursorPosition(0);
 
 }
 

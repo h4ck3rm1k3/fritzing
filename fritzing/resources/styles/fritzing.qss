@@ -250,6 +250,7 @@ HtmlInfoView {
 
 #instanceTitleEditor {
 	/* background-color is set programmatically */
+	text-align: left;
 	font-size: 14px;
 	font-weight: 600;
 	border: 0px;
@@ -270,12 +271,14 @@ HtmlInfoView {
 }
 
 /* part description/subtitle */
-#infoViewPartTitle {
+#infoViewPartTitle,
+#infoViewPartVersion {
 	margin: 4px 4px 0px 4px;
 	padding: 0px 0px 1px 0px;
 	font-size: 10px;
 	font-weight: normal;
-	color: rgb(70,70,70);/*rgb(110,110,110);*/
+	text-align: left;
+	color: rgb(70,70,70);     /*rgb(110,110,110);*/
 }
 
 

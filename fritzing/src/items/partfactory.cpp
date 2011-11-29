@@ -234,6 +234,9 @@ QString PartFactory::getSvgFilename(ModelPart * modelPart, const QString & expec
 		else if (expectedFileName.contains("bread", Qt::CaseInsensitive)) {
 			return getSvgFilenameAux(expectedFileName, &PinHeader::makeBreadboardSvg);		
 		}
+		else if (expectedFileName.contains("pcb", Qt::CaseInsensitive)) {
+			return getSvgFilenameAux(expectedFileName, &PinHeader::makePcbSvg);		
+		}
 	}
 
 	if (expectedFileName.contains("perfboard", Qt::CaseInsensitive)) {

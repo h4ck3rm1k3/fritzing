@@ -80,7 +80,7 @@ public:
 
 
 public:
-	static QString genFZP(const QString & moduleid, const QString & templateName, int minPins, int maxPins, int steps);
+	static QString genFZP(const QString & moduleid, const QString & templateName, int minPins, int maxPins, int steps, bool smd);
 
 signals:
 	void pinLabelSwap(ItemBase *, const QString & moduleID);

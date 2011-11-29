@@ -84,7 +84,7 @@ QString ScrewTerminal::genFZP(const QString & moduleid)
 	QStringList pieces = moduleid.split("_");
 	if (pieces.count() != 4) return "";
 
-	QString result = PaletteItem::genFZP(moduleid, "screw_terminal_fzpTemplate", MinPins, MaxPins, 1);
+	QString result = PaletteItem::genFZP(moduleid, "screw_terminal_fzpTemplate", MinPins, MaxPins, 1, false);
 	result.replace(".percent.", "%");
 	QString spacing = pieces.at(3);
 	return result.arg(spacing).arg(Spacings.value(spacing, "")); 
