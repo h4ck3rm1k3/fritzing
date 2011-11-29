@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.2.2.b.03.04.2550" moduleId="generic_.percent.4_pin_header_%1_.percent.2">
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.2.2.b.03.04.2550" moduleId="generic_.percent.7_pin_header_%1_.percent.2">
     <version>4</version>
     <author>Fritzing Part-o-matic</author>
     <title>Generic .percent.5 header - %1 pins</title>

@@ -44,15 +44,11 @@ public:
 	~PinHeader();
 
 	QString getProperty(const QString & key);
-	void setProp(const QString & prop, const QString & value);
-	void setForm(QString form, bool force);
 	const QString & form();
 	PluralType isPlural();
 	void addedToScene(bool temporary);
 
 protected:
-	ConnectorItem* newConnectorItem(class Connector *connector);
-	ConnectorItem* newConnectorItem(ItemBase * layerkin, Connector *connector);
 	QStringList collectValues(const QString & family, const QString & prop, QString & value);
 
 public:
@@ -60,8 +56,10 @@ public:
 	static QString FemaleRoundedFormString;
 	static QString MaleFormString;
 	static QString ShroudedFormString;
-	static QString MaleSMDFormString;
-	static QString FemaleSMDFormString;
+	static QString MaleSingleRowSMDFormString;
+	static QString FemaleSingleRowSMDFormString;
+	static QString MaleDoubleRowSMDFormString;
+	static QString FemaleDoubleRowSMDFormString;
 
 public:
 	static void initNames();
@@ -84,7 +82,6 @@ protected:
 protected:
 	class FSvgRenderer * m_renderer;
 	QString m_form;
-	bool m_changingForm;
 };
 
 #endif
