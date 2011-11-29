@@ -107,6 +107,10 @@ QStringList PinHeader::collectValues(const QString & family, const QString & pro
 			minP = MinShroudedPins;
 			step = 2;
 		}
+		if (m_form.contains("double")) {
+			step = 2;
+			minP = 2;
+		}
 
 		for (int i = minP; i <= MaxPins; i += step) {
 			values << QString::number(i);
@@ -158,7 +162,7 @@ const QString & PinHeader::form() {
 
 const QStringList & PinHeader::forms() {
 	if (Forms.count() == 0) {
-		Forms << FemaleFormString << FemaleRoundedFormString << MaleFormString << ShroudedFormString << FemaleSingleRowSMDFormString  << MaleSingleRowSMDFormString;  // << FemaleDoubleRowSMDFormString  << MaleDoubleRowSMDFormString
+		Forms << FemaleFormString << FemaleRoundedFormString << MaleFormString << ShroudedFormString << FemaleSingleRowSMDFormString  << MaleSingleRowSMDFormString << FemaleDoubleRowSMDFormString  << MaleDoubleRowSMDFormString;
 	}
 	return Forms;
 }
@@ -557,8 +561,6 @@ QString PinHeader::makePcbShroudedSvg(int pins)
 	return svg.arg(TextUtils::getViewBoxCoord(svg, 3) / 10000.0).arg(repeatLs).arg(repeatRs);
 }
 
-
-
 QString PinHeader::makePcbSMDSvg(const QString & expectedFileName) 
 {
 	QStringList pieces = expectedFileName.split("_");
@@ -574,23 +576,51 @@ QString PinHeader::makePcbSMDSvg(const QString & expectedFileName)
 	QString header("<?xml version='1.0' encoding='utf-8'?>\n"
 				"<svg version='1.2' baseProfile='tiny' xmlns:svg='http://www.w3.org/2000/svg' "
 				"xmlns='http://www.w3.org/2000/svg'  x='0in' y='0in' width='%1in' "
-				"height='0.2834646in' viewBox='0 0 %2 283.4646'>\n"
+				"height='%4in' viewBox='0 0 %2 %5'>\n"
 				"<g id='silkscreen' >\n"
-				"<rect x='2' y='86.708672' width='%3' height='102.047256' fill='none' stroke='#ffffff' stroke-width='4' stroke-opacity='1'/>\n"
+				"<rect x='2' y='86.708672' width='%3' height='%6' fill='none' stroke='#ffffff' stroke-width='4' stroke-opacity='1'/>\n"
 				"</g>\n"
 				"<g id='copper1'>\n");
 
 	
 	double baseWidth = 152.7559;			// mils
+	double totalHeight = 283.4646;
 	double totalWidth = baseWidth + ((pins - 1) * spacing);
+	double rectHeight = 102.047256;
+	double y = 141.823;
+	if (!singleRow) {
+		totalHeight = 393.7;
+		totalWidth = baseWidth + ((pins - 2) * spacing / 2);
+		rectHeight = 200;
+		y = 251.9685;
+	}
 
-	QString svg = header.arg(totalWidth  / GraphicsUtils::StandardFritzingDPI).arg(totalWidth).arg(totalWidth - 4);
+	QString svg = header.arg(totalWidth / GraphicsUtils::StandardFritzingDPI)
+						.arg(totalWidth)
+						.arg(totalWidth - 4)
+						.arg(totalHeight  / GraphicsUtils::StandardFritzingDPI)
+						.arg(totalHeight)
+						.arg(rectHeight);
 
 	double x = 51.18110;
-	for (int i = 0; i < pins; i++) {
-		double y = (i % 2 == 0) ? 0 : 141.823;
-		svg += QString("<rect id='connector%1pin' x='%2' y='%3' width='51.18110' height='141.823' fill='#f7bf13' fill-opacity='1' stroke='none' stroke-width='0'/>\n").arg(i).arg(x).arg(y);
-		x += spacing;
+	if (singleRow) {
+		for (int i = 0; i < pins; i++) {
+			double ay = (i % 2 == 0) ? 0 : y;
+			svg += QString("<rect id='connector%1pin' x='%2' y='%3' width='51.18110' height='141.823' fill='#f7bf13' fill-opacity='1' stroke='none' stroke-width='0'/>\n").arg(i).arg(x).arg(ay);
+			x += spacing;
+		}
+	}
+	else {
+		double holdX = x;
+		for (int i = 0; i < pins / 2; i++) {
+			svg += QString("<rect id='connector%1pin' x='%2' y='0' width='51.18110' height='141.823' fill='#f7bf13' fill-opacity='1' stroke='none' stroke-width='0'/>\n").arg(pins - 1 - i).arg(x);
+			x += spacing;
+		}
+		x = holdX;
+		for (int i = 0; i < pins / 2; i++) {
+			svg += QString("<rect id='connector%1pin' x='%2' y='%3' width='51.18110' height='141.823' fill='#f7bf13' fill-opacity='1' stroke='none' stroke-width='0'/>\n").arg(i).arg(x).arg(y);
+			x += spacing;
+		}
 	}
 
 	svg += "</g>\n</svg>";
