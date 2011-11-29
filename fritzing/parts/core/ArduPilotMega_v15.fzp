@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='ArduPilotMega_v15'>
 <version>4</version>
-<date>2011-11-28</date>
+<date>2011-11-29</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;span style=&quot;font-weight: bold;&quot;&gt;Description: &lt;/span&gt;The ArduPilot Mega is the newest version of autopilot board designed by Chris Anderson and Jordi Mu&amp;ntilde;oz of DIY Drones. This latest revision uses&lt;span&gt;&lt;span&gt; &lt;/span&gt;&lt;/span&gt;the ATmega2560&lt;span&gt;&lt;span&gt; in place of the ATmega1280.&lt;/span&gt;&lt;/span&gt;&lt;br /&gt;

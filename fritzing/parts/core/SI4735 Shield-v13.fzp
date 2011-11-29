@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='SI4735 Shield-v13'>
 <version>4</version>
-<date>2011-11-28</date>
+<date>2011-11-29</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Description:&lt;/strong&gt; The Si4735 is the first digital CMOS AM/FM radio receiver IC that integrates the complete tuner function from antenna input to audio output. This feature-rich solution includes advanced seek algorithms, soft mute, auto-calibrated digital tuning, and FM stereo processing. The chip also incorporates a digital processor for the European Radio Data System (&lt;a href=&quot;http://en.wikipedia.org/wiki/Radio_Data_System&quot; target=&quot;_blank&quot;&gt;RDS&lt;/a&gt;) and the North American Radio Broadcast Data System (&lt;a href=&quot;http://en.wikipedia.org/wiki/RBDS&quot; target=&quot;_blank&quot;&gt;RBDS&lt;/a&gt;), including all required symbol decoding, block synchronization, error detection, and error correction functions. Basically it&amp;#39;s an entire AM/FM, LW/SW radio in a single chip.&lt;/p&gt;

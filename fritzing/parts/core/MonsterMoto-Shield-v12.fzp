@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='MonsterMoto-Shield-v12'>
 <version>4</version>
-<date>2011-11-28</date>
+<date>2011-11-29</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Description:&lt;/strong&gt; This is essentially a ramped up version of our Ardumoto motor driver shield. For this monster shield we&amp;#39;ve replaced the L298 H-bridge with a pair of VNH2SP30 full-bridge motor drivers. We&amp;#39;ve also beefed up the support circuitry so this board is capable of driving a pair of high-current motors! The VIN and motor out are pitched for our 5mm screw terminals (not included), making it easy to connect larger gauge wires.&lt;/p&gt;

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='IOIO-v15'>
 <version>4</version>
-<date>2011-11-28</date>
+<date>2011-11-29</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Description: &lt;/strong&gt;The IOIO (pronounced &amp;quot;yo-yo&amp;quot;) is a board specially designed to work with your Android device (OS versions 1.5 and greater). The board provides robust connectivity to an Android device via a USB connection and is fully controllable from within an Android application using a simple and intuitive Java API -&lt;a href=&quot;http://codaset.com/ytai/ioio/wiki/The-IOIO-Manager-Application&quot; target=&quot;_blank&quot;&gt;&lt;strong&gt;&lt;em&gt; &lt;/em&gt;&lt;/strong&gt;no embedded programming or external programmer will ever be needed&lt;/a&gt;!&lt;/p&gt;

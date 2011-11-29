@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='Arduino-Ethernet-v11'>
 <version>4</version>
-<date>2011-11-28</date>
+<date>2011-11-29</date>
 <author>SparkFun</author>
 <description>&lt;p&gt;
 	&lt;strong&gt;Description:&lt;/strong&gt; Ever wonder what would happen if you stacked an Ethernet shield on an Arduino Pro microcontroller and ran over it with a steam roller? Well, it would probably just break. But in a cartoon world it might turn into the Ethernet Pro! The Ethernet Pro is an Arduino-sized, shield-compatible microcontroller with all of the functionality of the Ethernet shield built right in!&lt;/p&gt;
