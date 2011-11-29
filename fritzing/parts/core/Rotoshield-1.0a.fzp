@@ -1,14 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='Rotoshield-1.0a'>
 <version>4</version>
-<date>2011-11-28</date>
+<date>2011-11-29</date>
 <author>Snootlab</author>
-<description>
-	&lt;div id=&quot;idTab1&quot; class=&quot;rte&quot;&gt;&lt;p&gt;Turn you electronic in mouvement !&lt;/p&gt;
+<description>	&lt;div id=&quot;idTab1&quot; class=&quot;rte&quot;&gt;&lt;p&gt;Put your electronic assemblies in motion !&lt;/p&gt;
 
 &lt;p&gt;&amp;nbsp;&lt;/p&gt;
 
-&lt;p&gt;A motor driver shield for Arduino&lt;/p&gt;
+&lt;p&gt;A motor driver shield for Arduino Uno, Mega and Duemilanove.&lt;/p&gt;
 
 &lt;ul&gt;
 
@@ -16,51 +15,51 @@
 
 &lt;p&gt;&amp;nbsp;&lt;/p&gt;
 
-&lt;p&gt;Using the L293DNE integrated circuit&amp;nbsp;(Quadruple Half H-bridge) that provides 0.6A per bridge (1.2A peak) with thermal diodes and integrated kickback.&lt;/p&gt;
-
-&lt;p&gt;Steering engines from  4.5VDC to 18VDC&lt;/p&gt;
+&lt;p&gt;Use the integrated circuit L293DNE (Quad Half H-bridge) that provides 0.6A per bridge (1.2A peak) with thermal protection and kickback diodes integrated.&lt;/p&gt;
 
 &lt;p&gt;&amp;nbsp;&lt;/p&gt;
 
+&lt;p&gt;DC motors from 4.5VDC to 20VDC&lt;/p&gt;
+
 &lt;ul&gt;
 
-&lt;li&gt;Can control up to 4 DC motors with individual speed control  (256 Levels);&lt;/li&gt;
+&lt;li&gt;Can control up to four DC motors individually controlled speed (256 levels)&lt;/li&gt;
 
-&lt;li&gt;Can drive up to 2 stepper motors (bipolar test, dev. unipolar bookstore in progress).&lt;/li&gt;
+&lt;li&gt;Can control up to 2 stepper motors.&lt;/li&gt;
 
 &lt;/ul&gt;
 
 &lt;p&gt;&amp;nbsp;&lt;/p&gt;
 
-&lt;p&gt;4 dual color LED indicates motor rotation direction.&lt;/p&gt;
+&lt;p&gt;Features :&lt;/p&gt;
 
-&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;ul&gt;
 
-&lt;p&gt;Use I2C bus to leave more digital output free.&lt;/p&gt;
+&lt;li&gt;4 bi-color LED to indicate the direction of rotation for each motor.&lt;/li&gt;
 
-&lt;p&gt;Only 4 PWM outputs of the Arduino (vs 6 available) and 2 analog input of the Arduino (vs 6 available) are used compared to other motor drivers.&lt;/p&gt;
+&lt;li&gt;I2C bus used to minimize digital output pin used.&lt;/li&gt;
 
-&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;li&gt;Only 4 Arduino PWM outputs and 2 analog input are used&lt;/li&gt;
 
-&lt;p&gt;Pull down resistors incorporated to disable the motors during board startup.&lt;/p&gt;
+&lt;li&gt;Easy programming thanks to the library developed for this shield (see below).&lt;/li&gt;
 
-&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;li&gt;Pull down resistors built to disable the motors during board startup.&lt;/li&gt;
+
+&lt;/ul&gt;
 
 &lt;ul&gt;
 
 &lt;li&gt;2 screw terminals to simplify wiring to the motors;&lt;/li&gt;
 
-&lt;li&gt;1 screw terminal block to allow the motor supply separate from that of logic circuits (better anti-interference).&lt;/li&gt;
+&lt;li&gt;1 screw terminal dedicated to motor power supply (anti-interference improvment).&lt;/li&gt;
+
+&lt;li&gt;ATX power supply header on the board. ATX 12VDC can be used for motor power by shorting dedicated solder jumper.&lt;/li&gt;
+
+&lt;li&gt;8 additional outputs available on 16 PWM intensity levels&lt;/li&gt;
+
+&lt;li&gt;Control sensors and outputs using the same shield.&lt;/li&gt;
 
 &lt;/ul&gt;
-
-&lt;p&gt;&amp;nbsp;&lt;/p&gt;
-
-&lt;p&gt;Possibility of power supply with ATX 12V with selectable soldered jumper.&lt;/p&gt;
-
-&lt;p&gt;&amp;nbsp;&lt;/p&gt;
-
-&lt;p&gt;8 additional PWM available outputs with 16 intensity levels to control leds and outputs.&lt;/p&gt;
 
 &lt;p&gt;&amp;nbsp;&lt;/p&gt;
 
@@ -72,16 +71,31 @@
 
 &lt;p&gt;&amp;nbsp;&lt;/p&gt;
 
-&lt;p&gt;&lt;img style=&quot;height: auto; font-family: Arial, Helvetica, sans-serif; color: #323232; list-style-type: none; list-style-position: initial; list-style-image: initial; padding: 0px; margin: 0px; border: 0px initial initial;&quot; title=&quot;Guide de montage&quot; src=&quot;https://shop.snootlab.com/img/p/87-340.jpg&quot; alt=&quot;Guide de montage&quot; width=&quot;210&quot; height=&quot;78&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://shop.snootlab.com/attachment.php?id_attachment=43&quot; target=&quot;_blank&quot;&gt;&lt;img style=&quot;height: auto; font-family: Arial, Helvetica, sans-serif; color: #323232; list-style-type: none; list-style-position: initial; list-style-image: initial; padding: 0px; margin: 0px; border: 0px initial initial;&quot; title=&quot;Assembly guide&quot; src=&quot;https://shop.snootlab.com/img/p/87-340.jpg&quot; alt=&quot;Assembly guide&quot; width=&quot;210&quot; height=&quot;78&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
 
+&lt;p&gt;Documentation and installation guide : &lt;a href=&quot;http://shop.snootlab.com/attachment.php?id_attachment=43&quot; target=&quot;_blank&quot;&gt;link&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;Official support forum: &lt;a href=&quot;http://forum.snootlab.com&quot; target=&quot;_blank&quot;&gt;forum.snootlab.com&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+
+&lt;p&gt;The official support forum: &lt;a href=&quot;http://forum.snootlab.com&quot; target=&quot;_blank&quot;&gt;forum.snootlab.com&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Example of derivative use of Rotoshield to control an output voltage, manage engine, etc.. on the forum.&lt;/p&gt;
 
 &lt;p&gt;&amp;nbsp;&lt;/p&gt;
 
 &lt;p&gt;Library on GitHub : &lt;a href=&quot;https://github.com/Snootlab/Snootor&quot; target=&quot;_blank&quot;&gt;link&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;Our libraries are available for Arduino and Arduino 1.0 (select the branch on Github).&lt;/p&gt;
+&lt;p&gt;Our libraries are available for Arduino and Arduino 1.0 (select the branche you want on the Git).&lt;/p&gt;
+
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+
+&lt;p&gt;Soldering kit comes in a reusable zip ESD packaging.&lt;/p&gt;
+
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+
+&lt;p&gt;Like all our products, this kit is RoHS.&lt;/p&gt;
+
+&lt;p&gt;&lt;img style=&quot;height: auto; font-family: Arial, Helvetica, sans-serif; color: #323232; list-style-type: none; list-style-position: initial; list-style-image: initial; padding: 0px; margin: 0px; border: 0px initial initial;&quot; src=&quot;http://shop.snootlab.com/themes/matrice/img/logos_ext/RoHS-Logo.jpg&quot; alt=&quot;&quot; width=&quot;45&quot; height=&quot;60&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/div&gt;
 
@@ -100,6 +114,8 @@
 					&lt;li&gt;&lt;a href=&quot;http://shop.snootlab.com/attachment.php?id_attachment=43&quot;&gt;Manual Rotoshield EN.pdf&lt;/a&gt;&lt;br /&gt;Assembly guide Rotoshield EN&lt;/li&gt;
 
 				&lt;/ul&gt;
+
+			 &lt;!-- accessories --&gt;
 </description>
 <title>Rotoshield - Motor driver shield for Arduino</title>
 <url>http://shop.snootlab.com/shields-snootlab/87-rotoshield.html</url>
