@@ -793,8 +793,8 @@ void FApplication::preferences() {
 	}
 
 	MainWindow * mainWindow = NULL;
-	foreach (QWidget * widget, m_orderedTopLevelWidgets) {
-		mainWindow = (MainWindow *) widget;
+	foreach (MainWindow * mw, orderedTopLevelMainWindows()) {
+		mainWindow = mw;
 		break;
 	}
 
@@ -825,20 +825,21 @@ void FApplication::updatePrefs(PrefsDialog & prefsDialog)
 	}
 
 	QHash<QString, QString> hash = prefsDialog.settings();
+	QList<MainWindow *> mainWindows = orderedTopLevelMainWindows();
 	foreach (QString key, hash.keys()) {
 		settings.setValue(key, hash.value(key));
 		if (key.compare("connectedColor") == 0) {
 			QColor c(hash.value(key));
 			ItemBase::setConnectedColor(c);
-			foreach (QWidget * widget, m_orderedTopLevelWidgets) {
-				((MainWindow *) widget)->redrawSketch();
+			foreach (MainWindow * mainWindow, mainWindows) {
+				mainWindow->redrawSketch();
 			}
 		}
 		else if (key.compare("unconnectedColor") == 0) {
 			QColor c(hash.value(key));
 			ItemBase::setUnconnectedColor(c);
-			foreach (QWidget * widget, m_orderedTopLevelWidgets) {
-				((MainWindow *) widget)->redrawSketch();
+			foreach (MainWindow * mainWindow, mainWindows) {
+				mainWindow->redrawSketch();
 			}
 		}
 		else if (key.compare("wheelMapping") == 0) {
@@ -851,8 +852,8 @@ void FApplication::updatePrefs(PrefsDialog & prefsDialog)
 			MainWindow::setAutosaveEnabled(hash.value(key).toInt());
 		}
 		else if (key.contains("gridsize", Qt::CaseInsensitive)) {
-			foreach (QWidget * widget, m_orderedTopLevelWidgets) {
-				foreach (SketchWidget * sketchWidget, ((MainWindow *) widget)->sketchWidgets()) {
+			foreach (MainWindow * mainWindow, mainWindows) {
+				foreach (SketchWidget * sketchWidget, mainWindow->sketchWidgets()) {
 					if (key.contains(sketchWidget->viewName())) {
 						sketchWidget->initGrid();
 					}
@@ -860,8 +861,8 @@ void FApplication::updatePrefs(PrefsDialog & prefsDialog)
 			}
 		}
 		else if (key.contains("curvy", Qt::CaseInsensitive)) {
-			foreach (QWidget * widget, m_orderedTopLevelWidgets) {
-				foreach (SketchWidget * sketchWidget, ((MainWindow *) widget)->sketchWidgets()) {
+			foreach (MainWindow * mainWindow, mainWindows) {
+				foreach (SketchWidget * sketchWidget, mainWindow->sketchWidgets()) {
 					if (key.contains(sketchWidget->getShortName())) {
 						sketchWidget->setCurvyWires(hash.value(key).compare("1") == 0);
 					}
@@ -873,8 +874,8 @@ void FApplication::updatePrefs(PrefsDialog & prefsDialog)
 	hash = prefsDialog.tempSettings();
 	foreach (QString key, hash.keys()) {
 		if (key.contains("background", Qt::CaseInsensitive)) {
-			foreach (QWidget * widget, m_orderedTopLevelWidgets) {
-				foreach (SketchWidget * sketchWidget, ((MainWindow *) widget)->sketchWidgets()) {
+			foreach (MainWindow * mainWindow, mainWindows) {
+				foreach (SketchWidget * sketchWidget, mainWindow->sketchWidgets()) {
 					if (key.contains(sketchWidget->getShortName())) {
 						sketchWidget->setBackground(hash.value(key));
 					}
@@ -1388,3 +1389,11 @@ void FApplication::runInscriptionService()
 	Panelizer::inscribe(this, m_panelFilename);
 }
 
+QList<MainWindow *> FApplication::orderedTopLevelMainWindows() {
+	QList<MainWindow *> mainWindows;
+	foreach (QWidget * widget, m_orderedTopLevelWidgets) {
+		MainWindow * mainWindow = qobject_cast<MainWindow *>(widget);
+		if (mainWindow) mainWindows.append(mainWindow);
+	}
+	return mainWindows;
+}

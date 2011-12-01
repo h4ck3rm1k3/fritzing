@@ -103,6 +103,7 @@ protected:
 	void cleanupBackups();
 	QString makeRequestParamsString();
 	void updatePrefs(class PrefsDialog & prefsDialog);
+	QList<MainWindow *> FApplication::orderedTopLevelMainWindows();
 
 	enum ServiceType {
 		PanelizerService = 1,
