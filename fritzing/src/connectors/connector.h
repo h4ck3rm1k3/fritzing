@@ -78,6 +78,7 @@ public:
 	struct SvgIdLayer * fullPinInfo(ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID);
 	QList< QPointer<class ConnectorItem> > viewItems();
 	const QString & legID(ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID);
+	void setConnectorLocalName(const QString &);
 
 public:
 	static void initNames();
@@ -95,6 +96,7 @@ protected:
 	QList<Connector *> m_toConnectors;
 	QPointer<class ModelPart> m_modelPart;
 	QPointer<class Bus> m_bus;
+	QString m_connectorLocalName;
 
 protected:
 	static QHash<ConnectorType, QString> Names;

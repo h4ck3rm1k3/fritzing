@@ -48,8 +48,8 @@ public:
 	void setId(QString id);
 	const QString & description();
 	void setDescription(QString description);
-	const QString & name();
-	void setName(QString name);
+	const QString & sharedName();
+	void setSharedName(QString name);
 	const QString & connectorTypeString();
 	void setConnectorType(QString type);
 	Connector::ConnectorType connectorType();

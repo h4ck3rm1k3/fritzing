@@ -2167,7 +2167,9 @@ void SketchWidget::prepMove(ItemBase * originatingItem, bool rubberBandLegEnable
 	}
 
 	if (wires.count() > 0) {
-		categorizeDragWires(wires);
+		QList<ItemBase *> freeWires;
+		categorizeDragWires(wires, freeWires);
+		m_checkUnder.append(freeWires);
 	}
 
 	categorizeDragLegs(rubberBandLegEnabled);
@@ -2314,9 +2316,8 @@ void SketchWidget::categorizeDragLegs(bool rubberBandLegEnabled)
 	}
 }
 
-void SketchWidget::categorizeDragWires(QSet<Wire *> & wires) 
+void SketchWidget::categorizeDragWires(QSet<Wire *> & wires, QList<ItemBase *> & freeWires) 
 {
-
 	foreach (Wire * w, wires) {
 		QList<Wire *> chainedWires;
 		QList<ConnectorItem *> ends;
@@ -2327,11 +2328,55 @@ void SketchWidget::categorizeDragWires(QSet<Wire *> & wires)
 	}
 
 	QList<ConnectionThing *> connectionThings;
+	QHash<ItemBase *, ConnectionThing *> ctHash;
 	foreach (Wire * w, wires) {
 		ConnectionThing * ct = new ConnectionThing;
 		ct->wire = w;
 		ct->status[0] = ct->status[1] = UNDETERMINED_;
 		connectionThings.append(ct);
+		ctHash.insert(w, ct);
+	}
+
+	// handle free first
+	foreach (Wire * w, wires) {
+		if (w->getTrace()) continue;
+
+		QList<ConnectorItem *> pairs;
+		pairs << w->connector0() << w->connector1();
+		for (int i = 0; i < pairs.count(); i++) {
+			ConnectorItem * ci = pairs.at(i);
+			if (ci->connectionsCount() == 0) {
+				ConnectionThing * ct = ctHash.value(ci->attachedTo());
+				if (ct->status[i] != UNDETERMINED_) continue;
+
+				// if one end is FREE, treat all connected wires as free (except possibly if the other end connector is attached to something)
+				QList<Wire *> chainedWires;
+				QList<ConnectorItem *> ends;
+				ct->wire->collectChained(chainedWires, ends);
+				ends.clear();
+				foreach (Wire * ww, chainedWires) {
+					ends.append(ww->connector0());
+					ends.append(ww->connector1());
+				}
+				foreach (ConnectorItem * end, ends) {
+					if (end->connectionsCount() == 0) {
+						ctHash.value(end->attachedTo())->status[i] = FREE_;
+					}
+					else {
+						bool onlyWires = true;
+						foreach (ConnectorItem * to, end->connectedToItems()) {
+							if (to->attachedToItemType() != ModelPart::Wire) {
+								onlyWires = false;
+								break;
+							}
+						}
+						if (onlyWires) {
+							ctHash.value(end->attachedTo())->status[i] = FREE_;
+						}
+					}
+				}
+			}
+		}
 	}
 
 	int noChangeCount = 0;
@@ -2394,18 +2439,17 @@ void SketchWidget::categorizeDragWires(QSet<Wire *> & wires)
 			if (ct->status[i] != UNDETERMINED_) continue;
 
 			if (from.at(i)->connectionsCount() == 0) {
-				changed = true;
-				ct->status[i] = FREE_;
+				DebugDialog::debug("FREE_ wire should not be found at this point");
 			}
 		}
 
 		if (ct->status[0] != UNDETERMINED_ && ct->status[1] != UNDETERMINED_) {
 			if (ct->status[0] == IN_) {
-				if (ct->status[1] == IN_) {
+				if (ct->status[1] == IN_ || ct->status[1] == FREE_) {
 					m_savedItems.insert(ct->wire->id(), ct->wire);
+					if (ct->status[1] == FREE_) freeWires.append(ct->wire);
 				}
 				else {
-					// OUT == FREE in this case
 					// attach the connector that stays IN
 					m_savedWires.insert(ct->wire, ct->wire->connector0());
 				}
@@ -2422,13 +2466,18 @@ void SketchWidget::categorizeDragWires(QSet<Wire *> & wires)
 			}
 			else /* ct->status[0] == FREE_ */ {  
 				if (ct->status[1] == IN_) {
-					// attach the connector that stays IN
-					m_savedWires.insert(ct->wire, ct->wire->connector1());
+					// attach wire that stays IN
+					m_savedItems.insert(ct->wire->id(), ct->wire);
+					freeWires.append(ct->wire);
 				}
 				else if (ct->status[1] == FREE_) {
 					// both sides are free, so if the wire is selected, drag it
 					if (ct->wire->isSelected()) {
 						m_savedItems.insert(ct->wire->id(), ct->wire);
+						freeWires.append(ct->wire);
+					}
+					else {
+						outWires.append(ct->wire);
 					}
 				}
 				else {
@@ -3010,9 +3059,13 @@ bool SketchWidget::checkMoved()
 
 	QList<ConnectorItem *> restoreConnectorItems;
 	foreach (ItemBase * item, m_savedItems) {
-		if (item->itemType() == ModelPart::Wire) continue;
-
 		foreach (ConnectorItem * fromConnectorItem, item->cachedConnectorItems()) {
+			if (item->itemType() == ModelPart::Wire) {
+				if (fromConnectorItem->connectionsCount() > 0) {
+					continue;
+				}
+			}
+
 			ConnectorItem * toConnectorItem = fromConnectorItem->overConnectorItem();
 			if (toConnectorItem != NULL) {
 				toConnectorItem->connectorHover(item, false);

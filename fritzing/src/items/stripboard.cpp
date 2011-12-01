@@ -285,7 +285,7 @@ Stripboard::Stripboard( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifi
 	foreach (Connector * connector, modelPart->connectors().values()) {
 		ConnectorShared * connectorShared = connector->connectorShared();
 		int cx, cy;
-		getXY(cx, cy, connectorShared->name());
+		getXY(cx, cy, connector->connectorSharedName());
 		BusShared * busShared = m_buses.at(cy);
 		busShared->addConnectorShared(connectorShared);
 	}

@@ -138,6 +138,7 @@ public:
 	const QVector<class Bezier *> & beziers();
 	bool isBendpoint();
 	void cursorKeyEvent(Qt::KeyboardModifiers modifiers);
+	void setConnectorLocalName(const QString & name);
 
 protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );

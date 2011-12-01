@@ -2739,3 +2739,10 @@ bool ConnectorItem::isBendpoint()
 
 	return true;
 }
+
+void ConnectorItem::setConnectorLocalName(const QString & name) 
+{
+	if (m_connector) {
+		m_connector->setConnectorLocalName(name);
+	}
+}

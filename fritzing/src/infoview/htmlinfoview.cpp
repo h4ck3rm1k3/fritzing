@@ -321,20 +321,17 @@ void HtmlInfoView::viewConnectorItemInfo(ConnectorItem * connectorItem) {
 	m_lastConnectorItemCount = count;
 
 	Connector * connector = NULL;
-	ConnectorShared * connectorShared = NULL;
 	if (connectorItem) {
 		if (connectorItem->attachedTo() != m_lastItemBase) {
 			return;
 		}
 
 		connector = connectorItem->connector();
-		connectorShared = connector->connectorShared();
-	
 	}
 
 	if (m_connDescr) {
 		m_connDescr->setText(connectorItem ? tr("connected to %n item(s)", "", connectorItem->connectionsCount()) : "");
-		m_connName->setText(connectorShared ? connectorShared->name() : "");
+		m_connName->setText(connector ? connector->connectorSharedName() : "");
 		m_connType->setText(connector ? Connector::connectorNameFromType(connector->connectorType()) : "");
 	}
 

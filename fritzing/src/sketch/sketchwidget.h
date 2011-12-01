@@ -387,7 +387,7 @@ protected:
 	void prepDragBendpoint(Wire *, QPoint eventPos, bool dragCurve);
 	void prepDragWire(Wire *);
 	void clickBackground(QMouseEvent *);
-	void categorizeDragWires(QSet<Wire *> & wires);
+	void categorizeDragWires(QSet<Wire *> & wires, QList<ItemBase *> & freeWires);
 	void categorizeDragLegs(bool rubberBandLegEnabled);
 	void prepMove(ItemBase * originatingItem, bool rubberBandLegEnabled);
 	void initBackgroundColor();

@@ -979,6 +979,7 @@ ConnectorItem * Wire::connector1() {
 
 void Wire::findConnectorsUnder() {
 	foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
+		if (connectorItem->connectionsCount() > 0) continue;  // only check free ends
 		connectorItem->findConnectorUnder(true, false, ConnectorItem::emptyConnectorItemList, false, NULL);
 	}
 }

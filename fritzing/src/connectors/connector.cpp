@@ -128,7 +128,7 @@ void Connector::saveAsPart(QXmlStreamWriter & writer) {
 	writer.writeStartElement("connector");
 	writer.writeAttribute("id", connectorShared()->id());
 	writer.writeAttribute("type", connectorShared()->connectorTypeString());
-	writer.writeAttribute("name", connectorShared()->name());
+	writer.writeAttribute("name", connectorShared()->sharedName());
 	writer.writeTextElement("description", connectorShared()->description());
 	writer.writeStartElement("views");
 	QMultiHash<ViewIdentifierClass::ViewIdentifier,SvgIdLayer *> pins = m_connectorShared->pins();
@@ -196,7 +196,11 @@ const QString & Connector::connectorSharedID() {
 const QString & Connector::connectorSharedName() {
 	if (m_connectorShared == NULL) return ___emptyString___;
 
-	return m_connectorShared->name();
+	if (!m_connectorLocalName.isEmpty()) {
+		return m_connectorLocalName;
+	}
+
+	return m_connectorShared->sharedName();
 }
 
 const QString & Connector::connectorSharedDescription() {
@@ -262,4 +266,13 @@ const QString & Connector::legID(ViewIdentifierClass::ViewIdentifier viewID, Vie
 	if (m_connectorShared) return m_connectorShared->legID(viewID, viewLayerID);
 
 	return ___emptyString___;
+}
+
+void Connector::setConnectorLocalName(const QString & name) {
+	if (m_connectorShared != NULL && name.compare(m_connectorShared->sharedName()) == 0) {
+		m_connectorLocalName.clear();
+		return;
+	}
+
+	m_connectorLocalName = name;
 }

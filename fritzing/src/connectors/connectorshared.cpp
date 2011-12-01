@@ -101,10 +101,10 @@ void ConnectorShared::setDescription(QString description) {
 	m_description = description;
 }
 
-const QString & ConnectorShared::name() {
+const QString & ConnectorShared::sharedName() {
 	return m_name;
 }
-void ConnectorShared::setName(QString name) {
+void ConnectorShared::setSharedName(QString name) {
 	m_name = name;
 }
 

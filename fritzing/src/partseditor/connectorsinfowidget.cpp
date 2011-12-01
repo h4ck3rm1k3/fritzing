@@ -347,7 +347,7 @@ const QList< QPointer<ConnectorShared> > ConnectorsInfoWidget::connectorsShared(
 			//DebugDialog::debug(QString("what is this pin %1").arg(sil->m_svgViewLayerID));
 		//}
 		cs->setId(id);
-		cs->setName(sci->name());
+		cs->setSharedName(sci->name());
 		cs->setDescription(sci->description());
 		cs->setConnectorType(sci->type());
 
