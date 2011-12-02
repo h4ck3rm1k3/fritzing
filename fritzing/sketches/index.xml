@@ -171,6 +171,7 @@
       <url name="Get your own Fritzing Starter Kit" href="http://fritzing.org/shop/starter-kit/" />
 		</category>
 		<category name="Fritzing Super Upgrade Kit">
+		  <sketch id="AnalogInputFSR"/>			
 			<sketch id="555TouchSwitch"/>
 			<sketch id="LCD"/>
 			<sketch id="Countdown"/>
@@ -179,7 +180,7 @@
 			<sketch id="DC_motor_control"/>
 			<sketch id="Mood-Light"/>
 			<separator />
-      <url name="Get your own Fritzing Extension Kit" href="http://fritzing.org/shop/starter-kit/" />			
+      <url name="Get your own Fritzing Super Upgrade Kit" href="http://fritzing.org/shop/super-upgrade-kit/" />			
 		</category>-->
 	</categories>
 </fritzing-sketches>
