@@ -11,7 +11,7 @@
 		<sketch id="BarebonesArduinoStripboard" name="Barebones Arduino with Stripboard" src="core/Barebones Arduino (stripboard).fz"/>
 		<sketch id="Blink" name="Blink" src="core/Blink.fz"/>
 		<sketch id="Button" name="Button" src="core/Button.fz"/>
-		<sketch id="Countdown" name="Countdown" src="core/Countdown.fz"/>		
+		<sketch id="Countdown" name="Countdown (Rotary Encoder + 7 Segment Displays)" src="core/Countdown.fz"/>		
 		<sketch id="DC_motor_control" name="DC Motor" src="core/DC_motor_control.fz"/>
 		<sketch id="Knock" name="Knock (Piezo)" src="core/Knock.fz"/>
 		<sketch id="LCD" name="Liquid Crystal Display" src="core/LiquidCrystalDisplay.fz"/>
@@ -170,12 +170,13 @@
       <separator />
       <url name="Get your own Fritzing Starter Kit" href="http://fritzing.org/shop/starter-kit/" />
 		</category>
-		<!--<category name="Fritzing Extension Kit">
+		<category name="Fritzing Super Upgrade Kit">
 			<sketch id="555TouchSwitch"/>
-			<sketch id="BarebonesArduino"/>
+			<sketch id="LCD"/>
 			<sketch id="Countdown"/>
 			<sketch id="Shift_Register"/>
 			<sketch id="Shift_Register_2x"/>
+			<sketch id="DC_motor_control"/>
 			<sketch id="Mood-Light"/>
 			<separator />
       <url name="Get your own Fritzing Extension Kit" href="http://fritzing.org/shop/starter-kit/" />			
