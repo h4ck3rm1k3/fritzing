@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="pt_PT">
+<TS version="2.0" language="pt_BR">
 <context>
     <name>AboutBox</name>
     <message>
@@ -49,7 +49,7 @@
     </message>
     <message>
         <source>Special thanks goes out to: </source>
-        <translation>Agradecimentos especiais vão para:</translation>
+        <translation>Agradecimentos especiais para:</translation>
     </message>
     <message>
         <source>Jussi &amp;Auml;ngeslev&amp;auml;, Massimo Banzi, Ayah Bdeir, </source>
@@ -77,7 +77,7 @@
     </message>
     <message>
         <source>Thanks to Kurt Badelt and Miguel Solis for the Spanish translation, </source>
-        <translation>Agradecimentos para  Kurt Badelt e Miguel Solis pela tradução para Espanhol, </translation>
+        <translation>Agradecimentos para Kurt Badelt e Miguel Solis pela tradução para Espanhol, </translation>
     </message>
     <message>
         <source>to Gianluca Urgese for the Italian translation, </source>
@@ -141,7 +141,7 @@
     </message>
     <message>
         <source>Fritzing a test spin. </source>
-        <translation>ao Fritzing o teste inicial. </translation>
+        <translation>os testes iniciais no Fritzing. </translation>
     </message>
     <message>
         <source>&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</source>
@@ -190,11 +190,11 @@
     </message>
     <message>
         <source>professional</source>
-        <translation>professional</translation>
+        <translation>profissional</translation>
     </message>
     <message>
         <source>custom</source>
-        <translation>adaptar</translation>
+        <translation>personalizado</translation>
     </message>
     <message>
         <source>Trace width</source>
@@ -217,7 +217,7 @@
     </message>
     <message>
         <source>New bin (%1)</source>
-        <translation>Novo compartimento (%1)</translation>
+        <translation>Novo repositório (%1)</translation>
     </message>
     <message>
         <source>Select a part to import</source>
@@ -233,91 +233,91 @@
     </message>
     <message>
         <source>Fritzing Bin Files (*%1 *%2);;Fritzing Bin (*%1);;Fritzing Shareable Bin (*%2)</source>
-        <translation>Arquivos de compartimento Fritzing (*%1 *%2);; Compartimento Fritzing(*%1);; Compartimento Fritzing compartilhável (*%2)</translation>
+        <translation>Arquivos de repositório Fritzing (*%1 *%2);; Repositório Fritzing(*%1);; Repositório Fritzing compartilhável (*%2)</translation>
     </message>
     <message>
         <source>Cannot set a NULL bin as the current one</source>
-        <translation>Não é possível definir NULL como compartimento atual</translation>
+        <translation>Não é possível definir NULL como repositório atual</translation>
     </message>
     <message>
         <source>BinManager::updateTitle: Couldn&apos;t set the bin &apos;%1&apos; as dirty</source>
-        <translation>GestorCompartimento::TítuloActualizado: Não se pode definir o compartimento &apos;%1&apos; como &quot;dirty&quot;</translation>
+        <translation>GestorRepositório::TítuloAtualizado: Não se pode definir o repositório &apos;%1&apos; como &quot;dirty&quot;</translation>
     </message>
     <message>
         <source>Select a Fritzing Parts Bin file to open</source>
-        <translation>Selecciona um compartimento Fritzing de componentes para abrir</translation>
+        <translation>Selecione um repositório Fritzing de componentes para abrir</translation>
     </message>
     <message>
         <source>Bin</source>
-        <translation>Compartimento</translation>
+        <translation>Repositório</translation>
     </message>
     <message>
         <source>New Bin...</source>
-        <translation>Novo Compartimento...</translation>
+        <translation>Novo Repositório...</translation>
     </message>
     <message>
         <source>Create a new parts bin</source>
-        <translation>Criar um novo compartimento para componentes</translation>
+        <translation>Criar um novo repositório para componentes</translation>
     </message>
     <message>
         <source>Open Bin...</source>
-        <translation>Abrir Compartimento...</translation>
+        <translation>Abrir Repositório...</translation>
     </message>
     <message>
         <source>Open a parts bin from a file</source>
-        <translation>Abrir os componentes de um compartimento de um ficheiro</translation>
+        <translation>Abrir os repositórios de um arquivo</translation>
     </message>
     <message>
         <source>Close Bin</source>
-        <translation>Fechar Compartimento</translation>
+        <translation>Fechar Repositório</translation>
     </message>
     <message>
         <source>Close parts bin</source>
-        <translation>Fechar compartimento de componentes</translation>
+        <translation>Fechar repositório de componentes</translation>
     </message>
     <message>
         <source>Delete Bin</source>
-        <translation>Apagar Compartimento</translation>
+        <translation>Apagar Repositório</translation>
     </message>
     <message>
         <source>Delete parts bin</source>
-        <translation>Apagar componentes do compartimento</translation>
+        <translation>Apagar componentes do repositório</translation>
     </message>
     <message>
         <source>Save Bin</source>
-        <translation>Guardar Compartimento</translation>
+        <translation>Salvar Repositório</translation>
     </message>
     <message>
         <source>Save parts bin</source>
-        <translation>Guardar os componentes do compartimento</translation>
+        <translation>Salvar os componentes do repositório</translation>
     </message>
     <message>
         <source>Save Bin As...</source>
-        <translation>Guardar compartimento como...</translation>
+        <translation>Salvar repositório como...</translation>
     </message>
     <message>
         <source>Save parts bin as...</source>
-        <translation>Guardar os componentes do compartimento como...</translation>
+        <translation>Salvar os componentes do repositório como...</translation>
     </message>
     <message>
         <source>Export Bin...</source>
-        <translation>Exportar compartimento...</translation>
+        <translation>Exportar repositório...</translation>
     </message>
     <message>
         <source>Save parts bin in compressed format...</source>
-        <translation>Guardar componentes do compartimento em formato comprimido...</translation>
+        <translation>Salvar componentes do repositório em formato compactado...</translation>
     </message>
     <message>
         <source>Rename Bin...</source>
-        <translation>Renomear compartimento...</translation>
+        <translation>Renomear repositório...</translation>
     </message>
     <message>
         <source>Rename parts bin...</source>
-        <translation>Renomear o compartimento dos componentes...</translation>
+        <translation>Renomear o repositório dos componentes...</translation>
     </message>
     <message>
         <source>Show Bin in List View</source>
-        <translation>Mostrar o compartimento no modo lista</translation>
+        <translation>Mostrar o repositório no modo lista</translation>
     </message>
     <message>
         <source>Display parts as a list</source>
@@ -325,7 +325,7 @@
     </message>
     <message>
         <source>Show Bin in Icon View</source>
-        <translation>Mostrar o compartimento no modo ícone</translation>
+        <translation>Mostrar o repositório no modo ícone</translation>
     </message>
     <message>
         <source>Display parts as icons</source>
@@ -353,35 +353,35 @@
     </message>
     <message>
         <source>Delete bin</source>
-        <translation>Apagar compartimento</translation>
+        <translation>Apagar repositório</translation>
     </message>
     <message>
         <source>Do you really want to delete bin &apos;%1&apos;?  This action cannot be undone.</source>
-        <translation>Queres realmente apagar o compartimento &apos;%1&apos;?  Esta acção não pode ser desfeita.</translation>
+        <translation>Deseja realmente apagar o repositório &apos;%1&apos;?  Esta ação não pode ser desfeita.</translation>
     </message>
     <message>
         <source>Read-only bin</source>
-        <translation>Compartimento apenas de leitura</translation>
+        <translation>Repositório apenas de leitura</translation>
     </message>
     <message>
         <source>This bin cannot be renamed.</source>
-        <translation>Este compartimento não pode ser renomeado.</translation>
+        <translation>Este repositório não pode ser renomeado.</translation>
     </message>
     <message>
         <source>Rename bin</source>
-        <translation>Renomear compartimento</translation>
+        <translation>Renomear repositório</translation>
     </message>
     <message>
         <source>Please choose a name for the bin:</source>
-        <translation>Por favor selecione um nome para o compartimento:</translation>
+        <translation>Selecione um nome para o repositório:</translation>
     </message>
     <message>
         <source>Remove from bin</source>
-        <translation>Remover do compartimento</translation>
+        <translation>Remover do repositório</translation>
     </message>
     <message>
         <source>Do you really want to remove &apos;%1&apos; from the bin?</source>
-        <translation>Queres realmente remover &apos;%1&apos; do compartimento?</translation>
+        <translation>Deseja realmente remover &apos;%1&apos; do repositório?</translation>
     </message>
 </context>
 <context>
@@ -422,21 +422,21 @@
     <message numerus="yes">
         <source>Note: the autorouter did not route %n parts, because they are not located entirely on the board.</source>
         <translation>
-            <numerusform>Nota: o auto-encaminhamento não foi efectivo no componente %n, porque este não está colocado inteiramente dentro da placa.</numerusform>
-            <numerusform>Nota: o auto-encaminhamento não foi efectivo nos componentes %n, porque estes não estão colocados inteiramente dentro da placa.</numerusform>
+            <numerusform>Nota: o auto-encaminhamento não foi efetivo no componente %n, porque este não está colocado inteiramente dentro da placa.</numerusform>
+            <numerusform>Nota: o auto-encaminhamento não foi efetivo nos componentes %n, porque estes não estão colocados inteiramente dentro da placa.</numerusform>
         </translation>
     </message>
     <message>
         <source>The Design Rule Check (DRC) was cancelled, because it could not find a PCB board part.</source>
-        <translation>A verificação da régua de desenho (DRC) foi cancelada, porque não foi possível encontrar uma placa PCB.</translation>
+        <translation>A verificação das regras de desenho (DRC) foi cancelada, porque não foi possível encontrar uma placa PCB.</translation>
     </message>
     <message>
         <source>Your sketch is ready for production: there are no connectors or traces that overlap or are too close together.</source>
-        <translation>O teu desenho está pronto para produção: não existem pistas ou ligações incorrectas ou demasiado próximas.</translation>
+        <translation>Seu desenho está pronto para produção: não existem trilhas ou ligações incorretas ou muito próximas.</translation>
     </message>
     <message>
         <source>The areas on your board highlighted in red are connectors and traces which overlap or are too close together. Reposition them and run the DRC again to find more problems.</source>
-        <translation>As áreas pintadas a vermelho na tua placa são ligações ou pistas que se sobrepõem ou estão demasiado próximos. Reposiciona-os e corre o DRC outra vez para encontrares mais problemas.</translation>
+        <translation>As áreas pintadas a vermelho na sua placa são ligações ou trilhas que se sobrepõem ou estão muito próximas. Reposicione-os e execute o DRC outra vez para detectar mais problemas.</translation>
     </message>
     <message numerus="yes">
         <source>
@@ -456,11 +456,11 @@ Nota: Os componentes %n não estão totalmente dentro da placa.</numerusform>
     <name>ConnectorItem</name>
     <message>
         <source>Add bendpoint</source>
-        <translation>Adicionar ponto de flexão</translation>
+        <translation>Adicionar ponto de curva</translation>
     </message>
     <message>
         <source>Remove bendpoint</source>
-        <translation>Remover ponto de flexão</translation>
+        <translation>Remover ponto de curva</translation>
     </message>
     <message>
         <source>Straighten curve</source>
@@ -535,7 +535,7 @@ antes de adicionar algum conector</translation>
     <name>DockManager</name>
     <message>
         <source>View Switcher</source>
-        <translation>Visão Alternador</translation>
+        <translation>Alternar Visões</translation>
     </message>
     <message>
         <source>Inspector</source>
@@ -599,7 +599,7 @@ antes de adicionar algum conector</translation>
     <message>
         <source>Do you want to import parts and bins that you have created with earlier versions of Fritzing?
 </source>
-        <translation>Gostaria de importar peças e compartimentos que você criou com versões anteriores do Fritzing?</translation>
+        <translation>Gostaria de importar peças e repositórios que você criou com versões anteriores do Fritzing?</translation>
     </message>
     <message>
         <source>
@@ -661,7 +661,7 @@ Por favor selecione outro tipo de fonte do Fritzing para o substituir:</translat
     </message>
     <message>
         <source>Do you want to save the changes you made in the document &quot;%1&quot;?</source>
-        <translation>Quer salvar as alterações feitas no documento &quot;%1&quot;?</translation>
+        <translation>Deseja salvar as alterações feitas no documento &quot;%1&quot;?</translation>
     </message>
     <message>
         <source>Save...</source>
@@ -692,11 +692,11 @@ Por favor selecione outro tipo de fonte do Fritzing para o substituir:</translat
     <name>Helper</name>
     <message>
         <source>The &lt;b&gt;Breadboard View&lt;/b&gt; is meant to look like a &lt;i&gt;real-life&lt;/i&gt; breadboard prototype.&lt;br/&gt;&lt;br/&gt;Begin by dragging a part from the Parts Bin, which is over at the top right. Then pull in more parts, connecting them by clicking on the connectors and dragging wires. The process is similar to how you would arrange things in the physical world. &lt;br/&gt;&lt;br/&gt;After you&apos;re finished creating your sketch in the breadboard view, try the other views. You can switch by clicking the other views in either the View Switcher or the Navigator on the lower right. Because different views have different purposes, parts will look different in the other views.</source>
-        <translation>A &lt;b&gt; visão do tipo Protoboard &lt;/b&gt; tem como objetivo parecer como &lt;i&gt; na vida real&lt;/i&gt; um protótipo feito em uma protoboard. &lt;br/&gt;&lt;br/&gt;Começe arrastando um componente da Caixa de Componentes, situado na parte superior direita. Depois pegue mais componentes, e ligue-os clicando nos conectores e arrastando fios. O processo é similar a como você organiza as coisas no mundo físico. &lt;br/&gt;&lt;br/&gt;Depois de terminar a criação do seu sketch na Visão Protoboard, tente outras visões. Você pode mudar entre as visões clicando em Visão Alternador ou em Navegador no canto inferior direito. Diferentes visões têm diferentes objetivos, sendo assim, os componentes vão parecer diferentes nos outros de visão.</translation>
+        <translation>A &lt;b&gt; visão do tipo Protoboard &lt;/b&gt; tem como objetivo parecer como &lt;i&gt; na vida real&lt;/i&gt; um protótipo feito em uma protoboard. &lt;br/&gt;&lt;br/&gt;Comece arrastando um componente da Caixa de Componentes, situado na parte superior direita. Depois pegue mais componentes, e ligue-os clicando nos conectores e arrastando fios. O processo é similar a como você organiza as coisas no mundo físico. &lt;br/&gt;&lt;br/&gt;Depois de terminar a criação do seu sketch na Visão Protoboard, tente outras visões. Você pode mudar entre as visões clicando em Alternar Visões ou em Navegador no canto inferior direito. Diferentes visões têm diferentes objetivos, sendo assim, os componentes vão parecer diferentes nos outros de visão.</translation>
     </message>
     <message>
         <source>Welcome to the &lt;b&gt;Schematic View&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;This is a more abstract way to look at components and connections than the Breadboard View. You have the same elements as you have on your breadboard, they just look different. This representation is closer to the traditional diagrams used by engineers.&lt;br/&gt;&lt;br/&gt;You can press &amp;lt;Shift&amp;gt;-click with the mouse to create bend points and tidy up your connections. The Schematic View can help you check that you have made the right connections between components. You can also print out your schematic for documentation.</source>
-        <translation>Bem vindo a &lt;b&gt; Visão Esquemática&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Esta é uma forma mais abstrata de ver os componentes e ligações do que na Visão Protoboard. Você tem os mesmos elementos que na protoboard, apenas a sua aparência é diferente. Esta representação é mais próxima das usadas pelos engenheiros&lt;br/&gt;&lt;br/&gt; Podes pressionar &amp;lt;Shift&amp;gt;-clique no mouse para criar pontos de inflexão e arrumar suas conexões. A Visão Esquemática pode ajudar você a verificar se as conexões feitas entre os componentes foram corretas. Você também pode imprimir o seu esquemático para documentação.</translation>
+        <translation>Bem vindo a &lt;b&gt; Visão Esquemática&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Esta é uma forma mais abstrata de ver os componentes e ligações do que na Visão Protoboard. Você tem os mesmos elementos que na protoboard, apenas a sua aparência é diferente. Esta representação é mais próxima das usadas pelos engenheiros&lt;br/&gt;&lt;br/&gt; Podes pressionar &amp;lt;Shift&amp;gt;-clique no mouse para criar pontos de curva e arrumar suas conexões. A Visão Esquemática pode ajudar você a verificar se as conexões feitas entre os componentes foram corretas. Você também pode imprimir o seu esquemático para documentação.</translation>
     </message>
     <message>
         <source>The &lt;b&gt;PCB View&lt;/b&gt; is where you design how the components will appear on a physical PCB (Printed Circuit Board).&lt;br/&gt;&lt;br/&gt;PCBs can be made at home or in a small lab using DIY etching processes. They also can be sent to professional PCB manufacturing services for more precise fabrication. &lt;br/&gt;&lt;table&gt;&lt;tr&gt;&lt;td&gt;The first thing you will need is a board to place your parts on. There should already be one beneath this widget, but if not, drag in the board icon from the parts bin (image at right). &lt;/td&gt;&lt;td&gt;&lt;img src=&quot;:resources/parts/svg/core/icon/rectangle_pcb.svg&quot; /&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;br/&gt;&lt;br/&gt;To lay out your PCB, rearrange all the components so they fit nicely on the board. Then try to shift them around to minimize the length and confusion of connections. You can also resize rectangular boards. &lt;br/&gt;&lt;table&gt;&lt;tr&gt;&lt;td&gt;Once the parts are sorted out, you connect them with copper traces. You can drag out a trace from individual connections or use the autorouter to generate them. The Autoroute button is at the bottom of the window (image at right).&lt;/td&gt;&lt;td&gt;&lt;img src=&quot;:resources/images/icons/toolbarAutorouteEnabled_icon.png&quot; /&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
@@ -777,23 +777,23 @@ Por favor selecione outro tipo de fonte do Fritzing para o substituir:</translat
     </message>
     <message>
         <source>Change the part label here</source>
-        <translation>Mudar o nome a etiqueta do componente aqui</translation>
+        <translation>Mudar o nome do componente aqui</translation>
     </message>
     <message>
         <source>Part breadboard view image</source>
-        <translation>Imagem dos componentes constituintes breadboard</translation>
+        <translation>Imagem dos componentes na protoboard</translation>
     </message>
     <message>
         <source>Part schematic view image</source>
-        <translation>Imagem dos componentes constituintes do esquema</translation>
+        <translation>Imagem dos componentes do esquema</translation>
     </message>
     <message>
         <source>Part pcb view image</source>
-        <translation>Imagem dos componentes constituintes da PCB</translation>
+        <translation>Imagem dos componentes da PCB</translation>
     </message>
     <message>
         <source>Part version number</source>
-        <translation>Número de versão do componente</translation>
+        <translation>Versão do componente</translation>
     </message>
     <message>
         <source>Locked</source>
@@ -801,7 +801,7 @@ Por favor selecione outro tipo de fonte do Fritzing para o substituir:</translat
     </message>
     <message>
         <source>Change the locked state of the part in this view.  A locked part can&apos;t be moved</source>
-        <translation>Mudar o estado de bloqueio deste componente nesta vista.  Um componente bloqueado não pode ser movido</translation>
+        <translation>Mudar o estado de bloqueio deste componente nesta visão.  Um componente bloqueado não pode ser movido</translation>
     </message>
 </context>
 <context>
@@ -880,7 +880,7 @@ Por favor selecione outro tipo de fonte do Fritzing para o substituir:</translat
     </message>
     <message>
         <source>file %1 not found</source>
-        <translation>ficheiro %1 não encontrado</translation>
+        <translation>arquivo %1 não encontrado</translation>
     </message>
     <message>
         <source>capacitance</source>
@@ -920,7 +920,7 @@ Por favor selecione outro tipo de fonte do Fritzing para o substituir:</translat
     </message>
     <message>
         <source>frequency</source>
-        <translation>frequencia</translation>
+        <translation>frequência</translation>
     </message>
     <message>
         <source>processor</source>
@@ -944,7 +944,7 @@ Por favor selecione outro tipo de fonte do Fritzing para o substituir:</translat
     </message>
     <message>
         <source>filename</source>
-        <translation>nome do ficheiro</translation>
+        <translation>nome do arquivo</translation>
     </message>
     <message>
         <source>title</source>
@@ -956,7 +956,7 @@ Por favor selecione outro tipo de fonte do Fritzing para o substituir:</translat
     </message>
     <message>
         <source>rev</source>
-        <translation>rev</translation>
+        <translation>revisão</translation>
     </message>
     <message>
         <source>sheet</source>
@@ -964,7 +964,7 @@ Por favor selecione outro tipo de fonte do Fritzing para o substituir:</translat
     </message>
     <message>
         <source>project</source>
-        <translation>projecto</translation>
+        <translation>projeto</translation>
     </message>
     <message>
         <source>unable to create renderer for svg %1</source>
@@ -1028,7 +1028,7 @@ Por favor selecione outro tipo de fonte do Fritzing para o substituir:</translat
     </message>
     <message>
         <source>Select an image file to load</source>
-        <translation>Seleccione um ficheiro de imagem para carregar</translation>
+        <translation>Selecione um arquivo de imagem para carregar</translation>
     </message>
     <message>
         <source>Unable to load</source>
@@ -1060,7 +1060,7 @@ Por favor selecione outro tipo de fonte do Fritzing para o substituir:</translat
     </message>
     <message>
         <source>image file</source>
-        <translation>ficheiro de imagem</translation>
+        <translation>arquivo de imagem</translation>
     </message>
     <message>
         <source>shape</source>
@@ -1498,7 +1498,7 @@ Por favor selecione outro tipo de fonte do Fritzing para o substituir:</translat
     </message>
     <message>
         <source>Flip current selection vertically</source>
-        <translation>Inverter os componentes selecionados na verticall</translation>
+        <translation>Inverter os componentes selecionados na vertical</translation>
     </message>
     <message>
         <source>Bring to Front</source>
@@ -1830,7 +1830,7 @@ Por favor selecione outro tipo de fonte do Fritzing para o substituir:</translat
     </message>
     <message>
         <source>This will soon provide an export of your Fritzing sketch to the EAGLE layout software. If you&apos;d like to have more exports to your favourite EDA tool, please let us know, or contribute.</source>
-        <translation>Vai ser providenciada a exportação do sketch criado pelo Fritzing para o software EAGLE. Se desejares ter a exportação para outro tipo de software de desenvolvimento, diga-nos, ou contribua.</translation>
+        <translation>Vai ser providenciada a exportação do sketch criado pelo Fritzing para o software EAGLE. Se deseja ter a exportação para outro tipo de software de desenvolvimento, diga-nos, ou contribua.</translation>
     </message>
     <message>
         <source>Sorry!</source>
@@ -1844,7 +1844,7 @@ Estamos trabalhando para evitar esta mensagem, e apenas deixar você escolher en
     </message>
     <message>
         <source>Swapped %1 with module %2</source>
-        <translation>Swapped %1 com módulo %2</translation>
+        <translation>Trocado %1 com módulo %2</translation>
     </message>
     <message>
         <source>All traces have not yet been routed.</source>
@@ -1852,7 +1852,7 @@ Estamos trabalhando para evitar esta mensagem, e apenas deixar você escolher en
     </message>
     <message>
         <source>Do you want to proceed anyway?</source>
-        <translation>Quer continuar na mesma?</translation>
+        <translation>Quer continuar mesmo assim?</translation>
     </message>
     <message>
         <source>Raise and Lower</source>
@@ -1864,15 +1864,15 @@ Estamos trabalhando para evitar esta mensagem, e apenas deixar você escolher en
     </message>
     <message>
         <source>Add Bendpoint</source>
-        <translation>Adicionar ponto de flexão</translation>
+        <translation>Adicionar ponto de curva</translation>
     </message>
     <message>
         <source>Add a bendpoint to the selected wire</source>
-        <translation>Adicionar um ponto de flexão ao fio selecionado</translation>
+        <translation>Adicionar um ponto de curva ao fio selecionado</translation>
     </message>
     <message>
         <source>Remove Bendpoint</source>
-        <translation>Remover ponto de flexão</translation>
+        <translation>Remover ponto de curva</translation>
     </message>
     <message>
         <source>Your sketch does not have a board yet!  Please add a PCB in order to export to Gerber.</source>
@@ -1932,19 +1932,19 @@ Estamos trabalhando para evitar esta mensagem, e apenas deixar você escolher en
     </message>
     <message>
         <source>&amp;Add to bin...</source>
-        <translation>&amp;Adicionar ao compartimento...</translation>
+        <translation>&amp;Adicionar ao repositório...</translation>
     </message>
     <message>
         <source>Add selected part to bin</source>
-        <translation>Adicionar o componente selecionado ao compartimento</translation>
+        <translation>Adicionar o componente selecionado ao repositório</translation>
     </message>
     <message>
         <source>&amp;Import parts and bins from old version...</source>
-        <translation>&amp;Importar componentes e compartimentos de uma versão anterior...</translation>
+        <translation>&amp;Importar componentes e repositórios de uma versão anterior...</translation>
     </message>
     <message>
         <source>Import parts and bins from previous installation</source>
-        <translation>Importar componentes e compartimentos de uma instalação anterior</translation>
+        <translation>Importar componentes e repositórios de uma instalação anterior</translation>
     </message>
     <message>
         <source>&amp;Diagram</source>
@@ -1998,7 +1998,7 @@ Estamos trabalhando para evitar esta mensagem, e apenas deixar você escolher en
         <source>Some connectors have changed.
 In order to see the changes, you have to restart fritzing.
 Do you want to restart now?</source>
-        <translation>Algumas ligações mudaram.Para ver as mudanças,você deve reiniciar o Fritzing.Queres reiniciar agora?</translation>
+        <translation>Algumas ligações mudaram.Para ver as mudanças,você deve reiniciar o Fritzing. Reiniciar agora?</translation>
     </message>
     <message>
         <source>Share online...</source>
@@ -2014,7 +2014,7 @@ Do you want to restart now?</source>
     </message>
     <message>
         <source>XML Netlist...</source>
-        <translation>XML Netlist...</translation>
+        <translation>Netlist XML...</translation>
     </message>
     <message>
         <source>Save a netlist in XML format</source>
@@ -2077,8 +2077,8 @@ Todos os seus componentes estão atualizados.</translation>
     <message numerus="yes">
         <source>Found %n outdated parts. Do you want to update them now?</source>
         <translation>
-            <numerusform>Foram encontradas %n componentes desatualizados. Quer atualizar esses componentes?</numerusform>
-            <numerusform>Foram encontradas %n componentes desatualizados. Quer atualizar esses componentes?</numerusform>
+            <numerusform>Foram encontradas %n componentes desatualizados. Deseja atualizar esses componentes?</numerusform>
+            <numerusform>Foram encontradas %n componentes desatualizados. Deseja atualizar esses componentes?</numerusform>
         </translation>
     </message>
     <message>
@@ -2173,7 +2173,7 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
     </message>
     <message>
         <source>Unable to read shareable part %1</source>
-        <translation>Não é possivel ler o elemento compartilhado %1</translation>
+        <translation>Não é possivel ler o elemento compartilhável %1</translation>
     </message>
     <message>
         <source>Backing up &apos;%1&apos;</source>
@@ -2201,7 +2201,7 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
     </message>
     <message>
         <source>Set both copper layers clickable</source>
-        <translation>Defina ambas as camadas de cobre clicáveis</translation>
+        <translation>Defina ambas camadas de cobre clicáveis</translation>
     </message>
     <message>
         <source>Set copper top layer clickable</source>
@@ -2213,7 +2213,7 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
     </message>
     <message>
         <source>Design Rules Check</source>
-        <translation>Verificar regras de projeto</translation>
+        <translation>Verificar regras de projeto (DRC)</translation>
     </message>
     <message>
         <source>Select any parts that are too close together for safe board production (w/in 10 mil)</source>
@@ -2324,27 +2324,27 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
     </message>
     <message>
         <source>Select All Locked Parts</source>
-        <translation>Seleccionar todos os componentes bloqueados</translation>
+        <translation>Selecionar todos os componentes bloqueados</translation>
     </message>
     <message>
         <source>Select all parts that can&apos;t be moved</source>
-        <translation>Seleccionar todos os componentes que não podem ser movidos</translation>
+        <translation>Selecionar todos os componentes que não podem ser movidos</translation>
     </message>
     <message>
         <source>Show Parts Bin Icon View</source>
-        <translation>Mostrar os componentes do compartimento no modo ícone</translation>
+        <translation>Mostrar os componentes do repositório no modo ícone</translation>
     </message>
     <message>
         <source>Display the parts bin in an icon view</source>
-        <translation>Mostrar os componentes do compartimento na vista de ícone</translation>
+        <translation>Mostrar os componentes do repositório na vista de ícone</translation>
     </message>
     <message>
         <source>Show Parts Bin List View</source>
-        <translation>Mostrar os componentes do compartimento no modo lista</translation>
+        <translation>Mostrar os componentes do repositório no modo lista</translation>
     </message>
     <message>
         <source>Display the parts bin in a list view</source>
-        <translation>Mostrar os componentes do compartimento na vista de lista</translation>
+        <translation>Mostrar os componentes do repositório na vista de lista</translation>
     </message>
     <message>
         <source>Donate to Fritzing</source>
@@ -2356,23 +2356,23 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
     </message>
     <message>
         <source>Export for PCB</source>
-        <translation>Exportar para PCB</translation>
+        <translation>Exportar PCB</translation>
     </message>
     <message>
         <source>Export the current sketch to PDF for DIY PCB production (photoresist)</source>
-        <translation>Exportar o desenho actual para PDF para DIY produção de PCB (fotoresistivo)</translation>
+        <translation>Exportar o desenho atual para PDF para DIY produção de PCB (fotoresistivo)</translation>
     </message>
     <message>
         <source>Export the current sketch to PDF for DIY PCB production (tone transfer)</source>
-        <translation>Exportar o desenho actual para PDF para DIY produção de PCB (transferência de tom)</translation>
+        <translation>Exportar o desenho atual para PDF para DIY produção de PCB (transferência de tom)</translation>
     </message>
     <message>
         <source>Export the current sketch to SVG for DIY PCB production (photoresist)</source>
-        <translation>Exportar o desenho actual para SVG para DIY produção de PCB (fotoresistivo)</translation>
+        <translation>Exportar o desenho atual para SVG para DIY produção de PCB (fotoresistivo)</translation>
     </message>
     <message>
         <source>Export the current sketch to SVG for DIY PCB production (tone transfer)</source>
-        <translation>Exportar o desenho actual para SVG para DIY produção de PCB (transferência de tom)</translation>
+        <translation>Exportar o desenho atual para SVG para DIY produção de PCB (transferência de tom)</translation>
     </message>
     <message>
         <source>Autorouter settings...</source>
@@ -2452,7 +2452,7 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
     </message>
     <message>
         <source>Do you want to swap to a double-sided board now?</source>
-        <translation>Queres trocar para uma placa de dupla face agora?</translation>
+        <translation>Deseja trocar para uma placa de dupla face agora?</translation>
     </message>
     <message>
         <source>Swap</source>
@@ -2464,7 +2464,7 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
     </message>
     <message>
         <source>BoM Text File (*.html)</source>
-        <translation>BoM Ficheiro de Texto (*html)</translation>
+        <translation>BoM arquivo de Texto (*html)</translation>
     </message>
     <message>
         <source>Extended Gerber (RS-274X)...</source>
@@ -2476,7 +2476,7 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
     </message>
     <message>
         <source>Unable to save BOM file, but the text is on the clipboard.</source>
-        <translation>Incapaz de gravar o ficheiro BOM, mas o texto está no clipboard</translation>
+        <translation>Incapaz de gravar o arquivo BOM, mas o texto está no clipboard</translation>
     </message>
     <message>
         <source>Do not autoroute</source>
@@ -2484,7 +2484,7 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
     </message>
     <message>
         <source>When autorouting, do not rip up this trace wire, via, or jumper item</source>
-        <translation>Quando fazes encaminhamento automatico, não apagues um fio ou um qualquer jumper</translation>
+        <translation>Durante o roteamento automatico, não apagar fios ou jumpers</translation>
     </message>
     <message>
         <source>Move to other side of the board</source>
@@ -2492,15 +2492,15 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
     </message>
     <message>
         <source>Select all jumper item parts</source>
-        <translation>Seleccionar todos os jumpers dos componentes</translation>
+        <translation>Selecionar todos os jumpers dos componentes</translation>
     </message>
     <message>
         <source>Select All Vias</source>
-        <translation>Seleccionar todas as Vias</translation>
+        <translation>Selecionar todas as Vias</translation>
     </message>
     <message>
         <source>Select all via parts</source>
-        <translation>Seleccionar todos os componentes Vias</translation>
+        <translation>Selecionar todos os componentes Vias</translation>
     </message>
     <message>
         <source>%1 %2 %3</source>
@@ -2528,15 +2528,15 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
     </message>
     <message>
         <source>Straighten the curve of the selected wire</source>
-        <translation>Endireitar Curva do fio seleccionado</translation>
+        <translation>Endireitar Curva do fio selecionado</translation>
     </message>
     <message>
         <source>Select All CopperFill</source>
-        <translation>Seleccionar todo o preenchimento de cobre</translation>
+        <translation>Selecionar todo o preenchimento de cobre</translation>
     </message>
     <message>
         <source>Select all copper fill items</source>
-        <translation>Seleccionar todos os items preenchidos com cobre</translation>
+        <translation>Selecionar todos os items preenchidos com cobre</translation>
     </message>
     <message>
         <source>unable to find replacement for %1.
@@ -2625,19 +2625,19 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
     </message>
     <message>
         <source>Fill empty regions of the copper layer--fill will include all traces connected to a GROUND</source>
-        <translation>Preencher as regiões livres da camada de cobre--preenchimento vai incluir todas as pistas ligadas à MASSA</translation>
+        <translation>Preencher as regiões livres da camada de cobre--preenchimento vai incluir todas as trilha ligadas à GND</translation>
     </message>
     <message>
         <source>Fill empty regions of the copper layer--not including traces connected to a GROUND</source>
-        <translation>Preencher as regiões livres da camada de cobre--preenchimento não vai incluir todas as pistas ligadas à MASSA</translation>
+        <translation>Preencher as regiões livres da camada de cobre--preenchimento não vai incluir todas as trilhas ligadas à GND</translation>
     </message>
     <message>
         <source>Copper Fill Traces</source>
-        <translation>Preencher as pistas de cobre</translation>
+        <translation>Preencher as trilhas de cobre</translation>
     </message>
     <message>
         <source>There are traces connected to copper fill which will also be removed. Proceed?</source>
-        <translation>Existem pistas ligadas à camada de cobre este também vai ser removido. Prosseguir?</translation>
+        <translation>Existem trilhas ligadas à camada de cobre este também vai ser removido. Prosseguir?</translation>
     </message>
 </context>
 <context>
@@ -2748,7 +2748,7 @@ Razão: %2 (código do erro %3)</translation>
     </message>
     <message>
         <source>Your sketch does not have a board yet!  Please add a PCB in order to use copper fill.</source>
-        <translation>O teu sketch ainda não tem uma placa! Por favor adiciona uma PCB (Placa de Circuito Impresso) para usar o preenchimento em cobre.</translation>
+        <translation>Seu sketch ainda não tem uma placa! Adicione uma PCB (Placa de Circuito Impresso) para usar o preenchimento em cobre.</translation>
     </message>
     <message>
         <source>Fritzing error: unable to render board svg (1).</source>
@@ -2772,7 +2772,7 @@ Razão: %2 (código do erro %3)</translation>
     </message>
     <message>
         <source>This seems like an attempt to create a trace across layers. This circumstance should not arise: please contact the developers.</source>
-        <translation>Esta parece ser uma tentativa de criar uma pista entre camadas. Isto não pode acontecer: por favor contacta a equipa do Fritzing.</translation>
+        <translation>Esta parece ser uma tentativa de criar uma pista entre camadas. Isto não pode acontecer: por favor contate a equipe do Fritzing.</translation>
     </message>
     <message>
         <source>Unable to create copper fill--possibly the part was dropped onto another part or wire rather than the actual PCB.</source>
@@ -2810,7 +2810,7 @@ Razão: %2 (código do erro %3)</translation>
     <name>PartLabel</name>
     <message>
         <source>Rotate current selection 90 degrees counter clockwise</source>
-        <translation>Rodar os componentes seleccionados 90 graus no sentido Anti-Horário</translation>
+        <translation>Rodar os componentes selecionados 90 graus no sentido Anti-Horário</translation>
     </message>
     <message>
         <source>Edit</source>
@@ -2965,7 +2965,7 @@ Razão: %2 (código do erro %3)</translation>
     <name>PartsBinPaletteWidget</name>
     <message>
         <source>Untitled Bin</source>
-        <translation>Compartimento sem nome</translation>
+        <translation>Repositório sem nome</translation>
     </message>
     <message>
         <source>Specify a file name</source>
@@ -2977,12 +2977,12 @@ Razão: %2 (código do erro %3)</translation>
     </message>
     <message>
         <source>Cannot find file %1.</source>
-        <translation>Não foi possível encontrar o ficheiro %1.</translation>
+        <translation>Não foi possível encontrar o arquivo %1.</translation>
     </message>
     <message>
         <source>Cannot read file %1:
 %2.</source>
-        <translation>Não foi possível lerr o ficheiro %1:
+        <translation>Não foi possível ler o arquivo %1:
 %2.</translation>
     </message>
     <message>
@@ -2991,11 +2991,11 @@ Razão: %2 (código do erro %3)</translation>
     </message>
     <message>
         <source>Fritzing Bin (*%1)</source>
-        <translation>Compartimento Fritzing (*%1)</translation>
+        <translation>Repositório Fritzing (*%1)</translation>
     </message>
     <message>
         <source>Don&apos;t Save</source>
-        <translation>Não guardar</translation>
+        <translation>Não salvar</translation>
     </message>
     <message>
         <source>Ctrl+D</source>
@@ -3007,19 +3007,19 @@ Razão: %2 (código do erro %3)</translation>
     </message>
     <message>
         <source>Add to bin</source>
-        <translation>Adicionar ao compartimento</translation>
+        <translation>Adicionar ao repositório</translation>
     </message>
     <message>
         <source>Do you really want to add the selected part to the bin?</source>
-        <translation>Você realmente quer adicionar o componente seleccionado ao compartimento?</translation>
+        <translation>Você realmente deseja adicionar o componente selecionado ao repositório?</translation>
     </message>
     <message>
         <source>Do you want to save the changes you made in the bin &quot;%1&quot;?</source>
-        <translation>Quer salvar as alterações feitas no compartimento &quot;%1&quot;?</translation>
+        <translation>Deseja salvar as alterações feitas no repositório &quot;%1&quot;?</translation>
     </message>
     <message>
         <source>Save bin &quot;%1&quot;</source>
-        <translation>Salvar compartimento &quot;%1&quot;</translation>
+        <translation>Salvar repositório &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3031,7 +3031,7 @@ Razão: %2 (código do erro %3)</translation>
     </message>
     <message>
         <source>loading bin &apos;%1&apos;</source>
-        <translation>Carregando compartimento &apos;%1&apos;</translation>
+        <translation>Carregando repositório &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Change icon color...</source>
@@ -3039,11 +3039,11 @@ Razão: %2 (código do erro %3)</translation>
     </message>
     <message>
         <source>Change the color of the icon for this bin.</source>
-        <translation>Mudar a cor do ícone para este compartimento.</translation>
+        <translation>Mudar a cor do ícone para este repositório.</translation>
     </message>
     <message>
         <source>Select a color for this icon</source>
-        <translation>Seleccionar uma cor para este ícone</translation>
+        <translation>Selecionar uma cor para este ícone</translation>
     </message>
 </context>
 <context>
@@ -3062,15 +3062,15 @@ Razão: %2 (código do erro %3)</translation>
     </message>
     <message>
         <source>You could tell a little bit about this part</source>
-        <translation>Você pode-dizer um pouco sobre este componente</translation>
+        <translation>Fale um pouco sobre este componente</translation>
     </message>
     <message>
         <source>Please classify this part</source>
-        <translation>Por favor classifique este componente</translation>
+        <translation>Classifique este componente</translation>
     </message>
     <message>
         <source>You can add your tags to make searching easier</source>
-        <translation>Você pode adicionar marcadores para tornar a pesquisa mais fácil</translation>
+        <translation>Adicione marcadores para tornar a pesquisa mais fácil</translation>
     </message>
     <message>
         <source>&lt;i&gt;created by&lt;/i&gt; %1 &lt;i&gt;on&lt;/i&gt; %2</source>
@@ -3131,8 +3131,8 @@ Razão: %2 (código do erro %3)</translation>
     <message>
         <source>There&apos;s already a file with this name.
 Please, specify a new filename</source>
-        <translation>Já existe um ficheiro com este nome.
-Por favor, especifique um novo nome para o ficheiro</translation>
+        <translation>Já existe um arquivo com este nome.
+Por favor, especifique um novo nome para o arquivo</translation>
     </message>
     <message>
         <source>Fritzing</source>
@@ -3146,7 +3146,7 @@ Por favor, especifique um novo nome para o ficheiro</translation>
     </message>
     <message>
         <source>Saved &apos;%1&apos;</source>
-        <translation>Guardado &apos;%1&apos;</translation>
+        <translation>Salvo &apos;%1&apos;</translation>
     </message>
     <message>
         <source>%1 %2</source>
@@ -3195,7 +3195,7 @@ Por favor, especifique um novo nome para o ficheiro</translation>
     </message>
     <message>
         <source>Couldn&apos;t open svg file</source>
-        <translation>Impossível de abrir o ficheiro svg</translation>
+        <translation>Impossível de abrir o arquivo svg</translation>
     </message>
     <message>
         <source>The file couldn&apos;t be opened. If this file defines its dimensions 
@@ -3203,7 +3203,7 @@ in non-real-world units (e.g. pixels), then they won&apos;t be translated
 into real life ones.
 Malformed font-family definitions won&apos;t be fixed either.</source>
         <translation>O arquivo não pode ser aberto. Se o arquivo definir as dimensões 
-em unidades não-reais (p.ex. pixeis), essas unidades não serão convertidas 
+em unidades não-reais (p.ex. pixels), essas unidades não serão convertidas 
 em unidades &quot;reais&quot;.
 Tipos de letra incorretos também não serão corrigidas.</translation>
     </message>
@@ -3326,31 +3326,31 @@ numa PCB (Placa de Circuito Impresso)?</translation>
     <name>PinLabelDialog</name>
     <message>
         <source>&lt;p&gt;&lt;h2&gt;Pin Label Editor&lt;/h2&gt;&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Editor de etiquetas de pinos</translation>
     </message>
     <message>
         <source>&lt;p&gt;Click on a label next to a pin number to rename that pin.</source>
-        <translation type="unfinished"></translation>
+        <translation>Clique na etiqueta próxima ao pino para renomeá-lo</translation>
     </message>
     <message>
         <source>You can use the tab key to move through the labels in order.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Você pode usar a tecla tab para se mover entre os pinos</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Save as new part</source>
-        <translation type="unfinished">Salvar como novo componente</translation>
+        <translation>Salvar como novo componente</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished">Desfazer</translation>
+        <translation>Desfazer</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished">Retroceder</translation>
+        <translation>Refazer</translation>
     </message>
 </context>
 <context>
@@ -3437,11 +3437,11 @@ tecla shift troca o eixo de scroll</translation>
     </message>
     <message>
         <source>Align-to-Grid size</source>
-        <translation>Alinhar ao tamanho da grelha</translation>
+        <translation>Alinhar ao tamanho da grade</translation>
     </message>
     <message>
         <source>Set the grid size for %1.</source>
-        <translation>Definir o tamanho da grelha para %1.</translation>
+        <translation>Definir o tamanho da grade para %1.</translation>
     </message>
     <message>
         <source>Grid Size:</source>
@@ -3476,9 +3476,9 @@ tecla shift troca o eixo de scroll</translation>
 
 This checkbox sets the default behavior. You can switch back to the non-default behavior by holding down the Control key (Mac: Command key) when you drag.
 </source>
-        <translation>Quando moves o teu cursor para baixo e arrastas um fio ou uma &quot;pata&quot; de um componente (ao contrário de uma ligação) queres manter a curvatura do fio (ou &quot;pata&quot;) ou criar um novo ponto de dobragem?
+        <translation>Quando você move o cursor para baixo e arrasta um fio ou uma &quot;pata&quot; de um componente (ao contrário de uma ligação) queres manter a curvatura do fio (ou &quot;pata&quot;) ou criar um novo ponto de dobragem?
 
-Esta caixa de verificação define as definições standard. Podes mudar estas definições pressionando continuamente a tecla Control (Mac: Tecla de Comando) quando arrastas.</translation>
+Esta caixa de verificação define as definições padrão. Para mudar essas configurações, pressione continuamente a tecla Control (Mac: Tecla de Comando) enquanto move um componente.</translation>
     </message>
 </context>
 <context>
@@ -3529,7 +3529,7 @@ Esta caixa de verificação define as definições standard. Podes mudar estas d
     </message>
     <message>
         <source>Are you sure you want to remove &quot;%1&quot; from the sketch?</source>
-        <translation>Tem certeza que gostaria de remover %1 do sketch?</translation>
+        <translation>Tem certeza que deseja remover %1 do sketch?</translation>
     </message>
     <message>
         <source>The file &apos;%1&apos; must be saved before it can be sent to the programmer.</source>
@@ -3656,11 +3656,11 @@ Esta caixa de verificação define as definições standard. Podes mudar estas d
     </message>
     <message>
         <source>Redo</source>
-        <translation>Retroceder</translation>
+        <translation>Refazer</translation>
     </message>
     <message>
         <source>&amp;Cut</source>
-        <translation>&amp;Cortar</translation>
+        <translation>&amp;Recortar</translation>
     </message>
     <message>
         <source>Ctrl+X</source>
@@ -3759,11 +3759,11 @@ Esta caixa de verificação define as definições standard. Podes mudar estas d
     </message>
     <message>
         <source>The file &apos;%1&apos; is read-only; please use a different filename.</source>
-        <translation>O arquivo &apos;%1&apos; é apenas de leitura; por favor especifique um arquivo diferente.</translation>
+        <translation>O arquivo &apos;%1&apos; é somente leitura; por favor especifique um arquivo diferente.</translation>
     </message>
     <message>
         <source>icon view</source>
-        <translation>Visão Ícone</translation>
+        <translation>Visão ícone</translation>
     </message>
     <message>
         <source>breadboard view</source>
@@ -3775,7 +3775,7 @@ Esta caixa de verificação define as definições standard. Podes mudar estas d
     </message>
     <message>
         <source>pcb view</source>
-        <translation>visão pcb</translation>
+        <translation>visão PCB</translation>
     </message>
     <message>
         <source>Part</source>
@@ -3843,11 +3843,11 @@ Esta caixa de verificação define as definições standard. Podes mudar estas d
     </message>
     <message>
         <source>no name yet</source>
-        <translation>Não possuí um nome ainda</translation>
+        <translation>ainda não possui um nome</translation>
     </message>
     <message>
         <source>no description yet</source>
-        <translation>não foi adicionada nenhuma descrição ainda</translation>
+        <translation>ainda não foi adicionada uma descrição</translation>
     </message>
     <message>
         <source>Accept</source>
@@ -3900,8 +3900,8 @@ Esta caixa de verificação define as definições standard. Podes mudar estas d
     <message>
         <source>Sorry, we have a problem with the swapping mechanism.
 Fritzing still works, but you won&apos;t be able to change parts properties.</source>
-        <translation>Estamos a ter uns problemas com o mecanismo de mudança.
-O Fritzing ainda trabalha, mas não vais poder modificar as propriedas dos componentes.</translation>
+        <translation>Estamos tendo problemas com o mecanismo de mudança.
+O Fritzing tentando resolver o problema, mas não será possível modificar as propriedas dos componentes.</translation>
     </message>
     <message>
         <source>Schematic View</source>
@@ -3937,7 +3937,7 @@ O Fritzing ainda trabalha, mas não vais poder modificar as propriedas dos compo
     </message>
     <message>
         <source>Check for updates</source>
-        <translation>Ver se existem updates (actualizações) disponíveis</translation>
+        <translation>Verificar atualizações</translation>
     </message>
     <message>
         <source>Icon</source>
@@ -3989,17 +3989,16 @@ O Fritzing ainda trabalha, mas não vais poder modificar as propriedas dos compo
     </message>
     <message>
         <source>The file %1 is not a Fritzing file (4).</source>
-        <translation>O ficheiro %1 não é um ficheiro Fritzing (4).</translation>
+        <translation>O arquivo %1 não é um arquivo Fritzing (4).</translation>
     </message>
     <message>
         <source>Part already in bin</source>
-        <translation>Componente já se encontra no compartimento</translation>
+        <translation>Componente já se encontra no repositório</translation>
     </message>
     <message>
         <source>The part that you have just added,
 is already there, we won&apos;t add it again, right?</source>
-        <translation>A parte que acabaste de adicionar,
-já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
+        <translation>A parte que você acaba de adicionar é duplicada, não vais adicionar outra vez, Ok?!?</translation>
     </message>
     <message>
         <source>bb</source>
@@ -4012,11 +4011,11 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>schem</source>
-        <translation>Esquema</translation>
+        <translation>Esquemático</translation>
     </message>
     <message>
         <source>File Progress...</source>
-        <translation>Ficheiro em progresso...</translation>
+        <translation>Arquivo em progresso...</translation>
     </message>
     <message>
         <source>&lt;b&gt;Connected highlight color&lt;/b&gt;</source>
@@ -4028,7 +4027,7 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>Select outdated parts</source>
-        <translation>Seleccione os componentes desactualizados</translation>
+        <translation>Selecione os componentes desactualizados</translation>
     </message>
     <message>
         <source>Select all jumpers</source>
@@ -4192,7 +4191,7 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>bad layer mask parameter</source>
-        <translation>parâmetros da camada de máscara incorrectos</translation>
+        <translation>parâmetros da camada de máscara incorretos</translation>
     </message>
     <message>
         <source>non-circular holes not implemented</source>
@@ -4248,15 +4247,15 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>Error reading file %1: %2.</source>
-        <translation>Erro ao ler o ficheiro %1: %2.</translation>
+        <translation>Erro ao ler o arquivo %1: %2.</translation>
     </message>
     <message>
         <source>Select locked parts</source>
-        <translation>Seleccionar componentes bloqueados</translation>
+        <translation>Selecionar componentes bloqueados</translation>
     </message>
     <message>
         <source>Cannot autoroute: no board part found</source>
-        <translation>Impossível de efectuar o autoencaminhamento: não foi encontrada nenhuma placa</translation>
+        <translation>Impossível de efetuar o autoencaminhamento: não foi encontrada nenhuma placa</translation>
     </message>
     <message>
         <source>No connections to route&apos;.</source>
@@ -4264,7 +4263,7 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>Cannot autoroute: maybe all traces are marked &apos;do not autoroute&apos;.</source>
-        <translation>Autoencaminhamento automático é impossível: talvez todos os traços estejam marcados como &apos;não efectuar autoencaminhamento&apos;.</translation>
+        <translation>Autoencaminhamento automático é impossível: talvez todos os traços estejam marcados como &apos;não efetuar autoencaminhamento&apos;.</translation>
     </message>
     <message>
         <source>Auorouter Settings</source>
@@ -4332,7 +4331,7 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>Select all traces marked &apos;Don&apos;t autoroute&apos;</source>
-        <translation>Seleccionar todos os traços marcados como &quot;Não autoencaminhar (Autoroute)&quot;</translation>
+        <translation>Selecionar todos os traços marcados como &quot;Não autoencaminhar (Autoroute)&quot;</translation>
     </message>
     <message>
         <source>outline is empty</source>
@@ -4376,7 +4375,7 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>drill file export failure (1)</source>
-        <translation>falha ao exportar o ficheiro drill (1)</translation>
+        <translation>falha ao exportar o arquivo drill (1)</translation>
     </message>
     <message>
         <source>drill export failure</source>
@@ -4384,7 +4383,7 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>mask file export failure (1)</source>
-        <translation>falha a exportar o ficheiro de máscara (1)</translation>
+        <translation>falha a exportar o arquivo de máscara (1)</translation>
     </message>
     <message>
         <source>%1 file export failure (2)</source>
@@ -4473,7 +4472,7 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>Last backup</source>
-        <translation>Último cópia de segurança</translation>
+        <translation>Última cópia de segurança</translation>
     </message>
     <message>
         <source>Last saved</source>
@@ -4537,7 +4536,7 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>Filename</source>
-        <translation>Nome do ficheiro</translation>
+        <translation>Nome do arquivo</translation>
     </message>
     <message>
         <source>Date</source>
@@ -4633,7 +4632,7 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>done loading</source>
-        <translation>carregamento efectuado</translation>
+        <translation>carregamento efetuado</translation>
     </message>
     <message>
         <source>%1 %2</source>
@@ -4645,7 +4644,7 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation>Seleccionar Tudo</translation>
+        <translation>Selecionar Tudo</translation>
     </message>
     <message>
         <source>Deselect</source>
@@ -4669,11 +4668,11 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>Select %1</source>
-        <translation>Seleccionar %1</translation>
+        <translation>Selecionar %1</translation>
     </message>
     <message>
         <source>Select %1 items</source>
-        <translation>Seleccionar %1 itens</translation>
+        <translation>Selecionar %1 itens</translation>
     </message>
     <message>
         <source>Disconnect</source>
@@ -4705,7 +4704,7 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>Change %1 label to &apos;%2&apos;</source>
-        <translation>Mudar a etiquetal de %1 para &apos;%2&apos;</translation>
+        <translation>Mudar a etiqueta de %1 para &apos;%2&apos;</translation>
     </message>
     <message>
         <source>Change %1 color from %2 to %3</source>
@@ -4729,7 +4728,7 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>%1 label &apos;%2&apos;</source>
-        <translation>%1 etiquetal &apos;%2&apos;</translation>
+        <translation>%1 etiqueta &apos;%2&apos;</translation>
     </message>
     <message>
         <source>Resize Note</source>
@@ -4741,7 +4740,7 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>Double-click to delete this bend point</source>
-        <translation>Duplo clique para seleccionar este ponto de dobra</translation>
+        <translation>Duplo clique para selecionar este ponto de dobra</translation>
     </message>
     <message>
         <source>Double-click</source>
@@ -4838,7 +4837,7 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation>Cortar</translation>
+        <translation>Recortar</translation>
     </message>
     <message numerus="yes">
         <source>%1 %n strip(s)</source>
@@ -4849,12 +4848,12 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>strip length</source>
-        <translatorcomment>comprimento das tiras</translatorcomment>
-        <translation>comprimento da tira</translation>
+        <translatorcomment>comprimento das trilhas</translatorcomment>
+        <translation>comprimento da trilhas</translation>
     </message>
     <message>
         <source>strips</source>
-        <translation>tiras</translation>
+        <translation>trilhas</translation>
     </message>
 </context>
 <context>
@@ -4960,7 +4959,7 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>&lt;li&gt;If you can&apos;t find a part in the Parts Bin, the Generic IC is your friend.  Drag it onto your sketch, then use the widgets in the Inspector to: choose from among 25 different through-hole and SMD packages; change the pin label; and--for DIPs and SIPs--change the number of pins.&lt;/li&gt;</source>
-        <translation>&lt;li&gt;Se não consegues encontrar um componente num compartimento, o integrado genérico é teu amigo. Arrasta-o para o teu desenho, usa as opções para: escolheres de 25 diferentes integrados e de formato SMD; muda os nomes dos pinos; e--para DIPs and SIPs--muda o número de pinos.&lt;/li&gt;</translation>
+        <translation>&lt;li&gt;Se não consegues encontrar um componente num repositório, o integrado genérico é seu amigo. Arraste-o para o seu desenho, usa as opções para: escolheres de 25 diferentes integrados e de formato SMD; muda os nomes dos pinos; e--para DIPs and SIPs--muda o número de pinos.&lt;/li&gt;</translation>
     </message>
 </context>
 <context>
@@ -5046,7 +5045,7 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>Czech - %1</source>
-        <translation>Checo - %1</translation>
+        <translation>Tcheco - %1</translation>
     </message>
     <message>
         <source>Turkish - %1</source>
@@ -5089,15 +5088,15 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>Sorry, unable to retrieve update info</source>
-        <translation>Desculpa, não impossível obter informação sobre atualizações disponíveis</translation>
+        <translation>Desculpe, não foi impossível obter informação sobre atualizações disponíveis</translation>
     </message>
     <message>
         <source>A new main release is available for downloading:</source>
-        <translation>Uma nova versão do Fritzing  encontra-se disponível para download:</translation>
+        <translation>Uma nova versão do Fritzing encontra-se disponível para download:</translation>
     </message>
     <message>
         <source>A new interim release is available for downloading:</source>
-        <translation>Uma nova versão intercalar está disponível para download:</translation>
+        <translation>Uma atualização está disponível para download:</translation>
     </message>
 </context>
 <context>
@@ -5139,7 +5138,7 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>grey</source>
-        <translation>cinzento</translation>
+        <translation>cinza</translation>
     </message>
     <message>
         <source>white</source>

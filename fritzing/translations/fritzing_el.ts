@@ -694,45 +694,45 @@ in order to fix this connector</source>
 <context>
     <name>FApplication</name>
     <message>
-        <location filename="../src/fapplication.cpp" line="1166"/>
-        <location filename="../src/fapplication.cpp" line="1170"/>
+        <location filename="../src/fapplication.cpp" line="1167"/>
+        <location filename="../src/fapplication.cpp" line="1171"/>
         <source>Fritzing failure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="1166"/>
+        <location filename="../src/fapplication.cpp" line="1167"/>
         <source>Fritzing caught an exception %1 from %2 in event %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="1170"/>
+        <location filename="../src/fapplication.cpp" line="1171"/>
         <source>Fritzing caught an exception from %1 in event %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="1276"/>
+        <location filename="../src/fapplication.cpp" line="1277"/>
         <source>Import files from previous version?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="1277"/>
+        <location filename="../src/fapplication.cpp" line="1278"/>
         <source>Do you want to import parts and bins that you have created with earlier versions of Fritzing?
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="1278"/>
+        <location filename="../src/fapplication.cpp" line="1279"/>
         <source>
 Note: You can import them later using the &quot;Help&quot; &gt; &quot;Import parts and bins from old version...&quot; menu action.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="1284"/>
+        <location filename="../src/fapplication.cpp" line="1285"/>
         <source>Import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="1285"/>
+        <location filename="../src/fapplication.cpp" line="1286"/>
         <source>Do not import now</source>
         <translation type="unfinished"></translation>
     </message>
@@ -884,67 +884,67 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="161"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="162"/>
         <source>Part breadboard view image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="163"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="164"/>
         <source>Part schematic view image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="165"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="166"/>
         <source>Part pcb view image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="172"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="173"/>
         <source>Part version number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="177"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="178"/>
         <source>Locked</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="179"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="180"/>
         <source>Change the locked state of the part in this view.  A locked part can&apos;t be moved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="201"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="202"/>
         <source>Properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="213"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="214"/>
         <source>Tags</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="222"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="223"/>
         <source>Connections</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="234"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="235"/>
         <source>conn.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="241"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="242"/>
         <source>name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="248"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="249"/>
         <source>type</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/infoview/htmlinfoview.cpp" line="335"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="333"/>
         <source>connected to %n item(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -952,22 +952,22 @@ Please select one of the Fritzing fonts to replace them:</source>
         </translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="372"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="370"/>
         <source>(autoroutable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="373"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="371"/>
         <source>Wire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="376"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="374"/>
         <source>Rat&apos;s nest wire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="379"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="377"/>
         <source>Trace wire %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3492,35 +3492,35 @@ Reason: %2 (errcode %3)</source>
 <context>
     <name>PaletteItem</name>
     <message>
-        <location filename="../src/items/paletteitem.cpp" line="565"/>
+        <location filename="../src/items/paletteitem.cpp" line="569"/>
         <source>Edit Pin Labels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/items/paletteitem.cpp" line="583"/>
-        <location filename="../src/items/paletteitem.cpp" line="596"/>
-        <location filename="../src/items/paletteitem.cpp" line="624"/>
-        <location filename="../src/items/paletteitem.cpp" line="641"/>
+        <location filename="../src/items/paletteitem.cpp" line="587"/>
+        <location filename="../src/items/paletteitem.cpp" line="600"/>
+        <location filename="../src/items/paletteitem.cpp" line="628"/>
+        <location filename="../src/items/paletteitem.cpp" line="645"/>
         <source>Fritzing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/items/paletteitem.cpp" line="584"/>
+        <location filename="../src/items/paletteitem.cpp" line="588"/>
         <source>Unable to proceed; unable to find top level view.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/items/paletteitem.cpp" line="597"/>
+        <location filename="../src/items/paletteitem.cpp" line="601"/>
         <source>Unable to proceed; part connectors do no have standard IDs.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/items/paletteitem.cpp" line="625"/>
+        <location filename="../src/items/paletteitem.cpp" line="629"/>
         <source>Unable to parse own fzp file.  Nothing was saved.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/items/paletteitem.cpp" line="642"/>
+        <location filename="../src/items/paletteitem.cpp" line="646"/>
         <source>Label mismatch.  Nothing was saved.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4758,12 +4758,12 @@ This checkbox sets the default behavior. You can switch back to the non-default 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="897"/>
+        <location filename="../src/fapplication.cpp" line="898"/>
         <source>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;&amp;#169; 2007-%1 Fachhochschule Potsdam&lt;/font&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="911"/>
+        <location filename="../src/fapplication.cpp" line="912"/>
         <source>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;Version %1.%2.%3 (%4%5)%6&lt;/font&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5034,78 +5034,78 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3222"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3275"/>
         <source>%1 %2,%3 %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3251"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3304"/>
         <source>Change leg of %1,%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3413"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3466"/>
         <source>%1 %2 %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3568"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3621"/>
         <source>%1 Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3774"/>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3791"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3827"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3844"/>
         <source>Bring forward</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3783"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3836"/>
         <source>Send backward</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3800"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3853"/>
         <source>Bring to front</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="4991"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5044"/>
         <source>Split Wire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5047"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5100"/>
         <source>Join Wire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6965"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7018"/>
         <source>Trace wires</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6968"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7021"/>
         <source>Ratsnest wires</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6970"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7023"/>
         <source>Select all %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7250"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7303"/>
         <source>Select all jumpers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7265"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7318"/>
         <source>Select outdated parts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7279"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7332"/>
         <source>Select locked parts</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5827,155 +5827,155 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="2946"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="2995"/>
         <source>Move %2 (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="2949"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="2998"/>
         <source>Move %2 items (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3120"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3173"/>
         <source>Select %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3123"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3176"/>
         <source>Select %1 items</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3210"/>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3397"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3263"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3450"/>
         <source>Disconnect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3211"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3264"/>
         <source>from %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3214"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3267"/>
         <source>Move leg of</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3218"/>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3409"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3271"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3462"/>
         <source>Connect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3219"/>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3410"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3272"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3463"/>
         <source>to %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3273"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3326"/>
         <source>Change leg curvature for %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3299"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3352"/>
         <source>Change leg bendpoint for %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3405"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3458"/>
         <source>Change</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3462"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3515"/>
         <source>Create and connect wire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="4095"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="4148"/>
         <source>Rotate %2 (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="4242"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="4295"/>
         <source>Flip %2 (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5143"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5196"/>
         <source>Double-click</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5143"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5196"/>
         <source>Drag or double-click</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5144"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5197"/>
         <source>or alt-drag to move the segment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5209"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5262"/>
         <source>Double-click to delete this bend point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5271"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5324"/>
         <source>Change note to &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5296"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5349"/>
         <source>Change %1 label to &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5730"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5783"/>
         <source>Change %1 color from %2 to %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5736"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5789"/>
         <source>Change color of %1 wires to %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5782"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5835"/>
         <source>Change %1 width from %2 to %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5788"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5841"/>
         <source>Change width of %1 wires to %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6364"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6417"/>
         <source>Move label &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6371"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6424"/>
         <source>%1 label &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6371"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6424"/>
         <source>Rotate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6371"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6424"/>
         <source>Flip</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/sketch/sketchwidget.cpp" line="6406"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6459"/>
         <source>show part label(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -5983,7 +5983,7 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/sketch/sketchwidget.cpp" line="6409"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6462"/>
         <source>hide part label(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -5991,52 +5991,52 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         </translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6423"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6476"/>
         <source>Resize Note</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6763"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6816"/>
         <source>Change pin spacing from %1 to %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6775"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6828"/>
         <source>Change form from %1 to %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6800"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6853"/>
         <source>Change Resistance from %1 to %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6822"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6875"/>
         <source>Change %1 from %2 to %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6883"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6936"/>
         <source>Resize ruler to %1%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7068"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7121"/>
         <source>Disconnect all wires from %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7071"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7124"/>
         <source>Disconnect all wires from %1 items</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7336"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7389"/>
         <source>Change image from %1 to %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="8082"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="8135"/>
         <source>Rotate %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6396,93 +6396,93 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
 <context>
     <name>Wire</name>
     <message>
-        <location filename="../src/items/wire.cpp" line="1169"/>
+        <location filename="../src/items/wire.cpp" line="1170"/>
         <source>thin (16 mil)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/items/wire.cpp" line="1170"/>
+        <location filename="../src/items/wire.cpp" line="1171"/>
         <source>standard (24 mil)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/items/wire.cpp" line="1171"/>
+        <location filename="../src/items/wire.cpp" line="1172"/>
         <source>thick (32 mil)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/items/wire.cpp" line="1172"/>
+        <location filename="../src/items/wire.cpp" line="1173"/>
         <source>extra thick (48 mil)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/items/wire.cpp" line="1179"/>
-        <location filename="../src/items/wire.cpp" line="1192"/>
-        <source>blue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/items/wire.cpp" line="1180"/>
         <location filename="../src/items/wire.cpp" line="1193"/>
-        <source>red</source>
+        <source>blue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/items/wire.cpp" line="1181"/>
         <location filename="../src/items/wire.cpp" line="1194"/>
-        <source>black</source>
+        <source>red</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/items/wire.cpp" line="1182"/>
         <location filename="../src/items/wire.cpp" line="1195"/>
-        <source>yellow</source>
+        <source>black</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/items/wire.cpp" line="1183"/>
         <location filename="../src/items/wire.cpp" line="1196"/>
-        <source>green</source>
+        <source>yellow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/items/wire.cpp" line="1184"/>
         <location filename="../src/items/wire.cpp" line="1197"/>
-        <source>grey</source>
+        <source>green</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/items/wire.cpp" line="1185"/>
         <location filename="../src/items/wire.cpp" line="1198"/>
-        <source>white</source>
+        <source>grey</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/items/wire.cpp" line="1186"/>
         <location filename="../src/items/wire.cpp" line="1199"/>
-        <source>orange</source>
+        <source>white</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/items/wire.cpp" line="1187"/>
         <location filename="../src/items/wire.cpp" line="1200"/>
-        <source>brown</source>
+        <source>orange</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/items/wire.cpp" line="1188"/>
         <location filename="../src/items/wire.cpp" line="1201"/>
-        <source>purple</source>
+        <source>brown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/items/wire.cpp" line="1189"/>
         <location filename="../src/items/wire.cpp" line="1202"/>
+        <source>purple</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/items/wire.cpp" line="1190"/>
+        <location filename="../src/items/wire.cpp" line="1203"/>
         <source>schematic black</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/items/wire.cpp" line="1465"/>
+        <location filename="../src/items/wire.cpp" line="1466"/>
         <source>color</source>
         <translation type="unfinished"></translation>
     </message>
