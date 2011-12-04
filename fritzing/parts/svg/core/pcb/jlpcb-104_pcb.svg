@@ -8,24 +8,160 @@
    <title >element:JP1</title>
    <g  stroke-width="0">
     <title >package:FE06</title>
+    <line  stroke="white" stroke-linecap="round" y1="65.88" x1="51.48" y2="58.68" stroke-width="0.432" x2="51.48"/>
+    <line  stroke="white" stroke-linecap="round" y1="58.68" x1="51.48" y2="58.68" stroke-width="0.432" x2="45"/>
+    <line  stroke="white" stroke-linecap="round" y1="58.68" x1="45" y2="59.4" stroke-width="0.432" x2="44.28"/>
+    <line  stroke="white" stroke-linecap="round" y1="59.4" x1="44.28" y2="58.68" stroke-width="0.432" x2="43.56"/>
+    <line  stroke="white" stroke-linecap="round" y1="58.68" x1="43.56" y2="58.68" stroke-width="0.432" x2="37.8"/>
+    <line  stroke="white" stroke-linecap="round" y1="58.68" x1="37.8" y2="59.4" stroke-width="0.432" x2="37.08"/>
+    <line  stroke="white" stroke-linecap="round" y1="59.4" x1="37.08" y2="58.68" stroke-width="0.432" x2="36.36"/>
+    <line  stroke="white" stroke-linecap="round" y1="58.68" x1="36.36" y2="58.68" stroke-width="0.432" x2="30.6"/>
+    <line  stroke="white" stroke-linecap="round" y1="58.68" x1="30.6" y2="59.4" stroke-width="0.432" x2="29.88"/>
+    <line  stroke="white" stroke-linecap="round" y1="59.4" x1="29.88" y2="58.68" stroke-width="0.432" x2="29.16"/>
+    <line  stroke="white" stroke-linecap="round" y1="58.68" x1="29.16" y2="58.68" stroke-width="0.432" x2="23.4"/>
+    <line  stroke="white" stroke-linecap="round" y1="58.68" x1="23.4" y2="59.4" stroke-width="0.432" x2="22.68"/>
+    <line  stroke="white" stroke-linecap="round" y1="59.4" x1="22.68" y2="58.68" stroke-width="0.432" x2="21.96"/>
+    <line  stroke="white" stroke-linecap="round" y1="58.68" x1="21.96" y2="58.68" stroke-width="0.432" x2="16.2"/>
+    <line  stroke="white" stroke-linecap="round" y1="58.68" x1="14.76" y2="58.68" stroke-width="0.432" x2="8.28"/>
+    <line  stroke="white" stroke-linecap="round" y1="58.68" x1="8.28" y2="65.88" stroke-width="0.432" x2="8.28"/>
+    <line  stroke="white" stroke-linecap="round" y1="65.88" x1="8.28" y2="65.88" stroke-width="0.432" x2="14.76"/>
+    <line  stroke="white" stroke-linecap="round" y1="65.88" x1="16.2" y2="65.88" stroke-width="0.432" x2="21.96"/>
+    <line  stroke="white" stroke-linecap="round" y1="65.88" x1="21.96" y2="65.16" stroke-width="0.432" x2="22.68"/>
+    <line  stroke="white" stroke-linecap="round" y1="65.16" x1="22.68" y2="65.88" stroke-width="0.432" x2="23.4"/>
+    <line  stroke="white" stroke-linecap="round" y1="65.88" x1="23.4" y2="65.88" stroke-width="0.432" x2="29.16"/>
+    <line  stroke="white" stroke-linecap="round" y1="65.88" x1="29.16" y2="65.16" stroke-width="0.432" x2="29.88"/>
+    <line  stroke="white" stroke-linecap="round" y1="65.16" x1="29.88" y2="65.88" stroke-width="0.432" x2="30.6"/>
+    <line  stroke="white" stroke-linecap="round" y1="65.88" x1="30.6" y2="65.88" stroke-width="0.432" x2="36.36"/>
+    <line  stroke="white" stroke-linecap="round" y1="65.88" x1="36.36" y2="65.16" stroke-width="0.432" x2="37.08"/>
+    <line  stroke="white" stroke-linecap="round" y1="65.16" x1="37.08" y2="65.88" stroke-width="0.432" x2="37.8"/>
+    <line  stroke="white" stroke-linecap="round" y1="65.88" x1="37.8" y2="65.88" stroke-width="0.432" x2="43.56"/>
+    <line  stroke="white" stroke-linecap="round" y1="65.88" x1="43.56" y2="65.16" stroke-width="0.432" x2="44.28"/>
+    <line  stroke="white" stroke-linecap="round" y1="65.16" x1="44.28" y2="65.88" stroke-width="0.432" x2="45"/>
+    <line  stroke="white" stroke-linecap="round" y1="65.88" x1="45" y2="65.88" stroke-width="0.432" x2="51.48"/>
+    <line  stroke="white" stroke-linecap="round" y1="65.88" x1="14.76" y2="65.16" stroke-width="0.432" x2="15.48"/>
+    <line  stroke="white" stroke-linecap="round" y1="65.16" x1="15.48" y2="65.88" stroke-width="0.432" x2="16.2"/>
+    <line  stroke="white" stroke-linecap="round" y1="59.4" x1="15.48" y2="58.68" stroke-width="0.432" x2="14.76"/>
+    <line  stroke="white" stroke-linecap="round" y1="58.68" x1="16.2" y2="59.4" stroke-width="0.432" x2="15.48"/>
    </g>
   </g>
   <g  stroke-width="0">
    <title >element:JP2</title>
    <g  stroke-width="0">
     <title >package:FE06</title>
+    <line  stroke="white" stroke-linecap="round" y1="73.08" x1="51.48" y2="65.88" stroke-width="0.432" x2="51.48"/>
+    <line  stroke="white" stroke-linecap="round" y1="65.88" x1="51.48" y2="65.88" stroke-width="0.432" x2="45"/>
+    <line  stroke="white" stroke-linecap="round" y1="65.88" x1="45" y2="66.6" stroke-width="0.432" x2="44.28"/>
+    <line  stroke="white" stroke-linecap="round" y1="66.6" x1="44.28" y2="65.88" stroke-width="0.432" x2="43.56"/>
+    <line  stroke="white" stroke-linecap="round" y1="65.88" x1="43.56" y2="65.88" stroke-width="0.432" x2="37.8"/>
+    <line  stroke="white" stroke-linecap="round" y1="65.88" x1="37.8" y2="66.6" stroke-width="0.432" x2="37.08"/>
+    <line  stroke="white" stroke-linecap="round" y1="66.6" x1="37.08" y2="65.88" stroke-width="0.432" x2="36.36"/>
+    <line  stroke="white" stroke-linecap="round" y1="65.88" x1="36.36" y2="65.88" stroke-width="0.432" x2="30.6"/>
+    <line  stroke="white" stroke-linecap="round" y1="65.88" x1="30.6" y2="66.6" stroke-width="0.432" x2="29.88"/>
+    <line  stroke="white" stroke-linecap="round" y1="66.6" x1="29.88" y2="65.88" stroke-width="0.432" x2="29.16"/>
+    <line  stroke="white" stroke-linecap="round" y1="65.88" x1="29.16" y2="65.88" stroke-width="0.432" x2="23.4"/>
+    <line  stroke="white" stroke-linecap="round" y1="65.88" x1="23.4" y2="66.6" stroke-width="0.432" x2="22.68"/>
+    <line  stroke="white" stroke-linecap="round" y1="66.6" x1="22.68" y2="65.88" stroke-width="0.432" x2="21.96"/>
+    <line  stroke="white" stroke-linecap="round" y1="65.88" x1="21.96" y2="65.88" stroke-width="0.432" x2="16.2"/>
+    <line  stroke="white" stroke-linecap="round" y1="65.88" x1="14.76" y2="65.88" stroke-width="0.432" x2="8.28"/>
+    <line  stroke="white" stroke-linecap="round" y1="65.88" x1="8.28" y2="73.08" stroke-width="0.432" x2="8.28"/>
+    <line  stroke="white" stroke-linecap="round" y1="73.08" x1="8.28" y2="73.08" stroke-width="0.432" x2="14.76"/>
+    <line  stroke="white" stroke-linecap="round" y1="73.08" x1="16.2" y2="73.08" stroke-width="0.432" x2="21.96"/>
+    <line  stroke="white" stroke-linecap="round" y1="73.08" x1="21.96" y2="72.36" stroke-width="0.432" x2="22.68"/>
+    <line  stroke="white" stroke-linecap="round" y1="72.36" x1="22.68" y2="73.08" stroke-width="0.432" x2="23.4"/>
+    <line  stroke="white" stroke-linecap="round" y1="73.08" x1="23.4" y2="73.08" stroke-width="0.432" x2="29.16"/>
+    <line  stroke="white" stroke-linecap="round" y1="73.08" x1="29.16" y2="72.36" stroke-width="0.432" x2="29.88"/>
+    <line  stroke="white" stroke-linecap="round" y1="72.36" x1="29.88" y2="73.08" stroke-width="0.432" x2="30.6"/>
+    <line  stroke="white" stroke-linecap="round" y1="73.08" x1="30.6" y2="73.08" stroke-width="0.432" x2="36.36"/>
+    <line  stroke="white" stroke-linecap="round" y1="73.08" x1="36.36" y2="72.36" stroke-width="0.432" x2="37.08"/>
+    <line  stroke="white" stroke-linecap="round" y1="72.36" x1="37.08" y2="73.08" stroke-width="0.432" x2="37.8"/>
+    <line  stroke="white" stroke-linecap="round" y1="73.08" x1="37.8" y2="73.08" stroke-width="0.432" x2="43.56"/>
+    <line  stroke="white" stroke-linecap="round" y1="73.08" x1="43.56" y2="72.36" stroke-width="0.432" x2="44.28"/>
+    <line  stroke="white" stroke-linecap="round" y1="72.36" x1="44.28" y2="73.08" stroke-width="0.432" x2="45"/>
+    <line  stroke="white" stroke-linecap="round" y1="73.08" x1="45" y2="73.08" stroke-width="0.432" x2="51.48"/>
+    <line  stroke="white" stroke-linecap="round" y1="73.08" x1="14.76" y2="72.36" stroke-width="0.432" x2="15.48"/>
+    <line  stroke="white" stroke-linecap="round" y1="72.36" x1="15.48" y2="73.08" stroke-width="0.432" x2="16.2"/>
+    <line  stroke="white" stroke-linecap="round" y1="66.6" x1="15.48" y2="65.88" stroke-width="0.432" x2="14.76"/>
+    <line  stroke="white" stroke-linecap="round" y1="65.88" x1="16.2" y2="66.6" stroke-width="0.432" x2="15.48"/>
    </g>
   </g>
   <g  stroke-width="0">
    <title >element:JP3</title>
    <g  stroke-width="0">
     <title >package:FE06</title>
+    <line  stroke="white" stroke-linecap="round" y1="1.08" x1="8.28" y2="8.28" stroke-width="0.432" x2="8.28"/>
+    <line  stroke="white" stroke-linecap="round" y1="8.28" x1="8.28" y2="8.28" stroke-width="0.432" x2="14.76"/>
+    <line  stroke="white" stroke-linecap="round" y1="8.28" x1="14.76" y2="7.56" stroke-width="0.432" x2="15.48"/>
+    <line  stroke="white" stroke-linecap="round" y1="7.56" x1="15.48" y2="8.28" stroke-width="0.432" x2="16.2"/>
+    <line  stroke="white" stroke-linecap="round" y1="8.28" x1="16.2" y2="8.28" stroke-width="0.432" x2="21.96"/>
+    <line  stroke="white" stroke-linecap="round" y1="8.28" x1="21.96" y2="7.56" stroke-width="0.432" x2="22.68"/>
+    <line  stroke="white" stroke-linecap="round" y1="7.56" x1="22.68" y2="8.28" stroke-width="0.432" x2="23.4"/>
+    <line  stroke="white" stroke-linecap="round" y1="8.28" x1="23.4" y2="8.28" stroke-width="0.432" x2="29.16"/>
+    <line  stroke="white" stroke-linecap="round" y1="8.28" x1="29.16" y2="7.56" stroke-width="0.432" x2="29.88"/>
+    <line  stroke="white" stroke-linecap="round" y1="7.56" x1="29.88" y2="8.28" stroke-width="0.432" x2="30.6"/>
+    <line  stroke="white" stroke-linecap="round" y1="8.28" x1="30.6" y2="8.28" stroke-width="0.432" x2="36.36"/>
+    <line  stroke="white" stroke-linecap="round" y1="8.28" x1="36.36" y2="7.56" stroke-width="0.432" x2="37.08"/>
+    <line  stroke="white" stroke-linecap="round" y1="7.56" x1="37.08" y2="8.28" stroke-width="0.432" x2="37.8"/>
+    <line  stroke="white" stroke-linecap="round" y1="8.28" x1="37.8" y2="8.28" stroke-width="0.432" x2="43.56"/>
+    <line  stroke="white" stroke-linecap="round" y1="8.28" x1="45" y2="8.28" stroke-width="0.432" x2="51.48"/>
+    <line  stroke="white" stroke-linecap="round" y1="8.28" x1="51.48" y2="1.08" stroke-width="0.432" x2="51.48"/>
+    <line  stroke="white" stroke-linecap="round" y1="1.08" x1="51.48" y2="1.08" stroke-width="0.432" x2="45"/>
+    <line  stroke="white" stroke-linecap="round" y1="1.08" x1="43.56" y2="1.08" stroke-width="0.432" x2="37.8"/>
+    <line  stroke="white" stroke-linecap="round" y1="1.08" x1="37.8" y2="1.8" stroke-width="0.432" x2="37.08"/>
+    <line  stroke="white" stroke-linecap="round" y1="1.8" x1="37.08" y2="1.08" stroke-width="0.432" x2="36.36"/>
+    <line  stroke="white" stroke-linecap="round" y1="1.08" x1="36.36" y2="1.08" stroke-width="0.432" x2="30.6"/>
+    <line  stroke="white" stroke-linecap="round" y1="1.08" x1="30.6" y2="1.8" stroke-width="0.432" x2="29.88"/>
+    <line  stroke="white" stroke-linecap="round" y1="1.8" x1="29.88" y2="1.08" stroke-width="0.432" x2="29.16"/>
+    <line  stroke="white" stroke-linecap="round" y1="1.08" x1="29.16" y2="1.08" stroke-width="0.432" x2="23.4"/>
+    <line  stroke="white" stroke-linecap="round" y1="1.08" x1="23.4" y2="1.8" stroke-width="0.432" x2="22.68"/>
+    <line  stroke="white" stroke-linecap="round" y1="1.8" x1="22.68" y2="1.08" stroke-width="0.432" x2="21.96"/>
+    <line  stroke="white" stroke-linecap="round" y1="1.08" x1="21.96" y2="1.08" stroke-width="0.432" x2="16.2"/>
+    <line  stroke="white" stroke-linecap="round" y1="1.08" x1="16.2" y2="1.8" stroke-width="0.432" x2="15.48"/>
+    <line  stroke="white" stroke-linecap="round" y1="1.8" x1="15.48" y2="1.08" stroke-width="0.432" x2="14.76"/>
+    <line  stroke="white" stroke-linecap="round" y1="1.08" x1="14.76" y2="1.08" stroke-width="0.432" x2="8.28"/>
+    <line  stroke="white" stroke-linecap="round" y1="1.08" x1="45" y2="1.8" stroke-width="0.432" x2="44.28"/>
+    <line  stroke="white" stroke-linecap="round" y1="1.8" x1="44.28" y2="1.08" stroke-width="0.432" x2="43.56"/>
+    <line  stroke="white" stroke-linecap="round" y1="7.56" x1="44.28" y2="8.28" stroke-width="0.432" x2="45"/>
+    <line  stroke="white" stroke-linecap="round" y1="8.28" x1="43.56" y2="7.56" stroke-width="0.432" x2="44.28"/>
    </g>
   </g>
   <g  stroke-width="0">
    <title >element:JP4</title>
    <g  stroke-width="0">
     <title >package:FE06</title>
+    <line  stroke="white" stroke-linecap="round" y1="8.28" x1="8.28" y2="15.48" stroke-width="0.432" x2="8.28"/>
+    <line  stroke="white" stroke-linecap="round" y1="15.48" x1="8.28" y2="15.48" stroke-width="0.432" x2="14.76"/>
+    <line  stroke="white" stroke-linecap="round" y1="15.48" x1="14.76" y2="14.76" stroke-width="0.432" x2="15.48"/>
+    <line  stroke="white" stroke-linecap="round" y1="14.76" x1="15.48" y2="15.48" stroke-width="0.432" x2="16.2"/>
+    <line  stroke="white" stroke-linecap="round" y1="15.48" x1="16.2" y2="15.48" stroke-width="0.432" x2="21.96"/>
+    <line  stroke="white" stroke-linecap="round" y1="15.48" x1="21.96" y2="14.76" stroke-width="0.432" x2="22.68"/>
+    <line  stroke="white" stroke-linecap="round" y1="14.76" x1="22.68" y2="15.48" stroke-width="0.432" x2="23.4"/>
+    <line  stroke="white" stroke-linecap="round" y1="15.48" x1="23.4" y2="15.48" stroke-width="0.432" x2="29.16"/>
+    <line  stroke="white" stroke-linecap="round" y1="15.48" x1="29.16" y2="14.76" stroke-width="0.432" x2="29.88"/>
+    <line  stroke="white" stroke-linecap="round" y1="14.76" x1="29.88" y2="15.48" stroke-width="0.432" x2="30.6"/>
+    <line  stroke="white" stroke-linecap="round" y1="15.48" x1="30.6" y2="15.48" stroke-width="0.432" x2="36.36"/>
+    <line  stroke="white" stroke-linecap="round" y1="15.48" x1="36.36" y2="14.76" stroke-width="0.432" x2="37.08"/>
+    <line  stroke="white" stroke-linecap="round" y1="14.76" x1="37.08" y2="15.48" stroke-width="0.432" x2="37.8"/>
+    <line  stroke="white" stroke-linecap="round" y1="15.48" x1="37.8" y2="15.48" stroke-width="0.432" x2="43.56"/>
+    <line  stroke="white" stroke-linecap="round" y1="15.48" x1="45" y2="15.48" stroke-width="0.432" x2="51.48"/>
+    <line  stroke="white" stroke-linecap="round" y1="15.48" x1="51.48" y2="8.28" stroke-width="0.432" x2="51.48"/>
+    <line  stroke="white" stroke-linecap="round" y1="8.28" x1="51.48" y2="8.28" stroke-width="0.432" x2="45"/>
+    <line  stroke="white" stroke-linecap="round" y1="8.28" x1="43.56" y2="8.28" stroke-width="0.432" x2="37.8"/>
+    <line  stroke="white" stroke-linecap="round" y1="8.28" x1="37.8" y2="9" stroke-width="0.432" x2="37.08"/>
+    <line  stroke="white" stroke-linecap="round" y1="9" x1="37.08" y2="8.28" stroke-width="0.432" x2="36.36"/>
+    <line  stroke="white" stroke-linecap="round" y1="8.28" x1="36.36" y2="8.28" stroke-width="0.432" x2="30.6"/>
+    <line  stroke="white" stroke-linecap="round" y1="8.28" x1="30.6" y2="9" stroke-width="0.432" x2="29.88"/>
+    <line  stroke="white" stroke-linecap="round" y1="9" x1="29.88" y2="8.28" stroke-width="0.432" x2="29.16"/>
+    <line  stroke="white" stroke-linecap="round" y1="8.28" x1="29.16" y2="8.28" stroke-width="0.432" x2="23.4"/>
+    <line  stroke="white" stroke-linecap="round" y1="8.28" x1="23.4" y2="9" stroke-width="0.432" x2="22.68"/>
+    <line  stroke="white" stroke-linecap="round" y1="9" x1="22.68" y2="8.28" stroke-width="0.432" x2="21.96"/>
+    <line  stroke="white" stroke-linecap="round" y1="8.28" x1="21.96" y2="8.28" stroke-width="0.432" x2="16.2"/>
+    <line  stroke="white" stroke-linecap="round" y1="8.28" x1="16.2" y2="9" stroke-width="0.432" x2="15.48"/>
+    <line  stroke="white" stroke-linecap="round" y1="9" x1="15.48" y2="8.28" stroke-width="0.432" x2="14.76"/>
+    <line  stroke="white" stroke-linecap="round" y1="8.28" x1="14.76" y2="8.28" stroke-width="0.432" x2="8.28"/>
+    <line  stroke="white" stroke-linecap="round" y1="8.28" x1="45" y2="9" stroke-width="0.432" x2="44.28"/>
+    <line  stroke="white" stroke-linecap="round" y1="9" x1="44.28" y2="8.28" stroke-width="0.432" x2="43.56"/>
+    <line  stroke="white" stroke-linecap="round" y1="14.76" x1="44.28" y2="15.48" stroke-width="0.432" x2="45"/>
+    <line  stroke="white" stroke-linecap="round" y1="15.48" x1="43.56" y2="14.76" stroke-width="0.432" x2="44.28"/>
    </g>
   </g>
  </g>
