@@ -632,6 +632,13 @@
                 </iconView>
             </views>
         </instance>
+	<instance moduleIdRef="jlpcb-104" modelIndex="48" path="parts/core/jlpcb-104.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
       
       <instance moduleIdRef="__spacer__" modelIndex="3" path="Microcontroller">
         <views>
@@ -706,6 +713,13 @@
             </views>
         </instance>
         <instance moduleIdRef="a0bc75e3536cc51ac28b344cead00745" modelIndex="48" path="parts/core/Teensy 2.0.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
+        <instance moduleIdRef="jlpcb-128" modelIndex="48" path="parts/core/jlpcb-128.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
