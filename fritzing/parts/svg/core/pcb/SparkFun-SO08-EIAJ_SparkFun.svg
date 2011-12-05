@@ -65,9 +65,9 @@
  <line fill="none" stroke="white" y1="335.5" x1="1609" y2="335.5" stroke-width="26" x2="1749"/>
  <line fill="none" stroke="white" y1="735.5" x1="1609" y2="335.5" stroke-width="26" x2="1609"/>
  <line fill="none" stroke="white" y1="2763.5" x1="0" y2="2763.5" stroke-width="60" x2="1858"/>
- <line fill="none" stroke="white" y1="2763.5" x1="1858" y2="755.5" stroke-width="60" x2="1858"/>
+ <line fill="none" stroke="white" y1="2763.5" x1="1828" y2="755.5" stroke-width="60" x2="1828"/>
  <line fill="none" stroke="white" y1="755.5" x1="1858" y2="755.5" stroke-width="60" x2="0"/>
- <line fill="none" stroke="white" y1="755.5" x1="0" y2="2763.5" stroke-width="60" x2="0"/>
+ <line fill="none" stroke="white" y1="755.5" x1="30" y2="2763.5" stroke-width="60" x2="30"/>
  <circle fill="none" cx="220" cy="2444.5" stroke="white" r="39.598" stroke-width="40"/>
 </g>
 </svg>
