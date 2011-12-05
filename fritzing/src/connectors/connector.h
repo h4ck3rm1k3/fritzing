@@ -79,6 +79,7 @@ public:
 	QList< QPointer<class ConnectorItem> > viewItems();
 	const QString & legID(ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID);
 	void setConnectorLocalName(const QString &);
+	const QString & connectorLocalName();
 
 public:
 	static void initNames();

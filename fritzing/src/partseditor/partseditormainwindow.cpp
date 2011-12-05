@@ -109,6 +109,7 @@ void PartsEditorMainWindow::initText() {
 
 void PartsEditorMainWindow::setup(long id, ModelPart *modelPart, bool fromTemplate, ItemBase * fromItem)
 {
+	ModelPart * originalModelPart = NULL;
     QFile styleSheet(":/resources/styles/partseditor.qss");
     m_mainFrame = new QFrame(this);
     m_mainFrame->setObjectName("partsEditor");
@@ -171,6 +172,7 @@ void PartsEditorMainWindow::setup(long id, ModelPart *modelPart, bool fromTempla
 			}
 		}
 
+		originalModelPart = modelPart;
 		modelPart = mp;
 		m_sketchModel = new SketchModel(modelPart);
 	}
@@ -180,6 +182,17 @@ void PartsEditorMainWindow::setup(long id, ModelPart *modelPart, bool fromTempla
 	createHeader(mp);
 	createCenter(mp, fromItem);
 	createFooter();
+
+	// copy connector local names here if any
+	if (originalModelPart) {
+		foreach (Connector * fromConnector, originalModelPart->connectors()) {
+			foreach (Connector * toConnector, mp->connectors()) {
+				if (toConnector->connectorSharedID().compare(fromConnector->connectorSharedID()) == 0) {
+					toConnector->setConnectorLocalName(fromConnector->connectorLocalName());
+				}
+			}
+		}
+	}
 
 	layout()->setMargin(0);
 	layout()->setSpacing(0);

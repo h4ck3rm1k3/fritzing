@@ -140,10 +140,12 @@ SingleConnectorInfoWidget::SingleConnectorInfoWidget(ConnectorsInfoWidget *topLe
 
 	if(connector && connector->connectorShared()) {
 		m_id = connector->connectorSharedID();
-		ConnectorShared *connStuff = connector->connectorShared();
-		name = connStuff->sharedName().isNull() || connStuff->sharedName().isEmpty() ? EMPTY_CONN_NAME : connStuff->sharedName();
-		description = connStuff->description().isNull() || connStuff->description().isEmpty()? EMPTY_CONN_DESC : connStuff->description();
-		type = connStuff->connectorType() == Connector::Unknown ? EMPTY_CONN_TYPE : connStuff->connectorType();
+		name = connector->connectorSharedName();
+		if (name.isEmpty()) name = EMPTY_CONN_NAME;
+		description = connector->connectorSharedDescription();
+		if (description.isEmpty()) description = EMPTY_CONN_DESC;
+		type = connector->connectorType();
+		if (type == Connector::Unknown) type = EMPTY_CONN_TYPE;
 	} else {
 		name = EMPTY_CONN_NAME;
 		description = EMPTY_CONN_DESC;

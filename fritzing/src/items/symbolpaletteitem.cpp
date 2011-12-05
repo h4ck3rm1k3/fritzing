@@ -217,7 +217,6 @@ void SymbolPaletteItem::setVoltage(double v) {
 		}
 	}
 
-    updateTooltip();
     if (m_partLabel) m_partLabel->displayTextsIf();
 }
 

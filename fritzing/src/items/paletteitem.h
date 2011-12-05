@@ -61,7 +61,6 @@ public:
 	void syncKinMoved(QPointF offset, QPointF loc);
 
 	void setInstanceTitle(const QString&);
-	void updateTooltip();
 
 	bool swap(ModelPart* newModelPart, const LayerHash &layerHash, bool reinit, class SwapCommand *);
 	QString family();

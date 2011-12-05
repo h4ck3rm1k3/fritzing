@@ -384,13 +384,6 @@ void PaletteItem::setInstanceTitle(const QString& title) {
 	}
 }
 
-void PaletteItem::updateTooltip() {
-	ItemBase::updateTooltip();
-	foreach (ItemBase * lkpi, m_layerKin) {
-		lkpi->updateTooltip();
-	}
-}
-
 QString PaletteItem::family() {
 	return modelPartShared()->family();
 }
@@ -616,6 +609,25 @@ void PaletteItem::openPinLabelDialog() {
 	int result = pinLabelDialog.exec();
 	if (result != QDialog::Accepted) return;
 
+	QStringList newLabels = pinLabelDialog.labels();
+	if (newLabels.count() != sortedConnectorItems.count()) {
+		QMessageBox::warning(
+			NULL,
+			tr("Fritzing"),
+			tr("Label mismatch.  Nothing was saved.")
+		);	
+		return;
+	}
+
+
+	for (int i = 0; i < newLabels.count(); i++) {
+		ConnectorItem * connectorItem = sortedConnectorItems.at(i);
+		connectorItem->setConnectorLocalName(newLabels.at(i));
+	}
+
+	/*
+
+
 	QFile file(modelPart()->path());
 
 	QDomDocument * domDocument = new QDomDocument();
@@ -677,6 +689,9 @@ void PaletteItem::openPinLabelDialog() {
 	connect(this, SIGNAL(pinLabelSwap(ItemBase *, const QString &)), infoGraphicsView->window(), SLOT(swapOne(ItemBase *, const QString &)));
 	emit pinLabelSwap(this, moduleID);
 	disconnect(this, SIGNAL(pinLabelSwap(ItemBase *, const QString &)), infoGraphicsView->window(), SLOT(swapOne(ItemBase *, const QString &)));
+
+
+	*/
 }
 
 bool PaletteItem::isSingleRow(QList<ConnectorItem *> & connectorItems) {

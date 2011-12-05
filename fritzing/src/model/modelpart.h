@@ -152,6 +152,7 @@ public:
 	QString hasBaseNameFor(ViewIdentifierClass::ViewIdentifier);
 	void initBuses();
 	void clearBuses();
+	void setConnectorLocalName(const QString & id, const QString & name);
 
 public:
 	static long nextIndex();

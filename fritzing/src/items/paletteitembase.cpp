@@ -392,7 +392,6 @@ bool PaletteItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::Vie
 
 	if (doConnectors) {
 		setUpConnectors(renderer, modelPart->ignoreTerminalPoints());
-		setConnectorTooltips();
 	}
 
 	if (!m_viewGeometry.transform().isIdentity()) {

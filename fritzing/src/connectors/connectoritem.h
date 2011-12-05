@@ -83,7 +83,6 @@ public:
 	void saveInstance(QXmlStreamWriter & );
 	void writeConnector(QXmlStreamWriter & writer, const QString & elementName);
 	bool wiredTo(ConnectorItem *, ViewGeometry::WireFlags skipFlags);
-	void setBaseTooltip(const QString &);
 	void clearConnector();
 	bool connectionIsAllowed(ConnectorItem * other);
 	void restoreColor(bool doBuses, int busConnectedCount, bool doCross);
@@ -139,6 +138,7 @@ public:
 	bool isBendpoint();
 	void cursorKeyEvent(Qt::KeyboardModifiers modifiers);
 	void setConnectorLocalName(const QString & name);
+	void updateTooltip();
 
 protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
@@ -156,7 +156,6 @@ protected:
 	void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
 	void writeTopLevelAttributes(QXmlStreamWriter & writer);
 	void writeOtherElements(QXmlStreamWriter & writer);
-	void updateTooltip();
     static class Wire * directlyWiredToAux(ConnectorItem * source, ConnectorItem * target, ViewGeometry::WireFlags flags, QList<ConnectorItem *> & visited);
 	bool isEverVisible();
 	void setHiddenOrInactive();
@@ -197,7 +196,6 @@ protected:
 	QList< QPointer<ConnectorItem> > m_connectedTo;
 	QPointF m_terminalPoint;
 	QPointer<ConnectorItem> m_overConnectorItem;
-	QString m_baseTooltip;
 	bool m_connectorHovering;
 	bool m_spaceBarWasPressed;
 	bool m_hoverEnterSpaceBarWasPressed;

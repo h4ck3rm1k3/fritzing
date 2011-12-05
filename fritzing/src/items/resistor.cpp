@@ -184,7 +184,6 @@ void Resistor::setResistance(QString resistance, QString pinSpacing, bool force)
 	modelPart()->setProp("tolerance", tolerance);
 
 	updateResistances(m_ohms);
-	updateTooltip();
     if (m_partLabel) m_partLabel->displayTextsIf();
 }
 

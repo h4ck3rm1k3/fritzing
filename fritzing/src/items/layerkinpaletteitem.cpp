@@ -136,10 +136,6 @@ ItemBase * LayerKinPaletteItem::lowerConnectorLayerVisible(ItemBase * itemBase) 
 	return m_layerKinChief->lowerConnectorLayerVisible(itemBase);
 }
 
-QString LayerKinPaletteItem::toolTip2() {
-	return m_layerKinChief->toolTip2();
-}
-
 bool LayerKinPaletteItem::stickyEnabled() {
 	return m_layerKinChief->stickyEnabled();
 }

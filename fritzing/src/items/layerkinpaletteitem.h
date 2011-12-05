@@ -44,7 +44,6 @@ public:
 	void clearModelPart();
 	ItemBase * lowerConnectorLayerVisible(ItemBase *);
 	void init(ViewLayer::ViewLayerID, ViewLayer::ViewLayerSpec, const LayerHash &viewLayers);
-	QString toolTip2();
 	bool sticky();
 	void setSticky(bool);
 	void addSticky(ItemBase *, bool stickem);

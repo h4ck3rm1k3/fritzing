@@ -614,8 +614,6 @@ void LogoItem::setLogo(QString logo, bool force) {
 	modelPart()->setProp("logo", logo);
 	modelPart()->setProp("shape", svg);
 	positionGrips();
-
-	updateTooltip();
 }
 
 void LogoItem::rerender(const QString & svg)

@@ -51,13 +51,10 @@ void FGraphicsScene::helpEvent(QGraphicsSceneHelpEvent *helpEvent)
 			if (connectorItem) {
 				if (connectorItem->attachedTo()->hidden()) continue;
 				if (connectorItem->attachedTo()->inactive()) continue;
+
+				connectorItem->updateTooltip();
 			}
 
-			if (!tmp->toolTip().isEmpty()) {
-				text = tmp->toolTip();
-				point = helpEvent->screenPos();
-				break;
-			}
 		}
 		else {
 			if (itemBase->hidden()) continue;
@@ -65,11 +62,13 @@ void FGraphicsScene::helpEvent(QGraphicsSceneHelpEvent *helpEvent)
 
 			if (!itemBase->acceptHoverEvents()) continue;
 		
-			if (!itemBase->toolTip2().isEmpty()) {
-				text = itemBase->toolTip2();
-				point = helpEvent->screenPos();
-				break;
-			}
+			itemBase->updateTooltip();
+		}
+
+		if (!tmp->toolTip().isEmpty()) {
+			text = tmp->toolTip();
+			point = helpEvent->screenPos();
+			break;
 		}
     }
 

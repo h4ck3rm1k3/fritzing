@@ -150,7 +150,6 @@ void Hole::setHoleSize(QString holeSize, bool force) {
 		setBoth(m_holeSettings.holeDiameter, m_holeSettings.ringThickness);
 		modelPart()->setProp("hole size", holeSize);
 
-		updateTooltip();
 		if (m_partLabel) m_partLabel->displayTextsIf();	
 	}
 }

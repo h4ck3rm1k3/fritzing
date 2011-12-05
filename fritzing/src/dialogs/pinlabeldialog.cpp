@@ -109,7 +109,7 @@ PinLabelDialog::PinLabelDialog(const QStringList & labels, bool singleRow, const
 	cancelButton->setDefault(false);
 	
 	m_saveAsButton = buttonBox->button(QDialogButtonBox::Save);
-	m_saveAsButton->setText(tr("Save as new part"));
+	m_saveAsButton->setText(tr("Save"));
 	m_saveAsButton->setEnabled(false);
 	m_saveAsButton->setDefault(false);
 

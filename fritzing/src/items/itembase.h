@@ -120,7 +120,6 @@ public:
 	QString label();
 	virtual void updateTooltip();
 	void setTooltip();
-	void setConnectorTooltips();
 	void removeTooltip();
 	bool hasConnectors();
 	bool hasNonConnectors();
@@ -145,7 +144,6 @@ public:
 	QPointF partLabelScenePos();
 	QRectF partLabelSceneBoundingRect();
 	bool isSwappable();
-	virtual QString toolTip2();
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	virtual void collectWireConnectees(QSet<class Wire *> & wires);
 	virtual bool collectFemaleConnectees(QSet<ItemBase *> & items);

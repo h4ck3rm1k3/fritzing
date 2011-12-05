@@ -256,6 +256,27 @@ void ModelPart::saveInstance(QXmlStreamWriter & streamWriter)
 		}
 	}
 
+	bool writeLocal = false;
+	foreach (Connector * connector, this->connectors()) {
+		if (!connector->connectorLocalName().isEmpty()) {
+			writeLocal = true;
+			break;
+		}
+	}
+
+	if (writeLocal) {
+		streamWriter.writeStartElement("localConnectors");
+		foreach (Connector * connector, this->connectors()) {
+			if (!connector->connectorLocalName().isEmpty()) {
+				streamWriter.writeStartElement("localConnector");
+				streamWriter.writeAttribute("id", connector->connectorSharedID());
+				streamWriter.writeAttribute("name", connector->connectorLocalName());
+				streamWriter.writeEndElement();
+			}
+		}
+		streamWriter.writeEndElement();
+	}
+
 	foreach (QByteArray byteArray, dynamicPropertyNames()) {
 		streamWriter.writeStartElement("property");
 		streamWriter.writeAttribute("name",  byteArray.data());
@@ -811,3 +832,11 @@ ModelPart::ItemType ModelPart::itemType() const
 	return m_type; 
 };
 
+void ModelPart::setConnectorLocalName(const QString & id, const QString & name)
+{
+	if (id.isEmpty()) return;
+	Connector * connector = m_connectorHash.value(id, NULL);
+	if (connector) {
+		connector->setConnectorLocalName(name);
+	}
+}

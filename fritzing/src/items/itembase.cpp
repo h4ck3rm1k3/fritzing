@@ -202,17 +202,6 @@ void ItemBase::setTooltip() {
 	}
 }
 
-void ItemBase::setConnectorTooltips() {
-	foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
-        QString tt = QString("<b>%1</b><br />%2" + ITEMBASE_FONT_PREFIX + "%3" + ITEMBASE_FONT_SUFFIX)
-                .arg(connectorItem->connectorSharedName())
-                .arg(connectorItem->connector()->connectorShared()->description())
-				.arg(toolTip());
-
-		connectorItem->setBaseTooltip(tt);
-	}
-}
-
 void ItemBase::removeTooltip() {
 	this->setToolTip(___emptyString___);
 }
@@ -1106,16 +1095,6 @@ QVariant ItemBase::itemChange(QGraphicsItem::GraphicsItemChange change, const QV
 	}
 
 	return QGraphicsSvgItem::itemChange(change, value);
-}
-
-QString ItemBase::toolTip2() {
-	// because QGraphicsItem::toolTip() isn't virtual
-	QString tt = toolTip();
-	if (!tt.isEmpty()) return tt;
-
-	// because the tooltip may not have been initialized for this view
-	setTooltip();
-	return toolTip();
 }
 
 void ItemBase::cleanup() {

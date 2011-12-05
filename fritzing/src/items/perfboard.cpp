@@ -96,7 +96,6 @@ void Perfboard::setProp(const QString & prop, const QString & value)
 	m_size = value;
 	modelPart()->setProp("size", value);
 
-	updateTooltip();
     if (m_partLabel) m_partLabel->displayTextsIf();
 }
 

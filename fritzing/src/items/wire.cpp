@@ -190,7 +190,6 @@ FSvgRenderer * Wire::setUp(ViewLayer::ViewLayerID viewLayerID, const LayerHash &
 	FSvgRenderer * svgRenderer = setUpConnectors(m_modelPart, m_viewIdentifier);
 	if (svgRenderer != NULL) {
 		initEnds(m_viewGeometry, svgRenderer->viewBox(), infoGraphicsView);
-		setConnectorTooltips();
 	}
 	setZValue(this->z());
 

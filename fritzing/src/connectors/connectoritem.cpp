@@ -451,8 +451,6 @@ void ConnectorItem::connectTo(ConnectorItem * connected) {
 	if (m_attachedTo != NULL) {
 		m_attachedTo->connectionChange(this, connected, true);
 	}
-
-	updateTooltip();
 }
 
 ConnectorItem * ConnectorItem::removeConnection(ItemBase * itemBase) {
@@ -468,7 +466,6 @@ ConnectorItem * ConnectorItem::removeConnection(ItemBase * itemBase) {
 				.arg((long) this, 0, 16)
 				.arg(itemBase->modelPartShared()->title())
 				.arg(m_connectedTo.count()) );
-			updateTooltip();
 			return removed;
 		}
 	}
@@ -484,19 +481,16 @@ void ConnectorItem::removeConnection(ConnectorItem * connectedItem, bool emitCha
 	if (emitChange) {
 		m_attachedTo->connectionChange(this, connectedItem, false);
 	}
-	updateTooltip();
 }
 
 void ConnectorItem::tempConnectTo(ConnectorItem * item, bool applyColor) {
 	if (!m_connectedTo.contains(item)) m_connectedTo.append(item);
-	updateTooltip();
 
 	if(applyColor) restoreColor(true, 0, true);
 }
 
 void ConnectorItem::tempRemove(ConnectorItem * item, bool applyColor) {
 	m_connectedTo.removeOne(item);
-	updateTooltip();
 
 	if(applyColor) restoreColor(true, 0, true);
 }
@@ -1435,7 +1429,11 @@ void ConnectorItem::updateTooltip() {
 	}
 
 	if (connectors.count() == 1) {
-		setToolTip(connectors[0]->m_baseTooltip);
+		QString tt = QString("<b>%1</b><br />%2" + ItemBase::ITEMBASE_FONT_PREFIX + "%3" + ItemBase::ITEMBASE_FONT_SUFFIX)
+                .arg(connectors[0]->connectorSharedName())
+                .arg(connectors[0]->connectorSharedDescription())
+				.arg(connectors[0]->attachedTo()->toolTip());
+		setToolTip(tt);
 		return;
 	}
 
@@ -1447,11 +1445,6 @@ void ConnectorItem::updateTooltip() {
 
     setToolTip(ItemBase::ITEMBASE_FONT_PREFIX + connections + ItemBase::ITEMBASE_FONT_SUFFIX);
 
-}
-
-void ConnectorItem::setBaseTooltip(const QString & tooltip) {
-	m_baseTooltip = tooltip;
-	setToolTip(tooltip);
 }
 
 void ConnectorItem::clearConnector() {
@@ -2746,3 +2739,4 @@ void ConnectorItem::setConnectorLocalName(const QString & name)
 		m_connector->setConnectorLocalName(name);
 	}
 }
+

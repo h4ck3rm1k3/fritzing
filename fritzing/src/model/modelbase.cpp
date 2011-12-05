@@ -218,6 +218,13 @@ bool ModelBase::loadInstances(QDomDocument & domDocument, QDomElement & instance
    			modelPart->setInstanceTitle(instanceTitle);
    		}
 
+		QDomElement localConnectors = instance.firstChildElement("localConnectors");
+		QDomElement localConnector = localConnectors.firstChildElement("localConnector");
+		while (!localConnector.isNull()) {
+			modelPart->setConnectorLocalName(localConnector.attribute("id"), localConnector.attribute("name"));
+			localConnector = localConnector.nextSiblingElement("localConnector");
+		}
+
    		QString instanceText = instance.firstChildElement("text").text();
    		if(!instanceText.isNull() && !instanceText.isEmpty()) {
    			modelPart->setInstanceText(instanceText);
