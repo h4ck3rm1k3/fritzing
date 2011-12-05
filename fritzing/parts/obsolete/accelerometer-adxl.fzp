@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.13b.12.02.3806" moduleId="a7ec63797771e5b6f370dca4ff17bc81">
-    <version>4</version>
+    <version replacedby="ADXL335_v13" >4</version>
     <author>Lionel Michel</author>
     <title>3-Axis Accelerometer Breakout</title>
     <label>U</label>
@@ -11,7 +11,7 @@
 				<tag>breakout</tag>
     </tags>
     <properties>
-        <property name="family">Accelerometers</property>
+        <property name="family">obsolete Accelerometers</property>
         <property name="axes">3 (x, y, z)</property>
 	<property name="chip">ADXL</property>
     </properties>

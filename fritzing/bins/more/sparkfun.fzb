@@ -293,7 +293,14 @@
     </iconView>
    </views>
   </instance> 
-  
+<instance moduleIdRef="ADXL335_v13" modelIndex="20" path="parts/core/ADXL335_v13.fzp">
+    <views>
+	<iconView layer="icon">
+	    <geometry z="-1" x="-1" y="-1"/>
+	</iconView>
+    </views>
+</instance>
+ 
 <instance moduleIdRef="__spacer__" modelIndex="3" path="LilyPad">
         <views>
           <iconView layer="icon">
