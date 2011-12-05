@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.5.4b.05.18.4914" moduleId="led_superflux_rgb_anode">
+<module fritzingVersion="0.5.4b.05.18.4914" moduleId="LEDSuperfluxAnodeModuleID">
     <version>4</version>
     <author>stefanhermann</author>
-    <title>Super Flux RGB LED (com. anode)</title>
+    <title>Super Flux LED blue</title>
     <label>LED</label>
-    <date>2011-09-21</date>
+    <date>2011-09-22</date>
     <tags>
-				<tag>rgb</tag>
 				<tag>led</tag>
         <tag>super flux</tag>
         <tag>full color</tag>
@@ -14,23 +13,24 @@
     </tags>
     <properties>
         <property name="family">SuperFlux LED</property>
-        <property name="type">RGB</property>
+        <property name="color" showInLabel="yes">Blue</property>
+        <property name="type">single color</property> 
         <property name="polarity">common anode</property>
     </properties>
-    <description>A full color SuperFlux LED.</description>
+    <description>A SuperFlux LED.</description>
     <views>
         <iconView>
-            <layers image="icon/LED-SuperFlux-rgb	.svg">
+            <layers image="icon/LED-SuperFlux-blue.svg">
                 <layer layerId="icon"/>
             </layers>
         </iconView>
         <breadboardView>
-            <layers image="breadboard/led-superFlux-rgb.svg">
+            <layers image="breadboard/led-superFlux-blue.svg">
                 <layer layerId="breadboard"/>
             </layers>
         </breadboardView>
         <schematicView>
-            <layers image="schematic/led-rgb-4pin-anode.svg">
+            <layers image="schematic/led-SuperFlux.svg">
                 <layer layerId="schematic"/>
             </layers>
         </schematicView>
@@ -43,14 +43,14 @@
         </pcbView>
     </views>
     <connectors>
-        <connector id="connector0" type="male" name="red cathode">
-            <description>cathode pin for red LED</description>
+        <connector id="connector0" type="male" name="anode">
+            <description>anode</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector0pin"  terminalId="connector0terminal"/>
                 </breadboardView>
                 <schematicView>
-                    <p layer="schematic" svgId="connector0pin" terminalId="connector0terminal"/>
+                    <p layer="schematic" svgId="connector1pin" terminalId="connector1terminal"/>
                 </schematicView>
                 <pcbView>
                     <p layer="copper1" svgId="connector0pad"/>
@@ -58,14 +58,14 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector3" type="male" name="common anode">
-            <description>anode pin for every color, supply +voltage</description>
+        <connector id="connector3" type="male" name="anode">
+            <description>anode</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector3pin" terminalId="connector3terminal"/>
                 </breadboardView>
                 <schematicView>
-                    <p layer="schematic" svgId="connector1pin" terminalId="connector1terminal"/>
+                    <p layer="schematic" svgId="connector2pin" terminalId="connector2terminal"/>
                 </schematicView>
                 <pcbView>
                     <p layer="copper1" svgId="connector3pad"/>
@@ -73,14 +73,14 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector1" type="male" name="blue cathode">
-            <description>cathode pin for blue LED</description>
+        <connector id="connector1" type="male" name="cathode">
+            <description>cathode</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector1pin"  terminalId="connector1terminal"/>
                 </breadboardView>
                 <schematicView>
-                    <p layer="schematic" svgId="connector3pin" terminalId="connector3terminal"/>
+                    <p layer="schematic" svgId="connector0pin" terminalId="connector0terminal"/>
                 </schematicView>
                 <pcbView>
                     <p layer="copper1" svgId="connector1pad"/>
@@ -88,14 +88,14 @@
                 </pcbView>
             </views>
         </connector>
-         <connector id="connector2" type="male" name="green cathode">
-            <description>cathode pin for green LED</description>
+         <connector id="connector2" type="male" name="cathode">
+            <description>cathode</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector2pin"  terminalId="connector2terminal"/>
                 </breadboardView>
                 <schematicView>
-                    <p layer="schematic" svgId="connector2pin" terminalId="connector2terminal"/>
+                    <p layer="schematic" svgId="connector3pin" terminalId="connector3terminal"/>
                 </schematicView>
                 <pcbView>
                     <p layer="copper1" svgId="connector2pad"/>
@@ -104,4 +104,15 @@
             </views>
         </connector>
    </connectors>
+	  <buses>
+	    <bus id="anode">
+	      <nodeMember connectorId="connector3"/>
+	      <nodeMember connectorId="connector0"/>
+	    </bus>
+
+	    <bus id="cathode">
+	      <nodeMember connectorId="connector1"/>
+	      <nodeMember connectorId="connector2"/>
+	    </bus>
+	  </buses>
 </module>
