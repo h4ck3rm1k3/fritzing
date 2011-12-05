@@ -91,7 +91,7 @@
 </property>
 
 <property name="color" symbol="" minValue="" maxValue="" defaultValue="Blue" numeric="no" editable="no">
-   	<suffix suffix="LEDSuperfluxAnodeModuleID"/>
+   	<suffix suffix="LEDSuperfluxModuleID"/>
 	<menuItem value="Red"  adjunct="#ff0000"/>  
 	<menuItem value="Yellow"  adjunct="#ffff00"/> 
 	<menuItem value="Green"  adjunct="#00ff00"/> 

@@ -150,7 +150,7 @@ QString LED::getColorSVG(const QString & color, ViewLayer::ViewLayerID viewLayer
 	int errorLine;
 	int errorColumn;
 	QDomDocument domDocument;
-	if (!domDocument.setContent(viewLayerID == ViewLayer::Breadboard ? BreadboardSvg.value(moduleID()) : IconSvg.value(moduleID()), &errorStr, &errorLine, &errorColumn)) {
+	if (!domDocument.setContent(viewLayerID == ViewLayer::Breadboard ? BreadboardSvg.value(m_filename) : IconSvg.value(m_filename), &errorStr, &errorLine, &errorColumn)) {
 		return "";
 	}
 
@@ -172,11 +172,11 @@ QString LED::getColorSVG(const QString & color, ViewLayer::ViewLayerID viewLayer
 bool LED::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors, LayerAttributes & layerAttributes, QString & error)
 {
 	bool result = Capacitor::setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, viewLayerSpec, doConnectors, layerAttributes, error);
-	if (viewLayerID == ViewLayer::Breadboard && BreadboardSvg.value(moduleID()).isEmpty() && result) {
-		BreadboardSvg.insert(moduleID(), QString(layerAttributes.loaded()));
+	if (viewLayerID == ViewLayer::Breadboard && BreadboardSvg.value(m_filename).isEmpty() && result) {
+		BreadboardSvg.insert(m_filename, QString(layerAttributes.loaded()));
 	}
-	else if (viewLayerID == ViewLayer::Icon && IconSvg.isEmpty() && result) {
-		IconSvg.insert(moduleID(), QString(layerAttributes.loaded()));
+	else if (viewLayerID == ViewLayer::Icon && IconSvg.value(m_filename).isEmpty() && result) {
+		IconSvg.insert(m_filename, QString(layerAttributes.loaded()));
 	}
 	return result;
 }

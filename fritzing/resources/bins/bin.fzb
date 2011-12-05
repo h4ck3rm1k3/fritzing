@@ -266,7 +266,7 @@
                 </iconView>
             </views>
         </instance>
-	<instance moduleIdRef="LEDSuperfluxAnodeModuleID" modelIndex="24" path="parts/core/led_flux_blue_anode.fzp">
+	<instance moduleIdRef="AnodeLEDSuperfluxModuleID" modelIndex="24" path="parts/core/led_flux_blue_anode.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
