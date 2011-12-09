@@ -77,7 +77,7 @@ unix {
 	desktop.files += fritzing.desktop
 
 	manpage.path = $$DATADIR/man/man1
-	manpage.files += fritzing.1
+	manpage.files += Fritzing.1
 
 	icon.path = $$DATADIR/icons
 	icon.extra = install -D -m 0644 resources/images/fritzing_icon.png $(INSTALL_ROOT)$$DATADIR/icons/fritzing.png
