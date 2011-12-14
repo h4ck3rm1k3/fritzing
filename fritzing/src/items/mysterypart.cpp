@@ -620,6 +620,8 @@ QString MysteryPart::makeBreadboardSipSvg(const QString & expectedFileName)
 }
 
 bool MysteryPart::changePinLabels(bool singleRow, bool sip) {
+	Q_UNUSED(singleRow);
+
 	if (m_viewIdentifier != ViewIdentifierClass::SchematicView) return true;
 
 	bool hasLocal = false;

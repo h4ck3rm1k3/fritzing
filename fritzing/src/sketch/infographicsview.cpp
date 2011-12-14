@@ -26,7 +26,6 @@ $Date$
 
 #include "infographicsview.h"
 #include "../debugdialog.h"
-#include "../commands.h"
 #include "../infoview/htmlinfoview.h"
 
 #include <QMessageBox>
@@ -337,4 +336,13 @@ void InfoGraphicsView::triggerRotate(ItemBase *, double degrees)
 
 void InfoGraphicsView::changePinLabels(ItemBase * itemBase, bool singleRow)
 {
+	Q_UNUSED(itemBase);
+	Q_UNUSED(singleRow);
+}
+
+void InfoGraphicsView::renamePins(ItemBase *, const QStringList & oldLabels, const QStringList & newLabels, bool singleRow)
+{
+	Q_UNUSED(oldLabels);
+	Q_UNUSED(newLabels);
+	Q_UNUSED(singleRow);
 }

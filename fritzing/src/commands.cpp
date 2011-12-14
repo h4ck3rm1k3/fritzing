@@ -1858,3 +1858,31 @@ QString SetDropOffsetCommand::getParamString() const {
 			.arg(m_itemID).arg(m_dropOffset.x()).arg(m_dropOffset.y());
 
 }
+
+///////////////////////////////////////////////
+
+
+RenamePinsCommand::RenamePinsCommand(SketchWidget *sketchWidget, long id, const QStringList & oldOnes, const QStringList & newOnes, bool singleRow, QUndoCommand *parent) :
+	BaseCommand(BaseCommand::CrossView, sketchWidget, parent)
+{
+	m_oldLabels = oldOnes;
+	m_newLabels = newOnes;
+	m_itemID = id;
+	m_singleRow = singleRow;
+}
+
+void RenamePinsCommand::undo() {
+	m_sketchWidget->renamePins(m_itemID, m_oldLabels, m_singleRow);
+}
+
+void RenamePinsCommand::redo() {
+	m_sketchWidget->renamePins(m_itemID, m_newLabels, m_singleRow);
+}
+
+QString RenamePinsCommand::getParamString() const {
+	return QString("RenamePinsCommand ") 
+		+ BaseCommand::getParamString()
+		+ QString(" id:%1 sr:%2") 
+			.arg(m_itemID).arg(m_singleRow);
+
+}

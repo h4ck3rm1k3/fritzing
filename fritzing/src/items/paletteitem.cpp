@@ -37,8 +37,6 @@ $Date$
 #include "../dialogs/pinlabeldialog.h"
 #include "../utils/folderutils.h"
 #include "../utils/textutils.h"
-#include "mysterypart.h"
-#include "dip.h"
 
 #include <QGraphicsSceneMouseEvent>
 #include <QSvgRenderer>
@@ -621,11 +619,18 @@ void PaletteItem::openPinLabelDialog() {
 		return;
 	}
 
-	for (int i = 0; i < newLabels.count(); i++) {
+	infoGraphicsView->renamePins(this, labels, newLabels, singleRow);
+}
+
+void PaletteItem::renamePins(const QStringList & labels, bool singleRow)
+{
+	QList<ConnectorItem *> sortedConnectorItems = sortConnectorItems();
+	for (int i = 0; i < labels.count(); i++) {
 		ConnectorItem * connectorItem = sortedConnectorItems.at(i);
-		connectorItem->setConnectorLocalName(newLabels.at(i));
+		connectorItem->setConnectorLocalName(labels.at(i));
 	}
 
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	infoGraphicsView->changePinLabels(this, singleRow);
 }
 
@@ -669,6 +674,8 @@ QList<ConnectorItem *> PaletteItem::sortConnectorItems() {
 }
 
 bool PaletteItem::changePinLabels(bool singleRow, bool sip) {
+	Q_UNUSED(singleRow);
+	Q_UNUSED(sip);
 	if (m_viewIdentifier != ViewIdentifierClass::SchematicView) return true;
 
 	return false;

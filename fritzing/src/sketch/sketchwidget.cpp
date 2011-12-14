@@ -8221,3 +8221,23 @@ void SketchWidget::changePinLabels(ItemBase * itemBase, bool singleRow)
 	changePinLabelsSlot(itemBase, singleRow);
 }
 
+void SketchWidget::renamePins(ItemBase * itemBase, const QStringList & oldLabels, const QStringList & newLabels, bool singleRow)
+{
+	QUndoCommand * command = new RenamePinsCommand(this, itemBase->id(), oldLabels, newLabels, singleRow, NULL);
+	command->setText(tr("change pin labels"));
+	m_undoStack->waitPush(command, 10);
+}
+
+void SketchWidget::renamePins(long id, const QStringList & labels, bool singleRow)
+{
+	ItemBase * itemBase = findItem(id);
+	if (itemBase == NULL) return;
+
+	PaletteItem * paletteItem = qobject_cast<PaletteItem *>(itemBase->layerKinChief());
+	if (paletteItem == NULL) return;
+
+	paletteItem->renamePins(labels, singleRow);
+}
+
+
+

@@ -79,6 +79,7 @@ public:
 	virtual bool changePinLabels(bool singleRow, bool sip);
 	QStringList getPinLabels(bool & hasLocal);
 	bool loadExtraRenderer(const QString & svg);
+	void renamePins(const QStringList & labels, bool singleRow);
 
 public:
 	static QString genFZP(const QString & moduleid, const QString & templateName, int minPins, int maxPins, int steps, bool smd);

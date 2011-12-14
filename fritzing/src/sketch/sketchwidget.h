@@ -46,11 +46,6 @@ $Date$
 #include "../utils/misc.h"
 #include "../commands.h"
 
-QT_BEGIN_NAMESPACE
-class QDragEnterEvent;
-class QDropEvent;
-QT_END_NAMESPACE
-
 struct ItemCount {
 	int selCount;
 	int hasLabelCount;
@@ -286,6 +281,8 @@ public:
 	bool curvyWiresIndicated(Qt::KeyboardModifiers);
 	void triggerRotate(ItemBase *, double degrees);
 	void makeWiresChangeConnectionCommands(const QList<Wire *> & wires, QUndoCommand * parentCommand);
+	void renamePins(ItemBase *, const QStringList & oldLabels, const QStringList & newLabels, bool singleRow);
+	void renamePins(long itemID, const QStringList & labels, bool singleRow);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
