@@ -32,6 +32,8 @@ $Date$
 #include "../utils/textutils.h"
 #include "../layerattributes.h"
 #include "partlabel.h"
+#include "../connectors/connectoritem.h"
+
 
 #include <QDomNodeList>
 #include <QDomDocument>
@@ -68,8 +70,6 @@ MysteryPart::MysteryPart( ModelPart * modelPart, ViewIdentifierClass::ViewIdenti
 		m_spacing = modelPart->properties().value("spacing", "300mil");
 		modelPart->setProp("spacing", m_spacing);
 	}
-
-	m_renderer = NULL;
 }
 
 MysteryPart::~MysteryPart() {
@@ -157,29 +157,23 @@ void MysteryPart::setChipLabel(QString chipLabel, bool force) {
 
 	if (!force && m_chipLabel.compare(chipLabel) == 0) return;
 
+	m_chipLabel = chipLabel;
+
 	QString svg;
 	switch (this->m_viewIdentifier) {
 		case ViewIdentifierClass::BreadboardView:
+			svg = makeSvg(chipLabel, true);
+			break;
 		case ViewIdentifierClass::SchematicView:
-			svg = makeSvg(chipLabel);
+			svg = makeSvg(chipLabel, false);
+			svg = retrieveSchematicSvg(svg);
 			break;
 		default:
 			break;
 	}
 
-	if (!svg.isEmpty()) {
-		if (m_renderer == NULL) {
-			m_renderer = new FSvgRenderer(this);
-		}
-		//DebugDialog::debug(svg);
+	loadExtraRenderer(svg);
 
-		bool result = m_renderer->fastLoad(svg.toUtf8());
-		if (result) {
-			setSharedRendererEx(m_renderer);
-		}
-	}
-
-	m_chipLabel = chipLabel;
 	modelPart()->setProp("chip label", chipLabel);
 
     if (m_partLabel) m_partLabel->displayTextsIf();
@@ -191,9 +185,12 @@ QString MysteryPart::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QStri
 	QString svg = PaletteItem::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 	switch (viewLayerID) {
 		case ViewLayer::Breadboard:
-		case ViewLayer::Schematic:
 		case ViewLayer::Icon:
 			return TextUtils::replaceTextElement(svg, "label", m_chipLabel);
+
+		case ViewLayer::Schematic:
+			return TextUtils::removeSVGHeader(retrieveSchematicSvg(svg));
+
 		default:
 			break;
 	}
@@ -201,13 +198,28 @@ QString MysteryPart::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QStri
 	return svg; 
 }
 
-QString MysteryPart::makeSvg(const QString & chipLabel) {
+QString MysteryPart::retrieveSchematicSvg(QString & svg) {
+
+	bool hasLocal = false;
+	QStringList labels = getPinLabels(hasLocal);
+		
+	if (hasLocal) {
+		svg = makeSchematicSvg(labels, false);
+	}
+
+	return TextUtils::replaceTextElement(svg, "label", m_chipLabel);
+}
+
+
+QString MysteryPart::makeSvg(const QString & chipLabel, bool replace) {
 	QString path = filename();
 	QFile file(filename());
 	QString svg;
 	if (file.open(QFile::ReadOnly)) {
 		svg = file.readAll();
 		file.close();
+		if (!replace) return svg;
+
 		return TextUtils::replaceTextElement(svg, "label", chipLabel);
 	}
 
@@ -416,26 +428,53 @@ QString MysteryPart::makeSchematicSvg(const QString & expectedFileName)
 	}
 
 	int pins = pieces.at(2).toInt();
+	QStringList labels;
+	for (int i = 0; i < pins; i++) {
+		labels << QString::number(i + 1);
+	}
+
+	return makeSchematicSvg(labels, sip);
+}
+
+QString MysteryPart::makeSchematicSvg(const QStringList & labels, bool sip) 
+{	
 	int increment = 300;
-	double totalHeight = (pins * increment) + 330;
+	double totalHeight = (labels.count() * increment) + 330;
 	int border = 30;
 	int textOffset = 50;
 	int repeatTextOffset = 50;
 	int fontSize = 255;
+	int labelFontSize = 130;
+	int defaultLabelWidth = 30;
 	QString labelText = "?";
+	double textMax = defaultLabelWidth;
+	QFont font("Droid Sans", labelFontSize * 72 / GraphicsUtils::StandardFritzingDPI, QFont::Normal);
+	QFontMetricsF fm(font);
+	for (int i = 0; i < labels.count(); i++) {
+		double w = fm.width(labels.at(i));
+		if (w > textMax) textMax = w;
+	}
+	textMax = textMax * GraphicsUtils::StandardFritzingDPI / 72;
+
+	int totalWidth = 1530;
+	int innerWidth = 1200;
+	if (textMax > defaultLabelWidth) {
+		totalWidth += (textMax - defaultLabelWidth);
+		innerWidth += (textMax - defaultLabelWidth);
+	}
 
 	QString header("<?xml version='1.0' encoding='UTF-8' standalone='no'?>\n"
 					"<svg xmlns:svg='http://www.w3.org/2000/svg' \n"
 					"xmlns='http://www.w3.org/2000/svg' \n"
 					"version='1.2' baseProfile='tiny' \n"
-					"width='1.53in' height='%1in' viewBox='0 0 1530 %2'>\n"
+					"width='%7in' height='%1in' viewBox='0 0 %8 %2'>\n"
 					"<g id='schematic'>\n"
-					"<rect x='315' y='15' fill='none' width='1200' height='%3' stroke='#000000' stroke-linejoin='round' stroke-linecap='round' stroke-width='30' />\n"
-					"<text id='label' x='915' y='%4' fill='#000000' stroke='none' font-family='DroidSans' text-anchor='middle' font-size='%5' >%6</text>\n");
+					"<rect x='315' y='15' fill='none' width='%9' height='%3' stroke='#000000' stroke-linejoin='round' stroke-linecap='round' stroke-width='30' />\n"
+					"<text id='label' x='%11' y='%4' fill='#000000' stroke='none' font-family='DroidSans' text-anchor='middle' font-size='%5' >%6</text>\n");
 
 	if (!sip) {
-		header +=	"<circle fill='#000000' cx='1330' cy='200' r='150' stroke-width='0' />\n"
-					"<text x='1330' fill='#FFFFFF' y='305' font-family='DroidSans' text-anchor='middle' font-weight='bold' stroke-width='0' font-size='275' >?</text>\n";
+		header +=	"<circle fill='#000000' cx='%10' cy='200' r='150' stroke-width='0' />\n"
+					"<text x='%10' fill='#FFFFFF' y='305' font-family='DroidSans' text-anchor='middle' font-weight='bold' stroke-width='0' font-size='275' >?</text>\n";
 	}
 	else {
 		labelText = "IC";
@@ -449,21 +488,28 @@ QString MysteryPart::makeSchematicSvg(const QString & expectedFileName)
 		.arg(totalHeight - border)
 		.arg((totalHeight / 2) + textOffset)
 		.arg(fontSize)
-		.arg(labelText);
+		.arg(labelText)
+		.arg(totalWidth / 1000.0)
+		.arg(totalWidth)
+		.arg(innerWidth)
+		.arg(totalWidth - 200)
+		.arg(increment + textMax + ((totalWidth - increment - textMax) / 2.0))
+		;
 
 
 	QString repeat("<line fill='none' stroke='#000000' stroke-linejoin='round' stroke-linecap='round' stroke-width='30' x1='15' y1='%1' x2='300' y2='%1'  />\n"
 					"<rect x='0' y='%2' fill='none' width='300' height='30' id='connector%3pin' stroke-width='0' />\n"
 					"<rect x='0' y='%2' fill='none' width='30' height='30' id='connector%3terminal' stroke-width='0' />\n"
-					"<text id='label%3' x='390' y='%4' font-family='DroidSans' stroke='none' fill='#000000' text-anchor='start' font-size='130' >%5</text>\n");
+					"<text id='label%3' x='390' y='%4' font-family='DroidSans' stroke='none' fill='#000000' text-anchor='start' font-size='%6' >%5</text>\n");
   
-	for (int i = 0; i < pins; i++) {
+	for (int i = 0; i < labels.count(); i++) {
 		svg += repeat
 			.arg(315 + (i * increment))
 			.arg(300 + (i * increment))
 			.arg(i)
 			.arg(300 + repeatTextOffset + (i * increment))
-			.arg(i + 1);
+			.arg(labels.at(i))
+			.arg(labelFontSize);
 	}
 
 	svg += "</g>\n";
@@ -573,3 +619,15 @@ QString MysteryPart::makeBreadboardSipSvg(const QString & expectedFileName)
 	return svg.arg(TextUtils::getViewBoxCoord(svg, 2) / 100).arg(repeats);
 }
 
+bool MysteryPart::changePinLabels(bool singleRow, bool sip) {
+	if (m_viewIdentifier != ViewIdentifierClass::SchematicView) return true;
+
+	bool hasLocal = false;
+	QStringList labels = getPinLabels(hasLocal);
+	if (labels.count() == 0) return true;
+
+	QString svg = MysteryPart::makeSchematicSvg(labels, sip);
+	loadExtraRenderer(svg);
+
+	return true;
+}

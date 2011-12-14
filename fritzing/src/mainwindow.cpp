@@ -592,6 +592,9 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 	succeeded = succeeded && connect(signaller, SIGNAL(updatePartLabelInstanceTitleSignal(long)),
 									 slotter, SLOT(updatePartLabelInstanceTitleSlot(long)));
 
+	succeeded = succeeded && connect(signaller, SIGNAL(changePinLabelsSignal(ItemBase *, bool)),
+									 slotter, SLOT(changePinLabelsSlot(ItemBase *, bool)));
+
 
 	if (!succeeded) {
 		DebugDialog::debug("connectPair failed");

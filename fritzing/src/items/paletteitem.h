@@ -76,7 +76,9 @@ public:
 	void resetImage(class InfoGraphicsView *);
 	void resetKinImage(ItemBase * layerKin, InfoGraphicsView * infoGraphicsView);
 	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
-
+	virtual bool changePinLabels(bool singleRow, bool sip);
+	QStringList getPinLabels(bool & hasLocal);
+	bool loadExtraRenderer(const QString & svg);
 
 public:
 	static QString genFZP(const QString & moduleid, const QString & templateName, int minPins, int maxPins, int steps, bool smd);
@@ -94,9 +96,11 @@ protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void figureHover();
 	bool isSingleRow(QList<ConnectorItem *> & connectorItems);
+	QList<ConnectorItem *> sortConnectorItems();
 
 protected:
  	QList<class ItemBase *> m_layerKin;
+	QPointer<class FSvgRenderer> m_extraRenderer;
 
 };
 

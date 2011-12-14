@@ -39,7 +39,6 @@ $Date$
 #include <QMenu>
 #include <QApplication>
 #include <QInputDialog>
-#include <QFontMetricsF>
 #include <QStringList>
 #include <QFont>
 #include <QSvgRenderer>

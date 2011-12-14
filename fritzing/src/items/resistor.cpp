@@ -118,8 +118,6 @@ Resistor::Resistor( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier v
 		modelPart->setProp("pin spacing", m_pinSpacing);
 	}
 
-	m_renderer = NULL;
-
 	updateResistances(m_ohms);
 }
 
@@ -137,15 +135,9 @@ void Resistor::setResistance(QString resistance, QString pinSpacing, bool force)
 	switch (this->m_viewIdentifier) {
 		case ViewIdentifierClass::BreadboardView:
 			if (force || resistance.compare(m_ohms) != 0) {
-				if (m_renderer == NULL) {
-					m_renderer = new FSvgRenderer(this);
-				}
 				QString svg = makeSvg(resistance, m_viewLayerID);
 				//DebugDialog::debug(svg);
-				bool result = m_renderer->fastLoad(svg.toUtf8());
-				if (result) {
-					setSharedRendererEx(m_renderer);
-				}
+				loadExtraRenderer(svg.toUtf8());
 			}
 			break;
 		case ViewIdentifierClass::PCBView:

@@ -93,7 +93,6 @@ protected:
 	QPointF m_itemPos;
 	QPointF m_itemC0;
 	QPointF m_itemC1;
-	QPointer<FSvgRenderer> m_renderer;
 	QHash <ViewLayer::ViewLayerID, QPointer<FSvgRenderer> > m_renderers;
 };
 

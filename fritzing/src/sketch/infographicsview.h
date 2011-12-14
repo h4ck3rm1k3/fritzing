@@ -101,6 +101,7 @@ public:
 	virtual double getWireStrokeWidth(Wire *, double wireWidth);
 	virtual bool curvyWiresIndicated(Qt::KeyboardModifiers);
 	virtual void triggerRotate(ItemBase *, double degrees);
+	virtual void changePinLabels(ItemBase *, bool singleRow);
 
 public slots:
 	virtual void setVoltage(double, bool doEmit);
@@ -110,6 +111,7 @@ public slots:
 signals:
 	void setVoltageSignal(double, bool doEmit);
 	void swapSignal(const QString & family, const QString & prop, QMap<QString, QString> & propsMap, ItemBase *);
+	void changePinLabelsSignal(ItemBase *, bool singleRow);
 
 public:
 	static InfoGraphicsView * getInfoGraphicsView(QGraphicsItem *);

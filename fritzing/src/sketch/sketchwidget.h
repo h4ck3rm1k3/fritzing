@@ -522,6 +522,8 @@ protected slots:
 	void makeDeleteItemCommandPrepSlot(ItemBase * itemBase, bool foreign, QUndoCommand * parentCommand);
 	void makeDeleteItemCommandFinalSlot(ItemBase * itemBase, bool foreign, QUndoCommand * parentCommand);
 	void updatePartLabelInstanceTitleSlot(long itemID);
+	void changePinLabelsSlot(ItemBase * itemBase, bool singleRow);
+	void changePinLabels(ItemBase *, bool singleRow);
 
 public slots:
 	void changeWireColor(const QString newColor);

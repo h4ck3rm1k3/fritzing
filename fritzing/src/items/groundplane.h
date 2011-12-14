@@ -69,7 +69,6 @@ protected:
 
 protected:
 	ConnectorItem * m_connector0;
-	class FSvgRenderer * m_renderer;
 	QPointF m_dropOffset;
 	QPainterPath m_shape;
 };

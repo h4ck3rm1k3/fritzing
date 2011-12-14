@@ -51,7 +51,6 @@ SymbolPaletteItem::SymbolPaletteItem( ModelPart * modelPart, ViewIdentifierClass
 {
 	m_connector0 = m_connector1 = NULL;
 	m_voltage = 0;
-	m_renderer = NULL;
 
 	m_voltageReference = (modelPart->properties().value("type").compare("voltage reference") == 0);
 
@@ -205,17 +204,7 @@ void SymbolPaletteItem::setVoltage(double v) {
 	if (!m_voltageReference) return;
 
 	QString svg = makeSvg();
-	if (!svg.isEmpty()) {
-		if (m_renderer == NULL) {
-			m_renderer = new FSvgRenderer(this);
-		}
-		//DebugDialog::debug(svg);
-
-		bool result = m_renderer->fastLoad(svg.toUtf8());
-		if (result) {
-			setSharedRendererEx(m_renderer);
-		}
-	}
+	loadExtraRenderer(svg);
 
     if (m_partLabel) m_partLabel->displayTextsIf();
 }

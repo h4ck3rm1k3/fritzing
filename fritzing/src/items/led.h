@@ -58,7 +58,6 @@ protected:
 	QString getColorSVG(const QString & color, ViewLayer::ViewLayerID);
 
 protected:
-	class FSvgRenderer * m_renderer;
 	QString m_title;
 
 };

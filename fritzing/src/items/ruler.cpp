@@ -52,7 +52,6 @@ Ruler::Ruler( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIde
 	m_widthEditor = NULL;
 	m_unitsEditor = NULL;
 	m_widthValidator = NULL;
-	m_renderer = NULL;
 	QString w = modelPart->prop("width").toString();
 	if (w.isEmpty()) {
 		if (DefaultWidth.isEmpty()) {
@@ -78,13 +77,8 @@ void Ruler::resizeMM(double magnitude, double unitsFlag, const LayerHash & viewL
 
 	QString s = makeSvg(newW);
 
-	if (m_renderer == NULL) {
-		m_renderer = new FSvgRenderer(this);
-	}
-
-	bool result = m_renderer->fastLoad(s.toUtf8());
+	bool result = loadExtraRenderer(s.toUtf8());
 	if (result) {
-		setSharedRendererEx(m_renderer);
         modelPart()->setProp("width", QVariant(QString::number(magnitude) + units));
 	}
 	//	DebugDialog::debug(QString("fast load result %1 %2").arg(result).arg(s));

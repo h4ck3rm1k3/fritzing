@@ -76,7 +76,7 @@ Hole::Hole( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdent
 	m_holeSettings.holeDiameter = sizes.at(0);
 	m_holeSettings.ringThickness = sizes.at(1);
 
-	m_otherLayerRenderer = m_renderer = NULL;
+	m_otherLayerRenderer = m_extraRenderer = NULL;
 }
 
 Hole::~Hole() {
@@ -187,7 +187,7 @@ void Hole::setBoth(const QString & holeDiameter, const QString & ringThickness) 
 	ItemBase * otherLayer = setBothSvg(holeDiameter, ringThickness, connectorIDs);
 
 	// there's only one NonConnectorItem
-	foreach (SvgIdLayer * svgIdLayer, m_renderer->setUpNonConnectors()) {
+	foreach (SvgIdLayer * svgIdLayer, m_extraRenderer->setUpNonConnectors()) {
 		if (svgIdLayer == NULL) continue;
 
 		setBothNonConnectors(this, svgIdLayer);
@@ -202,16 +202,10 @@ void Hole::setBoth(const QString & holeDiameter, const QString & ringThickness) 
 ItemBase * Hole::setBothSvg(const QString & holeDiameter, const QString & ringThickness, const QStringList & connectorIDs) 
 {
 	QString svg = makeSvg(holeDiameter, ringThickness, m_viewLayerID);
-	if (m_renderer == NULL) {
-		m_renderer = new FSvgRenderer(this);
-	}
+	loadExtraRenderer(svg.toUtf8());
 
 	QString setColor;
 	QStringList noIDs;
-	QByteArray result = m_renderer->loadSvg(svg.toLatin1(), m_filename, connectorIDs, noIDs,  noIDs, "", "", true);
-	if (!result.isEmpty()) {
-		setSharedRendererEx(m_renderer);
-	}
 
 	QString osvg;
 	ItemBase * otherLayer = NULL;
@@ -228,7 +222,7 @@ ItemBase * Hole::setBothSvg(const QString & holeDiameter, const QString & ringTh
 			m_otherLayerRenderer = new FSvgRenderer(this);
 		}
 
-		result = m_otherLayerRenderer->loadSvg(osvg.toLatin1(), m_filename, connectorIDs, noIDs,  noIDs, "", "", true);
+		QByteArray result = m_otherLayerRenderer->loadSvg(osvg.toLatin1(), m_filename, connectorIDs, noIDs,  noIDs, "", "", true);
 		if (!result.isEmpty()) {
 			qobject_cast<PaletteItemBase *>(otherLayer)->setSharedRendererEx(m_otherLayerRenderer);
 		}

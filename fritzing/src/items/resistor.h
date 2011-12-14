@@ -73,7 +73,6 @@ public:
 	static double toOhms(const QString & ohmsString, void * data);
 
 protected:
-	class FSvgRenderer * m_renderer;
 	QString m_ohms;
 	QString m_pinSpacing;
 	QString m_title;

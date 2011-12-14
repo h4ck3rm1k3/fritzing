@@ -68,7 +68,6 @@ void loadIconSvg()
 GroundPlane::GroundPlane( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel) 
 	: PaletteItem(modelPart, viewIdentifier,  viewGeometry,  id, itemMenu, doLabel)
 {
-	m_renderer = NULL;
 	m_connector0 = NULL;
 }
 
@@ -175,16 +174,7 @@ void GroundPlane::setSvgAux(const QString & svg) {
 	QString cpy = svg;
 	bool result = splitter.splitString(cpy, xmlName);
 	if (result) {
-		if (m_renderer == NULL) {
-			m_renderer = new FSvgRenderer(this);
-		}
-		//DebugDialog::debug(svg);
-
-		bool result = m_renderer->fastLoad(svg.toUtf8());
-		if (result) {
-			setSharedRendererEx(m_renderer);
-		}
-
+		loadExtraRenderer(svg.toUtf8());
 		if (m_connector0) {
 			QPainterPath painterPath = splitter.painterPath(FSvgRenderer::printerScale(), GroundPlaneGenerator::ConnectorName);
 			m_connector0->setRect(painterPath.boundingRect());

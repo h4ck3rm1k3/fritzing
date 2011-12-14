@@ -61,7 +61,7 @@ void Via::setBoth(const QString & holeDiameter, const QString & ringThickness) {
 		SvgIdLayer * svgIdLayer = connector->fullPinInfo(m_viewIdentifier, m_viewLayerID);
 		if (svgIdLayer == NULL) continue;
 
-		bool result = m_renderer->setUpConnector(svgIdLayer, false);
+		bool result = m_extraRenderer->setUpConnector(svgIdLayer, false);
 		if (!result) continue;
 
 		setBothConnectors(this, svgIdLayer);

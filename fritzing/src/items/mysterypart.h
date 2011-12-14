@@ -56,6 +56,7 @@ public:
 	bool onlySpacingChanges(QMap<QString, QString> & propsMap);
 	PluralType isPlural();
 	void addedToScene(bool temporary);
+	bool changePinLabels(bool singleRow, bool sip);
 
 public slots:
 	void chipLabelEntry();
@@ -68,12 +69,13 @@ public:
 	static QString genDipFZP(const QString & moduleid);
 	static QString genModuleID(QMap<QString, QString> & currPropsMap);
 	static QString makeSchematicSvg(const QString & expectedFileName);
+	static QString makeSchematicSvg(const QStringList & labels, bool sip);
 	static QString makeBreadboardSvg(const QString & expectedFileName);
 	static QString makeBreadboardSipSvg(const QString & expectedFileName);
 	static QString makeBreadboardDipSvg(const QString & expectedFileName);
 
 protected:
-	QString makeSvg(const QString & chipLabel);
+	QString makeSvg(const QString & chipLabel, bool replace);
 	ConnectorItem* newConnectorItem(class Connector *connector);
 	ConnectorItem* newConnectorItem(ItemBase * layerkin, Connector *connector);
 	QStringList collectValues(const QString & family, const QString & prop, QString & value);
@@ -81,11 +83,11 @@ protected:
 	virtual bool otherPropsChange(const QMap<QString, QString> & propsMap);
 	virtual const QStringList & spacings();
 	void setChipLabelDelay(QString chipLabel, bool force);
+	virtual QString retrieveSchematicSvg(QString & svg);
 
 	static int NoExcusePins;
 
 protected:
-	class FSvgRenderer * m_renderer;
 	QString m_chipLabel;
 	QString m_title;
 	bool m_changingSpacing;

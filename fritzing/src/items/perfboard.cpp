@@ -61,8 +61,6 @@ Perfboard::Perfboard( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier
 		m_size = modelPart->properties().value("size", "20.20");
 		modelPart->setProp("size", m_size);
 	}
-
-	m_renderer = NULL;
 }
 
 Perfboard::~Perfboard() {
@@ -77,15 +75,9 @@ void Perfboard::setProp(const QString & prop, const QString & value)
 	switch (this->m_viewIdentifier) {
 		case ViewIdentifierClass::BreadboardView:
 			if (value.compare(m_size) != 0) {
-				if (m_renderer == NULL) {
-					m_renderer = new FSvgRenderer(this);
-				}
 				QString svg = makeBreadboardSvg(value);
+				loadExtraRenderer(svg);
 				//DebugDialog::debug(svg);
-				bool result = m_renderer->fastLoad(svg.toUtf8());
-				if (result) {
-					setSharedRendererEx(m_renderer);
-				}
 			}
 			break;
 

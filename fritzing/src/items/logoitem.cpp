@@ -86,13 +86,7 @@ void LogoItem::addedToScene(bool temporary)
 		if (!shape.isEmpty()) {
 					
 			m_aspectRatio = modelPart()->prop("aspectratio").toSizeF();
-			if (m_renderer == NULL) {
-				m_renderer = new FSvgRenderer(this);
-			}
-
-			bool result = m_renderer->fastLoad(shape.toUtf8());
-			if (result) {
-				setSharedRendererEx(m_renderer);
+			if (loadExtraRenderer(shape.toUtf8())) {
 				positionGrips();
 			}
 		}
@@ -356,14 +350,10 @@ void LogoItem::prepLoadImageAux(const QString & fileName, bool addName)
 
 void LogoItem::reloadImage(const QString & svg, const QSizeF & aspectRatio, const QString & fileName, bool addName) 
 {
-	if (m_renderer == NULL) {
-		m_renderer = new FSvgRenderer(this);
-	}
-	bool result = m_renderer->fastLoad(svg.toUtf8());
+	bool result = loadExtraRenderer(svg.toUtf8());
 	if (result) {
-		setSharedRendererEx(m_renderer);
 		if (aspectRatio == QSizeF(0, 0)) {
-			QRectF r = m_renderer->viewBoxF();
+			QRectF r = m_extraRenderer->viewBoxF();
 			m_aspectRatio.setWidth(r.width());
 			m_aspectRatio.setHeight(r.height());
 		}
@@ -390,8 +380,7 @@ void LogoItem::reloadImage(const QString & svg, const QSizeF & aspectRatio, cons
 	}
 	else {
 		// restore previous (not sure whether this is necessary)
-		m_renderer->fastLoad(prop("shape").toUtf8());
-		setSharedRendererEx(m_renderer);
+		loadExtraRenderer(prop("shape").toUtf8());
 		unableToLoad(fileName);
 	}
 }
@@ -503,10 +492,6 @@ void LogoItem::loadImage(const QString & fileName, bool addName)
 		svg = TextUtils::mergeSvgFinish(doc);
 	}
 
-	if (m_renderer == NULL) {
-		m_renderer = new FSvgRenderer(this);
-	}
-
 	reloadImage(svg, QSizeF(0, 0), fileName, addName);
 }
 
@@ -523,10 +508,6 @@ void LogoItem::resizeMM(double mmW, double mmH, const LayerHash & viewLayers) {
 	{
 		positionGrips();
 		return;
-	}
-
-	if (m_renderer == NULL) {
-		m_renderer = new FSvgRenderer(this);
 	}
 
 	double inW = GraphicsUtils::mm2mils(mmW) / 1000;
@@ -560,9 +541,8 @@ void LogoItem::resizeMM(double mmW, double mmH, const LayerHash & viewLayers) {
 
 	svg = TextUtils::removeXMLEntities(domDocument.toString());			
 
-	bool result = m_renderer->fastLoad(svg.toUtf8());
+	bool result = loadExtraRenderer(svg.toUtf8());
 	if (result) {
-		setSharedRendererEx(m_renderer);
 		modelPart()->setProp("shape", svg);
 		modelPart()->setProp("width", mmW);
 		modelPart()->setProp("height", mmH);
@@ -618,15 +598,9 @@ void LogoItem::setLogo(QString logo, bool force) {
 
 void LogoItem::rerender(const QString & svg)
 {
-	if (m_renderer == NULL) {
-		m_renderer = new FSvgRenderer(this);
-	}
-	//DebugDialog::debug(svg);
-
-	bool result = m_renderer->fastLoad(svg.toUtf8());
+	bool result = loadExtraRenderer(svg.toUtf8());
 	if (result) {
-		setSharedRendererEx(m_renderer);
-		QRectF r = m_renderer->viewBoxF();
+		QRectF r = m_extraRenderer->viewBoxF();
 		m_aspectRatio.setWidth(r.width());
 		m_aspectRatio.setHeight(r.height());
 	}

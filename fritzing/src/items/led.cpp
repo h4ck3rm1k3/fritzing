@@ -42,7 +42,6 @@ static QHash<QString, QString> IconSvg;
 LED::LED( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: Capacitor(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
-	m_renderer = NULL;
 }
 
 LED::~LED() {
@@ -134,14 +133,7 @@ void LED::setColor(const QString & color)
 			return;
 	}
 
-	if (m_renderer == NULL) {
-		m_renderer = new FSvgRenderer(this);
-	}
-
-	bool result = m_renderer->fastLoad(getColorSVG(color, m_viewLayerID).toUtf8());
-	if (result) {
-		setSharedRendererEx(m_renderer);
-	}
+	loadExtraRenderer(getColorSVG(color, m_viewLayerID).toUtf8());
 }
 
 QString LED::getColorSVG(const QString & color, ViewLayer::ViewLayerID viewLayerID) 

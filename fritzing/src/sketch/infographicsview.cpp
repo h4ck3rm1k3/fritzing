@@ -334,3 +334,7 @@ void InfoGraphicsView::triggerRotate(ItemBase *, double degrees)
 {
 	Q_UNUSED(degrees);
 }
+
+void InfoGraphicsView::changePinLabels(ItemBase * itemBase, bool singleRow)
+{
+}

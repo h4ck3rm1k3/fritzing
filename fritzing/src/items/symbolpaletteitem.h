@@ -69,8 +69,6 @@ protected:
 	QPointer<ConnectorItem> m_connector0;
 	QPointer<ConnectorItem> m_connector1;
 	bool m_voltageReference;
-	class FSvgRenderer * m_renderer;
-
 };
 
 #endif

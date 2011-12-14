@@ -27,6 +27,10 @@ $Date$
 #include "dip.h"
 #include "../utils/textutils.h"
 #include "../utils/graphicsutils.h"
+#include "../connectors/connectoritem.h"
+#include "../fsvgrenderer.h"
+
+#include <QFontMetricsF>
 
 static QStringList Spacings;
 
@@ -105,7 +109,6 @@ QStringList Dip::collectValues(const QString & family, const QString & prop, QSt
 	return MysteryPart::collectValues(family, prop, value);
 }
 
-
 QString Dip::genModuleID(QMap<QString, QString> & currPropsMap)
 {
 	QString value = currPropsMap.value("package");
@@ -172,6 +175,21 @@ QString Dip::makePcbSvg(const QString & expectedFileName)
 	return svg;
 }
 
+QString Dip::retrieveSchematicSvg(QString & svg) {
+	bool hasLocal = false;
+	QStringList labels = getPinLabels(hasLocal);
+		
+	if (hasLocal) {
+		if (this->isDIP()) {
+			svg = makeSchematicSvg(labels);
+		}
+		else {
+			svg = MysteryPart::makeSchematicSvg(labels, true);
+		}
+	}
+
+	return TextUtils::replaceTextElement(svg, "label", m_chipLabel);
+}
 
 QString Dip::makeSchematicSvg(const QString & expectedFileName) 
 {
@@ -179,34 +197,86 @@ QString Dip::makeSchematicSvg(const QString & expectedFileName)
 	if (pieces.count() != 5) return "";
 
 	int pins = pieces.at(3).toInt();
+	QStringList labels;
+	for (int i = 0; i < pins; i++) {
+		labels << QString::number(i + 1);
+	}
+
+	return makeSchematicSvg(labels);
+}
+
+QString Dip::makeSchematicSvg(const QStringList & labels) 
+{
+	int pins = labels.count();
 	int increment = 300;
 	double totalHeight = (pins * increment / 2) + 330;
 	int border = 30;
+	int pinWidth = 630;
+	int centralWidth = 1200;
+	int pinTextWidth = 0;
+	int defaultLabelWidth = 30;
+	int labelFontSize = 130;
+
+	double textMax = defaultLabelWidth;
+	QFont font("Droid Sans", labelFontSize * 72 / GraphicsUtils::StandardFritzingDPI, QFont::Normal);
+	QFontMetricsF fm(font);
+	for (int i = 0; i < labels.count(); i++) {
+		double w = fm.width(labels.at(i));
+		if (w > textMax) textMax = w;
+	}
+	if (textMax > defaultLabelWidth) {
+		pinTextWidth += (textMax - defaultLabelWidth) * 2 * 1000 / 72;
+	}
+	centralWidth += pinTextWidth;
+	int totalWidth = centralWidth + pinWidth;
+
 
 	QString header("<?xml version='1.0' encoding='UTF-8' standalone='no'?>\n"
 					"<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' \n"
-					"width='1.83in' height='%1in' viewBox='0 0 1830 %2' >\n"
+					"width='%4in' height='%1in' viewBox='0 0 %5 %2' >\n"
 					"<g id='schematic' >\n"
-					"<rect x='315' y='15' fill='none' width='1200' height='%3' stroke='#000000' stroke-linejoin='round' stroke-linecap='round' stroke-width='30' />\n"
-					"<text id='label' x='915.0' y='465' font-family='DroidSans' stroke='none' fill='#000000' text-anchor='middle' font-size='235' >IC</text>\n");
+					"<rect x='315' y='15' fill='none' width='%6' height='%3' stroke='#000000' stroke-linejoin='round' stroke-linecap='round' stroke-width='30' />\n"
+					"<text id='label' x='%7' y='465' font-family='DroidSans' stroke='none' fill='#000000' text-anchor='middle' font-size='235' >IC</text>\n");
 
-	QString svg = header.arg(totalHeight / 1000).arg(totalHeight).arg(totalHeight - border);
+	QString svg = header
+				.arg(totalHeight / 1000)
+				.arg(totalHeight)
+				.arg(totalHeight - border)
+				.arg(totalWidth / 1000.0)
+				.arg(totalWidth)
+				.arg(centralWidth)
+				.arg(totalWidth / 2.0)
+				;
   
 	QString repeatL("<line fill='none' stroke='#000000' stroke-linejoin='round' stroke-linecap='round' stroke-width='30' x1='15' y1='%1' x2='300' y2='%1'  />\n"
 					"<rect x='0' y='%2' fill='none' width='300' height='30' id='connector%3pin' stroke-width='0' />\n"
 					"<rect x='0' y='%2' fill='none' width='30' height='30' id='connector%3terminal' stroke-width='0' />\n"
-					"<text id='label%3' x='390' y='%4' font-family='DroidSans' stroke='none' fill='#000000' text-anchor='start' font-size='130' >%5</text>\n");
+					"<text id='label%3' x='390' y='%4' font-family='DroidSans' stroke='none' fill='#000000' text-anchor='start' font-size='%6' >%5</text>\n");
 
-	QString repeatR("<line fill='none' stroke='#000000' stroke-linejoin='round' stroke-linecap='round' stroke-width='30' x1='1515' y1='%1' x2='1815' y2='%1'  />\n"
-					"<rect x='1530' y='%2' fill='none' width='300' height='30' id='connector%3pin' stroke-width='0' />>\n"
-					"<rect x='1830' y='%2' fill='none' width='30' height='30' id='connector%3terminal' stroke-width='0' />>\n"
-					"<text id='label%3' x='1440' y='%4' font-family='DroidSans' stroke='none' fill='#000000' text-anchor='end' font-size='130' >%5</text>>\n");
+	
+	QString repeatR("<line fill='none' stroke='#000000' stroke-linejoin='round' stroke-linecap='round' stroke-width='30' x1='%7' y1='%1' x2='%8' y2='%1'  />\n"
+					"<rect x='%9' y='%2' fill='none' width='300' height='30' id='connector%3pin' stroke-width='0' />>\n"
+					"<rect x='%10' y='%2' fill='none' width='30' height='30' id='connector%3terminal' stroke-width='0' />>\n"
+					"<text id='label%3' x='%11' y='%4' font-family='DroidSans' stroke='none' fill='#000000' text-anchor='end' font-size='%6' >%5</text>>\n");
 
 
 	int y = 300;
 	for (int i = 0; i < pins / 2; i++) {
-		svg += repeatL.arg(15 + y).arg(y).arg(i).arg(y + 50).arg(i + 1);
-		svg += repeatR.arg(15 + y).arg(y).arg(pins - i - 1).arg(y + 50).arg(pins - i);
+		svg += repeatL.arg(15 + y).arg(y).arg(i).arg(y + 50).arg(labels.at(i)).arg(labelFontSize);
+		svg += repeatR
+				.arg(15 + y)
+				.arg(y)
+				.arg(pins - i - 1)
+				.arg(y + 50)
+				.arg(labels.at(pins - i - 1))
+				.arg(labelFontSize)
+
+				.arg(totalWidth - 315)
+				.arg(totalWidth - 15)
+				.arg(totalWidth - 300)
+				.arg(totalWidth)
+				.arg(totalWidth - 390)								
+				;
 		y += increment;
 	}
 
@@ -327,4 +397,25 @@ QString Dip::makeBreadboardDipSvg(const QString & expectedFileName)
 
 
 	return svg.arg(TextUtils::getViewBoxCoord(svg, 2) / 100.0).arg(repeatTs).arg(repeatBs);
+}
+
+bool Dip::changePinLabels(bool singleRow, bool sip) {
+	if (m_viewIdentifier != ViewIdentifierClass::SchematicView) return true;
+
+	bool hasLocal = false;
+	QStringList labels = getPinLabels(hasLocal);
+	if (labels.count() == 0) return true;
+
+	QString svg;
+
+	if (singleRow) {
+		svg = MysteryPart::makeSchematicSvg(labels, sip);
+	}
+	else {
+		svg = Dip::makeSchematicSvg(labels);
+	}
+
+	loadExtraRenderer(svg);
+
+	return true;
 }

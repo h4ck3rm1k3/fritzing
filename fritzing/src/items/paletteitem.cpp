@@ -37,6 +37,8 @@ $Date$
 #include "../dialogs/pinlabeldialog.h"
 #include "../utils/folderutils.h"
 #include "../utils/textutils.h"
+#include "mysterypart.h"
+#include "dip.h"
 
 #include <QGraphicsSceneMouseEvent>
 #include <QSvgRenderer>
@@ -100,6 +102,7 @@ bool byID(ConnectorItem * c1, ConnectorItem * c2)
 PaletteItem::PaletteItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
+	m_extraRenderer = NULL;
 	if(doLabel) {
 		m_partLabel = new PartLabel(this, NULL);
 		m_partLabel->setVisible(false);
@@ -584,15 +587,13 @@ void PaletteItem::openPinLabelDialog() {
 	}
 
 	QStringList labels;
-	QList<ConnectorItem *> sortedConnectorItems(this->cachedConnectorItems());
-	ByIDParseSuccessful = true;
-	qSort(sortedConnectorItems.begin(), sortedConnectorItems.end(), byID);
-	if (!ByIDParseSuccessful || sortedConnectorItems.count() == 0) {
+	QList<ConnectorItem *> sortedConnectorItems = sortConnectorItems();
+	if (sortedConnectorItems.count() == 0) {
 		QMessageBox::warning(
 			NULL,
 			tr("Fritzing"),
 			tr("Unable to proceed; part connectors do no have standard IDs.")
-		);		
+		);
 		return;
 	}
 
@@ -605,7 +606,8 @@ void PaletteItem::openPinLabelDialog() {
 		chipLabel = instanceTitle();
 	}
 
-	PinLabelDialog pinLabelDialog(labels, isSingleRow(sortedConnectorItems), chipLabel, modelPart()->isCore(), NULL);
+	bool singleRow = isSingleRow(sortedConnectorItems);
+	PinLabelDialog pinLabelDialog(labels, singleRow, chipLabel, modelPart()->isCore(), NULL);
 	int result = pinLabelDialog.exec();
 	if (result != QDialog::Accepted) return;
 
@@ -619,79 +621,12 @@ void PaletteItem::openPinLabelDialog() {
 		return;
 	}
 
-
 	for (int i = 0; i < newLabels.count(); i++) {
 		ConnectorItem * connectorItem = sortedConnectorItems.at(i);
 		connectorItem->setConnectorLocalName(newLabels.at(i));
 	}
 
-	/*
-
-
-	QFile file(modelPart()->path());
-
-	QDomDocument * domDocument = new QDomDocument();
-	QString errorStr;
-	int errorLine;
-	int errorColumn;
-	if (!domDocument->setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
-		QMessageBox::warning(
-			NULL,
-			tr("Fritzing"),
-			tr("Unable to parse own fzp file.  Nothing was saved.")
-		);	
-		return;
-	}
-
-	QString moduleID = pinLabelDialog.doSaveAs() ? FolderUtils::getRandText() : this->moduleID();
-
-	QDomElement root = domDocument->documentElement();
-	root.setAttribute("moduleId", moduleID);
-	TextUtils::replaceElementChildText(*domDocument, root, "author", getenvUser());
-	TextUtils::replaceElementChildText(*domDocument, root, "date", QDate::currentDate().toString(Qt::ISODate));
-
-	QStringList newLabels = pinLabelDialog.labels();
-	if (newLabels.count() != sortedConnectorItems.count()) {
-		QMessageBox::warning(
-			NULL,
-			tr("Fritzing"),
-			tr("Label mismatch.  Nothing was saved.")
-		);	
-		return;
-	}
-
-	QDomElement connectors = root.firstChildElement("connectors");
-
-	for (int i = 0; i < newLabels.count(); i++) {
-		ConnectorItem * connectorItem = sortedConnectorItems.at(i);
-		QDomElement connector = TextUtils::findElementWithAttribute(connectors, "id", connectorItem->connectorSharedID());
-		connector.setAttribute("name", newLabels.at(i));
-	}
-
-	QString userPartsFolderPath = FolderUtils::getUserDataStorePath("parts")+"/user/";
-	QFile file2(userPartsFolderPath + moduleID + FritzingPartExtension);
-	file2.open(QIODevice::WriteOnly);
-	QTextStream out2(&file2);
-	out2.setCodec("UTF-8");
-	out2 << domDocument->toString();
-	file2.close();
-
-	if (pinLabelDialog.doSaveAs()) {
-		delete domDocument;
-	}
-	else {
-		// this never happens
-		m_modelPart->modelPartShared()->setDomDocument(domDocument);
-		m_modelPart->modelPartShared()->resetConnectorsInitialization();
-		m_modelPart->initConnectors(true);
-	}
-
-	connect(this, SIGNAL(pinLabelSwap(ItemBase *, const QString &)), infoGraphicsView->window(), SLOT(swapOne(ItemBase *, const QString &)));
-	emit pinLabelSwap(this, moduleID);
-	disconnect(this, SIGNAL(pinLabelSwap(ItemBase *, const QString &)), infoGraphicsView->window(), SLOT(swapOne(ItemBase *, const QString &)));
-
-
-	*/
+	infoGraphicsView->changePinLabels(this, singleRow);
 }
 
 bool PaletteItem::isSingleRow(QList<ConnectorItem *> & connectorItems) {
@@ -720,4 +655,55 @@ bool PaletteItem::isSingleRow(QList<ConnectorItem *> & connectorItems) {
 	}
 
 	return true;
+}
+
+QList<ConnectorItem *> PaletteItem::sortConnectorItems() {
+	QList<ConnectorItem *> sortedConnectorItems(this->cachedConnectorItems());
+	ByIDParseSuccessful = true;
+	qSort(sortedConnectorItems.begin(), sortedConnectorItems.end(), byID);
+	if (!ByIDParseSuccessful || sortedConnectorItems.count() == 0) {		
+		sortedConnectorItems.clear();
+	}
+
+	return sortedConnectorItems;
+}
+
+bool PaletteItem::changePinLabels(bool singleRow, bool sip) {
+	if (m_viewIdentifier != ViewIdentifierClass::SchematicView) return true;
+
+	return false;
+}
+
+QStringList PaletteItem::getPinLabels(bool & hasLocal) {
+	hasLocal = false;
+	QStringList labels;
+	QList<ConnectorItem *> sortedConnectorItems = sortConnectorItems();
+	if (sortedConnectorItems.count() == 0) return labels;
+
+	foreach (ConnectorItem * connectorItem, sortedConnectorItems) {
+		labels.append(connectorItem->connectorSharedName());
+		if (!connectorItem->connector()->connectorLocalName().isEmpty()) {
+			hasLocal = true;
+		}
+	}
+
+	return labels;
+}
+
+bool PaletteItem::loadExtraRenderer(const QString & svg) {
+	if (!svg.isEmpty()) {
+		if (m_extraRenderer == NULL) {
+			m_extraRenderer = new FSvgRenderer(this);
+		}
+		//DebugDialog::debug(svg);
+
+		bool result = m_extraRenderer->fastLoad(svg.toUtf8());
+		if (result) {
+			setSharedRendererEx(m_extraRenderer);
+		}
+
+		return result;
+	}
+
+	return false;
 }

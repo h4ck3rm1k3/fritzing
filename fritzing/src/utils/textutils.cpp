@@ -1108,3 +1108,17 @@ QString TextUtils::pointToSvgString(QPointF p, QPointF offset, double dpi, doubl
 	return point;
 }
 
+QString TextUtils::removeSVGHeader(QString & string) {
+	int ix = string.indexOf("<svg");
+	if (ix < 0) return string;
+
+	ix = string.indexOf(">", ix);
+	if (ix < 0) return string;
+
+	int jx = string.indexOf("</svg>");
+	if (jx < 0) return string;
+
+	string.remove(jx, 6);
+	string.remove(0, ix + 1);
+	return string;
+}

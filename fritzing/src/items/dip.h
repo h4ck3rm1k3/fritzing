@@ -40,6 +40,7 @@ public:
 
 	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
 	QStringList collectValues(const QString & family, const QString & prop, QString & value);
+	bool changePinLabels(bool singleRow, bool sip);
 
 public:
 	static QString genSipFZP(const QString & moduleid);
@@ -47,6 +48,7 @@ public:
 	static QString genModuleID(QMap<QString, QString> & currPropsMap);
 	static QString makePcbSvg(const QString & expectedFileName);
 	static QString makeSchematicSvg(const QString & expectedFileName);
+	static QString makeSchematicSvg(const QStringList & labels);
 	static QString makeBreadboardSvg(const QString & expectedFileName);
 	static QString makeBreadboardSipSvg(const QString & expectedFileName);
 	static QString makeBreadboardDipSvg(const QString & expectedFileName);
@@ -55,6 +57,7 @@ protected:
 	bool isDIP();
 	bool otherPropsChange(const QMap<QString, QString> & propsMap);
 	const QStringList & spacings();
+	QString retrieveSchematicSvg(QString & svg);
 };
 
 #endif

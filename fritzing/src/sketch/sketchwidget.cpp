@@ -8158,3 +8158,66 @@ void SketchWidget::makeWiresChangeConnectionCommands(const QList<Wire *> & wires
 		}
 	}
 }
+
+void SketchWidget::changePinLabelsSlot(ItemBase * itemBase, bool singleRow)
+{
+	itemBase = this->findItem(itemBase->id());
+	if (itemBase == NULL) return;
+	if (itemBase->viewIdentifier() != ViewIdentifierClass::SchematicView) return;
+
+	PaletteItem * paletteItem = qobject_cast<PaletteItem *>(itemBase->layerKinChief());
+	if (paletteItem == NULL) return;
+
+	bool sip = false;
+	if (qobject_cast<Dip *>(itemBase)) {
+		sip = true;
+	}
+	else if (qobject_cast<MysteryPart *>(itemBase)) {
+		sip = false;
+	}
+	else {
+		bool hasLocal = false;
+		QStringList labels = paletteItem->getPinLabels(hasLocal);
+		if (labels.count() == 0) return;
+
+		// part was formerly a mystery part or generic ic ...
+		QHash<QString, QString> properties = itemBase->modelPart()->properties();
+		bool hasLayout = false;
+		foreach (QString key, properties.keys()) {
+			QString value = properties.value(key);
+			if (key.compare("layout", Qt::CaseInsensitive) == 0) {
+				// was a mystery part
+				hasLayout = true;
+				break;
+			}
+
+			if (key.compare("package") == 0) {
+				// was a generic ic
+				QString svg;
+				sip = value.contains("sip", Qt::CaseInsensitive);		
+			}
+		}
+
+		QString svg;
+		if (hasLayout) {
+			svg = MysteryPart::makeSchematicSvg(labels, false);
+		}
+		else if (sip) {
+			svg = MysteryPart::makeSchematicSvg(labels, true);
+		}
+		else {
+			svg = Dip::makeSchematicSvg(labels);
+		}
+		paletteItem->loadExtraRenderer(svg);
+		return;
+	}
+
+	paletteItem->changePinLabels(singleRow, sip);
+}
+
+void SketchWidget::changePinLabels(ItemBase * itemBase, bool singleRow)
+{
+	emit changePinLabelsSignal(itemBase, singleRow);
+	changePinLabelsSlot(itemBase, singleRow);
+}
+

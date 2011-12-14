@@ -80,7 +80,6 @@ protected:
 	static void initSpacings();
 
 protected:
-	class FSvgRenderer * m_renderer;
 	QString m_form;
 };
 

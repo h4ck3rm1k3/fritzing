@@ -64,7 +64,6 @@ protected:
 	QString makeSvg(double inches);
 	
 protected:
-	class FSvgRenderer * m_renderer;
 	QPointer<QLineEdit> m_widthEditor;
 	QPointer<QComboBox> m_unitsEditor;
 	QPointer<QDoubleValidator> m_widthValidator;

@@ -55,7 +55,6 @@ JumperItem::JumperItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifi
 		Colors.insert(ViewLayer::Silkscreen1, ViewLayer::Silkscreen1Color);
 	}
 
-	m_renderer = NULL;
 	m_otherItem = m_connector0 = m_connector1 = m_dragItem = NULL;
 	if (Copper0LayerTemplate.isEmpty()) {
 		QFile file(":/resources/templates/jumper_copper0LayerTemplate.txt");
@@ -319,16 +318,9 @@ void JumperItem::resize() {
 
 	prepareGeometryChange();
 
-	if (m_renderer == NULL) {
-		m_renderer = new FSvgRenderer(this);
-	}
 	QString s = makeSvg(ViewLayer::Copper0);
 	//DebugDialog::debug(s);
-
-	bool result = m_renderer->fastLoad(s.toUtf8());
-	if (result) {
-		setSharedRendererEx(m_renderer);
-	}
+	loadExtraRenderer(s);
 
 	foreach (ItemBase * itemBase, m_layerKin) {
 		switch(itemBase->viewLayerID()) {

@@ -66,8 +66,6 @@ PinHeader::PinHeader( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier
 		m_form = modelPart->properties().value("form", FemaleFormString);
 		modelPart->setProp("form", m_form);
 	}
-
-	m_renderer = NULL;
 }
 
 PinHeader::~PinHeader() {

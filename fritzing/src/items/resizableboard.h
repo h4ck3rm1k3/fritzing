@@ -116,7 +116,6 @@ protected:
 	class ResizeHandle * m_resizeGripBL;
 	class ResizeHandle * m_resizeGripBR;
 	class ResizeHandle * m_inResize;
-	class FSvgRenderer * m_renderer;
 	class FSvgRenderer * m_silkscreenRenderer;
 	QSizeF m_boardSize;
 	QPointF m_boardPos;

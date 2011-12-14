@@ -125,7 +125,7 @@ ResizableBoard::ResizableBoard( ModelPart * modelPart, ViewIdentifierClass::View
 
 	m_resizeGripTL = m_resizeGripTR = m_resizeGripBL = m_resizeGripBR = NULL;
 
-	m_silkscreenRenderer = m_renderer = NULL;
+	m_silkscreenRenderer = NULL;
 	m_inResize = NULL;
 
 }
@@ -450,18 +450,14 @@ void ResizableBoard::resizeMM(double mmW, double mmH, const LayerHash & viewLaye
 
 void ResizableBoard::resizeMMAux(double mmW, double mmH) {
 
-	if (m_renderer == NULL) {
-		m_renderer = new FSvgRenderer(this);
-	}
 
 	double milsW = GraphicsUtils::mm2mils(mmW);
 	double milsH = GraphicsUtils::mm2mils(mmH);
 
 	QString s = makeFirstLayerSvg(mmW, mmH, milsW, milsH);
 
-	bool result = m_renderer->fastLoad(s.toUtf8());
+	bool result = loadExtraRenderer(s.toUtf8());
 	if (result) {
-		setSharedRendererEx(m_renderer);
 		modelPart()->setProp("width", mmW);
 		modelPart()->setProp("height", mmH);
 
