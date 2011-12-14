@@ -80,6 +80,7 @@ public:
 	QStringList getPinLabels(bool & hasLocal);
 	bool loadExtraRenderer(const QString & svg);
 	void renamePins(const QStringList & labels, bool singleRow);
+	void resetConnectors();
 
 public:
 	static QString genFZP(const QString & moduleid, const QString & templateName, int minPins, int maxPins, int steps, bool smd);

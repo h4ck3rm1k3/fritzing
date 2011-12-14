@@ -8168,12 +8168,12 @@ void SketchWidget::changePinLabelsSlot(ItemBase * itemBase, bool singleRow)
 	PaletteItem * paletteItem = qobject_cast<PaletteItem *>(itemBase->layerKinChief());
 	if (paletteItem == NULL) return;
 
-	bool sip = false;
 	if (qobject_cast<Dip *>(itemBase)) {
-		sip = true;
+		paletteItem->changePinLabels(singleRow, true);
+		paletteItem->resetConnectors();
 	}
 	else if (qobject_cast<MysteryPart *>(itemBase)) {
-		sip = false;
+		paletteItem->changePinLabels(singleRow, false);
 	}
 	else {
 		bool hasLocal = false;
@@ -8183,6 +8183,7 @@ void SketchWidget::changePinLabelsSlot(ItemBase * itemBase, bool singleRow)
 		// part was formerly a mystery part or generic ic ...
 		QHash<QString, QString> properties = itemBase->modelPart()->properties();
 		bool hasLayout = false;
+		bool sip = false;
 		foreach (QString key, properties.keys()) {
 			QString value = properties.value(key);
 			if (key.compare("layout", Qt::CaseInsensitive) == 0) {
@@ -8209,10 +8210,11 @@ void SketchWidget::changePinLabelsSlot(ItemBase * itemBase, bool singleRow)
 			svg = Dip::makeSchematicSvg(labels);
 		}
 		paletteItem->loadExtraRenderer(svg);
-		return;
+		if (!hasLayout && !sip) {
+			paletteItem->resetConnectors();
+		}
 	}
 
-	paletteItem->changePinLabels(singleRow, sip);
 }
 
 void SketchWidget::changePinLabels(ItemBase * itemBase, bool singleRow)

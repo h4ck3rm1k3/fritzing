@@ -714,3 +714,14 @@ bool PaletteItem::loadExtraRenderer(const QString & svg) {
 
 	return false;
 }
+
+void PaletteItem::resetConnectors() {
+	double w = this->boundingRect().width();
+	QList<ConnectorItem *> sortedConnectorItems = sortConnectorItems();
+	for (int i = sortedConnectorItems.count() / 2; i < sortedConnectorItems.count(); i++) {
+		ConnectorItem * connectorItem = sortedConnectorItems.at(i);
+		QRectF r = connectorItem->rect();
+		r.moveTo(w - r.width(), r.top());
+		connectorItem->setRect(r);
+	}
+}
