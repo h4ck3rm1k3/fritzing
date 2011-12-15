@@ -189,7 +189,8 @@ QString MysteryPart::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QStri
 			return TextUtils::replaceTextElement(svg, "label", m_chipLabel);
 
 		case ViewLayer::Schematic:
-			return TextUtils::removeSVGHeader(retrieveSchematicSvg(svg));
+			svg = retrieveSchematicSvg(svg);
+			return TextUtils::removeSVGHeader(svg);
 
 		default:
 			break;
