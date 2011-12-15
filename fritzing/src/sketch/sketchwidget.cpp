@@ -6871,6 +6871,8 @@ void SketchWidget::setResistance(long itemID, QString resistance, QString pinSpa
 
 void SketchWidget::setProp(ItemBase * item, const QString & prop, const QString & trProp, const QString & oldValue, const QString & newValue, bool redraw)
 {
+	if (oldValue.isEmpty() && newValue.isEmpty()) return;
+
 	SetPropCommand * cmd = new SetPropCommand(this, item->id(), prop, oldValue, newValue, redraw, NULL);
 	cmd->setText(tr("Change %1 from %2 to %3").arg(trProp).arg(oldValue).arg(newValue));
 	m_undoStack->push(cmd);
