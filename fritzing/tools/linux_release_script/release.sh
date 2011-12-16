@@ -22,7 +22,8 @@ fi
 cd $compile_folder
 #QT_HOME="/home/jonathan/qtsdk-2010.05/qt"
 #QT_HOME="/usr"
-QT_HOME="/home/jonathan/QtSDK/Desktop/Qt/473/gcc"
+#QT_HOME="/home/jonathan/QtSDK/Desktop/Qt/473/gcc"
+QT_HOME="/usr/local/Trolltech/Qt-4.8.0"
 
 
 $QT_HOME/bin/qmake CONFIG+=release -unix
