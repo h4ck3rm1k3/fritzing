@@ -1,16 +1,23 @@
 #!/bin/bash
 arch_aux=`uname -m`
 
+
+if [ "$1" = "" ]
+then
+  echo "Usage: $0 <need a version string such as '0.6.4b' (without the quotes)>"
+  exit
+fi
+
 compile_folder="build-$arch_aux"
 svn export http://fritzing.googlecode.com/svn/trunk/fritzing $compile_folder
 
 #let's define some variables that we'll need to in the future
-date=`date +%Y.%m.%d`
+relname=$1  #`date +%Y.%m.%d`
 
 if [ "$arch_aux" == 'x86_64' ] ; then
 	arch='AMD64'
 	# only creates the source tarball, when running on the 64 platform
-	tarball_folder="fritzing.$date.source"
+	tarball_folder="fritzing-$relname.source"
 	cp -rf $compile_folder $tarball_folder
 	echo "making source tarball: $tarball_folder"
 	tar -cjf ./$tarball_folder.tar.bz2 $tarball_folder
@@ -29,7 +36,7 @@ QT_HOME="/usr/local/Trolltech/Qt-4.8.0"
 $QT_HOME/bin/qmake CONFIG+=release -unix
 make
 
-release_folder="fritzing.$date.linux.$arch"
+release_folder="fritzing-$relname.linux.$arch"
 
 echo "making release folder: $release_folder"
 mkdir ../$release_folder
