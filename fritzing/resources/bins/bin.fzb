@@ -647,7 +647,7 @@
         </views>
       </instance>
 
-        <instance moduleIdRef="4321DEAB24_ST" modelIndex="48" path="parts/core/arduino.fzp">
+        <instance moduleIdRef="ArduinoUnoR3" modelIndex="48" path="parts/core/Arduino_UNO_R3.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
