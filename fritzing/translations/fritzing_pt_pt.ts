@@ -108,10 +108,6 @@
         <translation>ao Steven Noppe pela tradução para Holandês, </translation>
     </message>
     <message>
-        <source>and to Arthur Zanona for the Portuguese (Brazilian) translation. </source>
-        <translation>e ao Arthur Zanona pela tradução para Português (Brazil). </translation>
-    </message>
-    <message>
         <source>Fritzing is made possible with funding from the </source>
         <translation>Fritzing foi possível com o financiamento proveniente da </translation>
     </message>
@@ -150,6 +146,10 @@
     <message>
         <source>Version %1.%2.%3 &lt;small&gt;(%4%5 %6)%7 [Qt %8]&lt;/small&gt;</source>
         <translation>Versão %1.%2.%3 &lt;small&gt;(%4%5 %6)%7 [Qt %8]&lt;/small&gt;</translation>
+    </message>
+    <message>
+        <source>and to Arthur Zanona, Nuno Pessanha Santos, and Leandro Nunes for the Portuguese (Brazilian) translation. </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2798,10 +2798,6 @@ Razão: %2 (código do erro %3)</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unable to parse own fzp file.  Nothing was saved.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Label mismatch.  Nothing was saved.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3341,16 +3337,16 @@ numa PCB (Placa de Circuito Impresso)?</translation>
         <translation type="unfinished">Cancelar</translation>
     </message>
     <message>
-        <source>Save as new part</source>
-        <translation type="unfinished">Guardar um novo componente</translation>
-    </message>
-    <message>
         <source>Undo</source>
         <translation type="unfinished">Voltar atrás</translation>
     </message>
     <message>
         <source>Redo</source>
         <translation type="unfinished">Retroceder</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Guardar</translation>
     </message>
 </context>
 <context>
@@ -4824,6 +4820,10 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     <message>
         <source>Rotate %1</source>
         <translation>Rodar %1</translation>
+    </message>
+    <message>
+        <source>change pin labels</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -108,10 +108,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>and to Arthur Zanona for the Portuguese (Brazilian) translation. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Fritzing is made possible with funding from the </source>
         <translation type="unfinished"></translation>
     </message>
@@ -149,6 +145,10 @@
     </message>
     <message>
         <source>Version %1.%2.%3 &lt;small&gt;(%4%5 %6)%7 [Qt %8]&lt;/small&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>and to Arthur Zanona, Nuno Pessanha Santos, and Leandro Nunes for the Portuguese (Brazilian) translation. </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2801,10 +2801,6 @@ Reason: %2 (errcode %3)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unable to parse own fzp file.  Nothing was saved.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Label mismatch.  Nothing was saved.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3342,16 +3338,16 @@ the PCB view?</source>
         <translation type="unfinished">Отменить</translation>
     </message>
     <message>
-        <source>Save as new part</source>
-        <translation type="unfinished">Сохранить как новый элемент</translation>
-    </message>
-    <message>
         <source>Undo</source>
         <translation type="unfinished">Отменить</translation>
     </message>
     <message>
         <source>Redo</source>
         <translation type="unfinished">Отменить</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Сохранить</translation>
     </message>
 </context>
 <context>
@@ -4820,6 +4816,10 @@ Fritzing по-прежнему работает, но вы не сможете �
     </message>
     <message>
         <source>Rotate %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>change pin labels</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
