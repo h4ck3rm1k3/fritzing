@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.		
 	 			
 *********************************************************************
-							
+					
 $Revision$:
 $Author$:
 $Date$
@@ -27,13 +27,13 @@ $Date$
 #include "version.h"								
 											
 #include <QString>
-#include <QStringList>
+#include <QStringList>			
 			
 #include "../debugdialog.h"   
 	
 QString Version::m_majorVersion("0");				
 QString Version::m_minorVersion("6");
-QString Version::m_minorSubVersion("4");
+QString Version::m_minorSubVersion("5");
 QString Version::m_modifier("b");
 QString Version::m_svnRevision("$Revision$:");
 QString Version::m_svnDate("$Date$");
