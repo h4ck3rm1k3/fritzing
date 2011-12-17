@@ -217,7 +217,7 @@ QString PinHeader::genFZP(const QString & moduleid)
 		if (moduleid.contains("single")) {
 			form = MaleSingleRowSMDFormString;
 			formText = "single row SMD male";
-			formModule = "single_row_smdD_male";
+			formModule = "single_row_smd_male";
 		}
 		else {
 			form = MaleDoubleRowSMDFormString;
