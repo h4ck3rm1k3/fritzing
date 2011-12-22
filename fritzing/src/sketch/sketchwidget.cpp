@@ -2420,7 +2420,7 @@ void SketchWidget::categorizeDragWires(QSet<Wire *> & wires, QList<ItemBase *> &
 
 			// it's not connected and not stuck
 
-			if (ct->wire->getTrace()) {
+			if (ct->wire->getTrace() && from.at(i)->connectionsCount() == 0) {
 				// this is a bug.  traces should be connected at both ends. Pretend that the unconnected end is connected to something
 				DebugDialog::debug(QString("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"
 											"Trace %1 connector %2 is unconnected\n"
