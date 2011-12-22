@@ -2716,10 +2716,6 @@ Reason: %2 (errcode %3)</source>
         <translation>重置板大小至%1 %2</translation>
     </message>
     <message>
-        <source>Fritzing only allows one board part per sketch. Either delete the current board, or select it and swap it for a different one.</source>
-        <translation>Fritzing的每个sketch只允许一块板元件。或者删除当前板，或者选择一个不同的来代替它。</translation>
-    </message>
-    <message>
         <source>Change trace layer</source>
         <translation>改变引导线层</translation>
     </message>
@@ -5042,6 +5038,10 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     </message>
     <message>
         <source>Bulgarian - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Galician - %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

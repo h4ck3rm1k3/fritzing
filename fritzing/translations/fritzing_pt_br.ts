@@ -2727,10 +2727,6 @@ Razão: %2 (código do erro %3)</translation>
         <translation>Redimensionar placa para %1 %2</translation>
     </message>
     <message>
-        <source>Fritzing only allows one board part per sketch. Either delete the current board, or select it and swap it for a different one.</source>
-        <translation>Fritzing permite apenas um componente de placa por sketch. Exclua a placa atual, ou selecione-a e troque-a por uma diferente.</translation>
-    </message>
-    <message>
         <source>Change trace layer</source>
         <translation>Mudar camada de traço</translation>
     </message>
@@ -5070,6 +5066,10 @@ is already there, we won&apos;t add it again, right?</source>
     <message>
         <source>Bulgarian - %1</source>
         <translation>Búlgaro - %1</translation>
+    </message>
+    <message>
+        <source>Galician - %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -42,6 +42,7 @@ TRANSLATIONS += translations/fritzing_de.ts \
 	translations/fritzing_bg.ts \
 	translations/fritzing_hi.ts \
 	translations/fritzing_gl.ts \
+	translations/fritzing_ko.ts \
 
 
 

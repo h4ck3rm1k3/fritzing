@@ -3405,88 +3405,83 @@ Reason: %2 (errcode %3)</source>
         <translation>點擊此連接器來拖曳出一條新徑跡。</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="690"/>
-        <source>Fritzing only allows one board part per sketch. Either delete the current board, or select it and swap it for a different one.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1195"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1916"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1197"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1918"/>
         <source>Resize board to %1 %2</source>
         <translation>將板子大小變為 %1 %2</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1751"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1753"/>
         <source>Change trace layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1968"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1970"/>
         <source>Delete ratsnest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2005"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2007"/>
         <source>Create and connect trace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2017"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2477"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2488"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2501"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2513"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2525"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2534"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2571"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2579"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2589"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2610"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2622"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2019"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2479"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2490"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2503"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2515"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2527"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2536"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2573"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2581"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2591"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2612"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2624"/>
         <source>Fritzing</source>
         <translation type="unfinished">Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2017"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2019"/>
         <source>This seems like an attempt to create a trace across layers. This circumstance should not arise: please contact the developers.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2478"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2572"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2480"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2574"/>
         <source>Your sketch does not have a board yet!  Please add a PCB in order to use copper fill.</source>
         <translation type="unfinished">草圖還沒有版子，請先增加一個 PCB 版，才能使用銅層充填。</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2488"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2589"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2490"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2591"/>
         <source>Fritzing error: unable to render board svg (1).</source>
         <translation type="unfinished">Fritzing 錯誤: 無法產製版子 svg (1).</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2501"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2513"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2610"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2503"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2515"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2612"/>
         <source>Fritzing error: unable to render copper svg (1).</source>
         <translation type="unfinished">Fritzing 錯誤: 無法產製銅 svg (1).</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2525"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2527"/>
         <source>Fritzing error: unable to write copper fill (1).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2534"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2536"/>
         <source>Fritzing error: unable to write copper fill (2).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2579"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2581"/>
         <source>Unable to create copper fill--probably the part wasn&apos;t dropped onto the PCB.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2622"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2624"/>
         <source>Unable to create copper fill--possibly the part was dropped onto another part or wire rather than the actual PCB.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4726,7 +4721,7 @@ This checkbox sets the default behavior. You can switch back to the non-default 
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="475"/>
         <location filename="../src/partseditor/partseditorpaletteitem.cpp" line="261"/>
         <location filename="../src/program/programtab.cpp" line="578"/>
-        <location filename="../src/sketch/sketchwidget.cpp" line="784"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="786"/>
         <location filename="../src/svg/gerbergenerator.cpp" line="301"/>
         <source>Fritzing</source>
         <translation>Fritzing</translation>
@@ -5006,12 +5001,12 @@ Fritzing 還可以運作，但此時，您無法變更元件的屬性。</transl
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2313"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2315"/>
         <source>change trace %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2372"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2374"/>
         <source>delete trace %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5027,83 +5022,83 @@ Fritzing 還可以運作，但此時，您無法變更元件的屬性。</transl
         <translation>概要圖檢視</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="785"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="787"/>
         <source>Error reading file %1: %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3275"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3277"/>
         <source>%1 %2,%3 %4</source>
         <translation type="unfinished">%1 %2,%3 %4</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3304"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3306"/>
         <source>Change leg of %1,%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3466"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3468"/>
         <source>%1 %2 %3</source>
         <translation>%1 %2 %3</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3621"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3623"/>
         <source>%1 Layer</source>
         <translation>%1 層</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3827"/>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3844"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3829"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3846"/>
         <source>Bring forward</source>
         <translation>提前一排</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3836"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3838"/>
         <source>Send backward</source>
         <translation>後退一排</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3853"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3855"/>
         <source>Bring to front</source>
         <translation>提到最前排</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5044"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5046"/>
         <source>Split Wire</source>
         <translation>分割導線</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5100"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5102"/>
         <source>Join Wire</source>
         <translation>加入導線</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7020"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7022"/>
         <source>Trace wires</source>
         <translation>徑跡導線</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7023"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7025"/>
         <source>Ratsnest wires</source>
         <translation>鼠巢導線</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7025"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7027"/>
         <source>Select all %1</source>
         <translation>選取全部的 %1</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7305"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7307"/>
         <source>Select all jumpers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7320"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7322"/>
         <source>Select outdated parts</source>
         <translation>選取過時元件</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7334"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7336"/>
         <source>Select locked parts</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5815,249 +5810,249 @@ Fritzing 還可以運作，但此時，您無法變更元件的屬性。</transl
         <translation>載入完成</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="936"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="938"/>
         <source>%1 %2</source>
         <translation>%1 %2</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="939"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="941"/>
         <source>%1 %2 items</source>
         <translation>%1 %2 項</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="1346"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="1348"/>
         <source>Select All</source>
         <translation>全選</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="1346"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="1348"/>
         <source>Deselect</source>
         <translation>全不選</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="1793"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="1795"/>
         <source>Add %1</source>
         <translation>增加 %1</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="1886"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="1888"/>
         <source>Selection</source>
         <translation>選取</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="2995"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="2997"/>
         <source>Move %2 (%1)</source>
         <translation>移動 %2 (%1)</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="2998"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3000"/>
         <source>Move %2 items (%1)</source>
         <translation>移動 %2 項 (%1)</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3173"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3175"/>
         <source>Select %1</source>
         <translation>選 %1</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3176"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3178"/>
         <source>Select %1 items</source>
         <translation>選 %1 項</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3263"/>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3450"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3265"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3452"/>
         <source>Disconnect</source>
         <translation>斷開</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3458"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3460"/>
         <source>Change</source>
         <translation>變更</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3271"/>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3462"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3273"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3464"/>
         <source>Connect</source>
         <translation>連接</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3272"/>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3463"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3274"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3465"/>
         <source>to %1</source>
         <translation>到 %1</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3515"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3517"/>
         <source>Create and connect wire</source>
         <translation>建立並連接導線</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="4148"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="4150"/>
         <source>Rotate %2 (%1)</source>
         <translation>旋轉 %2 (%1)</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6424"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6426"/>
         <source>Rotate</source>
         <translation>旋轉</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6424"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6426"/>
         <source>Flip</source>
         <translation>翻轉</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5196"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5198"/>
         <source>Double-click</source>
         <translation>雙擊</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3264"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3266"/>
         <source>from %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3267"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3269"/>
         <source>Move leg of</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3326"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3328"/>
         <source>Change leg curvature for %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3352"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3354"/>
         <source>Change leg bendpoint for %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="4295"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="4297"/>
         <source>Flip %2 (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5196"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5198"/>
         <source>Drag or double-click</source>
         <translation>拖曳或雙擊</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5197"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5199"/>
         <source>or alt-drag to move the segment</source>
         <translation>或按下 Alt 鍵，同時拖曳線段</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5262"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5264"/>
         <source>Double-click to delete this bend point</source>
         <translation>雙擊，刪除這個轉彎點</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5324"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5326"/>
         <source>Change note to &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5349"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5351"/>
         <source>Change %1 label to &apos;%2&apos;</source>
         <translation>改變 %1 標頭為 &apos;%2&apos;</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5783"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5785"/>
         <source>Change %1 color from %2 to %3</source>
         <translation>改變 %1 的顏色，由 %2 變為 %3</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5789"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5791"/>
         <source>Change color of %1 wires to %2</source>
         <translation>將顏色 %1 的導線變為 %2</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5835"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5837"/>
         <source>Change %1 width from %2 to %3</source>
         <translation>改變 %1 的寬，由 %2 變為 %3</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5841"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5843"/>
         <source>Change width of %1 wires to %2</source>
         <translation>將寬 %1 的導線變為 %2</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6417"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6419"/>
         <source>Move label &apos;%1&apos;</source>
         <translation>移動標頭 &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6424"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6426"/>
         <source>%1 label &apos;%2&apos;</source>
         <translation>%1 標頭 &apos;%2&apos;</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/sketch/sketchwidget.cpp" line="6459"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6461"/>
         <source>show part label(s)</source>
         <translation>
             <numerusform>顯示元件標頭</numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/sketch/sketchwidget.cpp" line="6462"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6464"/>
         <source>hide part label(s)</source>
         <translation>
             <numerusform>隱藏元件標頭</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6476"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6478"/>
         <source>Resize Note</source>
         <translation>大小變更註解</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6816"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6818"/>
         <source>Change pin spacing from %1 to %2</source>
         <translation>接腳間隔由 %1 變為 %2</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6828"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6830"/>
         <source>Change form from %1 to %2</source>
         <translation>形狀由 %1 變為 %2</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6853"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6855"/>
         <source>Change Resistance from %1 to %2</source>
         <translation>電阻由 %1 變為 %2</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6877"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6879"/>
         <source>Change %1 from %2 to %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6938"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6940"/>
         <source>Resize ruler to %1%2</source>
         <translation>尺規大小調為 %1 %2</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7123"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7125"/>
         <source>Disconnect all wires from %1</source>
         <translation>%1 的導線全部斷開</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7126"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7128"/>
         <source>Disconnect all wires from %1 items</source>
         <translation>%1 項的導線全部斷開</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7391"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7393"/>
         <source>Change image from %1 to %2</source>
         <translation>變更圖檔 %1 為 %2</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="8137"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="8139"/>
         <source>Rotate %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="8231"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="8233"/>
         <source>change pin labels</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6356,6 +6351,11 @@ Fritzing 還可以運作，但此時，您無法變更元件的屬性。</transl
     <message>
         <location filename="../src/dialogs/translatorlistmodel.cpp" line="91"/>
         <source>Bulgarian - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/translatorlistmodel.cpp" line="94"/>
+        <source>Galician - %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

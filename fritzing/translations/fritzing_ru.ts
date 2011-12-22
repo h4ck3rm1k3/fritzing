@@ -2730,10 +2730,6 @@ Reason: %2 (errcode %3)</source>
         <translation type="unfinished">Изменить размер на %1 %2</translation>
     </message>
     <message>
-        <source>Fritzing only allows one board part per sketch. Either delete the current board, or select it and swap it for a different one.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Change trace layer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5063,6 +5059,10 @@ Fritzing по-прежнему работает, но вы не сможете �
     </message>
     <message>
         <source>Bulgarian - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Galician - %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

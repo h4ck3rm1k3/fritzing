@@ -2720,10 +2720,6 @@ Reason: %2 (errcode %3)</source>
         <translation type="unfinished">ボードのサイズを %1 %2 に変更</translation>
     </message>
     <message>
-        <source>Fritzing only allows one board part per sketch. Either delete the current board, or select it and swap it for a different one.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Change trace layer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5043,6 +5039,10 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>Bulgarian - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Galician - %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

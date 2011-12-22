@@ -2703,10 +2703,6 @@ Reason: %2 (errcode %3)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Fritzing only allows one board part per sketch. Either delete the current board, or select it and swap it for a different one.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Change trace layer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5004,6 +5000,10 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     </message>
     <message>
         <source>Bulgarian - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Galician - %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -93,6 +93,9 @@ TranslatorListModel::TranslatorListModel(QFileInfoList & fileInfoList, QObject* 
 
 		m_languages.insert("galician", tr("Galician - %1").arg("Galego"));
 
+		ushort t13[] = { 0xD55C,  0xAD6D,  0xC5B4, 0};
+		m_languages.insert("korean", tr("Korean - %1").arg(QString::fromUtf16(t13)));
+
         // More languages written in their own language can be found
         // at http://www.mozilla.com/en-US/firefox/all.html 
 

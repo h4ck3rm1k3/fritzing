@@ -2723,10 +2723,6 @@ Reden : %2 (errcode %3)</translation>
         <translation>Wijzig de grootte van het bord naar %1 %2</translation>
     </message>
     <message>
-        <source>Fritzing only allows one board part per sketch. Either delete the current board, or select it and swap it for a different one.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Change trace layer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5051,6 +5047,10 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
     </message>
     <message>
         <source>Bulgarian - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Galician - %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
