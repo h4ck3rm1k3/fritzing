@@ -595,7 +595,7 @@ StackTabBar[current="true"]::tab:selected {
 }
 
 #partsBinCombinedMenuButton::menu-indicator {
-     image: url();
+     image: url(:/resources/images/icons/noArrow_icon.png);  
 }
 
 /**************** sketch area widgets ****************/

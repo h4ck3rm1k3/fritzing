@@ -331,6 +331,7 @@ QToolButton* PartsBinPaletteWidget::newToolButton(const QString& btnObjName, con
 	QToolButton *toolBtn = new QToolButton(this);
 	toolBtn->setObjectName(btnObjName);
 	toolBtn->setToolButtonStyle(Qt::ToolButtonIconOnly);
+	toolBtn->setArrowType(Qt::NoArrow);
 	if (text != ___emptyString___) {
 		toolBtn->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 		toolBtn->setText(text);
