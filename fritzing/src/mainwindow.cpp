@@ -1813,6 +1813,18 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 
 	QString generatedModuleID;
 
+	if (family.compare("logo") == 0 && prop.compare("layer") == 0) {
+		QString value = currPropsMap.value(prop);
+		if (value.contains("1") && m_currentGraphicsView->boardLayers() == 1) {
+			QMessageBox::warning(
+				this,
+				tr("No copper top layer"),
+				tr("The copper top (copper 1) layer is not available on a one-sided board.  Please switch the board to double-sided or choose the copper bottom (copper 0) layer.")
+			);
+			return;
+		}
+	}
+
 	if (generatedModuleID.isEmpty()) {
 		if (family.compare("Prototyping Board", Qt::CaseInsensitive) == 0) {
 			if (prop.compare("size", Qt::CaseInsensitive) == 0 || prop.compare("type", Qt::CaseInsensitive) == 0) {

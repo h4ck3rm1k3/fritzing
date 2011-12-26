@@ -813,7 +813,7 @@ CopperLogoItem::CopperLogoItem( ModelPart * modelPart, ViewIdentifierClass::View
 	}
 
 	if (Copper0ImageNames.count() == 0) {
-		Copper0ImageNames << "Fritzing icon copper1";
+		Copper0ImageNames << "Fritzing icon copper0";
 	}
 
 	m_hasLogo = (modelPart->moduleID().endsWith(ModuleIDNames::LogoTextModuleIDName));
@@ -828,24 +828,24 @@ CopperLogoItem::~CopperLogoItem() {
 }
 
 ViewLayer::ViewLayerID CopperLogoItem::layer() {
-	return modelPart()->properties().value("layer").contains("0") ? ViewLayer::Copper0 :  ViewLayer::Copper1;
+	return isCopper0() ? ViewLayer::Copper0 :  ViewLayer::Copper1;
 }
 
 QString CopperLogoItem::colorString() {
-	return modelPart()->properties().value("layer").contains("0") ? ViewLayer::Copper0Color :  ViewLayer::Copper1Color;
+	return isCopper0() ? ViewLayer::Copper0Color :  ViewLayer::Copper1Color;
 }
 
 QStringList & CopperLogoItem::getImageNames() {
-	return modelPart()->properties().value("layer").contains("0") ? Copper0ImageNames :  Copper1ImageNames;
+	return isCopper0() ? Copper0ImageNames :  Copper1ImageNames;
 }
 
 QStringList & CopperLogoItem::getNewImageNames() {
-	return modelPart()->properties().value("layer").contains("0") ? NewCopper0ImageNames :  NewCopper1ImageNames;
+	return isCopper0() ? NewCopper0ImageNames :  NewCopper1ImageNames;
 }
 
 QString CopperLogoItem::hackSvg(const QString & svg, const QString & logo) {
 	QString newSvg = LogoItem::hackSvg(svg, logo);
-	if (!modelPart()->properties().value("layer").contains("0")) return newSvg;
+	if (!isCopper0()) return newSvg;
 
 	return flipSvg(newSvg);
 }
@@ -868,7 +868,7 @@ QString CopperLogoItem::flipSvg(const QString & svg)
 
 void CopperLogoItem::reloadImage(const QString & svg, const QSizeF & aspectRatio, const QString & fileName, bool addName) 
 {
-	if (modelPart()->properties().value("layer").contains("0")) {
+	if (isCopper0()) {
 		if (!svg.contains("_flipped_")) {
 			LogoItem::reloadImage(flipSvg(svg), aspectRatio, fileName, addName);
 			return;
@@ -876,4 +876,8 @@ void CopperLogoItem::reloadImage(const QString & svg, const QSizeF & aspectRatio
 	}
 
 	LogoItem::reloadImage(svg, aspectRatio, fileName, addName);
+}
+
+bool CopperLogoItem::isCopper0() {
+	return modelPart()->properties().value("layer").contains("0");
 }

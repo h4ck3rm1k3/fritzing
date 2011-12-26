@@ -110,7 +110,7 @@ protected:
 	QStringList & getNewImageNames();
 	QString hackSvg(const QString & svg, const QString & logo);
 	QString flipSvg(const QString & svg);
-
+	bool isCopper0();
 };
 
 #endif
