@@ -560,7 +560,8 @@ void BinManager::restoreStateAndGeometry(QList<BinLocation *> & actualLocations)
 	actualLocations.clear();
 
 	foreach (BinLocation * tLocation, theoreticalLocations) {
-		bool gotOne = false;
+                tLocation->marked = false;
+                bool gotOne = false;
 
 		for (int ix = 0; ix < tempLocations.count(); ix++) {
 			BinLocation  * aLocation = tempLocations[ix];
@@ -590,12 +591,15 @@ void BinManager::restoreStateAndGeometry(QList<BinLocation *> & actualLocations)
 			QFileInfo info(tLocation->path);
 			if (info.exists()) {
 				actualLocations.append(tLocation);
+                                tLocation->marked = true;
 			}		
 		}
 	}
 
-	foreach (BinLocation * binLocation, theoreticalLocations) {
-		delete binLocation;
+        foreach (BinLocation * tLocation, theoreticalLocations) {
+            if (!tLocation->marked) {
+                delete tLocation;
+            }
 	}
 
 	// catch the leftovers
