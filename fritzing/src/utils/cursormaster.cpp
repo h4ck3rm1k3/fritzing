@@ -192,14 +192,16 @@ void CursorMaster::deleteCursor(QObject * object)
 
 bool CursorMaster::eventFilter(QObject * object, QEvent * event)
 {
-	QApplication * application = NULL;
+	Q_UNUSED(object);
 	//QGraphicsScene * scene = NULL;
 
 	switch (event->type()) {
 		case QEvent::KeyPress:
 		case QEvent::KeyRelease:
-			application = dynamic_cast<QApplication *>(object);
-			if (application) {
+			//scene = dynamic_cast<QGraphicsScene *>(object);
+			//DebugDialog::debug(QString("event filter %1").arg(object->metaObject()->className()));
+			//if (scene) 
+			{
 				QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
 				foreach (QObject * listener, Listeners) {
 					if (listener) {
