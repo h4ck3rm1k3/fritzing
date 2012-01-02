@@ -549,6 +549,7 @@ void PartLabel::rotateFlipLabel(double degrees, Qt::Orientations orientation) {
 			yScale = 1;
 		}
 		else return;
+
 		transformLabel(QTransform().scale(xScale,yScale));
 	}
 }
@@ -861,11 +862,10 @@ QString PartLabel::makeSvgAux(bool blackOnly, double dpi, double printerScale, d
 	}
 
 	svg += "</g>";
-    QTransform t = transform();
 
 	h = y - (pixels / 2);
 
-	QFontInfo fontInfo(m_font);
+	//QFontInfo fontInfo(m_font);
 	//DebugDialog::debug(QString("%1 match:%2 ps:%3 sty:%4 w:%5")
 	//	.arg(fontInfo.family())
 	//	.arg(fontInfo.exactMatch())
@@ -874,12 +874,16 @@ QString PartLabel::makeSvgAux(bool blackOnly, double dpi, double printerScale, d
 	//	.arg(fontInfo.weight())
 	//	);
 
+	return svg;
+
 	//DebugDialog::debug(QString("final:%1 %2 %3").arg(w).arg(h).arg(m_font.toString()));
-    return TextUtils::svgTransform(svg, t, false, QString());
+    //QTransform t = transform();
+    //return TextUtils::svgTransform(svg, t, false, QString());
 }
 
 void PartLabel::resetSvg()
 {
+
 	double w, h;
 	QString innerSvg = makeSvgAux(false, GraphicsUtils::StandardFritzingDPI, FSvgRenderer::printerScale(), w, h);
 	if (innerSvg.isEmpty()) return;
