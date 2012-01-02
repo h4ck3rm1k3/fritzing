@@ -49,9 +49,7 @@ Via::~Via() {
 void Via::setBoth(const QString & holeDiameter, const QString & ringThickness) {
 	if (this->m_viewIdentifier != ViewIdentifierClass::PCBView) return;
 
-	QStringList connectorIDs;
-	connectorIDs << "connector0pin";
-	ItemBase * otherLayer = setBothSvg(holeDiameter, ringThickness, connectorIDs);
+	ItemBase * otherLayer = setBothSvg(holeDiameter, ringThickness);
 
 	// there's only one connector
 	foreach (Connector * connector, m_modelPart->connectors().values()) {

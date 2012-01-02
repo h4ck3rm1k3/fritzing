@@ -183,8 +183,7 @@ bool Hole::setHoleSize(QString & holeSize, bool force, HoleSettings & holeSettin
 void Hole::setBoth(const QString & holeDiameter, const QString & ringThickness) {
 	if (this->m_viewIdentifier != ViewIdentifierClass::PCBView) return;
 
-	QStringList connectorIDs;
-	ItemBase * otherLayer = setBothSvg(holeDiameter, ringThickness, connectorIDs);
+	ItemBase * otherLayer = setBothSvg(holeDiameter, ringThickness);
 
 	// there's only one NonConnectorItem
 	foreach (SvgIdLayer * svgIdLayer, m_extraRenderer->setUpNonConnectors()) {
@@ -199,7 +198,7 @@ void Hole::setBoth(const QString & holeDiameter, const QString & ringThickness) 
 	}
 }
 
-ItemBase * Hole::setBothSvg(const QString & holeDiameter, const QString & ringThickness, const QStringList & connectorIDs) 
+ItemBase * Hole::setBothSvg(const QString & holeDiameter, const QString & ringThickness) 
 {
 	QString svg = makeSvg(holeDiameter, ringThickness, m_viewLayerID);
 	loadExtraRenderer(svg.toUtf8());
