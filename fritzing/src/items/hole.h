@@ -107,7 +107,7 @@ protected:
 	virtual void setBoth(const QString & holeDiameter, const QString &  thickness);
 											 
 protected:
-	class FSvgRenderer * m_otherLayerRenderer;
+	QPointer<class FSvgRenderer> m_otherLayerRenderer;
 	HoleSettings m_holeSettings;
 
 public:

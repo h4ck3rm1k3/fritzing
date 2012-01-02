@@ -203,6 +203,8 @@ ItemBase * Hole::setBothSvg(const QString & holeDiameter, const QString & ringTh
 {
 	QString svg = makeSvg(holeDiameter, ringThickness, m_viewLayerID);
 	loadExtraRenderer(svg.toUtf8());
+	//DebugDialog::debug("both");
+	//DebugDialog::debug(svg);
 
 	QString setColor;
 	QStringList noIDs;
@@ -222,11 +224,16 @@ ItemBase * Hole::setBothSvg(const QString & holeDiameter, const QString & ringTh
 			m_otherLayerRenderer = new FSvgRenderer(this);
 		}
 
-		QByteArray result = m_otherLayerRenderer->loadSvg(osvg.toLatin1(), m_filename, connectorIDs, noIDs,  noIDs, "", "", true);
-		if (!result.isEmpty()) {
+		//DebugDialog::debug(osvg);
+
+
+		bool result = m_otherLayerRenderer->fastLoad(osvg.toUtf8());
+		if (result) {
 			qobject_cast<PaletteItemBase *>(otherLayer)->setSharedRendererEx(m_otherLayerRenderer);
 		}
 	}
+
+	//DebugDialog::debug("other");
 	
 	return otherLayer;
 }
@@ -281,6 +288,7 @@ QString Hole::makeSvg(const QString & holeDiameter, const QString & ringThicknes
 	}
   		
 	svg += "</g></svg>";
+	//DebugDialog::debug("hole svg " + svg);
 	return svg;
 }
 
