@@ -2412,8 +2412,10 @@ void SketchWidget::categorizeDragWires(QSet<Wire *> & wires, QList<ItemBase *> &
 			if (stickingTo != NULL) {
 				QPointF p = from.at(i)->sceneAdjustedTerminalPoint(NULL);
 				if (stickingTo->contains(stickingTo->mapFromScene(p))) {
-					ct->status[i] = m_savedItems.keys().contains(stickingTo->layerKinChief()->id()) ? IN_ : OUT_;
-					changed = true;
+					if (m_savedItems.keys().contains(stickingTo->layerKinChief()->id())) {
+						ct->status[i] = IN_;
+						changed = true;
+					}
 				}
 			}
 			if (ct->status[i] != UNDETERMINED_) continue;
