@@ -866,7 +866,7 @@ bool PartsBinPaletteWidget::canClose() {
 		return true;
 	case BinLocation::More:
 		return false;
-	case BinLocation::Resource:
+	case BinLocation::App:
 		return false;
 	case BinLocation::Outside:
 	default:

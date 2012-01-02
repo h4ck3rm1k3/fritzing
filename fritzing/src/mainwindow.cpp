@@ -206,7 +206,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel, QW
 	setAttribute(Qt::WA_DeleteOnClose, true);
 
 #ifdef Q_WS_MAC
-	//setAttribute(Qt::WA_QuitOnClose, false);					// restoring this temporarily (2008.12.19)
+	setAttribute(Qt::WA_QuitOnClose, false);					// restoring this temporarily (2008.12.19)
 #endif
     m_dontClose = m_closing = false;
 

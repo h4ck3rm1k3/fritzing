@@ -55,8 +55,8 @@ QString BinLocation::toString(BinLocation::Location location) {
 			return "user";
 	case BinLocation::More:
 			return "more";
-	case BinLocation::Resource:
-			return "resource";
+	case BinLocation::App:
+			return "app";
 	case BinLocation::Outside:
 	default:
 		return "outside";
@@ -65,21 +65,22 @@ QString BinLocation::toString(BinLocation::Location location) {
 
 BinLocation::Location BinLocation::fromString(const QString & locationString) {
 	if (locationString.compare("user", Qt::CaseInsensitive) == 0) return BinLocation::User;
-	if (locationString.compare("resource", Qt::CaseInsensitive) == 0) return BinLocation::Resource;
 	if (locationString.compare("more", Qt::CaseInsensitive) == 0) return BinLocation::More;
+	if (locationString.compare("app", Qt::CaseInsensitive) == 0) return BinLocation::App;
 	return BinLocation::Outside;
 }
 
 BinLocation::Location BinLocation::findLocation(const QString & filename) 
 {
-	if (filename.startsWith(":")) {
-		return BinLocation::Resource;
-	}
-	else if (filename.startsWith(FolderUtils::getUserDataStorePath("bins"))) {
+
+	if (filename.startsWith(FolderUtils::getUserDataStorePath("bins"))) {
 		return BinLocation::User;
 	}
 	else if (filename.startsWith(FolderUtils::getApplicationSubFolderPath("bins") + "/more")) {
 		return BinLocation::More;
+	}
+	else if (filename.startsWith(FolderUtils::getApplicationSubFolderPath("bins"))) {
+		return BinLocation::App;
 	}
 
 	return BinLocation::Outside;
@@ -633,7 +634,7 @@ void BinManager::readTheoreticalLocations(QList<BinLocation *> & theoreticalLoca
 void BinManager::findAllBins(QList<BinLocation *> & locations) 
 {
 	BinLocation * location = new BinLocation;
-	location->location = BinLocation::Resource;
+	location->location = BinLocation::App;
 	location->path = CorePartsBinLocation;
 	QString icon;
 	getBinTitle(location->path, location->title, icon);
@@ -771,7 +772,7 @@ void BinManager::initNames() {
     BinManager::SearchBinLocation = FolderUtils::getUserDataStorePath("bins")+"/search.fzb";
     BinManager::SearchBinTemplateLocation =":/resources/bins/search.fzb";
 	BinManager::ContribPartsBinLocation = FolderUtils::getUserDataStorePath("bins")+"/contribParts.fzb";
-    BinManager::CorePartsBinLocation = ":/resources/bins/bin.fzb";
+    BinManager::CorePartsBinLocation = FolderUtils::getApplicationSubFolderPath("bins")+"/core.fzb";
 
 	StandardBinIcons.insert(BinManager::MyPartsBinLocation, "Mine.png");
 	StandardBinIcons.insert(BinManager::SearchBinLocation, "Search.png");

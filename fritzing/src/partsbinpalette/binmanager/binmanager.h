@@ -41,9 +41,9 @@ class PartsBinPaletteWidget;
 
 struct BinLocation {
 	enum Location {
-		Resource,
 		More,
 		User,
+		App,
 		Outside,
 		Any
 	};
