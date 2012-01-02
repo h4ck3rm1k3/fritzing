@@ -51,6 +51,17 @@
                     <a id="portal-logo" accesskey="1" href="/" name="portal-logo">
                         <img src="{{ MEDIA_URL }}fritzing/img/logo.gif" alt="" title="" height="29" width="289" />
                     </a>
+		<!-- AddThis Button BEGIN -->
+		<div class="addthis_toolbox addthis_default_style" style="position: relative; float: left; margin-left: 2em;">
+		<!--<a class="addthis_button_facebook_like" fb:like:layout="button_count" fb:like:href="http://www.facebook.com/pages/Fritzing/178139742262089"></a>-->
+		<a class="addthis_button_facebook_like" fb:like:layout="button_count" fb:like:href="http://fritzing.org"></a>
+		<!--<a class="addthis_button_google_plusone" g:plusone:size="medium" g:plusone:href="https://plus.google.com/111413496761356146888" g:plusone:width="70px"></a>-->
+		<a class="addthis_button_google_plusone" g:plusone:size="medium" g:plusone:href="http://fritzing.org" g:plusone:width="70px"></a>
+		<a class="addthis_button_twitter_follow_native" tf:screen_name="FritzingOrg" tf:show-screen-name="false" tf:width="150px"></a>
+		<a class="addthis_button_tweet" tw:url="http://fritzing.org"></a>
+		</div>
+		<script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=fritzing"></script>
+		<!-- AddThis Button END -->
                     <div id="portal-personaltools-wrapper">
 						<form id="searchForm" class="search" style="margin-bottom: 0;" action="http://www.google.com/search" method="get">
 							<input id="search" type="text" value="" name="q"/>
@@ -136,7 +147,17 @@
 				    </script>
 				     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 				<li>
-					<a class="addthis_button" href="http://addthis.com/bookmark.php?v=250&amp;username=fritzing"><img src="http://s7.addthis.com/static/btn/v2/lg-share-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/></a><script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=fritzing"></script>
+				<!-- AddThis Button BEGIN -->
+				<div class="addthis_toolbox addthis_default_style ">
+				<a class="addthis_button_facebook"></a>
+				<a class="addthis_button_twitter"></a>
+				<a class="addthis_button_email"></a>
+				<a class="addthis_button_compact"></a>
+				<a class="addthis_counter addthis_bubble_style"></a>
+				</div>
+				<script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=fritzing"></script>
+				<!-- AddThis Button END -->
+					<!--<a class="addthis_button" href="http://addthis.com/bookmark.php?v=250&amp;username=fritzing"><img src="http://s7.addthis.com/static/btn/v2/lg-share-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/></a><script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=fritzing"></script>-->
 				</li>
                                         {% if request.user.is_authenticated and current_page %}
                                         <li id="document-action-sendto">
