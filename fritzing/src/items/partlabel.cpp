@@ -827,9 +827,16 @@ QString mapToSVGStyle(QFont::Style style) {
 	}
 }
 
-QString PartLabel::makeSvg(bool blackOnly, double dpi, double printerScale) {
+QString PartLabel::makeSvg(bool blackOnly, double dpi, double printerScale, bool includeTransform) {
 	double w, h;
-	return makeSvgAux(blackOnly, dpi, printerScale, w, h);
+	QString svg = makeSvgAux(blackOnly, dpi, printerScale, w, h);
+	if (includeTransform) {
+		QTransform t = transform();
+		if (!t.isIdentity()) {
+			svg = TextUtils::svgTransform(svg, t, false, QString());
+		}
+	}
+	return svg;
 }
 
 
@@ -877,8 +884,7 @@ QString PartLabel::makeSvgAux(bool blackOnly, double dpi, double printerScale, d
 	return svg;
 
 	//DebugDialog::debug(QString("final:%1 %2 %3").arg(w).arg(h).arg(m_font.toString()));
-    //QTransform t = transform();
-    //return TextUtils::svgTransform(svg, t, false, QString());
+    
 }
 
 void PartLabel::resetSvg()

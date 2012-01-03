@@ -67,7 +67,7 @@ public:
 	void ownerSelected(bool selected);
     void displayTexts();
     void displayTextsIf();
-	QString makeSvg(bool blackOnly, double dpi, double printerScale);
+	QString makeSvg(bool blackOnly, double dpi, double printerScale, bool includeTransform);
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 protected:

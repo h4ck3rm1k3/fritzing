@@ -1643,7 +1643,7 @@ ViewLayer::ViewLayerID ItemBase::partLabelViewLayerID() {
 QString ItemBase::makePartLabelSvg(bool blackOnly, double dpi, double printerScale) {
 	if (m_partLabel == NULL) return "";
 	if (!m_partLabel->initialized()) return "";
-	return m_partLabel->makeSvg(blackOnly, dpi, printerScale);
+	return m_partLabel->makeSvg(blackOnly, dpi, printerScale, true);
 }
 
 QPointF ItemBase::partLabelScenePos() {
