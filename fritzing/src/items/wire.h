@@ -117,6 +117,7 @@ public:
 	void setNormal(bool);
 	bool getNormal();
 	bool getTrace();
+	bool isTraceType(ViewGeometry::WireFlag);
 
 	bool hasFlag(ViewGeometry::WireFlag);
 	bool hasAnyFlag(ViewGeometry::WireFlags);

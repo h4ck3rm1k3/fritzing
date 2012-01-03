@@ -42,7 +42,6 @@ public:
 	static void initFolder();
 	static void cleanup();
 	static class ModelPart * fixObsoleteModuleID(QDomDocument & domDocument, QDomElement & instance, QString & moduleIDRef, class ModelBase * referenceModel);
-	static bool isRatsnest(QDomElement & instance);
 	static QString folderPath();
 
 

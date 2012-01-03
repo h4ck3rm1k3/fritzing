@@ -94,6 +94,8 @@ protected:
 	void runGerberService();
 	void runPanelizerService();
 	void runInscriptionService();
+	void runExampleService();
+	void runExampleService(QDir &);
 	QList<class MainWindow *> recoverBackups();
 	QList<MainWindow *> loadLastOpenSketch();
 	void doLoadPrevious(MainWindow *);
@@ -103,7 +105,7 @@ protected:
 	void cleanupBackups();
 	QString makeRequestParamsString();
 	void updatePrefs(class PrefsDialog & prefsDialog);
-        QList<MainWindow *> orderedTopLevelMainWindows();
+    QList<MainWindow *> orderedTopLevelMainWindows();
 
 	enum ServiceType {
 		PanelizerService = 1,
@@ -112,6 +114,7 @@ protected:
 		GedaService,
 		KicadSchematicService,
 		KicadFootprintService,
+		ExampleService,
 		NoService
 	};
 

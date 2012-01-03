@@ -951,8 +951,8 @@ Please select one of the Fritzing fonts to replace them:</source>
     </message>
     <message>
         <location filename="../src/infoview/htmlinfoview.cpp" line="374"/>
-        <source>Rat&apos;s nest wire</source>
-        <translation>鼠巢佈線</translation>
+        <source>Ratsnest wire</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/infoview/htmlinfoview.cpp" line="377"/>
@@ -3395,12 +3395,12 @@ Reason: %2 (errcode %3)</source>
 <context>
     <name>PCBSketchWidget</name>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="208"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="205"/>
         <source>Create Trace from this Wire</source>
         <translation>從這條導線建立徑跡</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="338"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="335"/>
         <source>Click this connector to drag out a new trace.</source>
         <translation>點擊此連接器來拖曳出一條新徑跡。</translation>
     </message>
@@ -4986,17 +4986,17 @@ Fritzing 還可以運作，但此時，您無法變更元件的屬性。</transl
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinview.cpp" line="51"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="121"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="118"/>
         <source>PCB View</source>
         <translation>PCB 檢視</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="122"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="119"/>
         <source>pcb</source>
         <translation>pcb</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="321"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="318"/>
         <source>Select all traces marked &apos;Don&apos;t autoroute&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5144,113 +5144,114 @@ Fritzing 還可以運作，但此時，您無法變更元件的屬性。</transl
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="81"/>
-        <location filename="../src/viewlayer.cpp" line="88"/>
+        <location filename="../src/viewlayer.cpp" line="89"/>
         <source>Parts</source>
         <translation>元件</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="82"/>
-        <location filename="../src/viewlayer.cpp" line="90"/>
+        <location filename="../src/viewlayer.cpp" line="91"/>
         <source>Wires</source>
         <translation>導線</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="83"/>
-        <location filename="../src/viewlayer.cpp" line="91"/>
+        <location filename="../src/viewlayer.cpp" line="92"/>
         <source>Part Labels</source>
         <translation>元件標頭</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="84"/>
-        <location filename="../src/viewlayer.cpp" line="92"/>
-        <location filename="../src/viewlayer.cpp" line="111"/>
-        <source>Notes</source>
-        <translation>註解</translation>
+        <location filename="../src/viewlayer.cpp" line="105"/>
+        <source>Ratsnest</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="85"/>
         <location filename="../src/viewlayer.cpp" line="93"/>
         <location filename="../src/viewlayer.cpp" line="112"/>
+        <source>Notes</source>
+        <translation>註解</translation>
+    </message>
+    <message>
+        <location filename="../src/viewlayer.cpp" line="86"/>
+        <location filename="../src/viewlayer.cpp" line="94"/>
+        <location filename="../src/viewlayer.cpp" line="113"/>
         <source>Rulers</source>
         <translation>尺規</translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="87"/>
+        <location filename="../src/viewlayer.cpp" line="88"/>
         <source>Frame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="89"/>
+        <location filename="../src/viewlayer.cpp" line="90"/>
         <source>Nets</source>
         <translation>網絡</translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="95"/>
+        <location filename="../src/viewlayer.cpp" line="96"/>
         <source>Board</source>
         <translation>板</translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="104"/>
-        <source>Rat&apos;s nest</source>
-        <translation>鼠巢</translation>
-    </message>
-    <message>
-        <location filename="../src/viewlayer.cpp" line="96"/>
+        <location filename="../src/viewlayer.cpp" line="97"/>
         <source>Silkscreen Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="97"/>
+        <location filename="../src/viewlayer.cpp" line="98"/>
         <source>Silkscreen Top (Part Labels)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="98"/>
+        <location filename="../src/viewlayer.cpp" line="99"/>
         <source>Copper Fill Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="101"/>
+        <location filename="../src/viewlayer.cpp" line="102"/>
         <source>Copper Fill Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="99"/>
+        <location filename="../src/viewlayer.cpp" line="100"/>
         <source>Copper Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="100"/>
+        <location filename="../src/viewlayer.cpp" line="101"/>
         <source>Copper Bottom Trace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="102"/>
+        <location filename="../src/viewlayer.cpp" line="103"/>
         <source>Copper Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="103"/>
+        <location filename="../src/viewlayer.cpp" line="104"/>
         <source>Copper Top Trace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="105"/>
+        <location filename="../src/viewlayer.cpp" line="106"/>
         <source>Silkscreen Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="106"/>
+        <location filename="../src/viewlayer.cpp" line="107"/>
         <source>Silkscreen Bottom (Part Labels)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="110"/>
+        <location filename="../src/viewlayer.cpp" line="111"/>
         <source>Part Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="118"/>
+        <location filename="../src/viewlayer.cpp" line="119"/>
         <source>Unknown Layer</source>
         <translation>未知層</translation>
     </message>
@@ -5800,12 +5801,12 @@ Fritzing 還可以運作，但此時，您無法變更元件的屬性。</transl
 <context>
     <name>SketchWidget</name>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="608"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="610"/>
         <source>loading part</source>
         <translation>元件載入中</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="610"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="612"/>
         <source>done loading</source>
         <translation>載入完成</translation>
     </message>

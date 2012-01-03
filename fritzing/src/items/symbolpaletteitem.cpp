@@ -117,7 +117,7 @@ void SymbolPaletteItem::removeMeFromBus(double v) {
 ConnectorItem* SymbolPaletteItem::newConnectorItem(Connector *connector) 
 {
 	ConnectorItem * connectorItem = PaletteItemBase::newConnectorItem(connector);
-	if (m_viewIdentifier != ViewIdentifierClass::SchematicView) return connectorItem;
+	//if (m_viewIdentifier != ViewIdentifierClass::SchematicView) return connectorItem;
 
 	if (connector->connectorSharedID().compare("connector0") == 0) {
 		m_connector0 = connectorItem;
@@ -143,7 +143,7 @@ ConnectorItem* SymbolPaletteItem::newConnectorItem(Connector *connector)
 void SymbolPaletteItem::busConnectorItems(Bus * bus, QList<class ConnectorItem *> & items) {
 	PaletteItem::busConnectorItems(bus, items);
 
-	if (m_viewIdentifier != ViewIdentifierClass::SchematicView) return;
+	//if (m_viewIdentifier != ViewIdentifierClass::SchematicView) return;
 
 	//foreach (ConnectorItem * bc, items) {
 		//bc->debugInfo(QString("bc %1").arg(bus->id()));
@@ -187,7 +187,7 @@ void SymbolPaletteItem::setVoltage(double v) {
 		Voltages.append(v);
 	}
 
-	if (m_viewIdentifier != ViewIdentifierClass::SchematicView) return;
+	//if (m_viewIdentifier != ViewIdentifierClass::SchematicView) return;
 
 	foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
 		if (connectorItem->isGrounded()) {

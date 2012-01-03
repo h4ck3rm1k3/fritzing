@@ -117,7 +117,7 @@ public:
 	void addBendpoint(ItemBase * lastHoverEnterItem, ConnectorItem * lastHoverEnterConnectorItem, QPointF lastLocation);
 	void flattenCurve(ItemBase * lastHoverEnterItem, ConnectorItem * lastHoverEnterConnectorItem, QPointF lastLocation);
 
-	virtual void deleteSelected(Wire *);
+	void deleteSelected(Wire *);
 	PaletteItem *getSelectedPart();
 
     void addViewLayer(ViewLayer *);
@@ -178,7 +178,8 @@ public:
 	void hideConnectors(bool hide);
 	void saveLayerVisibility();
 	void restoreLayerVisibility();
-	virtual void updateRoutingStatus(CleanUpWiresCommand*, RoutingStatus &, bool manual);
+	void updateRoutingStatus(CleanUpWiresCommand*, RoutingStatus &, bool manual);
+	void updateRoutingStatus(RoutingStatus &, bool manual);
 	virtual bool hasAnyNets();
 	void ensureLayerVisible(ViewLayer::ViewLayerID);
 
@@ -263,7 +264,7 @@ public:
 	QGraphicsItem * addWatermark(const QString & filename);
 	void copyHeart(QList<ItemBase *> & bases, bool saveBoundingRects, QByteArray & itemData, QList<long> & modelIndexes);
 	void pasteHeart(QByteArray & itemData, bool seekOutsideConnections);
-	virtual ViewGeometry::WireFlag getTraceFlag();
+	ViewGeometry::WireFlag getTraceFlag();
 	void changeBus(ItemBase *, bool connec, const QString & oldBus, const QString & newBus, QList<ConnectorItem *> &, const QString & message);
 	const QString & filenameIf();
 	void setItemDropOffset(long id, QPointF offset);
@@ -283,6 +284,10 @@ public:
 	void makeWiresChangeConnectionCommands(const QList<Wire *> & wires, QUndoCommand * parentCommand);
 	void renamePins(ItemBase *, const QStringList & oldLabels, const QStringList & newLabels, bool singleRow);
 	void renamePins(long itemID, const QStringList & labels, bool singleRow);
+	void getRatsnestColor(QColor &);
+	VirtualWire * makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, bool routed, QColor color);
+	virtual double getRatsnestOpacity(bool);
+
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -336,7 +341,8 @@ protected:
 	void keyPressEvent(QKeyEvent *);
 	void keyReleaseEvent(QKeyEvent *);
 	void clearTemporaries();
-	virtual void dragWireChanged(class Wire* wire, ConnectorItem * from, ConnectorItem * to);
+	void dragWireChanged(class Wire* wire, ConnectorItem * from, ConnectorItem * to);
+	void dragRatsnestChanged();
 	void killDroppingItem();
 	ViewLayer::ViewLayerID getViewLayerID(ModelPart *, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerSpec);
 	ItemBase * overSticky(ItemBase *);
@@ -349,7 +355,6 @@ protected:
 	void resizeEvent(QResizeEvent *);
 
 	void addViewLayersAux(const LayerList &layers, float startZ = 1.5);
-	void tempConnectWire(Wire * wire, ConnectorItem * from, ConnectorItem * to);
 	virtual bool disconnectFromFemale(ItemBase * item, QHash<long, ItemBase *> & savedItems, ConnectorPairHash &, bool doCommand, bool rubberBandLegEnabled, QUndoCommand * parentCommand);
 	void clearDragWireTempCommand();
 	bool draggingWireEnd();
@@ -360,17 +365,16 @@ protected:
 	virtual bool canChainWire(Wire *);
 	virtual bool canDragWire(Wire *);
 	virtual bool canCreateWire(Wire * dragWire, ConnectorItem * from, ConnectorItem * to);
-	virtual bool modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand);
+	//virtual bool modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand);
+	virtual void setUpColor(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, Wire * wire, QUndoCommand * parentCommand);
 	void setupAutoscroll(bool moving);
 	void turnOffAutoscroll();
 	bool checkAutoscroll(QPoint globalPos);
 	virtual void setWireVisible(Wire *);
-	virtual void chainVisible(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, bool connect);
 	bool matchesLayer(ModelPart * modelPart);
 
 	QByteArray removeOutsideConnections(const QByteArray & itemData, QList<long> & modelIndexes);
 	void addWireExtras(long newID, QDomElement & view, QUndoCommand * parentCommand);
-	virtual bool doRatsnestOnCopy();
 	virtual const QString & hoverEnterWireConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	virtual const QString & hoverEnterPartConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	void partLabelChangedAux(ItemBase * pitem,const QString & oldText, const QString &newText);
@@ -439,7 +443,10 @@ protected:
 	void moveLegBendpoints(bool undoOnly, QUndoCommand * parentCommand);
 	void moveLegBendpointsAux(ConnectorItem * connectorItem, bool undoOnly, QUndoCommand * parentCommand);
 	virtual void rotatePartLabels(double degrees, QTransform &, QPointF center, QUndoCommand * parentCommand);
-
+	bool checkUpdateRatsnest(QList<ConnectorItem *> & connectorItems);
+	void makeRatsnestViewGeometry(ViewGeometry & viewGeometry, ConnectorItem * source, ConnectorItem * dest); 
+	virtual double getTraceWidth();
+	virtual const QString & traceColor(ViewLayer::ViewLayerSpec);
 
 protected:
 	static bool lessThan(int a, int b);
@@ -651,6 +658,7 @@ protected:
 	QMultiHash<ItemBase *, ConnectorItem *> m_stretchingLegs;
 	bool m_curvyWires;
 	bool m_rubberBandLegWasEnabled;
+	RoutingStatus m_routingStatus;
 
 public:
 	static ViewLayer::ViewLayerID defaultConnectorLayer(ViewIdentifierClass::ViewIdentifier viewId);

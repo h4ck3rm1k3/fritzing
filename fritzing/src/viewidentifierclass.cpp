@@ -102,6 +102,7 @@ void ViewIdentifierClass::initNames() {
 		ii << ViewLayer::Icon;
 		bb << ViewLayer::BreadboardBreadboard << ViewLayer::Breadboard 
 			<< ViewLayer::BreadboardWire << ViewLayer::BreadboardLabel 
+			<< ViewLayer::BreadboardRatsnest 
 			<< ViewLayer::BreadboardNote << ViewLayer::BreadboardRuler;
 		ss << ViewLayer::SchematicFrame << ViewLayer::Schematic 
 			<< ViewLayer::SchematicWire 
@@ -112,7 +113,7 @@ void ViewIdentifierClass::initNames() {
 			<< ViewLayer::Copper0 
 			<< ViewLayer::Copper0Trace << ViewLayer::GroundPlane1 
 			<< ViewLayer::Copper1 << ViewLayer::Copper1Trace 
-			<< ViewLayer::Ratsnest 
+			<< ViewLayer::PcbRatsnest 
 			<< ViewLayer::Silkscreen1 << ViewLayer::Silkscreen1Label 
 			<< ViewLayer::PartImage 
 			<< ViewLayer::PcbNote << ViewLayer::PcbRuler;

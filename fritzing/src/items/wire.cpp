@@ -927,7 +927,7 @@ FSvgRenderer * Wire::setUpConnectors(ModelPart * modelPart, ViewIdentifierClass:
 		return NULL;
 	}
 
-	foreach (Connector * connector, m_modelPart->connectors().values()) {
+	foreach (Connector * connector, modelPart->connectors().values()) {
 		if (connector == NULL) continue;
 
 		SvgIdLayer * svgIdLayer = connector->fullPinInfo(viewIdentifier, m_viewLayerID);
@@ -1243,6 +1243,10 @@ bool Wire::hasFlag(ViewGeometry::WireFlag flag)
 	return m_viewGeometry.hasFlag(flag);
 }
 
+bool Wire::isTraceType(ViewGeometry::WireFlag flag) {
+	return hasFlag(flag);
+}
+
 bool Wire::hasAnyFlag(ViewGeometry::WireFlags flags)
 {
 	return m_viewGeometry.hasAnyFlag(flags);
@@ -1351,23 +1355,34 @@ QVariant Wire::itemChange(GraphicsItemChange change, const QVariant &value)
 void Wire::cleanup() {
 }
 
-void Wire::getConnectedColor(ConnectorItem * connectorItem, QBrush * &brush, QPen * &pen, double & opacity, double & negativePenWidth, bool & negativeOffsetRect) {
-
+void Wire::getConnectedColor(ConnectorItem * connectorItem, QBrush * &brush, QPen * &pen, double & opacity, double & negativePenWidth, bool & negativeOffsetRect) 
+{
 	connectorItem->setBigDot(false);
 	int count = 0;
 	bool bendpoint = true;
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView == NULL) {
+		ItemBase::getConnectedColor(connectorItem, brush, pen, opacity, negativePenWidth, negativeOffsetRect);
+		return;
+	}
+
 	foreach (ConnectorItem * toConnectorItem, connectorItem->connectedToItems()) {
-		if (toConnectorItem->attachedToItemType() != ModelPart::Wire) {
+		if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
+			Wire * w = qobject_cast<Wire *>(toConnectorItem->attachedTo());
+			if (w->isTraceType(infoGraphicsView->getTraceFlag())) {
+				count++;
+			}
+		}
+		else {
 			// for drawing a big dot on the end of a part connector in schematic view if the part is connected to more than one trace
 			bendpoint = false;
 			if (toConnectorItem->connectionsCount() > 1) {	
-				InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
-				if (infoGraphicsView != NULL && infoGraphicsView->hasBigDots()) {
+				if (infoGraphicsView->hasBigDots()) {
 					int c = 0;
 					foreach (ConnectorItem * totoConnectorItem, toConnectorItem->connectedToItems()) {
 						if (totoConnectorItem->attachedToItemType() == ModelPart::Wire) {
 							Wire * w = qobject_cast<Wire *>(totoConnectorItem->attachedTo());
-							if (w && w->getTrace()) {
+							if (w && w->isTraceType(ViewGeometry::SchematicTraceFlag) && w->isTraceType(infoGraphicsView->getTraceFlag())) {
 								c++;
 							}
 						}
@@ -1379,11 +1394,9 @@ void Wire::getConnectedColor(ConnectorItem * connectorItem, QBrush * &brush, QPe
 				}
 			}
 
-			ItemBase::getConnectedColor(connectorItem, brush, pen, opacity, negativePenWidth, negativeOffsetRect);
-			return;
+			count = 0;
+			break;
 		}
-
-		count++;
 	}
 
 	if (count == 0) {

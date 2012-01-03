@@ -29,6 +29,7 @@ $Date$
 #include "../items/partfactory.h"
 #include "../items/moduleidnames.h"
 #include "../version/version.h"
+#include "../viewgeometry.h"
 
 #include <QMessageBox>
 
@@ -102,6 +103,7 @@ bool ModelBase::load(const QString & fileName, ModelBase * refModel, QList<Model
     }
 
 	bool checkForRats = true;
+	bool checkForTraces = true;
 	QString fzVersion = root.attribute("fritzingVersion");
 	if (fzVersion.length() > 0) {
 		// with version 0.4.3 ratsnests in fz files are obsolete
@@ -113,6 +115,10 @@ bool ModelBase::load(const QString & fileName, ModelBase * refModel, QList<Model
 		VersionThing versionThingFz;
 		Version::toVersionThing(fzVersion,versionThingFz);
 		checkForRats = !Version::greaterThan(versionThingRats, versionThingFz);
+		// with version 0.6.5 traces are copied to all views
+		versionThingRats.minorVersion = 6;
+		versionThingRats.minorSubVersion = 4;
+		checkForTraces = !Version::greaterThan(versionThingRats, versionThingFz);
 	}
 
 	ModelPartSharedRoot * modelPartSharedRoot = this->rootModelPartShared();
@@ -158,7 +164,28 @@ bool ModelBase::load(const QString & fileName, ModelBase * refModel, QList<Model
    	}
 
 	emit loadingInstances(this, instances);
-	bool result = loadInstances(domDocument, instances, modelParts, checkForRats);
+
+	if (checkForRats) {
+		QDomElement instance = instances.firstChildElement("instance");
+   		while (!instance.isNull()) {
+			QDomElement nextInstance = instance.nextSiblingElement("instance");
+			if (isRatsnest(instance)) {
+				instances.removeChild(instance);
+			}
+			
+			instance = nextInstance;
+		}
+	}
+
+	if (checkForTraces) {
+		QDomElement instance = instances.firstChildElement("instance");
+   		while (!instance.isNull()) {
+			checkTraces(instance);
+			instance = instance.nextSiblingElement("instance");
+		}
+	}
+
+	bool result = loadInstances(domDocument, instances, modelParts);
 	emit loadedInstances(this, instances);
 	return result;
 }
@@ -167,18 +194,13 @@ ModelPart * ModelBase::fixObsoleteModuleID(QDomDocument & domDocument, QDomEleme
 	return PartFactory::fixObsoleteModuleID(domDocument, instance, moduleIDRef, m_referenceModel);
 }
 
-bool ModelBase::loadInstances(QDomDocument & domDocument, QDomElement & instances, QList<ModelPart *> & modelParts, bool checkForRats)
+bool ModelBase::loadInstances(QDomDocument & domDocument, QDomElement & instances, QList<ModelPart *> & modelParts)
 {
 	QHash<QString, QString> missingModules;
    	QDomElement instance = instances.firstChildElement("instance");
    	ModelPart* modelPart = NULL;
    	while (!instance.isNull()) {
 		emit loadingInstance(this, instance);
-		if (checkForRats && isRatsnest(instance)) {
-			// ratsnests in sketches are now obsolete
-			instance = instance.nextSiblingElement("instance");
-			continue;
-		}
 
    		// for now assume all parts are in the palette
    		QString moduleIDRef = instance.attribute("moduleIdRef");
@@ -415,7 +437,7 @@ bool ModelBase::paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *
 	//file.write(domDocument.toByteArray());
 	//file.close();
 
-	return loadInstances(domDocument, instances, modelParts, false);
+	return loadInstances(domDocument, instances, modelParts);
 }
 
 void ModelBase::renewModelIndexes(QDomElement & parentElement, const QString & childName, QHash<long, long> & oldToNew)
@@ -462,10 +484,6 @@ void ModelBase::renewModelIndexes(QDomElement & parentElement, const QString & c
 	}
 }
 
-bool ModelBase::isRatsnest(QDomElement & instance) {
-	return PartFactory::isRatsnest(instance);
-}
-
 void ModelBase::setReportMissingModules(bool b) {
 	m_reportMissingModules = b;
 }
@@ -483,4 +501,122 @@ ModelPartSharedRoot * ModelBase::rootModelPartShared() {
 	if (m_root == NULL) return NULL;
 
 	return m_root->modelPartSharedRoot();
+}
+
+bool ModelBase::isRatsnest(QDomElement & instance) {
+	QString moduleIDRef = instance.attribute("moduleIdRef");
+	if (moduleIDRef.compare(ModuleIDNames::WireModuleIDName) != 0) return false;
+
+	QDomElement views = instance.firstChildElement("views");
+	if (views.isNull()) return false;
+
+	QDomElement view = views.firstChildElement();
+	while (!view.isNull()) {
+		QDomElement geometry = view.firstChildElement("geometry");
+		if (!geometry.isNull()) {
+			int flags = geometry.attribute("wireFlags").toInt();
+			if (flags & ViewGeometry::RatsnestFlag) {
+				return true;
+			}
+			if (flags & ViewGeometry::ObsoleteJumperFlag) {
+				return true;
+			}
+		}
+
+		view = view.nextSiblingElement();
+	}
+
+	return false;
+}
+
+
+void ModelBase::checkTraces(QDomElement & instance) {
+	QString moduleIDRef = instance.attribute("moduleIdRef");
+	if (moduleIDRef.compare(ModuleIDNames::WireModuleIDName) != 0) return;
+
+	QDomElement views = instance.firstChildElement("views");
+	if (views.isNull()) return;
+
+	QDomElement bbView = views.firstChildElement("breadboardView");
+	QDomElement schView = views.firstChildElement("schematicView");
+	QDomElement pcbView = views.firstChildElement("pcbView");
+
+	if (!bbView.isNull() && !schView.isNull() && !pcbView.isNull()) {
+		// if it's a breadboard wire; just make sure flag is correct
+
+		QList<QDomElement> elements;
+		elements << bbView << schView << pcbView;
+		foreach (QDomElement element, elements) {
+			QDomElement geometry = element.firstChildElement("geometry");
+			if (!geometry.isNull()) {
+				int flags = geometry.attribute("wireFlags").toInt();
+				if (flags & ViewGeometry::PCBTraceFlag) return;				// not a breadboard wire, bail out
+				if (flags & ViewGeometry::SchematicTraceFlag) return;		// not a breadboard wire, bail out
+
+				if ((flags & ViewGeometry::NormalFlag) == 0) {
+					flags |= ViewGeometry::NormalFlag;
+					geometry.setAttribute("wireFlags", QString::number(flags));
+				}
+			}
+		}
+
+
+		return;
+	}
+
+	if (!bbView.isNull()) {
+		QDomElement geometry = bbView.firstChildElement("geometry");
+		if (!geometry.isNull()) {
+			int flags = geometry.attribute("wireFlags").toInt();
+			if ((flags & ViewGeometry::NormalFlag) == 0) {
+				flags |= ViewGeometry::NormalFlag;
+				geometry.setAttribute("wireFlags", QString::number(flags));
+			}
+		}
+		schView = bbView.cloneNode(true).toElement();
+		pcbView = bbView.cloneNode(true).toElement();
+		schView.setTagName("schematicView");
+		pcbView.setTagName("pcbView");
+		views.appendChild(pcbView);
+		views.appendChild(schView);
+		return;
+	}
+
+	if (!schView.isNull()) {
+		QDomElement geometry = schView.firstChildElement("geometry");
+		if (!geometry.isNull()) {
+			int flags = geometry.attribute("wireFlags").toInt();
+			if (flags & ViewGeometry::PCBTraceFlag) {
+				flags ^= ViewGeometry::PCBTraceFlag;
+				flags |= ViewGeometry::SchematicTraceFlag;
+				geometry.setAttribute("wireFlags", QString::number(flags));
+			}
+		}
+		pcbView = schView.cloneNode(true).toElement();
+		bbView = schView.cloneNode(true).toElement();
+		pcbView.setTagName("pcbView");
+		bbView.setTagName("breadboardView");
+		views.appendChild(bbView);
+		views.appendChild(pcbView);
+		return;
+	}
+	
+	if (!pcbView.isNull()) {
+		schView = pcbView.cloneNode(true).toElement();
+		bbView = pcbView.cloneNode(true).toElement();
+		schView.setTagName("schematicView");
+		bbView.setTagName("breadboardView");
+		views.appendChild(bbView);
+		views.appendChild(schView);
+		return;
+	}
+
+	QDomElement iconView = views.firstChildElement("iconView");
+	if (!iconView.isNull()) return;
+
+	QString string;
+	QTextStream stream(&string);
+	instance.save(stream, 0);
+	stream.flush();
+	DebugDialog::debug(QString("no wire view elements in fz file %1").arg(string));	
 }

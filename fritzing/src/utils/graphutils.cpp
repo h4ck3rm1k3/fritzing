@@ -44,7 +44,7 @@ $Date$
 #pragma warning(pop)					// restore warning state
 #endif
 
-bool GraphUtils::chooseRatsnestGraph(const QList<ConnectorItem *> & partConnectorItems, ConnectorPairHash & result) {
+bool GraphUtils::chooseRatsnestGraph(const QList<ConnectorItem *> & partConnectorItems, ViewGeometry::WireFlags flags, ConnectorPairHash & result) {
 	using namespace boost;
 	typedef adjacency_list < vecS, vecS, undirectedS, property<vertex_distance_t, double>, property < edge_weight_t, double > > Graph;
 	typedef std::pair < int, int >E;
@@ -111,7 +111,7 @@ bool GraphUtils::chooseRatsnestGraph(const QList<ConnectorItem *> & partConnecto
 			if (checkWiredTo) {
 				QList<ConnectorItem *> cwConnectorItems;
 				cwConnectorItems.append(c1);
-				ConnectorItem::collectEqualPotential(cwConnectorItems, true, ViewGeometry::NotTraceFlags);
+				ConnectorItem::collectEqualPotential(cwConnectorItems, true, flags);
 				wiredTo.append(cwConnectorItems);
 				//foreach (ConnectorItem * cx, cwConnectorItems) {
 					//cx->debugInfo("\t\tcx");
@@ -149,7 +149,7 @@ bool GraphUtils::chooseRatsnestGraph(const QList<ConnectorItem *> & partConnecto
 	return true;
 }
 
-bool GraphUtils::scoreOneNet(QList<ConnectorItem *> & partConnectorItems, RoutingStatus & routingStatus) {
+bool GraphUtils::scoreOneNet(QList<ConnectorItem *> & partConnectorItems, ViewGeometry::WireFlags myTrace, RoutingStatus & routingStatus) {
 	using namespace boost;
 
 	int num_nodes = partConnectorItems.count();
@@ -213,7 +213,10 @@ bool GraphUtils::scoreOneNet(QList<ConnectorItem *> & partConnectorItems, Routin
 			Wire * wire = qobject_cast<Wire *>(toConnectorItem->attachedTo());
 			if (wire == NULL) continue;
 
-			if (!wire->getTrace()) continue;
+			if (!(wire->getViewGeometry().wireFlags() & myTrace)) {
+				// don't add edge if the connection isn't traced with my kind of trace
+				continue;
+			}
 
 			QList<Wire *> wires;
 			QList<ConnectorItem *> ends;

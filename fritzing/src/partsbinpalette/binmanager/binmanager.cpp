@@ -205,7 +205,6 @@ void BinManager::setPaletteModel(PaletteModel *model) {
 	m_paletteModel = model;
 }
 
-
 bool BinManager::beforeClosing() {
 	bool retval = true;
 

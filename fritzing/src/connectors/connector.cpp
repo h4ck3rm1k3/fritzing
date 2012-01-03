@@ -97,7 +97,6 @@ void Connector::addViewItem(ConnectorItem * item) {
 }
 
 void Connector::removeViewItem(ConnectorItem * item) {
-
 	//DebugDialog::debug(QString("remove view item c:%1 ci:%2 b:%3").arg((long) this, 0, 16).arg((long) item, 0, 16).arg((long) m_bus.data(), 0, 16));
 	m_connectorItems.remove(QuickHash(item->attachedToViewIdentifier(), item->attachedToViewLayerID()));
 }

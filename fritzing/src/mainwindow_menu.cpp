@@ -2885,23 +2885,31 @@ void MainWindow::shareOnline() {
 	QDesktopServices::openUrl(QString("http://fritzing.org/projects/create"));
 }
 
+
 void MainWindow::selectAllObsolete() {
+	selectAllObsolete(true);
+}
+
+void MainWindow::selectAllObsolete(bool displayFeedback) {
 	int obs = m_currentGraphicsView->selectAllObsolete();
+	if (!displayFeedback) return;
+
 	if (obs <= 0) {
-            QMessageBox::information(this, tr("Fritzing"), tr("No outdated parts found.\nAll your parts are up-to-date.") );
-        } else {
-            QMessageBox::StandardButton answer = QMessageBox::question(
-                    this,
-                    tr("Outdated parts"),
-                    tr("Found %n outdated parts. Do you want to update them now?", "", obs),
-                    QMessageBox::Yes | QMessageBox::No,
-                    QMessageBox::Yes
-            );
-            // TODO: make button texts translatable
-            if(answer == QMessageBox::Yes) {
-                    swapObsolete();
-            }
+        QMessageBox::information(this, tr("Fritzing"), tr("No outdated parts found.\nAll your parts are up-to-date.") );
+    } 
+	else {
+        QMessageBox::StandardButton answer = QMessageBox::question(
+                this,
+                tr("Outdated parts"),
+                tr("Found %n outdated parts. Do you want to update them now?", "", obs),
+                QMessageBox::Yes | QMessageBox::No,
+                QMessageBox::Yes
+        );
+        // TODO: make button texts translatable
+        if (answer == QMessageBox::Yes) {
+            swapObsolete();
         }
+	}
 }
 
 ModelPart * MainWindow::findReplacedby(ModelPart * originalModelPart) {
@@ -2922,8 +2930,11 @@ ModelPart * MainWindow::findReplacedby(ModelPart * originalModelPart) {
 	}
 }
 
-
 void MainWindow::swapObsolete() {
+	swapObsolete(true);
+}
+
+void MainWindow::swapObsolete(bool displayFeedback) {
 
 	QSet<ItemBase *> itemBases;
 	foreach (QGraphicsItem * item, m_currentGraphicsView->scene()->selectedItems()) {
@@ -3006,8 +3017,11 @@ void MainWindow::swapObsolete() {
 		m_undoStack->push(parentCommand);
 	}
 
-	QMessageBox::information(this, tr("Fritzing"), tr("Successfully updated %1 part(s).\n"
+	if (displayFeedback) {
+		QMessageBox::information(this, tr("Fritzing"), tr("Successfully updated %1 part(s).\n"
                                                           "Please check all views for potential side-effects.").arg(count) );
+	}
+	DebugDialog::debug(QString("updated %1 obsolete in %2").arg(count).arg(m_fileName));
 }
 
 void MainWindow::throwFakeException() {

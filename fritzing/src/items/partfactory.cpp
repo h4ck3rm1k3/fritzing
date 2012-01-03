@@ -79,7 +79,6 @@ ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClas
 			}
 			if (viewGeometry.getAnyTrace()) {
 				TraceWire * traceWire = new TraceWire(modelPart, viewIdentifier, viewGeometry, id, wireMenu);
-				traceWire->setSchematic(viewIdentifier == ViewIdentifierClass::SchematicView);
 				return traceWire;
 			}
 			return new Wire(modelPart, viewIdentifier, viewGeometry, id, wireMenu, false);
@@ -403,32 +402,6 @@ ModelPart * PartFactory::fixObsoleteModuleID(QDomDocument & domDocument, QDomEle
 	}
 
 	return NULL;
-}
-
-bool PartFactory::isRatsnest(QDomElement & instance) {
-	QString moduleIDRef = instance.attribute("moduleIdRef");
-	if (moduleIDRef.compare(ModuleIDNames::WireModuleIDName) != 0) return false;
-
-	QDomElement views = instance.firstChildElement("views");
-	if (views.isNull()) return false;
-
-	QDomElement view = views.firstChildElement();
-	while (!view.isNull()) {
-		QDomElement geometry = view.firstChildElement("geometry");
-		if (!geometry.isNull()) {
-			int flags = geometry.attribute("wireFlags").toInt();
-			if (flags & ViewGeometry::RatsnestFlag) {
-				return true;
-			}
-			if (flags & ViewGeometry::ObsoleteJumperFlag) {
-				return true;
-			}
-		}
-
-		view = view.nextSiblingElement();
-	}
-
-	return false;
 }
 
 QString PartFactory::folderPath() {

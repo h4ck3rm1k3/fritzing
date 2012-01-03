@@ -756,10 +756,6 @@ Por favor seleccione um dos tipos de letra do Fritzing para o substituir:</trans
         <translation>Fio</translation>
     </message>
     <message>
-        <source>Rat&apos;s nest wire</source>
-        <translation>Fio como um ninho de ratos</translation>
-    </message>
-    <message>
         <source>Trace wire %1</source>
         <translation>Traçar fio %1</translation>
     </message>
@@ -802,6 +798,10 @@ Por favor seleccione um dos tipos de letra do Fritzing para o substituir:</trans
     <message>
         <source>Change the locked state of the part in this view.  A locked part can&apos;t be moved</source>
         <translation>Mudar o estado de bloqueio deste componente nesta vista.  Um componente bloqueado não pode ser movido</translation>
+    </message>
+    <message>
+        <source>Ratsnest wire</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2639,6 +2639,14 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
         <source>There are traces connected to copper fill which will also be removed. Proceed?</source>
         <translation>Existem pistas ligadas à camada de cobre este também vai ser removido. Prosseguir?</translation>
     </message>
+    <message>
+        <source>No copper top layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The copper top (copper 1) layer is not available on a one-sided board.  Please switch the board to double-sided or choose the copper bottom (copper 0) layer.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -2731,10 +2739,6 @@ Razão: %2 (código do erro %3)</translation>
         <translation>Mudar a camada do traço</translation>
     </message>
     <message>
-        <source>Create and connect trace</source>
-        <translation>Criar e ligar fio</translation>
-    </message>
-    <message>
         <source>Delete ratsnest</source>
         <translation>Apagar emaranhado</translation>
     </message>
@@ -2767,12 +2771,12 @@ Razão: %2 (código do erro %3)</translation>
         <translation>Impossível criar o preenchimento de cobre--provavelmente o componente não foi colocado na PCB.</translation>
     </message>
     <message>
-        <source>This seems like an attempt to create a trace across layers. This circumstance should not arise: please contact the developers.</source>
-        <translation>Esta parece ser uma tentativa de criar uma pista entre camadas. Isto não pode acontecer: por favor contacta a equipa do Fritzing.</translation>
-    </message>
-    <message>
         <source>Unable to create copper fill--possibly the part was dropped onto another part or wire rather than the actual PCB.</source>
         <translation>Impossível criar o preenchimento de cobre--provavelmente o componente foi largado noutro sítio que não esta PCB.</translation>
+    </message>
+    <message>
+        <source>Fritzing only allows one board part per sketch. Either delete the current board, or select it and swap it for a different one.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3969,10 +3973,6 @@ O Fritzing ainda trabalha, mas não vais poder modificar as propriedas dos compo
         <translation>Placa</translation>
     </message>
     <message>
-        <source>Rat&apos;s nest</source>
-        <translation>Ninho de ratos</translation>
-    </message>
-    <message>
         <source>Unknown Layer</source>
         <translation>Camada desconhecida</translation>
     </message>
@@ -4412,6 +4412,10 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>Pin Label Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ratsnest</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

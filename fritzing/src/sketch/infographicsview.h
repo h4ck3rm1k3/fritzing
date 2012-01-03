@@ -103,6 +103,7 @@ public:
 	virtual void triggerRotate(ItemBase *, double degrees);
 	virtual void changePinLabels(ItemBase *, bool singleRow);
 	virtual void renamePins(ItemBase *, const QStringList & oldLabels, const QStringList & newLabels, bool singleRow);
+	virtual ViewGeometry::WireFlag getTraceFlag();
 
 public slots:
 	virtual void setVoltage(double, bool doEmit);

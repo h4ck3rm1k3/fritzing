@@ -150,6 +150,14 @@ bool FApplication::init() {
 			return false;
 		}
 
+		if ((m_arguments[i].compare("-e", Qt::CaseInsensitive) == 0) ||
+			(m_arguments[i].compare("-examples", Qt::CaseInsensitive) == 0)||
+			(m_arguments[i].compare("--examples", Qt::CaseInsensitive) == 0)) {
+			m_serviceType = ExampleService;
+			m_outputFolder = " ";					// otherwise program will bail out
+			toRemove << i;
+		}
+
 		if (i + 1 >= m_arguments.length()) continue;
 
 		if ((m_arguments[i].compare("-f", Qt::CaseInsensitive) == 0) ||
@@ -493,6 +501,10 @@ int FApplication::serviceStartup() {
 
 		case InscriptionService:
 			runInscriptionService();
+			return 0;
+
+		case ExampleService:
+			runExampleService();
 			return 0;
 
 		default:
@@ -1396,4 +1408,56 @@ QList<MainWindow *> FApplication::orderedTopLevelMainWindows() {
 		if (mainWindow) mainWindows.append(mainWindow);
 	}
 	return mainWindows;
+}
+
+void FApplication::runExampleService()
+{	
+	m_started = true;
+
+	createUserDataStoreFolderStructure();
+	registerFonts();
+	loadReferenceModel();
+
+	if (!loadBin("")) {
+		DebugDialog::debug(QString("load bin failed"));
+		return;
+	}
+
+	QDir sketchesDir(FolderUtils::getApplicationSubFolderPath("sketches"));
+	runExampleService(sketchesDir);
+}
+
+void FApplication::runExampleService(QDir & dir) {
+	QStringList nameFilters;
+	nameFilters << "*.fz";
+	QFileInfoList fileList = dir.entryInfoList(nameFilters, QDir::Files | QDir::NoSymLinks);
+	foreach (QFileInfo fileInfo, fileList) {
+		QString path = fileInfo.absoluteFilePath();
+		DebugDialog::debug("sketch file " + path);
+
+		int loaded = 0;
+		MainWindow * mainWindow = loadWindows(loaded);
+		if (mainWindow == NULL) continue;
+
+		mainWindow->noBackup();
+
+		FolderUtils::setOpenSaveFolderAux(dir.absolutePath());
+
+		if (!mainWindow->loadWhich(path, false, false, true)) {
+			DebugDialog::debug(QString("failed to load"));
+		}
+		else {
+			mainWindow->selectAllObsolete(false);
+			mainWindow->swapObsolete(false);
+			mainWindow->saveAsAux(path);
+			mainWindow->setCloseSilently(true);
+			mainWindow->close();
+		}
+	}
+
+	QFileInfoList dirList = dir.entryInfoList(QDir::AllDirs | QDir::NoDotAndDotDot | QDir::Hidden | QDir::NoSymLinks);
+	foreach (QFileInfo dirInfo, dirList) {
+		QDir dir(dirInfo.filePath());
+		runExampleService(dir);
+	}
 }

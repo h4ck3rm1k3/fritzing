@@ -36,7 +36,6 @@ $Date$
 #include "../items/moduleidnames.h"
 #include "../items/partlabel.h"
 #include "../help/sketchmainhelp.h"
-#include "../utils/ratsnestcolors.h"
 #include "../fsvgrenderer.h"
 #include "../autoroute/autorouteprogressdialog.h"
 #include "../items/groundplane.h"
@@ -44,7 +43,6 @@ $Date$
 #include "../utils/autoclosemessagebox.h"
 #include "../utils/graphicsutils.h"
 #include "../utils/textutils.h"
-#include "../utils/graphutils.h"
 #include "../processeventblocker.h"
 #include "../autoroute/cmrouter/cmrouter.h"
 #include "../autoroute/cmrouter/tileutils.h"
@@ -64,10 +62,7 @@ $Date$
 #include <QPushButton>
 #include <QMessageBox>
 
-
 static const int MAX_INT = std::numeric_limits<int>::max();
-
-const char * PCBSketchWidget::FakeTraceProperty = "FakeTrace";
 
 static QString PCBTraceColor1 = "trace1";
 static QString PCBTraceColor = "trace";
@@ -113,6 +108,8 @@ bool distanceLessThan(ConnectorItem * end0, ConnectorItem * end1) {
 
 //////////////////////////////////////////////////////
 
+const char * PCBSketchWidget::FakeTraceProperty = "FakeTrace";
+
 PCBSketchWidget::PCBSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent)
     : SketchWidget(viewIdentifier, parent)
 {
@@ -129,7 +126,7 @@ PCBSketchWidget::PCBSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentif
 
 void PCBSketchWidget::setWireVisible(Wire * wire)
 {
-	bool visible = wire->getRatsnest() || wire->getTrace();
+	bool visible = wire->getRatsnest() || (wire->isTraceType(this->getTraceFlag()));
 	wire->setVisible(visible);
 	wire->setEverVisible(visible);
 }
@@ -247,7 +244,7 @@ bool PCBSketchWidget::createOneTrace(Wire * wire, ViewGeometry::WireFlag flag, b
 	if (wire->getRatsnest()) {
 		trace = wire->findTraced(getTraceFlag(), ends);
 	}
-	else if (wire->getTrace()) {
+	else if (wire->isTraceType(getTraceFlag())) {
 		trace = wire;
 	}
 	else if (!allowAny) {
@@ -267,7 +264,7 @@ bool PCBSketchWidget::createOneTrace(Wire * wire, ViewGeometry::WireFlag flag, b
 	}
 
 	QString colorString = traceColor(createWireViewLayerSpec(ends[0], ends[1]));
-	long newID = createWire(ends[0], ends[1], flag, false, BaseCommand::SingleView, parentCommand);
+	long newID = createWire(ends[0], ends[1], flag, false, BaseCommand::CrossView, parentCommand);
 	new WireColorChangeCommand(this, newID, colorString, colorString, getRatsnestOpacity(false), getRatsnestOpacity(false), parentCommand);
 	new WireWidthChangeCommand(this, newID, getTraceWidth(), getTraceWidth(), parentCommand);
 	return true;
@@ -340,113 +337,6 @@ const QString & PCBSketchWidget::hoverEnterPartConnectorMessage(QGraphicsSceneHo
 	return message;
 }
 
-bool PCBSketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromDragWire, ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, QUndoCommand * parentCommand)
-{	
-	Q_UNUSED(fromDragWire);
-	if (fromConnectorItem == toConnectorItem) {
-		// can't drag a wire to itself
-		return false;
-	}
-
-	bool result = false;
-
-	QList<ConnectorItem *> connectorItems;
-	connectorItems.append(fromConnectorItem);
-	ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::TraceRatsnestFlags);
-	if (connectorItems.contains(toConnectorItem)) {
-		// don't generate a wire in bb view if the connectors are already connected
-		result = true;
-	}
-	else {
-		if (fromConnectorItem->attachedToItemType() == ModelPart::Symbol ||
-			toConnectorItem->attachedToItemType() == ModelPart::Symbol) 
-		{
-			// set up extra connection for breadboard view (for now; won't be necessary if breadboard gets ratsnest)
-			connectSymbols(fromConnectorItem, toConnectorItem, parentCommand);
-		}
-
-		bool fromWire = fromConnectorItem->attachedToItemType() == ModelPart::Wire;
-		bool toWire = toConnectorItem->attachedToItemType() == ModelPart::Wire;
-
-		if (fromWire && toWire)
-		{
-			ConnectorItem * originalFromConnectorItem = fromConnectorItem;
-			ConnectorItem * originalToConnectorItem = toConnectorItem;
-			ConnectorItem * newFromConnectorItem = lookForBreadboardConnection(fromConnectorItem);
-			ConnectorItem * newToConnectorItem = lookForBreadboardConnection(toConnectorItem);
-			if (newFromConnectorItem->attachedToItemType() == ModelPart::Breadboard &&
-				newToConnectorItem->attachedToItemType() == ModelPart::Breadboard)
-			{
-				// connection can be made with one wire
-				makeModifiedWire(newFromConnectorItem, newToConnectorItem, BaseCommand::CrossView, ViewGeometry::NormalFlag, parentCommand);
-			}
-			else if (newToConnectorItem->attachedToItemType() == ModelPart::Breadboard) {
-				makeTwoWires(originalToConnectorItem, newToConnectorItem, originalFromConnectorItem, newFromConnectorItem, parentCommand);
-			}
-			else {
-				makeTwoWires(originalFromConnectorItem, newFromConnectorItem, originalToConnectorItem, newToConnectorItem, parentCommand);
-			}
-			result = true;
-		}
-		else if (fromWire) {
-			modifyNewWireConnectionsAux(fromConnectorItem, toConnectorItem, parentCommand);
-			result = true;
-		}
-		else if (toWire) {
-			modifyNewWireConnectionsAux(toConnectorItem, fromConnectorItem, parentCommand);
-			result = true;
-		}
-	}
-
-	dragWire->connector0()->tempConnectTo(fromConnectorItem, false);
-	dragWire->connector1()->tempConnectTo(toConnectorItem, false);
-	QList<ConnectorItem *> ends;
-	Wire * Trace = dragWire->findTraced(getTraceFlag(), ends);
-	dragWire->connector0()->tempRemove(fromConnectorItem, false);
-	dragWire->connector1()->tempRemove(toConnectorItem, false);
-
-	if (Trace == NULL) {
-		ViewGeometry::WireFlags flags =  getTraceFlag();
-		long newID = makeModifiedWire(fromConnectorItem, toConnectorItem, BaseCommand::SingleView, flags, parentCommand);
-		QString tc = traceColor(fromConnectorItem);
-		new WireColorChangeCommand(this, newID, tc, tc, 1.0, 1.0, parentCommand);
-		double traceWidth = getTraceWidth();
-		if (autorouteTypePCB()) {
-			double minDim = qMin(fromConnectorItem->minDimension(), toConnectorItem->minDimension());
-			if (minDim < traceWidth) {
-				traceWidth = getSmallerTraceWidth(minDim);  
-			}
-		}
-		new WireWidthChangeCommand(this, newID, traceWidth, traceWidth, parentCommand);
-		if (fromConnectorItem->attachedToItemType() == ModelPart::Wire) {
-			foreach (ConnectorItem * connectorItem, fromConnectorItem->connectedToItems()) {
-				if (connectorItem->attachedToItemType() == ModelPart::Wire) {
-					// not sure about the wire type check
-					new ChangeConnectionCommand(this, BaseCommand::SingleView,
-							newID, "connector0",
-							connectorItem->attachedToID(), connectorItem->connectorSharedID(),
-							ViewLayer::specFromID(connectorItem->attachedToViewLayerID()),
-							true, parentCommand);
-				}
-			}
-		}
-		if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
-			foreach (ConnectorItem * connectorItem, toConnectorItem->connectedToItems()) {
-				if (connectorItem->attachedToItemType() == ModelPart::Wire) {
-					// not sure about the wire type check
-					new ChangeConnectionCommand(this, BaseCommand::SingleView,
-							newID, "connector1",
-							connectorItem->attachedToID(), connectorItem->connectorSharedID(),
-							ViewLayer::specFromID(connectorItem->attachedToViewLayerID()),
-							true, parentCommand);
-				}
-			}
-		}
-	}
-
-	return result;
-}
-
 void PCBSketchWidget::connectSymbols(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, QUndoCommand * parentCommand) {
 	ConnectorItem * target1 = NULL;
 	ConnectorItem * target2 = NULL;
@@ -510,7 +400,7 @@ void PCBSketchWidget::addDefaultParts() {
 	viewGeometry.setLoc(QPointF(0, 0));
 
 	// have to put this off until later, because positioning the item doesn't work correctly until the view is visible
-	m_addedDefaultPart = addItem(paletteModel()->retrieveModelPart(ModuleIDNames::TwoSidedRectangleModuleIDName), defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
+	m_addedDefaultPart = addItem(paletteModel()->retrieveModelPart(ModuleIDNames::TwoSidedRectangleModuleIDName), defaultViewLayerSpec(), BaseCommand::CrossView, viewGeometry, newID, -1, NULL, NULL);
 	m_addDefaultParts = true;
 
 	changeBoardLayers(2, true);
@@ -581,7 +471,7 @@ ViewLayer::ViewLayerID PCBSketchWidget::getDragWireViewLayerID(ConnectorItem * c
 
 ViewLayer::ViewLayerID PCBSketchWidget::getWireViewLayerID(const ViewGeometry & viewGeometry, ViewLayer::ViewLayerSpec viewLayerSpec) {
 	if (viewGeometry.getRatsnest()) {
-		return ViewLayer::Ratsnest;
+		return ViewLayer::PcbRatsnest;
 	}
 
 	if (viewGeometry.getAnyTrace()) {
@@ -741,74 +631,12 @@ bool PCBSketchWidget::canCreateWire(Wire * dragWire, ConnectorItem * from, Conne
 	return ((from != NULL) && (to != NULL));
 }
 
-bool PCBSketchWidget::doRatsnestOnCopy() 
-{
-	return true;
-}
-
 double PCBSketchWidget::getRatsnestOpacity(Wire * wire) {
 	return getRatsnestOpacity(wire->getRouted());
 }
 
 double PCBSketchWidget::getRatsnestOpacity(bool routed) {
 	return (routed ? 0.2 : 1.0);
-}
-
-void PCBSketchWidget::getRatsnestColor(QColor & color) 
-{
-	//RatsnestColors::reset(m_viewIdentifier);
-	color = RatsnestColors::netColor(m_viewIdentifier);
-}
-
-
-VirtualWire * PCBSketchWidget::makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, bool routed, QColor color) {
-	if (source->attachedTo() == dest->attachedTo()) {
-		if (source == dest) return NULL;
-
-		if (source->bus() == dest->bus() && dest->bus() != NULL) {
-			return NULL;				// don't draw a wire within the same part on the same bus
-		}
-	}
-	
-	long newID = ItemBase::getNextID();
-
-	ViewGeometry viewGeometry;
-	makeRatsnestViewGeometry(viewGeometry, source, dest);
-	viewGeometry.setRouted(routed);
-
-	/*
-	 DebugDialog::debug(QString("creating ratsnest %10: %1, from %6 %7, to %8 %9, frompos: %2 %3, topos: %4 %5")
-	 .arg(newID)
-	 .arg(fromPos.x()).arg(fromPos.y())
-	 .arg(toPos.x()).arg(toPos.y())
-	 .arg(source->attachedToTitle()).arg(source->connectorSharedID())
-	 .arg(dest->attachedToTitle()).arg(dest->connectorSharedID())
-	 .arg(m_viewIdentifier)
-	 );
-	 */
-
-	ItemBase * newItemBase = addItem(m_paletteModel->retrieveModelPart(ModuleIDNames::WireModuleIDName), source->attachedTo()->viewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);		
-	VirtualWire * wire = qobject_cast<VirtualWire *>(newItemBase);
-	tempConnectWire(wire, source, dest);
-
-	if (!source->attachedTo()->isVisible() || !dest->attachedTo()->isVisible()) {
-		wire->setVisible(false);
-	}
-
-	double opacity = getRatsnestOpacity(routed);
-	wire->setColor(color, opacity);
-
-	return wire;
-}
-
-void PCBSketchWidget::makeRatsnestViewGeometry(ViewGeometry & viewGeometry, ConnectorItem * source, ConnectorItem * dest) 
-{
-	QPointF fromPos = source->sceneAdjustedTerminalPoint(NULL);
-	viewGeometry.setLoc(fromPos);
-	QPointF toPos = dest->sceneAdjustedTerminalPoint(NULL);
-	QLineF line(0, 0, toPos.x() - fromPos.x(), toPos.y() - fromPos.y());
-	viewGeometry.setLine(line);
-	viewGeometry.setWireFlags(ViewGeometry::RatsnestFlag);
 }
 
 ConnectorItem * PCBSketchWidget::lookForBreadboardConnection(ConnectorItem * connectorItem) 
@@ -883,121 +711,6 @@ long PCBSketchWidget::makeModifiedWire(ConnectorItem * fromConnectorItem, Connec
 								true, parentCommand);
 
 	return newID;
-}
-
-void PCBSketchWidget::modifyNewWireConnectionsAux(ConnectorItem * fromConnectorItem,
-												  ConnectorItem * toConnectorItem, 
-												  QUndoCommand * parentCommand)
-{
-	// fromConnectorItem is connected to a wire
-	Wire * wire = qobject_cast<Wire *>(fromConnectorItem->attachedTo());
-	QList<Wire *> wires;
-	QList<ConnectorItem *> ends;
-	wire->collectChained(wires, ends);
-	ConnectorItem::collectEqualPotential(ends, true, ViewGeometry::TraceRatsnestFlags);
-	if (ends.contains(toConnectorItem)) {
-		// don't need a new wire
-		return;
-	}
-
-	ConnectorItem * originalFromConnectorItem = fromConnectorItem;
-	fromConnectorItem = lookForBreadboardConnection(fromConnectorItem);		
-	if (fromConnectorItem->attachedToItemType() == ModelPart::Breadboard) {
-		makeModifiedWire(fromConnectorItem, toConnectorItem, BaseCommand::CrossView, ViewGeometry::NormalFlag, parentCommand);
-		return;
-	}
-
-	makeTwoWires(originalFromConnectorItem, fromConnectorItem, toConnectorItem, toConnectorItem, parentCommand);
-}
-
-void PCBSketchWidget::makeTwoWires(ConnectorItem * originalFromConnectorItem, ConnectorItem * fromConnectorItem,
-									ConnectorItem * originalToConnectorItem, ConnectorItem * toConnectorItem, 
-									QUndoCommand * parentCommand) 
-{	
-	ItemBase * newBreadboard = NULL;
-	if (!(fromConnectorItem->attachedToItemType() == ModelPart::Breadboard)) {
-		// find an empty bus on a breadboard
-		fromConnectorItem = lookForNewBreadboardConnection(fromConnectorItem, newBreadboard);
-		if (fromConnectorItem == NULL) {
-			// this shouldn't happen
-			return;
-		}
-
-		if (newBreadboard) {
-			new AddItemCommand(this, BaseCommand::CrossView, newBreadboard->moduleID(), originalFromConnectorItem->attachedTo()->viewLayerSpec(), newBreadboard->getViewGeometry(), newBreadboard->id(), true, -1, parentCommand);
-			m_temporaries.append(newBreadboard);			// puts it on a list to be deleted
-		}
-	}
-
-	ConnectorItem * nearestPartConnectorItem = findNearestPartConnectorItem(originalFromConnectorItem);
-	if (nearestPartConnectorItem == NULL) return;
-
-	// make a wire, from the part nearest to fromConnectorItem, to the breadboard
-	toConnectorItem = nearestPartConnectorItem;
-	makeModifiedWire(fromConnectorItem, toConnectorItem, BaseCommand::CrossView, ViewGeometry::NormalFlag, parentCommand);
-
-	if (originalToConnectorItem->attachedToItemType() == ModelPart::Wire) {
-		originalToConnectorItem = findNearestPartConnectorItem(originalToConnectorItem);
-		if (originalToConnectorItem == NULL) return;
-	}
-
-	// draw a wire from that bus on the breadboard to the other part (toConnectorItem)
-	ConnectorItem * otherPartBusConnectorItem = findEmptyBusConnectorItem(fromConnectorItem);
-	makeModifiedWire(otherPartBusConnectorItem, originalToConnectorItem, BaseCommand::CrossView, ViewGeometry::NormalFlag, parentCommand);
-}
-
-ConnectorItem * PCBSketchWidget::lookForNewBreadboardConnection(ConnectorItem * connectorItem,  ItemBase * & newBreadboard) {
-	Q_UNUSED(connectorItem);
-	
-	newBreadboard = NULL;
-	QList<ItemBase *> breadboards;
-	double maxY = 0;
-	foreach (QGraphicsItem * item, scene()->items()) {
-		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
-		if (itemBase == NULL) continue;
-
-		if (itemBase->itemType() == ModelPart::Breadboard) {
-			breadboards.append(itemBase);
-			break;
-		}
-
-		double y = itemBase->pos().y() + itemBase->size().height();
-		if (y > maxY) {
-			maxY = y;
-		}
-	}
-
-	ConnectorItem * busConnectorItem = NULL;
-	foreach (ItemBase * breadboard, breadboards) {
-		busConnectorItem = findEmptyBus(breadboard);
-		if (busConnectorItem != NULL) return busConnectorItem;
-	}
-
-	ViewGeometry vg;
-	vg.setLoc(QPointF(0, maxY + 50));
-
-	long id = ItemBase::getNextID();
-	newBreadboard = this->addItem(ModuleIDNames::TinyBreadboardModuleIDName, defaultViewLayerSpec(), BaseCommand::SingleView, vg, id, -1, NULL);
-	busConnectorItem = findEmptyBus(newBreadboard);
-	return busConnectorItem;
-}
-
-ConnectorItem * PCBSketchWidget::findEmptyBus(ItemBase * breadboard) {
-	foreach (Bus * bus, breadboard->buses().values()) {
-		QList<ConnectorItem *> busConnectorItems;
-		breadboard->busConnectorItems(bus, busConnectorItems);
-		bool allEmpty = true;
-		foreach (ConnectorItem * busConnectorItem, busConnectorItems) {
-			if (busConnectorItem->connectionsCount() > 0) {
-				allEmpty = false;
-				break;
-			}
-		}
-		if (allEmpty && busConnectorItems.count() > 0) {
-			return busConnectorItems[0];
-		}
-	}
-	return NULL;
 }
 
 ConnectorItem * PCBSketchWidget::findNearestPartConnectorItem(ConnectorItem * fromConnectorItem) {
@@ -1242,167 +955,6 @@ void PCBSketchWidget::forwardRoutingStatus(const RoutingStatus & routingStatus)
 	SketchWidget::forwardRoutingStatus(routingStatus);
 }
 
-void PCBSketchWidget::updateRoutingStatus(CleanUpWiresCommand* command, RoutingStatus & routingStatus, bool manual)
-{
-	//DebugDialog::debug("update ratsnest status");
-
-
-	checkDeleteTrace(command);
-
-	routingStatus.zero();
-	updateRoutingStatus(routingStatus, manual);
-
-	if (routingStatus != m_routingStatus) {
-		if (command) {
-			// changing state after the command has already been executed
-			command->addRoutingStatus(this, m_routingStatus, routingStatus);
-		}
-
-		emit routingStatusSignal(this, routingStatus);
-
-		m_routingStatus = routingStatus;
-	}
-}
-
-void PCBSketchWidget::updateRoutingStatus(RoutingStatus & routingStatus, bool manual) 
-{
-	DebugDialog::debug(QString("update routing status %1 %2 %3")
-		.arg(m_viewIdentifier) 
-		.arg(m_ratsnestUpdateConnect.count())
-		.arg(m_ratsnestUpdateDisconnect.count())
-		);
-
-	// TODO: think about ways to optimize this...
-
-	QList< QPointer<VirtualWire> > ratsToDelete;
-
-	QList< QList<ConnectorItem *> > ratnestsToUpdate;
-	QList<ConnectorItem *> visited;
-	foreach (QGraphicsItem * item, scene()->items()) {
-		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
-		if (connectorItem == NULL) continue;
-		if (visited.contains(connectorItem)) continue;
-
-		//connectorItem->debugInfo("testing urs");
-
-		VirtualWire * vw = qobject_cast<VirtualWire *>(connectorItem->attachedTo());
-		if (vw != NULL) {
-			if (vw->connector0()->connectionsCount() == 0 || vw->connector1()->connectionsCount() == 0) {
-				ratsToDelete.append(vw);
-			}
-			visited << vw->connector0() << vw->connector1();
-			continue;  
-		}
-
-
-		QList<ConnectorItem *> connectorItems;
-		connectorItems.append(connectorItem);
-		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::RatsnestFlag | getTraceFlag());
-		visited.append(connectorItems);
-
-		//foreach (ConnectorItem * ci, connectorItems) ci->debugInfo("cep");
-
-		bool doRatsnest = manual || checkUpdateRatsnest(connectorItems);
-		if (!doRatsnest && connectorItems.count() <= 1) continue;
-
-		QList<ConnectorItem *> partConnectorItems;
-		ConnectorItem::collectParts(connectorItems, partConnectorItems, includeSymbols(), ViewLayer::TopAndBottom);
-		if (partConnectorItems.count() < 1) continue;
-		if (!doRatsnest && partConnectorItems.count() <= 1) continue;
-
-		for (int i = partConnectorItems.count() - 1; i >= 0; i--) {
-			ConnectorItem * ci = partConnectorItems[i];
-			
-			//ci->debugInfo("pc");
-
-			if (!ci->attachedTo()->isEverVisible()) {
-				// may not be necessary when views are brought completely into sync
-				partConnectorItems.removeAt(i);
-			}
-		}
-
-		if (partConnectorItems.count() < 1) continue;
-
-		if (doRatsnest) {
-			ratnestsToUpdate.append(partConnectorItems);
-		}
-
-		if (partConnectorItems.count() <= 1) continue;
-
-		GraphUtils::scoreOneNet(partConnectorItems, routingStatus);
-	}
-
-	routingStatus.m_jumperItemCount /= 4;			// since we counted each connector twice on two layers (4 connectors per jumper item)
-
-	// can't do this in the above loop since VirtualWires and ConnectorItems are added and deleted
-	foreach (QList<ConnectorItem *> partConnectorItems, ratnestsToUpdate) {
-		partConnectorItems.at(0)->displayRatsnest(partConnectorItems);
-	}
-
-	foreach(QPointer<VirtualWire> vw, ratsToDelete) {
-		if (vw != NULL) {
-			vw->scene()->removeItem(vw);
-			delete vw;
-		}
-	}
-
-        /*
-        // uncomment for live drc
-        CMRouter cmRouter(this);
-        QString message;
-        bool result = cmRouter.drc(message);
-        */
-}
-
-bool PCBSketchWidget::checkUpdateRatsnest(QList<ConnectorItem *> & connectorItems) {
-	bool doRatsnest = false;
-	for (int i = m_ratsnestUpdateConnect.count() - 1; i >= 0; i--) {
-		ConnectorItem * ci = m_ratsnestUpdateConnect[i];
-		bool remove = false;
-		if (ci == NULL) {
-			remove = true;
-			//DebugDialog::debug(QString("rem rat null %1 con:true").arg(m_viewIdentifier));
-		}
-		else if (connectorItems.contains(ci)) {
-			remove = true;
-			/*
-			DebugDialog::debug(QString("rem rat '%1' id:%2 cid:%3 vid:%4 vlid:%5 con:true")
-				.arg(ci->attachedToTitle())
-				.arg(ci->attachedToID())
-				.arg(ci->connectorSharedID())
-				.arg(m_viewIdentifier)
-				.arg(ci->attachedToViewLayerID())
-				);
-				*/
-			doRatsnest = true;
-		}
-		if (remove) m_ratsnestUpdateConnect.removeAt(i);
-	}
-	for (int i = m_ratsnestUpdateDisconnect.count() - 1; i >= 0; i--) {
-		ConnectorItem * ci = m_ratsnestUpdateDisconnect[i];
-		bool remove = false;
-		if (ci == NULL) {
-			remove = true;
-			//DebugDialog::debug(QString("rem rat null %1 con:false").arg(m_viewIdentifier));
-		}
-		else if (connectorItems.contains(ci)) {
-			remove = true;
-			/*
-			DebugDialog::debug(QString("rem rat '%1' id:%2 cid:%3 vid:%4 vlid:%5 false")
-				.arg(ci->attachedToTitle())
-				.arg(ci->attachedToID())
-				.arg(ci->connectorSharedID())
-				.arg(m_viewIdentifier)
-				.arg(ci->attachedToViewLayerID())
-				);
-				*/
-			doRatsnest = true;
-		}
-		if (remove) m_ratsnestUpdateDisconnect.removeAt(i);
-	}
-
-	return doRatsnest;
-}
 
 double PCBSketchWidget::defaultGridSizeInches() {
 	return 0.1;
@@ -1632,7 +1184,7 @@ void PCBSketchWidget::removeWire(Wire * w, QList<ConnectorItem *> & ends, QList<
 	w->collectChained(chained, ends);
 	makeWiresChangeConnectionCommands(chained, parentCommand);
 	foreach (Wire * c, chained) {
-		makeDeleteItemCommand(c,  /* BaseCommand::SingleView  */ BaseCommand::CrossView, parentCommand);
+		makeDeleteItemCommand(c, BaseCommand::CrossView, parentCommand);
 		done.append(c);
 	}
 }
@@ -1929,147 +1481,12 @@ void PCBSketchWidget::resizeBoard() {
 	m_resizingBoard = NULL;
 }
 
-void PCBSketchWidget::deleteSelected(Wire * wire) {
-	QSet<ItemBase *> itemBases;
-	if (wire) {
-		itemBases << wire;
-	}
-	else {
-		foreach (QGraphicsItem * item, scene()->selectedItems()) {
-			ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
-			if (itemBase == NULL) continue;
-
-			itemBase = itemBase->layerKinChief();
-			itemBases.insert(itemBase);
-		}
-	}
-
-	// assumes ratsnest is not mixed with other itembases
-	bool rats = true;
-	foreach (ItemBase * itemBase, itemBases) {
-		Wire * wire = qobject_cast<Wire *>(itemBase);
-		if (wire == NULL) {
-			rats = false;
-			break;
-		}
-		if (!wire->getRatsnest()) {
-			rats = false;
-			break;
-		}
-	}
-
-	if (!rats) {
-		SketchWidget::deleteSelected(NULL);			// wire is selected in this case, so don't bother sending it along
-		return;
-	}
-
-	// probably deal with connections to ground symbol or ground plane here?
-
-	QUndoCommand * parentCommand = new QUndoCommand(tr("Delete ratsnest"));
-	QList<long> ids;
-	emit disconnectWireSignal(itemBases, ids, parentCommand);
-	m_undoStack->push(parentCommand);
-}
-
 bool PCBSketchWidget::canDragWire(Wire * wire) {
 	if (wire == NULL) return false;
 
 	if (wire->getRatsnest()) return false;
 
 	return true;
-}
-
-void PCBSketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, ConnectorItem * to)
-{
-	if (m_bendpointWire == NULL || !wire->getRatsnest()) {
-		SketchWidget::dragWireChanged(wire, fromOnWire, to);
-		return;
-	}
-
-	// m_bendpointWire is the original wire
-	// m_connectorDragWire is temporary
-	// wire == m_connectorDragWire
-	// m_connectorDragConnector is from original wire
-
-	QList<Wire *> wires;
-	QList<ConnectorItem *> ends;
-	m_bendpointWire->collectChained(wires, ends);
-	if (ends.count() != 2) {
-		// ratsnest wires should always and only have two ends: we're screwed
-		return;
-	}
-
-	BaseCommand::CrossViewType crossViewType = BaseCommand::SingleView;
-
-	QUndoCommand * parentCommand = new QUndoCommand();
-	parentCommand->setText(tr("Create and connect trace"));
-
-	new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
-
-	//SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
-
-	m_connectorDragWire->saveGeometry();
-	m_bendpointWire->saveGeometry();
-
-	ViewLayer::ViewLayerSpec viewLayerSpec = createWireViewLayerSpec(ends[0], ends[1]);
-	if (viewLayerSpec == ViewLayer::UnknownSpec) {
-		// for now this should not be possible
-		QMessageBox::critical(NULL, tr("Fritzing"), tr("This seems like an attempt to create a trace across layers. This circumstance should not arise: please contact the developers."));
-	}
-	else {
-		long newID1 = ItemBase::getNextID();
-		ViewGeometry vg1 = m_connectorDragWire->getViewGeometry();
-		vg1.setWireFlags(getTraceFlag());
-		new AddItemCommand(this, crossViewType, m_connectorDragWire->moduleID(), viewLayerSpec, vg1, newID1, true, -1, parentCommand);
-		new CheckStickyCommand(this, crossViewType, newID1, false, CheckStickyCommand::RemoveOnly, parentCommand);
-		new WireColorChangeCommand(this, newID1, traceColor(viewLayerSpec), traceColor(viewLayerSpec), 1.0, 1.0, parentCommand);
-		new WireWidthChangeCommand(this, newID1, getTraceWidth(), getTraceWidth(), parentCommand);
-
-		long newID2 = ItemBase::getNextID();
-		ViewGeometry vg2 = m_bendpointWire->getViewGeometry();
-		vg2.setWireFlags(getTraceFlag());
-		new AddItemCommand(this, crossViewType, m_bendpointWire->moduleID(), viewLayerSpec, vg2, newID2, true, -1, parentCommand);
-		new CheckStickyCommand(this, crossViewType, newID2, false, CheckStickyCommand::RemoveOnly, parentCommand);
-		new WireColorChangeCommand(this, newID2, traceColor(viewLayerSpec), traceColor(viewLayerSpec), 1.0, 1.0, parentCommand);
-		new WireWidthChangeCommand(this, newID2, getTraceWidth(), getTraceWidth(), parentCommand);
-
-		new ChangeConnectionCommand(this, BaseCommand::SingleView,
-										newID2, m_connectorDragConnector->connectorSharedID(),
-										newID1, m_connectorDragWire->connector0()->connectorSharedID(),
-										viewLayerSpec,					// ViewLayer::specFromID(wire->viewLayerID())
-										true, parentCommand);
-
-		foreach (ConnectorItem * toConnectorItem, m_bendpointWire->connector0()->connectedToItems()) {
-			new ChangeConnectionCommand(this, BaseCommand::SingleView,
-										newID2, m_bendpointWire->connector0()->connectorSharedID(),
-										toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
-										viewLayerSpec,					// ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID())
-										true, parentCommand);
-		}
-		foreach (ConnectorItem * toConnectorItem, m_connectorDragWire->connector1()->connectedToItems()) {
-			new ChangeConnectionCommand(this, BaseCommand::SingleView,
-										newID1, m_connectorDragWire->connector1()->connectorSharedID(),
-										toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
-										viewLayerSpec,					// ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID())
-										true, parentCommand);
-			m_connectorDragWire->connector1()->tempRemove(toConnectorItem, false);
-			toConnectorItem->tempRemove(m_connectorDragWire->connector1(), false);
-			m_bendpointWire->connector1()->tempConnectTo(toConnectorItem, false);
-			toConnectorItem->tempConnectTo(m_bendpointWire->connector1(), false);
-		}
-	}
-
-	m_bendpointWire->setPos(m_bendpointVG.loc());
-	m_bendpointWire->setLine(m_bendpointVG.line());
-	m_connectorDragConnector->tempRemove(m_connectorDragWire->connector0(), false);
-	m_connectorDragWire->connector0()->tempRemove(m_connectorDragConnector, false);
-	m_bendpointWire = NULL;			// signal that we're done
-
-	// remove the temporary wire
-	this->scene()->removeItem(m_connectorDragWire);
-
-	new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
-	m_undoStack->push(parentCommand);
 }
 
 void PCBSketchWidget::wireSplitSlot(Wire* wire, QPointF newPos, QPointF oldPos, QLineF oldLine) {
@@ -2080,8 +1497,9 @@ void PCBSketchWidget::wireSplitSlot(Wire* wire, QPointF newPos, QPointF oldPos, 
 	createTrace(wire);
 }
 
-
 void PCBSketchWidget::jumperItemHack() {
+	return;
+
 	if (AlreadyDidJumperHack) return;
 
 	// under linux32, Qt 4.6.1, 4.6.2, 4.6.3, certain files (StepperMotor.fz) cause a crash somehow related to JumperItems.
@@ -2123,7 +1541,7 @@ void PCBSketchWidget::updateNet(Wire * wire) {
 	ConnectorItem::collectParts(connectorItems, partConnectorItems, includeSymbols(), ViewLayer::TopAndBottom);
 	if (partConnectorItems.count() < 1) return;
 
-	partConnectorItems.at(0)->displayRatsnest(partConnectorItems);
+	partConnectorItems.at(0)->displayRatsnest(partConnectorItems, this->getTraceFlag());
 }
 
 bool PCBSketchWidget::hasAnyNets() {
@@ -2291,21 +1709,6 @@ void PCBSketchWidget::changeTrace(Wire * wire, ConnectorItem * from, ConnectorIt
 			toDest = this->findNearestPartConnectorItem(toDest);
 		}
 
-		QList<ConnectorItem *> connectorItems;
-		connectorItems.append(toDest);
-		ConnectorItem::collectEqualPotential(connectorItems, true,getTraceFlag() | ViewGeometry::RatsnestFlag);
-		if (!connectorItems.contains(fromDest)) {
-			// have to make a permanent connection
-			ConnectorItem * permanentFrom = fromDest;
-			foreach (ConnectorItem * end, ends) {
-				if (end != fromDest) {
-					permanentFrom = end;
-					break;
-				}
-			}
-			makeModifiedWire(permanentFrom, toDest, BaseCommand::CrossView, ViewGeometry::NormalFlag, parentCommand);	
-		}	
-
 		extendChangeConnectionCommand(BaseCommand::CrossView, from, to, 
 				ViewLayer::specFromID(wire->viewLayerID()),
 				true, parentCommand);
@@ -2375,62 +1778,6 @@ void PCBSketchWidget::changeTrace(Wire * wire, ConnectorItem * from, ConnectorIt
 	m_undoStack->push(parentCommand);
 }
 
-void PCBSketchWidget::checkDeleteTrace(CleanUpWiresCommand* command) 
-{
-	if (command == NULL) return;
-	if (m_ratsnestUpdateDisconnect.count() == 0) return;
-	if (command->hasTraces(this)) return;			// already dealt with this
-
-	// this code should now only be relevant to the case in which a wire is deleted in breadboard view
-	if (command->sketchWidget()->viewIdentifier() != ViewIdentifierClass::BreadboardView) return;
-
-	QSet<Wire *> deletedWires;
-	QList<Wire *> visitedWires;
-	foreach (QGraphicsItem * item, scene()->items()) {
-		Wire * wire = dynamic_cast<Wire *>(item);
-		if (wire == NULL) continue;
-		if (!wire->getTrace()) continue;
-		if (visitedWires.contains(wire)) continue;
-
-		if (wire->connector0()->connectedToItems().count() == 0) {
-			// trace is already going to be deleted
-			continue;
-		}
-
-		QList<Wire *> wires;
-		QList<ConnectorItem *> ends;
-		wire->collectChained(wires, ends);
-		visitedWires.append(wires);
-		if (ends.count() <= 0) continue;
-
-		//foreach (ConnectorItem * ci, ends) ci->debugInfo("end");
-
-		QList<ConnectorItem *> connectorItems;
-		connectorItems.append(ends[0]);
-		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::RatsnestFlag | getTraceFlag());
-		//foreach (ConnectorItem * ci, connectorItems) ci->debugInfo("   eq");
-
-		bool doDelete = false;
-		foreach (ConnectorItem * end, ends) {
-			if (!connectorItems.contains(end)) {
-				doDelete = true;
-				break;
-			}
-		}
-
-		if (doDelete) {
-			foreach (Wire * w, wires) {
-				command->addTrace(this, w);
-				deletedWires.insert(w);
-			}
-		}
-	}
-
-	foreach (Wire * w, deletedWires.values()) {
-		//wire->markDeleted(true);
-		deleteItem(w, true, false, false);
-	}
-}
 
 
 void PCBSketchWidget::deleteItem(ItemBase * itemBase, bool deleteModelPart, bool doEmit, bool later)
@@ -2674,7 +2021,7 @@ Wire * PCBSketchWidget::createTempWireForDragging(Wire * fromWire, ModelPart * w
 	if (spec == ViewLayer::UnknownSpec) {
 		spec = wireViewLayerSpec(connectorItem);
 	}
-	viewGeometry.setTrace(true);
+	viewGeometry.setPCBTrace(true);
 	Wire * wire =  SketchWidget::createTempWireForDragging(fromWire, wireModel, connectorItem, viewGeometry, spec);
 	if (fromWire == NULL) {
 		wire->setColorString(traceColor(connectorItem), 1.0);
@@ -2764,3 +2111,24 @@ QString PCBSketchWidget::characterizeGroundFill() {
 
 	return result;
 }
+
+void PCBSketchWidget::setUpColor(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, Wire * wire, QUndoCommand * parentCommand) {
+		ViewGeometry::WireFlags flags =  getTraceFlag();
+		QString tc = traceColor(fromConnectorItem);
+		new WireColorChangeCommand(this, wire->id(), tc, tc, 1.0, 1.0, parentCommand);
+		double traceWidth = getTraceWidth();
+		if (autorouteTypePCB()) {
+			double minDim = qMin(fromConnectorItem->minDimension(), toConnectorItem->minDimension());
+			if (minDim < traceWidth) {
+				traceWidth = getSmallerTraceWidth(minDim);  
+			}
+		}
+		new WireWidthChangeCommand(this, wire->id(), traceWidth, traceWidth, parentCommand);
+
+}
+
+ViewGeometry::WireFlag PCBSketchWidget::getTraceFlag() {
+	return ViewGeometry::PCBTraceFlag;
+}
+
+

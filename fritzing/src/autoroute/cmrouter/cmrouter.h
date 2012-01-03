@@ -123,6 +123,8 @@ struct Ordering {
 	int viaCount;
 	int totalViaCount;
 	QByteArray md5sum;
+	QByteArray saved;
+	QMultiHash<TraceWire *, long> splitDNA;
 
 	Ordering() {
 		unroutedCount = jumperCount = viaCount = totalViaCount = 0;
@@ -205,7 +207,7 @@ signals:
 protected:
 	void restoreOriginalState(QUndoCommand * parentCommand);
 	void addWireToUndo(Wire * wire, QUndoCommand * parentCommand);
-	void addToUndo(QUndoCommand * parentCommand);
+	void addToUndo(QMultiHash<TraceWire *, long> &, QUndoCommand * parentCommand);
 	void collectEdges(QList<Edge *> & edges);
 	//bool findShortcut(TileRect & tileRect, bool useX, bool targetGreater, JSubedge * subedge, QList<QPointF> & allPoints, int ix);
 	//void shortenUs(QList<QPointF> & allPoints, JSubedge *);
@@ -234,7 +236,7 @@ protected:
 	bool appendIfRect(PathUnit * pathUnit, TileRect & nextRect, PathUnit::Direction direction, int tWidthNeeded);
 	bool roomToNext(PathUnit * pathUnit, bool horizontal, int tWidthNeeded, TileRect & nextRect);
 	void hookUpWires(QList<PathUnit *> & fullPath, QList<Wire *> & wires);
-	ConnectorItem * splitTrace(Wire * wire, QPointF point);
+	ConnectorItem * splitTrace(Wire * wire, QPointF point, Edge *);
 	void clearEdge(Edge * edge);
 	PathUnit * initPathUnit(Edge * edge, Tile *, PriorityQueue<PathUnit *> & pq, QMultiHash<Tile *, PathUnit *> &);
 	bool propagate(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit *> & p2, QMultiHash<Tile *, PathUnit *> &, CompletePath  &, bool canCrossLayers);
@@ -263,21 +265,20 @@ protected:
 							PathUnit * & nearest, int & bestCost, TileRect & nearestSpace, bool horizontal);
 	QPointF calcJumperLocation(PathUnit * pathUnit, TileRect & nearestSpace, int tWidthNeeded, int tHeightNeeded);
 	bool addJumperItemHalf(ConnectorItem * jumperConnectorItem, PathUnit * nearest, PathUnit * parent, int searchx, int searchy, Edge * edge);
-	Edge * makeEdge(ConnectorItem * from, ConnectorItem * to, class VirtualWire *);
+	Edge * makeEdge(ConnectorItem * from, ConnectorItem * to);
 	void expand(ConnectorItem * originalConnectorItem, QList<ConnectorItem *> & connectorItems, QSet<Wire *> & traceWires);
 	void clipParts();
 	void insertUnion(TileRect & tileRect, QGraphicsItem *, Tile::TileType tileType);
 	bool blockDirection(PathUnit * pathUnit, PathUnit::Direction direction, TileRect & nextRect, int tWidthNeeded);
 	void clearTracesAndJumpers();
-	void saveTracesAndJumpers(QByteArray & byteArray);
+	void saveTracesAndJumpers(Ordering *);
 	void initUndo(QUndoCommand * parentCommand);
 	void addUndoConnection(bool connect, class JumperItem *, QUndoCommand * parentCommand);
 	void addUndoConnection(bool connect, class Via *, QUndoCommand * parentCommand);
 	void addUndoConnection(bool connect, TraceWire *, QUndoCommand * parentCommand);
 	void addUndoConnection(bool connect, ConnectorItem *, BaseCommand::CrossViewType, QUndoCommand * parentCommand);
-	bool reorder(QList<Ordering *> & orderings, Ordering *  currentOrdering, Ordering * & bestOrdering, QByteArray & bestResult, QGraphicsLineItem * lineItem);
+	bool reorder(QList<Ordering *> & orderings, Ordering *  currentOrdering, Ordering * & bestOrdering, QGraphicsLineItem * lineItem);
 	bool reorderEdges(QList<Ordering *> & orderings, Ordering * currentOrdering, QGraphicsLineItem *);
-	ConnectorItem * findPartForJumperOrVia(ConnectorItem * jumperConnectorItem);
 	void drawTileRect(TileRect & tileRect, QColor & color);
 	void deletePathUnits();
 	void computeMD5(Ordering * ordering);
@@ -288,7 +289,6 @@ protected:
 	void listCompletePath(CompletePath & completePath, QList<PathUnit *> & fullPath);
     class Via * makeVia(PathUnit * pathUnit);
 	bool orderingImproved(Ordering * currentOrdering, Ordering * bestOrdering);
-	ConnectorItem * findViaConnector(ConnectorItem * viaConnectorItem);
 	double minWireWidth(CompletePath & completePath);
 	void setUpWidths(double width);
 	void fixWidths();
@@ -304,12 +304,12 @@ protected:
 	QHash<ViewLayer::ViewLayerID, Plane *> m_planeHash;
 	QHash<Plane*, ViewLayer::ViewLayerSpec> m_specHash;
 	QList<Plane *> m_planes;
+	QMultiHash<TraceWire *, TraceWire *> m_splitDNA;
 	Plane * m_unionPlane;
 	Plane * m_union90Plane;
 	QHash<Wire *, Edge *> m_tracesToEdges;
 	ItemBase * m_board;
 	int m_maxCycles;
-	QByteArray m_startState;
 	QSet<ConnectorItem *> m_offBoardConnectors;
 	QHash<PathUnit *, TileRect> m_nearestSpaces;
 	bool m_hasOverlaps;

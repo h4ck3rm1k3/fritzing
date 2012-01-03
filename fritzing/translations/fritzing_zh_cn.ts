@@ -748,10 +748,6 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation>导线</translation>
     </message>
     <message>
-        <source>Rat&apos;s nest wire</source>
-        <translation>飞线和覆铜预览</translation>
-    </message>
-    <message>
         <source>Trace wire %1</source>
         <translation>引导线%1</translation>
     </message>
@@ -793,6 +789,10 @@ Please select one of the Fritzing fonts to replace them:</source>
     </message>
     <message>
         <source>Change the locked state of the part in this view.  A locked part can&apos;t be moved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ratsnest wire</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2629,6 +2629,14 @@ Please check all views for potential side-effects.</source>
         <source>There are traces connected to copper fill which will also be removed. Proceed?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>No copper top layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The copper top (copper 1) layer is not available on a one-sided board.  Please switch the board to double-sided or choose the copper bottom (copper 0) layer.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -2720,10 +2728,6 @@ Reason: %2 (errcode %3)</source>
         <translation>改变引导线层</translation>
     </message>
     <message>
-        <source>Create and connect trace</source>
-        <translation>创建并连接引导线</translation>
-    </message>
-    <message>
         <source>Delete ratsnest</source>
         <translation>删除覆铜</translation>
     </message>
@@ -2756,11 +2760,11 @@ Reason: %2 (errcode %3)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This seems like an attempt to create a trace across layers. This circumstance should not arise: please contact the developers.</source>
+        <source>Unable to create copper fill--possibly the part was dropped onto another part or wire rather than the actual PCB.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unable to create copper fill--possibly the part was dropped onto another part or wire rather than the actual PCB.</source>
+        <source>Fritzing only allows one board part per sketch. Either delete the current board, or select it and swap it for a different one.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3990,10 +3994,6 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
         <translation>板</translation>
     </message>
     <message>
-        <source>Rat&apos;s nest</source>
-        <translation>飞线和覆铜预览</translation>
-    </message>
-    <message>
         <source>Unknown Layer</source>
         <translation>未知层</translation>
     </message>
@@ -4392,6 +4392,10 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     </message>
     <message>
         <source>Pin Label Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ratsnest</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -71,8 +71,7 @@ TraceWire * Autorouter::drawOneTrace(QPointF fromPos, QPointF toPos, int width, 
 	QLineF line(0, 0, toPos.x() - fromPos.x(), toPos.y() - fromPos.y());
 	viewGeometry.setLine(line);
 
-	ItemBase * trace = m_sketchWidget->
-	  addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ModuleIDNames::WireModuleIDName), 
+	ItemBase * trace = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ModuleIDNames::WireModuleIDName), 
 		  viewLayerSpec, BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
 	if (trace == NULL) {
 		// we're in trouble
@@ -94,51 +93,6 @@ TraceWire * Autorouter::drawOneTrace(QPointF fromPos, QPointF toPos, int width, 
 	traceWire->setWireWidth(width, m_sketchWidget, m_sketchWidget->getWireStrokeWidth(traceWire, width));
 
 	return traceWire;
-}
-
-void Autorouter::expand(ConnectorItem * originalConnectorItem, QList<ConnectorItem *> & connectorItems, QSet<Wire *> & visited) 
-{
-	Bus * bus = originalConnectorItem->bus();
-	if (bus == NULL) {
-		connectorItems.append(originalConnectorItem);
-	}
-	else {
-		// TODO: make sure both sides get bus relatives correctly
-
-		QList<ConnectorItem *> tempConnectorItems;
-		originalConnectorItem->attachedTo()->busConnectorItems(bus, tempConnectorItems);
-		ViewLayer::ViewLayerID originalViewLayerID = originalConnectorItem->attachedToViewLayerID();
-		foreach (ConnectorItem * connectorItem, tempConnectorItems) {
-			if (m_sketchWidget->sameElectricalLayer2(connectorItem->attachedToViewLayerID(), originalViewLayerID)) {
-				connectorItems.append(connectorItem);
-			}
-		}
-	}
-
-	for (int i = 0; i < connectorItems.count(); i++) { 
-		ConnectorItem * fromConnectorItem = connectorItems[i];
-		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
-			TraceWire * traceWire = qobject_cast<TraceWire *>(toConnectorItem->attachedTo());
-			if (traceWire == NULL) continue;
-			if (visited.contains(traceWire)) continue;
-
-			QList<Wire *> wires;
-			QList<ConnectorItem *> ends;
-			traceWire->collectChained(wires, ends);
-			foreach (Wire * wire, wires) {
-				ConnectorItem * c0 = wire->connector0();
-				if ((c0 != NULL) && c0->chained()) {
-					connectorItems.append(c0);
-				}
-				visited.insert(wire);
-			}
-			foreach (ConnectorItem * end, ends) {
-				if (!connectorItems.contains(end)) {
-					connectorItems.append(end);
-				}
-			}
-		}
-	}
 }
 
 void Autorouter::cancel() {

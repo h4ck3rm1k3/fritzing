@@ -34,8 +34,8 @@ class GraphUtils
 {
 
 public:
-	static bool chooseRatsnestGraph(const QList<ConnectorItem *> & equipotentials, ConnectorPairHash & result);
-	static bool scoreOneNet(QList<ConnectorItem *> & partConnectorItems, RoutingStatus & routingStatus);
+	static bool chooseRatsnestGraph(const QList<ConnectorItem *> & equipotentials, ViewGeometry::WireFlags, ConnectorPairHash & result);
+	static bool scoreOneNet(QList<ConnectorItem *> & partConnectorItems, ViewGeometry::WireFlags, RoutingStatus & routingStatus);
 
 };
 

@@ -106,7 +106,7 @@ void SchematicSketchWidget::tidyWires() {
 	foreach (QGraphicsItem * item, scene()->selectedItems()) {
 		Wire * wire = dynamic_cast<Wire *>(item);
 		if (wire == NULL) continue;
-		if (!wire->getTrace()) continue;
+		if ((wire->getViewGeometry().wireFlags() & ViewGeometry::SchematicTraceFlag) == 0) continue;
 		if (visited.contains(wire)) continue;
 	}
 }
@@ -465,3 +465,4 @@ void SchematicSketchWidget::rotatePartLabels(double degrees, QTransform & transf
 {
 	SketchWidget::rotatePartLabels(degrees, transform, center, parentCommand);
 }
+

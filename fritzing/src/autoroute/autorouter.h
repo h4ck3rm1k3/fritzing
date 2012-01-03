@@ -55,7 +55,6 @@ protected:
 	virtual void cleanUpNets();
 	virtual void updateRoutingStatus();
 	virtual class TraceWire * drawOneTrace(QPointF fromPos, QPointF toPos, int width, ViewLayer::ViewLayerSpec);
-	virtual void expand(ConnectorItem * originalConnectorItem, QList<ConnectorItem *> & connectorItems, QSet<Wire *> & visited);
 
 public slots:
 	virtual void cancel();

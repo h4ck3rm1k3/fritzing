@@ -1022,7 +1022,7 @@ QString ChangeZCommand::getParamString() const {
 		+ BaseCommand::getParamString();
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////singlev///////////////////////////////////////////////////////////////////////
 
 CheckStickyCommand::CheckStickyCommand(SketchWidget* sketchWidget, BaseCommand::CrossViewType crossViewType, long itemID, bool checkCurrent, CheckType checkType, QUndoCommand *parent)
 : BaseCommand(crossViewType, sketchWidget, parent)
@@ -1169,19 +1169,19 @@ void CleanUpWiresCommand::addTrace(SketchWidget * sketchWidget, Wire * wire)
 	addSubCommand(new WireWidthChangeCommand(sketchWidget, wire->id(), wire->width(), wire->width(), NULL));
 	
 	foreach (ConnectorItem * toConnectorItem, wire->connector0()->connectedToItems()) {	
-		addSubCommand(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
+		addSubCommand(new ChangeConnectionCommand(sketchWidget, BaseCommand::CrossView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
 								wire->id(), "connector0", 
 								ViewLayer::specFromID(wire->viewLayerID()),
 								false, NULL));
 	}
 	foreach (ConnectorItem * toConnectorItem, wire->connector1()->connectedToItems()) {	
-		addSubCommand(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
+		addSubCommand(new ChangeConnectionCommand(sketchWidget, BaseCommand::CrossView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
 							wire->id(), "connector1", 
 							ViewLayer::specFromID(wire->viewLayerID()),
 							false, NULL));
 	}
 
-	addSubCommand(new DeleteItemCommand(sketchWidget, BaseCommand::SingleView, ModuleIDNames::WireModuleIDName, wire->viewLayerSpec(), wire->getViewGeometry(), wire->id(), wire->modelPart()->modelIndex(), NULL));
+	addSubCommand(new DeleteItemCommand(sketchWidget, BaseCommand::CrossView, ModuleIDNames::WireModuleIDName, wire->viewLayerSpec(), wire->getViewGeometry(), wire->id(), wire->modelPart()->modelIndex(), NULL));
 }
 
 bool CleanUpWiresCommand::hasTraces(SketchWidget * sketchWidget) {

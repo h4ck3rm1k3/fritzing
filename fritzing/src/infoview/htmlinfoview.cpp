@@ -371,7 +371,7 @@ void HtmlInfoView::appendWireStuff(Wire* wire, bool swappingEnabled) {
 	QString nameString = tr("Wire");
 	if (swappingEnabled) {
 		if (wire->getRatsnest()) {
-			nameString = tr("Rat's nest wire");
+			nameString = tr("Ratsnest wire");
 		} 
 		else if(wire->getTrace()) {
 			nameString = tr("Trace wire %1").arg(autoroutable);

@@ -751,10 +751,6 @@ Selecteer a.u.b. een Fritzing lettertype om ze te vervangen:</translation>
         <translation>Draad</translation>
     </message>
     <message>
-        <source>Rat&apos;s nest wire</source>
-        <translation>Ratten nest draad</translation>
-    </message>
-    <message>
         <source>Trace wire %1</source>
         <translation>Trace draad %1</translation>
     </message>
@@ -796,6 +792,10 @@ Selecteer a.u.b. een Fritzing lettertype om ze te vervangen:</translation>
     </message>
     <message>
         <source>Change the locked state of the part in this view.  A locked part can&apos;t be moved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ratsnest wire</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2635,6 +2635,14 @@ Controleer a.u.b. alle views voor potentiële fouten.</translation>
         <source>There are traces connected to copper fill which will also be removed. Proceed?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>No copper top layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The copper top (copper 1) layer is not available on a one-sided board.  Please switch the board to double-sided or choose the copper bottom (copper 0) layer.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -2727,10 +2735,6 @@ Reden : %2 (errcode %3)</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Create and connect trace</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Delete ratsnest</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2763,11 +2767,11 @@ Reden : %2 (errcode %3)</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This seems like an attempt to create a trace across layers. This circumstance should not arise: please contact the developers.</source>
+        <source>Unable to create copper fill--possibly the part was dropped onto another part or wire rather than the actual PCB.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unable to create copper fill--possibly the part was dropped onto another part or wire rather than the actual PCB.</source>
+        <source>Fritzing only allows one board part per sketch. Either delete the current board, or select it and swap it for a different one.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4001,10 +4005,6 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
         <translation>Bord</translation>
     </message>
     <message>
-        <source>Rat&apos;s nest</source>
-        <translation>Ratten nest</translation>
-    </message>
-    <message>
         <source>Unknown Layer</source>
         <translation>Onbekende laag</translation>
     </message>
@@ -4398,6 +4398,10 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
     </message>
     <message>
         <source>Pin Label Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ratsnest</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

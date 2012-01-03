@@ -95,7 +95,7 @@ public:
 	bool isCrossLayerFrom(ConnectorItem * candidate);
 	bool isInLayers(ViewLayer::ViewLayerSpec);
 	ConnectorItem * getCrossLayerConnectorItem();
-	void displayRatsnest(QList<ConnectorItem *> & partsConnectorItems);
+	void displayRatsnest(QList<ConnectorItem *> & partsConnectorItems, ViewGeometry::WireFlags myFlag);
 	void clearRatsnestDisplay(QList<ConnectorItem *> & connectorItems);
 	bool marked();
 	void setMarked(bool);

@@ -43,7 +43,6 @@ public:
 	void createTrace(Wire *);
 	void excludeFromAutoroute(bool exclude);
 	void selectAllExcludedTraces();
-	void updateRoutingStatus(CleanUpWiresCommand*, RoutingStatus &, bool manual);
 	bool hasAnyNets();
 	void forwardRoutingStatus(const RoutingStatus &);
 	void addDefaultParts();
@@ -52,7 +51,7 @@ public:
 	virtual bool autorouteTypePCB();
 	virtual double getKeepout();
 	virtual const QString & traceColor(ConnectorItem *);
-	virtual const QString & traceColor(ViewLayer::ViewLayerSpec);
+	const QString & traceColor(ViewLayer::ViewLayerSpec);
 	virtual void ensureTraceLayersVisible();
 	virtual void ensureTraceLayerVisible();
 	bool canChainMultiple();
@@ -67,8 +66,8 @@ public:
 	ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry, ViewLayer::ViewLayerSpec);
 	ItemBase * findBoard();
 	double getRatsnestOpacity(Wire *);
-	virtual double getRatsnestOpacity(bool);
-	void updateRoutingStatus(RoutingStatus &, bool manual);
+	double getRatsnestOpacity(bool);
+
 	void setBoardLayers(int, bool redraw);
 	long setUpSwap(ItemBase *, long newModelIndex, const QString & newModuleID, ViewLayer::ViewLayerSpec, bool doEmit, bool noFinalChangeWiresCommand, QUndoCommand * parentCommand);
 	void loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType, QUndoCommand * parentCommand, 
@@ -79,17 +78,14 @@ public:
 	virtual bool sameElectricalLayer2(ViewLayer::ViewLayerID, ViewLayer::ViewLayerID);
 	void changeTraceLayer();
 	void changeLayer(long id, double z, ViewLayer::ViewLayerID viewLayerID);
-	void deleteSelected(Wire *);
 	void jumperItemHack();
-	VirtualWire * makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, bool routed, QColor color);
-	void getRatsnestColor(QColor &);
 	void updateNet(Wire*);
 	bool acceptsTrace(const ViewGeometry & viewGeometry);
 	ItemBase * placePartDroppedInOtherView(ModelPart *, ViewLayer::ViewLayerSpec, const ViewGeometry & viewGeometry, long id, SketchWidget * dropOrigin);
 	void autorouterSettings();
 	void getViaSize(double & ringThickness, double & holeSize);
     void deleteItem(ItemBase *, bool deleteModelPart, bool doEmit, bool later);
-	virtual double getTraceWidth();
+	double getTraceWidth();
 	virtual double getAutorouterTraceWidth();
 	void getBendpointWidths(class Wire *, double w, double & w1, double & w2, bool & negativeOffsetRect);
 	double getSmallerTraceWidth(double minDim);
@@ -99,6 +95,7 @@ public:
 	bool curvyWiresIndicated(Qt::KeyboardModifiers);
 	ItemBase * addCopperLogoItem(ViewLayer::ViewLayerSpec viewLayerSpec);
 	QString characterizeGroundFill();
+	ViewGeometry::WireFlag getTraceFlag();
 
 public:
 	static QSizeF jumperItemSize();
@@ -127,23 +124,22 @@ protected:
 	void createTrace(Wire * fromWire, const QString & commandString, ViewGeometry::WireFlag);
 	bool createOneTrace(Wire * wire, ViewGeometry::WireFlag flag, bool allowAny, QList<Wire *> & done, QUndoCommand * parentCommand);
 	const QString & hoverEnterPartConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
-	bool modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand);
+	//bool modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand);
 	ViewLayer::ViewLayerID getDragWireViewLayerID(ConnectorItem *);
 	bool canDropModelPart(ModelPart * modelPart);
 	bool canCreateWire(Wire * dragWire, ConnectorItem * from, ConnectorItem * to);
 	bool bothEndsConnected(Wire * wire, ViewGeometry::WireFlags, ConnectorItem * oneEnd, QList<Wire *> & wires, QList<ConnectorItem *> & partConnectorItems);
-	bool doRatsnestOnCopy();
-	void makeRatsnestViewGeometry(ViewGeometry & viewGeometry, ConnectorItem * source, ConnectorItem * dest); 
 	ConnectorItem * lookForBreadboardConnection(ConnectorItem * connectorItem);
 	ConnectorItem * findEmptyBusConnectorItem(ConnectorItem * busConnectorItem);
 	long makeModifiedWire(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, BaseCommand::CrossViewType, ViewGeometry::WireFlags, QUndoCommand * parentCommand);
-	void modifyNewWireConnectionsAux(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, QUndoCommand * parentCommand);
-	void makeTwoWires(ConnectorItem * originalFromConnectorItem, ConnectorItem * fromConnectorItem,
-						ConnectorItem * originalToConnectorItem, ConnectorItem * toConnectorItem, 
-						QUndoCommand * parentCommand); 
-	ConnectorItem * lookForNewBreadboardConnection(ConnectorItem * connectorItem, ItemBase * & newBreadboard);
+	void setUpColor(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, Wire * wire, QUndoCommand * parentCommand);
+	//void modifyNewWireConnectionsAux(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, QUndoCommand * parentCommand);
+	//void makeTwoWires(ConnectorItem * originalFromConnectorItem, ConnectorItem * fromConnectorItem,
+	//					ConnectorItem * originalToConnectorItem, ConnectorItem * toConnectorItem, 
+	//					QUndoCommand * parentCommand); 
+	//ConnectorItem * lookForNewBreadboardConnection(ConnectorItem * connectorItem, ItemBase * & newBreadboard);
 	ConnectorItem * findNearestPartConnectorItem(ConnectorItem * fromConnectorItem);
-	ConnectorItem * findEmptyBus(ItemBase * breadboard);
+	//ConnectorItem * findEmptyBus(ItemBase * breadboard);
 	bool bothEndsConnectedAux(Wire * wire, ViewGeometry::WireFlags flag, ConnectorItem * oneEnd, QList<Wire *> & wires, QList<ConnectorItem *> & partConnectorItems, QList<Wire *> & visited);
 	void getLabelFont(QFont &, QColor &, ViewLayer::ViewLayerSpec);
 	void connectSymbolPrep(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, ConnectorItem * & target1, ConnectorItem * & target2);
@@ -159,12 +155,9 @@ protected:
 	bool resizingBoardRelease();
 	void resizeBoard();
 	void resizeJumperItem();
-	void dragWireChanged(class Wire* wire, ConnectorItem * from, ConnectorItem * to);
-	bool checkUpdateRatsnest(QList<ConnectorItem *> & connectorItems);
 	QPoint calcFixedToCenterItemOffset(const QRect & viewPortRect, const QSizeF & helpSize);
 	void dealWithDefaultParts();
 	void changeTrace(Wire * wire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand);
-	void checkDeleteTrace(CleanUpWiresCommand* command);
 	void clearSmdTraces(QList<ItemBase *> & smds, 	QList<Wire *> & already, QUndoCommand * parentCommand);
 	bool connectorItemHasSpec(ConnectorItem * connectorItem, ViewLayer::ViewLayerSpec spec);
 	ViewLayer::ViewLayerSpec createWireViewLayerSpec(ConnectorItem * from, ConnectorItem * to);
@@ -188,7 +181,6 @@ protected slots:
 	void wireSplitSlot(class Wire*, QPointF newPos, QPointF oldPos, QLineF oldLine);
 
 protected:
-	RoutingStatus m_routingStatus;
 	CleanType m_cleanType;
 	QPointF m_jumperDragOffset;
 	QPointer<class JumperItem> m_resizingJumperItem;

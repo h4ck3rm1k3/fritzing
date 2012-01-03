@@ -346,3 +346,8 @@ void InfoGraphicsView::renamePins(ItemBase *, const QStringList & oldLabels, con
 	Q_UNUSED(newLabels);
 	Q_UNUSED(singleRow);
 }
+
+ViewGeometry::WireFlag InfoGraphicsView::getTraceFlag()
+{
+	return ViewGeometry::NoFlag;
+}

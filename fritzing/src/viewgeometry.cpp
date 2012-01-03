@@ -28,7 +28,7 @@ $Date$
 #include "utils/graphicsutils.h"
 
 // get a compiler errow when using WireFlags instead of QFlags<>
-QFlags<ViewGeometry::WireFlag> ViewGeometry::TraceRatsnestFlags = ViewGeometry::TraceFlag | ViewGeometry::RatsnestFlag;
+QFlags<ViewGeometry::WireFlag> ViewGeometry::TraceRatsnestFlags = ViewGeometry::PCBTraceFlag | ViewGeometry::RatsnestFlag;
 QFlags<ViewGeometry::WireFlag> ViewGeometry::NotTraceFlags = ViewGeometry::NormalFlag | ViewGeometry::RatsnestFlag;
 
 ViewGeometry::ViewGeometry(  )
@@ -140,8 +140,8 @@ void ViewGeometry::setRouted(bool routed) {
 	setWireFlag(routed, RoutedFlag);
 }
 
-void ViewGeometry::setTrace(bool trace) {
-	setWireFlag(trace, TraceFlag);
+void ViewGeometry::setPCBTrace(bool trace) {
+	setWireFlag(trace, PCBTraceFlag);
 }
 
 void ViewGeometry::setSchematicTrace(bool trace) {
@@ -170,12 +170,12 @@ bool ViewGeometry::getNormal() const {
 	return m_wireFlags.testFlag(NormalFlag);
 }
 
-bool ViewGeometry::getTrace() const {
-	return m_wireFlags.testFlag(TraceFlag);
+bool ViewGeometry::getPCBTrace() const {
+	return m_wireFlags.testFlag(PCBTraceFlag);
 }
 
 bool ViewGeometry::getAnyTrace() const {
-	return getTrace() || getSchematicTrace();
+	return getPCBTrace() || getSchematicTrace();
 }
 
 bool ViewGeometry::getSchematicTrace() const {

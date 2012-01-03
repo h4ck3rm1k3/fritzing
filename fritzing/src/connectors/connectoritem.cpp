@@ -935,6 +935,9 @@ bool ConnectorItem::isHybrid() {
 
 void ConnectorItem::setBigDot(bool bd) {
 	m_bigDot = bd;
+	//if (bd) {
+	//	this->debugInfo("big dot");
+	//}
 }
 
 bool ConnectorItem::isBigDot() {
@@ -1719,7 +1722,7 @@ bool ConnectorItem::connectedToWires() {
 	return false;
 }
 
-void ConnectorItem::displayRatsnest(QList<ConnectorItem *> & partConnectorItems) {
+void ConnectorItem::displayRatsnest(QList<ConnectorItem *> & partConnectorItems, ViewGeometry::WireFlags myFlag) {
 	bool formerColorWasNamed = false;
 	bool gotFormerColor = false;
 	QColor formerColor;
@@ -1759,7 +1762,7 @@ void ConnectorItem::displayRatsnest(QList<ConnectorItem *> & partConnectorItems)
 	}
 
 	ConnectorPairHash result;
-	GraphUtils::chooseRatsnestGraph(partConnectorItems, result);
+	GraphUtils::chooseRatsnestGraph(partConnectorItems, (ViewGeometry::RatsnestFlag | ViewGeometry::NormalFlag | ViewGeometry::PCBTraceFlag | ViewGeometry::SchematicTraceFlag) ^ myFlag, result);
 
 	foreach (ConnectorItem * key, result.uniqueKeys()) {
 		foreach (ConnectorItem * value, result.values(key)) {

@@ -94,6 +94,7 @@ $Date$
 #include "../../items/via.h"
 #include "../../items/resizableboard.h"
 #include "../../utils/graphicsutils.h"
+#include "../../utils/graphutils.h"
 #include "../../utils/textutils.h"
 #include "../../connectors/connectoritem.h"
 #include "../../items/moduleidnames.h"
@@ -524,23 +525,11 @@ void CMRouter::start()
 
 	clearGridEntries();
 
-	QUndoCommand * parentCommand = new QUndoCommand("Autoroute");
-	new CleanUpWiresCommand(m_sketchWidget, CleanUpWiresCommand::UndoOnly, parentCommand);
-
-	if (m_bothSidesNow) {
-		emit wantBothVisible();
-		ProcessEventBlocker::processEvents();
-	}
-
-	initUndo(parentCommand);
-	updateRoutingStatus();
-
 	QHash<ConnectorItem *, int> indexer;
 	m_sketchWidget->collectAllNets(indexer, m_allPartConnectorItems, false, m_bothSidesNow);
 
 	if (m_allPartConnectorItems.count() == 0) {
 		QMessageBox::information(NULL, QObject::tr("Fritzing"), QObject::tr("No connections to route'."));
-		restoreOriginalState(parentCommand);
 		cleanUpNets();
 		return;
 	}
@@ -553,14 +542,23 @@ void CMRouter::start()
 		netCounters[i] = (m_allPartConnectorItems[i]->count() - 1) * 2;			// since we use two connectors at a time on a net
 	}
 
+	fixWidths();
+
+	QUndoCommand * parentCommand = new QUndoCommand("Autoroute");
+	new CleanUpWiresCommand(m_sketchWidget, CleanUpWiresCommand::UndoOnly, parentCommand);
+
+	if (m_bothSidesNow) {
+		emit wantBothVisible();
+		ProcessEventBlocker::processEvents();
+	}
+
+	initUndo(parentCommand);
+
 	if (m_cancelled || m_stopTracing) {
 		restoreOriginalState(parentCommand);
 		cleanUpNets();
 		return;
 	}
-
-
-	fixWidths();
 
 	ProcessEventBlocker::processEvents(); // to keep the app  from freezing
 
@@ -586,7 +584,6 @@ void CMRouter::start()
 	QList<Edge *> edges;
 	bool allDone = false;
 	QList< Ordering * > orderings;
-	QByteArray bestResult;
 
 	// TODO: collect edges uses ratsnests as a shortcut for a net
 	// but actually there are many many ways a given net can be routed
@@ -630,18 +627,20 @@ void CMRouter::start()
 		ProcessEventBlocker::processEvents();
 
 		allDone = runEdges(currentOrdering->edges, netCounters, routingStatus, m_sketchWidget->usesJumperItem(), bestOrdering);
+		foreach (TraceWire * fromWire, m_splitDNA.keys()) {
+			foreach (TraceWire * toWire, m_splitDNA.values(fromWire)) {
+				currentOrdering->splitDNA.insert(fromWire, toWire->id());
+			}
+		}
 		//DebugDialog::debug("after run edges");
 		if (m_cancelled || allDone || m_stopTracing) break;
 
 		ProcessEventBlocker::processEvents();
-		reorder(orderings, currentOrdering, bestOrdering, bestResult, lineItem);
+		reorder(orderings, currentOrdering, bestOrdering, lineItem);
 
 		// TODO: only delete the edges that have been reordered
 		clearTracesAndJumpers();
 		drcClean();
-		if (!m_startState.isEmpty()) {
-			m_sketchWidget->pasteHeart(m_startState, true);
-		}
 		ProcessEventBlocker::processEvents();
 
 	}
@@ -662,16 +661,25 @@ void CMRouter::start()
 	}
 
 
+	QMultiHash<TraceWire *, long> splitDNA;
 	if (!allDone) {
 		if (orderingIndex == 0) {
 			// stop where we are
+			foreach (TraceWire * fromWire, m_splitDNA.keys()) {
+				foreach (TraceWire * toWire, m_splitDNA.values(fromWire)) {
+					splitDNA.insert(fromWire, toWire->id());
+				}
+			}
 		}
 		else {
 			clearTracesAndJumpers();
-			// what happens to non-empty start state 
-			m_sketchWidget->pasteHeart(bestResult, true);
+			m_sketchWidget->pasteHeart(bestOrdering->saved, true);
+			splitDNA = bestOrdering->splitDNA;
 			ProcessEventBlocker::processEvents();
 		}
+	}
+	else {
+		splitDNA = bestOrdering->splitDNA;
 	}
 
 	foreach (Ordering * ordering, orderings) delete ordering;
@@ -679,14 +687,13 @@ void CMRouter::start()
 
 	cleanUpNets();
 
-	addToUndo(parentCommand);
+	addToUndo(splitDNA, parentCommand);
+
+	clearTracesAndJumpers();
 
 	clearEdges(edges);
 	drcClean();
 	new CleanUpWiresCommand(m_sketchWidget, CleanUpWiresCommand::RedoOnly, parentCommand);
-
-	// note that the undo command which creates traces, jumpers and vias is set to turnOffFirstRedo()
-	// in other words, the traces, jumpers and vias created in the autorouting process are not recreated the first time the undo stack is invoked
 
 	m_sketchWidget->pushCommand(parentCommand);
 	m_sketchWidget->repaint();
@@ -702,7 +709,7 @@ void CMRouter::start()
 }
 
 
-bool CMRouter::reorder(QList<Ordering *> & orderings, Ordering * currentOrdering, Ordering * & bestOrdering, QByteArray & bestResult, QGraphicsLineItem * lineItem) {
+bool CMRouter::reorder(QList<Ordering *> & orderings, Ordering * currentOrdering, Ordering * & bestOrdering, QGraphicsLineItem * lineItem) {
 	currentOrdering->jumperCount = currentOrdering->unroutedCount = currentOrdering->viaCount = currentOrdering->totalViaCount = 0;
 	foreach (Edge * edge, currentOrdering->edges) {
 		if (!edge->routed) currentOrdering->unroutedCount++;
@@ -713,12 +720,14 @@ bool CMRouter::reorder(QList<Ordering *> & orderings, Ordering * currentOrdering
 
 	if (orderings.count() > 1) {
 		if (orderingImproved(currentOrdering, bestOrdering)) {
+			bestOrdering->splitDNA.clear();
+			bestOrdering->saved.clear();
 			bestOrdering = currentOrdering;
-			saveTracesAndJumpers(bestResult);
+			saveTracesAndJumpers(currentOrdering);
 		}
 	}
 	else {
-		saveTracesAndJumpers(bestResult);
+		saveTracesAndJumpers(currentOrdering);
 	}
 
 	return reorderEdges(orderings, currentOrdering, lineItem);
@@ -761,6 +770,7 @@ bool CMRouter::reorderEdges(QList<Ordering *> & orderings, Ordering * currentOrd
 			}
 
 			if (traceWire == NULL) continue;
+			if (!traceWire->isTraceType(m_sketchWidget->getTraceFlag())) continue;
 
 			Edge * tedge = m_tracesToEdges.value(traceWire, NULL);
 			if (tedge != NULL) {
@@ -926,6 +936,7 @@ bool CMRouter::drc(CMRouter::OverlapType overlapType, CMRouter::OverlapType wire
 
 bool CMRouter::runEdges(QList<Edge *> & edges, QVector<int> & netCounters, RoutingStatus & routingStatus, bool makeJumper, Ordering * bestOrdering)
 {	
+	m_splitDNA.clear();
 	bool result = drc(CMRouter::ClipAllOverlaps, CMRouter::ClipAllOverlaps, true, m_sketchWidget->autorouteTypePCB());
 	if (!result) {
 		m_cancelled = true;
@@ -1116,6 +1127,7 @@ Plane * CMRouter::tilePlane(ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewL
 			if (!wire->isVisible()) continue;
 			if (wire->hidden()) continue;
 			if (!wire->getTrace()) continue;
+			if (!wire->isTraceType(m_sketchWidget->getTraceFlag())) continue;
 			if (!m_sketchWidget->sameElectricalLayer2(wire->viewLayerID(), viewLayerID)) continue;
 			if (beenThere.contains(wire)) continue;
 
@@ -1639,14 +1651,45 @@ void CMRouter::tileWires(QList<Wire *> & wires, QList<Tile *> & alreadyTiled, Ti
 
 }
 
-ConnectorItem * CMRouter::splitTrace(Wire * wire, QPointF point) 
+ConnectorItem * CMRouter::splitTrace(Wire * wire, QPointF point, Edge * edge) 
 {
+	TraceWire * doNotAutorouteWire = NULL;
+	if (!wire->getAutoroutable()) {
+		doNotAutorouteWire = qobject_cast<TraceWire *>(wire);
+		QList<TraceWire *> wires = m_splitDNA.values(doNotAutorouteWire);
+		if (wires.count() > 0) {
+			foreach (Wire * w, wires) {
+				if (w->contains(point)) {
+					wire = w;
+					break;
+				}
+			}
+		}
+		else {
+			TraceWire * tw = drawOneTrace(wire->pos(), wire->line().p2() + wire->pos(), wire->width(), wire->viewLayerSpec());
+			m_tracesToEdges.insert(tw, edge);
+			m_splitDNA.insert(doNotAutorouteWire, tw);
+			foreach (ConnectorItem * toConnectorItem, wire->connector1()->connectedToItems()) {
+				tw->connector1()->tempConnectTo(toConnectorItem, false);
+				toConnectorItem->tempConnectTo(tw->connector1(), false);
+			}
+			foreach (ConnectorItem * toConnectorItem, wire->connector0()->connectedToItems()) {
+				tw->connector0()->tempConnectTo(toConnectorItem, false);
+				toConnectorItem->tempConnectTo(tw->connector0(), false);
+			}
+			wire = tw;
+		}
+	}
+
 	// split the trace at point
 	QLineF originalLine = wire->line();
 	QLineF newLine(QPointF(0,0), point - wire->pos());
 	wire->setLine(newLine);
 	TraceWire * splitWire = drawOneTrace(point, originalLine.p2() + wire->pos(), wire->width(), wire->viewLayerSpec());
-	splitWire->setAutoroutable(wire->getAutoroutable());
+	if (doNotAutorouteWire) {
+		m_splitDNA.insert(doNotAutorouteWire, splitWire);
+	}
+	m_tracesToEdges.insert(splitWire, edge);
 	ConnectorItem * connector1 = wire->connector1();
 	ConnectorItem * newConnector1 = splitWire->connector1();
 	foreach (ConnectorItem * toConnectorItem, connector1->connectedToItems()) {
@@ -2333,57 +2376,49 @@ GridEntry * CMRouter::drawGridItem(Tile * tile)
 	return gridEntry;
 }
 
-
 void CMRouter::collectEdges(QList<Edge *> & edges)
 {
-	foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
-		VirtualWire * vw = dynamic_cast<VirtualWire *>(item);
-		if (vw == NULL) continue;
+	foreach (QList<ConnectorItem *> * connectorItems, m_allPartConnectorItems) {
+		ConnectorPairHash result;
+		GraphUtils::chooseRatsnestGraph(*connectorItems, (ViewGeometry::RatsnestFlag | ViewGeometry::NormalFlag | ViewGeometry::PCBTraceFlag | ViewGeometry::SchematicTraceFlag) ^ m_sketchWidget->getTraceFlag(), result);
+		foreach (ConnectorItem * from, result.keys()) {
+			foreach (ConnectorItem * to, result.values(from)) {
+				bool fromOK = false;
+				foreach (ViewLayer::ViewLayerID viewLayerID, m_viewLayerIDs) {
+					if (m_sketchWidget->sameElectricalLayer2(viewLayerID, from->attachedToViewLayerID())) {
+						fromOK = true;
+						break;
+					}
+				}
 
-		ConnectorItem * from = vw->connector0()->firstConnectedToIsh();
-		if (!from) {
-			continue;
-		}
+				if (!fromOK) {
+					from = from->getCrossLayerConnectorItem();
+				}
 
-		ConnectorItem * to = vw->connector1()->firstConnectedToIsh();
-		if (!to) {
-			continue;
-		}
+				if (from == NULL) continue;
 
-		bool fromOK = false;
-		foreach (ViewLayer::ViewLayerID viewLayerID, m_viewLayerIDs) {
-			if (m_sketchWidget->sameElectricalLayer2(viewLayerID, from->attachedToViewLayerID())) {
-				fromOK = true;
-				break;
+				bool toOK = false;
+				foreach (ViewLayer::ViewLayerID viewLayerID, m_viewLayerIDs) {
+					if (m_sketchWidget->sameElectricalLayer2(viewLayerID, to->attachedToViewLayerID())) {
+						toOK = true;
+						break;
+					}
+				}
+
+				if (!toOK) {
+					to = to->getCrossLayerConnectorItem();
+				}
+
+				if (to == NULL) continue;
+
+				//from->debugInfo("from");
+				//to->debugInfo("to");
+
+				Edge * edge0 = makeEdge(from, to);
+				edges.append(edge0);
+				edge0->id = edges.count() - 1;
 			}
 		}
-
-		if (!fromOK) {
-			from = from->getCrossLayerConnectorItem();
-		}
-
-		if (from == NULL) continue;
-
-		bool toOK = false;
-		foreach (ViewLayer::ViewLayerID viewLayerID, m_viewLayerIDs) {
-			if (m_sketchWidget->sameElectricalLayer2(viewLayerID, to->attachedToViewLayerID())) {
-				toOK = true;
-				break;
-			}
-		}
-
-		if (!toOK) {
-			to = to->getCrossLayerConnectorItem();
-		}
-
-		if (to == NULL) continue;
-
-		//from->debugInfo("from");
-		//to->debugInfo("to");
-
-		Edge * edge0 = makeEdge(from, to, vw);
-		edges.append(edge0);
-		edge0->id = edges.count() - 1;
 	}
 }
 
@@ -2396,14 +2431,14 @@ void CMRouter::clearEdge(Edge * edge) {
 	edge->toTraces.clear();
 }
 
-Edge * CMRouter::makeEdge(ConnectorItem * from, ConnectorItem * to,  VirtualWire * vw) {
+Edge * CMRouter::makeEdge(ConnectorItem * from, ConnectorItem * to) {
 	Edge * edge = new Edge;
 	edge->from = from;
 	edge->to = to;
 	edge->routed = false;
-	edge->line = QLineF(vw->pos(), vw->pos() + vw->line().p2());
 	QPointF pi = from->sceneAdjustedTerminalPoint(NULL);
 	QPointF pj = to->sceneAdjustedTerminalPoint(NULL);
+	edge->line = QLineF(pi, pj);
 	double px = pi.x() - pj.x();
 	double py = pi.y() - pj.y();
 	edge->distance = (px * px) + (py * py);
@@ -2440,6 +2475,7 @@ void CMRouter::initUndo(QUndoCommand * parentCommand)
 			foreach (ConnectorItem * connectorItem, both) {
 				TraceWire * w = qobject_cast<TraceWire *>(connectorItem->attachedTo());
 				if (w == NULL) continue;
+				if (!w->isTraceType(m_sketchWidget->getTraceFlag())) continue;
 
 				QList<Wire *> wires;
 				QList<ConnectorItem *> ends;
@@ -2467,6 +2503,7 @@ void CMRouter::initUndo(QUndoCommand * parentCommand)
 			foreach (ConnectorItem * connectorItem, both) {
 				TraceWire * w = qobject_cast<TraceWire *>(connectorItem->attachedTo());
 				if (w == NULL) continue;
+				if (!w->isTraceType(m_sketchWidget->getTraceFlag())) continue;
 
 				QList<Wire *> wires;
 				QList<ConnectorItem *> ends;
@@ -2482,35 +2519,25 @@ void CMRouter::initUndo(QUndoCommand * parentCommand)
 	foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
 		TraceWire * traceWire = dynamic_cast<TraceWire *>(item);
 		if (traceWire == NULL) continue;
+		if (!traceWire->isTraceType(m_sketchWidget->getTraceFlag())) continue;
+		if (!traceWire->getAutoroutable()) continue;
 
 		traceWires.append(traceWire);
 		addUndoConnection(false, traceWire, parentCommand);
-		if (!traceWire->getAutoroutable()) {
-			doNotAutorouteList.append(traceWire);
-		}
-	}
-
-	m_startState.clear();
-	if (doNotAutorouteList.count() > 0) {
-		QList<long> modelIndexes;
-		m_sketchWidget->copyHeart(doNotAutorouteList, true, m_startState, modelIndexes);
 	}
 
 	foreach (TraceWire * traceWire, traceWires) {
-		m_sketchWidget->makeDeleteItemCommand(traceWire, BaseCommand::SingleView, parentCommand);
+		m_sketchWidget->makeDeleteItemCommand(traceWire, BaseCommand::CrossView, parentCommand);
 	}
 	foreach (JumperItem * jumperItem, jumperItems) {
 		m_sketchWidget->makeDeleteItemCommand(jumperItem, BaseCommand::CrossView, parentCommand);
 	}
-	
 	foreach (Via * via, vias) {
 		m_sketchWidget->makeDeleteItemCommand(via, BaseCommand::CrossView, parentCommand);
 	}
 	
 	foreach (TraceWire * traceWire, traceWires) {
-		if (traceWire->getAutoroutable()) {
-			m_sketchWidget->deleteItem(traceWire, true, false, false);
-		}
+		m_sketchWidget->deleteItem(traceWire, true, false, false);
 	}
 	foreach (JumperItem * jumperItem, jumperItems) {
 		m_sketchWidget->deleteItem(jumperItem, true, true, false);
@@ -2528,31 +2555,43 @@ void CMRouter::restoreOriginalState(QUndoCommand * parentCommand) {
 
 void CMRouter::addWireToUndo(Wire * wire, QUndoCommand * parentCommand) 
 {
-	AddItemCommand * addItemCommand = new AddItemCommand(m_sketchWidget, BaseCommand::SingleView, ModuleIDNames::WireModuleIDName, wire->viewLayerSpec(), wire->getViewGeometry(), wire->id(), false, -1, parentCommand);
+	new AddItemCommand(m_sketchWidget, BaseCommand::CrossView, ModuleIDNames::WireModuleIDName, wire->viewLayerSpec(), wire->getViewGeometry(), wire->id(), false, -1, parentCommand);
 	new CheckStickyCommand(m_sketchWidget, BaseCommand::SingleView, wire->id(), false, CheckStickyCommand::RemoveOnly, parentCommand);
 	
 	new WireWidthChangeCommand(m_sketchWidget, wire->id(), wire->width(), wire->width(), parentCommand);
 	new WireColorChangeCommand(m_sketchWidget, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), parentCommand);
-	if (wire->getAutoroutable()) {
-		// only turn off first redo if it was marked autoroutable--doNotAutoroute will be deleted and have to be replaced
-		addItemCommand->turnOffFirstRedo();
-	}
+
 }
 
-void CMRouter::addToUndo(QUndoCommand * parentCommand) 
+void CMRouter::addToUndo(QMultiHash<TraceWire *, long> & splitDNA, QUndoCommand * parentCommand) 
 {
+	foreach (TraceWire * traceWire, splitDNA.uniqueKeys()) {
+		// original doNotAutoroute wire has been split so delete it here because it has been replaced
+		addUndoConnection(false, traceWire, parentCommand);
+		m_sketchWidget->makeDeleteItemCommand(traceWire, BaseCommand::CrossView, parentCommand);
+	}
+
+	QList<long> newDNA = splitDNA.values();
 	QList<TraceWire *> wires;
 	QList<JumperItem *> jumperItems;	
 	QList<Via *> vias;
 	foreach (QGraphicsItem * item, m_sketchWidget->items()) {
 		TraceWire * wire = dynamic_cast<TraceWire *>(item);
 		if (wire != NULL) {
+			if (!wire->getAutoroutable()) continue;
+			if (!wire->isTraceType(m_sketchWidget->getTraceFlag())) continue;
+
 			m_sketchWidget->setClipEnds(wire, true);
 			wire->update();
-			if (wire->getAutoroutable()) {
-				wire->setWireWidth(StandardWireWidth, m_sketchWidget, m_sketchWidget->getWireStrokeWidth(wire, StandardWireWidth));
+			bool ra = false;
+			if (newDNA.contains(wire->id())) {
+				wire->setAutoroutable(false);
+				ra = true;
 			}
 			addWireToUndo(wire, parentCommand);
+			if (ra) {
+				wire->setAutoroutable(true);
+			}
 			wires.append(wire);
 			continue;
 		}
@@ -2563,37 +2602,13 @@ void CMRouter::addToUndo(QUndoCommand * parentCommand)
 				continue;
 			}
 
-			ConnectorItem * connector0 = NULL;
-			ConnectorItem * connector1 = NULL;
-			QList<ConnectorItem *> connectorItems;
-			connectorItems.append(jumperItem->connector0());
-			ConnectorItem::collectEqualPotential(connectorItems, true, m_sketchWidget->getTraceFlag() | ViewGeometry::RatsnestFlag);
-			QList<ConnectorItem *> partsConnectors;
-			ConnectorItem::collectParts(connectorItems, partsConnectors, false, ViewLayer::TopAndBottom);
-			if (partsConnectors.count() <= 4) {
-				// a jumperItem has 4 connectors (2 per 2 layers), so this jumper is not connected to anything else except by a trace
-				// so add a "normal" connection
-				connector0 = findPartForJumperOrVia(jumperItem->connector0());
-				connector1 = findPartForJumperOrVia(jumperItem->connector1());
-				if (connector0 == NULL || connector1 == NULL) {
-					DebugDialog::debug("unable to find part for jumper");   // something is really fucked up...
-					continue;
-				}
-			}
-
 			jumperItem->saveParams();
 			QPointF pos, c0, c1;
 			jumperItem->getParams(pos, c0, c1);
 
-			AddItemCommand * addItemCommand = new AddItemCommand(m_sketchWidget, BaseCommand::CrossView, ModuleIDNames::JumperModuleIDName, jumperItem->viewLayerSpec(), jumperItem->getViewGeometry(), jumperItem->id(), false, -1, parentCommand);
-			addItemCommand->turnOffFirstRedo();
+			new AddItemCommand(m_sketchWidget, BaseCommand::CrossView, ModuleIDNames::JumperModuleIDName, jumperItem->viewLayerSpec(), jumperItem->getViewGeometry(), jumperItem->id(), false, -1, parentCommand);
 			new ResizeJumperItemCommand(m_sketchWidget, jumperItem->id(), pos, c0, c1, pos, c0, c1, parentCommand);
 			new CheckStickyCommand(m_sketchWidget, BaseCommand::SingleView, jumperItem->id(), false, CheckStickyCommand::RemoveOnly, parentCommand);
-
-			if (connector0 != NULL && connector1 != NULL) {
-				m_sketchWidget->createWire(jumperItem->connector0(), connector0, ViewGeometry::NoFlag, true, BaseCommand::CrossView, parentCommand);
-				m_sketchWidget->createWire(jumperItem->connector1(), connector1, ViewGeometry::NoFlag, true, BaseCommand::CrossView, parentCommand);
-			}
 
 			continue;
 		}
@@ -2604,25 +2619,16 @@ void CMRouter::addToUndo(QUndoCommand * parentCommand)
 				continue;
 			}
 
-			ConnectorItem * connector0 = findViaConnector(via->connectorItem());
-			ConnectorItem * connector1 = findViaConnector(via->connectorItem()->getCrossLayerConnectorItem());
-
-			AddItemCommand * addItemCommand = new AddItemCommand(m_sketchWidget, BaseCommand::CrossView, ModuleIDNames::ViaModuleIDName, via->viewLayerSpec(), via->getViewGeometry(), via->id(), false, -1, parentCommand);
-			addItemCommand->turnOffFirstRedo();
+			new AddItemCommand(m_sketchWidget, BaseCommand::CrossView, ModuleIDNames::ViaModuleIDName, via->viewLayerSpec(), via->getViewGeometry(), via->id(), false, -1, parentCommand);
 			new CheckStickyCommand(m_sketchWidget, BaseCommand::SingleView, via->id(), false, CheckStickyCommand::RemoveOnly, parentCommand);
 			new SetPropCommand(m_sketchWidget, via->id(), "hole size", via->holeSize(), via->holeSize(), true, parentCommand);
-
-			if (connector0 != NULL && connector1 != NULL) {
-				m_sketchWidget->createWire(via->connectorItem(), connector0, ViewGeometry::NoFlag, true, BaseCommand::CrossView, parentCommand);
-				m_sketchWidget->createWire(via->connectorItem()->getCrossLayerConnectorItem(), connector1, ViewGeometry::NoFlag, true, BaseCommand::CrossView, parentCommand);
-			}
 
 			continue;
 		}
 	}
 
 	foreach (TraceWire * traceWire, wires) {
-		traceWire->debugInfo("trace");
+		//traceWire->debugInfo("trace");
 		addUndoConnection(true, traceWire, parentCommand);
 	}
 	foreach (JumperItem * jumperItem, jumperItems) {
@@ -2631,41 +2637,6 @@ void CMRouter::addToUndo(QUndoCommand * parentCommand)
 	foreach (Via * via, vias) {
 		addUndoConnection(true, via, parentCommand);
 	}
-}
-
-ConnectorItem * CMRouter::findViaConnector(ConnectorItem * connectorItem) {
-	QList<ConnectorItem *> connectorItems;
-	connectorItems.append(connectorItem);
-	ConnectorItem::collectEqualPotential(connectorItems, false, m_sketchWidget->getTraceFlag() | ViewGeometry::RatsnestFlag);
-	QList<ConnectorItem *> partsConnectors;
-	ConnectorItem::collectParts(connectorItems, partsConnectors, false, ViewLayer::TopAndBottom);
-	if (partsConnectors.count() <= 2) {
-		// a via has 2 connectors (1 per 2 layers), so this via is not connected to anything else except by a trace
-		// so add a "normal" connection
-		return findPartForJumperOrVia(connectorItem);
-	}
-
-	return NULL;
-}
-
-ConnectorItem * CMRouter::findPartForJumperOrVia(ConnectorItem * jvConnectorItem) {
-	TraceWire * traceWire = NULL;
-	foreach (ConnectorItem * connectorItem, jvConnectorItem->connectedToItems()) {
-		traceWire = qobject_cast<TraceWire *>(connectorItem->attachedTo());
-		if (traceWire) break;
-	}
-	if (traceWire == NULL) return NULL;
-
-	QList<Wire *> wires;
-	QList<ConnectorItem *> ends;
-	traceWire->collectChained(wires, ends);
-	foreach (ConnectorItem * end, ends) {
-		if (end->attachedTo()->layerKinChief() != jvConnectorItem->attachedTo()->layerKinChief()) {
-			return end;
-		}
-	}
-
-	return NULL;
 }
 
 void CMRouter::addUndoConnection(bool connect, Via * via, QUndoCommand * parentCommand) {
@@ -2679,8 +2650,8 @@ void CMRouter::addUndoConnection(bool connect, JumperItem * jumperItem, QUndoCom
 }
 
 void CMRouter::addUndoConnection(bool connect, TraceWire * traceWire, QUndoCommand * parentCommand) {
-	addUndoConnection(connect, traceWire->connector0(), BaseCommand::SingleView, parentCommand);
-	addUndoConnection(connect, traceWire->connector1(), BaseCommand::SingleView, parentCommand);
+	addUndoConnection(connect, traceWire->connector0(), BaseCommand::CrossView, parentCommand);
+	addUndoConnection(connect, traceWire->connector1(), BaseCommand::CrossView, parentCommand);
 }
 
 void CMRouter::addUndoConnection(bool connect, ConnectorItem * connectorItem, BaseCommand::CrossViewType crossView, QUndoCommand * parentCommand) 
@@ -3182,7 +3153,7 @@ bool CMRouter::addJumperItem(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathU
 	long newID = ItemBase::getNextID();
 	ViewGeometry viewGeometry;
 	ItemBase * itemBase = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ModuleIDNames::JumperModuleIDName), 
-												  m_specHash.value(nearest1->plane), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
+												  m_specHash.value(nearest1->plane), BaseCommand::CrossView, viewGeometry, newID, -1, NULL, NULL);
 	if (itemBase == NULL) {
 		return NULL;
 	}
@@ -3773,14 +3744,10 @@ void CMRouter::tracePath(CompletePath & completePath)
 	// TODO: make sure that splitTrace succeeds if trace was not autoroutable
 
 	if (first->connectorItem == NULL) {
-		first->connectorItem = splitTrace(first->wire, allPoints.first());
-		Wire * split = qobject_cast<Wire *>(first->connectorItem->attachedTo());
-		m_tracesToEdges.insert(split, first->edge);
+		first->connectorItem = splitTrace(first->wire, allPoints.first(), first->edge);		
 	}
 	if (last->connectorItem == NULL) {
-		last->connectorItem = splitTrace(last->wire, allPoints.last());
-		Wire * split = qobject_cast<Wire *>(last->connectorItem->attachedTo());
-		m_tracesToEdges.insert(split, first->edge);
+		last->connectorItem = splitTrace(last->wire, allPoints.last(), last->edge);
 	}
 
 	//ProcessEventBlocker::processEvents();
@@ -4028,7 +3995,7 @@ void CMRouter::traceSegments(QList<Segment *> & segments) {
 void CMRouter::expand(ConnectorItem * originalConnectorItem, QList<ConnectorItem *> & connectorItems, QSet<Wire *> & visited) 
 {
 	connectorItems.append(originalConnectorItem);
-	ConnectorItem::collectEqualPotential(connectorItems, m_bothSidesNow, ViewGeometry::RatsnestFlag | ViewGeometry::NormalFlag);
+	ConnectorItem::collectEqualPotential(connectorItems, m_bothSidesNow, (ViewGeometry::RatsnestFlag | ViewGeometry::NormalFlag | ViewGeometry::PCBTraceFlag | ViewGeometry::SchematicTraceFlag) ^ m_sketchWidget->getTraceFlag());
 	foreach (ConnectorItem * connectorItem, connectorItems) {
 		TraceWire * traceWire = TraceWire::getTrace(connectorItem);
 		if (traceWire) visited.insert(traceWire);
@@ -4070,7 +4037,9 @@ void CMRouter::clearTracesAndJumpers() {
 		}
 		TraceWire * traceWire = dynamic_cast<TraceWire *>(item);
 		if (traceWire != NULL) {
-			traceWires.append(traceWire);
+			if (traceWire->isTraceType(m_sketchWidget->getTraceFlag()) && traceWire->getAutoroutable()) {
+				traceWires.append(traceWire);
+			}
 			continue;
 		}
 	}
@@ -4086,8 +4055,9 @@ void CMRouter::clearTracesAndJumpers() {
 	}
 }
 
-void CMRouter::saveTracesAndJumpers(QByteArray & byteArray) {
-	byteArray.clear();
+void CMRouter::saveTracesAndJumpers(Ordering * ordering) {
+	ordering->saved.clear();
+
 	QList<ItemBase *> itemBases;
 	foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
 		JumperItem * jumperItem = dynamic_cast<JumperItem *>(item);
@@ -4106,13 +4076,16 @@ void CMRouter::saveTracesAndJumpers(QByteArray & byteArray) {
 		}
 		TraceWire * traceWire = dynamic_cast<TraceWire *>(item);
 		if (traceWire != NULL) {
-			itemBases.append(traceWire);
+			if (traceWire->isTraceType(m_sketchWidget->getTraceFlag()) && traceWire->getAutoroutable()) {
+				itemBases.append(traceWire);
+			}
 			continue;
 		}
 	}
 
 	QList<long> modelIndexes;
-	m_sketchWidget->copyHeart(itemBases, true, byteArray, modelIndexes);
+	m_sketchWidget->copyHeart(itemBases, true, ordering->saved, modelIndexes);
+
 }
 
 void CMRouter::setMaxCycles(int maxCycles) 

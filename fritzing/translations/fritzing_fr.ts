@@ -905,11 +905,6 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation>câble</translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="374"/>
-        <source>Rat&apos;s nest wire</source>
-        <translation>Rat&apos;s nest wire</translation>
-    </message>
-    <message>
         <location filename="../src/infoview/htmlinfoview.cpp" line="377"/>
         <source>Trace wire %1</source>
         <translation>Tracer un câble %1</translation>
@@ -966,6 +961,11 @@ Please select one of the Fritzing fonts to replace them:</source>
             <numerusform>connecté à %n éléments</numerusform>
             <numerusform></numerusform>
         </translation>
+    </message>
+    <message>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="374"/>
+        <source>Ratsnest wire</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/infoview/htmlinfoview.cpp" line="202"/>
@@ -3396,12 +3396,12 @@ Reason: %2 (errcode %3)</source>
 <context>
     <name>PCBSketchWidget</name>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="208"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="205"/>
         <source>Create Trace from this Wire</source>
         <translation>Créer une piste à partir de ce câble</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="338"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="335"/>
         <source>Click this connector to drag out a new trace.</source>
         <translation>Cliquer sur ce connecteur pour commencer une nouvelle piste.</translation>
     </message>
@@ -4654,12 +4654,12 @@ This checkbox sets the default behavior. You can switch back to the non-default 
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="122"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="119"/>
         <source>pcb</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="321"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="318"/>
         <source>Select all traces marked &apos;Don&apos;t autoroute&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4879,7 +4879,7 @@ This checkbox sets the default behavior. You can switch back to the non-default 
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinview.cpp" line="51"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="121"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="118"/>
         <source>PCB View</source>
         <translation>Vue de la platine d&apos;essai</translation>
     </message>
@@ -4979,100 +4979,101 @@ Fritzing va continuer à fonctionner, mais vous n&apos;aurez pas la possibilité
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="81"/>
-        <location filename="../src/viewlayer.cpp" line="88"/>
+        <location filename="../src/viewlayer.cpp" line="89"/>
         <source>Parts</source>
         <translation>Composants</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="82"/>
-        <location filename="../src/viewlayer.cpp" line="90"/>
+        <location filename="../src/viewlayer.cpp" line="91"/>
         <source>Wires</source>
         <translation>Câbles</translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="85"/>
-        <location filename="../src/viewlayer.cpp" line="93"/>
-        <location filename="../src/viewlayer.cpp" line="112"/>
+        <location filename="../src/viewlayer.cpp" line="84"/>
+        <location filename="../src/viewlayer.cpp" line="105"/>
+        <source>Ratsnest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/viewlayer.cpp" line="86"/>
+        <location filename="../src/viewlayer.cpp" line="94"/>
+        <location filename="../src/viewlayer.cpp" line="113"/>
         <source>Rulers</source>
         <translation>Règles</translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="87"/>
+        <location filename="../src/viewlayer.cpp" line="88"/>
         <source>Frame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="89"/>
+        <location filename="../src/viewlayer.cpp" line="90"/>
         <source>Nets</source>
         <translation>Réseaux</translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="95"/>
+        <location filename="../src/viewlayer.cpp" line="96"/>
         <source>Board</source>
         <translation>Platine</translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="104"/>
-        <source>Rat&apos;s nest</source>
-        <translation>Rat&apos;s nest</translation>
-    </message>
-    <message>
-        <location filename="../src/viewlayer.cpp" line="96"/>
+        <location filename="../src/viewlayer.cpp" line="97"/>
         <source>Silkscreen Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="97"/>
+        <location filename="../src/viewlayer.cpp" line="98"/>
         <source>Silkscreen Top (Part Labels)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="98"/>
+        <location filename="../src/viewlayer.cpp" line="99"/>
         <source>Copper Fill Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="101"/>
+        <location filename="../src/viewlayer.cpp" line="102"/>
         <source>Copper Fill Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="99"/>
+        <location filename="../src/viewlayer.cpp" line="100"/>
         <source>Copper Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="100"/>
+        <location filename="../src/viewlayer.cpp" line="101"/>
         <source>Copper Bottom Trace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="102"/>
+        <location filename="../src/viewlayer.cpp" line="103"/>
         <source>Copper Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="103"/>
+        <location filename="../src/viewlayer.cpp" line="104"/>
         <source>Copper Top Trace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="105"/>
+        <location filename="../src/viewlayer.cpp" line="106"/>
         <source>Silkscreen Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="106"/>
+        <location filename="../src/viewlayer.cpp" line="107"/>
         <source>Silkscreen Bottom (Part Labels)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="110"/>
+        <location filename="../src/viewlayer.cpp" line="111"/>
         <source>Part Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="118"/>
+        <location filename="../src/viewlayer.cpp" line="119"/>
         <source>Unknown Layer</source>
         <translation>Calques inconnus</translation>
     </message>
@@ -5143,14 +5144,14 @@ Fritzing va continuer à fonctionner, mais vous n&apos;aurez pas la possibilité
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="83"/>
-        <location filename="../src/viewlayer.cpp" line="91"/>
+        <location filename="../src/viewlayer.cpp" line="92"/>
         <source>Part Labels</source>
         <translation>Étiquettes de composant</translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="84"/>
-        <location filename="../src/viewlayer.cpp" line="92"/>
-        <location filename="../src/viewlayer.cpp" line="111"/>
+        <location filename="../src/viewlayer.cpp" line="85"/>
+        <location filename="../src/viewlayer.cpp" line="93"/>
+        <location filename="../src/viewlayer.cpp" line="112"/>
         <source>Notes</source>
         <translation>Notes</translation>
     </message>
@@ -5792,12 +5793,12 @@ is already there, we won&apos;t add it again, right?</source>
 <context>
     <name>SketchWidget</name>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="608"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="610"/>
         <source>loading part</source>
         <translation>charger le composant</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="610"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="612"/>
         <source>done loading</source>
         <translation>chargement terminé</translation>
     </message>

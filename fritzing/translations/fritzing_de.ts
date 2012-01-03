@@ -912,11 +912,6 @@ Bitte wähle eine der Fritzing-Schriftarten, um sie zu ersetzen:</translation>
         <translation>Kabel</translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="374"/>
-        <source>Rat&apos;s nest wire</source>
-        <translation>Luftlinie</translation>
-    </message>
-    <message>
         <location filename="../src/infoview/htmlinfoview.cpp" line="377"/>
         <source>Trace wire %1</source>
         <translation>Leiterbahn %1</translation>
@@ -973,6 +968,11 @@ Bitte wähle eine der Fritzing-Schriftarten, um sie zu ersetzen:</translation>
             <numerusform>Verbunden mit %n Element</numerusform>
             <numerusform>Verbunden mit %n Elementen</numerusform>
         </translation>
+    </message>
+    <message>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="374"/>
+        <source>Ratsnest wire</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/infoview/htmlinfoview.cpp" line="202"/>
@@ -3414,12 +3414,12 @@ Ursache: %2 (Fehlercode %3)</translation>
 <context>
     <name>PCBSketchWidget</name>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="208"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="205"/>
         <source>Create Trace from this Wire</source>
         <translation>Diesen Draht in Leiterbahn umwandeln</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="338"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="335"/>
         <source>Click this connector to drag out a new trace.</source>
         <translation>Diese Verbindung anklicken und ziehen, um eine neue Leiterbahn zu erzeugen.</translation>
     </message>
@@ -4697,12 +4697,12 @@ Diese Kontrollbox legt das standardmäßige Verhalten fest. Du kannst zum nichts
         <translation>&lt;b&gt;Farbe für &quot;nicht verbunden&quot;&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="122"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="119"/>
         <source>pcb</source>
         <translation>Leiterplatte</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="321"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="318"/>
         <source>Select all traces marked &apos;Don&apos;t autoroute&apos;</source>
         <translation type="unfinished">Alle Leiterbahnen auswählen, die mit &apos;nicht autorouten&apos; gekennzeichnet sind</translation>
     </message>
@@ -4892,7 +4892,7 @@ Diese Kontrollbox legt das standardmäßige Verhalten fest. Du kannst zum nichts
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinview.cpp" line="51"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="121"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="118"/>
         <source>PCB View</source>
         <translation type="unfinished">Leiterplattenansicht</translation>
     </message>
@@ -4980,100 +4980,101 @@ Diese Kontrollbox legt das standardmäßige Verhalten fest. Du kannst zum nichts
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="81"/>
-        <location filename="../src/viewlayer.cpp" line="88"/>
+        <location filename="../src/viewlayer.cpp" line="89"/>
         <source>Parts</source>
         <translation>Bauteile</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="82"/>
-        <location filename="../src/viewlayer.cpp" line="90"/>
+        <location filename="../src/viewlayer.cpp" line="91"/>
         <source>Wires</source>
         <translation>Kabel</translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="85"/>
-        <location filename="../src/viewlayer.cpp" line="93"/>
-        <location filename="../src/viewlayer.cpp" line="112"/>
+        <location filename="../src/viewlayer.cpp" line="84"/>
+        <location filename="../src/viewlayer.cpp" line="105"/>
+        <source>Ratsnest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/viewlayer.cpp" line="86"/>
+        <location filename="../src/viewlayer.cpp" line="94"/>
+        <location filename="../src/viewlayer.cpp" line="113"/>
         <source>Rulers</source>
         <translation>Lineal</translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="87"/>
+        <location filename="../src/viewlayer.cpp" line="88"/>
         <source>Frame</source>
         <translation type="unfinished">Rahmen</translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="89"/>
+        <location filename="../src/viewlayer.cpp" line="90"/>
         <source>Nets</source>
         <translation>Netz</translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="95"/>
+        <location filename="../src/viewlayer.cpp" line="96"/>
         <source>Board</source>
         <translation>Leiterplatten</translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="104"/>
-        <source>Rat&apos;s nest</source>
-        <translation>Luftlinien</translation>
-    </message>
-    <message>
-        <location filename="../src/viewlayer.cpp" line="96"/>
+        <location filename="../src/viewlayer.cpp" line="97"/>
         <source>Silkscreen Top</source>
         <translation>Siebdruck oben</translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="97"/>
+        <location filename="../src/viewlayer.cpp" line="98"/>
         <source>Silkscreen Top (Part Labels)</source>
         <translation>Siebdruck oben (Bezeichnungen)</translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="98"/>
+        <location filename="../src/viewlayer.cpp" line="99"/>
         <source>Copper Fill Bottom</source>
         <translation type="unfinished">Kupferfüllung Unterseite</translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="101"/>
+        <location filename="../src/viewlayer.cpp" line="102"/>
         <source>Copper Fill Top</source>
         <translation type="unfinished">Kuperfüllung Oberseite</translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="99"/>
+        <location filename="../src/viewlayer.cpp" line="100"/>
         <source>Copper Bottom</source>
         <translation>Kupfer unten</translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="100"/>
+        <location filename="../src/viewlayer.cpp" line="101"/>
         <source>Copper Bottom Trace</source>
         <translation>Kupfern unten (Leiterbahnen)</translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="102"/>
+        <location filename="../src/viewlayer.cpp" line="103"/>
         <source>Copper Top</source>
         <translation>Kupfer oben</translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="103"/>
+        <location filename="../src/viewlayer.cpp" line="104"/>
         <source>Copper Top Trace</source>
         <translation>Kupfer oben (Leiterbahnen)</translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="105"/>
+        <location filename="../src/viewlayer.cpp" line="106"/>
         <source>Silkscreen Bottom</source>
         <translation>Siebdruck unten</translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="106"/>
+        <location filename="../src/viewlayer.cpp" line="107"/>
         <source>Silkscreen Bottom (Part Labels)</source>
         <translation>Siebdruck unten (Bezeichnungen)</translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="110"/>
+        <location filename="../src/viewlayer.cpp" line="111"/>
         <source>Part Image</source>
         <translation>Bauteil-Abbild</translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="118"/>
+        <location filename="../src/viewlayer.cpp" line="119"/>
         <source>Unknown Layer</source>
         <translation>Unbekannte Ebene</translation>
     </message>
@@ -5141,14 +5142,14 @@ Versuche, Fritzing neu zu starten. Falls das Problem bestehen bleibt, wende Dich
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="83"/>
-        <location filename="../src/viewlayer.cpp" line="91"/>
+        <location filename="../src/viewlayer.cpp" line="92"/>
         <source>Part Labels</source>
         <translation>Beschriftungs</translation>
     </message>
     <message>
-        <location filename="../src/viewlayer.cpp" line="84"/>
-        <location filename="../src/viewlayer.cpp" line="92"/>
-        <location filename="../src/viewlayer.cpp" line="111"/>
+        <location filename="../src/viewlayer.cpp" line="85"/>
+        <location filename="../src/viewlayer.cpp" line="93"/>
+        <location filename="../src/viewlayer.cpp" line="112"/>
         <source>Notes</source>
         <translation>Notizen</translation>
     </message>
@@ -5820,12 +5821,12 @@ im Sortiment. Nicht erneut hinzufügen?</translation>
 <context>
     <name>SketchWidget</name>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="608"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="610"/>
         <source>loading part</source>
         <translation type="unfinished">Lade Bauteil</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="610"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="612"/>
         <source>done loading</source>
         <translation>Bauteil geladen</translation>
     </message>

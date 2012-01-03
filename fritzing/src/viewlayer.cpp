@@ -81,6 +81,7 @@ void ViewLayer::initNames() {
 		names.insert(ViewLayer::Breadboard, new StringPair("breadboard", QObject::tr("Parts")));
 		names.insert(ViewLayer::BreadboardWire,  new StringPair("breadboardWire", QObject::tr("Wires")));
 		names.insert(ViewLayer::BreadboardLabel,  new StringPair("breadboardLabel", QObject::tr("Part Labels")));
+		names.insert(ViewLayer::BreadboardRatsnest, new StringPair("breadboardRatsnest", QObject::tr("Ratsnest")));
 		names.insert(ViewLayer::BreadboardNote,  new StringPair("breadboardNote", QObject::tr("Notes")));
 		names.insert(ViewLayer::BreadboardRuler,  new StringPair("breadboardRuler", QObject::tr("Rulers")));
 
@@ -101,7 +102,7 @@ void ViewLayer::initNames() {
 		names.insert(ViewLayer::GroundPlane1,  new StringPair("groundplane1", QObject::tr("Copper Fill Top")));
 		names.insert(ViewLayer::Copper1,  new StringPair("copper1", QObject::tr("Copper Top")));
 		names.insert(ViewLayer::Copper1Trace,  new StringPair("copper1trace", QObject::tr("Copper Top Trace")));
-		names.insert(ViewLayer::Ratsnest, new StringPair("ratsnest", QObject::tr("Rat's nest")));
+		names.insert(ViewLayer::PcbRatsnest, new StringPair("ratsnest", QObject::tr("Ratsnest")));
 		names.insert(ViewLayer::Silkscreen0,  new StringPair("silkscreen0", QObject::tr("Silkscreen Bottom")));
 		names.insert(ViewLayer::Silkscreen0Label,  new StringPair("silkscreen0Label", QObject::tr("Silkscreen Bottom (Part Labels)")));
 		//names.insert(ViewLayer::Soldermask,  new StringPair("soldermask",  QObject::tr("Solder mask")));

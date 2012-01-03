@@ -47,7 +47,7 @@ public:
 	enum WireFlag {
 		NoFlag = 0,
 		RoutedFlag = 2,
-		TraceFlag = 4,
+		PCBTraceFlag = 4,
 		ObsoleteJumperFlag = 8,
 		RatsnestFlag = 16,
 		AutoroutableFlag = 32,
@@ -80,8 +80,8 @@ public:
 	void set(const ViewGeometry &);
 	void setRouted(bool);
 	bool getRouted() const;
-	void setTrace(bool);
-	bool getTrace() const;
+	void setPCBTrace(bool);
+	bool getPCBTrace() const;
 	bool getAnyTrace() const;
 	void setSchematicTrace(bool);
 	bool getSchematicTrace() const;

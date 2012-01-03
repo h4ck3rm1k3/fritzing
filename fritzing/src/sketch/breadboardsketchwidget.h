@@ -64,6 +64,8 @@ protected:
 	double defaultGridSizeInches();
 	ViewLayer::ViewLayerID getLabelViewLayerID(ViewLayer::ViewLayerSpec);
 	QPoint calcFixedToCenterItemOffset(const QRect & viewPortRect, const QSizeF & helpSize);
+	double getTraceWidth();
+	const QString & traceColor(ViewLayer::ViewLayerSpec);
 
 };
 

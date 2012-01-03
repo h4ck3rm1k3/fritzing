@@ -129,6 +129,9 @@ public:
 	class PCBSketchWidget * pcbView();
 	void noBackup();
 	void swapSelectedAux(ItemBase * itemBase, const QString & moduleID);
+	bool saveAsAux(const QString & fileName);
+	void swapObsolete(bool displayFeedback);
+	void selectAllObsolete(bool displayFeedback);
 
 public:
 	static void initNames();
@@ -158,6 +161,8 @@ public slots:
 	void copperFill();
 	void changeBoardLayers(int layers, bool doEmit);
 	void swapOne(ItemBase * itemBase, const QString & moduleID);
+	void selectAllObsolete();
+	void swapObsolete();
 
 protected slots:
 	void load();
@@ -288,9 +293,6 @@ protected slots:
 	void exportNormalizedSVG();
 	void exportNormalizedFlattenedSVG();
 
-	void selectAllObsolete();
-	void swapObsolete();
-
 	void launchExternalProcess();
 	bool externalProcess(QString & name, QString & path, QStringList & args);
 	void processError(QProcess::ProcessError processError);
@@ -308,7 +310,7 @@ protected slots:
 	void updateLayerMenuSlot();
 	bool save();
 	bool saveAs();
-    void backupSketch();
+	void backupSketch();
 	void undoStackCleanChanged(bool isClean);
 	void autosaveNeeded(int index = 0);
 	void firstTimeHelpHidden();
@@ -353,7 +355,6 @@ protected:
 	void connectPairs();
 	void connectPair(SketchWidget * signaller, SketchWidget * slotter);
 	void closeEvent(QCloseEvent * event);
-	bool saveAsAux(const QString & fileName);
 	void saveAsAuxAux(const QString & fileName);
 	void printAux(QPrinter &printer, bool removeBackground, bool paginate);
 	void exportAux(QString fileName, QImage::Format format, bool removeBackground);
