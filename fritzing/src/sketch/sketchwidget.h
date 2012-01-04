@@ -287,6 +287,7 @@ public:
 	void getRatsnestColor(QColor &);
 	VirtualWire * makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, bool routed, QColor color);
 	virtual double getRatsnestOpacity(bool);
+	void setAnyInRotation();
 
 
 protected:
@@ -659,6 +660,7 @@ protected:
 	bool m_curvyWires;
 	bool m_rubberBandLegWasEnabled;
 	RoutingStatus m_routingStatus;
+	bool m_anyInRotation;
 
 public:
 	static ViewLayer::ViewLayerID defaultConnectorLayer(ViewIdentifierClass::ViewIdentifier viewId);

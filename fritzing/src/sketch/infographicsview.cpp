@@ -351,3 +351,7 @@ ViewGeometry::WireFlag InfoGraphicsView::getTraceFlag()
 {
 	return ViewGeometry::NoFlag;
 }
+
+void InfoGraphicsView::setAnyInRotation()
+{
+}

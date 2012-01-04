@@ -236,12 +236,18 @@ void PaletteItemBase::mousePressEvent(PaletteItemBase * originalItem, QGraphicsS
 		RotationCenter = mapToScene(this->boundingRectWithoutLegs().center());
 		RotationAxis = event->scenePos(); 
 		OriginalTransform = this->transform();
-		DebugDialog::debug(QString("c:%1,%2 a:%3,%4 t:%5,%6,%7,%8 %9,%10")
+		/*
+		DebugDialog::debug(QString("%11:in rotation:%1,%2 a:%3,%4 t:%5,%6,%7,%8 %9,%10")
 			.arg(RotationCenter.x()).arg(RotationCenter.y())
 			.arg(RotationAxis.x()).arg(RotationAxis.y())
 			.arg(OriginalTransform.m11()).arg(OriginalTransform.m12()).arg(OriginalTransform.m21()).arg(OriginalTransform.m22())
 			.arg(OriginalTransform.dx()).arg(OriginalTransform.dy())
+			.arg((long) this, 0, 16)
 			);
+			*/
+		this->debugInfo("in rotation");
+		InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+		if (infoGraphicsView) infoGraphicsView->setAnyInRotation();
 		return;
 	}
 

@@ -104,6 +104,7 @@ public:
 	virtual void changePinLabels(ItemBase *, bool singleRow);
 	virtual void renamePins(ItemBase *, const QStringList & oldLabels, const QStringList & newLabels, bool singleRow);
 	virtual ViewGeometry::WireFlag getTraceFlag();
+	virtual void setAnyInRotation();
 
 public slots:
 	virtual void setVoltage(double, bool doEmit);

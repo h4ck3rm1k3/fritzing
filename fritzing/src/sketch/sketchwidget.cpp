@@ -2025,7 +2025,13 @@ void SketchWidget::mousePressEvent(QMouseEvent *event)
 		}
 	}
 
+	m_anyInRotation = false;
+	// mouse event gets passed through to individual QGraphicsItems
 	QGraphicsView::mousePressEvent(event);
+	if (m_anyInRotation) {
+		m_anyInRotation = false;
+		return;
+	}
 
 	items = this->items(event->pos());
 	QGraphicsItem* item = NULL;
@@ -2038,7 +2044,12 @@ void SketchWidget::mousePressEvent(QMouseEvent *event)
 
 	foreach (QGraphicsItem * gItem, items) {
 		PaletteItemBase * paletteItemBase = dynamic_cast<PaletteItemBase *>(gItem);
-		if (paletteItemBase && paletteItemBase->inRotation()) return;
+		if (paletteItemBase == NULL) continue;
+
+		if (paletteItemBase->inRotation()) {
+			return;
+		}
+
 	}
 
 	if (item != wasItem) {
@@ -8590,3 +8601,9 @@ const QString & SketchWidget::traceColor(ViewLayer::ViewLayerSpec) {
 double SketchWidget::getTraceWidth() {
 	return 1;
 }
+
+void SketchWidget::setAnyInRotation()
+{
+	m_anyInRotation = true;
+}
+
