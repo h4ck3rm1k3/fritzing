@@ -41,7 +41,7 @@ struct ConnectorInfo {
 	double radius;
 	double strokeWidth;
 	QMatrix matrix;
-	QRectF bounds;
+	//QRectF cbounds;
 	QMatrix terminalMatrix;
 	QMatrix legMatrix;
 	QString legColor;

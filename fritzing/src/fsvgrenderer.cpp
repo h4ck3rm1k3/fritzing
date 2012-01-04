@@ -567,9 +567,19 @@ bool FSvgRenderer::initConnectorInfoStructAux(QDomElement & element, ConnectorIn
 		//}
 	}
 
+	QMatrix matrix = TextUtils::elementToMatrix(element);
+	if (!matrix.isIdentity()) {
+		QRectF r1(0,0,r,r);
+		QRectF r2 = matrix.mapRect(r1);
+		if (r2.width() != r1.width()) {
+			r = r2.width();
+			sw = sw * r2.width() / r1.width();
+		}
+	}
+
 	//DebugDialog::debug("got a circle");
 	connectorInfo->gotCircle = true;
-	connectorInfo->bounds.setRect(cx - r - (sw / 2.0), cy - r - (sw / 2.0), (r * 2) + sw, (r * 2) + sw);
+	//connectorInfo->cbounds.setRect(cx - r - (sw / 2.0), cy - r - (sw / 2.0), (r * 2) + sw, (r * 2) + sw);
 	connectorInfo->radius = r;
 	connectorInfo->strokeWidth = sw;
 	return true;
@@ -605,7 +615,10 @@ bool FSvgRenderer::setUpConnector(SvgIdLayer * svgIdLayer, bool ignoreTerminalPo
 
 	QString connectorID = svgIdLayer->m_svgId;
 
+	// boundsOnElement seems to include any matrix on the element itself.
+	// I would swear this wasn't true before Qt4.7, but maybe I am crazy
 	QRectF bounds = this->boundsOnElement(connectorID);	
+
 	if (bounds.isNull() && !svgIdLayer->m_hybrid) {		// hybrids can have zero size
 		svgIdLayer->m_svgVisible = false;		
 		DebugDialog::debug("renderer::setupconnector: null bounds");
@@ -615,23 +628,27 @@ bool FSvgRenderer::setUpConnector(SvgIdLayer * svgIdLayer, bool ignoreTerminalPo
 	QSizeF defaultSizeF = this->defaultSizeF();
 	QRectF viewBox = this->viewBoxF();
 
-	ConnectorInfo * connectorInfo = getConnectorInfo(connectorID);		
+	ConnectorInfo * connectorInfo = getConnectorInfo(connectorID);	
+
+	/*
+	DebugDialog::debug(QString("connectorid:%1 m11:%2 m12:%3 m21:%4 m22:%5 dx:%6 dy:%7")
+						.arg(connectorID)
+						.arg(connectorInfo->matrix.m11())
+						.arg(connectorInfo->matrix.m12())
+						.arg(connectorInfo->matrix.m21())
+						.arg(connectorInfo->matrix.m22())
+						.arg(connectorInfo->matrix.dx())
+						.arg(connectorInfo->matrix.dy()),
+				bounds);
+	*/
+
 	if (connectorInfo && connectorInfo->gotCircle) {
 		svgIdLayer->m_radius = connectorInfo->radius * defaultSizeF.width() / viewBox.width();
 		svgIdLayer->m_strokeWidth = connectorInfo->strokeWidth * defaultSizeF.width() / viewBox.width();
-		bounds = connectorInfo->bounds;
+		//bounds = connectorInfo->cbounds;
 	}
 
-	// matrixForElement only grabs parent matrices, not any transforms in the element itself
-	if (connectorInfo->matrix.dx() != 0 || connectorInfo->matrix.dy() != 0 ) {
-		if (connectorInfo->matrix.m11() == 1 && connectorInfo->matrix.m22() == 1 && connectorInfo->matrix.m12() == 0 && connectorInfo->matrix.m21() == 0) {
-			// Translation seems to already appear in the bounds unless the matrix also includes rotation/scaling. 
-			// I think this is an inconsistency in Qt but so far it seems only to have occurred with the generated SMD ICs
-			connectorInfo->matrix.translate(-connectorInfo->matrix.dx(), -connectorInfo->matrix.dy()); 
-		}
-	}
-	QMatrix matrix0 = connectorInfo->matrix * this->matrixForElement(connectorID);  
-
+	
 	/*DebugDialog::debug(QString("identity matrix %11 %1 %2, viewbox: %3 %4 %5 %6, bounds: %7 %8 %9 %10, size: %12 %13").arg(m_modelPart->title()).arg(connectorSharedID())
 					   .arg(viewBox.x()).arg(viewBox.y()).arg(viewBox.width()).arg(viewBox.height())
 					   .arg(bounds.x()).arg(bounds.y()).arg(bounds.width()).arg(bounds.height())
@@ -642,7 +659,10 @@ bool FSvgRenderer::setUpConnector(SvgIdLayer * svgIdLayer, bool ignoreTerminalPo
 
 	// some strangeness in the way that svg items and non-svg items map to screen space
 	// might be a qt problem.
-	QRectF r1 = matrix0.mapRect(bounds);
+	//QMatrix matrix0 = connectorInfo->matrix * this->matrixForElement(connectorID);  
+	//QRectF r1 = matrix0.mapRect(bounds);
+	QRectF r1 = this->matrixForElement(connectorID).mapRect(bounds);
+
 	/*
 	svgIdLayer->m_rect.setRect(r1.x() * defaultSize.width() / viewBox.width(), 
 							   r1.y() * defaultSize.height() / viewBox.height(), 
@@ -696,6 +716,7 @@ void FSvgRenderer::calcLeg(SvgIdLayer * svgIdLayer, const QRectF & viewBox, Conn
 
 QPointF FSvgRenderer::calcTerminalPoint(const QString & terminalId, const QRectF & connectorRect, bool ignoreTerminalPoint, const QRectF & viewBox, QMatrix & terminalMatrix)
 {
+	Q_UNUSED(terminalMatrix);
 	QPointF terminalPoint = connectorRect.center() - connectorRect.topLeft();    // default spot is centered
 	if (ignoreTerminalPoint) {
 		return terminalPoint;
@@ -722,8 +743,9 @@ QPointF FSvgRenderer::calcTerminalPoint(const QString & terminalId, const QRectF
 
 
 	// matrixForElement only grabs parent matrices, not any transforms in the element itself
-	QMatrix tMatrix = this->matrixForElement(terminalId) * terminalMatrix;
-	QRectF terminalRect = tMatrix.mapRect(tBounds);
+	//QMatrix tMatrix = this->matrixForElement(terminalId) ; //* terminalMatrix;
+	//QRectF terminalRect = tMatrix.mapRect(tBounds);
+	QRectF terminalRect = this->matrixForElement(terminalId).mapRect(tBounds);
 	QPointF c = terminalRect.center();
 	QPointF q(c.x() * defaultSizeF.width() / viewBox.width(), c.y() * defaultSizeF.height() / viewBox.height());
 	terminalPoint = q - connectorRect.topLeft();
@@ -762,14 +784,13 @@ QList<SvgIdLayer *> FSvgRenderer::setUpNonConnectors() {
 		if (connectorInfo && connectorInfo->gotCircle) {
 			svgIdLayer->m_radius = connectorInfo->radius * defaultSizeF.width() / viewBox.width();
 			svgIdLayer->m_strokeWidth = connectorInfo->strokeWidth * defaultSizeF.width() / viewBox.width();
-			bounds = connectorInfo->bounds;
+			//bounds = connectorInfo->cbounds;
 		}
 
 		// matrixForElement only grabs parent matrices, not any transforms in the element itself
-		QMatrix matrix0 = connectorInfo->matrix * this->matrixForElement(nonConnectorID);  
-
-
-		QRectF r1 = matrix0.mapRect(bounds);
+		//QMatrix matrix0 = connectorInfo->matrix * this->matrixForElement(nonConnectorID);  
+		//QRectF r1 = matrix0.mapRect(bounds);
+		QRectF r1 = this->matrixForElement(nonConnectorID).mapRect(bounds);
 		svgIdLayer->m_rect.setRect(r1.x() * defaultSize.width() / viewBox.width(), r1.y() * defaultSize.height() / viewBox.height(), r1.width() * defaultSize.width() / viewBox.width(), r1.height() * defaultSize.height() / viewBox.height());
 		svgIdLayer->m_point = svgIdLayer->m_rect.center() - svgIdLayer->m_rect.topLeft();
 		svgIdLayer->m_svgVisible = true;
@@ -780,3 +801,5 @@ QList<SvgIdLayer *> FSvgRenderer::setUpNonConnectors() {
 	return list;
 
 }
+
+
