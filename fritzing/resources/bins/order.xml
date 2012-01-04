@@ -1,6 +1,6 @@
 <order>
 	<bin title="Search" location="user" />
-	<bin title="Core Parts" location="resource" />
+	<bin title="Core Parts" location="app" />
 	<bin title="My Parts" location="user" />
 	<bin title="___*___" location="user" />
 	<bin title="___*___" location="outside" />
