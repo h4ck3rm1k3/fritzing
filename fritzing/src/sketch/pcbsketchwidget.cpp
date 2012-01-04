@@ -274,7 +274,10 @@ void PCBSketchWidget::excludeFromAutoroute(bool exclude)
 {
 	foreach (QGraphicsItem * item, scene()->selectedItems()) {
 		TraceWire * wire = dynamic_cast<TraceWire *>(item);
+		
 		if (wire) {
+			if (!wire->isTraceType(getTraceFlag())) continue;
+
 			QList<Wire *> wires;
 			QList<ConnectorItem *> ends;
 			wire->collectChained(wires, ends);
@@ -305,10 +308,7 @@ void PCBSketchWidget::selectAllExcludedTraces()
 		TraceWire * wire = dynamic_cast<TraceWire *>(item);
 		if (wire == NULL) continue;
 
-		if (wire->parentItem() != NULL) {
-			// skip module wires
-			continue;
-		}
+		if (!wire->isTraceType(getTraceFlag())) continue;
 
 		if (!wire->getAutoroutable()) {
 			wires.append(wire);
@@ -335,62 +335,6 @@ const QString & PCBSketchWidget::hoverEnterPartConnectorMessage(QGraphicsSceneHo
 	static QString message = tr("Click this connector to drag out a new trace.");
 
 	return message;
-}
-
-void PCBSketchWidget::connectSymbols(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, QUndoCommand * parentCommand) {
-	ConnectorItem * target1 = NULL;
-	ConnectorItem * target2 = NULL;
-	if (fromConnectorItem->attachedToItemType() == ModelPart::Symbol && toConnectorItem->attachedToItemType() == ModelPart::Symbol) {
-		QList<ConnectorItem *> connectorItems;
-		connectorItems.append(fromConnectorItem);
-		ConnectorItem::collectEqualPotential(connectorItems, false, ViewGeometry::TraceRatsnestFlags);
-		foreach (ConnectorItem * c, connectorItems) {
-			if (c->attachedToItemType() == ModelPart::Part) {
-				target1 = c; 
-				break;
-			}
-		}
-		connectorItems.clear();
-		connectorItems.append(toConnectorItem);
-		ConnectorItem::collectEqualPotential(connectorItems, false, ViewGeometry::TraceRatsnestFlags);
-		foreach (ConnectorItem * c, connectorItems) {
-			if (c->attachedToItemType() == ModelPart::Part) {
-				target2 = c; 
-				break;
-			}
-		}
-	}
-	else if (fromConnectorItem->attachedToItemType() == ModelPart::Symbol) {
-		connectSymbolPrep(fromConnectorItem, toConnectorItem, target1, target2);
-	}
-	else if (toConnectorItem->attachedToItemType() == ModelPart::Symbol) {
-		connectSymbolPrep(toConnectorItem, fromConnectorItem, target1, target2);
-	}
-
-	if (target1 == NULL) return;
-	if (target2 == NULL) return;
-
-	makeModifiedWire(target1, target2, BaseCommand::CrossView, ViewGeometry::NormalFlag, parentCommand);
-}
-
-void PCBSketchWidget::connectSymbolPrep(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, ConnectorItem * & target1, ConnectorItem * & target2) {
-	QList<ConnectorItem *> connectorItems;
-	connectorItems.append(fromConnectorItem);
-	ConnectorItem::collectEqualPotential(connectorItems, false, ViewGeometry::TraceRatsnestFlags);
-	foreach (ConnectorItem * c, connectorItems) {
-		if (c->attachedToItemType() == ModelPart::Part) {
-			target1 = c;
-			break;
-		}
-	}
-	if (target1 == NULL) return;
-
-	if (toConnectorItem->attachedToItemType() == ModelPart::Part) {
-		target2 = toConnectorItem;
-	}
-	else if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
-		target2 = findNearestPartConnectorItem(toConnectorItem);
-	}
 }
 
 void PCBSketchWidget::addDefaultParts() {
@@ -684,35 +628,6 @@ ConnectorItem * PCBSketchWidget::findEmptyBusConnectorItem(ConnectorItem * busCo
 	return busConnectorItem;
 }
 
-
-long PCBSketchWidget::makeModifiedWire(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, BaseCommand::CrossViewType cvt, ViewGeometry::WireFlags wireFlags, QUndoCommand * parentCommand) 
-{
-	// create a new real wire
-	long newID = ItemBase::getNextID();
-	//DebugDialog::debug(QString("new real wire %1").arg(newID));
-	//fromConnectorItem->debugInfo("\tfrom");
-	//toConnectorItem->debugInfo("\tto");
-	ViewGeometry viewGeometry;
-	makeRatsnestViewGeometry(viewGeometry, fromConnectorItem, toConnectorItem);
-	viewGeometry.setWireFlags(wireFlags);
-	ViewLayer::ViewLayerSpec viewLayerSpec = wireViewLayerSpec(fromConnectorItem);
-	new AddItemCommand(this, cvt, ModuleIDNames::WireModuleIDName, viewLayerSpec, viewGeometry, newID, true, -1, parentCommand);
-	new CheckStickyCommand(this, cvt, newID, false, CheckStickyCommand::RemoveOnly, parentCommand);
-
-	new ChangeConnectionCommand(this, cvt,
-								newID, "connector0",
-								fromConnectorItem->attachedToID(), fromConnectorItem->connectorSharedID(),
-								ViewLayer::specFromID(fromConnectorItem->attachedToViewLayerID()),
-								true, parentCommand);
-	new ChangeConnectionCommand(this, cvt,
-								newID, "connector1",
-								toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
-								ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
-								true, parentCommand);
-
-	return newID;
-}
-
 ConnectorItem * PCBSketchWidget::findNearestPartConnectorItem(ConnectorItem * fromConnectorItem) {
 	// find the nearest part to fromConnectorItem
 	Wire * wire = qobject_cast<Wire *>(fromConnectorItem->attachedTo());
@@ -813,6 +728,8 @@ void PCBSketchWidget::showGroundTraces(bool show) {
 	foreach (QGraphicsItem * item, scene()->items()) {
 		TraceWire * trace = dynamic_cast<TraceWire *>(item);
 		if (trace == NULL) continue;
+
+		if (!trace->isTraceType(getTraceFlag())) continue;
 
 		if (trace->isGrounded()) {
 			trace->setVisible(show);
@@ -1083,6 +1000,8 @@ long PCBSketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const Q
 		foreach (QGraphicsItem * item, scene()->items()) {
 			TraceWire * tw = dynamic_cast<TraceWire *>(item);
 			if (tw == NULL) continue;
+
+			if (!tw->isTraceType(getTraceFlag())) continue;
 			if (tw->viewLayerID() != ViewLayer::Copper1Trace) continue;
 			if (already.contains(tw)) continue;
 				
@@ -1278,6 +1197,8 @@ void PCBSketchWidget::changeTraceLayer() {
 	foreach (QGraphicsItem * item, scene()->selectedItems()) {
 		TraceWire * tw = dynamic_cast<TraceWire *>(item);
 		if (tw == NULL) continue;
+
+		if (!tw->isTraceType(getTraceFlag())) continue;
 		if (visitedWires.contains(tw)) continue;
 
 		QList<Wire *> wires;

@@ -230,64 +230,6 @@ void SchematicSketchWidget::changeConnection(long fromID, const QString & fromCo
 	m_updateDotsTimer.start();
 }
 
-AddItemCommand * SchematicSketchWidget::newAddItemCommand(BaseCommand::CrossViewType crossViewType, QString moduleID, ViewLayer::ViewLayerSpec viewLayerSpec, 
-														  ViewGeometry & viewGeometry, qint64 id, bool updateInfoView, 
-														  long modelIndex, QUndoCommand *parent)
-{
-	AddItemCommand* addItemCommand = SketchWidget::newAddItemCommand(crossViewType, moduleID, viewLayerSpec, viewGeometry, id, updateInfoView, modelIndex, parent);
-	double v = 0;
-	bool gotV = false;
-	if (moduleID.compare(ModuleIDNames::GroundModuleIDName) == 0) {
-		gotV = true;
-	}
-	else if (moduleID.compare(ModuleIDNames::PowerModuleIDName) == 0) {
-		gotV = true;
-		v = SymbolPaletteItem::DefaultVoltage;
-	}
-	else if (moduleID.compare(ModuleIDNames::JustPowerModuleIDName) == 0) {
-		gotV = true;
-		v = SymbolPaletteItem::DefaultVoltage;
-	}
-
-	if (!gotV) {
-		return addItemCommand;
-	}
-
-	// create the item temporarily, only in order to call makeModifiedWire, then delete it
-	SymbolPaletteItem * newSymbol = qobject_cast<SymbolPaletteItem *>(addItem(moduleID, viewLayerSpec, BaseCommand::SingleView, viewGeometry, id, modelIndex, NULL));
-	
-	foreach (QGraphicsItem * item, scene()->items()) {
-		SymbolPaletteItem * symbol = dynamic_cast<SymbolPaletteItem *>(item);
-		if (symbol == NULL) continue;
-		if (symbol == newSymbol) continue;					// don't connect self to self
-		if (symbol == m_droppingItem) continue;				// the drag item
-
-		if (symbol->voltage() == v && sameGround(newSymbol->connector0(), symbol->connector0())) {
-			makeModifiedWire(newSymbol->connector0(), symbol->connector0(), crossViewType, ViewGeometry::NormalFlag, parent); 
-		}
-
-		// connector1 is always ground
-		// connector0 may be ground or power
-
-		if (symbol->connector1() != NULL && v == 0 && sameGround(newSymbol->connector0(), symbol->connector1())) {
-			makeModifiedWire(newSymbol->connector0(), symbol->connector1(), crossViewType, ViewGeometry::NormalFlag, parent); 
-		}
-
-		if (newSymbol->connector1() != NULL) {
-			if (symbol->voltage() == 0 && sameGround(newSymbol->connector1(), symbol->connector0())) {
-				makeModifiedWire(newSymbol->connector1(), symbol->connector0(), crossViewType, ViewGeometry::NormalFlag, parent); 
-			}
-			if (symbol->connector1() != NULL) {
-				makeModifiedWire(newSymbol->connector1(), symbol->connector1(), crossViewType, ViewGeometry::NormalFlag, parent); 
-			}
-		}
-	}
-
-	deleteItem(newSymbol, false, false, false);				// WARNING: don't delete the model part here...
-
-	return addItemCommand;
-}
-
 void SchematicSketchWidget::setVoltage(double v, bool doEmit)
 {
 	Q_UNUSED(doEmit);
@@ -319,16 +261,6 @@ void SchematicSketchWidget::setVoltage(double v, bool doEmit)
 	}
 
 	new SetPropCommand(this, item->id(), "voltage", QString::number(sitem->voltage()), QString::number(v), true, parentCommand);
-	
-	foreach (QGraphicsItem * item, scene()->items()) {
-		SymbolPaletteItem * other = dynamic_cast<SymbolPaletteItem *>(item);
-		if (other == NULL) continue;
-		if (other == sitem) continue;
-
-		if (other->voltage() == v && sameGround(sitem->connector0(), other->connector0())) {
-			this->makeModifiedWire(sitem->connector0(), other->connector0(), BaseCommand::CrossView, ViewGeometry::NormalFlag, parentCommand);
-		}
-	}
 
 	new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
 

@@ -85,9 +85,6 @@ protected slots:
 
 protected:
 	double getRatsnestOpacity(bool);
-	AddItemCommand * newAddItemCommand(BaseCommand::CrossViewType crossViewType, 
-										QString moduleID, ViewLayer::ViewLayerSpec, ViewGeometry & viewGeometry, qint64 id, 
-										bool updateInfoView, long modelIndex, QUndoCommand *parent);
 	ViewLayer::ViewLayerID getLabelViewLayerID(ViewLayer::ViewLayerSpec);
 	QPoint calcFixedToCenterItemOffset(const QRect & viewPortRect, const QSizeF & helpSize);
 	void extraRenderSvgStep(ItemBase *, QPointF offset, double dpi, double printerScale, QString & outputSvg);
