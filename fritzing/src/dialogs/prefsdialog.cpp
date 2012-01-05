@@ -64,7 +64,7 @@ PrefsDialog::~PrefsDialog()
 void PrefsDialog::initViewInfo(int index, const QString & viewName, const QString & shortName, double defaultSize, QColor current, QColor standard, bool curvy) 
 {
 	m_viewInfoThings[index].index = index;
-	m_viewInfoThings[index].defaultSize = defaultSize;
+	m_viewInfoThings[index].defaultGridSize = defaultSize;
 	m_viewInfoThings[index].viewName = viewName;
 	m_viewInfoThings[index].shortName = shortName;
 	m_viewInfoThings[index].currentBColor = current;
@@ -456,7 +456,7 @@ QWidget * PrefsDialog::createGridSizeForm(ViewInfoThing * viewInfoThing)
 	QString szString = settings.value(QString("%1GridSize").arg(viewInfoThing->viewName), "").toString();
 	if (szString.isEmpty()) {
 		viewInfoThing->inButton->setChecked(true);
-		viewInfoThing->lineEdit->setText(QString::number(viewInfoThing->defaultSize));
+		viewInfoThing->lineEdit->setText(QString::number(viewInfoThing->defaultGridSize));
 	}
 	else {
 		if (szString.endsWith("mm")) {
@@ -516,7 +516,7 @@ void PrefsDialog::restoreDefault() {
 
 	viewInfoThing->inButton->setChecked(true);
 	viewInfoThing->mmButton->setChecked(false);
-	viewInfoThing->lineEdit->setText(QString::number(viewInfoThing->defaultSize));
+	viewInfoThing->lineEdit->setText(QString::number(viewInfoThing->defaultGridSize));
 	updateGridSize(viewInfoThing);
 }
 

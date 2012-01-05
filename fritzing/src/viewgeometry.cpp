@@ -27,10 +27,6 @@ $Date$
 #include "viewgeometry.h"
 #include "utils/graphicsutils.h"
 
-// get a compiler errow when using WireFlags instead of QFlags<>
-QFlags<ViewGeometry::WireFlag> ViewGeometry::TraceRatsnestFlags = ViewGeometry::PCBTraceFlag | ViewGeometry::RatsnestFlag;
-QFlags<ViewGeometry::WireFlag> ViewGeometry::NotTraceFlags = ViewGeometry::NormalFlag | ViewGeometry::RatsnestFlag;
-
 ViewGeometry::ViewGeometry(  )
 {
 	m_z = -1;

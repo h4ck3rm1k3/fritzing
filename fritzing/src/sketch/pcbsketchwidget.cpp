@@ -194,7 +194,7 @@ bool PCBSketchWidget::canChainWire(Wire * wire) {
 		ConnectorItem * c1 = wire->connector1()->firstConnectedToIsh();
 		if (c1 == NULL) return false;
 
-		return !c0->wiredTo(c1, ViewGeometry::NotTraceFlags); 
+		return !c0->wiredTo(c1, (ViewGeometry::NormalFlag | ViewGeometry::PCBTraceFlag | ViewGeometry::RatsnestFlag | ViewGeometry::SchematicTraceFlag) ^ getTraceFlag()); 
 	}
 
 	return result;
@@ -581,51 +581,6 @@ double PCBSketchWidget::getRatsnestOpacity(Wire * wire) {
 
 double PCBSketchWidget::getRatsnestOpacity(bool routed) {
 	return (routed ? 0.2 : 1.0);
-}
-
-ConnectorItem * PCBSketchWidget::lookForBreadboardConnection(ConnectorItem * connectorItem) 
-{
-	Wire * wire = qobject_cast<Wire *>(connectorItem->attachedTo());
-	QList<ConnectorItem *> ends;
-	if (wire != NULL) {
-		QList<Wire *> wires;
-		wire->collectChained(wires, ends);
-		foreach (ConnectorItem * end, ends) {
-			foreach (ConnectorItem * toConnectorItem, end->connectedToItems()) {
-				if (toConnectorItem->attachedToItemType() == ModelPart::Breadboard) {
-					return findEmptyBusConnectorItem(toConnectorItem);
-				}
-			}
-		}
-	}
-
-	ends.clear();
-	ends.append(connectorItem);
-	ConnectorItem::collectEqualPotential(ends, true, ViewGeometry::TraceRatsnestFlags);
-	foreach (ConnectorItem * end, ends) {
-		if (end->attachedToItemType() == ModelPart::Breadboard) {
-			return findEmptyBusConnectorItem(end);
-		}
-	}
-
-	return connectorItem;
-}
-
-ConnectorItem * PCBSketchWidget::findEmptyBusConnectorItem(ConnectorItem * busConnectorItem) {
-	Bus * bus = busConnectorItem->bus();
-	if (bus == NULL) return busConnectorItem;
-
-	QList<ConnectorItem *> connectorItems;
-	busConnectorItem->attachedTo()->busConnectorItems(bus, connectorItems);
-	foreach (ConnectorItem * connectorItem, connectorItems) {
-		if (connectorItem == busConnectorItem) continue;
-
-		if (connectorItem->connectionsCount() == 0) {
-			return connectorItem;
-		}
-	}
-
-	return busConnectorItem;
 }
 
 ConnectorItem * PCBSketchWidget::findNearestPartConnectorItem(ConnectorItem * fromConnectorItem) {

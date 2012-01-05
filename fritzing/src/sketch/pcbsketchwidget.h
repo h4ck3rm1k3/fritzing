@@ -129,8 +129,6 @@ protected:
 	bool canDropModelPart(ModelPart * modelPart);
 	bool canCreateWire(Wire * dragWire, ConnectorItem * from, ConnectorItem * to);
 	bool bothEndsConnected(Wire * wire, ViewGeometry::WireFlags, ConnectorItem * oneEnd, QList<Wire *> & wires, QList<ConnectorItem *> & partConnectorItems);
-	ConnectorItem * lookForBreadboardConnection(ConnectorItem * connectorItem);
-	ConnectorItem * findEmptyBusConnectorItem(ConnectorItem * busConnectorItem);
 	void setUpColor(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, Wire * wire, QUndoCommand * parentCommand);
 	ConnectorItem * findNearestPartConnectorItem(ConnectorItem * fromConnectorItem);
 	bool bothEndsConnectedAux(Wire * wire, ViewGeometry::WireFlags flag, ConnectorItem * oneEnd, QList<Wire *> & wires, QList<ConnectorItem *> & partConnectorItems, QList<Wire *> & visited);

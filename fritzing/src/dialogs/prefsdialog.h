@@ -44,7 +44,7 @@ struct ViewInfoThing
 	QDoubleValidator * validator;
 	QRadioButton * mmButton;
 	QRadioButton * inButton;
-	double defaultSize;
+	double defaultGridSize;
 	QString viewName;
 	QString shortName;
 	int index;

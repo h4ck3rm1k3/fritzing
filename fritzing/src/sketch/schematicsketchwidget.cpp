@@ -33,6 +33,7 @@ $Date$
 #include "../waitpushundostack.h"
 #include "../items/moduleidnames.h"
 #include "../fsvgrenderer.h"
+#include "../utils/graphicsutils.h"
 
 #include <limits>
 
@@ -268,7 +269,7 @@ void SchematicSketchWidget::setVoltage(double v, bool doEmit)
 }
 
 double SchematicSketchWidget::defaultGridSizeInches() {
-	return 0.3;
+	return GraphicsUtils::StandardSchematicSeparationMils / 1000;
 }
 
 ViewLayer::ViewLayerID SchematicSketchWidget::getLabelViewLayerID(ViewLayer::ViewLayerSpec) {

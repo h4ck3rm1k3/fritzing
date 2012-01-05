@@ -2042,16 +2042,6 @@ void SketchWidget::mousePressEvent(QMouseEvent *event)
 		}
 	}
 
-	foreach (QGraphicsItem * gItem, items) {
-		PaletteItemBase * paletteItemBase = dynamic_cast<PaletteItemBase *>(gItem);
-		if (paletteItemBase == NULL) continue;
-
-		if (paletteItemBase->inRotation()) {
-			return;
-		}
-
-	}
-
 	if (item != wasItem) {
 		// if the item was deleted during mousePressEvent
 		// for example, by shift-clicking a connectorItem
@@ -3327,7 +3317,7 @@ void SketchWidget::prepLegBendpointMove(ConnectorItem * from, int index, QPointF
 		if (former.count() > 0) {
 			QList<ConnectorItem *> connectorItems;
 			connectorItems.append(from);
-			ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::TraceRatsnestFlags);
+			ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::RatsnestFlag | ViewGeometry::PCBTraceFlag | ViewGeometry::SchematicTraceFlag);
 
 			foreach (ConnectorItem * formerConnectorItem, former) {
 				ChangeConnectionCommand * ccc = extendChangeConnectionCommand(BaseCommand::CrossView, from, formerConnectorItem, 
@@ -3509,10 +3499,6 @@ void SketchWidget::wireChangedSlot(Wire* wire, const QLineF & oldLine, const QLi
 
 	if (!chained) {
 		if (former.count() > 0) {
-			QList<ConnectorItem *> connectorItems;
-			connectorItems.append(from);
-			ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::TraceRatsnestFlags);
-
 			foreach (ConnectorItem * formerConnectorItem, former) {
 				extendChangeConnectionCommand(BaseCommand::CrossView, from, formerConnectorItem, 
 					ViewLayer::specFromID(wire->viewLayerID()),
@@ -3570,43 +3556,38 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Conne
 
 	m_connectorDragWire->saveGeometry();
 	bool doEmit = false;
-	if ((m_bendpointWire == NULL) && false /* && modifyNewWireConnections(wire, fromOnWire, m_connectorDragConnector, to, parentCommand)  */) {
+	long fromID = wire->id();
+
+	DebugDialog::debug(QString("m_connectorDragConnector:%1 %4 from:%2 to:%3")
+						.arg(m_connectorDragConnector->connectorSharedID())
+						.arg(fromOnWire->connectorSharedID())
+						.arg((to == NULL) ? "null" : to->connectorSharedID())
+						.arg(m_connectorDragConnector->attachedTo()->title()) );
+
+
+	// create a new wire with the same id as the temporary wire
+	ViewGeometry vg = m_connectorDragWire->getViewGeometry();
+	vg.setWireFlags(getTraceFlag());
+	new AddItemCommand(this, crossViewType, m_connectorDragWire->moduleID(), m_connectorDragWire->viewLayerSpec(), vg, fromID, true, -1, parentCommand);
+	new CheckStickyCommand(this, crossViewType, fromID, false, CheckStickyCommand::RemoveOnly, parentCommand);
+	selectItemCommand->addRedo(fromID);
+
+	if (m_bendpointWire == NULL) {
+		ConnectorItem * anchor = wire->otherConnector(fromOnWire);
+		if (anchor != NULL) {
+			extendChangeConnectionCommand(BaseCommand::CrossView, anchor, m_connectorDragConnector, ViewLayer::specFromID(wire->viewLayerID()), true, parentCommand);
+			doEmit = true;
+		}
+		if (to != NULL) {
+			extendChangeConnectionCommand(BaseCommand::CrossView, fromOnWire, to, ViewLayer::specFromID(wire->viewLayerID()), true, parentCommand);
+			doEmit = true;
+		}
+
+		setUpColor(m_connectorDragConnector, to, wire, parentCommand);
 	}
 	else {
-		long fromID = wire->id();
-
-		DebugDialog::debug(QString("m_connectorDragConnector:%1 %4 from:%2 to:%3")
-						   .arg(m_connectorDragConnector->connectorSharedID())
-						   .arg(fromOnWire->connectorSharedID())
-						   .arg((to == NULL) ? "null" : to->connectorSharedID())
-						   .arg(m_connectorDragConnector->attachedTo()->title()) );
-
-
-		// create a new wire with the same id as the temporary wire
-		ViewGeometry vg = m_connectorDragWire->getViewGeometry();
-		vg.setWireFlags(getTraceFlag());
-		new AddItemCommand(this, crossViewType, m_connectorDragWire->moduleID(), m_connectorDragWire->viewLayerSpec(), vg, fromID, true, -1, parentCommand);
-		new CheckStickyCommand(this, crossViewType, fromID, false, CheckStickyCommand::RemoveOnly, parentCommand);
-		SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
-		selectItemCommand->addRedo(fromID);
-
-		if (m_bendpointWire == NULL) {
-			ConnectorItem * anchor = wire->otherConnector(fromOnWire);
-			if (anchor != NULL) {
-				extendChangeConnectionCommand(BaseCommand::CrossView, anchor, m_connectorDragConnector, ViewLayer::specFromID(wire->viewLayerID()), true, parentCommand);
-				doEmit = true;
-			}
-			if (to != NULL) {
-				extendChangeConnectionCommand(BaseCommand::CrossView, fromOnWire, to, ViewLayer::specFromID(wire->viewLayerID()), true, parentCommand);
-				doEmit = true;
-			}
-
-			setUpColor(m_connectorDragConnector, to, wire, parentCommand);
-		}
-		else {
-			new WireColorChangeCommand(this, wire->id(), m_bendpointWire->colorString(), m_bendpointWire->colorString(), m_bendpointWire->opacity(), m_bendpointWire->opacity(), parentCommand);
-			new WireWidthChangeCommand(this, wire->id(), m_bendpointWire->width(), m_bendpointWire->width(), parentCommand);
-		}
+		new WireColorChangeCommand(this, wire->id(), m_bendpointWire->colorString(), m_bendpointWire->colorString(), m_bendpointWire->opacity(), m_bendpointWire->opacity(), parentCommand);
+		new WireWidthChangeCommand(this, wire->id(), m_bendpointWire->width(), m_bendpointWire->width(), parentCommand);
 	}
 
 	if (m_bendpointWire) {
