@@ -372,7 +372,7 @@ QString PinHeader::makeSchematicSvg(const QString & expectedFileName)
 
 	int pins = pieces.at(pieces.count() - 3).toInt();
 	QString form = expectedFileName.contains("female") ? "female" :"male";
-	double unitHeight = 0.27;  // inches
+	double unitHeight = GraphicsUtils::StandardSchematicSeparationMils / 1000;  // inches
 	double unitHeightPoints = unitHeight * 72;
 
 	QString header("<?xml version='1.0' encoding='utf-8'?>\n"

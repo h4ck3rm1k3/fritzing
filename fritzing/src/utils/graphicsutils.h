@@ -72,6 +72,7 @@ public:
 	static const int IllustratorDPI = 72;
 	static const int StandardFritzingDPI = 1000;
 	static const double InchesPerMeter;
+	static const double StandardSchematicSeparationMils;
 
 
 };

@@ -33,6 +33,7 @@ $Date$
 
 
 const double GraphicsUtils::InchesPerMeter = 39.370078;
+const double GraphicsUtils::StandardSchematicSeparationMils = 295.275591;   // 7.5mm
 
 
 void GraphicsUtils::distanceFromLine(double cx, double cy, double ax, double ay, double bx, double by, 

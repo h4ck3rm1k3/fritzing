@@ -208,11 +208,11 @@ QString Dip::makeSchematicSvg(const QString & expectedFileName)
 QString Dip::makeSchematicSvg(const QStringList & labels) 
 {
 	int pins = labels.count();
-	int increment = 300;
-	double totalHeight = (pins * increment / 2) + 330;
+	int increment = GraphicsUtils::StandardSchematicSeparationMils;  
 	int border = 30;
-	int pinWidth = 630;
-	int centralWidth = 1200;
+	double totalHeight = (pins * increment / 2) + increment + border;
+	int pinWidth = increment + increment + border;
+	int centralWidth = increment * 4;
 	int pinTextWidth = 0;
 	int defaultLabelWidth = 30;
 	int labelFontSize = 130;

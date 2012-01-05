@@ -439,9 +439,9 @@ QString MysteryPart::makeSchematicSvg(const QString & expectedFileName)
 
 QString MysteryPart::makeSchematicSvg(const QStringList & labels, bool sip) 
 {	
-	int increment = 300;
-	double totalHeight = (labels.count() * increment) + 330;
+	int increment = GraphicsUtils::StandardSchematicSeparationMils;   // 7.5mm;
 	int border = 30;
+	double totalHeight = (labels.count() * increment) + increment + border;
 	int textOffset = 50;
 	int repeatTextOffset = 50;
 	int fontSize = 255;
@@ -457,8 +457,8 @@ QString MysteryPart::makeSchematicSvg(const QStringList & labels, bool sip)
 	}
 	textMax = textMax * GraphicsUtils::StandardFritzingDPI / 72;
 
-	int totalWidth = 1530;
-	int innerWidth = 1200;
+	int totalWidth = (5 * increment) + border;
+	int innerWidth = 4 * increment;
 	if (textMax > defaultLabelWidth) {
 		totalWidth += (textMax - defaultLabelWidth);
 		innerWidth += (textMax - defaultLabelWidth);
@@ -505,10 +505,10 @@ QString MysteryPart::makeSchematicSvg(const QStringList & labels, bool sip)
   
 	for (int i = 0; i < labels.count(); i++) {
 		svg += repeat
-			.arg(315 + (i * increment))
-			.arg(300 + (i * increment))
+			.arg(increment + (border / 2) + (i * increment))
+			.arg(increment + (i * increment))
 			.arg(i)
-			.arg(300 + repeatTextOffset + (i * increment))
+			.arg(increment + repeatTextOffset + (i * increment))
 			.arg(labels.at(i))
 			.arg(labelFontSize);
 	}

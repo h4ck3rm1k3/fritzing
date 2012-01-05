@@ -148,14 +148,14 @@ QString ScrewTerminal::makeSchematicSvg(const QString & expectedFileName)
 	if (pieces.count() != 5) return "";
 
 	int pins = pieces.at(2).toInt();
-	double increment = 0.27;				// inches
-	double incrementPoints = 19.439;		// 72 dpi
+	double increment = GraphicsUtils::StandardSchematicSeparationMils / 1000;				
+	double incrementPoints = increment * 72;		// 72 dpi
 
 
 	QString header("<?xml version='1.0' encoding='utf-8'?>\n"
 					"<svg version='1.1' baseProfile='basic' id='svg2' xmlns:svg='http://www.w3.org/2000/svg'\n"
 					"xmlns='http://www.w3.org/2000/svg'  x='0px' y='0px' width='0.87in'\n"
-					"height='%1in' viewBox='0 0 62.641 [19.439]' xml:space='preserve'>\n"
+					"height='%1in' viewBox='0 0 62.641 [%2]' xml:space='preserve'>\n"
 					"<g id='schematic'>\n");
 
 	QString repeat("<line id='connector%1pin' fill='none' stroke='#000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' x1='0.998' y1='[9.723]' x2='17.845' y2='[9.723]'/>\n"
@@ -163,7 +163,7 @@ QString ScrewTerminal::makeSchematicSvg(const QString & expectedFileName)
 					"<circle fill='none' stroke-width='2' stroke='#000000' cx='52.9215' cy='[9.723]' r='8.7195' />\n"
 					"<line id='line' fill='none' stroke='#000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' x1='43.202' y1='[9.723]' x2='16.452' y2='[9.723]'/>\n");
 
-	QString svg = TextUtils::incrementTemplateString(header.arg(increment * pins), 1, incrementPoints * (pins - 1), TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction, NULL);
+	QString svg = TextUtils::incrementTemplateString(header.arg(increment * pins).arg(incrementPoints), 1, incrementPoints * (pins - 1), TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction, NULL);
 	svg += TextUtils::incrementTemplateString(repeat, pins, incrementPoints, TextUtils::standardMultiplyPinFunction, TextUtils::standardCopyPinFunction, NULL);
 	svg += "</g>\n</svg>";
 
