@@ -11,7 +11,9 @@
  </tags>
  <properties>
   <property name="family">Optocoupler</property>
- <property name="package">THT</property></properties>
+ <property name="package">THT</property>
+<property name="part">4N35</property>
+ </properties>
  <description>Optocoupler - keeps you from frying your stuff!</description>
  <views>
   <iconView>

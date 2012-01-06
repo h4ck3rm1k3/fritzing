@@ -37,22 +37,8 @@
         </pcbView>
     </views>
     <connectors>
-        <connector id="connector3" type="male" name="F1">
-            <description>Analog pin (Arduino A4)</description>
-            <views>
-                <breadboardView>
-                    <p layer="breadboard" svgId="connector3pin"/>
-                </breadboardView>
-                <schematicView>
-                    <p layer="schematic" svgId="connector3pin"/>
-                                </schematicView>
-                <pcbView>
-                    <p layer="copper0" svgId="connector3pin"/>
-                    <p layer="copper1" svgId="connector3pin"/>
-                </pcbView>
-            </views>
-        </connector>
-        <connector id="connector20" type="female" name="ISP">
+    
+         <connector id="connector20" type="female" name="ISP">
             <description>no description yet</description>
             <views>
                 <breadboardView>
@@ -68,22 +54,7 @@
 
             </views>
         </connector>
-        <connector id="connector4" type="male" name="F4">
-            <description>Analog pin (Arduino A3)</description>
-            <views>
-                <breadboardView>
-                    <p layer="breadboard" svgId="connector4pin"/>
-                </breadboardView>
-                <schematicView>
-                    <p layer="schematic" svgId="connector4pin"/>
-                                                </schematicView>
-                <pcbView>
-                    <p layer="copper0" svgId="connector4pin"/>
-                    <p layer="copper1" svgId="connector4pin"/>
-                </pcbView>
-            </views>
-        </connector>
-        <connector id="connector21" type="female" name="ISP">
+         <connector id="connector21" type="female" name="ISP">
             <description>no description yet</description>
             <views>
                 <breadboardView>
@@ -97,6 +68,102 @@
                     <p layer="copper1" svgId="connector21pin"/>
                 </pcbView>
 
+            </views>
+        </connector>
+       <connector id="connector16" type="female" name="ISP">
+            <description>no description yet</description>
+            <views>
+                <breadboardView>
+                    <p layer="breadboard" svgId="connector16pin"/>
+                </breadboardView>
+                <schematicView>
+                    <p layer="schematic" svgId="connector16pin"/>
+                                </schematicView>
+                <pcbView>
+                    <p layer="copper0" svgId="connector16pin"/>
+                    <p layer="copper1" svgId="connector16pin"/>
+                </pcbView>
+
+            </views>
+        </connector>
+        <connector id="connector17" type="female" name="ISP">
+            <description>no description yet</description>
+            <views>
+                <breadboardView>
+                    <p layer="breadboard" svgId="connector17pin"/>
+                </breadboardView>
+                <schematicView>
+                    <p layer="schematic" svgId="connector17pin"/>
+                                </schematicView>
+                <pcbView>
+                    <p layer="copper0" svgId="connector17pin"/>
+                    <p layer="copper1" svgId="connector17pin"/>
+                </pcbView>
+
+            </views>
+        </connector>
+        <connector id="connector18" type="female" name="ISP">
+            <description>no description yet</description>
+            <views>
+                <breadboardView>
+                    <p layer="breadboard" svgId="connector18pin"/>
+                </breadboardView>
+                <schematicView>
+                    <p layer="schematic" svgId="connector18pin"/>
+                                </schematicView>
+                <pcbView>
+                    <p layer="copper0" svgId="connector18pin"/>
+                    <p layer="copper1" svgId="connector18pin"/>
+                </pcbView>
+
+            </views>
+        </connector>
+        <connector id="connector19" type="female" name="ISP">
+            <description>no description yet</description>
+            <views>
+                <breadboardView>
+                    <p layer="breadboard" svgId="connector19pin"/>
+                </breadboardView>
+                <schematicView>
+                    <p layer="schematic" svgId="connector19pin"/>
+                                </schematicView>
+                <pcbView>
+                    <p layer="copper0" svgId="connector19pin"/>
+                    <p layer="copper1" svgId="connector19pin"/>
+                </pcbView>
+
+            </views>
+        </connector>
+
+ 
+        <connector id="connector3" type="male" name="F1">
+            <description>Analog pin (Arduino A4)</description>
+            <views>
+                <breadboardView>
+                    <p layer="breadboard" svgId="connector3pin"/>
+                </breadboardView>
+                <schematicView>
+                    <p layer="schematic" svgId="connector3pin"/>
+                                </schematicView>
+                <pcbView>
+                    <p layer="copper0" svgId="connector3pin"/>
+                    <p layer="copper1" svgId="connector3pin"/>
+                </pcbView>
+            </views>
+        </connector>
+         <connector id="connector4" type="male" name="F4">
+            <description>Analog pin (Arduino A3)</description>
+            <views>
+                <breadboardView>
+                    <p layer="breadboard" svgId="connector4pin"/>
+                </breadboardView>
+                <schematicView>
+                    <p layer="schematic" svgId="connector4pin"/>
+                                                </schematicView>
+                <pcbView>
+                    <p layer="copper0" svgId="connector4pin"/>
+                    <p layer="copper1" svgId="connector4pin"/>
+                </pcbView>
             </views>
         </connector>
         <connector id="connector5" type="male" name="F5">
@@ -532,71 +599,7 @@ Analog pin (Arduino A6)</description>
 
             </views>
         </connector>
-        <connector id="connector16" type="female" name="ISP">
-            <description>no description yet</description>
-            <views>
-                <breadboardView>
-                    <p layer="breadboard" svgId="connector16pin"/>
-                </breadboardView>
-                <schematicView>
-                    <p layer="schematic" svgId="connector16pin"/>
-                                </schematicView>
-                <pcbView>
-                    <p layer="copper0" svgId="connector16pin"/>
-                    <p layer="copper1" svgId="connector16pin"/>
-                </pcbView>
-
-            </views>
-        </connector>
-        <connector id="connector17" type="female" name="ISP">
-            <description>no description yet</description>
-            <views>
-                <breadboardView>
-                    <p layer="breadboard" svgId="connector17pin"/>
-                </breadboardView>
-                <schematicView>
-                    <p layer="schematic" svgId="connector17pin"/>
-                                </schematicView>
-                <pcbView>
-                    <p layer="copper0" svgId="connector17pin"/>
-                    <p layer="copper1" svgId="connector17pin"/>
-                </pcbView>
-
-            </views>
-        </connector>
-        <connector id="connector18" type="female" name="ISP">
-            <description>no description yet</description>
-            <views>
-                <breadboardView>
-                    <p layer="breadboard" svgId="connector18pin"/>
-                </breadboardView>
-                <schematicView>
-                    <p layer="schematic" svgId="connector18pin"/>
-                                </schematicView>
-                <pcbView>
-                    <p layer="copper0" svgId="connector3pin"/>
-                    <p layer="copper1" svgId="connector3pin"/>
-                </pcbView>
-
-            </views>
-        </connector>
-        <connector id="connector19" type="female" name="ISP">
-            <description>no description yet</description>
-            <views>
-                <breadboardView>
-                    <p layer="breadboard" svgId="connector19pin"/>
-                </breadboardView>
-                <schematicView>
-                    <p layer="schematic" svgId="connector19pin"/>
-                                </schematicView>
-                <pcbView>
-                    <p layer="copper0" svgId="connector19pin"/>
-                    <p layer="copper1" svgId="connector19pin"/>
-                </pcbView>
-
-            </views>
-        </connector>
-        <connector id="connector0" type="male" name="5V">
+         <connector id="connector0" type="male" name="5V">
             <description>no description yet</description>
             <views>
                 <breadboardView>
