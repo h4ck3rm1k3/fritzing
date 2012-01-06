@@ -803,6 +803,14 @@ QStringList & LogoItem::getNewImageNames() {
 	return NewImageNames;
 }
 
+double LogoItem::minWidth() {
+	return 10;
+}
+
+double LogoItem::minHeight() {
+	return 10;
+}
+
 ///////////////////////////////////////////////////////////////////////
 
 CopperLogoItem::CopperLogoItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
@@ -881,3 +889,4 @@ void CopperLogoItem::reloadImage(const QString & svg, const QSizeF & aspectRatio
 bool CopperLogoItem::isCopper0() {
 	return modelPart()->properties().value("layer").contains("0");
 }
+

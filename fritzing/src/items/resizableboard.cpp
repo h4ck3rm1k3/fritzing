@@ -330,6 +330,8 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 		newR.setRect(0, 0, oldX2 - newX, newY - oldY1);
 	}
 
+	DebugDialog::debug("new rect", newR);
+
 	LayerHash lh;
 	resizePixels(newR.width(), newR.height(), lh);
 	event->accept();

@@ -82,6 +82,8 @@ protected:
 	virtual QStringList & getImageNames();
 	virtual QStringList & getNewImageNames();
 	void rerender(const QString & svg);
+	double minWidth();
+	double minHeight();
 
 
 protected:

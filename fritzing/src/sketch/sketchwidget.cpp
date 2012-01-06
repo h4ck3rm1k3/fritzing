@@ -1410,6 +1410,33 @@ void SketchWidget::copy() {
 
 void SketchWidget::copyAux(QList<ItemBase *> & bases, bool saveBoundingRects)
 {
+	for (int i = bases.count() - 1; i >= 0; i--) {
+		Wire * wire = qobject_cast<Wire *>(bases.at(i));
+		if (wire == NULL) continue;
+		if (!wire->getTrace()) continue;
+
+		QList<ConnectorItem *> ends;
+		QList<Wire *> wires;
+		wire->collectChained(wires, ends);
+		if (ends.count() < 2) {
+			// trace is dangling
+			bases.removeAt(i);
+			continue;
+		}
+
+		foreach (ConnectorItem * end, ends) {
+			if (bases.contains(end->attachedTo())) continue;
+
+			// trace is dangling
+			bases.removeAt(i);
+			break;
+		}
+	}
+
+	if (bases.count() == 0) {
+		return;
+	}
+
     QByteArray itemData;
 	QList<long> modelIndexes;
 	copyHeart(bases, saveBoundingRects, itemData, modelIndexes);
@@ -7703,8 +7730,8 @@ void SketchWidget::copyDrop() {
 	QList<ItemBase *> itemBases = m_savedItems.values();
     qSort(itemBases.begin(), itemBases.end(), ItemBase::zLessThan);
 	foreach (ItemBase * itemBase, itemBases) {
-                QPointF loc = itemBase->getViewGeometry().loc();
-                itemBase->setItemPos(loc);
+		QPointF loc = itemBase->getViewGeometry().loc();
+        itemBase->setItemPos(loc);
 	}
 	copyAux(itemBases, false);
 
