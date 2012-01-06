@@ -677,15 +677,19 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, ViewLayer::ViewLayerS
 	Wire * wire = qobject_cast<Wire *>(newItem);
 	if (wire) {
 
+		QString descr;
 		bool ratsnest = viewGeometry.getRatsnest();
 		if (ratsnest) {
 			setClipEnds((ClipableWire *) wire, true);
+			descr = "ratsnest";
 		}
 		else if (viewGeometry.getAnyTrace() ) {
 			setClipEnds((ClipableWire *) wire, true);
+			descr = "trace";
 		}
 		else {
 			wire->setNormal(true);
+			descr = "wire";
 		}
 
 		wire->setUp(getWireViewLayerID(viewGeometry, wire->viewLayerSpec()), m_viewLayers, this);
@@ -694,7 +698,7 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, ViewLayer::ViewLayerS
 
 		addToScene(wire, wire->viewLayerID());
 		wire->addedToScene(temporary);
-		wire->debugInfo("add wire");
+		wire->debugInfo("add " + descr);
 
 		return wire;
 	}
@@ -4656,6 +4660,8 @@ void SketchWidget::changeConnectionAux(long fromID, const QString & fromConnecto
 	fromConnectorItem->debugInfo("   from");
 	toConnectorItem->debugInfo("   to");
 
+	ratsnestConnect(fromConnectorItem, toConnectorItem, connect);
+
 	if (connect) {
 		fromConnectorItem->connector()->connectTo(toConnectorItem->connector());
 		fromConnectorItem->connectTo(toConnectorItem);
@@ -4666,8 +4672,6 @@ void SketchWidget::changeConnectionAux(long fromID, const QString & fromConnecto
 		fromConnectorItem->removeConnection(toConnectorItem, true);
 		toConnectorItem->removeConnection(fromConnectorItem, true);
 	}
-	ratsnestConnect(fromConnectorItem, connect);
-	ratsnestConnect(toConnectorItem, connect);
 
 	if (updateConnections) {
 		fromConnectorItem->attachedTo()->updateConnections(fromConnectorItem);
@@ -6240,9 +6244,8 @@ void SketchWidget::updateRoutingStatus(RoutingStatus & routingStatus, bool manua
 			//ci->debugInfo("pc");
 
 			if (!ci->attachedTo()->isEverVisible()) {
-				// may not be necessary when views are brought completely into sync
-				//partConnectorItems.removeAt(i);
-				ci->debugInfo("ever visible check");
+				partConnectorItems.removeAt(i);
+				// ci->debugInfo("ever visible check");
 			}
 		}
 
@@ -6261,15 +6264,21 @@ void SketchWidget::updateRoutingStatus(RoutingStatus & routingStatus, bool manua
 
 	// can't do this in the above loop since VirtualWires and ConnectorItems are added and deleted
 	foreach (QList<ConnectorItem *> partConnectorItems, ratnestsToUpdate) {
+		//partConnectorItems.at(0)->debugInfo("display ratsnest");
 		partConnectorItems.at(0)->displayRatsnest(partConnectorItems, this->getTraceFlag());
 	}
 
 	foreach(QPointer<VirtualWire> vw, ratsToDelete) {
 		if (vw != NULL) {
+			vw->debugInfo("removing rat 2");
 			vw->scene()->removeItem(vw);
 			delete vw;
 		}
 	}
+
+
+	m_ratsnestUpdateConnect.clear();
+	m_ratsnestUpdateDisconnect.clear();
 
         /*
         // uncomment for live drc
@@ -7776,7 +7785,6 @@ void SketchWidget::collectAllNets(QHash<ConnectorItem *, int> & indexer, QList< 
 
 		for (int i = partConnectorItems->count() - 1; i >= 0; i--) {
 			if (!partConnectorItems->at(i)->attachedTo()->isEverVisible()) {
-				// may not be necessary when views are brought completely into sync
 				partConnectorItems->removeAt(i);
 			}
 		}
@@ -7912,6 +7920,16 @@ void SketchWidget::ratsnestConnect(long id, const QString & connectorID, bool co
 	if (connectorItem == NULL) return;
 
 	ratsnestConnect(connectorItem, connect);
+}
+
+void SketchWidget::ratsnestConnect(ConnectorItem * c1, ConnectorItem * c2, bool connect) {
+	QList<ConnectorItem *> connectorItems;
+	connectorItems.append(c1);
+	connectorItems.append(c2);
+	ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::RatsnestFlag);
+	foreach (ConnectorItem * connectorItem, connectorItems) {
+		ratsnestConnect(connectorItem, connect);
+	}
 }
 
 void SketchWidget::ratsnestConnect(ConnectorItem * connectorItem, bool connect) {
@@ -8458,53 +8476,16 @@ void SketchWidget::renamePins(long id, const QStringList & labels, bool singleRo
 }
 
 bool SketchWidget::checkUpdateRatsnest(QList<ConnectorItem *> & connectorItems) {
-	bool doRatsnest = false;
-	for (int i = m_ratsnestUpdateConnect.count() - 1; i >= 0; i--) {
-		ConnectorItem * ci = m_ratsnestUpdateConnect[i];
-		bool remove = false;
-		if (ci == NULL) {
-			remove = true;
-			//DebugDialog::debug(QString("rem rat null %1 con:true").arg(m_viewIdentifier));
-		}
-		else if (connectorItems.contains(ci)) {
-			remove = true;
-			/*
-			DebugDialog::debug(QString("rem rat '%1' id:%2 cid:%3 vid:%4 vlid:%5 con:true")
-				.arg(ci->attachedToTitle())
-				.arg(ci->attachedToID())
-				.arg(ci->connectorSharedID())
-				.arg(m_viewIdentifier)
-				.arg(ci->attachedToViewLayerID())
-				);
-				*/
-			doRatsnest = true;
-		}
-		if (remove) m_ratsnestUpdateConnect.removeAt(i);
+	foreach (ConnectorItem * ci, m_ratsnestUpdateConnect) {
+		if (ci == NULL) continue;
+		if (connectorItems.contains(ci)) return true;
 	}
-	for (int i = m_ratsnestUpdateDisconnect.count() - 1; i >= 0; i--) {
-		ConnectorItem * ci = m_ratsnestUpdateDisconnect[i];
-		bool remove = false;
-		if (ci == NULL) {
-			remove = true;
-			//DebugDialog::debug(QString("rem rat null %1 con:false").arg(m_viewIdentifier));
-		}
-		else if (connectorItems.contains(ci)) {
-			remove = true;
-			/*
-			DebugDialog::debug(QString("rem rat '%1' id:%2 cid:%3 vid:%4 vlid:%5 false")
-				.arg(ci->attachedToTitle())
-				.arg(ci->attachedToID())
-				.arg(ci->connectorSharedID())
-				.arg(m_viewIdentifier)
-				.arg(ci->attachedToViewLayerID())
-				);
-				*/
-			doRatsnest = true;
-		}
-		if (remove) m_ratsnestUpdateDisconnect.removeAt(i);
+	foreach (ConnectorItem * ci, m_ratsnestUpdateDisconnect) {
+		if (ci == NULL) continue;
+		if (connectorItems.contains(ci)) return true;
 	}
 
-	return doRatsnest;
+	return false;
 }
 
 void SketchWidget::getRatsnestColor(QColor & color) 
@@ -8528,16 +8509,8 @@ VirtualWire * SketchWidget::makeOneRatsnestWire(ConnectorItem * source, Connecto
 	makeRatsnestViewGeometry(viewGeometry, source, dest);
 	viewGeometry.setRouted(routed);
 
-	/*
-	 DebugDialog::debug(QString("creating ratsnest %10: %1, from %6 %7, to %8 %9, frompos: %2 %3, topos: %4 %5")
-	 .arg(newID)
-	 .arg(fromPos.x()).arg(fromPos.y())
-	 .arg(toPos.x()).arg(toPos.y())
-	 .arg(source->attachedToTitle()).arg(source->connectorSharedID())
-	 .arg(dest->attachedToTitle()).arg(dest->connectorSharedID())
-	 .arg(m_viewIdentifier)
-	 );
-	 */
+	//source->debugInfo("making rat src");
+	//dest->debugInfo("making rat dst");
 
 	// ratsnest only added to one view
 	ItemBase * newItemBase = addItem(m_paletteModel->retrieveModelPart(ModuleIDNames::WireModuleIDName), source->attachedTo()->viewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);		

@@ -1801,6 +1801,7 @@ void ConnectorItem::clearRatsnestDisplay(QList<ConnectorItem *> & connectorItems
 			c2->tempRemove(vw->connector1(), false);
 		}
 
+		vw->debugInfo("removing rat 1");
 		vw->scene()->removeItem(vw);
 		delete vw;
 	}

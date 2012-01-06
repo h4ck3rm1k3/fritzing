@@ -259,6 +259,7 @@ public:
 	virtual void changeLayer(long id, double z, ViewLayer::ViewLayerID viewLayerID);
 	void ratsnestConnect(ConnectorItem * connectorItem, bool connect);
 	void ratsnestConnect(ItemBase *, bool connect);
+	void ratsnestConnect(ConnectorItem * c1, ConnectorItem * c2, bool connect);
 	virtual void addDefaultParts();
 	float getTopZ();
 	QGraphicsItem * addWatermark(const QString & filename);
