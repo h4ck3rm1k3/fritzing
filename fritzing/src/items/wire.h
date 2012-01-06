@@ -223,6 +223,7 @@ protected:
 	QPainterPath shapeAux(double width) const;
 	void hoverLeaveEvent( QGraphicsSceneHoverEvent * event );
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
+    void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 	void updateCursor(Qt::KeyboardModifiers);
 
 protected:

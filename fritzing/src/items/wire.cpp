@@ -388,6 +388,15 @@ void Wire::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
 	emit wireSplitSignal(this, event->scenePos(), this->pos(), this->line());
 }
 
+void Wire::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
+{
+	WireMenu * wireMenu = qobject_cast<WireMenu *>(m_itemMenu);
+	if (wireMenu) {
+		wireMenu->setWire(this);
+	}
+	ItemBase::contextMenuEvent(event);
+}
+
 void Wire::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
 	WireMenu * wireMenu = qobject_cast<WireMenu *>(m_itemMenu);
