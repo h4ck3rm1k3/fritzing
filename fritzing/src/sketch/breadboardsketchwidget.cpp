@@ -131,6 +131,9 @@ bool BreadboardSketchWidget::canDropModelPart(ModelPart * modelPart) {
 }
 
 void BreadboardSketchWidget::initWire(Wire * wire, int penWidth) {
+	if (wire->getRatsnest()) {
+		penWidth = 3;
+	}
 	wire->setPenWidth(penWidth - 2, this, (penWidth - 2) * WireHoverStrokeFactor);
 	wire->setColorString("blue", 1.0);
 }
