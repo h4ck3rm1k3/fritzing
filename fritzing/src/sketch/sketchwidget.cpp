@@ -1774,10 +1774,11 @@ void SketchWidget::dragMoveHighlightConnector(QPoint eventPos) {
 	if (m_alignToGrid && (m_alignmentItem != NULL)) {
 		QPointF l =  m_alignmentItem->getViewGeometry().loc();
 		alignLoc(loc, m_alignmentStartPoint, loc, l);
-		QPointF q = m_alignmentItem->pos();
-		if (q != l) {
-			DebugDialog::debug(QString("m alignment %1 %2, %3 %4").arg(q.x()).arg(q.y()).arg(l.x()).arg(l.y()));
-		}
+
+		//QPointF q = m_alignmentItem->pos();
+		//if (q != l) {
+		//	DebugDialog::debug(QString("m alignment %1 %2, %3 %4").arg(q.x()).arg(q.y()).arg(l.x()).arg(l.y()));
+		//}
 	}
 
 	m_droppingItem->setItemPos(loc);
@@ -3624,7 +3625,10 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Conne
 	if (m_bendpointWire) {
 		ChangeWireCurveCommand * cwcc = new ChangeWireCurveCommand(this, m_bendpointWire->id(), m_bendpointWire->undoCurve(), m_bendpointWire->curve(), parentCommand);
 		cwcc->setUndoOnly();
-		new ChangeWireCommand(this, m_bendpointWire->id(), m_bendpointVG.line(), m_bendpointWire->line(), m_bendpointVG.loc(), m_bendpointWire->pos(), true, false, parentCommand);		
+
+		// puts the wire in position at redo time
+		ChangeWireCommand * cwc = new ChangeWireCommand(this, m_bendpointWire->id(), m_bendpointVG.line(), m_bendpointWire->line(), m_bendpointVG.loc(), m_bendpointWire->pos(), true, false, parentCommand);		
+		cwc->setRedoOnly();
 		foreach (ConnectorItem * toConnectorItem, wire->connector1()->connectedToItems()) {
 			toConnectorItem->tempRemove(wire->connector1(), false);
 			wire->connector1()->tempRemove(toConnectorItem, false);
@@ -3652,6 +3656,10 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Conne
 		new ChangeWireCurveCommand(this, wire->id(), NULL, wire->curve(), parentCommand);
 		cwcc = new ChangeWireCurveCommand(this, m_bendpointWire->id(), m_bendpointWire->undoCurve(), m_bendpointWire->curve(), parentCommand);
 		cwcc->setRedoOnly();
+
+		// puts the wire in position at undo time
+		cwc = new ChangeWireCommand(this, m_bendpointWire->id(), m_bendpointVG.line(), m_bendpointWire->line(), m_bendpointVG.loc(), m_bendpointWire->pos(), true, false, parentCommand);		
+		cwc->setUndoOnly();
 
 		SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
 		selectItemCommand->addRedo(m_bendpointWire->id());

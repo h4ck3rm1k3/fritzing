@@ -468,12 +468,16 @@ ChangeWireCommand::ChangeWireCommand(SketchWidget* sketchWidget, long fromID,
 
 void ChangeWireCommand::undo()
 {
-    m_sketchWidget->changeWire(m_fromID, m_oldLine, m_oldPos, m_updateConnections, m_updateRatsnest);
+	if (!m_redoOnly) {
+		m_sketchWidget->changeWire(m_fromID, m_oldLine, m_oldPos, m_updateConnections, m_updateRatsnest);
+	}
 }
 
 void ChangeWireCommand::redo()
 {
-    m_sketchWidget->changeWire(m_fromID, m_newLine, m_newPos, m_updateConnections, m_updateRatsnest);
+	if (!m_undoOnly) {
+		m_sketchWidget->changeWire(m_fromID, m_newLine, m_newPos, m_updateConnections, m_updateRatsnest);
+	}
 }
 
 QString ChangeWireCommand::getParamString() const {

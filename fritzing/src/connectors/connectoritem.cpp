@@ -838,6 +838,11 @@ void ConnectorItem::attachedMoved() {
 	foreach (ConnectorItem * toConnector, m_connectedTo) {
 		ItemBase * itemBase = toConnector->attachedTo();
 		if (itemBase == NULL) continue;
+		if (!itemBase->isVisible()) {
+			this->debugInfo("continue");
+			itemBase->debugInfo("    ");
+			continue;
+		}
 
 		itemBase->connectedMoved(this, toConnector);
 	}
@@ -847,7 +852,18 @@ ConnectorItem * ConnectorItem::firstConnectedToIsh() {
 	if (m_connectedTo.count() <= 0) return NULL;
 
 	foreach (ConnectorItem * connectorItem, m_connectedTo) {
-		if (!connectorItem->attachedTo()->getRatsnest()) return connectorItem;
+		if (connectorItem->attachedTo()->getRatsnest()) continue;
+		
+		if (connectorItem->isVisible()) return connectorItem;
+	}
+
+	// TODO: not sure whether to return invisible connectors
+	// TODO: get rid of this function?
+
+	foreach (ConnectorItem * connectorItem, m_connectedTo) {
+		if (connectorItem->attachedTo()->getRatsnest()) continue;
+		
+		return connectorItem;
 	}
 
 	return NULL;
