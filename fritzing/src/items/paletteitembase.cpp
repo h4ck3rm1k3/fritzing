@@ -266,6 +266,8 @@ void PaletteItemBase::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 		return;
 	}
 
+	// TODO: doesn't account for scaling
+	// see http://www.gamedev.net/topic/441695-transform-matrix-decomposition/
 	double originalAngle = atan2(OriginalTransform.m12(), OriginalTransform.m11()) * 180 / M_PI;
 	double a1 = atan2(RotationAxis.y() - RotationCenter.y(), RotationAxis.x() - RotationCenter.x());
 	double a2 = atan2(event->scenePos().y() - RotationCenter.y(), event->scenePos().x() - RotationCenter.x());
@@ -314,6 +316,8 @@ void PaletteItemBase::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 	m_inRotation = false;
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView) {
+		// TODO: doesn't account for scaling
+		// see: http://www.gamedev.net/topic/441695-transform-matrix-decomposition/
 		double originalAngle = atan2(OriginalTransform.m12(), OriginalTransform.m11()) * 180 / M_PI;
 		double currentAngle = atan2(transform().m12(), transform().m11()) * 180 / M_PI;
 		rotateItem(originalAngle - currentAngle);		// put it back; undo command will redo it

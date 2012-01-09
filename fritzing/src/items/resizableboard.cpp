@@ -686,10 +686,11 @@ void ResizableBoard::paintSelected(QPainter *painter, const QStyleOptionGraphics
 
 	PaletteItem::paintSelected(painter, option, widget);
 
-	double scale = m_currentScale = painter->worldTransform().m11();
-	if (scale == 0) {
-		scale = m_currentScale = painter->worldTransform().m12();
-	}
+	// http://www.gamedev.net/topic/441695-transform-matrix-decomposition/
+	double m11 = painter->worldTransform().m11();
+	double m12 = painter->worldTransform().m12();
+	double scale = m_currentScale = qSqrt((m11 * m11) + (m12 * m12));
+
 	double scalefull = CornerHandleSize / scale;
 	double scalehalf = scalefull / 2;
 	double bottom = m_size.height();
