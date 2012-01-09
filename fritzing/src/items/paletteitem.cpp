@@ -706,6 +706,7 @@ bool PaletteItem::loadExtraRenderer(const QString & svg) {
 
 		bool result = m_extraRenderer->fastLoad(svg.toUtf8());
 		if (result) {
+			prepareGeometryChange();
 			setSharedRendererEx(m_extraRenderer);
 		}
 

@@ -1144,6 +1144,8 @@ void ItemBase::transformItem(const QTransform & currTransf) {
 	if (!m_hasRubberBandLeg) {
 		updateConnections();
 	}
+	//QTransform t = this->transform();
+	//DebugDialog::debug(QString("matrix m11:%1 m12:%2 m21:%3 m22:%4").arg(t.m11()).arg(t.m12()).arg(t.m21()).arg(t.m22()));
 	update();
 }
 

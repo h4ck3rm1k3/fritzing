@@ -65,6 +65,7 @@ public:
 	static QCursor * MoveCursor;	
 	static QCursor * BendlegCursor;	
 	static QCursor * RotateCursor;	
+	static QCursor * ScaleCursor;	
 
 protected:
 	static CursorMaster TheCursorMaster;

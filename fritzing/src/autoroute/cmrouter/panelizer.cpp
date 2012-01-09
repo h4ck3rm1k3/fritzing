@@ -373,13 +373,13 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 				}
 			}
 			catch (const char * msg) {
-				DebugDialog::debug(QString("panelizer error %1 %2").arg(panelItem->boardName).arg(msg));
+				DebugDialog::debug(QString("panelizer error 1 %1 %2").arg(panelItem->boardName).arg(msg));
 			}
 			catch (const QString & msg) {
-				DebugDialog::debug(QString("panelizer error %1 %2").arg(panelItem->boardName).arg(msg));
+				DebugDialog::debug(QString("panelizer error 2 %1 %2").arg(panelItem->boardName).arg(msg));
 			}
 			catch (...) {
-				DebugDialog::debug(QString("panelizer error %1").arg(panelItem->boardName));
+				DebugDialog::debug(QString("panelizer error 3 %1").arg(panelItem->boardName));
 			}
 
 		}
@@ -640,6 +640,13 @@ bool Panelizer::openWindows(QDomElement & board, QHash<QString, QString> & fzzFi
 		if (boardItem == NULL) {
 			DebugDialog::debug(QString("no board found in '%1'").arg(path));
 			return false;
+		}
+
+		foreach (QGraphicsItem * item, mainWindow->pcbView()->scene()->items()) {
+			ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+			if (itemBase == NULL) continue;
+
+			itemBase->setMoveLock(false);
 		}
 
 		PanelItem * panelItem = new PanelItem;

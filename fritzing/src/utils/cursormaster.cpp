@@ -48,6 +48,7 @@ QCursor * CursorMaster::RubberbandCursor = NULL;
 QCursor * CursorMaster::MoveCursor = NULL;
 QCursor * CursorMaster::BendlegCursor = NULL;
 QCursor * CursorMaster::RotateCursor = NULL;
+QCursor * CursorMaster::ScaleCursor = NULL;
 
 //static QTimer timer;
 
@@ -67,37 +68,45 @@ void CursorMaster::initCursors()
 		//timer.setInterval(0);
 		//connect(&timer, SIGNAL(timeout()), &TheCursorMaster, SLOT(moveCursor()));
 
-		QBitmap bitmap1(":resources/images/cursor/bendpoint.bmp");
-		QBitmap bitmap1m(":resources/images/cursor/bendpoint_mask.bmp");
-		BendpointCursor = new QCursor(bitmap1, bitmap1m, 0, 0);
+		QStringList names;
+		QStringList masks;
+		QList<QCursor **> cursors;
 
-		QBitmap bitmap2(":resources/images/cursor/new_bendpoint.bmp");
-		QBitmap bitmap2m(":resources/images/cursor/new_bendpoint_mask.bmp");
-		NewBendpointCursor = new QCursor(bitmap2, bitmap2m, 0, 0);
+		names << ":resources/images/cursor/bendpoint.bmp" 
+			<< ":resources/images/cursor/new_bendpoint.bmp"
+			<< ":resources/images/cursor/make_wire.bmp"
+			<< ":resources/images/cursor/curve.bmp"
+			<< ":resources/images/cursor/rubberband_move.bmp"
+			<< ":resources/images/cursor/part_move.bmp"
+			<< ":resources/images/cursor/bendleg.bmp"
+			<< ":resources/images/cursor/rotate.bmp"
+			<< ":resources/images/cursor/scale.bmp";
 
-		QBitmap bitmap3(":resources/images/cursor/make_wire.bmp");
-		QBitmap bitmap3m(":resources/images/cursor/make_wire_mask.bmp");
-		MakeWireCursor = new QCursor(bitmap3, bitmap3m, 0, 0);
+		masks << ":resources/images/cursor/bendpoint_mask.bmp"
+			<< ":resources/images/cursor/new_bendpoint_mask.bmp"
+			<< ":resources/images/cursor/make_wire_mask.bmp"
+			<< ":resources/images/cursor/curve_mask.bmp"
+			<< ":resources/images/cursor/rubberband_move_mask.bmp"
+			<< ":resources/images/cursor/part_move_mask.bmp"
+			<< ":resources/images/cursor/bendleg_mask.bmp"
+			<< ":resources/images/cursor/rotate_mask.bmp"
+			<< ":resources/images/cursor/scale_mask.bmp";
 
-		QBitmap bitmap4(":resources/images/cursor/curve.bmp");
-		QBitmap bitmap4m(":resources/images/cursor/curve_mask.bmp");
-		MakeCurveCursor = new QCursor(bitmap4, bitmap4m, 0, 0);
+		cursors << &BendpointCursor
+			<< &NewBendpointCursor
+			<< &MakeWireCursor
+			<< &MakeCurveCursor
+			<< &RubberbandCursor
+			<< &MoveCursor
+			<< &BendlegCursor
+			<< &RotateCursor
+			<< &ScaleCursor;
 
-		QBitmap bitmap5(":resources/images/cursor/rubberband_move.bmp");
-		QBitmap bitmap5m(":resources/images/cursor/rubberband_move_mask.bmp");
-		RubberbandCursor = new QCursor(bitmap5, bitmap5m, 0, 0);
-
-		QBitmap bitmap6(":resources/images/cursor/part_move.bmp");
-		QBitmap bitmap6m(":resources/images/cursor/part_move_mask.bmp");
-		MoveCursor = new QCursor(bitmap6, bitmap6m, 0, 0);
-
-		QBitmap bitmap7(":resources/images/cursor/bendleg.bmp");
-		QBitmap bitmap7m(":resources/images/cursor/bendleg_mask.bmp");
-		BendlegCursor = new QCursor(bitmap7, bitmap7m, 0, 0);
-
-		QBitmap bitmap8(":resources/images/cursor/rotate.bmp");
-		QBitmap bitmap8m(":resources/images/cursor/rotate_mask.bmp");
-		RotateCursor = new QCursor(bitmap8, bitmap8m, 0, 0);
+		for (int i = 0; i < cursors.count(); i++) {
+			QBitmap bitmap1(names.at(i));
+			QBitmap bitmap1m(masks.at(i));
+			*cursors.at(i) = new QCursor(bitmap1, bitmap1m, 0, 0);
+		}
 
 		QApplication::instance()->installEventFilter(instance());
 	}

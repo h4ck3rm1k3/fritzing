@@ -73,6 +73,8 @@
         <file>resources/images/cursor/rubberband_move_mask.bmp</file>
         <file>resources/images/cursor/rotate.bmp</file>
         <file>resources/images/cursor/rotate_mask.bmp</file>
+        <file>resources/images/cursor/scale.bmp</file>
+        <file>resources/images/cursor/scale_mask.bmp</file>
 	
         <file>resources/images/icons/partsBinOpenEnabled_icon.png</file>
         <file>resources/images/icons/partsBinOpenPressed_icon.png</file>

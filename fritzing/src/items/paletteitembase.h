@@ -88,9 +88,9 @@ public:
 protected:
     void setUpConnectors(FSvgRenderer *, bool ignoreTerminalPoints);
 	void findConnectorsUnder();
-	void hoverEnterEvent ( QGraphicsSceneHoverEvent * event );
-	void hoverLeaveEvent ( QGraphicsSceneHoverEvent * event );
-	void hoverMoveEvent( QGraphicsSceneHoverEvent * event );
+	void hoverEnterEvent(QGraphicsSceneHoverEvent * event );
+	void hoverLeaveEvent(QGraphicsSceneHoverEvent * event );
+	void hoverMoveEvent(QGraphicsSceneHoverEvent * event );
 	void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 	virtual bool canFindConnectorsUnder();
 	bool inRotationLocation(QPointF scenePos, Qt::KeyboardModifiers modifiers, QPointF & returnPoint);
