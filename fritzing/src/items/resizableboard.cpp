@@ -47,6 +47,7 @@ static QString SilkscreenLayerTemplate = "";
 static const int LineThickness = 8;
 static const QRegExp HeightExpr("height=\\'\\d*px");
 
+const double ResizableBoard::CornerHandleSize = 7.0;
 QString ResizableBoard::customShapeTranslated;
 
 
@@ -123,53 +124,18 @@ ResizableBoard::ResizableBoard( ModelPart * modelPart, ViewIdentifierClass::View
 	m_keepAspectRatio = false;
 	m_widthEditor = m_heightEditor = NULL;
 
-	m_resizeGripTL = m_resizeGripTR = m_resizeGripBL = m_resizeGripBR = NULL;
-
 	m_silkscreenRenderer = NULL;
-	m_inResize = NULL;
-
+	m_corner = ResizableBoard::NO_CORNER;
+	m_currentScale = 1.0;
 }
 
 ResizableBoard::~ResizableBoard() {
 }
 
-QVariant ResizableBoard::itemChange(GraphicsItemChange change, const QVariant &value)
-{
-	switch (change) {
-		case ItemSelectedChange:
-			if (m_resizeGripBL) {
-				m_resizeGripBL->setVisible(value.toBool());
-				m_resizeGripBR->setVisible(value.toBool());
-				m_resizeGripTL->setVisible(value.toBool());
-				m_resizeGripTR->setVisible(value.toBool());
-			}
-			break;
-		default:
-			break;
-   	}
-
-    return Board::itemChange(change, value);
-}
-
-
 void ResizableBoard::addedToScene(bool temporary) {
 	loadTemplates();
 	if (this->scene()) {
-		if (hasGrips()) {
-			m_resizeGripTL = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveTopLeft.png"), Qt::SizeFDiagCursor, this);
-			connect(m_resizeGripTL, SIGNAL(mousePressSignal(QGraphicsSceneMouseEvent *, ResizeHandle *)), this, SLOT(handleMousePressSlot(QGraphicsSceneMouseEvent *, ResizeHandle *)));
-			m_resizeGripTR = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveTopRight.png"), Qt::SizeBDiagCursor, this);
-			connect(m_resizeGripTR, SIGNAL(mousePressSignal(QGraphicsSceneMouseEvent *, ResizeHandle *)), this, SLOT(handleMousePressSlot(QGraphicsSceneMouseEvent *, ResizeHandle *)));
-			m_resizeGripBL = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveBottomLeft.png"), Qt::SizeBDiagCursor, this);
-			connect(m_resizeGripBL, SIGNAL(mousePressSignal(QGraphicsSceneMouseEvent *, ResizeHandle *)), this, SLOT(handleMousePressSlot(QGraphicsSceneMouseEvent *, ResizeHandle *)));
-			m_resizeGripBR = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveBottomRight.png"), Qt::SizeFDiagCursor, this);
-			connect(m_resizeGripBR, SIGNAL(mousePressSignal(QGraphicsSceneMouseEvent *, ResizeHandle *)), this, SLOT(handleMousePressSlot(QGraphicsSceneMouseEvent *, ResizeHandle *)));
-			connect(m_resizeGripTL, SIGNAL(zoomChangedSignal(double)), this, SLOT(handleZoomChangedSlot(double)));
-		}
-		if (m_resizeGripBL) {
-			setInitialSize();
-			positionGrips();
-		}
+		setInitialSize();
 	}
 
 	PaletteItem::addedToScene(temporary);
@@ -198,184 +164,33 @@ double ResizableBoard::minHeight() {
 	return 0.5 * FSvgRenderer::printerScale();
 }
 
-bool ResizableBoard::hasGrips() {
-	return moduleID().contains(ModuleIDNames::RectangleModuleIDName);
-}
 
-void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
-	if (m_inResize == NULL) {
-		Board::mouseMoveEvent(event);
-		return;
-	}
-
-	QRectF rect = boundingRect();
-	rect.moveTopLeft(this->pos());
-
-	double oldX1 = rect.x();
-	double oldY1 = rect.y();
-	double oldX2 = oldX1+rect.width();
-	double oldY2 = oldY1+rect.height();
-	double newX = event->scenePos().x() + m_inResize->resizeOffset().x();
-	double newY = event->scenePos().y() + m_inResize->resizeOffset().y();
-	QRectF newR;
-	
-	double minW = minWidth();
-	double minH = minHeight();
-
-	if (m_inResize == m_resizeGripBR) {
-		if (newX - oldX1 < minW) {
-			newX = oldX1 + minW;
-		}
-		if (newY - oldY1 < minH) {
-			newY = oldY1 + minH;
-		}
-
-		if (m_keepAspectRatio) {
-			double w = (newY - oldY1) * m_aspectRatio.width() / m_aspectRatio.height();
-			double h = (newX - oldX1) * m_aspectRatio.height() / m_aspectRatio.width();
-			if (qAbs(w + oldX1 - newX) <= qAbs(h + oldY1 - newY)) {
-				newX = oldX1 + w;
-			}
-			else {
-				newY = oldY1 + h;
-			}
-		}
-
-		newR.setRect(0, 0, newX - oldX1, newY - oldY1);
-	}
-	else if (m_inResize == m_resizeGripTL) {
-		oldX2 = m_originalRect.left() + m_originalRect.width();
-		oldY2 = m_originalRect.top() + m_originalRect.height();
-
-		if (oldX2 - newX < minW) {
-			newX = oldX2 - minW;
-		}
-		if (oldY2 - newY < minH) {
-			newY = oldY2 - minH;
-		}
-
-		QPointF p(newX, newY);
-		if (p != this->pos()) {
-			this->setPos(p);
-		}
-
-		if (m_keepAspectRatio) {
-			double w = (oldY2 - newY) * m_aspectRatio.width() / m_aspectRatio.height();
-			double h = (oldX2 - newX) * m_aspectRatio.height() / m_aspectRatio.width();
-			if (qAbs(w + newX - oldX2) <= qAbs(h + newY - oldY2)) {
-				oldX2 = newX + w;
-			}
-			else {
-				oldY2 = newY + h;
-			}
-		}
-
-		newR.setRect(0, 0, oldX2 - newX, oldY2 - newY);
-	}
-	else if (m_inResize == m_resizeGripTR) {
-		if (newX - oldX1 < minW) {
-			newX = oldX1 + minW;
-		}
-
-		oldY2 = m_originalRect.top() + m_originalRect.height();
-		if (oldY2 - newY < minH) {
-			newY = oldY2 - minH;
-		}
-
-		QPointF p(oldX1, newY);
-		if (p != this->pos()) {
-			this->setPos(p);
-		}
-
-		if (m_keepAspectRatio) {
-			double w = (oldY2 - newY) * m_aspectRatio.width() / m_aspectRatio.height();
-			double h = (newX - oldX1) * m_aspectRatio.height() / m_aspectRatio.width();
-			if (qAbs(w + newX - oldX1) <= qAbs(h + newY - oldY2)) {
-				newX = oldX1 + w;
-			}
-			else {
-				oldY2 = newY + h;
-			}
-		}
-
-		newR.setRect(0, 0, newX - oldX1, oldY2 - newY);
-		//DebugDialog::debug(QString("new rect %1 %2 %3").arg(newY).arg(newR.height()).arg(newY + newR.height()));
-	}
-	else if (m_inResize == m_resizeGripBL) {
-		oldX2 = m_originalRect.left() + m_originalRect.width();
-		if (oldX2 - newX < minW) {
-			newX = oldX2 - minW;
-		}
-		if (newY - oldY1 < minH) {
-			newY = oldY1 + minH;
-		}
-
-		QPointF p(newX, oldY1);
-		if (p != this->pos()) {
-			this->setPos(p);
-		}
-
-		if (m_keepAspectRatio) {
-			double w = (newY - oldY1) * m_aspectRatio.width() / m_aspectRatio.height();
-			double h = (oldX2 - newX) * m_aspectRatio.height() / m_aspectRatio.width();
-			if (qAbs(w + oldX2 - newX) <= qAbs(h + oldY1 - newY)) {
-				oldX2 = newX + w;
-			}
-			else {
-				newY = oldY1 + h;
-			}
-		}
-
-
-		newR.setRect(0, 0, oldX2 - newX, newY - oldY1);
-	}
-
-	DebugDialog::debug("new rect", newR);
-
-	LayerHash lh;
-	resizePixels(newR.width(), newR.height(), lh);
-	event->accept();
-}
-
-void ResizableBoard::mouseReleaseEvent(QGraphicsSceneMouseEvent * event) {
-	if (m_inResize == NULL) {
-		Board::mouseReleaseEvent(event);
-		return;
-	}
-
-	this->ungrabMouse();
-	event->accept();
-	m_inResize = NULL;
-
-	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
-	if (infoGraphicsView) {
-		infoGraphicsView->viewItemInfo(this);
-	}
-}
-
-void ResizableBoard::handleMousePressSlot(QGraphicsSceneMouseEvent * event, ResizeHandle * resizeHandle)
+void ResizableBoard::mousePressEvent(QGraphicsSceneMouseEvent * event) 
 {
-	if (m_spaceBarWasPressed) return;
 
-	m_originalRect = boundingRect();
-	m_originalRect.moveTopLeft(this->pos());
+	m_corner = ResizableBoard::NO_CORNER;
 
-	if (resizeHandle == m_resizeGripBR) {
-		QSizeF sz = this->boundingRect().size();
-		resizeHandle->setResizeOffset(this->pos() + QPointF(sz.width(), sz.height()) - event->scenePos());
-	}
-	else if (resizeHandle == m_resizeGripTL) {
-		resizeHandle->setResizeOffset(this->pos() - event->scenePos());
-	}
-	else if (resizeHandle == m_resizeGripTR) {
-		resizeHandle->setResizeOffset(QPointF(this->pos().x() + this->boundingRect().width(), this->pos().y())  - event->scenePos());
-	}
-	else if (resizeHandle == m_resizeGripBL) {
-		resizeHandle->setResizeOffset(QPointF(this->pos().x(), this->pos().y() + this->boundingRect().height())  - event->scenePos());
+	if (m_spaceBarWasPressed) {
+		PaletteItem::mousePressEvent(event);
+		return;
 	}
 
-	m_inResize = resizeHandle;
-	this->grabMouse();
+	double right = m_size.width();
+	double bottom = m_size.height();
+
+	m_resizeMousePos = event->scenePos();
+	m_resizeStartPos = pos();
+	m_resizeStartSize = m_size;
+	m_resizeStartTopLeft = mapToScene(0, 0);
+	m_resizeStartBottomRight = mapToScene(right, bottom);
+
+
+	m_corner = findCorner(event->scenePos(), event->modifiers());
+	switch (m_corner) {
+		case ResizableBoard::NO_CORNER:
+			PaletteItem::mousePressEvent(event);
+			return;
+	}
 
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView) {
@@ -384,36 +199,147 @@ void ResizableBoard::handleMousePressSlot(QGraphicsSceneMouseEvent * event, Resi
 	}
 }
 
-void ResizableBoard::handleZoomChangedSlot(double scale) {
-	Q_UNUSED(scale);
-	positionGrips();
+void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
+	if (m_corner == ResizableBoard::NO_CORNER) {
+		Board::mouseMoveEvent(event);
+		return;
+	}
+
+	QPointF zero = mapToScene(0, 0);
+	QPointF ds = mapFromScene(zero + event->scenePos() - m_resizeMousePos);
+	QPointF newPos;
+	QSizeF size = m_resizeStartSize;
+
+	switch (m_corner) {
+		case ResizableBoard::BOTTOM_RIGHT:
+			size.setWidth(size.width() + ds.x());
+			size.setHeight(size.height() + ds.y());
+			break;
+		case ResizableBoard::TOP_RIGHT:
+			size.setWidth(size.width() + ds.x());
+			size.setHeight(size.height() - ds.y());
+			break;
+		case ResizableBoard::BOTTOM_LEFT:
+			size.setWidth(size.width() - ds.x());
+			size.setHeight(size.height() + ds.y());
+			break;
+		case ResizableBoard::TOP_LEFT:
+			size.setWidth(size.width() - ds.x());
+			size.setHeight(size.height() - ds.y());
+			break;
+	}
+
+	if (size.width() < minWidth()) size.setWidth(minWidth());
+	if (size.height() < minHeight()) size.setHeight(minHeight());
+
+	if (m_keepAspectRatio) {
+		double cw = size.height() * m_aspectRatio.width() / m_aspectRatio.height();
+		double ch = size.width() * m_aspectRatio.height() / m_aspectRatio.width();
+		if (ch < minHeight()) {
+			size.setWidth(cw);
+		}
+		else if (cw < minWidth()) {
+			size.setHeight(ch);
+		}
+		else {
+			// figure out which is closer to the mouse
+			QPointF p1(cw, size.height());
+			p1 = mapToScene(p1);
+			QPointF p2(size.width(), ch);
+			p2 = mapToScene(p2);
+			double d1 = GraphicsUtils::distanceSqd(p1, event->scenePos());
+			double d2 = GraphicsUtils::distanceSqd(p2, event->scenePos());
+			if (d1 <= d2) {
+				size.setWidth(cw);
+			}
+			else {
+				size.setHeight(ch);
+			}
+		}
+	}
+
+	bool changePos = (m_corner != ResizableBoard::BOTTOM_RIGHT);
+	bool changeTransform = !this->transform().isIdentity();
+
+	LayerHash lh;
+	QSizeF oldSize = m_size;
+	resizePixels(size.width(), size.height(), lh);
+
+	if (changePos) {
+		if (changeTransform) {
+			QTransform oldT = transform();
+
+			DebugDialog::debug(QString("t old m:%1,%2,%3,%4 d:%5,%6 p:%7,%8 sz:%9,%10")
+				.arg(oldT.m11()).arg(oldT.m12()).arg(oldT.m21()).arg(oldT.m22())
+				.arg(oldT.toAffine().dx()).arg(oldT.toAffine().dy())
+				.arg(pos().x()).arg(pos().y())
+				.arg(oldSize.width()).arg(oldSize.height()));
+
+			double sw = size.width() / 2;
+			double sh = size.height() / 2;	
+			QMatrix m(oldT.m11(), oldT.m12(), oldT.m21(), oldT.m22(), 0, 0);
+			QTransform newT = QTransform().translate(-sw, -sh) * QTransform(m) * QTransform().translate(sw, sh);
+
+			QList<ItemBase *> kin;
+			kin << this->layerKinChief();
+			foreach (ItemBase * lk, this->layerKinChief()->layerKin()) {
+				kin << lk;
+			}
+			foreach (ItemBase * itemBase, kin) {
+				itemBase->getViewGeometry().setTransform(newT);
+				itemBase->setTransform(newT);
+			}
+			
+			QTransform t = transform();
+			DebugDialog::debug(QString("t new m:%1,%2,%3,%4 d:%5,%6 p:%7,%8 sz:%9,%10")
+				.arg(t.m11()).arg(t.m12()).arg(t.m21()).arg(t.m22())
+				.arg(t.toAffine().dx()).arg(t.toAffine().dy())
+				.arg(pos().x()).arg(pos().y())
+				.arg(size.width()).arg(size.height()));
+		}
+
+		QPointF tl = mapToScene(0, 0);
+		QPointF br = mapToScene(size.width(), size.height());
+		double dx = 0;
+		double dy = 0;
+		switch (m_corner) {
+			case ResizableBoard::TOP_RIGHT:
+				dx = m_resizeStartTopLeft.x() - tl.x();
+				dy = m_resizeStartBottomRight.y() - br.y();
+				break;
+			case ResizableBoard::BOTTOM_LEFT:
+				dx = m_resizeStartBottomRight.x() - br.x();
+				dy = m_resizeStartTopLeft.y() - tl.y();
+				break;
+			case ResizableBoard::TOP_LEFT:
+				dx = m_resizeStartBottomRight.x() - br.x();
+				dy = m_resizeStartBottomRight.y() - br.y();
+				break;
+		}
+
+		setPos(m_resizeStartPos.x() + dx, m_resizeStartPos.y() + dy);
+	}
 }
 
-void ResizableBoard::positionGrips() {
-	if (m_resizeGripBL == NULL) return;
+void ResizableBoard::mouseReleaseEvent(QGraphicsSceneMouseEvent * event) {
+	if (m_corner == ResizableBoard::NO_CORNER) {
+		Board::mouseReleaseEvent(event);
+		return;
+	}
 
-	// TODO:  figure out how to position these on a rotated board
+	event->accept();
+	m_corner = ResizableBoard::NO_CORNER;
+	setCursor(Qt::ArrowCursor);
 
-	QSizeF sz = this->boundingRect().size();
-	double scale = m_resizeGripBL->currentScale();
-
-	// assuming all the handles are the same size, offset to the center
-	QSizeF hsz = m_resizeGripBL->boundingRect().size();
-	double dx = hsz.width() / (scale * 2);
-	double dy = hsz.height() / (scale * 2);
-
-	m_resizeGripBR->setPos(sz.width() - dx, sz.height() - dy);
-	m_resizeGripBL->setPos(-dx, sz.height() - dy);
-	m_resizeGripTR->setPos(sz.width() - dx, -dy);
-	m_resizeGripTL->setPos(-dx, -dy);
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView) {
+		infoGraphicsView->viewItemInfo(this);
+	}
 }
 
 bool ResizableBoard::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors, LayerAttributes & layerAttributes, QString & error)
 {
 	bool result = Board::setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, viewLayerSpec, doConnectors, layerAttributes, error);
-	if ((viewIdentifier == theViewIdentifier()) && result) {
-		positionGrips();
-	}
 
 	return result;
 }
@@ -434,7 +360,6 @@ void ResizableBoard::resizeMM(double mmW, double mmH, const LayerHash & viewLaye
 		modelPart()->setProp("height", QVariant());
 		modelPart()->setProp("width", QVariant());
 		// do the layerkin
-		positionGrips();
 		return;
 	}
 
@@ -442,7 +367,6 @@ void ResizableBoard::resizeMM(double mmW, double mmH, const LayerHash & viewLaye
 	if (qAbs(GraphicsUtils::pixels2mm(r.width(), FSvgRenderer::printerScale()) - mmW) < .001 &&
 		qAbs(GraphicsUtils::pixels2mm(r.height(), FSvgRenderer::printerScale()) - mmH) < .001) 
 	{
-		positionGrips();
 		return;
 	}
 
@@ -451,7 +375,6 @@ void ResizableBoard::resizeMM(double mmW, double mmH, const LayerHash & viewLaye
 
 
 void ResizableBoard::resizeMMAux(double mmW, double mmH) {
-
 
 	double milsW = GraphicsUtils::mm2mils(mmW);
 	double milsH = GraphicsUtils::mm2mils(mmH);
@@ -472,14 +395,13 @@ void ResizableBoard::resizeMMAux(double mmW, double mmH) {
 	}
 	//	DebugDialog::debug(QString("fast load result %1 %2").arg(result).arg(s));
 
-	positionGrips();
-
 	foreach (ItemBase * itemBase, m_layerKin) {
 		QString s = makeNextLayerSvg(itemBase->viewLayerID(), mmW, mmH, milsW, milsH);
 		if (!s.isEmpty()) {
 			if (m_silkscreenRenderer == NULL) {
 				m_silkscreenRenderer = new FSvgRenderer(itemBase);
 			}
+			itemBase->prepareGeometryChange();
 			bool result = m_silkscreenRenderer->fastLoad(s.toUtf8());
 			if (result) {
 				qobject_cast<PaletteItemBase *>(itemBase)->setSharedRendererEx(m_silkscreenRenderer);
@@ -576,30 +498,6 @@ QString ResizableBoard::makeSilkscreenSvg(double mmW, double mmH, double milsW, 
 		.arg(mmW).arg(mmH)
 		.arg(milsW).arg(milsH)
 		.arg(milsW - LineThickness).arg(milsH - LineThickness);
-}
-
-void ResizableBoard::rotateItem(double degrees) {
-	// TODO: this hack only works for 90 degree rotations
-	// eventually need to make this work for other angles
-	// what gets screwed up is the drag handles
-
-	if (moduleID().contains(ModuleIDNames::RectangleModuleIDName)) {
-		if (degrees == 90 || degrees == -90 || degrees == 270 || degrees == -270) {
-			QRectF r = this->boundingRect();
-			r.moveTopLeft(pos());
-			QPointF c = r.center();
-			ViewGeometry vg;
-			vg.setLoc(QPointF(c.x() - (r.height() / 2.0), c.y() - (r.width() / 2.0)));	
-			double w = m_modelPart->prop("width").toDouble();
-			double h = m_modelPart->prop("height").toDouble();
-			LayerHash viewLayers;
-			resizeMM(h, w, viewLayers);
-			moveItem(vg);
-		}
-	}
-	else {
-		Board::rotateItem(degrees);
-	}
 }
 
 void ResizableBoard::saveParams() {
@@ -777,40 +675,134 @@ void ResizableBoard::heightEntry() {
 	}
 }
 
-void ResizableBoard::calcRotation(QTransform & rotation, QPointF center, ViewGeometry & vg2) 
-{
-	if (moduleID().contains(ModuleIDNames::RectangleModuleIDName)) {
-		// because these boards don't actually rotate yet
-		QRectF r = boundingRect();
-		//QPointF test(center.x() - (r.height() / 2.0), center.y() - (r.width() / 2.0));
-		QPointF p0 = pos();
-		double angle = atan2(rotation.m12(), rotation.m11()) * 180 / M_PI;
-		if (angle < 0) angle += 360;
-		if (qAbs(angle - 90) < 1) {			// degrees == 90
-			p0 += r.bottomLeft();
-		}
-		else if (qAbs(angle - 270) < 1) {		// degrees == -90
-			p0 += r.topRight();
-		}
-		else if (qAbs(angle - 180) < 1) {		// degrees == 180
-			p0 += r.bottomRight();
-		}
-		else if (qAbs(angle - 0) < 1) {
-		}
-		else {
-			// we're screwed: only multiples of 90 for now.
-			DebugDialog::debug(QString("non-90 degree rotation for board %1").arg(angle));
-		}
-		QPointF d0 = p0 - center;
-		QPointF d0t = rotation.map(d0);
-		vg2.setLoc(d0t + center);
-	}
-	else {
-		Board::calcRotation(rotation, center, vg2);
-	}
-}
-
 bool ResizableBoard::hasPartNumberProperty()
 {
 	return false;
+}
+
+void ResizableBoard::paintSelected(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+	if (m_hidden) return;
+
+	PaletteItem::paintSelected(painter, option, widget);
+
+	double scale = m_currentScale = painter->worldTransform().m11();
+	if (scale == 0) {
+		scale = m_currentScale = painter->worldTransform().m12();
+	}
+	double scalefull = CornerHandleSize / scale;
+	double scalehalf = scalefull / 2;
+	double bottom = m_size.height();
+	double right = m_size.width();
+	
+	QPen pen;
+	pen.setWidthF(1.0 / scale);
+	pen.setColor(QColor(0, 0, 0));
+	QBrush brush(QColor(255, 255, 255));
+	painter->setPen(pen);
+	painter->setBrush(brush);
+
+	QPolygonF poly;
+
+	// upper left
+	poly.append(QPointF(0, 0));
+	poly.append(QPointF(0, scalefull));
+	poly.append(QPointF(scalehalf, scalefull));
+	poly.append(QPointF(scalehalf, scalehalf));
+	poly.append(QPointF(scalefull, scalehalf));
+	poly.append(QPointF(scalefull, 0));
+	painter->drawPolygon(poly);
+
+	// upper right
+	poly.clear();
+	poly.append(QPointF(right, 0));
+	poly.append(QPointF(right, scalefull));
+	poly.append(QPointF(right - scalehalf, scalefull));
+	poly.append(QPointF(right - scalehalf, scalehalf));
+	poly.append(QPointF(right - scalefull, scalehalf));
+	poly.append(QPointF(right - scalefull, 0));
+	painter->drawPolygon(poly);
+
+	// lower left
+	poly.clear();
+	poly.append(QPointF(0, bottom - scalefull));
+	poly.append(QPointF(0, bottom));
+	poly.append(QPointF(scalefull, bottom));
+	poly.append(QPointF(scalefull, bottom - scalehalf));
+	poly.append(QPointF(scalehalf, bottom - scalehalf));
+	poly.append(QPointF(scalehalf, bottom - scalefull));
+	painter->drawPolygon(poly);
+
+	// lower right
+	poly.clear();
+	poly.append(QPointF(right, bottom - scalefull));
+	poly.append(QPointF(right, bottom));
+	poly.append(QPointF(right - scalefull, bottom));
+	poly.append(QPointF(right - scalefull, bottom - scalehalf));
+	poly.append(QPointF(right - scalehalf, bottom - scalehalf));
+	poly.append(QPointF(right - scalehalf, bottom - scalefull));
+	painter->drawPolygon(poly);
+}
+
+bool ResizableBoard::inResize() {
+	return m_corner != ResizableBoard::NO_CORNER;
+}
+
+void ResizableBoard::hoverEnterEvent( QGraphicsSceneHoverEvent * event ) {
+	PaletteItemBase::hoverEnterEvent(event);
+}
+
+void ResizableBoard::hoverMoveEvent( QGraphicsSceneHoverEvent * event ) {
+	PaletteItemBase::hoverMoveEvent(event);
+
+	m_corner = findCorner(event->scenePos(), event->modifiers());
+	QCursor cursor;
+	switch (m_corner) {
+		case ResizableBoard::BOTTOM_RIGHT:
+		case ResizableBoard::TOP_LEFT:
+		case ResizableBoard::TOP_RIGHT:
+		case ResizableBoard::BOTTOM_LEFT:
+			cursor = *CursorMaster::ScaleCursor;
+			break;
+		case ResizableBoard::NO_CORNER:
+			cursor = Qt::ArrowCursor;
+			break;
+	}
+	setCursor(cursor);
+
+}
+
+void ResizableBoard::hoverLeaveEvent( QGraphicsSceneHoverEvent * event ) {
+	setCursor(Qt::ArrowCursor);
+	PaletteItemBase::hoverLeaveEvent(event);
+}
+
+ResizableBoard::Corner ResizableBoard::findCorner(QPointF scenePos, Qt::KeyboardModifiers modifiers) {
+	Q_UNUSED(modifiers);
+		
+	if (!this->isSelected()) return ResizableBoard::NO_CORNER;
+
+	double d = CornerHandleSize / m_currentScale;
+	double d2 = d * d;
+	double right = m_size.width();
+	double bottom = m_size.height();
+	//DebugDialog::debug(QString("size %1 %2").arg(right).arg(bottom));
+	QPointF q = mapToScene(right, bottom);
+	if (GraphicsUtils::distanceSqd(scenePos, q) <= d2) {
+		return ResizableBoard::BOTTOM_RIGHT;
+	}
+	q = mapToScene(0, 0);
+	if (GraphicsUtils::distanceSqd(scenePos, q) <= d2) {
+		return ResizableBoard::TOP_LEFT;
+	}
+	q = mapToScene(right, 0);
+	if (GraphicsUtils::distanceSqd(scenePos, q) <= d2) {
+		return ResizableBoard::TOP_RIGHT;
+	}
+	q = mapToScene(0, bottom);
+	if (GraphicsUtils::distanceSqd(scenePos, q) <= d2) {
+		return ResizableBoard::BOTTOM_LEFT;
+	}
+
+	return ResizableBoard::NO_CORNER;
 }

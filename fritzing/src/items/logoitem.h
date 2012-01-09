@@ -70,7 +70,6 @@ protected slots:
 	void fileNameEntry(const QString & filename);
 
 protected:
-	bool hasGrips();
 	virtual QString hackSvg(const QString & svg, const QString & logo);
 	void initImage();
 	void unableToLoad(const QString & fileName);
@@ -84,7 +83,8 @@ protected:
 	void rerender(const QString & svg);
 	double minWidth();
 	double minHeight();
-
+	bool freeRotationAllowed(Qt::KeyboardModifiers modifiers);
+	ResizableBoard::Corner findCorner(QPointF p, Qt::KeyboardModifiers);
 
 protected:
 	QString m_logo;

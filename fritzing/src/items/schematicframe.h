@@ -67,7 +67,6 @@ protected slots:
 	void incDate();
 
 protected:
-	bool hasGrips();
 	double minWidth();
 	double minHeight();
 	ViewIdentifierClass::ViewIdentifier theViewIdentifier();

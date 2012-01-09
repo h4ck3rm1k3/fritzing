@@ -71,15 +71,15 @@ public:
  	void loadLayerKin(const LayerHash & viewLayers, ViewLayer::ViewLayerSpec);
 	virtual void setInitialSize();
 	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi);
-	void rotateItem(double degrees);
 	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
 	void saveParams();
 	void getParams(QPointF &, QSizeF &);
 	bool hasCustomSVG();
-	void calcRotation(QTransform & rotation, QPointF center, ViewGeometry &);
 	QSizeF getSizeMM();
 	void addedToScene(bool temporary);
 	bool hasPartNumberProperty();
+	void paintSelected(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+	bool inResize();
 
 public:
 	static QString customShapeTranslated;
@@ -88,19 +88,25 @@ public slots:
 	void widthEntry();
 	void heightEntry();
 
-protected slots:
-	void handleMousePressSlot(QGraphicsSceneMouseEvent * event, class ResizeHandle * resizeHandle);
-	void handleZoomChangedSlot(double scale);
+protected:
+	enum Corner {
+		NO_CORNER = 0,
+		TOP_LEFT ,
+		TOP_RIGHT,
+		BOTTOM_LEFT,
+		BOTTOM_RIGHT
+	};
 
 protected:
-	void positionGrips();
-	void mouseMoveEvent ( QGraphicsSceneMouseEvent * event );
-	void mouseReleaseEvent ( QGraphicsSceneMouseEvent * event );
+	void mousePressEvent(QGraphicsSceneMouseEvent * event );
+	void mouseMoveEvent(QGraphicsSceneMouseEvent * event );
+	void mouseReleaseEvent(QGraphicsSceneMouseEvent * event );
+	void hoverEnterEvent(QGraphicsSceneHoverEvent * event );
+	void hoverLeaveEvent(QGraphicsSceneHoverEvent * event );
+	void hoverMoveEvent(QGraphicsSceneHoverEvent * event );
 	QString makeBoardSvg(double mmW, double mmH, double milsW, double milsH);
 	QString makeSilkscreenSvg(double mmW, double mmH, double milsW, double milsH);
 	QStringList collectValues(const QString & family, const QString & prop, QString & value);
-	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
-	virtual bool hasGrips();
 	virtual void loadTemplates();
 	virtual double minWidth();
 	virtual double minHeight();
@@ -109,21 +115,27 @@ protected:
 	virtual QString makeFirstLayerSvg(double mmW, double mmH, double milsW, double milsH);
 	virtual QString makeNextLayerSvg(ViewLayer::ViewLayerID, double mmW, double mmH, double milsW, double milsH);
 	virtual void resizeMMAux(double w, double h);
+	virtual ResizableBoard::Corner findCorner(QPointF p, Qt::KeyboardModifiers);
 
 protected:
-	class ResizeHandle * m_resizeGripTL;
-	class ResizeHandle * m_resizeGripTR;
-	class ResizeHandle * m_resizeGripBL;
-	class ResizeHandle * m_resizeGripBR;
-	class ResizeHandle * m_inResize;
+	static const double CornerHandleSize;
+
+	Corner m_corner;
 	class FSvgRenderer * m_silkscreenRenderer;
 	QSizeF m_boardSize;
 	QPointF m_boardPos;
-	QRectF m_originalRect;
 	QPointer<QLineEdit> m_widthEditor;
 	QPointer<QLineEdit> m_heightEditor;
 	bool m_keepAspectRatio;
 	QSizeF m_aspectRatio;
+	double m_currentScale;
+
+	QPointF m_resizeMousePos;
+	QSizeF m_resizeStartSize;
+	QPointF m_resizeStartPos;
+	QPointF m_resizeStartTopLeft;
+	QPointF m_resizeStartBottomRight;
+
 };
 
 #endif

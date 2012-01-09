@@ -1318,8 +1318,9 @@ void PCBSketchWidget::resizeJumperItem() {
 
 bool PCBSketchWidget::resizingBoardPress(QGraphicsItem * item) {
 	// board's child items (at the moment) are the resize grips
-	m_resizingBoard = dynamic_cast<ResizableBoard *>(item->parentItem());
+	m_resizingBoard = dynamic_cast<ResizableBoard *>(item);
 	if (m_resizingBoard == NULL) return false;
+	if (!m_resizingBoard->inResize()) return false;
 
 	m_resizingBoard->saveParams();
 	return true;

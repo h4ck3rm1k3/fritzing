@@ -87,7 +87,7 @@ void LogoItem::addedToScene(bool temporary)
 					
 			m_aspectRatio = modelPart()->prop("aspectratio").toSizeF();
 			if (loadExtraRenderer(shape.toUtf8())) {
-				positionGrips();
+
 			}
 		}
 		else {
@@ -149,6 +149,7 @@ QString LogoItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString,
 			}
 
 			QString string = splitter.elementString(xmlName);
+
 			if (scaleY == 1) return string;
 
 			QTransform t;
@@ -313,10 +314,6 @@ bool LogoItem::collectExtraInfo(QWidget * parent, const QString & family, const 
 
 }
 
-bool LogoItem::hasGrips() {
-	return true;
-}
-
 void LogoItem::prepLoadImage() {
 	QList<QByteArray> supportedImageFormats = QImageReader::supportedImageFormats();
 	QString imagesStr = tr("Images");
@@ -375,7 +372,6 @@ void LogoItem::reloadImage(const QString & svg, const QSizeF & aspectRatio, cons
 				m_fileNameComboBox->blockSignals(wasBlocked);
 			}
 		}
-		positionGrips();
 		m_logo = "";
 	}
 	else {
@@ -468,7 +464,7 @@ void LogoItem::loadImage(const QString & fileName, bool addName)
 			return;
 		}
 
-		if (image.format() != QImage::Format_RGB32) {
+		if (image.format() != QImage::Format_RGB32 && image.format() != QImage::Format_ARGB32) {
 			image = image.convertToFormat(QImage::Format_RGB32);
 		}
 
@@ -506,7 +502,6 @@ void LogoItem::resizeMM(double mmW, double mmH, const LayerHash & viewLayers) {
 	if (qAbs(GraphicsUtils::pixels2mm(r.width(), FSvgRenderer::printerScale()) - mmW) < .001 &&
 		qAbs(GraphicsUtils::pixels2mm(r.height(), FSvgRenderer::printerScale()) - mmH) < .001) 
 	{
-		positionGrips();
 		return;
 	}
 
@@ -546,7 +541,6 @@ void LogoItem::resizeMM(double mmW, double mmH, const LayerHash & viewLayers) {
 		modelPart()->setProp("shape", svg);
 		modelPart()->setProp("width", mmW);
 		modelPart()->setProp("height", mmH);
-		positionGrips();
 	}
 
 	if (m_widthEditor) {
@@ -593,7 +587,6 @@ void LogoItem::setLogo(QString logo, bool force) {
 	m_logo = logo;
 	modelPart()->setProp("logo", logo);
 	modelPart()->setProp("shape", svg);
-	positionGrips();
 }
 
 void LogoItem::rerender(const QString & svg)
@@ -804,11 +797,25 @@ QStringList & LogoItem::getNewImageNames() {
 }
 
 double LogoItem::minWidth() {
-	return 10;
+	return ResizableBoard::CornerHandleSize * 2;
 }
 
 double LogoItem::minHeight() {
-	return 10;
+	return ResizableBoard::CornerHandleSize * 2;
+}
+
+bool LogoItem::freeRotationAllowed(Qt::KeyboardModifiers modifiers) {
+
+	if ((modifiers & altOrMetaModifier()) == 0) return false;
+	if (!isSelected()) return false;
+
+	return true;
+}
+
+ResizableBoard::Corner LogoItem::findCorner(QPointF scenePos, Qt::KeyboardModifiers modifiers) {
+	if (modifiers & altOrMetaModifier()) return ResizableBoard::NO_CORNER;
+
+	return ResizableBoard::findCorner(scenePos, modifiers);
 }
 
 ///////////////////////////////////////////////////////////////////////

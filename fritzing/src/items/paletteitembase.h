@@ -94,7 +94,7 @@ protected:
 	void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 	virtual bool canFindConnectorsUnder();
 	bool inRotationLocation(QPointF scenePos, Qt::KeyboardModifiers modifiers, QPointF & returnPoint);
-	bool freeRotationAllowed(Qt::KeyboardModifiers modifiers);
+	virtual bool freeRotationAllowed(Qt::KeyboardModifiers modifiers);
 	void checkFreeRotation(Qt::KeyboardModifiers modifiers, QPointF scenePos);
 
 	virtual LayerKinPaletteItem * newLayerKinPaletteItem(

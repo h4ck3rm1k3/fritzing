@@ -352,11 +352,6 @@ bool SchematicFrame::collectExtraInfo(QWidget * parent, const QString & family, 
 	return PaletteItem::collectExtraInfo(parent, family, propp, value, swappingEnabled, returnProp, returnValue, returnWidget);
 }
 
-bool SchematicFrame::hasGrips() {
-	return true;
-}
-
-
 void SchematicFrame::setProp(const QString & prop, const QString & value) 
 {	
 	ResizableBoard::setProp(prop, value);
