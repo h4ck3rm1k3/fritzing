@@ -7133,7 +7133,7 @@ void SketchWidget::setProp(ItemBase * item, const QString & prop, const QString 
 
 	SetPropCommand * cmd = new SetPropCommand(this, item->id(), prop, oldValue, newValue, redraw, NULL);
 	cmd->setText(tr("Change %1 from %2 to %3").arg(trProp).arg(oldValue).arg(newValue));
-	m_undoStack->push(cmd);
+        m_undoStack->waitPush(cmd, 1);
 }
 
 void SketchWidget::setProp(long itemID, const QString & prop, const QString & value, bool redraw, bool doEmit) {
