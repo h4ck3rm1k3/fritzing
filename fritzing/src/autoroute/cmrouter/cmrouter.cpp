@@ -2595,35 +2595,37 @@ void CMRouter::addToUndo(QMultiHash<TraceWire *, long> & splitDNA, QUndoCommand 
 			wires.append(wire);
 			continue;
 		}
-		JumperItem * jumperItem = dynamic_cast<JumperItem *>(item);	
-		if (jumperItem != NULL) {
-			jumperItems.append(jumperItem);
-			if (!jumperItem->getAutoroutable()) {
+		if (m_sketchWidget->usesJumperItem()) {
+			JumperItem * jumperItem = dynamic_cast<JumperItem *>(item);	
+			if (jumperItem != NULL) {
+				jumperItems.append(jumperItem);
+				if (!jumperItem->getAutoroutable()) {
+					continue;
+				}
+
+				jumperItem->saveParams();
+				QPointF pos, c0, c1;
+				jumperItem->getParams(pos, c0, c1);
+
+				new AddItemCommand(m_sketchWidget, BaseCommand::CrossView, ModuleIDNames::JumperModuleIDName, jumperItem->viewLayerSpec(), jumperItem->getViewGeometry(), jumperItem->id(), false, -1, parentCommand);
+				new ResizeJumperItemCommand(m_sketchWidget, jumperItem->id(), pos, c0, c1, pos, c0, c1, parentCommand);
+				new CheckStickyCommand(m_sketchWidget, BaseCommand::SingleView, jumperItem->id(), false, CheckStickyCommand::RemoveOnly, parentCommand);
+
 				continue;
 			}
+			Via * via = dynamic_cast<Via *>(item);	
+			if (via != NULL) {
+				vias.append(via);
+				if (!via->getAutoroutable()) {
+					continue;
+				}
 
-			jumperItem->saveParams();
-			QPointF pos, c0, c1;
-			jumperItem->getParams(pos, c0, c1);
+				new AddItemCommand(m_sketchWidget, BaseCommand::CrossView, ModuleIDNames::ViaModuleIDName, via->viewLayerSpec(), via->getViewGeometry(), via->id(), false, -1, parentCommand);
+				new CheckStickyCommand(m_sketchWidget, BaseCommand::SingleView, via->id(), false, CheckStickyCommand::RemoveOnly, parentCommand);
+				new SetPropCommand(m_sketchWidget, via->id(), "hole size", via->holeSize(), via->holeSize(), true, parentCommand);
 
-			new AddItemCommand(m_sketchWidget, BaseCommand::CrossView, ModuleIDNames::JumperModuleIDName, jumperItem->viewLayerSpec(), jumperItem->getViewGeometry(), jumperItem->id(), false, -1, parentCommand);
-			new ResizeJumperItemCommand(m_sketchWidget, jumperItem->id(), pos, c0, c1, pos, c0, c1, parentCommand);
-			new CheckStickyCommand(m_sketchWidget, BaseCommand::SingleView, jumperItem->id(), false, CheckStickyCommand::RemoveOnly, parentCommand);
-
-			continue;
-		}
-		Via * via = dynamic_cast<Via *>(item);	
-		if (via != NULL) {
-			vias.append(via);
-			if (!via->getAutoroutable()) {
 				continue;
 			}
-
-			new AddItemCommand(m_sketchWidget, BaseCommand::CrossView, ModuleIDNames::ViaModuleIDName, via->viewLayerSpec(), via->getViewGeometry(), via->id(), false, -1, parentCommand);
-			new CheckStickyCommand(m_sketchWidget, BaseCommand::SingleView, via->id(), false, CheckStickyCommand::RemoveOnly, parentCommand);
-			new SetPropCommand(m_sketchWidget, via->id(), "hole size", via->holeSize(), via->holeSize(), true, parentCommand);
-
-			continue;
 		}
 	}
 
@@ -4021,20 +4023,23 @@ void CMRouter::clearTracesAndJumpers() {
 	QList<TraceWire *> traceWires;
 
 	foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
-		JumperItem * jumperItem = dynamic_cast<JumperItem *>(item);
-		if (jumperItem != NULL) {
-			if (jumperItem->getAutoroutable()) {
-				jumperItems.append(jumperItem);
+		if (m_sketchWidget->usesJumperItem()) {
+			JumperItem * jumperItem = dynamic_cast<JumperItem *>(item);
+			if (jumperItem != NULL) {
+				if (jumperItem->getAutoroutable()) {
+					jumperItems.append(jumperItem);
+				}
+				continue;
 			}
-			continue;
-		}
-		Via * via = dynamic_cast<Via *>(item);
-		if (via != NULL) {
-			if (via->getAutoroutable()) {
-				vias.append(via);
+			Via * via = dynamic_cast<Via *>(item);
+			if (via != NULL) {
+				if (via->getAutoroutable()) {
+					vias.append(via);
+				}
+				continue;
 			}
-			continue;
 		}
+
 		TraceWire * traceWire = dynamic_cast<TraceWire *>(item);
 		if (traceWire != NULL) {
 			if (traceWire->isTraceType(m_sketchWidget->getTraceFlag()) && traceWire->getAutoroutable()) {
@@ -4060,19 +4065,21 @@ void CMRouter::saveTracesAndJumpers(Ordering * ordering) {
 
 	QList<ItemBase *> itemBases;
 	foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
-		JumperItem * jumperItem = dynamic_cast<JumperItem *>(item);
-		if (jumperItem != NULL) {
-			if (jumperItem->getAutoroutable()) {
-				itemBases.append(jumperItem);
+		if (m_sketchWidget->usesJumperItem()) {
+			JumperItem * jumperItem = dynamic_cast<JumperItem *>(item);
+			if (jumperItem != NULL) {
+				if (jumperItem->getAutoroutable()) {
+					itemBases.append(jumperItem);
+				}
+				continue;
 			}
-			continue;
-		}
-		Via * via = dynamic_cast<Via *>(item);
-		if (via != NULL) {
-			if (via->getAutoroutable()) {
-				itemBases.append(via);
+			Via * via = dynamic_cast<Via *>(item);
+			if (via != NULL) {
+				if (via->getAutoroutable()) {
+					itemBases.append(via);
+				}
+				continue;
 			}
-			continue;
 		}
 		TraceWire * traceWire = dynamic_cast<TraceWire *>(item);
 		if (traceWire != NULL) {

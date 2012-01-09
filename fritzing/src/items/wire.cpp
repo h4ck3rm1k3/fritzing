@@ -314,6 +314,7 @@ void Wire::paintBody(QPainter * painter, const QStyleOptionGraphicsItem * option
 		painter->restore();
 	}
 	   
+	// DebugDialog::debug(QString("pen width %1 %2").arg(m_pen.widthF()).arg(m_viewIdentifier));
 	painter->setPen(m_pen);
 	if (painterPath.isEmpty()) {
 		painter->drawLine(getPaintLine());	
@@ -485,7 +486,6 @@ void Wire::mouseMoveConnectorEvent(ConnectorItem * connectorItem, QGraphicsScene
 	mouseMoveEventAux(this->mapFromItem(connectorItem, event->pos()), event->modifiers());
 }
 
-
 void Wire::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 	mouseMoveEventAux(event->pos(), event->modifiers());
 }
@@ -612,18 +612,28 @@ void Wire::mouseMoveEventAux(QPointF eventPos, Qt::KeyboardModifiers modifiers) 
 
 void Wire::setConnector0Rect() {
 	QRectF rect = m_connector0->rect();
-	rect.moveTo(0 - (rect.width()  / 2.0)  ,
+	rect.moveTo(0 - (rect.width()  / 2.0),
 				0 - (rect.height()  / 2.0) );
-	//DebugDialog::debug(QString("set connector rect %1 %2").arg(rect.width()).arg(rect.height()));
 	m_connector0->setRect(rect);
+
+//	QPointF p = m_connector0->mapToScene(m_connector0->rect().center());
+//	m_connector0->debugInfo(QString("c0:%1 %2").arg(p.x()).arg(p.y()));
+//	p = m_connector1->mapToScene(m_connector1->rect().center());
+//	m_connector1->debugInfo(QString("c1:%1 %2").arg(p.x()).arg(p.y()));
+
 }
 
 
 void Wire::setConnector1Rect() {
 	QRectF rect = m_connector1->rect();
-	rect.moveTo(this->line().dx() - (rect.width()  / 2.0)  ,
+	rect.moveTo(this->line().dx() - (rect.width()  / 2.0),
 				this->line().dy() - (rect.height()  / 2.0) );
 	m_connector1->setRect(rect);
+
+//	QPointF p = m_connector0->mapToScene(m_connector0->rect().center());
+//	m_connector0->debugInfo(QString("c0:%1 %2").arg(p.x()).arg(p.y()));
+//	p = m_connector1->mapToScene(m_connector1->rect().center());
+//	m_connector1->debugInfo(QString("c1:%1 %2").arg(p.x()).arg(p.y()));
 }
 
 void Wire::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {

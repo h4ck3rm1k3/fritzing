@@ -44,7 +44,7 @@ $Date$
 
 static const int THRESHOLD = 2;
 
-#define QGRAY(rgb) qGray(rgb)
+#define QGRAY(rgb) (qGray(rgb) * qAlpha(rgb) / 255)
 inline int OFFSET(int x, int y, QImage * image) { return (y * image->width()) + x; }
 
 QString GroundPlaneGenerator::ConnectorName = "connector0pad";
@@ -429,6 +429,7 @@ void GroundPlaneGenerator::scanLines(QImage & image, int bWidth, int bHeight, QL
 				//DebugDialog::debug(QString("current %1").arg(current,0,16));
 			//}
 			int gray = QGRAY(current);
+			//DebugDialog::debug(QString("current %1 %2").arg(current,0,16).arg(gray, 0, 16));
 			if (inWhite) {
 				if (gray > threshold) {			// qBlue(current) == 0xff    gray > 128
 					// another white pixel, keep moving
