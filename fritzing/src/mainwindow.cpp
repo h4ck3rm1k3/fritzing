@@ -425,7 +425,7 @@ void MainWindow::init(PaletteModel * paletteModel, ReferenceModel *refModel) {
 		m_fileProgressDialog->setValue(98);
 	}
 
-    m_pcbGraphicsView->jumperItemHack();
+    //m_pcbGraphicsView->jumperItemHack();
 
 }
 

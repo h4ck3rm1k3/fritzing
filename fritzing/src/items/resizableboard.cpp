@@ -243,6 +243,7 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 			size.setHeight(ch);
 		}
 		else {
+			/*
 			// figure out which is closer to the mouse
 			QPointF p1(cw, size.height());
 			p1 = mapToScene(p1);
@@ -251,6 +252,18 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 			double d1 = GraphicsUtils::distanceSqd(p1, event->scenePos());
 			double d2 = GraphicsUtils::distanceSqd(p2, event->scenePos());
 			if (d1 <= d2) {
+				size.setWidth(cw);
+			}
+			else {
+				size.setHeight(ch);
+			}
+			*/
+
+			// figure out which one changes the area least
+			double a1 = cw * size.height();
+			double a2 = ch * size.width();
+			double ac = m_size.width() * m_size.height();
+			if (qAbs(ac - a1) <= qAbs(ac - a2)) {
 				size.setWidth(cw);
 			}
 			else {
