@@ -33,8 +33,30 @@ $Date$
 
 static QString Copper0LayerTemplate = "";
 static QString JumperWireLayerTemplate = "";
+static const QString ShadowColor ="#1b5bb3";
 
 static QHash<ViewLayer::ViewLayerID, QString> Colors;
+
+QString makeWireImage(double w, double h, double r0x, double r0y, double r1x, double r1y, const QString & layerName, const QString & color, double thickness) {
+	return JumperWireLayerTemplate
+				.arg(w).arg(h)
+				.arg(w * 1000).arg(h * 1000)			
+				.arg(r0x).arg(r0y).arg(r1x).arg(r1y)
+				.arg(layerName)
+				.arg(color)
+				.arg(thickness);
+}
+
+
+void shorten(QRectF r0, QPointF r0c, QPointF r1c, double & r0x, double & r0y, double & r1x, double & r1y) 
+{
+	double radius = r0.width() / 2.0;
+	GraphicsUtils::shortenLine(r0c, r1c, radius, radius);
+	r0x = GraphicsUtils::pixels2mils(r0c.x(), FSvgRenderer::printerScale());
+	r0y = GraphicsUtils::pixels2mils(r0c.y(), FSvgRenderer::printerScale());
+	r1x = GraphicsUtils::pixels2mils(r1c.x(), FSvgRenderer::printerScale());
+	r1y = GraphicsUtils::pixels2mils(r1c.y(), FSvgRenderer::printerScale());
+}
 
 
 // TODO: 
@@ -51,7 +73,6 @@ JumperItem::JumperItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifi
 		Colors.insert(ViewLayer::Copper0, ViewLayer::Copper0Color);
 		Colors.insert(ViewLayer::Copper1, ViewLayer::Copper1Color);
 		Colors.insert(ViewLayer::PartImage, ViewLayer::JumperColor);
-		//Colors.insert(ViewLayer::Silkscreen0, ViewLayer::Silkscreen0Color);
 		Colors.insert(ViewLayer::Silkscreen1, ViewLayer::Silkscreen1Color);
 	}
 
@@ -266,8 +287,6 @@ QString JumperItem::makeSvg(ViewLayer::ViewLayerID viewLayerID)
 	modelPart()->setProp("r1x", r1x);
 	modelPart()->setProp("r1y", r1y);
 
-	int thickness = 21;
-
 	switch (viewLayerID) {
 		case ViewLayer::Copper0:
 		case ViewLayer::Copper1:
@@ -280,26 +299,24 @@ QString JumperItem::makeSvg(ViewLayer::ViewLayerID viewLayerID)
 
 		//case ViewLayer::Silkscreen0:
 		case ViewLayer::Silkscreen1:
+			shorten(r0, r0c, r1c, r0x, r0y, r1x, r1y);
+			return makeWireImage(w, h, r0x, r0y, r1x, r1y, ViewLayer::viewLayerXmlNameFromID(viewLayerID), Colors.value(viewLayerID), 21);
+			
+		case ViewLayer::PartImage:
 			{
-				double radius = r0.width() / 2.0;
-				GraphicsUtils::shortenLine(r0c, r1c, radius, radius);
-				r0x = GraphicsUtils::pixels2mils(r0c.x(), FSvgRenderer::printerScale());
-				r0y = GraphicsUtils::pixels2mils(r0c.y(), FSvgRenderer::printerScale());
-				r1x = GraphicsUtils::pixels2mils(r1c.x(), FSvgRenderer::printerScale());
-				r1y = GraphicsUtils::pixels2mils(r1c.y(), FSvgRenderer::printerScale());
+				shorten(r0, r0c, r1c, r0x, r0y, r1x, r1y);
+				QString svg = makeWireImage(w, h, r0x, r0y, r1x, r1y, ViewLayer::viewLayerXmlNameFromID(viewLayerID), ShadowColor, 40);
+				QString svg2 = makeWireImage(w, h, r0x, r0y, r1x, r1y, "", Colors.value(viewLayerID), 20);
+				int ix1 = svg.indexOf("<line");
+				int ix2 = svg.indexOf(">", ix1);
+				int ix3 = svg2.indexOf("<line");
+				int ix4 = svg2.indexOf(">", ix3);
+				svg.insert(ix2 + 1, svg2.mid(ix3, ix4 - ix3 + 1));
+				return svg;
 			}
 			
-			thickness = 8;
-		case ViewLayer::PartImage:
-			return JumperWireLayerTemplate
-				.arg(w).arg(h)
-				.arg(w * 1000).arg(h * 1000)			
-				.arg(r0x).arg(r0y).arg(r1x).arg(r1y)
-				.arg(ViewLayer::viewLayerXmlNameFromID(viewLayerID))
-				.arg(Colors.value(viewLayerID))
-				.arg(thickness);
-                default:
-                    break;
+        default:
+			break;
 	}
 
 	return ___emptyString___;
@@ -338,6 +355,7 @@ void JumperItem::resize() {
 					s = makeSvg(itemBase->viewLayerID());
 					bool result = renderer->fastLoad(s.toUtf8());
 					if (result) {
+						itemBase->prepareGeometryChange();
 						qobject_cast<PaletteItemBase *>(itemBase)->setSharedRendererEx(renderer);
 					}
                 }

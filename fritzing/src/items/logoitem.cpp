@@ -33,7 +33,7 @@ $Date$
 #include "../svg/svgfilesplitter.h"
 #include "moduleidnames.h"
 #include "../svg/groundplanegenerator.h"
-
+#include "../utils/cursormaster.h"
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -813,9 +813,16 @@ bool LogoItem::freeRotationAllowed(Qt::KeyboardModifiers modifiers) {
 }
 
 ResizableBoard::Corner LogoItem::findCorner(QPointF scenePos, Qt::KeyboardModifiers modifiers) {
-	if (modifiers & altOrMetaModifier()) return ResizableBoard::NO_CORNER;
+	ResizableBoard::Corner corner = ResizableBoard::findCorner(scenePos, modifiers);
+	if (corner == ResizableBoard::NO_CORNER) return corner;
 
-	return ResizableBoard::findCorner(scenePos, modifiers);
+	if (modifiers & altOrMetaModifier()) {
+		// free rotate
+		setCursor(*CursorMaster::RotateCursor);
+		return ResizableBoard::NO_CORNER;
+	}
+
+	return corner;
 }
 
 ///////////////////////////////////////////////////////////////////////
