@@ -182,13 +182,14 @@ void ResizableBoard::mousePressEvent(QGraphicsSceneMouseEvent * event)
 	m_resizeStartPos = pos();
 	m_resizeStartSize = m_size;
 	m_resizeStartTopLeft = mapToScene(0, 0);
+	m_resizeStartTopRight = mapToScene(right, 0);
+	m_resizeStartBottomLeft = mapToScene(0, bottom);
 	m_resizeStartBottomRight = mapToScene(right, bottom);
-
 
 	m_corner = findCorner(event->scenePos(), event->modifiers());
 	switch (m_corner) {
 		case ResizableBoard::NO_CORNER:
-			PaletteItem::mousePressEvent(event);
+			Board::mousePressEvent(event);
 			return;
 	}
 
@@ -278,6 +279,7 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 			double sw = size.width() / 2;
 			double sh = size.height() / 2;	
 			QMatrix m(oldT.m11(), oldT.m12(), oldT.m21(), oldT.m22(), 0, 0);
+			ds = m.inverted().map(ds);
 			QTransform newT = QTransform().translate(-sw, -sh) * QTransform(m) * QTransform().translate(sw, sh);
 
 			QList<ItemBase *> kin;
@@ -297,27 +299,25 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 				.arg(pos().x()).arg(pos().y())
 				.arg(size.width()).arg(size.height()));
 		}
-
-		QPointF tl = mapToScene(0, 0);
-		QPointF br = mapToScene(size.width(), size.height());
-		double dx = 0;
-		double dy = 0;
+	
+		QPointF actual;
+		QPointF desired;
 		switch (m_corner) {
 			case ResizableBoard::TOP_RIGHT:
-				dx = m_resizeStartTopLeft.x() - tl.x();
-				dy = m_resizeStartBottomRight.y() - br.y();
+				actual = mapToScene(0, size.height());
+				desired = m_resizeStartBottomLeft;
 				break;
 			case ResizableBoard::BOTTOM_LEFT:
-				dx = m_resizeStartBottomRight.x() - br.x();
-				dy = m_resizeStartTopLeft.y() - tl.y();
+				actual = mapToScene(size.width(), 0);
+				desired = m_resizeStartTopRight;
 				break;
 			case ResizableBoard::TOP_LEFT:
-				dx = m_resizeStartBottomRight.x() - br.x();
-				dy = m_resizeStartBottomRight.y() - br.y();
+				actual = mapToScene(size.width(), size.height());
+				desired = m_resizeStartBottomRight;
 				break;
-		}
+		}	
 
-		setPos(m_resizeStartPos.x() + dx, m_resizeStartPos.y() + dy);
+		setPos(pos() + desired - actual);
 	}
 }
 
@@ -689,7 +689,7 @@ void ResizableBoard::paintSelected(QPainter *painter, const QStyleOptionGraphics
 	// http://www.gamedev.net/topic/441695-transform-matrix-decomposition/
 	double m11 = painter->worldTransform().m11();
 	double m12 = painter->worldTransform().m12();
-	double scale = m_currentScale = qSqrt((m11 * m11) + (m12 * m12));
+	double scale = m_currentScale = qSqrt((m11 * m11) + (m12 * m12));   // assumes same scaling for both x and y
 
 	double scalefull = CornerHandleSize / scale;
 	double scalehalf = scalefull / 2;

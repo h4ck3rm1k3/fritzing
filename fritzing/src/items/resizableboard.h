@@ -135,7 +135,8 @@ protected:
 	QPointF m_resizeStartPos;
 	QPointF m_resizeStartTopLeft;
 	QPointF m_resizeStartBottomRight;
-
+	QPointF m_resizeStartTopRight;
+	QPointF m_resizeStartBottomLeft;
 };
 
 #endif
