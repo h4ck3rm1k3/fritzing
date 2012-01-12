@@ -140,7 +140,7 @@ void PartsEditorMainWindow::setup(long id, ModelPart *modelPart, bool fromTempla
 		m_updateEnabled = modelPart->isCore()?
 							CORE_EDITION_ENABLED:
 							(modelPart->isContrib() || modelPart->isAlien()? false: true);
-		m_fileName = modelPart->path();
+		m_fwFilename = modelPart->path();
 		setTitle();
 		UntitledPartIndex--; // TODO Mariano: not good enough
 	}
@@ -148,7 +148,7 @@ void PartsEditorMainWindow::setup(long id, ModelPart *modelPart, bool fromTempla
 	if(!fromTemplate) {
 		m_sketchModel = new SketchModel(true);
 	} else {
-		ModelPart * mp = m_paletteModel->loadPart(m_fileName, false, false);
+		ModelPart * mp = m_paletteModel->loadPart(m_fwFilename, false, false);
 	    // this seems hacky but maybe it's ok
 		if (mp == NULL || mp->modelPartShared() == NULL) {
 			QMessageBox::critical(this, tr("Parts Editor"),
@@ -500,40 +500,40 @@ bool PartsEditorMainWindow::save() {
 
 bool PartsEditorMainWindow::saveAs() {
 	if(validateMinRequirements()) {
-		QString fileNameBU = m_fileName;
+		QString fileNameBU = m_fwFilename;
 		QString moduleIdBU = m_moduleId;
 
 		m_moduleId = ___emptyString___;
 		QString title = m_title->text();
-		m_fileName = title != ___emptyString___ ? title+FritzingPartExtension : m_fileName;
+		m_fwFilename = title != ___emptyString___ ? title+FritzingPartExtension : m_fwFilename;
 
 		// TODO Mariano: This folder should be defined in the preferences... some day
 		QString partsFolderPath = FolderUtils::getUserDataStorePath("parts")+"/";
 		QString userPartsFolderPath = partsFolderPath+"user/";
 
 		bool firstTime = true; // Perhaps the user wants to use the default file name, confirm first
-		while(m_fileName.isEmpty()
-			  || QFileInfo(userPartsFolderPath+m_fileName).exists()
-			  || (FolderUtils::isEmptyFileName(m_fileName,untitledFileName()) && firstTime) ) 
+		while(m_fwFilename.isEmpty()
+			  || QFileInfo(userPartsFolderPath+m_fwFilename).exists()
+			  || (FolderUtils::isEmptyFileName(m_fwFilename,untitledFileName()) && firstTime) ) 
 		{
 			bool ok;
-			m_fileName = QInputDialog::getText(
+			m_fwFilename = QInputDialog::getText(
 				this,
 				tr("Save as new part"),
 				tr("There's already a file with this name.\nPlease, specify a new filename"),
 				QLineEdit::Normal,
-				m_fileName,
+				m_fwFilename,
 				&ok
 			);
 			firstTime = false;
 			if (!ok) {
 				m_moduleId = moduleIdBU;
-				m_fileName = fileNameBU;
+				m_fwFilename = fileNameBU;
 				return false;
 			}
 		}
 
-		m_fileName.replace(QRegExp("[^A-Za-z0-9\\.]"), "_");
+		m_fwFilename.replace(QRegExp("[^A-Za-z0-9\\.]"), "_");
 
 		Qt::CaseSensitivity cs = Qt::CaseSensitive;
 	#ifdef Q_WS_WIN
@@ -542,10 +542,10 @@ bool PartsEditorMainWindow::saveAs() {
 		cs = Qt::CaseInsensitive;
 	#endif
 
-		QString filename = !m_fileName.startsWith(userPartsFolderPath, cs)
-						&& !m_fileName.startsWith(partsFolderPath, cs)
-				? userPartsFolderPath+m_fileName
-				: m_fileName;
+		QString filename = !m_fwFilename.startsWith(userPartsFolderPath, cs)
+						&& !m_fwFilename.startsWith(partsFolderPath, cs)
+				? userPartsFolderPath+m_fwFilename
+				: m_fwFilename;
 		QString guid = "__"+FolderUtils::getRandText()+FritzingPartExtension;
 		if(!alreadyHasExtension(filename, FritzingPartExtension)) {
 			filename += guid;
@@ -604,7 +604,7 @@ bool PartsEditorMainWindow::saveAsAux(const QString & fileName) {
 
     m_partUpdated = true;
 
-    m_fileName = fileName;
+    setFileName(fileName);
     //setCurrentFile(fileName);
 
    // mark the stack clean so we update the window dirty flag
@@ -664,7 +664,7 @@ ModelPartShared* PartsEditorMainWindow::createModelPartShared() {
 }
 
 void PartsEditorMainWindow::cleanUp() {
-	bool decUntitled = m_fileName.startsWith(untitledFileName());
+	bool decUntitled = m_fwFilename.startsWith(untitledFileName());
 	if(decUntitled) {
 		if(m_lastOpened == this) {
 			UntitledPartIndex -= m_closedBeforeCount;
@@ -691,7 +691,7 @@ void PartsEditorMainWindow::closeEvent(QCloseEvent *event) {
 		cleanUp();
 		QMainWindow::closeEvent(event);
 		if(m_partUpdated) {
-			emit partUpdated(m_fileName, m_id, !m_savedAsNewPart &&
+			emit partUpdated(m_fwFilename, m_id, !m_savedAsNewPart &&
 				(m_connsInfo->connectorsCountChanged() || m_views->connectorsPosOrSizeChanged())
 			);
 		}

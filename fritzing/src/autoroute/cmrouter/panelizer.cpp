@@ -1226,12 +1226,12 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
 			mainWindow->copperFill();
 		}
 
-		mainWindow->saveAsShareable(path);
+		mainWindow->saveAsShareable(path, true);
 	}
 	else {
 		QRectF r = boardItem->sceneBoundingRect();
 		logoItem->setPos(r.right() + 10, r.top());
-		mainWindow->saveAsShareable(path);
+		mainWindow->saveAsShareable(path, true);
 		DebugDialog::debug(QString("\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"
 									"unable to place inscription in %1\n"
 									"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n").arg(path));

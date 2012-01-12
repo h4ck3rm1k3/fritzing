@@ -45,12 +45,14 @@ const QString FolderUtils::LockFileName = "___lockfile___.txt";
 
 FolderUtils::FolderUtils() {
 	m_openSaveFolder = ___emptyString___;
-	m_folders << "/bins" 
+	m_folders 
+		<< "/bins" 
 		<< "/partfactory"
 		<< "/parts/user" << "/parts/contrib"
 		<< "/parts/svg/user/icon" << "/parts/svg/user/breadboard" << "/parts/svg/user/schematic" << "/parts/svg/user/pcb"
 		<< "/parts/svg/contrib/icon" << "/parts/svg/contrib/breadboard" << "/parts/svg/contrib/schematic" << "/parts/svg/contrib/pcb"
-		<< "/backup";
+		<< "/backup" 
+		<< "/fzz";
 }
 
 FolderUtils::~FolderUtils() {

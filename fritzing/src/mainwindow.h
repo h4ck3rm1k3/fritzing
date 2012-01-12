@@ -86,7 +86,7 @@ public:
     MainWindow(QFile & fileToLoad);
 	~MainWindow();
 
-    void load(const QString & fileName, bool setAsLastOpened, bool addToRecent, const QString & displayName);
+    void mainLoad(const QString & fileName, const QString & displayName);
 	bool loadWhich(const QString & fileName, bool setAsLastOpened, bool addToRecent, bool dontAsk);
 	void notClosableForAWhile();
 	QAction *raiseWindowAction();
@@ -115,12 +115,12 @@ public:
 	// if we consider a part as the smallest ("atomic") entity inside
 	// fritzing, then this functions may help with the bundle tasks
 	// on the complex entities: sketches, bins, modules (?)
-	void saveBundledNonAtomicEntity(QString &filename, const QString &extension, Bundler *bundler, const QList<ModelPart*> &partsToSave, bool askForFilename);
+	void saveBundledNonAtomicEntity(QString &filename, const QString &extension, Bundler *bundler, const QList<ModelPart*> &partsToSave, bool askForFilename, const QString & destFolderPath, bool saveModel);
 	void loadBundledNonAtomicEntity(const QString &filename, Bundler *bundler, bool addToBin, bool dontAsk);
-	void saveAsShareable(const QString & path);
+	void saveAsShareable(const QString & path, bool saveModel);
 
 	
-	void setCurrentFile(const QString &fileName, bool addToRecent, bool recovered, const QString & backupName);
+	void setCurrentFile(const QString &fileName, bool addToRecent, bool recovered, bool setAsLastOpened, const QString & backupName);
 	void setRecovered(bool);
 	void setReportMissingModules(bool);
 	QList<SketchWidget *> sketchWidgets();
@@ -165,7 +165,7 @@ public slots:
 	void swapObsolete();
 
 protected slots:
-	void load();
+	void mainLoad();
 	void openRecentOrExampleFile();
     void print();
     void doExport();
@@ -264,7 +264,6 @@ protected slots:
 	void selectAllJumperItems();
 	void selectAllVias();
 
-	void saveBundledSketch();
 	void shareOnline();
 	void saveBundledPart(const QString &moduleId=___emptyString___);
 	void saveBundledAux(ModelPart *mp, const QDir &destFolder);
@@ -376,7 +375,6 @@ protected:
 	QString getExtensionString();
 	QStringList getExtensions();
 	const QString defaultSaveFolder();
-	const QString & fileName();
 	bool undoStackIsEmpty();
 
 	void createTraceMenuActions();
@@ -518,7 +516,6 @@ protected:
 	QAction *m_saveAsAct;
 	QAction *m_pageSetupAct;
 	QAction *m_printAct;
-	QAction *m_saveAsBundledAct;
 	QAction *m_shareOnlineAct;
 
 	QAction * m_launchExternalProcessAct;
@@ -722,12 +719,15 @@ protected:
 	bool m_orderFabEnabled;		
 	SwapTimer m_swapTimer;
 	bool m_closeSilently;
+	QString m_fzzFolder;
+	QHash<QString, class QtLockedFile *> m_fzzFiles;
 
 public:
 	static int RestartNeeded;
 	static int AutosaveTimeoutMinutes;
 	static bool AutosaveEnabled;
 	static QString BackupFolder;
+
 
 protected:
 	static const QString UntitledSketchName;

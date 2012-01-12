@@ -56,12 +56,14 @@ FritzingWindow::FritzingWindow(const QString &untitledFileName, int &untitledFil
 	// Let's set the icon
 	this->setWindowIcon(QIcon(QPixmap(":resources/images/fritzing_icon.png")));
 
-	m_fileName = untitledFileName;
+	QString fn = untitledFileName;
 
 	if(untitledFileCount > 1) {
-		m_fileName += " " + QString::number(untitledFileCount);
+		fn += " " + QString::number(untitledFileCount);
 	}
-	m_fileName += fileExt;
+	fn += fileExt;
+	setFileName(fn);
+
 	untitledFileCount++;
 
 	setTitle();
@@ -79,26 +81,26 @@ void FritzingWindow::createCloseAction() {
 
 void FritzingWindow::setTitle() {
 	setWindowTitle(tr("%1 - %2")
-		.arg(QFileInfo(m_fileName).fileName()+(m_readOnly?ReadOnlyPlaceholder:"")+QtFunkyPlaceholder)
+		.arg(QFileInfo(m_fwFilename).fileName()+(m_readOnly?ReadOnlyPlaceholder:"")+QtFunkyPlaceholder)
 		.arg(fritzingTitle()));
 }
 
 // returns true if the user wanted to save the file
 bool FritzingWindow::save() {
 	bool result;
-	if (FolderUtils::isEmptyFileName(m_fileName, untitledFileName())) {
+	if (FolderUtils::isEmptyFileName(m_fwFilename, untitledFileName())) {
 		result = saveAs();
 	} else if (m_readOnly) {
 		result = saveAs();
 	} else {
-		result = saveAsAux(m_fileName);
+		result = saveAsAux(m_fwFilename);
 	}
 
 	return result;
 }
 
 bool FritzingWindow::saveAs() {
-	return saveAs(m_fileName, m_readOnly);
+	return saveAs(m_fwFilename, m_readOnly);
 }
 
 bool FritzingWindow::save(const QString & filename, bool readOnly) {
@@ -188,7 +190,7 @@ bool FritzingWindow::alreadyHasExtension(const QString &fileName, const QString 
 
 bool FritzingWindow::beforeClosing(bool showCancel) {
 	if (this->isWindowModified()) {
-		QMessageBox::StandardButton reply = beforeClosingMessage(m_fileName, showCancel);
+		QMessageBox::StandardButton reply = beforeClosingMessage(m_fwFilename, showCancel);
      	if (reply == QMessageBox::Save) {
      		return save();
     	} 
@@ -218,7 +220,7 @@ QMessageBox::StandardButton FritzingWindow::beforeClosingMessage(const QString &
     }
     messageBox.setStandardButtons(buttons);
     messageBox.setDefaultButton(QMessageBox::Save);
-    if (m_fileName.startsWith(untitledFileName())) {
+    if (m_fwFilename.startsWith(untitledFileName())) {
         messageBox.setButtonText(QMessageBox::Save, tr("Save..."));
     }
 	else {
@@ -247,8 +249,12 @@ const QString FritzingWindow::fritzingTitle() {
 	return ___fritzingTitle___;
 }
 
-const QString & FritzingWindow::fileName() {
-	return m_fileName;
+const QString &  FritzingWindow::fileName() {
+	return m_fwFilename;
+}
+
+void FritzingWindow::setFileName(const QString & filename) {
+	m_fwFilename = filename;
 }
 
 void FritzingWindow::notClosableForAWhile() {

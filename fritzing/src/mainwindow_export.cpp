@@ -613,11 +613,11 @@ bool MainWindow::saveAsAux(const QString & fileName) {
 	undoStackCleanChanged(true);
 
 	m_statusBar->showMessage(tr("Saved '%1'").arg(fileName), 2000);
-    setCurrentFile(fileName, true, false, "");
+    setCurrentFile(fileName, true, false, true, "");
 
-	if(m_restarting && m_fileName != ___emptyString___) {
+	if(m_restarting && m_fwFilename != ___emptyString___) {
 		QSettings settings;
-		settings.setValue("lastOpenSketch",m_fileName);
+		settings.setValue("lastOpenSketch",m_fwFilename);
 	}
 
    // mark the stack clean so we update the window dirty flag
@@ -636,10 +636,22 @@ void MainWindow::saveAsAuxAux(const QString & fileName) {
 	connect(m_sketchModel->root(), SIGNAL(startSaveInstances(const QString &, ModelPart *, QXmlStreamWriter &)),
 		this, SLOT(startSaveInstancesSlot(const QString &, ModelPart *, QXmlStreamWriter &)), Qt::DirectConnection);
 
-	m_sketchModel->save(fileName, false);
+	QDir dir(this->m_fzzFolder);
+	QStringList nameFilters("*" + FritzingSketchExtension);
+	QFileInfoList fileList = dir.entryInfoList(nameFilters, QDir::Files | QDir::NoSymLinks);
+	foreach (QFileInfo fileInfo, fileList) {
+		QFile file(fileInfo.absoluteFilePath());
+		file.remove();
+	}
+
+	QString fzName = dir.absoluteFilePath(QFileInfo(fileName).completeBaseName() + FritzingSketchExtension); 
+	m_sketchModel->save(fzName, false);
+
+	saveAsShareable(fileName, false);
 
 	disconnect(m_sketchModel->root(), SIGNAL(startSaveInstances(const QString &, ModelPart *, QXmlStreamWriter &)),
 			   this, SLOT(startSaveInstancesSlot(const QString &, ModelPart *, QXmlStreamWriter &)));
+
 
 	QApplication::restoreOverrideCursor();
 }
@@ -656,11 +668,6 @@ void MainWindow::createExportActions() {
 	m_saveAsAct->setShortcut(tr("Shift+Ctrl+S"));
 	m_saveAsAct->setStatusTip(tr("Save the current sketch"));
 	connect(m_saveAsAct, SIGNAL(triggered()), this, SLOT(saveAs()));
-
-	m_saveAsBundledAct = new QAction(tr("Save As Shareable..."), this);
-	m_saveAsBundledAct->setShortcut(tr("Alt+Ctrl+S"));
-	m_saveAsBundledAct->setStatusTip(tr("Export current sketch and its non-core parts"));
-	connect(m_saveAsBundledAct, SIGNAL(triggered()), this, SLOT(saveBundledSketch()));
 
 	m_shareOnlineAct = new QAction(tr("Share online..."), this);
 	m_shareOnlineAct->setStatusTip(tr("Post a project to the Fritzing website"));
@@ -951,8 +958,8 @@ void MainWindow::exportBOM() {
 
 	QString bom = bomTemplate
 		.arg("Fritzing Bill of Materials")
-		.arg(QFileInfo(m_fileName).fileName())
-		.arg(m_fileName)
+		.arg(QFileInfo(m_fwFilename).fileName())
+		.arg(m_fwFilename)
 		.arg(QDateTime::currentDateTime().toString("dddd, MMMM d yyyy, hh:mm:ss"))
 		.arg(assemblyString)
 		.arg(shoppingListString)
@@ -1014,7 +1021,7 @@ void MainWindow::exportNetlist() {
 	doc.setContent(QString("<?xml version='1.0' encoding='UTF-8'?>\n") + TextUtils::CreatedWithFritzingXmlComment);
 	QDomElement netlist = doc.createElement("netlist");
 	doc.appendChild(netlist);
-	netlist.setAttribute("sketch", QFileInfo(m_fileName).fileName());
+	netlist.setAttribute("sketch", QFileInfo(m_fwFilename).fileName());
     netlist.setAttribute("date", QDateTime::currentDateTime().toString());
 
 	// TODO: filter out 'ignore' connectors
@@ -1174,13 +1181,13 @@ void MainWindow::exportToGerber() {
 	FileProgressDialog * fileProgressDialog = exportProgress();
 
 	FolderUtils::setOpenSaveFolder(exportDir);
-	GerberGenerator::exportToGerber(m_fileName, exportDir, board, m_pcbGraphicsView, true);
+	GerberGenerator::exportToGerber(m_fwFilename, exportDir, board, m_pcbGraphicsView, true);
 	m_statusBar->showMessage(tr("Sketch exported to Gerber"), 2000);
 
 	delete fileProgressDialog;
 }
 
 void MainWindow::exportToGerber(const QString & exportDir) {
-	GerberGenerator::exportToGerber(m_fileName, exportDir, NULL, m_pcbGraphicsView, false);
+	GerberGenerator::exportToGerber(m_fwFilename, exportDir, NULL, m_pcbGraphicsView, false);
 }
 

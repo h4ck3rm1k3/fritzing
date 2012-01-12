@@ -1006,6 +1006,7 @@ void FApplication::createUserDataStoreFolderStructure() {
     copyBin(BinManager::MyPartsBinLocation, BinManager::MyPartsBinTemplateLocation);
     copyBin(BinManager::SearchBinLocation, BinManager::SearchBinTemplateLocation);
 	PartFactory::initFolder();
+
 }
 
 void FApplication::copyBin(const QString & dest, const QString & source) {
@@ -1274,7 +1275,7 @@ QList<MainWindow *> FApplication::loadLastOpenSketch() {
     DebugDialog::debug(QString("Loading last open sketch %1").arg(lastSketchPath));
     settings.remove("lastOpenSketch");				// clear the preference, in case the load crashes
     MainWindow *mainWindow = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, lastSketchPath, true);
-    mainWindow->load(lastSketchPath, true, true, "");
+    mainWindow->loadWhich(lastSketchPath, true, true, "");
     sketches << mainWindow;
     settings.setValue("lastOpenSketch", lastSketchPath);	// the load works, so restore the preference
 	return sketches;
@@ -1307,7 +1308,7 @@ QList<MainWindow *> FApplication::recoverBackups()
 {	
 
 	QFileInfoList backupList;
-	QStringList filters("*.fz");
+	QStringList filters("*" + FritzingSketchExtension);
 	FolderUtils::checkLockedFiles("backup", backupList, filters, m_lockedFiles, false);
 
 	QList<MainWindow*> recoveredSketches;
@@ -1325,8 +1326,8 @@ QList<MainWindow *> FApplication::recoverBackups()
 			QString backupName = item->data(0, Qt::UserRole).value<QString>();
 			QString originalPath = item->data(1, Qt::UserRole).value<QString>();
  			currentRecoveredSketch->setRecovered(true);
-			currentRecoveredSketch->load(backupName, false, false, originalPath);		
-            currentRecoveredSketch->setCurrentFile(originalPath, false, true, backupName);
+			currentRecoveredSketch->mainLoad(backupName, originalPath);		
+            currentRecoveredSketch->setCurrentFile(originalPath, false, true, false, backupName);
             currentRecoveredSketch->setWindowModified(true);
             currentRecoveredSketch->showAllFirstTimeHelp(false);
             recoveredSketches << currentRecoveredSketch;
@@ -1429,7 +1430,7 @@ void FApplication::runExampleService()
 
 void FApplication::runExampleService(QDir & dir) {
 	QStringList nameFilters;
-	nameFilters << "*.fz";
+	nameFilters << ("*" + FritzingSketchExtension);
 	QFileInfoList fileList = dir.entryInfoList(nameFilters, QDir::Files | QDir::NoSymLinks);
 	foreach (QFileInfo fileInfo, fileList) {
 		QString path = fileInfo.absoluteFilePath();

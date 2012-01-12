@@ -280,7 +280,7 @@ int GerberGenerator::doEnd(const QString & svg, int boardLayers, const QString &
 
 bool GerberGenerator::saveEnd(const QString & layerName, const QString & exportDir, const QString & prefix, const QString & suffix, bool displayMessageBoxes, SVG2gerber & gerber)
 {
-    QString outname = exportDir + "/" +  QFileInfo(prefix).fileName().remove(FritzingSketchExtension) + suffix;
+    QString outname = exportDir + "/" +  QFileInfo(prefix).completeBaseName() + suffix;
     QFile out(outname);
 	if (!out.open(QIODevice::WriteOnly | QIODevice::Text)) {
 		displayMessage(QObject::tr("%1 file export failure (2)").arg(layerName), displayMessageBoxes);

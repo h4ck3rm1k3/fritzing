@@ -766,9 +766,11 @@ void ResizableBoard::hoverMoveEvent( QGraphicsSceneHoverEvent * event ) {
 		case ResizableBoard::TOP_LEFT:
 		case ResizableBoard::TOP_RIGHT:
 		case ResizableBoard::BOTTOM_LEFT:
+			//DebugDialog::debug("setting scale cursor");
 			cursor = *CursorMaster::ScaleCursor;
 			break;
-		case ResizableBoard::NO_CORNER:
+		default:
+			//DebugDialog::debug("setting other cursor");
 			cursor = Qt::ArrowCursor;
 			break;
 	}

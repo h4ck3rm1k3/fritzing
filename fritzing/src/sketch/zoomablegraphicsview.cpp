@@ -27,6 +27,7 @@ $Date$
 #include <QWheelEvent>
 #include <QScrollBar>
 #include <QSettings>
+#include <QGLWidget>
 
 #include "zoomablegraphicsview.h"
 #include "../utils/zoomslider.h"
@@ -57,6 +58,7 @@ ZoomableGraphicsView::ZoomableGraphicsView( QWidget * parent )
 			m_wheelMapping = ScrollPrimary;
 		}
 	}
+	setViewport(new QGLWidget);
 }
 
 void ZoomableGraphicsView::wheelEvent(QWheelEvent* event) {

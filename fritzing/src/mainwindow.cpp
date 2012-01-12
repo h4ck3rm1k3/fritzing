@@ -92,6 +92,10 @@ $Date$
 
 ///////////////////////////////////////////////
 
+#define ZIP_PART QString("part.")
+#define ZIP_SVG  QString("svg.")
+
+///////////////////////////////////////////////
 
 SwapTimer::SwapTimer() : QTimer() 
 {
@@ -252,6 +256,11 @@ void MainWindow::init(PaletteModel * paletteModel, ReferenceModel *refModel) {
 	if (m_fileProgressDialog) {
 		m_fileProgressDialog->setValue(2);
 	}
+
+	FolderUtils::initLockedFiles("fzz", m_fzzFolder, m_fzzFiles);
+	QFileInfoList backupList;
+	QStringList filters;
+	FolderUtils::checkLockedFiles("fzz", backupList, filters, m_fzzFiles, true);
 
 	// all this belongs in viewLayer.xml
 	m_breadboardGraphicsView = new BreadboardSketchWidget(ViewIdentifierClass::BreadboardView, this);
@@ -442,6 +451,11 @@ MainWindow::~MainWindow()
 		delete linkedFile;
 	}
 	m_linkedProgramFiles.clear();
+
+	if (!m_fzzFolder.isEmpty()) {
+		FolderUtils::releaseLockedFiles(m_fzzFolder, m_fzzFiles);
+		FolderUtils::rmdir(m_fzzFolder);
+	}
 }					   
 
 void MainWindow::showNavigator() {
@@ -603,16 +617,21 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 }
 
 
-void MainWindow::setCurrentFile(const QString &fileName, bool addToRecent, bool recovered, const QString & backupName) {
-	m_fileName = fileName;
+void MainWindow::setCurrentFile(const QString &filename, bool addToRecent, bool recovered, bool setAsLastOpened, const QString & backupName) {
+	setFileName(filename);
+
+	if(setAsLastOpened) {
+		QSettings settings;
+		settings.setValue("lastOpenSketch",filename);
+	}
 
     // If this is an untitled sketch, increment the untitled sketch number
     // to something reasonable.
 	if (recovered) {
-		if (fileName.startsWith(untitledFileName())) {
-			DebugDialog::debug(QString("Comparing untitled documents: %1 %2").arg(fileName).arg(untitledFileName()));
+		if (filename.startsWith(untitledFileName())) {
+			DebugDialog::debug(QString("Comparing untitled documents: %1 %2").arg(filename).arg(untitledFileName()));
 			QRegExp regexp("\\d+");
-			int ix = regexp.indexIn(fileName);
+			int ix = regexp.indexIn(filename);
 			int untitledSketchNumber = ix >= 0 ? regexp.cap(0).toInt() : 1;
 			untitledSketchNumber++;
 			DebugDialog::debug(QString("%1 untitled documents open, currently thinking %2").arg(untitledSketchNumber).arg(UntitledSketchIndex));
@@ -621,7 +640,7 @@ void MainWindow::setCurrentFile(const QString &fileName, bool addToRecent, bool 
 		else {
 			// sketch files aren't actually set to read-only
 			QString examplesPath = FolderUtils::getApplicationSubFolderPath("sketches");
-			if (fileName.contains(examplesPath, Qt::CaseInsensitive)) {
+			if (filename.contains(examplesPath, Qt::CaseInsensitive)) {
 				// If the file is read-only be sure to set this
 				setReadOnly(true);
 			}
@@ -638,8 +657,8 @@ void MainWindow::setCurrentFile(const QString &fileName, bool addToRecent, bool 
 	if(addToRecent) {
 		QSettings settings;
 		QStringList files = settings.value("recentFileList").toStringList();
-		files.removeAll(fileName);
-		files.prepend(fileName);
+		files.removeAll(filename);
+		files.prepend(filename);
 		while (files.size() > MaxRecentFiles)
 			files.removeLast();
 
@@ -1035,9 +1054,9 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 bool MainWindow::whatToDoWithAlienFiles() {
 	if (m_alienFiles.size() > 0) {
 		QMessageBox::StandardButton reply;
-		reply = QMessageBox::question(this, tr("Save %1").arg(QFileInfo(m_fileName).baseName()),
+		reply = QMessageBox::question(this, tr("Save %1").arg(QFileInfo(m_fwFilename).baseName()),
 						 m_alienPartsMsg
-						 .arg(QFileInfo(m_fileName).baseName()),
+						 .arg(QFileInfo(m_fwFilename).baseName()),
 						 QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
 		// TODO: translate button text
 		if (reply == QMessageBox::Yes) {
@@ -1163,15 +1182,11 @@ int &MainWindow::untitledFileCount() {
 }
 
 const QString MainWindow::fileExtension() {
-	return FritzingSketchExtension;
+	return FritzingBundleExtension;
 }
 
 const QString MainWindow::defaultSaveFolder() {
 	return FolderUtils::openSaveFolder();
-}
-
-const QString & MainWindow::fileName() {
-	return m_fileName;
 }
 
 bool MainWindow::undoStackIsEmpty() {
@@ -1186,29 +1201,14 @@ void MainWindow::setInfoViewOnHover(bool infoViewOnHover) {
 	m_binManager->setInfoViewOnHover(infoViewOnHover);
 }
 
-#define ZIP_PART QString("part.")
-#define ZIP_SVG  QString("svg.")
-
-void MainWindow::saveBundledSketch() {
-	bool wasModified = isWindowModified();
-	bool prevSaveBtnState = m_saveAct->isEnabled();
-	saveBundledNonAtomicEntity(
-		m_fileName, FritzingBundleExtension, this,
-		m_sketchModel->root()->getAllNonCoreParts(), true
-	);
-	m_saveAct->setEnabled(prevSaveBtnState);
-	setWindowModified(wasModified);
-	setTitle();
-}
-
-void MainWindow::saveAsShareable(const QString & path)
+void MainWindow::saveAsShareable(const QString & path, bool saveModel)
 {
 	QString filename = path;
-	saveBundledNonAtomicEntity(filename, FritzingBundleExtension, this, m_sketchModel->root()->getAllNonCoreParts(), false);
+	saveBundledNonAtomicEntity(filename, FritzingBundleExtension, this, m_sketchModel->root()->getAllNonCoreParts(), false, m_fzzFolder, saveModel);
 }
 
 
-void MainWindow::saveBundledNonAtomicEntity(QString &filename, const QString &extension, Bundler *bundler, const QList<ModelPart*> &partsToSave, bool askForFilename) {
+void MainWindow::saveBundledNonAtomicEntity(QString &filename, const QString &extension, Bundler *bundler, const QList<ModelPart*> &partsToSave, bool askForFilename, const QString & destFolderPath, bool saveModel) {
 	QString fileExt;
 	QString path = defaultSaveFolder() + "/" + QFileInfo(filename).fileName()+"z";
 	QString bundledFileName = askForFilename 
@@ -1225,26 +1225,37 @@ void MainWindow::saveBundledNonAtomicEntity(QString &filename, const QString &ex
 
 	ProcessEventBlocker::processEvents();
 
-	QDir destFolder = QDir::temp();
-	FolderUtils::createFolderAnCdIntoIt(destFolder, FolderUtils::getRandText());
-	QString dirToRemove = destFolder.path();
+	QDir destFolder;
+	QString dirToRemove;
+	if (destFolderPath.isEmpty()) {
+		destFolder = QDir::temp();
+		FolderUtils::createFolderAnCdIntoIt(destFolder, FolderUtils::getRandText());
+		dirToRemove = destFolder.path();
+	}
+	else {
+		destFolder = QDir(destFolderPath);
+	}
 
 	QString aux = QFileInfo(bundledFileName).fileName();
 	QString destSketchPath = // remove the last "z" from the extension
 			destFolder.path()+"/"+aux.left(aux.size()-1);
 	DebugDialog::debug("saving entity temporarily to "+destSketchPath);
 
-	for (int i = 0; i < m_linkedProgramFiles.count(); i++) {
-		LinkedFile * linkedFile = m_linkedProgramFiles.at(i);
-		QFileInfo fileInfo(linkedFile->filename);
-		QFile file(linkedFile->filename);
-		file.copy(destFolder.absoluteFilePath(fileInfo.fileName()));
+	if (extension.compare(FritzingBundleExtension) == 0) {
+		for (int i = 0; i < m_linkedProgramFiles.count(); i++) {
+			LinkedFile * linkedFile = m_linkedProgramFiles.at(i);
+			QFileInfo fileInfo(linkedFile->filename);
+			QFile file(linkedFile->filename);
+			file.copy(destFolder.absoluteFilePath(fileInfo.fileName()));
+		}
 	}
 
-	QString prevFileName = filename;
-	ProcessEventBlocker::processEvents();
-	bundler->saveAsAux(destSketchPath);
-	filename = prevFileName;
+	if (saveModel) {
+		QString prevFileName = filename;
+		ProcessEventBlocker::processEvents();
+		bundler->saveAsAux(destSketchPath);
+		filename = prevFileName;
+	}
 
 	foreach(ModelPart* mp, partsToSave) {
 		saveBundledAux(mp, destFolder);
@@ -1260,11 +1271,48 @@ void MainWindow::saveBundledNonAtomicEntity(QString &filename, const QString &ex
 		);
 	}
 
-	FolderUtils::rmdir(dirToRemove);
+	if (!dirToRemove.isEmpty()) {
+		FolderUtils::rmdir(dirToRemove);
+	}
 }
 
 void MainWindow::loadBundledSketch(const QString &fileName, bool dontAsk) {
-	loadBundledNonAtomicEntity(fileName, this, /*addToBin*/true, dontAsk);
+
+	Q_UNUSED(dontAsk);
+	
+	if(!FolderUtils::unzipTo(fileName, m_fzzFolder)) {
+		QMessageBox::warning(
+			this,
+			tr("Fritzing"),
+			tr("Unable to open '%1'").arg(fileName)
+		);
+
+		return;
+	}
+
+	QDir dir(m_fzzFolder);
+
+	QStringList namefilters;
+	namefilters << "*"+FritzingSketchExtension;
+	QFileInfoList entryInfoList = dir.entryInfoList(namefilters);
+	if (entryInfoList.count() == 0) {
+		QMessageBox::warning(
+			this,
+			tr("Fritzing"),
+			tr("No Sketch found in '%1'").arg(fileName)
+		);
+
+		return;
+	}
+
+	QFileInfo sketchInfo = entryInfoList[0];
+
+	QString sketchName = dir.absoluteFilePath(sketchInfo.fileName());
+
+	QList<ModelPart*> mps = moveToPartsFolder(dir, this, false);
+	// the bundled itself
+	this->mainLoad(sketchName, "");
+	setCurrentFile(fileName, true, false, true, "");
 }
 
 void MainWindow::loadBundledNonAtomicEntity(const QString &fileName, Bundler* bundler, bool addToBin, bool dontAsk) {
@@ -1364,9 +1412,10 @@ bool MainWindow::preloadBundledAux(QDir &unzipDir, bool dontAsk)
 bool MainWindow::loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps) {
 
 	Q_UNUSED(unzipDir);
-        Q_UNUSED(mps);
+    Q_UNUSED(mps);
 
-	this->load(m_bundledSketchName, true, true, "");
+	this->mainLoad(m_bundledSketchName, "");
+	setCurrentFile(m_bundledSketchName, true, false, true, "");
 
 	if (m_linkedProgramFiles.count() > 0) {
 		// since the temporary dir containing the program files is about to be deleted
@@ -1486,14 +1535,13 @@ void MainWindow::saveBundledPart(const QString &moduleId) {
 	DebugDialog::debug("saving part temporarily to "+destPartPath);
 
 	bool wasModified = isWindowModified();
-	QString prevFileName = m_fileName;
+	//QString prevFileName = m_fileName;
 	//saveAsAux(destPartPath);
-	m_fileName = prevFileName;
+	//m_fileName = prevFileName;
 	setWindowModified(wasModified);
 	setTitle();
 
 	saveBundledAux(mp, destFolder);
-
 
 	if(!FolderUtils::createZipAndSaveTo(destFolder, bundledFileName)) {
 		QMessageBox::warning(
@@ -1712,18 +1760,18 @@ void MainWindow::activateWindowAux() {
 
 void MainWindow::updateRaiseWindowAction() {
 	QString actionText;
-	QFileInfo fileInfo(m_fileName);
+	QFileInfo fileInfo(m_fwFilename);
 	if(fileInfo.exists()) {
-		int lastSlashIdx = m_fileName.lastIndexOf("/");
-		int beforeLastSlashIdx = m_fileName.left(lastSlashIdx).lastIndexOf("/");
+		int lastSlashIdx = m_fwFilename.lastIndexOf("/");
+		int beforeLastSlashIdx = m_fwFilename.left(lastSlashIdx).lastIndexOf("/");
 		actionText = beforeLastSlashIdx > -1 && lastSlashIdx > -1 ? "..." : "";
-		actionText += m_fileName.right(m_fileName.size()-beforeLastSlashIdx-1);
+		actionText += m_fwFilename.right(m_fwFilename.size()-beforeLastSlashIdx-1);
 	} else {
-		actionText = m_fileName;
+		actionText = m_fwFilename;
 	}
 	m_raiseWindowAct->setText(actionText);
-	m_raiseWindowAct->setToolTip(m_fileName);
-	m_raiseWindowAct->setStatusTip("raise \""+m_fileName+"\" window");
+	m_raiseWindowAct->setToolTip(m_fwFilename);
+	m_raiseWindowAct->setStatusTip("raise \""+m_fwFilename+"\" window");
 }
 
 QSizeGrip *MainWindow::sizeGrip() {
@@ -2327,7 +2375,7 @@ bool MainWindow::save() {
 	bool result = FritzingWindow::save();
 	if (result) {
 		QSettings settings;
-		settings.setValue("lastOpenSketch", m_fileName);
+		settings.setValue("lastOpenSketch", m_fwFilename);
 	}
 	return result;
 }
@@ -2336,7 +2384,7 @@ bool MainWindow::saveAs() {
 	bool result = FritzingWindow::saveAs();
 	if (result) {
 		QSettings settings;
-		settings.setValue("lastOpenSketch", m_fileName);
+		settings.setValue("lastOpenSketch", m_fwFilename);
 	}
 	return result;
 }
@@ -2400,8 +2448,8 @@ void  MainWindow::backupSketch() {
     if (m_autosaveNeeded && !m_undoStack->isClean()) {
         m_autosaveNeeded = false;			// clear this now in case the save takes a really long time
 
-        DebugDialog::debug(QString("%1 autosaved as %2").arg(m_fileName).arg(m_backupFileNameAndPath));
-        statusBar()->showMessage(tr("Backing up '%1'").arg(m_fileName), 2000);
+        DebugDialog::debug(QString("%1 autosaved as %2").arg(m_fwFilename).arg(m_backupFileNameAndPath));
+        statusBar()->showMessage(tr("Backing up '%1'").arg(m_fwFilename), 2000);
 		ProcessEventBlocker::processEvents();
 		m_backingUp = true;
 		saveAsAuxAux(m_backupFileNameAndPath);

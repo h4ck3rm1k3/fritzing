@@ -379,7 +379,7 @@ void PartsBinPaletteWidget::saveBundledBin() {
 	bool wasModified = m_isDirty;
 	m_manager->mainWindow()->saveBundledNonAtomicEntity(
 		m_fileName, FritzingBundledBinExtension, this,
-		m_model->root()->getAllNonCoreParts(), true
+		m_model->root()->getAllNonCoreParts(), true, "", true
 	);
 	setDirty(wasModified);
 	saveAsLastBin();

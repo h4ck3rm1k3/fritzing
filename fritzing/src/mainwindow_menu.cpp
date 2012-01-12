@@ -95,7 +95,7 @@ bool sortSketchDescriptors(SketchDescriptor * s1, SketchDescriptor * s2){
 void MainWindow::closeIfEmptySketch(MainWindow* mw) {
 	int cascFactorX; int cascFactorY;
 	// close empty sketch window if user opens from a file
-	if (FolderUtils::isEmptyFileName(mw->m_fileName, untitledFileName()) && mw->undoStackIsEmpty()) {
+	if (FolderUtils::isEmptyFileName(mw->m_fwFilename, untitledFileName()) && mw->undoStackIsEmpty()) {
 		QTimer::singleShot(0, mw, SLOT(close()) );
 		cascFactorX = 0;
 		cascFactorY = 0;
@@ -107,7 +107,7 @@ void MainWindow::closeIfEmptySketch(MainWindow* mw) {
 	mw->show();
 }
 
-void MainWindow::load() {
+void MainWindow::mainLoad() {
 	QString path;
 	// if it's the first time load is called use Documents folder
 	if(m_firstOpen){
@@ -165,20 +165,31 @@ bool MainWindow::loadWhich(const QString & fileName, bool setAsLastOpened, bool 
 
 	bool result = false;
     if(fileName.endsWith(FritzingSketchExtension)) {
-    	load(fileName, setAsLastOpened, addToRecent, "");
+		QString fileExt;
+		QString bundledFileName = FolderUtils::getSaveFileName(this, tr("The .fz format is obsolete. Please specify an .fzz file name to save to"), fileName + "z", tr("Fritzing (*%1)").arg(FritzingBundleExtension), &fileExt);
+		if (bundledFileName.isEmpty()) return false;
+
+    	mainLoad(fileName, "");
 		result = true;
-    } else if(fileName.endsWith(FritzingBundleExtension)) {
+
+		saveAsShareable(bundledFileName, true);
+		setCurrentFile(bundledFileName, addToRecent, false, setAsLastOpened, "");
+    } 
+	else if(fileName.endsWith(FritzingBundleExtension)) {
     	loadBundledSketch(fileName, dontAsk);
 		result = true;
-    } else if (
+    } 
+	else if (
     		fileName.endsWith(FritzingBinExtension)
     		|| fileName.endsWith(FritzingBundledBinExtension)
     	) {
 		m_binManager->load(fileName);
 		result = true;
-	} else if (fileName.endsWith(FritzingPartExtension)) {
+	} 
+	else if (fileName.endsWith(FritzingPartExtension)) {
 		notYetImplemented(tr("directly loading parts"));
-	}  else if (fileName.endsWith(FritzingBundledPartExtension)) {
+	}  
+	else if (fileName.endsWith(FritzingBundledPartExtension)) {
 		loadBundledPart(fileName);
 		result = true;
 	}
@@ -190,7 +201,7 @@ bool MainWindow::loadWhich(const QString & fileName, bool setAsLastOpened, bool 
 	return result;
 }
 
-void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addToRecent, const QString & displayName) {
+void MainWindow::mainLoad(const QString & fileName, const QString & displayName) {
 
 	if (m_fileProgressDialog) {
 		m_fileProgressDialog->setMaximum(200);
@@ -258,12 +269,6 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 		m_fileProgressDialog->setValue(198);
 	}
 
-	if(setAsLastOpened) {
-		QSettings settings;
-		settings.setValue("lastOpenSketch",fileName);
-	}
-
-	setCurrentFile(fileName, addToRecent, false, "");
 }
 
 void MainWindow::copy() {
@@ -367,7 +372,7 @@ void MainWindow::tipsAndTricks()
 
 void MainWindow::createActions()
 {
-	m_raiseWindowAct = new QAction(m_fileName, this);
+	m_raiseWindowAct = new QAction(m_fwFilename, this);
 	m_raiseWindowAct->setCheckable(true);
 	connect( m_raiseWindowAct, SIGNAL(triggered()), this, SLOT(raiseAndActivate()));
 	updateRaiseWindowAction();
@@ -390,7 +395,7 @@ void MainWindow::createFileMenuActions() {
 	m_openAct = new QAction(tr("&Open..."), this);
 	m_openAct->setShortcut(tr("Ctrl+O"));
 	m_openAct->setStatusTip(tr("Open a sketch"));
-	connect(m_openAct, SIGNAL(triggered()), this, SLOT(load()));
+	connect(m_openAct, SIGNAL(triggered()), this, SLOT(mainLoad()));
 
 	createOpenRecentMenu();
 	createOpenExampleMenu();
@@ -521,13 +526,13 @@ void MainWindow::populateMenuFromFolderContent(QMenu * parentMenu, const QString
 	if(content.size() > 0) {
 		for(int i=0; i < content.size(); i++) {
 			QString currFile = content.at(i);
-			QString currFilePath = currDir->absolutePath()+"/"+currFile;
+			QString currFilePath = currDir->absoluteFilePath(currFile);
 			if(QFileInfo(currFilePath).isDir()) {
 				QMenu * currMenu = new QMenu(currFile, parentMenu);
 				parentMenu->addMenu(currMenu);
 				populateMenuFromFolderContent(currMenu, currFilePath);
 			} else {
-				QString actionText = currFile.remove(FritzingSketchExtension);
+				QString actionText = QFileInfo(currFilePath).completeBaseName();
 				m_openExampleActions << actionText;
 				QAction * currAction = new QAction(actionText, this);
 				currAction->setData(currFilePath);
@@ -947,7 +952,6 @@ void MainWindow::createMenus()
     m_fileMenu->addAction(m_closeAct);
     m_fileMenu->addAction(m_saveAct);
     m_fileMenu->addAction(m_saveAsAct);
-    m_fileMenu->addAction(m_saveAsBundledAct);
     m_fileMenu->addAction(m_shareOnlineAct);
 
 	if (m_orderFabEnabled) {
@@ -2032,7 +2036,7 @@ void MainWindow::openRecentOrExampleFile() {
 		MainWindow* mw = newMainWindow(m_paletteModel, m_refModel, action->data().toString(), true);
 		bool readOnly = m_openExampleActions.contains(action->text());
 		mw->setReadOnly(readOnly);
-		mw->load(filename,!readOnly,!readOnly,"");
+		mw->loadWhich(filename,!readOnly,!readOnly,"");
 		mw->clearFileProgressDialog();
 		closeIfEmptySketch(mw);
 	}
@@ -2705,15 +2709,15 @@ void MainWindow::changeWireColor(bool checked) {
 }
 
 QString MainWindow::constructFileName(const QString & differentiator, const QString & suffix) {
-	QString filename = QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension);
-	filename += "_" + (differentiator.isEmpty() ? m_currentGraphicsView->getShortName() : differentiator);
-	return filename + suffix;
+	QString fn = QFileInfo(m_fwFilename).completeBaseName();
+	fn += "_" + (differentiator.isEmpty() ? m_currentGraphicsView->getShortName() : differentiator);
+	return fn + suffix;
 }
 
 void MainWindow::startSaveInstancesSlot(const QString & fileName, ModelPart *, QXmlStreamWriter & streamWriter) {
 	
 	if (m_backingUp) {
-		streamWriter.writeTextElement("originalFileName", m_fileName);
+		streamWriter.writeTextElement("originalFileName", m_fwFilename);
 	}
 
 	if (m_linkedProgramFiles.count() > 0) {
@@ -3021,7 +3025,7 @@ void MainWindow::swapObsolete(bool displayFeedback) {
 		QMessageBox::information(this, tr("Fritzing"), tr("Successfully updated %1 part(s).\n"
                                                           "Please check all views for potential side-effects.").arg(count) );
 	}
-	DebugDialog::debug(QString("updated %1 obsolete in %2").arg(count).arg(m_fileName));
+	DebugDialog::debug(QString("updated %1 obsolete in %2").arg(count).arg(m_fwFilename));
 }
 
 void MainWindow::throwFakeException() {
@@ -3047,7 +3051,7 @@ void MainWindow::openProgramWindow() {
 	connect(m_programWindow, SIGNAL(changeActivationSignal(bool, QWidget *)), qApp, SLOT(changeActivation(bool, QWidget *)), Qt::DirectConnection);
 	connect(m_programWindow, SIGNAL(destroyed(QObject *)), qApp, SLOT(topLevelWidgetDestroyed(QObject *)));
 
-	QFileInfo fileInfo(m_fileName);
+	QFileInfo fileInfo(m_fwFilename);
 	m_programWindow->setup(m_linkedProgramFiles, fileInfo.absoluteDir().absolutePath());
 	m_programWindow->setVisible(true);
 }

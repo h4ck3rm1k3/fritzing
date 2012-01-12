@@ -44,6 +44,7 @@ class FritzingWindow : public QMainWindow, public Bundler
 public:
 	FritzingWindow(const QString &untitledFileName, int &untitledFileCount, QString fileExt, QWidget * parent = 0, Qt::WFlags f = 0);
 	const QString &fileName();
+	void setFileName(const QString &);
 
 	virtual void notClosableForAWhile();
 	static bool alreadyHasExtension(const QString &fileName, const QString &extension=___emptyString___);
@@ -78,7 +79,7 @@ protected:
 
 protected:
 	class WaitPushUndoStack * m_undoStack;
-	QString m_fileName;
+	QString m_fwFilename;
 	bool m_readOnly;
 	QAction *m_closeAct;
 	QDir m_tempDir;

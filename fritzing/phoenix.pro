@@ -101,7 +101,7 @@ unix {
 }
 		
 ICON = resources/images/fritzing_icon.icns
-QT += core gui svg xml network sql #opengl
+QT += core gui svg xml network sql opengl
 
 RC_FILE = fritzing.rc
 RESOURCES += phoenixresources.qrc
