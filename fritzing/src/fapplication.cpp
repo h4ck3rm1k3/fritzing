@@ -1430,7 +1430,7 @@ void FApplication::runExampleService()
 
 void FApplication::runExampleService(QDir & dir) {
 	QStringList nameFilters;
-	nameFilters << ("*" + FritzingSketchExtension);
+	nameFilters << ("*" + FritzingBundleExtension);   //  FritzingSketchExtension
 	QFileInfoList fileList = dir.entryInfoList(nameFilters, QDir::Files | QDir::NoSymLinks);
 	foreach (QFileInfo fileInfo, fileList) {
 		QString path = fileInfo.absoluteFilePath();
@@ -1450,7 +1450,7 @@ void FApplication::runExampleService(QDir & dir) {
 		else {
 			mainWindow->selectAllObsolete(false);
 			mainWindow->swapObsolete(false);
-			mainWindow->saveAsAux(path + "z");
+			mainWindow->saveAsAux(path);    //   path + "z"
 			mainWindow->setCloseSilently(true);
 			mainWindow->close();
 		}

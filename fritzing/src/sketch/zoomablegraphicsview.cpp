@@ -58,7 +58,7 @@ ZoomableGraphicsView::ZoomableGraphicsView( QWidget * parent )
 			m_wheelMapping = ScrollPrimary;
 		}
 	}
-	//setViewport(new QGLWidget);
+	setViewport(new QGLWidget);
 }
 
 void ZoomableGraphicsView::wheelEvent(QWheelEvent* event) {
