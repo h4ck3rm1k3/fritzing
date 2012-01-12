@@ -191,6 +191,8 @@ void ResizableBoard::mousePressEvent(QGraphicsSceneMouseEvent * event)
 		case ResizableBoard::NO_CORNER:
 			Board::mousePressEvent(event);
 			return;
+        default:
+                break;
 	}
 
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
@@ -228,6 +230,8 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 			size.setWidth(size.width() - ds.x());
 			size.setHeight(size.height() - ds.y());
 			break;
+                default:
+                        break;
 	}
 
 	if (size.width() < minWidth()) size.setWidth(minWidth());
@@ -312,6 +316,8 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 				actual = mapToScene(size.width(), size.height());
 				desired = m_resizeStartBottomRight;
 				break;
+                        default:
+                                break;
 		}	
 
 		setPos(pos() + desired - actual);
