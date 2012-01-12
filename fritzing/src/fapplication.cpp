@@ -1450,7 +1450,7 @@ void FApplication::runExampleService(QDir & dir) {
 		else {
 			mainWindow->selectAllObsolete(false);
 			mainWindow->swapObsolete(false);
-			mainWindow->saveAsAux(path);
+			mainWindow->saveAsAux(path + "z");
 			mainWindow->setCloseSilently(true);
 			mainWindow->close();
 		}

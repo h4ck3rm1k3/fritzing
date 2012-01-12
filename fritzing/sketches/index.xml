@@ -1,45 +1,45 @@
 <fritzing-sketches>
 	<sketches>
-		<sketch id="555TouchSwitch" name="555 Touch Switch" src="core/555TouchSwitch.fz"/>
-		<sketch id="AnalogInputFSR" name="Force Sensor" src="core/AnalogInputFSR.fz"/>
-		<sketch id="AnalogInputOutput" name="Analog In/Out (Pot and LED)" src="core/AnalogInputOutput.fz"/>
-		<sketch id="AnalogInputPot" name="Potentiometer" src="core/AnalogInputPot.fz"/>
-		<sketch id="AnalogInputThermistor" name="Thermistor" src="core/AnalogInputThermistor.fz"/>
-		<sketch id="AnalogInputToServo" name="Servo (with Pot)" src="core/AnalogInputToServo.fz"/>
-		<sketch id="ArduinoISP" name="Arduino ISP" src="core/ArduinoISP.fz"/>
-		<sketch id="BarebonesArduino" name="Barebones Arduino" src="core/Arduino-no-FTDI.fz"/>
-		<sketch id="BarebonesArduinoStripboard" name="Barebones Arduino with Stripboard" src="core/Barebones Arduino (stripboard).fz"/>
-		<sketch id="Blink" name="Blink" src="core/Blink.fz"/>
-		<sketch id="Button" name="Button" src="core/Button.fz"/>
-		<sketch id="Countdown" name="Countdown (Rotary Encoder + 7 Segment Displays)" src="core/Countdown.fz"/>		
-		<sketch id="DC_motor_control" name="DC Motor" src="core/DC_motor_control.fz"/>
-		<sketch id="Knock" name="Knock (Piezo)" src="core/Knock.fz"/>
-		<sketch id="LCD" name="Liquid Crystal Display" src="core/LiquidCrystalDisplay.fz"/>
-		<sketch id="Loop" name="Loop" src="core/Loop.fz"/>
-		<sketch id="Melody" name="Melody" src="core/Melody.fz"/>
-		<sketch id="Mood-Light" name="Mood-Light" src="core/Mood-Light.fz"/>
-		<sketch id="MidiDrumKit" name="Midi Drum Kit" src="core/MidiDrumKit.fz"/>
-		<sketch id="npnPowerTransistor" name="NPN Power Transistor" src="core/npnPowerTransistor.fz"/>
-		<sketch id="Op_Amp" name="Operation Amplifier" src="core/Op-amp.fz"/>
-		<sketch id="Optocoupler" name="Optocoupler" src="core/Optocoupler.fz"/>
-		<sketch id="Photocell" name="Photocell" src="core/Photocell.fz"/>
-		<sketch id="Parking" name="Parking Assistant (Infrared)" src="core/Parking-Assistant.fz"/>
-		<sketch id="CurvyParking" name="Curvy Parking Assistant (Infrared)" src="core/Curvy-Parking-Assistant.fz"/>
-		<sketch id="Relay" name="Relay" src="core/Relay.fz"/>
-		<sketch id="RGB_LED" name="Colored Light (RGB LED)" src="core/RGB-LED.fz"/>
-		<sketch id="Color-Fader" name="Color Fader (RGB LED)" src="core/color-fader.fz"/>
-		<sketch id="Shift_Register" name="Shift Register" src="core/Shift_Register.fz"/>
-		<sketch id="Shift_Register_2x" name="Shift Register 2x" src="core/Shift_Register_2x.fz"/>
-		<sketch id="Stepper_Motor" name="Stepper Motor" src="core/Stepper_Motor.fz"/>
-		<sketch id="TemperaturSensorLM35" name="Temperatur Sensing" src="core/TemperaturSensorLM35.fz"/>
-		<sketch id="earthquakeDetection" name="Earthquake Detection" src="core/earthquakeDetection.fz"/>		
-		<sketch id="TiltSwitch" name="Tilt Switch" src="core/TiltSwitch.fz"/>
-		<sketch id="Touch_Switch" name="Touch Switch" src="core/TouchSwitch.fz"/>
-		<sketch id="TrafficLight" name="Traffic Light" src="core/TrafficLight.fz"/>
-		<sketch id="VirtualColorMixer" name="Virtual Color Mixer" src="core/VirtualColorMixer.fz"/>
-		<sketch id="VoltageRegulator" name="Voltage Regulator" src="core/VoltageRegulator_7800series.fz"/>
-		<sketch id="VoltageRegulatorSwitch" name="Voltage Regulator with Switch" src="core/VoltageRegulator_with_switch.fz"/>
-		<sketch id="Window_Alarm" name="Window Alarm" src="core/Window_Alarm.fz"/>
+		<sketch id="555TouchSwitch" name="555 Touch Switch" src="core/555TouchSwitch.fzz"/>
+		<sketch id="AnalogInputFSR" name="Force Sensor" src="core/AnalogInputFSR.fzz"/>
+		<sketch id="AnalogInputOutput" name="Analog In/Out (Pot and LED)" src="core/AnalogInputOutput.fzz"/>
+		<sketch id="AnalogInputPot" name="Potentiometer" src="core/AnalogInputPot.fzz"/>
+		<sketch id="AnalogInputThermistor" name="Thermistor" src="core/AnalogInputThermistor.fzz"/>
+		<sketch id="AnalogInputToServo" name="Servo (with Pot)" src="core/AnalogInputToServo.fzz"/>
+		<sketch id="ArduinoISP" name="Arduino ISP" src="core/ArduinoISP.fzz"/>
+		<sketch id="BarebonesArduino" name="Barebones Arduino" src="core/Arduino-no-FTDI.fzz"/>
+		<sketch id="BarebonesArduinoStripboard" name="Barebones Arduino with Stripboard" src="core/Barebones Arduino (stripboard).fzz"/>
+		<sketch id="Blink" name="Blink" src="core/Blink.fzz"/>
+		<sketch id="Button" name="Button" src="core/Button.fzz"/>
+		<sketch id="Countdown" name="Countdown (Rotary Encoder + 7 Segment Displays)" src="core/Countdown.fzz"/>		
+		<sketch id="DC_motor_control" name="DC Motor" src="core/DC_motor_control.fzz"/>
+		<sketch id="Knock" name="Knock (Piezo)" src="core/Knock.fzz"/>
+		<sketch id="LCD" name="Liquid Crystal Display" src="core/LiquidCrystalDisplay.fzz"/>
+		<sketch id="Loop" name="Loop" src="core/Loop.fzz"/>
+		<sketch id="Melody" name="Melody" src="core/Melody.fzz"/>
+		<sketch id="Mood-Light" name="Mood-Light" src="core/Mood-Light.fzz"/>
+		<sketch id="MidiDrumKit" name="Midi Drum Kit" src="core/MidiDrumKit.fzz"/>
+		<sketch id="npnPowerTransistor" name="NPN Power Transistor" src="core/npnPowerTransistor.fzz"/>
+		<sketch id="Op_Amp" name="Operation Amplifier" src="core/Op-amp.fzz"/>
+		<sketch id="Optocoupler" name="Optocoupler" src="core/Optocoupler.fzz"/>
+		<sketch id="Photocell" name="Photocell" src="core/Photocell.fzz"/>
+		<sketch id="Parking" name="Parking Assistant (Infrared)" src="core/Parking-Assistant.fzz"/>
+		<sketch id="CurvyParking" name="Curvy Parking Assistant (Infrared)" src="core/Curvy-Parking-Assistant.fzz"/>
+		<sketch id="Relay" name="Relay" src="core/Relay.fzz"/>
+		<sketch id="RGB_LED" name="Colored Light (RGB LED)" src="core/RGB-LED.fzz"/>
+		<sketch id="Color-Fader" name="Color Fader (RGB LED)" src="core/color-fader.fzz"/>
+		<sketch id="Shift_Register" name="Shift Register" src="core/Shift_Register.fzz"/>
+		<sketch id="Shift_Register_2x" name="Shift Register 2x" src="core/Shift_Register_2x.fzz"/>
+		<sketch id="Stepper_Motor" name="Stepper Motor" src="core/Stepper_Motor.fzz"/>
+		<sketch id="TemperaturSensorLM35" name="Temperatur Sensing" src="core/TemperaturSensorLM35.fzz"/>
+		<sketch id="earthquakeDetection" name="Earthquake Detection" src="core/earthquakeDetection.fzz"/>		
+		<sketch id="TiltSwitch" name="Tilt Switch" src="core/TiltSwitch.fzz"/>
+		<sketch id="Touch_Switch" name="Touch Switch" src="core/TouchSwitch.fzz"/>
+		<sketch id="TrafficLight" name="Traffic Light" src="core/TrafficLight.fzz"/>
+		<sketch id="VirtualColorMixer" name="Virtual Color Mixer" src="core/VirtualColorMixer.fzz"/>
+		<sketch id="VoltageRegulator" name="Voltage Regulator" src="core/VoltageRegulator_7800series.fzz"/>
+		<sketch id="VoltageRegulatorSwitch" name="Voltage Regulator with Switch" src="core/VoltageRegulator_with_switch.fzz"/>
+		<sketch id="Window_Alarm" name="Window Alarm" src="core/Window_Alarm.fzz"/>
 	</sketches>
 	<categories>
 		<category name="Arduino">

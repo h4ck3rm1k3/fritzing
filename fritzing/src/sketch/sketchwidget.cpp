@@ -121,7 +121,6 @@ const int AutoRepeatDelay = 750;
 SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
 {
-    //setViewport(new QGLWidget);
 	m_rubberBandLegWasEnabled = m_curvyWires = false;
 	m_middleMouseIsPressed = false;
 	m_arrowTimer.setParent(this);
