@@ -629,7 +629,7 @@ bool Panelizer::openWindows(QDomElement & board, QHash<QString, QString> & fzzFi
 
 		FolderUtils::setOpenSaveFolderAux(fzDir.absolutePath());
 
-		if (!mainWindow->loadWhich(path, false, false, true)) {
+		if (!mainWindow->loadWhich(path, false, false, "")) {
 			DebugDialog::debug(QString("failed to load '%1'").arg(path));
 			return false;
 		}
@@ -1056,7 +1056,7 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
 
 	FolderUtils::setOpenSaveFolderAux(fzDir.absolutePath());
 
-	if (!mainWindow->loadWhich(path, false, false, true)) {
+	if (!mainWindow->loadWhich(path, false, false, "")) {
 		DebugDialog::debug(QString("failed to load '%1'").arg(path));
 		return mainWindow;
 	}

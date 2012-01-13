@@ -537,7 +537,7 @@ void FApplication::runGerberService()
 		m_started = true;
 
 		FolderUtils::setOpenSaveFolderAux(m_outputFolder);
-		if (mainWindow->loadWhich(filepath, false, false, true)) {
+		if (mainWindow->loadWhich(filepath, false, false, "")) {
 			mainWindow->exportToGerber(m_outputFolder);
 		}
 
@@ -777,7 +777,7 @@ void FApplication::finish()
 
 void FApplication::loadNew(QString path) {
 	MainWindow * mw = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, path, true);
-	if (!mw->loadWhich(path, false, true, false)) {
+	if (!mw->loadWhich(path, false, true, "")) {
 		mw->close();
 	}
 	mw->clearFileProgressDialog();
@@ -786,7 +786,7 @@ void FApplication::loadNew(QString path) {
 void FApplication::loadOne(MainWindow * mw, QString path, int loaded) {
 	if (loaded == 0) {
 		mw->showFileProgressDialog(path);
-		mw->loadWhich(path, true, true, false);
+		mw->loadWhich(path, true, true, "");
 	}
 	else {
 		loadNew(path);
@@ -1228,7 +1228,7 @@ void FApplication::loadSomething(bool firstRun, const QString & prevVersion) {
         foreach (QString filename, m_filesToLoad) {
             DebugDialog::debug(QString("Loading non-service file %1").arg(filename));
             MainWindow *mainWindow = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, filename, true);
-            mainWindow->loadWhich(filename, true, true, false);
+            mainWindow->loadWhich(filename, true, true, "");
             sketchesToLoad << mainWindow;
         }
 	}
@@ -1319,22 +1319,40 @@ QList<MainWindow *> FApplication::recoverBackups()
     QList<QTreeWidgetItem*> fileItems = recoveryDialog.getFileList();
     DebugDialog::debug(QString("Recovering %1 files from recoveryDialog").arg(fileItems.size()));
     foreach (QTreeWidgetItem * item, fileItems) {
+		QString backupName = item->data(0, Qt::UserRole).value<QString>();
         if (result == QDialog::Accepted && item->isSelected()) {
 			QString originalBaseName = item->text(0);
             DebugDialog::debug(QString("Loading recovered sketch %1").arg(originalBaseName));
-            MainWindow *currentRecoveredSketch = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, originalBaseName, true);
-			QString backupName = item->data(0, Qt::UserRole).value<QString>();
+			
 			QString originalPath = item->data(1, Qt::UserRole).value<QString>();
- 			currentRecoveredSketch->setRecovered(true);
-			currentRecoveredSketch->mainLoad(backupName, originalPath);		
-            currentRecoveredSketch->setCurrentFile(originalPath, false, true, false, backupName);
-            currentRecoveredSketch->setWindowModified(true);
-            currentRecoveredSketch->showAllFirstTimeHelp(false);
-            recoveredSketches << currentRecoveredSketch;
+			QString fileExt;
+			QString bundledFileName = FolderUtils::getSaveFileName(NULL, tr("Please specify an .fzz file name to save to (cancel will delete the backup)"), originalPath, tr("Fritzing (*%1)").arg(FritzingBundleExtension), &fileExt);
+			if (!bundledFileName.isEmpty()) {
+				MainWindow *currentRecoveredSketch = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, originalBaseName, true);
+    			currentRecoveredSketch->mainLoad(backupName, bundledFileName);
+				currentRecoveredSketch->saveAsShareable(bundledFileName, true);
+				currentRecoveredSketch->setCurrentFile(bundledFileName, true, true);
+				currentRecoveredSketch->showAllFirstTimeHelp(false);
+				recoveredSketches << currentRecoveredSketch;
+
+				/*
+				if (originalPath.startsWith(untitledFileName())) {
+					DebugDialog::debug(QString("Comparing untitled documents: %1 %2").arg(filename).arg(untitledFileName()));
+					QRegExp regexp("\\d+");
+					int ix = regexp.indexIn(filename);
+					int untitledSketchNumber = ix >= 0 ? regexp.cap(0).toInt() : 1;
+					untitledSketchNumber++;
+					DebugDialog::debug(QString("%1 untitled documents open, currently thinking %2").arg(untitledSketchNumber).arg(UntitledSketchIndex));
+					UntitledSketchIndex = UntitledSketchIndex >= untitledSketchNumber ? UntitledSketchIndex : untitledSketchNumber;
+				}
+				*/
+
+
+
+			}
         }
-        else {
-			QFile::remove(item->data(0, Qt::UserRole).value<QString>());
-        }
+
+		QFile::remove(backupName);
     }
 
 	return recoveredSketches;
@@ -1444,7 +1462,7 @@ void FApplication::runExampleService(QDir & dir) {
 
 		FolderUtils::setOpenSaveFolderAux(dir.absolutePath());
 
-		if (!mainWindow->loadWhich(path, false, false, true)) {
+		if (!mainWindow->loadWhich(path, false, false, "")) {
 			DebugDialog::debug(QString("failed to load"));
 		}
 		else {

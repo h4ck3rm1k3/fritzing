@@ -165,7 +165,6 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel, QW
 	m_currentGraphicsView = NULL;
 	m_comboboxChanged = false;
 	m_helper = NULL;
-	m_recovered = false;
 	m_smdOneSideWarningGiven = false;
 
     // Add a timer for autosaving
@@ -175,7 +174,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel, QW
 
 	resize(MainWindowDefaultWidth, MainWindowDefaultHeight);
 
-	m_backupFileNameAndPath = MainWindow::BackupFolder + "/" + FolderUtils::getRandText() + fileExtension();
+	m_backupFileNameAndPath = MainWindow::BackupFolder + "/" + FolderUtils::getRandText() + FritzingSketchExtension;
     // Connect the undoStack to our autosave stuff
     connect(m_undoStack, SIGNAL(indexChanged(int)), this, SLOT(autosaveNeeded(int)));
     connect(m_undoStack, SIGNAL(cleanChanged(bool)), this, SLOT(undoStackCleanChanged(bool)));
@@ -617,39 +616,13 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 }
 
 
-void MainWindow::setCurrentFile(const QString &filename, bool addToRecent, bool recovered, bool setAsLastOpened, const QString & backupName) {
+void MainWindow::setCurrentFile(const QString &filename, bool addToRecent, bool setAsLastOpened) {
 	setFileName(filename);
 
 	if(setAsLastOpened) {
 		QSettings settings;
 		settings.setValue("lastOpenSketch",filename);
 	}
-
-    // If this is an untitled sketch, increment the untitled sketch number
-    // to something reasonable.
-	if (recovered) {
-		if (filename.startsWith(untitledFileName())) {
-			DebugDialog::debug(QString("Comparing untitled documents: %1 %2").arg(filename).arg(untitledFileName()));
-			QRegExp regexp("\\d+");
-			int ix = regexp.indexIn(filename);
-			int untitledSketchNumber = ix >= 0 ? regexp.cap(0).toInt() : 1;
-			untitledSketchNumber++;
-			DebugDialog::debug(QString("%1 untitled documents open, currently thinking %2").arg(untitledSketchNumber).arg(UntitledSketchIndex));
-			UntitledSketchIndex = UntitledSketchIndex >= untitledSketchNumber ? UntitledSketchIndex : untitledSketchNumber;
-		}
-		else {
-			// sketch files aren't actually set to read-only
-			QString examplesPath = FolderUtils::getApplicationSubFolderPath("sketches");
-			if (filename.contains(examplesPath, Qt::CaseInsensitive)) {
-				// If the file is read-only be sure to set this
-				setReadOnly(true);
-			}
-		}
-
-		// If this was a sketch restored from the backup directory, preserve the
-		// backup file name
-        m_backupFileNameAndPath = backupName;
-    }
 
 	updateRaiseWindowAction();
 	setTitle();
@@ -1190,7 +1163,7 @@ const QString MainWindow::defaultSaveFolder() {
 }
 
 bool MainWindow::undoStackIsEmpty() {
-	return m_undoStack->count() == 0 && !m_recovered;
+	return m_undoStack->count() == 0;
 }
 
 void MainWindow::setInfoViewOnHover(bool infoViewOnHover) {
@@ -1276,10 +1249,8 @@ void MainWindow::saveBundledNonAtomicEntity(QString &filename, const QString &ex
 	}
 }
 
-void MainWindow::loadBundledSketch(const QString &fileName, bool dontAsk) {
+void MainWindow::loadBundledSketch(const QString &fileName) {
 
-	Q_UNUSED(dontAsk);
-	
 	if(!FolderUtils::unzipTo(fileName, m_fzzFolder)) {
 		QMessageBox::warning(
 			this,
@@ -1312,7 +1283,7 @@ void MainWindow::loadBundledSketch(const QString &fileName, bool dontAsk) {
 	QList<ModelPart*> mps = moveToPartsFolder(dir, this, false);
 	// the bundled itself
 	this->mainLoad(sketchName, "");
-	setCurrentFile(fileName, true, false, true, "");
+	setCurrentFile(fileName, true, true);
 }
 
 void MainWindow::loadBundledNonAtomicEntity(const QString &fileName, Bundler* bundler, bool addToBin, bool dontAsk) {
@@ -1415,7 +1386,7 @@ bool MainWindow::loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps) {
     Q_UNUSED(mps);
 
 	this->mainLoad(m_bundledSketchName, "");
-	setCurrentFile(m_bundledSketchName, true, false, true, "");
+	setCurrentFile(m_bundledSketchName, true, true);
 
 	if (m_linkedProgramFiles.count() > 0) {
 		// since the temporary dir containing the program files is about to be deleted
@@ -2452,7 +2423,9 @@ void  MainWindow::backupSketch() {
         statusBar()->showMessage(tr("Backing up '%1'").arg(m_fwFilename), 2000);
 		ProcessEventBlocker::processEvents();
 		m_backingUp = true;
-		saveAsAuxAux(m_backupFileNameAndPath);
+		connectStartSave(true);
+		m_sketchModel->save(m_backupFileNameAndPath, false);
+		connectStartSave(false);
 		m_backingUp = false;
     }
 }
@@ -2502,10 +2475,6 @@ void MainWindow::setAutosave(int minutes, bool enabled) {
 			mainWindow->m_autosaveTimer.start(AutosaveTimeoutMinutes * 60 * 1000);
 		}
 	}
-}
-
-void MainWindow::setRecovered(bool recovered) {
-	m_recovered = recovered;
 }
 
 bool MainWindow::hasLinkedProgramFiles(const QString & filename, QStringList & linkedProgramFiles) 

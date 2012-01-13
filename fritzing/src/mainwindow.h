@@ -87,7 +87,7 @@ public:
 	~MainWindow();
 
     void mainLoad(const QString & fileName, const QString & displayName);
-	bool loadWhich(const QString & fileName, bool setAsLastOpened, bool addToRecent, bool dontAsk);
+	bool loadWhich(const QString & fileName, bool setAsLastOpened, bool addToRecent, const QString & displayName);
 	void notClosableForAWhile();
 	QAction *raiseWindowAction();
 	QSizeGrip *sizeGrip();
@@ -120,8 +120,7 @@ public:
 	void saveAsShareable(const QString & path, bool saveModel);
 
 	
-	void setCurrentFile(const QString &fileName, bool addToRecent, bool recovered, bool setAsLastOpened, const QString & backupName);
-	void setRecovered(bool);
+	void setCurrentFile(const QString &fileName, bool addToRecent, bool setAsLastOpened);
 	void setReportMissingModules(bool);
 	QList<SketchWidget *> sketchWidgets();
 	void setCloseSilently(bool);
@@ -267,7 +266,7 @@ protected slots:
 	void shareOnline();
 	void saveBundledPart(const QString &moduleId=___emptyString___);
 	void saveBundledAux(ModelPart *mp, const QDir &destFolder);
-	void loadBundledSketch(const QString &fileName, bool dontAsk);
+	void loadBundledSketch(const QString &fileName);
 	void loadBundledPart();
 
 	void binSaved(bool hasAlienParts);
@@ -449,6 +448,7 @@ protected:
 	void swapSelectedMap(const QString & family, const QString & prop, QMap<QString, QString> & currPropsMap, ItemBase *);
 	ModelPart * findReplacedby(ModelPart * originalModelPart);
 	void groundFillAux(bool fillGroundTraces);
+	void connectStartSave(bool connect);
 
 protected:
 	static void removeActionsStartingAt(QMenu *menu, int start=0);
@@ -712,7 +712,6 @@ protected:
 	QTimer m_autosaveTimer;
 	bool m_autosaveNeeded;
 	bool m_backingUp;
-	bool m_recovered;
 	QString m_bundledSketchName;
 	RoutingStatus m_routingStatus;
 	bool m_smdOneSideWarningGiven;

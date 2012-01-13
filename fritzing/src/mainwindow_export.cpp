@@ -613,7 +613,7 @@ bool MainWindow::saveAsAux(const QString & fileName) {
 	undoStackCleanChanged(true);
 
 	m_statusBar->showMessage(tr("Saved '%1'").arg(fileName), 2000);
-    setCurrentFile(fileName, true, false, true, "");
+    setCurrentFile(fileName, true, true);
 
 	if(m_restarting && m_fwFilename != ___emptyString___) {
 		QSettings settings;
@@ -633,8 +633,8 @@ bool MainWindow::saveAsAux(const QString & fileName) {
 
 void MainWindow::saveAsAuxAux(const QString & fileName) {
     QApplication::setOverrideCursor(Qt::WaitCursor);
-	connect(m_sketchModel->root(), SIGNAL(startSaveInstances(const QString &, ModelPart *, QXmlStreamWriter &)),
-		this, SLOT(startSaveInstancesSlot(const QString &, ModelPart *, QXmlStreamWriter &)), Qt::DirectConnection);
+
+	connectStartSave(true);
 
 	QDir dir(this->m_fzzFolder);
 	QStringList nameFilters("*" + FritzingSketchExtension);
@@ -649,9 +649,7 @@ void MainWindow::saveAsAuxAux(const QString & fileName) {
 
 	saveAsShareable(fileName, false);
 
-	disconnect(m_sketchModel->root(), SIGNAL(startSaveInstances(const QString &, ModelPart *, QXmlStreamWriter &)),
-			   this, SLOT(startSaveInstancesSlot(const QString &, ModelPart *, QXmlStreamWriter &)));
-
+	connectStartSave(false);
 
 	QApplication::restoreOverrideCursor();
 }
@@ -1191,3 +1189,14 @@ void MainWindow::exportToGerber(const QString & exportDir) {
 	GerberGenerator::exportToGerber(m_fwFilename, exportDir, NULL, m_pcbGraphicsView, false);
 }
 
+void MainWindow::connectStartSave(bool doConnect) {
+
+	if (doConnect) {
+		connect(m_sketchModel->root(), SIGNAL(startSaveInstances(const QString &, ModelPart *, QXmlStreamWriter &)),
+				this, SLOT(startSaveInstancesSlot(const QString &, ModelPart *, QXmlStreamWriter &)), Qt::DirectConnection);
+	}
+	else {
+		disconnect(m_sketchModel->root(), SIGNAL(startSaveInstances(const QString &, ModelPart *, QXmlStreamWriter &)),
+				this, SLOT(startSaveInstancesSlot(const QString &, ModelPart *, QXmlStreamWriter &)));
+	}
+}

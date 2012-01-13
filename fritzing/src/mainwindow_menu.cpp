@@ -151,12 +151,12 @@ void MainWindow::mainLoad() {
     file.close();
 
     MainWindow* mw = newMainWindow(m_paletteModel, m_refModel, fileName, true);
-	mw->loadWhich(fileName, true, true, false);
+	mw->loadWhich(fileName, true, true, "");
     mw->clearFileProgressDialog();
 	closeIfEmptySketch(mw);
 }
 
-bool MainWindow::loadWhich(const QString & fileName, bool setAsLastOpened, bool addToRecent, bool dontAsk)
+bool MainWindow::loadWhich(const QString & fileName, bool setAsLastOpened, bool addToRecent, const QString & displayName)
 {
 	if (!QFileInfo(fileName).exists()) {
 		QMessageBox::warning(NULL, tr("Fritzing"), tr("File '%1' not found").arg(fileName));
@@ -169,14 +169,14 @@ bool MainWindow::loadWhich(const QString & fileName, bool setAsLastOpened, bool 
 		QString bundledFileName = FolderUtils::getSaveFileName(this, tr("The .fz format is obsolete. Please specify an .fzz file name to save to"), fileName + "z", tr("Fritzing (*%1)").arg(FritzingBundleExtension), &fileExt);
 		if (bundledFileName.isEmpty()) return false;
 
-    	mainLoad(fileName, "");
+    	mainLoad(fileName, displayName);
 		result = true;
 
 		saveAsShareable(bundledFileName, true);
-		setCurrentFile(bundledFileName, addToRecent, false, setAsLastOpened, "");
+		setCurrentFile(bundledFileName, addToRecent, setAsLastOpened);
     } 
 	else if(fileName.endsWith(FritzingBundleExtension)) {
-    	loadBundledSketch(fileName, dontAsk);
+    	loadBundledSketch(fileName);
 		result = true;
     } 
 	else if (
