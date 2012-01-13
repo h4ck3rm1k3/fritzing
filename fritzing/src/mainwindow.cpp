@@ -1249,7 +1249,7 @@ void MainWindow::saveBundledNonAtomicEntity(QString &filename, const QString &ex
 	}
 }
 
-void MainWindow::loadBundledSketch(const QString &fileName) {
+void MainWindow::loadBundledSketch(const QString &fileName, bool addToRecent, bool setAsLastOpened) {
 
 	if(!FolderUtils::unzipTo(fileName, m_fzzFolder)) {
 		QMessageBox::warning(
@@ -1283,7 +1283,7 @@ void MainWindow::loadBundledSketch(const QString &fileName) {
 	QList<ModelPart*> mps = moveToPartsFolder(dir, this, false);
 	// the bundled itself
 	this->mainLoad(sketchName, "");
-	setCurrentFile(fileName, true, true);
+	setCurrentFile(fileName, addToRecent, setAsLastOpened);
 }
 
 void MainWindow::loadBundledNonAtomicEntity(const QString &fileName, Bundler* bundler, bool addToBin, bool dontAsk) {

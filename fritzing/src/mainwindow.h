@@ -266,7 +266,6 @@ protected slots:
 	void shareOnline();
 	void saveBundledPart(const QString &moduleId=___emptyString___);
 	void saveBundledAux(ModelPart *mp, const QDir &destFolder);
-	void loadBundledSketch(const QString &fileName);
 	void loadBundledPart();
 
 	void binSaved(bool hasAlienParts);
@@ -449,6 +448,7 @@ protected:
 	ModelPart * findReplacedby(ModelPart * originalModelPart);
 	void groundFillAux(bool fillGroundTraces);
 	void connectStartSave(bool connect);
+	void loadBundledSketch(const QString &fileName, bool addToRecent, bool setAsLastOpened);
 
 protected:
 	static void removeActionsStartingAt(QMenu *menu, int start=0);

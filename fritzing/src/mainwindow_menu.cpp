@@ -176,7 +176,7 @@ bool MainWindow::loadWhich(const QString & fileName, bool setAsLastOpened, bool 
 		setCurrentFile(bundledFileName, addToRecent, setAsLastOpened);
     } 
 	else if(fileName.endsWith(FritzingBundleExtension)) {
-    	loadBundledSketch(fileName);
+    	loadBundledSketch(fileName, addToRecent, setAsLastOpened);
 		result = true;
     } 
 	else if (
