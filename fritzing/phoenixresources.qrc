@@ -22,15 +22,7 @@
         <file>resources/images/aboutbox_CC.png</file>
         <file>resources/images/aboutbox_FHP.png</file>
         <file>resources/images/aboutbox_scrollfade.png</file>
-        <file>resources/images/new.png</file>
         <file>resources/images/watermark_fritzing_outline.svg</file>
-        <file>resources/images/print.png</file>
-        <file>resources/images/save.png</file>
-        <file>resources/images/undo.png</file>
-        <file>resources/images/add.png</file>
-        <file>resources/images/remove.png</file>
-        <file>resources/images/document-print.png</file>
-        <file>resources/images/applications-accessories.png</file>
         <file>resources/images/dot.png</file>
         <file>resources/images/fritzing_icon.png</file>
         <file>resources/images/breadboard_icon.png</file>
@@ -289,6 +281,7 @@
         <file>resources/bins/icons/SparkFun.png</file>
         <file>resources/bins/icons/Contrib.png</file>
         <file>resources/bins/icons/Parallax.png</file>
+        <file>resources/bins/icons/Temp.png</file>
 
 	<file>resources/templates/jumper_copper0LayerTemplate.txt</file>
         <file>resources/templates/jumper_jumperwiresLayerTemplate.txt</file>
