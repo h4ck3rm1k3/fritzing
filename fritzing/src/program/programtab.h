@@ -74,6 +74,7 @@ public:
 	const QString & extensionString();
 	bool readOnly();
 	void setClean();
+	void setDirty();
 	bool save(const QString & filename);
 	bool loadProgramFile(const QString & filename, const QString & altFilename, bool noUpdate);
     void print(QPrinter & printer);
@@ -84,6 +85,7 @@ public:
 	const QString & programmer();
 	const QString & language();
 	void setLanguage(const QString &, bool updateLink);
+	void appendToConsole(const QString &);
 
 public slots:
     void setLanguage(const QString &);

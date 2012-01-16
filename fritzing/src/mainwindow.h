@@ -379,8 +379,6 @@ protected:
 	void hideShowTraceMenu();
 
 	QList<ModelPart*> moveToPartsFolder(QDir &unzipDir, MainWindow* mw, bool addToBin=true);
-	bool loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps);
-	bool preloadBundledAux(QDir &unzipDir, bool dontAsk);
 	void copyToSvgFolder(const QFileInfo& file, const QString &destFolder = "contrib");
 	ModelPart* copyToPartsFolder(const QFileInfo& file, bool addToBin=true, const QString &destFolder="contrib");
 

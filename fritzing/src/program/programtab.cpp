@@ -526,6 +526,11 @@ void ProgramTab::setClean() {
 	textChanged();
 }
 
+void ProgramTab::setDirty() {
+	m_textEdit->document()->setModified(true);
+	textChanged();
+}
+
 void ProgramTab::save() {
 	emit wantToSave(m_tabWidget->currentIndex());
 }
@@ -807,4 +812,9 @@ void ProgramTab::enableProgramButton() {
 	}
 
 	m_programButton->setEnabled(enabled);
+}
+
+void ProgramTab::appendToConsole(const QString & text)
+{
+	m_console->append(text);
 }

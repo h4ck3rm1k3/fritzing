@@ -710,7 +710,11 @@ int FApplication::startup(bool firstRun)
 	QString prevVersion = settings.value("version").toString();
 	QString currVersion = Version::versionString();
 	if(prevVersion != currVersion) {
+		QVariant pid = settings.value("pid");
 		settings.clear();
+		if (!pid.isNull()) {
+			settings.setValue("pid", pid);
+		}
 	}
 
 	//bool fabEnabled = settings.value(ORDERFABENABLED, QVariant(false)).toBool();

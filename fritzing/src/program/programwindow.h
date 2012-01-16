@@ -43,9 +43,19 @@ $Date$
 #include "../fritzingwindow.h"
 
 struct LinkedFile {
-	QString filename;
+	enum FileFlag {
+		NoFlag = 0,
+		SameMachineFlag = 1,
+		ObsoleteFlag = 2,
+		InBundleFlag = 4,
+		ReadOnlyFlag = 8
+	};
+	Q_DECLARE_FLAGS(FileFlags, FileFlag)
+
+	QString linkedFilename;
 	QString language;
 	QString programmer;
+	FileFlags fileFlags;
 };
 
 class PTabWidget : public QTabWidget 

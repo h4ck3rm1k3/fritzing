@@ -43,6 +43,7 @@ bool PaletteModel::CreateAllPartsBinFile = false;  // now generating the all par
 
 bool PaletteModel::CreateNonCorePartsBinFile = false;
 bool PaletteModel::CreateContribPartsBinFile = true;
+bool PaletteModel::CreateTempPartsBinFile = true;
 
 static bool JustAppendAllPartsInstances = false;
 static bool FirstTime = true;
@@ -51,6 +52,7 @@ static bool FirstTimeWrite = true;
 QString PaletteModel::AllPartsBinFilePath = ___emptyString___;
 QString PaletteModel::NonCorePartsBinFilePath = ___emptyString___;
 QString PaletteModel::ContribPartsBinFilePath = ___emptyString___;
+QString PaletteModel::TempPartsBinFilePath = ___emptyString___;
 
 static QString FritzingContribPath;
 
@@ -101,6 +103,7 @@ void PaletteModel::initNames() {
 	AllPartsBinFilePath = FolderUtils::getApplicationSubFolderPath("bins")+"/allParts.dbg" + FritzingBinExtension;
 	NonCorePartsBinFilePath = FolderUtils::getUserDataStorePath("bins")+"/nonCoreParts" + FritzingBinExtension;
 	ContribPartsBinFilePath = FolderUtils::getUserDataStorePath("bins")+"/contribParts" + FritzingBinExtension;
+	TempPartsBinFilePath = FolderUtils::getUserDataStorePath("bins")+"/tempParts" + FritzingBinExtension;
 }
 
 ModelPart * PaletteModel::retrieveModelPart(const QString & moduleID) {
@@ -190,6 +193,7 @@ void PaletteModel::writeCommonBinsHeader() {
 	writeCommonBinsHeaderAux(CreateAllPartsBinFile, AllPartsBinFilePath, "All Parts");
 	writeCommonBinsHeaderAux(CreateNonCorePartsBinFile, NonCorePartsBinFilePath, "All my parts");
 	writeCommonBinsHeaderAux(CreateContribPartsBinFile, ContribPartsBinFilePath, "Contributed Parts");
+	writeCommonBinsHeaderAux(CreateTempPartsBinFile, TempPartsBinFilePath, "Temporary Parts");
 }
 
 void PaletteModel::writeCommonBinsHeaderAux(bool doIt, const QString &filename, const QString &binName) {
@@ -206,6 +210,7 @@ void PaletteModel::writeCommonBinsFooter() {
 	writeCommonBinsFooterAux(CreateAllPartsBinFile, AllPartsBinFilePath);
 	writeCommonBinsFooterAux(CreateNonCorePartsBinFile, NonCorePartsBinFilePath);
 	writeCommonBinsFooterAux(CreateContribPartsBinFile, ContribPartsBinFilePath);
+	writeCommonBinsFooterAux(CreateTempPartsBinFile, TempPartsBinFilePath);
 }
 
 void PaletteModel::writeCommonBinsFooterAux(bool doIt, const QString &filename) {

@@ -90,6 +90,8 @@ protected:
 	static QString NonCorePartsBinFilePath;
 	static bool CreateContribPartsBinFile;
 	static QString ContribPartsBinFilePath;
+	static bool CreateTempPartsBinFile;
+	static QString TempPartsBinFilePath;
 
 public:
 	static void initNames();

@@ -16,7 +16,7 @@
         <file>resources/images/splash/fab_slice5.png</file>
         <file>resources/images/splash/fab_slice6.png</file>
         <file>resources/images/splash/splash_screen_start.png</file>
-        <file>resources/images/splash/splash.xml</file>
+	<file>resources/images/splash/splash.xml</file>
 
         <file>resources/images/AboutBoxLogoShield.png</file>
         <file>resources/images/aboutbox_CC.png</file>

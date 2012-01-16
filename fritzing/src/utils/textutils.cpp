@@ -25,6 +25,8 @@ $Date$
 ********************************************************************/
 
 #include <QTextDocument>
+#include <QNetworkInterface>
+
 #include "textutils.h"
 #include "misc.h"
 //#include "../debugdialog.h"
@@ -1122,3 +1124,17 @@ QString TextUtils::removeSVGHeader(QString & string) {
 	string.remove(0, ix + 1);
 	return string;
 }
+
+
+QString TextUtils::getMacAddress()
+{
+	// http://stackoverflow.com/questions/7609953/obtaining-mac-address-on-windows-in-qt
+    foreach (QNetworkInterface interface, QNetworkInterface::allInterfaces())
+    {
+        // Return only the first non-loopback MAC Address
+        if (!(interface.flags() & QNetworkInterface::IsLoopBack))
+            return interface.hardwareAddress();
+    }
+    return QString();
+}
+

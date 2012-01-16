@@ -98,6 +98,7 @@ public:
 	static void replaceChildText(QDomDocument & doc, QDomNode & node, const QString & text);
 	static void replaceElementChildText(QDomDocument & doc, QDomElement & root, const QString & elementName, const QString & text);
 	static QString removeSVGHeader(QString & string);
+	static QString getMacAddress();
 
 public:
 	static const QRegExp FindWhitespace;

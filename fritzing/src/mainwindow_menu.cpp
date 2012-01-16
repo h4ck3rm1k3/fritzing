@@ -2715,20 +2715,21 @@ QString MainWindow::constructFileName(const QString & differentiator, const QStr
 }
 
 void MainWindow::startSaveInstancesSlot(const QString & fileName, ModelPart *, QXmlStreamWriter & streamWriter) {
-	
+	Q_UNUSED(fileName);
+
 	if (m_backingUp) {
 		streamWriter.writeTextElement("originalFileName", m_fwFilename);
 	}
 
 	if (m_linkedProgramFiles.count() > 0) {
-		QFileInfo fileInfo(fileName);
-		QDir dir = fileInfo.absoluteDir();
 		streamWriter.writeStartElement("programs");
+		QSettings settings;
+		streamWriter.writeAttribute("pid", settings.value("pid").toString());
 		foreach (LinkedFile * linkedFile, m_linkedProgramFiles) {
 			streamWriter.writeStartElement("program");
 			streamWriter.writeAttribute("language", linkedFile->language);
 			streamWriter.writeAttribute("programmer", linkedFile->programmer);
-			streamWriter.writeCharacters(dir.relativeFilePath(linkedFile->filename));
+			streamWriter.writeCharacters(linkedFile->linkedFilename);
 			streamWriter.writeEndElement();
 		}
 		streamWriter.writeEndElement();
@@ -2753,23 +2754,49 @@ void MainWindow::loadedRootSlot(const QString & fname, ModelBase *, QDomElement 
 	QDomElement programs = root.firstChildElement("programs");
 	if (programs.isNull()) return;
 
+	QString thatPid = programs.attribute("pid");
+	QSettings settings;
+	QString thisPid = settings.value("pid").toString();
+	bool sameMachine = !thisPid.isEmpty() && (thatPid.compare(thisPid) == 0);
 	QFileInfo fileInfo(fname);
+	QDir dir = fileInfo.absoluteDir();
 
 	QDomElement program = programs.firstChildElement("program");
 	while (!program.isNull()) {
+		bool obsolete = false;
+		bool inBundle = false;
 		QString text;
 		TextUtils::findText(program, text);
 		if (!text.isEmpty()) {
 			QString language = program.attribute("language");
 			QString programmer = program.attribute("programmer");
-			QDir dir = fileInfo.absoluteDir();
-			QFileInfo newFileInfo(text);
-			dir.cd(newFileInfo.dir().path());
-			QString path = dir.absoluteFilePath(newFileInfo.fileName());
+			QString path;
+			if (thatPid.isEmpty()) {
+				// pre 0.7.0 relative path
+				QFileInfo newFileInfo(text);
+				dir.cd(newFileInfo.dir().path());
+				path = dir.absoluteFilePath(newFileInfo.fileName());
+				obsolete = true;
+			}
+			else {
+				path = text;
+			}
+
 			LinkedFile * linkedFile = new LinkedFile;
-			linkedFile->filename = path;
+			QFileInfo info(path);
+			if (!(sameMachine && info.exists())) {
+				inBundle = true;
+				path = dir.absoluteFilePath(info.fileName());
+			}
+			linkedFile->linkedFilename = path;
 			linkedFile->language = language;
 			linkedFile->programmer = programmer;
+			linkedFile->fileFlags = LinkedFile::NoFlag;
+			if (sameMachine) linkedFile->fileFlags |= LinkedFile::SameMachineFlag;
+			if (obsolete) linkedFile->fileFlags |= LinkedFile::ObsoleteFlag;
+			if (inBundle) linkedFile->fileFlags |= LinkedFile::InBundleFlag;
+			if (this->m_readOnly) linkedFile->fileFlags |= LinkedFile::ReadOnlyFlag;
+			
 			m_linkedProgramFiles.append(linkedFile);
 		}
 		program = program.nextSiblingElement("program");
@@ -3066,7 +3093,7 @@ void MainWindow::linkToProgramFile(const QString & filename, const QString & lan
 	if (addLink && strong) {
 		bool gotOne = false;
 		foreach (LinkedFile * linkedFile, m_linkedProgramFiles) {
-			if (linkedFile->filename.compare(filename, sensitivity) == 0) {
+			if (linkedFile->linkedFilename.compare(filename, sensitivity) == 0) {
 				if (linkedFile->language != language) {
 					linkedFile->language = language;
 					this->setWindowModified(true);
@@ -3081,7 +3108,7 @@ void MainWindow::linkToProgramFile(const QString & filename, const QString & lan
 		}
 		if (!gotOne) {
 			LinkedFile * linkedFile = new LinkedFile;
-			linkedFile->filename = filename;
+			linkedFile->linkedFilename = filename;
 			linkedFile->language = language;
 			linkedFile->programmer = programmer;
 			m_linkedProgramFiles.append(linkedFile);
@@ -3092,7 +3119,7 @@ void MainWindow::linkToProgramFile(const QString & filename, const QString & lan
 	else {
 		for (int i = 0; i < m_linkedProgramFiles.count(); i++) {
 			LinkedFile * linkedFile = m_linkedProgramFiles.at(i);
-			if (linkedFile->filename.compare(filename, sensitivity) == 0) {
+			if (linkedFile->linkedFilename.compare(filename, sensitivity) == 0) {
 				if (strong) {
 					m_linkedProgramFiles.removeAt(i);
 					this->setWindowModified(true);

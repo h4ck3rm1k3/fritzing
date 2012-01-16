@@ -1211,14 +1211,14 @@ void MainWindow::saveBundledNonAtomicEntity(QString &filename, const QString &ex
 
 	QString aux = QFileInfo(bundledFileName).fileName();
 	QString destSketchPath = // remove the last "z" from the extension
-			destFolder.path()+"/"+aux.left(aux.size()-1);
+							 destFolder.path()+"/"+aux.left(aux.size()-1);
 	DebugDialog::debug("saving entity temporarily to "+destSketchPath);
 
 	if (extension.compare(FritzingBundleExtension) == 0) {
 		for (int i = 0; i < m_linkedProgramFiles.count(); i++) {
 			LinkedFile * linkedFile = m_linkedProgramFiles.at(i);
-			QFileInfo fileInfo(linkedFile->filename);
-			QFile file(linkedFile->filename);
+			QFileInfo fileInfo(linkedFile->linkedFilename);
+			QFile file(linkedFile->linkedFilename);
 			file.copy(destFolder.absoluteFilePath(fileInfo.fileName()));
 		}
 	}
@@ -1313,96 +1313,6 @@ void MainWindow::loadBundledNonAtomicEntity(const QString &fileName, Bundler* bu
 
 	FolderUtils::rmdir(unzipDirPath);
 }
-
-bool MainWindow::preloadBundledAux(QDir &unzipDir, bool dontAsk) 
-{
-	QStringList namefilters;
-	namefilters << "*"+FritzingSketchExtension;
-	QFileInfoList entryInfoList = unzipDir.entryInfoList(namefilters);
-	if (entryInfoList.count() == 0) return false;
-
-	QFileInfo sketchInfo = entryInfoList[0];
-	QStringList linkedProgramFiles;
-
-	QString sketchName = defaultSaveFolder() + "/" + sketchInfo.fileName();
-	hasLinkedProgramFiles(sketchInfo.filePath(), linkedProgramFiles);
-
-	if (dontAsk) {
-	}
-	else {
-		if (linkedProgramFiles.isEmpty()) {
-			QString fileExt;
-			sketchName = 
-				FolderUtils::getSaveFileName(
-					this,
-					tr("Please specify a location for the archived sketch"),
-					sketchName,
-					tr("Fritzing File (*%1)").arg(FritzingSketchExtension),
-					&fileExt
-				);
-			if (sketchName.isEmpty()) return false;
-		}
-		else {
-			// ask the user for a folder to store the sketch and program files
-			QString path = QFileDialog::getExistingDirectory(
-								this,
-								tr("Please choose a folder to save the archived sketch and program files"),
-								defaultSaveFolder(),
-								QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-			if (path.isEmpty()) return false;
-
-			sketchName = path + "/" + sketchInfo.fileName();
-		}
-	}
-
-	if (QFile(sketchName).exists()) {
-		// otherwise copy fails under windows
-		QFile::remove(sketchName);
-	}
-
-	if (!QFile::copy(sketchInfo.filePath(), sketchName)) {
-		QMessageBox::warning(
-			this,
-			tr("Fritzing"),
-			tr("Unable to save sketch to %1").arg(sketchName)
-		);
-		return false;
-	}
-
-	QDir sketchDir = QFileInfo(sketchName).absoluteDir();
-
-	foreach (QString fname, linkedProgramFiles) {
-		QFileInfo finfo(fname);
-		QFile::copy(unzipDir.absoluteFilePath(finfo.fileName()), sketchDir.absoluteFilePath(finfo.fileName()));
-	}
-
-	m_bundledSketchName = sketchName;
-	return true;
-}
-
-bool MainWindow::loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps) {
-
-	Q_UNUSED(unzipDir);
-    Q_UNUSED(mps);
-
-	this->mainLoad(m_bundledSketchName, "");
-	setCurrentFile(m_bundledSketchName, true, true);
-
-	if (m_linkedProgramFiles.count() > 0) {
-		// since the temporary dir containing the program files is about to be deleted
-		// update the names to where the new copy is
-		QFileInfo sketchInfo(m_bundledSketchName);
-		QDir newdir = sketchInfo.absoluteDir();
-		foreach (LinkedFile * linkedFile, m_linkedProgramFiles) {
-			QFileInfo p(linkedFile->filename);
-			linkedFile->filename = newdir.absoluteFilePath(p.fileName());
-		}
-	}
-
-	m_alienPartsMsg = tr("Do you want to keep the parts that were loaded with this shareable sketch %1?");
-	return true;
-}
-
 
 /*
 void MainWindow::loadBundledPartFromWeb() {

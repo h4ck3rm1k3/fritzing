@@ -93,6 +93,7 @@ QString BinManager::MyPartsBinTemplateLocation;
 QString BinManager::SearchBinLocation;
 QString BinManager::SearchBinTemplateLocation;
 QString BinManager::ContribPartsBinLocation;
+QString BinManager::TempPartsBinLocation;
 QString BinManager::CorePartsBinLocation;
 
 QString BinManager::StandardBinStyle = "background-color: gray;";
@@ -169,6 +170,9 @@ void BinManager::registerBin(PartsBinPaletteWidget* bin) {
 		bin->setAllowsChanges(false);
 	}
 	else if (bin->fileName().compare(ContribPartsBinLocation) == 0) {
+		bin->setAllowsChanges(false);
+	}
+	else if (bin->fileName().compare(TempPartsBinLocation) == 0) {
 		bin->setAllowsChanges(false);
 	}
 	else if (bin->fileName().contains(FolderUtils::getApplicationSubFolderPath("bins"))) {
@@ -771,12 +775,14 @@ void BinManager::initNames() {
     BinManager::SearchBinLocation = FolderUtils::getUserDataStorePath("bins")+"/search.fzb";
     BinManager::SearchBinTemplateLocation =":/resources/bins/search.fzb";
 	BinManager::ContribPartsBinLocation = FolderUtils::getUserDataStorePath("bins")+"/contribParts.fzb";
+	BinManager::TempPartsBinLocation = FolderUtils::getUserDataStorePath("bins")+"/tempParts.fzb";
     BinManager::CorePartsBinLocation = FolderUtils::getApplicationSubFolderPath("bins")+"/core.fzb";
 
 	StandardBinIcons.insert(BinManager::MyPartsBinLocation, "Mine.png");
 	StandardBinIcons.insert(BinManager::SearchBinLocation, "Search.png");
 	StandardBinIcons.insert(BinManager::ContribPartsBinLocation, "Contrib.png");
 	StandardBinIcons.insert(BinManager::CorePartsBinLocation, "Core.png");
+	StandardBinIcons.insert(BinManager::TempPartsBinLocation, "Temp.png");
 }
 
 void BinManager::search(const QString & searchText) {
