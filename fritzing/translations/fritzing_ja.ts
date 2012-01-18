@@ -598,6 +598,14 @@ before adding any connectors</source>
 Note: You can import them later using the &quot;Help&quot; &gt; &quot;Import parts and bins from old version...&quot; menu action.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Please specify an .fzz file name to save to (cancel will delete the backup)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fritzing (*%1)</source>
+        <translation type="unfinished">Fritzing (*%1)</translation>
+    </message>
 </context>
 <context>
     <name>FixFontsDialog</name>
@@ -1084,10 +1092,6 @@ Fritzingのフォントを指定してください:</translation>
         <translation>%1を保存</translation>
     </message>
     <message>
-        <source>Do you want to keep the parts that were loaded with this shareable sketch %1?</source>
-        <translation>公開スケッチ %1 にある部品を保存しますか?</translation>
-    </message>
-    <message>
         <source>Specify a file name</source>
         <translation>ファイル名を指定してください</translation>
     </message>
@@ -1284,18 +1288,6 @@ Fritzingのフォントを指定してください:</translation>
     <message>
         <source>Shift+Ctrl+S</source>
         <translation>Shift+Ctrl+S</translation>
-    </message>
-    <message>
-        <source>Save As Shareable...</source>
-        <translation>公開用として保存...</translation>
-    </message>
-    <message>
-        <source>Alt+Ctrl+S</source>
-        <translation>Alt+Ctrl+S</translation>
-    </message>
-    <message>
-        <source>Export current sketch and its non-core parts</source>
-        <translation>現在のスケッチをコアではない状態でエクスポート</translation>
     </message>
     <message>
         <source>Export the current sketch to Eagle CAD</source>
@@ -2231,22 +2223,6 @@ Please check all views for potential side-effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Please specify a location for the archived sketch</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fritzing File (*%1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please choose a folder to save the archived sketch and program files</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unable to save sketch to %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>File &apos;%1&apos; not found</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2640,6 +2616,18 @@ Please check all views for potential side-effects.</source>
         <source>The copper top (copper 1) layer is not available on a one-sided board.  Please switch the board to double-sided or choose the copper bottom (copper 0) layer.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unable to open &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No Sketch found in &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The .fz format is obsolete. Please specify an .fzz file name to save to</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -2729,10 +2717,6 @@ Reason: %2 (errcode %3)</source>
     </message>
     <message>
         <source>Change trace layer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete ratsnest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3717,6 +3701,14 @@ This checkbox sets the default behavior. You can switch back to the non-default 
         <source>Locate...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>File &apos;%&apos; was restored from the .fzz file; the local copy was not found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File &apos;%&apos; was restored from the .fzz file; save a local copy to work with an external editor.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -3945,10 +3937,6 @@ Fritzingはまだ作業中のためパーツのプロパティを変更するこ
     <message>
         <source>Rulers</source>
         <translation>定規</translation>
-    </message>
-    <message>
-        <source>Nets</source>
-        <translation>ネット</translation>
     </message>
     <message>
         <source>Board</source>
@@ -4804,6 +4792,30 @@ is already there, we won&apos;t add it again, right?</source>
         <source>change pin labels</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Delete ratsnest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fritzing</source>
+        <translation type="unfinished">Fritzing</translation>
+    </message>
+    <message>
+        <source>This seems like an attempt to create a trace across layers. This circumstance should not arise: please contact the developers.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create and connect %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>wire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>trace</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Stripboard</name>
@@ -4892,10 +4904,6 @@ is already there, we won&apos;t add it again, right?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;li&gt;To precisely move a selection of parts, use the arrow keys.  Shift-arrow moves by 10 units.&lt;/li&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&lt;li&gt;To toggle the visibility of layer in a view, go to the view menu and choose one of the view layer items.  Or open up the &lt;b&gt;Layers&lt;/b&gt; palette from the &lt;b&gt;Window&lt;/b&gt; menu.&lt;/li&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4916,10 +4924,6 @@ is already there, we won&apos;t add it again, right?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;li&gt;To display different properties in a part label, rotate it, or change the font, right-click the label.&lt;/li&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&lt;li&gt;In Breadboard view, to drag out a wire from the end of a rubber-band leg, drag with the Alt (Linux: Meta) key down.&lt;/li&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4932,7 +4936,23 @@ is already there, we won&apos;t add it again, right?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;li&gt;If you can&apos;t find a part in the Parts Bin, the Generic IC is your friend.  Drag it onto your sketch, then use the widgets in the Inspector to: choose from among 25 different through-hole and SMD packages; change the pin label; and--for DIPs and SIPs--change the number of pins.&lt;/li&gt;</source>
+        <source>&lt;li&gt;If you can&apos;t find a part in the Parts Bin, the Generic IC is your friend.  Drag it onto your sketch, then use the widgets in the Inspector to: choose from among 25 different through-hole and SMD packages; change the pin label; and--for DIPs and SIPs--change the number of pins.  You can also change the pin names with the Pin Label editor&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;li&gt;To free-rotate a part in Breadboard or PCB view, select it, then hover your mouse near one of the corners until you see the rotate cursor. Mouse down and that corner will follow your mouse as you drag.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;li&gt;To free-rotate a logo text or image item in PCB view hold down the Alt (Linux: meta) key and free-rotate as usual.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;li&gt;To display different properties in a part label, as well as rotate it, or change the font, right-click the label.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;li&gt;To more precisely move a selection of parts, use the arrow keys.  Shift-arrow moves by 10 units.&lt;/li&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5047,6 +5067,10 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>Galician - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Korean - %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

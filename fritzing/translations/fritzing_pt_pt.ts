@@ -607,6 +607,14 @@ Note: You can import them later using the &quot;Help&quot; &gt; &quot;Import par
         <translation>
 Nota: Pode importar posteriormente usando o menu de acção &quot;Ajuda&quot; -&gt; &quot;Importar peças e compartimentos de versões antigas...&quot;.</translation>
     </message>
+    <message>
+        <source>Please specify an .fzz file name to save to (cancel will delete the backup)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fritzing (*%1)</source>
+        <translation type="unfinished">Fritzing (*%1)</translation>
+    </message>
 </context>
 <context>
     <name>FixFontsDialog</name>
@@ -1122,10 +1130,6 @@ Por favor seleccione um dos tipos de letra do Fritzing para o substituir:</trans
         <translation>Parte Fritzing (*%1)</translation>
     </message>
     <message>
-        <source>Do you want to keep the parts that were loaded with this shareable sketch %1?</source>
-        <translation>Quer manter as partes que carregou com este sketch compartilhável %1?</translation>
-    </message>
-    <message>
         <source>Do you want to keep the imported parts?</source>
         <translation>Você quer manter os componentes importados?</translation>
     </message>
@@ -1311,18 +1315,6 @@ Por favor seleccione um dos tipos de letra do Fritzing para o substituir:</trans
     <message>
         <source>Shift+Ctrl+S</source>
         <translation>Shift+Ctrl+S</translation>
-    </message>
-    <message>
-        <source>Save As Shareable...</source>
-        <translation>Guardar como compatilhável...</translation>
-    </message>
-    <message>
-        <source>Alt+Ctrl+S</source>
-        <translation>Alt+Ctrl+S</translation>
-    </message>
-    <message>
-        <source>Export current sketch and its non-core parts</source>
-        <translation>Exportar o sketch actual e os seus componentes</translation>
     </message>
     <message>
         <source>Export the current sketch to Eagle CAD</source>
@@ -2236,22 +2228,6 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
         <translation>Processo de encaminhamento...</translation>
     </message>
     <message>
-        <source>Please specify a location for the archived sketch</source>
-        <translation>Por favor específica um local para guardar o desenho</translation>
-    </message>
-    <message>
-        <source>Fritzing File (*%1)</source>
-        <translation>Ficheiro Fritzing (*%1)</translation>
-    </message>
-    <message>
-        <source>Please choose a folder to save the archived sketch and program files</source>
-        <translation>Por favor escolhe uma pasta para guardar o desenho arquivado e os ficheiros do programa</translation>
-    </message>
-    <message>
-        <source>Unable to save sketch to %1</source>
-        <translation>Impossível gravar o desenho %1</translation>
-    </message>
-    <message>
         <source>File &apos;%1&apos; not found</source>
         <translation>Ficheiro &apos;%1&apos; não encontrado</translation>
     </message>
@@ -2647,6 +2623,18 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
         <source>The copper top (copper 1) layer is not available on a one-sided board.  Please switch the board to double-sided or choose the copper bottom (copper 0) layer.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unable to open &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No Sketch found in &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The .fz format is obsolete. Please specify an .fzz file name to save to</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -2737,10 +2725,6 @@ Razão: %2 (código do erro %3)</translation>
     <message>
         <source>Change trace layer</source>
         <translation>Mudar a camada do traço</translation>
-    </message>
-    <message>
-        <source>Delete ratsnest</source>
-        <translation>Apagar emaranhado</translation>
     </message>
     <message>
         <source>Fritzing</source>
@@ -3735,6 +3719,14 @@ Esta caixa de verificação define as definições standard. Podes mudar estas d
         <source>Locate...</source>
         <translation>Localizar...</translation>
     </message>
+    <message>
+        <source>File &apos;%&apos; was restored from the .fzz file; the local copy was not found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File &apos;%&apos; was restored from the .fzz file; save a local copy to work with an external editor.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -3963,10 +3955,6 @@ O Fritzing ainda trabalha, mas não vais poder modificar as propriedas dos compo
     <message>
         <source>Rulers</source>
         <translation>Réguas</translation>
-    </message>
-    <message>
-        <source>Nets</source>
-        <translation>Redes</translation>
     </message>
     <message>
         <source>Board</source>
@@ -4825,6 +4813,30 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
         <source>change pin labels</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Delete ratsnest</source>
+        <translation type="unfinished">Apagar emaranhado</translation>
+    </message>
+    <message>
+        <source>Fritzing</source>
+        <translation type="unfinished">Fritzing</translation>
+    </message>
+    <message>
+        <source>This seems like an attempt to create a trace across layers. This circumstance should not arise: please contact the developers.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create and connect %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>wire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>trace</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Stripboard</name>
@@ -4915,10 +4927,6 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
         <translation>&lt;li&gt;Para apagar um ponto de flexão de um fio, faz duplo clique em cima do fio.&lt;/li&gt;</translation>
     </message>
     <message>
-        <source>&lt;li&gt;To precisely move a selection of parts, use the arrow keys.  Shift-arrow moves by 10 units.&lt;/li&gt;</source>
-        <translation>&lt;li&gt;Para mover de forma precisa os componentes seleccionados, usa as setas existentes no teclado. Shift e seta move o correspondente a 10 unidades.&lt;/li&gt;</translation>
-    </message>
-    <message>
         <source>&lt;li&gt;To toggle the visibility of layer in a view, go to the view menu and choose one of the view layer items.  Or open up the &lt;b&gt;Layers&lt;/b&gt; palette from the &lt;b&gt;Window&lt;/b&gt; menu.&lt;/li&gt;</source>
         <translation>&lt;li&gt;Para alternar a visibilidade da camada em uma visão, vai ao menu visão e escolhe um dos items da camada de visão.. Ou abre a palete de &lt;b&gt;Camadas&lt;/b&gt; no Menu &lt;b&gt;Janela&lt;/b&gt;.&lt;/li&gt;</translation>
     </message>
@@ -4939,10 +4947,6 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
         <translation>&lt;li&gt;Para arrastar o canvas, segura a barra de espaço e arrasta com o rato.&lt;/li&gt;</translation>
     </message>
     <message>
-        <source>&lt;li&gt;To display different properties in a part label, rotate it, or change the font, right-click the label.&lt;/li&gt;</source>
-        <translation>&lt;li&gt;Para mostrar as diferentes propriedades na etiqueta de um componente, gira-o ou muda o tipo de letra, clique direito com o rato na etiqueta.&lt;/li&gt;</translation>
-    </message>
-    <message>
         <source>&lt;li&gt;In Breadboard view, to drag out a wire from the end of a rubber-band leg, drag with the Alt (Linux: Meta) key down.&lt;/li&gt;</source>
         <translation>&lt;li&gt;Na vista de Breadboard, para largar um fio do final de um ponto de flexão, arrasta com o Alt (Linux: Meta) pressionado&lt;/li&gt;</translation>
     </message>
@@ -4955,8 +4959,24 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
         <translation>&lt;li&gt;Na vista de Breadboard, para adicionar uma curva a um fio, arrasta com a tecla Control pressionada (Mac: Command). Podes definir os fios como curvos por definição nas Opções-Preferencias.&lt;/li&gt;</translation>
     </message>
     <message>
-        <source>&lt;li&gt;If you can&apos;t find a part in the Parts Bin, the Generic IC is your friend.  Drag it onto your sketch, then use the widgets in the Inspector to: choose from among 25 different through-hole and SMD packages; change the pin label; and--for DIPs and SIPs--change the number of pins.&lt;/li&gt;</source>
-        <translation>&lt;li&gt;Se não consegues encontrar um componente num compartimento, o integrado genérico é teu amigo. Arrasta-o para o teu desenho, usa as opções para: escolheres de 25 diferentes integrados e de formato SMD; muda os nomes dos pinos; e--para DIPs and SIPs--muda o número de pinos.&lt;/li&gt;</translation>
+        <source>&lt;li&gt;If you can&apos;t find a part in the Parts Bin, the Generic IC is your friend.  Drag it onto your sketch, then use the widgets in the Inspector to: choose from among 25 different through-hole and SMD packages; change the pin label; and--for DIPs and SIPs--change the number of pins.  You can also change the pin names with the Pin Label editor&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;li&gt;To free-rotate a part in Breadboard or PCB view, select it, then hover your mouse near one of the corners until you see the rotate cursor. Mouse down and that corner will follow your mouse as you drag.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;li&gt;To free-rotate a logo text or image item in PCB view hold down the Alt (Linux: meta) key and free-rotate as usual.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;li&gt;To display different properties in a part label, as well as rotate it, or change the font, right-click the label.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;li&gt;To more precisely move a selection of parts, use the arrow keys.  Shift-arrow moves by 10 units.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5070,6 +5090,10 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>Galician - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Korean - %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
