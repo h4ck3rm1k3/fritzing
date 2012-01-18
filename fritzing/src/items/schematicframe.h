@@ -63,8 +63,6 @@ protected slots:
 	void propEntry();
 	void dateTimeEntry(QDateTime);
 	void sheetEntry(int);
-	void incSheet();
-	void incDate();
 
 protected:
 	double minWidth();
@@ -75,8 +73,6 @@ protected:
 	QString makeFirstLayerSvg(double mmW, double mmH, double milsW, double milsH);
 	QString makeNextLayerSvg(ViewLayer::ViewLayerID, double mmW, double mmH, double milsW, double milsH);
 	bool makeLineEdit(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
-	QTimer m_sheetTimer;
-	QTimer m_dateTimer;
 	QTextEdit * m_textEdit;
 	bool m_wrapInitialized;
 

@@ -265,7 +265,7 @@ void SchematicSketchWidget::setVoltage(double v, bool doEmit)
 
 	new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
 
-	m_undoStack->push(parentCommand);
+	m_undoStack->waitPush(parentCommand, PropChangeDelay);
 }
 
 double SchematicSketchWidget::defaultGridSizeInches() {

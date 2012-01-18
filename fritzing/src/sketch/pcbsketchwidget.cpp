@@ -781,7 +781,7 @@ void PCBSketchWidget::resizeBoard(double mmW, double mmH, bool doEmit)
 	rememberSticky(item, parentCommand);
 	new ResizeBoardCommand(this, item->id(), origw, origh, mmW, mmH, parentCommand);
 	new CheckStickyCommand(this, BaseCommand::SingleView, item->id(), true, CheckStickyCommand::RedoOnly, parentCommand);
-	m_undoStack->push(parentCommand);
+	m_undoStack->waitPush(parentCommand, PropChangeDelay);
 }
 
 void PCBSketchWidget::showLabelFirstTime(long itemID, bool show, bool doEmit) {
@@ -1228,7 +1228,7 @@ void PCBSketchWidget::changeTraceLayer() {
 		}
 	}
 
-	m_undoStack->push(parentCommand);
+	m_undoStack->waitPush(parentCommand, PropChangeDelay);
 }
 
 void PCBSketchWidget::changeLayer(long id, double z, ViewLayer::ViewLayerID viewLayerID) {
@@ -1592,7 +1592,7 @@ void PCBSketchWidget::changeTrace(Wire * wire, ConnectorItem * from, ConnectorIt
 
 		parentCommand->setText(QObject::tr("change trace %1").arg(wire->title()) );
 		new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
-		m_undoStack->push(parentCommand);
+		m_undoStack->waitPush(parentCommand, PropChangeDelay);
 		return;
 	}
 
@@ -1652,7 +1652,7 @@ void PCBSketchWidget::changeTrace(Wire * wire, ConnectorItem * from, ConnectorIt
 	parentCommand->setText(QObject::tr("delete trace %1").arg(wire->title()) );
 
 	new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
-	m_undoStack->push(parentCommand);
+	m_undoStack->waitPush(parentCommand, PropChangeDelay);
 }
 
 

@@ -378,18 +378,6 @@ QStringList Resistor::collectValues(const QString & family, const QString & prop
 
 void Resistor::resistanceEntry(const QString & text) {
     //DebugDialog::debug(QString("resistance entry %1").arg(text));
-    static QTimer timer;
-    timer.setSingleShot(true);
-    timer.setInterval(10);
-    timer.setProperty("text", QVariant(text));
-    connect (&timer, SIGNAL(timeout()), this, SLOT(resistanceEntryAux()));
-    timer.stop();
-    timer.start();
-}
-
-void Resistor::resistanceEntryAux() {
-    QString text = sender()->property("text").toString();
-    if (text.isEmpty()) return;
 
     InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
     if (infoGraphicsView != NULL) {

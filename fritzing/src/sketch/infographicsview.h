@@ -57,10 +57,8 @@ public:
 
 	virtual void mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 
-	virtual void partLabelChanged(ItemBase *, const QString &oldText, const QString & newText);
 	
 	virtual void hidePartLabel(ItemBase * item);
-	virtual void noteChanged(ItemBase *, const QString &oldText, const QString & newText, QSizeF oldSize, QSizeF newSize);
 	virtual void partLabelMoved(ItemBase *, QPointF oldPos, QPointF oldOffset, QPointF newPos, QPointF newOffset);
 	virtual void rotateFlipPartLabel(ItemBase *, double degrees, Qt::Orientations flipDirection);
 	virtual void noteSizeChanged(ItemBase * itemBase, const QRectF & oldRect, const QRectF & newRect);
@@ -76,11 +74,7 @@ public:
 	virtual double getLabelFontSizeMedium();
 	virtual double getLabelFontSizeLarge();
 	virtual bool hasBigDots();
-	virtual void setResistance(QString resistance, QString pinSpacing);
-	virtual void setProp(ItemBase *, const QString & propName, const QString & translatedPropName, const QString & oldValue, const QString & newValue, bool redraw);
-	virtual void changeWireWidthMils(const QString newWidth);
-	virtual void changeWireColor(const QString newColor);
-	virtual void swap(const QString & family, const QString & prop, QMap<QString, QString> & propsMap, ItemBase *);
+
 	virtual LayerHash & viewLayers();
 	virtual void loadLogoImage(long itemID, const QString & oldSvg, const QSizeF oldAspectRatio, const QString & oldFilename, const QString & newFilename, bool addName);
 
@@ -105,6 +99,15 @@ public:
 	virtual void renamePins(ItemBase *, const QStringList & oldLabels, const QStringList & newLabels, bool singleRow);
 	virtual ViewGeometry::WireFlag getTraceFlag();
 	virtual void setAnyInRotation();
+
+	virtual void partLabelChanged(ItemBase *, const QString &oldText, const QString & newText);
+	virtual void noteChanged(ItemBase *, const QString &oldText, const QString & newText, QSizeF oldSize, QSizeF newSize);
+	virtual void setResistance(QString resistance, QString pinSpacing);
+	virtual void setProp(ItemBase *, const QString & propName, const QString & translatedPropName, const QString & oldValue, const QString & newValue, bool redraw);
+	virtual void changeWireWidthMils(const QString newWidth);
+	virtual void changeWireColor(const QString newColor);
+	virtual void swap(const QString & family, const QString & prop, QMap<QString, QString> & propsMap, ItemBase *);
+
 
 public slots:
 	virtual void setVoltage(double, bool doEmit);

@@ -665,6 +665,7 @@ protected:
 
 public:
 	static ViewLayer::ViewLayerID defaultConnectorLayer(ViewIdentifierClass::ViewIdentifier viewId);
+	static const int PropChangeDelay;
 
 protected:
 	static QHash<ViewIdentifierClass::ViewIdentifier,QColor> m_bgcolors;

@@ -97,40 +97,6 @@ $Date$
 
 ///////////////////////////////////////////////
 
-SwapTimer::SwapTimer() : QTimer() 
-{
-}
-
-void SwapTimer::setAll(const QString & family, const QString & prop, QMap<QString, QString> & propsMap, ItemBase * itemBase)
-{
-	m_family = family;
-	m_prop = prop;
-	m_propsMap = propsMap;
-	m_itemBase = itemBase;
-}
-
-const QString & SwapTimer::family()
-{
-	return  m_family;
-}
-
-const QString & SwapTimer::prop()
-{
-	return m_prop;
-}
-
-QMap<QString, QString> SwapTimer::propsMap()
-{
-	return m_propsMap;
-}
-
-ItemBase * SwapTimer::itemBase()
-{
-	return m_itemBase;
-}
-
-//////////////////////////////////////////////
-
 const QString MainWindow::UntitledSketchName = "Untitled Sketch";
 int MainWindow::UntitledSketchIndex = 1;
 int MainWindow::CascadeFactorX = 21;
@@ -151,10 +117,6 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel, QW
 {
 	m_closeSilently = false;
 	m_orderFabAct = NULL;
-	m_swapTimer.setInterval(15);
-	m_swapTimer.setParent(this);
-	m_swapTimer.setSingleShot(true);
-	connect(&m_swapTimer, SIGNAL(timeout()), this, SLOT(swapSelectedTimeout()));
 	m_activeLayerButtonWidget = NULL;
 	m_programWindow = NULL;
 	m_windowMenuSeparator = NULL;
@@ -485,11 +447,11 @@ void MainWindow::connectPairs() {
 						this, SLOT(routingStatusSlot(SketchWidget *, const RoutingStatus &)));
 
 	succeeded = connect(m_breadboardGraphicsView, SIGNAL(swapSignal(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)), 
-						this, SLOT(swapSelectedDelay(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)));
+						this, SLOT(swapSelectedMap(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)));
 	succeeded = connect(m_schematicGraphicsView, SIGNAL(swapSignal(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)), 
-						this, SLOT(swapSelectedDelay(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)));
+						this, SLOT(swapSelectedMap(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)));
 	succeeded = connect(m_pcbGraphicsView, SIGNAL(swapSignal(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)), 
-						this, SLOT(swapSelectedDelay(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)));
+						this, SLOT(swapSelectedMap(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)));
 
 	succeeded = connect(m_breadboardGraphicsView, SIGNAL(warnSMDSignal(const QString &)), this, SLOT(warnSMD(const QString &)), Qt::QueuedConnection);
 	succeeded = connect(m_pcbGraphicsView, SIGNAL(warnSMDSignal(const QString &)), this, SLOT(warnSMD(const QString &)), Qt::QueuedConnection);
@@ -1721,21 +1683,6 @@ void MainWindow::enableCheckUpdates(bool enabled)
 	}
 }
 
-void MainWindow::swapSelectedDelay(const QString & family, const QString & prop, QMap<QString, QString> & currPropsMap, ItemBase * itemBase) 
-{
-	m_swapTimer.stop();
-	m_swapTimer.setAll(family, prop, currPropsMap, itemBase);
-	m_swapTimer.start();
-}
-
-void MainWindow::swapSelectedTimeout()
-{
-	if (sender() == &m_swapTimer) {
-                QMap<QString, QString> map =  m_swapTimer.propsMap();
-                swapSelectedMap(m_swapTimer.family(), m_swapTimer.prop(), map, m_swapTimer.itemBase());
-	}
-}
-
 void MainWindow::swapSelectedMap(const QString & family, const QString & prop, QMap<QString, QString> & currPropsMap, ItemBase * itemBase) 
 {
 	if (itemBase == NULL) return;
@@ -1961,7 +1908,7 @@ void MainWindow::swapSelectedAux(ItemBase * itemBase, const QString & moduleID) 
 	new CleanUpWiresCommand(m_breadboardGraphicsView, CleanUpWiresCommand::UndoOnly, parentCommand);
 	swapSelectedAuxAux(itemBase, moduleID, itemBase->viewLayerSpec(), parentCommand);
 	// need to defer execution so the content of the info view doesn't change during an event that started in the info view
-	m_undoStack->waitPush(parentCommand, 10);
+	m_undoStack->waitPush(parentCommand, SketchWidget::PropChangeDelay);
 
 	warnSMD(moduleID);
 

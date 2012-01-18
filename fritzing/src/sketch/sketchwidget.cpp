@@ -114,7 +114,9 @@ QHash<ViewIdentifierClass::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
 
 const int SketchWidget::MoveAutoScrollThreshold = 5;
 const int SketchWidget::DragAutoScrollThreshold = 10;
-const int AutoRepeatDelay = 750;
+static const int AutoRepeatDelay = 750;
+const int SketchWidget::PropChangeDelay = 15;
+
 
 /////////////////////////////////////////////////////////////////////
 
@@ -944,7 +946,7 @@ void SketchWidget::deleteSelected(Wire * wire) {
 	QUndoCommand * parentCommand = new QUndoCommand(tr("Delete ratsnest"));
 	QList<long> ids;
 	emit disconnectWireSignal(itemBases, ids, parentCommand);
-	m_undoStack->push(parentCommand);
+	m_undoStack->waitPush(parentCommand, PropChangeDelay);
 }
 
 void SketchWidget::cutDeleteAux(QString undoStackMessage) {
@@ -1012,7 +1014,7 @@ void SketchWidget::deleteAux(QSet<ItemBase *> & deletedItems, QUndoCommand * par
 		sketchWidget->makeDeleteItemCommand(itemBase, BaseCommand::CrossView, parentCommand);
 	}
 	if (doPush) {
-   		m_undoStack->push(parentCommand);
+   		m_undoStack->waitPush(parentCommand, PropChangeDelay);
 	}
 }
 
@@ -3547,7 +3549,7 @@ void SketchWidget::wireChangedSlot(Wire* wire, const QLineF & oldLine, const QLi
 	clearTemporaries();
 
 	new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
-	m_undoStack->push(parentCommand);
+	m_undoStack->waitPush(parentCommand, PropChangeDelay);
 }
 
 void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, ConnectorItem * to)
@@ -5479,7 +5481,7 @@ void SketchWidget::cleanUpWiresSlot(CleanUpWiresCommand * command) {
 void SketchWidget::noteChanged(ItemBase * item, const QString &oldText, const QString & newText, QSizeF oldSize, QSizeF newSize) {
 	ChangeNoteTextCommand * command = new ChangeNoteTextCommand(this, item->id(), oldText, newText, oldSize, newSize, NULL);
 	command->setText(tr("Change note to '%2'").arg(newText));
-	m_undoStack->push(command);
+	m_undoStack->waitPush(command, PropChangeDelay);
 }
 
 void SketchWidget::partLabelChanged(ItemBase * pitem,const QString & oldText, const QString &newText) {
@@ -5504,7 +5506,7 @@ void SketchWidget::partLabelChangedAux(ItemBase * pitem,const QString & oldText,
 
 	ChangeLabelTextCommand * command = new ChangeLabelTextCommand(this, pitem->id(), oldText, newText, NULL);
 	command->setText(tr("Change %1 label to '%2'").arg(pitem->title()).arg(newText));
-	m_undoStack->push(command);
+	m_undoStack->waitPush(command, PropChangeDelay);
 }
 
 void SketchWidget::setInfoViewOnHover(bool infoViewOnHover) {
@@ -5967,7 +5969,7 @@ void SketchWidget::changeWireColor(const QString newColor)
 		}
 	}
 
-	m_undoStack->push(parentCommand);
+	m_undoStack->waitPush(parentCommand, PropChangeDelay);
 }
 
 void SketchWidget::changeWireWidthMils(const QString newWidthStr)
@@ -6017,7 +6019,7 @@ void SketchWidget::changeWireWidthMils(const QString newWidthStr)
 		}
 	}
 
-	m_undoStack->push(parentCommand);
+	m_undoStack->waitPush(parentCommand, PropChangeDelay);
 }
 
 void SketchWidget::changeWireColor(long wireId, const QString& color, double opacity) {
@@ -7071,7 +7073,7 @@ void SketchWidget::setSpacing(const QString & spacing) {
 
 	SetPropCommand * cmd = new SetPropCommand(this, item->id(), "spacing", mysteryPart->spacing(), spacing, true, NULL);
 	cmd->setText(tr("Change pin spacing from %1 to %2").arg(mysteryPart->spacing()).arg(spacing));
-	m_undoStack->push(cmd);
+	m_undoStack->waitPush(cmd, PropChangeDelay);
 }
 
 void SketchWidget::setForm(const QString & form) {
@@ -7083,7 +7085,7 @@ void SketchWidget::setForm(const QString & form) {
 
 	SetPropCommand * cmd = new SetPropCommand(this, item->id(), "form", pinHeader->form(), form, true, NULL);
 	cmd->setText(tr("Change form from %1 to %2").arg(pinHeader->form()).arg(form));
-	m_undoStack->push(cmd);
+	m_undoStack->waitPush(cmd, PropChangeDelay);
 }
 
 void SketchWidget::setResistance(QString resistance, QString pinSpacing)
@@ -7108,7 +7110,7 @@ void SketchWidget::setResistance(QString resistance, QString pinSpacing)
 
 	SetResistanceCommand * cmd = new SetResistanceCommand(this, item->id(), resistor->resistance(), resistance, resistor->pinSpacing(), pinSpacing, NULL);
 	cmd->setText(tr("Change Resistance from %1 to %2").arg(resistor->resistance()).arg(resistance));
-	m_undoStack->push(cmd);
+	m_undoStack->waitPush(cmd, PropChangeDelay);
 }
 
 void SketchWidget::setResistance(long itemID, QString resistance, QString pinSpacing, bool doEmit) {
@@ -7133,7 +7135,7 @@ void SketchWidget::setProp(ItemBase * item, const QString & prop, const QString 
 	SetPropCommand * cmd = new SetPropCommand(this, item->id(), prop, oldValue, newValue, redraw, NULL);
 	cmd->setText(tr("Change %1 from %2 to %3").arg(trProp).arg(oldValue).arg(newValue));
 	// unhook triggered action from originating widget event
-    m_undoStack->waitPush(cmd, 1);
+    m_undoStack->waitPush(cmd, PropChangeDelay);
 }
 
 void SketchWidget::setProp(long itemID, const QString & prop, const QString & value, bool redraw, bool doEmit) {
@@ -7195,7 +7197,7 @@ void SketchWidget::resizeBoard(double mmW, double mmH, bool doEmit)
 	double origh = orig.endsWith("cm") ? 0 : 1;
 	QUndoCommand * parentCommand = new QUndoCommand(tr("Resize ruler to %1%2").arg(mmW).arg((mmH == 0) ? "cm" : "in"));
 	new ResizeBoardCommand(this, item->id(), origw, origh, mmW, mmH, parentCommand);
-	m_undoStack->push(parentCommand);
+	m_undoStack->waitPush(parentCommand, PropChangeDelay);
 }
 
 void SketchWidget::addBendpoint(ItemBase * lastHoverEnterItem, ConnectorItem * lastHoverEnterConnectorItem, QPointF lastLocation) {
@@ -7647,7 +7649,7 @@ void SketchWidget::restorePartLabel(long itemID, QDomElement & element) {
 void SketchWidget::loadLogoImage(long itemID, const QString & oldSvg, const QSizeF oldAspectRatio, const QString & oldFilename, const QString & newFilename, bool addName) {
 	QUndoCommand * cmd = new LoadLogoImageCommand(this, itemID, oldSvg, oldAspectRatio, oldFilename, newFilename, addName, NULL);
 	cmd->setText(tr("Change image from %1 to %2").arg(oldFilename).arg(newFilename));
-	m_undoStack->push(cmd);
+	m_undoStack->waitPush(cmd, PropChangeDelay);
 }
 
 void SketchWidget::loadLogoImage(long itemID, const QString & oldSvg, const QSizeF oldAspectRatio, const QString & oldFilename) {
@@ -8253,7 +8255,7 @@ void SketchWidget::changeBus(ItemBase * itemBase, bool connect, const QString & 
 		cuwc->addRatsnestConnect(connectorItem->attachedToID(), connectorItem->connectorSharedID(), connect);
 	}
 
-	m_undoStack->push(parentCommand);
+	m_undoStack->waitPush(parentCommand, PropChangeDelay);
 
 }
 

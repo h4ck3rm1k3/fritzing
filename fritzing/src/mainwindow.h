@@ -58,26 +58,6 @@ bool sortPartList(ItemBase * b1, ItemBase * b2);
 
 static const QString ORDERFABENABLED = "OrderFabEnabled";
 
-class SwapTimer : public QTimer
-{
-Q_OBJECT
-
-public:
-	SwapTimer();
-
-	void setAll(const QString & family, const QString & prop, QMap<QString, QString> &  propsMap, ItemBase *);
-	const QString & family();
-	const QString & prop();
-	QMap<QString, QString> propsMap();
-	ItemBase * itemBase();
-
-protected:
-	QString m_family;
-	QString m_prop;
-	QMap<QString, QString> m_propsMap;
-	QPointer <ItemBase> m_itemBase;
-};
-
 class MainWindow : public FritzingWindow
 {
     Q_OBJECT
@@ -323,8 +303,7 @@ protected slots:
 	void boardDeletedSlot();
 	void cursorLocationSlot(double, double);
 	void locationLabelClicked();
-	void swapSelectedDelay(const QString & family, const QString & prop, QMap<QString, QString> & currPropsMap, ItemBase *);
-	void swapSelectedTimeout();
+	void swapSelectedMap(const QString & family, const QString & prop, QMap<QString, QString> & currPropsMap, ItemBase *);
 	void filenameIfSlot(QString & filename);
 	void openURL();
 
@@ -442,7 +421,6 @@ protected:
 	void routingStatusLabelMouse(QMouseEvent*, bool show);
 	class Wire * retrieveWire();
 	QString getBomProps(ItemBase *);
-	void swapSelectedMap(const QString & family, const QString & prop, QMap<QString, QString> & currPropsMap, ItemBase *);
 	ModelPart * findReplacedby(ModelPart * originalModelPart);
 	void groundFillAux(bool fillGroundTraces);
 	void connectStartSave(bool connect);
@@ -714,7 +692,6 @@ protected:
 	RoutingStatus m_routingStatus;
 	bool m_smdOneSideWarningGiven;
 	bool m_orderFabEnabled;		
-	SwapTimer m_swapTimer;
 	bool m_closeSilently;
 	QString m_fzzFolder;
 	QHash<QString, class QtLockedFile *> m_fzzFiles;

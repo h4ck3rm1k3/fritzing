@@ -30,7 +30,6 @@ $Date$
 #include <QFont>
 #include <QChar>
 #include <QTime>
-#include <QTimer>
 #include <QKeyEvent>
 #include <QCloseEvent>
 #include <QScrollBar>

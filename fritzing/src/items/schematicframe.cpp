@@ -77,14 +77,6 @@ SchematicFrame::SchematicFrame( ModelPart * modelPart, ViewIdentifierClass::View
 		FrameProps.insert("rev", tr("Rev"));
 	}
 
-	m_sheetTimer.setInterval(1000);
-	m_sheetTimer.setSingleShot(true);
-	connect(&m_sheetTimer, SIGNAL(timeout()), this, SLOT(incSheet()));
-
-	m_dateTimer.setInterval(1000);
-	m_dateTimer.setSingleShot(true);
-	connect(&m_dateTimer, SIGNAL(timeout()), this, SLOT(incDate()));
-
 	foreach (QString prop, FrameProps.keys()) {
 		if (modelPart->prop(prop).toString().isEmpty()) {
 			modelPart->setProp(prop, modelPart->properties().value(prop));
@@ -419,30 +411,14 @@ void SchematicFrame::propEntry() {
 }
 
 void SchematicFrame::dateTimeEntry(QDateTime dateTime) {
-	m_dateTimer.stop();
-	m_dateTimer.setProperty("value", dateTime.toTime_t());
-	m_dateTimer.start();
-}
-
-void SchematicFrame::incDate() {
-	int value = sender()->property("value").toInt();
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
-		infoGraphicsView->setProp(this, "date", tr("date"), prop("date"), QString::number(value), true);
+		infoGraphicsView->setProp(this, "date", tr("date"), prop("date"), QString::number(dateTime.toTime_t()), true);
 	}
 }
 
 void SchematicFrame::sheetEntry(int value) {
-	m_sheetTimer.stop();
-	m_sheetTimer.setProperty("role", sender()->property("role").toString());
-	m_sheetTimer.setProperty("value", value);
-	m_sheetTimer.start();
-}
-
-void SchematicFrame::incSheet() 
-{
 	QString role = sender()->property("role").toString();
-	int value = sender()->property("value").toInt();
 	QString sheet = prop("sheet");
 	QStringList strings = sheet.split("/");
 	if (strings.count() != 2) {
