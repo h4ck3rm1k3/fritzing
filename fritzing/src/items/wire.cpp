@@ -88,12 +88,11 @@ later:
 #include "../utils/bezier.h"
 #include "../utils/bezierdisplay.h"
 #include "../utils/cursormaster.h"
+#include "../utils/ratsnestcolors.h"
 #include "../layerattributes.h"
 
 #include <stdlib.h>
 
-QHash<QString, QString> Wire::colors;
-QHash<QString, QString> Wire::shadowColors;
 QHash<QString, QString> Wire::colorTrans;
 QStringList Wire::colorNames;
 QHash<int, QString> Wire::widthTrans;
@@ -1143,16 +1142,9 @@ void Wire::setColorString(QString colorName, double op) {
 	// sets a color using the name (.e. "red")
 	// note: colorName is associated with a Fritzing color, not a Qt color
 
-	QString colorString = colors.value(colorName, "");
+	QString colorString = RatsnestColors::wireColor(m_viewIdentifier, colorName);     
 	if (colorString.isEmpty()) {
 		colorString = colorName;
-
-		foreach (QString c, colors.keys()) {
-			if (colors.value(c).compare(colorName, Qt::CaseInsensitive) == 0) {
-				colorName = c;
-				break;
-			}
-		}
 	}
 
 	QColor c;
@@ -1160,12 +1152,12 @@ void Wire::setColorString(QString colorName, double op) {
 	setColor(c, op);
 	m_colorName = colorName;
 
-	colorString = shadowColors.value(colorName, "");
-	if (colorString.isEmpty()) {
-		colorString = colorName;
+	QString shadowColorString = RatsnestColors::shadowColor(m_viewIdentifier, colorName);
+	if (shadowColorString.isEmpty()) {
+		shadowColorString = colorString;
 	}
 
-	c.setNamedColor(colorString);
+	c.setNamedColor(shadowColorString);
 	setShadowColor(c);
 }
 
@@ -1182,7 +1174,7 @@ QString Wire::colorString() {
 }
 
 void Wire::initNames() {
-	if (colors.count() > 0) return;
+	if (colorNames.count() > 0) return;
 
 	widths << 16 << 24 << 32 << 48;
 	widthTrans.insert(widths[0], tr("thin (16 mil)"));
@@ -1205,7 +1197,6 @@ void Wire::initNames() {
 	colorNames.append(tr("orange"));
     colorNames.append(tr("brown"));
     colorNames.append(tr("purple"));
-    colorNames.append(tr("schematic black"));
 
 	// need this hash table to translate from user's language to internal color name
     colorTrans.insert(tr("blue"), "blue");
@@ -1218,43 +1209,6 @@ void Wire::initNames() {
 	colorTrans.insert(tr("orange"), "orange");
 	colorTrans.insert(tr("brown"), "brown");
     colorTrans.insert(tr("purple"), "purple");
-    colorTrans.insert(tr("schematic black"), "schematic black");
-
-    colors.insert("blue",	"#418dd9");
-	colors.insert("red",	"#cc1414");
-    colors.insert("black",	"#404040");
-	colors.insert("yellow", "#ffe24d");
-	colors.insert("green",	"#47cc79");
-	colors.insert("grey",	"#999999");
-	colors.insert("white",	"#ffffff");
-	colors.insert("orange", "#ff7033");
-	colors.insert("jumper", ViewLayer::JumperColor);
-	colors.insert("trace",  ViewLayer::Copper0Color);    
-	colors.insert("trace1",  ViewLayer::Copper1Color);    
-	//colors.insert("unrouted", "#000000");
-	//colors.insert("blackblack", "#000000");
-	colors.insert("schematicGrey", "#9d9d9d");
-    colors.insert("purple", "#ab58a2");
-	colors.insert("brown", "#8c3b00");
-	colors.insert("schematic black", "#000000");
-
-    shadowColors.insert("blue",		"#1b5bb3");
-	shadowColors.insert("red",		"#8c0000");
-    shadowColors.insert("black",	"#000000");
-	shadowColors.insert("yellow",	"#e6ab00");
-	shadowColors.insert("green",	"#00a63d");
-	shadowColors.insert("grey",		"#666666");
-	shadowColors.insert("white",	"#999999");
-	shadowColors.insert("orange",	"#d95821");
-    shadowColors.insert("jumper",	"#2d6563");
-	shadowColors.insert("trace",	"#d69b00");
-	shadowColors.insert("trace1",   "#d69b00");    
-	//shadowColors.insert("unrouted", "#000000");
-    shadowColors.insert("purple",	"#7a3a73");
-    shadowColors.insert("brown",	"#6c2710");
-	shadowColors.insert("schematicGrey", "#1d1d1d");
-	//shadowColors.insert("blackblack", "#000000");
-	shadowColors.insert("schematic black", "#000000");
 }
 
 bool Wire::hasFlag(ViewGeometry::WireFlag flag)
@@ -1280,13 +1234,6 @@ Wire * Wire::findTraced(ViewGeometry::WireFlags flags, QList<ConnectorItem *>  &
 	}
 
 	return ConnectorItem::directlyWiredTo(ends[0], ends[1], flags);
-}
-
-QRgb Wire::getRgb(const QString & name) {
-	QString str = colors.value(name);
-	QColor c;
-	c.setNamedColor(str);
-	return c.rgb();
 }
 
 void Wire::setWireFlags(ViewGeometry::WireFlags wireFlags) {

@@ -65,8 +65,8 @@ public:
 	virtual double getLabelFontSizeLarge();
 	ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry, ViewLayer::ViewLayerSpec);
 	ItemBase * findBoard();
-	double getRatsnestOpacity(Wire *);
-	double getRatsnestOpacity(bool);
+	double getRatsnestOpacity();
+	double getRatsnestWidth();
 
 	void setBoardLayers(int, bool redraw);
 	long setUpSwap(ItemBase *, long newModelIndex, const QString & newModuleID, ViewLayer::ViewLayerSpec, bool doEmit, bool noFinalChangeWiresCommand, QUndoCommand * parentCommand);

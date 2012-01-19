@@ -183,7 +183,6 @@ public:
 
 public:
 	static void initNames();
-	static QRgb getRgb(const QString & name);
 	static void cleanup();
 
 protected:
@@ -258,10 +257,6 @@ public:
 	static QHash<QString, QString> colorTrans;
 	static QHash<int, QString> widthTrans;
 	static QList<int> widths;
-
-protected:
-	static QHash<QString, QString> shadowColors;
-	static QHash<QString, QString> colors;
 
 signals:
 	void wireChangedSignal(Wire* me, const QLineF & oldLine, const QLineF & newLine, QPointF oldPos, QPointF newPos, ConnectorItem * from, ConnectorItem * to);

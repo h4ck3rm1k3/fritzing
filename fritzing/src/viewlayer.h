@@ -98,7 +98,6 @@ public:
 	static const QString Copper1Color;
 	static const QString Silkscreen1Color;
 	static const QString Silkscreen0Color;
-	static const QString JumperColor;
 
 protected:
 	static double zIncrement;

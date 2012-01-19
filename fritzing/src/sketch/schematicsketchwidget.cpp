@@ -37,7 +37,7 @@ $Date$
 
 #include <limits>
 
-static QString SchematicTraceColor = "schematic black";
+static QString SchematicTraceColor = "black";
 static const double TraceHoverStrokeFactor = 3;
 
 static const double TraceWidthMils = 33.3333;
@@ -55,7 +55,6 @@ SchematicSketchWidget::SchematicSketchWidget(ViewIdentifierClass::ViewIdentifier
 {
 	m_shortName = QObject::tr("schem");
 	m_viewName = QObject::tr("Schematic View");
-	m_standardBackgroundColor = QColor(255,255,255);
 	initBackgroundColor();
 
 	m_cleanType = ninetyClean;
@@ -88,13 +87,11 @@ ViewLayer::ViewLayerID SchematicSketchWidget::getWireViewLayerID(const ViewGeome
 void SchematicSketchWidget::initWire(Wire * wire, int penWidth) {
 	Q_UNUSED(penWidth);
 	if (wire->getRatsnest()) {
-		wire->setPenWidth(0.5, this, 0.5 * TraceHoverStrokeFactor);
-		wire->setColorString("schematicGrey", 0.7);
+		return;
 	}
-	else {
-		wire->setPenWidth(getTraceWidth(), this, getTraceWidth() * TraceHoverStrokeFactor);
-		wire->setColorString("schematic black", 1.0);
-	}
+
+	wire->setPenWidth(getTraceWidth(), this, getTraceWidth() * TraceHoverStrokeFactor);
+	wire->setColorString("black", 1.0);
 }
 
 bool SchematicSketchWidget::autorouteTypePCB() {
@@ -120,8 +117,12 @@ void SchematicSketchWidget::ensureTraceLayerVisible() {
 	ensureLayerVisible(ViewLayer::SchematicTrace);
 }
 
-double SchematicSketchWidget::getRatsnestOpacity(bool routed) {
-	return (routed ? 0.1 : 0.7);
+double SchematicSketchWidget::getRatsnestOpacity() {
+	return 0.7;
+}
+
+double SchematicSketchWidget::getRatsnestWidth() {
+	return 0.7;
 }
 
 bool SchematicSketchWidget::usesJumperItem() {

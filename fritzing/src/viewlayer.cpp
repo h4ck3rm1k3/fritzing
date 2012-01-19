@@ -39,7 +39,6 @@ const QString ViewLayer::Copper0Color = "#F28A00";//"#ff9400";
 const QString ViewLayer::Copper1Color = "#FFCB33"; //#ffbf00";
 const QString ViewLayer::Silkscreen1Color = "#ffffff";
 const QString ViewLayer::Silkscreen0Color = "#bbbbcc";
-const QString ViewLayer::JumperColor = "#418dd9";
 
 static LayerList CopperBottomLayers;
 static LayerList CopperTopLayers;

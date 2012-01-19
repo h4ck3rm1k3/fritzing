@@ -25,6 +25,8 @@ $Date$
 ********************************************************************/
 
 #include "ratsnestcolors.h"
+#include "../debugdialog.h"
+
 #include <QFile>
 
 QHash<ViewIdentifierClass::ViewIdentifier, RatsnestColors *> RatsnestColors::m_viewList;
@@ -42,7 +44,9 @@ class RatsnestColor {
 
 protected:
 	QString m_name;
-	QColor m_color;
+	QString m_wire;
+	QColor m_ratsnest;
+	QString m_shadow;
 	QStringList m_connectorNames;
 };
 
@@ -50,7 +54,10 @@ protected:
 
 RatsnestColor::RatsnestColor(const QDomElement & color) {
 	m_name = color.attribute("name");
-	m_color.setNamedColor(color.attribute("color"));
+	DebugDialog::debug("color name " + m_name);
+	m_ratsnest.setNamedColor(color.attribute("ratsnest"));
+	m_wire = color.attribute("wire");
+	m_shadow = color.attribute("shadow");
 	QDomElement connector = color.firstChildElement("connector");
 	while (!connector.isNull()) {
 		m_connectorNames.append(connector.attribute("name"));
@@ -66,11 +73,13 @@ RatsnestColor::~RatsnestColor() {
 RatsnestColors::RatsnestColors(const QDomElement & view) 
 {
 	m_viewIdentifier = ViewIdentifierClass::idFromXmlName(view.attribute("name"));
+	m_backgroundColor.setNamedColor(view.attribute("background"));
 	m_index = 0;
 	QDomElement color = view.firstChildElement("color");
 	while (!color.isNull()) {
 		RatsnestColor * ratsnestColor = new RatsnestColor(color);
-		m_ratsnestColors.append(ratsnestColor);
+		m_ratsnestColorHash.insert(ratsnestColor->m_name, ratsnestColor);
+		m_ratsnestColorList.append(ratsnestColor);
 		foreach (QString name, ratsnestColor->m_connectorNames) {
 			m_allNames.insert(name.toLower(), ratsnestColor);
 		}
@@ -80,10 +89,11 @@ RatsnestColors::RatsnestColors(const QDomElement & view)
 
 RatsnestColors::~RatsnestColors()
 {
-	foreach (RatsnestColor * ratsnestColor, m_ratsnestColors) {
+	foreach (RatsnestColor * ratsnestColor, m_ratsnestColorHash.values()) {
 		delete ratsnestColor;
 	}
-	m_ratsnestColors.clear();
+	m_ratsnestColorHash.clear();
+	m_ratsnestColorList.clear();
 }
 
 void RatsnestColors::initNames() {
@@ -130,25 +140,30 @@ const QColor & RatsnestColors::netColor(ViewIdentifierClass::ViewIdentifier view
 }
 
 const QColor & RatsnestColors::getNextColor() {
-	if (m_ratsnestColors.length() <= 0) return ErrorColor;
+	if (m_ratsnestColorList.count() <= 0) return ErrorColor;
 
 	int resetCount = 0;
 	while (true) {
-		if (m_index < 0 || m_index >= m_ratsnestColors.length()) {
+		if (m_index < 0 || m_index >= m_ratsnestColorList.count()) {
 			m_index = 0;
 			if (++resetCount > 2) {
 				// prevent infinite loops if all the colors in the list are for particular connectors
 				return ErrorColor;
 			}
 		}
-		RatsnestColor * ratsnestColor = m_ratsnestColors[m_index++];
+		RatsnestColor * ratsnestColor = m_ratsnestColorList[m_index++];
 		if (ratsnestColor->m_connectorNames.length() > 0) {
 			// don't use colors designated for particular connectors
 			m_index++;
+			continue;
 		}
-		else {
-			return ratsnestColor->m_color;
+
+		if (!ratsnestColor->m_ratsnest.isValid()){
+			m_index++;
+			continue;
 		}
+
+		return ratsnestColor->m_ratsnest;
 	}
 }
 
@@ -158,7 +173,7 @@ bool RatsnestColors::findConnectorColor(const QStringList & names, QColor & colo
 		RatsnestColor * ratsnestColor = m_allNames.value(name.toLower(), NULL);
 		if (ratsnestColor == NULL) continue;
 
-		color = ratsnestColor->m_color;
+		color = ratsnestColor->m_ratsnest;
 		return true;
 	}
 
@@ -169,8 +184,8 @@ bool RatsnestColors::isConnectorColor(ViewIdentifierClass::ViewIdentifier m_view
 	RatsnestColors * ratsnestColors = m_viewList.value(m_viewIdentifier, NULL);
 	if (ratsnestColors == NULL) return false;
 
-	foreach (RatsnestColor * ratsnestColor, ratsnestColors->m_ratsnestColors) {
-		if (ratsnestColor->m_color == color) {
+	foreach (RatsnestColor * ratsnestColor, ratsnestColors->m_ratsnestColorList) {
+		if (ratsnestColor->m_ratsnest == color) {
 			return (ratsnestColor->m_connectorNames.length() > 0);
 		}
 	}
@@ -184,3 +199,46 @@ void RatsnestColors::reset(ViewIdentifierClass::ViewIdentifier m_viewIdentifier)
 
 	ratsnestColors->m_index = 0;
 }
+
+QColor RatsnestColors::backgroundColor(ViewIdentifierClass::ViewIdentifier viewIdentifier) 
+{
+	RatsnestColors * ratsnestColors = m_viewList.value(viewIdentifier, NULL);
+	if (ratsnestColors == NULL) return QColor();
+
+	return ratsnestColors->m_backgroundColor;
+}
+
+const QString & RatsnestColors::shadowColor(ViewIdentifierClass::ViewIdentifier viewIdentifier, const QString & name)
+{
+	RatsnestColors * ratsnestColors = m_viewList.value(viewIdentifier, NULL);
+	if (ratsnestColors == NULL) return ___emptyString___;
+
+	RatsnestColor * ratsnestColor = ratsnestColors->m_ratsnestColorHash.value(name.toLower(), NULL);
+	if (ratsnestColor == NULL) return ___emptyString___;
+
+	return ratsnestColor->m_shadow;
+}
+
+QString RatsnestColors::wireColor(ViewIdentifierClass::ViewIdentifier viewIdentifier, QString & name)
+{
+	RatsnestColors * ratsnestColors = m_viewList.value(viewIdentifier, NULL);
+	if (ratsnestColors == NULL) return ___emptyString___;
+
+	RatsnestColor * ratsnestColor = ratsnestColors->m_ratsnestColorHash.value(name.toLower(), NULL);
+	if (ratsnestColor != NULL) {
+		QString w = ratsnestColor->m_wire;
+		if (!w.isEmpty()) return w;
+	}
+
+	// reverse lookup
+	foreach (QString c, ratsnestColors->m_ratsnestColorHash.keys()) {
+		QString w = ratsnestColors->m_ratsnestColorHash.value(c)->m_wire;
+		if (w.compare(name, Qt::CaseInsensitive) == 0) {
+			name = c;
+			return w;
+		}
+	}
+
+	return ___emptyString___;
+}
+

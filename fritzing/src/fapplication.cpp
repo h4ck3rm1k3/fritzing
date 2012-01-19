@@ -274,6 +274,7 @@ bool FApplication::init() {
 	MainWindow::initNames();
 	FSvgRenderer::calcPrinterScale();
 	ViewIdentifierClass::initNames();
+	RatsnestColors::initNames();
 	Wire::initNames();
 	ItemBase::initNames();
 	ViewLayer::initNames();
@@ -282,7 +283,6 @@ bool FApplication::init() {
 	PartsEditorMainWindow::initText();
 	BinManager::initNames();
 	PaletteModel::initNames();
-	RatsnestColors::initNames();
 	SvgIconWidget::initNames();
 	PinHeader::initNames();
 	CursorMaster::initCursors();

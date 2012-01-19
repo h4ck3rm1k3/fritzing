@@ -84,7 +84,8 @@ protected slots:
 	void updateBigDots();
 
 protected:
-	double getRatsnestOpacity(bool);
+	double getRatsnestOpacity();
+	double getRatsnestWidth();
 	ViewLayer::ViewLayerID getLabelViewLayerID(ViewLayer::ViewLayerSpec);
 	QPoint calcFixedToCenterItemOffset(const QRect & viewPortRect, const QSizeF & helpSize);
 	void extraRenderSvgStep(ItemBase *, QPointF offset, double dpi, double printerScale, QString & outputSvg);

@@ -50,6 +50,7 @@ $Date$
 #include "../utils/folderutils.h"
 #include "../utils/textutils.h"
 #include "../utils/graphicsutils.h"
+#include "../utils/ratsnestcolors.h"
 #include "../svg/gedaelement2svg.h"
 #include "../svg/kicadmodule2svg.h"
 #include "../svg/kicadschematic2svg.h"
@@ -248,8 +249,8 @@ void PartsEditorView::fitCenterAndDeselect() {
 
 void PartsEditorView::setDefaultBackground() {
 	QString bgColor = " PartsEditorView {background-color: rgb(%1,%2,%3);} ";
-	if(m_bgcolors.contains(m_viewIdentifier)) {
-		QColor c = m_bgcolors[m_viewIdentifier];
+	QColor c = standardBackground();
+	if (c.isValid()) {
 		setStyleSheet(styleSheet()+bgColor.arg(c.red()).arg(c.green()).arg(c.blue()));
 	}
 }

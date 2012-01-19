@@ -110,8 +110,6 @@ enum ConnectionStatus {
 
 static const double CloseEnough = 0.5;  // in pixels, for swapping into the breadboard
 
-QHash<ViewIdentifierClass::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
-
 const int SketchWidget::MoveAutoScrollThreshold = 5;
 const int SketchWidget::DragAutoScrollThreshold = 10;
 static const int AutoRepeatDelay = 750;
@@ -7328,13 +7326,12 @@ void SketchWidget::getBendpointWidths(Wire * wire, double width, double & bendpo
 	negativeOffsetRect = true;
 }
 
-const QColor & SketchWidget::standardBackground() {
-	return m_standardBackgroundColor;
+QColor SketchWidget::standardBackground() {
+	return RatsnestColors::backgroundColor(m_viewIdentifier);
 }
 
 void SketchWidget::initBackgroundColor() {
-	m_bgcolors[m_viewIdentifier] = m_standardBackgroundColor;
-	setBackground(m_standardBackgroundColor);
+	setBackground(standardBackground());
 
 	QSettings settings;
 	QString colorName = settings.value(QString("%1BackgroundColor").arg(getShortName())).toString();
@@ -8564,15 +8561,18 @@ VirtualWire * SketchWidget::makeOneRatsnestWire(ConnectorItem * source, Connecto
 		wire->setVisible(false);
 	}
 
-	double opacity = getRatsnestOpacity(routed);
-	wire->setColor(color, opacity);
+	wire->setColor(color, getRatsnestOpacity());
+	wire->setWireWidth(getRatsnestWidth(), this, 1.0);
 
 	return wire;
 }
 
-double SketchWidget::getRatsnestOpacity(bool routed) {
-	Q_UNUSED(routed);
-	return 0.3;
+double SketchWidget::getRatsnestOpacity() {
+	return 1.0;
+}
+
+double SketchWidget::getRatsnestWidth() {
+	return 1.0;
 }
 
 void SketchWidget::makeRatsnestViewGeometry(ViewGeometry & viewGeometry, ConnectorItem * source, ConnectorItem * dest) 

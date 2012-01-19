@@ -41,7 +41,6 @@ BreadboardSketchWidget::BreadboardSketchWidget(ViewIdentifierClass::ViewIdentifi
 {
 	m_shortName = QObject::tr("bb");
 	m_viewName = QObject::tr("Breadboard View");
-	m_standardBackgroundColor = QColor(204,204,204);
 	initBackgroundColor();
 }
 
@@ -132,7 +131,8 @@ bool BreadboardSketchWidget::canDropModelPart(ModelPart * modelPart) {
 
 void BreadboardSketchWidget::initWire(Wire * wire, int penWidth) {
 	if (wire->getRatsnest()) {
-		penWidth = 3;
+		// handle elsewhere
+		return;
 	}
 	wire->setPenWidth(penWidth - 2, this, (penWidth - 2) * WireHoverStrokeFactor);
 	wire->setColorString("blue", 1.0);
@@ -242,4 +242,12 @@ void BreadboardSketchWidget::getBendpointWidths(Wire * wire, double width, doubl
 	Q_UNUSED(width);
 	bendpoint2Width = bendpointWidth = -1;
 	negativeOffsetRect = true;
+}
+
+double BreadboardSketchWidget::getRatsnestOpacity() {
+	return 0.7;
+}
+
+double BreadboardSketchWidget::getRatsnestWidth() {
+	return 0.7;
 }

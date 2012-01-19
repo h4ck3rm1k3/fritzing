@@ -45,14 +45,19 @@ public:
 	static bool findConnectorColor(const QStringList & names, QColor & color);
 	static bool isConnectorColor(ViewIdentifierClass::ViewIdentifier m_viewIdentifier, const QColor &);
 	static void reset(ViewIdentifierClass::ViewIdentifier m_viewIdentifier);
+	static QColor backgroundColor(ViewIdentifierClass::ViewIdentifier);
+	static const QString & shadowColor(ViewIdentifierClass::ViewIdentifier, const QString& name);
+	static QString wireColor(ViewIdentifierClass::ViewIdentifier, QString& name);
 
 protected:
 	const QColor & getNextColor();
 
 protected:
 	ViewIdentifierClass::ViewIdentifier m_viewIdentifier;
+	QColor m_backgroundColor;
 	int m_index;
-	QList<class RatsnestColor *> m_ratsnestColors;
+	QHash<QString, class RatsnestColor *> m_ratsnestColorHash;
+	QList<class RatsnestColor *> m_ratsnestColorList;
 
 	static QHash<ViewIdentifierClass::ViewIdentifier, RatsnestColors *> m_viewList;
 	static QHash<QString, class RatsnestColor *> m_allNames;

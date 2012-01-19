@@ -34,6 +34,7 @@ $Date$
 static QString Copper0LayerTemplate = "";
 static QString JumperWireLayerTemplate = "";
 static const QString ShadowColor ="#1b5bb3";
+static const QString JumperColor = "#418dd9";
 
 static QHash<ViewLayer::ViewLayerID, QString> Colors;
 
@@ -72,7 +73,7 @@ JumperItem::JumperItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifi
 	if (Colors.isEmpty()) {
 		Colors.insert(ViewLayer::Copper0, ViewLayer::Copper0Color);
 		Colors.insert(ViewLayer::Copper1, ViewLayer::Copper1Color);
-		Colors.insert(ViewLayer::PartImage, ViewLayer::JumperColor);
+		Colors.insert(ViewLayer::PartImage, JumperColor);
 		Colors.insert(ViewLayer::Silkscreen1, ViewLayer::Silkscreen1Color);
 	}
 

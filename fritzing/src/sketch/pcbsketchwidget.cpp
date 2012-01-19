@@ -117,7 +117,6 @@ PCBSketchWidget::PCBSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentif
 	m_resizingJumperItem = NULL;
 	m_viewName = QObject::tr("PCB View");
 	m_shortName = QObject::tr("pcb");
-	m_standardBackgroundColor = QColor(160,168,179);
 	initBackgroundColor();
 
 	m_routingStatus.zero();
@@ -265,7 +264,7 @@ bool PCBSketchWidget::createOneTrace(Wire * wire, ViewGeometry::WireFlag flag, b
 
 	QString colorString = traceColor(createWireViewLayerSpec(ends[0], ends[1]));
 	long newID = createWire(ends[0], ends[1], flag, false, BaseCommand::CrossView, parentCommand);
-	new WireColorChangeCommand(this, newID, colorString, colorString, getRatsnestOpacity(false), getRatsnestOpacity(false), parentCommand);
+	new WireColorChangeCommand(this, newID, colorString, colorString, getRatsnestOpacity(), getRatsnestOpacity(), parentCommand);
 	new WireWidthChangeCommand(this, newID, getTraceWidth(), getTraceWidth(), parentCommand);
 	return true;
 }
@@ -440,7 +439,9 @@ ViewLayer::ViewLayerID PCBSketchWidget::getWireViewLayerID(const ViewGeometry & 
 
 void PCBSketchWidget::initWire(Wire * wire, int penWidth) {
 	Q_UNUSED(penWidth);
-	wire->setColorString("black", 1.0);
+	if (wire->getRatsnest()) return;
+
+	wire->setColorString(traceColor(wire->connector0()), 1.0);
 	wire->setPenWidth(1, this, 2);
 }
 
@@ -575,12 +576,12 @@ bool PCBSketchWidget::canCreateWire(Wire * dragWire, ConnectorItem * from, Conne
 	return ((from != NULL) && (to != NULL));
 }
 
-double PCBSketchWidget::getRatsnestOpacity(Wire * wire) {
-	return getRatsnestOpacity(wire->getRouted());
+double PCBSketchWidget::getRatsnestOpacity() {
+	return 0.7;
 }
 
-double PCBSketchWidget::getRatsnestOpacity(bool routed) {
-	return (routed ? 0.2 : 1.0);
+double PCBSketchWidget::getRatsnestWidth() {
+	return 0.7;
 }
 
 ConnectorItem * PCBSketchWidget::findNearestPartConnectorItem(ConnectorItem * fromConnectorItem) {

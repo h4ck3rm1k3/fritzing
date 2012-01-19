@@ -55,10 +55,6 @@ protected:
 	bool disconnectFromFemale(ItemBase * item, QHash<long, ItemBase *> & savedItems, ConnectorPairHash &, bool doCommand, bool rubberBandLegEnabled, QUndoCommand * parentCommand);
 	BaseCommand::CrossViewType wireSplitCrossView();
 	bool canDropModelPart(ModelPart * modelPart); 
-	/*
-	void translateToLocalItems(ConnectorPairHash & foreignMoveItems, ConnectorPairHash & moveItems,	QMultiHash<PaletteItemBase *, ConnectorItem *> & bases);
-	bool shareBreadboard(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, ItemBase * & breadboardItemBase);
-	*/
 	void getLabelFont(QFont &, QColor &, ViewLayer::ViewLayerSpec);
 	void setNewPartVisible(ItemBase *);
 	double defaultGridSizeInches();
@@ -66,7 +62,8 @@ protected:
 	QPoint calcFixedToCenterItemOffset(const QRect & viewPortRect, const QSizeF & helpSize);
 	double getTraceWidth();
 	const QString & traceColor(ViewLayer::ViewLayerSpec);
-
+	double getRatsnestOpacity();
+	double getRatsnestWidth();
 };
 
 #endif

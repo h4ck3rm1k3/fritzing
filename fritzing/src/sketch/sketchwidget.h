@@ -133,7 +133,7 @@ public:
  	void mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
  	void setBackground(QColor);
  	const QColor& background();
-	const QColor& standardBackground();
+	QColor standardBackground();
  	void setItemMenu(QMenu*);
  	void setWireMenu(QMenu*);
 	virtual void changeConnection(long fromID,
@@ -287,7 +287,8 @@ public:
 	void renamePins(long itemID, const QStringList & labels, bool singleRow);
 	void getRatsnestColor(QColor &);
 	VirtualWire * makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, bool routed, QColor color);
-	virtual double getRatsnestOpacity(bool);
+	virtual double getRatsnestOpacity();
+	virtual double getRatsnestWidth();
 	void setAnyInRotation();
 
 
@@ -628,7 +629,6 @@ protected:
 	QPointer<Wire> m_dragBendpointWire;
 	bool m_dragCurve;
 	QPoint m_dragBendpointPos;
-	QColor m_standardBackgroundColor;
 	StatusConnectStatus m_statusConnectState;
 	QList<QGraphicsItem *> m_inFocus;
 	QString m_viewName;
@@ -668,7 +668,6 @@ public:
 	static const int PropChangeDelay;
 
 protected:
-	static QHash<ViewIdentifierClass::ViewIdentifier,QColor> m_bgcolors;
 	static const int MoveAutoScrollThreshold;
 	static const int DragAutoScrollThreshold;
 };
