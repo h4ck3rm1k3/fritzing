@@ -195,6 +195,20 @@
           </iconView>
         </views>
    </instance>
+<instance moduleIdRef="ADXL335_v13" modelIndex="20" path="parts/core/ADXL335_v13.fzp">
+    <views>
+  <iconView layer="icon">
+      <geometry z="-1" x="-1" y="-1"/>
+  </iconView>
+    </views>
+</instance>
+  <instance moduleIdRef="ADXL345-BreakoutBoard-v13">
+   <views>
+    <iconView layer="icon">
+     <geometry x="-1" y="-1" z="-1"/>
+    </iconView>
+   </views>
+  </instance>
    <instance moduleIdRef="5DOF-v25">
    <views>
     <iconView layer="icon">
@@ -202,14 +216,21 @@
     </iconView>
    </views>
   </instance>
-  <instance moduleIdRef="ACS712 Low Current Sensor Board v12">
+   <instance moduleIdRef="6DOF-Digital-v10">
    <views>
     <iconView layer="icon">
      <geometry x="-1" y="-1" z="-1"/>
     </iconView>
    </views>
   </instance>
-  <instance moduleIdRef="ADXL345-BreakoutBoard-v13">
+    <instance moduleIdRef="9DoF-Stick-v13">
+   <views>
+    <iconView layer="icon">
+     <geometry x="-1" y="-1" z="-1"/>
+    </iconView>
+   </views>
+  </instance>
+  <instance moduleIdRef="ACS712 Low Current Sensor Board v12">
    <views>
     <iconView layer="icon">
      <geometry x="-1" y="-1" z="-1"/>
@@ -272,13 +293,6 @@
     </iconView>
    </views>
   </instance>
-    <instance moduleIdRef="9DoF-Stick-v13">
-   <views>
-    <iconView layer="icon">
-     <geometry x="-1" y="-1" z="-1"/>
-    </iconView>
-   </views>
-  </instance>
    <instance moduleIdRef="L3G4200D-Breakout-v10">
    <views>
     <iconView layer="icon">
@@ -293,13 +307,6 @@
     </iconView>
    </views>
   </instance> 
-<instance moduleIdRef="ADXL335_v13" modelIndex="20" path="parts/core/ADXL335_v13.fzp">
-    <views>
-	<iconView layer="icon">
-	    <geometry z="-1" x="-1" y="-1"/>
-	</iconView>
-    </views>
-</instance>
  
 <instance moduleIdRef="__spacer__" modelIndex="3" path="LilyPad">
         <views>
