@@ -151,6 +151,10 @@
         <source>and to Arthur Zanona, Nuno Pessanha Santos, and Leandro Nunes for the Portuguese (Brazilian) translation. </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>to Josef Dustira for the Czech translation, </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AbstractEditableLabelWidget</name>
@@ -5176,10 +5180,6 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>purple</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>schematic black</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

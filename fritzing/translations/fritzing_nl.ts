@@ -151,6 +151,10 @@
         <source>and to Arthur Zanona, Nuno Pessanha Santos, and Leandro Nunes for the Portuguese (Brazilian) translation. </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>to Josef Dustira for the Czech translation, </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AbstractEditableLabelWidget</name>
@@ -5184,10 +5188,6 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
     </message>
     <message>
         <source>purple</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>schematic black</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
