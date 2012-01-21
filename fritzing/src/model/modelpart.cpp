@@ -69,8 +69,7 @@ ModelPart::ModelPart(QDomDocument * domDocument, const QString & path, ItemType 
 
 void ModelPart::commonInit(ItemType type) {
 	m_type = type;
-	m_core = false;
-	m_alien = false;
+	m_locationFlags = 0;
 	m_indexSynched = false;
 }
 
@@ -147,9 +146,7 @@ void ModelPart::copy(ModelPart * modelPart) {
 
 	m_type = modelPart->itemType();
 	m_modelPartShared = modelPart->modelPartShared();
-	m_core = modelPart->isCore();
-	m_contrib = modelPart->isContrib();
-	m_alien = modelPart->isAlien();
+	m_locationFlags = modelPart->m_locationFlags;
 }
 
 void ModelPart::copyNew(ModelPart * modelPart) {
@@ -545,27 +542,44 @@ bool ModelPart::ignoreTerminalPoints() {
 }
 
 bool ModelPart::isCore() {
-	return m_core;
+	return (m_locationFlags & CoreFlag) != 0;
 }
 
 void ModelPart::setCore(bool core) {
-	m_core = core;
+	setLocationFlag(core, CoreFlag);
 }
 
 bool ModelPart::isContrib() {
-	return m_contrib;
+	return (m_locationFlags & ContribFlag) != 0;
 }
 
 void ModelPart::setContrib(bool contrib) {
-	m_contrib = contrib;
+	setLocationFlag(contrib, ContribFlag);
 }
 
 bool ModelPart::isAlien() {
-	return m_alien;
+	return (m_locationFlags & AlienFlag) != 0;;
 }
 
 void ModelPart::setAlien(bool alien) {
-	m_alien = alien;
+	setLocationFlag(alien, AlienFlag);
+}
+
+bool ModelPart::isFzz() {
+	return (m_locationFlags & FzzFlag) != 0;;
+}
+
+void ModelPart::setFzz(bool fzz) {
+	setLocationFlag(fzz, FzzFlag);
+}
+
+void ModelPart::setLocationFlag(bool setting, LocationFlag flag) {
+	if (setting) {
+		m_locationFlags |= flag;
+	}
+	else {
+		m_locationFlags &= ~flag;
+	}
 }
 
 bool ModelPart::hasViewIdentifier(ViewIdentifierClass::ViewIdentifier viewIdentifier) {

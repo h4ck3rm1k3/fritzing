@@ -67,6 +67,15 @@ public:
 		 Unknown
 	};
 
+	enum LocationFlag {
+		NoFlag = 0,
+		CoreFlag = 1,
+		ContribFlag = 2,
+		AlienFlag = 4,
+		FzzFlag = 8
+	};
+	Q_DECLARE_FLAGS(LocationFlags, LocationFlag)
+
 public:
 	ModelPart(QDomDocument *, const QString& path, ItemType type);
 	ModelPart(ItemType type = ModelPart::Unknown);
@@ -116,12 +125,13 @@ public:
 
 	bool isCore();
 	void setCore(bool core);
-
 	bool isContrib();
 	void setContrib(bool contrib);
-
-	bool isAlien(); // from "outside" ?
+	bool isAlien(); // from "outside" 
 	void setAlien(bool alien);
+	bool isFzz(); // from "outside" 
+	void setFzz(bool alien);
+	void setLocationFlag(bool setting, LocationFlag flag);
 
 	bool hasViewIdentifier(ViewIdentifierClass::ViewIdentifier viewIdentifier);
 
@@ -184,9 +194,7 @@ protected:
 	long m_index;						// only used at save time to identify model parts in the xml
 	QDomElement m_instanceDomElement;	// only used at load time (so far)
 
-	bool m_core;
-	bool m_contrib;
-	bool m_alien;
+	LocationFlags m_locationFlags;
 	bool m_originalModelPartShared;
 	bool m_indexSynched;
 
@@ -203,5 +211,6 @@ protected:
 
 Q_DECLARE_METATYPE( ModelPart* );			// so we can stash them in a QVariant
 typedef QList< QPointer<ModelPart> > ModelPartList;
+Q_DECLARE_OPERATORS_FOR_FLAGS(ModelPart::LocationFlags)
 
 #endif

@@ -587,3 +587,17 @@ void FolderUtils::checkLockedFiles(const QString & prefix, QFileInfoList & backu
 		}
 	}
 }
+
+void FolderUtils::makePartFolderHierarchy(const QString & prefixFolder, const QString & destFolder) {
+	QDir dir(prefixFolder);
+
+	dir.mkdir(destFolder);
+	dir.mkdir("svg");
+	dir.cd("svg");
+	dir.mkdir(destFolder);
+	dir.cd(destFolder);
+	dir.mkdir("icon");
+	dir.mkdir("breadboard");
+	dir.mkdir("schematic");
+	dir.mkdir("pcb");
+}

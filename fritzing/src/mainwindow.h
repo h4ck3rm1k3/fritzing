@@ -357,9 +357,9 @@ protected:
 	void createTraceMenuActions();
 	void hideShowTraceMenu();
 
-	QList<ModelPart*> moveToPartsFolder(QDir &unzipDir, MainWindow* mw, bool addToBin=true);
-	void copyToSvgFolder(const QFileInfo& file, const QString &destFolder = "contrib");
-	ModelPart* copyToPartsFolder(const QFileInfo& file, bool addToBin=true, const QString &destFolder="contrib");
+	QList<ModelPart*> moveToPartsFolder(QDir &unzipDir, MainWindow* mw, bool addToBin, bool addToAlien, const QString & prefixFolder, const QString &destFolder);
+	void copyToSvgFolder(const QFileInfo& file, bool addToAlien, const QString & prefixFolder, const QString &destFolder);
+	ModelPart* copyToPartsFolder(const QFileInfo& file, bool addToBin, bool addToAlien, const QString & prefixFolder, const QString &destFolder);
 
 	void closeIfEmptySketch(MainWindow* mw);
 	bool whatToDoWithAlienFiles();

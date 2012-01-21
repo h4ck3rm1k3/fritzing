@@ -93,7 +93,9 @@ QString BinManager::MyPartsBinTemplateLocation;
 QString BinManager::SearchBinLocation;
 QString BinManager::SearchBinTemplateLocation;
 QString BinManager::ContribPartsBinLocation;
+QString BinManager::ContribPartsBinTemplateLocation;
 QString BinManager::TempPartsBinLocation;
+QString BinManager::TempPartsBinTemplateLocation;
 QString BinManager::CorePartsBinLocation;
 
 QString BinManager::StandardBinStyle = "background-color: gray;";
@@ -310,9 +312,26 @@ void BinManager::addPart(ModelPart *modelPart, int position) {
 
 void BinManager::addToMyPart(ModelPart *modelPart) {
 	PartsBinPaletteWidget *bin = getOrOpenMyPartsBin();
-	addPartAux(bin,modelPart);
 	if (bin) {
+		addPartAux(bin,modelPart);
 		setAsCurrentTab(bin);
+	}
+}
+
+void BinManager::addToContrib(ModelPart *modelPart) {
+	PartsBinPaletteWidget *bin = getOrOpenBin(ContribPartsBinLocation, ContribPartsBinTemplateLocation);
+	if (bin) {
+		addPartAux(bin,modelPart);
+		setAsCurrentTab(bin);
+	}
+}
+
+void BinManager::addToTemp(ModelPart *modelPart) {
+	PartsBinPaletteWidget *bin = getOrOpenBin(TempPartsBinLocation, TempPartsBinTemplateLocation);
+	if (bin) {
+		addPartAux(bin,modelPart);
+		setAsCurrentTab(bin);
+		bin->setDirty(false);
 	}
 }
 

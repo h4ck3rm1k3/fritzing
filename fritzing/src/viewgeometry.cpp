@@ -193,7 +193,6 @@ void ViewGeometry::setWireFlag(bool setting, WireFlag flag) {
 	else {
 		m_wireFlags &= ~flag;
 	}
-
 }
 
 int ViewGeometry::flagsAsInt() const {

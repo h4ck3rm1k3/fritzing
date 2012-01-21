@@ -71,6 +71,8 @@ class BinManager : public QFrame {
 		void insertBin(PartsBinPaletteWidget* bin, int index);
 		void addPart(ModelPart *modelPart, int position = -1);
 		void addToMyPart(ModelPart *modelPart);
+		void addToContrib(ModelPart *modelPart);
+		void addToTemp(ModelPart *modelPart);
 
 		void addNewPart(ModelPart *modelPart);
 
@@ -212,7 +214,9 @@ protected:
         static QString SearchBinLocation;
         static QString SearchBinTemplateLocation;
 		static QString ContribPartsBinLocation;
+		static QString ContribPartsBinTemplateLocation;
 		static QString TempPartsBinLocation;
+		static QString TempPartsBinTemplateLocation;
 		static QHash<QString, QString> StandardBinIcons;
 
 		static bool isTabReorderingEvent(QDropEvent* event);

@@ -342,16 +342,7 @@ void PartFactory::initFolder()
 	QStringList filters;
 	filters << ("*" + FritzingPartExtension) << "*.svg";
 	FolderUtils::checkLockedFiles("partfactory", backupList, filters, LockedFiles, true);
-	QDir dir(PartFactoryFolderPath);
-	dir.mkdir("core");
-	dir.mkdir("svg");
-	dir.cd("svg");
-	dir.mkdir("core");
-	dir.cd("core");
-	dir.mkdir("icon");
-	dir.mkdir("breadboard");
-	dir.mkdir("schematic");
-	dir.mkdir("pcb");
+	FolderUtils::makePartFolderHierarchy(PartFactoryFolderPath, "core");
 }
 
 void PartFactory::cleanup()
