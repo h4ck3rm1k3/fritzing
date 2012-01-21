@@ -55,11 +55,14 @@ QHash<QObject *, QObject *> & ItemDrag::_cache() {
 	return singleton->m_cache;
 }
 
-
 ItemDrag * ItemDrag::_itemDrag() {
 	return singleton;
 }
 
 void ItemDrag::_dragIsDone() {
 	singleton->dragIsDone();
+}
+
+void ItemDrag::_setOriginator(QWidget * originator) {
+	singleton->m_originator = originator;
 }

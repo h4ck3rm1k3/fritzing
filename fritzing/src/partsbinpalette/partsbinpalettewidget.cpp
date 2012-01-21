@@ -874,3 +874,7 @@ bool PartsBinPaletteWidget::canClose() {
 		return true;
 	}
 }
+
+void PartsBinPaletteWidget::copyFilesToContrib(ModelPart * mp) {
+	m_manager->copyFilesToContrib(mp);
+}

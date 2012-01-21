@@ -58,11 +58,6 @@ FolderUtils::FolderUtils() {
 FolderUtils::~FolderUtils() {
 }
 
-// finds the user parts folder based on local desktop (OS) defaults
-QString FolderUtils::getUserPartsFolder() {
-	return QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/UserCreatedParts";
-}
-
 // finds a subfolder of the application directory searching backward up the tree
 QDir * FolderUtils::getApplicationSubFolder(QString search) {
 	if (singleton == NULL) {

@@ -48,13 +48,16 @@ public:
 	static ItemDrag * _itemDrag();
 	static QHash<QObject *, QObject *> & _cache();
 	static void _dragIsDone();
+	static QWidget * originator();
 	static void cleanup();
+	static void _setOriginator(QWidget *);
 
 signals:
 	void dragIsDoneSignal(ItemDrag *);
 
 protected:
 	QHash<QObject *, QObject *> m_cache;
+	QWidget * m_originator;
 	
 protected:
 	static ItemDrag * singleton;

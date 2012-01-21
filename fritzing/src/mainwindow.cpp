@@ -441,6 +441,12 @@ void MainWindow::connectPairs() {
 	connectPair(m_pcbGraphicsView, m_breadboardGraphicsView);
 	connectPair(m_pcbGraphicsView, m_schematicGraphicsView);
 
+
+	connect(m_breadboardGraphicsView, SIGNAL(dropSignal(const QPoint &, ModelPart *)), this, SLOT(dropSlot(const QPoint &, ModelPart *)));
+	connect(m_schematicGraphicsView, SIGNAL(dropSignal(const QPoint &, ModelPart *)), this, SLOT(dropSlot(const QPoint &, ModelPart *)));
+	connect(m_pcbGraphicsView, SIGNAL(dropSignal(const QPoint &, ModelPart *)), this, SLOT(dropSlot(const QPoint &, ModelPart *)));
+
+
 	bool succeeded = connect(m_pcbGraphicsView, SIGNAL(routingStatusSignal(SketchWidget *, const RoutingStatus &)),
 						this, SLOT(routingStatusSlot(SketchWidget *, const RoutingStatus &)));
 	succeeded = connect(m_schematicGraphicsView, SIGNAL(routingStatusSignal(SketchWidget *, const RoutingStatus &)),
@@ -2600,3 +2606,6 @@ void MainWindow::swapOne(ItemBase * itemBase, const QString & moduleID) {
 	swapSelectedAux(itemBase, moduleID);
 }
 
+void MainWindow::dropSlot(const QPoint &, ModelPart * mp) {
+	m_binManager->copyFilesToContrib(mp);
+}

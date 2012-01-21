@@ -51,7 +51,7 @@ class Helper : public QObject {
 		static void initText();
 
 	protected slots:
-		void somethingDroppedIntoView(const QPoint &);
+		void somethingDroppedIntoView(const QPoint &, ModelPart *);
 		void viewSwitched();
 
 	protected:

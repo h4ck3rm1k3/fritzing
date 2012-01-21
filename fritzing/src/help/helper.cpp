@@ -121,11 +121,11 @@ Helper::~Helper() {
 }
 
 void Helper::connectToView(SketchWidget* view) {
-	connect(view, SIGNAL(dropSignal(const QPoint &)), this, SLOT(somethingDroppedIntoView(const QPoint &)));
+	connect(view, SIGNAL(dropSignal(const QPoint &, ModelPart *)), this, SLOT(somethingDroppedIntoView(const QPoint &, ModelPart *)));
 }
 
 
-void Helper::somethingDroppedIntoView(const QPoint & pos) {
+void Helper::somethingDroppedIntoView(const QPoint & pos, ModelPart *) {
 	Q_UNUSED(pos);
 
 	if(m_stillWaitingFirstDrop) {
@@ -137,7 +137,7 @@ void Helper::somethingDroppedIntoView(const QPoint & pos) {
 		m_breadMainHelp->setTransparent();
 		m_schemMainHelp->setTransparent();
 		m_pcbMainHelp->setTransparent();
-		disconnect(m_owner->m_currentGraphicsView, SIGNAL(dropSignal(const QPoint &)), this, SLOT(somethingDroppedIntoView(const QPoint &)));
+		disconnect(m_owner->m_currentGraphicsView, SIGNAL(dropSignal(const QPoint &, ModelPart *)), this, SLOT(somethingDroppedIntoView(const QPoint &, ModelPart *)));
 	}
 	m_owner->update();   // fixes update problem, thanks to bryant.mairs
 }

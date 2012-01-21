@@ -142,6 +142,7 @@ public slots:
 	void swapOne(ItemBase * itemBase, const QString & moduleID);
 	void selectAllObsolete();
 	void swapObsolete();
+	void dropSlot(const QPoint &, ModelPart *);
 
 protected slots:
 	void mainLoad();

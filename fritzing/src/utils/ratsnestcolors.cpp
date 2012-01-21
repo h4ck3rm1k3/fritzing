@@ -54,7 +54,7 @@ protected:
 
 RatsnestColor::RatsnestColor(const QDomElement & color) {
 	m_name = color.attribute("name");
-	DebugDialog::debug("color name " + m_name);
+	//DebugDialog::debug("color name " + m_name);
 	m_ratsnest.setNamedColor(color.attribute("ratsnest"));
 	m_wire = color.attribute("wire");
 	m_shadow = color.attribute("shadow");

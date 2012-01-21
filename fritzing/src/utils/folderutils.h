@@ -38,7 +38,6 @@ class FolderUtils
 {
 
 public:
-	static QString getUserPartsFolder();
 	static QDir *getApplicationSubFolder(QString);
 	static QString getApplicationSubFolderPath(QString);
 	static QString getUserDataStorePath(QString folder = ___emptyString___);

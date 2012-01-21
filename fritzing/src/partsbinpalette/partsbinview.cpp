@@ -108,6 +108,8 @@ void PartsBinView::mousePressOnItem(const QPoint &dragStartPos, const QString &m
 	mimeData->setData("application/x-dnditemdata", itemData);
 	mimeData->setData("action", "part-reordering");
 
+	ItemDrag::_setOriginator(this->m_parent);
+
 	QDrag * drag = new QDrag(dynamic_cast<QWidget*>(this));
 
 	drag->setMimeData(mimeData);
@@ -196,6 +198,7 @@ void PartsBinView::dropEventAux(QDropEvent* event, bool justAppend) {
 		dataStream >> moduleID >> offset;
 
 		ModelPart * mp = m_refModel->retrieveModelPart(moduleID);
+		m_parent->copyFilesToContrib(mp);
 		if(mp) {
 			if(m_parent->contains(moduleID)) {
 				QMessageBox::information(NULL, QObject::tr("Part already in bin"), QObject::tr("The part that you have just added,\nis already there, we won't add it again, right?"));

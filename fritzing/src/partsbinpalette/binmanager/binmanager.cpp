@@ -1120,3 +1120,30 @@ void BinManager::setTabIcon(PartsBinPaletteWidget* w, QIcon * icon)
 	}
 }
 
+
+void BinManager::copyFilesToContrib(ModelPart * mp) {
+	QString path = mp->path();
+	if (path.isEmpty()) return;
+
+	QFileInfo info(path);
+	QFile fzp(path);
+	
+	QString parts = FolderUtils::getUserDataStorePath("parts");
+	fzp.copy(parts + "/contrib/" + info.fileName());
+	QString prefix = parts + "/svg/contrib/";
+
+	QDir dir = info.absoluteDir();
+	dir.cdUp();
+	dir.cd("svg");
+	dir.cd("contrib");
+
+	QList<ViewIdentifierClass::ViewIdentifier> viewIdentifiers;
+	viewIdentifiers << ViewIdentifierClass::IconView << ViewIdentifierClass::BreadboardView << ViewIdentifierClass::SchematicView << ViewIdentifierClass::PCBView;
+	foreach (ViewIdentifierClass::ViewIdentifier viewIdentifier, viewIdentifiers) {
+		QString fn = mp->hasBaseNameFor(viewIdentifier);
+		if (!fn.isEmpty()) {
+			QFile svg(dir.absoluteFilePath(fn));
+			svg.copy(prefix + fn);
+		}
+	}
+}

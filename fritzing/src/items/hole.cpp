@@ -574,7 +574,8 @@ QWidget * Hole::createHoleSettings(QWidget * parent, HoleSettings & holeSettings
 	gridLayout->setMargin(0);
 
 	holeSettings.unitsComboBox = new QComboBox(subFrame);
-    holeSettings.unitsComboBox->setMaximumWidth(60);
+    holeSettings.unitsComboBox->setMaximumWidth(70);
+    holeSettings.unitsComboBox->setMinimumWidth(50);
 	holeSettings.unitsComboBox->setMinimumHeight(rowHeight);
 	holeSettings.unitsComboBox->setMaximumHeight(rowHeight);
 	holeSettings.unitsComboBox->setEditable(false);

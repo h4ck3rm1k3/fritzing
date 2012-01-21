@@ -1924,7 +1924,7 @@ void SketchWidget::dropItemEvent(QDropEvent *event) {
 
     event->acceptProposedAction();
 
-	emit dropSignal(event->pos());
+	emit dropSignal(event->pos(), modelPart);
 	emit warnSMDSignal(modelPart->moduleID());
 }
 
