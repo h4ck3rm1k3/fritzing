@@ -31,7 +31,7 @@
 		<sketch id="Shift_Register" name="Shift Register" src="core/Shift_Register.fzz"/>
 		<sketch id="Shift_Register_2x" name="Shift Register 2x" src="core/Shift_Register_2x.fzz"/>
 		<sketch id="Stepper_Motor" name="Stepper Motor" src="core/Stepper_Motor.fzz"/>
-		<sketch id="TemperaturSensorLM35" name="Temperatur Sensing" src="core/TemperaturSensorLM35.fzz"/>
+		<sketch id="TemperaturSensorLM35" name="Temperature Sensor" src="core/TemperaturSensorLM35.fzz"/>
 		<sketch id="earthquakeDetection" name="Earthquake Detection" src="core/earthquakeDetection.fzz"/>		
 		<sketch id="TiltSwitch" name="Tilt Switch" src="core/TiltSwitch.fzz"/>
 		<sketch id="Touch_Switch" name="Touch Switch" src="core/TouchSwitch.fzz"/>
@@ -80,9 +80,13 @@
 			<category name="Sensors">
 				<category name="Force">
 					<sketch id="AnalogInputFSR"/>
+					<sketch id="Knock"/>
 				</category>
 				<category name="Light">
 					<sketch id="Photocell"/>
+				</category>
+				<category name="Motion">
+					<sketch id="TiltSwitch"/>
 				</category>
 				<category name="Proximity">
 					<sketch id="Parking"/>
@@ -98,6 +102,7 @@
 				</category>
 				<category name="Temperature">
 					<sketch id="AnalogInputThermistor"/>
+					<sketch id="TemperaturSensorLM35"/>
 				</category>
 				<category name="Touch">
 					<sketch id="555TouchSwitch"/>
@@ -155,20 +160,24 @@
 			</category>
 		</category>
 		<category name="Fritzing Starter Kit">
-			<sketch id="Photocell"/>
-			<sketch id="TiltSwitch"/>
-			<sketch id="AnalogInputToServo"/>
-			<sketch id="Color-Fader"/>
-			<sketch id="Touch_Switch"/>
-			<sketch id="TrafficLight"/>
-			<sketch id="AnalogInputOutput"/>
+			<sketch id="Blink"/>
 			<sketch id="Loop"/>
 			<sketch id="Button"/>
+			<sketch id="TrafficLight"/>
+			<sketch id="TiltSwitch"/>
+			<sketch id="Knock"/>
 			<sketch id="Melody"/>
+               <sketch id="AnalogInputPot"/>
+			<sketch id="Photocell"/>
+			<sketch id="AnalogInputToServo"/>
+			<sketch id="Color-Fader"/>
+			<sketch id="AnalogInputOutput"/>
+			<sketch id="Touch_Switch"/>
+               <sketch id="Relay"/>
 			<sketch id="TemperaturSensorLM35"/>
 			<sketch id="earthquakeDetection"/>
-      <separator />
-      <url name="Get your own Fritzing Starter Kit" href="http://fritzing.org/shop/starter-kit/" />
+              <separator />
+              <url name="Get your own Fritzing Starter Kit" href="http://fritzing.org/shop/starter-kit/" />
 		</category>
 		<category name="Fritzing Super Upgrade Kit">
 		  <sketch id="AnalogInputFSR"/>			
@@ -179,8 +188,9 @@
 			<sketch id="Shift_Register_2x"/>
 			<sketch id="DC_motor_control"/>
 			<sketch id="Mood-Light"/>
+               <sketch id="Optocoupler"/>
 			<separator />
-      <url name="Get your own Fritzing Super Upgrade Kit" href="http://fritzing.org/shop/super-upgrade-kit/" />			
+               <url name="Get your own Fritzing Super Upgrade Kit" href="http://fritzing.org/shop/super-upgrade-kit/" />			
 		</category>-->
 	</categories>
 </fritzing-sketches>
