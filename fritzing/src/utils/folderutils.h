@@ -58,7 +58,7 @@ public:
 	static bool unzipTo(const QString &filepath, const QString &dirToDecompress);
 	static void replicateDir(QDir srcDir, QDir targDir);
 	static QString getRandText();
-	static void initLockedFiles(const QString & prefix, QString & folder, QHash<QString, class QtLockedFile *> & lockedFiles);
+	static void initLockedFiles(const QString & prefix, QString & folder, QHash<QString, class QtLockedFile *> & lockedFiles, bool lockFiles);
 	static void releaseLockedFiles(const QString & folder, QHash<QString, class QtLockedFile *> & lockedFiles);
 	static void checkLockedFiles(const QString & prefix, QFileInfoList & backupList, QStringList & filters, QHash<QString, class QtLockedFile *> & lockedFiles, bool recurse);
 	static void cleanup();
@@ -75,6 +75,7 @@ protected:
 	const QString libraryPath();
 
 	static bool checkLockedFilesAux(const QDir & parent, QStringList & filters);
+	static void releaseLockedFiles(const QString & folder, QHash<QString, class QtLockedFile *> & lockedFiles, bool remove);
 
 public:
 	static const QString LockFileName;

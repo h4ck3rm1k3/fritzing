@@ -337,7 +337,7 @@ QString PartFactory::getFzpFilename(const QString & moduleID)
 
 void PartFactory::initFolder()
 {
-	FolderUtils::initLockedFiles("partfactory", PartFactoryFolderPath, LockedFiles);
+	FolderUtils::initLockedFiles("partfactory", PartFactoryFolderPath, LockedFiles, true);
 	QFileInfoList backupList;
 	QStringList filters;
 	filters << ("*" + FritzingPartExtension) << "*.svg";

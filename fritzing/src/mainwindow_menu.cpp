@@ -150,7 +150,7 @@ void MainWindow::mainLoad() {
 
     file.close();
 
-    MainWindow* mw = newMainWindow(m_paletteModel, m_refModel, fileName, true);
+    MainWindow* mw = newMainWindow(m_paletteModel, m_refModel, fileName, true, true);
 	mw->loadWhich(fileName, true, true, "");
     mw->clearFileProgressDialog();
 	closeIfEmptySketch(mw);
@@ -1793,7 +1793,7 @@ void MainWindow::openInPartsEditor() {
 }
 
 void MainWindow::createNewSketch() {
-    MainWindow* mw = newMainWindow(m_paletteModel, m_refModel, "", true);
+    MainWindow* mw = newMainWindow(m_paletteModel, m_refModel, "", true, true);
     mw->move(x()+CascadeFactorX,y()+CascadeFactorY);
 	ProcessEventBlocker::processEvents();
 
@@ -2033,7 +2033,7 @@ void MainWindow::openRecentOrExampleFile() {
 			return;
 		}
 
-		MainWindow* mw = newMainWindow(m_paletteModel, m_refModel, action->data().toString(), true);
+		MainWindow* mw = newMainWindow(m_paletteModel, m_refModel, action->data().toString(), true, true);
 		bool readOnly = m_openExampleActions.contains(action->text());
 		mw->setReadOnly(readOnly);
 		mw->loadWhich(filename,!readOnly,!readOnly,"");

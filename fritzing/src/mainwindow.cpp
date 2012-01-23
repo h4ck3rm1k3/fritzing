@@ -209,7 +209,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel, QW
 			Qt::DirectConnection);
 }
 
-void MainWindow::init(PaletteModel * paletteModel, ReferenceModel *refModel) {
+void MainWindow::init(PaletteModel * paletteModel, ReferenceModel *refModel, bool lockFiles) {
     m_paletteModel = paletteModel;
     m_refModel = refModel;
     m_restarting = false;
@@ -218,10 +218,13 @@ void MainWindow::init(PaletteModel * paletteModel, ReferenceModel *refModel) {
 		m_fileProgressDialog->setValue(2);
 	}
 
-	FolderUtils::initLockedFiles("fzz", m_fzzFolder, m_fzzFiles);
-	QFileInfoList backupList;
-	QStringList filters;
-	FolderUtils::checkLockedFiles("fzz", backupList, filters, m_fzzFiles, true);
+
+	FolderUtils::initLockedFiles("fzz", m_fzzFolder, m_fzzFiles, lockFiles);
+	if (lockFiles) {
+		QFileInfoList backupList;
+		QStringList filters;
+		FolderUtils::checkLockedFiles("fzz", backupList, filters, m_fzzFiles, true);
+	}
 
 	// all this belongs in viewLayer.xml
 	m_breadboardGraphicsView = new BreadboardSketchWidget(ViewIdentifierClass::BreadboardView, this);
@@ -2139,13 +2142,13 @@ void MainWindow::addDefaultParts() {
 	m_schematicGraphicsView->addDefaultParts();
 }
 
-MainWindow * MainWindow::newMainWindow(PaletteModel * paletteModel, ReferenceModel *refModel, const QString & displayPath, bool showProgress) {
+MainWindow * MainWindow::newMainWindow(PaletteModel * paletteModel, ReferenceModel *refModel, const QString & displayPath, bool showProgress, bool lockFiles) {
     MainWindow * mw = new MainWindow(paletteModel, refModel, NULL);
 	if (showProgress) {
 		mw->showFileProgressDialog(displayPath);
 	}
 
-    mw->init(paletteModel, refModel);
+    mw->init(paletteModel, refModel, lockFiles);
 
 	return mw;
 }
@@ -2607,3 +2610,4 @@ void MainWindow::swapOne(ItemBase * itemBase, const QString & moduleID) {
 void MainWindow::dropSlot(const QPoint &, ModelPart * mp) {
 	m_binManager->copyFilesToContrib(mp);
 }
+

@@ -54,7 +54,7 @@ public:
 	class ReferenceModel * loadReferenceModel();
 	void registerFonts();
 	bool loadBin(QString binToOpen);
-	class MainWindow * loadWindows(int & loaded);
+	class MainWindow * loadWindows(int & loaded, bool lockFiles);
 
 public:
 	static bool spaceBarIsPressed();

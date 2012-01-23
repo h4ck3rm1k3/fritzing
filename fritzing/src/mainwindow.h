@@ -78,7 +78,7 @@ public:
 	class PartsEditorMainWindow* getPartsEditor(ModelPart *modelPart, long id, ItemBase * fromItem, class PartsBinPaletteWidget* requester);
 	ModelPart *loadPartFromFile(const QString& newPartPath, bool connectorsChanged=false);
 	void addDefaultParts();
-    void init(class PaletteModel *, ReferenceModel *refModel);
+    void init(class PaletteModel *, ReferenceModel *refModel, bool lockFiles);
 	void showFileProgressDialog(const QString & path);
 	void setFileProgressPath(const QString & path);
 	void clearFileProgressDialog();
@@ -114,7 +114,7 @@ public:
 
 public:
 	static void initNames();
-	static MainWindow * newMainWindow(PaletteModel * paletteModel, ReferenceModel *refModel, const QString & displayPath, bool showProgress);
+	static MainWindow * newMainWindow(PaletteModel * paletteModel, ReferenceModel *refModel, const QString & displayPath, bool showProgress, bool lockFiles);
 	static void setAutosavePeriod(int);
 	static void setAutosaveEnabled(bool);
 

@@ -469,22 +469,28 @@ bool FolderUtils::unzipTo(const QString &filepath, const QString &dirToDecompres
 	return true;
 }
 
-void FolderUtils::initLockedFiles(const QString & prefix, QString & folder, QHash<QString, class QtLockedFile *> & lockedFiles) {
+void FolderUtils::initLockedFiles(const QString & prefix, QString & folder, QHash<QString, class QtLockedFile *> & lockedFiles, bool lockFiles) {
 	// first create our own unique folder and lock it
 	QDir backupDir(FolderUtils::getUserDataStorePath(prefix));
 	QString lockedSubfolder = FolderUtils::getRandText();
 	backupDir.mkdir(lockedSubfolder);
 	folder = backupDir.absoluteFilePath(lockedSubfolder);
-	QtLockedFile * lockFile = new QtLockedFile(folder + "/" + LockFileName);
-	lockFile->open(QFile::WriteOnly);
-	lockFile->lock(QtLockedFile::WriteLock, true);
-	lockedFiles.insert(lockedSubfolder, lockFile);
+	if (lockFiles) {
+		QtLockedFile * lockFile = new QtLockedFile(folder + "/" + LockFileName);
+		lockFile->open(QFile::WriteOnly);
+		lockFile->lock(QtLockedFile::WriteLock, true);
+		lockedFiles.insert(lockedSubfolder, lockFile);
+	}
 }
-
 
 void FolderUtils::releaseLockedFiles(const QString & folder, QHash<QString, class QtLockedFile *> & lockedFiles) 
 {
 	// remove backup files; this is a clean exit
+	releaseLockedFiles(folder, lockedFiles, true);
+}
+
+void FolderUtils::releaseLockedFiles(const QString & folder, QHash<QString, class QtLockedFile *> & lockedFiles, bool remove) 
+{
 	QDir backupDir(folder);
 	backupDir.cdUp();
 	foreach (QString sub, lockedFiles.keys()) {
@@ -492,7 +498,9 @@ void FolderUtils::releaseLockedFiles(const QString & folder, QHash<QString, clas
 		lockedFile->unlock();
 		lockedFile->close();
 		delete lockedFile;
-        FolderUtils::rmdir(backupDir.absoluteFilePath(sub));
+        if (remove) {
+			FolderUtils::rmdir(backupDir.absoluteFilePath(sub));
+		}
 	}
 	lockedFiles.clear();
 }

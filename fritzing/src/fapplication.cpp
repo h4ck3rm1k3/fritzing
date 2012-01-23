@@ -456,9 +456,9 @@ bool FApplication::loadBin(QString binToOpen) {
 	return true;
 }
 
-MainWindow * FApplication::loadWindows(int & loaded) {
+MainWindow * FApplication::loadWindows(int & loaded, bool lockFiles) {
 	// our MainWindows use WA_DeleteOnClose so this has to be added to the heap (via new) rather than the stack (for local vars)
-	MainWindow * mainWindow = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, "", false);   // this is also slow
+	MainWindow * mainWindow = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, "", false, lockFiles);   // this is also slow
 	mainWindow->setReportMissingModules(false);
 
 	loaded = 0;
@@ -532,7 +532,7 @@ void FApplication::runGerberService()
 	foreach (QString filename, filenames) {
 		QString filepath = dir.absoluteFilePath(filename);
 		int loaded = 0;
-		MainWindow * mainWindow = loadWindows(loaded);
+		MainWindow * mainWindow = loadWindows(loaded, false);
 		mainWindow->noBackup();
 		m_started = true;
 
@@ -780,7 +780,7 @@ void FApplication::finish()
 }
 
 void FApplication::loadNew(QString path) {
-	MainWindow * mw = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, path, true);
+	MainWindow * mw = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, path, true, true);
 	if (!mw->loadWhich(path, false, true, "")) {
 		mw->close();
 	}
@@ -1231,7 +1231,7 @@ void FApplication::loadSomething(bool firstRun, const QString & prevVersion) {
 
         foreach (QString filename, m_filesToLoad) {
             DebugDialog::debug(QString("Loading non-service file %1").arg(filename));
-            MainWindow *mainWindow = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, filename, true);
+            MainWindow *mainWindow = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, filename, true, true);
             mainWindow->loadWhich(filename, true, true, "");
             sketchesToLoad << mainWindow;
         }
@@ -1246,7 +1246,7 @@ void FApplication::loadSomething(bool firstRun, const QString & prevVersion) {
 	MainWindow * newBlankSketch = NULL;
 	if (sketchesToLoad.isEmpty()) {
 		//DebugDialog::debug(QString("empty sketch"));
-		newBlankSketch = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, "", true);
+		newBlankSketch = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, "", true, true);
 		if (newBlankSketch) {
 			// make sure to start an empty sketch with a board
 			newBlankSketch->addDefaultParts();   // do this before call to show()
@@ -1278,7 +1278,7 @@ QList<MainWindow *> FApplication::loadLastOpenSketch() {
 
     DebugDialog::debug(QString("Loading last open sketch %1").arg(lastSketchPath));
     settings.remove("lastOpenSketch");				// clear the preference, in case the load crashes
-    MainWindow *mainWindow = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, lastSketchPath, true);
+    MainWindow *mainWindow = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, lastSketchPath, true, true);
     mainWindow->loadWhich(lastSketchPath, true, true, "");
     sketches << mainWindow;
     settings.setValue("lastOpenSketch", lastSketchPath);	// the load works, so restore the preference
@@ -1332,7 +1332,7 @@ QList<MainWindow *> FApplication::recoverBackups()
 			QString fileExt;
 			QString bundledFileName = FolderUtils::getSaveFileName(NULL, tr("Please specify an .fzz file name to save to (cancel will delete the backup)"), originalPath, tr("Fritzing (*%1)").arg(FritzingBundleExtension), &fileExt);
 			if (!bundledFileName.isEmpty()) {
-				MainWindow *currentRecoveredSketch = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, originalBaseName, true);
+				MainWindow *currentRecoveredSketch = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, originalBaseName, true, true);
     			currentRecoveredSketch->mainLoad(backupName, bundledFileName);
 				currentRecoveredSketch->saveAsShareable(bundledFileName, true);
 				currentRecoveredSketch->setCurrentFile(bundledFileName, true, true);
@@ -1373,7 +1373,7 @@ void FApplication::initFilesToLoad()
 }
 
 void FApplication::initBackups() {
-	FolderUtils::initLockedFiles("backup", MainWindow::BackupFolder, m_lockedFiles);
+	FolderUtils::initLockedFiles("backup", MainWindow::BackupFolder, m_lockedFiles, true);
 }
 
 void FApplication::cleanupBackups() {
@@ -1459,7 +1459,7 @@ void FApplication::runExampleService(QDir & dir) {
 		DebugDialog::debug("sketch file " + path);
 
 		int loaded = 0;
-		MainWindow * mainWindow = loadWindows(loaded);
+		MainWindow * mainWindow = loadWindows(loaded, false);
 		if (mainWindow == NULL) continue;
 
 		mainWindow->noBackup();
