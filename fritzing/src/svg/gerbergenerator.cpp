@@ -106,7 +106,7 @@ void GerberGenerator::exportToGerber(const QString & filename, const QString & e
 	int outlineInvalidCount = outlineGerber.convert(svgOutline, sketchWidget->boardLayers() == 2, "contour", SVG2gerber::ForOutline, svgSize * GraphicsUtils::StandardFritzingDPI);
 	
 	DebugDialog::debug(QString("outline output: %1").arg(outlineGerber.getGerber()));
-	saveEnd("contour", exportDir, filename, OutlineSuffix, displayMessageBoxes, outlineGerber);
+	saveEnd("contour", exportDir, filename, OutlineSuffix, displayMessageBoxes, true, outlineGerber);
 
 	doDrill(board, sketchWidget, filename, exportDir, displayMessageBoxes);
 
@@ -141,7 +141,7 @@ int GerberGenerator::doCopper(ItemBase * board, PCBSketchWidget * sketchWidget, 
 		return 0;
 	}
 
-	return doEnd(svg, sketchWidget->boardLayers(), copperName, SVG2gerber::ForCopper, svgSize * GraphicsUtils::StandardFritzingDPI, exportDir, filename, copperSuffix, displayMessageBoxes);
+	return doEnd(svg, sketchWidget->boardLayers(), copperName, SVG2gerber::ForCopper, svgSize * GraphicsUtils::StandardFritzingDPI, exportDir, filename, copperSuffix, displayMessageBoxes, true);
 }
 
 
@@ -181,7 +181,7 @@ int GerberGenerator::doSilk(LayerList silkLayerIDs, const QString & silkName, co
 	//fs2 << svgSilk;
 	//f2.close();
 
-	return doEnd(svgSilk, sketchWidget->boardLayers(), silkName, SVG2gerber::ForSilk, svgSize * GraphicsUtils::StandardFritzingDPI, exportDir, filename, gerberSuffix, displayMessageBoxes);
+	return doEnd(svgSilk, sketchWidget->boardLayers(), silkName, SVG2gerber::ForSilk, svgSize * GraphicsUtils::StandardFritzingDPI, exportDir, filename, gerberSuffix, displayMessageBoxes, true);
 }
 
 
@@ -212,7 +212,7 @@ int GerberGenerator::doDrill(ItemBase * board, PCBSketchWidget * sketchWidget, c
 		return 0;
 	}
 
-	return doEnd(svgDrill, sketchWidget->boardLayers(), "drill", SVG2gerber::ForDrill, svgSize * GraphicsUtils::StandardFritzingDPI, exportDir, filename, DrillSuffix, displayMessageBoxes);
+	return doEnd(svgDrill, sketchWidget->boardLayers(), "drill", SVG2gerber::ForDrill, svgSize * GraphicsUtils::StandardFritzingDPI, exportDir, filename, DrillSuffix, displayMessageBoxes, true);
 }
 
 int GerberGenerator::doMask(LayerList maskLayerIDs, const QString &maskName, const QString & gerberSuffix, ItemBase * board, PCBSketchWidget * sketchWidget, const QString & filename, const QString & exportDir, bool displayMessageBoxes ) 
@@ -263,24 +263,26 @@ int GerberGenerator::doMask(LayerList maskLayerIDs, const QString &maskName, con
 		return 0;
 	}
 
-	return doEnd(svgMask, sketchWidget->boardLayers(), maskName, SVG2gerber::ForMask, svgSize * GraphicsUtils::StandardFritzingDPI, exportDir, filename, gerberSuffix, displayMessageBoxes);
+	return doEnd(svgMask, sketchWidget->boardLayers(), maskName, SVG2gerber::ForMask, svgSize * GraphicsUtils::StandardFritzingDPI, exportDir, filename, gerberSuffix, displayMessageBoxes, true);
 }
 
 int GerberGenerator::doEnd(const QString & svg, int boardLayers, const QString & layerName, SVG2gerber::ForWhy forWhy, QSizeF svgSize, 
-							const QString & exportDir, const QString & prefix, const QString & suffix, bool displayMessageBoxes)
+							const QString & exportDir, const QString & prefix, const QString & suffix, bool displayMessageBoxes, bool chopPrefix)
 {
     // create mask gerber from svg
     SVG2gerber gerber;
 	int invalidCount = gerber.convert(svg, boardLayers == 2, layerName, forWhy, svgSize);
 
-	saveEnd(layerName, exportDir, prefix, suffix, displayMessageBoxes, gerber);
+	saveEnd(layerName, exportDir, prefix, suffix, displayMessageBoxes, chopPrefix, gerber);
 
 	return invalidCount;
 }
 
-bool GerberGenerator::saveEnd(const QString & layerName, const QString & exportDir, const QString & prefix, const QString & suffix, bool displayMessageBoxes, SVG2gerber & gerber)
+bool GerberGenerator::saveEnd(const QString & layerName, const QString & exportDir, const QString & prefix, const QString & suffix, bool displayMessageBoxes, bool chopPrefix, SVG2gerber & gerber)
 {
-    QString outname = exportDir + "/" +  QFileInfo(prefix).completeBaseName() + suffix;
+	QString usePrefix = (chopPrefix) ? QFileInfo(prefix).completeBaseName() : prefix;
+
+    QString outname = exportDir + "/" +  usePrefix + suffix;
     QFile out(outname);
 	if (!out.open(QIODevice::WriteOnly | QIODevice::Text)) {
 		displayMessage(QObject::tr("%1 file export failure (2)").arg(layerName), displayMessageBoxes);

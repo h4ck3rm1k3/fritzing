@@ -340,6 +340,8 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 		foreach (PanelItem * panelItem, insertPanelItems) {
 			if (panelItem->planePair != planePair) continue;
 
+			DebugDialog::debug(QString("placing %1 on panel %2").arg(panelItem->boardName).arg(planePair->index));
+
 			try {
 				if ((panelItem->rotate90 && !rotated.value(panelItem->path)) || (panelItem->rotate90 == false && rotated.value(panelItem->path)))
 				{
@@ -398,8 +400,10 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 			}
 
 			QString prefix = QString("%1.panel_%2").arg(panelParams.prefix).arg(planePair->index);
+			QString suffix = layerThingList.at(i).suffix;
+			DebugDialog::debug("converting " + prefix + " " + suffix);
 			QSizeF svgSize(panelParams.panelWidth, panelParams.panelHeight);
-			GerberGenerator::doEnd(planePair->svgs.at(i), 2, layerThingList.at(i).name, layerThingList.at(i).forWhy, svgSize, gerberDir.absolutePath(), prefix, layerThingList.at(i).suffix, false);
+			GerberGenerator::doEnd(planePair->svgs.at(i), 2, layerThingList.at(i).name, layerThingList.at(i).forWhy, svgSize, gerberDir.absolutePath(), prefix, suffix, false, false);
 		}
 	}
 }
@@ -1219,23 +1223,23 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
 			logoItem->setPos(rect.left() - (size.width() / 2) + (size.height() / 2), rect.top() + (size.width() / 2) - (size.height() / 2));
 			mainWindow->pcbView()->rotateX(90, false);
 		}
-		if (fillType == GroundPlane::fillTypeGround) {
-			mainWindow->groundFill();
-		}
-		else {
-			mainWindow->copperFill();
-		}
-
-		mainWindow->saveAsShareable(path, true);
 	}
 	else {
 		QRectF r = boardItem->sceneBoundingRect();
 		logoItem->setPos(r.right() + 10, r.top());
-		mainWindow->saveAsShareable(path, true);
 		DebugDialog::debug(QString("\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"
 									"unable to place inscription in %1\n"
 									"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n").arg(path));
 	}
+
+	if (fillType == GroundPlane::fillTypeGround) {
+		mainWindow->groundFill();
+	}
+	else {
+		mainWindow->copperFill();
+	}
+
+	mainWindow->saveAsShareable(path, true);
 
 	return mainWindow;
 }
