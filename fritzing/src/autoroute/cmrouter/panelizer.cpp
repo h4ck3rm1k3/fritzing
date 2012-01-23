@@ -304,12 +304,12 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 	addOptional(optionalCount, refPanelItems, insertPanelItems, panelParams, planePairs);
 
 	foreach (PlanePair * planePair, planePairs) {
+		planePair->svg += "</svg>";
 		QString fname = svgDir.absoluteFilePath(QString("%1.panel_%2.layout.svg").arg(panelParams.prefix).arg(planePair->index));
 		QFile outfile(fname);
 		if (outfile.open(QIODevice::WriteOnly | QIODevice::Text)) {
 			QTextStream out(&outfile);
 			out << planePair->svg;
-			out << "</svg>";
 			outfile.close();
 		}
 	}
@@ -386,12 +386,13 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 
 		}
 
+		QString prefix = QString("%1.panel_%2").arg(panelParams.prefix).arg(planePair->index);
 		for (int i = 0; i < planePair->svgs.count(); i++) {
 			if (planePair->svgs.at(i).isEmpty()) continue;
 
 			planePair->svgs.replace(i, planePair->svgs.at(i) + "</svg>");
 
-			QString fname = svgDir.absoluteFilePath(QString("%1.panel_%2.%3.svg").arg(panelParams.prefix).arg(planePair->index).arg(layerThingList.at(i).name));
+			QString fname = svgDir.absoluteFilePath(QString("%1.%2.svg").arg(prefix).arg(layerThingList.at(i).name));
 			QFile outfile(fname);
 			if (outfile.open(QIODevice::WriteOnly | QIODevice::Text)) {
 				QTextStream out(&outfile);
@@ -399,11 +400,31 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 				outfile.close();
 			}
 
-			QString prefix = QString("%1.panel_%2").arg(panelParams.prefix).arg(planePair->index);
 			QString suffix = layerThingList.at(i).suffix;
 			DebugDialog::debug("converting " + prefix + " " + suffix);
 			QSizeF svgSize(panelParams.panelWidth, panelParams.panelHeight);
 			GerberGenerator::doEnd(planePair->svgs.at(i), 2, layerThingList.at(i).name, layerThingList.at(i).forWhy, svgSize, gerberDir.absolutePath(), prefix, suffix, false, false);
+
+		}
+
+		QDomDocument doc;
+		QString merger = planePair->svgs.at(7);  // outline layer
+		merger.replace("black", "#90f0a0");
+		merger.replace("#000000", "#90f0a0");
+		merger.replace("fill-opacity=\"0.5\"", "fill-opacity=\"1\"");
+		TextUtils::mergeSvg(doc, merger, "");
+		TextUtils::mergeSvg(doc, planePair->svgs.at(0), "");		// silktop layer
+		merger = planePair->svg;									// layout
+		merger.replace("'red'", "'none'");
+		merger.replace("#000000", "red");
+		TextUtils::mergeSvg(doc, merger, "");
+		merger = TextUtils::mergeSvgFinish(doc);
+		QString fname = svgDir.absoluteFilePath(QString("%1.%2.svg").arg(prefix).arg("identification"));
+		QFile outfile(fname);
+		if (outfile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+			QTextStream out(&outfile);
+			out << merger;
+			outfile.close();
 		}
 	}
 }
@@ -497,11 +518,23 @@ bool Panelizer::bestFitOne(PanelItem * panelItem, PanelParams & panelParams, QLi
 			.arg(panelItem->y * GraphicsUtils::StandardFritzingDPI)
 			.arg(GraphicsUtils::StandardFritzingDPI * w)
 			.arg(GraphicsUtils::StandardFritzingDPI * h);
-		planePair->svg += QString("<text x='%1' y='%2' anchor='middle' font-family='DroidSans' stroke='none' fill='#000000' text-anchor='middle' font-size='85'>%3</text>\n")
-			.arg(GraphicsUtils::StandardFritzingDPI * (panelItem->x + (w / 2)))
-			.arg(GraphicsUtils::StandardFritzingDPI * (panelItem->y + (h  / 2)))
-			.arg(QFileInfo(panelItem->path).completeBaseName());
 
+		QStringList strings = QFileInfo(panelItem->path).completeBaseName().split("_");
+		double cx = GraphicsUtils::StandardFritzingDPI * (panelItem->x + (w / 2));
+		int fontSize1 = 250;
+		int fontSize2 = 150;
+		int fontSize = fontSize1;
+		double cy = GraphicsUtils::StandardFritzingDPI * (panelItem->y + (h  / 2));
+		cy -= ((strings.count() - 1) * fontSize2 / 2);
+		foreach (QString string, strings) {
+			planePair->svg += QString("<text x='%1' y='%2' anchor='middle' font-family='DroidSans' stroke='none' fill='#000000' text-anchor='middle' font-size='%3'>%4</text>\n")
+				.arg(cx)
+				.arg(cy)
+				.arg(fontSize)
+				.arg(string);
+			cy += fontSize;
+			if (fontSize == fontSize1) fontSize = fontSize2;
+		}
 
 		TiInsertTile(planePair->thePlane, &tileRect, NULL, Tile::OBSTACLE);
 		TileRect tileRect90;
@@ -1097,6 +1130,11 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
 		//return NULL;
 	//}
 
+
+	// adding the serial number as a copper logo is now obsolete
+
+	/*
+
 	QList<QGraphicsItem *> toDelete;
 	foreach (QGraphicsItem * item, mainWindow->pcbView()->scene()->items()) {
 		CopperLogoItem * cli = dynamic_cast<CopperLogoItem *>(item);
@@ -1111,6 +1149,8 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
 		DebugDialog::debug("deleting prior inscription");
 		delete item;
 	}
+
+	*/
 
 	if (mainWindow->pcbView()->boardLayers() == 1) {
 		bool swapped = false;
@@ -1141,6 +1181,10 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
 		}
 	}
 
+
+	// adding the serial number as a copper logo is now obsolete
+
+	/*
 	CMRouter router(mainWindow->pcbView());
 	QList<Tile *> alreadyTiled;
 	router.setKeepout(mainWindow->pcbView()->getKeepout());
@@ -1231,6 +1275,8 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
 									"unable to place inscription in %1\n"
 									"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n").arg(path));
 	}
+
+	*/
 
 	if (fillType == GroundPlane::fillTypeGround) {
 		mainWindow->groundFill();
