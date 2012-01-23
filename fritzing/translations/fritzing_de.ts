@@ -550,13 +550,13 @@
         <source>
 
 Note: %n parts are not located entirely on the board.</source>
-        <translation>
+        <translation type="unfinished">
             <numerusform>
 
-Hinweis: %n Bauteil befindet sich außerhalb derLeiterplatte.</numerusform>
+Hinweis: %n Bauteil befindet sich außerhalb der Leiterplatte.</numerusform>
             <numerusform>
 
-Hinweis: %n Bauteil befinden sich außerhalb derLeiterplatte.</numerusform>
+Hinweis: %n Bauteil befinden sich außerhalb der Leiterplatte.</numerusform>
         </translation>
     </message>
 </context>
