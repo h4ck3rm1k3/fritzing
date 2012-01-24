@@ -415,10 +415,12 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 		merger.replace("#000000", "#90f0a0");
 		merger.replace("fill-opacity=\"0.5\"", "fill-opacity=\"1\"");
 		TextUtils::mergeSvg(doc, merger, "");
-		TextUtils::mergeSvg(doc, planePair->svgs.at(0), "");		// silktop layer
-		merger = planePair->svg;									// layout
-		merger.replace("'red'", "'none'");
-		merger.replace("#000000", "red");
+		merger = planePair->svgs.at(0);			// silktop layer
+		merger.replace("black", "#909090");
+		merger.replace("#000000", "#909090");
+		TextUtils::mergeSvg(doc, merger, "");		
+		merger = planePair->svg;				// layout
+		merger.replace("'red'", "'none'");		// hide background rect
 		TextUtils::mergeSvg(doc, merger, "");
 		merger = TextUtils::mergeSvgFinish(doc);
 		QString fname = svgDir.absoluteFilePath(QString("%1.%2.svg").arg(prefix).arg("identification"));
@@ -534,7 +536,7 @@ bool Panelizer::bestFitOne(PanelItem * panelItem, PanelParams & panelParams, QLi
 		double cy = GraphicsUtils::StandardFritzingDPI * (panelItem->y + (h  / 2));
 		cy -= ((strings.count() - 1) * fontSize2 / 2);
 		foreach (QString string, strings) {
-			planePair->svg += QString("<text x='%1' y='%2' anchor='middle' font-family='DroidSans' stroke='none' fill='#000000' text-anchor='middle' font-size='%3'>%4</text>\n")
+			planePair->svg += QString("<text x='%1' y='%2' anchor='middle' font-family='OCRA' stroke='none' fill='#000000' text-anchor='middle' font-size='%3'>%4</text>\n")
 				.arg(cx)
 				.arg(cy)
 				.arg(fontSize)
