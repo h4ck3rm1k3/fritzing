@@ -309,6 +309,7 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 		QFile outfile(fname);
 		if (outfile.open(QIODevice::WriteOnly | QIODevice::Text)) {
 			QTextStream out(&outfile);
+			out.setCodec("UTF-8");
 			out << planePair->svg;
 			outfile.close();
 		}
@@ -396,6 +397,7 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 			QFile outfile(fname);
 			if (outfile.open(QIODevice::WriteOnly | QIODevice::Text)) {
 				QTextStream out(&outfile);
+				out.setCodec("UTF-8");
 				out << planePair->svgs.at(i);
 				outfile.close();
 			}
@@ -423,9 +425,14 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 		QFile outfile(fname);
 		if (outfile.open(QIODevice::WriteOnly | QIODevice::Text)) {
 			QTextStream out(&outfile);
+			out.setCodec("UTF-8");
 			out << merger;
 			outfile.close();
 		}
+	}
+
+	foreach (PanelItem * panelItem, refPanelItems.values()) {
+		panelItem->window->close();
 	}
 }
 
@@ -1080,12 +1087,16 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
 		return NULL;
 	}
 
+
+	// adding the serial number as a copper logo is now obsolete
+	/*
 	bool ok;
 	double inscriptionHeight = TextUtils::convertToInches(board.attribute("inscriptionHeight"), &ok, false);
 	if (!ok) {
 		DebugDialog::debug(QString("bad inscriptionHeight '%1'").arg(path));
 		return NULL;
 	}
+	*/
 
 	int loaded = 0;
 	MainWindow * mainWindow = app->loadWindows(loaded, false);
@@ -1132,7 +1143,6 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
 
 
 	// adding the serial number as a copper logo is now obsolete
-
 	/*
 
 	QList<QGraphicsItem *> toDelete;
