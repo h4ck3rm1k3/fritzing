@@ -49,7 +49,7 @@ protected slots:
 	void production(bool);
 	void widthEntry(const QString &);
 
-	void changeUnits(const QString &);
+	void changeUnits(bool);
 	void changeHoleSize(const QString &);
 	void changeDiameter();
 	void changeThickness();

@@ -388,7 +388,7 @@ HtmlInfoView {
 }
 
 #infoViewGroupBox {
-	border: none;
+	border: 1px solid gray;
 	font-size: 10px;
 	font-weight: bold;
 	margin: 5px 0px 0px 0px;

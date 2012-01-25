@@ -108,7 +108,8 @@ AutorouterSettingsDialog::AutorouterSettingsDialog(QWidget *parent) : QDialog(pa
 	QWidget * viaWidget = Hole::createHoleSettings(viaGroupBox, m_holeSettings, true, "");
 
 	connect(m_holeSettings.sizesComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeHoleSize(const QString &)));
-	connect(m_holeSettings.unitsComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeUnits(const QString &)));
+	connect(m_holeSettings.mmRadioButton, SIGNAL(toggled(bool)), this, SLOT(changeUnits(bool)));
+	connect(m_holeSettings.inRadioButton, SIGNAL(toggled(bool)), this, SLOT(changeUnits(bool)));
 	connect(m_holeSettings.diameterEdit, SIGNAL(editingFinished()), this, SLOT(changeDiameter()));
 	connect(m_holeSettings.thicknessEdit, SIGNAL(editingFinished()), this, SLOT(changeThickness()));
 
@@ -189,7 +190,8 @@ void AutorouterSettingsDialog::enableCustom(bool enable)
 {
 	m_holeSettings.diameterEdit->setEnabled(enable);
 	m_holeSettings.thicknessEdit->setEnabled(enable);
-	m_holeSettings.unitsComboBox->setEnabled(enable);
+	m_holeSettings.mmRadioButton->setEnabled(enable);
+	m_holeSettings.inRadioButton->setEnabled(enable);
 	m_holeSettings.sizesComboBox->setEnabled(enable);
 	m_customFrame->setVisible(enable);
 }
@@ -233,16 +235,16 @@ void AutorouterSettingsDialog::changeHoleSize(const QString & newSize) {
 	Hole::setHoleSize(s, false, m_holeSettings);
 }
 
-void AutorouterSettingsDialog::changeUnits(const QString & units) 
+void AutorouterSettingsDialog::changeUnits(bool) 
 {
-	QString newVal = Hole::changeUnits(units, m_holeSettings);
+	QString newVal = Hole::changeUnits(m_holeSettings.currentUnits(), m_holeSettings);
 }
 
 void AutorouterSettingsDialog::changeDiameter() 
 {
 	if (Hole::changeDiameter(m_holeSettings, sender())) {
 		QLineEdit * edit = qobject_cast<QLineEdit *>(sender());
-		changeHoleSize(edit->text() + m_holeSettings.unitsComboBox->currentText() + "," + m_holeSettings.ringThickness);
+		changeHoleSize(edit->text() + m_holeSettings.currentUnits() + "," + m_holeSettings.ringThickness);
 	}
 }
 
@@ -250,7 +252,7 @@ void AutorouterSettingsDialog::changeThickness()
 {
 	if (Hole::changeThickness(m_holeSettings, sender())) {
 		QLineEdit * edit = qobject_cast<QLineEdit *>(sender());
-		changeHoleSize(m_holeSettings.holeDiameter + "," + edit->text() + m_holeSettings.unitsComboBox->currentText());
+		changeHoleSize(m_holeSettings.holeDiameter + "," + edit->text() + m_holeSettings.currentUnits());
 	}	
 }
 

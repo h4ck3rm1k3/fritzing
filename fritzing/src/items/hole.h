@@ -33,6 +33,7 @@ $Date$
 #include <QPixmap>
 #include <QVariant>
 #include <QComboBox>
+#include <QRadioButton>
 #include <QDoubleValidator>
 
 #include "paletteitem.h"
@@ -47,10 +48,13 @@ struct HoleSettings
 	QPointer<QDoubleValidator> thicknessValidator;
 	QPointer<QLineEdit> diameterEdit;
 	QPointer<QLineEdit> thicknessEdit;
-	QPointer<QComboBox> unitsComboBox;
+	QPointer<QRadioButton> inRadioButton;
+	QPointer<QRadioButton> mmRadioButton;
 	QPointer<QComboBox> sizesComboBox;
 	RangeCalc ringThicknessRange;
 	RangeCalc holeDiameterRange;
+
+	QString currentUnits();
 };
 
 class Hole : public PaletteItem 
@@ -95,7 +99,7 @@ public:
 protected slots:
 	void changeDiameter();
 	void changeThickness();
-	void changeUnits(const QString &);
+	void changeUnits(bool);
 	void changeHoleSize(const QString &);
 
 protected:
@@ -105,6 +109,7 @@ protected:
 	void setBothNonConnectors(ItemBase * itemBase, SvgIdLayer * svgIdLayer);
 	void setUpHoleSizes();
 	virtual void setBoth(const QString & holeDiameter, const QString &  thickness);
+	QString currentUnits();
 											 
 protected:
 	QPointer<class FSvgRenderer> m_otherLayerRenderer;

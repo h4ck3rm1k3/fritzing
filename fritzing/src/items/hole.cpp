@@ -53,6 +53,14 @@ QHash<QString, QString> Hole::HoleSizes;
 const QString Hole::AutorouteViaHoleSize = "autorouteViaHoleSize";
 const QString Hole::AutorouteViaRingThickness = "autorouteViaRingThickness";
 
+
+QString HoleSettings::currentUnits() {
+	if (mmRadioButton->isChecked()) return QObject::tr("mm");
+	return QObject::tr("in");
+}
+
+//////////////////////////////////////////////////
+
 Hole::Hole( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
@@ -86,7 +94,8 @@ void Hole::initHoleSettings(HoleSettings & holeSettings)
 {
 	holeSettings.diameterEdit = holeSettings.thicknessEdit = NULL;
 	holeSettings.diameterValidator = holeSettings.thicknessValidator = NULL;
-	holeSettings.unitsComboBox = holeSettings.sizesComboBox = NULL;
+	holeSettings.inRadioButton = holeSettings.mmRadioButton = NULL;
+	holeSettings.sizesComboBox = NULL;
 	holeSettings.holeDiameterRange = Hole::holeDiameterRange;
 	holeSettings.ringThicknessRange = Hole::ringThicknessRange;
 }
@@ -362,8 +371,9 @@ bool Hole::collectExtraInfo(QWidget * parent, const QString & family, const QStr
 		returnValue = m_modelPart->prop("hole size").toString();
 		QWidget * frame = createHoleSettings(parent, m_holeSettings, swappingEnabled, returnValue);
 
-		connect(m_holeSettings.sizesComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeHoleSize(const QString &)));
-		connect(m_holeSettings.unitsComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeUnits(const QString &)));
+		connect(m_holeSettings.sizesComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeHoleSize(const QString &)));	
+		connect(m_holeSettings.mmRadioButton, SIGNAL(toggled(bool)), this, SLOT(changeUnits(bool)));
+		connect(m_holeSettings.inRadioButton, SIGNAL(toggled(bool)), this, SLOT(changeUnits(bool)));
 		connect(m_holeSettings.diameterEdit, SIGNAL(editingFinished()), this, SLOT(changeDiameter()));
 		connect(m_holeSettings.thicknessEdit, SIGNAL(editingFinished()), this, SLOT(changeThickness()));
 
@@ -378,7 +388,7 @@ void Hole::changeThickness()
 {
 	if (changeThickness(m_holeSettings, sender())) {
 		QLineEdit * edit = qobject_cast<QLineEdit *>(sender());
-		changeHoleSize(m_holeSettings.holeDiameter + "," + edit->text() + m_holeSettings.unitsComboBox->currentText());
+		changeHoleSize(m_holeSettings.holeDiameter + "," + edit->text() + currentUnits());
 	}	
 }
 
@@ -398,7 +408,7 @@ void Hole::changeDiameter()
 {
 	if (changeDiameter(m_holeSettings, sender())) {
 		QLineEdit * edit = qobject_cast<QLineEdit *>(sender());
-		changeHoleSize(edit->text() + m_holeSettings.unitsComboBox->currentText() + "," + m_holeSettings.ringThickness);
+		changeHoleSize(edit->text() + currentUnits() + "," + m_holeSettings.ringThickness);
 	}
 }
 
@@ -414,9 +424,9 @@ bool Hole::changeDiameter(HoleSettings & holeSettings, QObject * sender)
 	return (newValue != oldValue);
 }
 
-void Hole::changeUnits(const QString & units) 
+void Hole::changeUnits(bool) 
 {
-	QString newVal = changeUnits(units, m_holeSettings);
+	QString newVal = changeUnits(currentUnits(), m_holeSettings);
 	modelPart()->setProp("hole size", newVal);
 }
 
@@ -447,9 +457,9 @@ void Hole::updateValidators(HoleSettings & holeSettings)
 {
 	if (holeSettings.diameterValidator == NULL) return;
 	if (holeSettings.thicknessValidator == NULL) return;
-	if (holeSettings.unitsComboBox == NULL) return;
+	if (holeSettings.mmRadioButton == NULL) return;
 
-	QString units = holeSettings.unitsComboBox->currentText();
+	QString units = holeSettings.currentUnits();
 	QPointF hdRange = holeSettings.holeDiameterRange(holeSettings.ringThickness);
 	QPointF rtRange = holeSettings.ringThicknessRange(holeSettings.holeDiameter);
 
@@ -482,13 +492,13 @@ void Hole::changeHoleSize(const QString & newSize) {
 void Hole::updateEditTexts(HoleSettings & holeSettings) {
 	if (holeSettings.diameterEdit == NULL) return;
 	if (holeSettings.thicknessEdit == NULL) return;
-	if (holeSettings.unitsComboBox == NULL) return;
+	if (holeSettings.mmRadioButton == NULL) return;
 
 	double hd = TextUtils::convertToInches(holeSettings.holeDiameter);
 	double rt = TextUtils::convertToInches(holeSettings.ringThickness);
 
 	QString newVal;
-	if (holeSettings.unitsComboBox->currentText() == "in") {
+	if (holeSettings.currentUnits() == "in") {
 		newVal = QString("%1,%2").arg(hd).arg(rt);
 	}
 	else {
@@ -573,16 +583,24 @@ QWidget * Hole::createHoleSettings(QWidget * parent, HoleSettings & holeSettings
 	QGridLayout * gridLayout = new QGridLayout(subFrame);
 	gridLayout->setMargin(0);
 
-	holeSettings.unitsComboBox = new QComboBox(subFrame);
-    holeSettings.unitsComboBox->setMaximumWidth(70);
-    holeSettings.unitsComboBox->setMinimumWidth(50);
-	holeSettings.unitsComboBox->setMinimumHeight(rowHeight);
-	holeSettings.unitsComboBox->setMaximumHeight(rowHeight);
-	holeSettings.unitsComboBox->setEditable(false);
-	holeSettings.unitsComboBox->addItem("mm");
-	holeSettings.unitsComboBox->addItem("in");
-	gridLayout->addWidget(holeSettings.unitsComboBox, 0, 2, 2, 1);
-	holeSettings.unitsComboBox->setObjectName("infoViewComboBox");
+	QGroupBox * rbFrame = new QGroupBox("", subFrame);
+	rbFrame->setObjectName("infoViewGroupBox");
+	QVBoxLayout * vbl = new QVBoxLayout(rbFrame);
+	vbl->setMargin(0);
+
+	holeSettings.inRadioButton = new QRadioButton(tr("in"), subFrame);
+	gridLayout->addWidget(holeSettings.inRadioButton, 0, 2);
+	holeSettings.inRadioButton->setObjectName("infoViewRadioButton");
+
+	holeSettings.mmRadioButton = new QRadioButton(tr("mm"), subFrame);
+	gridLayout->addWidget(holeSettings.mmRadioButton, 1, 2);
+	holeSettings.inRadioButton->setObjectName("infoViewRadioButton");
+
+	vbl->addWidget(holeSettings.inRadioButton);
+	vbl->addWidget(holeSettings.mmRadioButton);
+	rbFrame->setLayout(vbl);
+
+	gridLayout->addWidget(rbFrame, 0, 2, 2, 1, Qt::AlignVCenter);
 
 	holeSettings.diameterEdit = new QLineEdit(subFrame);
 	holeSettings.diameterEdit->setMinimumHeight(rowHeight);
@@ -620,11 +638,18 @@ QWidget * Hole::createHoleSettings(QWidget * parent, HoleSettings & holeSettings
 
 	holeSettings.sizesComboBox->addItems(HoleSizes.keys());
 	holeSettings.sizesComboBox->setEnabled(swappingEnabled);
-	holeSettings.unitsComboBox->setEnabled(swappingEnabled);
-	holeSettings.unitsComboBox->setCurrentIndex(currentHoleSize.contains("in") ? 1 : 0);
-
+	holeSettings.mmRadioButton->setEnabled(swappingEnabled);
+	holeSettings.inRadioButton->setEnabled(swappingEnabled);
 	holeSettings.diameterEdit->setEnabled(swappingEnabled);
 	holeSettings.thicknessEdit->setEnabled(swappingEnabled);
+
+
+	if (currentHoleSize.contains("mm")) {
+		holeSettings.mmRadioButton->setChecked(true);
+	}
+	else {
+		holeSettings.inRadioButton->setChecked(true);
+	}
 
 	updateEditTexts(holeSettings);
 	updateValidators(holeSettings);
@@ -644,3 +669,8 @@ bool Hole::rotation45Allowed() {
 bool Hole::canFindConnectorsUnder() {
 	return false;
 }
+
+QString Hole::currentUnits() {
+	return m_holeSettings.currentUnits();
+}
+
