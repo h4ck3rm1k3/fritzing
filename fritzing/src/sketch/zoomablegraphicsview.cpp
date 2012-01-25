@@ -27,7 +27,7 @@ $Date$
 #include <QWheelEvent>
 #include <QScrollBar>
 #include <QSettings>
-#include <QGLWidget>
+//#include <QGLWidget>
 
 #include "zoomablegraphicsview.h"
 #include "../utils/zoomslider.h"
