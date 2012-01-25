@@ -44,7 +44,6 @@ mkdir ../$release_folder
 echo "copying release files"
 cp -rf bins/ parts/ sketches/ Fritzing Fritzing.sh README.txt LICENSE.GPL2 LICENSE.GPL3 ../$release_folder/
 cd ../$release_folder
-chmod +x Fritzing.sh
 
 echo "making library folders"
 mkdir lib
@@ -57,10 +56,11 @@ echo "copying libraries"
 
 cp $QT_HOME/lib/libQtCore.so.4 $QT_HOME/lib/libQtGui.so.4 $QT_HOME/lib/libQtNetwork.so.4 $QT_HOME/lib/libQtSql.so.4 $QT_HOME/lib/libQtSvg.so.4  $QT_HOME/lib/libQtXml.so.4 $QT_HOME/lib/libQtXmlPatterns.so.4 .
 
-#  
+mv ../Fritzing .  				     # hide the executable in the lib folder
+mv ../Fritzing.sh ../Fritzing   		# rename Fritzing.sh to Fritzing
+chmod +x ../Fritzing
 
-# jrc 17 july 2010, both platforms seem to need libaudio now
-# seems not to be needed anymore
+# libaudio seems not to be needed anymore
 # if is i368 copy the libaudio
 #if [ $arch == 'i386' ]
 #    then
