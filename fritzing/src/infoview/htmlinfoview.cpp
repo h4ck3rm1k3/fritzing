@@ -312,7 +312,7 @@ void HtmlInfoView::hoverLeaveItem(InfoGraphicsView * infoGraphicsView, QGraphics
 	m_setContentTimer.start();
 }
 
-void HtmlInfoView::viewConnectorItemInfo(ConnectorItem * connectorItem) {
+void HtmlInfoView::viewConnectorItemInfo(QGraphicsSceneHoverEvent *, ConnectorItem * connectorItem) {
 
 	int count = connectorItem ? connectorItem->connectionsCount() : 0;
 	if (m_lastConnectorItem == connectorItem && m_lastConnectorItemCount == count) return;
@@ -341,14 +341,14 @@ void HtmlInfoView::hoverEnterConnectorItem(InfoGraphicsView *igv, QGraphicsScene
 	Q_UNUSED(event)
 	Q_UNUSED(swappingEnabled)
 	Q_UNUSED(igv)
-	viewConnectorItemInfo(item);
+	viewConnectorItemInfo(event, item);
 }
 
 void HtmlInfoView::hoverLeaveConnectorItem(InfoGraphicsView *igv, QGraphicsSceneHoverEvent *event, ConnectorItem *connItem) {
 	Q_UNUSED(event);
 	Q_UNUSED(connItem);
 	Q_UNUSED(igv);
-	viewConnectorItemInfo(NULL);
+	viewConnectorItemInfo(event, NULL);
 }
 
 void HtmlInfoView::appendStuff(ItemBase* item, bool swappingEnabled) {
@@ -490,7 +490,7 @@ void HtmlInfoView::setNullContent()
 	setUpIcons(NULL);
 	displayProps(NULL, NULL, false);
 	addTags(NULL);
-	viewConnectorItemInfo(NULL);
+	viewConnectorItemInfo(NULL, NULL);
 	m_connFrame->setVisible(false);
 	m_propFrame->setVisible(false);
 	m_proplabel->setVisible(false);

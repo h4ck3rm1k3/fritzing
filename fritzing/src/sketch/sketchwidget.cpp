@@ -5394,7 +5394,7 @@ void SketchWidget::hoverLeaveItem(QGraphicsSceneHoverEvent * event, ItemBase * i
 
 void SketchWidget::hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item) {
 	if(m_infoViewOnHover || currentlyInfoviewed(item->attachedTo())) {
-		viewConnectorItemInfo(item);
+		InfoGraphicsView::hoverEnterConnectorItem(event, item);
 	}
 
 	if (item->attachedToItemType() == ModelPart::Wire) {

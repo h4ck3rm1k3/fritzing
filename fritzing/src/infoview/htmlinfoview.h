@@ -81,7 +81,6 @@ public:
 	void hoverEnterItem(class InfoGraphicsView *, QGraphicsSceneHoverEvent * event, ItemBase * item, bool swappingEnabled);
 	void hoverLeaveItem(class InfoGraphicsView *, QGraphicsSceneHoverEvent * event, ItemBase * item);
 
-	void viewConnectorItemInfo(ConnectorItem* item);
 	void hoverEnterConnectorItem(class InfoGraphicsView *, QGraphicsSceneHoverEvent * event, ConnectorItem * item, bool swappingEnabled);
 	void hoverLeaveConnectorItem(class InfoGraphicsView *, QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 
@@ -121,6 +120,7 @@ protected:
 	void clearPropThingPlugin(PropThing * propThing);
 	void clearPropThingPlugin(PropThing * propThing, QWidget * plugin);
 	QPixmap * getPixmap(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier);
+	void viewConnectorItemInfo(QGraphicsSceneHoverEvent * event, ConnectorItem* item);
 
 protected:
 	QPointer<ItemBase> m_currentItem;

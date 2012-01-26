@@ -37,6 +37,7 @@ InfoGraphicsView::InfoGraphicsView( QWidget * parent )
 {
 	m_infoView = NULL;
 	m_boardLayers = 1;
+	m_hoverEnterMode = m_hoverEnterConnectorMode = false;
 }
 
 void InfoGraphicsView::viewItemInfo(ItemBase * item) {
@@ -48,31 +49,37 @@ void InfoGraphicsView::viewItemInfo(ItemBase * item) {
 void InfoGraphicsView::hoverEnterItem(QGraphicsSceneHoverEvent * event, ItemBase * item) {
 	if (m_infoView == NULL) return;
 
-	//m_infoView->hoverEnterItem(this, event, item ? item->layerKinChief() : item, swappingEnabled(item));
+	if (event->modifiers() & Qt::ShiftModifier) {
+		m_hoverEnterMode = true;
+		m_infoView->hoverEnterItem(this, event, item ? item->layerKinChief() : item, swappingEnabled(item));
+	}
 }
 
 void InfoGraphicsView::hoverLeaveItem(QGraphicsSceneHoverEvent * event, ItemBase * item){
 	if (m_infoView == NULL) return;
 
-	//m_infoView->hoverLeaveItem(this, event, item ? item->layerKinChief() : item);
-}
-
-void InfoGraphicsView::viewConnectorItemInfo(ConnectorItem * item) {
-	if (m_infoView == NULL) return;
-
-	//m_infoView->viewConnectorItemInfo(item);
+	if (m_hoverEnterMode) {
+		m_hoverEnterMode = false;
+		m_infoView->hoverLeaveItem(this, event, item ? item->layerKinChief() : item);
+	}
 }
 
 void InfoGraphicsView::hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item) {
 	if (m_infoView == NULL) return;
 
-	//m_infoView->hoverEnterConnectorItem(this, event, item, swappingEnabled(item->attachedTo()));
+	if (event->modifiers() & Qt::ShiftModifier) {
+		m_hoverEnterConnectorMode = true;
+		m_infoView->hoverEnterConnectorItem(this, event, item, swappingEnabled(item->attachedTo()));
+	}
 }
 
 void InfoGraphicsView::hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item){
 	if (m_infoView == NULL) return;
 
-	//m_infoView->hoverLeaveConnectorItem(this, event, item);
+	if (m_hoverEnterConnectorMode) {
+		m_hoverEnterConnectorMode = false;
+		m_infoView->hoverLeaveConnectorItem(this, event, item);
+	}
 }
 
 void InfoGraphicsView::setInfoView(HtmlInfoView * infoView) {

@@ -48,7 +48,6 @@ public:
 
 	virtual bool swappingEnabled(ItemBase *) = 0;
 
-	void viewConnectorItemInfo(ConnectorItem * item);
 	virtual void hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	virtual void hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 
@@ -126,6 +125,8 @@ protected:
 	QGraphicsItem *selectedAux();
 	class HtmlInfoView *m_infoView;
 	int m_boardLayers;
+	bool m_hoverEnterMode;
+	bool m_hoverEnterConnectorMode;
 
 };
 
