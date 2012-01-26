@@ -48,31 +48,31 @@ void InfoGraphicsView::viewItemInfo(ItemBase * item) {
 void InfoGraphicsView::hoverEnterItem(QGraphicsSceneHoverEvent * event, ItemBase * item) {
 	if (m_infoView == NULL) return;
 
-	m_infoView->hoverEnterItem(this, event, item ? item->layerKinChief() : item, swappingEnabled(item));
+	//m_infoView->hoverEnterItem(this, event, item ? item->layerKinChief() : item, swappingEnabled(item));
 }
 
 void InfoGraphicsView::hoverLeaveItem(QGraphicsSceneHoverEvent * event, ItemBase * item){
 	if (m_infoView == NULL) return;
 
-	m_infoView->hoverLeaveItem(this, event, item ? item->layerKinChief() : item);
+	//m_infoView->hoverLeaveItem(this, event, item ? item->layerKinChief() : item);
 }
 
 void InfoGraphicsView::viewConnectorItemInfo(ConnectorItem * item) {
 	if (m_infoView == NULL) return;
 
-	m_infoView->viewConnectorItemInfo(item);
+	//m_infoView->viewConnectorItemInfo(item);
 }
 
 void InfoGraphicsView::hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item) {
 	if (m_infoView == NULL) return;
 
-	m_infoView->hoverEnterConnectorItem(this, event, item, swappingEnabled(item->attachedTo()));
+	//m_infoView->hoverEnterConnectorItem(this, event, item, swappingEnabled(item->attachedTo()));
 }
 
 void InfoGraphicsView::hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item){
 	if (m_infoView == NULL) return;
 
-	m_infoView->hoverLeaveConnectorItem(this, event, item);
+	//m_infoView->hoverLeaveConnectorItem(this, event, item);
 }
 
 void InfoGraphicsView::setInfoView(HtmlInfoView * infoView) {
