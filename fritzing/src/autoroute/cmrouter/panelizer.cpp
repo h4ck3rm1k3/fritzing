@@ -1139,7 +1139,7 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
 		//	mainWindow->copperFill();
 		//}
 
-		//mainWindow->saveAsShareable(path);
+		//mainWindow->saveAsShareable(path, true);
 		//return NULL;
 	//}
 

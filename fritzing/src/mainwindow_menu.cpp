@@ -172,7 +172,11 @@ bool MainWindow::loadWhich(const QString & fileName, bool setAsLastOpened, bool 
     	mainLoad(fileName, displayName);
 		result = true;
 
-		saveAsShareable(bundledFileName, true);
+		QFile file(fileName);
+		QFileInfo info(fileName);
+		QDir dest(m_fzzFolder);
+		file.copy(dest.absoluteFilePath(info.fileName()));			// copy the .fz file directly
+		saveAsShareable(bundledFileName, false);					// false to prevent saving a bundle inside the bundle
 		setCurrentFile(bundledFileName, addToRecent, setAsLastOpened);
     } 
 	else if(fileName.endsWith(FritzingBundleExtension)) {

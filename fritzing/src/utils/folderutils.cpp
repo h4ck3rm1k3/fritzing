@@ -347,6 +347,7 @@ bool FolderUtils::createZipAndSaveTo(const QDir &dirToCompress, const QString &f
 	QDir::setCurrent(dirToCompress.path());
 	foreach(QFileInfo file, files) {
 		if(!file.isFile()||file.fileName()==filepath) continue;
+		if (file.fileName().contains(LockFileName)) continue;
 
 		inFile.setFileName(file.fileName());
 
