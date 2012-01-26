@@ -260,7 +260,7 @@ void PartsBinListView::dropEvent(QDropEvent* event) {
 
 void PartsBinListView::startDrag(Qt::DropActions supportedActions) {
 	QListWidget::startDrag(supportedActions);
-	ItemDrag::_dragIsDone();
+	ItemDrag::dragIsDone();
 }
 
 void PartsBinListView::moveItem(int fromIndex, int toIndex) {

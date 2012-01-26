@@ -113,7 +113,7 @@ class BinManager : public QFrame {
 		QMenu * combinedMenu(PartsBinPaletteWidget *);
 		QMenu * combinedMenu();
 		void setTabIcon(PartsBinPaletteWidget* w, QIcon *);
-		void copyFilesToContrib(ModelPart *);
+		void copyFilesToContrib(ModelPart *, QWidget * originator);
 
 	signals:
 		void savePartAsBundled(const QString &moduleId);

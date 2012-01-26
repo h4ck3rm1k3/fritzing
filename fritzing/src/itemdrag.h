@@ -41,16 +41,15 @@ Q_OBJECT
 	
 protected:	
 	ItemDrag(QObject * parent = 0);
-	QHash<QObject *, QObject *> & cache();
-	void dragIsDone();
+	void __dragIsDone();
 	
 public:
-	static ItemDrag * _itemDrag();
-	static QHash<QObject *, QObject *> & _cache();
-	static void _dragIsDone();
+	static ItemDrag * singleton();
+	static QHash<QObject *, QObject *> & cache();
+	static void dragIsDone();
 	static QWidget * originator();
 	static void cleanup();
-	static void _setOriginator(QWidget *);
+	static void setOriginator(QWidget *);
 
 signals:
 	void dragIsDoneSignal(ItemDrag *);
@@ -60,7 +59,7 @@ protected:
 	QWidget * m_originator;
 	
 protected:
-	static ItemDrag * singleton;
+	static ItemDrag * Singleton;
 };
 
 #endif

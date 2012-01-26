@@ -472,6 +472,7 @@ signals:
 
 	void resizeSignal();
 	void dropSignal(const QPoint &pos, ModelPart *);
+	void dropTempSignal(ModelPart *, QWidget *);
 	void routingStatusSignal(SketchWidget *, const RoutingStatus &);
 	void movingSignal(SketchWidget *, QUndoCommand * parentCommand);
 	void selectAllItemsSignal(bool state, bool doEmit);

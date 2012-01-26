@@ -1121,7 +1121,12 @@ void BinManager::setTabIcon(PartsBinPaletteWidget* w, QIcon * icon)
 }
 
 
-void BinManager::copyFilesToContrib(ModelPart * mp) {
+void BinManager::copyFilesToContrib(ModelPart * mp, QWidget * originator) {
+	PartsBinPaletteWidget * bin = qobject_cast<PartsBinPaletteWidget *>(originator);
+	if (bin == NULL) return;
+
+	if (bin->fileName().compare(TempPartsBinLocation) != 0) return;				// only copy from temp bin
+
 	QString path = mp->path();
 	if (path.isEmpty()) return;
 

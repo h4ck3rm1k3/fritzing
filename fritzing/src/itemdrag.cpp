@@ -28,41 +28,41 @@ $Date$
 #include "itemdrag.h"
 #include "debugdialog.h"
 
-ItemDrag * ItemDrag::singleton = new ItemDrag();
+ItemDrag * ItemDrag::Singleton = new ItemDrag();
 
 ItemDrag::ItemDrag(QObject * parent) :
 	QObject(parent)
 {
 }
 
-void ItemDrag::cleanup() {
-	if (singleton) {
-		delete singleton;
-		singleton = NULL;
-	}
-}
-
-QHash<QObject *, QObject *> & ItemDrag::cache() {
-	return m_cache;
-}
-
-void ItemDrag::dragIsDone() {
+void ItemDrag::__dragIsDone() {
 	m_cache.clear();
 	emit dragIsDoneSignal(this);
 }
 
-QHash<QObject *, QObject *> & ItemDrag::_cache() {
-	return singleton->m_cache;
+void ItemDrag::cleanup() {
+	if (Singleton) {
+		delete Singleton;
+		Singleton = NULL;
+	}
 }
 
-ItemDrag * ItemDrag::_itemDrag() {
-	return singleton;
+QHash<QObject *, QObject *> & ItemDrag::cache() {
+	return Singleton->m_cache;
 }
 
-void ItemDrag::_dragIsDone() {
-	singleton->dragIsDone();
+ItemDrag * ItemDrag::singleton() {
+	return Singleton;
 }
 
-void ItemDrag::_setOriginator(QWidget * originator) {
-	singleton->m_originator = originator;
+void ItemDrag::dragIsDone() {
+	Singleton->__dragIsDone();
+}
+
+void ItemDrag::setOriginator(QWidget * originator) {
+	Singleton->m_originator = originator;
+}
+
+QWidget* ItemDrag::originator() {
+	return Singleton->m_originator;
 }

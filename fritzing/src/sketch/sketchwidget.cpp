@@ -1628,7 +1628,7 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 	m_droppingWire = (modelPart->itemType() == ModelPart::Wire);
 	m_droppingOffset = offset;
 
-	if (ItemDrag::_cache().contains(this)) {
+	if (ItemDrag::cache().contains(this)) {
 		m_droppingItem->setVisible(true);
 	} 
 	else {
@@ -1670,9 +1670,9 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 		QHash<Wire *, ConnectorItem *> savedWires;
 		findAlignmentAnchor(m_droppingItem, savedItems, savedWires);
 
-		ItemDrag::_cache().insert(this, m_droppingItem);
+		ItemDrag::cache().insert(this, m_droppingItem);
 		//m_droppingItem->setCacheMode(QGraphicsItem::ItemCoordinateCache);
-		connect(ItemDrag::_itemDrag(), SIGNAL(dragIsDoneSignal(ItemDrag *)), this, SLOT(dragIsDoneSlot(ItemDrag *)));
+		connect(ItemDrag::singleton(), SIGNAL(dragIsDoneSignal(ItemDrag *)), this, SLOT(dragIsDoneSlot(ItemDrag *)));
 	}
 	//ItemDrag::_setPixmapVisible(false);
 
@@ -1925,6 +1925,7 @@ void SketchWidget::dropItemEvent(QDropEvent *event) {
     event->acceptProposedAction();
 
 	emit dropSignal(event->pos(), modelPart);
+	emit dropTempSignal(modelPart, ItemDrag::originator());
 	emit warnSMDSignal(modelPart->moduleID());
 }
 

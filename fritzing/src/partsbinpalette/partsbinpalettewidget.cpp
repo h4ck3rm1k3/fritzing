@@ -875,6 +875,6 @@ bool PartsBinPaletteWidget::canClose() {
 	}
 }
 
-void PartsBinPaletteWidget::copyFilesToContrib(ModelPart * mp) {
-	m_manager->copyFilesToContrib(mp);
+void PartsBinPaletteWidget::copyFilesToContrib(ModelPart * mp, QWidget * originator) {
+	m_manager->copyFilesToContrib(mp, originator);
 }
