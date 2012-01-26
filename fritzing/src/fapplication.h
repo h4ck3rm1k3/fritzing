@@ -106,6 +106,7 @@ protected:
 	QString makeRequestParamsString();
 	void updatePrefs(class PrefsDialog & prefsDialog);
     QList<MainWindow *> orderedTopLevelMainWindows();
+	void cleanFzzs();
 
 	enum ServiceType {
 		PanelizerService = 1,

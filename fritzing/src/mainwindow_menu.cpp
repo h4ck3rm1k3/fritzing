@@ -164,20 +164,45 @@ bool MainWindow::loadWhich(const QString & fileName, bool setAsLastOpened, bool 
 	}
 
 	bool result = false;
-    if(fileName.endsWith(FritzingSketchExtension)) {
-		QString fileExt;
-		QString bundledFileName = FolderUtils::getSaveFileName(this, tr("The .fz format is obsolete. Please specify an .fzz file name to save to"), fileName + "z", tr("Fritzing (*%1)").arg(FritzingBundleExtension), &fileExt);
-		if (bundledFileName.isEmpty()) return false;
+    if (fileName.endsWith(FritzingSketchExtension)) {
+		QFileInfo info(fileName);
+		QMessageBox messageBox(NULL);
+		messageBox.setWindowTitle(tr("the .fz file format is obsolete"));
+		messageBox.setText(tr("The .fz file format has been deprecated.\n\nWould you like to convert '%1' to the .fzz format now or open it read-only?\n").arg(info.fileName()));
+		messageBox.setInformativeText(tr("The conversion process will not modify '%1'.").arg(info.fileName()));
+		messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+		messageBox.setDefaultButton(QMessageBox::Yes);
+		messageBox.setIcon(QMessageBox::Question);
+		messageBox.setWindowModality(Qt::WindowModal);
+		messageBox.setButtonText(QMessageBox::Yes, tr("Convert"));
+		messageBox.setButtonText(QMessageBox::No, tr("Read-only"));
+		messageBox.setButtonText(QMessageBox::Cancel, tr("Cancel"));
+		QMessageBox::StandardButton answer = (QMessageBox::StandardButton) messageBox.exec();
+
+		if (answer == QMessageBox::Cancel) return false;
+
+		QString bundledFileName;
+		if (answer == QMessageBox::Yes) {
+			QString fileExt;
+			bundledFileName = FolderUtils::getSaveFileName(this, tr("Please specify an .fzz file name to save '%1' to").arg(info.fileName()), fileName + "z", tr("Fritzing (*%1)").arg(FritzingBundleExtension), &fileExt);
+			if (bundledFileName.isEmpty()) return false;	
+		}
 
     	mainLoad(fileName, displayName);
 		result = true;
 
 		QFile file(fileName);
-		QFileInfo info(fileName);
 		QDir dest(m_fzzFolder);
 		file.copy(dest.absoluteFilePath(info.fileName()));			// copy the .fz file directly
-		saveAsShareable(bundledFileName, false);					// false to prevent saving a bundle inside the bundle
-		setCurrentFile(bundledFileName, addToRecent, setAsLastOpened);
+
+		if (answer == QMessageBox::Yes) {
+			saveAsShareable(bundledFileName, false);					// false to prevent saving a bundle inside the bundle
+			setCurrentFile(bundledFileName, addToRecent, setAsLastOpened);
+		}
+		else {
+			this->setReadOnly(true);
+			setCurrentFile(fileName, false, false);
+		}
     } 
 	else if(fileName.endsWith(FritzingBundleExtension)) {
     	loadBundledSketch(fileName, addToRecent, setAsLastOpened);

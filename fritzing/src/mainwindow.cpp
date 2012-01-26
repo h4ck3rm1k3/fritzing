@@ -2224,7 +2224,13 @@ bool MainWindow::save() {
 }
 
 bool MainWindow::saveAs() {
-	bool result = FritzingWindow::saveAs();
+	bool result = false;
+	if (m_fwFilename.endsWith(FritzingSketchExtension)) {
+		result = FritzingWindow::saveAs(m_fwFilename + 'z', false);
+	}
+	else {
+		result = FritzingWindow::saveAs();
+	}
 	if (result) {
 		QSettings settings;
 		settings.setValue("lastOpenSketch", m_fwFilename);

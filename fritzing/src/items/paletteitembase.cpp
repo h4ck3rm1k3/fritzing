@@ -704,6 +704,7 @@ const QCursor * PaletteItemBase::getCursor(Qt::KeyboardModifiers modifiers)
 		}
 	}
 
+	//DebugDialog::debug("returning move cursor");
 	return CursorMaster::MoveCursor;
 }
 

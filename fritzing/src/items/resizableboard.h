@@ -32,6 +32,7 @@ $Date$
 #include <QPixmap>
 #include <QVariant>
 #include <QLineEdit>
+#include <QCursor>
 
 #include "paletteitem.h"
 
@@ -116,6 +117,8 @@ protected:
 	virtual QString makeNextLayerSvg(ViewLayer::ViewLayerID, double mmW, double mmH, double milsW, double milsH);
 	virtual void resizeMMAux(double w, double h);
 	virtual ResizableBoard::Corner findCorner(QPointF p, Qt::KeyboardModifiers);
+	void setKinCursor(QCursor &);
+	void setKinCursor(Qt::CursorShape);
 
 protected:
 	static const double CornerHandleSize;

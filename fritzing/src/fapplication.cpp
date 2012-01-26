@@ -697,6 +697,8 @@ int FApplication::startup(bool firstRun)
 							   .arg("%1") );
 		#endif
 
+
+		cleanFzzs();
 	} 
 	else 
 	{
@@ -1483,4 +1485,14 @@ void FApplication::runExampleService(QDir & dir) {
 		QDir dir(dirInfo.filePath());
 		runExampleService(dir);
 	}
+}
+
+void FApplication::cleanFzzs() {
+	QHash<QString, QtLockedFile *> lockedFiles;
+	QString folder;
+	FolderUtils::initLockedFiles("fzz", folder, lockedFiles, true);
+	QFileInfoList backupList;
+	QStringList filters;
+	FolderUtils::checkLockedFiles("fzz", backupList, filters, lockedFiles, true);
+	FolderUtils::releaseLockedFiles(folder, lockedFiles);
 }

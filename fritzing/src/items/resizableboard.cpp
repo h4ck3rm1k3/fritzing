@@ -138,7 +138,7 @@ void ResizableBoard::addedToScene(bool temporary) {
 		setInitialSize();
 	}
 
-	PaletteItem::addedToScene(temporary);
+	Board::addedToScene(temporary);
 }
 
 void ResizableBoard::loadTemplates() {
@@ -171,7 +171,7 @@ void ResizableBoard::mousePressEvent(QGraphicsSceneMouseEvent * event)
 	m_corner = ResizableBoard::NO_CORNER;
 
 	if (m_spaceBarWasPressed) {
-		PaletteItem::mousePressEvent(event);
+		Board::mousePressEvent(event);
 		return;
 	}
 
@@ -332,7 +332,7 @@ void ResizableBoard::mouseReleaseEvent(QGraphicsSceneMouseEvent * event) {
 
 	event->accept();
 	m_corner = ResizableBoard::NO_CORNER;
-	setCursor(Qt::ArrowCursor);
+	setKinCursor(Qt::ArrowCursor);
 
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView) {
@@ -687,7 +687,7 @@ void ResizableBoard::paintSelected(QPainter *painter, const QStyleOptionGraphics
 {
 	if (m_hidden) return;
 
-	PaletteItem::paintSelected(painter, option, widget);
+	Board::paintSelected(painter, option, widget);
 
 	// http://www.gamedev.net/topic/441695-transform-matrix-decomposition/
 	double m11 = painter->worldTransform().m11();
@@ -753,11 +753,11 @@ bool ResizableBoard::inResize() {
 }
 
 void ResizableBoard::hoverEnterEvent( QGraphicsSceneHoverEvent * event ) {
-	PaletteItemBase::hoverEnterEvent(event);
+	Board::hoverEnterEvent(event);
 }
 
 void ResizableBoard::hoverMoveEvent( QGraphicsSceneHoverEvent * event ) {
-	PaletteItemBase::hoverMoveEvent(event);
+	Board::hoverMoveEvent(event);
 
 	m_corner = findCorner(event->scenePos(), event->modifiers());
 	QCursor cursor;
@@ -774,13 +774,14 @@ void ResizableBoard::hoverMoveEvent( QGraphicsSceneHoverEvent * event ) {
 			cursor = Qt::ArrowCursor;
 			break;
 	}
-	setCursor(cursor);
+	setKinCursor(cursor);
 
 }
 
 void ResizableBoard::hoverLeaveEvent( QGraphicsSceneHoverEvent * event ) {
-	setCursor(Qt::ArrowCursor);
-	PaletteItemBase::hoverLeaveEvent(event);
+	setKinCursor(Qt::ArrowCursor);
+	//DebugDialog::debug("setting arrow cursor");		
+	Board::hoverLeaveEvent(event);
 }
 
 ResizableBoard::Corner ResizableBoard::findCorner(QPointF scenePos, Qt::KeyboardModifiers modifiers) {
@@ -811,4 +812,20 @@ ResizableBoard::Corner ResizableBoard::findCorner(QPointF scenePos, Qt::Keyboard
 	}
 
 	return ResizableBoard::NO_CORNER;
+}
+
+void ResizableBoard::setKinCursor(QCursor & cursor) {
+	ItemBase * chief = this->layerKinChief();
+	chief->setCursor(cursor);
+	foreach (ItemBase * itemBase, chief->layerKin()) {
+		itemBase->setCursor(cursor);
+	}
+}
+
+void ResizableBoard::setKinCursor(Qt::CursorShape cursor) {
+	ItemBase * chief = this->layerKinChief();
+	chief->setCursor(cursor);
+	foreach (ItemBase * itemBase, chief->layerKin()) {
+		itemBase->setCursor(cursor);
+	}
 }

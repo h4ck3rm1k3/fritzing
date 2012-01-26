@@ -349,6 +349,9 @@ bool FolderUtils::createZipAndSaveTo(const QDir &dirToCompress, const QString &f
 		if(!file.isFile()||file.fileName()==filepath) continue;
 		if (file.fileName().contains(LockFileName)) continue;
 
+//#pragma message("remove fzz check")
+//if (file.fileName().endsWith(".fzz")) continue;
+
 		inFile.setFileName(file.fileName());
 
 		if(!inFile.open(QIODevice::ReadOnly)) {
