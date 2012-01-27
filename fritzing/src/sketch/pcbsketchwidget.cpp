@@ -983,6 +983,7 @@ void PCBSketchWidget::clearSmdTraces(QList<ItemBase *> & smds, 	QList<Wire *> & 
 				TraceWire * tw = qobject_cast<TraceWire *>(toci->attachedTo());
 				if (tw == NULL) continue;
 				if (already.contains(tw)) continue;
+				if (!tw->isTraceType(getTraceFlag())) continue;
 
 				QList<ConnectorItem *> ends;
 				removeWire(tw, ends, already, parentCommand);		
