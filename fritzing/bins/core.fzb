@@ -368,6 +368,13 @@
                 </iconView>
             </views>
         </instance>
+        <instance moduleIdRef="71d4db74a3a0ec43d9303ddffee7361b" modelIndex="29" path="parts/core/DIP_Relay_D31A.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
         <instance moduleIdRef="93d4585be720f3982141f4d032f44c8e" modelIndex="30" path="parts/core/peltier element.fzp">
             <views>
                 <iconView layer="icon">
