@@ -100,13 +100,13 @@ QString Via::makeID() {
 
 QPointF Via::ringThicknessRange(const QString & holeDiameter) {
 	Q_UNUSED(holeDiameter);
-	QPointF p(.001, 1.0);
+	QPointF p(.001, 10.0);
 	return p;
 }
 
 QPointF Via::holeDiameterRange(const QString & ringThickness) {
 	Q_UNUSED(ringThickness);
-	QPointF p(.001, 1.0);
+	QPointF p(.001, 20.0);
 	return p;
 }
 

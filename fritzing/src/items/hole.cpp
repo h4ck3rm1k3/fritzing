@@ -471,13 +471,13 @@ void Hole::updateValidators(HoleSettings & holeSettings)
 
 QPointF Hole::ringThicknessRange(const QString & holeDiameter) {
 	double hd = TextUtils::convertToInches(holeDiameter);
-	QPointF p(hd > 0 ? 0 : .001, 1.0);
+	QPointF p(hd > 0 ? 0 : .001, 10.0);
 	return p;
 }
 
 QPointF Hole::holeDiameterRange(const QString & ringThickness) {
 	double rt = TextUtils::convertToInches(ringThickness);
-	QPointF p(rt > 0 ? 0 : .001, 1.0);
+	QPointF p(rt > 0 ? 0 : .001, 10.0);
 	return p;
 }
 
