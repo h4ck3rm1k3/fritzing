@@ -178,7 +178,7 @@ bool PCBSketchWidget::canCopyItem(QGraphicsItem * item, int count)
 		if (wire->getRatsnest()) return false;
 	}
 
-	return SketchWidget::canDeleteItem(item, count);
+	return SketchWidget::canCopyItem(item, count);
 }
 
 bool PCBSketchWidget::canChainWire(Wire * wire) {

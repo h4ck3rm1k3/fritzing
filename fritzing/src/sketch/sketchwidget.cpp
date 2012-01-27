@@ -916,8 +916,11 @@ void SketchWidget::deleteSelected(Wire * wire) {
 		foreach (QGraphicsItem * item, scene()->selectedItems()) {
 			ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 			if (itemBase == NULL) continue;
+			if (itemBase->moveLock()) continue;
 
 			itemBase = itemBase->layerKinChief();
+			if (itemBase->moveLock()) continue;
+
 			itemBases.insert(itemBase);
 		}
 	}
@@ -6392,8 +6395,12 @@ bool SketchWidget::canDeleteItem(QGraphicsItem * item, int count)
 	ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 	if (itemBase == NULL) return false;
 
+	if (itemBase->moveLock()) return false;
+
 	ItemBase * chief = itemBase->layerKinChief();
 	if (chief == NULL) return false;
+
+	if (chief->moveLock()) return false;
 
 	return true;
 }

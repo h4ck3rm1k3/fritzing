@@ -374,10 +374,10 @@ void ProgramWindow::setup(const QList<LinkedFile *> & linkedFiles, const QString
             programTab->loadProgramFile(linkedFile->linkedFilename, dir.absoluteFilePath(fileInfo.fileName()), false);
 			if ((linkedFile->fileFlags & LinkedFile::InBundleFlag) && ((linkedFile->fileFlags & LinkedFile::ReadOnlyFlag) == 0)) { 
 				if (linkedFile->fileFlags & LinkedFile::SameMachineFlag) {
-					programTab->appendToConsole(tr("File '%' was restored from the .fzz file; the local copy was not found.").arg(fileInfo.fileName()));
+					programTab->appendToConsole(tr("File '%1' was restored from the .fzz file; the local copy was not found.").arg(fileInfo.fileName()));
 				}
 				else {
-					programTab->appendToConsole(tr("File '%' was restored from the .fzz file; save a local copy to work with an external editor.").arg(fileInfo.fileName()));
+					programTab->appendToConsole(tr("File '%1' was restored from the .fzz file; save a local copy to work with an external editor.").arg(fileInfo.fileName()));
 				}
 			}
 			if (!m_languages.value(linkedFile->language, "").isEmpty()) {
