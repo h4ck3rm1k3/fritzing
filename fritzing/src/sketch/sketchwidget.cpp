@@ -4899,8 +4899,14 @@ void SketchWidget::prepDeleteProps(ItemBase * itemBase, long id, const QString &
 			}
 			return;
 		
+		case ModelPart::Board:
+			new ChangeBoardLayersCommand(this, m_boardLayers, m_boardLayers, parentCommand);
+			prepDeleteOtherProps(itemBase, id, newModuleID, parentCommand);
+			return;
+		
 		case ModelPart::ResizableBoard:
 			{
+				new ChangeBoardLayersCommand(this, m_boardLayers, m_boardLayers, parentCommand);
 				ResizableBoard * brd = qobject_cast<ResizableBoard *>(itemBase);
 				if (brd) {
 					brd->saveParams();
