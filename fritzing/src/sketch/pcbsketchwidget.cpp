@@ -63,6 +63,8 @@ $Date$
 #include <QMessageBox>
 
 static const int MAX_INT = std::numeric_limits<int>::max();
+static const double BlurBy = 3.5;
+static const double StrokeWidthIncrement = 50;
 
 static QString PCBTraceColor1 = "trace1";
 static QString PCBTraceColor = "trace";
@@ -1721,8 +1723,17 @@ bool PCBSketchWidget::groundFill(bool fillGroundTraces, QUndoCommand * parentCom
 	exceptions << "none" << "" << background().name();    // the color of holes in the board
 
 	GroundPlaneGenerator gpg;
+	gpg.setBlurBy(BlurBy);
+	gpg.setLayerName("groundplane");
+	gpg.setStrokeWidthIncrement(StrokeWidthIncrement);
+	gpg.setMinRunSize(10);
+	if (fillGroundTraces) {
+		connect(&gpg, SIGNAL(postImageSignal(GroundPlaneGenerator *, QImage *, QGraphicsItem *)), 
+				this, SLOT(postImageSlot(GroundPlaneGenerator *, QImage *, QGraphicsItem *)));
+	}
+
 	bool result = gpg.generateGroundPlane(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board, GraphicsUtils::StandardFritzingDPI / 2.0  /* 2 MIL */,
-											ViewLayer::Copper0Color, "groundplane", 3.5);
+											ViewLayer::Copper0Color);
 	if (result == false) {
         QMessageBox::critical(NULL, tr("Fritzing"), tr("Fritzing error: unable to write copper fill (1)."));
 		return false;
@@ -1730,8 +1741,16 @@ bool PCBSketchWidget::groundFill(bool fillGroundTraces, QUndoCommand * parentCom
 
 	GroundPlaneGenerator gpg2;
 	if (boardLayers() > 1) {
+		gpg2.setBlurBy(BlurBy);
+		gpg2.setLayerName("groundplane1");
+		gpg2.setStrokeWidthIncrement(StrokeWidthIncrement);
+		gpg2.setMinRunSize(10);
+		if (fillGroundTraces) {
+			connect(&gpg2, SIGNAL(postImageSignal(GroundPlaneGenerator *, QImage *, QGraphicsItem *)), 
+					this, SLOT(postImageSlot(GroundPlaneGenerator *, QImage *, QGraphicsItem *)));
+		}
 		bool result = gpg2.generateGroundPlane(boardSvg, boardImageSize, svg2, copperImageSize, exceptions, board, GraphicsUtils::StandardFritzingDPI / 2.0  /* 2 MIL */,
-												ViewLayer::Copper1Color, "groundplane1", 3.5);
+												ViewLayer::Copper1Color);
 		if (result == false) {
 			QMessageBox::critical(NULL, tr("Fritzing"), tr("Fritzing error: unable to write copper fill (2)."));
 			return false;
@@ -1817,8 +1836,12 @@ QString PCBSketchWidget::generateCopperFillUnit(ItemBase * itemBase, QPointF whe
 	exceptions << "none" << "" << background().name();    // the color of holes in the board
 
 	GroundPlaneGenerator gpg;
+	gpg.setBlurBy(BlurBy);
+	gpg.setStrokeWidthIncrement(StrokeWidthIncrement);
+	gpg.setLayerName(gpLayerName);
+	gpg.setMinRunSize(10);
 	bool result = gpg.generateGroundPlaneUnit(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board, GraphicsUtils::StandardFritzingDPI / 2.0  /* 2 MIL */, 
-												color, gpLayerName, whereToStart, 3.5);
+												color, whereToStart);
 
 	if (result == false || gpg.newSVGs().count() < 1) {
         QMessageBox::critical(NULL, tr("Fritzing"), tr("Unable to create copper fill--possibly the part was dropped onto another part or wire rather than the actual PCB."));
@@ -1986,4 +2009,91 @@ ViewGeometry::WireFlag PCBSketchWidget::getTraceFlag() {
 	return ViewGeometry::PCBTraceFlag;
 }
 
+void PCBSketchWidget::postImageSlot(GroundPlaneGenerator * gpg, QImage * image, QGraphicsItem * board) {
+
+	ConnectorItem * seed = NULL;
+	foreach (QGraphicsItem * item, scene()->items()) {
+		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
+		if (connectorItem == NULL) continue;
+		if (!connectorItem->isGrounded()) continue;
+
+		seed = connectorItem;
+		break;
+	}
+	if (seed == NULL) return;
+
+	QList<ConnectorItem *> connectorItems;
+	connectorItems.append(seed);
+	ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::NoFlag);
+
+	QRectF boardRect = board->sceneBoundingRect();
+	ViewLayer::ViewLayerID viewLayerID = (gpg->layerName() == "groundplane") ? ViewLayer::Copper0 : ViewLayer::Copper1;
+
+	QList<QRectF> rects;
+	foreach (ConnectorItem * connectorItem, connectorItems) {
+		if (connectorItem->attachedToViewLayerID() != viewLayerID) continue;
+		if (connectorItem->attachedToItemType() == ModelPart::Wire) continue;
+
+		QRectF r = connectorItem->sceneBoundingRect();
+
+		double x = (r.left() - boardRect.left()) * image->width() / boardRect.width();
+		double y = (r.top() - boardRect.top()) * image->height() / boardRect.height();
+		double w = r.width() * image->width() / boardRect.width();
+		double h = r.height() * image->height() / boardRect.height();
+
+		double cw = w / 4;
+		double ch = h / 4;
+		int cx = x + (w / 2);
+		int cy = y + (h / 2);
+
+		x -= BlurBy + w;
+		y -= BlurBy + h;
+		w += BlurBy + BlurBy + w + w;
+		h += BlurBy + BlurBy + h + h;
+
+		// check north, south, east, west for groundplane, and if it's there draw to it from the connector
+
+		for (int i = cy; i > y; i--) {
+			if (image->pixel(cx, i) & 0xffffff) {
+				QRectF s(cx - cw, i - 1, cw + cw, cy - i);
+				rects.append(s);
+				break;
+			}
+		}
+		for (int i = cy; i < y + h; i++) {
+			if (image->pixel(cx, i) & 0xffffff) {
+				QRectF s(cx - cw, cy, cw + cw, i - cy);
+				rects.append(s);
+				break;
+			}
+		}
+		for (int i = cx; i > x; i--) {
+			if (image->pixel(i, cy) & 0xffffff) {
+				QRectF s(i - 1, cy - ch, cx - i, ch + ch);
+				rects.append(s);
+				break;
+			}
+		}
+		for (int i = cx; i < x + w; i++) {
+			if (image->pixel(i, cy) & 0xffffff) {
+				QRectF s(cx, cy - ch, i - cx, ch + ch);
+				rects.append(s);
+				break;
+			}
+		}
+
+		DebugDialog::debug(QString("x:%1 y:%2 w:%3 h:%4").arg(x).arg(y).arg(w).arg(h));
+	}
+
+	if (rects.count() == 0) return;
+
+	QPainter painter(image);
+	foreach (QRectF r, rects) {
+		painter.fillRect(r, QColor(255, 255, 255));
+	}
+	painter.end();
+#ifndef QT_NODEBUG
+	image->save("testGroundFillCopperPost.png");
+#endif
+}
 

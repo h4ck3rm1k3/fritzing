@@ -1481,6 +1481,7 @@ bool CMRouter::initBoard(ItemBase * board, Plane * thePlane, QList<Tile *> & alr
 
 	GroundPlaneGenerator gpg;
 	QList<QRect> rects;
+	gpg.setMinRunSize(1);
 	gpg.getBoardRects(svg, board, FSvgRenderer::printerScale(), m_keepout, rects);
 	QPointF boardPos = board->pos();
 	foreach (QRect r, rects) {
@@ -1609,7 +1610,9 @@ void CMRouter::tileWires(QList<Wire *> & wires, QList<Tile *> & alreadyTiled, Ti
 			painter.end();
 
 			QList<QRect> rects;
-			GroundPlaneGenerator::scanLines(image, w, h, rects, 1, 1);
+			GroundPlaneGenerator gpg;
+			gpg.setMinRunSize(1);
+			gpg.scanLines(image, w, h, rects, 1);
 			foreach (QRect rect, rects) {
 				QRectF r(p1.x() - tx + (rect.left() * factor),
 						 p1.y() - ty + (rect.top() * factor),

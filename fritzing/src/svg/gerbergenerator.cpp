@@ -461,6 +461,8 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 #endif
 
 		GroundPlaneGenerator gpg;
+		gpg.setLayerName(layerName);
+		gpg.setMinRunSize(1);
 		if (forWhy == SVG2gerber::ForOutline) {
 		//	int tinyWidth = boardRect.width();
 		//	int tinyHeight = boardRect.height();
@@ -471,10 +473,10 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 		//	renderer.render(&painter, tinyTarget);
 		//	painter.end();
 		//	tinyImage.invertPixels();				// need white pixels on a black background for GroundPlaneGenerator
-			gpg.scanOutline(image, image.width(), image.height(), GraphicsUtils::StandardFritzingDPI / res, GraphicsUtils::StandardFritzingDPI, "#000000", layerName, false, 1, false, QSizeF(0, 0), 0);
+			gpg.scanOutline(image, image.width(), image.height(), GraphicsUtils::StandardFritzingDPI / res, GraphicsUtils::StandardFritzingDPI, "#000000", false, false, QSizeF(0, 0), 0);
 		}
 		else {
-			gpg.scanImage(image, image.width(), image.height(), GraphicsUtils::StandardFritzingDPI / res, GraphicsUtils::StandardFritzingDPI, "#000000", layerName, false, 1, false, QSizeF(0, 0), 0, sourceRes.topLeft());
+			gpg.scanImage(image, image.width(), image.height(), GraphicsUtils::StandardFritzingDPI / res, GraphicsUtils::StandardFritzingDPI, "#000000", false, false, QSizeF(0, 0), 0, sourceRes.topLeft());
 		}
 
 		if (gpg.newSVGs().count() > 0) {

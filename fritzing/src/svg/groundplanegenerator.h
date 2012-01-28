@@ -35,39 +35,47 @@ $Date$
 #include <QStringList>
 #include <QGraphicsItem>
 
-class GroundPlaneGenerator
+class GroundPlaneGenerator : public QObject
 {
-
+	Q_OBJECT
 public:
 	GroundPlaneGenerator();
 	~GroundPlaneGenerator();
 
 	bool generateGroundPlane(const QString & boardSvg, QSizeF boardImageSize, const QString & svg, QSizeF copperImageSize, QStringList & exceptions, 
-							 QGraphicsItem * board, double res, const QString & color, const QString & layerName, double blurBy); 
+							 QGraphicsItem * board, double res, const QString & color); 
 	bool generateGroundPlaneUnit(const QString & boardSvg, QSizeF boardImageSize, const QString & svg, QSizeF copperImageSize, QStringList & exceptions, 
-							 QGraphicsItem * board, double res, const QString & color, const QString & layerName, QPointF whereToStart, double blurBy); 
+							 QGraphicsItem * board, double res, const QString & color, QPointF whereToStart); 
 	void scanImage(QImage & image, double bWidth, double bHeight, double pixelFactor, double res, 
-					const QString & colorString, const QString & layerName, bool makeConnector, 
-					int minRunSize, bool makeOffset, QSizeF minAreaInches, double minDimensionInches, QPointF offsetPolygons);  
+					const QString & colorString, bool makeConnector, 
+					bool makeOffset, QSizeF minAreaInches, double minDimensionInches, QPointF offsetPolygons);  
 	void scanOutline(QImage & image, double bWidth, double bHeight, double pixelFactor, double res, 
-					const QString & colorString, const QString & layerName, bool makeConnector, int minRunSize, bool makeOffset, QSizeF minAreaInches, double minDimensionInches);  
-	static void scanLines(QImage & image, int bWidth, int bHeight, QList<QRect> & rects, int threshhold, int minRunSize);
+					const QString & colorString, bool makeConnector, bool makeOffset, QSizeF minAreaInches, double minDimensionInches);  
+	void scanLines(QImage & image, int bWidth, int bHeight, QList<QRect> & rects, int threshhold);
 	bool getBoardRects(const QString & boardSvg, QGraphicsItem * board, double res, double keepoutSpace, QList<QRect> & rects);
 	const QStringList & newSVGs();
 	const QList<QPointF> & newOffsets();
+	void setBlurBy(double);
+	void setStrokeWidthIncrement(double);
+	void setLayerName(const QString &);
+	const QString & layerName();
+	void setMinRunSize(int minRunSize);
 
 public:
 	static QString ConnectorName;
 
+signals:
+	void postImageSignal(GroundPlaneGenerator *, QImage *, QGraphicsItem * board);
+
 protected:
 	void splitScanLines(QList<QRect> & rects, QList< QList<int> * > & pieces);
 	void joinScanLines(QList<QRect> & rects, QList<QPolygon> & polygons);
-	QString makePolySvg(QList<QPolygon> & polygons, double res, double bWidth, double bHeight, double pixelFactor, const QString & colorString, const QString & layerName, 
+	QString makePolySvg(QList<QPolygon> & polygons, double res, double bWidth, double bHeight, double pixelFactor, const QString & colorString, 
 							bool makeConnectorFlag, QPointF * offset, QSizeF minAreaInches, double minDimensionInches, QPointF polygonOffset);
 	QString makeOnePoly(const QPolygon & poly, const QString & colorString, const QString & id, int minX, int minY);
 	double calcArea(QPolygon & poly);
 	QImage * generateGroundPlaneAux(const QString & boardSvg, QSizeF boardImageSize, const QString & svg, QSizeF copperImageSize, QStringList & exceptions, 
-									QGraphicsItem * board, double res, double & bWidth, double & bHeight, double blurBy); 
+									QGraphicsItem * board, double res, double & bWidth, double & bHeight); 
 	void makeConnector(QList<QPolygon> & polygons, double res, double pixelFactor, const QString & colorString, int minX, int minY, QString & svg);
 	bool tryNextPoint(int x, int y, QImage & image, QList<QPoint> & points);
 	void collectBorderPoints(QImage & image, QList<QPoint> & points);
@@ -76,6 +84,10 @@ protected:
 protected:
 	QStringList m_newSVGs;
 	QList<QPointF> m_newOffsets;
+	double m_blurBy;
+	QString m_layerName;
+	double m_strokeWidthIncrement;
+	int m_minRunSize;
 };
 
 #endif
