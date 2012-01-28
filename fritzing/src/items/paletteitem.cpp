@@ -33,6 +33,7 @@ $Date$
 #include "partlabel.h"
 #include "../commands.h"
 #include "../connectors/connectoritem.h"
+#include "../connectors/svgidlayer.h"
 #include "../layerattributes.h"
 #include "../dialogs/pinlabeldialog.h"
 #include "../utils/folderutils.h"
@@ -717,12 +718,18 @@ bool PaletteItem::loadExtraRenderer(const QString & svg) {
 }
 
 void PaletteItem::resetConnectors() {
-	double w = this->boundingRect().width();
-	QList<ConnectorItem *> sortedConnectorItems = sortConnectorItems();
-	for (int i = sortedConnectorItems.count() / 2; i < sortedConnectorItems.count(); i++) {
-		ConnectorItem * connectorItem = sortedConnectorItems.at(i);
+	if (m_viewIdentifier != ViewIdentifierClass::SchematicView) return;
+
+	QSizeF size = m_extraRenderer->defaultSizeF();   // pixels
+	QRectF viewBox = m_extraRenderer->viewBoxF();
+	foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
+		SvgIdLayer * svgIdLayer = connectorItem->connector()->fullPinInfo(m_viewIdentifier, m_viewLayerID);
+		if (svgIdLayer == NULL) continue;
+
+		QRectF bounds = this->m_extraRenderer->boundsOnElement(svgIdLayer->m_svgId);
+		QPointF p(bounds.left() * size.width() / viewBox.width(), bounds.top() * size.height() / viewBox.height());
 		QRectF r = connectorItem->rect();
-		r.moveTo(w - r.width(), r.top());
+		r.moveTo(p.x(), p.y());
 		connectorItem->setRect(r);
 	}
 }
