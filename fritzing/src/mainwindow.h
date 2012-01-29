@@ -111,6 +111,7 @@ public:
 	bool saveAsAux(const QString & fileName);
 	void swapObsolete(bool displayFeedback);
 	void selectAllObsolete(bool displayFeedback);
+	void hideTempBin();
 
 public:
 	static void initNames();

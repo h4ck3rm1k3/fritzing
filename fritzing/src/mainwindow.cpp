@@ -1254,6 +1254,10 @@ void MainWindow::loadBundledSketch(const QString &fileName, bool addToRecent, bo
 		m_binManager->addToTemp(mp);
 	}
 
+	if (mps.count() == 0) {
+		m_binManager->hideTemp();
+	}
+
 	// the bundled itself
 	this->mainLoad(sketchName, "");
 	setCurrentFile(fileName, addToRecent, setAsLastOpened);
@@ -2615,3 +2619,6 @@ void MainWindow::dropTempSlot(ModelPart * mp, QWidget * widget) {
 	m_binManager->copyFilesToContrib(mp, widget);
 }
 
+void MainWindow::hideTempBin() {
+	if (m_binManager) m_binManager->hideTemp();
+}

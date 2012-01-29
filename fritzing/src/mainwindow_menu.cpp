@@ -1828,6 +1828,7 @@ void MainWindow::createNewSketch() {
 
 	mw->addDefaultParts();
     mw->show();
+	mw->hideTempBin();
 
     QSettings settings;
     settings.remove("lastOpenSketch");

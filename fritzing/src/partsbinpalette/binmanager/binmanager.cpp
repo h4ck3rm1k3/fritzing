@@ -335,6 +335,16 @@ void BinManager::addToTemp(ModelPart *modelPart) {
 	}
 }
 
+void BinManager::hideTemp() {
+	for (int i = 0; i < m_stackTabWidget->count(); i++) {
+		PartsBinPaletteWidget* bin = (PartsBinPaletteWidget *) m_stackTabWidget->widget(i);
+        if (bin->fileName() == TempPartsBinLocation) {
+            m_stackTabWidget->removeTab(i);
+			break;
+		}
+	}
+}
+
 void BinManager::addPartAux(PartsBinPaletteWidget *bin, ModelPart *modelPart, int position) {
 	if(bin) {
 		if (bin->fastLoaded()) {

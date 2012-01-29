@@ -73,6 +73,7 @@ class BinManager : public QFrame {
 		void addToMyPart(ModelPart *modelPart);
 		void addToContrib(ModelPart *modelPart);
 		void addToTemp(ModelPart *modelPart);
+		void hideTemp();
 
 		void addNewPart(ModelPart *modelPart);
 

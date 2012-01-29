@@ -1265,6 +1265,9 @@ void FApplication::loadSomething(bool firstRun, const QString & prevVersion) {
 	if (loadPrevious) {
 		doLoadPrevious(newBlankSketch);
 	}
+	else if (newBlankSketch) {
+		newBlankSketch->hideTempBin();
+	}
 }
 
 QList<MainWindow *> FApplication::loadLastOpenSketch() {
