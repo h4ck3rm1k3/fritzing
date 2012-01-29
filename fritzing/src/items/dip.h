@@ -41,6 +41,7 @@ public:
 	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
 	QStringList collectValues(const QString & family, const QString & prop, QString & value);
 	bool changePinLabels(bool singleRow, bool sip);
+	void addedToScene(bool temporary);
 
 public:
 	static QString genSipFZP(const QString & moduleid);

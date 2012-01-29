@@ -61,7 +61,9 @@ bool Dip::collectExtraInfo(QWidget * parent, const QString & family, const QStri
 
 bool Dip::isDIP() {
 	QString package = modelPart()->properties().value("package", "");
-	return (package.indexOf("DIP", 0, Qt::CaseInsensitive) >= 0);
+	if (package.indexOf("dip", 0, Qt::CaseInsensitive) >= 0) return true;
+	if (package.indexOf("sip", 0, Qt::CaseInsensitive) >= 0) return false;
+	return m_modelPart->family().contains("generic ic", Qt::CaseInsensitive);
 }
 
 bool Dip::otherPropsChange(const QMap<QString, QString> & propsMap) {
@@ -418,4 +420,16 @@ bool Dip::changePinLabels(bool singleRow, bool sip) {
 	loadExtraRenderer(svg);
 
 	return true;
+}
+
+void Dip::addedToScene(bool temporary)
+{
+    MysteryPart::addedToScene(temporary);
+	if (this->isDIP()) {
+		bool hasLocal = false;
+		QStringList labels = getPinLabels(hasLocal);
+		if (hasLocal) {
+			resetConnectors();
+		}
+	}
 }

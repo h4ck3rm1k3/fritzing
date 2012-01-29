@@ -854,3 +854,9 @@ void ModelPart::setConnectorLocalName(const QString & id, const QString & name)
 		connector->setConnectorLocalName(name);
 	}
 }
+
+QString ModelPart::family(){
+	if (m_modelPartShared) return m_modelPartShared->family();
+
+	return "";
+}

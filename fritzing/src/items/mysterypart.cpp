@@ -291,7 +291,7 @@ void MysteryPart::addedToScene(bool temporary)
 		setSpacing(m_spacing, true);
 	}
 
-    return PaletteItem::addedToScene(temporary);
+    PaletteItem::addedToScene(temporary);
 }
 
 const QString & MysteryPart::title() {

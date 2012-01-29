@@ -119,6 +119,7 @@ public:
 	const QString & language();
 	const QString & uri();
 	const QDate & date();
+	QString family();
 
 	Bus * bus(const QString & busID);
 	bool ignoreTerminalPoints();
