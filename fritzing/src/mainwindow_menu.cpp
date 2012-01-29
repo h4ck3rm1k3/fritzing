@@ -2786,7 +2786,7 @@ void MainWindow::loadedRootSlot(const QString & fname, ModelBase *, QDomElement 
 	QString thatPid = programs.attribute("pid");
 	QSettings settings;
 	QString thisPid = settings.value("pid").toString();
-	bool sameMachine = !thisPid.isEmpty() && (thatPid.compare(thisPid) == 0);
+	bool sameMachine = thatPid.isEmpty() || (!thisPid.isEmpty() && (thatPid.compare(thisPid) == 0));
 	QFileInfo fileInfo(fname);
 	QDir dir = fileInfo.absoluteDir();
 
