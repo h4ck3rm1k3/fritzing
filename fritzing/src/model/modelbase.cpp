@@ -343,7 +343,7 @@ void ModelBase::save(const QString & fileName, bool asPart) {
 	QFileInfo info(fileName);
 	QDir dir = info.absoluteDir();
 
-	QString temp = dir.absoluteFilePath("part_temp.xml");
+	QString temp = dir.absoluteFilePath("temp.xml");
     QFile file1(temp);
     if (!file1.open(QFile::WriteOnly | QFile::Text)) {
         QMessageBox::warning(NULL, QObject::tr("Fritzing"),

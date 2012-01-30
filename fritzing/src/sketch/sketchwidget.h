@@ -486,7 +486,7 @@ signals:
 	void dropPasteSignal(SketchWidget *);
 	void changeBoardLayersSignal(int, bool doEmit);
 	void firstTimeHelpHidden();
-	void disconnectWireSignal(QSet<ItemBase *> &, QList<long> &, QUndoCommand * parentCommand);
+	void deleteRatsnestSignal(Wire *, QList<long> &, QUndoCommand * parentCommand);
 	void deleteTracesSignal(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, SketchWidget *> & otherDeletedItems, QList<long> & deletedIDs, bool isForeign, QUndoCommand * parentCommand);
 	void makeDeleteItemCommandPrepSignal(ItemBase * itemBase, bool foreign, QUndoCommand * parentCommand);
 	void makeDeleteItemCommandFinalSignal(ItemBase * itemBase, bool foreign, QUndoCommand * parentCommand);
@@ -523,7 +523,7 @@ protected slots:
 	void rememberSticky(long id, QUndoCommand * parentCommand);
 	void rememberSticky(ItemBase *, QUndoCommand * parentCommand);
 	void copyBoundingRectsSlot(QHash<QString, QRectF> &);
-	void disconnectWireSlot(QSet<ItemBase *> &, QList<long> & deletedIDs, QUndoCommand * parentCommand);
+	void deleteRatsnestSlot(Wire *, QList<long> & deletedIDs, QUndoCommand * parentCommand);
 	void deleteTracesSlot(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, SketchWidget *> & otherDeletedItems, QList<long> & deletedIDs, bool isForeign, QUndoCommand * parentCommand);
 	void vScrollToZero();
 	void arrowTimerTimeout();

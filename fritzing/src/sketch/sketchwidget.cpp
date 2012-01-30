@@ -946,7 +946,7 @@ void SketchWidget::deleteSelected(Wire * wire) {
 
 	QUndoCommand * parentCommand = new QUndoCommand(tr("Delete ratsnest"));
 	QList<long> ids;
-	emit disconnectWireSignal(itemBases, ids, parentCommand);
+	emit deleteRatsnestSignal(wire, ids, parentCommand);
 	m_undoStack->waitPush(parentCommand, PropChangeDelay);
 }
 
@@ -7992,7 +7992,7 @@ void SketchWidget::ratsnestConnect(ConnectorItem * connectorItem, bool connect) 
 }
 
 
-void SketchWidget::disconnectWireSlot(QSet<ItemBase *> & foreignDeletedItems, QList<long> & deletedIDs, QUndoCommand * parentCommand)
+void SketchWidget::deleteRatsnestSlot(Wire * ratsnest, QList<long> & deletedIDs, QUndoCommand * parentCommand)
 {
 	// deleting a ratsnest really means deleting underlying connections
 	// for now assume only one ratsnest is being deleted although it's written as a loop
@@ -8000,152 +8000,148 @@ void SketchWidget::disconnectWireSlot(QSet<ItemBase *> & foreignDeletedItems, QL
 
 	QSet<ItemBase *> deletedItems;
 
-	foreach (ItemBase * foreignItemBase, foreignDeletedItems) {
-		Wire * foreignWire = qobject_cast<Wire *>(foreignItemBase);
-		if (foreignWire == NULL) continue;	// shouldn't happen
+	// assume ratsnest has only one connection at each end
+	ConnectorItem * foreignSource = ratsnest->connector0()->firstConnectedToIsh();
+	ConnectorItem * foreignSink = ratsnest->connector1()->firstConnectedToIsh();
+	if (foreignSource == NULL) return;
+	if (foreignSink == NULL) return;
 
-		// assume ratsnest has only one connection at each end
-		ConnectorItem * foreignSource = foreignWire->connector0()->firstConnectedToIsh();
-		ConnectorItem * foreignSink = foreignWire->connector1()->firstConnectedToIsh();
-		if (foreignSource == NULL) continue;
-		if (foreignSink == NULL) continue;
+	ItemBase * sourceBase = findItem(foreignSource->attachedToID());
+	if (sourceBase == NULL) return;
 
-		ItemBase * sourceBase = findItem(foreignSource->attachedToID());
-		if (sourceBase == NULL) continue;
+	ConnectorItem * source = findConnectorItem(sourceBase, foreignSource->connectorSharedID(), ViewLayer::Bottom);
+	if (source == NULL) return;
 
-		ConnectorItem * source = findConnectorItem(sourceBase, foreignSource->connectorSharedID(), ViewLayer::Bottom);
-		if (source == NULL) continue;
+	ItemBase * sinkBase = findItem(foreignSink->attachedToID());
+	if (sinkBase == NULL) return;
 
-		ItemBase * sinkBase = findItem(foreignSink->attachedToID());
-		if (sinkBase == NULL) continue;
+	ConnectorItem * sink = findConnectorItem(sinkBase, foreignSink->connectorSharedID(), ViewLayer::Bottom);
+	if (sink == NULL) return;
 
-		ConnectorItem * sink = findConnectorItem(sinkBase, foreignSink->connectorSharedID(), ViewLayer::Bottom);
-		if (sink == NULL) continue;
+	QList<ConnectorItem *> connectorItems;
+	connectorItems.append(source);
+	connectorItems.append(sink);
+	ConnectorItem::collectEqualPotential(connectorItems, true, (ViewGeometry::RatsnestFlag | ViewGeometry::NormalFlag | ViewGeometry::PCBTraceFlag | ViewGeometry::SchematicTraceFlag) ^ getTraceFlag());
+	QList<ConnectorItem *> partConnectorItems;
+	ConnectorItem::collectParts(connectorItems, partConnectorItems, true, ViewLayer::TopAndBottom);
+	int n = partConnectorItems.count();
 
-		QList<ConnectorItem *> connectorItems;
-		connectorItems.append(source);
-		connectorItems.append(sink);
-		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::RatsnestFlag);
-		QList<ConnectorItem *> partConnectorItems;
-		ConnectorItem::collectParts(connectorItems, partConnectorItems, true, ViewLayer::TopAndBottom);
-		int n = partConnectorItems.count();
-
-		QSet<ConnectorItem *> sameBuses;
-		for (int i = 0; i < n; i++) {
-			ConnectorItem * ci = partConnectorItems[i];
-			for (int j = i + 1; j < n; j++) {
-				ConnectorItem * cj = partConnectorItems[j];
-				if (ci->attachedTo() == cj->attachedTo()) {
-					if (ci->bus() != NULL) {
-						if (ci->bus() == cj->bus()) {
-							sameBuses.insert(cj);
-						}
+	QSet<ConnectorItem *> sameBuses;
+	for (int i = 0; i < n; i++) {
+		ConnectorItem * ci = partConnectorItems[i];
+		for (int j = i + 1; j < n; j++) {
+			ConnectorItem * cj = partConnectorItems[j];
+			if (ci->attachedTo() == cj->attachedTo()) {
+				if (ci->bus() != NULL) {
+					if (ci->bus() == cj->bus()) {
+						sameBuses.insert(cj);
 					}
-				}
-			}
-		}
-		foreach (ConnectorItem * ci, sameBuses) {
-			partConnectorItems.removeOne(ci);
-		}
-		n = partConnectorItems.count();
-
-		// there are multiple possibilities for each pair of connectors:
-
-		// they are directly connected because they're each inserted into female connectors on the same bus
-		// they are directly connected with a wire
-		// they are "directly" connected through some combination of female connectors and wires (i.e. one part is connected to a wire which is inserted into a female connector)
-		// they are indirectly connected via other parts
-
-		// what if there are multiple direct connections--treat it as a single connection and delete them all
-
-		QVector< QVector< QList<ConnectorItem *> > > buses(n, QVector< QList<ConnectorItem *> >(n, QList<ConnectorItem *>()));
-		QVector< QVector<int> > cap(n, QVector<int>(n));
-		QVector<int> prev(n);
-		int sourceIndex = -1;
-		int sinkIndex = -1;
-		for (int i = 0; i < n; i++) {
-			ConnectorItem * ci = partConnectorItems[i];
-			if (ci == source) sourceIndex = i;
-			else if (ci == sink) sinkIndex = i;
-			for (int j = i; j < n; j++) {
-				ConnectorItem * cj = partConnectorItems[j];
-				int weight = 0;
-				if (i != j) {
-					if (connectedDirectlyTo(ci, cj, buses[j][i])) weight = 1;
-				}
-				cap[j][i] = cap[i][j] = weight;
-				buses[i][j] = buses[j][i];
-			}
-		}
-
-		fordFulkerson(cap, prev, n, sourceIndex, sinkIndex);
-
-		QHash<ConnectorItem *, ConnectorItem *> detachItems;			// key is part to be detached, value is part to detach from
-
-		// If prev[v] == -1, then v is not reachable from s
-		for (int i = 0; i < n; i++) {
-			QList<ConnectorItem *> & deleteConnectors = buses[i][sourceIndex];
-			if (prev[i] == -1 && deleteConnectors.count() > 0) {
-				foreach (ConnectorItem * deleteConnector, deleteConnectors) {
-					DebugDialog::debug(QString("delete something %1").arg(deleteConnector->attachedToID()));
-					if (deleteConnector->attachedToItemType() == ModelPart::Wire) {
-						Wire * deletedWire = qobject_cast<Wire *>(deleteConnector->attachedTo());
-						QList<ConnectorItem *> ends;
-						QList<Wire *> wires;
-						deletedWire->collectChained(wires, ends);
-						foreach (Wire * w, wires) {
-							if (!deletedIDs.contains(w->id())) {
-								deletedItems.insert(w);
-								deletedIDs.append(w->id());
-							}
-						}
-					}
-					else {
-
-						// we have to detach the source or sink from a female connector
-						if (deleteConnector->connectorType() == Connector::Female) {
-							detachItems.insert(partConnectorItems[i], deleteConnector);
-						}
-						else {
-							detachItems.insert(deleteConnector, partConnectorItems[i]);
-						}
-					}
-				}
-			}
-		}
-
-		foreach (ConnectorItem * detacheeConnector, detachItems.keys()) {
-			ItemBase * detachee = detacheeConnector->attachedTo();
-			ConnectorItem * detachFromConnector = detachItems.value(detacheeConnector);
-			ItemBase * detachFrom = detachFromConnector->attachedTo();
-			QPointF newPos = calcNewLoc(detachee, detachFrom);
-
-			// delete connections
-			// add wires and connections for undisconnected connectors
-
-			detachee->saveGeometry();
-			ViewGeometry vg = detachee->getViewGeometry();
-			vg.setLoc(newPos);
-			new MoveItemCommand(this, detachee->id(), detachee->getViewGeometry(), vg, false, parentCommand);
-			QHash<long, ItemBase *> emptyList;
-			ConnectorPairHash connectorHash;
-			disconnectFromFemale(detachee, emptyList, connectorHash, true, false, parentCommand);
-			foreach (ConnectorItem * fromConnectorItem, connectorHash.uniqueKeys()) {
-				if (detachItems.keys().contains(fromConnectorItem)) {
-					// don't need to reconnect
-					continue;
-				}
-				if (detachItems.values().contains(fromConnectorItem)) {
-					// don't need to reconnect
-					continue;
-				}
-
-				foreach (ConnectorItem * toConnectorItem, connectorHash.values(fromConnectorItem)) {
-					createWire(fromConnectorItem, toConnectorItem, ViewGeometry::NoFlag, false, BaseCommand::CrossView, parentCommand);
 				}
 			}
 		}
 	}
+	foreach (ConnectorItem * ci, sameBuses) {
+		partConnectorItems.removeOne(ci);
+	}
+	n = partConnectorItems.count();
+
+	// there are multiple possibilities for each pair of connectors:
+
+	// they are directly connected because they're each inserted into female connectors on the same bus
+	// they are directly connected with a wire
+	// they are "directly" connected through some combination of female connectors and wires (i.e. one part is connected to a wire which is inserted into a female connector)
+	// they are indirectly connected via other parts
+
+	// what if there are multiple direct connections--treat it as a single connection and delete them all
+
+	QVector< QVector< QList<ConnectorItem *> > > buses(n, QVector< QList<ConnectorItem *> >(n, QList<ConnectorItem *>()));
+	QVector< QVector<int> > cap(n, QVector<int>(n));
+	QVector<int> prev(n);
+	int sourceIndex = -1;
+	int sinkIndex = -1;
+	for (int i = 0; i < n; i++) {
+		ConnectorItem * ci = partConnectorItems[i];
+		if (ci == source) sourceIndex = i;
+		else if (ci == sink) sinkIndex = i;
+		for (int j = i; j < n; j++) {
+			ConnectorItem * cj = partConnectorItems[j];
+			int weight = 0;
+			if (i != j) {
+				if (connectedDirectlyTo(ci, cj, buses[j][i])) weight = 1;
+			}
+			cap[j][i] = cap[i][j] = weight;
+			buses[i][j] = buses[j][i];
+		}
+	}
+
+	fordFulkerson(cap, prev, n, sourceIndex, sinkIndex);
+
+	QHash<ConnectorItem *, ConnectorItem *> detachItems;			// key is part to be detached, value is part to detach from
+
+	// If prev[v] == -1, then v is not reachable from s
+	for (int i = 0; i < n; i++) {
+		QList<ConnectorItem *> & deleteConnectors = buses[i][sourceIndex];
+		if (prev[i] == -1 && deleteConnectors.count() > 0) {
+			foreach (ConnectorItem * deleteConnector, deleteConnectors) {
+				DebugDialog::debug(QString("delete something %1").arg(deleteConnector->attachedToID()));
+				if (deleteConnector->attachedToItemType() == ModelPart::Wire) {
+					Wire * deletedWire = qobject_cast<Wire *>(deleteConnector->attachedTo());
+					QList<ConnectorItem *> ends;
+					QList<Wire *> wires;
+					deletedWire->collectChained(wires, ends);
+					foreach (Wire * w, wires) {
+						if (!deletedIDs.contains(w->id())) {
+							deletedItems.insert(w);
+							deletedIDs.append(w->id());
+						}
+					}
+				}
+				else {
+
+					// we have to detach the source or sink from a female connector
+					if (deleteConnector->connectorType() == Connector::Female) {
+						detachItems.insert(partConnectorItems[i], deleteConnector);
+					}
+					else {
+						detachItems.insert(deleteConnector, partConnectorItems[i]);
+					}
+				}
+			}
+		}
+	}
+
+	foreach (ConnectorItem * detacheeConnector, detachItems.keys()) {
+		ItemBase * detachee = detacheeConnector->attachedTo();
+		ConnectorItem * detachFromConnector = detachItems.value(detacheeConnector);
+		ItemBase * detachFrom = detachFromConnector->attachedTo();
+		QPointF newPos = calcNewLoc(detachee, detachFrom);
+
+		// delete connections
+		// add wires and connections for undisconnected connectors
+
+		detachee->saveGeometry();
+		ViewGeometry vg = detachee->getViewGeometry();
+		vg.setLoc(newPos);
+		new MoveItemCommand(this, detachee->id(), detachee->getViewGeometry(), vg, false, parentCommand);
+		QHash<long, ItemBase *> emptyList;
+		ConnectorPairHash connectorHash;
+		disconnectFromFemale(detachee, emptyList, connectorHash, true, false, parentCommand);
+		foreach (ConnectorItem * fromConnectorItem, connectorHash.uniqueKeys()) {
+			if (detachItems.keys().contains(fromConnectorItem)) {
+				// don't need to reconnect
+				continue;
+			}
+			if (detachItems.values().contains(fromConnectorItem)) {
+				// don't need to reconnect
+				continue;
+			}
+
+			foreach (ConnectorItem * toConnectorItem, connectorHash.values(fromConnectorItem)) {
+				createWire(fromConnectorItem, toConnectorItem, ViewGeometry::NoFlag, false, BaseCommand::CrossView, parentCommand);
+			}
+		}
+	}
+
 
 	deleteAux(deletedItems, parentCommand, false);
 }
@@ -8171,6 +8167,10 @@ bool SketchWidget::connectedDirectlyTo(ConnectorItem * from, ConnectorItem * to,
 
 	bool result = false;
 	foreach (ConnectorItem * toConnectorItem, from->connectedToItems()) {
+		if (!toConnectorItem->attachedTo()->isEverVisible()) {
+			continue;   // ignore breadboard connectors in schematic view, for example
+		}
+
 		if (toConnectorItem == to) {
 			byBus.append(NULL);
 			return true;
@@ -8180,10 +8180,13 @@ bool SketchWidget::connectedDirectlyTo(ConnectorItem * from, ConnectorItem * to,
 
 		Bus * bus = toConnectorItem->bus();
 		if (bus == NULL) continue;
-
 		QList<ConnectorItem *> busConnectorItems;
 		toConnectorItem->attachedTo()->busConnectorItems(bus, busConnectorItems);
 		foreach (ConnectorItem * busConnectorItem, busConnectorItems) {
+			if (!busConnectorItem->attachedTo()->isEverVisible()) {
+				continue;   // ignore breadboard connectors in schematic view, for example
+			}
+
 			if (busConnectorItem == to) {
 				byBus.append(NULL);
 				result = true;

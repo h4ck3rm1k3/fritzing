@@ -556,8 +556,8 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 	succeeded = succeeded && connect(signaller, SIGNAL(changeBoardLayersSignal(int, bool )),
 									 slotter, SLOT(changeBoardLayers(int, bool )));
 
-	succeeded = succeeded && connect(signaller, SIGNAL(disconnectWireSignal(QSet<ItemBase *> &, QList<long> &, QUndoCommand *)),
-									 slotter, SLOT(disconnectWireSlot(QSet<ItemBase *> &, QList<long> &, QUndoCommand *)),
+	succeeded = succeeded && connect(signaller, SIGNAL(deleteRatsnestSignal(Wire *, QList<long> &, QUndoCommand *)),
+									 slotter, SLOT(deleteRatsnestSlot(Wire *, QList<long> &, QUndoCommand *)),
 									 Qt::DirectConnection);
 
 	succeeded = succeeded && connect(signaller, SIGNAL(deleteTracesSignal(QSet<ItemBase *> &, QHash<ItemBase *, SketchWidget *> &, QList<long> &, bool, QUndoCommand *)),
