@@ -347,8 +347,11 @@ void ModelBase::save(const QString & fileName, bool asPart) {
     QFile file1(temp);
     if (!file1.open(QFile::WriteOnly | QFile::Text)) {
         QMessageBox::warning(NULL, QObject::tr("Fritzing"),
-                             QObject::tr("Cannot write file temp file:\n%1.")
-                              .arg(file1.errorString()));
+                             QObject::tr("Cannot write file temp:\n%1\n%2\n%3.")
+							  .arg(temp)
+							  .arg(fileName)
+                              .arg(file1.errorString())
+							  );
         return;
     }
 
