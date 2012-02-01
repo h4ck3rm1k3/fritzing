@@ -1527,7 +1527,10 @@ bool ConnectorItem::isGrounded(ConnectorItem * c1, ConnectorItem * c2) {
 bool ConnectorItem::isGrounded() {
 	QString name = connectorSharedName();
 	return ((name.compare("gnd", Qt::CaseInsensitive) == 0) || 
-			(name.compare("ground", Qt::CaseInsensitive) == 0));
+			(name.compare("-", Qt::CaseInsensitive) == 0) || 
+			(name.compare("vss", Qt::CaseInsensitive) == 0) || 
+			(name.compare("ground", Qt::CaseInsensitive) == 0)
+			);
 }
 
 ConnectorItem * ConnectorItem::getCrossLayerConnectorItem() {

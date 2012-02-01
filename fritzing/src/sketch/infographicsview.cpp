@@ -46,21 +46,21 @@ void InfoGraphicsView::viewItemInfo(ItemBase * item) {
 	m_infoView->viewItemInfo(this, item ? item->layerKinChief() : item, swappingEnabled(item));
 }
 
-void InfoGraphicsView::hoverEnterItem(QGraphicsSceneHoverEvent * event, ItemBase * item) {
+void InfoGraphicsView::hoverEnterItem(QGraphicsSceneHoverEvent * event, ItemBase * itemBase) {
 	if (m_infoView == NULL) return;
 
-	if (event->modifiers() & Qt::ShiftModifier) {
+	if (event->modifiers() & Qt::ShiftModifier || itemBase->viewIdentifier() == ViewIdentifierClass::IconView) {
 		m_hoverEnterMode = true;
-		m_infoView->hoverEnterItem(this, event, item ? item->layerKinChief() : item, swappingEnabled(item));
+		m_infoView->hoverEnterItem(this, event, itemBase ? itemBase->layerKinChief() : itemBase, swappingEnabled(itemBase));
 	}
 }
 
-void InfoGraphicsView::hoverLeaveItem(QGraphicsSceneHoverEvent * event, ItemBase * item){
+void InfoGraphicsView::hoverLeaveItem(QGraphicsSceneHoverEvent * event, ItemBase * itemBase) {
 	if (m_infoView == NULL) return;
 
 	if (m_hoverEnterMode) {
 		m_hoverEnterMode = false;
-		m_infoView->hoverLeaveItem(this, event, item ? item->layerKinChief() : item);
+		m_infoView->hoverLeaveItem(this, event, itemBase ? itemBase->layerKinChief() : itemBase);
 	}
 }
 
