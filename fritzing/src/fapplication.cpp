@@ -42,6 +42,7 @@ $Date$
 #include "partsbinpalette/binmanager/binmanager.h"
 #include "help/tipsandtricks.h"
 #include "utils/folderutils.h"
+#include "utils/lockmanager.h"
 #include "dialogs/translatorlistmodel.h"
 #include "partsbinpalette/svgiconwidget.h"
 #include "items/moduleidnames.h"
@@ -58,7 +59,6 @@ $Date$
 #include "items/pinheader.h"
 #include "items/partfactory.h"
 #include "dialogs/recoverydialog.h"
-#include "lib/qtlockedfile/qtlockedfile.h"
 #include "lib/qtsysteminfo/QtSystemInfo.h"
 #include "processeventblocker.h"
 #include "autoroute/cmrouter/panelizer.h"
@@ -1315,10 +1315,14 @@ void FApplication::doLoadPrevious(MainWindow * sketchWindow) {
 
 QList<MainWindow *> FApplication::recoverBackups()
 {	
-
 	QFileInfoList backupList;
-	QStringList filters("*" + FritzingSketchExtension);
-	FolderUtils::checkLockedFiles("backup", backupList, filters, m_lockedFiles, false);
+	LockManager::checkLockedFiles("backup", backupList, m_lockedFiles, false, LockManager::FastTime);
+	for (int i = backupList.size() - 1; i >=0; i--) {
+		QFileInfo fileInfo = backupList.at(i);
+		if (!fileInfo.fileName().endsWith(FritzingSketchExtension)) {
+			backupList.removeAt(i);
+		}
+	}
 
 	QList<MainWindow*> recoveredSketches;
     if (backupList.size() == 0) return recoveredSketches;
@@ -1378,11 +1382,11 @@ void FApplication::initFilesToLoad()
 }
 
 void FApplication::initBackups() {
-	FolderUtils::initLockedFiles("backup", MainWindow::BackupFolder, m_lockedFiles, true);
+	LockManager::initLockedFiles("backup", MainWindow::BackupFolder, m_lockedFiles, LockManager::FastTime);
 }
 
 void FApplication::cleanupBackups() {
-	FolderUtils::releaseLockedFiles(MainWindow::BackupFolder, m_lockedFiles);
+	LockManager::releaseLockedFiles(MainWindow::BackupFolder, m_lockedFiles);
 }
 
 void FApplication::gotOrderFab(QNetworkReply * networkReply) {
@@ -1491,11 +1495,10 @@ void FApplication::runExampleService(QDir & dir) {
 }
 
 void FApplication::cleanFzzs() {
-	QHash<QString, QtLockedFile *> lockedFiles;
+	QHash<QString, LockedFile *> lockedFiles;
 	QString folder;
-	FolderUtils::initLockedFiles("fzz", folder, lockedFiles, true);
+	LockManager::initLockedFiles("fzz", folder, lockedFiles, LockManager::SlowTime);
 	QFileInfoList backupList;
-	QStringList filters;
-	FolderUtils::checkLockedFiles("fzz", backupList, filters, lockedFiles, true);
-	FolderUtils::releaseLockedFiles(folder, lockedFiles);
+	LockManager::checkLockedFiles("fzz", backupList, lockedFiles, true, LockManager::SlowTime);
+	LockManager::releaseLockedFiles(folder, lockedFiles);
 }

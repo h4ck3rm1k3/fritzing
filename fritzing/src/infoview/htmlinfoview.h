@@ -31,7 +31,6 @@ $Date$
 
 #include <QFrame>
 #include <QGraphicsSceneHoverEvent>
-#include <QMutex>
 #include <QTimer>
 #include <QLabel>
 #include <QScrollArea>

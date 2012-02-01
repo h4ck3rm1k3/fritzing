@@ -25,6 +25,7 @@ $Date$
 ********************************************************************/
 
 #include "folderutils.h"
+#include "lockmanager.h"
 #include <QDesktopServices>
 #include <QCoreApplication>
 #include <QSettings>
@@ -35,13 +36,11 @@ $Date$
 #include "../debugdialog.h"
 #include "../lib/quazip/quazip.h"
 #include "../lib/quazip/quazipfile.h"
-#include "../lib/qtlockedfile/qtlockedfile.h"
 #include "../lib/qtsysteminfo/QtSystemInfo.h"
 
 
 FolderUtils* FolderUtils::singleton = NULL;
 QString FolderUtils::m_openSaveFolder = "";
-const QString FolderUtils::LockFileName = "___lockfile___.txt";
 
 FolderUtils::FolderUtils() {
 	m_openSaveFolder = ___emptyString___;
@@ -347,7 +346,7 @@ bool FolderUtils::createZipAndSaveTo(const QDir &dirToCompress, const QString &f
 	QDir::setCurrent(dirToCompress.path());
 	foreach(QFileInfo file, files) {
 		if(!file.isFile()||file.fileName()==filepath) continue;
-		if (file.fileName().contains(LockFileName)) continue;
+		if (file.fileName().contains(LockManager::LockedFileName)) continue;
 
 //#pragma message("remove fzz check")
 //if (file.fileName().endsWith(".fzz")) continue;
@@ -473,57 +472,6 @@ bool FolderUtils::unzipTo(const QString &filepath, const QString &dirToDecompres
 	return true;
 }
 
-void FolderUtils::initLockedFiles(const QString & prefix, QString & folder, QHash<QString, class QtLockedFile *> & lockedFiles, bool lockFiles) {
-	// first create our own unique folder and lock it
-	QDir backupDir(FolderUtils::getUserDataStorePath(prefix));
-	QString lockedSubfolder = FolderUtils::getRandText();
-	backupDir.mkdir(lockedSubfolder);
-	folder = backupDir.absoluteFilePath(lockedSubfolder);
-	if (lockFiles) {
-		QtLockedFile * lockFile = new QtLockedFile(folder + "/" + LockFileName);
-		lockFile->open(QFile::WriteOnly);
-		lockFile->lock(QtLockedFile::WriteLock, true);
-		lockedFiles.insert(lockedSubfolder, lockFile);
-	}
-}
-
-void FolderUtils::releaseLockedFiles(const QString & folder, QHash<QString, class QtLockedFile *> & lockedFiles) 
-{
-	// remove backup files; this is a clean exit
-	releaseLockedFiles(folder, lockedFiles, true);
-}
-
-void FolderUtils::releaseLockedFiles(const QString & folder, QHash<QString, class QtLockedFile *> & lockedFiles, bool remove) 
-{
-	QDir backupDir(folder);
-	backupDir.cdUp();
-	foreach (QString sub, lockedFiles.keys()) {
-        QtLockedFile * lockedFile = lockedFiles.value(sub);
-		lockedFile->unlock();
-		lockedFile->close();
-		delete lockedFile;
-        if (remove) {
-			FolderUtils::rmdir(backupDir.absoluteFilePath(sub));
-		}
-	}
-	lockedFiles.clear();
-}
-
-bool FolderUtils::checkLockedFilesAux(const QDir & parent, QStringList & filters)
-{
-	QFileInfoList dirList = parent.entryInfoList(QDir::AllDirs | QDir::NoDotAndDotDot | QDir::Hidden | QDir::NoSymLinks);
-	foreach (QFileInfo dirInfo, dirList) {
-		QDir dir(dirInfo.filePath());
-		//DebugDialog::debug(QString("looking in backup dir %1").arg(dir.absolutePath()));
-		QFileInfoList fileInfoList = dir.entryInfoList(filters, QDir::Files | QDir::Hidden | QDir::NoSymLinks);
-		if (!fileInfoList.isEmpty()) return true;
-
-		if (checkLockedFilesAux(dir, filters)) return true;
-	}
-
-	return false;
-}
-
 void FolderUtils::collectFiles(const QDir & parent, QStringList & filters, QStringList & files)
 {
 	QFileInfoList fileInfoList = parent.entryInfoList(filters, QDir::Files | QDir::Hidden | QDir::NoSymLinks);
@@ -540,60 +488,7 @@ void FolderUtils::collectFiles(const QDir & parent, QStringList & filters, QStri
 	}
 }
 
-void FolderUtils::checkLockedFiles(const QString & prefix, QFileInfoList & backupList, QStringList & filters, QHash<QString, class QtLockedFile *> & lockedFiles, bool recurse)
-{
-	QDir backupDir(FolderUtils::getUserDataStorePath(prefix));
-	QFileInfoList dirList = backupDir.entryInfoList(QDir::AllDirs | QDir::NoDotAndDotDot | QDir::Hidden | QDir::NoSymLinks);
-	foreach (QFileInfo dirInfo, dirList) {
-		QDir dir(dirInfo.filePath());
-		//DebugDialog::debug(QString("looking in backup dir %1").arg(dir.absolutePath()));
-		QFileInfoList fileInfoList = dir.entryInfoList(filters, QDir::Files | QDir::Hidden | QDir::NoSymLinks);
-		bool gotRecurse = false;
-		if (recurse && fileInfoList.isEmpty()) {
-			gotRecurse = checkLockedFilesAux(dir, filters);
-		}
 
-		if (fileInfoList.isEmpty() && !gotRecurse) {
-			// could mean this backup folder is just being created by another process
-			// could also mean it's leftover crap.
-			// check the date and only delete if it's old
-
-			// don't lock the file, in case this is a race condition:
-			// if another instance starting up is about to lock the file, 
-			// the date will be recent and we won't delete 
-			
-			QDateTime lastModified = dirInfo.lastModified();
-			if (lastModified < QDateTime::currentDateTime().addSecs(-5 * 60)) {
-				// At startup, creating the backup folder, the lock file, and locking it are successive operations
-				// so even giving it 5 minutes here is probably way more than we need
-				FolderUtils::rmdir(dirInfo.filePath());
-			}
-			
-			continue;
-		}
-		
-		QtLockedFile * otherLockFile = new QtLockedFile(dir.absoluteFilePath(FolderUtils::LockFileName));
-		bool isOpen = otherLockFile->open(QFile::WriteOnly);
-		if (!isOpen) {
-			// somebody else owns the file
-			delete otherLockFile;
-			continue;
-		}
-
-		if (!otherLockFile->lock(QtLockedFile::WriteLock, false)) {
-			// somebody else owns the file
-			otherLockFile->close();
-			delete otherLockFile;
-			continue;
-		}
-
-		// we own the file
-		lockedFiles.insert(dirInfo.fileName(), otherLockFile);		
-		foreach (QFileInfo fileInfo, fileInfoList) {
-			backupList << fileInfo;
-		}
-	}
-}
 
 void FolderUtils::makePartFolderHierarchy(const QString & prefixFolder, const QString & destFolder) {
 	QDir dir(prefixFolder);

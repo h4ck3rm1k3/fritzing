@@ -211,8 +211,6 @@ parts editor support
 #include <QPen>
 #include <QColor>
 #include <limits>
-#include <QMutex>
-#include <QMutexLocker>
 #include <QSet>
 #include <QToolTip>
 #include <QBitmap>

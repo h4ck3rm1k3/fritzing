@@ -54,9 +54,10 @@ $Date$
 #include "stripboard.h"
 #include "led.h"
 #include "../utils/folderutils.h"
+#include "../utils/lockmanager.h"
 
 static QString PartFactoryFolderPath;
-static QHash<QString, class QtLockedFile *> LockedFiles;
+static QHash<QString, LockedFile *> LockedFiles;
 
 ItemBase * PartFactory::createPart( ModelPart * modelPart, ViewLayer::ViewLayerSpec viewLayerSpec, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, QMenu * wireMenu, bool doLabel)
 {
@@ -337,17 +338,15 @@ QString PartFactory::getFzpFilename(const QString & moduleID)
 
 void PartFactory::initFolder()
 {
-	FolderUtils::initLockedFiles("partfactory", PartFactoryFolderPath, LockedFiles, true);
+	LockManager::initLockedFiles("partfactory", PartFactoryFolderPath, LockedFiles, LockManager::SlowTime);
 	QFileInfoList backupList;
-	QStringList filters;
-	filters << ("*" + FritzingPartExtension) << "*.svg";
-	FolderUtils::checkLockedFiles("partfactory", backupList, filters, LockedFiles, true);
+	LockManager::checkLockedFiles("partfactory", backupList, LockedFiles, true, LockManager::SlowTime);
 	FolderUtils::makePartFolderHierarchy(PartFactoryFolderPath, "core");
 }
 
 void PartFactory::cleanup()
 {
-	FolderUtils::releaseLockedFiles(PartFactoryFolderPath, LockedFiles);
+	LockManager::releaseLockedFiles(PartFactoryFolderPath, LockedFiles);
 }
 
 ModelPart * PartFactory::fixObsoleteModuleID(QDomDocument & domDocument, QDomElement & instance, QString & moduleIDRef, ModelBase * referenceModel) {

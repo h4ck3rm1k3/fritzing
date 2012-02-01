@@ -696,7 +696,7 @@ protected:
 	bool m_orderFabEnabled;		
 	bool m_closeSilently;
 	QString m_fzzFolder;
-	QHash<QString, class QtLockedFile *> m_fzzFiles;
+	QHash<QString, struct LockedFile *> m_fzzFiles;
 
 public:
 	static int RestartNeeded;

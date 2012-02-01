@@ -33,7 +33,6 @@ $Date$
 #include <QFileDialog>
 #include <QPointer>
 #include <QWidget>
-#include <QMutex>
 #include <QTimer>
 #include <QNetworkReply>
 
@@ -142,7 +141,7 @@ protected:
 	class FSplashScreen * m_splash;
 	QString m_outputFolder;
 	QString m_panelFilename;
-	QHash<QString, class QtLockedFile *> m_lockedFiles;
+	QHash<QString, struct LockedFile *> m_lockedFiles;
 
 public:
 	static int RestartNeeded;

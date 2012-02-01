@@ -36,6 +36,7 @@ src/utils/fileprogressdialog.h \
 src/utils/flineedit.h \
 src/utils/focusoutcombobox.h \
 src/utils/fsizegrip.h \
+src/utils/lockmanager.h \
 src/utils/misc.h \
 src/utils/resizehandle.h \
 src/utils/folderutils.h \
@@ -58,6 +59,7 @@ src/utils/fileprogressdialog.cpp \
 src/utils/flineedit.cpp \
 src/utils/focusoutcombobox.cpp \
 src/utils/fsizegrip.cpp \
+src/utils/lockmanager.cpp \
 src/utils/misc.cpp \
 src/utils/resizehandle.cpp \
 src/utils/folderutils.cpp \

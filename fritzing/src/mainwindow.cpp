@@ -57,6 +57,7 @@ $Date$
 #include "sketch/pcbsketchwidget.h"
 #include "svg/svgfilesplitter.h"
 #include "utils/folderutils.h"
+#include "utils/lockmanager.h"
 #include "utils/textutils.h"
 #include "utils/graphicsutils.h"
 #include "items/mysterypart.h"
@@ -218,12 +219,10 @@ void MainWindow::init(PaletteModel * paletteModel, ReferenceModel *refModel, boo
 		m_fileProgressDialog->setValue(2);
 	}
 
-
-	FolderUtils::initLockedFiles("fzz", m_fzzFolder, m_fzzFiles, lockFiles);
+	LockManager::initLockedFiles("fzz", m_fzzFolder, m_fzzFiles, lockFiles ? LockManager::SlowTime : 0);
 	if (lockFiles) {
 		QFileInfoList backupList;
-		QStringList filters;
-		FolderUtils::checkLockedFiles("fzz", backupList, filters, m_fzzFiles, true);
+		LockManager::checkLockedFiles("fzz", backupList, m_fzzFiles, true, LockManager::SlowTime);
 	}
 
 	// all this belongs in viewLayer.xml
@@ -415,7 +414,7 @@ MainWindow::~MainWindow()
 	m_linkedProgramFiles.clear();
 
 	if (!m_fzzFolder.isEmpty()) {
-		FolderUtils::releaseLockedFiles(m_fzzFolder, m_fzzFiles);
+		LockManager::releaseLockedFiles(m_fzzFolder, m_fzzFiles);
 		FolderUtils::rmdir(m_fzzFolder);
 	}
 }					   
