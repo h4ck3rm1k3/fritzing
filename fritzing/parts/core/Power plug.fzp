@@ -33,8 +33,8 @@
         </pcbView>
     </views>
     <connectors>
-        <connector id="connector0" name="pin 1" type="male">
-            <description>Ring (GND)</description>
+        <connector id="connector0" name="GND" type="male">
+            <description>Ring (Ground)</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector0pin" terminalId="connector0terminal"/>
@@ -47,8 +47,8 @@
                 <p layer="copper1" svgId="connector1pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector1" name="pin 2" type="male">
-            <description>Center Pin (V+)</description>
+        <connector id="connector1" name="VCC" type="male">
+            <description>Center Pin (Power)</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector1pin" terminalId="connector1terminal"/>
@@ -61,8 +61,8 @@
                 <p layer="copper1" svgId="connector0pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector2" name="pin 3" type="male">
-            <description>Chassis (GND)</description>
+        <connector id="connector2" name="GND" type="male">
+            <description>Chassis (Ground)</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector2pin" terminalId="connector2terminal"/>
