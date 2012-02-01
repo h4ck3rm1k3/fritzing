@@ -33,7 +33,7 @@ $Date$
 #include <QDateTime>
 
 const QString LockManager::LockedFileName = "___lockfile___.txt";
-const long LockManager::FastTime =  3000;
+const long LockManager::FastTime =  2000;
 const long LockManager::SlowTime = 240000;
 
 static LockManager TheLockManager;
