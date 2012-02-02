@@ -18,7 +18,7 @@
       <property name="Pin Spacing">400 mil</property>
       <property name="package">THT</property>
       <property name="bands">5</property>
-      <property name="tolerance" showInLabel="yes">&#177;5%</property>
+      <property name="tolerance">&#177;5%</property>
     </properties>
     <taxonomy>discreteParts.resistor.220</taxonomy>
     <description>A generic 5-band resistor (0.25W)</description>
