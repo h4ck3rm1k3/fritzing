@@ -1140,7 +1140,6 @@ void MainWindow::createMenus()
 	m_pcbTraceMenu->addSeparator();
 
 	m_pcbTraceMenu->addAction(m_changeTraceLayerAct);
-	m_pcbTraceMenu->addAction(m_createTraceAct);
 	m_pcbTraceMenu->addAction(m_excludeFromAutorouteAct);
 	m_pcbTraceMenu->addSeparator();
 
@@ -1152,7 +1151,6 @@ void MainWindow::createMenus()
 
 	m_schematicTraceMenu = menuBar()->addMenu(tr("&Diagram"));
 	m_schematicTraceMenu->addAction(m_autorouteAct);
-	m_schematicTraceMenu->addAction(m_createTraceAct);
 	m_schematicTraceMenu->addAction(m_excludeFromAutorouteAct);
 	m_schematicTraceMenu->addAction(m_selectAllTracesAct);
 	m_schematicTraceMenu->addAction(m_selectAllExcludedTracesAct);
@@ -1349,6 +1347,7 @@ void MainWindow::updateWireMenu() {
 	m_sendBackwardWireAct->setWire(wire);
 	m_sendToBackWireAct->setWire(wire);
 	m_createTraceWireAct->setWire(wire);
+	m_createWireWireAct->setWire(wire);
 	m_deleteWireAct->setWire(wire);
 	m_excludeFromAutorouteWireAct->setWire(wire);
 	m_updateNetAct->setWire(wire);
@@ -1358,6 +1357,7 @@ void MainWindow::updateWireMenu() {
 	m_sendBackwardWireAct->setEnabled(enableZOK);
 	m_sendToBackWireAct->setEnabled(enableZOK);
 	m_createTraceWireAct->setEnabled(enableAll && createTraceOK);
+	m_createWireWireAct->setEnabled(enableAll && createTraceOK);
 	m_deleteWireAct->setEnabled(enableAll && deleteOK);
 	m_excludeFromAutorouteWireAct->setEnabled(enableAll && excludeOK);
 	m_updateNetAct->setEnabled(gotRat);
@@ -1463,28 +1463,6 @@ void MainWindow::updateItemMenu() {
 
 	QList<QGraphicsItem *> items = m_currentGraphicsView->scene()->selectedItems();
 
-	if (m_currentGraphicsView == m_pcbGraphicsView) {
-		bool enabled = true;
-		int count = 0;
-		foreach (QGraphicsItem * item, items) {
-			VirtualWire * vw = dynamic_cast<VirtualWire *>(item);
-			if (vw == NULL) {
-				enabled = false;
-				break;
-			}
-
-			if (!vw->getRatsnest()) {
-				enabled = false;
-				break;
-			}
-
-			count++;
-		}
-
-		// TODO: if there's already a trace or jumper, disable appropriately
-		m_createTraceAct->setEnabled(enabled && count > 0);
-	}
-
 	int selCount = 0;
 	ItemBase * itemBase = NULL;
 	foreach(QGraphicsItem * item, items) {
@@ -1557,7 +1535,6 @@ void MainWindow::updateTraceMenu() {
 	bool jiEnabled = false;
 	bool viaEnabled = false;
 	bool tEnabled = false;
-	bool ctEnabled = false;
 	bool cjEnabled = false;
 	bool exEnabled = false;
 	bool exChecked = true;
@@ -1642,7 +1619,6 @@ void MainWindow::updateTraceMenu() {
 		}
 	}
 
-	m_createTraceAct->setEnabled(ctEnabled);
 	m_excludeFromAutorouteAct->setEnabled(exEnabled);
 	m_excludeFromAutorouteAct->setChecked(exChecked);
 	m_changeTraceLayerAct->setEnabled(ctlEnabled);
@@ -2112,11 +2088,14 @@ void MainWindow::createTraceMenuActions() {
 	m_activeLayerBottomAct->setShortcut(tr("Shift+Ctrl+1"));
 	connect(m_activeLayerBottomAct, SIGNAL(triggered()), this, SLOT(activeLayerBottom()));
 
-	m_createTraceAct = new QAction(tr("&Create Trace from Selected Wire(s)"), this);
-	m_createTraceAct->setStatusTip(tr("Create a trace from the selected wire"));
-	connect(m_createTraceAct, SIGNAL(triggered()), this, SLOT(createTrace()));
-	m_createTraceWireAct = new WireAction(m_createTraceAct);
+	QAction * traceAct = new QAction(tr("&Create trace from ratsnest"), this);
+	traceAct->setStatusTip(tr("Create a trace from the ratsnest line"));
+	m_createTraceWireAct = new WireAction(traceAct);
 	connect(m_createTraceWireAct, SIGNAL(triggered()), this, SLOT(createTrace()));
+	traceAct = new QAction(tr("&Create wire from ratsnest"), this);
+	traceAct->setStatusTip(tr("Create a wire from the ratsnest line"));
+	m_createWireWireAct = new WireAction(traceAct);
+	connect(m_createWireWireAct, SIGNAL(triggered()), this, SLOT(createTrace()));
 
 	m_updateNetAct = new WireAction(tr("Update Ratsnest"), this);
 	m_updateNetAct->setStatusTip(tr("Redraw this net"));
@@ -2629,6 +2608,7 @@ QMenu *MainWindow::breadboardWireMenu() {
 		action->setCheckable(true);
 		connect(action, SIGNAL(triggered(bool)), this, SLOT(changeWireColor(bool)));
 	}
+	menu->addAction(m_createWireWireAct);
 	menu->addSeparator();
 	menu->addAction(m_deleteWireAct);
 	menu->addSeparator();

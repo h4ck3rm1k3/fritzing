@@ -450,6 +450,9 @@ protected:
 	void makeRatsnestViewGeometry(ViewGeometry & viewGeometry, ConnectorItem * source, ConnectorItem * dest); 
 	virtual double getTraceWidth();
 	virtual const QString & traceColor(ViewLayer::ViewLayerSpec);
+	void createTrace(Wire * fromWire, const QString & commandString, ViewGeometry::WireFlag);
+	bool createOneTrace(Wire * wire, ViewGeometry::WireFlag flag, bool allowAny, QList<Wire *> & done, QUndoCommand * parentCommand);
+	void removeWire(Wire * w, QList<ConnectorItem *> & ends, QList<Wire *> & done, QUndoCommand * parentCommand);
 
 protected:
 	static bool lessThan(int a, int b);

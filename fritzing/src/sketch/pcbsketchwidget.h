@@ -120,8 +120,6 @@ protected:
 	ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerSpec, QDomElement & layers, QString & layerName);
 	bool canChainWire(Wire *);
 	bool canDragWire(Wire * wire);
-	void createTrace(Wire * fromWire, const QString & commandString, ViewGeometry::WireFlag);
-	bool createOneTrace(Wire * wire, ViewGeometry::WireFlag flag, bool allowAny, QList<Wire *> & done, QUndoCommand * parentCommand);
 	const QString & hoverEnterPartConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	//bool modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand);
 	ViewLayer::ViewLayerID getDragWireViewLayerID(ConnectorItem *);
@@ -136,7 +134,6 @@ protected:
 	ViewLayer::ViewLayerID getLabelViewLayerID(ViewLayer::ViewLayerSpec);
 	ViewLayer::ViewLayerSpec wireViewLayerSpec(ConnectorItem *);
 	int isBoardLayerChange(ItemBase * itemBase, const QString & newModuleID, bool master);
-	void removeWire(Wire * w, QList<ConnectorItem *> & ends, QList<Wire *> & done, QUndoCommand * parentCommand);
 	bool resizingJumperItemPress(QGraphicsItem * item);
 	bool resizingJumperItemRelease();
 	bool resizingBoardPress(QGraphicsItem * item);

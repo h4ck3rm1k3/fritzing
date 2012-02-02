@@ -202,73 +202,9 @@ bool PCBSketchWidget::canChainWire(Wire * wire) {
 
 
 void PCBSketchWidget::createTrace(Wire * wire) {
-	QString commandString = tr("Create Trace from this Wire");
-	createTrace(wire, commandString, getTraceFlag());
+	QString commandString = tr("Create Trace from Ratsnest");
+	SketchWidget::createTrace(wire, commandString, getTraceFlag());
 	ensureTraceLayerVisible();
-}
-
-void PCBSketchWidget::createTrace(Wire * fromWire, const QString & commandString, ViewGeometry::WireFlag flag)
-{
-	QList<Wire *> done;
-	QUndoCommand * parentCommand = new QUndoCommand(commandString);
-
-	new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
-
-	bool gotOne = false;
-	if (fromWire == NULL) {
-		foreach (QGraphicsItem * item, scene()->selectedItems()) {
-			Wire * wire = dynamic_cast<Wire *>(item);
-			if (wire == NULL) continue;
-			if (done.contains(wire)) continue;
-
-			gotOne = createOneTrace(wire, flag, false, done, parentCommand);
-		}
-	}
-	else {
-		gotOne = createOneTrace(fromWire, flag, false, done, parentCommand);
-	}
-
-	if (!gotOne) {
-		delete parentCommand;
-		return;
-	}
-
-	new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
-	m_undoStack->push(parentCommand);
-}
-
-bool PCBSketchWidget::createOneTrace(Wire * wire, ViewGeometry::WireFlag flag, bool allowAny, QList<Wire *> & done, QUndoCommand * parentCommand) 
-{
-	QList<ConnectorItem *> ends;
-	Wire * trace = NULL;
-	if (wire->getRatsnest()) {
-		trace = wire->findTraced(getTraceFlag(), ends);
-	}
-	else if (wire->isTraceType(getTraceFlag())) {
-		trace = wire;
-	}
-	else if (!allowAny) {
-		// not eligible
-		return false;
-	}
-	else {
-		trace = wire->findTraced(getTraceFlag(), ends);
-	}
-
-	if (trace && trace->hasFlag(flag)) {
-		return false;
-	}
-
-	if (trace != NULL) {
-		removeWire(trace, ends, done, parentCommand);
-	}
-
-	QString colorString = traceColor(createWireViewLayerSpec(ends[0], ends[1]));
-	long newID = createWire(ends[0], ends[1], flag, false, BaseCommand::CrossView, parentCommand);
-	// TODO: is this opacity constant stored someplace
-	new WireColorChangeCommand(this, newID, colorString, colorString, 1.0, 1.0, parentCommand);
-	new WireWidthChangeCommand(this, newID, getTraceWidth(), getTraceWidth(), parentCommand);
-	return true;
 }
 
 void PCBSketchWidget::excludeFromAutoroute(bool exclude)
@@ -1054,17 +990,6 @@ void PCBSketchWidget::changeBoardLayers(int layers, bool doEmit) {
 		this->setLayerActive(ViewLayer::Copper0, true);
 	}
 	emit updateLayerMenuSignal();
-}
-
-void PCBSketchWidget::removeWire(Wire * w, QList<ConnectorItem *> & ends, QList<Wire *> & done, QUndoCommand * parentCommand) 
-{
-	QList<Wire *> chained;
-	w->collectChained(chained, ends);
-	makeWiresChangeConnectionCommands(chained, parentCommand);
-	foreach (Wire * c, chained) {
-		makeDeleteItemCommand(c, BaseCommand::CrossView, parentCommand);
-		done.append(c);
-	}
 }
 
 void PCBSketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType crossViewType, QUndoCommand * parentCommand, 
