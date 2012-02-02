@@ -1446,11 +1446,10 @@ void ConnectorItem::updateTooltip() {
 	}
 
 	if (connectors.count() == 1) {
-		QString tt = QString("<b>%1</b>: %2<br />%4: %3")
+        QString tt = QString("<b>%1</b>: %2<br /><span style='font-size:small;'>%3</span>")
                 .arg(connectors[0]->connectorSharedName())
                 .arg(connectors[0]->connectorSharedDescription())
-                .arg(connectors[0]->attachedToTitle())		
-				.arg(connectors[0]->attachedToInstanceTitle());
+                .arg(connectors[0]->attachedToTitle());
 		setToolTip(tt);
 		return;
 	}
