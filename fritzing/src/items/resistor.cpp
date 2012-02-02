@@ -95,6 +95,7 @@ Resistor::Resistor( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier v
 	}
 
 	if (Tolerances.count() == 0) {
+		// TODO: move this into properties.xml
 		Tolerances.insert(PlusMinusSymbol + "0.05%", QColor(140, 140, 140));
 		Tolerances.insert(PlusMinusSymbol + "0.1%", QColor(130, 16, 210));
 		Tolerances.insert(PlusMinusSymbol + "0.25%", QColor(0, 96, 182));

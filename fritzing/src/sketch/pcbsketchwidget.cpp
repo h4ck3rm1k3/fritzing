@@ -265,7 +265,8 @@ bool PCBSketchWidget::createOneTrace(Wire * wire, ViewGeometry::WireFlag flag, b
 
 	QString colorString = traceColor(createWireViewLayerSpec(ends[0], ends[1]));
 	long newID = createWire(ends[0], ends[1], flag, false, BaseCommand::CrossView, parentCommand);
-	new WireColorChangeCommand(this, newID, colorString, colorString, getRatsnestOpacity(), getRatsnestOpacity(), parentCommand);
+	// TODO: is this opacity constant stored someplace
+	new WireColorChangeCommand(this, newID, colorString, colorString, 1.0, 1.0, parentCommand);
 	new WireWidthChangeCommand(this, newID, getTraceWidth(), getTraceWidth(), parentCommand);
 	return true;
 }
@@ -1498,8 +1499,8 @@ void PCBSketchWidget::getViaSize(double & ringThickness, double & holeSize) {
 void PCBSketchWidget::getDefaultViaSize(QString & ringThickness, QString & holeSize) {
 	// these settings are initialized in hole.cpp
 	QSettings settings;
-	ringThickness = settings.value(Hole::AutorouteViaRingThickness, "").toString();
-	holeSize = settings.value(Hole::AutorouteViaHoleSize, "").toString();
+	ringThickness = settings.value(Hole::AutorouteViaRingThickness, Hole::DefaultAutorouteViaRingThickness).toString();
+	holeSize = settings.value(Hole::AutorouteViaHoleSize, Hole::DefaultAutorouteViaHoleSize).toString();
 }
 
 void PCBSketchWidget::changeTrace(Wire * wire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand) 

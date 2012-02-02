@@ -708,14 +708,18 @@ int FApplication::startup(bool firstRun)
 
 	loadReferenceModel();
 
-	QSettings settings;
-	QString prevVersion = settings.value("version").toString();
-	QString currVersion = Version::versionString();
-	if(prevVersion != currVersion) {
-		QVariant pid = settings.value("pid");
-		settings.clear();
-		if (!pid.isNull()) {
-			settings.setValue("pid", pid);
+	QString prevVersion;
+	{
+		// put this in a block so that QSettings is closed
+		QSettings settings;
+		prevVersion = settings.value("version").toString();
+		QString currVersion = Version::versionString();
+		if(prevVersion != currVersion) {
+			QVariant pid = settings.value("pid");
+			settings.clear();
+			if (!pid.isNull()) {
+				settings.setValue("pid", pid);
+			}
 		}
 	}
 
@@ -736,6 +740,7 @@ int FApplication::startup(bool firstRun)
 	if (m_progressIndex >= 0) splash.showProgress(m_progressIndex, 0.65);
 	ProcessEventBlocker::processEvents();
 
+	QSettings settings;
 	if (!loadBin(settings.value("lastBin").toString())) {
 			// TODO: we're really screwed, what now?
 		QMessageBox::warning(NULL, QObject::tr("Fritzing"), QObject::tr("Friting cannot load the parts bin"));

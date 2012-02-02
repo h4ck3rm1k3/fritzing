@@ -52,6 +52,8 @@ static const int rowHeight = 21;
 QHash<QString, QString> Hole::HoleSizes;
 const QString Hole::AutorouteViaHoleSize = "autorouteViaHoleSize";
 const QString Hole::AutorouteViaRingThickness = "autorouteViaRingThickness";
+QString Hole::DefaultAutorouteViaHoleSize;
+QString Hole::DefaultAutorouteViaRingThickness;
 
 
 QString HoleSettings::currentUnits() {
@@ -128,8 +130,14 @@ void Hole::setUpHoleSizes() {
 		QString hs = ve.attribute("holesize");
 		QString name = ve.attribute("name");
 		if (ve.attribute("default").compare("yes") == 0) {
-			if (ringThickness.isEmpty()) settings.setValue(AutorouteViaRingThickness, rt);
-			if (holeSize.isEmpty()) settings.setValue(AutorouteViaHoleSize, hs);
+			if (ringThickness.isEmpty()) {
+				settings.setValue(AutorouteViaRingThickness, rt);
+				DefaultAutorouteViaRingThickness = rt;
+			}
+			if (holeSize.isEmpty()) {
+				settings.setValue(AutorouteViaHoleSize, hs);
+				DefaultAutorouteViaHoleSize = hs;
+			}
 		}
 		HoleSizes.insert(name, QString("%1,%2").arg(hs).arg(rt));
 		ve = ve.nextSiblingElement("via");

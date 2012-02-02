@@ -121,6 +121,8 @@ public:
 public:
 	static const QString AutorouteViaHoleSize;
 	static const QString AutorouteViaRingThickness;
+	static QString DefaultAutorouteViaHoleSize;
+	static QString DefaultAutorouteViaRingThickness;
 };
 
 #endif

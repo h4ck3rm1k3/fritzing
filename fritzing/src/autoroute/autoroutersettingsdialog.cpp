@@ -175,7 +175,9 @@ void AutorouterSettingsDialog::production(bool checked) {
 void AutorouterSettingsDialog::acceptAnd() {
 	QSettings settings;
 	settings.setValue(Hole::AutorouteViaHoleSize, m_holeSettings.holeDiameter);
+	Hole::DefaultAutorouteViaHoleSize = m_holeSettings.holeDiameter;
 	settings.setValue(Hole::AutorouteViaRingThickness, m_holeSettings.ringThickness);
+	Hole::DefaultAutorouteViaRingThickness = m_holeSettings.ringThickness;
 	settings.setValue(AutorouteTraceWidth, m_traceWidth);
 	
 	accept();
