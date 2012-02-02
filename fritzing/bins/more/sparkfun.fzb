@@ -578,6 +578,13 @@
     </iconView>
    </views>
   </instance>
+  <instance moduleIdRef="OpenLog">
+   <views>
+    <iconView layer="icon">
+     <geometry x="-1" y="-1" z="-1"/>
+    </iconView>
+   </views>
+  </instance>
  <instance moduleIdRef="quadstep-v12">
    <views>
     <iconView layer="icon">
