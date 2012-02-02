@@ -15,6 +15,8 @@
 		<sketch id="DC_motor_control" name="DC Motor" src="core/DC_motor_control.fzz"/>
 		<sketch id="Knock" name="Knock (Piezo)" src="core/Knock.fzz"/>
 		<sketch id="LCD" name="Liquid Crystal Display" src="core/LiquidCrystalDisplay.fzz"/>
+		<sketch id="LEDmatrix_simple" name="Simple LED Matrix" src="core/LED-Matrix_simple.fzz"/>
+		<sketch id="LEDmatrix" name="LED Matrix 5x7" src="core/LED-Matrix.fzz"/>
 		<sketch id="Loop" name="Loop" src="core/Loop.fzz"/>
 		<sketch id="Melody" name="Melody" src="core/Melody.fzz"/>
 		<sketch id="Mood-Light" name="Mood-Light" src="core/Mood-Light.fzz"/>
@@ -33,6 +35,7 @@
 		<sketch id="Stepper_Motor" name="Stepper Motor" src="core/Stepper_Motor.fzz"/>
 		<sketch id="TemperaturSensorLM35" name="Temperature Sensor" src="core/TemperaturSensorLM35.fzz"/>
 		<sketch id="TiltSwitch" name="Tilt Switch" src="core/TiltSwitch.fzz"/>
+		<sketch id="Timer" name="Timer" src="core/Timer.fzz"/>		
 		<sketch id="Touch_Switch" name="Touch Switch" src="core/TouchSwitch.fzz"/>
 		<sketch id="TrafficLight" name="Traffic Light" src="core/TrafficLight.fzz"/>
 		<sketch id="VirtualColorMixer" name="Virtual Color Mixer" src="core/VirtualColorMixer.fzz"/>
@@ -49,6 +52,9 @@
 					<sketch id="TrafficLight"/>
 					<sketch id="Shift_Register"/>
 					<sketch id="Shift_Register_2x"/>
+					<sketch id="LEDmatrix_simple"/>
+					<sketch id="LEDmatrix"/>		
+					<sketch id="Timer"/>			
 				</category>
 				<category name="Input">
 					<sketch id="Button"/>
@@ -184,6 +190,8 @@
 			<sketch id="Countdown"/>
 			<sketch id="Shift_Register"/>
 			<sketch id="Shift_Register_2x"/>
+			<sketch id="LEDmatrix_simple"/>	
+			<sketch id="Timer"/>						
 			<sketch id="DC_motor_control"/>
 			<sketch id="Mood-Light"/>
                <sketch id="Optocoupler"/>
