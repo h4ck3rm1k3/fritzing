@@ -32,7 +32,6 @@
 		<sketch id="Shift_Register_2x" name="Shift Register 2x" src="core/Shift_Register_2x.fzz"/>
 		<sketch id="Stepper_Motor" name="Stepper Motor" src="core/Stepper_Motor.fzz"/>
 		<sketch id="TemperaturSensorLM35" name="Temperature Sensor" src="core/TemperaturSensorLM35.fzz"/>
-		<sketch id="earthquakeDetection" name="Earthquake Detection" src="core/earthquakeDetection.fzz"/>		
 		<sketch id="TiltSwitch" name="Tilt Switch" src="core/TiltSwitch.fzz"/>
 		<sketch id="Touch_Switch" name="Touch Switch" src="core/TouchSwitch.fzz"/>
 		<sketch id="TrafficLight" name="Traffic Light" src="core/TrafficLight.fzz"/>
@@ -175,7 +174,6 @@
 			<sketch id="Touch_Switch"/>
                <sketch id="Relay"/>
 			<sketch id="TemperaturSensorLM35"/>
-			<sketch id="earthquakeDetection"/>
               <separator />
               <url name="Get your own Fritzing Starter Kit" href="http://fritzing.org/shop/starter-kit/" />
 		</category>
