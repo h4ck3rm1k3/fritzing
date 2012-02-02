@@ -837,8 +837,8 @@ void ConnectorItem::attachedMoved() {
 		ItemBase * itemBase = toConnector->attachedTo();
 		if (itemBase == NULL) continue;
 		if (!itemBase->isVisible()) {
-			this->debugInfo("continue");
-			itemBase->debugInfo("    ");
+			//this->debugInfo("continue");
+			//itemBase->debugInfo("    ");
 			continue;
 		}
 
@@ -1779,7 +1779,7 @@ void ConnectorItem::displayRatsnest(QList<ConnectorItem *> & partConnectorItems,
 	}
 
 	ConnectorPairHash result;
-	GraphUtils::chooseRatsnestGraph(partConnectorItems, (ViewGeometry::RatsnestFlag | ViewGeometry::NormalFlag | ViewGeometry::PCBTraceFlag | ViewGeometry::SchematicTraceFlag) ^ myFlag, result);
+	GraphUtils::chooseRatsnestGraph(&partConnectorItems, (ViewGeometry::RatsnestFlag | ViewGeometry::NormalFlag | ViewGeometry::PCBTraceFlag | ViewGeometry::SchematicTraceFlag) ^ myFlag, result);
 
 	foreach (ConnectorItem * key, result.uniqueKeys()) {
 		foreach (ConnectorItem * value, result.values(key)) {

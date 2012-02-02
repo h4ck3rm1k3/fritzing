@@ -528,6 +528,31 @@ void CMRouter::start()
 	QHash<ConnectorItem *, int> indexer;
 	m_sketchWidget->collectAllNets(indexer, m_allPartConnectorItems, false, m_bothSidesNow);
 
+	// remove any vias or jumperItems that will be deleted
+	for (int i = m_allPartConnectorItems.count() - 1; i >= 0; i--) {
+		QList<ConnectorItem *> * connectorItems = m_allPartConnectorItems.at(i);
+		for (int j = connectorItems->count() - 1; j >= 0; j--) {
+			ConnectorItem * connectorItem = connectorItems->at(j);
+			connectorItem->debugInfo("pci");
+			bool doRemove = false;
+			if (connectorItem->attachedToItemType() == ModelPart::Via) {
+				Via * via = qobject_cast<Via *>(connectorItem->attachedTo()->layerKinChief());
+				doRemove = via->getAutoroutable();
+			}
+			else if (connectorItem->attachedToItemType() == ModelPart::Jumper) {
+				JumperItem * jumperItem = qobject_cast<JumperItem *>(connectorItem->attachedTo()->layerKinChief());
+				doRemove = jumperItem->getAutoroutable();
+			}
+			if (doRemove) {
+				connectorItems->removeAt(j);
+			}
+		}
+		if (connectorItems->count() == 0) {
+			m_allPartConnectorItems.removeAt(i);
+			delete connectorItems;
+		}
+	}
+
 	if (m_allPartConnectorItems.count() == 0) {
 		QMessageBox::information(NULL, QObject::tr("Fritzing"), QObject::tr("No connections to route'."));
 		cleanUpNets();
@@ -2383,7 +2408,7 @@ void CMRouter::collectEdges(QList<Edge *> & edges)
 {
 	foreach (QList<ConnectorItem *> * connectorItems, m_allPartConnectorItems) {
 		ConnectorPairHash result;
-		GraphUtils::chooseRatsnestGraph(*connectorItems, (ViewGeometry::RatsnestFlag | ViewGeometry::NormalFlag | ViewGeometry::PCBTraceFlag | ViewGeometry::SchematicTraceFlag) ^ m_sketchWidget->getTraceFlag(), result);
+		GraphUtils::chooseRatsnestGraph(connectorItems, (ViewGeometry::RatsnestFlag | ViewGeometry::NormalFlag | ViewGeometry::PCBTraceFlag | ViewGeometry::SchematicTraceFlag) ^ m_sketchWidget->getTraceFlag(), result);
 		foreach (ConnectorItem * from, result.keys()) {
 			foreach (ConnectorItem * to, result.values(from)) {
 				bool fromOK = false;

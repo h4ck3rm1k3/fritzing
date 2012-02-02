@@ -44,14 +44,14 @@ $Date$
 #pragma warning(pop)					// restore warning state
 #endif
 
-bool GraphUtils::chooseRatsnestGraph(const QList<ConnectorItem *> & partConnectorItems, ViewGeometry::WireFlags flags, ConnectorPairHash & result) {
+bool GraphUtils::chooseRatsnestGraph(const QList<ConnectorItem *> * partConnectorItems, ViewGeometry::WireFlags flags, ConnectorPairHash & result) {
 	using namespace boost;
 	typedef adjacency_list < vecS, vecS, undirectedS, property<vertex_distance_t, double>, property < edge_weight_t, double > > Graph;
 	typedef std::pair < int, int >E;
 
-	if (partConnectorItems.count() < 2) return false;
+	if (partConnectorItems->count() < 2) return false;
 
-	QList <ConnectorItem *> temp(partConnectorItems);
+	QList <ConnectorItem *> temp(*partConnectorItems);
 
 	//DebugDialog::debug("__________________");
 	int tix = 0;

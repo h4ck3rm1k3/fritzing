@@ -547,10 +547,10 @@ bool FSvgRenderer::initConnectorInfoStructAux(QDomElement & element, ConnectorIn
 	}
 
 	bool ok;
-	double cx = element.attribute("cx").toDouble(&ok);
+	element.attribute("cx").toDouble(&ok);
 	if (!ok) return false;
 
-	double cy = element.attribute("cy").toDouble(&ok);
+	element.attribute("cy").toDouble(&ok);
 	if (!ok) return false;
 
 	double r = element.attribute("r").toDouble(&ok);
