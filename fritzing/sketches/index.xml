@@ -32,7 +32,7 @@
 		<sketch id="Parking" name="Parking Assistant (Infrared)" src="core/Parking-Assistant.fzz"/>
 		<sketch id="Relay" name="Relay" src="core/Relay.fzz"/>
 		<sketch id="RGB_LED" name="Colored Light (RGB LED)" src="core/RGB-LED.fzz"/>
-		<sketch id="Sabotage-Detection" name="Accelerometer" src="Sabotage-Detection.fzz"/>
+		<sketch id="Sabotage-Detection" name="Accelerometer" src="core/Sabotage-Detection.fzz"/>
 		<sketch id="Shift_Register" name="Shift Register" src="core/Shift_Register.fzz"/>
 		<sketch id="Shift_Register_2x" name="Shift Register 2x" src="core/Shift_Register_2x.fzz"/>
 		<sketch id="Stepper_Motor" name="Stepper Motor" src="core/Stepper_Motor.fzz"/>
