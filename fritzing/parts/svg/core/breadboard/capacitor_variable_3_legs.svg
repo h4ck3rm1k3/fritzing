@@ -6,12 +6,12 @@
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="32.024px"
 	 height="29.13px" viewBox="0 0 32.024 29.13" enable-background="new 0 0 32.024 29.13" xml:space="preserve">
 <g id="breadboard">
-	<rect id="connector0pin" x="14.922" y="26.53" fill="none" width="2.16" height="2.251"/>
-	<rect id="connector2pin" x="0.661" y="17.794" fill="none" width="2.881" height="2.16"/>
-	<rect id="connector1pin" x="28.415" y="17.662" fill="none" width="3.076" height="2.159"/>
-	<rect id="connector0terminal" x="14.922" y="26.621" fill="none" width="2.16" height="2.16"/>
-	<rect id="connector1terminal" x="29.331" y="17.662" fill="none" width="2.16" height="2.159"/>
-	<rect id="connector2terminal" x="0.661" y="17.794" fill="none" width="2.16" height="2.16"/>
+	<rect id="connector0pin" x="14.922" y="25.53" fill="none" width="2.16" height="3.251"/>
+	<rect id="connector2pin" x="0.661" y="17.894" fill="none" width="2.881" height="2.16"/>
+	<rect id="connector1pin" x="28.415" y="17.762" fill="none" width="3.076" height="2.159"/>
+	<rect id="connector0terminal" x="14.922" y="25.621" fill="none" width="2.16" height="3.16"/>
+	<rect id="connector1terminal" x="29.331" y="17.762" fill="none" width="2.16" height="2.159"/>
+	<rect id="connector2terminal" x="0.661" y="17.894" fill="none" width="2.16" height="2.16"/>
 	<g id="legs">
 		<g id="pin0">
 			<rect id="rect10" x="2.91" y="16.382" fill="#8C8C8C" width="1.439" height="4.89"/>

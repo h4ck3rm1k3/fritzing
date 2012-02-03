@@ -12,6 +12,7 @@
 <properties>
 <property name='max capacitance'>10pF</property>
 <property name='family'>variable capacitor</property>
+<property name='type'>7 S-Triko 160 V DC for PCB mounting, Adjustable from one side, vertical to PCB</property>
 <property name='min capacitance'>2pF</property>
 </properties>
 <views>
