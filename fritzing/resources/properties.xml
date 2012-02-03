@@ -26,6 +26,14 @@
 	<menuItem value="0.001000000000" />
 	<menuItem value="0.004700000000" />
 </property>
+
+<property name="max capacitance" symbol="F" minValue="0.000000000001" maxValue=".0047" defaultValue=".0000001" numeric="yes" editable="yes" >	
+	<suffix suffix="VariableCapacitorModuleID" />
+</property>
+
+<property name="min capacitance" symbol="F" minValue="0.000000000001" maxValue=".0047" defaultValue=".0000001" numeric="yes" editable="yes" >	
+	<suffix suffix="VariableCapacitorModuleID" />
+</property>
 		
 <property name="voltage" symbol="V" minValue="5" maxValue="500" defaultValue="35" numeric="yes" editable="yes">
  	<suffix suffix="CapacitorModuleID"/>
