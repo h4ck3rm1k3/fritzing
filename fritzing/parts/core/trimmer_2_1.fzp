@@ -16,12 +16,12 @@
 </properties>
 <views>
 <breadboardView>
-<layers image='breadboard/trimmer_2_1_breadboard.svg'>
+<layers image='breadboard/capacitor_variable_2_legs.svg'>
 <layer layerId='breadboard'/>
 </layers>
 </breadboardView>
 <schematicView>
-<layers image='schematic/trimmer_2_1_schematic.svg'>
+<layers image='schematic/capacitor_variable_2_legs.svg'>
 <layer layerId='schematic'/>
 </layers>
 </schematicView>
@@ -39,7 +39,7 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector0' type='female' name='0>
+<connector id='connector0' type='female' name='0'>
 <description>0</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pin'/></breadboardView>

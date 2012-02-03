@@ -16,12 +16,12 @@
 </properties>
 <views>
 <breadboardView>
-<layers image='breadboard/trimmer_3_3_p_breadboard.svg'>
+<layers image='breadboard/capacitor_variable_3_legs.svg'>
 <layer layerId='breadboard'/>
 </layers>
 </breadboardView>
 <schematicView>
-<layers image='schematic/trimmer_3_3_p_schematic.svg'>
+<layers image='schematic/capacitor_variable_3_legs.svg'>
 <layer layerId='schematic'/>
 </layers>
 </schematicView>
