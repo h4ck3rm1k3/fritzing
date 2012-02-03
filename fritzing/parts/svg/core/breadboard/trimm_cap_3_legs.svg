@@ -10,7 +10,7 @@
 	<rect id="connector2pin" x="0.661" y="17.794" fill="none" width="2.881" height="2.16"/>
 	<rect id="connector1pin" x="28.415" y="17.662" fill="none" width="3.076" height="2.159"/>
 	<rect id="connector0terminal" x="14.922" y="26.621" fill="none" width="2.16" height="2.16"/>
-	<rect id="connector1terminal_1_" x="29.331" y="17.662" fill="none" width="2.16" height="2.159"/>
+	<rect id="connector1terminal" x="29.331" y="17.662" fill="none" width="2.16" height="2.159"/>
 	<rect id="connector2terminal" x="0.661" y="17.794" fill="none" width="2.16" height="2.16"/>
 	<g id="legs">
 		<g id="pin0">

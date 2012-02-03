@@ -8,7 +8,7 @@
 <g id="breadboard">
 	<rect id="connector0pin" x="0.641" y="8.107" fill="none" width="2.392" height="2.16"/>
 	<rect id="connector1pin" x="15.061" y="8.199" fill="none" width="2.16" height="2.158"/>
-	<rect id="connector1terminal_1_" x="15.061" y="8.199" fill="none" width="2.16" height="2.158"/>
+	<rect id="connector1terminal" x="15.061" y="8.199" fill="none" width="2.16" height="2.158"/>
 	<rect id="connector0terminal" x="0.641" y="8.107" fill="none" width="2.159" height="2.16"/>
 	<g id="legs">
 		<g id="legs_1_">
