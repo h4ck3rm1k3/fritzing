@@ -860,9 +860,10 @@ QString PartLabel::makeSvgAux(bool blackOnly, double dpi, double printerScale, d
 	w = 0;
 	QStringList texts = m_displayText.split("\n");
 	foreach (QString t, texts) {
+		QString t1 = TextUtils::convertExtendedChars(TextUtils::escapeAnd(t));
 		svg += QString("<text x='0' y='%1'>%2</text>")
 			.arg(y * dpi / printerScale)
-			.arg(TextUtils::stripNonValidXMLCharacters(TextUtils::escapeAnd(t)));
+			.arg(t1);
 		y += pixels;
 		w = qMax(w, t.length() * pixels * 0.75);
 		//DebugDialog::debug(QString("\t%1, %2").arg(w).arg(y));

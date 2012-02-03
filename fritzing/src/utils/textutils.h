@@ -71,6 +71,7 @@ public:
 	static bool getSvgSizes(QDomDocument & doc, double & sWidth, double & sHeight, double & vbWidth, double & vbHeight);
 	static bool findText(QDomNode & node, QString & text);
 	static QString stripNonValidXMLCharacters(const QString & str); 
+	static QString convertExtendedChars(const QString & str); 
 	static QString escapeAnd(const QString &);
 	static QMatrix elementToMatrix(QDomElement & element);
 	static QMatrix transformStringToMatrix(const QString & transform);

@@ -585,6 +585,21 @@ QString TextUtils::escapeAnd(const QString & string) {
 	return s;
 }
 
+QString TextUtils::convertExtendedChars(const QString & str) 
+{
+	QString result;
+    foreach (QChar c, str) {
+		if (c < 128) {
+			result.append(c);
+		}
+		else {
+			result.append(QString("&#x%1;").arg(c.unicode(), 0, 16));
+		}
+	}
+
+	return result;
+}
+
 QString TextUtils::stripNonValidXMLCharacters(const QString & str) 
 {
 	QString result;
@@ -607,7 +622,12 @@ QString TextUtils::stripNonValidXMLCharacters(const QString & str)
 				result.append(hs);
 				in_hs = false;
 			}
-			result.append(c);
+			if (c > 255) {
+				result.append(QString("&#%1").arg(c, 0, 16));
+			}
+			else {
+				result.append(c);
+			}
 		}
 		else {
 			in_hs = false;
