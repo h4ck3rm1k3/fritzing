@@ -1937,19 +1937,16 @@ ViewGeometry::WireFlag PCBSketchWidget::getTraceFlag() {
 
 void PCBSketchWidget::postImageSlot(GroundPlaneGenerator * gpg, QImage * image, QGraphicsItem * board) {
 
-	ConnectorItem * seed = NULL;
+	QList<ConnectorItem *> connectorItems;
 	foreach (QGraphicsItem * item, scene()->items()) {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
 		if (connectorItem == NULL) continue;
 		if (!connectorItem->isGrounded()) continue;
 
-		seed = connectorItem;
-		break;
+		connectorItems << connectorItem;
 	}
-	if (seed == NULL) return;
+	if (connectorItems.count() == 0) return;
 
-	QList<ConnectorItem *> connectorItems;
-	connectorItems.append(seed);
 	ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::NoFlag);
 
 	QRectF boardRect = board->sceneBoundingRect();
@@ -1972,35 +1969,37 @@ void PCBSketchWidget::postImageSlot(GroundPlaneGenerator * gpg, QImage * image, 
 		int cx = x + (w / 2);
 		int cy = y + (h / 2);
 
-		x -= BlurBy + w;
-		y -= BlurBy + h;
-		w += BlurBy + BlurBy + w + w;
-		h += BlurBy + BlurBy + h + h;
+		double factor = 0.75;
+
+		double bl = x - (w * factor);
+		double bt = y - (h * factor);
+		double br = x + w + (w * factor);
+		double bb = y + h + (h * factor);
 
 		// check north, south, east, west for groundplane, and if it's there draw to it from the connector
 
-		for (int i = cy; i > y; i--) {
+		for (int i = y; i > bt; i--) {
 			if (image->pixel(cx, i) & 0xffffff) {
 				QRectF s(cx - cw, i - 1, cw + cw, cy - i);
 				rects.append(s);
 				break;
 			}
 		}
-		for (int i = cy; i < y + h; i++) {
+		for (int i = y + h; i < bb; i++) {
 			if (image->pixel(cx, i) & 0xffffff) {
 				QRectF s(cx - cw, cy, cw + cw, i - cy);
 				rects.append(s);
 				break;
 			}
 		}
-		for (int i = cx; i > x; i--) {
+		for (int i = x; i > bl; i--) {
 			if (image->pixel(i, cy) & 0xffffff) {
 				QRectF s(i - 1, cy - ch, cx - i, ch + ch);
 				rects.append(s);
 				break;
 			}
 		}
-		for (int i = cx; i < x + w; i++) {
+		for (int i = x + w; i < br + w; i++) {
 			if (image->pixel(i, cy) & 0xffffff) {
 				QRectF s(cx, cy - ch, i - cx, ch + ch);
 				rects.append(s);
