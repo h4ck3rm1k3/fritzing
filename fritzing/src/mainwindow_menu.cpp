@@ -1121,7 +1121,7 @@ void MainWindow::createMenus()
 	updateWindowMenu();
 	connect(m_windowMenu, SIGNAL(aboutToShow()), this, SLOT(updateWindowMenu()));
 
-	m_pcbTraceMenu = menuBar()->addMenu(tr("&Trace"));
+	m_pcbTraceMenu = menuBar()->addMenu(tr("&Routing"));
 	m_pcbTraceMenu->addAction(m_autorouteAct);
 	m_pcbTraceMenu->addAction(m_designRulesCheckAct);
 	m_pcbTraceMenu->addAction(m_autorouterSettingsAct);
@@ -1149,7 +1149,7 @@ void MainWindow::createMenus()
 	m_pcbTraceMenu->addAction(m_selectAllViasAct);
 	m_pcbTraceMenu->addAction(m_selectAllCopperFillAct);
 
-	m_schematicTraceMenu = menuBar()->addMenu(tr("&Diagram"));
+	m_schematicTraceMenu = menuBar()->addMenu(tr("&Routing"));
 	m_schematicTraceMenu->addAction(m_autorouteAct);
 	m_schematicTraceMenu->addAction(m_excludeFromAutorouteAct);
 	m_schematicTraceMenu->addAction(m_selectAllTracesAct);
@@ -1160,9 +1160,13 @@ void MainWindow::createMenus()
 	m_schematicTraceMenu->addAction(m_tidyWiresAct);
 #endif
 
+	m_breadboardTraceMenu = menuBar()->addMenu(tr("&Routing"));
+	m_breadboardTraceMenu->addAction(m_selectAllWiresAct);
+
 	updateTraceMenu();
 	connect(m_pcbTraceMenu, SIGNAL(aboutToShow()), this, SLOT(updateTraceMenu()));
 	connect(m_schematicTraceMenu, SIGNAL(aboutToShow()), this, SLOT(updateTraceMenu()));
+	connect(m_breadboardTraceMenu, SIGNAL(aboutToShow()), this, SLOT(updateTraceMenu()));
 
 
     menuBar()->addSeparator();
@@ -1544,7 +1548,7 @@ void MainWindow::updateTraceMenu() {
 	bool ctlEnabled = false;
 	bool arEnabled = false;
 
-	if (m_currentGraphicsView != NULL && m_currentGraphicsView != this->m_breadboardGraphicsView) {
+	if (m_currentGraphicsView != NULL) {
 		QList<QGraphicsItem *> items = m_currentGraphicsView->scene()->items();
 		foreach (QGraphicsItem * item, items) {
 			Wire * wire = dynamic_cast<Wire *>(item);
@@ -1553,6 +1557,7 @@ void MainWindow::updateTraceMenu() {
 
 				ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 				if (itemBase == NULL) continue;
+				if (!itemBase->isEverVisible()) continue;
 
 				switch (itemBase->itemType()) {
 					case ModelPart::Board:
@@ -1586,6 +1591,7 @@ void MainWindow::updateTraceMenu() {
 				continue;
 			}
 
+			if (!wire->isEverVisible()) continue;
 			if (wire->getRatsnest()) {
 				//rEnabled = true;
 				//if (wire->isSelected()) {
@@ -1593,7 +1599,7 @@ void MainWindow::updateTraceMenu() {
 					//cjEnabled = true;
 				//}
 			}
-			else if (wire->getTrace()) {
+			else if (wire->isTraceType(m_currentGraphicsView->getTraceFlag())) {
 				arEnabled = true;
 				tEnabled = true;
 				twEnabled = true;
@@ -1629,6 +1635,7 @@ void MainWindow::updateTraceMenu() {
 	m_exportEtchableSvgAct->setEnabled(true);
 	m_exportEtchableSvgFlipAct->setEnabled(true);
 	m_selectAllTracesAct->setEnabled(tEnabled);
+	m_selectAllWiresAct->setEnabled(tEnabled);
 	m_selectAllCopperFillAct->setEnabled(gfrEnabled);
 	m_selectAllExcludedTracesAct->setEnabled(tEnabled);
 	m_selectAllJumperItemsAct->setEnabled(jiEnabled);
@@ -2063,6 +2070,7 @@ void MainWindow::removeActionsStartingAt(QMenu * menu, int start) {
 void MainWindow::hideShowTraceMenu() {
 	m_pcbTraceMenu->menuAction()->setVisible(m_currentGraphicsView == m_pcbGraphicsView);
 	m_schematicTraceMenu->menuAction()->setVisible(m_currentGraphicsView == m_schematicGraphicsView);
+	m_breadboardTraceMenu->menuAction()->setVisible(m_currentGraphicsView == m_breadboardGraphicsView);
 }
 
 void MainWindow::createTraceMenuActions() {
@@ -2115,6 +2123,10 @@ void MainWindow::createTraceMenuActions() {
 	m_selectAllTracesAct = new QAction(tr("Select All Traces"), this);
 	m_selectAllTracesAct->setStatusTip(tr("Select all trace wires"));
 	connect(m_selectAllTracesAct, SIGNAL(triggered()), this, SLOT(selectAllTraces()));
+
+	m_selectAllWiresAct = new QAction(tr("Select All Wires"), this);
+	m_selectAllWiresAct->setStatusTip(tr("Select all wires"));
+	connect(m_selectAllWiresAct, SIGNAL(triggered()), this, SLOT(selectAllTraces()));
 
 	m_selectAllCopperFillAct = new QAction(tr("Select All CopperFill"), this);
 	m_selectAllCopperFillAct->setStatusTip(tr("Select all copper fill items"));

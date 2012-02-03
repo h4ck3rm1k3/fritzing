@@ -604,6 +604,7 @@ protected:
 	// Trace Menu
 	QMenu *m_pcbTraceMenu;
 	QMenu *m_schematicTraceMenu;
+	QMenu *m_breadboardTraceMenu;
 	QAction *m_autorouteAct;
 	QAction *m_orderFabAct;
 	QAction *m_activeLayerTopAct;
@@ -617,6 +618,7 @@ protected:
 	QAction *m_excludeFromAutorouteAct;
 	class WireAction *m_excludeFromAutorouteWireAct;
 	QAction *m_selectAllTracesAct;
+	QAction *m_selectAllWiresAct;
 	QAction *m_selectAllCopperFillAct;
 	QAction *m_updateRoutingStatusAct;
 	QAction *m_selectAllExcludedTracesAct;
