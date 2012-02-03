@@ -11,8 +11,12 @@
 		<sketch id="BarebonesArduinoStripboard" name="Barebones Arduino with Stripboard" src="core/Barebones Arduino (stripboard).fzz"/>
 		<sketch id="Blink" name="Blink" src="core/Blink.fzz"/>
 		<sketch id="Button" name="Button" src="core/Button.fzz"/>
-		<sketch id="Countdown" name="Countdown (Rotary Encoder + 7 Segment Displays)" src="core/Countdown.fzz"/>		
+		<sketch id="Color-Fader" name="Color Fader (RGB LED)" src="core/color-fader.fzz"/>
+		<sketch id="CosmicRayGun" name="Cosmic Ray Gun" src="core/CosmicRayGun.fzz"/>		
+		<sketch id="Countdown" name="Countdown (Rotary Encoder + 7 Segment Displays)" src="core/Countdown.fzz"/>
+		<sketch id="CurvyParking" name="Curvy Parking Assistant (Infrared)" src="core/Curvy-Parking-Assistant.fzz"/>				
 		<sketch id="DC_motor_control" name="DC Motor" src="core/DC_motor_control.fzz"/>
+		<sketch id="EDGY-motor-control" name="EDGY Motor Control" src="core/EDGY-motor-control.fzz"/>
 		<sketch id="Knock" name="Knock (Piezo)" src="core/Knock.fzz"/>
 		<sketch id="LCD" name="Liquid Crystal Display" src="core/LiquidCrystalDisplay.fzz"/>
 		<sketch id="LEDmatrix_simple" name="Simple LED Matrix" src="core/LED-Matrix_simple.fzz"/>
@@ -26,10 +30,9 @@
 		<sketch id="Optocoupler" name="Optocoupler" src="core/Optocoupler.fzz"/>
 		<sketch id="Photocell" name="Photocell" src="core/Photocell.fzz"/>
 		<sketch id="Parking" name="Parking Assistant (Infrared)" src="core/Parking-Assistant.fzz"/>
-		<sketch id="CurvyParking" name="Curvy Parking Assistant (Infrared)" src="core/Curvy-Parking-Assistant.fzz"/>
 		<sketch id="Relay" name="Relay" src="core/Relay.fzz"/>
 		<sketch id="RGB_LED" name="Colored Light (RGB LED)" src="core/RGB-LED.fzz"/>
-		<sketch id="Color-Fader" name="Color Fader (RGB LED)" src="core/color-fader.fzz"/>
+		<sketch id="Sabotage-Detection" name="Accelerometer" src="Sabotage-Detection.fzz"/>
 		<sketch id="Shift_Register" name="Shift Register" src="core/Shift_Register.fzz"/>
 		<sketch id="Shift_Register_2x" name="Shift Register 2x" src="core/Shift_Register_2x.fzz"/>
 		<sketch id="Stepper_Motor" name="Stepper Motor" src="core/Stepper_Motor.fzz"/>
@@ -92,6 +95,7 @@
 				</category>
 				<category name="Motion">
 					<sketch id="TiltSwitch"/>
+					<sketch id="Sabotage-Detection"/>
 				</category>
 				<category name="Proximity">
 					<sketch id="Parking"/>
@@ -104,6 +108,7 @@
 				<category name="Sound">
 					<sketch id="Knock"/>
 					<sketch id="MidiDrumKit"/>
+					<sketch id="CosmicRayGun"/>
 				</category>
 				<category name="Temperature">
 					<sketch id="AnalogInputThermistor"/>
@@ -137,6 +142,7 @@
 					<sketch id="AnalogInputToServo"/>
 					<sketch id="DC_motor_control"/>
 					<sketch id="Stepper_Motor"/>
+					<sketch id="EDGY-motor-control"/>
 				</category>
 			</category>
 			<category name="Sound">
@@ -180,6 +186,7 @@
 			<sketch id="Touch_Switch"/>
                <sketch id="Relay"/>
 			<sketch id="TemperaturSensorLM35"/>
+			<sketch id="CosmicRayGun"/>
               <separator />
               <url name="Get your own Fritzing Starter Kit" href="http://fritzing.org/shop/starter-kit/" />
 		</category>
@@ -194,8 +201,9 @@
 			<sketch id="Timer"/>						
 			<sketch id="DC_motor_control"/>
 			<sketch id="Mood-Light"/>
-               <sketch id="Optocoupler"/>
-			<separator />
+      <sketch id="Optocoupler"/>
+			<sketch id="Sabotage-Detection"/>
+							 <separator />
                <url name="Get your own Fritzing Super Upgrade Kit" href="http://fritzing.org/shop/super-upgrade-kit/" />			
 		</category>-->
 	</categories>
