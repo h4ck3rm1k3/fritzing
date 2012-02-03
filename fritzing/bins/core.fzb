@@ -137,6 +137,13 @@
                 </iconView>
             </views>
         </instance>
+       <instance moduleIdRef="trimmer_3_1_vVariableCapacitorModuleID" modelIndex="14" path="parts/core/trimmer_3_1_v.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
        <instance moduleIdRef="ALPS_STEC12E07" modelIndex="14" path="parts/core/Rotary_Encoder.fzp">
             <views>
                 <iconView layer="icon">
