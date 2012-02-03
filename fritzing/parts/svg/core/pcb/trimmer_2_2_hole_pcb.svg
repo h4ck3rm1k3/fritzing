@@ -18,6 +18,7 @@
   <g  id="copper0" stroke-width="0">
    <circle  fill="none" cx="16.4466" cy="8.64" connectorname="2" stroke="#F7BD13" r="1.94882" id="connector1pad" stroke-width="0.77953"/>
    <circle  fill="none" cx="2.27339" cy="8.64" connectorname="1" stroke="#F7BD13" r="1.94882" id="connector0pad" stroke-width="0.77953"/>
+   <circle  cx="9.92693" cy="8.64" stroke="none" r="2.83465" stroke-width="0" fill="black" id="nonconn0" />
   </g>
  </g>
 </svg>
