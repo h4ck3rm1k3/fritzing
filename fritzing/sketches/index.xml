@@ -17,6 +17,8 @@
 		<sketch id="CurvyParking" name="Curvy Parking Assistant (Infrared)" src="core/Curvy-Parking-Assistant.fzz"/>				
 		<sketch id="DC_motor_control" name="DC Motor" src="core/DC_motor_control.fzz"/>
 		<sketch id="EDGY-motor-control" name="EDGY Motor Control" src="core/EDGY-motor-control.fzz"/>
+		<sketch id="EDGY-motor-control_two_motors" name="EDGY Motor Control Two Motors" src="core/EDGY-motor-control-two-motors.fzz"/>
+		<sketch id="EDGY-motor-control_stepper" name="EDGY Motor Control Stepper" src="core/EDGY-motor-control-stepper.fzz"/>
 		<sketch id="Knock" name="Knock (Piezo)" src="core/Knock.fzz"/>
 		<sketch id="LCD" name="Liquid Crystal Display" src="core/LiquidCrystalDisplay.fzz"/>
 		<sketch id="LEDmatrix_simple" name="Simple LED Matrix" src="core/LED-Matrix_simple.fzz"/>
@@ -205,6 +207,11 @@
 			<sketch id="Sabotage-Detection"/>
 							 <separator />
                <url name="Get your own Fritzing Super Upgrade Kit" href="http://fritzing.org/shop/super-upgrade-kit/" />			
-		</category>-->
+		</category>
+		<category name="Fritzing EDGY">
+			<sketch id="EDGY-motor-control"/>
+			<sketch id="EDGY-motor-control_two_motors"/>
+			<sketch id="EDGY-motor-control_stepper"/>
+		</category>
 	</categories>
 </fritzing-sketches>
