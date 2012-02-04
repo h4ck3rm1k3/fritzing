@@ -1060,21 +1060,6 @@ bool PCBSketchWidget::sameElectricalLayer2(ViewLayer::ViewLayerID id1, ViewLayer
 	return false;
 }
 
-bool PCBSketchWidget::sameElectricalLayer(ViewLayer::ViewLayerID id1, ViewLayer::ViewLayerID id2) {
-	// assumes both ids are in a copper layer or one id is a wildcard (UnknownLayer)
-
-	if (id1 == id2) return true;
-	if (id1 == ViewLayer::UnknownLayer) return true;
-	if (id2 == ViewLayer::UnknownLayer) return true;
-
-	LayerList copperBottom = ViewLayer::copperLayers(ViewLayer::Bottom);
-
-	bool c1 = copperBottom.contains(id1);
-	bool c2 = copperBottom.contains(id2);
-
-	return c1 == c2;
-}
-
 void PCBSketchWidget::changeTraceLayer() {
 	QList<Wire *> visitedWires;
 	QList<Wire *> changeWires;
@@ -1937,12 +1922,17 @@ ViewGeometry::WireFlag PCBSketchWidget::getTraceFlag() {
 
 void PCBSketchWidget::postImageSlot(GroundPlaneGenerator * gpg, QImage * image, QGraphicsItem * board) {
 
+	ViewLayer::ViewLayerID viewLayerID = (gpg->layerName() == "groundplane") ? ViewLayer::Copper0 : ViewLayer::Copper1;
+
 	QList<ConnectorItem *> connectorItems;
 	foreach (QGraphicsItem * item, scene()->items()) {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
 		if (connectorItem == NULL) continue;
+		if (connectorItem->attachedToViewLayerID() != viewLayerID) continue;
+		if (!connectorItem->attachedTo()->isEverVisible()) continue;
 		if (!connectorItem->isGrounded()) continue;
 
+		connectorItem->debugInfo("post image a");
 		connectorItems << connectorItem;
 	}
 	if (connectorItems.count() == 0) return;
@@ -1950,64 +1940,93 @@ void PCBSketchWidget::postImageSlot(GroundPlaneGenerator * gpg, QImage * image, 
 	ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::NoFlag);
 
 	QRectF boardRect = board->sceneBoundingRect();
-	ViewLayer::ViewLayerID viewLayerID = (gpg->layerName() == "groundplane") ? ViewLayer::Copper0 : ViewLayer::Copper1;
 
 	QList<QRectF> rects;
 	foreach (ConnectorItem * connectorItem, connectorItems) {
 		if (connectorItem->attachedToViewLayerID() != viewLayerID) continue;
 		if (connectorItem->attachedToItemType() == ModelPart::Wire) continue;
+		if (!connectorItem->attachedTo()->isEverVisible()) continue;
 
+		connectorItem->debugInfo("post image b");
 		QRectF r = connectorItem->sceneBoundingRect();
+		DebugDialog::debug("pb", r);
+		QRectF check = r;
+		check.setLeft(r.right());
+		check.setRight(r.right() + r.width());
+		bool checkRight = !hasNeighbor(connectorItem, viewLayerID, check);
 
-		double x = (r.left() - boardRect.left()) * image->width() / boardRect.width();
-		double y = (r.top() - boardRect.top()) * image->height() / boardRect.height();
-		double w = r.width() * image->width() / boardRect.width();
-		double h = r.height() * image->height() / boardRect.height();
+		check = r;
+		check.setLeft(r.left() - r.width());
+		check.setRight(r.left());
+		bool checkLeft = !hasNeighbor(connectorItem, viewLayerID, check);
+
+		check = r;
+		check.setTop(r.bottom());
+		check.setBottom(r.bottom() + r.height());
+		bool checkDown = !hasNeighbor(connectorItem, viewLayerID, check);
+
+		check = r;
+		check.setTop(r.top() - r.width());
+		check.setBottom(r.top());
+		bool checkUp = !hasNeighbor(connectorItem, viewLayerID, check);
+
+		double x1 = (r.left() - boardRect.left()) * image->width() / boardRect.width();
+		double x2 = (r.right() - boardRect.left()) * image->width() / boardRect.width();
+		double y1 = (r.top() - boardRect.top()) * image->height() / boardRect.height();
+		double y2 = (r.bottom() - boardRect.top()) * image->height() / boardRect.height();
+		double w = x2 - x1;
+		double h = y2 - y1;
 
 		double cw = w / 4;
 		double ch = h / 4;
-		int cx = x + (w / 2);
-		int cy = y + (h / 2);
+		int cx = (x1 + x2) /2;
+		int cy = (y1 + y2) /2;
 
-		double factor = 0.75;
+		double borderl = x1 - w;
+		double borderr = x2 + w;
+		double bordert = y1 - h;
+		double borderb = y2 + h;
 
-		double bl = x - (w * factor);
-		double bt = y - (h * factor);
-		double br = x + w + (w * factor);
-		double bb = y + h + (h * factor);
+		// check left, up, right, down for groundplane, and if it's there draw to it from the connector
 
-		// check north, south, east, west for groundplane, and if it's there draw to it from the connector
-
-		for (int i = y; i > bt; i--) {
-			if (image->pixel(cx, i) & 0xffffff) {
-				QRectF s(cx - cw, i - 1, cw + cw, cy - i);
-				rects.append(s);
-				break;
+		if (checkUp){
+			for (int y = y1; y > bordert; y--) {
+				if (image->pixel(cx, y) & 0xffffff) {
+					QRectF s(cx - cw, y - 1, cw + cw, cy - y);
+					rects.append(s);
+					break;
+				}
 			}
 		}
-		for (int i = y + h; i < bb; i++) {
-			if (image->pixel(cx, i) & 0xffffff) {
-				QRectF s(cx - cw, cy, cw + cw, i - cy);
-				rects.append(s);
-				break;
+		if (checkDown) {
+			for (int y = y2; y < borderb; y++) {
+				if (image->pixel(cx, y) & 0xffffff) {
+					QRectF s(cx - cw, cy, cw + cw, y - cy + 1);
+					rects.append(s);
+					break;
+				}
 			}
 		}
-		for (int i = x; i > bl; i--) {
-			if (image->pixel(i, cy) & 0xffffff) {
-				QRectF s(i - 1, cy - ch, cx - i, ch + ch);
-				rects.append(s);
-				break;
+		if (checkLeft) {
+			for (int x = x1; x > borderl; x--) {
+				if (image->pixel(x, cy) & 0xffffff) {
+					QRectF s(x - 1, cy - ch, cx - x, ch + ch);
+					rects.append(s);
+					break;
+				}
 			}
 		}
-		for (int i = x + w; i < br + w; i++) {
-			if (image->pixel(i, cy) & 0xffffff) {
-				QRectF s(cx, cy - ch, i - cx, ch + ch);
-				rects.append(s);
-				break;
+		if (checkRight) {
+			for (int x = x2; x < borderr; x++) {
+				if (image->pixel(x, cy) & 0xffffff) {
+					QRectF s(cx, cy - ch, x - cx + 1, ch + ch);
+					rects.append(s);
+					break;
+				}
 			}
 		}
 
-		DebugDialog::debug(QString("x:%1 y:%2 w:%3 h:%4").arg(x).arg(y).arg(w).arg(h));
+		DebugDialog::debug(QString("x1:%1 y1:%2 x2:%3 y2:%4").arg(x1).arg(y1).arg(x2).arg(y2));
 	}
 
 	if (rects.count() == 0) return;
@@ -2017,8 +2036,31 @@ void PCBSketchWidget::postImageSlot(GroundPlaneGenerator * gpg, QImage * image, 
 		painter.fillRect(r, QColor(255, 255, 255));
 	}
 	painter.end();
-#ifndef QT_NODEBUG
+#ifndef QT_NO_DEBUG
 	image->save("testGroundFillCopperPost.png");
 #endif
 }
 
+bool PCBSketchWidget::hasNeighbor(ConnectorItem * connectorItem, ViewLayer::ViewLayerID viewLayerID, const QRectF & r) 
+{
+	foreach (QGraphicsItem * item, scene()->items(r)) {
+		ConnectorItem * ci = dynamic_cast<ConnectorItem *>(item);
+		if (ci != NULL) {
+			if (ci->attachedToViewLayerID() != viewLayerID) continue;
+			if (!ci->attachedTo()->isEverVisible()) continue;
+			if (ci == connectorItem) continue;
+
+			return true;
+		}
+
+		TraceWire * traceWire = dynamic_cast<TraceWire *>(item);
+		if (traceWire != NULL) {
+			if (!sameElectricalLayer2(traceWire->viewLayerID(), viewLayerID)) continue;
+			if (!traceWire->isTraceType(getTraceFlag())) continue;
+
+			return true;
+		}
+	}
+
+	return false;
+}

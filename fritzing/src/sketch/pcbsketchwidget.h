@@ -74,7 +74,6 @@ public:
 							bool offsetPaste, const QRectF * boundingRect, bool seekOutsideConnections, QList<long> & newIDs);
 	virtual bool isInLayers(ConnectorItem *, ViewLayer::ViewLayerSpec);
 	bool routeBothSides();
-	virtual bool sameElectricalLayer(ViewLayer::ViewLayerID, ViewLayer::ViewLayerID);
 	virtual bool sameElectricalLayer2(ViewLayer::ViewLayerID, ViewLayer::ViewLayerID);
 	void changeTraceLayer();
 	void changeLayer(long id, double z, ViewLayer::ViewLayerID viewLayerID);
@@ -149,6 +148,7 @@ protected:
 	Wire * createTempWireForDragging(Wire * fromWire, ModelPart * wireModel, ConnectorItem * connectorItem, ViewGeometry & viewGeometry, ViewLayer::ViewLayerSpec);
 	void prereleaseTempWireForDragging(Wire*);
 	void rotatePartLabels(double degrees, QTransform &, QPointF center, QUndoCommand * parentCommand);
+	bool hasNeighbor(ConnectorItem * connectorItem, ViewLayer::ViewLayerID viewLayerID, const QRectF & r);
 
 signals:
 	void subSwapSignal(SketchWidget *, ItemBase *, ViewLayer::ViewLayerSpec, QUndoCommand * parentCommand);
