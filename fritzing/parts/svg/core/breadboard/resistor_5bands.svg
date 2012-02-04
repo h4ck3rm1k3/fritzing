@@ -2,8 +2,8 @@
 <svg version="1.2" baseProfile="tiny"
 	 xmlns="http://www.w3.org/2000/svg" 
 	 x="0px" y="0px" width="0.44444in" height="0.11111in" viewBox="0 0 32 8" >
-<defs>
-</defs>
+
+<g id="breadboard">
 <rect id="connector0pin" x="1.455" y="2.392" fill="none" width="0.72" height="0.72"/>
 <rect id="connector1pin" x="28.165" y="2.392" fill="none" width="0.721" height="0.72"/>
 <line id="connector0leg" fill="none" stroke="#8C8C8C" stroke-width="2.91" stroke-linecap="round" x1="1.455" y1="3.439" x2="3.223" y2="3.439"/>
@@ -35,4 +35,5 @@
 <circle id="ReflexLeft" fill="#FFFFFF" cx="7.408" cy="0.943" r="0.432"/>
 <rect id="Reflex_gold" x="22.426" y="0.23" fill="#FFFF33" width="0.703" height="1.62"/>
 <rect id="Reflex_extra" x="22.426" y="0.59" fill="#FFFFFF" width="0.703" height="0.749"/>
+</g>
 </svg>
