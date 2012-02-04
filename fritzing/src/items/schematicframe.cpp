@@ -199,7 +199,7 @@ QString SchematicFrame::makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, double 
 	dt.setTime_t(modelPart()->prop("date").toUInt());
 	hash.insert("date", dt.toString(DisplayFormat));
 
-	return TextUtils::replaceTextElements(svg, hash);
+	return TextUtils::convertExtendedChars(TextUtils::replaceTextElements(svg, hash));
 }
 
 QString SchematicFrame::makeNextLayerSvg(ViewLayer::ViewLayerID viewLayerID, double mmW, double mmH, double milsW, double milsH) 

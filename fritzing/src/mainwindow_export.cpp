@@ -852,7 +852,7 @@ void MainWindow::exportSvg(double res, bool selectedItems, bool flatten) {
 	file.open(QIODevice::WriteOnly);
 	QTextStream out(&file);
 	out.setCodec("UTF-8");
-	out << svg;
+	out << TextUtils::convertExtendedChars(svg);
 	file.close();
 	delete fileProgressDialog;
 
