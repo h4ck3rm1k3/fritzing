@@ -155,6 +155,10 @@
         <source>to Josef Dustira for the Czech translation, </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>to Jinbuhm Kim for the Korean translation, </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AbstractEditableLabelWidget</name>
@@ -722,6 +726,14 @@ Fritzingのフォントを指定してください:</translation>
     </message>
     <message>
         <source>advanced settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>in</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mm</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1727,10 +1739,6 @@ Fritzingのフォントを指定してください:</translation>
         <translation>ウィンドウ(&amp;W)</translation>
     </message>
     <message>
-        <source>&amp;Trace</source>
-        <translation>配線(&amp;T)</translation>
-    </message>
-    <message>
         <source>&amp;Help</source>
         <translation>ヘルプ(&amp;H)</translation>
     </message>
@@ -1753,16 +1761,6 @@ Fritzingのフォントを指定してください:</translation>
     <message>
         <source>Autoroute...</source>
         <translation>自動配線(オートルート) ...</translation>
-    </message>
-    <message>
-        <source>&amp;Create Trace from Selected Wire(s)</source>
-        <translatorcomment>意訳</translatorcomment>
-        <translation>配線されたワイヤを配線する (&amp;C)</translation>
-    </message>
-    <message>
-        <source>Create a trace from the selected wire</source>
-        <translatorcomment>意訳</translatorcomment>
-        <translation>ワイヤ(ラッツネスト)を配線(トレース)する</translation>
     </message>
     <message>
         <source>Select All Traces</source>
@@ -1936,10 +1934,6 @@ We&apos;re working to avoid this message, and only let you choose between proper
     <message>
         <source>Import parts and bins from previous installation</source>
         <translation>以前インストールされたパーツとビンのインポート</translation>
-    </message>
-    <message>
-        <source>&amp;Diagram</source>
-        <translation>回路図 (&amp;D)</translation>
     </message>
     <message>
         <source>Tidy Wires</source>
@@ -2629,7 +2623,58 @@ Please check all views for potential side-effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The .fz format is obsolete. Please specify an .fzz file name to save to</source>
+        <source>the .fz file format is obsolete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The .fz file format has been deprecated.
+
+Would you like to convert &apos;%1&apos; to the .fzz format now or open it read-only?
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The conversion process will not modify &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Read-only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please specify an .fzz file name to save &apos;%1&apos; to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Routing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Create trace from ratsnest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create a trace from the ratsnest line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Create wire from ratsnest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create a wire from the ratsnest line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select All Wires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all wires</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2708,10 +2753,6 @@ Reason: %2 (errcode %3)</source>
 <context>
     <name>PCBSketchWidget</name>
     <message>
-        <source>Create Trace from this Wire</source>
-        <translation>このワイヤーのトレースを作成</translation>
-    </message>
-    <message>
         <source>Click this connector to drag out a new trace.</source>
         <translation>このコネクターをドラッグして新しいトレースを作成.</translation>
     </message>
@@ -2757,6 +2798,10 @@ Reason: %2 (errcode %3)</source>
     </message>
     <message>
         <source>Fritzing only allows one board part per sketch. Either delete the current board, or select it and swap it for a different one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create Trace from Ratsnest</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3706,11 +3751,11 @@ This checkbox sets the default behavior. You can switch back to the non-default 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>File &apos;%&apos; was restored from the .fzz file; the local copy was not found.</source>
+        <source>File &apos;%1&apos; was restored from the .fzz file; the local copy was not found.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>File &apos;%&apos; was restored from the .fzz file; save a local copy to work with an external editor.</source>
+        <source>File &apos;%1&apos; was restored from the .fzz file; save a local copy to work with an external editor.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3781,12 +3826,6 @@ This checkbox sets the default behavior. You can switch back to the non-default 
     <message>
         <source>The file %1 is not a Fritzing file (3).</source>
         <translation>ファイル %1 はFritzingファイルではありません (3).</translation>
-    </message>
-    <message>
-        <source>Cannot write file temp file:
-%1.</source>
-        <translation>作業用ファイルが書けません:
-%1.</translation>
     </message>
     <message>
         <source>No parts found.</source>
@@ -4391,6 +4430,21 @@ is already there, we won&apos;t add it again, right?</source>
         <source>Ratsnest</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>mm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>in</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot write file temp:
+%1
+%2
+%3.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QShortcut</name>
@@ -4818,6 +4872,10 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>trace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create wire from Ratsnest</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

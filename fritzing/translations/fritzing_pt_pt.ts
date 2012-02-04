@@ -155,6 +155,10 @@
         <source>to Josef Dustira for the Czech translation, </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>to Jinbuhm Kim for the Korean translation, </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AbstractEditableLabelWidget</name>
@@ -732,6 +736,14 @@ Por favor seleccione um dos tipos de letra do Fritzing para o substituir:</trans
     <message>
         <source>advanced settings</source>
         <translation>configurações avançadas</translation>
+    </message>
+    <message>
+        <source>in</source>
+        <translation type="unfinished">polegadas</translation>
+    </message>
+    <message>
+        <source>mm</source>
+        <translation type="unfinished">mm</translation>
     </message>
 </context>
 <context>
@@ -1757,10 +1769,6 @@ Por favor seleccione um dos tipos de letra do Fritzing para o substituir:</trans
         <translation>&amp;Janela</translation>
     </message>
     <message>
-        <source>&amp;Trace</source>
-        <translation>&amp;Traçar</translation>
-    </message>
-    <message>
         <source>&amp;Help</source>
         <translation>&amp;Ajuda</translation>
     </message>
@@ -1783,14 +1791,6 @@ Por favor seleccione um dos tipos de letra do Fritzing para o substituir:</trans
     <message>
         <source>Autoroute...</source>
         <translation>Autoroute...</translation>
-    </message>
-    <message>
-        <source>&amp;Create Trace from Selected Wire(s)</source>
-        <translation>&amp;Criar um traço a partir do(s) fio(s) seleccionados</translation>
-    </message>
-    <message>
-        <source>Create a trace from the selected wire</source>
-        <translation>Criar um traço a partir do fio seleccionados</translation>
     </message>
     <message>
         <source>Select All Traces</source>
@@ -1941,10 +1941,6 @@ Estamos a trabalhar para evitar esta mensagem, e apenas deixar-te escolher entre
     <message>
         <source>Import parts and bins from previous installation</source>
         <translation>Importar componentes e compartimentos de uma instalação anterior</translation>
-    </message>
-    <message>
-        <source>&amp;Diagram</source>
-        <translation>&amp;Diagrama</translation>
     </message>
     <message>
         <source>Tidy Wires</source>
@@ -2636,7 +2632,58 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The .fz format is obsolete. Please specify an .fzz file name to save to</source>
+        <source>the .fz file format is obsolete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The .fz file format has been deprecated.
+
+Would you like to convert &apos;%1&apos; to the .fzz format now or open it read-only?
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The conversion process will not modify &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Read-only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please specify an .fzz file name to save &apos;%1&apos; to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Routing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Create trace from ratsnest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create a trace from the ratsnest line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Create wire from ratsnest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create a wire from the ratsnest line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select All Wires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all wires</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2715,10 +2762,6 @@ Razão: %2 (código do erro %3)</translation>
 <context>
     <name>PCBSketchWidget</name>
     <message>
-        <source>Create Trace from this Wire</source>
-        <translation>Criar traço apartir deste fio</translation>
-    </message>
-    <message>
         <source>Click this connector to drag out a new trace.</source>
         <translation>Clique neste conector para arrastar um novo traço.</translation>
     </message>
@@ -2764,6 +2807,10 @@ Razão: %2 (código do erro %3)</translation>
     </message>
     <message>
         <source>Fritzing only allows one board part per sketch. Either delete the current board, or select it and swap it for a different one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create Trace from Ratsnest</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3724,11 +3771,11 @@ Esta caixa de verificação define as definições standard. Podes mudar estas d
         <translation>Localizar...</translation>
     </message>
     <message>
-        <source>File &apos;%&apos; was restored from the .fzz file; the local copy was not found.</source>
+        <source>File &apos;%1&apos; was restored from the .fzz file; the local copy was not found.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>File &apos;%&apos; was restored from the .fzz file; save a local copy to work with an external editor.</source>
+        <source>File &apos;%1&apos; was restored from the .fzz file; save a local copy to work with an external editor.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3799,12 +3846,6 @@ Esta caixa de verificação define as definições standard. Podes mudar estas d
     <message>
         <source>The file %1 is not a Fritzing file (3).</source>
         <translation>O ficheiro %1 não é um ficheiro Fritzing (3).</translation>
-    </message>
-    <message>
-        <source>Cannot write file temp file:
-%1.</source>
-        <translation>Não foi possível escrever no ficheiro temporário
-%1.</translation>
     </message>
     <message>
         <source>No parts found.</source>
@@ -4410,6 +4451,21 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
         <source>Ratsnest</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>mm</source>
+        <translation type="unfinished">mm</translation>
+    </message>
+    <message>
+        <source>in</source>
+        <translation type="unfinished">polegadas</translation>
+    </message>
+    <message>
+        <source>Cannot write file temp:
+%1
+%2
+%3.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QShortcut</name>
@@ -4839,6 +4895,10 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>trace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create wire from Ratsnest</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -155,6 +155,10 @@
         <source>to Josef Dustira for the Czech translation, </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>to Jinbuhm Kim for the Korean translation, </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AbstractEditableLabelWidget</name>
@@ -719,6 +723,14 @@ Please select one of the Fritzing fonts to replace them:</source>
     </message>
     <message>
         <source>advanced settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>in</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mm</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1932,14 +1944,6 @@ We&apos;re working to avoid this message, and only let you choose between proper
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Trace</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Diagram</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;Help</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1981,14 +1985,6 @@ We&apos;re working to avoid this message, and only let you choose between proper
     </message>
     <message>
         <source>Autoroute...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Create Trace from Selected Wire(s)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create a trace from the selected wire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2614,7 +2610,58 @@ Please check all views for potential side-effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The .fz format is obsolete. Please specify an .fzz file name to save to</source>
+        <source>the .fz file format is obsolete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The .fz file format has been deprecated.
+
+Would you like to convert &apos;%1&apos; to the .fzz format now or open it read-only?
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The conversion process will not modify &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Read-only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please specify an .fzz file name to save &apos;%1&apos; to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Routing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Create trace from ratsnest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create a trace from the ratsnest line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Create wire from ratsnest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create a wire from the ratsnest line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select All Wires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all wires</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2691,10 +2738,6 @@ Reason: %2 (errcode %3)</source>
 <context>
     <name>PCBSketchWidget</name>
     <message>
-        <source>Create Trace from this Wire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Click this connector to drag out a new trace.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2740,6 +2783,10 @@ Reason: %2 (errcode %3)</source>
     </message>
     <message>
         <source>Fritzing only allows one board part per sketch. Either delete the current board, or select it and swap it for a different one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create Trace from Ratsnest</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3674,11 +3721,11 @@ This checkbox sets the default behavior. You can switch back to the non-default 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>File &apos;%&apos; was restored from the .fzz file; the local copy was not found.</source>
+        <source>File &apos;%1&apos; was restored from the .fzz file; the local copy was not found.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>File &apos;%&apos; was restored from the .fzz file; save a local copy to work with an external editor.</source>
+        <source>File &apos;%1&apos; was restored from the .fzz file; save a local copy to work with an external editor.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3761,11 +3808,6 @@ This checkbox sets the default behavior. You can switch back to the non-default 
     </message>
     <message>
         <source>The file %1 is not a Fritzing file (3).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot write file temp file:
-%1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4352,6 +4394,21 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         <source>Ratsnest</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>mm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>in</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot write file temp:
+%1
+%2
+%3.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QShortcut</name>
@@ -4779,6 +4836,10 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     </message>
     <message>
         <source>trace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create wire from Ratsnest</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

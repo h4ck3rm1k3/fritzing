@@ -155,6 +155,10 @@
         <source>to Josef Dustira for the Czech translation, </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>to Jinbuhm Kim for the Korean translation, </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AbstractEditableLabelWidget</name>
@@ -726,6 +730,14 @@ Selecteer a.u.b. een Fritzing lettertype om ze te vervangen:</translation>
     </message>
     <message>
         <source>advanced settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>in</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mm</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1950,14 +1962,6 @@ Wij werken er momenteel aan om dit bericht te vermijden en je te laten kiezen tu
         <translation>&amp;Venster</translation>
     </message>
     <message>
-        <source>&amp;Trace</source>
-        <translation>&amp;Baan</translation>
-    </message>
-    <message>
-        <source>&amp;Diagram</source>
-        <translation>&amp;Diagram</translation>
-    </message>
-    <message>
         <source>&amp;Help</source>
         <translation>&amp;Help</translation>
     </message>
@@ -2000,14 +2004,6 @@ Wij werken er momenteel aan om dit bericht te vermijden en je te laten kiezen tu
     <message>
         <source>Autoroute...</source>
         <translation>Autoroute...</translation>
-    </message>
-    <message>
-        <source>&amp;Create Trace from Selected Wire(s)</source>
-        <translation>&amp;Creëer banen van de geselecteerde draden</translation>
-    </message>
-    <message>
-        <source>Create a trace from the selected wire</source>
-        <translation>Creëer een baan van de geselecteerde draad</translation>
     </message>
     <message>
         <source>Select All Traces</source>
@@ -2632,7 +2628,58 @@ Controleer a.u.b. alle views voor potentiële fouten.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The .fz format is obsolete. Please specify an .fzz file name to save to</source>
+        <source>the .fz file format is obsolete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The .fz file format has been deprecated.
+
+Would you like to convert &apos;%1&apos; to the .fzz format now or open it read-only?
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The conversion process will not modify &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Read-only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please specify an .fzz file name to save &apos;%1&apos; to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Routing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Create trace from ratsnest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create a trace from the ratsnest line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Create wire from ratsnest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create a wire from the ratsnest line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select All Wires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all wires</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2711,10 +2758,6 @@ Reden : %2 (errcode %3)</translation>
 <context>
     <name>PCBSketchWidget</name>
     <message>
-        <source>Create Trace from this Wire</source>
-        <translation>Creëer trace van deze draad</translation>
-    </message>
-    <message>
         <source>Click this connector to drag out a new trace.</source>
         <translation>Klik op de aansluiting om een nieuwe baan te creëren.</translation>
     </message>
@@ -2760,6 +2803,10 @@ Reden : %2 (errcode %3)</translation>
     </message>
     <message>
         <source>Fritzing only allows one board part per sketch. Either delete the current board, or select it and swap it for a different one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create Trace from Ratsnest</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3710,11 +3757,11 @@ This checkbox sets the default behavior. You can switch back to the non-default 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>File &apos;%&apos; was restored from the .fzz file; the local copy was not found.</source>
+        <source>File &apos;%1&apos; was restored from the .fzz file; the local copy was not found.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>File &apos;%&apos; was restored from the .fzz file; save a local copy to work with an external editor.</source>
+        <source>File &apos;%1&apos; was restored from the .fzz file; save a local copy to work with an external editor.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3801,12 +3848,6 @@ This checkbox sets the default behavior. You can switch back to the non-default 
     <message>
         <source>The file %1 is not a Fritzing file (3).</source>
         <translation>Het bestand %1 is geen Fritzing bestand (3).</translation>
-    </message>
-    <message>
-        <source>Cannot write file temp file:
-%1.</source>
-        <translation>Kan niet schrijven naar het tijdelijke bestand:
-%1.</translation>
     </message>
     <message>
         <source>No parts found.</source>
@@ -4396,6 +4437,21 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
         <source>Ratsnest</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>mm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>in</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot write file temp:
+%1
+%2
+%3.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QShortcut</name>
@@ -4825,6 +4881,10 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
     </message>
     <message>
         <source>trace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create wire from Ratsnest</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
