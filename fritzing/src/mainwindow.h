@@ -58,6 +58,26 @@ bool sortPartList(ItemBase * b1, ItemBase * b2);
 
 static const QString ORDERFABENABLED = "OrderFabEnabled";
 
+class SwapTimer : public QTimer
+{
+Q_OBJECT
+
+public:
+	SwapTimer();
+
+	void setAll(const QString & family, const QString & prop, QMap<QString, QString> &  propsMap, ItemBase *);
+	const QString & family();
+	const QString & prop();
+	QMap<QString, QString> propsMap();
+	ItemBase * itemBase();
+
+protected:
+	QString m_family;
+	QString m_prop;
+	QMap<QString, QString> m_propsMap;
+	QPointer <ItemBase> m_itemBase;
+};
+
 class MainWindow : public FritzingWindow
 {
     Q_OBJECT
@@ -306,6 +326,8 @@ protected slots:
 	void cursorLocationSlot(double, double);
 	void locationLabelClicked();
 	void swapSelectedMap(const QString & family, const QString & prop, QMap<QString, QString> & currPropsMap, ItemBase *);
+	void swapSelectedDelay(const QString & family, const QString & prop, QMap<QString, QString> & currPropsMap, ItemBase *);
+	void swapSelectedTimeout();
 	void filenameIfSlot(QString & filename);
 	void openURL();
 
@@ -699,6 +721,7 @@ protected:
 	bool m_closeSilently;
 	QString m_fzzFolder;
 	QHash<QString, struct LockedFile *> m_fzzFiles;
+	SwapTimer m_swapTimer;
 
 public:
 	static int RestartNeeded;

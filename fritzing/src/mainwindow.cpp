@@ -98,6 +98,42 @@ $Date$
 
 ///////////////////////////////////////////////
 
+// SwapTimer explained: http://code.google.com/p/fritzing/issues/detail?id=1431
+
+SwapTimer::SwapTimer() : QTimer() 
+{
+}
+
+void SwapTimer::setAll(const QString & family, const QString & prop, QMap<QString, QString> & propsMap, ItemBase * itemBase)
+{
+	m_family = family;
+	m_prop = prop;
+	m_propsMap = propsMap;
+	m_itemBase = itemBase;
+}
+
+const QString & SwapTimer::family()
+{
+	return  m_family;
+}
+
+const QString & SwapTimer::prop()
+{
+	return m_prop;
+}
+
+QMap<QString, QString> SwapTimer::propsMap()
+{
+	return m_propsMap;
+}
+
+ItemBase * SwapTimer::itemBase()
+{
+	return m_itemBase;
+}
+
+///////////////////////////////////////////////
+
 const QString MainWindow::UntitledSketchName = "Untitled Sketch";
 int MainWindow::UntitledSketchIndex = 1;
 int MainWindow::CascadeFactorX = 21;
@@ -116,6 +152,11 @@ QString MainWindow::BackupFolder;
 MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel, QWidget * parent) :
     FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension(), parent)
 {
+	m_swapTimer.setInterval(30);
+	m_swapTimer.setParent(this);
+	m_swapTimer.setSingleShot(true);
+	connect(&m_swapTimer, SIGNAL(timeout()), this, SLOT(swapSelectedTimeout()));
+
 	m_closeSilently = false;
 	m_orderFabAct = NULL;
 	m_activeLayerButtonWidget = NULL;
@@ -451,11 +492,11 @@ void MainWindow::connectPairs() {
 						this, SLOT(routingStatusSlot(SketchWidget *, const RoutingStatus &)));
 
 	succeeded = connect(m_breadboardGraphicsView, SIGNAL(swapSignal(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)), 
-						this, SLOT(swapSelectedMap(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)));
+						this, SLOT(swapSelectedDelay(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)));
 	succeeded = connect(m_schematicGraphicsView, SIGNAL(swapSignal(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)), 
-						this, SLOT(swapSelectedMap(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)));
+						this, SLOT(swapSelectedDelay(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)));
 	succeeded = connect(m_pcbGraphicsView, SIGNAL(swapSignal(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)), 
-						this, SLOT(swapSelectedMap(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)));
+						this, SLOT(swapSelectedDelay(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)));
 
 	succeeded = connect(m_breadboardGraphicsView, SIGNAL(warnSMDSignal(const QString &)), this, SLOT(warnSMD(const QString &)), Qt::QueuedConnection);
 	succeeded = connect(m_pcbGraphicsView, SIGNAL(warnSMDSignal(const QString &)), this, SLOT(warnSMD(const QString &)), Qt::QueuedConnection);
@@ -1698,6 +1739,22 @@ void MainWindow::enableCheckUpdates(bool enabled)
 {
 	if (m_checkForUpdatesAct != NULL) {
 		m_checkForUpdatesAct->setEnabled(enabled);
+	}
+}
+
+
+void MainWindow::swapSelectedDelay(const QString & family, const QString & prop, QMap<QString, QString> & currPropsMap, ItemBase * itemBase) 
+{
+	m_swapTimer.stop();
+	m_swapTimer.setAll(family, prop, currPropsMap, itemBase);
+	m_swapTimer.start();
+}
+
+void MainWindow::swapSelectedTimeout()
+{
+	if (sender() == &m_swapTimer) {
+		QMap<QString, QString> map =  m_swapTimer.propsMap();
+		swapSelectedMap(m_swapTimer.family(), m_swapTimer.prop(), map, m_swapTimer.itemBase());
 	}
 }
 
