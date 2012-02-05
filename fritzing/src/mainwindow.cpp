@@ -490,6 +490,8 @@ void MainWindow::connectPairs() {
 						this, SLOT(routingStatusSlot(SketchWidget *, const RoutingStatus &)));
 	succeeded = connect(m_schematicGraphicsView, SIGNAL(routingStatusSignal(SketchWidget *, const RoutingStatus &)),
 						this, SLOT(routingStatusSlot(SketchWidget *, const RoutingStatus &)));
+	succeeded = connect(m_breadboardGraphicsView, SIGNAL(routingStatusSignal(SketchWidget *, const RoutingStatus &)),
+						this, SLOT(routingStatusSlot(SketchWidget *, const RoutingStatus &)));
 
 	succeeded = connect(m_breadboardGraphicsView, SIGNAL(swapSignal(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)), 
 						this, SLOT(swapSelectedDelay(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)));
@@ -841,7 +843,7 @@ QList<QWidget*> MainWindow::getButtonsForView(ViewIdentifierClass::ViewIdentifie
 			retval << createFlipButton(parent); 
 			break;
 		case ViewIdentifierClass::SchematicView:
-			retval << createFlipButton(parent) << createToolbarSpacer(parent) << createAutorouteButton(parent) << createRoutingStatusLabel(parent);
+			retval << createFlipButton(parent) << createToolbarSpacer(parent) << createAutorouteButton(parent);
 			break;
 		case ViewIdentifierClass::PCBView:
 			retval << SketchAreaWidget::separator(parent) 
@@ -851,12 +853,12 @@ QList<QWidget*> MainWindow::getButtonsForView(ViewIdentifierClass::ViewIdentifie
 			if (m_orderFabEnabled) {
 				retval << createOrderFabButton(parent);
 			}
-			retval << createRoutingStatusLabel(parent);
 			break;
 		default:
 			break;
 	}
 
+	retval << createRoutingStatusLabel(parent);
 	return retval;
 }
 
