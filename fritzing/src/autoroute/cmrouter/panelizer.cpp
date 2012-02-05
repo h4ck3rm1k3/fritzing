@@ -1072,33 +1072,13 @@ void Panelizer::inscribe(FApplication * app, const QString & panelFilename)
 
 	// TODO: delete temp fz folder
 
-
 }
 
 MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QString> & fzzFilePaths, FApplication * app, QDir & fzDir, ReferenceModel * referenceModel)
 {
 	QString boardName = board.attribute("name");
 
-	if (board.attribute("inscription").isEmpty()) {
-		return NULL;
-	}
-
 	QString path = fzzFilePaths.value(boardName, "");
-	if (board.attribute("inscriptionHeight").isEmpty()) {
-		DebugDialog::debug(QString("missing inscriptionHeight '%1'").arg(path));
-		return NULL;
-	}
-
-
-	// adding the serial number as a copper logo is now obsolete
-	/*
-	bool ok;
-	double inscriptionHeight = TextUtils::convertToInches(board.attribute("inscriptionHeight"), &ok, false);
-	if (!ok) {
-		DebugDialog::debug(QString("bad inscriptionHeight '%1'").arg(path));
-		return NULL;
-	}
-	*/
 
 	int loaded = 0;
 	MainWindow * mainWindow = app->loadWindows(loaded, false);
@@ -1119,53 +1099,11 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
 		return mainWindow;
 	}
 
+	bool filled = false;
 	QString fillType = mainWindow->pcbView()->characterizeGroundFill();
-	if (fillType == GroundPlane::fillTypeGround || fillType == GroundPlane::fillTypePlain) { 
-		mainWindow->removeGroundFill(true);
-	}
-	else if (fillType == GroundPlane::fillTypeIndividual) {
-		DebugDialog::debug(QString("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-									"individual ground fill--better check %1"
-									"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!").arg(path));
-	}
 
-
-	// TODO: eventually make it optional to add copper fill to these items
-	//if (board.attribute("inscription").isEmpty()) {
-		//if (fillType == GroundPlane::fillTypeGround) {
-		//	mainWindow->groundFill();
-		//}
-		//else {
-		//	mainWindow->copperFill();
-		//}
-
-		//mainWindow->saveAsShareable(path, true);
-		//return NULL;
-	//}
-
-
-	// adding the serial number as a copper logo is now obsolete
-	/*
-
-	QList<QGraphicsItem *> toDelete;
-	foreach (QGraphicsItem * item, mainWindow->pcbView()->scene()->items()) {
-		CopperLogoItem * cli = dynamic_cast<CopperLogoItem *>(item);
-		if (cli == NULL) continue;
-
-		if (cli->modelPart()->prop("inscription") == "true") {
-			toDelete.append(cli);
-		}
-	}
-
-	foreach (QGraphicsItem * item, toDelete) {
-		DebugDialog::debug("deleting prior inscription");
-		delete item;
-	}
-
-	*/
-
+	bool swapped = false;
 	if (mainWindow->pcbView()->boardLayers() == 1) {
-		bool swapped = false;
 		QMultiHash<QString, QString> properties = boardItem->modelPart()->properties();
 		QString family = properties.value("family", "");
 		QString shape = properties.value("shape", "");
@@ -1181,6 +1119,8 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
 					if (shape == newShape) {
 						mainWindow->swapSelectedAux(boardItem, newModuleID);
 						mainWindow->changeBoardLayers(2, true);
+						mainWindow->removeGroundFill(true);
+						fillType = GroundPlane::fillTypeNone;
 						swapped = true;
 					}
 				}
@@ -1193,111 +1133,15 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
 		}
 	}
 
-
-	// adding the serial number as a copper logo is now obsolete
-
-	/*
-	CMRouter router(mainWindow->pcbView());
-	QList<Tile *> alreadyTiled;
-	router.setKeepout(mainWindow->pcbView()->getKeepout());
-	router.drc(CMRouter::ClipAllOverlaps, CMRouter::ClipAllOverlaps, true, true);
-	CopperLogoItem * logoItem = qobject_cast<CopperLogoItem *>(mainWindow->pcbView()->addCopperLogoItem(ViewLayer::Bottom));
-	logoItem->setLogo(board.attribute("inscription"), true);
-	logoItem->setHeight(inscriptionHeight * 25.4);
-	logoItem->modelPart()->setProperty("inscription", QVariant("true"));
-	QSizeF size(logoItem->size().width() + mainWindow->pcbView()->getKeepout(), logoItem->size().height() + mainWindow->pcbView()->getKeepout());
-	
-	LayerList layerList;
-	layerList << ViewLayer::Copper0Trace;
-	layerList << ViewLayer::Copper1Trace;
-
-	BestPlace bestPlace;
-	bestPlace.maxRect = router.boardRect();
-	bestPlace.bestTile = NULL;
-
-	foreach (ViewLayer::ViewLayerID viewLayerID, layerList) {
-		bestPlace.rotate90 = false;
-		bestPlace.width = realToTile(size.width());
-		bestPlace.height = realToTile(size.height());
-		bestPlace.plane = router.getPlane(viewLayerID);
-		if (bestPlace.plane == NULL) {
-			DebugDialog::debug(QString("error tiling plane in %1\n").arg(path));
-			return mainWindow;
-		}
-
-		TileRect searchRect = bestPlace.maxRect;
-		searchRect.ymaxi = searchRect.ymini + realToTile(size.height());
-		TiSrArea(NULL, bestPlace.plane, &searchRect, roomOnTop, &bestPlace);
-		if (bestPlace.bestTile != NULL) break;
-
-		searchRect = bestPlace.maxRect;
-		searchRect.ymini = searchRect.ymaxi - realToTile(size.height());
-		TiSrArea(NULL, bestPlace.plane, &searchRect, roomOnBottom, &bestPlace);
-		if (bestPlace.bestTile != NULL) break;
-
-		searchRect = bestPlace.maxRect;
-		searchRect.xmaxi = searchRect.xmini + realToTile(size.width());
-		bestPlace.height = realToTile(size.width());
-		bestPlace.width = realToTile(size.height());
-		bestPlace.rotate90 = true;
-		TiSrArea(NULL, bestPlace.plane, &searchRect, roomOnLeft, &bestPlace);
-		if (bestPlace.bestTile != NULL) break;
-
-		searchRect = bestPlace.maxRect;
-		searchRect.xmini = searchRect.xmaxi - realToTile(size.width());
-		bestPlace.rotate90 = true;
-		TiSrArea(NULL, bestPlace.plane, &searchRect, roomOnRight, &bestPlace);
-		if (bestPlace.bestTile != NULL) break;
-
-		bestPlace.rotate90 = false;
-		bestPlace.width = realToTile(size.width());
-		bestPlace.height = realToTile(size.height());
-		TiSrArea(NULL, bestPlace.plane, &bestPlace.maxRect, roomAnywhere, &bestPlace);
-		if (bestPlace.bestTile != NULL) break;
-
-		bestPlace.rotate90 = true;
-		bestPlace.height = realToTile(size.width());
-		bestPlace.width = realToTile(size.height());
-		TiSrArea(NULL, bestPlace.plane, &bestPlace.maxRect, roomAnywhere, &bestPlace);
-		if (bestPlace.bestTile != NULL) break;
-	}
-
-	if (bestPlace.bestTile != NULL) {
-		if (bestPlace.plane == router.getPlane(ViewLayer::Copper1Trace)) {
-			delete logoItem;
-			logoItem = qobject_cast<CopperLogoItem *>(mainWindow->pcbView()->addCopperLogoItem(ViewLayer::Top));
-			logoItem->setLogo(board.attribute("inscription"), true);
-			logoItem->setHeight(inscriptionHeight * 25.4);
-			logoItem->modelPart()->setProperty("inscription", QVariant("true"));
-		}
-		QRectF rect;
-		tileToQRect(bestPlace.bestTile, rect);
-		logoItem->setPos(rect.left(), rect.top());
-		if (bestPlace.rotate90) {
-			mainWindow->pcbView()->selectAllItems(false, false);
-			logoItem->setSelected(true);
-			logoItem->setPos(rect.left() - (size.width() / 2) + (size.height() / 2), rect.top() + (size.width() / 2) - (size.height() / 2));
-			mainWindow->pcbView()->rotateX(90, false);
-		}
-	}
-	else {
-		QRectF r = boardItem->sceneBoundingRect();
-		logoItem->setPos(r.right() + 10, r.top());
-		DebugDialog::debug(QString("\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"
-									"unable to place inscription in %1\n"
-									"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n").arg(path));
-	}
-
-	*/
-
-	if (fillType == GroundPlane::fillTypeGround) {
-		mainWindow->groundFill();
-	}
-	else {
+	if (fillType == GroundPlane::fillTypeNone) {
 		mainWindow->copperFill();
+		filled = true;
 	}
 
-	mainWindow->saveAsShareable(path, true);
+	if (swapped || filled) { 
+		mainWindow->saveAsShareable(path, true);
+		DebugDialog::debug(QString("%1 swapped:%2 filled:%3").arg(path).arg(swapped).arg(filled));
+	}
 
 	return mainWindow;
 }

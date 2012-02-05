@@ -596,10 +596,6 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 	succeeded = succeeded && connect(signaller, SIGNAL(changeBoardLayersSignal(int, bool )),
 									 slotter, SLOT(changeBoardLayers(int, bool )));
 
-	succeeded = succeeded && connect(signaller, SIGNAL(deleteRatsnestSignal(Wire *, QList<long> &, QUndoCommand *)),
-									 slotter, SLOT(deleteRatsnestSlot(Wire *, QList<long> &, QUndoCommand *)),
-									 Qt::DirectConnection);
-
 	succeeded = succeeded && connect(signaller, SIGNAL(deleteTracesSignal(QSet<ItemBase *> &, QHash<ItemBase *, SketchWidget *> &, QList<long> &, bool, QUndoCommand *)),
 									 slotter, SLOT(deleteTracesSlot(QSet<ItemBase *> &, QHash<ItemBase *, SketchWidget *> &, QList<long> &, bool, QUndoCommand *)),
 									 Qt::DirectConnection);
@@ -615,6 +611,13 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 	succeeded = succeeded && connect(signaller, SIGNAL(changePinLabelsSignal(ItemBase *, bool)),
 									 slotter, SLOT(changePinLabelsSlot(ItemBase *, bool)));
 
+	succeeded = succeeded && connect(signaller, SIGNAL(collectRatsnestSignal(Wire *, QList<ConnectorItem *> &)),
+									 slotter, SLOT(collectRatsnestSlot(Wire *, QList<ConnectorItem *> &)),
+									 Qt::DirectConnection);
+
+	succeeded = succeeded && connect(signaller, SIGNAL(removeRatsnestSignal(QList<ConnectorItem *> &, BusArray &, QList<class LongPair> &, QUndoCommand *)),
+									 slotter, SLOT(removeRatsnestSlot(QList<ConnectorItem *> &, BusArray &, QList<class LongPair> &, QUndoCommand *)),
+									 Qt::DirectConnection);
 
 	if (!succeeded) {
 		DebugDialog::debug("connectPair failed");

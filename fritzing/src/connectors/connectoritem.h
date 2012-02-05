@@ -139,6 +139,7 @@ public:
 	void cursorKeyEvent(Qt::KeyboardModifiers modifiers);
 	void setConnectorLocalName(const QString & name);
 	void updateTooltip();
+	bool connectedDirectlyTo(ConnectorItem * to, QList<ConnectorItem *> & byBus);
 
 protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
@@ -190,6 +191,7 @@ protected:
 	void updateWireCursor(Qt::KeyboardModifiers modifiers);
 	bool curvyWiresIndicated(Qt::KeyboardModifiers);
 	double findT(Bezier * bezier, double blen, double length);
+	bool connectedDirectlyTo(ConnectorItem * to, QList<ConnectorItem *> & byBus, QList<ConnectorItem *> & visited);
 
 protected:
 	QPointer<Connector> m_connector;

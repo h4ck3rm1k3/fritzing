@@ -1882,7 +1882,7 @@ QString PCBSketchWidget::characterizeGroundFill() {
 		QString fillType = gp->prop("fillType");
 		if (fillType.isEmpty()) {
 			// old style fill with no property
-			fillType = GroundPlane::fillTypeGround;
+			return GroundPlane::fillTypePlain;
 		}
 
 		if (fillType == GroundPlane::fillTypeGround) {
@@ -1894,9 +1894,9 @@ QString PCBSketchWidget::characterizeGroundFill() {
 			// assumes multiple fill types are not possible
 			return fillType;
 		}
-	}
 
-	// return individual or none
+		result = fillType;
+	}
 
 	return result;
 }
@@ -1932,7 +1932,7 @@ void PCBSketchWidget::postImageSlot(GroundPlaneGenerator * gpg, QImage * image, 
 		if (!connectorItem->attachedTo()->isEverVisible()) continue;
 		if (!connectorItem->isGrounded()) continue;
 
-		connectorItem->debugInfo("post image a");
+		//connectorItem->debugInfo("post image a");
 		connectorItems << connectorItem;
 	}
 	if (connectorItems.count() == 0) return;
@@ -1947,9 +1947,9 @@ void PCBSketchWidget::postImageSlot(GroundPlaneGenerator * gpg, QImage * image, 
 		if (connectorItem->attachedToItemType() == ModelPart::Wire) continue;
 		if (!connectorItem->attachedTo()->isEverVisible()) continue;
 
-		connectorItem->debugInfo("post image b");
+		//connectorItem->debugInfo("post image b");
 		QRectF r = connectorItem->sceneBoundingRect();
-		DebugDialog::debug("pb", r);
+		//DebugDialog::debug("pb", r);
 		QRectF check = r;
 		check.setLeft(r.right());
 		check.setRight(r.right() + r.width());

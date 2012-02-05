@@ -69,6 +69,9 @@ public:
 	~SizeItem();
 };
 
+typedef QVector< QVector< QList<ConnectorItem *> > > BusArray;
+
+
 class SketchWidget : public InfoGraphicsView
 {
 	Q_OBJECT
@@ -422,8 +425,6 @@ protected:
 	virtual bool resizingJumperItemRelease();
 	virtual bool resizingBoardPress(QGraphicsItem * item);
 	virtual bool resizingBoardRelease();
-	bool connectedDirectlyTo(ConnectorItem * from, ConnectorItem * to, QList<ConnectorItem *> & byBus);
-	bool connectedDirectlyTo(ConnectorItem * from, ConnectorItem * to, QList<ConnectorItem *> & byBus, QList<ConnectorItem *> & visited);
 	virtual QPoint calcFixedToCenterItemOffset(const QRect & viewPortRect, const QSizeF & helpSize);
 	virtual bool acceptsTrace(const ViewGeometry &);
 	virtual ItemBase * placePartDroppedInOtherView(ModelPart *, ViewLayer::ViewLayerSpec, const ViewGeometry & viewGeometry, long id, SketchWidget * dropOrigin);
@@ -453,6 +454,7 @@ protected:
 	void createTrace(Wire * fromWire, const QString & commandString, ViewGeometry::WireFlag);
 	bool createOneTrace(Wire * wire, ViewGeometry::WireFlag flag, bool allowAny, QList<Wire *> & done, QUndoCommand * parentCommand);
 	void removeWire(Wire * w, QList<ConnectorItem *> & ends, QList<Wire *> & done, QUndoCommand * parentCommand);
+	void addToDelete(QList<ConnectorItem *> & deleteConnectors, ConnectorItem * detachItem, QSet<ItemBase *> & deletedItems, QList<long> & deletedIDs, QHash<ConnectorItem *, ConnectorItem *> & detachItems);
 
 protected:
 	static bool lessThan(int a, int b);
@@ -489,7 +491,6 @@ signals:
 	void dropPasteSignal(SketchWidget *);
 	void changeBoardLayersSignal(int, bool doEmit);
 	void firstTimeHelpHidden();
-	void deleteRatsnestSignal(Wire *, QList<long> &, QUndoCommand * parentCommand);
 	void deleteTracesSignal(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, SketchWidget *> & otherDeletedItems, QList<long> & deletedIDs, bool isForeign, QUndoCommand * parentCommand);
 	void makeDeleteItemCommandPrepSignal(ItemBase * itemBase, bool foreign, QUndoCommand * parentCommand);
 	void makeDeleteItemCommandFinalSignal(ItemBase * itemBase, bool foreign, QUndoCommand * parentCommand);
@@ -498,6 +499,8 @@ signals:
 	void ratsnestConnectSignal(long id, const QString & connectorID, bool connect, bool doEmit);
 	void updatePartLabelInstanceTitleSignal(long itemID);
 	void filenameIfSignal(QString & filename);
+	void collectRatsnestSignal(Wire * ratsnest, QList<ConnectorItem *> & foreignPartConnectorItems);
+	void removeRatsnestSignal(QList<ConnectorItem *> & partConnectorItems, BusArray & buses, QList<LongPair> & cutSet, QUndoCommand * parentCommand);
 
 protected slots:
 	void itemAddedSlot(ModelPart *, ViewLayer::ViewLayerSpec, const ViewGeometry &, long id, SketchWidget * dropOrigin);
@@ -526,7 +529,7 @@ protected slots:
 	void rememberSticky(long id, QUndoCommand * parentCommand);
 	void rememberSticky(ItemBase *, QUndoCommand * parentCommand);
 	void copyBoundingRectsSlot(QHash<QString, QRectF> &);
-	void deleteRatsnestSlot(Wire *, QList<long> & deletedIDs, QUndoCommand * parentCommand);
+	void deleteRatsnest(Wire *, QUndoCommand * parentCommand);
 	void deleteTracesSlot(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, SketchWidget *> & otherDeletedItems, QList<long> & deletedIDs, bool isForeign, QUndoCommand * parentCommand);
 	void vScrollToZero();
 	void arrowTimerTimeout();
@@ -535,6 +538,8 @@ protected slots:
 	void updatePartLabelInstanceTitleSlot(long itemID);
 	void changePinLabelsSlot(ItemBase * itemBase, bool singleRow);
 	void changePinLabels(ItemBase *, bool singleRow);
+	void collectRatsnestSlot(Wire * ratsnest, QList<ConnectorItem *> & foreignPartConnectorItems);
+	void removeRatsnestSlot(QList<ConnectorItem *> & partConnectorItems, BusArray & buses, QList<LongPair> & cutSet, QUndoCommand * parentCommand);
 
 public slots:
 	void changeWireColor(const QString newColor);
