@@ -59,7 +59,7 @@ GroundPlaneGenerator::GroundPlaneGenerator()
 {
 	m_blurBy = 0;
 	m_strokeWidthIncrement = 0;
-	m_minRunSize = 1;
+	m_minRiseSize = m_minRunSize = 1;
 }
 
 GroundPlaneGenerator::~GroundPlaneGenerator() {
@@ -428,6 +428,50 @@ void GroundPlaneGenerator::scanImage(QImage & image, double bWidth, double bHeig
 
 void GroundPlaneGenerator::scanLines(QImage & image, int bWidth, int bHeight, QList<QRect> & rects, int threshold)
 {
+	if (m_minRiseSize > 1) {
+		for (int x = 0; x < bWidth; x++) {
+			bool inWhite = false;
+			int whiteStart = 0;
+			for (int y = 0; y < bHeight; y++) {
+				QRgb current = image.pixel(x, y);
+				int gray = QGRAY(current);
+				if (inWhite) {
+					if (gray > threshold) {			// qBlue(current) == 0xff    gray > 128
+						// another white pixel, keep moving
+						continue;
+					}
+
+					// got black: close up this segment;
+					inWhite = false;
+					if (y - whiteStart < m_minRiseSize) {
+						for (int j = whiteStart; j <= y; j++) {
+							image.setPixel(x, j, 0);
+						}
+						continue;
+					}
+
+				}
+				else {
+					if (gray <= threshold) {		// qBlue(current) != 0xff				
+						// another black pixel, keep moving
+						continue;
+					}
+
+					inWhite = true;
+					whiteStart = y;
+				}
+			}
+			if (inWhite) {
+				// close up the last segment
+				if (bHeight - whiteStart < m_minRiseSize) {
+					for (int j = whiteStart; j <= bHeight; j++) {
+						image.setPixel(x, j, 0);
+					}			
+				}
+			}
+		}
+	}
+
 	// threshold should be between 0 and 255 exclusive; smaller will include more of the svg
 	for (int y = 0; y < bHeight; y++) {
 		bool inWhite = false;
@@ -1117,6 +1161,7 @@ const QString & GroundPlaneGenerator::layerName() {
 	return m_layerName;
 }
 
-void GroundPlaneGenerator::setMinRunSize(int mrs) {
-	m_minRunSize = mrs;
+void GroundPlaneGenerator::setMinRunSize(int mrus, int mris) {
+	m_minRunSize = mrus;
+	m_minRiseSize = mris;
 }

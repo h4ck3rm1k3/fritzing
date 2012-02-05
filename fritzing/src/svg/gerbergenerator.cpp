@@ -462,7 +462,7 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 
 		GroundPlaneGenerator gpg;
 		gpg.setLayerName(layerName);
-		gpg.setMinRunSize(1);
+		gpg.setMinRunSize(1, 1);
 		if (forWhy == SVG2gerber::ForOutline) {
 		//	int tinyWidth = boardRect.width();
 		//	int tinyHeight = boardRect.height();

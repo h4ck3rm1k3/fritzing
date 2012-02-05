@@ -59,7 +59,7 @@ public:
 	void setStrokeWidthIncrement(double);
 	void setLayerName(const QString &);
 	const QString & layerName();
-	void setMinRunSize(int minRunSize);
+	void setMinRunSize(int minRunSize, int minRiseSize);
 
 public:
 	static QString ConnectorName;
@@ -88,6 +88,7 @@ protected:
 	QString m_layerName;
 	double m_strokeWidthIncrement;
 	int m_minRunSize;
+	int m_minRiseSize;
 };
 
 #endif
