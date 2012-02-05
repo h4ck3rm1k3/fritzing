@@ -1,6 +1,7 @@
 <fritzing-sketches>
 	<sketches>
 		<sketch id="555TouchSwitch" name="555 Touch Switch" src="core/555TouchSwitch.fzz"/>
+		<sketch id="7segment_direct" name="7 Segment direct" src="core/7Segment_direct.fzz"/>
 		<sketch id="AnalogInputFSR" name="Force Sensor" src="core/AnalogInputFSR.fzz"/>
 		<sketch id="AnalogInputOutput" name="Analog In/Out (Pot and LED)" src="core/AnalogInputOutput.fzz"/>
 		<sketch id="AnalogInputPot" name="Potentiometer" src="core/AnalogInputPot.fzz"/>
@@ -58,7 +59,8 @@
 					<sketch id="Shift_Register"/>
 					<sketch id="Shift_Register_2x"/>
 					<sketch id="LEDmatrix_simple"/>
-					<sketch id="LEDmatrix"/>		
+					<sketch id="LEDmatrix"/>	
+					<sketch id="7segment_direct"/>	
 					<sketch id="Timer"/>			
 				</category>
 				<category name="Input">
