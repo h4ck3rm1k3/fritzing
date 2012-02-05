@@ -1637,7 +1637,7 @@ bool PCBSketchWidget::groundFill(bool fillGroundTraces, QUndoCommand * parentCom
 	gpg.setBlurBy(BlurBy);
 	gpg.setLayerName("groundplane");
 	gpg.setStrokeWidthIncrement(StrokeWidthIncrement);
-	gpg.setMinRunSize(10, 20);
+	gpg.setMinRunSize(10, 10);
 	if (fillGroundTraces) {
 		connect(&gpg, SIGNAL(postImageSignal(GroundPlaneGenerator *, QImage *, QGraphicsItem *)), 
 				this, SLOT(postImageSlot(GroundPlaneGenerator *, QImage *, QGraphicsItem *)));
@@ -1655,7 +1655,7 @@ bool PCBSketchWidget::groundFill(bool fillGroundTraces, QUndoCommand * parentCom
 		gpg2.setBlurBy(BlurBy);
 		gpg2.setLayerName("groundplane1");
 		gpg2.setStrokeWidthIncrement(StrokeWidthIncrement);
-		gpg2.setMinRunSize(10, 20);
+		gpg2.setMinRunSize(10, 10);
 		if (fillGroundTraces) {
 			connect(&gpg2, SIGNAL(postImageSignal(GroundPlaneGenerator *, QImage *, QGraphicsItem *)), 
 					this, SLOT(postImageSlot(GroundPlaneGenerator *, QImage *, QGraphicsItem *)));
@@ -1750,7 +1750,7 @@ QString PCBSketchWidget::generateCopperFillUnit(ItemBase * itemBase, QPointF whe
 	gpg.setBlurBy(BlurBy);
 	gpg.setStrokeWidthIncrement(StrokeWidthIncrement);
 	gpg.setLayerName(gpLayerName);
-	gpg.setMinRunSize(10, 20);
+	gpg.setMinRunSize(10, 10);
 	bool result = gpg.generateGroundPlaneUnit(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board, GraphicsUtils::StandardFritzingDPI / 2.0  /* 2 MIL */, 
 												color, whereToStart);
 
