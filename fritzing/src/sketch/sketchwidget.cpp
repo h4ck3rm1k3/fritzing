@@ -6271,7 +6271,10 @@ void SketchWidget::updateRoutingStatus(RoutingStatus & routingStatus, bool manua
 		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::RatsnestFlag | getTraceFlag());
 		visited.append(connectorItems);
 
-		//foreach (ConnectorItem * ci, connectorItems) ci->debugInfo("cep");
+		//if (this->viewIdentifier() == ViewIdentifierClass::PCBView) {
+		//	DebugDialog::debug("________________________");
+		//	foreach (ConnectorItem * ci, connectorItems) ci->debugInfo("cep");
+		//}
 
 		bool doRatsnest = manual || checkUpdateRatsnest(connectorItems);
 		if (!doRatsnest && connectorItems.count() <= 1) continue;
@@ -6281,10 +6284,13 @@ void SketchWidget::updateRoutingStatus(RoutingStatus & routingStatus, bool manua
 		if (partConnectorItems.count() < 1) continue;
 		if (!doRatsnest && partConnectorItems.count() <= 1) continue;
 
+		//DebugDialog::debug("________________________");
 		for (int i = partConnectorItems.count() - 1; i >= 0; i--) {
 			ConnectorItem * ci = partConnectorItems[i];
 			
-			//ci->debugInfo("pc");
+			//if (this->viewIdentifier() == ViewIdentifierClass::PCBView) {
+			//	ci->debugInfo("pc");
+			//}
 
 			if (!ci->attachedTo()->isEverVisible()) {
 				partConnectorItems.removeAt(i);
@@ -8071,13 +8077,10 @@ void SketchWidget::deleteRatsnest(Wire * ratsnest, QUndoCommand * parentCommand)
 	connectorItems.append(sink);
 	ConnectorItem::collectEqualPotential(connectorItems, true, (ViewGeometry::RatsnestFlag | ViewGeometry::NormalFlag | ViewGeometry::PCBTraceFlag | ViewGeometry::SchematicTraceFlag) ^ getTraceFlag());
 
-	QList<ConnectorItem *> partConnectorItems;
-	QList<ConnectorItem *> foreignPartConnectorItems;
-	ConnectorItem::collectParts(connectorItems, partConnectorItems, true, ViewLayer::TopAndBottom);
-	emit collectRatsnestSignal(ratsnest, foreignPartConnectorItems);
-	partConnectorItems.append(foreignPartConnectorItems);
+	QList<ConnectorItem *> foreignConnectorItems;
+	emit collectRatsnestSignal(ratsnest, foreignConnectorItems);
+	connectorItems.append(foreignConnectorItems);
 
-	int n = partConnectorItems.count();
 
 	// there are multiple possibilities for each pair of connectors:
 
@@ -8087,31 +8090,45 @@ void SketchWidget::deleteRatsnest(Wire * ratsnest, QUndoCommand * parentCommand)
 	// they are indirectly connected via other parts
 
 	// what if there are multiple direct connections--treat it as a single connection and delete them all
-
-	BusArray buses(n, QVector< QList<ConnectorItem *> >(n, QList<ConnectorItem *>()));
 	
-	QList<LongPair> cutSet;
-	GraphUtils::minCut(partConnectorItems, buses, source, sink, cutSet);
-	emit removeRatsnestSignal(partConnectorItems, buses, cutSet, parentCommand);
+	QList<ConnectorEdge *> cutSet;
+	GraphUtils::minCut(connectorItems, source, sink, cutSet);
+	emit removeRatsnestSignal(cutSet, parentCommand);
+	foreach (ConnectorEdge * ce, cutSet) {
+		delete ce;
+	}
 }
 
-void SketchWidget::removeRatsnestSlot(QList<ConnectorItem *> & partConnectorItems, BusArray & buses, QList<LongPair> & cutSet, QUndoCommand * parentCommand)
+void SketchWidget::removeRatsnestSlot(QList<ConnectorEdge *> & cutSet, QUndoCommand * parentCommand)
 {
 	QHash<ConnectorItem *, ConnectorItem *> detachItems;			// key is part to be detached, value is part to detach from
 	QSet<ItemBase *> deletedItems;
 	QList<long> deletedIDs;
 
-	foreach (LongPair pair, cutSet) {
-		ConnectorItem * ci = partConnectorItems[pair.first];
-		ConnectorItem * cj = partConnectorItems[pair.second];
-		if (ci->attachedToViewIdentifier() != viewIdentifier()) continue;
-		if (cj->attachedToViewIdentifier() != viewIdentifier()) continue;
+	foreach (ConnectorEdge * ce, cutSet) {
 
-		QList<ConnectorItem *> & deleteConnectors = buses[pair.first][pair.second];
-		if (deleteConnectors.count() > 0) {
-			ci->debugInfo("cutting");
-			cj->debugInfo("       ");
-			addToDelete(buses[pair.first][pair.second], ci, deletedItems, deletedIDs, detachItems);
+		if (ce->c0->attachedToViewIdentifier() != viewIdentifier()) continue;
+		if (ce->c1->attachedToViewIdentifier() != viewIdentifier()) continue;
+
+		if (ce->wire) {
+			QList<ConnectorItem *> ends;
+			QList<Wire *> wires;
+			ce->wire->collectChained(wires, ends);
+			foreach (Wire * w, wires) {
+				if (!deletedIDs.contains(w->id())) {
+					deletedItems.insert(w);
+					deletedIDs.append(w->id());
+				}
+			}
+		}
+		else {
+			// we have to detach the source or sink from a female connector
+			if (ce->c0->connectorType() == Connector::Female) {
+				detachItems.insert(ce->c1, ce->c0);
+			}
+			else {
+				detachItems.insert(ce->c0, ce->c1);
+			}
 		}
 	}
 
@@ -8149,33 +8166,6 @@ void SketchWidget::removeRatsnestSlot(QList<ConnectorItem *> & partConnectorItem
 
 
 	deleteAux(deletedItems, parentCommand, false);
-}
-
-void SketchWidget::addToDelete(QList<ConnectorItem *> & deleteConnectors, ConnectorItem * detachItem, QSet<ItemBase *> & deletedItems, QList<long> & deletedIDs, QHash<ConnectorItem *, ConnectorItem *> & detachItems) {
-	foreach (ConnectorItem * deleteConnector, deleteConnectors) {
-		deleteConnector->debugInfo("delete something");
-		if (deleteConnector->attachedToItemType() == ModelPart::Wire) {
-			Wire * deletedWire = qobject_cast<Wire *>(deleteConnector->attachedTo());
-			QList<ConnectorItem *> ends;
-			QList<Wire *> wires;
-			deletedWire->collectChained(wires, ends);
-			foreach (Wire * w, wires) {
-				if (!deletedIDs.contains(w->id())) {
-					deletedItems.insert(w);
-					deletedIDs.append(w->id());
-				}
-			}
-		}
-		else {
-			// we have to detach the source or sink from a female connector
-			if (deleteConnector->connectorType() == Connector::Female) {
-				detachItems.insert(detachItem, deleteConnector);
-			}
-			else {
-				detachItems.insert(deleteConnector, detachItem);
-			}
-		}
-	}
 }
 
 void SketchWidget::addDefaultParts() {
@@ -8532,8 +8522,10 @@ VirtualWire * SketchWidget::makeOneRatsnestWire(ConnectorItem * source, Connecto
 	makeRatsnestViewGeometry(viewGeometry, source, dest);
 	viewGeometry.setRouted(routed);
 
-	//source->debugInfo("making rat src");
-	//dest->debugInfo("making rat dst");
+	if (viewIdentifier() == ViewIdentifierClass::PCBView) {
+		source->debugInfo("making rat src");
+		dest->debugInfo("making rat dst");
+	}
 
 	// ratsnest only added to one view
 	ItemBase * newItemBase = addItem(m_paletteModel->retrieveModelPart(ModuleIDNames::WireModuleIDName), source->attachedTo()->viewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);		
@@ -8598,7 +8590,7 @@ void SketchWidget::removeWire(Wire * w, QList<ConnectorItem *> & ends, QList<Wir
 	}
 }
 
-void SketchWidget::collectRatsnestSlot(Wire * ratsnest, QList<ConnectorItem *> & foreignPartConnectorItems)
+void SketchWidget::collectRatsnestSlot(Wire * ratsnest, QList<ConnectorItem *> & foreignConnectorItems)
 {
 	// assume ratsnest has only one connection at each end
 	ConnectorItem * foreignSource = ratsnest->connector0()->firstConnectedToIsh();
@@ -8622,9 +8614,7 @@ void SketchWidget::collectRatsnestSlot(Wire * ratsnest, QList<ConnectorItem *> &
 	connectorItems.append(source);
 	connectorItems.append(sink);
 	ConnectorItem::collectEqualPotential(connectorItems, true, (ViewGeometry::RatsnestFlag | ViewGeometry::NormalFlag | ViewGeometry::PCBTraceFlag | ViewGeometry::SchematicTraceFlag) ^ getTraceFlag());
-	QList<ConnectorItem *> partConnectorItems;
-	ConnectorItem::collectParts(connectorItems, partConnectorItems, true, ViewLayer::TopAndBottom);
-	foreignPartConnectorItems.append(partConnectorItems);
+	foreignConnectorItems.append(connectorItems);
 }
 
 

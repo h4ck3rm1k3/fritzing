@@ -141,6 +141,8 @@ ConnectorItem* SymbolPaletteItem::newConnectorItem(Connector *connector)
 }
 
 void SymbolPaletteItem::busConnectorItems(Bus * bus, QList<class ConnectorItem *> & items) {
+	if (bus == NULL) return;
+
 	PaletteItem::busConnectorItems(bus, items);
 
 	//if (m_viewIdentifier != ViewIdentifierClass::SchematicView) return;

@@ -88,6 +88,4 @@ static const QString MaleSymbolString = QString("%1").arg(QChar(0x2642));
 
 Qt::KeyboardModifier altOrMetaModifier();
 
-typedef QPair<long, long> LongPair;
-
 #endif

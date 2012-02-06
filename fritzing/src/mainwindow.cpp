@@ -617,8 +617,8 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 									 slotter, SLOT(collectRatsnestSlot(Wire *, QList<ConnectorItem *> &)),
 									 Qt::DirectConnection);
 
-	succeeded = succeeded && connect(signaller, SIGNAL(removeRatsnestSignal(QList<ConnectorItem *> &, BusArray &, QList<class LongPair> &, QUndoCommand *)),
-									 slotter, SLOT(removeRatsnestSlot(QList<ConnectorItem *> &, BusArray &, QList<class LongPair> &, QUndoCommand *)),
+	succeeded = succeeded && connect(signaller, SIGNAL(removeRatsnestSignal(QList<struct ConnectorEdge *> &, QUndoCommand *)),
+									 slotter, SLOT(removeRatsnestSlot(QList<struct ConnectorEdge *> &, QUndoCommand *)),
 									 Qt::DirectConnection);
 
 	if (!succeeded) {

@@ -1864,20 +1864,22 @@ void ConnectorItem::debugInfo(const QString & msg)
 {
 
 #ifndef QT_NO_DEBUG
-	DebugDialog::debug(QString("%1 cid:%2 %3 %4 id:%5 %6 vlid:%7 vid:%8 spec:%9 flg:%10 hy:%11 bus:%12")
-		.arg(msg)
-		.arg(this->connectorSharedID())
-		.arg(this->connectorSharedName())
-		.arg(this->attachedToTitle())
-		.arg(this->attachedToID())
-		.arg(this->attachedToInstanceTitle())
-		.arg(this->attachedToViewLayerID())
-		.arg(this->attachedToViewIdentifier())
-		.arg(this->attachedToViewLayerSpec())
-		.arg(this->attachedTo()->wireFlags())
-		.arg(this->m_hybrid)
-		.arg((long) this->bus(), 0, 16)
-	);
+	QString s = QString("%1 cid:%2 %3 %4 id:%5 %6 vlid:%7 vid:%8 spec:%9 flg:%10 hy:%11 bus:%12")
+	//QString s = QString("%1 %2 %3 %4 id:%5 %6 vlid:%7 vid:%8")
+			.arg(msg)
+			.arg(this->connectorSharedID())
+			.arg(this->connectorSharedName())
+			.arg(this->attachedToTitle())
+			.arg(this->attachedToID())
+			.arg(this->attachedToInstanceTitle())
+			.arg(this->attachedToViewLayerID())
+			.arg(this->attachedToViewIdentifier())
+			.arg(this->attachedToViewLayerSpec())
+			.arg(this->attachedTo()->wireFlags())
+			.arg(this->m_hybrid)
+			.arg((long) this->bus(), 0, 16);
+	//s.replace(" ", "_");
+	DebugDialog::debug(s);
 #else
 	Q_UNUSED(msg);
 #endif
@@ -2761,69 +2763,3 @@ void ConnectorItem::setConnectorLocalName(const QString & name)
 	}
 }
 
-bool ConnectorItem::connectedDirectlyTo(ConnectorItem * to, QList<ConnectorItem *> & byBus) 
-{
-	QList<ConnectorItem *> visited;
-	bool result = connectedDirectlyTo(to, byBus, visited);
-	if (result) {
-		for (int i = 0; i < byBus.count(); i++) {
-			if (byBus[i] == NULL) {
-				byBus[i] = this;
-			}
-		}
-	}
-	return result;
-}
-
-bool ConnectorItem::connectedDirectlyTo(ConnectorItem * to, QList<ConnectorItem *> & byBus, QList<ConnectorItem *> & visited) 
-{
-	if (visited.contains(this)) return false;
-	visited.append(this);
-
-	bool result = false;
-	foreach (ConnectorItem * toConnectorItem, this->connectedToItems()) {
-		if (!toConnectorItem->attachedTo()->isEverVisible()) {
-			continue;   // ignore breadboard connectors in schematic view, for example
-		}
-		if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
-			if (qobject_cast<Wire *>(toConnectorItem->attachedTo())->getRatsnest()) continue;
-		}
-
-		if (toConnectorItem == to) {
-			byBus.append(NULL);
-			return true;
-		}
-
-		if (visited.contains(toConnectorItem)) continue;
-
-		Bus * bus = toConnectorItem->bus();
-		if (bus == NULL) continue;
-		QList<ConnectorItem *> busConnectorItems;
-		toConnectorItem->attachedTo()->busConnectorItems(bus, busConnectorItems);
-		foreach (ConnectorItem * busConnectorItem, busConnectorItems) {
-			if (!busConnectorItem->attachedTo()->isEverVisible()) {
-				continue;   // ignore breadboard connectors in schematic view, for example
-			}
-
-			if (busConnectorItem->attachedToItemType() == ModelPart::Wire) {
-				if (qobject_cast<Wire *>(busConnectorItem->attachedTo())->getRatsnest()) continue;
-			}
-
-			if (busConnectorItem == to) {
-				byBus.append(NULL);
-				result = true;
-			}
-			else if (busConnectorItem != toConnectorItem) {
-				if (busConnectorItem->connectedDirectlyTo(to, byBus, visited)) {
-					result = true;
-					int ix = byBus.count() - 1;
-					if (byBus.at(ix) == NULL || byBus.at(ix)->attachedToItemType() != ModelPart::Wire) {
-						byBus[ix] = busConnectorItem;
-					}
-				}
-			}
-		}
-	}
-
-	return result;
-}

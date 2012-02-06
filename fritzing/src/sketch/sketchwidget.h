@@ -69,9 +69,6 @@ public:
 	~SizeItem();
 };
 
-typedef QVector< QVector< QList<ConnectorItem *> > > BusArray;
-
-
 class SketchWidget : public InfoGraphicsView
 {
 	Q_OBJECT
@@ -454,7 +451,6 @@ protected:
 	void createTrace(Wire * fromWire, const QString & commandString, ViewGeometry::WireFlag);
 	bool createOneTrace(Wire * wire, ViewGeometry::WireFlag flag, bool allowAny, QList<Wire *> & done, QUndoCommand * parentCommand);
 	void removeWire(Wire * w, QList<ConnectorItem *> & ends, QList<Wire *> & done, QUndoCommand * parentCommand);
-	void addToDelete(QList<ConnectorItem *> & deleteConnectors, ConnectorItem * detachItem, QSet<ItemBase *> & deletedItems, QList<long> & deletedIDs, QHash<ConnectorItem *, ConnectorItem *> & detachItems);
 
 protected:
 	static bool lessThan(int a, int b);
@@ -499,8 +495,8 @@ signals:
 	void ratsnestConnectSignal(long id, const QString & connectorID, bool connect, bool doEmit);
 	void updatePartLabelInstanceTitleSignal(long itemID);
 	void filenameIfSignal(QString & filename);
-	void collectRatsnestSignal(Wire * ratsnest, QList<ConnectorItem *> & foreignPartConnectorItems);
-	void removeRatsnestSignal(QList<ConnectorItem *> & partConnectorItems, BusArray & buses, QList<LongPair> & cutSet, QUndoCommand * parentCommand);
+	void collectRatsnestSignal(Wire * ratsnest, QList<ConnectorItem *> & foreignConnectorItems);
+	void removeRatsnestSignal(QList<struct ConnectorEdge *> & cutSet, QUndoCommand * parentCommand); 
 
 protected slots:
 	void itemAddedSlot(ModelPart *, ViewLayer::ViewLayerSpec, const ViewGeometry &, long id, SketchWidget * dropOrigin);
@@ -538,8 +534,8 @@ protected slots:
 	void updatePartLabelInstanceTitleSlot(long itemID);
 	void changePinLabelsSlot(ItemBase * itemBase, bool singleRow);
 	void changePinLabels(ItemBase *, bool singleRow);
-	void collectRatsnestSlot(Wire * ratsnest, QList<ConnectorItem *> & foreignPartConnectorItems);
-	void removeRatsnestSlot(QList<ConnectorItem *> & partConnectorItems, BusArray & buses, QList<LongPair> & cutSet, QUndoCommand * parentCommand);
+	void collectRatsnestSlot(Wire * ratsnest, QList<ConnectorItem *> & foreignConnectorItems);
+	void removeRatsnestSlot(QList<struct ConnectorEdge *> & cutSet, QUndoCommand * parentCommand);
 
 public slots:
 	void changeWireColor(const QString newColor);

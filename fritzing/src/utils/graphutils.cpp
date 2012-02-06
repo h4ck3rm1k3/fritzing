@@ -48,13 +48,35 @@ $Date$
 #pragma warning(pop)					// restore warning state
 #endif
 
-struct SimpleEdge {
-	int head;
-	int tail;
-	int weight;
-};
+void ConnectorEdge::setHeadTail(int h, int t) {
+	head = h;
+	tail = t;
+}
 
-void GraphUtils::minCut(QList<ConnectorItem *> & partConnectorItems, QVector< QVector< QList<ConnectorItem *> > > & buses, ConnectorItem * source, ConnectorItem * sink, QList<LongPair> & minCut) 
+ConnectorEdge * makeConnectorEdge(QList<ConnectorEdge *> & edges, ConnectorItem * ci, ConnectorItem * cj, int weight, Wire * wire) 
+{
+	ConnectorEdge * connectorEdge = new ConnectorEdge;
+	connectorEdge->c0 = ci;
+	connectorEdge->c1 = cj;
+	connectorEdge->weight = weight;
+	connectorEdge->wire = wire;
+	edges.append(connectorEdge);
+	return connectorEdge;
+}
+
+static int LastVertex = 0;
+
+#define appendVertIf(ci, vertices, verts) {	\
+	int ix = vertices.value(ci, -1);		\
+	if (ix == -1) {							\
+		ix = vertices.count();				\
+		vertices.insert(ci, ix);			\
+		verts.append(add_vertex(g));		\
+	}										\
+	LastVertex = ix;						\
+}
+
+void GraphUtils::minCut(QList<ConnectorItem *> & connectorItems, ConnectorItem * source, ConnectorItem * sink, QList<ConnectorEdge *> & minCut) 
 {
 	// this helped:  http://boost.2283326.n4.nabble.com/graph-edmund-karp-max-flow-vs-kolmogorov-max-flow-color-map-td2565611.html
 	
@@ -79,135 +101,150 @@ void GraphUtils::minCut(QList<ConnectorItem *> & partConnectorItems, QVector< QV
 
 	Traits::vertex_descriptor s, t;
 
-	int count = partConnectorItems.count();
-	int counts[3];
-	counts[0] = 0;
-	ViewIdentifierClass::ViewIdentifier viewIdentifier = partConnectorItems.at(0)->attachedToViewIdentifier();
-	int ix = 1;
-	for (int i = 1; i < count; i++) {
-		if (partConnectorItems.at(i)->attachedToViewIdentifier() != viewIdentifier) {
-			counts[ix++] = i;
-			if (ix == 3) break;
-			viewIdentifier = partConnectorItems.at(i)->attachedToViewIdentifier();
+	ViewIdentifierClass::ViewIdentifier homeViewIdentifier = source->attachedToViewIdentifier();
+
+	QList<Wire *> visitedWires;
+	QList<int> indexes;
+	QHash<ConnectorItem *, int> vertices;
+	QList<ConnectorEdge *> edges;
+	QVector<Traits::vertex_descriptor> verts;
+
+	vertices.insert(source, 0);
+	vertices.insert(sink, 1);
+	verts.append(s = add_vertex(g));
+	verts.append(t = add_vertex(g));
+
+	foreach (ConnectorItem * connectorItem, connectorItems) {
+		if (connectorItem->attachedToItemType() == ModelPart::Wire) {
+			Wire * wire = qobject_cast<Wire *>(connectorItem->attachedTo());
+			if (visitedWires.contains(wire)) continue;
+
+			QList<Wire *> wires;
+			QList<ConnectorItem *> ends;
+			wire->collectChained(wires, ends);
+			visitedWires.append(wires);
+			if (ends.count() < 2) continue;
+
+			foreach (ConnectorItem * end, ends) {
+				appendVertIf(end, vertices, verts);
+			}
+
+			for (int i = 0; i < ends.count(); i++) {
+				for (int j = i + 1; j < ends.count(); j++) {
+					ConnectorItem * end = ends[i];
+					ConnectorEdge * connectorEdge = makeConnectorEdge(edges, end, ends[j], (end->attachedToViewIdentifier() == homeViewIdentifier ? 1000 : 1), wire);
+					connectorEdge->setHeadTail(vertices.value(connectorEdge->c0), vertices.value(connectorEdge->c1));
+				}
+			}
+			continue;
 		}
-	}
 
-	std::vector<Traits::vertex_descriptor> verts(count);
-	for (int i = 0; i < count; ++i) {
-		verts[i] = add_vertex(g);
-		partConnectorItems.at(i)->debugInfo(QString("%1 part").arg(i));
-	}
+		if (connectorItem->connectorType() == Connector::Female && connectorItem->attachedToViewIdentifier() == ViewIdentifierClass::BreadboardView) {
+			appendVertIf(connectorItem, vertices, verts);
+			int ix = LastVertex;
+			bool home = connectorItem->attachedToViewIdentifier() == homeViewIdentifier;
+			foreach (ConnectorItem * toConnectorItem, connectorItem->connectedToItems()) {
+				if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
+					// deal with the wire
+					continue;
+				}
+				if (!toConnectorItem->attachedTo()->isEverVisible()) continue;
 
-	QVector<SimpleEdge> edges;
-
-	int l[3][2];
-	l[0][0] = 0;
-	l[0][1] = counts[1];
-	l[1][0] = counts[1];
-	l[1][1] = counts[2];
-	l[2][0] = counts[2];
-	l[2][1] = count;
-
-	// connect same connectors across views
-	for (long i = 0; i < counts[1]; i++) {
-		ConnectorItem * ci = partConnectorItems.at(i);
-		for (int lix = 1; lix < 3; lix++) {
-			for (long j = l[lix][0]; j < l[lix][1]; j++) {
-				ConnectorItem * cj = partConnectorItems.at(j);
-				if (ci->attachedToID() != cj->attachedToID()) continue;
-				if (ci->connectorSharedID().compare(cj->connectorSharedID()) == 0) {
-					SimpleEdge se;
-					se.head = i;
-					se.tail = j;
-					se.weight = 1000;
-					edges.append(se);
-					break;
-				}
-			}
-		}
-	}
-
-	for (long lix = 0; lix < 3; lix++) {
-		long start = l[lix][0];
-		long end = l[lix][1];
-		for (long i = start; i < end; i++) {
-			ConnectorItem * ci = partConnectorItems[i];
-			if (ci == source) {
-				s = verts[i];
-				ci->debugInfo(QString("source %1").arg(i));
-			}
-			else if (ci == sink) {
-				t = verts[i];
-				ci->debugInfo(QString("sink %1").arg(i));
-			}
-			for (long j = i + 1; j < end; j++) {
-				ConnectorItem * cj = partConnectorItems[j];
-				int weight = 0;
-				if (ci->getCrossLayerConnectorItem() == cj) {
-					weight = 1000;
-				}
-				else if (ci->attachedTo() == cj->attachedTo()) {
-					if (ci->bus() != NULL) {
-						if (ci->bus() == cj->bus()) {
-							weight = 1000;
-						}
-					}
-				}
-				if (weight == 0) {
-					if (ci->connectedDirectlyTo(cj, buses[j][i])) {
-						weight = ((start == 0) ? 1000 : 1);			// privilege this view over the others, so only they get cut
-						ci->debugInfo(QString("conn %1").arg(weight));
-						cj->debugInfo("       ");
-					}
-				}
-				if (weight) {
-					SimpleEdge se;
-					se.head = i;
-					se.tail = j;
-					se.weight = weight;
-					edges.append(se);
-				}
-				buses[i][j] = buses[j][i];
+				appendVertIf(toConnectorItem, vertices, verts);
+				int jx = LastVertex;
+				ConnectorEdge * connectorEdge = makeConnectorEdge(edges, connectorItem, toConnectorItem, home ? 1000 : 1, NULL);
+				connectorEdge->setHeadTail(ix, jx);
 			}
 		}
 	}
 
-	foreach(SimpleEdge se, edges) {
+	// don't forget to make edges from bus connections
+	QList<ConnectorItem *> keys = vertices.keys();
+	while (keys.count() > 0) {
+		ConnectorItem * key = keys.takeFirst();
+		if (key->attachedToItemType() == ModelPart::Wire) continue;
+		if (key->bus() == NULL) continue;
+
+		int ix = vertices.value(key);
+		QList<ConnectorItem *> bcis;
+		key->attachedTo()->busConnectorItems(key->bus(), bcis);
+		foreach (ConnectorItem * bci, bcis) {
+			if (bci == key) continue;
+
+			keys.removeOne(bci);
+			appendVertIf(bci, vertices, verts);
+			int jx = LastVertex;
+			ConnectorEdge * connectorEdge = makeConnectorEdge(edges, key, bci, 1000, NULL);
+			connectorEdge->setHeadTail(ix, jx);
+		}
+	}
+
+	// make cross-view connections
+	keys = vertices.keys();
+	while (keys.count() > 0) {
+		ConnectorItem * key = keys.takeFirst();
+		for (int i = keys.count() - 1; i >= 0; i--) {
+			ConnectorItem * other = keys.at(i);
+			if (key->attachedTo()->layerKinChief()->id() != other->attachedTo()->layerKinChief()->id()) continue;
+			if (key->connectorSharedID().compare(other->connectorSharedID()) != 0) continue;
+
+			keys.removeAt(i);
+			ConnectorEdge * connectorEdge = makeConnectorEdge(edges, key, other, 1000, NULL);
+			connectorEdge->setHeadTail(vertices.value(key),  vertices.value(other));
+		}
+	}
+
+	foreach(ConnectorItem * connectorItem, vertices.keys()) {
+		connectorItem->debugInfo(QString("vertex %1").arg(vertices.value(connectorItem)));
+	}
+
+	foreach(ConnectorEdge * ce, edges) {
 		Traits::edge_descriptor e1, e2;
 		bool in1, in2;
-		tie(e1, in1) = add_edge(verts[se.head], verts[se.tail], g);
-		tie(e2, in2) = add_edge(verts[se.tail], verts[se.head], g);
-		capacity[e1] = se.weight;
-		capacity[e2] = se.weight;
+		tie(e1, in1) = add_edge(verts[ce->head], verts[ce->tail], g);
+		tie(e2, in2) = add_edge(verts[ce->tail], verts[ce->head], g);
+		capacity[e2] = capacity[e1] = ce->weight;
+		ce->weight;
 		reverse[e1] = e2;
 		reverse[e2] = e1;
-		partConnectorItems.at(se.head)->debugInfo(QString("head %1").arg(se.weight));
-		partConnectorItems.at(se.tail)->debugInfo("\ttail");
+		ce->c0->debugInfo(QString("head %1").arg(ce->weight));
+		ce->c1->debugInfo("\ttail");
 	}
 
-	
+	/*
+	foreach(ConnectorEdge * ce, edges) {
+		connectorItems.at(ce->head)->debugInfo(QString("%1").arg(ce->weight));
+	}
+	DebugDialog::debug("");	
+	DebugDialog::debug("");
+	foreach(ConnectorEdge * ce, edges) {
+		partConnectorItems.at(ce->tail)->debugInfo(QString("%1").arg(ce->weight));
+	}
+	*/
+
 	// if color_map parameter not specified, colors are not set
     long flow = edmonds_karp_max_flow(g, s, t, color_map(color)); 
 	DebugDialog::debug(QString("flow %1, s%2, t%3").arg(flow).arg(index(s)).arg(index(t)));
-	for (int i = 0; i < count; ++i) {
+	for (int i = 0; i < verts.count(); ++i) {
 		DebugDialog::debug(QString("index %1 %2").arg(index(verts[i])).arg(color(verts[i])));
 	}
 
 	typedef property_traits<property_map < Graph, vertex_color_t >::type>::value_type tColorValue;
     typedef boost::color_traits<tColorValue> tColorTraits; 
-	foreach (SimpleEdge se, edges) {
+	foreach (ConnectorEdge * ce, edges) {
 		bool addIt = false;
-		if (color(verts[se.head]) == tColorTraits::white() && color(verts[se.tail]) != tColorTraits::white()) {
+		if (color(verts[ce->head]) == tColorTraits::white() && color(verts[ce->tail]) != tColorTraits::white()) {
 			addIt = true;
 		}
-		else if (color(verts[se.head]) != tColorTraits::white() && color(verts[se.tail]) == tColorTraits::white()) {
+		else if (color(verts[ce->head]) != tColorTraits::white() && color(verts[ce->tail]) == tColorTraits::white()) {
 			addIt = true;
 		}
 		if (addIt) {
-			LongPair lp(se.head, se.tail);
-			minCut << lp;
-			DebugDialog::debug(QString("edge %1 %2 w:%3").arg(se.head).arg(se.tail).arg(se.weight));
-
+			minCut << ce;
+			DebugDialog::debug(QString("edge %1 %2 w:%3").arg(ce->head).arg(ce->tail).arg(ce->weight));
+		}
+		else {
+			delete ce;
 		}
 	}     
 }

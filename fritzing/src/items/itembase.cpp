@@ -625,6 +625,8 @@ const QHash<QString, QPointer<Bus> > & ItemBase::buses() {
 }
 
 void ItemBase::busConnectorItems(class Bus * bus, QList<class ConnectorItem *> & items) {
+	if (bus == NULL) return;
+
 	foreach (Connector * connector, bus->connectors()) {
 		QList< QPointer<ConnectorItem> > allConnectorItems = connector->viewItems();
 		foreach (ConnectorItem * connectorItem, allConnectorItems) {

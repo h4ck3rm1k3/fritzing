@@ -30,13 +30,24 @@ $Date$
 #include "../connectors/connectoritem.h"
 #include "../routingstatus.h"
 
+struct ConnectorEdge {
+	int head;
+	int tail;
+	int weight;
+	ConnectorItem * c0;
+	ConnectorItem * c1;
+	class Wire * wire;
+
+	void setHeadTail(int head, int tail);
+};
+
 class GraphUtils
 {
 
 public:
 	static bool chooseRatsnestGraph(const QList<ConnectorItem *> * equipotentials, ViewGeometry::WireFlags, ConnectorPairHash & result);
 	static bool scoreOneNet(QList<ConnectorItem *> & partConnectorItems, ViewGeometry::WireFlags, RoutingStatus & routingStatus);
-	static void minCut(QList<ConnectorItem *> & partConnectorItems, QVector< QVector< QList<ConnectorItem *> > > & buses, ConnectorItem * source, ConnectorItem * sink, QList<LongPair> & cutSet); 
+	static void minCut(QList<ConnectorItem *> & connectorItems, ConnectorItem * source, ConnectorItem * sink, QList<ConnectorEdge *> & cutSet); 
 };
 
 #endif
