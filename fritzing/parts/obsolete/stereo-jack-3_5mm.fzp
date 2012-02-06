@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.18b.04.14.4111" moduleId="stereo-jack-3_5mm">
-    <version>4</version>
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.18b.04.14.4111" moduleId="40a05d9dc2asdf9c6e50e467c97a50e">
+ <version replacedby="stereo-jack-3_5mm">4</version>
     <author>Lionel Michel</author>
     <title>Stereo Jack (TRS) 3.5mm</title>
     <label>TRS</label>
@@ -36,7 +36,7 @@
             </layers>
         </schematicView>
         <pcbView>
-            <layers image="pcb/stereo-jack-3_5mm-PG203J_h.svg">
+            <layers image="pcb/stereo-jack-3_5mm-PG203J.svg">
                 <layer layerId="copper0"/>
                 <layer layerId="silkscreen"/>
             <layer layerId="copper1"/></layers>
