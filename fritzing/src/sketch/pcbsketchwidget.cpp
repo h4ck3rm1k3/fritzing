@@ -1670,11 +1670,12 @@ bool PCBSketchWidget::groundFill(bool fillGroundTraces, QUndoCommand * parentCom
 
 
 	QString fillType = (fillGroundTraces) ? GroundPlane::fillTypeGround : GroundPlane::fillTypePlain;
+	QRectF bsbr = board->sceneBoundingRect();
 
 	int ix = 0;
 	foreach (QString svg, gpg.newSVGs()) {
 		ViewGeometry vg;
-		vg.setLoc(board->pos() + gpg.newOffsets()[ix++]);
+		vg.setLoc(bsbr.topLeft() + gpg.newOffsets()[ix++]);
 		long newID = ItemBase::getNextID();
 		new AddItemCommand(this, BaseCommand::CrossView, ModuleIDNames::GroundPlaneModuleIDName, ViewLayer::GroundPlane_Bottom, vg, newID, false, -1, parentCommand);
 		new SetPropCommand(this, newID, "svg", svg, svg, true, parentCommand);
@@ -1684,7 +1685,7 @@ bool PCBSketchWidget::groundFill(bool fillGroundTraces, QUndoCommand * parentCom
 	ix = 0;
 	foreach (QString svg, gpg2.newSVGs()) {
 		ViewGeometry vg;
-		vg.setLoc(board->pos() + gpg2.newOffsets()[ix++]);
+		vg.setLoc(bsbr.topLeft() + gpg2.newOffsets()[ix++]);
 		long newID = ItemBase::getNextID();
 		new AddItemCommand(this, BaseCommand::CrossView, ModuleIDNames::GroundPlaneModuleIDName, ViewLayer::GroundPlane_Top, vg, newID, false, -1, parentCommand);
 		new SetPropCommand(this, newID, "svg", svg, svg, true, parentCommand);
@@ -1705,9 +1706,8 @@ QString PCBSketchWidget::generateCopperFillUnit(ItemBase * itemBase, QPointF whe
         return "";
     }
 
-	QRectF r = board->boundingRect();
-	r.moveTo(board->pos());
-	if (!r.contains(whereToStart)) {
+	QRectF bsbr = board->sceneBoundingRect();
+	if (!bsbr.contains(whereToStart)) {
         QMessageBox::critical(NULL, tr("Fritzing"), tr("Unable to create copper fill--probably the part wasn't dropped onto the PCB."));
 		return "";
 	}
@@ -1759,7 +1759,7 @@ QString PCBSketchWidget::generateCopperFillUnit(ItemBase * itemBase, QPointF whe
 		return "";
 	}
 
-	itemBase->setPos(board->pos() + gpg.newOffsets()[0]);
+	itemBase->setPos(bsbr.topLeft() + gpg.newOffsets()[0]);
 	itemBase->setViewLayerID(gpLayerName, m_viewLayers);
 
 	return gpg.newSVGs()[0];

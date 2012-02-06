@@ -163,8 +163,10 @@ bool GroundPlaneGenerator::generateGroundPlaneUnit(const QString & boardSvg, QSi
 	QImage * image = generateGroundPlaneAux(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board, res, bWidth, bHeight);
 	if (image == NULL) return false;
 
-	QPoint s(qRound(res * (whereToStart.x() - board->pos().x()) / FSvgRenderer::printerScale()),
-			qRound(res * (whereToStart.y() - board->pos().y()) / FSvgRenderer::printerScale()));
+	QRectF bsbr = board->sceneBoundingRect();
+
+	QPoint s(qRound(res * (whereToStart.x() - bsbr.topLeft().x()) / FSvgRenderer::printerScale()),
+			qRound(res * (whereToStart.y() - bsbr.topLeft().y()) / FSvgRenderer::printerScale()));
 
 	QBitArray redMarker(image->height() * image->width(), false);
 

@@ -471,8 +471,7 @@ CMRouter::CMRouter(PCBSketchWidget * sketchWidget) : Autorouter(sketchWidget)
 	}
 
 	if (m_board) {
-		m_maxRect = m_board->boundingRect();
-		m_maxRect.translate(m_board->pos());
+		m_maxRect = m_board->sceneBoundingRect();
 	}
 	else {
 		m_maxRect = m_sketchWidget->scene()->itemsBoundingRect();
@@ -1508,10 +1507,10 @@ bool CMRouter::initBoard(ItemBase * board, Plane * thePlane, QList<Tile *> & alr
 	QList<QRect> rects;
 	gpg.setMinRunSize(1, 1);
 	gpg.getBoardRects(svg, board, FSvgRenderer::printerScale(), m_keepout, rects);
-	QPointF boardPos = board->pos();
+	QRectF bsbr = board->sceneBoundingRect();
 	foreach (QRect r, rects) {
 		TileRect tileRect;
-		realsToTile(tileRect, r.left() + boardPos.x(), r.top() + boardPos.y(), r.right() + boardPos.x(), r.bottom() + 1 + boardPos.y());  // note off-by-one weirdness
+		realsToTile(tileRect, r.left() + bsbr.topLeft().x(), r.top() + bsbr.topLeft().y(), r.right() + bsbr.topLeft().x(), r.bottom() + 1 + bsbr.topLeft().y());  // note off-by-one weirdness
 		insertTile(thePlane, tileRect, alreadyTiled, NULL, Tile::OBSTACLE, CMRouter::IgnoreAllOverlaps);
 		//drawGridItem(tile);
 	}
