@@ -4505,6 +4505,19 @@ void SketchWidget::flipX(Qt::Orientations orientation, bool rubberBandLegEnabled
 
 }
 
+ConnectorItem * SketchWidget::findConnectorItem(ConnectorItem * foreignConnectorItem) {
+	ItemBase * itemBase = findItem(foreignConnectorItem->attachedTo()->layerKinChief()->id());
+
+	if (itemBase == NULL) {
+		return NULL;
+	}
+
+	ConnectorItem * result = findConnectorItem(itemBase, foreignConnectorItem->connectorSharedID(), ViewLayer::Bottom);
+	if (result) return result;
+
+	return findConnectorItem(itemBase, foreignConnectorItem->connectorSharedID(), ViewLayer::Top);
+}
+
 ConnectorItem * SketchWidget::findConnectorItem(ItemBase * itemBase, const QString & connectorID, ViewLayer::ViewLayerSpec viewLayerSpec) {
 
 	ConnectorItem * connectorItem = itemBase->findConnectorItemWithSharedID(connectorID, viewLayerSpec);
@@ -8075,12 +8088,10 @@ void SketchWidget::deleteRatsnest(Wire * ratsnest, QUndoCommand * parentCommand)
 	QList<ConnectorItem *> connectorItems;
 	connectorItems.append(source);
 	connectorItems.append(sink);
-	ConnectorItem::collectEqualPotential(connectorItems, true, (ViewGeometry::RatsnestFlag | ViewGeometry::NormalFlag | ViewGeometry::PCBTraceFlag | ViewGeometry::SchematicTraceFlag) ^ getTraceFlag());
+	ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::RatsnestFlag);
 
-	QList<ConnectorItem *> foreignConnectorItems;
-	emit collectRatsnestSignal(ratsnest, foreignConnectorItems);
-	connectorItems.append(foreignConnectorItems);
-
+	QList<SketchWidget *> foreignSketchWidgets;
+	emit collectRatsnestSignal(foreignSketchWidgets);
 
 	// there are multiple possibilities for each pair of connectors:
 
@@ -8092,7 +8103,7 @@ void SketchWidget::deleteRatsnest(Wire * ratsnest, QUndoCommand * parentCommand)
 	// what if there are multiple direct connections--treat it as a single connection and delete them all
 	
 	QList<ConnectorEdge *> cutSet;
-	GraphUtils::minCut(connectorItems, source, sink, cutSet);
+	GraphUtils::minCut(connectorItems, foreignSketchWidgets, source, sink, cutSet);
 	emit removeRatsnestSignal(cutSet, parentCommand);
 	foreach (ConnectorEdge * ce, cutSet) {
 		delete ce;
@@ -8590,31 +8601,9 @@ void SketchWidget::removeWire(Wire * w, QList<ConnectorItem *> & ends, QList<Wir
 	}
 }
 
-void SketchWidget::collectRatsnestSlot(Wire * ratsnest, QList<ConnectorItem *> & foreignConnectorItems)
+void SketchWidget::collectRatsnestSlot(QList<SketchWidget *> & foreignSketchWidgets)
 {
-	// assume ratsnest has only one connection at each end
-	ConnectorItem * foreignSource = ratsnest->connector0()->firstConnectedToIsh();
-	ConnectorItem * foreignSink = ratsnest->connector1()->firstConnectedToIsh();
-	if (foreignSource == NULL) return;
-	if (foreignSink == NULL) return;
-
-	ItemBase * sourceBase = findItem(foreignSource->attachedToID());
-	if (sourceBase == NULL) return;
-
-	ConnectorItem * source = findConnectorItem(sourceBase, foreignSource->connectorSharedID(), ViewLayer::Bottom);
-	if (source == NULL) return;
-
-	ItemBase * sinkBase = findItem(foreignSink->attachedToID());
-	if (sinkBase == NULL) return;
-
-	ConnectorItem * sink = findConnectorItem(sinkBase, foreignSink->connectorSharedID(), ViewLayer::Bottom);
-	if (sink == NULL) return;
-
-	QList<ConnectorItem *> connectorItems;
-	connectorItems.append(source);
-	connectorItems.append(sink);
-	ConnectorItem::collectEqualPotential(connectorItems, true, (ViewGeometry::RatsnestFlag | ViewGeometry::NormalFlag | ViewGeometry::PCBTraceFlag | ViewGeometry::SchematicTraceFlag) ^ getTraceFlag());
-	foreignConnectorItems.append(connectorItems);
+	foreignSketchWidgets << this;
 }
 
 

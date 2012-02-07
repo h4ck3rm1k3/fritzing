@@ -28,6 +28,7 @@ $Date$
 #include "../fsvgrenderer.h"
 #include "../items/wire.h"
 #include "../items/jumperitem.h"
+#include "../sketch/sketchwidget.h"
 
 #ifdef _MSC_VER 
 #pragma warning(push) 
@@ -60,6 +61,7 @@ ConnectorEdge * makeConnectorEdge(QList<ConnectorEdge *> & edges, ConnectorItem 
 	connectorEdge->c1 = cj;
 	connectorEdge->weight = weight;
 	connectorEdge->wire = wire;
+	connectorEdge->visible = true;
 	edges.append(connectorEdge);
 	return connectorEdge;
 }
@@ -76,7 +78,7 @@ static int LastVertex = 0;
 	LastVertex = ix;						\
 }
 
-void GraphUtils::minCut(QList<ConnectorItem *> & connectorItems, ConnectorItem * source, ConnectorItem * sink, QList<ConnectorEdge *> & minCut) 
+void GraphUtils::minCut(QList<ConnectorItem *> & connectorItems, QList<SketchWidget *> & foreignSketchWidgets, ConnectorItem * source, ConnectorItem * sink, QList<ConnectorEdge *> & minCut) 
 {
 	// this helped:  http://boost.2283326.n4.nabble.com/graph-edmund-karp-max-flow-vs-kolmogorov-max-flow-color-map-td2565611.html
 	
@@ -101,8 +103,6 @@ void GraphUtils::minCut(QList<ConnectorItem *> & connectorItems, ConnectorItem *
 
 	Traits::vertex_descriptor s, t;
 
-	ViewIdentifierClass::ViewIdentifier homeViewIdentifier = source->attachedToViewIdentifier();
-
 	QList<Wire *> visitedWires;
 	QList<int> indexes;
 	QHash<ConnectorItem *, int> vertices;
@@ -115,6 +115,7 @@ void GraphUtils::minCut(QList<ConnectorItem *> & connectorItems, ConnectorItem *
 	verts.append(t = add_vertex(g));
 
 	foreach (ConnectorItem * connectorItem, connectorItems) {
+		connectorItem->debugInfo("input");
 		if (connectorItem->attachedToItemType() == ModelPart::Wire) {
 			Wire * wire = qobject_cast<Wire *>(connectorItem->attachedTo());
 			if (visitedWires.contains(wire)) continue;
@@ -130,38 +131,99 @@ void GraphUtils::minCut(QList<ConnectorItem *> & connectorItems, ConnectorItem *
 			}
 
 			for (int i = 0; i < ends.count(); i++) {
+				ConnectorItem * end = ends[i];
 				for (int j = i + 1; j < ends.count(); j++) {
-					ConnectorItem * end = ends[i];
-					ConnectorEdge * connectorEdge = makeConnectorEdge(edges, end, ends[j], (end->attachedToViewIdentifier() == homeViewIdentifier ? 1000 : 1), wire);
+					ConnectorEdge * connectorEdge = makeConnectorEdge(edges, end, ends[j], 1000, wire);
 					connectorEdge->setHeadTail(vertices.value(connectorEdge->c0), vertices.value(connectorEdge->c1));
 				}
 			}
 			continue;
 		}
 
-		if (connectorItem->connectorType() == Connector::Female && connectorItem->attachedToViewIdentifier() == ViewIdentifierClass::BreadboardView) {
+		if (connectorItem->connectorType() == Connector::Female) {
 			appendVertIf(connectorItem, vertices, verts);
 			int ix = LastVertex;
-			bool home = connectorItem->attachedToViewIdentifier() == homeViewIdentifier;
 			foreach (ConnectorItem * toConnectorItem, connectorItem->connectedToItems()) {
 				if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
 					// deal with the wire
 					continue;
 				}
-				if (!toConnectorItem->attachedTo()->isEverVisible()) continue;
 
 				appendVertIf(toConnectorItem, vertices, verts);
 				int jx = LastVertex;
-				ConnectorEdge * connectorEdge = makeConnectorEdge(edges, connectorItem, toConnectorItem, home ? 1000 : 1, NULL);
+				ConnectorEdge * connectorEdge = makeConnectorEdge(edges, connectorItem, toConnectorItem, 1000, NULL);
 				connectorEdge->setHeadTail(ix, jx);
 			}
 		}
 	}
 
-	// don't forget to make edges from bus connections
-	QList<ConnectorItem *> keys = vertices.keys();
-	while (keys.count() > 0) {
-		ConnectorItem * key = keys.takeFirst();
+	// don't forget to add edges from bus connections
+	QList<ConnectorItem *> originalKeys = vertices.keys();
+
+	// make cross-view connections
+	QList<ConnectorEdge *> foreignEdges;
+	foreach (ConnectorEdge * ce, edges) {
+		if (ce->wire && !ce->wire->isEverVisible()) {
+			ce->visible = false;
+			foreach (SketchWidget * foreignSketchWidget, foreignSketchWidgets) {
+				ItemBase * foreignItemBase = foreignSketchWidget->findItem(ce->wire->id());
+				if (foreignItemBase && foreignItemBase->isEverVisible()) {
+					ConnectorItem * fc0 = foreignSketchWidget->findConnectorItem(ce->c0);
+					ConnectorItem * fc1 = foreignSketchWidget->findConnectorItem(ce->c1);
+					if (fc0 && fc1) {
+						appendVertIf(fc0, vertices, verts);
+						int ix = LastVertex;
+						appendVertIf(fc1, vertices, verts);
+						int jx = LastVertex;
+						ConnectorEdge * fce = makeConnectorEdge(foreignEdges, fc0, fc1, 1, qobject_cast<Wire *>(foreignItemBase));
+						fce->setHeadTail(ix, jx);
+						fce = makeConnectorEdge(foreignEdges, ce->c0, fc0, 1000, NULL);
+						fce->setHeadTail(ce->head, ix);
+						fce = makeConnectorEdge(foreignEdges, ce->c1, fc1, 1000, NULL);
+						fce->setHeadTail(ce->tail, jx);
+					}
+					else {
+						ce->c0->debugInfo("missing foreign connector");
+					}
+					break;
+				}
+			}
+		}
+		if (ce->wire) continue;
+
+		if (!ce->c0->attachedTo()->isEverVisible()) {
+			ce->visible = false;
+			foreach (SketchWidget * foreignSketchWidget, foreignSketchWidgets) {
+				ConnectorItem * fc0 = foreignSketchWidget->findConnectorItem(ce->c0);
+				if (fc0 == NULL) {
+					ce->c0->debugInfo("missing foreign connector");
+					continue;
+				}
+				if (!fc0->attachedTo()->isEverVisible()) continue;
+
+				ConnectorItem * fc1 = foreignSketchWidget->findConnectorItem(ce->c1);
+				if (fc0 && fc1) {
+					appendVertIf(fc0, vertices, verts);
+					int ix = LastVertex;
+					appendVertIf(fc1, vertices, verts);
+					int jx = LastVertex;
+					ConnectorEdge * fce = makeConnectorEdge(foreignEdges, fc0, fc1, 1, NULL);
+					fce->setHeadTail(ix, jx);
+					fce = makeConnectorEdge(foreignEdges, ce->c0, fc0, 1000, NULL);
+					fce->setHeadTail(ce->head, ix);
+					fce = makeConnectorEdge(foreignEdges, ce->c1, fc1, 1000, NULL);
+					fce->setHeadTail(ce->tail, jx);
+
+				}
+				else {
+					ce->c0->debugInfo("missing foreign connector");
+				}
+			}
+		}	
+	}
+	
+	while (originalKeys.count() > 0) {
+		ConnectorItem * key = originalKeys.takeFirst();
 		if (key->attachedToItemType() == ModelPart::Wire) continue;
 		if (key->bus() == NULL) continue;
 
@@ -171,7 +233,7 @@ void GraphUtils::minCut(QList<ConnectorItem *> & connectorItems, ConnectorItem *
 		foreach (ConnectorItem * bci, bcis) {
 			if (bci == key) continue;
 
-			keys.removeOne(bci);
+			originalKeys.removeOne(bci);
 			appendVertIf(bci, vertices, verts);
 			int jx = LastVertex;
 			ConnectorEdge * connectorEdge = makeConnectorEdge(edges, key, bci, 1000, NULL);
@@ -179,18 +241,24 @@ void GraphUtils::minCut(QList<ConnectorItem *> & connectorItems, ConnectorItem *
 		}
 	}
 
-	// make cross-view connections
-	keys = vertices.keys();
-	while (keys.count() > 0) {
-		ConnectorItem * key = keys.takeFirst();
-		for (int i = keys.count() - 1; i >= 0; i--) {
-			ConnectorItem * other = keys.at(i);
-			if (key->attachedTo()->layerKinChief()->id() != other->attachedTo()->layerKinChief()->id()) continue;
-			if (key->connectorSharedID().compare(other->connectorSharedID()) != 0) continue;
+	edges.append(foreignEdges);
 
-			keys.removeAt(i);
-			ConnectorEdge * connectorEdge = makeConnectorEdge(edges, key, other, 1000, NULL);
-			connectorEdge->setHeadTail(vertices.value(key),  vertices.value(other));
+	// add cross-layer edges
+	QList <ConnectorItem *> crossVisited;
+	foreach (ConnectorEdge * ce, edges) {
+		QList<ConnectorItem *> from;
+		from << ce->c0;
+		from << ce->c1;
+		foreach (ConnectorItem * ci, from) {
+			if (!crossVisited.contains(ci)) {
+				ConnectorItem * cross = ci->getCrossLayerConnectorItem();
+				if (cross == NULL) continue;
+
+				appendVertIf(cross, vertices, verts);
+				int jx = LastVertex;
+				ConnectorEdge * connectorEdge = makeConnectorEdge(edges, ci, cross, 1000, NULL);
+				connectorEdge->setHeadTail(vertices.value(ci), jx);
+			}
 		}
 	}
 
@@ -199,12 +267,13 @@ void GraphUtils::minCut(QList<ConnectorItem *> & connectorItems, ConnectorItem *
 	}
 
 	foreach(ConnectorEdge * ce, edges) {
+		if (!ce->visible) continue;
+
 		Traits::edge_descriptor e1, e2;
 		bool in1, in2;
 		tie(e1, in1) = add_edge(verts[ce->head], verts[ce->tail], g);
 		tie(e2, in2) = add_edge(verts[ce->tail], verts[ce->head], g);
 		capacity[e2] = capacity[e1] = ce->weight;
-		ce->weight;
 		reverse[e1] = e2;
 		reverse[e2] = e1;
 		ce->c0->debugInfo(QString("head %1").arg(ce->weight));
@@ -233,15 +302,17 @@ void GraphUtils::minCut(QList<ConnectorItem *> & connectorItems, ConnectorItem *
     typedef boost::color_traits<tColorValue> tColorTraits; 
 	foreach (ConnectorEdge * ce, edges) {
 		bool addIt = false;
-		if (color(verts[ce->head]) == tColorTraits::white() && color(verts[ce->tail]) != tColorTraits::white()) {
-			addIt = true;
-		}
-		else if (color(verts[ce->head]) != tColorTraits::white() && color(verts[ce->tail]) == tColorTraits::white()) {
-			addIt = true;
-		}
-		if (addIt) {
-			minCut << ce;
-			DebugDialog::debug(QString("edge %1 %2 w:%3").arg(ce->head).arg(ce->tail).arg(ce->weight));
+		if (ce->visible) {
+			if (color(verts[ce->head]) == tColorTraits::white() && color(verts[ce->tail]) != tColorTraits::white()) {
+				addIt = true;
+			}
+			else if (color(verts[ce->head]) != tColorTraits::white() && color(verts[ce->tail]) == tColorTraits::white()) {
+				addIt = true;
+			}
+			if (addIt) {
+				minCut << ce;
+				DebugDialog::debug(QString("edge %1 %2 w:%3").arg(ce->head).arg(ce->tail).arg(ce->weight));
+			}
 		}
 		else {
 			delete ce;

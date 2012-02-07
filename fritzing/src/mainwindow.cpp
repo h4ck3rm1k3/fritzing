@@ -613,8 +613,8 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 	succeeded = succeeded && connect(signaller, SIGNAL(changePinLabelsSignal(ItemBase *, bool)),
 									 slotter, SLOT(changePinLabelsSlot(ItemBase *, bool)));
 
-	succeeded = succeeded && connect(signaller, SIGNAL(collectRatsnestSignal(Wire *, QList<ConnectorItem *> &)),
-									 slotter, SLOT(collectRatsnestSlot(Wire *, QList<ConnectorItem *> &)),
+	succeeded = succeeded && connect(signaller, SIGNAL(collectRatsnestSignal(QList<SketchWidget *> &)),
+									 slotter, SLOT(collectRatsnestSlot(QList<SketchWidget *> &)),
 									 Qt::DirectConnection);
 
 	succeeded = succeeded && connect(signaller, SIGNAL(removeRatsnestSignal(QList<struct ConnectorEdge *> &, QUndoCommand *)),

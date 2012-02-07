@@ -290,7 +290,7 @@ public:
 	virtual double getRatsnestOpacity();
 	virtual double getRatsnestWidth();
 	void setAnyInRotation();
-
+	ConnectorItem * findConnectorItem(ConnectorItem * foreignConnectorItem);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -495,7 +495,7 @@ signals:
 	void ratsnestConnectSignal(long id, const QString & connectorID, bool connect, bool doEmit);
 	void updatePartLabelInstanceTitleSignal(long itemID);
 	void filenameIfSignal(QString & filename);
-	void collectRatsnestSignal(Wire * ratsnest, QList<ConnectorItem *> & foreignConnectorItems);
+	void collectRatsnestSignal(QList<SketchWidget *> & foreignSketchWidgets);
 	void removeRatsnestSignal(QList<struct ConnectorEdge *> & cutSet, QUndoCommand * parentCommand); 
 
 protected slots:
@@ -534,7 +534,7 @@ protected slots:
 	void updatePartLabelInstanceTitleSlot(long itemID);
 	void changePinLabelsSlot(ItemBase * itemBase, bool singleRow);
 	void changePinLabels(ItemBase *, bool singleRow);
-	void collectRatsnestSlot(Wire * ratsnest, QList<ConnectorItem *> & foreignConnectorItems);
+	void collectRatsnestSlot(QList<SketchWidget *> & foreignSketchWidgets);
 	void removeRatsnestSlot(QList<struct ConnectorEdge *> & cutSet, QUndoCommand * parentCommand);
 
 public slots:
