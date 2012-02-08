@@ -197,17 +197,17 @@ QString ScrewTerminal::makePcbSvg(const QString & expectedFileName)
 					"</g>\n"
 					"<g id='copper1'>\n"
 					"<g id='copper0'>\n"
-					"<rect width='55' height='55' x='%6' y='%7' fill='none' stroke='rgb(255, 191, 0)' stroke-width='20' />\n");
+					"<rect width='60' height='60' x='%6' y='%7' fill='none' stroke='rgb(255, 191, 0)' stroke-width='20' />\n");
 
-	QString repeat("<circle cx='%1' cy='%2' fill='none' id='connector%3pin' r='27.5' stroke='rgb(255, 191, 0)' stroke-width='20'/>\n");
+	QString repeat("<circle cx='%1' cy='%2' fill='none' id='connector%3pin' r='30' stroke='rgb(255, 191, 0)' stroke-width='20'/>\n");
 
 	header = header.arg(width)
 					.arg(width * dpi)
 					.arg(pins * spacing + 0.04)
 					.arg((width - 0.02) * dpi)
 					.arg(verticalX * dpi)
-					.arg(centerX - 27.5)
-					.arg(initialY - 27.5);
+					.arg(centerX - 30)
+					.arg(initialY - 30);
 	QString svg = TextUtils::incrementTemplateString(header, 1, pins * dpi * spacing, TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction, NULL);
 	for (int i = 0; i < pins; i++) {
 		svg += repeat.arg(centerX).arg(initialY + (i * dpi * spacing)).arg(i);
