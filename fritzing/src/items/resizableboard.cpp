@@ -652,14 +652,15 @@ void ResizableBoard::widthEntry() {
 	QLineEdit * edit = qobject_cast<QLineEdit *>(sender());
 	if (edit == NULL) return;
 
-	double newVal = edit->text().toDouble();
-	double oldVal =  m_modelPart->prop("height").toDouble();
+	double w = edit->text().toDouble();
+	double oldW = m_modelPart->prop("width").toDouble();
+	if (w == oldW) return;
 
-	if (oldVal == newVal) return;
+	double h =  m_modelPart->prop("height").toDouble();
 
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
-		infoGraphicsView->resizeBoard(oldVal, newVal, true);
+		infoGraphicsView->resizeBoard(w, h, true);
 	}
 }
 
@@ -667,14 +668,15 @@ void ResizableBoard::heightEntry() {
 	QLineEdit * edit = qobject_cast<QLineEdit *>(sender());
 	if (edit == NULL) return;
 
-	double newVal = edit->text().toDouble();
-	double oldVal =  m_modelPart->prop("width").toDouble();
+	double h = edit->text().toDouble();
+	double oldH =  m_modelPart->prop("height").toDouble();
+	if (h == oldH) return;
 
-	if (oldVal == newVal) return;
+	double w =  m_modelPart->prop("width").toDouble();
 
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
-		infoGraphicsView->resizeBoard(oldVal, newVal, true);
+		infoGraphicsView->resizeBoard(w, h, true);
 	}
 }
 
