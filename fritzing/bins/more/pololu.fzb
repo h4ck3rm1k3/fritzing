@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module fritzingVersion="0.6.3" icon="Pololu.png">
+    <title>Pololu</title>
+    <instances>
+        <instance moduleIdRef="045cef49a96039c64e7363608e127209" modelIndex="1000" >
+            <views>
+                <iconView layer="">
+                    <geometry z="0" x="-1" y="-1"/>
+                </iconView>
+                <iconView layer="">
+                    <geometry z="0" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
+    </instances>
+</module>
