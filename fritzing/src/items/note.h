@@ -76,6 +76,7 @@ protected:
 	void connectSlots();
 	void disconnectSlots();
 	void forceFormat(int position, int charsAdded);
+	QString retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi);
 
 protected slots:
 	void contentsChangeSlot(int position, int charsAdded, int charsRemoved);

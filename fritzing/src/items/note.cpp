@@ -31,8 +31,10 @@ $Date$
 #include "../utils/resizehandle.h"
 #include "../utils/textutils.h"
 #include "../utils/graphicsutils.h"
+#include "../fsvgrenderer.h"
 
 #include <QTextFrame>
+#include <QTextLayout>
 #include <QTextFrameFormat>
 #include <QApplication>
 #include <QTextDocumentFragment>
@@ -78,7 +80,7 @@ const double InactiveOpacity = 0.5;
 
 QString Note::initialTextString;
 
-QRegExp urlTag("<a.*href=[\"']([^\"]+[.\\s]*)[\"'].*>");    
+QRegExp UrlTag("<a.*href=[\"']([^\"]+[.\\s]*)[\"'].*>");    
 
 ///////////////////////////////////////
 
@@ -95,6 +97,17 @@ void findA(QDomElement element, QList<QDomElement> & aElements)
 
 		c = c.nextSiblingElement();
 	}
+}
+
+
+QString addText(const QString & text, bool inUrl) 
+{
+	if (text.isEmpty()) return "";
+
+	return QString("<tspan fill='%1' >%2</tspan>\n")
+				.arg(inUrl ? "#0000ff" : "#000000")
+				.arg(text)
+				;
 }
 
 ///////////////////////////////////////
@@ -589,14 +602,14 @@ void Note::linkDialog() {
 		if (!atStart) {
 			textCursor.setPosition(wasAnchor - 1, QTextCursor::KeepAnchor);
 			QString html = textCursor.selection().toHtml();
-			if (urlTag.indexIn(html) >= 0) {
+			if (UrlTag.indexIn(html) >= 0) {
 				gotUrl = true;
 			}
 		}
 		if (!gotUrl && !atEnd) {
 			textCursor.setPosition(wasAnchor + 1, QTextCursor::KeepAnchor);
 			QString html = textCursor.selection().toHtml();
-			if (urlTag.indexIn(html) >= 0) {
+			if (UrlTag.indexIn(html) >= 0) {
 				gotUrl = true;
 			}
 		}
@@ -605,7 +618,7 @@ void Note::linkDialog() {
 	else {
 		QString html = textCursor.selection().toHtml();
 		DebugDialog::debug(html);
-		if (urlTag.indexIn(html) >= 0) {
+		if (UrlTag.indexIn(html) >= 0) {
 			gotUrl = true;
 		}
 	}
@@ -614,7 +627,7 @@ void Note::linkDialog() {
 	QString originalText;
 	QString originalUrl;
 	if (gotUrl) {
-		originalUrl = urlTag.cap(1);
+		originalUrl = UrlTag.cap(1);
 		ld.setUrl(originalUrl);
 		QString html = m_graphicsTextItem->toHtml();
 
@@ -722,4 +735,99 @@ bool Note::rotationAllowed() {
 
 bool Note::rotation45Allowed() {
 	return false;
+}
+
+QString Note::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi)
+{
+	Q_UNUSED(svgHash);
+
+	switch (viewLayerID) {
+		case ViewLayer::BreadboardNote:
+			if (viewIdentifier() != ViewIdentifierClass::BreadboardView) return ___emptyString___;
+			break;
+		case ViewLayer::PcbNote:
+			if (viewIdentifier() != ViewIdentifierClass::PCBView) return ___emptyString___;
+			break;
+		case ViewLayer::SchematicNote:
+			if (viewIdentifier() != ViewIdentifierClass::SchematicView) return ___emptyString___;
+			break;
+		default:
+			return ___emptyString___;
+	}
+
+	QString svg = "<g>";
+
+	QString penColor = blackOnly ? "#000000" : m_pen.color().name();
+	double penWidth = m_pen.widthF() * dpi / FSvgRenderer::printerScale();
+	QString brushColor = blackOnly ? "none" : m_brush.color().name();
+	svg += QString("<rect x='%1' y='%2' width='%3' height='%4' fill='%5' stroke='%6' stroke-width='%7' />")
+		.arg(penWidth / 2)
+		.arg(penWidth / 2)
+		.arg((m_rect.width() * dpi / FSvgRenderer::printerScale()) - penWidth)
+		.arg((m_rect.height() * dpi / FSvgRenderer::printerScale()) - penWidth)
+		.arg(brushColor)
+		.arg(penColor)
+		.arg(penWidth)
+		;
+
+	QTextCursor textCursor = m_graphicsTextItem->textCursor();
+	QSizeF gripSize = m_resizeGrip->boundingRect().size();
+	double docLeft = gripSize.width();
+	double docTop = gripSize.height();
+	for (QTextBlock block = m_graphicsTextItem->document()->begin(); block.isValid(); block = block.next()) {
+		QTextLayout * layout = block.layout();
+		double left = block.blockFormat().leftMargin() + docLeft + layout->position().x();
+		double top = block.blockFormat().topMargin() + docTop + layout->position().y();
+		for (int i = 0; i < layout->lineCount(); i++) {
+			QTextLine line = layout->lineAt(i);
+			QRectF r = line.rect();
+			int start = line.textStart();
+			int count = line.textLength();
+
+			QString soFar;
+
+			svg += QString("<text  x='%1' y='%2' font-family='%3' stroke='none' fill='#000000' text-anchor='left' font-size='%4' >\n")
+				.arg((left + r.left()) * dpi / FSvgRenderer::printerScale())
+				.arg((top + r.top() + line.ascent()) * dpi / FSvgRenderer::printerScale())
+				.arg("Droid Sans")
+				.arg(line.ascent() * dpi / FSvgRenderer::printerScale()) 
+				;
+
+
+			bool inUrl = false;
+			for (int i = 0; i < count; i++) {
+				textCursor.setPosition(i + start + block.position(), QTextCursor::MoveAnchor);
+				textCursor.setPosition(i + start + block.position() + 1, QTextCursor::KeepAnchor);
+				QString html = textCursor.selection().toHtml();
+				if (UrlTag.indexIn(html) >= 0) {
+					if (inUrl) {
+						soFar += block.text().mid(start + i, 1);
+						continue;
+					}
+
+					svg += addText(soFar, false);
+					soFar = block.text().mid(start + i, 1);
+					inUrl = true;
+				}
+				else {
+					if (!inUrl) {
+						soFar += block.text().mid(start + i, 1);
+						continue;
+					}
+
+					svg += addText(soFar, !blackOnly);
+					soFar = block.text().mid(start + i, 1);
+					inUrl = false;
+				}
+			}
+			svg += addText(soFar, inUrl && !blackOnly);
+			svg += "</text>";
+		}
+	}	
+
+
+	svg += "</g>";
+
+
+	return svg;	
 }
