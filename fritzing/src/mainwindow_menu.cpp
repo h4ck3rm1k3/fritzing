@@ -1131,6 +1131,8 @@ void MainWindow::createMenus()
 	groundFillMenu->addAction(m_copperFillAct);
 	groundFillMenu->addAction(m_groundFillAct);
 	groundFillMenu->addAction(m_removeGroundFillAct);
+	groundFillMenu->addAction(m_setGroundFillSeedAct);
+	groundFillMenu->addAction(m_clearGroundFillSeedAct);
 	//m_pcbTraceMenu->addAction(m_updateRoutingStatusAct);
 	m_pcbTraceMenu->addSeparator();
 
@@ -1539,7 +1541,6 @@ void MainWindow::updateTraceMenu() {
 	bool jiEnabled = false;
 	bool viaEnabled = false;
 	bool tEnabled = false;
-	bool cjEnabled = false;
 	bool exEnabled = false;
 	bool exChecked = true;
 	bool twEnabled = false;
@@ -1596,7 +1597,6 @@ void MainWindow::updateTraceMenu() {
 				//rEnabled = true;
 				//if (wire->isSelected()) {
 					//ctEnabled = true;
-					//cjEnabled = true;
 				//}
 			}
 			else if (wire->isTraceType(m_currentGraphicsView->getTraceFlag())) {
@@ -1604,7 +1604,6 @@ void MainWindow::updateTraceMenu() {
 				tEnabled = true;
 				twEnabled = true;
 				if (wire->isSelected()) {
-					cjEnabled = true;
 					exEnabled = true;
 					if (wire->getAutoroutable()) {
 						exChecked = false;
@@ -1644,6 +1643,11 @@ void MainWindow::updateTraceMenu() {
 	m_groundFillAct->setEnabled(gfEnabled);
 	m_copperFillAct->setEnabled(gfEnabled);
 	m_removeGroundFillAct->setEnabled(gfrEnabled);
+
+	// TODO: set and clear enabler logic
+	m_setGroundFillSeedAct->setEnabled(exEnabled);
+	m_clearGroundFillSeedAct->setEnabled(gfEnabled);
+
 	m_designRulesCheckAct->setEnabled(true);
 	m_autorouterSettingsAct->setEnabled(m_currentGraphicsView == m_pcbGraphicsView);
 	m_updateRoutingStatusAct->setEnabled(true);
@@ -2163,6 +2167,14 @@ void MainWindow::createTraceMenuActions() {
 	m_removeGroundFillAct = new QAction(tr("Remove Copper Fill"), this);
 	m_removeGroundFillAct->setStatusTip(tr("Remove the copper fill"));
 	connect(m_removeGroundFillAct, SIGNAL(triggered()), this, SLOT(removeGroundFill()));
+
+	m_setGroundFillSeedAct = new QAction(tr("Set Copper Fill Seeds"), this);
+	m_setGroundFillSeedAct->setStatusTip(tr("Fill empty regions of the copper layer--fill will include all traces connected to the seeds"));
+	connect(m_setGroundFillSeedAct, SIGNAL(triggered()), this, SLOT(setGroundFillSeed()));
+
+	m_clearGroundFillSeedAct = new QAction(tr("Clear Copper Fill Seeds"), this);
+	m_clearGroundFillSeedAct->setStatusTip(tr("Fill will avoid all traces"));
+	connect(m_clearGroundFillSeedAct, SIGNAL(triggered()), this, SLOT(clearGroundFillSeed()));
 
 	m_designRulesCheckAct = new QAction(tr("Design Rules Check"), this);
 	m_designRulesCheckAct->setStatusTip(tr("Select any parts that are too close together for safe board production (w/in 10 mil)"));
@@ -3245,3 +3257,10 @@ void MainWindow::orderFab()
 	QDesktopServices::openUrl(QString("http://fab.fritzing.org/"));
 }
 
+void MainWindow::setGroundFillSeed() {
+	m_pcbGraphicsView->setGroundFillSeed();
+}
+
+void MainWindow::clearGroundFillSeed() {
+	m_pcbGraphicsView->clearGroundFillSeed();
+}

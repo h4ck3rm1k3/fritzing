@@ -218,6 +218,18 @@ void InfoGraphicsView::setProp(ItemBase * item, const QString & prop, const QStr
 	Q_UNUSED(redraw);
 }
 
+void InfoGraphicsView::setHoleSize(ItemBase * item, const QString & prop, const QString & trProp, const QString & oldValue, const QString & newValue, QRectF & oldRect, QRectF & newRect, bool redraw)
+{
+	Q_UNUSED(item);
+	Q_UNUSED(prop);
+	Q_UNUSED(trProp);
+	Q_UNUSED(oldValue);
+	Q_UNUSED(newValue);
+	Q_UNUSED(oldRect);
+	Q_UNUSED(newRect);
+	Q_UNUSED(redraw);
+}
+
 void InfoGraphicsView::changeWireWidthMils(const QString newWidth) {
 	Q_UNUSED(newWidth);
 }

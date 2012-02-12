@@ -133,7 +133,7 @@ void LED::setColor(const QString & color)
 			return;
 	}
 
-	loadExtraRenderer(getColorSVG(color, m_viewLayerID).toUtf8());
+	loadExtraRenderer(getColorSVG(color, m_viewLayerID).toUtf8(),true);
 }
 
 QString LED::getColorSVG(const QString & color, ViewLayer::ViewLayerID viewLayerID) 

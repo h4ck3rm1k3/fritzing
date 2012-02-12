@@ -698,14 +698,14 @@ QStringList PaletteItem::getPinLabels(bool & hasLocal) {
 	return labels;
 }
 
-bool PaletteItem::loadExtraRenderer(const QString & svg) {
+bool PaletteItem::loadExtraRenderer(const QString & svg, bool fastLoad) {
 	if (!svg.isEmpty()) {
 		if (m_extraRenderer == NULL) {
 			m_extraRenderer = new FSvgRenderer(this);
 		}
 		//DebugDialog::debug(svg);
 
-		bool result = m_extraRenderer->fastLoad(svg.toUtf8());
+		bool result = fastLoad ? m_extraRenderer->fastLoad(svg.toUtf8()) : m_extraRenderer->loadSvgString(svg);
 		if (result) {
 			prepareGeometryChange();
 			setSharedRendererEx(m_extraRenderer);

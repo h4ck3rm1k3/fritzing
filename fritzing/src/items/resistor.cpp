@@ -138,7 +138,7 @@ void Resistor::setResistance(QString resistance, QString pinSpacing, bool force)
 			if (force || resistance.compare(m_ohms) != 0) {
 				QString svg = makeSvg(resistance, m_viewLayerID);
 				//DebugDialog::debug(svg);
-				loadExtraRenderer(svg.toUtf8());
+				loadExtraRenderer(svg.toUtf8(), false);
 			}
 			break;
 		case ViewIdentifierClass::PCBView:

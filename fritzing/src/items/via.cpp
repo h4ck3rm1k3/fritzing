@@ -27,7 +27,6 @@ $Date$
 #include "via.h"
 #include "../utils/graphicsutils.h"
 #include "../fsvgrenderer.h"
-#include "../sketch/infographicsview.h"
 #include "../utils/textutils.h"
 #include "../viewlayer.h"
 #include "../connectors/connectoritem.h"
@@ -86,6 +85,8 @@ void Via::setBoth(const QString & holeDiameter, const QString & ringThickness) {
 void Via::setBothConnectors(ItemBase * itemBase, SvgIdLayer * svgIdLayer) 
 {
 	foreach (ConnectorItem * connectorItem, itemBase->cachedConnectorItems()) {
+		DebugDialog::debug(QString("via set rect %1").arg(itemBase->viewIdentifier()), svgIdLayer->m_rect);
+
 		connectorItem->setRect(svgIdLayer->m_rect);
 		connectorItem->setTerminalPoint(svgIdLayer->m_point);
 		connectorItem->setRadius(svgIdLayer->m_radius, svgIdLayer->m_strokeWidth);

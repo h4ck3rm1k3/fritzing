@@ -154,7 +154,7 @@ void MysteryPart::setChipLabel(QString chipLabel, bool force) {
 			break;
 	}
 
-	loadExtraRenderer(svg);
+	loadExtraRenderer(svg, false);
 
 	modelPart()->setProp("chip label", chipLabel);
 
@@ -612,7 +612,7 @@ bool MysteryPart::changePinLabels(bool singleRow, bool sip) {
 	if (labels.count() == 0) return true;
 
 	QString svg = MysteryPart::makeSchematicSvg(labels, sip);
-	loadExtraRenderer(svg);
+	loadExtraRenderer(svg, false);
 
 	return true;
 }

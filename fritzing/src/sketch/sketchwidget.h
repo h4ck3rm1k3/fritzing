@@ -553,6 +553,7 @@ public slots:
 	void setResistance(QString resistance, QString pinSpacing);
 	void setProp(long itemID, const QString & prop, const QString & value, bool redraw, bool doEmit);
 	void setProp(ItemBase *, const QString & propName, const QString & translatedPropName, const QString & oldValue, const QString & newValue, bool redraw);
+	void setHoleSize(ItemBase *, const QString & propName, const QString & translatedPropName, const QString & oldValue, const QString & newValue, QRectF & oldRect, QRectF & newRect, bool redraw);
 	void setSpacing(const QString & spacing);
 	void setForm(const QString & form);
 	virtual void showLabelFirstTime(long itemID, bool show, bool doEmit);

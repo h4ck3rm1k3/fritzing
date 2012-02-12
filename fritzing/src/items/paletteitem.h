@@ -78,7 +78,7 @@ public:
 	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
 	virtual bool changePinLabels(bool singleRow, bool sip);
 	QStringList getPinLabels(bool & hasLocal);
-	bool loadExtraRenderer(const QString & svg);
+	bool loadExtraRenderer(const QString & svg, bool fastload);
 	void renamePins(const QStringList & labels, bool singleRow);
 	void resetConnectors();
 

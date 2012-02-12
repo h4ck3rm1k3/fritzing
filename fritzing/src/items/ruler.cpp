@@ -77,7 +77,7 @@ void Ruler::resizeMM(double magnitude, double unitsFlag, const LayerHash & viewL
 
 	QString s = makeSvg(newW);
 
-	bool result = loadExtraRenderer(s.toUtf8());
+	bool result = loadExtraRenderer(s.toUtf8(), false);
 	if (result) {
         modelPart()->setProp("width", QVariant(QString::number(magnitude) + units));
 	}

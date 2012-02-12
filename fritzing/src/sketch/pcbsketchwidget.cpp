@@ -2064,3 +2064,11 @@ bool PCBSketchWidget::hasNeighbor(ConnectorItem * connectorItem, ViewLayer::View
 
 	return false;
 }
+
+void PCBSketchWidget::setGroundFillSeed() 
+{
+}
+
+void PCBSketchWidget::clearGroundFillSeed() 
+{
+}

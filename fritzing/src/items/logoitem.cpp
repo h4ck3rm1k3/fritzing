@@ -86,7 +86,7 @@ void LogoItem::addedToScene(bool temporary)
 		if (!shape.isEmpty()) {
 					
 			m_aspectRatio = modelPart()->prop("aspectratio").toSizeF();
-			if (loadExtraRenderer(shape.toUtf8())) {
+			if (loadExtraRenderer(shape.toUtf8(), false)) {
 
 			}
 		}
@@ -347,7 +347,7 @@ void LogoItem::prepLoadImageAux(const QString & fileName, bool addName)
 
 void LogoItem::reloadImage(const QString & svg, const QSizeF & aspectRatio, const QString & fileName, bool addName) 
 {
-	bool result = loadExtraRenderer(svg.toUtf8());
+	bool result = loadExtraRenderer(svg.toUtf8(), false);
 	if (result) {
 		if (aspectRatio == QSizeF(0, 0)) {
 			QRectF r = m_extraRenderer->viewBoxF();
@@ -376,7 +376,7 @@ void LogoItem::reloadImage(const QString & svg, const QSizeF & aspectRatio, cons
 	}
 	else {
 		// restore previous (not sure whether this is necessary)
-		loadExtraRenderer(prop("shape").toUtf8());
+		loadExtraRenderer(prop("shape").toUtf8(), false);
 		unableToLoad(fileName);
 	}
 }
@@ -538,7 +538,7 @@ void LogoItem::resizeMM(double mmW, double mmH, const LayerHash & viewLayers) {
 
 	svg = TextUtils::removeXMLEntities(domDocument.toString());			
 
-	bool result = loadExtraRenderer(svg.toUtf8());
+	bool result = loadExtraRenderer(svg.toUtf8(), false);
 	if (result) {
 		modelPart()->setProp("shape", svg);
 		modelPart()->setProp("width", mmW);
@@ -593,7 +593,7 @@ void LogoItem::setLogo(QString logo, bool force) {
 
 void LogoItem::rerender(const QString & svg)
 {
-	bool result = loadExtraRenderer(svg.toUtf8());
+	bool result = loadExtraRenderer(svg.toUtf8(), false);
 	if (result) {
 		QRectF r = m_extraRenderer->viewBoxF();
 		m_aspectRatio.setWidth(r.width());

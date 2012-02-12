@@ -48,6 +48,7 @@ $Date$
 #include "screwterminal.h"
 #include "hole.h"
 #include "via.h"
+#include "pad.h"
 #include "capacitor.h"
 #include "perfboard.h"
 #include "breadboard.h"
@@ -150,6 +151,9 @@ ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClas
 					}
 					if (moduleID.endsWith(ModuleIDNames::SchematicFrameModuleIDName)) {
 						return new SchematicFrame(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
+					}
+					if (moduleID.compare(ModuleIDNames::PadModuleIDName) == 0) {
+						return new Pad(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 					}
 					// must get the subclasses first
 					if (modelPart->itemType() == ModelPart::Breadboard) {

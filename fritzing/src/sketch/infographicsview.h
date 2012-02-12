@@ -103,6 +103,7 @@ public:
 	virtual void noteChanged(ItemBase *, const QString &oldText, const QString & newText, QSizeF oldSize, QSizeF newSize);
 	virtual void setResistance(QString resistance, QString pinSpacing);
 	virtual void setProp(ItemBase *, const QString & propName, const QString & translatedPropName, const QString & oldValue, const QString & newValue, bool redraw);
+	virtual void setHoleSize(ItemBase *, const QString & propName, const QString & translatedPropName, const QString & oldValue, const QString & newValue, QRectF & oldRect, QRectF & newRect, bool redraw);
 	virtual void changeWireWidthMils(const QString newWidth);
 	virtual void changeWireColor(const QString newColor);
 	virtual void swap(const QString & family, const QString & prop, QMap<QString, QString> & propsMap, ItemBase *);

@@ -115,7 +115,7 @@ void GraphUtils::minCut(QList<ConnectorItem *> & connectorItems, QList<SketchWid
 	verts.append(t = add_vertex(g));
 
 	foreach (ConnectorItem * connectorItem, connectorItems) {
-		connectorItem->debugInfo("input");
+		//connectorItem->debugInfo("input");
 		if (connectorItem->attachedToItemType() == ModelPart::Wire) {
 			Wire * wire = qobject_cast<Wire *>(connectorItem->attachedTo());
 			if (visitedWires.contains(wire)) continue;
@@ -262,9 +262,9 @@ void GraphUtils::minCut(QList<ConnectorItem *> & connectorItems, QList<SketchWid
 		}
 	}
 
-	foreach(ConnectorItem * connectorItem, vertices.keys()) {
-		connectorItem->debugInfo(QString("vertex %1").arg(vertices.value(connectorItem)));
-	}
+	//foreach(ConnectorItem * connectorItem, vertices.keys()) {
+	//	connectorItem->debugInfo(QString("vertex %1").arg(vertices.value(connectorItem)));
+	//}
 
 	foreach(ConnectorEdge * ce, edges) {
 		if (!ce->visible) continue;
@@ -276,8 +276,8 @@ void GraphUtils::minCut(QList<ConnectorItem *> & connectorItems, QList<SketchWid
 		capacity[e2] = capacity[e1] = ce->weight;
 		reverse[e1] = e2;
 		reverse[e2] = e1;
-		ce->c0->debugInfo(QString("head %1").arg(ce->weight));
-		ce->c1->debugInfo("\ttail");
+		//ce->c0->debugInfo(QString("head %1").arg(ce->weight));
+		//ce->c1->debugInfo("\ttail");
 	}
 
 	/*
@@ -294,9 +294,9 @@ void GraphUtils::minCut(QList<ConnectorItem *> & connectorItems, QList<SketchWid
 	// if color_map parameter not specified, colors are not set
     long flow = edmonds_karp_max_flow(g, s, t, color_map(color)); 
 	DebugDialog::debug(QString("flow %1, s%2, t%3").arg(flow).arg(index(s)).arg(index(t)));
-	for (int i = 0; i < verts.count(); ++i) {
-		DebugDialog::debug(QString("index %1 %2").arg(index(verts[i])).arg(color(verts[i])));
-	}
+	//for (int i = 0; i < verts.count(); ++i) {
+	//	DebugDialog::debug(QString("index %1 %2").arg(index(verts[i])).arg(color(verts[i])));
+	//}
 
 	typedef property_traits<property_map < Graph, vertex_color_t >::type>::value_type tColorValue;
     typedef boost::color_traits<tColorValue> tColorTraits; 
@@ -311,7 +311,7 @@ void GraphUtils::minCut(QList<ConnectorItem *> & connectorItems, QList<SketchWid
 			}
 			if (addIt) {
 				minCut << ce;
-				DebugDialog::debug(QString("edge %1 %2 w:%3").arg(ce->head).arg(ce->tail).arg(ce->weight));
+				//DebugDialog::debug(QString("edge %1 %2 w:%3").arg(ce->head).arg(ce->tail).arg(ce->weight));
 			}
 		}
 		else {

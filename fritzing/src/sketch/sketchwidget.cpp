@@ -7168,6 +7168,25 @@ void SketchWidget::setProp(ItemBase * item, const QString & prop, const QString 
     m_undoStack->waitPush(cmd, PropChangeDelay);
 }
 
+void SketchWidget::setHoleSize(ItemBase * item, const QString & prop, const QString & trProp, const QString & oldValue, const QString & newValue, QRectF & oldRect, QRectF & newRect, bool redraw)
+{
+	if (oldValue.isEmpty() && newValue.isEmpty()) return;
+
+	QUndoCommand * parentCommand = new QUndoCommand(tr("Change %1 from %2 to %3").arg(trProp).arg(oldValue).arg(newValue));	
+	new SetPropCommand(this, item->id(), prop, oldValue, newValue, redraw, parentCommand);
+	item->saveGeometry();
+	ViewGeometry vg(item->getViewGeometry());
+	QPointF p(vg.loc().x() + (oldRect.width() / 2) - (newRect.width() / 2), 
+				vg.loc().y() + (oldRect.height() / 2) - (newRect.height() / 2));
+	vg.setLoc(p);
+	new MoveItemCommand(this, item->id(), item->getViewGeometry(), vg, false, parentCommand);
+	//DebugDialog::debug("set hole", oldRect);
+	//DebugDialog::debug("        ", newRect);
+	//DebugDialog::debug("        ", item->getViewGeometry().loc());
+	//DebugDialog::debug("        ", p);
+    m_undoStack->waitPush(parentCommand, PropChangeDelay);
+}
+
 void SketchWidget::setProp(long itemID, const QString & prop, const QString & value, bool redraw, bool doEmit) {
 	ItemBase * item = findItem(itemID);
 	if (item == NULL) return;
@@ -8467,7 +8486,7 @@ void SketchWidget::changePinLabelsSlot(ItemBase * itemBase, bool singleRow)
 		else {
 			svg = Dip::makeSchematicSvg(labels);
 		}
-		paletteItem->loadExtraRenderer(svg);
+		paletteItem->loadExtraRenderer(svg, false);
 		if (!hasLayout && !sip) {
 			paletteItem->resetConnectors();
 		}

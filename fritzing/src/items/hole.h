@@ -110,7 +110,9 @@ protected:
 	void setUpHoleSizes();
 	virtual void setBoth(const QString & holeDiameter, const QString &  thickness);
 	QString currentUnits();
-											 
+	static QStringList getSizes(QString & holeSize);
+	QRectF getRect(const QString & newSize);
+
 protected:
 	QPointer<class FSvgRenderer> m_otherLayerRenderer;
 	HoleSettings m_holeSettings;

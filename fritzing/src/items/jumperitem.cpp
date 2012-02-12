@@ -338,7 +338,7 @@ void JumperItem::resize() {
 
 	QString s = makeSvg(ViewLayer::Copper0);
 	//DebugDialog::debug(s);
-	loadExtraRenderer(s);
+	loadExtraRenderer(s, false);
 
 	foreach (ItemBase * itemBase, m_layerKin) {
 		switch(itemBase->viewLayerID()) {
@@ -354,7 +354,7 @@ void JumperItem::resize() {
 					}
 
 					s = makeSvg(itemBase->viewLayerID());
-					bool result = renderer->fastLoad(s.toUtf8());
+					bool result = renderer->loadSvgString(s);
 					if (result) {
 						itemBase->prepareGeometryChange();
 						qobject_cast<PaletteItemBase *>(itemBase)->setSharedRendererEx(renderer);

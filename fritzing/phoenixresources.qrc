@@ -203,6 +203,7 @@
         <file>resources/parts/core/copper0logoimage.fzp</file>
         <file>resources/parts/core/ground.fzp</file>
 	<file>resources/parts/core/via.fzp</file>
+	<file>resources/parts/core/pad.fzp</file>
         <file>resources/parts/core/dcpower.fzp</file>
         <file>resources/parts/core/power.fzp</file>
         <file>resources/parts/core/jumper.fzp</file>
@@ -229,6 +230,7 @@
         <file>resources/parts/svg/core/icon/jumpericon.svg</file>
         <file>resources/parts/svg/core/icon/hole.svg</file>
 	<file>resources/parts/svg/core/icon/via.svg</file>
+	<file>resources/parts/svg/core/icon/pad.svg</file>
 	<file>resources/parts/svg/core/icon/schematic_frame_icon.svg</file>
 	<file>resources/parts/svg/core/icon/groundplane.svg</file>
 	<file>resources/parts/svg/core/icon/note.svg</file>
@@ -244,6 +246,7 @@
         <file>resources/parts/svg/core/pcb/hole.svg</file>
         <file>resources/parts/svg/core/pcb/groundplane.svg</file>
         <file>resources/parts/svg/core/pcb/via.svg</file>
+        <file>resources/parts/svg/core/pcb/pad.svg</file>
  
         <file>resources/parts/svg/core/schematic/ground.svg</file>
         <file>resources/parts/svg/core/schematic/cell.svg</file>

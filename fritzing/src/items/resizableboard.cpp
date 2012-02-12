@@ -384,7 +384,7 @@ void ResizableBoard::resizeMMAux(double mmW, double mmH) {
 
 	QString s = makeFirstLayerSvg(mmW, mmH, milsW, milsH);
 
-	bool result = loadExtraRenderer(s.toUtf8());
+	bool result = loadExtraRenderer(s.toUtf8(), false);
 	if (result) {
 		modelPart()->setProp("width", mmW);
 		modelPart()->setProp("height", mmH);
@@ -405,7 +405,7 @@ void ResizableBoard::resizeMMAux(double mmW, double mmH) {
 				m_silkscreenRenderer = new FSvgRenderer(itemBase);
 			}
 			itemBase->prepareGeometryChange();
-			bool result = m_silkscreenRenderer->fastLoad(s.toUtf8());
+			bool result = m_silkscreenRenderer->loadSvgString(s);
 			if (result) {
 				qobject_cast<PaletteItemBase *>(itemBase)->setSharedRendererEx(m_silkscreenRenderer);
 				itemBase->modelPart()->setProp("width", mmW);

@@ -76,7 +76,7 @@ void Perfboard::setProp(const QString & prop, const QString & value)
 		case ViewIdentifierClass::BreadboardView:
 			if (value.compare(m_size) != 0) {
 				QString svg = makeBreadboardSvg(value);
-				loadExtraRenderer(svg);
+				loadExtraRenderer(svg, false);
 				//DebugDialog::debug(svg);
 			}
 			break;

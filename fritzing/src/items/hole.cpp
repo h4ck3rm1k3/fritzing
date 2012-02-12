@@ -162,26 +162,27 @@ QString Hole::holeSize(HoleSettings & holeSettings) {
 	return QString("%1,%2").arg(holeSettings.holeDiameter).arg(holeSettings.ringThickness);
 }
 
-void Hole::setHoleSize(QString holeSize, bool force) {
-	if (setHoleSize(holeSize, force, m_holeSettings)) {
+void Hole::setHoleSize(QString newSize, bool force) {
+	//DebugDialog::debug(QString("old holesize %1").arg(viewIdentifier()) + holeSize(), sceneBoundingRect());
+	//foreach (QGraphicsItem * childItem, childItems()) {
+	//	DebugDialog::debug(QString("   child"), childItem->sceneBoundingRect());
+	//}
+
+	if (setHoleSize(newSize, force, m_holeSettings)) {
 		setBoth(m_holeSettings.holeDiameter, m_holeSettings.ringThickness);
-		modelPart()->setProp("hole size", holeSize);
+		modelPart()->setProp("hole size", newSize);
 
 		if (m_partLabel) m_partLabel->displayTextsIf();	
 	}
+	//DebugDialog::debug(QString("new holesize %1 ").arg(viewIdentifier()) + holeSize(), sceneBoundingRect());
+	//foreach (QGraphicsItem * childItem, childItems()) {
+	//	DebugDialog::debug(QString("   child"), childItem->sceneBoundingRect());
+	//}
 }
 
 bool Hole::setHoleSize(QString & holeSize, bool force, HoleSettings & holeSettings)
 {
-	QString hashedHoleSize = HoleSizes.value(holeSize);
-	QStringList sizes;
-	if (hashedHoleSize.isEmpty()) {
-		sizes = holeSize.split(",");
-	}
-	else {
-		sizes = hashedHoleSize.split(",");
-		holeSize = sizes[0] + "," + sizes[1];
-	}
+	QStringList sizes = getSizes(holeSize);
 	if (sizes.count() < 2) return false;
 
 	if (!force && (holeSettings.holeDiameter.compare(sizes.at(0)) == 0) && (holeSettings.ringThickness.compare(sizes.at(1)) == 0)) 
@@ -195,6 +196,32 @@ bool Hole::setHoleSize(QString & holeSize, bool force, HoleSettings & holeSettin
 	updateValidators(holeSettings);
 	updateSizes(holeSettings);
 	return true;
+}
+
+QRectF Hole::getRect(const QString & newSize) {
+	QString s = newSize;
+	QStringList sizes = getSizes(s);
+	if (sizes.count() < 2) return boundingRect();
+
+	double diameter = TextUtils::convertToInches(sizes.at(0));
+	double ringThickness = TextUtils::convertToInches(sizes.at(1));
+	double dim = (diameter + ringThickness + ringThickness) * FSvgRenderer::printerScale();
+	//DebugDialog::debug(QString("get rect %1 %2").arg(newSize).arg(dim));
+	return QRectF(0, 0, dim, dim);
+}
+
+QStringList Hole::getSizes(QString & holeSize)
+{
+	QStringList sizes;
+	QString hashedHoleSize = HoleSizes.value(holeSize);
+	if (hashedHoleSize.isEmpty()) {
+		sizes = holeSize.split(",");
+	}
+	else {
+		sizes = hashedHoleSize.split(",");
+		holeSize = sizes[0] + "," + sizes[1];
+	}
+	return sizes;
 }
 
 void Hole::setBoth(const QString & holeDiameter, const QString & ringThickness) {
@@ -218,7 +245,7 @@ void Hole::setBoth(const QString & holeDiameter, const QString & ringThickness) 
 ItemBase * Hole::setBothSvg(const QString & holeDiameter, const QString & ringThickness) 
 {
 	QString svg = makeSvg(holeDiameter, ringThickness, m_viewLayerID);
-	loadExtraRenderer(svg.toUtf8());
+	loadExtraRenderer(svg.toUtf8(), false);
 	//DebugDialog::debug("both");
 	//DebugDialog::debug(svg);
 
@@ -243,7 +270,7 @@ ItemBase * Hole::setBothSvg(const QString & holeDiameter, const QString & ringTh
 		//DebugDialog::debug(osvg);
 
 
-		bool result = m_otherLayerRenderer->fastLoad(osvg.toUtf8());
+		bool result = m_otherLayerRenderer->loadSvgString(osvg);
 		if (result) {
 			qobject_cast<PaletteItemBase *>(otherLayer)->setSharedRendererEx(m_otherLayerRenderer);
 		}
@@ -259,6 +286,7 @@ void Hole::setBothNonConnectors(ItemBase * itemBase, SvgIdLayer * svgIdLayer) {
 		NonConnectorItem * nonConnectorItem = dynamic_cast<NonConnectorItem *>(child);
 		if (nonConnectorItem == NULL) continue;
 
+		//DebugDialog::debug(QString("hole set rect %1").arg(m_viewIdentifier), svgIdLayer->m_rect);
 		nonConnectorItem->setRect(svgIdLayer->m_rect);
 		nonConnectorItem->setRadius(svgIdLayer->m_radius, svgIdLayer->m_strokeWidth);
 		break;
@@ -493,7 +521,7 @@ QPointF Hole::holeDiameterRange(const QString & ringThickness) {
 void Hole::changeHoleSize(const QString & newSize) {
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
-		infoGraphicsView->setProp(this, "hole size", tr("hole size"), this->holeSize(), newSize, true);
+		infoGraphicsView->setHoleSize(this, "hole size", tr("hole size"), holeSize(), newSize, getRect(holeSize()), getRect(newSize), true);
 	}
 }
 

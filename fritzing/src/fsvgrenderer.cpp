@@ -126,6 +126,12 @@ QByteArray FSvgRenderer::loadSvg(const QString & filename, const QStringList & c
 
 }
 
+bool FSvgRenderer::loadSvgString(const QString & svg) {
+	QByteArray byteArray(svg.toUtf8());
+	loadSvg(byteArray, "");
+	return true;
+}
+
 QByteArray FSvgRenderer::loadSvg(const QByteArray & contents, const QString & filename) {
 	QStringList strings;
 	QString string;

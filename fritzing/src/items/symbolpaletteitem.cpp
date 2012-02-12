@@ -206,7 +206,7 @@ void SymbolPaletteItem::setVoltage(double v) {
 	if (!m_voltageReference) return;
 
 	QString svg = makeSvg();
-	loadExtraRenderer(svg);
+	loadExtraRenderer(svg, false);
 
     if (m_partLabel) m_partLabel->displayTextsIf();
 }
