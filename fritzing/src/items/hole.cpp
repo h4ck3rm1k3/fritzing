@@ -521,7 +521,9 @@ QPointF Hole::holeDiameterRange(const QString & ringThickness) {
 void Hole::changeHoleSize(const QString & newSize) {
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
-		infoGraphicsView->setHoleSize(this, "hole size", tr("hole size"), holeSize(), newSize, getRect(holeSize()), getRect(newSize), true);
+        QRectF holeRect = getRect(holeSize());
+        QRectF newHoleRect = getRect(newSize);
+        infoGraphicsView->setHoleSize(this, "hole size", tr("hole size"), holeSize(), newSize, holeRect, newHoleRect, true);
 	}
 }
 
