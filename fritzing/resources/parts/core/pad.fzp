@@ -12,7 +12,7 @@
  </tags>
  <properties>
   <property name="shape" ></property>
-  <property name="connect at" ></property>
+  <property name="connect to" ></property>
  </properties>
  <taxonomy>discreteParts.pcb.pad</taxonomy>
  <description>Pad</description>
@@ -49,7 +49,7 @@
           <p svgId="connector0pad" layer="copper1" />
         </schematicView>
         <pcbView>
-          <p svgId="connector0pad" layer="copper1" />
+          <p svgId="connector0pad" terminalId="connector0terminal" layer="copper1" />
         </pcbView>
       </views>
     </connector>  

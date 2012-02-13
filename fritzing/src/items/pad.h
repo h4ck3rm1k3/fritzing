@@ -67,10 +67,7 @@ public:
 	void addedToScene(bool temporary);
 
 protected slots:
-	//void layerEntry();
-	//void terminalPointEntry()
-	//void widthEntry();
-	//void heightEntry();
+	void terminalPointEntry(const QString &);
 
 protected:
 	double minWidth();

@@ -25,7 +25,7 @@ $Date$
 ********************************************************************/
 
 // TODO:
-//		choice of terminalpoint
+//		flip for one-sided board
 
 #include "pad.h"
 
@@ -36,7 +36,6 @@ $Date$
 #include "../sketch/infographicsview.h"
 #include "../svg/svgfilesplitter.h"
 #include "moduleidnames.h"
-
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -85,9 +84,30 @@ QString Pad::makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, double mmW, double
 	double wpx = mmW > 0 ? GraphicsUtils::mm2pixels(mmW) : OriginalWidth;
 	double hpx = mmH > 0 ? GraphicsUtils::mm2pixels(mmH) : OriginalHeight;
 
+	QString connectAt = m_modelPart->prop("connect").toString();
+	QRectF terminal;
+	double minW = qMin(1.0, wpx / 3);
+	double minH = qMin(1.0, hpx / 3);
+	if (connectAt.compare("center", Qt::CaseInsensitive) == 0) {
+		terminal.setRect(2, 2, wpx, hpx);
+	}
+	else if (connectAt.compare("north", Qt::CaseInsensitive) == 0) {
+		terminal.setRect(2, 2, wpx, minH);
+	}
+	else if (connectAt.compare("south", Qt::CaseInsensitive) == 0) {
+		terminal.setRect(2, 2 + hpx - minH, wpx, minH);
+	}
+	else if (connectAt.compare("east", Qt::CaseInsensitive) == 0) {
+		terminal.setRect(2 + wpx - minW, 2, minW, hpx);
+	}
+	else if (connectAt.compare("west", Qt::CaseInsensitive) == 0) {
+		terminal.setRect(2, 2, minW, hpx);
+	}
+
 	QString svg = QString("<svg version='1.1' xmlns='http://www.w3.org/2000/svg'  x='0px' y='0px' width='%1px' height='%2px' viewBox='0 0 %1 %2'>\n"
 							"<g id='%5'>\n"
 							"<rect  id='connector0pad' x='2' y='2' fill='#FFBF00' stroke='none' stroke-width='0' width='%3' height='%4'/>\n"
+							"<rect  id='connector0terminal' x='%6' y='%7' fill='none' stroke='none' stroke-width='0' width='%8' height='%9'/>\n"
 							"</g>\n"
 							"</svg>"
 							)
@@ -96,9 +116,13 @@ QString Pad::makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, double mmW, double
 					.arg(wpx)
 					.arg(hpx)
 					.arg(ViewLayer::viewLayerXmlNameFromID(viewLayerID))
+					.arg(terminal.left())
+					.arg(terminal.top())
+					.arg(terminal.width())
+					.arg(terminal.height())
 					;
 
-	DebugDialog::debug("pad svg: " + svg);
+	//DebugDialog::debug("pad svg: " + svg);
 	return svg;
 }
 
@@ -142,11 +166,42 @@ bool Pad::collectExtraInfo(QWidget * parent, const QString & family, const QStri
 		return true;
 	}
 
+	if (prop.compare("connect to", Qt::CaseInsensitive) == 0) {
+		QComboBox * comboBox = new QComboBox();
+		comboBox->setObjectName("infoViewComboBox");
+		comboBox->setEditable(false);
+		comboBox->setEnabled(swappingEnabled);
+		comboBox->addItem(tr("center"), "center");
+		comboBox->addItem(tr("north"), "north");
+		comboBox->addItem(tr("east"), "east");
+		comboBox->addItem(tr("south"), "south");
+		comboBox->addItem(tr("west"), "west");
+		QString connectAt = m_modelPart->prop("connect").toString();
+		for (int i = 0; i < comboBox->count(); i++) {
+			if (comboBox->itemData(i).toString().compare(connectAt) == 0) {
+				comboBox->setCurrentIndex(i);
+				break;
+			}
+		}
+
+		connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(terminalPointEntry(const QString &)));
+
+		returnWidget = comboBox;
+		returnProp = tr("connect to");
+		return true;
+	}
+
 	return PaletteItem::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
 }
 
 void Pad::setProp(const QString & prop, const QString & value) 
 {	
+	if (prop.compare("connect to", Qt::CaseInsensitive) == 0) {
+		modelPart()->setProp("connect", value);
+		resizeMMAux(m_modelPart->prop("width").toDouble(), m_modelPart->prop("height").toDouble());
+		return;
+	}
+
 	ResizableBoard::setProp(prop, value);
 }
 
@@ -183,8 +238,9 @@ void Pad::setInitialSize() {
 	double w = m_modelPart->prop("width").toDouble();
 	if (w == 0) {
 		// set the size so the infoGraphicsView will display the size as you drag
-		modelPart()->setProp("width", 25.4 * OriginalWidth / GraphicsUtils::StandardFritzingDPI); 
-		modelPart()->setProp("height", 25.4 * OriginalHeight / GraphicsUtils::StandardFritzingDPI); 
+		modelPart()->setProp("width", GraphicsUtils::pixels2mm(OriginalWidth, FSvgRenderer::printerScale())); 
+		modelPart()->setProp("height", GraphicsUtils::pixels2mm(OriginalHeight, FSvgRenderer::printerScale())); 
+		modelPart()->setProp("connect", "center"); 
 	}
 }
 
@@ -229,10 +285,19 @@ void Pad::resizeMMAux(double mmW, double mmH) {
 void Pad::addedToScene(bool temporary)
 {
 	if (this->scene()) {
-		QRectF r = boundingRect();
-		resizeMMAux(GraphicsUtils::pixels2mm(r.width() - 4, FSvgRenderer::printerScale()),
-					GraphicsUtils::pixels2mm(r.height() - 4, FSvgRenderer::printerScale()));
+		setInitialSize();
+		resizeMMAux(m_modelPart->prop("width").toDouble(), m_modelPart->prop("height").toDouble());
 	}
 
     return PaletteItem::addedToScene(temporary);
+}
+
+void Pad::terminalPointEntry(const QString & value) {
+	QString connectAt = m_modelPart->prop("connect").toString();
+	if (connectAt.compare(value) == 0) return;
+
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView != NULL) {
+		infoGraphicsView->setProp(this, "connect to", tr("connect to"), connectAt, value, true);
+	}
 }
