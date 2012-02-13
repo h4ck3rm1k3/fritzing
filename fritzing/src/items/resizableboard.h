@@ -33,6 +33,7 @@ $Date$
 #include <QVariant>
 #include <QLineEdit>
 #include <QCursor>
+#include <QCheckbox>
 
 #include "paletteitem.h"
 
@@ -119,6 +120,7 @@ protected:
 	virtual ResizableBoard::Corner findCorner(QPointF p, Qt::KeyboardModifiers);
 	void setKinCursor(QCursor &);
 	void setKinCursor(Qt::CursorShape);
+	QFrame * setUpDimEntry(bool includeProportion, QWidget * & returnWidget);
 
 protected:
 	static const double CornerHandleSize;
@@ -132,6 +134,7 @@ protected:
 	bool m_keepAspectRatio;
 	QSizeF m_aspectRatio;
 	double m_currentScale;
+	QPointer<QCheckBox> m_aspectRatioCheck;
 
 	QPointF m_resizeMousePos;
 	QSizeF m_resizeStartSize;

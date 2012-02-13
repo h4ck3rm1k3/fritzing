@@ -186,6 +186,7 @@ bool SchematicSketchWidget::canDropModelPart(ModelPart * modelPart) {
 	}
 
 	if (modelPart->moduleID().endsWith(ModuleIDNames::SchematicFrameModuleIDName)) return true;
+	if (modelPart->moduleID().endsWith(ModuleIDNames::PadModuleIDName)) return false;
 
 	return PCBSketchWidget::canDropModelPart(modelPart);
 }

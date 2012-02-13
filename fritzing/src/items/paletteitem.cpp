@@ -733,3 +733,52 @@ void PaletteItem::resetConnectors() {
 		connectorItem->setRect(r);
 	}
 }
+
+
+void PaletteItem::resetConnectors(ItemBase * otherLayer,FSvgRenderer * otherLayerRenderer)
+{
+	// there's only one connector
+	foreach (Connector * connector, m_modelPart->connectors().values()) {
+		if (connector == NULL) continue;
+
+		connector->unprocess(m_viewIdentifier, m_viewLayerID);
+		SvgIdLayer * svgIdLayer = connector->fullPinInfo(m_viewIdentifier, m_viewLayerID);
+		if (svgIdLayer == NULL) continue;
+
+		bool result = m_extraRenderer->setUpConnector(svgIdLayer, false);
+		if (!result) continue;
+
+		resetConnector(this, svgIdLayer);
+	}
+
+	if (otherLayer) {
+		foreach (Connector * connector, m_modelPart->connectors().values()) {
+			if (connector == NULL) continue;
+
+			connector->unprocess(m_viewIdentifier, otherLayer->viewLayerID());
+			SvgIdLayer * svgIdLayer = connector->fullPinInfo(m_viewIdentifier, otherLayer->viewLayerID());
+			if (svgIdLayer == NULL) continue;
+
+			bool result = otherLayerRenderer->setUpConnector(svgIdLayer, false);
+			if (!result) continue;
+
+			resetConnector(otherLayer, svgIdLayer);
+		}
+	}
+
+
+}
+
+void PaletteItem::resetConnector(ItemBase * itemBase, SvgIdLayer * svgIdLayer) 
+{
+	foreach (ConnectorItem * connectorItem, itemBase->cachedConnectorItems()) {
+		DebugDialog::debug(QString("via set rect %1").arg(itemBase->viewIdentifier()), svgIdLayer->m_rect);
+
+		connectorItem->setRect(svgIdLayer->m_rect);
+		connectorItem->setTerminalPoint(svgIdLayer->m_point);
+		connectorItem->setRadius(svgIdLayer->m_radius, svgIdLayer->m_strokeWidth);
+		connectorItem->attachedMoved();
+		break;
+	}
+}
+

@@ -54,6 +54,7 @@ public:
 
 	static double mm2mils(double mm);
 	static double pixels2mm(double p, double dpi);
+	static double mm2pixels(double mm);
 	static double mils2pixels(double m, double dpi);
 	static void saveTransform(QXmlStreamWriter & streamWriter, const QTransform & transform);
 	static bool loadTransform(const QDomElement & transformElement, QTransform & transform);

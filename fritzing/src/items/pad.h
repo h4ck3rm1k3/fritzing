@@ -53,14 +53,24 @@ public:
 	bool hasPartLabel();
 	bool stickyEnabled();
 	PluralType isPlural();
-	void addedToScene(bool temporary);
 	bool rotationAllowed();
 	bool rotation45Allowed();
 	bool hasPartNumberProperty();
 	void setInitialSize();
+	void mousePressEvent(QGraphicsSceneMouseEvent * event );
+	void mouseMoveEvent(QGraphicsSceneMouseEvent * event );
+	void mouseReleaseEvent(QGraphicsSceneMouseEvent * event );
+	void paintSelected(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+	void hoverEnterEvent(QGraphicsSceneHoverEvent * event );
+	void hoverLeaveEvent(QGraphicsSceneHoverEvent * event );
+	void hoverMoveEvent(QGraphicsSceneHoverEvent * event );
+	void addedToScene(bool temporary);
 
 protected slots:
 	//void layerEntry();
+	//void terminalPointEntry()
+	//void widthEntry();
+	//void heightEntry();
 
 protected:
 	double minWidth();
@@ -69,6 +79,11 @@ protected:
 	QString makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, double mmW, double mmH, double milsW, double milsH);
 	QString makeFirstLayerSvg(double mmW, double mmH, double milsW, double milsH);
 	QString makeNextLayerSvg(ViewLayer::ViewLayerID, double mmW, double mmH, double milsW, double milsH);
+	void resizeMMAux(double w, double h);
+
+
+protected:
+	QPointer<class FSvgRenderer> m_otherLayerRenderer;
 
 };
 

@@ -560,75 +560,7 @@ bool ResizableBoard::collectExtraInfo(QWidget * parent, const QString & family, 
 			return true;
 		}
 
-		double w = qRound(m_modelPart->prop("width").toDouble() * 10) / 10.0;	// truncate to 1 decimal point
-		double h = qRound(m_modelPart->prop("height").toDouble() * 10) / 10.0;  // truncate to 1 decimal point
-
-		QFrame * frame = new QFrame();
-		QVBoxLayout * vboxLayout = new QVBoxLayout();
-		vboxLayout->setAlignment(Qt::AlignLeft);
-		vboxLayout->setSpacing(1);
-		vboxLayout->setContentsMargins(0, 3, 0, 0);
-		vboxLayout->setMargin(0);
-
-		QFrame * subframe1 = new QFrame();
-		QHBoxLayout * hboxLayout1 = new QHBoxLayout();
-		hboxLayout1->setAlignment(Qt::AlignLeft);
-		hboxLayout1->setContentsMargins(0, 0, 0, 0);
-		hboxLayout1->setSpacing(2);
-
-		QLabel * l1 = new QLabel(tr("width(mm)"));	
-		l1->setMargin(0);
-		l1->setObjectName("infoViewLabel");	
-		QLineEdit * e1 = new QLineEdit();
-		e1->setEnabled(swappingEnabled);
-		QDoubleValidator * validator = new QDoubleValidator(e1);
-		validator->setRange(0.1, 999.9, 1);
-		validator->setNotation(QDoubleValidator::StandardNotation);
-		e1->setObjectName("infoViewLineEdit");	
-		e1->setValidator(validator);
-		e1->setMaxLength(5);
-		e1->setText(QString::number(w));
-		m_widthEditor = e1;
-
-		QFrame * subframe2 = new QFrame();
-		QHBoxLayout * hboxLayout2 = new QHBoxLayout();
-		hboxLayout2->setAlignment(Qt::AlignLeft);
-		hboxLayout2->setContentsMargins(0, 0, 0, 0);
-		hboxLayout2->setSpacing(2);
-
-		QLabel * l2 = new QLabel(tr("height(mm)"));
-		l2->setMargin(0);
-		l2->setObjectName("infoViewLabel");	
-		QLineEdit * e2 = new QLineEdit();
-		e2->setEnabled(swappingEnabled);
-		validator = new QDoubleValidator(e2);
-		validator->setRange(0.1, 999.9, 1);
-		validator->setNotation(QDoubleValidator::StandardNotation);
-		e2->setObjectName("infoViewLineEdit");	
-		e2->setValidator(validator);
-		e2->setMaxLength(5);
-		e2->setText(QString::number(h));
-		m_heightEditor = e2;
-
-		hboxLayout1->addWidget(l1);
-		hboxLayout1->addWidget(e1);
-
-		hboxLayout2->addWidget(l2);
-		hboxLayout2->addWidget(e2);
-
-		subframe1->setLayout(hboxLayout1);
-		subframe2->setLayout(hboxLayout2);
-
-		if (returnWidget != NULL) vboxLayout->addWidget(qobject_cast<QWidget *>(returnWidget));
-		vboxLayout->addWidget(subframe1);
-		vboxLayout->addWidget(subframe2);
-
-		frame->setLayout(vboxLayout);
-
-		connect(e1, SIGNAL(editingFinished()), this, SLOT(widthEntry()));
-		connect(e2, SIGNAL(editingFinished()), this, SLOT(heightEntry()));
-
-		returnWidget = frame;
+		returnWidget = setUpDimEntry(false, returnWidget);
 		return true;
 	}
 
@@ -830,4 +762,98 @@ void ResizableBoard::setKinCursor(Qt::CursorShape cursor) {
 	foreach (ItemBase * itemBase, chief->layerKin()) {
 		itemBase->setCursor(cursor);
 	}
+}
+
+QFrame * ResizableBoard::setUpDimEntry(bool includeProportion, QWidget * & returnWidget)
+{
+	double w = qRound(m_modelPart->prop("width").toDouble() * 10) / 10.0;	// truncate to 1 decimal point
+	double h = qRound(m_modelPart->prop("height").toDouble() * 10) / 10.0;  // truncate to 1 decimal point
+
+	QFrame * frame = new QFrame();
+	frame->setObjectName("infoViewPartFrame");
+	QVBoxLayout * vboxLayout = new QVBoxLayout();
+	vboxLayout->setAlignment(Qt::AlignLeft);
+	vboxLayout->setSpacing(1);
+	vboxLayout->setContentsMargins(0, 3, 0, 0);
+
+	QFrame * subframe1 = new QFrame();
+	QHBoxLayout * hboxLayout1 = new QHBoxLayout();
+	hboxLayout1->setAlignment(Qt::AlignLeft);
+	hboxLayout1->setContentsMargins(0, 0, 0, 0);
+	hboxLayout1->setSpacing(2);
+
+	QFrame * subframe2 = new QFrame();
+	QHBoxLayout * hboxLayout2 = new QHBoxLayout();
+	hboxLayout2->setAlignment(Qt::AlignLeft);
+	hboxLayout2->setContentsMargins(0, 0, 0, 0);
+	hboxLayout2->setSpacing(2);
+
+	QLabel * l1 = new QLabel(tr("width(mm)"));	
+	l1->setMargin(0);
+	l1->setObjectName("infoViewLabel");
+	QLineEdit * e1 = new QLineEdit();
+	QDoubleValidator * validator = new QDoubleValidator(e1);
+	validator->setRange(0.1, 999.9, 1);
+	validator->setNotation(QDoubleValidator::StandardNotation);
+	e1->setObjectName("infoViewLineEdit");
+	e1->setValidator(validator);
+	e1->setMaxLength(5);
+	e1->setText(QString::number(w));
+
+	QLabel * l2 = new QLabel(tr("height(mm)"));
+	l2->setMargin(0);
+	l2->setObjectName("infoViewLabel");
+	QLineEdit * e2 = new QLineEdit();
+	validator = new QDoubleValidator(e1);
+	validator->setRange(0.1, 999.9, 1);
+	validator->setNotation(QDoubleValidator::StandardNotation);
+	e2->setObjectName("infoViewLineEdit");
+	e2->setValidator(validator);
+	e2->setMaxLength(5);
+	e2->setText(QString::number(h));
+
+	hboxLayout1->addWidget(l1);
+	hboxLayout1->addWidget(e1);
+	hboxLayout2->addWidget(l2);
+	hboxLayout2->addWidget(e2);
+
+	subframe1->setLayout(hboxLayout1);
+	subframe2->setLayout(hboxLayout2);
+	if (returnWidget != NULL) vboxLayout->addWidget(returnWidget);
+
+	connect(e1, SIGNAL(editingFinished()), this, SLOT(widthEntry()));
+	connect(e2, SIGNAL(editingFinished()), this, SLOT(heightEntry()));
+
+	m_widthEditor = e1;
+	m_heightEditor = e2;
+
+	vboxLayout->addWidget(subframe1);
+	vboxLayout->addWidget(subframe2);
+
+	if (includeProportion) {
+		QFrame * subframe3 = new QFrame();
+		QHBoxLayout * hboxLayout3 = new QHBoxLayout();
+		hboxLayout3->setAlignment(Qt::AlignLeft);
+		hboxLayout3->setContentsMargins(0, 0, 0, 0);
+		hboxLayout3->setSpacing(0);
+	
+		QLabel * l3 = new QLabel(tr("keep in proportion"));
+		l3->setMargin(0);
+		l3->setObjectName("infoViewLabel");
+		QCheckBox * checkBox = new QCheckBox();
+		checkBox->setChecked(m_keepAspectRatio);
+		checkBox->setObjectName("infoViewCheckBox");
+
+		hboxLayout3->addWidget(l3);
+		hboxLayout3->addWidget(checkBox);
+		subframe3->setLayout(hboxLayout3);
+		connect(checkBox, SIGNAL(toggled(bool)), this, SLOT(keepAspectRatio(bool)));
+		m_aspectRatioCheck = checkBox;
+
+		vboxLayout->addWidget(subframe3);
+	}
+
+	frame->setLayout(vboxLayout);
+
+	return frame;
 }

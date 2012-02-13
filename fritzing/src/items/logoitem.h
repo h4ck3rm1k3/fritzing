@@ -90,7 +90,6 @@ protected:
 	QString m_logo;
 	bool m_hasLogo;
 	QString m_originalFilename;
-	QCheckBox * m_aspectRatioCheck;
 	QComboBox * m_fileNameComboBox;
 };
 

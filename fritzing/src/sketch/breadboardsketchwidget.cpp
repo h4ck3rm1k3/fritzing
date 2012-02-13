@@ -108,11 +108,7 @@ BaseCommand::CrossViewType BreadboardSketchWidget::wireSplitCrossView()
 	return BaseCommand::CrossView;
 }
 
-bool BreadboardSketchWidget::canDropModelPart(ModelPart * modelPart) {
-	if (modelPart->itemType() == ModelPart::Board || modelPart->itemType() == ModelPart::ResizableBoard) {
-		return matchesLayer(modelPart);
-	}
-	
+bool BreadboardSketchWidget::canDropModelPart(ModelPart * modelPart) {	
 	switch (modelPart->itemType()) {
 		case ModelPart::Board:
 		case ModelPart::ResizableBoard:
@@ -125,7 +121,9 @@ bool BreadboardSketchWidget::canDropModelPart(ModelPart * modelPart) {
 		case ModelPart::Via:
 			return false;
 		default:
-			return !modelPart->moduleID().endsWith(ModuleIDNames::SchematicFrameModuleIDName);
+			if (modelPart->moduleID().endsWith(ModuleIDNames::SchematicFrameModuleIDName)) return false;
+			if (modelPart->moduleID().endsWith(ModuleIDNames::PadModuleIDName)) return false;
+			return true;
 	}
 }
 

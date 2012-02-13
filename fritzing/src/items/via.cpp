@@ -49,51 +49,9 @@ void Via::setBoth(const QString & holeDiameter, const QString & ringThickness) {
 	if (this->m_viewIdentifier != ViewIdentifierClass::PCBView) return;
 
 	ItemBase * otherLayer = setBothSvg(holeDiameter, ringThickness);
-
-	// there's only one connector
-	foreach (Connector * connector, m_modelPart->connectors().values()) {
-		if (connector == NULL) continue;
-
-		connector->unprocess(m_viewIdentifier, m_viewLayerID);
-		SvgIdLayer * svgIdLayer = connector->fullPinInfo(m_viewIdentifier, m_viewLayerID);
-		if (svgIdLayer == NULL) continue;
-
-		bool result = m_extraRenderer->setUpConnector(svgIdLayer, false);
-		if (!result) continue;
-
-		setBothConnectors(this, svgIdLayer);
-	}
-
-	if (otherLayer) {
-		foreach (Connector * connector, m_modelPart->connectors().values()) {
-			if (connector == NULL) continue;
-
-			connector->unprocess(m_viewIdentifier, otherLayer->viewLayerID());
-			SvgIdLayer * svgIdLayer = connector->fullPinInfo(m_viewIdentifier, otherLayer->viewLayerID());
-			if (svgIdLayer == NULL) continue;
-
-			bool result = m_otherLayerRenderer->setUpConnector(svgIdLayer, false);
-			if (!result) continue;
-
-			setBothConnectors(otherLayer, svgIdLayer);
-		}
-	}
-
-
+	resetConnectors(otherLayer, m_otherLayerRenderer);
 }
 
-void Via::setBothConnectors(ItemBase * itemBase, SvgIdLayer * svgIdLayer) 
-{
-	foreach (ConnectorItem * connectorItem, itemBase->cachedConnectorItems()) {
-		DebugDialog::debug(QString("via set rect %1").arg(itemBase->viewIdentifier()), svgIdLayer->m_rect);
-
-		connectorItem->setRect(svgIdLayer->m_rect);
-		connectorItem->setTerminalPoint(svgIdLayer->m_point);
-		connectorItem->setRadius(svgIdLayer->m_radius, svgIdLayer->m_strokeWidth);
-		connectorItem->attachedMoved();
-		break;
-	}
-}
 
 QString Via::makeID() {
 	return "connector0pin";

@@ -11,8 +11,9 @@
   <tag>fritzing core</tag>
  </tags>
  <properties>
-  <property name="width" ></property>
-  <property name="height" ></property>
+  <property name="shape" ></property>
+  <property name="layer" ></property>
+  <property name="connect at" ></property>
  </properties>
  <taxonomy>discreteParts.pcb.pad</taxonomy>
  <description>Pad</description>
@@ -24,17 +25,16 @@
   </iconView>
   <breadboardView>
    <layers image="pcb/pad.svg" >
-    <layer layerId="copper0" />
+    <layer layerId="copper1" />
    </layers>
   </breadboardView>
   <schematicView>
    <layers image="pcb/pad.svg" >
-    <layer layerId="copper0" />
+    <layer layerId="copper1" />
    </layers>
   </schematicView>
   <pcbView>
    <layers image="pcb/pad.svg" >
-    <layer layerId="copper0" />
     <layer layerId="copper1" />
    </layers>
   </pcbView>
@@ -44,13 +44,12 @@
       <description>via</description>
       <views>
         <breadboardView>
-          <p svgId="connector0pad" layer="copper0" />
+          <p svgId="connector0pad" layer="copper1" />
         </breadboardView>
         <schematicView>
-          <p svgId="connector0pad" layer="copper0" />
+          <p svgId="connector0pad" layer="copper1" />
         </schematicView>
         <pcbView>
-          <p svgId="connector0pad" layer="copper0" />
           <p svgId="connector0pad" layer="copper1" />
         </pcbView>
       </views>

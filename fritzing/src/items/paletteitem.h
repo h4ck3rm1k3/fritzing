@@ -81,6 +81,9 @@ public:
 	bool loadExtraRenderer(const QString & svg, bool fastload);
 	void renamePins(const QStringList & labels, bool singleRow);
 	void resetConnectors();
+	void resetConnectors(ItemBase * otherLayer, FSvgRenderer * otherLayerRenderer);
+	void resetConnector(ItemBase * itemBase, SvgIdLayer * svgIdLayer);
+
 
 public:
 	static QString genFZP(const QString & moduleid, const QString & templateName, int minPins, int maxPins, int steps, bool smd);

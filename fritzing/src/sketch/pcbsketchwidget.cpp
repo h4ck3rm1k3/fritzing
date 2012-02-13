@@ -691,13 +691,21 @@ void PCBSketchWidget::resizeBoard(double mmW, double mmH, bool doEmit)
 	PaletteItem * item = getSelectedPart();
 	if (item == NULL) return;
 
+	bool handle = false;
 	switch (item->itemType()) {
 		case ModelPart::ResizableBoard:
 		case ModelPart::Logo:
+			handle = true;
+			break;
+		case ModelPart::Part:
+			handle = item->moduleID().endsWith(ModuleIDNames::PadModuleIDName);
 			break;
 		default:
-			return SketchWidget::resizeBoard(mmW, mmH, doEmit);
+			break;
 	}
+
+	if (!handle) return SketchWidget::resizeBoard(mmW, mmH, doEmit);
+
 
 	double origw = item->modelPart()->prop("width").toDouble();
 	double origh = item->modelPart()->prop("height").toDouble();

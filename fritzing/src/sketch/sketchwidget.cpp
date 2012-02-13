@@ -48,6 +48,7 @@ $Date$
 #include "../items/partfactory.h"
 #include "../items/paletteitem.h"
 #include "../items/logoitem.h"
+#include "../items/pad.h"
 #include "../items/ruler.h"
 #include "../items/symbolpaletteitem.h"
 #include "../items/wire.h"
@@ -7220,6 +7221,10 @@ void SketchWidget::resizeBoard(long itemID, double mmW, double mmH) {
 			return;
 	}
 
+	Pad * pad = qobject_cast<Pad *>(item);
+	if (pad) {
+		pad->resizeMM(mmW, mmH, m_viewLayers);
+	}
 }
 
 void SketchWidget::resizeBoard(double mmW, double mmH, bool doEmit)
