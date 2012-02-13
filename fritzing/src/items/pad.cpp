@@ -296,7 +296,11 @@ void Pad::addedToScene(bool temporary)
     return PaletteItem::addedToScene(temporary);
 }
 
-void Pad::terminalPointEntry(const QString & value) {
+void Pad::terminalPointEntry(const QString &) {
+	QComboBox * comboBox = qobject_cast<QComboBox *>(sender());
+	if (comboBox == NULL) return;
+
+	QString value = comboBox->itemData(comboBox->currentIndex()).toString();
 	QString connectAt = m_modelPart->prop("connect").toString();
 	if (connectAt.compare(value) == 0) return;
 
