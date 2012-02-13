@@ -81,10 +81,6 @@ protected:
 	QString makeNextLayerSvg(ViewLayer::ViewLayerID, double mmW, double mmH, double milsW, double milsH);
 	void resizeMMAux(double w, double h);
 
-
-protected:
-	QPointer<class FSvgRenderer> m_otherLayerRenderer;
-
 };
 
 

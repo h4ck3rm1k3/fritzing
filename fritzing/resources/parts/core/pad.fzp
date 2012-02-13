@@ -12,7 +12,6 @@
  </tags>
  <properties>
   <property name="shape" ></property>
-  <property name="layer" ></property>
   <property name="connect at" ></property>
  </properties>
  <taxonomy>discreteParts.pcb.pad</taxonomy>

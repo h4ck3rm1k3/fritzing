@@ -26,8 +26,6 @@ $Date: 2012-02-04 11:42:07 +0100 (Sat, 04 Feb 2012) $
 
 // TODO:
 //		choice of terminalpoint
-//		choice of layer
-//		border around outside
 
 #include "pad.h"
 
@@ -65,7 +63,6 @@ static double OriginalHeight = 32;
 Pad::Pad( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: ResizableBoard(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
-	m_otherLayerRenderer = NULL;
 }
 
 Pad::~Pad() {
@@ -91,7 +88,7 @@ QString Pad::makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, double mmW, double
 	QString svg = QString("<svg version='1.1' xmlns='http://www.w3.org/2000/svg'  x='0px' y='0px' width='%1px' height='%2px' viewBox='0 0 %1 %2'>\n"
 							"<g id='%5'>\n"
 							"<rect  id='connector0pad' x='2' y='2' fill='#FFBF00' stroke='none' stroke-width='0' width='%3' height='%4'/>\n"
-							"</g></g>\n"
+							"</g>\n"
 							"</svg>"
 							)
 					.arg(wpx + 4)
@@ -101,6 +98,7 @@ QString Pad::makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, double mmW, double
 					.arg(ViewLayer::viewLayerXmlNameFromID(viewLayerID))
 					;
 
+	DebugDialog::debug("pad svg: " + svg);
 	return svg;
 }
 
@@ -225,20 +223,8 @@ void Pad::hoverLeaveEvent( QGraphicsSceneHoverEvent * event ) {
 void Pad::resizeMMAux(double mmW, double mmH) {
 	ResizableBoard::resizeMMAux(mmW, mmH);
 
-	ItemBase * otherLayer = NULL;
-	foreach (ItemBase * layerKin, m_layerKin) {
-		if (layerKin->hasConnectors()) {
-			otherLayer = layerKin;
-			break;
-		}
-	}
-
-	if (m_otherLayerRenderer == NULL) {
-		m_otherLayerRenderer = new FSvgRenderer(this);
-	}
-	resetConnectors(otherLayer, m_otherLayerRenderer);
+	resetConnectors(NULL, NULL);
 }
-
 
 void Pad::addedToScene(bool temporary)
 {
