@@ -229,6 +229,10 @@ bool Pad::rotation45Allowed() {
 	return true;
 }
 
+bool Pad::freeRotationAllowed(Qt::KeyboardModifiers) {
+	return true;
+}
+
 bool Pad::hasPartNumberProperty()
 {
 	return false;
@@ -256,7 +260,7 @@ void Pad::mouseReleaseEvent(QGraphicsSceneMouseEvent * event)
 
 void Pad::mouseMoveEvent(QGraphicsSceneMouseEvent * event) 
 {
-	PaletteItem::mousePressEvent(event);
+	PaletteItem::mouseMoveEvent(event);
 }
 
 void Pad::paintSelected(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -300,4 +304,8 @@ void Pad::terminalPointEntry(const QString & value) {
 	if (infoGraphicsView != NULL) {
 		infoGraphicsView->setProp(this, "connect to", tr("connect to"), connectAt, value, true);
 	}
+}
+
+ResizableBoard::Corner Pad::findCorner(QPointF, Qt::KeyboardModifiers) {
+	return ResizableBoard::NO_CORNER;
 }

@@ -55,6 +55,7 @@ public:
 	PluralType isPlural();
 	bool rotationAllowed();
 	bool rotation45Allowed();
+	bool freeRotationAllowed(Qt::KeyboardModifiers);	
 	bool hasPartNumberProperty();
 	void setInitialSize();
 	void mousePressEvent(QGraphicsSceneMouseEvent * event );
@@ -77,6 +78,7 @@ protected:
 	QString makeFirstLayerSvg(double mmW, double mmH, double milsW, double milsH);
 	QString makeNextLayerSvg(ViewLayer::ViewLayerID, double mmW, double mmH, double milsW, double milsH);
 	void resizeMMAux(double w, double h);
+	ResizableBoard::Corner findCorner(QPointF, Qt::KeyboardModifiers);
 
 };
 
