@@ -33,7 +33,7 @@ $Date$
 #include <QVariant>
 #include <QLineEdit>
 #include <QCursor>
-#include <QCheckbox>
+#include <QCheckBox>
 
 #include "paletteitem.h"
 
