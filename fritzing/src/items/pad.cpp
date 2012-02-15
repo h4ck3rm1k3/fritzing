@@ -62,6 +62,7 @@ static double OriginalHeight = 32;
 Pad::Pad( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: ResizableBoard(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
+	m_decimalsAfter = 2;
 }
 
 Pad::~Pad() {
@@ -287,7 +288,6 @@ void Pad::hoverLeaveEvent( QGraphicsSceneHoverEvent * event ) {
 
 void Pad::resizeMMAux(double mmW, double mmH) {
 	ResizableBoard::resizeMMAux(mmW, mmH);
-
 	resetConnectors(NULL, NULL);
 }
 

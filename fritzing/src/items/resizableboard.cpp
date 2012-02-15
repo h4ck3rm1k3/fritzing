@@ -127,6 +127,7 @@ ResizableBoard::ResizableBoard( ModelPart * modelPart, ViewIdentifierClass::View
 	m_silkscreenRenderer = NULL;
 	m_corner = ResizableBoard::NO_CORNER;
 	m_currentScale = 1.0;
+	m_decimalsAfter = 1;
 }
 
 ResizableBoard::~ResizableBoard() {
@@ -389,11 +390,12 @@ void ResizableBoard::resizeMMAux(double mmW, double mmH) {
 		modelPart()->setProp("width", mmW);
 		modelPart()->setProp("height", mmH);
 
+		double tens = pow(10.0, m_decimalsAfter);
 		if (m_widthEditor) {
-			m_widthEditor->setText(QString::number(qRound(mmW * 10) / 10.0));
+			m_widthEditor->setText(QString::number(qRound(mmW * tens) / tens));
 		}
 		if (m_heightEditor) {
-			m_heightEditor->setText(QString::number(qRound(mmH * 10) / 10.0));
+			m_heightEditor->setText(QString::number(qRound(mmH * tens) / tens));
 		}
 	}
 	//	DebugDialog::debug(QString("fast load result %1 %2").arg(result).arg(s));
@@ -538,13 +540,14 @@ bool ResizableBoard::collectExtraInfo(QWidget * parent, const QString & family, 
 			vboxLayout->setMargin(0);
 			vboxLayout->setContentsMargins(0, 3, 0, 0);
 
+			double tens = pow(10.0, m_decimalsAfter);
 			QRectF r = this->boundingRect();
-			double w = qRound(GraphicsUtils::pixels2mm(r.width(), FSvgRenderer::printerScale()) * 100) / 100.0;
+			double w = qRound(GraphicsUtils::pixels2mm(r.width(), FSvgRenderer::printerScale()) * tens) / tens;
 			QLabel * l1 = new QLabel(tr("width: %1mm").arg(w));	
 			l1->setMargin(0);
 			l1->setObjectName("infoViewLabel");		
 
-			double h = qRound(GraphicsUtils::pixels2mm(r.height(), FSvgRenderer::printerScale()) * 100) / 100.0;
+			double h = qRound(GraphicsUtils::pixels2mm(r.height(), FSvgRenderer::printerScale()) * tens) / tens;
 			QLabel * l2 = new QLabel(tr("height: %1mm").arg(h));
 			l2->setMargin(0);
 			l2->setObjectName("infoViewLabel");		
@@ -766,8 +769,9 @@ void ResizableBoard::setKinCursor(Qt::CursorShape cursor) {
 
 QFrame * ResizableBoard::setUpDimEntry(bool includeProportion, QWidget * & returnWidget)
 {
-	double w = qRound(m_modelPart->prop("width").toDouble() * 10) / 10.0;	// truncate to 1 decimal point
-	double h = qRound(m_modelPart->prop("height").toDouble() * 10) / 10.0;  // truncate to 1 decimal point
+	double tens = pow(10.0, m_decimalsAfter);
+	double w = qRound(m_modelPart->prop("width").toDouble() * tens) / tens;	// truncate to 1 decimal point
+	double h = qRound(m_modelPart->prop("height").toDouble() * tens) / tens;  // truncate to 1 decimal point
 
 	QFrame * frame = new QFrame();
 	frame->setObjectName("infoViewPartFrame");
@@ -793,11 +797,11 @@ QFrame * ResizableBoard::setUpDimEntry(bool includeProportion, QWidget * & retur
 	l1->setObjectName("infoViewLabel");
 	QLineEdit * e1 = new QLineEdit();
 	QDoubleValidator * validator = new QDoubleValidator(e1);
-	validator->setRange(0.1, 999.9, 1);
+	validator->setRange(0.1, 999.9, m_decimalsAfter);
 	validator->setNotation(QDoubleValidator::StandardNotation);
 	e1->setObjectName("infoViewLineEdit");
 	e1->setValidator(validator);
-	e1->setMaxLength(5);
+	e1->setMaxLength(4 + m_decimalsAfter);
 	e1->setText(QString::number(w));
 
 	QLabel * l2 = new QLabel(tr("height(mm)"));
@@ -805,11 +809,11 @@ QFrame * ResizableBoard::setUpDimEntry(bool includeProportion, QWidget * & retur
 	l2->setObjectName("infoViewLabel");
 	QLineEdit * e2 = new QLineEdit();
 	validator = new QDoubleValidator(e1);
-	validator->setRange(0.1, 999.9, 1);
+	validator->setRange(0.1, 999.9, m_decimalsAfter);
 	validator->setNotation(QDoubleValidator::StandardNotation);
 	e2->setObjectName("infoViewLineEdit");
 	e2->setValidator(validator);
-	e2->setMaxLength(5);
+	e2->setMaxLength(4 + m_decimalsAfter);
 	e2->setText(QString::number(h));
 
 	hboxLayout1->addWidget(l1);

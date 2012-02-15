@@ -143,6 +143,7 @@ protected:
 	QPointF m_resizeStartBottomRight;
 	QPointF m_resizeStartTopRight;
 	QPointF m_resizeStartBottomLeft;
+	int m_decimalsAfter;
 };
 
 #endif
