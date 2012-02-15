@@ -739,6 +739,11 @@ ResizableBoard::Corner LogoItem::findCorner(QPointF scenePos, Qt::KeyboardModifi
 	return corner;
 }
 
+void LogoItem::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+	PaletteItem::paintHover(painter, option, widget);
+}
+
 ///////////////////////////////////////////////////////////////////////
 
 CopperLogoItem::CopperLogoItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)

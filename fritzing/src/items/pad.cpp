@@ -248,6 +248,11 @@ void Pad::setInitialSize() {
 	}
 }
 
+void Pad::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+	PaletteItem::paintHover(painter, option, widget);
+}
+
 void Pad::mousePressEvent(QGraphicsSceneMouseEvent * event) 
 {
 	PaletteItem::mousePressEvent(event);

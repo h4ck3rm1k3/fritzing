@@ -66,6 +66,7 @@ public:
 	void hoverLeaveEvent(QGraphicsSceneHoverEvent * event );
 	void hoverMoveEvent(QGraphicsSceneHoverEvent * event );
 	void addedToScene(bool temporary);
+	void paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 protected slots:
 	void terminalPointEntry(const QString &);

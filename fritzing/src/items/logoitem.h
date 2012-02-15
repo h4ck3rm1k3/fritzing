@@ -60,6 +60,7 @@ public:
 	PluralType isPlural();
 	void addedToScene(bool temporary);
 	void setHeight(double h);
+	void paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 protected slots:
 	void prepLoadImage();
