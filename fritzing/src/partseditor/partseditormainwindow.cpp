@@ -499,71 +499,70 @@ bool PartsEditorMainWindow::save() {
 }
 
 bool PartsEditorMainWindow::saveAs() {
-	if(validateMinRequirements()) {
-		QString fileNameBU = m_fwFilename;
-		QString moduleIdBU = m_moduleId;
+	if(!validateMinRequirements()) return false;
 
-		m_moduleId = ___emptyString___;
-		QString title = m_title->text();
-		m_fwFilename = title != ___emptyString___ ? title+FritzingPartExtension : m_fwFilename;
+	QString fileNameBU = m_fwFilename;
+	QString moduleIdBU = m_moduleId;
 
-		// TODO Mariano: This folder should be defined in the preferences... some day
-		QString partsFolderPath = FolderUtils::getUserDataStorePath("parts")+"/";
-		QString userPartsFolderPath = partsFolderPath+"user/";
+	m_moduleId = ___emptyString___;
+	QString title = m_title->text();
+	m_fwFilename = title != ___emptyString___ ? title+FritzingPartExtension : QFileInfo(m_fwFilename).baseName();
 
-		bool firstTime = true; // Perhaps the user wants to use the default file name, confirm first
-		while(m_fwFilename.isEmpty()
-			  || QFileInfo(userPartsFolderPath+m_fwFilename).exists()
-			  || (FolderUtils::isEmptyFileName(m_fwFilename,untitledFileName()) && firstTime) ) 
-		{
-			bool ok;
-			m_fwFilename = QInputDialog::getText(
-				this,
-				tr("Save as new part"),
-				tr("There's already a file with this name.\nPlease, specify a new filename"),
-				QLineEdit::Normal,
-				m_fwFilename,
-				&ok
-			);
-			firstTime = false;
-			if (!ok) {
-				m_moduleId = moduleIdBU;
-				m_fwFilename = fileNameBU;
-				return false;
-			}
+	// TODO Mariano: This folder should be defined in the preferences... some day
+	QString partsFolderPath = FolderUtils::getUserDataStorePath("parts")+"/";
+	QString userPartsFolderPath = partsFolderPath+"user/";
+
+	bool firstTime = true; // Perhaps the user wants to use the default file name, confirm first
+	while(m_fwFilename.isEmpty()
+			|| QFileInfo(userPartsFolderPath+m_fwFilename).exists()
+			|| (FolderUtils::isEmptyFileName(m_fwFilename,untitledFileName()) && firstTime) ) 
+	{
+		bool ok;
+		m_fwFilename = QInputDialog::getText(
+			this,
+			tr("Save as new part"),
+			tr("There's already a file with this name.\nPlease, specify a new filename"),
+			QLineEdit::Normal,
+			m_fwFilename,
+			&ok
+		);
+		firstTime = false;
+		if (!ok) {
+			m_moduleId = moduleIdBU;
+			m_fwFilename = fileNameBU;
+			return false;
 		}
+	}
 
-		m_fwFilename.replace(QRegExp("[^A-Za-z0-9\\.]"), "_");
+	m_fwFilename.replace(QRegExp("[^A-Za-z0-9\\.]"), "_");
 
-		Qt::CaseSensitivity cs = Qt::CaseSensitive;
-	#ifdef Q_WS_WIN
-		// seems to be necessary for Windows: getUserDataStorePath() returns a string starting with "c:"
-		// but the file dialog returns a string beginning with "C:"
-		cs = Qt::CaseInsensitive;
-	#endif
+	Qt::CaseSensitivity cs = Qt::CaseSensitive;
+#ifdef Q_WS_WIN
+	// seems to be necessary for Windows: getUserDataStorePath() returns a string starting with "c:"
+	// but the file dialog returns a string beginning with "C:"
+	cs = Qt::CaseInsensitive;
+#endif
 
-		QString filename = !m_fwFilename.startsWith(userPartsFolderPath, cs)
-						&& !m_fwFilename.startsWith(partsFolderPath, cs)
-				? userPartsFolderPath+m_fwFilename
-				: m_fwFilename;
-		QString guid = "__"+FolderUtils::getRandText()+FritzingPartExtension;
-		if(!alreadyHasExtension(filename, FritzingPartExtension)) {
-			filename += guid;
-		} else {
-			filename.replace(FritzingPartExtension,guid);
-		}
+	QString filename = !m_fwFilename.startsWith(userPartsFolderPath, cs)
+					&& !m_fwFilename.startsWith(partsFolderPath, cs)
+			? userPartsFolderPath+m_fwFilename
+			: m_fwFilename;
+	QString guid = "__"+FolderUtils::getRandText()+FritzingPartExtension;
+	if(!alreadyHasExtension(filename, FritzingPartExtension)) {
+		filename += guid;
+	} else {
+		filename.replace(FritzingPartExtension,guid);
+	}
 
-		makeNonCore();
-		if (!saveAsAux(filename)) return false;
+	makeNonCore();
+	if (!saveAsAux(filename)) return false;
 
-		if(wannaSaveAfterWarning(true)) {
-			m_savedAsNewPart = true;
-			m_updateEnabled = true;
-			updateButtons();
-			if(m_closeAfterSaving) close();
-			return true;
-		}
-
+	if(wannaSaveAfterWarning(true)) {
+		m_savedAsNewPart = true;
+		m_updateEnabled = true;
+		updateButtons();
+		if(m_closeAfterSaving) close();
+		return true;
 	}
 
 	return false;
