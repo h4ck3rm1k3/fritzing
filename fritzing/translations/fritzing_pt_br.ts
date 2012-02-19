@@ -1035,10 +1035,6 @@ Por favor selecione outro tipo de fonte do Fritzing para o substituir:</translat
 <context>
     <name>LogoItem</name>
     <message>
-        <source>size</source>
-        <translation>tamanho</translation>
-    </message>
-    <message>
         <source>logo</source>
         <translation>logotipo</translation>
     </message>
@@ -1069,18 +1065,6 @@ Por favor selecione outro tipo de fonte do Fritzing para o substituir:</translat
     <message>
         <source>Unable to display image from %1</source>
         <translation>Não é possível exibir imagem do %1</translation>
-    </message>
-    <message>
-        <source>width(mm)</source>
-        <translation>largura(mm)</translation>
-    </message>
-    <message>
-        <source>height(mm)</source>
-        <translation>altura(mm)</translation>
-    </message>
-    <message>
-        <source>keep in proportion</source>
-        <translation>manter na proporção</translation>
     </message>
     <message>
         <source>image file</source>
@@ -2686,6 +2670,22 @@ Would you like to convert &apos;%1&apos; to the .fzz format now or open it read-
         <source>Select all wires</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Set Copper Fill Seeds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fill empty regions of the copper layer--fill will include all traces connected to the seeds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear Copper Fill Seeds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fill will avoid all traces</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -2811,6 +2811,37 @@ Razão: %2 (código do erro %3)</translation>
     </message>
     <message>
         <source>Create Trace from Ratsnest</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Pad</name>
+    <message>
+        <source>shape</source>
+        <translation type="unfinished">forma</translation>
+    </message>
+    <message>
+        <source>center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>north</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>east</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>south</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>west</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>connect to</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4563,6 +4594,10 @@ is already there, we won&apos;t add it again, right?</source>
     <message>
         <source>height(mm)</source>
         <translation>altura(mm)</translation>
+    </message>
+    <message>
+        <source>keep in proportion</source>
+        <translation type="unfinished">manter na proporção</translation>
     </message>
 </context>
 <context>

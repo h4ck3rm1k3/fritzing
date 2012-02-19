@@ -1034,24 +1034,8 @@ Selecteer a.u.b. een Fritzing lettertype om ze te vervangen:</translation>
         <translation>Logo</translation>
     </message>
     <message>
-        <source>size</source>
-        <translation>grootte</translation>
-    </message>
-    <message>
         <source>load image file</source>
         <translation>Laad afbeelding</translation>
-    </message>
-    <message>
-        <source>width(mm)</source>
-        <translation>breedte (mm)</translation>
-    </message>
-    <message>
-        <source>height(mm)</source>
-        <translation>hoogte (mm)</translation>
-    </message>
-    <message>
-        <source>keep in proportion</source>
-        <translation>In proportie houden</translation>
     </message>
     <message>
         <source>Images</source>
@@ -2682,6 +2666,22 @@ Would you like to convert &apos;%1&apos; to the .fzz format now or open it read-
         <source>Select all wires</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Set Copper Fill Seeds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fill empty regions of the copper layer--fill will include all traces connected to the seeds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear Copper Fill Seeds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fill will avoid all traces</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -2807,6 +2807,37 @@ Reden : %2 (errcode %3)</translation>
     </message>
     <message>
         <source>Create Trace from Ratsnest</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Pad</name>
+    <message>
+        <source>shape</source>
+        <translation type="unfinished">vorm</translation>
+    </message>
+    <message>
+        <source>center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>north</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>east</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>south</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>west</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>connect to</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4546,6 +4577,10 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
     <message>
         <source>height(mm)</source>
         <translation type="unfinished">hoogte (mm)</translation>
+    </message>
+    <message>
+        <source>keep in proportion</source>
+        <translation type="unfinished">In proportie houden</translation>
     </message>
 </context>
 <context>

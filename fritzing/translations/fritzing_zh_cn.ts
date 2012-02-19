@@ -1027,10 +1027,6 @@ Please select one of the Fritzing fonts to replace them:</source>
 <context>
     <name>LogoItem</name>
     <message>
-        <source>size</source>
-        <translation>大小</translation>
-    </message>
-    <message>
         <source>logo</source>
         <translation>标识</translation>
     </message>
@@ -1061,18 +1057,6 @@ Please select one of the Fritzing fonts to replace them:</source>
     <message>
         <source>Unable to display image from %1</source>
         <translation>不能从%1显示图像</translation>
-    </message>
-    <message>
-        <source>width(mm)</source>
-        <translation>宽度(mm)</translation>
-    </message>
-    <message>
-        <source>height(mm)</source>
-        <translation>高度(mm)</translation>
-    </message>
-    <message>
-        <source>keep in proportion</source>
-        <translation>保持比例</translation>
     </message>
     <message>
         <source>image file</source>
@@ -2676,6 +2660,22 @@ Would you like to convert &apos;%1&apos; to the .fzz format now or open it read-
         <source>Select all wires</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Set Copper Fill Seeds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fill empty regions of the copper layer--fill will include all traces connected to the seeds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear Copper Fill Seeds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fill will avoid all traces</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -2800,6 +2800,37 @@ Reason: %2 (errcode %3)</source>
     </message>
     <message>
         <source>Create Trace from Ratsnest</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Pad</name>
+    <message>
+        <source>shape</source>
+        <translation type="unfinished">形状</translation>
+    </message>
+    <message>
+        <source>center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>north</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>east</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>south</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>west</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>connect to</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4540,6 +4571,10 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     <message>
         <source>height(mm)</source>
         <translation>高度(mm)</translation>
+    </message>
+    <message>
+        <source>keep in proportion</source>
+        <translation type="unfinished">保持比例</translation>
     </message>
 </context>
 <context>

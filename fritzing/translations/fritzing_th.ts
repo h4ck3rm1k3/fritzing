@@ -1026,19 +1026,7 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>load image file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>width(mm)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>height(mm)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1063,10 +1051,6 @@ Please select one of the Fritzing fonts to replace them:</source>
     </message>
     <message>
         <source>Unable to load image from %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>keep in proportion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2664,6 +2648,22 @@ Would you like to convert &apos;%1&apos; to the .fzz format now or open it read-
         <source>Select all wires</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Set Copper Fill Seeds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fill empty regions of the copper layer--fill will include all traces connected to the seeds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear Copper Fill Seeds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fill will avoid all traces</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -2787,6 +2787,37 @@ Reason: %2 (errcode %3)</source>
     </message>
     <message>
         <source>Create Trace from Ratsnest</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Pad</name>
+    <message>
+        <source>shape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>north</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>east</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>south</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>west</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>connect to</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4502,6 +4533,10 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     </message>
     <message>
         <source>height(mm)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>keep in proportion</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
