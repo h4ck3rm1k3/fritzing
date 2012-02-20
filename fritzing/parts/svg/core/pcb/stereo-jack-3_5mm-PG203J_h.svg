@@ -6,11 +6,11 @@
  <circle cx="4527" cy="3381.5" fill="none" id="connector3pin" r="351.75" stroke="#ff9400" stroke-width="100"/>
  <circle cx="4527" cy="4365.5" fill="none" id="connector4pin" r="351.75" stroke="#ff9400" stroke-width="100"/>
 
- <circle id="nonconn0" cx="2559" cy="429.5" fill="black" r="176.877" stroke="black" stroke-width="0"/>
- <circle id="nonconn1" cx="1575" cy="429.5" fill="black" r="176.877" stroke="black" stroke-width="0"/>
- <circle id="nonconn2" cx="1575" cy="4365.5" fill="black" r="176.877" stroke="black" stroke-width="0"/>
- <circle id="nonconn3" cx="2559" cy="4365.5" fill="black" r="176.877" stroke="black" stroke-width="0"/>
- <circle id="nonconn4" cx="4527" cy="2397.5" fill="black" r="176.877" stroke="black" stroke-width="0"/>
+ <circle id="nonconn0" cx="2559" cy="429.5" fill="black" r="220" stroke="black" stroke-width="0"/>
+ <circle id="nonconn1" cx="1575" cy="429.5" fill="black" r="220" stroke="black" stroke-width="0"/>
+ <circle id="nonconn2" cx="1575" cy="4365.5" fill="black" r="220" stroke="black" stroke-width="0"/>
+ <circle id="nonconn3" cx="2559" cy="4365.5" fill="black" r="220" stroke="black" stroke-width="0"/>
+ <circle id="nonconn4" cx="4527" cy="2397.5" fill="black" r="220" stroke="black" stroke-width="0"/>
 
 </g></g>
 <g id="silkscreen">
