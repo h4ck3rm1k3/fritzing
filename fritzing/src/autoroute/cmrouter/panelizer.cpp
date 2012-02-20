@@ -406,7 +406,7 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 			DebugDialog::debug("converting " + prefix + " " + suffix);
 			QSizeF svgSize(panelParams.panelWidth, panelParams.panelHeight);
 			GerberGenerator::doEnd(planePair->svgs.at(i), 2, layerThingList.at(i).name, layerThingList.at(i).forWhy, svgSize, gerberDir.absolutePath(), prefix, suffix, false, false);
-
+			DebugDialog::debug("after converting " + prefix + " " + suffix);
 		}
 
 		QDomDocument doc;
@@ -667,6 +667,13 @@ bool Panelizer::checkBoards(QDomElement & board, QHash<QString, QString> & fzzFi
 bool Panelizer::openWindows(QDomElement & board, QHash<QString, QString> & fzzFilePaths, FApplication * app, PanelParams & panelParams, QDir & fzDir, QHash<QString, PanelItem *> & refPanelItems)
 {
 	while (!board.isNull()) {
+		int required = board.attribute("requiredCount", "").toInt();
+		int optional = board.attribute("maxOptionalCount", "").toInt();
+		if (required == 0 && optional == 0) {
+			board = board.nextSiblingElement("board"); 
+			continue;
+		}
+
 		QString boardName = board.attribute("name");
 		QString path = fzzFilePaths.value(boardName, "");
 		int loaded = 0;
@@ -700,8 +707,8 @@ bool Panelizer::openWindows(QDomElement & board, QHash<QString, QString> & fzzFi
 		panelItem->window = mainWindow;
 		panelItem->path = path;
 		panelItem->board = boardItem;
-		panelItem->required = board.attribute("requiredCount", "").toInt();
-		panelItem->maxOptional = board.attribute("maxOptionalCount", "").toInt();
+		panelItem->required = required;
+		panelItem->maxOptional = optional;
 
 		QSizeF boardSize = boardItem->size();
 		ResizableBoard * resizableBoard = qobject_cast<ResizableBoard *>(boardItem->layerKinChief());

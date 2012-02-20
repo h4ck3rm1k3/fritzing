@@ -772,7 +772,7 @@ void PaletteItem::resetConnectors(ItemBase * otherLayer,FSvgRenderer * otherLaye
 void PaletteItem::resetConnector(ItemBase * itemBase, SvgIdLayer * svgIdLayer) 
 {
 	foreach (ConnectorItem * connectorItem, itemBase->cachedConnectorItems()) {
-		DebugDialog::debug(QString("via set rect %1").arg(itemBase->viewIdentifier()), svgIdLayer->m_rect);
+		//DebugDialog::debug(QString("via set rect %1").arg(itemBase->viewIdentifier()), svgIdLayer->m_rect);
 
 		connectorItem->setRect(svgIdLayer->m_rect);
 		connectorItem->setTerminalPoint(svgIdLayer->m_point);

@@ -1001,7 +1001,8 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 	}
 
 
-	DebugDialog::debug(QString("current top level windows: %1").arg(QApplication::topLevelWidgets().size()));
+	DebugDialog::debug(QString("top level windows: %1").arg(QApplication::topLevelWidgets().size()));
+	/*
 	foreach (QWidget * widget, QApplication::topLevelWidgets()) {
 		QMenu * menu = qobject_cast<QMenu *>(widget);
 		if (menu != NULL) {
@@ -1013,6 +1014,7 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 			.arg(widget->toolTip())
 			);
 	}
+	*/
 
 	m_closing = true;
 	emit aboutToClose();
