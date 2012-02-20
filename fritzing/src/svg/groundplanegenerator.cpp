@@ -43,6 +43,7 @@ $Date$
 #include <limits>
 
 static const int THRESHOLD = 2;
+static const double BORDERINCHES = 0.04;
 
 #define QGRAY(rgb) (qGray(rgb) * qAlpha(rgb) / 255)
 inline int OFFSET(int x, int y, QImage * image) { return (y * image->width()) + x; }
@@ -300,7 +301,7 @@ QImage * GroundPlaneGenerator::generateGroundPlaneAux(const QString & boardSvg, 
 	image->save("testGroundFillBoard.png");
 #endif
 
-	for (double m = 0; m < .004; m += (1.0 / res)) {
+	for (double m = 0; m < BORDERINCHES; m += (1.0 / res)) {   // 1 mm
 		QList<QPoint> points;
 		collectBorderPoints(*image, points);
 
