@@ -27,6 +27,7 @@ $Date: 2011-08-15 01:36:25 +0200 (Mon, 15 Aug 2011) $
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QSvgRenderer>
+#include <qmath.h>
 
 #include "gerbergenerator.h"
 #include "../debugdialog.h"
@@ -50,7 +51,25 @@ const QString GerberGenerator::DrillSuffix = "_drill.txt";
 const QString GerberGenerator::OutlineSuffix = "_contour.gm1";
 const QString GerberGenerator::MagicBoardOutlineID = "boardoutline";
 
-const double GerberGenerator::MaskClearanceMils = 3;		
+const double GerberGenerator::MaskClearanceMils = 3;	
+
+////////////////////////////////////////////
+
+bool pixelsCollide(QImage * image1, QImage * image2, int x1, int y1, int x2, int y2) {
+	for (int y = y1; y < y2; y++) {
+		for (int x = x1; x < x2; x++) {
+			QRgb p1 = image1->pixel(x, y);
+			if (p1 == 0xffffff) continue;
+
+			QRgb p2 = image2->pixel(x, y);
+			if (p2 == 0xffffff) continue;
+
+			return true;
+		}
+	}
+
+	return false;
+}
 
 ////////////////////////////////////////////
 
@@ -73,17 +92,18 @@ void GerberGenerator::exportToGerber(const QString & filename, const QString & e
 	}
 
 	LayerList maskLayerIDs = ViewLayer::maskLayers(ViewLayer::Bottom);
-	int maskInvalidCount = doMask(maskLayerIDs, "Mask0", MaskBottomSuffix, board, sketchWidget, filename, exportDir, displayMessageBoxes);
+	QString maskBottom, maskTop;
+	int maskInvalidCount = doMask(maskLayerIDs, "Mask0", MaskBottomSuffix, board, sketchWidget, filename, exportDir, displayMessageBoxes, maskBottom);
 
 	if (sketchWidget->boardLayers() == 2) {
 		maskLayerIDs = ViewLayer::maskLayers(ViewLayer::Top);
-		maskInvalidCount += doMask(maskLayerIDs, "Mask1", MaskTopSuffix, board, sketchWidget, filename, exportDir, displayMessageBoxes);
+		maskInvalidCount += doMask(maskLayerIDs, "Mask1", MaskTopSuffix, board, sketchWidget, filename, exportDir, displayMessageBoxes, maskTop);
 	}
 
     LayerList silkLayerIDs = ViewLayer::silkLayers(ViewLayer::Top);
-	int silkInvalidCount = doSilk(silkLayerIDs, "Silk1", SilkTopSuffix, board, sketchWidget, filename, exportDir, displayMessageBoxes);
+	int silkInvalidCount = doSilk(silkLayerIDs, "Silk1", SilkTopSuffix, board, sketchWidget, filename, exportDir, displayMessageBoxes, maskTop);
     silkLayerIDs = ViewLayer::silkLayers(ViewLayer::Bottom);
-	silkInvalidCount += doSilk(silkLayerIDs, "Silk0", SilkBottomSuffix, board, sketchWidget, filename, exportDir, displayMessageBoxes);
+	silkInvalidCount += doSilk(silkLayerIDs, "Silk0", SilkBottomSuffix, board, sketchWidget, filename, exportDir, displayMessageBoxes, maskBottom);
 
     // now do it for the outline/contour
     LayerList outlineLayerIDs = ViewLayer::outlineLayers();
@@ -96,7 +116,7 @@ void GerberGenerator::exportToGerber(const QString & filename, const QString & e
     }
 
 	svgOutline = cleanOutline(svgOutline);
-	svgOutline = clipToBoard(svgOutline, board, "board", SVG2gerber::ForOutline);
+	svgOutline = clipToBoard(svgOutline, board, "board", SVG2gerber::ForOutline, "");
 
 	QXmlStreamReader streamReader(svgOutline);
 	QSizeF svgSize = FSvgRenderer::parseForWidthAndHeight(streamReader);
@@ -135,7 +155,7 @@ int GerberGenerator::doCopper(ItemBase * board, PCBSketchWidget * sketchWidget, 
 	QXmlStreamReader streamReader(svg);
 	QSizeF svgSize = FSvgRenderer::parseForWidthAndHeight(streamReader);
 
-	svg = clipToBoard(svg, board, copperName, SVG2gerber::ForCopper);
+	svg = clipToBoard(svg, board, copperName, SVG2gerber::ForCopper, "");
 	if (svg.isEmpty()) {
 		displayMessage(QObject::tr("%1 file export failure (3)").arg(copperName), displayMessageBoxes);
 		return 0;
@@ -145,7 +165,7 @@ int GerberGenerator::doCopper(ItemBase * board, PCBSketchWidget * sketchWidget, 
 }
 
 
-int GerberGenerator::doSilk(LayerList silkLayerIDs, const QString & silkName, const QString & gerberSuffix, ItemBase * board, PCBSketchWidget * sketchWidget, const QString & filename, const QString & exportDir, bool displayMessageBoxes ) 
+int GerberGenerator::doSilk(LayerList silkLayerIDs, const QString & silkName, const QString & gerberSuffix, ItemBase * board, PCBSketchWidget * sketchWidget, const QString & filename, const QString & exportDir, bool displayMessageBoxes, const QString & clipString) 
 {
 	QSizeF imageSize;
 	bool empty;
@@ -169,7 +189,7 @@ int GerberGenerator::doSilk(LayerList silkLayerIDs, const QString & silkName, co
 	QXmlStreamReader streamReader(svgSilk);
 	QSizeF svgSize = FSvgRenderer::parseForWidthAndHeight(streamReader);
 
-	svgSilk = clipToBoard(svgSilk, board, silkName, SVG2gerber::ForSilk);
+	svgSilk = clipToBoard(svgSilk, board, silkName, SVG2gerber::ForSilk, clipString);
 	if (svgSilk.isEmpty()) {
 		displayMessage(QObject::tr("silk export failure"), displayMessageBoxes);
 		return 0;
@@ -206,7 +226,7 @@ int GerberGenerator::doDrill(ItemBase * board, PCBSketchWidget * sketchWidget, c
 	QXmlStreamReader streamReader(svgDrill);
 	QSizeF svgSize = FSvgRenderer::parseForWidthAndHeight(streamReader);
 
-	svgDrill = clipToBoard(svgDrill, board, "Copper0", SVG2gerber::ForDrill);
+	svgDrill = clipToBoard(svgDrill, board, "Copper0", SVG2gerber::ForDrill, "");
 	if (svgDrill.isEmpty()) {
 		displayMessage(QObject::tr("drill export failure"), displayMessageBoxes);
 		return 0;
@@ -215,7 +235,7 @@ int GerberGenerator::doDrill(ItemBase * board, PCBSketchWidget * sketchWidget, c
 	return doEnd(svgDrill, sketchWidget->boardLayers(), "drill", SVG2gerber::ForDrill, svgSize * GraphicsUtils::StandardFritzingDPI, exportDir, filename, DrillSuffix, displayMessageBoxes, true);
 }
 
-int GerberGenerator::doMask(LayerList maskLayerIDs, const QString &maskName, const QString & gerberSuffix, ItemBase * board, PCBSketchWidget * sketchWidget, const QString & filename, const QString & exportDir, bool displayMessageBoxes ) 
+int GerberGenerator::doMask(LayerList maskLayerIDs, const QString &maskName, const QString & gerberSuffix, ItemBase * board, PCBSketchWidget * sketchWidget, const QString & filename, const QString & exportDir, bool displayMessageBoxes, QString & clipString) 
 {
 	// don't want these in the mask laqyer
 	QList<ItemBase *> copperLogoItems;
@@ -245,12 +265,13 @@ int GerberGenerator::doMask(LayerList maskLayerIDs, const QString &maskName, con
 	QXmlStreamReader streamReader(svgMask);
 	QSizeF svgSize = FSvgRenderer::parseForWidthAndHeight(streamReader);
 
-	svgMask = clipToBoard(svgMask, board, maskName, SVG2gerber::ForCopper);
+	svgMask = clipToBoard(svgMask, board, maskName, SVG2gerber::ForCopper, "");
 	if (svgMask.isEmpty()) {
 		displayMessage(QObject::tr("mask export failure"), displayMessageBoxes);
 		return 0;
 	}
 
+	clipString = svgMask;
 
 	return doEnd(svgMask, sketchWidget->boardLayers(), maskName, SVG2gerber::ForCopper, svgSize * GraphicsUtils::StandardFritzingDPI, exportDir, filename, gerberSuffix, displayMessageBoxes, true);
 }
@@ -296,13 +317,13 @@ void GerberGenerator::displayMessage(const QString & message, bool displayMessag
 	DebugDialog::debug(message);
 }
 
-QString GerberGenerator::clipToBoard(QString svgString, ItemBase * board, const QString & layerName, SVG2gerber::ForWhy forWhy) {
+QString GerberGenerator::clipToBoard(QString svgString, ItemBase * board, const QString & layerName, SVG2gerber::ForWhy forWhy, const QString & clipString) {
 	QRectF source = board->sceneBoundingRect();
 	source.moveTo(0, 0);
-	return clipToBoard(svgString, source, layerName, forWhy);
+	return clipToBoard(svgString, source, layerName, forWhy, clipString);
 }
 
-QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, const QString & layerName, SVG2gerber::ForWhy forWhy) {
+QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, const QString & layerName, SVG2gerber::ForWhy forWhy, const QString & clipString) {
 	// document 1 will contain svg that is easy to convert to gerber
 	QDomDocument domDocument1;
 	QString errorStr;
@@ -356,10 +377,28 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
     TextUtils::collectLeaves(e2, transformCount2, leaves2);
 
 	double res = GraphicsUtils::StandardFritzingDPI;
+	// convert from pixel dpi to StandardFritzingDPI
 	QRectF sourceRes(boardRect.left() * res / FSvgRenderer::printerScale(), boardRect.top() * res / FSvgRenderer::printerScale(), 
 					 boardRect.width() * res / FSvgRenderer::printerScale(), boardRect.height() * res / FSvgRenderer::printerScale());
 	int twidth = sourceRes.width();
 	int theight = sourceRes.height();
+	QSize imgSize(twidth, theight);
+
+	QImage * clipImage = NULL;
+	if (!clipString.isEmpty()) {
+		clipImage = new QImage(imgSize, QImage::Format_RGB32);
+		clipImage->fill(0xffffffff);
+		clipImage->setDotsPerMeterX(res * GraphicsUtils::InchesPerMeter);
+		clipImage->setDotsPerMeterY(res * GraphicsUtils::InchesPerMeter);
+		QRectF target(0, 0, twidth, theight);
+
+		QXmlStreamReader reader(clipString);
+		QSvgRenderer renderer(&reader);		
+		QPainter painter;
+		painter.begin(clipImage);
+		renderer.render(&painter, target);
+		painter.end();
+	}
 
 	svgString = TextUtils::removeXMLEntities(domDocument1.toString());
 
@@ -371,13 +410,12 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 		QRectF bounds = renderer.boundsOnElement(n);
 		QMatrix m = renderer.matrixForElement(n);
 		QDomElement element = leaves1.at(i);
-		QString ms = element.attribute("transform");
-		if (!ms.isEmpty()) {
-			m *= TextUtils::transformStringToMatrix(ms);
-		}
 		QRectF mBounds = m.mapRect(bounds);
 		if (mBounds.left() < sourceRes.left() - 0.1|| mBounds.top() < sourceRes.top() - 0.1 || mBounds.right() > sourceRes.right() + 0.1 || mBounds.bottom() > sourceRes.bottom() + 0.1) {
-			// element is outside of bounds, squash it so it will be clipped
+			// element is outside of bounds--squash it so it will be clipped
+			// we don't care if the board shape is irregular
+			// since anything printed between the shape and the bounding rectangle 
+			// will be physically clipped when the board is cut out
 			element.setTagName("g");
 			anyClipped = anyConverted = true;
 		}	
@@ -394,6 +432,46 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 		}
 	}
 
+	if (clipImage) {
+		QImage another(imgSize, QImage::Format_RGB32);
+		another.fill(0xffffffff);
+		another.setDotsPerMeterX(res * GraphicsUtils::InchesPerMeter);
+		another.setDotsPerMeterY(res * GraphicsUtils::InchesPerMeter);
+		QRectF target(0, 0, twidth, theight);
+
+		svgString = TextUtils::removeXMLEntities(domDocument1.toString());
+		QXmlStreamReader reader(svgString);
+		QSvgRenderer renderer(&reader);
+		QPainter painter;
+		painter.begin(&another);
+		renderer.render(&painter, target);
+		painter.end();
+
+		for (int i = 0; i < transformCount1; i++) {
+			QDomElement element = leaves1.at(i);
+			if (element.tagName().compare("g") == 0) {
+				// element is already converted to raster space, we'll clip it later
+				continue;
+			}
+
+			QString n = QString::number(i);
+			QRectF bounds = renderer.boundsOnElement(n);
+			QMatrix m = renderer.matrixForElement(n);
+			QRectF mBounds = m.mapRect(bounds);
+
+
+			int x1 = qFloor(qMax(0.0, mBounds.left() - sourceRes.left()));
+			int x2 = qCeil(qMin(sourceRes.width(), mBounds.right() - sourceRes.left()));
+			int y1 = qFloor(qMax(0.0, mBounds.top() - sourceRes.top()));
+			int y2 = qCeil(qMin(sourceRes.height(), mBounds.bottom() - sourceRes.top()));
+			
+			if (pixelsCollide(&another, clipImage, x1, y1, x2, y2)) {
+				element.setTagName("g");
+				anyClipped = anyConverted = true;
+			}
+		}
+	}
+
 	if (anyClipped) {
 		// svg has been changed by clipping process so get the string again
 		svgString = TextUtils::removeXMLEntities(domDocument1.toString());
@@ -402,7 +480,7 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
     if (anyConverted) {
 		for (int i = 0; i < transformCount1; i++) {
 			QDomElement element1 = leaves1.at(i);
-			if (element1.tagName() != "g") {
+			if (element1.tagName().compare("g") != 0) {
 				// document 1 element svg can be directly converted to gerber
 				// so remove it from document 2
 				QDomElement element2 = leaves2.at(i);
@@ -410,7 +488,6 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 			}
 		}
 		
-		QSize imgSize(twidth, theight);
 
 		// expand the svg to fill the space of the image
 		QDomElement root = domDocument2.documentElement();
@@ -445,6 +522,18 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 		painter.end();
 		image.invertPixels();				// need white pixels on a black background for GroundPlaneGenerator
 
+		if (clipImage != NULL) {
+			// can this be done with a single blt using composition mode
+			// if not, grab a scanline instead of testing every pixel
+			for (int y = 0; y < theight; y++) {
+				for (int x = 0; x < twidth; x++) {
+					if (clipImage->pixel(x, y) != 0xffffffff) {
+						image.setPixel(x, y, 0);
+					}
+				}
+			}
+		}
+
 #ifndef QT_NO_DEBUG
 		image.save("output.png");
 #endif
@@ -477,6 +566,8 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 			svgString = TextUtils::mergeSvgFinish(doc);
 		}
 	}
+
+	if (clipImage) delete clipImage;
 
 	return svgString;
 }
