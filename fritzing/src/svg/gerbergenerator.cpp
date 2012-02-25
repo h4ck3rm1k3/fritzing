@@ -37,7 +37,6 @@ $Date: 2011-08-15 01:36:25 +0200 (Mon, 15 Aug 2011) $
 #include "../utils/graphicsutils.h"
 #include "../utils/textutils.h"
 #include "../utils/folderutils.h"
-#include "../items/logoitem.h"
 
 static QRegExp AaCc("[aAcCqQtTsS]");
 
@@ -51,6 +50,7 @@ const QString GerberGenerator::DrillSuffix = "_drill.txt";
 const QString GerberGenerator::OutlineSuffix = "_contour.gm1";
 const QString GerberGenerator::MagicBoardOutlineID = "boardoutline";
 
+const double GerberGenerator::MaskClearanceMils = 3;		
 
 ////////////////////////////////////////////
 
@@ -105,7 +105,7 @@ void GerberGenerator::exportToGerber(const QString & filename, const QString & e
     SVG2gerber outlineGerber;
 	int outlineInvalidCount = outlineGerber.convert(svgOutline, sketchWidget->boardLayers() == 2, "contour", SVG2gerber::ForOutline, svgSize * GraphicsUtils::StandardFritzingDPI);
 	
-	DebugDialog::debug(QString("outline output: %1").arg(outlineGerber.getGerber()));
+	//DebugDialog::debug(QString("outline output: %1").arg(outlineGerber.getGerber()));
 	saveEnd("contour", exportDir, filename, OutlineSuffix, displayMessageBoxes, true, outlineGerber);
 
 	doDrill(board, sketchWidget, filename, exportDir, displayMessageBoxes);
@@ -219,13 +219,7 @@ int GerberGenerator::doMask(LayerList maskLayerIDs, const QString &maskName, con
 {
 	// don't want these in the mask laqyer
 	QList<ItemBase *> copperLogoItems;
-	foreach (QGraphicsItem * item, sketchWidget->items()) {
-		CopperLogoItem * logoItem = dynamic_cast<CopperLogoItem *>(item);
-		if (logoItem && logoItem->isVisible()) {
-			copperLogoItems.append(logoItem);
-			logoItem->setVisible(false);
-		}
-	}
+	sketchWidget->hideCopperLogoItems(copperLogoItems);
 
 	QSizeF imageSize;
 	bool empty;
@@ -235,35 +229,30 @@ int GerberGenerator::doMask(LayerList maskLayerIDs, const QString &maskName, con
         return 0;
     }
 
-	foreach (ItemBase * logoItem, copperLogoItems) {
-		logoItem->setVisible(true);
-	}
+	sketchWidget->restoreCopperLogoItems(copperLogoItems);
 
 	if (empty) {
 		// don't bother with file
 		return 0;
 	}
 
-	QDomDocument domDocument;
-	QString errorStr;
-	int errorLine;
-	int errorColumn;
-	bool result = domDocument.setContent(svgMask, &errorStr, &errorLine, &errorColumn);
-	if (!result) {
-		displayMessage(QObject::tr("%1 file export failure (2)").arg(maskName), displayMessageBoxes);
+	svgMask = TextUtils::expandAndFill(svgMask, "black", MaskClearanceMils * 2);
+	if (svgMask.isEmpty()) {
+		displayMessage(QObject::tr("%1 mask export failure (2)").arg(maskName), displayMessageBoxes);
 		return 0;
 	}
 
 	QXmlStreamReader streamReader(svgMask);
 	QSizeF svgSize = FSvgRenderer::parseForWidthAndHeight(streamReader);
 
-	svgMask = clipToBoard(svgMask, board, maskName, SVG2gerber::ForMask);
+	svgMask = clipToBoard(svgMask, board, maskName, SVG2gerber::ForCopper);
 	if (svgMask.isEmpty()) {
 		displayMessage(QObject::tr("mask export failure"), displayMessageBoxes);
 		return 0;
 	}
 
-	return doEnd(svgMask, sketchWidget->boardLayers(), maskName, SVG2gerber::ForMask, svgSize * GraphicsUtils::StandardFritzingDPI, exportDir, filename, gerberSuffix, displayMessageBoxes, true);
+
+	return doEnd(svgMask, sketchWidget->boardLayers(), maskName, SVG2gerber::ForCopper, svgSize * GraphicsUtils::StandardFritzingDPI, exportDir, filename, gerberSuffix, displayMessageBoxes, true);
 }
 
 int GerberGenerator::doEnd(const QString & svg, int boardLayers, const QString & layerName, SVG2gerber::ForWhy forWhy, QSizeF svgSize, 

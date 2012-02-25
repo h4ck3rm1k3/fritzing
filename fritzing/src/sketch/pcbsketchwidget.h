@@ -96,6 +96,8 @@ public:
 	ItemBase * addCopperLogoItem(ViewLayer::ViewLayerSpec viewLayerSpec);
 	QString characterizeGroundFill();
 	ViewGeometry::WireFlag getTraceFlag();
+	void hideCopperLogoItems(QList<ItemBase *> & copperLogoItems);
+	void restoreCopperLogoItems(QList<ItemBase *> & copperLogoItems);
 
 public:
 	static QSizeF jumperItemSize();

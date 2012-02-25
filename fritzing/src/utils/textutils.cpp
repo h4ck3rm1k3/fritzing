@@ -1158,3 +1158,52 @@ QString TextUtils::getMacAddress()
     return QString();
 }
 
+
+QString TextUtils::expandAndFill(const QString & svg, const QString & color, double expandBy)
+{
+	QDomDocument domDocument;
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+	bool result = domDocument.setContent(svg, &errorStr, &errorLine, &errorColumn);
+	if (!result) {
+		return "";
+	}
+
+	QDomElement root = domDocument.documentElement();
+	expandAndFillAux(root, color, expandBy);
+
+	return domDocument.toString();
+}
+
+void TextUtils::expandAndFillAux(QDomElement & element, const QString & color, double expandBy)
+{
+	bool gotChildren = false;
+	QDomElement child = element.firstChildElement();
+	while (!child.isNull()) {
+		gotChildren = true;
+		expandAndFillAux(child, color, expandBy);
+		child = child.nextSiblingElement();
+	}	
+
+	if (gotChildren) return;
+
+	QString fill = element.attribute("fill");
+	QString stroke = element.attribute("stroke");
+	QString strokeWidth = element.attribute("stroke-width");
+	if (stroke.isEmpty() && fill.isEmpty()) {
+		return;
+	}
+		
+	element.setAttribute("fill", color);
+	element.setAttribute("stroke", color);
+
+	if (strokeWidth.isEmpty()) {
+		strokeWidth = "0";
+	}
+
+	double sw = strokeWidth.toDouble();
+	sw += expandBy;
+	element.setAttribute("stroke-width", QString::number(sw));
+
+}

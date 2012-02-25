@@ -54,6 +54,8 @@ public:
 	static const QString OutlineSuffix;
 	static const QString MagicBoardOutlineID;
 
+	static const double MaskClearanceMils;		
+
 protected:
 	static int doSilk(LayerList silkLayerIDs, const QString & silkName, const QString & gerberSuffix, ItemBase * board, PCBSketchWidget * sketchWidget, const QString & filename, const QString & exportDir, bool displayMessageBoxes);
 	static int doMask(LayerList maskLayerIDs, const QString & maskName, const QString & gerberSuffix, ItemBase * board, PCBSketchWidget * sketchWidget, const QString & filename, const QString & exportDir, bool displayMessageBoxes);

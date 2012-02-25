@@ -49,6 +49,7 @@ $Date$
 #include "../autoroute/cmrouter/panelizer.h"
 #include "../autoroute/autoroutersettingsdialog.h"
 #include "../svg/groundplanegenerator.h"
+#include "../items/logoitem.h"
 
 #include <limits>
 #include <QApplication>
@@ -2079,4 +2080,22 @@ void PCBSketchWidget::setGroundFillSeed()
 
 void PCBSketchWidget::clearGroundFillSeed() 
 {
+}
+
+void PCBSketchWidget::hideCopperLogoItems(QList<ItemBase *> & copperLogoItems)
+{
+	foreach (QGraphicsItem * item, this->items()) {
+		CopperLogoItem * logoItem = dynamic_cast<CopperLogoItem *>(item);
+		if (logoItem && logoItem->isVisible()) {
+			copperLogoItems.append(logoItem);
+			logoItem->setVisible(false);
+		}
+	}
+}
+
+void PCBSketchWidget::restoreCopperLogoItems(QList<ItemBase *> & copperLogoItems)
+{
+	foreach (ItemBase * logoItem, copperLogoItems) {
+		logoItem->setVisible(true);
+	}
 }

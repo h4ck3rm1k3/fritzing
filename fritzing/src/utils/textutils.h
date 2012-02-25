@@ -100,7 +100,9 @@ public:
 	static void replaceElementChildText(QDomDocument & doc, QDomElement & root, const QString & elementName, const QString & text);
 	static QString removeSVGHeader(QString & string);
 	static QString getMacAddress();
-
+	static QString expandAndFill(const QString & svg, const QString & color, double expandBy);
+	static void expandAndFillAux(QDomElement &, const QString & color, double expandBy);
+	
 public:
 	static const QRegExp FindWhitespace;
 	static const QRegExp SodipodiDetector;

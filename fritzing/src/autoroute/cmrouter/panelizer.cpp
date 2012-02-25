@@ -355,14 +355,29 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 				QSizeF imageSize;
 				bool empty;
 
-				for (int i = 0; i < planePair->svgs.count(); i++) {
+				for (int i = 0; i < planePair->svgs.count(); i++) {					
+					SVG2gerber::ForWhy forWhy = layerThingList.at(i).forWhy;
+					QList<ItemBase *> copperLogoItems;
+					if (forWhy == SVG2gerber::ForMask) {
+						panelItem->window->pcbView()->hideCopperLogoItems(copperLogoItems);
+					}
 					QString one = panelItem->window->pcbView()->renderToSVG(FSvgRenderer::printerScale(), layerThingList.at(i).layerList, layerThingList.at(i).layerList, true, imageSize, panelItem->board, GraphicsUtils::StandardFritzingDPI, false, false, false, empty);
 					
-					if (layerThingList.at(i).forWhy == SVG2gerber::ForOutline) {
-						one = GerberGenerator::cleanOutline(one);
+					
+					switch (forWhy) {
+						case SVG2gerber::ForOutline:
+							one = GerberGenerator::cleanOutline(one);
+							break;
+						case SVG2gerber::ForMask:
+							panelItem->window->pcbView()->restoreCopperLogoItems(copperLogoItems);
+							one = TextUtils::expandAndFill(one, "black", GerberGenerator::MaskClearanceMils * 2);
+							forWhy = SVG2gerber::ForCopper;
+							break;
+						default:
+							break;
 					}
 					
-					one = GerberGenerator::clipToBoard(one, panelItem->board, layerThingList.at(i).name, layerThingList.at(i).forWhy);
+					one = GerberGenerator::clipToBoard(one, panelItem->board, layerThingList.at(i).name, forWhy);
 					if (one.isEmpty()) continue;
 
 					int left = one.indexOf("<svg");
@@ -405,7 +420,9 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 			QString suffix = layerThingList.at(i).suffix;
 			DebugDialog::debug("converting " + prefix + " " + suffix);
 			QSizeF svgSize(panelParams.panelWidth, panelParams.panelHeight);
-			GerberGenerator::doEnd(planePair->svgs.at(i), 2, layerThingList.at(i).name, layerThingList.at(i).forWhy, svgSize, gerberDir.absolutePath(), prefix, suffix, false, false);
+			SVG2gerber::ForWhy forWhy = layerThingList.at(i).forWhy;
+			if (forWhy == SVG2gerber::ForMask) forWhy = SVG2gerber::ForCopper;
+			GerberGenerator::doEnd(planePair->svgs.at(i), 2, layerThingList.at(i).name, forWhy, svgSize, gerberDir.absolutePath(), prefix, suffix, false, false);
 			DebugDialog::debug("after converting " + prefix + " " + suffix);
 		}
 

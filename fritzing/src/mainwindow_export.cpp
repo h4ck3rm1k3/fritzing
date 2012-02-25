@@ -169,8 +169,10 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 
 	FolderUtils::setOpenSaveFolder(exportDir);
 	fileNames.append(exportDir + "/" + constructFileName("etch_copper_bottom", suffix));
+	fileNames.append(exportDir + "/" + constructFileName("etch_mask_bottom", suffix));
 	if (m_pcbGraphicsView->boardLayers() > 1) {
 		fileNames.append(exportDir + "/" + constructFileName("etch_copper_top", suffix));
+		fileNames.append(exportDir + "/" + constructFileName("etch_mask_top", suffix));
 	}
 	fileNames.append(exportDir + "/" + constructFileName("etch_silk_top", suffix));
 	fileExt = extFmt;
@@ -179,23 +181,40 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 
     ItemBase * board = m_pcbGraphicsView->findBoard();
 
+	QList<ItemBase *> copperLogoItems;
 	for (int ix = 0; ix < fileNames.count(); ix++) {
+		bool doMask = false;
 		QString fileName = fileNames[ix];
 		LayerList viewLayerIDs;
 		if (fileName.contains("copper") && fileName.contains("bottom")) {
 			viewLayerIDs << ViewLayer::GroundPlane0 << ViewLayer::Copper0 << ViewLayer::Copper0Trace;
 		}
+		if (fileName.contains("mask") && fileName.contains("bottom")) {
+			doMask = true;
+			viewLayerIDs << ViewLayer::GroundPlane0 << ViewLayer::Copper0;
+		}
 		else if (fileName.contains("copper") && fileName.contains("top")) {
 			viewLayerIDs << ViewLayer::GroundPlane1 << ViewLayer::Copper1 << ViewLayer::Copper1Trace;
 		}
+		else if (fileName.contains("mask") && fileName.contains("top")) {
+			viewLayerIDs << ViewLayer::GroundPlane1 << ViewLayer::Copper1;
+			doMask = true;
+		}
 		else if (fileName.contains("silk") && fileName.contains("top")) {
 			viewLayerIDs << ViewLayer::Silkscreen1 << ViewLayer::Silkscreen1Label;
+		}
+
+		if (doMask) {
+			m_pcbGraphicsView->hideCopperLogoItems(copperLogoItems);
 		}
 
 		QSizeF imageSize;
 		if (wantSVG) {
 			bool empty;
 			QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, GraphicsUtils::IllustratorDPI, false, false, false, empty);
+			if (doMask) {
+				svg = TextUtils::expandAndFill(svg, "black", GerberGenerator::MaskClearanceMils * 2 * GraphicsUtils::IllustratorDPI / 1000);
+			}
 			svg = mergeBoardSvg(svg, board, GraphicsUtils::IllustratorDPI, imageSize, flip);
 			
 			QFile file(fileName);
@@ -212,6 +231,9 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 			int res = printer.resolution();
 			bool empty;
 			QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, res, false, false, false, empty);
+			if (doMask) {
+				svg = TextUtils::expandAndFill(svg, "black", GerberGenerator::MaskClearanceMils * 2 * res / 1000);
+			}
 			svg = mergeBoardSvg(svg, board, res, imageSize, flip);
 			
 			// now convert to pdf
@@ -233,6 +255,10 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 
 			painter.end();
 		}
+		if (doMask) {
+			m_pcbGraphicsView->restoreCopperLogoItems(copperLogoItems);
+		}
+
 	}
 
 	m_statusBar->showMessage(tr("Sketch exported"), 2000);
