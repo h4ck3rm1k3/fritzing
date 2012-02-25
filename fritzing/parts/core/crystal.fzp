@@ -12,6 +12,7 @@
 	<tag>piezoelectric</tag>
     </tags>
     <properties>
+        <property name="pin spacing">5.08mm</property>
         <property name="family">oscillator</property>
         <property name="type">crystal</property>
         <property name="frequency" showInLabel="yes">16 Mhz</property>

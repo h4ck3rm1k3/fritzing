@@ -46,14 +46,17 @@
 	<menuItem value="100" />
 </property>
   
-<property name="frequency" symbol="MHz" minValue="" maxValue="" defaultValue="16" numeric="yes" editable="no">
+<property name="frequency" symbol="" minValue="" maxValue="" defaultValue="16 MHz" numeric="no" editable="no">
    	<suffix suffix="CrystalModuleID"/>
-	<menuItem value="1" />
-	<menuItem value="2" />
-	<menuItem value="4" />    
-	<menuItem value="8" />
-	<menuItem value="16" />
-	<menuItem value="20" />
+	<menuItem value="32 kHz" />
+	<menuItem value="1 MHz" />
+	<menuItem value="2 MHz" />
+	<menuItem value="4 MHz" />    
+	<menuItem value="8 MHz" />
+	<menuItem value="16 MHz" />
+	<menuItem value="20 MHz" />
+	<menuItem value="32 MHz" />
+	<menuItem value="40 MHz" />
 </property>
 
 
