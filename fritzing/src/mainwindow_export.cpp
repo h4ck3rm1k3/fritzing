@@ -90,6 +90,19 @@ bool sortPartList(ItemBase * b1, ItemBase * b2){
     return b1->instanceTitle().toLower() < b2->instanceTitle().toLower();
 }
 
+void massageOutput(QString & svg, bool doMask, bool doSilk, QString & maskTop, QString & maskBottom, const QString & fileName, int dpi)
+{
+	if (doMask) {
+		if (fileName.contains("bottom")) maskBottom = svg; else maskTop = svg;
+		svg = TextUtils::expandAndFill(svg, "black", GerberGenerator::MaskClearanceMils * 2 * dpi / 1000);
+	}
+	else if (doSilk) {
+		QString use = (fileName.contains("bottom")) ? maskBottom : maskTop;
+		use = TextUtils::expandAndFill(use, "white", GerberGenerator::MaskClearanceMils * 2 * dpi / 1000);
+		svg = TextUtils::mergeSvg(svg, use, "", false);
+	}
+}
+
 /////////////////////////////////////////////////////////
 
 void MainWindow::initNames()
@@ -181,9 +194,11 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 
     ItemBase * board = m_pcbGraphicsView->findBoard();
 
+	QString maskTop, maskBottom;
 	QList<ItemBase *> copperLogoItems;
 	for (int ix = 0; ix < fileNames.count(); ix++) {
 		bool doMask = false;
+		bool doSilk = false;
 		QString fileName = fileNames[ix];
 		LayerList viewLayerIDs;
 		if (fileName.contains("copper") && fileName.contains("bottom")) {
@@ -191,17 +206,18 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 		}
 		if (fileName.contains("mask") && fileName.contains("bottom")) {
 			doMask = true;
-			viewLayerIDs << ViewLayer::GroundPlane0 << ViewLayer::Copper0;
+			viewLayerIDs << ViewLayer::Copper0;
 		}
 		else if (fileName.contains("copper") && fileName.contains("top")) {
 			viewLayerIDs << ViewLayer::GroundPlane1 << ViewLayer::Copper1 << ViewLayer::Copper1Trace;
 		}
 		else if (fileName.contains("mask") && fileName.contains("top")) {
-			viewLayerIDs << ViewLayer::GroundPlane1 << ViewLayer::Copper1;
+			viewLayerIDs << ViewLayer::Copper1;
 			doMask = true;
 		}
 		else if (fileName.contains("silk") && fileName.contains("top")) {
 			viewLayerIDs << ViewLayer::Silkscreen1 << ViewLayer::Silkscreen1Label;
+			doSilk = true;
 		}
 
 		if (doMask) {
@@ -212,9 +228,7 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 		if (wantSVG) {
 			bool empty;
 			QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, GraphicsUtils::IllustratorDPI, false, false, false, empty);
-			if (doMask) {
-				svg = TextUtils::expandAndFill(svg, "black", GerberGenerator::MaskClearanceMils * 2 * GraphicsUtils::IllustratorDPI / 1000);
-			}
+			massageOutput(svg, doMask, doSilk, maskTop, maskBottom, fileName, GraphicsUtils::IllustratorDPI);		
 			svg = mergeBoardSvg(svg, board, GraphicsUtils::IllustratorDPI, imageSize, flip);
 			
 			QFile file(fileName);
@@ -231,9 +245,7 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 			int res = printer.resolution();
 			bool empty;
 			QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, res, false, false, false, empty);
-			if (doMask) {
-				svg = TextUtils::expandAndFill(svg, "black", GerberGenerator::MaskClearanceMils * 2 * res / 1000);
-			}
+			massageOutput(svg, doMask, doSilk, maskTop, maskBottom, fileName, res);
 			svg = mergeBoardSvg(svg, board, res, imageSize, flip);
 			
 			// now convert to pdf
