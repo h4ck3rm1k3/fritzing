@@ -32,7 +32,6 @@ $Date$
 #include <QDialogButtonBox>
 #include <QVBoxLayout>
 #include <QLabel>
-#include <QPushButton>
 
 /////////////////////////////////////////////////////////
 
@@ -42,6 +41,7 @@ GroundFillSeedDialog::GroundFillSeedDialog(PCBSketchWidget * sketchWidget, QList
 	m_sketchWidget = sketchWidget;
 	m_connectorItems = connectorItems;
 	m_activeConnectorItem = NULL;
+	m_doFill = false;
 
 	this->setWindowTitle(QObject::tr("Ground Fill Seed Editor"));
 
@@ -81,9 +81,10 @@ GroundFillSeedDialog::GroundFillSeedDialog(PCBSketchWidget * sketchWidget, QList
 	}
 
 	connect(m_listWidget, SIGNAL(itemClicked(QListWidgetItem *)), this, SLOT(clickedSlot(QListWidgetItem *)));
+	connect(m_listWidget, SIGNAL(itemChanged(QListWidgetItem *)), this, SLOT(changedSlot(QListWidgetItem *)));
 	vLayout->addWidget(m_listWidget);
 
-	QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+	QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Yes | QDialogButtonBox::Cancel);
 	
 	QPushButton * cancelButton = buttonBox->button(QDialogButtonBox::Cancel);
 	cancelButton->setText(tr("Cancel"));
@@ -93,17 +94,35 @@ GroundFillSeedDialog::GroundFillSeedDialog(PCBSketchWidget * sketchWidget, QList
 	okButton->setText(tr("OK"));
 	okButton->setDefault(true);
 
+	m_doFillButton = buttonBox->button(QDialogButtonBox::Yes);
+	m_doFillButton->setDefault(false);
+	connect(m_doFillButton, SIGNAL(clicked(bool)), this, SLOT(doFill(bool)));
+
     connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 
 	vLayout->addWidget(buttonBox);
 	this->setLayout(vLayout);
 
+	changedSlot(NULL);
 }
 
 GroundFillSeedDialog::~GroundFillSeedDialog()
 {
 }
+
+void GroundFillSeedDialog::changedSlot(QListWidgetItem *) {
+	bool checked = false;
+	for (int i = 0; i < m_listWidget->count(); i++) {
+		if (m_listWidget->item(i)->checkState() == Qt::Checked) {
+			checked = true;
+			break;
+		}
+	}
+
+	m_doFillButton->setText(checked ? tr("OK and ground fill") : tr("OK and copper fill"));
+}
+
 
 void GroundFillSeedDialog::clickedSlot(QListWidgetItem * item) {
 	int ix = -1;
@@ -146,3 +165,11 @@ void GroundFillSeedDialog::getResults(QList<bool> & results) {
 	}
 }
 
+bool GroundFillSeedDialog::getFill() {
+	return m_doFill;
+}
+
+void GroundFillSeedDialog::doFill(bool) {
+	m_doFill = true;
+	accept();
+}

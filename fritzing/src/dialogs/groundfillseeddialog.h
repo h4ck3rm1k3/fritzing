@@ -32,6 +32,7 @@ $Date$
 #include <QList>
 #include <QListWidget>
 #include <QListWidgetItem>
+#include <QPushButton>
 
 class GroundFillSeedDialog : public QDialog
 {
@@ -42,11 +43,14 @@ public:
 	~GroundFillSeedDialog();
 
 	void getResults(QList<bool> & results);
+	bool getFill();
 
 public slots:
 	void clickedSlot(QListWidgetItem *);
+	void changedSlot(QListWidgetItem *);
 	void accept();
 	void reject();
+	void doFill(bool);
 
 protected:
 	void showEqualPotential(ConnectorItem * connectorItem, bool show);
@@ -56,6 +60,8 @@ protected:
 	QList<ConnectorItem *> m_connectorItems;
 	QListWidget * m_listWidget;
 	ConnectorItem * m_activeConnectorItem;
+	bool m_doFill;
+	QPushButton * m_doFillButton;
 
 };
 

@@ -2109,9 +2109,11 @@ void PCBSketchWidget::setGroundFillSeeds(const QString & intro)
 		GroundFillSeedCommand * command = NULL;
 		QList<bool> results;
 		gfsd.getResults(results);
+		bool checked = false;
 		for (int i = 0; i < seeds.count(); i++) {
 			ConnectorItem * ci = seeds.at(i);
 			bool isSeed = results.at(i);
+			checked |= isSeed;
 			if (isSeed != ci->isGroundFillSeed()) {
 				if (command == NULL) {
 					command = new GroundFillSeedCommand(this, NULL);
@@ -2121,6 +2123,11 @@ void PCBSketchWidget::setGroundFillSeeds(const QString & intro)
 		}
 		if (command) {
 			m_undoStack->push(command);
+		}
+
+		if (gfsd.getFill()) {
+			if (checked) emit groundFillSignal();
+			else emit copperFillSignal();
 		}
 	}
 }

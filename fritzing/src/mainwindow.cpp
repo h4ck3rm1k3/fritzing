@@ -488,6 +488,11 @@ void MainWindow::connectPairs() {
 	connect(m_schematicGraphicsView, SIGNAL(dropTempSignal(ModelPart *, QWidget *)), this, SLOT(dropTempSlot(ModelPart *, QWidget *)));
 	connect(m_pcbGraphicsView, SIGNAL(dropTempSignal(ModelPart *, QWidget *)), this, SLOT(dropTempSlot(ModelPart *, QWidget *)));
 
+
+	connect(m_pcbGraphicsView, SIGNAL(groundFillSignal()), this, SLOT(groundFill()));
+	connect(m_pcbGraphicsView, SIGNAL(copperFillSignal()), this, SLOT(copperFill()));
+
+
 	connect(m_breadboardGraphicsView, SIGNAL(setActiveWireSignal(Wire *)), this, SLOT(setActiveWire(Wire *)));
 	connect(m_schematicGraphicsView, SIGNAL(setActiveWireSignal(Wire *)), this, SLOT(setActiveWire(Wire *)));
 	connect(m_pcbGraphicsView, SIGNAL(setActiveWireSignal(Wire *)), this, SLOT(setActiveWire(Wire *)));
