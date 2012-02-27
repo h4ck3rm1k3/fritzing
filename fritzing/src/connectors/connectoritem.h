@@ -36,6 +36,20 @@ $Date$
 
 class LegItem;
 
+class ConnectorItemAction : public QAction {
+	Q_OBJECT
+
+public:
+	ConnectorItemAction(QAction *);
+	ConnectorItemAction(const QString & text, QObject * parent);
+
+	void setConnectorItem(ConnectorItem *);
+	ConnectorItem * connectorItem();
+
+protected:
+	ConnectorItem * m_connectorItem;
+};
+
 class ConnectorItem : public NonConnectorItem, public CursorKeyListener
 {
 Q_OBJECT
@@ -139,6 +153,8 @@ public:
 	void cursorKeyEvent(Qt::KeyboardModifiers modifiers);
 	void setConnectorLocalName(const QString & name);
 	void updateTooltip();
+	bool isGroundFillSeed();
+	void setGroundFillSeed(bool);
 
 protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
@@ -154,7 +170,6 @@ protected:
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 	void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
-	void writeTopLevelAttributes(QXmlStreamWriter & writer);
 	void writeOtherElements(QXmlStreamWriter & writer);
     static class Wire * directlyWiredToAux(ConnectorItem * source, ConnectorItem * target, ViewGeometry::WireFlags flags, QList<ConnectorItem *> & visited);
 	bool isEverVisible();
@@ -219,6 +234,7 @@ protected:
 	QPointF m_connectorDrawEnd;
 	double m_connectorDrawT;
 	double m_connectorDetectT;
+	bool m_groundFillSeed;
 	
 protected:	
 	static QList<ConnectorItem *>  m_equalPotentialDisplayItems;

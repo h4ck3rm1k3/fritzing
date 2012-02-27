@@ -1131,8 +1131,7 @@ void MainWindow::createMenus()
 	groundFillMenu->addAction(m_copperFillAct);
 	groundFillMenu->addAction(m_groundFillAct);
 	groundFillMenu->addAction(m_removeGroundFillAct);
-	groundFillMenu->addAction(m_setGroundFillSeedAct);
-	groundFillMenu->addAction(m_clearGroundFillSeedAct);
+	groundFillMenu->addAction(m_setGroundFillSeedsAct);
 	//m_pcbTraceMenu->addAction(m_updateRoutingStatusAct);
 	m_pcbTraceMenu->addSeparator();
 
@@ -1293,11 +1292,8 @@ void MainWindow::updateWireMenu() {
 	// assumes update wire menu is only called when right-clicking a wire
 	// and that wire is cached by the menu in Wire::mousePressEvent
 
-	WireMenu * wireMenu = qobject_cast<WireMenu *>(sender());
-	Wire * wire = NULL;
-	if (wireMenu != NULL) {
-		wire = wireMenu->wire();
-	}
+	Wire * wire = m_activeWire;
+	m_activeWire = NULL;
 
 	if (wire) {
 		enableAddBendpointAct(wire);
@@ -1356,7 +1352,6 @@ void MainWindow::updateWireMenu() {
 	m_createWireWireAct->setWire(wire);
 	m_deleteWireAct->setWire(wire);
 	m_excludeFromAutorouteWireAct->setWire(wire);
-	m_updateNetAct->setWire(wire);
 
 	m_bringToFrontWireAct->setEnabled(enableZOK);
 	m_bringForwardWireAct->setEnabled(enableZOK);
@@ -1366,7 +1361,6 @@ void MainWindow::updateWireMenu() {
 	m_createWireWireAct->setEnabled(enableAll && createTraceOK);
 	m_deleteWireAct->setEnabled(enableAll && deleteOK);
 	m_excludeFromAutorouteWireAct->setEnabled(enableAll && excludeOK);
-	m_updateNetAct->setEnabled(gotRat);
 
 	m_changeTraceLayerAct->setEnabled(ctlOK);
 
@@ -1467,6 +1461,9 @@ void MainWindow::updateTransformationActions() {
 void MainWindow::updateItemMenu() {
 	if (m_currentGraphicsView == NULL) return;
 
+	ConnectorItem * activeConnectorItem = m_activeConnectorItem;
+	m_activeConnectorItem = NULL;
+
 	QList<QGraphicsItem *> items = m_currentGraphicsView->scene()->selectedItems();
 
 	int selCount = 0;
@@ -1498,6 +1495,15 @@ void MainWindow::updateItemMenu() {
 
 	m_disconnectAllAct->setEnabled(enabled && m_currentGraphicsView->canDisconnectAll() && (itemBase->rightClickedConnector() != NULL));
 
+	bool gfsEnabled = false;
+	if (activeConnectorItem) {
+		if (activeConnectorItem->attachedToItemType() != ModelPart::CopperFill) {
+			gfsEnabled = true;
+			m_setOneGroundFillSeedAct->setChecked(activeConnectorItem->isGroundFillSeed());
+		}
+	}
+	m_setOneGroundFillSeedAct->setEnabled(gfsEnabled);
+	m_setOneGroundFillSeedAct->setConnectorItem(activeConnectorItem);
 }
 
 void MainWindow::updateEditMenu() {
@@ -1548,6 +1554,7 @@ void MainWindow::updateTraceMenu() {
 	bool gfrEnabled = false;
 	bool ctlEnabled = false;
 	bool arEnabled = false;
+	bool gfsEnabled = false;
 
 	if (m_currentGraphicsView != NULL) {
 		QList<QGraphicsItem *> items = m_currentGraphicsView->scene()->items();
@@ -1559,6 +1566,11 @@ void MainWindow::updateTraceMenu() {
 				ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 				if (itemBase == NULL) continue;
 				if (!itemBase->isEverVisible()) continue;
+				
+
+				if (!gfsEnabled) {
+					gfsEnabled = itemBase->itemType() != ModelPart::CopperFill && itemBase->hasConnectors();
+				}
 
 				switch (itemBase->itemType()) {
 					case ModelPart::Board:
@@ -1645,8 +1657,7 @@ void MainWindow::updateTraceMenu() {
 	m_removeGroundFillAct->setEnabled(gfrEnabled);
 
 	// TODO: set and clear enabler logic
-	m_setGroundFillSeedAct->setEnabled(exEnabled);
-	m_clearGroundFillSeedAct->setEnabled(gfEnabled);
+	m_setGroundFillSeedsAct->setEnabled(gfsEnabled);
 
 	m_designRulesCheckAct->setEnabled(true);
 	m_autorouterSettingsAct->setEnabled(m_currentGraphicsView == m_pcbGraphicsView);
@@ -1743,11 +1754,25 @@ void MainWindow::openPartsEditor(PaletteItem * paletteItem) {
 	ModelPart* modelPart = paletteItem? paletteItem->modelPart(): NULL;
 	long id = paletteItem? paletteItem->id(): -1;
 	QWidget *partsEditor = getPartsEditor(modelPart, id, paletteItem, NULL);
+	if (partsEditor == NULL) return;
+
 	partsEditor->show();
 	partsEditor->raise();
 }
 
 PartsEditorMainWindow* MainWindow::getPartsEditor(ModelPart *modelPart, long _id, ItemBase * fromItem, class PartsBinPaletteWidget* requester) {
+	QMessageBox::StandardButton answer = QMessageBox::question(
+            this,
+            tr("Parts Editor"),
+            tr("A new Parts Editor is under construction. The old Parts Editor is still available, but the code is pretty buggy. So use it at your own risk.\n\nOpen the old Parts Editor?"),
+            QMessageBox::Yes | QMessageBox::No,
+            QMessageBox::Yes
+    );
+    // TODO: make button texts translatable
+    if (answer != QMessageBox::Yes) {
+        return NULL;
+    }		
+
 	static long nextId = -1;
 	long id = _id==-1? nextId--: _id;
 
@@ -2109,10 +2134,6 @@ void MainWindow::createTraceMenuActions() {
 	m_createWireWireAct = new WireAction(traceAct);
 	connect(m_createWireWireAct, SIGNAL(triggered()), this, SLOT(createTrace()));
 
-	m_updateNetAct = new WireAction(tr("Update Ratsnest"), this);
-	m_updateNetAct->setStatusTip(tr("Redraw this net"));
-	connect(m_updateNetAct, SIGNAL(triggered()), this, SLOT(updateNet()));
-
 	m_excludeFromAutorouteAct = new QAction(tr("Do not autoroute"), this);
 	m_excludeFromAutorouteAct->setStatusTip(tr("When autorouting, do not rip up this trace wire, via, or jumper item"));
 	connect(m_excludeFromAutorouteAct, SIGNAL(triggered()), this, SLOT(excludeFromAutoroute()));
@@ -2168,13 +2189,14 @@ void MainWindow::createTraceMenuActions() {
 	m_removeGroundFillAct->setStatusTip(tr("Remove the copper fill"));
 	connect(m_removeGroundFillAct, SIGNAL(triggered()), this, SLOT(removeGroundFill()));
 
-	m_setGroundFillSeedAct = new QAction(tr("Set Copper Fill Seeds"), this);
-	m_setGroundFillSeedAct->setStatusTip(tr("Fill empty regions of the copper layer--fill will include all traces connected to the seeds"));
-	connect(m_setGroundFillSeedAct, SIGNAL(triggered()), this, SLOT(setGroundFillSeed()));
+	m_setGroundFillSeedsAct = new QAction(tr("Choose Ground Fill Seed(s)..."), this);
+	m_setGroundFillSeedsAct->setStatusTip(tr("Fill empty regions of the copper layer--fill will include all traces connected to the seeds"));
+	connect(m_setGroundFillSeedsAct, SIGNAL(triggered()), this, SLOT(setGroundFillSeeds()));
 
-	m_clearGroundFillSeedAct = new QAction(tr("Clear Copper Fill Seeds"), this);
-	m_clearGroundFillSeedAct->setStatusTip(tr("Fill will avoid all traces"));
-	connect(m_clearGroundFillSeedAct, SIGNAL(triggered()), this, SLOT(clearGroundFillSeed()));
+	m_setOneGroundFillSeedAct = new ConnectorItemAction(tr("Set Ground Fill Seed"), this);
+	m_setOneGroundFillSeedAct->setStatusTip(tr("Treat this connector and its connections as a 'ground' during ground fill."));
+	m_setOneGroundFillSeedAct->setCheckable(true);
+	connect(m_setOneGroundFillSeedAct, SIGNAL(triggered()), this, SLOT(setOneGroundFillSeed()));
 
 	m_designRulesCheckAct = new QAction(tr("Design Rules Check"), this);
 	m_designRulesCheckAct->setStatusTip(tr("Select any parts that are too close together for safe board production (w/in 10 mil)"));
@@ -2509,8 +2531,8 @@ void MainWindow::groundFillAux(bool fillGroundTraces)
 
 	if (m_pcbGraphicsView == NULL) return;
 
-    FileProgressDialog fileProgress("Generating copper fill...", 0, this);
-	QUndoCommand * parentCommand = new QUndoCommand(tr("Copper Fill"));
+    FileProgressDialog fileProgress(tr("Generating %1 fill...").arg(fillGroundTraces ? tr("ground") : tr("copper")), 0, this);
+	QUndoCommand * parentCommand = new QUndoCommand(fillGroundTraces ? tr("Ground Fill") : tr("Copper Fill"));
 	if (m_pcbGraphicsView->groundFill(fillGroundTraces, parentCommand)) {
 		m_undoStack->push(parentCommand);
 	}
@@ -2616,11 +2638,13 @@ QMenu *MainWindow::pcbItemMenu() {
 	QMenu *menu = new QMenu(QObject::tr("Part"), this);
 	menu->addMenu(m_rotateMenu);
 	menu = viewItemMenuAux(menu);
+	menu->addSeparator();
+	menu->addAction(m_setOneGroundFillSeedAct);
 	return menu;
 }
 
 QMenu *MainWindow::breadboardWireMenu() {
-	QMenu *menu = new WireMenu(QObject::tr("Wire"), this);
+	QMenu *menu = new QMenu(QObject::tr("Wire"), this);
 	menu->addMenu(m_zOrderWireMenu);
 	menu->addSeparator();
 	m_wireColorMenu = menu->addMenu(tr("&Wire Color"));
@@ -2650,7 +2674,7 @@ QMenu *MainWindow::breadboardWireMenu() {
 }
 
 QMenu *MainWindow::pcbWireMenu() {
-	QMenu *menu = new WireMenu(QObject::tr("Wire"), this);
+	QMenu *menu = new QMenu(QObject::tr("Wire"), this);
 	menu->addMenu(m_zOrderWireMenu);
 	menu->addSeparator();
 	menu->addAction(m_changeTraceLayerAct);	
@@ -2658,7 +2682,6 @@ QMenu *MainWindow::pcbWireMenu() {
 	menu->addAction(m_excludeFromAutorouteWireAct);
 	menu->addSeparator();
 	menu->addAction(m_deleteWireAct);
-	//menu->addAction(m_updateNetAct);
 	menu->addSeparator();
 	menu->addAction(m_addBendpointAct);
 	menu->addAction(m_flattenCurveAct);
@@ -2674,14 +2697,13 @@ QMenu *MainWindow::pcbWireMenu() {
 }
 
 QMenu *MainWindow::schematicWireMenu() {
-	QMenu *menu = new WireMenu(QObject::tr("Wire"), this);
+	QMenu *menu = new QMenu(QObject::tr("Wire"), this);
 	menu->addMenu(m_zOrderWireMenu);
 	menu->addSeparator();
 	menu->addAction(m_createTraceWireAct);
 	menu->addAction(m_excludeFromAutorouteWireAct);
 	menu->addSeparator();
 	menu->addAction(m_deleteWireAct);
-	//menu->addAction(m_updateNetAct);
 	menu->addSeparator();
 	menu->addAction(m_addBendpointAct);
 #ifndef QT_NO_DEBUG
@@ -3213,6 +3235,13 @@ Wire * MainWindow::retrieveWire() {
 	return wireAction->wire();
 }
 
+ConnectorItem * MainWindow::retrieveConnectorItem() {
+	ConnectorItemAction * connectorItemAction = qobject_cast<ConnectorItemAction *>(sender());
+	if (connectorItemAction == NULL) return NULL;
+
+	return connectorItemAction->connectorItem();
+}
+
 void MainWindow::moveLock()
 {
 	bool moveLock = true;
@@ -3257,10 +3286,19 @@ void MainWindow::orderFab()
 	QDesktopServices::openUrl(QString("http://fab.fritzing.org/"));
 }
 
-void MainWindow::setGroundFillSeed() {
-	m_pcbGraphicsView->setGroundFillSeed();
+void MainWindow::setGroundFillSeeds() {
+	m_pcbGraphicsView->setGroundFillSeeds();
 }
 
-void MainWindow::clearGroundFillSeed() {
-	m_pcbGraphicsView->clearGroundFillSeed();
+void MainWindow::setOneGroundFillSeed() {
+	ConnectorItemAction * action = qobject_cast<ConnectorItemAction *>(sender());
+	if (action == NULL) return;
+
+	ConnectorItem * connectorItem = action->connectorItem();
+	if (connectorItem == NULL) return;
+
+	GroundFillSeedCommand * command = new GroundFillSeedCommand(m_pcbGraphicsView, NULL);
+	command->addItem(connectorItem->attachedToID(), connectorItem->connectorSharedID(), action->isChecked());
+
+	m_undoStack->push(command);
 }

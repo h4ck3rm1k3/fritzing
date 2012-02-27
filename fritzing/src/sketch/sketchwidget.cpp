@@ -424,6 +424,16 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 		while (!connector.isNull()) {
 			QString fromConnectorID = connector.attribute("connectorId");
 			ViewLayer::ViewLayerID connectorViewLayerID = ViewLayer::viewLayerIDFromXmlString(connector.attribute("layer"));
+			bool gfs = connector.attribute("groundFillSeed").compare("true") == 0;
+			if (gfs) {
+				ItemBase * fromBase = newItems.value(mp->modelIndex(), NULL);
+				if (fromBase) {
+					ConnectorItem * fromConnectorItem = fromBase->findConnectorItemWithSharedID(fromConnectorID, ViewLayer::specFromID(connectorViewLayerID));
+					if (fromConnectorItem) {
+						fromConnectorItem->setGroundFillSeed(true);
+					}
+				}
+			}
 			QDomElement connects = connector.firstChildElement("connects");
 			if (!connects.isNull()) {
 				QDomElement connect = connects.firstChildElement("connect");
@@ -513,7 +523,8 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 }
 
 void SketchWidget::handleConnect(QDomElement & connect, ModelPart * mp, const QString & fromConnectorID, ViewLayer::ViewLayerID fromViewLayerID, 
-									QStringList & alreadyConnected, QHash<long, ItemBase *> & newItems, QUndoCommand * parentCommand, bool seekOutsideConnections)
+									QStringList & alreadyConnected, QHash<long, ItemBase *> & newItems, QUndoCommand * parentCommand, 
+									bool seekOutsideConnections)
 {
 	bool ok;
 	QHash<long, ItemBase *> otherNewItems;
@@ -8630,4 +8641,13 @@ void SketchWidget::collectRatsnestSlot(QList<SketchWidget *> & foreignSketchWidg
 	foreignSketchWidgets << this;
 }
 
+void SketchWidget::setGroundFillSeed(long id, const QString & connectorID, bool seed)
+{
+	ItemBase * itemBase = findItem(id);
+	if (itemBase == NULL) return;
 
+	ConnectorItem * connectorItem = findConnectorItem(itemBase, connectorID, ViewLayer::specFromID(itemBase->viewLayerID()));
+	if (connectorItem == NULL) return;
+
+	connectorItem->setGroundFillSeed(seed);
+}

@@ -58,8 +58,8 @@ public:
 	void setNewPartVisible(ItemBase *);
 	virtual bool usesJumperItem();
 	void setClipEnds(class ClipableWire *, bool);
-	void showGroundTraces(bool show);
-        virtual double getLabelFontSizeTiny();
+	void showGroundTraces(QList<ConnectorItem *> & seeds, bool show);
+    virtual double getLabelFontSizeTiny();
 	virtual double getLabelFontSizeSmall();
 	virtual double getLabelFontSizeMedium();
 	virtual double getLabelFontSizeLarge();
@@ -88,8 +88,7 @@ public:
 	void getBendpointWidths(class Wire *, double w, double & w1, double & w2, bool & negativeOffsetRect);
 	double getSmallerTraceWidth(double minDim);
 	bool groundFill(bool fillGroundTraces, QUndoCommand * parentCommand);
-	void setGroundFillSeed();
-	void clearGroundFillSeed();
+	void setGroundFillSeeds();
 	QString generateCopperFillUnit(ItemBase * itemBase, QPointF whereToStart);
 	double getWireStrokeWidth(Wire *, double wireWidth);
 	bool curvyWiresIndicated(Qt::KeyboardModifiers);
@@ -153,6 +152,8 @@ protected:
 	void prereleaseTempWireForDragging(Wire*);
 	void rotatePartLabels(double degrees, QTransform &, QPointF center, QUndoCommand * parentCommand);
 	bool hasNeighbor(ConnectorItem * connectorItem, ViewLayer::ViewLayerID viewLayerID, const QRectF & r);
+	void setGroundFillSeeds(const QString & intro);
+	bool collectGroundFillSeeds(QList<ConnectorItem *> & seeds, bool includePotential);
 
 signals:
 	void subSwapSignal(SketchWidget *, ItemBase *, ViewLayer::ViewLayerSpec, QUndoCommand * parentCommand);
@@ -175,6 +176,7 @@ protected:
 	QPointF m_jumperDragOffset;
 	QPointer<class JumperItem> m_resizingJumperItem;
 	QPointer<class ResizableBoard> m_resizingBoard;
+	QList<ConnectorItem *> * m_groundFillSeeds;
 
 protected:
 	static QSizeF m_jumperItemSize;

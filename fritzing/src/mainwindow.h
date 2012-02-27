@@ -159,8 +159,8 @@ public slots:
 	void groundFill();
 	void removeGroundFill(bool force = false);
 	void copperFill();
-	void setGroundFillSeed();
-	void clearGroundFillSeed();
+	void setOneGroundFillSeed();
+	void setGroundFillSeeds();
 	void changeBoardLayers(int layers, bool doEmit);
 	void swapOne(ItemBase * itemBase, const QString & moduleID);
 	void selectAllObsolete();
@@ -332,6 +332,8 @@ protected slots:
 	void swapSelectedTimeout();
 	void filenameIfSlot(QString & filename);
 	void openURL();
+	void setActiveWire(Wire *);
+	void setActiveConnectorItem(ConnectorItem *);
 
 protected:
 	void initSketchWidget(SketchWidget *);
@@ -446,6 +448,7 @@ protected:
 
 	void routingStatusLabelMouse(QMouseEvent*, bool show);
 	class Wire * retrieveWire();
+	class ConnectorItem * retrieveConnectorItem();
 	QString getBomProps(ItemBase *);
 	ModelPart * findReplacedby(ModelPart * originalModelPart);
 	void groundFillAux(bool fillGroundTraces);
@@ -636,7 +639,6 @@ protected:
 	QAction *m_activeLayerBothAct;
 	class WireAction *m_createTraceWireAct;
 	class WireAction *m_createWireWireAct;
-	class WireAction *m_updateNetAct;			// when we're confident, we can remove this
 	QAction *m_createJumperAct;
 	QAction *m_changeTraceLayerAct;
 	QAction *m_excludeFromAutorouteAct;
@@ -651,8 +653,8 @@ protected:
 	QAction *m_groundFillAct;
 	QAction *m_removeGroundFillAct;
 	QAction *m_copperFillAct;
-	QAction *m_setGroundFillSeedAct;
-	QAction *m_clearGroundFillSeedAct;
+	class ConnectorItemAction *m_setOneGroundFillSeedAct;
+	QAction *m_setGroundFillSeedsAct;
 	QAction *m_designRulesCheckAct;
 	QAction *m_autorouterSettingsAct;
 	QAction *m_tidyWiresAct;
@@ -726,6 +728,8 @@ protected:
 	QString m_fzzFolder;
 	QHash<QString, struct LockedFile *> m_fzzFiles;
 	SwapTimer m_swapTimer;
+	QPointer<Wire> m_activeWire;
+	QPointer<ConnectorItem> m_activeConnectorItem;
 
 public:
 	static int RestartNeeded;

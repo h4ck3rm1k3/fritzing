@@ -290,6 +290,27 @@ QColor addColor(QColor & color, int offset)
     return rgb.convertTo(color.spec());
 }
 
+/////////////////////////////////////////////////////////////
+
+ConnectorItemAction::ConnectorItemAction(QAction * action) : QAction(action) {
+	m_connectorItem = NULL;
+	this->setText(action->text());
+	this->setStatusTip(action->statusTip());
+	this->setCheckable(action->isCheckable());
+}
+
+ConnectorItemAction::ConnectorItemAction(const QString & title, QObject * parent) : QAction(title, parent) {
+	m_connectorItem = NULL;
+}
+
+void ConnectorItemAction::setConnectorItem(ConnectorItem * c) {
+	m_connectorItem = c;
+}
+
+ConnectorItem * ConnectorItemAction::connectorItem() {
+	return m_connectorItem;
+}
+
 /////////////////////////////////////////////////////////
 
 ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
@@ -297,6 +318,7 @@ ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 {
 	// initialize m_connectorT, otherwise will trigger qWarning("QLine::unitVector: New line does not have unit length");
 	// TODO: figure out why paint is being called with m_connectorT not initialized
+	m_groundFillSeed = false;
 	m_connectorDetectT = m_connectorDrawT = 0;
 	m_draggingCurve = m_draggingLeg = m_rubberBandLeg = m_bigDot = m_hybrid = false;
 	m_marked = false;
@@ -1074,20 +1096,18 @@ bool ConnectorItem::chained() {
 	return false;
 }
 
-void ConnectorItem::writeTopLevelAttributes(QXmlStreamWriter & writer) {
-	// do not write anything other than attributes in this routine.l
-	writer.writeAttribute("layer", ViewLayer::viewLayerXmlNameFromID(attachedToViewLayerID()));
-}
-
 void ConnectorItem::saveInstance(QXmlStreamWriter & writer) {
-	if (m_connectedTo.count() <= 0 && !m_rubberBandLeg) {
+	if (m_connectedTo.count() <= 0 && !m_rubberBandLeg && !m_groundFillSeed) {
 		// no need to save if there's no connection
 		return;
 	}
 
 	writer.writeStartElement("connector");
 	writer.writeAttribute("connectorId", connectorSharedID());
-	writeTopLevelAttributes(writer);
+	writer.writeAttribute("layer", ViewLayer::viewLayerXmlNameFromID(attachedToViewLayerID()));
+	if (m_groundFillSeed) {
+		writer.writeAttribute("groundFillSeed", "true");
+	}
 
 	writer.writeStartElement("geometry");
 	QPointF p = this->pos();
@@ -2471,6 +2491,11 @@ void ConnectorItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 		return;
 	}
 
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView != NULL) {
+		infoGraphicsView->setActiveConnectorItem(this);
+	}
+
 	if ((acceptedMouseButtons() & Qt::RightButton) == 0) {
 		event->ignore();
 		return;
@@ -2761,5 +2786,17 @@ void ConnectorItem::setConnectorLocalName(const QString & name)
 	if (m_connector) {
 		m_connector->setConnectorLocalName(name);
 	}
+}
+
+bool ConnectorItem::isGroundFillSeed() 
+{
+	return m_groundFillSeed;
+}
+
+void ConnectorItem::setGroundFillSeed(bool seed) 
+{
+	m_groundFillSeed = seed;
+	ConnectorItem * cross = this->getCrossLayerConnectorItem();
+	if (cross) cross->m_groundFillSeed = seed;
 }
 

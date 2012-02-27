@@ -1865,7 +1865,6 @@ QString SetDropOffsetCommand::getParamString() const {
 
 ///////////////////////////////////////////////
 
-
 RenamePinsCommand::RenamePinsCommand(SketchWidget *sketchWidget, long id, const QStringList & oldOnes, const QStringList & newOnes, bool singleRow, QUndoCommand *parent) :
 	BaseCommand(BaseCommand::CrossView, sketchWidget, parent)
 {
@@ -1890,3 +1889,43 @@ QString RenamePinsCommand::getParamString() const {
 			.arg(m_itemID).arg(m_singleRow);
 
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+GroundFillSeedCommand::GroundFillSeedCommand(SketchWidget* sketchWidget, QUndoCommand *parent)
+    : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
+{
+	setText(QObject::tr("Set Ground Fill Seed"));
+}
+
+void GroundFillSeedCommand::undo()
+{
+	foreach(GFSThing gfsThing, m_items) {
+		m_sketchWidget->setGroundFillSeed(gfsThing.id, gfsThing.connectorID, !gfsThing.seed);
+	}
+}
+
+void GroundFillSeedCommand::redo()
+{
+	foreach(GFSThing gfsThing, m_items) {
+		m_sketchWidget->setGroundFillSeed(gfsThing.id, gfsThing.connectorID, gfsThing.seed);
+	}
+}
+
+void GroundFillSeedCommand::addItem(long id, const QString & connectorID, bool seed)
+{
+	GFSThing gfsThing;
+	gfsThing.id = id;
+	gfsThing.connectorID = connectorID;
+	gfsThing.seed = seed;
+	m_items.append(gfsThing);
+}
+
+QString GroundFillSeedCommand::getParamString() const {
+	return QString("GroundFillSeedCommand ") 
+		+ BaseCommand::getParamString() + 
+		QString(" items:%1")
+		.arg(m_items.count())
+		;
+}
+

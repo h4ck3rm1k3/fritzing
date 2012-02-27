@@ -737,6 +737,8 @@ void BinManager::addPartTo(PartsBinPaletteWidget* bin, ModelPart* mp) {
 
 void BinManager::newPartTo(PartsBinPaletteWidget* bin) {
 	PartsEditorMainWindow *partsEditor = m_mainWindow->getPartsEditor(NULL, -1, NULL, bin);
+	if (partsEditor == NULL) return;
+
 	partsEditor->show();
 	partsEditor->raise();
 }
@@ -759,6 +761,8 @@ void BinManager::importPartTo(PartsBinPaletteWidget* bin) {
 void BinManager::editSelectedPartFrom(PartsBinPaletteWidget* bin) {
 	ModelPart *selectedMP = bin->selected();
 	PartsEditorMainWindow *partsEditor = m_mainWindow->getPartsEditor(selectedMP, -1, NULL, bin);
+	if (partsEditor == NULL) return;
+
 	partsEditor->show();
 	partsEditor->raise();
 }

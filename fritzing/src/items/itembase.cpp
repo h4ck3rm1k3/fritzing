@@ -330,7 +330,7 @@ void ItemBase::saveInstance(QXmlStreamWriter & streamWriter) {
 
 	bool saveConnectorItems = false;
 	foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
-		if (connectorItem->connectionsCount() > 0 || connectorItem->hasRubberBandLeg()) {
+		if (connectorItem->connectionsCount() > 0 || connectorItem->hasRubberBandLeg() || connectorItem->isGroundFillSeed()) {
 			saveConnectorItems = true;
 			break;
 		}

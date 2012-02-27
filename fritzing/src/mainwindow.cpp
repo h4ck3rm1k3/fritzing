@@ -152,6 +152,8 @@ QString MainWindow::BackupFolder;
 MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel, QWidget * parent) :
     FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension(), parent)
 {
+	m_activeWire = NULL;
+	m_activeConnectorItem = NULL;
 	m_swapTimer.setInterval(30);
 	m_swapTimer.setParent(this);
 	m_swapTimer.setSingleShot(true);
@@ -485,6 +487,14 @@ void MainWindow::connectPairs() {
 	connect(m_breadboardGraphicsView, SIGNAL(dropTempSignal(ModelPart *, QWidget *)), this, SLOT(dropTempSlot(ModelPart *, QWidget *)));
 	connect(m_schematicGraphicsView, SIGNAL(dropTempSignal(ModelPart *, QWidget *)), this, SLOT(dropTempSlot(ModelPart *, QWidget *)));
 	connect(m_pcbGraphicsView, SIGNAL(dropTempSignal(ModelPart *, QWidget *)), this, SLOT(dropTempSlot(ModelPart *, QWidget *)));
+
+	connect(m_breadboardGraphicsView, SIGNAL(setActiveWireSignal(Wire *)), this, SLOT(setActiveWire(Wire *)));
+	connect(m_schematicGraphicsView, SIGNAL(setActiveWireSignal(Wire *)), this, SLOT(setActiveWire(Wire *)));
+	connect(m_pcbGraphicsView, SIGNAL(setActiveWireSignal(Wire *)), this, SLOT(setActiveWire(Wire *)));
+
+	connect(m_breadboardGraphicsView, SIGNAL(setActiveConnectorItemSignal(ConnectorItem *)), this, SLOT(setActiveConnectorItem(ConnectorItem *)));
+	connect(m_schematicGraphicsView, SIGNAL(setActiveConnectorItemSignal(ConnectorItem *)), this, SLOT(setActiveConnectorItem(ConnectorItem *)));
+	connect(m_pcbGraphicsView, SIGNAL(setActiveConnectorItemSignal(ConnectorItem *)), this, SLOT(setActiveConnectorItem(ConnectorItem *)));
 
 	bool succeeded = connect(m_pcbGraphicsView, SIGNAL(routingStatusSignal(SketchWidget *, const RoutingStatus &)),
 						this, SLOT(routingStatusSlot(SketchWidget *, const RoutingStatus &)));
@@ -2685,3 +2695,12 @@ void MainWindow::dropTempSlot(ModelPart * mp, QWidget * widget) {
 void MainWindow::hideTempBin() {
 	if (m_binManager) m_binManager->hideTemp();
 }
+
+void MainWindow::setActiveWire(Wire * wire) {
+	m_activeWire = wire;
+}
+
+void MainWindow::setActiveConnectorItem(ConnectorItem * connectorItem) {
+	m_activeConnectorItem = connectorItem;
+}
+

@@ -291,6 +291,7 @@ public:
 	virtual double getRatsnestWidth();
 	void setAnyInRotation();
 	ConnectorItem * findConnectorItem(ConnectorItem * foreignConnectorItem);
+	void setGroundFillSeed(long id, const QString & connectorID, bool seed);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

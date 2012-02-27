@@ -115,22 +115,6 @@ bool alphaLessThan(QColor * c1, QColor * c2)
 
 /////////////////////////////////////////////////////////////
 
-
-WireMenu::WireMenu(const QString & title, QWidget * parent) : QMenu(title, parent) 
-{
-	m_wire = NULL;
-}
-
-void WireMenu::setWire(Wire * w) {
-	m_wire = w;
-}
-
-Wire * WireMenu::wire() {
-	return m_wire;
-}
-
-/////////////////////////////////////////////////////////////
-
 WireAction::WireAction(QAction * action) : QAction(action) {
 	m_wire = NULL;
 	this->setText(action->text());
@@ -390,19 +374,16 @@ void Wire::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
 
 void Wire::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 {
-	WireMenu * wireMenu = qobject_cast<WireMenu *>(m_itemMenu);
-	if (wireMenu) {
-		wireMenu->setWire(this);
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView != NULL) {
+		infoGraphicsView->setActiveWire(this);
 	}
+
 	ItemBase::contextMenuEvent(event);
 }
 
 void Wire::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-	WireMenu * wireMenu = qobject_cast<WireMenu *>(m_itemMenu);
-	if (wireMenu) {
-		wireMenu->setWire(this);
-	}
 	ItemBase::mousePressEvent(event);
 }
 

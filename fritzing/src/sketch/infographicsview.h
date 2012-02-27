@@ -107,6 +107,8 @@ public:
 	virtual void changeWireWidthMils(const QString newWidth);
 	virtual void changeWireColor(const QString newColor);
 	virtual void swap(const QString & family, const QString & prop, QMap<QString, QString> & propsMap, ItemBase *);
+	void setActiveWire(Wire *);
+	void setActiveConnectorItem(ConnectorItem *);
 
 
 public slots:
@@ -118,6 +120,8 @@ signals:
 	void setVoltageSignal(double, bool doEmit);
 	void swapSignal(const QString & family, const QString & prop, QMap<QString, QString> & propsMap, ItemBase *);
 	void changePinLabelsSignal(ItemBase *, bool singleRow);
+	void setActiveWireSignal(Wire *);
+	void setActiveConnectorItemSignal(ConnectorItem *);
 
 public:
 	static InfoGraphicsView * getInfoGraphicsView(QGraphicsItem *);

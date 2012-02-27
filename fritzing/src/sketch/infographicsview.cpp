@@ -374,3 +374,13 @@ ViewGeometry::WireFlag InfoGraphicsView::getTraceFlag()
 void InfoGraphicsView::setAnyInRotation()
 {
 }
+
+void InfoGraphicsView::setActiveWire(Wire * wire)
+{
+	emit setActiveWireSignal(wire);
+}
+
+void InfoGraphicsView::setActiveConnectorItem(ConnectorItem * connectorItem)
+{
+	emit setActiveConnectorItemSignal(connectorItem);
+}

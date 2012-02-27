@@ -41,18 +41,6 @@ $Date$
 #include "itembase.h"
 #include "../utils/cursormaster.h"
 
-class WireMenu : public QMenu {
-	Q_OBJECT
-
-public:
-	WireMenu(const QString & title, QWidget * parent = 0);
-	void setWire(Wire *);
-	Wire * wire();
-
-protected:
-	Wire * m_wire;
-};
-
 class WireAction : public QAction {
 	Q_OBJECT
 

@@ -1025,4 +1025,27 @@ protected:
 
 /////////////////////////////////////////////
 
+struct GFSThing {
+	long id;
+	QString connectorID;
+	bool seed;
+};
+
+class GroundFillSeedCommand : public BaseCommand
+{
+public:
+    GroundFillSeedCommand(class SketchWidget *sketchWidget, QUndoCommand *parent);
+    void undo();
+    void redo();
+	void addItem(long id, const QString & connectorID, bool seed);
+
+protected:
+	QString getParamString() const;
+
+protected:
+	QList<GFSThing> m_items;
+};
+
+/////////////////////////////////////////////
+
 #endif // COMMANDS_H
