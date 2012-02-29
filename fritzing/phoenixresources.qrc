@@ -284,6 +284,7 @@
         <file>resources/bins/icons/SparkFun.png</file>
         <file>resources/bins/icons/Contrib.png</file>
         <file>resources/bins/icons/Parallax.png</file>
+        <file>resources/bins/icons/Pololu.png</file>
         <file>resources/bins/icons/Temp.png</file>
 
 	<file>resources/templates/jumper_copper0LayerTemplate.txt</file>

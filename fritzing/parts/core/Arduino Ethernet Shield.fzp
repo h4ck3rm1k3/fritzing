@@ -10,7 +10,8 @@
         <tag>Shield</tag>
     </tags>
     <properties>
-        <property name="family">Arduino Shield</property>
+        <property name="family">Arduino Shield</property>        
+	<property name="type">Ethernet</property>
     </properties>
     <description>Ethernet shield for the awesome Arduino microcontroller.</description>
     <views>
