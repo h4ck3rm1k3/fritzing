@@ -665,6 +665,8 @@ void FApplication::runKicadSchematicService() {
 
 int FApplication::startup(bool firstRun)
 {
+	//DebugDialog::setEnabled(true);
+
 	QPixmap pixmap(":/resources/images/splash/splash_screen_start.png");
 	FSplashScreen splash(pixmap);
 	m_splash = &splash;

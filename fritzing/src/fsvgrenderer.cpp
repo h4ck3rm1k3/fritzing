@@ -444,10 +444,19 @@ void FSvgRenderer::initLegInfoAux(QDomElement & element, const QStringList & con
 	if (!id.isEmpty()) {
 		int ix = legIDs.indexOf(id);
 		if (ix >= 0) {
+			//DebugDialog::debug("init leg info " + id);
+			//foreach (QString lid, legIDs) {
+			//	DebugDialog::debug("\tleg id:" + lid);
+			//}
+
 			element.setTagName("g");			// don't want this element to actually be drawn
 			gotOne = true;
 			ConnectorInfo * connectorInfo = m_connectorInfoHash.value(connectorIDs.at(ix), NULL);
 			if (connectorInfo) {
+				//QString temp;
+				//QTextStream stream(&temp);
+				//element.save(stream, 0);
+				//DebugDialog::debug("\t matched " + connectorIDs.at(ix) + " " + temp);
 				connectorInfo->legMatrix = TextUtils::elementToMatrix(element);
 				connectorInfo->legColor = element.attribute("stroke");
 				connectorInfo->legLine = QLineF();
@@ -698,6 +707,15 @@ void FSvgRenderer::calcLeg(SvgIdLayer * svgIdLayer, const QRectF & viewBox, Conn
 
 	QSizeF defaultSizeF = this->defaultSizeF();
 	svgIdLayer->m_legStrokeWidth = connectorInfo->legStrokeWidth * defaultSizeF.width() / viewBox.width();
+
+	/*
+	DebugDialog::debug(	QString("calcleg leg %1 %2 %3 %4")
+		.arg(connectorInfo->legLine.p1().x())
+		.arg(connectorInfo->legLine.p1().y())
+		.arg(connectorInfo->legLine.p2().x())
+		.arg(connectorInfo->legLine.p2().y())
+		);
+	*/
 
 	QMatrix matrix = this->matrixForElement(svgIdLayer->m_legId) * connectorInfo->legMatrix;
 	QPointF p1 = matrix.map(connectorInfo->legLine.p1());

@@ -2314,6 +2314,15 @@ const QString & ConnectorItem::legID(ViewIdentifierClass::ViewIdentifier viewID,
 void ConnectorItem::setRubberBandLeg(QColor color, double strokeWidth, QLineF parentLine) {
 	// assumes this is only called once, when the connector is first set up
 
+	/*
+	this->debugInfo(QString("set rubber band leg %1 %2 %3 %4")
+		.arg(parentLine.p1().x())
+		.arg(parentLine.p1().y())
+		.arg(parentLine.p2().x())
+		.arg(parentLine.p2().y())
+		);
+	*/
+
 	m_rubberBandLeg = true;
 	setFlag(QGraphicsItem::ItemIsMovable, true);
 	setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
