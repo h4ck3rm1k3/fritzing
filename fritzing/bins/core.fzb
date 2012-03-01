@@ -249,6 +249,14 @@
                 </iconView>
             </views>
         </instance>
+        <instance moduleIdRef="Humidity_and_Temperature_Sensor_RHT03_6" modelIndex="31" path="parts/core/Humidity_and_Temperature_Sensor_RHT03.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>	
+	
 	
 	
       <instance moduleIdRef="__spacer__" modelIndex="3" path="Output">
