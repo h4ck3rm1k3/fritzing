@@ -365,7 +365,7 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 					if (forWhy == SVG2gerber::ForMask) {
 						panelItem->window->pcbView()->hideCopperLogoItems(copperLogoItems);
 					}
-					QString one = panelItem->window->pcbView()->renderToSVG(FSvgRenderer::printerScale(), layerThingList.at(i).layerList, layerThingList.at(i).layerList, true, imageSize, panelItem->board, GraphicsUtils::StandardFritzingDPI, false, false, false, empty);
+					QString one = panelItem->window->pcbView()->renderToSVG(FSvgRenderer::printerScale(), layerThingList.at(i).layerList, true, imageSize, panelItem->board, GraphicsUtils::StandardFritzingDPI, false, false, false, empty);
 					
 					QString clipString;
 					

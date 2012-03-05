@@ -1853,3 +1853,7 @@ const QCursor * ItemBase::getCursor(Qt::KeyboardModifiers)
 {
 	return CursorMaster::MoveCursor;
 }
+
+PartLabel * ItemBase::partLabel() {
+	return m_partLabel;
+}

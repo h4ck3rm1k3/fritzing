@@ -59,10 +59,12 @@ bool pixelsCollide(QImage * image1, QImage * image2, int x1, int y1, int x2, int
 	for (int y = y1; y < y2; y++) {
 		for (int x = x1; x < x2; x++) {
 			QRgb p1 = image1->pixel(x, y);
-			if (p1 == 0xffffff) continue;
+			if (p1 == 0xffffffff) continue;
 
 			QRgb p2 = image2->pixel(x, y);
-			if (p2 == 0xffffff) continue;
+			if (p2 == 0xffffffff) continue;
+
+			//DebugDialog::debug(QString("p1:%1 p2:%2").arg(p1, 0, 16).arg(p2, 0, 16));
 
 			return true;
 		}
@@ -109,7 +111,7 @@ void GerberGenerator::exportToGerber(const QString & filename, const QString & e
     LayerList outlineLayerIDs = ViewLayer::outlineLayers();
 	QSizeF imageSize;
 	bool empty;
-	QString svgOutline = sketchWidget->renderToSVG(FSvgRenderer::printerScale(), outlineLayerIDs, outlineLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, false, empty);
+	QString svgOutline = sketchWidget->renderToSVG(FSvgRenderer::printerScale(), outlineLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, false, empty);
     if (svgOutline.isEmpty()) {
         displayMessage(QObject::tr("outline is empty"), displayMessageBoxes);
         return;
@@ -146,7 +148,7 @@ int GerberGenerator::doCopper(ItemBase * board, PCBSketchWidget * sketchWidget, 
 {
 	QSizeF imageSize;
 	bool empty;
-	QString svg = sketchWidget->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, false, empty);
+	QString svg = sketchWidget->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, false, empty);
 	if (svg.isEmpty()) {
 		displayMessage(QObject::tr("%1 file export failure (1)").arg(copperName), displayMessageBoxes);
 		return 0;
@@ -169,7 +171,7 @@ int GerberGenerator::doSilk(LayerList silkLayerIDs, const QString & silkName, co
 {
 	QSizeF imageSize;
 	bool empty;
-	QString svgSilk = sketchWidget->renderToSVG(FSvgRenderer::printerScale(), silkLayerIDs, silkLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, false, empty);
+	QString svgSilk = sketchWidget->renderToSVG(FSvgRenderer::printerScale(), silkLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, false, empty);
     if (svgSilk.isEmpty()) {
 		displayMessage(QObject::tr("silk file export failure (1)"), displayMessageBoxes);
         return 0;
@@ -212,7 +214,7 @@ int GerberGenerator::doDrill(ItemBase * board, PCBSketchWidget * sketchWidget, c
 
 	QSizeF imageSize;
 	bool empty;
-	QString svgDrill = sketchWidget->renderToSVG(FSvgRenderer::printerScale(), drillLayerIDs, drillLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, false, empty);
+	QString svgDrill = sketchWidget->renderToSVG(FSvgRenderer::printerScale(), drillLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, false, empty);
     if (svgDrill.isEmpty()) {
 		displayMessage(QObject::tr("drill file export failure (1)"), displayMessageBoxes);
         return 0;
@@ -243,7 +245,7 @@ int GerberGenerator::doMask(LayerList maskLayerIDs, const QString &maskName, con
 
 	QSizeF imageSize;
 	bool empty;
-	QString svgMask = sketchWidget->renderToSVG(FSvgRenderer::printerScale(), maskLayerIDs, maskLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, false, empty);
+	QString svgMask = sketchWidget->renderToSVG(FSvgRenderer::printerScale(), maskLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, false, empty);
     if (svgMask.isEmpty()) {
 		displayMessage(QObject::tr("mask file export failure (1)"), displayMessageBoxes);
         return 0;
@@ -386,7 +388,7 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 
 	QImage * clipImage = NULL;
 	if (!clipString.isEmpty()) {
-		clipImage = new QImage(imgSize, QImage::Format_RGB32);
+		clipImage = new QImage(imgSize, QImage::Format_Mono);
 		clipImage->fill(0xffffffff);
 		clipImage->setDotsPerMeterX(res * GraphicsUtils::InchesPerMeter);
 		clipImage->setDotsPerMeterY(res * GraphicsUtils::InchesPerMeter);
@@ -433,7 +435,7 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 	}
 
 	if (clipImage) {
-		QImage another(imgSize, QImage::Format_RGB32);
+		QImage another(imgSize, QImage::Format_Mono);
 		another.fill(0xffffffff);
 		another.setDotsPerMeterX(res * GraphicsUtils::InchesPerMeter);
 		another.setDotsPerMeterY(res * GraphicsUtils::InchesPerMeter);
@@ -509,7 +511,7 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 		QByteArray svgByteArray;
 		SvgFileSplitter::changeColors(svg, toColor, exceptions, svgByteArray);
 
-		QImage image(imgSize, QImage::Format_RGB32);
+		QImage image(imgSize, QImage::Format_Mono);
 		image.fill(0xffffffff);
 		image.setDotsPerMeterX(res * GraphicsUtils::InchesPerMeter);
 		image.setDotsPerMeterY(res * GraphicsUtils::InchesPerMeter);
@@ -545,7 +547,7 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 		//	int tinyWidth = boardRect.width();
 		//	int tinyHeight = boardRect.height();
 		//	QRectF tinyTarget(0, 0, tinyWidth, tinyHeight);
-		//	QImage tinyImage(tinyWidth, tinyHeight, QImage::Format_RGB32);
+		//	QImage tinyImage(tinyWidth, tinyHeight, QImage::Format_Mono);
 		//	QPainter painter;
 		//	painter.begin(&tinyImage);
 		//	renderer.render(&painter, tinyTarget);

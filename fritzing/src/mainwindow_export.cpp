@@ -227,7 +227,7 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 		QSizeF imageSize;
 		if (wantSVG) {
 			bool empty;
-			QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, GraphicsUtils::IllustratorDPI, false, false, false, empty);
+			QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, true, imageSize, board, GraphicsUtils::IllustratorDPI, false, false, false, empty);
 			massageOutput(svg, doMask, doSilk, maskTop, maskBottom, fileName, GraphicsUtils::IllustratorDPI);		
 			svg = mergeBoardSvg(svg, board, GraphicsUtils::IllustratorDPI, imageSize, flip);
 			
@@ -244,7 +244,7 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 			printer.setOutputFileName(fileName);
 			int res = printer.resolution();
 			bool empty;
-			QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, res, false, false, false, empty);
+			QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, true, imageSize, board, res, false, false, false, empty);
 			massageOutput(svg, doMask, doSilk, maskTop, maskBottom, fileName, res);
 			svg = mergeBoardSvg(svg, board, res, imageSize, flip);
 			
@@ -369,7 +369,7 @@ QString MainWindow::getBoardSilkscreenSvg(ItemBase * board, int res, QSizeF & im
 	LayerList viewLayerIDs;
 	viewLayerIDs << ViewLayer::Silkscreen1;
 	bool empty;
-	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, res, true, false, false, empty);
+	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, true, imageSize, board, res, true, false, false, empty);
 	board->setSelected(false);
 	foreach (QGraphicsItem * item, items) {
 		item->setSelected(true);
@@ -876,7 +876,7 @@ void MainWindow::exportSvg(double res, bool selectedItems, bool flatten) {
 
 	QSizeF imageSize;
 	bool empty;
-	QString svg = m_currentGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, false, imageSize, NULL, res, selectedItems, flatten, false, empty);
+	QString svg = m_currentGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, false, imageSize, NULL, res, selectedItems, flatten, false, empty);
 	if (svg.isEmpty()) {
 		// tell the user something reasonable
 		return;

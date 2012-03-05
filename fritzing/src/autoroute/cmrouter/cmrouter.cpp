@@ -1616,7 +1616,7 @@ void CMRouter::tileWires(QList<Wire *> & wires, QList<Tile *> & alreadyTiled, Ti
 			double factor = (eliminateThin ? StandardWireWidth : 1);
 			double w = (dx + m_keepout + m_keepout) / factor;
 			double h = (dy + m_keepout + m_keepout) / factor;
-			QImage image(w, h, QImage::Format_RGB32);
+			QImage image(w, h, QImage::Format_Mono);
 			image.fill(0xff000000);
 			QPainter painter(&image);
 			painter.setRenderHint(QPainter::Antialiasing);
@@ -1636,7 +1636,7 @@ void CMRouter::tileWires(QList<Wire *> & wires, QList<Tile *> & alreadyTiled, Ti
 			QList<QRect> rects;
 			GroundPlaneGenerator gpg;
 			gpg.setMinRunSize(1, 1);
-			gpg.scanLines(image, w, h, rects, 1);
+			gpg.scanLines(image, w, h, rects);
 			foreach (QRect rect, rects) {
 				QRectF r(p1.x() - tx + (rect.left() * factor),
 						 p1.y() - ty + (rect.top() * factor),

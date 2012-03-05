@@ -42,10 +42,8 @@ $Date$
 #include <qmath.h>
 #include <limits>
 
-static const int THRESHOLD = 2;
 static const double BORDERINCHES = 0.04;
 
-#define QGRAY(rgb) (qGray(rgb) * qAlpha(rgb) / 255)
 inline int OFFSET(int x, int y, QImage * image) { return (y * image->width()) + x; }
 
 QString GroundPlaneGenerator::ConnectorName = "connector0pad";
@@ -79,7 +77,7 @@ bool GroundPlaneGenerator::getBoardRects(const QString & boardSvg, QGraphicsItem
 	QRectF br = board->sceneBoundingRect();
 	double bWidth = res * br.width() / FSvgRenderer::printerScale();
 	double bHeight = res * br.height() / FSvgRenderer::printerScale();
-	QImage image(bWidth, bHeight, QImage::Format_Mono);  // Format_RGB32
+	QImage image(bWidth, bHeight, QImage::Format_Mono);  
 	image.setDotsPerMeterX(res * GraphicsUtils::InchesPerMeter);
 	image.setDotsPerMeterY(res * GraphicsUtils::InchesPerMeter);
 	image.fill(0xffffffff);
@@ -92,11 +90,10 @@ bool GroundPlaneGenerator::getBoardRects(const QString & boardSvg, QGraphicsItem
 	painter.end();
 
 #ifndef QT_NO_DEBUG
-	//image.save("getBoardRects.png");
+	image.save("getBoardRects.png");
 #endif
 
 	QColor keepaway(255,255,255);
-	int threshold = 1;
 
 	// now add keepout area to the border
 	QImage image2 = image.copy();
@@ -110,8 +107,7 @@ bool GroundPlaneGenerator::getBoardRects(const QString & boardSvg, QGraphicsItem
 	for (int y = 0; y < image.height(); y++) {
 		for (int x = 0; x < image.width(); x++) {
 			QRgb current = image.pixel(x, y);
-			int gray = QGRAY(current);
-			if (gray <= threshold) {			
+			if (current != 0xffffffff) {			
 				continue;
 			}
 
@@ -121,10 +117,10 @@ bool GroundPlaneGenerator::getBoardRects(const QString & boardSvg, QGraphicsItem
 	painter.end();
 
 #ifndef QT_NO_DEBUG
-	//image2.save("getBoardRects2.png");
+	image2.save("getBoardRects2.png");
 #endif
 
-	scanLines(image2, bWidth, bHeight, rects, threshold);
+	scanLines(image2, bWidth, bHeight, rects);
 
 	// combine parallel equal-sized rects
 	int ix = 0;
@@ -172,8 +168,8 @@ bool GroundPlaneGenerator::generateGroundPlaneUnit(const QString & boardSvg, QSi
 	QBitArray redMarker(image->height() * image->width(), false);
 
 	QRgb pixel = image->pixel(s);
-	int gray = QGRAY(pixel);
-	if (gray <= THRESHOLD) {
+	DebugDialog::debug(QString("unit %1").arg(pixel, 0, 16));
+	if (pixel != 0xffffffff) {
 		// starting off in bad territory
 		delete image;
 		return false;
@@ -197,8 +193,7 @@ bool GroundPlaneGenerator::generateGroundPlaneUnit(const QString & boardSvg, QSi
 		if (redMarker.testBit(OFFSET(p.x(), p.y(), image))) continue;			// already been here
 
 		QRgb pixel = image->pixel(p);
-		int gray = QGRAY(pixel);
-		if (gray <= THRESHOLD) continue;			// black; bail
+		if (pixel != 0xffffffff) continue;			// black; bail
 
 		redMarker.setBit(OFFSET(p.x(), p.y(), image), true);
 		if (p.x() > maxX) maxX = p.x();
@@ -371,7 +366,7 @@ void GroundPlaneGenerator::scanImage(QImage & image, double bWidth, double bHeig
 									 bool makeOffset, QSizeF minAreaInches, double minDimensionInches, QPointF polygonOffset)  
 {
 	QList<QRect> rects;
-	scanLines(image, bWidth, bHeight, rects, THRESHOLD);
+	scanLines(image, bWidth, bHeight, rects);
 	QList< QList<int> * > pieces;
 	splitScanLines(rects, pieces);
 	foreach (QList<int> * piece, pieces) {
@@ -429,7 +424,7 @@ void GroundPlaneGenerator::scanImage(QImage & image, double bWidth, double bHeig
 
 }
 
-void GroundPlaneGenerator::scanLines(QImage & image, int bWidth, int bHeight, QList<QRect> & rects, int threshold)
+void GroundPlaneGenerator::scanLines(QImage & image, int bWidth, int bHeight, QList<QRect> & rects)
 {
 	if (m_minRiseSize > 1) {
 		for (int x = 0; x < bWidth; x++) {
@@ -437,9 +432,8 @@ void GroundPlaneGenerator::scanLines(QImage & image, int bWidth, int bHeight, QL
 			int whiteStart = 0;
 			for (int y = 0; y < bHeight; y++) {
 				QRgb current = image.pixel(x, y);
-				int gray = QGRAY(current);
 				if (inWhite) {
-					if (gray > threshold) {			// qBlue(current) == 0xff    gray > 128
+					if (current == 0xffffffff) {			// qBlue(current) == 0xff    gray > 128
 						// another white pixel, keep moving
 						continue;
 					}
@@ -455,7 +449,7 @@ void GroundPlaneGenerator::scanLines(QImage & image, int bWidth, int bHeight, QL
 
 				}
 				else {
-					if (gray <= threshold) {		// qBlue(current) != 0xff				
+					if (current != 0xffffffff) {		// qBlue(current) != 0xff				
 						// another black pixel, keep moving
 						continue;
 					}
@@ -484,10 +478,9 @@ void GroundPlaneGenerator::scanLines(QImage & image, int bWidth, int bHeight, QL
 			//if (current != 0xff000000 && current != 0xffffffff) {
 				//DebugDialog::debug(QString("current %1").arg(current,0,16));
 			//}
-			int gray = QGRAY(current);
 			//DebugDialog::debug(QString("current %1 %2").arg(current,0,16).arg(gray, 0, 16));
 			if (inWhite) {
-				if (gray > threshold) {			// qBlue(current) == 0xff    gray > 128
+				if (current == 0xffffffff) {			// qBlue(current) == 0xff    gray > 128
 					// another white pixel, keep moving
 					continue;
 				}
@@ -502,7 +495,7 @@ void GroundPlaneGenerator::scanLines(QImage & image, int bWidth, int bHeight, QL
 				rects.append(QRect(whiteStart, y, x - whiteStart, 1));
 			}
 			else {
-				if (gray <= threshold) {		// qBlue(current) != 0xff				
+				if (current != 0xffffffff) {		// qBlue(current) != 0xff				
 					// another black pixel, keep moving
 					continue;
 				}
@@ -978,14 +971,13 @@ void GroundPlaneGenerator::collectBorderPoints(QImage & image, QList<QPoint> & p
 {
 	// background is black
 
-        int currentX = 0, currentY = 0;
+    int currentX = 0, currentY = 0;
 	bool gotSomething = false;
 
 	for (int y = 0; y < image.height(); y++) {
 		for (int x = 0; x < image.width(); x++) {
 			QRgb current = image.pixel(x, y);
-			int gray = QGRAY(current);
-			if (gray <= THRESHOLD) {		// qBlue(current) != 0xff				
+			if (current != 0xffffffff) {				
 				// another black pixel, keep moving
 				continue;
 			}
@@ -1096,7 +1088,7 @@ bool GroundPlaneGenerator::tryNextPoint(int x, int y, QImage & image, QList<QPoi
 	}
 
 	QRgb pixel = image.pixel(x, y);
-	if (QGRAY(pixel) <= THRESHOLD) {						
+	if (pixel != 0xffffffff) {						
 		// empty pixel, not on the border
 		return false;
 	}
@@ -1107,7 +1099,7 @@ bool GroundPlaneGenerator::tryNextPoint(int x, int y, QImage & image, QList<QPoi
 	}
 
 	pixel = image.pixel(x + 1, y);
-	if (QGRAY(pixel) <= THRESHOLD) {						
+	if (pixel != 0xffffffff) {						
 		points.append(QPoint(x, y));
 		return true;
 	}
@@ -1118,7 +1110,7 @@ bool GroundPlaneGenerator::tryNextPoint(int x, int y, QImage & image, QList<QPoi
 	}
 
 	pixel = image.pixel(x, y + 1);
-	if (QGRAY(pixel) <= THRESHOLD) {						
+	if (pixel != 0xffffffff) {						
 		points.append(QPoint(x, y));
 		return true;
 	}
@@ -1129,7 +1121,7 @@ bool GroundPlaneGenerator::tryNextPoint(int x, int y, QImage & image, QList<QPoi
 	}
 
 	pixel = image.pixel(x - 1, y);
-	if (QGRAY(pixel) <= THRESHOLD) {						
+	if (pixel != 0xffffffff) {						
 		points.append(QPoint(x, y));
 		return true;
 	}
@@ -1140,7 +1132,7 @@ bool GroundPlaneGenerator::tryNextPoint(int x, int y, QImage & image, QList<QPoi
 	}
 
 	pixel = image.pixel(x, y - 1);
-	if (QGRAY(pixel) <= THRESHOLD) {						
+	if (pixel != 0xffffffff) {						
 		points.append(QPoint(x, y));
 		return true;
 	}

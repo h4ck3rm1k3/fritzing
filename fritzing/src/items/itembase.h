@@ -199,6 +199,7 @@ public:
     QRectF boundingRect() const;
     virtual QPainterPath hoverShape() const;
 	virtual const QCursor * getCursor(Qt::KeyboardModifiers);
+	class PartLabel * partLabel();
 
 public:
 	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, double & opacity, double & negativePenWidth, bool & negativeOffsetRect);

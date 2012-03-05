@@ -377,7 +377,7 @@ void LogoItem::loadImage(const QString & fileName, bool addName)
 		}
 
 		if (image.format() != QImage::Format_RGB32 && image.format() != QImage::Format_ARGB32) {
-			image = image.convertToFormat(QImage::Format_RGB32);
+			image = image.convertToFormat(QImage::Format_Mono);
 		}
 
 		GroundPlaneGenerator gpg;

@@ -116,6 +116,12 @@ const int SketchWidget::DragAutoScrollThreshold = 10;
 static const int AutoRepeatDelay = 750;
 const int SketchWidget::PropChangeDelay = 15;
 
+/////////////////////////////////////////////////////////////////////
+
+bool zLessThan(QGraphicsItem * & p1, QGraphicsItem * & p2)
+{
+	return p1->zValue() < p2->zValue();
+}
 
 /////////////////////////////////////////////////////////////////////
 
@@ -2870,7 +2876,7 @@ QString SketchWidget::makeMoveSVG(double printerScale, double dpi, QPointF & off
 	}
 
 	QSizeF imageSize;
-	return renderToSVG(printerScale, viewLayerIDs, viewLayerIDs, true, imageSize, NULL, dpi, false, itemBases, itemsBoundingRect);
+	return renderToSVG(printerScale, viewLayerIDs, true, imageSize, NULL, dpi, false, itemBases, itemsBoundingRect);
 
 	*/
 }
@@ -6787,7 +6793,7 @@ void SketchWidget::resizeNote(long itemID, const QSizeF & size)
 	note->setSize(size);
 }
 
-QString SketchWidget::renderToSVG(double printerScale, const LayerList & partLayers, const LayerList & wireLayers, 
+QString SketchWidget::renderToSVG(double printerScale, const LayerList & layers, 
 								  bool blackOnly, QSizeF & imageSize, ItemBase * board, double dpi, 
 								  bool selectedItems, bool flatten, bool fillHoles, bool & empty)
 {
@@ -6795,50 +6801,37 @@ QString SketchWidget::renderToSVG(double printerScale, const LayerList & partLay
 	if (board) {
 		offsetRect = board->sceneBoundingRect();
 	}
-	return renderToSVG(printerScale, partLayers, wireLayers, blackOnly, imageSize, offsetRect, dpi, selectedItems, flatten, fillHoles, empty);
+	return renderToSVG(printerScale, layers, blackOnly, imageSize, offsetRect, dpi, selectedItems, flatten, fillHoles, empty);
 }
 
 
-QString SketchWidget::renderToSVG(double printerScale, const LayerList & partLayers, const LayerList & wireLayers, 
+QString SketchWidget::renderToSVG(double printerScale, const LayerList & layers, 
 								  bool blackOnly, QSizeF & imageSize, QRectF & offsetRect, double dpi, 
 								  bool selectedItems, bool flatten, bool fillHoles, bool & empty)
 {
 
-	QList<ItemBase *> itemBases;
+	QList<QGraphicsItem *> itemsAndLabels;
 	QRectF itemsBoundingRect;
 	foreach (QGraphicsItem * item, (selectedItems) ? scene()->selectedItems() : scene()->items()) {
 		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 		if (itemBase == NULL) continue;
-		if (!itemBase->isVisible()) continue;
 		if (itemBase->hidden()) continue;
 
-		switch (itemBase->itemType()) {
-			case ModelPart::Wire:
-				if (!wireLayers.contains(itemBase->viewLayerID())) {
-					continue;
-				}
-				break;
-			case ModelPart::Unknown:
-				continue;
-			default:
-				if (!partLayers.contains(itemBase->viewLayerID())) {
-					if (itemBase == itemBase->layerKinChief() && itemBase->isPartLabelVisible()) {
-						break;
-					}
-					continue;
-				}
+		if (itemBase == itemBase->layerKinChief() && itemBase->isPartLabelVisible()) {
+			if (layers.contains(itemBase->partLabelViewLayerID())) {
+				itemsAndLabels.append(itemBase->partLabel());
+				itemsBoundingRect |= itemBase->partLabelSceneBoundingRect();
+			}
 		}
 
-		itemBases.append(itemBase);
+		if (!itemBase->isVisible()) continue;
+		if (!layers.contains(itemBase->viewLayerID())) continue;
 
-		// TODO: if the itembase or part label isn't in the selected view layers, this could be the wrong rect
+		itemsAndLabels.append(itemBase);
 		itemsBoundingRect |= item->sceneBoundingRect();
-		if (itemBase->isPartLabelVisible()) {
-			itemsBoundingRect |= itemBase->partLabelSceneBoundingRect();
-		}
 	}
 
-	return renderToSVG(printerScale, partLayers, wireLayers, blackOnly, imageSize, offsetRect, dpi, flatten, fillHoles, itemBases, itemsBoundingRect, empty);
+	return renderToSVG(printerScale, blackOnly, imageSize, offsetRect, dpi, flatten, fillHoles, itemsAndLabels, itemsBoundingRect, empty);
 }
 
 QString translateSVG(QString & svg, QPointF loc, double dpi, double printerScale) {
@@ -6853,9 +6846,8 @@ QString translateSVG(QString & svg, QPointF loc, double dpi, double printerScale
 	return svg;
 }
 
-QString SketchWidget::renderToSVG(double printerScale, const LayerList & partLayers, const LayerList & wireLayers, 
-								  bool blackOnly, QSizeF & imageSize, QRectF & offsetRect, double dpi, bool flatten,
-								  bool fillHoles, QList<ItemBase *> & itemBases, QRectF itemsBoundingRect,
+QString SketchWidget::renderToSVG(double printerScale, bool blackOnly, QSizeF & imageSize, QRectF & offsetRect, double dpi, bool flatten,
+								  bool fillHoles, QList<QGraphicsItem *> & itemsAndLabels, QRectF itemsBoundingRect,
 								  bool & empty)
 {
 	Q_UNUSED(fillHoles);
@@ -6879,105 +6871,95 @@ QString SketchWidget::renderToSVG(double printerScale, const LayerList & partLay
 	QHash<QString, QString> svgHash;
 
 	// put them in z order
-	qSort(itemBases.begin(), itemBases.end(), ItemBase::zLessThan);
+	qSort(itemsAndLabels.begin(), itemsAndLabels.end(), zLessThan);
 
 	QList<ItemBase *> gotLabel;
-	foreach (ItemBase * itemBase, itemBases) {
-		ItemBase * chief = itemBase->layerKinChief();
-		if (!gotLabel.contains(chief)) {
-			gotLabel.append(chief);
-			if (chief->isPartLabelVisible()) {
-				ViewLayer::ViewLayerID viewLayerID = chief->partLabelViewLayerID();
-				if (viewLayerID != ViewLayer::UnknownLayer) {
-					if (partLayers.contains(viewLayerID)) {
-						QString labelSvg = chief->makePartLabelSvg(blackOnly, dpi, printerScale);
-						if (!labelSvg.isEmpty()) {
-							empty = false;
-							outputSVG.append(translateSVG(labelSvg, chief->partLabelScenePos() - offset, dpi, printerScale));
-						}
-					}
-				}		
-			}
+	foreach (QGraphicsItem * item, itemsAndLabels) {
+		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+		if (itemBase == NULL) {
+			PartLabel * partLabel = dynamic_cast<PartLabel *>(item);
+			if (partLabel == NULL) continue;
+
+			QString labelSvg = partLabel->owner()->makePartLabelSvg(blackOnly, dpi, printerScale);
+			if (labelSvg.isEmpty()) continue;
+
+			empty = false;
+			outputSVG.append(translateSVG(labelSvg, partLabel->owner()->partLabelScenePos() - offset, dpi, printerScale));
+			continue;
 		}
+			
 		if (itemBase->itemType() != ModelPart::Wire) {
-			foreach (ViewLayer::ViewLayerID viewLayerID, partLayers) {
-				if (itemBase->viewLayerID() != viewLayerID) continue;
+			QString itemSvg = itemBase->retrieveSvg(itemBase->viewLayerID(), svgHash, blackOnly, dpi);
+			if (itemSvg.isEmpty()) continue;
 
-				QString itemSvg = itemBase->retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
-				if (itemSvg.isEmpty()) continue;
+			if (flatten) {
+				QDomDocument domDocument;
+				QString errorStr;
+				int errorLine;
+				int errorColumn;
+				bool result = domDocument.setContent(itemSvg, &errorStr, &errorLine, &errorColumn);
+				if (!result) continue;
 
-				if (flatten) {
-					QDomDocument domDocument;
-					QString errorStr;
-					int errorLine;
-					int errorColumn;
-					bool result = domDocument.setContent(itemSvg, &errorStr, &errorLine, &errorColumn);
-					if (!result) continue;
-
-					QDomElement root = domDocument.documentElement();
-					SvgFlattener flattener;
-					flattener.flattenChildren(root);
-					SvgFileSplitter::fixStyleAttributeRecurse(root);
-					itemSvg = domDocument.toString();
-				}
-				if (false && fillHoles) {
-					QDomDocument domDocument;
-					QString errorStr;
-					int errorLine;
-					int errorColumn;
-					bool result = domDocument.setContent(itemSvg, &errorStr, &errorLine, &errorColumn);
-					if (!result) continue;
-
-					QDomNodeList circleList = domDocument.elementsByTagName("circle");
-					for(uint i = 0; i < circleList.length(); i++) {
-						QDomElement circle = circleList.item(i).toElement();
-						QString fill = circle.attribute("fill");
-						if (fill.isEmpty() || fill.compare("none") == 0) {
-							circle.setAttribute("fill", circle.attribute("stroke"));
-						}
-					}
-					itemSvg = domDocument.toString();
-				}
-
-				foreach (ConnectorItem * ci, itemBase->cachedConnectorItems()) {
-					if (!ci->hasRubberBandLeg()) continue;
-
-					outputSVG.append(ci->makeLegSvg(offset, dpi, printerScale, blackOnly));
-				}
-
-                QTransform t = itemBase->transform();
-                itemSvg = TextUtils::svgTransform(itemSvg, t, false, QString());
-				outputSVG.append(translateSVG(itemSvg, itemBase->scenePos() - offset, dpi, printerScale));
-				empty = false;
-
-				/*
-				// TODO:  deal with rotations and flips
-				QString shifted = splitter->shift(loc.x(), loc.y(), xmlName);
-				outputSVG.append(shifted);
-				empty = false;
-				splitter->shift(-loc.x(), -loc.y(), xmlName);
-				*/
+				QDomElement root = domDocument.documentElement();
+				SvgFlattener flattener;
+				flattener.flattenChildren(root);
+				SvgFileSplitter::fixStyleAttributeRecurse(root);
+				itemSvg = domDocument.toString();
 			}
+			if (false && fillHoles) {
+				QDomDocument domDocument;
+				QString errorStr;
+				int errorLine;
+				int errorColumn;
+				bool result = domDocument.setContent(itemSvg, &errorStr, &errorLine, &errorColumn);
+				if (!result) continue;
+
+				QDomNodeList circleList = domDocument.elementsByTagName("circle");
+				for(uint i = 0; i < circleList.length(); i++) {
+					QDomElement circle = circleList.item(i).toElement();
+					QString fill = circle.attribute("fill");
+					if (fill.isEmpty() || fill.compare("none") == 0) {
+						circle.setAttribute("fill", circle.attribute("stroke"));
+					}
+				}
+				itemSvg = domDocument.toString();
+			}
+
+			foreach (ConnectorItem * ci, itemBase->cachedConnectorItems()) {
+				if (!ci->hasRubberBandLeg()) continue;
+
+				outputSVG.append(ci->makeLegSvg(offset, dpi, printerScale, blackOnly));
+			}
+
+            QTransform t = itemBase->transform();
+            itemSvg = TextUtils::svgTransform(itemSvg, t, false, QString());
+			outputSVG.append(translateSVG(itemSvg, itemBase->scenePos() - offset, dpi, printerScale));
+			empty = false;
+
+			/*
+			// TODO:  deal with rotations and flips
+			QString shifted = splitter->shift(loc.x(), loc.y(), xmlName);
+			outputSVG.append(shifted);
+			empty = false;
+			splitter->shift(-loc.x(), -loc.y(), xmlName);
+			*/
 		}
 		else {
-			foreach (ViewLayer::ViewLayerID viewLayerID, wireLayers) {
-				Wire * wire = qobject_cast<Wire *>(itemBase);
-				if (wire == NULL) continue;
-				if (wire->viewLayerID() != viewLayerID) continue;
+			Wire * wire = qobject_cast<Wire *>(itemBase);
+			if (wire == NULL) continue;
 
-				//if (wire->getTrace()) {
-				//	DebugDialog::debug(QString("trace %1 %2,%3 %4,%5")
-				//		.arg(wire->id()) 
-				//		.arg(wire->line().p1().x())
-				//		.arg(wire->line().p1().y())
-				//		.arg(wire->line().p2().x())
-				//		.arg(wire->line().p2().y())
-				//		);
-				//}
+			//if (wire->getTrace()) {
+			//	DebugDialog::debug(QString("trace %1 %2,%3 %4,%5")
+			//		.arg(wire->id()) 
+			//		.arg(wire->line().p1().x())
+			//		.arg(wire->line().p1().y())
+			//		.arg(wire->line().p2().x())
+			//		.arg(wire->line().p2().y())
+			//		);
+			//}
 
-				outputSVG.append(makeWireSVG(wire, offset, dpi, printerScale, blackOnly));
-				empty = false;
-			}
+			outputSVG.append(makeWireSVG(wire, offset, dpi, printerScale, blackOnly));
+			empty = false;
 		}
 		extraRenderSvgStep(itemBase, offset, dpi, printerScale, outputSVG);
 	}
