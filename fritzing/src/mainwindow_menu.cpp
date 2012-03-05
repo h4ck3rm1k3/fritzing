@@ -645,6 +645,7 @@ void MainWindow::createEditMenuActions() {
 	connect(m_pasteAct, SIGNAL(triggered()), this, SLOT(paste()));
 
 	m_pasteInPlaceAct = new QAction(tr("Paste in Place"), this);
+	m_pasteInPlaceAct->setShortcut(tr("Ctrl+B"));
 	m_pasteInPlaceAct->setStatusTip(tr("Paste clipboard contents in place"));
 	connect(m_pasteInPlaceAct, SIGNAL(triggered()), this, SLOT(pasteInPlace()));
 
