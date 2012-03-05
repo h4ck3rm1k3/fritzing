@@ -304,13 +304,13 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 	addOptional(optionalCount, refPanelItems, insertPanelItems, panelParams, planePairs);
 
 	foreach (PlanePair * planePair, planePairs) {
-		planePair->svg += "</svg>";
+		planePair->layoutSVG += "</svg>";
 		QString fname = svgDir.absoluteFilePath(QString("%1.panel_%2.layout.svg").arg(panelParams.prefix).arg(planePair->index));
 		QFile outfile(fname);
 		if (outfile.open(QIODevice::WriteOnly | QIODevice::Text)) {
 			QTextStream out(&outfile);
 			out.setCodec("UTF-8");
-			out << planePair->svg;
+			out << planePair->layoutSVG;
 			outfile.close();
 		}
 	}
@@ -349,7 +349,12 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 					// try to minimize rotations by keeping state
 					rotated.insert(panelItem->path, !rotated.value(panelItem->path));
 					panelItem->window->pcbView()->selectAllItems(true, false);
+					DebugDialog::debug(QString("rotating 90:%1 %2").arg(panelItem->path).arg((long) panelItem, 0, 16));
+					QMatrix matrix = panelItem->board->matrix();
+					DebugDialog::debug(QString("\tmatrix m11:%1 m12:%2 m21:%3 m22:%4").arg(matrix.m11()).arg(matrix.m12()).arg(matrix.m21()).arg(matrix.m22()));
 					panelItem->window->pcbView()->rotateX(90, false);
+					matrix = panelItem->board->matrix();
+					DebugDialog::debug(QString("\tmatrix m11:%1 m12:%2 m21:%3 m22:%4").arg(matrix.m11()).arg(matrix.m12()).arg(matrix.m21()).arg(matrix.m22()));
 				}
 
 				QSizeF imageSize;
@@ -455,7 +460,7 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 		merger.replace("black", "#909090");
 		merger.replace("#000000", "#909090");
 		TextUtils::mergeSvg(doc, merger, "");		
-		merger = planePair->svg;				// layout
+		merger = planePair->layoutSVG;				// layout
 		merger.replace("'red'", "'none'");		// hide background rect
 		TextUtils::mergeSvg(doc, merger, "");
 		merger = TextUtils::mergeSvgFinish(doc);
@@ -537,6 +542,8 @@ bool Panelizer::bestFitOne(PanelItem * panelItem, PanelParams & panelParams, QLi
 		panelItem->x = tileToReal(bestPlace1.bestTileRect.xmini) ;
 		panelItem->y = tileToReal(bestPlace1.bestTileRect.ymini);
 		panelItem->rotate90 = bestPlace1.rotate90;
+
+		DebugDialog::debug(QString("setting rotate90:%1 %2").arg(panelItem->rotate90).arg(panelItem->path));
 		panelItem->planePair = planePair;
 
 		TileRect tileRect;
@@ -558,7 +565,7 @@ bool Panelizer::bestFitOne(PanelItem * panelItem, PanelParams & panelParams, QLi
 			h = panelItem->boardSizeInches.width();
 		}
 
-		planePair->svg += QString("<rect x='%1' y='%2' width='%3' height='%4' stroke='none' fill='red'/>\n")
+		planePair->layoutSVG += QString("<rect x='%1' y='%2' width='%3' height='%4' stroke='none' fill='red'/>\n")
 			.arg(panelItem->x * GraphicsUtils::StandardFritzingDPI)
 			.arg(panelItem->y * GraphicsUtils::StandardFritzingDPI)
 			.arg(GraphicsUtils::StandardFritzingDPI * w)
@@ -572,7 +579,7 @@ bool Panelizer::bestFitOne(PanelItem * panelItem, PanelParams & panelParams, QLi
 		double cy = GraphicsUtils::StandardFritzingDPI * (panelItem->y + (h  / 2));
 		cy -= ((strings.count() - 1) * fontSize2 / 2);
 		foreach (QString string, strings) {
-			planePair->svg += QString("<text x='%1' y='%2' anchor='middle' font-family='OCRA' stroke='none' fill='#000000' text-anchor='middle' font-size='%3'>%4</text>\n")
+			planePair->layoutSVG += QString("<text x='%1' y='%2' anchor='middle' font-family='OCRA' stroke='none' fill='#000000' text-anchor='middle' font-size='%3'>%4</text>\n")
 				.arg(cx)
 				.arg(cy)
 				.arg(fontSize)
@@ -598,7 +605,7 @@ PlanePair * Panelizer::makePlanePair(PanelParams & panelParams)
 	PlanePair * planePair = new PlanePair;
 
 	// for debugging
-	planePair->svg = TextUtils::makeSVGHeader(1, GraphicsUtils::StandardFritzingDPI, panelParams.panelWidth, panelParams.panelHeight);
+	planePair->layoutSVG = TextUtils::makeSVGHeader(1, GraphicsUtils::StandardFritzingDPI, panelParams.panelWidth, panelParams.panelHeight);
 	planePair->index = PlanePairIndex++;
 
 	Tile * bufferTile = TiAlloc();
@@ -746,14 +753,31 @@ bool Panelizer::openWindows(QDomElement & board, QHash<QString, QString> & fzzFi
 		panelItem->required = required;
 		panelItem->maxOptional = optional;
 
+		QRectF sbr = boardItem->layerKinChief()->sceneBoundingRect();
+		panelItem->boardSizeInches = sbr.size() / FSvgRenderer::printerScale();
+		DebugDialog::debug(QString("board size inches c %1, %2, %3")
+				.arg(panelItem->boardSizeInches.width())
+				.arg(panelItem->boardSizeInches.height())
+				.arg(path));
+
+		/*
 		QSizeF boardSize = boardItem->size();
 		ResizableBoard * resizableBoard = qobject_cast<ResizableBoard *>(boardItem->layerKinChief());
 		if (resizableBoard != NULL) {
 			panelItem->boardSizeInches = resizableBoard->getSizeMM() / 25.4;
+			DebugDialog::debug(QString("board size inches a %1, %2, %3")
+				.arg(panelItem->boardSizeInches.width())
+				.arg(panelItem->boardSizeInches.height())
+				.arg(path), boardItem->sceneBoundingRect());
 		}
 		else {
 			panelItem->boardSizeInches = boardSize / FSvgRenderer::printerScale();
+			DebugDialog::debug(QString("board size inches b %1, %2, %3")
+				.arg(panelItem->boardSizeInches.width())
+				.arg(panelItem->boardSizeInches.height())
+				.arg(path), boardItem->sceneBoundingRect());
 		}
+		*/
 
 		bool tooBig = false;
 		if (panelItem->boardSizeInches.width() >= panelParams.panelWidth) {

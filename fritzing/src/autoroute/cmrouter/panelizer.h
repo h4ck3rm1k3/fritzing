@@ -42,7 +42,7 @@ struct PlanePair
 	TileRect tilePanelRect;
 	TileRect tilePanelRect90;
 	QStringList svgs;
-	QString svg;
+	QString layoutSVG;
 	int index;
 };
 
