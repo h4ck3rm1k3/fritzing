@@ -114,7 +114,7 @@ static const double CloseEnough = 0.5;  // in pixels, for swapping into the brea
 const int SketchWidget::MoveAutoScrollThreshold = 5;
 const int SketchWidget::DragAutoScrollThreshold = 10;
 static const int AutoRepeatDelay = 750;
-const int SketchWidget::PropChangeDelay = 15;
+const int SketchWidget::PropChangeDelay = 100;
 
 /////////////////////////////////////////////////////////////////////
 
@@ -7166,10 +7166,10 @@ void SketchWidget::setHoleSize(ItemBase * item, const QString & prop, const QStr
 				vg.loc().y() + (oldRect.height() / 2) - (newRect.height() / 2));
 	vg.setLoc(p);
 	new MoveItemCommand(this, item->id(), item->getViewGeometry(), vg, false, parentCommand);
-	//DebugDialog::debug("set hole", oldRect);
-	//DebugDialog::debug("        ", newRect);
-	//DebugDialog::debug("        ", item->getViewGeometry().loc());
-	//DebugDialog::debug("        ", p);
+        //DebugDialog::debug("set hole", oldRect);
+        //DebugDialog::debug("        ", newRect);
+        //DebugDialog::debug("        ", item->getViewGeometry().loc());
+        //DebugDialog::debug("        ", p);
     m_undoStack->waitPush(parentCommand, PropChangeDelay);
 }
 
