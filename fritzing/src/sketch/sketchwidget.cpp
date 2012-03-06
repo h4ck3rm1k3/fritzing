@@ -1436,6 +1436,7 @@ void SketchWidget::copyAux(QList<ItemBase *> & bases, bool saveBoundingRects)
 
 		foreach (ConnectorItem * end, ends) {
 			if (bases.contains(end->attachedTo())) continue;
+			if (bases.contains(end->attachedTo()->layerKinChief())) continue;
 
 			// trace is dangling
 			bases.removeAt(i);
