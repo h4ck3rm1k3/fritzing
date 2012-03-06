@@ -680,7 +680,7 @@ void Wire::writeGeometry(QXmlStreamWriter & streamWriter) {
 	streamWriter.writeEndElement();
 }
 
-void Wire::setExtras(QDomElement & element, InfoGraphicsView * infoGraphicsView)
+void Wire::setExtras(const QDomElement & element, InfoGraphicsView * infoGraphicsView)
 {
 	if (element.isNull()) return;
 
@@ -711,7 +711,7 @@ void Wire::setExtras(QDomElement & element, InfoGraphicsView * infoGraphicsView)
 
 }
 
-void Wire::setColorFromElement(QDomElement & element) {
+void Wire::setColorFromElement(const QDomElement & element) {
 	QString colorString = element.attribute("color");
 	if (colorString.isNull() || colorString.isEmpty()) return;
 

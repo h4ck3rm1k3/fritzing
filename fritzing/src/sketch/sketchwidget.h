@@ -291,6 +291,7 @@ public:
 	void setAnyInRotation();
 	ConnectorItem * findConnectorItem(ConnectorItem * foreignConnectorItem);
 	void setGroundFillSeed(long id, const QString & connectorID, bool seed);
+	void setWireExtras(long id, const QDomElement &);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

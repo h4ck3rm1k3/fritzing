@@ -1929,3 +1929,38 @@ QString GroundFillSeedCommand::getParamString() const {
 		;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+WireExtrasCommand::WireExtrasCommand(SketchWidget* sketchWidget, long fromID,
+									 const QDomElement & oldExtras, const QDomElement & newExtras,
+									 QUndoCommand *parent)
+    : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
+{
+
+    m_fromID = fromID;
+	m_newExtras = newExtras;
+    m_oldExtras = oldExtras;
+}
+
+void WireExtrasCommand::undo()
+{
+	if (!m_redoOnly) {
+		m_sketchWidget->setWireExtras(m_fromID, m_oldExtras);
+	}
+}
+
+void WireExtrasCommand::redo()
+{
+	if (!m_undoOnly) {
+		m_sketchWidget->setWireExtras(m_fromID, m_newExtras);
+	}
+}
+
+QString WireExtrasCommand::getParamString() const {
+	return QString("WireExtrasCommand ") 
+		+ BaseCommand::getParamString() + 
+		QString(" fromid:%1 ")
+		.arg(m_fromID)
+		;
+}
+

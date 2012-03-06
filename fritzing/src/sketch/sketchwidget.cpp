@@ -595,26 +595,17 @@ void SketchWidget::addWireExtras(long newID, QDomElement & view, QUndoCommand * 
 	QDomElement extras = view.firstChildElement("wireExtras");
 	if (extras.isNull()) return;
 
-	bool ok;
-	int w = extras.attribute("width").toInt(&ok);
-	if (ok) {
-		new WireWidthChangeCommand(this, newID, w, w, parentCommand);
-	}
+	QDomElement copy(extras);
 
-	QString colorString = extras.attribute("color");
-	if (!colorString.isEmpty()) {
-		double op = extras.attribute("opacity").toDouble(&ok);
-		if (!ok) {
-			op = 1.0;
-		}
-		new WireColorChangeCommand(this, newID, colorString, colorString, op, op, parentCommand);
-	}
+	new WireExtrasCommand(this, newID, copy, copy, parentCommand);
+}
 
-	QDomElement bElement = extras.firstChildElement("bezier");
-	Bezier bezier = Bezier::fromElement(bElement);
-	if (!bezier.isEmpty()) {
-		new ChangeWireCurveCommand(this, newID, &bezier, &bezier, parentCommand);
-	}
+void SketchWidget::setWireExtras(long newID, const QDomElement & extras)
+{
+	Wire * wire = qobject_cast<Wire *>(findItem(newID));
+	if (wire == NULL) return;
+
+	wire->setExtras(extras, this);
 }
 
 ItemBase * SketchWidget::addItem(const QString & moduleID, ViewLayer::ViewLayerSpec viewLayerSpec, BaseCommand::CrossViewType crossViewType, const ViewGeometry & viewGeometry, long id, long modelIndex,  AddDeleteItemCommand * originatingCommand) {

@@ -1048,4 +1048,25 @@ protected:
 
 /////////////////////////////////////////////
 
+class WireExtrasCommand : public BaseCommand
+{
+public:
+    WireExtrasCommand(class SketchWidget *sketchWidget, long fromID,
+    					const QDomElement & oldExtras, const QDomElement & newExtras,
+    					QUndoCommand *parent);
+    void undo();
+    void redo();
+
+protected:
+	QString getParamString() const;
+
+protected:
+    long m_fromID;
+	QDomElement m_oldExtras;
+	QDomElement m_newExtras;
+
+};
+
+/////////////////////////////////////////////
+
 #endif // COMMANDS_H
