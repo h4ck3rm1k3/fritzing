@@ -160,7 +160,8 @@ public slots:
 	void removeGroundFill(bool force = false);
 	void copperFill();
 	void setOneGroundFillSeed();
-	void setGroundFillSeeds();
+	void setGroundFillSeeds();	
+	void clearGroundFillSeeds();
 	void changeBoardLayers(int layers, bool doEmit);
 	void swapOne(ItemBase * itemBase, const QString & moduleID);
 	void selectAllObsolete();
@@ -655,6 +656,7 @@ protected:
 	QAction *m_copperFillAct;
 	class ConnectorItemAction *m_setOneGroundFillSeedAct;
 	QAction *m_setGroundFillSeedsAct;
+	QAction *m_clearGroundFillSeedsAct;
 	QAction *m_designRulesCheckAct;
 	QAction *m_autorouterSettingsAct;
 	QAction *m_tidyWiresAct;

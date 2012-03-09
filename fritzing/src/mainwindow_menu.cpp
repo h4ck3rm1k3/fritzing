@@ -1133,6 +1133,7 @@ void MainWindow::createMenus()
 	groundFillMenu->addAction(m_groundFillAct);
 	groundFillMenu->addAction(m_removeGroundFillAct);
 	groundFillMenu->addAction(m_setGroundFillSeedsAct);
+	groundFillMenu->addAction(m_clearGroundFillSeedsAct);
 	//m_pcbTraceMenu->addAction(m_updateRoutingStatusAct);
 	m_pcbTraceMenu->addSeparator();
 
@@ -1659,6 +1660,7 @@ void MainWindow::updateTraceMenu() {
 
 	// TODO: set and clear enabler logic
 	m_setGroundFillSeedsAct->setEnabled(gfsEnabled);
+	m_clearGroundFillSeedsAct->setEnabled(gfsEnabled);
 
 	m_designRulesCheckAct->setEnabled(true);
 	m_autorouterSettingsAct->setEnabled(m_currentGraphicsView == m_pcbGraphicsView);
@@ -2199,6 +2201,10 @@ void MainWindow::createTraceMenuActions() {
 	m_setOneGroundFillSeedAct->setCheckable(true);
 	connect(m_setOneGroundFillSeedAct, SIGNAL(triggered()), this, SLOT(setOneGroundFillSeed()));
 
+	m_clearGroundFillSeedsAct = new ConnectorItemAction(tr("Clear Ground Fill Seeds"), this);
+	m_clearGroundFillSeedsAct->setStatusTip(tr("Clear ground fill seeds--enable copper fill only."));
+	connect(m_clearGroundFillSeedsAct, SIGNAL(triggered()), this, SLOT(clearGroundFillSeeds()));
+
 	m_designRulesCheckAct = new QAction(tr("Design Rules Check"), this);
 	m_designRulesCheckAct->setStatusTip(tr("Select any parts that are too close together for safe board production (w/in 10 mil)"));
 	m_designRulesCheckAct->setShortcut(tr("Shift+Ctrl+D"));
@@ -2641,6 +2647,7 @@ QMenu *MainWindow::pcbItemMenu() {
 	menu = viewItemMenuAux(menu);
 	menu->addSeparator();
 	menu->addAction(m_setOneGroundFillSeedAct);
+	menu->addAction(m_clearGroundFillSeedsAct);
 	return menu;
 }
 
@@ -3289,6 +3296,10 @@ void MainWindow::orderFab()
 
 void MainWindow::setGroundFillSeeds() {
 	m_pcbGraphicsView->setGroundFillSeeds();
+}
+
+void MainWindow::clearGroundFillSeeds() {
+	m_pcbGraphicsView->clearGroundFillSeeds();
 }
 
 void MainWindow::setOneGroundFillSeed() {

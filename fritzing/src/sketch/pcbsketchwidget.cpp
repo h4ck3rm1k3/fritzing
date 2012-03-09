@@ -2097,6 +2097,34 @@ void PCBSketchWidget::restoreCopperLogoItems(QList<ItemBase *> & copperLogoItems
 	}
 }
 
+
+void PCBSketchWidget::clearGroundFillSeeds() 
+{
+	QList<ConnectorItem *> trueSeeds;
+
+	foreach (QGraphicsItem * item, scene()->items()) {
+		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
+		if (connectorItem == NULL) continue;
+		if (connectorItem->attachedToItemType() == ModelPart::CopperFill) continue;
+
+		if (connectorItem->isGroundFillSeed()) {
+			trueSeeds.append(connectorItem);
+			continue;
+		}
+	}
+
+	if (trueSeeds.count() == 0) return;
+
+	GroundFillSeedCommand * command = new GroundFillSeedCommand(this, NULL);
+	command->setText(tr("Clear ground fill seeds"));
+	foreach (ConnectorItem * connectorItem, trueSeeds) {
+		command->addItem(connectorItem->attachedToID(), connectorItem->connectorSharedID(), false);
+	}
+
+	m_undoStack->waitPush(command, PropChangeDelay);
+}
+
+
 void PCBSketchWidget::setGroundFillSeeds() 
 {
 	setGroundFillSeeds("");

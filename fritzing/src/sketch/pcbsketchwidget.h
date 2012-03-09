@@ -89,6 +89,7 @@ public:
 	double getSmallerTraceWidth(double minDim);
 	bool groundFill(bool fillGroundTraces, QUndoCommand * parentCommand);
 	void setGroundFillSeeds();
+	void clearGroundFillSeeds();
 	QString generateCopperFillUnit(ItemBase * itemBase, QPointF whereToStart);
 	double getWireStrokeWidth(Wire *, double wireWidth);
 	bool curvyWiresIndicated(Qt::KeyboardModifiers);
