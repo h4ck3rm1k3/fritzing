@@ -836,7 +836,7 @@ void PCBSketchWidget::setBoardLayers(int layers, bool redraw) {
 }
 
 long PCBSketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const QString & newModuleID, ViewLayer::ViewLayerSpec viewLayerSpec, 
-								bool master, bool noFinalChangeWiresCommand, QUndoCommand * parentCommand)
+								bool master, bool noFinalChangeWiresCommand, QList<Wire *> & wiresToDelete, QUndoCommand * parentCommand)
 {
 	Q_UNUSED(noFinalChangeWiresCommand);
 
@@ -846,7 +846,7 @@ long PCBSketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const Q
 	int newLayers = isBoardLayerChange(itemBase, newModuleID, master);
 	bool wasSMD = itemBase->modelPart()->flippedSMD();
 
-	long newID = SketchWidget::setUpSwap(itemBase, newModelIndex, newModuleID, viewLayerSpec, master, newLayers != m_boardLayers, parentCommand);
+	long newID = SketchWidget::setUpSwap(itemBase, newModelIndex, newModuleID, viewLayerSpec, master, newLayers != m_boardLayers, wiresToDelete, parentCommand);
 	if (newLayers == m_boardLayers) {
 		if (!wasSMD) {
 			ModelPart * mp = paletteModel()->retrieveModelPart(newModuleID);

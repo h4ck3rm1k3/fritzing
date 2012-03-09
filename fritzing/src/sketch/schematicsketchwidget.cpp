@@ -288,9 +288,9 @@ const QString & SchematicSketchWidget::traceColor(ViewLayer::ViewLayerSpec) {
 	return SchematicTraceColor;
 }
 
-long SchematicSketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const QString & newModuleID, ViewLayer::ViewLayerSpec viewLayerSpec, bool master, bool noFinalChangeWiresCommand, QUndoCommand * parentCommand)
+long SchematicSketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const QString & newModuleID, ViewLayer::ViewLayerSpec viewLayerSpec, bool master, bool noFinalChangeWiresCommand, QList<Wire *> & wiresToDelete, QUndoCommand * parentCommand)
 {
-	return SketchWidget::setUpSwap(itemBase, newModelIndex, newModuleID, viewLayerSpec, master, noFinalChangeWiresCommand, parentCommand);
+	return SketchWidget::setUpSwap(itemBase, newModelIndex, newModuleID, viewLayerSpec, master, noFinalChangeWiresCommand, wiresToDelete, parentCommand);
 }
 
 

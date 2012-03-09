@@ -5562,7 +5562,7 @@ void SketchWidget::updateInfoViewSlot() {
 }
 
 long SketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const QString & newModuleID, ViewLayer::ViewLayerSpec viewLayerSpec, 
-								bool master, bool noFinalChangeWiresCommand, QUndoCommand * parentCommand)
+								bool master, bool noFinalChangeWiresCommand, QList<Wire *> & wiresToDelete, QUndoCommand * parentCommand)
 {
 	long newID = ItemBase::getNextID(newModelIndex);
 	if (itemBase->viewIdentifier() != m_viewIdentifier) {
@@ -5590,7 +5590,7 @@ long SketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const QStr
 		new TransformItemCommand(this, newID, m, m, parentCommand);
 	}
 
-	setUpSwapReconnect(itemBase, newID, newModuleID, master, parentCommand);
+	setUpSwapReconnect(itemBase, newID, newModuleID, master, wiresToDelete, parentCommand);
 	new CheckStickyCommand(this, BaseCommand::SingleView, newID, false, CheckStickyCommand::RemoveOnly, parentCommand);
 	if (itemBase->isPartLabelVisible()) {
 		ShowLabelCommand * slc = new ShowLabelCommand(this, parentCommand);
@@ -5604,7 +5604,21 @@ long SketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const QStr
 
 		new ChangeLabelTextCommand(this, itemBase->id(), itemBase->instanceTitle(), itemBase->instanceTitle(), parentCommand);
 		new ChangeLabelTextCommand(this, newID, itemBase->instanceTitle(), itemBase->instanceTitle(), parentCommand);
-				
+
+		foreach (Wire * wire, wiresToDelete) {
+			QList<Wire *> chained;
+			QList<ConnectorItem *> ends;
+			wire->collectChained(chained, ends);
+			foreach (Wire * w, chained) {
+				if (!wiresToDelete.contains(w)) wiresToDelete.append(w);
+			}
+		}
+
+		makeWiresChangeConnectionCommands(wiresToDelete, parentCommand);
+		foreach (Wire * wire, wiresToDelete) {
+			makeDeleteItemCommand(wire, BaseCommand::CrossView, parentCommand);
+		}
+
 		makeDeleteItemCommand(itemBase, BaseCommand::CrossView, parentCommand);
 		selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
 		selectItemCommand->addRedo(newID);  // to make sure new item is selected so it appears in the info view
@@ -5618,7 +5632,7 @@ long SketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const QStr
 	return newID;
 }
 
-void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QString & newModuleID, bool master, QUndoCommand * parentCommand)
+void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QString & newModuleID, bool master, QList<Wire *> & wiresToDelete, QUndoCommand * parentCommand)
 {
 	ModelPart * newModelPart = m_refModel->retrieveModelPart(newModuleID);
 	if (newModelPart == NULL) return;
@@ -5706,7 +5720,14 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
 			// delete connection to part being swapped out
 			Wire * wire = qobject_cast<Wire *>(toConnectorItem->attachedTo());
-			if (wire != NULL && wire->getRatsnest()) continue;
+			if (wire != NULL) {
+				if (wire->getRatsnest()) continue;
+
+				if (newConnector == NULL && wire->getTrace() && wire->isTraceType(getTraceFlag())) {
+					wiresToDelete.append(wire);
+					continue;
+				}
+			}
 
 			// command created for each view
 			extendChangeConnectionCommand(BaseCommand::SingleView,
