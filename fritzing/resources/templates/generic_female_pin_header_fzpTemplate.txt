@@ -29,7 +29,7 @@
             </layers>
         </schematicView>
         <pcbView>
-            <layers image="pcb/jumper_%1_.percent.2_pcb.svg">
+            <layers image="pcb/nsjumper_%1_.percent.2_pcb.svg">
                 <layer layerId="copper0"/>
                 <layer layerId="silkscreen"/>
 	      <layer layerId="copper1"/>

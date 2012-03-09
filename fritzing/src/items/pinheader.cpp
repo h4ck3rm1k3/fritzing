@@ -229,9 +229,11 @@ QString PinHeader::genFZP(const QString & moduleid)
 	result = result.arg(Spacings.value(spacing, "")).arg(spacing).arg(form).arg(formBread).arg(formText).arg(formSchematic).arg(formModule); 
 	if (moduleid.contains("smd")) {
 		QString sd = moduleid.contains("single") ? "single" : "double";
+		result.replace("nsjumper", QString("smd_%1_row_pin_header").arg(sd));
 		result.replace("jumper", QString("smd_%1_row_pin_header").arg(sd));
 	}
 	else if (moduleid.contains("shrouded")) {
+		result.replace("nsjumper", "shrouded");
 		result.replace("jumper", "shrouded");
 	}
 
@@ -327,10 +329,12 @@ QString PinHeader::makePcbSvg(const QString & expectedFileName)
 
 	QString middle;
 
-	middle += QString( "<rect fill='none' height='%1' width='%1' stroke='rgb(255, 191, 0)' stroke-width='%2' x='%3' y='%3'/>\n")
+	if (!expectedFileName.contains("nsjumper")) {
+		middle += QString( "<rect fill='none' height='%1' width='%1' stroke='rgb(255, 191, 0)' stroke-width='%2' x='%3' y='%3'/>\n")
 					.arg(radius * 2)
 					.arg(copperStrokeWidth)
 					.arg(center - radius);
+	}
 	for (int i = 0; i < pins; i++) {
 		middle += QString("<circle cx='%1' cy='%2' fill='none' id='connector%3pin' r='%4' stroke='rgb(255, 191, 0)' stroke-width='%5'/>\n")
 					.arg(center)
