@@ -413,7 +413,7 @@
           </iconView>
         </views>
       </instance>
-        <instance moduleIdRef="f5e8f260-de38-11dd-b332-0022430987e8" modelIndex="32" path="parts/core/atmega168.fzp">
+        <instance moduleIdRef="8e4b4f3e54f56b3f712afc6a8e6a8a71" modelIndex="32" path="parts/core/atmega168.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>

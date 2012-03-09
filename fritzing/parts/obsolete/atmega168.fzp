@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.6b.08.14.3340" moduleId="f5e8f260-de38-11dd-b332-0022430987e8">
-    <version>4</version>
+    <version replacedby="8e4b4f3e54f56b3f712afc6a8e6a8a71" >4</version>
     <author>Brendan Howell</author>
     <title>atmega168</title>
     <label>U</label>
