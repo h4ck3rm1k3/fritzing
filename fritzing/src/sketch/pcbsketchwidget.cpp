@@ -1994,6 +1994,8 @@ void PCBSketchWidget::postImageSlot(GroundPlaneGenerator * gpg, QImage * image, 
 		int cx = (x1 + x2) /2;
 		int cy = (y1 + y2) /2;
 
+		int rad = qFloor(connectorItem->calcClipRadius() * image->width() / boardRect.width());
+
 		double borderl = x1 - w;
 		double borderr = x2 + w;
 		double bordert = y1 - h;
@@ -2004,7 +2006,7 @@ void PCBSketchWidget::postImageSlot(GroundPlaneGenerator * gpg, QImage * image, 
 		if (checkUp){
 			for (int y = y1; y > bordert; y--) {
 				if (image->pixel(cx, y) & 0xffffff) {
-					QRectF s(cx - cw, y - 1, cw + cw, cy - y);
+					QRectF s(cx - cw, y - 1, cw + cw, cy - y - rad);
 					rects.append(s);
 					break;
 				}
@@ -2013,7 +2015,7 @@ void PCBSketchWidget::postImageSlot(GroundPlaneGenerator * gpg, QImage * image, 
 		if (checkDown) {
 			for (int y = y2; y < borderb; y++) {
 				if (image->pixel(cx, y) & 0xffffff) {
-					QRectF s(cx - cw, cy, cw + cw, y - cy + 1);
+					QRectF s(cx - cw, cy + rad, cw + cw, y - cy - rad);
 					rects.append(s);
 					break;
 				}
@@ -2022,7 +2024,7 @@ void PCBSketchWidget::postImageSlot(GroundPlaneGenerator * gpg, QImage * image, 
 		if (checkLeft) {
 			for (int x = x1; x > borderl; x--) {
 				if (image->pixel(x, cy) & 0xffffff) {
-					QRectF s(x - 1, cy - ch, cx - x, ch + ch);
+					QRectF s(x - 1, cy - ch, cx - x - rad, ch + ch);
 					rects.append(s);
 					break;
 				}
@@ -2031,7 +2033,7 @@ void PCBSketchWidget::postImageSlot(GroundPlaneGenerator * gpg, QImage * image, 
 		if (checkRight) {
 			for (int x = x2; x < borderr; x++) {
 				if (image->pixel(x, cy) & 0xffffff) {
-					QRectF s(cx, cy - ch, x - cx + 1, ch + ch);
+					QRectF s(cx + rad, cy - ch, x - cx - rad, ch + ch);
 					rects.append(s);
 					break;
 				}
