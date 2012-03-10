@@ -201,21 +201,21 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 		bool doSilk = false;
 		QString fileName = fileNames[ix];
 		LayerList viewLayerIDs;
-		if (fileName.contains("copper") && fileName.contains("bottom")) {
+		if (fileName.contains("copper_bottom")) {
 			viewLayerIDs << ViewLayer::GroundPlane0 << ViewLayer::Copper0 << ViewLayer::Copper0Trace;
 		}
-		else if (fileName.contains("mask") && fileName.contains("bottom")) {
+		else if (fileName.contains("mask_bottom")) {
 			doMask = true;
 			viewLayerIDs << ViewLayer::Copper0;
 		}
-		else if (fileName.contains("copper") && fileName.contains("top")) {
+		else if (fileName.contains("copper_top")) {
 			viewLayerIDs << ViewLayer::GroundPlane1 << ViewLayer::Copper1 << ViewLayer::Copper1Trace;
 		}
-		else if (fileName.contains("mask") && fileName.contains("top")) {
+		else if (fileName.contains("mask_top")) {
 			viewLayerIDs << ViewLayer::Copper1;
 			doMask = true;
 		}
-		else if (fileName.contains("silk") && fileName.contains("top")) {
+		else if (fileName.contains("silk_top")) {
 			viewLayerIDs << ViewLayer::Silkscreen1 << ViewLayer::Silkscreen1Label;
 			doSilk = true;
 		}
