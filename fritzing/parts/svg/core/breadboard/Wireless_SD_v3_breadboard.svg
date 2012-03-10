@@ -127,8 +127,8 @@
      <title >text:^ means they are not usable if on a Uno or Duemilanove because they share the SPI</title>
     </g>
     <g  stroke-width="0">
-     <title >text:</title>
-     <text  x="30.6" y="133.2" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="12.528"/>
+     <title >text:LOGO</title>
+     <text  x="30.6" y="133.2" font-family="OCRA" fill="#ffffff" text-anchor="start" stroke="none" stroke-width="0" font-size="12.528">LOGO</text>
     </g>
     <g  stroke-width="0">
      <title >element:A1</title>
@@ -1685,17 +1685,17 @@
    <rect  width="9.21262" x="51.1965" y="40.3965" fill="#ffffff" height="9.21262" stroke="none" fill-opacity="0.15" stroke-width="0"/>
    <rect  width="16.8661" x="8.85262" y="3.48378" fill="#ffffff" height="12.4724" stroke="none" fill-opacity="0.15" stroke-width="0"/>
    <rect  width="92.7778" x="1.27559" y="34.1008" fill="#ffffff" height="68.5984" stroke="none" fill-opacity="0.15" stroke-width="0"/>
-   <circle  fill="none" cx="144" cy="144" connectorname="N$18" stroke="#9A916C" r="1.8" id="connector3pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="144" cy="144" connectorname="A0" stroke="#9A916C" r="1.8" id="connector3pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m142.2,139.86,3.6,0,0,8.28,-3.6,0,0,-8.28M142.2,144a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="151.2" cy="144" connectorname="2" stroke="#9A916C" r="1.8" id="connector4pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="151.2" cy="144" connectorname="A1" stroke="#9A916C" r="1.8" id="connector4pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m149.4,139.86,3.6,0,0,8.28,-3.6,0,0,-8.28M149.4,144a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="158.4" cy="144" connectorname="3" stroke="#9A916C" r="1.8" id="connector5pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="158.4" cy="144" connectorname="A2" stroke="#9A916C" r="1.8" id="connector5pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m156.6,139.86,3.6,0,0,8.28,-3.6,0,0,-8.28M156.6,144a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="165.6" cy="144" connectorname="4" stroke="#9A916C" r="1.8" id="connector6pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="165.6" cy="144" connectorname="A3" stroke="#9A916C" r="1.8" id="connector6pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m163.8,139.86,3.6,0,0,8.28,-3.6,0,0,-8.28M163.8,144a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="172.8" cy="144" connectorname="5" stroke="#9A916C" r="1.8" id="connector7pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="172.8" cy="144" connectorname="A4" stroke="#9A916C" r="1.8" id="connector7pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m171,139.86,3.6,0,0,8.28,-3.6,0,0,-8.28M171,144a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="180" cy="144" connectorname="6" stroke="#9A916C" r="1.8" id="connector8pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="180" cy="144" connectorname="A5" stroke="#9A916C" r="1.8" id="connector8pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m178.2,139.86,3.6,0,0,8.28,-3.6,0,0,-8.28M178.2,144a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
    <circle  fill="none" cx="180.36" cy="64.8" connectorname="MISO" stroke="#9A916C" r="1.8" id="connector49pin" stroke-width="0.72"/>
    <circle  fill="none" cx="187.56" cy="64.8" connectorname="+5V" stroke="#9A916C" r="1.8" id="connector50pin" stroke-width="0.72"/>
@@ -1703,81 +1703,81 @@
    <circle  fill="none" cx="187.56" cy="72" connectorname="MOSI" stroke="#9A916C" r="1.8" id="connector52pin" stroke-width="0.72"/>
    <circle  fill="none" cx="180.36" cy="79.2" connectorname="RESET" stroke="#9A916C" r="1.8" id="connector53pin" stroke-width="0.72"/>
    <circle  fill="none" cx="187.56" cy="79.2" connectorname="GND" stroke="#9A916C" r="1.8" id="connector54pin" stroke-width="0.72"/>
-   <circle  fill="none" cx="118.08" cy="14.4" connectorname="1" stroke="#9A916C" r="1.8" id="connector55pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="118.08" cy="14.4" connectorname="D8" stroke="#9A916C" r="1.8" id="connector55pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m116.28,10.26,3.6,0,0,8.28,-3.6,0,0,-8.28M116.28,14.4a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="110.88" cy="14.4" connectorname="2" stroke="#9A916C" r="1.8" id="connector56pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="110.88" cy="14.4" connectorname="D9" stroke="#9A916C" r="1.8" id="connector56pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m109.08,10.26,3.6,0,0,8.28,-3.6,0,0,-8.28M109.08,14.4a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="103.68" cy="14.4" connectorname="3" stroke="#9A916C" r="1.8" id="connector57pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="103.68" cy="14.4" connectorname="D10" stroke="#9A916C" r="1.8" id="connector57pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m101.88,10.26,3.6,0,0,8.28,-3.6,0,0,-8.28M101.88,14.4a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="96.48" cy="14.4" connectorname="4" stroke="#9A916C" r="1.8" id="connector58pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="96.48" cy="14.4" connectorname="D11" stroke="#9A916C" r="1.8" id="connector58pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m94.68,10.26,3.6,0,0,8.28,-3.6,0,0,-8.28M94.68,14.4a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="89.28" cy="14.4" connectorname="5" stroke="#9A916C" r="1.8" id="connector59pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="89.28" cy="14.4" connectorname="D12" stroke="#9A916C" r="1.8" id="connector59pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m87.48,10.26,3.6,0,0,8.28,-3.6,0,0,-8.28M87.48,14.4a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="82.08" cy="14.4" connectorname="6" stroke="#9A916C" r="1.8" id="connector60pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="82.08" cy="14.4" connectorname="D13" stroke="#9A916C" r="1.8" id="connector60pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m80.28,10.26,3.6,0,0,8.28,-3.6,0,0,-8.28M80.28,14.4a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
    <circle  fill="none" cx="74.88" cy="14.4" connectorname="GND" stroke="#9A916C" r="1.8" id="connector61pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m73.08,10.26,3.6,0,0,8.28,-3.6,0,0,-8.28M73.08,14.4a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="67.68" cy="14.4" connectorname="8" stroke="#9A916C" r="1.8" id="connector62pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="67.68" cy="14.4" connectorname="AREF" stroke="#9A916C" r="1.8" id="connector62pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m65.88,10.26,3.6,0,0,8.28,-3.6,0,0,-8.28M65.88,14.4a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="118.08" cy="7.2" connectorname="1" stroke="#9A916C" r="1.8" id="connector63pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="118.08" cy="7.2" connectorname="D8" stroke="#9A916C" r="1.8" id="connector63pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m116.28,3.06,3.6,0,0,8.28,-3.6,0,0,-8.28M116.28,7.2a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="110.88" cy="7.2" connectorname="2" stroke="#9A916C" r="1.8" id="connector64pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="110.88" cy="7.2" connectorname="D9" stroke="#9A916C" r="1.8" id="connector64pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m109.08,3.06,3.6,0,0,8.28,-3.6,0,0,-8.28M109.08,7.2a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="103.68" cy="7.2" connectorname="3" stroke="#9A916C" r="1.8" id="connector65pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="103.68" cy="7.2" connectorname="D10" stroke="#9A916C" r="1.8" id="connector65pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m101.88,3.06,3.6,0,0,8.28,-3.6,0,0,-8.28M101.88,7.2a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="96.48" cy="7.2" connectorname="4" stroke="#9A916C" r="1.8" id="connector66pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="96.48" cy="7.2" connectorname="D11" stroke="#9A916C" r="1.8" id="connector66pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m94.68,3.06,3.6,0,0,8.28,-3.6,0,0,-8.28M94.68,7.2a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="89.28" cy="7.2" connectorname="5" stroke="#9A916C" r="1.8" id="connector67pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="89.28" cy="7.2" connectorname="D12" stroke="#9A916C" r="1.8" id="connector67pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m87.48,3.06,3.6,0,0,8.28,-3.6,0,0,-8.28M87.48,7.2a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="82.08" cy="7.2" connectorname="6" stroke="#9A916C" r="1.8" id="connector68pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="82.08" cy="7.2" connectorname="D13" stroke="#9A916C" r="1.8" id="connector68pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m80.28,3.06,3.6,0,0,8.28,-3.6,0,0,-8.28M80.28,7.2a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
    <circle  fill="none" cx="74.88" cy="7.2" connectorname="GND" stroke="#9A916C" r="1.8" id="connector69pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m73.08,3.06,3.6,0,0,8.28,-3.6,0,0,-8.28M73.08,7.2a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="67.68" cy="7.2" connectorname="8" stroke="#9A916C" r="1.8" id="connector70pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="67.68" cy="7.2" connectorname="AREF" stroke="#9A916C" r="1.8" id="connector70pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m65.88,3.06,3.6,0,0,8.28,-3.6,0,0,-8.28M65.88,7.2a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="144" cy="136.8" connectorname="N$18" stroke="#9A916C" r="1.8" id="connector71pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="144" cy="136.8" connectorname="A0" stroke="#9A916C" r="1.8" id="connector71pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m142.2,132.66,3.6,0,0,8.28,-3.6,0,0,-8.28M142.2,136.8a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="151.2" cy="136.8" connectorname="2" stroke="#9A916C" r="1.8" id="connector72pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="151.2" cy="136.8" connectorname="A1" stroke="#9A916C" r="1.8" id="connector72pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m149.4,132.66,3.6,0,0,8.28,-3.6,0,0,-8.28M149.4,136.8a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="158.4" cy="136.8" connectorname="3" stroke="#9A916C" r="1.8" id="connector73pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="158.4" cy="136.8" connectorname="A2" stroke="#9A916C" r="1.8" id="connector73pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m156.6,132.66,3.6,0,0,8.28,-3.6,0,0,-8.28M156.6,136.8a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="165.6" cy="136.8" connectorname="4" stroke="#9A916C" r="1.8" id="connector74pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="165.6" cy="136.8" connectorname="A3" stroke="#9A916C" r="1.8" id="connector74pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m163.8,132.66,3.6,0,0,8.28,-3.6,0,0,-8.28M163.8,136.8a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="172.8" cy="136.8" connectorname="5" stroke="#9A916C" r="1.8" id="connector75pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="172.8" cy="136.8" connectorname="A4" stroke="#9A916C" r="1.8" id="connector75pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m171,132.66,3.6,0,0,8.28,-3.6,0,0,-8.28M171,136.8a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="180" cy="136.8" connectorname="6" stroke="#9A916C" r="1.8" id="connector76pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="180" cy="136.8" connectorname="A5" stroke="#9A916C" r="1.8" id="connector76pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m178.2,132.66,3.6,0,0,8.28,-3.6,0,0,-8.28M178.2,136.8a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
    <circle  fill="none" cx="180" cy="7.2" connectorname="ARDUINO-RX(0)" stroke="#9A916C" r="1.8" id="connector77pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m178.2,3.06,3.6,0,0,8.28,-3.6,0,0,-8.28M178.2,7.2a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
    <circle  fill="none" cx="172.8" cy="7.2" connectorname="ARDUINO-TX(1)" stroke="#9A916C" r="1.8" id="connector78pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m171,3.06,3.6,0,0,8.28,-3.6,0,0,-8.28M171,7.2a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="165.6" cy="7.2" connectorname="3" stroke="#9A916C" r="1.8" id="connector79pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="165.6" cy="7.2" connectorname="D2" stroke="#9A916C" r="1.8" id="connector79pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m163.8,3.06,3.6,0,0,8.28,-3.6,0,0,-8.28M163.8,7.2a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="158.4" cy="7.2" connectorname="4" stroke="#9A916C" r="1.8" id="connector80pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="158.4" cy="7.2" connectorname="D3" stroke="#9A916C" r="1.8" id="connector80pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m156.6,3.06,3.6,0,0,8.28,-3.6,0,0,-8.28M156.6,7.2a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
    <circle  fill="none" cx="151.2" cy="7.2" connectorname="SD_CS" stroke="#9A916C" r="1.8" id="connector81pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m149.4,3.06,3.6,0,0,8.28,-3.6,0,0,-8.28M149.4,7.2a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="144" cy="7.2" connectorname="6" stroke="#9A916C" r="1.8" id="connector82pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="144" cy="7.2" connectorname="D5" stroke="#9A916C" r="1.8" id="connector82pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m142.2,3.06,3.6,0,0,8.28,-3.6,0,0,-8.28M142.2,7.2a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="136.8" cy="7.2" connectorname="7" stroke="#9A916C" r="1.8" id="connector83pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="136.8" cy="7.2" connectorname="D6" stroke="#9A916C" r="1.8" id="connector83pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m135,3.06,3.6,0,0,8.28,-3.6,0,0,-8.28M135,7.2a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="129.6" cy="7.2" connectorname="8" stroke="#9A916C" r="1.8" id="connector84pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="129.6" cy="7.2" connectorname="D7" stroke="#9A916C" r="1.8" id="connector84pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m127.8,3.06,3.6,0,0,8.28,-3.6,0,0,-8.28M127.8,7.2a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
    <circle  fill="none" cx="180" cy="14.4" connectorname="ARDUINO-RX(0)" stroke="#9A916C" r="1.8" id="connector85pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m178.2,10.26,3.6,0,0,8.28,-3.6,0,0,-8.28M178.2,14.4a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
    <circle  fill="none" cx="172.8" cy="14.4" connectorname="ARDUINO-TX(1)" stroke="#9A916C" r="1.8" id="connector86pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m171,10.26,3.6,0,0,8.28,-3.6,0,0,-8.28M171,14.4a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="165.6" cy="14.4" connectorname="3" stroke="#9A916C" r="1.8" id="connector87pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="165.6" cy="14.4" connectorname="D2" stroke="#9A916C" r="1.8" id="connector87pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m163.8,10.26,3.6,0,0,8.28,-3.6,0,0,-8.28M163.8,14.4a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="158.4" cy="14.4" connectorname="4" stroke="#9A916C" r="1.8" id="connector88pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="158.4" cy="14.4" connectorname="D3" stroke="#9A916C" r="1.8" id="connector88pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m156.6,10.26,3.6,0,0,8.28,-3.6,0,0,-8.28M156.6,14.4a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
    <circle  fill="none" cx="151.2" cy="14.4" connectorname="SD_CS" stroke="#9A916C" r="1.8" id="connector89pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m149.4,10.26,3.6,0,0,8.28,-3.6,0,0,-8.28M149.4,14.4a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="144" cy="14.4" connectorname="6" stroke="#9A916C" r="1.8" id="connector90pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="144" cy="14.4" connectorname="D5" stroke="#9A916C" r="1.8" id="connector90pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m142.2,10.26,3.6,0,0,8.28,-3.6,0,0,-8.28M142.2,14.4a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="136.8" cy="14.4" connectorname="7" stroke="#9A916C" r="1.8" id="connector91pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="136.8" cy="14.4" connectorname="D6" stroke="#9A916C" r="1.8" id="connector91pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m135,10.26,3.6,0,0,8.28,-3.6,0,0,-8.28M135,14.4a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="129.6" cy="14.4" connectorname="8" stroke="#9A916C" r="1.8" id="connector92pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="129.6" cy="14.4" connectorname="D7" stroke="#9A916C" r="1.8" id="connector92pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m127.8,10.26,3.6,0,0,8.28,-3.6,0,0,-8.28M127.8,14.4a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
    <circle  fill="none" cx="12.6" cy="108" connectorname="3.3V" stroke="#9A916C" r="1.8" id="connector93pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m10.8,103.86,3.6,0,0,8.28,-3.6,0,0,-8.28M10.8,108a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
@@ -1821,7 +1821,7 @@
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m10.8,24.66,3.6,0,0,8.28,-3.6,0,0,-8.28M10.8,28.8a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
    <circle  fill="none" cx="93.6" cy="144" connectorname="RESET" stroke="#9A916C" r="1.8" id="connector113pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m91.8,139.86,3.6,0,0,8.28,-3.6,0,0,-8.28M91.8,144a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="100.8" cy="144" connectorname="N$223" stroke="#9A916C" r="1.8" id="connector114pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="100.8" cy="144" connectorname="3.3V" stroke="#9A916C" r="1.8" id="connector114pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m99,139.86,3.6,0,0,8.28,-3.6,0,0,-8.28M99,144a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
    <circle  fill="none" cx="108" cy="144" connectorname="+5V" stroke="#9A916C" r="1.8" id="connector115pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m106.2,139.86,3.6,0,0,8.28,-3.6,0,0,-8.28M106.2,144a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
@@ -1829,11 +1829,11 @@
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m113.4,139.86,3.6,0,0,8.28,-3.6,0,0,-8.28M113.4,144a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
    <circle  fill="none" cx="122.4" cy="144" connectorname="GND" stroke="#9A916C" r="1.8" id="connector117pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m120.6,139.86,3.6,0,0,8.28,-3.6,0,0,-8.28M120.6,144a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="129.6" cy="144" connectorname="6" stroke="#9A916C" r="1.8" id="connector118pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="129.6" cy="144" connectorname="VIN" stroke="#9A916C" r="1.8" id="connector118pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m127.8,139.86,3.6,0,0,8.28,-3.6,0,0,-8.28M127.8,144a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
    <circle  fill="none" cx="93.6" cy="136.8" connectorname="RESET" stroke="#9A916C" r="1.8" id="connector119pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m91.8,132.66,3.6,0,0,8.28,-3.6,0,0,-8.28M91.8,136.8a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="100.8" cy="136.8" connectorname="N$223" stroke="#9A916C" r="1.8" id="connector120pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="100.8" cy="136.8" connectorname="3.3V" stroke="#9A916C" r="1.8" id="connector120pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m99,132.66,3.6,0,0,8.28,-3.6,0,0,-8.28M99,136.8a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
    <circle  fill="none" cx="108" cy="136.8" connectorname="+5V" stroke="#9A916C" r="1.8" id="connector121pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m106.2,132.66,3.6,0,0,8.28,-3.6,0,0,-8.28M106.2,136.8a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
@@ -1841,7 +1841,7 @@
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m113.4,132.66,3.6,0,0,8.28,-3.6,0,0,-8.28M113.4,136.8a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
    <circle  fill="none" cx="122.4" cy="136.8" connectorname="GND" stroke="#9A916C" r="1.8" id="connector123pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m120.6,132.66,3.6,0,0,8.28,-3.6,0,0,-8.28M120.6,136.8a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="129.6" cy="136.8" connectorname="6" stroke="#9A916C" r="1.8" id="connector124pin" stroke-width="0.72"/>
+   <circle  fill="none" cx="129.6" cy="136.8" connectorname="VIN" stroke="#9A916C" r="1.8" id="connector124pin" stroke-width="0.72"/>
    <path  fill="#9A916C" stroke="none" stroke-width="0" d="m127.8,132.66,3.6,0,0,8.28,-3.6,0,0,-8.28M127.8,136.8a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
    <circle  fill="none" cx="99" cy="59.4" connectorname="N$8" stroke="#9A916C" r="1.66535" id="connector188pin" stroke-width="0.77953"/>
    <circle  fill="none" cx="99" cy="37.8" connectorname="N$32" stroke="#9A916C" r="1.66535" id="connector189pin" stroke-width="0.77953"/>

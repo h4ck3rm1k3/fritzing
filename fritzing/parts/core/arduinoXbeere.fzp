@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.5.2b.02.18.4756' moduleId='arduinoXbeere'>
 <version>4</version>
-<date>2012-02-29</date>
-<author>jonathan</author>
+<date>2012-03-10</date>
+<author>Arduino</author>
 <description>The Xbee shield allows an Arduino board to communicate wirelessly using Zigbee. It is based on the Xbee module from MaxStream. The module can communicate up to 100 feet indoors or 300 feet outdoors (with line-of-sight). It can be used as a serial/usb replacement or you can put it into a command mode and configure it for a variety of broadcast and mesh networking options. The shields breaks out each of the Xbee&apos;s pins to a through-hole solder pad. It also provides female pin headers for use of digital pins 2 to 7 and the analog inputs, which are covered by the shield (digital pins 8 to 13 are not obstructed by the shield, so you can use the headers on the board itself).
 The Xbee shield was created in collaboration with Libelium, who developed it for use in their SquidBee motes (used for creating sensor networks).</description>
 <title>Arduino Xbee Libellium Shield</title>
@@ -42,6 +42,16 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 </iconView>
 </views>
 <connectors>
+<connector id='connector11' type='female' name='1'>
+<description>1</description><views>
+<breadboardView>
+<p layer='breadboard' svgId='connector11pin'/></breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector11pin' terminalId='connector11terminal'/></schematicView>
+<pcbView>
+<p layer='copper0' svgId='connector11pad'/><p layer='copper1' svgId='connector11pad'/></pcbView>
+</views>
+</connector>
 <connector id='connector12' type='female' name='+5V'>
 <description>+5V</description><views>
 <breadboardView>
@@ -50,6 +60,26 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='schematic' svgId='connector12pin' terminalId='connector12terminal'/></schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector12pad'/><p layer='copper1' svgId='connector12pad'/></pcbView>
+</views>
+</connector>
+<connector id='connector13' type='female' name='3'>
+<description>3</description><views>
+<breadboardView>
+<p layer='breadboard' svgId='connector13pin'/></breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector13pin' terminalId='connector13terminal'/></schematicView>
+<pcbView>
+<p layer='copper0' svgId='connector13pad'/><p layer='copper1' svgId='connector13pad'/></pcbView>
+</views>
+</connector>
+<connector id='connector14' type='female' name='4'>
+<description>4</description><views>
+<breadboardView>
+<p layer='breadboard' svgId='connector14pin'/></breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector14pin' terminalId='connector14terminal'/></schematicView>
+<pcbView>
+<p layer='copper0' svgId='connector14pad'/><p layer='copper1' svgId='connector14pad'/></pcbView>
 </views>
 </connector>
 <connector id='connector15' type='female' name='RESET'>
@@ -102,8 +132,8 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='copper0' svgId='connector19pad'/><p layer='copper1' svgId='connector19pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector20' type='female' name='4'>
-<description>4</description><views>
+<connector id='connector20' type='female' name='D3'>
+<description>D3</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector20pin'/></breadboardView>
 <schematicView>
@@ -112,8 +142,8 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='copper0' svgId='connector20pad'/><p layer='copper1' svgId='connector20pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector21' type='female' name='5'>
-<description>5</description><views>
+<connector id='connector21' type='female' name='D4'>
+<description>D4</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector21pin'/></breadboardView>
 <schematicView>
@@ -122,8 +152,8 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='copper0' svgId='connector21pad'/><p layer='copper1' svgId='connector21pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector22' type='female' name='6'>
-<description>6</description><views>
+<connector id='connector22' type='female' name='D5'>
+<description>D5</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector22pin'/></breadboardView>
 <schematicView>
@@ -132,8 +162,8 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='copper0' svgId='connector22pad'/><p layer='copper1' svgId='connector22pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector23' type='female' name='7'>
-<description>7</description><views>
+<connector id='connector23' type='female' name='D6'>
+<description>D6</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector23pin'/></breadboardView>
 <schematicView>
@@ -142,8 +172,8 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='copper0' svgId='connector23pad'/><p layer='copper1' svgId='connector23pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector24' type='female' name='8'>
-<description>8</description><views>
+<connector id='connector24' type='female' name='D7'>
+<description>D7</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector24pin'/></breadboardView>
 <schematicView>
@@ -152,8 +182,8 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='copper0' svgId='connector24pad'/><p layer='copper1' svgId='connector24pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector25' type='female' name='20'>
-<description>20</description><views>
+<connector id='connector25' type='female' name='I/08'>
+<description>I/08</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector25pin'/></breadboardView>
 <schematicView>
@@ -162,8 +192,8 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='copper0' svgId='connector25pad'/><p layer='copper1' svgId='connector25pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector26' type='female' name='19'>
-<description>19</description><views>
+<connector id='connector26' type='female' name='I/02'>
+<description>I/02</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector26pin'/></breadboardView>
 <schematicView>
@@ -172,8 +202,8 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='copper0' svgId='connector26pad'/><p layer='copper1' svgId='connector26pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector27' type='female' name='18'>
-<description>18</description><views>
+<connector id='connector27' type='female' name='I/03'>
+<description>I/03</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector27pin'/></breadboardView>
 <schematicView>
@@ -182,8 +212,8 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='copper0' svgId='connector27pad'/><p layer='copper1' svgId='connector27pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector28' type='female' name='17'>
-<description>17</description><views>
+<connector id='connector28' type='female' name='I/06'>
+<description>I/06</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector28pin'/></breadboardView>
 <schematicView>
@@ -192,8 +222,8 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='copper0' svgId='connector28pad'/><p layer='copper1' svgId='connector28pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector29' type='female' name='16'>
-<description>16</description><views>
+<connector id='connector29' type='female' name='I/05'>
+<description>I/05</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector29pin'/></breadboardView>
 <schematicView>
@@ -232,8 +262,8 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='copper0' svgId='connector32pad'/><p layer='copper1' svgId='connector32pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector33' type='female' name='12'>
-<description>12</description><views>
+<connector id='connector33' type='female' name='I/07'>
+<description>I/07</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector33pin'/></breadboardView>
 <schematicView>
@@ -242,8 +272,8 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='copper0' svgId='connector33pad'/><p layer='copper1' svgId='connector33pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector34' type='female' name='11'>
-<description>11</description><views>
+<connector id='connector34' type='female' name='I/04'>
+<description>I/04</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector34pin'/></breadboardView>
 <schematicView>
@@ -262,8 +292,8 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='copper0' svgId='connector35pad'/><p layer='copper1' svgId='connector35pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector36' type='female' name='2'>
-<description>2</description><views>
+<connector id='connector36' type='female' name='DOUT'>
+<description>DOUT</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector36pin'/></breadboardView>
 <schematicView>
@@ -322,8 +352,8 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='copper0' svgId='connector41pad'/><p layer='copper1' svgId='connector41pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector42' type='female' name='2'>
-<description>2</description><views>
+<connector id='connector42' type='female' name='D3'>
+<description>D3</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector42pin'/></breadboardView>
 <schematicView>
@@ -332,8 +362,8 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='copper0' svgId='connector42pad'/><p layer='copper1' svgId='connector42pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector43' type='female' name='3'>
-<description>3</description><views>
+<connector id='connector43' type='female' name='D4'>
+<description>D4</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector43pin'/></breadboardView>
 <schematicView>
@@ -342,8 +372,8 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='copper0' svgId='connector43pad'/><p layer='copper1' svgId='connector43pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector44' type='female' name='4'>
-<description>4</description><views>
+<connector id='connector44' type='female' name='D5'>
+<description>D5</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector44pin'/></breadboardView>
 <schematicView>
@@ -352,8 +382,8 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='copper0' svgId='connector44pad'/><p layer='copper1' svgId='connector44pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector45' type='female' name='5'>
-<description>5</description><views>
+<connector id='connector45' type='female' name='D6'>
+<description>D6</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector45pin'/></breadboardView>
 <schematicView>
@@ -362,8 +392,8 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='copper0' svgId='connector45pad'/><p layer='copper1' svgId='connector45pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector46' type='female' name='6'>
-<description>6</description><views>
+<connector id='connector46' type='female' name='D7'>
+<description>D7</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector46pin'/></breadboardView>
 <schematicView>
@@ -372,8 +402,8 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='copper0' svgId='connector46pad'/><p layer='copper1' svgId='connector46pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector47' type='female' name='N$16'>
-<description>N$16</description><views>
+<connector id='connector47' type='female' name='A5'>
+<description>A5</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector47pin'/></breadboardView>
 <schematicView>
@@ -382,8 +412,8 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='copper0' svgId='connector47pad'/><p layer='copper1' svgId='connector47pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector48' type='female' name='2'>
-<description>2</description><views>
+<connector id='connector48' type='female' name='A4'>
+<description>A4</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector48pin'/></breadboardView>
 <schematicView>
@@ -392,8 +422,8 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='copper0' svgId='connector48pad'/><p layer='copper1' svgId='connector48pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector49' type='female' name='3'>
-<description>3</description><views>
+<connector id='connector49' type='female' name='A3'>
+<description>A3</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector49pin'/></breadboardView>
 <schematicView>
@@ -402,8 +432,8 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='copper0' svgId='connector49pad'/><p layer='copper1' svgId='connector49pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector50' type='female' name='N$4'>
-<description>N$4</description><views>
+<connector id='connector50' type='female' name='A2'>
+<description>A2</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector50pin'/></breadboardView>
 <schematicView>
@@ -412,8 +442,8 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='copper0' svgId='connector50pad'/><p layer='copper1' svgId='connector50pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector51' type='female' name='5'>
-<description>5</description><views>
+<connector id='connector51' type='female' name='A1'>
+<description>A1</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector51pin'/></breadboardView>
 <schematicView>
@@ -422,8 +452,8 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='copper0' svgId='connector51pad'/><p layer='copper1' svgId='connector51pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector52' type='female' name='6'>
-<description>6</description><views>
+<connector id='connector52' type='female' name='A0'>
+<description>A0</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector52pin'/></breadboardView>
 <schematicView>
@@ -432,8 +462,8 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='copper0' svgId='connector52pad'/><p layer='copper1' svgId='connector52pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector53' type='female' name='1'>
-<description>1</description><views>
+<connector id='connector53' type='female' name='A0'>
+<description>A0</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector53pin'/></breadboardView>
 <schematicView>
@@ -442,8 +472,8 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='copper0' svgId='connector53pad'/><p layer='copper1' svgId='connector53pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector54' type='female' name='2'>
-<description>2</description><views>
+<connector id='connector54' type='female' name='A1'>
+<description>A1</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector54pin'/></breadboardView>
 <schematicView>
@@ -452,8 +482,8 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='copper0' svgId='connector54pad'/><p layer='copper1' svgId='connector54pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector55' type='female' name='3'>
-<description>3</description><views>
+<connector id='connector55' type='female' name='A2'>
+<description>A2</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector55pin'/></breadboardView>
 <schematicView>
@@ -462,8 +492,8 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='copper0' svgId='connector55pad'/><p layer='copper1' svgId='connector55pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector56' type='female' name='4'>
-<description>4</description><views>
+<connector id='connector56' type='female' name='A3'>
+<description>A3</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector56pin'/></breadboardView>
 <schematicView>
@@ -472,8 +502,8 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='copper0' svgId='connector56pad'/><p layer='copper1' svgId='connector56pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector57' type='female' name='5'>
-<description>5</description><views>
+<connector id='connector57' type='female' name='A4'>
+<description>A4</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector57pin'/></breadboardView>
 <schematicView>
@@ -482,8 +512,8 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='copper0' svgId='connector57pad'/><p layer='copper1' svgId='connector57pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector58' type='female' name='N$16'>
-<description>N$16</description><views>
+<connector id='connector58' type='female' name='A5'>
+<description>A5</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector58pin'/></breadboardView>
 <schematicView>
@@ -542,8 +572,8 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='copper0' svgId='connector63pad'/><p layer='copper1' svgId='connector63pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector64' type='female' name='4'>
-<description>4</description><views>
+<connector id='connector64' type='female' name='PWM1'>
+<description>PWM1</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector64pin'/></breadboardView>
 <schematicView>
@@ -552,8 +582,8 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='copper0' svgId='connector64pad'/><p layer='copper1' svgId='connector64pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector65' type='female' name='6'>
-<description>6</description><views>
+<connector id='connector65' type='female' name='PWM0'>
+<description>PWM0</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector65pin'/></breadboardView>
 <schematicView>
@@ -562,8 +592,8 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='copper0' svgId='connector65pad'/><p layer='copper1' svgId='connector65pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector66' type='female' name='5'>
-<description>5</description><views>
+<connector id='connector66' type='female' name='RST'>
+<description>RST</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector66pin'/></breadboardView>
 <schematicView>
@@ -582,8 +612,8 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='copper0' svgId='connector67pad'/><p layer='copper1' svgId='connector67pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector68' type='female' name='3'>
-<description>3</description><views>
+<connector id='connector68' type='female' name='DIN'>
+<description>DIN</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector68pin'/></breadboardView>
 <schematicView>
@@ -592,8 +622,8 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <p layer='copper0' svgId='connector68pad'/><p layer='copper1' svgId='connector68pad'/></pcbView>
 </views>
 </connector>
-<connector id='connector69' type='female' name='2'>
-<description>2</description><views>
+<connector id='connector69' type='female' name='DOUT'>
+<description>DOUT</description><views>
 <breadboardView>
 <p layer='breadboard' svgId='connector69pin'/></breadboardView>
 <schematicView>
@@ -628,47 +658,47 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <nodeMember connectorId='connector19'/>
 <nodeMember connectorId='connector41'/>
 </bus>
-<bus id='n$11'>
+<bus id='d3'>
 <nodeMember connectorId='connector20'/>
 <nodeMember connectorId='connector42'/>
 </bus>
-<bus id='n$12'>
+<bus id='d4'>
 <nodeMember connectorId='connector21'/>
 <nodeMember connectorId='connector43'/>
 </bus>
-<bus id='n$13'>
+<bus id='d5'>
 <nodeMember connectorId='connector22'/>
 <nodeMember connectorId='connector44'/>
 </bus>
-<bus id='n$14'>
+<bus id='d6'>
 <nodeMember connectorId='connector23'/>
 <nodeMember connectorId='connector45'/>
 </bus>
-<bus id='n$15'>
+<bus id='d7'>
 <nodeMember connectorId='connector24'/>
 <nodeMember connectorId='connector46'/>
 </bus>
-<bus id='n$2'>
+<bus id='a0'>
 <nodeMember connectorId='connector52'/>
 <nodeMember connectorId='connector53'/>
 </bus>
-<bus id='n$3'>
+<bus id='a1'>
 <nodeMember connectorId='connector51'/>
 <nodeMember connectorId='connector54'/>
 </bus>
-<bus id='n$4'>
+<bus id='a2'>
 <nodeMember connectorId='connector50'/>
 <nodeMember connectorId='connector55'/>
 </bus>
-<bus id='n$8'>
+<bus id='a3'>
 <nodeMember connectorId='connector49'/>
 <nodeMember connectorId='connector56'/>
 </bus>
-<bus id='n$9'>
+<bus id='a4'>
 <nodeMember connectorId='connector48'/>
 <nodeMember connectorId='connector57'/>
 </bus>
-<bus id='n$16'>
+<bus id='a5'>
 <nodeMember connectorId='connector47'/>
 <nodeMember connectorId='connector58'/>
 </bus>
@@ -681,7 +711,7 @@ The Xbee shield was created in collaboration with Libelium, who developed it for
 <nodeMember connectorId='connector60'/>
 <nodeMember connectorId='connector61'/>
 </bus>
-<bus id='2'>
+<bus id='dout'>
 <nodeMember connectorId='connector36'/>
 <nodeMember connectorId='connector69'/>
 </bus>
