@@ -169,6 +169,13 @@ void BreadboardSketchWidget::setNewPartVisible(ItemBase * itemBase) {
 			itemBase->setEverVisible(false);
 			return;
 		default:
+			if (itemBase->moduleID().endsWith(ModuleIDNames::SchematicFrameModuleIDName) || 
+				itemBase->moduleID().endsWith(ModuleIDNames::PadModuleIDName)) 
+			{
+				itemBase->setVisible(false);
+				itemBase->setEverVisible(false);
+				return;
+			}
 			break;
 	}
 }
