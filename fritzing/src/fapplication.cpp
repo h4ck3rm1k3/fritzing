@@ -667,7 +667,17 @@ int FApplication::startup(bool firstRun)
 {
 	//DebugDialog::setEnabled(true);
 
-	QPixmap pixmap(":/resources/images/splash/splash_screen_start.png");
+	QString splashName = ":/resources/images/splash/splash_screen_start.png";
+	QDateTime now = QDateTime::currentDateTime();
+	if (now.date().month() == 4 && now.date().day() == 1) {
+		QString aSplashName = ":/resources/images/splash/april1st.png";
+		QFileInfo info(aSplashName);
+		if (info.exists()) {
+			splashName = aSplashName;
+		}
+	}
+
+	QPixmap pixmap(splashName);
 	FSplashScreen splash(pixmap);
 	m_splash = &splash;
 	ProcessEventBlocker::processEvents();								// seems to need this (sometimes?) to display the splash screen
