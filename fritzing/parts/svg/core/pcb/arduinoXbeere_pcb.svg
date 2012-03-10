@@ -813,7 +813,7 @@
    <path  fill="#F7BD13" stroke="none" stroke-width="0" d="m159.27,3.12633,3.6,0,0,8.28,-3.6,0,0,-8.28M159.27,7.26631a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
    <circle  fill="none" cx="153.87" cy="7.26631" connectorname="M8TXD" stroke="#F7BD13" r="1.8" id="connector18pad" stroke-width="0.72"/>
    <path  fill="#F7BD13" stroke="none" stroke-width="0" d="m152.07,3.12633,3.6,0,0,8.28,-3.6,0,0,-8.28M152.07,7.26631a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="146.67" cy="7.26631" connectorname="3" stroke="#F7BD13" r="1.8" id="connector19pad" stroke-width="0.72"/>
+   <circle  fill="none" cx="146.67" cy="7.26631" connectorname="D2" stroke="#F7BD13" r="1.8" id="connector19pad" stroke-width="0.72"/>
    <path  fill="#F7BD13" stroke="none" stroke-width="0" d="m144.87,3.12633,3.6,0,0,8.28,-3.6,0,0,-8.28M144.87,7.26631a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
    <circle  fill="none" cx="139.47" cy="7.26631" connectorname="D3" stroke="#F7BD13" r="1.8" id="connector20pad" stroke-width="0.72"/>
    <path  fill="#F7BD13" stroke="none" stroke-width="0" d="m137.67,3.12633,3.6,0,0,8.28,-3.6,0,0,-8.28M137.67,7.26631a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
@@ -874,7 +874,7 @@
    <path  fill="#F7BD13" stroke="none" stroke-width="0" d="m160.2,19.62,3.6,0,0,8.28,-3.6,0,0,-8.28M160.2,23.76a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
    <circle  fill="none" cx="154.8" cy="23.76" connectorname="M8TXD" stroke="#F7BD13" r="1.8" id="connector40pad" stroke-width="0.72"/>
    <path  fill="#F7BD13" stroke="none" stroke-width="0" d="m153,19.62,3.6,0,0,8.28,-3.6,0,0,-8.28M153,23.76a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
-   <circle  fill="none" cx="146.664" cy="16.416" connectorname="N$10" stroke="#F7BD13" r="1.8" id="connector41pad" stroke-width="0.72"/>
+   <circle  fill="none" cx="146.664" cy="16.416" connectorname="D2" stroke="#F7BD13" r="1.8" id="connector41pad" stroke-width="0.72"/>
    <path  fill="#F7BD13" stroke="none" stroke-width="0" d="m144.864,12.276,3.6,0,0,8.28,-3.6,0,0,-8.28M144.864,16.416a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
    <circle  fill="none" cx="139.464" cy="16.416" connectorname="D3" stroke="#F7BD13" r="1.8" id="connector42pad" stroke-width="0.72"/>
    <path  fill="#F7BD13" stroke="none" stroke-width="0" d="m137.664,12.276,3.6,0,0,8.28,-3.6,0,0,-8.28M137.664,16.416a1.8,1.8,0,1,0,3.6,0,1.8,1.8,0,1,0,-3.6,0z"/>
