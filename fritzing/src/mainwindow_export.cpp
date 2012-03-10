@@ -204,7 +204,7 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 		if (fileName.contains("copper") && fileName.contains("bottom")) {
 			viewLayerIDs << ViewLayer::GroundPlane0 << ViewLayer::Copper0 << ViewLayer::Copper0Trace;
 		}
-		if (fileName.contains("mask") && fileName.contains("bottom")) {
+		else if (fileName.contains("mask") && fileName.contains("bottom")) {
 			doMask = true;
 			viewLayerIDs << ViewLayer::Copper0;
 		}
