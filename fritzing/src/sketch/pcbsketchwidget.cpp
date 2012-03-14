@@ -1578,8 +1578,9 @@ double PCBSketchWidget::getTraceWidth() {
 
 double PCBSketchWidget::getAutorouterTraceWidth() {
 	QSettings settings;
-	int traceWidthMils = settings.value(AutorouterSettingsDialog::AutorouteTraceWidth, QString::number(GraphicsUtils::pixels2mils(getTraceWidth(), FSvgRenderer::printerScale()))).toInt();
-	return FSvgRenderer::printerScale() * traceWidthMils / 1000;
+	QString def = QString::number(GraphicsUtils::pixels2mils(getTraceWidth(), FSvgRenderer::printerScale()));
+	int traceWidthMils = settings.value(AutorouterSettingsDialog::AutorouteTraceWidth, def).toInt();
+	return FSvgRenderer::printerScale() * traceWidthMils / 1000.0;
 }
 
 void PCBSketchWidget::getBendpointWidths(Wire * wire, double width, double & bendpointWidth, double & bendpoint2Width, bool & negativeOffsetRect) 

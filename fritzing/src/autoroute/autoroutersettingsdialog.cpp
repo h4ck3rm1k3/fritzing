@@ -60,11 +60,13 @@ const QString AutorouterSettingsDialog::AutorouteTraceWidth = "autorouteTraceWid
 
 AutorouterSettingsDialog::AutorouterSettingsDialog(QWidget *parent) : QDialog(parent) 
 {
-	QSettings settings;
-	m_traceWidth = settings.value(AutorouteTraceWidth, "0").toInt();
-	if (m_traceWidth == 0) {
-		m_traceWidth = GraphicsUtils::pixels2mils(Wire::STANDARD_TRACE_WIDTH, FSvgRenderer::printerScale());
-		settings.setValue(AutorouteTraceWidth, m_traceWidth);
+	{
+		QSettings settings;
+		m_traceWidth = settings.value(AutorouteTraceWidth, "0").toInt();
+		if (m_traceWidth == 0) {
+			m_traceWidth = GraphicsUtils::pixels2mils(Wire::STANDARD_TRACE_WIDTH, FSvgRenderer::printerScale());
+			settings.setValue(AutorouteTraceWidth, m_traceWidth);
+		}
 	}
 
 	Hole::initHoleSettings(m_holeSettings);

@@ -61,7 +61,7 @@ void Autorouter::updateRoutingStatus() {
 	m_sketchWidget->updateRoutingStatus(routingStatus, true);
 }
 
-TraceWire * Autorouter::drawOneTrace(QPointF fromPos, QPointF toPos, int width, ViewLayer::ViewLayerSpec viewLayerSpec)
+TraceWire * Autorouter::drawOneTrace(QPointF fromPos, QPointF toPos, double width, ViewLayer::ViewLayerSpec viewLayerSpec)
 {
 	long newID = ItemBase::getNextID();
 	ViewGeometry viewGeometry;

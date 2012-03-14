@@ -54,7 +54,7 @@ public:
 protected:
 	virtual void cleanUpNets();
 	virtual void updateRoutingStatus();
-	virtual class TraceWire * drawOneTrace(QPointF fromPos, QPointF toPos, int width, ViewLayer::ViewLayerSpec);
+	virtual class TraceWire * drawOneTrace(QPointF fromPos, QPointF toPos, double width, ViewLayer::ViewLayerSpec);
 
 public slots:
 	virtual void cancel();

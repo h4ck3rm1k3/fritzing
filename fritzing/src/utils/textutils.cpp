@@ -24,8 +24,8 @@ $Date$
 
 ********************************************************************/
 
-#include <QTextDocument>
 #include <QNetworkInterface>
+#include <QTextDocument>
 
 #include "textutils.h"
 #include "misc.h"
