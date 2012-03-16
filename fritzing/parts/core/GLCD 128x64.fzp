@@ -3,6 +3,7 @@
     <title>128 x 64 Graphic LCD</title>
     <label>GLCD 128x64</label>
     <date>2010-02-20</date>
+    <url>http://www.arduino.cc/playground/Code/GLCDks0108</url>
     <tags/>
     <properties>
         <property name="resolution">128x64</property>
