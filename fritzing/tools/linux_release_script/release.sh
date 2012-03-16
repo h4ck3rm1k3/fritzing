@@ -19,6 +19,13 @@ if [ "$arch_aux" == 'x86_64' ] ; then
 	# only creates the source tarball, when running on the 64 platform
 	tarball_folder="fritzing-$relname.source"
 	cp -rf $compile_folder $tarball_folder
+	rm -rf $tarball_folder/datasheets
+	rm -rf $tarball_folder/not_quite_ready
+	rm -rf $tarball_folder/part-gen-scripts
+	rm -rf $tarball_folder/tools/artreeno
+	rm -rf $tarball_folder/tools/fixfz
+	rm -rf $tarball_folder/tools/gerb-merge
+	rm -rf $tarball_folder/tools/qlalr
 	echo "making source tarball: $tarball_folder"
 	tar -cjf ./$tarball_folder.tar.bz2 $tarball_folder
 	rm -rf $tarball_folder
