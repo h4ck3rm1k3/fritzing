@@ -555,7 +555,7 @@ bool TextUtils::getSvgSizes(QDomDocument & doc, double & sWidth, double & sHeigh
 	return true;
 }
 
-bool TextUtils::findText(QDomNode & node, QString & text) {
+bool TextUtils::findText(const QDomNode & node, QString & text) {
 	if (node.isText()) {
 		text = node.nodeValue();
 		return true;

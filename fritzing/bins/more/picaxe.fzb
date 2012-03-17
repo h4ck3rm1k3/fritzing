@@ -512,5 +512,16 @@
                 </iconView>
             </views>
         </instance>
+       <instance moduleIdRef="83fdcaa81d3a1b40d252954136f96f24" modelIndex="6132" >
+            <views>
+                <iconView layer="">
+                    <geometry z="0" x="-1" y="-1"/>
+                </iconView>
+                <iconView layer="">
+                    <geometry z="0" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
+		
     </instances>
 </module>
