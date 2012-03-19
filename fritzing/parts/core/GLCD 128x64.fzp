@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.15b.02.03.3943" moduleId="573db3a7829811cf0df27fae150514b3">
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.15b.02.03.3943" moduleId="GLCD128x64">
     <author>Vince Callahan</author>
     <title>128 x 64 Graphic LCD</title>
     <label>GLCD 128x64</label>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.7.0b.02.01.5801" moduleId="6dbb9847a5c950a255f76ae258c484a5">
+<module fritzingVersion="0.7.0b.02.01.5801" moduleId="M5450_LED_Driver">
     <version>4</version>
     <author>Christopher Mann</author>
     <title>M5450 LED Driver</title>

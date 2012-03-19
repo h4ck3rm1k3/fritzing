@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.7.1b.03.10.5908" moduleId="83fdcaa81d3a1b40d252954136f96f24">
+<module fritzingVersion="0.7.1b.03.10.5908" moduleId="PICAXE16">
     <version>4</version>
     <author>Fritzing Part-o-matic ,Uğur Can Bastık</author>
     <title>PIC 16F877A</title>
@@ -7,14 +7,15 @@
     <date>2012-02-18</date>
     <tags>
         <tag>DIP</tag>
-        <tag>user part ,PIC</tag>
+        <tag>PIC</tag>
         <tag>Microchip</tag>
     </tags>
     <properties>
-        <property name="family">PIC</property>
+        <property name="family">Microcontroller Board (PICAXE)</property>
+				<property name="variant">PICAXE-16</property>
+				<property name="package">THT</property>
         <property name="editable pin labels">true</property>
         <property name="chip label">PIC 16F877A</property>
-        <property name="part number"></property>
     </properties>
     <description>Microchip PIC 16F877A microcontroller</description>
     <views>
