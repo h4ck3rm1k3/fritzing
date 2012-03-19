@@ -67,7 +67,8 @@ Optocoupler - keeps you from frying your stuff!</description>
                     <p layer="schematic" svgId="connector5" terminalId="connector5terminal"/>
                 </schematicView>
                 <pcbView>
-                    <p layer="copper0" svgId="connector5"/>
+                    <p layer="copper0" svgId="connector5"/>                    
+		<p layer="copper1" svgId="connector5"/>
                 </pcbView>
             </views>
         </connector>
