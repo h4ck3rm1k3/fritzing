@@ -456,7 +456,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 			normalizeAttribute(element, "y2", sNewWidth, vbWidth);
 		}
 		else {
-			DebugDialog::debug(QString("unable to handle linearGradient with gradientUnits=%1").arg(element.attribute("gradientUnits")));
+			//DebugDialog::debug(QString("unable to handle linearGradient with gradientUnits=%1").arg(element.attribute("gradientUnits")));
 		}
 	}
 	else if (nodeName.compare("radialGradient") == 0) {
@@ -468,7 +468,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 			normalizeAttribute(element, "r", sNewWidth, vbWidth);
 		}
 		else {
-			DebugDialog::debug(QString("unable to handle radialGradient with gradientUnits=%1").arg(element.attribute("gradientUnits")));
+			//DebugDialog::debug(QString("unable to handle radialGradient with gradientUnits=%1").arg(element.attribute("gradientUnits")));
 		}
 	}
 	else {
@@ -725,7 +725,7 @@ void SvgFileSplitter::shiftCommandSlot(QChar command, bool relative, QList<doubl
 	switch(command.toAscii()) {
 		case 'v':
 		case 'V':
-			DebugDialog::debug("'v' and 'V' are now removed by preprocessing; shouldn't be here");
+			//DebugDialog::debug("'v' and 'V' are now removed by preprocessing; shouldn't be here");
 			/*
 			d = args[0];
 			if (!relative) {
@@ -736,7 +736,7 @@ void SvgFileSplitter::shiftCommandSlot(QChar command, bool relative, QList<doubl
 			break;
 		case 'h':
 		case 'H':
-			DebugDialog::debug("'h' and 'H' are now removed by preprocessing; shouldn't be here");
+			//DebugDialog::debug("'h' and 'H' are now removed by preprocessing; shouldn't be here");
 			/*
 			d = args[0];
 			if (!relative) {

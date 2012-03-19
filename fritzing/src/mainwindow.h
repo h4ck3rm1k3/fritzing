@@ -132,6 +132,7 @@ public:
 	void swapObsolete(bool displayFeedback);
 	void selectAllObsolete(bool displayFeedback);
 	void hideTempBin();
+	const QString & fritzingVersion();
 
 public:
 	static void initNames();

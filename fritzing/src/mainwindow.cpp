@@ -2710,3 +2710,8 @@ void MainWindow::setActiveConnectorItem(ConnectorItem * connectorItem) {
 	m_activeConnectorItem = connectorItem;
 }
 
+const QString & MainWindow::fritzingVersion() {
+	if (m_sketchModel) return m_sketchModel->fritzingVersion();
+
+	return ___emptyString___;
+}

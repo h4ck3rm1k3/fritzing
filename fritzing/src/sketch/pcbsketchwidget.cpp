@@ -1908,7 +1908,7 @@ QString PCBSketchWidget::characterizeGroundFill() {
 		QString fillType = gp->prop("fillType");
 		if (fillType.isEmpty()) {
 			// old style fill with no property
-			return GroundPlane::fillTypePlain;
+			return GroundPlane::fillTypeGround;
 		}
 
 		if (fillType == GroundPlane::fillTypeGround) {

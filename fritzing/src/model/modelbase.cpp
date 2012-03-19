@@ -104,8 +104,8 @@ bool ModelBase::load(const QString & fileName, ModelBase * refModel, QList<Model
 
 	bool checkForRats = true;
 	bool checkForTraces = true;
-	QString fzVersion = root.attribute("fritzingVersion");
-	if (fzVersion.length() > 0) {
+	m_fritzingVersion = root.attribute("fritzingVersion");
+	if (m_fritzingVersion.length() > 0) {
 		// with version 0.4.3 ratsnests in fz files are obsolete
 		VersionThing versionThingRats;
 		versionThingRats.majorVersion = 0;
@@ -113,7 +113,7 @@ bool ModelBase::load(const QString & fileName, ModelBase * refModel, QList<Model
 		versionThingRats.minorSubVersion = 2;
 		versionThingRats.releaseModifier = "";
 		VersionThing versionThingFz;
-		Version::toVersionThing(fzVersion,versionThingFz);
+		Version::toVersionThing(m_fritzingVersion,versionThingFz);
 		checkForRats = !Version::greaterThan(versionThingRats, versionThingFz);
 		// with version 0.6.5 traces are copied to all views
 		versionThingRats.minorVersion = 6;
@@ -622,4 +622,8 @@ void ModelBase::checkTraces(QDomElement & instance) {
 	instance.save(stream, 0);
 	stream.flush();
 	DebugDialog::debug(QString("no wire view elements in fz file %1").arg(string));	
+}
+
+const QString & ModelBase::fritzingVersion() {
+	return m_fritzingVersion;
 }

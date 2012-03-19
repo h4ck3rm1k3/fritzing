@@ -39,6 +39,8 @@ $Date$
 #include "../../svg/gerbergenerator.h"
 #include "../../autoroute/cmrouter/cmrouter.h"
 #include "../../referencemodel/referencemodel.h"
+#include "../../version/version.h"
+
 #include "tileutils.h"
 
 #include <QFile>
@@ -451,12 +453,12 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 		}
 
 		QDomDocument doc;
-		QString merger = planePair->svgs.at(7);  // outline layer
+		QString merger = planePair->svgs.at(0);  // outline layer
 		merger.replace("black", "#90f0a0");
 		merger.replace("#000000", "#90f0a0");
 		merger.replace("fill-opacity=\"0.5\"", "fill-opacity=\"1\"");
 		TextUtils::mergeSvg(doc, merger, "");
-		merger = planePair->svgs.at(0);			// silktop layer
+		merger = planePair->svgs.at(5);			// silktop layer
 		merger.replace("black", "#909090");
 		merger.replace("#000000", "#909090");
 		TextUtils::mergeSvg(doc, merger, "");		
@@ -1159,6 +1161,17 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
 	}
 
 	mainWindow->showPCBView();
+	QString fritzingVersion = mainWindow->fritzingVersion();
+	VersionThing versionThing;
+	versionThing.majorVersion = 0;
+	versionThing.minorVersion = 7;
+	versionThing.minorSubVersion = 0;
+	versionThing.releaseModifier = "";
+
+	VersionThing versionThingFz;
+	Version::toVersionThing(fritzingVersion, versionThingFz);
+	bool oldGround = !Version::greaterThan(versionThing, versionThingFz);
+	
 		
 	ItemBase * boardItem = mainWindow->pcbView()->findBoard();
 	if (boardItem == NULL) {
@@ -1204,6 +1217,12 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
 		mainWindow->copperFill();
 		filled = true;
 	}
+	else if ((fillType == GroundPlane::fillTypeGround) && oldGround) {
+		mainWindow->removeGroundFill(true);
+		mainWindow->groundFill();
+		filled = true;
+	}
+
 
 	if (swapped || filled) { 
 		mainWindow->saveAsShareable(path, true);

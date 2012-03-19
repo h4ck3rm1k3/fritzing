@@ -51,6 +51,7 @@ public:
 	bool paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *> & modelParts, QHash<QString, QRectF> & boundingRects, bool preserveIndex);
 	void setReportMissingModules(bool);
 	bool genFZP(const QString & moduleID, ModelBase * refModel);
+	const QString & fritzingVersion();
 
 signals:
 	void loadedViews(ModelBase *, QDomElement & views);
@@ -70,6 +71,7 @@ protected:
 	QPointer<ModelPart> m_root;
 	QPointer<ModelBase> m_referenceModel;
 	bool m_reportMissingModules;
+	QString m_fritzingVersion;
 };
 
 #endif
