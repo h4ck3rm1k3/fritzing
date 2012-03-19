@@ -321,7 +321,20 @@
     </iconView>
    </views>
   </instance>
-  
+  <instance moduleIdRef="bf73a00d2ecd04be25675ebfb2d130c0">
+   <views>
+    <iconView layer="icon">
+     <geometry x="-1" y="-1" z="-1"/>
+    </iconView>
+   </views>
+  </instance>
+  <instance moduleIdRef="17e42b0f30876b6ca457314cbd7e5847">
+   <views>
+    <iconView layer="icon">
+     <geometry x="-1" y="-1" z="-1"/>
+    </iconView>
+   </views>
+  </instance>  
   
 <instance moduleIdRef="__spacer__" modelIndex="3" path="LilyPad">
         <views>

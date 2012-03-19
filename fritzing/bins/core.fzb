@@ -107,15 +107,6 @@
                 </iconView>
             </views>
         </instance>
-	<!--
-        <instance moduleIdRef="3234DFDC00PotentiometerModuleID" modelIndex="14" path="parts/core/big_pot.fzp">
-            <views>
-                <iconView layer="icon">
-                    <geometry z="-1" x="-1" y="-1"/>
-                </iconView>
-            </views>
-        </instance>
-	-->
         <instance moduleIdRef="cee49c7a6b94e1759bb995959b72f50cPotentiometerModuleID" modelIndex="14" path="parts/core/pot-small.fzp">
             <views>
                 <iconView layer="icon">
@@ -320,6 +311,13 @@
                 </iconView>
             </views>
         </instance>
+        <instance moduleIdRef="GLCD128x64" modelIndex="24" path="parts/core/GLCD 128x64.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
         <instance moduleIdRef="8abf6496b5d466c7a1893c17a296a676" modelIndex="25" path="parts/core/piezo sensor.fzp">
             <views>
                 <iconView layer="icon">
@@ -498,6 +496,13 @@
         </views>
       </instance>
      <instance moduleIdRef="RevEd_uM_FPUv2">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+     <instance moduleIdRef="M5450_LED_Driver">
         <views>
           <iconView layer="icon">
             <geometry z="-1" x="-1" y="-1"></geometry>
