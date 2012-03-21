@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<!-- Created with Fritzing (http://www.fritzing.org/) -->
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.390079in' height='0.100394in' viewBox='0 0 9.908 2.55' >
+<g id='copper1'>
+<circle id='connector0pin' connectorname='1' cx='3.654' cy='2.05' r='0.4' stroke='#F7BD13' stroke-width='0.2' fill='none' />
+<circle id='connector1pin' connectorname='3' cx='4.954' cy='2.05' r='0.4' stroke='#F7BD13' stroke-width='0.2' fill='none' />
+<circle id='connector2pin' connectorname='5' cx='6.254' cy='2.05' r='0.4' stroke='#F7BD13' stroke-width='0.2' fill='none' />
+<circle id='connector3pin' connectorname='4' cx='5.604' cy='0.5' r='0.4' stroke='#F7BD13' stroke-width='0.2' fill='none' />
+<circle id='connector4pin' connectorname='2' cx='4.304' cy='0.5' r='0.4' stroke='#F7BD13' stroke-width='0.2' fill='none' />
+<circle id='connector5pin' connectorname='P$1' cx='0.854' cy='1.275' r='0.727' stroke='#F7BD13' stroke-width='0.254' fill='none' />
+<circle id='connector6pin' connectorname='P$2' cx='9.054' cy='1.275' r='0.727' stroke='#F7BD13' stroke-width='0.254' fill='none' />
+<g id='copper0'>
+<circle id='connector0pin' connectorname='1' cx='3.654' cy='2.05' r='0.4' stroke='#F7BD13' stroke-width='0.2' fill='none' />
+<circle id='connector1pin' connectorname='3' cx='4.954' cy='2.05' r='0.4' stroke='#F7BD13' stroke-width='0.2' fill='none' />
+<circle id='connector2pin' connectorname='5' cx='6.254' cy='2.05' r='0.4' stroke='#F7BD13' stroke-width='0.2' fill='none' />
+<circle id='connector3pin' connectorname='4' cx='5.604' cy='0.5' r='0.4' stroke='#F7BD13' stroke-width='0.2' fill='none' />
+<circle id='connector4pin' connectorname='2' cx='4.304' cy='0.5' r='0.4' stroke='#F7BD13' stroke-width='0.2' fill='none' />
+<circle id='connector5pin' connectorname='P$1' cx='0.854' cy='1.275' r='0.727' stroke='#F7BD13' stroke-width='0.254' fill='none' />
+<circle id='connector6pin' connectorname='P$2' cx='9.054' cy='1.275' r='0.727' stroke='#F7BD13' stroke-width='0.254' fill='none' />
+</g>
+</g>
+<g id='silkscreen'>
+</g>
+</svg>

@@ -1,0 +1,293 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<module fritzingVersion='0.7.2b' icon=''>
+<title>SparkFun-Aesthetics</title>
+<instances>
+<instance moduleIdRef='SparkFun-Aesthetics-ANDROID-ELECTRIC_SHEEP_LOGO-_' modelIndex='0'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-ANDROID-ELECTRIC_SHEEP_LOGO-' modelIndex='1'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-CREATIVE_COMMONS-' modelIndex='2'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-DGND-' modelIndex='3'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-FIDUCIAL-1.5X3' modelIndex='4'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-FIDUCIAL-1X2' modelIndex='5'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-FIDUCIAL-1X2.5' modelIndex='6'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-FIDUCIAL-UFIDUCIAL' modelIndex='7'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-FIDUCIALTAB-' modelIndex='8'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-FIO_LOGO-V2' modelIndex='9'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-FKIT-LOGO--MEDIUM' modelIndex='10'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-FKIT-LOGO--SMALL' modelIndex='11'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-FKIT-LOGO--VERY_SMALL' modelIndex='12'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-FKIT-LOGO--VERY_SMALL_VECTOR' modelIndex='13'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-FKIT-LOGOTYPE--SMALL' modelIndex='14'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-FKIT-LOGOTYPE--VERY_SMALL' modelIndex='15'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-FKIT-LOGOTYPE--MEDIUM' modelIndex='16'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-FRAME-A3-' modelIndex='17'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-GND-' modelIndex='18'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-LOGO-FIRST-' modelIndex='19'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-LOGO-OTL-' modelIndex='20'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-LOGO-SFE-M' modelIndex='21'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-LOGO-SFE-NEW' modelIndex='22'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-LOGO-SFE-CP' modelIndex='23'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-LOGO-SFE-SK' modelIndex='24'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-LOGO-SFE-NW2' modelIndex='25'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-LOGO-SFE-SM' modelIndex='26'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-OSHW-LOGO-S' modelIndex='27'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-OSHW-LOGO-M' modelIndex='28'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-OSHW-LOGO-L' modelIndex='29'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-SPARKFUN-EAGLE-RULES-' modelIndex='30'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-STARBOARD_LOGO-' modelIndex='31'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-STARBOARD_LOGO--TEXT' modelIndex='32'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-VCC-' modelIndex='33'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-VNEG-' modelIndex='34'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-V_BATT-' modelIndex='35'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-1.0V-' modelIndex='36'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-1.8V-' modelIndex='37'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-2.8V-' modelIndex='38'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-3.3V-' modelIndex='39'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-5V-' modelIndex='40'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+</instances>
+</module>

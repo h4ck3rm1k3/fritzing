@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<!-- Created with Fritzing (http://www.fritzing.org/) -->
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.129039in' height='0.116961in' viewBox='0 0 3.2776 2.9708' >
+<g id='breadboard'>
+<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l3.2776,0 0,2.9708 -3.2776,0 0,-2.9708z
+'/>
+<path stroke='#f8f8f8' fill='#f8f8f8' stroke-width='0.15' d='L2.1853,2.5134L2.5623,2.8208L2.8208,2.5623L2.6437,1.8708L3.1276,1.8216L3.1276,1.456L2.5134,1.0923L2.8208,0.7153L2.5623,0.4568L1.8708,0.6339L1.8216,0.15L1.456,0.15L1.0923,0.7642L0.7153,0.4568L0.4568,0.7153L0.6339,1.4068L0.15,1.456L0.15,1.8216L0.7642,2.1853L0.4568,2.5623L0.7153,2.8208L1.2441,2.5916L1.8182,2.0719z' stroke-linecap='round'/>
+</g>
+</svg>

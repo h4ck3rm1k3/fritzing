@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<!-- Created with Fritzing (http://www.fritzing.org/) -->
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.46in' height='2.2768in' viewBox='0 0 11.684 57.8306' >
+<g id='breadboard'>
+<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l11.684,0 0,57.8306 -11.684,0 0,-57.8306z
+'/>
+<rect id='connector0pad' connectorname='GROUND' x='5.5245' y='6.604' width='0.635' height='1.27' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<path stroke='#9A916C' fill='#9A916C' stroke-width='0.127' d='M5.842,14.351L4.3726,14.3311L3.302,14.224L1.7479,13.8564L0.127,12.827L0.127,11.684L0.127,6.477L0.127,4.191L1.5369,0.706L2.2774,0.4589L3.4318,0.241L4.7114,0.127L5.842,0.127L7.2507,0.1409L8.5237,0.2823L9.9835,0.6406L11.557,1.651L11.557,5.842L11.557,9.144L11.557,12.827L9.1711,14.0662L6.0261,14.351z' stroke-linecap='round'/>
+</g>
+</svg>

@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<!-- Created with Fritzing (http://www.fritzing.org/) -->
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.250382in' height='0.628in' viewBox='0 0 6.3597 15.9512' >
+<g id='breadboard'>
+<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l6.3597,0 0,15.9512 -6.3597,0 0,-15.9512z
+M0.254,14.5415a1.1557,1.1557 0 1 0 2.3114,0 1.1557,1.1557 0 1 0 -2.3114,0z
+M0.254,1.4097a1.1557,1.1557 0 1 0 2.3114,0 1.1557,1.1557 0 1 0 -2.3114,0z
+'/>
+<circle id='connector0pin' connectorname='P$5' cx='1.4097' cy='14.5415' r='1.2827' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector1pin' connectorname='P$6' cx='1.4097' cy='1.4097' r='1.2827' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<rect id='connector2pad' connectorname='D-' x='3.3597' y='6.5256' width='3' height='0.9' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector3pad' connectorname='VBUS' x='3.3597' y='4.5256' width='3' height='0.9' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector4pad' connectorname='D+' x='3.3597' y='8.5256' width='3' height='0.9' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector5pad' connectorname='GND' x='3.3597' y='10.5256' width='3' height='0.9' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+</g>
+</svg>

@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-POT--RV16AF-20'>
+<version>4</version>
+<date>2012-03-21</date>
+<label></label>
+<author>www.fritzing.org</author>
+<description></description>
+<title>-RV16AF-20</title>
+<tags>
+<tag>POT</tag>
+<tag>-RV16AF-20</tag>
+</tags>
+<properties>
+<property name='family'>POT</property>
+</properties>
+<views>
+<breadboardView>
+<layers image='breadboard/sparkfun-electromechanical_POT_ALPHA_RV16AF-20_breadboard.svg'>
+<layer layerId='breadboard'/>
+</layers>
+</breadboardView>
+<schematicView>
+<layers image='schematic/sparkfun-electromechanical_POT_schematic.svg'>
+<layer layerId='schematic'/>
+</layers>
+</schematicView>
+<pcbView>
+<layers image='pcb/sparkfun-electromechanical_POT_ALPHA_RV16AF-20_pcb.svg'>
+<layer layerId='copper1'/>
+<layer layerId='silkscreen'/>
+</layers>
+</pcbView>
+<iconView>
+<layers image='breadboard/sparkfun-electromechanical_POT_ALPHA_RV16AF-20_breadboard.svg'>
+<layer layerId='icon'/>
+</layers>
+</iconView>
+</views>
+<connectors>
+<connector id='connector0' type='pad' name='A'>
+<description>A</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector0pin'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper1' svgId='connector0pin'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector2' type='pad' name='E'>
+<description>E</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector2pin'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper1' svgId='connector2pin'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector1' type='pad' name='S'>
+<description>S</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector1pin'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper1' svgId='connector1pin'/>
+</pcbView>
+</views>
+</connector>
+</connectors>
+</module>

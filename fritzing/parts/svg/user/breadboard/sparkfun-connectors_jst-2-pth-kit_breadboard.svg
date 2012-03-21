@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<!-- Created with Fritzing (http://www.fritzing.org/) -->
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.13574in' height='0.057in' viewBox='0 0 3.4478 1.4478' >
+<g id='breadboard'>
+<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l3.4478,0 0,1.4478 -3.4478,0 0,-1.4478z
+M0.3739,0.7239a0.35,0.35 0 1 0 0.7,0 0.35,0.35 0 1 0 -0.7,0z
+M2.3739,0.7239a0.35,0.35 0 1 0 0.7,0 0.35,0.35 0 1 0 -0.7,0z
+'/>
+<circle id='connector0pin' connectorname='1' cx='0.7239' cy='0.7239' r='0.53695' stroke='#9A916C' stroke-width='0.3739' fill='none' />
+<circle id='connector1pin' connectorname='2' cx='2.7239' cy='0.7239' r='0.53695' stroke='#9A916C' stroke-width='0.3739' fill='none' />
+</g>
+</svg>

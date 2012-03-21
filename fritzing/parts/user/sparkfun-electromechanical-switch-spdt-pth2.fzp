@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-SWITCH-SPDT-PTH2'>
+<version>4</version>
+<date>2012-03-21</date>
+<label>S</label>
+<author>www.fritzing.org</author>
+<description>&lt;b&gt;SPST Switch&lt;/b&gt;
+Simple slide switch. Spark Fun Electronics SKU : COM-00102</description>
+<title>PTH2</title>
+<tags>
+<tag>SWITCH-SPDT</tag>
+<tag>PTH2</tag>
+</tags>
+<properties>
+<property name='family'>SWITCH-SPDT</property>
+</properties>
+<views>
+<breadboardView>
+<layers image='breadboard/sparkfun-electromechanical_SWITCHE-DPDT_breadboard.svg'>
+<layer layerId='breadboard'/>
+</layers>
+</breadboardView>
+<schematicView>
+<layers image='schematic/sparkfun-electromechanical_TOGGLE_schematic.svg'>
+<layer layerId='schematic'/>
+</layers>
+</schematicView>
+<pcbView>
+<layers image='pcb/sparkfun-electromechanical_SWITCHE-DPDT_pcb.svg'>
+<layer layerId='copper1'/>
+<layer layerId='silkscreen'/>
+</layers>
+</pcbView>
+<iconView>
+<layers image='breadboard/sparkfun-electromechanical_SWITCHE-DPDT_breadboard.svg'>
+<layer layerId='icon'/>
+</layers>
+</iconView>
+</views>
+<connectors>
+<connector id='connector4' type='pad' name='O'>
+<description>O</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector4pin'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper1' svgId='connector4pin'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector5' type='pad' name='P'>
+<description>P</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector5pin'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper1' svgId='connector5pin'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector6' type='pad' name='S'>
+<description>S</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector6pin'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper1' svgId='connector6pin'/>
+</pcbView>
+</views>
+</connector>
+</connectors>
+</module>

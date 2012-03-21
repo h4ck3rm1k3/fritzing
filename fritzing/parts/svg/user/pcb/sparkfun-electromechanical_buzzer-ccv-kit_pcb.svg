@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<!-- Created with Fritzing (http://www.fritzing.org/) -->
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.464567in' height='0.651971in' viewBox='0 0 11.8 16.5601' >
+<g id='copper1'>
+<rect id='connector0pad' connectorname='-' x='0' y='9.45846' width='3.5' height='2' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector1pad' connectorname='+' x='8.3' y='9.45846' width='3.5' height='2' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<g id='copper0'>
+</g>
+</g>
+<g id='silkscreen'>
+<path fill='none' d='M1.7,8.85846 A4.47216,4.47216 0 0 1 7.17,6.14046' stroke-width='0.2032' stroke='#f0f0f0' />
+<path fill='none' d='M8.948,7.15646 A4.5153,4.5153 0 0 1 10.091,8.80746' stroke-width='0.2032' stroke='#f0f0f0' />
+<path fill='none' d='M10.1,12.0585 A4.84733,4.84733 0 0 1 8.5,14.1585' stroke-width='0.2032' stroke='#f0f0f0' />
+<path fill='none' d='M2.598,13.5065 A3.96942,3.96942 0 0 0 3.3,14.0585' stroke-width='0.2032' stroke='#f0f0f0' />
+<line x1='3.3' y1='16.4585' x2='8.5' y2='16.4585' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='8.5' y1='16.4585' x2='8.5' y2='14.1585' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='3.3' y1='16.4585' x2='3.3' y2='14.0585' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+</g>
+</svg>

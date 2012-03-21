@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<!-- Created with Fritzing (http://www.fritzing.org/) -->
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.295276in' height='0.334646in' viewBox='0 0 7.5 8.5' >
+<g id='breadboard'>
+<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l7.5,0 0,8.5 -7.5,0 0,-8.5z
+'/>
+<rect id='connector0pad' connectorname='5V' x='0' y='7' width='7.5' height='1.5' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector1pad' connectorname='USB_M' x='1' y='4.75' width='6.5' height='1' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector2pad' connectorname='USB_P' x='1' y='2.75' width='6.5' height='1' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector3pad' connectorname='GND' x='0' y='0' width='7.5' height='1.5' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+</g>
+</svg>

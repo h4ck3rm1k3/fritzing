@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<!-- Created with Fritzing (http://www.fritzing.org/) -->
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.141732in' height='0.0907384in' viewBox='0 0 3.6 2.30476' >
+<g id='copper1'>
+<rect id='connector0pad' connectorname='EP' x='0.935' y='0.213156' width='1.73' height='1.88' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector1pad' connectorname='1' x='0' y='0.253156' width='0.8' height='0.3' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector2pad' connectorname='2' x='0' y='0.753156' width='0.8' height='0.3' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector3pad' connectorname='4' x='0' y='1.75316' width='0.8' height='0.3' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector4pad' connectorname='3' x='0' y='1.25316' width='0.8' height='0.3' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector5pad' connectorname='8' x='2.8' y='0.253156' width='0.8' height='0.3' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector6pad' connectorname='7' x='2.8' y='0.753156' width='0.8' height='0.3' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector7pad' connectorname='5' x='2.8' y='1.75316' width='0.8' height='0.3' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector8pad' connectorname='6' x='2.8' y='1.25316' width='0.8' height='0.3' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<g id='copper0'>
+</g>
+</g>
+<g id='silkscreen'>
+<line x1='0.3' y1='0.103156' x2='0.35' y2='0.103156' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='0.35' y1='0.103156' x2='3.3' y2='0.103156' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='0.3' y1='2.20316' x2='3.3' y2='2.20316' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<path fill='none' d='M0.3,0.103156 A0.201556,0.201556 0 1 1 0.35,0.103156' stroke-width='0.2032' stroke='#f0f0f0' />
+</g>
+</svg>

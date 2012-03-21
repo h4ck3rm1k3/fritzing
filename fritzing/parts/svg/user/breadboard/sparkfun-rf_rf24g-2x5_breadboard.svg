@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<!-- Created with Fritzing (http://www.fritzing.org/) -->
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.0872126in' height='0.23485in' viewBox='0 0 2.2152 5.9652' >
+<g id='breadboard'>
+<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l2.2152,0 0,5.9652 -2.2152,0 0,-5.9652z
+M1.4326,5.4826a0.3,0.3 0 1 0 0.6,0 0.3,0.3 0 1 0 -0.6,0z
+M0.1826,5.4826a0.3,0.3 0 1 0 0.6,0 0.3,0.3 0 1 0 -0.6,0z
+M0.1826,4.2326a0.3,0.3 0 1 0 0.6,0 0.3,0.3 0 1 0 -0.6,0z
+M0.1826,2.9826a0.3,0.3 0 1 0 0.6,0 0.3,0.3 0 1 0 -0.6,0z
+M0.1826,1.7326a0.3,0.3 0 1 0 0.6,0 0.3,0.3 0 1 0 -0.6,0z
+M0.1826,0.4826a0.3,0.3 0 1 0 0.6,0 0.3,0.3 0 1 0 -0.6,0z
+M1.4326,0.4826a0.3,0.3 0 1 0 0.6,0 0.3,0.3 0 1 0 -0.6,0z
+M1.4326,1.7326a0.3,0.3 0 1 0 0.6,0 0.3,0.3 0 1 0 -0.6,0z
+M1.4326,2.9826a0.3,0.3 0 1 0 0.6,0 0.3,0.3 0 1 0 -0.6,0z
+M1.4326,4.2326a0.3,0.3 0 1 0 0.6,0 0.3,0.3 0 1 0 -0.6,0z
+'/>
+<circle id='connector0pin' connectorname='10' cx='1.7326' cy='5.4826' r='0.3913' stroke='#9A916C' stroke-width='0.1826' fill='none' />
+<circle id='connector1pin' connectorname='1' cx='0.4826' cy='5.4826' r='0.3913' stroke='#9A916C' stroke-width='0.1826' fill='none' />
+<path stroke='none' stroke-width='0' d='m0,5 0.9652,0 0,0.9652 -0.9652,0 0,-3zM0.1826,5.4826a0.3,0.3 0 1 0 0.6,0 0.3,0.3 0 1 0 -0.6,0z
+' fill='#9A916C' />
+<circle id='connector2pin' connectorname='2' cx='0.4826' cy='4.2326' r='0.3913' stroke='#9A916C' stroke-width='0.1826' fill='none' />
+<circle id='connector3pin' connectorname='3' cx='0.4826' cy='2.9826' r='0.3913' stroke='#9A916C' stroke-width='0.1826' fill='none' />
+<circle id='connector4pin' connectorname='4' cx='0.4826' cy='1.7326' r='0.3913' stroke='#9A916C' stroke-width='0.1826' fill='none' />
+<circle id='connector5pin' connectorname='5' cx='0.4826' cy='0.4826' r='0.3913' stroke='#9A916C' stroke-width='0.1826' fill='none' />
+<circle id='connector6pin' connectorname='6' cx='1.7326' cy='0.4826' r='0.3913' stroke='#9A916C' stroke-width='0.1826' fill='none' />
+<circle id='connector7pin' connectorname='7' cx='1.7326' cy='1.7326' r='0.3913' stroke='#9A916C' stroke-width='0.1826' fill='none' />
+<circle id='connector8pin' connectorname='8' cx='1.7326' cy='2.9826' r='0.3913' stroke='#9A916C' stroke-width='0.1826' fill='none' />
+<circle id='connector9pin' connectorname='9' cx='1.7326' cy='4.2326' r='0.3913' stroke='#9A916C' stroke-width='0.1826' fill='none' />
+</g>
+</svg>

@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<!-- Created with Fritzing (http://www.fritzing.org/) -->
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='2.25039in' height='0.0905512in' viewBox='0 0 57.16 2.3' >
+<g id='breadboard'>
+<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l57.16,0 0,2.3 -57.16,0 0,-2.3z
+M0.565,1.15a0.585,0.585 0 1 0 1.17,0 0.585,0.585 0 1 0 -1.17,0z
+M55.425,1.15a0.585,0.585 0 1 0 1.17,0 0.585,0.585 0 1 0 -1.17,0z
+'/>
+<circle id='connector0pin' connectorname='-' cx='1.15' cy='1.15' r='0.8675' stroke='#9A916C' stroke-width='0.565' fill='none' />
+<circle id='connector1pin' connectorname='+' cx='56.01' cy='1.15' r='0.8675' stroke='#9A916C' stroke-width='0.565' fill='none' />
+<line x1='52.58' y1='0.15' x2='52.58' y2='2.15' stroke='#f8f8f8' stroke-width='0.25' stroke-linecap='round'/>
+<line x1='51.58' y1='1.15' x2='53.58' y2='1.15' stroke='#f8f8f8' stroke-width='0.25' stroke-linecap='round'/>
+<line x1='3.58' y1='0.15' x2='3.58' y2='2.15' stroke='#f8f8f8' stroke-width='0.25' stroke-linecap='round'/>
+</g>
+</svg>

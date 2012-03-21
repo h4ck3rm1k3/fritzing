@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<!-- Created with Fritzing (http://www.fritzing.org/) -->
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='1.01488in' height='0.07in' viewBox='0 0 25.778 1.778' >
+<g id='copper1'>
+<circle id='connector0pin' connectorname='NEG' cx='0.889' cy='0.889' r='0.657' stroke='#F7BD13' stroke-width='0.464' fill='none' />
+<circle id='connector1pin' connectorname='POS' cx='24.889' cy='0.889' r='0.657' stroke='#F7BD13' stroke-width='0.464' fill='none' />
+<path stroke='none' stroke-width='0' d='m24,0 1.778,0 0,1.778 -1.778,0 0,-3zM24.464,0.889a0.425,0.425 0 1 0 0.85,0 0.425,0.425 0 1 0 -0.85,0z
+' fill='#F7BD13' />
+<g id='copper0'>
+<circle id='connector0pin' connectorname='NEG' cx='0.889' cy='0.889' r='0.657' stroke='#F7BD13' stroke-width='0.464' fill='none' />
+<circle id='connector1pin' connectorname='POS' cx='24.889' cy='0.889' r='0.657' stroke='#F7BD13' stroke-width='0.464' fill='none' />
+<path stroke='none' stroke-width='0' d='m24,0 1.778,0 0,1.778 -1.778,0 0,-3zM24.464,0.889a0.425,0.425 0 1 0 0.85,0 0.425,0.425 0 1 0 -0.85,0z
+' fill='#F7BD13' />
+</g>
+</g>
+<g id='silkscreen'>
+</g>
+</svg>

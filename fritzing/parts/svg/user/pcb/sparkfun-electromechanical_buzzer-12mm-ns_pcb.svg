@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<!-- Created with Fritzing (http://www.fritzing.org/) -->
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.311339in' height='0.0554331in' viewBox='0 0 7.908 1.408' >
+<g id='copper1'>
+<circle id='connector0pin' connectorname='-' cx='0.704' cy='0.704' r='0.577' stroke='#F7BD13' stroke-width='0.254' fill='none' />
+<circle id='connector1pin' connectorname='+' cx='7.204' cy='0.704' r='0.577' stroke='#F7BD13' stroke-width='0.254' fill='none' />
+<g id='copper0'>
+<circle id='connector0pin' connectorname='-' cx='0.704' cy='0.704' r='0.577' stroke='#F7BD13' stroke-width='0.254' fill='none' />
+<circle id='connector1pin' connectorname='+' cx='7.204' cy='0.704' r='0.577' stroke='#F7BD13' stroke-width='0.254' fill='none' />
+</g>
+</g>
+<g id='silkscreen'>
+</g>
+</svg>

@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<!-- Created with Fritzing (http://www.fritzing.org/) -->
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.207197in' height='0.187063in' viewBox='0 0 5.2628 4.7514' >
+<g id='copper1'>
+<g id='copper0'>
+</g>
+</g>
+<g id='silkscreen'>
+<path stroke='#f0f0f0' fill='#f0f0f0' stroke-width='0.15' d='L3.5422,4.089L4.1706,4.6014L4.6014,4.1706L4.3061,3.018L5.1128,2.9361L5.1128,2.3267L4.089,1.7206L4.6014,1.0922L4.1706,0.6614L3.018,0.9567L2.9361,0.15L2.3267,0.15L1.7206,1.1738L1.0922,0.6614L0.6614,1.0922L0.9567,2.2448L0.15,2.3267L0.15,2.9361L1.1738,3.5422L0.6614,4.1706L1.0922,4.6014L1.9736,4.2194L2.9304,3.3532z' stroke-linecap='round'/>
+</g>
+</svg>

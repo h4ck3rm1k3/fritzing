@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<module fritzingVersion='0.7.2b' moduleId='SparkFun-Aesthetics-V_BATT-'>
+<version>4</version>
+<date>2012-03-21</date>
+<label></label>
+<author>www.fritzing.org</author>
+<description>&lt;b&gt;V_BATT&lt;/b&gt;&lt;br&gt;
+Generic symbol for the battery input to a system.</description>
+<title></title>
+<tags>
+<tag>V_BATT</tag>
+<tag></tag>
+</tags>
+<properties>
+<property name='family'>V_BATT</property>
+</properties>
+<views>
+<breadboardView>
+<layers image='breadboard/sparkfun-aesthetics__breadboard.svg'>
+<layer layerId='breadboard'/>
+</layers>
+</breadboardView>
+<schematicView>
+<layers image='schematic/sparkfun-aesthetics_V_BATT_schematic.svg'>
+<layer layerId='schematic'/>
+</layers>
+</schematicView>
+<pcbView>
+<layers image='pcb/sparkfun-aesthetics__pcb.svg'>
+<layer layerId='copper1'/>
+<layer layerId='silkscreen'/>
+</layers>
+</pcbView>
+<iconView>
+<layers image='breadboard/sparkfun-aesthetics__breadboard.svg'>
+<layer layerId='icon'/>
+</layers>
+</iconView>
+</views>
+<connectors>
+</connectors>
+</module>

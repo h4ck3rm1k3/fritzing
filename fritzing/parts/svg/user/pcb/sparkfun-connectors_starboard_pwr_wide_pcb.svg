@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<!-- Created with Fritzing (http://www.fritzing.org/) -->
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.46in' height='2.34514in' viewBox='0 0 11.684 59.5665' >
+<g id='copper1'>
+<rect id='connector0pad' connectorname='GROUND' x='5.5245' y='30.5208' width='0.635' height='1.27' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<path stroke='#F7BD13' fill='#F7BD13' stroke-width='0.127' d='L2.5744,37.8682L0.127,36.6168L1.5958,24.4723L2.032,24.2978L3.8355,23.9904L5.1684,23.9168L7.6285,23.9684L8.9324,24.1539L11.557,25.4408L11.557,35.2198L10.8712,35.2198L9.144,34.1784L9.0932,34.153L9.4996,32.1718L8.0264,33.518L6.3754,32.5274L7.112,34.407L5.7404,35.6516L7.5946,35.4992L8.3312,37.3534L8.8138,35.3722L10.8712,35.2198L11.557,35.2198L11.557,36.6168L6.4038,38.1408z' stroke-linecap='round'/>
+<g id='copper0'>
+</g>
+</g>
+<g id='silkscreen'>
+</g>
+</svg>

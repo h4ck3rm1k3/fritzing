@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<!-- Created with Fritzing (http://www.fritzing.org/) -->
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.463488in' height='0.543307in' viewBox='0 0 11.7726 13.8' >
+<g id='copper1'>
+<line x1='1.4' y1='1.185' x2='7.75' y2='1.185' stroke='#F7BD13' stroke-width='1.27' stroke-linecap='round'/>
+<line x1='7.75' y1='1.185' x2='7.75' y2='1.82' stroke='#F7BD13' stroke-width='1.27' stroke-linecap='round'/>
+<line x1='7.75' y1='1.82' x2='10.29' y2='4.36' stroke='#F7BD13' stroke-width='1.27' stroke-linecap='round'/>
+<line x1='3.94' y1='4.36' x2='3.94' y2='8.805' stroke='#F7BD13' stroke-width='1.27' stroke-linecap='round'/>
+<line x1='3.94' y1='8.805' x2='3.94' y2='12.615' stroke='#F7BD13' stroke-width='1.27' stroke-linecap='round'/>
+<line x1='3.94' y1='12.615' x2='1.4' y2='12.615' stroke='#F7BD13' stroke-width='1.27' stroke-linecap='round'/>
+<line x1='7.75' y1='12.615' x2='3.94' y2='12.615' stroke='#F7BD13' stroke-width='1.27' stroke-linecap='round'/>
+<line x1='7.115' y1='8.805' x2='3.94' y2='8.805' stroke='#F7BD13' stroke-width='1.27' stroke-linecap='round'/>
+<circle id='connector0pin' connectorname='POWER' cx='10.02' cy='4.36' r='1.6256' stroke='#F7BD13' stroke-width='0.254' fill='none' />
+<circle id='connector1pin' connectorname='GND@1' cx='4.02' cy='4.36' r='1.6256' stroke='#F7BD13' stroke-width='0.254' fill='none' />
+<circle id='connector2pin' connectorname='GND' cx='7.02' cy='9.06' r='1.6256' stroke='#F7BD13' stroke-width='0.254' fill='none' />
+<rect id='connector3pad' connectorname='POWER@1' x='0' y='0' width='2.8' height='2.4' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector4pad' connectorname='GND@3' x='0' y='11.4' width='2.8' height='2.4' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector5pad' connectorname='POWER@2' x='6.1' y='0' width='2.8' height='2.4' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector6pad' connectorname='GND@4' x='6.1' y='11.4' width='2.8' height='2.4' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<g id='copper0'>
+<circle id='connector0pin' connectorname='POWER' cx='10.02' cy='4.36' r='1.6256' stroke='#F7BD13' stroke-width='0.254' fill='none' />
+<circle id='connector1pin' connectorname='GND@1' cx='4.02' cy='4.36' r='1.6256' stroke='#F7BD13' stroke-width='0.254' fill='none' />
+<circle id='connector2pin' connectorname='GND' cx='7.02' cy='9.06' r='1.6256' stroke='#F7BD13' stroke-width='0.254' fill='none' />
+</g>
+</g>
+<g id='silkscreen'>
+</g>
+</svg>

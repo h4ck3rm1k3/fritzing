@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<!-- Created with Fritzing (http://www.fritzing.org/) -->
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.348425in' height='0.21063in' viewBox='0 0 8.85 5.35' >
+<g id='copper1'>
+<circle id='connector0pin' connectorname='P$6' cx='1.1' cy='1.1' r='0.875' stroke='#F7BD13' stroke-width='0.45' fill='none' />
+<circle id='connector1pin' connectorname='P$7' cx='1.1' cy='4.25' r='0.875' stroke='#F7BD13' stroke-width='0.45' fill='none' />
+<circle id='connector2pin' connectorname='P$8' cx='7.75' cy='1.1' r='0.875' stroke='#F7BD13' stroke-width='0.45' fill='none' />
+<circle id='connector3pin' connectorname='P$9' cx='7.75' cy='4.25' r='0.875' stroke='#F7BD13' stroke-width='0.45' fill='none' />
+<rect id='connector4pad' connectorname='3' x='4.225' y='3.15' width='0.4' height='2.2' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector5pad' connectorname='2' x='3.575' y='3.15' width='0.4' height='2.2' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector6pad' connectorname='1' x='2.925' y='3.15' width='0.4' height='2.2' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector7pad' connectorname='5' x='5.525' y='3.15' width='0.4' height='2.2' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector8pad' connectorname='4' x='4.875' y='3.15' width='0.4' height='2.2' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<g id='copper0'>
+<circle id='connector0pin' connectorname='P$6' cx='1.1' cy='1.1' r='0.875' stroke='#F7BD13' stroke-width='0.45' fill='none' />
+<circle id='connector1pin' connectorname='P$7' cx='1.1' cy='4.25' r='0.875' stroke='#F7BD13' stroke-width='0.45' fill='none' />
+<circle id='connector2pin' connectorname='P$8' cx='7.75' cy='1.1' r='0.875' stroke='#F7BD13' stroke-width='0.45' fill='none' />
+<circle id='connector3pin' connectorname='P$9' cx='7.75' cy='4.25' r='0.875' stroke='#F7BD13' stroke-width='0.45' fill='none' />
+</g>
+</g>
+<g id='silkscreen'>
+</g>
+</svg>
