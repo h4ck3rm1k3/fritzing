@@ -54,6 +54,8 @@ M41.3004,17.2212a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
 <circle id='connector22pin' connectorname='23' cx='36.2712' cy='17.2212' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <circle id='connector23pin' connectorname='24' cx='39.0398' cy='17.2212' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <circle id='connector24pin' connectorname='25' cx='41.8084' cy='17.2212' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle cx='3.0988' cy='18.4912' r='1.651' stroke='black' stroke-width='0' fill='black' id='nonconn4' />
+<circle cx='50.1396' cy='18.4912' r='1.651' stroke='black' stroke-width='0' fill='black' id='nonconn5' />
 <line x1='7.9502' y1='0.5842' x2='8.2042' y2='0.5842' stroke='#f8f8f8' stroke-width='0.1524' stroke-linecap='round'/>
 <path fill='none' d='M7.4422,1.0922 A0.508,0.508 0 0 1 7.9502,0.5842' stroke-width='0.1524' stroke='#f8f8f8' />
 <path fill='none' d='M45.2882,0.5842 A0.508,0.508 0 0 1 45.7962,1.0922' stroke-width='0.1524' stroke='#f8f8f8' />

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-MAX98300-ETA_'>
 <version>4</version>
-<date>2012-03-21</date>
+<date>2012-03-22</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Mono 2.6W Class D Amplifier&lt;/b&gt;&lt;p&gt;
@@ -48,7 +48,6 @@ Both packages are specified over the extended -40NC to
 <layers image='pcb/sparkfun-poweric_8-TDFN-EP_pcb.svg'>
 <layer layerId='copper1'/>
 <layer layerId='silkscreen'/>
-<layer layerId='copper0'/>
 </layers>
 </pcbView>
 <iconView>
@@ -58,7 +57,7 @@ Both packages are specified over the extended -40NC to
 </iconView>
 </views>
 <connectors>
-<connector id='connector3' type='male' name='GAIN'>
+<connector id='connector3' type='pad' name='GAIN'>
 <description>GAIN</description>
 <views>
 <breadboardView>
@@ -68,12 +67,11 @@ Both packages are specified over the extended -40NC to
 <p layer='schematic' svgId='connector8pin' terminalId='connector8terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector3pad'/>
 <p layer='copper1' svgId='connector3pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='male' name='GND_1'>
+<connector id='connector4' type='pad' name='GND_1'>
 <description>GND_1</description>
 <views>
 <breadboardView>
@@ -83,12 +81,11 @@ Both packages are specified over the extended -40NC to
 <p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector4pad'/>
 <p layer='copper1' svgId='connector4pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='male' name='GND_2'>
+<connector id='connector8' type='pad' name='GND_2'>
 <description>GND_2</description>
 <views>
 <breadboardView>
@@ -98,12 +95,11 @@ Both packages are specified over the extended -40NC to
 <p layer='schematic' svgId='connector7pin' terminalId='connector7terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector8pad'/>
 <p layer='copper1' svgId='connector8pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='male' name='IN_'>
+<connector id='connector0' type='pad' name='IN_'>
 <description>IN_</description>
 <views>
 <breadboardView>
@@ -113,12 +109,11 @@ Both packages are specified over the extended -40NC to
 <p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector0pad'/>
 <p layer='copper1' svgId='connector0pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='male' name='IN-'>
+<connector id='connector1' type='pad' name='IN-'>
 <description>IN-</description>
 <views>
 <breadboardView>
@@ -128,12 +123,11 @@ Both packages are specified over the extended -40NC to
 <p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector1pad'/>
 <p layer='copper1' svgId='connector1pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='male' name='OUT_'>
+<connector id='connector6' type='pad' name='OUT_'>
 <description>OUT_</description>
 <views>
 <breadboardView>
@@ -143,12 +137,11 @@ Both packages are specified over the extended -40NC to
 <p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector6pad'/>
 <p layer='copper1' svgId='connector6pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='male' name='OUT-'>
+<connector id='connector5' type='pad' name='OUT-'>
 <description>OUT-</description>
 <views>
 <breadboardView>
@@ -158,12 +151,11 @@ Both packages are specified over the extended -40NC to
 <p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector5pad'/>
 <p layer='copper1' svgId='connector5pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='male' name='SHDN'>
+<connector id='connector2' type='pad' name='SHDN'>
 <description>SHDN</description>
 <views>
 <breadboardView>
@@ -173,12 +165,11 @@ Both packages are specified over the extended -40NC to
 <p layer='schematic' svgId='connector6pin' terminalId='connector6terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector2pad'/>
 <p layer='copper1' svgId='connector2pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='male' name='VDD'>
+<connector id='connector7' type='pad' name='VDD'>
 <description>VDD</description>
 <views>
 <breadboardView>
@@ -188,7 +179,6 @@ Both packages are specified over the extended -40NC to
 <p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector7pad'/>
 <p layer='copper1' svgId='connector7pad'/>
 </pcbView>
 </views>

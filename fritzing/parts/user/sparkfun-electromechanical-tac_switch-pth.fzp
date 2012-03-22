@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-TAC_SWITCH-PTH'>
 <version>4</version>
-<date>2012-03-21</date>
+<date>2012-03-22</date>
 <label>S</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Momentary Switch&lt;/b&gt;
@@ -29,6 +29,7 @@ Button commonly used for reset or general input. Spark Fun Electronics SKU : COM
 <layers image='pcb/sparkfun-electromechanical_TACTILE-PTH_pcb.svg'>
 <layer layerId='copper1'/>
 <layer layerId='silkscreen'/>
+<layer layerId='copper0'/>
 </layers>
 </pcbView>
 <iconView>
@@ -38,7 +39,7 @@ Button commonly used for reset or general input. Spark Fun Electronics SKU : COM
 </iconView>
 </views>
 <connectors>
-<connector id='connector0' type='pad' name='1'>
+<connector id='connector0' type='male' name='1'>
 <description>1</description>
 <views>
 <breadboardView>
@@ -48,11 +49,12 @@ Button commonly used for reset or general input. Spark Fun Electronics SKU : COM
 <p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
 </schematicView>
 <pcbView>
+<p layer='copper0' svgId='connector0pin'/>
 <p layer='copper1' svgId='connector0pin'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='pad' name='2'>
+<connector id='connector1' type='male' name='2'>
 <description>2</description>
 <views>
 <breadboardView>
@@ -62,11 +64,12 @@ Button commonly used for reset or general input. Spark Fun Electronics SKU : COM
 <p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
 </schematicView>
 <pcbView>
+<p layer='copper0' svgId='connector1pin'/>
 <p layer='copper1' svgId='connector1pin'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='pad' name='3'>
+<connector id='connector2' type='male' name='3'>
 <description>3</description>
 <views>
 <breadboardView>
@@ -76,11 +79,12 @@ Button commonly used for reset or general input. Spark Fun Electronics SKU : COM
 <p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
 </schematicView>
 <pcbView>
+<p layer='copper0' svgId='connector2pin'/>
 <p layer='copper1' svgId='connector2pin'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='pad' name='4'>
+<connector id='connector3' type='male' name='4'>
 <description>4</description>
 <views>
 <breadboardView>
@@ -90,6 +94,7 @@ Button commonly used for reset or general input. Spark Fun Electronics SKU : COM
 <p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
 </schematicView>
 <pcbView>
+<p layer='copper0' svgId='connector3pin'/>
 <p layer='copper1' svgId='connector3pin'/>
 </pcbView>
 </views>

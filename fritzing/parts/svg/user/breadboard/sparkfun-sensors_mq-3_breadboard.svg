@@ -16,6 +16,7 @@ M11.292,5.1a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
 <circle id='connector3pin' connectorname='A2' cx='5.1' cy='11.8' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <circle id='connector4pin' connectorname='B2' cx='11.8' cy='11.8' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <circle id='connector5pin' connectorname='B1' cx='11.8' cy='5.1' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle cx='8.45' cy='8.45' r='1.5' stroke='black' stroke-width='0' fill='black' id='nonconn2' />
 <circle cx='8.45' cy='8.45' r='8.4' stroke='#f8f8f8' stroke-width='0.1' fill='none' />
 </g>
 </svg>

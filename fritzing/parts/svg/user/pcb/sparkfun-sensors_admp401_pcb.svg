@@ -8,7 +8,9 @@
 <rect id='connector2pad' connectorname='1' x='0.477' y='0.457' width='0.9' height='0.9' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <rect id='connector3pad' connectorname='4' x='0.477' y='3.977' width='0.7' height='0.7' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <rect id='connector4pad' connectorname='5' x='2.877' y='0.457' width='0.9' height='0.9' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<circle cx='2.127' cy='3.527' r='0.45' stroke='black' stroke-width='0' fill='black' id='nonconn0' />
 <g id='copper0'>
+<circle cx='2.127' cy='3.527' r='0.45' stroke='black' stroke-width='0' fill='black' id='nonconn1' />
 </g>
 </g>
 <g id='silkscreen'>

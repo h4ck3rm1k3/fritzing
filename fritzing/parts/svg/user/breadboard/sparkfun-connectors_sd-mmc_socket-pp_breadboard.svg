@@ -20,6 +20,8 @@
 <rect id='connector13pad' connectorname='2' x='18.78' y='0.0204' width='1.2' height='1.5' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector14pad' connectorname='1' x='21.28' y='0.0204' width='1.2' height='1.5' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector15pad' connectorname='9' x='23.78' y='0.0204' width='1.2' height='1.5' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<circle cx='2.9' cy='25.1204' r='0.75' stroke='black' stroke-width='0' fill='black' id='nonconn4' />
+<circle cx='27.1' cy='25.1204' r='0.75' stroke='black' stroke-width='0' fill='black' id='nonconn5' />
 <line x1='1.4' y1='20.1204' x2='1.4' y2='11.6204' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='1.4' y1='10.1204' x2='1.4' y2='7.1204' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='1.4' y1='4.1204' x2='1.4' y2='1.5204' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>

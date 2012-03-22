@@ -8,6 +8,9 @@
 <circle id='connector1pin' connectorname='V-' cx='53.1495' cy='21.6535' r='1.143' stroke='#F7BD13' stroke-width='0.254' fill='none' />
 <path stroke='none' stroke-width='0' d='m51.8795,20.3835 2.54,0 0,2.54 -2.54,0 0,-3zM52.1335,21.6535a1.016,1.016 0 1 0 2.032,0 1.016,1.016 0 1 0 -2.032,0z
 ' fill='#F7BD13' />
+<circle cx='27.2415' cy='26.2255' r='1.143' stroke='black' stroke-width='0' fill='black' id='nonconn0' />
+<circle cx='13.7795' cy='3.8735' r='1.143' stroke='black' stroke-width='0' fill='black' id='nonconn1' />
+<circle cx='40.7035' cy='3.8735' r='1.143' stroke='black' stroke-width='0' fill='black' id='nonconn2' />
 <g id='copper0'>
 <circle id='connector0pin' connectorname='V+' cx='53.1495' cy='8.6995' r='1.143' stroke='#F7BD13' stroke-width='0.254' fill='none' />
 <path stroke='none' stroke-width='0' d='m51.8795,7.4295 2.54,0 0,2.54 -2.54,0 0,-3zM52.1335,8.6995a1.016,1.016 0 1 0 2.032,0 1.016,1.016 0 1 0 -2.032,0z
@@ -15,6 +18,9 @@
 <circle id='connector1pin' connectorname='V-' cx='53.1495' cy='21.6535' r='1.143' stroke='#F7BD13' stroke-width='0.254' fill='none' />
 <path stroke='none' stroke-width='0' d='m51.8795,20.3835 2.54,0 0,2.54 -2.54,0 0,-3zM52.1335,21.6535a1.016,1.016 0 1 0 2.032,0 1.016,1.016 0 1 0 -2.032,0z
 ' fill='#F7BD13' />
+<circle cx='27.2415' cy='26.2255' r='1.143' stroke='black' stroke-width='0' fill='black' id='nonconn3' />
+<circle cx='13.7795' cy='3.8735' r='1.143' stroke='black' stroke-width='0' fill='black' id='nonconn4' />
+<circle cx='40.7035' cy='3.8735' r='1.143' stroke='black' stroke-width='0' fill='black' id='nonconn5' />
 </g>
 </g>
 <g id='silkscreen'>

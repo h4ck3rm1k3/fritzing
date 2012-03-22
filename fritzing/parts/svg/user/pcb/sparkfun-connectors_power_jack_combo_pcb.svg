@@ -17,10 +17,14 @@
 <rect id='connector4pad' connectorname='GND@3' x='0' y='11.4' width='2.8' height='2.4' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <rect id='connector5pad' connectorname='POWER@2' x='6.1' y='0' width='2.8' height='2.4' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <rect id='connector6pad' connectorname='GND@4' x='6.1' y='11.4' width='2.8' height='2.4' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<circle cx='1.4' cy='6.9' r='0.8' stroke='black' stroke-width='0' fill='black' id='nonconn0' />
+<circle cx='6.48' cy='6.9' r='0.8' stroke='black' stroke-width='0' fill='black' id='nonconn1' />
 <g id='copper0'>
 <circle id='connector0pin' connectorname='POWER' cx='10.02' cy='4.36' r='1.6256' stroke='#F7BD13' stroke-width='0.254' fill='none' />
 <circle id='connector1pin' connectorname='GND@1' cx='4.02' cy='4.36' r='1.6256' stroke='#F7BD13' stroke-width='0.254' fill='none' />
 <circle id='connector2pin' connectorname='GND' cx='7.02' cy='9.06' r='1.6256' stroke='#F7BD13' stroke-width='0.254' fill='none' />
+<circle cx='1.4' cy='6.9' r='0.8' stroke='black' stroke-width='0' fill='black' id='nonconn2' />
+<circle cx='6.48' cy='6.9' r='0.8' stroke='black' stroke-width='0' fill='black' id='nonconn3' />
 </g>
 </g>
 <g id='silkscreen'>

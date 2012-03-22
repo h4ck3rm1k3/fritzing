@@ -204,6 +204,14 @@ M10.8966,37.554a0.4064,0.4064 0 1 0 0.8128,0 0.4064,0.4064 0 1 0 -0.8128,0z
 <circle id='connector13pin' connectorname='K2' cx='36.322' cy='37.681' r='0.5334' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <circle id='connector14pin' connectorname='A1' cx='13.843' cy='37.554' r='0.5334' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <circle id='connector15pin' connectorname='K1' cx='11.303' cy='37.554' r='0.5334' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle cx='12.627' cy='25.127' r='1.5' stroke='black' stroke-width='0' fill='black' id='nonconn16' />
+<circle cx='25.127' cy='12.627' r='1.5' stroke='black' stroke-width='0' fill='black' id='nonconn17' />
+<circle cx='37.627' cy='25.127' r='1.5' stroke='black' stroke-width='0' fill='black' id='nonconn18' />
+<circle cx='25.127' cy='37.627' r='1.5' stroke='black' stroke-width='0' fill='black' id='nonconn19' />
+<circle cx='2.627' cy='47.627' r='1.5' stroke='black' stroke-width='0' fill='black' id='nonconn20' />
+<circle cx='2.627' cy='2.627' r='1.5' stroke='black' stroke-width='0' fill='black' id='nonconn21' />
+<circle cx='47.627' cy='2.627' r='1.5' stroke='black' stroke-width='0' fill='black' id='nonconn22' />
+<circle cx='47.627' cy='47.627' r='1.5' stroke='black' stroke-width='0' fill='black' id='nonconn23' />
 <line x1='0.127' y1='50.127' x2='0.127' y2='0.127' stroke='#f8f8f8' stroke-width='0.254' stroke-linecap='round'/>
 <line x1='0.127' y1='0.127' x2='50.127' y2='0.127' stroke='#f8f8f8' stroke-width='0.254' stroke-linecap='round'/>
 <line x1='50.127' y1='0.127' x2='50.127' y2='50.127' stroke='#f8f8f8' stroke-width='0.254' stroke-linecap='round'/>

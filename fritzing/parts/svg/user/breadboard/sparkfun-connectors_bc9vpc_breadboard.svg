@@ -12,6 +12,9 @@ M52.1335,21.6535a1.016,1.016 0 1 0 2.032,0 1.016,1.016 0 1 0 -2.032,0z
 <circle id='connector1pin' connectorname='V-' cx='53.1495' cy='21.6535' r='1.143' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <path stroke='none' stroke-width='0' d='m51.8795,20.3835 2.54,0 0,2.54 -2.54,0 0,-3zM52.1335,21.6535a1.016,1.016 0 1 0 2.032,0 1.016,1.016 0 1 0 -2.032,0z
 ' fill='#9A916C' />
+<circle cx='27.2415' cy='26.2255' r='1.143' stroke='black' stroke-width='0' fill='black' id='nonconn6' />
+<circle cx='13.7795' cy='3.8735' r='1.143' stroke='black' stroke-width='0' fill='black' id='nonconn7' />
+<circle cx='40.7035' cy='3.8735' r='1.143' stroke='black' stroke-width='0' fill='black' id='nonconn8' />
 <line x1='0.0635' y1='30.0355' x2='0.0635' y2='0.0635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='0.0635' y1='0.0635' x2='54.9275' y2='0.0635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='54.9275' y1='0.0635' x2='54.9275' y2='30.0355' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>

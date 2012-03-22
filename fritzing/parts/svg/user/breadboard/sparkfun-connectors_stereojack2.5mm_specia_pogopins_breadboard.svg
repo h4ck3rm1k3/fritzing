@@ -20,6 +20,7 @@ M10.3047,2.8152a0.5588,0.5588 0 1 0 1.1176,0 0.5588,0.5588 0 1 0 -1.1176,0z
 <circle id='connector3pin' connectorname='TIP' cx='10.8635' cy='2.8152' r='0.762' stroke='#9A916C' stroke-width='0.4064' fill='none' />
 <path stroke='none' stroke-width='0' d='m12.7939,1.85a0.9652,0.9652 0 0 1 0.9652,0.9652l0,0a0.9652,0.9652 0 0 1 -0.9652,0.9652l-1.9304,0a0.9652,0.9652 0 0 1 -0.9652,-0.9652l0,-0a0.9652,0.9652 0 0 1 0.9652,-0.9652l1.9304,0zM10.3047,2.8152a0.5588,0.5588 0 1 0 1.1176,0 0.5588,0.5588 0 1 0 -1.1176,0z
 ' fill='#9A916C' />
+<circle cx='6.3635' cy='2.8152' r='0.6' stroke='black' stroke-width='0' fill='black' id='nonconn2' />
 <line x1='10.9635' y1='0.3152' x2='3.0635' y2='0.3152' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='3.0635' y1='0.3152' x2='3.0635' y2='1.1152' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='3.0635' y1='1.1152' x2='3.0635' y2='4.7152' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>

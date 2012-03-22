@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-FT232RL-BASIC-SSOP'>
 <version>4</version>
-<date>2012-03-21</date>
+<date>2012-03-22</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;USB UART&lt;/b&gt;
@@ -29,7 +29,6 @@ This is the simplified version of the FT232RL unit. Only what you need, nothing 
 <layers image='pcb/sparkfun-digitalic_SSOP28DB_pcb.svg'>
 <layer layerId='copper1'/>
 <layer layerId='silkscreen'/>
-<layer layerId='copper0'/>
 </layers>
 </pcbView>
 <iconView>
@@ -39,7 +38,7 @@ This is the simplified version of the FT232RL unit. Only what you need, nothing 
 </iconView>
 </views>
 <connectors>
-<connector id='connector11' type='male' name='3V3OUT'>
+<connector id='connector11' type='pad' name='3V3OUT'>
 <description>3V3OUT</description>
 <views>
 <breadboardView>
@@ -49,12 +48,11 @@ This is the simplified version of the FT232RL unit. Only what you need, nothing 
 <p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector11pad'/>
 <p layer='copper1' svgId='connector11pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='male' name='AGND'>
+<connector id='connector3' type='pad' name='AGND'>
 <description>AGND</description>
 <views>
 <breadboardView>
@@ -64,12 +62,11 @@ This is the simplified version of the FT232RL unit. Only what you need, nothing 
 <p layer='schematic' svgId='connector9pin' terminalId='connector9terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector3pad'/>
 <p layer='copper1' svgId='connector3pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector24' type='male' name='CTS'>
+<connector id='connector24' type='pad' name='CTS'>
 <description>CTS</description>
 <views>
 <breadboardView>
@@ -79,12 +76,11 @@ This is the simplified version of the FT232RL unit. Only what you need, nothing 
 <p layer='schematic' svgId='connector15pin' terminalId='connector15terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector24pad'/>
 <p layer='copper1' svgId='connector24pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector15' type='male' name='DTR'>
+<connector id='connector15' type='pad' name='DTR'>
 <description>DTR</description>
 <views>
 <breadboardView>
@@ -94,12 +90,11 @@ This is the simplified version of the FT232RL unit. Only what you need, nothing 
 <p layer='schematic' svgId='connector16pin' terminalId='connector16terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector15pad'/>
 <p layer='copper1' svgId='connector15pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector20' type='male' name='GND1'>
+<connector id='connector20' type='pad' name='GND1'>
 <description>GND1</description>
 <views>
 <breadboardView>
@@ -109,12 +104,11 @@ This is the simplified version of the FT232RL unit. Only what you need, nothing 
 <p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector20pad'/>
 <p layer='copper1' svgId='connector20pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='male' name='GND2'>
+<connector id='connector10' type='pad' name='GND2'>
 <description>GND2</description>
 <views>
 <breadboardView>
@@ -124,12 +118,11 @@ This is the simplified version of the FT232RL unit. Only what you need, nothing 
 <p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector10pad'/>
 <p layer='copper1' svgId='connector10pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='male' name='GND3'>
+<connector id='connector8' type='pad' name='GND3'>
 <description>GND3</description>
 <views>
 <breadboardView>
@@ -139,12 +132,11 @@ This is the simplified version of the FT232RL unit. Only what you need, nothing 
 <p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector8pad'/>
 <p layer='copper1' svgId='connector8pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector16' type='male' name='RTS'>
+<connector id='connector16' type='pad' name='RTS'>
 <description>RTS</description>
 <views>
 <breadboardView>
@@ -154,12 +146,11 @@ This is the simplified version of the FT232RL unit. Only what you need, nothing 
 <p layer='schematic' svgId='connector14pin' terminalId='connector14terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector16pad'/>
 <p layer='copper1' svgId='connector16pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector18' type='male' name='RXD'>
+<connector id='connector18' type='pad' name='RXD'>
 <description>RXD</description>
 <views>
 <breadboardView>
@@ -169,12 +160,11 @@ This is the simplified version of the FT232RL unit. Only what you need, nothing 
 <p layer='schematic' svgId='connector7pin' terminalId='connector7terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector18pad'/>
 <p layer='copper1' svgId='connector18pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='male' name='RXLED'>
+<connector id='connector6' type='pad' name='RXLED'>
 <description>RXLED</description>
 <views>
 <breadboardView>
@@ -184,12 +174,11 @@ This is the simplified version of the FT232RL unit. Only what you need, nothing 
 <p layer='schematic' svgId='connector13pin' terminalId='connector13terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector6pad'/>
 <p layer='copper1' svgId='connector6pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='male' name='TEST'>
+<connector id='connector2' type='pad' name='TEST'>
 <description>TEST</description>
 <views>
 <breadboardView>
@@ -199,12 +188,11 @@ This is the simplified version of the FT232RL unit. Only what you need, nothing 
 <p layer='schematic' svgId='connector10pin' terminalId='connector10terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector2pad'/>
 <p layer='copper1' svgId='connector2pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector14' type='male' name='TXD'>
+<connector id='connector14' type='pad' name='TXD'>
 <description>TXD</description>
 <views>
 <breadboardView>
@@ -214,12 +202,11 @@ This is the simplified version of the FT232RL unit. Only what you need, nothing 
 <p layer='schematic' svgId='connector6pin' terminalId='connector6terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector14pad'/>
 <p layer='copper1' svgId='connector14pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='male' name='TXLED'>
+<connector id='connector5' type='pad' name='TXLED'>
 <description>TXLED</description>
 <views>
 <breadboardView>
@@ -229,12 +216,11 @@ This is the simplified version of the FT232RL unit. Only what you need, nothing 
 <p layer='schematic' svgId='connector12pin' terminalId='connector12terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector5pad'/>
 <p layer='copper1' svgId='connector5pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector12' type='male' name='USBDM'>
+<connector id='connector12' type='pad' name='USBDM'>
 <description>USBDM</description>
 <views>
 <breadboardView>
@@ -244,12 +230,11 @@ This is the simplified version of the FT232RL unit. Only what you need, nothing 
 <p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector12pad'/>
 <p layer='copper1' svgId='connector12pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector13' type='male' name='USBDP'>
+<connector id='connector13' type='pad' name='USBDP'>
 <description>USBDP</description>
 <views>
 <breadboardView>
@@ -259,12 +244,11 @@ This is the simplified version of the FT232RL unit. Only what you need, nothing 
 <p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector13pad'/>
 <p layer='copper1' svgId='connector13pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='male' name='VCC'>
+<connector id='connector7' type='pad' name='VCC'>
 <description>VCC</description>
 <views>
 <breadboardView>
@@ -274,12 +258,11 @@ This is the simplified version of the FT232RL unit. Only what you need, nothing 
 <p layer='schematic' svgId='connector11pin' terminalId='connector11terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector7pad'/>
 <p layer='copper1' svgId='connector7pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector17' type='male' name='VCCIO'>
+<connector id='connector17' type='pad' name='VCCIO'>
 <description>VCCIO</description>
 <views>
 <breadboardView>
@@ -289,7 +272,6 @@ This is the simplified version of the FT232RL unit. Only what you need, nothing 
 <p layer='schematic' svgId='connector8pin' terminalId='connector8terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector17pad'/>
 <p layer='copper1' svgId='connector17pad'/>
 </pcbView>
 </views>

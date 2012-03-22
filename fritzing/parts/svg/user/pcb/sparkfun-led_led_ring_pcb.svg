@@ -22,6 +22,8 @@
 <circle id='connector17pin' connectorname='11' cx='4.2889' cy='30.3389' r='0.8' stroke='#F7BD13' stroke-width='0.4' fill='none' />
 <circle id='connector18pin' connectorname='10' cx='5.5889' cy='32.6389' r='0.8' stroke='#F7BD13' stroke-width='0.4' fill='none' />
 <circle id='connector19pin' connectorname='9' cx='6.8889' cy='30.3389' r='0.8' stroke='#F7BD13' stroke-width='0.4' fill='none' />
+<circle cx='20.0889' cy='3.5889' r='2' stroke='black' stroke-width='0' fill='black' id='nonconn0' />
+<circle cx='20.0889' cy='31.5889' r='1.5' stroke='black' stroke-width='0' fill='black' id='nonconn1' />
 <g id='copper0'>
 <circle id='connector0pin' connectorname='16' cx='6.8889' cy='4.8389' r='0.8' stroke='#F7BD13' stroke-width='0.4' fill='none' />
 <circle id='connector1pin' connectorname='15' cx='5.5889' cy='2.5389' r='0.8' stroke='#F7BD13' stroke-width='0.4' fill='none' />
@@ -43,6 +45,8 @@
 <circle id='connector17pin' connectorname='11' cx='4.2889' cy='30.3389' r='0.8' stroke='#F7BD13' stroke-width='0.4' fill='none' />
 <circle id='connector18pin' connectorname='10' cx='5.5889' cy='32.6389' r='0.8' stroke='#F7BD13' stroke-width='0.4' fill='none' />
 <circle id='connector19pin' connectorname='9' cx='6.8889' cy='30.3389' r='0.8' stroke='#F7BD13' stroke-width='0.4' fill='none' />
+<circle cx='20.0889' cy='3.5889' r='2' stroke='black' stroke-width='0' fill='black' id='nonconn2' />
+<circle cx='20.0889' cy='31.5889' r='1.5' stroke='black' stroke-width='0' fill='black' id='nonconn3' />
 </g>
 </g>
 <g id='silkscreen'>

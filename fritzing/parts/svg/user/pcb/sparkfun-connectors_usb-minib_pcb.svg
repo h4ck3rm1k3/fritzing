@@ -11,7 +11,11 @@
 <rect id='connector6pad' connectorname='MTN4' x='5.5' y='9' width='2.5' height='2' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <rect id='connector7pad' connectorname='MTN2' x='5.5' y='0' width='2.5' height='2' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <rect id='connector8pad' connectorname='VBUS' x='5.5' y='3.65' width='2.5' height='0.5' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<circle cx='4.25' cy='3.3' r='0.45' stroke='black' stroke-width='0' fill='black' id='nonconn0' />
+<circle cx='4.25' cy='7.7' r='0.45' stroke='black' stroke-width='0' fill='black' id='nonconn1' />
 <g id='copper0'>
+<circle cx='4.25' cy='3.3' r='0.45' stroke='black' stroke-width='0' fill='black' id='nonconn2' />
+<circle cx='4.25' cy='7.7' r='0.45' stroke='black' stroke-width='0' fill='black' id='nonconn3' />
 </g>
 </g>
 <g id='silkscreen'>

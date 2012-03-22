@@ -16,6 +16,7 @@ M7.3152,18.4912a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
 <circle id='connector2pin' connectorname='OUT' cx='7.8232' cy='18.4912' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <path stroke='none' stroke-width='0' d='m7.8232,16.9672a0.762,0.762 0 0 1 0.762,0.762l0,1.524a0.762,0.762 0 0 1 -0.762,0.762l-0,0a0.762,0.762 0 0 1 -0.762,-0.762l0,-1.524a0.762,0.762 0 0 1 0.762,-0.762l0,0zM7.3152,18.4912a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
 ' fill='#9A916C' />
+<circle cx='5.2832' cy='3.5052' r='1.651' stroke='black' stroke-width='0' fill='black' id='nonconn2' />
 <line x1='0.0762' y1='15.9512' x2='10.4902' y2='15.9512' stroke='#f8f8f8' stroke-width='0.1524' stroke-linecap='round'/>
 <line x1='10.4902' y1='0.0762' x2='0.0762' y2='0.0762' stroke='#f8f8f8' stroke-width='0.1524' stroke-linecap='round'/>
 <line x1='10.4902' y1='15.9512' x2='10.4902' y2='3.5052' stroke='#f8f8f8' stroke-width='0.1524' stroke-linecap='round'/>

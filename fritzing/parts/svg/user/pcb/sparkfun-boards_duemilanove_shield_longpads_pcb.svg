@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
-<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='2.51005in' height='2.55499in' viewBox='0 0 63.7553 64.8968' >
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='2.51005in' height='2.93299in' viewBox='0 0 63.7553 74.498' >
 <g id='copper1'>
 <circle id='connector0pin' connectorname='RES' cx='50.1396' cy='55.067' r='0.7239' stroke='#F7BD13' stroke-width='0.4318' fill='none' />
 <path stroke='none' stroke-width='0' d='m51.0794,54.1272a0.9398,0.9398 0 0 1 0.9398,0.9398l0,0a0.9398,0.9398 0 0 1 -0.9398,0.9398l-1.8796,0a0.9398,0.9398 0 0 1 -0.9398,-0.9398l0,-0a0.9398,0.9398 0 0 1 0.9398,-0.9398l1.8796,0zM49.6316,55.067a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
@@ -86,6 +86,8 @@
 <circle id='connector27pin' connectorname='AREF' cx='1.8796' cy='63.957' r='0.7239' stroke='#F7BD13' stroke-width='0.4318' fill='none' />
 <path stroke='none' stroke-width='0' d='m2.8194,63.0172a0.9398,0.9398 0 0 1 0.9398,0.9398l0,0a0.9398,0.9398 0 0 1 -0.9398,0.9398l-1.8796,0a0.9398,0.9398 0 0 1 -0.9398,-0.9398l0,-0a0.9398,0.9398 0 0 1 0.9398,-0.9398l1.8796,0zM1.3716,63.957a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
 ' fill='#F7BD13' />
+<circle cx='45.0596' cy='22.047' r='1.651' stroke='black' stroke-width='0' fill='black' id='nonconn0' />
+<circle cx='1.8796' cy='72.847' r='1.651' stroke='black' stroke-width='0' fill='black' id='nonconn1' />
 <g id='copper0'>
 <circle id='connector0pin' connectorname='RES' cx='50.1396' cy='55.067' r='0.7239' stroke='#F7BD13' stroke-width='0.4318' fill='none' />
 <path stroke='none' stroke-width='0' d='m51.0794,54.1272a0.9398,0.9398 0 0 1 0.9398,0.9398l0,0a0.9398,0.9398 0 0 1 -0.9398,0.9398l-1.8796,0a0.9398,0.9398 0 0 1 -0.9398,-0.9398l0,-0a0.9398,0.9398 0 0 1 0.9398,-0.9398l1.8796,0zM49.6316,55.067a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
@@ -171,6 +173,8 @@
 <circle id='connector27pin' connectorname='AREF' cx='1.8796' cy='63.957' r='0.7239' stroke='#F7BD13' stroke-width='0.4318' fill='none' />
 <path stroke='none' stroke-width='0' d='m2.8194,63.0172a0.9398,0.9398 0 0 1 0.9398,0.9398l0,0a0.9398,0.9398 0 0 1 -0.9398,0.9398l-1.8796,0a0.9398,0.9398 0 0 1 -0.9398,-0.9398l0,-0a0.9398,0.9398 0 0 1 0.9398,-0.9398l1.8796,0zM1.3716,63.957a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
 ' fill='#F7BD13' />
+<circle cx='45.0596' cy='22.047' r='1.651' stroke='black' stroke-width='0' fill='black' id='nonconn2' />
+<circle cx='1.8796' cy='72.847' r='1.651' stroke='black' stroke-width='0' fill='black' id='nonconn3' />
 </g>
 </g>
 <g id='silkscreen'>

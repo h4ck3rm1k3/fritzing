@@ -1,12 +1,14 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
-<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.354921in' height='0.243276in' viewBox='0 0 9.015 6.1792' >
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.437008in' height='0.243276in' viewBox='0 0 11.1 6.1792' >
 <g id='breadboard'>
-<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l9.015,0 0,6.1792 -9.015,0 0,-6.1792z
+<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l11.1,0 0,6.1792 -11.1,0 0,-6.1792z
 '/>
 <rect id='connector0pad' connectorname='V-' x='7.315' y='0' width='1.7' height='3' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector1pad' connectorname='SIG' x='4.775' y='0' width='1.7' height='3' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector2pad' connectorname='V+' x='2.235' y='0' width='1.7' height='3' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<circle cx='10.415' cy='5.09' r='0.685' stroke='black' stroke-width='0' fill='black' id='nonconn4' />
+<circle cx='0.835' cy='5.09' r='0.685' stroke='black' stroke-width='0' fill='black' id='nonconn5' />
 <line x1='0.125' y1='1' x2='0.625' y2='0.5' stroke='#f8f8f8' stroke-width='0.25' stroke-linecap='round'/>
 <line x1='0.625' y1='0.5' x2='1.125' y2='1' stroke='#f8f8f8' stroke-width='0.25' stroke-linecap='round'/>
 <line x1='0.625' y1='0.5' x2='0.625' y2='2.5' stroke='#f8f8f8' stroke-width='0.25' stroke-linecap='round'/>

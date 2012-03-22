@@ -23,6 +23,13 @@
 <circle id='connector6pin' connectorname='7' cx='16.6116' cy='1.8796' r='0.7239' stroke='#F7BD13' stroke-width='0.4318' fill='none' />
 <path stroke='none' stroke-width='0' d='m16.6116,0a0.9398,0.9398 0 0 1 0.9398,0.9398l0,1.8796a0.9398,0.9398 0 0 1 -0.9398,0.9398l-0,0a0.9398,0.9398 0 0 1 -0.9398,-0.9398l0,-1.8796a0.9398,0.9398 0 0 1 0.9398,-0.9398l0,0zM16.1036,1.8796a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
 ' fill='#F7BD13' />
+<circle cx='1.3716' cy='1.8796' r='0.508' stroke='black' stroke-width='0' fill='black' id='nonconn0' />
+<circle cx='3.9116' cy='1.8796' r='0.508' stroke='black' stroke-width='0' fill='black' id='nonconn1' />
+<circle cx='6.4516' cy='1.8796' r='0.508' stroke='black' stroke-width='0' fill='black' id='nonconn2' />
+<circle cx='8.9916' cy='1.8796' r='0.508' stroke='black' stroke-width='0' fill='black' id='nonconn3' />
+<circle cx='11.5316' cy='1.8796' r='0.508' stroke='black' stroke-width='0' fill='black' id='nonconn4' />
+<circle cx='14.0716' cy='1.8796' r='0.508' stroke='black' stroke-width='0' fill='black' id='nonconn5' />
+<circle cx='16.6116' cy='1.8796' r='0.508' stroke='black' stroke-width='0' fill='black' id='nonconn6' />
 <g id='copper0'>
 <circle id='connector0pin' connectorname='1' cx='1.3716' cy='1.8796' r='0.7239' stroke='#F7BD13' stroke-width='0.4318' fill='none' />
 <path stroke='none' stroke-width='0' d='m1.3716,0a0.9398,0.9398 0 0 1 0.9398,0.9398l0,1.8796a0.9398,0.9398 0 0 1 -0.9398,0.9398l-0,0a0.9398,0.9398 0 0 1 -0.9398,-0.9398l0,-1.8796a0.9398,0.9398 0 0 1 0.9398,-0.9398l0,0zM0.8636,1.8796a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
@@ -45,6 +52,13 @@
 <circle id='connector6pin' connectorname='7' cx='16.6116' cy='1.8796' r='0.7239' stroke='#F7BD13' stroke-width='0.4318' fill='none' />
 <path stroke='none' stroke-width='0' d='m16.6116,0a0.9398,0.9398 0 0 1 0.9398,0.9398l0,1.8796a0.9398,0.9398 0 0 1 -0.9398,0.9398l-0,0a0.9398,0.9398 0 0 1 -0.9398,-0.9398l0,-1.8796a0.9398,0.9398 0 0 1 0.9398,-0.9398l0,0zM16.1036,1.8796a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
 ' fill='#F7BD13' />
+<circle cx='1.3716' cy='1.8796' r='0.508' stroke='black' stroke-width='0' fill='black' id='nonconn7' />
+<circle cx='3.9116' cy='1.8796' r='0.508' stroke='black' stroke-width='0' fill='black' id='nonconn8' />
+<circle cx='6.4516' cy='1.8796' r='0.508' stroke='black' stroke-width='0' fill='black' id='nonconn9' />
+<circle cx='8.9916' cy='1.8796' r='0.508' stroke='black' stroke-width='0' fill='black' id='nonconn10' />
+<circle cx='11.5316' cy='1.8796' r='0.508' stroke='black' stroke-width='0' fill='black' id='nonconn11' />
+<circle cx='14.0716' cy='1.8796' r='0.508' stroke='black' stroke-width='0' fill='black' id='nonconn12' />
+<circle cx='16.6116' cy='1.8796' r='0.508' stroke='black' stroke-width='0' fill='black' id='nonconn13' />
 </g>
 </g>
 <g id='silkscreen'>

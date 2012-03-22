@@ -6,6 +6,8 @@
 '/>
 <rect id='connector0pad' connectorname='-' x='0' y='9.20846' width='3.2' height='2.5' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector1pad' connectorname='+' x='8' y='9.20846' width='3.2' height='2.5' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<circle cx='1.7' cy='12.7085' r='0.4' stroke='black' stroke-width='0' fill='black' id='nonconn4' />
+<circle cx='7.85' cy='6.55846' r='0.4' stroke='black' stroke-width='0' fill='black' id='nonconn5' />
 <path fill='none' d='M1.4,8.85846 A4.47216,4.47216 0 0 1 6.87,6.14046' stroke-width='0.2032' stroke='#f8f8f8' />
 <path fill='none' d='M8.648,7.15646 A4.5153,4.5153 0 0 1 9.791,8.80746' stroke-width='0.2032' stroke='#f8f8f8' />
 <path fill='none' d='M9.8,12.0585 A4.84733,4.84733 0 0 1 8.2,14.1585' stroke-width='0.2032' stroke='#f8f8f8' />

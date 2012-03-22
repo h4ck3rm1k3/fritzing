@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
-<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.53937in' height='0.11811in' viewBox='0 0 13.7 3' >
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.53937in' height='0.283465in' viewBox='0 0 13.7 7.2' >
 <g id='breadboard'>
-<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l13.7,0 0,3 -13.7,0 0,-3z
+<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l13.7,0 0,7.2 -13.7,0 0,-7.2z
 '/>
 <rect id='connector0pad' connectorname='4' x='7.62' y='0' width='1' height='3' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector1pad' connectorname='5' x='10.16' y='0' width='1' height='3' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
@@ -10,5 +10,7 @@
 <rect id='connector3pad' connectorname='3' x='5.08' y='0' width='1' height='3' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector4pad' connectorname='2' x='2.54' y='0' width='1' height='3' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector5pad' connectorname='1' x='0' y='0' width='1' height='3' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<circle cx='1.77' cy='6.5' r='0.7' stroke='black' stroke-width='0' fill='black' id='nonconn4' />
+<circle cx='11.93' cy='6.5' r='0.7' stroke='black' stroke-width='0' fill='black' id='nonconn5' />
 </g>
 </svg>

@@ -8,6 +8,8 @@
 <rect id='connector1pad' connectorname='GND' x='2.2016' y='11.4' width='2.8' height='2.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector2pad' connectorname='VIN1' x='8.3016' y='0' width='2.8' height='2.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector3pad' connectorname='P$4' x='8.3016' y='11.4' width='2.8' height='2.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<circle cx='3.6016' cy='6.9' r='1.016' stroke='black' stroke-width='0' fill='black' id='nonconn4' />
+<circle cx='8.1736' cy='6.9' r='1.016' stroke='black' stroke-width='0' fill='black' id='nonconn5' />
 <line x1='13.4016' y1='2.4' x2='13.4016' y2='11.4' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='0.1016' y1='2.4' x2='0.1016' y2='4.4' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='0.1016' y1='4.4' x2='0.1016' y2='9.4' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>

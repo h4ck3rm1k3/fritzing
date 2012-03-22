@@ -6,11 +6,13 @@
 <circle id='connector1pin' connectorname='2' cx='14.8516' cy='9.3516' r='0.627' stroke='#F7BD13' stroke-width='0.254' fill='none' />
 <rect x='2.3516' y='4.3516' width='3' height='10' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <rect x='13.3516' y='4.3516' width='3' height='10' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<circle cx='9.3516' cy='9.3516' r='2' stroke='black' stroke-width='0' fill='black' id='nonconn0' />
 <g id='copper0'>
 <circle id='connector0pin' connectorname='1' cx='3.8516' cy='9.3516' r='0.627' stroke='#F7BD13' stroke-width='0.254' fill='none' />
 <circle id='connector1pin' connectorname='2' cx='14.8516' cy='9.3516' r='0.627' stroke='#F7BD13' stroke-width='0.254' fill='none' />
 <rect x='2.3516' y='4.3516' width='3' height='10' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <rect x='13.3516' y='4.3516' width='3' height='10' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<circle cx='9.3516' cy='9.3516' r='2' stroke='black' stroke-width='0' fill='black' id='nonconn1' />
 </g>
 </g>
 <g id='silkscreen'>

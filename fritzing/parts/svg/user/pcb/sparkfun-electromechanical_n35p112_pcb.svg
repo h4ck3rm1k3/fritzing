@@ -15,7 +15,11 @@
 <rect id='connector10pad' connectorname='12' x='8.9' y='9.2' width='2.2' height='2.4' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <rect id='connector11pad' connectorname='10' x='0' y='8.88178e-16' width='2.2' height='2.4' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <rect id='connector12pad' connectorname='11' x='8.9' y='8.88178e-16' width='2.2' height='2.4' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<circle cx='3.45' cy='1.6' r='0.7' stroke='black' stroke-width='0' fill='black' id='nonconn0' />
+<circle cx='7.65' cy='9.8' r='0.5' stroke='black' stroke-width='0' fill='black' id='nonconn1' />
 <g id='copper0'>
+<circle cx='3.45' cy='1.6' r='0.7' stroke='black' stroke-width='0' fill='black' id='nonconn2' />
+<circle cx='7.65' cy='9.8' r='0.5' stroke='black' stroke-width='0' fill='black' id='nonconn3' />
 </g>
 </g>
 <g id='silkscreen'>

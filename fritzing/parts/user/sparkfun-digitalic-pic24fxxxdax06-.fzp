@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-PIC24FXXXDAX06-'>
 <version>4</version>
-<date>2012-03-21</date>
+<date>2012-03-22</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;PIC24FXXXDAX06&lt;/b&gt;
@@ -29,7 +29,6 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <layers image='pcb/sparkfun-digitalic_PIC24FXXX_TQFP64_pcb.svg'>
 <layer layerId='copper1'/>
 <layer layerId='silkscreen'/>
-<layer layerId='copper0'/>
 </layers>
 </pcbView>
 <iconView>
@@ -39,7 +38,7 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 </iconView>
 </views>
 <connectors>
-<connector id='connector6' type='male' name='_MCLR'>
+<connector id='connector6' type='pad' name='_MCLR'>
 <description>_MCLR</description>
 <views>
 <breadboardView>
@@ -49,12 +48,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector6pad'/>
 <p layer='copper1' svgId='connector6pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector28' type='male' name='AN14_CTPLS_RP14_CN32_RB14'>
+<connector id='connector28' type='pad' name='AN14_CTPLS_RP14_CN32_RB14'>
 <description>AN14_CTPLS_RP14_CN32_RB14</description>
 <views>
 <breadboardView>
@@ -64,12 +62,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector28pad'/>
 <p layer='copper1' svgId='connector28pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector29' type='male' name='AN15_RP29_REFO_CN12_RB15'>
+<connector id='connector29' type='pad' name='AN15_RP29_REFO_CN12_RB15'>
 <description>AN15_RP29_REFO_CN12_RB15</description>
 <views>
 <breadboardView>
@@ -79,12 +76,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector6pin' terminalId='connector6terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector29pad'/>
 <p layer='copper1' svgId='connector29pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector13' type='male' name='AN2_C2INB_VMIO_RP13_CN4_RB2'>
+<connector id='connector13' type='pad' name='AN2_C2INB_VMIO_RP13_CN4_RB2'>
 <description>AN2_C2INB_VMIO_RP13_CN4_RB2</description>
 <views>
 <breadboardView>
@@ -94,12 +90,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector13pad'/>
 <p layer='copper1' svgId='connector13pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector12' type='male' name='AN3_C2INA_VPIO_CN5_RB3'>
+<connector id='connector12' type='pad' name='AN3_C2INA_VPIO_CN5_RB3'>
 <description>AN3_C2INA_VPIO_CN5_RB3</description>
 <views>
 <breadboardView>
@@ -109,12 +104,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector12pad'/>
 <p layer='copper1' svgId='connector12pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector20' type='male' name='AN8_RP8_CN26_RB8'>
+<connector id='connector20' type='pad' name='AN8_RP8_CN26_RB8'>
 <description>AN8_RP8_CN26_RB8</description>
 <views>
 <breadboardView>
@@ -124,12 +118,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector20pad'/>
 <p layer='copper1' svgId='connector20pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector21' type='male' name='AN9_RP9_CN27_RB9'>
+<connector id='connector21' type='pad' name='AN9_RP9_CN27_RB9'>
 <description>AN9_RP9_CN27_RB9</description>
 <views>
 <breadboardView>
@@ -139,12 +132,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector21pad'/>
 <p layer='copper1' svgId='connector21pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector18' type='male' name='AVDD'>
+<connector id='connector18' type='pad' name='AVDD'>
 <description>AVDD</description>
 <views>
 <breadboardView>
@@ -154,12 +146,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector7pin' terminalId='connector7terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector18pad'/>
 <p layer='copper1' svgId='connector18pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector19' type='male' name='AVSS'>
+<connector id='connector19' type='pad' name='AVSS'>
 <description>AVSS</description>
 <views>
 <breadboardView>
@@ -169,12 +160,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector8pin' terminalId='connector8terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector19pad'/>
 <p layer='copper1' svgId='connector19pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='male' name='C1INC_RP26_CN9_RG7'>
+<connector id='connector4' type='pad' name='C1INC_RP26_CN9_RG7'>
 <description>C1INC_RP26_CN9_RG7</description>
 <views>
 <breadboardView>
@@ -184,12 +174,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector9pin' terminalId='connector9terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector4pad'/>
 <p layer='copper1' svgId='connector4pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='male' name='C1IND_RP21_CN8_RG6'>
+<connector id='connector3' type='pad' name='C1IND_RP21_CN8_RG6'>
 <description>C1IND_RP21_CN8_RG6</description>
 <views>
 <breadboardView>
@@ -199,12 +188,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector10pin' terminalId='connector10terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector3pad'/>
 <p layer='copper1' svgId='connector3pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='male' name='C2INC_RP27_GD15_CN11_RG9'>
+<connector id='connector7' type='pad' name='C2INC_RP27_GD15_CN11_RG9'>
 <description>C2INC_RP27_GD15_CN11_RG9</description>
 <views>
 <breadboardView>
@@ -214,12 +202,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector11pin' terminalId='connector11terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector7pad'/>
 <p layer='copper1' svgId='connector7pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='male' name='C2IND_RP19_GD14_CN10_RG8'>
+<connector id='connector5' type='pad' name='C2IND_RP19_GD14_CN10_RG8'>
 <description>C2IND_RP19_GD14_CN10_RG8</description>
 <views>
 <breadboardView>
@@ -229,12 +216,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector12pin' terminalId='connector12terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector5pad'/>
 <p layer='copper1' svgId='connector5pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector54' type='male' name='C3INA_SESSEND_CN16_RD7'>
+<connector id='connector54' type='pad' name='C3INA_SESSEND_CN16_RD7'>
 <description>C3INA_SESSEND_CN16_RD7</description>
 <views>
 <breadboardView>
@@ -244,12 +230,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector13pin' terminalId='connector13terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector54pad'/>
 <p layer='copper1' svgId='connector54pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector53' type='male' name='C3INB_CN15_RD6'>
+<connector id='connector53' type='pad' name='C3INB_CN15_RD6'>
 <description>C3INB_CN15_RD6</description>
 <views>
 <breadboardView>
@@ -259,12 +244,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector14pin' terminalId='connector14terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector53pad'/>
 <p layer='copper1' svgId='connector53pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector36' type='male' name='D__CN83_RG2'>
+<connector id='connector36' type='pad' name='D__CN83_RG2'>
 <description>D__CN83_RG2</description>
 <views>
 <breadboardView>
@@ -274,12 +258,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector15pin' terminalId='connector15terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector36pad'/>
 <p layer='copper1' svgId='connector36pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector35' type='male' name='D-_CN84_RG3'>
+<connector id='connector35' type='pad' name='D-_CN84_RG3'>
 <description>D-_CN84_RG3</description>
 <views>
 <breadboardView>
@@ -289,12 +272,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector16pin' terminalId='connector16terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector35pad'/>
 <p layer='copper1' svgId='connector35pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector45' type='male' name='DMH_RP11_INT0_CN49_RD0'>
+<connector id='connector45' type='pad' name='DMH_RP11_INT0_CN49_RD0'>
 <description>DMH_RP11_INT0_CN49_RD0</description>
 <views>
 <breadboardView>
@@ -304,12 +286,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector17pin' terminalId='connector17terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector45pad'/>
 <p layer='copper1' svgId='connector45pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector49' type='male' name='DPH_RP23_CN51_RD2'>
+<connector id='connector49' type='pad' name='DPH_RP23_CN51_RD2'>
 <description>DPH_RP23_CN51_RD2</description>
 <views>
 <breadboardView>
@@ -319,12 +300,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector18pin' terminalId='connector18terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector49pad'/>
 <p layer='copper1' svgId='connector49pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector42' type='male' name='DPLN_SDA1_RP4_GD8_CN54_RD9'>
+<connector id='connector42' type='pad' name='DPLN_SDA1_RP4_GD8_CN54_RD9'>
 <description>DPLN_SDA1_RP4_GD8_CN54_RD9</description>
 <views>
 <breadboardView>
@@ -334,12 +314,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector19pin' terminalId='connector19terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector42pad'/>
 <p layer='copper1' svgId='connector42pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector56' type='male' name='ENVREG'>
+<connector id='connector56' type='pad' name='ENVREG'>
 <description>ENVREG</description>
 <views>
 <breadboardView>
@@ -349,12 +328,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector20pin' terminalId='connector20terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector56pad'/>
 <p layer='copper1' svgId='connector56pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector59' type='male' name='GD0_CN58_RE0'>
+<connector id='connector59' type='pad' name='GD0_CN58_RE0'>
 <description>GD0_CN58_RE0</description>
 <views>
 <breadboardView>
@@ -364,12 +342,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector21pin' terminalId='connector21terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector59pad'/>
 <p layer='copper1' svgId='connector59pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector60' type='male' name='GD1_CN59_RE1'>
+<connector id='connector60' type='pad' name='GD1_CN59_RE1'>
 <description>GD1_CN59_RE1</description>
 <views>
 <breadboardView>
@@ -379,12 +356,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector22pin' terminalId='connector22terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector60pad'/>
 <p layer='copper1' svgId='connector60pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector57' type='male' name='GD10_VBUSST_VCMPST1_VBUSVLD_CN68_RF0'>
+<connector id='connector57' type='pad' name='GD10_VBUSST_VCMPST1_VBUSVLD_CN68_RF0'>
 <description>GD10_VBUSST_VCMPST1_VBUSVLD_CN68_RF0</description>
 <views>
 <breadboardView>
@@ -394,12 +370,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector25pin' terminalId='connector25terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector57pad'/>
 <p layer='copper1' svgId='connector57pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector58' type='male' name='GD11_VCMPST2_SESSVLD_CN69_RF1'>
+<connector id='connector58' type='pad' name='GD11_VCMPST2_SESSVLD_CN69_RF1'>
 <description>GD11_VCMPST2_SESSVLD_CN69_RF1</description>
 <views>
 <breadboardView>
@@ -409,12 +384,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector26pin' terminalId='connector26terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector58pad'/>
 <p layer='copper1' svgId='connector58pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='male' name='GD12_SCL3_CN64_RE6'>
+<connector id='connector1' type='pad' name='GD12_SCL3_CN64_RE6'>
 <description>GD12_SCL3_CN64_RE6</description>
 <views>
 <breadboardView>
@@ -424,12 +398,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector27pin' terminalId='connector27terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector1pad'/>
 <p layer='copper1' svgId='connector1pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='male' name='GD13_SDA3_CN65_RE7'>
+<connector id='connector2' type='pad' name='GD13_SDA3_CN65_RE7'>
 <description>GD13_SDA3_CN65_RE7</description>
 <views>
 <breadboardView>
@@ -439,12 +412,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector28pin' terminalId='connector28terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector2pad'/>
 <p layer='copper1' svgId='connector2pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector61' type='male' name='GD2_CN60_RE2'>
+<connector id='connector61' type='pad' name='GD2_CN60_RE2'>
 <description>GD2_CN60_RE2</description>
 <views>
 <breadboardView>
@@ -454,12 +426,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector23pin' terminalId='connector23terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector61pad'/>
 <p layer='copper1' svgId='connector61pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector62' type='male' name='GD3_CN61_RE3'>
+<connector id='connector62' type='pad' name='GD3_CN61_RE3'>
 <description>GD3_CN61_RE3</description>
 <views>
 <breadboardView>
@@ -469,12 +440,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector24pin' terminalId='connector24terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector62pad'/>
 <p layer='copper1' svgId='connector62pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector63' type='male' name='HSYNC_CN62_RE4'>
+<connector id='connector63' type='pad' name='HSYNC_CN62_RE4'>
 <description>HSYNC_CN62_RE4</description>
 <views>
 <breadboardView>
@@ -484,12 +454,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector29pin' terminalId='connector29terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector63pad'/>
 <p layer='copper1' svgId='connector63pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector38' type='male' name='OSCI_CLKI_CN23_RC12'>
+<connector id='connector38' type='pad' name='OSCI_CLKI_CN23_RC12'>
 <description>OSCI_CLKI_CN23_RC12</description>
 <views>
 <breadboardView>
@@ -499,12 +468,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector30pin' terminalId='connector30terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector38pad'/>
 <p layer='copper1' svgId='connector38pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector39' type='male' name='OSCO_CLKO_CN22_RC15'>
+<connector id='connector39' type='pad' name='OSCO_CLKO_CN22_RC15'>
 <description>OSCO_CLKO_CN22_RC15</description>
 <views>
 <breadboardView>
@@ -514,12 +482,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector31pin' terminalId='connector31terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector39pad'/>
 <p layer='copper1' svgId='connector39pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector14' type='male' name='PGEC1_AN1_VREF-_RP1_CN3_RB1'>
+<connector id='connector14' type='pad' name='PGEC1_AN1_VREF-_RP1_CN3_RB1'>
 <description>PGEC1_AN1_VREF-_RP1_CN3_RB1</description>
 <views>
 <breadboardView>
@@ -529,12 +496,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector32pin' terminalId='connector32terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector14pad'/>
 <p layer='copper1' svgId='connector14pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector16' type='male' name='PGEC2_AN6_RP6_CN24_RB6'>
+<connector id='connector16' type='pad' name='PGEC2_AN6_RP6_CN24_RB6'>
 <description>PGEC2_AN6_RP6_CN24_RB6</description>
 <views>
 <breadboardView>
@@ -544,12 +510,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector33pin' terminalId='connector33terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector16pad'/>
 <p layer='copper1' svgId='connector16pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='male' name='PGEC3_AN5_C1INA_VBUSON_RP18_CN7_RB5'>
+<connector id='connector10' type='pad' name='PGEC3_AN5_C1INA_VBUSON_RP18_CN7_RB5'>
 <description>PGEC3_AN5_C1INA_VBUSON_RP18_CN7_RB5</description>
 <views>
 <breadboardView>
@@ -559,12 +524,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector34pin' terminalId='connector34terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector10pad'/>
 <p layer='copper1' svgId='connector10pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector15' type='male' name='PGED1_AN0_VREF__RP0_CN2_RB0'>
+<connector id='connector15' type='pad' name='PGED1_AN0_VREF__RP0_CN2_RB0'>
 <description>PGED1_AN0_VREF__RP0_CN2_RB0</description>
 <views>
 <breadboardView>
@@ -574,12 +538,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector35pin' terminalId='connector35terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector15pad'/>
 <p layer='copper1' svgId='connector15pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector17' type='male' name='PGED2_AN7_RP7_RCV_CN25_RB7'>
+<connector id='connector17' type='pad' name='PGED2_AN7_RP7_RCV_CN25_RB7'>
 <description>PGED2_AN7_RP7_RCV_CN25_RB7</description>
 <views>
 <breadboardView>
@@ -589,12 +552,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector36pin' terminalId='connector36terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector17pad'/>
 <p layer='copper1' svgId='connector17pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector11' type='male' name='PGED3_AN4_C1INB_USBOEN_RP28_CN6_RB4'>
+<connector id='connector11' type='pad' name='PGED3_AN4_C1INB_USBOEN_RP28_CN6_RB4'>
 <description>PGED3_AN4_C1INB_USBOEN_RP28_CN6_RB4</description>
 <views>
 <breadboardView>
@@ -604,12 +566,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector37pin' terminalId='connector37terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector11pad'/>
 <p layer='copper1' svgId='connector11pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector44' type='male' name='RP12_GD7_CN56_RD11'>
+<connector id='connector44' type='pad' name='RP12_GD7_CN56_RD11'>
 <description>RP12_GD7_CN56_RD11</description>
 <views>
 <breadboardView>
@@ -619,12 +580,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector38pin' terminalId='connector38terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector44pad'/>
 <p layer='copper1' svgId='connector44pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector32' type='male' name='RP16_USBID_CN71_RF3'>
+<connector id='connector32' type='pad' name='RP16_USBID_CN71_RF3'>
 <description>RP16_USBID_CN71_RF3</description>
 <views>
 <breadboardView>
@@ -634,12 +594,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector39pin' terminalId='connector39terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector32pad'/>
 <p layer='copper1' svgId='connector32pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector52' type='male' name='RP20_GPWR_CN14_RD5'>
+<connector id='connector52' type='pad' name='RP20_GPWR_CN14_RD5'>
 <description>RP20_GPWR_CN14_RD5</description>
 <views>
 <breadboardView>
@@ -649,12 +608,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector40pin' terminalId='connector40terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector52pad'/>
 <p layer='copper1' svgId='connector52pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector50' type='male' name='RP22_GEN_CN52_RD3'>
+<connector id='connector50' type='pad' name='RP22_GEN_CN52_RD3'>
 <description>RP22_GEN_CN52_RD3</description>
 <views>
 <breadboardView>
@@ -664,12 +622,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector41pin' terminalId='connector41terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector50pad'/>
 <p layer='copper1' svgId='connector50pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector51' type='male' name='RP25_GCLK_CN13_RD4'>
+<connector id='connector51' type='pad' name='RP25_GCLK_CN13_RD4'>
 <description>RP25_GCLK_CN13_RD4</description>
 <views>
 <breadboardView>
@@ -679,12 +636,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector42pin' terminalId='connector42terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector51pad'/>
 <p layer='copper1' svgId='connector51pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector41' type='male' name='RTCC_DMLN_RP2_CN53_RD8'>
+<connector id='connector41' type='pad' name='RTCC_DMLN_RP2_CN53_RD8'>
 <description>RTCC_DMLN_RP2_CN53_RD8</description>
 <views>
 <breadboardView>
@@ -694,12 +650,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector43pin' terminalId='connector43terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector41pad'/>
 <p layer='copper1' svgId='connector41pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector43' type='male' name='SCL1_RP3_GD6_CN55_RD10'>
+<connector id='connector43' type='pad' name='SCL1_RP3_GD6_CN55_RD10'>
 <description>SCL1_RP3_GD6_CN55_RD10</description>
 <views>
 <breadboardView>
@@ -709,12 +664,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector44pin' terminalId='connector44terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector43pad'/>
 <p layer='copper1' svgId='connector43pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector31' type='male' name='SCL2_RP17_GD5_CN18_RF5'>
+<connector id='connector31' type='pad' name='SCL2_RP17_GD5_CN18_RF5'>
 <description>SCL2_RP17_GD5_CN18_RF5</description>
 <views>
 <breadboardView>
@@ -724,12 +678,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector45pin' terminalId='connector45terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector31pad'/>
 <p layer='copper1' svgId='connector31pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector30' type='male' name='SDA2_RP10_GD4_CN17_RF4'>
+<connector id='connector30' type='pad' name='SDA2_RP10_GD4_CN17_RF4'>
 <description>SDA2_RP10_GD4_CN17_RF4</description>
 <views>
 <breadboardView>
@@ -739,12 +692,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector46pin' terminalId='connector46terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector30pad'/>
 <p layer='copper1' svgId='connector30pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector46' type='male' name='SOSCI_C3IND_CN1_RC13'>
+<connector id='connector46' type='pad' name='SOSCI_C3IND_CN1_RC13'>
 <description>SOSCI_C3IND_CN1_RC13</description>
 <views>
 <breadboardView>
@@ -754,12 +706,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector47pin' terminalId='connector47terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector46pad'/>
 <p layer='copper1' svgId='connector46pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector47' type='male' name='SOSCO_SCLKI_T1CK_C3INC_RPI37_CN0_RC14'>
+<connector id='connector47' type='pad' name='SOSCO_SCLKI_T1CK_C3INC_RPI37_CN0_RC14'>
 <description>SOSCO_SCLKI_T1CK_C3INC_RPI37_CN0_RC14</description>
 <views>
 <breadboardView>
@@ -769,12 +720,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector48pin' terminalId='connector48terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector47pad'/>
 <p layer='copper1' svgId='connector47pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector26' type='male' name='TCK_AN12_CTEDG2_CN30_RB12'>
+<connector id='connector26' type='pad' name='TCK_AN12_CTEDG2_CN30_RB12'>
 <description>TCK_AN12_CTEDG2_CN30_RB12</description>
 <views>
 <breadboardView>
@@ -784,12 +734,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector49pin' terminalId='connector49terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector26pad'/>
 <p layer='copper1' svgId='connector26pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector27' type='male' name='TDI_AN13_CTEDG1_CN31_RB13'>
+<connector id='connector27' type='pad' name='TDI_AN13_CTEDG1_CN31_RB13'>
 <description>TDI_AN13_CTEDG1_CN31_RB13</description>
 <views>
 <breadboardView>
@@ -799,12 +748,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector50pin' terminalId='connector50terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector27pad'/>
 <p layer='copper1' svgId='connector27pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector23' type='male' name='TDO_AN11_CN29_RB11'>
+<connector id='connector23' type='pad' name='TDO_AN11_CN29_RB11'>
 <description>TDO_AN11_CN29_RB11</description>
 <views>
 <breadboardView>
@@ -814,12 +762,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector51pin' terminalId='connector51terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector23pad'/>
 <p layer='copper1' svgId='connector23pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector22' type='male' name='TMS_CVREF_AN10_CN28_RB10'>
+<connector id='connector22' type='pad' name='TMS_CVREF_AN10_CN28_RB10'>
 <description>TMS_CVREF_AN10_CN28_RB10</description>
 <views>
 <breadboardView>
@@ -829,12 +776,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector52pin' terminalId='connector52terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector22pad'/>
 <p layer='copper1' svgId='connector22pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector33' type='male' name='VBUS_RF7'>
+<connector id='connector33' type='pad' name='VBUS_RF7'>
 <description>VBUS_RF7</description>
 <views>
 <breadboardView>
@@ -844,12 +790,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector53pin' terminalId='connector53terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector33pad'/>
 <p layer='copper1' svgId='connector33pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector55' type='male' name='VCAP'>
+<connector id='connector55' type='pad' name='VCAP'>
 <description>VCAP</description>
 <views>
 <breadboardView>
@@ -859,12 +804,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector54pin' terminalId='connector54terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector55pad'/>
 <p layer='copper1' svgId='connector55pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector48' type='male' name='VCPCON_RP24_GD9_VBUSCHG_CN50_RD1'>
+<connector id='connector48' type='pad' name='VCPCON_RP24_GD9_VBUSCHG_CN50_RD1'>
 <description>VCPCON_RP24_GD9_VBUSCHG_CN50_RD1</description>
 <views>
 <breadboardView>
@@ -874,12 +818,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector55pin' terminalId='connector55terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector48pad'/>
 <p layer='copper1' svgId='connector48pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector9' type='male' name='VDD_1'>
+<connector id='connector9' type='pad' name='VDD_1'>
 <description>VDD_1</description>
 <views>
 <breadboardView>
@@ -889,12 +832,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector56pin' terminalId='connector56terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector9pad'/>
 <p layer='copper1' svgId='connector9pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector25' type='male' name='VDD_2'>
+<connector id='connector25' type='pad' name='VDD_2'>
 <description>VDD_2</description>
 <views>
 <breadboardView>
@@ -904,12 +846,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector57pin' terminalId='connector57terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector25pad'/>
 <p layer='copper1' svgId='connector25pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector37' type='male' name='VDD_3'>
+<connector id='connector37' type='pad' name='VDD_3'>
 <description>VDD_3</description>
 <views>
 <breadboardView>
@@ -919,12 +860,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector58pin' terminalId='connector58terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector37pad'/>
 <p layer='copper1' svgId='connector37pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='male' name='VSS_1'>
+<connector id='connector8' type='pad' name='VSS_1'>
 <description>VSS_1</description>
 <views>
 <breadboardView>
@@ -934,12 +874,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector59pin' terminalId='connector59terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector8pad'/>
 <p layer='copper1' svgId='connector8pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector24' type='male' name='VSS_2'>
+<connector id='connector24' type='pad' name='VSS_2'>
 <description>VSS_2</description>
 <views>
 <breadboardView>
@@ -949,12 +888,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector60pin' terminalId='connector60terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector24pad'/>
 <p layer='copper1' svgId='connector24pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector40' type='male' name='VSS_3'>
+<connector id='connector40' type='pad' name='VSS_3'>
 <description>VSS_3</description>
 <views>
 <breadboardView>
@@ -964,12 +902,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector61pin' terminalId='connector61terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector40pad'/>
 <p layer='copper1' svgId='connector40pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='male' name='VSYNC_CN63_RE5'>
+<connector id='connector0' type='pad' name='VSYNC_CN63_RE5'>
 <description>VSYNC_CN63_RE5</description>
 <views>
 <breadboardView>
@@ -979,12 +916,11 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector62pin' terminalId='connector62terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector0pad'/>
 <p layer='copper1' svgId='connector0pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector34' type='male' name='VUSB'>
+<connector id='connector34' type='pad' name='VUSB'>
 <description>VUSB</description>
 <views>
 <breadboardView>
@@ -994,7 +930,6 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 <p layer='schematic' svgId='connector63pin' terminalId='connector63terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector34pad'/>
 <p layer='copper1' svgId='connector34pad'/>
 </pcbView>
 </views>

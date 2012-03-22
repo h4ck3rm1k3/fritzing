@@ -13,6 +13,8 @@
 <rect id='connector6pad' connectorname='VBUS' x='5.51' y='3.64' width='3.5' height='0.5' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector7pad' connectorname='ID' x='5.5' y='6.05' width='3.5' height='0.5' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector8pad' connectorname='GND' x='5.5' y='6.85' width='3.5' height='0.5' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<circle cx='4.25' cy='3.3' r='0.45' stroke='black' stroke-width='0' fill='black' id='nonconn4' />
+<circle cx='4.25' cy='7.7' r='0.45' stroke='black' stroke-width='0' fill='black' id='nonconn5' />
 <line x1='2.75' y1='1.7' x2='5.15' y2='1.7' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='7.55' y1='2.4' x2='7.55' y2='3.4' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='7.55' y1='7.6' x2='7.55' y2='8.6' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>

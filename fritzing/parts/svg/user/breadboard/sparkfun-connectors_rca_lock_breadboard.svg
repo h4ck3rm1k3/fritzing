@@ -1,18 +1,20 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
-<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.393827in' height='0.41089in' viewBox='0 0 10.0032 10.4366' >
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.396394in' height='0.418646in' viewBox='0 0 10.0684 10.6336' >
 <g id='breadboard'>
-<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l10.0032,0 0,10.4366 -10.0032,0 0,-10.4366z
-M3.1548,5.2056a1.15,1.15 0 1 0 2.3,0 1.15,1.15 0 1 0 -2.3,0z
-M6.9818,1.404a1.15,1.15 0 1 0 2.3,0 1.15,1.15 0 1 0 -2.3,0z
-M6.9818,9.0326a1.15,1.15 0 1 0 2.3,0 1.15,1.15 0 1 0 -2.3,0z
+<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l10.0684,0 0,10.6336 -10.0684,0 0,-10.6336z
+M3.22,5.3168a1.15,1.15 0 1 0 2.3,0 1.15,1.15 0 1 0 -2.3,0z
+M7.047,1.5152a1.15,1.15 0 1 0 2.3,0 1.15,1.15 0 1 0 -2.3,0z
+M7.047,9.1438a1.15,1.15 0 1 0 2.3,0 1.15,1.15 0 1 0 -2.3,0z
 '/>
-<circle id='connector0pin' connectorname='BARREL' cx='4.3048' cy='5.2056' r='1.277' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector1pin' connectorname='BREAK' cx='8.1318' cy='1.404' r='1.277' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector2pin' connectorname='SPRING' cx='8.1318' cy='9.0326' r='1.277' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<line x1='2.1016' y1='0.2056' x2='6.1016' y2='0.2056' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='9.9016' y1='0.2056' x2='9.9016' y2='10.2056' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='2.1016' y1='10.2056' x2='6.1016' y2='10.2056' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='0.1016' y1='2.2056' x2='0.1016' y2='8.2056' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<circle id='connector0pin' connectorname='BARREL' cx='4.37' cy='5.3168' r='1.277' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector1pin' connectorname='BREAK' cx='8.197' cy='1.5152' r='1.277' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector2pin' connectorname='SPRING' cx='8.197' cy='9.1438' r='1.277' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle cx='1.0668' cy='1.0668' r='1.0668' stroke='black' stroke-width='0' fill='black' id='nonconn4' />
+<circle cx='1.0668' cy='9.5668' r='1.0668' stroke='black' stroke-width='0' fill='black' id='nonconn5' />
+<line x1='2.1668' y1='0.3168' x2='6.1668' y2='0.3168' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='9.9668' y1='0.3168' x2='9.9668' y2='10.3168' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='2.1668' y1='10.3168' x2='6.1668' y2='10.3168' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='0.1668' y1='2.3168' x2='0.1668' y2='8.3168' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 </g>
 </svg>

@@ -1,12 +1,14 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
-<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.295276in' height='0.177165in' viewBox='0 0 7.5 4.5' >
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.537008in' height='0.829134in' viewBox='0 0 13.64 21.06' >
 <g id='breadboard'>
-<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l7.5,0 0,4.5 -7.5,0 0,-4.5z
+<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l13.64,0 0,21.06 -13.64,0 0,-21.06z
 '/>
-<rect id='connector0pad' connectorname='GND' x='0' y='0' width='1.5' height='4.5' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector1pad' connectorname='X' x='6' y='0' width='1.5' height='4.5' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector2pad' connectorname='Y' x='2' y='0' width='1.5' height='4.5' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector3pad' connectorname='VCC' x='4' y='0' width='1.5' height='4.5' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector0pad' connectorname='GND' x='6.14' y='1.77636e-15' width='1.5' height='4.5' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector1pad' connectorname='X' x='12.14' y='1.77636e-15' width='1.5' height='4.5' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector2pad' connectorname='Y' x='8.14' y='1.77636e-15' width='1.5' height='4.5' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector3pad' connectorname='VCC' x='10.14' y='1.77636e-15' width='1.5' height='4.5' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<circle cx='1' cy='1.015' r='1' stroke='black' stroke-width='0' fill='black' id='nonconn4' />
+<circle cx='2.515' cy='20.06' r='1' stroke='black' stroke-width='0' fill='black' id='nonconn5' />
 </g>
 </svg>

@@ -38,7 +38,17 @@
 <rect id='connector33pad' connectorname='P31' x='37.5635' y='18.0135' width='1.5' height='0.2' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <rect id='connector34pad' connectorname='P33' x='37.5635' y='18.5135' width='1.5' height='0.2' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <rect id='connector35pad' connectorname='P35' x='37.5635' y='19.0135' width='1.5' height='0.2' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<circle cx='37.7635' cy='9.5635' r='0.25' stroke='black' stroke-width='0' fill='black' id='nonconn0' />
+<circle cx='37.7535' cy='20.1635' r='0.25' stroke='black' stroke-width='0' fill='black' id='nonconn1' />
+<circle cx='36.2635' cy='25.3635' r='0.55' stroke='black' stroke-width='0' fill='black' id='nonconn2' />
+<circle cx='4.2635' cy='25.3635' r='0.55' stroke='black' stroke-width='0' fill='black' id='nonconn3' />
+<circle cx='4.2635' cy='4.3635' r='0.55' stroke='black' stroke-width='0' fill='black' id='nonconn4' />
 <g id='copper0'>
+<circle cx='37.7635' cy='9.5635' r='0.25' stroke='black' stroke-width='0' fill='black' id='nonconn5' />
+<circle cx='37.7535' cy='20.1635' r='0.25' stroke='black' stroke-width='0' fill='black' id='nonconn6' />
+<circle cx='36.2635' cy='25.3635' r='0.55' stroke='black' stroke-width='0' fill='black' id='nonconn7' />
+<circle cx='4.2635' cy='25.3635' r='0.55' stroke='black' stroke-width='0' fill='black' id='nonconn8' />
+<circle cx='4.2635' cy='4.3635' r='0.55' stroke='black' stroke-width='0' fill='black' id='nonconn9' />
 </g>
 </g>
 <g id='silkscreen'>

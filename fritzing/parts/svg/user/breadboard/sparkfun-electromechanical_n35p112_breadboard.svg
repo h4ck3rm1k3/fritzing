@@ -17,6 +17,8 @@
 <rect id='connector10pad' connectorname='12' x='8.9' y='9.2' width='2.2' height='2.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector11pad' connectorname='10' x='0' y='8.88178e-16' width='2.2' height='2.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector12pad' connectorname='11' x='8.9' y='8.88178e-16' width='2.2' height='2.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<circle cx='3.45' cy='1.6' r='0.7' stroke='black' stroke-width='0' fill='black' id='nonconn4' />
+<circle cx='7.65' cy='9.8' r='0.5' stroke='black' stroke-width='0' fill='black' id='nonconn5' />
 <line x1='2.55' y1='0.4' x2='8.55' y2='0.4' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='2.55' y1='11' x2='8.55' y2='11' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='10.95' y1='2.7' x2='10.95' y2='8.7' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>

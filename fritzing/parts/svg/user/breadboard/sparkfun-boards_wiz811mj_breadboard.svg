@@ -88,6 +88,8 @@ M31.4135,3.8735a0.51,0.51 0 1 0 1.02,0 0.51,0.51 0 1 0 -1.02,0z
 <circle id='connector37pin' connectorname='6' cx='26.8435' cy='3.8735' r='0.7249' stroke='#9A916C' stroke-width='0.4298' fill='none' />
 <circle id='connector38pin' connectorname='4' cx='29.3835' cy='3.8735' r='0.7249' stroke='#9A916C' stroke-width='0.4298' fill='none' />
 <circle id='connector39pin' connectorname='2' cx='31.9235' cy='3.8735' r='0.7249' stroke='#9A916C' stroke-width='0.4298' fill='none' />
+<circle cx='4.0635' cy='21.0635' r='1.5' stroke='black' stroke-width='0' fill='black' id='nonconn4' />
+<circle cx='4.0635' cy='4.0635' r='1.5' stroke='black' stroke-width='0' fill='black' id='nonconn5' />
 <line x1='0.0635' y1='25.0635' x2='0.0635' y2='0.0635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='0.0635' y1='0.0635' x2='52.0635' y2='0.0635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='52.0635' y1='0.0635' x2='52.0635' y2='25.0635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>

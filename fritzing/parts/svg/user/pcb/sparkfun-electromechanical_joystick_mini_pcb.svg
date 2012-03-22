@@ -10,7 +10,11 @@
 <rect id='connector5pad' connectorname='GND' x='6.65' y='4.58' width='1.85' height='1.1' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <rect id='connector6pad' connectorname='NC' x='3.3' y='-8.88178e-16' width='1.9' height='2' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <rect id='connector7pad' connectorname='NC@0' x='3.305' y='8.25' width='1.9' height='2' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<circle cx='4.265' cy='3.235' r='0.375' stroke='black' stroke-width='0' fill='black' id='nonconn0' />
+<circle cx='4.25' cy='7.03' r='0.525' stroke='black' stroke-width='0' fill='black' id='nonconn1' />
 <g id='copper0'>
+<circle cx='4.265' cy='3.235' r='0.375' stroke='black' stroke-width='0' fill='black' id='nonconn2' />
+<circle cx='4.25' cy='7.03' r='0.525' stroke='black' stroke-width='0' fill='black' id='nonconn3' />
 </g>
 </g>
 <g id='silkscreen'>

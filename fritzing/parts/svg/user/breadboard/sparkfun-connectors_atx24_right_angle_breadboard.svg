@@ -52,6 +52,8 @@ M2.027,1.45a0.9,0.9 0 1 0 1.8,0 0.9,0.9 0 1 0 -1.8,0z
 <circle id='connector21pin' connectorname='22' cx='11.327' cy='1.45' r='1.175' stroke='#9A916C' stroke-width='0.55' fill='none' />
 <circle id='connector22pin' connectorname='23' cx='7.127' cy='1.45' r='1.175' stroke='#9A916C' stroke-width='0.55' fill='none' />
 <circle id='connector23pin' connectorname='24' cx='2.927' cy='1.45' r='1.175' stroke='#9A916C' stroke-width='0.55' fill='none' />
+<circle cx='2.927' cy='14.25' r='1.5' stroke='black' stroke-width='0' fill='black' id='nonconn4' />
+<circle cx='49.127' cy='14.25' r='1.5' stroke='black' stroke-width='0' fill='black' id='nonconn5' />
 <line x1='0.127' y1='8.31' x2='0.127' y2='20.85' stroke='#f8f8f8' stroke-width='0.254' stroke-linecap='round'/>
 <line x1='0.127' y1='20.85' x2='51.927' y2='20.85' stroke='#f8f8f8' stroke-width='0.254' stroke-linecap='round'/>
 <line x1='51.927' y1='20.85' x2='51.927' y2='8.31' stroke='#f8f8f8' stroke-width='0.254' stroke-linecap='round'/>

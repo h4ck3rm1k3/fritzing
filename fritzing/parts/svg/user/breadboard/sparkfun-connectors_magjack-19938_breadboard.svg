@@ -34,6 +34,8 @@ M4.4516,1.054a0.8,0.8 0 1 0 1.6,0 0.8,0.8 0 1 0 -1.6,0z
 <circle id='connector11pin' connectorname='10' cx='15.9216' cy='11.879' r='0.637' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <circle id='connector12pin' connectorname='P$1' cx='5.2516' cy='16.854' r='0.927' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <circle id='connector13pin' connectorname='P$2' cx='5.2516' cy='1.054' r='0.927' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle cx='2.2016' cy='14.669' r='1.575' stroke='black' stroke-width='0' fill='black' id='nonconn4' />
+<circle cx='2.2016' cy='3.239' r='1.575' stroke='black' stroke-width='0' fill='black' id='nonconn5' />
 <line x1='16.7016' y1='0.854' x2='6.7416' y2='0.854' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='3.7716' y1='0.854' x2='0.1016' y2='0.854' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='0.1016' y1='0.854' x2='0.1016' y2='17.054' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>

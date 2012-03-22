@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-MCP73833-'>
 <version>4</version>
-<date>2012-03-21</date>
+<date>2012-03-22</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Stand-alone Linear Li-ion/Li-polymer Charge Management Controller&lt;br&gt;
@@ -32,7 +32,6 @@ Last modified: 8/17/10&lt;br&gt;
 <layers image='pcb/sparkfun-poweric_MSOP-10_pcb.svg'>
 <layer layerId='copper1'/>
 <layer layerId='silkscreen'/>
-<layer layerId='copper0'/>
 </layers>
 </pcbView>
 <iconView>
@@ -42,7 +41,7 @@ Last modified: 8/17/10&lt;br&gt;
 </iconView>
 </views>
 <connectors>
-<connector id='connector2' type='male' name='PROG'>
+<connector id='connector2' type='pad' name='PROG'>
 <description>PROG</description>
 <views>
 <breadboardView>
@@ -52,12 +51,11 @@ Last modified: 8/17/10&lt;br&gt;
 <p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector2pad'/>
 <p layer='copper1' svgId='connector2pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='male' name='STAT1'>
+<connector id='connector5' type='pad' name='STAT1'>
 <description>STAT1</description>
 <views>
 <breadboardView>
@@ -67,12 +65,11 @@ Last modified: 8/17/10&lt;br&gt;
 <p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector5pad'/>
 <p layer='copper1' svgId='connector5pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='male' name='STAT2'>
+<connector id='connector6' type='pad' name='STAT2'>
 <description>STAT2</description>
 <views>
 <breadboardView>
@@ -82,12 +79,11 @@ Last modified: 8/17/10&lt;br&gt;
 <p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector6pad'/>
 <p layer='copper1' svgId='connector6pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='male' name='THERM'>
+<connector id='connector0' type='pad' name='THERM'>
 <description>THERM</description>
 <views>
 <breadboardView>
@@ -97,12 +93,11 @@ Last modified: 8/17/10&lt;br&gt;
 <p layer='schematic' svgId='connector7pin' terminalId='connector7terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector0pad'/>
 <p layer='copper1' svgId='connector0pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='male' name='VBAT_1'>
+<connector id='connector3' type='pad' name='VBAT_1'>
 <description>VBAT_1</description>
 <views>
 <breadboardView>
@@ -112,12 +107,11 @@ Last modified: 8/17/10&lt;br&gt;
 <p layer='schematic' svgId='connector8pin' terminalId='connector8terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector3pad'/>
 <p layer='copper1' svgId='connector3pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='male' name='VBAT_2'>
+<connector id='connector4' type='pad' name='VBAT_2'>
 <description>VBAT_2</description>
 <views>
 <breadboardView>
@@ -127,12 +121,11 @@ Last modified: 8/17/10&lt;br&gt;
 <p layer='schematic' svgId='connector9pin' terminalId='connector9terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector4pad'/>
 <p layer='copper1' svgId='connector4pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector9' type='male' name='VDD_1'>
+<connector id='connector9' type='pad' name='VDD_1'>
 <description>VDD_1</description>
 <views>
 <breadboardView>
@@ -142,12 +135,11 @@ Last modified: 8/17/10&lt;br&gt;
 <p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector9pad'/>
 <p layer='copper1' svgId='connector9pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='male' name='VDD_2'>
+<connector id='connector8' type='pad' name='VDD_2'>
 <description>VDD_2</description>
 <views>
 <breadboardView>
@@ -157,12 +149,11 @@ Last modified: 8/17/10&lt;br&gt;
 <p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector8pad'/>
 <p layer='copper1' svgId='connector8pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='male' name='VSS'>
+<connector id='connector7' type='pad' name='VSS'>
 <description>VSS</description>
 <views>
 <breadboardView>
@@ -172,12 +163,11 @@ Last modified: 8/17/10&lt;br&gt;
 <p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector7pad'/>
 <p layer='copper1' svgId='connector7pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='male' name='_PG'>
+<connector id='connector1' type='pad' name='_PG'>
 <description>_PG</description>
 <views>
 <breadboardView>
@@ -187,7 +177,6 @@ Last modified: 8/17/10&lt;br&gt;
 <p layer='schematic' svgId='connector6pin' terminalId='connector6terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector1pad'/>
 <p layer='copper1' svgId='connector1pad'/>
 </pcbView>
 </views>

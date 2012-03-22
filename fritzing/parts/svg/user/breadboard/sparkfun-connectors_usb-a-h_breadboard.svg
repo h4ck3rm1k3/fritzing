@@ -16,6 +16,8 @@ M2.0016,1.354a1.1,1.1 0 1 0 2.2,0 1.1,1.1 0 1 0 -2.2,0z
 <circle id='connector3pin' connectorname='VBUS' cx='5.5016' cy='10.654' r='0.6985' stroke='#9A916C' stroke-width='0.4826' fill='none' />
 <circle id='connector4pin' connectorname='GND2' cx='3.1016' cy='12.954' r='1.227' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <circle id='connector5pin' connectorname='GND3' cx='3.1016' cy='1.354' r='1.227' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle cx='3.0016' cy='4.904' r='0.55' stroke='black' stroke-width='0' fill='black' id='nonconn4' />
+<circle cx='3.0016' cy='9.404' r='0.55' stroke='black' stroke-width='0' fill='black' id='nonconn5' />
 <line x1='0.1016' y1='1.154' x2='0.1016' y2='13.154' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='0.1016' y1='1.154' x2='1.1016' y2='1.154' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='0.1016' y1='13.154' x2='1.1016' y2='13.154' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>

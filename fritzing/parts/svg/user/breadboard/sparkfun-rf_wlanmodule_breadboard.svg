@@ -40,6 +40,11 @@
 <rect id='connector33pad' connectorname='P31' x='37.5635' y='18.0135' width='1.5' height='0.2' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector34pad' connectorname='P33' x='37.5635' y='18.5135' width='1.5' height='0.2' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector35pad' connectorname='P35' x='37.5635' y='19.0135' width='1.5' height='0.2' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<circle cx='37.7635' cy='9.5635' r='0.25' stroke='black' stroke-width='0' fill='black' id='nonconn10' />
+<circle cx='37.7535' cy='20.1635' r='0.25' stroke='black' stroke-width='0' fill='black' id='nonconn11' />
+<circle cx='36.2635' cy='25.3635' r='0.55' stroke='black' stroke-width='0' fill='black' id='nonconn12' />
+<circle cx='4.2635' cy='25.3635' r='0.55' stroke='black' stroke-width='0' fill='black' id='nonconn13' />
+<circle cx='4.2635' cy='4.3635' r='0.55' stroke='black' stroke-width='0' fill='black' id='nonconn14' />
 <line x1='40.4635' y1='0.0835' x2='40.4635' y2='29.6135' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='40.4635' y1='29.6135' x2='0.0635' y2='29.6135' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='0.0635' y1='29.6135' x2='0.0635' y2='0.0635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>

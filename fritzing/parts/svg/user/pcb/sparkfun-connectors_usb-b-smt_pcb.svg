@@ -8,7 +8,11 @@
 <rect id='connector3pad' connectorname='D-' x='10.6016' y='7.525' width='3' height='0.7' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <rect id='connector4pad' connectorname='GND' x='10.6016' y='8.775' width='3' height='0.7' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <rect id='connector5pad' connectorname='VUSB' x='10.6016' y='10.025' width='3' height='0.7' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<circle cx='5.1016' cy='6.25' r='0.7' stroke='black' stroke-width='0' fill='black' id='nonconn0' />
+<circle cx='5.1016' cy='10.75' r='0.7' stroke='black' stroke-width='0' fill='black' id='nonconn1' />
 <g id='copper0'>
+<circle cx='5.1016' cy='6.25' r='0.7' stroke='black' stroke-width='0' fill='black' id='nonconn2' />
+<circle cx='5.1016' cy='10.75' r='0.7' stroke='black' stroke-width='0' fill='black' id='nonconn3' />
 </g>
 </g>
 <g id='silkscreen'>

@@ -14,6 +14,7 @@
 <circle id='connector3pin' connectorname='TIP' cx='10.8635' cy='2.8152' r='0.762' stroke='#F7BD13' stroke-width='0.4064' fill='none' />
 <path stroke='none' stroke-width='0' d='m12.7939,1.85a0.9652,0.9652 0 0 1 0.9652,0.9652l0,0a0.9652,0.9652 0 0 1 -0.9652,0.9652l-1.9304,0a0.9652,0.9652 0 0 1 -0.9652,-0.9652l0,-0a0.9652,0.9652 0 0 1 0.9652,-0.9652l1.9304,0zM10.3047,2.8152a0.5588,0.5588 0 1 0 1.1176,0 0.5588,0.5588 0 1 0 -1.1176,0z
 ' fill='#F7BD13' />
+<circle cx='6.3635' cy='2.8152' r='0.6' stroke='black' stroke-width='0' fill='black' id='nonconn0' />
 <g id='copper0'>
 <circle id='connector0pin' connectorname='RING1' cx='8.8635' cy='4.6652' r='0.762' stroke='#F7BD13' stroke-width='0.4064' fill='none' />
 <path stroke='none' stroke-width='0' d='m8.8635,3.7a0.9652,0.9652 0 0 1 0.9652,0.9652l0,1.9304a0.9652,0.9652 0 0 1 -0.9652,0.9652l-0,0a0.9652,0.9652 0 0 1 -0.9652,-0.9652l0,-1.9304a0.9652,0.9652 0 0 1 0.9652,-0.9652l0,0zM8.3047,4.6652a0.5588,0.5588 0 1 0 1.1176,0 0.5588,0.5588 0 1 0 -1.1176,0z
@@ -27,6 +28,7 @@
 <circle id='connector3pin' connectorname='TIP' cx='10.8635' cy='2.8152' r='0.762' stroke='#F7BD13' stroke-width='0.4064' fill='none' />
 <path stroke='none' stroke-width='0' d='m12.7939,1.85a0.9652,0.9652 0 0 1 0.9652,0.9652l0,0a0.9652,0.9652 0 0 1 -0.9652,0.9652l-1.9304,0a0.9652,0.9652 0 0 1 -0.9652,-0.9652l0,-0a0.9652,0.9652 0 0 1 0.9652,-0.9652l1.9304,0zM10.3047,2.8152a0.5588,0.5588 0 1 0 1.1176,0 0.5588,0.5588 0 1 0 -1.1176,0z
 ' fill='#F7BD13' />
+<circle cx='6.3635' cy='2.8152' r='0.6' stroke='black' stroke-width='0' fill='black' id='nonconn1' />
 </g>
 </g>
 <g id='silkscreen'>

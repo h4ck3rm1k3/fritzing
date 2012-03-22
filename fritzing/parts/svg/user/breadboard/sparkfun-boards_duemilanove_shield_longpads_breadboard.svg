@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
-<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='2.51005in' height='2.55499in' viewBox='0 0 63.7553 64.8968' >
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='2.51005in' height='2.93299in' viewBox='0 0 63.7553 74.498' >
 <g id='breadboard'>
-<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l63.7553,0 0,64.8968 -63.7553,0 0,-64.8968z
+<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l63.7553,0 0,74.498 -63.7553,0 0,-74.498z
 M49.6316,55.067a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
 M49.6316,52.527a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
 M49.6316,49.987a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
@@ -116,6 +116,8 @@ M1.3716,63.957a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
 <circle id='connector27pin' connectorname='AREF' cx='1.8796' cy='63.957' r='0.7239' stroke='#9A916C' stroke-width='0.4318' fill='none' />
 <path stroke='none' stroke-width='0' d='m2.8194,63.0172a0.9398,0.9398 0 0 1 0.9398,0.9398l0,0a0.9398,0.9398 0 0 1 -0.9398,0.9398l-1.8796,0a0.9398,0.9398 0 0 1 -0.9398,-0.9398l0,-0a0.9398,0.9398 0 0 1 0.9398,-0.9398l1.8796,0zM1.3716,63.957a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
 ' fill='#9A916C' />
+<circle cx='45.0596' cy='22.047' r='1.651' stroke='black' stroke-width='0' fill='black' id='nonconn4' />
+<circle cx='1.8796' cy='72.847' r='1.651' stroke='black' stroke-width='0' fill='black' id='nonconn5' />
 <text font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='1.3208' x='48.7553' y='48.2598' text-anchor='end'>GND</text>
 <text font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='1.3208' x='48.7553' y='45.7198' text-anchor='end'>GND</text>
 <text font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='1.3208' x='48.7553' y='50.7998' text-anchor='end'>+5V</text>

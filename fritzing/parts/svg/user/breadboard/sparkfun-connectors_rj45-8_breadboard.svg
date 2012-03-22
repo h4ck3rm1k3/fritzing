@@ -22,6 +22,8 @@ M2.7766,3.7516a0.5,0.5 0 1 0 1,0 0.5,0.5 0 1 0 -1,0z
 <circle id='connector7pin' connectorname='1' cx='3.2766' cy='3.7516' r='0.7199' stroke='#9A916C' stroke-width='0.4398' fill='none' />
 <path stroke='none' stroke-width='0' d='m2.3368,2.8118 1.8796,0 0,1.8796 -1.8796,0 0,-3zM2.7766,3.7516a0.5,0.5 0 1 0 1,0 0.5,0.5 0 1 0 -1,0z
 ' fill='#9A916C' />
+<circle cx='2.0066' cy='10.1016' r='1.6' stroke='black' stroke-width='0' fill='black' id='nonconn4' />
+<circle cx='13.4366' cy='10.1016' r='1.6' stroke='black' stroke-width='0' fill='black' id='nonconn5' />
 <line x1='0.1016' y1='0.1016' x2='15.3416' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='0.1016' y1='13.1016' x2='0.1016' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='0.1016' y1='13.1016' x2='15.3416' y2='13.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>

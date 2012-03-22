@@ -11,6 +11,8 @@
 <rect id='connector4pad' connectorname='GND2' x='0' y='2.1016' width='1' height='0.8' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector5pad' connectorname='GND3' x='7.3' y='0.1016' width='1' height='0.6' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector6pad' connectorname='GND4' x='7.3' y='2.1016' width='1' height='0.8' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<circle cx='2.65' cy='1.4016' r='0.45' stroke='black' stroke-width='0' fill='black' id='nonconn4' />
+<circle cx='5.65' cy='1.4016' r='0.45' stroke='black' stroke-width='0' fill='black' id='nonconn5' />
 <line x1='0.8' y1='1.1016' x2='0.8' y2='1.7016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='7.5' y1='1.1016' x2='7.5' y2='1.7016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='6.85' y1='0.1016' x2='1.45' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>

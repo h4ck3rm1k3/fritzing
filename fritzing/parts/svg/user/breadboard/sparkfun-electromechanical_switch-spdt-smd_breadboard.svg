@@ -7,6 +7,8 @@
 <rect id='connector0pad' connectorname='1' x='1.5016' y='3.3516' width='1.2' height='2.5' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector1pad' connectorname='2' x='4.0016' y='3.3516' width='1.2' height='2.5' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector2pad' connectorname='3' x='6.5016' y='3.3516' width='1.2' height='2.5' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<circle cx='1.0516' cy='1.8516' r='0.45' stroke='black' stroke-width='0' fill='black' id='nonconn4' />
+<circle cx='8.1516' cy='1.8516' r='0.45' stroke='black' stroke-width='0' fill='black' id='nonconn5' />
 <line x1='0.6016' y1='3.6016' x2='0.1016' y2='3.6016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='0.1016' y1='3.6016' x2='0.1016' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='0.1016' y1='0.1016' x2='9.1016' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>

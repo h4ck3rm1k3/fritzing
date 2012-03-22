@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-STARBOARD_GND--WIDE'>
 <version>4</version>
-<date>2012-03-21</date>
+<date>2012-03-22</date>
 <label>J</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;StarBoard ground Pad&lt;/h3&gt;
@@ -29,7 +29,6 @@ Starboard pads sans the star cutout in top layer</description>
 <layers image='pcb/sparkfun-connectors_STARBOARD_GROUND_WIDE_pcb.svg'>
 <layer layerId='copper1'/>
 <layer layerId='silkscreen'/>
-<layer layerId='copper0'/>
 </layers>
 </pcbView>
 <iconView>
@@ -39,7 +38,7 @@ Starboard pads sans the star cutout in top layer</description>
 </iconView>
 </views>
 <connectors>
-<connector id='connector0' type='male' name='MOUNT'>
+<connector id='connector0' type='pad' name='MOUNT'>
 <description>MOUNT</description>
 <views>
 <breadboardView>
@@ -49,7 +48,6 @@ Starboard pads sans the star cutout in top layer</description>
 <p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector0pad'/>
 <p layer='copper1' svgId='connector0pad'/>
 </pcbView>
 </views>
