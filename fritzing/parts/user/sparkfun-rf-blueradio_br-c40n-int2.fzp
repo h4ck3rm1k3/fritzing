@@ -39,6 +39,21 @@ BR-C40A with antenna cut off. 50 Ohm antenna trace and connector required. Footp
 </iconView>
 </views>
 <connectors>
+<connector id='connector28' type='male' name='ANT'>
+<description>ANT</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector28pad'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector26pin' terminalId='connector26terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper0' svgId='connector28pad'/>
+<p layer='copper1' svgId='connector28pad'/>
+</pcbView>
+</views>
+</connector>
 <connector id='connector23' type='male' name='GND'>
 <description>GND</description>
 <views>
@@ -66,6 +81,36 @@ BR-C40A with antenna cut off. 50 Ohm antenna trace and connector required. Footp
 <pcbView>
 <p layer='copper0' svgId='connector12pin'/>
 <p layer='copper1' svgId='connector12pin'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector27' type='male' name='GND_2'>
+<description>GND_2</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector27pad'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper0' svgId='connector27pad'/>
+<p layer='copper1' svgId='connector27pad'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector26' type='male' name='GND_3'>
+<description>GND_3</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector26pad'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper0' svgId='connector26pad'/>
+<p layer='copper1' svgId='connector26pad'/>
 </pcbView>
 </views>
 </connector>

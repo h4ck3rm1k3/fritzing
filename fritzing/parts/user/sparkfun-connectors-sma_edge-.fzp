@@ -66,6 +66,34 @@ End launch SMA connector. The paste layer has been removed so that the connector
 </pcbView>
 </views>
 </connector>
+<connector id='connector3' type='pad' name='GND_2'>
+<description>GND_2</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector3pad'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper1' svgId='connector3pad'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector4' type='pad' name='GND_3'>
+<description>GND_3</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector4pad'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper1' svgId='connector4pad'/>
+</pcbView>
+</views>
+</connector>
 <connector id='connector1' type='pad' name='SIGNAL'>
 <description>SIGNAL</description>
 <views>

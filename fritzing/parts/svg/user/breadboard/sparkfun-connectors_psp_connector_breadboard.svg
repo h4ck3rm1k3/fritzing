@@ -44,7 +44,8 @@
 <rect id='connector37pad' connectorname='GND2' x='0' y='3.573' width='1.27' height='0.254' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector38pad' connectorname='VCC2' x='0' y='4.573' width='1.27' height='0.254' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector39pad' connectorname='GND' x='0' y='3.073' width='1.27' height='0.254' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector40pad' connectorname='GND4' x='2.735' y='0' width='2.2' height='1.8' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector41pad' connectorname='GND5' x='2.735' y='24' width='2.2' height='1.8' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector40pad' connectorname='.' x='4.0345' y='0.8995' width='0.001' height='0.001' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector41pad' connectorname='GND4' x='2.735' y='0' width='2.2' height='1.8' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector42pad' connectorname='GND5' x='2.735' y='24' width='2.2' height='1.8' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 </g>
 </svg>

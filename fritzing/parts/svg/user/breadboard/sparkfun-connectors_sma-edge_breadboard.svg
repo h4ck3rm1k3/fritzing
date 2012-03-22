@@ -7,5 +7,7 @@
 <rect id='connector0pad' connectorname='GND@0' x='0' y='0' width='1.524' height='4.064' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector1pad' connectorname='SIG' x='2.54' y='0' width='1.524' height='4.064' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector2pad' connectorname='GND@1' x='5.08' y='0' width='1.524' height='4.064' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector3pad' connectorname='GND@2' x='0' y='0' width='1.524' height='4.064' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector4pad' connectorname='GND@3' x='5.08' y='0' width='1.524' height='4.064' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 </g>
 </svg>

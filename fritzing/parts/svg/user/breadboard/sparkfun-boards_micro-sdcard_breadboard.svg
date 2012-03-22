@@ -4,6 +4,14 @@
 <g id='breadboard'>
 <path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l26.2535,0 0,23.399 -26.2535,0 0,-23.399z
 '/>
+<rect id='connector0pad' connectorname='DAT1' x='9.6385' y='16.934' width='0.85' height='3.25' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector1pad' connectorname='DAT0' x='8.5385' y='16.934' width='0.85' height='3.25' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector2pad' connectorname='GND' x='7.4385' y='16.884' width='0.85' height='3.75' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector3pad' connectorname='CLK' x='6.3385' y='16.934' width='0.85' height='3.25' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector4pad' connectorname='VCC' x='5.2385' y='16.884' width='0.85' height='3.75' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector5pad' connectorname='CMD' x='4.1385' y='16.934' width='0.85' height='3.25' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector6pad' connectorname='CD/DAT3' x='3.0385' y='16.934' width='0.85' height='3.25' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector7pad' connectorname='DAT2' x='1.9385' y='16.934' width='0.85' height='3.25' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <line x1='11.0635' y1='20.859' x2='11.0635' y2='5.859' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='11.0635' y1='5.859' x2='0.0635' y2='5.859' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='0.0635' y1='11.259' x2='0.4635' y2='11.659' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
