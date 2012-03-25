@@ -1,18 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-AVR_SPI_PROG-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;AVR 10-pin ICSP Header&lt;/b&gt; 
 This is the standard AVR In Circuit Serial Programming header. Minimal, but includes pin one indicator. Works with standard Olimex programmers. Also look for the 6-pin reduced version. Spark Fun Electronics SKU: PRT-00778</description>
-<title></title>
+<title>AVR 10-pin ICSP Header</title>
 <tags>
 <tag>AVR_SPI_PROG</tag>
-<tag></tag>
+<tag>AVR_ICSP</tag>
 </tags>
 <properties>
-<property name='family'>AVR_SPI_PROG</property>
+<property name='package'>avr_icsp</property>
+<property name='family'>avr_spi_prog</property>
 </properties>
 <views>
 <breadboardView>

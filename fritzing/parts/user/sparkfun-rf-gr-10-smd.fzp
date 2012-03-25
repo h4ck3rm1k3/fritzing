@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-GR-10-SMD'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;GR-10 GPS Receiver Module&lt;/b&gt;
 Proto layout and schematic for GR-10 GPS receiver. Spark Fun Electronics SKU : GPS-08291</description>
-<title>SMD</title>
+<title>GR-10 GPS Receiver Module</title>
 <tags>
-<tag>GR-10</tag>
 <tag>SMD</tag>
+<tag>GR-10</tag>
+<tag>GR-10</tag>
 </tags>
 <properties>
-<property name='family'>GR-10</property>
+<property name='package'>gr-10</property>
+<property name='family'>gr-10</property>
+<property name='variant'>smd</property>
 </properties>
 <views>
 <breadboardView>
@@ -38,8 +41,8 @@ Proto layout and schematic for GR-10 GPS receiver. Spark Fun Electronics SKU : G
 </iconView>
 </views>
 <connectors>
-<connector id='connector9' type='pad' name='1.8V_10'>
-<description>1.8V_10</description>
+<connector id='connector9' type='pad' name='1.8V@10'>
+<description>1.8V@10</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector9pad'/>
@@ -52,8 +55,8 @@ Proto layout and schematic for GR-10 GPS receiver. Spark Fun Electronics SKU : G
 </pcbView>
 </views>
 </connector>
-<connector id='connector20' type='pad' name='1.8V_21'>
-<description>1.8V_21</description>
+<connector id='connector20' type='pad' name='1.8V@21'>
+<description>1.8V@21</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector20pad'/>
@@ -66,8 +69,8 @@ Proto layout and schematic for GR-10 GPS receiver. Spark Fun Electronics SKU : G
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='pad' name='1.8V_3'>
-<description>1.8V_3</description>
+<connector id='connector2' type='pad' name='1.8V@3'>
+<description>1.8V@3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pad'/>
@@ -206,8 +209,8 @@ Proto layout and schematic for GR-10 GPS receiver. Spark Fun Electronics SKU : G
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='pad' name='GND_11'>
-<description>GND_11</description>
+<connector id='connector10' type='pad' name='GND@11'>
+<description>GND@11</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pad'/>
@@ -220,8 +223,8 @@ Proto layout and schematic for GR-10 GPS receiver. Spark Fun Electronics SKU : G
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='pad' name='GND_2'>
-<description>GND_2</description>
+<connector id='connector1' type='pad' name='GND@2'>
+<description>GND@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pad'/>
@@ -234,8 +237,8 @@ Proto layout and schematic for GR-10 GPS receiver. Spark Fun Electronics SKU : G
 </pcbView>
 </views>
 </connector>
-<connector id='connector23' type='pad' name='GND_24'>
-<description>GND_24</description>
+<connector id='connector23' type='pad' name='GND@24'>
+<description>GND@24</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector23pad'/>
@@ -248,8 +251,8 @@ Proto layout and schematic for GR-10 GPS receiver. Spark Fun Electronics SKU : G
 </pcbView>
 </views>
 </connector>
-<connector id='connector26' type='pad' name='GND_27'>
-<description>GND_27</description>
+<connector id='connector26' type='pad' name='GND@27'>
+<description>GND@27</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector26pad'/>
@@ -262,8 +265,8 @@ Proto layout and schematic for GR-10 GPS receiver. Spark Fun Electronics SKU : G
 </pcbView>
 </views>
 </connector>
-<connector id='connector28' type='pad' name='GND_29'>
-<description>GND_29</description>
+<connector id='connector28' type='pad' name='GND@29'>
+<description>GND@29</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector28pad'/>
@@ -276,8 +279,8 @@ Proto layout and schematic for GR-10 GPS receiver. Spark Fun Electronics SKU : G
 </pcbView>
 </views>
 </connector>
-<connector id='connector30' type='pad' name='GND_31'>
-<description>GND_31</description>
+<connector id='connector30' type='pad' name='GND@31'>
+<description>GND@31</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector30pad'/>

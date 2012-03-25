@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-74AHC1G08-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Single 2-input AND gate</description>
-<title></title>
+<title>74AHC1G08</title>
 <tags>
 <tag>74AHC1G08</tag>
-<tag></tag>
+<tag>SOT23-5</tag>
 </tags>
 <properties>
-<property name='family'>74AHC1G08</property>
+<property name='package'>sot23-5</property>
+<property name='family'>74ahc1g08</property>
 </properties>
 <views>
 <breadboardView>

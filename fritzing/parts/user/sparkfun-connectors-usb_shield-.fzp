@@ -1,18 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-USB_SHIELD-'>
+<module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-USB+SHIELD-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;USB+Shield&lt;/h3&gt;
 USB connector with shield pins connectable</description>
-<title></title>
+<title>USB+SHIELD</title>
 <tags>
 <tag>USB+SHIELD</tag>
-<tag></tag>
+<tag>USB-B-PTH</tag>
 </tags>
 <properties>
-<property name='family'>USB+SHIELD</property>
+<property name='package'>usb-b-pth</property>
+<property name='family'>usb+shield</property>
 </properties>
 <views>
 <breadboardView>
@@ -39,8 +40,8 @@ USB connector with shield pins connectable</description>
 </iconView>
 </views>
 <connectors>
-<connector id='connector2' type='male' name='D_'>
-<description>D_</description>
+<connector id='connector2' type='male' name='D+'>
+<description>D+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pin'/>
@@ -84,8 +85,8 @@ USB connector with shield pins connectable</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='male' name='P_1'>
-<description>P_1</description>
+<connector id='connector4' type='male' name='P$1'>
+<description>P$1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pin'/>
@@ -99,8 +100,8 @@ USB connector with shield pins connectable</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='male' name='P_2'>
-<description>P_2</description>
+<connector id='connector5' type='male' name='P$2'>
+<description>P$2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector5pin'/>

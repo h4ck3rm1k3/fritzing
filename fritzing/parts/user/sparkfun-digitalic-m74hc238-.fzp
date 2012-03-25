@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-M74HC238-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>M74HC238 - CMOS 3 TO 8 LINE DECODER</description>
-<title></title>
+<title>M74HC238</title>
 <tags>
 <tag>M74HC238</tag>
-<tag></tag>
+<tag>DIL16</tag>
 </tags>
 <properties>
-<property name='family'>M74HC238</property>
+<property name='package'>dil16</property>
+<property name='family'>m74hc238</property>
 </properties>
 <views>
 <breadboardView>
@@ -248,8 +249,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='male' name='_G2A'>
-<description>_G2A</description>
+<connector id='connector3' type='male' name='~G2A'>
+<description>~G2A</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pin'/>
@@ -263,8 +264,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='male' name='_G2B'>
-<description>_G2B</description>
+<connector id='connector4' type='male' name='~G2B'>
+<description>~G2B</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pin'/>

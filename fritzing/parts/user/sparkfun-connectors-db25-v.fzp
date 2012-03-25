@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-DB25-V'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>X</label>
 <author>www.fritzing.org</author>
 <description>Various DB25 connectors</description>
-<title>V</title>
+<title>DB25</title>
 <tags>
-<tag>DB25</tag>
 <tag>V</tag>
+<tag>DB25</tag>
+<tag>M25V</tag>
 </tags>
 <properties>
-<property name='family'>DB25</property>
+<property name='package'>m25v</property>
+<property name='family'>db25</property>
+<property name='variant'>v</property>
 </properties>
 <views>
 <breadboardView>

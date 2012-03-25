@@ -1,18 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-SMA_EDGE-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>J$</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;SMA Antenna Connector&lt;/b&gt;
 End launch SMA connector. The paste layer has been removed so that the connector can be hand soldered onto the board after reflow.</description>
-<title></title>
+<title>SMA Antenna Connector</title>
 <tags>
 <tag>SMA_EDGE</tag>
-<tag></tag>
+<tag>SMA-EDGE</tag>
 </tags>
 <properties>
-<property name='family'>SMA_EDGE</property>
+<property name='package'>sma-edge</property>
+<property name='family'>sma_edge</property>
 </properties>
 <views>
 <breadboardView>
@@ -38,8 +39,8 @@ End launch SMA connector. The paste layer has been removed so that the connector
 </iconView>
 </views>
 <connectors>
-<connector id='connector0' type='pad' name='GND_0'>
-<description>GND_0</description>
+<connector id='connector0' type='pad' name='GND@0'>
+<description>GND@0</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pad'/>
@@ -52,8 +53,8 @@ End launch SMA connector. The paste layer has been removed so that the connector
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='pad' name='GND_1'>
-<description>GND_1</description>
+<connector id='connector2' type='pad' name='GND@1'>
+<description>GND@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pad'/>
@@ -66,8 +67,8 @@ End launch SMA connector. The paste layer has been removed so that the connector
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='pad' name='GND_2'>
-<description>GND_2</description>
+<connector id='connector3' type='pad' name='GND@2'>
+<description>GND@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pad'/>
@@ -80,8 +81,8 @@ End launch SMA connector. The paste layer has been removed so that the connector
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='pad' name='GND_3'>
-<description>GND_3</description>
+<connector id='connector4' type='pad' name='GND@3'>
+<description>GND@3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pad'/>

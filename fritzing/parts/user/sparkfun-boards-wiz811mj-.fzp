@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Boards-WIZ811MJ-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;WIZnet W5100 Network Module with MagJack - WIZ811MJ&lt;/h3&gt;
@@ -9,13 +9,14 @@ WIZnet&apos;s WIZ811MJ is a breakout board for the W5100 embedded TCP/IP chip. A
 
 See http://www.sparkfun.com/commerce/product_info.php?products_id=9473 for more documentation and info.&lt;br&gt;
 &lt;B&gt;**UNPROVEN&lt;/b&gt;</description>
-<title></title>
+<title>WIZ811MJ</title>
 <tags>
 <tag>WIZ811MJ</tag>
-<tag></tag>
+<tag>WIZ811MJ</tag>
 </tags>
 <properties>
-<property name='family'>WIZ811MJ</property>
+<property name='package'>wiz811mj</property>
+<property name='family'>wiz811mj</property>
 </properties>
 <views>
 <breadboardView>
@@ -477,8 +478,8 @@ See http://www.sparkfun.com/commerce/product_info.php?products_id=9473 for more 
 </pcbView>
 </views>
 </connector>
-<connector id='connector24' type='male' name='GND_1'>
-<description>GND_1</description>
+<connector id='connector24' type='male' name='GND@1'>
+<description>GND@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector24pin'/>
@@ -492,8 +493,8 @@ See http://www.sparkfun.com/commerce/product_info.php?products_id=9473 for more 
 </pcbView>
 </views>
 </connector>
-<connector id='connector15' type='male' name='GND_2'>
-<description>GND_2</description>
+<connector id='connector15' type='male' name='GND@2'>
+<description>GND@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector15pin'/>
@@ -507,8 +508,8 @@ See http://www.sparkfun.com/commerce/product_info.php?products_id=9473 for more 
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='male' name='GND_3'>
-<description>GND_3</description>
+<connector id='connector10' type='male' name='GND@3'>
+<description>GND@3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pin'/>
@@ -522,8 +523,8 @@ See http://www.sparkfun.com/commerce/product_info.php?products_id=9473 for more 
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='male' name='GND_4'>
-<description>GND_4</description>
+<connector id='connector0' type='male' name='GND@4'>
+<description>GND@4</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pin'/>
@@ -537,8 +538,8 @@ See http://www.sparkfun.com/commerce/product_info.php?products_id=9473 for more 
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='male' name='GND_5'>
-<description>GND_5</description>
+<connector id='connector5' type='male' name='GND@5'>
+<description>GND@5</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector5pin'/>
@@ -597,8 +598,8 @@ See http://www.sparkfun.com/commerce/product_info.php?products_id=9473 for more 
 </pcbView>
 </views>
 </connector>
-<connector id='connector34' type='male' name='VCC_1'>
-<description>VCC_1</description>
+<connector id='connector34' type='male' name='VCC@1'>
+<description>VCC@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector34pin'/>
@@ -612,8 +613,8 @@ See http://www.sparkfun.com/commerce/product_info.php?products_id=9473 for more 
 </pcbView>
 </views>
 </connector>
-<connector id='connector19' type='male' name='VCC_2'>
-<description>VCC_2</description>
+<connector id='connector19' type='male' name='VCC@2'>
+<description>VCC@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector19pin'/>

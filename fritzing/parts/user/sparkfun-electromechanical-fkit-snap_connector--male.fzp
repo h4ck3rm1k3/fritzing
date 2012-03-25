@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-FKIT-SNAP_CONNECTOR--MALE'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Snap connector for Fabrick.it products</description>
-<title>-MALE</title>
+<title>FKIT-SNAP_CONNECTOR</title>
 <tags>
-<tag>FKIT-SNAP_CONNECTOR</tag>
 <tag>-MALE</tag>
+<tag>FKIT-SNAP_CONNECTOR</tag>
+<tag>FKIT-SNAP_MALE</tag>
 </tags>
 <properties>
-<property name='family'>FKIT-SNAP_CONNECTOR</property>
+<property name='package'>fkit-snap_male</property>
+<property name='family'>fkit-snap_connector</property>
+<property name='variant'>-male</property>
 </properties>
 <views>
 <breadboardView>

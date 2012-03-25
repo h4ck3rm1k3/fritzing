@@ -1,19 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-LS20126-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt; LS20126 20-Channel GPS Module&lt;/h3&gt;&lt;br&gt;
 SparkFun SKU# &lt;b&gt;GPS-09838&lt;/b&gt;&lt;br&gt;
 The LOCOSYS LS20126 GPS smart antenna module is a high sensitivity, low power, SMD type, 20 channels with built-in magnetic sensor, 3-axial acceleration sensor L1 GPS receiver and 10mm patch antenna designed for portable applications.</description>
-<title></title>
+<title>GPS-09838</title>
 <tags>
 <tag>LS20126</tag>
-<tag></tag>
+<tag>LS20126</tag>
 </tags>
 <properties>
-<property name='family'>LS20126</property>
+<property name='package'>ls20126</property>
+<property name='family'>ls20126</property>
 </properties>
 <views>
 <breadboardView>
@@ -70,8 +71,8 @@ The LOCOSYS LS20126 GPS smart antenna module is a high sensitivity, low power, S
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='male' name='GND_1'>
-<description>GND_1</description>
+<connector id='connector2' type='male' name='GND@1'>
+<description>GND@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pad'/>
@@ -85,8 +86,8 @@ The LOCOSYS LS20126 GPS smart antenna module is a high sensitivity, low power, S
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='male' name='GND_2'>
-<description>GND_2</description>
+<connector id='connector1' type='male' name='GND@2'>
+<description>GND@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pin'/>
@@ -100,8 +101,8 @@ The LOCOSYS LS20126 GPS smart antenna module is a high sensitivity, low power, S
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='male' name='GND_3'>
-<description>GND_3</description>
+<connector id='connector0' type='male' name='GND@3'>
+<description>GND@3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pin'/>

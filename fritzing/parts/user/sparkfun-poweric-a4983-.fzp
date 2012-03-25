@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-A4983-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>DMOS Microstepping Driver with Translator</description>
-<title></title>
+<title>A4983</title>
 <tags>
 <tag>A4983</tag>
-<tag></tag>
+<tag>QFN-28-5MM</tag>
 </tags>
 <properties>
-<property name='family'>A4983</property>
+<property name='package'>qfn-28-5mm</property>
+<property name='family'>a4983</property>
 </properties>
 <views>
 <breadboardView>
@@ -93,8 +94,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='pad' name='GND_1'>
-<description>GND_1</description>
+<connector id='connector2' type='pad' name='GND@1'>
+<description>GND@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pad'/>
@@ -107,8 +108,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector17' type='pad' name='GND_2'>
-<description>GND_2</description>
+<connector id='connector17' type='pad' name='GND@2'>
+<description>GND@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector17pad'/>
@@ -177,8 +178,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='pad' name='NC_1'>
-<description>NC_1</description>
+<connector id='connector6' type='pad' name='NC@1'>
+<description>NC@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pad'/>
@@ -191,8 +192,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector19' type='pad' name='NC_2'>
-<description>NC_2</description>
+<connector id='connector19' type='pad' name='NC@2'>
+<description>NC@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector19pad'/>
@@ -205,8 +206,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector24' type='pad' name='NC_3'>
-<description>NC_3</description>
+<connector id='connector24' type='pad' name='NC@3'>
+<description>NC@3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector24pad'/>

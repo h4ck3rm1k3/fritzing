@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-MIC-ELECTRET_SMD'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Omni-directional electret microphone. 9.7mm standard diameter.</description>
-<title>ELECTRET_SMD</title>
+<title>MIC</title>
 <tags>
-<tag>MIC</tag>
 <tag>ELECTRET_SMD</tag>
+<tag>MIC</tag>
+<tag>MIC_ELECTRET_SMD</tag>
 </tags>
 <properties>
-<property name='family'>MIC</property>
+<property name='package'>mic_electret_smd</property>
+<property name='family'>mic</property>
+<property name='variant'>electret_smd</property>
 </properties>
 <views>
 <breadboardView>

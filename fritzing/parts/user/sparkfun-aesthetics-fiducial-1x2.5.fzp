@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Aesthetics-FIDUCIAL-1X2.5'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Fiducial Alignment Points&lt;/b&gt;
 Various fiducial points for machine vision alignment.</description>
-<title>1X2.5</title>
+<title>Fiducial Alignment Points</title>
 <tags>
-<tag>FIDUCIAL</tag>
 <tag>1X2.5</tag>
+<tag>FIDUCIAL</tag>
+<tag>FIDUCIAL-1X2.5</tag>
 </tags>
 <properties>
-<property name='family'>FIDUCIAL</property>
+<property name='package'>fiducial-1x2.5</property>
+<property name='family'>fiducial</property>
+<property name='variant'>1x2.5</property>
 </properties>
 <views>
 <breadboardView>

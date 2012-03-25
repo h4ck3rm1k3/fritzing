@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-ALM-1412-SMD'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;GPS Antenna Amp&lt;/b&gt;
 Filter and Amp built into one. Very small package.</description>
-<title>SMD</title>
+<title>GPS Antenna Amp</title>
 <tags>
-<tag>ALM-1412</tag>
 <tag>SMD</tag>
+<tag>ALM-1412</tag>
+<tag>ALM-1412</tag>
 </tags>
 <properties>
-<property name='family'>ALM-1412</property>
+<property name='package'>alm-1412</property>
+<property name='family'>alm-1412</property>
+<property name='variant'>smd</property>
 </properties>
 <views>
 <breadboardView>
@@ -52,8 +55,8 @@ Filter and Amp built into one. Very small package.</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='pad' name='GND_6'>
-<description>GND_6</description>
+<connector id='connector7' type='pad' name='GND@6'>
+<description>GND@6</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pad'/>
@@ -66,8 +69,8 @@ Filter and Amp built into one. Very small package.</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='pad' name='GND_7'>
-<description>GND_7</description>
+<connector id='connector8' type='pad' name='GND@7'>
+<description>GND@7</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector8pad'/>
@@ -80,8 +83,8 @@ Filter and Amp built into one. Very small package.</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='pad' name='GND_8'>
-<description>GND_8</description>
+<connector id='connector6' type='pad' name='GND@8'>
+<description>GND@8</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pad'/>
@@ -94,8 +97,8 @@ Filter and Amp built into one. Very small package.</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='pad' name='GND_9'>
-<description>GND_9</description>
+<connector id='connector5' type='pad' name='GND@9'>
+<description>GND@9</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector5pad'/>

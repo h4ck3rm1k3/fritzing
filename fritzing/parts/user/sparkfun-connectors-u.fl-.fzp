@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-U.FL-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>SMD antenna connector- WRL-09144</description>
-<title></title>
+<title>U.FL</title>
 <tags>
 <tag>U.FL</tag>
-<tag></tag>
+<tag>U.FL</tag>
 </tags>
 <properties>
-<property name='family'>U.FL</property>
+<property name='package'>u.fl</property>
+<property name='family'>u.fl</property>
 </properties>
 <views>
 <breadboardView>
@@ -37,8 +38,8 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector0' type='pad' name='GND_0'>
-<description>GND_0</description>
+<connector id='connector0' type='pad' name='GND@0'>
+<description>GND@0</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pad'/>
@@ -51,8 +52,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='pad' name='GND_1'>
-<description>GND_1</description>
+<connector id='connector1' type='pad' name='GND@1'>
+<description>GND@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pad'/>

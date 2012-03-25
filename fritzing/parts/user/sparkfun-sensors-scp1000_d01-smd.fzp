@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-SCP1000_D01-SMD'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Barometric pressure sensor. Schematic elements and footprint production proven. Spark Fun Electronics SKU : COM-08128</description>
-<title>SMD</title>
+<title>SCP1000_D01</title>
 <tags>
-<tag>SCP1000_D01</tag>
 <tag>SMD</tag>
+<tag>SCP1000_D01</tag>
+<tag>SCP1000</tag>
 </tags>
 <properties>
-<property name='family'>SCP1000_D01</property>
+<property name='package'>scp1000</property>
+<property name='family'>scp1000_d01</property>
+<property name='variant'>smd</property>
 </properties>
 <views>
 <breadboardView>

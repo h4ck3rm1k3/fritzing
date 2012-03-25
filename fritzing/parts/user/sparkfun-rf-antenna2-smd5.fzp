@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-ANTENNA2-SMD5'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Chip antenna&lt;/b&gt;&lt;p&gt;
 Single endded antenna. Common with smaller chip antennas. CHIP4 package is the GPS Chip Antenna &lt;b&gt;SKU:&lt;/b&gt; GPS-08418. CHIP5 package is 2.4GHz chip antenna &lt;b&gt;SKU:&lt;/b&gt; WRL-00144.</description>
-<title>SMD5</title>
+<title>Chip antenna</title>
 <tags>
-<tag>ANTENNA2</tag>
 <tag>SMD5</tag>
+<tag>ANTENNA2</tag>
+<tag>ANTENNA-CHIP5</tag>
 </tags>
 <properties>
-<property name='family'>ANTENNA2</property>
+<property name='package'>antenna-chip5</property>
+<property name='family'>antenna2</property>
+<property name='variant'>smd5</property>
 </properties>
 <views>
 <breadboardView>

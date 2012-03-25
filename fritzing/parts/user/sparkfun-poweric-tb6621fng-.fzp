@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-TB6621FNG-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Toshiba 1A dual motor driver</description>
-<title></title>
+<title>TB6621FNG</title>
 <tags>
 <tag>TB6621FNG</tag>
-<tag></tag>
+<tag>SSOP24</tag>
 </tags>
 <properties>
-<property name='family'>TB6621FNG</property>
+<property name='package'>ssop24</property>
+<property name='family'>tb6621fng</property>
 </properties>
 <views>
 <breadboardView>
@@ -37,8 +38,8 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector10' type='pad' name='A01_1'>
-<description>A01_1</description>
+<connector id='connector10' type='pad' name='A01@1'>
+<description>A01@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pad'/>
@@ -51,8 +52,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector11' type='pad' name='A01_2'>
-<description>A01_2</description>
+<connector id='connector11' type='pad' name='A01@2'>
+<description>A01@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector11pad'/>
@@ -65,8 +66,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector14' type='pad' name='A02_5'>
-<description>A02_5</description>
+<connector id='connector14' type='pad' name='A02@5'>
+<description>A02@5</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector14pad'/>
@@ -79,8 +80,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector15' type='pad' name='A02_6'>
-<description>A02_6</description>
+<connector id='connector15' type='pad' name='A02@6'>
+<description>A02@6</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector15pad'/>
@@ -121,8 +122,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector20' type='pad' name='B01_11'>
-<description>B01_11</description>
+<connector id='connector20' type='pad' name='B01@11'>
+<description>B01@11</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector20pad'/>
@@ -135,8 +136,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector21' type='pad' name='B01_12'>
-<description>B01_12</description>
+<connector id='connector21' type='pad' name='B01@12'>
+<description>B01@12</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector21pad'/>
@@ -149,8 +150,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector16' type='pad' name='B02_7'>
-<description>B02_7</description>
+<connector id='connector16' type='pad' name='B02@7'>
+<description>B02@7</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector16pad'/>
@@ -163,8 +164,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector17' type='pad' name='B02_8'>
-<description>B02_8</description>
+<connector id='connector17' type='pad' name='B02@8'>
+<description>B02@8</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector17pad'/>
@@ -219,8 +220,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector12' type='pad' name='PGND1_3'>
-<description>PGND1_3</description>
+<connector id='connector12' type='pad' name='PGND1@3'>
+<description>PGND1@3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector12pad'/>
@@ -233,8 +234,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector13' type='pad' name='PGND1_4'>
-<description>PGND1_4</description>
+<connector id='connector13' type='pad' name='PGND1@4'>
+<description>PGND1@4</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector13pad'/>
@@ -247,8 +248,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector19' type='pad' name='PGND2_10'>
-<description>PGND2_10</description>
+<connector id='connector19' type='pad' name='PGND2@10'>
+<description>PGND2@10</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector19pad'/>
@@ -261,8 +262,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector18' type='pad' name='PGND2_9'>
-<description>PGND2_9</description>
+<connector id='connector18' type='pad' name='PGND2@9'>
+<description>PGND2@9</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector18pad'/>

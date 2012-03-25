@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-CY7C64215-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Cypress PSOC uC with USB</description>
-<title></title>
+<title>CY7C64215</title>
 <tags>
 <tag>CY7C64215</tag>
-<tag></tag>
+<tag>SSOP28DB</tag>
 </tags>
 <properties>
-<property name='family'>CY7C64215</property>
+<property name='package'>ssop28db</property>
+<property name='family'>cy7c64215</property>
 </properties>
 <views>
 <breadboardView>
@@ -37,8 +38,8 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector27' type='pad' name='D_'>
-<description>D_</description>
+<connector id='connector27' type='pad' name='D+'>
+<description>D+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector27pad'/>
@@ -373,8 +374,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector12' type='pad' name='VDD_16'>
-<description>VDD_16</description>
+<connector id='connector12' type='pad' name='VDD@16'>
+<description>VDD@16</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector12pad'/>
@@ -387,8 +388,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='pad' name='VDD_28'>
-<description>VDD_28</description>
+<connector id='connector0' type='pad' name='VDD@28'>
+<description>VDD@28</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pad'/>
@@ -401,8 +402,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector14' type='pad' name='VSS_1'>
-<description>VSS_1</description>
+<connector id='connector14' type='pad' name='VSS@1'>
+<description>VSS@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector14pad'/>
@@ -415,8 +416,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector26' type='pad' name='VSS_13'>
-<description>VSS_13</description>
+<connector id='connector26' type='pad' name='VSS@13'>
+<description>VSS@13</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector26pad'/>

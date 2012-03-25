@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-MAX7456-GROUNDPAD'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Monochrome NTSC/PAL on-screen display generator (SPI)</description>
-<title>GROUNDPAD</title>
+<title>MAX7456</title>
 <tags>
-<tag>MAX7456</tag>
 <tag>GROUNDPAD</tag>
+<tag>MAX7456</tag>
+<tag>TSSOP28-GROUNDPAD</tag>
 </tags>
 <properties>
-<property name='family'>MAX7456</property>
+<property name='package'>tssop28-groundpad</property>
+<property name='family'>max7456</property>
+<property name='variant'>groundpad</property>
 </properties>
 <views>
 <breadboardView>
@@ -261,8 +264,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='pad' name='_CS'>
-<description>_CS</description>
+<connector id='connector6' type='pad' name='~CS'>
+<description>~CS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pad'/>
@@ -275,8 +278,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector24' type='pad' name='_HSYNC'>
-<description>_HSYNC</description>
+<connector id='connector24' type='pad' name='~HSYNC'>
+<description>~HSYNC</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector24pad'/>
@@ -289,8 +292,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector23' type='pad' name='_RESET'>
-<description>_RESET</description>
+<connector id='connector23' type='pad' name='~RESET'>
+<description>~RESET</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector23pad'/>
@@ -303,8 +306,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector25' type='pad' name='_VSYNC'>
-<description>_VSYNC</description>
+<connector id='connector25' type='pad' name='~VSYNC'>
+<description>~VSYNC</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector25pad'/>

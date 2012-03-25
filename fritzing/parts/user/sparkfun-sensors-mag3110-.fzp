@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-MAG3110-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>3-axis digital (I2C) magnetometer</description>
-<title></title>
+<title>MAG3110</title>
 <tags>
 <tag>MAG3110</tag>
-<tag></tag>
+<tag>DFN-10</tag>
 </tags>
 <properties>
-<property name='family'>MAG3110</property>
+<property name='package'>dfn-10</property>
+<property name='family'>mag3110</property>
 </properties>
 <views>
 <breadboardView>
@@ -65,8 +66,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='pad' name='GND_10'>
-<description>GND_10</description>
+<connector id='connector6' type='pad' name='GND@10'>
+<description>GND@10</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pad'/>
@@ -79,8 +80,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='pad' name='GND_5'>
-<description>GND_5</description>
+<connector id='connector4' type='pad' name='GND@5'>
+<description>GND@5</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pad'/>

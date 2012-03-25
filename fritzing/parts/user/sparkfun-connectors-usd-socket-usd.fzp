@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-USD-SOCKET-USD'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;microSD Socket&lt;/b&gt;
 Push-push type uSD socket. Schematic element and footprint production proven. Spark Fun Electronics SKU : PRT-00127. tDoc lines correctly indicate media card edge positions when inserting (unlocked, locked, depressed).</description>
-<title>USD</title>
+<title>microSD Socket</title>
 <tags>
-<tag>USD-SOCKET</tag>
 <tag>USD</tag>
+<tag>USD-SOCKET</tag>
+<tag>USD-SOCKET-PP</tag>
 </tags>
 <properties>
-<property name='family'>USD-SOCKET</property>
+<property name='package'>usd-socket-pp</property>
+<property name='family'>usd-socket</property>
+<property name='variant'>usd</property>
 </properties>
 <views>
 <breadboardView>
@@ -136,8 +139,8 @@ Push-push type uSD socket. Schematic element and footprint production proven. Sp
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='pad' name='SHIELD_1'>
-<description>SHIELD_1</description>
+<connector id='connector3' type='pad' name='SHIELD@1'>
+<description>SHIELD@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pad'/>
@@ -150,8 +153,8 @@ Push-push type uSD socket. Schematic element and footprint production proven. Sp
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='pad' name='SHIELD_2'>
-<description>SHIELD_2</description>
+<connector id='connector2' type='pad' name='SHIELD@2'>
+<description>SHIELD@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pad'/>
@@ -164,8 +167,8 @@ Push-push type uSD socket. Schematic element and footprint production proven. Sp
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='pad' name='SHIELD_3'>
-<description>SHIELD_3</description>
+<connector id='connector0' type='pad' name='SHIELD@3'>
+<description>SHIELD@3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pad'/>
@@ -178,8 +181,8 @@ Push-push type uSD socket. Schematic element and footprint production proven. Sp
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='pad' name='SHIELD_4'>
-<description>SHIELD_4</description>
+<connector id='connector1' type='pad' name='SHIELD@4'>
+<description>SHIELD@4</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pad'/>

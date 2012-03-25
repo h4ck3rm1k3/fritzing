@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Displays-ALPHANUMERIC-PTH'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Alphanumeric LED Display&lt;/b&gt; Common anode. Multiple LEDs on some segments. Multiple LED colors available. Works great with A6282 driver IC. Decimal points are unfornately not connected. SKU: COM-09933.</description>
-<title>PTH</title>
+<title>Alphanumeric LED Display</title>
 <tags>
-<tag>ALPHANUMERIC</tag>
 <tag>PTH</tag>
+<tag>ALPHANUMERIC</tag>
+<tag>ALPHANUMERIC</tag>
 </tags>
 <properties>
-<property name='family'>ALPHANUMERIC</property>
+<property name='package'>alphanumeric</property>
+<property name='family'>alphanumeric</property>
+<property name='variant'>pth</property>
 </properties>
 <views>
 <breadboardView>
@@ -278,8 +281,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='male' name='NC_1'>
-<description>NC_1</description>
+<connector id='connector0' type='male' name='NC@1'>
+<description>NC@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pin'/>
@@ -293,8 +296,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='male' name='NC_13'>
-<description>NC_13</description>
+<connector id='connector10' type='male' name='NC@13'>
+<description>NC@13</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pin'/>
@@ -308,8 +311,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector14' type='male' name='VCC_18'>
-<description>VCC_18</description>
+<connector id='connector14' type='male' name='VCC@18'>
+<description>VCC@18</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector14pin'/>
@@ -323,8 +326,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='male' name='VCC_6'>
-<description>VCC_6</description>
+<connector id='connector4' type='male' name='VCC@6'>
+<description>VCC@6</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pin'/>

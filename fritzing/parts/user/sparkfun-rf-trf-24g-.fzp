@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-TRF-24G-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>2.4GHz wireless module</description>
-<title></title>
+<title>TRF-24G</title>
 <tags>
 <tag>TRF-24G</tag>
-<tag></tag>
+<tag>TRF-24G-SOCKET</tag>
 </tags>
 <properties>
-<property name='family'>TRF-24G</property>
+<property name='package'>trf-24g-socket</property>
+<property name='family'>trf-24g</property>
 </properties>
 <views>
 <breadboardView>

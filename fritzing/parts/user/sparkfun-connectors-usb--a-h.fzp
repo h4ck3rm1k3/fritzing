@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-USB--A-H'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>X</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;USB Connectors&lt;/b&gt;
@@ -12,13 +12,16 @@
 &lt;p&gt;USB-B-SMT is throughly reviewed, but untested. Needs silkscreen touching up.
 &lt;p&gt;USB-A-S has not been used/tested
 &lt;p&gt;USB-MB-H has not been used/tested</description>
-<title>-A-H</title>
+<title>USB Connectors</title>
 <tags>
-<tag>USB</tag>
 <tag>-A-H</tag>
+<tag>USB</tag>
+<tag>USB-A-H</tag>
 </tags>
 <properties>
-<property name='family'>USB</property>
+<property name='package'>usb-a-h</property>
+<property name='family'>usb</property>
+<property name='variant'>-a-h</property>
 </properties>
 <views>
 <breadboardView>
@@ -45,8 +48,8 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector2' type='male' name='D_'>
-<description>D_</description>
+<connector id='connector2' type='male' name='D+'>
+<description>D+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pin'/>

@@ -1,20 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-WTV020SD-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>IC</label>
 <author>www.fritzing.org</author>
 <description>SD audio playback IC&lt;br&gt;
 Can play back .wav or .ad4 files from an SD card&lt;br&gt;
 SPI control or digital input trigger control&lt;br&gt;
 available in SSOP-20 or DIP-20</description>
-<title></title>
+<title>WTV020SD</title>
 <tags>
 <tag>WTV020SD</tag>
-<tag></tag>
+<tag>SSOP_20</tag>
 </tags>
 <properties>
-<property name='family'>WTV020SD</property>
+<property name='package'>ssop_20</property>
+<property name='family'>wtv020sd</property>
 </properties>
 <views>
 <breadboardView>

@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-V_REG_NCP1400-SOT23-5'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>IC</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Switching step-up voltage regulator&lt;/b&gt;
 NCP1400 switiching regulator takes single cell AA and outputs 100mA at 3.3V or 5V with minimal number of external components.</description>
-<title>SOT23-5</title>
+<title>Switching step-up voltage regulator</title>
 <tags>
+<tag>SOT23-5</tag>
 <tag>V_REG_NCP1400</tag>
 <tag>SOT23-5</tag>
 </tags>
 <properties>
-<property name='family'>V_REG_NCP1400</property>
+<property name='package'>sot23-5</property>
+<property name='family'>v_reg_ncp1400</property>
+<property name='variant'>sot23-5</property>
 </properties>
 <views>
 <breadboardView>

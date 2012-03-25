@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Aesthetics-VCC-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>P+</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;SUPPLY SYMBOL&lt;/b&gt;</description>
-<title></title>
+<title>SUPPLY SYMBOL</title>
 <tags>
 <tag>VCC</tag>
 <tag></tag>
 </tags>
 <properties>
-<property name='family'>VCC</property>
+<property name='package'></property>
+<property name='family'>vcc</property>
 </properties>
 <views>
 <breadboardView>

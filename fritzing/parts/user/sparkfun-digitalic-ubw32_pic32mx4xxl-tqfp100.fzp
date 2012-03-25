@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-UBW32_PIC32MX4XXL-TQFP100'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description></description>
-<title>TQFP100</title>
+<title>UBW32_PIC32MX4XXL</title>
 <tags>
-<tag>UBW32_PIC32MX4XXL</tag>
 <tag>TQFP100</tag>
+<tag>UBW32_PIC32MX4XXL</tag>
+<tag>UBW32_TQFP100</tag>
 </tags>
 <properties>
-<property name='family'>UBW32_PIC32MX4XXL</property>
+<property name='package'>ubw32_tqfp100</property>
+<property name='family'>ubw32_pic32mx4xxl</property>
+<property name='variant'>tqfp100</property>
 </properties>
 <views>
 <breadboardView>
@@ -93,8 +96,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector21' type='pad' name='C2IN__AN3_CN5_RB3'>
-<description>C2IN__AN3_CN5_RB3</description>
+<connector id='connector21' type='pad' name='C2IN+_AN3_CN5_RB3'>
+<description>C2IN+_AN3_CN5_RB3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector21pad'/>
@@ -163,8 +166,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector56' type='pad' name='D__RG2'>
-<description>D__RG2</description>
+<connector id='connector56' type='pad' name='D+_RG2'>
+<description>D+_RG2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector56pad'/>
@@ -527,8 +530,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector28' type='pad' name='PMA6_VREF__CVREF__RA10'>
-<description>PMA6_VREF__CVREF__RA10</description>
+<connector id='connector28' type='pad' name='PMA6_VREF+_CVREF+_RA10'>
+<description>PMA6_VREF+_CVREF+_RA10</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector28pad'/>
@@ -1255,8 +1258,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector19' type='pad' name='VBUSON_C1IN__AN5_CN7_RB5'>
-<description>VBUSON_C1IN__AN5_CN7_RB5</description>
+<connector id='connector19' type='pad' name='VBUSON_C1IN+_AN5_CN7_RB5'>
+<description>VBUSON_C1IN+_AN5_CN7_RB5</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector19pad'/>

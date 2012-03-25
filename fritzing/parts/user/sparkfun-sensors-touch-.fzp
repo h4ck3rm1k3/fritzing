@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-TOUCH-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Electrode for resistive touch detection</description>
-<title></title>
+<title>TOUCH</title>
 <tags>
 <tag>TOUCH</tag>
-<tag></tag>
+<tag>TOUCH1</tag>
 </tags>
 <properties>
-<property name='family'>TOUCH</property>
+<property name='package'>touch1</property>
+<property name='family'>touch</property>
 </properties>
 <views>
 <breadboardView>

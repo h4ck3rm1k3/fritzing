@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-MAX98300-ETA_'>
+<module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-MAX98300-ETA+'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Mono 2.6W Class D Amplifier&lt;/b&gt;&lt;p&gt;
@@ -25,13 +25,16 @@ The MAX98300 is available in an 8-pin TDFN-EP (2mm
 x 2mm x 0.8mm) and a 9-bump (1.2mm x 1.2mm) WLP.
 Both packages are specified over the extended -40NC to
 +85NC temperature range.</description>
-<title>ETA+</title>
+<title>Mono 2.6W Class D Amplifier</title>
 <tags>
-<tag>MAX98300</tag>
 <tag>ETA+</tag>
+<tag>MAX98300</tag>
+<tag>8-TDFN-EP</tag>
 </tags>
 <properties>
-<property name='family'>MAX98300</property>
+<property name='package'>8-tdfn-ep</property>
+<property name='family'>max98300</property>
+<property name='variant'>eta+</property>
 </properties>
 <views>
 <breadboardView>
@@ -71,8 +74,8 @@ Both packages are specified over the extended -40NC to
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='pad' name='GND_1'>
-<description>GND_1</description>
+<connector id='connector4' type='pad' name='GND@1'>
+<description>GND@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pad'/>
@@ -85,8 +88,8 @@ Both packages are specified over the extended -40NC to
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='pad' name='GND_2'>
-<description>GND_2</description>
+<connector id='connector8' type='pad' name='GND@2'>
+<description>GND@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector8pad'/>
@@ -99,8 +102,8 @@ Both packages are specified over the extended -40NC to
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='pad' name='IN_'>
-<description>IN_</description>
+<connector id='connector0' type='pad' name='IN+'>
+<description>IN+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pad'/>
@@ -127,8 +130,8 @@ Both packages are specified over the extended -40NC to
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='pad' name='OUT_'>
-<description>OUT_</description>
+<connector id='connector6' type='pad' name='OUT+'>
+<description>OUT+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pad'/>

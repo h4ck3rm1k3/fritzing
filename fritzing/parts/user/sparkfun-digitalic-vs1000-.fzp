@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-VS1000-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>OGG Vorbis codec</description>
-<title></title>
+<title>VS1000</title>
 <tags>
 <tag>VS1000</tag>
-<tag></tag>
+<tag>LQFP-48</tag>
 </tags>
 <properties>
-<property name='family'>VS1000</property>
+<property name='package'>lqfp-48</property>
+<property name='family'>vs1000</property>
 </properties>
 <views>
 <breadboardView>

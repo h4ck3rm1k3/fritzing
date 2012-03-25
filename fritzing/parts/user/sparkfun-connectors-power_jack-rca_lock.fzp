@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-POWER_JACK-RCA_LOCK'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>J</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Power Jack&lt;/b&gt;
 This is the standard 5.5mm barrel jack for power. The PTH is the most common, proven, reliable, footprint. All others are experimental. The Slot footprint only works if the mill layer is transmitted to the PCB fab house so be warned. Spark Fun Electronics SKU : PRT-00119. Mating wall wart : TOL-00298 (and others)</description>
-<title>RCA_LOCK</title>
+<title>Power Jack</title>
 <tags>
+<tag>RCA_LOCK</tag>
 <tag>POWER_JACK</tag>
 <tag>RCA_LOCK</tag>
 </tags>
 <properties>
-<property name='family'>POWER_JACK</property>
+<property name='package'>rca_lock</property>
+<property name='family'>power_jack</property>
+<property name='variant'>rca_lock</property>
 </properties>
 <views>
 <breadboardView>

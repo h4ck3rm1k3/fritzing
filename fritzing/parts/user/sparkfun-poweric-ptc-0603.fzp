@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-PTC-0603'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>F</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Resettable Fuse PTC&lt;/b&gt;
 Resettable Fuse. Spark Fun Electronics SKU : COM-08357</description>
-<title>0603</title>
+<title>Resettable Fuse PTC</title>
 <tags>
+<tag>0603</tag>
 <tag>PTC</tag>
 <tag>0603</tag>
 </tags>
 <properties>
-<property name='family'>PTC</property>
+<property name='package'>0603</property>
+<property name='family'>ptc</property>
+<property name='variant'>0603</property>
 </properties>
 <views>
 <breadboardView>

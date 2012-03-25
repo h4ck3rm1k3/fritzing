@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-MAX232-SOIC16'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;RS232 Transceiver&lt;/b&gt;
 Very common IC. This is generically called &apos;MAX232&apos;, but works with the 3V equivalent MAX3232 generic ICs. Field tested and mother approved. Spark Fun Electronics SKU : COM-00316 (DIP) and COM-00589 (SMD)</description>
-<title>SOIC16</title>
+<title>RS232 Transceiver</title>
 <tags>
-<tag>MAX232</tag>
 <tag>SOIC16</tag>
+<tag>MAX232</tag>
+<tag>SO016</tag>
 </tags>
 <properties>
-<property name='family'>MAX232</property>
+<property name='package'>so016</property>
+<property name='family'>max232</property>
+<property name='variant'>soic16</property>
 </properties>
 <views>
 <breadboardView>
@@ -38,8 +41,8 @@ Very common IC. This is generically called &apos;MAX232&apos;, but works with th
 </iconView>
 </views>
 <connectors>
-<connector id='connector0' type='pad' name='C1_'>
-<description>C1_</description>
+<connector id='connector0' type='pad' name='C1+'>
+<description>C1+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pad'/>
@@ -66,8 +69,8 @@ Very common IC. This is generically called &apos;MAX232&apos;, but works with th
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='pad' name='C2_'>
-<description>C2_</description>
+<connector id='connector3' type='pad' name='C2+'>
+<description>C2+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pad'/>
@@ -220,8 +223,8 @@ Very common IC. This is generically called &apos;MAX232&apos;, but works with th
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='pad' name='V_'>
-<description>V_</description>
+<connector id='connector1' type='pad' name='V+'>
+<description>V+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pad'/>

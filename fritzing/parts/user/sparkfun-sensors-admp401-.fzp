@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-ADMP401-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Omnidirection bottom-port MEMS microphone</description>
-<title></title>
+<title>ADMP401</title>
 <tags>
 <tag>ADMP401</tag>
-<tag></tag>
+<tag>ADMP401</tag>
 </tags>
 <properties>
-<property name='family'>ADMP401</property>
+<property name='package'>admp401</property>
+<property name='family'>admp401</property>
 </properties>
 <views>
 <breadboardView>
@@ -37,8 +38,8 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector0' type='pad' name='GND_2'>
-<description>GND_2</description>
+<connector id='connector0' type='pad' name='GND@2'>
+<description>GND@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pad'/>
@@ -51,8 +52,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='pad' name='GND_4'>
-<description>GND_4</description>
+<connector id='connector3' type='pad' name='GND@4'>
+<description>GND@4</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pad'/>
@@ -65,8 +66,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='pad' name='GND_6'>
-<description>GND_6</description>
+<connector id='connector1' type='pad' name='GND@6'>
+<description>GND@6</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pad'/>

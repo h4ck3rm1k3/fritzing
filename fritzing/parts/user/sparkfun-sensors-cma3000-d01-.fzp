@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-CMA3000-D01-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>3-axis 2/8g I2c/SPI accelerometer</description>
-<title></title>
+<title>CMA3000-D01</title>
 <tags>
 <tag>CMA3000-D01</tag>
-<tag></tag>
+<tag>CMA3000</tag>
 </tags>
 <properties>
-<property name='family'>CMA3000-D01</property>
+<property name='package'>cma3000</property>
+<property name='family'>cma3000-d01</property>
 </properties>
 <views>
 <breadboardView>

@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-HMC6042-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Honeywell 2-axis magnetic sensor</description>
-<title></title>
+<title>HMC6042</title>
 <tags>
 <tag>HMC6042</tag>
-<tag></tag>
+<tag>HMC6042</tag>
 </tags>
 <properties>
-<property name='family'>HMC6042</property>
+<property name='package'>hmc6042</property>
+<property name='family'>hmc6042</property>
 </properties>
 <views>
 <breadboardView>
@@ -107,8 +108,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector18' type='pad' name='INZ_'>
-<description>INZ_</description>
+<connector id='connector18' type='pad' name='INZ+'>
+<description>INZ+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector18pad'/>
@@ -177,8 +178,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='pad' name='S_R_'>
-<description>S_R_</description>
+<connector id='connector0' type='pad' name='S_R+'>
+<description>S_R+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pad'/>

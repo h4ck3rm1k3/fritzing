@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-EM406_OUTLINE-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Package outline for EM406 GPS module</description>
-<title></title>
+<title>EM406_OUTLINE</title>
 <tags>
 <tag>EM406_OUTLINE</tag>
-<tag></tag>
+<tag>EM406_OUTLINE</tag>
 </tags>
 <properties>
-<property name='family'>EM406_OUTLINE</property>
+<property name='package'>em406_outline</property>
+<property name='family'>em406_outline</property>
 </properties>
 <views>
 <breadboardView>

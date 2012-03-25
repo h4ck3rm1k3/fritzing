@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-SC16IS750-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>IC</label>
 <author>www.fritzing.org</author>
 <description>SPI/I2C/IrDA to UART</description>
-<title></title>
+<title>SC16IS750</title>
 <tags>
 <tag>SC16IS750</tag>
-<tag></tag>
+<tag>QFN-24</tag>
 </tags>
 <properties>
-<property name='family'>SC16IS750</property>
+<property name='package'>qfn-24</property>
+<property name='family'>sc16is750</property>
 </properties>
 <views>
 <breadboardView>

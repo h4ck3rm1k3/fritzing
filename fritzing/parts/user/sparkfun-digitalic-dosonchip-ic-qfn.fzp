@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-DOSONCHIP-IC-QFN'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;DOSonCHIP IC&lt;/b&gt;
 This is the tested schematic and footprint for the DOSonCHIP FAT16 FAT32 IC. Spark Fun Electronics SKU : COM-07956. QFN package also tested/proven.</description>
-<title>QFN</title>
+<title>DOSonCHIP IC</title>
 <tags>
-<tag>DOSONCHIP-IC</tag>
 <tag>QFN</tag>
+<tag>DOSONCHIP-IC</tag>
+<tag>QFN-24</tag>
 </tags>
 <properties>
-<property name='family'>DOSONCHIP-IC</property>
+<property name='package'>qfn-24</property>
+<property name='family'>dosonchip-ic</property>
+<property name='variant'>qfn</property>
 </properties>
 <views>
 <breadboardView>

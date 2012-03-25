@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-ADXL330-SMD'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Triple Axis Accelerometer&lt;/b&gt;
 Analog Devices ADXL330 +/-3g 2.4V-5.25V Analog output. Spark Fun Electronics SKU : COM-00730. Center pad paste layer has been reduced to avoid shorting.</description>
-<title>SMD</title>
+<title>Triple Axis Accelerometer</title>
 <tags>
-<tag>ADXL330</tag>
 <tag>SMD</tag>
+<tag>ADXL330</tag>
+<tag>LFCSP-16</tag>
 </tags>
 <properties>
-<property name='family'>ADXL330</property>
+<property name='package'>lfcsp-16</property>
+<property name='family'>adxl330</property>
+<property name='variant'>smd</property>
 </properties>
 <views>
 <breadboardView>
@@ -52,8 +55,8 @@ Analog Devices ADXL330 +/-3g 2.4V-5.25V Analog output. Spark Fun Electronics SKU
 </pcbView>
 </views>
 </connector>
-<connector id='connector12' type='pad' name='COM_1'>
-<description>COM_1</description>
+<connector id='connector12' type='pad' name='COM@1'>
+<description>COM@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector12pad'/>
@@ -66,8 +69,8 @@ Analog Devices ADXL330 +/-3g 2.4V-5.25V Analog output. Spark Fun Electronics SKU
 </pcbView>
 </views>
 </connector>
-<connector id='connector11' type='pad' name='COM_2'>
-<description>COM_2</description>
+<connector id='connector11' type='pad' name='COM@2'>
+<description>COM@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector11pad'/>
@@ -80,8 +83,8 @@ Analog Devices ADXL330 +/-3g 2.4V-5.25V Analog output. Spark Fun Electronics SKU
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='pad' name='COM_3'>
-<description>COM_3</description>
+<connector id='connector10' type='pad' name='COM@3'>
+<description>COM@3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pad'/>
@@ -122,8 +125,8 @@ Analog Devices ADXL330 +/-3g 2.4V-5.25V Analog output. Spark Fun Electronics SKU
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='pad' name='VS_1'>
-<description>VS_1</description>
+<connector id='connector2' type='pad' name='VS@1'>
+<description>VS@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pad'/>

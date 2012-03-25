@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DiscreteSemi-MOSFET-NCHANNEL-SOIC8-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>IRF9410 and NDS8434 SOIC-8 parts.</description>
-<title></title>
+<title>MOSFET-NCHANNEL-SOIC8</title>
 <tags>
 <tag>MOSFET-NCHANNEL-SOIC8</tag>
-<tag></tag>
+<tag>SO08</tag>
 </tags>
 <properties>
-<property name='family'>MOSFET-NCHANNEL-SOIC8</property>
+<property name='package'>so08</property>
+<property name='family'>mosfet-nchannel-soic8</property>
 </properties>
 <views>
 <breadboardView>
@@ -37,8 +38,8 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector7' type='pad' name='D_1'>
-<description>D_1</description>
+<connector id='connector7' type='pad' name='D@1'>
+<description>D@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pad'/>
@@ -51,8 +52,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='pad' name='D_2'>
-<description>D_2</description>
+<connector id='connector6' type='pad' name='D@2'>
+<description>D@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pad'/>
@@ -65,8 +66,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='pad' name='D_3'>
-<description>D_3</description>
+<connector id='connector5' type='pad' name='D@3'>
+<description>D@3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector5pad'/>
@@ -79,8 +80,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='pad' name='D_4'>
-<description>D_4</description>
+<connector id='connector4' type='pad' name='D@4'>
+<description>D@4</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pad'/>
@@ -107,8 +108,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='pad' name='S_1'>
-<description>S_1</description>
+<connector id='connector0' type='pad' name='S@1'>
+<description>S@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pad'/>
@@ -121,8 +122,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='pad' name='S_2'>
-<description>S_2</description>
+<connector id='connector1' type='pad' name='S@2'>
+<description>S@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pad'/>
@@ -135,8 +136,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='pad' name='S_3'>
-<description>S_3</description>
+<connector id='connector2' type='pad' name='S@3'>
+<description>S@3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pad'/>

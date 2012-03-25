@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-SWITCH-DPDT-PTH1'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>S</label>
 <author>www.fritzing.org</author>
 <description>DPDT Version of the COM-00597</description>
-<title>PTH1</title>
+<title>SWITCH-DPDT</title>
 <tags>
-<tag>SWITCH-DPDT</tag>
 <tag>PTH1</tag>
+<tag>SWITCH-DPDT</tag>
+<tag>MS</tag>
 </tags>
 <properties>
-<property name='family'>SWITCH-DPDT</property>
+<property name='package'>ms</property>
+<property name='family'>switch-dpdt</property>
+<property name='variant'>pth1</property>
 </properties>
 <views>
 <breadboardView>

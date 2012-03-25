@@ -1,18 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-SW_DIP-8-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>SW</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;DIP Switch 8 Position&lt;/b&gt;
 Spark Fun Electronics SKU : COM-08034</description>
-<title></title>
+<title>DIP Switch 8 Position</title>
 <tags>
 <tag>SW_DIP-8</tag>
-<tag></tag>
+<tag>DIPSWITCH-08</tag>
 </tags>
 <properties>
-<property name='family'>SW_DIP-8</property>
+<property name='package'>dipswitch-08</property>
+<property name='family'>sw_dip-8</property>
 </properties>
 <views>
 <breadboardView>

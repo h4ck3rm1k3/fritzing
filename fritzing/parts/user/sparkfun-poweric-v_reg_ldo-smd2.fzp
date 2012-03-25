@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-V_REG_LDO-SMD2'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Voltage Regulator LDO&lt;/b&gt;
 Standard 150mA LDO voltage regulator in SOT-23 layout. Micrel part MIC5205. BP (by-pass) pin is used to lower output noise with 470pF cap.</description>
-<title>SMD2</title>
+<title>Voltage Regulator LDO</title>
 <tags>
-<tag>V_REG_LDO</tag>
 <tag>SMD2</tag>
+<tag>V_REG_LDO</tag>
+<tag>SC70</tag>
 </tags>
 <properties>
-<property name='family'>V_REG_LDO</property>
+<property name='package'>sc70</property>
+<property name='family'>v_reg_ldo</property>
+<property name='variant'>smd2</property>
 </properties>
 <views>
 <breadboardView>

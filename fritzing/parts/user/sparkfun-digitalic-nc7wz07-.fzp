@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-NC7WZ07-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Ultra-high speed dual open-drain output buffer (non-inverting)</description>
-<title></title>
+<title>NC7WZ07</title>
 <tags>
 <tag>NC7WZ07</tag>
-<tag></tag>
+<tag>SC70-6</tag>
 </tags>
 <properties>
-<property name='family'>NC7WZ07</property>
+<property name='package'>sc70-6</property>
+<property name='family'>nc7wz07</property>
 </properties>
 <views>
 <breadboardView>

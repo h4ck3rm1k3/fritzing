@@ -1,18 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-MMA7260-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Freescale 3-axis 1.5/2/4/6g analog output accelerometer.&lt;BR&gt;
 Schematic element and footprint production proven. Center pad has reduced paste layer for solder short reduction. Spark Fun Electronics SKU : COM-00308</description>
-<title></title>
+<title>MMA7260</title>
 <tags>
 <tag>MMA7260</tag>
-<tag></tag>
+<tag>MMA7260</tag>
 </tags>
 <properties>
-<property name='family'>MMA7260</property>
+<property name='package'>mma7260</property>
+<property name='family'>mma7260</property>
 </properties>
 <views>
 <breadboardView>

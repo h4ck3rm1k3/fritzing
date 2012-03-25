@@ -1,18 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-PIC24FXXXDAX06-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;PIC24FXXXDAX06&lt;/b&gt;
 PIC24FXXXDA106 / PIC24FXXXDA206</description>
-<title></title>
+<title>PIC24FXXXDAX06</title>
 <tags>
 <tag>PIC24FXXXDAX06</tag>
-<tag></tag>
+<tag>PIC24FXXX_TQFP64</tag>
 </tags>
 <properties>
-<property name='family'>PIC24FXXXDAX06</property>
+<property name='package'>pic24fxxx_tqfp64</property>
+<property name='family'>pic24fxxxdax06</property>
 </properties>
 <views>
 <breadboardView>
@@ -38,8 +39,8 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 </iconView>
 </views>
 <connectors>
-<connector id='connector6' type='pad' name='_MCLR'>
-<description>_MCLR</description>
+<connector id='connector6' type='pad' name='!MCLR'>
+<description>!MCLR</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pad'/>
@@ -248,8 +249,8 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector36' type='pad' name='D__CN83_RG2'>
-<description>D__CN83_RG2</description>
+<connector id='connector36' type='pad' name='D+_CN83_RG2'>
+<description>D+_CN83_RG2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector36pad'/>
@@ -528,8 +529,8 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector15' type='pad' name='PGED1_AN0_VREF__RP0_CN2_RB0'>
-<description>PGED1_AN0_VREF__RP0_CN2_RB0</description>
+<connector id='connector15' type='pad' name='PGED1_AN0_VREF+_RP0_CN2_RB0'>
+<description>PGED1_AN0_VREF+_RP0_CN2_RB0</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector15pad'/>
@@ -822,8 +823,8 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector9' type='pad' name='VDD_1'>
-<description>VDD_1</description>
+<connector id='connector9' type='pad' name='VDD@1'>
+<description>VDD@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector9pad'/>
@@ -836,8 +837,8 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector25' type='pad' name='VDD_2'>
-<description>VDD_2</description>
+<connector id='connector25' type='pad' name='VDD@2'>
+<description>VDD@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector25pad'/>
@@ -850,8 +851,8 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector37' type='pad' name='VDD_3'>
-<description>VDD_3</description>
+<connector id='connector37' type='pad' name='VDD@3'>
+<description>VDD@3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector37pad'/>
@@ -864,8 +865,8 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='pad' name='VSS_1'>
-<description>VSS_1</description>
+<connector id='connector8' type='pad' name='VSS@1'>
+<description>VSS@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector8pad'/>
@@ -878,8 +879,8 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector24' type='pad' name='VSS_2'>
-<description>VSS_2</description>
+<connector id='connector24' type='pad' name='VSS@2'>
+<description>VSS@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector24pad'/>
@@ -892,8 +893,8 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector40' type='pad' name='VSS_3'>
-<description>VSS_3</description>
+<connector id='connector40' type='pad' name='VSS@3'>
+<description>VSS@3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector40pad'/>

@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-NRF24LU1-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>2.4GHz transceiver</description>
-<title></title>
+<title>NRF24LU1</title>
 <tags>
 <tag>NRF24LU1</tag>
-<tag></tag>
+<tag>QFN-32</tag>
 </tags>
 <properties>
-<property name='family'>NRF24LU1</property>
+<property name='package'>qfn-32</property>
+<property name='family'>nrf24lu1</property>
 </properties>
 <views>
 <breadboardView>
@@ -79,8 +80,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='pad' name='D_'>
-<description>D_</description>
+<connector id='connector3' type='pad' name='D+'>
+<description>D+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pad'/>

@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-SWITCH-SPDT-PTH2'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>S</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;SPST Switch&lt;/b&gt;
 Simple slide switch. Spark Fun Electronics SKU : COM-00102</description>
-<title>PTH2</title>
+<title>SPST Switch</title>
 <tags>
-<tag>SWITCH-SPDT</tag>
 <tag>PTH2</tag>
+<tag>SWITCH-SPDT</tag>
+<tag>SWITCHE-DPDT</tag>
 </tags>
 <properties>
-<property name='family'>SWITCH-SPDT</property>
+<property name='package'>switche-dpdt</property>
+<property name='family'>switch-spdt</property>
+<property name='variant'>pth2</property>
 </properties>
 <views>
 <breadboardView>

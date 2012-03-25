@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-SWITCH-DPDT-EG2211'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>S</label>
 <author>www.fritzing.org</author>
 <description>DPDT Version of the COM-00597</description>
-<title>EG2211</title>
+<title>SWITCH-DPDT</title>
 <tags>
+<tag>EG2211</tag>
 <tag>SWITCH-DPDT</tag>
 <tag>EG2211</tag>
 </tags>
 <properties>
-<property name='family'>SWITCH-DPDT</property>
+<property name='package'>eg2211</property>
+<property name='family'>switch-dpdt</property>
+<property name='variant'>eg2211</property>
 </properties>
 <views>
 <breadboardView>

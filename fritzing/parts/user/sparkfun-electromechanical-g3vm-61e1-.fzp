@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-G3VM-61E1-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Omron NO solid state relay</description>
-<title></title>
+<title>G3VM-61E1</title>
 <tags>
 <tag>G3VM-61E1</tag>
-<tag></tag>
+<tag>G3VM-61E1</tag>
 </tags>
 <properties>
-<property name='family'>G3VM-61E1</property>
+<property name='package'>g3vm-61e1</property>
+<property name='family'>g3vm-61e1</property>
 </properties>
 <views>
 <breadboardView>
@@ -37,8 +38,8 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector0' type='pad' name='P_1'>
-<description>P_1</description>
+<connector id='connector0' type='pad' name='P$1'>
+<description>P$1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pad'/>
@@ -51,8 +52,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='pad' name='P_2'>
-<description>P_2</description>
+<connector id='connector1' type='pad' name='P$2'>
+<description>P$2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pad'/>
@@ -65,8 +66,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='pad' name='P_3'>
-<description>P_3</description>
+<connector id='connector2' type='pad' name='P$3'>
+<description>P$3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pad'/>
@@ -79,8 +80,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='pad' name='P_4'>
-<description>P_4</description>
+<connector id='connector3' type='pad' name='P$4'>
+<description>P$4</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pad'/>
@@ -93,8 +94,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='pad' name='P_5'>
-<description>P_5</description>
+<connector id='connector4' type='pad' name='P$5'>
+<description>P$5</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pad'/>
@@ -107,8 +108,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='pad' name='P_6'>
-<description>P_6</description>
+<connector id='connector5' type='pad' name='P$6'>
+<description>P$6</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector5pad'/>

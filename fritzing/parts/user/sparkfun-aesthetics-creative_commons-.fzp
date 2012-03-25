@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Aesthetics-CREATIVE_COMMONS-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Creative Commons License summary</description>
-<title></title>
+<title>CREATIVE_COMMONS</title>
 <tags>
 <tag>CREATIVE_COMMONS</tag>
-<tag></tag>
+<tag>CREATIVE_COMMONS</tag>
 </tags>
 <properties>
-<property name='family'>CREATIVE_COMMONS</property>
+<property name='package'>creative_commons</property>
+<property name='family'>creative_commons</property>
 </properties>
 <views>
 <breadboardView>

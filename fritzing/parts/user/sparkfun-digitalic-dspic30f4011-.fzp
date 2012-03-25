@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-DSPIC30F4011-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Microchip 16-bit DSP for UAVv2x, not tested</description>
-<title></title>
+<title>DSPIC30F4011</title>
 <tags>
 <tag>DSPIC30F4011</tag>
-<tag></tag>
+<tag>TQFP44</tag>
 </tags>
 <properties>
-<property name='family'>DSPIC30F4011</property>
+<property name='package'>tqfp44</property>
+<property name='family'>dspic30f4011</property>
 </properties>
 <views>
 <breadboardView>
@@ -177,8 +178,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector18' type='pad' name='RB0_AREF_'>
-<description>RB0_AREF_</description>
+<connector id='connector18' type='pad' name='RB0_AREF+'>
+<description>RB0_AREF+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector18pad'/>

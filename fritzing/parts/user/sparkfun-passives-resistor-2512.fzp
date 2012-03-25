@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Passives-RESISTOR-2512'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>R</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Resistor&lt;/b&gt;
 Basic schematic elements and footprints for 0603, 1206, and PTH resistors.</description>
-<title>2512</title>
+<title>Resistor</title>
 <tags>
-<tag>RESISTOR</tag>
 <tag>2512</tag>
+<tag>RESISTOR</tag>
+<tag>R2512</tag>
 </tags>
 <properties>
-<property name='family'>RESISTOR</property>
+<property name='package'>r2512</property>
+<property name='family'>resistor</property>
+<property name='variant'>2512</property>
 </properties>
 <views>
 <breadboardView>

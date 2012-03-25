@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-ISL29102-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Light-to-voltage converter.</description>
-<title></title>
+<title>ISL29102</title>
 <tags>
 <tag>ISL29102</tag>
-<tag></tag>
+<tag>ODFN6</tag>
 </tags>
 <properties>
-<property name='family'>ISL29102</property>
+<property name='package'>odfn6</property>
+<property name='family'>isl29102</property>
 </properties>
 <views>
 <breadboardView>

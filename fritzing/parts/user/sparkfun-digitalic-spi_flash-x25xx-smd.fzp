@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-SPI_FLASH-X25XX-SMD'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>8pin SPI Flash series x25xx. Works with devices like W25X32 and BR25L32</description>
-<title>SMD</title>
+<title>SPI_FLASH-X25XX</title>
 <tags>
-<tag>SPI_FLASH-X25XX</tag>
 <tag>SMD</tag>
+<tag>SPI_FLASH-X25XX</tag>
+<tag>SO08</tag>
 </tags>
 <properties>
-<property name='family'>SPI_FLASH-X25XX</property>
+<property name='package'>so08</property>
+<property name='family'>spi_flash-x25xx</property>
+<property name='variant'>smd</property>
 </properties>
 <views>
 <breadboardView>

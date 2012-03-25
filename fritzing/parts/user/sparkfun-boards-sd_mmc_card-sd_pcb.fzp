@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Boards-SD_MMC_CARD-SD_PCB'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Mechanical size of an SD/MMC card- NOT a socket!</description>
-<title>SD_PCB</title>
+<title>SD_MMC_CARD</title>
 <tags>
-<tag>SD_MMC_CARD</tag>
 <tag>SD_PCB</tag>
+<tag>SD_MMC_CARD</tag>
+<tag>SD-MMC-CARD</tag>
 </tags>
 <properties>
-<property name='family'>SD_MMC_CARD</property>
+<property name='package'>sd-mmc-card</property>
+<property name='family'>sd_mmc_card</property>
+<property name='variant'>sd_pcb</property>
 </properties>
 <views>
 <breadboardView>

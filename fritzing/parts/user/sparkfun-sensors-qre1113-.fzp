@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-QRE1113-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Reflective object sensor</description>
-<title></title>
+<title>QRE1113</title>
 <tags>
 <tag>QRE1113</tag>
-<tag></tag>
+<tag>QRE1113</tag>
 </tags>
 <properties>
-<property name='family'>QRE1113</property>
+<property name='package'>qre1113</property>
+<property name='family'>qre1113</property>
 </properties>
 <views>
 <breadboardView>

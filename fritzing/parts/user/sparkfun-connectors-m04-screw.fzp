@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-M04-SCREW'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Header 4&lt;/b&gt;
 Standard 4-pin 0.1&quot; header. Use with straight break away headers (SKU : PRT-00116), right angle break away headers (PRT-00553), swiss pins (PRT-00743), machine pins (PRT-00117), and female headers (PRT-00115). Molex polarized connector foot print use with SKU : PRT-08231 with associated crimp pins and housings. 1MM SMD Version SKU: PRT-10208</description>
-<title>SCREW</title>
+<title>Header 4</title>
 <tags>
-<tag>M04</tag>
 <tag>SCREW</tag>
+<tag>M04</tag>
+<tag>SCREWTERMINAL-3.5MM-4</tag>
 </tags>
 <properties>
-<property name='family'>M04</property>
+<property name='package'>screwterminal-3.5mm-4</property>
+<property name='family'>m04</property>
+<property name='variant'>screw</property>
 </properties>
 <views>
 <breadboardView>

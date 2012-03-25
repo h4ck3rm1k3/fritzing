@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Displays-LCD-G12864-BARE'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Graphical LCD 128x64&lt;/b&gt; 
 Footprint is not yet proven. Double check it. Spark Fun Electronics SKU : LCD-00710</description>
-<title>BARE</title>
+<title>Graphical LCD 128x64</title>
 <tags>
-<tag>LCD-G12864</tag>
 <tag>BARE</tag>
+<tag>LCD-G12864</tag>
+<tag>1X20</tag>
 </tags>
 <properties>
-<property name='family'>LCD-G12864</property>
+<property name='package'>1x20</property>
+<property name='family'>lcd-g12864</property>
+<property name='variant'>bare</property>
 </properties>
 <views>
 <breadboardView>

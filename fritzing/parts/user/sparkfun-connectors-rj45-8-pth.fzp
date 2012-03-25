@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-RJ45-8-PTH'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;RJ45 Jack&lt;/b&gt;
 Simple RJ45, 8-pin connection - connector for common Cat5, Cat5e, and Cat6 Ethernet cables. Footprint not yet proven in production. Connector sku is PRT-00643; Breakout PCB sku is BOB-00716.</description>
-<title>PTH</title>
+<title>RJ45 Jack</title>
 <tags>
-<tag>RJ45-8</tag>
 <tag>PTH</tag>
+<tag>RJ45-8</tag>
+<tag>RJ45-8</tag>
 </tags>
 <properties>
-<property name='family'>RJ45-8</property>
+<property name='package'>rj45-8</property>
+<property name='family'>rj45-8</property>
+<property name='variant'>pth</property>
 </properties>
 <views>
 <breadboardView>

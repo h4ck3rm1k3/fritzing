@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-V_REG_78XX-SINK'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>IC</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Voltage Regulator&lt;/b&gt;
 Standard 7805 5V regulator. IGO (Input Ground Output). Spark Fun Electronics SKU : COM-00107</description>
-<title>SINK</title>
+<title>Voltage Regulator</title>
 <tags>
-<tag>V_REG_78XX</tag>
 <tag>SINK</tag>
+<tag>V_REG_78XX</tag>
+<tag>TO220-IGO</tag>
 </tags>
 <properties>
-<property name='family'>V_REG_78XX</property>
+<property name='package'>to220-igo</property>
+<property name='family'>v_reg_78xx</property>
+<property name='variant'>sink</property>
 </properties>
 <views>
 <breadboardView>

@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-HV826MG_BACKLIGHT-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Small EL backlight driver for the CFAX 128x64 graphical display.</description>
-<title></title>
+<title>HV826MG_BACKLIGHT</title>
 <tags>
 <tag>HV826MG_BACKLIGHT</tag>
-<tag></tag>
+<tag>MSOP8</tag>
 </tags>
 <properties>
-<property name='family'>HV826MG_BACKLIGHT</property>
+<property name='package'>msop8</property>
+<property name='family'>hv826mg_backlight</property>
 </properties>
 <views>
 <breadboardView>

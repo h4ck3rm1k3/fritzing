@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-STW5093-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>STW5093 - PCM Audio Codec</description>
-<title></title>
+<title>STW5093</title>
 <tags>
 <tag>STW5093</tag>
-<tag></tag>
+<tag>TSSOP30</tag>
 </tags>
 <properties>
-<property name='family'>STW5093</property>
+<property name='package'>tssop30</property>
+<property name='family'>stw5093</property>
 </properties>
 <views>
 <breadboardView>
@@ -247,8 +248,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='pad' name='MIC1_'>
-<description>MIC1_</description>
+<connector id='connector7' type='pad' name='MIC1+'>
+<description>MIC1+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pad'/>
@@ -275,8 +276,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='pad' name='MIC2_'>
-<description>MIC2_</description>
+<connector id='connector10' type='pad' name='MIC2+'>
+<description>MIC2+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pad'/>
@@ -303,8 +304,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='pad' name='MIC3_'>
-<description>MIC3_</description>
+<connector id='connector3' type='pad' name='MIC3+'>
+<description>MIC3+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pad'/>
@@ -429,8 +430,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector14' type='pad' name='VLR_'>
-<description>VLR_</description>
+<connector id='connector14' type='pad' name='VLR+'>
+<description>VLR+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector14pad'/>

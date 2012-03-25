@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-PCF8575C-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>PCF8575C I/O Expander.</description>
-<title></title>
+<title>PCF8575C</title>
 <tags>
 <tag>PCF8575C</tag>
-<tag></tag>
+<tag>SO-24DW</tag>
 </tags>
 <properties>
-<property name='family'>PCF8575C</property>
+<property name='package'>so-24dw</property>
+<property name='family'>pcf8575c</property>
 </properties>
 <views>
 <breadboardView>

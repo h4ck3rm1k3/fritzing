@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-BUTTON-CONDUCTIVE-SMD-0.1_'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Used with rubber key pads. This one was designed and proven to work with the PolyCase Key FOB enclosures.</description>
-<title>SMD-0.1&quot;</title>
+<title>BUTTON-CONDUCTIVE</title>
 <tags>
+<tag>SMD-0.1_</tag>
 <tag>BUTTON-CONDUCTIVE</tag>
-<tag>SMD-0.1&quot;</tag>
+<tag>BUTTON-CONDUCTIVE-0.1</tag>
 </tags>
 <properties>
-<property name='family'>BUTTON-CONDUCTIVE</property>
+<property name='package'>button-conductive-0.1</property>
+<property name='family'>button-conductive</property>
+<property name='variant'>smd-0.1_</property>
 </properties>
 <views>
 <breadboardView>

@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Aesthetics-FKIT-LOGOTYPE--VERY_SMALL'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>LOGO</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;Fabrick.it Logotype&lt;/h3&gt;</description>
-<title>-VERY_SMALL</title>
+<title>FKIT-LOGOTYPE</title>
 <tags>
-<tag>FKIT-LOGOTYPE</tag>
 <tag>-VERY_SMALL</tag>
+<tag>FKIT-LOGOTYPE</tag>
+<tag>FKIT-LOGOTYPE_VERY_SMALL</tag>
 </tags>
 <properties>
-<property name='family'>FKIT-LOGOTYPE</property>
+<property name='package'>fkit-logotype_very_small</property>
+<property name='family'>fkit-logotype</property>
+<property name='variant'>-very_small</property>
 </properties>
 <views>
 <breadboardView>

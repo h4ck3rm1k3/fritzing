@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-SWITCH-DPDT-OS'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>S</label>
 <author>www.fritzing.org</author>
 <description>DPDT Version of the COM-00597</description>
-<title>OS</title>
+<title>SWITCH-DPDT</title>
 <tags>
+<tag>OS</tag>
 <tag>SWITCH-DPDT</tag>
 <tag>OS</tag>
 </tags>
 <properties>
-<property name='family'>SWITCH-DPDT</property>
+<property name='package'>os</property>
+<property name='family'>switch-dpdt</property>
+<property name='variant'>os</property>
 </properties>
 <views>
 <breadboardView>

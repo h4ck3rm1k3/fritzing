@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-TCM8240MD-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>1.3MP color image sensor</description>
-<title></title>
+<title>TCM8240MD</title>
 <tags>
 <tag>TCM8240MD</tag>
-<tag></tag>
+<tag>TCM8240MD</tag>
 </tags>
 <properties>
-<property name='family'>TCM8240MD</property>
+<property name='package'>tcm8240md</property>
+<property name='family'>tcm8240md</property>
 </properties>
 <views>
 <breadboardView>
@@ -163,8 +164,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector11' type='pad' name='DVDD_1.6V_'>
-<description>DVDD_1.6V_</description>
+<connector id='connector11' type='pad' name='DVDD(1.6V)'>
+<description>DVDD(1.6V)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector11pad'/>
@@ -191,8 +192,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='pad' name='GND_11'>
-<description>GND_11</description>
+<connector id='connector10' type='pad' name='GND@11'>
+<description>GND@11</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pad'/>
@@ -205,8 +206,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector16' type='pad' name='GND_17'>
-<description>GND_17</description>
+<connector id='connector16' type='pad' name='GND@17'>
+<description>GND@17</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector16pad'/>
@@ -219,8 +220,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector19' type='pad' name='GND_20'>
-<description>GND_20</description>
+<connector id='connector19' type='pad' name='GND@20'>
+<description>GND@20</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector19pad'/>
@@ -233,8 +234,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='pad' name='GND_5'>
-<description>GND_5</description>
+<connector id='connector4' type='pad' name='GND@5'>
+<description>GND@5</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pad'/>
@@ -247,8 +248,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='pad' name='GND_9'>
-<description>GND_9</description>
+<connector id='connector8' type='pad' name='GND@9'>
+<description>GND@9</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector8pad'/>
@@ -289,8 +290,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='pad' name='PVDD_2.8V_'>
-<description>PVDD_2.8V_</description>
+<connector id='connector5' type='pad' name='PVDD(2.8V)'>
+<description>PVDD(2.8V)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector5pad'/>

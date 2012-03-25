@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-MINI-DIN6-PTH'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;mini DIN 6 Connector&lt;/b&gt;
 Commonly found on the back of a computer for PS2 keyboard and mice. Schematic and footprint are proven. Spark Fun Electronics SKU : PRT-08509</description>
-<title>PTH</title>
+<title>mini DIN 6 Connector</title>
 <tags>
-<tag>MINI-DIN6</tag>
 <tag>PTH</tag>
+<tag>MINI-DIN6</tag>
+<tag>MINI-DIN6</tag>
 </tags>
 <properties>
-<property name='family'>MINI-DIN6</property>
+<property name='package'>mini-din6</property>
+<property name='family'>mini-din6</property>
+<property name='variant'>pth</property>
 </properties>
 <views>
 <breadboardView>

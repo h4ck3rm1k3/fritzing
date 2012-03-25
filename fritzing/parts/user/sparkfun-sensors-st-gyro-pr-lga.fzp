@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-ST-GYRO-PR-LGA'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description></description>
-<title>LGA</title>
+<title>ST-GYRO-PR</title>
 <tags>
-<tag>ST-GYRO-PR</tag>
 <tag>LGA</tag>
+<tag>ST-GYRO-PR</tag>
+<tag>ST-GYRO</tag>
 </tags>
 <properties>
-<property name='family'>ST-GYRO-PR</property>
+<property name='package'>st-gyro</property>
+<property name='family'>st-gyro-pr</property>
+<property name='variant'>lga</property>
 </properties>
 <views>
 <breadboardView>
@@ -177,8 +180,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector13' type='pad' name='RES_14'>
-<description>RES_14</description>
+<connector id='connector13' type='pad' name='RES@14'>
+<description>RES@14</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector13pad'/>
@@ -191,8 +194,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector14' type='pad' name='RES_15'>
-<description>RES_15</description>
+<connector id='connector14' type='pad' name='RES@15'>
+<description>RES@15</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector14pad'/>

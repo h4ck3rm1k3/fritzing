@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-SIMHOLDER2-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Alternate SIM card socket.</description>
-<title></title>
+<title>SIMHOLDER2</title>
 <tags>
 <tag>SIMHOLDER2</tag>
-<tag></tag>
+<tag>SIMHOLDER2</tag>
 </tags>
 <properties>
-<property name='family'>SIMHOLDER2</property>
+<property name='package'>simholder2</property>
+<property name='family'>simholder2</property>
 </properties>
 <views>
 <breadboardView>

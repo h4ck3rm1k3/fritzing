@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Aesthetics-1.8V-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>1.8V supply symbol</description>
-<title></title>
+<title>1.8V</title>
 <tags>
 <tag>1.8V</tag>
 <tag></tag>
 </tags>
 <properties>
-<property name='family'>1.8V</property>
+<property name='package'></property>
+<property name='family'>1.8v</property>
 </properties>
 <views>
 <breadboardView>

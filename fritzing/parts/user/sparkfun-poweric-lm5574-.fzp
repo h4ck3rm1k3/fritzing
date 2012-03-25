@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-LM5574-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Simple Switcher 75V, 0.5A Step-down switching regulator</description>
-<title></title>
+<title>LM5574</title>
 <tags>
 <tag>LM5574</tag>
-<tag></tag>
+<tag>TSSOP-16</tag>
 </tags>
 <properties>
-<property name='family'>LM5574</property>
+<property name='package'>tssop-16</property>
+<property name='family'>lm5574</property>
 </properties>
 <views>
 <breadboardView>

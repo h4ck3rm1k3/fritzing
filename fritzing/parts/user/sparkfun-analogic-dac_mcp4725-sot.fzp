@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-DAC_MCP4725-SOT'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Microchip 12-bit I2C DAC, SOT23-6</description>
-<title>SOT</title>
+<title>DAC_MCP4725</title>
 <tags>
-<tag>DAC_MCP4725</tag>
 <tag>SOT</tag>
+<tag>DAC_MCP4725</tag>
+<tag>SOT23-6</tag>
 </tags>
 <properties>
-<property name='family'>DAC_MCP4725</property>
+<property name='package'>sot23-6</property>
+<property name='family'>dac_mcp4725</property>
+<property name='variant'>sot</property>
 </properties>
 <views>
 <breadboardView>

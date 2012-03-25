@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Boards-XPORT-DIRECT-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>TCP/IP phy and stack module</description>
-<title></title>
+<title>XPORT-DIRECT</title>
 <tags>
 <tag>XPORT-DIRECT</tag>
-<tag></tag>
+<tag>XPORT_DIRECT_MODULE</tag>
 </tags>
 <properties>
-<property name='family'>XPORT-DIRECT</property>
+<property name='package'>xport_direct_module</property>
+<property name='family'>xport-direct</property>
 </properties>
 <views>
 <breadboardView>
@@ -113,8 +114,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector11' type='male' name='GND_1'>
-<description>GND_1</description>
+<connector id='connector11' type='male' name='GND@1'>
+<description>GND@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector11pin'/>
@@ -128,8 +129,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector23' type='male' name='GND_2'>
-<description>GND_2</description>
+<connector id='connector23' type='male' name='GND@2'>
+<description>GND@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector23pin'/>
@@ -143,8 +144,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector12' type='male' name='GND_24'>
-<description>GND_24</description>
+<connector id='connector12' type='male' name='GND@24'>
+<description>GND@24</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector12pin'/>

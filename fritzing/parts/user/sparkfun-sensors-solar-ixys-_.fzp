@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-SOLAR-IXYS-_'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>D</label>
 <author>www.fritzing.org</author>
 <description></description>
-<title>_</title>
+<title>SOLAR-IXYS</title>
 <tags>
-<tag>SOLAR-IXYS</tag>
 <tag>_</tag>
+<tag>SOLAR-IXYS</tag>
+<tag>SO08</tag>
 </tags>
 <properties>
-<property name='family'>SOLAR-IXYS</property>
+<property name='package'>so08</property>
+<property name='family'>solar-ixys</property>
+<property name='variant'>_</property>
 </properties>
 <views>
 <breadboardView>

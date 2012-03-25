@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Displays-LCD_CFAX-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Graphic LCD module (LCD-00463) DISCONTINUED</description>
-<title></title>
+<title>LCD_CFAX</title>
 <tags>
 <tag>LCD_CFAX</tag>
-<tag></tag>
+<tag>LCD_CFAX</tag>
 </tags>
 <properties>
-<property name='family'>LCD_CFAX</property>
+<property name='package'>lcd_cfax</property>
+<property name='family'>lcd_cfax</property>
 </properties>
 <views>
 <breadboardView>

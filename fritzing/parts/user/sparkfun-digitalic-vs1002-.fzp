@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-VS1002-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>MP3 deecoder</description>
-<title></title>
+<title>VS1002</title>
 <tags>
 <tag>VS1002</tag>
-<tag></tag>
+<tag>LQFP-48</tag>
 </tags>
 <properties>
-<property name='family'>VS1002</property>
+<property name='package'>lqfp-48</property>
+<property name='family'>vs1002</property>
 </properties>
 <views>
 <breadboardView>

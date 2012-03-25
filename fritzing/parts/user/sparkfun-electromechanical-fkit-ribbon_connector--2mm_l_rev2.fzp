@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-FKIT-RIBBON_CONNECTOR--2MM_L_REV2'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>J</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;fabrick.it Conductive Ribbon Connector&lt;/h3&gt;</description>
-<title>-2MM_L_REV2</title>
+<title>FKIT-RIBBON_CONNECTOR</title>
 <tags>
-<tag>FKIT-RIBBON_CONNECTOR</tag>
 <tag>-2MM_L_REV2</tag>
+<tag>FKIT-RIBBON_CONNECTOR</tag>
+<tag>FKIT-RIBBON_CONNECTOR_03_2MM_L</tag>
 </tags>
 <properties>
-<property name='family'>FKIT-RIBBON_CONNECTOR</property>
+<property name='package'>fkit-ribbon_connector_03_2mm_l</property>
+<property name='family'>fkit-ribbon_connector</property>
+<property name='variant'>-2mm_l_rev2</property>
 </properties>
 <views>
 <breadboardView>
@@ -38,8 +41,8 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector0' type='male' name='P_1'>
-<description>P_1</description>
+<connector id='connector0' type='male' name='P$1'>
+<description>P$1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pin'/>
@@ -53,8 +56,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='male' name='P_2'>
-<description>P_2</description>
+<connector id='connector3' type='male' name='P$2'>
+<description>P$2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pin'/>
@@ -68,8 +71,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='male' name='P_3'>
-<description>P_3</description>
+<connector id='connector6' type='male' name='P$3'>
+<description>P$3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pin'/>

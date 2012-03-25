@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-74_595-N'>
+<module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-74*595-N'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>IC</label>
 <author>www.fritzing.org</author>
 <description>8-bit &lt;b&gt;SHIFT REGISTER&lt;/b&gt;, output latch</description>
-<title>N</title>
+<title>SHIFT REGISTER</title>
 <tags>
-<tag>74*595</tag>
 <tag>N</tag>
+<tag>74*595</tag>
+<tag>DIL16</tag>
 </tags>
 <properties>
+<property name='package'>dil16</property>
 <property name='family'>74*595</property>
+<property name='variant'>n</property>
 </properties>
 <views>
 <breadboardView>
@@ -188,8 +191,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='male' name='QH_'>
-<description>QH_</description>
+<connector id='connector8' type='male' name='QH*'>
+<description>QH*</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector8pin'/>

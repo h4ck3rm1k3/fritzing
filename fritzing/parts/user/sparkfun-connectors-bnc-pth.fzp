@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-BNC-PTH'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>BNC Connector, Mouser Part# 5227161</description>
-<title>PTH</title>
+<title>BNC</title>
 <tags>
-<tag>BNC</tag>
 <tag>PTH</tag>
+<tag>BNC</tag>
+<tag>BNC</tag>
 </tags>
 <properties>
-<property name='family'>BNC</property>
+<property name='package'>bnc</property>
+<property name='family'>bnc</property>
+<property name='variant'>pth</property>
 </properties>
 <views>
 <breadboardView>

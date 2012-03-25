@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-LM4871-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>3W audio amplifier</description>
-<title></title>
+<title>LM4871</title>
 <tags>
 <tag>LM4871</tag>
-<tag></tag>
+<tag>SO08</tag>
 </tags>
 <properties>
-<property name='family'>LM4871</property>
+<property name='package'>so08</property>
+<property name='family'>lm4871</property>
 </properties>
 <views>
 <breadboardView>
@@ -65,8 +66,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='pad' name='IN_'>
-<description>IN_</description>
+<connector id='connector2' type='pad' name='IN+'>
+<description>IN+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pad'/>

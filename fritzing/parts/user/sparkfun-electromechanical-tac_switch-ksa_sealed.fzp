@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-TAC_SWITCH-KSA_SEALED'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>S</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Momentary Switch&lt;/b&gt;
 Button commonly used for reset or general input. Spark Fun Electronics SKU : COM-00097</description>
-<title>KSA_SEALED</title>
+<title>Momentary Switch</title>
 <tags>
-<tag>TAC_SWITCH</tag>
 <tag>KSA_SEALED</tag>
+<tag>TAC_SWITCH</tag>
+<tag>KSA_SEALED_TAC_SWITCH</tag>
 </tags>
 <properties>
-<property name='family'>TAC_SWITCH</property>
+<property name='package'>ksa_sealed_tac_switch</property>
+<property name='family'>tac_switch</property>
+<property name='variant'>ksa_sealed</property>
 </properties>
 <views>
 <breadboardView>

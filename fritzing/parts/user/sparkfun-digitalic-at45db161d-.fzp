@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-AT45DB161D-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>16-Mbit SPI flash memory</description>
-<title></title>
+<title>AT45DB161D</title>
 <tags>
 <tag>AT45DB161D</tag>
-<tag></tag>
+<tag>SO08-EIAJ</tag>
 </tags>
 <properties>
-<property name='family'>AT45DB161D</property>
+<property name='package'>so08-eiaj</property>
+<property name='family'>at45db161d</property>
 </properties>
 <views>
 <breadboardView>

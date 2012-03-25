@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-JOYSTICK-PSP1000-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>This is a footprint for the PSP-1000 Joystick.  4-pins: X, Y, Vcc and GND</description>
-<title></title>
+<title>JOYSTICK-PSP1000</title>
 <tags>
 <tag>JOYSTICK-PSP1000</tag>
-<tag></tag>
+<tag>JOYSTICK-PSP1000</tag>
 </tags>
 <properties>
-<property name='family'>JOYSTICK-PSP1000</property>
+<property name='package'>joystick-psp1000</property>
+<property name='family'>joystick-psp1000</property>
 </properties>
 <views>
 <breadboardView>

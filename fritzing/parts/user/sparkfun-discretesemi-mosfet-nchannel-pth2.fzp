@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DiscreteSemi-MOSFET-NCHANNEL-PTH2'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>Q</label>
 <author>www.fritzing.org</author>
 <description>Generic NMOS footprint</description>
-<title>PTH2</title>
+<title>MOSFET-NCHANNEL</title>
 <tags>
-<tag>MOSFET-NCHANNEL</tag>
 <tag>PTH2</tag>
+<tag>MOSFET-NCHANNEL</tag>
+<tag>TO220V</tag>
 </tags>
 <properties>
-<property name='family'>MOSFET-NCHANNEL</property>
+<property name='package'>to220v</property>
+<property name='family'>mosfet-nchannel</property>
+<property name='variant'>pth2</property>
 </properties>
 <views>
 <breadboardView>

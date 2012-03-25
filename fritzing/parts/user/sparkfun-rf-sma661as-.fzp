@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-SMA661AS-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>GPS low noise amplifier, 18dB gain, low external parts count</description>
-<title></title>
+<title>SMA661AS</title>
 <tags>
 <tag>SMA661AS</tag>
-<tag></tag>
+<tag>SOT666</tag>
 </tags>
 <properties>
-<property name='family'>SMA661AS</property>
+<property name='package'>sot666</property>
+<property name='family'>sma661as</property>
 </properties>
 <views>
 <breadboardView>
@@ -37,8 +38,8 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector1' type='pad' name='GND_2'>
-<description>GND_2</description>
+<connector id='connector1' type='pad' name='GND@2'>
+<description>GND@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pad'/>
@@ -51,8 +52,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='pad' name='GND_5'>
-<description>GND_5</description>
+<connector id='connector4' type='pad' name='GND@5'>
+<description>GND@5</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pad'/>

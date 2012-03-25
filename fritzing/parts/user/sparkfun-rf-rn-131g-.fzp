@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-RN-131G-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Roving Netowrks WiFLy GSX Module</description>
-<title></title>
+<title>RN-131G</title>
 <tags>
 <tag>RN-131G</tag>
-<tag></tag>
+<tag>RN-131G</tag>
 </tags>
 <properties>
-<property name='family'>RN-131G</property>
+<property name='package'>rn-131g</property>
+<property name='family'>rn-131g</property>
 </properties>
 <views>
 <breadboardView>
@@ -149,8 +150,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector18' type='pad' name='GND_19'>
-<description>GND_19</description>
+<connector id='connector18' type='pad' name='GND@19'>
+<description>GND@19</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector18pad'/>
@@ -163,8 +164,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector35' type='pad' name='GND_36'>
-<description>GND_36</description>
+<connector id='connector35' type='pad' name='GND@36'>
+<description>GND@36</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector35pad'/>
@@ -177,8 +178,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector36' type='pad' name='GND_37'>
-<description>GND_37</description>
+<connector id='connector36' type='pad' name='GND@37'>
+<description>GND@37</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector36pad'/>
@@ -191,8 +192,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector37' type='pad' name='GND_38'>
-<description>GND_38</description>
+<connector id='connector37' type='pad' name='GND@38'>
+<description>GND@38</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector37pad'/>
@@ -205,8 +206,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector38' type='pad' name='GND_39'>
-<description>GND_39</description>
+<connector id='connector38' type='pad' name='GND@39'>
+<description>GND@39</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector38pad'/>
@@ -219,8 +220,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector39' type='pad' name='GND_40'>
-<description>GND_40</description>
+<connector id='connector39' type='pad' name='GND@40'>
+<description>GND@40</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector39pad'/>
@@ -233,8 +234,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector40' type='pad' name='GND_41'>
-<description>GND_41</description>
+<connector id='connector40' type='pad' name='GND@41'>
+<description>GND@41</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector40pad'/>
@@ -247,8 +248,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector41' type='pad' name='GND_42'>
-<description>GND_42</description>
+<connector id='connector41' type='pad' name='GND@42'>
+<description>GND@42</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector41pad'/>
@@ -261,8 +262,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector42' type='pad' name='GND_43'>
-<description>GND_43</description>
+<connector id='connector42' type='pad' name='GND@43'>
+<description>GND@43</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector42pad'/>
@@ -275,8 +276,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector43' type='pad' name='GND_44'>
-<description>GND_44</description>
+<connector id='connector43' type='pad' name='GND@44'>
+<description>GND@44</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector43pad'/>

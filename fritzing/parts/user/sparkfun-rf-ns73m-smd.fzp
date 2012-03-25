@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-NS73M-SMD'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;FM Transmitter&lt;/b&gt;
 2mW transmitter NS73M. Easy SPI interface. Digital tuning. SKU: WRL-08452</description>
-<title>SMD</title>
+<title>FM Transmitter</title>
 <tags>
-<tag>NS73M</tag>
 <tag>SMD</tag>
+<tag>NS73M</tag>
+<tag>NS73M</tag>
 </tags>
 <properties>
-<property name='family'>NS73M</property>
+<property name='package'>ns73m</property>
+<property name='family'>ns73m</property>
+<property name='variant'>smd</property>
 </properties>
 <views>
 <breadboardView>
@@ -66,8 +69,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='pad' name='GND_1'>
-<description>GND_1</description>
+<connector id='connector7' type='pad' name='GND@1'>
+<description>GND@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pad'/>
@@ -80,8 +83,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='pad' name='GND_11'>
-<description>GND_11</description>
+<connector id='connector2' type='pad' name='GND@11'>
+<description>GND@11</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pad'/>
@@ -94,8 +97,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='pad' name='GND_14'>
-<description>GND_14</description>
+<connector id='connector5' type='pad' name='GND@14'>
+<description>GND@14</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector5pad'/>

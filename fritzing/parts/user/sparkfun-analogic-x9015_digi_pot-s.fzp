@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-X9015_DIGI_POT-S'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Digital pot- up/down/increment control only</description>
-<title>S</title>
+<title>X9015_DIGI_POT</title>
 <tags>
-<tag>X9015_DIGI_POT</tag>
 <tag>S</tag>
+<tag>X9015_DIGI_POT</tag>
+<tag>SO08</tag>
 </tags>
 <properties>
-<property name='family'>X9015_DIGI_POT</property>
+<property name='package'>so08</property>
+<property name='family'>x9015_digi_pot</property>
+<property name='variant'>s</property>
 </properties>
 <views>
 <breadboardView>

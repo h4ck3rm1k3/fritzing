@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Aesthetics-FIDUCIALTAB-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Fiducial/tab for panelizing boards.</description>
-<title></title>
+<title>FIDUCIALTAB</title>
 <tags>
 <tag>FIDUCIALTAB</tag>
-<tag></tag>
+<tag>FIDUCIALTAB</tag>
 </tags>
 <properties>
-<property name='family'>FIDUCIALTAB</property>
+<property name='package'>fiducialtab</property>
+<property name='family'>fiducialtab</property>
 </properties>
 <views>
 <breadboardView>

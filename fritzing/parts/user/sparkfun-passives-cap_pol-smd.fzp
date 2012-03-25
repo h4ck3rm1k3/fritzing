@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Passives-CAP_POL-SMD'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>C</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Capacitor Polarized&lt;/b&gt;
 These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in electrolytic and tantalum varieties. Always verify the external diameter of the through hole cap, it varies with capacity, voltage, and manufacturer. The EIA devices should be standard.</description>
-<title>SMD</title>
+<title>Capacitor Polarized</title>
 <tags>
-<tag>CAP_POL</tag>
 <tag>SMD</tag>
+<tag>CAP_POL</tag>
+<tag>VISHAY_C</tag>
 </tags>
 <properties>
-<property name='family'>CAP_POL</property>
+<property name='package'>vishay_c</property>
+<property name='family'>cap_pol</property>
+<property name='variant'>smd</property>
 </properties>
 <views>
 <breadboardView>
@@ -38,8 +41,8 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 </iconView>
 </views>
 <connectors>
-<connector id='connector0' type='pad' name='_'>
-<description>_</description>
+<connector id='connector0' type='pad' name='+'>
+<description>+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pad'/>

@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Aesthetics-LOGO-OTL-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description></description>
-<title></title>
+<title>LOGO-OTL</title>
 <tags>
 <tag>LOGO-OTL</tag>
-<tag></tag>
+<tag>OVERTONE_LOGO</tag>
 </tags>
 <properties>
-<property name='family'>LOGO-OTL</property>
+<property name='package'>overtone_logo</property>
+<property name='family'>logo-otl</property>
 </properties>
 <views>
 <breadboardView>

@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-ADM1087-SC-70'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Power supply sequencer</description>
-<title>SC-70</title>
+<title>ADM1087</title>
 <tags>
+<tag>SC-70</tag>
 <tag>ADM1087</tag>
 <tag>SC-70</tag>
 </tags>
 <properties>
-<property name='family'>ADM1087</property>
+<property name='package'>sc-70</property>
+<property name='family'>adm1087</property>
+<property name='variant'>sc-70</property>
 </properties>
 <views>
 <breadboardView>

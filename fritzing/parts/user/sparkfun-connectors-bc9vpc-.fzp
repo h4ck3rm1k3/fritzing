@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-BC9VPC-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>BAT</label>
 <author>www.fritzing.org</author>
 <description>9V board-mount battery cradle</description>
-<title></title>
+<title>BC9VPC</title>
 <tags>
 <tag>BC9VPC</tag>
-<tag></tag>
+<tag>BC9VPC</tag>
 </tags>
 <properties>
-<property name='family'>BC9VPC</property>
+<property name='package'>bc9vpc</property>
+<property name='family'>bc9vpc</property>
 </properties>
 <views>
 <breadboardView>
@@ -38,8 +39,8 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector0' type='male' name='V_'>
-<description>V_</description>
+<connector id='connector0' type='male' name='V+'>
+<description>V+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pin'/>

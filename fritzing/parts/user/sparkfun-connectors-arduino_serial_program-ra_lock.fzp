@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-ARDUINO_SERIAL_PROGRAM-RA_LOCK'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>FTDI connector footprints</description>
-<title>RA_LOCK</title>
+<title>ARDUINO_SERIAL_PROGRAM</title>
 <tags>
-<tag>ARDUINO_SERIAL_PROGRAM</tag>
 <tag>RA_LOCK</tag>
+<tag>ARDUINO_SERIAL_PROGRAM</tag>
+<tag>MOLEX-1X6-RA_LOCK</tag>
 </tags>
 <properties>
-<property name='family'>ARDUINO_SERIAL_PROGRAM</property>
+<property name='package'>molex-1x6-ra_lock</property>
+<property name='family'>arduino_serial_program</property>
+<property name='variant'>ra_lock</property>
 </properties>
 <views>
 <breadboardView>

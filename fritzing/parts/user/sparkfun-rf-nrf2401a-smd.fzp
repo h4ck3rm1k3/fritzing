@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-NRF2401A-SMD'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;2.4GHz Transceiver&lt;/b&gt;
 This is the very popular, low power RF transceiver from Nordic Semiconductor. Used in the Nike+iPod product. SKU: COM-00300</description>
-<title>SMD</title>
+<title>2.4GHz Transceiver</title>
 <tags>
-<tag>NRF2401A</tag>
 <tag>SMD</tag>
+<tag>NRF2401A</tag>
+<tag>MLP-24</tag>
 </tags>
 <properties>
-<property name='family'>NRF2401A</property>
+<property name='package'>mlp-24</property>
+<property name='family'>nrf2401a</property>
+<property name='variant'>smd</property>
 </properties>
 <views>
 <breadboardView>
@@ -220,8 +223,8 @@ This is the very popular, low power RF transceiver from Nordic Semiconductor. Us
 </pcbView>
 </views>
 </connector>
-<connector id='connector17' type='pad' name='VDD_17'>
-<description>VDD_17</description>
+<connector id='connector17' type='pad' name='VDD@17'>
+<description>VDD@17</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector17pad'/>
@@ -234,8 +237,8 @@ This is the very popular, low power RF transceiver from Nordic Semiconductor. Us
 </pcbView>
 </views>
 </connector>
-<connector id='connector21' type='pad' name='VDD_21'>
-<description>VDD_21</description>
+<connector id='connector21' type='pad' name='VDD@21'>
+<description>VDD@21</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector21pad'/>
@@ -248,8 +251,8 @@ This is the very popular, low power RF transceiver from Nordic Semiconductor. Us
 </pcbView>
 </views>
 </connector>
-<connector id='connector24' type='pad' name='VDD_24'>
-<description>VDD_24</description>
+<connector id='connector24' type='pad' name='VDD@24'>
+<description>VDD@24</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector24pad'/>
@@ -276,8 +279,8 @@ This is the very popular, low power RF transceiver from Nordic Semiconductor. Us
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='pad' name='VSS_0'>
-<description>VSS_0</description>
+<connector id='connector0' type='pad' name='VSS@0'>
+<description>VSS@0</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pad'/>
@@ -290,8 +293,8 @@ This is the very popular, low power RF transceiver from Nordic Semiconductor. Us
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='pad' name='VSS_10'>
-<description>VSS_10</description>
+<connector id='connector10' type='pad' name='VSS@10'>
+<description>VSS@10</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pad'/>
@@ -304,8 +307,8 @@ This is the very popular, low power RF transceiver from Nordic Semiconductor. Us
 </pcbView>
 </views>
 </connector>
-<connector id='connector18' type='pad' name='VSS_18'>
-<description>VSS_18</description>
+<connector id='connector18' type='pad' name='VSS@18'>
+<description>VSS@18</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector18pad'/>
@@ -318,8 +321,8 @@ This is the very popular, low power RF transceiver from Nordic Semiconductor. Us
 </pcbView>
 </views>
 </connector>
-<connector id='connector20' type='pad' name='VSS_20'>
-<description>VSS_20</description>
+<connector id='connector20' type='pad' name='VSS@20'>
+<description>VSS@20</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector20pad'/>
@@ -332,8 +335,8 @@ This is the very popular, low power RF transceiver from Nordic Semiconductor. Us
 </pcbView>
 </views>
 </connector>
-<connector id='connector22' type='pad' name='VSS_22'>
-<description>VSS_22</description>
+<connector id='connector22' type='pad' name='VSS@22'>
+<description>VSS@22</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector22pad'/>

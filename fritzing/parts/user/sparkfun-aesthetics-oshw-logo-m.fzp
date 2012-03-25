@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Aesthetics-OSHW-LOGO-M'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Open Source Hardware Logo&lt;/b&gt; This logo indicates the piece of hardware it is found on incorporates a OSHW license and/or adheres to the definition of open source hardware found here: http://freedomdefined.org/OSHW</description>
-<title>M</title>
+<title>Open Source Hardware Logo</title>
 <tags>
-<tag>OSHW-LOGO</tag>
 <tag>M</tag>
+<tag>OSHW-LOGO</tag>
+<tag>OSHW-LOGO-M</tag>
 </tags>
 <properties>
-<property name='family'>OSHW-LOGO</property>
+<property name='package'>oshw-logo-m</property>
+<property name='family'>oshw-logo</property>
+<property name='variant'>m</property>
 </properties>
 <views>
 <breadboardView>

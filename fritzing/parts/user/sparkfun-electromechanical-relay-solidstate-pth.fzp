@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-RELAY-SOLIDSTATE-PTH'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>SPST SS relay</description>
-<title>PTH</title>
+<title>RELAY-SOLIDSTATE</title>
 <tags>
-<tag>RELAY-SOLIDSTATE</tag>
 <tag>PTH</tag>
+<tag>RELAY-SOLIDSTATE</tag>
+<tag>RELAY-S108T02</tag>
 </tags>
 <properties>
-<property name='family'>RELAY-SOLIDSTATE</property>
+<property name='package'>relay-s108t02</property>
+<property name='family'>relay-solidstate</property>
+<property name='variant'>pth</property>
 </properties>
 <views>
 <breadboardView>
@@ -38,8 +41,8 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector2' type='male' name='_'>
-<description>_</description>
+<connector id='connector2' type='male' name='+'>
+<description>+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pin'/>

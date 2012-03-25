@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DiscreteSemi-MOSFET-PCHANNEL-SMD'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>Q</label>
 <author>www.fritzing.org</author>
 <description>Generic PMOSFET</description>
-<title>SMD</title>
+<title>MOSFET-PCHANNEL</title>
 <tags>
-<tag>MOSFET-PCHANNEL</tag>
 <tag>SMD</tag>
+<tag>MOSFET-PCHANNEL</tag>
+<tag>SOT23-3</tag>
 </tags>
 <properties>
-<property name='family'>MOSFET-PCHANNEL</property>
+<property name='package'>sot23-3</property>
+<property name='family'>mosfet-pchannel</property>
+<property name='variant'>smd</property>
 </properties>
 <views>
 <breadboardView>

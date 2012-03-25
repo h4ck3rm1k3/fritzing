@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-SCA3000-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>2g SPI accelerometer with interrrupt</description>
-<title></title>
+<title>SCA3000</title>
 <tags>
 <tag>SCA3000</tag>
-<tag></tag>
+<tag>SCA3000</tag>
 </tags>
 <properties>
-<property name='family'>SCA3000</property>
+<property name='package'>sca3000</property>
+<property name='family'>sca3000</property>
 </properties>
 <views>
 <breadboardView>
@@ -51,8 +52,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector14' type='pad' name='AVSS_15'>
-<description>AVSS_15</description>
+<connector id='connector14' type='pad' name='AVSS@15'>
+<description>AVSS@15</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector14pad'/>
@@ -65,8 +66,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector15' type='pad' name='AVSS_16'>
-<description>AVSS_16</description>
+<connector id='connector15' type='pad' name='AVSS@16'>
+<description>AVSS@16</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector15pad'/>

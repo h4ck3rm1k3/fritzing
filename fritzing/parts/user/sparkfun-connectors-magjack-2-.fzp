@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-MAGJACK-2-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>J</label>
 <author>www.fritzing.org</author>
 <description>RJ-45 with LEDs</description>
-<title></title>
+<title>MAGJACK-2</title>
 <tags>
 <tag>MAGJACK-2</tag>
-<tag></tag>
+<tag>MAGJACK-19938</tag>
 </tags>
 <properties>
-<property name='family'>MAGJACK-2</property>
+<property name='package'>magjack-19938</property>
+<property name='family'>magjack-2</property>
 </properties>
 <views>
 <breadboardView>
@@ -38,8 +39,8 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector11' type='male' name='GLED_'>
-<description>GLED_</description>
+<connector id='connector11' type='male' name='GLED+'>
+<description>GLED+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector11pin'/>
@@ -83,8 +84,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='male' name='RD_'>
-<description>RD_</description>
+<connector id='connector0' type='male' name='RD+'>
+<description>RD+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pin'/>
@@ -143,8 +144,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='male' name='TD_'>
-<description>TD_</description>
+<connector id='connector3' type='male' name='TD+'>
+<description>TD+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pin'/>
@@ -173,8 +174,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector9' type='male' name='YLED_'>
-<description>YLED_</description>
+<connector id='connector9' type='male' name='YLED+'>
+<description>YLED+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector9pin'/>

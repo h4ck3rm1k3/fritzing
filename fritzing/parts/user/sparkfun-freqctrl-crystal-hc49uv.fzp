@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-FreqCtrl-CRYSTAL-HC49UV'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>Y</label>
 <author>www.fritzing.org</author>
 <description>Various standard crystals. Proven footprints. Spark Fun Electronics SKU : COM-00534</description>
-<title>HC49UV</title>
+<title>CRYSTAL</title>
 <tags>
-<tag>CRYSTAL</tag>
 <tag>HC49UV</tag>
+<tag>CRYSTAL</tag>
+<tag>HC49U-V</tag>
 </tags>
 <properties>
-<property name='family'>CRYSTAL</property>
+<property name='package'>hc49u-v</property>
+<property name='family'>crystal</property>
+<property name='variant'>hc49uv</property>
 </properties>
 <views>
 <breadboardView>

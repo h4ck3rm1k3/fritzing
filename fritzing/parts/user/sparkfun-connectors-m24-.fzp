@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-M24-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>1x24 .1&quot; header</description>
-<title></title>
+<title>M24</title>
 <tags>
 <tag>M24</tag>
-<tag></tag>
+<tag>1X24</tag>
 </tags>
 <properties>
-<property name='family'>M24</property>
+<property name='package'>1x24</property>
+<property name='family'>m24</property>
 </properties>
 <views>
 <breadboardView>

@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-LOAD_CELL-1X03-PTH'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>J</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;Half-wheatstone bridge Load Cell&lt;/h3&gt;</description>
-<title>1X03-PTH</title>
+<title>LOAD_CELL</title>
 <tags>
-<tag>LOAD_CELL</tag>
 <tag>1X03-PTH</tag>
+<tag>LOAD_CELL</tag>
+<tag>1X03</tag>
 </tags>
 <properties>
-<property name='family'>LOAD_CELL</property>
+<property name='package'>1x03</property>
+<property name='family'>load_cell</property>
+<property name='variant'>1x03-pth</property>
 </properties>
 <views>
 <breadboardView>

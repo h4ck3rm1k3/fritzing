@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-RF-LINK_RX-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>RF Link receivers- WRL-8947, 8948, 8949, 8950</description>
-<title></title>
+<title>RF-LINK_RX</title>
 <tags>
 <tag>RF-LINK_RX</tag>
-<tag></tag>
+<tag>RF-LINK_RX</tag>
 </tags>
 <properties>
-<property name='family'>RF-LINK_RX</property>
+<property name='package'>rf-link_rx</property>
+<property name='family'>rf-link_rx</property>
 </properties>
 <views>
 <breadboardView>
@@ -38,8 +39,8 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector3' type='male' name='_5V'>
-<description>_5V</description>
+<connector id='connector3' type='male' name='+5V'>
+<description>+5V</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pin'/>

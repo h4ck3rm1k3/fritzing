@@ -1,18 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-GE863_GPS-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;GE863 Cellular Module with GPS&lt;/b&gt;
 Proto layout and schematic for GE863 cellular module with SiRF III GPS. Spark Fun Electronics SKU : CEL-08246</description>
-<title></title>
+<title>GE863 Cellular Module with GPS</title>
 <tags>
 <tag>GE863_GPS</tag>
-<tag></tag>
+<tag>GE863</tag>
 </tags>
 <properties>
-<property name='family'>GE863_GPS</property>
+<property name='package'>ge863</property>
+<property name='family'>ge863_gps</property>
 </properties>
 <views>
 <breadboardView>
@@ -234,8 +235,8 @@ Proto layout and schematic for GE863 cellular module with SiRF III GPS. Spark Fu
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='pad' name='EAR_HF_'>
-<description>EAR_HF_</description>
+<connector id='connector10' type='pad' name='EAR_HF+'>
+<description>EAR_HF+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pad'/>
@@ -262,8 +263,8 @@ Proto layout and schematic for GE863 cellular module with SiRF III GPS. Spark Fu
 </pcbView>
 </views>
 </connector>
-<connector id='connector9' type='pad' name='EAR_MT_'>
-<description>EAR_MT_</description>
+<connector id='connector9' type='pad' name='EAR_MT+'>
+<description>EAR_MT+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector9pad'/>
@@ -290,8 +291,8 @@ Proto layout and schematic for GE863 cellular module with SiRF III GPS. Spark Fu
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='pad' name='GND_0'>
-<description>GND_0</description>
+<connector id='connector7' type='pad' name='GND@0'>
+<description>GND@0</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pad'/>
@@ -304,8 +305,8 @@ Proto layout and schematic for GE863 cellular module with SiRF III GPS. Spark Fu
 </pcbView>
 </views>
 </connector>
-<connector id='connector16' type='pad' name='GND_1'>
-<description>GND_1</description>
+<connector id='connector16' type='pad' name='GND@1'>
+<description>GND@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector16pad'/>
@@ -318,8 +319,8 @@ Proto layout and schematic for GE863 cellular module with SiRF III GPS. Spark Fu
 </pcbView>
 </views>
 </connector>
-<connector id='connector71' type='pad' name='GND_10'>
-<description>GND_10</description>
+<connector id='connector71' type='pad' name='GND@10'>
+<description>GND@10</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector71pad'/>
@@ -332,8 +333,8 @@ Proto layout and schematic for GE863 cellular module with SiRF III GPS. Spark Fu
 </pcbView>
 </views>
 </connector>
-<connector id='connector76' type='pad' name='GND_11'>
-<description>GND_11</description>
+<connector id='connector76' type='pad' name='GND@11'>
+<description>GND@11</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector76pad'/>
@@ -346,8 +347,8 @@ Proto layout and schematic for GE863 cellular module with SiRF III GPS. Spark Fu
 </pcbView>
 </views>
 </connector>
-<connector id='connector78' type='pad' name='GND_12'>
-<description>GND_12</description>
+<connector id='connector78' type='pad' name='GND@12'>
+<description>GND@12</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector78pad'/>
@@ -360,8 +361,8 @@ Proto layout and schematic for GE863 cellular module with SiRF III GPS. Spark Fu
 </pcbView>
 </views>
 </connector>
-<connector id='connector81' type='pad' name='GND_13'>
-<description>GND_13</description>
+<connector id='connector81' type='pad' name='GND@13'>
+<description>GND@13</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector81pad'/>
@@ -374,8 +375,8 @@ Proto layout and schematic for GE863 cellular module with SiRF III GPS. Spark Fu
 </pcbView>
 </views>
 </connector>
-<connector id='connector27' type='pad' name='GND_2'>
-<description>GND_2</description>
+<connector id='connector27' type='pad' name='GND@2'>
+<description>GND@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector27pad'/>
@@ -388,8 +389,8 @@ Proto layout and schematic for GE863 cellular module with SiRF III GPS. Spark Fu
 </pcbView>
 </views>
 </connector>
-<connector id='connector35' type='pad' name='GND_3'>
-<description>GND_3</description>
+<connector id='connector35' type='pad' name='GND@3'>
+<description>GND@3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector35pad'/>
@@ -402,8 +403,8 @@ Proto layout and schematic for GE863 cellular module with SiRF III GPS. Spark Fu
 </pcbView>
 </views>
 </connector>
-<connector id='connector44' type='pad' name='GND_4'>
-<description>GND_4</description>
+<connector id='connector44' type='pad' name='GND@4'>
+<description>GND@4</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector44pad'/>
@@ -416,8 +417,8 @@ Proto layout and schematic for GE863 cellular module with SiRF III GPS. Spark Fu
 </pcbView>
 </views>
 </connector>
-<connector id='connector47' type='pad' name='GND_5'>
-<description>GND_5</description>
+<connector id='connector47' type='pad' name='GND@5'>
+<description>GND@5</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector47pad'/>
@@ -430,8 +431,8 @@ Proto layout and schematic for GE863 cellular module with SiRF III GPS. Spark Fu
 </pcbView>
 </views>
 </connector>
-<connector id='connector49' type='pad' name='GND_6'>
-<description>GND_6</description>
+<connector id='connector49' type='pad' name='GND@6'>
+<description>GND@6</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector49pad'/>
@@ -444,8 +445,8 @@ Proto layout and schematic for GE863 cellular module with SiRF III GPS. Spark Fu
 </pcbView>
 </views>
 </connector>
-<connector id='connector55' type='pad' name='GND_7'>
-<description>GND_7</description>
+<connector id='connector55' type='pad' name='GND@7'>
+<description>GND@7</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector55pad'/>
@@ -458,8 +459,8 @@ Proto layout and schematic for GE863 cellular module with SiRF III GPS. Spark Fu
 </pcbView>
 </views>
 </connector>
-<connector id='connector66' type='pad' name='GND_8'>
-<description>GND_8</description>
+<connector id='connector66' type='pad' name='GND@8'>
+<description>GND@8</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector66pad'/>
@@ -472,8 +473,8 @@ Proto layout and schematic for GE863 cellular module with SiRF III GPS. Spark Fu
 </pcbView>
 </views>
 </connector>
-<connector id='connector68' type='pad' name='GND_9'>
-<description>GND_9</description>
+<connector id='connector68' type='pad' name='GND@9'>
+<description>GND@9</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector68pad'/>
@@ -766,8 +767,8 @@ Proto layout and schematic for GE863 cellular module with SiRF III GPS. Spark Fu
 </pcbView>
 </views>
 </connector>
-<connector id='connector14' type='pad' name='MIC_HF_'>
-<description>MIC_HF_</description>
+<connector id='connector14' type='pad' name='MIC_HF+'>
+<description>MIC_HF+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector14pad'/>
@@ -794,8 +795,8 @@ Proto layout and schematic for GE863 cellular module with SiRF III GPS. Spark Fu
 </pcbView>
 </views>
 </connector>
-<connector id='connector12' type='pad' name='MIC_MT_'>
-<description>MIC_MT_</description>
+<connector id='connector12' type='pad' name='MIC_MT+'>
+<description>MIC_MT+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector12pad'/>

@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Displays-7-SEGMENT-DISPLAY-PTH'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description></description>
-<title>PTH</title>
+<title>7-SEGMENT-DISPLAY</title>
 <tags>
-<tag>7-SEGMENT-DISPLAY</tag>
 <tag>PTH</tag>
+<tag>7-SEGMENT-DISPLAY</tag>
+<tag>7-SEGMENT-DISPLAY</tag>
 </tags>
 <properties>
-<property name='family'>7-SEGMENT-DISPLAY</property>
+<property name='package'>7-segment-display</property>
+<property name='family'>7-segment-display</property>
+<property name='variant'>pth</property>
 </properties>
 <views>
 <breadboardView>

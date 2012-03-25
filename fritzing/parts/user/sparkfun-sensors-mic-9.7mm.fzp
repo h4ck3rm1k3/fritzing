@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-MIC-9.7MM'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Omni-directional electret microphone. 9.7mm standard diameter.</description>
-<title>9.7MM</title>
+<title>MIC</title>
 <tags>
-<tag>MIC</tag>
 <tag>9.7MM</tag>
+<tag>MIC</tag>
+<tag>MIC-9.7MM</tag>
 </tags>
 <properties>
-<property name='family'>MIC</property>
+<property name='package'>mic-9.7mm</property>
+<property name='family'>mic</property>
+<property name='variant'>9.7mm</property>
 </properties>
 <views>
 <breadboardView>

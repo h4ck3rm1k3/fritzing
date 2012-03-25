@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Displays-LCD_BACKLIGHT_PADS-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description></description>
-<title></title>
+<title>LCD_BACKLIGHT_PADS</title>
 <tags>
 <tag>LCD_BACKLIGHT_PADS</tag>
-<tag></tag>
+<tag>LCD_BACKLIGHT_PADS</tag>
 </tags>
 <properties>
-<property name='family'>LCD_BACKLIGHT_PADS</property>
+<property name='package'>lcd_backlight_pads</property>
+<property name='family'>lcd_backlight_pads</property>
 </properties>
 <views>
 <breadboardView>

@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-FreqCtrl-RESONATOR-PTH'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>Y</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Resonator&lt;/b&gt;
 Small SMD resonator. This is the itty bitty 10/20MHz resonators with built in caps. CSTCE10M0G55 and CSTCE20M0V53. Footprint has been reviewed closely but hasn&apos;t been tested yet.</description>
-<title>PTH</title>
+<title>Resonator</title>
 <tags>
-<tag>RESONATOR</tag>
 <tag>PTH</tag>
+<tag>RESONATOR</tag>
+<tag>RESONATOR-PTH</tag>
 </tags>
 <properties>
-<property name='family'>RESONATOR</property>
+<property name='package'>resonator-pth</property>
+<property name='family'>resonator</property>
+<property name='variant'>pth</property>
 </properties>
 <views>
 <breadboardView>

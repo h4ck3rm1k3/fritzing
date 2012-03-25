@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DiscreteSemi-V-REFERENCE-SMD'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Zener diode</description>
-<title>SMD</title>
+<title>V-REFERENCE</title>
 <tags>
-<tag>V-REFERENCE</tag>
 <tag>SMD</tag>
+<tag>V-REFERENCE</tag>
+<tag>SOT23-3</tag>
 </tags>
 <properties>
-<property name='family'>V-REFERENCE</property>
+<property name='package'>sot23-3</property>
+<property name='family'>v-reference</property>
+<property name='variant'>smd</property>
 </properties>
 <views>
 <breadboardView>

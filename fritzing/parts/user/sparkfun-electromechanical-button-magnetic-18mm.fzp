@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-BUTTON-MAGNETIC-18MM'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Magnetic metal snaps. 18mm is DEV-08682.</description>
-<title>18MM</title>
+<title>BUTTON-MAGNETIC</title>
 <tags>
-<tag>BUTTON-MAGNETIC</tag>
 <tag>18MM</tag>
+<tag>BUTTON-MAGNETIC</tag>
+<tag>BUTTON-18MM</tag>
 </tags>
 <properties>
-<property name='family'>BUTTON-MAGNETIC</property>
+<property name='package'>button-18mm</property>
+<property name='family'>button-magnetic</property>
+<property name='variant'>18mm</property>
 </properties>
 <views>
 <breadboardView>

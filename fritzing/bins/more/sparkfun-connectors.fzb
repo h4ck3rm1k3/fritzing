@@ -1962,7 +1962,7 @@
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Connectors-USB_SHIELD-' modelIndex='280'>
+<instance moduleIdRef='SparkFun-Connectors-USB+SHIELD-' modelIndex='280'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>

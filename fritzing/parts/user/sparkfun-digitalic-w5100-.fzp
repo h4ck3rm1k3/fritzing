@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-W5100-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;WIZnet W5100&lt;/h3&gt;
@@ -9,13 +9,14 @@ TCP/IP PHY Embedded Chip&lt;br&gt;
 See SparkFun catalog # COM-09471&lt;br&gt;
 &lt;br&gt;
 Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm,  0.4mm pitch</description>
-<title></title>
+<title>LQFP-80</title>
 <tags>
 <tag>W5100</tag>
-<tag></tag>
+<tag>LQFP-80</tag>
 </tags>
 <properties>
-<property name='family'>W5100</property>
+<property name='package'>lqfp-80</property>
+<property name='family'>w5100</property>
 </properties>
 <views>
 <breadboardView>
@@ -41,8 +42,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm,  0.4mm pitch</description>
 </iconView>
 </views>
 <connectors>
-<connector id='connector74' type='pad' name='_CS'>
-<description>_CS</description>
+<connector id='connector74' type='pad' name='*CS'>
+<description>*CS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector74pad'/>
@@ -55,8 +56,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm,  0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector75' type='pad' name='_INT'>
-<description>_INT</description>
+<connector id='connector75' type='pad' name='*INT'>
+<description>*INT</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector75pad'/>
@@ -69,8 +70,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm,  0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector77' type='pad' name='_RD'>
-<description>_RD</description>
+<connector id='connector77' type='pad' name='*RD'>
+<description>*RD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector77pad'/>
@@ -83,8 +84,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm,  0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector78' type='pad' name='_RESET'>
-<description>_RESET</description>
+<connector id='connector78' type='pad' name='*RESET'>
+<description>*RESET</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector78pad'/>
@@ -97,8 +98,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm,  0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector41' type='pad' name='_SCS'>
-<description>_SCS</description>
+<connector id='connector41' type='pad' name='*SCS'>
+<description>*SCS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector41pad'/>
@@ -111,8 +112,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm,  0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector76' type='pad' name='_WR'>
-<description>_WR</description>
+<connector id='connector76' type='pad' name='*WR'>
+<description>*WR</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector76pad'/>
@@ -125,8 +126,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm,  0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector23' type='pad' name='1V8A_0'>
-<description>1V8A_0</description>
+<connector id='connector23' type='pad' name='1V8A@0'>
+<description>1V8A@0</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector23pad'/>
@@ -139,8 +140,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm,  0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector13' type='pad' name='1V8A_1'>
-<description>1V8A_1</description>
+<connector id='connector13' type='pad' name='1V8A@1'>
+<description>1V8A@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector13pad'/>
@@ -153,8 +154,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm,  0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector34' type='pad' name='1V8D_0'>
-<description>1V8D_0</description>
+<connector id='connector34' type='pad' name='1V8D@0'>
+<description>1V8D@0</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector34pad'/>
@@ -167,8 +168,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm,  0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector35' type='pad' name='1V8D_1'>
-<description>1V8D_1</description>
+<connector id='connector35' type='pad' name='1V8D@1'>
+<description>1V8D@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector35pad'/>
@@ -181,8 +182,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm,  0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector52' type='pad' name='1V8D_2'>
-<description>1V8D_2</description>
+<connector id='connector52' type='pad' name='1V8D@2'>
+<description>1V8D@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector52pad'/>
@@ -195,8 +196,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm,  0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='pad' name='1V8D_3'>
-<description>1V8D_3</description>
+<connector id='connector1' type='pad' name='1V8D@3'>
+<description>1V8D@3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pad'/>
@@ -237,8 +238,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm,  0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector31' type='pad' name='3V3D_0'>
-<description>3V3D_0</description>
+<connector id='connector31' type='pad' name='3V3D@0'>
+<description>3V3D@0</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector31pad'/>
@@ -251,8 +252,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm,  0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector37' type='pad' name='3V3D_1'>
-<description>3V3D_1</description>
+<connector id='connector37' type='pad' name='3V3D@1'>
+<description>3V3D@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector37pad'/>
@@ -265,8 +266,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm,  0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector66' type='pad' name='3V3D_2'>
-<description>3V3D_2</description>
+<connector id='connector66' type='pad' name='3V3D@2'>
+<description>3V3D@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector66pad'/>
@@ -629,8 +630,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm,  0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector26' type='pad' name='GNDA_0'>
-<description>GNDA_0</description>
+<connector id='connector26' type='pad' name='GNDA@0'>
+<description>GNDA@0</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector26pad'/>
@@ -643,8 +644,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm,  0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector20' type='pad' name='GNDA_1'>
-<description>GNDA_1</description>
+<connector id='connector20' type='pad' name='GNDA@1'>
+<description>GNDA@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector20pad'/>
@@ -657,8 +658,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm,  0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector16' type='pad' name='GNDA_2'>
-<description>GNDA_2</description>
+<connector id='connector16' type='pad' name='GNDA@2'>
+<description>GNDA@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector16pad'/>
@@ -671,8 +672,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm,  0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector32' type='pad' name='GNDD_0'>
-<description>GNDD_0</description>
+<connector id='connector32' type='pad' name='GNDD@0'>
+<description>GNDD@0</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector32pad'/>
@@ -685,8 +686,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm,  0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector33' type='pad' name='GNDD_1'>
-<description>GNDD_1</description>
+<connector id='connector33' type='pad' name='GNDD@1'>
+<description>GNDD@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector33pad'/>
@@ -699,8 +700,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm,  0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector36' type='pad' name='GNDD_2'>
-<description>GNDD_2</description>
+<connector id='connector36' type='pad' name='GNDD@2'>
+<description>GNDD@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector36pad'/>
@@ -713,8 +714,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm,  0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector51' type='pad' name='GNDD_3'>
-<description>GNDD_3</description>
+<connector id='connector51' type='pad' name='GNDD@3'>
+<description>GNDD@3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector51pad'/>
@@ -727,8 +728,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm,  0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector67' type='pad' name='GNDD_4'>
-<description>GNDD_4</description>
+<connector id='connector67' type='pad' name='GNDD@4'>
+<description>GNDD@4</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector67pad'/>
@@ -741,8 +742,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm,  0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='pad' name='GNDD_5'>
-<description>GNDD_5</description>
+<connector id='connector2' type='pad' name='GNDD@5'>
+<description>GNDD@5</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pad'/>
@@ -797,8 +798,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm,  0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector27' type='pad' name='NC_0'>
-<description>NC_0</description>
+<connector id='connector27' type='pad' name='NC@0'>
+<description>NC@0</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector27pad'/>
@@ -811,8 +812,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm,  0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector79' type='pad' name='NC_1'>
-<description>NC_1</description>
+<connector id='connector79' type='pad' name='NC@1'>
+<description>NC@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector79pad'/>
@@ -825,8 +826,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm,  0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector9' type='pad' name='NC_2'>
-<description>NC_2</description>
+<connector id='connector9' type='pad' name='NC@2'>
+<description>NC@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector9pad'/>
@@ -839,8 +840,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm,  0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='pad' name='NC_3'>
-<description>NC_3</description>
+<connector id='connector8' type='pad' name='NC@3'>
+<description>NC@3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector8pad'/>
@@ -853,8 +854,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm,  0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector17' type='pad' name='NC_4'>
-<description>NC_4</description>
+<connector id='connector17' type='pad' name='NC@4'>
+<description>NC@4</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector17pad'/>
@@ -867,8 +868,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm,  0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector18' type='pad' name='NC_5'>
-<description>NC_5</description>
+<connector id='connector18' type='pad' name='NC@5'>
+<description>NC@5</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector18pad'/>
@@ -881,8 +882,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm,  0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector19' type='pad' name='NC_6'>
-<description>NC_6</description>
+<connector id='connector19' type='pad' name='NC@6'>
+<description>NC@6</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector19pad'/>

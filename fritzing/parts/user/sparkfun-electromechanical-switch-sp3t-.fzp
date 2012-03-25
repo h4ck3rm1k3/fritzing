@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-SWITCH-SP3T-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>S</label>
 <author>www.fritzing.org</author>
 <description></description>
-<title></title>
+<title>SWITCH-SP3T</title>
 <tags>
 <tag>SWITCH-SP3T</tag>
-<tag></tag>
+<tag>SWITCH-SP3T-SMD</tag>
 </tags>
 <properties>
-<property name='family'>SWITCH-SP3T</property>
+<property name='package'>switch-sp3t-smd</property>
+<property name='family'>switch-sp3t</property>
 </properties>
 <views>
 <breadboardView>

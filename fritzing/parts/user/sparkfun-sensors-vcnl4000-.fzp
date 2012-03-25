@@ -1,18 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-VCNL4000-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Fully integrated proximity and ambient light sensor with infrared emitter and I2C interface&lt;br&gt;
 &lt;br&gt;</description>
-<title></title>
+<title>VCNL4000</title>
 <tags>
 <tag>VCNL4000</tag>
-<tag></tag>
+<tag>VCNL4000</tag>
 </tags>
 <properties>
-<property name='family'>VCNL4000</property>
+<property name='package'>vcnl4000</property>
+<property name='family'>vcnl4000</property>
 </properties>
 <views>
 <breadboardView>
@@ -38,8 +39,8 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector11' type='pad' name='GND_0'>
-<description>GND_0</description>
+<connector id='connector11' type='pad' name='GND@0'>
+<description>GND@0</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector11pad'/>
@@ -52,8 +53,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='pad' name='GND_1'>
-<description>GND_1</description>
+<connector id='connector10' type='pad' name='GND@1'>
+<description>GND@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pad'/>
@@ -66,8 +67,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='pad' name='IR_'>
-<description>IR_</description>
+<connector id='connector0' type='pad' name='IR+'>
+<description>IR+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pad'/>
@@ -80,8 +81,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='pad' name='IR-_0'>
-<description>IR-_0</description>
+<connector id='connector1' type='pad' name='IR-@0'>
+<description>IR-@0</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pad'/>
@@ -94,8 +95,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='pad' name='IR-_1'>
-<description>IR-_1</description>
+<connector id='connector2' type='pad' name='IR-@1'>
+<description>IR-@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pad'/>

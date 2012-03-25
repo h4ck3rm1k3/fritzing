@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DiscreteSemi-TRANSISTOR_PNP-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>Q</label>
 <author>www.fritzing.org</author>
 <description>Generic PNP BJT. Double check pinouts against datasheets- not all devices are the same!</description>
-<title></title>
+<title>TRANSISTOR_PNP</title>
 <tags>
 <tag>TRANSISTOR_PNP</tag>
-<tag></tag>
+<tag>SOT89</tag>
 </tags>
 <properties>
-<property name='family'>TRANSISTOR_PNP</property>
+<property name='package'>sot89</property>
+<property name='family'>transistor_pnp</property>
 </properties>
 <views>
 <breadboardView>

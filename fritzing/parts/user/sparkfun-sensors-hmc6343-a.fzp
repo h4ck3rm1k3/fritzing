@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-HMC6343-A'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Honeywell compass IC with tilt compensation, SEN-08656</description>
-<title>A</title>
+<title>HMC6343</title>
 <tags>
-<tag>HMC6343</tag>
 <tag>A</tag>
+<tag>HMC6343</tag>
+<tag>LCC36</tag>
 </tags>
 <properties>
-<property name='family'>HMC6343</property>
+<property name='package'>lcc36</property>
+<property name='family'>hmc6343</property>
+<property name='variant'>a</property>
 </properties>
 <views>
 <breadboardView>
@@ -65,8 +68,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector24' type='pad' name='GND_25'>
-<description>GND_25</description>
+<connector id='connector24' type='pad' name='GND@25'>
+<description>GND@25</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector24pad'/>
@@ -79,8 +82,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector30' type='pad' name='GND_29'>
-<description>GND_29</description>
+<connector id='connector30' type='pad' name='GND@29'>
+<description>GND@29</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector30pad'/>
@@ -121,8 +124,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector12' type='pad' name='VDD_11'>
-<description>VDD_11</description>
+<connector id='connector12' type='pad' name='VDD@11'>
+<description>VDD@11</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector12pad'/>
@@ -135,8 +138,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector20' type='pad' name='VDD_21'>
-<description>VDD_21</description>
+<connector id='connector20' type='pad' name='VDD@21'>
+<description>VDD@21</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector20pad'/>
@@ -149,8 +152,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='pad' name='VDD_3'>
-<description>VDD_3</description>
+<connector id='connector2' type='pad' name='VDD@3'>
+<description>VDD@3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pad'/>

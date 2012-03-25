@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-TMP102-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>I2C degC temp sensor</description>
-<title></title>
+<title>TMP102</title>
 <tags>
 <tag>TMP102</tag>
-<tag></tag>
+<tag>SOT563</tag>
 </tags>
 <properties>
-<property name='family'>TMP102</property>
+<property name='package'>sot563</property>
+<property name='family'>tmp102</property>
 </properties>
 <views>
 <breadboardView>

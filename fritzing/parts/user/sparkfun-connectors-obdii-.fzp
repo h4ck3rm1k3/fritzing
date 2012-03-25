@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-OBDII-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>OBDII connector footprint</description>
-<title></title>
+<title>OBDII</title>
 <tags>
 <tag>OBDII</tag>
-<tag></tag>
+<tag>OBDII</tag>
 </tags>
 <properties>
-<property name='family'>OBDII</property>
+<property name='package'>obdii</property>
+<property name='family'>obdii</property>
 </properties>
 <views>
 <breadboardView>
@@ -248,8 +249,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='male' name='J1850BUS_'>
-<description>J1850BUS_</description>
+<connector id='connector6' type='male' name='J1850BUS+'>
+<description>J1850BUS+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pin'/>

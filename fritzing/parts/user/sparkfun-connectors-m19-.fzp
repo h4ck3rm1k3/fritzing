@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-M19-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>1x19 .1&quot; header</description>
-<title></title>
+<title>M19</title>
 <tags>
 <tag>M19</tag>
-<tag></tag>
+<tag>1X19</tag>
 </tags>
 <properties>
-<property name='family'>M19</property>
+<property name='package'>1x19</property>
+<property name='family'>m19</property>
 </properties>
 <views>
 <breadboardView>

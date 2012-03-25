@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-LASSEN_IQ_GPS-LASSEN'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Lassen iq 
 12-Channel GPS receiver. Schematic and footprint production proven. Spark Fun Electronics SKU : GPS-00163. Surface mount mating connector : GPS-00170</description>
-<title>LASSEN</title>
+<title>LASSEN_IQ_GPS</title>
 <tags>
-<tag>LASSEN_IQ_GPS</tag>
 <tag>LASSEN</tag>
+<tag>LASSEN_IQ_GPS</tag>
+<tag>LASSEN_IQ_GPS</tag>
 </tags>
 <properties>
-<property name='family'>LASSEN_IQ_GPS</property>
+<property name='package'>lassen_iq_gps</property>
+<property name='family'>lassen_iq_gps</property>
+<property name='variant'>lassen</property>
 </properties>
 <views>
 <breadboardView>

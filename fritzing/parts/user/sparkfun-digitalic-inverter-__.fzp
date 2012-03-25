@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-INVERTER-__'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Single inverter, SOT23-5</description>
-<title>&quot;&quot;</title>
+<title>INVERTER</title>
 <tags>
+<tag>__</tag>
 <tag>INVERTER</tag>
-<tag>&quot;&quot;</tag>
+<tag>SC70</tag>
 </tags>
 <properties>
-<property name='family'>INVERTER</property>
+<property name='package'>sc70</property>
+<property name='family'>inverter</property>
+<property name='variant'>__</property>
 </properties>
 <views>
 <breadboardView>

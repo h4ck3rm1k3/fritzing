@@ -1,18 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-MCP73831-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Miniature single cell, fully integrated Li-Ion, Li-polymer charge management controller&lt;br&gt;
 http://ww1.microchip.com/downloads/en/DeviceDoc/21984a.pdf</description>
-<title></title>
+<title>MCP73831</title>
 <tags>
 <tag>MCP73831</tag>
-<tag></tag>
+<tag>SOT23-5</tag>
 </tags>
 <properties>
-<property name='family'>MCP73831</property>
+<property name='package'>sot23-5</property>
+<property name='family'>mcp73831</property>
 </properties>
 <views>
 <breadboardView>

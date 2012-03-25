@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-AVR_SPI_PRG_6-NS'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>J</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;AVR ISP 6 Pin&lt;/b&gt;
 This is the reduced ISP connector for AVR programming. Common on Arduino. This footprint will take up less PCB space and can be used with a 10-pin to 6-pin adapter such as SKU: BOB-08508</description>
-<title>NS</title>
+<title>AVR ISP 6 Pin</title>
 <tags>
-<tag>AVR_SPI_PRG_6</tag>
 <tag>NS</tag>
+<tag>AVR_SPI_PRG_6</tag>
+<tag>2X3-NS</tag>
 </tags>
 <properties>
-<property name='family'>AVR_SPI_PRG_6</property>
+<property name='package'>2x3-ns</property>
+<property name='family'>avr_spi_prg_6</property>
+<property name='variant'>ns</property>
 </properties>
 <views>
 <breadboardView>

@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Displays-SCREENKEY-TFT128-DEMENSIONANDHOLES'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Mechanical footprint of the ScreenKey (COM-09366)&lt;br&gt;
 NO ELECTRICAL CONNECTIONS.</description>
-<title>DEMENSIONANDHOLES</title>
+<title>SCREENKEY-TFT128</title>
 <tags>
-<tag>SCREENKEY-TFT128</tag>
 <tag>DEMENSIONANDHOLES</tag>
+<tag>SCREENKEY-TFT128</tag>
+<tag>SCREENKEY-TFT128</tag>
 </tags>
 <properties>
-<property name='family'>SCREENKEY-TFT128</property>
+<property name='package'>screenkey-tft128</property>
+<property name='family'>screenkey-tft128</property>
+<property name='variant'>demensionandholes</property>
 </properties>
 <views>
 <breadboardView>

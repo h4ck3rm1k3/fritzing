@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-PIC-ICSP-PTH'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>ISCP Programming connector for UAV, UBW Kit, etc.</description>
-<title>PTH</title>
+<title>PIC-ICSP</title>
 <tags>
-<tag>PIC-ICSP</tag>
 <tag>PTH</tag>
+<tag>PIC-ICSP</tag>
+<tag>MOLEX-1X6</tag>
 </tags>
 <properties>
-<property name='family'>PIC-ICSP</property>
+<property name='package'>molex-1x6</property>
+<property name='family'>pic-icsp</property>
+<property name='variant'>pth</property>
 </properties>
 <views>
 <breadboardView>

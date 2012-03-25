@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-PSP_TOUCH_CONNECTOR-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>4-Pin Connector for PSP Touch Screen (LCD-08448)</description>
-<title></title>
+<title>PSP_TOUCH_CONNECTOR</title>
 <tags>
 <tag>PSP_TOUCH_CONNECTOR</tag>
-<tag></tag>
+<tag>PSP_TOUCH_CONNECTOR</tag>
 </tags>
 <properties>
-<property name='family'>PSP_TOUCH_CONNECTOR</property>
+<property name='package'>psp_touch_connector</property>
+<property name='family'>psp_touch_connector</property>
 </properties>
 <views>
 <breadboardView>

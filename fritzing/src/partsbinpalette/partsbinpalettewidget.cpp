@@ -451,6 +451,9 @@ void PartsBinPaletteWidget::load(const QString &filename, QWidget * progressTarg
 	PaletteModel * oldModel = (m_canDeleteModel) ? m_model : NULL;
 	PaletteModel * paletteBinModel = new PaletteModel(true, false, false);
 
+	QString name = m_title;
+	if (name.isEmpty()) name = QFileInfo(filename).baseName();
+
 	bool deleteWhenDone = false;
     if (progressTarget != NULL) {
         //DebugDialog::debug("open progress " + filename);
@@ -458,8 +461,6 @@ void PartsBinPaletteWidget::load(const QString &filename, QWidget * progressTarg
         progressTarget = m_loadingProgressDialog = new FileProgressDialog(tr("Loading..."), 200, progressTarget);
 		m_loadingProgressDialog->setBinLoadingChunk(200);
 		m_loadingProgressDialog->setBinLoadingCount(1);
-		QString name = m_title;
-		if (name.isEmpty()) name = QFileInfo(filename).baseName();
 		m_loadingProgressDialog->setMessage(tr("loading bin '%1'").arg(name));
 		m_loadingProgressDialog->show();
 	}
@@ -470,7 +471,9 @@ void PartsBinPaletteWidget::load(const QString &filename, QWidget * progressTarg
 		connect(m_iconView, SIGNAL(settingItem()), progressTarget, SLOT(settingItemSlot()));
 		connect(m_listView, SIGNAL(settingItem()), progressTarget, SLOT(settingItemSlot()));
 	}
+	DebugDialog::debug(QString("loading bin '%1'").arg(name));
 	bool result = paletteBinModel->load(filename, m_refModel);
+	DebugDialog::debug(QString("done loading bin '%1'").arg(name));
 
 	if (!result) {
 		QMessageBox::warning(NULL, QObject::tr("Fritzing"), QObject::tr("Friting cannot load the parts bin"));

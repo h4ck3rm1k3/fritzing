@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DiscreteSemi-TRANSISTOR_PNP-SMD'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>Q</label>
 <author>www.fritzing.org</author>
 <description>Generic PNP BJT. Double check pinouts against datasheets- not all devices are the same!</description>
-<title>SMD</title>
+<title>TRANSISTOR_PNP</title>
 <tags>
-<tag>TRANSISTOR_PNP</tag>
 <tag>SMD</tag>
+<tag>TRANSISTOR_PNP</tag>
+<tag>SOT23-3</tag>
 </tags>
 <properties>
-<property name='family'>TRANSISTOR_PNP</property>
+<property name='package'>sot23-3</property>
+<property name='family'>transistor_pnp</property>
+<property name='variant'>smd</property>
 </properties>
 <views>
 <breadboardView>

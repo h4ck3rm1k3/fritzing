@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-AUDIO-JACK2-PTH'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Stereo audio jack with bypass switches.</description>
-<title>PTH</title>
+<title>AUDIO-JACK2</title>
 <tags>
-<tag>AUDIO-JACK2</tag>
 <tag>PTH</tag>
+<tag>AUDIO-JACK2</tag>
+<tag>AUDIO-JACK</tag>
 </tags>
 <properties>
-<property name='family'>AUDIO-JACK2</property>
+<property name='package'>audio-jack</property>
+<property name='family'>audio-jack2</property>
+<property name='variant'>pth</property>
 </properties>
 <views>
 <breadboardView>

@@ -1,18 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-EM406-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;EM406 GPS Connector&lt;/b&gt;
 Proven layout and schematic for EM406 connector. Spark Fun Electronics SKU : GPS-00579</description>
-<title></title>
+<title>EM406 GPS Connector</title>
 <tags>
 <tag>EM406</tag>
-<tag></tag>
+<tag>EM406</tag>
 </tags>
 <properties>
-<property name='family'>EM406</property>
+<property name='package'>em406</property>
+<property name='family'>em406</property>
 </properties>
 <views>
 <breadboardView>

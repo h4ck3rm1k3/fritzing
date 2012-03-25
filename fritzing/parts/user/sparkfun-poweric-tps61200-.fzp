@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-TPS61200-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>DC to DC Booster</description>
-<title></title>
+<title>TPS61200</title>
 <tags>
 <tag>TPS61200</tag>
-<tag></tag>
+<tag>QFN-10_PAD</tag>
 </tags>
 <properties>
-<property name='family'>TPS61200</property>
+<property name='package'>qfn-10_pad</property>
+<property name='family'>tps61200</property>
 </properties>
 <views>
 <breadboardView>
@@ -93,8 +94,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='pad' name='PAD_1'>
-<description>PAD_1</description>
+<connector id='connector10' type='pad' name='PAD@1'>
+<description>PAD@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pad'/>
@@ -107,8 +108,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector11' type='pad' name='PAD_2'>
-<description>PAD_2</description>
+<connector id='connector11' type='pad' name='PAD@2'>
+<description>PAD@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector11pad'/>
@@ -121,8 +122,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector12' type='pad' name='PAD_3'>
-<description>PAD_3</description>
+<connector id='connector12' type='pad' name='PAD@3'>
+<description>PAD@3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector12pad'/>
@@ -135,8 +136,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector13' type='pad' name='PAD_4'>
-<description>PAD_4</description>
+<connector id='connector13' type='pad' name='PAD@4'>
+<description>PAD@4</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector13pad'/>
@@ -149,8 +150,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector14' type='pad' name='PAD_5'>
-<description>PAD_5</description>
+<connector id='connector14' type='pad' name='PAD@5'>
+<description>PAD@5</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector14pad'/>

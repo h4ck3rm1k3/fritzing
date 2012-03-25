@@ -1,18 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-LED-LED-TRICOLOR-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Tri-Color LED SMD&lt;/b&gt;
 Proven layout and schematic for triple color LED in SMD package - common anode. Spark Fun Electronics SKU : COM-07844</description>
-<title></title>
+<title>Tri-Color LED SMD</title>
 <tags>
 <tag>LED-TRICOLOR</tag>
-<tag></tag>
+<tag>LED-TRICOLOR-SMD</tag>
 </tags>
 <properties>
-<property name='family'>LED-TRICOLOR</property>
+<property name='package'>led-tricolor-smd</property>
+<property name='family'>led-tricolor</property>
 </properties>
 <views>
 <breadboardView>

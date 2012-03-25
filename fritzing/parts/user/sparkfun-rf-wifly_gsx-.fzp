@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-WIFLY_GSX-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>WiFi module</description>
-<title></title>
+<title>WIFLY_GSX</title>
 <tags>
 <tag>WIFLY_GSX</tag>
-<tag></tag>
+<tag>WIFLY_GSX</tag>
 </tags>
 <properties>
-<property name='family'>WIFLY_GSX</property>
+<property name='package'>wifly_gsx</property>
+<property name='family'>wifly_gsx</property>
 </properties>
 <views>
 <breadboardView>

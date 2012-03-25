@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-PIC18F2455-SMD'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description></description>
-<title>SMD</title>
+<title>PIC18F2455</title>
 <tags>
-<tag>PIC18F2455</tag>
 <tag>SMD</tag>
+<tag>PIC18F2455</tag>
+<tag>SO-28W</tag>
 </tags>
 <properties>
-<property name='family'>PIC18F2455</property>
+<property name='package'>so-28w</property>
+<property name='family'>pic18f2455</property>
+<property name='variant'>smd</property>
 </properties>
 <views>
 <breadboardView>
@@ -331,8 +334,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector14' type='pad' name='RC5_D_'>
-<description>RC5_D_</description>
+<connector id='connector14' type='pad' name='RC5_D+'>
+<description>RC5_D+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector14pad'/>
@@ -415,8 +418,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector11' type='pad' name='VSS_19'>
-<description>VSS_19</description>
+<connector id='connector11' type='pad' name='VSS@19'>
+<description>VSS@19</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector11pad'/>

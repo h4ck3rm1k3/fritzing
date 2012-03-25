@@ -72,42 +72,49 @@
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-LED-LED_PIRANHA_5MM-' modelIndex='10'>
+<instance moduleIdRef='SparkFun-LED-LED_BARGRAPH_10-' modelIndex='10'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-LED-LED_RING-' modelIndex='11'>
+<instance moduleIdRef='SparkFun-LED-LED_PIRANHA_5MM-' modelIndex='11'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-LED-LIGHTPIPE-7511-' modelIndex='12'>
+<instance moduleIdRef='SparkFun-LED-LED_RING-' modelIndex='12'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-LED-LTE-302-' modelIndex='13'>
+<instance moduleIdRef='SparkFun-LED-LIGHTPIPE-7511-' modelIndex='13'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-LED-LUXEON-SMD' modelIndex='14'>
+<instance moduleIdRef='SparkFun-LED-LTE-302-' modelIndex='14'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-LED-LUXEON-REBEL-' modelIndex='15'>
+<instance moduleIdRef='SparkFun-LED-LUXEON-SMD' modelIndex='15'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-LED-LUXEON-REBEL-' modelIndex='16'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>

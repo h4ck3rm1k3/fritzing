@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Boards-ARDUINO-MEGA-PRO'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Arduino Mega board footprint</description>
-<title>PRO</title>
+<title>ARDUINO-MEGA</title>
 <tags>
-<tag>ARDUINO-MEGA</tag>
 <tag>PRO</tag>
+<tag>ARDUINO-MEGA</tag>
+<tag>ARDUINO_MEGA-PRO-3.3V</tag>
 </tags>
 <properties>
-<property name='family'>ARDUINO-MEGA</property>
+<property name='package'>arduino_mega-pro-3.3v</property>
+<property name='family'>arduino-mega</property>
+<property name='variant'>pro</property>
 </properties>
 <views>
 <breadboardView>
@@ -38,8 +41,8 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector30' type='male' name='0_RX0_'>
-<description>0_RX0_</description>
+<connector id='connector30' type='male' name='0(RX0)'>
+<description>0(RX0)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector30pin'/>
@@ -53,8 +56,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector29' type='male' name='1_TX0_'>
-<description>1_TX0_</description>
+<connector id='connector29' type='male' name='1(TX0)'>
+<description>1(TX0)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector29pin'/>
@@ -128,8 +131,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector15' type='male' name='14_TX3_'>
-<description>14_TX3_</description>
+<connector id='connector15' type='male' name='14(TX3)'>
+<description>14(TX3)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector15pin'/>
@@ -143,8 +146,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='male' name='15_RX3_'>
-<description>15_RX3_</description>
+<connector id='connector8' type='male' name='15(RX3)'>
+<description>15(RX3)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector8pin'/>
@@ -158,8 +161,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector9' type='male' name='16_TX2_'>
-<description>16_TX2_</description>
+<connector id='connector9' type='male' name='16(TX2)'>
+<description>16(TX2)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector9pin'/>
@@ -173,8 +176,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='male' name='17_RX2_'>
-<description>17_RX2_</description>
+<connector id='connector10' type='male' name='17(RX2)'>
+<description>17(RX2)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pin'/>
@@ -188,8 +191,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector11' type='male' name='18_TX1_'>
-<description>18_TX1_</description>
+<connector id='connector11' type='male' name='18(TX1)'>
+<description>18(TX1)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector11pin'/>
@@ -203,8 +206,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector12' type='male' name='19_RX1_'>
-<description>19_RX1_</description>
+<connector id='connector12' type='male' name='19(RX1)'>
+<description>19(RX1)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector12pin'/>
@@ -233,8 +236,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector13' type='male' name='20_SDA_'>
-<description>20_SDA_</description>
+<connector id='connector13' type='male' name='20(SDA)'>
+<description>20(SDA)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector13pin'/>
@@ -248,8 +251,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector14' type='male' name='21_SCL_'>
-<description>21_SCL_</description>
+<connector id='connector14' type='male' name='21(SCL)'>
+<description>21(SCL)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector14pin'/>
@@ -803,8 +806,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector78' type='male' name='5V_0'>
-<description>5V_0</description>
+<connector id='connector78' type='male' name='5V@0'>
+<description>5V@0</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector78pin'/>
@@ -818,8 +821,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector74' type='male' name='5V_1'>
-<description>5V_1</description>
+<connector id='connector74' type='male' name='5V@1'>
+<description>5V@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector74pin'/>
@@ -833,8 +836,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector75' type='male' name='5V_2'>
-<description>5V_2</description>
+<connector id='connector75' type='male' name='5V@2'>
+<description>5V@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector75pin'/>
@@ -908,8 +911,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector23' type='male' name='A0_RX0_'>
-<description>A0_RX0_</description>
+<connector id='connector23' type='male' name='A0(RX0)'>
+<description>A0(RX0)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector23pin'/>
@@ -923,8 +926,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector16' type='male' name='A1_TX0_'>
-<description>A1_TX0_</description>
+<connector id='connector16' type='male' name='A1(TX0)'>
+<description>A1(TX0)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector16pin'/>
@@ -1163,8 +1166,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector79' type='male' name='GND_0'>
-<description>GND_0</description>
+<connector id='connector79' type='male' name='GND@0'>
+<description>GND@0</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector79pin'/>
@@ -1178,8 +1181,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector80' type='male' name='GND_1'>
-<description>GND_1</description>
+<connector id='connector80' type='male' name='GND@1'>
+<description>GND@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector80pin'/>
@@ -1193,8 +1196,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector72' type='male' name='GND_2'>
-<description>GND_2</description>
+<connector id='connector72' type='male' name='GND@2'>
+<description>GND@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector72pin'/>
@@ -1208,8 +1211,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector73' type='male' name='GND_3'>
-<description>GND_3</description>
+<connector id='connector73' type='male' name='GND@3'>
+<description>GND@3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector73pin'/>
@@ -1223,8 +1226,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector32' type='male' name='GND_4'>
-<description>GND_4</description>
+<connector id='connector32' type='male' name='GND@4'>
+<description>GND@4</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector32pin'/>

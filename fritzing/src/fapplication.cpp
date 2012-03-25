@@ -158,6 +158,13 @@ bool FApplication::init() {
 			toRemove << i;
 		}
 
+		if ((m_arguments[i].compare("-d", Qt::CaseInsensitive) == 0) ||
+			(m_arguments[i].compare("-debug", Qt::CaseInsensitive) == 0)||
+			(m_arguments[i].compare("--debug", Qt::CaseInsensitive) == 0)) {
+			DebugDialog::setEnabled(true);
+			toRemove << i;
+		}
+
 		if (i + 1 >= m_arguments.length()) continue;
 
 		if ((m_arguments[i].compare("-f", Qt::CaseInsensitive) == 0) ||

@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-AUDIO-JACK-SMD2'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;3.5mm Audio Jack&lt;/b&gt;
 Simple 3.5mm common PCB mount audio jack. SKU: PRT-08032</description>
-<title>SMD2</title>
+<title>3.5mm Audio Jack</title>
 <tags>
-<tag>AUDIO-JACK</tag>
 <tag>SMD2</tag>
+<tag>AUDIO-JACK</tag>
+<tag>AUDIO-JACK-3.5MM-SMD</tag>
 </tags>
 <properties>
-<property name='family'>AUDIO-JACK</property>
+<property name='package'>audio-jack-3.5mm-smd</property>
+<property name='family'>audio-jack</property>
+<property name='variant'>smd2</property>
 </properties>
 <views>
 <breadboardView>

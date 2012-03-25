@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Displays-7-SEGMENT-4DIGIT-YOUNGSUN-LONGPADS'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>LED</label>
 <author>www.fritzing.org</author>
 <description>This is a part for the 4-Digit 7-segment LEDs from Young Sun.  Different from the Digikey LEDs, all 16 pins are used.
 The LONGPADS Variant is used for a test jig, but you may like it because there is more pad to solder to. If you are concerned about routing space, the standard works just fine though.</description>
-<title>LONGPADS</title>
+<title>7-SEGMENT-4DIGIT-YOUNGSUN</title>
 <tags>
-<tag>7-SEGMENT-4DIGIT-YOUNGSUN</tag>
 <tag>LONGPADS</tag>
+<tag>7-SEGMENT-4DIGIT-YOUNGSUN</tag>
+<tag>7-SEGMENT-4DIGIT-YOUNGSUN-LONGPADS</tag>
 </tags>
 <properties>
-<property name='family'>7-SEGMENT-4DIGIT-YOUNGSUN</property>
+<property name='package'>7-segment-4digit-youngsun-longpads</property>
+<property name='family'>7-segment-4digit-youngsun</property>
+<property name='variant'>longpads</property>
 </properties>
 <views>
 <breadboardView>

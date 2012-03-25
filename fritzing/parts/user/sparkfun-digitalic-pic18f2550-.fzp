@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-PIC18F2550-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description></description>
-<title></title>
+<title>PIC18F2550</title>
 <tags>
 <tag>PIC18F2550</tag>
-<tag></tag>
+<tag>DIL28-3</tag>
 </tags>
 <properties>
-<property name='family'>PIC18F2550</property>
+<property name='package'>dil28-3</property>
+<property name='family'>pic18f2550</property>
 </properties>
 <views>
 <breadboardView>
@@ -353,8 +354,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector15' type='male' name='RC5_D_'>
-<description>RC5_D_</description>
+<connector id='connector15' type='male' name='RC5_D+'>
+<description>RC5_D+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector15pin'/>
@@ -443,8 +444,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector18' type='male' name='VSS_19'>
-<description>VSS_19</description>
+<connector id='connector18' type='male' name='VSS@19'>
+<description>VSS@19</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector18pin'/>

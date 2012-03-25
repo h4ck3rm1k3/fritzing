@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-AVR_SPI_PROG2-LOCK'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;AVR 10-pin ICSP Header&lt;/b&gt; 
 This is the standard AVR In Circuit Serial Programming header. Minimal, but includes pin one indicator. Works with standard Olimex programmers. Also look for the 6-pin reduced version. Spark Fun Electronics SKU: PRT-00778</description>
-<title>LOCK</title>
+<title>AVR 10-pin ICSP Header</title>
 <tags>
-<tag>AVR_SPI_PROG2</tag>
 <tag>LOCK</tag>
+<tag>AVR_SPI_PROG2</tag>
+<tag>2X5-SHROUDED_LOCK</tag>
 </tags>
 <properties>
-<property name='family'>AVR_SPI_PROG2</property>
+<property name='package'>2x5-shrouded_lock</property>
+<property name='family'>avr_spi_prog2</property>
+<property name='variant'>lock</property>
 </properties>
 <views>
 <breadboardView>

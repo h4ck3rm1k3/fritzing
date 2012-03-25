@@ -1,18 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-PIC-ICSP-MINI-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;PIC-ICSP-Mini&lt;/b&gt;
 Miniature 5-pin connection for temporary programming of PICs. Use this device in your design to save space. Program the PIC with this adapter Spark Fun Electronics SKU : BOB-00194</description>
-<title></title>
+<title>PIC-ICSP-Mini</title>
 <tags>
 <tag>PIC-ICSP-MINI</tag>
-<tag></tag>
+<tag>PIC-ICSP-MINI</tag>
 </tags>
 <properties>
-<property name='family'>PIC-ICSP-MINI</property>
+<property name='package'>pic-icsp-mini</property>
+<property name='family'>pic-icsp-mini</property>
 </properties>
 <views>
 <breadboardView>

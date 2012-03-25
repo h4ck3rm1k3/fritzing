@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-BATTERY-12MM'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>BAT</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Battery Holders&lt;/b&gt;
 Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
-<title>12MM</title>
+<title>Battery Holders</title>
 <tags>
-<tag>BATTERY</tag>
 <tag>12MM</tag>
+<tag>BATTERY</tag>
+<tag>BATTCON_12MM</tag>
 </tags>
 <properties>
-<property name='family'>BATTERY</property>
+<property name='package'>battcon_12mm</property>
+<property name='family'>battery</property>
+<property name='variant'>12mm</property>
 </properties>
 <views>
 <breadboardView>
@@ -38,8 +41,8 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 </iconView>
 </views>
 <connectors>
-<connector id='connector1' type='pad' name='_'>
-<description>_</description>
+<connector id='connector1' type='pad' name='+'>
+<description>+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pad'/>

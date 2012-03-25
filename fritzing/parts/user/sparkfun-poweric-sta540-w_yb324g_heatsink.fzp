@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-STA540-W_YB324G_HEATSINK'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Multiwatt package for L298 bridge driver</description>
-<title>W/YB324G_HEATSINK</title>
+<title>STA540</title>
 <tags>
+<tag>W_YB324G_HEATSINK</tag>
 <tag>STA540</tag>
-<tag>W/YB324G_HEATSINK</tag>
+<tag>MULTIWATT15_YB324GHEATSINK</tag>
 </tags>
 <properties>
-<property name='family'>STA540</property>
+<property name='package'>multiwatt15_yb324gheatsink</property>
+<property name='family'>sta540</property>
+<property name='variant'>w_yb324g_heatsink</property>
 </properties>
 <views>
 <breadboardView>

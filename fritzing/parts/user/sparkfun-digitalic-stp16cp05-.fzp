@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-STP16CP05-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>16-pin constant current sink shift register LED driver</description>
-<title></title>
+<title>STP16CP05</title>
 <tags>
 <tag>STP16CP05</tag>
-<tag></tag>
+<tag>SO-24DW</tag>
 </tags>
 <properties>
-<property name='family'>STP16CP05</property>
+<property name='package'>so-24dw</property>
+<property name='family'>stp16cp05</property>
 </properties>
 <views>
 <breadboardView>
@@ -359,8 +360,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector15' type='pad' name='_OE'>
-<description>_OE</description>
+<connector id='connector15' type='pad' name='~OE'>
+<description>~OE</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector15pad'/>

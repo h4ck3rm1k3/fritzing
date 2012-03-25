@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DiscreteSemi-OPTO_DARL_6N138S-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Optoisolator, darlington pair output</description>
-<title></title>
+<title>OPTO_DARL_6N138S</title>
 <tags>
 <tag>OPTO_DARL_6N138S</tag>
-<tag></tag>
+<tag>8-SMD</tag>
 </tags>
 <properties>
-<property name='family'>OPTO_DARL_6N138S</property>
+<property name='package'>8-smd</property>
+<property name='family'>opto_darl_6n138s</property>
 </properties>
 <views>
 <breadboardView>

@@ -1,18 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-USB_MICROB_PLUG-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;USB Micro-B Plug&lt;/h3&gt;
 Comes in a variety of packages.  Check out Hirose&apos;s ZX-x0 line: http://www.hirose.co.jp/cataloge_hp/e24200011.pdf</description>
-<title></title>
+<title>USB_MICROB_PLUG</title>
 <tags>
 <tag>USB_MICROB_PLUG</tag>
-<tag></tag>
+<tag>MICRO-B-RA-SMT</tag>
 </tags>
 <properties>
-<property name='family'>USB_MICROB_PLUG</property>
+<property name='package'>micro-b-ra-smt</property>
+<property name='family'>usb_microb_plug</property>
 </properties>
 <views>
 <breadboardView>
@@ -38,8 +39,8 @@ Comes in a variety of packages.  Check out Hirose&apos;s ZX-x0 line: http://www.
 </iconView>
 </views>
 <connectors>
-<connector id='connector3' type='pad' name='D_'>
-<description>D_</description>
+<connector id='connector3' type='pad' name='D+'>
+<description>D+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pad'/>

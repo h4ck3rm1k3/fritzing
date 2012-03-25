@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-ADNS2610-PTH'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Optical mouse sensor (SPI)</description>
-<title>PTH</title>
+<title>ADNS2610</title>
 <tags>
-<tag>ADNS2610</tag>
 <tag>PTH</tag>
+<tag>ADNS2610</tag>
+<tag>ADNS2610</tag>
 </tags>
 <properties>
-<property name='family'>ADNS2610</property>
+<property name='package'>adns2610</property>
+<property name='family'>adns2610</property>
+<property name='variant'>pth</property>
 </properties>
 <views>
 <breadboardView>

@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-MSGEQ7-SOIC'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>IC</label>
 <author>www.fritzing.org</author>
 <description>7-band graphic equalizer</description>
-<title>SOIC</title>
+<title>MSGEQ7</title>
 <tags>
-<tag>MSGEQ7</tag>
 <tag>SOIC</tag>
+<tag>MSGEQ7</tag>
+<tag>SOIC8</tag>
 </tags>
 <properties>
-<property name='family'>MSGEQ7</property>
+<property name='package'>soic8</property>
+<property name='family'>msgeq7</property>
+<property name='variant'>soic</property>
 </properties>
 <views>
 <breadboardView>

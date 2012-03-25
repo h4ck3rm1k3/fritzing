@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-V_REG_LM1117-SOT223'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>IC</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Voltage Regulator LM1117&lt;/b&gt;
 Standard adjustable voltage regulator but in SMD form. Spark Fun Electronics SKU : COM-00595</description>
-<title>SOT223</title>
+<title>Voltage Regulator LM1117</title>
 <tags>
+<tag>SOT223</tag>
 <tag>V_REG_LM1117</tag>
 <tag>SOT223</tag>
 </tags>
 <properties>
-<property name='family'>V_REG_LM1117</property>
+<property name='package'>sot223</property>
+<property name='family'>v_reg_lm1117</property>
+<property name='variant'>sot223</property>
 </properties>
 <views>
 <breadboardView>
@@ -80,8 +83,8 @@ Standard adjustable voltage regulator but in SMD form. Spark Fun Electronics SKU
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='pad' name='OUT_1'>
-<description>OUT_1</description>
+<connector id='connector3' type='pad' name='OUT@1'>
+<description>OUT@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pad'/>

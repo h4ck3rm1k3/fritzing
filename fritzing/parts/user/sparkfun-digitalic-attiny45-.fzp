@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-ATTINY45-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Atmel 8-pin 2/4/8kB flash uC</description>
-<title></title>
+<title>ATTINY45</title>
 <tags>
 <tag>ATTINY45</tag>
-<tag></tag>
+<tag>SO08-EIAJ</tag>
 </tags>
 <properties>
-<property name='family'>ATTINY45</property>
+<property name='package'>so08-eiaj</property>
+<property name='family'>attiny45</property>
 </properties>
 <views>
 <breadboardView>
@@ -51,8 +52,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='pad' name='PB0_MOSI_'>
-<description>PB0_MOSI_</description>
+<connector id='connector4' type='pad' name='PB0(MOSI)'>
+<description>PB0(MOSI)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pad'/>
@@ -65,8 +66,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='pad' name='PB1_MISO_'>
-<description>PB1_MISO_</description>
+<connector id='connector5' type='pad' name='PB1(MISO)'>
+<description>PB1(MISO)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector5pad'/>
@@ -79,8 +80,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='pad' name='PB2_SCK_ADC1_'>
-<description>PB2_SCK_ADC1_</description>
+<connector id='connector6' type='pad' name='PB2(SCK_ADC1)'>
+<description>PB2(SCK_ADC1)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pad'/>
@@ -93,8 +94,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='pad' name='PB3_ADC3_'>
-<description>PB3_ADC3_</description>
+<connector id='connector1' type='pad' name='PB3(ADC3)'>
+<description>PB3(ADC3)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pad'/>
@@ -107,8 +108,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='pad' name='PB4_ADC2_'>
-<description>PB4_ADC2_</description>
+<connector id='connector2' type='pad' name='PB4(ADC2)'>
+<description>PB4(ADC2)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pad'/>
@@ -121,8 +122,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='pad' name='PB5_NRES_'>
-<description>PB5_NRES_</description>
+<connector id='connector0' type='pad' name='PB5(NRES)'>
+<description>PB5(NRES)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pad'/>

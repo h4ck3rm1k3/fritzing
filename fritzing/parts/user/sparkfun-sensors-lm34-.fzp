@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-LM34-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>10mV/degF, 1 degF accurate analog temp sensor</description>
-<title></title>
+<title>LM34</title>
 <tags>
 <tag>LM34</tag>
-<tag></tag>
+<tag>SO08</tag>
 </tags>
 <properties>
-<property name='family'>LM34</property>
+<property name='package'>so08</property>
+<property name='family'>lm34</property>
 </properties>
 <views>
 <breadboardView>
@@ -51,8 +52,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='pad' name='V_'>
-<description>V_</description>
+<connector id='connector7' type='pad' name='V+'>
+<description>V+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pad'/>

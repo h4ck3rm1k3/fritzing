@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-NE555-P'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>IC</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;General purpose bipolar Timer&lt;/b&gt;</description>
-<title>P</title>
+<title>General purpose bipolar Timer</title>
 <tags>
-<tag>NE555</tag>
 <tag>P</tag>
+<tag>NE555</tag>
+<tag>DIL-08</tag>
 </tags>
 <properties>
-<property name='family'>NE555</property>
+<property name='package'>dil-08</property>
+<property name='family'>ne555</property>
+<property name='variant'>p</property>
 </properties>
 <views>
 <breadboardView>
@@ -143,8 +146,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='male' name='VCC_'>
-<description>VCC_</description>
+<connector id='connector3' type='male' name='VCC+'>
+<description>VCC+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pin'/>

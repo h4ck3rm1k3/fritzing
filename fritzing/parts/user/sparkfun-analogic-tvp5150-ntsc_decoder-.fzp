@@ -1,21 +1,22 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-TVP5150-NTSC_DECODER-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Texas Instrument NTSC/PAL Decoder
 TI Part #TVP5150AM1
 *** UNPROVEN FOOTPRINT ***
 
 Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
-<title></title>
+<title>TVP5150-NTSC_DECODER</title>
 <tags>
 <tag>TVP5150-NTSC_DECODER</tag>
-<tag></tag>
+<tag>TQFP32-5MM</tag>
 </tags>
 <properties>
-<property name='family'>TVP5150-NTSC_DECODER</property>
+<property name='package'>tqfp32-5mm</property>
+<property name='family'>tvp5150-ntsc_decoder</property>
 </properties>
 <views>
 <breadboardView>

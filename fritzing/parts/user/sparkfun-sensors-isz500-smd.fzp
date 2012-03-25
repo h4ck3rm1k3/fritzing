@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-ISZ500-SMD'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>ISZ500 Single axis gyro</description>
-<title>SMD</title>
+<title>ISZ500</title>
 <tags>
-<tag>ISZ500</tag>
 <tag>SMD</tag>
+<tag>ISZ500</tag>
+<tag>QFN-28_6X8</tag>
 </tags>
 <properties>
-<property name='family'>ISZ500</property>
+<property name='package'>qfn-28_6x8</property>
+<property name='family'>isz500</property>
+<property name='variant'>smd</property>
 </properties>
 <views>
 <breadboardView>
@@ -65,8 +68,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector14' type='pad' name='GND_2'>
-<description>GND_2</description>
+<connector id='connector14' type='pad' name='GND@2'>
+<description>GND@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector14pad'/>
@@ -79,8 +82,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='pad' name='GND_26'>
-<description>GND_26</description>
+<connector id='connector0' type='pad' name='GND@26'>
+<description>GND@26</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pad'/>
@@ -93,8 +96,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='pad' name='GND_27'>
-<description>GND_27</description>
+<connector id='connector3' type='pad' name='GND@27'>
+<description>GND@27</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pad'/>
@@ -107,8 +110,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='pad' name='GND_28'>
-<description>GND_28</description>
+<connector id='connector4' type='pad' name='GND@28'>
+<description>GND@28</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pad'/>
@@ -121,8 +124,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector12' type='pad' name='GND_8'>
-<description>GND_8</description>
+<connector id='connector12' type='pad' name='GND@8'>
+<description>GND@8</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector12pad'/>
@@ -149,8 +152,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector25' type='pad' name='VDD_19'>
-<description>VDD_19</description>
+<connector id='connector25' type='pad' name='VDD@19'>
+<description>VDD@19</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector25pad'/>
@@ -163,8 +166,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector15' type='pad' name='VDD_9'>
-<description>VDD_9</description>
+<connector id='connector15' type='pad' name='VDD@9'>
+<description>VDD@9</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector15pad'/>

@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Aesthetics-FIO_LOGO-V2'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Logo for the FIO products</description>
-<title>V2</title>
+<title>FIO_LOGO</title>
 <tags>
-<tag>FIO_LOGO</tag>
 <tag>V2</tag>
+<tag>FIO_LOGO</tag>
+<tag>FUNNEL_LOGO_BOTTOM_V2</tag>
 </tags>
 <properties>
-<property name='family'>FIO_LOGO</property>
+<property name='package'>funnel_logo_bottom_v2</property>
+<property name='family'>fio_logo</property>
+<property name='variant'>v2</property>
 </properties>
 <views>
 <breadboardView>

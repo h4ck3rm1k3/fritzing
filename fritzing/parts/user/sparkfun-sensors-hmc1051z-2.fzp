@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-HMC1051Z-2'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Honeywell 1-axis magnetometer</description>
-<title>2</title>
+<title>HMC1051Z</title>
 <tags>
-<tag>HMC1051Z</tag>
 <tag>2</tag>
+<tag>HMC1051Z</tag>
+<tag>HMC1051Z_2</tag>
 </tags>
 <properties>
-<property name='family'>HMC1051Z</property>
+<property name='package'>hmc1051z_2</property>
+<property name='family'>hmc1051z</property>
+<property name='variant'>2</property>
 </properties>
 <views>
 <breadboardView>
@@ -38,8 +41,8 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector0' type='male' name='GND_1'>
-<description>GND_1</description>
+<connector id='connector0' type='male' name='GND@1'>
+<description>GND@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pin'/>
@@ -53,8 +56,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='male' name='GND_4'>
-<description>GND_4</description>
+<connector id='connector3' type='male' name='GND@4'>
+<description>GND@4</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pin'/>
@@ -68,8 +71,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='male' name='GND_5'>
-<description>GND_5</description>
+<connector id='connector4' type='male' name='GND@5'>
+<description>GND@5</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pin'/>
@@ -83,8 +86,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='male' name='S_R_'>
-<description>S_R_</description>
+<connector id='connector5' type='male' name='S_R+'>
+<description>S_R+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector5pin'/>
@@ -113,8 +116,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='male' name='V0_'>
-<description>V0_</description>
+<connector id='connector1' type='male' name='V0+'>
+<description>V0+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pin'/>

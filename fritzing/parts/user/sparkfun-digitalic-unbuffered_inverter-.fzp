@@ -1,19 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-UNBUFFERED_INVERTER-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>FAIRCHILD Unbuffered Inverter.
 Used for external clock sources
 Digikey P/N NC7SPU04P5XCT-ND</description>
-<title></title>
+<title>UNBUFFERED_INVERTER</title>
 <tags>
 <tag>UNBUFFERED_INVERTER</tag>
-<tag></tag>
+<tag>SC70</tag>
 </tags>
 <properties>
-<property name='family'>UNBUFFERED_INVERTER</property>
+<property name='package'>sc70</property>
+<property name='family'>unbuffered_inverter</property>
 </properties>
 <views>
 <breadboardView>

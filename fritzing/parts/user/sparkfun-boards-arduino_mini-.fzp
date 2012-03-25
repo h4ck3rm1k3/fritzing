@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Boards-ARDUINO_MINI-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Arduino Pro Mini footprint</description>
-<title></title>
+<title>ARDUINO_MINI</title>
 <tags>
 <tag>ARDUINO_MINI</tag>
-<tag></tag>
+<tag>ARDUINO_MINI</tag>
 </tags>
 <properties>
-<property name='family'>ARDUINO_MINI</property>
+<property name='package'>arduino_mini</property>
+<property name='family'>arduino_mini</property>
 </properties>
 <views>
 <breadboardView>

@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-TAC_SWITCH-SMD'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>S</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Momentary Switch&lt;/b&gt;
 Button commonly used for reset or general input. Spark Fun Electronics SKU : COM-00097</description>
-<title>SMD</title>
+<title>Momentary Switch</title>
 <tags>
-<tag>TAC_SWITCH</tag>
 <tag>SMD</tag>
+<tag>TAC_SWITCH</tag>
+<tag>TACTILE_SWITCH_SMD</tag>
 </tags>
 <properties>
-<property name='family'>TAC_SWITCH</property>
+<property name='package'>tactile_switch_smd</property>
+<property name='family'>tac_switch</property>
+<property name='variant'>smd</property>
 </properties>
 <views>
 <breadboardView>

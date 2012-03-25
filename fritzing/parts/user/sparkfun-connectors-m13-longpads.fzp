@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-M13-LONGPADS'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>13-pin single row .1&quot; header</description>
-<title>LONGPADS</title>
+<title>M13</title>
 <tags>
-<tag>M13</tag>
 <tag>LONGPADS</tag>
+<tag>M13</tag>
+<tag>1X13-LONGPADS</tag>
 </tags>
 <properties>
-<property name='family'>M13</property>
+<property name='package'>1x13-longpads</property>
+<property name='family'>m13</property>
+<property name='variant'>longpads</property>
 </properties>
 <views>
 <breadboardView>

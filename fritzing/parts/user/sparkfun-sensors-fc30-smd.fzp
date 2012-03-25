@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-FC30-SMD'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>STMicro 3-axis accelerometer with tap detection- orientation output only.</description>
-<title>SMD</title>
+<title>FC30</title>
 <tags>
-<tag>FC30</tag>
 <tag>SMD</tag>
+<tag>FC30</tag>
+<tag>LGA14</tag>
 </tags>
 <properties>
-<property name='family'>FC30</property>
+<property name='package'>lga14</property>
+<property name='family'>fc30</property>
+<property name='variant'>smd</property>
 </properties>
 <views>
 <breadboardView>
@@ -51,8 +54,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='pad' name='GND_5'>
-<description>GND_5</description>
+<connector id='connector1' type='pad' name='GND@5'>
+<description>GND@5</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pad'/>
@@ -107,8 +110,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='pad' name='RES_10'>
-<description>RES_10</description>
+<connector id='connector10' type='pad' name='RES@10'>
+<description>RES@10</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pad'/>
@@ -121,8 +124,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='pad' name='RES_13'>
-<description>RES_13</description>
+<connector id='connector7' type='pad' name='RES@13'>
+<description>RES@13</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pad'/>
@@ -135,8 +138,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='pad' name='RES_14'>
-<description>RES_14</description>
+<connector id='connector6' type='pad' name='RES@14'>
+<description>RES@14</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pad'/>
@@ -149,8 +152,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='pad' name='RES_4'>
-<description>RES_4</description>
+<connector id='connector2' type='pad' name='RES@4'>
+<description>RES@4</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pad'/>
@@ -163,8 +166,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector13' type='pad' name='RES_7'>
-<description>RES_7</description>
+<connector id='connector13' type='pad' name='RES@7'>
+<description>RES@7</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector13pad'/>
@@ -191,8 +194,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='pad' name='VDD_3'>
-<description>VDD_3</description>
+<connector id='connector3' type='pad' name='VDD@3'>
+<description>VDD@3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pad'/>
@@ -205,8 +208,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='pad' name='VDD_6'>
-<description>VDD_6</description>
+<connector id='connector0' type='pad' name='VDD@6'>
+<description>VDD@6</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pad'/>

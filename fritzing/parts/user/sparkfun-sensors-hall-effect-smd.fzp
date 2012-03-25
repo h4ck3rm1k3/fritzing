@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-HALL-EFFECT-SMD'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Hall effect sensor in SC70 package</description>
-<title>SMD</title>
+<title>HALL-EFFECT</title>
 <tags>
-<tag>HALL-EFFECT</tag>
 <tag>SMD</tag>
+<tag>HALL-EFFECT</tag>
+<tag>SC70</tag>
 </tags>
 <properties>
-<property name='family'>HALL-EFFECT</property>
+<property name='package'>sc70</property>
+<property name='family'>hall-effect</property>
+<property name='variant'>smd</property>
 </properties>
 <views>
 <breadboardView>

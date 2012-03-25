@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-QRB1114-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>Q</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;PHOTOTRANSISTOR REFLECTIVE OBJECT SENSOR&lt;/b&gt;
@@ -20,13 +20,14 @@ object passes within its field of view. The area of the optimum response approxi
 &lt;br&gt;Emitter-Collector Voltage (VECO) 4.5 V
 &lt;br&gt;Collector Current 20 mA
 &lt;br&gt;Power Dissipation (PD) 100 mW</description>
-<title></title>
+<title>PHOTOTRANSISTOR REFLECTIVE OBJECT SENSOR</title>
 <tags>
 <tag>QRB1114</tag>
-<tag></tag>
+<tag>QRB1114-SIDE</tag>
 </tags>
 <properties>
-<property name='family'>QRB1114</property>
+<property name='package'>qrb1114-side</property>
+<property name='family'>qrb1114</property>
 </properties>
 <views>
 <breadboardView>

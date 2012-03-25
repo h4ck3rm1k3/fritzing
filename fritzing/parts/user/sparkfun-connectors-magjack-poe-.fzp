@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-MAGJACK-POE-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;PoE compatible MagJack&lt;/h3&gt;</description>
-<title></title>
+<title>MAGJACK-POE</title>
 <tags>
 <tag>MAGJACK-POE</tag>
-<tag></tag>
+<tag>MAGJACK-POE</tag>
 </tags>
 <properties>
-<property name='family'>MAGJACK-POE</property>
+<property name='package'>magjack-poe</property>
+<property name='family'>magjack-poe</property>
 </properties>
 <views>
 <breadboardView>
@@ -38,8 +39,8 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector15' type='male' name='GLED_'>
-<description>GLED_</description>
+<connector id='connector15' type='male' name='GLED+'>
+<description>GLED+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector15pin'/>
@@ -83,8 +84,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector9' type='male' name='RD_'>
-<description>RD_</description>
+<connector id='connector9' type='male' name='RD+'>
+<description>RD+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector9pin'/>
@@ -113,8 +114,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='male' name='SHIELD_0'>
-<description>SHIELD_0</description>
+<connector id='connector0' type='male' name='SHIELD@0'>
+<description>SHIELD@0</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pin'/>
@@ -128,8 +129,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='male' name='SHIELD_1'>
-<description>SHIELD_1</description>
+<connector id='connector1' type='male' name='SHIELD@1'>
+<description>SHIELD@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pin'/>
@@ -158,8 +159,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='male' name='TD_'>
-<description>TD_</description>
+<connector id='connector2' type='male' name='TD+'>
+<description>TD+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pin'/>
@@ -188,8 +189,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector11' type='male' name='V_'>
-<description>V_</description>
+<connector id='connector11' type='male' name='V+'>
+<description>V+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector11pin'/>
@@ -218,8 +219,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector13' type='male' name='YLED_'>
-<description>YLED_</description>
+<connector id='connector13' type='male' name='YLED+'>
+<description>YLED+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector13pin'/>

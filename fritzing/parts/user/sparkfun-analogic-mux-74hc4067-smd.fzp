@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-MUX-74HC4067-SMD'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>16-channel analog MUX</description>
-<title>SMD</title>
+<title>MUX-74HC4067</title>
 <tags>
-<tag>MUX-74HC4067</tag>
 <tag>SMD</tag>
+<tag>MUX-74HC4067</tag>
+<tag>SSOP24</tag>
 </tags>
 <properties>
-<property name='family'>MUX-74HC4067</property>
+<property name='package'>ssop24</property>
+<property name='family'>mux-74hc4067</property>
+<property name='variant'>smd</property>
 </properties>
 <views>
 <breadboardView>

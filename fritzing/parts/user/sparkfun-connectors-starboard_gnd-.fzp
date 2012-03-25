@@ -1,18 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-STARBOARD_GND-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>J</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;StarBoard ground Pad&lt;/h3&gt;
 Starboard pads sans the star cutout in top layer</description>
-<title></title>
+<title>STARBOARD_GND</title>
 <tags>
 <tag>STARBOARD_GND</tag>
-<tag></tag>
+<tag>STARBOARD_GROUND</tag>
 </tags>
 <properties>
-<property name='family'>STARBOARD_GND</property>
+<property name='package'>starboard_ground</property>
+<property name='family'>starboard_gnd</property>
 </properties>
 <views>
 <breadboardView>

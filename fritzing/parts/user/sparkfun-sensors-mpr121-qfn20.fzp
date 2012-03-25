@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-MPR121-QFN20'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>MPR121 Capacitive Touch Sensor Controller</description>
-<title>QFN20</title>
+<title>MPR121</title>
 <tags>
-<tag>MPR121</tag>
 <tag>QFN20</tag>
+<tag>MPR121</tag>
+<tag>QFN-20-0.4MM</tag>
 </tags>
 <properties>
-<property name='family'>MPR121</property>
+<property name='package'>qfn-20-0.4mm</property>
+<property name='family'>mpr121</property>
+<property name='variant'>qfn20</property>
 </properties>
 <views>
 <breadboardView>
@@ -303,8 +306,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='pad' name='_IRQ'>
-<description>_IRQ</description>
+<connector id='connector7' type='pad' name='~IRQ'>
+<description>~IRQ</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pad'/>

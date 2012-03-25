@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-LM3480IM4-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Small package linear regulator</description>
-<title></title>
+<title>LM3480IM4</title>
 <tags>
 <tag>LM3480IM4</tag>
-<tag></tag>
+<tag>SOT23-3</tag>
 </tags>
 <properties>
-<property name='family'>LM3480IM4</property>
+<property name='package'>sot23-3</property>
+<property name='family'>lm3480im4</property>
 </properties>
 <views>
 <breadboardView>

@@ -128,161 +128,168 @@
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Aesthetics-GND-' modelIndex='18'>
+<instance moduleIdRef='SparkFun-Aesthetics-FRAME-LETTER-' modelIndex='18'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Aesthetics-LOGO-FIRST-' modelIndex='19'>
+<instance moduleIdRef='SparkFun-Aesthetics-GND-' modelIndex='19'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Aesthetics-LOGO-OTL-' modelIndex='20'>
+<instance moduleIdRef='SparkFun-Aesthetics-LOGO-FIRST-' modelIndex='20'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Aesthetics-LOGO-SFE-M' modelIndex='21'>
+<instance moduleIdRef='SparkFun-Aesthetics-LOGO-OTL-' modelIndex='21'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Aesthetics-LOGO-SFE-NEW' modelIndex='22'>
+<instance moduleIdRef='SparkFun-Aesthetics-LOGO-SFE-M' modelIndex='22'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Aesthetics-LOGO-SFE-CP' modelIndex='23'>
+<instance moduleIdRef='SparkFun-Aesthetics-LOGO-SFE-NEW' modelIndex='23'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Aesthetics-LOGO-SFE-SK' modelIndex='24'>
+<instance moduleIdRef='SparkFun-Aesthetics-LOGO-SFE-CP' modelIndex='24'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Aesthetics-LOGO-SFE-NW2' modelIndex='25'>
+<instance moduleIdRef='SparkFun-Aesthetics-LOGO-SFE-SK' modelIndex='25'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Aesthetics-LOGO-SFE-SM' modelIndex='26'>
+<instance moduleIdRef='SparkFun-Aesthetics-LOGO-SFE-NW2' modelIndex='26'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Aesthetics-OSHW-LOGO-S' modelIndex='27'>
+<instance moduleIdRef='SparkFun-Aesthetics-LOGO-SFE-SM' modelIndex='27'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Aesthetics-OSHW-LOGO-M' modelIndex='28'>
+<instance moduleIdRef='SparkFun-Aesthetics-OSHW-LOGO-S' modelIndex='28'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Aesthetics-OSHW-LOGO-L' modelIndex='29'>
+<instance moduleIdRef='SparkFun-Aesthetics-OSHW-LOGO-M' modelIndex='29'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Aesthetics-SPARKFUN-EAGLE-RULES-' modelIndex='30'>
+<instance moduleIdRef='SparkFun-Aesthetics-OSHW-LOGO-L' modelIndex='30'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Aesthetics-STARBOARD_LOGO-' modelIndex='31'>
+<instance moduleIdRef='SparkFun-Aesthetics-SPARKFUN-EAGLE-RULES-' modelIndex='31'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Aesthetics-STARBOARD_LOGO--TEXT' modelIndex='32'>
+<instance moduleIdRef='SparkFun-Aesthetics-STARBOARD_LOGO-' modelIndex='32'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Aesthetics-VCC-' modelIndex='33'>
+<instance moduleIdRef='SparkFun-Aesthetics-STARBOARD_LOGO--TEXT' modelIndex='33'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Aesthetics-VNEG-' modelIndex='34'>
+<instance moduleIdRef='SparkFun-Aesthetics-VCC-' modelIndex='34'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Aesthetics-V_BATT-' modelIndex='35'>
+<instance moduleIdRef='SparkFun-Aesthetics-VNEG-' modelIndex='35'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Aesthetics-1.0V-' modelIndex='36'>
+<instance moduleIdRef='SparkFun-Aesthetics-V_BATT-' modelIndex='36'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Aesthetics-1.8V-' modelIndex='37'>
+<instance moduleIdRef='SparkFun-Aesthetics-1.0V-' modelIndex='37'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Aesthetics-2.8V-' modelIndex='38'>
+<instance moduleIdRef='SparkFun-Aesthetics-1.8V-' modelIndex='38'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Aesthetics-3.3V-' modelIndex='39'>
+<instance moduleIdRef='SparkFun-Aesthetics-2.8V-' modelIndex='39'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Aesthetics-5V-' modelIndex='40'>
+<instance moduleIdRef='SparkFun-Aesthetics-3.3V-' modelIndex='40'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Aesthetics-5V-' modelIndex='41'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>

@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-MLX90609-SMD'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Single axis 150 deg/s analog and SPI MEMs gyroscope. Spark Fun Electronics SKU: COM-08336 and others</description>
-<title>SMD</title>
+<title>MLX90609</title>
 <tags>
-<tag>MLX90609</tag>
 <tag>SMD</tag>
+<tag>MLX90609</tag>
+<tag>MLX90609</tag>
 </tags>
 <properties>
-<property name='family'>MLX90609</property>
+<property name='package'>mlx90609</property>
+<property name='family'>mlx90609</property>
+<property name='variant'>smd</property>
 </properties>
 <views>
 <breadboardView>
@@ -247,8 +250,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='pad' name='TOPCAP_1'>
-<description>TOPCAP_1</description>
+<connector id='connector0' type='pad' name='TOPCAP@1'>
+<description>TOPCAP@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pad'/>
@@ -261,8 +264,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector31' type='pad' name='TOPCAP_2'>
-<description>TOPCAP_2</description>
+<connector id='connector31' type='pad' name='TOPCAP@2'>
+<description>TOPCAP@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector31pad'/>

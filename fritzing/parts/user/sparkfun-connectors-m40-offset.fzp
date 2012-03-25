@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-M40-OFFSET'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>1x40 .1&quot; header</description>
-<title>OFFSET</title>
+<title>M40</title>
 <tags>
-<tag>M40</tag>
 <tag>OFFSET</tag>
+<tag>M40</tag>
+<tag>1X40_OFFSET</tag>
 </tags>
 <properties>
-<property name='family'>M40</property>
+<property name='package'>1x40_offset</property>
+<property name='family'>m40</property>
+<property name='variant'>offset</property>
 </properties>
 <views>
 <breadboardView>

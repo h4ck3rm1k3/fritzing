@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-SWITCH-MOMENTARY-2-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>S</label>
 <author>www.fritzing.org</author>
 <description>Various NO switches- pushbuttons, reed, etc</description>
-<title></title>
+<title>SWITCH-MOMENTARY-2</title>
 <tags>
 <tag>SWITCH-MOMENTARY-2</tag>
-<tag></tag>
+<tag>TACTILE_SWITCH_TALL</tag>
 </tags>
 <properties>
-<property name='family'>SWITCH-MOMENTARY-2</property>
+<property name='package'>tactile_switch_tall</property>
+<property name='family'>switch-momentary-2</property>
 </properties>
 <views>
 <breadboardView>

@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-VENUS634-SMD'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Venus634 from SkyTraq</description>
-<title>SMD</title>
+<title>VENUS634</title>
 <tags>
-<tag>VENUS634</tag>
 <tag>SMD</tag>
+<tag>VENUS634</tag>
+<tag>LGA44</tag>
 </tags>
 <properties>
-<property name='family'>VENUS634</property>
+<property name='package'>lga44</property>
+<property name='family'>venus634</property>
+<property name='variant'>smd</property>
 </properties>
 <views>
 <breadboardView>
@@ -79,8 +82,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector26' type='pad' name='GND_10'>
-<description>GND_10</description>
+<connector id='connector26' type='pad' name='GND@10'>
+<description>GND@10</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector26pad'/>
@@ -93,8 +96,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector27' type='pad' name='GND_11'>
-<description>GND_11</description>
+<connector id='connector27' type='pad' name='GND@11'>
+<description>GND@11</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector27pad'/>
@@ -107,8 +110,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector42' type='pad' name='GND_15'>
-<description>GND_15</description>
+<connector id='connector42' type='pad' name='GND@15'>
+<description>GND@15</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector42pad'/>
@@ -121,8 +124,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector35' type='pad' name='GND_19'>
-<description>GND_19</description>
+<connector id='connector35' type='pad' name='GND@19'>
+<description>GND@19</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector35pad'/>
@@ -135,8 +138,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector37' type='pad' name='GNDRF_21'>
-<description>GNDRF_21</description>
+<connector id='connector37' type='pad' name='GNDRF@21'>
+<description>GNDRF@21</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector37pad'/>
@@ -149,8 +152,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector38' type='pad' name='GNDRF_22'>
-<description>GNDRF_22</description>
+<connector id='connector38' type='pad' name='GNDRF@22'>
+<description>GNDRF@22</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector38pad'/>
@@ -163,8 +166,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='pad' name='GNDRF_24'>
-<description>GNDRF_24</description>
+<connector id='connector7' type='pad' name='GNDRF@24'>
+<description>GNDRF@24</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pad'/>
@@ -177,8 +180,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='pad' name='GNDRF_25'>
-<description>GNDRF_25</description>
+<connector id='connector8' type='pad' name='GNDRF@25'>
+<description>GNDRF@25</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector8pad'/>
@@ -191,8 +194,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='pad' name='GNDRF_27'>
-<description>GNDRF_27</description>
+<connector id='connector10' type='pad' name='GNDRF@27'>
+<description>GNDRF@27</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pad'/>
@@ -205,8 +208,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='pad' name='GNDRF_28'>
-<description>GNDRF_28</description>
+<connector id='connector0' type='pad' name='GNDRF@28'>
+<description>GNDRF@28</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pad'/>
@@ -219,8 +222,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='pad' name='GNDRF_29'>
-<description>GNDRF_29</description>
+<connector id='connector1' type='pad' name='GNDRF@29'>
+<description>GNDRF@29</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pad'/>
@@ -233,8 +236,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='pad' name='GNDRF_31'>
-<description>GNDRF_31</description>
+<connector id='connector3' type='pad' name='GNDRF@31'>
+<description>GNDRF@31</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pad'/>
@@ -247,8 +250,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='pad' name='GNDRF_33'>
-<description>GNDRF_33</description>
+<connector id='connector5' type='pad' name='GNDRF@33'>
+<description>GNDRF@33</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector5pad'/>

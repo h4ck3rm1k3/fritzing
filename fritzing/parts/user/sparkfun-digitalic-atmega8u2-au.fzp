@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-ATMEGA8U2-AU'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Atmel 32-pin 8-bit Microcontroller with 8/16/32K Bystes of ISP Flash and USB Controller. ATmega8U2, ATmega16U2, and ATmega32U2</description>
-<title>AU</title>
+<title>ATMEGA8U2</title>
 <tags>
-<tag>ATMEGA8U2</tag>
 <tag>AU</tag>
+<tag>ATMEGA8U2</tag>
+<tag>TQFP32-08</tag>
 </tags>
 <properties>
-<property name='family'>ATMEGA8U2</property>
+<property name='package'>tqfp32-08</property>
+<property name='family'>atmega8u2</property>
+<property name='variant'>au</property>
 </properties>
 <views>
 <breadboardView>
@@ -51,8 +54,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector28' type='pad' name='D_'>
-<description>D_</description>
+<connector id='connector28' type='pad' name='D+'>
+<description>D+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector28pad'/>
@@ -107,8 +110,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector14' type='pad' name='PB1_SCK_'>
-<description>PB1_SCK_</description>
+<connector id='connector14' type='pad' name='PB1(SCK)'>
+<description>PB1(SCK)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector14pad'/>
@@ -121,8 +124,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector15' type='pad' name='PB2_MOSI_'>
-<description>PB2_MOSI_</description>
+<connector id='connector15' type='pad' name='PB2(MOSI)'>
+<description>PB2(MOSI)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector15pad'/>
@@ -135,8 +138,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector16' type='pad' name='PB3_MISO_'>
-<description>PB3_MISO_</description>
+<connector id='connector16' type='pad' name='PB3(MISO)'>
+<description>PB3(MISO)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector16pad'/>
@@ -303,8 +306,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='pad' name='PD2_RX_'>
-<description>PD2_RX_</description>
+<connector id='connector7' type='pad' name='PD2(RX)'>
+<description>PD2(RX)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pad'/>
@@ -317,8 +320,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='pad' name='PD3_TX_'>
-<description>PD3_TX_</description>
+<connector id='connector8' type='pad' name='PD3(TX)'>
+<description>PD3(TX)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector8pad'/>
@@ -359,8 +362,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector11' type='pad' name='PD6_RTS_'>
-<description>PD6_RTS_</description>
+<connector id='connector11' type='pad' name='PD6(RTS)'>
+<description>PD6(RTS)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector11pad'/>
@@ -373,8 +376,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector12' type='pad' name='PD7_CTS_'>
-<description>PD7_CTS_</description>
+<connector id='connector12' type='pad' name='PD7(CTS)'>
+<description>PD7(CTS)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector12pad'/>

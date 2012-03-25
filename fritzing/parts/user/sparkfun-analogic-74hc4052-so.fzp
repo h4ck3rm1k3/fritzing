@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-74HC4052-SO'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Dual 4:1 analog mux</description>
-<title>SO</title>
+<title>74HC4052</title>
 <tags>
-<tag>74HC4052</tag>
 <tag>SO</tag>
+<tag>74HC4052</tag>
+<tag>SO16</tag>
 </tags>
 <properties>
-<property name='family'>74HC4052</property>
+<property name='package'>so16</property>
+<property name='family'>74hc4052</property>
+<property name='variant'>so</property>
 </properties>
 <views>
 <breadboardView>

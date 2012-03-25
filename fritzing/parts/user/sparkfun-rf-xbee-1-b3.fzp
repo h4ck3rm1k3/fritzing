@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-XBEE-1-B3'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Xbee module footprints</description>
-<title>B3</title>
+<title>XBEE-1</title>
 <tags>
-<tag>XBEE-1</tag>
 <tag>B3</tag>
+<tag>XBEE-1</tag>
+<tag>XBEE-SMD</tag>
 </tags>
 <properties>
-<property name='family'>XBEE-1</property>
+<property name='package'>xbee-smd</property>
+<property name='family'>xbee-1</property>
+<property name='variant'>b3</property>
 </properties>
 <views>
 <breadboardView>
@@ -233,8 +236,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector13' type='pad' name='RES_14'>
-<description>RES_14</description>
+<connector id='connector13' type='pad' name='RES@14'>
+<description>RES@14</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector13pad'/>
@@ -247,8 +250,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='pad' name='RES_8'>
-<description>RES_8</description>
+<connector id='connector2' type='pad' name='RES@8'>
+<description>RES@8</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pad'/>

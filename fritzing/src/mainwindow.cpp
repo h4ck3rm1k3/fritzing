@@ -306,10 +306,12 @@ void MainWindow::init(PaletteModel * paletteModel, ReferenceModel *refModel, boo
     m_dockManager = new DockManager(this);
     m_dockManager->createBinAndInfoViewDocks();
 
-
+	DebugDialog::debug("after creating bin");
 	if (m_fileProgressDialog) {
 		m_fileProgressDialog->setValue(89);
 	}
+
+
 
 	// This is the magic translation that changes all the shortcut text on the menu items
 	// to the native language instead of "Ctrl", so the German menu items will now read "Strg"
@@ -319,14 +321,23 @@ void MainWindow::init(PaletteModel * paletteModel, ReferenceModel *refModel, boo
 	QShortcut::tr("Shift", "for naming shortcut keys on menu items");
 	QShortcut::tr("Meta", "for naming shortcut keys on menu items");
 
+	DebugDialog::debug("create menus");
+
     createActions();
     createMenus();
+
+	DebugDialog::debug("create toolbars");
+
     createToolBars();
     createStatusBar();
+
+	DebugDialog::debug("after creating status bar");
 
 	if (m_fileProgressDialog) {
 		m_fileProgressDialog->setValue(91);
 	}
+
+	DebugDialog::debug("create view switcher");
 
 	m_layerPalette->setShowAllLayersAction(m_showAllLayersAct);
 	m_layerPalette->setHideAllLayersAction(m_hideAllLayersAct);
@@ -2665,13 +2676,6 @@ QList<SketchWidget *> MainWindow::sketchWidgets()
 	QList<SketchWidget *> list;
 	list << m_breadboardGraphicsView << m_schematicGraphicsView << m_pcbGraphicsView;
 	return list;
-}
-
-void MainWindow::fileProgressDialogSetBinLoadingCount(int count)
-{
-	if (m_fileProgressDialog) {
-		m_fileProgressDialog->setBinLoadingCount(count);
-	}
 }
 
 void MainWindow::setCloseSilently(bool cs)

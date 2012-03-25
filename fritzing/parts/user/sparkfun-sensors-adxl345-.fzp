@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-ADXL345-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>3-axis SPI/I2C 2/4/8/16g accelerometer</description>
-<title></title>
+<title>ADXL345</title>
 <tags>
 <tag>ADXL345</tag>
-<tag></tag>
+<tag>LGA14</tag>
 </tags>
 <properties>
-<property name='family'>ADXL345</property>
+<property name='package'>lga14</property>
+<property name='family'>adxl345</property>
 </properties>
 <views>
 <breadboardView>
@@ -51,8 +52,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='pad' name='GND_2'>
-<description>GND_2</description>
+<connector id='connector4' type='pad' name='GND@2'>
+<description>GND@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pad'/>
@@ -65,8 +66,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='pad' name='GND_4'>
-<description>GND_4</description>
+<connector id='connector2' type='pad' name='GND@4'>
+<description>GND@4</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pad'/>
@@ -79,8 +80,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='pad' name='GND_5'>
-<description>GND_5</description>
+<connector id='connector1' type='pad' name='GND@5'>
+<description>GND@5</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pad'/>
@@ -121,8 +122,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='pad' name='NC_10'>
-<description>NC_10</description>
+<connector id='connector10' type='pad' name='NC@10'>
+<description>NC@10</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pad'/>
@@ -135,8 +136,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector9' type='pad' name='NC_11'>
-<description>NC_11</description>
+<connector id='connector9' type='pad' name='NC@11'>
+<description>NC@11</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector9pad'/>
@@ -149,8 +150,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='pad' name='NC_3'>
-<description>NC_3</description>
+<connector id='connector3' type='pad' name='NC@3'>
+<description>NC@3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pad'/>

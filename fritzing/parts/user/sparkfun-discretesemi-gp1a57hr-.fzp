@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DiscreteSemi-GP1A57HR-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Optoisolator with 15k built-in bias resistor.</description>
-<title></title>
+<title>GP1A57HR</title>
 <tags>
 <tag>GP1A57HR</tag>
-<tag></tag>
+<tag>GP1A57HR</tag>
 </tags>
 <properties>
-<property name='family'>GP1A57HR</property>
+<property name='package'>gp1a57hr</property>
+<property name='family'>gp1a57hr</property>
 </properties>
 <views>
 <breadboardView>

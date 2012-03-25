@@ -1,18 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-IMU3000-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>3-axis I2C programmable gyro.&lt;BR&gt;
 Can interface with an I2C accelerometer to provide 6-axis motion information.</description>
-<title></title>
+<title>IMU3000</title>
 <tags>
 <tag>IMU3000</tag>
-<tag></tag>
+<tag>QFN-24</tag>
 </tags>
 <properties>
-<property name='family'>IMU3000</property>
+<property name='package'>qfn-24</property>
+<property name='family'>imu3000</property>
 </properties>
 <views>
 <breadboardView>
@@ -122,8 +123,8 @@ Can interface with an I2C accelerometer to provide 6-axis motion information.</d
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='pad' name='GND_11'>
-<description>GND_11</description>
+<connector id='connector10' type='pad' name='GND@11'>
+<description>GND@11</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pad'/>
@@ -136,8 +137,8 @@ Can interface with an I2C accelerometer to provide 6-axis motion information.</d
 </pcbView>
 </views>
 </connector>
-<connector id='connector17' type='pad' name='GND_18'>
-<description>GND_18</description>
+<connector id='connector17' type='pad' name='GND@18'>
+<description>GND@18</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector17pad'/>

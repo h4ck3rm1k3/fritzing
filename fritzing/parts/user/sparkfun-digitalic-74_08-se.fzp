@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-74_08-SE'>
+<module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-74*08-SE'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Single 2-input AND gate</description>
-<title>SE</title>
+<title>74*08</title>
 <tags>
-<tag>74*08</tag>
 <tag>SE</tag>
+<tag>74*08</tag>
+<tag>SOT353</tag>
 </tags>
 <properties>
+<property name='package'>sot353</property>
 <property name='family'>74*08</property>
+<property name='variant'>se</property>
 </properties>
 <views>
 <breadboardView>

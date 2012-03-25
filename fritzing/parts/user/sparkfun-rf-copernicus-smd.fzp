@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-COPERNICUS-SMD'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>IC</label>
 <author>www.fritzing.org</author>
 <description>Copernicus II GPS-  Trimble recommended layout and paste layer. Footprint production proven. Spark Fun Electronics SKU : GPS-07951</description>
-<title>SMD</title>
+<title>COPERNICUS</title>
 <tags>
-<tag>COPERNICUS</tag>
 <tag>SMD</tag>
+<tag>COPERNICUS</tag>
+<tag>COPERNICUS</tag>
 </tags>
 <properties>
-<property name='family'>COPERNICUS</property>
+<property name='package'>copernicus</property>
+<property name='family'>copernicus</property>
+<property name='variant'>smd</property>
 </properties>
 <views>
 <breadboardView>
@@ -51,8 +54,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector13' type='pad' name='GND_1'>
-<description>GND_1</description>
+<connector id='connector13' type='pad' name='GND@1'>
+<description>GND@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector13pad'/>
@@ -65,8 +68,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector14' type='pad' name='GND_2'>
-<description>GND_2</description>
+<connector id='connector14' type='pad' name='GND@2'>
+<description>GND@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector14pad'/>
@@ -79,8 +82,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector16' type='pad' name='GND_3'>
-<description>GND_3</description>
+<connector id='connector16' type='pad' name='GND@3'>
+<description>GND@3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector16pad'/>
@@ -93,8 +96,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector25' type='pad' name='GND_4'>
-<description>GND_4</description>
+<connector id='connector25' type='pad' name='GND@4'>
+<description>GND@4</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector25pad'/>
@@ -107,8 +110,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector26' type='pad' name='GND_5'>
-<description>GND_5</description>
+<connector id='connector26' type='pad' name='GND@5'>
+<description>GND@5</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector26pad'/>
@@ -121,8 +124,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector12' type='pad' name='GND_6'>
-<description>GND_6</description>
+<connector id='connector12' type='pad' name='GND@6'>
+<description>GND@6</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector12pad'/>
@@ -135,8 +138,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector27' type='pad' name='GND_7'>
-<description>GND_7</description>
+<connector id='connector27' type='pad' name='GND@7'>
+<description>GND@7</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector27pad'/>
@@ -149,8 +152,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='pad' name='GND_8'>
-<description>GND_8</description>
+<connector id='connector0' type='pad' name='GND@8'>
+<description>GND@8</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pad'/>

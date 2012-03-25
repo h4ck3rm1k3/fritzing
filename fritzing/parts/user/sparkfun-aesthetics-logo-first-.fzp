@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Aesthetics-LOGO-FIRST-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description></description>
-<title></title>
+<title>LOGO-FIRST</title>
 <tags>
 <tag>LOGO-FIRST</tag>
-<tag></tag>
+<tag>FRIST_LOGO</tag>
 </tags>
 <properties>
-<property name='family'>LOGO-FIRST</property>
+<property name='package'>frist_logo</property>
+<property name='family'>logo-first</property>
 </properties>
 <views>
 <breadboardView>

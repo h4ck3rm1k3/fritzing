@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-AD7781-CRZ'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>20-Bit, Pin-Programmable, Ultralow Power Sigma-Delta ADC</description>
-<title>CRZ</title>
+<title>AD7781</title>
 <tags>
-<tag>AD7781</tag>
 <tag>CRZ</tag>
+<tag>AD7781</tag>
+<tag>SOIC-14</tag>
 </tags>
 <properties>
-<property name='family'>AD7781</property>
+<property name='package'>soic-14</property>
+<property name='family'>ad7781</property>
+<property name='variant'>crz</property>
 </properties>
 <views>
 <breadboardView>
@@ -37,8 +40,8 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector12' type='pad' name='_PDRST'>
-<description>_PDRST</description>
+<connector id='connector12' type='pad' name='*PDRST'>
+<description>*PDRST</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector12pad'/>
@@ -51,8 +54,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='pad' name='AIN_'>
-<description>AIN_</description>
+<connector id='connector4' type='pad' name='AIN+'>
+<description>AIN+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pad'/>
@@ -177,8 +180,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='pad' name='REFIN_'>
-<description>REFIN_</description>
+<connector id='connector6' type='pad' name='REFIN+'>
+<description>REFIN+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pad'/>

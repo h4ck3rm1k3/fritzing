@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-A6282--LP'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>16-Channel Constant-Current LED Driver&lt;br&gt;
@@ -9,13 +9,16 @@ Packages: TSSOP-24, 24-pin QFN&lt;br&gt;
 &lt;br&gt;
 Last modified: 8/20/10&lt;br&gt;
 &lt;B&gt;Unproven!&lt;/b&gt;&lt;br&gt;</description>
-<title>-LP</title>
+<title>A6282</title>
 <tags>
-<tag>A6282</tag>
 <tag>-LP</tag>
+<tag>A6282</tag>
+<tag>TSSOP-24</tag>
 </tags>
 <properties>
-<property name='family'>A6282</property>
+<property name='package'>tssop-24</property>
+<property name='family'>a6282</property>
+<property name='variant'>-lp</property>
 </properties>
 <views>
 <breadboardView>
@@ -55,8 +58,8 @@ Last modified: 8/20/10&lt;br&gt;
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='pad' name='GND_1'>
-<description>GND_1</description>
+<connector id='connector10' type='pad' name='GND@1'>
+<description>GND@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pad'/>
@@ -69,8 +72,8 @@ Last modified: 8/20/10&lt;br&gt;
 </pcbView>
 </views>
 </connector>
-<connector id='connector24' type='pad' name='GND_2'>
-<description>GND_2</description>
+<connector id='connector24' type='pad' name='GND@2'>
+<description>GND@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector24pad'/>
@@ -377,8 +380,8 @@ Last modified: 8/20/10&lt;br&gt;
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='pad' name='_OE'>
-<description>_OE</description>
+<connector id='connector4' type='pad' name='~OE'>
+<description>~OE</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pad'/>

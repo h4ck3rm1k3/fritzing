@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-74_595-FK'>
+<module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-74*595-FK'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>IC</label>
 <author>www.fritzing.org</author>
 <description>8-bit &lt;b&gt;SHIFT REGISTER&lt;/b&gt;, output latch</description>
-<title>FK</title>
+<title>SHIFT REGISTER</title>
 <tags>
-<tag>74*595</tag>
 <tag>FK</tag>
+<tag>74*595</tag>
+<tag>LCC20</tag>
 </tags>
 <properties>
+<property name='package'>lcc20</property>
 <property name='family'>74*595</property>
+<property name='variant'>fk</property>
 </properties>
 <views>
 <breadboardView>
@@ -177,8 +180,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector11' type='pad' name='QH_'>
-<description>QH_</description>
+<connector id='connector11' type='pad' name='QH*'>
+<description>QH*</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector11pad'/>

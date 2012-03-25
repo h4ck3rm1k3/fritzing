@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-MC9S12XS64-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Freescale 16-bit uC</description>
-<title></title>
+<title>MC9S12XS64</title>
 <tags>
 <tag>MC9S12XS64</tag>
-<tag></tag>
+<tag>SQFP-S-10X10-64</tag>
 </tags>
 <properties>
-<property name='family'>MC9S12XS64</property>
+<property name='package'>sqfp-s-10x10-64</property>
+<property name='family'>mc9s12xs64</property>
 </properties>
 <views>
 <breadboardView>

@@ -1,18 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-WLANMODULE-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;DPAC WiFi Module&lt;/b&gt;
 Footprint for DPAC wireless module. Not fully tested so double check it. Spark Fun Electronics SKU : (Module) WRL-00665, (Connector) WRL-00673</description>
-<title></title>
+<title>DPAC WiFi Module</title>
 <tags>
 <tag>WLANMODULE</tag>
-<tag></tag>
+<tag>WLANMODULE</tag>
 </tags>
 <properties>
-<property name='family'>WLANMODULE</property>
+<property name='package'>wlanmodule</property>
+<property name='family'>wlanmodule</property>
 </properties>
 <views>
 <breadboardView>
@@ -80,8 +81,8 @@ Footprint for DPAC wireless module. Not fully tested so double check it. Spark F
 </pcbView>
 </views>
 </connector>
-<connector id='connector19' type='pad' name='DVDD_0'>
-<description>DVDD_0</description>
+<connector id='connector19' type='pad' name='DVDD@0'>
+<description>DVDD@0</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector19pad'/>
@@ -94,8 +95,8 @@ Footprint for DPAC wireless module. Not fully tested so double check it. Spark F
 </pcbView>
 </views>
 </connector>
-<connector id='connector34' type='pad' name='DVDD_1'>
-<description>DVDD_1</description>
+<connector id='connector34' type='pad' name='DVDD@1'>
+<description>DVDD@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector34pad'/>
@@ -108,8 +109,8 @@ Footprint for DPAC wireless module. Not fully tested so double check it. Spark F
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='pad' name='DVDD_2'>
-<description>DVDD_2</description>
+<connector id='connector1' type='pad' name='DVDD@2'>
+<description>DVDD@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pad'/>
@@ -122,8 +123,8 @@ Footprint for DPAC wireless module. Not fully tested so double check it. Spark F
 </pcbView>
 </views>
 </connector>
-<connector id='connector16' type='pad' name='DVDD_3'>
-<description>DVDD_3</description>
+<connector id='connector16' type='pad' name='DVDD@3'>
+<description>DVDD@3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector16pad'/>
@@ -486,8 +487,8 @@ Footprint for DPAC wireless module. Not fully tested so double check it. Spark F
 </pcbView>
 </views>
 </connector>
-<connector id='connector18' type='pad' name='VSS_0'>
-<description>VSS_0</description>
+<connector id='connector18' type='pad' name='VSS@0'>
+<description>VSS@0</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector18pad'/>
@@ -500,8 +501,8 @@ Footprint for DPAC wireless module. Not fully tested so double check it. Spark F
 </pcbView>
 </views>
 </connector>
-<connector id='connector25' type='pad' name='VSS_1'>
-<description>VSS_1</description>
+<connector id='connector25' type='pad' name='VSS@1'>
+<description>VSS@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector25pad'/>
@@ -514,8 +515,8 @@ Footprint for DPAC wireless module. Not fully tested so double check it. Spark F
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='pad' name='VSS_2'>
-<description>VSS_2</description>
+<connector id='connector7' type='pad' name='VSS@2'>
+<description>VSS@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pad'/>
@@ -528,8 +529,8 @@ Footprint for DPAC wireless module. Not fully tested so double check it. Spark F
 </pcbView>
 </views>
 </connector>
-<connector id='connector17' type='pad' name='VSS_3'>
-<description>VSS_3</description>
+<connector id='connector17' type='pad' name='VSS@3'>
+<description>VSS@3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector17pad'/>

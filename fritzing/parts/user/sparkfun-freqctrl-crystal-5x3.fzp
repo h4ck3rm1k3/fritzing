@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-FreqCtrl-CRYSTAL-5X3'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>Y</label>
 <author>www.fritzing.org</author>
 <description>Various standard crystals. Proven footprints. Spark Fun Electronics SKU : COM-00534</description>
-<title>5X3</title>
+<title>CRYSTAL</title>
 <tags>
-<tag>CRYSTAL</tag>
 <tag>5X3</tag>
+<tag>CRYSTAL</tag>
+<tag>CRYSTAL-SMD-5X3</tag>
 </tags>
 <properties>
-<property name='family'>CRYSTAL</property>
+<property name='package'>crystal-smd-5x3</property>
+<property name='family'>crystal</property>
+<property name='variant'>5x3</property>
 </properties>
 <views>
 <breadboardView>

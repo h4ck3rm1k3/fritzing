@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-BLUERADIO_BR-C40A-BAS'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Bluetooth SMD Module&lt;/b&gt;
 Footprint fully proven. Spark Fun Electronics SKU : WRL-00149</description>
-<title>BAS</title>
+<title>Bluetooth SMD Module</title>
 <tags>
-<tag>BLUERADIO_BR-C40A</tag>
 <tag>BAS</tag>
+<tag>BLUERADIO_BR-C40A</tag>
+<tag>BLUERADIO_BR-C40A</tag>
 </tags>
 <properties>
-<property name='family'>BLUERADIO_BR-C40A</property>
+<property name='package'>blueradio_br-c40a</property>
+<property name='family'>blueradio_br-c40a</property>
+<property name='variant'>bas</property>
 </properties>
 <views>
 <breadboardView>
@@ -52,8 +55,8 @@ Footprint fully proven. Spark Fun Electronics SKU : WRL-00149</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector11' type='pad' name='GND_1'>
-<description>GND_1</description>
+<connector id='connector11' type='pad' name='GND@1'>
+<description>GND@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector11pad'/>
@@ -66,8 +69,8 @@ Footprint fully proven. Spark Fun Electronics SKU : WRL-00149</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector27' type='pad' name='GND_2'>
-<description>GND_2</description>
+<connector id='connector27' type='pad' name='GND@2'>
+<description>GND@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector27pad'/>
@@ -80,8 +83,8 @@ Footprint fully proven. Spark Fun Electronics SKU : WRL-00149</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector26' type='pad' name='GND_3'>
-<description>GND_3</description>
+<connector id='connector26' type='pad' name='GND@3'>
+<description>GND@3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector26pad'/>
@@ -94,8 +97,8 @@ Footprint fully proven. Spark Fun Electronics SKU : WRL-00149</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector24' type='pad' name='GND_4'>
-<description>GND_4</description>
+<connector id='connector24' type='pad' name='GND@4'>
+<description>GND@4</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector24pad'/>
@@ -108,8 +111,8 @@ Footprint fully proven. Spark Fun Electronics SKU : WRL-00149</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector25' type='pad' name='GND_5'>
-<description>GND_5</description>
+<connector id='connector25' type='pad' name='GND@5'>
+<description>GND@5</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector25pad'/>

@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-AVR_MINI_PROG-SMD'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>AVR ISP 6-pin inline header</description>
-<title>SMD</title>
+<title>AVR_MINI_PROG</title>
 <tags>
-<tag>AVR_MINI_PROG</tag>
 <tag>SMD</tag>
+<tag>AVR_MINI_PROG</tag>
+<tag>AVR_MINI_PROG</tag>
 </tags>
 <properties>
-<property name='family'>AVR_MINI_PROG</property>
+<property name='package'>avr_mini_prog</property>
+<property name='family'>avr_mini_prog</property>
+<property name='variant'>smd</property>
 </properties>
 <views>
 <breadboardView>

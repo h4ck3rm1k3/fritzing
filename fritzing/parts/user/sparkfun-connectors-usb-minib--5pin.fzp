@@ -1,21 +1,24 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-USB-MINIB--5PIN'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Mini-USB &quot;B&quot; connector with 5th pin broken out.&lt;/b&gt;&lt;p&gt;
 Created new symbol breaking out 5th &quot;ID&quot; pin in mini/micro USB connector spec.  See: http://en.wikipedia.org/wiki/Mini_usb#Cables.  Uses same footprint as 4-pin symbol.&lt;p&gt;
  
 
 Also added pins to connect to mounting / shield pads if required (probably not generally needed as signals aren&apos;t shielded once they leave the connector).</description>
-<title>-5PIN</title>
+<title>Mini-USB _B_ connector with 5th pin broken out.</title>
 <tags>
-<tag>USB-MINIB</tag>
 <tag>-5PIN</tag>
+<tag>USB-MINIB</tag>
+<tag>USB-MINIB</tag>
 </tags>
 <properties>
-<property name='family'>USB-MINIB</property>
+<property name='package'>usb-minib</property>
+<property name='family'>usb-minib</property>
+<property name='variant'>-5pin</property>
 </properties>
 <views>
 <breadboardView>
@@ -41,8 +44,8 @@ Also added pins to connect to mounting / shield pads if required (probably not g
 </iconView>
 </views>
 <connectors>
-<connector id='connector0' type='pad' name='D_'>
-<description>D_</description>
+<connector id='connector0' type='pad' name='D+'>
+<description>D+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pad'/>

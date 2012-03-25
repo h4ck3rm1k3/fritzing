@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-FreqCtrl-RESONATOR-WIDE-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description></description>
-<title></title>
+<title>RESONATOR-WIDE</title>
 <tags>
 <tag>RESONATOR-WIDE</tag>
-<tag></tag>
+<tag>RESONATOR-WIDE-SMD</tag>
 </tags>
 <properties>
-<property name='family'>RESONATOR-WIDE</property>
+<property name='package'>resonator-wide-smd</property>
+<property name='family'>resonator-wide</property>
 </properties>
 <views>
 <breadboardView>

@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-MUX-TS3A5017-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Dual-channel 4:1 analog mux</description>
-<title></title>
+<title>MUX-TS3A5017</title>
 <tags>
 <tag>MUX-TS3A5017</tag>
-<tag></tag>
+<tag>SO16</tag>
 </tags>
 <properties>
-<property name='family'>MUX-TS3A5017</property>
+<property name='package'>so16</property>
+<property name='family'>mux-ts3a5017</property>
 </properties>
 <views>
 <breadboardView>

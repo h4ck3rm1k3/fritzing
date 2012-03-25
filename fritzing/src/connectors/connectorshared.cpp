@@ -200,9 +200,9 @@ void ConnectorShared::loadPin(QDomElement elem, ViewIdentifierClass::ViewIdentif
 
 		//DebugDialog::debug(QString("svg id view layer id %1, %2").arg(svgIdLayer->m_viewLayerID).arg(layer));
 		svgIdLayer->m_terminalId = pinElem.attribute("terminalId");
-		if (!svgIdLayer->m_terminalId.isEmpty()) {
-			DebugDialog::debug("terminalid " + svgIdLayer->m_terminalId);
-		}
+		//if (!svgIdLayer->m_terminalId.isEmpty()) {
+		//	DebugDialog::debug("terminalid " + svgIdLayer->m_terminalId);
+		//}
 		m_pins.insert(viewId, svgIdLayer);
 		//DebugDialog::debug(QString("insert b %1 %2 %3").arg(viewId).arg(svgId).arg(layer));
 

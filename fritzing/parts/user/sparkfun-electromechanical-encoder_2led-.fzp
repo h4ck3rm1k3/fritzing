@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-ENCODER_2LED-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;H3&gt;Illuminated Rotary Encoder w/ 2 LEDs&lt;/h3&gt;</description>
-<title></title>
+<title>ENCODER_2LED</title>
 <tags>
 <tag>ENCODER_2LED</tag>
-<tag></tag>
+<tag>ENCODER_LED_2</tag>
 </tags>
 <properties>
-<property name='family'>ENCODER_2LED</property>
+<property name='package'>encoder_led_2</property>
+<property name='family'>encoder_2led</property>
 </properties>
 <views>
 <breadboardView>
@@ -38,8 +39,8 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector3' type='male' name='_G'>
-<description>_G</description>
+<connector id='connector3' type='male' name='+G'>
+<description>+G</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pin'/>
@@ -53,8 +54,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='male' name='_R'>
-<description>_R</description>
+<connector id='connector4' type='male' name='+R'>
+<description>+R</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pin'/>

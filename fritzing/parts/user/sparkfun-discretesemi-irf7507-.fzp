@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DiscreteSemi-IRF7507-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Dual transistor NMOS/PMOS in one package.</description>
-<title></title>
+<title>IRF7507</title>
 <tags>
 <tag>IRF7507</tag>
-<tag></tag>
+<tag>MSOP8</tag>
 </tags>
 <properties>
-<property name='family'>IRF7507</property>
+<property name='package'>msop8</property>
+<property name='family'>irf7507</property>
 </properties>
 <views>
 <breadboardView>
@@ -37,8 +38,8 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector6' type='pad' name='D1_7'>
-<description>D1_7</description>
+<connector id='connector6' type='pad' name='D1@7'>
+<description>D1@7</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pad'/>
@@ -51,8 +52,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='pad' name='D1_8'>
-<description>D1_8</description>
+<connector id='connector7' type='pad' name='D1@8'>
+<description>D1@8</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pad'/>
@@ -65,8 +66,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='pad' name='D2_5'>
-<description>D2_5</description>
+<connector id='connector4' type='pad' name='D2@5'>
+<description>D2@5</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pad'/>
@@ -79,8 +80,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='pad' name='D2_6'>
-<description>D2_6</description>
+<connector id='connector5' type='pad' name='D2@6'>
+<description>D2@6</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector5pad'/>

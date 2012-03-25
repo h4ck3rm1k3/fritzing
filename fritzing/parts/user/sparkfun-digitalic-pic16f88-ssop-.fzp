@@ -1,20 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-PIC16F88-SSOP-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>IC</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;PIC 16F8x&lt;/b&gt;
 8-Bit PIC16F8X Family
 
 &lt;p&gt;Pin Compatible : PIC16F83, PIC16CR83, PIC16F84A, PIC16CR84</description>
-<title></title>
+<title>PIC 16F8x</title>
 <tags>
 <tag>PIC16F88-SSOP</tag>
-<tag></tag>
+<tag>SSOP20</tag>
 </tags>
 <properties>
-<property name='family'>PIC16F88-SSOP</property>
+<property name='package'>ssop20</property>
+<property name='family'>pic16f88-ssop</property>
 </properties>
 <views>
 <breadboardView>
@@ -278,8 +279,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector15' type='pad' name='VDD_1'>
-<description>VDD_1</description>
+<connector id='connector15' type='pad' name='VDD@1'>
+<description>VDD@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector15pad'/>
@@ -306,8 +307,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='pad' name='VSS_1'>
-<description>VSS_1</description>
+<connector id='connector5' type='pad' name='VSS@1'>
+<description>VSS@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector5pad'/>

@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-MIRF-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>MIRF</label>
 <author>www.fritzing.org</author>
 <description>nRF2401A 2.4GHz transceiver module, WRL-00153</description>
-<title></title>
+<title>MIRF</title>
 <tags>
 <tag>MIRF</tag>
-<tag></tag>
+<tag>MIRF</tag>
 </tags>
 <properties>
-<property name='family'>MIRF</property>
+<property name='package'>mirf</property>
+<property name='family'>mirf</property>
 </properties>
 <views>
 <breadboardView>

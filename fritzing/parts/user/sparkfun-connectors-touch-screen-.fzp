@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-TOUCH-SCREEN-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Nintendo DS touch screen connector LCD-09105</description>
-<title></title>
+<title>TOUCH-SCREEN</title>
 <tags>
 <tag>TOUCH-SCREEN</tag>
-<tag></tag>
+<tag>TOUCH-SCREEN</tag>
 </tags>
 <properties>
-<property name='family'>TOUCH-SCREEN</property>
+<property name='package'>touch-screen</property>
+<property name='family'>touch-screen</property>
 </properties>
 <views>
 <breadboardView>

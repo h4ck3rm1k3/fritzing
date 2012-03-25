@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-ICL3232-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>3V to RS-232 transceiver</description>
-<title></title>
+<title>ICL3232</title>
 <tags>
 <tag>ICL3232</tag>
-<tag></tag>
+<tag>DIL16</tag>
 </tags>
 <properties>
-<property name='family'>ICL3232</property>
+<property name='package'>dil16</property>
+<property name='family'>icl3232</property>
 </properties>
 <views>
 <breadboardView>
@@ -38,8 +39,8 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector0' type='male' name='C1_'>
-<description>C1_</description>
+<connector id='connector0' type='male' name='C1+'>
+<description>C1+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pin'/>
@@ -68,8 +69,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='male' name='C2_'>
-<description>C2_</description>
+<connector id='connector3' type='male' name='C2+'>
+<description>C2+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pin'/>
@@ -233,8 +234,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='male' name='V_'>
-<description>V_</description>
+<connector id='connector1' type='male' name='V+'>
+<description>V+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pin'/>

@@ -1,18 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-STM811-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;STM811 Reset Circuit&lt;/h3&gt;
 Used in the Ethernet Shield</description>
-<title></title>
+<title>STM811</title>
 <tags>
 <tag>STM811</tag>
-<tag></tag>
+<tag>SOT143</tag>
 </tags>
 <properties>
-<property name='family'>STM811</property>
+<property name='package'>sot143</property>
+<property name='family'>stm811</property>
 </properties>
 <views>
 <breadboardView>
@@ -66,8 +67,8 @@ Used in the Ethernet Shield</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='pad' name='_MR'>
-<description>_MR</description>
+<connector id='connector2' type='pad' name='~MR'>
+<description>~MR</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pad'/>
@@ -80,8 +81,8 @@ Used in the Ethernet Shield</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='pad' name='_RST'>
-<description>_RST</description>
+<connector id='connector1' type='pad' name='~RST'>
+<description>~RST</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pad'/>

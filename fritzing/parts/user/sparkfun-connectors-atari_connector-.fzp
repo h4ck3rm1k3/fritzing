@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-ATARI_CONNECTOR-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>DB9 labeled for Atari joystick</description>
-<title></title>
+<title>ATARI_CONNECTOR</title>
 <tags>
 <tag>ATARI_CONNECTOR</tag>
-<tag></tag>
+<tag>ATARI_CONNECTOR</tag>
 </tags>
 <properties>
-<property name='family'>ATARI_CONNECTOR</property>
+<property name='package'>atari_connector</property>
+<property name='family'>atari_connector</property>
 </properties>
 <views>
 <breadboardView>

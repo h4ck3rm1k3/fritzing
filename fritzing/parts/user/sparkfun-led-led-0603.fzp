@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-LED-LED-0603'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>LED</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;LEDs&lt;/b&gt;
 Standard schematic elements and footprints for 5mm, 3mm, 1206, and 0603 sized LEDs. 5mm - Spark Fun Electronics SKU : COM-00529 (and others)</description>
-<title>0603</title>
+<title>LEDs</title>
 <tags>
-<tag>LED</tag>
 <tag>0603</tag>
+<tag>LED</tag>
+<tag>LED-0603</tag>
 </tags>
 <properties>
-<property name='family'>LED</property>
+<property name='package'>led-0603</property>
+<property name='family'>led</property>
+<property name='variant'>0603</property>
 </properties>
 <views>
 <breadboardView>

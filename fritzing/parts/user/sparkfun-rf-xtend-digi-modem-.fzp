@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-XTEND-DIGI-MODEM-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Xtend Digi Modem WRL-09411</description>
-<title></title>
+<title>XTEND-DIGI-MODEM</title>
 <tags>
 <tag>XTEND-DIGI-MODEM</tag>
-<tag></tag>
+<tag>XTEND-DIGI-MODEM</tag>
 </tags>
 <properties>
-<property name='family'>XTEND-DIGI-MODEM</property>
+<property name='package'>xtend-digi-modem</property>
+<property name='family'>xtend-digi-modem</property>
 </properties>
 <views>
 <breadboardView>

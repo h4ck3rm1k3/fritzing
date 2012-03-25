@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-ID-12_20-ID-12_LOCK'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>RFID reader for ID2, ID12, and ID20 Package</description>
-<title>ID-12_LOCK</title>
+<title>ID-12_20</title>
 <tags>
-<tag>ID-12/20</tag>
+<tag>ID-12_LOCK</tag>
+<tag>ID-12_20</tag>
 <tag>ID-12_LOCK</tag>
 </tags>
 <properties>
-<property name='family'>ID-12/20</property>
+<property name='package'>id-12_lock</property>
+<property name='family'>id-12_20</property>
+<property name='variant'>id-12_lock</property>
 </properties>
 <views>
 <breadboardView>
@@ -38,8 +41,8 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector6' type='male' name='__-'>
-<description>__-</description>
+<connector id='connector6' type='male' name='+_-'>
+<description>+_-</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pin'/>

@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-ZUNE_CONNECTOR_MALE-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Male connector for the Zune media player.  UNPROVEN FOOTPRINT!  This connector must be used only with a 1.2mm PCB thickness.</description>
-<title></title>
+<title>ZUNE_CONNECTOR_MALE</title>
 <tags>
 <tag>ZUNE_CONNECTOR_MALE</tag>
-<tag></tag>
+<tag>ZUNE_CONNECTOR_MALE</tag>
 </tags>
 <properties>
-<property name='family'>ZUNE_CONNECTOR_MALE</property>
+<property name='package'>zune_connector_male</property>
+<property name='family'>zune_connector_male</property>
 </properties>
 <views>
 <breadboardView>
@@ -233,8 +234,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector18' type='pad' name='GND_19'>
-<description>GND_19</description>
+<connector id='connector18' type='pad' name='GND@19'>
+<description>GND@19</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector18pad'/>
@@ -247,8 +248,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector21' type='pad' name='GND_22'>
-<description>GND_22</description>
+<connector id='connector21' type='pad' name='GND@22'>
+<description>GND@22</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector21pad'/>
@@ -261,8 +262,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector22' type='pad' name='GND_23'>
-<description>GND_23</description>
+<connector id='connector22' type='pad' name='GND@23'>
+<description>GND@23</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector22pad'/>
@@ -275,8 +276,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector23' type='pad' name='GND_24'>
-<description>GND_24</description>
+<connector id='connector23' type='pad' name='GND@24'>
+<description>GND@24</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector23pad'/>
@@ -289,8 +290,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='pad' name='USB_5V_1'>
-<description>USB_5V_1</description>
+<connector id='connector0' type='pad' name='USB_5V@1'>
+<description>USB_5V@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pad'/>
@@ -303,8 +304,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='pad' name='USB_5V_2'>
-<description>USB_5V_2</description>
+<connector id='connector1' type='pad' name='USB_5V@2'>
+<description>USB_5V@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pad'/>
@@ -317,8 +318,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='pad' name='USB_5V_3'>
-<description>USB_5V_3</description>
+<connector id='connector2' type='pad' name='USB_5V@3'>
+<description>USB_5V@3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pad'/>
@@ -331,8 +332,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector20' type='pad' name='USB_DATA_'>
-<description>USB_DATA_</description>
+<connector id='connector20' type='pad' name='USB_DATA+'>
+<description>USB_DATA+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector20pad'/>
@@ -359,8 +360,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='pad' name='VIDEO_'>
-<description>VIDEO_</description>
+<connector id='connector8' type='pad' name='VIDEO+'>
+<description>VIDEO+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector8pad'/>

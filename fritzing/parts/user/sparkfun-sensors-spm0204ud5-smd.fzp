@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-SPM0204UD5-SMD'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Ultrasonic range sensor</description>
-<title>SMD</title>
+<title>SPM0204UD5</title>
 <tags>
-<tag>SPM0204UD5</tag>
 <tag>SMD</tag>
+<tag>SPM0204UD5</tag>
+<tag>SPM0204UD5</tag>
 </tags>
 <properties>
-<property name='family'>SPM0204UD5</property>
+<property name='package'>spm0204ud5</property>
+<property name='family'>spm0204ud5</property>
+<property name='variant'>smd</property>
 </properties>
 <views>
 <breadboardView>
@@ -51,8 +54,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='pad' name='GND_'>
-<description>GND_</description>
+<connector id='connector0' type='pad' name='GND#'>
+<description>GND#</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pad'/>

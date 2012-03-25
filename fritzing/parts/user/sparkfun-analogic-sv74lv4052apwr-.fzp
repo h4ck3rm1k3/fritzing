@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-SV74LV4052APWR-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Dual 4:1 analog mux</description>
-<title></title>
+<title>SV74LV4052APWR</title>
 <tags>
 <tag>SV74LV4052APWR</tag>
-<tag></tag>
+<tag>TSSOP16</tag>
 </tags>
 <properties>
-<property name='family'>SV74LV4052APWR</property>
+<property name='package'>tssop16</property>
+<property name='family'>sv74lv4052apwr</property>
 </properties>
 <views>
 <breadboardView>
@@ -205,8 +206,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='pad' name='GND_8'>
-<description>GND_8</description>
+<connector id='connector7' type='pad' name='GND@8'>
+<description>GND@8</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pad'/>
@@ -219,8 +220,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='pad' name='GNG_7'>
-<description>GNG_7</description>
+<connector id='connector6' type='pad' name='GNG@7'>
+<description>GNG@7</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pad'/>

@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Passives-FB-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description></description>
-<title></title>
+<title>FB</title>
 <tags>
 <tag>FB</tag>
-<tag></tag>
+<tag>0603</tag>
 </tags>
 <properties>
-<property name='family'>FB</property>
+<property name='package'>0603</property>
+<property name='family'>fb</property>
 </properties>
 <views>
 <breadboardView>
@@ -37,8 +38,8 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector0' type='pad' name='P_1'>
-<description>P_1</description>
+<connector id='connector0' type='pad' name='P$1'>
+<description>P$1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pad'/>
@@ -51,8 +52,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='pad' name='P_2'>
-<description>P_2</description>
+<connector id='connector1' type='pad' name='P$2'>
+<description>P$2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pad'/>

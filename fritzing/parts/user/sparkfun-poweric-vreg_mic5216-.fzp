@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-VREG_MIC5216-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>500mA LDO, MSOP8 for better dissipation</description>
-<title></title>
+<title>VREG_MIC5216</title>
 <tags>
 <tag>VREG_MIC5216</tag>
-<tag></tag>
+<tag>MSOP8</tag>
 </tags>
 <properties>
-<property name='family'>VREG_MIC5216</property>
+<property name='package'>msop8</property>
+<property name='family'>vreg_mic5216</property>
 </properties>
 <views>
 <breadboardView>
@@ -65,8 +66,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='pad' name='GND_5'>
-<description>GND_5</description>
+<connector id='connector4' type='pad' name='GND@5'>
+<description>GND@5</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pad'/>
@@ -79,8 +80,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='pad' name='GND_6'>
-<description>GND_6</description>
+<connector id='connector5' type='pad' name='GND@6'>
+<description>GND@6</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector5pad'/>
@@ -93,8 +94,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='pad' name='GND_7'>
-<description>GND_7</description>
+<connector id='connector6' type='pad' name='GND@7'>
+<description>GND@7</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pad'/>
@@ -107,8 +108,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='pad' name='GND_8'>
-<description>GND_8</description>
+<connector id='connector7' type='pad' name='GND@8'>
+<description>GND@8</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pad'/>

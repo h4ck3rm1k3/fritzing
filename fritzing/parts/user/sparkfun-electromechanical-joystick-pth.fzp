@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-JOYSTICK-PTH'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Thumb Joystick&lt;/b&gt;
 Joystick commonly found in PS2 controllers. Two pots and a select switch. Footprint proven. Spark Fun Electronics SKU : COM-09032</description>
-<title>PTH</title>
+<title>Thumb Joystick</title>
 <tags>
-<tag>JOYSTICK</tag>
 <tag>PTH</tag>
+<tag>JOYSTICK</tag>
+<tag>JOYSTICK</tag>
 </tags>
 <properties>
-<property name='family'>JOYSTICK</property>
+<property name='package'>joystick</property>
+<property name='family'>joystick</property>
+<property name='variant'>pth</property>
 </properties>
 <views>
 <breadboardView>
@@ -54,8 +57,8 @@ Joystick commonly found in PS2 controllers. Two pots and a select switch. Footpr
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='male' name='H_'>
-<description>H_</description>
+<connector id='connector6' type='male' name='H+'>
+<description>H+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pin'/>
@@ -84,8 +87,8 @@ Joystick commonly found in PS2 controllers. Two pots and a select switch. Footpr
 </pcbView>
 </views>
 </connector>
-<connector id='connector12' type='male' name='SEL_'>
-<description>SEL_</description>
+<connector id='connector12' type='male' name='SEL+'>
+<description>SEL+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector12pin'/>
@@ -129,8 +132,8 @@ Joystick commonly found in PS2 controllers. Two pots and a select switch. Footpr
 </pcbView>
 </views>
 </connector>
-<connector id='connector9' type='male' name='V_'>
-<description>V_</description>
+<connector id='connector9' type='male' name='V+'>
+<description>V+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector9pin'/>

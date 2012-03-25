@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-GEIGER_TUBE-LND712'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>LND712 Geiger Tube (COM-08875)</description>
-<title>LND712</title>
+<title>GEIGER_TUBE</title>
 <tags>
-<tag>GEIGER_TUBE</tag>
 <tag>LND712</tag>
+<tag>GEIGER_TUBE</tag>
+<tag>GEIGER_TUBE</tag>
 </tags>
 <properties>
-<property name='family'>GEIGER_TUBE</property>
+<property name='package'>geiger_tube</property>
+<property name='family'>geiger_tube</property>
+<property name='variant'>lnd712</property>
 </properties>
 <views>
 <breadboardView>

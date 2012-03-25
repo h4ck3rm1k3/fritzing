@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-ADXRSXXX-SMD'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Various MEMS gyros- ADXRS6xx, 150, 300, 401</description>
-<title>SMD</title>
+<title>ADXRSXXX</title>
 <tags>
-<tag>ADXRSXXX</tag>
 <tag>SMD</tag>
+<tag>ADXRSXXX</tag>
+<tag>BC-32</tag>
 </tags>
 <properties>
-<property name='family'>ADXRSXXX</property>
+<property name='package'>bc-32</property>
+<property name='family'>adxrsxxx</property>
+<property name='variant'>smd</property>
 </properties>
 <views>
 <breadboardView>

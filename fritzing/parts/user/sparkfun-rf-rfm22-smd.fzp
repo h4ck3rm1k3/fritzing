@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-RFM22-SMD'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>The RFM22 is a low-power, low cost radio that is capable of operating in the 434MHz and 900MHz open bands. It&apos;s frequency is software defined and there are some very good libraries written for it.</description>
-<title>SMD</title>
+<title>RFM22</title>
 <tags>
-<tag>RFM22</tag>
 <tag>SMD</tag>
+<tag>RFM22</tag>
+<tag>RFM22-XXX-S2</tag>
 </tags>
 <properties>
-<property name='family'>RFM22</property>
+<property name='package'>rfm22-xxx-s2</property>
+<property name='family'>rfm22</property>
+<property name='variant'>smd</property>
 </properties>
 <views>
 <breadboardView>
@@ -51,8 +54,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='pad' name='GND_1'>
-<description>GND_1</description>
+<connector id='connector1' type='pad' name='GND@1'>
+<description>GND@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pad'/>
@@ -65,8 +68,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='pad' name='GND_2'>
-<description>GND_2</description>
+<connector id='connector8' type='pad' name='GND@2'>
+<description>GND@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector8pad'/>
@@ -79,8 +82,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector15' type='pad' name='GND_3'>
-<description>GND_3</description>
+<connector id='connector15' type='pad' name='GND@3'>
+<description>GND@3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector15pad'/>

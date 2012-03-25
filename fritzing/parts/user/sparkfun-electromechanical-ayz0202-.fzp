@@ -1,18 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-AYZ0202-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;SPDT Slide Switch&lt;/b&gt;
 Simple SMD single-pull double-throw slide switch. Good for  less than 350mA power switch, switching UARTs between devices, etc. Spark Fun Electronics SKU : COM-00597</description>
-<title></title>
+<title>SPDT Slide Switch</title>
 <tags>
 <tag>AYZ0202</tag>
-<tag></tag>
+<tag>AYZ0202</tag>
 </tags>
 <properties>
-<property name='family'>AYZ0202</property>
+<property name='package'>ayz0202</property>
+<property name='family'>ayz0202</property>
 </properties>
 <views>
 <breadboardView>

@@ -1,18 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-IPOD_CONNECTOR_MALE-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;iPod Male Connector&lt;/b&gt;
 This is the connector that will insert into an iPods. Use this connector to gain access to the various iPod pins. Schematic and footprint are not yet production proven. The PCB thickness must be more thin than the standard 0.062&quot; FR4. Spark Fun Electronics SKU : DEV-00633</description>
-<title></title>
+<title>iPod Male Connector</title>
 <tags>
 <tag>IPOD_CONNECTOR_MALE</tag>
-<tag></tag>
+<tag>IPOD_MALE_CONNECTOR</tag>
 </tags>
 <properties>
-<property name='family'>IPOD_CONNECTOR_MALE</property>
+<property name='package'>ipod_male_connector</property>
+<property name='family'>ipod_connector_male</property>
 </properties>
 <views>
 <breadboardView>
@@ -108,8 +109,8 @@ This is the connector that will insert into an iPods. Use this connector to gain
 </pcbView>
 </views>
 </connector>
-<connector id='connector9' type='pad' name='FW_12V_19'>
-<description>FW_12V_19</description>
+<connector id='connector9' type='pad' name='FW_12V@19'>
+<description>FW_12V@19</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector9pad'/>
@@ -122,8 +123,8 @@ This is the connector that will insert into an iPods. Use this connector to gain
 </pcbView>
 </views>
 </connector>
-<connector id='connector23' type='pad' name='FW_12V_20'>
-<description>FW_12V_20</description>
+<connector id='connector23' type='pad' name='FW_12V@20'>
+<description>FW_12V@20</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector23pad'/>
@@ -136,8 +137,8 @@ This is the connector that will insert into an iPods. Use this connector to gain
 </pcbView>
 </views>
 </connector>
-<connector id='connector25' type='pad' name='FW_TPA_'>
-<description>FW_TPA_</description>
+<connector id='connector25' type='pad' name='FW_TPA+'>
+<description>FW_TPA+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector25pad'/>
@@ -164,8 +165,8 @@ This is the connector that will insert into an iPods. Use this connector to gain
 </pcbView>
 </views>
 </connector>
-<connector id='connector27' type='pad' name='FW_TPB_'>
-<description>FW_TPB_</description>
+<connector id='connector27' type='pad' name='FW_TPB+'>
+<description>FW_TPB+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector27pad'/>
@@ -192,8 +193,8 @@ This is the connector that will insert into an iPods. Use this connector to gain
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='pad' name='GND_1'>
-<description>GND_1</description>
+<connector id='connector0' type='pad' name='GND@1'>
+<description>GND@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pad'/>
@@ -206,8 +207,8 @@ This is the connector that will insert into an iPods. Use this connector to gain
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='pad' name='GND_11'>
-<description>GND_11</description>
+<connector id='connector5' type='pad' name='GND@11'>
+<description>GND@11</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector5pad'/>
@@ -220,8 +221,8 @@ This is the connector that will insert into an iPods. Use this connector to gain
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='pad' name='GND_15'>
-<description>GND_15</description>
+<connector id='connector7' type='pad' name='GND@15'>
+<description>GND@15</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pad'/>
@@ -234,8 +235,8 @@ This is the connector that will insert into an iPods. Use this connector to gain
 </pcbView>
 </views>
 </connector>
-<connector id='connector21' type='pad' name='GND_16'>
-<description>GND_16</description>
+<connector id='connector21' type='pad' name='GND@16'>
+<description>GND@16</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector21pad'/>
@@ -248,8 +249,8 @@ This is the connector that will insert into an iPods. Use this connector to gain
 </pcbView>
 </views>
 </connector>
-<connector id='connector14' type='pad' name='GND_2'>
-<description>GND_2</description>
+<connector id='connector14' type='pad' name='GND@2'>
+<description>GND@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector14pad'/>
@@ -262,8 +263,8 @@ This is the connector that will insert into an iPods. Use this connector to gain
 </pcbView>
 </views>
 </connector>
-<connector id='connector28' type='pad' name='GND_29'>
-<description>GND_29</description>
+<connector id='connector28' type='pad' name='GND@29'>
+<description>GND@29</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector28pad'/>
@@ -276,8 +277,8 @@ This is the connector that will insert into an iPods. Use this connector to gain
 </pcbView>
 </views>
 </connector>
-<connector id='connector29' type='pad' name='GND_30'>
-<description>GND_30</description>
+<connector id='connector29' type='pad' name='GND@30'>
+<description>GND@30</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector29pad'/>
@@ -416,8 +417,8 @@ This is the connector that will insert into an iPods. Use this connector to gain
 </pcbView>
 </views>
 </connector>
-<connector id='connector13' type='pad' name='USB_D_'>
-<description>USB_D_</description>
+<connector id='connector13' type='pad' name='USB_D+'>
+<description>USB_D+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector13pad'/>

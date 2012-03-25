@@ -29,6 +29,7 @@ $Date$
 #include "../processeventblocker.h"
 
 #include <QFormLayout>
+#include <QTextStream>
 #include <QLabel>
 #include <QComboBox>
 #include <QPushButton>
@@ -113,6 +114,7 @@ void FileProgressDialog::setMinimum(int minimum) {
 
 void FileProgressDialog::setMaximum(int maximum) {
 	m_progressBar->setMaximum(maximum);
+	DebugDialog::debug(QString("set maximum:%1").arg(maximum)); 
 }
 
 void FileProgressDialog::setValue(int value) {
@@ -163,7 +165,11 @@ void FileProgressDialog::loadingInstancesSlot(class ModelBase *, QDomElement & i
 		
 void FileProgressDialog::loadingInstanceSlot(class ModelBase *, QDomElement & instance)
 {
-	Q_UNUSED(instance);
+	//QString text;
+	//QTextStream textStream(&text);
+	//instance.save(textStream, 0);
+	//DebugDialog::debug(QString("loading %1").arg(text));
+	DebugDialog::debug(QString("loading %1").arg(instance.attribute("path")));
 	settingItemSlot();
 }
 

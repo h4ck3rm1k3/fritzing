@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-V_REG_LD1085-D2'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;LD1085 3A low-drop positive voltage regulator, adjustable&lt;/h3&gt;
@@ -10,13 +10,16 @@ The LD1085xx is a low drop voltage regulator able to provide up to 3 A of output
 &lt;br&gt;
 &lt;B&gt;Available Packages&lt;/b&gt;
 &lt;ul&gt;&lt;li&gt;D&lt;sup&gt;2&lt;/sup&gt;PAK/A - 3-pin w/ tabs, SMD</description>
-<title>D2</title>
+<title>V_REG_LD1085</title>
 <tags>
-<tag>V_REG_LD1085</tag>
 <tag>D2</tag>
+<tag>V_REG_LD1085</tag>
+<tag>D2PACK_A</tag>
 </tags>
 <properties>
-<property name='family'>V_REG_LD1085</property>
+<property name='package'>d2pack_a</property>
+<property name='family'>v_reg_ld1085</property>
+<property name='variant'>d2</property>
 </properties>
 <views>
 <breadboardView>
@@ -84,8 +87,8 @@ The LD1085xx is a low drop voltage regulator able to provide up to 3 A of output
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='pad' name='OUT_1'>
-<description>OUT_1</description>
+<connector id='connector0' type='pad' name='OUT@1'>
+<description>OUT@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pad'/>

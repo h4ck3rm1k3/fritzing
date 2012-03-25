@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-SI470X-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>FM receiver IC. Tested with Si4703. You really only need SEN, RST, SCLK, and SDIO to get a full FM radio working. Antenna comes from headphone jack. See BOB-10344.</description>
-<title></title>
+<title>SI470X</title>
 <tags>
 <tag>SI470X</tag>
-<tag></tag>
+<tag>SI470X</tag>
 </tags>
 <properties>
-<property name='family'>SI470X</property>
+<property name='package'>si470x</property>
+<property name='family'>si470x</property>
 </properties>
 <views>
 <breadboardView>
@@ -37,8 +38,8 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector3' type='pad' name='_RST'>
-<description>_RST</description>
+<connector id='connector3' type='pad' name='!RST'>
+<description>!RST</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pad'/>
@@ -51,8 +52,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='pad' name='_SEN'>
-<description>_SEN</description>
+<connector id='connector4' type='pad' name='!SEN'>
+<description>!SEN</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pad'/>
@@ -93,8 +94,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='pad' name='GND_12'>
-<description>GND_12</description>
+<connector id='connector10' type='pad' name='GND@12'>
+<description>GND@12</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pad'/>
@@ -107,8 +108,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector19' type='pad' name='GND_PAD'>
-<description>GND_PAD</description>
+<connector id='connector19' type='pad' name='GND@PAD'>
+<description>GND@PAD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector19pad'/>

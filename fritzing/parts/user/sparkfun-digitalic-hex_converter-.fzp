@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-HEX_CONVERTER-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Just what it says.</description>
-<title></title>
+<title>HEX_CONVERTER</title>
 <tags>
 <tag>HEX_CONVERTER</tag>
-<tag></tag>
+<tag>SO016</tag>
 </tags>
 <properties>
-<property name='family'>HEX_CONVERTER</property>
+<property name='package'>so016</property>
+<property name='family'>hex_converter</property>
 </properties>
 <views>
 <breadboardView>

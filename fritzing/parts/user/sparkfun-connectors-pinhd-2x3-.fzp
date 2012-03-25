@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-PINHD-2X3-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;PIN HEADER&lt;/b&gt;</description>
-<title></title>
+<title>PIN HEADER</title>
 <tags>
 <tag>PINHD-2X3</tag>
-<tag></tag>
+<tag>2X03</tag>
 </tags>
 <properties>
-<property name='family'>PINHD-2X3</property>
+<property name='package'>2x03</property>
+<property name='family'>pinhd-2x3</property>
 </properties>
 <views>
 <breadboardView>

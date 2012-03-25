@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-MAX98306-ETD_'>
+<module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-MAX98306-ETD+'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Stereo 3.7W Class D Amplifier&lt;/b&gt;&lt;p&gt;
@@ -24,13 +24,16 @@ extends battery life in portable applications.
 The IC is available in a 14-pin TDFN (3mm x 3mm x
 0.75mm) package specified over the extended -40NC to
 +85NC temperature range.</description>
-<title>ETD+</title>
+<title>Stereo 3.7W Class D Amplifier</title>
 <tags>
-<tag>MAX98306</tag>
 <tag>ETD+</tag>
+<tag>MAX98306</tag>
+<tag>14-TDFN</tag>
 </tags>
 <properties>
-<property name='family'>MAX98306</property>
+<property name='package'>14-tdfn</property>
+<property name='family'>max98306</property>
+<property name='variant'>etd+</property>
 </properties>
 <views>
 <breadboardView>
@@ -70,8 +73,8 @@ The IC is available in a 14-pin TDFN (3mm x 3mm x
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='pad' name='GND_1'>
-<description>GND_1</description>
+<connector id='connector0' type='pad' name='GND@1'>
+<description>GND@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pad'/>
@@ -84,8 +87,8 @@ The IC is available in a 14-pin TDFN (3mm x 3mm x
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='pad' name='GND_2'>
-<description>GND_2</description>
+<connector id='connector8' type='pad' name='GND@2'>
+<description>GND@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector8pad'/>
@@ -98,8 +101,8 @@ The IC is available in a 14-pin TDFN (3mm x 3mm x
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='pad' name='GND_3'>
-<description>GND_3</description>
+<connector id='connector1' type='pad' name='GND@3'>
+<description>GND@3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pad'/>
@@ -112,8 +115,8 @@ The IC is available in a 14-pin TDFN (3mm x 3mm x
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='pad' name='INL_'>
-<description>INL_</description>
+<connector id='connector3' type='pad' name='INL+'>
+<description>INL+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pad'/>
@@ -140,8 +143,8 @@ The IC is available in a 14-pin TDFN (3mm x 3mm x
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='pad' name='INR_'>
-<description>INR_</description>
+<connector id='connector7' type='pad' name='INR+'>
+<description>INR+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pad'/>
@@ -168,8 +171,8 @@ The IC is available in a 14-pin TDFN (3mm x 3mm x
 </pcbView>
 </views>
 </connector>
-<connector id='connector13' type='pad' name='OUTL_'>
-<description>OUTL_</description>
+<connector id='connector13' type='pad' name='OUTL+'>
+<description>OUTL+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector13pad'/>
@@ -196,8 +199,8 @@ The IC is available in a 14-pin TDFN (3mm x 3mm x
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='pad' name='OUTR_'>
-<description>OUTR_</description>
+<connector id='connector10' type='pad' name='OUTR+'>
+<description>OUTR+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pad'/>
@@ -238,8 +241,8 @@ The IC is available in a 14-pin TDFN (3mm x 3mm x
 </pcbView>
 </views>
 </connector>
-<connector id='connector11' type='pad' name='VDD_1'>
-<description>VDD_1</description>
+<connector id='connector11' type='pad' name='VDD@1'>
+<description>VDD@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector11pad'/>
@@ -252,8 +255,8 @@ The IC is available in a 14-pin TDFN (3mm x 3mm x
 </pcbView>
 </views>
 </connector>
-<connector id='connector12' type='pad' name='VDD_2'>
-<description>VDD_2</description>
+<connector id='connector12' type='pad' name='VDD@2'>
+<description>VDD@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector12pad'/>

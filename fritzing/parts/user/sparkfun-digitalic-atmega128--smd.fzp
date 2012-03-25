@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-ATMEGA128--SMD'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>ATmega128/128L/1281/2561. Note: The ATmega128 pin 1 is PEN and the ATmega256/1281 pin 1 is PG5.</description>
-<title>-SMD</title>
+<title>ATMEGA128</title>
 <tags>
-<tag>ATMEGA128</tag>
 <tag>-SMD</tag>
+<tag>ATMEGA128</tag>
+<tag>TQFP64_14X14MM</tag>
 </tags>
 <properties>
-<property name='family'>ATMEGA128</property>
+<property name='package'>tqfp64_14x14mm</property>
+<property name='family'>atmega128</property>
+<property name='variant'>-smd</property>
 </properties>
 <views>
 <breadboardView>
@@ -79,8 +82,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector36' type='pad' name='GND_22'>
-<description>GND_22</description>
+<connector id='connector36' type='pad' name='GND@22'>
+<description>GND@22</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector36pad'/>
@@ -93,8 +96,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='pad' name='GND_53'>
-<description>GND_53</description>
+<connector id='connector7' type='pad' name='GND@53'>
+<description>GND@53</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pad'/>
@@ -219,8 +222,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector18' type='pad' name='PB0_SS_'>
-<description>PB0_SS_</description>
+<connector id='connector18' type='pad' name='PB0(SS)'>
+<description>PB0(SS)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector18pad'/>
@@ -233,8 +236,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector21' type='pad' name='PB1_SCK_'>
-<description>PB1_SCK_</description>
+<connector id='connector21' type='pad' name='PB1(SCK)'>
+<description>PB1(SCK)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector21pad'/>
@@ -247,8 +250,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector22' type='pad' name='PB2_MOSI_'>
-<description>PB2_MOSI_</description>
+<connector id='connector22' type='pad' name='PB2(MOSI)'>
+<description>PB2(MOSI)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector22pad'/>
@@ -261,8 +264,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector25' type='pad' name='PB3_MISO_'>
-<description>PB3_MISO_</description>
+<connector id='connector25' type='pad' name='PB3(MISO)'>
+<description>PB3(MISO)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector25pad'/>
@@ -443,8 +446,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector33' type='pad' name='PD0_SCL_'>
-<description>PD0_SCL_</description>
+<connector id='connector33' type='pad' name='PD0(SCL)'>
+<description>PD0(SCL)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector33pad'/>
@@ -457,8 +460,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector34' type='pad' name='PD1_SDA_'>
-<description>PD1_SDA_</description>
+<connector id='connector34' type='pad' name='PD1(SDA)'>
+<description>PD1(SDA)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector34pad'/>
@@ -555,8 +558,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector28' type='pad' name='PE0_RXD_'>
-<description>PE0_RXD_</description>
+<connector id='connector28' type='pad' name='PE0(RXD)'>
+<description>PE0(RXD)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector28pad'/>
@@ -569,8 +572,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector27' type='pad' name='PE1_TXD_'>
-<description>PE1_TXD_</description>
+<connector id='connector27' type='pad' name='PE1(TXD)'>
+<description>PE1(TXD)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector27pad'/>
@@ -877,8 +880,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector39' type='pad' name='VCC_21'>
-<description>VCC_21</description>
+<connector id='connector39' type='pad' name='VCC@21'>
+<description>VCC@21</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector39pad'/>
@@ -891,8 +894,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='pad' name='VCC_52'>
-<description>VCC_52</description>
+<connector id='connector8' type='pad' name='VCC@52'>
+<description>VCC@52</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector8pad'/>

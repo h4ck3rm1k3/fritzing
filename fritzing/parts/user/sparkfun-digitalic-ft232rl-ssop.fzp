@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-FT232RL-SSOP'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>IC</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;USB UART&lt;/b&gt;
 FT232RL 4&lt;sup&gt;th&lt;/sup&gt; Generation USB UART (USB &amp;lt;-&amp;gt; Serial) Controller. Spark Fun Electronics SKU : COM-00650</description>
-<title>SSOP</title>
+<title>USB UART</title>
 <tags>
-<tag>FT232RL</tag>
 <tag>SSOP</tag>
+<tag>FT232RL</tag>
+<tag>SSOP28DB</tag>
 </tags>
 <properties>
-<property name='family'>FT232RL</property>
+<property name='package'>ssop28db</property>
+<property name='family'>ft232rl</property>
+<property name='variant'>ssop</property>
 </properties>
 <views>
 <breadboardView>

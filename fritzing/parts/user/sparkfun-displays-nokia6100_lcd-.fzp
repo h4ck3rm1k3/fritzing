@@ -1,18 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Displays-NOKIA6100_LCD-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Nokia 6100 Color LCD&lt;/b&gt;
 Schematic element and footprint production proven but could use some touching up. Spark Fun Electronics SKU : LCD-00569. Mating SMD connector : LCD-00570</description>
-<title></title>
+<title>Nokia 6100 Color LCD</title>
 <tags>
 <tag>NOKIA6100_LCD</tag>
-<tag></tag>
+<tag>NOKIA6100_LCD</tag>
 </tags>
 <properties>
-<property name='family'>NOKIA6100_LCD</property>
+<property name='package'>nokia6100_lcd</property>
+<property name='family'>nokia6100_lcd</property>
 </properties>
 <views>
 <breadboardView>

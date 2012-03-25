@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-M06-SMD-STRAIGHT-COMBO'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Header 6&lt;/b&gt;
@@ -15,13 +15,16 @@ to hold the component in place.  0.005 has proven to be the perfect amount of &q
 Although looks a little odd when you look at the bare footprint, once you have a header in there, the alteration is very hard to notice.  Also,
 if you push a header all the way into place, it is covered up entirely on the bottom side.  This idea of altering the position of holes to aid alignment 
 will be further integrated into the Sparkfun Library for other footprints.  It can help hold any component with 3 or more connection pins.</description>
-<title>SMD-STRAIGHT-COMBO</title>
+<title>Header 6</title>
 <tags>
-<tag>M06</tag>
 <tag>SMD-STRAIGHT-COMBO</tag>
+<tag>M06</tag>
+<tag>1X06_SMD_STRAIGHT_COMBO</tag>
 </tags>
 <properties>
-<property name='family'>M06</property>
+<property name='package'>1x06_smd_straight_combo</property>
+<property name='family'>m06</property>
+<property name='variant'>smd-straight-combo</property>
 </properties>
 <views>
 <breadboardView>

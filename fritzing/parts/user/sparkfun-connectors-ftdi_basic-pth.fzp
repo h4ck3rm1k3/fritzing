@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-FTDI_BASIC-PTH'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>FTDI Basic header with labels</description>
-<title>PTH</title>
+<title>FTDI_BASIC</title>
 <tags>
-<tag>FTDI_BASIC</tag>
 <tag>PTH</tag>
+<tag>FTDI_BASIC</tag>
+<tag>FTDI_BASIC</tag>
 </tags>
 <properties>
-<property name='family'>FTDI_BASIC</property>
+<property name='package'>ftdi_basic</property>
+<property name='family'>ftdi_basic</property>
+<property name='variant'>pth</property>
 </properties>
 <views>
 <breadboardView>

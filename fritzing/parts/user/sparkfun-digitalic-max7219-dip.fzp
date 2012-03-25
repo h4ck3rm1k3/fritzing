@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-MAX7219-DIP'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>8-digit, 8-segment LED display driver, serial input</description>
-<title>DIP</title>
+<title>MAX7219</title>
 <tags>
-<tag>MAX7219</tag>
 <tag>DIP</tag>
+<tag>MAX7219</tag>
+<tag>DIL24</tag>
 </tags>
 <properties>
-<property name='family'>MAX7219</property>
+<property name='package'>dil24</property>
+<property name='family'>max7219</property>
+<property name='variant'>dip</property>
 </properties>
 <views>
 <breadboardView>

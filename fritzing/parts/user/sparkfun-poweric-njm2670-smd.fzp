@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-NJM2670-SMD'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Dual H-bridge driver</description>
-<title>SMD</title>
+<title>NJM2670</title>
 <tags>
-<tag>NJM2670</tag>
 <tag>SMD</tag>
+<tag>NJM2670</tag>
+<tag>SO-24W</tag>
 </tags>
 <properties>
-<property name='family'>NJM2670</property>
+<property name='package'>so-24w</property>
+<property name='family'>njm2670</property>
+<property name='variant'>smd</property>
 </properties>
 <views>
 <breadboardView>
@@ -65,8 +68,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='pad' name='GND_1'>
-<description>GND_1</description>
+<connector id='connector5' type='pad' name='GND@1'>
+<description>GND@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector5pad'/>
@@ -79,8 +82,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='pad' name='GND_2'>
-<description>GND_2</description>
+<connector id='connector6' type='pad' name='GND@2'>
+<description>GND@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pad'/>
@@ -93,8 +96,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='pad' name='GND_3'>
-<description>GND_3</description>
+<connector id='connector10' type='pad' name='GND@3'>
+<description>GND@3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pad'/>
@@ -107,8 +110,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector18' type='pad' name='GND_4'>
-<description>GND_4</description>
+<connector id='connector18' type='pad' name='GND@4'>
+<description>GND@4</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector18pad'/>
@@ -177,8 +180,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='pad' name='NC_1'>
-<description>NC_1</description>
+<connector id='connector3' type='pad' name='NC@1'>
+<description>NC@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pad'/>
@@ -191,8 +194,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector9' type='pad' name='NC_2'>
-<description>NC_2</description>
+<connector id='connector9' type='pad' name='NC@2'>
+<description>NC@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector9pad'/>
@@ -205,8 +208,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector13' type='pad' name='NC_3'>
-<description>NC_3</description>
+<connector id='connector13' type='pad' name='NC@3'>
+<description>NC@3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector13pad'/>
@@ -219,8 +222,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector20' type='pad' name='NC_4'>
-<description>NC_4</description>
+<connector id='connector20' type='pad' name='NC@4'>
+<description>NC@4</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector20pad'/>

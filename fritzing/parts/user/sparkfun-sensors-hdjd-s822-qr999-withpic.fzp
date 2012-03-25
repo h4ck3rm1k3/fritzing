@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-HDJD-S822-QR999-WITHPIC'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Avago RGB color sensor, analog out</description>
-<title>WITHPIC</title>
+<title>HDJD-S822-QR999</title>
 <tags>
-<tag>HDJD-S822-QR999</tag>
 <tag>WITHPIC</tag>
+<tag>HDJD-S822-QR999</tag>
+<tag>QFN-16-(ROUNDED0THERMAL-PAD)</tag>
 </tags>
 <properties>
-<property name='family'>HDJD-S822-QR999</property>
+<property name='package'>qfn-16-(rounded0thermal-pad)</property>
+<property name='family'>hdjd-s822-qr999</property>
+<property name='variant'>withpic</property>
 </properties>
 <views>
 <breadboardView>

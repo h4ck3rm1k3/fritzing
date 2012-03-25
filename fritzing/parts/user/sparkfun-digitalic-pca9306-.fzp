@@ -1,18 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-PCA9306-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Bidirectional I2C level shifter.&lt;br&gt;
 NOT compatible with all available part number pinout schemes- DOUBLE CHECK!!!</description>
-<title></title>
+<title>PCA9306</title>
 <tags>
 <tag>PCA9306</tag>
-<tag></tag>
+<tag>PSOP-8</tag>
 </tags>
 <properties>
-<property name='family'>PCA9306</property>
+<property name='package'>psop-8</property>
+<property name='family'>pca9306</property>
 </properties>
 <views>
 <breadboardView>

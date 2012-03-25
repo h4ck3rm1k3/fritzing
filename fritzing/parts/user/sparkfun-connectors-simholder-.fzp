@@ -1,18 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-SIMHOLDER-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;SIM Socket&lt;/b&gt;
 Socket for SIM cellular cards. Schematic element and footprint production proven. Spark Fun Electronics SKU : PRT-00548</description>
-<title></title>
+<title>SIM Socket</title>
 <tags>
 <tag>SIMHOLDER</tag>
-<tag></tag>
+<tag>SIMHOLDER</tag>
 </tags>
 <properties>
-<property name='family'>SIMHOLDER</property>
+<property name='package'>simholder</property>
+<property name='family'>simholder</property>
 </properties>
 <views>
 <breadboardView>

@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Displays-LCD-16X2-8X2-KIT'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Standard text-only 16x2 parallel input LCD</description>
-<title>8X2-KIT</title>
+<title>LCD-16X2</title>
 <tags>
-<tag>LCD-16X2</tag>
 <tag>8X2-KIT</tag>
+<tag>LCD-16X2</tag>
+<tag>LCD-8X2-KIT</tag>
 </tags>
 <properties>
-<property name='family'>LCD-16X2</property>
+<property name='package'>lcd-8x2-kit</property>
+<property name='family'>lcd-16x2</property>
+<property name='variant'>8x2-kit</property>
 </properties>
 <views>
 <breadboardView>

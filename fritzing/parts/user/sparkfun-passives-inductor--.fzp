@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Passives-INDUCTOR--'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>L</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Inductors&lt;/b&gt;
 Basic Inductor/Choke - 0603 and 1206. Footprints are not proven and vary greatly between part numbers.</description>
-<title>-</title>
+<title>Inductors</title>
 <tags>
-<tag>INDUCTOR</tag>
 <tag>-</tag>
+<tag>INDUCTOR</tag>
+<tag>CDRH3D28</tag>
 </tags>
 <properties>
-<property name='family'>INDUCTOR</property>
+<property name='package'>cdrh3d28</property>
+<property name='family'>inductor</property>
+<property name='variant'>-</property>
 </properties>
 <views>
 <breadboardView>

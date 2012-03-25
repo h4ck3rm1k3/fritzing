@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-FreqCtrl-CRYSTAL-SMD'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>Y</label>
 <author>www.fritzing.org</author>
 <description>Various standard crystals. Proven footprints. Spark Fun Electronics SKU : COM-00534</description>
-<title>SMD</title>
+<title>CRYSTAL</title>
 <tags>
-<tag>CRYSTAL</tag>
 <tag>SMD</tag>
+<tag>CRYSTAL</tag>
+<tag>HC49UP</tag>
 </tags>
 <properties>
-<property name='family'>CRYSTAL</property>
+<property name='package'>hc49up</property>
+<property name='family'>crystal</property>
+<property name='variant'>smd</property>
 </properties>
 <views>
 <breadboardView>

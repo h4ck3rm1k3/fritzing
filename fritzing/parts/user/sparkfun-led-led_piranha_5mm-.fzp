@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-LED-LED_PIRANHA_5MM-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>High-brightness RGB through-hole LED, similar to that used in the Shiftbrite</description>
-<title></title>
+<title>LED_PIRANHA_5MM</title>
 <tags>
 <tag>LED_PIRANHA_5MM</tag>
-<tag></tag>
+<tag>LED_PIRANHA_5MM</tag>
 </tags>
 <properties>
-<property name='family'>LED_PIRANHA_5MM</property>
+<property name='package'>led_piranha_5mm</property>
+<property name='family'>led_piranha_5mm</property>
 </properties>
 <views>
 <breadboardView>

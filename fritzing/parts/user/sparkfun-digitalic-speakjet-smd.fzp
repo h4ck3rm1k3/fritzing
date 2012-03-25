@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-SPEAKJET-SMD'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Speech synthesis chip- COM-09578</description>
-<title>SMD</title>
+<title>SPEAKJET</title>
 <tags>
-<tag>SPEAKJET</tag>
 <tag>SMD</tag>
+<tag>SPEAKJET</tag>
+<tag>SOIC-18</tag>
 </tags>
 <properties>
-<property name='family'>SPEAKJET</property>
+<property name='package'>soic-18</property>
+<property name='family'>speakjet</property>
+<property name='variant'>smd</property>
 </properties>
 <views>
 <breadboardView>

@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-ACS712-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Hall-effect-based isolated linear current sensor</description>
-<title></title>
+<title>ACS712</title>
 <tags>
 <tag>ACS712</tag>
-<tag></tag>
+<tag>SO08</tag>
 </tags>
 <properties>
-<property name='family'>ACS712</property>
+<property name='package'>so08</property>
+<property name='family'>acs712</property>
 </properties>
 <views>
 <breadboardView>
@@ -65,8 +66,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='pad' name='IP__1'>
-<description>IP__1</description>
+<connector id='connector0' type='pad' name='IP+@1'>
+<description>IP+@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pad'/>
@@ -79,8 +80,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='pad' name='IP__2'>
-<description>IP__2</description>
+<connector id='connector1' type='pad' name='IP+@2'>
+<description>IP+@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pad'/>
@@ -93,8 +94,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='pad' name='IP-_3'>
-<description>IP-_3</description>
+<connector id='connector2' type='pad' name='IP-@3'>
+<description>IP-@3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pad'/>
@@ -107,8 +108,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='pad' name='IP-_4'>
-<description>IP-_4</description>
+<connector id='connector3' type='pad' name='IP-@4'>
+<description>IP-@4</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pad'/>

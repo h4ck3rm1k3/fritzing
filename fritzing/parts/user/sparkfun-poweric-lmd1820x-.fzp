@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-LMD1820X-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>LMD1820X H-Bridge - BOB-00747</description>
-<title></title>
+<title>LMD1820X</title>
 <tags>
 <tag>LMD1820X</tag>
-<tag></tag>
+<tag>TO-220-11LEAD</tag>
 </tags>
 <properties>
-<property name='family'>LMD1820X</property>
+<property name='package'>to-220-11lead</property>
+<property name='family'>lmd1820x</property>
 </properties>
 <views>
 <breadboardView>

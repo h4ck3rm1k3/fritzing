@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<module fritzingVersion='0.7.2b' moduleId='SparkFun-Passives-RPACK_--BUSSED-SIP-PTH-5'>
+<module fritzingVersion='0.7.2b' moduleId='SparkFun-Passives-RPACK*--BUSSED-SIP-PTH-5'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>R</label>
 <author>www.fritzing.org</author>
 <description>BOURNS 4600X series thick-film SIP resistor packs&lt;br&gt;
@@ -11,13 +11,16 @@ Five resistors bussed to a single pin (denoted by dot).&lt;br&gt;
 &lt;a href=&quot;http://dlnmh9ip6v2uc.cloudfront.net/datasheets/Components/General/4600x.pdf&quot;&gt;datasheet&lt;/a&gt;&lt;br&gt;
 &lt;br&gt;
 SFE parts COM-10855 (330), COM-10856 (10K)&lt;br&gt;</description>
-<title>-BUSSED-SIP-PTH-5</title>
+<title>RPACK*</title>
 <tags>
-<tag>RPACK*</tag>
 <tag>-BUSSED-SIP-PTH-5</tag>
+<tag>RPACK*</tag>
+<tag>RPACK-SIP-PTH-5</tag>
 </tags>
 <properties>
-<property name='family'>RPACK*</property>
+<property name='package'>rpack-sip-pth-5</property>
+<property name='family'>rpack*</property>
+<property name='variant'>-bussed-sip-pth-5</property>
 </properties>
 <views>
 <breadboardView>

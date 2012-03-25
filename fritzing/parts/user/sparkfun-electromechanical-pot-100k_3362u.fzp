@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-POT-100K_3362U'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description></description>
-<title>100K_3362U</title>
+<title>POT</title>
 <tags>
-<tag>POT</tag>
 <tag>100K_3362U</tag>
+<tag>POT</tag>
+<tag>3362U</tag>
 </tags>
 <properties>
-<property name='family'>POT</property>
+<property name='package'>3362u</property>
+<property name='family'>pot</property>
+<property name='variant'>100k_3362u</property>
 </properties>
 <views>
 <breadboardView>

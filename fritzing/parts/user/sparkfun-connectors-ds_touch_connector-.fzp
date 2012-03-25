@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-DS_TOUCH_CONNECTOR-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>4-pin DS touch screen connector (LCD-09105)</description>
-<title></title>
+<title>DS_TOUCH_CONNECTOR</title>
 <tags>
 <tag>DS_TOUCH_CONNECTOR</tag>
-<tag></tag>
+<tag>DS_TOUCH_CONNECTOR</tag>
 </tags>
 <properties>
-<property name='family'>DS_TOUCH_CONNECTOR</property>
+<property name='package'>ds_touch_connector</property>
+<property name='family'>ds_touch_connector</property>
 </properties>
 <views>
 <breadboardView>

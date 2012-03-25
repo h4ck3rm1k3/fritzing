@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-74LVC138AD-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>3-to-8 decoder</description>
-<title></title>
+<title>74LVC138AD</title>
 <tags>
 <tag>74LVC138AD</tag>
-<tag></tag>
+<tag>SO016</tag>
 </tags>
 <properties>
-<property name='family'>74LVC138AD</property>
+<property name='package'>so016</property>
+<property name='family'>74lvc138ad</property>
 </properties>
 <views>
 <breadboardView>

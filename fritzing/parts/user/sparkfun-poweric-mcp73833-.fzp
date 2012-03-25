@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-MCP73833-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Stand-alone Linear Li-ion/Li-polymer Charge Management Controller&lt;br&gt;
@@ -9,13 +9,14 @@ Packages: DFN-10, MSOP-10&lt;br&gt;
 &lt;br&gt;
 Last modified: 8/17/10&lt;br&gt;
 &lt;b&gt;Unproven!&lt;/b&gt;</description>
-<title></title>
+<title>Unproven!</title>
 <tags>
 <tag>MCP73833</tag>
-<tag></tag>
+<tag>MSOP-10</tag>
 </tags>
 <properties>
-<property name='family'>MCP73833</property>
+<property name='package'>msop-10</property>
+<property name='family'>mcp73833</property>
 </properties>
 <views>
 <breadboardView>
@@ -97,8 +98,8 @@ Last modified: 8/17/10&lt;br&gt;
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='pad' name='VBAT_1'>
-<description>VBAT_1</description>
+<connector id='connector3' type='pad' name='VBAT@1'>
+<description>VBAT@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pad'/>
@@ -111,8 +112,8 @@ Last modified: 8/17/10&lt;br&gt;
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='pad' name='VBAT_2'>
-<description>VBAT_2</description>
+<connector id='connector4' type='pad' name='VBAT@2'>
+<description>VBAT@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pad'/>
@@ -125,8 +126,8 @@ Last modified: 8/17/10&lt;br&gt;
 </pcbView>
 </views>
 </connector>
-<connector id='connector9' type='pad' name='VDD_1'>
-<description>VDD_1</description>
+<connector id='connector9' type='pad' name='VDD@1'>
+<description>VDD@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector9pad'/>
@@ -139,8 +140,8 @@ Last modified: 8/17/10&lt;br&gt;
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='pad' name='VDD_2'>
-<description>VDD_2</description>
+<connector id='connector8' type='pad' name='VDD@2'>
+<description>VDD@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector8pad'/>
@@ -167,8 +168,8 @@ Last modified: 8/17/10&lt;br&gt;
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='pad' name='_PG'>
-<description>_PG</description>
+<connector id='connector1' type='pad' name='~PG'>
+<description>~PG</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pad'/>

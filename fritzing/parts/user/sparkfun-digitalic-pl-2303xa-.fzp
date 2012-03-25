@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-PL-2303XA-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Prolific USB chip, requires 12MHz xtal</description>
-<title></title>
+<title>PL-2303XA</title>
 <tags>
 <tag>PL-2303XA</tag>
-<tag></tag>
+<tag>SSOP28DB</tag>
 </tags>
 <properties>
-<property name='family'>PL-2303XA</property>
+<property name='package'>ssop28db</property>
+<property name='family'>pl-2303xa</property>
 </properties>
 <views>
 <breadboardView>
@@ -149,8 +150,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='pad' name='GND_18'>
-<description>GND_18</description>
+<connector id='connector10' type='pad' name='GND@18'>
+<description>GND@18</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pad'/>
@@ -163,8 +164,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='pad' name='GND_21'>
-<description>GND_21</description>
+<connector id='connector8' type='pad' name='GND@21'>
+<description>GND@21</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector8pad'/>
@@ -177,8 +178,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector20' type='pad' name='GND_7'>
-<description>GND_7</description>
+<connector id='connector20' type='pad' name='GND@7'>
+<description>GND@7</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector20pad'/>

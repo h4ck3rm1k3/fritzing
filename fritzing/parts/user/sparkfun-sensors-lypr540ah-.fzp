@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-LYPR540AH-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>3-axis 400/1600 deg/s analog output gyroscope</description>
-<title></title>
+<title>LYPR540AH</title>
 <tags>
 <tag>LYPR540AH</tag>
-<tag></tag>
+<tag>LGA28L</tag>
 </tags>
 <properties>
-<property name='family'>LYPR540AH</property>
+<property name='package'>lga28l</property>
+<property name='family'>lypr540ah</property>
 </properties>
 <views>
 <breadboardView>

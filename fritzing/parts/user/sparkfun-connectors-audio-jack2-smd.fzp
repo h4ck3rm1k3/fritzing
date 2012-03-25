@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-AUDIO-JACK2-SMD'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Stereo audio jack with bypass switches.</description>
-<title>SMD</title>
+<title>AUDIO-JACK2</title>
 <tags>
-<tag>AUDIO-JACK2</tag>
 <tag>SMD</tag>
+<tag>AUDIO-JACK2</tag>
+<tag>AUDIO-JACK-3.5MM-SMD</tag>
 </tags>
 <properties>
-<property name='family'>AUDIO-JACK2</property>
+<property name='package'>audio-jack-3.5mm-smd</property>
+<property name='family'>audio-jack2</property>
+<property name='variant'>smd</property>
 </properties>
 <views>
 <breadboardView>

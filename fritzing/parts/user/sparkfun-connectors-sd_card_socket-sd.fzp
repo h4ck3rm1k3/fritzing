@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-SD_CARD_SOCKET-SD'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;SD/MMC Socket&lt;/b&gt;
 Media socket for SD and MMC cards. Push-push type. Schematic element and footprint production proven. Spark Fun Electronics SKU : PRT-00136</description>
-<title>SD</title>
+<title>SD_MMC Socket</title>
 <tags>
-<tag>SD_CARD_SOCKET</tag>
 <tag>SD</tag>
+<tag>SD_CARD_SOCKET</tag>
+<tag>SD-MMC_SOCKET-PP</tag>
 </tags>
 <properties>
-<property name='family'>SD_CARD_SOCKET</property>
+<property name='package'>sd-mmc_socket-pp</property>
+<property name='family'>sd_card_socket</property>
+<property name='variant'>sd</property>
 </properties>
 <views>
 <breadboardView>

@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-74VHC4052_ANALOG_MUX-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Dual 4:1 analog mux</description>
-<title></title>
+<title>74VHC4052_ANALOG_MUX</title>
 <tags>
 <tag>74VHC4052_ANALOG_MUX</tag>
-<tag></tag>
+<tag>TSSOP16</tag>
 </tags>
 <properties>
-<property name='family'>74VHC4052_ANALOG_MUX</property>
+<property name='package'>tssop16</property>
+<property name='family'>74vhc4052_analog_mux</property>
 </properties>
 <views>
 <breadboardView>

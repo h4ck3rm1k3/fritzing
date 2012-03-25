@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-PQ1CY1032Z-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>3.5A Switching Regulator</description>
-<title></title>
+<title>PQ1CY1032Z</title>
 <tags>
 <tag>PQ1CY1032Z</tag>
-<tag></tag>
+<tag>Q5-DD_SPX29300</tag>
 </tags>
 <properties>
-<property name='family'>PQ1CY1032Z</property>
+<property name='package'>q5-dd_spx29300</property>
+<property name='family'>pq1cy1032z</property>
 </properties>
 <views>
 <breadboardView>

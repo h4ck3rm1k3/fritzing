@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-MAGNET-18MM'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Ceramic disc magnet, COM-08890</description>
-<title>18MM</title>
+<title>MAGNET</title>
 <tags>
-<tag>MAGNET</tag>
 <tag>18MM</tag>
+<tag>MAGNET</tag>
+<tag>MAGNET-18MM</tag>
 </tags>
 <properties>
-<property name='family'>MAGNET</property>
+<property name='package'>magnet-18mm</property>
+<property name='family'>magnet</property>
+<property name='variant'>18mm</property>
 </properties>
 <views>
 <breadboardView>

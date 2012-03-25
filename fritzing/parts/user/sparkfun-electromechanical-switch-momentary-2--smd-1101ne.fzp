@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-SWITCH-MOMENTARY-2--SMD-1101NE'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>S</label>
 <author>www.fritzing.org</author>
 <description>Various NO switches- pushbuttons, reed, etc</description>
-<title>-SMD-1101NE</title>
+<title>SWITCH-MOMENTARY-2</title>
 <tags>
-<tag>SWITCH-MOMENTARY-2</tag>
 <tag>-SMD-1101NE</tag>
+<tag>SWITCH-MOMENTARY-2</tag>
+<tag>TACTILE-SWITCH-1101NE</tag>
 </tags>
 <properties>
-<property name='family'>SWITCH-MOMENTARY-2</property>
+<property name='package'>tactile-switch-1101ne</property>
+<property name='family'>switch-momentary-2</property>
+<property name='variant'>-smd-1101ne</property>
 </properties>
 <views>
 <breadboardView>

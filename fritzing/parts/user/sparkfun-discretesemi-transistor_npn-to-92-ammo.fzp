@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DiscreteSemi-TRANSISTOR_NPN-TO-92-AMMO'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>Q</label>
 <author>www.fritzing.org</author>
 <description>Generic NPN BJT. MMBT2222 is the common NPN we use. Double check against datasheet- not all devices are the same!</description>
-<title>TO-92-AMMO</title>
+<title>TRANSISTOR_NPN</title>
 <tags>
+<tag>TO-92-AMMO</tag>
 <tag>TRANSISTOR_NPN</tag>
 <tag>TO-92-AMMO</tag>
 </tags>
 <properties>
-<property name='family'>TRANSISTOR_NPN</property>
+<property name='package'>to-92-ammo</property>
+<property name='family'>transistor_npn</property>
+<property name='variant'>to-92-ammo</property>
 </properties>
 <views>
 <breadboardView>

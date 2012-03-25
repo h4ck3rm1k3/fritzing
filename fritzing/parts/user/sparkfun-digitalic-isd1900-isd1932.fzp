@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-ISD1900-ISD1932'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Voice recorder IC</description>
-<title>ISD1932</title>
+<title>ISD1900</title>
 <tags>
-<tag>ISD1900</tag>
 <tag>ISD1932</tag>
+<tag>ISD1900</tag>
+<tag>SO-28W</tag>
 </tags>
 <properties>
-<property name='family'>ISD1900</property>
+<property name='package'>so-28w</property>
+<property name='family'>isd1900</property>
+<property name='variant'>isd1932</property>
 </properties>
 <views>
 <breadboardView>
@@ -121,8 +124,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector12' type='pad' name='MIC_'>
-<description>MIC_</description>
+<connector id='connector12' type='pad' name='MIC+'>
+<description>MIC+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector12pad'/>
@@ -219,8 +222,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector15' type='pad' name='SP_'>
-<description>SP_</description>
+<connector id='connector15' type='pad' name='SP+'>
+<description>SP+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector15pad'/>

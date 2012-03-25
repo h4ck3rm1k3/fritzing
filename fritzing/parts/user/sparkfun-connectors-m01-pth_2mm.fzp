@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-M01-PTH_2MM'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Header 1&lt;/b&gt;
 Standard 1-pin 0.1&quot; header. Use with straight break away headers (SKU : PRT-00116), right angle break away headers (PRT-00553), swiss pins (PRT-00743), machine pins (PRT-00117), and female headers (PRT-00115).</description>
-<title>PTH_2MM</title>
+<title>Header 1</title>
 <tags>
-<tag>M01</tag>
 <tag>PTH_2MM</tag>
+<tag>M01</tag>
+<tag>1X01_2MM</tag>
 </tags>
 <properties>
-<property name='family'>M01</property>
+<property name='package'>1x01_2mm</property>
+<property name='family'>m01</property>
+<property name='variant'>pth_2mm</property>
 </properties>
 <views>
 <breadboardView>

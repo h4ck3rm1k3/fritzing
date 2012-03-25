@@ -1,19 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-LED-LED_RING-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>LED</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;16 LED Ring&lt;/h3&gt;
 COM-10595&lt;br&gt;
 http://dlnmh9ip6v2uc.cloudfront.net/datasheets/Components/LED/Top-Up%20LED%20Ring%20LED-CCL-A.pdf</description>
-<title></title>
+<title>LED_RING</title>
 <tags>
 <tag>LED_RING</tag>
-<tag></tag>
+<tag>LED_RING</tag>
 </tags>
 <properties>
-<property name='family'>LED_RING</property>
+<property name='package'>led_ring</property>
+<property name='family'>led_ring</property>
 </properties>
 <views>
 <breadboardView>

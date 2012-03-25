@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-MCP42XXX-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>SPI controlled dual digital potentiometer by Microchip</description>
-<title></title>
+<title>MCP42XXX</title>
 <tags>
 <tag>MCP42XXX</tag>
-<tag></tag>
+<tag>SO014</tag>
 </tags>
 <properties>
-<property name='family'>MCP42XXX</property>
+<property name='package'>so014</property>
+<property name='family'>mcp42xxx</property>
 </properties>
 <views>
 <breadboardView>

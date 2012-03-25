@@ -1,18 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-HMC1052L-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;HMC1052L&lt;/b&gt;
 Dual axis magnetic sensor. Used for compass and magnetometer applications. Schematic and footprint are not tested and probably need fixing. Spark Fun Electronics SKU : COM-00708</description>
-<title></title>
+<title>HMC1052L</title>
 <tags>
 <tag>HMC1052L</tag>
-<tag></tag>
+<tag>16LPCC</tag>
 </tags>
 <properties>
-<property name='family'>HMC1052L</property>
+<property name='package'>16lpcc</property>
+<property name='family'>hmc1052l</property>
 </properties>
 <views>
 <breadboardView>
@@ -136,8 +137,8 @@ Dual axis magnetic sensor. Used for compass and magnetometer applications. Schem
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='pad' name='OFF_'>
-<description>OFF_</description>
+<connector id='connector2' type='pad' name='OFF+'>
+<description>OFF+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pad'/>
@@ -164,8 +165,8 @@ Dual axis magnetic sensor. Used for compass and magnetometer applications. Schem
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='pad' name='OUT_A'>
-<description>OUT_A</description>
+<connector id='connector1' type='pad' name='OUT+A'>
+<description>OUT+A</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pad'/>
@@ -178,8 +179,8 @@ Dual axis magnetic sensor. Used for compass and magnetometer applications. Schem
 </pcbView>
 </views>
 </connector>
-<connector id='connector14' type='pad' name='OUT_B'>
-<description>OUT_B</description>
+<connector id='connector14' type='pad' name='OUT+B'>
+<description>OUT+B</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector14pad'/>
@@ -220,8 +221,8 @@ Dual axis magnetic sensor. Used for compass and magnetometer applications. Schem
 </pcbView>
 </views>
 </connector>
-<connector id='connector13' type='pad' name='S_R_'>
-<description>S_R_</description>
+<connector id='connector13' type='pad' name='S_R+'>
+<description>S_R+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector13pad'/>

@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-BALUN-0805'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>B</label>
 <author>www.fritzing.org</author>
 <description>0805 footprint balun- Ember 351/357</description>
-<title>0805</title>
+<title>BALUN</title>
 <tags>
-<tag>BALUN</tag>
 <tag>0805</tag>
+<tag>BALUN</tag>
+<tag>BALUN</tag>
 </tags>
 <properties>
-<property name='family'>BALUN</property>
+<property name='package'>balun</property>
+<property name='family'>balun</property>
+<property name='variant'>0805</property>
 </properties>
 <views>
 <breadboardView>
@@ -37,8 +40,8 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector1' type='pad' name='GND_2'>
-<description>GND_2</description>
+<connector id='connector1' type='pad' name='GND@2'>
+<description>GND@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pad'/>
@@ -51,8 +54,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='pad' name='GND_5'>
-<description>GND_5</description>
+<connector id='connector4' type='pad' name='GND@5'>
+<description>GND@5</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pad'/>

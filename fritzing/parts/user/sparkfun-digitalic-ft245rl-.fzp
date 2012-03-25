@@ -1,18 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-FT245RL-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;USB FIFO Controller&lt;/b&gt;
 4&lt;sup&gt;th&lt;/sup&gt; Generation USB Controller (USB &amp;lt;-&amp;gt; Parallel) - FIFO. Spark Fun Electronics SKU : COM-00787</description>
-<title></title>
+<title>USB FIFO Controller</title>
 <tags>
 <tag>FT245RL</tag>
-<tag></tag>
+<tag>SSOP28DB</tag>
 </tags>
 <properties>
-<property name='family'>FT245RL</property>
+<property name='package'>ssop28db</property>
+<property name='family'>ft245rl</property>
 </properties>
 <views>
 <breadboardView>

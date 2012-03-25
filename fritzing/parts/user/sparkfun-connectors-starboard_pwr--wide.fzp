@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-STARBOARD_PWR--WIDE'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>J</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;StarbBoard Power pad&lt;/h3&gt;
 Power pads are designated by the star cutout in the top layer.</description>
-<title>-WIDE</title>
+<title>STARBOARD_PWR</title>
 <tags>
-<tag>STARBOARD_PWR</tag>
 <tag>-WIDE</tag>
+<tag>STARBOARD_PWR</tag>
+<tag>STARBOARD_PWR_WIDE</tag>
 </tags>
 <properties>
-<property name='family'>STARBOARD_PWR</property>
+<property name='package'>starboard_pwr_wide</property>
+<property name='family'>starboard_pwr</property>
+<property name='variant'>-wide</property>
 </properties>
 <views>
 <breadboardView>

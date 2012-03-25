@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-RELAY-PTH3'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>SPDT relay (COM-00101)</description>
-<title>PTH3</title>
+<title>RELAY</title>
 <tags>
-<tag>RELAY</tag>
 <tag>PTH3</tag>
+<tag>RELAY</tag>
+<tag>RELAY-T9A-2</tag>
 </tags>
 <properties>
-<property name='family'>RELAY</property>
+<property name='package'>relay-t9a-2</property>
+<property name='family'>relay</property>
+<property name='variant'>pth3</property>
 </properties>
 <views>
 <breadboardView>

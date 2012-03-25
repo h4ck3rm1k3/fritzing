@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-SN74HC251-_SMD'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>SN54HC251 Data Selector/Multiplexer</description>
-<title>_SMD</title>
+<title>SN74HC251</title>
 <tags>
-<tag>SN74HC251</tag>
 <tag>_SMD</tag>
+<tag>SN74HC251</tag>
+<tag>SO016</tag>
 </tags>
 <properties>
-<property name='family'>SN74HC251</property>
+<property name='package'>so016</property>
+<property name='family'>sn74hc251</property>
+<property name='variant'>_smd</property>
 </properties>
 <views>
 <breadboardView>

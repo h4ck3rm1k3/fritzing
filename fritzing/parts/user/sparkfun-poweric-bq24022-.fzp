@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-BQ24022-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Single-chip, Li-ion and Li-pol charger IC with autonomous USB-port and AC-adapter supply management.&lt;br&gt;
@@ -9,13 +9,14 @@ Datasheet: http://focus.ti.com/lit/ds/symlink/bq24022.pdf&lt;br&gt;
 &lt;br&gt;
 &lt;b&gt;Unproven&lt;/b&gt;&lt;br&gt;
 Last modified: 8/16/10&lt;br&gt;</description>
-<title></title>
+<title>Unproven</title>
 <tags>
 <tag>BQ24022</tag>
-<tag></tag>
+<tag>DRC-10</tag>
 </tags>
 <properties>
-<property name='family'>BQ24022</property>
+<property name='package'>drc-10</property>
+<property name='family'>bq24022</property>
 </properties>
 <views>
 <breadboardView>
@@ -167,8 +168,8 @@ Last modified: 8/16/10&lt;br&gt;</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='pad' name='_CE'>
-<description>_CE</description>
+<connector id='connector8' type='pad' name='~CE'>
+<description>~CE</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector8pad'/>
@@ -181,8 +182,8 @@ Last modified: 8/16/10&lt;br&gt;</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector9' type='pad' name='_PG'>
-<description>_PG</description>
+<connector id='connector9' type='pad' name='~PG'>
+<description>~PG</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector9pad'/>

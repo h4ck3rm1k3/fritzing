@@ -1,19 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-MPL115A-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;&lt;h3&gt;MPL115A1 (SPI) and MPL115A2 (I2C) Miniature Digital Barometer&lt;/h3&gt;&lt;/b&gt;
 &lt;br&gt;
 5.0x3.0x1.2mm LGA Package</description>
-<title></title>
+<title>_h3_MPL115A1 (SPI) and MPL115A2 (I2C) Miniature Digital Barometer__h3_</title>
 <tags>
 <tag>MPL115A</tag>
-<tag></tag>
+<tag>LGA8</tag>
 </tags>
 <properties>
-<property name='family'>MPL115A</property>
+<property name='package'>lga8</property>
+<property name='family'>mpl115a</property>
 </properties>
 <views>
 <breadboardView>

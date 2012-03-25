@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-SCANTOOL-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;h1&gt;STN1110 - Multiprotocol OBD II to UART Interpreter, QFN Package&lt;/h1&gt;
@@ -19,13 +19,14 @@
 &lt;/p&gt;
 
 &lt;br /&gt;</description>
-<title></title>
+<title>SCANTOOL</title>
 <tags>
 <tag>SCANTOOL</tag>
-<tag></tag>
+<tag>_STN_SCANTOOL_QFN-28-S</tag>
 </tags>
 <properties>
-<property name='family'>SCANTOOL</property>
+<property name='package'>_stn_scantool_qfn-28-s</property>
+<property name='family'>scantool</property>
 </properties>
 <views>
 <breadboardView>
@@ -51,8 +52,8 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector21' type='pad' name='_ISO_K_TX'>
-<description>_ISO_K_TX</description>
+<connector id='connector21' type='pad' name='!ISO_K_TX'>
+<description>!ISO_K_TX</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector21pad'/>
@@ -65,8 +66,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector22' type='pad' name='_ISO_L_TX'>
-<description>_ISO_L_TX</description>
+<connector id='connector22' type='pad' name='!ISO_L_TX'>
+<description>!ISO_L_TX</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector22pad'/>
@@ -79,8 +80,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='pad' name='_ISO_RX'>
-<description>_ISO_RX</description>
+<connector id='connector7' type='pad' name='!ISO_RX'>
+<description>!ISO_RX</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pad'/>
@@ -93,8 +94,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='pad' name='_J1850_BUS-_TX'>
-<description>_J1850_BUS-_TX</description>
+<connector id='connector3' type='pad' name='!J1850_BUS-_TX'>
+<description>!J1850_BUS-_TX</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pad'/>
@@ -107,8 +108,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector18' type='pad' name='_OBD_RX_LED___INT'>
-<description>_OBD_RX_LED___INT</description>
+<connector id='connector18' type='pad' name='!OBD_RX_LED!_!INT'>
+<description>!OBD_RX_LED!_!INT</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector18pad'/>
@@ -121,8 +122,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector17' type='pad' name='_OBD_TX_LED___RST_NVM'>
-<description>_OBD_TX_LED___RST_NVM</description>
+<connector id='connector17' type='pad' name='!OBD_TX_LED!_!RST_NVM'>
+<description>!OBD_TX_LED!_!RST_NVM</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector17pad'/>
@@ -135,8 +136,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector25' type='pad' name='_RESET'>
-<description>_RESET</description>
+<connector id='connector25' type='pad' name='!RESET'>
+<description>!RESET</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector25pad'/>
@@ -149,8 +150,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='pad' name='_SLEEP'>
-<description>_SLEEP</description>
+<connector id='connector8' type='pad' name='!SLEEP'>
+<description>!SLEEP</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector8pad'/>
@@ -163,8 +164,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector20' type='pad' name='_UART_RX_LED'>
-<description>_UART_RX_LED</description>
+<connector id='connector20' type='pad' name='!UART_RX_LED'>
+<description>!UART_RX_LED</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector20pad'/>
@@ -177,8 +178,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector19' type='pad' name='_UART_TX_LED'>
-<description>_UART_TX_LED</description>
+<connector id='connector19' type='pad' name='!UART_TX_LED'>
+<description>!UART_TX_LED</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector19pad'/>
@@ -191,8 +192,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='pad' name='_VPW_RX'>
-<description>_VPW_RX</description>
+<connector id='connector0' type='pad' name='!VPW_RX'>
+<description>!VPW_RX</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pad'/>
@@ -275,8 +276,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='pad' name='J1850_BUS__TX'>
-<description>J1850_BUS__TX</description>
+<connector id='connector2' type='pad' name='J1850_BUS+_TX'>
+<description>J1850_BUS+_TX</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pad'/>
@@ -331,8 +332,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector27' type='pad' name='PWM__VPW'>
-<description>PWM__VPW</description>
+<connector id='connector27' type='pad' name='PWM_!VPW'>
+<description>PWM_!VPW</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector27pad'/>
@@ -429,8 +430,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector15' type='pad' name='VSS_16'>
-<description>VSS_16</description>
+<connector id='connector15' type='pad' name='VSS@16'>
+<description>VSS@16</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector15pad'/>
@@ -443,8 +444,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='pad' name='VSS_5'>
-<description>VSS_5</description>
+<connector id='connector4' type='pad' name='VSS@5'>
+<description>VSS@5</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pad'/>

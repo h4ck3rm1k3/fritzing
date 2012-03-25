@@ -240,7 +240,7 @@
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Passives-INDUCTOR-H_' modelIndex='34'>
+<instance moduleIdRef='SparkFun-Passives-INDUCTOR-H*' modelIndex='34'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
@@ -576,161 +576,168 @@
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Passives-RPACK_--BUSSED-SIP-PTH-5' modelIndex='82'>
+<instance moduleIdRef='SparkFun-Passives-RESISTOR-ARRAY-0603-ARV' modelIndex='82'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER-NC' modelIndex='83'>
+<instance moduleIdRef='SparkFun-Passives-RPACK*--BUSSED-SIP-PTH-5' modelIndex='83'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER-TRACE' modelIndex='84'>
+<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER-NC' modelIndex='84'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER-NC2' modelIndex='85'>
+<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER-TRACE' modelIndex='85'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER-NO' modelIndex='86'>
+<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER-NC2' modelIndex='86'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER-OLD-NC' modelIndex='87'>
+<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER-NO' modelIndex='87'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER-OLD-TRACE' modelIndex='88'>
+<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER-OLD-NC' modelIndex='88'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER-OLD-NC2' modelIndex='89'>
+<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER-OLD-TRACE' modelIndex='89'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER-OLD-NO' modelIndex='90'>
+<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER-OLD-NC2' modelIndex='90'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER_2WAY-W' modelIndex='91'>
+<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER-OLD-NO' modelIndex='91'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER_2WAY-T' modelIndex='92'>
+<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER_2WAY-W' modelIndex='92'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER_2WAY-S' modelIndex='93'>
+<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER_2WAY-T' modelIndex='93'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER_2WAY-PASTE1_2' modelIndex='94'>
+<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER_2WAY-S' modelIndex='94'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER_2WAY-PASTE2_3' modelIndex='95'>
+<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER_2WAY-PASTE1_2' modelIndex='95'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER_2WAY-OLD-W' modelIndex='96'>
+<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER_2WAY-PASTE2_3' modelIndex='96'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER_2WAY-OLD-T' modelIndex='97'>
+<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER_2WAY-OLD-W' modelIndex='97'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER_2WAY-OLD-S' modelIndex='98'>
+<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER_2WAY-OLD-T' modelIndex='98'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER_2WAY-OLD-PASTE1_2' modelIndex='99'>
+<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER_2WAY-OLD-S' modelIndex='99'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER_2WAY-OLD-PASTE2_3' modelIndex='100'>
+<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER_2WAY-OLD-PASTE1_2' modelIndex='100'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Passives-TEST-POINT-2' modelIndex='101'>
+<instance moduleIdRef='SparkFun-Passives-SOLDERJUMPER_2WAY-OLD-PASTE2_3' modelIndex='101'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Passives-TEST-POINT-3' modelIndex='102'>
+<instance moduleIdRef='SparkFun-Passives-TEST-POINT-2' modelIndex='102'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Passives-TEST-POINT-3X5' modelIndex='103'>
+<instance moduleIdRef='SparkFun-Passives-TEST-POINT-3' modelIndex='103'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-Passives-GND_CONNECT-' modelIndex='104'>
+<instance moduleIdRef='SparkFun-Passives-TEST-POINT-3X5' modelIndex='104'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-Passives-GND_CONNECT-' modelIndex='105'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>

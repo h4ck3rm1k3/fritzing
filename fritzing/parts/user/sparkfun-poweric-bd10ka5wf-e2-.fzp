@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-BD10KA5WF-E2-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>500mA LDO, 1.0V SO-8 (COM-10827)</description>
-<title></title>
+<title>BD10KA5WF-E2</title>
 <tags>
 <tag>BD10KA5WF-E2</tag>
-<tag></tag>
+<tag>SO08WIDE</tag>
 </tags>
 <properties>
-<property name='family'>BD10KA5WF-E2</property>
+<property name='package'>so08wide</property>
+<property name='family'>bd10ka5wf-e2</property>
 </properties>
 <views>
 <breadboardView>

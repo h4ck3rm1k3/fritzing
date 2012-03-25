@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-MAX6675-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>K-type thermocouple ADC, SPI output</description>
-<title></title>
+<title>MAX6675</title>
 <tags>
 <tag>MAX6675</tag>
-<tag></tag>
+<tag>SO08-MAX6675</tag>
 </tags>
 <properties>
-<property name='family'>MAX6675</property>
+<property name='package'>so08-max6675</property>
+<property name='family'>max6675</property>
 </properties>
 <views>
 <breadboardView>
@@ -79,8 +80,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='pad' name='T_'>
-<description>T_</description>
+<connector id='connector3' type='pad' name='T+'>
+<description>T+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pad'/>

@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-LIS331-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>3-axis 6/12/24g SPI/I2C accelerometer</description>
-<title></title>
+<title>LIS331</title>
 <tags>
 <tag>LIS331</tag>
-<tag></tag>
+<tag>LGA16-3MM</tag>
 </tags>
 <properties>
-<property name='family'>LIS331</property>
+<property name='package'>lga16-3mm</property>
+<property name='family'>lis331</property>
 </properties>
 <views>
 <breadboardView>
@@ -51,8 +52,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='pad' name='GND_12'>
-<description>GND_12</description>
+<connector id='connector3' type='pad' name='GND@12'>
+<description>GND@12</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pad'/>
@@ -65,8 +66,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='pad' name='GND_13'>
-<description>GND_13</description>
+<connector id='connector4' type='pad' name='GND@13'>
+<description>GND@13</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pad'/>
@@ -79,8 +80,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector12' type='pad' name='GND_16'>
-<description>GND_16</description>
+<connector id='connector12' type='pad' name='GND@16'>
+<description>GND@16</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector12pad'/>
@@ -93,8 +94,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector9' type='pad' name='GND_5'>
-<description>GND_5</description>
+<connector id='connector9' type='pad' name='GND@5'>
+<description>GND@5</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector9pad'/>

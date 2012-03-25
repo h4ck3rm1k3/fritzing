@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-ID-12_20-SMD'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>RFID reader for ID2, ID12, and ID20 Package</description>
-<title>SMD</title>
+<title>ID-12_20</title>
 <tags>
-<tag>ID-12/20</tag>
 <tag>SMD</tag>
+<tag>ID-12_20</tag>
+<tag>ID-12_SMD</tag>
 </tags>
 <properties>
-<property name='family'>ID-12/20</property>
+<property name='package'>id-12_smd</property>
+<property name='family'>id-12_20</property>
+<property name='variant'>smd</property>
 </properties>
 <views>
 <breadboardView>
@@ -37,8 +40,8 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector1' type='pad' name='__-'>
-<description>__-</description>
+<connector id='connector1' type='pad' name='+_-'>
+<description>+_-</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pad'/>

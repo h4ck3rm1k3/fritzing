@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-FT2232D-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>USB to USART/FIFO/JTAG/SPI/I2C</description>
-<title></title>
+<title>FT2232D</title>
 <tags>
 <tag>FT2232D</tag>
-<tag></tag>
+<tag>LQFP-48</tag>
 </tags>
 <properties>
-<property name='family'>FT2232D</property>
+<property name='package'>lqfp-48</property>
+<property name='family'>ft2232d</property>
 </properties>
 <views>
 <breadboardView>
@@ -513,8 +514,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector40' type='pad' name='PWEN_'>
-<description>PWEN_</description>
+<connector id='connector40' type='pad' name='PWEN#'>
+<description>PWEN#</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector40pad'/>
@@ -527,8 +528,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='pad' name='RESET_'>
-<description>RESET_</description>
+<connector id='connector3' type='pad' name='RESET#'>
+<description>RESET#</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pad'/>
@@ -541,8 +542,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='pad' name='RSTOUT_'>
-<description>RSTOUT_</description>
+<connector id='connector4' type='pad' name='RSTOUT#'>
+<description>RSTOUT#</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pad'/>

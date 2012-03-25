@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-SCREENKEYMATINGCONNECTOR-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>ScreenKey mating connector- PRT-09586</description>
-<title></title>
+<title>SCREENKEYMATINGCONNECTOR</title>
 <tags>
 <tag>SCREENKEYMATINGCONNECTOR</tag>
-<tag></tag>
+<tag>SCREENKEYMATINGCONNECTOR</tag>
 </tags>
 <properties>
-<property name='family'>SCREENKEYMATINGCONNECTOR</property>
+<property name='package'>screenkeymatingconnector</property>
+<property name='family'>screenkeymatingconnector</property>
 </properties>
 <views>
 <breadboardView>

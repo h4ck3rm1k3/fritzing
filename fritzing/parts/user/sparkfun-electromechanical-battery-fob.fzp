@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-BATTERY-FOB'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>BAT</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Battery Holders&lt;/b&gt;
 Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
-<title>FOB</title>
+<title>Battery Holders</title>
 <tags>
-<tag>BATTERY</tag>
 <tag>FOB</tag>
+<tag>BATTERY</tag>
+<tag>BATTERY_20MM_PTH_COMPACT</tag>
 </tags>
 <properties>
-<property name='family'>BATTERY</property>
+<property name='package'>battery_20mm_pth_compact</property>
+<property name='family'>battery</property>
+<property name='variant'>fob</property>
 </properties>
 <views>
 <breadboardView>
@@ -39,8 +42,8 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 </iconView>
 </views>
 <connectors>
-<connector id='connector0' type='male' name='_'>
-<description>_</description>
+<connector id='connector0' type='male' name='+'>
+<description>+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pin'/>

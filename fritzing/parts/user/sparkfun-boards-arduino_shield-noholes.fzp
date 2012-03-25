@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Boards-ARDUINO_SHIELD-NOHOLES'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Arduino shield footprint</description>
-<title>NOHOLES</title>
+<title>ARDUINO_SHIELD</title>
 <tags>
-<tag>ARDUINO_SHIELD</tag>
 <tag>NOHOLES</tag>
+<tag>ARDUINO_SHIELD</tag>
+<tag>DUEMILANOVE_SHIELD_NOHOLES</tag>
 </tags>
 <properties>
-<property name='family'>ARDUINO_SHIELD</property>
+<property name='package'>duemilanove_shield_noholes</property>
+<property name='family'>arduino_shield</property>
+<property name='variant'>noholes</property>
 </properties>
 <views>
 <breadboardView>
@@ -38,8 +41,8 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector22' type='male' name='_D10'>
-<description>_D10</description>
+<connector id='connector22' type='male' name='*D10'>
+<description>*D10</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector22pin'/>
@@ -53,8 +56,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector23' type='male' name='_D11'>
-<description>_D11</description>
+<connector id='connector23' type='male' name='*D11'>
+<description>*D11</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector23pin'/>
@@ -68,8 +71,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector15' type='male' name='_D3'>
-<description>_D3</description>
+<connector id='connector15' type='male' name='*D3'>
+<description>*D3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector15pin'/>
@@ -83,8 +86,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector17' type='male' name='_D5'>
-<description>_D5</description>
+<connector id='connector17' type='male' name='*D5'>
+<description>*D5</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector17pin'/>
@@ -98,8 +101,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector18' type='male' name='_D6'>
-<description>_D6</description>
+<connector id='connector18' type='male' name='*D6'>
+<description>*D6</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector18pin'/>
@@ -113,8 +116,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector21' type='male' name='_D9'>
-<description>_D9</description>
+<connector id='connector21' type='male' name='*D9'>
+<description>*D9</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector21pin'/>
@@ -353,8 +356,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='male' name='GND_0'>
-<description>GND_0</description>
+<connector id='connector3' type='male' name='GND@0'>
+<description>GND@0</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pin'/>
@@ -368,8 +371,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='male' name='GND_1'>
-<description>GND_1</description>
+<connector id='connector4' type='male' name='GND@1'>
+<description>GND@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pin'/>
@@ -383,8 +386,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector26' type='male' name='GND_2'>
-<description>GND_2</description>
+<connector id='connector26' type='male' name='GND@2'>
+<description>GND@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector26pin'/>

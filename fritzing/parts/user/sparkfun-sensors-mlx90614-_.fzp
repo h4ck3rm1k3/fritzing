@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-MLX90614-_'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Non-contact PIR I2C interface temperature sensor</description>
-<title>_</title>
+<title>MLX90614</title>
 <tags>
-<tag>MLX90614</tag>
 <tag>_</tag>
+<tag>MLX90614</tag>
+<tag>TO-39</tag>
 </tags>
 <properties>
-<property name='family'>MLX90614</property>
+<property name='package'>to-39</property>
+<property name='family'>mlx90614</property>
+<property name='variant'>_</property>
 </properties>
 <views>
 <breadboardView>

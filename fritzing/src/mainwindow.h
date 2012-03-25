@@ -103,7 +103,6 @@ public:
 	void setFileProgressPath(const QString & path);
 	void clearFileProgressDialog();
 	class FileProgressDialog * fileProgressDialog();
-	void fileProgressDialogSetBinLoadingCount(int);
 
 	const QString &selectedModuleID();
 

@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-FreqCtrl-DS3234-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>SPI RTC module with battery backup and internal clock.</description>
-<title></title>
+<title>DS3234</title>
 <tags>
 <tag>DS3234</tag>
-<tag></tag>
+<tag>DS3234</tag>
 </tags>
 <properties>
-<property name='family'>DS3234</property>
+<property name='package'>ds3234</property>
+<property name='family'>ds3234</property>
 </properties>
 <views>
 <breadboardView>
@@ -107,8 +108,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='pad' name='GND_10'>
-<description>GND_10</description>
+<connector id='connector0' type='pad' name='GND@10'>
+<description>GND@10</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pad'/>
@@ -121,8 +122,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='pad' name='GND_11'>
-<description>GND_11</description>
+<connector id='connector1' type='pad' name='GND@11'>
+<description>GND@11</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pad'/>
@@ -135,8 +136,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='pad' name='GND_12'>
-<description>GND_12</description>
+<connector id='connector2' type='pad' name='GND@12'>
+<description>GND@12</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pad'/>
@@ -149,8 +150,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='pad' name='GND_13'>
-<description>GND_13</description>
+<connector id='connector3' type='pad' name='GND@13'>
+<description>GND@13</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pad'/>
@@ -163,8 +164,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='pad' name='GND_14'>
-<description>GND_14</description>
+<connector id='connector4' type='pad' name='GND@14'>
+<description>GND@14</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pad'/>
@@ -177,8 +178,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector18' type='pad' name='GND_2'>
-<description>GND_2</description>
+<connector id='connector18' type='pad' name='GND@2'>
+<description>GND@2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector18pad'/>
@@ -191,8 +192,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector13' type='pad' name='GND_7'>
-<description>GND_7</description>
+<connector id='connector13' type='pad' name='GND@7'>
+<description>GND@7</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector13pad'/>
@@ -205,8 +206,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector12' type='pad' name='GND_8'>
-<description>GND_8</description>
+<connector id='connector12' type='pad' name='GND@8'>
+<description>GND@8</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector12pad'/>
@@ -219,8 +220,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector11' type='pad' name='GND_9'>
-<description>GND_9</description>
+<connector id='connector11' type='pad' name='GND@9'>
+<description>GND@9</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector11pad'/>
@@ -261,8 +262,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='pad' name='SCLK_18'>
-<description>SCLK_18</description>
+<connector id='connector8' type='pad' name='SCLK@18'>
+<description>SCLK@18</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector8pad'/>
@@ -275,8 +276,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='pad' name='SCLK_20'>
-<description>SCLK_20</description>
+<connector id='connector10' type='pad' name='SCLK@20'>
+<description>SCLK@20</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pad'/>

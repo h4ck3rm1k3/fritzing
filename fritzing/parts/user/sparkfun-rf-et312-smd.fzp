@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-ET312-SMD'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;ET312 GPS Receiver&lt;/b&gt;
 Proven layout and schematic for SiRF III ET312 GPS receiver. This footprint has been tweaked significantly to work with the ET312. This footprint has been fully qualified. Spark Fun Electronics SKU : GPS-08268.</description>
-<title>SMD</title>
+<title>ET312 GPS Receiver</title>
 <tags>
-<tag>ET312</tag>
 <tag>SMD</tag>
+<tag>ET312</tag>
+<tag>ET312</tag>
 </tags>
 <properties>
-<property name='family'>ET312</property>
+<property name='package'>et312</property>
+<property name='family'>et312</property>
+<property name='variant'>smd</property>
 </properties>
 <views>
 <breadboardView>

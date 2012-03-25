@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-HIH-4030-SMD'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Humidity Sensor</description>
-<title>SMD</title>
+<title>HIH-4030</title>
 <tags>
-<tag>HIH-4030</tag>
 <tag>SMD</tag>
+<tag>HIH-4030</tag>
+<tag>HIH-4030</tag>
 </tags>
 <properties>
-<property name='family'>HIH-4030</property>
+<property name='package'>hih-4030</property>
+<property name='family'>hih-4030</property>
+<property name='variant'>smd</property>
 </properties>
 <views>
 <breadboardView>

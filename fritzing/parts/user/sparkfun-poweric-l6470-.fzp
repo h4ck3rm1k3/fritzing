@@ -1,18 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-L6470-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>3A RMS/7A peak bipolar stepper motor driver with SPI control
 and step input in HTSSOP-28 package.</description>
-<title></title>
+<title>L6470</title>
 <tags>
 <tag>L6470</tag>
-<tag></tag>
+<tag>HTSSOP28</tag>
 </tags>
 <properties>
-<property name='family'>L6470</property>
+<property name='package'>htssop28</property>
+<property name='family'>l6470</property>
 </properties>
 <views>
 <breadboardView>

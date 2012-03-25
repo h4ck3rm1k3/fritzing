@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-STA540-6400BG_W_SOLDERPOSTS'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Multiwatt package for L298 bridge driver</description>
-<title>6400BG_W/SOLDERPOSTS</title>
+<title>STA540</title>
 <tags>
+<tag>6400BG_W_SOLDERPOSTS</tag>
 <tag>STA540</tag>
-<tag>6400BG_W/SOLDERPOSTS</tag>
+<tag>MULTIWATT15_6400BGHEATSINK_2</tag>
 </tags>
 <properties>
-<property name='family'>STA540</property>
+<property name='package'>multiwatt15_6400bgheatsink_2</property>
+<property name='family'>sta540</property>
+<property name='variant'>6400bg_w_solderposts</property>
 </properties>
 <views>
 <breadboardView>

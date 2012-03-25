@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-FT232RQ-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>USB to USART. Non-stock item, unproven FP for this part.</description>
-<title></title>
+<title>FT232RQ</title>
 <tags>
 <tag>FT232RQ</tag>
-<tag></tag>
+<tag>QFN-32</tag>
 </tags>
 <properties>
-<property name='family'>FT232RQ</property>
+<property name='package'>qfn-32</property>
+<property name='family'>ft232rq</property>
 </properties>
 <views>
 <breadboardView>
@@ -121,8 +122,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector16' type='pad' name='GND_17'>
-<description>GND_17</description>
+<connector id='connector16' type='pad' name='GND@17'>
+<description>GND@17</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector16pad'/>
@@ -135,8 +136,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector19' type='pad' name='GND_20'>
-<description>GND_20</description>
+<connector id='connector19' type='pad' name='GND@20'>
+<description>GND@20</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector19pad'/>
@@ -149,8 +150,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='pad' name='GND_4'>
-<description>GND_4</description>
+<connector id='connector3' type='pad' name='GND@4'>
+<description>GND@4</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pad'/>

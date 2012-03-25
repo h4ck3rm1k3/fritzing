@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Passives-JUMPER-3-OLD-1-2'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description></description>
-<title>1-2</title>
+<title>JUMPER-3-OLD</title>
 <tags>
-<tag>JUMPER-3-OLD</tag>
 <tag>1-2</tag>
+<tag>JUMPER-3-OLD</tag>
+<tag>SJ_3_PASTE1_2</tag>
 </tags>
 <properties>
-<property name='family'>JUMPER-3-OLD</property>
+<property name='package'>sj_3_paste1_2</property>
+<property name='family'>jumper-3-old</property>
+<property name='variant'>1-2</property>
 </properties>
 <views>
 <breadboardView>

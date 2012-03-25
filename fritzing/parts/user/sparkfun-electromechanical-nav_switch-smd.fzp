@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-NAV_SWITCH-SMD'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Navigation Switch&lt;/b&gt;
 Three way navigation switch. Commonly used as up/down/select on MP3 players. Schematic element and footprint production proven. Spark Fun Electronics SKU : COM-08184</description>
-<title>SMD</title>
+<title>Navigation Switch</title>
 <tags>
-<tag>NAV_SWITCH</tag>
 <tag>SMD</tag>
+<tag>NAV_SWITCH</tag>
+<tag>NAV_SWITCH</tag>
 </tags>
 <properties>
-<property name='family'>NAV_SWITCH</property>
+<property name='package'>nav_switch</property>
+<property name='family'>nav_switch</property>
+<property name='variant'>smd</property>
 </properties>
 <views>
 <breadboardView>

@@ -1,19 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-ENCODER_RGB_CA-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>SW</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;Illuminated Rotary Encoder w/ RGB LED and select switch&lt;/h3&gt;
 
 EC12PLRGBSDVBF-D: http://top-up.so-buy.com/front/bin/ptdetail.phtml?Part=EC12PLRGBSDVBF-D</description>
-<title></title>
+<title>ENCODER_RGB_CA</title>
 <tags>
 <tag>ENCODER_RGB_CA</tag>
-<tag></tag>
+<tag>ENCODER_LED_3</tag>
 </tags>
 <properties>
-<property name='family'>ENCODER_RGB_CA</property>
+<property name='package'>encoder_led_3</property>
+<property name='family'>encoder_rgb_ca</property>
 </properties>
 <views>
 <breadboardView>
@@ -40,8 +41,8 @@ EC12PLRGBSDVBF-D: http://top-up.so-buy.com/front/bin/ptdetail.phtml?Part=EC12PLR
 </iconView>
 </views>
 <connectors>
-<connector id='connector9' type='male' name='_'>
-<description>_</description>
+<connector id='connector9' type='male' name='+'>
+<description>+</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector9pin'/>

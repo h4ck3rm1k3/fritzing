@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-SWITCH_SPDT-'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>Side-actuated SPDT slide switch, as used on the Arduino Pro</description>
-<title></title>
+<title>SWITCH_SPDT</title>
 <tags>
 <tag>SWITCH_SPDT</tag>
-<tag></tag>
+<tag>KPS-1290</tag>
 </tags>
 <properties>
-<property name='family'>SWITCH_SPDT</property>
+<property name='package'>kps-1290</property>
+<property name='family'>switch_spdt</property>
 </properties>
 <views>
 <breadboardView>

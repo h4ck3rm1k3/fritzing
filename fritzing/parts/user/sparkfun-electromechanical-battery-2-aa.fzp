@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-BATTERY-2-AA'>
 <version>4</version>
-<date>2012-03-22</date>
-<label></label>
+<date>2012-03-25</date>
+<label>U</label>
 <author>www.fritzing.org</author>
 <description>AA and AAA battery holders</description>
-<title>AA</title>
+<title>BATTERY-2</title>
 <tags>
-<tag>BATTERY-2</tag>
 <tag>AA</tag>
+<tag>BATTERY-2</tag>
+<tag>BATTERY-AA</tag>
 </tags>
 <properties>
-<property name='family'>BATTERY-2</property>
+<property name='package'>battery-aa</property>
+<property name='family'>battery-2</property>
+<property name='variant'>aa</property>
 </properties>
 <views>
 <breadboardView>
@@ -38,8 +41,8 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector1' type='male' name='_1'>
-<description>_1</description>
+<connector id='connector1' type='male' name='+1'>
+<description>+1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pin'/>
@@ -53,8 +56,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='male' name='_2'>
-<description>_2</description>
+<connector id='connector0' type='male' name='+2'>
+<description>+2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pin'/>

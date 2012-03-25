@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-ATMEGA128RFA1-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Atmel 8-bit micro with 802.15.4 wireless support and 128k flash</description>
-<title></title>
+<title>ATMEGA128RFA1</title>
 <tags>
 <tag>ATMEGA128RFA1</tag>
-<tag></tag>
+<tag>QFN-64</tag>
 </tags>
 <properties>
-<property name='family'>ATMEGA128RFA1</property>
+<property name='package'>qfn-64</property>
+<property name='family'>atmega128rfa1</property>
 </properties>
 <views>
 <breadboardView>
@@ -65,8 +66,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector57' type='pad' name='AVSS_58'>
-<description>AVSS_58</description>
+<connector id='connector57' type='pad' name='AVSS@58'>
+<description>AVSS@58</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector57pad'/>
@@ -79,8 +80,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector60' type='pad' name='AVSS_61'>
-<description>AVSS_61</description>
+<connector id='connector60' type='pad' name='AVSS@61'>
+<description>AVSS@61</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector60pad'/>
@@ -135,8 +136,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='pad' name='DEVDD_23'>
-<description>DEVDD_23</description>
+<connector id='connector5' type='pad' name='DEVDD@23'>
+<description>DEVDD@23</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector5pad'/>
@@ -149,8 +150,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector33' type='pad' name='DEVDD_34'>
-<description>DEVDD_34</description>
+<connector id='connector33' type='pad' name='DEVDD@34'>
+<description>DEVDD@34</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector33pad'/>
@@ -163,8 +164,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector43' type='pad' name='DEVDD_44'>
-<description>DEVDD_44</description>
+<connector id='connector43' type='pad' name='DEVDD@44'>
+<description>DEVDD@44</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector43pad'/>
@@ -177,8 +178,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector53' type='pad' name='DEVDD_54'>
-<description>DEVDD_54</description>
+<connector id='connector53' type='pad' name='DEVDD@54'>
+<description>DEVDD@54</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector53pad'/>
@@ -191,8 +192,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='pad' name='DVDD_21'>
-<description>DVDD_21</description>
+<connector id='connector7' type='pad' name='DVDD@21'>
+<description>DVDD@21</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pad'/>
@@ -205,8 +206,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='pad' name='DVDD_22'>
-<description>DVDD_22</description>
+<connector id='connector6' type='pad' name='DVDD@22'>
+<description>DVDD@22</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pad'/>
@@ -219,8 +220,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector26' type='pad' name='DVSS_20'>
-<description>DVSS_20</description>
+<connector id='connector26' type='pad' name='DVSS@20'>
+<description>DVSS@20</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector26pad'/>
@@ -233,8 +234,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='pad' name='DVSS_24'>
-<description>DVSS_24</description>
+<connector id='connector2' type='pad' name='DVSS@24'>
+<description>DVSS@24</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pad'/>
@@ -247,8 +248,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector34' type='pad' name='DVSS_35'>
-<description>DVSS_35</description>
+<connector id='connector34' type='pad' name='DVSS@35'>
+<description>DVSS@35</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector34pad'/>
@@ -261,8 +262,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector44' type='pad' name='DVSS_45'>
-<description>DVSS_45</description>
+<connector id='connector44' type='pad' name='DVSS@45'>
+<description>DVSS@45</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector44pad'/>
@@ -275,8 +276,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector54' type='pad' name='DVSS_55'>
-<description>DVSS_55</description>
+<connector id='connector54' type='pad' name='DVSS@55'>
+<description>DVSS@55</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector54pad'/>

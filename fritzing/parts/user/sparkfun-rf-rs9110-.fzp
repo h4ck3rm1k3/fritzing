@@ -1,17 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-RS9110-'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Redpine WiFi module</description>
-<title></title>
+<title>RS9110</title>
 <tags>
 <tag>RS9110</tag>
-<tag></tag>
+<tag>RS9110-N-11-22-SHORT</tag>
 </tags>
 <properties>
-<property name='family'>RS9110</property>
+<property name='package'>rs9110-n-11-22-short</property>
+<property name='family'>rs9110</property>
 </properties>
 <views>
 <breadboardView>
@@ -65,8 +66,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector26' type='pad' name='GND_10'>
-<description>GND_10</description>
+<connector id='connector26' type='pad' name='GND@10'>
+<description>GND@10</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector26pad'/>
@@ -79,8 +80,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='pad' name='GND_16'>
-<description>GND_16</description>
+<connector id='connector4' type='pad' name='GND@16'>
+<description>GND@16</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pad'/>
@@ -93,8 +94,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='pad' name='GND_20'>
-<description>GND_20</description>
+<connector id='connector0' type='pad' name='GND@20'>
+<description>GND@20</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pad'/>
@@ -107,8 +108,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector21' type='pad' name='GND_21'>
-<description>GND_21</description>
+<connector id='connector21' type='pad' name='GND@21'>
+<description>GND@21</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector21pad'/>
@@ -121,8 +122,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector13' type='pad' name='GND_48'>
-<description>GND_48</description>
+<connector id='connector13' type='pad' name='GND@48'>
+<description>GND@48</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector13pad'/>
@@ -135,8 +136,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector33' type='pad' name='GND_PAD'>
-<description>GND_PAD</description>
+<connector id='connector33' type='pad' name='GND@PAD'>
+<description>GND@PAD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector33pad'/>
@@ -303,8 +304,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector15' type='pad' name='VIN_46'>
-<description>VIN_46</description>
+<connector id='connector15' type='pad' name='VIN@46'>
+<description>VIN@46</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector15pad'/>
@@ -317,8 +318,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector14' type='pad' name='VIN_47'>
-<description>VIN_47</description>
+<connector id='connector14' type='pad' name='VIN@47'>
+<description>VIN@47</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector14pad'/>

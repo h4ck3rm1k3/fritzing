@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-DB9-MALE'>
 <version>4</version>
-<date>2012-03-22</date>
+<date>2012-03-25</date>
 <label>X</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;DB9 Connector&lt;/b&gt;
 Standard DB9 (D-Sub 9) serial connector. Can be used for CAN bus as well as RS485 and RS232. Footprint production proven. Spark Fun Electronics SKU : PRT-00429</description>
-<title>MALE</title>
+<title>DB9 Connector</title>
 <tags>
-<tag>DB9</tag>
 <tag>MALE</tag>
+<tag>DB9</tag>
+<tag>DB9_MALE</tag>
 </tags>
 <properties>
-<property name='family'>DB9</property>
+<property name='package'>db9_male</property>
+<property name='family'>db9</property>
+<property name='variant'>male</property>
 </properties>
 <views>
 <breadboardView>
