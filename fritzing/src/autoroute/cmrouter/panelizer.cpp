@@ -734,11 +734,17 @@ bool Panelizer::openWindows(QDomElement & board, QHash<QString, QString> & fzzFi
 
 		mainWindow->showPCBView();
 		
-		ItemBase * boardItem = mainWindow->pcbView()->findBoard();
-		if (boardItem == NULL) {
+		QList<ItemBase *> boards = mainWindow->pcbView()->findBoard();
+		
+		if (boards.count() == 0) {
 			DebugDialog::debug(QString("no board found in '%1'").arg(path));
 			return false;
 		}
+		if (boards.count() > 1) {
+			DebugDialog::debug(QString("multiple boards found in '%1'").arg(path));
+			return false;
+		}
+		ItemBase * boardItem = boards.at(0);
 
 		foreach (QGraphicsItem * item, mainWindow->pcbView()->scene()->items()) {
 			ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
@@ -1173,11 +1179,16 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
 	bool oldGround = !Version::greaterThan(versionThing, versionThingFz);
 	
 		
-	ItemBase * boardItem = mainWindow->pcbView()->findBoard();
-	if (boardItem == NULL) {
+	QList<ItemBase *> boards = mainWindow->pcbView()->findBoard();	
+	if (boards.count() == 0) {
 		DebugDialog::debug(QString("no board found in '%1'").arg(path));
 		return mainWindow;
 	}
+	if (boards.count() == 2) {
+		DebugDialog::debug(QString("multiple boards found in '%1'").arg(path));
+		return mainWindow;
+	}
+	ItemBase * boardItem = boards.at(0);
 
 	bool filled = false;
 	QString fillType = mainWindow->pcbView()->characterizeGroundFill();

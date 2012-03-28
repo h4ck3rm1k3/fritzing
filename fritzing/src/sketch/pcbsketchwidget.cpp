@@ -460,7 +460,7 @@ bool PCBSketchWidget::canDropModelPart(ModelPart * modelPart) {
 		case ModelPart::ResizableBoard:
 			if (!matchesLayer(modelPart)) return false;
 			
-			if (findBoard() != NULL) {
+			if (findBoard().count() != 0) {
 				// don't allow multiple boards
 				AutoCloseMessageBox::showMessage(this->window(), tr("Fritzing only allows one board part per sketch. Either delete the current board, or select it and swap it for a different one."));
 				return false;
@@ -755,18 +755,19 @@ void PCBSketchWidget::showLabelFirstTime(long itemID, bool show, bool doEmit) {
 
 }
 
-ItemBase * PCBSketchWidget::findBoard() {
+QList<ItemBase *> PCBSketchWidget::findBoard() {
+	QSet<ItemBase *> boards;
     foreach (QGraphicsItem * childItem, items()) {
         ItemBase * board = dynamic_cast<ItemBase *>(childItem);
         if (board == NULL) continue;
 
         //for now take the first board you find
         if (board->itemType() == ModelPart::ResizableBoard || board->itemType() == ModelPart::Board) {
-            return board->layerKinChief();
+           boards.insert(board->layerKinChief());
         }
     }
 
-	return NULL;
+	return boards.toList();
 }
 
 void PCBSketchWidget::forwardRoutingStatus(const RoutingStatus & routingStatus) 
@@ -1183,7 +1184,8 @@ bool PCBSketchWidget::resizingJumperItemPress(QGraphicsItem * item) {
 		m_resizingJumperItem->saveParams();
 		if (m_alignToGrid) {
 			m_alignmentStartPoint = QPointF(0,0);
-			ItemBase * board = findBoard();
+			QList<ItemBase *> boards = findBoard();
+			ItemBase * board = boards.count() == 1 ? boards.at(0) : NULL;
 			QHash<long, ItemBase *> savedItems;
 			QHash<Wire *, ConnectorItem *> savedWires;
 			if (board == NULL) {
@@ -1344,11 +1346,15 @@ ItemBase * PCBSketchWidget::placePartDroppedInOtherView(ModelPart * modelPart, V
 	if (newItem == NULL) return newItem;
 	if (!autorouteTypePCB()) return newItem;
 
-	ItemBase * board = findBoard();
-	if (board == NULL) {
+	QList<ItemBase *> boards = findBoard();
+	if (boards.count() == 0) {
+		return newItem;
+	}
+	if (boards.count() > 1) {
 		return newItem;
 	}
 
+	ItemBase * board = boards.at(0);
 	dealWithDefaultParts();
 
 	// This is a 2d bin-packing problem. We can use our tile datastructure for this.  
@@ -1563,8 +1569,7 @@ void PCBSketchWidget::deleteItem(ItemBase * itemBase, bool deleteModelPart, bool
 	bool boardDeleted = (itemBase->itemType() == ModelPart::Board || itemBase->itemType() == ModelPart::ResizableBoard);
 	SketchWidget::deleteItem(itemBase, deleteModelPart, doEmit, later);
 	if (boardDeleted) {
-		ItemBase * board = findBoard();
-		if (board == NULL) {
+		if (findBoard().count() == 0) {
 			// no board found, so set to single-layer by default
 			changeBoardLayers(1, true);
 			emit boardDeletedSignal();
@@ -1598,13 +1603,20 @@ double PCBSketchWidget::getSmallerTraceWidth(double minDim) {
 bool PCBSketchWidget::groundFill(bool fillGroundTraces, QUndoCommand * parentCommand)
 {
 	m_groundFillSeeds = NULL;
-	ItemBase * board = findBoard();
+	QList<ItemBase *> boards = findBoard();
     // barf an error if there's no board
-    if (!board) {
+    if (boards.count() == 0) {
         QMessageBox::critical(NULL, tr("Fritzing"),
                    tr("Your sketch does not have a board yet!  Please add a PCB in order to use copper fill."));
         return false;
     }
+    if (boards.count() > 1) {
+        QMessageBox::critical(NULL, tr("Fritzing"),
+                   tr("Copper Fill: multiple boards are not supported."));
+        return false;
+    }
+
+	ItemBase * board = boards.at(0);
 
 	QList<ConnectorItem *> seeds;
 	if (fillGroundTraces) {
@@ -1724,13 +1736,20 @@ bool PCBSketchWidget::groundFill(bool fillGroundTraces, QUndoCommand * parentCom
 
 QString PCBSketchWidget::generateCopperFillUnit(ItemBase * itemBase, QPointF whereToStart)
 {
-	ItemBase * board = findBoard();
+	QList<ItemBase *> boards = findBoard();
     // barf an error if there's no board
-    if (!board) {
+    if (boards.count() == 0) {
         QMessageBox::critical(NULL, tr("Fritzing"),
                    tr("Your sketch does not have a board yet!  Please add a PCB in order to use copper fill."));
         return "";
     }
+    if (boards.count() > 1) {
+        QMessageBox::critical(NULL, tr("Fritzing"),
+                   tr("Copper fill: multiple boards are not supported."));
+        return "";
+    }
+
+	ItemBase * board = boards.at(0);
 
 	QRectF bsbr = board->sceneBoundingRect();
 	if (!bsbr.contains(whereToStart)) {

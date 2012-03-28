@@ -64,7 +64,7 @@ public:
 	virtual double getLabelFontSizeMedium();
 	virtual double getLabelFontSizeLarge();
 	ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry, ViewLayer::ViewLayerSpec);
-	ItemBase * findBoard();
+	QList<ItemBase *> findBoard();
 	double getRatsnestOpacity();
 	double getRatsnestWidth();
 

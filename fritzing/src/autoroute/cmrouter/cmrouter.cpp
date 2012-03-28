@@ -467,7 +467,10 @@ CMRouter::CMRouter(PCBSketchWidget * sketchWidget) : Autorouter(sketchWidget)
 	m_board = NULL;
 
 	if (sketchWidget->autorouteTypePCB()) {
-		m_board = sketchWidget->findBoard();
+		QList<ItemBase *> boards = sketchWidget->findBoard();
+		if (boards.count() == 1) {
+			m_board = boards.at(0);
+		}
 	}
 
 	if (m_board) {
@@ -504,7 +507,7 @@ CMRouter::~CMRouter()
 void CMRouter::start()
 {	
 	if (m_sketchWidget->autorouteTypePCB() && m_board == NULL) {
-		QMessageBox::warning(NULL, QObject::tr("Fritzing"), QObject::tr("Cannot autoroute: no board part found"));
+		QMessageBox::warning(NULL, QObject::tr("Fritzing"), QObject::tr("Cannot autoroute: no board (or multiple boards) found"));
 		return;
 	}
 
@@ -848,7 +851,7 @@ bool CMRouter::drc(QString & message)
 	//	what about ground plane?
 
 	if (m_sketchWidget->autorouteTypePCB() && m_board == NULL) {
-        message = tr("The Design Rule Check (DRC) was cancelled, because it could not find a PCB board part.");
+        message = tr("The Design Rule Check (DRC) was cancelled, because it could not find a board (or it found more than one).");
 		return false;
 	}
 

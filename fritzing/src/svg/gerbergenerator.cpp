@@ -78,11 +78,17 @@ bool pixelsCollide(QImage * image1, QImage * image2, int x1, int y1, int x2, int
 void GerberGenerator::exportToGerber(const QString & filename, const QString & exportDir, ItemBase * board, PCBSketchWidget * sketchWidget, bool displayMessageBoxes) 
 {
 	if (board == NULL) {
-		board = sketchWidget->findBoard();
-	}
-	if (board == NULL) {
-		DebugDialog::debug("board not found");
-		return;
+		QList<ItemBase *> boards = sketchWidget->findBoard();
+		if (boards.count() == 0) {
+			DebugDialog::debug("board not found");
+			return;
+		}
+		if (boards.count() > 1) {
+			DebugDialog::debug("multiple boards found");
+			return;
+		}
+
+		board = boards.at(0);
 	}
 
 	LayerList viewLayerIDs = ViewLayer::copperLayers(ViewLayer::Bottom);

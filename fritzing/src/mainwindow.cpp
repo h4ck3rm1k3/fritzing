@@ -2564,7 +2564,9 @@ void MainWindow::warnSMD(const QString & moduleID) {
 	}
 
 	if (m_smdOneSideWarningGiven) return;
-	if (m_pcbGraphicsView->findBoard() == NULL) return;
+
+	QList<ItemBase *> boards = m_pcbGraphicsView->findBoard();
+	if (boards.count() != 1) return;
 
 	m_smdOneSideWarningGiven = true;
 	// don't want to trigger the message box and subsequent swap from within the original event
@@ -2594,8 +2596,10 @@ void MainWindow::warnSMDReally()
 			return;
 	}
 
-	ItemBase * board = m_pcbGraphicsView->findBoard();
-	if (board == NULL) return;
+	QList<ItemBase *> boards = m_pcbGraphicsView->findBoard();
+	if (boards.count() != 1) return;
+
+	ItemBase * board = boards.at(0);
 
 	QMap<QString, QString> propsMap;
 	QString family;

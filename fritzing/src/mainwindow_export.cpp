@@ -152,6 +152,11 @@ void MainWindow::exportEtchable() {
 
 void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 {
+	QList<ItemBase *> boards = m_pcbGraphicsView->findBoard();
+	if (boards.count() != 1) return;
+
+    ItemBase * board = boards.at(0);
+
 	RoutingStatus routingStatus;
 	m_pcbGraphicsView->updateRoutingStatus(NULL, routingStatus, true);
 	if (routingStatus.m_connectorsLeftToRoute > 0) {
@@ -192,7 +197,6 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 	
 	FileProgressDialog * fileProgressDialog = exportProgress();
 
-    ItemBase * board = m_pcbGraphicsView->findBoard();
 
 	QString maskTop, maskBottom;
 	QList<ItemBase *> copperLogoItems;
@@ -1198,14 +1202,21 @@ void MainWindow::exportToGerber() {
 
     //NOTE: this assumes just one board per sketch
 
-    // grab the list of parts
-    ItemBase * board = m_pcbGraphicsView->findBoard();
+	QList<ItemBase *> boards = m_pcbGraphicsView->findBoard();
+
     // barf an error if there's no board
-    if (!board) {
+    if (boards.count() == 0) {
         QMessageBox::critical(this, tr("Fritzing"),
                    tr("Your sketch does not have a board yet!  Please add a PCB in order to export to Gerber."));
         return;
     }
+    if (boards.count() > 1) {
+        QMessageBox::critical(this, tr("Fritzing"),
+                   tr("Gerber export can not handle multiple boards."));
+        return;
+    }
+
+	ItemBase * board = boards.at(0);
 
     QString exportDir = QFileDialog::getExistingDirectory(this, tr("Choose a folder for exporting"),
                                              defaultSaveFolder(),
