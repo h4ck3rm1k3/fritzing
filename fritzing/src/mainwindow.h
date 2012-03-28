@@ -114,7 +114,7 @@ public:
 	// if we consider a part as the smallest ("atomic") entity inside
 	// fritzing, then this functions may help with the bundle tasks
 	// on the complex entities: sketches, bins, modules (?)
-	void saveBundledNonAtomicEntity(QString &filename, const QString &extension, Bundler *bundler, const QList<ModelPart*> &partsToSave, bool askForFilename, const QString & destFolderPath, bool saveModel);
+	void saveBundledNonAtomicEntity(QString &filename, const QString &extension, Bundler *bundler, const QList<ModelPart*> &partsToSave, bool askForFilename, const QString & destFolderPath, bool saveModel, bool deleteLeftovers);
 	void loadBundledNonAtomicEntity(const QString &filename, Bundler *bundler, bool addToBin, bool dontAsk);
 	void saveAsShareable(const QString & path, bool saveModel);
 
@@ -270,7 +270,7 @@ protected slots:
 
 	void shareOnline();
 	void saveBundledPart(const QString &moduleId=___emptyString___);
-	void saveBundledAux(ModelPart *mp, const QDir &destFolder);
+	QStringList saveBundledAux(ModelPart *mp, const QDir &destFolder);
 	void loadBundledPart();
 
 	void binSaved(bool hasAlienParts);

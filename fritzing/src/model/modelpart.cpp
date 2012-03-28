@@ -860,3 +860,7 @@ QString ModelPart::family(){
 
 	return "";
 }
+
+bool ModelPart::hasViewItems() {
+	return (m_viewItems.count() > 0);
+}

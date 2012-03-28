@@ -309,9 +309,11 @@ void MainWindow::init(PaletteModel * paletteModel, ReferenceModel *refModel, boo
 	DebugDialog::debug("before creating dock");
 
     m_dockManager = new DockManager(this);
-    m_dockManager->createBinAndInfoViewDocks();
+	DebugDialog::debug("before creating bins");
 
-	DebugDialog::debug("after creating bin");
+	m_dockManager->createBinAndInfoViewDocks();
+
+	DebugDialog::debug("after creating bins");
 	if (m_fileProgressDialog) {
 		m_fileProgressDialog->setValue(89);
 	}
@@ -1222,11 +1224,22 @@ void MainWindow::setInfoViewOnHover(bool infoViewOnHover) {
 void MainWindow::saveAsShareable(const QString & path, bool saveModel)
 {
 	QString filename = path;
-	saveBundledNonAtomicEntity(filename, FritzingBundleExtension, this, m_sketchModel->root()->getAllNonCoreParts(), false, m_fzzFolder, saveModel);
+	QHash<QString, ModelPart *> saveParts;
+	foreach (QGraphicsItem * item, m_pcbGraphicsView->scene()->items()) {
+		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+		if (itemBase == NULL) continue;
+		if (itemBase->modelPart()->isCore()) continue;
+	
+		saveParts.insert(itemBase->moduleID(), itemBase->modelPart());
+	}
+	saveBundledNonAtomicEntity(filename, FritzingBundleExtension, this, saveParts.values(), false, m_fzzFolder, saveModel, true);
+
 }
 
 
-void MainWindow::saveBundledNonAtomicEntity(QString &filename, const QString &extension, Bundler *bundler, const QList<ModelPart*> &partsToSave, bool askForFilename, const QString & destFolderPath, bool saveModel) {
+void MainWindow::saveBundledNonAtomicEntity(QString &filename, const QString &extension, Bundler *bundler, const QList<ModelPart*> &partsToSave, bool askForFilename, const QString & destFolderPath, bool saveModel, bool deleteLeftovers) {
+	QStringList names;
+
 	QString fileExt;
 	QString path = defaultSaveFolder() + "/" + QFileInfo(filename).fileName()+"z";
 	QString bundledFileName = askForFilename 
@@ -1276,7 +1289,19 @@ void MainWindow::saveBundledNonAtomicEntity(QString &filename, const QString &ex
 	}
 
 	foreach(ModelPart* mp, partsToSave) {
-		saveBundledAux(mp, destFolder);
+		names.append(saveBundledAux(mp, destFolder));
+	}
+
+	if (deleteLeftovers) {
+		QStringList nameFilters;
+		nameFilters << ("*" + FritzingPartExtension) << "*.svg";   
+		QDir dir(destFolder);
+		QStringList fileList = dir.entryList(nameFilters, QDir::Files | QDir::NoSymLinks);
+		foreach (QString fileName, fileList) {
+			if (!names.contains(fileName)) {
+				QFile::remove(dir.absoluteFilePath(fileName));
+			}
+		}
 	}
 
 	QApplication::processEvents();
@@ -1491,10 +1516,13 @@ void MainWindow::saveBundledPart(const QString &moduleId) {
 	FolderUtils::rmdir(dirToRemove);
 }
 
-void MainWindow::saveBundledAux(ModelPart *mp, const QDir &destFolder) {
+QStringList MainWindow::saveBundledAux(ModelPart *mp, const QDir &destFolder) {
+	QStringList names;
 	QString partPath = mp->modelPartShared()->path();
 	QFile file(partPath);
-	file.copy(destFolder.path()+"/"+ZIP_PART+QFileInfo(partPath).fileName());
+	QString fn = ZIP_PART + QFileInfo(partPath).fileName();
+	names << fn;
+	file.copy(destFolder.path()+"/"+fn);
 
 	QList<ViewIdentifierClass::ViewIdentifier> identifiers;
 	identifiers << ViewIdentifierClass::IconView << ViewIdentifierClass::BreadboardView << ViewIdentifierClass::SchematicView << ViewIdentifierClass::PCBView;
@@ -1507,8 +1535,12 @@ void MainWindow::saveBundledAux(ModelPart *mp, const QDir &destFolder) {
 
 		QFile file(filename);
 		basename.replace("/", ".");
-		file.copy(destFolder.path()+"/"+ZIP_SVG+basename);
+		QString fn = ZIP_SVG + basename;
+		names << fn;
+		file.copy(destFolder.path()+"/"+fn);
 	}
+
+	return names;
 }
 
 QList<ModelPart*> MainWindow::moveToPartsFolder(QDir &unzipDir, MainWindow* mw, bool addToBin, bool addToAlien, const QString & prefixFolder, const QString &destFolder) {

@@ -82,9 +82,11 @@ void DockManager::dockChangeActivation(bool activate, QWidget * originator) {
 
 void DockManager::createBinAndInfoViewDocks() {
 	m_mainWindow->m_infoView = new HtmlInfoView();
+	DebugDialog::debug("after html view");
 
 	m_mainWindow->m_binManager = new BinManager(m_mainWindow->m_refModel, m_mainWindow->m_infoView, m_mainWindow->m_undoStack, m_mainWindow);
 
+	DebugDialog::debug("after bin manager");
 	if (m_mainWindow->m_paletteModel->loadedFromFile()) {
 		m_mainWindow->m_binManager->loadFromModel(m_mainWindow->m_paletteModel);
 	} else {
