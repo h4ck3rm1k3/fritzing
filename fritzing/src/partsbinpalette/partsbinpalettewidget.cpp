@@ -488,7 +488,7 @@ void PartsBinPaletteWidget::load(const QString &filename, QWidget * progressTarg
 	}
 
 	if (progressTarget) {
-        //DebugDialog::debug("close progress " + filename);
+        DebugDialog::debug("close progress " + filename);
 		disconnect(paletteBinModel, SIGNAL(loadingInstances(ModelBase *, QDomElement &)), progressTarget, SLOT(loadingInstancesSlot(ModelBase *, QDomElement &)));
 		disconnect(paletteBinModel, SIGNAL(loadingInstance(ModelBase *, QDomElement &)), progressTarget, SLOT(loadingInstanceSlot(ModelBase *, QDomElement &)));
 		disconnect(m_iconView, SIGNAL(settingItem()), progressTarget, SLOT(settingItemSlot()));
@@ -500,6 +500,7 @@ void PartsBinPaletteWidget::load(const QString &filename, QWidget * progressTarg
 		m_loadingProgressDialog = NULL;
 	}
 
+	DebugDialog::debug("done loading bin");
 	//delete paletteReferenceModel;
 }
 

@@ -154,6 +154,7 @@ void UpdateDialog::xmlErrorSlot(QXmlStreamReader::Error  errorCode) {
 
 void UpdateDialog::handleError() 
 {
+	DebugDialog::debug("handle error");
 	if (m_atUserRequest) {
 		m_feedbackLabel->setText(tr("Sorry, unable to retrieve update info")); 
 	}
@@ -161,6 +162,7 @@ void UpdateDialog::handleError()
 		// automatic update check: don't bother the user
 	}
 	emit enableAgainSignal(true);
+	DebugDialog::debug("handle error done");
 }
 
 void UpdateDialog::setAtUserRequest(bool atUserRequest) 

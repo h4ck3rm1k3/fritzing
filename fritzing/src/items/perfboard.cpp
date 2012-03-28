@@ -41,15 +41,19 @@ $Date$
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QLabel>
+#include <QMessageBox>
 
 
 static const int ConnectorIDJump = 1000;
-static const int MaxXDimension = 61;
+static const int MaxXDimension = 99;
 static const int MinXDimension = 5;
-static const int MaxYDimension = 38;
+static const int MaxYDimension = 99;
 static const int MinYDimension = 5;
+static const int WarningSize = 2000;
 
 static const QString OneHole("M%1,%2a%3,%3 0 1 %5 %4,0 %3,%3 0 1 %5 -%4,0z\n");
+
+bool Perfboard::m_gotWarning = false;
 
 /////////////////////////////////////////////////////////////////////
 
@@ -284,6 +288,33 @@ bool Perfboard::canEditPart() {
 
 void Perfboard::changeBoardSize() 
 {
+	if (!m_gotWarning) {
+		int x = m_xEdit->text().toInt();
+		int y = m_yEdit->text().toInt();
+		if (x * y >= WarningSize) {
+			m_gotWarning = true;
+			QMessageBox messageBox(NULL);
+			messageBox.setWindowTitle(tr("Performance Warning"));
+			messageBox.setText(tr("Performance of perfboards and stripboards with more than approximately 2000 holes can be slow. Are you sure ?\n"
+				"\nNote: this warning will not be repeated during this session."
+				));
+			messageBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+			messageBox.setDefaultButton(QMessageBox::Cancel);
+			messageBox.setIcon(QMessageBox::Warning);
+			messageBox.setWindowModality(Qt::WindowModal);
+			messageBox.setButtonText(QMessageBox::Ok, tr("Set new size"));
+			messageBox.setButtonText(QMessageBox::Cancel, tr("Cancel"));
+			QMessageBox::StandardButton answer = (QMessageBox::StandardButton) messageBox.exec();
+
+			if (answer != QMessageBox::Ok) {
+				getXY(x, y, m_size);
+				m_xEdit->setText(QString::number(x));
+				m_yEdit->setText(QString::number(y));
+				return;
+			}
+		}
+	}
+
 
 	QString newSize = QString("%1.%2").arg(m_xEdit->text()).arg(m_yEdit->text());
     m_propsMap.insert("size", newSize);

@@ -95,7 +95,7 @@ QString FolderUtils::getApplicationSubFolderPath(QString search) {
 QString FolderUtils::getUserDataStorePath(QString folder) {
 	QString settingsFile = QSettings(QSettings::IniFormat,QSettings::UserScope,"Fritzing","Fritzing").fileName();
 	return QFileInfo(settingsFile).dir()
-        .absolutePath()+(folder!=___emptyString___?QString("/")+folder:QString(""));
+        .absolutePath()+(folder.isEmpty()?"":QString("/")+folder);
 }
 
 const QStringList & FolderUtils::getUserDataStoreFolders() {

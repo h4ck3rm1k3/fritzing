@@ -27,6 +27,7 @@ $Date$
 
 
 #include "debugdialog.h"
+#include "utils/folderutils.h"
 #include <QEvent>
 #include <QCoreApplication>
 #include <QFile>
@@ -73,8 +74,8 @@ DebugDialog::DebugDialog(QWidget *parent)
 	m_textEdit = new QTextEdit(this);
 	m_textEdit->setGeometry(QRect(10, 10, 381, 281));
 
-    QString path = QCoreApplication::applicationDirPath();
-    path += "/../debug.txt";
+    QString path = FolderUtils::getUserDataStorePath("");
+    path += "/debug.txt";
 
 	m_file.setFileName(path);
 	m_file.remove();

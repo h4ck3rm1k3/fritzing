@@ -268,6 +268,8 @@ void MainWindow::init(PaletteModel * paletteModel, ReferenceModel *refModel, boo
 		LockManager::checkLockedFiles("fzz", backupList, m_fzzFiles, true, LockManager::SlowTime);
 	}
 
+	DebugDialog::debug("init sketch widgets");
+
 	// all this belongs in viewLayer.xml
 	m_breadboardGraphicsView = new BreadboardSketchWidget(ViewIdentifierClass::BreadboardView, this);
 	initSketchWidget(m_breadboardGraphicsView);
@@ -277,6 +279,7 @@ void MainWindow::init(PaletteModel * paletteModel, ReferenceModel *refModel, boo
 	if (m_fileProgressDialog) {
 		m_fileProgressDialog->setValue(11);
 	}
+
 
 	m_schematicGraphicsView = new SchematicSketchWidget(ViewIdentifierClass::SchematicView, this);
 	initSketchWidget(m_schematicGraphicsView);
@@ -302,6 +305,8 @@ void MainWindow::init(PaletteModel * paletteModel, ReferenceModel *refModel, boo
     m_undoGroup->setActiveStack(m_undoStack);
 
 	m_layerPalette = new LayerPalette(this);
+
+	DebugDialog::debug("before creating dock");
 
     m_dockManager = new DockManager(this);
     m_dockManager->createBinAndInfoViewDocks();

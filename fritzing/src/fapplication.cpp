@@ -775,6 +775,7 @@ int FApplication::startup(bool firstRun)
 
 	if (m_progressIndex >= 0) splash.showProgress(m_progressIndex, 0.875);
 
+	DebugDialog::debug("load something");
 	loadSomething(firstRun, prevVersion);
 	m_started = true;
 
@@ -1012,12 +1013,14 @@ void FApplication::checkForUpdates(bool atUserRequest)
 
 void FApplication::enableCheckUpdates(bool enabled)
 {
+	DebugDialog::debug("before enable check updates");
     foreach (QWidget *widget, QApplication::topLevelWidgets()) {
         MainWindow *mainWindow = qobject_cast<MainWindow *>(widget);
 		if (mainWindow) {
 			mainWindow->enableCheckUpdates(enabled);
 		}
 	}
+	DebugDialog::debug("after enable check updates");
 }
 
 
@@ -1234,7 +1237,7 @@ void FApplication::loadSomething(bool firstRun, const QString & prevVersion) {
 
 	initBackups();
 
-	//DebugDialog::debug("checking for backups");
+	DebugDialog::debug("checking for backups");
     QList<MainWindow*> sketchesToLoad = recoverBackups();
 
 	bool loadPrevious = false;
@@ -1242,7 +1245,7 @@ void FApplication::loadSomething(bool firstRun, const QString & prevVersion) {
 		loadPrevious = !prevVersion.isEmpty() && Version::greaterThan(prevVersion, Version::FirstVersionWithDetachedUserData);
 	}
 
-	//DebugDialog::debug(QString("load previous %1").arg(loadPrevious));
+	DebugDialog::debug(QString("load previous %1").arg(loadPrevious));
 
 	if (!loadPrevious && sketchesToLoad.isEmpty()) {
 		if (!firstRun) {
@@ -1253,7 +1256,7 @@ void FApplication::loadSomething(bool firstRun, const QString & prevVersion) {
 
 	if (!loadPrevious && sketchesToLoad.isEmpty()) {
 		// Check for double-clicked files to load
-		//DebugDialog::debug(QString("check files to load %1").arg(m_filesToLoad.count()));
+		DebugDialog::debug(QString("check files to load %1").arg(m_filesToLoad.count()));
 
         foreach (QString filename, m_filesToLoad) {
             DebugDialog::debug(QString("Loading non-service file %1").arg(filename));
@@ -1265,13 +1268,13 @@ void FApplication::loadSomething(bool firstRun, const QString & prevVersion) {
 
     // Find any previously open sketches to reload
     if (!loadPrevious && sketchesToLoad.isEmpty()) {
-		//DebugDialog::debug(QString("load last open"));
+		DebugDialog::debug(QString("load last open"));
 		sketchesToLoad = loadLastOpenSketch();
 	}
 
 	MainWindow * newBlankSketch = NULL;
 	if (sketchesToLoad.isEmpty()) {
-		//DebugDialog::debug(QString("empty sketch"));
+		DebugDialog::debug(QString("create empty sketch"));
 		newBlankSketch = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, "", true, true);
 		if (newBlankSketch) {
 			// make sure to start an empty sketch with a board
@@ -1279,6 +1282,8 @@ void FApplication::loadSomething(bool firstRun, const QString & prevVersion) {
 			sketchesToLoad << newBlankSketch;
 		}
 	}
+
+	DebugDialog::debug(QString("finish up sketch loading"));
 
     // Finish loading the sketches and show them to the user
 	foreach (MainWindow* sketch, sketchesToLoad) {

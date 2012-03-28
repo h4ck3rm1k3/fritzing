@@ -74,6 +74,9 @@ protected:
 	static bool getXY(int & x, int & y, const QString & s);
 
 protected:
+	static bool m_gotWarning;
+
+protected:
 	QString m_size;
 	QPointer<QLineEdit> m_xEdit;
 	QPointer<QLineEdit> m_yEdit;
