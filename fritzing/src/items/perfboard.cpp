@@ -45,9 +45,9 @@ $Date$
 
 
 static const int ConnectorIDJump = 1000;
-static const int MaxXDimension = 99;
+static const int MaxXDimension = 199;
 static const int MinXDimension = 5;
-static const int MaxYDimension = 99;
+static const int MaxYDimension = 199;
 static const int MinYDimension = 5;
 static const int WarningSize = 2000;
 

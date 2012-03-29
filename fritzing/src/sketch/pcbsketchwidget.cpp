@@ -1920,6 +1920,25 @@ void PCBSketchWidget::rotatePartLabels(double degrees, QTransform & transform, Q
 
 QString PCBSketchWidget::characterizeGroundFill() {
 	QString result = GroundPlane::fillTypeNone;
+	bool gotZero = false;
+	bool gotOne = false;
+
+	foreach (QGraphicsItem * item, scene()->items()) {
+		GroundPlane * gp = dynamic_cast<GroundPlane *>(item);
+		if (gp == NULL) continue;
+
+		if (gp->viewLayerID() == ViewLayer::GroundPlane0) {
+			gotZero = true;
+		}
+		else if (gp->viewLayerID() == ViewLayer::GroundPlane1) {
+			gotOne = true;
+		}
+
+		if (gotZero && gotOne) break;
+	}
+
+	if (!(gotZero && gotOne)) return result;
+
 	foreach (QGraphicsItem * item, scene()->items()) {
 		GroundPlane * gp = dynamic_cast<GroundPlane *>(item);
 		if (gp == NULL) continue;
