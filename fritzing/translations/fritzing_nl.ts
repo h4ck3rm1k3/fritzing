@@ -435,10 +435,6 @@
         </translation>
     </message>
     <message>
-        <source>The Design Rule Check (DRC) was cancelled, because it could not find a PCB board part.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Your sketch is ready for production: there are no connectors or traces that overlap or are too close together.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -454,6 +450,10 @@ Note: %n parts are not located entirely on the board.</source>
             <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
+    </message>
+    <message>
+        <source>The Design Rule Check (DRC) was cancelled, because it could not find a board (or it found more than one).</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -697,6 +697,35 @@ Selecteer a.u.b. een Fritzing lettertype om ze te vervangen:</translation>
     <message>
         <source>Cancel</source>
         <translation>Annuleren</translation>
+    </message>
+</context>
+<context>
+    <name>GroundFillSeedDialog</name>
+    <message>
+        <source>The difference between a &apos;ground fill&apos; and plain &apos;copper fill&apos; is that in a ground fill, the flooded area includes traces and connectors that are connected to &apos;ground&apos; connectors. Ground connectors are usually labeled &apos;GND&apos; or &apos;ground&apos; but sometimes this is not the case. It also may be that there are multiple nets with a ground connector, and you might only want one of the nets to be filled.
+
+This dialog collects only connectors labeled &apos;GND&apos; or &apos;ground&apos;, as well as connectors already chosen as seeds.
+
+Click an item to highlight its connections in the sketch.
+
+It is also possible to choose a connector as a ground fill seed by right-clicking a connector and choosing the &apos;Set Ground Fill Seed&apos; context menu option.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished">OK</translation>
+    </message>
+    <message>
+        <source>OK and ground fill</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK and copper fill</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2252,14 +2281,6 @@ Controleer a.u.b. alle views voor potentiële fouten.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Update Ratsnest</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Redraw this net</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Move selected traces to the other side of the board (note: the &apos;first&apos; trace will be moved and the rest will follow to the same side)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2667,19 +2688,57 @@ Would you like to convert &apos;%1&apos; to the .fzz format now or open it read-
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Set Copper Fill Seeds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Fill empty regions of the copper layer--fill will include all traces connected to the seeds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Clear Copper Fill Seeds</source>
+        <source>Gerber export can not handle multiple boards.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Fill will avoid all traces</source>
+        <source>Ctrl+B</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parts Editor</source>
+        <translation type="unfinished">componenten editor</translation>
+    </message>
+    <message>
+        <source>A new Parts Editor is under construction. The old Parts Editor is still available, but the code is pretty buggy. So use it at your own risk.
+
+Open the old Parts Editor?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose Ground Fill Seed(s)...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set Ground Fill Seed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Treat this connector and its connections as a &apos;ground&apos; during ground fill.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear Ground Fill Seeds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear ground fill seeds--enable copper fill only.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Generating %1 fill...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ground</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>copper</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2807,6 +2866,24 @@ Reden : %2 (errcode %3)</translation>
     </message>
     <message>
         <source>Create Trace from Ratsnest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copper Fill: multiple boards are not supported.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please designate one or more ground fill seeds before doing a ground fill.
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copper fill: multiple boards are not supported.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear ground fill seeds</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3374,6 +3451,24 @@ op de PCB?</translation>
     </message>
     <message>
         <source>columns</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Performance Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Performance of perfboards and stripboards with more than approximately 2000 holes can be slow. Are you sure ?
+
+Note: this warning will not be repeated during this session.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set new size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4297,10 +4392,6 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot autoroute: no board part found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>No connections to route&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4481,6 +4572,22 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
 %1
 %2
 %3.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot autoroute: no board (or multiple boards) found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set Ground Fill Seed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ground Fill Seed Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 mask export failure (2)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
