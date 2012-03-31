@@ -235,6 +235,7 @@ protected:
 	double m_connectorDrawT;
 	double m_connectorDetectT;
 	bool m_groundFillSeed;
+	int m_moveCount;
 	
 protected:	
 	static QList<ConnectorItem *>  m_equalPotentialDisplayItems;

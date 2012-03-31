@@ -661,12 +661,18 @@ void ConnectorItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 
 	if (m_rubberBandLeg && m_draggingLeg) {
+		m_draggingLeg = false;
+
 		if (m_insertBendpointPossible) {
 			// didn't move far enough; bail
 			return;
 		}
 
-		m_draggingLeg = false;
+		if (m_moveCount == 0) { 
+			// never moved
+			return;
+		}
+
 		ConnectorItem * to = releaseDrag();
 
 		if (m_draggingCurve) {
@@ -741,7 +747,7 @@ void ConnectorItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
 }
 
 void ConnectorItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
-
+	m_moveCount++;
 	if (m_rubberBandLeg && m_draggingLeg) {
 		if (m_draggingCurve) {
 			Bezier * bezier = m_legCurves.at(m_draggingLegIndex);
@@ -811,6 +817,7 @@ void ConnectorItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 
 void ConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 	m_draggingCurve = m_draggingLeg = false;
+	m_moveCount = 0;
 
 	if (event->button() != Qt::LeftButton) {
 		QGraphicsRectItem::mousePressEvent(event);
