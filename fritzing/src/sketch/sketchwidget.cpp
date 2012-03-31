@@ -2229,8 +2229,9 @@ void SketchWidget::prepMove(ItemBase * originatingItem, bool rubberBandLegEnable
 		}
 
 		QSet<ItemBase *> set;
-		if (collectFemaleConnectees(chief, set)) {
+		if (collectFemaleConnectees(chief, set)) {  // for historical reasons returns true if chief has male connectors
 			if (i < originalItemsCount) {
+
 				m_checkUnder.append(chief);
 			}
 		}
@@ -2240,6 +2241,21 @@ void SketchWidget::prepMove(ItemBase * originatingItem, bool rubberBandLegEnable
 			}
 		}
 		chief->collectWireConnectees(wires);
+	}
+
+	for (int i = m_checkUnder.count() - 1; i >= 0; i--) {
+		ItemBase * itemBase = m_checkUnder.at(i);
+		foreach (ConnectorItem * connectorItem, itemBase->cachedConnectorItems()) {
+			bool gotOne = false;
+			foreach (ConnectorItem * toConnectorItem, connectorItem->connectedToItems()) {
+				if (m_savedItems.value(toConnectorItem->attachedToID(), NULL) != NULL) {
+					m_checkUnder.removeAt(i);
+					gotOne = true;
+					break;
+				}
+			}
+			if (gotOne) break;
+		}
 	}
 
 	if (wires.count() > 0) {
