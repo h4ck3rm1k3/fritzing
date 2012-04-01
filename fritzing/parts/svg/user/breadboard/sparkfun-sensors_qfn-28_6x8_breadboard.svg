@@ -32,6 +32,22 @@
 <rect id='connector25pad' connectorname='19' x='4.85' y='1.35' width='0.6' height='0.25' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector26pad' connectorname='20' x='4.85' y='0.85' width='0.6' height='0.25' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector27pad' connectorname='11' x='2.85' y='3.85' width='0.25' height='0.6' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<line x1='1.709' y1='2.733' x2='1.709' y2='3.4188' stroke='#f8f8f8' stroke-width='0.0508' stroke-linecap='round'/>
+<path fill='none' d='M1.5566,3.1394 A0.155029,0.155029 0 0 1 1.8614,3.0886' stroke-width='0.0508' stroke='#f8f8f8' />
+<line x1='1.8614' y1='3.0886' x2='1.9122' y2='3.0378' stroke='#f8f8f8' stroke-width='0.0508' stroke-linecap='round'/>
+<line x1='3.9696' y1='1.209' x2='3.2838' y2='1.209' stroke='#f8f8f8' stroke-width='0.0508' stroke-linecap='round'/>
+<line x1='3.868' y1='1.082' x2='3.9696' y2='1.209' stroke='#f8f8f8' stroke-width='0.0508' stroke-linecap='round'/>
+<line x1='3.9696' y1='1.209' x2='3.868' y2='1.336' stroke='#f8f8f8' stroke-width='0.0508' stroke-linecap='round'/>
+<path fill='none' d='M3.5632,1.0566 A0.155038,0.155038 0 0 1 3.614,1.3614' stroke-width='0.0508' stroke='#f8f8f8' />
+<line x1='3.614' y1='1.3614' x2='3.6648' y2='1.4122' stroke='#f8f8f8' stroke-width='0.0508' stroke-linecap='round'/>
+<line x1='1.8614' y1='3.0886' x2='1.7852' y2='3.0886' stroke='#f8f8f8' stroke-width='0.0508' stroke-linecap='round'/>
+<line x1='3.614' y1='1.3614' x2='3.614' y2='1.2852' stroke='#f8f8f8' stroke-width='0.0508' stroke-linecap='round'/>
+<line x1='1.709' y1='3.4188' x2='1.6074' y2='3.3172' stroke='#f8f8f8' stroke-width='0.0508' stroke-linecap='round'/>
+<line x1='1.709' y1='3.4188' x2='1.8106' y2='3.3172' stroke='#f8f8f8' stroke-width='0.0508' stroke-linecap='round'/>
+<line x1='0.225' y1='4.225' x2='5.225' y2='4.225' stroke='#f8f8f8' stroke-width='0.09' stroke-linecap='round'/>
+<line x1='5.225' y1='4.225' x2='5.225' y2='0.225' stroke='#f8f8f8' stroke-width='0.09' stroke-linecap='round'/>
+<line x1='5.225' y1='0.225' x2='0.225' y2='0.225' stroke='#f8f8f8' stroke-width='0.09' stroke-linecap='round'/>
+<line x1='0.225' y1='0.225' x2='0.225' y2='4.225' stroke='#f8f8f8' stroke-width='0.09' stroke-linecap='round'/>
 <line x1='0.217' y1='0.225' x2='0.217' y2='0.525' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='0.217' y1='0.225' x2='0.517' y2='0.225' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='5.217' y1='0.225' x2='4.917' y2='0.225' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
@@ -41,5 +57,11 @@
 <line x1='0.217' y1='4.225' x2='0.217' y2='3.925' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='0.217' y1='4.225' x2='0.517' y2='4.225' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <circle cx='1.025' cy='1.025' r='0.2' stroke='#f8f8f8' stroke-width='0.2032' fill='none' />
+<circle cx='1.025' cy='1.025' r='0.2' stroke='#f8f8f8' stroke-width='0.09' fill='none' />
+<circle cx='1.701' cy='1.971' r='0.254' stroke='#f8f8f8' stroke-width='0.0508' fill='none' />
+<circle cx='1.701' cy='1.971' r='0.0254' stroke='#f8f8f8' stroke-width='0.0508' fill='none' />
+<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='0.29718' x='3.3092' y='1.1074' text-anchor='start'>X</text>
+<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='0.29718' x='1.455' y='2.8346' text-anchor='start'>Y</text>
+<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='0.29718' x='2.082' y='2.0726' text-anchor='start'>Z</text>
 </g>
 </svg>

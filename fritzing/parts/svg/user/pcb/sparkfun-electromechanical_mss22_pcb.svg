@@ -26,6 +26,10 @@
 </g>
 </g>
 <g id='silkscreen'>
+<line x1='0.679' y1='14.429' x2='6.479' y2='14.429' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='0.679' y1='0.429' x2='6.479' y2='0.429' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='0.679' y1='0.429' x2='0.679' y2='14.429' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='6.479' y1='0.429' x2='6.479' y2='14.429' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='0.629' y1='2.229' x2='0.629' y2='12.629' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='6.529' y1='2.229' x2='6.529' y2='12.629' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='2.129' y1='14.529' x2='5.029' y2='14.529' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>

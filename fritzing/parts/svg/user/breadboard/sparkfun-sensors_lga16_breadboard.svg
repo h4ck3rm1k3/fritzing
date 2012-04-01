@@ -20,6 +20,10 @@
 <rect id='connector13pad' connectorname='6' x='1.8288' y='4.4704' width='0.508' height='1.27' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector14pad' connectorname='16' x='1.8288' y='0' width='0.508' height='1.27' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector15pad' connectorname='14' x='3.4036' y='0' width='0.508' height='1.27' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<line x1='5.3721' y1='0.3683' x2='0.3683' y2='0.3683' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='0.3683' y1='0.3683' x2='0.3683' y2='5.3721' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='0.3683' y1='5.3721' x2='5.3721' y2='5.3721' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='5.3721' y1='5.3721' x2='5.3721' y2='0.3683' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='0.2794' y1='5.4356' x2='0.7112' y2='5.4356' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='0.2794' y1='5.4356' x2='0.2794' y2='5.0038' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='5.461' y1='5.461' x2='5.461' y2='5.0292' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
@@ -28,5 +32,8 @@
 <line x1='5.461' y1='0.2794' x2='5.461' y2='0.7112' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='0.2794' y1='0.7112' x2='0.7366' y2='0.254' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='0.7366' y1='0.254' x2='0.8382' y2='0.254' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='2.2352' y1='2.8702' x2='2.7686' y2='2.5654' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='2.2352' y1='2.8702' x2='1.9812' y2='2.3114' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<path fill='none' d='M2.8702,3.5052 A0.635,0.635 0 1 0 2.2352,2.8702' stroke-width='0.127' stroke='#f8f8f8' />
 </g>
 </svg>

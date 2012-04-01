@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
 <svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='31.4893in' height='11.2593in' viewBox='0 0 799.827 285.987' >
-<g id='schematic'>
+<g id='icon'><g id='schematic'>
 <line x1='0.127' y1='1.38' x2='249.047' y2='1.38' stroke='#000000' stroke-width='0.254' stroke-linecap='round'/>
 <line x1='249.047' y1='1.38' x2='249.047' y2='285.86' stroke='#000000' stroke-width='0.254' stroke-linecap='round'/>
 <line x1='249.047' y1='285.86' x2='0.127' y2='285.86' stroke='#000000' stroke-width='0.254' stroke-linecap='round'/>
@@ -101,5 +101,5 @@
 <text font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='2.3114' x='7.747' y='263' text-anchor='start'>4. Group banks of functionally similar pins together (all VCC, all GND, all NCs, I2C, analog, PORTC, etc).</text>
 <text font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='2.3114' x='7.747' y='100.44' text-anchor='start'>10. Components must have correct values assigned to each part. For example a capacitor value would be: 0.1uF/25V </text>
 <text font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='2.3114' x='7.747' y='237.6' text-anchor='start'>4. Origin of the footprint must be located in the center of the footprint. Where possible, the footprint should be symmetric on both axises.</text>
-</g>
+</g></g>
 </svg>

@@ -12,6 +12,9 @@
 </g>
 </g>
 <g id='silkscreen'>
+<line x1='8.5' y1='16.4585' x2='3.3' y2='16.4585' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='8.5' y1='16.4585' x2='8.5' y2='14.1585' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='3.3' y1='16.4585' x2='3.3' y2='14.1585' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
 <path fill='none' d='M1.7,8.85846 A4.47216,4.47216 0 0 1 7.17,6.14046' stroke-width='0.2032' stroke='#f0f0f0' />
 <path fill='none' d='M8.948,7.15646 A4.5153,4.5153 0 0 1 10.091,8.80746' stroke-width='0.2032' stroke='#f0f0f0' />
 <path fill='none' d='M10.1,12.0585 A4.84733,4.84733 0 0 1 8.5,14.1585' stroke-width='0.2032' stroke='#f0f0f0' />
@@ -19,5 +22,8 @@
 <line x1='3.3' y1='16.4585' x2='8.5' y2='16.4585' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='8.5' y1='16.4585' x2='8.5' y2='14.1585' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='3.3' y1='16.4585' x2='3.3' y2='14.0585' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<circle cx='5.9' cy='10.4585' r='4.5' stroke='#f0f0f0' stroke-width='0.127' fill='none' />
+<rect x='0.7' y='9.70846' width='2.3' height='1.5' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
+<rect x='8.8' y='9.70846' width='2.3' height='1.5' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
 </g>
 </svg>

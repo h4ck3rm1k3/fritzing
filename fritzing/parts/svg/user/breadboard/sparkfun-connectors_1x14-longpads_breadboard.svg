@@ -118,5 +118,19 @@ M33.8328,1.6256a0.5588,0.5588 0 1 0 1.1176,0 0.5588,0.5588 0 1 0 -1.1176,0z
 <line x1='18.5166' y1='0.3556' x2='17.8816' y2='0.9906' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='17.8816' y1='2.2606' x2='18.5166' y2='2.8956' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='35.6616' y1='0.9906' x2='35.6616' y2='2.2606' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<rect x='16.3576' y='1.3716' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='13.8176' y='1.3716' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='11.2776' y='1.3716' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='8.7376' y='1.3716' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='6.1976' y='1.3716' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='3.6576' y='1.3716' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='1.1176' y='1.3716' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='34.1376' y='1.3716' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='31.5976' y='1.3716' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='29.0576' y='1.3716' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='26.5176' y='1.3716' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='23.9776' y='1.3716' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='21.4376' y='1.3716' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='18.8976' y='1.3716' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
 </g>
 </svg>

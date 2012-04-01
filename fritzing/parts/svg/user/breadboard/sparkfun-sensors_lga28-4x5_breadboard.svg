@@ -32,6 +32,10 @@
 <rect id='connector25pad' connectorname='24' x='2.8075' y='0' width='0.31' height='0.7' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector26pad' connectorname='26' x='1.8075' y='0' width='0.31' height='0.7' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector27pad' connectorname='28' x='0.8075' y='0' width='0.31' height='0.7' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<line x1='0.2125' y1='4.2125' x2='0.2125' y2='0.2125' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='0.2125' y1='0.2125' x2='5.2125' y2='0.2125' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='5.2125' y1='0.2125' x2='5.2125' y2='4.2125' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='5.2125' y1='4.2125' x2='0.2125' y2='4.2125' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='5.0125' y1='4.3125' x2='5.3125' y2='4.3125' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='5.3125' y1='4.3125' x2='5.3125' y2='4.0125' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='5.3125' y1='0.4125' x2='5.3125' y2='0.1125' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>

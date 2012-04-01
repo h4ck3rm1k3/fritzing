@@ -9,5 +9,9 @@
 <rect id='connector2pad' connectorname='3' x='2.7516' y='0' width='0.7' height='1.7' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <line x1='3.7016' y1='0.2' x2='3.7016' y2='1.5' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='0.1016' y1='1.5' x2='0.1016' y2='0.2' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='0.3016' y1='0.2' x2='3.5016' y2='0.2' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='3.5016' y1='0.2' x2='3.5016' y2='1.5' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='3.5016' y1='1.5' x2='0.3016' y2='1.5' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='0.3016' y1='1.5' x2='0.3016' y2='0.2' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 </g>
 </svg>

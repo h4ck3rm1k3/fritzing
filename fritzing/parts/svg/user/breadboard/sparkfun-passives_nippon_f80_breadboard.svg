@@ -10,11 +10,18 @@
 <line x1='5.575' y1='1.29775' x2='7.175' y2='2.59775' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='7.175' y1='6.59775' x2='5.575' y2='7.89775' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='5.575' y1='7.89775' x2='0.575' y2='7.89775' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='0.575' y1='1.29775' x2='5.575' y2='1.29775' stroke='#f8f8f8' stroke-width='0.1016' stroke-linecap='round'/>
+<line x1='5.575' y1='1.29775' x2='7.175' y2='2.59775' stroke='#f8f8f8' stroke-width='0.1016' stroke-linecap='round'/>
+<line x1='7.175' y1='6.59775' x2='5.575' y2='7.89775' stroke='#f8f8f8' stroke-width='0.1016' stroke-linecap='round'/>
+<line x1='5.575' y1='7.89775' x2='0.575' y2='7.89775' stroke='#f8f8f8' stroke-width='0.1016' stroke-linecap='round'/>
 <line x1='0.575' y1='1.29775' x2='0.575' y2='3.91275' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='0.575' y1='7.89775' x2='0.575' y2='5.28275' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='7.175' y1='2.59775' x2='7.175' y2='3.91275' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='7.175' y1='6.59775' x2='7.175' y2='5.28275' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='0.575' y1='1.29775' x2='0.575' y2='7.89775' stroke='#f8f8f8' stroke-width='0.1016' stroke-linecap='round'/>
+<line x1='7.175' y1='2.59775' x2='7.175' y2='6.59775' stroke='#f8f8f8' stroke-width='0.1016' stroke-linecap='round'/>
 <path fill='none' d='M0.775,3.91275 A3.16635,3.16635 0 0 1 6.975,3.91275' stroke-width='0.2032' stroke='#f8f8f8' />
 <path fill='none' d='M6.975,5.28275 A3.17682,3.17682 0 0 1 0.775,5.28275' stroke-width='0.2032' stroke='#f8f8f8' />
+<circle cx='3.875' cy='4.59775' r='3.15' stroke='#f8f8f8' stroke-width='0.1016' fill='none' />
 </g>
 </svg>

@@ -25,5 +25,19 @@
 <line x1='0.0889' y1='5.325' x2='0.0889' y2='1.375' stroke='#f0f0f0' stroke-width='0.1778' stroke-linecap='round'/>
 <line x1='0.0889' y1='1.375' x2='8.7889' y2='1.375' stroke='#f0f0f0' stroke-width='0.1778' stroke-linecap='round'/>
 <circle cx='1.0389' cy='4.35' r='0.5' stroke='#f0f0f0' stroke-width='0.1778' fill='none' />
+<rect x='4.2389' y='0.35' width='0.4' height='0.6' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
+<rect x='2.9689' y='0.35' width='0.4' height='0.6' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
+<rect x='1.6989' y='0.35' width='0.4' height='0.6' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
+<rect x='0.4289' y='0.35' width='0.4' height='0.6' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
+<rect x='5.5089' y='0.35' width='0.4' height='0.6' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
+<rect x='6.7789' y='0.35' width='0.4' height='0.6' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
+<rect x='8.0489' y='0.35' width='0.4' height='0.6' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
+<rect x='0.4289' y='5.75' width='0.4' height='0.6' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
+<rect x='1.6989' y='5.75' width='0.4' height='0.6' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
+<rect x='2.9689' y='5.75' width='0.4' height='0.6' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
+<rect x='4.2389' y='5.75' width='0.4' height='0.6' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
+<rect x='5.5089' y='5.75' width='0.4' height='0.6' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
+<rect x='6.7789' y='5.75' width='0.4' height='0.6' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
+<rect x='8.0489' y='5.75' width='0.4' height='0.6' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
 </g>
 </svg>

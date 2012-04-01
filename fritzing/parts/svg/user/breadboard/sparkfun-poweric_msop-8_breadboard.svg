@@ -12,7 +12,9 @@
 <rect id='connector5pad' connectorname='6' x='1.7216' y='0' width='0.41' height='1.02' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector6pad' connectorname='7' x='1.0716' y='0' width='0.41' height='1.02' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector7pad' connectorname='8' x='0.4216' y='0' width='0.41' height='1.02' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<line x1='0.1016' y1='4.41' x2='3.1016' y2='4.41' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='3.1016' y1='4.41' x2='3.1016' y2='1.41' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='3.1016' y1='1.41' x2='0.1016' y2='1.41' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='0.1016' y1='1.41' x2='0.1016' y2='4.41' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <circle cx='0.5982' cy='3.9006' r='0.1436' stroke='#f8f8f8' stroke-width='0.2032' fill='none' />
 </g>

@@ -14,16 +14,30 @@
 <line x1='10.922' y1='7.2644' x2='4.064' y2='7.2644' stroke='#f8f8f8' stroke-width='0.0508' stroke-linecap='round'/>
 <line x1='4.064' y1='3.9624' x2='10.922' y2='3.9624' stroke='#f8f8f8' stroke-width='0.0508' stroke-linecap='round'/>
 <line x1='12.954' y1='7.6454' x2='2.032' y2='7.6454' stroke='#f8f8f8' stroke-width='0.1524' stroke-linecap='round'/>
+<line x1='13.208' y1='5.6134' x2='13.97' y2='5.6134' stroke='#f8f8f8' stroke-width='0.1524' stroke-linecap='round'/>
+<line x1='13.208' y1='4.8514' x2='13.97' y2='4.8514' stroke='#f8f8f8' stroke-width='0.1524' stroke-linecap='round'/>
+<line x1='13.97' y1='5.6134' x2='13.97' y2='4.8514' stroke='#f8f8f8' stroke-width='0.1524' stroke-linecap='round'/>
 <path fill='none' d='M12.954,7.6454 A0.254,0.254 0 0 0 13.208,7.3914' stroke-width='0.1524' stroke='#f8f8f8' />
+<line x1='13.208' y1='6.3754' x2='13.208' y2='4.0894' stroke='#f8f8f8' stroke-width='0.1524' stroke-linecap='round'/>
 <line x1='13.208' y1='7.3914' x2='13.208' y2='6.3754' stroke='#f8f8f8' stroke-width='0.1524' stroke-linecap='round'/>
 <path fill='none' d='M10.922,6.5024 A1.27,1.27 0 0 0 11.4756,6.3754' stroke-width='0.0508' stroke='#f8f8f8' />
 <path fill='none' d='M10.922,3.9624 A1.27,1.27 0 0 1 11.4756,4.0894' stroke-width='0.0508' stroke='#f8f8f8' />
 <path fill='none' d='M10.922,7.2644 A2.032,2.032 0 0 0 12.602,6.3753' stroke-width='0.0508' stroke='#f8f8f8' />
+<path fill='none' d='M11.4756,6.3754 A1.27001,1.27001 0 0 0 11.4756,4.0894' stroke-width='0.0508' stroke='#f8f8f8' />
+<path fill='none' d='M12.6021,6.3754 A2.03204,2.03204 0 0 0 12.6021,4.0894' stroke-width='0.0508' stroke='#f8f8f8' />
 <path fill='none' d='M2.3839,6.3754 A2.032,2.032 0 0 0 4.064,7.2644' stroke-width='0.0508' stroke='#f8f8f8' />
+<path fill='none' d='M3.5104,6.3754 A1.27001,1.27001 0 0 1 3.5104,4.0894' stroke-width='0.0508' stroke='#f8f8f8' />
 <path fill='none' d='M3.5104,6.3754 A1.27,1.27 0 0 0 4.064,6.5024' stroke-width='0.0508' stroke='#f8f8f8' />
 <path fill='none' d='M3.5104,4.0894 A1.27,1.27 0 0 1 4.064,3.9624' stroke-width='0.0508' stroke='#f8f8f8' />
+<line x1='1.016' y1='5.6134' x2='1.016' y2='4.8514' stroke='#f8f8f8' stroke-width='0.1524' stroke-linecap='round'/>
+<path fill='none' d='M2.3839,6.3754 A2.03204,2.03204 0 0 1 2.3839,4.0894' stroke-width='0.0508' stroke='#f8f8f8' />
+<line x1='1.778' y1='6.3754' x2='1.778' y2='5.6134' stroke='#f8f8f8' stroke-width='0.1524' stroke-linecap='round'/>
+<line x1='1.778' y1='5.6134' x2='1.778' y2='4.8514' stroke='#f8f8f8' stroke-width='0.1524' stroke-linecap='round'/>
+<line x1='1.778' y1='4.8514' x2='1.778' y2='4.0894' stroke='#f8f8f8' stroke-width='0.1524' stroke-linecap='round'/>
 <line x1='1.778' y1='7.3914' x2='1.778' y2='6.3754' stroke='#f8f8f8' stroke-width='0.1524' stroke-linecap='round'/>
 <path fill='none' d='M1.778,7.3914 A0.254,0.254 0 0 0 2.032,7.6454' stroke-width='0.1524' stroke='#f8f8f8' />
+<line x1='1.778' y1='5.6134' x2='1.016' y2='5.6134' stroke='#f8f8f8' stroke-width='0.1524' stroke-linecap='round'/>
+<line x1='1.778' y1='4.8514' x2='1.016' y2='4.8514' stroke='#f8f8f8' stroke-width='0.1524' stroke-linecap='round'/>
 <line x1='4.064' y1='3.2004' x2='10.922' y2='3.2004' stroke='#f8f8f8' stroke-width='0.0508' stroke-linecap='round'/>
 <line x1='12.954' y1='2.8194' x2='2.032' y2='2.8194' stroke='#f8f8f8' stroke-width='0.1524' stroke-linecap='round'/>
 <path fill='none' d='M12.954,2.8194 A0.254,0.254 0 0 1 13.208,3.0734' stroke-width='0.1524' stroke='#f8f8f8' />

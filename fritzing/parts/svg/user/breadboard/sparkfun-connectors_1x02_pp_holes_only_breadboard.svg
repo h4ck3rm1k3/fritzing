@@ -10,5 +10,7 @@ M2.8321,0.7366a0.4445,0.4445 0 1 0 0.889,0 0.4445,0.4445 0 1 0 -0.889,0z
 <circle id='connector1pin' connectorname='2' cx='3.2766' cy='0.7366' r='0.42545' stroke='#9A916C' stroke-width='-0.0381' fill='none' />
 <circle cx='0.7366' cy='0.7366' r='0.7366' stroke='black' stroke-width='0' fill='black' id='nonconn4' />
 <circle cx='3.2766' cy='0.7366' r='0.7366' stroke='black' stroke-width='0' fill='black' id='nonconn5' />
+<circle cx='0.7366' cy='0.7366' r='0.635' stroke='#f8f8f8' stroke-width='0.127' fill='none' />
+<circle cx='3.2766' cy='0.7366' r='0.635' stroke='#f8f8f8' stroke-width='0.127' fill='none' />
 </g>
 </svg>

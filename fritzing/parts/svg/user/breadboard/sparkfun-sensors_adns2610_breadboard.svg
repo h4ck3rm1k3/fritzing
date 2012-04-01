@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
-<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='1.52653in' height='0.735in' viewBox='0 0 38.7738 18.669' >
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='1.8in' height='0.735in' viewBox='0 0 45.72 18.669' >
 <g id='breadboard'>
-<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l38.7738,0 0,18.669 -38.7738,0 0,-18.669z
+<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l45.72,0 0,18.669 -45.72,0 0,-18.669z
 M31.1785,15.748a0.3937,0.3937 0 1 0 0.7874,0 0.3937,0.3937 0 1 0 -0.7874,0z
 M33.1785,15.748a0.3937,0.3937 0 1 0 0.7874,0 0.3937,0.3937 0 1 0 -0.7874,0z
 M35.1785,15.748a0.3937,0.3937 0 1 0 0.7874,0 0.3937,0.3937 0 1 0 -0.7874,0z
@@ -28,6 +28,14 @@ M36.1785,2.948a0.3937,0.3937 0 1 0 0.7874,0 0.3937,0.3937 0 1 0 -0.7874,0z
 <line x1='38.6722' y1='4.748' x2='28.7722' y2='4.748' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='28.7722' y1='4.748' x2='28.7722' y2='13.848' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='28.7722' y1='13.848' x2='29.7722' y2='13.848' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='45.6184' y1='14.224' x2='17.6276' y2='14.224' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='45.6184' y1='4.3942' x2='17.6276' y2='4.3942' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='17.6276' y1='4.3942' x2='17.6276' y2='14.224' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='45.6184' y1='4.3942' x2='45.6184' y2='14.224' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <circle cx='30.7594' cy='17.24' r='0.4' stroke='#f8f8f8' stroke-width='0.2032' fill='none' />
+<circle cx='33.5722' cy='9.248' r='2.6019' stroke='#f8f8f8' stroke-width='0.127' fill='none' />
+<circle cx='8.4074' cy='10.5918' r='0.4064' stroke='#f8f8f8' stroke-width='0.2032' fill='none' />
+<circle cx='8.4074' cy='8.0518' r='0.4064' stroke='#f8f8f8' stroke-width='0.2032' fill='none' />
+<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='1.1557' x='6.2992' y='4.826' text-anchor='start'>LED Placement </text>
 </g>
 </svg>

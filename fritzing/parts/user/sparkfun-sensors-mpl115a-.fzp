@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-MPL115A-'>
 <version>4</version>
-<date>2012-03-25</date>
+<date>2012-04-01</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;&lt;h3&gt;MPL115A1 (SPI) and MPL115A2 (I2C) Miniature Digital Barometer&lt;/h3&gt;&lt;/b&gt;

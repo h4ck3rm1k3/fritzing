@@ -17,5 +17,6 @@
 <path fill='none' d='M30.947,5.11982 A2.99402,2.99402 0 0 0 25.747,3.11982' stroke-width='0.2032' stroke='#f8f8f8' />
 <line x1='4.867' y1='5.11982' x2='4.867' y2='12.4998' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='30.947' y1='5.11982' x2='30.947' y2='12.4998' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<circle cx='17.907' cy='15.4998' r='12.25' stroke='#f8f8f8' stroke-width='0.2032' fill='none' />
 </g>
 </svg>

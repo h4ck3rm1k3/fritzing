@@ -6,5 +6,9 @@
 '/>
 <rect id='connector0pad' connectorname='1' x='0' y='0' width='1.8' height='3.2' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector1pad' connectorname='2' x='5.6' y='0' width='1.8' height='3.2' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<line x1='1.338' y1='0.127' x2='6.087' y2='0.127' stroke='#f8f8f8' stroke-width='0.1524' stroke-linecap='round'/>
+<line x1='1.338' y1='3.073' x2='6.087' y2='3.073' stroke='#f8f8f8' stroke-width='0.1524' stroke-linecap='round'/>
+<rect x='0.4996' y='0.0493' width='0.8499' height='3.1001' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='6.0622' y='0.0493' width='0.8499' height='3.1001' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
 </g>
 </svg>

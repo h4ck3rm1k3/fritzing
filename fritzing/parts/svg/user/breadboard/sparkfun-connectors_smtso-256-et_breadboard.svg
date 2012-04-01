@@ -6,5 +6,6 @@
 M1.1938,3.0988a1.905,1.905 0 1 0 3.81,0 1.905,1.905 0 1 0 -3.81,0z
 '/>
 <circle id='connector0pin' connectorname='P$1' cx='3.0988' cy='3.0988' r='2.5019' stroke='#9A916C' stroke-width='1.1938' fill='none' />
+<circle cx='3.0988' cy='3.0988' r='1.016' stroke='#f8f8f8' stroke-width='0.127' fill='none' />
 </g>
 </svg>

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-SWITCH-SPDT-PTH3'>
 <version>4</version>
-<date>2012-03-25</date>
+<date>2012-04-01</date>
 <label>S</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;SPST Switch&lt;/b&gt;

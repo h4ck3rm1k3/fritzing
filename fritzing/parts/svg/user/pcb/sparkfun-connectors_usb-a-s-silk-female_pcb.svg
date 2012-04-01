@@ -14,6 +14,16 @@
 </g>
 </g>
 <g id='silkscreen'>
+<line x1='14.1633' y1='1.4097' x2='0.1806' y2='1.4097' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='14.1633' y1='14.5415' x2='0.1806' y2='14.5415' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='0.1806' y1='1.4986' x2='0.1806' y2='14.4526' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='14.176' y1='1.4732' x2='14.176' y2='14.478' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='7.9276' y1='13.0556' x2='1.5776' y2='12.4206' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='1.5776' y1='12.4206' x2='1.5776' y2='9.2456' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='1.5776' y1='9.2456' x2='7.9276' y2='8.6106' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='7.9276' y1='2.8956' x2='1.5776' y2='3.5306' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='1.5776' y1='3.5306' x2='1.5776' y2='6.7056' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='1.5776' y1='6.7056' x2='7.9276' y2='7.3406' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='0.1016' y1='1.3716' x2='7.9756' y2='1.3716' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='0.1016' y1='1.3716' x2='0.1016' y2='14.5796' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='0.1016' y1='14.5796' x2='7.9756' y2='14.5796' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>

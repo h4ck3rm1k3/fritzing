@@ -58,5 +58,9 @@
 <line x1='7.3' y1='2.15' x2='7.3' y2='0.3' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='7.3' y1='0.3' x2='5.45' y2='0.3' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='0.8' y1='0.3' x2='0.3' y2='0.8' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='0.3' y1='0.3' x2='0.3' y2='7.3' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='0.4' y1='7.3' x2='7.3' y2='7.3' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='7.3' y1='7.3' x2='7.3' y2='0.3' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='7.3' y1='0.3' x2='0.3' y2='0.3' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
 </g>
 </svg>

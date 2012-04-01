@@ -6,6 +6,6 @@
 M2.667,8.1278a1.4605,1.4605 0 1 0 2.921,0 1.4605,1.4605 0 1 0 -2.921,0z
 '/>
 <circle id='connector0pin' connectorname='1' cx='4.1275' cy='8.1278' r='1.87325' stroke='#9A916C' stroke-width='0.8255' fill='none' />
-<path stroke='#9A916C' fill='#9A916C' stroke-width='0.254' d='z' stroke-linecap='round'/>
+<path stroke='#9A916C' fill='#9A916C' stroke-width='0.254' d='M0.127,8.1278 A4.0006,4.0006 0 0 1 4.1275,4.1273M4.1275,4.1273 A4.0004,4.0004 0 0 1 8.128,8.1278M8.128,8.1278 A4.0006,4.0006 0 0 1 4.1275,12.1283M4.1275,12.1283 A4.0006,4.0006 0 0 1 0.127,8.1278z' stroke-linecap='round'/>
 </g>
 </svg>

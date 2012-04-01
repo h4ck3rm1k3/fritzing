@@ -27,5 +27,23 @@
 <line x1='11.3792' y1='1.6891' x2='0.0762' y2='1.6891' stroke='#f8f8f8' stroke-width='0.1524' stroke-linecap='round'/>
 <line x1='0.0762' y1='1.6891' x2='0.0762' y2='9.0551' stroke='#f8f8f8' stroke-width='0.1524' stroke-linecap='round'/>
 <circle cx='1.0668' cy='8.1407' r='0.5334' stroke='#f8f8f8' stroke-width='0.1524' fill='none' />
+<rect x='10.6172' y='0.2921' width='0.4064' height='1.3462' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='9.3472' y='0.2921' width='0.4064' height='1.3462' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='8.0772' y='0.2921' width='0.4064' height='1.3462' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='6.8072' y='0.2921' width='0.4064' height='1.3462' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='5.5372' y='0.2921' width='0.4064' height='1.3462' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='4.2672' y='0.2921' width='0.4064' height='1.3462' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='2.9972' y='0.2921' width='0.4064' height='1.3462' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='1.7272' y='0.2921' width='0.4064' height='1.3462' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='0.4572' y='0.2921' width='0.4064' height='1.3462' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='0.4572' y='9.1059' width='0.4064' height='1.3462' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='1.7272' y='9.1059' width='0.4064' height='1.3462' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='2.9972' y='9.1059' width='0.4064' height='1.3462' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='4.2672' y='9.1059' width='0.4064' height='1.3462' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='5.5372' y='9.1059' width='0.4064' height='1.3462' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='6.8072' y='9.1059' width='0.4064' height='1.3462' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='8.0772' y='9.1059' width='0.4064' height='1.3462' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='9.3472' y='9.1059' width='0.4064' height='1.3462' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='10.6172' y='9.1059' width='0.4064' height='1.3462' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
 </g>
 </svg>

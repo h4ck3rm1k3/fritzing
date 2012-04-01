@@ -50,5 +50,16 @@
 </g>
 </g>
 <g id='silkscreen'>
+<circle cx='0.7366' cy='0.7366' r='0.635' stroke='#f0f0f0' stroke-width='0.127' fill='none' />
+<circle cx='3.2766' cy='0.7366' r='0.635' stroke='#f0f0f0' stroke-width='0.127' fill='none' />
+<circle cx='5.8166' cy='0.7366' r='0.635' stroke='#f0f0f0' stroke-width='0.127' fill='none' />
+<circle cx='8.3566' cy='0.7366' r='0.635' stroke='#f0f0f0' stroke-width='0.127' fill='none' />
+<circle cx='10.8966' cy='0.7366' r='0.635' stroke='#f0f0f0' stroke-width='0.127' fill='none' />
+<circle cx='13.4366' cy='0.7366' r='0.635' stroke='#f0f0f0' stroke-width='0.127' fill='none' />
+<circle cx='15.9766' cy='0.7366' r='0.635' stroke='#f0f0f0' stroke-width='0.127' fill='none' />
+<circle cx='18.5166' cy='0.7366' r='0.635' stroke='#f0f0f0' stroke-width='0.127' fill='none' />
+<circle cx='21.0566' cy='0.7366' r='0.635' stroke='#f0f0f0' stroke-width='0.127' fill='none' />
+<circle cx='23.5966' cy='0.7366' r='0.635' stroke='#f0f0f0' stroke-width='0.127' fill='none' />
+<circle cx='26.1366' cy='0.7366' r='0.635' stroke='#f0f0f0' stroke-width='0.127' fill='none' />
 </g>
 </svg>

@@ -54,5 +54,19 @@
 <line x1='0.2278' y1='6.2222' x2='0.6342' y2='6.2222' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='6.2222' y1='6.2222' x2='6.2222' y2='5.8158' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='6.2222' y1='6.2222' x2='5.8158' y2='6.2222' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='2.209' y1='3.733' x2='2.209' y2='4.4188' stroke='#f0f0f0' stroke-width='0.0508' stroke-linecap='round'/>
+<path fill='none' d='M2.0566,4.1394 A0.155029,0.155029 0 0 1 2.3614,4.0886' stroke-width='0.0508' stroke='#f0f0f0' />
+<line x1='2.3614' y1='4.0886' x2='2.4122' y2='4.0378' stroke='#f0f0f0' stroke-width='0.0508' stroke-linecap='round'/>
+<line x1='4.4696' y1='2.209' x2='3.7838' y2='2.209' stroke='#f0f0f0' stroke-width='0.0508' stroke-linecap='round'/>
+<line x1='4.368' y1='2.082' x2='4.4696' y2='2.209' stroke='#f0f0f0' stroke-width='0.0508' stroke-linecap='round'/>
+<line x1='4.4696' y1='2.209' x2='4.368' y2='2.336' stroke='#f0f0f0' stroke-width='0.0508' stroke-linecap='round'/>
+<path fill='none' d='M4.0632,2.0566 A0.155038,0.155038 0 0 1 4.114,2.3614' stroke-width='0.0508' stroke='#f0f0f0' />
+<line x1='4.114' y1='2.3614' x2='4.1648' y2='2.4122' stroke='#f0f0f0' stroke-width='0.0508' stroke-linecap='round'/>
+<line x1='2.3614' y1='4.0886' x2='2.2852' y2='4.0886' stroke='#f0f0f0' stroke-width='0.0508' stroke-linecap='round'/>
+<line x1='4.114' y1='2.3614' x2='4.114' y2='2.2852' stroke='#f0f0f0' stroke-width='0.0508' stroke-linecap='round'/>
+<line x1='2.209' y1='4.4188' x2='2.1074' y2='4.3172' stroke='#f0f0f0' stroke-width='0.0508' stroke-linecap='round'/>
+<line x1='2.209' y1='4.4188' x2='2.3106' y2='4.3172' stroke='#f0f0f0' stroke-width='0.0508' stroke-linecap='round'/>
+<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f0f0f0' font-size='0.29718' x='3.8092' y='2.1074' text-anchor='start'>X</text>
+<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f0f0f0' font-size='0.29718' x='1.955' y='3.8346' text-anchor='start'>Y</text>
 </g>
 </svg>

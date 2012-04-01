@@ -1,15 +1,21 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
-<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.433in' height='0.26in' viewBox='0 0 10.9982 6.604' >
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.433in' height='0.346in' viewBox='0 0 10.9982 8.7884' >
 <g id='breadboard'>
-<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l10.9982,0 0,6.604 -10.9982,0 0,-6.604z
-M0.9398,3.302a0.4064,0.4064 0 1 0 0.8128,0 0.4064,0.4064 0 1 0 -0.8128,0z
-M3.4798,3.302a0.4064,0.4064 0 1 0 0.8128,0 0.4064,0.4064 0 1 0 -0.8128,0z
+<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l10.9982,0 0,8.7884 -10.9982,0 0,-8.7884z
+M0.9398,4.3942a0.4064,0.4064 0 1 0 0.8128,0 0.4064,0.4064 0 1 0 -0.8128,0z
+M3.4798,4.3942a0.4064,0.4064 0 1 0 0.8128,0 0.4064,0.4064 0 1 0 -0.8128,0z
 '/>
-<circle id='connector0pin' connectorname='A' cx='1.3462' cy='3.302' r='0.6731' stroke='#9A916C' stroke-width='0.5334' fill='none' />
-<circle id='connector1pin' connectorname='K' cx='3.8862' cy='3.302' r='0.6731' stroke='#9A916C' stroke-width='0.5334' fill='none' />
-<line x1='5.1562' y1='5.207' x2='5.1562' y2='1.397' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<path fill='none' d='M5.1562,5.207 A3.175,3.175 0 1 1 5.1562,1.397' stroke-width='0.254' stroke='#f8f8f8' />
-<circle cx='2.6162' cy='3.302' r='2.54' stroke='#f8f8f8' stroke-width='0.1524' fill='none' />
+<circle id='connector0pin' connectorname='A' cx='1.3462' cy='4.3942' r='0.6731' stroke='#9A916C' stroke-width='0.5334' fill='none' />
+<circle id='connector1pin' connectorname='K' cx='3.8862' cy='4.3942' r='0.6731' stroke='#9A916C' stroke-width='0.5334' fill='none' />
+<line x1='5.1562' y1='6.2992' x2='5.1562' y2='2.4892' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<path fill='none' d='M5.1562,6.2992 A3.175,3.175 0 1 1 5.1562,2.4892' stroke-width='0.254' stroke='#f8f8f8' />
+<path fill='none' d='M1.4732,4.3942 A1.143,1.143 0 0 1 2.6162,3.2512' stroke-width='0.1524' stroke='#f8f8f8' />
+<path fill='none' d='M2.6162,5.5372 A1.143,1.143 0 0 0 3.7592,4.3942' stroke-width='0.1524' stroke='#f8f8f8' />
+<path fill='none' d='M0.9652,4.3942 A1.651,1.651 0 0 1 2.6162,2.7432' stroke-width='0.1524' stroke='#f8f8f8' />
+<path fill='none' d='M2.6162,6.0452 A1.651,1.651 0 0 0 4.2672,4.3942' stroke-width='0.1524' stroke='#f8f8f8' />
+<path fill='none' d='M0.4572,4.3942 A2.159,2.159 0 0 1 2.6162,2.2352' stroke-width='0.1524' stroke='#f8f8f8' />
+<path fill='none' d='M2.6162,6.5532 A2.159,2.159 0 0 0 4.7752,4.3942' stroke-width='0.1524' stroke='#f8f8f8' />
+<circle cx='2.6162' cy='4.3942' r='2.54' stroke='#f8f8f8' stroke-width='0.1524' fill='none' />
 </g>
 </svg>

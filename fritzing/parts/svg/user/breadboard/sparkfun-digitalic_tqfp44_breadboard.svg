@@ -57,5 +57,49 @@
 <line x1='2.15' y1='11.35' x2='1.75' y2='10.95' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='1.75' y1='10.95' x2='1.75' y2='2.15' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <circle cx='2.55' cy='2.55' r='0.2827' stroke='#f8f8f8' stroke-width='0.254' fill='none' />
+<rect x='0.4499' y='2.3501' width='1.1501' height='0.3998' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='0.4499' y='3.15' width='1.1501' height='0.4' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='0.4499' y='3.9501' width='1.1501' height='0.4' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='0.4499' y='4.7499' width='1.1501' height='0.4001' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='0.4499' y='5.55' width='1.1501' height='0.4001' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='0.4499' y='6.3501' width='1.1501' height='0.3998' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='0.4499' y='7.1499' width='1.1501' height='0.4001' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='0.4499' y='7.95' width='1.1501' height='0.4001' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='0.4499' y='8.7499' width='1.1501' height='0.4' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='0.4499' y='9.55' width='1.1501' height='0.4' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='0.4499' y='10.3501' width='1.1501' height='0.3998' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='2.3501' y='11.5' width='0.3998' height='1.1501' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='3.15' y='11.5' width='0.4' height='1.1501' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='3.9501' y='11.5' width='0.4' height='1.1501' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='4.7499' y='11.5' width='0.4001' height='1.1501' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='5.55' y='11.5' width='0.4001' height='1.1501' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='6.3501' y='11.5' width='0.3998' height='1.1501' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='7.1499' y='11.5' width='0.4001' height='1.1501' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='7.95' y='11.5' width='0.4001' height='1.1501' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='8.7499' y='11.5' width='0.4' height='1.1501' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='9.55' y='11.5' width='0.4' height='1.1501' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='10.3501' y='11.5' width='0.3998' height='1.1501' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='11.5' y='10.3501' width='1.1501' height='0.3998' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='11.5' y='9.55' width='1.1501' height='0.4' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='11.5' y='8.7499' width='1.1501' height='0.4' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='11.5' y='7.95' width='1.1501' height='0.4001' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='11.5' y='7.1499' width='1.1501' height='0.4001' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='11.5' y='6.3501' width='1.1501' height='0.3998' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='11.5' y='5.55' width='1.1501' height='0.4001' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='11.5' y='4.7499' width='1.1501' height='0.4001' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='11.5' y='3.9501' width='1.1501' height='0.4' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='11.5' y='3.15' width='1.1501' height='0.4' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='11.5' y='2.3501' width='1.1501' height='0.3998' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='10.3501' y='0.4499' width='0.3998' height='1.1501' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='9.55' y='0.4499' width='0.4' height='1.1501' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='8.7499' y='0.4499' width='0.4' height='1.1501' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='7.95' y='0.4499' width='0.4001' height='1.1501' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='7.1499' y='0.4499' width='0.4001' height='1.1501' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='6.3501' y='0.4499' width='0.3998' height='1.1501' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='5.55' y='0.4499' width='0.4001' height='1.1501' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='4.7499' y='0.4499' width='0.4001' height='1.1501' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='3.9501' y='0.4499' width='0.4' height='1.1501' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='3.15' y='0.4499' width='0.4' height='1.1501' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='2.3501' y='0.4499' width='0.3998' height='1.1501' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
 </g>
 </svg>

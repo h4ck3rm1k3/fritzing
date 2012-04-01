@@ -8,10 +8,13 @@ M3.0734,5.4919a0.4064,0.4064 0 1 0 0.8128,0 0.4064,0.4064 0 1 0 -0.8128,0z
 '/>
 <circle id='connector0pin' connectorname='A' cx='0.9398' cy='5.4919' r='0.6731' stroke='#9A916C' stroke-width='0.5334' fill='none' />
 <circle id='connector1pin' connectorname='K' cx='3.4798' cy='5.4919' r='0.6731' stroke='#9A916C' stroke-width='0.5334' fill='none' />
+<line x1='3.7846' y1='6.7619' x2='3.7846' y2='4.2219' stroke='#f8f8f8' stroke-width='0.254' stroke-linecap='round'/>
 <path fill='none' d='M2.2098,3.4599 A2.032,2.032 0 0 1 3.7708,4.191' stroke-width='0.254' stroke='#f8f8f8' />
 <path fill='none' d='M0.4169,4.5357 A2.032,2.032 0 0 1 2.2098,3.4599' stroke-width='0.254' stroke='#f8f8f8' />
 <path fill='none' d='M2.2098,7.5239 A2.032,2.032 0 0 0 3.761,6.8045' stroke-width='0.254' stroke='#f8f8f8' />
 <path fill='none' d='M0.4455,6.5001 A2.032,2.032 0 0 0 2.2098,7.5239' stroke-width='0.254' stroke='#f8f8f8' />
+<path fill='none' d='M0.1778,5.4919 A2.032,2.032 0 0 1 0.4207,4.5285' stroke-width='0.254' stroke='#f8f8f8' />
+<path fill='none' d='M0.1778,5.4919 A2.032,2.032 0 0 0 0.4792,6.5569' stroke-width='0.254' stroke='#f8f8f8' />
 <line x1='3.7846' y1='4.1965' x2='3.7846' y2='4.7045' stroke='#f8f8f8' stroke-width='0.254' stroke-linecap='round'/>
 <line x1='3.7846' y1='6.7873' x2='3.7846' y2='6.3301' stroke='#f8f8f8' stroke-width='0.254' stroke-linecap='round'/>
 </g>

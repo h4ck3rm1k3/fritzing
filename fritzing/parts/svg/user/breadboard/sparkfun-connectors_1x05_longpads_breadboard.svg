@@ -26,5 +26,10 @@ M10.9728,1.8796a0.5588,0.5588 0 1 0 1.1176,0 0.5588,0.5588 0 1 0 -1.1176,0z
 ' fill='#9A916C' />
 <line x1='0.1016' y1='1.2446' x2='0.1016' y2='2.5146' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='12.8016' y1='1.2446' x2='12.8016' y2='2.5146' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<rect x='11.2776' y='1.6256' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='8.7376' y='1.6256' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='6.1976' y='1.6256' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='3.6576' y='1.6256' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect x='1.1176' y='1.6256' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
 </g>
 </svg>

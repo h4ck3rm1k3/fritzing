@@ -20,5 +20,6 @@
 <line x1='1.6764' y1='0.1016' x2='2.6416' y2='0.1016' stroke='#9A916C' stroke-width='0.2032' stroke-linecap='round'/>
 <rect id='connector0pad' connectorname='1' x='2.54' y='0' width='0.2032' height='0.2032' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector1pad' connectorname='2' x='2.54' y='2.54' width='0.2032' height='0.2032' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<circle cx='1.3462' cy='1.3716' r='1.27' stroke='#f8f8f8' stroke-width='0.127' fill='none' />
 </g>
 </svg>

@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
-<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.684425in' height='0.606622in' viewBox='0 0 17.3844 15.4082' >
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.684425in' height='0.842843in' viewBox='0 0 17.3844 21.4082' >
 <g id='breadboard'>
-<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l17.3844,0 0,15.4082 -17.3844,0 0,-15.4082z
+<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l17.3844,0 0,21.4082 -17.3844,0 0,-21.4082z
 M12.6572,1.2166a0.5,0.5 0 1 0 1,0 0.5,0.5 0 1 0 -1,0z
 M11.3872,3.7566a0.5,0.5 0 1 0 1,0 0.5,0.5 0 1 0 -1,0z
 M10.1172,1.2166a0.5,0.5 0 1 0 1,0 0.5,0.5 0 1 0 -1,0z
@@ -38,6 +38,9 @@ M4.0922,14.1016a0.5,0.5 0 1 0 1,0 0.5,0.5 0 1 0 -1,0z
 <circle cx='14.4272' cy='10.1066' r='1.6' stroke='black' stroke-width='0' fill='black' id='nonconn5' />
 <line x1='1.0922' y1='0.1066' x2='16.2322' y2='0.1066' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='1.0922' y1='15.3066' x2='16.3322' y2='15.3066' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='1.0922' y1='13.1066' x2='1.0922' y2='21.3066' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='1.0922' y1='21.3066' x2='16.3322' y2='21.3066' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='16.3322' y1='21.3066' x2='16.3322' y2='13.1066' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='1.0922' y1='0.2016' x2='1.0922' y2='5.7016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='16.2922' y1='0.1016' x2='16.2922' y2='5.7016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='1.0922' y1='15.2016' x2='1.0922' y2='8.5016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>

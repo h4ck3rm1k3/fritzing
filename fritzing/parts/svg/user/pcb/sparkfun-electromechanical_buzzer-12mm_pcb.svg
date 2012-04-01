@@ -11,5 +11,6 @@
 </g>
 <g id='silkscreen'>
 <circle cx='6.0016' cy='6.0016' r='5.9' stroke='#f0f0f0' stroke-width='0.2032' fill='none' />
+<circle cx='6.0016' cy='6.0016' r='1.27' stroke='#f0f0f0' stroke-width='0.2032' fill='none' />
 </g>
 </svg>

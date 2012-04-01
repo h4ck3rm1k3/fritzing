@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
-<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='1.52653in' height='0.735in' viewBox='0 0 38.7738 18.669' >
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='1.8in' height='0.735in' viewBox='0 0 45.72 18.669' >
 <g id='copper1'>
 <circle id='connector0pin' connectorname='1' cx='31.5722' cy='15.748' r='0.61595' stroke='#F7BD13' stroke-width='0.4445' fill='none' />
 <circle id='connector1pin' connectorname='2' cx='33.5722' cy='15.748' r='0.61595' stroke='#F7BD13' stroke-width='0.4445' fill='none' />
@@ -33,6 +33,14 @@
 <line x1='38.6722' y1='4.748' x2='28.7722' y2='4.748' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='28.7722' y1='4.748' x2='28.7722' y2='13.848' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='28.7722' y1='13.848' x2='29.7722' y2='13.848' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='45.6184' y1='14.224' x2='17.6276' y2='14.224' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='45.6184' y1='4.3942' x2='17.6276' y2='4.3942' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='17.6276' y1='4.3942' x2='17.6276' y2='14.224' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='45.6184' y1='4.3942' x2='45.6184' y2='14.224' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <circle cx='30.7594' cy='17.24' r='0.4' stroke='#f0f0f0' stroke-width='0.2032' fill='none' />
+<circle cx='33.5722' cy='9.248' r='2.6019' stroke='#f0f0f0' stroke-width='0.127' fill='none' />
+<circle cx='8.4074' cy='10.5918' r='0.4064' stroke='#f0f0f0' stroke-width='0.2032' fill='none' />
+<circle cx='8.4074' cy='8.0518' r='0.4064' stroke='#f0f0f0' stroke-width='0.2032' fill='none' />
+<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f0f0f0' font-size='1.1557' x='6.2992' y='4.826' text-anchor='start'>LED Placement </text>
 </g>
 </svg>

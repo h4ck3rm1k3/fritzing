@@ -1,16 +1,18 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
-<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.787069in' height='0.436382in' viewBox='0 0 19.9916 11.0841' >
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.787069in' height='0.515041in' viewBox='0 0 19.9916 13.0821' >
 <g id='breadboard'>
-<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l19.9916,0 0,11.0841 -19.9916,0 0,-11.0841z
-M16.9416,5.54205a1.2,1.2 0 1 0 2.4,0 1.2,1.2 0 1 0 -2.4,0z
-M11.8616,5.54205a1.2,1.2 0 1 0 2.4,0 1.2,1.2 0 1 0 -2.4,0z
+<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l19.9916,0 0,13.0821 -19.9916,0 0,-13.0821z
+M16.9416,7.54a1.2,1.2 0 1 0 2.4,0 1.2,1.2 0 1 0 -2.4,0z
+M11.8616,7.54a1.2,1.2 0 1 0 2.4,0 1.2,1.2 0 1 0 -2.4,0z
 '/>
-<circle id='connector0pin' connectorname='A' cx='18.1416' cy='5.54205' r='1.525' stroke='#9A916C' stroke-width='0.65' fill='none' />
-<circle id='connector1pin' connectorname='C' cx='13.0616' cy='5.54205' r='1.525' stroke='#9A916C' stroke-width='0.65' fill='none' />
-<path stroke='none' stroke-width='0' d='m11.2116,3.69205 3.7,0 0,3.7 -3.7,0 0,-3zM11.8616,5.54205a1.2,1.2 0 1 0 2.4,0 1.2,1.2 0 1 0 -2.4,0z
+<circle id='connector0pin' connectorname='A' cx='18.1416' cy='7.54' r='1.525' stroke='#9A916C' stroke-width='0.65' fill='none' />
+<circle id='connector1pin' connectorname='C' cx='13.0616' cy='7.54' r='1.525' stroke='#9A916C' stroke-width='0.65' fill='none' />
+<path stroke='none' stroke-width='0' d='m11.2116,5.69 3.7,0 0,3.7 -3.7,0 0,-3zM11.8616,7.54a1.2,1.2 0 1 0 2.4,0 1.2,1.2 0 1 0 -2.4,0z
 ' fill='#9A916C' />
-<path fill='none' d='M10.6016,7.54205 A5.44045,5.44045 0 1 0 10.6016,3.54205' stroke-width='0.2032' stroke='#f8f8f8' />
-<line x1='10.6016' y1='3.54205' x2='10.6016' y2='7.54205' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<path fill='none' d='M10.6016,9.54 A5.44045,5.44045 0 1 0 10.6016,5.54' stroke-width='0.2032' stroke='#f8f8f8' />
+<line x1='10.6016' y1='5.54' x2='10.6016' y2='9.54' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='1.3208' x='17.7606' y='5' text-anchor='start'>L</text>
+<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='1.3208' x='12.6806' y='5' text-anchor='start'>S</text>
 </g>
 </svg>

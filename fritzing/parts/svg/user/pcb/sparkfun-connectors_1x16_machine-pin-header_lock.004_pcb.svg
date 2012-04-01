@@ -138,5 +138,21 @@
 <line x1='29.9466' y1='0.1016' x2='30.5816' y2='0.7366' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='30.5816' y1='2.0066' x2='29.9466' y2='2.6416' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='40.7416' y1='0.7366' x2='40.7416' y2='2.0066' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<circle cx='1.3716' cy='1.3716' r='0.3302' stroke='#f0f0f0' stroke-width='0.0254' fill='none' />
+<circle cx='3.9116' cy='1.3716' r='0.3302' stroke='#f0f0f0' stroke-width='0.0254' fill='none' />
+<circle cx='6.4516' cy='1.3716' r='0.3302' stroke='#f0f0f0' stroke-width='0.0254' fill='none' />
+<circle cx='8.9916' cy='1.3716' r='0.3302' stroke='#f0f0f0' stroke-width='0.0254' fill='none' />
+<circle cx='11.5316' cy='1.3716' r='0.3302' stroke='#f0f0f0' stroke-width='0.0254' fill='none' />
+<circle cx='14.0716' cy='1.3716' r='0.3302' stroke='#f0f0f0' stroke-width='0.0254' fill='none' />
+<circle cx='16.6116' cy='1.3716' r='0.3302' stroke='#f0f0f0' stroke-width='0.0254' fill='none' />
+<circle cx='19.1516' cy='1.3716' r='0.3302' stroke='#f0f0f0' stroke-width='0.0254' fill='none' />
+<circle cx='21.6916' cy='1.3716' r='0.3302' stroke='#f0f0f0' stroke-width='0.0254' fill='none' />
+<circle cx='24.2316' cy='1.3716' r='0.3302' stroke='#f0f0f0' stroke-width='0.0254' fill='none' />
+<circle cx='26.7716' cy='1.3716' r='0.3302' stroke='#f0f0f0' stroke-width='0.0254' fill='none' />
+<circle cx='29.3116' cy='1.3716' r='0.3302' stroke='#f0f0f0' stroke-width='0.0254' fill='none' />
+<circle cx='31.8516' cy='1.3716' r='0.3302' stroke='#f0f0f0' stroke-width='0.0254' fill='none' />
+<circle cx='34.3916' cy='1.3716' r='0.3302' stroke='#f0f0f0' stroke-width='0.0254' fill='none' />
+<circle cx='36.9316' cy='1.3716' r='0.3302' stroke='#f0f0f0' stroke-width='0.0254' fill='none' />
+<circle cx='39.4716' cy='1.3716' r='0.3302' stroke='#f0f0f0' stroke-width='0.0254' fill='none' />
 </g>
 </svg>

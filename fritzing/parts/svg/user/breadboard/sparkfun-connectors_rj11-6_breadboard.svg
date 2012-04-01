@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
-<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.548in' height='0.623in' viewBox='0 0 13.9192 15.8242' >
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.548in' height='0.738in' viewBox='0 0 13.9192 18.7452' >
 <g id='breadboard'>
-<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l13.9192,0 0,15.8242 -13.9192,0 0,-15.8242z
+<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l13.9192,0 0,18.7452 -13.9192,0 0,-18.7452z
 M3.2766,1.6256a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
 M4.5466,4.1656a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
 M5.8166,1.6256a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
@@ -22,5 +22,8 @@ M9.6266,4.1656a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
 <line x1='13.8176' y1='0.1016' x2='0.1016' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='0.1016' y1='0.1016' x2='0.1016' y2='15.7226' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='13.8176' y1='15.7226' x2='0.1016' y2='15.7226' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='0.1016' y1='15.7226' x2='0.1016' y2='18.6436' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='0.1016' y1='18.6436' x2='13.8176' y2='18.6436' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='13.8176' y1='18.6436' x2='13.8176' y2='15.7226' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 </g>
 </svg>

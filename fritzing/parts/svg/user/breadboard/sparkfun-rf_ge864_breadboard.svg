@@ -125,6 +125,14 @@
 <rect id='connector118pad' connectorname='J1' x='22.3194' y='2.2876' width='1' height='1' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector119pad' connectorname='K1' x='24.8194' y='2.2876' width='1' height='1' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector120pad' connectorname='L1' x='27.3194' y='2.2876' width='1' height='1' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<path fill='none' d='M30.4694,1.0876 A0.926603,0.926603 0 0 1 29.5194,0.1376' stroke-width='0.127' stroke='#f8f8f8' />
+<path fill='none' d='M29.5194,30.4376 A0.926603,0.926603 0 0 1 30.4694,29.4876' stroke-width='0.127' stroke='#f8f8f8' />
+<path fill='none' d='M0.1694,29.4876 A0.926603,0.926603 0 0 1 1.1194,30.4376' stroke-width='0.127' stroke='#f8f8f8' />
+<line x1='1.1194' y1='30.4376' x2='29.5194' y2='30.4376' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<path fill='none' d='M0.1694,29.4876 A0.05,0.05 0 0 1 0.1194,29.4376' stroke-width='0.127' stroke='#f8f8f8' />
+<line x1='0.1194' y1='29.4376' x2='0.1194' y2='0.1376' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='30.4694' y1='29.4876' x2='30.4694' y2='1.0876' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='29.5194' y1='0.1376' x2='0.1194' y2='0.1376' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='0.127' y1='0.1524' x2='2.8194' y2='0.1524' stroke='#f8f8f8' stroke-width='0.254' stroke-linecap='round'/>
 <line x1='0.127' y1='0.1524' x2='0.127' y2='2.8448' stroke='#f8f8f8' stroke-width='0.254' stroke-linecap='round'/>
 <path fill='none' d='M0.144,29.494 A0.926966,0.926966 0 0 1 1.1194,30.4186' stroke-width='0.254' stroke='#f8f8f8' />

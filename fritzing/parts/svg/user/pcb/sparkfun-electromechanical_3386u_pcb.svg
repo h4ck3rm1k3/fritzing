@@ -21,8 +21,16 @@
 <line x1='9.6316' y1='9.6316' x2='9.6316' y2='0.1016' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='9.6316' y1='0.1016' x2='0.1016' y2='0.1016' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='0.1016' y1='0.1016' x2='0.1016' y2='9.6316' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='3.3666' y1='2.6666' x2='4.3666' y2='2.6666' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='4.3666' y1='2.6666' x2='4.3666' y2='6.6666' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='4.3666' y1='6.6666' x2='5.3666' y2='6.6666' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='5.3666' y1='6.6666' x2='5.3666' y2='2.6666' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='5.3666' y1='2.6666' x2='6.3666' y2='2.6666' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='4.8666' y1='1.1666' x2='3.3666' y2='2.6666' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='6.3666' y1='2.6666' x2='4.8666' y2='1.1666' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='0.8666' y1='9.6316' x2='0.8666' y2='9.2316' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='0.8666' y1='9.2316' x2='8.8666' y2='9.2316' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='8.8666' y1='9.2316' x2='8.8666' y2='9.6316' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<circle cx='4.8666' cy='4.2916' r='4' stroke='#f0f0f0' stroke-width='0.127' fill='none' />
 </g>
 </svg>

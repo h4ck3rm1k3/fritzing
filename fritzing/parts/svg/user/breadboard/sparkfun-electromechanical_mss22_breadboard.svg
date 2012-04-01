@@ -24,6 +24,10 @@ M3.104,2.429a0.475,0.475 0 1 0 0.95,0 0.475,0.475 0 1 0 -0.95,0z
 <circle id='connector7pin' connectorname='3' cx='3.579' cy='6.429' r='0.602' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <circle id='connector8pin' connectorname='2' cx='3.579' cy='4.429' r='0.602' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <circle id='connector9pin' connectorname='1' cx='3.579' cy='2.429' r='0.602' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<line x1='0.679' y1='14.429' x2='6.479' y2='14.429' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='0.679' y1='0.429' x2='6.479' y2='0.429' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='0.679' y1='0.429' x2='0.679' y2='14.429' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='6.479' y1='0.429' x2='6.479' y2='14.429' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='0.629' y1='2.229' x2='0.629' y2='12.629' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='6.529' y1='2.229' x2='6.529' y2='12.629' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='2.129' y1='14.529' x2='5.029' y2='14.529' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>

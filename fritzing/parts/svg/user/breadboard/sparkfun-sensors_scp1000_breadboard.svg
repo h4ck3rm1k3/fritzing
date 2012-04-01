@@ -1,32 +1,33 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
-<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.234646in' height='0.651538in' viewBox='0 0 5.96 16.5491' >
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.245157in' height='0.651538in' viewBox='0 0 6.227 16.5491' >
 <g id='breadboard'>
-<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l5.96,0 0,16.5491 -5.96,0 0,-16.5491z
+<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l6.227,0 0,16.5491 -6.227,0 0,-16.5491z
 '/>
-<rect id='connector0pad' connectorname='DVSS' x='4.52' y='9.88361' width='0.55' height='0.67' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector1pad' connectorname='DVDD' x='3.72' y='9.88361' width='0.55' height='0.67' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector2pad' connectorname='CLK' x='2.92' y='9.88361' width='0.55' height='0.67' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector3pad' connectorname='DRDY' x='2.12' y='9.88361' width='0.55' height='0.67' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector4pad' connectorname='TRIG' x='1.32' y='9.88361' width='0.55' height='0.67' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector5pad' connectorname='ATST' x='0.52' y='9.88361' width='0.55' height='0.67' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector6pad' connectorname='SCK/SCL' x='4.52' y='5.74361' width='0.55' height='0.67' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector7pad' connectorname='MOSI/SDA' x='3.72' y='5.74361' width='0.55' height='0.67' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector8pad' connectorname='MISO' x='2.92' y='5.74361' width='0.55' height='0.67' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector9pad' connectorname='CSB' x='2.12' y='5.74361' width='0.55' height='0.67' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector10pad' connectorname='AVDD' x='1.32' y='5.74361' width='0.55' height='0.67' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector11pad' connectorname='AVSS' x='0.52' y='5.74361' width='0.55' height='0.67' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector12pad' connectorname='AVSS@1' x='0.13' y='7.06361' width='0.57' height='0.57' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector13pad' connectorname='ATST@1' x='0.13' y='8.66361' width='0.57' height='0.57' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector14pad' connectorname='DUMMY2' x='0' y='7.91361' width='0.67' height='0.47' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector15pad' connectorname='PD' x='5.26' y='7.06361' width='0.57' height='0.57' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector16pad' connectorname='DVDDS' x='5.26' y='8.66361' width='0.57' height='0.57' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector17pad' connectorname='DUMMY1' x='5.29' y='7.91361' width='0.67' height='0.47' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<line x1='1.18' y1='7.39861' x2='2.68' y2='7.39861' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='2.68' y1='7.39861' x2='2.68' y2='8.89861' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='2.68' y1='8.89861' x2='1.18' y2='8.89861' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='1.18' y1='8.89861' x2='1.18' y2='7.39861' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<path fill='none' d='M1.38,5.54861 A2.95121,2.95121 0 0 1 4.53,5.54861' stroke-width='0.2032' stroke='#f8f8f8' />
-<path fill='none' d='M1.43,10.7986 A3.04886,3.04886 0 0 0 4.53,10.7486' stroke-width='0.2032' stroke='#f8f8f8' />
+<rect id='connector0pad' connectorname='DVSS' x='4.7035' y='9.88361' width='0.55' height='0.67' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector1pad' connectorname='DVDD' x='3.9035' y='9.88361' width='0.55' height='0.67' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector2pad' connectorname='CLK' x='3.1035' y='9.88361' width='0.55' height='0.67' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector3pad' connectorname='DRDY' x='2.3035' y='9.88361' width='0.55' height='0.67' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector4pad' connectorname='TRIG' x='1.5035' y='9.88361' width='0.55' height='0.67' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector5pad' connectorname='ATST' x='0.7035' y='9.88361' width='0.55' height='0.67' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector6pad' connectorname='SCK/SCL' x='4.7035' y='5.74361' width='0.55' height='0.67' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector7pad' connectorname='MOSI/SDA' x='3.9035' y='5.74361' width='0.55' height='0.67' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector8pad' connectorname='MISO' x='3.1035' y='5.74361' width='0.55' height='0.67' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector9pad' connectorname='CSB' x='2.3035' y='5.74361' width='0.55' height='0.67' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector10pad' connectorname='AVDD' x='1.5035' y='5.74361' width='0.55' height='0.67' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector11pad' connectorname='AVSS' x='0.7035' y='5.74361' width='0.55' height='0.67' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector12pad' connectorname='AVSS@1' x='0.3135' y='7.06361' width='0.57' height='0.57' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector13pad' connectorname='ATST@1' x='0.3135' y='8.66361' width='0.57' height='0.57' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector14pad' connectorname='DUMMY2' x='0.1835' y='7.91361' width='0.67' height='0.47' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector15pad' connectorname='PD' x='5.4435' y='7.06361' width='0.57' height='0.57' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector16pad' connectorname='DVDDS' x='5.4435' y='8.66361' width='0.57' height='0.57' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector17pad' connectorname='DUMMY1' x='5.4735' y='7.91361' width='0.67' height='0.47' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<line x1='1.3635' y1='7.39861' x2='2.8635' y2='7.39861' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='2.8635' y1='7.39861' x2='2.8635' y2='8.89861' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='2.8635' y1='8.89861' x2='1.3635' y2='8.89861' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='1.3635' y1='8.89861' x2='1.3635' y2='7.39861' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<path fill='none' d='M1.5635,5.54861 A2.95121,2.95121 0 0 1 4.7135,5.54861' stroke-width='0.2032' stroke='#f8f8f8' />
+<path fill='none' d='M1.6135,10.7986 A3.04886,3.04886 0 0 0 4.7135,10.7486' stroke-width='0.2032' stroke='#f8f8f8' />
+<circle cx='3.1135' cy='8.14861' r='3.05' stroke='#f8f8f8' stroke-width='0.127' fill='none' />
 </g>
 </svg>

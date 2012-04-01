@@ -13,5 +13,8 @@ M5.3666,0.7366a0.45,0.45 0 1 0 0.9,0 0.45,0.45 0 1 0 -0.9,0z
 <circle cx='0.7366' cy='0.7366' r='0.7366' stroke='black' stroke-width='0' fill='black' id='nonconn6' />
 <circle cx='3.2766' cy='0.7366' r='0.7366' stroke='black' stroke-width='0' fill='black' id='nonconn7' />
 <circle cx='5.8166' cy='0.7366' r='0.7366' stroke='black' stroke-width='0' fill='black' id='nonconn8' />
+<circle cx='0.7366' cy='0.7366' r='0.635' stroke='#f8f8f8' stroke-width='0.127' fill='none' />
+<circle cx='3.2766' cy='0.7366' r='0.635' stroke='#f8f8f8' stroke-width='0.127' fill='none' />
+<circle cx='5.8166' cy='0.7366' r='0.635' stroke='#f8f8f8' stroke-width='0.127' fill='none' />
 </g>
 </svg>

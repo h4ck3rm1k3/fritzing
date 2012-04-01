@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
-<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.684425in' height='0.606622in' viewBox='0 0 17.3844 15.4082' >
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.684425in' height='0.842843in' viewBox='0 0 17.3844 21.4082' >
 <g id='copper1'>
 <circle id='connector0pin' connectorname='8' cx='13.1572' cy='1.2166' r='0.7199' stroke='#F7BD13' stroke-width='0.4398' fill='none' />
 <circle id='connector1pin' connectorname='7' cx='11.8872' cy='3.7566' r='0.7199' stroke='#F7BD13' stroke-width='0.4398' fill='none' />
@@ -44,6 +44,9 @@
 <g id='silkscreen'>
 <line x1='1.0922' y1='0.1066' x2='16.2322' y2='0.1066' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='1.0922' y1='15.3066' x2='16.3322' y2='15.3066' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='1.0922' y1='13.1066' x2='1.0922' y2='21.3066' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='1.0922' y1='21.3066' x2='16.3322' y2='21.3066' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='16.3322' y1='21.3066' x2='16.3322' y2='13.1066' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='1.0922' y1='0.2016' x2='1.0922' y2='5.7016' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='16.2922' y1='0.1016' x2='16.2922' y2='5.7016' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='1.0922' y1='15.2016' x2='1.0922' y2='8.5016' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>

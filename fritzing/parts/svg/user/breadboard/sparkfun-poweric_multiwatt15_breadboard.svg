@@ -39,6 +39,7 @@ M18.5416,10.0316a0.55,0.55 0 1 0 1.1,0 0.55,0.55 0 1 0 -1.1,0z
 <line x1='0.1016' y1='0.1016' x2='20.3016' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='20.3016' y1='0.1016' x2='20.3016' y2='1.7016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='20.3016' y1='1.7016' x2='20.3016' y2='5.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='20.3016' y1='5.1016' x2='0.1016' y2='5.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='0.1016' y1='1.7016' x2='20.3016' y2='1.7016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='0.1116' y1='5.0916' x2='1.4116' y2='5.0916' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='3.7616' y1='5.0916' x2='3.9616' y2='5.0916' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>

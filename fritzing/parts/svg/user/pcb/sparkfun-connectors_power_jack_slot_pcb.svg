@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
-<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.348488in' height='0.46463in' viewBox='0 0 8.8516 11.8016' >
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.348488in' height='0.58274in' viewBox='0 0 8.8516 14.8016' >
 <g id='copper1'>
 <circle id='connector0pin' connectorname='PWR' cx='2' cy='1' r='0.75' stroke='#F7BD13' stroke-width='0.5' fill='none' />
 <path stroke='none' stroke-width='0' d='m3,0a1,1 0 0 1 1,1l0,0a1,1 0 0 1 -1,1l-2,0a1,1 0 0 1 -1,-1l0,-0a1,1 0 0 1 1,-1l2,0zM1.5,1a0.5,0.5 0 1 0 1,0 0.5,0.5 0 1 0 -1,0z
@@ -25,7 +25,13 @@
 </g>
 <g id='silkscreen'>
 <line x1='8.75' y1='1.1' x2='4.25' y2='1.1' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='4.25' y1='1.1' x2='0.25' y2='1.1' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='0.25' y1='1.1' x2='0.25' y2='2.1' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='0.25' y1='2.1' x2='0.25' y2='6.4' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='0.25' y1='6.4' x2='0.25' y2='8.25' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='0.25' y1='11.7' x2='0.25' y2='14.7' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='8.75' y1='14.7' x2='8.75' y2='11.7' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='8.75' y1='14.7' x2='0.25' y2='14.7' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='0.25' y1='8.29' x2='0.25' y2='11.7' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='8.75' y1='11.7' x2='8.75' y2='1.1' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='0.25' y1='11.7' x2='8.75' y2='11.7' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>

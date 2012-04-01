@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-FKIT-COIN_CELL-LIR2450-H'>
 <version>4</version>
-<date>2012-03-25</date>
+<date>2012-04-01</date>
 <label>BATT</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;Fabrick.it Coin Cell Holder&lt;/h3&gt;

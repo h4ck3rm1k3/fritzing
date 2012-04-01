@@ -28,6 +28,7 @@ M18.0516,9.4716a0.55,0.55 0 1 0 1.1,0 0.55,0.55 0 1 0 -1.1,0z
 <circle id='connector8pin' connectorname='7' cx='11.8016' cy='9.4716' r='0.75' stroke='#9A916C' stroke-width='0.4' fill='none' />
 <circle id='connector9pin' connectorname='9' cx='15.2016' cy='9.4716' r='0.75' stroke='#9A916C' stroke-width='0.4' fill='none' />
 <circle id='connector10pin' connectorname='11' cx='18.6016' cy='9.4716' r='0.75' stroke='#9A916C' stroke-width='0.4' fill='none' />
+<line x1='0.1016' y1='4.6016' x2='20.1216' y2='4.6016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='20.1216' y1='4.6016' x2='20.1216' y2='1.6516' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='20.1216' y1='1.6516' x2='20.1216' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='20.1216' y1='0.1016' x2='0.1016' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>

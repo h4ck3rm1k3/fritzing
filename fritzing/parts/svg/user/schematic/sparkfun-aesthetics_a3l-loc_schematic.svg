@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
 <svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='16.1162in' height='10.6144in' viewBox='0 0 409.351 269.607' >
-<g id='schematic'>
+<g id='icon'><g id='schematic'>
 <line x1='0.0508' y1='269.556' x2='50.8508' y2='269.556' stroke='#000000' stroke-width='0.1016' stroke-linecap='round'/>
 <line x1='50.8508' y1='269.556' x2='98.4758' y2='269.556' stroke='#000000' stroke-width='0.1016' stroke-linecap='round'/>
 <line x1='98.4758' y1='269.556' x2='146.101' y2='269.556' stroke='#000000' stroke-width='0.1016' stroke-linecap='round'/>
@@ -126,5 +126,5 @@
 <text font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='3.302' x='309.677' y='265.238' text-anchor='start'>Drawn By:</text>
 <text font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='3.302' x='309.931' y='249.998' text-anchor='start'>Title:</text>
 <text font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='3.302' x='310.185' y='255.078' text-anchor='start'>Version:</text>
-</g>
+</g></g>
 </svg>

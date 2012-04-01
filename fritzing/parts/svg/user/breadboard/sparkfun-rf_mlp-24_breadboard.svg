@@ -29,6 +29,10 @@
 <rect id='connector22pad' connectorname='22' x='2.2282' y='0' width='0.3048' height='0.6096' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector23pad' connectorname='23' x='1.5782' y='0' width='0.3048' height='0.6096' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector24pad' connectorname='24' x='0.9282' y='0' width='0.3048' height='0.6096' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<line x1='0.2056' y1='0.2056' x2='5.2056' y2='0.2056' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='5.2056' y1='0.2056' x2='5.2056' y2='5.2056' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='5.2056' y1='5.2056' x2='0.2056' y2='5.2056' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='0.2056' y1='5.2056' x2='0.2056' y2='0.2056' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 <circle cx='0.4306' cy='0.4306' r='0.1903' stroke='#f8f8f8' stroke-width='0.127' fill='none' />
 </g>
 </svg>

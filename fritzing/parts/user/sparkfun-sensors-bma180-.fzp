@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-BMA180-'>
 <version>4</version>
-<date>2012-03-25</date>
+<date>2012-04-01</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>3-axis, 14-bit SPI/I2C accelerometer.&lt;br&gt;

@@ -8,6 +8,12 @@
 </g>
 </g>
 <g id='silkscreen'>
+<line x1='0.65' y1='1.79999' x2='5.45' y2='1.79999' stroke='#f0f0f0' stroke-width='0.1016' stroke-linecap='round'/>
+<line x1='5.45' y1='1.79999' x2='7.15' y2='3.49999' stroke='#f0f0f0' stroke-width='0.1016' stroke-linecap='round'/>
+<line x1='7.15' y1='3.49999' x2='7.15' y2='6.59999' stroke='#f0f0f0' stroke-width='0.1016' stroke-linecap='round'/>
+<line x1='7.15' y1='6.59999' x2='5.45' y2='8.29999' stroke='#f0f0f0' stroke-width='0.1016' stroke-linecap='round'/>
+<line x1='5.45' y1='8.29999' x2='0.65' y2='8.29999' stroke='#f0f0f0' stroke-width='0.1016' stroke-linecap='round'/>
+<line x1='0.65' y1='8.29999' x2='0.65' y2='1.79999' stroke='#f0f0f0' stroke-width='0.1016' stroke-linecap='round'/>
 <line x1='0.65' y1='4.09999' x2='0.65' y2='1.79999' stroke='#f0f0f0' stroke-width='0.1016' stroke-linecap='round'/>
 <line x1='0.65' y1='1.79999' x2='5.45' y2='1.79999' stroke='#f0f0f0' stroke-width='0.1016' stroke-linecap='round'/>
 <line x1='5.45' y1='1.79999' x2='7.15' y2='3.49999' stroke='#f0f0f0' stroke-width='0.1016' stroke-linecap='round'/>
@@ -18,5 +24,10 @@
 <line x1='0.65' y1='8.29999' x2='0.65' y2='5.99999' stroke='#f0f0f0' stroke-width='0.1016' stroke-linecap='round'/>
 <path fill='none' d='M6.85,4.09999 A3.09919,3.09919 0 0 0 0.95,4.09999' stroke-width='0.1016' stroke='#f0f0f0' />
 <path fill='none' d='M0.95,5.99999 A3.09919,3.09919 0 0 0 6.85,5.99999' stroke-width='0.1016' stroke='#f0f0f0' />
+<line x1='1.8' y1='2.79999' x2='1.8' y2='7.24999' stroke='#f0f0f0' stroke-width='0.1016' stroke-linecap='round'/>
+<circle cx='3.9' cy='5.04999' r='3.1' stroke='#f0f0f0' stroke-width='0.1016' fill='none' />
+<rect x='0.25' y='4.69999' width='0.6' height='0.7' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
+<rect x='6.95' y='4.69999' width='0.6' height='0.7' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
+<path stroke='#f0f0f0' fill='#f0f0f0' stroke-width='0.1016' d='M1.75,2.89999L1.3,3.44999L1,4.14999L0.85,5.04999L1,5.99999L1.35,6.69999L1.75,7.19999L1.75,2.94999z' stroke-linecap='round'/>
 </g>
 </svg>

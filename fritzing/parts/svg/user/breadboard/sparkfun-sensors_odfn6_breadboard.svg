@@ -10,7 +10,9 @@
 <rect id='connector3pad' connectorname='P$4' x='1.96' y='1.55' width='0.55' height='0.3' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector4pad' connectorname='P$5' x='1.96' y='0.9' width='0.55' height='0.3' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector5pad' connectorname='P$6' x='1.96' y='0.25' width='0.55' height='0.3' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<line x1='0.205' y1='0.05' x2='0.205' y2='2.05' stroke='#f8f8f8' stroke-width='0.1' stroke-linecap='round'/>
 <line x1='0.205' y1='2.05' x2='2.305' y2='2.05' stroke='#f8f8f8' stroke-width='0.1' stroke-linecap='round'/>
+<line x1='2.305' y1='2.05' x2='2.305' y2='0.05' stroke='#f8f8f8' stroke-width='0.1' stroke-linecap='round'/>
 <line x1='2.305' y1='0.05' x2='0.205' y2='0.05' stroke='#f8f8f8' stroke-width='0.1' stroke-linecap='round'/>
 <circle cx='0.895' cy='0.32' r='0.064' stroke='#f8f8f8' stroke-width='0.127' fill='none' />
 </g>

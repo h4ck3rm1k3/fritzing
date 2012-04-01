@@ -3,7 +3,7 @@
 <svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.325in' height='0.482492in' viewBox='0 0 8.255 12.2553' >
 <g id='copper1'>
 <circle id='connector0pin' connectorname='1' cx='4.1275' cy='8.1278' r='1.87325' stroke='#F7BD13' stroke-width='0.8255' fill='none' />
-<path stroke='#F7BD13' fill='#F7BD13' stroke-width='0.254' d='z' stroke-linecap='round'/>
+<path stroke='#F7BD13' fill='#F7BD13' stroke-width='0.254' d='M0.127,8.1278 A4.0006,4.0006 0 0 1 4.1275,4.1273M4.1275,4.1273 A4.0004,4.0004 0 0 1 8.128,8.1278M8.128,8.1278 A4.0006,4.0006 0 0 1 4.1275,12.1283M4.1275,12.1283 A4.0006,4.0006 0 0 1 0.127,8.1278z' stroke-linecap='round'/>
 <g id='copper0'>
 <circle id='connector0pin' connectorname='1' cx='4.1275' cy='8.1278' r='1.87325' stroke='#F7BD13' stroke-width='0.8255' fill='none' />
 </g>

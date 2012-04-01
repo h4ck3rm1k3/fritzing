@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
-<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.452094in' height='0.663in' viewBox='0 0 11.4832 16.8402' >
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.452094in' height='0.817843in' viewBox='0 0 11.4832 20.7732' >
 <g id='breadboard'>
-<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l11.4832,0 0,16.8402 -11.4832,0 0,-16.8402z
+<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l11.4832,0 0,20.7732 -11.4832,0 0,-20.7732z
 M3.3921,3.9116a0.4445,0.4445 0 1 0 0.889,0 0.4445,0.4445 0 1 0 -0.889,0z
 M4.6621,1.3716a0.4445,0.4445 0 1 0 0.889,0 0.4445,0.4445 0 1 0 -0.889,0z
 M5.9321,3.9116a0.4445,0.4445 0 1 0 0.889,0 0.4445,0.4445 0 1 0 -0.889,0z
@@ -18,5 +18,8 @@ M7.2021,1.3716a0.4445,0.4445 0 1 0 0.889,0 0.4445,0.4445 0 1 0 -0.889,0z
 <line x1='11.3816' y1='0.1016' x2='0.1016' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='0.1016' y1='0.1016' x2='0.1016' y2='16.7386' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='11.3816' y1='16.7386' x2='0.1016' y2='16.7386' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='0.1016' y1='16.7386' x2='0.1016' y2='20.6716' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='0.1016' y1='20.6716' x2='11.3816' y2='20.6716' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='11.3816' y1='20.6716' x2='11.3816' y2='16.7386' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 </g>
 </svg>
