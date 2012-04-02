@@ -165,11 +165,12 @@ void FileProgressDialog::loadingInstancesSlot(class ModelBase *, QDomElement & i
 		
 void FileProgressDialog::loadingInstanceSlot(class ModelBase *, QDomElement & instance)
 {
+	Q_UNUSED(instance); 
 	//QString text;
 	//QTextStream textStream(&text);
 	//instance.save(textStream, 0);
 	//DebugDialog::debug(QString("loading %1").arg(text));
-	DebugDialog::debug(QString("loading %1").arg(instance.attribute("path")));
+	//DebugDialog::debug(QString("loading %1").arg(instance.attribute("path")));
 	settingItemSlot();
 }
 

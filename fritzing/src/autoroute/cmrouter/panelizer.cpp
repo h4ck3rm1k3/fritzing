@@ -353,10 +353,10 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 					panelItem->window->pcbView()->selectAllItems(true, false);
 					DebugDialog::debug(QString("rotating 90:%1 %2").arg(panelItem->path).arg((long) panelItem, 0, 16));
 					QMatrix matrix = panelItem->board->matrix();
-					DebugDialog::debug(QString("\tmatrix m11:%1 m12:%2 m21:%3 m22:%4").arg(matrix.m11()).arg(matrix.m12()).arg(matrix.m21()).arg(matrix.m22()));
+					DebugDialog::debug(QString("\tmatrix m11:%1 m12:%2 m21:%3 m22:%4 dx:%5 dy:%6").arg(matrix.m11()).arg(matrix.m12()).arg(matrix.m21()).arg(matrix.m22()).arg(matrix.dx()).arg(matrix.dy()));
 					panelItem->window->pcbView()->rotateX(90, false);
 					matrix = panelItem->board->matrix();
-					DebugDialog::debug(QString("\tmatrix m11:%1 m12:%2 m21:%3 m22:%4").arg(matrix.m11()).arg(matrix.m12()).arg(matrix.m21()).arg(matrix.m22()));
+					DebugDialog::debug(QString("\tmatrix m11:%1 m12:%2 m21:%3 m22:%4 dx:%5 dy:%6").arg(matrix.m11()).arg(matrix.m12()).arg(matrix.m21()).arg(matrix.m22()).arg(matrix.dx()).arg(matrix.dy()));
 				}
 
 				QSizeF imageSize;
@@ -428,6 +428,7 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 
 		}
 
+		DebugDialog::debug("after placement");
 		QString prefix = QString("%1.panel_%2").arg(panelParams.prefix).arg(planePair->index);
 		for (int i = 0; i < planePair->svgs.count(); i++) {
 			if (planePair->svgs.at(i).isEmpty()) continue;

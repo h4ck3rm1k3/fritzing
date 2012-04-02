@@ -52,7 +52,7 @@ QString PinHeader::FemaleDoubleRowSMDFormString;
 QString PinHeader::MaleDoubleRowSMDFormString;
 
 static int MinPins = 1;
-static int MinShroudedPins = 8;
+static int MinShroudedPins = 6;
 static int MaxPins = 64;
 static QHash<QString, QString> Spacings;
 static QString ShroudedSpacing;
