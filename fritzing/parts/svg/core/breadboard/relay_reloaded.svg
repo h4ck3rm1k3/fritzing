@@ -4,10 +4,9 @@
 	<!ENTITY ns_flows "http://ns.adobe.com/Flows/1.0/">
 ]>
 <svg version="1.2" baseProfile="tiny"
-	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
-	 x="0px" y="0px" width="38px" height="24px" viewBox="-0.276 -0.84 38 24" xml:space="preserve">
-<defs>
-</defs>
+	 xmlns="http://www.w3.org/2000/svg"  
+	 x="0px" y="0px" width="38px" height="24px" viewBox="-0.276 -0.84 38 24" >
+<g id="breadboard">
 <rect id="connector5pin" x="0.028" y="0.001" fill="none" width="1.452" height="1.507"/>
 <rect id="connector5terminal" x="0.028" y="0.001" fill="none" width="1.452" height="0.272"/>
 <rect id="connector4pin" x="7.038" y="0.001" fill="none" width="1.454" height="1.507"/>
@@ -103,4 +102,5 @@
 <rect fill="#8C8C8C" width="1.51" height="1.51"/>
 <rect x="35.828" fill="#8C8C8C" width="1.51" height="1.51"/>
 <rect x="6.999" fill="#8C8C8C" width="1.51" height="1.51"/>
+</g>
 </svg>
