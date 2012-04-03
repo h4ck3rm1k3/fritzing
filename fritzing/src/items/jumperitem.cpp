@@ -30,6 +30,7 @@ $Date$
 #include "../model/modelpart.h"
 #include "../utils/graphicsutils.h"
 #include "../svg/svgfilesplitter.h"
+#include "../sketch/infographicsview.h"
 
 static QString Copper0LayerTemplate = "";
 static QString JumperWireLayerTemplate = "";
@@ -202,6 +203,12 @@ void JumperItem::initialResize(ViewIdentifierClass::ViewIdentifier viewIdentifie
 
 void JumperItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+	InfoGraphicsView *infographics = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infographics != NULL && infographics->spaceBarIsPressed()) { 
+		event->ignore();
+		return;
+	}
+
 	m_dragItem = NULL;
 	QRectF rect = m_connector0->rect();
 	double dx = m_connectorTL.x();
