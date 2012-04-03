@@ -23,7 +23,5 @@ M3.5306,1.524a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
 <line x1='5.1816' y1='2.5146' x2='4.9022' y2='2.794' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='5.1816' y1='1.524' x2='5.1816' y2='0.5334' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='5.1816' y1='0.5334' x2='4.9022' y2='0.254' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<rect x='1.0795' y='1.2319' width='0.5842' height='0.5842' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='3.6195' y='1.2319' width='0.5842' height='0.5842' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
 </g>
 </svg>

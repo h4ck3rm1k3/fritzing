@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
-<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='1.63492in' height='1.23728in' viewBox='0 0 41.527 31.427' >
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='1.63492in' height='1.27665in' viewBox='0 0 41.527 32.427' >
 <g id='breadboard'>
-<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l41.527,0 0,31.427 -41.527,0 0,-31.427z
+<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l41.527,0 0,32.427 -41.527,0 0,-32.427z
 '/>
 <rect id='connector0pad' connectorname='1' x='37.2635' y='0.4635' width='1' height='1' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector1pad' connectorname='2' x='35.2635' y='0.4635' width='1' height='1' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>

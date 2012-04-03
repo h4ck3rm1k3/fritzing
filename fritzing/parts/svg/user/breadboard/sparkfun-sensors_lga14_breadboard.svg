@@ -18,25 +18,10 @@
 <rect id='connector11pad' connectorname='9' x='1.25' y='2.2' width='0.5' height='1.2' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector12pad' connectorname='8' x='0.45' y='2.2' width='0.5' height='1.2' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector13pad' connectorname='7' x='0' y='1.45' width='1.2' height='0.5' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<line x1='5.2' y1='0.2' x2='0.2' y2='0.2' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='0.2' y1='0.2' x2='0.2' y2='3.2' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='0.2' y1='3.2' x2='5.2' y2='3.2' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='5.2' y1='3.2' x2='5.2' y2='0.2' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='5.2' y1='0.2' x2='5.2' y2='1' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='5.2' y1='2.4' x2='5.2' y2='3.2' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='0.2' y1='3.2' x2='0.2' y2='2.4' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='0.2' y1='1' x2='0.2' y2='0.2' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='2.954' y1='1.827' x2='3.208' y2='1.827' stroke='#f8f8f8' stroke-width='0.0508' stroke-linecap='round'/>
-<line x1='3.208' y1='1.827' x2='3.081' y2='1.7' stroke='#f8f8f8' stroke-width='0.0508' stroke-linecap='round'/>
-<line x1='3.208' y1='1.827' x2='3.081' y2='1.954' stroke='#f8f8f8' stroke-width='0.0508' stroke-linecap='round'/>
-<line x1='2.319' y1='1.573' x2='2.319' y2='1.319' stroke='#f8f8f8' stroke-width='0.0508' stroke-linecap='round'/>
-<line x1='2.319' y1='1.319' x2='2.192' y2='1.446' stroke='#f8f8f8' stroke-width='0.0508' stroke-linecap='round'/>
-<line x1='2.319' y1='1.319' x2='2.446' y2='1.446' stroke='#f8f8f8' stroke-width='0.0508' stroke-linecap='round'/>
 <circle cx='3.7' cy='1.7' r='0.1' stroke='#f8f8f8' stroke-width='0.2032' fill='none' />
-<circle cx='2.954' cy='1.446' r='0.127' stroke='#f8f8f8' stroke-width='0.0508' fill='none' />
-<circle cx='2.954' cy='1.446' r='0.0254' stroke='#f8f8f8' stroke-width='0.0508' fill='none' />
-<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='0.39624' x='2.573' y='1.954' text-anchor='start'>X</text>
-<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='0.39624' x='2.192' y='1.954' text-anchor='start'>Y</text>
-<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='0.39624' x='2.573' y='1.573' text-anchor='start'>Z</text>
 </g>
 </svg>

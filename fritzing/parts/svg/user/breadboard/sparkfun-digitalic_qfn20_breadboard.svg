@@ -26,9 +26,5 @@
 <rect id='connector19pad' connectorname='19' x='1.575' y='0' width='0.3' height='0.65' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector20pad' connectorname='20' x='1.075' y='0' width='0.3' height='0.65' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <line x1='0.725' y1='0.225' x2='0.225' y2='0.725' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='0.225' y1='0.225' x2='4.225' y2='0.225' stroke='#f8f8f8' stroke-width='0.0762' stroke-linecap='round'/>
-<line x1='4.225' y1='0.225' x2='4.225' y2='4.225' stroke='#f8f8f8' stroke-width='0.0762' stroke-linecap='round'/>
-<line x1='4.225' y1='4.225' x2='0.225' y2='4.225' stroke='#f8f8f8' stroke-width='0.0762' stroke-linecap='round'/>
-<line x1='0.225' y1='4.225' x2='0.225' y2='0.225' stroke='#f8f8f8' stroke-width='0.0762' stroke-linecap='round'/>
 </g>
 </svg>

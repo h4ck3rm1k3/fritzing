@@ -38,11 +38,5 @@ M5.9182,1.3462a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
 <line x1='7.0612' y1='0.0762' x2='7.6962' y2='0.7112' stroke='#f8f8f8' stroke-width='0.1524' stroke-linecap='round'/>
 <line x1='7.6962' y1='0.7112' x2='7.6962' y2='4.5212' stroke='#f8f8f8' stroke-width='0.1524' stroke-linecap='round'/>
 <line x1='5.7912' y1='5.1562' x2='7.0612' y2='5.1562' stroke='#f8f8f8' stroke-width='0.1524' stroke-linecap='round'/>
-<rect x='1.0922' y='3.6322' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='1.0922' y='1.0922' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='3.6322' y='1.0922' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='3.6322' y='3.6322' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='6.1722' y='1.0922' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='6.1722' y='3.6322' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
 </g>
 </svg>

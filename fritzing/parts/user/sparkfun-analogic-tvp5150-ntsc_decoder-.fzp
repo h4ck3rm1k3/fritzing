@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-TVP5150-NTSC_DECODER-'>
 <version>4</version>
-<date>2012-04-01</date>
+<date>2012-04-03</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Texas Instrument NTSC/PAL Decoder
@@ -20,7 +20,7 @@ Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
 </properties>
 <views>
 <breadboardView>
-<layers image='breadboard/sparkfun-analogic_TQFP32-5MM_breadboard.svg'>
+<layers image='breadboard/tqfp32-5mm_breadboard.svg'>
 <layer layerId='breadboard'/>
 </layers>
 </breadboardView>
@@ -36,7 +36,7 @@ Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/sparkfun-analogic_TQFP32-5MM_breadboard.svg'>
+<layers image='breadboard/tqfp32-5mm_breadboard.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>
@@ -46,7 +46,7 @@ Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
 <description>AGND</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector6pad'/>
+<p layer='breadboard' svgId='connector6pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
@@ -60,7 +60,7 @@ Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
 <description>AIP1A</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector0pad'/>
+<p layer='breadboard' svgId='connector0pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
@@ -74,7 +74,7 @@ Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
 <description>AIP1B</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector1pad'/>
+<p layer='breadboard' svgId='connector1pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
@@ -88,7 +88,7 @@ Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
 <description>AVID</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector25pad'/>
+<p layer='breadboard' svgId='connector25pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
@@ -102,7 +102,7 @@ Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
 <description>CH_AGND</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector30pad'/>
+<p layer='breadboard' svgId='connector30pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/>
@@ -116,7 +116,7 @@ Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
 <description>CH_AVDD</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector31pad'/>
+<p layer='breadboard' svgId='connector31pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>
@@ -130,7 +130,7 @@ Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
 <description>DGND</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector18pad'/>
+<p layer='breadboard' svgId='connector18pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector6pin' terminalId='connector6terminal'/>
@@ -144,7 +144,7 @@ Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
 <description>DVDD</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector19pad'/>
+<p layer='breadboard' svgId='connector19pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector7pin' terminalId='connector7terminal'/>
@@ -158,7 +158,7 @@ Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
 <description>FID_GLCO</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector22pad'/>
+<p layer='breadboard' svgId='connector22pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector8pin' terminalId='connector8terminal'/>
@@ -172,7 +172,7 @@ Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
 <description>HSYNC</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector24pad'/>
+<p layer='breadboard' svgId='connector24pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector9pin' terminalId='connector9terminal'/>
@@ -186,7 +186,7 @@ Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
 <description>INT_REQ</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector26pad'/>
+<p layer='breadboard' svgId='connector26pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector10pin' terminalId='connector10terminal'/>
@@ -200,7 +200,7 @@ Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
 <description>IO_DVDD</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector9pad'/>
+<p layer='breadboard' svgId='connector9pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector11pin' terminalId='connector11terminal'/>
@@ -214,7 +214,7 @@ Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
 <description>PCLK_SCLK</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector8pad'/>
+<p layer='breadboard' svgId='connector8pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector12pin' terminalId='connector12terminal'/>
@@ -228,7 +228,7 @@ Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
 <description>PDN</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector27pad'/>
+<p layer='breadboard' svgId='connector27pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector13pin' terminalId='connector13terminal'/>
@@ -242,7 +242,7 @@ Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
 <description>PLL_AGND</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector2pad'/>
+<p layer='breadboard' svgId='connector2pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector14pin' terminalId='connector14terminal'/>
@@ -256,7 +256,7 @@ Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
 <description>PLL_AVDD</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector3pad'/>
+<p layer='breadboard' svgId='connector3pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector15pin' terminalId='connector15terminal'/>
@@ -270,7 +270,7 @@ Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
 <description>REFM</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector29pad'/>
+<p layer='breadboard' svgId='connector29pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector16pin' terminalId='connector16terminal'/>
@@ -284,7 +284,7 @@ Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
 <description>REFP</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector28pad'/>
+<p layer='breadboard' svgId='connector28pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector17pin' terminalId='connector17terminal'/>
@@ -298,7 +298,7 @@ Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
 <description>RESET_</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector7pad'/>
+<p layer='breadboard' svgId='connector7pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector18pin' terminalId='connector18terminal'/>
@@ -312,7 +312,7 @@ Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
 <description>SCL</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector20pad'/>
+<p layer='breadboard' svgId='connector20pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector19pin' terminalId='connector19terminal'/>
@@ -326,7 +326,7 @@ Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
 <description>SDA</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector21pad'/>
+<p layer='breadboard' svgId='connector21pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector20pin' terminalId='connector20terminal'/>
@@ -340,7 +340,7 @@ Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
 <description>VSYNC</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector23pad'/>
+<p layer='breadboard' svgId='connector23pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector21pin' terminalId='connector21terminal'/>
@@ -354,7 +354,7 @@ Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
 <description>XTAL1</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector4pad'/>
+<p layer='breadboard' svgId='connector4pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector22pin' terminalId='connector22terminal'/>
@@ -368,7 +368,7 @@ Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
 <description>XTAL2</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector5pad'/>
+<p layer='breadboard' svgId='connector5pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector23pin' terminalId='connector23terminal'/>
@@ -382,7 +382,7 @@ Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
 <description>YOUT_0</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector17pad'/>
+<p layer='breadboard' svgId='connector17pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector24pin' terminalId='connector24terminal'/>
@@ -396,7 +396,7 @@ Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
 <description>YOUT_1</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector16pad'/>
+<p layer='breadboard' svgId='connector16pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector25pin' terminalId='connector25terminal'/>
@@ -410,7 +410,7 @@ Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
 <description>YOUT_2</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector15pad'/>
+<p layer='breadboard' svgId='connector15pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector26pin' terminalId='connector26terminal'/>
@@ -424,7 +424,7 @@ Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
 <description>YOUT_3</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector14pad'/>
+<p layer='breadboard' svgId='connector14pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector27pin' terminalId='connector27terminal'/>
@@ -438,7 +438,7 @@ Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
 <description>YOUT_4</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector13pad'/>
+<p layer='breadboard' svgId='connector13pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector28pin' terminalId='connector28terminal'/>
@@ -452,7 +452,7 @@ Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
 <description>YOUT_5</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector12pad'/>
+<p layer='breadboard' svgId='connector12pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector29pin' terminalId='connector29terminal'/>
@@ -466,7 +466,7 @@ Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
 <description>YOUT_6</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector11pad'/>
+<p layer='breadboard' svgId='connector11pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector30pin' terminalId='connector30terminal'/>
@@ -480,7 +480,7 @@ Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
 <description>YOUT_7</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector10pad'/>
+<p layer='breadboard' svgId='connector10pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector31pin' terminalId='connector31terminal'/>

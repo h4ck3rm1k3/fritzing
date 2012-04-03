@@ -17,11 +17,6 @@
 <line x1='8.202' y1='7.595' x2='8.6262' y2='8.0191' stroke='#f0f0f0' stroke-width='0.254' stroke-linecap='round'/>
 <line x1='7.5302' y1='8.2666' x2='7.9545' y2='8.6909' stroke='#f0f0f0' stroke-width='0.254' stroke-linecap='round'/>
 <line x1='8.6616' y1='8.0545' x2='7.9898' y2='8.7262' stroke='#f0f0f0' stroke-width='0.254' stroke-linecap='round'/>
-<line x1='8.202' y1='7.595' x2='8.6262' y2='8.0191' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='8.6616' y1='8.0545' x2='7.9898' y2='8.7262' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='7.5302' y1='8.2666' x2='7.9545' y2='8.6909' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
-<circle cx='4.6813' cy='4.6813' r='2.6' stroke='#f0f0f0' stroke-width='0.127' fill='none' />
-<circle cx='4.6813' cy='4.6813' r='4.55' stroke='#f0f0f0' stroke-width='0.127' fill='none' />
 <circle cx='4.6813' cy='4.6813' r='4.5543' stroke='#f0f0f0' stroke-width='0.254' fill='none' />
 </g>
 </svg>

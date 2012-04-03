@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-PIC18F2455-SMD'>
 <version>4</version>
-<date>2012-04-01</date>
+<date>2012-04-03</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description></description>
@@ -18,7 +18,7 @@
 </properties>
 <views>
 <breadboardView>
-<layers image='breadboard/sparkfun-digitalic_SO-28W_breadboard.svg'>
+<layers image='breadboard/so-28w_breadboard.svg'>
 <layer layerId='breadboard'/>
 </layers>
 </breadboardView>
@@ -34,7 +34,7 @@
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/sparkfun-digitalic_SO-28W_breadboard.svg'>
+<layers image='breadboard/so-28w_breadboard.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>
@@ -44,7 +44,7 @@
 <description>MCLR_VPP</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector0pad'/>
+<p layer='breadboard' svgId='connector0pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector21pin' terminalId='connector21terminal'/>
@@ -58,7 +58,7 @@
 <description>OSC1</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector8pad'/>
+<p layer='breadboard' svgId='connector8pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector17pin' terminalId='connector17terminal'/>
@@ -72,7 +72,7 @@
 <description>OSC2</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector9pad'/>
+<p layer='breadboard' svgId='connector9pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector16pin' terminalId='connector16terminal'/>
@@ -86,7 +86,7 @@
 <description>RA0_AN0</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector1pad'/>
+<p layer='breadboard' svgId='connector1pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector18pin' terminalId='connector18terminal'/>
@@ -100,7 +100,7 @@
 <description>RA1_AN1</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector2pad'/>
+<p layer='breadboard' svgId='connector2pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector19pin' terminalId='connector19terminal'/>
@@ -114,7 +114,7 @@
 <description>RA2_AN2</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector3pad'/>
+<p layer='breadboard' svgId='connector3pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
@@ -128,7 +128,7 @@
 <description>RA3_AN3</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector4pad'/>
+<p layer='breadboard' svgId='connector4pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
@@ -142,7 +142,7 @@
 <description>RA4_AN4</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector5pad'/>
+<p layer='breadboard' svgId='connector5pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
@@ -156,7 +156,7 @@
 <description>RA5_AN4</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector6pad'/>
+<p layer='breadboard' svgId='connector6pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector20pin' terminalId='connector20terminal'/>
@@ -170,7 +170,7 @@
 <description>RB0_INT0</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector20pad'/>
+<p layer='breadboard' svgId='connector20pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector6pin' terminalId='connector6terminal'/>
@@ -184,7 +184,7 @@
 <description>RB1_INT1_AN10</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector21pad'/>
+<p layer='breadboard' svgId='connector21pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector15pin' terminalId='connector15terminal'/>
@@ -198,7 +198,7 @@
 <description>RB2_INT2_AN8</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector22pad'/>
+<p layer='breadboard' svgId='connector22pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector14pin' terminalId='connector14terminal'/>
@@ -212,7 +212,7 @@
 <description>RB3_AN9</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector23pad'/>
+<p layer='breadboard' svgId='connector23pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector22pin' terminalId='connector22terminal'/>
@@ -226,7 +226,7 @@
 <description>RB4_AN11</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector24pad'/>
+<p layer='breadboard' svgId='connector24pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector8pin' terminalId='connector8terminal'/>
@@ -240,7 +240,7 @@
 <description>RB5_PGM</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector25pad'/>
+<p layer='breadboard' svgId='connector25pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector9pin' terminalId='connector9terminal'/>
@@ -254,7 +254,7 @@
 <description>RB6_PGC</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector26pad'/>
+<p layer='breadboard' svgId='connector26pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector10pin' terminalId='connector10terminal'/>
@@ -268,7 +268,7 @@
 <description>RB7_PGD</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector27pad'/>
+<p layer='breadboard' svgId='connector27pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector11pin' terminalId='connector11terminal'/>
@@ -282,7 +282,7 @@
 <description>RC0</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector19pad'/>
+<p layer='breadboard' svgId='connector19pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector27pin' terminalId='connector27terminal'/>
@@ -296,7 +296,7 @@
 <description>RC1</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector18pad'/>
+<p layer='breadboard' svgId='connector18pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector24pin' terminalId='connector24terminal'/>
@@ -310,7 +310,7 @@
 <description>RC2</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector17pad'/>
+<p layer='breadboard' svgId='connector17pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector25pin' terminalId='connector25terminal'/>
@@ -324,7 +324,7 @@
 <description>RC4_D-</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector15pad'/>
+<p layer='breadboard' svgId='connector15pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector7pin' terminalId='connector7terminal'/>
@@ -338,7 +338,7 @@
 <description>RC5_D+</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector14pad'/>
+<p layer='breadboard' svgId='connector14pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>
@@ -352,7 +352,7 @@
 <description>RX_RC7</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector12pad'/>
+<p layer='breadboard' svgId='connector12pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
@@ -366,7 +366,7 @@
 <description>TX_RC6</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector13pad'/>
+<p layer='breadboard' svgId='connector13pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/>
@@ -380,7 +380,7 @@
 <description>V-USB</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector16pad'/>
+<p layer='breadboard' svgId='connector16pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector26pin' terminalId='connector26terminal'/>
@@ -394,7 +394,7 @@
 <description>VDD</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector10pad'/>
+<p layer='breadboard' svgId='connector10pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector23pin' terminalId='connector23terminal'/>
@@ -408,7 +408,7 @@
 <description>VSS</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector7pad'/>
+<p layer='breadboard' svgId='connector7pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector12pin' terminalId='connector12terminal'/>
@@ -422,7 +422,7 @@
 <description>VSS@19</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector11pad'/>
+<p layer='breadboard' svgId='connector11pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector13pin' terminalId='connector13terminal'/>

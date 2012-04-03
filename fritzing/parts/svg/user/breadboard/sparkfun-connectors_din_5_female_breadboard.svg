@@ -16,7 +16,6 @@ M14.9935,1.5235a0.7,0.7 0 1 0 1.4,0 0.7,0.7 0 1 0 -1.4,0z
 <circle id='connector4pin' connectorname='5' cx='15.6935' cy='1.5235' r='0.827' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <circle cx='5.7035' cy='14.0335' r='0.7' stroke='black' stroke-width='0' fill='black' id='nonconn4' />
 <circle cx='15.6935' cy='14.0335' r='0.7' stroke='black' stroke-width='0' fill='black' id='nonconn5' />
-<line x1='10.6635' y1='4.0535' x2='10.6835' y2='4.0535' stroke='#f8f8f8' stroke-width='0.09' stroke-linecap='round'/>
 <line x1='0.0635' y1='16.5435' x2='21.2635' y2='16.5435' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='21.2635' y1='16.5435' x2='21.2635' y2='0.0635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='21.2635' y1='0.0635' x2='0.0635' y2='0.0635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-NE555-P'>
 <version>4</version>
-<date>2012-04-01</date>
+<date>2012-04-03</date>
 <label>IC</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;General purpose bipolar Timer&lt;/b&gt;</description>

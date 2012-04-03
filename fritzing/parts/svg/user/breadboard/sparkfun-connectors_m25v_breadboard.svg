@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
-<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='2.096in' height='0.56485in' viewBox='0 0 53.2384 14.3472' >
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='2.096in' height='0.53985in' viewBox='0 0 53.2384 13.7122' >
 <g id='breadboard'>
-<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l53.2384,0 0,14.3472 -53.2384,0 0,-14.3472z
+<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l53.2384,0 0,13.7122 -53.2384,0 0,-13.7122z
 M42.672,5.9906a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
 M39.9034,5.9906a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
 M37.1602,5.9906a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
@@ -102,31 +102,6 @@ M10.922,8.8354a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
 <path fill='none' d='M43.8912,11.731 A1.7272,1.7272 0 0 0 45.6155,10.0979' stroke-width='0.1524' stroke='#f8f8f8' />
 <circle cx='3.0988' cy='7.4384' r='1.651' stroke='#f8f8f8' stroke-width='0.1524' fill='none' />
 <circle cx='50.1396' cy='7.413' r='1.651' stroke='#f8f8f8' stroke-width='0.1524' fill='none' />
-<circle cx='23.8506' cy='5.9906' r='0.254' stroke='#f8f8f8' stroke-width='0.4064' fill='none' />
-<circle cx='22.479' cy='8.8354' r='0.254' stroke='#f8f8f8' stroke-width='0.4064' fill='none' />
-<circle cx='21.1074' cy='5.9906' r='0.254' stroke='#f8f8f8' stroke-width='0.4064' fill='none' />
-<circle cx='26.6192' cy='5.9906' r='0.254' stroke='#f8f8f8' stroke-width='0.4064' fill='none' />
-<circle cx='25.2476' cy='8.8354' r='0.254' stroke='#f8f8f8' stroke-width='0.4064' fill='none' />
-<circle cx='27.9908' cy='8.8354' r='0.254' stroke='#f8f8f8' stroke-width='0.4064' fill='none' />
-<circle cx='29.3878' cy='5.9906' r='0.254' stroke='#f8f8f8' stroke-width='0.4064' fill='none' />
-<circle cx='32.131' cy='5.9906' r='0.254' stroke='#f8f8f8' stroke-width='0.4064' fill='none' />
-<circle cx='30.7594' cy='8.8354' r='0.254' stroke='#f8f8f8' stroke-width='0.4064' fill='none' />
-<circle cx='33.528' cy='8.8354' r='0.254' stroke='#f8f8f8' stroke-width='0.4064' fill='none' />
-<circle cx='34.8996' cy='5.9906' r='0.254' stroke='#f8f8f8' stroke-width='0.4064' fill='none' />
-<circle cx='36.2712' cy='8.8354' r='0.254' stroke='#f8f8f8' stroke-width='0.4064' fill='none' />
-<circle cx='37.6682' cy='5.9906' r='0.254' stroke='#f8f8f8' stroke-width='0.4064' fill='none' />
-<circle cx='39.0398' cy='8.8354' r='0.254' stroke='#f8f8f8' stroke-width='0.4064' fill='none' />
-<circle cx='40.4114' cy='5.9906' r='0.254' stroke='#f8f8f8' stroke-width='0.4064' fill='none' />
-<circle cx='43.18' cy='5.9906' r='0.254' stroke='#f8f8f8' stroke-width='0.4064' fill='none' />
-<circle cx='41.8084' cy='8.8354' r='0.254' stroke='#f8f8f8' stroke-width='0.4064' fill='none' />
-<circle cx='18.3388' cy='5.9906' r='0.254' stroke='#f8f8f8' stroke-width='0.4064' fill='none' />
-<circle cx='19.7104' cy='8.8354' r='0.254' stroke='#f8f8f8' stroke-width='0.4064' fill='none' />
-<circle cx='16.9672' cy='8.8354' r='0.254' stroke='#f8f8f8' stroke-width='0.4064' fill='none' />
-<circle cx='15.5702' cy='5.9906' r='0.254' stroke='#f8f8f8' stroke-width='0.4064' fill='none' />
-<circle cx='12.827' cy='5.9906' r='0.254' stroke='#f8f8f8' stroke-width='0.4064' fill='none' />
-<circle cx='10.0584' cy='5.9906' r='0.254' stroke='#f8f8f8' stroke-width='0.4064' fill='none' />
-<circle cx='14.1986' cy='8.8354' r='0.254' stroke='#f8f8f8' stroke-width='0.4064' fill='none' />
-<circle cx='11.43' cy='8.8354' r='0.254' stroke='#f8f8f8' stroke-width='0.4064' fill='none' />
 <text font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='1.28778' x='9.8552' y='5' text-anchor='start'>1</text>
 <text font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='1.28778' x='12.5222' y='5' text-anchor='start'>2</text>
 <text font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='1.28778' x='15.1892' y='5' text-anchor='start'>3</text>

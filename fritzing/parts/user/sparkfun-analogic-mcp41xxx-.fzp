@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-MCP41XXX-'>
 <version>4</version>
-<date>2012-04-01</date>
+<date>2012-04-03</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>SPI controlled single digital potentiometer by Microchip</description>
@@ -16,7 +16,7 @@
 </properties>
 <views>
 <breadboardView>
-<layers image='breadboard/sparkfun-analogic_SO08_breadboard.svg'>
+<layers image='breadboard/so08_breadboard.svg'>
 <layer layerId='breadboard'/>
 </layers>
 </breadboardView>
@@ -32,7 +32,7 @@
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/sparkfun-analogic_SO08_breadboard.svg'>
+<layers image='breadboard/so08_breadboard.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>
@@ -42,7 +42,7 @@
 <description>A</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector4pad'/>
+<p layer='breadboard' svgId='connector4pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/>
@@ -56,7 +56,7 @@
 <description>B</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector6pad'/>
+<p layer='breadboard' svgId='connector6pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector6pin' terminalId='connector6terminal'/>
@@ -70,7 +70,7 @@
 <description>CS</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector0pad'/>
+<p layer='breadboard' svgId='connector0pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
@@ -84,7 +84,7 @@
 <description>DI</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector2pad'/>
+<p layer='breadboard' svgId='connector2pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
@@ -98,7 +98,7 @@
 <description>GND</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector3pad'/>
+<p layer='breadboard' svgId='connector3pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector7pin' terminalId='connector7terminal'/>
@@ -112,7 +112,7 @@
 <description>SCK</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector1pad'/>
+<p layer='breadboard' svgId='connector1pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
@@ -126,7 +126,7 @@
 <description>VCC</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector7pad'/>
+<p layer='breadboard' svgId='connector7pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
@@ -140,7 +140,7 @@
 <description>W</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector5pad'/>
+<p layer='breadboard' svgId='connector5pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>

@@ -26,6 +26,5 @@
 <line x1='3.49' y1='2.98' x2='3.49' y2='4.48' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='3.49' y1='4.48' x2='1.99' y2='4.48' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='1.99' y1='4.48' x2='1.99' y2='2.98' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<circle cx='3.74' cy='3.73' r='3.05' stroke='#f8f8f8' stroke-width='0.127' fill='none' />
 </g>
 </svg>

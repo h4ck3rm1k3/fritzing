@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
-<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.124in' height='0.562in' viewBox='0 0 3.1496 14.2748' >
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.124in' height='0.4575in' viewBox='0 0 3.1496 11.6205' >
 <g id='breadboard'>
-<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l3.1496,0 0,14.2748 -3.1496,0 0,-14.2748z
+<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l3.1496,0 0,11.6205 -3.1496,0 0,-11.6205z
 '/>
-<rect id='connector0pad' connectorname='GROUND' x='1.2573' y='6.5913' width='0.635' height='1.27' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<path stroke='#9A916C' fill='#9A916C' stroke-width='0.127' d='M1.5748,12.9413L1.7526,12.9413 A1.27,1.27 0 0 0 3.0226,11.6713M3.0226,11.6713L3.0226,3.0353L3.0226,2.9591 A1.4478,1.4478 0 0 0 1.5748,1.5113M1.5748,1.5113 A1.4478,1.4478 0 0 0 0.127,2.9591M0.127,2.9591L0.127,3.0353L0.127,11.6713 A1.27,1.27 0 0 0 1.397,12.9413M1.397,12.9413z' stroke-linecap='round'/>
+<rect id='connector0pad' connectorname='GROUND' x='1.2573' y='5.1435' width='0.635' height='1.27' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<path stroke='#9A916C' fill='#9A916C' stroke-width='0.127' d='M1.5748,11.4935L1.7526,11.4935 A1.27,1.27 0 0 0 3.0226,10.2235M3.0226,10.2235L3.0226,1.5875L3.0226,1.5113 A1.4478,1.4478 0 0 0 1.5748,0.0635M1.5748,0.0635 A1.4478,1.4478 0 0 0 0.127,1.5113M0.127,1.5113L0.127,1.5875L0.127,10.2235 A1.27,1.27 0 0 0 1.397,11.4935M1.397,11.4935z' stroke-linecap='round'/>
 </g>
 </svg>

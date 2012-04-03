@@ -8,18 +8,11 @@
 <rect id='connector1pad' connectorname='2' x='5.3' y='13.4' width='1.6' height='3.5' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector2pad' connectorname='3' x='7.84' y='13.4' width='1.6' height='3.5' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector3pad' connectorname='1' x='2.76' y='13.4' width='1.6' height='3.5' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<line x1='0.9' y1='11.45' x2='0.9' y2='2.3' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='11.3' y1='2.3' x2='11.3' y2='11.45' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='11.3' y1='11.45' x2='0.9' y2='11.45' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='0.9' y1='11.45' x2='0.9' y2='10.05' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='11.3' y1='11.45' x2='11.3' y2='10.05' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<rect x='5.575' y='13.45' width='1.05' height='3.2' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='8.115' y='13.45' width='1.05' height='3.2' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='3.035' y='13.45' width='1.05' height='3.2' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
 <rect x='5.575' y='11.35' width='1.05' height='1.9' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
 <rect x='3.035' y='11.35' width='1.05' height='1.9' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
 <rect x='8.115' y='11.35' width='1.05' height='1.9' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<path stroke='#f8f8f8' fill='#f8f8f8' stroke-width='0.2032' d='M0.9,2.275L0.9,1.175L3.3,0.8L8.9,0.8L11.3,1.175L11.3,2.275z' stroke-linecap='round'/>
-<path stroke='#f8f8f8' fill='#f8f8f8' stroke-width='0.127' d='M1.85,8.8L1.85,6.875L2.5,6.875L2.5,3.475L3.3,3.475L3.3,0.8L8.9,0.8L8.9,3.475L9.7,3.475L9.7,6.875L10.35,6.875L10.35,8.8z' stroke-linecap='round'/>
 </g>
 </svg>

@@ -10,6 +10,5 @@ M0.8128,1.8796a0.5588,0.5588 0 1 0 1.1176,0 0.5588,0.5588 0 1 0 -1.1176,0z
 ' fill='#9A916C' />
 <line x1='0.1016' y1='1.2446' x2='0.1016' y2='2.5146' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='2.6416' y1='1.2446' x2='2.6416' y2='2.5146' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<rect x='1.1176' y='1.6256' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
 </g>
 </svg>

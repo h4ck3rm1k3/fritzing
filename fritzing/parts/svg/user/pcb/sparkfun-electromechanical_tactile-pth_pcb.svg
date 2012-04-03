@@ -14,25 +14,10 @@
 </g>
 </g>
 <g id='silkscreen'>
-<line x1='7.239' y1='2.1844' x2='7.239' y2='0.6604' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='7.239' y1='0.6604' x2='6.731' y2='0.1524' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='6.731' y1='6.2484' x2='7.239' y2='5.7404' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='7.239' y1='5.7404' x2='7.239' y2='4.2164' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='1.651' y1='0.1524' x2='1.143' y2='0.6604' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='1.143' y1='0.6604' x2='1.143' y2='2.1844' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='1.651' y1='6.2484' x2='1.143' y2='5.7404' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='1.143' y1='5.7404' x2='1.143' y2='4.2164' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='6.731' y1='6.2484' x2='6.35' y2='6.2484' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='1.651' y1='6.2484' x2='2.032' y2='6.2484' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='1.651' y1='0.1524' x2='2.032' y2='0.1524' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='6.731' y1='0.1524' x2='6.35' y2='0.1524' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='6.35' y1='0.1524' x2='2.032' y2='0.1524' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='2.032' y1='6.2484' x2='6.35' y2='6.2484' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='7.239' y1='2.2024' x2='7.239' y2='4.2164' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='1.143' y1='2.1724' x2='1.143' y2='4.2164' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='1.651' y1='1.9304' x2='1.651' y2='2.6924' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='1.651' y1='3.7084' x2='1.651' y2='4.4704' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='1.651' y1='2.6924' x2='2.032' y2='3.5814' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <circle cx='4.191' cy='3.2004' r='1.778' stroke='#f0f0f0' stroke-width='0.2032' fill='none' />
 </g>
 </svg>

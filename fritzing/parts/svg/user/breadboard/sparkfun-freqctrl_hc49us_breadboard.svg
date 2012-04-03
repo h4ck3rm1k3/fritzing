@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
-<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.278in' height='0.188in' viewBox='0 0 7.0612 4.7752' >
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.368in' height='0.188in' viewBox='0 0 9.3472 4.7752' >
 <g id='breadboard'>
-<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l7.0612,0 0,4.7752 -7.0612,0 0,-4.7752z
+<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l9.3472,0 0,4.7752 -9.3472,0 0,-4.7752z
 M0.6406,2.3876a0.35,0.35 0 1 0 0.7,0 0.35,0.35 0 1 0 -0.7,0z
 M5.7206,2.3876a0.35,0.35 0 1 0 0.7,0 0.35,0.35 0 1 0 -0.7,0z
 '/>

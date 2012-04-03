@@ -234,9 +234,5 @@
 <path fill='none' d='M35.052,35.776 A3.175,3.175 0 1 1 35.052,39.586' stroke-width='0.2032' stroke='#f0f0f0' />
 <line x1='10.033' y1='35.649' x2='10.033' y2='39.459' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <path fill='none' d='M10.033,35.649 A3.175,3.175 0 1 1 10.033,39.459' stroke-width='0.2032' stroke='#f0f0f0' />
-<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f0f0f0' font-size='1.3208' x='11.811' y='11.138' text-anchor='start'>D3</text>
-<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f0f0f0' font-size='1.3208' x='36.703' y='11.138' text-anchor='start'>D4</text>
-<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f0f0f0' font-size='1.3208' x='11.811' y='36.03' text-anchor='start'>D1</text>
-<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f0f0f0' font-size='1.3208' x='36.83' y='36.284' text-anchor='start'>D2</text>
 </g>
 </svg>

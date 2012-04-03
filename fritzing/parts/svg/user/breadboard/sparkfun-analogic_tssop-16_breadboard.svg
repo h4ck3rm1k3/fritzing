@@ -29,21 +29,5 @@
 <path fill='none' d='M5.0889,5.4264 A0.2236,0.2236 0 0 1 4.8653,5.65' stroke-width='0.1778' stroke='#f8f8f8' />
 <line x1='4.8653' y1='5.65' x2='0.3125' y2='5.65' stroke='#f8f8f8' stroke-width='0.1778' stroke-linecap='round'/>
 <circle cx='0.5889' cy='5.15' r='0.1' stroke='#f8f8f8' stroke-width='0.1778' fill='none' />
-<rect x='2.7639' y='6.05' width='0.3' height='0.6' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='2.1139' y='6.05' width='0.3' height='0.6' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='1.4639' y='6.05' width='0.3' height='0.6' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='0.8139' y='6.05' width='0.3' height='0.6' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='3.4139' y='6.05' width='0.3' height='0.6' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='4.0639' y='6.05' width='0.3' height='0.6' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='4.7139' y='6.05' width='0.3' height='0.6' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='0.1639' y='6.05' width='0.3' height='0.6' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='2.1139' y='0.25' width='0.3' height='0.6' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='2.7639' y='0.25' width='0.3' height='0.6' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='3.4139' y='0.25' width='0.3' height='0.6' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='4.0639' y='0.25' width='0.3' height='0.6' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='1.4639' y='0.25' width='0.3' height='0.6' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='0.8139' y='0.25' width='0.3' height='0.6' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='0.1639' y='0.25' width='0.3' height='0.6' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='4.7139' y='0.25' width='0.3' height='0.6' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
 </g>
 </svg>

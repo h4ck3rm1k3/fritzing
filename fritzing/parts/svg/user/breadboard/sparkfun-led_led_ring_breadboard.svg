@@ -47,11 +47,7 @@ M6.2889,30.3389a0.6,0.6 0 1 0 1.2,0 0.6,0.6 0 1 0 -1.2,0z
 <circle cx='20.0889' cy='3.5889' r='2' stroke='black' stroke-width='0' fill='black' id='nonconn4' />
 <circle cx='20.0889' cy='31.5889' r='1.5' stroke='black' stroke-width='0' fill='black' id='nonconn5' />
 <line x1='0.0889' y1='30.5889' x2='0.0889' y2='4.5889' stroke='#f8f8f8' stroke-width='0.1778' stroke-linecap='round'/>
-<line x1='0.0889' y1='4.5889' x2='8.3889' y2='4.5889' stroke='#f8f8f8' stroke-width='0.1778' stroke-linecap='round'/>
-<line x1='0.0889' y1='30.5889' x2='8.3889' y2='30.5889' stroke='#f8f8f8' stroke-width='0.1778' stroke-linecap='round'/>
-<line x1='40.0889' y1='30.5889' x2='31.7889' y2='30.5889' stroke='#f8f8f8' stroke-width='0.1778' stroke-linecap='round'/>
 <line x1='40.0889' y1='30.5889' x2='40.0889' y2='4.5889' stroke='#f8f8f8' stroke-width='0.1778' stroke-linecap='round'/>
-<line x1='40.0889' y1='4.5889' x2='31.7889' y2='4.5889' stroke='#f8f8f8' stroke-width='0.1778' stroke-linecap='round'/>
 <circle cx='20.0889' cy='17.5889' r='17.5' stroke='#f8f8f8' stroke-width='0.1778' fill='none' />
 <circle cx='20.0889' cy='17.5889' r='11' stroke='#f8f8f8' stroke-width='0.127' fill='none' />
 </g>

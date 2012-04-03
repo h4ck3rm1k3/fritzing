@@ -64,37 +64,5 @@
 <line x1='1.3' y1='1.8' x2='1.8' y2='2.26' stroke='#f0f0f0' stroke-width='0.0508' stroke-linecap='round'/>
 <circle cx='2.86' cy='6.721' r='0.75' stroke='#f0f0f0' stroke-width='0.0508' fill='none' />
 <circle cx='2.86' cy='6.721' r='0.5' stroke='#f0f0f0' stroke-width='0.0508' fill='none' />
-<rect x='1.9' y='0.35' width='0.3' height='0.95' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='2.7' y='0.35' width='0.3' height='0.95' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='3.5' y='0.35' width='0.3' height='0.95' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='4.3' y='0.35' width='0.3' height='0.95' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='5.1' y='0.35' width='0.3' height='0.95' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='5.9' y='0.35' width='0.3' height='0.95' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='6.7' y='0.35' width='0.3' height='0.95' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='7.5' y='0.35' width='0.3' height='0.95' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='8.4' y='1.9' width='0.95' height='0.3' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='8.4' y='2.7' width='0.95' height='0.3' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='8.4' y='3.5' width='0.95' height='0.3' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='8.4' y='4.3' width='0.95' height='0.3' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='8.4' y='5.1' width='0.95' height='0.3' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='8.4' y='5.9' width='0.95' height='0.3' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='8.4' y='6.7' width='0.95' height='0.3' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='8.4' y='7.5' width='0.95' height='0.3' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='7.5' y='8.4' width='0.3' height='0.95' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='6.7' y='8.4' width='0.3' height='0.95' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='5.9' y='8.4' width='0.3' height='0.95' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='5.1' y='8.4' width='0.3' height='0.95' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='4.3' y='8.4' width='0.3' height='0.95' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='3.5' y='8.4' width='0.3' height='0.95' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='2.7' y='8.4' width='0.3' height='0.95' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='1.9' y='8.4' width='0.3' height='0.95' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='0.35' y='7.5' width='0.95' height='0.3' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='0.35' y='6.7' width='0.95' height='0.3' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='0.35' y='5.9' width='0.95' height='0.3' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='0.35' y='5.1' width='0.95' height='0.35' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='0.35' y='4.3' width='0.95' height='0.35' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='0.35' y='3.5' width='0.95' height='0.3' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='0.35' y='2.7' width='0.95' height='0.3' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='0.35' y='1.9' width='0.95' height='0.3' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
 </g>
 </svg>

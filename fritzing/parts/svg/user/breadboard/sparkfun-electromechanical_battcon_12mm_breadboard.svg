@@ -1,19 +1,19 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
-<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.745in' height='0.559642in' viewBox='0 0 18.923 14.2149' >
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.745in' height='0.465in' viewBox='0 0 18.923 11.811' >
 <g id='breadboard'>
-<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l18.923,0 0,14.2149 -18.923,0 0,-14.2149z
+<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l18.923,0 0,11.811 -18.923,0 0,-11.811z
 '/>
-<rect id='connector0pad' connectorname='GND' x='7.4803' y='5.82021' width='3.9624' height='3.9624' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector1pad' connectorname='PWR@1' x='0' y='6.21391' width='3.175' height='3.175' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector2pad' connectorname='PWR@2' x='15.748' y='6.21391' width='3.175' height='3.175' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<path fill='none' d='M3.3655,3.48341 A1.76891,1.76891 0 0 1 5.6515,2.46741' stroke-width='0.127' stroke='#f8f8f8' />
-<path fill='none' d='M13.2715,2.46741 A1.76891,1.76891 0 0 1 15.5575,3.48341' stroke-width='0.127' stroke='#f8f8f8' />
-<line x1='15.5575' y1='3.48341' x2='15.5575' y2='11.1034' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='15.5575' y1='11.1034' x2='12.5095' y2='14.1514' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='12.5095' y1='14.1514' x2='6.4135' y2='14.1514' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='6.4135' y1='14.1514' x2='3.3655' y2='11.1034' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='3.3655' y1='11.1034' x2='3.3655' y2='3.48341' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<path fill='none' d='M13.2715,2.46741 A5.38815,5.38815 0 0 1 5.6515,2.46741' stroke-width='0.127' stroke='#f8f8f8' />
+<rect id='connector0pad' connectorname='GND' x='7.4803' y='3.4163' width='3.9624' height='3.9624' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector1pad' connectorname='PWR@1' x='0' y='3.81' width='3.175' height='3.175' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector2pad' connectorname='PWR@2' x='15.748' y='3.81' width='3.175' height='3.175' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<path fill='none' d='M3.3655,1.0795 A1.76891,1.76891 0 0 1 5.6515,0.0635' stroke-width='0.127' stroke='#f8f8f8' />
+<path fill='none' d='M13.2715,0.0635 A1.76891,1.76891 0 0 1 15.5575,1.0795' stroke-width='0.127' stroke='#f8f8f8' />
+<line x1='15.5575' y1='1.0795' x2='15.5575' y2='8.6995' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='15.5575' y1='8.6995' x2='12.5095' y2='11.7475' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='12.5095' y1='11.7475' x2='6.4135' y2='11.7475' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='6.4135' y1='11.7475' x2='3.3655' y2='8.6995' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line x1='3.3655' y1='8.6995' x2='3.3655' y2='1.0795' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<path fill='none' d='M13.2715,0.0635 A5.38815,5.38815 0 0 1 5.6515,0.0635' stroke-width='0.127' stroke='#f8f8f8' />
 </g>
 </svg>

@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
-<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.258in' height='1.118in' viewBox='0 0 6.5532 28.3972' >
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.258in' height='0.926in' viewBox='0 0 6.5532 23.5204' >
 <g id='copper1'>
-<rect id='connector0pad' connectorname='GROUND' x='2.9591' y='13.0556' width='0.635' height='1.27' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
-<path stroke='#F7BD13' fill='#F7BD13' stroke-width='0.2032' d='M3.2766,25.7556L2.7432,25.7556 A2.54,2.54 0 0 1 0.2032,23.2156M0.2032,23.2156L0.2032,5.1816 A2.54,2.54 0 0 1 2.7432,2.6416M2.7432,2.6416L3.2766,2.6416L3.81,2.6416 A2.54,2.54 0 0 1 6.35,5.1816M6.35,5.1816L6.35,23.2156 A2.54,2.54 0 0 1 3.81,25.7556M3.81,25.7556z' stroke-linecap='round'/>
+<rect id='connector0pad' connectorname='GROUND' x='2.9591' y='10.6172' width='0.635' height='1.27' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<path stroke='#F7BD13' fill='#F7BD13' stroke-width='0.2032' d='M3.2766,23.3172L2.7432,23.3172 A2.54,2.54 0 0 1 0.2032,20.7772M0.2032,20.7772L0.2032,2.7432 A2.54,2.54 0 0 1 2.7432,0.2032M2.7432,0.2032L3.2766,0.2032L3.81,0.2032 A2.54,2.54 0 0 1 6.35,2.7432M6.35,2.7432L6.35,20.7772 A2.54,2.54 0 0 1 3.81,23.3172M3.81,23.3172z' stroke-linecap='round'/>
 <g id='copper0'>
 </g>
 </g>

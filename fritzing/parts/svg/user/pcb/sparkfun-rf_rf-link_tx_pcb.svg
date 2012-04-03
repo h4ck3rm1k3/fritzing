@@ -22,9 +22,5 @@
 <line x1='0.2032' y1='5.9182' x2='12.9032' y2='5.9182' stroke='#f0f0f0' stroke-width='0.4064' stroke-linecap='round'/>
 <line x1='12.9032' y1='5.9182' x2='12.9032' y2='0.2032' stroke='#f0f0f0' stroke-width='0.4064' stroke-linecap='round'/>
 <line x1='12.9032' y1='0.2032' x2='0.2032' y2='0.2032' stroke='#f0f0f0' stroke-width='0.4064' stroke-linecap='round'/>
-<rect x='8.8392' y='1.8542' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='6.2992' y='1.8542' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='3.7592' y='1.8542' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='1.2192' y='1.8542' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
 </g>
 </svg>

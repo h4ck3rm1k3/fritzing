@@ -34,10 +34,6 @@
 </g>
 </g>
 <g id='silkscreen'>
-<line x1='7.225' y1='0.225' x2='7.225' y2='7.225' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='7.225' y1='7.225' x2='0.225' y2='7.225' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='0.225' y1='7.225' x2='0.225' y2='0.225' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='0.225' y1='0.225' x2='7.225' y2='0.225' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='6.725' y1='0.225' x2='7.225' y2='0.225' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='7.225' y1='0.225' x2='7.225' y2='0.725' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='0.725' y1='0.225' x2='0.225' y2='0.225' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
@@ -46,11 +42,6 @@
 <line x1='0.225' y1='7.225' x2='0.725' y2='7.225' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='7.225' y1='6.725' x2='7.225' y2='7.225' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='7.225' y1='7.225' x2='6.725' y2='7.225' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<path fill='none' d='M3.725,4.995 A1.27,1.27 0 1 0 2.455,3.725' stroke-width='0.127' stroke='#f0f0f0' />
-<line x1='2.455' y1='3.725' x2='2.709' y2='3.471' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='2.455' y1='3.725' x2='2.201' y2='3.471' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='3.979' y1='3.725' x2='3.471' y2='3.725' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='3.725' y1='3.471' x2='3.725' y2='3.979' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
 <circle cx='1.725' cy='1.725' r='0.5' stroke='#f0f0f0' stroke-width='0.2032' fill='none' />
 </g>
 </svg>

@@ -48,13 +48,6 @@
 <rect id='connector41pad' connectorname='38' x='14.0635' y='8.5635' width='1' height='1' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector42pad' connectorname='37' x='16.0635' y='8.5635' width='1' height='1' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector43pad' connectorname='36' x='18.0635' y='8.5635' width='1' height='1' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<line x1='0.5635' y1='37.5635' x2='20.5635' y2='37.5635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='20.5635' y1='37.5635' x2='20.5635' y2='8.5635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='20.5635' y1='8.5635' x2='20.5635' y2='0.5635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='20.5635' y1='0.5635' x2='0.5635' y2='0.5635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='0.5635' y1='0.5635' x2='0.5635' y2='8.5635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='0.5635' y1='8.5635' x2='0.5635' y2='37.5635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='0.5635' y1='8.5635' x2='20.5635' y2='8.5635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='0.0635' y1='0.0635' x2='21.0635' y2='0.0635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='21.0635' y1='0.0635' x2='21.0635' y2='8.0635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='21.0635' y1='8.0635' x2='21.0635' y2='38.0635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>

@@ -956,28 +956,6 @@ M80.115,36.987a0.3,0.3 0 1 0 0.6,0 0.3,0.3 0 1 0 -0.6,0z
 <path fill='none' d='M84.627,38 A3.24158,3.24158 0 0 1 90.377,38.75' stroke-width='0.2032' stroke='#f8f8f8' />
 <line x1='84.627' y1='38' x2='84.627' y2='38.75' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='84.627' y1='42' x2='84.627' y2='41.25' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='0.127' y1='102.5' x2='0.127' y2='2.5002' stroke='#f8f8f8' stroke-width='0.0254' stroke-linecap='round'/>
-<line x1='0.127' y1='102.5' x2='100.127' y2='102.5' stroke='#f8f8f8' stroke-width='0.0254' stroke-linecap='round'/>
-<line x1='49.6316' y1='52.9954' x2='50.6222' y2='52.0048' stroke='#f8f8f8' stroke-width='0.0254' stroke-linecap='round'/>
-<line x1='49.6316' y1='52.0048' x2='50.6222' y2='52.9954' stroke='#f8f8f8' stroke-width='0.0254' stroke-linecap='round'/>
-<line x1='100.127' y1='102.5' x2='100.127' y2='2.5002' stroke='#f8f8f8' stroke-width='0.0254' stroke-linecap='round'/>
-<line x1='100.127' y1='2.5002' x2='0.127' y2='2.5002' stroke='#f8f8f8' stroke-width='0.0254' stroke-linecap='round'/>
-<circle cx='2.6416' cy='100.011' r='1.27' stroke='#f8f8f8' stroke-width='0.0254' fill='none' />
-<circle cx='2.6416' cy='55.002' r='1.2446' stroke='#f8f8f8' stroke-width='0.0254' fill='none' />
-<circle cx='47.625' cy='100.011' r='1.27' stroke='#f8f8f8' stroke-width='0.0254' fill='none' />
-<circle cx='47.625' cy='55.002' r='1.2446' stroke='#f8f8f8' stroke-width='0.0254' fill='none' />
-<circle cx='2.6416' cy='49.9982' r='1.2446' stroke='#f8f8f8' stroke-width='0.0254' fill='none' />
-<circle cx='2.6416' cy='4.9894' r='1.2446' stroke='#f8f8f8' stroke-width='0.0254' fill='none' />
-<circle cx='47.625' cy='49.9982' r='1.2446' stroke='#f8f8f8' stroke-width='0.0254' fill='none' />
-<circle cx='47.625' cy='4.9894' r='1.2446' stroke='#f8f8f8' stroke-width='0.0254' fill='none' />
-<circle cx='52.6288' cy='100.011' r='1.27' stroke='#f8f8f8' stroke-width='0.0254' fill='none' />
-<circle cx='52.6288' cy='55.002' r='1.2446' stroke='#f8f8f8' stroke-width='0.0254' fill='none' />
-<circle cx='97.6376' cy='100.011' r='1.27' stroke='#f8f8f8' stroke-width='0.0254' fill='none' />
-<circle cx='97.6376' cy='55.002' r='1.2446' stroke='#f8f8f8' stroke-width='0.0254' fill='none' />
-<circle cx='52.6288' cy='49.9982' r='1.2446' stroke='#f8f8f8' stroke-width='0.0254' fill='none' />
-<circle cx='52.6288' cy='4.9894' r='1.2446' stroke='#f8f8f8' stroke-width='0.0254' fill='none' />
-<circle cx='97.6376' cy='49.9982' r='1.2446' stroke='#f8f8f8' stroke-width='0.0254' fill='none' />
-<circle cx='97.6376' cy='4.9894' r='1.2446' stroke='#f8f8f8' stroke-width='0.0254' fill='none' />
 <text font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='1.3208' x='11.877' y='63.5' text-anchor='start'>B8</text>
 <text font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='1.3208' x='36.877' y='63.5' text-anchor='start'>B9</text>
 <text font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='1.3208' x='11.127' y='88.5' text-anchor='start'>B12</text>

@@ -35,14 +35,8 @@ M7.3152,18.4912a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
 <line x1='0.7112' y1='15.3162' x2='0.7112' y2='7.0612' stroke='#f8f8f8' stroke-width='0.0508' stroke-linecap='round'/>
 <circle cx='5.2832' cy='3.5052' r='1.8034' stroke='#f8f8f8' stroke-width='0.1524' fill='none' />
 <text font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='1.28778' x='0.8382' y='6.8072' text-anchor='start'>A15,2mm</text>
-<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='1.651' x='4.7752' y='14.6812' text-anchor='start'>-</text>
-<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='1.651' x='2.2352' y='14.6812' text-anchor='start'>I</text>
-<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='1.651' x='7.3152' y='14.6812' text-anchor='start'>O</text>
 <rect x='7.1882' y='15.9512' width='1.27' height='0.889' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='7.1882' y='16.8402' width='1.27' height='1.651' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
 <rect x='4.6482' y='15.9512' width='1.27' height='0.889' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
 <rect x='2.1082' y='15.9512' width='1.27' height='0.889' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='4.6482' y='16.8402' width='1.27' height='1.651' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='2.1082' y='16.8402' width='1.27' height='1.651' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
 </g>
 </svg>

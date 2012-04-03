@@ -1,19 +1,16 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
-<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='1.61077in' height='0.856057in' viewBox='0 0 40.9135 21.7439' >
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.905732in' height='0.322961in' viewBox='0 0 23.0056 8.2032' >
 <g id='breadboard'>
-<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l40.9135,0 0,21.7439 -40.9135,0 0,-21.7439z
-M0.3916,10.8719a0.65,0.65 0 1 0 1.3,0 0.65,0.65 0 1 0 -1.3,0z
-M20.3916,10.8719a0.65,0.65 0 1 0 1.3,0 0.65,0.65 0 1 0 -1.3,0z
+<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l23.0056,0 0,8.2032 -23.0056,0 0,-8.2032z
+M0.254,4.1016a0.65,0.65 0 1 0 1.3,0 0.65,0.65 0 1 0 -1.3,0z
+M20.254,4.1016a0.65,0.65 0 1 0 1.3,0 0.65,0.65 0 1 0 -1.3,0z
 '/>
-<circle id='connector0pin' connectorname='2' cx='1.0416' cy='10.8719' r='0.777' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector1pin' connectorname='1' cx='21.0416' cy='10.8719' r='0.777' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<path fill='none' d='M20.0416,14.8719 A10.7703,10.7703 0 1 1 20.0416,6.87193' stroke-width='0.2032' stroke='#f8f8f8' />
-<line x1='20.0416' y1='6.87193' x2='23.0416' y2='6.87193' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='23.0416' y1='6.87193' x2='23.0416' y2='14.8719' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='23.0416' y1='14.8719' x2='20.0416' y2='14.8719' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<circle cx='10.1016' cy='10.7719' r='10' stroke='#f8f8f8' stroke-width='0.2032' fill='none' />
-<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='1.651' x='18.3266' y='11.4719' text-anchor='start'>+</text>
-<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='1.651' x='2.9916' y='11.4719' text-anchor='start'>-</text>
+<circle id='connector0pin' connectorname='2' cx='0.904' cy='4.1016' r='0.777' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector1pin' connectorname='1' cx='20.904' cy='4.1016' r='0.777' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<path fill='none' d='M19.904,8.1016 A10.7703,10.7703 0 1 1 19.904,0.1016' stroke-width='0.2032' stroke='#f8f8f8' />
+<line x1='19.904' y1='0.1016' x2='22.904' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='22.904' y1='0.1016' x2='22.904' y2='8.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line x1='22.904' y1='8.1016' x2='19.904' y2='8.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 </g>
 </svg>

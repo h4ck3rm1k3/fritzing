@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
-<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='1.54724in' height='1.24409in' viewBox='0 0 39.3 31.6' >
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='1.24409in' height='1.24409in' viewBox='0 0 31.6 31.6' >
 <g id='breadboard'>
-<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l39.3,0 0,31.6 -39.3,0 0,-31.6z
+<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l31.6,0 0,31.6 -31.6,0 0,-31.6z
 '/>
 <rect id='connector0pad' connectorname='1' x='0' y='2.805' width='1.5' height='0.33' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector1pad' connectorname='2' x='0' y='3.305' width='1.5' height='0.33' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
@@ -212,10 +212,6 @@
 <rect id='connector205pad' connectorname='206' x='3.965' y='0' width='0.33' height='1.5' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector206pad' connectorname='207' x='3.4675' y='0.0013' width='0.33' height='1.5' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector207pad' connectorname='208' x='2.965' y='0' width='0.33' height='1.5' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<line x1='0.5' y1='31.1' x2='31.1' y2='31.1' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='31.1' y1='31.1' x2='31.1' y2='0.51' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='31.1' y1='0.51' x2='0.5' y2='0.51' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='0.5' y1='0.51' x2='0.5' y2='31.1' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='1.8' y1='29.8' x2='29.8' y2='29.8' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='29.8' y1='29.8' x2='29.8' y2='1.8' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='29.8' y1='1.8' x2='1.8' y2='1.8' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
@@ -274,6 +270,5 @@
 <path fill='none' d='M18.205,10.53 A0.771028,0.771028 0 0 1 18.5863,11.9282' stroke-width='0.127' stroke='#f8f8f8' />
 <path fill='none' d='M18.586,11.927 A0.454353,0.454353 0 0 1 18.8397,12.435' stroke-width='0.127' stroke='#f8f8f8' />
 <circle cx='3.3' cy='3.3' r='0.5' stroke='#f8f8f8' stroke-width='0.127' fill='none' />
-<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='1.651' x='12.3' y='15.3' text-anchor='start'>PQFP208</text>
 </g>
 </svg>

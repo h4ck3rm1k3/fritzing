@@ -14,23 +14,8 @@
 <rect id='connector7pad' connectorname='5' x='2.5618' y='4.219' width='0.305' height='0.889' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector8pad' connectorname='2' x='1.0618' y='4.219' width='0.305' height='0.889' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector9pad' connectorname='1' x='0.5618' y='4.219' width='0.305' height='0.889' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<line x1='3.2143' y1='1.054' x2='0.2143' y2='1.054' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='0.2143' y1='1.054' x2='0.2143' y2='4.054' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='0.2143' y1='4.054' x2='3.2143' y2='4.054' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='3.2143' y1='4.054' x2='3.2143' y2='1.054' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='0.0635' y1='1.054' x2='0.0635' y2='4.054' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 <line x1='3.3651' y1='1.054' x2='3.3651' y2='4.054' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<circle cx='0.9143' cy='3.354' r='0.3' stroke='#f8f8f8' stroke-width='0.127' fill='none' />
 <circle cx='0.9349' cy='3.3652' r='0.0567' stroke='#f8f8f8' stroke-width='0.127' fill='none' />
-<rect x='0.6143' y='0.104' width='0.2' height='0.85' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='1.1143' y='0.104' width='0.2' height='0.85' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='1.6143' y='0.104' width='0.2' height='0.85' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='2.1143' y='0.104' width='0.2' height='0.85' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='2.6143' y='0.104' width='0.2' height='0.85' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='0.6143' y='4.154' width='0.2' height='0.85' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='1.1143' y='4.154' width='0.2' height='0.85' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='1.6143' y='4.154' width='0.2' height='0.85' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='2.1143' y='4.154' width='0.2' height='0.85' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='2.6143' y='4.154' width='0.2' height='0.85' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
 </g>
 </svg>

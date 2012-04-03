@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-IMU3000-'>
 <version>4</version>
-<date>2012-04-01</date>
+<date>2012-04-03</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>3-axis I2C programmable gyro.&lt;BR&gt;
@@ -17,7 +17,7 @@ Can interface with an I2C accelerometer to provide 6-axis motion information.</d
 </properties>
 <views>
 <breadboardView>
-<layers image='breadboard/sparkfun-sensors_QFN-24_breadboard.svg'>
+<layers image='breadboard/qfn-24_breadboard.svg'>
 <layer layerId='breadboard'/>
 </layers>
 </breadboardView>
@@ -33,7 +33,7 @@ Can interface with an I2C accelerometer to provide 6-axis motion information.</d
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/sparkfun-sensors_QFN-24_breadboard.svg'>
+<layers image='breadboard/qfn-24_breadboard.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>
@@ -43,7 +43,7 @@ Can interface with an I2C accelerometer to provide 6-axis motion information.</d
 <description>AD0</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector8pad'/>
+<p layer='breadboard' svgId='connector8pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector9pin' terminalId='connector9terminal'/>
@@ -57,7 +57,7 @@ Can interface with an I2C accelerometer to provide 6-axis motion information.</d
 <description>AUX_CL</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector6pad'/>
+<p layer='breadboard' svgId='connector6pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector12pin' terminalId='connector12terminal'/>
@@ -71,7 +71,7 @@ Can interface with an I2C accelerometer to provide 6-axis motion information.</d
 <description>AUX_DA</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector5pad'/>
+<p layer='breadboard' svgId='connector5pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector11pin' terminalId='connector11terminal'/>
@@ -85,7 +85,7 @@ Can interface with an I2C accelerometer to provide 6-axis motion information.</d
 <description>CLKIN</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector0pad'/>
+<p layer='breadboard' svgId='connector0pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector10pin' terminalId='connector10terminal'/>
@@ -99,7 +99,7 @@ Can interface with an I2C accelerometer to provide 6-axis motion information.</d
 <description>CLKOUT</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector21pad'/>
+<p layer='breadboard' svgId='connector21pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>
@@ -113,7 +113,7 @@ Can interface with an I2C accelerometer to provide 6-axis motion information.</d
 <description>CPOUT</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector19pad'/>
+<p layer='breadboard' svgId='connector19pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
@@ -127,7 +127,7 @@ Can interface with an I2C accelerometer to provide 6-axis motion information.</d
 <description>GND@11</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector10pad'/>
+<p layer='breadboard' svgId='connector10pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector7pin' terminalId='connector7terminal'/>
@@ -141,7 +141,7 @@ Can interface with an I2C accelerometer to provide 6-axis motion information.</d
 <description>GND@18</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector17pad'/>
+<p layer='breadboard' svgId='connector17pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
@@ -155,7 +155,7 @@ Can interface with an I2C accelerometer to provide 6-axis motion information.</d
 <description>INT</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector11pad'/>
+<p layer='breadboard' svgId='connector11pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
@@ -169,7 +169,7 @@ Can interface with an I2C accelerometer to provide 6-axis motion information.</d
 <description>REGOUT</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector9pad'/>
+<p layer='breadboard' svgId='connector9pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector6pin' terminalId='connector6terminal'/>
@@ -183,7 +183,7 @@ Can interface with an I2C accelerometer to provide 6-axis motion information.</d
 <description>SCL</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector22pad'/>
+<p layer='breadboard' svgId='connector22pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector13pin' terminalId='connector13terminal'/>
@@ -197,7 +197,7 @@ Can interface with an I2C accelerometer to provide 6-axis motion information.</d
 <description>SDA</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector23pad'/>
+<p layer='breadboard' svgId='connector23pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector8pin' terminalId='connector8terminal'/>
@@ -211,7 +211,7 @@ Can interface with an I2C accelerometer to provide 6-axis motion information.</d
 <description>VDD</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector12pad'/>
+<p layer='breadboard' svgId='connector12pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
@@ -225,7 +225,7 @@ Can interface with an I2C accelerometer to provide 6-axis motion information.</d
 <description>VLOG</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector7pad'/>
+<p layer='breadboard' svgId='connector7pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/>

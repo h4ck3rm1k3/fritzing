@@ -22,11 +22,5 @@
 <line x1='6.5532' y1='1.651' x2='0.1016' y2='1.651' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='0.1016' y1='1.651' x2='0.1016' y2='7.747' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line x1='0.1016' y1='7.747' x2='6.5532' y2='7.747' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='0.4064' y1='1.966' x2='0.4064' y2='21.397' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='0.4064' y1='21.397' x2='3.5814' y2='21.397' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='3.5814' y1='21.397' x2='6.1214' y2='21.397' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='6.1214' y1='21.397' x2='6.1214' y2='2.601' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='6.1214' y1='2.601' x2='6.1214' y2='1.966' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='6.1214' y1='1.966' x2='0.4064' y2='1.966' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 </g>
 </svg>
