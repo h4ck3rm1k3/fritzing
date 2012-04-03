@@ -147,7 +147,7 @@ void Resistor::setResistance(QString resistance, QString pinSpacing, bool force)
 				InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 				if (infoGraphicsView == NULL) break;
 
-				if (moduleID().compare(ModuleIDNames::ResistorModuleIDName) != 0) break;
+				if (!moduleID().endsWith(ModuleIDNames::ResistorModuleIDName)) break;
 
 				QDomElement element = LayerAttributes::getSvgElementLayers(modelPart()->domDocument(), m_viewIdentifier);
 				if (element.isNull()) break;
