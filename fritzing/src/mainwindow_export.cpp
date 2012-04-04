@@ -967,8 +967,7 @@ void MainWindow::exportBOM() {
 	foreach (ItemBase * itemBase, partList) {
 		if (itemBase->itemType() != ModelPart::Part) continue;
 
-        QString label = itemBase->instanceTitle();
-        QString desc = itemBase->title();
+        QString desc = getBomProps(itemBase);
 
         if(!shoppingList.contains(desc)) {
             shoppingList.insert(desc, 1);
@@ -993,7 +992,8 @@ void MainWindow::exportBOM() {
         it.next();
 		ItemBase * itemBase = descrs.value(it.key());
 
-		shoppingListString += bomRowTemplate.arg(it.value()).arg(it.key()).arg(getBomProps(itemBase));
+		// it.value() = count; it.key() = bomProps
+		shoppingListString += bomRowTemplate.arg(it.value()).arg(itemBase->title()).arg(it.key());
     }
 
 	QString bom = bomTemplate
