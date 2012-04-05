@@ -1,78 +1,861 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
-<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.654606in' height='0.182165in' viewBox='0 0 16.627 4.627' >
-<g id='breadboard'>
-<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l16.627,0 0,4.627 -16.627,0 0,-4.627z
-'/>
-<rect id='connector0pad' connectorname='1' x='15.4135' y='3.0735' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector1pad' connectorname='3' x='14.9135' y='3.0735' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector2pad' connectorname='5' x='14.4135' y='3.0735' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector3pad' connectorname='7' x='13.9135' y='3.0735' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector4pad' connectorname='9' x='13.4135' y='3.0735' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector5pad' connectorname='11' x='12.9135' y='3.0735' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector6pad' connectorname='13' x='12.4135' y='3.0735' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector7pad' connectorname='15' x='11.9135' y='3.0735' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector8pad' connectorname='17' x='11.4135' y='3.0735' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector9pad' connectorname='19' x='10.9135' y='3.0735' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector10pad' connectorname='21' x='10.4135' y='3.0735' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector11pad' connectorname='23' x='9.9135' y='3.0735' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector12pad' connectorname='25' x='9.4135' y='3.0735' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector13pad' connectorname='27' x='8.9135' y='3.0735' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector14pad' connectorname='29' x='8.4135' y='3.0735' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector15pad' connectorname='31' x='7.9135' y='3.0735' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector16pad' connectorname='33' x='7.4135' y='3.0735' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector17pad' connectorname='35' x='6.9135' y='3.0735' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector18pad' connectorname='37' x='6.4135' y='3.0735' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector19pad' connectorname='39' x='5.9135' y='3.0735' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector20pad' connectorname='41' x='5.4135' y='3.0735' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector21pad' connectorname='43' x='4.9135' y='3.0735' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector22pad' connectorname='45' x='4.4135' y='3.0735' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector23pad' connectorname='47' x='3.9135' y='3.0735' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector24pad' connectorname='49' x='3.4135' y='3.0735' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector25pad' connectorname='51' x='2.9135' y='3.0735' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector26pad' connectorname='53' x='2.4135' y='3.0735' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector27pad' connectorname='55' x='1.9135' y='3.0735' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector28pad' connectorname='57' x='1.4135' y='3.0735' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector29pad' connectorname='59' x='0.9135' y='3.0735' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector30pad' connectorname='2' x='15.4135' y='0.2535' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector31pad' connectorname='4' x='14.9135' y='0.2535' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector32pad' connectorname='6' x='14.4135' y='0.2535' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector33pad' connectorname='8' x='13.9135' y='0.2535' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector34pad' connectorname='10' x='13.4135' y='0.2535' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector35pad' connectorname='12' x='12.9135' y='0.2535' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector36pad' connectorname='14' x='12.4135' y='0.2535' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector37pad' connectorname='16' x='11.9135' y='0.2535' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector38pad' connectorname='18' x='11.4135' y='0.2535' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector39pad' connectorname='20' x='10.9135' y='0.2535' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector40pad' connectorname='22' x='10.4135' y='0.2535' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector41pad' connectorname='24' x='9.9135' y='0.2535' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector42pad' connectorname='26' x='9.4135' y='0.2535' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector43pad' connectorname='28' x='8.9135' y='0.2535' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector44pad' connectorname='30' x='8.4135' y='0.2535' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector45pad' connectorname='32' x='7.9135' y='0.2535' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector46pad' connectorname='34' x='7.4135' y='0.2535' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector47pad' connectorname='36' x='6.9135' y='0.2535' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector48pad' connectorname='38' x='6.4135' y='0.2535' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector49pad' connectorname='40' x='5.9135' y='0.2535' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector50pad' connectorname='42' x='5.4135' y='0.2535' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector51pad' connectorname='44' x='4.9135' y='0.2535' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector52pad' connectorname='46' x='4.4135' y='0.2535' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector53pad' connectorname='48' x='3.9135' y='0.2535' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector54pad' connectorname='50' x='3.4135' y='0.2535' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector55pad' connectorname='52' x='2.9135' y='0.2535' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector56pad' connectorname='54' x='2.4135' y='0.2535' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector57pad' connectorname='56' x='1.9135' y='0.2535' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector58pad' connectorname='58' x='1.4135' y='0.2535' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector59pad' connectorname='60' x='0.9135' y='0.2535' width='0.3' height='1.4' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<line x1='0.5635' y1='0.0635' x2='0.0635' y2='0.0635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='0.0635' y1='0.0635' x2='0.0635' y2='4.5635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='0.0635' y1='4.5635' x2='0.5635' y2='4.5635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='16.0635' y1='0.0635' x2='16.5635' y2='0.0635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='16.5635' y1='0.0635' x2='16.5635' y2='4.5635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='16.5635' y1='4.5635' x2='16.0635' y2='4.5635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='1.0635' y1='1.0635' x2='15.5635' y2='1.0635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='15.5635' y1='1.0635' x2='15.5635' y2='3.5635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='15.5635' y1='3.5635' x2='1.0635' y2='3.5635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='1.0635' y1='3.5635' x2='1.0635' y2='1.0635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-</g>
+<svg width="3in" x="0in" version="1.2" y="0in" xmlns="http://www.w3.org/2000/svg" height="0.4in" viewBox="0 0 3000 400" baseProfile="tiny" xmlns:svg="http://www.w3.org/2000/svg">
+ <desc>Fritzing breadboard generated by brd2svg</desc>
+ <g id="breadboard">
+  <g id="icon">
+   <path fill="#1F7A34" stroke="none" stroke-width="0" d="M0,0L0,170A30,30 0 0 1 0,230L0,400L3000,400L3000,0L0,0z"/>
+   <g transform="translate(1172.7,108.917)">
+    <g transform="matrix(0.5, 0, 0, 0.5, 163.652, 45.5413)">
+     <rect width="11.811" x="606.83" y="121.004" fill="#F7BD13" connectorname="1" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="587.145" y="121.004" fill="#F7BD13" connectorname="3" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="567.46" y="121.004" fill="#F7BD13" connectorname="5" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="547.775" y="121.004" fill="#F7BD13" connectorname="7" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="528.09" y="121.004" fill="#F7BD13" connectorname="9" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="508.405" y="121.004" fill="#F7BD13" connectorname="11" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="488.72" y="121.004" fill="#F7BD13" connectorname="13" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="469.035" y="121.004" fill="#F7BD13" connectorname="15" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="449.35" y="121.004" fill="#F7BD13" connectorname="17" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="429.665" y="121.004" fill="#F7BD13" connectorname="19" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="409.98" y="121.004" fill="#F7BD13" connectorname="21" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="390.295" y="121.004" fill="#F7BD13" connectorname="23" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="370.61" y="121.004" fill="#F7BD13" connectorname="25" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="350.925" y="121.004" fill="#F7BD13" connectorname="27" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="331.24" y="121.004" fill="#F7BD13" connectorname="29" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="311.555" y="121.004" fill="#F7BD13" connectorname="31" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="291.87" y="121.004" fill="#F7BD13" connectorname="33" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="272.185" y="121.004" fill="#F7BD13" connectorname="35" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="252.5" y="121.004" fill="#F7BD13" connectorname="37" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="232.815" y="121.004" fill="#F7BD13" connectorname="39" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="213.13" y="121.004" fill="#F7BD13" connectorname="41" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="193.445" y="121.004" fill="#F7BD13" connectorname="43" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="173.76" y="121.004" fill="#F7BD13" connectorname="45" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="154.075" y="121.004" fill="#F7BD13" connectorname="47" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="134.39" y="121.004" fill="#F7BD13" connectorname="49" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="114.705" y="121.004" fill="#F7BD13" connectorname="51" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="95.0196" y="121.004" fill="#F7BD13" connectorname="53" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="75.3346" y="121.004" fill="#F7BD13" connectorname="55" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="55.6496" y="121.004" fill="#F7BD13" connectorname="57" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="35.9646" y="121.004" fill="#F7BD13" connectorname="59" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="606.83" y="9.9803" fill="#F7BD13" connectorname="2" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="587.145" y="9.9803" fill="#F7BD13" connectorname="4" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="567.46" y="9.9803" fill="#F7BD13" connectorname="6" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="547.775" y="9.9803" fill="#F7BD13" connectorname="8" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="528.09" y="9.9803" fill="#F7BD13" connectorname="10" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="508.405" y="9.9803" fill="#F7BD13" connectorname="12" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="488.72" y="9.9803" fill="#F7BD13" connectorname="14" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="469.035" y="9.9803" fill="#F7BD13" connectorname="16" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="449.35" y="9.9803" fill="#F7BD13" connectorname="18" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="429.665" y="9.9803" fill="#F7BD13" connectorname="20" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="409.98" y="9.9803" fill="#F7BD13" connectorname="22" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="390.295" y="9.9803" fill="#F7BD13" connectorname="24" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="370.61" y="9.9803" fill="#F7BD13" connectorname="26" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="350.925" y="9.9803" fill="#F7BD13" connectorname="28" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="331.24" y="9.9803" fill="#F7BD13" connectorname="30" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="311.555" y="9.9803" fill="#F7BD13" connectorname="32" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="291.87" y="9.9803" fill="#F7BD13" connectorname="34" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="272.185" y="9.9803" fill="#F7BD13" connectorname="36" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="252.5" y="9.9803" fill="#F7BD13" connectorname="38" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="232.815" y="9.9803" fill="#F7BD13" connectorname="40" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="213.13" y="9.9803" fill="#F7BD13" connectorname="42" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="193.445" y="9.9803" fill="#F7BD13" connectorname="44" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="173.76" y="9.9803" fill="#F7BD13" connectorname="46" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="154.075" y="9.9803" fill="#F7BD13" connectorname="48" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="134.39" y="9.9803" fill="#F7BD13" connectorname="50" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="114.705" y="9.9803" fill="#F7BD13" connectorname="52" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="95.0196" y="9.9803" fill="#F7BD13" connectorname="54" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="75.3346" y="9.9803" fill="#F7BD13" connectorname="56" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="55.6496" y="9.9803" fill="#F7BD13" connectorname="58" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="11.811" x="35.9646" y="9.9803" fill="#F7BD13" connectorname="60" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="654.606" x="0" y="0" fill="#303030" height="182.165" stroke="none" stroke-width="0"/>
+     <polygon fill="#1f1f1f" points="0,0 654.606,0 644.606,10 10,10"/>
+     <polygon fill="#1f1f1f" points="0,182.165 654.606,182.165 644.606,172.165 10,172.165"/>
+     <polygon fill="#000000" points="0,0 0,182.165 10,172.165 10,10"/>
+     <polygon fill="#3d3d3d" points="654.606,0 654.606,182.165 644.606,172.165 644.606,10"/>
+     <circle fill="#1f1f1f" cx="30" cy="152.165" stroke="none" r="10" stroke-width="0"/>
+    </g>
+   </g>
+   <text x="50" y="224.375" font-family="OCRA" fill="white" text-anchor="start" stroke="none" id="label" stroke-width="0" font-size="65">SM5100B-SPECIAL_FOR_TESTING</text>
+   <g transform="translate(63.5,326.05)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">0</text>
+    </g>
+   </g>
+   <g transform="translate(63.5,73.95)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">59</text>
+    </g>
+   </g>
+   <g transform="translate(163.5,326.05)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">1</text>
+    </g>
+   </g>
+   <g transform="translate(163.5,73.95)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">58</text>
+    </g>
+   </g>
+   <g transform="translate(263.5,326.05)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">2</text>
+    </g>
+   </g>
+   <g transform="translate(263.5,73.95)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">57</text>
+    </g>
+   </g>
+   <g transform="translate(363.5,326.05)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">3</text>
+    </g>
+   </g>
+   <g transform="translate(363.5,73.95)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">56</text>
+    </g>
+   </g>
+   <g transform="translate(463.5,326.05)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">4</text>
+    </g>
+   </g>
+   <g transform="translate(463.5,73.95)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">55</text>
+    </g>
+   </g>
+   <g transform="translate(563.5,326.05)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">5</text>
+    </g>
+   </g>
+   <g transform="translate(563.5,73.95)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">54</text>
+    </g>
+   </g>
+   <g transform="translate(663.5,326.05)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">6</text>
+    </g>
+   </g>
+   <g transform="translate(663.5,73.95)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">53</text>
+    </g>
+   </g>
+   <g transform="translate(763.5,326.05)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">7</text>
+    </g>
+   </g>
+   <g transform="translate(763.5,73.95)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">52</text>
+    </g>
+   </g>
+   <g transform="translate(863.5,326.05)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">8</text>
+    </g>
+   </g>
+   <g transform="translate(863.5,73.95)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">51</text>
+    </g>
+   </g>
+   <g transform="translate(963.5,326.05)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">9</text>
+    </g>
+   </g>
+   <g transform="translate(963.5,73.95)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">50</text>
+    </g>
+   </g>
+   <g transform="translate(1063.5,326.05)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">10</text>
+    </g>
+   </g>
+   <g transform="translate(1063.5,73.95)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">49</text>
+    </g>
+   </g>
+   <g transform="translate(1163.5,326.05)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">11</text>
+    </g>
+   </g>
+   <g transform="translate(1163.5,73.95)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">48</text>
+    </g>
+   </g>
+   <g transform="translate(1263.5,326.05)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">12</text>
+    </g>
+   </g>
+   <g transform="translate(1263.5,73.95)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">47</text>
+    </g>
+   </g>
+   <g transform="translate(1363.5,326.05)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">13</text>
+    </g>
+   </g>
+   <g transform="translate(1363.5,73.95)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">46</text>
+    </g>
+   </g>
+   <g transform="translate(1463.5,326.05)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">14</text>
+    </g>
+   </g>
+   <g transform="translate(1463.5,73.95)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">45</text>
+    </g>
+   </g>
+   <g transform="translate(1563.5,326.05)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">15</text>
+    </g>
+   </g>
+   <g transform="translate(1563.5,73.95)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">44</text>
+    </g>
+   </g>
+   <g transform="translate(1663.5,326.05)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">16</text>
+    </g>
+   </g>
+   <g transform="translate(1663.5,73.95)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">43</text>
+    </g>
+   </g>
+   <g transform="translate(1763.5,326.05)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">17</text>
+    </g>
+   </g>
+   <g transform="translate(1763.5,73.95)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">42</text>
+    </g>
+   </g>
+   <g transform="translate(1863.5,326.05)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">18</text>
+    </g>
+   </g>
+   <g transform="translate(1863.5,73.95)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">41</text>
+    </g>
+   </g>
+   <g transform="translate(1963.5,326.05)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">19</text>
+    </g>
+   </g>
+   <g transform="translate(1963.5,73.95)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">40</text>
+    </g>
+   </g>
+   <g transform="translate(2063.5,326.05)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">20</text>
+    </g>
+   </g>
+   <g transform="translate(2063.5,73.95)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">39</text>
+    </g>
+   </g>
+   <g transform="translate(2163.5,326.05)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">21</text>
+    </g>
+   </g>
+   <g transform="translate(2163.5,73.95)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">38</text>
+    </g>
+   </g>
+   <g transform="translate(2263.5,326.05)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">22</text>
+    </g>
+   </g>
+   <g transform="translate(2263.5,73.95)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">37</text>
+    </g>
+   </g>
+   <g transform="translate(2363.5,326.05)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">23</text>
+    </g>
+   </g>
+   <g transform="translate(2363.5,73.95)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">36</text>
+    </g>
+   </g>
+   <g transform="translate(2463.5,326.05)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">24</text>
+    </g>
+   </g>
+   <g transform="translate(2463.5,73.95)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">35</text>
+    </g>
+   </g>
+   <g transform="translate(2563.5,326.05)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">25</text>
+    </g>
+   </g>
+   <g transform="translate(2563.5,73.95)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">34</text>
+    </g>
+   </g>
+   <g transform="translate(2663.5,326.05)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">26</text>
+    </g>
+   </g>
+   <g transform="translate(2663.5,73.95)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">33</text>
+    </g>
+   </g>
+   <g transform="translate(2763.5,326.05)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">27</text>
+    </g>
+   </g>
+   <g transform="translate(2763.5,73.95)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">32</text>
+    </g>
+   </g>
+   <g transform="translate(2863.5,326.05)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">28</text>
+    </g>
+   </g>
+   <g transform="translate(2863.5,73.95)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">31</text>
+    </g>
+   </g>
+   <g transform="translate(2963.5,326.05)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">29</text>
+    </g>
+   </g>
+   <g transform="translate(2963.5,73.95)">
+    <g transform="rotate(-90)">
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">30</text>
+    </g>
+   </g>
+  </g>
+  <g transform="translate(34.035,334.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector0pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(34.035,34.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector59pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(134.035,334.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector1pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(134.035,34.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector58pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(234.035,334.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector2pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(234.035,34.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector57pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(334.035,334.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector3pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(334.035,34.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector56pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(434.035,334.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector4pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(434.035,34.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector55pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(534.035,334.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector5pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(534.035,34.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector54pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(634.035,334.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector6pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(634.035,34.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector53pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(734.035,334.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector7pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(734.035,34.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector52pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(834.035,334.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector8pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(834.035,34.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector51pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(934.035,334.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector9pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(934.035,34.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector50pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(1034.04,334.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector10pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(1034.04,34.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector49pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(1134.04,334.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector11pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(1134.04,34.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector48pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(1234.04,334.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector12pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(1234.04,34.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector47pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(1334.04,334.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector13pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(1334.04,34.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector46pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(1434.04,334.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector14pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(1434.04,34.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector45pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(1534.04,334.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector15pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(1534.04,34.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector44pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(1634.04,334.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector16pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(1634.04,34.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector43pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(1734.04,334.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector17pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(1734.04,34.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector42pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(1834.04,334.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector18pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(1834.04,34.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector41pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(1934.04,334.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector19pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(1934.04,34.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector40pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(2034.04,334.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector20pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(2034.04,34.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector39pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(2134.03,334.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector21pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(2134.03,34.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector38pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(2234.03,334.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector22pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(2234.03,34.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector37pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(2334.03,334.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector23pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(2334.03,34.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector36pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(2434.03,334.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector24pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(2434.03,34.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector35pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(2534.03,334.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector25pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(2534.03,34.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector34pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(2634.03,334.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector26pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(2634.03,34.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector33pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(2734.03,334.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector27pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(2734.03,34.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector32pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(2834.03,334.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector28pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(2834.03,34.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector31pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(2934.03,334.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector29pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+  <g transform="translate(2934.03,34.05)">
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector30pad" stroke-width="0"/>
+   <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
+   <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
+   <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
+   <polygon fill="#5E5B43" points="24.2079,24.1368,24.2079,7.76321,31.93,0,31.93,31.9" stroke-width="0"/>
+   <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
+  </g>
+ </g>
 </svg>

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-ATMEGA8U2-AU'>
 <version>4</version>
-<date>2012-04-03</date>
+<date>2012-04-05</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Atmel 32-pin 8-bit Microcontroller with 8/16/32K Bystes of ISP Flash and USB Controller. ATmega8U2, ATmega16U2, and ATmega32U2</description>
