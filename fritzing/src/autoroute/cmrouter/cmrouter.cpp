@@ -4180,7 +4180,7 @@ Via * CMRouter::makeVia(PathUnit * pathUnit) {
 
 	long newID = ItemBase::getNextID();
 	ViewGeometry viewGeometry;
-	viewGeometry.setLoc(QPointF(tileToReal(cx - tHalfWidth), tileToReal(cy - tHalfHeight)));
+	viewGeometry.setLoc(QPointF(tileToReal(cx - tHalfWidth) - Hole::OffsetPixels, tileToReal(cy - tHalfHeight) - Hole::OffsetPixels));
 
 	ItemBase * itemBase = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ModuleIDNames::ViaModuleIDName), 
 										m_specHash.value(pathUnit->plane), BaseCommand::CrossView, viewGeometry, newID, -1, NULL, NULL);

@@ -133,6 +133,7 @@ BinManager::BinManager(class ReferenceModel *refModel, class HtmlInfoView *infoV
 	createCombinedMenu();
 	createContextMenus();
 
+	DebugDialog::debug("init bin manager");
 	QList<BinLocation *> actualLocations;
 	findAllBins(actualLocations);
 	restoreStateAndGeometry(actualLocations);
@@ -144,7 +145,10 @@ BinManager::BinManager(class ReferenceModel *refModel, class HtmlInfoView *infoV
 		registerBin(bin);
 		delete location;
 	}
+	DebugDialog::debug("open core bin");
 	openCoreBinIn();
+		
+	DebugDialog::debug("after core bin");
 
 	connectTabWidget();
 }

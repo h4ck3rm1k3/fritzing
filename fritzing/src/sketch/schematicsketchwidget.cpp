@@ -406,3 +406,8 @@ void SchematicSketchWidget::rotatePartLabels(double degrees, QTransform & transf
 	SketchWidget::rotatePartLabels(degrees, transform, center, parentCommand);
 }
 
+void SchematicSketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType crossViewType, QUndoCommand * parentCommand, 
+						bool offsetPaste, const QRectF * boundingRect, bool seekOutsideConnections, QList<long> & newIDs)
+{
+	SketchWidget::loadFromModelParts(modelParts, crossViewType, parentCommand, offsetPaste, boundingRect, seekOutsideConnections, newIDs);
+}

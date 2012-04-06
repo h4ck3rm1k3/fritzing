@@ -155,6 +155,7 @@ protected:
 	bool hasNeighbor(ConnectorItem * connectorItem, ViewLayer::ViewLayerID viewLayerID, const QRectF & r);
 	void setGroundFillSeeds(const QString & intro);
 	bool collectGroundFillSeeds(QList<ConnectorItem *> & seeds, bool includePotential);
+	void shiftHoles();
 
 signals:
 	void subSwapSignal(SketchWidget *, ItemBase *, ViewLayer::ViewLayerSpec, QUndoCommand * parentCommand);

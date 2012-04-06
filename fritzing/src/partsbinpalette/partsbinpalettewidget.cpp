@@ -437,6 +437,8 @@ void PartsBinPaletteWidget::load(const QString &filename, QWidget * progressTarg
 
 	m_location = BinLocation::findLocation(filename);
 
+	DebugDialog::debug("loading bin");
+
 	if (fastLoad) {
 		QString binName, iconName;
 		if (BinManager::getBinTitle(filename, binName, iconName)) {
@@ -451,12 +453,15 @@ void PartsBinPaletteWidget::load(const QString &filename, QWidget * progressTarg
 	PaletteModel * oldModel = (m_canDeleteModel) ? m_model : NULL;
 	PaletteModel * paletteBinModel = new PaletteModel(true, false, false);
 
+
+	DebugDialog::debug("after palette model");
+
 	QString name = m_title;
 	if (name.isEmpty()) name = QFileInfo(filename).baseName();
 
 	bool deleteWhenDone = false;
     if (progressTarget != NULL) {
-        //DebugDialog::debug("open progress " + filename);
+        DebugDialog::debug("open progress " + filename);
 		deleteWhenDone = true;
         progressTarget = m_loadingProgressDialog = new FileProgressDialog(tr("Loading..."), 200, progressTarget);
 		m_loadingProgressDialog->setBinLoadingChunk(200);

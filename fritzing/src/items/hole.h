@@ -125,6 +125,7 @@ public:
 	static const QString AutorouteViaRingThickness;
 	static QString DefaultAutorouteViaHoleSize;
 	static QString DefaultAutorouteViaRingThickness;
+	static const double OffsetPixels;
 };
 
 #endif

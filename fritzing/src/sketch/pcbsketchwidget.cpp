@@ -51,6 +51,7 @@ $Date$
 #include "../svg/groundplanegenerator.h"
 #include "../items/logoitem.h"
 #include "../dialogs/groundfillseeddialog.h"
+#include "../version/version.h"
 
 #include <limits>
 #include <QApplication>
@@ -1039,6 +1040,11 @@ void PCBSketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseCo
 	}
 
 	SketchWidget::loadFromModelParts(modelParts, crossViewType, parentCommand, offsetPaste, boundingRect, seekOutsideConnections, newIDs);
+
+	if (parentCommand == NULL) {
+		shiftHoles();
+	}
+
 }
 
 bool PCBSketchWidget::isInLayers(ConnectorItem * connectorItem, ViewLayer::ViewLayerSpec viewLayerSpec) {
@@ -2248,4 +2254,33 @@ bool PCBSketchWidget::collectGroundFillSeeds(QList<ConnectorItem *> & seeds, boo
 	}
 	
 	return trueSeeds.count() > 0;
+}
+
+void PCBSketchWidget::shiftHoles() {
+	// vias and holes before version 0.7.3 did not have offset
+
+	VersionThing versionThingOffset;
+	versionThingOffset.majorVersion = 0;
+	versionThingOffset.minorVersion = 7;
+	versionThingOffset.minorSubVersion = 2;
+	versionThingOffset.releaseModifier = "b";
+	VersionThing versionThingFz;
+	Version::toVersionThing(m_sketchModel->fritzingVersion(), versionThingFz);
+	bool doShift = !Version::greaterThan(versionThingOffset, versionThingFz);
+	if (!doShift) return;
+
+	foreach (QGraphicsItem * item, scene()->items()) {
+		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+		if (itemBase == NULL) continue;
+
+		switch (itemBase->itemType()) {
+			case ModelPart::Via:
+			case ModelPart::Hole:
+				itemBase->setPos(itemBase->pos().x() - (Hole::OffsetPixels / 2), itemBase->pos().y() - (Hole::OffsetPixels / 2));
+				break;
+
+			default:
+				continue;
+		}		
+	}
 }

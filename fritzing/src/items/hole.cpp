@@ -49,6 +49,7 @@ $Date$
 
 static const int rowHeight = 21;
 
+const double Hole::OffsetPixels = 2;
 QHash<QString, QString> Hole::HoleSizes;
 const QString Hole::AutorouteViaHoleSize = "autorouteViaHoleSize";
 const QString Hole::AutorouteViaRingThickness = "autorouteViaRingThickness";
@@ -296,11 +297,16 @@ void Hole::setBothNonConnectors(ItemBase * itemBase, SvgIdLayer * svgIdLayer) {
 
 QString Hole::makeSvg(const QString & holeDiameter, const QString & ringThickness, ViewLayer::ViewLayerID viewLayerID) 
 {
-	double hd = TextUtils::convertToInches(holeDiameter) * GraphicsUtils::StandardFritzingDPI;
-	double rt = TextUtils::convertToInches(ringThickness) * GraphicsUtils::StandardFritzingDPI;
+	double offsetDPI = OffsetPixels / FSvgRenderer::printerScale();
+	double hd = TextUtils::convertToInches(holeDiameter);
+	double rt = TextUtils::convertToInches(ringThickness);
 
-	double wInches = (hd + rt + rt) / GraphicsUtils::StandardFritzingDPI;
+	double wInches = hd + rt + rt + offsetDPI + offsetDPI;
 	QString svg = TextUtils::makeSVGHeader(1, GraphicsUtils::StandardFritzingDPI, wInches, wInches);
+
+	hd *= GraphicsUtils::StandardFritzingDPI;
+	rt *= GraphicsUtils::StandardFritzingDPI;
+	offsetDPI *= GraphicsUtils::StandardFritzingDPI;
 
 	QString setColor;
 	if (viewLayerID == ViewLayer::Copper0) {
@@ -314,20 +320,21 @@ QString Hole::makeSvg(const QString & holeDiameter, const QString & ringThicknes
 	
 	QString id = makeID();
 	if (hd == 0) {
-		svg += QString("<circle cx='%1' cy='%1' r='%1' fill='%2' id='%3' />")
+		svg += QString("<circle cx='%1' cy='%1' r='%2' fill='%3' id='%4' />")
+					.arg(rt + offsetDPI)
 					.arg(rt)
 					.arg(setColor)
 					.arg(id);
 	}
 	else {
 		svg += QString("<circle fill='none' cx='%1' cy='%1' r='%2' stroke-width='%3' stroke='%4' id='%5' />")
-			.arg((hd / 2) + rt)
+			.arg((hd / 2) + rt + offsetDPI)
 			.arg((hd / 2) + (rt / 2))
 			.arg(rt)
 			.arg(setColor)
 			.arg(id);
 		svg += QString("<circle drill='0' fill='black' cx='%1' cy='%1' r='%2' stroke-width='0'  />")   // set the drill attribute to 0 for gerber translation
-			.arg((hd / 2) + rt)
+			.arg((hd / 2) + rt + offsetDPI)
 			.arg(hd / 2);
 	}
   		
