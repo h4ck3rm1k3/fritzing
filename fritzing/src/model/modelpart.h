@@ -88,7 +88,7 @@ public:
 	void copyNew(ModelPart *);
 	void copyStuff(ModelPart * modelPart);
 	ModelPartShared * modelPartShared();
-        ModelPartSharedRoot * modelPartSharedRoot();
+    ModelPartSharedRoot * modelPartSharedRoot();
 	void setModelPartShared(ModelPartShared *modelPartShared);
 	void saveInstances(const QString & fileName, QXmlStreamWriter & streamWriter, bool startDocument);
 	void saveAsPart(QXmlStreamWriter & streamWriter, bool startDocument);
@@ -165,6 +165,7 @@ public:
 	void initBuses();
 	void clearBuses();
 	void setConnectorLocalName(const QString & id, const QString & name);
+	void setLocalTitle(const QString &);
 
 public:
 	static long nextIndex();
@@ -202,6 +203,7 @@ protected:
 
 	QString m_instanceTitle;
 	QString m_instanceText;
+	QString m_localTitle;
 
 	QList<QObject*> m_orderedChildren;
 

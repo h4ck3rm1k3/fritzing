@@ -134,6 +134,18 @@ void LED::setColor(const QString & color)
 	}
 
 	loadExtraRenderer(getColorSVG(color, m_viewLayerID).toUtf8(),true);
+
+	QString title = modelPart()->modelPartShared()->title();
+	if (title.startsWith("red", Qt::CaseInsensitive)) {
+		title.remove(0, 3);
+		QStringList strings = color.split(" ");
+		modelPart()->setLocalTitle(strings.at(0) + title);
+	}
+	else if (title.endsWith("blue", Qt::CaseInsensitive)) {
+		title.chop(4);
+		QStringList strings = color.split(" ");
+		modelPart()->setLocalTitle(title + strings.at(0));
+	}
 }
 
 QString LED::getColorSVG(const QString & color, ViewLayer::ViewLayerID viewLayerID) 

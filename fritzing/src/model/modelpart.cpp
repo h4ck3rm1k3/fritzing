@@ -482,9 +482,15 @@ const QDomElement & ModelPart::instanceDomElement() {
 }
 
 const QString & ModelPart::title() {
+	if (!m_localTitle.isEmpty()) return m_localTitle;
+
 	if (m_modelPartShared != NULL) return m_modelPartShared->title();
 
-	return ___emptyString___;
+	return m_localTitle;
+}
+
+void ModelPart::setLocalTitle(const QString & localTitle) {
+	m_localTitle = localTitle;
 }
 
 const QString & ModelPart::version() {

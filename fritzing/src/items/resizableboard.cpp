@@ -41,6 +41,7 @@ $Date$
 #include <QLineEdit>
 #include <QRegExp>
 #include <qmath.h>
+#include <qnumeric.h>
 
 static QString BoardLayerTemplate = "";
 static QString SilkscreenLayerTemplate = "";

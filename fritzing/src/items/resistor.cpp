@@ -133,6 +133,8 @@ void Resistor::setResistance(QString resistance, QString pinSpacing, bool force)
 		resistance.chop(1);
 	}
 
+	modelPart()->setLocalTitle(resistance + " " + OhmSymbol + " " + tr("Resistor"));
+
 	switch (this->m_viewIdentifier) {
 		case ViewIdentifierClass::BreadboardView:
 			if (force || resistance.compare(m_ohms) != 0) {
