@@ -6,38 +6,38 @@
   <g id="icon">
    <path fill="#1F7A34" stroke="none" stroke-width="0" d="M0,0L0,170A30,30 0 0 1 0,230L0,400L200,400L200,0L0,0z"/>
    <g transform="translate(-47.6378,170.472)">
-    <g transform="matrix(0.5, 0, 0, 0.5, 73.8189, 14.7638)">
+    <g transform="matrix(0, 0, 0, 0, 147.638, 29.5276)">
      <rect width="47.2442" x="0" y="35.4331" fill="#F7BD13" connectorname="P$1" height="23.622" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="47.2442" x="0" y="0" fill="#F7BD13" connectorname="P$2" height="23.622" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="47.2442" x="248.032" y="35.4331" fill="#F7BD13" connectorname="NC2" height="23.622" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="47.2442" x="248.032" y="0" fill="#F7BD13" connectorname="NC1" height="23.622" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="197.913" x="48.6811" y="1.43701" fill="#303030" height="56.1811" stroke="none" stroke-width="0"/>
-     <polygon fill="#1f1f1f" points="48.6811,1.43701 246.594,1.43701 236.594,11.437 58.6811,11.437"/>
-     <polygon fill="#1f1f1f" points="48.6811,57.6181 246.594,57.6181 236.594,47.6181 58.6811,47.6181"/>
-     <polygon fill="#000000" points="48.6811,1.43701 48.6811,57.6181 58.6811,47.6181 58.6811,11.437"/>
-     <polygon fill="#3d3d3d" points="246.594,1.43701 246.594,57.6181 236.594,47.6181 236.594,11.437"/>
-     <circle fill="#1f1f1f" cx="78.6811" cy="27.6181" stroke="none" r="10" stroke-width="0"/>
+     <rect width="197.913" x="0" y="0" fill="#303030" height="56.1811" stroke="none" stroke-width="0"/>
+     <polygon fill="#1f1f1f" points="0,0 197.913,0 187.913,10 10,10"/>
+     <polygon fill="#1f1f1f" points="0,56.1811 197.913,56.1811 187.913,46.1811 10,46.1811"/>
+     <polygon fill="#000000" points="0,0 0,56.1811 10,46.1811 10,10"/>
+     <polygon fill="#3d3d3d" points="197.913,0 197.913,56.1811 187.913,46.1811 187.913,10"/>
+     <circle fill="#1f1f1f" cx="30" cy="26.1811" stroke="none" r="10" stroke-width="0"/>
     </g>
    </g>
    <text x="50" y="224.375" font-family="OCRA" fill="white" text-anchor="start" stroke="none" id="label" stroke-width="0" font-size="65">CRYSTAL-32KHZ-SMD_EPSON_MC146</text>
    <g transform="translate(63.5,326.05)">
     <g transform="rotate(-90)">
-     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">0</text>
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">1</text>
     </g>
    </g>
    <g transform="translate(63.5,73.95)">
     <g transform="rotate(-90)">
-     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">3</text>
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">4</text>
     </g>
    </g>
    <g transform="translate(163.5,326.05)">
     <g transform="rotate(-90)">
-     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">1</text>
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">2</text>
     </g>
    </g>
    <g transform="translate(163.5,73.95)">
     <g transform="rotate(-90)">
-     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">2</text>
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">3</text>
     </g>
    </g>
   </g>

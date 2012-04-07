@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-M10X2-SPECIAL'>
 <version>4</version>
-<date>2012-04-05</date>
+<date>2012-04-07</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>This was SPECIALLY designed to be used with our Graphic LCD Backpack.  Be sure you want to use this!  It is not only staggered on each line of header holes, but IT IS ALSO offset of the center point of the top and bottom lines by 5 mil.  This causes the headers to lock into place on the &quot;standard&quot; footprint on the LCD screen.  The extra squares on the tdocu layer are there simply to reference other pins (if you were to actually populate a longer header than ten long - this is what we do with the backpacks).</description>

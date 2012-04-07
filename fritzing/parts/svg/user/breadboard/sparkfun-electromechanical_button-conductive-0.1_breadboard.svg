@@ -6,7 +6,7 @@
   <g id="icon">
    <path fill="#1F7A34" stroke="none" stroke-width="0" d="M0,0L0,170A30,30 0 0 1 0,230L0,400L100,400L100,0L0,0z"/>
    <g transform="translate(-4,146)">
-    <g transform="matrix(0.5, 0, 0, 0.5, 27, 27)">
+    <g transform="matrix(-0.952381, 0, 0, -0.952381, 105.429, 105.429)">
      <line stroke="#F7BD13" stroke-linecap="round" y1="79" x1="41" y2="4" stroke-width="7" x2="41"/>
      <line stroke="#F7BD13" stroke-linecap="round" y1="29" x1="54" y2="104" stroke-width="7" x2="54"/>
      <line stroke="#F7BD13" stroke-linecap="round" y1="79" x1="66" y2="4" stroke-width="7" x2="66"/>
@@ -23,23 +23,23 @@
      <line stroke="#F7BD13" stroke-linecap="round" y1="4" x1="66" y2="4" stroke-width="8" x2="104"/>
      <rect width="8" x="100" y="0" fill="#F7BD13" connectorname="1" height="8" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="8" x="100" y="100" fill="#F7BD13" connectorname="2" height="8" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="105" x="1.5" y="1.5" fill="#303030" height="105" stroke="none" stroke-width="0"/>
-     <polygon fill="#1f1f1f" points="1.5,1.5 106.5,1.5 96.5,11.5 11.5,11.5"/>
-     <polygon fill="#1f1f1f" points="1.5,106.5 106.5,106.5 96.5,96.5 11.5,96.5"/>
-     <polygon fill="#000000" points="1.5,1.5 1.5,106.5 11.5,96.5 11.5,11.5"/>
-     <polygon fill="#3d3d3d" points="106.5,1.5 106.5,106.5 96.5,96.5 96.5,11.5"/>
-     <circle fill="#1f1f1f" cx="31.5" cy="76.5" stroke="none" r="10" stroke-width="0"/>
+     <rect width="105" x="-2.85714" y="-2.85714" fill="#303030" height="105" stroke="none" stroke-width="0"/>
+     <polygon fill="#1f1f1f" points="-2.85714,-2.85714 102.143,-2.85714 92.1429,7.14286 7.14286,7.14286"/>
+     <polygon fill="#1f1f1f" points="-2.85714,102.143 102.143,102.143 92.1429,92.1429 7.14286,92.1429"/>
+     <polygon fill="#000000" points="-2.85714,-2.85714 -2.85714,102.143 7.14286,92.1429 7.14286,7.14286"/>
+     <polygon fill="#3d3d3d" points="102.143,-2.85714 102.143,102.143 92.1429,92.1429 92.1429,7.14286"/>
+     <circle fill="#1f1f1f" cx="27.1429" cy="72.1429" stroke="none" r="10" stroke-width="0"/>
     </g>
    </g>
    <text x="50" y="224.375" font-family="OCRA" fill="white" text-anchor="start" stroke="none" id="label" stroke-width="0" font-size="65">BUTTON-CONDUCTIVE-0.1</text>
    <g transform="translate(63.5,326.05)">
     <g transform="rotate(-90)">
-     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">0</text>
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">1</text>
     </g>
    </g>
    <g transform="translate(63.5,73.95)">
     <g transform="rotate(-90)">
-     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">1</text>
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">2</text>
     </g>
    </g>
   </g>

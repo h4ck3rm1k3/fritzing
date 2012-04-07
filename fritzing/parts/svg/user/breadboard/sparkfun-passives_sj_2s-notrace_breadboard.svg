@@ -6,7 +6,7 @@
   <g id="icon">
    <path fill="#1F7A34" stroke="none" stroke-width="0" d="M0,0L0,170A30,30 0 0 1 0,230L0,400L100,400L100,0L0,0z"/>
    <g transform="translate(6.53187,156.63)">
-    <g transform="matrix(0.5, 0, 0, 0.5, 21.7341, 21.685)">
+    <g transform="matrix(-1.15027, 0, 0, -1.15027, 93.4681, 93.2573)">
      <rect width="25" x="15.0866" y="18.3701" fill="#F7BD13" connectorname="1" height="50" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="25" x="47.1182" y="18.3701" fill="#F7BD13" connectorname="2" height="50" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="86.9363" x="0" y="0" fill="#303030" height="86.7402" stroke="none" stroke-width="0"/>
@@ -20,12 +20,12 @@
    <text x="50" y="224.375" font-family="OCRA" fill="white" text-anchor="start" stroke="none" id="label" stroke-width="0" font-size="65">SJ_2S-NOTRACE</text>
    <g transform="translate(63.5,326.05)">
     <g transform="rotate(-90)">
-     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">0</text>
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">1</text>
     </g>
    </g>
    <g transform="translate(63.5,73.95)">
     <g transform="rotate(-90)">
-     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">1</text>
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">2</text>
     </g>
    </g>
   </g>

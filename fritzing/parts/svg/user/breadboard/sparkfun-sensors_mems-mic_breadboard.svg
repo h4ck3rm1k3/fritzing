@@ -6,38 +6,38 @@
   <g id="icon">
    <path fill="#1F7A34" stroke="none" stroke-width="0" d="M0,0L0,170A30,30 0 0 1 0,230L0,400L200,400L200,0L0,0z"/>
    <g transform="translate(31.8898,112.795)">
-    <g transform="matrix(0.5, 0, 0, 0.5, 34.0551, 43.6024)">
+    <g transform="matrix(0, 0, 0, 0, 68.1102, 87.2047)">
      <rect width="48.8187" x="0" y="117.323" fill="#F7BD13" connectorname="2" height="57.0865" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="48.8187" x="87.4013" y="117.323" fill="#F7BD13" connectorname="3" height="57.0865" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="48.8187" x="0" y="0" fill="#F7BD13" connectorname="1" height="57.0865" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="48.8187" x="87.4013" y="0" fill="#F7BD13" connectorname="4" height="57.0865" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="19" x="58.6102" y="77.7047" fill="#303030" height="19" stroke="none" stroke-width="0"/>
-     <polygon fill="#1f1f1f" points="58.6102,77.7047 77.6102,77.7047 67.6102,87.7047 68.6102,87.7047"/>
-     <polygon fill="#1f1f1f" points="58.6102,96.7047 77.6102,96.7047 67.6102,86.7047 68.6102,86.7047"/>
-     <polygon fill="#000000" points="58.6102,77.7047 58.6102,96.7047 68.6102,86.7047 68.6102,87.7047"/>
-     <polygon fill="#3d3d3d" points="77.6102,77.7047 77.6102,96.7047 67.6102,86.7047 67.6102,87.7047"/>
-     <circle fill="#1f1f1f" cx="88.6102" cy="66.7047" stroke="none" r="10" stroke-width="0"/>
+     <rect width="19" x="0" y="0" fill="#303030" height="19" stroke="none" stroke-width="0"/>
+     <polygon fill="#1f1f1f" points="0,0 19,0 9,10 10,10"/>
+     <polygon fill="#1f1f1f" points="0,19 19,19 9,9 10,9"/>
+     <polygon fill="#000000" points="0,0 0,19 10,9 10,10"/>
+     <polygon fill="#3d3d3d" points="19,0 19,19 9,9 9,10"/>
+     <circle fill="#1f1f1f" cx="30" cy="-11" stroke="none" r="10" stroke-width="0"/>
     </g>
    </g>
    <text x="50" y="224.375" font-family="OCRA" fill="white" text-anchor="start" stroke="none" id="label" stroke-width="0" font-size="65">MEMS-MIC</text>
    <g transform="translate(63.5,326.05)">
     <g transform="rotate(-90)">
-     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">0</text>
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">1</text>
     </g>
    </g>
    <g transform="translate(63.5,73.95)">
     <g transform="rotate(-90)">
-     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">3</text>
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">4</text>
     </g>
    </g>
    <g transform="translate(163.5,326.05)">
     <g transform="rotate(-90)">
-     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">1</text>
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">2</text>
     </g>
    </g>
    <g transform="translate(163.5,73.95)">
     <g transform="rotate(-90)">
-     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">2</text>
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">3</text>
     </g>
    </g>
   </g>

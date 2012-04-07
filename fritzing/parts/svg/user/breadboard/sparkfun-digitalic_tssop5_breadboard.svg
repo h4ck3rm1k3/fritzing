@@ -6,39 +6,39 @@
   <g id="icon">
    <path fill="#1F7A34" stroke="none" stroke-width="0" d="M0,0L0,170A30,30 0 0 1 0,230L0,400L200,400L200,0L0,0z"/>
    <g transform="translate(50,154.193)">
-    <g transform="matrix(0.5, 0, 0, 0.5, 25, 22.9035)">
+    <g transform="matrix(0, 0, 0, 0, 50, 45.8071)">
      <rect width="21.6535" x="0" y="15.4921" fill="#F7BD13" connectorname="1" height="15.748" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="21.6535" x="0" y="41.0827" fill="#F7BD13" connectorname="2" height="15.748" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="21.6535" x="0" y="66.6732" fill="#F7BD13" connectorname="3" height="15.748" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="21.6535" x="78.3465" y="66.6732" fill="#F7BD13" connectorname="4" height="15.748" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="21.6535" x="77.9528" y="15.0984" fill="#F7BD13" connectorname="5" height="15.748" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="56.1811" x="21.9094" y="0" fill="#303030" height="91.6142" stroke="none" stroke-width="0"/>
-     <polygon fill="#1f1f1f" points="21.9094,0 78.0906,0 68.0906,10 31.9094,10"/>
-     <polygon fill="#1f1f1f" points="21.9094,91.6142 78.0906,91.6142 68.0906,81.6142 31.9094,81.6142"/>
-     <polygon fill="#000000" points="21.9094,0 21.9094,91.6142 31.9094,81.6142 31.9094,10"/>
-     <polygon fill="#3d3d3d" points="78.0906,0 78.0906,91.6142 68.0906,81.6142 68.0906,10"/>
-     <circle fill="#1f1f1f" cx="51.9094" cy="61.6142" stroke="none" r="10" stroke-width="0"/>
+     <rect width="56.1811" x="0" y="0" fill="#303030" height="91.6142" stroke="none" stroke-width="0"/>
+     <polygon fill="#1f1f1f" points="0,0 56.1811,0 46.1811,10 10,10"/>
+     <polygon fill="#1f1f1f" points="0,91.6142 56.1811,91.6142 46.1811,81.6142 10,81.6142"/>
+     <polygon fill="#000000" points="0,0 0,91.6142 10,81.6142 10,10"/>
+     <polygon fill="#3d3d3d" points="56.1811,0 56.1811,91.6142 46.1811,81.6142 46.1811,10"/>
+     <circle fill="#1f1f1f" cx="30" cy="61.6142" stroke="none" r="10" stroke-width="0"/>
     </g>
    </g>
    <text x="50" y="224.375" font-family="OCRA" fill="white" text-anchor="start" stroke="none" id="label" stroke-width="0" font-size="65">TSSOP5</text>
    <g transform="translate(63.5,326.05)">
     <g transform="rotate(-90)">
-     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">0</text>
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">1</text>
     </g>
    </g>
    <g transform="translate(63.5,73.95)">
     <g transform="rotate(-90)">
-     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">4</text>
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">5</text>
     </g>
    </g>
    <g transform="translate(163.5,326.05)">
     <g transform="rotate(-90)">
-     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">1</text>
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">2</text>
     </g>
    </g>
    <g transform="translate(163.5,73.95)">
     <g transform="rotate(-90)">
-     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">3</text>
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">4</text>
     </g>
    </g>
   </g>

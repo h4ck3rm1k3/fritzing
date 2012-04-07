@@ -6,26 +6,26 @@
   <g id="icon">
    <path fill="#1F7A34" stroke="none" stroke-width="0" d="M0,0L0,170A30,30 0 0 1 0,230L0,400L100,400L100,0L0,0z"/>
    <g transform="translate(-68.1102,138.913)">
-    <g transform="matrix(0.5, 0, 0, 0.5, 59.0551, 30.5433)">
+    <g transform="matrix(-0.528814, 0, 0, -0.528814, 180.569, 93.3901)">
      <rect width="78.74" x="0" y="21.7165" fill="#F7BD13" connectorname="A" height="78.74" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="78.74" x="157.48" y="21.7165" fill="#F7BD13" connectorname="C" height="78.74" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="189.102" x="23.5591" y="0" fill="#303030" height="122.173" stroke="none" stroke-width="0"/>
-     <polygon fill="#1f1f1f" points="23.5591,0 212.661,0 202.661,10 33.5591,10"/>
-     <polygon fill="#1f1f1f" points="23.5591,122.173 212.661,122.173 202.661,112.173 33.5591,112.173"/>
-     <polygon fill="#000000" points="23.5591,0 23.5591,122.173 33.5591,112.173 33.5591,10"/>
-     <polygon fill="#3d3d3d" points="212.661,0 212.661,122.173 202.661,112.173 202.661,10"/>
-     <circle fill="#1f1f1f" cx="53.5591" cy="92.1732" stroke="none" r="10" stroke-width="0"/>
+     <rect width="189.102" x="-24.9167" y="0" fill="#303030" height="122.173" stroke="none" stroke-width="0"/>
+     <polygon fill="#1f1f1f" points="-24.9167,0 164.186,0 154.186,10 -14.9167,10"/>
+     <polygon fill="#1f1f1f" points="-24.9167,122.173 164.186,122.173 154.186,112.173 -14.9167,112.173"/>
+     <polygon fill="#000000" points="-24.9167,0 -24.9167,122.173 -14.9167,112.173 -14.9167,10"/>
+     <polygon fill="#3d3d3d" points="164.186,0 164.186,122.173 154.186,112.173 154.186,10"/>
+     <circle fill="#1f1f1f" cx="5.08328" cy="92.1732" stroke="none" r="10" stroke-width="0"/>
     </g>
    </g>
    <text x="50" y="224.375" font-family="OCRA" fill="white" text-anchor="start" stroke="none" id="label" stroke-width="0" font-size="65">SMA-DIODE_ALT</text>
    <g transform="translate(63.5,326.05)">
     <g transform="rotate(-90)">
-     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">0</text>
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">1</text>
     </g>
    </g>
    <g transform="translate(63.5,73.95)">
     <g transform="rotate(-90)">
-     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">1</text>
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">2</text>
     </g>
    </g>
   </g>

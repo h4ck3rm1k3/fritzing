@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-GS406SMD-MATING_SMD_***SPECIAL'>
 <version>4</version>
-<date>2012-04-05</date>
+<date>2012-04-07</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>50 Channel GS406 Helical GPS Receiver - SMD Connector.  The Mating SMD SPECIAL is called SPECIAL for a reason. This package was only made in order to make a dummy gs407 PCB with mating connector (used for testing).

@@ -6,26 +6,26 @@
   <g id="icon">
    <path fill="#1F7A34" stroke="none" stroke-width="0" d="M0,0L0,170A30,30 0 0 1 0,230L0,400L100,400L100,0L0,0z"/>
    <g transform="translate(-95.6693,137.008)">
-    <g transform="matrix(0.5, 0, 0, 0.5, 72.8346, 31.4961)">
+    <g transform="matrix(-0.396101, 0, 0, -0.396101, 203.369, 87.9434)">
      <rect width="70.8662" x="0" y="0" fill="#F7BD13" connectorname="1" height="125.984" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="70.8662" x="220.473" y="0" fill="#F7BD13" connectorname="2" height="125.984" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="252.461" x="19.439" y="1.96654" fill="#303030" height="122.051" stroke="none" stroke-width="0"/>
-     <polygon fill="#1f1f1f" points="19.439,1.96654 271.9,1.96654 261.9,11.9665 29.439,11.9665"/>
-     <polygon fill="#1f1f1f" points="19.439,124.018 271.9,124.018 261.9,114.018 29.439,114.018"/>
-     <polygon fill="#000000" points="19.439,1.96654 19.439,124.018 29.439,114.018 29.439,11.9665"/>
-     <polygon fill="#3d3d3d" points="271.9,1.96654 271.9,124.018 261.9,114.018 261.9,11.9665"/>
-     <circle fill="#1f1f1f" cx="49.439" cy="94.0177" stroke="none" r="10" stroke-width="0"/>
+     <rect width="252.461" x="-15.3996" y="-1.55789" fill="#303030" height="122.051" stroke="none" stroke-width="0"/>
+     <polygon fill="#1f1f1f" points="-15.3996,-1.55789 237.061,-1.55789 227.061,8.44211 -5.39961,8.44211"/>
+     <polygon fill="#1f1f1f" points="-15.3996,120.493 237.061,120.493 227.061,110.493 -5.39961,110.493"/>
+     <polygon fill="#000000" points="-15.3996,-1.55789 -15.3996,120.493 -5.39961,110.493 -5.39961,8.44211"/>
+     <polygon fill="#3d3d3d" points="237.061,-1.55789 237.061,120.493 227.061,110.493 227.061,8.44211"/>
+     <circle fill="#1f1f1f" cx="14.6004" cy="90.4933" stroke="none" r="10" stroke-width="0"/>
     </g>
    </g>
    <text x="50" y="224.375" font-family="OCRA" fill="white" text-anchor="start" stroke="none" id="label" stroke-width="0" font-size="65">R2512</text>
    <g transform="translate(63.5,326.05)">
     <g transform="rotate(-90)">
-     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">0</text>
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">1</text>
     </g>
    </g>
    <g transform="translate(63.5,73.95)">
     <g transform="rotate(-90)">
-     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">1</text>
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">2</text>
     </g>
    </g>
   </g>
