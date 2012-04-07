@@ -288,6 +288,11 @@ void LogoItem::reloadImage(const QString & svg, const QSizeF & aspectRatio, cons
 			}
 		}
 		m_logo = "";
+
+		LayerHash layerHash;
+		resizeMM(GraphicsUtils::pixels2mm(m_aspectRatio.width(), FSvgRenderer::printerScale()),
+				 GraphicsUtils::pixels2mm(m_aspectRatio.height(), FSvgRenderer::printerScale()),
+				 layerHash);
 	}
 	else {
 		// restore previous (not sure whether this is necessary)
@@ -517,7 +522,7 @@ void LogoItem::setLogo(QString logo, bool force) {
 		resizeMM(GraphicsUtils::pixels2mm(newSize.width(), FSvgRenderer::printerScale()),
 				 GraphicsUtils::pixels2mm(newSize.height(), FSvgRenderer::printerScale()),
 				 layerHash);
-		DebugDialog::debug(QString("size %1 %2").arg(m_size.width()).arg(m_size.height()));
+		//DebugDialog::debug(QString("size %1 %2").arg(m_size.width()).arg(m_size.height()));
 	}
 }
 
