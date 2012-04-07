@@ -325,6 +325,7 @@ protected:
 	bool m_moveLock;
 	bool m_hasRubberBandLeg;
 	QList<ConnectorItem *> m_cachedConnectorItems;
+	QGraphicsSvgItem * m_moveLockItem;
 
 protected:
 	static long nextID;

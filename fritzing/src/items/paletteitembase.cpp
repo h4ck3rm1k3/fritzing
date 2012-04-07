@@ -712,6 +712,7 @@ bool PaletteItemBase::freeRotationAllowed(Qt::KeyboardModifiers modifiers) {
 	Q_UNUSED(modifiers);
 	//if ((modifiers & altOrMetaModifier()) == 0) return false;
 	if (!isSelected()) return false;
+	if (this->moveLock()) return false;
 
 	return rotation45Allowed();
 }

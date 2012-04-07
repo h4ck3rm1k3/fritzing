@@ -67,6 +67,8 @@ bool numberValueLessThan(QString v1, QString v2)
 	return NumberMatcherValues.value(v1, 0) <= NumberMatcherValues.value(v2, 0);
 }
 
+static QSvgRenderer MoveLockRenderer;
+
 /////////////////////////////////
 
 class NameTriple {
@@ -142,6 +144,8 @@ ItemBase::ItemBase( ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier vi
 {
 	//DebugDialog::debug(QString("itembase %1 %2").arg(id).arg((long) static_cast<QGraphicsItem *>(this), 0, 16));
 	m_hasRubberBandLeg = m_moveLock = m_hoverEnterSpaceBarWasPressed = m_spaceBarWasPressed = false;
+
+	m_moveLockItem = NULL;
 
 	m_everVisible = true;
 
@@ -675,20 +679,6 @@ void ItemBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 		layerKinChief()->paintSelected(painter, option, widget);
     }	
 
-	if (m_moveLock) {
-		painter->save();
-		QPen pen;
-		pen.setColor(QColor(0,0,0));
-		pen.setWidth(2);
-		painter->setPen(pen);
-		painter->drawArc(2, 1, 6, 4, 180 * 16, -180 * 16);
-		painter->drawLine(2, 4, 2, 5);
-		painter->drawLine(8, 4, 8, 5);
-		painter->fillRect(0, 5, 10, 7, QColor(0,0,0));
-		
-		painter->restore();
-	}
-
 	if (m_inactive) {
 		painter->restore();
 	}
@@ -967,7 +957,7 @@ bool ItemBase::canFlip(Qt::Orientations orientations) {
 }
 
 bool ItemBase::canFlipHorizontal() {
-	return m_canFlipHorizontal;
+	return m_canFlipHorizontal && !m_moveLock;
 }
 
 void ItemBase::setCanFlipHorizontal(bool cf) {
@@ -975,7 +965,7 @@ void ItemBase::setCanFlipHorizontal(bool cf) {
 }
 
 bool ItemBase::canFlipVertical() {
-	return m_canFlipVertical;
+	return m_canFlipVertical && !m_moveLock;
 }
 
 void ItemBase::setCanFlipVertical(bool cf) {
@@ -983,11 +973,11 @@ void ItemBase::setCanFlipVertical(bool cf) {
 }
 
 bool ItemBase::rotationAllowed() {
-	return true;
+	return !m_moveLock;
 }
 
 bool ItemBase::rotation45Allowed() {
-	return true;
+	return !m_moveLock;
 }
 
 void ItemBase::clearModelPart() {
@@ -1719,7 +1709,33 @@ bool ItemBase::moveLock() {
 
 void ItemBase::setMoveLock(bool moveLock) 
 {
+	if (moveLock == m_moveLock) return;
+
 	m_moveLock = moveLock;
+	if (moveLock) {
+		if (!MoveLockRenderer.isValid()) {
+			QString fn(":resources/images/part_lock.svg");
+			bool success = MoveLockRenderer.load(fn);
+			DebugDialog::debug(QString("movelock load success %1").arg(success));
+		}
+
+		m_moveLockItem = new QGraphicsSvgItem();
+		m_moveLockItem->setAcceptHoverEvents(false);
+		m_moveLockItem->setAcceptedMouseButtons(Qt::NoButton);
+		m_moveLockItem->setSharedRenderer(&MoveLockRenderer);
+		m_moveLockItem->setPos(0,0);
+		m_moveLockItem->setZValue(-99999);
+		m_moveLockItem->setParentItem(this);
+		m_moveLockItem->setVisible(true);
+
+	}
+	else {
+		if (m_moveLockItem) {
+			delete m_moveLockItem;
+			m_moveLockItem = NULL;
+		}
+	}
+
 	update();
 }
 
