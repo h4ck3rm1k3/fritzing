@@ -35,6 +35,7 @@ $Date$
 #include <QPainter>
 #include <QCoreApplication>
 #include <QGraphicsSvgItem>
+#include <qnumeric.h>
 
 QString FSvgRenderer::NonConnectorName("nonconn");
 
@@ -106,30 +107,12 @@ QByteArray FSvgRenderer::loadSvg(const QString & filename, const QStringList & c
 
 	return loadAux(contents, filename, connectorIDs, terminalIDs, legIDs, setColor, colorElementID, findNonConnectors);
 
-	/*
-
-	QXmlStreamReader xml(contents);
-	determineDefaultSize(xml);
-
-	if (readConnectors) {
-		file.seek(0);
-		m_svgXml = file.readAll();
-	}
-	file.close();
-
-	bool result = QSvgRenderer::load(filename);
-	if (result) {
-		m_filename = filename;
-	}
-	return result;
-	*/
-
 }
 
 bool FSvgRenderer::loadSvgString(const QString & svg) {
 	QByteArray byteArray(svg.toUtf8());
-	loadSvg(byteArray, "");
-	return true;
+	QByteArray result = loadSvg(byteArray, "");
+	return !result.isEmpty();
 }
 
 QByteArray FSvgRenderer::loadSvg(const QByteArray & contents, const QString & filename) {
@@ -234,21 +217,12 @@ QByteArray FSvgRenderer::loadAux(const QByteArray & contents, const QString & fi
 	//DebugDialog::debug(cleanContents.data());
 
 	QXmlStreamReader xml(cleanContents);
-	determineDefaultSize(xml);
-
-	/*
-	QString path = QCoreApplication::applicationDirPath();
-	path += "/../boom.svg";
-	QFile file(path);
-	if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-		QTextStream out(&file);
-		out << QString(cleanContents);
-		file.close();
+	bool result = determineDefaultSize(xml);
+	if (!result) {
+		return QByteArray();
 	}
-	*/
 
-
-	bool result = QSvgRenderer::load(cleanContents);
+	result = QSvgRenderer::load(cleanContents);
 	if (result) {
 		m_filename = filename;
 		return cleanContents;
@@ -318,10 +292,12 @@ void FSvgRenderer::set(const QString & moduleID, ViewLayer::ViewLayerID viewLaye
 	rendererHash->insert(viewLayerID, renderer);
 }
 
-void FSvgRenderer::determineDefaultSize(QXmlStreamReader & xml)
+bool FSvgRenderer::determineDefaultSize(QXmlStreamReader & xml)
 {
 	QSizeF size = parseForWidthAndHeight(xml);
+
 	m_defaultSizeF = QSizeF(size.width() * m_printerScale, size.height() * m_printerScale);
+	return (size.width() != 0 && size.height() != 0);
 }
 
 QSizeF FSvgRenderer::parseForWidthAndHeight(QXmlStreamReader & xml)
@@ -331,32 +307,46 @@ QSizeF FSvgRenderer::parseForWidthAndHeight(QXmlStreamReader & xml)
 	QSizeF size(0,0);
 
 	bool isIllustrator = false;
+	bool bad = false;
 
-	while (!xml.atEnd()) {
+	while (!xml.atEnd() && !bad) {
         switch (xml.readNext()) {
 		case QXmlStreamReader::Comment:
-			isIllustrator = TextUtils::isIllustratorFile(xml.text().toString());
+			if (!isIllustrator) {
+				isIllustrator = TextUtils::isIllustratorFile(xml.text().toString());
+			}
 			break;
         case QXmlStreamReader::StartElement:
 			if (xml.name().toString().compare("svg") == 0) {
 				QString ws = xml.attributes().value("width").toString();
 				QString hs = xml.attributes().value("height").toString();
-				bool ok;
-				double w = TextUtils::convertToInches(ws, &ok, isIllustrator);
-				if (!ok) return size;
-
-				double h = TextUtils::convertToInches(hs, &ok, isIllustrator);
-				if (!ok) return size;
+				bool okw, okh;
+				double w = TextUtils::convertToInches(ws, &okw, isIllustrator);
+				double h = TextUtils::convertToInches(hs, &okh, isIllustrator);
+				if (!okw || qIsNaN(w) || qIsInf(w) || !okh || qIsNaN(h) || qIsInf(h)) {
+					bad = true;
+					break;
+				}
 
 				size.setWidth(w);
 				size.setHeight(h);
 				return size;
 			}
-			return size;
+			break;		
 		default:
-			break;
+			break;		
 		}
 	}
+
+	QIODevice * device = xml.device();
+	DebugDialog::debug("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+	DebugDialog::debug("bad width and/or bad height in svg:");
+	if (device) {
+		device->reset();
+		QString string(device->readAll());
+		DebugDialog::debug(string);
+	}
+	DebugDialog::debug("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
 	return size;
 }
@@ -379,22 +369,6 @@ void FSvgRenderer::calcPrinterScale() {
 	VanillaConnectorInfo.gotCircle = false;				
 	m_printerScale = 90.0;
 
-	/*
-
-	QString filename(":/resources/parts/svg/core/breadboard/wire.svg");
-	
-	QGraphicsSvgItem item(filename);
-	QRectF b = item.boundingRect();
-	QFile file(filename);
-	file.open(QFile::ReadOnly);
-	QXmlStreamReader xml(&file);
-	QSizeF size = parseForWidthAndHeight(xml);
-	if (size.width() <= 0) return;
-
-	double pscale = b.width() / size.width();
-	DebugDialog::debug(QString("printerscale %1").arg(pscale));
-
-	*/
 }
 
 double FSvgRenderer::printerScale() {

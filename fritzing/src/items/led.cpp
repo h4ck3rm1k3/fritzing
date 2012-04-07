@@ -135,7 +135,7 @@ void LED::setColor(const QString & color)
 
 	loadExtraRenderer(getColorSVG(color, m_viewLayerID).toUtf8(),true);
 
-	QString title = modelPart()->modelPartShared()->title();
+	QString title = modelPart()->modelPartShared()->title();  // bypass any local title by going to modelPartShared
 	if (title.startsWith("red", Qt::CaseInsensitive)) {
 		title.remove(0, 3);
 		QStringList strings = color.split(" ");

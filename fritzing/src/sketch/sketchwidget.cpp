@@ -505,6 +505,7 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 
 	if (parentCommand == NULL) {
 		foreach (ItemBase * item, newItems) {
+			item->doneLoading();
 			if (item->sticky()) {
 				stickyScoop(item, false, NULL);
 			}

@@ -1857,3 +1857,6 @@ const QCursor * ItemBase::getCursor(Qt::KeyboardModifiers)
 PartLabel * ItemBase::partLabel() {
 	return m_partLabel;
 }
+
+void ItemBase::doneLoading() {
+}

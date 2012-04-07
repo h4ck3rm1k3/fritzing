@@ -83,11 +83,12 @@ void LogoItem::addedToScene(bool temporary)
 		m_aspectRatio.setHeight(this->boundingRect().height());
 		m_originalFilename = filename();
 		QString shape = prop("shape");
-		if (!shape.isEmpty()) {
-					
+		if (!shape.isEmpty()) {					
 			m_aspectRatio = modelPart()->prop("aspectratio").toSizeF();
 			if (loadExtraRenderer(shape.toUtf8(), false)) {
-
+			}
+			else {
+				DebugDialog::debug("bad shape in " + m_originalFilename + " " + shape);
 			}
 		}
 		else {

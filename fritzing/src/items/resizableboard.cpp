@@ -122,6 +122,8 @@ bool Board::canFindConnectorsUnder() {
 ResizableBoard::ResizableBoard( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: Board(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
+	fixWH();
+
 	m_keepAspectRatio = false;
 	m_widthEditor = m_heightEditor = NULL;
 
@@ -135,6 +137,7 @@ ResizableBoard::~ResizableBoard() {
 }
 
 void ResizableBoard::addedToScene(bool temporary) {
+
 	loadTemplates();
 	if (this->scene()) {
 		setInitialSize();
@@ -420,16 +423,17 @@ void ResizableBoard::resizeMMAux(double mmW, double mmH) {
 }
 
 void ResizableBoard::loadLayerKin( const LayerHash & viewLayers, ViewLayer::ViewLayerSpec viewLayerSpec) {
+
 	loadTemplates();				
 	Board::loadLayerKin(viewLayers, viewLayerSpec);
-	double w = m_modelPart->prop("width").toDouble();
+	double w =  m_modelPart->prop("width").toDouble();
 	if (w != 0) {
 		resizeMM(w, m_modelPart->prop("height").toDouble(), viewLayers);
 	}
 }
 
 void ResizableBoard::setInitialSize() {
-	double w = m_modelPart->prop("width").toDouble();
+	double w =  m_modelPart->prop("width").toDouble();
 	if (w == 0) {
 		// set the size so the infoGraphicsView will display the size as you drag
 		QSizeF sz = this->boundingRect().size();
@@ -861,4 +865,24 @@ QFrame * ResizableBoard::setUpDimEntry(bool includeProportion, QWidget * & retur
 	frame->setLayout(vboxLayout);
 
 	return frame;
+}
+
+void ResizableBoard::fixWH() {
+	bool okw, okh;
+	QString wstr = m_modelPart->prop("width").toString();
+	QString hstr = m_modelPart->prop("height").toString();
+	double w = wstr.toDouble(&okw);
+	double h = hstr.toDouble(&okh);
+
+	//DebugDialog::debug(QString("w:%1 %2 ok:%3 h:%4 %5 ok:%6")
+					//.arg(wstr).arg(w).arg(okw)
+					//.arg(hstr).arg(h).arg(okh));
+
+	if ((!okw && !wstr.isEmpty()) || qIsNaN(w) || qIsInf(w) || (!okh && !hstr.isEmpty()) || qIsNaN(h) || qIsInf(h)) {
+		DebugDialog::debug("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		DebugDialog::debug("bad width or height in ResizableBoard or subclass " + wstr + " " + hstr);
+		DebugDialog::debug("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		m_modelPart->setProp("width", "");
+		m_modelPart->setProp("height", "");
+	}
 }

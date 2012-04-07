@@ -80,7 +80,7 @@ public:
 	static void removeFromHash(const QString &moduleId, const QString filename);
 
 protected:
-	void determineDefaultSize(QXmlStreamReader &);
+	bool determineDefaultSize(QXmlStreamReader &);
 	QByteArray loadAux (const QByteArray & contents, const QString & filename, const QStringList & connectorIDs, const QStringList & terminalIDs, const QStringList & legIDs, const QString & setColor, const QString & colorElementID, bool findNonConnectors);
 	bool initConnectorInfo(QDomDocument &, const QStringList & connectorIDs, const QStringList & terminalIDs, const QStringList & legIDs);
 	ConnectorInfo * initConnectorInfoStruct(QDomElement & connectorElement);
