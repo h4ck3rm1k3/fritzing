@@ -45,6 +45,7 @@ $Date$
 #include <QMessageBox>
 #include <QImage>
 #include <QLineEdit>
+#include <QApplication>
 
 static QStringList ImageNames;
 static QStringList NewImageNames;
@@ -60,6 +61,7 @@ LogoItem::LogoItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier v
 		ImageNames << "Made with Fritzing" << "Fritzing icon" << "OHANDA logo" << "OSHW logo";
 	}
 
+	m_inLogoEntry = QTime::currentTime().addSecs(-10);
 	m_fileNameComboBox = NULL;
 	m_aspectRatioCheck = NULL;
 	m_keepAspectRatio = true;
@@ -110,7 +112,7 @@ void LogoItem::addedToScene(bool temporary)
 QString LogoItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi)
 {
 	if (viewLayerID == layer() ) {
-		QString svg =prop("shape");
+		QString svg = prop("shape");
 		if (!svg.isEmpty()) {
 			QString xmlName = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
 			SvgFileSplitter splitter;
@@ -169,14 +171,14 @@ bool LogoItem::collectExtraInfo(QWidget * parent, const QString & family, const 
 			returnProp = tr("logo");
 			returnValue = m_logo;
 
-			QLineEdit * e1 = new QLineEdit(parent);
-			e1->setObjectName("infoViewLineEdit");
+			QLineEdit * edit = new QLineEdit(parent);
+			edit->setObjectName("infoViewLineEdit");
 
-			e1->setText(m_logo);
-			e1->setEnabled(swappingEnabled);
-			connect(e1, SIGNAL(editingFinished()), this, SLOT(logoEntry()));
+			edit->setText(m_logo);
+			edit->setEnabled(swappingEnabled);
+			connect(edit, SIGNAL(editingFinished()), this, SLOT(logoEntry()));
 
-			returnWidget = e1;
+			returnWidget = edit;
 			return true;
 		}
 	}
@@ -413,6 +415,8 @@ void LogoItem::resizeMM(double mmW, double mmH, const LayerHash & viewLayers) {
 		return;
 	}
 
+	DebugDialog::debug(QString("resize mm %1 %2").arg(mmW).arg(mmH));
+
 	QRectF r = this->boundingRect();
 	if (qAbs(GraphicsUtils::pixels2mm(r.width(), FSvgRenderer::printerScale()) - mmW) < .001 &&
 		qAbs(GraphicsUtils::pixels2mm(r.height(), FSvgRenderer::printerScale()) - mmH) < .001) 
@@ -458,13 +462,7 @@ void LogoItem::resizeMM(double mmW, double mmH, const LayerHash & viewLayers) {
 		modelPart()->setProp("height", mmH);
 	}
 
-	if (m_widthEditor) {
-		m_widthEditor->setText(QString::number(qRound(mmW * 10) / 10.0));
-	}
-
-	if (m_heightEditor) {
-		m_heightEditor->setText(QString::number(qRound(mmH * 10) / 10.0));
-	}
+	setWidthAndHeight(qRound(mmW * 10) / 10.0, qRound(mmH * 10) / 10.0);
 }
 
 void LogoItem::setProp(const QString & prop, const QString & value) {
@@ -477,7 +475,6 @@ void LogoItem::setProp(const QString & prop, const QString & value) {
 }
 
 void LogoItem::setLogo(QString logo, bool force) {
-
 	if (!force && m_logo.compare(logo) == 0) return;
 
 	switch (this->m_viewIdentifier) {
@@ -495,16 +492,36 @@ void LogoItem::setLogo(QString logo, bool force) {
 
 	if (svg.isEmpty()) return;
 
-	svg = hackSvg(svg, logo);
+	QSizeF oldSize = m_size;
+	QXmlStreamReader streamReader(svg);
+	QSizeF oldSvgSize = m_extraRenderer ? m_extraRenderer->viewBoxF().size() : QSizeF(0, 0);
+	
+	DebugDialog::debug(QString("size %1 %2, %3 %4").arg(m_size.width()).arg(m_size.height()).arg(oldSvgSize.width()).arg(oldSvgSize.height()));
 
-	rerender(svg);
+	svg = hackSvg(svg, logo);
+	QXmlStreamReader newStreamReader(svg);
+
+	bool ok = rerender(svg);
 
 	m_logo = logo;
 	modelPart()->setProp("logo", logo);
 	modelPart()->setProp("shape", svg);
+	if (ok && !force) {
+		QSizeF newSvgSize = m_extraRenderer->viewBoxF().size();
+		QSizeF newSize = newSvgSize * oldSize.height() / oldSvgSize.height();
+		DebugDialog::debug(QString("size %1 %2, %3 %4").arg(m_size.width()).arg(m_size.height()).arg(newSize.width()).arg(newSize.height()));
+		
+		// set the new text to approximately the same height as the original
+		// if the text is non-proportional that will be lost
+		LayerHash layerHash;
+		resizeMM(GraphicsUtils::pixels2mm(newSize.width(), FSvgRenderer::printerScale()),
+				 GraphicsUtils::pixels2mm(newSize.height(), FSvgRenderer::printerScale()),
+				 layerHash);
+		DebugDialog::debug(QString("size %1 %2").arg(m_size.width()).arg(m_size.height()));
+	}
 }
 
-void LogoItem::rerender(const QString & svg)
+bool LogoItem::rerender(const QString & svg)
 {
 	bool result = loadExtraRenderer(svg.toUtf8(), false);
 	if (result) {
@@ -512,6 +529,7 @@ void LogoItem::rerender(const QString & svg)
 		m_aspectRatio.setWidth(r.width());
 		m_aspectRatio.setHeight(r.height());
 	}
+	return result;
 }
 
 QString LogoItem::getProperty(const QString & key) {
@@ -539,6 +557,10 @@ void LogoItem::logoEntry() {
 	if (edit == NULL) return;
 
 	if (edit->text().compare(this->logo()) == 0) return;
+
+	// m_inLogoEntry is a hack because a focus out event was being triggered on m_widthEntry when a user hit the return key in logoentry
+	// this triggers a call to widthEntry() which causes all kinds of havoc.  (bug in version 0.7.1 and possibly earlier)
+	m_inLogoEntry = QTime::currentTime().addSecs(1);
 
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
@@ -599,10 +621,15 @@ QString LogoItem::hackSvg(const QString & svg, const QString & logo)
 }
 
 void LogoItem::widthEntry() {
+	if (QTime::currentTime() < m_inLogoEntry) return;
+
 	QLineEdit * edit = qobject_cast<QLineEdit *>(sender());
 	if (edit == NULL) return;
 
 	double w = edit->text().toDouble();
+	double oldW = m_modelPart->prop("width").toDouble();
+	if (w == oldW) return;
+
 	double h = m_modelPart->prop("height").toDouble();
 	if (m_keepAspectRatio) {
 		h = w * m_aspectRatio.height() / m_aspectRatio.width();
@@ -615,10 +642,16 @@ void LogoItem::widthEntry() {
 }
 
 void LogoItem::heightEntry() {
+	if (QTime::currentTime() < m_inLogoEntry) return;
+
 	QLineEdit * edit = qobject_cast<QLineEdit *>(sender());
 	if (edit == NULL) return;
 
-	setHeight(edit->text().toDouble());
+	double h = edit->text().toDouble();
+	double oldH =  m_modelPart->prop("height").toDouble();
+	if (h == oldH) return;
+
+	setHeight(h);
 }
 
 void LogoItem::setHeight(double h)

@@ -122,6 +122,7 @@ protected:
 	void setKinCursor(Qt::CursorShape);
 	QFrame * setUpDimEntry(bool includeProportion, QWidget * & returnWidget);
 	void fixWH();
+	void setWidthAndHeight(double w, double h);
 
 protected:
 	static const double CornerHandleSize;

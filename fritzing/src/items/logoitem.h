@@ -33,6 +33,7 @@ $Date$
 #include <QVariant>
 #include <QCheckBox>
 #include <QComboBox>
+#include <QTime>
 
 #include "resizableboard.h"
 
@@ -81,7 +82,7 @@ protected:
 	virtual QString layerName();
 	virtual QStringList & getImageNames();
 	virtual QStringList & getNewImageNames();
-	void rerender(const QString & svg);
+	bool rerender(const QString & svg);
 	double minWidth();
 	double minHeight();
 	bool freeRotationAllowed(Qt::KeyboardModifiers modifiers);
@@ -92,6 +93,7 @@ protected:
 	bool m_hasLogo;
 	QString m_originalFilename;
 	QComboBox * m_fileNameComboBox;
+	QTime m_inLogoEntry;
 };
 
 class CopperLogoItem : public LogoItem

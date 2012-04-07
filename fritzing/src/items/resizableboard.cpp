@@ -395,12 +395,7 @@ void ResizableBoard::resizeMMAux(double mmW, double mmH) {
 		modelPart()->setProp("height", mmH);
 
 		double tens = pow(10.0, m_decimalsAfter);
-		if (m_widthEditor) {
-			m_widthEditor->setText(QString::number(qRound(mmW * tens) / tens));
-		}
-		if (m_heightEditor) {
-			m_heightEditor->setText(QString::number(qRound(mmH * tens) / tens));
-		}
+		setWidthAndHeight(qRound(mmW * tens) / tens, qRound(mmH * tens) / tens);
 	}
 	//	DebugDialog::debug(QString("fast load result %1 %2").arg(result).arg(s));
 
@@ -884,5 +879,15 @@ void ResizableBoard::fixWH() {
 		DebugDialog::debug("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		m_modelPart->setProp("width", "");
 		m_modelPart->setProp("height", "");
+	}
+}
+
+void ResizableBoard::setWidthAndHeight(double w, double h)
+{
+	if (m_widthEditor) {
+		m_widthEditor->setText(QString::number(w));
+	}
+	if (m_heightEditor) {
+		m_heightEditor->setText(QString::number(h));
 	}
 }
