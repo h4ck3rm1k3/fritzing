@@ -7046,7 +7046,7 @@ void SketchWidget::drawBackground( QPainter * painter, const QRectF & rect )
 	InfoGraphicsView::drawForeground(painter, rect);
 
 	if (m_alignToGrid) {
-		QColor gridColor(0, 0, 0);
+		QColor gridColor(0, 0, 0, 80);
 		double gridSize = m_gridSizeInches * FSvgRenderer::printerScale();
 
 		painter->save();
@@ -7068,6 +7068,8 @@ void SketchWidget::drawBackground( QPainter * painter, const QRectF & rect )
 		QPen pen;
 		pen.setColor(gridColor);
 		pen.setWidth(0);
+		pen.setCosmetic(true);
+		//pen.setStyle(Qt::DotLine);
 		painter->setPen(pen);
 		painter->drawLines(linesX.data(), linesX.size());
 		painter->drawLines(linesY.data(), linesY.size());
