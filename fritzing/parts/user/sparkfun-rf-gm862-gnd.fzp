@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-GM862-GND'>
 <version>4</version>
-<date>2012-04-07</date>
+<date>2012-04-08</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;GM862 Cellular Module with GPS&lt;/b&gt;
@@ -19,24 +19,24 @@ Proven layout and schematic for GM862 cellular module with SiRF III GPS. Spark F
 </properties>
 <views>
 <breadboardView>
-<layers image='breadboard/sparkfun-rf_GM862_breadboard.svg'>
+<layers image='breadboard/sparkfun-rf_gm862_breadboard.svg'>
 <layer layerId='breadboard'/>
 </layers>
 </breadboardView>
 <schematicView>
-<layers image='schematic/sparkfun-rf_GM862_schematic.svg'>
+<layers image='schematic/sparkfun-rf_gm862_schematic.svg'>
 <layer layerId='schematic'/>
 </layers>
 </schematicView>
 <pcbView>
-<layers image='pcb/sparkfun-rf_GM862_pcb.svg'>
+<layers image='pcb/sparkfun-rf_gm862_pcb.svg'>
 <layer layerId='copper1'/>
 <layer layerId='silkscreen'/>
 <layer layerId='copper0'/>
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/sparkfun-rf_GM862_breadboard.svg'>
+<layers image='breadboard/sparkfun-rf_gm862_breadboard.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

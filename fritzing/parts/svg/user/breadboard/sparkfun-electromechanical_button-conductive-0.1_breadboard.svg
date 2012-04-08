@@ -7,20 +7,20 @@
    <path fill="#1F7A34" stroke="none" stroke-width="0" d="M0,0L0,170A30,30 0 0 1 0,230L0,400L100,400L100,0L0,0z"/>
    <g transform="translate(-4,146)">
     <g transform="matrix(-0.952381, 0, 0, -0.952381, 105.429, 105.429)">
-     <line stroke="#F7BD13" stroke-linecap="round" y1="79" x1="41" y2="4" stroke-width="7" x2="41"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="29" x1="54" y2="104" stroke-width="7" x2="54"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="79" x1="66" y2="4" stroke-width="7" x2="66"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="29" x1="29" y2="104" stroke-width="7" x2="29"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="78" x1="16" y2="4" stroke-width="7" x2="16"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="30" x1="4" y2="104" stroke-width="7" x2="4"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="32" x1="79" y2="104" stroke-width="7" x2="79"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="104" x1="4" y2="104" stroke-width="8" x2="29"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="104" x1="29" y2="104" stroke-width="8" x2="54"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="104" x1="54" y2="104" stroke-width="8" x2="79"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="104" x1="79" y2="104" stroke-width="8" x2="104"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="4" x1="16" y2="4" stroke-width="8" x2="41"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="4" x1="41" y2="4" stroke-width="8" x2="66"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="4" x1="66" y2="4" stroke-width="8" x2="104"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="79" x1="41" y2="4" stroke-width="7" x2="41"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="29" x1="54" y2="104" stroke-width="7" x2="54"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="79" x1="66" y2="4" stroke-width="7" x2="66"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="29" x1="29" y2="104" stroke-width="7" x2="29"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="78" x1="16" y2="4" stroke-width="7" x2="16"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="30" x1="4" y2="104" stroke-width="7" x2="4"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="32" x1="79" y2="104" stroke-width="7" x2="79"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="104" x1="4" y2="104" stroke-width="8" x2="29"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="104" x1="29" y2="104" stroke-width="8" x2="54"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="104" x1="54" y2="104" stroke-width="8" x2="79"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="104" x1="79" y2="104" stroke-width="8" x2="104"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="4" x1="16" y2="4" stroke-width="8" x2="41"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="4" x1="41" y2="4" stroke-width="8" x2="66"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="4" x1="66" y2="4" stroke-width="8" x2="104"/>
      <rect width="8" x="100" y="0" fill="#F7BD13" connectorname="1" height="8" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="8" x="100" y="100" fill="#F7BD13" connectorname="2" height="8" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="105" x="-2.85714" y="-2.85714" fill="#303030" height="105" stroke="none" stroke-width="0"/>

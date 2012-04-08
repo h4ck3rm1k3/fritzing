@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-XC3S250_500E-PQ208-'>
 <version>4</version>
-<date>2012-04-07</date>
+<date>2012-04-08</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Xilinx Spartan3E FPGA</description>
@@ -16,23 +16,23 @@
 </properties>
 <views>
 <breadboardView>
-<layers image='breadboard/sparkfun-digitalic_PQ208_breadboard.svg'>
+<layers image='breadboard/sparkfun-digitalic_pq208_breadboard.svg'>
 <layer layerId='breadboard'/>
 </layers>
 </breadboardView>
 <schematicView>
-<layers image='schematic/sparkfun-digitalic_XC3S250_500E-PQ208_schematic.svg'>
+<layers image='schematic/sparkfun-digitalic_xc3s250_500e-pq208_schematic.svg'>
 <layer layerId='schematic'/>
 </layers>
 </schematicView>
 <pcbView>
-<layers image='pcb/sparkfun-digitalic_PQ208_pcb.svg'>
+<layers image='pcb/sparkfun-digitalic_pq208_pcb.svg'>
 <layer layerId='copper1'/>
 <layer layerId='silkscreen'/>
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/sparkfun-digitalic_PQ208_breadboard.svg'>
+<layers image='breadboard/sparkfun-digitalic_pq208_breadboard.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

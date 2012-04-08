@@ -40,9 +40,9 @@ M29.7616,4.7716a0.5,0.5 0 1 0 1,0 0.5,0.5 0 1 0 -1,0z
 <circle cx='2.1016' cy='3.5016' r='1' stroke='black' stroke-width='0' fill='black' id='nonconn9' />
 <circle cx='2.1016' cy='33.5016' r='1' stroke='black' stroke-width='0' fill='black' id='nonconn10' />
 <circle cx='38.1016' cy='33.5016' r='1' stroke='black' stroke-width='0' fill='black' id='nonconn11' />
-<line x1='0.1016' y1='30.1016' x2='0.1016' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='0.1016' y1='0.1016' x2='40.1016' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='40.1016' y1='0.1016' x2='40.1016' y2='30.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='40.1016' y1='30.1016' x2='0.1016' y2='30.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='0.1016' y1='30.1016' x2='0.1016' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='0.1016' y1='0.1016' x2='40.1016' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='40.1016' y1='0.1016' x2='40.1016' y2='30.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='40.1016' y1='30.1016' x2='0.1016' y2='30.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 </g>
 </svg>

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-FKIT-RIBBON_CONNECTOR--2MM_L_REV2'>
 <version>4</version>
-<date>2012-04-07</date>
+<date>2012-04-08</date>
 <label>J</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;fabrick.it Conductive Ribbon Connector&lt;/h3&gt;</description>
@@ -18,24 +18,24 @@
 </properties>
 <views>
 <breadboardView>
-<layers image='breadboard/sparkfun-electromechanical_FKIT-RIBBON_CONNECTOR_03_2MM_L_breadboard.svg'>
+<layers image='breadboard/sparkfun-electromechanical_fkit-ribbon_connector_03_2mm_l_breadboard.svg'>
 <layer layerId='breadboard'/>
 </layers>
 </breadboardView>
 <schematicView>
-<layers image='schematic/sparkfun-electromechanical_FKIT-CONNECTOR_COND_03_schematic.svg'>
+<layers image='schematic/sparkfun-electromechanical_fkit-connector_cond_03_schematic.svg'>
 <layer layerId='schematic'/>
 </layers>
 </schematicView>
 <pcbView>
-<layers image='pcb/sparkfun-electromechanical_FKIT-RIBBON_CONNECTOR_03_2MM_L_pcb.svg'>
+<layers image='pcb/sparkfun-electromechanical_fkit-ribbon_connector_03_2mm_l_pcb.svg'>
 <layer layerId='copper1'/>
 <layer layerId='silkscreen'/>
 <layer layerId='copper0'/>
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/sparkfun-electromechanical_FKIT-RIBBON_CONNECTOR_03_2MM_L_breadboard.svg'>
+<layers image='breadboard/sparkfun-electromechanical_fkit-ribbon_connector_03_2mm_l_breadboard.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

@@ -7,12 +7,12 @@
    <path fill="#1F7A34" stroke="none" stroke-width="0" d="M0,0L0,270A30,30 0 0 1 0,330L0,600L600,600L600,0L0,0z"/>
    <g transform="translate(-7.43701,195.669)">
     <g transform="matrix(0.5, 0, 0, 0.5, 153.719, 52.1654)">
-     <line stroke="#F7BD13" stroke-linecap="round" y1="54.3306" x1="557.437" y2="154.33" stroke-width="16" x2="557.437"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="54.3306" x1="457.437" y2="154.33" stroke-width="16" x2="457.437"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="54.3306" x1="357.437" y2="154.33" stroke-width="16" x2="357.437"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="54.3306" x1="257.437" y2="154.33" stroke-width="16" x2="257.437"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="54.3306" x1="157.437" y2="154.33" stroke-width="16" x2="157.437"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="54.3306" x1="57.437" y2="154.33" stroke-width="16" x2="57.437"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="54.3306" x1="557.437" y2="154.33" stroke-width="16" x2="557.437"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="54.3306" x1="457.437" y2="154.33" stroke-width="16" x2="457.437"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="54.3306" x1="357.437" y2="154.33" stroke-width="16" x2="357.437"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="54.3306" x1="257.437" y2="154.33" stroke-width="16" x2="257.437"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="54.3306" x1="157.437" y2="154.33" stroke-width="16" x2="157.437"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="54.3306" x1="57.437" y2="154.33" stroke-width="16" x2="57.437"/>
      <rect width="39.3701" x="437.752" y="129.921" fill="#F7BD13" connectorname="5" height="78.74" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="39.3701" x="237.752" y="129.921" fill="#F7BD13" connectorname="3" height="78.74" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="39.3701" x="37.752" y="129.921" fill="#F7BD13" connectorname="1" height="78.74" stroke="none" stroke-linecap="round" stroke-width="0"/>

@@ -10,12 +10,12 @@ M5.7516,6.6016a0.35,0.35 0 1 0 0.7,0 0.35,0.35 0 1 0 -0.7,0z
 <circle id='connector0pin' connectorname='1' cx='2.1016' cy='6.6016' r='0.5814' stroke='#9A916C' stroke-width='0.4628' fill='none' />
 <circle id='connector1pin' connectorname='2' cx='4.1016' cy='6.6016' r='0.5814' stroke='#9A916C' stroke-width='0.4628' fill='none' />
 <circle id='connector2pin' connectorname='3' cx='6.1016' cy='6.6016' r='0.5814' stroke='#9A916C' stroke-width='0.4628' fill='none' />
-<line x1='0.1016' y1='7.9016' x2='0.1016' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='0.1016' y1='0.1016' x2='8.1016' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='8.1016' y1='0.1016' x2='8.1016' y2='7.9016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='0.1016' y1='7.9016' x2='0.8016' y2='7.9016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='8.1016' y1='7.9016' x2='7.4016' y2='7.9016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='0.8016' y1='7.9016' x2='0.8016' y2='6.6016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='7.4016' y1='7.9016' x2='7.4016' y2='6.6016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='0.1016' y1='7.9016' x2='0.1016' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='0.1016' y1='0.1016' x2='8.1016' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='8.1016' y1='0.1016' x2='8.1016' y2='7.9016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='0.1016' y1='7.9016' x2='0.8016' y2='7.9016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='8.1016' y1='7.9016' x2='7.4016' y2='7.9016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='0.8016' y1='7.9016' x2='0.8016' y2='6.6016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='7.4016' y1='7.9016' x2='7.4016' y2='6.6016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 </g>
 </svg>

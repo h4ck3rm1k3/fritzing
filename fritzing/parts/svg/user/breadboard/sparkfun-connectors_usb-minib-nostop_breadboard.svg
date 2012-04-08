@@ -17,9 +17,9 @@ M3.8,7.7a0.45,0.45 0 1 0 0.9,0 0.45,0.45 0 1 0 -0.9,0z
 <rect id='connector8pad' connectorname='G4' x='5.5' y='9' width='2.5' height='2' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector9pad' connectorname='G3' x='5.5' y='0' width='2.5' height='2' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <rect id='connector10pad' connectorname='VBUS' x='5.5' y='3.65' width='2.5' height='0.5' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<line x1='2.95' y1='1.7' x2='5.05' y2='1.7' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='7.55' y1='2.4' x2='7.55' y2='3.3' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='7.55' y1='7.7' x2='7.55' y2='8.6' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='5.05' y1='9.3' x2='2.95' y2='9.3' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='2.95' y1='1.7' x2='5.05' y2='1.7' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='7.55' y1='2.4' x2='7.55' y2='3.3' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='7.55' y1='7.7' x2='7.55' y2='8.6' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='5.05' y1='9.3' x2='2.95' y2='9.3' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 </g>
 </svg>

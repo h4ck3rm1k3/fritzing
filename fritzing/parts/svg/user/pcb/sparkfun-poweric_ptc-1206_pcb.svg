@@ -8,7 +8,7 @@
 </g>
 </g>
 <g id='silkscreen'>
-<line x1='2.535' y1='1.662' x2='1.265' y2='1.662' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='1.265' y1='0.138' x2='2.535' y2='0.138' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='2.535' y1='1.662' x2='1.265' y2='1.662' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='1.265' y1='0.138' x2='2.535' y2='0.138' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 </g>
 </svg>

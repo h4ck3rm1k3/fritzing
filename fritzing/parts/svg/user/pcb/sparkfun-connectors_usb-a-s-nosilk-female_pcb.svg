@@ -14,16 +14,16 @@
 </g>
 </g>
 <g id='silkscreen'>
-<line x1='14.0462' y1='1.4097' x2='0.0635' y2='1.4097' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='14.0462' y1='14.5415' x2='0.0635' y2='14.5415' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='0.0635' y1='1.4986' x2='0.0635' y2='14.4526' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='14.0589' y1='1.4732' x2='14.0589' y2='14.478' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='7.8105' y1='13.0556' x2='1.4605' y2='12.4206' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='1.4605' y1='12.4206' x2='1.4605' y2='9.2456' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='1.4605' y1='9.2456' x2='7.8105' y2='8.6106' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='7.8105' y1='2.8956' x2='1.4605' y2='3.5306' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='1.4605' y1='3.5306' x2='1.4605' y2='6.7056' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='1.4605' y1='6.7056' x2='7.8105' y2='7.3406' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
-<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f0f0f0' font-size='1.651' x='18.8105' y='16.8316' text-anchor='end'>&gt;NAME</text>
+<line class='other' x1='14.0462' y1='1.4097' x2='0.0635' y2='1.4097' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='14.0462' y1='14.5415' x2='0.0635' y2='14.5415' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='0.0635' y1='1.4986' x2='0.0635' y2='14.4526' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='14.0589' y1='1.4732' x2='14.0589' y2='14.478' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='7.8105' y1='13.0556' x2='1.4605' y2='12.4206' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='1.4605' y1='12.4206' x2='1.4605' y2='9.2456' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='1.4605' y1='9.2456' x2='7.8105' y2='8.6106' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='7.8105' y1='2.8956' x2='1.4605' y2='3.5306' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='1.4605' y1='3.5306' x2='1.4605' y2='6.7056' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='1.4605' y1='6.7056' x2='7.8105' y2='7.3406' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#f0f0f0' font-size='1.651' x='18.8105' y='16.8316' text-anchor='end'>&gt;NAME</text>
 </g>
 </svg>

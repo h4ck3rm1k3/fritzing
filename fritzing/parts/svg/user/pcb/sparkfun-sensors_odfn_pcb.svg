@@ -15,9 +15,9 @@
 </g>
 </g>
 <g id='silkscreen'>
-<line x1='0.23' y1='0.0635' x2='0.28' y2='0.0635' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='0.28' y1='0.0635' x2='3.23' y2='0.0635' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='0.23' y1='3.1635' x2='3.23' y2='3.1635' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
-<path fill='none' d='M0.23,0.0635 A0.201556,0.201556 0 1 1 0.28,0.0635' stroke-width='0.127' stroke='#f0f0f0' />
+<line class='other' x1='0.23' y1='0.0635' x2='0.28' y2='0.0635' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='0.28' y1='0.0635' x2='3.23' y2='0.0635' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='0.23' y1='3.1635' x2='3.23' y2='3.1635' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<path class='other' fill='none' d='M0.23,0.0635 A0.201556,0.201556 0 1 1 0.28,0.0635' stroke-width='0.127' stroke='#f0f0f0' />
 </g>
 </svg>

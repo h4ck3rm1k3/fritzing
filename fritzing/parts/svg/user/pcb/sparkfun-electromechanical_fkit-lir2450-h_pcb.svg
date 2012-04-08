@@ -14,8 +14,8 @@
 </g>
 </g>
 <g id='silkscreen'>
-<circle cx='12.889' cy='12.3135' r='12.25' stroke='#f0f0f0' stroke-width='0.127' fill='none' />
-<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f0f0f0' font-size='3.302' x='21.289' y='13.1635' text-anchor='start'>+</text>
-<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f0f0f0' font-size='3.302' x='2.439' y='13.2135' text-anchor='start'>-</text>
+<circle class='other' cx='12.889' cy='12.3135' r='12.25' stroke='#f0f0f0' stroke-width='0.127' fill='none' />
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#f0f0f0' font-size='3.302' x='21.289' y='13.1635' text-anchor='start'>+</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#f0f0f0' font-size='3.302' x='2.439' y='13.2135' text-anchor='start'>-</text>
 </g>
 </svg>

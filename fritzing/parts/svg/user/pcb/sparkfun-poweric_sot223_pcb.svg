@@ -10,9 +10,9 @@
 </g>
 </g>
 <g id='silkscreen'>
-<line x1='6.6548' y1='2.548' x2='6.6548' y2='5.85' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='6.6548' y1='5.85' x2='0.1016' y2='5.85' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='0.1016' y1='5.85' x2='0.1016' y2='2.548' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='0.1016' y1='2.548' x2='6.6548' y2='2.548' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='6.6548' y1='2.548' x2='6.6548' y2='5.85' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='6.6548' y1='5.85' x2='0.1016' y2='5.85' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='0.1016' y1='5.85' x2='0.1016' y2='2.548' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='0.1016' y1='2.548' x2='6.6548' y2='2.548' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 </g>
 </svg>

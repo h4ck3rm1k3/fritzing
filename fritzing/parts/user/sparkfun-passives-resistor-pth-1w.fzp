@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Passives-RESISTOR-PTH-1W'>
 <version>4</version>
-<date>2012-04-07</date>
+<date>2012-04-08</date>
 <label>R</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Resistor&lt;/b&gt;
@@ -19,24 +19,24 @@ Basic schematic elements and footprints for 0603, 1206, and PTH resistors.</desc
 </properties>
 <views>
 <breadboardView>
-<layers image='breadboard/sparkfun-passives_AXIAL-0.6_breadboard.svg'>
+<layers image='breadboard/sparkfun-passives_axial-0.6_breadboard.svg'>
 <layer layerId='breadboard'/>
 </layers>
 </breadboardView>
 <schematicView>
-<layers image='schematic/sparkfun-passives_RESISTOR_schematic.svg'>
+<layers image='schematic/sparkfun-passives_resistor_schematic.svg'>
 <layer layerId='schematic'/>
 </layers>
 </schematicView>
 <pcbView>
-<layers image='pcb/sparkfun-passives_AXIAL-0.6_pcb.svg'>
+<layers image='pcb/sparkfun-passives_axial-0.6_pcb.svg'>
 <layer layerId='copper1'/>
 <layer layerId='silkscreen'/>
 <layer layerId='copper0'/>
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/sparkfun-passives_AXIAL-0.6_breadboard.svg'>
+<layers image='breadboard/sparkfun-passives_axial-0.6_breadboard.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

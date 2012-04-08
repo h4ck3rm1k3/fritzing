@@ -40,19 +40,19 @@
 </g>
 </g>
 <g id='silkscreen'>
-<line x1='4.0386' y1='7.4676' x2='4.0386' y2='4.0676' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='4.0386' y1='4.0676' x2='4.0386' y2='2.4676' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='4.0386' y1='2.4676' x2='24.2386' y2='2.4676' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='24.2386' y1='2.4676' x2='24.2386' y2='4.0676' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='24.2386' y1='4.0676' x2='24.2386' y2='7.4676' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='4.0386' y1='4.0676' x2='24.2386' y2='4.0676' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='4.0486' y1='7.4576' x2='5.3486' y2='7.4576' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='7.6986' y1='7.4576' x2='7.8986' y2='7.4576' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='10.2486' y1='7.4576' x2='10.4486' y2='7.4576' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='12.7486' y1='7.4576' x2='12.9486' y2='7.4576' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='15.2986' y1='7.4576' x2='15.4986' y2='7.4576' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='17.8486' y1='7.4576' x2='18.0486' y2='7.4576' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='20.3986' y1='7.4576' x2='20.5986' y2='7.4576' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='24.2486' y1='7.4576' x2='22.9486' y2='7.4576' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='4.0386' y1='7.4676' x2='4.0386' y2='4.0676' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='4.0386' y1='4.0676' x2='4.0386' y2='2.4676' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='4.0386' y1='2.4676' x2='24.2386' y2='2.4676' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='24.2386' y1='2.4676' x2='24.2386' y2='4.0676' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='24.2386' y1='4.0676' x2='24.2386' y2='7.4676' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='4.0386' y1='4.0676' x2='24.2386' y2='4.0676' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='4.0486' y1='7.4576' x2='5.3486' y2='7.4576' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='7.6986' y1='7.4576' x2='7.8986' y2='7.4576' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='10.2486' y1='7.4576' x2='10.4486' y2='7.4576' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='12.7486' y1='7.4576' x2='12.9486' y2='7.4576' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='15.2986' y1='7.4576' x2='15.4986' y2='7.4576' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='17.8486' y1='7.4576' x2='18.0486' y2='7.4576' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='20.3986' y1='7.4576' x2='20.5986' y2='7.4576' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='24.2486' y1='7.4576' x2='22.9486' y2='7.4576' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 </g>
 </svg>

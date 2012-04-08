@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-OPAMP-DUAL-U'>
 <version>4</version>
-<date>2012-04-07</date>
+<date>2012-04-08</date>
 <label>IC</label>
 <author>www.fritzing.org</author>
 <description>Generic op-amp footprint</description>
@@ -23,12 +23,12 @@
 </layers>
 </breadboardView>
 <schematicView>
-<layers image='schematic/sparkfun-analogic_OP-AMP_-_OP-AMP_schematic.svg'>
+<layers image='schematic/sparkfun-analogic_op-amp_-_op-amp_schematic.svg'>
 <layer layerId='schematic'/>
 </layers>
 </schematicView>
 <pcbView>
-<layers image='pcb/sparkfun-analogic_SO08_pcb.svg'>
+<layers image='pcb/sparkfun-analogic_so08_pcb.svg'>
 <layer layerId='copper1'/>
 <layer layerId='silkscreen'/>
 </layers>

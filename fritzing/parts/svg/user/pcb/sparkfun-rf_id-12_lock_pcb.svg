@@ -34,21 +34,21 @@
 </g>
 </g>
 <g id='silkscreen'>
-<line x1='0.0635' y1='25.3635' x2='26.4635' y2='25.3635' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='26.4635' y1='25.3635' x2='26.4635' y2='0.0635' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='26.4635' y1='0.0635' x2='0.0635' y2='0.0635' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='0.0635' y1='0.0635' x2='0.0635' y2='25.3635' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
-<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f0f0f0' font-size='0.52832' x='18.0409' y='5.4191' text-anchor='start'>NC</text>
-<rect x='20.2761' y='4.8095' width='0.2032' height='0.508' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='16.2375' y='4.8095' width='0.2032' height='0.508' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='14.2563' y='4.8095' width='0.2032' height='0.508' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='12.2751' y='4.8095' width='0.2032' height='0.508' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='10.2685' y='4.8095' width='0.2032' height='0.508' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='8.2619' y='4.8095' width='0.2032' height='0.508' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='16.2629' y='19.8209' width='0.2032' height='0.508' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='14.2563' y='19.8209' width='0.2032' height='0.508' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='12.2243' y='19.8209' width='0.2032' height='0.508' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='10.2431' y='19.8209' width='0.2032' height='0.508' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='8.2619' y='19.8209' width='0.2032' height='0.508' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
+<line class='other' x1='0.0635' y1='25.3635' x2='26.4635' y2='25.3635' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='26.4635' y1='25.3635' x2='26.4635' y2='0.0635' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='26.4635' y1='0.0635' x2='0.0635' y2='0.0635' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='0.0635' y1='0.0635' x2='0.0635' y2='25.3635' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#f0f0f0' font-size='0.52832' x='18.0409' y='5.4191' text-anchor='start'>NC</text>
+<rect class='other' x='20.2761' y='4.8095' width='0.2032' height='0.508' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
+<rect class='other' x='16.2375' y='4.8095' width='0.2032' height='0.508' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
+<rect class='other' x='14.2563' y='4.8095' width='0.2032' height='0.508' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
+<rect class='other' x='12.2751' y='4.8095' width='0.2032' height='0.508' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
+<rect class='other' x='10.2685' y='4.8095' width='0.2032' height='0.508' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
+<rect class='other' x='8.2619' y='4.8095' width='0.2032' height='0.508' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
+<rect class='other' x='16.2629' y='19.8209' width='0.2032' height='0.508' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
+<rect class='other' x='14.2563' y='19.8209' width='0.2032' height='0.508' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
+<rect class='other' x='12.2243' y='19.8209' width='0.2032' height='0.508' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
+<rect class='other' x='10.2431' y='19.8209' width='0.2032' height='0.508' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
+<rect class='other' x='8.2619' y='19.8209' width='0.2032' height='0.508' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
 </g>
 </svg>

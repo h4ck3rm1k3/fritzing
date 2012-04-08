@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-JOYSTICK-PSP1000-'>
 <version>4</version>
-<date>2012-04-07</date>
+<date>2012-04-08</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>This is a footprint for the PSP-1000 Joystick.  4-pins: X, Y, Vcc and GND</description>
@@ -16,23 +16,23 @@
 </properties>
 <views>
 <breadboardView>
-<layers image='breadboard/sparkfun-electromechanical_JOYSTICK-PSP1000_breadboard.svg'>
+<layers image='breadboard/sparkfun-electromechanical_joystick-psp1000_breadboard.svg'>
 <layer layerId='breadboard'/>
 </layers>
 </breadboardView>
 <schematicView>
-<layers image='schematic/sparkfun-electromechanical_JOYSTICK-PSP1000_schematic.svg'>
+<layers image='schematic/sparkfun-electromechanical_joystick-psp1000_schematic.svg'>
 <layer layerId='schematic'/>
 </layers>
 </schematicView>
 <pcbView>
-<layers image='pcb/sparkfun-electromechanical_JOYSTICK-PSP1000_pcb.svg'>
+<layers image='pcb/sparkfun-electromechanical_joystick-psp1000_pcb.svg'>
 <layer layerId='copper1'/>
 <layer layerId='silkscreen'/>
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/sparkfun-electromechanical_JOYSTICK-PSP1000_breadboard.svg'>
+<layers image='breadboard/sparkfun-electromechanical_joystick-psp1000_breadboard.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

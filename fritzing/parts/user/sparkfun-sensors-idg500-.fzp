@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-IDG500-'>
 <version>4</version>
-<date>2012-04-07</date>
+<date>2012-04-08</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Invensense 500 deg/s MEMS Gyro, COM-09070</description>
@@ -16,23 +16,23 @@
 </properties>
 <views>
 <breadboardView>
-<layers image='breadboard/sparkfun-sensors_SPARKFUN_IDG500_breadboard.svg'>
+<layers image='breadboard/sparkfun-sensors_sparkfun_idg500_breadboard.svg'>
 <layer layerId='breadboard'/>
 </layers>
 </breadboardView>
 <schematicView>
-<layers image='schematic/sparkfun-sensors_IDG500-1_schematic.svg'>
+<layers image='schematic/sparkfun-sensors_idg500-1_schematic.svg'>
 <layer layerId='schematic'/>
 </layers>
 </schematicView>
 <pcbView>
-<layers image='pcb/sparkfun-sensors_SPARKFUN_IDG500_pcb.svg'>
+<layers image='pcb/sparkfun-sensors_sparkfun_idg500_pcb.svg'>
 <layer layerId='copper1'/>
 <layer layerId='silkscreen'/>
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/sparkfun-sensors_SPARKFUN_IDG500_breadboard.svg'>
+<layers image='breadboard/sparkfun-sensors_sparkfun_idg500_breadboard.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

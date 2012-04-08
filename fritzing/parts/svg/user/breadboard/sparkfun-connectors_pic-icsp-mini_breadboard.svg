@@ -16,6 +16,6 @@ M6.3516,1.1016a0.35,0.35 0 1 0 0.7,0 0.35,0.35 0 1 0 -0.7,0z
 <circle id='connector2pin' connectorname='3' cx='3.7016' cy='1.1016' r='0.477' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <circle id='connector3pin' connectorname='4' cx='5.2016' cy='1.1016' r='0.477' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <circle id='connector4pin' connectorname='5' cx='6.7016' cy='1.1016' r='0.477' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<line x1='1.3016' y1='0.1016' x2='0.1016' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='1.3016' y1='0.1016' x2='0.1016' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 </g>
 </svg>

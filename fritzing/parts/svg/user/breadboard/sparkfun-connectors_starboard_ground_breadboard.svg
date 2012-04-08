@@ -8,7 +8,7 @@
    <g transform="translate(-129,-63)">
     <g transform="matrix(0.5, 0, 0, 0.5, 64.5, 231.5)">
      <rect width="25" x="116.5" y="418" fill="#F7BD13" connectorname="GROUND" height="50" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <path fill="#F7BD13" stroke="#F7BD13" stroke-linecap="round" stroke-width="8" d="M129,918L108,918A100,100,0,0,1,8,818M8,818L8,108A100,100,0,0,1,108,8M108,8L129,8L150,8A100,100,0,0,1,250,108M250,108L250,818A100,100,0,0,1,150,918M150,918z"/>
+     <path class="other" fill="#F7BD13" stroke="none" stroke-linecap="round" stroke-width="0" d="M129,918L108,918A100,100,0,0,1,8,818L8,108A100,100,0,0,1,108,8L129,8L150,8A100,100,0,0,1,250,108L250,818A100,100,0,0,1,150,918z"/>
      <rect width="-1.69093e+11" x="8.45466e+10" y="8.45466e+10" fill="#303030" height="-1.69093e+11" stroke="none" stroke-width="0"/>
      <polygon fill="#1f1f1f" points="8.45466e+10,8.45466e+10 -8.45466e+10,8.45466e+10 -8.45466e+10,8.45466e+10 8.45466e+10,8.45466e+10"/>
      <polygon fill="#1f1f1f" points="8.45466e+10,-8.45466e+10 -8.45466e+10,-8.45466e+10 -8.45466e+10,-8.45466e+10 8.45466e+10,-8.45466e+10"/>

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-SPM0204UD5-SMD'>
 <version>4</version>
-<date>2012-04-07</date>
+<date>2012-04-08</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Ultrasonic range sensor</description>
@@ -18,23 +18,23 @@
 </properties>
 <views>
 <breadboardView>
-<layers image='breadboard/sparkfun-sensors_SPM0204UD5_breadboard.svg'>
+<layers image='breadboard/sparkfun-sensors_spm0204ud5_breadboard.svg'>
 <layer layerId='breadboard'/>
 </layers>
 </breadboardView>
 <schematicView>
-<layers image='schematic/sparkfun-sensors_SPM0204UD5_schematic.svg'>
+<layers image='schematic/sparkfun-sensors_spm0204ud5_schematic.svg'>
 <layer layerId='schematic'/>
 </layers>
 </schematicView>
 <pcbView>
-<layers image='pcb/sparkfun-sensors_SPM0204UD5_pcb.svg'>
+<layers image='pcb/sparkfun-sensors_spm0204ud5_pcb.svg'>
 <layer layerId='copper1'/>
 <layer layerId='silkscreen'/>
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/sparkfun-sensors_SPM0204UD5_breadboard.svg'>
+<layers image='breadboard/sparkfun-sensors_spm0204ud5_breadboard.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

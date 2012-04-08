@@ -8,9 +8,9 @@
 </g>
 </g>
 <g id='silkscreen'>
-<path fill='none' d='M1.672,1.4015 A0.743303,0.743303 0 0 0 2.772,1.4015' stroke-width='0.1016' stroke='#f0f0f0' />
-<path fill='none' d='M2.772,0.4015 A0.743303,0.743303 0 0 0 1.672,0.4015' stroke-width='0.1016' stroke='#f0f0f0' />
-<rect x='2.122' y='0.8015' width='0.2' height='0.2' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
-<rect x='2.672' y='1.3515' width='0.15' height='0.25' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
+<path class='other' fill='none' d='M1.672,1.4015 A0.743303,0.743303 0 0 0 2.772,1.4015' stroke-width='0.1016' stroke='#f0f0f0' />
+<path class='other' fill='none' d='M2.772,0.4015 A0.743303,0.743303 0 0 0 1.672,0.4015' stroke-width='0.1016' stroke='#f0f0f0' />
+<rect class='other' x='2.122' y='0.8015' width='0.2' height='0.2' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
+<rect class='other' x='2.672' y='1.3515' width='0.15' height='0.25' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
 </g>
 </svg>

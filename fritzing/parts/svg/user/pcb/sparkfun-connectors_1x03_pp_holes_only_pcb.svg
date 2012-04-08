@@ -18,8 +18,8 @@
 </g>
 </g>
 <g id='silkscreen'>
-<circle cx='0.7366' cy='0.7366' r='0.635' stroke='#f0f0f0' stroke-width='0.127' fill='none' />
-<circle cx='3.2766' cy='0.7366' r='0.635' stroke='#f0f0f0' stroke-width='0.127' fill='none' />
-<circle cx='5.8166' cy='0.7366' r='0.635' stroke='#f0f0f0' stroke-width='0.127' fill='none' />
+<circle class='other' cx='0.7366' cy='0.7366' r='0.635' stroke='#f0f0f0' stroke-width='0.127' fill='none' />
+<circle class='other' cx='3.2766' cy='0.7366' r='0.635' stroke='#f0f0f0' stroke-width='0.127' fill='none' />
+<circle class='other' cx='5.8166' cy='0.7366' r='0.635' stroke='#f0f0f0' stroke-width='0.127' fill='none' />
 </g>
 </svg>

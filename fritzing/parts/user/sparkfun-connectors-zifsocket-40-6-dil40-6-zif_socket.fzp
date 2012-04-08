@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-ZIFSOCKET-40-6-DIL40-6-ZIF_SOCKET'>
 <version>4</version>
-<date>2012-04-07</date>
+<date>2012-04-08</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Lever-action ZIF socket for 40-pin ICs</description>
@@ -23,12 +23,12 @@
 </layers>
 </breadboardView>
 <schematicView>
-<layers image='schematic/sparkfun-connectors_DIL-40-6_schematic.svg'>
+<layers image='schematic/sparkfun-connectors_dil-40-6_schematic.svg'>
 <layer layerId='schematic'/>
 </layers>
 </schematicView>
 <pcbView>
-<layers image='pcb/sparkfun-connectors_DIL40-6-ZIF_SOCKET_pcb.svg'>
+<layers image='pcb/sparkfun-connectors_dil40-6-zif_socket_pcb.svg'>
 <layer layerId='copper1'/>
 <layer layerId='silkscreen'/>
 <layer layerId='copper0'/>

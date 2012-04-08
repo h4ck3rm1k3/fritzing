@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-FT232RL-BASIC-SSOP'>
 <version>4</version>
-<date>2012-04-07</date>
+<date>2012-04-08</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;USB UART&lt;/b&gt;
@@ -24,12 +24,12 @@ This is the simplified version of the FT232RL unit. Only what you need, nothing 
 </layers>
 </breadboardView>
 <schematicView>
-<layers image='schematic/sparkfun-digitalic_FT232R-BASIC_schematic.svg'>
+<layers image='schematic/sparkfun-digitalic_ft232r-basic_schematic.svg'>
 <layer layerId='schematic'/>
 </layers>
 </schematicView>
 <pcbView>
-<layers image='pcb/sparkfun-digitalic_SSOP28DB_pcb.svg'>
+<layers image='pcb/sparkfun-digitalic_ssop28db_pcb.svg'>
 <layer layerId='copper1'/>
 <layer layerId='silkscreen'/>
 </layers>

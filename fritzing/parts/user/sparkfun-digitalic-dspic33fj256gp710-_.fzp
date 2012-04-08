@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-DSPIC33FJ256GP710-_'>
 <version>4</version>
-<date>2012-04-07</date>
+<date>2012-04-08</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Microchip 16-bit DSP</description>
@@ -18,23 +18,23 @@
 </properties>
 <views>
 <breadboardView>
-<layers image='breadboard/sparkfun-digitalic_TQFP-100-12X12MM_breadboard.svg'>
+<layers image='breadboard/sparkfun-digitalic_tqfp-100-12x12mm_breadboard.svg'>
 <layer layerId='breadboard'/>
 </layers>
 </breadboardView>
 <schematicView>
-<layers image='schematic/sparkfun-digitalic_DSPIC33FJ256GP710_POWER_DSPIC33FJ256GP710_CONTROL_DSPIC33FJ256GP710_EXTERNAL_DSPIC33FJ256GP710_EXTRA_schematic.svg'>
+<layers image='schematic/sparkfun-digitalic_dspic33fj256gp710_power_dspic33fj256gp710_control_dspic33fj256gp710_external_dspic33fj256gp710_extra_schematic.svg'>
 <layer layerId='schematic'/>
 </layers>
 </schematicView>
 <pcbView>
-<layers image='pcb/sparkfun-digitalic_TQFP-100-12X12MM_pcb.svg'>
+<layers image='pcb/sparkfun-digitalic_tqfp-100-12x12mm_pcb.svg'>
 <layer layerId='copper1'/>
 <layer layerId='silkscreen'/>
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/sparkfun-digitalic_TQFP-100-12X12MM_breadboard.svg'>
+<layers image='breadboard/sparkfun-digitalic_tqfp-100-12x12mm_breadboard.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

@@ -24,11 +24,11 @@ M13.707,22.787a0.5,0.5 0 1 0 1,0 0.5,0.5 0 1 0 -1,0z
 <circle id='connector7pin' connectorname='3' cx='9.127' cy='22.787' r='0.7199' stroke='#9A916C' stroke-width='0.4398' fill='none' />
 <circle id='connector8pin' connectorname='4' cx='11.667' cy='22.787' r='0.7199' stroke='#9A916C' stroke-width='0.4398' fill='none' />
 <circle id='connector9pin' connectorname='5' cx='14.207' cy='22.787' r='0.7199' stroke='#9A916C' stroke-width='0.4398' fill='none' />
-<line x1='0.127' y1='25.127' x2='0.127' y2='0.127' stroke='#f8f8f8' stroke-width='0.254' stroke-linecap='round'/>
-<line x1='0.127' y1='0.127' x2='18.127' y2='0.127' stroke='#f8f8f8' stroke-width='0.254' stroke-linecap='round'/>
-<line x1='18.127' y1='0.127' x2='18.127' y2='23.627' stroke='#f8f8f8' stroke-width='0.254' stroke-linecap='round'/>
-<line x1='16.627' y1='25.127' x2='0.127' y2='25.127' stroke='#f8f8f8' stroke-width='0.254' stroke-linecap='round'/>
-<line x1='18.127' y1='23.627' x2='16.627' y2='25.127' stroke='#f8f8f8' stroke-width='0.254' stroke-linecap='round'/>
-<circle cx='16.127' cy='20.627' r='0.6' stroke='#f8f8f8' stroke-width='0.2032' fill='none' />
+<line class='other' x1='0.127' y1='25.127' x2='0.127' y2='0.127' stroke='#f8f8f8' stroke-width='0.254' stroke-linecap='round'/>
+<line class='other' x1='0.127' y1='0.127' x2='18.127' y2='0.127' stroke='#f8f8f8' stroke-width='0.254' stroke-linecap='round'/>
+<line class='other' x1='18.127' y1='0.127' x2='18.127' y2='23.627' stroke='#f8f8f8' stroke-width='0.254' stroke-linecap='round'/>
+<line class='other' x1='16.627' y1='25.127' x2='0.127' y2='25.127' stroke='#f8f8f8' stroke-width='0.254' stroke-linecap='round'/>
+<line class='other' x1='18.127' y1='23.627' x2='16.627' y2='25.127' stroke='#f8f8f8' stroke-width='0.254' stroke-linecap='round'/>
+<circle class='other' cx='16.127' cy='20.627' r='0.6' stroke='#f8f8f8' stroke-width='0.2032' fill='none' />
 </g>
 </svg>

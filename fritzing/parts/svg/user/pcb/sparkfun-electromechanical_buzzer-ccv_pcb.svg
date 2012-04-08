@@ -12,12 +12,12 @@
 </g>
 </g>
 <g id='silkscreen'>
-<path fill='none' d='M1.4,2.7 A4.47216,4.47216 0 0 1 6.87,-0.018' stroke-width='0.2032' stroke='#f0f0f0' />
-<path fill='none' d='M8.648,0.998 A4.5153,4.5153 0 0 1 9.791,2.649' stroke-width='0.2032' stroke='#f0f0f0' />
-<path fill='none' d='M9.8,5.9 A4.84733,4.84733 0 0 1 8.2,8' stroke-width='0.2032' stroke='#f0f0f0' />
-<path fill='none' d='M2.298,7.348 A3.96942,3.96942 0 0 0 3,7.9' stroke-width='0.2032' stroke='#f0f0f0' />
-<line x1='3' y1='10.3' x2='8.2' y2='10.3' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='8.2' y1='10.3' x2='8.2' y2='8' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='3' y1='10.3' x2='3' y2='7.9' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<path class='other' fill='none' d='M1.4,2.7 A4.47216,4.47216 0 0 1 6.87,-0.018' stroke-width='0.2032' stroke='#f0f0f0' />
+<path class='other' fill='none' d='M8.648,0.998 A4.5153,4.5153 0 0 1 9.791,2.649' stroke-width='0.2032' stroke='#f0f0f0' />
+<path class='other' fill='none' d='M9.8,5.9 A4.84733,4.84733 0 0 1 8.2,8' stroke-width='0.2032' stroke='#f0f0f0' />
+<path class='other' fill='none' d='M2.298,7.348 A3.96942,3.96942 0 0 0 3,7.9' stroke-width='0.2032' stroke='#f0f0f0' />
+<line class='other' x1='3' y1='10.3' x2='8.2' y2='10.3' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='8.2' y1='10.3' x2='8.2' y2='8' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='3' y1='10.3' x2='3' y2='7.9' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 </g>
 </svg>

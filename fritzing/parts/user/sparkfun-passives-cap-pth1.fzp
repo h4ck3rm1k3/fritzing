@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Passives-CAP-PTH1'>
 <version>4</version>
-<date>2012-04-07</date>
+<date>2012-04-08</date>
 <label>C</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Capacitor&lt;/b&gt;
@@ -19,24 +19,24 @@ Standard 0603 ceramic capacitor, and 0.1&quot; leaded capacitor.</description>
 </properties>
 <views>
 <breadboardView>
-<layers image='breadboard/sparkfun-passives_CAP-PTH-5MM_breadboard.svg'>
+<layers image='breadboard/sparkfun-passives_cap-pth-5mm_breadboard.svg'>
 <layer layerId='breadboard'/>
 </layers>
 </breadboardView>
 <schematicView>
-<layers image='schematic/sparkfun-passives_CAP_schematic.svg'>
+<layers image='schematic/sparkfun-passives_cap_schematic.svg'>
 <layer layerId='schematic'/>
 </layers>
 </schematicView>
 <pcbView>
-<layers image='pcb/sparkfun-passives_CAP-PTH-5MM_pcb.svg'>
+<layers image='pcb/sparkfun-passives_cap-pth-5mm_pcb.svg'>
 <layer layerId='copper1'/>
 <layer layerId='silkscreen'/>
 <layer layerId='copper0'/>
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/sparkfun-passives_CAP-PTH-5MM_breadboard.svg'>
+<layers image='breadboard/sparkfun-passives_cap-pth-5mm_breadboard.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

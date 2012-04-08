@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DiscreteSemi-ILD213T-'>
 <version>4</version>
-<date>2012-04-07</date>
+<date>2012-04-08</date>
 <label>IC</label>
 <author>www.fritzing.org</author>
 <description>Dual optoisolator.</description>
@@ -21,12 +21,12 @@
 </layers>
 </breadboardView>
 <schematicView>
-<layers image='schematic/sparkfun-discretesemi_ILD213T_schematic.svg'>
+<layers image='schematic/sparkfun-discretesemi_ild213t_schematic.svg'>
 <layer layerId='schematic'/>
 </layers>
 </schematicView>
 <pcbView>
-<layers image='pcb/sparkfun-discretesemi_SO08_pcb.svg'>
+<layers image='pcb/sparkfun-discretesemi_so08_pcb.svg'>
 <layer layerId='copper1'/>
 <layer layerId='silkscreen'/>
 </layers>

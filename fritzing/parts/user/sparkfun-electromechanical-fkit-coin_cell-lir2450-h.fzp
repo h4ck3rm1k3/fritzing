@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-FKIT-COIN_CELL-LIR2450-H'>
 <version>4</version>
-<date>2012-04-07</date>
+<date>2012-04-08</date>
 <label>BATT</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;Fabrick.it Coin Cell Holder&lt;/h3&gt;
@@ -19,24 +19,24 @@ Coin cell holder for 24.5mm rechargable coin cell</description>
 </properties>
 <views>
 <breadboardView>
-<layers image='breadboard/sparkfun-electromechanical_FKIT-LIR2450-H_breadboard.svg'>
+<layers image='breadboard/sparkfun-electromechanical_fkit-lir2450-h_breadboard.svg'>
 <layer layerId='breadboard'/>
 </layers>
 </breadboardView>
 <schematicView>
-<layers image='schematic/sparkfun-electromechanical_FKIT-BATTERY_schematic.svg'>
+<layers image='schematic/sparkfun-electromechanical_fkit-battery_schematic.svg'>
 <layer layerId='schematic'/>
 </layers>
 </schematicView>
 <pcbView>
-<layers image='pcb/sparkfun-electromechanical_FKIT-LIR2450-H_pcb.svg'>
+<layers image='pcb/sparkfun-electromechanical_fkit-lir2450-h_pcb.svg'>
 <layer layerId='copper1'/>
 <layer layerId='silkscreen'/>
 <layer layerId='copper0'/>
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/sparkfun-electromechanical_FKIT-LIR2450-H_breadboard.svg'>
+<layers image='breadboard/sparkfun-electromechanical_fkit-lir2450-h_breadboard.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

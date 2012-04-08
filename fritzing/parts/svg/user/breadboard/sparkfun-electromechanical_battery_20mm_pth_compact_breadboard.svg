@@ -13,15 +13,15 @@ M21.254,7.5016a0.9271,0.9271 0 1 0 1.8542,0 0.9271,0.9271 0 1 0 -1.8542,0z
 <path stroke='none' stroke-width='0' d='m22.1811,5.1394a1.1811,1.1811 0 0 1 1.1811,1.1811l0,2.3622a1.1811,1.1811 0 0 1 -1.1811,1.1811l-0,0a1.1811,1.1811 0 0 1 -1.1811,-1.1811l0,-2.3622a1.1811,1.1811 0 0 1 1.1811,-1.1811l0,0zM21.254,7.5016a0.9271,0.9271 0 1 0 1.8542,0 0.9271,0.9271 0 1 0 -1.8542,0z
 ' fill='#9A916C' />
 <rect id='connector2pad' connectorname='2' x='9.6491' y='5.4696' width='4.064' height='4.064' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<line x1='7.9811' y1='17.4016' x2='15.3811' y2='17.4016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='7.9811' y1='17.4016' x2='1.1811' y2='13.2016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='15.3811' y1='17.4016' x2='22.1811' y2='13.2016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<path fill='none' d='M6.3811,0.2016 A7.31364,7.31364 0 0 0 17.0811,0.1016' stroke-width='0.2032' stroke='#f8f8f8' />
-<line x1='22.1811' y1='13.2016' x2='22.1811' y2='11.0016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='1.1811' y1='13.2016' x2='1.1811' y2='11.0016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<path fill='none' d='M6.3811,0.2016 A2.96791,2.96791 0 0 0 1.1811,2.2016' stroke-width='0.2032' stroke='#f8f8f8' />
-<path fill='none' d='M22.1811,2.2016 A2.99398,2.99398 0 0 0 16.9811,0.2016' stroke-width='0.2032' stroke='#f8f8f8' />
-<line x1='1.1811' y1='2.2016' x2='1.1811' y2='4.0016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='22.1811' y1='2.2016' x2='22.1811' y2='4.0016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='7.9811' y1='17.4016' x2='15.3811' y2='17.4016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='7.9811' y1='17.4016' x2='1.1811' y2='13.2016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='15.3811' y1='17.4016' x2='22.1811' y2='13.2016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<path class='other' fill='none' d='M6.3811,0.2016 A7.31364,7.31364 0 0 0 17.0811,0.1016' stroke-width='0.2032' stroke='#f8f8f8' />
+<line class='other' x1='22.1811' y1='13.2016' x2='22.1811' y2='11.0016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='1.1811' y1='13.2016' x2='1.1811' y2='11.0016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<path class='other' fill='none' d='M6.3811,0.2016 A2.96791,2.96791 0 0 0 1.1811,2.2016' stroke-width='0.2032' stroke='#f8f8f8' />
+<path class='other' fill='none' d='M22.1811,2.2016 A2.99398,2.99398 0 0 0 16.9811,0.2016' stroke-width='0.2032' stroke='#f8f8f8' />
+<line class='other' x1='1.1811' y1='2.2016' x2='1.1811' y2='4.0016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='22.1811' y1='2.2016' x2='22.1811' y2='4.0016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 </g>
 </svg>

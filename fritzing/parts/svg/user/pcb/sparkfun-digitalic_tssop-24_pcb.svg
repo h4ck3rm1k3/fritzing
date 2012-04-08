@@ -31,8 +31,8 @@
 </g>
 </g>
 <g id='silkscreen'>
-<line x1='0.1016' y1='5.875' x2='0.1016' y2='1.875' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='7.9016' y1='1.875' x2='7.9016' y2='5.875' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<circle cx='0.8456' cy='5.253' r='0.2231' stroke='#f0f0f0' stroke-width='0.2032' fill='none' />
+<line class='other' x1='0.1016' y1='5.875' x2='0.1016' y2='1.875' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='7.9016' y1='1.875' x2='7.9016' y2='5.875' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<circle class='other' cx='0.8456' cy='5.253' r='0.2231' stroke='#f0f0f0' stroke-width='0.2032' fill='none' />
 </g>
 </svg>

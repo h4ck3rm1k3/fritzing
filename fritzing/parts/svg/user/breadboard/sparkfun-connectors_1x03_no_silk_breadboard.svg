@@ -10,8 +10,8 @@ M5.5118,0.9398a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
 <circle id='connector0pin' connectorname='1' cx='0.9398' cy='0.9398' r='0.7239' stroke='#9A916C' stroke-width='0.4318' fill='none' />
 <circle id='connector1pin' connectorname='2' cx='3.4798' cy='0.9398' r='0.7239' stroke='#9A916C' stroke-width='0.4318' fill='none' />
 <circle id='connector2pin' connectorname='3' cx='6.0198' cy='0.9398' r='0.7239' stroke='#9A916C' stroke-width='0.4318' fill='none' />
-<rect x='5.7658' y='0.6858' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='3.2258' y='0.6858' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
-<rect x='0.6858' y='0.6858' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect class='other' x='5.7658' y='0.6858' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect class='other' x='3.2258' y='0.6858' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
+<rect class='other' x='0.6858' y='0.6858' width='0.508' height='0.508' stroke='none' stroke-width='0' fill='#f8f8f8' stroke-linecap='round'/>
 </g>
 </svg>

@@ -36,7 +36,7 @@ M27.904,2.68a1.1,1.1 0 1 0 2.2,0 1.1,1.1 0 1 0 -2.2,0z
 <circle id='connector13pin' connectorname='11' cx='21.104' cy='2.68' r='1.227' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <circle id='connector14pin' connectorname='10' cx='25.054' cy='2.68' r='1.227' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <circle id='connector15pin' connectorname='9' cx='29.004' cy='2.68' r='1.227' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='1.651' x='28.659' y='9.175' text-anchor='start'>1</text>
-<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='1.651' x='0.084' y='6' text-anchor='start'>16</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='1.651' x='28.659' y='9.175' text-anchor='start'>1</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='1.651' x='0.084' y='6' text-anchor='start'>16</text>
 </g>
 </svg>

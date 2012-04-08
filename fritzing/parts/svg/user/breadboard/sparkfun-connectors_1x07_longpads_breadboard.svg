@@ -39,7 +39,7 @@ M16.1036,1.8796a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
 <circle cx='11.5316' cy='1.8796' r='0.508' stroke='black' stroke-width='0' fill='black' id='nonconn18' />
 <circle cx='14.0716' cy='1.8796' r='0.508' stroke='black' stroke-width='0' fill='black' id='nonconn19' />
 <circle cx='16.6116' cy='1.8796' r='0.508' stroke='black' stroke-width='0' fill='black' id='nonconn20' />
-<line x1='0.1016' y1='1.2446' x2='0.1016' y2='2.5146' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='17.8816' y1='1.2446' x2='17.8816' y2='2.5146' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='0.1016' y1='1.2446' x2='0.1016' y2='2.5146' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='17.8816' y1='1.2446' x2='17.8816' y2='2.5146' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 </g>
 </svg>

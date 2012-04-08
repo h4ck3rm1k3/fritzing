@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-M15-'>
 <version>4</version>
-<date>2012-04-07</date>
+<date>2012-04-08</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Header 15&lt;/b&gt;
@@ -17,24 +17,24 @@ Standard 15-pin 0.1&quot; header. Use with straight break away headers (SKU : PR
 </properties>
 <views>
 <breadboardView>
-<layers image='breadboard/sparkfun-connectors_1X15_breadboard.svg'>
+<layers image='breadboard/sparkfun-connectors_1x15_breadboard.svg'>
 <layer layerId='breadboard'/>
 </layers>
 </breadboardView>
 <schematicView>
-<layers image='schematic/sparkfun-connectors_M15_schematic.svg'>
+<layers image='schematic/sparkfun-connectors_m15_schematic.svg'>
 <layer layerId='schematic'/>
 </layers>
 </schematicView>
 <pcbView>
-<layers image='pcb/sparkfun-connectors_1X15_pcb.svg'>
+<layers image='pcb/sparkfun-connectors_1x15_pcb.svg'>
 <layer layerId='copper1'/>
 <layer layerId='silkscreen'/>
 <layer layerId='copper0'/>
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/sparkfun-connectors_1X15_breadboard.svg'>
+<layers image='breadboard/sparkfun-connectors_1x15_breadboard.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

@@ -7,7 +7,7 @@
    <path fill="#1F7A34" stroke="none" stroke-width="0" d="M0,0L0,170A30,30 0 0 1 0,230L0,400L300,400L300,0L0,0z"/>
    <g transform="translate(82.6142,113.323)">
     <g transform="matrix(0.5, 0, 0, 0.5, 33.6929, 43.3386)">
-     <circle fill="none" cx="67.386" cy="126.441" stroke="#F7BD13" r="27.5591" stroke-width="11.8111"/>
+     <circle class="other" fill="none" cx="67.386" cy="126.441" stroke="#F7BD13" r="27.5591" stroke-width="11.8111"/>
      <rect width="23.6221" x="73.2915" y="37.8582" fill="#F7BD13" connectorname="5" height="15.748" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="23.6221" x="37.8584" y="65.4172" fill="#F7BD13" connectorname="2" height="15.748" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="23.6221" x="73.2915" y="65.4172" fill="#F7BD13" connectorname="4" height="15.748" stroke="none" stroke-linecap="round" stroke-width="0"/>

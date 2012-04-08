@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-VNH2SP30-'>
 <version>4</version>
-<date>2012-04-07</date>
+<date>2012-04-08</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>30A motor driver IC</description>
@@ -21,12 +21,12 @@
 </layers>
 </breadboardView>
 <schematicView>
-<layers image='schematic/sparkfun-poweric_VNH2SP30_schematic.svg'>
+<layers image='schematic/sparkfun-poweric_vnh2sp30_schematic.svg'>
 <layer layerId='schematic'/>
 </layers>
 </schematicView>
 <pcbView>
-<layers image='pcb/sparkfun-poweric_VNH2SP30_pcb.svg'>
+<layers image='pcb/sparkfun-poweric_vnh2sp30_pcb.svg'>
 <layer layerId='copper1'/>
 <layer layerId='silkscreen'/>
 </layers>

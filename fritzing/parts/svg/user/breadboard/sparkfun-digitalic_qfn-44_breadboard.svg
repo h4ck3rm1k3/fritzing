@@ -51,7 +51,7 @@
      <rect width="11.811" x="84.6458" y="0" fill="#F7BD13" connectorname="42" height="31.4961" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="11.811" x="64.9607" y="0" fill="#F7BD13" connectorname="43" height="31.4961" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="11.811" x="45.2757" y="0" fill="#F7BD13" connectorname="44" height="31.4961" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="196.851" x="51.1812" y="51.1812" fill="#F7BD13" height="196.851" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="196.851" x="51.1812" y="51.1812" class="other" fill="#F7BD13" height="196.851" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="283.591" x="7.81102" y="7.81102" fill="#303030" height="283.591" stroke="none" stroke-width="0"/>
      <polygon fill="#1f1f1f" points="7.81102,7.81102 291.402,7.81102 281.402,17.811 17.811,17.811"/>
      <polygon fill="#1f1f1f" points="7.81102,291.402 291.402,291.402 281.402,281.402 17.811,281.402"/>

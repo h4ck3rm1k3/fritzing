@@ -8,8 +8,8 @@ M8.8016,10.143a0.45,0.45 0 1 0 0.9,0 0.45,0.45 0 1 0 -0.9,0z
 '/>
 <circle id='connector0pin' connectorname='-' cx='2.7516' cy='10.143' r='0.577' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <circle id='connector1pin' connectorname='+' cx='9.2516' cy='10.143' r='0.577' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle cx='6.0016' cy='10.143' r='5.9' stroke='#f8f8f8' stroke-width='0.2032' fill='none' />
-<circle cx='6.0016' cy='10.143' r='1.27' stroke='#f8f8f8' stroke-width='0.2032' fill='none' />
-<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='2.3114' x='8.6686' y='9' text-anchor='start'>+</text>
+<circle class='other' cx='6.0016' cy='10.143' r='5.9' stroke='#f8f8f8' stroke-width='0.2032' fill='none' />
+<circle class='other' cx='6.0016' cy='10.143' r='1.27' stroke='#f8f8f8' stroke-width='0.2032' fill='none' />
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='2.3114' x='8.6686' y='9' text-anchor='start'>+</text>
 </g>
 </svg>

@@ -4,6 +4,6 @@
 <g id='breadboard'>
 <path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l18.2032,0 0,18.2032 -18.2032,0 0,-18.2032z
 '/>
-<circle cx='9.1016' cy='9.1016' r='9' stroke='#f8f8f8' stroke-width='0.2032' fill='none' />
+<circle class='other' cx='9.1016' cy='9.1016' r='9' stroke='#f8f8f8' stroke-width='0.2032' fill='none' />
 </g>
 </svg>

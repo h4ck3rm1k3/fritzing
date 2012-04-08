@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-ARDUINO_SERIAL_PROGRAM-LOCK'>
 <version>4</version>
-<date>2012-04-07</date>
+<date>2012-04-08</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>FTDI connector footprints</description>
@@ -18,24 +18,24 @@
 </properties>
 <views>
 <breadboardView>
-<layers image='breadboard/sparkfun-connectors_1X06_LOCK_breadboard.svg'>
+<layers image='breadboard/sparkfun-connectors_1x06_lock_breadboard.svg'>
 <layer layerId='breadboard'/>
 </layers>
 </breadboardView>
 <schematicView>
-<layers image='schematic/sparkfun-connectors_ARDUINO_SERIAL_PROGRAM_schematic.svg'>
+<layers image='schematic/sparkfun-connectors_arduino_serial_program_schematic.svg'>
 <layer layerId='schematic'/>
 </layers>
 </schematicView>
 <pcbView>
-<layers image='pcb/sparkfun-connectors_1X06_LOCK_pcb.svg'>
+<layers image='pcb/sparkfun-connectors_1x06_lock_pcb.svg'>
 <layer layerId='copper1'/>
 <layer layerId='silkscreen'/>
 <layer layerId='copper0'/>
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/sparkfun-connectors_1X06_LOCK_breadboard.svg'>
+<layers image='breadboard/sparkfun-connectors_1x06_lock_breadboard.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

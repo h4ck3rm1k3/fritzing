@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-RF-LINK_RX-'>
 <version>4</version>
-<date>2012-04-07</date>
+<date>2012-04-08</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>RF Link receivers- WRL-8947, 8948, 8949, 8950</description>
@@ -16,24 +16,24 @@
 </properties>
 <views>
 <breadboardView>
-<layers image='breadboard/sparkfun-rf_RF-LINK_RX_breadboard.svg'>
+<layers image='breadboard/sparkfun-rf_rf-link_rx_breadboard.svg'>
 <layer layerId='breadboard'/>
 </layers>
 </breadboardView>
 <schematicView>
-<layers image='schematic/sparkfun-rf_RF-LINK_RX_schematic.svg'>
+<layers image='schematic/sparkfun-rf_rf-link_rx_schematic.svg'>
 <layer layerId='schematic'/>
 </layers>
 </schematicView>
 <pcbView>
-<layers image='pcb/sparkfun-rf_RF-LINK_RX_pcb.svg'>
+<layers image='pcb/sparkfun-rf_rf-link_rx_pcb.svg'>
 <layer layerId='copper1'/>
 <layer layerId='silkscreen'/>
 <layer layerId='copper0'/>
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/sparkfun-rf_RF-LINK_RX_breadboard.svg'>
+<layers image='breadboard/sparkfun-rf_rf-link_rx_breadboard.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

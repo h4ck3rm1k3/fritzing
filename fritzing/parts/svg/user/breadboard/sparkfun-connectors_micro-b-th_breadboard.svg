@@ -18,9 +18,9 @@ M8.6885,2.1635a0.6,0.6 0 1 0 1.2,0 0.6,0.6 0 1 0 -1.2,0z
 <circle id='connector4pin' connectorname='2' cx='4.5385' cy='1.3885' r='0.4' stroke='#9A916C' stroke-width='0.2' fill='none' />
 <circle id='connector5pin' connectorname='P$1' cx='1.0885' cy='2.1635' r='0.727' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <circle id='connector6pin' connectorname='P$2' cx='9.2885' cy='2.1635' r='0.727' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<line x1='0.0635' y1='4.2635' x2='10.3135' y2='4.2635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='0.0635' y1='0.0635' x2='10.3135' y2='0.0635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='0.0635' y1='4.2635' x2='0.0635' y2='0.0635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='10.3135' y1='4.2635' x2='10.3135' y2='0.0635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='0.0635' y1='4.2635' x2='10.3135' y2='4.2635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='0.0635' y1='0.0635' x2='10.3135' y2='0.0635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='0.0635' y1='4.2635' x2='0.0635' y2='0.0635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='10.3135' y1='4.2635' x2='10.3135' y2='0.0635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 </g>
 </svg>

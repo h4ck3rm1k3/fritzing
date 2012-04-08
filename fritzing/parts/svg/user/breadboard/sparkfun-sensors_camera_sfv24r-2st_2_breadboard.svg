@@ -31,8 +31,8 @@
      <rect width="11.811" x="165.886" y="168.484" fill="#F7BD13" connectorname="22" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="11.811" x="146.201" y="168.484" fill="#F7BD13" connectorname="23" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="11.811" x="126.516" y="168.484" fill="#F7BD13" connectorname="24" height="55.118" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <path fill="#F7BD13" stroke="#F7BD13" stroke-linecap="round" stroke-width="5" d="M114.705,107.106L114.705,53.555L32.4921,53.555L32.4921,107.114z"/>
-     <path fill="#F7BD13" stroke="#F7BD13" stroke-linecap="round" stroke-width="5" d="M683.704,107.106L683.704,53.555L601.492,53.555L601.492,107.114z"/>
+     <path class="other" fill="#F7BD13" stroke="none" stroke-linecap="round" stroke-width="0" d="M114.705,107.106L114.705,53.555L32.4921,53.555L32.4921,107.114z"/>
+     <path class="other" fill="#F7BD13" stroke="none" stroke-linecap="round" stroke-width="0" d="M683.704,107.106L683.704,53.555L601.492,53.555L601.492,107.114z"/>
      <rect width="717.598" x="0" y="0" fill="#303030" height="237.913" stroke="none" stroke-width="0"/>
      <polygon fill="#1f1f1f" points="0,0 717.598,0 707.598,10 10,10"/>
      <polygon fill="#1f1f1f" points="0,237.913 717.598,237.913 707.598,227.913 10,227.913"/>

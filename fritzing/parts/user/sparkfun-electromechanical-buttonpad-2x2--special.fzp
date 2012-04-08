@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-BUTTONPAD-2X2--SPECIAL'>
 <version>4</version>
-<date>2012-04-07</date>
+<date>2012-04-08</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Proven layout and schematic for 2x2 button pad. Panelize this device/fp to a 4x4 pad if needed. Spark Fun Electronics SKU : COM-07835. Compatible common cathode tri-color LED SKU : COM-00105</description>
@@ -18,24 +18,24 @@
 </properties>
 <views>
 <breadboardView>
-<layers image='breadboard/sparkfun-electromechanical_BUTTONPAD-2X2-SPECIAL_breadboard.svg'>
+<layers image='breadboard/sparkfun-electromechanical_buttonpad-2x2-special_breadboard.svg'>
 <layer layerId='breadboard'/>
 </layers>
 </breadboardView>
 <schematicView>
-<layers image='schematic/sparkfun-electromechanical_BUTTONPAD_SINGLE_BUTTONPAD_SINGLE_BUTTONPAD_SINGLE_BUTTONPAD_SINGLE_schematic.svg'>
+<layers image='schematic/sparkfun-electromechanical_buttonpad_single_buttonpad_single_buttonpad_single_buttonpad_single_schematic.svg'>
 <layer layerId='schematic'/>
 </layers>
 </schematicView>
 <pcbView>
-<layers image='pcb/sparkfun-electromechanical_BUTTONPAD-2X2-SPECIAL_pcb.svg'>
+<layers image='pcb/sparkfun-electromechanical_buttonpad-2x2-special_pcb.svg'>
 <layer layerId='copper1'/>
 <layer layerId='silkscreen'/>
 <layer layerId='copper0'/>
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/sparkfun-electromechanical_BUTTONPAD-2X2-SPECIAL_breadboard.svg'>
+<layers image='breadboard/sparkfun-electromechanical_buttonpad-2x2-special_breadboard.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

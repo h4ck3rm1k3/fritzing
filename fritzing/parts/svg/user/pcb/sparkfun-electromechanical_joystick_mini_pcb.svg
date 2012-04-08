@@ -18,16 +18,16 @@
 </g>
 </g>
 <g id='silkscreen'>
-<line x1='0.59' y1='8.62' x2='0.59' y2='1.62' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='7.885' y1='1.62' x2='7.885' y2='8.62' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='7.885' y1='8.62' x2='0.59' y2='8.62' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='4.255' y1='7.1' x2='6.255' y2='5.1' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='6.255' y1='5.1' x2='4.255' y2='3.1' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='4.255' y1='3.1' x2='2.255' y2='5.1' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='2.255' y1='5.1' x2='4.255' y2='7.1' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='0.59' y1='1.62' x2='3.45' y2='1.62' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='3.45' y1='1.62' x2='4.27' y2='2.44' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='4.27' y1='2.44' x2='5.095' y2='1.615' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='5.095' y1='1.615' x2='7.865' y2='1.615' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='0.59' y1='8.62' x2='0.59' y2='1.62' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='7.885' y1='1.62' x2='7.885' y2='8.62' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='7.885' y1='8.62' x2='0.59' y2='8.62' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='4.255' y1='7.1' x2='6.255' y2='5.1' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='6.255' y1='5.1' x2='4.255' y2='3.1' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='4.255' y1='3.1' x2='2.255' y2='5.1' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='2.255' y1='5.1' x2='4.255' y2='7.1' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='0.59' y1='1.62' x2='3.45' y2='1.62' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='3.45' y1='1.62' x2='4.27' y2='2.44' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='4.27' y1='2.44' x2='5.095' y2='1.615' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='5.095' y1='1.615' x2='7.865' y2='1.615' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 </g>
 </svg>

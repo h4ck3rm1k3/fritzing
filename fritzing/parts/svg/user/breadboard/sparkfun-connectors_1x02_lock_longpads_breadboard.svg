@@ -12,16 +12,16 @@ M3.5306,1.524a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
 <circle id='connector1pin' connectorname='2' cx='4.0386' cy='1.524' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <path stroke='none' stroke-width='0' d='m4.0386,0a0.762,0.762 0 0 1 0.762,0.762l0,1.524a0.762,0.762 0 0 1 -0.762,0.762l-0,0a0.762,0.762 0 0 1 -0.762,-0.762l0,-1.524a0.762,0.762 0 0 1 0.762,-0.762l0,0zM3.5306,1.524a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
 ' fill='#9A916C' />
-<line x1='3.0226' y1='1.524' x2='2.2606' y2='1.524' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='0.1016' y1='1.524' x2='0.3556' y2='1.524' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='0.1016' y1='1.524' x2='0.1016' y2='0.5334' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='0.1016' y1='0.5334' x2='0.381' y2='0.254' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='0.1016' y1='1.524' x2='0.1016' y2='2.5146' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='0.1016' y1='2.5146' x2='0.381' y2='2.794' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='5.1816' y1='1.524' x2='4.9276' y2='1.524' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='5.1816' y1='1.524' x2='5.1816' y2='2.5146' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='5.1816' y1='2.5146' x2='4.9022' y2='2.794' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='5.1816' y1='1.524' x2='5.1816' y2='0.5334' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='5.1816' y1='0.5334' x2='4.9022' y2='0.254' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='3.0226' y1='1.524' x2='2.2606' y2='1.524' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='0.1016' y1='1.524' x2='0.3556' y2='1.524' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='0.1016' y1='1.524' x2='0.1016' y2='0.5334' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='0.1016' y1='0.5334' x2='0.381' y2='0.254' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='0.1016' y1='1.524' x2='0.1016' y2='2.5146' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='0.1016' y1='2.5146' x2='0.381' y2='2.794' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='5.1816' y1='1.524' x2='4.9276' y2='1.524' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='5.1816' y1='1.524' x2='5.1816' y2='2.5146' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='5.1816' y1='2.5146' x2='4.9022' y2='2.794' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='5.1816' y1='1.524' x2='5.1816' y2='0.5334' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='5.1816' y1='0.5334' x2='4.9022' y2='0.254' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 </g>
 </svg>

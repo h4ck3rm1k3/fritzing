@@ -27,7 +27,7 @@
 </g>
 <g id='silkscreen'>
 <g transform='translate(0.935,7.24)'><g transform='rotate(270)'>
-<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f0f0f0' font-size='1.651' x='0' y='0' text-anchor='start'>1</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#f0f0f0' font-size='1.651' x='0' y='0' text-anchor='start'>1</text>
 </g></g>
 </g>
 </svg>

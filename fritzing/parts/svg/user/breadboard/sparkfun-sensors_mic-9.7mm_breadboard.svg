@@ -8,7 +8,7 @@ M2.5516,6.2216a0.4,0.4 0 1 0 0.8,0 0.4,0.4 0 1 0 -0.8,0z
 '/>
 <circle id='connector0pin' connectorname='1' cx='2.9516' cy='3.6816' r='0.6191' stroke='#9A916C' stroke-width='0.4382' fill='none' />
 <circle id='connector1pin' connectorname='2' cx='2.9516' cy='6.2216' r='0.6191' stroke='#9A916C' stroke-width='0.4382' fill='none' />
-<circle cx='4.9516' cy='4.9516' r='4.85' stroke='#f8f8f8' stroke-width='0.2032' fill='none' />
-<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='1.651' x='3.5656' y='7.8816' text-anchor='start'>-</text>
+<circle class='other' cx='4.9516' cy='4.9516' r='4.85' stroke='#f8f8f8' stroke-width='0.2032' fill='none' />
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='1.651' x='3.5656' y='7.8816' text-anchor='start'>-</text>
 </g>
 </svg>

@@ -10,7 +10,7 @@ M11.4046,8.1026a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
 <circle id='connector1pin' connectorname='1' cx='11.9126' cy='8.1026' r='0.66675' stroke='#9A916C' stroke-width='0.3175' fill='none' />
 <path stroke='none' stroke-width='0' d='m11.0871,7.2771 1.651,0 0,1.651 -1.651,0 0,-3zM11.4046,8.1026a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
 ' fill='#9A916C' />
-<line x1='4.9276' y1='6.1976' x2='3.6576' y2='6.1976' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<circle cx='8.1026' cy='8.1026' r='8.001' stroke='#f8f8f8' stroke-width='0.2032' fill='none' />
+<line class='other' x1='4.9276' y1='6.1976' x2='3.6576' y2='6.1976' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<circle class='other' cx='8.1026' cy='8.1026' r='8.001' stroke='#f8f8f8' stroke-width='0.2032' fill='none' />
 </g>
 </svg>

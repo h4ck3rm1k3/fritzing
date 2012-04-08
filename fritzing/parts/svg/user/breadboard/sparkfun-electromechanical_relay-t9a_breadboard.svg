@@ -14,13 +14,13 @@ M19.3675,26.5176a0.5461,0.5461 0 1 0 1.0922,0 0.5461,0.5461 0 1 0 -1.0922,0z
 <circle id='connector2pin' connectorname='MAIN' cx='5.9436' cy='13.8176' r='1.1557' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <circle id='connector3pin' connectorname='COIL1' cx='9.7536' cy='26.5176' r='0.6731' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <circle id='connector4pin' connectorname='COIL2' cx='19.9136' cy='26.5176' r='0.6731' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<line x1='1.1176' y1='0.1016' x2='26.5176' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='27.5336' y1='1.1176' x2='27.5336' y2='31.5976' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='26.5176' y1='32.6136' x2='1.1176' y2='32.6136' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='0.1016' y1='31.5976' x2='0.1016' y2='1.1176' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<path fill='none' d='M0.1016,1.1176 A1.08137,1.08137 0 0 1 1.1176,0.1016' stroke-width='0.2032' stroke='#f8f8f8' />
-<path fill='none' d='M27.5336,1.1176 A0.898026,0.898026 0 0 0 26.5176,0.1016' stroke-width='0.2032' stroke='#f8f8f8' />
-<path fill='none' d='M0.1016,31.5976 A0.898026,0.898026 0 0 0 1.1176,32.6136' stroke-width='0.2032' stroke='#f8f8f8' />
-<path fill='none' d='M26.5176,32.6136 A0.898026,0.898026 0 0 0 27.5336,31.5976' stroke-width='0.2032' stroke='#f8f8f8' />
+<line class='other' x1='1.1176' y1='0.1016' x2='26.5176' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='27.5336' y1='1.1176' x2='27.5336' y2='31.5976' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='26.5176' y1='32.6136' x2='1.1176' y2='32.6136' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='0.1016' y1='31.5976' x2='0.1016' y2='1.1176' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<path class='other' fill='none' d='M0.1016,1.1176 A1.08137,1.08137 0 0 1 1.1176,0.1016' stroke-width='0.2032' stroke='#f8f8f8' />
+<path class='other' fill='none' d='M27.5336,1.1176 A0.898026,0.898026 0 0 0 26.5176,0.1016' stroke-width='0.2032' stroke='#f8f8f8' />
+<path class='other' fill='none' d='M0.1016,31.5976 A0.898026,0.898026 0 0 0 1.1176,32.6136' stroke-width='0.2032' stroke='#f8f8f8' />
+<path class='other' fill='none' d='M26.5176,32.6136 A0.898026,0.898026 0 0 0 27.5336,31.5976' stroke-width='0.2032' stroke='#f8f8f8' />
 </g>
 </svg>

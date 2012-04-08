@@ -10,14 +10,14 @@
 </g>
 </g>
 <g id='silkscreen'>
-<line x1='3.7338' y1='3.429' x2='3.7338' y2='0.889' stroke='#f0f0f0' stroke-width='0.254' stroke-linecap='round'/>
-<path fill='none' d='M2.159,0.127 A2.032,2.032 0 0 1 3.72,0.8581' stroke-width='0.254' stroke='#f0f0f0' />
-<path fill='none' d='M0.3661,1.2028 A2.032,2.032 0 0 1 2.159,0.127' stroke-width='0.254' stroke='#f0f0f0' />
-<path fill='none' d='M2.159,4.191 A2.032,2.032 0 0 0 3.7102,3.4716' stroke-width='0.254' stroke='#f0f0f0' />
-<path fill='none' d='M0.3947,3.1672 A2.032,2.032 0 0 0 2.159,4.191' stroke-width='0.254' stroke='#f0f0f0' />
-<path fill='none' d='M0.127,2.159 A2.032,2.032 0 0 1 0.3699,1.1956' stroke-width='0.254' stroke='#f0f0f0' />
-<path fill='none' d='M0.127,2.159 A2.032,2.032 0 0 0 0.4284,3.224' stroke-width='0.254' stroke='#f0f0f0' />
-<line x1='3.7338' y1='0.8636' x2='3.7338' y2='1.3716' stroke='#f0f0f0' stroke-width='0.254' stroke-linecap='round'/>
-<line x1='3.7338' y1='3.4544' x2='3.7338' y2='2.9972' stroke='#f0f0f0' stroke-width='0.254' stroke-linecap='round'/>
+<line class='other' x1='3.7338' y1='3.429' x2='3.7338' y2='0.889' stroke='#f0f0f0' stroke-width='0.254' stroke-linecap='round'/>
+<path class='other' fill='none' d='M2.159,0.127 A2.032,2.032 0 0 1 3.72,0.8581' stroke-width='0.254' stroke='#f0f0f0' />
+<path class='other' fill='none' d='M0.3661,1.2028 A2.032,2.032 0 0 1 2.159,0.127' stroke-width='0.254' stroke='#f0f0f0' />
+<path class='other' fill='none' d='M2.159,4.191 A2.032,2.032 0 0 0 3.7102,3.4716' stroke-width='0.254' stroke='#f0f0f0' />
+<path class='other' fill='none' d='M0.3947,3.1672 A2.032,2.032 0 0 0 2.159,4.191' stroke-width='0.254' stroke='#f0f0f0' />
+<path class='other' fill='none' d='M0.127,2.159 A2.032,2.032 0 0 1 0.3699,1.1956' stroke-width='0.254' stroke='#f0f0f0' />
+<path class='other' fill='none' d='M0.127,2.159 A2.032,2.032 0 0 0 0.4284,3.224' stroke-width='0.254' stroke='#f0f0f0' />
+<line class='other' x1='3.7338' y1='0.8636' x2='3.7338' y2='1.3716' stroke='#f0f0f0' stroke-width='0.254' stroke-linecap='round'/>
+<line class='other' x1='3.7338' y1='3.4544' x2='3.7338' y2='2.9972' stroke='#f0f0f0' stroke-width='0.254' stroke-linecap='round'/>
 </g>
 </svg>

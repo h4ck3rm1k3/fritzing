@@ -8,9 +8,9 @@ M5.7206,2.3876a0.35,0.35 0 1 0 0.7,0 0.35,0.35 0 1 0 -0.7,0z
 '/>
 <circle id='connector0pin' connectorname='1' cx='0.9906' cy='2.3876' r='0.58775' stroke='#9A916C' stroke-width='0.4755' fill='none' />
 <circle id='connector1pin' connectorname='2' cx='6.0706' cy='2.3876' r='0.58775' stroke='#9A916C' stroke-width='0.4755' fill='none' />
-<line x1='0.1016' y1='4.6736' x2='6.9596' y2='4.6736' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='6.9596' y1='0.1016' x2='0.1016' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<path fill='none' d='M6.9596,0.1016 A2.286,2.286 0 1 1 6.9596,4.6736' stroke-width='0.2032' stroke='#f8f8f8' />
-<path fill='none' d='M0.1016,0.1016 A2.286,2.286 0 1 0 0.1016,4.6736' stroke-width='0.2032' stroke='#f8f8f8' />
+<line class='other' x1='0.1016' y1='4.6736' x2='6.9596' y2='4.6736' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='6.9596' y1='0.1016' x2='0.1016' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<path class='other' fill='none' d='M6.9596,0.1016 A2.286,2.286 0 1 1 6.9596,4.6736' stroke-width='0.2032' stroke='#f8f8f8' />
+<path class='other' fill='none' d='M0.1016,0.1016 A2.286,2.286 0 1 0 0.1016,4.6736' stroke-width='0.2032' stroke='#f8f8f8' />
 </g>
 </svg>

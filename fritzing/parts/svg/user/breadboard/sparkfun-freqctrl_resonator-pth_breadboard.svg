@@ -10,9 +10,9 @@ M5.6198,1.8796a0.4,0.4 0 1 0 0.8,0 0.4,0.4 0 1 0 -0.8,0z
 <circle id='connector0pin' connectorname='2' cx='3.4798' cy='1.8796' r='0.6699' stroke='#9A916C' stroke-width='0.5398' fill='none' />
 <circle id='connector1pin' connectorname='1' cx='0.9398' cy='1.8796' r='0.6699' stroke='#9A916C' stroke-width='0.5398' fill='none' />
 <circle id='connector2pin' connectorname='3' cx='6.0198' cy='1.8796' r='0.6699' stroke='#9A916C' stroke-width='0.5398' fill='none' />
-<path fill='none' d='M1.1938,0.1016 A1.79917,1.79917 0 0 0 1.1938,3.6576' stroke-width='0.2032' stroke='#f8f8f8' />
-<path fill='none' d='M5.7658,3.6576 A1.79917,1.79917 0 0 0 5.7658,0.1016' stroke-width='0.2032' stroke='#f8f8f8' />
-<path fill='none' d='M1.1938,3.6576 A20.6375,20.6375 0 0 0 5.7658,3.6576' stroke-width='0.2032' stroke='#f8f8f8' />
-<path fill='none' d='M5.7658,0.1016 A20.5744,20.5744 0 0 0 1.1938,0.1016' stroke-width='0.2032' stroke='#f8f8f8' />
+<path class='other' fill='none' d='M1.1938,0.1016 A1.79917,1.79917 0 0 0 1.1938,3.6576' stroke-width='0.2032' stroke='#f8f8f8' />
+<path class='other' fill='none' d='M5.7658,3.6576 A1.79917,1.79917 0 0 0 5.7658,0.1016' stroke-width='0.2032' stroke='#f8f8f8' />
+<path class='other' fill='none' d='M1.1938,3.6576 A20.6375,20.6375 0 0 0 5.7658,3.6576' stroke-width='0.2032' stroke='#f8f8f8' />
+<path class='other' fill='none' d='M5.7658,0.1016 A20.5744,20.5744 0 0 0 1.1938,0.1016' stroke-width='0.2032' stroke='#f8f8f8' />
 </g>
 </svg>

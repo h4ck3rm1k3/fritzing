@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-MPR121-QFN20'>
 <version>4</version>
-<date>2012-04-07</date>
+<date>2012-04-08</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>MPR121 Capacitive Touch Sensor Controller</description>
@@ -23,12 +23,12 @@
 </layers>
 </breadboardView>
 <schematicView>
-<layers image='schematic/sparkfun-sensors_MPR121_schematic.svg'>
+<layers image='schematic/sparkfun-sensors_mpr121_schematic.svg'>
 <layer layerId='schematic'/>
 </layers>
 </schematicView>
 <pcbView>
-<layers image='pcb/sparkfun-sensors_QFN-20-0.4MM_pcb.svg'>
+<layers image='pcb/sparkfun-sensors_qfn-20-0.4mm_pcb.svg'>
 <layer layerId='copper1'/>
 <layer layerId='silkscreen'/>
 </layers>

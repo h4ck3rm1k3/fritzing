@@ -246,13 +246,13 @@
 </g>
 </g>
 <g id='silkscreen'>
-<line x1='52.3494' y1='1.816' x2='52.3494' y2='16.04' stroke='#f0f0f0' stroke-width='0.1524' stroke-linecap='round'/>
-<line x1='0.0762' y1='16.04' x2='0.0762' y2='10.198' stroke='#f0f0f0' stroke-width='0.1524' stroke-linecap='round'/>
-<line x1='0.0762' y1='1.816' x2='0.0762' y2='7.658' stroke='#f0f0f0' stroke-width='0.1524' stroke-linecap='round'/>
-<path fill='none' d='M0.1778,10.198 A1.27,1.27 0 1 0 0.1778,7.658' stroke-width='0.1524' stroke='#f0f0f0' />
-<line x1='0.0762' y1='1.816' x2='0.8128' y2='1.816' stroke='#f0f0f0' stroke-width='0.1524' stroke-linecap='round'/>
-<line x1='0.0762' y1='16.04' x2='0.8128' y2='16.04' stroke='#f0f0f0' stroke-width='0.1524' stroke-linecap='round'/>
-<line x1='52.3494' y1='16.04' x2='51.6128' y2='16.04' stroke='#f0f0f0' stroke-width='0.1524' stroke-linecap='round'/>
-<line x1='52.3494' y1='1.816' x2='51.6128' y2='1.816' stroke='#f0f0f0' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='other' x1='52.3494' y1='1.816' x2='52.3494' y2='16.04' stroke='#f0f0f0' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='other' x1='0.0762' y1='16.04' x2='0.0762' y2='10.198' stroke='#f0f0f0' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='other' x1='0.0762' y1='1.816' x2='0.0762' y2='7.658' stroke='#f0f0f0' stroke-width='0.1524' stroke-linecap='round'/>
+<path class='other' fill='none' d='M0.1778,10.198 A1.27,1.27 0 1 0 0.1778,7.658' stroke-width='0.1524' stroke='#f0f0f0' />
+<line class='other' x1='0.0762' y1='1.816' x2='0.8128' y2='1.816' stroke='#f0f0f0' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='other' x1='0.0762' y1='16.04' x2='0.8128' y2='16.04' stroke='#f0f0f0' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='other' x1='52.3494' y1='16.04' x2='51.6128' y2='16.04' stroke='#f0f0f0' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='other' x1='52.3494' y1='1.816' x2='51.6128' y2='1.816' stroke='#f0f0f0' stroke-width='0.1524' stroke-linecap='round'/>
 </g>
 </svg>

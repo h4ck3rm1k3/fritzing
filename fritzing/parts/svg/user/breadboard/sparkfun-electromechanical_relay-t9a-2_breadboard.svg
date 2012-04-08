@@ -14,21 +14,21 @@ M16.8016,26.5216a0.55,0.55 0 1 0 1.1,0 0.55,0.55 0 1 0 -1.1,0z
 <circle id='connector2pin' connectorname='MAIN' cx='3.3916' cy='13.8216' r='1.1557' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <circle id='connector3pin' connectorname='COIL1' cx='7.1916' cy='26.5216' r='0.677' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <circle id='connector4pin' connectorname='COIL2' cx='17.3516' cy='26.5216' r='0.677' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<line x1='1.1016' y1='0.1016' x2='26.5016' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='27.5016' y1='1.0116' x2='27.5016' y2='12.1516' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='0.1016' y1='16.9516' x2='0.1016' y2='1.0116' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<path fill='none' d='M0.1016,1.0116 A1.01747,1.01747 0 0 1 1.1016,0.1016' stroke-width='0.2032' stroke='#f8f8f8' />
-<path fill='none' d='M27.5016,1.0116 A0.844964,0.844964 0 0 0 26.5016,0.1016' stroke-width='0.2032' stroke='#f8f8f8' />
-<line x1='0.8016' y1='17.7016' x2='1.4016' y2='17.7016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='22.7016' y1='12.9016' x2='26.8016' y2='12.9016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='2.1016' y1='18.4516' x2='2.1016' y2='31.7516' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='22.0016' y1='13.6516' x2='22.0016' y2='31.6516' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='2.8016' y1='32.4016' x2='21.3016' y2='32.4016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<path fill='none' d='M0.8016,17.7016 A0.716683,0.716683 0 0 1 0.1016,16.9516' stroke-width='0.2032' stroke='#f8f8f8' />
-<path fill='none' d='M1.4016,17.7016 A0.772128,0.772128 0 0 1 2.1016,18.4516' stroke-width='0.2032' stroke='#f8f8f8' />
-<path fill='none' d='M2.8016,32.4016 A0.796077,0.796077 0 0 1 2.1016,31.7516' stroke-width='0.2032' stroke='#f8f8f8' />
-<path fill='none' d='M22.0016,31.6516 A0.772128,0.772128 0 0 1 21.3016,32.4016' stroke-width='0.2032' stroke='#f8f8f8' />
-<path fill='none' d='M22.0016,13.6516 A0.772128,0.772128 0 0 1 22.7016,12.9016' stroke-width='0.2032' stroke='#f8f8f8' />
-<path fill='none' d='M27.5016,12.1516 A0.772128,0.772128 0 0 1 26.8016,12.9016' stroke-width='0.2032' stroke='#f8f8f8' />
+<line class='other' x1='1.1016' y1='0.1016' x2='26.5016' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='27.5016' y1='1.0116' x2='27.5016' y2='12.1516' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='0.1016' y1='16.9516' x2='0.1016' y2='1.0116' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<path class='other' fill='none' d='M0.1016,1.0116 A1.01747,1.01747 0 0 1 1.1016,0.1016' stroke-width='0.2032' stroke='#f8f8f8' />
+<path class='other' fill='none' d='M27.5016,1.0116 A0.844964,0.844964 0 0 0 26.5016,0.1016' stroke-width='0.2032' stroke='#f8f8f8' />
+<line class='other' x1='0.8016' y1='17.7016' x2='1.4016' y2='17.7016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='22.7016' y1='12.9016' x2='26.8016' y2='12.9016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='2.1016' y1='18.4516' x2='2.1016' y2='31.7516' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='22.0016' y1='13.6516' x2='22.0016' y2='31.6516' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='2.8016' y1='32.4016' x2='21.3016' y2='32.4016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<path class='other' fill='none' d='M0.8016,17.7016 A0.716683,0.716683 0 0 1 0.1016,16.9516' stroke-width='0.2032' stroke='#f8f8f8' />
+<path class='other' fill='none' d='M1.4016,17.7016 A0.772128,0.772128 0 0 1 2.1016,18.4516' stroke-width='0.2032' stroke='#f8f8f8' />
+<path class='other' fill='none' d='M2.8016,32.4016 A0.796077,0.796077 0 0 1 2.1016,31.7516' stroke-width='0.2032' stroke='#f8f8f8' />
+<path class='other' fill='none' d='M22.0016,31.6516 A0.772128,0.772128 0 0 1 21.3016,32.4016' stroke-width='0.2032' stroke='#f8f8f8' />
+<path class='other' fill='none' d='M22.0016,13.6516 A0.772128,0.772128 0 0 1 22.7016,12.9016' stroke-width='0.2032' stroke='#f8f8f8' />
+<path class='other' fill='none' d='M27.5016,12.1516 A0.772128,0.772128 0 0 1 26.8016,12.9016' stroke-width='0.2032' stroke='#f8f8f8' />
 </g>
 </svg>

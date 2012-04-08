@@ -7,29 +7,29 @@
    <path fill="#1F7A34" stroke="none" stroke-width="0" d="M0,0L0,270A30,30 0 0 1 0,330L0,600L100,600L100,0L0,0z"/>
    <g transform="translate(-155.819,174.585)">
     <g transform="matrix(0.5, 0, 0, 0.5, 102.909, 62.7076)">
-     <line stroke="#F7BD13" stroke-linecap="round" y1="204" x1="14.6378" y2="204" stroke-width="8" x2="120.638"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="204" x1="290.638" y2="204" stroke-width="8" x2="396.638"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="88.9999" x1="76.6378" y2="88.9999" stroke-width="8" x2="99.6378"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="88.9999" x1="334.638" y2="88.9999" stroke-width="8" x2="311.638"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="109" x1="304.638" y2="109" stroke-width="8" x2="338.638"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="109" x1="107.638" y2="109" stroke-width="8" x2="72.6378"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="129" x1="36.6378" y2="129" stroke-width="8" x2="95.6378"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="129" x1="374.638" y2="129" stroke-width="8" x2="316.638"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="149" x1="302.638" y2="149" stroke-width="8" x2="374.638"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="149" x1="108.638" y2="149" stroke-width="8" x2="36.6378"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="169" x1="12.6378" y2="169" stroke-width="8" x2="99.6378"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="169" x1="399.638" y2="169" stroke-width="8" x2="311.638"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="189" x1="283.638" y2="189" stroke-width="8" x2="385.638"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="189" x1="127.638" y2="189" stroke-width="8" x2="25.6378"/>
-     <path fill="none" stroke="#F7BD13" stroke-width="8" d="M95.6378,75.9999A213.515,213.514,0,0,0,4,188.779"/>
-     <path fill="none" stroke="#F7BD13" stroke-width="8" d="M407.638,189A213.312,213.312,0,0,0,315.666,75.9527"/>
-     <path fill="none" stroke="#F7BD13" stroke-width="8" d="M315.638,75.9999A120.83,120.83,0,0,0,95.6378,75.9999"/>
-     <path fill="none" stroke="#F7BD13" stroke-width="8" d="M131.638,58.9999A99.8193,99.8192,0,0,0,143.524,204.145"/>
-     <path fill="none" stroke="#F7BD13" stroke-width="8" d="M268.638,204A99.9563,99.9562,0,0,0,280.004,58.6653"/>
-     <path fill="none" stroke="#F7BD13" stroke-width="8" d="M143.638,204A99.9512,99.9511,0,0,0,268.638,204"/>
-     <path fill="none" stroke="#F7BD13" stroke-width="8" d="M4.6378,189A11.2334,11.2333,0,0,0,14.626,204.224"/>
-     <path fill="none" stroke="#F7BD13" stroke-width="8" d="M396.638,204A11.0035,11.0035,0,0,0,406.977,189.24"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="57.9999" x1="132.638" y2="58.9999" stroke-width="8" x2="131.638"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="204" x1="14.6378" y2="204" stroke-width="8" x2="120.638"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="204" x1="290.638" y2="204" stroke-width="8" x2="396.638"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="88.9999" x1="76.6378" y2="88.9999" stroke-width="8" x2="99.6378"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="88.9999" x1="334.638" y2="88.9999" stroke-width="8" x2="311.638"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="109" x1="304.638" y2="109" stroke-width="8" x2="338.638"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="109" x1="107.638" y2="109" stroke-width="8" x2="72.6378"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="129" x1="36.6378" y2="129" stroke-width="8" x2="95.6378"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="129" x1="374.638" y2="129" stroke-width="8" x2="316.638"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="149" x1="302.638" y2="149" stroke-width="8" x2="374.638"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="149" x1="108.638" y2="149" stroke-width="8" x2="36.6378"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="169" x1="12.6378" y2="169" stroke-width="8" x2="99.6378"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="169" x1="399.638" y2="169" stroke-width="8" x2="311.638"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="189" x1="283.638" y2="189" stroke-width="8" x2="385.638"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="189" x1="127.638" y2="189" stroke-width="8" x2="25.6378"/>
+     <path class="other" fill="none" stroke="#F7BD13" stroke-width="8" d="M95.6378,75.9999A213.515,213.514,0,0,0,4,188.779"/>
+     <path class="other" fill="none" stroke="#F7BD13" stroke-width="8" d="M407.638,189A213.312,213.312,0,0,0,315.666,75.9527"/>
+     <path class="other" fill="none" stroke="#F7BD13" stroke-width="8" d="M315.638,75.9999A120.83,120.83,0,0,0,95.6378,75.9999"/>
+     <path class="other" fill="none" stroke="#F7BD13" stroke-width="8" d="M131.638,58.9999A99.8193,99.8192,0,0,0,143.524,204.145"/>
+     <path class="other" fill="none" stroke="#F7BD13" stroke-width="8" d="M268.638,204A99.9563,99.9562,0,0,0,280.004,58.6653"/>
+     <path class="other" fill="none" stroke="#F7BD13" stroke-width="8" d="M143.638,204A99.9512,99.9511,0,0,0,268.638,204"/>
+     <path class="other" fill="none" stroke="#F7BD13" stroke-width="8" d="M4.6378,189A11.2334,11.2333,0,0,0,14.626,204.224"/>
+     <path class="other" fill="none" stroke="#F7BD13" stroke-width="8" d="M396.638,204A11.0035,11.0035,0,0,0,406.977,189.24"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="57.9999" x1="132.638" y2="58.9999" stroke-width="8" x2="131.638"/>
      <rect width="10" x="199.638" y="221" fill="#F7BD13" connectorname="1" height="9.99999" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="10" x="199.638" y="0" fill="#F7BD13" connectorname="2" height="9.99999" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="-1.69093e+11" x="8.45466e+10" y="8.45466e+10" fill="#303030" height="-1.69093e+11" stroke="none" stroke-width="0"/>

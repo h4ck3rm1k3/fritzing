@@ -2,6 +2,6 @@
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
 <svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='4.92126in' height='0.472441in' viewBox='0 0 125 12' >
 <g id='schematic'>
-<text font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='3.302' x='0' y='12' text-anchor='start'>Fabrickit logotype</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='3.302' x='0' y='12' text-anchor='start'>Fabrickit logotype</text>
 </g>
 </svg>

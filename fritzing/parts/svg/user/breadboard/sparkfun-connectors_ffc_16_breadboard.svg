@@ -23,8 +23,8 @@
      <rect width="23.6221" x="656.043" y="52.6654" fill="#F7BD13" connectorname="3" height="70.8661" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="23.6221" x="695.414" y="52.6654" fill="#F7BD13" connectorname="2" height="70.8661" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="23.6221" x="734.784" y="52.6654" fill="#F7BD13" connectorname="1" height="70.8661" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="90.5512" x="6.43701" y="158.965" fill="#F7BD13" height="98.4252" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="90.5512" x="805.65" y="158.965" fill="#F7BD13" height="98.4252" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="90.5512" x="6.43701" y="158.965" class="other" fill="#F7BD13" height="98.4252" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="90.5512" x="805.65" y="158.965" class="other" fill="#F7BD13" height="98.4252" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="902.638" x="0" y="0" fill="#303030" height="370.126" stroke="none" stroke-width="0"/>
      <polygon fill="#1f1f1f" points="0,0 902.638,0 892.638,10 10,10"/>
      <polygon fill="#1f1f1f" points="0,370.126 902.638,370.126 892.638,360.126 10,360.126"/>

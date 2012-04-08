@@ -15,11 +15,11 @@ M52.1335,21.6535a1.016,1.016 0 1 0 2.032,0 1.016,1.016 0 1 0 -2.032,0z
 <circle cx='27.2415' cy='26.2255' r='1.143' stroke='black' stroke-width='0' fill='black' id='nonconn6' />
 <circle cx='13.7795' cy='3.8735' r='1.143' stroke='black' stroke-width='0' fill='black' id='nonconn7' />
 <circle cx='40.7035' cy='3.8735' r='1.143' stroke='black' stroke-width='0' fill='black' id='nonconn8' />
-<line x1='0.0635' y1='30.0355' x2='0.0635' y2='0.0635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='0.0635' y1='0.0635' x2='54.9275' y2='0.0635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='54.9275' y1='0.0635' x2='54.9275' y2='30.0355' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='54.9275' y1='30.0355' x2='0.0635' y2='30.0355' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='1.651' x='49.3395' y='9.2075' text-anchor='start'>V+</text>
-<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='1.651' x='49.3395' y='22.1615' text-anchor='start'>V-</text>
+<line class='other' x1='0.0635' y1='30.0355' x2='0.0635' y2='0.0635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='0.0635' y1='0.0635' x2='54.9275' y2='0.0635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='54.9275' y1='0.0635' x2='54.9275' y2='30.0355' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='54.9275' y1='30.0355' x2='0.0635' y2='30.0355' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='1.651' x='49.3395' y='9.2075' text-anchor='start'>V+</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='1.651' x='49.3395' y='22.1615' text-anchor='start'>V-</text>
 </g>
 </svg>

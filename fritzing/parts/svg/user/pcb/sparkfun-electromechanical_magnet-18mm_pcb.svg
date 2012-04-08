@@ -6,6 +6,6 @@
 </g>
 </g>
 <g id='silkscreen'>
-<circle cx='9.1016' cy='9.1016' r='9' stroke='#f0f0f0' stroke-width='0.2032' fill='none' />
+<circle class='other' cx='9.1016' cy='9.1016' r='9' stroke='#f0f0f0' stroke-width='0.2032' fill='none' />
 </g>
 </svg>

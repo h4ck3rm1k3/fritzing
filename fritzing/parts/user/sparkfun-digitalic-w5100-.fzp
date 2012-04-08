@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-W5100-'>
 <version>4</version>
-<date>2012-04-07</date>
+<date>2012-04-08</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;WIZnet W5100&lt;/h3&gt;
@@ -20,23 +20,23 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm,  0.4mm pitch</description>
 </properties>
 <views>
 <breadboardView>
-<layers image='breadboard/sparkfun-digitalic_LQFP-80_breadboard.svg'>
+<layers image='breadboard/sparkfun-digitalic_lqfp-80_breadboard.svg'>
 <layer layerId='breadboard'/>
 </layers>
 </breadboardView>
 <schematicView>
-<layers image='schematic/sparkfun-digitalic_W5100_schematic.svg'>
+<layers image='schematic/sparkfun-digitalic_w5100_schematic.svg'>
 <layer layerId='schematic'/>
 </layers>
 </schematicView>
 <pcbView>
-<layers image='pcb/sparkfun-digitalic_LQFP-80_pcb.svg'>
+<layers image='pcb/sparkfun-digitalic_lqfp-80_pcb.svg'>
 <layer layerId='copper1'/>
 <layer layerId='silkscreen'/>
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/sparkfun-digitalic_LQFP-80_breadboard.svg'>
+<layers image='breadboard/sparkfun-digitalic_lqfp-80_breadboard.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

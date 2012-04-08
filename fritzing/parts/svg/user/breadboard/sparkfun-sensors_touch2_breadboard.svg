@@ -10,12 +10,12 @@ M10.8573,7.8553a0.3,0.3 0 1 0 0.6,0 0.3,0.3 0 1 0 -0.6,0z
 M10.6033,4.2993a0.3,0.3 0 1 0 0.6,0 0.3,0.3 0 1 0 -0.6,0z
 M10.6033,0.7433a0.3,0.3 0 1 0 0.6,0 0.3,0.3 0 1 0 -0.6,0z
 '/>
-<circle cx='11.4113' cy='11.4113' r='1.796' stroke='#9A916C' stroke-width='1.27' fill='none' />
-<circle cx='11.4113' cy='11.4113' r='7.1842' stroke='#9A916C' stroke-width='1.27' fill='none' />
-<circle cx='11.4113' cy='11.4113' r='8.9802' stroke='#9A916C' stroke-width='1.27' fill='none' />
-<circle cx='11.4113' cy='11.4113' r='10.7763' stroke='#9A916C' stroke-width='1.27' fill='none' />
-<circle cx='11.4113' cy='11.4113' r='3.5921' stroke='#9A916C' stroke-width='1.27' fill='none' />
-<circle cx='11.4113' cy='11.4113' r='5.3881' stroke='#9A916C' stroke-width='1.27' fill='none' />
+<circle class='other' cx='11.4113' cy='11.4113' r='1.796' stroke='#9A916C' stroke-width='1.27' fill='none' />
+<circle class='other' cx='11.4113' cy='11.4113' r='7.1842' stroke='#9A916C' stroke-width='1.27' fill='none' />
+<circle class='other' cx='11.4113' cy='11.4113' r='8.9802' stroke='#9A916C' stroke-width='1.27' fill='none' />
+<circle class='other' cx='11.4113' cy='11.4113' r='10.7763' stroke='#9A916C' stroke-width='1.27' fill='none' />
+<circle class='other' cx='11.4113' cy='11.4113' r='3.5921' stroke='#9A916C' stroke-width='1.27' fill='none' />
+<circle class='other' cx='11.4113' cy='11.4113' r='5.3881' stroke='#9A916C' stroke-width='1.27' fill='none' />
 <circle id='connector0pin' connectorname='P$1' cx='9.6333' cy='11.4113' r='0.427' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <circle id='connector1pin' connectorname='P$2' cx='6.0773' cy='11.4113' r='0.427' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <circle id='connector2pin' connectorname='P$3' cx='2.5213' cy='11.4113' r='0.427' stroke='#9A916C' stroke-width='0.254' fill='none' />

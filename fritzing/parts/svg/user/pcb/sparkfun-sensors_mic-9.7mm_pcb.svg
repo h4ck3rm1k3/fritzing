@@ -10,7 +10,7 @@
 </g>
 </g>
 <g id='silkscreen'>
-<circle cx='4.9516' cy='4.9516' r='4.85' stroke='#f0f0f0' stroke-width='0.2032' fill='none' />
-<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f0f0f0' font-size='1.651' x='3.5656' y='7.8816' text-anchor='start'>-</text>
+<circle class='other' cx='4.9516' cy='4.9516' r='4.85' stroke='#f0f0f0' stroke-width='0.2032' fill='none' />
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#f0f0f0' font-size='1.651' x='3.5656' y='7.8816' text-anchor='start'>-</text>
 </g>
 </svg>

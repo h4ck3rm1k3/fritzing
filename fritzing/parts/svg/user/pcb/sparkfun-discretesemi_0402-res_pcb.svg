@@ -8,6 +8,6 @@
 </g>
 </g>
 <g id='silkscreen'>
-<rect x='0.7968' y='0.0944' width='0.4064' height='0.7112' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
+<rect class='other' x='0.7968' y='0.0944' width='0.4064' height='0.7112' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>
 </g>
 </svg>

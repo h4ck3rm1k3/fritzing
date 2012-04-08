@@ -12,9 +12,9 @@
 </g>
 </g>
 <g id='silkscreen'>
-<path fill='none' d='M1.1938,0.1016 A1.79917,1.79917 0 0 0 1.1938,3.6576' stroke-width='0.2032' stroke='#f0f0f0' />
-<path fill='none' d='M5.7658,3.6576 A1.79917,1.79917 0 0 0 5.7658,0.1016' stroke-width='0.2032' stroke='#f0f0f0' />
-<path fill='none' d='M1.1938,3.6576 A20.6375,20.6375 0 0 0 5.7658,3.6576' stroke-width='0.2032' stroke='#f0f0f0' />
-<path fill='none' d='M5.7658,0.1016 A20.5744,20.5744 0 0 0 1.1938,0.1016' stroke-width='0.2032' stroke='#f0f0f0' />
+<path class='other' fill='none' d='M1.1938,0.1016 A1.79917,1.79917 0 0 0 1.1938,3.6576' stroke-width='0.2032' stroke='#f0f0f0' />
+<path class='other' fill='none' d='M5.7658,3.6576 A1.79917,1.79917 0 0 0 5.7658,0.1016' stroke-width='0.2032' stroke='#f0f0f0' />
+<path class='other' fill='none' d='M1.1938,3.6576 A20.6375,20.6375 0 0 0 5.7658,3.6576' stroke-width='0.2032' stroke='#f0f0f0' />
+<path class='other' fill='none' d='M5.7658,0.1016 A20.5744,20.5744 0 0 0 1.1938,0.1016' stroke-width='0.2032' stroke='#f0f0f0' />
 </g>
 </svg>

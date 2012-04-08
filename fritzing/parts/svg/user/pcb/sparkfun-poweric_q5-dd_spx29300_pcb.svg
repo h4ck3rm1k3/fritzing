@@ -12,14 +12,14 @@
 </g>
 </g>
 <g id='silkscreen'>
-<line x1='0.127' y1='1.0922' x2='0.127' y2='0.127' stroke='#f0f0f0' stroke-width='0.254' stroke-linecap='round'/>
-<line x1='0.127' y1='0.127' x2='1.8288' y2='0.127' stroke='#f0f0f0' stroke-width='0.254' stroke-linecap='round'/>
-<line x1='11.1506' y1='1.0922' x2='11.1506' y2='0.127' stroke='#f0f0f0' stroke-width='0.254' stroke-linecap='round'/>
-<line x1='11.1506' y1='0.127' x2='9.4488' y2='0.127' stroke='#f0f0f0' stroke-width='0.254' stroke-linecap='round'/>
-<circle cx='2.2388' cy='10.6426' r='0.2047' stroke='#f0f0f0' stroke-width='0.4064' fill='none' />
-<circle cx='3.9388' cy='10.6426' r='0.2047' stroke='#f0f0f0' stroke-width='0.4064' fill='none' />
-<circle cx='5.6388' cy='10.6426' r='0.2047' stroke='#f0f0f0' stroke-width='0.4064' fill='none' />
-<circle cx='7.3388' cy='10.6426' r='0.2047' stroke='#f0f0f0' stroke-width='0.4064' fill='none' />
-<circle cx='9.0388' cy='10.6426' r='0.2047' stroke='#f0f0f0' stroke-width='0.4064' fill='none' />
+<line class='other' x1='0.127' y1='1.0922' x2='0.127' y2='0.127' stroke='#f0f0f0' stroke-width='0.254' stroke-linecap='round'/>
+<line class='other' x1='0.127' y1='0.127' x2='1.8288' y2='0.127' stroke='#f0f0f0' stroke-width='0.254' stroke-linecap='round'/>
+<line class='other' x1='11.1506' y1='1.0922' x2='11.1506' y2='0.127' stroke='#f0f0f0' stroke-width='0.254' stroke-linecap='round'/>
+<line class='other' x1='11.1506' y1='0.127' x2='9.4488' y2='0.127' stroke='#f0f0f0' stroke-width='0.254' stroke-linecap='round'/>
+<circle class='other' cx='2.2388' cy='10.6426' r='0.2047' stroke='#f0f0f0' stroke-width='0.4064' fill='none' />
+<circle class='other' cx='3.9388' cy='10.6426' r='0.2047' stroke='#f0f0f0' stroke-width='0.4064' fill='none' />
+<circle class='other' cx='5.6388' cy='10.6426' r='0.2047' stroke='#f0f0f0' stroke-width='0.4064' fill='none' />
+<circle class='other' cx='7.3388' cy='10.6426' r='0.2047' stroke='#f0f0f0' stroke-width='0.4064' fill='none' />
+<circle class='other' cx='9.0388' cy='10.6426' r='0.2047' stroke='#f0f0f0' stroke-width='0.4064' fill='none' />
 </g>
 </svg>

@@ -38,7 +38,7 @@
 </g>
 </g>
 <g id='silkscreen'>
-<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f0f0f0' font-size='1.651' x='28.659' y='9.175' text-anchor='start'>1</text>
-<text font-family='OCRA' stroke='none' stroke-width='0' fill='#f0f0f0' font-size='1.651' x='0.084' y='6' text-anchor='start'>16</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#f0f0f0' font-size='1.651' x='28.659' y='9.175' text-anchor='start'>1</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#f0f0f0' font-size='1.651' x='0.084' y='6' text-anchor='start'>16</text>
 </g>
 </svg>

@@ -30,11 +30,11 @@
 </g>
 </g>
 <g id='silkscreen'>
-<line x1='0.1016' y1='8.89' x2='15.3416' y2='8.89' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='15.3416' y1='8.89' x2='15.3416' y2='2.286' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='15.3416' y1='2.286' x2='0.1016' y2='2.286' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<path fill='none' d='M0.1016,4.826 A0.762,0.762 0 1 1 0.1016,6.35' stroke-width='0.2032' stroke='#f0f0f0' />
-<line x1='0.1016' y1='4.826' x2='0.1016' y2='2.286' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='0.1016' y1='6.35' x2='0.1016' y2='8.89' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='0.1016' y1='8.89' x2='15.3416' y2='8.89' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='15.3416' y1='8.89' x2='15.3416' y2='2.286' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='15.3416' y1='2.286' x2='0.1016' y2='2.286' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<path class='other' fill='none' d='M0.1016,4.826 A0.762,0.762 0 1 1 0.1016,6.35' stroke-width='0.2032' stroke='#f0f0f0' />
+<line class='other' x1='0.1016' y1='4.826' x2='0.1016' y2='2.286' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='0.1016' y1='6.35' x2='0.1016' y2='8.89' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 </g>
 </svg>

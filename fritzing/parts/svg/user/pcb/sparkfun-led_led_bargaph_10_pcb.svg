@@ -126,13 +126,13 @@
 </g>
 </g>
 <g id='silkscreen'>
-<line x1='25.5016' y1='0.1016' x2='0.1016' y2='0.1016' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='2.6416' y1='10.2616' x2='25.5016' y2='10.2616' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='25.5016' y1='0.1016' x2='25.5016' y2='10.2616' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='2.6416' y1='10.2616' x2='0.1016' y2='7.7216' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='0.1016' y1='7.7216' x2='0.1016' y2='0.1016' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='12.8016' y1='7.4041' x2='12.8016' y2='2.9591' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='12.1666' y1='4.5466' x2='13.4366' y2='4.5466' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<path stroke='#f0f0f0' fill='#f0f0f0' stroke-width='0.127' d='M12.1666,5.4991L13.4366,5.4991L12.8016,4.5466z' stroke-linecap='round'/>
+<line class='other' x1='25.5016' y1='0.1016' x2='0.1016' y2='0.1016' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='2.6416' y1='10.2616' x2='25.5016' y2='10.2616' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='25.5016' y1='0.1016' x2='25.5016' y2='10.2616' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='2.6416' y1='10.2616' x2='0.1016' y2='7.7216' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='0.1016' y1='7.7216' x2='0.1016' y2='0.1016' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='12.8016' y1='7.4041' x2='12.8016' y2='2.9591' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='12.1666' y1='4.5466' x2='13.4366' y2='4.5466' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<path class='other' stroke='none' fill='#f0f0f0' stroke-width='0' d='M12.1666,5.4991L13.4366,5.4991L12.8016,4.5466z' stroke-linecap='round'/>
 </g>
 </svg>

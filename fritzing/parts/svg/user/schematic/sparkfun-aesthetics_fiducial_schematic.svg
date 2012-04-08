@@ -2,8 +2,8 @@
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
 <svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.11in' height='0.11in' viewBox='0 0 2.794 2.794' >
 <g id='schematic'>
-<line x1='0.635' y1='0.635' x2='2.159' y2='2.159' stroke='#000000' stroke-width='0.254' stroke-linecap='round'/>
-<line x1='2.159' y1='0.635' x2='0.635' y2='2.159' stroke='#000000' stroke-width='0.254' stroke-linecap='round'/>
-<circle cx='1.397' cy='1.397' r='1.27' stroke='#000000' stroke-width='0.254' fill='none' />
+<line class='other' x1='0.635' y1='0.635' x2='2.159' y2='2.159' stroke='#000000' stroke-width='0.254' stroke-linecap='round'/>
+<line class='other' x1='2.159' y1='0.635' x2='0.635' y2='2.159' stroke='#000000' stroke-width='0.254' stroke-linecap='round'/>
+<circle class='other' cx='1.397' cy='1.397' r='1.27' stroke='#000000' stroke-width='0.254' fill='none' />
 </g>
 </svg>

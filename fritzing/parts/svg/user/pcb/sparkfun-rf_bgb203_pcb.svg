@@ -55,14 +55,14 @@
 </g>
 </g>
 <g id='silkscreen'>
-<line x1='0.755' y1='1' x2='0.755' y2='1.4' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='0.755' y1='1' x2='1.655' y2='1' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='8.755' y1='1' x2='7.855' y2='1' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='8.755' y1='1' x2='8.755' y2='1.4' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='8.755' y1='8' x2='8.755' y2='7.6' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='8.755' y1='8' x2='7.855' y2='8' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='0.755' y1='8' x2='1.655' y2='8' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
-<line x1='0.755' y1='8' x2='0.755' y2='7.6' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
-<circle cx='2.348' cy='2.066' r='0.1612' stroke='#f0f0f0' stroke-width='0.127' fill='none' />
+<line class='other' x1='0.755' y1='1' x2='0.755' y2='1.4' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='0.755' y1='1' x2='1.655' y2='1' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='8.755' y1='1' x2='7.855' y2='1' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='8.755' y1='1' x2='8.755' y2='1.4' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='8.755' y1='8' x2='8.755' y2='7.6' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='8.755' y1='8' x2='7.855' y2='8' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='0.755' y1='8' x2='1.655' y2='8' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='0.755' y1='8' x2='0.755' y2='7.6' stroke='#f0f0f0' stroke-width='0.127' stroke-linecap='round'/>
+<circle class='other' cx='2.348' cy='2.066' r='0.1612' stroke='#f0f0f0' stroke-width='0.127' fill='none' />
 </g>
 </svg>

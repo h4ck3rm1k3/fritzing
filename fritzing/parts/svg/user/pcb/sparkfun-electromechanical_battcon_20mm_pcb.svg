@@ -9,15 +9,15 @@
 </g>
 </g>
 <g id='silkscreen'>
-<line x1='11.835' y1='18.9716' x2='19.235' y2='18.9716' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='11.835' y1='18.9716' x2='5.035' y2='12.9016' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='19.235' y1='18.9716' x2='26.035' y2='12.9016' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<path fill='none' d='M10.235,0.1016 A9.24028,9.24028 0 0 0 20.835,0.1016' stroke-width='0.2032' stroke='#f0f0f0' />
-<line x1='26.035' y1='12.9016' x2='26.035' y2='11.8016' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='5.035' y1='12.9016' x2='5.035' y2='11.8016' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<path fill='none' d='M5.035,2.1016 A2.96791,2.96791 0 0 1 10.235,0.1016' stroke-width='0.2032' stroke='#f0f0f0' />
-<path fill='none' d='M26.035,2.1016 A2.99402,2.99402 0 0 0 20.835,0.1016' stroke-width='0.2032' stroke='#f0f0f0' />
-<line x1='5.035' y1='2.1016' x2='5.035' y2='5.0016' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='26.035' y1='2.1016' x2='26.035' y2='5.0016' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='11.835' y1='18.9716' x2='19.235' y2='18.9716' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='11.835' y1='18.9716' x2='5.035' y2='12.9016' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='19.235' y1='18.9716' x2='26.035' y2='12.9016' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<path class='other' fill='none' d='M10.235,0.1016 A9.24028,9.24028 0 0 0 20.835,0.1016' stroke-width='0.2032' stroke='#f0f0f0' />
+<line class='other' x1='26.035' y1='12.9016' x2='26.035' y2='11.8016' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='5.035' y1='12.9016' x2='5.035' y2='11.8016' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<path class='other' fill='none' d='M5.035,2.1016 A2.96791,2.96791 0 0 1 10.235,0.1016' stroke-width='0.2032' stroke='#f0f0f0' />
+<path class='other' fill='none' d='M26.035,2.1016 A2.99402,2.99402 0 0 0 20.835,0.1016' stroke-width='0.2032' stroke='#f0f0f0' />
+<line class='other' x1='5.035' y1='2.1016' x2='5.035' y2='5.0016' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='26.035' y1='2.1016' x2='26.035' y2='5.0016' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 </g>
 </svg>

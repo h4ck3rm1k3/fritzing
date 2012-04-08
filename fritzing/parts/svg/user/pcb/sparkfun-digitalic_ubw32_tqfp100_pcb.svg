@@ -106,11 +106,11 @@
 </g>
 </g>
 <g id='silkscreen'>
-<line x1='2.577' y1='2.577' x2='12.323' y2='2.577' stroke='#f0f0f0' stroke-width='0.1524' stroke-linecap='round'/>
-<line x1='12.323' y1='2.577' x2='12.323' y2='12.323' stroke='#f0f0f0' stroke-width='0.1524' stroke-linecap='round'/>
-<line x1='12.323' y1='12.323' x2='3.127' y2='12.323' stroke='#f0f0f0' stroke-width='0.1524' stroke-linecap='round'/>
-<line x1='3.127' y1='12.323' x2='2.577' y2='11.773' stroke='#f0f0f0' stroke-width='0.1524' stroke-linecap='round'/>
-<line x1='2.577' y1='11.773' x2='2.577' y2='2.577' stroke='#f0f0f0' stroke-width='0.1524' stroke-linecap='round'/>
-<circle cx='3.75' cy='11.15' r='1' stroke='#f0f0f0' stroke-width='0.1524' fill='none' />
+<line class='other' x1='2.577' y1='2.577' x2='12.323' y2='2.577' stroke='#f0f0f0' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='other' x1='12.323' y1='2.577' x2='12.323' y2='12.323' stroke='#f0f0f0' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='other' x1='12.323' y1='12.323' x2='3.127' y2='12.323' stroke='#f0f0f0' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='other' x1='3.127' y1='12.323' x2='2.577' y2='11.773' stroke='#f0f0f0' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='other' x1='2.577' y1='11.773' x2='2.577' y2='2.577' stroke='#f0f0f0' stroke-width='0.1524' stroke-linecap='round'/>
+<circle class='other' cx='3.75' cy='11.15' r='1' stroke='#f0f0f0' stroke-width='0.1524' fill='none' />
 </g>
 </svg>

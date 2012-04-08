@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Passives-INDUCTOR-1210'>
 <version>4</version>
-<date>2012-04-07</date>
+<date>2012-04-08</date>
 <label>L</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Inductors&lt;/b&gt;
@@ -24,7 +24,7 @@ Basic Inductor/Choke - 0603 and 1206. Footprints are not proven and vary greatly
 </layers>
 </breadboardView>
 <schematicView>
-<layers image='schematic/sparkfun-passives_INDUCTOR_schematic.svg'>
+<layers image='schematic/sparkfun-passives_inductor_schematic.svg'>
 <layer layerId='schematic'/>
 </layers>
 </schematicView>

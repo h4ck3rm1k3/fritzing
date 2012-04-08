@@ -7,15 +7,15 @@
    <path fill="#1F7A34" stroke="none" stroke-width="0" d="M0,0L0,170A30,30 0 0 1 0,230L0,400L100,400L100,0L0,0z"/>
    <g transform="translate(-43.25,96)">
     <g transform="matrix(-0.606061, 0, 0, -0.606061, 149.765, 167.03)">
-     <line stroke="#F7BD13" stroke-linecap="round" y1="179" x1="82.5" y2="4" stroke-width="8" x2="82.5"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="29" x1="107.5" y2="204" stroke-width="8" x2="107.5"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="154" x1="132.5" y2="4" stroke-width="8" x2="132.5"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="29" x1="57.5" y2="204" stroke-width="8" x2="57.5"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="154" x1="32.5" y2="4" stroke-width="8" x2="32.5"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="54" x1="7.5" y2="204" stroke-width="8" x2="7.5"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="54" x1="157.5" y2="204" stroke-width="8" x2="157.5"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="204" x1="7.5" y2="204" stroke-width="8" x2="182.5"/>
-     <line stroke="#F7BD13" stroke-linecap="round" y1="4" x1="32.5" y2="4" stroke-width="8" x2="182.5"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="179" x1="82.5" y2="4" stroke-width="8" x2="82.5"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="29" x1="107.5" y2="204" stroke-width="8" x2="107.5"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="154" x1="132.5" y2="4" stroke-width="8" x2="132.5"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="29" x1="57.5" y2="204" stroke-width="8" x2="57.5"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="154" x1="32.5" y2="4" stroke-width="8" x2="32.5"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="54" x1="7.5" y2="204" stroke-width="8" x2="7.5"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="54" x1="157.5" y2="204" stroke-width="8" x2="157.5"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="204" x1="7.5" y2="204" stroke-width="8" x2="182.5"/>
+     <line class="other" stroke="#F7BD13" stroke-linecap="round" y1="4" x1="32.5" y2="4" stroke-width="8" x2="182.5"/>
      <rect width="8" x="178.5" y="0" fill="#F7BD13" connectorname="1" height="8" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="8" x="178.5" y="200" fill="#F7BD13" connectorname="2" height="8" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="165" x="-13.0303" y="-26.0606" fill="#303030" height="165" stroke="none" stroke-width="0"/>

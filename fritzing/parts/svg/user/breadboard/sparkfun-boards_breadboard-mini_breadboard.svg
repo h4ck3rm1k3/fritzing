@@ -4,9 +4,9 @@
 <g id='breadboard'>
 <path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l45.9232,0 0,35.7632 -45.9232,0 0,-35.7632z
 '/>
-<line x1='0.1016' y1='35.6616' x2='0.1016' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='0.1016' y1='0.1016' x2='45.8216' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='45.8216' y1='0.1016' x2='45.8216' y2='35.6616' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='45.8216' y1='35.6616' x2='0.1016' y2='35.6616' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='0.1016' y1='35.6616' x2='0.1016' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='0.1016' y1='0.1016' x2='45.8216' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='45.8216' y1='0.1016' x2='45.8216' y2='35.6616' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='45.8216' y1='35.6616' x2='0.1016' y2='35.6616' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 </g>
 </svg>

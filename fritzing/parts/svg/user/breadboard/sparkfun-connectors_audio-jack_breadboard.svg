@@ -19,11 +19,11 @@ M7.9516,11.1016a0.65,0.65 0 1 0 1.3,0 0.65,0.65 0 1 0 -1.3,0z
 <circle cx='1.1016' cy='11.1016' r='0.6' stroke='black' stroke-width='0' fill='black' id='nonconn12' />
 <circle cx='3.6016' cy='11.1016' r='0.6' stroke='black' stroke-width='0' fill='black' id='nonconn13' />
 <circle cx='8.6016' cy='6.1016' r='0.6' stroke='black' stroke-width='0' fill='black' id='nonconn14' />
-<line x1='11.1016' y1='0.1016' x2='11.1016' y2='12.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='0.1016' y1='0.1016' x2='7.1016' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='11.1016' y1='0.1016' x2='10.1016' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='0.1016' y1='0.1016' x2='0.1016' y2='12.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='0.1016' y1='12.1016' x2='7.1016' y2='12.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line x1='11.1016' y1='12.1016' x2='10.1016' y2='12.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='11.1016' y1='0.1016' x2='11.1016' y2='12.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='0.1016' y1='0.1016' x2='7.1016' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='11.1016' y1='0.1016' x2='10.1016' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='0.1016' y1='0.1016' x2='0.1016' y2='12.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='0.1016' y1='12.1016' x2='7.1016' y2='12.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='11.1016' y1='12.1016' x2='10.1016' y2='12.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 </g>
 </svg>
