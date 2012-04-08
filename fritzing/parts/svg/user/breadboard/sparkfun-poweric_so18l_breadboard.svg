@@ -25,12 +25,12 @@
      <rect width="26" x="23.0866" y="0" fill="#F7BD13" connectorname="18" height="80" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="26" x="423.087" y="386" fill="#F7BD13" connectorname="9" height="80" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="26" x="423.087" y="0" fill="#F7BD13" connectorname="10" height="80" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="472.087" x="0" y="82" fill="#303030" height="302" stroke="none" stroke-width="0"/>
-     <polygon fill="#1f1f1f" points="0,82 472.087,82 462.087,92 10,92"/>
-     <polygon fill="#1f1f1f" points="0,384 472.087,384 462.087,374 10,374"/>
-     <polygon fill="#000000" points="0,82 0,384 10,374 10,92"/>
-     <polygon fill="#3d3d3d" points="472.087,82 472.087,384 462.087,374 462.087,92"/>
-     <circle fill="#1f1f1f" cx="30" cy="354" stroke="none" r="10" stroke-width="0"/>
+     <rect width="472.087" x="0" y="81.9949" fill="#303030" height="302.01" stroke="none" stroke-width="0"/>
+     <polygon fill="#1f1f1f" points="0,81.9949 472.087,81.9949 462.087,91.9949 10,91.9949"/>
+     <polygon fill="#1f1f1f" points="0,384.005 472.087,384.005 462.087,374.005 10,374.005"/>
+     <polygon fill="#000000" points="0,81.9949 0,384.005 10,374.005 10,91.9949"/>
+     <polygon fill="#3d3d3d" points="472.087,81.9949 472.087,384.005 462.087,374.005 462.087,91.9949"/>
+     <circle fill="#1f1f1f" cx="30" cy="354.005" stroke="none" r="10" stroke-width="0"/>
     </g>
    </g>
    <text x="50" y="324.375" font-family="OCRA" fill="white" text-anchor="start" stroke="none" id="label" stroke-width="0" font-size="65">SO18L</text>

@@ -9,12 +9,12 @@
     <g transform="matrix(-2.11385, 0, 0, -2.11385, 272.4, 110.517)">
      <rect width="62.9923" x="0" y="0" fill="#F7BD13" connectorname="A" height="70.9843" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="62.9923" x="111.969" y="0" fill="#F7BD13" connectorname="C" height="70.9843" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="47.3071" x="-269.84" y="-38.1239" fill="#303030" height="52.949" stroke="none" stroke-width="0"/>
-     <polygon fill="#1f1f1f" points="-269.84,-38.1239 -222.533,-38.1239 -232.533,-28.1239 -259.84,-28.1239"/>
-     <polygon fill="#1f1f1f" points="-269.84,14.8251 -222.533,14.8251 -232.533,4.82507 -259.84,4.82507"/>
-     <polygon fill="#000000" points="-269.84,-38.1239 -269.84,14.8251 -259.84,4.82507 -259.84,-28.1239"/>
-     <polygon fill="#3d3d3d" points="-222.533,-38.1239 -222.533,14.8251 -232.533,4.82507 -232.533,-28.1239"/>
-     <circle fill="#1f1f1f" cx="-239.84" cy="-15.1749" stroke="none" r="10" stroke-width="0"/>
+     <rect width="47.3071" x="-269.84" y="-25.7071" fill="#303030" height="58.823" stroke="none" stroke-width="0"/>
+     <polygon fill="#1f1f1f" points="-269.84,-25.7071 -222.533,-25.7071 -232.533,-15.7071 -259.84,-15.7071"/>
+     <polygon fill="#1f1f1f" points="-269.84,33.1159 -222.533,33.1159 -232.533,23.1159 -259.84,23.1159"/>
+     <polygon fill="#000000" points="-269.84,-25.7071 -269.84,33.1159 -259.84,23.1159 -259.84,-15.7071"/>
+     <polygon fill="#3d3d3d" points="-222.533,-25.7071 -222.533,33.1159 -232.533,23.1159 -232.533,-15.7071"/>
+     <circle fill="#1f1f1f" cx="-239.84" cy="3.11587" stroke="none" r="10" stroke-width="0"/>
     </g>
    </g>
    <text x="50" y="224.375" font-family="OCRA" fill="white" text-anchor="start" stroke="none" id="label" stroke-width="0" font-size="65">FKIT-LED-1206</text>

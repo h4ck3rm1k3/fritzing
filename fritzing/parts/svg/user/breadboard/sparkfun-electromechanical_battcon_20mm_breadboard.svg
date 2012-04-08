@@ -5,17 +5,17 @@
  <g id="breadboard">
   <g id="icon">
    <path fill="#1F7A34" stroke="none" stroke-width="0" d="M0,0L0,170A30,30 0 0 1 0,230L0,400L100,400L100,0L0,0z"/>
-   <g transform="translate(-561.614,-175.457)">
-    <g transform="matrix(-0.119793, 0, 0, -0.119793, 684.881, 420.434)">
-     <rect width="238.977" x="492.127" y="211.283" fill="#F7BD13" connectorname="2" height="238.976" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="238.977" x="0" y="211.283" fill="#F7BD13" connectorname="1" height="238.976" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="238.977" x="984.253" y="211.283" fill="#F7BD13" connectorname="3" height="238.976" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="834.772" x="-46.5345" y="0" fill="#303030" height="750.913" stroke="none" stroke-width="0"/>
-     <polygon fill="#1f1f1f" points="-46.5345,0 788.237,0 778.237,10 -36.5345,10"/>
-     <polygon fill="#1f1f1f" points="-46.5345,750.913 788.237,750.913 778.237,740.913 -36.5345,740.913"/>
-     <polygon fill="#000000" points="-46.5345,0 -46.5345,750.913 -36.5345,740.913 -36.5345,10"/>
-     <polygon fill="#3d3d3d" points="788.237,0 788.237,750.913 778.237,740.913 778.237,10"/>
-     <circle fill="#1f1f1f" cx="-16.5345" cy="720.913" stroke="none" r="10" stroke-width="0"/>
+   <g transform="translate(-561.614,-195.382)">
+    <g transform="matrix(-0.119791, 0, 0, -0.119791, 684.88, 442.745)">
+     <rect width="238.977" x="492.127" y="251.134" fill="#F7BD13" connectorname="2" height="238.976" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="238.977" x="0" y="251.134" fill="#F7BD13" connectorname="1" height="238.976" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="238.977" x="984.253" y="251.134" fill="#F7BD13" connectorname="3" height="238.976" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="834.785" x="-46.5322" y="0" fill="#303030" height="790.764" stroke="none" stroke-width="0"/>
+     <polygon fill="#1f1f1f" points="-46.5322,0 788.252,0 778.252,10 -36.5322,10"/>
+     <polygon fill="#1f1f1f" points="-46.5322,790.764 788.252,790.764 778.252,780.764 -36.5322,780.764"/>
+     <polygon fill="#000000" points="-46.5322,0 -46.5322,790.764 -36.5322,780.764 -36.5322,10"/>
+     <polygon fill="#3d3d3d" points="788.252,0 788.252,790.764 778.252,780.764 778.252,10"/>
+     <circle fill="#1f1f1f" cx="-16.5322" cy="760.764" stroke="none" r="10" stroke-width="0"/>
     </g>
    </g>
    <text x="50" y="224.375" font-family="OCRA" fill="white" text-anchor="start" stroke="none" id="label" stroke-width="0" font-size="65">BATTCON_20MM</text>

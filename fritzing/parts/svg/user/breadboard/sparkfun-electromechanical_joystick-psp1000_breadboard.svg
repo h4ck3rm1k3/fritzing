@@ -5,20 +5,20 @@
  <g id="breadboard">
   <g id="icon">
    <path fill="#1F7A34" stroke="none" stroke-width="0" d="M0,0L0,170A30,30 0 0 1 0,230L0,400L200,400L200,0L0,0z"/>
-   <g transform="translate(-289.311,-243.596)">
-    <g transform="matrix(0, 0, 0, 0, 389.311, 443.596)">
-     <rect width="59.0551" x="264.311" y="18.5512" fill="#F7BD13" connectorname="GND" height="177.165" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="59.0551" x="500.531" y="18.5512" fill="#F7BD13" connectorname="X" height="177.165" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="59.0551" x="343.051" y="18.5512" fill="#F7BD13" connectorname="Y" height="177.165" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="59.0551" x="421.791" y="18.5512" fill="#F7BD13" connectorname="VCC" height="177.165" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <circle fill="black" cx="61.9488" cy="58.5118" stroke="black" r="39.3701" id="nonconn0" stroke-width="0"/>
-     <circle fill="black" cx="121.594" cy="808.315" stroke="black" r="39.3701" id="nonconn1" stroke-width="0"/>
-     <rect width="778.622" x="0" y="0" fill="#303030" height="887.193" stroke="none" stroke-width="0"/>
-     <polygon fill="#1f1f1f" points="0,0 778.622,0 768.622,10 10,10"/>
-     <polygon fill="#1f1f1f" points="0,887.193 778.622,887.193 768.622,877.193 10,877.193"/>
-     <polygon fill="#000000" points="0,0 0,887.193 10,877.193 10,10"/>
-     <polygon fill="#3d3d3d" points="778.622,0 778.622,887.193 768.622,877.193 768.622,10"/>
-     <circle fill="#1f1f1f" cx="30" cy="857.193" stroke="none" r="10" stroke-width="0"/>
+   <g transform="translate(-300.147,-254.28)">
+    <g transform="matrix(0, 0, 0, 0, 400.147, 454.28)">
+     <rect width="59.0552" x="285.982" y="39.919" fill="#F7BD13" connectorname="GND" height="177.166" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="59.0552" x="522.202" y="39.919" fill="#F7BD13" connectorname="X" height="177.166" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="59.0552" x="364.723" y="39.919" fill="#F7BD13" connectorname="Y" height="177.166" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="59.0552" x="443.462" y="39.919" fill="#F7BD13" connectorname="VCC" height="177.166" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <circle fill="black" cx="83.6199" cy="79.8797" stroke="black" r="39.3702" id="nonconn0" stroke-width="0"/>
+     <circle fill="black" cx="143.266" cy="829.683" stroke="black" r="39.3702" id="nonconn1" stroke-width="0"/>
+     <rect width="800.293" x="0" y="0" fill="#303030" height="908.561" stroke="none" stroke-width="0"/>
+     <polygon fill="#1f1f1f" points="0,0 800.293,0 790.293,10 10,10"/>
+     <polygon fill="#1f1f1f" points="0,908.561 800.293,908.561 790.293,898.561 10,898.561"/>
+     <polygon fill="#000000" points="0,0 0,908.561 10,898.561 10,10"/>
+     <polygon fill="#3d3d3d" points="800.293,0 800.293,908.561 790.293,898.561 790.293,10"/>
+     <circle fill="#1f1f1f" cx="30" cy="878.561" stroke="none" r="10" stroke-width="0"/>
     </g>
    </g>
    <text x="50" y="224.375" font-family="OCRA" fill="white" text-anchor="start" stroke="none" id="label" stroke-width="0" font-size="65">JOYSTICK-PSP1000</text>

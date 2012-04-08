@@ -5,18 +5,18 @@
  <g id="breadboard">
   <g id="icon">
    <path fill="#1F7A34" stroke="none" stroke-width="0" d="M0,0L0,170A30,30 0 0 1 0,230L0,400L100,400L100,0L0,0z"/>
-   <g transform="translate(-182.283,-4.75591)">
-    <g transform="matrix(-0.295239, 0, 0, -0.295239, 300.863, 265.208)">
-     <rect width="137.795" x="0" y="129.921" fill="#F7BD13" connectorname="-" height="78.7402" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="137.795" x="326.772" y="129.921" fill="#F7BD13" connectorname="+" height="78.7402" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <circle fill="black" cx="78.7402" cy="257.874" stroke="black" r="15.748" id="nonconn0" stroke-width="0"/>
-     <circle fill="black" cx="320.866" cy="15.748" stroke="black" r="15.748" id="nonconn1" stroke-width="0"/>
-     <rect width="338.709" x="-37.1583" y="-10.4194" fill="#303030" height="374.22" stroke="none" stroke-width="0"/>
-     <polygon fill="#1f1f1f" points="-37.1583,-10.4194 301.55,-10.4194 291.55,-0.419379 -27.1583,-0.419379"/>
-     <polygon fill="#1f1f1f" points="-37.1583,363.801 301.55,363.801 291.55,353.801 -27.1583,353.801"/>
-     <polygon fill="#000000" points="-37.1583,-10.4194 -37.1583,363.801 -27.1583,353.801 -27.1583,-0.419379"/>
-     <polygon fill="#3d3d3d" points="301.55,-10.4194 301.55,363.801 291.55,353.801 291.55,-0.419379"/>
-     <circle fill="#1f1f1f" cx="-7.15827" cy="333.801" stroke="none" r="10" stroke-width="0"/>
+   <g transform="translate(-182.283,-10.8004)">
+    <g transform="matrix(-0.295239, 0, 0, -0.295239, 300.863, 273.037)">
+     <rect width="137.795" x="0" y="142.01" fill="#F7BD13" connectorname="-" height="78.7399" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="137.795" x="326.772" y="142.01" fill="#F7BD13" connectorname="+" height="78.7399" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <circle fill="black" cx="78.7402" cy="269.962" stroke="black" r="15.748" id="nonconn0" stroke-width="0"/>
+     <circle fill="black" cx="320.866" cy="27.837" stroke="black" r="15.748" id="nonconn1" stroke-width="0"/>
+     <rect width="338.709" x="-37.1583" y="0" fill="#303030" height="421.601" stroke="none" stroke-width="0"/>
+     <polygon fill="#1f1f1f" points="-37.1583,0 301.55,0 291.55,10 -27.1583,10"/>
+     <polygon fill="#1f1f1f" points="-37.1583,421.601 301.55,421.601 291.55,411.601 -27.1583,411.601"/>
+     <polygon fill="#000000" points="-37.1583,0 -37.1583,421.601 -27.1583,411.601 -27.1583,10"/>
+     <polygon fill="#3d3d3d" points="301.55,0 301.55,421.601 291.55,411.601 291.55,10"/>
+     <circle fill="#1f1f1f" cx="-7.15827" cy="391.601" stroke="none" r="10" stroke-width="0"/>
     </g>
    </g>
    <text x="50" y="224.375" font-family="OCRA" fill="white" text-anchor="start" stroke="none" id="label" stroke-width="0" font-size="65">BUZZER-CCV-KIT</text>

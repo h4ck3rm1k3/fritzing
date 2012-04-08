@@ -5,15 +5,15 @@
  <g id="breadboard">
   <g id="icon">
    <path fill="#1F7A34" stroke="none" stroke-width="0" d="M0,0L0,170A30,30 0 0 1 0,230L0,400L100,400L100,0L0,0z"/>
-   <g transform="translate(6.53187,156.63)">
-    <g transform="matrix(-1.15027, 0, 0, -1.15027, 93.4681, 93.2573)">
-     <rect width="25" x="15.0866" y="18.3701" fill="#F7BD13" connectorname="1" height="50" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="25" x="47.1182" y="18.3701" fill="#F7BD13" connectorname="2" height="50" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="86.9363" x="0" y="0" fill="#303030" height="86.7402" stroke="none" stroke-width="0"/>
-     <polygon fill="#1f1f1f" points="0,0 86.9363,0 76.9363,10 10,10"/>
-     <polygon fill="#1f1f1f" points="0,86.7402 86.9363,86.7402 76.9363,76.7402 10,76.7402"/>
+   <g transform="translate(6.43411,156.63)">
+    <g transform="matrix(-1.14769, 0, 0, -1.14769, 93.5659, 93.1454)">
+     <rect width="25" x="15.2821" y="18.3701" fill="#F7BD13" connectorname="1" height="50" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="25" x="47.3137" y="18.3701" fill="#F7BD13" connectorname="2" height="50" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="87.1318" x="0" y="0" fill="#303030" height="86.7402" stroke="none" stroke-width="0"/>
+     <polygon fill="#1f1f1f" points="0,0 87.1318,0 77.1318,10 10,10"/>
+     <polygon fill="#1f1f1f" points="0,86.7402 87.1318,86.7402 77.1318,76.7402 10,76.7402"/>
      <polygon fill="#000000" points="0,0 0,86.7402 10,76.7402 10,10"/>
-     <polygon fill="#3d3d3d" points="86.9363,0 86.9363,86.7402 76.9363,76.7402 76.9363,10"/>
+     <polygon fill="#3d3d3d" points="87.1318,0 87.1318,86.7402 77.1318,76.7402 77.1318,10"/>
      <circle fill="#1f1f1f" cx="30" cy="56.7402" stroke="none" r="10" stroke-width="0"/>
     </g>
    </g>

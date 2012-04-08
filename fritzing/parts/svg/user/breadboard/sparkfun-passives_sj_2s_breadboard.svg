@@ -5,16 +5,16 @@
  <g id="breadboard">
   <g id="icon">
    <path fill="#1F7A34" stroke="none" stroke-width="0" d="M0,0L0,170A30,30 0 0 1 0,230L0,400L100,400L100,0L0,0z"/>
-   <g transform="translate(3.69291,157.63)">
-    <g transform="matrix(-1.07975, 0, 0, -1.07975, 96.3071, 88.1191)">
-     <rect width="25" x="17.5906" y="17.3701" fill="#F7BD13" connectorname="1" height="50" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="25" x="50.0236" y="17.3701" fill="#F7BD13" connectorname="2" height="50" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="92.6142" x="0" y="0" fill="#303030" height="84.7402" stroke="none" stroke-width="0"/>
+   <g transform="translate(3.69291,157.608)">
+    <g transform="matrix(-1.07975, 0, 0, -1.07975, 96.3071, 88.1655)">
+     <rect width="25" x="17.5906" y="17.4148" fill="#F7BD13" connectorname="1" height="50.0001" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="25" x="50.0236" y="17.4148" fill="#F7BD13" connectorname="2" height="50.0001" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="92.6142" x="0" y="0" fill="#303030" height="84.7848" stroke="none" stroke-width="0"/>
      <polygon fill="#1f1f1f" points="0,0 92.6142,0 82.6142,10 10,10"/>
-     <polygon fill="#1f1f1f" points="0,84.7402 92.6142,84.7402 82.6142,74.7402 10,74.7402"/>
-     <polygon fill="#000000" points="0,0 0,84.7402 10,74.7402 10,10"/>
-     <polygon fill="#3d3d3d" points="92.6142,0 92.6142,84.7402 82.6142,74.7402 82.6142,10"/>
-     <circle fill="#1f1f1f" cx="30" cy="54.7402" stroke="none" r="10" stroke-width="0"/>
+     <polygon fill="#1f1f1f" points="0,84.7848 92.6142,84.7848 82.6142,74.7848 10,74.7848"/>
+     <polygon fill="#000000" points="0,0 0,84.7848 10,74.7848 10,10"/>
+     <polygon fill="#3d3d3d" points="92.6142,0 92.6142,84.7848 82.6142,74.7848 82.6142,10"/>
+     <circle fill="#1f1f1f" cx="30" cy="54.7848" stroke="none" r="10" stroke-width="0"/>
     </g>
    </g>
    <text x="50" y="224.375" font-family="OCRA" fill="white" text-anchor="start" stroke="none" id="label" stroke-width="0" font-size="65">SJ_2S</text>

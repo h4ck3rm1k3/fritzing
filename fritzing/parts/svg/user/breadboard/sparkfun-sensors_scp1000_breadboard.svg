@@ -5,32 +5,32 @@
  <g id="breadboard">
   <g id="icon">
    <path fill="#1F7A34" stroke="none" stroke-width="0" d="M0,0L0,270A30,30 0 0 1 0,330L0,600L900,600L900,0L0,0z"/>
-   <g transform="translate(332.677,188.775)">
-    <g transform="matrix(0.5, 0, 0, 0.5, 58.6614, 55.6123)">
-     <rect width="21.6536" x="177.953" y="174.669" fill="#F7BD13" connectorname="DVSS" height="26.3779" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="21.6536" x="146.457" y="174.669" fill="#F7BD13" connectorname="DVDD" height="26.3779" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="21.6536" x="114.961" y="174.669" fill="#F7BD13" connectorname="CLK" height="26.3779" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="21.6536" x="83.4647" y="174.669" fill="#F7BD13" connectorname="DRDY" height="26.3779" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="21.6536" x="51.9686" y="174.669" fill="#F7BD13" connectorname="TRIG" height="26.3779" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="21.6536" x="20.4725" y="174.669" fill="#F7BD13" connectorname="ATST" height="26.3779" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="21.6536" x="177.953" y="11.6772" fill="#F7BD13" connectorname="SCK/SCL" height="26.3779" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="21.6536" x="146.457" y="11.6772" fill="#F7BD13" connectorname="MOSI/SDA" height="26.3779" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="21.6536" x="114.961" y="11.6772" fill="#F7BD13" connectorname="MISO" height="26.3779" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="21.6536" x="83.4647" y="11.6772" fill="#F7BD13" connectorname="CSB" height="26.3779" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="21.6536" x="51.9686" y="11.6772" fill="#F7BD13" connectorname="AVDD" height="26.3779" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="21.6536" x="20.4725" y="11.6772" fill="#F7BD13" connectorname="AVSS" height="26.3779" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="22.441" x="5.11812" y="63.6456" fill="#F7BD13" connectorname="AVSS@1" height="22.4409" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="22.441" x="5.11812" y="126.638" fill="#F7BD13" connectorname="ATST@1" height="22.4409" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="26.378" x="0" y="97.1101" fill="#F7BD13" connectorname="DUMMY2" height="18.5039" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="22.441" x="207.087" y="63.6456" fill="#F7BD13" connectorname="PD" height="22.4409" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="22.441" x="207.087" y="126.638" fill="#F7BD13" connectorname="DVDDS" height="22.4409" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="26.378" x="208.268" y="97.1101" fill="#F7BD13" connectorname="DUMMY1" height="18.5039" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="139.89" x="47.378" y="0" fill="#303030" height="222.449" stroke="none" stroke-width="0"/>
+   <g transform="translate(332.677,183.689)">
+    <g transform="matrix(0.5, 0, 0, 0.5, 58.6614, 58.1556)">
+     <rect width="21.6536" x="177.953" y="192.598" fill="#F7BD13" connectorname="DVSS" height="26.3779" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="21.6536" x="146.457" y="192.598" fill="#F7BD13" connectorname="DVDD" height="26.3779" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="21.6536" x="114.961" y="192.598" fill="#F7BD13" connectorname="CLK" height="26.3779" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="21.6536" x="83.4647" y="192.598" fill="#F7BD13" connectorname="DRDY" height="26.3779" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="21.6536" x="51.9686" y="192.598" fill="#F7BD13" connectorname="TRIG" height="26.3779" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="21.6536" x="20.4725" y="192.598" fill="#F7BD13" connectorname="ATST" height="26.3779" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="21.6536" x="177.953" y="29.6066" fill="#F7BD13" connectorname="SCK/SCL" height="26.3779" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="21.6536" x="146.457" y="29.6066" fill="#F7BD13" connectorname="MOSI/SDA" height="26.3779" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="21.6536" x="114.961" y="29.6066" fill="#F7BD13" connectorname="MISO" height="26.3779" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="21.6536" x="83.4647" y="29.6066" fill="#F7BD13" connectorname="CSB" height="26.3779" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="21.6536" x="51.9686" y="29.6066" fill="#F7BD13" connectorname="AVDD" height="26.3779" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="21.6536" x="20.4725" y="29.6066" fill="#F7BD13" connectorname="AVSS" height="26.3779" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="22.441" x="5.11812" y="81.575" fill="#F7BD13" connectorname="AVSS@1" height="22.4409" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="22.441" x="5.11812" y="144.567" fill="#F7BD13" connectorname="ATST@1" height="22.4409" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="26.378" x="0" y="115.04" fill="#F7BD13" connectorname="DUMMY2" height="18.5039" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="22.441" x="207.087" y="81.575" fill="#F7BD13" connectorname="PD" height="22.4409" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="22.441" x="207.087" y="144.567" fill="#F7BD13" connectorname="DVDDS" height="22.4409" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="26.378" x="208.268" y="115.04" fill="#F7BD13" connectorname="DUMMY1" height="18.5039" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="139.89" x="47.378" y="0" fill="#303030" height="232.622" stroke="none" stroke-width="0"/>
      <polygon fill="#1f1f1f" points="47.378,0 187.268,0 177.268,10 57.378,10"/>
-     <polygon fill="#1f1f1f" points="47.378,222.449 187.268,222.449 177.268,212.449 57.378,212.449"/>
-     <polygon fill="#000000" points="47.378,0 47.378,222.449 57.378,212.449 57.378,10"/>
-     <polygon fill="#3d3d3d" points="187.268,0 187.268,222.449 177.268,212.449 177.268,10"/>
-     <circle fill="#1f1f1f" cx="77.378" cy="192.449" stroke="none" r="10" stroke-width="0"/>
+     <polygon fill="#1f1f1f" points="47.378,232.622 187.268,232.622 177.268,222.622 57.378,222.622"/>
+     <polygon fill="#000000" points="47.378,0 47.378,232.622 57.378,222.622 57.378,10"/>
+     <polygon fill="#3d3d3d" points="187.268,0 187.268,232.622 177.268,222.622 177.268,10"/>
+     <circle fill="#1f1f1f" cx="77.378" cy="202.622" stroke="none" r="10" stroke-width="0"/>
     </g>
    </g>
    <text x="50" y="324.375" font-family="OCRA" fill="white" text-anchor="start" stroke="none" id="label" stroke-width="0" font-size="65">SCP1000</text>

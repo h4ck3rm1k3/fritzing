@@ -5,19 +5,19 @@
  <g id="breadboard">
   <g id="icon">
    <path fill="#1F7A34" stroke="none" stroke-width="0" d="M0,0L0,170A30,30 0 0 1 0,230L0,400L200,400L200,0L0,0z"/>
-   <g transform="translate(-368.071,-496.374)">
-    <g transform="matrix(0, 0, 0, 0, 468.071, 696.374)">
-     <rect width="70" x="0" y="182.347" fill="#F7BD13" connectorname="1" height="100" stroke="none" stroke-linecap="round" stroke-width="0"/>
+   <g transform="translate(-368.071,-105.181)">
+    <g transform="matrix(0, 0, 0, 0, 468.071, 305.181)">
+     <rect width="70" x="0" y="182.346" fill="#F7BD13" connectorname="1" height="100" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="511.811" x="212.165" y="135.89" fill="#F7BD13" connectorname="2" height="314.961" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="70" x="866.142" y="182.347" fill="#F7BD13" connectorname="3" height="100" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="70" x="866.142" y="182.346" fill="#F7BD13" connectorname="3" height="100" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="70" x="0" y="304.394" fill="#F7BD13" connectorname="P$1" height="100" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="70" x="866.142" y="304.394" fill="#F7BD13" connectorname="P$2" height="100" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="838.709" x="0" y="0" fill="#303030" height="1392.75" stroke="none" stroke-width="0"/>
+     <rect width="838.709" x="0" y="0" fill="#303030" height="610.362" stroke="none" stroke-width="0"/>
      <polygon fill="#1f1f1f" points="0,0 838.709,0 828.709,10 10,10"/>
-     <polygon fill="#1f1f1f" points="0,1392.75 838.709,1392.75 828.709,1382.75 10,1382.75"/>
-     <polygon fill="#000000" points="0,0 0,1392.75 10,1382.75 10,10"/>
-     <polygon fill="#3d3d3d" points="838.709,0 838.709,1392.75 828.709,1382.75 828.709,10"/>
-     <circle fill="#1f1f1f" cx="30" cy="1362.75" stroke="none" r="10" stroke-width="0"/>
+     <polygon fill="#1f1f1f" points="0,610.362 838.709,610.362 828.709,600.362 10,600.362"/>
+     <polygon fill="#000000" points="0,0 0,610.362 10,600.362 10,10"/>
+     <polygon fill="#3d3d3d" points="838.709,0 838.709,610.362 828.709,600.362 828.709,10"/>
+     <circle fill="#1f1f1f" cx="30" cy="580.362" stroke="none" r="10" stroke-width="0"/>
     </g>
    </g>
    <text x="50" y="224.375" font-family="OCRA" fill="white" text-anchor="start" stroke="none" id="label" stroke-width="0" font-size="65">BATTCON_20MM_4LEGS</text>

@@ -5,21 +5,21 @@
  <g id="breadboard">
   <g id="icon">
    <path fill="#1F7A34" stroke="none" stroke-width="0" d="M0,0L0,170A30,30 0 0 1 0,230L0,400L200,400L200,0L0,0z"/>
-   <g transform="translate(-144.094,-67.5514)">
-    <g transform="matrix(0, 0, 0, 0, 244.094, 267.551)">
-     <rect width="74.8032" x="108.268" y="196.914" fill="#F7BD13" connectorname="1" height="70.8662" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="74.8032" x="206.693" y="196.914" fill="#F7BD13" connectorname="T" height="70.8662" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="74.8032" x="305.118" y="196.914" fill="#F7BD13" connectorname="2" height="70.8662" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="62.9921" x="425.197" y="15.811" fill="#F7BD13" connectorname="C" height="59.0552" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="62.9921" x="0" y="15.811" fill="#F7BD13" connectorname="NC" height="59.0552" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <circle fill="black" cx="145.669" cy="82.7403" stroke="black" r="21.6535" id="nonconn0" stroke-width="0"/>
-     <circle fill="black" cx="342.52" cy="82.7403" stroke="black" r="21.6535" id="nonconn1" stroke-width="0"/>
-     <rect width="472.567" x="0" y="0" fill="#303030" height="535.103" stroke="none" stroke-width="0"/>
+   <g transform="translate(-144.094,14.9289)">
+    <g transform="matrix(0, 0, 0, 0, 244.094, 185.071)">
+     <rect width="74.8032" x="108.268" y="299.276" fill="#F7BD13" connectorname="1" height="70.8661" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="74.8032" x="206.693" y="299.276" fill="#F7BD13" connectorname="T" height="70.8661" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="74.8032" x="305.118" y="299.276" fill="#F7BD13" connectorname="2" height="70.8661" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="62.9921" x="425.197" y="118.174" fill="#F7BD13" connectorname="C" height="59.0551" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="62.9921" x="0" y="118.174" fill="#F7BD13" connectorname="NC" height="59.0551" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <circle fill="black" cx="145.669" cy="185.103" stroke="black" r="21.6535" id="nonconn0" stroke-width="0"/>
+     <circle fill="black" cx="342.52" cy="185.103" stroke="black" r="21.6535" id="nonconn1" stroke-width="0"/>
+     <rect width="472.567" x="0" y="0" fill="#303030" height="350.52" stroke="none" stroke-width="0"/>
      <polygon fill="#1f1f1f" points="0,0 472.567,0 462.567,10 10,10"/>
-     <polygon fill="#1f1f1f" points="0,535.103 472.567,535.103 462.567,525.103 10,525.103"/>
-     <polygon fill="#000000" points="0,0 0,535.103 10,525.103 10,10"/>
-     <polygon fill="#3d3d3d" points="472.567,0 472.567,535.103 462.567,525.103 462.567,10"/>
-     <circle fill="#1f1f1f" cx="30" cy="505.103" stroke="none" r="10" stroke-width="0"/>
+     <polygon fill="#1f1f1f" points="0,350.52 472.567,350.52 462.567,340.52 10,340.52"/>
+     <polygon fill="#000000" points="0,0 0,350.52 10,340.52 10,10"/>
+     <polygon fill="#3d3d3d" points="472.567,0 472.567,350.52 462.567,340.52 462.567,10"/>
+     <circle fill="#1f1f1f" cx="30" cy="320.52" stroke="none" r="10" stroke-width="0"/>
     </g>
    </g>
    <text x="50" y="224.375" font-family="OCRA" fill="white" text-anchor="start" stroke="none" id="label" stroke-width="0" font-size="65">NAV_SWITCH</text>

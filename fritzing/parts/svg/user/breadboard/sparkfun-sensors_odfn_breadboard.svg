@@ -5,23 +5,23 @@
  <g id="breadboard">
   <g id="icon">
    <path fill="#1F7A34" stroke="none" stroke-width="0" d="M0,0L0,170A30,30 0 0 1 0,230L0,400L400,400L400,0L0,0z"/>
-   <g transform="translate(131.89,136.476)">
-    <g transform="matrix(0.5, 0, 0, 0.5, 34.0551, 31.7618)">
-     <rect width="23.622" x="0" y="44.8227" fill="#F7BD13" connectorname="2" height="11.811" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="23.622" x="0" y="70.4133" fill="#F7BD13" connectorname="3" height="11.811" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="23.622" x="0" y="96.0038" fill="#F7BD13" connectorname="4" height="11.811" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="23.622" x="0" y="19.2322" fill="#F7BD13" connectorname="1" height="11.811" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="23.622" x="112.598" y="70.4133" fill="#F7BD13" connectorname="6" height="11.811" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="23.622" x="112.598" y="44.8227" fill="#F7BD13" connectorname="7" height="11.811" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="23.622" x="112.598" y="19.2322" fill="#F7BD13" connectorname="8" height="11.811" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="23.622" x="112.598" y="96.0038" fill="#F7BD13" connectorname="5" height="11.811" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="51.1809" x="42.5195" y="22.185" fill="#F7BD13" connectorname="NC" height="82.677" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="123.11" x="6.55512" y="0" fill="#303030" height="127.047" stroke="none" stroke-width="0"/>
-     <polygon fill="#1f1f1f" points="6.55512,0 129.665,0 119.665,10 16.5551,10"/>
-     <polygon fill="#1f1f1f" points="6.55512,127.047 129.665,127.047 119.665,117.047 16.5551,117.047"/>
-     <polygon fill="#000000" points="6.55512,0 6.55512,127.047 16.5551,117.047 16.5551,10"/>
-     <polygon fill="#3d3d3d" points="129.665,0 129.665,127.047 119.665,117.047 119.665,10"/>
-     <circle fill="#1f1f1f" cx="36.5551" cy="97.0472" stroke="none" r="10" stroke-width="0"/>
+   <g transform="translate(131.692,128.572)">
+    <g transform="matrix(0.5, 0, 0, 0.5, 34.1541, 35.7141)">
+     <rect width="23.622" x="0.39592" y="60.6324" fill="#F7BD13" connectorname="2" height="11.811" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="23.622" x="0.39592" y="86.223" fill="#F7BD13" connectorname="3" height="11.811" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="23.622" x="0.39592" y="111.814" fill="#F7BD13" connectorname="4" height="11.811" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="23.622" x="0.39592" y="35.0417" fill="#F7BD13" connectorname="1" height="11.811" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="23.622" x="112.994" y="86.223" fill="#F7BD13" connectorname="6" height="11.811" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="23.622" x="112.994" y="60.6324" fill="#F7BD13" connectorname="7" height="11.811" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="23.622" x="112.994" y="35.0417" fill="#F7BD13" connectorname="8" height="11.811" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="23.622" x="112.994" y="111.814" fill="#F7BD13" connectorname="5" height="11.811" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="51.1809" x="42.9156" y="37.9944" fill="#F7BD13" connectorname="NC" height="82.6773" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="130.061" x="3.27756" y="0" fill="#303030" height="142.857" stroke="none" stroke-width="0"/>
+     <polygon fill="#1f1f1f" points="3.27756,0 133.339,0 123.339,10 13.2776,10"/>
+     <polygon fill="#1f1f1f" points="3.27756,142.857 133.339,142.857 123.339,132.857 13.2776,132.857"/>
+     <polygon fill="#000000" points="3.27756,0 3.27756,142.857 13.2776,132.857 13.2776,10"/>
+     <polygon fill="#3d3d3d" points="133.339,0 133.339,142.857 123.339,132.857 123.339,10"/>
+     <circle fill="#1f1f1f" cx="33.2776" cy="112.857" stroke="none" r="10" stroke-width="0"/>
     </g>
    </g>
    <text x="50" y="224.375" font-family="OCRA" fill="white" text-anchor="start" stroke="none" id="label" stroke-width="0" font-size="65">ODFN</text>

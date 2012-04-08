@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
-<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='1.205in' height='1.23912in' viewBox='0 0 30.607 31.4737' >
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='1.205in' height='1.204in' viewBox='0 0 30.607 30.5816' >
 <g id='copper1'>
 <rect id='connector0pad' connectorname='A11' x='2.3194' y='27.2876' width='1' height='1' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <rect id='connector1pad' connectorname='B11' x='4.8194' y='27.2876' width='1' height='1' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
