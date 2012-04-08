@@ -21,7 +21,7 @@
 </layers>
 </breadboardView>
 <schematicView>
-<layers image='schematic/sparkfun-discretesemi_pnp_npn_schematic.svg'>
+<layers image='schematic/sparkfun-discretesemi_pnp_mix_13_schematic.svg'>
 <layer layerId='schematic'/>
 </layers>
 </schematicView>

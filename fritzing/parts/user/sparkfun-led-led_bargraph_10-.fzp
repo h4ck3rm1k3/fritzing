@@ -27,7 +27,7 @@ COM-09938 (green, Vf = 3.4V, Ifmax = 20mA)&lt;br&gt;</description>
 </layers>
 </breadboardView>
 <schematicView>
-<layers image='schematic/sparkfun-led_led_bargraph_10_led_bargraph_10_led_bargraph_10_led_bargraph_10_led_bargraph_10_led_bargraph_10_led_bargraph_10_led_bargraph_10_led_bargraph_10_led_bargraph_10_schematic.svg'>
+<layers image='schematic/sparkfun-led_led_bargraph_10_mix_19_schematic.svg'>
 <layer layerId='schematic'/>
 </layers>
 </schematicView>

@@ -24,7 +24,7 @@ Source: RS Component / Phycomp</description>
 </layers>
 </breadboardView>
 <schematicView>
-<layers image='schematic/sparkfun-passives_resistor-1_resistor-1_resistor-1_resistor-1_schematic.svg'>
+<layers image='schematic/sparkfun-passives_resistor-1_mix_20_schematic.svg'>
 <layer layerId='schematic'/>
 </layers>
 </schematicView>

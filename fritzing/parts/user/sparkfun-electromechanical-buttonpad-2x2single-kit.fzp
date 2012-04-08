@@ -23,7 +23,7 @@
 </layers>
 </breadboardView>
 <schematicView>
-<layers image='schematic/sparkfun-electromechanical_buttonpad_1led_buttonpad_1led_buttonpad_1led_buttonpad_1led_schematic.svg'>
+<layers image='schematic/sparkfun-electromechanical_buttonpad_1led_mix_16_schematic.svg'>
 <layer layerId='schematic'/>
 </layers>
 </schematicView>

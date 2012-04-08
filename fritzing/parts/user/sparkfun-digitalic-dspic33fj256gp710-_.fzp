@@ -23,7 +23,7 @@
 </layers>
 </breadboardView>
 <schematicView>
-<layers image='schematic/sparkfun-digitalic_dspic33fj256gp710_power_dspic33fj256gp710_control_dspic33fj256gp710_external_dspic33fj256gp710_extra_schematic.svg'>
+<layers image='schematic/sparkfun-digitalic_dspic33fj256gp710_power_mix_9_schematic.svg'>
 <layer layerId='schematic'/>
 </layers>
 </schematicView>

@@ -17,23 +17,23 @@ Standard 8.5x11 US Letter frame</description>
 </properties>
 <views>
 <breadboardView>
-<layers image='schematic/sparkfun-aesthetics_letter_l_docfield_schematic.svg'>
+<layers image='schematic/sparkfun-aesthetics_letter_l_mix_0_schematic.svg'>
 <layer layerId='schematic'/>
 </layers>
 </breadboardView>
 <schematicView>
-<layers image='schematic/sparkfun-aesthetics_letter_l_docfield_schematic.svg'>
+<layers image='schematic/sparkfun-aesthetics_letter_l_mix_0_schematic.svg'>
 <layer layerId='schematic'/>
 </layers>
 </schematicView>
 <pcbView>
-<layers image='schematic/sparkfun-aesthetics_letter_l_docfield_schematic.svg'>
+<layers image='schematic/sparkfun-aesthetics_letter_l_mix_0_schematic.svg'>
 <layer layerId='schematic'/>
 <layer layerId='silkscreen'/>
 </layers>
 </pcbView>
 <iconView>
-<layers image='schematic/sparkfun-aesthetics_letter_l_docfield_schematic.svg'>
+<layers image='schematic/sparkfun-aesthetics_letter_l_mix_0_schematic.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>
