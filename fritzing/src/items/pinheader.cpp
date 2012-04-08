@@ -27,7 +27,6 @@ $Date$
 #include "pinheader.h"
 #include "../utils/graphicsutils.h"
 #include "../fsvgrenderer.h"
-#include "../sketch/infographicsview.h"
 #include "../commands.h"
 #include "../utils/textutils.h"
 #include "../layerattributes.h"
@@ -244,18 +243,18 @@ QString PinHeader::genModuleID(QMap<QString, QString> & currPropsMap)
 {
 	initSpacings();
 	QString pins = currPropsMap.value("pins");
+	int p = pins.toInt();
 	QString spacing = currPropsMap.value("pin spacing");
 	if (spacing.isEmpty()) spacing = ShroudedSpacing;
 	QString form = currPropsMap.value("form");
 	QString formWord = "male";
+	bool isDouble = false;
+
 	if (form.contains("shrouded")) {
-		int p = pins.toInt();
 		if (p < MinShroudedPins) {
-			pins = QString::number(MinShroudedPins);
+			pins = QString::number(p = MinShroudedPins);
 		}
-		if (p % 2 == 1) {
-			pins = QString::number(p + 1);
-		}
+		isDouble = true; 
 		spacing = ShroudedSpacing;
 		formWord = "shrouded";
 	}
@@ -268,6 +267,7 @@ QString PinHeader::genModuleID(QMap<QString, QString> & currPropsMap)
 				formWord = "single_row_smd_female";
 			}
 			else {
+				isDouble = true;
 				formWord = "double_row_smd_female";
 			}
 		}
@@ -280,8 +280,13 @@ QString PinHeader::genModuleID(QMap<QString, QString> & currPropsMap)
 			formWord = "single_row_smd_male";
 		}
 		else {
+			isDouble = true;
 			formWord = "double_row_smd_male";
 		}
+	}
+
+	if (isDouble && (p % 2 == 1)) {
+		pins = QString::number(p + 1);
 	}
 
 	foreach (QString key, Spacings.keys()) {
