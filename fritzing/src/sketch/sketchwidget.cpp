@@ -7041,6 +7041,39 @@ void SketchWidget::drawBackground( QPainter * painter, const QRectF & rect )
 {
 	InfoGraphicsView::drawBackground(painter, rect);
 
+	// from:  http://www.qtcentre.org/threads/27364-Trying-to-draw-a-grid-on-a-QGraphicsScene-View
+	
+	InfoGraphicsView::drawForeground(painter, rect);
+
+	if (m_alignToGrid) {
+		QColor gridColor(0, 0, 0);
+		double gridSize = m_gridSizeInches * FSvgRenderer::printerScale();
+
+		painter->save();
+		double left = int(rect.left() * 10000) - (int(rect.left() * 10000) % int(gridSize * 10000));
+		left /= 10000;
+		double top = int(rect.top() * 10000) - (int(rect.top() * 10000) % int(gridSize * 10000));
+		top /= 10000;
+ 
+		QVarLengthArray<QLineF, 100> linesX;
+		for (double x = left; x < rect.right(); x += gridSize) {
+			linesX.append(QLineF(x, rect.top(), x, rect.bottom()));
+		}
+
+		QVarLengthArray<QLineF, 100> linesY;
+		for (double  y = top; y < rect.bottom(); y += gridSize) {
+			linesY.append(QLineF(rect.left(), y, rect.right(), y));
+		}
+
+		QPen pen;
+		pen.setColor(gridColor);
+		pen.setWidth(0);
+		painter->setPen(pen);
+		painter->drawLines(linesX.data(), linesX.size());
+		painter->drawLines(linesY.data(), linesY.size());
+		painter->restore();
+	}
+
 	// always draw the widget in the same place in the window
 	// no matter how the view is zoomed or scrolled
 
@@ -8663,3 +8696,4 @@ void SketchWidget::setGroundFillSeed(long id, const QString & connectorID, bool 
 
 	connectorItem->setGroundFillSeed(seed);
 }
+
