@@ -4056,9 +4056,9 @@ double SketchWidget::fitInWindow() {
 	foreach(QGraphicsItem * item, scene()->items()) {
 		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 		if (itemBase == NULL) continue;
+		if (!itemBase->isEverVisible()) continue;
 
-		itemsRect |= (itemBase->transform() * QTransform().translate(itemBase->x(), itemBase->y()))
-                            .mapRect(itemBase->boundingRect() | itemBase->childrenBoundingRect());
+		itemsRect |= itemBase->sceneBoundingRect();
 	}
 
 	QRectF viewRect = rect();
