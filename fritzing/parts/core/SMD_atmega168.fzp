@@ -19,7 +19,7 @@
     <description>Atmel ATmega168 microcontroller.  The hardware hacker favorite.</description>
     <views>
         <iconView>
-            <layers image="icon/atmega168_icon.svg">
+            <layers image="icon/microcontroller.svg">
                 <layer layerId="icon"/>
             </layers>
         </iconView>
