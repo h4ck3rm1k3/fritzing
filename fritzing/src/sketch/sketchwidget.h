@@ -246,6 +246,8 @@ public:
 
 	void alignToGrid(bool);
 	bool alignedToGrid();
+	void showGrid(bool);
+	bool showingGrid();
 	void saveZoom(double);
 	double retrieveZoom();
 	void initGrid();
@@ -644,6 +646,7 @@ protected:
 	int m_arrowTotalY;
 	bool m_movingByMouse;
 	bool m_alignToGrid;
+	bool m_showGrid;
 	double m_gridSizeInches;
 	QPointer<ItemBase> m_alignmentItem;
 	QPointF m_alignmentStartPoint;

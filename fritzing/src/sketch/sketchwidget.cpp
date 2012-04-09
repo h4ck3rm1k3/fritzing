@@ -141,7 +141,7 @@ SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, Q
 	m_clearSceneRect = false;
 	m_draggingBendpoint = false;
 	m_zoom = 100;
-	m_alignToGrid = false;
+	m_showGrid = m_alignToGrid = false;
 	m_movingByMouse = m_movingByArrow = false;
 	m_statusConnectState = StatusConnectNotTried;
 	m_dragBendpointWire = NULL;
@@ -7045,8 +7045,8 @@ void SketchWidget::drawBackground( QPainter * painter, const QRectF & rect )
 	
 	InfoGraphicsView::drawForeground(painter, rect);
 
-	if (m_alignToGrid) {
-		QColor gridColor(0, 0, 0, 80);
+	if (m_showGrid) {
+		QColor gridColor(0, 0, 0, 60);
 		double gridSize = m_gridSizeInches * FSvgRenderer::printerScale();
 
 		painter->save();
@@ -7881,8 +7881,19 @@ void SketchWidget::alignToGrid(bool align) {
 	settings.setValue(QString("%1AlignToGrid").arg(viewName()), align);
 }
 
+void SketchWidget::showGrid(bool show) {
+	m_showGrid = show;
+	QSettings settings;
+	settings.setValue(QString("%1ShowGrid").arg(viewName()), show);
+	update();
+}
+
 bool SketchWidget::alignedToGrid() {
 	return m_alignToGrid;
+}
+
+bool SketchWidget::showingGrid() {
+	return m_showGrid;
 }
 
 bool SketchWidget::canAlignToTopLeft(ItemBase *) 
@@ -7899,7 +7910,7 @@ double SketchWidget::retrieveZoom() {
 }
 
 void SketchWidget::initGrid() {
-	m_alignToGrid = false;
+	m_showGrid = m_alignToGrid = false;
 	m_gridSizeInches = defaultGridSizeInches();
 	QSettings settings;
 	QString szString = settings.value(QString("%1GridSize").arg(viewName()), "").toString();
@@ -7911,6 +7922,7 @@ void SketchWidget::initGrid() {
 		}
 	}
 	m_alignToGrid = settings.value(QString("%1AlignToGrid").arg(viewName()), false).toBool();
+	m_showGrid = settings.value(QString("%1ShowGrid").arg(viewName()), false).toBool();
 }
 
 

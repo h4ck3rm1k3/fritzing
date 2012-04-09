@@ -866,6 +866,11 @@ void MainWindow::createViewMenuActions() {
 	m_alignToGridAct->setCheckable(true);
 	connect(m_alignToGridAct, SIGNAL(triggered()), this, SLOT(alignToGrid()));
 
+	m_showGridAct = new QAction(tr("Show Grid"), this);
+	m_showGridAct->setStatusTip(tr("Show the grid"));
+	m_showGridAct->setCheckable(true);
+	connect(m_showGridAct, SIGNAL(triggered()), this, SLOT(showGrid()));
+
 	m_showBreadboardAct = new QAction(tr("&Show Breadboard"), this);
 	m_showBreadboardAct->setShortcut(tr("Ctrl+1"));
 	m_showBreadboardAct->setStatusTip(tr("Show the breadboard view"));
@@ -1104,6 +1109,7 @@ void MainWindow::createMenus()
 	m_viewMenu->addSeparator();
 
     m_viewMenu->addAction(m_alignToGridAct);
+    m_viewMenu->addAction(m_showGridAct);
 	m_viewMenu->addSeparator();
 
     m_viewMenu->addAction(m_showBreadboardAct);
@@ -1217,6 +1223,7 @@ void MainWindow::updateLayerMenu(bool resetLayout) {
 	if (m_currentGraphicsView == NULL) return;
 
 	m_alignToGridAct->setChecked(m_currentGraphicsView->alignedToGrid());
+	m_showGridAct->setChecked(m_currentGraphicsView->showingGrid());
 	
 	LayerHash viewLayers = m_currentGraphicsView->viewLayers();
 	LayerList keys = viewLayers.keys();
@@ -3128,6 +3135,12 @@ void MainWindow::alignToGrid() {
 	if (m_currentGraphicsView == NULL) return;
 
 	m_currentGraphicsView->alignToGrid(m_alignToGridAct->isChecked());
+}
+
+void MainWindow::showGrid() {
+	if (m_currentGraphicsView == NULL) return;
+
+	m_currentGraphicsView->showGrid(m_showGridAct->isChecked());
 }
 
 void MainWindow::openProgramWindow() {

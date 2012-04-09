@@ -190,6 +190,7 @@ protected slots:
     void actualSize();
 	void hundredPercentSize();
     void alignToGrid();
+    void showGrid();
     void showBreadboardView();
     void showSchematicView();
 	void showPartsBinIconView();
@@ -611,6 +612,7 @@ protected:
     QAction *m_actualSizeAct;
     QAction *m_100PercentSizeAct;
     QAction *m_alignToGridAct;
+    QAction *m_showGridAct;
     QAction *m_showBreadboardAct;
     QAction *m_showSchematicAct;
     QAction *m_showPCBAct;
