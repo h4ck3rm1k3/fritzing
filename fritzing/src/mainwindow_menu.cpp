@@ -1696,7 +1696,17 @@ void MainWindow::hundredPercentSize() {
 }
 
 void MainWindow::actualSize() {
+	QMessageBox::information(this, tr("Actual Size"),
+				tr("Sorry, it doesn't seem to be possible to determine the actual physical size of the monitor, so "
+				"'actual size' as currently implemented is only a guess. "
+				"Your best bet would be to drag out a ruler part, then place a real (physical) ruler on top and zoom until they match up."
+				));
+
+
 	int dpi = this->physicalDpiX();
+	int l = this->logicalDpiX();
+
+	DebugDialog::debug(QString("actual size %1 %2").arg(dpi).arg(l));
 
 	// remember the parameter to the next two functions is a percent
 	m_currentGraphicsView->absoluteZoom(dpi * 100.0 / FSvgRenderer::printerScale());
