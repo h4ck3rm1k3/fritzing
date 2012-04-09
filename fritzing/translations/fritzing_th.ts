@@ -2723,6 +2723,22 @@ Open the old Parts Editor?</source>
         <source>copper</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Show Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show the grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Actual Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>It doesn&apos;t seem to be possible to automatically determine the actual physical size of the monitor, so &apos;actual size&apos; as currently implemented is only a guess. Your best bet would be to drag out a ruler part, then place a real (physical) ruler on top and zoom until they match up.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -4615,6 +4631,10 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         <source>resistance</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Resistor</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ResizableBoard</name>
@@ -5239,6 +5259,10 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     </message>
     <message>
         <source>Korean - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Indonesian - %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
