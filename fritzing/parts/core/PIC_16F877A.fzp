@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.7.1b.03.10.5908" moduleId="PICAXE16">
+<module fritzingVersion="0.7.1b.03.10.5908" moduleId="83fdcaa81d3a1b40d252954136f96f24">
     <version>4</version>
-    <author>Fritzing Part-o-matic ,Uğur Can Bastık</author>
+    <author>Uğur Can Bastık</author>
     <title>PIC 16F877A</title>
     <label>PIC 16F877A</label>
     <date>2012-02-18</date>
