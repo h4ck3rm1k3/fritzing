@@ -11,6 +11,20 @@ fi
 compile_folder="build-$arch_aux"
 svn export http://fritzing.googlecode.com/svn/trunk/fritzing $compile_folder
 
+# get rid of user folder contents
+current_dir=$(pwd)
+cd $compile_folder/parts/user
+rm -rf *
+cd ../svg/user/breadboard
+rm -rf *
+cd ../schematic
+rm -rf *
+cd ../pcb
+rm -rf *
+cd ../icon
+rm -rf *
+cd $current_dir
+
 #let's define some variables that we'll need to in the future
 relname=$1  #`date +%Y.%m.%d`
 
