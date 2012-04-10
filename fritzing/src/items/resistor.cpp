@@ -40,8 +40,6 @@ $Date$
 #include <qmath.h>
 #include <QRegExpValidator>
 
-static QHash<QString, QString> BreadboardSvgs;
-static QHash<QString, QString> IconSvgs;
 static QStringList Resistances;
 static QHash<QString, QString> PinSpacings;
 static QHash<int, QColor> ColorBands;
@@ -149,23 +147,25 @@ void Resistor::setResistance(QString resistance, QString pinSpacing, bool force)
 				InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 				if (infoGraphicsView == NULL) break;
 
-				if (!moduleID().endsWith(ModuleIDNames::ResistorModuleIDName)) break;
+				if (modelPart()->properties().value("package").compare("tht", Qt::CaseInsensitive) == 0) 
+				{
+					// pinspacing is irrelevant for SMD resistors
+					QDomElement element = LayerAttributes::getSvgElementLayers(modelPart()->domDocument(), m_viewIdentifier);
+					if (element.isNull()) break;
 
-				QDomElement element = LayerAttributes::getSvgElementLayers(modelPart()->domDocument(), m_viewIdentifier);
-				if (element.isNull()) break;
+					// hack the dom element and call setUpImage
+					FSvgRenderer::removeFromHash(moduleID(), "");
+					QString filename = PinSpacings.value(pinSpacing, "");
+					if (filename.isEmpty()) break;
 
-				// hack the dom element and call setUpImage
-				FSvgRenderer::removeFromHash(moduleID(), "");
-				QString filename = PinSpacings.value(pinSpacing, "");
-				if (filename.isEmpty()) break;
+					element.setAttribute("image", filename);
+					m_changingPinSpacing = true;
+					resetImage(infoGraphicsView);
+					m_changingPinSpacing = false;
 
-				element.setAttribute("image", filename);
+					updateConnections();
+				}
 
-				m_changingPinSpacing = true;
-				resetImage(infoGraphicsView);
-				m_changingPinSpacing = false;
-
-				updateConnections();
 			}
 			break;
 		default:
@@ -227,7 +227,10 @@ QString Resistor::makeSvg(const QString & resistance, ViewLayer::ViewLayerID vie
 	int errorLine;
 	int errorColumn;
 	QDomDocument domDocument;
-	if (!domDocument.setContent(viewLayerID == ViewLayer::Breadboard ? BreadboardSvgs.value(moduleID) : IconSvgs.value(moduleID), &errorStr, &errorLine, &errorColumn)) {
+	QString fn = (viewLayerID == ViewLayer::Breadboard) ? m_breadboardSvgFile : m_iconSvgFile;
+	QFile file(fn);
+	if (!domDocument.setContent(&file, &errorStr, &errorLine, &errorColumn)) {
+		DebugDialog::debug(QString("makesvg failed %1 %2 %3").arg(errorStr).arg(errorLine).arg(errorColumn));
 		return "";
 	}
 	 
@@ -404,11 +407,11 @@ void Resistor::setProp(const QString & prop, const QString & value)
 bool Resistor::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors, LayerAttributes & layerAttributes, QString & error)
 {
 	bool result = Capacitor::setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, viewLayerSpec, doConnectors, layerAttributes, error);
-	if (viewLayerID == ViewLayer::Breadboard && BreadboardSvgs.value(modelPart->moduleID(), "").isEmpty() && result) {
-		BreadboardSvgs.insert(modelPart->moduleID(), QString(layerAttributes.loaded()));
+	if (viewLayerID == ViewLayer::Breadboard) {
+		if (result && m_breadboardSvgFile.isEmpty()) m_breadboardSvgFile = layerAttributes.filename();
 	}
-	else if (viewLayerID == ViewLayer::Icon && IconSvgs.value(modelPart->moduleID(), "").isEmpty() && result) {
-		IconSvgs.insert(modelPart->moduleID(), QString(layerAttributes.loaded()));
+	else if (viewLayerID == ViewLayer::Icon) {
+		if (result && m_iconSvgFile.isEmpty()) m_iconSvgFile = layerAttributes.filename();
 	}
 	return result;
 }

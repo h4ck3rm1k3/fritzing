@@ -303,6 +303,7 @@ void ModelPartShared::setFamily(const QString &family) {
 QHash<QString,QString> & ModelPartShared::properties() {
 	return m_properties;
 }
+
 void ModelPartShared::setProperties(const QHash<QString,QString> &properties) {
 	m_properties = properties;
 	ensurePartNumberProperty();

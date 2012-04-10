@@ -76,6 +76,8 @@ protected:
 	QString m_pinSpacing;
 	QString m_title;
 	bool m_changingPinSpacing;
+	QString m_iconSvgFile;
+	QString m_breadboardSvgFile;
 };
 
 #endif
