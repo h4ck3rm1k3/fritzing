@@ -243,6 +243,16 @@ void PCBSketchWidget::excludeFromAutoroute(bool exclude)
 
 void PCBSketchWidget::selectAllExcludedTraces() 
 {
+	selectAllXTraces(false, QObject::tr("Select all 'Don't autoroute' traces"));
+}
+
+void PCBSketchWidget::selectAllIncludedTraces() 
+{
+	selectAllXTraces(true, QObject::tr("Select all autorouteable traces"));
+}
+
+void PCBSketchWidget::selectAllXTraces(bool autoroutable, const QString & cmdText) 
+{
 	QList<Wire *> wires;
 	foreach (QGraphicsItem * item, scene()->items()) {
 		TraceWire * wire = dynamic_cast<TraceWire *>(item);
@@ -250,12 +260,12 @@ void PCBSketchWidget::selectAllExcludedTraces()
 
 		if (!wire->isTraceType(getTraceFlag())) continue;
 
-		if (!wire->getAutoroutable()) {
+		if (wire->getAutoroutable() == autoroutable) {
 			wires.append(wire);
 		}
 	}
 
-	QUndoCommand * parentCommand = new QUndoCommand(QObject::tr("Select all traces marked 'Don't autoroute'"));
+	QUndoCommand * parentCommand = new QUndoCommand(cmdText);
 
 	stackSelectionState(false, parentCommand);
 	SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
@@ -266,6 +276,8 @@ void PCBSketchWidget::selectAllExcludedTraces()
 	scene()->clearSelection();
 	m_undoStack->push(parentCommand);
 }
+
+
 
 const QString & PCBSketchWidget::hoverEnterPartConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item)
 {

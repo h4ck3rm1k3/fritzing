@@ -43,6 +43,7 @@ public:
 	void createTrace(Wire *);
 	void excludeFromAutoroute(bool exclude);
 	void selectAllExcludedTraces();
+	void selectAllIncludedTraces();
 	bool hasAnyNets();
 	void forwardRoutingStatus(const RoutingStatus &);
 	void addDefaultParts();
@@ -156,6 +157,7 @@ protected:
 	void setGroundFillSeeds(const QString & intro);
 	bool collectGroundFillSeeds(QList<ConnectorItem *> & seeds, bool includePotential);
 	void shiftHoles();
+	void selectAllXTraces(bool autoroutable, const QString & cmdText) ;
 
 signals:
 	void subSwapSignal(SketchWidget *, ItemBase *, ViewLayer::ViewLayerSpec, QUndoCommand * parentCommand);

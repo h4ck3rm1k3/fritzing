@@ -1155,6 +1155,7 @@ void MainWindow::createMenus()
 
 	m_pcbTraceMenu->addAction(m_selectAllTracesAct);
 	m_pcbTraceMenu->addAction(m_selectAllExcludedTracesAct);
+	m_pcbTraceMenu->addAction(m_selectAllIncludedTracesAct);
 	m_pcbTraceMenu->addAction(m_selectAllJumperItemsAct);
 	m_pcbTraceMenu->addAction(m_selectAllViasAct);
 	m_pcbTraceMenu->addAction(m_selectAllCopperFillAct);
@@ -1164,6 +1165,7 @@ void MainWindow::createMenus()
 	m_schematicTraceMenu->addAction(m_excludeFromAutorouteAct);
 	m_schematicTraceMenu->addAction(m_selectAllTracesAct);
 	m_schematicTraceMenu->addAction(m_selectAllExcludedTracesAct);
+	m_schematicTraceMenu->addAction(m_selectAllIncludedTracesAct);
 	//m_schematicTraceMenu->addAction(m_updateRoutingStatusAct);
 
 #ifndef QT_NO_DEBUG
@@ -1659,6 +1661,7 @@ void MainWindow::updateTraceMenu() {
 	m_selectAllWiresAct->setEnabled(tEnabled);
 	m_selectAllCopperFillAct->setEnabled(gfrEnabled);
 	m_selectAllExcludedTracesAct->setEnabled(tEnabled);
+	m_selectAllIncludedTracesAct->setEnabled(tEnabled);
 	m_selectAllJumperItemsAct->setEnabled(jiEnabled);
 	m_selectAllViasAct->setEnabled(viaEnabled);
 	m_tidyWiresAct->setEnabled(twEnabled);
@@ -2182,9 +2185,13 @@ void MainWindow::createTraceMenuActions() {
 	m_updateRoutingStatusAct->setStatusTip(tr("Recalculate routing status and ratsnest wires (in case the auto-update isn't working correctly)"));
 	connect(m_updateRoutingStatusAct, SIGNAL(triggered()), this, SLOT(updateRoutingStatus()));
 
-	m_selectAllExcludedTracesAct = new QAction(tr("Select All Traces Marked \"Don't Autoroute\""), this);
+	m_selectAllExcludedTracesAct = new QAction(tr("Select All \"Don't Autoroute\" Traces"), this);
 	m_selectAllExcludedTracesAct->setStatusTip(tr("Select all trace wires excluded from autorouting"));
 	connect(m_selectAllExcludedTracesAct, SIGNAL(triggered()), this, SLOT(selectAllExcludedTraces()));
+
+	m_selectAllIncludedTracesAct = new QAction(tr("Select All Autoroutable Traces"), this);
+	m_selectAllIncludedTracesAct->setStatusTip(tr("Select all trace wires that can be changed during autorouting"));
+	connect(m_selectAllIncludedTracesAct, SIGNAL(triggered()), this, SLOT(selectAllIncludedTraces()));
 
 	m_selectAllJumperItemsAct = new QAction(tr("Select All Jumpers"), this);
 	m_selectAllJumperItemsAct->setStatusTip(tr("Select all jumper item parts"));
@@ -2367,6 +2374,10 @@ void MainWindow::updateRoutingStatus() {
 
 void MainWindow::selectAllExcludedTraces() {
 	m_pcbGraphicsView->selectAllExcludedTraces();
+}
+
+void MainWindow::selectAllIncludedTraces() {
+	m_pcbGraphicsView->selectAllIncludedTraces();
 }
 
 void MainWindow::selectAllJumperItems() {

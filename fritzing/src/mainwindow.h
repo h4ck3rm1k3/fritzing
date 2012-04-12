@@ -266,6 +266,7 @@ protected slots:
 	void selectAllCopperFill();
 	void updateRoutingStatus();
 	void selectAllExcludedTraces();
+	void selectAllIncludedTraces();
 	void selectAllJumperItems();
 	void selectAllVias();
 
@@ -651,6 +652,7 @@ protected:
 	QAction *m_selectAllCopperFillAct;
 	QAction *m_updateRoutingStatusAct;
 	QAction *m_selectAllExcludedTracesAct;
+	QAction *m_selectAllIncludedTracesAct;
 	QAction *m_selectAllJumperItemsAct;
 	QAction *m_selectAllViasAct;
 	QAction *m_groundFillAct;
