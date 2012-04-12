@@ -426,6 +426,11 @@ bool GraphUtils::chooseRatsnestGraph(const QList<ConnectorItem *> * partConnecto
 	return true;
 }
 
+#define add_edge_d(i, j, g) \
+	add_edge(verts[i], verts[j], g); \
+	//partConnectorItems[i]->debugInfo(QString("edge from %1").arg(i)); \
+	//partConnectorItems[j]->debugInfo(QString("\tto %1").arg(j));
+
 bool GraphUtils::scoreOneNet(QList<ConnectorItem *> & partConnectorItems, ViewGeometry::WireFlags myTrace, RoutingStatus & routingStatus) {
 	using namespace boost;
 
@@ -445,14 +450,14 @@ bool GraphUtils::scoreOneNet(QList<ConnectorItem *> & partConnectorItems, ViewGe
 	//std::pair<int, int> pair;
 	bool gotUserConnection = false;
 	for (int i = 0; i < num_nodes; i++) {
-		add_edge(verts[i], verts[i], G);
+		add_edge_d(i, i, G);
 		ConnectorItem * from = partConnectorItems[i];
 		for (int j = i + 1; j < num_nodes; j++) {
 			ConnectorItem * to = partConnectorItems[j];
 
 			if (from->isCrossLayerConnectorItem(to)) {
-				add_edge(verts[i], verts[j], G);
-				add_edge(verts[j], verts[i], G);
+				add_edge_d(i, j, G);
+				add_edge_d(j, i, G);
 				continue;
 			}
 
@@ -462,8 +467,8 @@ bool GraphUtils::scoreOneNet(QList<ConnectorItem *> & partConnectorItems, ViewGe
 			}
 
 			if ((to->bus() != NULL) && (to->bus() == from->bus())) {	
-				add_edge(verts[i], verts[j], G);
-				add_edge(verts[j], verts[i], G);
+				add_edge_d(i, j, G);
+				add_edge_d(j, i, G);
 				continue;
 			}
 
@@ -503,8 +508,8 @@ bool GraphUtils::scoreOneNet(QList<ConnectorItem *> & partConnectorItems, ViewGe
 
 				int j = partConnectorItems.indexOf(end);
 				if (j >= 0) {
-					add_edge(verts[i], verts[j], G);
-					add_edge(verts[j], verts[i], G);
+					add_edge_d(i, j, G);
+					add_edge_d(j, i, G);
 				}
 			}
 		}
@@ -530,9 +535,9 @@ bool GraphUtils::scoreOneNet(QList<ConnectorItem *> & partConnectorItems, ViewGe
 				// we can minimally span the set with n-1 wires, so even if multiple connections are missing from a given connector, count it as one
 				anyMissing = missingOne = true;
 				
-				//ConnectorItem * ci = partConnectorItems.at(i);
-				//ConnectorItem * cj = partConnectorItems.at(j);
-				//ci->debugInfo("score one ci");
+				ConnectorItem * ci = partConnectorItems.at(i);
+				ConnectorItem * cj = partConnectorItems.at(j);
+				//ci->debugInfo("missing one ci");
 				//cj->debugInfo("\t\tcj");
 				
 			}

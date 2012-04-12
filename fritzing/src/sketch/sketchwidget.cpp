@@ -6298,11 +6298,11 @@ void SketchWidget::updateRoutingStatus(CleanUpWiresCommand* command, RoutingStat
 
 void SketchWidget::updateRoutingStatus(RoutingStatus & routingStatus, bool manual) 
 {
-	DebugDialog::debug(QString("update routing status %1 %2 %3")
-		.arg(m_viewIdentifier) 
-		.arg(m_ratsnestUpdateConnect.count())
-		.arg(m_ratsnestUpdateDisconnect.count())
-		);
+	//DebugDialog::debug(QString("update routing status %1 %2 %3")
+	//	.arg(m_viewIdentifier) 
+	//	.arg(m_ratsnestUpdateConnect.count())
+	//	.arg(m_ratsnestUpdateDisconnect.count())
+	//	);
 
 	// TODO: think about ways to optimize this...
 
@@ -6329,7 +6329,7 @@ void SketchWidget::updateRoutingStatus(RoutingStatus & routingStatus, bool manua
 
 		QList<ConnectorItem *> connectorItems;
 		connectorItems.append(connectorItem);
-		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::RatsnestFlag | getTraceFlag());
+		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::RatsnestFlag);
 		visited.append(connectorItems);
 
 		//if (this->viewIdentifier() == ViewIdentifierClass::PCBView) {
@@ -6350,7 +6350,7 @@ void SketchWidget::updateRoutingStatus(RoutingStatus & routingStatus, bool manua
 			ConnectorItem * ci = partConnectorItems[i];
 			
 			//if (this->viewIdentifier() == ViewIdentifierClass::PCBView) {
-			//	ci->debugInfo("pc");
+				//ci->debugInfo("pc");
 			//}
 
 			if (!ci->attachedTo()->isEverVisible()) {
