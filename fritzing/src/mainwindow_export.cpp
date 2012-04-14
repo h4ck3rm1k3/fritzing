@@ -753,9 +753,9 @@ void MainWindow::createExportActions() {
 	m_exportEagleAct->setStatusTip(tr("Export the current sketch to Eagle CAD"));
 	connect(m_exportEagleAct, SIGNAL(triggered()), this, SLOT(doExport()));
 
-        m_exportGerberAct = new QAction(tr("Extended Gerber (RS-274X)..."), this);
+    m_exportGerberAct = new QAction(tr("Extended Gerber (RS-274X)..."), this);
 	m_exportGerberAct->setData(gerberActionType);
-        m_exportGerberAct->setStatusTip(tr("Export the current sketch to Extended Gerber format (RS-274X) for professional PCB production"));
+    m_exportGerberAct->setStatusTip(tr("Export the current sketch to Extended Gerber format (RS-274X) for professional PCB production"));
 	connect(m_exportGerberAct, SIGNAL(triggered()), this, SLOT(doExport()));
 
 	m_exportEtchablePdfAct = new QAction(tr("Etchable (PDF)..."), this);
@@ -1228,7 +1228,10 @@ void MainWindow::exportToGerber() {
 	FileProgressDialog * fileProgressDialog = exportProgress();
 
 	FolderUtils::setOpenSaveFolder(exportDir);
+	m_pcbGraphicsView->saveLayerVisibility();
+	m_pcbGraphicsView->setAllLayersVisible(true);
 	GerberGenerator::exportToGerber(m_fwFilename, exportDir, board, m_pcbGraphicsView, true);
+	m_pcbGraphicsView->restoreLayerVisibility();
 	m_statusBar->showMessage(tr("Sketch exported to Gerber"), 2000);
 
 	delete fileProgressDialog;
