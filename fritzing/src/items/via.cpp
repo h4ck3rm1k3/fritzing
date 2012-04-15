@@ -50,6 +50,12 @@ void Via::setBoth(const QString & holeDiameter, const QString & ringThickness) {
 
 	ItemBase * otherLayer = setBothSvg(holeDiameter, ringThickness);
 	resetConnectors(otherLayer, m_otherLayerRenderer);
+
+    double hd = TextUtils::convertToInches(holeDiameter) * FSvgRenderer::printerScale();
+    double rt = TextUtils::convertToInches(ringThickness) * FSvgRenderer::printerScale();
+    ConnectorItem * ci = connectorItem();
+    ci->setRadius((hd / 2) + (rt / 2), rt);
+    ci->getCrossLayerConnectorItem()->setRadius((hd / 2) + (rt / 2), rt);
 }
 
 

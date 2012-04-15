@@ -1896,7 +1896,7 @@ void ConnectorItem::debugInfo(const QString & msg)
 {
 
 #ifndef QT_NO_DEBUG
-	QString s = QString("%1 cid:%2 %3 %4 id:%5 %6 vlid:%7 vid:%8 spec:%9 flg:%10 hy:%11 bus:%12")
+	QString s = QString("%1 cid:%2 %3 %4 id:%5 %6 vlid:%7 vid:%8 spec:%9 flg:%10 hy:%11 bus:%12 r:%13 sw:%14")
 	//QString s = QString("%1 %2 %3 %4 id:%5 %6 vlid:%7 vid:%8")
 			.arg(msg)
 			.arg(this->connectorSharedID())
@@ -1907,9 +1907,12 @@ void ConnectorItem::debugInfo(const QString & msg)
 			.arg(this->attachedToViewLayerID())
 			.arg(this->attachedToViewIdentifier())
 			.arg(this->attachedToViewLayerSpec())
-			.arg(this->attachedTo()->wireFlags())
+			.arg(this->attachedTo()->wireFlags()) 
 			.arg(this->m_hybrid)
-			.arg((long) this->bus(), 0, 16);
+			.arg((long) this->bus(), 0, 16)
+            .arg(this->m_radius)
+            .arg(this->m_strokeWidth)
+            ;
 	//s.replace(" ", "_");
 	DebugDialog::debug(s);
 #else

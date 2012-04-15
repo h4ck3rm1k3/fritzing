@@ -207,6 +207,8 @@ void ClipableWire::setClipEnds(bool clipEnds ) {
 void ClipableWire::calcClip(QPointF & p1, QPointF & p2, ConnectorItem * c1, ConnectorItem * c2) {
 
 	if (c1 != NULL && c2 != NULL && c1->isEffectivelyCircular() && c2->isEffectivelyCircular()) {
+        //c1->debugInfo("c1");
+        //c2->debugInfo("c2");
 		GraphicsUtils::shortenLine(p1, p2, c1->calcClipRadius() + (m_pen.width() / 2.0), c2->calcClipRadius() + (m_pen.width() / 2.0));
 		return;
 	}
