@@ -31,6 +31,7 @@ $Date$
 #include "../items/tracewire.h"
 #include "../items/virtualwire.h"
 #include "../items/resizableboard.h"
+#include "../items/pad.h"
 #include "../waitpushundostack.h"
 #include "../connectors/connectoritem.h"
 #include "../items/moduleidnames.h"
@@ -855,6 +856,7 @@ long PCBSketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const Q
 	Q_UNUSED(noFinalChangeWiresCommand);
 
 	QList<ItemBase *> smds;
+	QList<ItemBase *> pads;
 	QList<Wire *> already;
 
 	int newLayers = isBoardLayerChange(itemBase, newModuleID, master);
@@ -902,6 +904,11 @@ long PCBSketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const Q
 	foreach (QGraphicsItem * item, scene()->items()) {
 		ItemBase * smd = dynamic_cast<ItemBase *>(item);
 		if (smd == NULL) continue;
+        if (smd->moduleID().compare(ModuleIDNames::PadModuleIDName) == 0) {
+            pads << smd;
+            continue;
+        }
+
 		if (!smd->modelPart()->flippedSMD()) continue;
 
 		smd = smd->layerKinChief();
@@ -929,6 +936,16 @@ long PCBSketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const Q
 
 	foreach (ItemBase * smd, smds) {
 		emit subSwapSignal(this, smd, (newLayers == 1) ? ViewLayer::ThroughHoleThroughTop_OneLayer : ViewLayer::ThroughHoleThroughTop_TwoLayers, changeBoardCommand);
+	}
+
+	foreach (ItemBase * itemBase, pads) {
+        Pad * pad = qobject_cast<Pad *>(itemBase);
+        if (pad == NULL) continue;
+
+        double w = pad->modelPart()->prop("width").toDouble();
+        double h = pad->modelPart()->prop("height").toDouble();
+
+        new ResizeBoardCommand(this, pad->id(), w, h, w, h, parentCommand);
 	}
 
 	return newID;
