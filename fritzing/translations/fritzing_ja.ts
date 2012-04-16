@@ -1792,10 +1792,6 @@ It is also possible to choose a connector as a ground fill seed by right-clickin
         <translation>自動配線 ...</translation>
     </message>
     <message>
-        <source>Select All Traces Marked &quot;Don&apos;t Autoroute&quot;</source>
-        <translation>自動配線しない配線を全て選択</translation>
-    </message>
-    <message>
         <source>External Part (*%1)</source>
         <translation>外部パーツ (*%1)</translation>
     </message>
@@ -2750,6 +2746,18 @@ Open the old Parts Editor?</source>
     </message>
     <message>
         <source>It doesn&apos;t seem to be possible to automatically determine the actual physical size of the monitor, so &apos;actual size&apos; as currently implemented is only a guess. Your best bet would be to drag out a ruler part, then place a real (physical) ruler on top and zoom until they match up.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select All &quot;Don&apos;t Autoroute&quot; Traces</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select All Autoroutable Traces</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all trace wires that can be changed during autorouting</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4473,10 +4481,6 @@ is already there, we won&apos;t add it again, right?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select all traces marked &apos;Don&apos;t autoroute&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>outline is empty</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4597,6 +4601,14 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>%1 mask export failure (2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all &apos;Don&apos;t autoroute&apos; traces</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all autorouteable traces</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

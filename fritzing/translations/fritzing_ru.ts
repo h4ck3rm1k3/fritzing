@@ -1993,10 +1993,6 @@ We&apos;re working to avoid this message, and only let you choose between proper
         <translation type="unfinished">Выделить все трассы проводов</translation>
     </message>
     <message>
-        <source>Select All Traces Marked &quot;Don&apos;t Autoroute&quot;</source>
-        <translation>Выбрать все трассы с пометкой &quot;Не автотрассировать&quot;</translation>
-    </message>
-    <message>
         <source>Select all trace wires excluded from autorouting</source>
         <translation>Выбрать все трассы, исключённые из автотрассировки</translation>
     </message>
@@ -2761,6 +2757,18 @@ Open the old Parts Editor?</source>
     </message>
     <message>
         <source>It doesn&apos;t seem to be possible to automatically determine the actual physical size of the monitor, so &apos;actual size&apos; as currently implemented is only a guess. Your best bet would be to drag out a ruler part, then place a real (physical) ruler on top and zoom until they match up.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select All &quot;Don&apos;t Autoroute&quot; Traces</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select All Autoroutable Traces</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all trace wires that can be changed during autorouting</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4489,10 +4497,6 @@ Fritzing по-прежнему работает, но вы не сможете �
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select all traces marked &apos;Don&apos;t autoroute&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>outline is empty</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4613,6 +4617,14 @@ Fritzing по-прежнему работает, но вы не сможете �
     </message>
     <message>
         <source>%1 mask export failure (2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all &apos;Don&apos;t autoroute&apos; traces</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all autorouteable traces</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

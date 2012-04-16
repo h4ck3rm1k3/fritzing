@@ -1991,10 +1991,6 @@ We&apos;re working to avoid this message, and only let you choose between proper
         <translation>选择所有引导线导线</translation>
     </message>
     <message>
-        <source>Select All Traces Marked &quot;Don&apos;t Autoroute&quot;</source>
-        <translation>选择所有标记&quot;不自动布线&quot;的极限</translation>
-    </message>
-    <message>
         <source>Select all trace wires excluded from autorouting</source>
         <translation>选择所有被排除在自动布线外的引导线</translation>
     </message>
@@ -2770,6 +2766,18 @@ Open the old Parts Editor?</source>
     </message>
     <message>
         <source>It doesn&apos;t seem to be possible to automatically determine the actual physical size of the monitor, so &apos;actual size&apos; as currently implemented is only a guess. Your best bet would be to drag out a ruler part, then place a real (physical) ruler on top and zoom until they match up.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select All &quot;Don&apos;t Autoroute&quot; Traces</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select All Autoroutable Traces</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all trace wires that can be changed during autorouting</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4506,10 +4514,6 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
         <translation>改变%1，%2的针脚</translation>
     </message>
     <message>
-        <source>Select all traces marked &apos;Don&apos;t autoroute&apos;</source>
-        <translation>选择所有没标记为&apos;不要自动布线&apos;的导线</translation>
-    </message>
-    <message>
         <source>outline is empty</source>
         <translation>轮廓线是空的</translation>
     </message>
@@ -4634,6 +4638,14 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     <message>
         <source>%1 mask export failure (2)</source>
         <translation>%1阻焊层导出失败（2）</translation>
+    </message>
+    <message>
+        <source>Select all &apos;Don&apos;t autoroute&apos; traces</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all autorouteable traces</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -1814,10 +1814,6 @@ It is also possible to choose a connector as a ground fill seed by right-clickin
         <translation>Selecionar todos os fios</translation>
     </message>
     <message>
-        <source>Select All Traces Marked &quot;Don&apos;t Autoroute&quot;</source>
-        <translation>Selecionar Todos os Traços Marcados como &quot;Não Rotear Automaticamente&quot;</translation>
-    </message>
-    <message>
         <source>Select all trace wires excluded from autorouting</source>
         <translation>Selecionar todos os traços excluidos do roteamento automático</translation>
     </message>
@@ -2759,6 +2755,18 @@ Open the old Parts Editor?</source>
     </message>
     <message>
         <source>It doesn&apos;t seem to be possible to automatically determine the actual physical size of the monitor, so &apos;actual size&apos; as currently implemented is only a guess. Your best bet would be to drag out a ruler part, then place a real (physical) ruler on top and zoom until they match up.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select All &quot;Don&apos;t Autoroute&quot; Traces</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select All Autoroutable Traces</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all trace wires that can be changed during autorouting</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4493,10 +4501,6 @@ is already there, we won&apos;t add it again, right?</source>
         <translation>Mudar &quot;pata&quot; de %1,%2</translation>
     </message>
     <message>
-        <source>Select all traces marked &apos;Don&apos;t autoroute&apos;</source>
-        <translation>Selecionar todos os traços marcados como &quot;Não autoencaminhar (Autoroute)&quot;</translation>
-    </message>
-    <message>
         <source>outline is empty</source>
         <translation>rebordo está vazio</translation>
     </message>
@@ -4617,6 +4621,14 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>%1 mask export failure (2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all &apos;Don&apos;t autoroute&apos; traces</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all autorouteable traces</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
