@@ -1162,7 +1162,7 @@ long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to,
 							  BaseCommand::CrossViewType crossViewType, QUndoCommand * parentCommand)
 {
 	if (from == NULL || to == NULL) {
-		return NULL;
+		return -1;
 	}
 
 	long newID = ItemBase::getNextID();
