@@ -6922,6 +6922,10 @@ QString SketchWidget::renderToSVG(double printerScale, bool blackOnly, QSizeF & 
 			QString itemSvg = itemBase->retrieveSvg(itemBase->viewLayerID(), svgHash, blackOnly, dpi);
 			if (itemSvg.isEmpty()) continue;
 
+            if (itemSvg.contains("<use")) {
+                TextUtils::noUse(itemSvg);
+            }
+
 			if (flatten) {
 				QDomDocument domDocument;
 				QString errorStr;

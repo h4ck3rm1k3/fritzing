@@ -899,6 +899,60 @@ bool TextUtils::tspanRemove(QString &svg) {
 	return true;
 }
 
+bool TextUtils::noUse(QString &svg) {
+	if (!svg.contains("<use")) return false;
+
+	QDomDocument svgDom;
+	QString errorMsg;
+	int errorLine;
+	int errorCol;
+	if (!svgDom.setContent(svg, true, &errorMsg, &errorLine, &errorCol)) {
+		return false;
+	}
+
+    QDomElement root = svgDom.documentElement();
+    if (root.isNull()) return false;
+
+	QList<QDomElement> uses;
+	QDomNodeList useNodeList = svgDom.elementsByTagName("use");
+    for (int i = 0; i < useNodeList.count(); i++) {
+        QDomElement use = useNodeList.item(i).toElement();
+        QString refid = use.attribute("href");
+        if (refid.isEmpty()) continue;
+
+        QString id = use.attribute("id");
+        if (id.isEmpty()) continue;
+
+		uses.append(use);
+	}
+
+	foreach (QDomElement use, uses) {
+		QString transform = use.attribute("transform");
+        QString refid = use.attribute("href");
+        QString id = use.attribute("id");
+
+        QDomElement g = svgDom.createElement("g");
+		use.parentNode().replaceChild(g, use);
+        g.setAttribute("transform", transform);
+
+        if (refid.startsWith("#")) {
+            refid.remove(0, 1);
+            if (refid.isEmpty()) continue;
+        }
+
+        QDomElement toCopy = findElementWithAttribute(root, "id", refid);
+        if (toCopy.isNull()) continue;
+
+        QDomElement copy = toCopy.cloneNode(true).toElement();
+        g.appendChild(copy);
+        copy.setAttribute("id", id);
+	}
+
+	svg = removeXMLEntities(svgDom.toString());
+	return true;
+}
+
+
 QDomElement TextUtils::copyText(QDomDocument & svgDom, QDomElement & parent, QDomElement & text, const QString & defaultX, const QString & defaultY, bool copyAttributes)
 {
 	QDomNode cnode = text.firstChild();

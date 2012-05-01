@@ -107,7 +107,7 @@ QString Pad::makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, double mmW, double
 
 	QString svg = QString("<svg version='1.1' xmlns='http://www.w3.org/2000/svg'  x='0px' y='0px' width='%1px' height='%2px' viewBox='0 0 %1 %2'>\n"
 							"<g id='%5'>\n"
-							"<rect  id='connector0pad' x='2' y='2' fill='#FFBF00' stroke='none' stroke-width='0' width='%3' height='%4'/>\n"
+							"<rect  id='connector0pad' x='2' y='2' fill='%10' stroke='none' stroke-width='0' width='%3' height='%4'/>\n"
 							"<rect  id='connector0terminal' x='%6' y='%7' fill='none' stroke='none' stroke-width='0' width='%8' height='%9'/>\n"
 							"</g>\n"
 							"</svg>"
@@ -121,6 +121,7 @@ QString Pad::makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, double mmW, double
 					.arg(terminal.top())
 					.arg(terminal.width())
 					.arg(terminal.height())
+                    .arg((viewLayerID == ViewLayer::Copper0) ? ViewLayer::Copper0Color : ViewLayer::Copper1Color)
 					;
 
 	//DebugDialog::debug("pad svg: " + svg);

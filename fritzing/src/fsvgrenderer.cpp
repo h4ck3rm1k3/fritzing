@@ -161,6 +161,13 @@ QByteArray FSvgRenderer::loadAux(const QByteArray & contents, const QString & fi
 		cleaned = true;
 	}
 
+	if (contents.contains("<use")) {
+		QString string(contents);
+		TextUtils::noUse(string);
+		cleanContents = string.toUtf8();
+		cleaned = true;
+	}
+
 	if (!cleaned) {
 		cleanContents = contents; 
 	}
