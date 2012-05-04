@@ -19,7 +19,7 @@
         <property name="type">Atmel AVR</property>
         <property name="part number"></property>
     </properties>
-    <description>Atmel ATmega168 microcontroller.  The hardware hacker favorite.</description>
+    <description>Atmel ATtiny85 microcontroller. So small but so powerfull.</description>
     <views>
         <iconView>
             <layers image="icon/ATtiny85_icon.svg">
