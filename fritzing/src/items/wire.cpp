@@ -1157,14 +1157,20 @@ QString Wire::colorString() {
 void Wire::initNames() {
 	if (colorNames.count() > 0) return;
 
-	widths << 16 << 24 << 32 << 48;
-	widthTrans.insert(widths[0], tr("thin (16 mil)"));
-	widthTrans.insert(widths[1], tr("standard (24 mil)"));
-	widthTrans.insert(widths[2], tr("thick (32 mil)"));
-	widthTrans.insert(widths[3], tr("extra thick (48 mil)"));
+	widths << 8 << 12 << 16 << 24 << 32 << 48;
+    int i = 0;
+	widthTrans.insert(widths[i++], tr("super fine (8 mil)"));
+	widthTrans.insert(widths[i++], tr("extra thin (12 mil)"));
 
-	THIN_TRACE_WIDTH = GraphicsUtils::mils2pixels(widths[0], FSvgRenderer::printerScale());
-	STANDARD_TRACE_WIDTH = GraphicsUtils::mils2pixels(widths[1], FSvgRenderer::printerScale());
+	THIN_TRACE_WIDTH = GraphicsUtils::mils2pixels(widths[i], FSvgRenderer::printerScale());
+	widthTrans.insert(widths[i++], tr("thin (16 mil)"));
+
+	STANDARD_TRACE_WIDTH = GraphicsUtils::mils2pixels(widths[i], FSvgRenderer::printerScale());
+	widthTrans.insert(widths[i++], tr("standard (24 mil)"));
+
+	widthTrans.insert(widths[i++], tr("thick (32 mil)"));
+	widthTrans.insert(widths[i++], tr("extra thick (48 mil)"));
+
 	HALF_STANDARD_TRACE_WIDTH = STANDARD_TRACE_WIDTH / 2.0;
 
     // need a list because a hash table doesn't guarantee order 
