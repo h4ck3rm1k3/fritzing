@@ -3,7 +3,7 @@
 {% load generic_content %}
 {% block content %}
 
-<!-- *27031979,{% get_latest_object downloads.release as latest_release %}{% if latest_release %}{{ latest_release.downloads }}{% endif %},0#-->
+<!-- *27031979,{% get_latest_object downloads.release as latest_release %}{% if latest_release %}{{ latest_release.downloads|add:latest_release.updates }}{% endif %},0# -->
  
 <h1>Download</h1>
 <p class="documentDescription">
