@@ -2,6 +2,16 @@
 {% load downloads_tags %}
 {% load generic_content %}
 {% block content %}
+
+<!-- *27031979,
+{% get_latest_object downloads.release as latest_release %}
+{% if latest_release %}
+    {% for download in latest_release.download_set.all reversed %}
+	    {{ download.counter|add:download.updated }}
+    {% endfor %}
+{% endif %}
+,0#-->
+ 
 <h1>Download</h1>
 <p class="documentDescription">
 <span class="" id="parent-fieldname-description">
