@@ -2311,6 +2311,11 @@ void SketchWidget::findAlignmentAnchor(ItemBase * originatingItem, 	QHash<long, 
 			m_alignmentItem = originatingItem;
 			return;
 		}
+		if (canAlignToCenter(originatingItem)) {
+			m_alignmentStartPoint = originatingItem->sceneBoundingRect().center();
+			m_alignmentItem = originatingItem;
+			return;
+		}
 	}
 
 	foreach (ItemBase * itemBase, savedItems) {
@@ -2330,6 +2335,11 @@ void SketchWidget::findAlignmentAnchor(ItemBase * originatingItem, 	QHash<long, 
 	foreach (ItemBase * itemBase, savedItems) {
 		if (canAlignToTopLeft(itemBase)) {
 			m_alignmentStartPoint = itemBase->pos();
+			m_alignmentItem = itemBase;
+			return;
+		}
+		if (canAlignToCenter(itemBase)) {
+			m_alignmentStartPoint = originatingItem->sceneBoundingRect().center();
 			m_alignmentItem = itemBase;
 			return;
 		}
@@ -7073,10 +7083,10 @@ void SketchWidget::drawBackground( QPainter * painter, const QRectF & rect )
 		pen.setColor(gridColor);
 		pen.setWidth(0);
 		pen.setCosmetic(true);
-		//pen.setStyle(Qt::DotLine);
-		QVector<double> dashes;
-		dashes << 1 << 1;
-		pen.setDashPattern(dashes);
+		//pen.setStyle(Qt::DotLine);            
+		//QVector<double> dashes;                   // removed dash pattern at forum suggestion: http://fritzing.org/forum/thread/855
+		//dashes << 1 << 1;
+		//pen.setDashPattern(dashes);
 		painter->setPen(pen);
 		painter->drawLines(linesX.data(), linesX.size());
 		painter->drawLines(linesY.data(), linesY.size());
@@ -7904,6 +7914,11 @@ bool SketchWidget::showingGrid() {
 }
 
 bool SketchWidget::canAlignToTopLeft(ItemBase *) 
+{
+	return false;
+}
+
+bool SketchWidget::canAlignToCenter(ItemBase *) 
 {
 	return false;
 }

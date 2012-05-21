@@ -158,6 +158,7 @@ protected:
 	bool collectGroundFillSeeds(QList<ConnectorItem *> & seeds, bool includePotential);
 	void shiftHoles();
 	void selectAllXTraces(bool autoroutable, const QString & cmdText) ;
+	bool canAlignToCenter(ItemBase *);
 
 signals:
 	void subSwapSignal(SketchWidget *, ItemBase *, ViewLayer::ViewLayerSpec, QUndoCommand * parentCommand);

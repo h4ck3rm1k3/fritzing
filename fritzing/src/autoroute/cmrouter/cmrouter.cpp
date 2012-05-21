@@ -1235,7 +1235,8 @@ Plane * CMRouter::tilePlane(ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewL
 				TileRect tileRect;
 				realsToTile(tileRect, r.left() - m_keepout, r.top() - m_keepout, r.right() + m_keepout, r.bottom() + m_keepout);
 				extendToBounds(tileRect, partTileRect);
-				insertTile(thePlane, tileRect, alreadyTiled, connectorItem, Tile::OBSTACLE, CMRouter::IgnoreAllOverlaps);
+				Tile * newTile = insertTile(thePlane, tileRect, alreadyTiled, connectorItem, Tile::OBSTACLE, CMRouter::IgnoreAllOverlaps);
+                Q_UNUSED(newTile);
 				//drawGridItem(newTile);
 			}
 		}
@@ -1303,7 +1304,8 @@ void CMRouter::eliminateThinTiles(QList<TileRect> & originalTileRects, Plane * t
 
 			if (extendTile) {
 				QList<Tile *> alreadyTiled;
-				insertTile(thePlane, newRect, alreadyTiled, NULL, Tile::SPACE2, CMRouter::IgnoreAllOverlaps);
+				Tile * newTile = insertTile(thePlane, newRect, alreadyTiled, NULL, Tile::SPACE2, CMRouter::IgnoreAllOverlaps);
+                Q_UNUSED(newTile);
 				//drawGridItem(newTile);
 				TileRect leftRect = originalTileRect;
 				leftRect.xmaxi = newRect.xmini;
@@ -1462,8 +1464,9 @@ void CMRouter::eliminateThinTiles2(QList<TileRect> & tileRects, Plane * thePlane
 
 		if (doInsert) {
 			QList<Tile *> alreadyTiled;
-			insertTile(thePlane, newRect, alreadyTiled, NULL, Tile::SPACE2, CMRouter::IgnoreAllOverlaps);
+			Tile * newTile = insertTile(thePlane, newRect, alreadyTiled, NULL, Tile::SPACE2, CMRouter::IgnoreAllOverlaps);
 			//drawGridItem(newTile);
+            Q_UNUSED(newTile);
 			TileRect leftRect = originalTileRect;
 			leftRect.xmaxi = newRect.xmini;
 			if (leftRect.xmaxi - leftRect.xmini > 0) tileRects.append(leftRect);
@@ -1514,8 +1517,9 @@ bool CMRouter::initBoard(ItemBase * board, Plane * thePlane, QList<Tile *> & alr
 	foreach (QRect r, rects) {
 		TileRect tileRect;
 		realsToTile(tileRect, r.left() + bsbr.topLeft().x(), r.top() + bsbr.topLeft().y(), r.right() + bsbr.topLeft().x(), r.bottom() + 1 + bsbr.topLeft().y());  // note off-by-one weirdness
-		insertTile(thePlane, tileRect, alreadyTiled, NULL, Tile::OBSTACLE, CMRouter::IgnoreAllOverlaps);
-		//drawGridItem(tile);
+		Tile * newTile = insertTile(thePlane, tileRect, alreadyTiled, NULL, Tile::OBSTACLE, CMRouter::IgnoreAllOverlaps);
+		//drawGridItem(newTile);
+        Q_UNUSED(newTile);
 	}
 
 	return true;
@@ -1666,8 +1670,9 @@ void CMRouter::tileWires(QList<Wire *> & wires, QList<Tile *> & alreadyTiled, Ti
 					.arg(p2.x() / FSvgRenderer::printerScale())
 					.arg(p2.y() / FSvgRenderer::printerScale());
 			}
-			insertTile(plane, tileRect, alreadyTiled, w, tileType, overlapType);
-			//drawGridItem(tile);
+			Tile * newTile = insertTile(plane, tileRect, alreadyTiled, w, tileType, overlapType);
+			//drawGridItem(newTile);
+            Q_UNUSED(newTile);
 			if (alreadyTiled.count() > 0) {
 				m_hasOverlaps = true;
 				if (overlapType != ReportAllOverlaps) return;
@@ -2402,7 +2407,7 @@ GridEntry * CMRouter::drawGridItem(Tile * tile)
 	}
 	gridEntry->show();
 	gridEntry->setDrawn(true);
-	//ProcessEventBlocker::processEvents();
+	ProcessEventBlocker::processEvents();
 	return gridEntry;
 }
 
@@ -3511,7 +3516,6 @@ void CMRouter::crossLayerDest(PathUnit * pathUnit, PriorityQueue<PathUnit *> & s
 	int bestCost = std::numeric_limits<int>::max();
 	TileRect nearestSpace;
 	//drawGridItem(pathUnit->tile);
-	//ProcessEventBlocker::processEvents();
 	if (findNearestSpaceOne(pathUnit, tWidthNeeded, tHeightNeeded, nearest, bestCost, nearestSpace)) {
 		PathUnit * nextPathUnit = new PathUnit(&sourceQueue);
 		m_pathUnits.append(nextPathUnit);

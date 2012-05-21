@@ -2313,3 +2313,8 @@ void PCBSketchWidget::shiftHoles() {
 		}		
 	}
 }
+
+bool PCBSketchWidget::canAlignToCenter(ItemBase * itemBase) 
+{
+	return qobject_cast<Hole *>(itemBase) != NULL;
+}
