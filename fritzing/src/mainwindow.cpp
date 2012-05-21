@@ -1973,11 +1973,11 @@ bool MainWindow::swapSpecial(const QString & theProp, QMap<QString, QString> & c
 	QString pinSpacing, resistance, layers;
 	foreach (QString key, currPropsMap.keys()) {
 		if (key.compare("shape", Qt::CaseInsensitive) == 0) {
-			ResizableBoard * board = qobject_cast<ResizableBoard *>(itemBase);
+			Board * board = qobject_cast<Board *>(itemBase);
 			if (board == NULL) continue;
 
 			QString value = currPropsMap.value(key, "");
-			if (value.compare(ResizableBoard::customShapeTranslated) == 0) {
+			if (value.compare(Board::CustomShapeTranslated) == 0) {
 				if (!loadCustomBoardShape()) {
 					
 					// restores the infoview size menu
@@ -1994,11 +1994,11 @@ bool MainWindow::swapSpecial(const QString & theProp, QMap<QString, QString> & c
 			if (board->itemType() != ModelPart::Board && board->itemType() != ModelPart::ResizableBoard) continue;
 
 			QString value = currPropsMap.value(key, "");
-			if (value.compare(Board::oneLayerTranslated) == 0) {
+			if (value.compare(Board::OneLayerTranslated) == 0) {
 				layers = "1";
 				continue;
 			}
-			if (value.compare(Board::twoLayersTranslated) == 0) {
+			if (value.compare(Board::TwoLayersTranslated) == 0) {
 				layers = "2";
 				continue;
 			}

@@ -54,8 +54,9 @@ public:
 	bool canFindConnectorsUnder();
 
 public:
-	static QString oneLayerTranslated;
-	static QString twoLayersTranslated;
+	static QString OneLayerTranslated;
+	static QString TwoLayersTranslated;
+	static QString CustomShapeTranslated;
 };
 
 class ResizableBoard : public Board 
@@ -82,9 +83,6 @@ public:
 	bool hasPartNumberProperty();
 	void paintSelected(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	bool inResize();
-
-public:
-	static QString customShapeTranslated;
 
 public slots:
 	void widthEntry();

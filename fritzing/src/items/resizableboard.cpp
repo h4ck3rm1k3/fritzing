@@ -49,11 +49,10 @@ static const int LineThickness = 8;
 static const QRegExp HeightExpr("height=\\'\\d*px");
 
 const double ResizableBoard::CornerHandleSize = 7.0;
-QString ResizableBoard::customShapeTranslated;
 
-
-QString Board::oneLayerTranslated;
-QString Board::twoLayersTranslated;
+QString Board::CustomShapeTranslated;
+QString Board::OneLayerTranslated;
+QString Board::TwoLayersTranslated;
 
 Board::Board( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
@@ -77,28 +76,36 @@ void Board::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option
 QStringList Board::collectValues(const QString & family, const QString & prop, QString & value) {
 	if (prop.compare("layers", Qt::CaseInsensitive) == 0) {
 		QStringList result;
-		if (oneLayerTranslated.isEmpty()) {
-			oneLayerTranslated = tr("one layer (single-sided)");
+		if (OneLayerTranslated.isEmpty()) {
+			OneLayerTranslated = tr("one layer (single-sided)");
 		}
-		if (twoLayersTranslated.isEmpty()) {
-			twoLayersTranslated = tr("two layers (double-sided)");
+		if (TwoLayersTranslated.isEmpty()) {
+			TwoLayersTranslated = tr("two layers (double-sided)");
 		}
 
-		result.append(oneLayerTranslated);
-		result.append(twoLayersTranslated);
+		result.append(OneLayerTranslated);
+		result.append(TwoLayersTranslated);
 
 		if (value == "1") {
-			value = oneLayerTranslated;
+			value = OneLayerTranslated;
 		}
 		else if (value == "2") {
-			value = twoLayersTranslated;
+			value = TwoLayersTranslated;
 		}
 
 		return result;
 	}
 
-	return PaletteItem::collectValues(family, prop, value);
-}
+	QStringList result = PaletteItem::collectValues(family, prop, value);
+
+    if (prop.compare("shape", Qt::CaseInsensitive) == 0) {
+		if (CustomShapeTranslated.isEmpty()) {
+			CustomShapeTranslated = tr("Import Shape...");
+		}
+		result.append(CustomShapeTranslated);
+	}
+
+	return result;}
 
 
 bool Board::rotation45Allowed() {
@@ -571,16 +578,7 @@ bool ResizableBoard::collectExtraInfo(QWidget * parent, const QString & family, 
 }
 
 QStringList ResizableBoard::collectValues(const QString & family, const QString & prop, QString & value) {
-	QStringList result = Board::collectValues(family, prop, value);
-
-	if (prop.compare("shape", Qt::CaseInsensitive) == 0) {
-		if (customShapeTranslated.isEmpty()) {
-			customShapeTranslated = tr("Import Shape...");
-		}
-		result.append(customShapeTranslated);
-	}
-
-	return result;
+	return Board::collectValues(family, prop, value);
 }
 
 void ResizableBoard::widthEntry() {
