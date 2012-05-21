@@ -129,7 +129,7 @@ QDomElement LayerAttributes::getSvgElementLayer(QDomDocument * doc, ViewIdentifi
 
 
 bool LayerAttributes::sticky() {
-	return m_sticky;
+	return false; //m_sticky;
 }
 
 bool LayerAttributes::canFlipHorizontal() {

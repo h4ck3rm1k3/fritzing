@@ -759,7 +759,7 @@ bool ItemBase::stickyEnabled() {
 }
 
 bool ItemBase::sticky() {
-	return m_sticky;
+	return false;  //m_sticky;
 }
 
 void ItemBase::setSticky(bool s)
@@ -767,29 +767,29 @@ void ItemBase::setSticky(bool s)
 	m_sticky = s;
 }
 
-void ItemBase::addSticky(ItemBase * sticky, bool stickem) {
-	sticky = sticky->layerKinChief();
+void ItemBase::addSticky(ItemBase * stickyBase, bool stickem) {
+	stickyBase = stickyBase->layerKinChief();
 	//this->debugInfo(QString("add sticky %1:").arg(stickem));
 	//sticky->debugInfo(QString("  to"));
 	if (stickem) {
-		if (!m_sticky) {
+		if (!sticky()) {
 			foreach (ItemBase * oldstickingTo, m_stickyList.values()) {
-				if (oldstickingTo == sticky) continue;
+				if (oldstickingTo == stickyBase) continue;
 
 				oldstickingTo->addSticky(this, false);
 			}
 			m_stickyList.clear();
 		}
-		m_stickyList.insert(sticky->id(), sticky);
+		m_stickyList.insert(stickyBase->id(), stickyBase);
 	}
 	else {
-		m_stickyList.remove(sticky->id());
+		m_stickyList.remove(stickyBase->id());
 	}
 }
 
 
 ItemBase * ItemBase::stickingTo() {
-	if (m_sticky) return NULL;
+	if (sticky()) return NULL;
 
 	if (m_stickyList.count() < 1) return NULL;
 
