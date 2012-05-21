@@ -83,11 +83,34 @@ static QHash<QString, QImage::Format> fileExportFormats;
 static QHash<QString, QString> fileExtFormats;
 
 static QRegExp AaCc("[aAcC]");
+static QRegExp LabelNumber("([^\\d]+)(.*)");
 
 ////////////////////////////////////////////////////////
 
-bool sortPartList(ItemBase * b1, ItemBase * b2){
-    return b1->instanceTitle().toLower() < b2->instanceTitle().toLower();
+bool sortPartList(ItemBase * b1, ItemBase * b2) {
+    bool result = b1->instanceTitle().toLower() < b2->instanceTitle().toLower();
+
+    int ix1 = LabelNumber.indexIn(b1->instanceTitle());
+    if (ix1 < 0) return result;
+
+    QString label1 = LabelNumber.cap(1);
+    QString number1 = LabelNumber.cap(2);
+
+    int ix2 = LabelNumber.indexIn(b2->instanceTitle());
+    if (ix2 < 0) return result;
+
+    QString label2 = LabelNumber.cap(1);
+    QString number2 = LabelNumber.cap(2);
+    if (label2.compare(label1, Qt::CaseInsensitive) != 0) return result;
+
+    bool ok;
+    double d1 = number1.toDouble(&ok);
+    if (!ok) return result;
+
+    double d2 = number2.toDouble(&ok);
+    if (!ok) return result;
+
+    return d1 < d2;
 }
 
 void massageOutput(QString & svg, bool doMask, bool doSilk, QString & maskTop, QString & maskBottom, const QString & fileName, int dpi)
