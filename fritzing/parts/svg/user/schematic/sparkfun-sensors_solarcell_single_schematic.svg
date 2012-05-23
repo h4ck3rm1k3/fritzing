@@ -19,7 +19,9 @@
 <line class='other' x1='6.1722' y1='2.6162' x2='6.9342' y2='2.6162' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <line class='pin' id='connector0pin' connectorname='A' x1='0.0762' y1='5.9182' x2='5.1562' y2='5.9182' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector0terminal' x='0.0762' y='5.9182' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='5.6134' y='6.223' text-anchor='start'>A</text>
 <line class='pin' id='connector1pin' connectorname='C' x1='10.2362' y1='5.9182' x2='5.1562' y2='5.9182' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector1terminal' x='10.2362' y='5.9182' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='4.699' y='6.223' text-anchor='end'>C</text>
 </g>
 </svg>

@@ -24,12 +24,24 @@
 <line class='other' x1='3.683' y1='9.2202' x2='3.683' y2='8.2042' stroke='#000000' stroke-width='0.254' stroke-linecap='round'/>
 <line class='pin' id='connector0pin' connectorname='A' x1='10.287' y1='0.0762' x2='10.287' y2='2.6162' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector0terminal' x='10.287' y='0.0762' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<g transform='translate(10.5918,3.0734)'><g transform='rotate(270)'>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='0' y='0' text-anchor='end'>A</text>
+</g></g>
 <line class='pin' id='connector1pin' connectorname='E' x1='2.667' y1='12.7762' x2='2.667' y2='10.2362' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector1terminal' x='2.667' y='12.7762' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<g transform='translate(2.9718,9.779)'><g transform='rotate(270)'>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='0' y='0' text-anchor='start'>E</text>
+</g></g>
 <line class='pin' id='connector2pin' connectorname='C' x1='2.667' y1='0.0762' x2='2.667' y2='2.6162' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector2terminal' x='2.667' y='0.0762' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<g transform='translate(2.9718,3.0734)'><g transform='rotate(270)'>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='0' y='0' text-anchor='end'>C</text>
+</g></g>
 <line class='pin' id='connector3pin' connectorname='K' x1='10.287' y1='12.7762' x2='10.287' y2='10.2362' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector3terminal' x='10.287' y='12.7762' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<g transform='translate(10.5918,9.779)'><g transform='rotate(270)'>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='0' y='0' text-anchor='start'>K</text>
+</g></g>
 <path class='other' stroke='none' fill='#000000' stroke-width='0' d='M10.287,7.6962L11.811,6.1722L9.017,6.1722L10.033,7.1882z' stroke-linecap='round'/>
 </g>
 </svg>

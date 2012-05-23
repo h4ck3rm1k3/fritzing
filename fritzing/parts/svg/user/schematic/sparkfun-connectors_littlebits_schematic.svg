@@ -10,9 +10,12 @@
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='2.3114' x='0' y='22.716' text-anchor='start'>LB MALE</text>
 <line class='pin' id='connector0pin' connectorname='GND' x1='15.494' y1='17.636' x2='10.414' y2='17.636' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector0terminal' x='15.494' y='17.636' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='9.9568' y='17.9408' text-anchor='end'>GND</text>
 <line class='pin' id='connector1pin' connectorname='SIG' x1='15.494' y1='15.096' x2='10.414' y2='15.096' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector1terminal' x='15.494' y='15.096' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='9.9568' y='15.4008' text-anchor='end'>SIG</text>
 <line class='pin' id='connector2pin' connectorname='VCC' x1='15.494' y1='12.556' x2='10.414' y2='12.556' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector2terminal' x='15.494' y='12.556' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='9.9568' y='12.8608' text-anchor='end'>VCC</text>
 </g>
 </svg>

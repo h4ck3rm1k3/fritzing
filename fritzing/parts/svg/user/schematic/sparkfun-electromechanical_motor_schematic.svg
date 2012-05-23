@@ -18,7 +18,13 @@
 <circle class='other' cx='2.159' cy='5.1562' r='2.032' stroke='#000000' stroke-width='0.254' fill='none' />
 <line class='pin' id='connector0pin' connectorname='+' x1='2.159' y1='0.0762' x2='2.159' y2='0.0762' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector0terminal' x='2.159' y='0.0762' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<g transform='translate(2.4638,0.5334)'><g transform='rotate(270)'>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='0' y='0' text-anchor='end'>+</text>
+</g></g>
 <line class='pin' id='connector1pin' connectorname='-' x1='2.159' y1='10.2362' x2='2.159' y2='10.2362' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector1terminal' x='2.159' y='10.2362' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<g transform='translate(2.4638,10.6934)'><g transform='rotate(270)'>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='0' y='0' text-anchor='end'>-</text>
+</g></g>
 </g>
 </svg>
