@@ -124,10 +124,10 @@ class BinManager : public QFrame {
 		void updateBinCombinedMenuCurrent();					
 		void toIconView();
 		void toListView();
+		void setAsCurrentBin(PartsBinPaletteWidget* bin);
 
 	protected slots:
 		void updateFileName(PartsBinPaletteWidget* bin, const QString &newFileName, const QString &oldFilename);
-		void setAsCurrentBin(PartsBinPaletteWidget* bin);
 		void currentChanged(int);
 		void tabCloseRequested(int);
 		PartsBinPaletteWidget* newBinIn();

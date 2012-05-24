@@ -317,6 +317,10 @@ void PartsBinPaletteWidget::grabTitle(const QString & title, QString & iconFilen
 }
 
 void PartsBinPaletteWidget::addPart(ModelPart *modelPart, int position) {
+    if (m_model == NULL) {
+        return;
+    }
+
 	ModelPart *mp = m_model->addModelPart(m_model->root(),modelPart);
 
 	m_iconView->addPart(mp, position);
@@ -709,9 +713,10 @@ QAction *PartsBinPaletteWidget::addPartToMeAction() {
 }
 
 void PartsBinPaletteWidget::addSketchPartToMe() {
+    m_manager->openBinIn(this->m_fileName, false);
 	QString moduleID = m_manager->getSelectedModuleIDFromSketch();
 	bool wasAlreadyIn = contains(moduleID);
-	addPart(moduleID);
+	addPart(moduleID, -1);
 	if(!wasAlreadyIn) {
 		setDirty();
 	}
