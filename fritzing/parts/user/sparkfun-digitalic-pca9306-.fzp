@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-PCA9306-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' PCA9306  -->
 <version>4</version>
-<date>2012-05-23</date>
+<date>2012-05-24</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Bidirectional I2C level shifter.&lt;br&gt;
@@ -40,17 +40,17 @@ NOT compatible with all available part number pinout schemes- DOUBLE CHECK!!!</d
 </iconView>
 </views>
 <connectors>
-<connector id='connector4' type='pad' name='EN'>
+<connector id='connector7' type='pad' name='EN'>
 <description>EN</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector4pad'/>
+<p layer='breadboard' svgId='connector7pad'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper1' svgId='connector4pad'/>
+<p layer='copper1' svgId='connector7pad'/>
 </pcbView>
 </views>
 </connector>
@@ -82,17 +82,17 @@ NOT compatible with all available part number pinout schemes- DOUBLE CHECK!!!</d
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='pad' name='SCL2'>
+<connector id='connector5' type='pad' name='SCL2'>
 <description>SCL2</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector6pad'/>
+<p layer='breadboard' svgId='connector5pad'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper1' svgId='connector6pad'/>
+<p layer='copper1' svgId='connector5pad'/>
 </pcbView>
 </views>
 </connector>
@@ -110,17 +110,17 @@ NOT compatible with all available part number pinout schemes- DOUBLE CHECK!!!</d
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='pad' name='SDA2'>
+<connector id='connector4' type='pad' name='SDA2'>
 <description>SDA2</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector7pad'/>
+<p layer='breadboard' svgId='connector4pad'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector6pin' terminalId='connector6terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper1' svgId='connector7pad'/>
+<p layer='copper1' svgId='connector4pad'/>
 </pcbView>
 </views>
 </connector>
@@ -138,17 +138,17 @@ NOT compatible with all available part number pinout schemes- DOUBLE CHECK!!!</d
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='pad' name='VREF2'>
+<connector id='connector6' type='pad' name='VREF2'>
 <description>VREF2</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector5pad'/>
+<p layer='breadboard' svgId='connector6pad'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper1' svgId='connector5pad'/>
+<p layer='copper1' svgId='connector6pad'/>
 </pcbView>
 </views>
 </connector>

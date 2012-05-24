@@ -3,8 +3,8 @@
 <svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.488189in' height='0.370142in' viewBox='0 0 12.4 9.40161' >
 <g id='copper1'>
 <rect id='connector0pad' connectorname='1' x='2.75' y='7.60161' width='1.9' height='1.8' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
-<rect id='connector1pad' connectorname='T' x='5.25' y='7.60161' width='1.9' height='1.8' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
-<rect id='connector2pad' connectorname='2' x='7.75' y='7.60161' width='1.9' height='1.8' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector2pad' connectorname='T' x='5.25' y='7.60161' width='1.9' height='1.8' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector1pad' connectorname='2' x='7.75' y='7.60161' width='1.9' height='1.8' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <rect id='connector3pad' connectorname='C' x='10.8' y='3.00161' width='1.6' height='1.5' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <rect id='connector4pad' connectorname='NC' x='0' y='3.00161' width='1.6' height='1.5' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <circle cx='3.7' cy='4.70161' r='0.55' stroke='black' stroke-width='0' fill='black' id='nonconn0' />

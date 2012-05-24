@@ -29,31 +29,31 @@ M35.7632,5.71882a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
 M38.5318,5.71882a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
 M41.3004,5.71882a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
 '/>
-<circle id='connector0pin' connectorname='13' cx='10.0584' cy='8.56362' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector1pin' connectorname='12' cx='12.827' cy='8.56362' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector2pin' connectorname='11' cx='15.5702' cy='8.56362' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector3pin' connectorname='10' cx='18.3388' cy='8.56362' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector4pin' connectorname='9' cx='21.1074' cy='8.56362' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector5pin' connectorname='8' cx='23.8506' cy='8.56362' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector12pin' connectorname='13' cx='10.0584' cy='8.56362' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector11pin' connectorname='12' cx='12.827' cy='8.56362' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector10pin' connectorname='11' cx='15.5702' cy='8.56362' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector9pin' connectorname='10' cx='18.3388' cy='8.56362' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector8pin' connectorname='9' cx='21.1074' cy='8.56362' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector7pin' connectorname='8' cx='23.8506' cy='8.56362' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <circle id='connector6pin' connectorname='7' cx='26.6192' cy='8.56362' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector7pin' connectorname='6' cx='29.3878' cy='8.56362' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector8pin' connectorname='5' cx='32.131' cy='8.56362' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector9pin' connectorname='4' cx='34.8996' cy='8.56362' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector10pin' connectorname='3' cx='37.6682' cy='8.56362' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector11pin' connectorname='2' cx='40.4114' cy='8.56362' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector12pin' connectorname='1' cx='43.18' cy='8.56362' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector13pin' connectorname='25' cx='11.43' cy='5.71882' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector14pin' connectorname='24' cx='14.1986' cy='5.71882' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector15pin' connectorname='23' cx='16.9672' cy='5.71882' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector16pin' connectorname='22' cx='19.7104' cy='5.71882' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector17pin' connectorname='21' cx='22.479' cy='5.71882' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector18pin' connectorname='20' cx='25.2476' cy='5.71882' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector19pin' connectorname='19' cx='27.9908' cy='5.71882' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector20pin' connectorname='18' cx='30.7594' cy='5.71882' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector21pin' connectorname='17' cx='33.528' cy='5.71882' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector22pin' connectorname='16' cx='36.2712' cy='5.71882' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector23pin' connectorname='15' cx='39.0398' cy='5.71882' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector24pin' connectorname='14' cx='41.8084' cy='5.71882' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector5pin' connectorname='6' cx='29.3878' cy='8.56362' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector4pin' connectorname='5' cx='32.131' cy='8.56362' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector3pin' connectorname='4' cx='34.8996' cy='8.56362' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector2pin' connectorname='3' cx='37.6682' cy='8.56362' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector1pin' connectorname='2' cx='40.4114' cy='8.56362' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector0pin' connectorname='1' cx='43.18' cy='8.56362' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector24pin' connectorname='25' cx='11.43' cy='5.71882' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector23pin' connectorname='24' cx='14.1986' cy='5.71882' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector22pin' connectorname='23' cx='16.9672' cy='5.71882' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector21pin' connectorname='22' cx='19.7104' cy='5.71882' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector20pin' connectorname='21' cx='22.479' cy='5.71882' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector19pin' connectorname='20' cx='25.2476' cy='5.71882' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector18pin' connectorname='19' cx='27.9908' cy='5.71882' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector17pin' connectorname='18' cx='30.7594' cy='5.71882' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector16pin' connectorname='17' cx='33.528' cy='5.71882' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector15pin' connectorname='16' cx='36.2712' cy='5.71882' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector14pin' connectorname='15' cx='39.0398' cy='5.71882' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector13pin' connectorname='14' cx='41.8084' cy='5.71882' r='0.635' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <line class='other' x1='45.1866' y1='4.19482' x2='45.974' y2='9.47802' stroke='#f8f8f8' stroke-width='0.1524' stroke-linecap='round'/>
 <path class='other' fill='none' d='M8.0385,4.23622 A1.3462,1.3462 0 0 1 9.3472,3.20422' stroke-width='0.1524' stroke='#f8f8f8' />
 <path class='other' fill='none' d='M7.2697,9.44502 A1.3464,1.3464 0 0 0 8.5852,11.0782' stroke-width='0.1524' stroke='#f8f8f8' />

@@ -6,8 +6,8 @@
 <rect id='connector1pad' connectorname='2' x='0.8635' y='1.85' width='0.4' height='0.75' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <rect id='connector2pad' connectorname='3' x='1.5135' y='1.85' width='0.4' height='0.75' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <rect id='connector3pad' connectorname='4' x='1.5135' y='0' width='0.4' height='0.75' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
-<rect id='connector4pad' connectorname='6' x='0.2135' y='0' width='0.4' height='0.75' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
-<rect id='connector5pad' connectorname='5' x='0.8635' y='0' width='0.4' height='0.75' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector5pad' connectorname='6' x='0.2135' y='0' width='0.4' height='0.75' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector4pad' connectorname='5' x='0.8635' y='0' width='0.4' height='0.75' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <g id='copper0'>
 </g>
 </g>

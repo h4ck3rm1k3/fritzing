@@ -12,11 +12,11 @@
 <rect id='connector7pad' connectorname='8' x='1.7032' y='0' width='0.2968' height='0.85' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <rect id='connector8pad' connectorname='9' x='1.2032' y='0' width='0.2968' height='0.85' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <rect id='connector9pad' connectorname='10' x='0.7032' y='0' width='0.2968' height='0.85' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
-<rect id='connector10pad' connectorname='15' x='0.6516' y='1.075' width='2.4' height='1.65' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
-<rect id='connector11pad' connectorname='11' x='0.0016' y='1.51' width='0.7' height='0.28' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
-<rect id='connector12pad' connectorname='12' x='0.0016' y='2.01' width='0.7' height='0.28' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
-<rect id='connector13pad' connectorname='13' x='3.0016' y='1.51' width='0.7' height='0.28' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
-<rect id='connector14pad' connectorname='14' x='3.0016' y='2.01' width='0.7' height='0.28' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector14pad' connectorname='15' x='0.6516' y='1.075' width='2.4' height='1.65' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector10pad' connectorname='11' x='0.0016' y='1.51' width='0.7' height='0.28' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector11pad' connectorname='12' x='0.0016' y='2.01' width='0.7' height='0.28' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector12pad' connectorname='13' x='3.0016' y='1.51' width='0.7' height='0.28' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector13pad' connectorname='14' x='3.0016' y='2.01' width='0.7' height='0.28' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <g id='copper0'>
 </g>
 </g>

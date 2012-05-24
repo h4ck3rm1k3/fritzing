@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-DS_TOUCH_CONNECTOR-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' DS_TOUCH_CONNECTOR  -->
 <version>4</version>
-<date>2012-05-23</date>
+<date>2012-05-24</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>4-pin DS touch screen connector (LCD-09105)</description>
@@ -39,31 +39,31 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector2' type='pad' name='X1'>
+<connector id='connector0' type='pad' name='X1'>
 <description>X1</description>
-<views>
-<breadboardView>
-<p layer='breadboard' svgId='connector2pad'/>
-</breadboardView>
-<schematicView>
-<p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
-</schematicView>
-<pcbView>
-<p layer='copper1' svgId='connector2pad'/>
-</pcbView>
-</views>
-</connector>
-<connector id='connector0' type='pad' name='X2'>
-<description>X2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pad'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
+<p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector0pad'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector2' type='pad' name='X2'>
+<description>X2</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector2pad'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper1' svgId='connector2pad'/>
 </pcbView>
 </views>
 </connector>

@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-ADMP421-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' ADMP421  -->
 <version>4</version>
-<date>2012-05-23</date>
+<date>2012-05-24</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Omnidirectional bottom-port MEMS microphone (digital output)</description>
@@ -39,73 +39,73 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector3' type='pad' name='CLK'>
+<connector id='connector0' type='pad' name='CLK'>
 <description>CLK</description>
-<views>
-<breadboardView>
-<p layer='breadboard' svgId='connector3pad'/>
-</breadboardView>
-<schematicView>
-<p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
-</schematicView>
-<pcbView>
-<p layer='copper1' svgId='connector3pad'/>
-</pcbView>
-</views>
-</connector>
-<connector id='connector0' type='pad' name='DATA'>
-<description>DATA</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pad'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
+<p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector0pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='pad' name='GND@1'>
-<description>GND@1</description>
-<views>
-<breadboardView>
-<p layer='breadboard' svgId='connector5pad'/>
-</breadboardView>
-<schematicView>
-<p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>
-</schematicView>
-<pcbView>
-<p layer='copper1' svgId='connector5pad'/>
-</pcbView>
-</views>
-</connector>
-<connector id='connector4' type='pad' name='GND@2'>
-<description>GND@2</description>
+<connector id='connector4' type='pad' name='DATA'>
+<description>DATA</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pad'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
+<p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector4pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='pad' name='GND@3'>
-<description>GND@3</description>
+<connector id='connector6' type='pad' name='GND@1'>
+<description>GND@1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pad'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector6pin' terminalId='connector6terminal'/>
+<p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector6pad'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector5' type='pad' name='GND@2'>
+<description>GND@2</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector5pad'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper1' svgId='connector5pad'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector2' type='pad' name='GND@3'>
+<description>GND@3</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector2pad'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector6pin' terminalId='connector6terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper1' svgId='connector2pad'/>
 </pcbView>
 </views>
 </connector>
@@ -123,17 +123,17 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='pad' name='VDD'>
+<connector id='connector3' type='pad' name='VDD'>
 <description>VDD</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector2pad'/>
+<p layer='breadboard' svgId='connector3pad'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper1' svgId='connector2pad'/>
+<p layer='copper1' svgId='connector3pad'/>
 </pcbView>
 </views>
 </connector>

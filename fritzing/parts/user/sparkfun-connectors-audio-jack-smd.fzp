@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-AUDIO-JACK-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' AUDIO-JACK SMD -->
 <version>4</version>
-<date>2012-05-23</date>
+<date>2012-05-24</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;3.5mm Audio Jack&lt;/b&gt;
@@ -42,45 +42,45 @@ Simple 3.5mm common PCB mount audio jack. SKU: PRT-08032</description>
 </iconView>
 </views>
 <connectors>
-<connector id='connector3' type='pad' name='LEFT'>
+<connector id='connector0' type='pad' name='LEFT'>
 <description>LEFT</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector0pad'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper1' svgId='connector0pad'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector3' type='pad' name='RIGHT'>
+<description>RIGHT</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pad'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
+<p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector3pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='pad' name='RIGHT'>
-<description>RIGHT</description>
-<views>
-<breadboardView>
-<p layer='breadboard' svgId='connector2pad'/>
-</breadboardView>
-<schematicView>
-<p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
-</schematicView>
-<pcbView>
-<p layer='copper1' svgId='connector2pad'/>
-</pcbView>
-</views>
-</connector>
-<connector id='connector0' type='pad' name='SLEEVE'>
+<connector id='connector4' type='pad' name='SLEEVE'>
 <description>SLEEVE</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector0pad'/>
+<p layer='breadboard' svgId='connector4pad'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper1' svgId='connector0pad'/>
+<p layer='copper1' svgId='connector4pad'/>
 </pcbView>
 </views>
 </connector>

@@ -2,15 +2,15 @@
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
 <svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.577126in' height='0.480441in' viewBox='0 0 14.659 12.2032' >
 <g id='copper1'>
-<circle id='connector0pin' connectorname='4' cx='1.0795' cy='3.6016' r='0.83975' stroke='#F7BD13' stroke-width='0.4795' fill='none' />
+<circle id='connector3pin' connectorname='4' cx='1.0795' cy='3.6016' r='0.83975' stroke='#F7BD13' stroke-width='0.4795' fill='none' />
 <circle id='connector1pin' connectorname='2' cx='1.0795' cy='8.6016' r='0.83975' stroke='#F7BD13' stroke-width='0.4795' fill='none' />
-<circle id='connector2pin' connectorname='1' cx='13.5795' cy='8.6016' r='0.83975' stroke='#F7BD13' stroke-width='0.4795' fill='none' />
-<circle id='connector3pin' connectorname='3' cx='13.5795' cy='3.6016' r='0.83975' stroke='#F7BD13' stroke-width='0.4795' fill='none' />
+<circle id='connector0pin' connectorname='1' cx='13.5795' cy='8.6016' r='0.83975' stroke='#F7BD13' stroke-width='0.4795' fill='none' />
+<circle id='connector2pin' connectorname='3' cx='13.5795' cy='3.6016' r='0.83975' stroke='#F7BD13' stroke-width='0.4795' fill='none' />
 <g id='copper0'>
-<circle id='connector0pin' connectorname='4' cx='1.0795' cy='3.6016' r='0.83975' stroke='#F7BD13' stroke-width='0.4795' fill='none' />
+<circle id='connector3pin' connectorname='4' cx='1.0795' cy='3.6016' r='0.83975' stroke='#F7BD13' stroke-width='0.4795' fill='none' />
 <circle id='connector1pin' connectorname='2' cx='1.0795' cy='8.6016' r='0.83975' stroke='#F7BD13' stroke-width='0.4795' fill='none' />
-<circle id='connector2pin' connectorname='1' cx='13.5795' cy='8.6016' r='0.83975' stroke='#F7BD13' stroke-width='0.4795' fill='none' />
-<circle id='connector3pin' connectorname='3' cx='13.5795' cy='3.6016' r='0.83975' stroke='#F7BD13' stroke-width='0.4795' fill='none' />
+<circle id='connector0pin' connectorname='1' cx='13.5795' cy='8.6016' r='0.83975' stroke='#F7BD13' stroke-width='0.4795' fill='none' />
+<circle id='connector2pin' connectorname='3' cx='13.5795' cy='3.6016' r='0.83975' stroke='#F7BD13' stroke-width='0.4795' fill='none' />
 </g>
 </g>
 <g id='silkscreen'>

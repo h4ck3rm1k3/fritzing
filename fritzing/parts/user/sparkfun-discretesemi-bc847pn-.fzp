@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DiscreteSemi-BC847PN-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DiscreteSemi' BC847PN  -->
 <version>4</version>
-<date>2012-05-23</date>
+<date>2012-05-24</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>NPN/PNP transistor pair in SOT-363 package</description>
@@ -53,17 +53,17 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='pad' name='G1 C'>
+<connector id='connector5' type='pad' name='G1 C'>
 <description>G1 C</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector3pad'/>
+<p layer='breadboard' svgId='connector5pad'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper1' svgId='connector3pad'/>
+<p layer='copper1' svgId='connector5pad'/>
 </pcbView>
 </views>
 </connector>
@@ -109,17 +109,17 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='pad' name='G2 E'>
+<connector id='connector3' type='pad' name='G2 E'>
 <description>G2 E</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector5pad'/>
+<p layer='breadboard' svgId='connector3pad'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper1' svgId='connector5pad'/>
+<p layer='copper1' svgId='connector3pad'/>
 </pcbView>
 </views>
 </connector>

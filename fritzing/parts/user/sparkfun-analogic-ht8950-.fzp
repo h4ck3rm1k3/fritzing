@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-HT8950-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-AnalogIC' HT8950  -->
 <version>4</version>
-<date>2012-05-23</date>
+<date>2012-05-24</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Holtek voice modulator IC, COM-10574</description>
@@ -17,7 +17,7 @@
 </properties>
 <views>
 <breadboardView>
-<layers image='breadboard/generic_ic_dip_18_400mil_bread.svg'>
+<layers image='breadboard/generic_ic_dip_0_400mil_bread.svg'>
 <layer layerId='breadboard'/>
 </layers>
 </breadboardView>
@@ -34,39 +34,39 @@
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/generic_ic_dip_18_400mil_bread.svg'>
+<layers image='breadboard/generic_ic_dip_0_400mil_bread.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>
 </views>
 <connectors>
-<connector id='connector6' type='male' name='AIN'>
+<connector id='connector5' type='male' name='AIN'>
 <description>AIN</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector6pin'/>
+<p layer='breadboard' svgId='connector5pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector6pin'/>
-<p layer='copper1' svgId='connector6pin'/>
+<p layer='copper0' svgId='connector5pin'/>
+<p layer='copper1' svgId='connector5pin'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='male' name='AO'>
+<connector id='connector4' type='male' name='AO'>
 <description>AO</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector7pin'/>
+<p layer='breadboard' svgId='connector4pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector7pin'/>
-<p layer='copper1' svgId='connector7pin'/>
+<p layer='copper0' svgId='connector4pin'/>
+<p layer='copper1' svgId='connector4pin'/>
 </pcbView>
 </views>
 </connector>
@@ -100,18 +100,18 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='male' name='LAMP'>
+<connector id='connector7' type='male' name='LAMP'>
 <description>LAMP</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector3pin'/>
+<p layer='breadboard' svgId='connector7pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector7pin' terminalId='connector7terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector3pin'/>
-<p layer='copper1' svgId='connector3pin'/>
+<p layer='copper0' svgId='connector7pin'/>
+<p layer='copper1' svgId='connector7pin'/>
 </pcbView>
 </views>
 </connector>
@@ -190,18 +190,18 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='male' name='SW2'>
+<connector id='connector2' type='male' name='SW2'>
 <description>SW2</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector4pin'/>
+<p layer='breadboard' svgId='connector2pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector4pin'/>
-<p layer='copper1' svgId='connector4pin'/>
+<p layer='copper0' svgId='connector2pin'/>
+<p layer='copper1' svgId='connector2pin'/>
 </pcbView>
 </views>
 </connector>
@@ -250,18 +250,18 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='male' name='VDD'>
+<connector id='connector6' type='male' name='VDD'>
 <description>VDD</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector2pin'/>
+<p layer='breadboard' svgId='connector6pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector6pin' terminalId='connector6terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector2pin'/>
-<p layer='copper1' svgId='connector2pin'/>
+<p layer='copper0' svgId='connector6pin'/>
+<p layer='copper1' svgId='connector6pin'/>
 </pcbView>
 </views>
 </connector>
@@ -295,18 +295,18 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='male' name='VSS'>
+<connector id='connector3' type='male' name='VSS'>
 <description>VSS</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector5pin'/>
+<p layer='breadboard' svgId='connector3pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector5pin'/>
-<p layer='copper1' svgId='connector5pin'/>
+<p layer='copper0' svgId='connector3pin'/>
+<p layer='copper1' svgId='connector3pin'/>
 </pcbView>
 </views>
 </connector>

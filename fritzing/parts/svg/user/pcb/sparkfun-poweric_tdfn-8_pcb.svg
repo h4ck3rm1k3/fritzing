@@ -2,15 +2,15 @@
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
 <svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.141732in' height='0.106486in' viewBox='0 0 3.6 2.70476' >
 <g id='copper1'>
-<rect id='connector0pad' connectorname='EP' x='0.935' y='0.613156' width='1.73' height='1.88' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
-<rect id='connector1pad' connectorname='1' x='0' y='0.653156' width='0.8' height='0.3' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
-<rect id='connector2pad' connectorname='2' x='0' y='1.15316' width='0.8' height='0.3' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector8pad' connectorname='EP' x='0.935' y='0.613156' width='1.73' height='1.88' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector0pad' connectorname='1' x='0' y='0.653156' width='0.8' height='0.3' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector1pad' connectorname='2' x='0' y='1.15316' width='0.8' height='0.3' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <rect id='connector3pad' connectorname='4' x='0' y='2.15316' width='0.8' height='0.3' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
-<rect id='connector4pad' connectorname='3' x='0' y='1.65316' width='0.8' height='0.3' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
-<rect id='connector5pad' connectorname='8' x='2.8' y='0.653156' width='0.8' height='0.3' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector2pad' connectorname='3' x='0' y='1.65316' width='0.8' height='0.3' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector7pad' connectorname='8' x='2.8' y='0.653156' width='0.8' height='0.3' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <rect id='connector6pad' connectorname='7' x='2.8' y='1.15316' width='0.8' height='0.3' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
-<rect id='connector7pad' connectorname='5' x='2.8' y='2.15316' width='0.8' height='0.3' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
-<rect id='connector8pad' connectorname='6' x='2.8' y='1.65316' width='0.8' height='0.3' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector4pad' connectorname='5' x='2.8' y='2.15316' width='0.8' height='0.3' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector5pad' connectorname='6' x='2.8' y='1.65316' width='0.8' height='0.3' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <g id='copper0'>
 </g>
 </g>

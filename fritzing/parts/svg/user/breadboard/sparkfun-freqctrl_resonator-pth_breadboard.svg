@@ -7,8 +7,8 @@ M3.51157,2.00699a0.4,0.4 0 1 0 0.8,0 0.4,0.4 0 1 0 -0.8,0z
 M0.971572,2.00699a0.4,0.4 0 1 0 0.8,0 0.4,0.4 0 1 0 -0.8,0z
 M6.05157,2.00699a0.4,0.4 0 1 0 0.8,0 0.4,0.4 0 1 0 -0.8,0z
 '/>
-<circle id='connector0pin' connectorname='2' cx='3.91157' cy='2.00699' r='0.6699' stroke='#9A916C' stroke-width='0.5398' fill='none' />
-<circle id='connector1pin' connectorname='1' cx='1.37157' cy='2.00699' r='0.6699' stroke='#9A916C' stroke-width='0.5398' fill='none' />
+<circle id='connector1pin' connectorname='2' cx='3.91157' cy='2.00699' r='0.6699' stroke='#9A916C' stroke-width='0.5398' fill='none' />
+<circle id='connector0pin' connectorname='1' cx='1.37157' cy='2.00699' r='0.6699' stroke='#9A916C' stroke-width='0.5398' fill='none' />
 <circle id='connector2pin' connectorname='3' cx='6.45157' cy='2.00699' r='0.6699' stroke='#9A916C' stroke-width='0.5398' fill='none' />
 <path class='other' fill='none' d='M1.62557,0.228992 A1.79917,1.79917 0 0 0 1.62557,3.78499' stroke-width='0.2032' stroke='#f8f8f8' />
 <path class='other' fill='none' d='M6.19757,3.78499 A1.79917,1.79917 0 0 0 6.19757,0.228992' stroke-width='0.2032' stroke='#f8f8f8' />

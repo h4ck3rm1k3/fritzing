@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-HMC5843-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' HMC5843 SMD -->
 <version>4</version>
-<date>2012-05-23</date>
+<date>2012-05-24</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Honeywell 3-axis digital compass IC, SEN-09371</description>
@@ -41,241 +41,241 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector18' type='pad' name='AGND'>
+<connector id='connector16' type='pad' name='AGND'>
 <description>AGND</description>
-<views>
-<breadboardView>
-<p layer='breadboard' svgId='connector18pad'/>
-</breadboardView>
-<schematicView>
-<p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
-</schematicView>
-<pcbView>
-<p layer='copper1' svgId='connector18pad'/>
-</pcbView>
-</views>
-</connector>
-<connector id='connector16' type='pad' name='AVDD'>
-<description>AVDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector16pad'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
+<p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector16pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector11' type='pad' name='C1'>
-<description>C1</description>
-<views>
-<breadboardView>
-<p layer='breadboard' svgId='connector11pad'/>
-</breadboardView>
-<schematicView>
-<p layer='schematic' svgId='connector8pin' terminalId='connector8terminal'/>
-</schematicView>
-<pcbView>
-<p layer='copper1' svgId='connector11pad'/>
-</pcbView>
-</views>
-</connector>
-<connector id='connector13' type='pad' name='DGND'>
-<description>DGND</description>
-<views>
-<breadboardView>
-<p layer='breadboard' svgId='connector13pad'/>
-</breadboardView>
-<schematicView>
-<p layer='schematic' svgId='connector11pin' terminalId='connector11terminal'/>
-</schematicView>
-<pcbView>
-<p layer='copper1' svgId='connector13pad'/>
-</pcbView>
-</views>
-</connector>
-<connector id='connector17' type='pad' name='DRDY'>
-<description>DRDY</description>
+<connector id='connector17' type='pad' name='AVDD'>
+<description>AVDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector17pad'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
+<p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector17pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='pad' name='DVDD'>
-<description>DVDD</description>
-<views>
-<breadboardView>
-<p layer='breadboard' svgId='connector10pad'/>
-</breadboardView>
-<schematicView>
-<p layer='schematic' svgId='connector10pin' terminalId='connector10terminal'/>
-</schematicView>
-<pcbView>
-<p layer='copper1' svgId='connector10pad'/>
-</pcbView>
-</views>
-</connector>
-<connector id='connector8' type='pad' name='OFFN'>
-<description>OFFN</description>
-<views>
-<breadboardView>
-<p layer='breadboard' svgId='connector8pad'/>
-</breadboardView>
-<schematicView>
-<p layer='schematic' svgId='connector15pin' terminalId='connector15terminal'/>
-</schematicView>
-<pcbView>
-<p layer='copper1' svgId='connector8pad'/>
-</pcbView>
-</views>
-</connector>
-<connector id='connector9' type='pad' name='OFFP'>
-<description>OFFP</description>
-<views>
-<breadboardView>
-<p layer='breadboard' svgId='connector9pad'/>
-</breadboardView>
-<schematicView>
-<p layer='schematic' svgId='connector16pin' terminalId='connector16terminal'/>
-</schematicView>
-<pcbView>
-<p layer='copper1' svgId='connector9pad'/>
-</pcbView>
-</views>
-</connector>
-<connector id='connector4' type='pad' name='SCL'>
-<description>SCL</description>
-<views>
-<breadboardView>
-<p layer='breadboard' svgId='connector4pad'/>
-</breadboardView>
-<schematicView>
-<p layer='schematic' svgId='connector7pin' terminalId='connector7terminal'/>
-</schematicView>
-<pcbView>
-<p layer='copper1' svgId='connector4pad'/>
-</pcbView>
-</views>
-</connector>
-<connector id='connector1' type='pad' name='SCLP'>
-<description>SCLP</description>
-<views>
-<breadboardView>
-<p layer='breadboard' svgId='connector1pad'/>
-</breadboardView>
-<schematicView>
-<p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>
-</schematicView>
-<pcbView>
-<p layer='copper1' svgId='connector1pad'/>
-</pcbView>
-</views>
-</connector>
-<connector id='connector15' type='pad' name='SDA'>
-<description>SDA</description>
-<views>
-<breadboardView>
-<p layer='breadboard' svgId='connector15pad'/>
-</breadboardView>
-<schematicView>
-<p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
-</schematicView>
-<pcbView>
-<p layer='copper1' svgId='connector15pad'/>
-</pcbView>
-</views>
-</connector>
-<connector id='connector3' type='pad' name='SDAP'>
-<description>SDAP</description>
-<views>
-<breadboardView>
-<p layer='breadboard' svgId='connector3pad'/>
-</breadboardView>
-<schematicView>
-<p layer='schematic' svgId='connector6pin' terminalId='connector6terminal'/>
-</schematicView>
-<pcbView>
-<p layer='copper1' svgId='connector3pad'/>
-</pcbView>
-</views>
-</connector>
-<connector id='connector12' type='pad' name='SETC'>
-<description>SETC</description>
+<connector id='connector12' type='pad' name='C1'>
+<description>C1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector12pad'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector9pin' terminalId='connector9terminal'/>
+<p layer='schematic' svgId='connector8pin' terminalId='connector8terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector12pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='pad' name='SETN'>
-<description>SETN</description>
+<connector id='connector11' type='pad' name='DGND'>
+<description>DGND</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector5pad'/>
+<p layer='breadboard' svgId='connector11pad'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector13pin' terminalId='connector13terminal'/>
+<p layer='schematic' svgId='connector11pin' terminalId='connector11terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper1' svgId='connector5pad'/>
+<p layer='copper1' svgId='connector11pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='pad' name='SETP'>
-<description>SETP</description>
+<connector id='connector18' type='pad' name='DRDY'>
+<description>DRDY</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector7pad'/>
+<p layer='breadboard' svgId='connector18pad'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector14pin' terminalId='connector14terminal'/>
+<p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper1' svgId='connector7pad'/>
+<p layer='copper1' svgId='connector18pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector14' type='pad' name='SVDD'>
-<description>SVDD</description>
+<connector id='connector14' type='pad' name='DVDD'>
+<description>DVDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector14pad'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector12pin' terminalId='connector12terminal'/>
+<p layer='schematic' svgId='connector10pin' terminalId='connector10terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector14pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector19' type='pad' name='VREN'>
-<description>VREN</description>
+<connector id='connector6' type='pad' name='OFFN'>
+<description>OFFN</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector6pad'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector15pin' terminalId='connector15terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper1' svgId='connector6pad'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector5' type='pad' name='OFFP'>
+<description>OFFP</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector5pad'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector16pin' terminalId='connector16terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper1' svgId='connector5pad'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector0' type='pad' name='SCL'>
+<description>SCL</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector0pad'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector7pin' terminalId='connector7terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper1' svgId='connector0pad'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector2' type='pad' name='SCLP'>
+<description>SCLP</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector2pad'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper1' svgId='connector2pad'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector19' type='pad' name='SDA'>
+<description>SDA</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector19pad'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/>
+<p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector19pad'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector1' type='pad' name='SDAP'>
+<description>SDAP</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector1pad'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector6pin' terminalId='connector6terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper1' svgId='connector1pad'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector13' type='pad' name='SETC'>
+<description>SETC</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector13pad'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector9pin' terminalId='connector9terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper1' svgId='connector13pad'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector9' type='pad' name='SETN'>
+<description>SETN</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector9pad'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector13pin' terminalId='connector13terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper1' svgId='connector9pad'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector8' type='pad' name='SETP'>
+<description>SETP</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector8pad'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector14pin' terminalId='connector14terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper1' svgId='connector8pad'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector10' type='pad' name='SVDD'>
+<description>SVDD</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector10pad'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector12pin' terminalId='connector12terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper1' svgId='connector10pad'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector15' type='pad' name='VREN'>
+<description>VREN</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector15pad'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper1' svgId='connector15pad'/>
 </pcbView>
 </views>
 </connector>

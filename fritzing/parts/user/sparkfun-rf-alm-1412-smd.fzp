@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-ALM-1412-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-RF' ALM-1412 SMD -->
 <version>4</version>
-<date>2012-05-23</date>
+<date>2012-05-24</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;GPS Antenna Amp&lt;/b&gt;
@@ -56,59 +56,59 @@ Filter and Amp built into one. Very small package.</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='pad' name='GND@6'>
+<connector id='connector5' type='pad' name='GND@6'>
 <description>GND@6</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector7pad'/>
+<p layer='breadboard' svgId='connector5pad'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper1' svgId='connector7pad'/>
+<p layer='copper1' svgId='connector5pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='pad' name='GND@7'>
+<connector id='connector6' type='pad' name='GND@7'>
 <description>GND@7</description>
-<views>
-<breadboardView>
-<p layer='breadboard' svgId='connector8pad'/>
-</breadboardView>
-<schematicView>
-<p layer='schematic' svgId='connector6pin' terminalId='connector6terminal'/>
-</schematicView>
-<pcbView>
-<p layer='copper1' svgId='connector8pad'/>
-</pcbView>
-</views>
-</connector>
-<connector id='connector6' type='pad' name='GND@8'>
-<description>GND@8</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pad'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector7pin' terminalId='connector7terminal'/>
+<p layer='schematic' svgId='connector6pin' terminalId='connector6terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector6pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='pad' name='GND@9'>
+<connector id='connector7' type='pad' name='GND@8'>
+<description>GND@8</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector7pad'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector7pin' terminalId='connector7terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper1' svgId='connector7pad'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector8' type='pad' name='GND@9'>
 <description>GND@9</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector5pad'/>
+<p layer='breadboard' svgId='connector8pad'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector8pin' terminalId='connector8terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper1' svgId='connector5pad'/>
+<p layer='copper1' svgId='connector8pad'/>
 </pcbView>
 </views>
 </connector>

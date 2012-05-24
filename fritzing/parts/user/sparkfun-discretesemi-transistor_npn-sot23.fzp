@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DiscreteSemi-TRANSISTOR_NPN-SOT23'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DiscreteSemi' TRANSISTOR_NPN SOT23 -->
 <version>4</version>
-<date>2012-05-23</date>
+<date>2012-05-24</date>
 <label>Q</label>
 <author>www.fritzing.org</author>
 <description>Generic NPN BJT. MMBT2222 is the common NPN we use. Double check against datasheet- not all devices are the same!</description>
@@ -41,31 +41,31 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector2' type='pad' name='B'>
+<connector id='connector0' type='pad' name='B'>
 <description>B</description>
-<views>
-<breadboardView>
-<p layer='breadboard' svgId='connector2pad'/>
-</breadboardView>
-<schematicView>
-<p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
-</schematicView>
-<pcbView>
-<p layer='copper1' svgId='connector2pad'/>
-</pcbView>
-</views>
-</connector>
-<connector id='connector0' type='pad' name='C'>
-<description>C</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pad'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
+<p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector0pad'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector2' type='pad' name='C'>
+<description>C</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector2pad'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper1' svgId='connector2pad'/>
 </pcbView>
 </views>
 </connector>

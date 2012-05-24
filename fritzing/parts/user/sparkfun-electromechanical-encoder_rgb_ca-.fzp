@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-ENCODER_RGB_CA-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' ENCODER_RGB_CA  -->
 <version>4</version>
-<date>2012-05-23</date>
+<date>2012-05-24</date>
 <label>SW</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;Illuminated Rotary Encoder w/ RGB LED and select switch&lt;/h3&gt;
@@ -42,44 +42,14 @@ EC12PLRGBSDVBF-D: http://top-up.so-buy.com/front/bin/ptdetail.phtml?Part=EC12PLR
 </iconView>
 </views>
 <connectors>
-<connector id='connector9' type='male' name='+'>
+<connector id='connector4' type='male' name='+'>
 <description>+</description>
-<views>
-<breadboardView>
-<p layer='breadboard' svgId='connector9pin'/>
-</breadboardView>
-<schematicView>
-<p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
-</schematicView>
-<pcbView>
-<p layer='copper0' svgId='connector9pin'/>
-<p layer='copper1' svgId='connector9pin'/>
-</pcbView>
-</views>
-</connector>
-<connector id='connector7' type='male' name='-B'>
-<description>-B</description>
-<views>
-<breadboardView>
-<p layer='breadboard' svgId='connector7pin'/>
-</breadboardView>
-<schematicView>
-<p layer='schematic' svgId='connector7pin' terminalId='connector7terminal'/>
-</schematicView>
-<pcbView>
-<p layer='copper0' svgId='connector7pin'/>
-<p layer='copper1' svgId='connector7pin'/>
-</pcbView>
-</views>
-</connector>
-<connector id='connector4' type='male' name='-G'>
-<description>-G</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
+<p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector4pin'/>
@@ -87,59 +57,29 @@ EC12PLRGBSDVBF-D: http://top-up.so-buy.com/front/bin/ptdetail.phtml?Part=EC12PLR
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='male' name='-R'>
-<description>-R</description>
+<connector id='connector3' type='male' name='-B'>
+<description>-B</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector8pin'/>
+<p layer='breadboard' svgId='connector3pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>
+<p layer='schematic' svgId='connector7pin' terminalId='connector7terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector8pin'/>
-<p layer='copper1' svgId='connector8pin'/>
+<p layer='copper0' svgId='connector3pin'/>
+<p layer='copper1' svgId='connector3pin'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='male' name='A'>
-<description>A</description>
-<views>
-<breadboardView>
-<p layer='breadboard' svgId='connector0pin'/>
-</breadboardView>
-<schematicView>
-<p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
-</schematicView>
-<pcbView>
-<p layer='copper0' svgId='connector0pin'/>
-<p layer='copper1' svgId='connector0pin'/>
-</pcbView>
-</views>
-</connector>
-<connector id='connector2' type='male' name='B'>
-<description>B</description>
-<views>
-<breadboardView>
-<p layer='breadboard' svgId='connector2pin'/>
-</breadboardView>
-<schematicView>
-<p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/>
-</schematicView>
-<pcbView>
-<p layer='copper0' svgId='connector2pin'/>
-<p layer='copper1' svgId='connector2pin'/>
-</pcbView>
-</views>
-</connector>
-<connector id='connector1' type='male' name='C'>
-<description>C</description>
+<connector id='connector1' type='male' name='-G'>
+<description>-G</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
+<p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector1pin'/>
@@ -147,18 +87,78 @@ EC12PLRGBSDVBF-D: http://top-up.so-buy.com/front/bin/ptdetail.phtml?Part=EC12PLR
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='male' name='SW'>
+<connector id='connector0' type='male' name='-R'>
+<description>-R</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector0pin'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper0' svgId='connector0pin'/>
+<p layer='copper1' svgId='connector0pin'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector5' type='male' name='A'>
+<description>A</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector5pin'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper0' svgId='connector5pin'/>
+<p layer='copper1' svgId='connector5pin'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector7' type='male' name='B'>
+<description>B</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector7pin'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper0' svgId='connector7pin'/>
+<p layer='copper1' svgId='connector7pin'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector6' type='male' name='C'>
+<description>C</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector6pin'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper0' svgId='connector6pin'/>
+<p layer='copper1' svgId='connector6pin'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector2' type='male' name='SW'>
 <description>SW</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector3pin'/>
+<p layer='breadboard' svgId='connector2pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector6pin' terminalId='connector6terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector3pin'/>
-<p layer='copper1' svgId='connector3pin'/>
+<p layer='copper0' svgId='connector2pin'/>
+<p layer='copper1' svgId='connector2pin'/>
 </pcbView>
 </views>
 </connector>

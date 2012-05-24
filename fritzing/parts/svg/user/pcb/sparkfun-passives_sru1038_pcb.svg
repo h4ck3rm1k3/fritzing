@@ -2,8 +2,8 @@
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
 <svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.425197in' height='0.403701in' viewBox='0 0 10.8 10.254' >
 <g id='copper1'>
-<rect id='connector0pad' connectorname='2' x='9' y='3.327' width='1.8' height='3.6' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
-<rect id='connector1pad' connectorname='1' x='0' y='3.327' width='1.8' height='3.6' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector1pad' connectorname='2' x='9' y='3.327' width='1.8' height='3.6' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector0pad' connectorname='1' x='0' y='3.327' width='1.8' height='3.6' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <g id='copper0'>
 </g>
 </g>

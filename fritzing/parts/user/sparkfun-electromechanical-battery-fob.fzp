@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-BATTERY-FOB'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' BATTERY FOB -->
 <version>4</version>
-<date>2012-05-23</date>
+<date>2012-05-24</date>
 <label>BAT</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Battery Holders&lt;/b&gt;
@@ -58,18 +58,18 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='male' name='-'>
+<connector id='connector1' type='male' name='-'>
 <description>-</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector2pad'/>
+<p layer='breadboard' svgId='connector1pad'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector2pad'/>
-<p layer='copper1' svgId='connector2pad'/>
+<p layer='copper0' svgId='connector1pad'/>
+<p layer='copper1' svgId='connector1pad'/>
 </pcbView>
 </views>
 </connector>

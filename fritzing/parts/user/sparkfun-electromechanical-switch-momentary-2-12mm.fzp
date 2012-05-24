@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-SWITCH-MOMENTARY-2-12MM'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' SWITCH-MOMENTARY-2 12MM -->
 <version>4</version>
-<date>2012-05-23</date>
+<date>2012-05-24</date>
 <label>S</label>
 <author>www.fritzing.org</author>
 <description>Various NO switches- pushbuttons, reed, etc</description>
@@ -42,33 +42,33 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector2' type='male' name='1'>
+<connector id='connector0' type='male' name='1'>
 <description>1</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector2pin'/>
+<p layer='breadboard' svgId='connector0pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector2pin'/>
-<p layer='copper1' svgId='connector2pin'/>
+<p layer='copper0' svgId='connector0pin'/>
+<p layer='copper1' svgId='connector0pin'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='male' name='2'>
+<connector id='connector2' type='male' name='2'>
 <description>2</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector3pin'/>
+<p layer='breadboard' svgId='connector2pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector3pin'/>
-<p layer='copper1' svgId='connector3pin'/>
+<p layer='copper0' svgId='connector2pin'/>
+<p layer='copper1' svgId='connector2pin'/>
 </pcbView>
 </views>
 </connector>

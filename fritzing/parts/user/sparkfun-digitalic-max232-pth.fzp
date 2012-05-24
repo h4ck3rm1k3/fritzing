@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-MAX232-PTH'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' MAX232 PTH -->
 <version>4</version>
-<date>2012-05-23</date>
+<date>2012-05-24</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;RS232 Transceiver&lt;/b&gt;
@@ -20,7 +20,7 @@ Very common IC. This is generically called &apos;MAX232&apos;, but works with th
 </properties>
 <views>
 <breadboardView>
-<layers image='breadboard/generic_ic_dip_16_400mil_bread.svg'>
+<layers image='breadboard/generic_ic_dip_0_400mil_bread.svg'>
 <layer layerId='breadboard'/>
 </layers>
 </breadboardView>
@@ -37,7 +37,7 @@ Very common IC. This is generically called &apos;MAX232&apos;, but works with th
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/generic_ic_dip_16_400mil_bread.svg'>
+<layers image='breadboard/generic_ic_dip_0_400mil_bread.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

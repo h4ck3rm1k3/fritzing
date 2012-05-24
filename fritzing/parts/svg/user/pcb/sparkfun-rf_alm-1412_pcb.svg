@@ -7,10 +7,10 @@
 <rect id='connector2pad' connectorname='3' x='2.78' y='0.78' width='0.35' height='0.35' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <rect id='connector3pad' connectorname='4' x='0.71' y='0.01' width='0.35' height='0.35' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <rect id='connector4pad' connectorname='5' x='0.03' y='0.01' width='0.35' height='0.35' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
-<rect id='connector5pad' connectorname='9' x='1.5' y='0.01' width='0.35' height='0.35' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
-<rect id='connector6pad' connectorname='8' x='2.55' y='0.01' width='0.35' height='0.35' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
-<rect id='connector7pad' connectorname='6' x='1.5' y='1.55' width='0.35' height='0.35' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
-<rect id='connector8pad' connectorname='7' x='2.55' y='1.55' width='0.35' height='0.35' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector8pad' connectorname='9' x='1.5' y='0.01' width='0.35' height='0.35' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector7pad' connectorname='8' x='2.55' y='0.01' width='0.35' height='0.35' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector5pad' connectorname='6' x='1.5' y='1.55' width='0.35' height='0.35' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector6pad' connectorname='7' x='2.55' y='1.55' width='0.35' height='0.35' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <rect class='other' x='1.365' y='0.005' width='1.76' height='0.47' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <rect class='other' x='1.365' y='1.435' width='1.76' height='0.47' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <rect class='other' x='1.365' y='0.405' width='1.11' height='1.1' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>

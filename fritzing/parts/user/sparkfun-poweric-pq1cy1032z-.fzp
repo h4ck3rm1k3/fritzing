@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-PQ1CY1032Z-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-PowerIC' PQ1CY1032Z  -->
 <version>4</version>
-<date>2012-05-23</date>
+<date>2012-05-24</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>3.5A Switching Regulator</description>
@@ -39,73 +39,73 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector4' type='pad' name='ADJ'>
+<connector id='connector3' type='pad' name='ADJ'>
 <description>ADJ</description>
-<views>
-<breadboardView>
-<p layer='breadboard' svgId='connector4pad'/>
-</breadboardView>
-<schematicView>
-<p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
-</schematicView>
-<pcbView>
-<p layer='copper1' svgId='connector4pad'/>
-</pcbView>
-</views>
-</connector>
-<connector id='connector1' type='pad' name='GND'>
-<description>GND</description>
-<views>
-<breadboardView>
-<p layer='breadboard' svgId='connector1pad'/>
-</breadboardView>
-<schematicView>
-<p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
-</schematicView>
-<pcbView>
-<p layer='copper1' svgId='connector1pad'/>
-</pcbView>
-</views>
-</connector>
-<connector id='connector2' type='pad' name='VIN'>
-<description>VIN</description>
-<views>
-<breadboardView>
-<p layer='breadboard' svgId='connector2pad'/>
-</breadboardView>
-<schematicView>
-<p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
-</schematicView>
-<pcbView>
-<p layer='copper1' svgId='connector2pad'/>
-</pcbView>
-</views>
-</connector>
-<connector id='connector3' type='pad' name='VOUT'>
-<description>VOUT</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pad'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
+<p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector3pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='pad' name='VS'>
+<connector id='connector2' type='pad' name='GND'>
+<description>GND</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector2pad'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper1' svgId='connector2pad'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector0' type='pad' name='VIN'>
+<description>VIN</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector0pad'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper1' svgId='connector0pad'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector1' type='pad' name='VOUT'>
+<description>VOUT</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector1pad'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper1' svgId='connector1pad'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector4' type='pad' name='VS'>
 <description>VS</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector5pad'/>
+<p layer='breadboard' svgId='connector4pad'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper1' svgId='connector5pad'/>
+<p layer='copper1' svgId='connector4pad'/>
 </pcbView>
 </views>
 </connector>

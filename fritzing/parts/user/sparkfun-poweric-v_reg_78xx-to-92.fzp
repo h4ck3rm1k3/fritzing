@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-V_REG_78XX-TO-92'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-PowerIC' V_REG_78XX TO-92 -->
 <version>4</version>
-<date>2012-05-23</date>
+<date>2012-05-24</date>
 <label>IC</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Voltage Regulator&lt;/b&gt;
@@ -43,18 +43,18 @@ Standard 7805 5V regulator. IGO (Input Ground Output). Spark Fun Electronics SKU
 </iconView>
 </views>
 <connectors>
-<connector id='connector2' type='male' name='GND'>
+<connector id='connector0' type='male' name='GND'>
 <description>GND</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector2pin'/>
+<p layer='breadboard' svgId='connector0pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector2pin'/>
-<p layer='copper1' svgId='connector2pin'/>
+<p layer='copper0' svgId='connector0pin'/>
+<p layer='copper1' svgId='connector0pin'/>
 </pcbView>
 </views>
 </connector>
@@ -73,18 +73,18 @@ Standard 7805 5V regulator. IGO (Input Ground Output). Spark Fun Electronics SKU
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='male' name='OUT'>
+<connector id='connector2' type='male' name='OUT'>
 <description>OUT</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector0pin'/>
+<p layer='breadboard' svgId='connector2pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector0pin'/>
-<p layer='copper1' svgId='connector0pin'/>
+<p layer='copper0' svgId='connector2pin'/>
+<p layer='copper1' svgId='connector2pin'/>
 </pcbView>
 </views>
 </connector>

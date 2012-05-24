@@ -2,9 +2,9 @@
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
 <svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.339646in' height='0.23872in' viewBox='0 0 8.627 6.0635' >
 <g id='copper1'>
-<rect id='connector0pad' connectorname='3' x='3.9135' y='-4.44089e-16' width='0.3' height='1.5' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector2pad' connectorname='3' x='3.9135' y='-4.44089e-16' width='0.3' height='1.5' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <rect id='connector1pad' connectorname='2' x='4.4135' y='-4.44089e-16' width='0.3' height='1.5' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
-<rect id='connector2pad' connectorname='1' x='4.9135' y='-4.44089e-16' width='0.3' height='1.5' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector0pad' connectorname='1' x='4.9135' y='-4.44089e-16' width='0.3' height='1.5' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <rect id='connector3pad' connectorname='4' x='3.4135' y='-4.44089e-16' width='0.3' height='1.5' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <rect id='connector4pad' connectorname='P$5' x='0.8635' y='1.2' width='1.85' height='2.6' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <rect id='connector5pad' connectorname='P$6' x='5.9135' y='1.2' width='1.85' height='2.6' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>

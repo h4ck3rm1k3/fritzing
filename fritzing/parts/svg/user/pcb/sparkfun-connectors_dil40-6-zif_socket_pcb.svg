@@ -30,18 +30,18 @@
 <circle id='connector25pin' connectorname='26' cx='36.9316' cy='0.9398' r='0.7239' stroke='#F7BD13' stroke-width='0.4318' fill='none' />
 <circle id='connector26pin' connectorname='27' cx='34.3916' cy='0.9398' r='0.7239' stroke='#F7BD13' stroke-width='0.4318' fill='none' />
 <circle id='connector27pin' connectorname='28' cx='31.8516' cy='0.9398' r='0.7239' stroke='#F7BD13' stroke-width='0.4318' fill='none' />
-<circle id='connector28pin' connectorname='30' cx='26.7716' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
-<circle id='connector29pin' connectorname='31' cx='24.2316' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
-<circle id='connector30pin' connectorname='32' cx='21.6916' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
-<circle id='connector31pin' connectorname='33' cx='19.1516' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
-<circle id='connector32pin' connectorname='34' cx='16.6116' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
-<circle id='connector33pin' connectorname='35' cx='14.0716' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
-<circle id='connector34pin' connectorname='36' cx='11.5316' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
-<circle id='connector35pin' connectorname='37' cx='8.9916' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
-<circle id='connector36pin' connectorname='38' cx='6.4516' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
-<circle id='connector37pin' connectorname='39' cx='3.9116' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
-<circle id='connector38pin' connectorname='40' cx='1.3716' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
-<circle id='connector39pin' connectorname='29' cx='29.3116' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
+<circle id='connector29pin' connectorname='30' cx='26.7716' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
+<circle id='connector30pin' connectorname='31' cx='24.2316' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
+<circle id='connector31pin' connectorname='32' cx='21.6916' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
+<circle id='connector32pin' connectorname='33' cx='19.1516' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
+<circle id='connector33pin' connectorname='34' cx='16.6116' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
+<circle id='connector34pin' connectorname='35' cx='14.0716' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
+<circle id='connector35pin' connectorname='36' cx='11.5316' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
+<circle id='connector36pin' connectorname='37' cx='8.9916' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
+<circle id='connector37pin' connectorname='38' cx='6.4516' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
+<circle id='connector38pin' connectorname='39' cx='3.9116' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
+<circle id='connector39pin' connectorname='40' cx='1.3716' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
+<circle id='connector28pin' connectorname='29' cx='29.3116' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
 <g id='copper0'>
 <circle id='connector0pin' connectorname='1' cx='1.3716' cy='15.6718' r='0.7239' stroke='#F7BD13' stroke-width='0.4318' fill='none' />
 <circle id='connector1pin' connectorname='2' cx='3.9116' cy='15.6718' r='0.7239' stroke='#F7BD13' stroke-width='0.4318' fill='none' />
@@ -71,18 +71,18 @@
 <circle id='connector25pin' connectorname='26' cx='36.9316' cy='0.9398' r='0.7239' stroke='#F7BD13' stroke-width='0.4318' fill='none' />
 <circle id='connector26pin' connectorname='27' cx='34.3916' cy='0.9398' r='0.7239' stroke='#F7BD13' stroke-width='0.4318' fill='none' />
 <circle id='connector27pin' connectorname='28' cx='31.8516' cy='0.9398' r='0.7239' stroke='#F7BD13' stroke-width='0.4318' fill='none' />
-<circle id='connector28pin' connectorname='30' cx='26.7716' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
-<circle id='connector29pin' connectorname='31' cx='24.2316' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
-<circle id='connector30pin' connectorname='32' cx='21.6916' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
-<circle id='connector31pin' connectorname='33' cx='19.1516' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
-<circle id='connector32pin' connectorname='34' cx='16.6116' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
-<circle id='connector33pin' connectorname='35' cx='14.0716' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
-<circle id='connector34pin' connectorname='36' cx='11.5316' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
-<circle id='connector35pin' connectorname='37' cx='8.9916' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
-<circle id='connector36pin' connectorname='38' cx='6.4516' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
-<circle id='connector37pin' connectorname='39' cx='3.9116' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
-<circle id='connector38pin' connectorname='40' cx='1.3716' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
-<circle id='connector39pin' connectorname='29' cx='29.3116' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
+<circle id='connector29pin' connectorname='30' cx='26.7716' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
+<circle id='connector30pin' connectorname='31' cx='24.2316' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
+<circle id='connector31pin' connectorname='32' cx='21.6916' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
+<circle id='connector32pin' connectorname='33' cx='19.1516' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
+<circle id='connector33pin' connectorname='34' cx='16.6116' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
+<circle id='connector34pin' connectorname='35' cx='14.0716' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
+<circle id='connector35pin' connectorname='36' cx='11.5316' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
+<circle id='connector36pin' connectorname='37' cx='8.9916' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
+<circle id='connector37pin' connectorname='38' cx='6.4516' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
+<circle id='connector38pin' connectorname='39' cx='3.9116' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
+<circle id='connector39pin' connectorname='40' cx='1.3716' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
+<circle id='connector28pin' connectorname='29' cx='29.3116' cy='0.9398' r='0.7449' stroke='#F7BD13' stroke-width='0.3898' fill='none' />
 </g>
 </g>
 <g id='silkscreen'>

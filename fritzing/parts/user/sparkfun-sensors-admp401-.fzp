@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-ADMP401-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' ADMP401  -->
 <version>4</version>
-<date>2012-05-23</date>
+<date>2012-05-24</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Omnidirection bottom-port MEMS microphone</description>
@@ -39,17 +39,17 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector0' type='pad' name='GND@2'>
+<connector id='connector1' type='pad' name='GND@2'>
 <description>GND@2</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector0pad'/>
+<p layer='breadboard' svgId='connector1pad'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper1' svgId='connector0pad'/>
+<p layer='copper1' svgId='connector1pad'/>
 </pcbView>
 </views>
 </connector>
@@ -67,31 +67,31 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='pad' name='GND@6'>
+<connector id='connector5' type='pad' name='GND@6'>
 <description>GND@6</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector1pad'/>
+<p layer='breadboard' svgId='connector5pad'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper1' svgId='connector1pad'/>
+<p layer='copper1' svgId='connector5pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='pad' name='OUT'>
+<connector id='connector0' type='pad' name='OUT'>
 <description>OUT</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector2pad'/>
+<p layer='breadboard' svgId='connector0pad'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper1' svgId='connector2pad'/>
+<p layer='copper1' svgId='connector0pad'/>
 </pcbView>
 </views>
 </connector>

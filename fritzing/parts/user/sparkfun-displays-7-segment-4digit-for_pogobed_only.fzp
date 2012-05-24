@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Displays-7-SEGMENT-4DIGIT-FOR_POGOBED_ONLY'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Displays' 7-SEGMENT-4DIGIT FOR_POGOBED_ONLY -->
 <version>4</version>
-<date>2012-05-23</date>
+<date>2012-05-24</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description></description>
@@ -57,29 +57,14 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector9' type='male' name='11'>
+<connector id='connector10' type='male' name='11'>
 <description>11</description>
-<views>
-<breadboardView>
-<p layer='breadboard' svgId='connector9pin'/>
-</breadboardView>
-<schematicView>
-<p layer='schematic' svgId='connector9pin' terminalId='connector9terminal'/>
-</schematicView>
-<pcbView>
-<p layer='copper0' svgId='connector9pin'/>
-<p layer='copper1' svgId='connector9pin'/>
-</pcbView>
-</views>
-</connector>
-<connector id='connector10' type='male' name='13'>
-<description>13</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector10pin' terminalId='connector10terminal'/>
+<p layer='schematic' svgId='connector9pin' terminalId='connector9terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector10pin'/>
@@ -87,29 +72,14 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector11' type='male' name='14'>
-<description>14</description>
-<views>
-<breadboardView>
-<p layer='breadboard' svgId='connector11pin'/>
-</breadboardView>
-<schematicView>
-<p layer='schematic' svgId='connector11pin' terminalId='connector11terminal'/>
-</schematicView>
-<pcbView>
-<p layer='copper0' svgId='connector11pin'/>
-<p layer='copper1' svgId='connector11pin'/>
-</pcbView>
-</views>
-</connector>
-<connector id='connector12' type='male' name='15'>
-<description>15</description>
+<connector id='connector12' type='male' name='13'>
+<description>13</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector12pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector12pin' terminalId='connector12terminal'/>
+<p layer='schematic' svgId='connector10pin' terminalId='connector10terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector12pin'/>
@@ -117,18 +87,48 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector13' type='male' name='16'>
-<description>16</description>
+<connector id='connector13' type='male' name='14'>
+<description>14</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector13pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector13pin' terminalId='connector13terminal'/>
+<p layer='schematic' svgId='connector11pin' terminalId='connector11terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector13pin'/>
 <p layer='copper1' svgId='connector13pin'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector14' type='male' name='15'>
+<description>15</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector14pin'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector12pin' terminalId='connector12terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper0' svgId='connector14pin'/>
+<p layer='copper1' svgId='connector14pin'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector15' type='male' name='16'>
+<description>16</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector15pin'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector13pin' terminalId='connector13terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper0' svgId='connector15pin'/>
+<p layer='copper1' svgId='connector15pin'/>
 </pcbView>
 </views>
 </connector>

@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-MLX90614-_'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' MLX90614 _ -->
 <version>4</version>
-<date>2012-05-23</date>
+<date>2012-05-24</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Non-contact PIR I2C interface temperature sensor</description>
@@ -42,18 +42,18 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector3' type='male' name='PWM_SDA'>
+<connector id='connector1' type='male' name='PWM_SDA'>
 <description>PWM_SDA</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector3pin'/>
+<p layer='breadboard' svgId='connector1pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector3pin'/>
-<p layer='copper1' svgId='connector3pin'/>
+<p layer='copper0' svgId='connector1pin'/>
+<p layer='copper1' svgId='connector1pin'/>
 </pcbView>
 </views>
 </connector>
@@ -72,33 +72,33 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='male' name='VDD'>
+<connector id='connector2' type='male' name='VDD'>
 <description>VDD</description>
-<views>
-<breadboardView>
-<p layer='breadboard' svgId='connector1pin'/>
-</breadboardView>
-<schematicView>
-<p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
-</schematicView>
-<pcbView>
-<p layer='copper0' svgId='connector1pin'/>
-<p layer='copper1' svgId='connector1pin'/>
-</pcbView>
-</views>
-</connector>
-<connector id='connector2' type='male' name='VSS'>
-<description>VSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
+<p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector2pin'/>
 <p layer='copper1' svgId='connector2pin'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector3' type='male' name='VSS'>
+<description>VSS</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector3pin'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper0' svgId='connector3pin'/>
+<p layer='copper1' svgId='connector3pin'/>
 </pcbView>
 </views>
 </connector>

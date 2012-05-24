@@ -30,22 +30,22 @@ M0.9652,1.3716a0.4064,0.4064 0 1 0 0.8128,0 0.4064,0.4064 0 1 0 -0.8128,0z
 <circle id='connector1pin' connectorname='2' cx='3.9116' cy='8.9916' r='0.5334' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <path stroke='none' stroke-width='0' d='m3.9116,7.6708a0.6604,0.6604 0 0 1 0.6604,0.6604l0,1.3208a0.6604,0.6604 0 0 1 -0.6604,0.6604l-0,0a0.6604,0.6604 0 0 1 -0.6604,-0.6604l0,-1.3208a0.6604,0.6604 0 0 1 0.6604,-0.6604l0,0zM3.5052,8.9916a0.4064,0.4064 0 1 0 0.8128,0 0.4064,0.4064 0 1 0 -0.8128,0z
 ' fill='#9A916C' />
-<circle id='connector2pin' connectorname='7' cx='16.6116' cy='8.9916' r='0.5334' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector6pin' connectorname='7' cx='16.6116' cy='8.9916' r='0.5334' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <path stroke='none' stroke-width='0' d='m16.6116,7.6708a0.6604,0.6604 0 0 1 0.6604,0.6604l0,1.3208a0.6604,0.6604 0 0 1 -0.6604,0.6604l-0,0a0.6604,0.6604 0 0 1 -0.6604,-0.6604l0,-1.3208a0.6604,0.6604 0 0 1 0.6604,-0.6604l0,0zM16.2052,8.9916a0.4064,0.4064 0 1 0 0.8128,0 0.4064,0.4064 0 1 0 -0.8128,0z
 ' fill='#9A916C' />
-<circle id='connector3pin' connectorname='8' cx='19.1516' cy='8.9916' r='0.5334' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector7pin' connectorname='8' cx='19.1516' cy='8.9916' r='0.5334' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <path stroke='none' stroke-width='0' d='m19.1516,7.6708a0.6604,0.6604 0 0 1 0.6604,0.6604l0,1.3208a0.6604,0.6604 0 0 1 -0.6604,0.6604l-0,0a0.6604,0.6604 0 0 1 -0.6604,-0.6604l0,-1.3208a0.6604,0.6604 0 0 1 0.6604,-0.6604l0,0zM18.7452,8.9916a0.4064,0.4064 0 1 0 0.8128,0 0.4064,0.4064 0 1 0 -0.8128,0z
 ' fill='#9A916C' />
-<circle id='connector4pin' connectorname='3' cx='6.4516' cy='8.9916' r='0.5334' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector2pin' connectorname='3' cx='6.4516' cy='8.9916' r='0.5334' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <path stroke='none' stroke-width='0' d='m6.4516,7.6708a0.6604,0.6604 0 0 1 0.6604,0.6604l0,1.3208a0.6604,0.6604 0 0 1 -0.6604,0.6604l-0,0a0.6604,0.6604 0 0 1 -0.6604,-0.6604l0,-1.3208a0.6604,0.6604 0 0 1 0.6604,-0.6604l0,0zM6.0452,8.9916a0.4064,0.4064 0 1 0 0.8128,0 0.4064,0.4064 0 1 0 -0.8128,0z
 ' fill='#9A916C' />
-<circle id='connector5pin' connectorname='4' cx='8.9916' cy='8.9916' r='0.5334' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector3pin' connectorname='4' cx='8.9916' cy='8.9916' r='0.5334' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <path stroke='none' stroke-width='0' d='m8.9916,7.6708a0.6604,0.6604 0 0 1 0.6604,0.6604l0,1.3208a0.6604,0.6604 0 0 1 -0.6604,0.6604l-0,0a0.6604,0.6604 0 0 1 -0.6604,-0.6604l0,-1.3208a0.6604,0.6604 0 0 1 0.6604,-0.6604l0,0zM8.5852,8.9916a0.4064,0.4064 0 1 0 0.8128,0 0.4064,0.4064 0 1 0 -0.8128,0z
 ' fill='#9A916C' />
-<circle id='connector6pin' connectorname='6' cx='14.0716' cy='8.9916' r='0.5334' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector5pin' connectorname='6' cx='14.0716' cy='8.9916' r='0.5334' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <path stroke='none' stroke-width='0' d='m14.0716,7.6708a0.6604,0.6604 0 0 1 0.6604,0.6604l0,1.3208a0.6604,0.6604 0 0 1 -0.6604,0.6604l-0,0a0.6604,0.6604 0 0 1 -0.6604,-0.6604l0,-1.3208a0.6604,0.6604 0 0 1 0.6604,-0.6604l0,0zM13.6652,8.9916a0.4064,0.4064 0 1 0 0.8128,0 0.4064,0.4064 0 1 0 -0.8128,0z
 ' fill='#9A916C' />
-<circle id='connector7pin' connectorname='5' cx='11.5316' cy='8.9916' r='0.5334' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector4pin' connectorname='5' cx='11.5316' cy='8.9916' r='0.5334' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <path stroke='none' stroke-width='0' d='m11.5316,7.6708a0.6604,0.6604 0 0 1 0.6604,0.6604l0,1.3208a0.6604,0.6604 0 0 1 -0.6604,0.6604l-0,0a0.6604,0.6604 0 0 1 -0.6604,-0.6604l0,-1.3208a0.6604,0.6604 0 0 1 0.6604,-0.6604l0,0zM11.1252,8.9916a0.4064,0.4064 0 1 0 0.8128,0 0.4064,0.4064 0 1 0 -0.8128,0z
 ' fill='#9A916C' />
 <circle id='connector8pin' connectorname='9' cx='21.6916' cy='8.9916' r='0.5334' stroke='#9A916C' stroke-width='0.254' fill='none' />

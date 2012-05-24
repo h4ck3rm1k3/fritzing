@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-M08-SMD-STRAIGHT'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' M08 SMD-STRAIGHT -->
 <version>4</version>
-<date>2012-05-23</date>
+<date>2012-05-24</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Header 8&lt;/b&gt;
@@ -42,31 +42,31 @@ Standard 8-pin 0.1&quot; header. Use with straight break away headers (SKU : PRT
 </iconView>
 </views>
 <connectors>
-<connector id='connector3' type='pad' name='1'>
+<connector id='connector0' type='pad' name='1'>
 <description>1</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector3pad'/>
+<p layer='breadboard' svgId='connector0pad'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper1' svgId='connector3pad'/>
+<p layer='copper1' svgId='connector0pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='pad' name='2'>
+<connector id='connector1' type='pad' name='2'>
 <description>2</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector7pad'/>
+<p layer='breadboard' svgId='connector1pad'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper1' svgId='connector7pad'/>
+<p layer='copper1' svgId='connector1pad'/>
 </pcbView>
 </views>
 </connector>
@@ -84,31 +84,31 @@ Standard 8-pin 0.1&quot; header. Use with straight break away headers (SKU : PRT
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='pad' name='4'>
+<connector id='connector3' type='pad' name='4'>
 <description>4</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector6pad'/>
+<p layer='breadboard' svgId='connector3pad'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper1' svgId='connector6pad'/>
+<p layer='copper1' svgId='connector3pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='pad' name='5'>
+<connector id='connector4' type='pad' name='5'>
 <description>5</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector1pad'/>
+<p layer='breadboard' svgId='connector4pad'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper1' svgId='connector1pad'/>
+<p layer='copper1' svgId='connector4pad'/>
 </pcbView>
 </views>
 </connector>
@@ -126,31 +126,31 @@ Standard 8-pin 0.1&quot; header. Use with straight break away headers (SKU : PRT
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='pad' name='7'>
+<connector id='connector6' type='pad' name='7'>
 <description>7</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector0pad'/>
+<p layer='breadboard' svgId='connector6pad'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector6pin' terminalId='connector6terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper1' svgId='connector0pad'/>
+<p layer='copper1' svgId='connector6pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='pad' name='8'>
+<connector id='connector7' type='pad' name='8'>
 <description>8</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector4pad'/>
+<p layer='breadboard' svgId='connector7pad'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector7pin' terminalId='connector7terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper1' svgId='connector4pad'/>
+<p layer='copper1' svgId='connector7pad'/>
 </pcbView>
 </views>
 </connector>
