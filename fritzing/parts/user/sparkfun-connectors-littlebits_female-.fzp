@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-LITTLEBITS_FEMALE-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' LITTLEBITS_FEMALE  -->
 <version>4</version>
-<date>2012-05-24</date>
+<date>2012-05-25</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>Female end for LittleBits boards</description>

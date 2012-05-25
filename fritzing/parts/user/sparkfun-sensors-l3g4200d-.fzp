@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-L3G4200D-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' L3G4200D  -->
 <version>4</version>
-<date>2012-05-24</date>
+<date>2012-05-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;L3G4200D Three-axis, digital output gyroscope&lt;/h3&gt;

@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-LM386-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-AnalogIC' LM386  -->
 <version>4</version>
-<date>2012-05-24</date>
+<date>2012-05-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>low voltage audio power amplifier</description>
@@ -17,7 +17,7 @@
 </properties>
 <views>
 <breadboardView>
-<layers image='breadboard/generic_ic_dip_0_300mil_bread.svg'>
+<layers image='breadboard/generic_ic_dip_8_300mil_bread.svg'>
 <layer layerId='breadboard'/>
 </layers>
 </breadboardView>
@@ -34,7 +34,7 @@
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/generic_ic_dip_0_300mil_bread.svg'>
+<layers image='breadboard/generic_ic_dip_8_300mil_bread.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>
