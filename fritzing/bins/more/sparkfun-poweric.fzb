@@ -345,161 +345,168 @@
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-PowerIC-VREG_MIC5216-' modelIndex='49'>
+<instance moduleIdRef='SparkFun-PowerIC-V_REG_78XX-SIDE' modelIndex='49'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-PowerIC-V_REG_78XX-SIDE' modelIndex='50'>
+<instance moduleIdRef='SparkFun-PowerIC-V_REG_78XX-SINK' modelIndex='50'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-PowerIC-V_REG_78XX-SINK' modelIndex='51'>
+<instance moduleIdRef='SparkFun-PowerIC-V_REG_78XX-TO-92' modelIndex='51'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-PowerIC-V_REG_78XX-TO-92' modelIndex='52'>
+<instance moduleIdRef='SparkFun-PowerIC-V_REG_78XX--TO-220' modelIndex='52'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-PowerIC-V_REG_78XX--TO-220' modelIndex='53'>
+<instance moduleIdRef='SparkFun-PowerIC-V_REG_317-SINK' modelIndex='53'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-PowerIC-V_REG_317-SINK' modelIndex='54'>
+<instance moduleIdRef='SparkFun-PowerIC-V_REG_317-SMD' modelIndex='54'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-PowerIC-V_REG_317-SMD' modelIndex='55'>
+<instance moduleIdRef='SparkFun-PowerIC-V_REG_317-DPACK' modelIndex='55'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-PowerIC-V_REG_317-DPACK' modelIndex='56'>
+<instance moduleIdRef='SparkFun-PowerIC-V_REG_LD1085-D2' modelIndex='56'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-PowerIC-V_REG_LD1085-D2' modelIndex='57'>
+<instance moduleIdRef='SparkFun-PowerIC-V_REG_LD1117VXX-' modelIndex='57'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-PowerIC-V_REG_LD1117VXX-' modelIndex='58'>
+<instance moduleIdRef='SparkFun-PowerIC-V_REG_LDO-SMD' modelIndex='58'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-PowerIC-V_REG_LDO-SMD' modelIndex='59'>
+<instance moduleIdRef='SparkFun-PowerIC-V_REG_LDO-SMD2' modelIndex='59'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-PowerIC-V_REG_LDO-SMD2' modelIndex='60'>
+<instance moduleIdRef='SparkFun-PowerIC-V_REG_LM1117-SOT223' modelIndex='60'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-PowerIC-V_REG_LM1117-SOT223' modelIndex='61'>
+<instance moduleIdRef='SparkFun-PowerIC-V_REG_MC33269-DT' modelIndex='61'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-PowerIC-V_REG_MC33269-DT' modelIndex='62'>
+<instance moduleIdRef='SparkFun-PowerIC-V_REG_MIC2920-' modelIndex='62'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-PowerIC-V_REG_MIC2920-' modelIndex='63'>
+<instance moduleIdRef='SparkFun-PowerIC-V_REG_MIC5219-SMD' modelIndex='63'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-PowerIC-V_REG_MIC5219-SMD' modelIndex='64'>
+<instance moduleIdRef='SparkFun-PowerIC-V_REG_MIC5235-' modelIndex='64'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-PowerIC-V_REG_MIC5235-' modelIndex='65'>
+<instance moduleIdRef='SparkFun-PowerIC-V_REG_NCP50X-' modelIndex='65'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-PowerIC-V_REG_NCP50X-' modelIndex='66'>
+<instance moduleIdRef='SparkFun-PowerIC-V_REG_NCP1400-SOT23-5' modelIndex='66'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-PowerIC-V_REG_NCP1400-SOT23-5' modelIndex='67'>
+<instance moduleIdRef='SparkFun-PowerIC-V_REG_TPS61040-SMD' modelIndex='67'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-PowerIC-V_REG_TPS61040-SMD' modelIndex='68'>
+<instance moduleIdRef='SparkFun-PowerIC-V_REG_TPS76433-SOT23-5' modelIndex='68'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-PowerIC-V_REG_TPS76433-SOT23-5' modelIndex='69'>
+<instance moduleIdRef='SparkFun-PowerIC-ZXLD1360-' modelIndex='69'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-PowerIC-ZXLD1360-' modelIndex='70'>
+<instance moduleIdRef='SparkFun-PowerIC-A4983-' modelIndex='70'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
 </iconView>
 </views>
 </instance>
-<instance moduleIdRef='SparkFun-PowerIC-A4983-' modelIndex='71'>
+<instance moduleIdRef='SparkFun-PowerIC-TPS6214X-' modelIndex='71'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
+<instance moduleIdRef='SparkFun-PowerIC-V_REG_MIC5216-' modelIndex='72'>
 <views>
 <iconView layer='icon'>
 <geometry z='-1' x='-1' y='-1'></geometry>
