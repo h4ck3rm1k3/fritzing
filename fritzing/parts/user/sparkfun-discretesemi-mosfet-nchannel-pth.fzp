@@ -24,7 +24,7 @@
 </layers>
 </breadboardView>
 <schematicView>
-<layers image='schematic/sparkfun-discretesemi_mosfet-nchannel_schematic.svg'>
+<layers image='schematic/sparkfun-discretesemi_mosfet-nchannel-1_schematic.svg'>
 <layer layerId='schematic'/>
 </layers>
 </schematicView>
@@ -49,7 +49,7 @@
 <p layer='breadboard' svgId='connector0pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
+<p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector0pin'/>
@@ -64,7 +64,7 @@
 <p layer='breadboard' svgId='connector2pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
+<p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector2pin'/>

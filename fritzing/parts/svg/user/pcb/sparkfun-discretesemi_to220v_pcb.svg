@@ -31,7 +31,7 @@
 <line class='other' x1='0.101859' y1='0.1016' x2='10.2619' y2='0.1016' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line class='other' x1='10.2619' y1='0.1016' x2='10.2619' y2='1.1176' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <path class='other' fill='none' d='M0.101859,3.5306 A0.868059,0.868059 0 0 0 0.990859,4.4196' stroke-width='0.2032' stroke='#f0f0f0' />
-<path class='other' fill='none' d='M10.2619,3.5306 A0.868059,0.868059 0 0 1 9.37286,4.4196' stroke-width='0.2032' stroke='#f0f0f0' />
+<path class='other' fill='none' d='M9.37286,4.4196 A0.868059,0.868059 0 0 0 10.2619,3.5306' stroke-width='0.2032' stroke='#f0f0f0' />
 <line class='other' x1='0.990859' y1='4.4196' x2='1.37186' y2='4.4196' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <line class='other' x1='9.37286' y1='4.4196' x2='8.99186' y2='4.4196' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>
 <rect class='other' x='0.101859' y='0.1016' width='10.16' height='1.016' stroke='none' stroke-width='0' fill='#f0f0f0' stroke-linecap='round'/>

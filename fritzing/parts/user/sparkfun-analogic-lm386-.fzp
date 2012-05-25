@@ -22,7 +22,7 @@
 </layers>
 </breadboardView>
 <schematicView>
-<layers image='schematic/sparkfun-analogic_op-amp_-_schematic.svg'>
+<layers image='schematic/sparkfun-analogic_op-amp_-full_schematic.svg'>
 <layer layerId='schematic'/>
 </layers>
 </schematicView>
@@ -67,6 +67,51 @@
 <pcbView>
 <p layer='copper0' svgId='connector1pin'/>
 <p layer='copper1' svgId='connector1pin'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector6' type='male' name='BP'>
+<description>BP</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector6pin'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector7pin' terminalId='connector7terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper0' svgId='connector6pin'/>
+<p layer='copper1' svgId='connector6pin'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector0' type='male' name='GAIN@1'>
+<description>GAIN@1</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector0pin'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector6pin' terminalId='connector6terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper0' svgId='connector0pin'/>
+<p layer='copper1' svgId='connector0pin'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector7' type='male' name='GAIN@8'>
+<description>GAIN@8</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector7pin'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper0' svgId='connector7pin'/>
+<p layer='copper1' svgId='connector7pin'/>
 </pcbView>
 </views>
 </connector>

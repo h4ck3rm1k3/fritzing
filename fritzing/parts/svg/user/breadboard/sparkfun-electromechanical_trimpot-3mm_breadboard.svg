@@ -8,8 +8,8 @@
    <g transform="translate(-16.9921,117.323)">
     <g transform="matrix(-0.746356, 0, 0, -0.746356, 116.992, 144.384)">
      <rect width="39.37" x="13.8425" y="129.921" fill="#F7BD13" connectorname="1" height="35.433" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="39.37" x="80.7715" y="129.921" fill="#F7BD13" connectorname="3" height="35.433" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="43.307" x="45.3385" y="0" fill="#F7BD13" connectorname="2" height="35.433" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="39.37" x="80.7715" y="129.921" fill="#F7BD13" connectorname="3" height="35.433" stroke="none" stroke-linecap="round" stroke-width="0"/>
      <rect width="133.984" x="0" y="-23.4133" fill="#303030" height="133.984" stroke="none" stroke-width="0"/>
      <polygon fill="#1f1f1f" points="0,-23.4133 133.984,-23.4133 123.984,-13.4133 10,-13.4133"/>
      <polygon fill="#1f1f1f" points="0,110.571 133.984,110.571 123.984,100.571 10,100.571"/>

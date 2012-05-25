@@ -1,21 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-JOYSTICK_MINI-4UCON'>
-<!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' JOYSTICK_MINI 4UCON -->
+<module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-JOYSTICK_MINI-'>
+<!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' JOYSTICK_MINI  -->
 <version>4</version>
 <date>2012-05-25</date>
-<label>JP</label>
+<label>S</label>
 <author>www.fritzing.org</author>
-<description>Small 5-way tactile joystick, COM-10063</description>
+<description>Small 5-way tactile joystick, COM-10063&lt;p&gt;
+4UCON SF303GJ26</description>
 <title>JOYSTICK_MINI</title>
 <tags>
-<tag>4UCON</tag>
 <tag>JOYSTICK_MINI</tag>
 <tag>JOYSTICK_MINI</tag>
 </tags>
 <properties>
 <property name='package'>joystick_mini</property>
 <property name='family'>joystick_mini</property>
-<property name='variant'>4ucon</property>
 </properties>
 <views>
 <breadboardView>
@@ -83,31 +82,31 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='pad' name='LEFT'>
+<connector id='connector2' type='pad' name='LEFT'>
 <description>LEFT</description>
-<views>
-<breadboardView>
-<p layer='breadboard' svgId='connector1pad'/>
-</breadboardView>
-<schematicView>
-<p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
-</schematicView>
-<pcbView>
-<p layer='copper1' svgId='connector1pad'/>
-</pcbView>
-</views>
-</connector>
-<connector id='connector2' type='pad' name='RIGHT'>
-<description>RIGHT</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pad'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/>
+<p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector2pad'/>
+</pcbView>
+</views>
+</connector>
+<connector id='connector1' type='pad' name='RIGHT'>
+<description>RIGHT</description>
+<views>
+<breadboardView>
+<p layer='breadboard' svgId='connector1pad'/>
+</breadboardView>
+<schematicView>
+<p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/>
+</schematicView>
+<pcbView>
+<p layer='copper1' svgId='connector1pad'/>
 </pcbView>
 </views>
 </connector>

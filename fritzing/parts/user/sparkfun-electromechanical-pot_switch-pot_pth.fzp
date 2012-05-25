@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-POT_SWITCH-'>
-<!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' POT_SWITCH  -->
+<module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-POT_SWITCH-POT_PTH'>
+<!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' POT_SWITCH POT_PTH -->
 <version>4</version>
 <date>2012-05-25</date>
 <label>U</label>
@@ -8,12 +8,14 @@
 <description>Potentiometer w/ switch.</description>
 <title>POT_SWITCH</title>
 <tags>
+<tag>POT_PTH</tag>
 <tag>POT_SWITCH</tag>
 <tag>POT_PTH</tag>
 </tags>
 <properties>
 <property name='package'>pot_pth</property>
 <property name='family'>pot_switch</property>
+<property name='variant'>pot_pth</property>
 </properties>
 <views>
 <breadboardView>
