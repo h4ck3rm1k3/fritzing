@@ -276,6 +276,12 @@ void LogoItem::reloadImage(const QString & svg, const QSizeF & aspectRatio, cons
 		modelPart()->setProp("shape", svg);
 		modelPart()->setProp("logo", "");
 		modelPart()->setProp("lastfilename", fileName);
+
+        double mmW = GraphicsUtils::pixels2mm(m_aspectRatio.width(), FSvgRenderer::printerScale());
+        double mmH = GraphicsUtils::pixels2mm(m_aspectRatio.height(), FSvgRenderer::printerScale());
+        modelPart()->setProp("width", mmW);
+		modelPart()->setProp("height", mmH);
+
 		if (addName) {
 			if (!getNewImageNames().contains(fileName, Qt::CaseInsensitive)) {
 				getNewImageNames().append(fileName);
@@ -289,10 +295,16 @@ void LogoItem::reloadImage(const QString & svg, const QSizeF & aspectRatio, cons
 		}
 		m_logo = "";
 
+
+        /*
+        // jrc 27 may 2012: this doesn't seem to do anything
 		LayerHash layerHash;
 		resizeMM(GraphicsUtils::pixels2mm(m_aspectRatio.width(), FSvgRenderer::printerScale()),
 				 GraphicsUtils::pixels2mm(m_aspectRatio.height(), FSvgRenderer::printerScale()),
 				 layerHash);
+        */
+
+        setWidthAndHeight(qRound(mmW * 10) / 10.0, qRound(mmH * 10) / 10.0);
 	}
 	else {
 		// restore previous (not sure whether this is necessary)
