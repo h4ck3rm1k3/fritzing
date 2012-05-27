@@ -114,7 +114,7 @@ public:
 public slots:
 	virtual void setVoltage(double, bool doEmit);
 	virtual void resizeBoard(double w, double h, bool doEmit);
-	virtual void setInstanceTitle(long id, const QString & title, bool isUndoable, bool doEmit);
+	virtual void setInstanceTitle(long id, const QString & oldTitle, const QString & newTitle, bool isUndoable, bool doEmit);
 
 signals:
 	void setVoltageSignal(double, bool doEmit);

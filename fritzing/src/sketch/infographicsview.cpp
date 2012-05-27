@@ -242,9 +242,10 @@ void InfoGraphicsView::swap(const QString & family, const QString & prop, QMap<Q
 	emit swapSignal(family, prop, propsMap, itemBase);
 }
 
-void InfoGraphicsView::setInstanceTitle(long id, const QString & title, bool isUndoable, bool doEmit) {
+void InfoGraphicsView::setInstanceTitle(long id, const QString & oldTitle, const QString & newTitle, bool isUndoable, bool doEmit) {
 	Q_UNUSED(id);
-	Q_UNUSED(title);
+	Q_UNUSED(newTitle);
+	Q_UNUSED(oldTitle);
 	Q_UNUSED(isUndoable);
 	Q_UNUSED(doEmit);
 }

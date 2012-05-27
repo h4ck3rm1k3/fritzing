@@ -619,8 +619,8 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 	succeeded = succeeded && connect(signaller, SIGNAL(setPropSignal(long,  const QString &,  const QString &, bool, bool)),
 									 slotter, SLOT(setProp(long,  const QString &,  const QString &, bool, bool)));
 
-	succeeded = succeeded && connect(signaller, SIGNAL(setInstanceTitleSignal(long, const QString &, bool, bool )),
-									 slotter, SLOT(setInstanceTitle(long, const QString &, bool, bool )));
+	succeeded = succeeded && connect(signaller, SIGNAL(setInstanceTitleSignal(long, const QString &, const QString &, bool, bool )),
+									 slotter, SLOT(setInstanceTitle(long, const QString &, const QString &, bool, bool )));
 
 	succeeded = succeeded && connect(signaller, SIGNAL(setVoltageSignal(double, bool )),
 									 slotter, SLOT(setVoltage(double, bool )));

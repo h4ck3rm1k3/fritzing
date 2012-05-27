@@ -485,7 +485,7 @@ signals:
 	void disconnectAllSignal(QList<ConnectorItem *>, QHash<ItemBase *, SketchWidget *> & itemsToDelete, QUndoCommand * parentCommand);
 	void setResistanceSignal(long itemID, QString resistance, QString pinSpacing, bool doEmit);
 	void setPropSignal(long itemID, const QString & prop, const QString & value, bool doRedraw, bool doEmit);
-	void setInstanceTitleSignal(long id, const QString & title, bool isUndoable, bool doEmit);
+	void setInstanceTitleSignal(long id, const QString & oldTitle, const QString & newTitle, bool isUndoable, bool doEmit);
 	void statusMessageSignal(QString, int timeout);
 	void showLabelFirstTimeSignal(long itemID, bool show, bool doEmit);
 	void dropPasteSignal(SketchWidget *);
@@ -546,7 +546,7 @@ public slots:
 	void changeWireWidthMils(const QString newWidth);
  	void selectAllItems(bool state, bool doEmit);
 	void setNoteText(long itemID, const QString & newText);
-	void setInstanceTitle(long id, const QString & title, bool isUndoable, bool doEmit);
+	void setInstanceTitle(long id, const QString & oldTitle, const QString & newTitle, bool isUndoable, bool doEmit);
 	void incInstanceTitle(long id);
 	void showPartLabel(long id, bool showIt);
 	void checkSticky(long id, bool doEmit, bool checkCurrent, CheckStickyCommand *);

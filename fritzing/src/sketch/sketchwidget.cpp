@@ -6697,12 +6697,12 @@ void SketchWidget::updatePartLabelInstanceTitleSlot(long itemID) {
 	}
 }
 
-void SketchWidget::setInstanceTitle(long itemID, const QString & newText, bool isUndoable, bool doEmit) {
+void SketchWidget::setInstanceTitle(long itemID, const QString & oldText, const QString & newText, bool isUndoable, bool doEmit) {
 	// isUndoable is true when setInstanceTitle is called from the infoview 
+
 	ItemBase * itemBase = findItem(itemID);
 	if (itemBase == NULL) return;
 
-	QString oldText = itemBase->instanceTitle();
 	if (!isUndoable) {
 		itemBase->setInstanceTitle(newText);
 		if (doEmit && currentlyInfoviewed(itemBase))  {
@@ -6711,7 +6711,7 @@ void SketchWidget::setInstanceTitle(long itemID, const QString & newText, bool i
 		}
 
 		if (doEmit) {
-			emit setInstanceTitleSignal(itemID, newText, isUndoable, false);
+			emit setInstanceTitleSignal(itemID, oldText, newText, isUndoable, false);
 		}
 	}
 	else {

@@ -506,7 +506,7 @@ void HtmlInfoView::setInstanceTitle() {
 	if (m_currentItem == NULL) return;
 
 	DebugDialog::debug(QString("set instance title to %1").arg(edit->text()));
-	m_infoGraphicsView->setInstanceTitle(m_currentItem->id(), edit->text(), true, false);
+	m_infoGraphicsView->setInstanceTitle(m_currentItem->id(), m_partTitle->text(), edit->text(), true, false);
 }
 
 void HtmlInfoView::instanceTitleEnter() {
@@ -541,7 +541,10 @@ void HtmlInfoView::setInstanceTitleColors(FLineEdit * edit, const QColor & base,
 
 void HtmlInfoView::setUpTitle(ItemBase * itemBase) 
 {
-	if (itemBase == m_lastTitleItemBase) return;
+	if (itemBase == m_lastTitleItemBase) {
+        if (itemBase == NULL) return;
+        if (itemBase->instanceTitle().compare(m_titleEdit->text()) == 0) return;
+    }
 
 	m_lastTitleItemBase = itemBase;
 	if (itemBase) {

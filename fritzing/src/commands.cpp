@@ -1408,11 +1408,11 @@ ChangeLabelTextCommand::ChangeLabelTextCommand(SketchWidget *sketchWidget, long 
 }
 
 void ChangeLabelTextCommand::undo() {
-	m_sketchWidget->setInstanceTitle(m_itemID, m_oldText, false, true);
+	m_sketchWidget->setInstanceTitle(m_itemID, m_newText, m_oldText, false, true);
 }
 
 void ChangeLabelTextCommand::redo() {
-    m_sketchWidget->setInstanceTitle(m_itemID, m_newText, false, true);
+    m_sketchWidget->setInstanceTitle(m_itemID, m_oldText, m_newText, false, true);
 }
 
 QString ChangeLabelTextCommand::getParamString() const {
