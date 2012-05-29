@@ -162,7 +162,6 @@ protected:
 
 signals:
 	void subSwapSignal(SketchWidget *, ItemBase *, ViewLayer::ViewLayerSpec, QUndoCommand * parentCommand);
-	void updateLayerMenuSignal();
 	void boardDeletedSignal();
 	void groundFillSignal();
 	void copperFillSignal();

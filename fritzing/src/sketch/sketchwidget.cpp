@@ -4302,6 +4302,7 @@ void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGrap
 	ViewLayer * viewLayer = m_viewLayers.value(viewLayerID);
 	if (viewLayer != NULL && !viewLayer->visible()) {
 		setLayerVisible(viewLayer, true, true);
+        emit updateLayerMenuSignal();
 	}
 
 

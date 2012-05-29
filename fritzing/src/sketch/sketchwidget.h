@@ -501,6 +501,7 @@ signals:
 	void filenameIfSignal(QString & filename);
 	void collectRatsnestSignal(QList<SketchWidget *> & foreignSketchWidgets);
 	void removeRatsnestSignal(QList<struct ConnectorEdge *> & cutSet, QUndoCommand * parentCommand); 
+	void updateLayerMenuSignal();
 
 protected slots:
 	void itemAddedSlot(ModelPart *, ViewLayer::ViewLayerSpec, const ViewGeometry &, long id, SketchWidget * dropOrigin);
