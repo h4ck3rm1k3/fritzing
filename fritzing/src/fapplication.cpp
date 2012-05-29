@@ -350,17 +350,25 @@ bool FApplication::eventFilter(QObject *obj, QEvent *event)
 
 	switch (event->type()) {
 		case QEvent::MouseButtonPress:
+            //DebugDialog::debug("button press");
 			m_mousePressed = true;
 			break;
 		case QEvent::MouseButtonRelease:
+            //DebugDialog::debug("button release");
 			m_mousePressed = false;
 			break;
+        case QEvent::Drop:
+            // at least under Windows, the MouseButtonRelease event is not triggered if the Drop event is triggered
+            m_mousePressed = false;
+            break;
 		case QEvent::KeyPress:
 			{
+                //DebugDialog::debug(QString("key pressed %1 %2").arg(m_mousePressed).arg(QApplication::mouseButtons()));
 				if (!m_mousePressed) {
 					QKeyEvent * kevent = static_cast<QKeyEvent *>(event);
 					if (!kevent->isAutoRepeat() && (kevent->key() == Qt::Key_Space)) {
 						m_spaceBarIsPressed = true;
+                        //DebugDialog::debug("spacebar pressed");
 						emit spaceBarIsPressedSignal(true);
 					}
 				}
@@ -368,10 +376,12 @@ bool FApplication::eventFilter(QObject *obj, QEvent *event)
 			break;
 		case QEvent::KeyRelease:
 			{
+                //DebugDialog::debug(QString("key released %1 %2").arg(m_mousePressed).arg(QApplication::mouseButtons()));
 				if (m_spaceBarIsPressed) {
 					QKeyEvent * kevent = static_cast<QKeyEvent *>(event);
 					if (!kevent->isAutoRepeat() && (kevent->key() == Qt::Key_Space)) {
 						m_spaceBarIsPressed = false;
+                        //DebugDialog::debug("spacebar pressed");
 						emit spaceBarIsPressedSignal(false);
 					}
 				}
