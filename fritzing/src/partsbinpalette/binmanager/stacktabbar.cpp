@@ -40,7 +40,7 @@ $Date$
 
 StackTabBar::StackTabBar(StackTabWidget *parent) : QTabBar(parent) {
 	setAcceptDrops(true);
-	this->setUsesScrollButtons(false);
+	this->setUsesScrollButtons(true);
     //this->setContentsMargins(0,0,0,0);
     //this->setTabsClosable(true);
     setMovable(true);
