@@ -100,6 +100,9 @@ ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClas
 			if (modelPart->moduleID().startsWith("copper", Qt::CaseInsensitive)) {
 				return new CopperLogoItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 			}
+            else if (modelPart->moduleID().startsWith("board", Qt::CaseInsensitive)) {
+                return new BoardLogoItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
+            }
 			return new LogoItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 		case ModelPart::Ruler:
 			return new Ruler(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);

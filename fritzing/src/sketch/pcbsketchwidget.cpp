@@ -775,8 +775,8 @@ QList<ItemBase *> PCBSketchWidget::findBoard() {
         ItemBase * board = dynamic_cast<ItemBase *>(childItem);
         if (board == NULL) continue;
 
-        //for now take the first board you find
-        if (board->itemType() == ModelPart::ResizableBoard || board->itemType() == ModelPart::Board) {
+        // for now take the first board you find
+        if (board->itemType() == ModelPart::ResizableBoard || board->itemType() == ModelPart::Board || board->moduleID().contains(ModuleIDNames::BoardLogoImageModuleIDName)) {
            boards.insert(board->layerKinChief());
         }
     }

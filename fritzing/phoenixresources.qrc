@@ -18,7 +18,6 @@
         <file>resources/images/splash/splash_screen_start.png</file>
         <file>resources/images/splash/april1st.png</file>
 	<file>resources/images/splash/splash.xml</file>
-
         <file>resources/images/AboutBoxLogoShield.png</file>
         <file>resources/images/aboutbox_CC.png</file>
         <file>resources/images/aboutbox_FHP.png</file>
@@ -203,6 +202,8 @@
         <file>resources/parts/core/copper1logoimage.fzp</file>
          <file>resources/parts/core/copper0logotext.fzp</file>
         <file>resources/parts/core/copper0logoimage.fzp</file>
+        <file>resources/parts/core/boardlogoimage.fzp</file>
+        <file>resources/parts/core/boardlogoimage_one_layer.fzp</file>
         <file>resources/parts/core/ground.fzp</file>
 	<file>resources/parts/core/via.fzp</file>
 	<file>resources/parts/core/pad.fzp</file>

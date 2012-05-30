@@ -42,13 +42,12 @@ class LogoItem : public ResizableBoard
 	Q_OBJECT
 
 public:
-	// after calling this constructor if you want to render the loaded svg (either from model or from file), MUST call <renderImage>
 	LogoItem(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel);
 	~LogoItem();
 
 	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi);
 	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
-	void resizeMM(double w, double h, const LayerHash & viewLayers);
+	bool resizeMM(double w, double h, const LayerHash & viewLayers);
 	QString getProperty(const QString & key);
 	void setLogo(QString logo, bool force);
 	const QString & logo();
@@ -56,7 +55,7 @@ public:
 	void setProp(const QString & prop, const QString & value);
 	bool hasPartLabel();
 	void loadImage(const QString & fileName, bool addName);
-	virtual void reloadImage(const QString & svg, const QSizeF & aspectRatio, const QString & fileName, bool addName);
+	virtual bool reloadImage(const QString & svg, const QSizeF & aspectRatio, const QString & fileName, bool addName);
 	bool stickyEnabled();
 	PluralType isPlural();
 	void addedToScene(bool temporary);
@@ -87,6 +86,8 @@ protected:
 	double minHeight();
 	bool freeRotationAllowed(Qt::KeyboardModifiers modifiers);
 	ResizableBoard::Corner findCorner(QPointF p, Qt::KeyboardModifiers);
+    virtual QString getShapeForRenderer(const QString & svg);
+    virtual bool canRetrieveLayer(ViewLayer::ViewLayerID viewLayerID);
 
 protected:
 	QString m_logo;
@@ -101,11 +102,10 @@ class CopperLogoItem : public LogoItem
 Q_OBJECT
 	
 public:
-	// after calling this constructor if you want to render the loaded svg (either from model or from file), MUST call <renderImage>
 	CopperLogoItem(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel);
 	~CopperLogoItem();
 
-	void reloadImage(const QString & svg, const QSizeF & aspectRatio, const QString & fileName, bool addName);
+	bool reloadImage(const QString & svg, const QSizeF & aspectRatio, const QString & fileName, bool addName);
 
 protected:
 	ViewLayer::ViewLayerID layer();
@@ -116,5 +116,27 @@ protected:
 	QString flipSvg(const QString & svg);
 	bool isCopper0();
 };
+
+class BoardLogoItem : public LogoItem
+{
+public:
+	BoardLogoItem(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel);
+	~BoardLogoItem();
+
+    bool resizeMM(double w, double h, const LayerHash & viewLayers);
+	bool reloadImage(const QString & svg, const QSizeF & aspectRatio, const QString & fileName, bool addName);
+
+protected:
+	ViewLayer::ViewLayerID layer();
+	QString colorString();
+	QStringList & getImageNames();
+	QStringList & getNewImageNames();
+    QString getShapeForRenderer(const QString & svg);
+    QString getShapeForRenderer(const QString & svg, ViewLayer::ViewLayerID viewLayerID);
+    bool canRetrieveLayer(ViewLayer::ViewLayerID viewLayerID);
+    void reloadLayerKin(double mmW, double mmH);
+};
+
+
 
 #endif

@@ -53,6 +53,8 @@ static QStringList Copper0ImageNames;
 static QStringList NewCopper0ImageNames;
 static QStringList Copper1ImageNames;
 static QStringList NewCopper1ImageNames;
+static QStringList BoardImageNames;
+static QStringList NewBoardImageNames;
 
 LogoItem::LogoItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: ResizableBoard(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
@@ -76,6 +78,9 @@ LogoItem::LogoItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier v
 LogoItem::~LogoItem() {
 }
 
+QString LogoItem::getShapeForRenderer(const QString & svg) {
+    return svg;
+}
 
 void LogoItem::addedToScene(bool temporary)
 {
@@ -84,13 +89,13 @@ void LogoItem::addedToScene(bool temporary)
 		m_aspectRatio.setWidth(this->boundingRect().width());
 		m_aspectRatio.setHeight(this->boundingRect().height());
 		m_originalFilename = filename();
-		QString shape = prop("shape");
-		if (!shape.isEmpty()) {					
+		QString svg = prop("shape");
+		if (!svg.isEmpty()) {					
 			m_aspectRatio = modelPart()->prop("aspectratio").toSizeF();
-			if (loadExtraRenderer(shape.toUtf8(), false)) {
+			if (loadExtraRenderer(getShapeForRenderer(svg).toUtf8(), false)) {
 			}
 			else {
-				DebugDialog::debug("bad shape in " + m_originalFilename + " " + shape);
+				DebugDialog::debug("bad shape in " + m_originalFilename + " " + svg);
 			}
 		}
 		else {
@@ -108,10 +113,13 @@ void LogoItem::addedToScene(bool temporary)
     return ResizableBoard::addedToScene(temporary);
 }
 
+bool LogoItem::canRetrieveLayer(ViewLayer::ViewLayerID viewLayerID) {
+    return viewLayerID == layer();
+}
 
 QString LogoItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi)
 {
-	if (viewLayerID == layer() ) {
+	if (canRetrieveLayer(viewLayerID)) {
 		QString svg = prop("shape");
 		if (!svg.isEmpty()) {
 			QString xmlName = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
@@ -260,9 +268,10 @@ void LogoItem::prepLoadImageAux(const QString & fileName, bool addName)
 	}
 }
 
-void LogoItem::reloadImage(const QString & svg, const QSizeF & aspectRatio, const QString & fileName, bool addName) 
+bool LogoItem::reloadImage(const QString & svg, const QSizeF & aspectRatio, const QString & fileName, bool addName) 
 {
-	bool result = loadExtraRenderer(svg.toUtf8(), false);
+    QString shape = getShapeForRenderer(svg);
+	bool result = loadExtraRenderer(shape.toUtf8(), false);
 	if (result) {
 		if (aspectRatio == QSizeF(0, 0)) {
 			QRectF r = m_extraRenderer->viewBoxF();
@@ -277,8 +286,10 @@ void LogoItem::reloadImage(const QString & svg, const QSizeF & aspectRatio, cons
 		modelPart()->setProp("logo", "");
 		modelPart()->setProp("lastfilename", fileName);
 
-        double mmW = GraphicsUtils::pixels2mm(m_aspectRatio.width(), FSvgRenderer::printerScale());
-        double mmH = GraphicsUtils::pixels2mm(m_aspectRatio.height(), FSvgRenderer::printerScale());
+        QSizeF size = m_extraRenderer->defaultSizeF();
+
+        double mmW = GraphicsUtils::pixels2mm(size.width(), FSvgRenderer::printerScale());
+        double mmH = GraphicsUtils::pixels2mm(size.height(), FSvgRenderer::printerScale());
         modelPart()->setProp("width", mmW);
 		modelPart()->setProp("height", mmH);
 
@@ -295,21 +306,14 @@ void LogoItem::reloadImage(const QString & svg, const QSizeF & aspectRatio, cons
 		}
 		m_logo = "";
 
-
-        /*
-        // jrc 27 may 2012: this doesn't seem to do anything
-		LayerHash layerHash;
-		resizeMM(GraphicsUtils::pixels2mm(m_aspectRatio.width(), FSvgRenderer::printerScale()),
-				 GraphicsUtils::pixels2mm(m_aspectRatio.height(), FSvgRenderer::printerScale()),
-				 layerHash);
-        */
-
         setWidthAndHeight(qRound(mmW * 10) / 10.0, qRound(mmH * 10) / 10.0);
+        return true;
 	}
 	else {
 		// restore previous (not sure whether this is necessary)
-		loadExtraRenderer(prop("shape").toUtf8(), false);
+		loadExtraRenderer(getShapeForRenderer(prop("shape")).toUtf8(), false);
 		unableToLoad(fileName);
+        return false;
 	}
 }
 
@@ -357,6 +361,7 @@ void LogoItem::loadImage(const QString & fileName, bool addName)
 		exceptions << "none" << "";
 		QString toColor(colorString());
 		SvgFileSplitter::changeColors(root, toColor, exceptions);
+        // todo: change opacity?
 
 		bool isIllustrator = TextUtils::isIllustratorDoc(domDocument);
 
@@ -373,19 +378,22 @@ void LogoItem::loadImage(const QString & fileName, bool addName)
 			root.setAttribute("viewBox", QString("0 0 %1 %2").arg(w).arg(h));
 		}
 
-		QList<QDomNode> rootChildren;
-		QDomNode rootChild = root.firstChild();
-		while (!rootChild.isNull()) {
-			rootChildren.append(rootChild);
-			rootChild = rootChild.nextSibling();
-		}
+        QDomElement layerElement = TextUtils::findElementWithAttribute(root, "id", layerName());
+        if (layerElement.isNull()) {
+		    QList<QDomNode> rootChildren;
+		    QDomNode rootChild = root.firstChild();
+		    while (!rootChild.isNull()) {
+			    rootChildren.append(rootChild);
+			    rootChild = rootChild.nextSibling();
+		    }
 
-		QDomElement topG = domDocument.createElement("g");
-		topG.setAttribute("id", layerName());
-		root.appendChild(topG);
-		foreach (QDomNode node, rootChildren) {
-			topG.appendChild(node);
-		}
+		    QDomElement topG = domDocument.createElement("g");
+		    topG.setAttribute("id", layerName());
+		    root.appendChild(topG);
+		    foreach (QDomNode node, rootChildren) {
+			    topG.appendChild(node);
+		    }
+        }
 
 		svg = TextUtils::removeXMLEntities(domDocument.toString());
 	}
@@ -425,11 +433,12 @@ void LogoItem::loadImage(const QString & fileName, bool addName)
 	reloadImage(svg, QSizeF(0, 0), fileName, addName);
 }
 
-void LogoItem::resizeMM(double mmW, double mmH, const LayerHash & viewLayers) {
+bool LogoItem::resizeMM(double mmW, double mmH, const LayerHash & viewLayers) 
+{
 	Q_UNUSED(viewLayers);
 
 	if (mmW == 0 || mmH == 0) {
-		return;
+		return false;
 	}
 
 	DebugDialog::debug(QString("resize mm %1 %2").arg(mmW).arg(mmH));
@@ -438,7 +447,7 @@ void LogoItem::resizeMM(double mmW, double mmH, const LayerHash & viewLayers) {
 	if (qAbs(GraphicsUtils::pixels2mm(r.width(), FSvgRenderer::printerScale()) - mmW) < .001 &&
 		qAbs(GraphicsUtils::pixels2mm(r.height(), FSvgRenderer::printerScale()) - mmH) < .001) 
 	{
-		return;
+		return false;
 	}
 
 	double inW = GraphicsUtils::mm2mils(mmW) / 1000;
@@ -447,7 +456,7 @@ void LogoItem::resizeMM(double mmW, double mmH, const LayerHash & viewLayers) {
 	// TODO: deal with aspect ratio
 
 	QString svg = prop("shape");
-	if (svg.isEmpty()) return;
+	if (svg.isEmpty()) return false;
 
 	QString errorStr;
 	int errorLine;
@@ -455,24 +464,25 @@ void LogoItem::resizeMM(double mmW, double mmH, const LayerHash & viewLayers) {
 
 	QDomDocument domDocument;
 	if (!domDocument.setContent(svg, &errorStr, &errorLine, &errorColumn)) {
-		return;
+		return false;
 	}
 
 	QDomElement root = domDocument.documentElement();
 	if (root.isNull()) {
-		return;
+		return false;
 	}
 
 	if (root.tagName() != "svg") {
-		return;
+		return false;
 	}
 
 	root.setAttribute("width", QString::number(inW) + "in");
 	root.setAttribute("height", QString::number(inH) + "in");
 
-	svg = TextUtils::removeXMLEntities(domDocument.toString());			
+	svg = TextUtils::removeXMLEntities(domDocument.toString());	
+    QString shape = getShapeForRenderer(svg);
 
-	bool result = loadExtraRenderer(svg.toUtf8(), false);
+	bool result = loadExtraRenderer(shape.toUtf8(), false);
 	if (result) {
 		modelPart()->setProp("shape", svg);
 		modelPart()->setProp("width", mmW);
@@ -480,6 +490,7 @@ void LogoItem::resizeMM(double mmW, double mmH, const LayerHash & viewLayers) {
 	}
 
 	setWidthAndHeight(qRound(mmW * 10) / 10.0, qRound(mmH * 10) / 10.0);
+    return true;
 }
 
 void LogoItem::setProp(const QString & prop, const QString & value) {
@@ -858,19 +869,139 @@ QString CopperLogoItem::flipSvg(const QString & svg)
 	return newSvg;
 }
 
-void CopperLogoItem::reloadImage(const QString & svg, const QSizeF & aspectRatio, const QString & fileName, bool addName) 
+bool CopperLogoItem::reloadImage(const QString & svg, const QSizeF & aspectRatio, const QString & fileName, bool addName) 
 {
 	if (isCopper0()) {
 		if (!svg.contains("_flipped_")) {
-			LogoItem::reloadImage(flipSvg(svg), aspectRatio, fileName, addName);
-			return;
+			return LogoItem::reloadImage(flipSvg(svg), aspectRatio, fileName, addName);
 		}
 	}
 
-	LogoItem::reloadImage(svg, aspectRatio, fileName, addName);
+	return LogoItem::reloadImage(svg, aspectRatio, fileName, addName);
 }
 
 bool CopperLogoItem::isCopper0() {
 	return modelPart()->properties().value("layer").contains("0");
+}
+
+////////////////////////////////////////////
+
+// todo:
+//
+//  1 vs 2 layers
+//  allow pngs?
+//  use element bounds to detect contour
+//  make sure imported image has either no layers, board layer, or board layer + silkscreen layer and works in all 3 cases
+//  swapping: swap with custom, then load image after; keep loading image to update
+//  remove old import shape functionality
+//      newNames
+//      import shape ==> custom shape
+//      remove the old part-making code (load custom shape from main window?)
+//  don't allow drag and drop if board already there?
+
+BoardLogoItem::BoardLogoItem(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel) 
+    : LogoItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
+{
+    m_hasLogo = false;
+	if (BoardImageNames.count() == 0) {
+		BoardImageNames << "circle_pcb";
+	}
+}
+
+BoardLogoItem::~BoardLogoItem() {
+}
+
+QString BoardLogoItem::getShapeForRenderer(const QString & svg) 
+{
+    return getShapeForRenderer(svg, m_viewLayerID);
+}
+
+QString BoardLogoItem::getShapeForRenderer(const QString & svg, ViewLayer::ViewLayerID viewLayerID) 
+{
+    QString xmlName = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
+	SvgFileSplitter splitter;
+    QString xml = svg;
+	bool result = splitter.splitString(xml, xmlName);
+	if (!result) {
+		return "";
+	}
+
+    QString header("<?xml version='1.0' encoding='UTF-8'?>\n"
+                    "<svg ");
+    QDomNamedNodeMap map = splitter.domDocument().documentElement().attributes();
+    for (int i = 0; i < map.count(); i++) {
+        QDomNode node = map.item(i);
+        header += node.nodeName() + "='" + node.nodeValue() + "' ";
+    }
+    header += ">\n";
+
+    header = header + splitter.elementString(xmlName) + "\n</svg>";
+    DebugDialog::debug(header);
+	return header;
+}
+
+ViewLayer::ViewLayerID BoardLogoItem::layer() {
+	return ViewLayer::Board;
+}
+
+QString BoardLogoItem::colorString() {
+	return ViewLayer::BoardColor;
+}
+
+QStringList & BoardLogoItem::getImageNames() {
+	return BoardImageNames;
+}
+
+QStringList & BoardLogoItem::getNewImageNames() {
+	return NewBoardImageNames;
+}
+
+bool BoardLogoItem::resizeMM(double mmW, double mmH, const LayerHash & viewLayers) 
+{
+	bool result = LogoItem::resizeMM(mmW, mmH, viewLayers);
+    if (!result) return result;
+
+    reloadLayerKin(mmW, mmH);
+    return result;
+}
+
+void BoardLogoItem::reloadLayerKin(double mmW, double mmH)
+{
+	foreach (ItemBase * itemBase, m_layerKin) {
+        if (itemBase->viewLayerID() == LogoItem::layer()) {
+		    QString svg = getShapeForRenderer(prop("shape"), LogoItem::layer());
+		    if (!svg.isEmpty()) {
+                QStringList exceptions;
+                exceptions << "none" << "";
+		        QString toColor(LogoItem::colorString());
+                QByteArray byteArray;
+		        SvgFileSplitter::changeColors(svg, toColor, exceptions, byteArray);
+			    if (m_silkscreenRenderer == NULL) {
+				    m_silkscreenRenderer = new FSvgRenderer(itemBase);
+			    }
+			    itemBase->prepareGeometryChange();
+			    QByteArray ba = m_silkscreenRenderer->loadSvg(byteArray, "");
+			    if (!ba.isEmpty()) {
+				    qobject_cast<PaletteItemBase *>(itemBase)->setSharedRendererEx(m_silkscreenRenderer);
+				    itemBase->modelPart()->setProp("width", mmW);
+				    itemBase->modelPart()->setProp("height", mmH);
+			    }
+			    break;
+		    }
+	    }
+    }
+}
+
+bool BoardLogoItem::canRetrieveLayer(ViewLayer::ViewLayerID viewLayerID) {
+    return LogoItem::canRetrieveLayer(viewLayerID) || viewLayerID == LogoItem::layer();
+}
+
+bool BoardLogoItem::reloadImage(const QString & svg, const QSizeF & aspectRatio, const QString & fileName, bool addName) 
+{
+    bool result = LogoItem::reloadImage(svg, aspectRatio, fileName, addName);
+    if (!result) return result;
+
+    reloadLayerKin(prop("width").toDouble(), prop("height").toDouble());
+    return result;
 }
 

@@ -69,7 +69,7 @@ public:
 	~ResizableBoard();
 
 	bool setUpImage(ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, ViewLayer::ViewLayerSpec, bool doConnectors, LayerAttributes &, QString & error);
-	virtual void resizeMM(double w, double h, const LayerHash & viewLayers);
+	virtual bool resizeMM(double w, double h, const LayerHash & viewLayers);
 	void resizePixels(double w, double h, const LayerHash & viewLayers);
  	void loadLayerKin(const LayerHash & viewLayers, ViewLayer::ViewLayerSpec);
 	virtual void setInitialSize();

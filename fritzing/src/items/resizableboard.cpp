@@ -103,6 +103,7 @@ QStringList Board::collectValues(const QString & family, const QString & prop, Q
 			CustomShapeTranslated = tr("Import Shape...");
 		}
 		result.append(CustomShapeTranslated);
+
 	}
 
 	return result;}
@@ -367,7 +368,7 @@ void ResizableBoard::resizePixels(double w, double h, const LayerHash & viewLaye
 	resizeMM(GraphicsUtils::pixels2mm(w, FSvgRenderer::printerScale()), GraphicsUtils::pixels2mm(h, FSvgRenderer::printerScale()), viewLayers);
 }
 
-void ResizableBoard::resizeMM(double mmW, double mmH, const LayerHash & viewLayers) {
+bool ResizableBoard::resizeMM(double mmW, double mmH, const LayerHash & viewLayers) {
 	if (mmW == 0 || mmH == 0) {
 		QString error;
 		LayerAttributes layerAttributes;
@@ -375,17 +376,18 @@ void ResizableBoard::resizeMM(double mmW, double mmH, const LayerHash & viewLaye
 		modelPart()->setProp("height", QVariant());
 		modelPart()->setProp("width", QVariant());
 		// do the layerkin
-		return;
+		return false;
 	}
 
 	QRectF r = this->boundingRect();
 	if (qAbs(GraphicsUtils::pixels2mm(r.width(), FSvgRenderer::printerScale()) - mmW) < .001 &&
 		qAbs(GraphicsUtils::pixels2mm(r.height(), FSvgRenderer::printerScale()) - mmH) < .001) 
 	{
-		return;
+		return false;
 	}
 
 	resizeMMAux(mmW, mmH);
+    return true;
 }
 
 
