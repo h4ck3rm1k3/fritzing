@@ -59,6 +59,7 @@ static QHash<QGraphicsScene *, QGraphicsPixmapItem *> CursorItems;
 
 CursorMaster::CursorMaster() : QObject()
 {
+    m_blocked = false;
 }
 
 void CursorMaster::initCursors()
@@ -119,6 +120,8 @@ CursorMaster * CursorMaster::instance()
 
 void CursorMaster::addCursor(QObject * object, const QCursor & cursor)
 {
+    if (m_blocked) return;
+
 	if (object == NULL) return;
 
 
@@ -262,4 +265,12 @@ void CursorMaster::moveCursor() {
 	//DebugDialog::debug("move", p);
 	//item->setPos(p);   // + cursor->hotspot
 	//item->show();
+}
+
+void CursorMaster::block() {
+    m_blocked = true;
+}
+
+void CursorMaster::unblock() {
+    m_blocked = false;
 }

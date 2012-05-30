@@ -89,6 +89,7 @@ $Date$
 #include "../items/capacitor.h"
 #include "../utils/graphutils.h"
 #include "../utils/ratsnestcolors.h"
+#include "../utils/cursormaster.h"
 
 /////////////////////////////////////////////////////////////////////
 
@@ -6278,12 +6279,15 @@ void SketchWidget::spaceBarIsPressedSlot(bool isPressed) {
 	if (isPressed) {
 		setDragMode(QGraphicsView::ScrollHandDrag);
 		//setInteractive(false);
-		setCursor(Qt::OpenHandCursor);
+		//CursorMaster::instance()->addCursor(this, Qt::OpenHandCursor);
+        //setCursor(Qt::OpenHandCursor);
+        DebugDialog::debug("setting open hand cursor");
 	}
 	else {
+        //CursorMaster::instance()->removeCursor(this);
 		setDragMode(QGraphicsView::RubberBandDrag);
 		//setInteractive(true);
-		setCursor(Qt::ArrowCursor);
+		//setCursor(Qt::ArrowCursor);
 	}
 }
 

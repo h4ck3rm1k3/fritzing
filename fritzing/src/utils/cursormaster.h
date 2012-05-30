@@ -48,6 +48,8 @@ public:
 
 	void addCursor(QObject * listener, const QCursor & cursor);
 	void removeCursor(QObject * listener);
+    void block();
+    void unblock();
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
@@ -69,6 +71,7 @@ public:
 
 protected:
 	static CursorMaster TheCursorMaster;
+    bool m_blocked;
 };
 
 #endif
