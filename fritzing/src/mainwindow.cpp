@@ -1971,6 +1971,7 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 bool MainWindow::swapSpecial(const QString & theProp, QMap<QString, QString> & currPropsMap) {
 	ItemBase * itemBase = m_infoView->currentItem();
 	QString pinSpacing, resistance, layers;
+    bool customPCB = false;
 	foreach (QString key, currPropsMap.keys()) {
 		if (key.compare("shape", Qt::CaseInsensitive) == 0) {
 			Board * board = qobject_cast<Board *>(itemBase);
@@ -1978,12 +1979,8 @@ bool MainWindow::swapSpecial(const QString & theProp, QMap<QString, QString> & c
 
 			QString value = currPropsMap.value(key, "");
 			if (value.compare(Board::CustomShapeTranslated) == 0) {
-				if (!loadCustomBoardShape()) {
-					
-					// restores the infoview size menu
-					m_currentGraphicsView->viewItemInfo(itemBase);
-				}
-				return true;
+				customPCB = true;
+				continue;
 			}
 		}
 
@@ -2028,6 +2025,14 @@ bool MainWindow::swapSpecial(const QString & theProp, QMap<QString, QString> & c
 
 	if (!layers.isEmpty()) {
 		currPropsMap.insert("layers", layers);
+
+        if (customPCB) {
+            QString moduleID = layers == "1" ? ModuleIDNames::OneLayerBoardLogoImageModuleIDName : ModuleIDNames::BoardLogoImageModuleIDName;
+            swapSelectedAux(itemBase, moduleID);
+            return true;
+        }
+
+
 		return false;
 	}
 
@@ -2093,162 +2098,6 @@ long MainWindow::swapSelectedAuxAux(ItemBase * itemBase, const QString & moduleI
 	if (newID3 != 0) return newID3;
 	if (newID2 != 0) return newID2;
 	return newID1;
-}
-
-bool MainWindow::loadCustomBoardShape()
-{
-	ItemBase * itemBase = m_infoView->currentItem();
-	if (itemBase == NULL) return false;
-
-	itemBase = itemBase->layerKinChief();
-
-	QString path = FolderUtils::getOpenFileName(this,
-		tr("Open custom board shape SVG file"),
-		defaultSaveFolder(),
-		tr("SVG Files (%1)").arg("*.svg")
-	);
-
-	if (path.isEmpty()) {
-		return false; // Cancel pressed
-	}
-
-	QString svg;
-	QFile f(path);
-	if (f.open(QFile::ReadOnly)) {
-		svg = f.readAll();
-	}
-	if (svg.isEmpty()) {
-		QMessageBox::information(
-			NULL,
-			tr("Unable to load"),
-			tr("Unable to load image from %1").arg(path)
-		);			
-		return false;
-	}
-
-	TextUtils::cleanSodipodi(svg);
-	bool isIllustrator = TextUtils::fixPixelDimensionsIn(svg);
-	TextUtils::fixViewboxOrigin(svg);
-	TextUtils::tspanRemove(svg);
-
-	SvgFileSplitter splitter;
-	if (!splitter.splitString(svg, "board")) {
-		svgMissingLayer("board", path);
-		return false;
-	}
-
-	if (!splitter.splitString(svg, "silkscreen")) {
-		svgMissingLayer("silkscreen", path);
-		return false;
-	}
-
-	QString wStr, hStr, vbStr;
-	if (!SvgFileSplitter::getSvgSizeAttributes(svg, wStr, hStr, vbStr)) {
-		QMessageBox::warning(
-			this,
-			tr("Fritzing"),
-			tr("Svg file '%1' is missing width, height, or viewbox attribute").arg(path)
-		);
-		return false;
-	}
-
-	bool ok;
-	double w = TextUtils::convertToInches(wStr, &ok, isIllustrator);
-	if (!ok) {
-		QMessageBox::warning(
-			this,
-			tr("Fritzing"),
-			tr("Svg file '%1': bad width attribute").arg(path)
-		);
-		return false;
-	}
-
-	double h = TextUtils::convertToInches(hStr, &ok, isIllustrator);
-	if (!ok) {
-		QMessageBox::warning(
-			this,
-			tr("Fritzing"),
-			tr("Svg file '%1': bad height attribute").arg(path)
-		);
-		return false;
-	}
-
-	QString moduleID = FolderUtils::getRandText();
-	QString userPartsSvgFolderPath = FolderUtils::getUserDataStorePath("parts")+"/svg/user/";
-	QString newName = userPartsSvgFolderPath + "pcb" + "/" + moduleID + ".svg";
-
-	QFile svgFile(newName);
-	svgFile.open(QIODevice::WriteOnly);
-	QTextStream svgOut(&svgFile);
-	svgOut.setCodec("UTF-8");
-	svgOut << svg;
-	svgFile.close();
-
-	if (!svgFile.exists()) {
-		QMessageBox::warning(
-			this,
-			tr("Fritzing"),
-			tr("Sorry, Fritzing is unable to save the svg file.")
-		);
-		return false;
-	}
-
-	QFile file(":/resources/templates/resizableBoard_fzpTemplate.txt");
-	file.open(QFile::ReadOnly);
-	QString fzpTemplate = file.readAll();
-	file.close();
-
-	if (fzpTemplate.isEmpty()) {
-		QMessageBox::warning(
-			this,
-			tr("Fritzing"),
-			tr("Sorry, Fritzing is unable to load the part template file.")
-		);
-		return false;
-	}
-
-	// %1 = author
-	// %2 = width
-	// %3 = height
-	// %4 = filename (minus path and extension)
-	// %5 = date string
-	// %6 = module id
-	// %7 = time string
-	// %8 = layers
-
-	QString layers = itemBase->prop("layers");
-	if (layers.isEmpty()) {
-		layers = itemBase->modelPart()->properties().value("layers", "1");
-	}
-	if (layers.isEmpty()) {
-		layers = "1";
-	}
-
-	QString fzp = fzpTemplate
-		.arg(getenvUser())
-		.arg(w * 25.4)
-		.arg(h * 25.4)
-		.arg(QFileInfo(path).baseName())
-		.arg(QDate::currentDate().toString(Qt::ISODate))
-		.arg(moduleID)
-		.arg(QTime::currentTime().toString("HH:mm:ss"))
-		.arg(layers);
-
-
-	QString userPartsFolderPath = FolderUtils::getUserDataStorePath("parts")+"/user/";
-	QFile file2(userPartsFolderPath + moduleID + FritzingPartExtension);
-	file2.open(QIODevice::WriteOnly);
-	QTextStream out2(&file2);
-	out2.setCodec("UTF-8");
-	out2 << fzp;
-	file2.close();
-
-	loadPart(userPartsFolderPath + moduleID + FritzingPartExtension, -1, false);
-	swapSelectedAux(itemBase, moduleID);
-
-	itemBase->resetValues(itemBase->modelPart()->properties().value("family", "").toLower(), "shape");
-
-	return true;
 }
 
 void MainWindow::svgMissingLayer(const QString & layername, const QString & path) {

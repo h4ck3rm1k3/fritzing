@@ -100,14 +100,14 @@ QStringList Board::collectValues(const QString & family, const QString & prop, Q
 
     if (prop.compare("shape", Qt::CaseInsensitive) == 0) {
 		if (CustomShapeTranslated.isEmpty()) {
-			CustomShapeTranslated = tr("Import Shape...");
+			CustomShapeTranslated = tr("Custom Shape");
 		}
 		result.append(CustomShapeTranslated);
 
 	}
 
-	return result;}
-
+	return result;
+}
 
 bool Board::rotation45Allowed() {
 	return false;

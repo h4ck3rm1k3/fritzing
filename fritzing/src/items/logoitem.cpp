@@ -892,11 +892,12 @@ bool CopperLogoItem::isCopper0() {
 //  allow pngs?
 //  use element bounds to detect contour
 //  make sure imported image has either no layers, board layer, or board layer + silkscreen layer and works in all 3 cases
+//      if the first image has both layers and the second has only the board layer, the silkscreen is not updated
 //  swapping: swap with custom, then load image after; keep loading image to update
-//  remove old import shape functionality
-//      newNames
-//      import shape ==> custom shape
-//      remove the old part-making code (load custom shape from main window?)
+//  swapping: "custom shape" shouldn't show up on custom shape, but arduino shield and resizeable board should
+//  swapping: prepDelete needs special case when dealing with custom back to rectangular or arduino?
+//  layers menu doesn't make sense, type menu doesn't make sense
+//  lock part should disallow rotate and resize
 //  don't allow drag and drop if board already there?
 
 BoardLogoItem::BoardLogoItem(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel) 

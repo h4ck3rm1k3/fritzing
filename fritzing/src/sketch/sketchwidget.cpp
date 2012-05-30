@@ -4952,6 +4952,10 @@ void SketchWidget::prepDeleteProps(ItemBase * itemBase, long id, const QString &
 	// this works most of the time, but does not, for example, when a ResizableBoard is swapped for a custom board shape
 
 	ModelPart * mp = (newModuleID.isEmpty()) ? itemBase->modelPart() : paletteModel()->retrieveModelPart(newModuleID);
+    if (mp->itemType() == ModelPart::Logo && qobject_cast<Board *>(itemBase) != NULL) {
+        // board to custom board
+        mp = itemBase->modelPart();
+    }
 
 	switch (mp->itemType()) {
 		case ModelPart::Wire:

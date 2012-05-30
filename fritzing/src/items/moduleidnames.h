@@ -53,6 +53,7 @@ public:
 	static const QString Copper1LogoTextModuleIDName;
 	static const QString Copper1LogoImageModuleIDName;
 	static const QString BoardLogoImageModuleIDName;
+	static const QString OneLayerBoardLogoImageModuleIDName;
 	static const QString HoleModuleIDName;
 	static const QString ViaModuleIDName;
 	static const QString PadModuleIDName;
