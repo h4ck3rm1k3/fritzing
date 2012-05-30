@@ -3876,14 +3876,6 @@ ItemCount SketchWidget::calcItemCount() {
 				}
 			}
 
-			if (itemBase->canFlipHorizontal()) {
-				itemCount.selHFlipable++;
-			}
-
-			if (itemBase->canFlipVertical()) {
-				itemCount.selVFlipable++;
-			}
-
 			if (itemBase->isObsolete()) {
 				itemCount.obsoleteCount++;
 			}
@@ -3891,31 +3883,51 @@ ItemCount SketchWidget::calcItemCount() {
 			if (itemBase->itemType() == ModelPart::Wire) {
 				itemCount.wireCount++;
 			}
+            else {
+			    bool rotatable = itemBase->rotationAllowed();
+			    if (rotatable) {
+				    itemCount.selRotatable++;
+			    }
 
-			bool rotatable = itemBase->rotationAllowed();
-			if (rotatable) {
-				itemCount.selRotatable++;
-			}
+			    rotatable = itemBase->rotation45Allowed();
+			    if (rotatable) {
+				    itemCount.sel45Rotatable++;
+			    }
 
-			rotatable = itemBase->rotation45Allowed();
-			if (rotatable) {
-				itemCount.sel45Rotatable++;
-			}
+			    if (itemBase->canFlipHorizontal()) {
+				    itemCount.selHFlipable++;
+			    }
+
+			    if (itemBase->canFlipVertical()) {
+				    itemCount.selVFlipable++;
+			    }
+            }
 		}
 	}
 
-	if (itemCount.selCount != itemCount.selRotatable) {
+    /*
+    DebugDialog::debug(QString("sc:%1 wc:%2 sr:%3 s45r:%4 sv:%5 sh:%6")
+        .arg(itemCount.selCount)
+        .arg(itemCount.wireCount)
+        .arg(itemCount.selRotatable)
+        .arg(itemCount.sel45Rotatable)
+        .arg(itemCount.selVFlipable)
+        .arg(itemCount.selHFlipable)
+        );
+    */
+
+	if (itemCount.selCount - itemCount.wireCount != itemCount.selRotatable) {
 		// if you can't rotate them all, then you can't rotate any
 		itemCount.selRotatable = 0;
 	}
-	if (itemCount.selCount != itemCount.sel45Rotatable) {
+	if (itemCount.selCount - itemCount.wireCount != itemCount.sel45Rotatable) {
 		// if you can't rotate them all, then you can't rotate any
 		itemCount.sel45Rotatable = 0;
 	}
-	if (itemCount.selCount != itemCount.selVFlipable) {
+	if (itemCount.selCount - itemCount.wireCount != itemCount.selVFlipable) {
 		itemCount.selVFlipable = 0;
 	}
-	if (itemCount.selCount != itemCount.selHFlipable) {
+	if (itemCount.selCount - itemCount.wireCount != itemCount.selHFlipable) {
 		itemCount.selHFlipable = 0;
 	}
 	if (itemCount.selCount > 0) {
