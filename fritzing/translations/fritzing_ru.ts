@@ -404,6 +404,41 @@
     </message>
 </context>
 <context>
+    <name>BoardLogoItem</name>
+    <message>
+        <source>shape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>due to an xml problem: %1 line:%2 column:%3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>because the xml is not correctly formatted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>because there are multiple &lt;board&gt; layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>because there are multiple &lt;silkscreen&gt; layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>because there is no &lt;board&gt; layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>but the pcb itself will have no silkscreen layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>the svg doesn&apos;t fit the custom board format</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CMRouter</name>
     <message>
         <source>round %1 of:</source>
@@ -1084,10 +1119,6 @@ It is also possible to choose a connector as a ground fill seed by right-clickin
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unable to load image from %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Unable to display</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1101,6 +1132,60 @@ It is also possible to choose a connector as a ground fill seed by right-clickin
     </message>
     <message>
         <source>shape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>
+
+A custom board svg typically has one silkscreen layer and one board layer.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Have a look at the circle_pcb.svg file in your Fritzing installation folder at parts/svg/core/pcb/.
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>due to a rendering error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>because the svg is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>due to an xml problem: %1 line:%2 column:%3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>because the file has no root element</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>because the file has no &lt;svg&gt; element</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>because of an improper width or height attribute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>for unknown reasons--possibly the image file is corrupted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to load image from %1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can load, but</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The image from %1 can be loaded, but %2
+Use the file?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1219,30 +1304,6 @@ We&apos;re working to avoid this message, and only let you choose between proper
     <message>
         <source>Swapped %1 with module %2</source>
         <translation>Поменять %1 с модулем %2</translation>
-    </message>
-    <message>
-        <source>Open custom board shape SVG file</source>
-        <translation>Открыть другую плату из SVG-файла</translation>
-    </message>
-    <message>
-        <source>SVG Files (%1)</source>
-        <translation>SVG файлы (%1)</translation>
-    </message>
-    <message>
-        <source>Svg file &apos;%1&apos; is missing width, height, or viewbox attribute</source>
-        <translation>Svg файл &apos;%1&apos; отсутствуют атрибуты ширины, высоты или viewbox</translation>
-    </message>
-    <message>
-        <source>Svg file &apos;%1&apos;: bad width attribute</source>
-        <translation>Svg файл &apos;%1&apos;: ошибочный атрибут ширины</translation>
-    </message>
-    <message>
-        <source>Svg file &apos;%1&apos;: bad height attribute</source>
-        <translation>Svg файл &apos;%1&apos;: ошибочный атрибут высоты</translation>
-    </message>
-    <message>
-        <source>Sorry, Fritzing is unable to load the part template file.</source>
-        <translation>К сожалению, Fritzing не может загрузить часть файла шаблона.</translation>
     </message>
     <message>
         <source>Svg %1 is missing a &apos;%2&apos; layer. For more information on how to create a custom board shape, see the tutorial at &lt;a href=&apos;http://fritzing.org/learning/tutorials/designing-pcb/pcb-custom-shape/&apos;&gt;http://fritzing.org/learning/tutorials/designing-pcb/pcb-custom-shape/&lt;/a&gt;.</source>
@@ -2263,18 +2324,6 @@ Please check all views for potential side-effects.</source>
         </translation>
     </message>
     <message>
-        <source>Unable to load</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unable to load image from %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sorry, Fritzing is unable to save the svg file.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Delete Ratsnest Line</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2889,10 +2938,6 @@ Reason: %2 (errcode %3)</source>
     </message>
     <message>
         <source>Unable to create copper fill--possibly the part was dropped onto another part or wire rather than the actual PCB.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fritzing only allows one board part per sketch. Either delete the current board, or select it and swap it for a different one.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4703,10 +4748,6 @@ Fritzing по-прежнему работает, но вы не сможете �
 <context>
     <name>ResizableBoard</name>
     <message>
-        <source>Import Shape...</source>
-        <translation type="unfinished">Импортировать форму...</translation>
-    </message>
-    <message>
         <source>shape</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5438,6 +5479,14 @@ Fritzing по-прежнему работает, но вы не сможете �
     </message>
     <message>
         <source>purple</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>super fine (8 mil)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>extra thin (12 mil)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
