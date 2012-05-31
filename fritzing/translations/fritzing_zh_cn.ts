@@ -159,6 +159,10 @@
         <source>to Jinbuhm Kim for the Korean translation, </source>
         <translation>Jinbuhm Kim对韩语的翻译, </translation>
     </message>
+    <message>
+        <source>to Alex Kaltsas for the Greek translation, </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AbstractEditableLabelWidget</name>
