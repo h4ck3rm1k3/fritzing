@@ -63,6 +63,7 @@ LogoItem::LogoItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier v
 		ImageNames << "Made with Fritzing" << "Fritzing icon" << "OHANDA logo" << "OSHW logo";
 	}
 
+    m_svgOnly = false;
 	m_inLogoEntry = QTime::currentTime().addSecs(-10);
 	m_fileNameComboBox = NULL;
 	m_aspectRatioCheck = NULL;
@@ -238,12 +239,14 @@ bool LogoItem::collectExtraInfo(QWidget * parent, const QString & family, const 
 }
 
 void LogoItem::prepLoadImage() {
-	QList<QByteArray> supportedImageFormats = QImageReader::supportedImageFormats();
 	QString imagesStr = tr("Images");
 	imagesStr += " (";
-	foreach (QByteArray ba, supportedImageFormats) {
-		imagesStr += "*." + QString(ba) + " ";
-	}
+    if (!m_svgOnly) {
+	    QList<QByteArray> supportedImageFormats = QImageReader::supportedImageFormats();
+	    foreach (QByteArray ba, supportedImageFormats) {
+		    imagesStr += "*." + QString(ba) + " ";
+	    }
+    }
 	if (!imagesStr.contains("svg")) {
 		imagesStr += "*.svg";
 	}
@@ -889,19 +892,17 @@ bool CopperLogoItem::isCopper0() {
 // todo:
 //
 //  1 vs 2 layers
-//  allow pngs?
+//  fix opacity? don't mess with colors at all?
 //  use element bounds to detect contour
 //  make sure imported image has either no layers, board layer, or board layer + silkscreen layer and works in all 3 cases
-//      if the first image has both layers and the second has only the board layer, the silkscreen is not updated
 //  swapping: prepDelete needs special case when dealing with custom back to rectangular or arduino?
-//  pcb shape menu not showing up for swapping back
 //  lock part should disallow rotate and resize
-//  don't allow drag and drop if board already there?
 
 BoardLogoItem::BoardLogoItem(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel) 
     : LogoItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
     m_hasLogo = false;
+    m_svgOnly = true;
 	if (BoardImageNames.count() == 0) {
 		BoardImageNames << "circle_pcb";
 	}
@@ -921,8 +922,11 @@ QString BoardLogoItem::getShapeForRenderer(const QString & svg, ViewLayer::ViewL
 	SvgFileSplitter splitter;
     QString xml = svg;
 	bool result = splitter.splitString(xml, xmlName);
-	if (!result) {
-		return "";
+	if (result) {
+        xml = splitter.elementString(xmlName);
+    }
+    else {
+		xml = "";
 	}
 
     QString header("<?xml version='1.0' encoding='UTF-8'?>\n"
@@ -934,8 +938,8 @@ QString BoardLogoItem::getShapeForRenderer(const QString & svg, ViewLayer::ViewL
     }
     header += ">\n";
 
-    header = header + splitter.elementString(xmlName) + "\n</svg>";
-    DebugDialog::debug(header);
+    header = header + xml + "\n</svg>";
+    //DebugDialog::debug(header);
 	return header;
 }
 

@@ -1590,11 +1590,15 @@ ResizeBoardCommand::ResizeBoardCommand(SketchWidget * sketchWidget, long itemID,
 }
 
 void ResizeBoardCommand::undo() {
-	m_sketchWidget->resizeBoard(m_itemID, m_oldWidth, m_oldHeight);
+    if (!m_redoOnly) {
+	    m_sketchWidget->resizeBoard(m_itemID, m_oldWidth, m_oldHeight);
+    }
 }
 
 void ResizeBoardCommand::redo() {
-	m_sketchWidget->resizeBoard(m_itemID, m_newWidth, m_newHeight);
+    if (!m_undoOnly) {
+	    m_sketchWidget->resizeBoard(m_itemID, m_newWidth, m_newHeight);
+    }
 }
 
 QString ResizeBoardCommand::getParamString() const {

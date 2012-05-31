@@ -95,6 +95,7 @@ protected:
 	QString m_originalFilename;
 	QComboBox * m_fileNameComboBox;
 	QTime m_inLogoEntry;
+    bool m_svgOnly;
 };
 
 class CopperLogoItem : public LogoItem

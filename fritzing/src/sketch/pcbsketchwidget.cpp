@@ -474,11 +474,11 @@ bool PCBSketchWidget::canDropModelPart(ModelPart * modelPart) {
 		case ModelPart::ResizableBoard:
 			if (!matchesLayer(modelPart)) return false;
 			
-			if (findBoard().count() != 0) {
-				// don't allow multiple boards
-				AutoCloseMessageBox::showMessage(this->window(), tr("Fritzing only allows one board part per sketch. Either delete the current board, or select it and swap it for a different one."));
-				return false;
-			}
+			//if (findBoard().count() != 0) {
+			//	// don't allow multiple boards
+			//	AutoCloseMessageBox::showMessage(this->window(), tr("Fritzing only allows one board part per sketch. Either delete the current board, or select it and swap it for a different one."));
+			//	return false;
+			//}
 
 			return true;
 		default:

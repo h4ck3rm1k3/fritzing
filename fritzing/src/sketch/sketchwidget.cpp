@@ -4951,9 +4951,10 @@ void SketchWidget::prepDeleteProps(ItemBase * itemBase, long id, const QString &
 	// meaning that the properties of itemBase (which is the old part) apply to the new part (which has not yet been created)
 	// this works most of the time, but does not, for example, when a ResizableBoard is swapped for a custom board shape
 
+    bool boardToCustomBoard = false;
 	ModelPart * mp = (newModuleID.isEmpty()) ? itemBase->modelPart() : paletteModel()->retrieveModelPart(newModuleID);
     if (mp->itemType() == ModelPart::Logo && qobject_cast<Board *>(itemBase) != NULL) {
-        // board to custom board
+        boardToCustomBoard = true;
         mp = itemBase->modelPart();
     }
 
@@ -4980,7 +4981,10 @@ void SketchWidget::prepDeleteProps(ItemBase * itemBase, long id, const QString &
 					QPointF p;
 					QSizeF sz;
 					brd->getParams(p, sz);
-					new ResizeBoardCommand(this, id, sz.width(), sz.height(), sz.width(), sz.height(), parentCommand);
+					ResizeBoardCommand * rbc = new ResizeBoardCommand(this, id, sz.width(), sz.height(), sz.width(), sz.height(), parentCommand);
+                    if (boardToCustomBoard) {
+                        rbc->setUndoOnly();
+                    }
 				}
 				prepDeleteOtherProps(itemBase, id, newModuleID, parentCommand);
 			}
