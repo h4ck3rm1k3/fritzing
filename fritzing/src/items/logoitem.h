@@ -73,7 +73,8 @@ protected slots:
 protected:
 	virtual QString hackSvg(const QString & svg, const QString & logo);
 	void initImage();
-	void unableToLoad(const QString & fileName);
+	void unableToLoad(const QString & fileName, const QString & reason);
+	bool canLoad(const QString & fileName, const QString & reason);
 	void prepLoadImageAux(const QString & fileName, bool addName);
 	void setFileNameItems();
 	virtual ViewLayer::ViewLayerID layer();
@@ -88,6 +89,7 @@ protected:
 	ResizableBoard::Corner findCorner(QPointF p, Qt::KeyboardModifiers);
     virtual QString getShapeForRenderer(const QString & svg);
     virtual bool canRetrieveLayer(ViewLayer::ViewLayerID viewLayerID);
+    virtual bool checkImage(const QString & filename);
 
 protected:
 	QString m_logo;
@@ -137,6 +139,7 @@ protected:
     QString getShapeForRenderer(const QString & svg, ViewLayer::ViewLayerID viewLayerID);
     bool canRetrieveLayer(ViewLayer::ViewLayerID viewLayerID);
     void reloadLayerKin(double mmW, double mmH);
+    bool checkImage(const QString & filename);
 };
 
 

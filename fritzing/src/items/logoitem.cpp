@@ -56,11 +56,16 @@ static QStringList NewCopper1ImageNames;
 static QStringList BoardImageNames;
 static QStringList NewBoardImageNames;
 
+static QString StandardCustomBoardExplanation;
+
 LogoItem::LogoItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: ResizableBoard(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
 	if (ImageNames.count() == 0) {
 		ImageNames << "Made with Fritzing" << "Fritzing icon" << "OHANDA logo" << "OSHW logo";
+
+        StandardCustomBoardExplanation = tr("\n\nA custom board svg typically has one silkscreen layer and one board layer.\n") +
+                                            tr("Have a look at the circle_pcb.svg file in your Fritzing installation folder at parts/svg/core/pcb/.\n\n");
 	}
 
     m_svgOnly = false;
@@ -260,7 +265,14 @@ void LogoItem::prepLoadImage() {
 
 	if (fileName.isEmpty()) return;
 
+    if (!checkImage(fileName)) return;
+
 	prepLoadImageAux(fileName, true);
+}
+
+bool LogoItem::checkImage(const QString & filename) {
+    Q_UNUSED(filename);
+    return true;
 }
 
 void LogoItem::prepLoadImageAux(const QString & fileName, bool addName)
@@ -315,7 +327,7 @@ bool LogoItem::reloadImage(const QString & svg, const QSizeF & aspectRatio, cons
 	else {
 		// restore previous (not sure whether this is necessary)
 		loadExtraRenderer(getShapeForRenderer(prop("shape")).toUtf8(), false);
-		unableToLoad(fileName);
+		unableToLoad(fileName, tr("due to a rendering error"));
         return false;
 	}
 }
@@ -329,7 +341,7 @@ void LogoItem::loadImage(const QString & fileName, bool addName)
 			svg = f.readAll();
 		}
 		if (svg.isEmpty()) {
-			unableToLoad(fileName);
+			unableToLoad(fileName, tr("because the svg is empty"));
 			return;
 		}
 
@@ -345,18 +357,18 @@ void LogoItem::loadImage(const QString & fileName, bool addName)
 		QDomDocument domDocument;
 
 		if (!domDocument.setContent(svg, true, &errorStr, &errorLine, &errorColumn)) {
-			unableToLoad(fileName);
+			unableToLoad(fileName, tr("due to an xml problem: %1 line:%2 column:%3").arg(errorStr).arg(errorLine).arg(errorColumn));
 			return;
 		}
 
 		QDomElement root = domDocument.documentElement();
 		if (root.isNull()) {
-			unableToLoad(fileName);
+			unableToLoad(fileName, tr("because the file has no root element"));
 			return;
 		}
 
 		if (root.tagName() != "svg") {
-			unableToLoad(fileName);
+			unableToLoad(fileName, tr("because the file has no <svg> element"));
 			return;
 		}
 
@@ -374,7 +386,7 @@ void LogoItem::loadImage(const QString & fileName, bool addName)
 			double w = TextUtils::convertToInches(root.attribute("width"), &ok1, isIllustrator) * FSvgRenderer::printerScale();
 			double h = TextUtils::convertToInches(root.attribute("height"), &ok2, isIllustrator) * FSvgRenderer::printerScale();
 			if (!ok1 || !ok2) {
-				unableToLoad(fileName);
+				unableToLoad(fileName, tr("because of an improper width or height attribute"));
 				return;
 			}
 
@@ -403,7 +415,7 @@ void LogoItem::loadImage(const QString & fileName, bool addName)
 	else {
 		QImage image(fileName);
 		if (image.isNull()) {
-			unableToLoad(fileName);
+			unableToLoad(fileName, tr("for unknown reasons--possibly the image file is corrupted"));
 			return;
 		}
 
@@ -698,12 +710,23 @@ void LogoItem::setHeight(double h)
 	}
 }
 
-void LogoItem::unableToLoad(const QString & fileName) {
+void LogoItem::unableToLoad(const QString & fileName, const QString & reason) {
 	QMessageBox::information(
 		NULL,
 		tr("Unable to load"),
-		tr("Unable to load image from %1").arg(fileName)
+		tr("Unable to load image from %1 %2").arg(fileName).arg(reason)
 	);
+}
+
+bool LogoItem::canLoad(const QString & fileName, const QString & reason) {
+    QMessageBox::StandardButton answer = QMessageBox::question(
+		NULL,
+		tr("Can load, but"),
+		tr("The image from %1 can be loaded, but %2\nUse the file?").arg(fileName).arg(reason),
+		QMessageBox::Yes | QMessageBox::No,
+		QMessageBox::No
+	);
+	return answer == QMessageBox::Yes;
 }
 
 void LogoItem::keepAspectRatio(bool checkState) {
@@ -892,10 +915,8 @@ bool CopperLogoItem::isCopper0() {
 // todo:
 //
 //  fix opacity? don't mess with colors at all?
-//  use element bounds to detect contour
-//  make sure imported image has either no layers, board layer, or board layer + silkscreen layer and works in all 3 cases
-//  swapping: prepDelete needs special case when dealing with custom back to rectangular or arduino?
-//  lock part should disallow rotate and resize
+//  check incoming svg file:
+//      use element bounds to detect contour if there is no boardoutline id
 
 BoardLogoItem::BoardLogoItem(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel) 
     : LogoItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
@@ -1017,4 +1038,69 @@ bool BoardLogoItem::collectExtraInfo(QWidget * parent, const QString & family, c
 	}
 
     return LogoItem::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
+}
+
+
+bool BoardLogoItem::checkImage(const QString & filename) {
+    QFile file(filename);
+    
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+
+	QDomDocument domDocument;
+
+	if (!domDocument.setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
+		unableToLoad(filename, tr("due to an xml problem: %1 line:%2 column:%3").arg(errorStr).arg(errorLine).arg(errorColumn));
+		return false;
+	}
+
+    QDomElement root = domDocument.documentElement();
+	if (root.tagName() != "svg") {
+		unableToLoad(filename, tr("because the xml is not correctly formatted"));
+		return false;
+	}
+
+    QList<QDomElement> elements;
+    TextUtils::findElementsWithAttribute(root, "id", elements);
+    int layers = 0;
+    int boardLayers = 0;
+    int silk1Layers = 0;
+    foreach (QDomElement element, elements) {
+        QString id = element.attribute("id");
+        ViewLayer::ViewLayerID viewLayerID = ViewLayer::viewLayerIDFromXmlString(id);
+        if (viewLayerID != ViewLayer::UnknownLayer) {
+            layers++;
+            if (viewLayerID == ViewLayer::Board) {
+                boardLayers++;
+            }
+            if (viewLayerID == ViewLayer::Silkscreen1) {
+                silk1Layers++;
+            }
+        }
+    }
+
+    if ((boardLayers == 1) && (silk1Layers == 1)) return true;
+
+    if (boardLayers > 1) {
+        unableToLoad(filename, tr("because there are multiple <board> layers") + StandardCustomBoardExplanation);
+        return false;
+    }
+
+    if (silk1Layers > 1) {
+        unableToLoad(filename, tr("because there are multiple <silkscreen> layers") + StandardCustomBoardExplanation);
+        return false;
+    }
+
+    if (layers > 0 && boardLayers == 0) {
+        unableToLoad(filename, tr("because there is no <board> layer") + StandardCustomBoardExplanation);
+        return false;
+    }
+
+    if (layers == 0 || (boardLayers == 1 && silk1Layers == 0)) {
+        return canLoad(filename, tr("but the pcb itself will have no silkscreen layer") + StandardCustomBoardExplanation);
+    }
+
+    unableToLoad(filename, tr("the svg doesn't fit the custom board format") + StandardCustomBoardExplanation);
+    return false;
 }
