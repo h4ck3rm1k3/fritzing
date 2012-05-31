@@ -50,7 +50,6 @@ static const QRegExp HeightExpr("height=\\'\\d*px");
 
 const double ResizableBoard::CornerHandleSize = 7.0;
 
-QString Board::CustomShapeTranslated;
 QString Board::OneLayerTranslated;
 QString Board::TwoLayersTranslated;
 
@@ -96,17 +95,7 @@ QStringList Board::collectValues(const QString & family, const QString & prop, Q
 		return result;
 	}
 
-	QStringList result = PaletteItem::collectValues(family, prop, value);
-
-    if (prop.compare("shape", Qt::CaseInsensitive) == 0) {
-		if (CustomShapeTranslated.isEmpty()) {
-			CustomShapeTranslated = tr("Custom Shape");
-		}
-		result.append(CustomShapeTranslated);
-
-	}
-
-	return result;
+	return PaletteItem::collectValues(family, prop, value);
 }
 
 bool Board::rotation45Allowed() {

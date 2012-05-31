@@ -125,6 +125,7 @@ public:
 
     bool resizeMM(double w, double h, const LayerHash & viewLayers);
 	bool reloadImage(const QString & svg, const QSizeF & aspectRatio, const QString & fileName, bool addName);
+	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
 
 protected:
 	ViewLayer::ViewLayerID layer();

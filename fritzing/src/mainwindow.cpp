@@ -1971,19 +1971,8 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 bool MainWindow::swapSpecial(const QString & theProp, QMap<QString, QString> & currPropsMap) {
 	ItemBase * itemBase = m_infoView->currentItem();
 	QString pinSpacing, resistance, layers;
-    bool customPCB = false;
+
 	foreach (QString key, currPropsMap.keys()) {
-		if (key.compare("shape", Qt::CaseInsensitive) == 0) {
-			Board * board = qobject_cast<Board *>(itemBase);
-			if (board == NULL) continue;
-
-			QString value = currPropsMap.value(key, "");
-			if (value.compare(Board::CustomShapeTranslated) == 0) {
-				customPCB = true;
-				continue;
-			}
-		}
-
 		if (key.compare("layers", Qt::CaseInsensitive) == 0) {
 			Board * board = qobject_cast<Board *>(itemBase);
 			if (board == NULL) continue;
@@ -2025,14 +2014,6 @@ bool MainWindow::swapSpecial(const QString & theProp, QMap<QString, QString> & c
 
 	if (!layers.isEmpty()) {
 		currPropsMap.insert("layers", layers);
-
-        if (customPCB) {
-            QString moduleID = layers == "1" ? ModuleIDNames::OneLayerBoardLogoImageModuleIDName : ModuleIDNames::BoardLogoImageModuleIDName;
-            swapSelectedAux(itemBase, moduleID);
-            return true;
-        }
-
-
 		return false;
 	}
 

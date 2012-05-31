@@ -12,12 +12,10 @@
   <tag>fritzing core</tag>
  </tags>
  <properties>
-   <property name="family" >Logo</property>
+   <property name="family" >Plain Vanilla PCB</property>
    <property name="filename" ></property>
    <property name="layers" >2</property>
-   <property name="shape" ></property>
-   <property name="type" >image</property>
-   <property name="layer" >board</property>
+   <property name="shape" >Custom Shape</property>
  </properties>
  <taxonomy>discreteParts.pcb.logo</taxonomy>
  <description>For adding images to the board layer of the board</description>

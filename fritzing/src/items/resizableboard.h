@@ -56,7 +56,6 @@ public:
 public:
 	static QString OneLayerTranslated;
 	static QString TwoLayersTranslated;
-	static QString CustomShapeTranslated;
 };
 
 class ResizableBoard : public Board 

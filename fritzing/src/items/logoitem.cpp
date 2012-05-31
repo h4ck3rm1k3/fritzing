@@ -893,10 +893,8 @@ bool CopperLogoItem::isCopper0() {
 //  use element bounds to detect contour
 //  make sure imported image has either no layers, board layer, or board layer + silkscreen layer and works in all 3 cases
 //      if the first image has both layers and the second has only the board layer, the silkscreen is not updated
-//  swapping: swap with custom, then load image after; keep loading image to update
-//  swapping: "custom shape" shouldn't show up on custom shape, but arduino shield and resizeable board should
 //  swapping: prepDelete needs special case when dealing with custom back to rectangular or arduino?
-//  layers menu doesn't make sense, type menu doesn't make sense
+//  pcb shape menu not showing up for swapping back
 //  lock part should disallow rotate and resize
 //  don't allow drag and drop if board already there?
 
@@ -1006,3 +1004,14 @@ bool BoardLogoItem::reloadImage(const QString & svg, const QSizeF & aspectRatio,
     return result;
 }
 
+bool BoardLogoItem::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget) 
+{
+	if (prop.compare("shape", Qt::CaseInsensitive) == 0) {
+        Board::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
+		returnWidget = setUpDimEntry(true, returnWidget);
+		returnProp = tr("shape");
+		return true;
+	}
+
+    return LogoItem::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
+}
