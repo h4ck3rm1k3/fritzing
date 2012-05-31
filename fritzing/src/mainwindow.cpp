@@ -1977,7 +1977,7 @@ bool MainWindow::swapSpecial(const QString & theProp, QMap<QString, QString> & c
 			Board * board = qobject_cast<Board *>(itemBase);
 			if (board == NULL) continue;
 
-			if (board->itemType() != ModelPart::Board && board->itemType() != ModelPart::ResizableBoard) continue;
+            if (!itemBase->modelPart()->family().contains("pcb", Qt::CaseInsensitive)) continue;   // "plain vanilla pcb"
 
 			QString value = currPropsMap.value(key, "");
 			if (value.compare(Board::OneLayerTranslated) == 0) {

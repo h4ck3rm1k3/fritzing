@@ -198,7 +198,7 @@ QString SqliteReferenceModel::retrieveModuleId(const Part *examplePart, const QS
 
 		QString moduleId = ___emptyString___;
 		if(query.exec()) {
-			//DebugDialog::debug("SQLITE: retrieving: \n"+queryDebug);
+			DebugDialog::debug("SQLITE: retrieving: \n"+queryDebug);
 			if(query.next()) {
 				moduleId =  query.value(0).toString(); //grab the first
 			}

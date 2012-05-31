@@ -990,14 +990,9 @@ int PCBSketchWidget::isBoardLayerChange(ItemBase * itemBase, const QString & new
 {							
 	if (!master) return m_boardLayers;
 
-	switch (itemBase->itemType()) {
-		case ModelPart::Board:
-		case ModelPart::ResizableBoard:
-			// maybe a change
-			break;
-		default: 
-			// no change
-			return m_boardLayers;
+	if (!itemBase->modelPart()->family().contains("pcb", Qt::CaseInsensitive)) {
+		// no change
+		return m_boardLayers;
 	}
 
 	ModelPart * modelPart = paletteModel()->retrieveModelPart(newModuleID);

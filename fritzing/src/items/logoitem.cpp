@@ -891,7 +891,6 @@ bool CopperLogoItem::isCopper0() {
 
 // todo:
 //
-//  1 vs 2 layers
 //  fix opacity? don't mess with colors at all?
 //  use element bounds to detect contour
 //  make sure imported image has either no layers, board layer, or board layer + silkscreen layer and works in all 3 cases
