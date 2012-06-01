@@ -66,6 +66,8 @@ public:
 	virtual double getLabelFontSizeLarge();
 	ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry, ViewLayer::ViewLayerSpec);
 	QList<ItemBase *> findBoard();
+    ItemBase * findSelectedBoard(int & boardCount);
+    ItemBase * findBoardBeneath(ItemBase *);
 	double getRatsnestOpacity();
 	double getRatsnestWidth();
 
@@ -103,6 +105,7 @@ public:
 public:
 	static QSizeF jumperItemSize();
 	static void getDefaultViaSize(QString & ringThickness, QString & holeSize);
+    static bool isBoard(ItemBase *);
 
 public slots:
 	void resizeBoard(double w, double h, bool doEmit);

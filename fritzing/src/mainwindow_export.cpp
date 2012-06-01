@@ -175,10 +175,9 @@ void MainWindow::exportEtchable() {
 
 void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 {
-	QList<ItemBase *> boards = m_pcbGraphicsView->findBoard();
-	if (boards.count() != 1) return;
-
-    ItemBase * board = boards.at(0);
+    int boardCount;
+    ItemBase * board = m_pcbGraphicsView->findSelectedBoard(boardCount);
+    if (board == NULL) return;
 
 	RoutingStatus routingStatus;
 	m_pcbGraphicsView->updateRoutingStatus(NULL, routingStatus, true);
@@ -1225,21 +1224,20 @@ void MainWindow::exportToGerber() {
 
     //NOTE: this assumes just one board per sketch
 
-	QList<ItemBase *> boards = m_pcbGraphicsView->findBoard();
+    int boardCount;
+	ItemBase * board = m_pcbGraphicsView->findSelectedBoard(boardCount);
 
     // barf an error if there's no board
-    if (boards.count() == 0) {
+    if (boardCount == 0) {
         QMessageBox::critical(this, tr("Fritzing"),
                    tr("Your sketch does not have a board yet!  Please add a PCB in order to export to Gerber."));
         return;
     }
-    if (boards.count() > 1) {
+    if (board == NULL) {
         QMessageBox::critical(this, tr("Fritzing"),
-                   tr("Gerber export can not handle multiple boards."));
+                   tr("Gerber export can only handle one board at a time--please select the board you want to export."));
         return;
     }
-
-	ItemBase * board = boards.at(0);
 
     QString exportDir = QFileDialog::getExistingDirectory(this, tr("Choose a folder for exporting"),
                                              defaultSaveFolder(),

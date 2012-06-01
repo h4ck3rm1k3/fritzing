@@ -63,7 +63,7 @@ bool Dip::isDIP() {
 	QString package = modelPart()->properties().value("package", "");
 	if (package.indexOf("dip", 0, Qt::CaseInsensitive) >= 0) return true;
 	if (package.indexOf("sip", 0, Qt::CaseInsensitive) >= 0) return false;
-	return m_modelPart->family().contains("generic ic", Qt::CaseInsensitive);
+	return family().contains("generic ic", Qt::CaseInsensitive);
 }
 
 bool Dip::otherPropsChange(const QMap<QString, QString> & propsMap) {

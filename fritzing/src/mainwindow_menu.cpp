@@ -1562,11 +1562,13 @@ void MainWindow::updateTraceMenu() {
 	bool exEnabled = false;
 	bool exChecked = true;
 	bool twEnabled = false;
-	bool gfEnabled = false;
 	bool gfrEnabled = false;
 	bool ctlEnabled = false;
 	bool arEnabled = false;
 	bool gfsEnabled = false;
+    int boardCount = 0;
+    int boardSelectedCount = 0;
+    bool oneBoard = false;
 
 	if (m_currentGraphicsView != NULL) {
 		QList<QGraphicsItem *> items = m_currentGraphicsView->scene()->items();
@@ -1579,16 +1581,16 @@ void MainWindow::updateTraceMenu() {
 				if (itemBase == NULL) continue;
 				if (!itemBase->isEverVisible()) continue;
 				
-
 				if (!gfsEnabled) {
 					gfsEnabled = itemBase->itemType() != ModelPart::CopperFill && itemBase->hasConnectors();
 				}
 
+                if (PCBSketchWidget::isBoard(itemBase)) {
+                    boardCount++;
+                    if (itemBase->isSelected()) boardSelectedCount++;
+                }
+
 				switch (itemBase->itemType()) {
-					case ModelPart::Board:
-					case ModelPart::ResizableBoard:
-						gfEnabled = true;
-						break;
 					case ModelPart::Jumper:
 						jiEnabled = true;
 						if (itemBase->isSelected()) {
@@ -1648,15 +1650,18 @@ void MainWindow::updateTraceMenu() {
 		}
 	}
 
+    oneBoard = (boardCount == 1 || (boardCount > 1 && boardSelectedCount == 1));
+
 	m_excludeFromAutorouteAct->setEnabled(exEnabled);
 	m_excludeFromAutorouteAct->setChecked(exChecked);
 	m_changeTraceLayerAct->setEnabled(ctlEnabled);
-	m_autorouteAct->setEnabled(arEnabled);
-	m_orderFabAct->setEnabled(true);
-	m_exportEtchablePdfAct->setEnabled(true);
-	m_exportEtchablePdfFlipAct->setEnabled(true);
-	m_exportEtchableSvgAct->setEnabled(true);
-	m_exportEtchableSvgFlipAct->setEnabled(true);
+	m_autorouteAct->setEnabled(arEnabled && (oneBoard || (m_currentGraphicsView != m_pcbGraphicsView)));
+	m_orderFabAct->setEnabled(boardCount > 0);
+	m_exportEtchablePdfAct->setEnabled(oneBoard);
+	m_exportEtchablePdfFlipAct->setEnabled(oneBoard);
+	m_exportEtchableSvgAct->setEnabled(oneBoard);
+	m_exportEtchableSvgFlipAct->setEnabled(oneBoard);
+    m_exportGerberAct->setEnabled(oneBoard);
 	m_selectAllTracesAct->setEnabled(tEnabled);
 	m_selectAllWiresAct->setEnabled(tEnabled);
 	m_selectAllCopperFillAct->setEnabled(gfrEnabled);
@@ -1665,15 +1670,15 @@ void MainWindow::updateTraceMenu() {
 	m_selectAllJumperItemsAct->setEnabled(jiEnabled);
 	m_selectAllViasAct->setEnabled(viaEnabled);
 	m_tidyWiresAct->setEnabled(twEnabled);
-	m_groundFillAct->setEnabled(gfEnabled);
-	m_copperFillAct->setEnabled(gfEnabled);
-	m_removeGroundFillAct->setEnabled(gfrEnabled);
+	m_groundFillAct->setEnabled(oneBoard);
+	m_copperFillAct->setEnabled(oneBoard);
+	m_removeGroundFillAct->setEnabled(gfrEnabled && oneBoard);
 
 	// TODO: set and clear enabler logic
-	m_setGroundFillSeedsAct->setEnabled(gfsEnabled);
-	m_clearGroundFillSeedsAct->setEnabled(gfsEnabled);
+	m_setGroundFillSeedsAct->setEnabled(gfsEnabled && oneBoard);
+	m_clearGroundFillSeedsAct->setEnabled(gfsEnabled && oneBoard);
 
-	m_designRulesCheckAct->setEnabled(true);
+	m_designRulesCheckAct->setEnabled(oneBoard);
 	m_autorouterSettingsAct->setEnabled(m_currentGraphicsView == m_pcbGraphicsView);
 	m_updateRoutingStatusAct->setEnabled(true);
 }
@@ -2304,7 +2309,15 @@ void MainWindow::autoroute() {
 	PCBSketchWidget * pcbSketchWidget = qobject_cast<PCBSketchWidget *>(m_currentGraphicsView);
 	if (pcbSketchWidget == NULL) return;
 
-	dynamic_cast<SketchAreaWidget *>(pcbSketchWidget->parent())->routingStatusLabel()->setText(tr("Autorouting..."));
+    ItemBase * board = NULL;
+    if (pcbSketchWidget->autorouteTypePCB()) {
+        int boardCount;
+		board = pcbSketchWidget->findSelectedBoard(boardCount);
+        if (board == NULL) return;
+	}
+
+    
+    dynamic_cast<SketchAreaWidget *>(pcbSketchWidget->parent())->routingStatusLabel()->setText(tr("Autorouting..."));
 
 	bool copper0Active = pcbSketchWidget->layerIsActive(ViewLayer::Copper0);
 	bool copper1Active = pcbSketchWidget->layerIsActive(ViewLayer::Copper1);
@@ -2316,9 +2329,10 @@ void MainWindow::autoroute() {
 	QRect wr = this->frameGeometry();
 	progress.move(wr.right() - pr.width(), pr.top());
 
+
 	pcbSketchWidget->scene()->clearSelection();
 	pcbSketchWidget->setIgnoreSelectionChangeEvents(true);
-	CMRouter * autorouter = new CMRouter(pcbSketchWidget);
+	CMRouter * autorouter = new CMRouter(pcbSketchWidget, board);
 
 	connect(autorouter, SIGNAL(wantTopVisible()), this, SLOT(activeLayerTop()), Qt::DirectConnection);
 	connect(autorouter, SIGNAL(wantBottomVisible()), this, SLOT(activeLayerBottom()), Qt::DirectConnection);
@@ -3246,7 +3260,15 @@ void MainWindow::designRulesCheck()
 	PCBSketchWidget * pcbSketchWidget = qobject_cast<PCBSketchWidget *>(m_currentGraphicsView);
 	if (pcbSketchWidget == NULL) return;
 	
-	CMRouter cmRouter(pcbSketchWidget);
+
+    ItemBase * board = NULL;
+    if (pcbSketchWidget->autorouteTypePCB()) {
+        int boardCount;
+		board = pcbSketchWidget->findSelectedBoard(boardCount);
+        if (board == NULL) return;
+	}
+
+	CMRouter cmRouter(pcbSketchWidget, board);
 	QString message;
 	bool result = cmRouter.drc(message);
 

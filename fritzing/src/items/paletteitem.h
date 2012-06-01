@@ -63,7 +63,6 @@ public:
 	void setInstanceTitle(const QString&);
 
 	bool swap(ModelPart* newModelPart, const LayerHash &layerHash, bool reinit, class SwapCommand *);
-	QString family();
 	void setHidden(bool hidden);
 	void setInactive(bool inactivate);
 	bool collectFemaleConnectees(QSet<ItemBase *> & items);

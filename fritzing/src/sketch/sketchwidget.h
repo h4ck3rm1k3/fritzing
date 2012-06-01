@@ -208,7 +208,7 @@ public:
 						bool blackOnly, QSizeF & imageSize, ItemBase * board, double dpi, 
 						bool selectedItems, bool flatten, bool fillHoles, bool & empty);
 	QString renderToSVG(double printerScale, const LayerList &, 
-						bool blackOnly, QSizeF & imageSize, QRectF & offsetRect, double dpi, 
+						bool blackOnly, QSizeF & imageSize, ItemBase * board, QRectF & offsetRect, double dpi, 
 						bool selectedItems, bool flatten, bool fillHoles, bool & empty);
 	QString renderToSVG(double printerScale, bool blackOnly, QSizeF & imageSize, QRectF & offsetRect, double dpi, 
 								  bool flatten, bool fillHoles, 

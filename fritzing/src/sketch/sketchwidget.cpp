@@ -2883,22 +2883,6 @@ QString SketchWidget::makeMoveSVG(double printerScale, double dpi, QPointF & off
 	outputSVG += "</svg>";
 
 	return outputSVG;
-
-
-
-	/*
-	// this is too slow:
-	LayerList viewLayerIDs;
-	foreach (ViewLayer * viewLayer, viewLayers()) {
-		if (viewLayer == NULL) continue;
-
-		viewLayerIDs << viewLayer->viewLayerID();
-	}
-
-	QSizeF imageSize;
-	return renderToSVG(printerScale, viewLayerIDs, true, imageSize, NULL, dpi, false, itemBases, itemsBoundingRect);
-
-	*/
 }
 
 
@@ -6866,18 +6850,18 @@ QString SketchWidget::renderToSVG(double printerScale, const LayerList & layers,
 	if (board) {
 		offsetRect = board->sceneBoundingRect();
 	}
-	return renderToSVG(printerScale, layers, blackOnly, imageSize, offsetRect, dpi, selectedItems, flatten, fillHoles, empty);
+	return renderToSVG(printerScale, layers, blackOnly, imageSize, board, offsetRect, dpi, selectedItems, flatten, fillHoles, empty);
 }
 
 
 QString SketchWidget::renderToSVG(double printerScale, const LayerList & layers, 
-								  bool blackOnly, QSizeF & imageSize, QRectF & offsetRect, double dpi, 
+								  bool blackOnly, QSizeF & imageSize, ItemBase * board, QRectF & offsetRect, double dpi, 
 								  bool selectedItems, bool flatten, bool fillHoles, bool & empty)
 {
 
 	QList<QGraphicsItem *> itemsAndLabels;
 	QRectF itemsBoundingRect;
-	foreach (QGraphicsItem * item, (selectedItems) ? scene()->selectedItems() : scene()->items()) {
+	foreach (QGraphicsItem * item, (selectedItems) ? scene()->selectedItems() : (board != NULL ? scene()->collidingItems(board) : scene()->items())) {
 		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 		if (itemBase == NULL) continue;
 		if (itemBase->hidden()) continue;

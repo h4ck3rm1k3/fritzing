@@ -1974,10 +1974,7 @@ bool MainWindow::swapSpecial(const QString & theProp, QMap<QString, QString> & c
 
 	foreach (QString key, currPropsMap.keys()) {
 		if (key.compare("layers", Qt::CaseInsensitive) == 0) {
-			Board * board = qobject_cast<Board *>(itemBase);
-			if (board == NULL) continue;
-
-            if (!itemBase->modelPart()->family().contains("pcb", Qt::CaseInsensitive)) continue;   // "plain vanilla pcb"
+			if (!PCBSketchWidget::isBoard(itemBase)) continue;
 
 			QString value = currPropsMap.value(key, "");
 			if (value.compare(Board::OneLayerTranslated) == 0) {
@@ -2427,8 +2424,9 @@ void MainWindow::warnSMD(const QString & moduleID) {
 
 	if (m_smdOneSideWarningGiven) return;
 
-	QList<ItemBase *> boards = m_pcbGraphicsView->findBoard();
-	if (boards.count() != 1) return;
+    int boardCount;
+	ItemBase * board = m_pcbGraphicsView->findSelectedBoard(boardCount);
+	if (board == NULL) return;
 
 	m_smdOneSideWarningGiven = true;
 	// don't want to trigger the message box and subsequent swap from within the original event
@@ -2458,11 +2456,8 @@ void MainWindow::warnSMDReally()
 			return;
 	}
 
-	QList<ItemBase *> boards = m_pcbGraphicsView->findBoard();
-	if (boards.count() != 1) return;
-
-	ItemBase * board = boards.at(0);
-
+    int boardCount;
+	ItemBase * board = m_pcbGraphicsView->findSelectedBoard(boardCount);
 	QMap<QString, QString> propsMap;
 	QString family;
 	board->collectPropsMap(family, propsMap);

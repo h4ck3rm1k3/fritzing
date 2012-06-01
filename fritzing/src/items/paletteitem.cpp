@@ -386,10 +386,6 @@ void PaletteItem::setInstanceTitle(const QString& title) {
 	}
 }
 
-QString PaletteItem::family() {
-	return modelPartShared()->family();
-}
-
 void PaletteItem::setHidden(bool hide) {
 	ItemBase::setHidden(hide);
 	figureHover();

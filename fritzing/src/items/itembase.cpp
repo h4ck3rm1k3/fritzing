@@ -1876,3 +1876,7 @@ PartLabel * ItemBase::partLabel() {
 
 void ItemBase::doneLoading() {
 }
+
+QString ItemBase::family() {
+	return modelPart()->family();
+}

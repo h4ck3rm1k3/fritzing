@@ -201,6 +201,7 @@ public:
 	virtual const QCursor * getCursor(Qt::KeyboardModifiers);
 	class PartLabel * partLabel();
 	virtual void doneLoading();
+	QString family();
 
 public:
 	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, double & opacity, double & negativePenWidth, bool & negativeOffsetRect);

@@ -457,21 +457,14 @@ double Ordering::score() {
 
 ////////////////////////////////////////////////////////////////////
 
-CMRouter::CMRouter(PCBSketchWidget * sketchWidget) : Autorouter(sketchWidget)
+CMRouter::CMRouter(PCBSketchWidget * sketchWidget, ItemBase * board) : Autorouter(sketchWidget)
 {
 	QSettings settings;
 	m_maxCycles = settings.value("cmrouter/maxcycles", DefaultMaxCycles).toInt();
 		
 	m_bothSidesNow = sketchWidget->routeBothSides();
 	m_unionPlane = m_union90Plane = NULL;
-	m_board = NULL;
-
-	if (sketchWidget->autorouteTypePCB()) {
-		QList<ItemBase *> boards = sketchWidget->findBoard();
-		if (boards.count() == 1) {
-			m_board = boards.at(0);
-		}
-	}
+	m_board = board;
 
 	if (m_board) {
 		m_maxRect = m_board->sceneBoundingRect();
@@ -1117,8 +1110,9 @@ Plane * CMRouter::tilePlane(ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewL
 	if (!initBoard(m_board, thePlane, alreadyTiled)) return thePlane;
 
 	if (m_sketchWidget->autorouteTypePCB()) {
+        QList<QGraphicsItem *> collidingItems = m_sketchWidget->scene()->collidingItems(m_board);
 		// deal with "rectangular" elements first
-		foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
+		foreach (QGraphicsItem * item, collidingItems) {
 			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
 			if (connectorItem == NULL) continue;
 
@@ -1148,7 +1142,7 @@ Plane * CMRouter::tilePlane(ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewL
 
 		// now insert the wires
 		QList<Wire *> beenThere;
-		foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
+		foreach (QGraphicsItem * item, collidingItems) {
 			Wire * wire = dynamic_cast<Wire *>(item);
 			if (wire == NULL) continue;
 			if (!wire->isVisible()) continue;
@@ -1170,7 +1164,7 @@ Plane * CMRouter::tilePlane(ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewL
 		}
 
 		// now nonconnectors
-		foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
+		foreach (QGraphicsItem * item, collidingItems) {
 			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
 			if (connectorItem != NULL) {
 				continue;
@@ -2493,7 +2487,8 @@ void CMRouter::initUndo(QUndoCommand * parentCommand)
 	QList<TraceWire *> traceWires;
 	QList<ItemBase *> doNotAutorouteList;
 	if (m_sketchWidget->usesJumperItem()) {
-		foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
+        QList<QGraphicsItem *> collidingItems = m_sketchWidget->scene()->collidingItems(m_board);
+		foreach (QGraphicsItem * item, collidingItems) {
 			JumperItem * jumperItem = dynamic_cast<JumperItem *>(item);
 			if (jumperItem == NULL) continue;
 
@@ -2521,7 +2516,7 @@ void CMRouter::initUndo(QUndoCommand * parentCommand)
 				}
 			}
 		}
-		foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
+		foreach (QGraphicsItem * item, collidingItems) {
 			Via * via = dynamic_cast<Via *>(item);
 			if (via == NULL) continue;
 
@@ -2551,7 +2546,7 @@ void CMRouter::initUndo(QUndoCommand * parentCommand)
 		}
 	}
 
-	foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
+	foreach (QGraphicsItem * item, (m_board == NULL) ? m_sketchWidget->scene()->items() : m_sketchWidget->scene()->collidingItems(m_board)) {
 		TraceWire * traceWire = dynamic_cast<TraceWire *>(item);
 		if (traceWire == NULL) continue;
 		if (!traceWire->isTraceType(m_sketchWidget->getTraceFlag())) continue;
@@ -2610,7 +2605,7 @@ void CMRouter::addToUndo(QMultiHash<TraceWire *, long> & splitDNA, QUndoCommand 
 	QList<TraceWire *> wires;
 	QList<JumperItem *> jumperItems;	
 	QList<Via *> vias;
-	foreach (QGraphicsItem * item, m_sketchWidget->items()) {
+	foreach (QGraphicsItem * item, (m_board  == NULL) ? m_sketchWidget->scene()->items() : m_sketchWidget->scene()->collidingItems(m_board)) {
 		TraceWire * wire = dynamic_cast<TraceWire *>(item);
 		if (wire != NULL) {
 			if (!wire->getAutoroutable()) continue;
@@ -3127,7 +3122,7 @@ bool CMRouter::findNearestSpaceAux(PathUnit * pathUnit, TileRect & searchRect, i
 
 void CMRouter::clipParts() 
 {
-	foreach (QGraphicsItem * item,  m_sketchWidget->scene()->items()) {
+	foreach (QGraphicsItem * item, (m_board == NULL) ? m_sketchWidget->scene()->items() :  m_sketchWidget->scene()->collidingItems(m_board)) {
 		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 		if (itemBase == NULL) continue;
 
@@ -4056,7 +4051,7 @@ void CMRouter::clearTracesAndJumpers() {
 	QList<JumperItem *> jumperItems;
 	QList<TraceWire *> traceWires;
 
-	foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
+	foreach (QGraphicsItem * item, (m_board == NULL) ? m_sketchWidget->scene()->items() : m_sketchWidget->scene()->collidingItems(m_board)) {
 		if (m_sketchWidget->usesJumperItem()) {
 			JumperItem * jumperItem = dynamic_cast<JumperItem *>(item);
 			if (jumperItem != NULL) {
@@ -4098,7 +4093,7 @@ void CMRouter::saveTracesAndJumpers(Ordering * ordering) {
 	ordering->saved.clear();
 
 	QList<ItemBase *> itemBases;
-	foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
+	foreach (QGraphicsItem * item, (m_board == NULL) ? m_sketchWidget->scene()->items() : m_sketchWidget->scene()->collidingItems(m_board)) {
 		if (m_sketchWidget->usesJumperItem()) {
 			JumperItem * jumperItem = dynamic_cast<JumperItem *>(item);
 			if (jumperItem != NULL) {
