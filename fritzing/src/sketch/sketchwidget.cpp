@@ -6861,7 +6861,18 @@ QString SketchWidget::renderToSVG(double printerScale, const LayerList & layers,
 
 	QList<QGraphicsItem *> itemsAndLabels;
 	QRectF itemsBoundingRect;
-	foreach (QGraphicsItem * item, (selectedItems) ? scene()->selectedItems() : (board != NULL ? scene()->collidingItems(board) : scene()->items())) {
+    QList<QGraphicsItem *> items;
+    if (selectedItems) {
+        items = scene()->selectedItems();
+    }
+    else if (board == NULL) {
+        items = scene()->items();
+    }
+    else {
+        items = scene()->collidingItems(board);
+        items << board;
+    }
+	foreach (QGraphicsItem * item, items) {
 		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 		if (itemBase == NULL) continue;
 		if (itemBase->hidden()) continue;
