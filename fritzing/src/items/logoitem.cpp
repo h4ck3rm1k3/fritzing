@@ -70,6 +70,7 @@ LogoItem::LogoItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier v
 	}
 
     m_svgOnly = false;
+    m_standardizeColors = true;
 	m_inLogoEntry = QTime::currentTime().addSecs(-10);
 	m_fileNameComboBox = NULL;
 	m_aspectRatioCheck = NULL;
@@ -373,11 +374,13 @@ void LogoItem::loadImage(const QString & fileName, bool addName)
 			return;
 		}
 
-		QStringList exceptions;
-		exceptions << "none" << "";
-		QString toColor(colorString());
-		SvgFileSplitter::changeColors(root, toColor, exceptions);
-        // todo: change opacity?
+        if (m_standardizeColors) {
+		    QStringList exceptions;
+		    exceptions << "none" << "";
+		    QString toColor(colorString());
+		    SvgFileSplitter::changeColors(root, toColor, exceptions);
+            // todo: change opacity?
+        }
 
 		bool isIllustrator = TextUtils::isIllustratorDoc(domDocument);
 
@@ -915,15 +918,14 @@ bool CopperLogoItem::isCopper0() {
 
 // todo:
 //
-//  fix opacity? don't mess with colors at all?
-//  check incoming svg file:
-//      use element bounds to detect contour if there is no boardoutline id
+// don't mess with colors at all?
 
 BoardLogoItem::BoardLogoItem(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel) 
     : LogoItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
     m_hasLogo = false;
     m_svgOnly = true;
+    m_standardizeColors = false;
 	if (BoardImageNames.count() == 0) {
 		BoardImageNames << "circle_pcb";
 	}
@@ -995,17 +997,11 @@ void BoardLogoItem::reloadLayerKin(double mmW, double mmH)
         if (itemBase->viewLayerID() == LogoItem::layer()) {
 		    QString svg = getShapeForRenderer(prop("shape"), LogoItem::layer());
 		    if (!svg.isEmpty()) {
-                QStringList exceptions;
-                exceptions << "none" << "";
-		        QString toColor(LogoItem::colorString());
-                QByteArray byteArray;
-		        SvgFileSplitter::changeColors(svg, toColor, exceptions, byteArray);
 			    if (m_silkscreenRenderer == NULL) {
 				    m_silkscreenRenderer = new FSvgRenderer(itemBase);
 			    }
 			    itemBase->prepareGeometryChange();
-			    QByteArray ba = m_silkscreenRenderer->loadSvg(byteArray, "");
-			    if (!ba.isEmpty()) {
+			    if (m_silkscreenRenderer->loadSvgString(svg)) {
 				    qobject_cast<PaletteItemBase *>(itemBase)->setSharedRendererEx(m_silkscreenRenderer);
 				    itemBase->modelPart()->setProp("width", mmW);
 				    itemBase->modelPart()->setProp("height", mmH);

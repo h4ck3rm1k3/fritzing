@@ -169,7 +169,6 @@ double ResizableBoard::minHeight() {
 
 void ResizableBoard::mousePressEvent(QGraphicsSceneMouseEvent * event) 
 {
-
 	m_corner = ResizableBoard::NO_CORNER;
 
 	if (m_spaceBarWasPressed) {
