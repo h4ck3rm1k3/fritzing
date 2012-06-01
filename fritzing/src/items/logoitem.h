@@ -140,6 +140,7 @@ protected:
     bool canRetrieveLayer(ViewLayer::ViewLayerID viewLayerID);
     void reloadLayerKin(double mmW, double mmH);
     bool checkImage(const QString & filename);
+    QString setBoardOutline(const QString & svg);
 };
 
 

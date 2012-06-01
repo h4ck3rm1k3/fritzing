@@ -31,6 +31,7 @@ $Date$
 #include "../fsvgrenderer.h"
 #include "../sketch/infographicsview.h"
 #include "../svg/svgfilesplitter.h"
+#include "../svg/gerbergenerator.h"
 #include "moduleidnames.h"
 #include "../svg/groundplanegenerator.h"
 #include "../utils/cursormaster.h"
@@ -1021,12 +1022,83 @@ bool BoardLogoItem::canRetrieveLayer(ViewLayer::ViewLayerID viewLayerID) {
 
 bool BoardLogoItem::reloadImage(const QString & svg, const QSizeF & aspectRatio, const QString & fileName, bool addName) 
 {
-    bool result = LogoItem::reloadImage(svg, aspectRatio, fileName, addName);
+    bool result;
+    if (!svg.contains(GerberGenerator::MagicBoardOutlineID, Qt::CaseInsensitive)) {
+        QString nsvg = setBoardOutline(svg);
+        result = LogoItem::reloadImage(nsvg, aspectRatio, fileName, addName);
+    }
+    else {
+        result = LogoItem::reloadImage(svg, aspectRatio, fileName, addName);
+    }
     if (!result) return result;
 
     reloadLayerKin(prop("width").toDouble(), prop("height").toDouble());
     return result;
 }
+
+
+QString BoardLogoItem::setBoardOutline(const QString & svg) {
+    QString errorStr;
+	int errorLine;
+	int errorColumn;
+
+	QDomDocument domDocument;
+	if (!domDocument.setContent(svg, true, &errorStr, &errorLine, &errorColumn)) {
+		return svg;
+	}
+
+    QDomElement root = domDocument.documentElement();
+	if (root.tagName() != "svg") {
+		return svg;
+	}
+
+    QDomElement board = TextUtils::findElementWithAttribute(root, "id", "board");
+    if (board.isNull()) {
+        board = root;
+    }
+
+    QList<QDomElement> leaves;
+    TextUtils::collectLeaves(board, leaves);
+
+    if (leaves.count() == 1) {
+        QDomElement leaf = leaves.at(0);
+        leaf.setAttribute("id", GerberGenerator::MagicBoardOutlineID);
+        return TextUtils::removeXMLEntities(domDocument.toString());
+    }
+
+    int ix = 0;
+    QStringList ids;
+    foreach (QDomElement leaf, leaves) {
+        ids.append(leaf.attribute("id", ""));
+        leaf.setAttribute("id", QString("____%1____").arg(ix++));
+    }
+
+    QSvgRenderer renderer(domDocument.toByteArray());
+
+    ix = 0;
+    foreach (QDomElement leaf, leaves) {    
+        leaf.setAttribute("id", ids.at(ix++));
+    }
+
+    double maxArea = 0;
+    int maxIndex = -1;
+    for (int i = 0; i < leaves.count(); i++) {
+        QRectF r = renderer.boundsOnElement(QString("____%1____").arg(i));
+        if (r.width() * r.height() > maxArea) {
+            maxArea = r.width() * r.height();
+            maxIndex = i;
+        }
+    }
+
+    if (maxIndex >= 0) {
+        QDomElement leaf = leaves.at(maxIndex);
+        leaf.setAttribute("id", GerberGenerator::MagicBoardOutlineID);
+        return TextUtils::removeXMLEntities(domDocument.toString());
+    }
+
+    return svg;
+}
+
 
 bool BoardLogoItem::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget) 
 {
@@ -1066,6 +1138,7 @@ bool BoardLogoItem::checkImage(const QString & filename) {
     int layers = 0;
     int boardLayers = 0;
     int silk1Layers = 0;
+    bool boardHasChildren = false;
     foreach (QDomElement element, elements) {
         QString id = element.attribute("id");
         ViewLayer::ViewLayerID viewLayerID = ViewLayer::viewLayerIDFromXmlString(id);
@@ -1073,11 +1146,19 @@ bool BoardLogoItem::checkImage(const QString & filename) {
             layers++;
             if (viewLayerID == ViewLayer::Board) {
                 boardLayers++;
+                if (element.childNodes().count() > 0) {
+                    boardHasChildren = true;
+                }
             }
             if (viewLayerID == ViewLayer::Silkscreen1) {
                 silk1Layers++;
             }
         }
+    }
+
+    if (boardLayers == 1 && !boardHasChildren) {
+        unableToLoad(filename, tr("the <board> element contains no shape elements") + StandardCustomBoardExplanation);
+        return false;
     }
 
     if ((boardLayers == 1) && (silk1Layers == 1)) return true;
@@ -1094,6 +1175,11 @@ bool BoardLogoItem::checkImage(const QString & filename) {
 
     if (layers > 0 && boardLayers == 0) {
         unableToLoad(filename, tr("because there is no <board> layer") + StandardCustomBoardExplanation);
+        return false;
+    }
+
+    if (layers == 0 && root.childNodes().count() == 0) {
+        unableToLoad(filename, tr("the svg contains no shape elements") + StandardCustomBoardExplanation);
         return false;
     }
 
