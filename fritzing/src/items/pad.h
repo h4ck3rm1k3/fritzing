@@ -58,15 +58,7 @@ public:
 	bool freeRotationAllowed(Qt::KeyboardModifiers);	
 	bool hasPartNumberProperty();
 	void setInitialSize();
-	void mousePressEvent(QGraphicsSceneMouseEvent * event );
-	void mouseMoveEvent(QGraphicsSceneMouseEvent * event );
-	void mouseReleaseEvent(QGraphicsSceneMouseEvent * event );
-	void paintSelected(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-	void hoverEnterEvent(QGraphicsSceneHoverEvent * event );
-	void hoverLeaveEvent(QGraphicsSceneHoverEvent * event );
-	void hoverMoveEvent(QGraphicsSceneHoverEvent * event );
 	void addedToScene(bool temporary);
-	void paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 protected slots:
 	void terminalPointEntry(const QString &);

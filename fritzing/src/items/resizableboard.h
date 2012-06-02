@@ -56,6 +56,9 @@ public:
 public:
 	static QString OneLayerTranslated;
 	static QString TwoLayersTranslated;
+
+    static bool isBoard(ItemBase *);
+    static bool isBoard(ModelPart *);
 };
 
 class ResizableBoard : public Board 

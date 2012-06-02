@@ -236,7 +236,6 @@ public:
 	int selectAllObsolete();
 	int selectAllMoveLock();
 	void setMoveLock(long id, bool lock);
-	int selectAllItemType(ModelPart::ItemType);
 	bool partLabelsVisible();
 	void restorePartLabel(long itemID, QDomElement & element);
 	void loadLogoImage(long itemID, const QString & oldSvg, const QSizeF oldAspectRatio, const QString & oldFilename, const QString & newFilename, bool addName);

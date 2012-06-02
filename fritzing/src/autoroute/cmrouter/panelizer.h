@@ -97,6 +97,20 @@ struct PanelParams
 	QString outputFolder;
 };
 
+struct LayerThing {
+    LayerList layerList;
+    QString name;
+    SVG2gerber::ForWhy forWhy;
+    QString suffix;
+
+    LayerThing(const QString & n, LayerList ll, SVG2gerber::ForWhy fw, const QString & s) {
+            layerList = ll;
+            name = n;
+            forWhy = fw;
+            suffix = s;
+    }
+};
+
 class Panelizer
 {
 public:
@@ -109,11 +123,12 @@ protected:
 	static PlanePair * makePlanePair(PanelParams &);
 	static void collectFiles(QDomElement & path, QHash<QString, QString> & fzzFilePaths);
 	static bool checkBoards(QDomElement & board, QHash<QString, QString> & fzzFilePaths);
-	static bool openWindows(QDomElement & board, QHash<QString, QString> & fzzFilePaths, class FApplication *, PanelParams &, QDir & fzDir, QHash<QString, PanelItem *> & refPanelItems);
+	static bool openWindows(QDomElement & board, QHash<QString, QString> & fzzFilePaths, class FApplication *, PanelParams &, QDir & fzDir, QList<PanelItem *> & refPanelItems);
 	static void bestFit(QList<PanelItem *> & insertPanelItems, PanelParams &, QList<PlanePair *> &);
 	static bool bestFitOne(PanelItem * panelItem, PanelParams & panelParams, QList<PlanePair *> & planePairs, bool createNew);
-	static void addOptional(int optionalCount, QHash<QString, PanelItem *> & refPanelItems, QList<PanelItem *> & insertPanelItems, PanelParams &, QList<PlanePair *> &);
+	static void addOptional(int optionalCount, QList<PanelItem *> & refPanelItems, QList<PanelItem *> & insertPanelItems, PanelParams &, QList<PlanePair *> &);
 	static class MainWindow * inscribeBoard(QDomElement & board, QHash<QString, QString> & fzzFilePaths, FApplication * app, QDir & fzDir, class ReferenceModel *);
+    static void doOnePanelItem(PlanePair * planePair, QList<LayerThing> & layerThingList, PanelItem * panelItem);
 };
 
 #endif

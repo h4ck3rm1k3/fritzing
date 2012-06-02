@@ -1974,7 +1974,7 @@ bool MainWindow::swapSpecial(const QString & theProp, QMap<QString, QString> & c
 
 	foreach (QString key, currPropsMap.keys()) {
 		if (key.compare("layers", Qt::CaseInsensitive) == 0) {
-			if (!PCBSketchWidget::isBoard(itemBase)) continue;
+			if (!Board::isBoard(itemBase)) continue;
 
 			QString value = currPropsMap.value(key, "");
 			if (value.compare(Board::OneLayerTranslated) == 0) {

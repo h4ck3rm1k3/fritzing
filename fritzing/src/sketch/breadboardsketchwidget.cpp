@@ -27,6 +27,7 @@ $Date$
 #include "breadboardsketchwidget.h"
 #include "../debugdialog.h"
 #include "../items/virtualwire.h"
+#include "../items/resizableboard.h"
 #include "../connectors/connectoritem.h"
 #include "../items/moduleidnames.h"
 #include "../waitpushundostack.h"
@@ -109,10 +110,11 @@ BaseCommand::CrossViewType BreadboardSketchWidget::wireSplitCrossView()
 }
 
 bool BreadboardSketchWidget::canDropModelPart(ModelPart * modelPart) {	
+    if (Board::isBoard(modelPart)) {
+        return matchesLayer(modelPart);
+    }
+
 	switch (modelPart->itemType()) {
-		case ModelPart::Board:
-		case ModelPart::ResizableBoard:
-			return matchesLayer(modelPart);
 		case ModelPart::Logo:
 		case ModelPart::Symbol:
 		case ModelPart::Jumper:

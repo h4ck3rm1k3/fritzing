@@ -114,6 +114,26 @@ bool Board::canFindConnectorsUnder() {
 	return false;
 }
 
+
+bool Board::isBoard(ItemBase * itemBase) {
+    if (qobject_cast<Board *>(itemBase) == NULL) return false;
+
+    return isBoard(itemBase->modelPart());
+}
+
+bool Board::isBoard(ModelPart * modelPart) {
+    switch (modelPart->itemType()) {
+        case ModelPart::Board:
+            return true;
+        case ModelPart::ResizableBoard:
+            return true;
+        case ModelPart::Logo:
+            return modelPart->family().contains("pcb", Qt::CaseInsensitive);
+        default:
+            return false;
+    }
+}
+
 ///////////////////////////////////////////////////////////
 
 ResizableBoard::ResizableBoard( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)

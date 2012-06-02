@@ -101,11 +101,11 @@ public:
 	ViewGeometry::WireFlag getTraceFlag();
 	void hideCopperLogoItems(QList<ItemBase *> & copperLogoItems);
 	void restoreCopperLogoItems(QList<ItemBase *> & copperLogoItems);
+	int selectAllItemType(ModelPart::ItemType, const QString & typeName);
 
 public:
 	static QSizeF jumperItemSize();
 	static void getDefaultViaSize(QString & ringThickness, QString & holeSize);
-    static bool isBoard(ItemBase *);
 
 public slots:
 	void resizeBoard(double w, double h, bool doEmit);

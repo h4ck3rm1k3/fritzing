@@ -55,14 +55,6 @@ bool areaGreaterThan(PanelItem * p1, PanelItem * p2)
 	return p1->boardSizeInches.width() * p1->boardSizeInches.height() > p2->boardSizeInches.width() * p2->boardSizeInches.height();
 }
 
-bool rotateGreaterThan(PanelItem * p1, PanelItem * p2)
-{
-	Q_UNUSED(p2);
-	if (!p1->rotate90) return true;
-
-	return false;
-}
-
 int allSpaces(Tile * tile, UserData userData) {
 	QList<Tile*> * tiles = (QList<Tile*> *) userData;
 	if (TiGetType(tile) == Tile::SPACE) {
@@ -87,21 +79,6 @@ int allObstacles(Tile * tile, UserData userData) {
 static int PlanePairIndex = 0;
 
 static double Worst = std::numeric_limits<double>::max() / 4;
-
-struct LayerThing {
-    LayerList layerList;
-    QString name;
-    SVG2gerber::ForWhy forWhy;
-    QString suffix;
-
-    LayerThing(const QString & n, LayerList ll, SVG2gerber::ForWhy fw, const QString & s) {
-            layerList = ll;
-            name = n;
-            forWhy = fw;
-            suffix = s;
-    }
-
-};
 
 int roomOn(Tile * tile, TileRect & tileRect, BestPlace * bestPlace)
 {
@@ -283,13 +260,13 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 		return;
 	}
 
-	QHash<QString, PanelItem *> refPanelItems;
+	QList<PanelItem *> refPanelItems;
 	board = boards.firstChildElement("board");
 	if (!openWindows(board, fzzFilePaths, app, panelParams, fzDir, refPanelItems)) return;
 
 	QList<PanelItem *> insertPanelItems;
 	int optionalCount = 0;
-	foreach (PanelItem * panelItem, refPanelItems.values()) {
+	foreach (PanelItem * panelItem, refPanelItems) {
 		for (int i = 0; i < panelItem->required; i++) {
 			PanelItem * copy = new PanelItem(panelItem);
 			insertPanelItems.append(copy);
@@ -317,9 +294,6 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 		}
 	}
 
-	// so we only have to rotate once
-	qSort(insertPanelItems.begin(), insertPanelItems.end(), rotateGreaterThan);
-
 	QList<LayerThing> layerThingList;
 	layerThingList.append(LayerThing("outline", ViewLayer::outlineLayers(), SVG2gerber::ForOutline, GerberGenerator::OutlineSuffix));  
 	layerThingList.append(LayerThing("copper_top", ViewLayer::copperLayers(ViewLayer::Top), SVG2gerber::ForCopper, GerberGenerator::CopperTopSuffix));
@@ -331,7 +305,7 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 	layerThingList.append(LayerThing("drill", ViewLayer::drillLayers(), SVG2gerber::ForDrill, GerberGenerator::DrillSuffix));
 	  
 	QHash<QString, bool> rotated;
-	foreach(PanelItem * panelItem, refPanelItems.values()) {
+	foreach(PanelItem * panelItem, refPanelItems) {
 		rotated.insert(panelItem->path, false);
 	}
 
@@ -340,93 +314,40 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 			planePair->svgs << TextUtils::makeSVGHeader(1, GraphicsUtils::StandardFritzingDPI, panelParams.panelWidth, panelParams.panelHeight);
 		}
 
+        QList<PanelItem *> needToRotate;
 		foreach (PanelItem * panelItem, insertPanelItems) {
 			if (panelItem->planePair != planePair) continue;
 
 			DebugDialog::debug(QString("placing %1 on panel %2").arg(panelItem->boardName).arg(planePair->index));
+            if ((panelItem->rotate90 && !rotated.value(panelItem->path)) || (panelItem->rotate90 == false && rotated.value(panelItem->path))) {
+                needToRotate << panelItem;
+                continue;
+            }
 
-			try {
-				if ((panelItem->rotate90 && !rotated.value(panelItem->path)) || (panelItem->rotate90 == false && rotated.value(panelItem->path)))
-				{
-					// try to minimize rotations by keeping state
-					rotated.insert(panelItem->path, !rotated.value(panelItem->path));
-					panelItem->window->pcbView()->selectAllItems(true, false);
-					DebugDialog::debug(QString("rotating 90:%1 %2").arg(panelItem->path).arg((long) panelItem, 0, 16));
-					QMatrix matrix = panelItem->board->matrix();
-					DebugDialog::debug(QString("\tmatrix m11:%1 m12:%2 m21:%3 m22:%4 dx:%5 dy:%6").arg(matrix.m11()).arg(matrix.m12()).arg(matrix.m21()).arg(matrix.m22()).arg(matrix.dx()).arg(matrix.dy()));
-					panelItem->window->pcbView()->rotateX(90, false);
-					matrix = panelItem->board->matrix();
-					DebugDialog::debug(QString("\tmatrix m11:%1 m12:%2 m21:%3 m22:%4 dx:%5 dy:%6").arg(matrix.m11()).arg(matrix.m12()).arg(matrix.m21()).arg(matrix.m22()).arg(matrix.dx()).arg(matrix.dy()));
-				}
-
-				QSizeF imageSize;
-				bool empty;
-
-				QString maskTop;
-				QString maskBottom;
-
-				for (int i = 0; i < planePair->svgs.count(); i++) {					
-					SVG2gerber::ForWhy forWhy = layerThingList.at(i).forWhy;
-					QString name = layerThingList.at(i).name;
-					QList<ItemBase *> copperLogoItems;
-					if (forWhy == SVG2gerber::ForMask) {
-						panelItem->window->pcbView()->hideCopperLogoItems(copperLogoItems);
-					}
-					QString one = panelItem->window->pcbView()->renderToSVG(FSvgRenderer::printerScale(), layerThingList.at(i).layerList, true, imageSize, panelItem->board, GraphicsUtils::StandardFritzingDPI, false, false, false, empty);
-					
-					QString clipString;
-					
-					switch (forWhy) {
-						case SVG2gerber::ForOutline:
-							one = GerberGenerator::cleanOutline(one);
-							break;
-						case SVG2gerber::ForMask:
-							panelItem->window->pcbView()->restoreCopperLogoItems(copperLogoItems);
-							one = TextUtils::expandAndFill(one, "black", GerberGenerator::MaskClearanceMils * 2);
-							forWhy = SVG2gerber::ForCopper;
-							if (name.contains("bottom")) {
-								maskBottom = one;
-							}
-							else {
-								maskTop = one;
-							}
-							break;
-						case SVG2gerber::ForSilk:
-							if (name.contains("bottom")) {
-								clipString = maskBottom;
-							}
-							else {
-								clipString = maskTop;
-							}
-							break;
-						default:
-							break;
-					}
-					
-					one = GerberGenerator::clipToBoard(one, panelItem->board, name, forWhy, clipString);
-					if (one.isEmpty()) continue;
-
-					int left = one.indexOf("<svg");
-					left = one.indexOf(">", left + 1);
-					int right = one.lastIndexOf("<");
-					one = QString("<g transform='translate(%1,%2)'>\n").arg(panelItem->x * GraphicsUtils::StandardFritzingDPI).arg(panelItem->y * GraphicsUtils::StandardFritzingDPI) + 
-									one.mid(left + 1, right - left - 1) + 
-									"</g>\n";
-
-					planePair->svgs.replace(i, planePair->svgs.at(i) + one);
-				}
-			}
-			catch (const char * msg) {
-				DebugDialog::debug(QString("panelizer error 1 %1 %2").arg(panelItem->boardName).arg(msg));
-			}
-			catch (const QString & msg) {
-				DebugDialog::debug(QString("panelizer error 2 %1 %2").arg(panelItem->boardName).arg(msg));
-			}
-			catch (...) {
-				DebugDialog::debug(QString("panelizer error 3 %1").arg(panelItem->boardName));
-			}
-
+            doOnePanelItem(planePair, layerThingList, panelItem);
 		}
+
+        foreach (PanelItem * panelItem, needToRotate) {
+            if ((panelItem->rotate90 && !rotated.value(panelItem->path)) || (panelItem->rotate90 == false && rotated.value(panelItem->path)))
+		    {
+			    // try to minimize rotations by keeping state
+			    rotated.insert(panelItem->path, !rotated.value(panelItem->path));
+
+			    panelItem->window->pcbView()->selectAllItems(true, false);
+			    DebugDialog::debug(QString("rotating 90:%1 %2").arg(panelItem->path).arg((long) panelItem, 0, 16));
+			    QMatrix matrix = panelItem->board->matrix();
+			    DebugDialog::debug(QString("\tmatrix m11:%1 m12:%2 m21:%3 m22:%4 dx:%5 dy:%6").arg(matrix.m11()).arg(matrix.m12()).arg(matrix.m21()).arg(matrix.m22()).arg(matrix.dx()).arg(matrix.dy()));
+			    panelItem->window->pcbView()->rotateX(90, false);
+			    matrix = panelItem->board->matrix();
+			    DebugDialog::debug(QString("\tmatrix m11:%1 m12:%2 m21:%3 m22:%4 dx:%5 dy:%6").arg(matrix.m11()).arg(matrix.m12()).arg(matrix.m21()).arg(matrix.m22()).arg(matrix.dx()).arg(matrix.dy()));
+		    }
+        }
+
+		foreach (PanelItem * panelItem, needToRotate) {
+			DebugDialog::debug(QString("placing %1 on panel %2").arg(panelItem->boardName).arg(planePair->index));
+            doOnePanelItem(planePair, layerThingList, panelItem);
+		}
+
 
 		DebugDialog::debug("after placement");
 		QString prefix = QString("%1.panel_%2").arg(panelParams.prefix).arg(planePair->index);
@@ -477,8 +398,80 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 		}
 	}
 
-	foreach (PanelItem * panelItem, refPanelItems.values()) {
+	foreach (PanelItem * panelItem, refPanelItems) {
 		panelItem->window->close();
+	}
+}
+
+
+void Panelizer::doOnePanelItem(PlanePair * planePair, QList<LayerThing> & layerThingList, PanelItem * panelItem) {
+	try {
+		
+		QSizeF imageSize;
+		bool empty;
+
+		QString maskTop;
+		QString maskBottom;
+
+		for (int i = 0; i < planePair->svgs.count(); i++) {					
+			SVG2gerber::ForWhy forWhy = layerThingList.at(i).forWhy;
+			QString name = layerThingList.at(i).name;
+			QList<ItemBase *> copperLogoItems;
+			if (forWhy == SVG2gerber::ForMask) {
+				panelItem->window->pcbView()->hideCopperLogoItems(copperLogoItems);
+			}
+			QString one = panelItem->window->pcbView()->renderToSVG(FSvgRenderer::printerScale(), layerThingList.at(i).layerList, true, imageSize, panelItem->board, GraphicsUtils::StandardFritzingDPI, false, false, false, empty);
+					
+			QString clipString;
+					
+			switch (forWhy) {
+				case SVG2gerber::ForOutline:
+					one = GerberGenerator::cleanOutline(one);
+					break;
+				case SVG2gerber::ForMask:
+					panelItem->window->pcbView()->restoreCopperLogoItems(copperLogoItems);
+					one = TextUtils::expandAndFill(one, "black", GerberGenerator::MaskClearanceMils * 2);
+					forWhy = SVG2gerber::ForCopper;
+					if (name.contains("bottom")) {
+						maskBottom = one;
+					}
+					else {
+						maskTop = one;
+					}
+					break;
+				case SVG2gerber::ForSilk:
+					if (name.contains("bottom")) {
+						clipString = maskBottom;
+					}
+					else {
+						clipString = maskTop;
+					}
+					break;
+				default:
+					break;
+			}
+					
+			one = GerberGenerator::clipToBoard(one, panelItem->board, name, forWhy, clipString);
+			if (one.isEmpty()) continue;
+
+			int left = one.indexOf("<svg");
+			left = one.indexOf(">", left + 1);
+			int right = one.lastIndexOf("<");
+			one = QString("<g transform='translate(%1,%2)'>\n").arg(panelItem->x * GraphicsUtils::StandardFritzingDPI).arg(panelItem->y * GraphicsUtils::StandardFritzingDPI) + 
+							one.mid(left + 1, right - left - 1) + 
+							"</g>\n";
+
+			planePair->svgs.replace(i, planePair->svgs.at(i) + one);
+		}
+	}
+	catch (const char * msg) {
+		DebugDialog::debug(QString("panelizer error 1 %1 %2").arg(panelItem->boardName).arg(msg));
+	}
+	catch (const QString & msg) {
+		DebugDialog::debug(QString("panelizer error 2 %1 %2").arg(panelItem->boardName).arg(msg));
+	}
+	catch (...) {
+		DebugDialog::debug(QString("panelizer error 3 %1").arg(panelItem->boardName));
 	}
 }
 
@@ -710,7 +703,7 @@ bool Panelizer::checkBoards(QDomElement & board, QHash<QString, QString> & fzzFi
 	return true;
 }
 
-bool Panelizer::openWindows(QDomElement & board, QHash<QString, QString> & fzzFilePaths, FApplication * app, PanelParams & panelParams, QDir & fzDir, QHash<QString, PanelItem *> & refPanelItems)
+bool Panelizer::openWindows(QDomElement & board, QHash<QString, QString> & fzzFilePaths, FApplication * app, PanelParams & panelParams, QDir & fzDir, QList<PanelItem *> & refPanelItems)
 {
 	while (!board.isNull()) {
 		int required = board.attribute("requiredCount", "").toInt();
@@ -734,84 +727,74 @@ bool Panelizer::openWindows(QDomElement & board, QHash<QString, QString> & fzzFi
 		}
 
 		mainWindow->showPCBView();
-		
-		QList<ItemBase *> boards = mainWindow->pcbView()->findBoard();
-		
-		if (boards.count() == 0) {
-			DebugDialog::debug(QString("no board found in '%1'").arg(path));
-			return false;
-		}
-		if (boards.count() > 1) {
-			DebugDialog::debug(QString("multiple boards found in '%1'").arg(path));
-			return false;
-		}
-		ItemBase * boardItem = boards.at(0);
-
 		foreach (QGraphicsItem * item, mainWindow->pcbView()->scene()->items()) {
 			ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 			if (itemBase == NULL) continue;
 
 			itemBase->setMoveLock(false);
 		}
+		
+		QList<ItemBase *> boards = mainWindow->pcbView()->findBoard();
+        foreach (ItemBase * boardItem, boards) {
+		    PanelItem * panelItem = new PanelItem;
+		    panelItem->boardName = boardName;
+		    panelItem->window = mainWindow;
+		    panelItem->path = path;
+		    panelItem->board = boardItem;
+		    panelItem->required = required;
+		    panelItem->maxOptional = optional;
 
-		PanelItem * panelItem = new PanelItem;
-		panelItem->boardName = boardName;
-		panelItem->window = mainWindow;
-		panelItem->path = path;
-		panelItem->board = boardItem;
-		panelItem->required = required;
-		panelItem->maxOptional = optional;
+		    QRectF sbr = boardItem->layerKinChief()->sceneBoundingRect();
+		    panelItem->boardSizeInches = sbr.size() / FSvgRenderer::printerScale();
+		    DebugDialog::debug(QString("board size inches c %1, %2, %3")
+				    .arg(panelItem->boardSizeInches.width())
+				    .arg(panelItem->boardSizeInches.height())
+				    .arg(path));
 
-		QRectF sbr = boardItem->layerKinChief()->sceneBoundingRect();
-		panelItem->boardSizeInches = sbr.size() / FSvgRenderer::printerScale();
-		DebugDialog::debug(QString("board size inches c %1, %2, %3")
-				.arg(panelItem->boardSizeInches.width())
-				.arg(panelItem->boardSizeInches.height())
-				.arg(path));
+		    /*
+		    QSizeF boardSize = boardItem->size();
+		    ResizableBoard * resizableBoard = qobject_cast<ResizableBoard *>(boardItem->layerKinChief());
+		    if (resizableBoard != NULL) {
+			    panelItem->boardSizeInches = resizableBoard->getSizeMM() / 25.4;
+			    DebugDialog::debug(QString("board size inches a %1, %2, %3")
+				    .arg(panelItem->boardSizeInches.width())
+				    .arg(panelItem->boardSizeInches.height())
+				    .arg(path), boardItem->sceneBoundingRect());
+		    }
+		    else {
+			    panelItem->boardSizeInches = boardSize / FSvgRenderer::printerScale();
+			    DebugDialog::debug(QString("board size inches b %1, %2, %3")
+				    .arg(panelItem->boardSizeInches.width())
+				    .arg(panelItem->boardSizeInches.height())
+				    .arg(path), boardItem->sceneBoundingRect());
+		    }
+		    */
 
-		/*
-		QSizeF boardSize = boardItem->size();
-		ResizableBoard * resizableBoard = qobject_cast<ResizableBoard *>(boardItem->layerKinChief());
-		if (resizableBoard != NULL) {
-			panelItem->boardSizeInches = resizableBoard->getSizeMM() / 25.4;
-			DebugDialog::debug(QString("board size inches a %1, %2, %3")
-				.arg(panelItem->boardSizeInches.width())
-				.arg(panelItem->boardSizeInches.height())
-				.arg(path), boardItem->sceneBoundingRect());
-		}
-		else {
-			panelItem->boardSizeInches = boardSize / FSvgRenderer::printerScale();
-			DebugDialog::debug(QString("board size inches b %1, %2, %3")
-				.arg(panelItem->boardSizeInches.width())
-				.arg(panelItem->boardSizeInches.height())
-				.arg(path), boardItem->sceneBoundingRect());
-		}
-		*/
+		    bool tooBig = false;
+		    if (panelItem->boardSizeInches.width() >= panelParams.panelWidth) {
+			    tooBig = panelItem->boardSizeInches.width() >= panelParams.panelHeight;
+			    if (!tooBig) {
+				    tooBig = panelItem->boardSizeInches.height() >= panelParams.panelWidth;
+			    }
+		    }
 
-		bool tooBig = false;
-		if (panelItem->boardSizeInches.width() >= panelParams.panelWidth) {
-			tooBig = panelItem->boardSizeInches.width() >= panelParams.panelHeight;
-			if (!tooBig) {
-				tooBig = panelItem->boardSizeInches.height() >= panelParams.panelWidth;
-			}
-		}
+		    if (!tooBig) {
+			    if (panelItem->boardSizeInches.height() >= panelParams.panelHeight) {
+				    tooBig = panelItem->boardSizeInches.height() >= panelParams.panelWidth;
+				    if (!tooBig) {
+					    tooBig = panelItem->boardSizeInches.width() >= panelParams.panelHeight;
+				    }
+			    }
+		    }
 
-		if (!tooBig) {
-			if (panelItem->boardSizeInches.height() >= panelParams.panelHeight) {
-				tooBig = panelItem->boardSizeInches.height() >= panelParams.panelWidth;
-				if (!tooBig) {
-					tooBig = panelItem->boardSizeInches.width() >= panelParams.panelHeight;
-				}
-			}
-		}
-
-		if (tooBig) {
-			DebugDialog::debug(QString("board is too big for panel '%1'").arg(path));
-			return false;
-		}
+		    if (tooBig) {
+			    DebugDialog::debug(QString("board is too big for panel '%1'").arg(path));
+			    return false;
+		    }
 
 
-		refPanelItems.insert(boardName, panelItem);
+		    refPanelItems << panelItem;
+        }
 		mainWindow->setCloseSilently(true);
 
 		board = board.nextSiblingElement("board");
@@ -1036,12 +1019,12 @@ int Panelizer::placeBestFit(Tile * tile, UserData userData) {
 	return 0;
 }
 
-void Panelizer::addOptional(int optionalCount, QHash<QString, PanelItem *> & refPanelItems, QList<PanelItem *> & insertPanelItems, PanelParams & panelParams, QList<PlanePair *> & planePairs)
+void Panelizer::addOptional(int optionalCount, QList<PanelItem *> & refPanelItems, QList<PanelItem *> & insertPanelItems, PanelParams & panelParams, QList<PlanePair *> & planePairs)
 {
 	while (optionalCount > 0) {
 		int ix = qFloor(qrand() * optionalCount / (double) RAND_MAX);
 		int soFar = 0;
-		foreach (PanelItem * panelItem, refPanelItems.values()) {
+		foreach (PanelItem * panelItem, refPanelItems) {
 			if (panelItem->maxOptional == 0) continue;
 
 			if (ix >= soFar && ix < soFar + panelItem->maxOptional) {
@@ -1178,63 +1161,55 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
 	VersionThing versionThingFz;
 	Version::toVersionThing(fritzingVersion, versionThingFz);
 	bool oldGround = !Version::greaterThan(versionThing, versionThingFz);
-	
 		
-	QList<ItemBase *> boards = mainWindow->pcbView()->findBoard();	
-	if (boards.count() == 0) {
-		DebugDialog::debug(QString("no board found in '%1'").arg(path));
-		return mainWindow;
-	}
-	if (boards.count() == 2) {
-		DebugDialog::debug(QString("multiple boards found in '%1'").arg(path));
-		return mainWindow;
-	}
-	ItemBase * boardItem = boards.at(0);
-
-	bool filled = false;
-	QString fillType = mainWindow->pcbView()->characterizeGroundFill();
-
+    bool filled = false;
 	bool swapped = false;
-	if (mainWindow->pcbView()->boardLayers() == 1) {
-		QMultiHash<QString, QString> properties = boardItem->modelPart()->properties();
-		QString family = properties.value("family", "");
-		QString shape = properties.value("shape", "");
-		if (!shape.isEmpty() && !family.isEmpty()) {
-			QMultiHash<QString, QString> ps;
-			ps.insert("layers", "2");
-			ps.insert("shape", shape);
-			QString newModuleID = referenceModel->retrieveModuleId(family, ps, "layers", true); 
-			if (!newModuleID.isEmpty()) {
-				ModelPart * modelPart = referenceModel->retrieveModelPart(newModuleID);
-				if (modelPart) {
-					QString newShape = modelPart->properties().value("shape", "");
-					if (shape == newShape) {
-						mainWindow->swapSelectedAux(boardItem, newModuleID);
-						mainWindow->changeBoardLayers(2, true);
-						mainWindow->removeGroundFill(true);
-						fillType = GroundPlane::fillTypeNone;
-						swapped = true;
-					}
-				}
-			}
-		}
-		if (!swapped) {
-			DebugDialog::debug(QString("\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"
-									"unable to convert to double-sided board %1\n"
-									"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n").arg(path));
-		}
-	}
+    QList<ItemBase *> boards = mainWindow->pcbView()->findBoard();	
+	foreach (ItemBase * boardItem, boards) {
+        mainWindow->pcbView()->selectAllItems(false, false);
+        boardItem->setSelected(true);
+	    QString fillType = mainWindow->pcbView()->characterizeGroundFill();
+        QMultiHash<QString, QString> properties = boardItem->modelPart()->properties();
+	    if (properties.value("layers").compare("1") == 0) {
+		    QString family = properties.value("family", "");
+		    QString shape = properties.value("shape", "");
+            bool localSwapped = false;
+		    if (!shape.isEmpty() && !family.isEmpty()) {
+			    QMultiHash<QString, QString> ps;
+			    ps.insert("layers", "2");
+			    ps.insert("shape", shape);
+			    QString newModuleID = referenceModel->retrieveModuleId(family, ps, "layers", true); 
+			    if (!newModuleID.isEmpty()) {
+				    ModelPart * modelPart = referenceModel->retrieveModelPart(newModuleID);
+				    if (modelPart) {
+					    QString newShape = modelPart->properties().value("shape", "");
+					    if (shape == newShape) {
+						    mainWindow->swapSelectedAux(boardItem, newModuleID);
+                            mainWindow->changeBoardLayers(2, true);
+						    mainWindow->removeGroundFill(true);
+						    fillType = GroundPlane::fillTypeNone;
+						    localSwapped = swapped = true;
+					    }
+				    }
+			    }
+		    }
+		    if (!localSwapped) {
+			    DebugDialog::debug(QString("\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"
+									    "unable to convert to double-sided board %1\n"
+									    "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n").arg(path));
+		    }
+	    }
 
-	if (fillType == GroundPlane::fillTypeNone) {
-		mainWindow->copperFill();
-		filled = true;
-	}
-	else if ((fillType == GroundPlane::fillTypeGround) && oldGround) {
-		mainWindow->removeGroundFill(true);
-		mainWindow->groundFill();
-		filled = true;
-	}
-
+	    if (fillType == GroundPlane::fillTypeNone) {
+		    mainWindow->copperFill();
+		    filled = true;
+	    }
+	    else if ((fillType == GroundPlane::fillTypeGround) && oldGround) {
+		    mainWindow->removeGroundFill(true);
+		    mainWindow->groundFill();
+		    filled = true;
+	    }
+    }
 
 	if (swapped || filled) { 
 		mainWindow->saveAsShareable(path, true);

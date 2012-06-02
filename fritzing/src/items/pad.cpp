@@ -231,8 +231,11 @@ bool Pad::rotation45Allowed() {
 	return true;
 }
 
-bool Pad::freeRotationAllowed(Qt::KeyboardModifiers) {
-	return true;
+bool Pad::freeRotationAllowed(Qt::KeyboardModifiers modifiers) {
+	if ((modifiers & altOrMetaModifier()) == 0) return false;
+	if (!isSelected()) return false;
+
+    return true;
 }
 
 bool Pad::hasPartNumberProperty()
@@ -248,43 +251,6 @@ void Pad::setInitialSize() {
 		modelPart()->setProp("height", GraphicsUtils::pixels2mm(OriginalHeight, FSvgRenderer::printerScale())); 
 		modelPart()->setProp("connect", "center"); 
 	}
-}
-
-void Pad::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
-	PaletteItem::paintHover(painter, option, widget);
-}
-
-void Pad::mousePressEvent(QGraphicsSceneMouseEvent * event) 
-{
-	PaletteItem::mousePressEvent(event);
-}
-
-void Pad::mouseReleaseEvent(QGraphicsSceneMouseEvent * event) 
-{
-	PaletteItem::mouseReleaseEvent(event);
-}
-
-void Pad::mouseMoveEvent(QGraphicsSceneMouseEvent * event) 
-{
-	PaletteItem::mouseMoveEvent(event);
-}
-
-void Pad::paintSelected(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
-	PaletteItem::paintSelected(painter, option, widget);
-}
-
-void Pad::hoverEnterEvent( QGraphicsSceneHoverEvent * event ) {
-	PaletteItem::hoverEnterEvent(event);
-}
-
-void Pad::hoverMoveEvent( QGraphicsSceneHoverEvent * event ) {
-	PaletteItem::hoverMoveEvent(event);
-}
-
-void Pad::hoverLeaveEvent( QGraphicsSceneHoverEvent * event ) {
-	PaletteItem::hoverLeaveEvent(event);
 }
 
 void Pad::resizeMMAux(double mmW, double mmH) {
@@ -316,6 +282,16 @@ void Pad::terminalPointEntry(const QString &) {
 	}
 }
 
-ResizableBoard::Corner Pad::findCorner(QPointF, Qt::KeyboardModifiers) {
-	return ResizableBoard::NO_CORNER;
+ResizableBoard::Corner Pad::findCorner(QPointF scenePos, Qt::KeyboardModifiers modifiers) {
+	//return ResizableBoard::NO_CORNER;
+	ResizableBoard::Corner corner = ResizableBoard::findCorner(scenePos, modifiers);
+	if (corner == ResizableBoard::NO_CORNER) return corner;
+
+	if (modifiers & altOrMetaModifier()) {
+		// free rotate
+		setCursor(*CursorMaster::RotateCursor);
+		return ResizableBoard::NO_CORNER;
+	}
+
+	return corner;
 }

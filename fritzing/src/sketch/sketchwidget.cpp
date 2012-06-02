@@ -332,7 +332,7 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 			
 			// TODO: all this part specific stuff should be in the PartFactory
 			
-			if (mp->itemType() == ModelPart::ResizableBoard) {
+			if (Board::isBoard(mp) || mp->itemType() == ModelPart::Logo) {
 				bool ok;
 				double w = mp->prop("width").toDouble(&ok);
 				if (ok) {
@@ -1654,29 +1654,6 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 
 		bool doConnectors = true;
 
-		/* 
-		// seems to be fast enough now that we don't need this case statement
-		// don't need connectors for breadboard
-		// TODO: how to specify which parts don't need connectors during drag and drop from palette?
-		switch (modelPart->itemType()) {
-			case ModelPart::Breadboard:
-			case ModelPart::Board:
-			case ModelPart::ResizableBoard:
-			case ModelPart::Logo:
-			case ModelPart::Ruler:
-			case ModelPart::Symbol:
-			case ModelPart::Jumper:
-			case ModelPart::CopperFill:
-			case ModelPart::Via:
-			case ModelPart::Unknown:
-				doConnectors = true;
-				break;
-			default:
-				doConnectors = true;
-				break;
-		}
-		*/
-
 		// create temporary item for dragging
 		m_droppingItem = addItemAuxTemp(modelPart, defaultViewLayerSpec(), viewGeometry, fromID, NULL, doConnectors, m_viewIdentifier, true);
 
@@ -1878,9 +1855,8 @@ void SketchWidget::dropItemEvent(QDropEvent *event) {
 	BaseCommand::CrossViewType crossViewType = BaseCommand::CrossView;
 	switch (modelPart->itemType()) {
 		case ModelPart::Ruler:
-		case ModelPart::Logo:
 		case ModelPart::Note:
-			// rulers and logos are local to a particular view
+			// rulers and notes are local to a particular view
 			crossViewType = BaseCommand::SingleView;
 			break;
 		default:
@@ -3117,7 +3093,7 @@ bool SketchWidget::checkMoved()
 		}
 
 		// TODO: boardtypes and breadboard types are always sticky
-		if (item->itemType() == ModelPart::Board || item->itemType() == ModelPart::ResizableBoard) {
+        if (Board::isBoard(item)) {
 			hasBoard = true;
 		}
 	}
@@ -4473,6 +4449,8 @@ void SketchWidget::flipX(Qt::Orientations orientation, bool rubberBandLegEnabled
 		ItemBase *itemBase = ItemBase::extractTopLevelItemBase(items[i]);
 		if (itemBase == NULL) continue;
 
+        if (Board::isBoard(itemBase)) continue;
+
 		switch (itemBase->itemType()) {
 			case ModelPart::Wire:
 			case ModelPart::Note:
@@ -4480,8 +4458,6 @@ void SketchWidget::flipX(Qt::Orientations orientation, bool rubberBandLegEnabled
 			case ModelPart::Unknown:
 			case ModelPart::Via:
 			case ModelPart::Hole:
-			case ModelPart::Board:
-			case ModelPart::ResizableBoard:
 			case ModelPart::Breadboard:
 				continue;
 
@@ -7765,22 +7741,6 @@ void SketchWidget::resizeJumperItem(long itemID, QPointF pos, QPointF c0, QPoint
 	qobject_cast<JumperItem *>(item)->resize(pos, c0, c1);
 }
 
-
-int SketchWidget::selectAllItemType(ModelPart::ItemType itemType) 
-{
-	QSet<ItemBase *> itemBases;
-	foreach (QGraphicsItem * item, scene()->items()) {
-		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
-		if (itemBase == NULL) continue;
-		if (itemBase->itemType() != itemType) continue;
-
-		itemBases.insert(itemBase->layerKinChief());
-	}
-
-	return selectAllItems(itemBases, QObject::tr("Select all jumpers"));
-
-}
-
 int SketchWidget::selectAllObsolete() 
 {
 	QSet<ItemBase *> itemBases;
@@ -7808,7 +7768,6 @@ int SketchWidget::selectAllMoveLock()
 
 	return selectAllItems(itemBases, QObject::tr("Select locked parts"));
 }
-
 
 int SketchWidget::selectAllItems(QSet<ItemBase *> & itemBases, const QString & msg) 
 {

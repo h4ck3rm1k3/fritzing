@@ -459,6 +459,10 @@ void PCBSketchWidget::setNewPartVisible(ItemBase * itemBase) {
 }
 
 bool PCBSketchWidget::canDropModelPart(ModelPart * modelPart) {
+    if (Board::isBoard(modelPart)) {
+        return matchesLayer(modelPart);
+    }
+
 	switch (modelPart->itemType()) {
 		case ModelPart::Jumper:
 		case ModelPart::Logo:
@@ -470,11 +474,6 @@ bool PCBSketchWidget::canDropModelPart(ModelPart * modelPart) {
 		case ModelPart::Symbol:
 			// can't drag and drop these parts in this view
 			return false;
-		case ModelPart::Board:
-		case ModelPart::ResizableBoard:
-			if (!matchesLayer(modelPart)) return false;
-			
-			return true;
 		default:
 			return !modelPart->moduleID().endsWith(ModuleIDNames::SchematicFrameModuleIDName);
 	}
@@ -768,7 +767,7 @@ ItemBase * PCBSketchWidget::findBoardBeneath(ItemBase * itemBase) {
         Board * board = dynamic_cast<Board *>(item);
         if (board == NULL) continue;
 
-        if (isBoard(board)) return board;
+        if (Board::isBoard(board)) return board;
     }
 
     return NULL;
@@ -799,7 +798,7 @@ QList<ItemBase *> PCBSketchWidget::findBoard() {
         Board * board = dynamic_cast<Board *>(childItem);
         if (board == NULL) continue;
 
-        if (isBoard(board)) {
+        if (Board::isBoard(board)) {
            boards.insert(board->layerKinChief());
         }
     }
@@ -1013,7 +1012,7 @@ int PCBSketchWidget::isBoardLayerChange(ItemBase * itemBase, const QString & new
 {							
 	if (!master) return m_boardLayers;
 
-	if (!isBoard(itemBase)) {
+	if (!Board::isBoard(itemBase)) {
 		// no change
 		return m_boardLayers;
 	}
@@ -1053,36 +1052,25 @@ void PCBSketchWidget::changeBoardLayers(int layers, bool doEmit) {
 void PCBSketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType crossViewType, QUndoCommand * parentCommand, 
 						bool offsetPaste, const QRectF * boundingRect, bool seekOutsideConnections, QList<long> & newIDs) {
 	if (parentCommand == NULL) {
-		bool done = false;
 		foreach (ModelPart * modelPart, modelParts) {
-			switch (modelPart->itemType()) {
-				case ModelPart::Board:
-				case ModelPart::ResizableBoard:
-					{
-						done = true;		// not allowed to have multiple boards, so we're almost done
-
-						QString slayers = modelPart->properties().value("layers", "");
-						if (slayers.isEmpty()) {
-							// shouldn't happen
-							break;
-						}
-						bool ok;
-						int layers = slayers.toInt(&ok);
-						if (!ok) {
-							// shouldn't happen
-							break;
-						}
-						if (layers != m_boardLayers) {
-							changeBoardLayers(layers, true);
-							break;
-						}		
-					}
+            if (Board::isBoard(modelPart)) {
+                // assume that all boards have the same number of layers
+				QString slayers = modelPart->properties().value("layers", "");
+				if (slayers.isEmpty()) {
+					// shouldn't happen
+					continue;
+				}
+				bool ok;
+				int layers = slayers.toInt(&ok);
+				if (!ok) {
+					// shouldn't happen
+					continue;
+				}
+				if (layers != m_boardLayers) {
+					changeBoardLayers(layers, true);
 					break;
-				default: 
-					break;
+				}		
 			}
-
-			if (done) break;
 		}
 	}
 
@@ -1620,7 +1608,7 @@ void PCBSketchWidget::changeTrace(Wire * wire, ConnectorItem * from, ConnectorIt
 
 void PCBSketchWidget::deleteItem(ItemBase * itemBase, bool deleteModelPart, bool doEmit, bool later)
 {
-	bool boardDeleted = isBoard(itemBase);
+	bool boardDeleted = Board::isBoard(itemBase);
 	SketchWidget::deleteItem(itemBase, deleteModelPart, doEmit, later);
 	if (boardDeleted) {
 		if (findBoard().count() == 0) {
@@ -1945,17 +1933,19 @@ bool PCBSketchWidget::curvyWiresIndicated(Qt::KeyboardModifiers)
 
 void PCBSketchWidget::rotatePartLabels(double degrees, QTransform & transform, QPointF center, QUndoCommand * parentCommand)
 {
-	ItemBase * board = NULL;
+    QSet<ItemBase *> boards;
 	foreach (ItemBase * itemBase, m_savedItems.values()) {
-		if (itemBase->itemType() == ModelPart::ResizableBoard || itemBase->itemType() == ModelPart::Board) {
-			board = itemBase->layerKinChief();
-			break;
+        if (Board::isBoard(itemBase)) {
+		    boards.insert(itemBase);
 		}
 	}
 
-	if (board == NULL) return;
+	if (boards.count() == 0) return;
 
-	QRectF bbr = board->sceneBoundingRect();
+    QRectF bbr;
+    foreach (ItemBase * board, boards.values()) {
+        bbr |= board->sceneBoundingRect();
+    }
 
 	foreach (QGraphicsItem * item, scene()->items()) {
 		PartLabel * partLabel = dynamic_cast<PartLabel *>(item);
@@ -1978,7 +1968,9 @@ QString PCBSketchWidget::characterizeGroundFill() {
 	bool gotZero = false;
 	bool gotOne = false;
 
-	foreach (QGraphicsItem * item, scene()->items()) {
+    int boardCount;
+    ItemBase * board = findSelectedBoard(boardCount);
+	foreach (QGraphicsItem * item, scene()->collidingItems(board)) {
 		GroundPlane * gp = dynamic_cast<GroundPlane *>(item);
 		if (gp == NULL) continue;
 
@@ -2339,18 +2331,22 @@ bool PCBSketchWidget::canAlignToCenter(ItemBase * itemBase)
 	return qobject_cast<Hole *>(itemBase) != NULL;
 }
 
+int PCBSketchWidget::selectAllItemType(ModelPart::ItemType itemType, const QString & typeName) 
+{
+    int boardCount;
+    ItemBase * board = findSelectedBoard(boardCount);
+    if (board == NULL) return 0;
 
-bool PCBSketchWidget::isBoard(ItemBase * itemBase) {
-    if (qobject_cast<Board *>(itemBase) == NULL) return false;
+    QSet<ItemBase *> itemBases;
+	foreach (QGraphicsItem * item, scene()->collidingItems(board)) {
+		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+		if (itemBase == NULL) continue;
+		if (itemBase->itemType() != itemType) continue;
 
-    switch (itemBase->itemType()) {
-        case ModelPart::Board:
-            return true;
-        case ModelPart::ResizableBoard:
-            return true;
-        case ModelPart::Logo:
-            return itemBase->family().contains("pcb", Qt::CaseInsensitive);
-        default:
-            return false;
-    }
+		itemBases.insert(itemBase->layerKinChief());
+	}
+    itemBases << board;
+
+	return selectAllItems(itemBases, QObject::tr("Select all %1").arg(typeName));
+
 }

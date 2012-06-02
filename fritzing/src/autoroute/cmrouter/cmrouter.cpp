@@ -3125,13 +3125,12 @@ void CMRouter::clipParts()
 	foreach (QGraphicsItem * item, (m_board == NULL) ? m_sketchWidget->scene()->items() :  m_sketchWidget->scene()->collidingItems(m_board)) {
 		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 		if (itemBase == NULL) continue;
+        if (Board::isBoard(itemBase)) continue;
 
 		switch (itemBase->itemType()) {
 			case ModelPart::Wire: 
 			case ModelPart::Jumper: 
-			case ModelPart::Board: 
 			case ModelPart::Breadboard: 
-			case ModelPart::ResizableBoard: 
 			case ModelPart::Note: 
 			case ModelPart::Ruler: 
 				continue;

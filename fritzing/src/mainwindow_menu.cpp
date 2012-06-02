@@ -38,6 +38,7 @@ $Date$
 #include "autoroute/cmrouter/cmrouter.h"
 #include "autoroute/autorouteprogressdialog.h"
 #include "items/virtualwire.h"
+#include "items/resizableboard.h"
 #include "items/jumperitem.h"
 #include "items/via.h"
 #include "fsvgrenderer.h"
@@ -1568,7 +1569,6 @@ void MainWindow::updateTraceMenu() {
 	bool gfsEnabled = false;
     int boardCount = 0;
     int boardSelectedCount = 0;
-    bool oneBoard = false;
 
 	if (m_currentGraphicsView != NULL) {
 		QList<QGraphicsItem *> items = m_currentGraphicsView->scene()->items();
@@ -1585,7 +1585,7 @@ void MainWindow::updateTraceMenu() {
 					gfsEnabled = itemBase->itemType() != ModelPart::CopperFill && itemBase->hasConnectors();
 				}
 
-                if (PCBSketchWidget::isBoard(itemBase)) {
+                if (Board::isBoard(itemBase)) {
                     boardCount++;
                     if (itemBase->isSelected()) boardSelectedCount++;
                 }
@@ -1650,25 +1650,26 @@ void MainWindow::updateTraceMenu() {
 		}
 	}
 
-    oneBoard = (boardCount == 1 || (boardCount > 1 && boardSelectedCount == 1));
+    bool oneBoard = (boardCount == 1 || (boardCount > 1 && boardSelectedCount == 1));
+    bool oneBoardOr = (oneBoard || (m_currentGraphicsView != m_pcbGraphicsView));
 
 	m_excludeFromAutorouteAct->setEnabled(exEnabled);
 	m_excludeFromAutorouteAct->setChecked(exChecked);
 	m_changeTraceLayerAct->setEnabled(ctlEnabled);
-	m_autorouteAct->setEnabled(arEnabled && (oneBoard || (m_currentGraphicsView != m_pcbGraphicsView)));
+	m_autorouteAct->setEnabled(arEnabled && oneBoardOr);
 	m_orderFabAct->setEnabled(boardCount > 0);
 	m_exportEtchablePdfAct->setEnabled(oneBoard);
 	m_exportEtchablePdfFlipAct->setEnabled(oneBoard);
 	m_exportEtchableSvgAct->setEnabled(oneBoard);
 	m_exportEtchableSvgFlipAct->setEnabled(oneBoard);
     m_exportGerberAct->setEnabled(oneBoard);
-	m_selectAllTracesAct->setEnabled(tEnabled);
-	m_selectAllWiresAct->setEnabled(tEnabled);
-	m_selectAllCopperFillAct->setEnabled(gfrEnabled);
-	m_selectAllExcludedTracesAct->setEnabled(tEnabled);
-	m_selectAllIncludedTracesAct->setEnabled(tEnabled);
-	m_selectAllJumperItemsAct->setEnabled(jiEnabled);
-	m_selectAllViasAct->setEnabled(viaEnabled);
+	m_selectAllTracesAct->setEnabled(tEnabled && oneBoardOr);
+	m_selectAllWiresAct->setEnabled(tEnabled && oneBoardOr);
+	m_selectAllCopperFillAct->setEnabled(gfrEnabled && oneBoard);
+	m_selectAllExcludedTracesAct->setEnabled(tEnabled && oneBoardOr);
+	m_selectAllIncludedTracesAct->setEnabled(tEnabled && oneBoardOr);
+	m_selectAllJumperItemsAct->setEnabled(jiEnabled && oneBoard);
+	m_selectAllViasAct->setEnabled(viaEnabled && oneBoard);
 	m_tidyWiresAct->setEnabled(twEnabled);
 	m_groundFillAct->setEnabled(oneBoard);
 	m_copperFillAct->setEnabled(oneBoard);
@@ -2387,23 +2388,29 @@ void MainWindow::updateRoutingStatus() {
 }
 
 void MainWindow::selectAllExcludedTraces() {
-	m_pcbGraphicsView->selectAllExcludedTraces();
+	PCBSketchWidget * pcbSketchWidget = qobject_cast<PCBSketchWidget *>(m_currentGraphicsView);
+	if (pcbSketchWidget == NULL) return;
+
+    pcbSketchWidget->selectAllExcludedTraces();
 }
 
 void MainWindow::selectAllIncludedTraces() {
-	m_pcbGraphicsView->selectAllIncludedTraces();
+	PCBSketchWidget * pcbSketchWidget = qobject_cast<PCBSketchWidget *>(m_currentGraphicsView);
+	if (pcbSketchWidget == NULL) return;
+
+    pcbSketchWidget->selectAllIncludedTraces();
 }
 
 void MainWindow::selectAllJumperItems() {
-	m_currentGraphicsView->selectAllItemType(ModelPart::Jumper);
+	m_pcbGraphicsView->selectAllItemType(ModelPart::Jumper, tr("jumpers"));
 }
 
 void MainWindow::selectAllCopperFill() {
-	m_currentGraphicsView->selectAllItemType(ModelPart::CopperFill);
+	m_pcbGraphicsView->selectAllItemType(ModelPart::CopperFill, tr("copperfill"));
 }
 
 void MainWindow::selectAllVias() {
-	m_currentGraphicsView->selectAllItemType(ModelPart::Via);
+	m_pcbGraphicsView->selectAllItemType(ModelPart::Via, tr("vias"));
 }
 
 void MainWindow::notClosableForAWhile() {
