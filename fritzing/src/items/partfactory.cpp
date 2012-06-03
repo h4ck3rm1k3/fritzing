@@ -155,7 +155,7 @@ ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClas
 					if (moduleID.endsWith(ModuleIDNames::SchematicFrameModuleIDName)) {
 						return new SchematicFrame(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 					}
-					if (moduleID.compare(ModuleIDNames::PadModuleIDName) == 0) {
+					if (moduleID.endsWith(ModuleIDNames::PadModuleIDName)) {
 						return new Pad(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 					}
 					// must get the subclasses first

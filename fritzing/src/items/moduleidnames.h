@@ -57,6 +57,7 @@ public:
 	static const QString HoleModuleIDName;
 	static const QString ViaModuleIDName;
 	static const QString PadModuleIDName;
+	static const QString Copper0PadModuleIDName;
 	static const QString CapacitorModuleIDName;
 	static const QString CrystalModuleIDName;
 	static const QString ZenerDiodeModuleIDName;

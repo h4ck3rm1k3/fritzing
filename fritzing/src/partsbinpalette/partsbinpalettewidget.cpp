@@ -441,7 +441,7 @@ void PartsBinPaletteWidget::load(const QString &filename, QWidget * progressTarg
 
 	m_location = BinLocation::findLocation(filename);
 
-	DebugDialog::debug("loading bin");
+	//DebugDialog::debug("loading bin");
 
 	if (fastLoad) {
 		QString binName, iconName;
@@ -509,7 +509,7 @@ void PartsBinPaletteWidget::load(const QString &filename, QWidget * progressTarg
 		m_loadingProgressDialog = NULL;
 	}
 
-	DebugDialog::debug("done loading bin");
+	//DebugDialog::debug("done loading bin");
 	//delete paletteReferenceModel;
 }
 

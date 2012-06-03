@@ -165,7 +165,7 @@ protected:
 	bool canAlignToCenter(ItemBase *);
 
 signals:
-	void subSwapSignal(SketchWidget *, ItemBase *, ViewLayer::ViewLayerSpec, QUndoCommand * parentCommand);
+	void subSwapSignal(SketchWidget *, ItemBase *, const QString & newModuleID, ViewLayer::ViewLayerSpec, long & newID, QUndoCommand * parentCommand);
 	void boardDeletedSignal();
 	void groundFillSignal();
 	void copperFillSignal();

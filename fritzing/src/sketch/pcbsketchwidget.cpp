@@ -894,7 +894,7 @@ void PCBSketchWidget::swapLayers(ItemBase *, int newLayers, bool flip, QUndoComm
 	foreach (QGraphicsItem * item, scene()->items()) {
 		ItemBase * smd = dynamic_cast<ItemBase *>(item);
 		if (smd == NULL) continue;
-        if (smd->moduleID().compare(ModuleIDNames::PadModuleIDName) == 0) {
+        if (smd->moduleID().endsWith(ModuleIDNames::PadModuleIDName)) {
             pads << smd;
             continue;
         }
@@ -925,17 +925,23 @@ void PCBSketchWidget::swapLayers(ItemBase *, int newLayers, bool flip, QUndoComm
 	}
 
 	foreach (ItemBase * smd, smds) {
-		emit subSwapSignal(this, smd, (newLayers == 1) ? ViewLayer::ThroughHoleThroughTop_OneLayer : ViewLayer::ThroughHoleThroughTop_TwoLayers, changeBoardCommand);
+        long newID;
+		emit subSwapSignal(this, smd, smd->moduleID(), (newLayers == 1) ? ViewLayer::ThroughHoleThroughTop_OneLayer : ViewLayer::ThroughHoleThroughTop_TwoLayers, newID, changeBoardCommand);
 	}
 
 	foreach (ItemBase * itemBase, pads) {
         Pad * pad = qobject_cast<Pad *>(itemBase);
         if (pad == NULL) continue;
 
+        long newID;
+		emit subSwapSignal(this, pad, 
+                (newLayers == 1) ? ModuleIDNames::Copper0PadModuleIDName : ModuleIDNames::PadModuleIDName, 
+                (newLayers == 1) ? ViewLayer::ThroughHoleThroughTop_OneLayer : ViewLayer::ThroughHoleThroughTop_TwoLayers, 
+                newID, changeBoardCommand);
+
         double w = pad->modelPart()->localProp("width").toDouble();
         double h = pad->modelPart()->localProp("height").toDouble();
-
-        new ResizeBoardCommand(this, pad->id(), w, h, w, h, parentCommand);
+        new ResizeBoardCommand(this, newID, w, h, w, h, parentCommand);
 	}
 
 }

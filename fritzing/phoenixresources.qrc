@@ -207,6 +207,7 @@
         <file>resources/parts/core/ground.fzp</file>
 	<file>resources/parts/core/via.fzp</file>
 	<file>resources/parts/core/pad.fzp</file>
+	<file>resources/parts/core/pad0.fzp</file>
         <file>resources/parts/core/dcpower.fzp</file>
         <file>resources/parts/core/power.fzp</file>
         <file>resources/parts/core/jumper.fzp</file>

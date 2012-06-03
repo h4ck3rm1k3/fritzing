@@ -310,7 +310,7 @@ protected slots:
 	void openProgramWindow();
 	void linkToProgramFile(const QString & filename, const QString & language, const QString & programmer, bool addLink, bool strong);
 	void designRulesCheck();
-	void subSwapSlot(SketchWidget *, ItemBase *, ViewLayer::ViewLayerSpec, QUndoCommand * parentCommand);
+	void subSwapSlot(SketchWidget *, ItemBase *, const QString & newModuleID, ViewLayer::ViewLayerSpec, long & newID, QUndoCommand * parentCommand);
 	void updateLayerMenuSlot();
 	bool save();
 	bool saveAs();

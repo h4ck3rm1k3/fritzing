@@ -545,8 +545,8 @@ void MainWindow::connectPairs() {
 	succeeded = connect(m_pcbGraphicsView, SIGNAL(dropPasteSignal(SketchWidget *)), 
 						this, SLOT(dropPaste(SketchWidget *)));
 	
-	succeeded = connect(m_pcbGraphicsView, SIGNAL(subSwapSignal(SketchWidget *, ItemBase *, ViewLayer::ViewLayerSpec, QUndoCommand *)),
-						this, SLOT(subSwapSlot(SketchWidget *, ItemBase *, ViewLayer::ViewLayerSpec, QUndoCommand *)),
+	succeeded = connect(m_pcbGraphicsView, SIGNAL(subSwapSignal(SketchWidget *, ItemBase *, const QString &, ViewLayer::ViewLayerSpec, long &, QUndoCommand *)),
+						this, SLOT(subSwapSlot(SketchWidget *, ItemBase *, const QString &, ViewLayer::ViewLayerSpec, long &, QUndoCommand *)),
 						Qt::DirectConnection);
 
 	succeeded = connect(m_pcbGraphicsView, SIGNAL(firstTimeHelpHidden()), this, SLOT(firstTimeHelpHidden()));
@@ -2055,9 +2055,9 @@ void MainWindow::swapSelectedAux(ItemBase * itemBase, const QString & moduleID) 
 }
 
 
-void MainWindow::subSwapSlot(SketchWidget * sketchWidget, ItemBase * itemBase, ViewLayer::ViewLayerSpec viewLayerSpec, QUndoCommand * parentCommand) {
+void MainWindow::subSwapSlot(SketchWidget * sketchWidget, ItemBase * itemBase, const QString & newModuleID, ViewLayer::ViewLayerSpec viewLayerSpec, long & newID, QUndoCommand * parentCommand) {
 	Q_UNUSED(sketchWidget);
-	swapSelectedAuxAux(itemBase, itemBase->moduleID(), viewLayerSpec, parentCommand);
+	newID = swapSelectedAuxAux(itemBase, newModuleID, viewLayerSpec, parentCommand);
 }
 
 long MainWindow::swapSelectedAuxAux(ItemBase * itemBase, const QString & moduleID,  ViewLayer::ViewLayerSpec viewLayerSpec, QUndoCommand * parentCommand) 
@@ -2476,11 +2476,7 @@ void MainWindow::warnSMDReally()
 
     int boardCount;
 	ItemBase * board = m_pcbGraphicsView->findSelectedBoard(boardCount);
-	QMap<QString, QString> propsMap;
-	QString family;
-	board->collectPropsMap(family, propsMap);
-	propsMap.insert("layers", "2");
-	swapSelectedMap(family, "layers", propsMap, board);
+	swapLayers(board, 2, tr("Change to two layer pcb"), true);
 }
 
 
