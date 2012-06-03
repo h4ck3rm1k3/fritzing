@@ -297,7 +297,7 @@ void PCBSketchWidget::addDefaultParts() {
 	viewGeometry.setLoc(QPointF(0, 0));
 
 	// have to put this off until later, because positioning the item doesn't work correctly until the view is visible
-	m_addedDefaultPart = addItem(paletteModel()->retrieveModelPart(ModuleIDNames::TwoSidedRectangleModuleIDName), defaultViewLayerSpec(), BaseCommand::CrossView, viewGeometry, newID, -1, NULL, NULL);
+	m_addedDefaultPart = addItem(paletteModel()->retrieveModelPart(ModuleIDNames::TwoSidedRectanglePCBModuleIDName), defaultViewLayerSpec(), BaseCommand::CrossView, viewGeometry, newID, -1, NULL, NULL);
 	m_addDefaultParts = true;
 
 	changeBoardLayers(2, true);

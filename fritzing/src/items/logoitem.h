@@ -129,7 +129,6 @@ protected:
 	QStringList & getImageNames();
 	QStringList & getNewImageNames();
     QString getShapeForRenderer(const QString & svg);
-    QString getShapeForRenderer(const QString & svg, ViewLayer::ViewLayerID viewLayerID);
     bool canRetrieveLayer(ViewLayer::ViewLayerID viewLayerID);
     void reloadLayerKin(double mmW, double mmH);
     QString setBoardOutline(const QString & svg);

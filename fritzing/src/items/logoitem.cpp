@@ -811,34 +811,7 @@ BoardLogoItem::~BoardLogoItem() {
 
 QString BoardLogoItem::getShapeForRenderer(const QString & svg) 
 {
-    return getShapeForRenderer(svg, m_viewLayerID);
-}
-
-QString BoardLogoItem::getShapeForRenderer(const QString & svg, ViewLayer::ViewLayerID viewLayerID) 
-{
-    QString xmlName = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
-	SvgFileSplitter splitter;
-    QString xml = svg;
-	bool result = splitter.splitString(xml, xmlName);
-	if (result) {
-        xml = splitter.elementString(xmlName);
-    }
-    else {
-		xml = "";
-	}
-
-    QString header("<?xml version='1.0' encoding='UTF-8'?>\n"
-                    "<svg ");
-    QDomNamedNodeMap map = splitter.domDocument().documentElement().attributes();
-    for (int i = 0; i < map.count(); i++) {
-        QDomNode node = map.item(i);
-        header += node.nodeName() + "='" + node.nodeValue() + "' ";
-    }
-    header += ">\n";
-
-    header = header + xml + "\n</svg>";
-    //DebugDialog::debug(header);
-	return header;
+    return ResizableBoard::getShapeForRenderer(svg, m_viewLayerID);
 }
 
 ViewLayer::ViewLayerID BoardLogoItem::layer() {
@@ -870,7 +843,7 @@ void BoardLogoItem::reloadLayerKin(double mmW, double mmH)
 {
 	foreach (ItemBase * itemBase, m_layerKin) {
         if (itemBase->viewLayerID() == LogoItem::layer()) {
-		    QString svg = getShapeForRenderer(prop("shape"), LogoItem::layer());
+		    QString svg = ResizableBoard::getShapeForRenderer(prop("shape"), LogoItem::layer());
 		    if (!svg.isEmpty()) {
 			    if (m_silkscreenRenderer == NULL) {
 				    m_silkscreenRenderer = new FSvgRenderer(itemBase);

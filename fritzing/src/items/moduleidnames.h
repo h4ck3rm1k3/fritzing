@@ -36,8 +36,10 @@ public:
 	static const QString RulerModuleIDName;
 	static const QString BreadboardModuleIDName;
 	static const QString TinyBreadboardModuleIDName;
-	static const QString RectangleModuleIDName;
-	static const QString TwoSidedRectangleModuleIDName;
+	static const QString RectanglePCBModuleIDName;
+	static const QString TwoSidedRectanglePCBModuleIDName;
+	static const QString EllipsePCBModuleIDName;
+	static const QString TwoSidedEllipsePCBModuleIDName;
 	static const QString NoteModuleIDName;
 	static const QString WireModuleIDName;
 	static const QString JumperModuleIDName;

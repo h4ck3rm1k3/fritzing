@@ -134,6 +134,7 @@ protected:
 	void hoverMoveEvent(QGraphicsSceneHoverEvent * event );
 	QString makeBoardSvg(double mmW, double mmH, double milsW, double milsH);
 	QString makeSilkscreenSvg(double mmW, double mmH, double milsW, double milsH);
+    QString makeSvg(double mmW, double mmH, const QString & layerTemplate);
 	QStringList collectValues(const QString & family, const QString & prop, QString & value);
 	virtual void loadTemplates();
 	virtual double minWidth();
@@ -149,6 +150,7 @@ protected:
 	QFrame * setUpDimEntry(bool includeProportion, QWidget * & returnWidget);
 	void fixWH();
 	void setWidthAndHeight(double w, double h);
+    QString getShapeForRenderer(const QString & svg, ViewLayer::ViewLayerID viewLayerID);
 
 protected:
 	static const double CornerHandleSize;

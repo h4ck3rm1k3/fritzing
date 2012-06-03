@@ -196,6 +196,8 @@
         <file>resources/parts/core/note.fzp</file>
         <file>resources/parts/core/rectangle_pcb.fzp</file>
         <file>resources/parts/core/rectangle_pcb_two_layers.fzp</file>
+        <file>resources/parts/core/ellipse_pcb.fzp</file>
+        <file>resources/parts/core/ellipse_pcb_two_layers.fzp</file>
         <file>resources/parts/core/logotext.fzp</file>
         <file>resources/parts/core/logoimage.fzp</file>
         <file>resources/parts/core/copper1logotext.fzp</file>
@@ -244,6 +246,7 @@
         <file>resources/parts/svg/core/breadboard/30.20perfboard.svg</file>
 	
         <file>resources/parts/svg/core/pcb/rectangle_pcb.svg</file>
+        <file>resources/parts/svg/core/pcb/ellipse_pcb.svg</file>
         <file>resources/parts/svg/core/pcb/logo.svg</file>
         <file>resources/parts/svg/core/pcb/copper1logo.svg</file>
         <file>resources/parts/svg/core/pcb/jumper.svg</file>
@@ -293,9 +296,6 @@
 
 	<file>resources/templates/jumper_copper0LayerTemplate.txt</file>
         <file>resources/templates/jumper_jumperwiresLayerTemplate.txt</file>
-        <file>resources/templates/resizableBoard_boardLayerTemplate.txt</file>
-        <file>resources/templates/resizableBoard_silkscreenLayerTemplate.txt</file>
-        <file>resources/templates/resizableBoard_fzpTemplate.txt</file>
 	<file>resources/templates/bom.html</file>
 	<file>resources/templates/bom_row.html</file>
 	<file>resources/templates/perfboard_boardLayerTemplate.txt</file>

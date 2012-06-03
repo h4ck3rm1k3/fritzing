@@ -48,8 +48,8 @@ $Date$
 #include <qmath.h>
 #include <qnumeric.h>
 
-static QString BoardLayerTemplate = "";
-static QString SilkscreenLayerTemplate = "";
+QHash<QString, QString> BoardLayerTemplates;
+QHash<QString, QString> SilkscreenLayerTemplates;
 static const int LineThickness = 8;
 static const QRegExp HeightExpr("height=\\'\\d*px");
 static QString StandardCustomBoardExplanation;
@@ -431,18 +431,16 @@ void ResizableBoard::addedToScene(bool temporary) {
 }
 
 void ResizableBoard::loadTemplates() {
-	if (BoardLayerTemplate.isEmpty()) {
-		QFile file(":/resources/templates/resizableBoard_boardLayerTemplate.txt");
-		file.open(QFile::ReadOnly);
-		BoardLayerTemplate = file.readAll();
-		file.close();
-	}
-	if (SilkscreenLayerTemplate.isEmpty()) {
-		QFile file(":/resources/templates/resizableBoard_silkscreenLayerTemplate.txt");
-		file.open(QFile::ReadOnly);
-		SilkscreenLayerTemplate = file.readAll();
-		file.close();
-	}
+    if (!BoardLayerTemplates.value(moduleID(), "").isEmpty()) return;
+
+    QFile file(m_filename);
+    if (!file.open(QIODevice::ReadOnly)) return;
+
+    QString svg = file.readAll();
+    if (svg.isEmpty()) return;
+
+    BoardLayerTemplates.insert(moduleID(), getShapeForRenderer(svg, ViewLayer::Board));
+    SilkscreenLayerTemplates.insert(moduleID(), getShapeForRenderer(svg, ViewLayer::Silkscreen1));
 }
 
 double ResizableBoard::minWidth() {
@@ -776,17 +774,51 @@ QString ResizableBoard::makeFirstLayerSvg(double mmW, double mmH, double milsW, 
 }
 
 QString ResizableBoard::makeBoardSvg(double mmW, double mmH, double milsW, double milsH) {
-	return BoardLayerTemplate
-		.arg(mmW).arg(mmH)			
-		.arg(milsW).arg(milsH)
-		.arg(milsW - LineThickness).arg(milsH - LineThickness);
+    Q_UNUSED(milsW);
+    Q_UNUSED(milsH);
+    return makeSvg(mmW, mmH, BoardLayerTemplates.value(moduleID()));
 }
 
 QString ResizableBoard::makeSilkscreenSvg(double mmW, double mmH, double milsW, double milsH) {
-	return SilkscreenLayerTemplate
-		.arg(mmW).arg(mmH)
-		.arg(milsW).arg(milsH)
-		.arg(milsW - LineThickness).arg(milsH - LineThickness);
+    Q_UNUSED(milsW);
+    Q_UNUSED(milsH);
+    return makeSvg(mmW, mmH, SilkscreenLayerTemplates.value(moduleID()));
+}
+
+QString ResizableBoard::makeSvg(double mmW, double mmH, const QString & layerTemplate)
+{
+    if (layerTemplate.isEmpty()) return "";
+
+    QDomDocument doc;
+    if (!doc.setContent(layerTemplate)) return "";
+
+    QDomElement root = doc.documentElement();
+    QString mmString("%1mm");
+    root.setAttribute("width", mmString.arg(mmW));
+    root.setAttribute("height", mmString.arg(mmH));
+    root.setAttribute("viewBox", QString("0 0 %1 %2").arg(mmW).arg(mmH));
+    QList<QDomElement> leaves;
+    TextUtils::collectLeaves(root, leaves);
+    if (leaves.count() > 1) return "";
+
+    QDomElement leaf = leaves.at(0);
+
+    bool ok;
+    double strokeWidth = leaf.attribute("stroke-width").toDouble(&ok);
+    if (!ok) return "";
+
+    if (layerTemplate.contains("<ellipse")) {
+        leaf.setAttribute("cx", mmW / 2);
+        leaf.setAttribute("cy", mmH / 2);
+        leaf.setAttribute("rx", (mmW - strokeWidth) / 2);
+        leaf.setAttribute("ry", (mmH - strokeWidth) / 2);
+    }
+    else if (layerTemplate.contains("<rect")) {
+        leaf.setAttribute("width", mmW - strokeWidth);
+        leaf.setAttribute("height", mmH - strokeWidth);
+    }
+    
+    return doc.toString();
 }
 
 void ResizableBoard::saveParams() {
@@ -1166,4 +1198,31 @@ void ResizableBoard::setWidthAndHeight(double w, double h)
 	if (m_heightEditor) {
 		m_heightEditor->setText(QString::number(h));
 	}
+}
+
+QString ResizableBoard::getShapeForRenderer(const QString & svg, ViewLayer::ViewLayerID viewLayerID) 
+{
+    QString xmlName = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
+	SvgFileSplitter splitter;
+    QString xml = svg;
+	bool result = splitter.splitString(xml, xmlName);
+	if (result) {
+        xml = splitter.elementString(xmlName);
+    }
+    else {
+		xml = "";
+	}
+
+    QString header("<?xml version='1.0' encoding='UTF-8'?>\n"
+                    "<svg ");
+    QDomNamedNodeMap map = splitter.domDocument().documentElement().attributes();
+    for (int i = 0; i < map.count(); i++) {
+        QDomNode node = map.item(i);
+        header += node.nodeName() + "='" + node.nodeValue() + "' ";
+    }
+    header += ">\n";
+
+    header = header + xml + "\n</svg>";
+    //DebugDialog::debug(header);
+	return header;
 }
