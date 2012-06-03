@@ -254,8 +254,7 @@ LayerHash & InfoGraphicsView::viewLayers() {
 	return ViewLayers;
 }
 
-void InfoGraphicsView::loadLogoImage(long itemID, const QString & oldSvg, const QSizeF oldAspectRatio, const QString & oldFilename, const QString & newFilename, bool addName) {
-	Q_UNUSED(itemID);
+void InfoGraphicsView::loadLogoImage(ItemBase *, const QString & oldSvg, const QSizeF oldAspectRatio, const QString & oldFilename, const QString & newFilename, bool addName) {
 	Q_UNUSED(oldSvg);
 	Q_UNUSED(oldAspectRatio);
 	Q_UNUSED(oldFilename);

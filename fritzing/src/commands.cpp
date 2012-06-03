@@ -1790,13 +1790,15 @@ LoadLogoImageCommand::LoadLogoImageCommand(SketchWidget *sketchWidget, long id,
 }
 
 void LoadLogoImageCommand::undo() {
-	m_sketchWidget->loadLogoImage(m_itemID, m_oldSvg, m_oldAspectRatio, m_oldFilename);
+    if (!m_redoOnly) {
+	    m_sketchWidget->loadLogoImage(m_itemID, m_oldSvg, m_oldAspectRatio, m_oldFilename);
+    }
 }
 
 void LoadLogoImageCommand::redo() {
 	if (m_newFilename.isEmpty()) {
 	}
-	else {
+	else if (!m_undoOnly) {
 		m_sketchWidget->loadLogoImage(m_itemID, m_newFilename, m_addName);
 	}
 }

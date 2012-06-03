@@ -7820,8 +7820,14 @@ void SketchWidget::restorePartLabel(long itemID, QDomElement & element) {
 	itemBase->restorePartLabel(element, getLabelViewLayerID(itemBase->viewLayerSpec()));
 }
 
-void SketchWidget::loadLogoImage(long itemID, const QString & oldSvg, const QSizeF oldAspectRatio, const QString & oldFilename, const QString & newFilename, bool addName) {
-	QUndoCommand * cmd = new LoadLogoImageCommand(this, itemID, oldSvg, oldAspectRatio, oldFilename, newFilename, addName, NULL);
+void SketchWidget::loadLogoImage(ItemBase * itemBase, const QString & oldSvg, const QSizeF oldAspectRatio, const QString & oldFilename, const QString & newFilename, bool addName) {
+	if (oldSvg.isEmpty() && oldFilename.isEmpty()) {
+        // have to swap in a custom shape then load the file
+        emit swapBoardImageSignal(this, itemBase, newFilename, m_boardLayers == 1 ? ModuleIDNames::OneLayerBoardLogoImageModuleIDName : ModuleIDNames::BoardLogoImageModuleIDName, addName);
+        return;
+    }
+    
+    QUndoCommand * cmd = new LoadLogoImageCommand(this, itemBase->id(), oldSvg, oldAspectRatio, oldFilename, newFilename, addName, NULL);
 	cmd->setText(tr("Change image from %1 to %2").arg(oldFilename).arg(newFilename));
 	m_undoStack->waitPush(cmd, PropChangeDelay);
 }

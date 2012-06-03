@@ -510,6 +510,9 @@ void MainWindow::connectPairs() {
 	connect(m_pcbGraphicsView, SIGNAL(groundFillSignal()), this, SLOT(groundFill()));
 	connect(m_pcbGraphicsView, SIGNAL(copperFillSignal()), this, SLOT(copperFill()));
 
+    connect(m_pcbGraphicsView, SIGNAL(swapBoardImageSignal(SketchWidget *, ItemBase *, const QString &, const QString &, bool)),
+                this, SLOT(swapBoardImageSlot(SketchWidget *, ItemBase *, const QString &, const QString &, bool)));
+
 
 	connect(m_breadboardGraphicsView, SIGNAL(setActiveWireSignal(Wire *)), this, SLOT(setActiveWire(Wire *)));
 	connect(m_schematicGraphicsView, SIGNAL(setActiveWireSignal(Wire *)), this, SLOT(setActiveWire(Wire *)));
@@ -2047,11 +2050,23 @@ void MainWindow::swapSelectedAux(ItemBase * itemBase, const QString & moduleID) 
 	QUndoCommand* parentCommand = new QUndoCommand(tr("Swapped %1 with module %2").arg(itemBase->instanceTitle()).arg(moduleID));
 	new CleanUpWiresCommand(m_breadboardGraphicsView, CleanUpWiresCommand::UndoOnly, parentCommand);
 	swapSelectedAuxAux(itemBase, moduleID, itemBase->viewLayerSpec(), parentCommand);
+    
 	// need to defer execution so the content of the info view doesn't change during an event that started in the info view
 	m_undoStack->waitPush(parentCommand, SketchWidget::PropChangeDelay);
 
 	warnSMD(moduleID);
+}
 
+void MainWindow::swapBoardImageSlot(SketchWidget * sketchWidget, ItemBase * itemBase, const QString & filename, const QString & moduleID, bool addName) {
+
+	QUndoCommand* parentCommand = new QUndoCommand(tr("Change image to %2").arg(filename));
+	long newID = swapSelectedAuxAux(itemBase, moduleID, itemBase->viewLayerSpec(), parentCommand);
+
+    LoadLogoImageCommand * cmd = new LoadLogoImageCommand(sketchWidget, newID, "", QSizeF(0,0), filename, filename, addName, parentCommand);
+    cmd->setRedoOnly();
+   
+	// need to defer execution so the content of the info view doesn't change during an event that started in the info view
+	m_undoStack->waitPush(parentCommand, SketchWidget::PropChangeDelay);
 }
 
 

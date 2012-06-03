@@ -35,6 +35,7 @@ $Date$
 #include <QCursor>
 #include <QLabel>
 #include <QCheckBox>
+#include <QComboBox>
 
 #include "paletteitem.h"
 
@@ -53,13 +54,37 @@ public:
 	bool stickyEnabled();
 	PluralType isPlural();
 	bool canFindConnectorsUnder();
+	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
+
+protected:
+    void setupLoadImage(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
+	void setFileNameItems();
+	virtual QStringList & getImageNames();
+	virtual QStringList & getNewImageNames();
+    virtual bool checkImage(const QString & filename);
+	void unableToLoad(const QString & fileName, const QString & reason);
+	bool canLoad(const QString & fileName, const QString & reason);
+	virtual void prepLoadImageAux(const QString & fileName, bool addName);
 
 public:
 	static QString OneLayerTranslated;
 	static QString TwoLayersTranslated;
 
+public:
     static bool isBoard(ItemBase *);
     static bool isBoard(ModelPart *);
+
+protected slots:
+	void prepLoadImage();
+	void fileNameEntry(const QString & filename);
+
+protected:
+    QPointer<QComboBox> m_fileNameComboBox;
+    bool m_svgOnly;
+
+protected:
+    static QStringList BoardImageNames;
+    static QStringList NewBoardImageNames;
 };
 
 class ResizableBoard : public Board 
@@ -148,6 +173,7 @@ protected:
 	QPointF m_resizeStartTopRight;
 	QPointF m_resizeStartBottomLeft;
 	int m_decimalsAfter;
+
 };
 
 #endif

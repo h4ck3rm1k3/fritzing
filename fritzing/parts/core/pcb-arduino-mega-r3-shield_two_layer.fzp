@@ -15,6 +15,7 @@
    <property name="layers">2</property>
   <property name="Shape">Arduino Mega R3 Shield</property>
   <property name="family">Plain Vanilla PCB</property>
+  <property name="filename" ></property>
  </properties>
  <taxonomy>discreteParts.pcb.plain.arduino_mega_r3_shield</taxonomy>
  <description>Plain PCB Shaped to fit an Arduino Mega R3 &quot;Shield&quot;</description>

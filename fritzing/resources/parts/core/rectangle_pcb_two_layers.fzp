@@ -13,9 +13,10 @@
  </tags>
  <properties>
   <property name="layers">2</property>
-  <property name="Shape" >rectangle</property>
+  <property name="Shape" >Rectangle</property>
   <property name="family" >Plain Vanilla PCB</property>
- </properties>
+  <property name="filename" ></property>
+</properties>
  <taxonomy>discreteParts.pcb.rectangle.resizable</taxonomy>
  <description>Rectangular Resizable Circuit Board</description>
  <views>

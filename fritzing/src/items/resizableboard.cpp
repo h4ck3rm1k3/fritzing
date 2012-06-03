@@ -27,6 +27,8 @@ $Date$
 #include "resizableboard.h"
 #include "../utils/resizehandle.h"
 #include "../utils/graphicsutils.h"
+#include "../utils/folderutils.h"
+#include "../utils/textutils.h"
 #include "../fsvgrenderer.h"
 #include "../sketch/infographicsview.h"
 #include "../svg/svgfilesplitter.h"
@@ -39,6 +41,9 @@ $Date$
 #include <QFrame>
 #include <QLabel>
 #include <QLineEdit>
+#include <QPushButton>
+#include <QImageReader>
+#include <QMessageBox>
 #include <QRegExp>
 #include <qmath.h>
 #include <qnumeric.h>
@@ -47,6 +52,10 @@ static QString BoardLayerTemplate = "";
 static QString SilkscreenLayerTemplate = "";
 static const int LineThickness = 8;
 static const QRegExp HeightExpr("height=\\'\\d*px");
+static QString StandardCustomBoardExplanation;
+
+QStringList Board::BoardImageNames;
+QStringList Board::NewBoardImageNames;
 
 const double ResizableBoard::CornerHandleSize = 7.0;
 
@@ -56,11 +65,19 @@ QString Board::TwoLayersTranslated;
 Board::Board( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
+    m_svgOnly = true;
+	m_fileNameComboBox = NULL;
     if (isBoard(modelPart)) {
         if (modelPart->localProp("layers").isNull()) {
             modelPart->setLocalProp("layers", modelPart->properties().value("layers"));
         }
     }
+
+    if (StandardCustomBoardExplanation.isEmpty()) {
+        StandardCustomBoardExplanation = tr("\n\nA custom board svg typically has one silkscreen layer and one board layer.\n") +
+                                            tr("Have a look at the circle_pcb.svg file in your Fritzing installation folder at parts/svg/core/pcb/.\n\n");
+    }
+
 }
 
 Board::~Board() {
@@ -75,7 +92,6 @@ void Board::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option
 	painter->fillPath(this->hoverShape(), QBrush(hoverColor));
 	painter->restore();
 }
-
 
 QStringList Board::collectValues(const QString & family, const QString & prop, QString & value) {
 	if (prop.compare("layers", Qt::CaseInsensitive) == 0) {
@@ -104,7 +120,24 @@ QStringList Board::collectValues(const QString & family, const QString & prop, Q
 		return result;
 	}
 
-	return PaletteItem::collectValues(family, prop, value);
+
+	QStringList result = PaletteItem::collectValues(family, prop, value);
+    if (prop.compare("shape", Qt::CaseInsensitive) == 0 && isBoard(this) && !this->moduleID().contains(ModuleIDNames::BoardLogoImageModuleIDName)) {
+        result.removeAll("Custom Shape");
+    }
+
+    return result;
+
+}
+
+bool Board::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget) 
+{
+	if (prop.compare("filename", Qt::CaseInsensitive) == 0 && isBoard(this)) {
+        setupLoadImage(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
+		return true;
+	}
+
+	return PaletteItem::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
 }
 
 bool Board::rotation45Allowed() {
@@ -143,6 +176,223 @@ bool Board::isBoard(ModelPart * modelPart) {
         default:
             return false;
     }
+}
+
+void Board::setupLoadImage(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget) 
+{
+    Q_UNUSED(returnValue);
+    Q_UNUSED(value);
+    Q_UNUSED(prop);
+    Q_UNUSED(family);
+    Q_UNUSED(parent);
+
+	returnProp = tr("image file");
+
+	QFrame * frame = new QFrame();
+	frame->setObjectName("infoViewPartFrame");
+	QVBoxLayout * vboxLayout = new QVBoxLayout();
+	vboxLayout->setContentsMargins(0, 0, 0, 0);
+	vboxLayout->setSpacing(0);
+	vboxLayout->setMargin(0);
+
+	QComboBox * comboBox = new QComboBox();
+	comboBox->setObjectName("infoViewComboBox");
+	comboBox->setEditable(false);
+	comboBox->setEnabled(swappingEnabled);
+	m_fileNameComboBox = comboBox;
+
+	setFileNameItems();
+
+	connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(fileNameEntry(const QString &)));
+
+	QPushButton * button = new QPushButton (tr("load image file"));
+	button->setObjectName("infoViewButton");
+	connect(button, SIGNAL(pressed()), this, SLOT(prepLoadImage()));
+	button->setEnabled(swappingEnabled);
+
+	vboxLayout->addWidget(comboBox);
+	vboxLayout->addWidget(button);
+
+	frame->setLayout(vboxLayout);
+	returnWidget = frame;
+
+	returnProp = "";
+}
+
+void Board::setFileNameItems() {
+	if (m_fileNameComboBox == NULL) return;
+
+	m_fileNameComboBox->addItems(getImageNames());
+	m_fileNameComboBox->addItems(getNewImageNames());
+
+	int ix = 0;
+	foreach (QString name, getImageNames()) {
+		if (prop("lastfilename").contains(name)) {
+			m_fileNameComboBox->setCurrentIndex(ix);
+			return;
+		}
+		ix++;
+	}
+
+	foreach (QString name, getNewImageNames()) {
+		if (prop("lastfilename").contains(name)) {
+			m_fileNameComboBox->setCurrentIndex(ix);
+			return;
+		}
+		ix++;
+	}
+}
+
+QStringList & Board::getImageNames() {
+	return BoardImageNames;
+}
+
+QStringList & Board::getNewImageNames() {
+	return NewBoardImageNames;
+}
+
+void Board::fileNameEntry(const QString & filename) {
+	foreach (QString name, getImageNames()) {
+		if (filename.compare(name) == 0) {
+			QString f = FolderUtils::getApplicationSubFolderPath("parts") + "/svg/core/pcb/" + filename + ".svg";
+			return prepLoadImageAux(f, false);
+			break;
+		}
+	}
+
+	prepLoadImageAux(filename, true);
+}
+
+void Board::prepLoadImage() {
+	QString imagesStr = tr("Images");
+	imagesStr += " (";
+    if (!m_svgOnly) {
+	    QList<QByteArray> supportedImageFormats = QImageReader::supportedImageFormats();
+	    foreach (QByteArray ba, supportedImageFormats) {
+		    imagesStr += "*." + QString(ba) + " ";
+	    }
+    }
+	if (!imagesStr.contains("svg")) {
+		imagesStr += "*.svg";
+	}
+	imagesStr += ")";
+	QString fileName = FolderUtils::getOpenFileName(
+		NULL,
+		tr("Select an image file to load"),
+		"",
+		imagesStr
+	);
+
+	if (fileName.isEmpty()) return;
+
+    if (!checkImage(fileName)) return;
+
+	prepLoadImageAux(fileName, true);
+}
+
+bool Board::checkImage(const QString & filename) {
+    QFile file(filename);
+    
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+
+	QDomDocument domDocument;
+
+	if (!domDocument.setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
+		unableToLoad(filename, tr("due to an xml problem: %1 line:%2 column:%3").arg(errorStr).arg(errorLine).arg(errorColumn));
+		return false;
+	}
+
+    QDomElement root = domDocument.documentElement();
+	if (root.tagName() != "svg") {
+		unableToLoad(filename, tr("because the xml is not correctly formatted"));
+		return false;
+	}
+
+    QList<QDomElement> elements;
+    TextUtils::findElementsWithAttribute(root, "id", elements);
+    int layers = 0;
+    int boardLayers = 0;
+    int silk1Layers = 0;
+    bool boardHasChildren = false;
+    foreach (QDomElement element, elements) {
+        QString id = element.attribute("id");
+        ViewLayer::ViewLayerID viewLayerID = ViewLayer::viewLayerIDFromXmlString(id);
+        if (viewLayerID != ViewLayer::UnknownLayer) {
+            layers++;
+            if (viewLayerID == ViewLayer::Board) {
+                boardLayers++;
+                if (element.childNodes().count() > 0) {
+                    boardHasChildren = true;
+                }
+            }
+            if (viewLayerID == ViewLayer::Silkscreen1) {
+                silk1Layers++;
+            }
+        }
+    }
+
+    if (boardLayers == 1 && !boardHasChildren) {
+        unableToLoad(filename, tr("the <board> element contains no shape elements") + StandardCustomBoardExplanation);
+        return false;
+    }
+
+    if ((boardLayers == 1) && (silk1Layers == 1)) return true;
+
+    if (boardLayers > 1) {
+        unableToLoad(filename, tr("because there are multiple <board> layers") + StandardCustomBoardExplanation);
+        return false;
+    }
+
+    if (silk1Layers > 1) {
+        unableToLoad(filename, tr("because there are multiple <silkscreen> layers") + StandardCustomBoardExplanation);
+        return false;
+    }
+
+    if (layers > 0 && boardLayers == 0) {
+        unableToLoad(filename, tr("because there is no <board> layer") + StandardCustomBoardExplanation);
+        return false;
+    }
+
+    if (layers == 0 && root.childNodes().count() == 0) {
+        unableToLoad(filename, tr("the svg contains no shape elements") + StandardCustomBoardExplanation);
+        return false;
+    }
+
+    if (layers == 0 || (boardLayers == 1 && silk1Layers == 0)) {
+        return canLoad(filename, tr("but the pcb itself will have no silkscreen layer") + StandardCustomBoardExplanation);
+    }
+
+    unableToLoad(filename, tr("the svg doesn't fit the custom board format") + StandardCustomBoardExplanation);
+    return false;
+}
+
+void Board::unableToLoad(const QString & fileName, const QString & reason) {
+	QMessageBox::information(
+		NULL,
+		tr("Unable to load"),
+		tr("Unable to load image from %1 %2").arg(fileName).arg(reason)
+	);
+}
+
+bool Board::canLoad(const QString & fileName, const QString & reason) {
+    QMessageBox::StandardButton answer = QMessageBox::question(
+		NULL,
+		tr("Can load, but"),
+		tr("The image from %1 can be loaded, but %2\nUse the file?").arg(fileName).arg(reason),
+		QMessageBox::Yes | QMessageBox::No,
+		QMessageBox::No
+	);
+	return answer == QMessageBox::Yes;
+}
+
+void Board::prepLoadImageAux(const QString & fileName, bool addName)
+{
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView != NULL) {
+		infoGraphicsView->loadLogoImage(this, "", QSizeF(0,0), "", fileName, addName);
+	}
 }
 
 ///////////////////////////////////////////////////////////

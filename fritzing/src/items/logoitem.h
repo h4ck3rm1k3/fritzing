@@ -63,25 +63,18 @@ public:
 	void paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 protected slots:
-	void prepLoadImage();
 	void logoEntry();
 	void widthEntry();
 	void heightEntry();
 	void keepAspectRatio(bool checkState);
-	void fileNameEntry(const QString & filename);
 
 protected:
 	virtual QString hackSvg(const QString & svg, const QString & logo);
 	void initImage();
-	void unableToLoad(const QString & fileName, const QString & reason);
-	bool canLoad(const QString & fileName, const QString & reason);
 	void prepLoadImageAux(const QString & fileName, bool addName);
-	void setFileNameItems();
 	virtual ViewLayer::ViewLayerID layer();
 	virtual QString colorString();
 	virtual QString layerName();
-	virtual QStringList & getImageNames();
-	virtual QStringList & getNewImageNames();
 	bool rerender(const QString & svg);
 	double minWidth();
 	double minHeight();
@@ -89,15 +82,15 @@ protected:
 	ResizableBoard::Corner findCorner(QPointF p, Qt::KeyboardModifiers);
     virtual QString getShapeForRenderer(const QString & svg);
     virtual bool canRetrieveLayer(ViewLayer::ViewLayerID viewLayerID);
-    virtual bool checkImage(const QString & filename);
+    bool checkImage(const QString & filename);
+	QStringList & getImageNames();
+	QStringList & getNewImageNames();
 
 protected:
 	QString m_logo;
 	bool m_hasLogo;
 	QString m_originalFilename;
-	QComboBox * m_fileNameComboBox;
 	QTime m_inLogoEntry;
-    bool m_svgOnly;
     bool m_standardizeColors;
 };
 
@@ -115,7 +108,6 @@ protected:
 	ViewLayer::ViewLayerID layer();
 	QString colorString();
 	QStringList & getImageNames();
-	QStringList & getNewImageNames();
 	QString hackSvg(const QString & svg, const QString & logo);
 	QString flipSvg(const QString & svg);
 	bool isCopper0();
@@ -140,8 +132,9 @@ protected:
     QString getShapeForRenderer(const QString & svg, ViewLayer::ViewLayerID viewLayerID);
     bool canRetrieveLayer(ViewLayer::ViewLayerID viewLayerID);
     void reloadLayerKin(double mmW, double mmH);
-    bool checkImage(const QString & filename);
     QString setBoardOutline(const QString & svg);
+    bool checkImage(const QString & filename);
+
 };
 
 

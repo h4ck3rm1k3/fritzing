@@ -247,7 +247,7 @@ public:
 	void setMoveLock(long id, bool lock);
 	bool partLabelsVisible();
 	void restorePartLabel(long itemID, QDomElement & element);
-	void loadLogoImage(long itemID, const QString & oldSvg, const QSizeF oldAspectRatio, const QString & oldFilename, const QString & newFilename, bool addName);
+	void loadLogoImage(ItemBase *, const QString & oldSvg, const QSizeF oldAspectRatio, const QString & oldFilename, const QString & newFilename, bool addName);
 	void loadLogoImage(long itemID, const QString & oldSvg, const QSizeF oldAspectRatio, const QString & oldFilename);
 	void loadLogoImage(long itemID, const QString & newFilename, bool addName);
 	void setNoteFocus(QGraphicsItem *, bool inFocus);
@@ -510,6 +510,7 @@ signals:
 	void collectRatsnestSignal(QList<SketchWidget *> & foreignSketchWidgets);
 	void removeRatsnestSignal(QList<struct ConnectorEdge *> & cutSet, QUndoCommand * parentCommand); 
 	void updateLayerMenuSignal();
+    void swapBoardImageSignal(SketchWidget * sketchWidget, ItemBase * itemBase, const QString & filename, const QString & moduleID, bool addName);
 
 protected slots:
 	void itemAddedSlot(ModelPart *, ViewLayer::ViewLayerSpec, const ViewGeometry &, long id, SketchWidget * dropOrigin);
