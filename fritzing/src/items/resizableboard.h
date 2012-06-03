@@ -33,6 +33,7 @@ $Date$
 #include <QVariant>
 #include <QLineEdit>
 #include <QCursor>
+#include <QLabel>
 #include <QCheckBox>
 
 #include "paletteitem.h"
@@ -137,6 +138,7 @@ protected:
 	QSizeF m_aspectRatio;
 	double m_currentScale;
 	QPointer<QCheckBox> m_aspectRatioCheck;
+    QPointer<QLabel> m_aspectRatioLabel;
 
 	QPointF m_resizeMousePos;
 	QSizeF m_resizeStartSize;

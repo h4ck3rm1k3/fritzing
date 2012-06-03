@@ -154,6 +154,8 @@ ResizableBoard::ResizableBoard( ModelPart * modelPart, ViewIdentifierClass::View
 
 	m_keepAspectRatio = false;
 	m_widthEditor = m_heightEditor = NULL;
+    m_aspectRatioCheck = NULL;
+    m_aspectRatioLabel = NULL;
 
 	m_silkscreenRenderer = NULL;
 	m_corner = ResizableBoard::NO_CORNER;
@@ -872,6 +874,7 @@ QFrame * ResizableBoard::setUpDimEntry(bool includeProportion, QWidget * & retur
 		subframe3->setLayout(hboxLayout3);
 		connect(checkBox, SIGNAL(toggled(bool)), this, SLOT(keepAspectRatio(bool)));
 		m_aspectRatioCheck = checkBox;
+        m_aspectRatioLabel = l3;
 
 		vboxLayout->addWidget(subframe3);
 	}

@@ -1100,7 +1100,11 @@ bool BoardLogoItem::collectExtraInfo(QWidget * parent, const QString & family, c
 {
 	if (prop.compare("shape", Qt::CaseInsensitive) == 0) {
         Board::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
-		returnWidget = setUpDimEntry(true, returnWidget);
+		returnWidget = setUpDimEntry(true, returnWidget);   
+        m_aspectRatioCheck->setEnabled(false);
+        m_aspectRatioCheck->setChecked(true);
+        m_aspectRatioCheck->setVisible(false);
+        m_aspectRatioLabel->setVisible(false);
 		returnProp = tr("shape");
 		return true;
 	}
