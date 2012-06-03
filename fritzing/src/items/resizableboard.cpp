@@ -71,6 +71,10 @@ Board::Board( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIde
         if (modelPart->localProp("layers").isNull()) {
             modelPart->setLocalProp("layers", modelPart->properties().value("layers"));
         }
+        if (itemType() == ModelPart::Board && !modelPart->properties().keys().contains("filename")) {
+            // deal with old style custom boards
+            modelPart->modelPartShared()->setProperty("filename", "");
+        }
     }
 
     if (StandardCustomBoardExplanation.isEmpty()) {
