@@ -26,6 +26,7 @@ $Date$
 
 #include "waitpushundostack.h"
 #include "utils/misc.h"
+#include "utils/folderutils.h"
 #include "commands.h"
 
 #include <QCoreApplication>
@@ -52,8 +53,8 @@ WaitPushUndoStack::WaitPushUndoStack(QObject * parent) :
 	QUndoStack(parent)
 {
 #ifndef QT_NO_DEBUG
-	QString path = QCoreApplication::applicationDirPath();
-    path += "/../undoStack.txt";
+    QString path = FolderUtils::getUserDataStorePath("");
+    path += "/undostack.txt";
 
 	m_file.setFileName(path);
 	m_file.remove();

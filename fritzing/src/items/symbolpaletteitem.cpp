@@ -62,7 +62,7 @@ SymbolPaletteItem::SymbolPaletteItem( ModelPart * modelPart, ViewIdentifierClass
 	}
 
 	bool ok;
-	double temp = modelPart->prop("voltage").toDouble(&ok);
+	double temp = modelPart->localProp("voltage").toDouble(&ok);
 	if (ok) {
 		m_voltage = temp;
 	}
@@ -71,7 +71,7 @@ SymbolPaletteItem::SymbolPaletteItem( ModelPart * modelPart, ViewIdentifierClass
 		if (ok) {
 			m_voltage = SymbolPaletteItem::DefaultVoltage;
 		}
-		modelPart->setProp("voltage", m_voltage);
+		modelPart->setLocalProp("voltage", m_voltage);
 	}
 	if (!Voltages.contains(m_voltage)) {
 		Voltages.append(m_voltage);
@@ -184,7 +184,7 @@ void SymbolPaletteItem::setVoltage(double v) {
 	removeMeFromBus(m_voltage);
 
 	m_voltage = v;
-	m_modelPart->setProp("voltage", v);
+	m_modelPart->setLocalProp("voltage", v);
 	if (!Voltages.contains(v)) {
 		Voltages.append(v);
 	}

@@ -160,7 +160,7 @@ void PartsEditorMainWindow::setup(long id, ModelPart *modelPart, bool fromTempla
 
 		QHash<QString,QString> properties = mp->modelPartShared()->properties();
 		foreach (QString key, properties.keys()) {
-			QVariant prop = modelPart->prop(key);
+			QVariant prop = modelPart->localProp(key);
 			if (!prop.isNull() && prop.isValid()) {
 				QString p = prop.toString();
 				if (!p.isEmpty()) {

@@ -853,6 +853,7 @@ QHash<QString, QString> HtmlInfoView::getPartProperties(ModelPart * modelPart, I
 	QString family;
 	QString partNumber;
 	if (modelPart) {
+        // TODO: someday get local props
 		properties = modelPart->properties();
 		family = properties.value("family", "").toLower();
 		if (itemBase) {

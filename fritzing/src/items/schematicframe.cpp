@@ -78,18 +78,18 @@ SchematicFrame::SchematicFrame( ModelPart * modelPart, ViewIdentifierClass::View
 	}
 
 	foreach (QString prop, FrameProps.keys()) {
-		if (modelPart->prop(prop).toString().isEmpty()) {
-			modelPart->setProp(prop, modelPart->properties().value(prop));
+		if (modelPart->localProp(prop).toString().isEmpty()) {
+			modelPart->setLocalProp(prop, modelPart->properties().value(prop));
 		}
 	}
 
-	if (modelPart->prop("date").toString().isEmpty()) {
+	if (modelPart->localProp("date").toString().isEmpty()) {
 		QDateTime dt = QDateTime::currentDateTime();
-		modelPart->setProp("date", QString::number(dt.toTime_t()));
+		modelPart->setLocalProp("date", QString::number(dt.toTime_t()));
 	}
 
-	if (modelPart->prop("sheet").toString().isEmpty()) {
-		modelPart->setProp("sheet","1/1");
+	if (modelPart->localProp("sheet").toString().isEmpty()) {
+		modelPart->setLocalProp("sheet","1/1");
 	}
 
 	m_wrapInitialized = false;
@@ -196,7 +196,7 @@ QString SchematicFrame::makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, double 
 
 
 	QDateTime dt;
-	dt.setTime_t(modelPart()->prop("date").toUInt());
+	dt.setTime_t(modelPart()->localProp("date").toUInt());
 	hash.insert("date", dt.toString(DisplayFormat));
 
 	return TextUtils::convertExtendedChars(TextUtils::replaceTextElements(svg, hash));
@@ -234,11 +234,11 @@ void SchematicFrame::addedToScene(bool temporary)
 	if (prop("filename").isEmpty()) {
 		InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 		if (infoGraphicsView != NULL) {
-			modelPart()->setProp("filename", infoGraphicsView->filenameIf());
+			modelPart()->setLocalProp("filename", infoGraphicsView->filenameIf());
 		}
 	}
     ResizableBoard::addedToScene(temporary);
-	resizeMMAux(m_modelPart->prop("width").toDouble(), m_modelPart->prop("height").toDouble());
+	resizeMMAux(m_modelPart->localProp("width").toDouble(), m_modelPart->localProp("height").toDouble());
 }
 
 QString SchematicFrame::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi)
@@ -349,8 +349,8 @@ void SchematicFrame::setProp(const QString & prop, const QString & value)
 	ResizableBoard::setProp(prop, value);
 
 	if (FrameProps.keys().contains(prop)) {
-		modelPart()->setProp(prop, value);
-		resizeMMAux(modelPart()->prop("width").toDouble(), modelPart()->prop("height").toDouble());
+		modelPart()->setLocalProp(prop, value);
+		resizeMMAux(modelPart()->localProp("width").toDouble(), modelPart()->localProp("height").toDouble());
 	}
 
 }
@@ -385,11 +385,11 @@ bool SchematicFrame::hasPartNumberProperty()
 }
 
 void SchematicFrame::setInitialSize() {
-	double w = m_modelPart->prop("width").toDouble();
+	double w = m_modelPart->localProp("width").toDouble();
 	if (w == 0) {
 		// set the size so the infoGraphicsView will display the size as you drag
-		modelPart()->setProp("width", 25.4 * OriginalWidth / GraphicsUtils::StandardFritzingDPI); 
-		modelPart()->setProp("height", 25.4 * OriginalHeight / GraphicsUtils::StandardFritzingDPI); 
+		modelPart()->setLocalProp("width", 25.4 * OriginalWidth / GraphicsUtils::StandardFritzingDPI); 
+		modelPart()->setLocalProp("height", 25.4 * OriginalHeight / GraphicsUtils::StandardFritzingDPI); 
 	}
 }
 

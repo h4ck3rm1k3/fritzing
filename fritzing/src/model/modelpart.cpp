@@ -759,22 +759,23 @@ void ModelPart::setOrderedChildren(QList<QObject*> children) {
 	m_orderedChildren = children;
 }
 
-void ModelPart::setProp(const char * name, const QVariant & value) {
+void ModelPart::setLocalProp(const char * name, const QVariant & value) {
+    //DebugDialog::debug(QString("mp set prop %1 %2").arg(name).arg(value.toString()));
 	setProperty(name, value);
 }
 
-QVariant ModelPart::prop(const char * name) const {
+QVariant ModelPart::localProp(const char * name) const {
 	return property(name);
 }
 
-void ModelPart::setProp(const QString & name, const QVariant & value) {
+void ModelPart::setLocalProp(const QString & name, const QVariant & value) {
 	QByteArray b = name.toLatin1();
-	setProp(b.data(), value);
+	setLocalProp(b.data(), value);
 }
 
-QVariant ModelPart::prop(const QString & name) const {
+QVariant ModelPart::localProp(const QString & name) const {
 	QByteArray b = name.toLatin1();
-	return prop(b.data());
+	return localProp(b.data());
 }
 
 const QStringList & ModelPart::possibleFolders() {

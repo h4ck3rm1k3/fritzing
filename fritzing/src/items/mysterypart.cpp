@@ -57,15 +57,15 @@ MysteryPart::MysteryPart( ModelPart * modelPart, ViewIdentifierClass::ViewIdenti
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
 	m_changingSpacing = false;
-	m_chipLabel = modelPart->prop("chip label").toString();
+	m_chipLabel = modelPart->localProp("chip label").toString();
 	if (m_chipLabel.isEmpty()) {
 		m_chipLabel = modelPart->properties().value("chip label", "?");
-		modelPart->setProp("chip label", m_chipLabel);
+		modelPart->setLocalProp("chip label", m_chipLabel);
 	}
-	m_spacing = modelPart->prop("spacing").toString();
+	m_spacing = modelPart->localProp("spacing").toString();
 	if (m_spacing.isEmpty()) {
 		m_spacing = modelPart->properties().value("spacing", "300mil");
-		modelPart->setProp("spacing", m_spacing);
+		modelPart->setLocalProp("spacing", m_spacing);
 	}
 }
 
@@ -129,7 +129,7 @@ void MysteryPart::setSpacing(QString spacing, bool force) {
 	}
 
 	m_spacing = spacing;
-	modelPart()->setProp("spacing", spacing);
+	modelPart()->setLocalProp("spacing", spacing);
 
     if (m_partLabel) m_partLabel->displayTextsIf();
 
@@ -156,7 +156,7 @@ void MysteryPart::setChipLabel(QString chipLabel, bool force) {
 
 	loadExtraRenderer(svg, false);
 
-	modelPart()->setProp("chip label", chipLabel);
+	modelPart()->setLocalProp("chip label", chipLabel);
 
     if (m_partLabel) m_partLabel->displayTextsIf();
 

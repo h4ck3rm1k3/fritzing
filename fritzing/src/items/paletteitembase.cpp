@@ -68,11 +68,11 @@ PaletteItemBase::PaletteItemBase(ModelPart * modelPart, ViewIdentifierClass::Vie
 	setAcceptHoverEvents(true);
 
 	if (hasPartNumberProperty()) {
-		QString savedValue = modelPart->prop(ModelPartShared::PartNumberPropertyName).toString();
+		QString savedValue = modelPart->localProp(ModelPartShared::PartNumberPropertyName).toString();
 		if (savedValue.isEmpty()) {
 			savedValue = modelPart->properties().value(ModelPartShared::PartNumberPropertyName, "");
 			if (!savedValue.isEmpty()) {
-				modelPart->setProp(ModelPartShared::PartNumberPropertyName, savedValue);
+				modelPart->setLocalProp(ModelPartShared::PartNumberPropertyName, savedValue);
 			}
 		}
 	}
@@ -658,7 +658,7 @@ bool PaletteItemBase::collectExtraInfo(QWidget * parent, const QString & family,
 
 		QLineEdit * lineEdit = new QLineEdit();
 		lineEdit->setEnabled(swappingEnabled);
-		QString current = m_modelPart->prop(ModelPartShared::PartNumberPropertyName).toString();
+		QString current = m_modelPart->localProp(ModelPartShared::PartNumberPropertyName).toString();
 		lineEdit->setText(current);
 		connect(lineEdit, SIGNAL(editingFinished()), this, SLOT(partPropertyEntry()));	
 		lineEdit->setObjectName("infoViewLineEdit");		
@@ -673,7 +673,7 @@ bool PaletteItemBase::collectExtraInfo(QWidget * parent, const QString & family,
 void PaletteItemBase::setProp(const QString & prop, const QString & value) 
 {	
 	if (prop.compare(ModelPartShared::PartNumberPropertyName) == 0) {
-		modelPart()->setProp(ModelPartShared::PartNumberPropertyName, value);
+		modelPart()->setLocalProp(ModelPartShared::PartNumberPropertyName, value);
 		if (m_partLabel) m_partLabel->displayTextsIf();
 		return;
 	}
@@ -687,7 +687,7 @@ void PaletteItemBase::partPropertyEntry() {
 
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
-		infoGraphicsView->setProp(this, ModelPartShared::PartNumberPropertyName, "", m_modelPart->prop(ModelPartShared::PartNumberPropertyName).toString(), lineEdit->text(), true);
+		infoGraphicsView->setProp(this, ModelPartShared::PartNumberPropertyName, "", m_modelPart->localProp(ModelPartShared::PartNumberPropertyName).toString(), lineEdit->text(), true);
 	}
 }
 

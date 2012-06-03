@@ -148,10 +148,10 @@ public:
 	QString getNextTitle(const QString & candidate);
 
 	void setOrderedChildren(QList<QObject*> children);
-	void setProp(const QString & name, const QVariant & value);
-	QVariant prop(const QString & name) const;
-	void setProp(const char * name, const QVariant & value);
-	QVariant prop(const char * name) const;
+	void setLocalProp(const QString & name, const QVariant & value);
+	QVariant localProp(const QString & name) const;
+	void setLocalProp(const char * name, const QVariant & value);
+	QVariant localProp(const char * name) const;
 
 	const QString & replacedby();
 	bool isObsolete();

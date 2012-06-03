@@ -60,10 +60,10 @@ static QString ShroudedSpacing;
 PinHeader::PinHeader( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
-	m_form = modelPart->prop("form").toString();
+	m_form = modelPart->localProp("form").toString();
 	if (m_form.isEmpty()) {
 		m_form = modelPart->properties().value("form", FemaleFormString);
-		modelPart->setProp("form", m_form);
+		modelPart->setLocalProp("form", m_form);
 	}
 }
 

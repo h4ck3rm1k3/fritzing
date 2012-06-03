@@ -560,7 +560,7 @@ void Stripboard::reinitBuses(bool triggerUndo)
 
 	modelPart()->clearBuses();
 	modelPart()->initBuses();
-	modelPart()->setProp("buses",  busPropertyString);
+	modelPart()->setLocalProp("buses",  busPropertyString);
 
 	
 	QList<ConnectorItem *> visited;

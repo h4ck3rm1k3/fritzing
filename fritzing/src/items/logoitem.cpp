@@ -76,10 +76,10 @@ LogoItem::LogoItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier v
 	m_aspectRatioCheck = NULL;
 	m_keepAspectRatio = true;
 	m_hasLogo = (modelPart->moduleID() == ModuleIDNames::LogoTextModuleIDName);
-	m_logo = modelPart->prop("logo").toString();
+	m_logo = modelPart->localProp("logo").toString();
 	if (m_hasLogo && m_logo.isEmpty()) {
 		m_logo = modelPart->properties().value("logo", "logo");
-		modelPart->setProp("logo", m_logo);
+		modelPart->setLocalProp("logo", m_logo);
 	}
 }
 
@@ -99,7 +99,7 @@ void LogoItem::addedToScene(bool temporary)
 		m_originalFilename = filename();
 		QString svg = prop("shape");
 		if (!svg.isEmpty()) {					
-			m_aspectRatio = modelPart()->prop("aspectratio").toSizeF();
+			m_aspectRatio = modelPart()->localProp("aspectratio").toSizeF();
 			if (loadExtraRenderer(getShapeForRenderer(svg).toUtf8(), false)) {
 			}
 			else {
@@ -111,8 +111,8 @@ void LogoItem::addedToScene(bool temporary)
 			if (f.open(QFile::ReadOnly)) {
 				QString svg = f.readAll();
 				f.close();
-				modelPart()->setProp("shape", svg);
-				modelPart()->setProp("lastfilename", m_originalFilename);
+				modelPart()->setLocalProp("shape", svg);
+				modelPart()->setLocalProp("lastfilename", m_originalFilename);
 				initImage();
 			}
 		}
@@ -298,17 +298,17 @@ bool LogoItem::reloadImage(const QString & svg, const QSizeF & aspectRatio, cons
 		else {
 			m_aspectRatio = aspectRatio;
 		}
-		modelPart()->setProp("aspectratio", m_aspectRatio);
-		modelPart()->setProp("shape", svg);
-		modelPart()->setProp("logo", "");
-		modelPart()->setProp("lastfilename", fileName);
+		modelPart()->setLocalProp("aspectratio", m_aspectRatio);
+		modelPart()->setLocalProp("shape", svg);
+		modelPart()->setLocalProp("logo", "");
+		modelPart()->setLocalProp("lastfilename", fileName);
 
         QSizeF size = m_extraRenderer->defaultSizeF();
 
         double mmW = GraphicsUtils::pixels2mm(size.width(), FSvgRenderer::printerScale());
         double mmH = GraphicsUtils::pixels2mm(size.height(), FSvgRenderer::printerScale());
-        modelPart()->setProp("width", mmW);
-		modelPart()->setProp("height", mmH);
+        modelPart()->setLocalProp("width", mmW);
+		modelPart()->setLocalProp("height", mmH);
 
 		if (addName) {
 			if (!getNewImageNames().contains(fileName, Qt::CaseInsensitive)) {
@@ -503,9 +503,9 @@ bool LogoItem::resizeMM(double mmW, double mmH, const LayerHash & viewLayers)
 
 	bool result = loadExtraRenderer(shape.toUtf8(), false);
 	if (result) {
-		modelPart()->setProp("shape", svg);
-		modelPart()->setProp("width", mmW);
-		modelPart()->setProp("height", mmH);
+		modelPart()->setLocalProp("shape", svg);
+		modelPart()->setLocalProp("width", mmW);
+		modelPart()->setLocalProp("height", mmH);
 	}
 
 	setWidthAndHeight(qRound(mmW * 10) / 10.0, qRound(mmH * 10) / 10.0);
@@ -551,8 +551,8 @@ void LogoItem::setLogo(QString logo, bool force) {
 	bool ok = rerender(svg);
 
 	m_logo = logo;
-	modelPart()->setProp("logo", logo);
-	modelPart()->setProp("shape", svg);
+	modelPart()->setLocalProp("logo", logo);
+	modelPart()->setLocalProp("shape", svg);
 	if (ok && !force) {
 		QSizeF newSvgSize = m_extraRenderer->viewBoxF().size();
 		QSizeF newSize = newSvgSize * oldSize.height() / oldSvgSize.height();
@@ -655,10 +655,10 @@ QString LogoItem::hackSvg(const QString & svg, const QString & logo)
 			if (child.isText()) {
 				child.setNodeValue(logo);
 
-				modelPart()->setProp("width", logo.length() * 0.1 * 25.4);
+				modelPart()->setLocalProp("width", logo.length() * 0.1 * 25.4);
 				QString h = root.attribute("height");
 				bool ok;
-				modelPart()->setProp("height", TextUtils::convertToInches(h, &ok, false) * 25.4);
+				modelPart()->setLocalProp("height", TextUtils::convertToInches(h, &ok, false) * 25.4);
 				return doc.toString();
 			}
 		}
@@ -674,10 +674,10 @@ void LogoItem::widthEntry() {
 	if (edit == NULL) return;
 
 	double w = edit->text().toDouble();
-	double oldW = m_modelPart->prop("width").toDouble();
+	double oldW = m_modelPart->localProp("width").toDouble();
 	if (w == oldW) return;
 
-	double h = m_modelPart->prop("height").toDouble();
+	double h = m_modelPart->localProp("height").toDouble();
 	if (m_keepAspectRatio) {
 		h = w * m_aspectRatio.height() / m_aspectRatio.width();
 	}
@@ -695,7 +695,7 @@ void LogoItem::heightEntry() {
 	if (edit == NULL) return;
 
 	double h = edit->text().toDouble();
-	double oldH =  m_modelPart->prop("height").toDouble();
+	double oldH =  m_modelPart->localProp("height").toDouble();
 	if (h == oldH) return;
 
 	setHeight(h);
@@ -703,7 +703,7 @@ void LogoItem::heightEntry() {
 
 void LogoItem::setHeight(double h)
 {
-	double w = m_modelPart->prop("width").toDouble();
+	double w = m_modelPart->localProp("width").toDouble();
 	if (m_keepAspectRatio) {
 		w = h * m_aspectRatio.width() / m_aspectRatio.height();
 	}
@@ -850,10 +850,10 @@ CopperLogoItem::CopperLogoItem( ModelPart * modelPart, ViewIdentifierClass::View
 	}
 
 	m_hasLogo = (modelPart->moduleID().endsWith(ModuleIDNames::LogoTextModuleIDName));
-	m_logo = modelPart->prop("logo").toString();
+	m_logo = modelPart->localProp("logo").toString();
 	if (m_hasLogo && m_logo.isEmpty()) {
 		m_logo = modelPart->properties().value("logo", "logo");
-		modelPart->setProp("logo", m_logo);
+		modelPart->setLocalProp("logo", m_logo);
 	}
 }
 
@@ -1003,8 +1003,8 @@ void BoardLogoItem::reloadLayerKin(double mmW, double mmH)
 			    itemBase->prepareGeometryChange();
 			    if (m_silkscreenRenderer->loadSvgString(svg)) {
 				    qobject_cast<PaletteItemBase *>(itemBase)->setSharedRendererEx(m_silkscreenRenderer);
-				    itemBase->modelPart()->setProp("width", mmW);
-				    itemBase->modelPart()->setProp("height", mmH);
+				    itemBase->modelPart()->setLocalProp("width", mmW);
+				    itemBase->modelPart()->setLocalProp("height", mmH);
 			    }
 			    break;
 		    }

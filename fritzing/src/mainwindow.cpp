@@ -1970,7 +1970,8 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 
 bool MainWindow::swapSpecial(const QString & theProp, QMap<QString, QString> & currPropsMap) {
 	ItemBase * itemBase = m_infoView->currentItem();
-	QString pinSpacing, resistance, layers;
+	QString pinSpacing, resistance;
+    int layers = 0;
 
 	foreach (QString key, currPropsMap.keys()) {
 		if (key.compare("layers", Qt::CaseInsensitive) == 0) {
@@ -1978,14 +1979,12 @@ bool MainWindow::swapSpecial(const QString & theProp, QMap<QString, QString> & c
 
 			QString value = currPropsMap.value(key, "");
 			if (value.compare(Board::OneLayerTranslated) == 0) {
-				layers = "1";
-				continue;
+				layers = 1;
 			}
-			if (value.compare(Board::TwoLayersTranslated) == 0) {
-				layers = "2";
-				continue;
+			else if (value.compare(Board::TwoLayersTranslated) == 0) {
+				layers = 2;
 			}
-		}
+        }
 
 		if (key.compare("spacing", Qt::CaseInsensitive) == 0) {
 			MysteryPart * mysteryPart = qobject_cast<MysteryPart *>(itemBase);
@@ -2009,10 +2008,15 @@ bool MainWindow::swapSpecial(const QString & theProp, QMap<QString, QString> & c
 		}
 	}
 
-	if (!layers.isEmpty()) {
-		currPropsMap.insert("layers", layers);
-		return false;
+    if (layers != 0) {
+        currPropsMap.insert("layers", QString::number(layers));
+        if (theProp.compare("layers") == 0) {
+            QString msg = (layers == 1) ? tr("Change to single layer pcb") : tr("Change to two layer pcb");
+            swapLayers(itemBase, layers, msg, true);
+            return true;
+        }
 	}
+
 
 	if (!resistance.isEmpty() || !pinSpacing.isEmpty()) {
 		if (theProp.contains("band", Qt::CaseInsensitive)) {
@@ -2028,6 +2032,14 @@ bool MainWindow::swapSpecial(const QString & theProp, QMap<QString, QString> & c
 	}
 
 	return false;
+}
+
+void MainWindow::swapLayers(ItemBase * itemBase, int layers, const QString & msg, bool flip) {
+    QUndoCommand* parentCommand = new QUndoCommand(msg);
+	new CleanUpWiresCommand(m_breadboardGraphicsView, CleanUpWiresCommand::UndoOnly, parentCommand);
+    m_pcbGraphicsView->swapLayers(itemBase, layers, flip, parentCommand);
+	// need to defer execution so the content of the info view doesn't change during an event that started in the info view
+	m_undoStack->waitPush(parentCommand, SketchWidget::PropChangeDelay);
 }
 
 void MainWindow::swapSelectedAux(ItemBase * itemBase, const QString & moduleID) {
@@ -2064,12 +2076,18 @@ long MainWindow::swapSelectedAuxAux(ItemBase * itemBase, const QString & moduleI
 		masterflags[0] = true;
 	}
 
-	QList<Wire *> wiresToDelete; 
-	long newID1 = m_schematicGraphicsView->setUpSwap(itemBase, modelIndex, moduleID, viewLayerSpec, masterflags[0], false, wiresToDelete, parentCommand);
-	long newID2 = m_pcbGraphicsView->setUpSwap(itemBase, modelIndex, moduleID, viewLayerSpec, masterflags[1], false, wiresToDelete, parentCommand);
+    SwapThing swapThing;
+    swapThing.itemBase = itemBase;
+    swapThing.newModelIndex = modelIndex;
+    swapThing.newModuleID = moduleID;
+    swapThing.viewLayerSpec = viewLayerSpec;
+    swapThing.parentCommand = parentCommand;
+
+	long newID1 = m_schematicGraphicsView->setUpSwap(swapThing, masterflags[0]);
+	long newID2 = m_pcbGraphicsView->setUpSwap(swapThing, masterflags[1]);
 
 	// master view must go last, since it creates the delete command
-	long newID3 = m_breadboardGraphicsView->setUpSwap(itemBase, modelIndex, moduleID, viewLayerSpec, masterflags[2], false, wiresToDelete, parentCommand);
+	long newID3 = m_breadboardGraphicsView->setUpSwap(swapThing, masterflags[2]);
 
 	// TODO:  z-order?
 
@@ -2556,12 +2574,6 @@ PCBSketchWidget * MainWindow::pcbView() {
 void MainWindow::noBackup()
 {
 	m_autosaveTimer.stop();
-}
-
-void MainWindow::swapOne(ItemBase * itemBase, const QString & moduleID) {
-	QString userPartsFolderPath = FolderUtils::getUserDataStorePath("parts")+"/user/";
-	loadPart(userPartsFolderPath + moduleID + FritzingPartExtension, -1, false);
-	swapSelectedAux(itemBase, moduleID);
 }
 
 void MainWindow::dropTempSlot(ModelPart * mp, QWidget * widget) {

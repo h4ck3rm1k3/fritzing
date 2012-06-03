@@ -334,9 +334,9 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 			
 			if (Board::isBoard(mp) || mp->itemType() == ModelPart::Logo) {
 				bool ok;
-				double w = mp->prop("width").toDouble(&ok);
+				double w = mp->localProp("width").toDouble(&ok);
 				if (ok) {
-					double h = mp->prop("height").toDouble(&ok);
+					double h = mp->localProp("height").toDouble(&ok);
 					if (ok) {
 						new ResizeBoardCommand(this, newID, w, h, w, h, parentCommand);
 					}
@@ -347,12 +347,12 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 				changeNoteTextCommand->setFirstTime(false);
 			}
 			else if (mp->itemType() == ModelPart::Ruler) {
-				QString w = mp->prop("width").toString();
+				QString w = mp->localProp("width").toString();
 				QString w2 = w;
 				w.chop(2);
 				int units = w2.endsWith("cm") ? 0 : 1;
 				new ResizeBoardCommand(this, newID, w.toDouble(), units, w.toDouble(), units, parentCommand);
-				mp->setProp("width", "");		// ResizeBoardCommand won't execute if the width property is already set
+				mp->setLocalProp("width", "");		// ResizeBoardCommand won't execute if the width property is already set
 			}
 
 			if (locked) {
@@ -4964,7 +4964,7 @@ void SketchWidget::prepDeleteProps(ItemBase * itemBase, long id, const QString &
 					new SetPropCommand(this, id, "logo", logoProp, logoProp, true, parentCommand);
 				}
 				else if (!shapeProp.isEmpty()) {
-					new LoadLogoImageCommand(this, id, shapeProp, logo->modelPart()->prop("aspectratio").toSizeF(), logo->prop("lastfilename"), "", false, parentCommand);
+					new LoadLogoImageCommand(this, id, shapeProp, logo->modelPart()->localProp("aspectratio").toSizeF(), logo->prop("lastfilename"), "", false, parentCommand);
 				}
 				prepDeleteOtherProps(itemBase, id, newModuleID, parentCommand);
 			}
@@ -5046,7 +5046,7 @@ void SketchWidget::prepDeleteOtherProps(ItemBase * itemBase, long id, const QStr
 		}
 	}
 
-	QString value = itemBase->modelPart()->prop(ModelPartShared::PartNumberPropertyName).toString();
+	QString value = itemBase->modelPart()->localProp(ModelPartShared::PartNumberPropertyName).toString();
 	if (!value.isEmpty()) {
 		QString newValue = value;
 		if (!newModuleID.isEmpty()) {
@@ -5570,10 +5570,12 @@ void SketchWidget::updateInfoViewSlot() {
 	InfoGraphicsView::viewItemInfo(m_lastPaletteItemSelected);
 }
 
-long SketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const QString & newModuleID, ViewLayer::ViewLayerSpec viewLayerSpec, 
-								bool master, bool noFinalChangeWiresCommand, QList<Wire *> & wiresToDelete, QUndoCommand * parentCommand)
+long SketchWidget::setUpSwap(SwapThing & swapThing, bool master)
 {
-	long newID = ItemBase::getNextID(newModelIndex);
+	long newID = ItemBase::getNextID(swapThing.newModelIndex);
+
+    ItemBase * itemBase = swapThing.itemBase;
+
 	if (itemBase->viewIdentifier() != m_viewIdentifier) {
 		itemBase = findItem(itemBase->id());
 		if (itemBase == NULL) return newID;
@@ -5588,62 +5590,60 @@ long SketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const QStr
 		needsTransform = true;
 	}
 
-	new MoveItemCommand(this, itemBase->id(), vg, vg, false, parentCommand);
+	new MoveItemCommand(this, itemBase->id(), vg, vg, false, swapThing.parentCommand);
 
 	// command created for each view
-	newAddItemCommand(BaseCommand::SingleView, newModuleID, viewLayerSpec, vg, newID, true, newModelIndex, parentCommand);
+	newAddItemCommand(BaseCommand::SingleView, swapThing.newModuleID, swapThing.viewLayerSpec, vg, newID, true, swapThing.newModelIndex, swapThing.parentCommand);
 
 	if (needsTransform) {
 		QMatrix m;
 		m.setMatrix(oldTransform.m11(), oldTransform.m12(), oldTransform.m21(), oldTransform.m22(), 0, 0);
-		new TransformItemCommand(this, newID, m, m, parentCommand);
+		new TransformItemCommand(this, newID, m, m, swapThing.parentCommand);
 	}
 
-	setUpSwapReconnect(itemBase, newID, newModuleID, master, wiresToDelete, parentCommand);
-	new CheckStickyCommand(this, BaseCommand::SingleView, newID, false, CheckStickyCommand::RemoveOnly, parentCommand);
+	setUpSwapReconnect(swapThing, itemBase, newID, master);
+	new CheckStickyCommand(this, BaseCommand::SingleView, newID, false, CheckStickyCommand::RemoveOnly, swapThing.parentCommand);
 	if (itemBase->isPartLabelVisible()) {
-		ShowLabelCommand * slc = new ShowLabelCommand(this, parentCommand);
+		ShowLabelCommand * slc = new ShowLabelCommand(this, swapThing.parentCommand);
 		slc->add(newID, true, true);
 	}
 
 	if (master) {		
-		SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
+		SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, swapThing.parentCommand);
 		selectItemCommand->addRedo(newID);
 		selectItemCommand->addUndo(itemBase->id());
 
-		new ChangeLabelTextCommand(this, itemBase->id(), itemBase->instanceTitle(), itemBase->instanceTitle(), parentCommand);
-		new ChangeLabelTextCommand(this, newID, itemBase->instanceTitle(), itemBase->instanceTitle(), parentCommand);
+		new ChangeLabelTextCommand(this, itemBase->id(), itemBase->instanceTitle(), itemBase->instanceTitle(), swapThing.parentCommand);
+		new ChangeLabelTextCommand(this, newID, itemBase->instanceTitle(), itemBase->instanceTitle(), swapThing.parentCommand);
 
-		foreach (Wire * wire, wiresToDelete) {
+		foreach (Wire * wire, swapThing.wiresToDelete) {
 			QList<Wire *> chained;
 			QList<ConnectorItem *> ends;
 			wire->collectChained(chained, ends);
 			foreach (Wire * w, chained) {
-				if (!wiresToDelete.contains(w)) wiresToDelete.append(w);
+				if (!swapThing.wiresToDelete.contains(w)) swapThing.wiresToDelete.append(w);
 			}
 		}
 
-		makeWiresChangeConnectionCommands(wiresToDelete, parentCommand);
-		foreach (Wire * wire, wiresToDelete) {
-			makeDeleteItemCommand(wire, BaseCommand::CrossView, parentCommand);
+		makeWiresChangeConnectionCommands(swapThing.wiresToDelete, swapThing.parentCommand);
+		foreach (Wire * wire, swapThing.wiresToDelete) {
+			makeDeleteItemCommand(wire, BaseCommand::CrossView, swapThing.parentCommand);
 		}
 
-		makeDeleteItemCommand(itemBase, BaseCommand::CrossView, parentCommand);
-		selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
+		makeDeleteItemCommand(itemBase, BaseCommand::CrossView, swapThing.parentCommand);
+		selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, swapThing.parentCommand);
 		selectItemCommand->addRedo(newID);  // to make sure new item is selected so it appears in the info view
 
-		prepDeleteProps(itemBase, newID, newModuleID, parentCommand);
-		if (!noFinalChangeWiresCommand) {
-			new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
-		}
+		prepDeleteProps(itemBase, newID, swapThing.newModuleID, swapThing.parentCommand);
+		new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, swapThing.parentCommand);
 	}
 
 	return newID;
 }
 
-void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QString & newModuleID, bool master, QList<Wire *> & wiresToDelete, QUndoCommand * parentCommand)
+void SketchWidget::setUpSwapReconnect(SwapThing & swapThing, ItemBase * itemBase, long newID, bool master)
 {
-	ModelPart * newModelPart = m_refModel->retrieveModelPart(newModuleID);
+	ModelPart * newModelPart = m_refModel->retrieveModelPart(swapThing.newModuleID);
 	if (newModelPart == NULL) return;
 
 	QList<ConnectorItem *> fromConnectorItems(itemBase->cachedConnectorItems());
@@ -5720,7 +5720,7 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 	QHash<QString, QPolygonF> legs;
 	QHash<QString, ConnectorItem *> formerLegs;
 	if (master && m2f.count() > 0 && (m_viewIdentifier == ViewIdentifierClass::BreadboardView)) {
-		checkFit(newModelPart, itemBase, newID, found, notFound, m2f, byWire, legs, formerLegs, parentCommand);
+		checkFit(newModelPart, itemBase, newID, found, notFound, m2f, byWire, legs, formerLegs, swapThing.parentCommand);
 	}
 
 	fromConnectorItems.append(other);
@@ -5733,7 +5733,7 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 				if (wire->getRatsnest()) continue;
 
 				if (newConnector == NULL && wire->getTrace() && wire->isTraceType(getTraceFlag())) {
-					wiresToDelete.append(wire);
+					swapThing.wiresToDelete.append(wire);
 					continue;
 				}
 			}
@@ -5742,7 +5742,7 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 			extendChangeConnectionCommand(BaseCommand::SingleView,
 										fromConnectorItem, toConnectorItem,
 										ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
-										false, parentCommand);
+										false, swapThing.parentCommand);
 
 			bool cleanup = false;
 			if (newConnector) {
@@ -5757,23 +5757,23 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 											newID, newConnector->connectorSharedID(),
 											toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
 											ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
-											true, parentCommand);
+											true, swapThing.parentCommand);
 
 			}
 
 			if (cleanup && master) {
 				long wireID = ItemBase::getNextID();
 				ViewGeometry vg;
-				new AddItemCommand(this, BaseCommand::CrossView, ModuleIDNames::WireModuleIDName, itemBase->viewLayerSpec(), vg, wireID, false, -1, parentCommand);
-				new CheckStickyCommand(this, BaseCommand::CrossView, wireID, false, CheckStickyCommand::RemoveOnly, parentCommand);
+				new AddItemCommand(this, BaseCommand::CrossView, ModuleIDNames::WireModuleIDName, itemBase->viewLayerSpec(), vg, wireID, false, -1, swapThing.parentCommand);
+				new CheckStickyCommand(this, BaseCommand::CrossView, wireID, false, CheckStickyCommand::RemoveOnly, swapThing.parentCommand);
 				new ChangeConnectionCommand(this, BaseCommand::CrossView, newID, newConnector->connectorSharedID(),
 											wireID, "connector0", 
 											ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
-											true, parentCommand);
+											true, swapThing.parentCommand);
 				new ChangeConnectionCommand(this, BaseCommand::CrossView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
 											wireID, "connector1", 
 											ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
-											true, parentCommand);
+											true, swapThing.parentCommand);
 			}
 		}
 	}
@@ -5781,7 +5781,7 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 	// changeConnection calls PaletteItemBase::connectedMoved which repositions the new part
 	// so slam in the desired position
         QPointF p = itemBase->getViewGeometry().loc();
-        new SimpleMoveItemCommand(this, newID, p, p, parentCommand);
+        new SimpleMoveItemCommand(this, newID, p, p, swapThing.parentCommand);
 
 	foreach (QString connectorID, legs.keys()) {
 		// must be invoked after all the connections have been dealt with
@@ -5792,7 +5792,7 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 			poly = connectorItem->leg();
 		}
 
-		ChangeLegCommand * clc = new ChangeLegCommand(this, newID, connectorID, poly, poly, true, true, "swap", parentCommand);
+		ChangeLegCommand * clc = new ChangeLegCommand(this, newID, connectorID, poly, poly, true, true, "swap", swapThing.parentCommand);
 		clc->setRedoOnly();
 
 		if (connectorItem && connectorItem->hasRubberBandLeg()) {
@@ -5802,7 +5802,7 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 				if (bezier == NULL) continue;
 				if (bezier->isEmpty()) continue;
 
-				ChangeLegCurveCommand * clcc = new ChangeLegCurveCommand(this, newID, connectorID, i, bezier, bezier, parentCommand);
+				ChangeLegCurveCommand * clcc = new ChangeLegCurveCommand(this, newID, connectorID, i, bezier, bezier, swapThing.parentCommand);
 				clcc->setRedoOnly();
 			}
 		}

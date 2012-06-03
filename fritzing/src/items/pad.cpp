@@ -85,7 +85,7 @@ QString Pad::makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, double mmW, double
 	double wpx = mmW > 0 ? GraphicsUtils::mm2pixels(mmW) : OriginalWidth;
 	double hpx = mmH > 0 ? GraphicsUtils::mm2pixels(mmH) : OriginalHeight;
 
-	QString connectAt = m_modelPart->prop("connect").toString();
+	QString connectAt = m_modelPart->localProp("connect").toString();
 	QRectF terminal;
 	double minW = qMin(1.0, wpx / 3);
 	double minH = qMin(1.0, hpx / 3);
@@ -178,7 +178,7 @@ bool Pad::collectExtraInfo(QWidget * parent, const QString & family, const QStri
 		comboBox->addItem(tr("east"), "east");
 		comboBox->addItem(tr("south"), "south");
 		comboBox->addItem(tr("west"), "west");
-		QString connectAt = m_modelPart->prop("connect").toString();
+		QString connectAt = m_modelPart->localProp("connect").toString();
 		for (int i = 0; i < comboBox->count(); i++) {
 			if (comboBox->itemData(i).toString().compare(connectAt) == 0) {
 				comboBox->setCurrentIndex(i);
@@ -199,8 +199,8 @@ bool Pad::collectExtraInfo(QWidget * parent, const QString & family, const QStri
 void Pad::setProp(const QString & prop, const QString & value) 
 {	
 	if (prop.compare("connect to", Qt::CaseInsensitive) == 0) {
-		modelPart()->setProp("connect", value);
-		resizeMMAux(m_modelPart->prop("width").toDouble(), m_modelPart->prop("height").toDouble());
+		modelPart()->setLocalProp("connect", value);
+		resizeMMAux(m_modelPart->localProp("width").toDouble(), m_modelPart->localProp("height").toDouble());
 		return;
 	}
 
@@ -244,12 +244,12 @@ bool Pad::hasPartNumberProperty()
 }
 
 void Pad::setInitialSize() {
-	double w = m_modelPart->prop("width").toDouble();
+	double w = m_modelPart->localProp("width").toDouble();
 	if (w == 0) {
 		// set the size so the infoGraphicsView will display the size as you drag
-		modelPart()->setProp("width", GraphicsUtils::pixels2mm(OriginalWidth, FSvgRenderer::printerScale())); 
-		modelPart()->setProp("height", GraphicsUtils::pixels2mm(OriginalHeight, FSvgRenderer::printerScale())); 
-		modelPart()->setProp("connect", "center"); 
+		modelPart()->setLocalProp("width", GraphicsUtils::pixels2mm(OriginalWidth, FSvgRenderer::printerScale())); 
+		modelPart()->setLocalProp("height", GraphicsUtils::pixels2mm(OriginalHeight, FSvgRenderer::printerScale())); 
+		modelPart()->setLocalProp("connect", "center"); 
 	}
 }
 
@@ -262,7 +262,7 @@ void Pad::addedToScene(bool temporary)
 {
 	if (this->scene()) {
 		setInitialSize();
-		resizeMMAux(m_modelPart->prop("width").toDouble(), m_modelPart->prop("height").toDouble());
+		resizeMMAux(m_modelPart->localProp("width").toDouble(), m_modelPart->localProp("height").toDouble());
 	}
 
     return PaletteItem::addedToScene(temporary);
@@ -273,7 +273,7 @@ void Pad::terminalPointEntry(const QString &) {
 	if (comboBox == NULL) return;
 
 	QString value = comboBox->itemData(comboBox->currentIndex()).toString();
-	QString connectAt = m_modelPart->prop("connect").toString();
+	QString connectAt = m_modelPart->localProp("connect").toString();
 	if (connectAt.compare(value) == 0) return;
 
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);

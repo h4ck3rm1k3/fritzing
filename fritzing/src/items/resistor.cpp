@@ -105,16 +105,16 @@ Resistor::Resistor( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier v
 		Tolerances.insert(PlusMinusSymbol + "20%", QColor(0xdb, 0xb4, 0x77));
 	}
 
-	m_ohms = modelPart->prop("resistance").toString();
+	m_ohms = modelPart->localProp("resistance").toString();
 	if (m_ohms.isEmpty()) {
 		m_ohms = modelPart->properties().value("resistance", "220");
-		modelPart->setProp("resistance", m_ohms);
+		modelPart->setLocalProp("resistance", m_ohms);
 	}
 
-	m_pinSpacing = modelPart->prop("pin spacing").toString();
+	m_pinSpacing = modelPart->localProp("pin spacing").toString();
 	if (m_pinSpacing.isEmpty()) {
 		m_pinSpacing = modelPart->properties().value("pin spacing", "400 mil");
-		modelPart->setProp("pin spacing", m_pinSpacing);
+		modelPart->setLocalProp("pin spacing", m_pinSpacing);
 	}
 
 	updateResistances(m_ohms);
@@ -174,9 +174,9 @@ void Resistor::setResistance(QString resistance, QString pinSpacing, bool force)
 
 	m_ohms = resistance;
 	m_pinSpacing = pinSpacing;
-	modelPart()->setProp("resistance", resistance);
-	modelPart()->setProp("pin spacing", pinSpacing);
-	modelPart()->setProp("tolerance", tolerance);
+	modelPart()->setLocalProp("resistance", resistance);
+	modelPart()->setLocalProp("pin spacing", pinSpacing);
+	modelPart()->setLocalProp("tolerance", tolerance);
 
 	updateResistances(m_ohms);
     if (m_partLabel) m_partLabel->displayTextsIf();

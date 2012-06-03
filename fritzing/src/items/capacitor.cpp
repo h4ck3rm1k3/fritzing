@@ -157,7 +157,7 @@ void Capacitor::setProp(const QString & prop, const QString & value) {
 	foreach (PropertyDef * propertyDef, m_propertyDefs.keys()) {
 		if (prop.compare(propertyDef->name, Qt::CaseInsensitive) == 0) {
 			m_propertyDefs.insert(propertyDef, value);
-			modelPart()->setProp(propertyDef->name, value);
+			modelPart()->setLocalProp(propertyDef->name, value);
 			if (m_partLabel) m_partLabel->displayTextsIf();
 			return;
 		}

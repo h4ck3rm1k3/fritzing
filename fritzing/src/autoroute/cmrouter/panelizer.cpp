@@ -1112,7 +1112,7 @@ void Panelizer::inscribe(FApplication * app, const QString & panelFilename)
 
 	app->createUserDataStoreFolderStructure();
 	app->registerFonts();
-	ReferenceModel * referenceModel = app->loadReferenceModel();
+	app->loadReferenceModel();
 
 	if (!app->loadBin("")) {
 		DebugDialog::debug(QString("load bin failed"));
@@ -1121,7 +1121,7 @@ void Panelizer::inscribe(FApplication * app, const QString & panelFilename)
 
 	board = boards.firstChildElement("board");
 	while (!board.isNull()) {
-		MainWindow * mainWindow = inscribeBoard(board, fzzFilePaths, app, fzDir, referenceModel);
+		MainWindow * mainWindow = inscribeBoard(board, fzzFilePaths, app, fzDir);
 		if (mainWindow) {
 			mainWindow->setCloseSilently(true);
 			mainWindow->close();
@@ -1133,7 +1133,7 @@ void Panelizer::inscribe(FApplication * app, const QString & panelFilename)
 
 }
 
-MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QString> & fzzFilePaths, FApplication * app, QDir & fzDir, ReferenceModel * referenceModel)
+MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QString> & fzzFilePaths, FApplication * app, QDir & fzDir)
 {
 	QString boardName = board.attribute("name");
 
@@ -1163,41 +1163,20 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
 	bool oldGround = !Version::greaterThan(versionThing, versionThingFz);
 		
     bool filled = false;
-	bool swapped = false;
     QList<ItemBase *> boards = mainWindow->pcbView()->findBoard();	
+    bool wasOne = false;
 	foreach (ItemBase * boardItem, boards) {
         mainWindow->pcbView()->selectAllItems(false, false);
         boardItem->setSelected(true);
 	    QString fillType = mainWindow->pcbView()->characterizeGroundFill();
-        QMultiHash<QString, QString> properties = boardItem->modelPart()->properties();
-	    if (properties.value("layers").compare("1") == 0) {
-		    QString family = properties.value("family", "");
-		    QString shape = properties.value("shape", "");
-            bool localSwapped = false;
-		    if (!shape.isEmpty() && !family.isEmpty()) {
-			    QMultiHash<QString, QString> ps;
-			    ps.insert("layers", "2");
-			    ps.insert("shape", shape);
-			    QString newModuleID = referenceModel->retrieveModuleId(family, ps, "layers", true); 
-			    if (!newModuleID.isEmpty()) {
-				    ModelPart * modelPart = referenceModel->retrieveModelPart(newModuleID);
-				    if (modelPart) {
-					    QString newShape = modelPart->properties().value("shape", "");
-					    if (shape == newShape) {
-						    mainWindow->swapSelectedAux(boardItem, newModuleID);
-                            mainWindow->changeBoardLayers(2, true);
-						    mainWindow->removeGroundFill(true);
-						    fillType = GroundPlane::fillTypeNone;
-						    localSwapped = swapped = true;
-					    }
-				    }
-			    }
-		    }
-		    if (!localSwapped) {
-			    DebugDialog::debug(QString("\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"
-									    "unable to convert to double-sided board %1\n"
-									    "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n").arg(path));
-		    }
+	    if (boardItem->prop("layers").compare("1") == 0) {
+            mainWindow->swapLayers(boardItem, 2, "", false);
+            wasOne = true;
+        }
+
+        if (wasOne) {
+	        mainWindow->removeGroundFill(true);
+		    fillType = GroundPlane::fillTypeNone;
 	    }
 
 	    if (fillType == GroundPlane::fillTypeNone) {
@@ -1211,9 +1190,9 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
 	    }
     }
 
-	if (swapped || filled) { 
+	if (filled) { 
 		mainWindow->saveAsShareable(path, true);
-		DebugDialog::debug(QString("%1 swapped:%2 filled:%3").arg(path).arg(swapped).arg(filled));
+		DebugDialog::debug(QString("%1 filled:%2").arg(path).arg(filled));
 	}
 
 	return mainWindow;

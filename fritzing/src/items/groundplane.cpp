@@ -161,7 +161,7 @@ void GroundPlane::addedToScene(bool temporary)
 
 
 void GroundPlane::setSvg(const QString & svg) {
-	modelPart()->setProp("svg", svg);
+	modelPart()->setLocalProp("svg", svg);
 	setSvgAux(svg);
 }
 
@@ -233,7 +233,7 @@ QString GroundPlane::generateSvg() {
 void GroundPlane::setDropOffset(QPointF offset) 
 {
 	m_dropOffset = offset;
-	modelPart()->setProp("fillType", fillTypeIndividual);
+	modelPart()->setLocalProp("fillType", fillTypeIndividual);
 	QString svg = generateSvg();
 	if (svg.isEmpty()) {
 		loadIconSvg();

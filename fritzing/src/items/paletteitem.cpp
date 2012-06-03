@@ -596,7 +596,7 @@ void PaletteItem::openPinLabelDialog() {
 		labels.append(connectorItem->connectorSharedName());
 	}
 
-	QString chipLabel = modelPart()->prop("chip label").toString();
+	QString chipLabel = modelPart()->localProp("chip label").toString();
 	if (chipLabel.isEmpty()) {
 		chipLabel = instanceTitle();
 	}

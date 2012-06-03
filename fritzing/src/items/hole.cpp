@@ -73,13 +73,13 @@ Hole::Hole( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdent
 		setUpHoleSizes();
 	}
 
-	QString holeSize = modelPart->prop("hole size").toString();
+	QString holeSize = modelPart->localProp("hole size").toString();
 	QStringList sizes = holeSize.split(",");
 	if (sizes.count() != 2) {
 		holeSize = HoleSizes.value(holeSize, "");
 		if (holeSize.isEmpty()) {
 			holeSize = modelPart->properties().value("hole size", ".035in,0.2in");
-			modelPart->setProp("hole size", holeSize);
+			modelPart->setLocalProp("hole size", holeSize);
 		}
 		sizes = holeSize.split(",");
 	}
@@ -171,7 +171,7 @@ void Hole::setHoleSize(QString newSize, bool force) {
 
 	if (setHoleSize(newSize, force, m_holeSettings)) {
 		setBoth(m_holeSettings.holeDiameter, m_holeSettings.ringThickness);
-		modelPart()->setProp("hole size", newSize);
+		modelPart()->setLocalProp("hole size", newSize);
 
 		if (m_partLabel) m_partLabel->displayTextsIf();	
 	}
@@ -385,7 +385,7 @@ QString Hole::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QSt
 		return PaletteItemBase::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 	}
 
-	QStringList holeSize = m_modelPart->prop("hole size").toString().split(",");
+	QStringList holeSize = m_modelPart->localProp("hole size").toString().split(",");
 	if (holeSize.length() == 2) {
 		QString svg = makeSvg(holeSize.at(0), holeSize.at(1), viewLayerID);
 		if (!svg.isEmpty()) {
@@ -411,7 +411,7 @@ bool Hole::collectExtraInfo(QWidget * parent, const QString & family, const QStr
 	if (prop.compare("hole size", Qt::CaseInsensitive) == 0) {
 		returnProp = tr("hole size");
 
-		returnValue = m_modelPart->prop("hole size").toString();
+		returnValue = m_modelPart->localProp("hole size").toString();
 		QWidget * frame = createHoleSettings(parent, m_holeSettings, swappingEnabled, returnValue);
 
 		connect(m_holeSettings.sizesComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeHoleSize(const QString &)));	
@@ -470,7 +470,7 @@ bool Hole::changeDiameter(HoleSettings & holeSettings, QObject * sender)
 void Hole::changeUnits(bool) 
 {
 	QString newVal = changeUnits(currentUnits(), m_holeSettings);
-	modelPart()->setProp("hole size", newVal);
+	modelPart()->setLocalProp("hole size", newVal);
 }
 
 QString Hole::changeUnits(const QString & units, HoleSettings & holeSettings) 

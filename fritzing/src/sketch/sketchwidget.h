@@ -60,6 +60,15 @@ struct ItemCount {
 	int wireCount;
 };
 
+struct SwapThing {
+    ItemBase * itemBase;
+    long newModelIndex;
+    QString newModuleID;
+    ViewLayer::ViewLayerSpec viewLayerSpec;
+    QList<Wire *> wiresToDelete;
+    QUndoCommand * parentCommand;
+};
+
 class SizeItem : public QObject, public QGraphicsLineItem
 {
 	Q_OBJECT
@@ -215,7 +224,7 @@ public:
 								  QList<QGraphicsItem *> & itemsAndLabels, QRectF itemsBoundingRect, bool & empty);
 
 	bool spaceBarIsPressed();
-	virtual long setUpSwap(ItemBase *, long newModelIndex, const QString & newModuleID, ViewLayer::ViewLayerSpec, bool doEmit, bool noFinalChangeWiresCommand, QList<Wire *> & wiresToDelete, QUndoCommand * parentCommand);
+	virtual long setUpSwap(SwapThing &, bool master);
 	ConnectorItem * lastHoverEnterConnectorItem();
 	ItemBase * lastHoverEnterItem();
 	LayerHash & viewLayers();
@@ -386,7 +395,7 @@ protected:
 	void drawBackground( QPainter * painter, const QRectF & rect );
 	void handleConnect(QDomElement & connect, ModelPart *, const QString & fromConnectorID, ViewLayer::ViewLayerID, QStringList & alreadyConnected, 
 						QHash<long, ItemBase *> & newItems, QUndoCommand * parentCommand, bool seekOutsideConnections);
-	void setUpSwapReconnect(ItemBase* itemBase, long newID, const QString & newModuleID, bool master, QList<Wire *> & wiresToDelete, QUndoCommand * parentCommand);
+	void setUpSwapReconnect(SwapThing &, ItemBase * itemBase, long newID, bool master);
 	bool swappedGender(ConnectorItem * originalConnectorItem, Connector * newConnector);
 	void setLastPaletteItemSelected(PaletteItem * paletteItem);
 	void setLastPaletteItemSelectedIf(ItemBase * itemBase);

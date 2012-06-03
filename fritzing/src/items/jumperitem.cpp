@@ -182,16 +182,16 @@ void JumperItem::initialResize(ViewIdentifierClass::ViewIdentifier viewIdentifie
 	if (viewIdentifier != ViewIdentifierClass::PCBView) return;
 
 	bool ok;
-	double r0x = m_modelPart->prop("r0x").toDouble(&ok);
+	double r0x = m_modelPart->localProp("r0x").toDouble(&ok);
 	if (!ok) return;
 
-	double r0y = m_modelPart->prop("r0y").toDouble(&ok);
+	double r0y = m_modelPart->localProp("r0y").toDouble(&ok);
 	if (!ok) return;
 					
-	double r1x = m_modelPart->prop("r1x").toDouble(&ok);
+	double r1x = m_modelPart->localProp("r1x").toDouble(&ok);
 	if (!ok) return;
 						
-	double r1y = m_modelPart->prop("r1y").toDouble(&ok);
+	double r1y = m_modelPart->localProp("r1y").toDouble(&ok);
 	if (!ok) return;
 							
 	resizeAux(GraphicsUtils::mils2pixels(r0x, FSvgRenderer::printerScale()), 
@@ -290,10 +290,10 @@ QString JumperItem::makeSvg(ViewLayer::ViewLayerID viewLayerID)
 	double r1x = GraphicsUtils::pixels2mils(r1c.x(), FSvgRenderer::printerScale());
 	double r1y = GraphicsUtils::pixels2mils(r1c.y(), FSvgRenderer::printerScale());
 
-	modelPart()->setProp("r0x", r0x);
-	modelPart()->setProp("r0y", r0y);
-	modelPart()->setProp("r1x", r1x);
-	modelPart()->setProp("r1y", r1y);
+	modelPart()->setLocalProp("r0x", r0x);
+	modelPart()->setLocalProp("r0y", r0y);
+	modelPart()->setLocalProp("r1x", r1x);
+	modelPart()->setLocalProp("r1y", r1y);
 
 	switch (viewLayerID) {
 		case ViewLayer::Copper0:

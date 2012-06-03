@@ -1449,7 +1449,7 @@ bool ItemBase::connectionIsAllowed(ConnectorItem * other) {
 QString ItemBase::getProperty(const QString & key) {
 	if (m_modelPart == NULL) return "";
 
-	QString result = m_modelPart->prop(key).toString();
+	QString result = m_modelPart->localProp(key).toString();
 	if (!result.isEmpty()) return result;
 
 	return m_modelPart->properties().value(key, "");
@@ -1500,14 +1500,15 @@ bool ItemBase::hasCustomSVG() {
 void ItemBase::setProp(const QString & prop, const QString & value) {
 	if (!m_modelPart) return;
 
-	m_modelPart->setProp(prop, value);
+    //DebugDialog::debug(QString("setting prop %1 %2").arg(prop).arg(value));
+	m_modelPart->setLocalProp(prop, value);
 }
 
 QString ItemBase::prop(const QString & p)
 {
 	if (m_modelPart == NULL) return "";
 
-	return m_modelPart->prop(p).toString();
+	return m_modelPart->localProp(p).toString();
 }
 
 bool ItemBase::isObsolete() {

@@ -72,7 +72,8 @@ public:
 	double getRatsnestWidth();
 
 	void setBoardLayers(int, bool redraw);
-	long setUpSwap(ItemBase *, long newModelIndex, const QString & newModuleID, ViewLayer::ViewLayerSpec, bool doEmit, bool noFinalChangeWiresCommand, QList<Wire *> & wiresToDelete, QUndoCommand * parentCommand);
+	long setUpSwap(SwapThing &, bool master);
+    void swapLayers(ItemBase * itemBase, int newLayers, bool flip, QUndoCommand * parentCommand);
 	void loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType, QUndoCommand * parentCommand, 
 							bool offsetPaste, const QRectF * boundingRect, bool seekOutsideConnections, QList<long> & newIDs);
 	virtual bool isInLayers(ConnectorItem *, ViewLayer::ViewLayerSpec);
@@ -102,6 +103,7 @@ public:
 	void hideCopperLogoItems(QList<ItemBase *> & copperLogoItems);
 	void restoreCopperLogoItems(QList<ItemBase *> & copperLogoItems);
 	int selectAllItemType(ModelPart::ItemType, const QString & typeName);
+	bool isBoardLayerChange(ItemBase * itemBase, const QString & newModuleID, int & newLayers);
 
 public:
 	static QSizeF jumperItemSize();
@@ -140,7 +142,6 @@ protected:
 	double defaultGridSizeInches();
 	ViewLayer::ViewLayerID getLabelViewLayerID(ViewLayer::ViewLayerSpec);
 	ViewLayer::ViewLayerSpec wireViewLayerSpec(ConnectorItem *);
-	int isBoardLayerChange(ItemBase * itemBase, const QString & newModuleID, bool master);
 	bool resizingJumperItemPress(QGraphicsItem * item);
 	bool resizingJumperItemRelease();
 	bool resizingBoardPress(QGraphicsItem * item);

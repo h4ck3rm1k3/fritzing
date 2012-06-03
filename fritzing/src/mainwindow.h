@@ -127,6 +127,7 @@ public:
 	class PCBSketchWidget * pcbView();
 	void noBackup();
 	void swapSelectedAux(ItemBase * itemBase, const QString & moduleID);
+    void swapLayers(ItemBase * itemBase, int layers, const QString & msg, bool flip);
 	bool saveAsAux(const QString & fileName);
 	void swapObsolete(bool displayFeedback);
 	void selectAllObsolete(bool displayFeedback);
@@ -163,7 +164,6 @@ public slots:
 	void setGroundFillSeeds();	
 	void clearGroundFillSeeds();
 	void changeBoardLayers(int layers, bool doEmit);
-	void swapOne(ItemBase * itemBase, const QString & moduleID);
 	void selectAllObsolete();
 	void swapObsolete();
 	void dropTempSlot(ModelPart *, QWidget *);

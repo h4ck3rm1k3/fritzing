@@ -715,13 +715,13 @@ void PCBSketchWidget::resizeBoard(double mmW, double mmH, bool doEmit)
 	if (!handle) return SketchWidget::resizeBoard(mmW, mmH, doEmit);
 
 
-	double origw = item->modelPart()->prop("width").toDouble();
-	double origh = item->modelPart()->prop("height").toDouble();
+	double origw = item->modelPart()->localProp("width").toDouble();
+	double origh = item->modelPart()->localProp("height").toDouble();
 
 	if (mmH == 0 || mmW == 0) {
 		dynamic_cast<ResizableBoard *>(item)->setInitialSize();
-		double w = item->modelPart()->prop("width").toDouble();
-		double h = item->modelPart()->prop("height").toDouble();
+		double w = item->modelPart()->localProp("width").toDouble();
+		double h = item->modelPart()->localProp("height").toDouble();
 		if (origw == w && origh == h) {
 			// no change
 			return;
@@ -872,55 +872,23 @@ void PCBSketchWidget::setBoardLayers(int layers, bool redraw) {
 	}
 }
 
-long PCBSketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const QString & newModuleID, ViewLayer::ViewLayerSpec viewLayerSpec, 
-								bool master, bool noFinalChangeWiresCommand, QList<Wire *> & wiresToDelete, QUndoCommand * parentCommand)
+void PCBSketchWidget::swapLayers(ItemBase *, int newLayers, bool flip, QUndoCommand * parentCommand) 
 {
-	Q_UNUSED(noFinalChangeWiresCommand);
-
 	QList<ItemBase *> smds;
 	QList<ItemBase *> pads;
-	QList<Wire *> already;
+    QList<Wire *> already;
 
-	int newLayers = isBoardLayerChange(itemBase, newModuleID, master);
-	bool wasSMD = itemBase->modelPart()->flippedSMD();
-
-	long newID = SketchWidget::setUpSwap(itemBase, newModelIndex, newModuleID, viewLayerSpec, master, newLayers != m_boardLayers, wiresToDelete, parentCommand);
-	if (newLayers == m_boardLayers) {
-		if (!wasSMD) {
-			ModelPart * mp = paletteModel()->retrieveModelPart(newModuleID);
-			if (mp->flippedSMD()) {
-				smds.append(itemBase);
-				clearSmdTraces(smds, already, parentCommand);
-			}
-		}
-		return newID;
+	if (!flip) {
+		new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
+		return;
 	}
 
-	if (itemBase->viewIdentifier() != m_viewIdentifier) {
-		itemBase = findItem(itemBase->id());
-		if (itemBase == NULL) {
-			if (master) {
-				new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
-			}
-			return newID;
-		}
-	}
 
 	ChangeBoardLayersCommand * changeBoardCommand = new ChangeBoardLayersCommand(this, m_boardLayers, newLayers, parentCommand);
-
-	ModelPart * mp = paletteModel()->retrieveModelPart(newModuleID);
-	if (mp->itemType() == ModelPart::ResizableBoard) {
-		// preserve the size if swapping rectangular board
-		ResizableBoard * rb = qobject_cast<ResizableBoard *>(itemBase);
-		if (rb) {
-			QPointF p;
-			QSizeF sz;
-			rb->getParams(p, sz);
-			new ResizeBoardCommand(this, newID, sz.width(), sz.height(), sz.width(), sz.height(), parentCommand);
-		}
-		new CheckStickyCommand(this, BaseCommand::SingleView, newID, false, CheckStickyCommand::RemoveOnly, parentCommand);
-	}
-
+    QList<ItemBase *> boards = findBoard();
+    foreach (ItemBase * board, boards) {
+        new SetPropCommand(this, board->id(), "layers", QString::number(m_boardLayers), QString::number(newLayers), true, parentCommand);
+    }
 
 	// disconnect and flip smds
 	foreach (QGraphicsItem * item, scene()->items()) {
@@ -964,10 +932,29 @@ long PCBSketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const Q
         Pad * pad = qobject_cast<Pad *>(itemBase);
         if (pad == NULL) continue;
 
-        double w = pad->modelPart()->prop("width").toDouble();
-        double h = pad->modelPart()->prop("height").toDouble();
+        double w = pad->modelPart()->localProp("width").toDouble();
+        double h = pad->modelPart()->localProp("height").toDouble();
 
         new ResizeBoardCommand(this, pad->id(), w, h, w, h, parentCommand);
+	}
+
+}
+
+long PCBSketchWidget::setUpSwap(SwapThing & swapThing, bool master)
+{
+	bool wasSMD = swapThing.itemBase->modelPart()->flippedSMD();
+
+	long newID = SketchWidget::setUpSwap(swapThing, master);
+
+	if (!wasSMD) {
+		ModelPart * mp = paletteModel()->retrieveModelPart(swapThing.newModuleID);
+		if (mp->flippedSMD()) {
+            // part was through-hole, now is smd, so remove traces on the now-missing layer
+            QList<Wire *> already;
+	        QList<ItemBase *> smds;
+			smds.append(swapThing.itemBase);
+			clearSmdTraces(smds, already, swapThing.parentCommand);
+		}
 	}
 
 	return newID;
@@ -1008,37 +995,36 @@ void PCBSketchWidget::clearSmdTraces(QList<ItemBase *> & smds, 	QList<Wire *> & 
 	}
 }
 
-int PCBSketchWidget::isBoardLayerChange(ItemBase * itemBase, const QString & newModuleID, bool master)
-{							
-	if (!master) return m_boardLayers;
-
+bool PCBSketchWidget::isBoardLayerChange(ItemBase * itemBase, const QString & newModuleID, int & newLayers)
+{	
+    newLayers = m_boardLayers;
 	if (!Board::isBoard(itemBase)) {
 		// no change
-		return m_boardLayers;
+		return false;
 	}
 
 	ModelPart * modelPart = paletteModel()->retrieveModelPart(newModuleID);
 	if (modelPart == NULL) {
 		// shouldn't happen
-		return m_boardLayers;
+		return false;
 	}
 
 	QString slayers = modelPart->properties().value("layers", "");
 	if (slayers.isEmpty()) {
 		// shouldn't happen
-		return m_boardLayers;
+		return false;
 	}
 
 	bool ok;
 	int layers = slayers.toInt(&ok);
 	if (!ok) {
 		// shouldn't happen
-		return m_boardLayers;
+		return false;
 	}
 
-	return layers;
+    newLayers = layers;
+	return (m_boardLayers != layers);
 }
-
 
 void PCBSketchWidget::changeBoardLayers(int layers, bool doEmit) {
 	setBoardLayers(layers, true);

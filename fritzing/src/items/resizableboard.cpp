@@ -56,6 +56,11 @@ QString Board::TwoLayersTranslated;
 Board::Board( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
+    if (isBoard(modelPart)) {
+        if (modelPart->localProp("layers").isNull()) {
+            modelPart->setLocalProp("layers", modelPart->properties().value("layers"));
+        }
+    }
 }
 
 Board::~Board() {
@@ -74,6 +79,10 @@ void Board::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option
 
 QStringList Board::collectValues(const QString & family, const QString & prop, QString & value) {
 	if (prop.compare("layers", Qt::CaseInsensitive) == 0) {
+        QString realValue = modelPart()->localProp("layers").toString();
+        if (!realValue.isEmpty()) {
+            value = realValue;
+        }
 		QStringList result;
 		if (OneLayerTranslated.isEmpty()) {
 			OneLayerTranslated = tr("one layer (single-sided)");
@@ -122,6 +131,8 @@ bool Board::isBoard(ItemBase * itemBase) {
 }
 
 bool Board::isBoard(ModelPart * modelPart) {
+    if (modelPart == NULL) return false;
+
     switch (modelPart->itemType()) {
         case ModelPart::Board:
             return true;
@@ -381,8 +392,8 @@ bool ResizableBoard::resizeMM(double mmW, double mmH, const LayerHash & viewLaye
 		QString error;
 		LayerAttributes layerAttributes;
 		setUpImage(modelPart(), m_viewIdentifier, viewLayers, m_viewLayerID, m_viewLayerSpec, true, layerAttributes, error);
-		modelPart()->setProp("height", QVariant());
-		modelPart()->setProp("width", QVariant());
+		modelPart()->setLocalProp("height", QVariant());
+		modelPart()->setLocalProp("width", QVariant());
 		// do the layerkin
 		return false;
 	}
@@ -408,8 +419,8 @@ void ResizableBoard::resizeMMAux(double mmW, double mmH) {
 
 	bool result = loadExtraRenderer(s.toUtf8(), false);
 	if (result) {
-		modelPart()->setProp("width", mmW);
-		modelPart()->setProp("height", mmH);
+		modelPart()->setLocalProp("width", mmW);
+		modelPart()->setLocalProp("height", mmH);
 
 		double tens = pow(10.0, m_decimalsAfter);
 		setWidthAndHeight(qRound(mmW * tens) / tens, qRound(mmH * tens) / tens);
@@ -426,8 +437,8 @@ void ResizableBoard::resizeMMAux(double mmW, double mmH) {
 			bool result = m_silkscreenRenderer->loadSvgString(s);
 			if (result) {
 				qobject_cast<PaletteItemBase *>(itemBase)->setSharedRendererEx(m_silkscreenRenderer);
-				itemBase->modelPart()->setProp("width", mmW);
-				itemBase->modelPart()->setProp("height", mmH);
+				itemBase->modelPart()->setLocalProp("width", mmW);
+				itemBase->modelPart()->setLocalProp("height", mmH);
 			}
 			break;
 		}
@@ -438,27 +449,27 @@ void ResizableBoard::loadLayerKin( const LayerHash & viewLayers, ViewLayer::View
 
 	loadTemplates();				
 	Board::loadLayerKin(viewLayers, viewLayerSpec);
-	double w =  m_modelPart->prop("width").toDouble();
+	double w =  m_modelPart->localProp("width").toDouble();
 	if (w != 0) {
-		resizeMM(w, m_modelPart->prop("height").toDouble(), viewLayers);
+		resizeMM(w, m_modelPart->localProp("height").toDouble(), viewLayers);
 	}
 }
 
 void ResizableBoard::setInitialSize() {
-	double w =  m_modelPart->prop("width").toDouble();
+	double w =  m_modelPart->localProp("width").toDouble();
 	if (w == 0) {
 		// set the size so the infoGraphicsView will display the size as you drag
 		QSizeF sz = this->boundingRect().size();
-		modelPart()->setProp("width", GraphicsUtils::pixels2mm(sz.width(), FSvgRenderer::printerScale())); 
-		modelPart()->setProp("height", GraphicsUtils::pixels2mm(sz.height(), FSvgRenderer::printerScale())); 
+		modelPart()->setLocalProp("width", GraphicsUtils::pixels2mm(sz.width(), FSvgRenderer::printerScale())); 
+		modelPart()->setLocalProp("height", GraphicsUtils::pixels2mm(sz.height(), FSvgRenderer::printerScale())); 
 	}
 }
 
 QString ResizableBoard::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi)
 {
-	double w = m_modelPart->prop("width").toDouble();
+	double w = m_modelPart->localProp("width").toDouble();
 	if (w != 0) {
-		double h = m_modelPart->prop("height").toDouble();
+		double h = m_modelPart->localProp("height").toDouble();
 		QString xml = makeLayerSvg(viewLayerID, w, h, GraphicsUtils::mm2mils(w), GraphicsUtils::mm2mils(h));
 		if (!xml.isEmpty()) {
 			QString xmlName = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
@@ -479,8 +490,8 @@ QString ResizableBoard::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QS
 }
 
 QSizeF ResizableBoard::getSizeMM() {
-	double w = m_modelPart->prop("width").toDouble();
-	double h = m_modelPart->prop("height").toDouble();
+	double w = m_modelPart->localProp("width").toDouble();
+	double h = m_modelPart->localProp("height").toDouble();
 	return QSizeF(w, h);
 }
 
@@ -523,8 +534,8 @@ QString ResizableBoard::makeSilkscreenSvg(double mmW, double mmH, double milsW, 
 }
 
 void ResizableBoard::saveParams() {
-	double w = modelPart()->prop("width").toDouble();
-	double h = modelPart()->prop("height").toDouble();
+	double w = modelPart()->localProp("width").toDouble();
+	double h = modelPart()->localProp("height").toDouble();
 	m_boardSize = QSizeF(w, h);
 	m_boardPos = pos();
 }
@@ -546,7 +557,7 @@ bool ResizableBoard::collectExtraInfo(QWidget * parent, const QString & family, 
 
 		returnProp = tr("shape");
 
-		if (!m_modelPart->prop("height").isValid()) { 
+		if (!m_modelPart->localProp("height").isValid()) { 
 			// display uneditable width and height
 			QFrame * frame = new QFrame();
 			frame->setObjectName("infoViewPartFrame");		
@@ -596,10 +607,10 @@ void ResizableBoard::widthEntry() {
 	if (edit == NULL) return;
 
 	double w = edit->text().toDouble();
-	double oldW = m_modelPart->prop("width").toDouble();
+	double oldW = m_modelPart->localProp("width").toDouble();
 	if (w == oldW) return;
 
-	double h =  m_modelPart->prop("height").toDouble();
+	double h =  m_modelPart->localProp("height").toDouble();
 
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
@@ -612,10 +623,10 @@ void ResizableBoard::heightEntry() {
 	if (edit == NULL) return;
 
 	double h = edit->text().toDouble();
-	double oldH =  m_modelPart->prop("height").toDouble();
+	double oldH =  m_modelPart->localProp("height").toDouble();
 	if (h == oldH) return;
 
-	double w =  m_modelPart->prop("width").toDouble();
+	double w =  m_modelPart->localProp("width").toDouble();
 
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
@@ -778,8 +789,8 @@ void ResizableBoard::setKinCursor(Qt::CursorShape cursor) {
 QFrame * ResizableBoard::setUpDimEntry(bool includeProportion, QWidget * & returnWidget)
 {
 	double tens = pow(10.0, m_decimalsAfter);
-	double w = qRound(m_modelPart->prop("width").toDouble() * tens) / tens;	// truncate to 1 decimal point
-	double h = qRound(m_modelPart->prop("height").toDouble() * tens) / tens;  // truncate to 1 decimal point
+	double w = qRound(m_modelPart->localProp("width").toDouble() * tens) / tens;	// truncate to 1 decimal point
+	double h = qRound(m_modelPart->localProp("height").toDouble() * tens) / tens;  // truncate to 1 decimal point
 
 	QFrame * frame = new QFrame();
 	frame->setObjectName("infoViewPartFrame");
@@ -872,8 +883,8 @@ QFrame * ResizableBoard::setUpDimEntry(bool includeProportion, QWidget * & retur
 
 void ResizableBoard::fixWH() {
 	bool okw, okh;
-	QString wstr = m_modelPart->prop("width").toString();
-	QString hstr = m_modelPart->prop("height").toString();
+	QString wstr = m_modelPart->localProp("width").toString();
+	QString hstr = m_modelPart->localProp("height").toString();
 	double w = wstr.toDouble(&okw);
 	double h = hstr.toDouble(&okh);
 
@@ -885,8 +896,8 @@ void ResizableBoard::fixWH() {
 		DebugDialog::debug("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		DebugDialog::debug("bad width or height in ResizableBoard or subclass " + wstr + " " + hstr);
 		DebugDialog::debug("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		m_modelPart->setProp("width", "");
-		m_modelPart->setProp("height", "");
+		m_modelPart->setLocalProp("width", "");
+		m_modelPart->setLocalProp("height", "");
 	}
 }
 

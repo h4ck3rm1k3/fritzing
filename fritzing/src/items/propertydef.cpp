@@ -112,11 +112,11 @@ void PropertyDefMaster::initPropertyDefs(ModelPart * modelPart, QHash<PropertyDe
 			else {
 				defaultValue = propertyDef->defaultValue;
 			}
-			QString savedValue = modelPart->prop(propertyDef->name).toString();
+			QString savedValue = modelPart->localProp(propertyDef->name).toString();
 			if (savedValue.isEmpty()) {
 				savedValue = modelPart->properties().value(propertyDef->name.toLower(), defaultValue);
 				if (!savedValue.isEmpty()) {
-					modelPart->setProp(propertyDef->name, savedValue);
+					modelPart->setLocalProp(propertyDef->name, savedValue);
 				}
 			}
 			// caches the current value

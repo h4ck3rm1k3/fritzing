@@ -60,10 +60,10 @@ bool Perfboard::m_gotWarning = false;
 Perfboard::Perfboard( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: Capacitor(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
-	m_size = modelPart->prop("size").toString();
+	m_size = modelPart->localProp("size").toString();
 	if (m_size.isEmpty()) {
 		m_size = modelPart->properties().value("size", "20.20");
-		modelPart->setProp("size", m_size);
+		modelPart->setLocalProp("size", m_size);
 	}
 }
 
@@ -90,7 +90,7 @@ void Perfboard::setProp(const QString & prop, const QString & value)
 	}
 
 	m_size = value;
-	modelPart()->setProp("size", value);
+	modelPart()->setLocalProp("size", value);
 
     if (m_partLabel) m_partLabel->displayTextsIf();
 }

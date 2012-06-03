@@ -52,12 +52,12 @@ Ruler::Ruler( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIde
 	m_widthEditor = NULL;
 	m_unitsEditor = NULL;
 	m_widthValidator = NULL;
-	QString w = modelPart->prop("width").toString();
+	QString w = modelPart->localProp("width").toString();
 	if (w.isEmpty()) {
 		if (DefaultWidth.isEmpty()) {
 			DefaultWidth = modelPart->properties().value("width", "10cm");
 		}
-		m_modelPart->setProp("width", DefaultWidth);
+		m_modelPart->setLocalProp("width", DefaultWidth);
 	}
 }
 
@@ -79,7 +79,7 @@ void Ruler::resizeMM(double magnitude, double unitsFlag, const LayerHash & viewL
 
 	bool result = loadExtraRenderer(s.toUtf8(), false);
 	if (result) {
-        modelPart()->setProp("width", QVariant(QString::number(magnitude) + units));
+        modelPart()->setLocalProp("width", QVariant(QString::number(magnitude) + units));
 	}
 	//	DebugDialog::debug(QString("fast load result %1 %2").arg(result).arg(s));
 
@@ -87,7 +87,7 @@ void Ruler::resizeMM(double magnitude, double unitsFlag, const LayerHash & viewL
 
 QString Ruler::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi) 
 {
-	double w = TextUtils::convertToInches(m_modelPart->prop("width").toString());
+	double w = TextUtils::convertToInches(m_modelPart->localProp("width").toString());
 	if (w != 0) {
 		QString xml;
 		switch (viewLayerID) {
@@ -215,14 +215,14 @@ bool Ruler::collectExtraInfo(QWidget * parent, const QString & family, const QSt
 	if (prop.compare("width", Qt::CaseInsensitive) == 0) {
 		returnProp = tr("width");
 
-		int units = m_modelPart->prop("width").toString().contains("cm") ? IndexCm : IndexIn;
+		int units = m_modelPart->localProp("width").toString().contains("cm") ? IndexCm : IndexIn;
 		QLineEdit * e1 = new QLineEdit();
 		QDoubleValidator * validator = new QDoubleValidator(e1);
 		validator->setRange(1.0, 20 * ((units == IndexCm) ? 2.54 : 1), 2);
 		validator->setNotation(QDoubleValidator::StandardNotation);
 		e1->setValidator(validator);
 		e1->setEnabled(swappingEnabled);
-		QString temp = m_modelPart->prop("width").toString();
+		QString temp = m_modelPart->localProp("width").toString();
 		temp.chop(2);
 		e1->setText(temp);
 		e1->setObjectName("infoViewLineEdit");		
@@ -288,12 +288,12 @@ void Ruler::widthEntry() {
 void Ruler::unitsEntry(const QString & units) {
 	double inches = TextUtils::convertToInches(prop("width"));
 	if (units == "in") {
-        modelPart()->setProp("width", QVariant(QString::number(inches) + "in"));
+        modelPart()->setLocalProp("width", QVariant(QString::number(inches) + "in"));
 		m_widthEditor->setText(QString::number(inches));
 		m_widthValidator->setTop(20);
 	}
 	else {
-        modelPart()->setProp("width", QVariant(QString::number(inches * 2.54) + "cm"));
+        modelPart()->setLocalProp("width", QVariant(QString::number(inches * 2.54) + "cm"));
 		m_widthEditor->setText(QString::number(inches * 2.54));
 		m_widthValidator->setTop(20 * 2.54);
 	}
@@ -318,7 +318,7 @@ void Ruler::addedToScene(bool temporary)
 	if (this->scene()) {
 		LayerHash viewLayers;
 		QString w = prop("width");
-		modelPart()->setProp("width", "");							// makes sure resizeMM will do the work
+		modelPart()->setLocalProp("width", "");							// makes sure resizeMM will do the work
 		double inches = TextUtils::convertToInches(w);
 		if (w.endsWith("cm")) {
 			resizeMM(inches * 2.54, IndexCm, viewLayers);
