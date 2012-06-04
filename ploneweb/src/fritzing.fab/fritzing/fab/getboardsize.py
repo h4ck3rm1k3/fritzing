@@ -12,8 +12,8 @@ def usage():
 usage:
     getboardsize.py -f <fzzfile> 
     
-    Unzip and parse the fzzfile looking for a board.  
-    If only one board is found, return its size (x by y) in millimeters.
+    Unzip and parse the fzzfile looking for boards.  
+    If if one or more boards are found, return their total size (x by y) in millimeters.
     Otherwise return an error.
 """
 
@@ -59,9 +59,14 @@ def main():
     print "pairs", pairs
     
     assert len(pairs) >= 2, "no boards found in '" + fzz + "'"
-    assert len(pairs) == 2, "multiple boards found in '" + fzz + "'"
-    
-    print "result", pairs
+
+    totalw = 0
+    totalh = 0
+    for k in range(0, len(pairs), 2):
+        totalw += pairs[k]
+        totalh += pairs[k + 1]
+
+    print "result", [totalw, totalh]
 
 
 def fromZipFile(zf, fzz):
@@ -88,7 +93,7 @@ def fromZipFile(zf, fzz):
     pairs = []
     customPairs = {}
     
-     #now look for custom boards
+     #now look for custom boards in the accompanying fzp files
     for i, name in enumerate(zf.namelist()):   
         if name.endswith('fzp'):
             fzpString = zf.read(name)
@@ -137,8 +142,12 @@ def fromZipFile(zf, fzz):
    
     #now look for board instances in the fz file:
     for instance in instances:
+        views = instance.getElementsByTagName("pcbView")
+        if len(views) == 0:
+            continue
+            
         id = instance.getAttribute('moduleIdRef')
-        if id == 'RectanglePCBModuleID' or id == 'TwoLayerRectanglePCBModuleID':
+        if id.endswith('PCBModuleID') or ('BoardLogoImage' in id):
             w = None
             h = None
             properties = instance.getElementsByTagName("property")
@@ -148,11 +157,15 @@ def fromZipFile(zf, fzz):
                     w = float(property.getAttribute("value"))
                 elif pname == "height":
                     h = float(property.getAttribute("value"))
-            pairs.append(w)
-            pairs.append(h)
+            if w != None and h != None:
+                pairs.append(w)
+                pairs.append(h)
         elif id == '423120090505' or id == '423120090505_2':           #arduino shield
             pairs.append(69.215)				#width="2.725in" 
             pairs.append(53.37556)			#height="2.1014in" 
+        elif id.endswith('Arduino_Mega_R3_PCB'):
+            pairs.append(101.6)
+            pairs.append(53.6194)
         else:
             pair = None
             try:
