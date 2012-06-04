@@ -125,7 +125,18 @@ void MainWindow::mainLoad() {
 			path,
 			tr("Fritzing Files (*%1 *%2);;Fritzing (*%1);;Fritzing Shareable (*%2)").arg(FritzingSketchExtension).arg(FritzingBundleExtension)
 		);
+
+    mainLoadAux(fileName);
+}
+
+void MainWindow::mainLoadAux(const QString & fileName)
+{
 	if (fileName.isNull()) return;
+
+    if (!fileName.endsWith(FritzingSketchExtension) && !fileName.endsWith(FritzingBundleExtension)) {
+        loadWhich(fileName, false, false, "");  
+        return;
+    }
 
 	if (alreadyOpen(fileName)) return;
 

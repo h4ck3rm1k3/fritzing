@@ -457,6 +457,9 @@ protected:
 	void groundFillAux(bool fillGroundTraces);
 	void connectStartSave(bool connect);
 	void loadBundledSketch(const QString &fileName, bool addToRecent, bool setAsLastOpened);
+    void dropEvent(QDropEvent *event);
+    void dragEnterEvent(QDragEnterEvent *event);
+    void mainLoadAux(const QString & fileName);
 
 protected:
 	static void removeActionsStartingAt(QMenu *menu, int start=0);

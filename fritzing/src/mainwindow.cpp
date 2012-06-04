@@ -152,6 +152,7 @@ QString MainWindow::BackupFolder;
 MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel, QWidget * parent) :
     FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension(), parent)
 {
+    setAcceptDrops(true);
 	m_activeWire = NULL;
 	m_activeConnectorItem = NULL;
 	m_swapTimer.setInterval(30);
@@ -662,7 +663,6 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 	}
 
 }
-
 
 void MainWindow::setCurrentFile(const QString &filename, bool addToRecent, bool setAsLastOpened) {
 	setFileName(filename);
@@ -2608,3 +2608,42 @@ const QString & MainWindow::fritzingVersion() {
 
 	return ___emptyString___;
 }
+
+
+void MainWindow::dragEnterEvent(QDragEnterEvent *event)
+{
+    const QMimeData* mimeData = event->mimeData();
+ 
+    if (mimeData->hasUrls()) {
+        QStringList pathList;
+        QList<QUrl> urlList = mimeData->urls();
+ 
+        // extract the local paths of the files
+        for (int i = 0; i < urlList.size() && i < 32; ++i) {
+            QString fn = urlList.at(i).toLocalFile();
+            foreach (QString ext, fritzingExtensions()) {
+                if (fn.endsWith(ext)) {
+                    event->acceptProposedAction();
+                    return;
+                }
+            }
+        }
+    }
+}
+
+void MainWindow::dropEvent(QDropEvent *event)
+{
+    const QMimeData* mimeData = event->mimeData();
+ 
+    if (mimeData->hasUrls()) {
+        QStringList pathList;
+        QList<QUrl> urlList = mimeData->urls();
+ 
+        // extract the local paths of the files
+        for (int i = 0; i < urlList.size() && i < 32; ++i) {
+            mainLoadAux(urlList.at(i).toLocalFile());
+        }
+    }
+}
+
+
