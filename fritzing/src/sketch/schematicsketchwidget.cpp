@@ -410,3 +410,8 @@ void SchematicSketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, 
 {
 	SketchWidget::loadFromModelParts(modelParts, crossViewType, parentCommand, offsetPaste, boundingRect, seekOutsideConnections, newIDs);
 }
+
+void SchematicSketchWidget::selectAllWires(ViewGeometry::WireFlag flag) 
+{
+    selectAllWiresFrom(flag, scene()->items());
+}

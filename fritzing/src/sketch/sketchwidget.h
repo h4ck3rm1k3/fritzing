@@ -230,7 +230,7 @@ public:
 	LayerHash & viewLayers();
 	virtual void createTrace(Wire*);
 	virtual void updateNet(Wire*);
-	void selectAllWires(ViewGeometry::WireFlag);
+	virtual void selectAllWires(ViewGeometry::WireFlag);
 	virtual void tidyWires();
 	const QString & getShortName();
 	virtual void setClipEnds(class ClipableWire *, bool);
@@ -463,6 +463,7 @@ protected:
 	void createTrace(Wire * fromWire, const QString & commandString, ViewGeometry::WireFlag);
 	bool createOneTrace(Wire * wire, ViewGeometry::WireFlag flag, bool allowAny, QList<Wire *> & done, QUndoCommand * parentCommand);
 	void removeWire(Wire * w, QList<ConnectorItem *> & ends, QList<Wire *> & done, QUndoCommand * parentCommand);
+    void selectAllWiresFrom(ViewGeometry::WireFlag flag, QList<QGraphicsItem *> & items);
 
 protected:
 	static bool lessThan(int a, int b);

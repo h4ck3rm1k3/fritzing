@@ -244,18 +244,29 @@ void PCBSketchWidget::excludeFromAutoroute(bool exclude)
 
 void PCBSketchWidget::selectAllExcludedTraces() 
 {
-	selectAllXTraces(false, QObject::tr("Select all 'Don't autoroute' traces"));
+	selectAllXTraces(false, QObject::tr("Select all 'Don't autoroute' traces"), autorouteTypePCB());
 }
 
 void PCBSketchWidget::selectAllIncludedTraces() 
 {
-	selectAllXTraces(true, QObject::tr("Select all autorouteable traces"));
+	selectAllXTraces(true, QObject::tr("Select all autorouteable traces"), autorouteTypePCB());
 }
 
-void PCBSketchWidget::selectAllXTraces(bool autoroutable, const QString & cmdText) 
+void PCBSketchWidget::selectAllXTraces(bool autoroutable, const QString & cmdText, bool forPCB) 
 {
 	QList<Wire *> wires;
-	foreach (QGraphicsItem * item, scene()->items()) {
+    QList<QGraphicsItem *> items;
+    if (forPCB) {
+        int boardCount;
+        ItemBase * board = findSelectedBoard(boardCount);
+        if (board == NULL) return;
+
+        items = scene()->collidingItems(board);
+    }
+    else {
+        items = scene()->items();
+    }
+	foreach (QGraphicsItem * item, items) {
 		TraceWire * wire = dynamic_cast<TraceWire *>(item);
 		if (wire == NULL) continue;
 
@@ -2348,4 +2359,13 @@ int PCBSketchWidget::selectAllItemType(ModelPart::ItemType itemType, const QStri
 
 	return selectAllItems(itemBases, QObject::tr("Select all %1").arg(typeName));
 
+}
+
+void PCBSketchWidget::selectAllWires(ViewGeometry::WireFlag flag) 
+{
+    int boardCount;
+    ItemBase * board = findSelectedBoard(boardCount);
+    if (board == NULL) return;
+
+    selectAllWiresFrom(flag, scene()->collidingItems(board));
 }

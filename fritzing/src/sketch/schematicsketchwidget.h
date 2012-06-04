@@ -93,7 +93,7 @@ protected:
 	void extraRenderSvgStep(ItemBase *, QPointF offset, double dpi, double printerScale, QString & outputSvg);
 	QString makeCircleSVG(QPointF p, double r, QPointF offset, double dpi, double printerScale);
 	ViewLayer::ViewLayerSpec createWireViewLayerSpec(ConnectorItem * from, ConnectorItem * to);
-
+    void selectAllWires(ViewGeometry::WireFlag flag);
 
 protected:
 	QTimer m_updateDotsTimer;

@@ -161,8 +161,9 @@ protected:
 	void setGroundFillSeeds(const QString & intro);
 	bool collectGroundFillSeeds(QList<ConnectorItem *> & seeds, bool includePotential);
 	void shiftHoles();
-	void selectAllXTraces(bool autoroutable, const QString & cmdText) ;
+	void selectAllXTraces(bool autoroutable, const QString & cmdText, bool forPCB);
 	bool canAlignToCenter(ItemBase *);
+    void selectAllWires(ViewGeometry::WireFlag flag);
 
 signals:
 	void subSwapSignal(SketchWidget *, ItemBase *, const QString & newModuleID, ViewLayer::ViewLayerSpec, long & newID, QUndoCommand * parentCommand);

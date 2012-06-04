@@ -7448,8 +7448,13 @@ void SketchWidget::updateNet(Wire *) {
 
 void SketchWidget::selectAllWires(ViewGeometry::WireFlag flag) 
 {
+    selectAllWiresFrom(flag, scene()->items());
+}
+
+void SketchWidget::selectAllWiresFrom(ViewGeometry::WireFlag flag, QList<QGraphicsItem *> & items) 
+{
 	QList<Wire *> wires;
-	foreach (QGraphicsItem * item, scene()->items()) {
+	foreach (QGraphicsItem * item, items) {
 		Wire * wire = dynamic_cast<Wire *>(item);
 		if (wire == NULL) continue;
 
