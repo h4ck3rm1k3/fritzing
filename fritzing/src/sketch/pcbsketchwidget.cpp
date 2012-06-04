@@ -2175,12 +2175,15 @@ void PCBSketchWidget::restoreCopperLogoItems(QList<ItemBase *> & copperLogoItems
 	}
 }
 
-
 void PCBSketchWidget::clearGroundFillSeeds() 
 {
 	QList<ConnectorItem *> trueSeeds;
 
-	foreach (QGraphicsItem * item, scene()->items()) {
+    int boardCount;
+    ItemBase * board = findSelectedBoard(boardCount);
+    if (board == NULL) return;
+
+	foreach (QGraphicsItem * item, scene()->collidingItems(board)) {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
 		if (connectorItem == NULL) continue;
 		if (connectorItem->attachedToItemType() == ModelPart::CopperFill) continue;
@@ -2245,7 +2248,11 @@ bool PCBSketchWidget::collectGroundFillSeeds(QList<ConnectorItem *> & seeds, boo
 	QList<ConnectorItem *> trueSeeds;
 	QList<ConnectorItem *> potentialSeeds;
 
-	foreach (QGraphicsItem * item, scene()->items()) {
+    int boardCount;
+    ItemBase * board = findSelectedBoard(boardCount);
+    if (board == NULL) return false;
+
+	foreach (QGraphicsItem * item, scene()->collidingItems(board)) {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
 		if (connectorItem == NULL) continue;
 		if (connectorItem->attachedToItemType() == ModelPart::CopperFill) continue;

@@ -2611,7 +2611,11 @@ void MainWindow::groundFillAux(bool fillGroundTraces)
 
 void MainWindow::removeGroundFill(bool force) {
 	QSet<ItemBase *> toDelete;
-	foreach (QGraphicsItem * item, m_pcbGraphicsView->scene()->items()) {
+    int boardCount;
+    ItemBase * board = m_pcbGraphicsView->findSelectedBoard(boardCount);
+    if (board == NULL) return;
+
+	foreach (QGraphicsItem * item, m_pcbGraphicsView->scene()->collidingItems(board)) {
 		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 		if (itemBase == NULL) continue;
 
