@@ -457,7 +457,7 @@ double Ordering::score() {
 
 ////////////////////////////////////////////////////////////////////
 
-CMRouter::CMRouter(PCBSketchWidget * sketchWidget, ItemBase * board) : Autorouter(sketchWidget)
+CMRouter::CMRouter(PCBSketchWidget * sketchWidget, ItemBase * board, bool adjustIf) : Autorouter(sketchWidget)
 {
 	QSettings settings;
 	m_maxCycles = settings.value("cmrouter/maxcycles", DefaultMaxCycles).toInt();
@@ -471,7 +471,9 @@ CMRouter::CMRouter(PCBSketchWidget * sketchWidget, ItemBase * board) : Autoroute
 	}
 	else {
 		m_maxRect = m_sketchWidget->scene()->itemsBoundingRect();
-		m_maxRect.adjust(-m_maxRect.width() / 2, -m_maxRect.height() / 2, m_maxRect.width() / 2, m_maxRect.height() / 2);
+        if (adjustIf) {
+		    m_maxRect.adjust(-m_maxRect.width() / 2, -m_maxRect.height() / 2, m_maxRect.width() / 2, m_maxRect.height() / 2);
+        }
 	}
 
 	QMatrix matrix90;

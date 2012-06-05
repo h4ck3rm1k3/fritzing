@@ -173,7 +173,7 @@ class CMRouter : public Autorouter
 	Q_OBJECT
 
 public:
-	CMRouter(class PCBSketchWidget *, ItemBase * board);
+	CMRouter(class PCBSketchWidget *, ItemBase * board, bool adjustIf);
 	~CMRouter(void);
 
 	void start();

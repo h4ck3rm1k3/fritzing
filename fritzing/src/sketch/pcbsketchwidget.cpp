@@ -1387,30 +1387,30 @@ ItemBase * PCBSketchWidget::placePartDroppedInOtherView(ModelPart * modelPart, V
 {
 	ItemBase * newItem = SketchWidget::placePartDroppedInOtherView(modelPart, viewLayerSpec, viewGeometry, id, dropOrigin);
 	if (newItem == NULL) return newItem;
-	if (!autorouteTypePCB()) return newItem;
+    if (!newItem->isEverVisible()) return newItem;
 
 	dealWithDefaultParts();
 
-	QList<ItemBase *> boards = findBoard();
-	if (boards.count() == 0) {
-		return newItem;
-	}
-
-
-	foreach (ItemBase * board, boards) {
+	QList<ItemBase *> boards;
+    if (autorouteTypePCB()) {
+        boards = findBoard();
+    }
+    else {
+        boards << NULL;
+    }
+	
+    foreach (ItemBase * board, boards) {
 
 	    // This is a 2d bin-packing problem. We can use our tile datastructure for this.  
 	    // Use a simple best-fit approach for now.  No idea how optimal a solution it is.
 
-	    CMRouter router(this, board);
+	    CMRouter router(this, board, false);
 	    int keepout = 10;
 	    router.setKeepout(keepout);
 	    Plane * plane = router.initPlane(false);
 	    QList<Tile *> alreadyTiled;	
-	    router.initBoard(board, plane, alreadyTiled);
 
-	    QRectF boardRect = board->sceneBoundingRect();
-	    foreach (QGraphicsItem * item, scene()->collidingItems(board)) {
+	    foreach (QGraphicsItem * item, (board) ? scene()->collidingItems(board) : scene()->items()) {
 		    ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 		    if (itemBase == NULL) continue;
             if (!itemBase->isEverVisible()) continue;

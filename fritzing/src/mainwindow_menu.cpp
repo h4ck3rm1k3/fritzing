@@ -2363,7 +2363,7 @@ void MainWindow::autoroute() {
 
 	pcbSketchWidget->scene()->clearSelection();
 	pcbSketchWidget->setIgnoreSelectionChangeEvents(true);
-	CMRouter * autorouter = new CMRouter(pcbSketchWidget, board);
+	CMRouter * autorouter = new CMRouter(pcbSketchWidget, board, true);
 
 	connect(autorouter, SIGNAL(wantTopVisible()), this, SLOT(activeLayerTop()), Qt::DirectConnection);
 	connect(autorouter, SIGNAL(wantBottomVisible()), this, SLOT(activeLayerBottom()), Qt::DirectConnection);
@@ -3303,7 +3303,7 @@ void MainWindow::designRulesCheck()
         if (board == NULL) return;
 	}
 
-	CMRouter cmRouter(pcbSketchWidget, board);
+	CMRouter cmRouter(pcbSketchWidget, board, true);
 	QString message;
 	bool result = cmRouter.drc(message);
 
