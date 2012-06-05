@@ -1389,65 +1389,65 @@ ItemBase * PCBSketchWidget::placePartDroppedInOtherView(ModelPart * modelPart, V
 	if (newItem == NULL) return newItem;
 	if (!autorouteTypePCB()) return newItem;
 
+	dealWithDefaultParts();
+
 	QList<ItemBase *> boards = findBoard();
 	if (boards.count() == 0) {
 		return newItem;
 	}
-	if (boards.count() > 1) {
-		return newItem;
-	}
 
-	ItemBase * board = boards.at(0);
-	dealWithDefaultParts();
 
-	// This is a 2d bin-packing problem. We can use our tile datastructure for this.  
-	// Use a simple best-fit approach for now.  No idea how optimal a solution it is.
+	foreach (ItemBase * board, boards) {
 
-    // TODO: if one board is too full, put it on the next one
+	    // This is a 2d bin-packing problem. We can use our tile datastructure for this.  
+	    // Use a simple best-fit approach for now.  No idea how optimal a solution it is.
 
-	CMRouter router(this, board);
-	int keepout = 10;
-	router.setKeepout(keepout);
-	Plane * plane = router.initPlane(false);
-	QList<Tile *> alreadyTiled;	
-	router.initBoard(board, plane, alreadyTiled);
+	    CMRouter router(this, board);
+	    int keepout = 10;
+	    router.setKeepout(keepout);
+	    Plane * plane = router.initPlane(false);
+	    QList<Tile *> alreadyTiled;	
+	    router.initBoard(board, plane, alreadyTiled);
 
-	QRectF boardRect = board->sceneBoundingRect();
-	foreach (QGraphicsItem * item, scene()->items()) {
-		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
-		if (itemBase == NULL) continue;
-		if (itemBase->layerKinChief() == board) continue;
-		if (itemBase->layerKinChief() == newItem) continue;
+	    QRectF boardRect = board->sceneBoundingRect();
+	    foreach (QGraphicsItem * item, scene()->collidingItems(board)) {
+		    ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+		    if (itemBase == NULL) continue;
+            if (!itemBase->isEverVisible()) continue;
+            if (itemBase->layerKinChief() != itemBase) continue;
 
-		QRectF r = itemBase->sceneBoundingRect();
-		r.adjust(-keepout, -keepout, keepout, keepout);
-		QRectF s = r.intersected(boardRect);
-		if (s.width() <= 0) continue;
-		if (s.height() <= 0) continue;	
+		    if (itemBase->layerKinChief() == board) continue;
+		    if (itemBase->layerKinChief() == newItem) continue;    
 
-		router.insertTile(plane, s, alreadyTiled, NULL, Tile::OBSTACLE, CMRouter::IgnoreAllOverlaps);
-	}
+		    QRectF r = itemBase->sceneBoundingRect();
+		    r.adjust(-keepout, -keepout, keepout, keepout);
+		    router.insertTile(plane, r, alreadyTiled, NULL, Tile::OBSTACLE, CMRouter::IgnoreAllOverlaps);
+	    }
 
-	BestPlace bestPlace;
-	bestPlace.maxRect = router.boardRect();
-	bestPlace.rotate90 = false;
-	bestPlace.bestTile = NULL;
-	bestPlace.width = realToTile(newItem->boundingRect().width());
-	bestPlace.height = realToTile(newItem->boundingRect().height());
-	bestPlace.plane = plane;
-	TiSrArea(NULL, plane, &bestPlace.maxRect, Panelizer::placeBestFit, &bestPlace);
-	if (bestPlace.bestTile != NULL) {
-		QRectF r;
-		tileToQRect(bestPlace.bestTile, r);
-		ItemBase * chief = newItem->layerKinChief();
-		chief->setPos(r.topLeft());
-		DebugDialog::debug(QString("placing part with rotation:%1").arg(bestPlace.rotate90), r);
-		if (bestPlace.rotate90) {
-			chief->rotateItem(90);
-		}
-		alignOneToGrid(newItem);
-	}
-	router.drcClean();
+	    BestPlace bestPlace;
+	    bestPlace.maxRect = router.boardRect();
+	    bestPlace.rotate90 = false;
+	    bestPlace.width = realToTile(newItem->boundingRect().width());
+	    bestPlace.height = realToTile(newItem->boundingRect().height());
+	    bestPlace.plane = plane;
+
+	    TiSrArea(NULL, plane, &bestPlace.maxRect, Panelizer::placeBestFit, &bestPlace);
+	    if (bestPlace.bestTile != NULL) {
+		    QRectF r;
+		    tileToQRect(bestPlace.bestTile, r);
+		    ItemBase * chief = newItem->layerKinChief();
+		    chief->setPos(r.topLeft());
+		    DebugDialog::debug(QString("placing part with rotation:%1").arg(bestPlace.rotate90), r);
+		    if (bestPlace.rotate90) {
+			    chief->rotateItem(90);
+		    }
+		    alignOneToGrid(newItem);
+	    }
+	    router.drcClean();
+        if (bestPlace.bestTile != NULL) {
+            break;
+        }
+    }
 
 	return newItem;
 }

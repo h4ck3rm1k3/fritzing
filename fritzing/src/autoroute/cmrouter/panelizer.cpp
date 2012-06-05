@@ -167,6 +167,12 @@ int roomOnRight(Tile * tile, UserData userData)
 	return roomOn(tile, tileRect, bestPlace);
 }
 
+
+BestPlace::BestPlace() {
+    bestTile = NULL;
+    bestArea = Worst;
+}
+
 /////////////////////////////////////////////////////////////////////////////////
 
 void Panelizer::panelize(FApplication * app, const QString & panelFilename) 
@@ -486,11 +492,9 @@ bool Panelizer::bestFitOne(PanelItem * panelItem, PanelParams & panelParams, QLi
 {
 	//DebugDialog::debug(QString("panel %1").arg(panelItem->boardName));
 	BestPlace bestPlace1, bestPlace2;
-	bestPlace1.bestTile = bestPlace2.bestTile = NULL;
 	bestPlace1.rotate90 = bestPlace2.rotate90 = false;
 	bestPlace1.width = bestPlace2.width = realToTile(panelItem->boardSizeInches.width() + panelParams.panelSpacing);
 	bestPlace1.height = bestPlace2.height = realToTile(panelItem->boardSizeInches.height() + panelParams.panelSpacing);
-	bestPlace1.bestArea = bestPlace2.bestArea = Worst;
 	int ppix = 0;
 	while (ppix < planePairs.count()) {
 		PlanePair *  planePair = planePairs.at(ppix);

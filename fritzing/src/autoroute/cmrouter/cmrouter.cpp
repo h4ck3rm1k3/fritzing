@@ -1231,7 +1231,7 @@ Plane * CMRouter::tilePlane(ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewL
 				extendToBounds(tileRect, partTileRect);
 				Tile * newTile = insertTile(thePlane, tileRect, alreadyTiled, connectorItem, Tile::OBSTACLE, CMRouter::IgnoreAllOverlaps);
                 Q_UNUSED(newTile);
-				//drawGridItem(newTile);
+				drawGridItem(newTile);
 			}
 		}
 	}
@@ -1300,7 +1300,7 @@ void CMRouter::eliminateThinTiles(QList<TileRect> & originalTileRects, Plane * t
 				QList<Tile *> alreadyTiled;
 				Tile * newTile = insertTile(thePlane, newRect, alreadyTiled, NULL, Tile::SPACE2, CMRouter::IgnoreAllOverlaps);
                 Q_UNUSED(newTile);
-				//drawGridItem(newTile);
+				drawGridItem(newTile);
 				TileRect leftRect = originalTileRect;
 				leftRect.xmaxi = newRect.xmini;
 				if (leftRect.xmaxi -leftRect.xmini > 0) tileRects.append(leftRect);
@@ -1459,7 +1459,7 @@ void CMRouter::eliminateThinTiles2(QList<TileRect> & tileRects, Plane * thePlane
 		if (doInsert) {
 			QList<Tile *> alreadyTiled;
 			Tile * newTile = insertTile(thePlane, newRect, alreadyTiled, NULL, Tile::SPACE2, CMRouter::IgnoreAllOverlaps);
-			//drawGridItem(newTile);
+			drawGridItem(newTile);
             Q_UNUSED(newTile);
 			TileRect leftRect = originalTileRect;
 			leftRect.xmaxi = newRect.xmini;
@@ -1479,7 +1479,7 @@ void CMRouter::eliminateThinTiles2(QList<TileRect> & tileRects, Plane * thePlane
 		if (tile == NULL) continue;
 
 		//infoTile("remaining", tile);
-		//drawGridItem(tile);
+		drawGridItem(tile);
 	}
 
 }
@@ -1512,8 +1512,7 @@ bool CMRouter::initBoard(ItemBase * board, Plane * thePlane, QList<Tile *> & alr
 		TileRect tileRect;
 		realsToTile(tileRect, r.left() + bsbr.topLeft().x(), r.top() + bsbr.topLeft().y(), r.right() + bsbr.topLeft().x(), r.bottom() + 1 + bsbr.topLeft().y());  // note off-by-one weirdness
 		Tile * newTile = insertTile(thePlane, tileRect, alreadyTiled, NULL, Tile::OBSTACLE, CMRouter::IgnoreAllOverlaps);
-		//drawGridItem(newTile);
-        Q_UNUSED(newTile);
+		drawGridItem(newTile);
 	}
 
 	return true;
@@ -1665,8 +1664,7 @@ void CMRouter::tileWires(QList<Wire *> & wires, QList<Tile *> & alreadyTiled, Ti
 					.arg(p2.y() / FSvgRenderer::printerScale());
 			}
 			Tile * newTile = insertTile(plane, tileRect, alreadyTiled, w, tileType, overlapType);
-			//drawGridItem(newTile);
-            Q_UNUSED(newTile);
+			drawGridItem(newTile);
 			if (alreadyTiled.count() > 0) {
 				m_hasOverlaps = true;
 				if (overlapType != ReportAllOverlaps) return;
@@ -2162,7 +2160,7 @@ void CMRouter::appendIf(PathUnit * pathUnit, Tile * next, QList<Tile *> & tiles,
 	}
 
 	if (bail) {
-		//drawGridItem(next);
+		drawGridItem(next);
 		return;
 	}
 
@@ -2192,16 +2190,16 @@ void CMRouter::appendIf(PathUnit * pathUnit, Tile * next, QList<Tile *> & tiles,
 	}
 
 	if (bail) {
-		//drawGridItem(next);
+		drawGridItem(next);
 		return;
 	}
 
 	if (!roomToNext(pathUnit, horizontal, tWidthNeeded, nextRect)) {
-		//drawGridItem(next);
+		drawGridItem(next);
 		return;
 	}
 
-	//drawGridItem(next);
+	drawGridItem(next);
 
 	tiles.append(next);
 }
@@ -2348,6 +2346,8 @@ void CMRouter::seedNext(PathUnit * pathUnit, QList<Tile *> & tiles) {
 
 GridEntry * CMRouter::drawGridItem(Tile * tile)
 {
+    return NULL;
+
 	if (tile == NULL) return NULL;
 
 	QRectF r;
@@ -2724,7 +2724,7 @@ Tile * CMRouter::addTile(NonConnectorItem * nci, Tile::TileType type, Plane * th
 	TileRect tileRect;
 	realsToTile(tileRect, r.left() - m_keepout, r.top() - m_keepout, r.right() + m_keepout, r.bottom() + m_keepout);
 	Tile * tile = insertTile(thePlane, tileRect, alreadyTiled, nci, type, overlapType);
-	//drawGridItem(tile);
+	drawGridItem(tile);
 	return tile;
 }
 
@@ -2845,7 +2845,7 @@ Tile * CMRouter::insertTile(Plane * thePlane, TileRect & tileRect, QList<Tile *>
 		insertUnion(tileRect, item, tileType);
 	}
 
-	//drawGridItem(newTile);
+	drawGridItem(newTile);
 	return newTile;
 }
 
@@ -3012,7 +3012,7 @@ PathUnit * CMRouter::initPathUnit(Edge * edge, Tile * tile, PriorityQueue<PathUn
 	m_pathUnits.append(pathUnit);
 	pathUnit->edge = edge;
 	pathUnit->tile = tile;
-	//drawGridItem(tile);
+	drawGridItem(tile);
 	pq.append(pathUnit);
 	tilePathUnits.insert(tile, pathUnit);
 	return pathUnit;
@@ -3509,7 +3509,7 @@ void CMRouter::crossLayerDest(PathUnit * pathUnit, PriorityQueue<PathUnit *> & s
 	getViaSize(tWidthNeeded, tHeightNeeded);
 	int bestCost = std::numeric_limits<int>::max();
 	TileRect nearestSpace;
-	//drawGridItem(pathUnit->tile);
+	drawGridItem(pathUnit->tile);
 	if (findNearestSpaceOne(pathUnit, tWidthNeeded, tHeightNeeded, nearest, bestCost, nearestSpace)) {
 		PathUnit * nextPathUnit = new PathUnit(&sourceQueue);
 		m_pathUnits.append(nextPathUnit);

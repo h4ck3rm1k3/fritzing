@@ -85,6 +85,8 @@ struct BestPlace
 	double bestArea;
 	bool rotate90;
 	Plane* plane;
+
+    BestPlace();
 };
 
 struct PanelParams
