@@ -764,7 +764,6 @@ SketchToolButton *MainWindow::createRotateButton(SketchAreaWidget *parent) {
 	SketchToolButton * rotateButton = new SketchToolButton("Rotate",parent, rotateMenuActions);
 	rotateButton->setDefaultAction(m_rotate90ccwAct);
 	rotateButton->setText(tr("Rotate"));
-	connect(rotateButton, SIGNAL(menuUpdateNeeded()), this, SLOT(updateTransformationActions()));
 
 	m_rotateButtons << rotateButton;
 	return rotateButton;
@@ -782,7 +781,6 @@ SketchToolButton *MainWindow::createFlipButton(SketchAreaWidget *parent) {
 	flipMenuActions << m_flipHorizontalAct << m_flipVerticalAct;
 	SketchToolButton *flipButton = new SketchToolButton("Flip",parent, flipMenuActions);
 	flipButton->setText(tr("Flip"));
-	connect(flipButton, SIGNAL(menuUpdateNeeded()), this, SLOT(updateTransformationActions()));
 
 	m_flipButtons << flipButton;
 	return flipButton;

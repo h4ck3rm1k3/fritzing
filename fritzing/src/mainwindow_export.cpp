@@ -196,10 +196,14 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 
 	QStringList fileNames;
 	QString path = defaultSaveFolder();
-	QString suffix = (wantPDF) ? pdfActionType : svgActionType;
 	QString extFmt = (wantPDF) ? fileExtFormats.value(pdfActionType) : fileExtFormats.value(svgActionType);
 	QString fileExt;
 
+	QString suffix = (wantPDF) ? pdfActionType : svgActionType;
+    QString prefix = "";
+    if (boardCount > 1) {
+        prefix = QString("%1_%2_").arg(board->instanceTitle()).arg(board->id());
+    }
 
 	QString exportDir = QFileDialog::getExistingDirectory(this, tr("Choose a folder for exporting"),
 												defaultSaveFolder(),
@@ -208,13 +212,13 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 	if (exportDir.isEmpty()) return;
 
 	FolderUtils::setOpenSaveFolder(exportDir);
-	fileNames.append(exportDir + "/" + constructFileName("etch_copper_bottom", suffix));
-	fileNames.append(exportDir + "/" + constructFileName("etch_mask_bottom", suffix));
+	fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_copper_bottom", suffix));
+	fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_mask_bottom", suffix));
 	if (m_pcbGraphicsView->boardLayers() > 1) {
-		fileNames.append(exportDir + "/" + constructFileName("etch_copper_top", suffix));
-		fileNames.append(exportDir + "/" + constructFileName("etch_mask_top", suffix));
+		fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_copper_top", suffix));
+		fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_mask_top", suffix));
 	}
-	fileNames.append(exportDir + "/" + constructFileName("etch_silk_top", suffix));
+	fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_silk_top", suffix));
 	fileExt = extFmt;
 	
 	FileProgressDialog * fileProgressDialog = exportProgress();
@@ -1251,7 +1255,13 @@ void MainWindow::exportToGerber() {
 	FolderUtils::setOpenSaveFolder(exportDir);
 	m_pcbGraphicsView->saveLayerVisibility();
 	m_pcbGraphicsView->setAllLayersVisible(true);
-	GerberGenerator::exportToGerber(m_fwFilename, exportDir, board, m_pcbGraphicsView, true);
+
+    QFileInfo info(m_fwFilename);
+    QString prefix = info.completeBaseName();
+    if (boardCount > 1) {
+        prefix += QString("_%1_%2").arg(board->instanceTitle()).arg(board->id());
+    }
+	GerberGenerator::exportToGerber(prefix, exportDir, board, m_pcbGraphicsView, true);
 	m_pcbGraphicsView->restoreLayerVisibility();
 	m_statusBar->showMessage(tr("Sketch exported to Gerber"), 2000);
 
@@ -1272,4 +1282,10 @@ void MainWindow::connectStartSave(bool doConnect) {
 		disconnect(m_sketchModel->root(), SIGNAL(startSaveInstances(const QString &, ModelPart *, QXmlStreamWriter &)),
 				this, SLOT(startSaveInstancesSlot(const QString &, ModelPart *, QXmlStreamWriter &)));
 	}
+}
+
+QString MainWindow::constructFileName(const QString & differentiator, const QString & suffix) {
+	QString fn = QFileInfo(m_fwFilename).completeBaseName();
+	fn += "_" + (differentiator.isEmpty() ? m_currentGraphicsView->getShortName() : differentiator);
+	return fn + suffix;
 }

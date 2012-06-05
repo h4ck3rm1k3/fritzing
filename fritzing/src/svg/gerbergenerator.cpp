@@ -75,7 +75,7 @@ bool pixelsCollide(QImage * image1, QImage * image2, int x1, int y1, int x2, int
 
 ////////////////////////////////////////////
 
-void GerberGenerator::exportToGerber(const QString & filename, const QString & exportDir, ItemBase * board, PCBSketchWidget * sketchWidget, bool displayMessageBoxes) 
+void GerberGenerator::exportToGerber(const QString & prefix, const QString & exportDir, ItemBase * board, PCBSketchWidget * sketchWidget, bool displayMessageBoxes) 
 {
 	if (board == NULL) {
         int boardCount;
@@ -91,26 +91,26 @@ void GerberGenerator::exportToGerber(const QString & filename, const QString & e
 	}
 
 	LayerList viewLayerIDs = ViewLayer::copperLayers(ViewLayer::Bottom);
-	int copperInvalidCount = doCopper(board, sketchWidget, viewLayerIDs, "Copper0", CopperBottomSuffix, filename, exportDir, displayMessageBoxes);
+	int copperInvalidCount = doCopper(board, sketchWidget, viewLayerIDs, "Copper0", CopperBottomSuffix, prefix, exportDir, displayMessageBoxes);
 
 	if (sketchWidget->boardLayers() == 2) {
 		viewLayerIDs = ViewLayer::copperLayers(ViewLayer::Top);
-		copperInvalidCount += doCopper(board, sketchWidget, viewLayerIDs, "Copper1", CopperTopSuffix, filename, exportDir, displayMessageBoxes);
+		copperInvalidCount += doCopper(board, sketchWidget, viewLayerIDs, "Copper1", CopperTopSuffix, prefix, exportDir, displayMessageBoxes);
 	}
 
 	LayerList maskLayerIDs = ViewLayer::maskLayers(ViewLayer::Bottom);
 	QString maskBottom, maskTop;
-	int maskInvalidCount = doMask(maskLayerIDs, "Mask0", MaskBottomSuffix, board, sketchWidget, filename, exportDir, displayMessageBoxes, maskBottom);
+	int maskInvalidCount = doMask(maskLayerIDs, "Mask0", MaskBottomSuffix, board, sketchWidget, prefix, exportDir, displayMessageBoxes, maskBottom);
 
 	if (sketchWidget->boardLayers() == 2) {
 		maskLayerIDs = ViewLayer::maskLayers(ViewLayer::Top);
-		maskInvalidCount += doMask(maskLayerIDs, "Mask1", MaskTopSuffix, board, sketchWidget, filename, exportDir, displayMessageBoxes, maskTop);
+		maskInvalidCount += doMask(maskLayerIDs, "Mask1", MaskTopSuffix, board, sketchWidget, prefix, exportDir, displayMessageBoxes, maskTop);
 	}
 
     LayerList silkLayerIDs = ViewLayer::silkLayers(ViewLayer::Top);
-	int silkInvalidCount = doSilk(silkLayerIDs, "Silk1", SilkTopSuffix, board, sketchWidget, filename, exportDir, displayMessageBoxes, maskTop);
+	int silkInvalidCount = doSilk(silkLayerIDs, "Silk1", SilkTopSuffix, board, sketchWidget, prefix, exportDir, displayMessageBoxes, maskTop);
     silkLayerIDs = ViewLayer::silkLayers(ViewLayer::Bottom);
-	silkInvalidCount += doSilk(silkLayerIDs, "Silk0", SilkBottomSuffix, board, sketchWidget, filename, exportDir, displayMessageBoxes, maskBottom);
+	silkInvalidCount += doSilk(silkLayerIDs, "Silk0", SilkBottomSuffix, board, sketchWidget, prefix, exportDir, displayMessageBoxes, maskBottom);
 
     // now do it for the outline/contour
     LayerList outlineLayerIDs = ViewLayer::outlineLayers();
@@ -133,9 +133,9 @@ void GerberGenerator::exportToGerber(const QString & filename, const QString & e
 	int outlineInvalidCount = outlineGerber.convert(svgOutline, sketchWidget->boardLayers() == 2, "contour", SVG2gerber::ForOutline, svgSize * GraphicsUtils::StandardFritzingDPI);
 	
 	//DebugDialog::debug(QString("outline output: %1").arg(outlineGerber.getGerber()));
-	saveEnd("contour", exportDir, filename, OutlineSuffix, displayMessageBoxes, true, outlineGerber);
+	saveEnd("contour", exportDir, prefix, OutlineSuffix, displayMessageBoxes, outlineGerber);
 
-	doDrill(board, sketchWidget, filename, exportDir, displayMessageBoxes);
+	doDrill(board, sketchWidget, prefix, exportDir, displayMessageBoxes);
 
 	if (outlineInvalidCount > 0 || silkInvalidCount > 0 || copperInvalidCount > 0 || maskInvalidCount) {
 		QString s;
@@ -168,7 +168,7 @@ int GerberGenerator::doCopper(ItemBase * board, PCBSketchWidget * sketchWidget, 
 		return 0;
 	}
 
-	return doEnd(svg, sketchWidget->boardLayers(), copperName, SVG2gerber::ForCopper, svgSize * GraphicsUtils::StandardFritzingDPI, exportDir, filename, copperSuffix, displayMessageBoxes, true);
+	return doEnd(svg, sketchWidget->boardLayers(), copperName, SVG2gerber::ForCopper, svgSize * GraphicsUtils::StandardFritzingDPI, exportDir, filename, copperSuffix, displayMessageBoxes);
 }
 
 
@@ -208,7 +208,7 @@ int GerberGenerator::doSilk(LayerList silkLayerIDs, const QString & silkName, co
 	//fs2 << svgSilk;
 	//f2.close();
 
-	return doEnd(svgSilk, sketchWidget->boardLayers(), silkName, SVG2gerber::ForSilk, svgSize * GraphicsUtils::StandardFritzingDPI, exportDir, filename, gerberSuffix, displayMessageBoxes, true);
+	return doEnd(svgSilk, sketchWidget->boardLayers(), silkName, SVG2gerber::ForSilk, svgSize * GraphicsUtils::StandardFritzingDPI, exportDir, filename, gerberSuffix, displayMessageBoxes);
 }
 
 
@@ -239,7 +239,7 @@ int GerberGenerator::doDrill(ItemBase * board, PCBSketchWidget * sketchWidget, c
 		return 0;
 	}
 
-	return doEnd(svgDrill, sketchWidget->boardLayers(), "drill", SVG2gerber::ForDrill, svgSize * GraphicsUtils::StandardFritzingDPI, exportDir, filename, DrillSuffix, displayMessageBoxes, true);
+	return doEnd(svgDrill, sketchWidget->boardLayers(), "drill", SVG2gerber::ForDrill, svgSize * GraphicsUtils::StandardFritzingDPI, exportDir, filename, DrillSuffix, displayMessageBoxes);
 }
 
 int GerberGenerator::doMask(LayerList maskLayerIDs, const QString &maskName, const QString & gerberSuffix, ItemBase * board, PCBSketchWidget * sketchWidget, const QString & filename, const QString & exportDir, bool displayMessageBoxes, QString & clipString) 
@@ -280,26 +280,25 @@ int GerberGenerator::doMask(LayerList maskLayerIDs, const QString &maskName, con
 
 	clipString = svgMask;
 
-	return doEnd(svgMask, sketchWidget->boardLayers(), maskName, SVG2gerber::ForCopper, svgSize * GraphicsUtils::StandardFritzingDPI, exportDir, filename, gerberSuffix, displayMessageBoxes, true);
+	return doEnd(svgMask, sketchWidget->boardLayers(), maskName, SVG2gerber::ForCopper, svgSize * GraphicsUtils::StandardFritzingDPI, exportDir, filename, gerberSuffix, displayMessageBoxes);
 }
 
 int GerberGenerator::doEnd(const QString & svg, int boardLayers, const QString & layerName, SVG2gerber::ForWhy forWhy, QSizeF svgSize, 
-							const QString & exportDir, const QString & prefix, const QString & suffix, bool displayMessageBoxes, bool chopPrefix)
+							const QString & exportDir, const QString & prefix, const QString & suffix, bool displayMessageBoxes)
 {
     // create mask gerber from svg
     SVG2gerber gerber;
 	int invalidCount = gerber.convert(svg, boardLayers == 2, layerName, forWhy, svgSize);
 
-	saveEnd(layerName, exportDir, prefix, suffix, displayMessageBoxes, chopPrefix, gerber);
+	saveEnd(layerName, exportDir, prefix, suffix, displayMessageBoxes, gerber);
 
 	return invalidCount;
 }
 
-bool GerberGenerator::saveEnd(const QString & layerName, const QString & exportDir, const QString & prefix, const QString & suffix, bool displayMessageBoxes, bool chopPrefix, SVG2gerber & gerber)
+bool GerberGenerator::saveEnd(const QString & layerName, const QString & exportDir, const QString & prefix, const QString & suffix, bool displayMessageBoxes, SVG2gerber & gerber)
 {
-	QString usePrefix = (chopPrefix) ? QFileInfo(prefix).completeBaseName() : prefix;
 
-    QString outname = exportDir + "/" +  usePrefix + suffix;
+    QString outname = exportDir + "/" +  prefix + suffix;
     QFile out(outname);
 	if (!out.open(QIODevice::WriteOnly | QIODevice::Text)) {
 		displayMessage(QObject::tr("%1 file export failure (2)").arg(layerName), displayMessageBoxes);

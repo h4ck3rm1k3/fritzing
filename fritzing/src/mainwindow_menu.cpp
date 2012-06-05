@@ -607,6 +607,8 @@ void MainWindow::createOpenRecentMenu() {
 void MainWindow::updateFileMenu() {
 	updateRecentFileActions();
 	m_orderFabAct->setEnabled(true);
+
+    updateExportActions();
 }
 
 void MainWindow::updateRecentFileActions() {
@@ -1457,7 +1459,25 @@ void MainWindow::updatePartMenu() {
 	m_openProgramWindowAct->setEnabled(true);
 }
 
+bool MainWindow::updateExportActions() {
+    ItemBase * board = NULL;
+    if (m_pcbGraphicsView != NULL) {
+        int boardCount;
+        board = m_pcbGraphicsView->findSelectedBoard(boardCount);
+    }
+
+	m_exportEtchablePdfAct->setEnabled(board != NULL);
+	m_exportEtchablePdfFlipAct->setEnabled(board != NULL);
+	m_exportEtchableSvgAct->setEnabled(board != NULL);
+	m_exportEtchableSvgFlipAct->setEnabled(board != NULL);
+    m_exportGerberAct->setEnabled(board != NULL);
+
+    return (board != NULL);
+}
+
 void MainWindow::updateTransformationActions() {
+    // update buttons in sketch toolbar at bottom
+
 	if (m_currentGraphicsView == NULL) return;
 
 	ItemCount itemCount = m_currentGraphicsView->calcItemCount();
@@ -1480,6 +1500,10 @@ void MainWindow::updateTransformationActions() {
 	foreach(SketchToolButton* flipButton, m_flipButtons) {
 		flipButton->setEnabled(enable);
 	}
+
+    bool result = updateExportActions();
+
+    m_autorouteAct->setEnabled(result && m_currentGraphicsView->hasAnyNets());
 }
 
 void MainWindow::updateItemMenu() {
@@ -1669,11 +1693,6 @@ void MainWindow::updateTraceMenu() {
 	m_changeTraceLayerAct->setEnabled(ctlEnabled);
 	m_autorouteAct->setEnabled(arEnabled && oneBoardOr);
 	m_orderFabAct->setEnabled(boardCount > 0);
-	m_exportEtchablePdfAct->setEnabled(oneBoard);
-	m_exportEtchablePdfFlipAct->setEnabled(oneBoard);
-	m_exportEtchableSvgAct->setEnabled(oneBoard);
-	m_exportEtchableSvgFlipAct->setEnabled(oneBoard);
-    m_exportGerberAct->setEnabled(oneBoard);
 	m_selectAllTracesAct->setEnabled(tEnabled && oneBoardOr);
 	m_selectAllWiresAct->setEnabled(tEnabled && oneBoardOr);
 	m_selectAllCopperFillAct->setEnabled(gfrEnabled && oneBoard);
@@ -2835,12 +2854,6 @@ void MainWindow::changeWireColor(bool checked) {
 	if (colorName.isEmpty()) return;
 
 	m_currentGraphicsView->changeWireColor(colorName);
-}
-
-QString MainWindow::constructFileName(const QString & differentiator, const QString & suffix) {
-	QString fn = QFileInfo(m_fwFilename).completeBaseName();
-	fn += "_" + (differentiator.isEmpty() ? m_currentGraphicsView->getShortName() : differentiator);
-	return fn + suffix;
 }
 
 void MainWindow::startSaveInstancesSlot(const QString & fileName, ModelPart *, QXmlStreamWriter & streamWriter) {

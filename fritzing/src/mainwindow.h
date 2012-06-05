@@ -168,6 +168,8 @@ public slots:
 	void swapObsolete();
 	void dropTempSlot(ModelPart *, QWidget *);
     void swapBoardImageSlot(SketchWidget * sketchWidget, ItemBase * itemBase, const QString & filename, const QString & moduleID, bool addName);
+	void updateTraceMenu();
+	void updateFileMenu();
 
 protected slots:
 	void mainLoad();
@@ -200,10 +202,8 @@ protected slots:
     void updateLayerMenu(bool resetLayout = false);
     void updatePartMenu();
     void updateWireMenu();
-	void updateFileMenu();
     void updateTransformationActions();
 	void updateRecentFileActions();
-	void updateTraceMenu();
     void tabWidget_currentChanged(int index);
     void createNewPart();
     void createNewSketch();
@@ -460,6 +460,7 @@ protected:
     void dropEvent(QDropEvent *event);
     void dragEnterEvent(QDragEnterEvent *event);
     void mainLoadAux(const QString & fileName);
+    bool updateExportActions();
 
 protected:
 	static void removeActionsStartingAt(QMenu *menu, int start=0);

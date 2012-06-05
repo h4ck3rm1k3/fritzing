@@ -38,7 +38,7 @@ $Date$
 SketchToolButton::SketchToolButton(const QString &imageName, QWidget *parent, QAction* defaultAction)
 	: QToolButton(parent)
 {
-	m_imageName = imageName;			// nice to have for debugging
+    m_imageName = imageName;			// nice to have for debugging
 	setupIcons(imageName);
 
 	//DebugDialog::debug(QString("%1 %2 %3 %4 %5 %6 %7").arg(imageName)

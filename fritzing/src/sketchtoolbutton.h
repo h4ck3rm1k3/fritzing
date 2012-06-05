@@ -42,9 +42,6 @@ class SketchToolButton : public QToolButton, public AbstractStatesButton {
 
 		void updateEnabledState();
 
-	signals:
-		void menuUpdateNeeded();
-
 	protected slots:
 		void setEnabledIconAux();
 
@@ -60,6 +57,7 @@ class SketchToolButton : public QToolButton, public AbstractStatesButton {
 
 	protected:
 		QString m_imageName;
+
 };
 
 #endif /* SKETCHTOOLBUTTON_H_ */
