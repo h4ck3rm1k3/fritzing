@@ -413,5 +413,5 @@ void SchematicSketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, 
 
 void SchematicSketchWidget::selectAllWires(ViewGeometry::WireFlag flag) 
 {
-    selectAllWiresFrom(flag, scene()->items());
+   SketchWidget::selectAllWires(flag);
 }

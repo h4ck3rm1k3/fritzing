@@ -2016,7 +2016,7 @@ QString PCBSketchWidget::characterizeGroundFill() {
 }
 
 void PCBSketchWidget::setUpColor(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, Wire * wire, QUndoCommand * parentCommand) {
-		ViewGeometry::WireFlags flags =  getTraceFlag();
+
 		QString tc = traceColor(fromConnectorItem);
 		new WireColorChangeCommand(this, wire->id(), tc, tc, 1.0, 1.0, parentCommand);
 		double traceWidth = getTraceWidth();
@@ -2367,5 +2367,6 @@ void PCBSketchWidget::selectAllWires(ViewGeometry::WireFlag flag)
     ItemBase * board = findSelectedBoard(boardCount);
     if (board == NULL) return;
 
-    selectAllWiresFrom(flag, scene()->collidingItems(board));
+    QList<QGraphicsItem *> items = scene()->collidingItems(board);
+    selectAllWiresFrom(flag, items);
 }

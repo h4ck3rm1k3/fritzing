@@ -187,6 +187,10 @@ QString Ruler::makeSvg(double inches) {
 		}
 	}
 
+    svg += QString("<line x1='%1' y1='%2' x2='%3' y2='%2' stroke-width='1px' stroke='black' />\n")
+        .arg(offset * GraphicsUtils::StandardFritzingDPI)
+        .arg(GraphicsUtils::StandardFritzingDPI / 2)
+        .arg((inches + offset) * GraphicsUtils::StandardFritzingDPI);
 	svg += "<g font-size='40'>\n";
 	svg += QString("<text x='%1' y='%2'>1/10</text>").arg((GraphicsUtils::StandardFritzingDPI * offset / 2.0) + 7).arg(780);
 	svg += QString("<text x='%1' y='%2'>1/16</text>").arg((GraphicsUtils::StandardFritzingDPI * offset / 2.0) + 7).arg(990);
@@ -225,7 +229,8 @@ bool Ruler::collectExtraInfo(QWidget * parent, const QString & family, const QSt
 		QString temp = m_modelPart->localProp("width").toString();
 		temp.chop(2);
 		e1->setText(temp);
-		e1->setObjectName("infoViewLineEdit");		
+		e1->setObjectName("infoViewLineEdit");	
+        e1->setMaximumWidth(80);
 
 		m_widthEditor = e1;
 		m_widthValidator = validator;
@@ -237,7 +242,8 @@ bool Ruler::collectExtraInfo(QWidget * parent, const QString & family, const QSt
 		comboBox->addItem("in");
 		comboBox->setCurrentIndex(units);
 		m_unitsEditor = comboBox;
-		comboBox->setObjectName("infoViewComboBox");		
+		comboBox->setObjectName("infoViewComboBox");	
+        comboBox->setMinimumWidth(60);
 
 
 		QHBoxLayout * hboxLayout = new QHBoxLayout();

@@ -7448,7 +7448,8 @@ void SketchWidget::updateNet(Wire *) {
 
 void SketchWidget::selectAllWires(ViewGeometry::WireFlag flag) 
 {
-    selectAllWiresFrom(flag, scene()->items());
+    QList<QGraphicsItem *> items = scene()->items();
+    selectAllWiresFrom(flag, items);
 }
 
 void SketchWidget::selectAllWiresFrom(ViewGeometry::WireFlag flag, QList<QGraphicsItem *> & items) 
