@@ -66,7 +66,6 @@ protected slots:
 	void logoEntry();
 	void widthEntry();
 	void heightEntry();
-	void keepAspectRatio(bool checkState);
 
 protected:
 	virtual QString hackSvg(const QString & svg, const QString & logo);

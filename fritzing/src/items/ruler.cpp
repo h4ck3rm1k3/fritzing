@@ -189,7 +189,7 @@ QString Ruler::makeSvg(double inches) {
 
     svg += QString("<line x1='%1' y1='%2' x2='%3' y2='%2' stroke-width='1px' stroke='black' />\n")
         .arg(offset * GraphicsUtils::StandardFritzingDPI)
-        .arg(GraphicsUtils::StandardFritzingDPI / 2)
+        .arg((GraphicsUtils::StandardFritzingDPI / 2) - 40)
         .arg((inches + offset) * GraphicsUtils::StandardFritzingDPI);
 	svg += "<g font-size='40'>\n";
 	svg += QString("<text x='%1' y='%2'>1/10</text>").arg((GraphicsUtils::StandardFritzingDPI * offset / 2.0) + 7).arg(780);

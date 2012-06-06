@@ -204,7 +204,7 @@ bool LogoItem::collectExtraInfo(QWidget * parent, const QString & family, const 
 	}
 
 	if (prop.compare("shape", Qt::CaseInsensitive) == 0) {
-		returnWidget = setUpDimEntry(true, returnWidget);
+		returnWidget = setUpDimEntry(true, !m_hasLogo, returnWidget);
 		returnProp = tr("shape");
 		return true;
 	}
@@ -249,6 +249,8 @@ bool LogoItem::reloadImage(const QString & svg, const QSizeF & aspectRatio, cons
         double mmH = GraphicsUtils::pixels2mm(size.height(), FSvgRenderer::printerScale());
         modelPart()->setLocalProp("width", mmW);
 		modelPart()->setLocalProp("height", mmH);
+        modelPart()->setLocalProp("originalWidth", mmW);
+		modelPart()->setLocalProp("originalHeight", mmH);
 
 		if (addName) {
 			if (!getNewImageNames().contains(fileName, Qt::CaseInsensitive)) {
@@ -656,10 +658,6 @@ void LogoItem::setHeight(double h)
 	}
 }
 
-void LogoItem::keepAspectRatio(bool checkState) {
-	m_keepAspectRatio = checkState;
-}
-
 bool LogoItem::stickyEnabled() {
 	return true;
 }
@@ -951,7 +949,7 @@ bool BoardLogoItem::collectExtraInfo(QWidget * parent, const QString & family, c
 {
 	if (prop.compare("shape", Qt::CaseInsensitive) == 0) {
         Board::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
-		returnWidget = setUpDimEntry(true, returnWidget);   
+		returnWidget = setUpDimEntry(true, true,  returnWidget);   
         m_aspectRatioCheck->setEnabled(false);
         m_aspectRatioCheck->setChecked(true);
         m_aspectRatioCheck->setVisible(false);

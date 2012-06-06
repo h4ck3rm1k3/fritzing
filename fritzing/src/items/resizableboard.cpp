@@ -59,6 +59,8 @@ QStringList Board::NewBoardImageNames;
 
 const double ResizableBoard::CornerHandleSize = 7.0;
 
+static const double JND = (double) 0.01;
+
 QString Board::OneLayerTranslated;
 QString Board::TwoLayersTranslated;
 
@@ -410,6 +412,7 @@ ResizableBoard::ResizableBoard( ModelPart * modelPart, ViewIdentifierClass::View
 	m_widthEditor = m_heightEditor = NULL;
     m_aspectRatioCheck = NULL;
     m_aspectRatioLabel = NULL;
+    m_revertButton = NULL;
 
 	m_silkscreenRenderer = NULL;
 	m_corner = ResizableBoard::NO_CORNER;
@@ -879,7 +882,7 @@ bool ResizableBoard::collectExtraInfo(QWidget * parent, const QString & family, 
 			return true;
 		}
 
-		returnWidget = setUpDimEntry(false, returnWidget);
+		returnWidget = setUpDimEntry(false, false, returnWidget);
 		return true;
 	}
 
@@ -1074,7 +1077,7 @@ void ResizableBoard::setKinCursor(Qt::CursorShape cursor) {
 	}
 }
 
-QFrame * ResizableBoard::setUpDimEntry(bool includeProportion, QWidget * & returnWidget)
+QFrame * ResizableBoard::setUpDimEntry(bool includeAspectRatio, bool includeRevert, QWidget * & returnWidget)
 {
 	double tens = pow(10.0, m_decimalsAfter);
 	double w = qRound(m_modelPart->localProp("width").toDouble() * tens) / tens;	// truncate to 1 decimal point
@@ -1141,26 +1144,41 @@ QFrame * ResizableBoard::setUpDimEntry(bool includeProportion, QWidget * & retur
 	vboxLayout->addWidget(subframe1);
 	vboxLayout->addWidget(subframe2);
 
-	if (includeProportion) {
+	if (includeAspectRatio || includeRevert) {
 		QFrame * subframe3 = new QFrame();
 		QHBoxLayout * hboxLayout3 = new QHBoxLayout();
 		hboxLayout3->setAlignment(Qt::AlignLeft);
 		hboxLayout3->setContentsMargins(0, 0, 0, 0);
 		hboxLayout3->setSpacing(0);
 	
-		QLabel * l3 = new QLabel(tr("keep in proportion"));
-		l3->setMargin(0);
-		l3->setObjectName("infoViewLabel");
-		QCheckBox * checkBox = new QCheckBox();
-		checkBox->setChecked(m_keepAspectRatio);
-		checkBox->setObjectName("infoViewCheckBox");
+        if (includeAspectRatio) {
+		    QLabel * l3 = new QLabel(tr("keep aspect ratio"));
+		    l3->setMargin(0);
+		    l3->setObjectName("infoViewLabel");
+		    QCheckBox * checkBox = new QCheckBox();
+		    checkBox->setChecked(m_keepAspectRatio);
+		    checkBox->setObjectName("infoViewCheckBox");
 
-		hboxLayout3->addWidget(l3);
-		hboxLayout3->addWidget(checkBox);
+		    hboxLayout3->addWidget(l3);
+		    hboxLayout3->addWidget(checkBox);
+ 		    connect(checkBox, SIGNAL(toggled(bool)), this, SLOT(keepAspectRatio(bool)));
+		    m_aspectRatioCheck = checkBox;
+            m_aspectRatioLabel = l3;
+       }
+        if (includeRevert) {
+            QPushButton * pb = new QPushButton(tr("Revert"));
+            pb->setObjectName("infoViewButton");
+            hboxLayout3->addWidget(pb);
+            connect(pb, SIGNAL(clicked(bool)), this, SLOT(revertSize(bool)));
+            double w = modelPart()->localProp("width").toDouble();
+            double ow = modelPart()->localProp("originalWidth").toDouble();
+            double h = modelPart()->localProp("height").toDouble();
+            double oh = modelPart()->localProp("originalHeight").toDouble();
+            pb->setEnabled(qAbs(w - ow) > JND || qAbs(h - oh) > JND);
+            m_revertButton = pb;
+        }
+
 		subframe3->setLayout(hboxLayout3);
-		connect(checkBox, SIGNAL(toggled(bool)), this, SLOT(keepAspectRatio(bool)));
-		m_aspectRatioCheck = checkBox;
-        m_aspectRatioLabel = l3;
 
 		vboxLayout->addWidget(subframe3);
 	}
@@ -1226,3 +1244,19 @@ QString ResizableBoard::getShapeForRenderer(const QString & svg, ViewLayer::View
     //DebugDialog::debug(header);
 	return header;
 }
+
+void ResizableBoard::keepAspectRatio(bool checkState) {
+	m_keepAspectRatio = checkState;
+}
+
+void ResizableBoard::revertSize(bool) {
+    double ow = modelPart()->localProp("originalWidth").toDouble();
+    double oh = modelPart()->localProp("originalHeight").toDouble();
+
+    InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView != NULL) {
+		infoGraphicsView->resizeBoard(ow, oh, true);
+        m_revertButton->setEnabled(false);
+	}
+}
+

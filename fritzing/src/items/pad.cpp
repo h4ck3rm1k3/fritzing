@@ -163,7 +163,7 @@ QString Pad::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QStr
 bool Pad::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget) 
 {
 	if (prop.compare("shape", Qt::CaseInsensitive) == 0) {
-		returnWidget = setUpDimEntry(false, returnWidget);
+		returnWidget = setUpDimEntry(false, false, returnWidget);
 		returnProp = tr("shape");
 		return true;
 	}
