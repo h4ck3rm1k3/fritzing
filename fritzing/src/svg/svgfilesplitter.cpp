@@ -496,7 +496,7 @@ QString SvgFileSplitter::shift(double x, double y, const QString & elementID, bo
 	QDomElement root = m_domDocument.documentElement();
 
 	QDomElement mainElement = TextUtils::findElementWithAttribute(root, "id", elementID);
-	if (mainElement.isNull()) return false;
+	if (mainElement.isNull()) return "";
 
 	QDomElement childElement = mainElement.firstChildElement();
 	while (!childElement.isNull()) {

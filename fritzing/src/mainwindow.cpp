@@ -525,56 +525,59 @@ void MainWindow::connectPairs() {
 
 	bool succeeded = connect(m_pcbGraphicsView, SIGNAL(routingStatusSignal(SketchWidget *, const RoutingStatus &)),
 						this, SLOT(routingStatusSlot(SketchWidget *, const RoutingStatus &)));
-	succeeded = connect(m_schematicGraphicsView, SIGNAL(routingStatusSignal(SketchWidget *, const RoutingStatus &)),
+	succeeded =  succeeded && connect(m_schematicGraphicsView, SIGNAL(routingStatusSignal(SketchWidget *, const RoutingStatus &)),
 						this, SLOT(routingStatusSlot(SketchWidget *, const RoutingStatus &)));
-	succeeded = connect(m_breadboardGraphicsView, SIGNAL(routingStatusSignal(SketchWidget *, const RoutingStatus &)),
+	succeeded =  succeeded && connect(m_breadboardGraphicsView, SIGNAL(routingStatusSignal(SketchWidget *, const RoutingStatus &)),
 						this, SLOT(routingStatusSlot(SketchWidget *, const RoutingStatus &)));
 
-	succeeded = connect(m_breadboardGraphicsView, SIGNAL(swapSignal(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)), 
+	succeeded =  succeeded && connect(m_breadboardGraphicsView, SIGNAL(swapSignal(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)), 
 						this, SLOT(swapSelectedDelay(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)));
-	succeeded = connect(m_schematicGraphicsView, SIGNAL(swapSignal(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)), 
+	succeeded =  succeeded && connect(m_schematicGraphicsView, SIGNAL(swapSignal(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)), 
 						this, SLOT(swapSelectedDelay(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)));
-	succeeded = connect(m_pcbGraphicsView, SIGNAL(swapSignal(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)), 
+	succeeded =  succeeded && connect(m_pcbGraphicsView, SIGNAL(swapSignal(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)), 
 						this, SLOT(swapSelectedDelay(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)));
 
-	succeeded = connect(m_breadboardGraphicsView, SIGNAL(warnSMDSignal(const QString &)), this, SLOT(warnSMD(const QString &)), Qt::QueuedConnection);
-	succeeded = connect(m_pcbGraphicsView, SIGNAL(warnSMDSignal(const QString &)), this, SLOT(warnSMD(const QString &)), Qt::QueuedConnection);
-	succeeded = connect(m_schematicGraphicsView, SIGNAL(warnSMDSignal(const QString &)), this, SLOT(warnSMD(const QString &)), Qt::QueuedConnection);
+	succeeded =  succeeded && connect(m_breadboardGraphicsView, SIGNAL(warnSMDSignal(const QString &)), this, SLOT(warnSMD(const QString &)), Qt::QueuedConnection);
+	succeeded =  succeeded && connect(m_pcbGraphicsView, SIGNAL(warnSMDSignal(const QString &)), this, SLOT(warnSMD(const QString &)), Qt::QueuedConnection);
+	succeeded =  succeeded && connect(m_schematicGraphicsView, SIGNAL(warnSMDSignal(const QString &)), this, SLOT(warnSMD(const QString &)), Qt::QueuedConnection);
 
 
-	succeeded = connect(m_breadboardGraphicsView, SIGNAL(dropPasteSignal(SketchWidget *)), 
+	succeeded =  succeeded && connect(m_breadboardGraphicsView, SIGNAL(dropPasteSignal(SketchWidget *)), 
 						this, SLOT(dropPaste(SketchWidget *)));
-	succeeded = connect(m_schematicGraphicsView, SIGNAL(dropPasteSignal(SketchWidget *)), 
+	succeeded =  succeeded && connect(m_schematicGraphicsView, SIGNAL(dropPasteSignal(SketchWidget *)), 
 						this, SLOT(dropPaste(SketchWidget *)));
-	succeeded = connect(m_pcbGraphicsView, SIGNAL(dropPasteSignal(SketchWidget *)), 
+	succeeded =  succeeded && connect(m_pcbGraphicsView, SIGNAL(dropPasteSignal(SketchWidget *)), 
 						this, SLOT(dropPaste(SketchWidget *)));
 	
-	succeeded = connect(m_pcbGraphicsView, SIGNAL(subSwapSignal(SketchWidget *, ItemBase *, const QString &, ViewLayer::ViewLayerSpec, long &, QUndoCommand *)),
+	succeeded =  succeeded && connect(m_pcbGraphicsView, SIGNAL(subSwapSignal(SketchWidget *, ItemBase *, const QString &, ViewLayer::ViewLayerSpec, long &, QUndoCommand *)),
 						this, SLOT(subSwapSlot(SketchWidget *, ItemBase *, const QString &, ViewLayer::ViewLayerSpec, long &, QUndoCommand *)),
 						Qt::DirectConnection);
 
-	succeeded = connect(m_pcbGraphicsView, SIGNAL(firstTimeHelpHidden()), this, SLOT(firstTimeHelpHidden()));
-	succeeded = connect(m_schematicGraphicsView, SIGNAL(firstTimeHelpHidden()), this, SLOT(firstTimeHelpHidden()));
-	succeeded = connect(m_breadboardGraphicsView, SIGNAL(firstTimeHelpHidden()), this, SLOT(firstTimeHelpHidden()));
+	succeeded =  succeeded && connect(m_pcbGraphicsView, SIGNAL(firstTimeHelpHidden()), this, SLOT(firstTimeHelpHidden()));
+	succeeded =  succeeded && connect(m_schematicGraphicsView, SIGNAL(firstTimeHelpHidden()), this, SLOT(firstTimeHelpHidden()));
+	succeeded =  succeeded && connect(m_breadboardGraphicsView, SIGNAL(firstTimeHelpHidden()), this, SLOT(firstTimeHelpHidden()));
 
-	succeeded = connect(m_pcbGraphicsView, SIGNAL(updateLayerMenuSignal()), this, SLOT(updateLayerMenuSlot()));
-	succeeded = connect(m_pcbGraphicsView, SIGNAL(changeBoardLayersSignal(int, bool )), this, SLOT(changeBoardLayers(int, bool )));
+	succeeded =  succeeded && connect(m_pcbGraphicsView, SIGNAL(updateLayerMenuSignal()), this, SLOT(updateLayerMenuSlot()));
+	succeeded =  succeeded && connect(m_pcbGraphicsView, SIGNAL(changeBoardLayersSignal(int, bool )), this, SLOT(changeBoardLayers(int, bool )));
 
 
-	succeeded = connect(qApp, SIGNAL(spaceBarIsPressedSignal(bool)), m_breadboardGraphicsView, SLOT(spaceBarIsPressedSlot(bool)));
-	succeeded = connect(qApp, SIGNAL(spaceBarIsPressedSignal(bool)), m_schematicGraphicsView, SLOT(spaceBarIsPressedSlot(bool)));
-	succeeded = connect(qApp, SIGNAL(spaceBarIsPressedSignal(bool)), m_pcbGraphicsView, SLOT(spaceBarIsPressedSlot(bool)));
+	succeeded =  succeeded && connect(qApp, SIGNAL(spaceBarIsPressedSignal(bool)), m_breadboardGraphicsView, SLOT(spaceBarIsPressedSlot(bool)));
+	succeeded =  succeeded && connect(qApp, SIGNAL(spaceBarIsPressedSignal(bool)), m_schematicGraphicsView, SLOT(spaceBarIsPressedSlot(bool)));
+	succeeded =  succeeded && connect(qApp, SIGNAL(spaceBarIsPressedSignal(bool)), m_pcbGraphicsView, SLOT(spaceBarIsPressedSlot(bool)));
 
-	succeeded = connect(m_pcbGraphicsView, SIGNAL(boardDeletedSignal()), this, SLOT(boardDeletedSlot()));
+	succeeded =  succeeded && connect(m_pcbGraphicsView, SIGNAL(boardDeletedSignal()), this, SLOT(boardDeletedSlot()));
 
-	succeeded = connect(m_pcbGraphicsView, SIGNAL(cursorLocationSignal(double, double)), this, SLOT(cursorLocationSlot(double, double)));
-	succeeded = connect(m_breadboardGraphicsView, SIGNAL(cursorLocationSignal(double, double)), this, SLOT(cursorLocationSlot(double, double)));
-	succeeded = connect(m_schematicGraphicsView, SIGNAL(cursorLocationSignal(double, double)), this, SLOT(cursorLocationSlot(double, double)));
+	succeeded =  succeeded && connect(m_pcbGraphicsView, SIGNAL(cursorLocationSignal(double, double)), this, SLOT(cursorLocationSlot(double, double)));
+	succeeded =  succeeded && connect(m_breadboardGraphicsView, SIGNAL(cursorLocationSignal(double, double)), this, SLOT(cursorLocationSlot(double, double)));
+	succeeded =  succeeded && connect(m_schematicGraphicsView, SIGNAL(cursorLocationSignal(double, double)), this, SLOT(cursorLocationSlot(double, double)));
 
-	succeeded = connect(m_breadboardGraphicsView, SIGNAL(filenameIfSignal(QString &)), this, SLOT(filenameIfSlot(QString &)), Qt::DirectConnection);
-	succeeded = connect(m_pcbGraphicsView, SIGNAL(filenameIfSignal(QString &)), this, SLOT(filenameIfSlot(QString &)), Qt::DirectConnection);
-	succeeded = connect(m_schematicGraphicsView, SIGNAL(filenameIfSignal(QString &)), this, SLOT(filenameIfSlot(QString &)), Qt::DirectConnection);
-
+	succeeded =  succeeded && connect(m_breadboardGraphicsView, SIGNAL(filenameIfSignal(QString &)), this, SLOT(filenameIfSlot(QString &)), Qt::DirectConnection);
+	succeeded =  succeeded && connect(m_pcbGraphicsView, SIGNAL(filenameIfSignal(QString &)), this, SLOT(filenameIfSlot(QString &)), Qt::DirectConnection);
+	succeeded =  succeeded && connect(m_schematicGraphicsView, SIGNAL(filenameIfSignal(QString &)), this, SLOT(filenameIfSlot(QString &)), Qt::DirectConnection);
+	
+    if (!succeeded) {
+		DebugDialog::debug("connectPair failed");
+	}
 }
 
 void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)

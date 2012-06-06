@@ -362,13 +362,13 @@ int PartsBinIconView::itemIndexAt(const QPoint& pos, bool &trustIt) {
 }
 
 bool PartsBinIconView::inEmptyArea(const QPoint& pos) {
+    // used only by internal drag and drop
 	if(m_layout->count() == 0) {
 		return true;
 	} else {
 		QGraphicsLayoutItem *lastItem = m_layout->itemAt(m_layout->count()-1);
 		QPointF itemBottomRightPoint =
 			lastItem->graphicsItem()->mapToScene(lastItem->contentsRect().bottomRight());
-		QPointF posF = mapToScene(pos);
 
 		return itemBottomRightPoint.y() < pos.y()
 			|| ( itemBottomRightPoint.y() >= pos.y()

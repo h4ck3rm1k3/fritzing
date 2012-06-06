@@ -465,10 +465,9 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 			QMatrix m = renderer.matrixForElement(n);
 			QRectF mBounds = m.mapRect(bounds);
 
-
-			int x1 = qFloor(qMax(0.0, mBounds.left() - sourceRes.left()));
+			int x1 = qFloor(qMax((qreal) 0.0, mBounds.left() - sourceRes.left()));          // atmel compiler fails without cast
 			int x2 = qCeil(qMin(sourceRes.width(), mBounds.right() - sourceRes.left()));
-			int y1 = qFloor(qMax(0.0, mBounds.top() - sourceRes.top()));
+			int y1 = qFloor(qMax((qreal) 0.0, mBounds.top() - sourceRes.top()));            // atmel compiler fails without cast
 			int y2 = qCeil(qMin(sourceRes.height(), mBounds.bottom() - sourceRes.top()));
 			
 			if (pixelsCollide(&another, clipImage, x1, y1, x2, y2)) {

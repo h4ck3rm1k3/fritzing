@@ -61,7 +61,6 @@ int GraphicsFlowLayout::doLayout(const QRectF &rect) {
 		QGraphicsLayoutItem* item = itemAt(i);
 		int nextX = x + item->preferredSize().width() + spacing();
 
-		QSizePolicy policy = item->sizePolicy();
 		if (item->sizePolicy().horizontalPolicy() == QSizePolicy::Expanding) { 
 			int myY = y + lineHeight + spacing() + SpaceBefore;
 			QRectF r(QPoint(rect.x(), myY), item->preferredSize());
