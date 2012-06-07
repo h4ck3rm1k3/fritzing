@@ -59,6 +59,7 @@ public:
 	bool hasPartNumberProperty();
 	void setInitialSize();
 	void addedToScene(bool temporary);
+	void paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 protected slots:
 	void terminalPointEntry(const QString &);

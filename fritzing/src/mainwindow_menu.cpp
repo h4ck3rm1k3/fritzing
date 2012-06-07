@@ -2637,8 +2637,10 @@ void MainWindow::removeGroundFill(bool force) {
 	foreach (QGraphicsItem * item, m_pcbGraphicsView->scene()->collidingItems(board)) {
 		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 		if (itemBase == NULL) continue;
+        //if (itemBase->moveLock()) continue;
 
 		if (isGroundFill(itemBase)) {
+
 			toDelete.insert(itemBase->layerKinChief());
 		}
 	}

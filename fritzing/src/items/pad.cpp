@@ -295,3 +295,9 @@ ResizableBoard::Corner Pad::findCorner(QPointF scenePos, Qt::KeyboardModifiers m
 
 	return corner;
 }
+
+
+void Pad::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+	PaletteItem::paintHover(painter, option, widget);
+}
