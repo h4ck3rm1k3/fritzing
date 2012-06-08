@@ -8711,14 +8711,14 @@ void SketchWidget::resolveTemporary(bool resolve, ItemBase * itemBase)
         return;
     }
 
-    QTimer timer;
-    timer.setProperty("temporary", QVariant::fromValue(itemBase));
-    timer.setSingleShot(true);
-    timer.setInterval(10);
-    connect(&timer, SIGNAL(timeout()), this, SLOT(deleteTemporary()));
+    QTimer * timer = new QTimer();
+    timer->setProperty("temporary", QVariant::fromValue(itemBase));
+    timer->setSingleShot(true);
+    timer->setInterval(10);
+    connect(timer, SIGNAL(timeout()), this, SLOT(deleteTemporary()));
 
     // resolveTemporary is invoked indirectly from the temporary stack item via the itemBase, so defer deletion
-    timer.start();
+    timer->start();
 }
 
 
@@ -8733,4 +8733,6 @@ void SketchWidget::deleteTemporary() {
     }
 
     m_undoStack->deleteTemporary();
+
+    s->deleteLater();
 }
