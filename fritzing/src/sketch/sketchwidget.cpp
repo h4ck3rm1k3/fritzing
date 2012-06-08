@@ -1843,7 +1843,7 @@ void SketchWidget::dropItemEvent(QDropEvent *event) {
 	if (modelPart == NULL) return;
 	if (modelPart->modelPartShared() == NULL) return;
 
-	QUndoCommand* parentCommand = new QUndoCommand(tr("Add %1").arg(m_droppingItem->title()));
+	QUndoCommand* parentCommand = new TemporaryCommand(tr("Add %1").arg(m_droppingItem->title()));
 	stackSelectionState(false, parentCommand);
 	CleanUpWiresCommand * cuw = new CleanUpWiresCommand(this, CleanUpWiresCommand::Noop, parentCommand);
 
@@ -1909,7 +1909,13 @@ void SketchWidget::dropItemEvent(QDropEvent *event) {
 		new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
 		cuw->setDirection(CleanUpWiresCommand::UndoOnly);
 	}
-    m_undoStack->waitPush(parentCommand, 10);
+
+    if (modelPart->itemType() == ModelPart::CopperFill) {
+        m_undoStack->waitPushTemporary(parentCommand, 10);
+    }
+    else {
+        m_undoStack->waitPush(parentCommand, 10);
+    }
 
 
     event->acceptProposedAction();
@@ -6820,19 +6826,19 @@ void SketchWidget::resizeNote(long itemID, const QSizeF & size)
 
 QString SketchWidget::renderToSVG(double printerScale, const LayerList & layers, 
 								  bool blackOnly, QSizeF & imageSize, ItemBase * board, double dpi, 
-								  bool selectedItems, bool flatten, bool fillHoles, bool & empty)
+								  bool selectedItems, bool renderBlocker, bool & empty)
 {
 	QRectF offsetRect;
 	if (board) {
 		offsetRect = board->sceneBoundingRect();
 	}
-	return renderToSVG(printerScale, layers, blackOnly, imageSize, board, offsetRect, dpi, selectedItems, flatten, fillHoles, empty);
+	return renderToSVG(printerScale, layers, blackOnly, imageSize, board, offsetRect, dpi, selectedItems, renderBlocker, empty);
 }
 
 
 QString SketchWidget::renderToSVG(double printerScale, const LayerList & layers, 
 								  bool blackOnly, QSizeF & imageSize, ItemBase * board, QRectF & offsetRect, double dpi, 
-								  bool selectedItems, bool flatten, bool fillHoles, bool & empty)
+								  bool selectedItems, bool renderBlocker, bool & empty)
 {
 
 	QList<QGraphicsItem *> itemsAndLabels;
@@ -6852,6 +6858,12 @@ QString SketchWidget::renderToSVG(double printerScale, const LayerList & layers,
 		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 		if (itemBase == NULL) continue;
 		if (itemBase->hidden()) continue;
+        if (!renderBlocker) {
+            Pad * pad = qobject_cast<Pad *>(itemBase);
+            if (pad != NULL && pad->copperBlocker()) {
+                continue;
+            }
+        }
 
 		if (itemBase == itemBase->layerKinChief() && itemBase->isPartLabelVisible()) {
 			if (layers.contains(itemBase->partLabelViewLayerID())) {
@@ -6867,7 +6879,7 @@ QString SketchWidget::renderToSVG(double printerScale, const LayerList & layers,
 		itemsBoundingRect |= item->sceneBoundingRect();
 	}
 
-	return renderToSVG(printerScale, blackOnly, imageSize, offsetRect, dpi, flatten, fillHoles, itemsAndLabels, itemsBoundingRect, empty);
+	return renderToSVG(printerScale, blackOnly, imageSize, offsetRect, dpi, renderBlocker, itemsAndLabels, itemsBoundingRect, empty);
 }
 
 QString translateSVG(QString & svg, QPointF loc, double dpi, double printerScale) {
@@ -6882,11 +6894,11 @@ QString translateSVG(QString & svg, QPointF loc, double dpi, double printerScale
 	return svg;
 }
 
-QString SketchWidget::renderToSVG(double printerScale, bool blackOnly, QSizeF & imageSize, QRectF & offsetRect, double dpi, bool flatten,
-								  bool fillHoles, QList<QGraphicsItem *> & itemsAndLabels, QRectF itemsBoundingRect,
+QString SketchWidget::renderToSVG(double printerScale, bool blackOnly, QSizeF & imageSize, QRectF & offsetRect, double dpi,
+								  bool renderBlocker, QList<QGraphicsItem *> & itemsAndLabels, QRectF itemsBoundingRect,
 								  bool & empty)
 {
-	Q_UNUSED(fillHoles);
+    Q_UNUSED(renderBlocker);
 	empty = true;
 
 	double width = itemsBoundingRect.width();
@@ -6931,39 +6943,6 @@ QString SketchWidget::renderToSVG(double printerScale, bool blackOnly, QSizeF & 
             if (itemSvg.contains("<use")) {
                 TextUtils::noUse(itemSvg);
             }
-
-			if (flatten) {
-				QDomDocument domDocument;
-				QString errorStr;
-				int errorLine;
-				int errorColumn;
-				bool result = domDocument.setContent(itemSvg, &errorStr, &errorLine, &errorColumn);
-				if (!result) continue;
-
-				QDomElement root = domDocument.documentElement();
-				SvgFlattener flattener;
-				flattener.flattenChildren(root);
-				SvgFileSplitter::fixStyleAttributeRecurse(root);
-				itemSvg = domDocument.toString();
-			}
-			if (false && fillHoles) {
-				QDomDocument domDocument;
-				QString errorStr;
-				int errorLine;
-				int errorColumn;
-				bool result = domDocument.setContent(itemSvg, &errorStr, &errorLine, &errorColumn);
-				if (!result) continue;
-
-				QDomNodeList circleList = domDocument.elementsByTagName("circle");
-				for(uint i = 0; i < circleList.length(); i++) {
-					QDomElement circle = circleList.item(i).toElement();
-					QString fill = circle.attribute("fill");
-					if (fill.isEmpty() || fill.compare("none") == 0) {
-						circle.setAttribute("fill", circle.attribute("stroke"));
-					}
-				}
-				itemSvg = domDocument.toString();
-			}
 
 			foreach (ConnectorItem * ci, itemBase->cachedConnectorItems()) {
 				if (!ci->hasRubberBandLeg()) continue;
@@ -8724,3 +8703,34 @@ void SketchWidget::setGroundFillSeed(long id, const QString & connectorID, bool 
 	connectorItem->setGroundFillSeed(seed);
 }
 
+
+void SketchWidget::resolveTemporary(bool resolve, ItemBase * itemBase)
+{
+    if (resolve) {
+        m_undoStack->resolveTemporary();
+        return;
+    }
+
+    QTimer timer;
+    timer.setProperty("temporary", QVariant::fromValue(itemBase));
+    timer.setSingleShot(true);
+    timer.setInterval(10);
+    connect(&timer, SIGNAL(timeout()), this, SLOT(deleteTemporary()));
+
+    // resolveTemporary is invoked indirectly from the temporary stack item via the itemBase, so defer deletion
+    timer.start();
+}
+
+
+void SketchWidget::deleteTemporary() {
+
+    QObject * s = sender();
+    if (s == NULL) return;
+
+    ItemBase * itemBase = s->property("temporary").value<ItemBase *>();
+    if (itemBase) {
+        deleteItem(itemBase->id(), true, true, false);
+    }
+
+    m_undoStack->deleteTemporary();
+}

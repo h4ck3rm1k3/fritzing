@@ -901,6 +901,13 @@
           </iconView>
         </views>
       </instance>
+      <instance moduleIdRef="Copper1BlockerModuleID" modelIndex="59" path=":/resources/parts/core/blocker.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"/>
+          </iconView>
+        </views>
+      </instance>
       <instance moduleIdRef="GroundPlaneModuleID" modelIndex="59" path=":/resources/parts/core/groundplane.fzp">
         <views>
           <iconView layer="icon">

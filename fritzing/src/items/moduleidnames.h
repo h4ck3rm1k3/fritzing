@@ -73,6 +73,7 @@ public:
 	static const QString StripboardModuleIDName;
 	static const QString SpacerModuleIDName;
 	static const QString SchematicFrameModuleIDName;
+    static const QString CopperBlockerModuleIDName;
 };
 
 #endif

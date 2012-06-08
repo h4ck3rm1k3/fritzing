@@ -261,7 +261,7 @@ QImage * GroundPlaneGenerator::generateGroundPlaneAux(const QString & boardSvg, 
 	//file0.close();
 	
 	QByteArray copperByteArray;
-	if (!SvgFileSplitter::changeStrokeWidth(svg, m_strokeWidthIncrement, false, copperByteArray)) {
+	if (!SvgFileSplitter::changeStrokeWidth(svg, m_strokeWidthIncrement, false, true, copperByteArray)) {
 		return NULL;
 	}
 	

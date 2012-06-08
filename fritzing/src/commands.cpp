@@ -1970,3 +1970,23 @@ QString WireExtrasCommand::getParamString() const {
 		;
 }
 
+////////////////////////////////////
+
+
+TemporaryCommand::TemporaryCommand(const QString & text) : QUndoCommand(text) {
+    m_enabled = true;
+}
+
+TemporaryCommand::~TemporaryCommand() {
+}
+
+void TemporaryCommand::setEnabled(bool enabled) {
+    m_enabled = enabled;
+}
+
+ void TemporaryCommand::redo() {
+     if (m_enabled) {
+         QUndoCommand::redo();
+     }
+}
+

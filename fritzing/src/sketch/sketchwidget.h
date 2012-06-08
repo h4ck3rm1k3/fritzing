@@ -215,12 +215,12 @@ public:
 	class SelectItemCommand* stackSelectionState(bool pushIt, QUndoCommand * parentCommand);
 	QString renderToSVG(double printerScale, const LayerList &, 
 						bool blackOnly, QSizeF & imageSize, ItemBase * board, double dpi, 
-						bool selectedItems, bool flatten, bool fillHoles, bool & empty);
+						bool selectedItems, bool renderBlocker, bool & empty);
 	QString renderToSVG(double printerScale, const LayerList &, 
 						bool blackOnly, QSizeF & imageSize, ItemBase * board, QRectF & offsetRect, double dpi, 
-						bool selectedItems, bool flatten, bool fillHoles, bool & empty);
+						bool selectedItems, bool renderBlocker, bool & empty);
 	QString renderToSVG(double printerScale, bool blackOnly, QSizeF & imageSize, QRectF & offsetRect, double dpi, 
-								  bool flatten, bool fillHoles, 
+								  bool renderBlocker, 
 								  QList<QGraphicsItem *> & itemsAndLabels, QRectF itemsBoundingRect, bool & empty);
 
 	bool spaceBarIsPressed();
@@ -302,6 +302,7 @@ public:
 	ConnectorItem * findConnectorItem(ConnectorItem * foreignConnectorItem);
 	void setGroundFillSeed(long id, const QString & connectorID, bool seed);
 	void setWireExtras(long id, const QDomElement &);
+    void resolveTemporary(bool, ItemBase *);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -551,6 +552,7 @@ protected slots:
 	void changePinLabels(ItemBase *, bool singleRow);
 	void collectRatsnestSlot(QList<SketchWidget *> & foreignSketchWidgets);
 	void removeRatsnestSlot(QList<struct ConnectorEdge *> & cutSet, QUndoCommand * parentCommand);
+    void deleteTemporary();
 
 public slots:
 	void changeWireColor(const QString newColor);

@@ -1161,7 +1161,7 @@ bool SvgFileSplitter::getSvgSizeAttributes(const QString & svg, QString & width,
 	return false;
 }
 
-bool SvgFileSplitter::changeStrokeWidth(const QString & svg, double delta, bool absolute, QByteArray & byteArray) {
+bool SvgFileSplitter::changeStrokeWidth(const QString & svg, double delta, bool absolute, bool changeOpacity, QByteArray & byteArray) {
 	QString errorStr;
 	int errorLine;
 	int errorColumn;
@@ -1181,20 +1181,33 @@ bool SvgFileSplitter::changeStrokeWidth(const QString & svg, double delta, bool 
 		return false;
 	}
 
-	changeStrokeWidth(root, delta, absolute);
+	changeStrokeWidth(root, delta, absolute, changeOpacity);
 	byteArray = domDocument.toByteArray();
 	return true;
 }
 
-void SvgFileSplitter::changeStrokeWidth(QDomElement & element, double delta, bool absolute) {
+void SvgFileSplitter::changeStrokeWidth(QDomElement & element, double delta, bool absolute, bool changeOpacity) {
 	bool ok;
 	double sw = element.attribute("stroke-width").toDouble(&ok);
 	if (ok) {
 		element.setAttribute("stroke-width", QString::number((absolute) ? delta : sw + delta));
 	}
+
+    if (changeOpacity) {
+	    QString fillo = element.attribute("fill-opacity");
+	    if (!fillo.isEmpty()) {
+		    element.setAttribute("fill-opacity", "1.0");
+	    }
+
+	    QString sillo = element.attribute("stroke-opacity");
+	    if (!sillo.isEmpty()) {
+		    element.setAttribute("stroke-opacity", "1.0");
+	    }
+    }
+
 	QDomElement child = element.firstChildElement();
 	while (!child.isNull()) {
-		changeStrokeWidth(child, delta, absolute);
+		changeStrokeWidth(child, delta, absolute, changeOpacity);
 		child = child.nextSiblingElement();
 	}
 }

@@ -232,14 +232,21 @@ QString GroundPlane::generateSvg() {
 
 void GroundPlane::setDropOffset(QPointF offset) 
 {
-	m_dropOffset = offset;
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView == NULL) return;
+    
+    m_dropOffset = offset;
 	modelPart()->setLocalProp("fillType", fillTypeIndividual);
 	QString svg = generateSvg();
+    bool resolve = true;
 	if (svg.isEmpty()) {
 		loadIconSvg();
 		svg = IconSvg;
+        resolve = false;
 	}
 	setSvg(svg);
+
+	infoGraphicsView->resolveTemporary(resolve, this);   
 }
 
 void GroundPlane::setShape(QPainterPath & pp) {

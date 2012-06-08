@@ -210,6 +210,8 @@
 	<file>resources/parts/core/via.fzp</file>
 	<file>resources/parts/core/pad.fzp</file>
 	<file>resources/parts/core/pad0.fzp</file>
+	<file>resources/parts/core/blocker.fzp</file>
+	<file>resources/parts/core/blocker0.fzp</file>
         <file>resources/parts/core/dcpower.fzp</file>
         <file>resources/parts/core/power.fzp</file>
         <file>resources/parts/core/jumper.fzp</file>
@@ -218,7 +220,7 @@
         <file>resources/parts/core/30.20PerfboardModuleID.fzp</file>
         <file>resources/parts/core/30.20StripboardModuleID.fzp</file>
         <file>resources/parts/core/schematic_frame.fzp</file>
-	
+
         <file>resources/parts/svg/core/icon/iconPerfboard.svg</file>
         <file>resources/parts/svg/core/icon/iconStripboard.svg</file>
         <file>resources/parts/svg/core/icon/wireicon.svg</file>
@@ -237,6 +239,7 @@
         <file>resources/parts/svg/core/icon/hole.svg</file>
 	<file>resources/parts/svg/core/icon/via.svg</file>
 	<file>resources/parts/svg/core/icon/pad.svg</file>
+	<file>resources/parts/svg/core/icon/blocker.svg</file>
 	<file>resources/parts/svg/core/icon/schematic_frame_icon.svg</file>
 	<file>resources/parts/svg/core/icon/groundplane.svg</file>
 	<file>resources/parts/svg/core/icon/note.svg</file>

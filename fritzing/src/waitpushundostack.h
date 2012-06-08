@@ -39,7 +39,10 @@ public:
 	~WaitPushUndoStack();
 
 	void waitPush(QUndoCommand *, int delayMS);
-	void deleteTimer(QTimer *);
+	void waitPushTemporary(QUndoCommand *, int delayMS);
+    void resolveTemporary();
+    void deleteTemporary();
+    void deleteTimer(QTimer *);
 
 #ifndef QT_NO_DEBUG
 public:
@@ -49,13 +52,14 @@ public:
 protected:
 	QFile m_file;
 #endif
-protected:
+   
+ protected:
 	void clearDeadTimers();
-
 
 protected:
 	QList<QTimer *> m_deadTimers;
 	QMutex m_mutex;
+    QUndoCommand * m_temporary;
 };
 
 

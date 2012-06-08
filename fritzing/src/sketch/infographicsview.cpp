@@ -384,3 +384,7 @@ void InfoGraphicsView::setActiveConnectorItem(ConnectorItem * connectorItem)
 {
 	emit setActiveConnectorItemSignal(connectorItem);
 }
+
+void InfoGraphicsView::resolveTemporary(bool, ItemBase *)
+{
+}

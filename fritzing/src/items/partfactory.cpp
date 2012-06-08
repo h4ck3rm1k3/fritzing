@@ -158,6 +158,9 @@ ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClas
 					if (moduleID.endsWith(ModuleIDNames::PadModuleIDName)) {
 						return new Pad(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 					}
+					if (moduleID.endsWith(ModuleIDNames::CopperBlockerModuleIDName)) {
+						return new CopperBlocker(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
+					}
 					// must get the subclasses first
 					if (modelPart->itemType() == ModelPart::Breadboard) {
 						return new Breadboard(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);

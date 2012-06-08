@@ -69,6 +69,11 @@ WaitPushUndoStack::~WaitPushUndoStack() {
 void WaitPushUndoStack::push(QUndoCommand * cmd) 
 {
 	writeUndo(cmd, 0, NULL);
+
+    if (m_temporary == cmd) {
+        m_temporary->redo();
+        return;
+    }
 	
 	QUndoStack::push(cmd);
 }
@@ -77,6 +82,12 @@ void WaitPushUndoStack::push(QUndoCommand * cmd)
 void WaitPushUndoStack::waitPush(QUndoCommand * command, int delayMS) {
 	clearDeadTimers();
 	new CommandTimer(command, delayMS, this);
+}
+
+
+void WaitPushUndoStack::waitPushTemporary(QUndoCommand * command, int delayMS) {
+    m_temporary = command;
+	waitPush(command, delayMS);
 }
 
 void WaitPushUndoStack::clearDeadTimers() {
@@ -91,6 +102,19 @@ void WaitPushUndoStack::clearDeadTimers() {
 void WaitPushUndoStack::deleteTimer(QTimer * timer) {
 	QMutexLocker locker(&m_mutex);
 	m_deadTimers.append(timer);
+}
+
+void WaitPushUndoStack::resolveTemporary() {
+    TemporaryCommand * tc = dynamic_cast<TemporaryCommand *>(m_temporary);
+    m_temporary = NULL;
+    tc->setEnabled(false);
+    push(tc);
+    tc->setEnabled(true);
+}
+
+void WaitPushUndoStack::deleteTemporary() {
+    delete m_temporary;
+    m_temporary = NULL;
 }
 
 #ifndef QT_NO_DEBUG

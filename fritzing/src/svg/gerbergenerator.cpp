@@ -116,7 +116,7 @@ void GerberGenerator::exportToGerber(const QString & prefix, const QString & exp
     LayerList outlineLayerIDs = ViewLayer::outlineLayers();
 	QSizeF imageSize;
 	bool empty;
-	QString svgOutline = sketchWidget->renderToSVG(FSvgRenderer::printerScale(), outlineLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, false, empty);
+	QString svgOutline = sketchWidget->renderToSVG(FSvgRenderer::printerScale(), outlineLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, empty);
     if (svgOutline.isEmpty()) {
         displayMessage(QObject::tr("outline is empty"), displayMessageBoxes);
         return;
@@ -153,7 +153,7 @@ int GerberGenerator::doCopper(ItemBase * board, PCBSketchWidget * sketchWidget, 
 {
 	QSizeF imageSize;
 	bool empty;
-	QString svg = sketchWidget->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, false, empty);
+	QString svg = sketchWidget->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, empty);
 	if (svg.isEmpty()) {
 		displayMessage(QObject::tr("%1 file export failure (1)").arg(copperName), displayMessageBoxes);
 		return 0;
@@ -176,7 +176,7 @@ int GerberGenerator::doSilk(LayerList silkLayerIDs, const QString & silkName, co
 {
 	QSizeF imageSize;
 	bool empty;
-	QString svgSilk = sketchWidget->renderToSVG(FSvgRenderer::printerScale(), silkLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, false, empty);
+	QString svgSilk = sketchWidget->renderToSVG(FSvgRenderer::printerScale(), silkLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, empty);
     if (svgSilk.isEmpty()) {
 		displayMessage(QObject::tr("silk file export failure (1)"), displayMessageBoxes);
         return 0;
@@ -219,7 +219,7 @@ int GerberGenerator::doDrill(ItemBase * board, PCBSketchWidget * sketchWidget, c
 
 	QSizeF imageSize;
 	bool empty;
-	QString svgDrill = sketchWidget->renderToSVG(FSvgRenderer::printerScale(), drillLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, false, empty);
+	QString svgDrill = sketchWidget->renderToSVG(FSvgRenderer::printerScale(), drillLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, empty);
     if (svgDrill.isEmpty()) {
 		displayMessage(QObject::tr("drill file export failure (1)"), displayMessageBoxes);
         return 0;
@@ -250,7 +250,7 @@ int GerberGenerator::doMask(LayerList maskLayerIDs, const QString &maskName, con
 
 	QSizeF imageSize;
 	bool empty;
-	QString svgMask = sketchWidget->renderToSVG(FSvgRenderer::printerScale(), maskLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, false, empty);
+	QString svgMask = sketchWidget->renderToSVG(FSvgRenderer::printerScale(), maskLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, empty);
     if (svgMask.isEmpty()) {
 		displayMessage(QObject::tr("mask file export failure (1)"), displayMessageBoxes);
         return 0;

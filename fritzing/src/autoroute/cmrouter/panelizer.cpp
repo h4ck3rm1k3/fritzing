@@ -426,7 +426,7 @@ void Panelizer::doOnePanelItem(PlanePair * planePair, QList<LayerThing> & layerT
 			if (forWhy == SVG2gerber::ForMask) {
 				panelItem->window->pcbView()->hideCopperLogoItems(copperLogoItems);
 			}
-			QString one = panelItem->window->pcbView()->renderToSVG(FSvgRenderer::printerScale(), layerThingList.at(i).layerList, true, imageSize, panelItem->board, GraphicsUtils::StandardFritzingDPI, false, false, false, empty);
+			QString one = panelItem->window->pcbView()->renderToSVG(FSvgRenderer::printerScale(), layerThingList.at(i).layerList, true, imageSize, panelItem->board, GraphicsUtils::StandardFritzingDPI, false, false, empty);
 					
 			QString clipString;
 					

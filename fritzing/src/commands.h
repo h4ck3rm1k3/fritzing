@@ -1069,4 +1069,19 @@ protected:
 
 /////////////////////////////////////////////
 
+class TemporaryCommand : public QUndoCommand
+{
+
+public:
+	TemporaryCommand(const QString & text);
+	~TemporaryCommand();
+
+    void setEnabled(bool);
+
+    void redo();
+
+protected:
+    bool m_enabled;
+};
+
 #endif // COMMANDS_H

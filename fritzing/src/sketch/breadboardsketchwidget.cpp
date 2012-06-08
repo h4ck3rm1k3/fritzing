@@ -125,6 +125,7 @@ bool BreadboardSketchWidget::canDropModelPart(ModelPart * modelPart) {
 		default:
 			if (modelPart->moduleID().endsWith(ModuleIDNames::SchematicFrameModuleIDName)) return false;
 			if (modelPart->moduleID().endsWith(ModuleIDNames::PadModuleIDName)) return false;
+			if (modelPart->moduleID().endsWith(ModuleIDNames::CopperBlockerModuleIDName)) return false;
 			return true;
 	}
 }

@@ -58,11 +58,13 @@ $Date$
 static QString PadTemplate = "";
 static double OriginalWidth = 28;
 static double OriginalHeight = 32;
+static double TheOffset = 4;
 
 Pad::Pad( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: ResizableBoard(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
 	m_decimalsAfter = 2;
+    m_copperBlocker = false;
 }
 
 Pad::~Pad() {
@@ -105,15 +107,16 @@ QString Pad::makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, double mmW, double
 		terminal.setRect(2, 2, minW, hpx);
 	}
 
+    QString copperColor = (viewLayerID == ViewLayer::Copper0) ? ViewLayer::Copper0Color : ViewLayer::Copper1Color;
 	QString svg = QString("<svg version='1.1' xmlns='http://www.w3.org/2000/svg'  x='0px' y='0px' width='%1px' height='%2px' viewBox='0 0 %1 %2'>\n"
 							"<g id='%5'>\n"
-							"<rect  id='connector0pad' x='2' y='2' fill='%10' stroke='none' stroke-width='0' width='%3' height='%4'/>\n"
-							"<rect  id='connector0terminal' x='%6' y='%7' fill='none' stroke='none' stroke-width='0' width='%8' height='%9'/>\n"
+							"<rect  id='%12pad' x='2' y='2' fill='%10' fill-opacity='%11' stroke='%13' stroke-width='%14' width='%3' height='%4'/>\n"
+							"<rect  id='%12terminal' x='%6' y='%7' fill='none' stroke='none' stroke-width='0' width='%8' height='%9'/>\n"
 							"</g>\n"
 							"</svg>"
 							)
-					.arg(wpx + 4)
-					.arg(hpx + 4)
+					.arg(wpx + TheOffset)
+					.arg(hpx + TheOffset)
 					.arg(wpx)
 					.arg(hpx)
 					.arg(ViewLayer::viewLayerXmlNameFromID(viewLayerID))
@@ -121,7 +124,11 @@ QString Pad::makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, double mmW, double
 					.arg(terminal.top())
 					.arg(terminal.width())
 					.arg(terminal.height())
-                    .arg((viewLayerID == ViewLayer::Copper0) ? ViewLayer::Copper0Color : ViewLayer::Copper1Color)
+                    .arg(copperColor)
+                    .arg(copperBlocker() ? 0.1 : 1.0)
+                    .arg(copperBlocker() ? "zzz" : "connector0")
+                    .arg(copperBlocker() ? copperColor : "none")
+                    .arg(copperBlocker() ? TheOffset : 0)
 					;
 
 	//DebugDialog::debug("pad svg: " + svg);
@@ -168,30 +175,32 @@ bool Pad::collectExtraInfo(QWidget * parent, const QString & family, const QStri
 		return true;
 	}
 
-	if (prop.compare("connect to", Qt::CaseInsensitive) == 0) {
-		QComboBox * comboBox = new QComboBox();
-		comboBox->setObjectName("infoViewComboBox");
-		comboBox->setEditable(false);
-		comboBox->setEnabled(swappingEnabled);
-		comboBox->addItem(tr("center"), "center");
-		comboBox->addItem(tr("north"), "north");
-		comboBox->addItem(tr("east"), "east");
-		comboBox->addItem(tr("south"), "south");
-		comboBox->addItem(tr("west"), "west");
-		QString connectAt = m_modelPart->localProp("connect").toString();
-		for (int i = 0; i < comboBox->count(); i++) {
-			if (comboBox->itemData(i).toString().compare(connectAt) == 0) {
-				comboBox->setCurrentIndex(i);
-				break;
-			}
-		}
+    if (!copperBlocker()) {
+	    if (prop.compare("connect to", Qt::CaseInsensitive) == 0) {
+		    QComboBox * comboBox = new QComboBox();
+		    comboBox->setObjectName("infoViewComboBox");
+		    comboBox->setEditable(false);
+		    comboBox->setEnabled(swappingEnabled);
+		    comboBox->addItem(tr("center"), "center");
+		    comboBox->addItem(tr("north"), "north");
+		    comboBox->addItem(tr("east"), "east");
+		    comboBox->addItem(tr("south"), "south");
+		    comboBox->addItem(tr("west"), "west");
+		    QString connectAt = m_modelPart->localProp("connect").toString();
+		    for (int i = 0; i < comboBox->count(); i++) {
+			    if (comboBox->itemData(i).toString().compare(connectAt) == 0) {
+				    comboBox->setCurrentIndex(i);
+				    break;
+			    }
+		    }
 
-		connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(terminalPointEntry(const QString &)));
+		    connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(terminalPointEntry(const QString &)));
 
-		returnWidget = comboBox;
-		returnProp = tr("connect to");
-		return true;
-	}
+		    returnWidget = comboBox;
+		    returnProp = tr("connect to");
+		    return true;
+	    }
+    }
 
 	return PaletteItem::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
 }
@@ -296,8 +305,47 @@ ResizableBoard::Corner Pad::findCorner(QPointF scenePos, Qt::KeyboardModifiers m
 	return corner;
 }
 
-
 void Pad::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
 	PaletteItem::paintHover(painter, option, widget);
+}
+
+bool Pad::copperBlocker() {
+    return m_copperBlocker;
+}
+
+//////////////////////////////////////////
+
+// no label
+// allow on copper0
+// drop only in pcb view
+
+CopperBlocker::CopperBlocker( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
+	: Pad(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
+{
+    m_copperBlocker = true;
+}
+
+CopperBlocker::~CopperBlocker() {
+
+}
+
+void CopperBlocker::mousePressEvent(QGraphicsSceneMouseEvent * event) 
+{
+	double right = m_size.width();
+	double bottom = m_size.height();
+    if (event->pos().x() < TheOffset || 
+        event->pos().y() < TheOffset || 
+        event->pos().x() >= right - TheOffset || 
+        event->pos().y() >= bottom - TheOffset)
+    {
+        Pad::mousePressEvent(event);
+        return;
+    }
+
+    event->ignore();
+}
+
+bool CopperBlocker::hasPartLabel() {
+	return false;
 }

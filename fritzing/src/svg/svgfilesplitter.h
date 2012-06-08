@@ -75,7 +75,7 @@ public:
 
 public:
 	static bool getSvgSizeAttributes(const QString & svg, QString & width, QString & height, QString & viewBox);
-	static bool changeStrokeWidth(const QString & svg, double delta, bool absolute, QByteArray &);
+	static bool changeStrokeWidth(const QString & svg, double delta, bool absolute, bool changeOpacity, QByteArray &);
 	static bool changeColors(const QString & svg, QString & toColor, QStringList & exceptions, QByteArray &);
 	static void changeColors(QDomElement & element, QString & toColor, QStringList & exceptions);
 	static void fixStyleAttributeRecurse(QDomElement & element);
@@ -95,7 +95,7 @@ protected:
 	void standardArgs(bool relative, bool starting, QList<double> & args, PathUserData * pathUserData);
 
 protected:
-	static void changeStrokeWidth(QDomElement & element, double delta, bool absolute);
+	static void changeStrokeWidth(QDomElement & element, double delta, bool absolute, bool changeOpacity);
 	static void fixStyleAttribute(QDomElement & element);
 	static bool shiftAttribute(QDomElement & element, const char * attributeName, double d);
 	static void setStrokeOrFill(QDomElement & element, bool doIt, const QString & color, bool force);
