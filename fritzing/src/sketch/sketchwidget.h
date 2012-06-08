@@ -422,6 +422,7 @@ protected:
 	void copyAux(QList<ItemBase *> & bases, bool saveBoundingRects);
 	void copyDrop();
 	void dropItemEvent(QDropEvent *event);
+    virtual QString checkDroppedModuleID(const QString & moduleID);
 	QString makeWireSVG(Wire * wire, QPointF offset, double dpi, double printerscale, bool blackOnly);
 	QString makeWireSVGAux(Wire * wire, double width, const QString & color, QPointF offset, double dpi, double printerScale, bool blackOnly);
 

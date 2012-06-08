@@ -164,6 +164,7 @@ protected:
 	void selectAllXTraces(bool autoroutable, const QString & cmdText, bool forPCB);
 	bool canAlignToCenter(ItemBase *);
     void selectAllWires(ViewGeometry::WireFlag flag);
+    QString checkDroppedModuleID(const QString & moduleID);
 
 signals:
 	void subSwapSignal(SketchWidget *, ItemBase *, const QString & newModuleID, ViewLayer::ViewLayerSpec, long & newID, QUndoCommand * parentCommand);

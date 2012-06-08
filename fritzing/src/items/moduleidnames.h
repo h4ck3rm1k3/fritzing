@@ -74,6 +74,8 @@ public:
 	static const QString SpacerModuleIDName;
 	static const QString SchematicFrameModuleIDName;
     static const QString CopperBlockerModuleIDName;
+    static const QString Copper1BlockerModuleIDName;
+    static const QString Copper0BlockerModuleIDName;
 };
 
 #endif

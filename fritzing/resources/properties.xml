@@ -55,6 +55,7 @@
 	<menuItem value="8 MHz" />
 	<menuItem value="16 MHz" />
 	<menuItem value="20 MHz" />
+	<menuItem value="25 MHz" />
 	<menuItem value="32 MHz" />
 	<menuItem value="40 MHz" />
 </property>

@@ -1634,6 +1634,7 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
     QPointF offset;
     dataStream >> moduleID >> offset;
 
+    moduleID = checkDroppedModuleID(moduleID);
 	ModelPart * modelPart = m_paletteModel->retrieveModelPart(moduleID);
 	if (modelPart ==  NULL) return false;
 
@@ -4999,6 +5000,17 @@ void SketchWidget::prepDeleteProps(ItemBase * itemBase, long id, const QString &
 		default:
 			break;
 	}
+
+    Pad* pad = qobject_cast<Pad *>(itemBase);
+    if (pad != NULL) {
+		pad->saveParams();
+		QPointF p;
+		QSizeF sz;
+		pad->getParams(p, sz);
+		new ResizeBoardCommand(this, id, sz.width(), sz.height(), sz.width(), sz.height(), parentCommand);
+        prepDeleteOtherProps(itemBase, id, newModuleID, parentCommand);
+        return;
+    }
 
 	Resistor * resistor =  qobject_cast<Resistor *>(itemBase);
 	if (resistor != NULL) {
@@ -8736,3 +8748,8 @@ void SketchWidget::deleteTemporary() {
 
     s->deleteLater();
 }
+
+QString SketchWidget::checkDroppedModuleID(const QString & moduleID) {
+    return moduleID;
+}
+

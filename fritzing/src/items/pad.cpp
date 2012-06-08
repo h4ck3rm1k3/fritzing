@@ -107,7 +107,7 @@ QString Pad::makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, double mmW, double
 		terminal.setRect(2, 2, minW, hpx);
 	}
 
-    QString blockerColor = (viewLayerID == ViewLayer::Copper0) ? "#a22A00" : "#aF6B33";
+    QString blockerColor = (viewLayerID == ViewLayer::Copper0) ? "#A22A00" : "#aF6B33";
     QString copperColor = (viewLayerID == ViewLayer::Copper0) ? ViewLayer::Copper0Color : ViewLayer::Copper1Color;
 	QString svg = QString("<svg version='1.1' xmlns='http://www.w3.org/2000/svg'  x='0px' y='0px' width='%1px' height='%2px' viewBox='0 0 %1 %2'>\n"
 							"<g id='%5'>\n"
@@ -339,10 +339,6 @@ bool Pad::copperBlocker() {
 
 //////////////////////////////////////////
 
-// no label
-// allow on copper0
-// drop only in pcb view
-
 CopperBlocker::CopperBlocker( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: Pad(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
@@ -385,4 +381,9 @@ QPainterPath CopperBlocker::hoverShape() const
 QPainterPath CopperBlocker::shape() const
 {
 	return hoverShape();
+}
+
+QString CopperBlocker::makeFirstLayerSvg(double mmW, double mmH, double milsW, double milsH) {
+
+	return makeLayerSvg(moduleID().compare(ModuleIDNames::Copper1BlockerModuleIDName) == 0 ? ViewLayer::Copper1 : ViewLayer::Copper0, mmW, mmH, milsW, milsH);
 }

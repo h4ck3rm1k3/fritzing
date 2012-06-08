@@ -2371,3 +2371,16 @@ void PCBSketchWidget::selectAllWires(ViewGeometry::WireFlag flag)
     QList<QGraphicsItem *> items = scene()->collidingItems(board);
     selectAllWiresFrom(flag, items);
 }
+
+QString PCBSketchWidget::checkDroppedModuleID(const QString & moduleID) {
+    if (!moduleID.endsWith(ModuleIDNames::CopperBlockerModuleIDName)) return moduleID;
+
+
+    ViewLayer * viewLayer = m_viewLayers.value(ViewLayer::Copper0);
+    if (viewLayer->isActive()) {
+        return ModuleIDNames::Copper0BlockerModuleIDName;
+    }
+
+    return ModuleIDNames::Copper1BlockerModuleIDName;
+}
+

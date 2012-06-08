@@ -72,4 +72,6 @@ const QString ModuleIDNames::StripboardModuleIDName = "StripboardModuleID";
 const QString ModuleIDNames::SpacerModuleIDName = "__spacer__";
 const QString ModuleIDNames::SchematicFrameModuleIDName = "SchematicFrameModuleID";
 const QString ModuleIDNames::CopperBlockerModuleIDName = "BlockerModuleID";
+const QString ModuleIDNames::Copper0BlockerModuleIDName = "Copper0BlockerModuleID";
+const QString ModuleIDNames::Copper1BlockerModuleIDName = "Copper1BlockerModuleID";
 

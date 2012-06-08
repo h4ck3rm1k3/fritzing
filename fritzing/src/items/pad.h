@@ -93,6 +93,10 @@ public:
     QPainterPath shape() const;
     QPainterPath hoverShape() const;
 
+protected:
+	QString makeFirstLayerSvg(double mmW, double mmH, double milsW, double milsH);
+
+
 	
 };
 
