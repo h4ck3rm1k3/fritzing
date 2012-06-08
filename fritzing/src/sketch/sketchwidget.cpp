@@ -7047,7 +7047,7 @@ void SketchWidget::drawBackground( QPainter * painter, const QRectF & rect )
 	InfoGraphicsView::drawForeground(painter, rect);
 
 	if (m_showGrid) {
-		QColor gridColor(0, 0, 0, 55);
+        QColor gridColor(0, 0, 0, 20);
 		double gridSize = m_gridSizeInches * FSvgRenderer::printerScale();
 
 		painter->save();
