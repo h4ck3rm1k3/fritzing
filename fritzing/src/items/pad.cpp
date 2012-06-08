@@ -107,29 +107,52 @@ QString Pad::makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, double mmW, double
 		terminal.setRect(2, 2, minW, hpx);
 	}
 
+    QString blockerColor = (viewLayerID == ViewLayer::Copper0) ? "#a22A00" : "#aF6B33";
     QString copperColor = (viewLayerID == ViewLayer::Copper0) ? ViewLayer::Copper0Color : ViewLayer::Copper1Color;
 	QString svg = QString("<svg version='1.1' xmlns='http://www.w3.org/2000/svg'  x='0px' y='0px' width='%1px' height='%2px' viewBox='0 0 %1 %2'>\n"
 							"<g id='%5'>\n"
-							"<rect  id='%12pad' x='2' y='2' fill='%10' fill-opacity='%11' stroke='%13' stroke-width='%14' width='%3' height='%4'/>\n"
-							"<rect  id='%12terminal' x='%6' y='%7' fill='none' stroke='none' stroke-width='0' width='%8' height='%9'/>\n"
-							"</g>\n"
-							"</svg>"
+							"<rect  id='%8pad' x='2' y='2' fill='%6' fill-opacity='%7' stroke='%9' stroke-width='%10' width='%3' height='%4'/>\n"
 							)
 					.arg(wpx + TheOffset)
 					.arg(hpx + TheOffset)
 					.arg(wpx)
 					.arg(hpx)
 					.arg(ViewLayer::viewLayerXmlNameFromID(viewLayerID))
+                    .arg(copperBlocker() ? blockerColor : copperColor)
+                    .arg(copperBlocker() ? 0.0 : 1.0)
+                    .arg(copperBlocker() ? "zzz" : "connector0")
+                    .arg(copperBlocker() ? blockerColor : "none")
+                    .arg(copperBlocker() ? TheOffset : 0)
+					;
+
+    if (copperBlocker()) {
+        svg += QString("<line stroke='%5' stroke-width='1' x1='%1' y1='%2' x2='%3'  y2='%4'/>\n")
+                    .arg(0)
+                    .arg(0)
+                    .arg(wpx + TheOffset)
+                    .arg(hpx + TheOffset)
+                    .arg(blockerColor)
+                   ;
+        svg += QString("<line stroke='%5' stroke-width='1' x1='%1' y1='%2' x2='%3'  y2='%4'/>\n")
+                    .arg(wpx + TheOffset)
+                    .arg(0)
+                    .arg(0)
+                    .arg(hpx + TheOffset)
+                    .arg(blockerColor)
+                   ;
+
+    }
+    else {
+        svg += QString("<rect  id='%12terminal' x='%1' y='%2' fill='none' stroke='none' stroke-width='0' width='%3' height='%4'/>\n")
 					.arg(terminal.left())
 					.arg(terminal.top())
 					.arg(terminal.width())
 					.arg(terminal.height())
-                    .arg(copperColor)
-                    .arg(copperBlocker() ? 0.1 : 1.0)
-                    .arg(copperBlocker() ? "zzz" : "connector0")
-                    .arg(copperBlocker() ? copperColor : "none")
-                    .arg(copperBlocker() ? TheOffset : 0)
-					;
+                    ;
+
+    }
+
+    svg += "</g>\n</svg>";
 
 	//DebugDialog::debug("pad svg: " + svg);
 	return svg;
@@ -327,25 +350,39 @@ CopperBlocker::CopperBlocker( ModelPart * modelPart, ViewIdentifierClass::ViewId
 }
 
 CopperBlocker::~CopperBlocker() {
-
-}
-
-void CopperBlocker::mousePressEvent(QGraphicsSceneMouseEvent * event) 
-{
-	double right = m_size.width();
-	double bottom = m_size.height();
-    if (event->pos().x() < TheOffset || 
-        event->pos().y() < TheOffset || 
-        event->pos().x() >= right - TheOffset || 
-        event->pos().y() >= bottom - TheOffset)
-    {
-        Pad::mousePressEvent(event);
-        return;
-    }
-
-    event->ignore();
 }
 
 bool CopperBlocker::hasPartLabel() {
 	return false;
+}
+
+QPainterPath CopperBlocker::hoverShape() const
+{
+    if (m_viewIdentifier != ViewIdentifierClass::PCBView) {
+        return PaletteItem::hoverShape();
+     }
+
+    QRectF r = boundingRect();
+
+	QPainterPath path; 
+    double half = TheOffset / 2;
+    path.moveTo(half, half);
+    path.lineTo(r.width() - half, half);
+    path.lineTo(r.width() - half, r.height() - half);
+    path.lineTo(half, r.height() - half);
+    path.closeSubpath();
+    path.moveTo(0, 0);
+    path.lineTo(r.width(), r.height());
+    path.moveTo(r.width(), 0);
+    path.lineTo(0, r.height());
+    path.moveTo(0, 0);
+
+	QPen pen;
+	pen.setCapStyle(Qt::RoundCap);
+	return GraphicsUtils::shapeFromPath(path, pen, TheOffset, false);
+}
+
+QPainterPath CopperBlocker::shape() const
+{
+	return hoverShape();
 }

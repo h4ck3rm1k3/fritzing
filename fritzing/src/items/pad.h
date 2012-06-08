@@ -90,9 +90,10 @@ public:
 	~CopperBlocker();
 
     bool hasPartLabel();
+    QPainterPath shape() const;
+    QPainterPath hoverShape() const;
 
-protected:
-	void mousePressEvent(QGraphicsSceneMouseEvent * event );
+	
 };
 
 
