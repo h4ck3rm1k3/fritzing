@@ -2080,16 +2080,19 @@ long MainWindow::swapSelectedAuxAux(ItemBase * itemBase, const QString & moduleI
 {
 	long modelIndex = ModelPart::nextIndex();
 
-	QList<bool> masterflags;
-	masterflags << false << false << false;
-	if (itemBase->modelPart()->viewItem(m_breadboardGraphicsView->scene()) != NULL) {
-		masterflags[2] = true;
-	}
-	else if (itemBase->modelPart()->viewItem(m_pcbGraphicsView->scene()) != NULL) {
-		masterflags[1] = true;
-	}
-	else {
-		masterflags[0] = true;
+	QList<SketchWidget *> sketchWidgets;
+
+    // master view must go last, since it creates the delete command, and possibly has all the local props
+    switch (itemBase->viewIdentifier()) {
+        case ViewIdentifierClass::SchematicView:
+		    sketchWidgets << m_pcbGraphicsView << m_breadboardGraphicsView << m_schematicGraphicsView;
+            break;
+        case ViewIdentifierClass::PCBView:
+            sketchWidgets << m_schematicGraphicsView << m_breadboardGraphicsView << m_pcbGraphicsView;
+            break;
+        default:
+            sketchWidgets << m_schematicGraphicsView << m_pcbGraphicsView << m_breadboardGraphicsView;
+            break;
 	}
 
     SwapThing swapThing;
@@ -2099,17 +2102,15 @@ long MainWindow::swapSelectedAuxAux(ItemBase * itemBase, const QString & moduleI
     swapThing.viewLayerSpec = viewLayerSpec;
     swapThing.parentCommand = parentCommand;
 
-	long newID1 = m_schematicGraphicsView->setUpSwap(swapThing, masterflags[0]);
-	long newID2 = m_pcbGraphicsView->setUpSwap(swapThing, masterflags[1]);
-
-	// master view must go last, since it creates the delete command
-	long newID3 = m_breadboardGraphicsView->setUpSwap(swapThing, masterflags[2]);
+    long newID = 0;
+    for (int i = 0; i < 3; i++) {
+        long tempID = sketchWidgets[i]->setUpSwap(swapThing, i == 2);
+        if (newID == 0 && tempID != 0) newID = tempID;
+    }
 
 	// TODO:  z-order?
 
-	if (newID3 != 0) return newID3;
-	if (newID2 != 0) return newID2;
-	return newID1;
+	return newID;
 }
 
 void MainWindow::svgMissingLayer(const QString & layername, const QString & path) {

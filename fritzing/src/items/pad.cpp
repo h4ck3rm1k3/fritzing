@@ -107,7 +107,7 @@ QString Pad::makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, double mmW, double
 		terminal.setRect(2, 2, minW, hpx);
 	}
 
-    QString blockerColor = (viewLayerID == ViewLayer::Copper0) ? "#A22A00" : "#aF6B33";
+    QString blockerColor = (viewLayerID == ViewLayer::Copper0) ? "#A26A00" : "#aF8B33";
     QString copperColor = (viewLayerID == ViewLayer::Copper0) ? ViewLayer::Copper0Color : ViewLayer::Copper1Color;
 	QString svg = QString("<svg version='1.1' xmlns='http://www.w3.org/2000/svg'  x='0px' y='0px' width='%1px' height='%2px' viewBox='0 0 %1 %2'>\n"
 							"<g id='%5'>\n"
