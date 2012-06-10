@@ -91,6 +91,25 @@ bool sortSketchDescriptors(SketchDescriptor * s1, SketchDescriptor * s2){
     return s1->name.toLower() < s2->name.toLower();
 }
 
+////////////////////////////////////////////////////////
+
+GridSizeThing::GridSizeThing(const QString & vName, const QString & sName, double defaultSize, const QString & gsText) 
+{
+	defaultGridSize = defaultSize;
+	viewName = vName;
+	shortName = sName;
+    gridSizeText = gsText;
+}
+
+GridSizeDialog::GridSizeDialog(GridSizeThing * gridSizeThing) : QDialog() {
+    m_gridSizeThing = gridSizeThing;
+}
+
+GridSizeThing * GridSizeDialog::gridSizeThing() {
+    return m_gridSizeThing;
+}
+
+
 /////////////////////////////////////////////////////////
 
 void MainWindow::closeIfEmptySketch(MainWindow* mw) {
@@ -885,6 +904,14 @@ void MainWindow::createViewMenuActions() {
 	m_showGridAct->setCheckable(true);
 	connect(m_showGridAct, SIGNAL(triggered()), this, SLOT(showGrid()));
 
+	m_setGridSizeAct = new QAction(tr("Set Grid Size..."), this);
+	m_setGridSizeAct->setStatusTip(tr("Set the size of the grid in this view"));
+	connect(m_setGridSizeAct, SIGNAL(triggered()), this, SLOT(setGridSize()));
+
+	m_setBackgroundColorAct = new QAction(tr("Set Background Color..."), this);
+	m_setBackgroundColorAct->setStatusTip(tr("Set the background color of this view"));
+	connect(m_setBackgroundColorAct, SIGNAL(triggered()), this, SLOT(setBackgroundColor()));
+
 	m_showBreadboardAct = new QAction(tr("&Show Breadboard"), this);
 	m_showBreadboardAct->setShortcut(tr("Ctrl+1"));
 	m_showBreadboardAct->setStatusTip(tr("Show the breadboard view"));
@@ -1124,6 +1151,8 @@ void MainWindow::createMenus()
 
     m_viewMenu->addAction(m_alignToGridAct);
     m_viewMenu->addAction(m_showGridAct);
+    m_viewMenu->addAction(m_setGridSizeAct);
+    m_viewMenu->addAction(m_setBackgroundColorAct);
 	m_viewMenu->addSeparator();
 
     m_viewMenu->addAction(m_showBreadboardAct);
@@ -2886,6 +2915,9 @@ void MainWindow::startSaveInstancesSlot(const QString & fileName, ModelPart *, Q
 		streamWriter.writeStartElement("view");
 		streamWriter.writeAttribute("name", ViewIdentifierClass::viewIdentifierXmlName(sketchWidget->viewIdentifier()));
 		streamWriter.writeAttribute("backgroundColor", sketchWidget->background().name());
+		streamWriter.writeAttribute("gridSize", sketchWidget->gridSizeText());
+		streamWriter.writeAttribute("showGr1d", sketchWidget->showingGrid() ? "1" : "0");
+		streamWriter.writeAttribute("alignToGr1d", sketchWidget->alignedToGrid() ? "1" : "0");
 		streamWriter.writeEndElement();
 	}
 	streamWriter.writeEndElement();
@@ -2948,7 +2980,6 @@ void MainWindow::loadedRootSlot(const QString & fname, ModelBase *, QDomElement 
 
 }
 
-
 void MainWindow::loadedViewsSlot(ModelBase *, QDomElement & views) {
 	if (views.isNull()) return;
 
@@ -2956,24 +2987,47 @@ void MainWindow::loadedViewsSlot(ModelBase *, QDomElement & views) {
 	while (!view.isNull()) {
 		QString name = view.attribute("name");
 		ViewIdentifierClass::ViewIdentifier viewIdentifier = ViewIdentifierClass::idFromXmlName(name);
-		QString colorName = view.attribute("backgroundColor");
-		QColor color;
-		color.setNamedColor(colorName);
-		if (color.isValid()) {
-			switch (viewIdentifier) {
-				case ViewIdentifierClass::BreadboardView:
-					m_breadboardGraphicsView->setBackground(color);
-					break;
-				case ViewIdentifierClass::SchematicView:
-					m_schematicGraphicsView->setBackground(color);
-					break;
-				case ViewIdentifierClass::PCBView:
-					m_pcbGraphicsView->setBackground(color);
-					break;
-				default:
-					break;
-			}
+        SketchWidget * sketchWidget = NULL;
+		switch (viewIdentifier) {
+			case ViewIdentifierClass::BreadboardView:
+				sketchWidget = m_breadboardGraphicsView;
+				break;
+			case ViewIdentifierClass::SchematicView:
+				sketchWidget = m_schematicGraphicsView;
+				break;
+			case ViewIdentifierClass::PCBView:
+				sketchWidget = m_pcbGraphicsView;
+				break;
+			default:
+				break;
 		}
+
+        if (sketchWidget) {
+		    QString colorName = view.attribute("backgroundColor", "");
+            QString gridSizeText = view.attribute("gridSize", "");
+            QString alignToGridText = view.attribute("alignToGrid", "");
+            QString showGridText = view.attribute("showGrid", "");
+		    QColor color;
+		    color.setNamedColor(colorName);
+
+            bool redraw = false;
+            if (color.isValid()) {
+                sketchWidget->setBackground(color);
+                redraw = true;
+            }
+            if (!alignToGridText.isEmpty()) {
+                sketchWidget->alignToGrid(alignToGridText.compare("1") == 0);
+            }
+            if (!showGridText.isEmpty()) {
+                sketchWidget->showGrid(showGridText.compare("1") == 0);
+                redraw = 1;
+            }
+            if (!gridSizeText.isEmpty()) {
+                sketchWidget->setGridSize(gridSizeText);
+                redraw = true;
+            }
+            if (redraw) sketchWidget->invalidateScene();
+        }
 
 		view = view.nextSiblingElement("view");
 	}
@@ -3207,13 +3261,118 @@ void MainWindow::alignToGrid() {
 	if (m_currentGraphicsView == NULL) return;
 
 	m_currentGraphicsView->alignToGrid(m_alignToGridAct->isChecked());
+    setWindowModified(true);
 }
 
 void MainWindow::showGrid() {
 	if (m_currentGraphicsView == NULL) return;
 
 	m_currentGraphicsView->showGrid(m_showGridAct->isChecked());
+    setWindowModified(true);
 }
+
+void MainWindow::setGridSize() 
+{
+    GridSizeThing gridSizeThing(m_currentGraphicsView->viewName(), 
+                                m_currentGraphicsView->getShortName(), 
+                                m_currentGraphicsView->defaultGridSizeInches(),
+                                m_currentGraphicsView->gridSizeText());
+
+    GridSizeDialog dialog(&gridSizeThing);
+    dialog.setWindowTitle(QObject::tr("Set Grid Size"));
+
+	QVBoxLayout * vLayout = new QVBoxLayout(&dialog);
+
+    vLayout->addWidget(createGridSizeForm(&gridSizeThing));
+
+    QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+	buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
+	buttonBox->button(QDialogButtonBox::Ok)->setText(tr("OK"));
+
+    connect(buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+	vLayout->addWidget(buttonBox);
+
+    int result = dialog.exec();
+
+    if (result == QDialog::Accepted) {
+	    QString units = (gridSizeThing.inButton->isChecked() ? "in" : "mm");
+        m_currentGraphicsView->setGridSize(gridSizeThing.lineEdit->text() + units);
+        setWindowModified(true);
+    }
+}
+
+QWidget * MainWindow::createGridSizeForm(GridSizeThing * gridSizeThing)
+{
+	QGroupBox * over = new QGroupBox("", this);
+
+	QVBoxLayout * vLayout = new QVBoxLayout();
+
+	QLabel * explain = new QLabel(tr("Set the grid size for %1.").arg(gridSizeThing->viewName));
+	vLayout->addWidget(explain);
+
+	QGroupBox * groupBox = new QGroupBox(this);
+
+	QHBoxLayout * hLayout = new QHBoxLayout();
+
+	QLabel * label = new QLabel(tr("Grid Size:"));
+	hLayout->addWidget(label);
+
+	gridSizeThing->lineEdit = new QLineEdit();
+	
+	gridSizeThing->lineEdit->setFixedWidth(45);
+
+	gridSizeThing->validator = new QDoubleValidator(gridSizeThing->lineEdit);
+	gridSizeThing->validator->setRange(0.001, 1.0, 3);
+	gridSizeThing->validator->setNotation(QDoubleValidator::StandardNotation);
+	gridSizeThing->lineEdit->setValidator(gridSizeThing->validator);
+
+	hLayout->addWidget(gridSizeThing->lineEdit);
+
+	gridSizeThing->inButton = new QRadioButton(tr("in"), this); 
+	hLayout->addWidget(gridSizeThing->inButton);
+
+	gridSizeThing->mmButton = new QRadioButton(tr("mm"), this); 
+	hLayout->addWidget(gridSizeThing->mmButton);
+
+	groupBox->setLayout(hLayout);
+
+	vLayout->addWidget(groupBox);
+	vLayout->addSpacing(5);
+
+	QPushButton * pushButton = new QPushButton(this);
+	pushButton->setText(tr("Restore Default"));
+	pushButton->setMaximumWidth(115);
+	vLayout->addWidget(pushButton);
+	vLayout->addSpacing(10);
+
+	over->setLayout(vLayout);
+
+	if (gridSizeThing->gridSizeText.length() <= 2) {
+		gridSizeThing->inButton->setChecked(true);
+		gridSizeThing->lineEdit->setText(QString::number(gridSizeThing->defaultGridSize));
+	}
+	else {
+		if (gridSizeThing->gridSizeText.endsWith("mm")) {
+			gridSizeThing->mmButton->setChecked(true);
+			gridSizeThing->validator->setTop(25.4);
+		}
+		else {
+			gridSizeThing->inButton->setChecked(true);
+		}
+        QString szString = gridSizeThing->gridSizeText;
+		szString.chop(2);
+		gridSizeThing->lineEdit->setText(szString);
+	}
+
+	connect(gridSizeThing->inButton, SIGNAL(clicked(bool)), this, SLOT(gridUnits(bool)));
+	connect(pushButton, SIGNAL(clicked()), this, SLOT(restoreDefaultGrid()));
+	connect(gridSizeThing->mmButton, SIGNAL(clicked(bool)), this, SLOT(gridUnits(bool)));
+
+	return over;
+}
+
 
 void MainWindow::openProgramWindow() {
 	if (m_programWindow) {
@@ -3407,4 +3566,60 @@ void MainWindow::setOneGroundFillSeed() {
 	command->addItem(connectorItem->attachedToID(), connectorItem->connectorSharedID(), action->isChecked());
 
 	m_undoStack->push(command);
+}
+
+void MainWindow::gridUnits(bool checked) {
+    QWidget * widget = qobject_cast<QWidget *>(sender());
+    if (widget == NULL) return;
+
+    GridSizeDialog * dialog = qobject_cast<GridSizeDialog *>(widget->window());
+    if (dialog == NULL) return;
+
+	GridSizeThing * gridSizeThing = dialog->gridSizeThing();
+
+	QString units;
+	if (sender() == gridSizeThing->inButton) {
+		units = (checked) ? "in" : "mm";
+	}
+	else {
+		units = (checked) ? "mm" : "in";
+	}
+	
+	if (units.startsWith("mm")) {
+		gridSizeThing->validator->setTop(25.4);
+		gridSizeThing->lineEdit->setText(QString::number(gridSizeThing->lineEdit->text().toDouble() * 25.4));
+	}
+	else {
+		gridSizeThing->validator->setTop(1.0);
+		gridSizeThing->lineEdit->setText(QString::number(gridSizeThing->lineEdit->text().toDouble() / 25.4));
+	}
+
+}
+
+void MainWindow::restoreDefaultGrid() {
+    QWidget * widget = qobject_cast<QWidget *>(sender());
+    if (widget == NULL) return;
+
+    GridSizeDialog * dialog = qobject_cast<GridSizeDialog *>(widget->window());
+    if (dialog == NULL) return;
+
+	GridSizeThing * gridSizeThing = dialog->gridSizeThing();
+
+	gridSizeThing->inButton->setChecked(true);
+	gridSizeThing->mmButton->setChecked(false);
+	gridSizeThing->lineEdit->setText(QString::number(gridSizeThing->defaultGridSize));
+}
+
+void MainWindow::setBackgroundColor()
+{
+	QColor cc = m_currentGraphicsView->background();
+	QColor scc = m_currentGraphicsView->standardBackground();
+
+	SetColorDialog setColorDialog(tr("%1 background Color").arg(m_currentGraphicsView->viewName()), cc, scc, true, this);
+	int result = setColorDialog.exec();
+	if (result == QDialog::Rejected) return;
+
+	QColor newColor = setColorDialog.selectedColor();
+    m_currentGraphicsView->setBackgroundColor(newColor, setColorDialog.isPrefsColor());
+    setWindowModified(true);
 }

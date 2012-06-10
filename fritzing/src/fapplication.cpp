@@ -861,8 +861,6 @@ void FApplication::preferences() {
 	int ix = 0;
 	foreach (SketchWidget * sketchWidget, mainWindow->sketchWidgets()) {
 		prefsDialog.initViewInfo(ix++,  sketchWidget->viewName(), sketchWidget->getShortName(), 
-									sketchWidget->defaultGridSizeInches(), 
-									sketchWidget->background(), sketchWidget->standardBackground(),
 									sketchWidget->curvyWires());
 	}
 
@@ -908,15 +906,6 @@ void FApplication::updatePrefs(PrefsDialog & prefsDialog)
 		else if (key.compare("autosaveEnabled") == 0) {
 			MainWindow::setAutosaveEnabled(hash.value(key).toInt());
 		}
-		else if (key.contains("gridsize", Qt::CaseInsensitive)) {
-			foreach (MainWindow * mainWindow, mainWindows) {
-				foreach (SketchWidget * sketchWidget, mainWindow->sketchWidgets()) {
-					if (key.contains(sketchWidget->viewName())) {
-						sketchWidget->initGrid();
-					}
-				}
-			}
-		}
 		else if (key.contains("curvy", Qt::CaseInsensitive)) {
 			foreach (MainWindow * mainWindow, mainWindows) {
 				foreach (SketchWidget * sketchWidget, mainWindow->sketchWidgets()) {
@@ -928,18 +917,6 @@ void FApplication::updatePrefs(PrefsDialog & prefsDialog)
 		}
 	}
 
-	hash = prefsDialog.tempSettings();
-	foreach (QString key, hash.keys()) {
-		if (key.contains("background", Qt::CaseInsensitive)) {
-			foreach (MainWindow * mainWindow, mainWindows) {
-				foreach (SketchWidget * sketchWidget, mainWindow->sketchWidgets()) {
-					if (key.contains(sketchWidget->getShortName())) {
-						sketchWidget->setBackground(hash.value(key));
-					}
-				}
-			}
-		}
-	}
 }
 
 void FApplication::initSplash(FSplashScreen & splash) {

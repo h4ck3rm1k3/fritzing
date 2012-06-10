@@ -61,14 +61,11 @@ PrefsDialog::~PrefsDialog()
 {
 }
 
-void PrefsDialog::initViewInfo(int index, const QString & viewName, const QString & shortName, double defaultSize, QColor current, QColor standard, bool curvy) 
+void PrefsDialog::initViewInfo(int index, const QString & viewName, const QString & shortName, bool curvy) 
 {
 	m_viewInfoThings[index].index = index;
-	m_viewInfoThings[index].defaultGridSize = defaultSize;
 	m_viewInfoThings[index].viewName = viewName;
 	m_viewInfoThings[index].shortName = shortName;
-	m_viewInfoThings[index].currentBColor = current;
-	m_viewInfoThings[index].standardBColor = standard;
 	m_viewInfoThings[index].curvy = curvy;
 }
 
@@ -82,8 +79,8 @@ void PrefsDialog::initLayout(QFileInfoList & list)
 
 	m_tabWidget->addTab(m_general, tr("General"));
 	m_tabWidget->addTab(m_breadboard, m_viewInfoThings[0].viewName);
-	m_tabWidget->addTab(m_schematic, m_viewInfoThings[1].viewName);
-	m_tabWidget->addTab(m_pcb, m_viewInfoThings[2].viewName);
+	//m_tabWidget->addTab(m_schematic, m_viewInfoThings[1].viewName);
+	//m_tabWidget->addTab(m_pcb, m_viewInfoThings[2].viewName);
 
 	QVBoxLayout * vLayout = new QVBoxLayout(this);
 	vLayout->addWidget(m_tabWidget);
@@ -91,8 +88,8 @@ void PrefsDialog::initLayout(QFileInfoList & list)
 	initGeneral(m_general, list);
 
 	initBreadboard(m_breadboard, &m_viewInfoThings[0]);
-	initSchematic(m_schematic, &m_viewInfoThings[1]);
-	initPCB(m_pcb, &m_viewInfoThings[2]);
+	//initSchematic(m_schematic, &m_viewInfoThings[1]);
+	//initPCB(m_pcb, &m_viewInfoThings[2]);
 
     QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
 	buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
@@ -126,13 +123,7 @@ void PrefsDialog::initGeneral(QWidget * widget, QFileInfoList & list)
 void PrefsDialog::initBreadboard(QWidget * widget, ViewInfoThing * viewInfoThing)
 {
 	QVBoxLayout * vLayout = new QVBoxLayout(widget);
-
-	QWidget * w1 = createGridSizeForm(viewInfoThing);
-	vLayout->addWidget(w1);
 	
-	QWidget * w2 = createBackgroundColorForm(viewInfoThing);
-	vLayout->addWidget(w2);
-
 	QWidget * w3 = createCurvyForm(viewInfoThing);
 	vLayout->addWidget(w3);
 
@@ -143,13 +134,8 @@ void PrefsDialog::initBreadboard(QWidget * widget, ViewInfoThing * viewInfoThing
 
 void PrefsDialog::initSchematic(QWidget * widget, ViewInfoThing * viewInfoThing)
 {
+    Q_UNUSED(viewInfoThing);
 	QVBoxLayout * vLayout = new QVBoxLayout(widget);
-
-	QWidget * w1 = createGridSizeForm(viewInfoThing);
-	vLayout->addWidget(w1);
-
-	QWidget * w2 = createBackgroundColorForm(viewInfoThing);
-	vLayout->addWidget(w2);
 
 	vLayout->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Preferred, QSizePolicy::Expanding));
 
@@ -158,13 +144,8 @@ void PrefsDialog::initSchematic(QWidget * widget, ViewInfoThing * viewInfoThing)
 
 void PrefsDialog::initPCB(QWidget * widget, ViewInfoThing * viewInfoThing)
 {
+    Q_UNUSED(viewInfoThing);
 	QVBoxLayout * vLayout = new QVBoxLayout(widget);
-
-	QWidget * w1 = createGridSizeForm(viewInfoThing);
-	vLayout->addWidget(w1);
-
-	QWidget * w2 = createBackgroundColorForm(viewInfoThing);
-	vLayout->addWidget(w2);
 
 	vLayout->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Preferred, QSizePolicy::Expanding));
 
@@ -405,168 +386,6 @@ void PrefsDialog::toggleAutosave(bool checked) {
 void PrefsDialog::changeAutosavePeriod(int value) {
 	m_settings.insert("autosavePeriod", QString("%1").arg(value));
 }
-
-QWidget * PrefsDialog::createGridSizeForm(ViewInfoThing * viewInfoThing)
-{
-	QGroupBox * over = new QGroupBox(tr("Align-to-Grid size"), this);
-
-	QVBoxLayout * vLayout = new QVBoxLayout();
-
-	QLabel * explain = new QLabel(tr("Set the grid size for %1.").arg(viewInfoThing->viewName));
-	vLayout->addWidget(explain);
-
-	QGroupBox * groupBox = new QGroupBox(this);
-
-	QHBoxLayout * hLayout = new QHBoxLayout();
-
-	QLabel * label = new QLabel(tr("Grid Size:"));
-	hLayout->addWidget(label);
-
-	viewInfoThing->lineEdit = new QLineEdit();
-	
-	viewInfoThing->lineEdit->setFixedWidth(45);
-
-	viewInfoThing->validator = new QDoubleValidator(viewInfoThing->lineEdit);
-	viewInfoThing->validator->setRange(0.001, 1.0, 3);
-	viewInfoThing->validator->setNotation(QDoubleValidator::StandardNotation);
-	viewInfoThing->lineEdit->setValidator(viewInfoThing->validator);
-
-	hLayout->addWidget(viewInfoThing->lineEdit);
-
-	viewInfoThing->inButton = new QRadioButton(tr("in"), this); 
-	hLayout->addWidget(viewInfoThing->inButton);
-
-	viewInfoThing->mmButton = new QRadioButton(tr("mm"), this); 
-	hLayout->addWidget(viewInfoThing->mmButton);
-
-	groupBox->setLayout(hLayout);
-
-	vLayout->addWidget(groupBox);
-	vLayout->addSpacing(5);
-
-	QPushButton * pushButton = new QPushButton(this);
-	pushButton->setText(tr("Restore Default"));
-	pushButton->setMaximumWidth(115);
-	vLayout->addWidget(pushButton);
-	vLayout->addSpacing(10);
-
-	over->setLayout(vLayout);
-
-	QSettings settings;
-	QString szString = settings.value(QString("%1GridSize").arg(viewInfoThing->viewName), "").toString();
-	if (szString.isEmpty()) {
-		viewInfoThing->inButton->setChecked(true);
-		viewInfoThing->lineEdit->setText(QString::number(viewInfoThing->defaultGridSize));
-	}
-	else {
-		if (szString.endsWith("mm")) {
-			viewInfoThing->mmButton->setChecked(true);
-			viewInfoThing->validator->setTop(25.4);
-		}
-		else {
-			viewInfoThing->inButton->setChecked(true);
-		}
-		szString.chop(2);
-		viewInfoThing->lineEdit->setText(szString);
-	}
-
-	viewInfoThing->inButton->setProperty("index", viewInfoThing->index);
-	pushButton->setProperty("index", viewInfoThing->index);
-	viewInfoThing->mmButton->setProperty("index", viewInfoThing->index);
-	viewInfoThing->lineEdit->setProperty("index", viewInfoThing->index);
-
-	connect(viewInfoThing->lineEdit, SIGNAL(editingFinished()), this, SLOT(gridEditingFinished()));
-	connect(viewInfoThing->inButton, SIGNAL(clicked(bool)), this, SLOT(units(bool)));
-	connect(pushButton, SIGNAL(clicked()), this, SLOT(restoreDefault()));
-	connect(viewInfoThing->mmButton, SIGNAL(clicked(bool)), this, SLOT(units(bool)));
-
-	return over;
-}
-
-void PrefsDialog::gridEditingFinished() {
-	ViewInfoThing * viewInfoThing = &m_viewInfoThings[sender()->property("index").toInt()];
-	updateGridSize(viewInfoThing);
-}
-
-void PrefsDialog::units(bool checked) {
-	ViewInfoThing * viewInfoThing = &m_viewInfoThings[sender()->property("index").toInt()];
-
-	QString units;
-	if (sender() == viewInfoThing->inButton) {
-		units = (checked) ? "in" : "mm";
-	}
-	else {
-		units = (checked) ? "mm" : "in";
-	}
-	
-	if (units.startsWith("mm")) {
-		viewInfoThing->validator->setTop(25.4);
-		viewInfoThing->lineEdit->setText(QString::number(viewInfoThing->lineEdit->text().toDouble() * 25.4));
-	}
-	else {
-		viewInfoThing->validator->setTop(1.0);
-		viewInfoThing->lineEdit->setText(QString::number(viewInfoThing->lineEdit->text().toDouble() / 25.4));
-	}
-
-	updateGridSize(viewInfoThing);
-}
-
-void PrefsDialog::restoreDefault() {
-	ViewInfoThing * viewInfoThing = &m_viewInfoThings[sender()->property("index").toInt()];
-
-	viewInfoThing->inButton->setChecked(true);
-	viewInfoThing->mmButton->setChecked(false);
-	viewInfoThing->lineEdit->setText(QString::number(viewInfoThing->defaultGridSize));
-	updateGridSize(viewInfoThing);
-}
-
-QWidget* PrefsDialog::createBackgroundColorForm(ViewInfoThing * viewInfoThing) 
-{
-	QGroupBox * groupBox = new QGroupBox(tr("Background color"));
-    QVBoxLayout *layout = new QVBoxLayout;
-
-	ClickableLabel * cl1 = new ClickableLabel(tr("%1 (click to change...)").arg(viewInfoThing->currentBColor.name()), this);
-	cl1->setProperty("index", viewInfoThing->index);
-	connect(cl1, SIGNAL(clicked()), this, SLOT(setBackgroundColor()));
-	cl1->setPalette(QPalette(viewInfoThing->currentBColor));
-	cl1->setAutoFillBackground(true);
-	cl1->setMargin(MARGIN);
-
-	layout->addWidget(cl1);
-
-	groupBox->setLayout(layout);
-	return groupBox;
-}
-
-void PrefsDialog::setBackgroundColor() {
-	ViewInfoThing * viewInfoThing = &m_viewInfoThings[sender()->property("index").toInt()];
-
-	QColor cc = viewInfoThing->currentBColor;
-	QColor scc = viewInfoThing->standardBColor;
-
-	SetColorDialog setColorDialog(tr("%1 background Color").arg(viewInfoThing->viewName), cc, scc, true, this);
-	int result = setColorDialog.exec();
-	if (result == QDialog::Rejected) return;
-
-	viewInfoThing->currentBColor = setColorDialog.selectedColor();
-	ClickableLabel * cl = qobject_cast<ClickableLabel *>(sender());
-	if (cl) {
-		cl->setPalette(QPalette(viewInfoThing->currentBColor));
-	}
-
-	if (setColorDialog.isPrefsColor()) {
-		QSettings settings;
-		m_settings.insert(QString("%1BackgroundColor").arg(viewInfoThing->shortName), setColorDialog.selectedColor().name());
-	}
-
-	m_tempSettings.insert(QString("%1BackgroundColor").arg(viewInfoThing->shortName), setColorDialog.selectedColor().name());
-}
-
-void PrefsDialog::updateGridSize(ViewInfoThing * viewInfoThing) {
-	QString units = (viewInfoThing->inButton->isChecked() ? "in" : "mm");
-	m_settings.insert(QString("%1GridSize").arg(viewInfoThing->viewName), viewInfoThing->lineEdit->text() + units);
-}
-
 
 QWidget* PrefsDialog::createCurvyForm(ViewInfoThing * viewInfoThing) 
 {

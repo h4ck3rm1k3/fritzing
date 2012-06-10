@@ -141,6 +141,7 @@ public:
 	void sortAnyByZ(const QList<QGraphicsItem *> & items, QList<ItemBase *> & bases);
  	void mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
  	void setBackground(QColor);
+    void setBackgroundColor(QColor, bool setPref);
  	const QColor& background();
 	QColor standardBackground();
  	void setItemMenu(QMenu*);
@@ -256,6 +257,8 @@ public:
 	bool alignedToGrid();
 	void showGrid(bool);
 	bool showingGrid();
+	void setGridSize(const QString &);
+    QString gridSizeText();
 	void saveZoom(double);
 	double retrieveZoom();
 	void initGrid();
@@ -663,6 +666,7 @@ protected:
 	bool m_alignToGrid;
 	bool m_showGrid;
 	double m_gridSizeInches;
+    QString m_gridSizeText;
 	QPointer<ItemBase> m_alignmentItem;
 	QPointF m_alignmentStartPoint;
 	double m_zoom;

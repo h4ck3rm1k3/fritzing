@@ -723,6 +723,104 @@ void MainWindow::saveAsAuxAux(const QString & fileName) {
 }
 
 
+void MainWindow::saveAsShareable(const QString & path, bool saveModel)
+{
+	QString filename = path;
+	QHash<QString, ModelPart *> saveParts;
+	foreach (QGraphicsItem * item, m_pcbGraphicsView->scene()->items()) {
+		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+		if (itemBase == NULL) continue;
+		if (itemBase->modelPart()->isCore()) continue;
+	
+		saveParts.insert(itemBase->moduleID(), itemBase->modelPart());
+	}
+	saveBundledNonAtomicEntity(filename, FritzingBundleExtension, this, saveParts.values(), false, m_fzzFolder, saveModel, true);
+
+}
+
+void MainWindow::saveBundledNonAtomicEntity(QString &filename, const QString &extension, Bundler *bundler, const QList<ModelPart*> &partsToSave, bool askForFilename, const QString & destFolderPath, bool saveModel, bool deleteLeftovers) {
+	QStringList names;
+
+	QString fileExt;
+	QString path = defaultSaveFolder() + "/" + QFileInfo(filename).fileName()+"z";
+	QString bundledFileName = askForFilename 
+		? FolderUtils::getSaveFileName(this, tr("Specify a file name"), path, tr("Fritzing (*%1)").arg(extension), &fileExt)
+		: filename;
+
+	if (bundledFileName.isEmpty()) return; // Cancel pressed
+
+    FileProgressDialog progress("Saving...", 0, this);
+
+	if(!alreadyHasExtension(bundledFileName, extension)) {
+		bundledFileName += extension;
+	}
+
+	ProcessEventBlocker::processEvents();
+
+	QDir destFolder;
+	QString dirToRemove;
+	if (destFolderPath.isEmpty()) {
+		destFolder = QDir::temp();
+		FolderUtils::createFolderAnCdIntoIt(destFolder, FolderUtils::getRandText());
+		dirToRemove = destFolder.path();
+	}
+	else {
+		destFolder = QDir(destFolderPath);
+	}
+
+	QString aux = QFileInfo(bundledFileName).fileName();
+	QString destSketchPath = // remove the last "z" from the extension
+							 destFolder.path()+"/"+aux.left(aux.size()-1);
+	DebugDialog::debug("saving entity temporarily to "+destSketchPath);
+
+	if (extension.compare(FritzingBundleExtension) == 0) {
+		for (int i = 0; i < m_linkedProgramFiles.count(); i++) {
+			LinkedFile * linkedFile = m_linkedProgramFiles.at(i);
+			QFileInfo fileInfo(linkedFile->linkedFilename);
+			QFile file(linkedFile->linkedFilename);
+			file.copy(destFolder.absoluteFilePath(fileInfo.fileName()));
+		}
+	}
+
+	if (saveModel) {
+		QString prevFileName = filename;
+		ProcessEventBlocker::processEvents();
+		bundler->saveAsAux(destSketchPath);
+		filename = prevFileName;
+	}
+
+	foreach(ModelPart* mp, partsToSave) {
+		names.append(saveBundledAux(mp, destFolder));
+	}
+
+	if (deleteLeftovers) {
+		QStringList nameFilters;
+		nameFilters << ("*" + FritzingPartExtension) << "*.svg";   
+		QDir dir(destFolder);
+		QStringList fileList = dir.entryList(nameFilters, QDir::Files | QDir::NoSymLinks);
+		foreach (QString fileName, fileList) {
+			if (!names.contains(fileName)) {
+				QFile::remove(dir.absoluteFilePath(fileName));
+			}
+		}
+	}
+
+	QApplication::processEvents();
+
+	if(!FolderUtils::createZipAndSaveTo(destFolder, bundledFileName)) {
+		QMessageBox::warning(
+			this,
+			tr("Fritzing"),
+			tr("Unable to export %1 as shareable").arg(bundledFileName)
+		);
+	}
+
+	if (!dirToRemove.isEmpty()) {
+		FolderUtils::rmdir(dirToRemove);
+	}
+}
+
+
 void MainWindow::createExportActions() {
 
 	m_saveAct = new QAction(tr("&Save"), this);

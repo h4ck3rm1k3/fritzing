@@ -40,16 +40,9 @@ $Date$
 
 struct ViewInfoThing
 {
-	QLineEdit * lineEdit;
-	QDoubleValidator * validator;
-	QRadioButton * mmButton;
-	QRadioButton * inButton;
-	double defaultGridSize;
 	QString viewName;
 	QString shortName;
 	int index;
-	QColor currentBColor;
-	QColor standardBColor;
 	bool curvy;
 };
 
@@ -66,7 +59,7 @@ public:
 	QHash<QString, QString> & settings();
 	QHash<QString, QString> & tempSettings();
 	void initLayout(QFileInfoList & list);
-	void initViewInfo(int index, const QString & viewName, const QString & shortName, double defaultSize, QColor current, QColor standard, bool curvy);
+	void initViewInfo(int index, const QString & viewName, const QString & shortName, bool curvy);
 
 protected:
 	QWidget * createLanguageForm(QFileInfoList & list);
@@ -79,9 +72,6 @@ protected:
 	void initBreadboard(QWidget *, ViewInfoThing *);
 	void initSchematic(QWidget *, ViewInfoThing *);
 	void initPCB(QWidget *, ViewInfoThing *);
-	QWidget * createGridSizeForm(ViewInfoThing *);
-	QWidget * createBackgroundColorForm(ViewInfoThing *);
-	void updateGridSize(ViewInfoThing *);
 	QWidget * createCurvyForm(ViewInfoThing *);
 
 protected slots:
@@ -92,10 +82,6 @@ protected slots:
 	void changeWheelBehavior();
 	void toggleAutosave(bool);
 	void changeAutosavePeriod(int);
-	void units(bool);
-	void restoreDefault();
-	void setBackgroundColor();
-	void gridEditingFinished();
 	void curvyChanged();
 
 protected:

@@ -29,6 +29,8 @@ $Date$
 
 #include <QUndoView>
 #include <QUndoGroup>
+#include <QRadioButton>
+#include <QLineEdit>
 #include <QToolButton>
 #include <QPushButton>
 #include <QStackedWidget>
@@ -76,6 +78,31 @@ protected:
 	QString m_prop;
 	QMap<QString, QString> m_propsMap;
 	QPointer <ItemBase> m_itemBase;
+};
+
+struct GridSizeThing
+{
+	QLineEdit * lineEdit;
+	QDoubleValidator * validator;
+	QRadioButton * mmButton;
+	QRadioButton * inButton;
+	double defaultGridSize;
+    QString gridSizeText;
+	QString viewName;
+	QString shortName;
+    
+    GridSizeThing(const QString & viewName, const QString & shortName, double defaultSize, const QString & gridSizeText);
+};
+
+class GridSizeDialog : public QDialog {
+    Q_OBJECT
+
+public:
+    GridSizeDialog(GridSizeThing *);
+    GridSizeThing * gridSizeThing();
+
+protected:
+    GridSizeThing * m_gridSizeThing;
 };
 
 class MainWindow : public FritzingWindow
@@ -194,6 +221,8 @@ protected slots:
 	void hundredPercentSize();
     void alignToGrid();
     void showGrid();
+    void setGridSize();
+    void setBackgroundColor();
     void showBreadboardView();
     void showSchematicView();
 	void showPartsBinIconView();
@@ -338,6 +367,8 @@ protected slots:
 	void openURL();
 	void setActiveWire(Wire *);
 	void setActiveConnectorItem(ConnectorItem *);
+	void gridUnits(bool);
+	void restoreDefaultGrid();
 
 protected:
 	void initSketchWidget(SketchWidget *);
@@ -461,6 +492,7 @@ protected:
     void dragEnterEvent(QDragEnterEvent *event);
     void mainLoadAux(const QString & fileName);
     bool updateExportActions();
+	QWidget * createGridSizeForm(GridSizeThing *);
 
 protected:
 	static void removeActionsStartingAt(QMenu *menu, int start=0);
@@ -618,6 +650,8 @@ protected:
     QAction *m_100PercentSizeAct;
     QAction *m_alignToGridAct;
     QAction *m_showGridAct;
+    QAction *m_setGridSizeAct;
+    QAction *m_setBackgroundColorAct;
     QAction *m_showBreadboardAct;
     QAction *m_showSchematicAct;
     QAction *m_showPCBAct;

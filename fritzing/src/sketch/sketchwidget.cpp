@@ -4581,6 +4581,16 @@ void SketchWidget::setBackground(QColor color) {
 	scene()->setBackgroundBrush(QBrush(color));
 }
 
+
+void SketchWidget::setBackgroundColor(QColor color, bool setPrefs) {
+    if (setPrefs) {
+		QSettings settings;
+		settings.setValue(QString("%1BackgroundColor").arg(getShortName()), color.name());
+	}
+    setBackground(color);
+}
+
+
 const QColor& SketchWidget::background() {
 	return scene()->backgroundBrush().color();
 }
@@ -7913,8 +7923,25 @@ double SketchWidget::retrieveZoom() {
 	return m_zoom;
 }
 
+void SketchWidget::setGridSize(const QString & newSize) 
+{
+     QSettings settings;
+     settings.setValue(QString("%1GridSize").arg(viewName()), newSize);
+     m_gridSizeInches = TextUtils::convertToInches(newSize);
+     m_gridSizeText = newSize;
+     if (m_showGrid) {
+         invalidateScene();
+     }
+}
+
+QString SketchWidget::gridSizeText() {
+    if (!m_gridSizeText.isEmpty()) return m_gridSizeText;
+    
+    return QString("%1in").arg(m_gridSizeInches);
+}
+
 void SketchWidget::initGrid() {
-	m_showGrid = m_alignToGrid = false;
+	m_showGrid = m_alignToGrid = true;
 	m_gridSizeInches = defaultGridSizeInches();
 	QSettings settings;
 	QString szString = settings.value(QString("%1GridSize").arg(viewName()), "").toString();
@@ -7923,6 +7950,7 @@ void SketchWidget::initGrid() {
 		double temp = TextUtils::convertToInches(szString, &ok, false);
 		if (ok) {
 			m_gridSizeInches = temp;
+            m_gridSizeText = szString;
 		}
 	}
 	m_alignToGrid = settings.value(QString("%1AlignToGrid").arg(viewName()), false).toBool();
