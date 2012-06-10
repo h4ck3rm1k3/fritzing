@@ -2916,8 +2916,8 @@ void MainWindow::startSaveInstancesSlot(const QString & fileName, ModelPart *, Q
 		streamWriter.writeAttribute("name", ViewIdentifierClass::viewIdentifierXmlName(sketchWidget->viewIdentifier()));
 		streamWriter.writeAttribute("backgroundColor", sketchWidget->background().name());
 		streamWriter.writeAttribute("gridSize", sketchWidget->gridSizeText());
-		streamWriter.writeAttribute("showGr1d", sketchWidget->showingGrid() ? "1" : "0");
-		streamWriter.writeAttribute("alignToGr1d", sketchWidget->alignedToGrid() ? "1" : "0");
+		streamWriter.writeAttribute("showGrid", sketchWidget->showingGrid() ? "1" : "0");
+		streamWriter.writeAttribute("alignToGrid", sketchWidget->alignedToGrid() ? "1" : "0");
 		streamWriter.writeEndElement();
 	}
 	streamWriter.writeEndElement();
