@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg version="1.2" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="0.07825in" height="0.1035in" viewBox="0 0 2.817 3.726" >
-
-<rect y="1.479" fill="#535353" width="2.817" height="2.247"/>
-<path fill="none" stroke="#535353" stroke-width="0.5421" stroke-miterlimit="10" d="M0.542,2.018c0,0,0-0.755,0-0.88
-	c0-0.479,0.389-0.867,0.866-0.867c0.479,0,0.868,0.388,0.868,0.867c0,0.142,0,0.88,0,0.88"/>
+<!-- Generator: Adobe Illustrator 15.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="5.189px" height="5.832px" viewBox="0 0 5.189 5.832" enable-background="new 0 0 5.189 5.832" xml:space="preserve">
+<rect x="1.904" y="3.05" opacity="0.7" fill="#231F20" width="3.213" height="2.701"/>
+<path opacity="0.7" fill="none" stroke="#231F20" stroke-width="0.6347" stroke-miterlimit="10" d="M2.522,3.05
+	c0-0.186,0-0.353,0-0.409c0-0.576,0.443-1.042,0.988-1.042c0.546,0,0.989,0.466,0.989,1.042c0,0.063,0,0.229,0,0.409"/>
+<path opacity="0.6" fill="none" stroke="#FFFFFF" stroke-width="0.1" stroke-miterlimit="10" d="M2.74,3.05c0-0.137,0-0.262,0-0.304
+	c0-0.557,0.323-0.897,0.755-0.914c0,0,0.2-0.032,0.386,0.114"/>
+<polyline opacity="0.6" fill="none" stroke="#FFFFFF" stroke-width="0.0974" stroke-miterlimit="10" points="1.904,5.676 
+	5.053,5.676 5.053,3.05 "/>
 </svg>
