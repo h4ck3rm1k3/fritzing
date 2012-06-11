@@ -6,8 +6,8 @@
 <rect x="1.904" y="3.05" opacity="0.7" fill="#231F20" width="3.213" height="2.701"/>
 <path opacity="0.7" fill="none" stroke="#231F20" stroke-width="0.6347" stroke-miterlimit="10" d="M2.522,3.05
 	c0-0.186,0-0.353,0-0.409c0-0.576,0.443-1.042,0.988-1.042c0.546,0,0.989,0.466,0.989,1.042c0,0.063,0,0.229,0,0.409"/>
-<path opacity="0.6" fill="none" stroke="#FFFFFF" stroke-width="0.1" stroke-miterlimit="10" d="M2.74,3.05c0-0.137,0-0.262,0-0.304
+<path opacity="0.8" fill="none" stroke="#FFFFFF" stroke-width="0.1" stroke-miterlimit="10" d="M2.74,3.05c0-0.137,0-0.262,0-0.304
 	c0-0.557,0.323-0.897,0.755-0.914c0,0,0.2-0.032,0.386,0.114"/>
-<polyline opacity="0.6" fill="none" stroke="#FFFFFF" stroke-width="0.0974" stroke-miterlimit="10" points="1.904,5.676 
+<polyline opacity="0.8" fill="none" stroke="#FFFFFF" stroke-width="0.0974" stroke-miterlimit="10" points="1.904,5.676 
 	5.053,5.676 5.053,3.05 "/>
 </svg>
