@@ -108,8 +108,11 @@ public:
 	bool getRatsnest();
 	const QHash<QString, QPointer<class Bus> > & buses();
 	int itemType() const;					// wanted this to return ModelPart::ItemType but couldn't figure out how to get it to compile
-	virtual bool sticky();
+	virtual bool isSticky();
+	virtual bool isBaseSticky();
 	virtual void setSticky(bool);
+	void setLocalSticky(bool);
+    bool isLocalSticky();
 	virtual void addSticky(ItemBase *, bool stickem);
 	virtual ItemBase * stickingTo();
 	virtual QList< QPointer<ItemBase> > stickyList();
@@ -327,6 +330,7 @@ protected:
 	bool m_hasRubberBandLeg;
 	QList<ConnectorItem *> m_cachedConnectorItems;
 	QGraphicsSvgItem * m_moveLockItem;
+	QGraphicsSvgItem * m_stickyItem;
 
 protected:
 	static long nextID;

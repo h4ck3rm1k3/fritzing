@@ -507,7 +507,7 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 	if (parentCommand == NULL) {
 		foreach (ItemBase * item, newItems) {
 			item->doneLoading();
-			if (item->sticky()) {
+			if (item->isSticky()) {
 				stickyScoop(item, false, NULL);
 			}
 		}
@@ -740,7 +740,7 @@ void SketchWidget::checkSticky(long id, bool doEmit, bool checkCurrent, CheckSti
 	ItemBase * itemBase = findItem(id);
 	if (itemBase == NULL) return;
 
-	if (itemBase->sticky()) {
+	if (itemBase->isSticky()) {
 		stickyScoop(itemBase, checkCurrent, checkStickyCommand);
 	}
 	else {
@@ -2197,7 +2197,7 @@ void SketchWidget::prepMove(ItemBase * originatingItem, bool rubberBandLegEnable
 		if (chief->moveLock()) continue;
 
 		m_savedItems.insert(chief->id(), chief);
-		if (chief->sticky()) {
+		if (chief->isSticky()) {
 			foreach(ItemBase * sitemBase, chief->stickyList()) {
 				if (sitemBase->isVisible()) {
 					if (sitemBase->itemType() == ModelPart::Wire) {
@@ -4498,7 +4498,7 @@ void SketchWidget::flipX(Qt::Orientations orientation, bool rubberBandLegEnabled
 	foreach (ItemBase * item, targets) {
 		disconnectFromFemale(item, emptyList, connectorHash, true, rubberBandLegEnabled, parentCommand);
 
-		if (item->sticky()) {
+		if (item->isSticky()) {
 			//TODO: apply transformation to stuck items
 		}
 		// TODO: if item has female connectors, then apply transform to connected items
@@ -5101,7 +5101,7 @@ void SketchWidget::rememberSticky(ItemBase * itemBase, QUndoCommand * parentComm
 	if (stickyList.count() <= 0) return;
 
 	CheckStickyCommand * checkStickyCommand = new CheckStickyCommand(this, BaseCommand::SingleView, itemBase->id(), false, CheckStickyCommand::UndoOnly, parentCommand);
-	if (itemBase->sticky()) {
+	if (itemBase->isSticky()) {
 		foreach (ItemBase * sticking, stickyList) {
 			checkStickyCommand->stick(this, itemBase->id(), sticking->id(), true);
 		}
@@ -5187,7 +5187,7 @@ ItemBase * SketchWidget::overSticky(ItemBase * itemBase) {
 		ItemBase * s = dynamic_cast<ItemBase *>(item);
 		if (s == NULL) continue;
 		if (s == itemBase) continue;
-		if (!s->sticky()) continue;
+		if (!s->isSticky()) continue;
 
 		return s->layerKinChief();
 	}
@@ -5227,7 +5227,7 @@ void SketchWidget::stickyScoop(ItemBase * stickyOne, bool checkCurrent, CheckSti
 
 		if (!itemBase->stickyEnabled()) continue;
 		if (added.contains(itemBase)) continue;
-		if (itemBase->sticky()) continue;
+		if (itemBase->isSticky()) continue;
 		if (stickyOne->alreadySticking(itemBase)) {
 			already.append(itemBase);
 			continue;

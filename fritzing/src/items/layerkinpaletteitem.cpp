@@ -140,8 +140,12 @@ bool LayerKinPaletteItem::stickyEnabled() {
 	return m_layerKinChief->stickyEnabled();
 }
 
-bool LayerKinPaletteItem::sticky() {
-	return m_layerKinChief->sticky();
+bool LayerKinPaletteItem::isSticky() {
+	return m_layerKinChief->isSticky();
+}
+
+bool LayerKinPaletteItem::isBaseSticky() {
+	return m_layerKinChief->isBaseSticky();
 }
 
 void LayerKinPaletteItem::setSticky(bool s) 

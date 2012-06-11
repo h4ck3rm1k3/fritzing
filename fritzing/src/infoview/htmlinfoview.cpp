@@ -117,6 +117,7 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	m_partUrl = NULL;
 	m_partVersion = NULL;
 	m_lockCheckbox = NULL;
+	m_stickyCheckbox = NULL;
 	m_connDescr = NULL;
 	m_tagsTextLabel = NULL;
 	m_lastSwappingEnabled = false;
@@ -174,12 +175,22 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	subVersionLayout->addWidget(m_partVersion, 0, Qt::AlignLeft);
 	subVersionLayout->addStretch(1);
 	versionLayout->addLayout(subVersionLayout);
+
+    QHBoxLayout * cbLayout = new QHBoxLayout();
 	
 	m_lockCheckbox = new QCheckBox(tr("Locked"));
 	m_lockCheckbox->setObjectName("infoViewLockCheckbox");
-	m_lockCheckbox->setToolTip(tr("Change the locked state of the part in this view.  A locked part can't be moved"));
+	m_lockCheckbox->setToolTip(tr("Change the locked state of the part in this view. A locked part can't be moved."));
 	connect(m_lockCheckbox, SIGNAL(clicked(bool)), this, SLOT(changeLock(bool)));
-	versionLayout->addWidget(m_lockCheckbox);
+	cbLayout->addWidget(m_lockCheckbox);
+
+	m_stickyCheckbox = new QCheckBox(tr("Sticky"));
+	m_stickyCheckbox->setObjectName("infoViewLockCheckbox");
+	m_stickyCheckbox->setToolTip(tr("Change the \"sticky\" state of the part in this view. When a sticky part is moved, objects on top of it also move."));
+	connect(m_stickyCheckbox, SIGNAL(clicked(bool)), this, SLOT(changeSticky(bool)));
+	cbLayout->addWidget(m_stickyCheckbox);
+
+    versionLayout->addLayout(cbLayout);
 
 	hboxLayout->addLayout(versionLayout);
 	
@@ -382,6 +393,7 @@ void HtmlInfoView::appendWireStuff(Wire* wire, bool swappingEnabled) {
 	}
 	partTitle(nameString, modelPart->version(), modelPart->url());
 	m_lockCheckbox->setVisible(false);
+	m_stickyCheckbox->setVisible(false);
 
 	setUpTitle(wire);
 	setUpIcons(wire->modelPart());
@@ -415,6 +427,13 @@ void HtmlInfoView::appendItemStuff(ItemBase * itemBase, ModelPart * modelPart, b
 	partTitle(nameString, modelPart->version(), modelPart->url());
 	m_lockCheckbox->setVisible(true);
 	m_lockCheckbox->setChecked(itemBase->moveLock());
+    if (itemBase->isBaseSticky()) {
+	    m_stickyCheckbox->setVisible(true);
+        m_stickyCheckbox->setChecked(itemBase->isLocalSticky());
+    }
+    else {
+	    m_stickyCheckbox->setVisible(false);
+    }
 
 	displayProps(modelPart, itemBase, swappingEnabled);
 	addTags(modelPart);
@@ -487,6 +506,7 @@ void HtmlInfoView::setNullContent()
 	setUpTitle(NULL);
 	partTitle("", "", "");
 	m_lockCheckbox->setVisible(false);
+	m_stickyCheckbox->setVisible(false);
 	setUpIcons(NULL);
 	displayProps(NULL, NULL, false);
 	addTags(NULL);
@@ -916,4 +936,13 @@ void HtmlInfoView::changeLock(bool lockState)
 	if (m_currentItem->itemType() == ModelPart::Wire) return;
 
 	m_currentItem->setMoveLock(lockState);
+}
+
+
+void HtmlInfoView::changeSticky(bool lockState)
+{
+	if (m_currentItem == NULL) return;
+	if (m_currentItem->itemType() == ModelPart::Wire) return;
+
+	m_currentItem->setLocalSticky(lockState);
 }

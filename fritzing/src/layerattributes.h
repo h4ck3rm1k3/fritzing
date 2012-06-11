@@ -43,7 +43,7 @@ public:
 	const QString & filename();
 	void setFilename(const QString &);
 	const QString & layerName();
-	bool sticky();
+	bool isSticky();
 	bool multiLayer();
 	bool getSvgElementID(QDomDocument * , ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID );
 	bool canFlipHorizontal();

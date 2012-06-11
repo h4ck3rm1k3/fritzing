@@ -68,6 +68,7 @@ bool numberValueLessThan(QString v1, QString v2)
 }
 
 static QSvgRenderer MoveLockRenderer;
+static QSvgRenderer StickyRenderer;
 
 /////////////////////////////////
 
@@ -146,6 +147,7 @@ ItemBase::ItemBase( ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier vi
 	m_hasRubberBandLeg = m_moveLock = m_hoverEnterSpaceBarWasPressed = m_spaceBarWasPressed = false;
 
 	m_moveLockItem = NULL;
+    m_stickyItem = NULL;
 
 	m_everVisible = true;
 
@@ -758,8 +760,13 @@ bool ItemBase::stickyEnabled() {
 	return true;
 }
 
-bool ItemBase::sticky() {
-	return false;  //m_sticky;
+bool ItemBase::isSticky() {
+	return isBaseSticky() && isLocalSticky();                      
+}
+
+
+bool ItemBase::isBaseSticky() {
+	return m_sticky;   // to cancel sticky return false; 
 }
 
 void ItemBase::setSticky(bool s)
@@ -767,12 +774,59 @@ void ItemBase::setSticky(bool s)
 	m_sticky = s;
 }
 
+bool ItemBase::isLocalSticky() {
+    if (layerKinChief() != this) {
+        return layerKinChief()->isLocalSticky();
+    }
+    QString stickyVal = modelPart()->localProp("sticky").toString();
+	return (stickyVal.compare("false") != 0);                      
+}
+
+void ItemBase::setLocalSticky(bool s)
+{
+    // dirty the window?
+    // undo command?
+    if (layerKinChief() != this) {
+        layerKinChief()->setLocalSticky(s);
+        return;
+    }
+
+    modelPart()->setLocalProp("sticky", s ? "true" : "false");
+
+	if (s) {
+        if (m_stickyItem == NULL) {
+		    if (!StickyRenderer.isValid()) {
+			    QString fn(":resources/images/part_sticky.svg");
+			    bool success = StickyRenderer.load(fn);
+			    DebugDialog::debug(QString("sticky load success %1").arg(success));
+		    }
+
+		    m_stickyItem = new QGraphicsSvgItem();
+		    m_stickyItem->setAcceptHoverEvents(false);
+		    m_stickyItem->setAcceptedMouseButtons(Qt::NoButton);
+		    m_stickyItem->setSharedRenderer(&StickyRenderer);
+		    m_stickyItem->setPos(m_moveLockItem == NULL ? 0 : m_moveLockItem->boundingRect().width() + 1, 0);
+		    m_stickyItem->setZValue(-99999);
+		    m_stickyItem->setParentItem(this);
+		    m_stickyItem->setVisible(true);
+        }
+	}
+	else {
+		if (m_stickyItem) {
+			delete m_stickyItem;
+			m_stickyItem = NULL;
+		}
+	}
+
+	update();
+}
+
 void ItemBase::addSticky(ItemBase * stickyBase, bool stickem) {
 	stickyBase = stickyBase->layerKinChief();
 	//this->debugInfo(QString("add sticky %1:").arg(stickem));
 	//sticky->debugInfo(QString("  to"));
 	if (stickem) {
-		if (!sticky()) {
+		if (!isSticky()) {
 			foreach (ItemBase * oldstickingTo, m_stickyList.values()) {
 				if (oldstickingTo == stickyBase) continue;
 
@@ -789,7 +843,7 @@ void ItemBase::addSticky(ItemBase * stickyBase, bool stickem) {
 
 
 ItemBase * ItemBase::stickingTo() {
-	if (sticky()) return NULL;
+	if (isSticky()) return NULL;
 
 	if (m_stickyList.count() < 1) return NULL;
 
@@ -1710,24 +1764,24 @@ bool ItemBase::moveLock() {
 
 void ItemBase::setMoveLock(bool moveLock) 
 {
-	if (moveLock == m_moveLock) return;
-
 	m_moveLock = moveLock;
 	if (moveLock) {
-		if (!MoveLockRenderer.isValid()) {
-			QString fn(":resources/images/part_lock.svg");
-			bool success = MoveLockRenderer.load(fn);
-			DebugDialog::debug(QString("movelock load success %1").arg(success));
-		}
+        if (m_moveLockItem == NULL) {
+		    if (!MoveLockRenderer.isValid()) {
+			    QString fn(":resources/images/part_lock.svg");
+			    bool success = MoveLockRenderer.load(fn);
+			    DebugDialog::debug(QString("movelock load success %1").arg(success));
+		    }
 
-		m_moveLockItem = new QGraphicsSvgItem();
-		m_moveLockItem->setAcceptHoverEvents(false);
-		m_moveLockItem->setAcceptedMouseButtons(Qt::NoButton);
-		m_moveLockItem->setSharedRenderer(&MoveLockRenderer);
-		m_moveLockItem->setPos(0,0);
-		m_moveLockItem->setZValue(-99999);
-		m_moveLockItem->setParentItem(this);
-		m_moveLockItem->setVisible(true);
+		    m_moveLockItem = new QGraphicsSvgItem();
+		    m_moveLockItem->setAcceptHoverEvents(false);
+		    m_moveLockItem->setAcceptedMouseButtons(Qt::NoButton);
+		    m_moveLockItem->setSharedRenderer(&MoveLockRenderer);
+		    m_moveLockItem->setPos(0,0);
+		    m_moveLockItem->setZValue(-99999);
+		    m_moveLockItem->setParentItem(this);
+		    m_moveLockItem->setVisible(true);
+        }
 
 	}
 	else {
@@ -1737,9 +1791,12 @@ void ItemBase::setMoveLock(bool moveLock)
 		}
 	}
 
+    if (m_stickyItem) {
+		m_stickyItem->setPos(m_moveLockItem == NULL ? 0 : m_moveLockItem->boundingRect().width() + 1, 0);
+    }
+
 	update();
 }
-
 
 void ItemBase::debugInfo(const QString & msg) const
 {

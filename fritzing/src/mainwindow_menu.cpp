@@ -816,6 +816,11 @@ void MainWindow::createPartMenuActions() {
 	m_moveLockAct->setCheckable(true);
     connect(m_moveLockAct, SIGNAL(triggered()), this, SLOT(moveLock()));
 
+	m_stickyAct = new QAction(tr("Sticky"), this);
+    m_stickyAct->setStatusTip(tr("If a \"sticky\" part is moved, parts on top of it are also moved"));
+	m_stickyAct->setCheckable(true);
+    connect(m_stickyAct, SIGNAL(triggered()), this, SLOT(setSticky()));
+
 	m_selectMoveLockAct = new QAction(tr("Select All Locked Parts"), this);
     m_selectMoveLockAct->setStatusTip(tr("Select all parts that can't be moved"));
     connect(m_selectMoveLockAct, SIGNAL(triggered()), this, SLOT(selectMoveLock()));
@@ -1115,6 +1120,7 @@ void MainWindow::createMenus()
 	m_zOrderWireMenu = new QMenu(m_zOrderMenu);
 	m_zOrderWireMenu->setTitle(m_zOrderMenu->title());
 	m_partMenu->addAction(m_moveLockAct);
+	m_partMenu->addAction(m_stickyAct);
 	m_partMenu->addAction(m_selectMoveLockAct);
 	
 	m_partMenu->addSeparator();
@@ -1479,7 +1485,11 @@ void MainWindow::updatePartMenu() {
 	updateEditMenu();
 
 	if (itemCount.selCount == 1) {
-		enableAddBendpointAct(m_currentGraphicsView->scene()->selectedItems()[0]);
+        ItemBase * itemBase = dynamic_cast<ItemBase *>(m_currentGraphicsView->scene()->selectedItems()[0]);
+		enableAddBendpointAct(itemBase);
+
+	    m_stickyAct->setEnabled(itemCount.selCount == 1 && itemCount.selCount > itemCount.wireCount && itemBase->isBaseSticky());
+	    m_stickyAct->setChecked(itemBase->isBaseSticky() && itemBase->isLocalSticky());
 	}
 
 	// TODO: only enable if there is an obsolete part in the sketch
@@ -2842,6 +2852,7 @@ QMenu *MainWindow::schematicWireMenu() {
 QMenu *MainWindow::viewItemMenuAux(QMenu* menu) {
 	menu->addMenu(m_zOrderMenu);
 	menu->addAction(m_moveLockAct);
+	menu->addAction(m_stickyAct);
 	menu->addSeparator();
 	menu->addAction(m_copyAct);
 	menu->addAction(m_duplicateAct);
@@ -3501,6 +3512,20 @@ ConnectorItem * MainWindow::retrieveConnectorItem() {
 	if (connectorItemAction == NULL) return NULL;
 
 	return connectorItemAction->connectorItem();
+}
+
+
+void MainWindow::setSticky()
+{
+    QList<QGraphicsItem *> items = m_currentGraphicsView->scene()->selectedItems();
+    if (items.count() < 1) return;
+
+    ItemBase * itemBase = dynamic_cast<ItemBase *>(items.at(0));
+    if (itemBase == NULL) return;
+
+    if (!itemBase->isBaseSticky()) return;
+
+    itemBase->setLocalSticky(!itemBase->isLocalSticky()); 
 }
 
 void MainWindow::moveLock()

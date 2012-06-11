@@ -100,6 +100,7 @@ protected slots:
 	void instanceTitleLeave();
 	void instanceTitleEditable(bool editable);
 	void changeLock(bool);
+	void changeSticky(bool);
 
 protected:
 	void appendStuff(ItemBase* item, bool swappingEnabled); //finds out if it's a wire or something else
@@ -146,6 +147,7 @@ protected:
 	QFrame * m_connFrame;
 	QFrame * m_propFrame;
 	QCheckBox * m_lockCheckbox;
+	QCheckBox * m_stickyCheckbox;
 	QGridLayout * m_propLayout;
 	QList <PropThing *> m_propThings;
     QPointer<class InfoGraphicsView> m_pendingInfoGraphicsView;

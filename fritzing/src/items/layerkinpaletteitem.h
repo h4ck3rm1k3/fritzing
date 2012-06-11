@@ -44,7 +44,8 @@ public:
 	void clearModelPart();
 	ItemBase * lowerConnectorLayerVisible(ItemBase *);
 	void init(ViewLayer::ViewLayerID, ViewLayer::ViewLayerSpec, const LayerHash &viewLayers);
-	bool sticky();
+	bool isSticky();
+	bool isBaseSticky();
 	void setSticky(bool);
 	void addSticky(ItemBase *, bool stickem);
 	ItemBase * stickingTo();
