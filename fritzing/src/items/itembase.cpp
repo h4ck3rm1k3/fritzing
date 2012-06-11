@@ -1827,6 +1827,10 @@ void ItemBase::debugInfo(const QString & msg) const
 void ItemBase::addedToScene(bool temporary) {
 	if (this->scene() && instanceTitle().isEmpty() && !temporary) {
 		setTooltip();
+        if (isSticky() && isLocalSticky()) {
+            // ensure icon is visible
+            setLocalSticky(true);
+        }
 	}
 }
 

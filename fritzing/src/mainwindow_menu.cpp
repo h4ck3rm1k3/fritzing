@@ -1484,13 +1484,18 @@ void MainWindow::updatePartMenu() {
 	updateItemMenu();
 	updateEditMenu();
 
+
 	if (itemCount.selCount == 1) {
         ItemBase * itemBase = dynamic_cast<ItemBase *>(m_currentGraphicsView->scene()->selectedItems()[0]);
 		enableAddBendpointAct(itemBase);
 
-	    m_stickyAct->setEnabled(itemCount.selCount == 1 && itemCount.selCount > itemCount.wireCount && itemBase->isBaseSticky());
+        m_stickyAct->setVisible(itemBase->isBaseSticky());
+	    m_stickyAct->setEnabled(true);
 	    m_stickyAct->setChecked(itemBase->isBaseSticky() && itemBase->isLocalSticky());
 	}
+    else {
+        m_stickyAct->setVisible(false);
+    }
 
 	// TODO: only enable if there is an obsolete part in the sketch
 	m_selectAllObsoleteAct->setEnabled(true);
@@ -3513,7 +3518,6 @@ ConnectorItem * MainWindow::retrieveConnectorItem() {
 
 	return connectorItemAction->connectorItem();
 }
-
 
 void MainWindow::setSticky()
 {
