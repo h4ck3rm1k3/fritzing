@@ -406,12 +406,34 @@
         <source>two layers (double-sided)</source>
         <translation>两层(双面)</translation>
     </message>
-</context>
-<context>
-    <name>BoardLogoItem</name>
     <message>
-        <source>shape</source>
-        <translation type="unfinished">形状</translation>
+        <source>
+
+A custom board svg typically has one silkscreen layer and one board layer.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Have a look at the circle_pcb.svg file in your Fritzing installation folder at parts/svg/core/pcb/.
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>image file</source>
+        <translation type="unfinished">图像文件</translation>
+    </message>
+    <message>
+        <source>load image file</source>
+        <translation type="unfinished">载入图像文件</translation>
+    </message>
+    <message>
+        <source>Images</source>
+        <translation type="unfinished">图像</translation>
+    </message>
+    <message>
+        <source>Select an image file to load</source>
+        <translation type="unfinished">选择一个载入的图像文件</translation>
     </message>
     <message>
         <source>due to an xml problem: %1 line:%2 column:%3</source>
@@ -419,6 +441,10 @@
     </message>
     <message>
         <source>because the xml is not correctly formatted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>the &lt;board&gt; element contains no shape elements</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -434,12 +460,40 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>the svg contains no shape elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>but the pcb itself will have no silkscreen layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>the svg doesn&apos;t fit the custom board format</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to load</source>
+        <translation type="unfinished">不能载入</translation>
+    </message>
+    <message>
+        <source>Unable to load image from %1 %2</source>
+        <translation type="unfinished">不能从%1 %2中载入图像</translation>
+    </message>
+    <message>
+        <source>Can load, but</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The image from %1 can be loaded, but %2
+Use the file?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>BoardLogoItem</name>
+    <message>
+        <source>shape</source>
+        <translation type="unfinished">形状</translation>
     </message>
 </context>
 <context>
@@ -888,12 +942,20 @@ It is also possible to choose a connector as a ground fill seed by right-clickin
         <translation>锁定</translation>
     </message>
     <message>
-        <source>Change the locked state of the part in this view.  A locked part can&apos;t be moved</source>
-        <translation>在这个视图中改变元件的锁定状态。锁定元件不能被移动</translation>
-    </message>
-    <message>
         <source>Ratsnest wire</source>
         <translation>飞线连线</translation>
+    </message>
+    <message>
+        <source>Change the locked state of the part in this view. A locked part can&apos;t be moved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sticky</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change the &quot;sticky&quot; state of the part in this view. When a sticky part is moved, objects on top of it also move.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1107,22 +1169,6 @@ It is also possible to choose a connector as a ground fill seed by right-clickin
         <translation>标识</translation>
     </message>
     <message>
-        <source>load image file</source>
-        <translation>载入图像文件</translation>
-    </message>
-    <message>
-        <source>Images</source>
-        <translation>图像</translation>
-    </message>
-    <message>
-        <source>Select an image file to load</source>
-        <translation>选择一个载入的图像文件</translation>
-    </message>
-    <message>
-        <source>Unable to load</source>
-        <translation>不能载入</translation>
-    </message>
-    <message>
         <source>Unable to display</source>
         <translation>不能显示</translation>
     </message>
@@ -1131,25 +1177,8 @@ It is also possible to choose a connector as a ground fill seed by right-clickin
         <translation>不能从%1显示图像</translation>
     </message>
     <message>
-        <source>image file</source>
-        <translation>图像文件</translation>
-    </message>
-    <message>
         <source>shape</source>
         <translation>形状</translation>
-    </message>
-    <message>
-        <source>
-
-A custom board svg typically has one silkscreen layer and one board layer.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Have a look at the circle_pcb.svg file in your Fritzing installation folder at parts/svg/core/pcb/.
-
-</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>due to a rendering error</source>
@@ -1177,19 +1206,6 @@ A custom board svg typically has one silkscreen layer and one board layer.
     </message>
     <message>
         <source>for unknown reasons--possibly the image file is corrupted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unable to load image from %1 %2</source>
-        <translation type="unfinished">不能从%1 %2中载入图像</translation>
-    </message>
-    <message>
-        <source>Can load, but</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The image from %1 can be loaded, but %2
-Use the file?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2754,10 +2770,6 @@ Would you like to convert &apos;%1&apos; to the .fzz format now or open it read-
         <translation>填充覆铜层的空区域--填充将包含所有连接至种子的导线</translation>
     </message>
     <message>
-        <source>Gerber export can not handle multiple boards.</source>
-        <translation>导出Gerber不能处理多层板。</translation>
-    </message>
-    <message>
         <source>Ctrl+B</source>
         <translation>Ctrl+B</translation>
     </message>
@@ -2832,6 +2844,86 @@ Open the old Parts Editor?</source>
     <message>
         <source>Select all trace wires that can be changed during autorouting</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change to single layer pcb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change to two layer pcb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change image to %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gerber export can only handle one board at a time--please select the board you want to export.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sticky</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If a &quot;sticky&quot; part is moved, parts on top of it are also moved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set Grid Size...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set the size of the grid in this view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set Background Color...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set the background color of this view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>jumpers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>copperfill</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>vias</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished">确定</translation>
+    </message>
+    <message>
+        <source>Set the grid size for %1.</source>
+        <translation type="unfinished">设置网格大小为%1。</translation>
+    </message>
+    <message>
+        <source>Grid Size:</source>
+        <translation type="unfinished">网格大小:</translation>
+    </message>
+    <message>
+        <source>in</source>
+        <translation type="unfinished">in</translation>
+    </message>
+    <message>
+        <source>mm</source>
+        <translation type="unfinished">mm</translation>
+    </message>
+    <message>
+        <source>Restore Default</source>
+        <translation type="unfinished">恢复默认值</translation>
+    </message>
+    <message>
+        <source>%1 background Color</source>
+        <translation type="unfinished">%1 背景色</translation>
     </message>
 </context>
 <context>
@@ -2956,10 +3048,6 @@ Reason: %2 (errcode %3)</source>
         <translation>从预拉线中创建线</translation>
     </message>
     <message>
-        <source>Copper Fill: multiple boards are not supported.</source>
-        <translation>覆铜填充：不支持多层板。</translation>
-    </message>
-    <message>
         <source>Please designate one or more ground fill seeds before doing a ground fill.
 
 </source>
@@ -2968,12 +3056,24 @@ Reason: %2 (errcode %3)</source>
 </translation>
     </message>
     <message>
-        <source>Copper fill: multiple boards are not supported.</source>
-        <translation>覆铜填充：不支持多层板。</translation>
-    </message>
-    <message>
         <source>Clear ground fill seeds</source>
         <translation>清除接地填充种子</translation>
+    </message>
+    <message>
+        <source>%1 Fill: please select the board you want to apply fill to.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ground</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copper</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copper fill: please select only the board you want to fill.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3678,38 +3778,6 @@ shift键转换滚动轴
         <translation>通用</translation>
     </message>
     <message>
-        <source>Align-to-Grid size</source>
-        <translation>对齐至网格大小</translation>
-    </message>
-    <message>
-        <source>Set the grid size for %1.</source>
-        <translation>设置网格大小为%1。</translation>
-    </message>
-    <message>
-        <source>Grid Size:</source>
-        <translation>网格大小:</translation>
-    </message>
-    <message>
-        <source>in</source>
-        <translation>in</translation>
-    </message>
-    <message>
-        <source>mm</source>
-        <translation>mm</translation>
-    </message>
-    <message>
-        <source>Restore Default</source>
-        <translation>恢复默认值</translation>
-    </message>
-    <message>
-        <source>Background color</source>
-        <translation>背景色</translation>
-    </message>
-    <message>
-        <source>%1 background Color</source>
-        <translation>%1 背景色</translation>
-    </message>
-    <message>
         <source>Curvy vs. straight wires</source>
         <translation>弯曲拉直线</translation>
     </message>
@@ -4266,10 +4334,6 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
         <translation>选择过期元件</translation>
     </message>
     <message>
-        <source>Select all jumpers</source>
-        <translation>选择所有跳线</translation>
-    </message>
-    <message>
         <source>files</source>
         <translation>文件</translation>
     </message>
@@ -4696,6 +4760,10 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
         <source>Select all autorouteable traces</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Set Grid Size</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QShortcut</name>
@@ -4792,8 +4860,12 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
         <translation>高度(mm)</translation>
     </message>
     <message>
-        <source>keep in proportion</source>
-        <translation>保持比例</translation>
+        <source>keep aspect ratio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Revert</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

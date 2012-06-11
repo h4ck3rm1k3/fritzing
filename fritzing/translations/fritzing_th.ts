@@ -406,11 +406,33 @@
         <source>two layers (double-sided)</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>BoardLogoItem</name>
     <message>
-        <source>shape</source>
+        <source>
+
+A custom board svg typically has one silkscreen layer and one board layer.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Have a look at the circle_pcb.svg file in your Fritzing installation folder at parts/svg/core/pcb/.
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>image file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>load image file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Images</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select an image file to load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -419,6 +441,10 @@
     </message>
     <message>
         <source>because the xml is not correctly formatted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>the &lt;board&gt; element contains no shape elements</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -434,11 +460,39 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>the svg contains no shape elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>but the pcb itself will have no silkscreen layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>the svg doesn&apos;t fit the custom board format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to load image from %1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can load, but</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The image from %1 can be loaded, but %2
+Use the file?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>BoardLogoItem</name>
+    <message>
+        <source>shape</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -875,11 +929,19 @@ It is also possible to choose a connector as a ground fill seed by right-clickin
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Change the locked state of the part in this view.  A locked part can&apos;t be moved</source>
+        <source>Ratsnest wire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ratsnest wire</source>
+        <source>Change the locked state of the part in this view. A locked part can&apos;t be moved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sticky</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change the &quot;sticky&quot; state of the part in this view. When a sticky part is moved, objects on top of it also move.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1094,18 +1156,6 @@ It is also possible to choose a connector as a ground fill seed by right-clickin
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>load image file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Images</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select an image file to load</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Unable to display</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1114,28 +1164,7 @@ It is also possible to choose a connector as a ground fill seed by right-clickin
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unable to load</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>image file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>shape</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>
-
-A custom board svg typically has one silkscreen layer and one board layer.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Have a look at the circle_pcb.svg file in your Fritzing installation folder at parts/svg/core/pcb/.
-
-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1164,19 +1193,6 @@ A custom board svg typically has one silkscreen layer and one board layer.
     </message>
     <message>
         <source>for unknown reasons--possibly the image file is corrupted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unable to load image from %1 %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Can load, but</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The image from %1 can be loaded, but %2
-Use the file?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2723,10 +2739,6 @@ Would you like to convert &apos;%1&apos; to the .fzz format now or open it read-
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Gerber export can not handle multiple boards.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Ctrl+B</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2798,6 +2810,86 @@ Open the old Parts Editor?</source>
     </message>
     <message>
         <source>Select all trace wires that can be changed during autorouting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change to single layer pcb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change to two layer pcb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change image to %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gerber export can only handle one board at a time--please select the board you want to export.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sticky</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If a &quot;sticky&quot; part is moved, parts on top of it are also moved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set Grid Size...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set the size of the grid in this view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set Background Color...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set the background color of this view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>jumpers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>copperfill</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>vias</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set the grid size for %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grid Size:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>in</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restore Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 background Color</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2922,21 +3014,29 @@ Reason: %2 (errcode %3)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Copper Fill: multiple boards are not supported.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Please designate one or more ground fill seeds before doing a ground fill.
 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Copper fill: multiple boards are not supported.</source>
+        <source>Clear ground fill seeds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Clear ground fill seeds</source>
+        <source>%1 Fill: please select the board you want to apply fill to.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ground</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copper</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copper fill: please select only the board you want to fill.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3619,38 +3719,6 @@ shift key swaps scroll axis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Align-to-Grid size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Set the grid size for %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Grid Size:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>in</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>mm</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Restore Default</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Background color</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 background Color</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Curvy vs. straight wires</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4198,10 +4266,6 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select all jumpers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>files</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4624,6 +4688,10 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         <source>Select all autorouteable traces</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Set Grid Size</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QShortcut</name>
@@ -4720,7 +4788,11 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>keep in proportion</source>
+        <source>keep aspect ratio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Revert</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

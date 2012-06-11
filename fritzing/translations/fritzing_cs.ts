@@ -494,68 +494,134 @@
 <context>
     <name>Board</name>
     <message>
-        <location filename="../src/items/resizableboard.cpp" line="79"/>
+        <location filename="../src/items/resizableboard.cpp" line="83"/>
+        <source>
+
+A custom board svg typically has one silkscreen layer and one board layer.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/items/resizableboard.cpp" line="84"/>
+        <source>Have a look at the circle_pcb.svg file in your Fritzing installation folder at parts/svg/core/pcb/.
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/items/resizableboard.cpp" line="110"/>
         <source>one layer (single-sided)</source>
         <translation>jedna vrstva (jednostranný)</translation>
     </message>
     <message>
-        <location filename="../src/items/resizableboard.cpp" line="82"/>
+        <location filename="../src/items/resizableboard.cpp" line="113"/>
         <source>two layers (double-sided)</source>
         <translation>dvě vrstvy (oboustranný)</translation>
+    </message>
+    <message>
+        <location filename="../src/items/resizableboard.cpp" line="195"/>
+        <source>image file</source>
+        <translation type="unfinished">soubor obrázku</translation>
+    </message>
+    <message>
+        <location filename="../src/items/resizableboard.cpp" line="214"/>
+        <source>load image file</source>
+        <translation type="unfinished">načíst soubor obrázku</translation>
+    </message>
+    <message>
+        <location filename="../src/items/resizableboard.cpp" line="273"/>
+        <source>Images</source>
+        <translation type="unfinished">Obrázky</translation>
+    </message>
+    <message>
+        <location filename="../src/items/resizableboard.cpp" line="287"/>
+        <source>Select an image file to load</source>
+        <translation type="unfinished">Preferencesyberte soubor obrázku</translation>
+    </message>
+    <message>
+        <location filename="../src/items/resizableboard.cpp" line="309"/>
+        <source>due to an xml problem: %1 line:%2 column:%3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/items/resizableboard.cpp" line="315"/>
+        <source>because the xml is not correctly formatted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/items/resizableboard.cpp" line="343"/>
+        <source>the &lt;board&gt; element contains no shape elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/items/resizableboard.cpp" line="350"/>
+        <source>because there are multiple &lt;board&gt; layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/items/resizableboard.cpp" line="355"/>
+        <source>because there are multiple &lt;silkscreen&gt; layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/items/resizableboard.cpp" line="360"/>
+        <source>because there is no &lt;board&gt; layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/items/resizableboard.cpp" line="365"/>
+        <source>the svg contains no shape elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/items/resizableboard.cpp" line="370"/>
+        <source>but the pcb itself will have no silkscreen layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/items/resizableboard.cpp" line="373"/>
+        <source>the svg doesn&apos;t fit the custom board format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/items/resizableboard.cpp" line="380"/>
+        <source>Unable to load</source>
+        <translation type="unfinished">Nelze načíst</translation>
+    </message>
+    <message>
+        <location filename="../src/items/resizableboard.cpp" line="381"/>
+        <source>Unable to load image from %1 %2</source>
+        <translation type="unfinished">Nelze načíst obrázek z %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../src/items/resizableboard.cpp" line="388"/>
+        <source>Can load, but</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/items/resizableboard.cpp" line="389"/>
+        <source>The image from %1 can be loaded, but %2
+Use the file?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>BoardLogoItem</name>
     <message>
-        <location filename="../src/items/logoitem.cpp" line="1036"/>
+        <location filename="../src/items/logoitem.cpp" line="957"/>
         <source>shape</source>
         <translation type="unfinished">tvar</translation>
-    </message>
-    <message>
-        <location filename="../src/items/logoitem.cpp" line="1054"/>
-        <source>due to an xml problem: %1 line:%2 column:%3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/items/logoitem.cpp" line="1060"/>
-        <source>because the xml is not correctly formatted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/items/logoitem.cpp" line="1086"/>
-        <source>because there are multiple &lt;board&gt; layers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/items/logoitem.cpp" line="1091"/>
-        <source>because there are multiple &lt;silkscreen&gt; layers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/items/logoitem.cpp" line="1096"/>
-        <source>because there is no &lt;board&gt; layer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/items/logoitem.cpp" line="1101"/>
-        <source>but the pcb itself will have no silkscreen layer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/items/logoitem.cpp" line="1104"/>
-        <source>the svg doesn&apos;t fit the custom board format</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>CMRouter</name>
     <message>
-        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="647"/>
+        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="642"/>
         <source>best so far: %1 unrouted</source>
         <translation>prozatím nejlepší: %1 neroutováno</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="649"/>
+        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="644"/>
         <source>/%n jumpers</source>
         <translation>
             <numerusform>/%n propojka</numerusform>
@@ -564,7 +630,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="649"/>
+        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="644"/>
         <source>/%n vias</source>
         <translation>
             <numerusform>/%n průchod</numerusform>
@@ -573,12 +639,12 @@
         </translation>
     </message>
     <message>
-        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="653"/>
+        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="648"/>
         <source>round %1 of:</source>
         <translation>kolo %1 z:</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="734"/>
+        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="729"/>
         <source>Note: the autorouter did not route %n parts, because they are not located entirely on the board.</source>
         <translation>
             <numerusform>Pozn.: autorouter neroutoval %n součástek, protože nejsou umístěny zcelana desce.</numerusform>
@@ -587,22 +653,22 @@
         </translation>
     </message>
     <message>
-        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="854"/>
+        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="849"/>
         <source>The Design Rule Check (DRC) was cancelled, because it could not find a board (or it found more than one).</source>
         <translation>Kontrola pravidel návrhu (DRC) byla zrušena, protože nebyla nalezena deska (nebo bylo nalezeno více než jedna).</translation>
     </message>
     <message>
-        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="866"/>
+        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="861"/>
         <source>Your sketch is ready for production: there are no connectors or traces that overlap or are too close together.</source>
         <translation>Váš návrh je připraven pro výrobu: nebyly nalezeny žádné překrývající se propojky,ani spoje a současně také nejsou příliš blízko sebe.</translation>
     </message>
     <message>
-        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="871"/>
+        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="866"/>
         <source>The areas on your board highlighted in red are connectors and traces which overlap or are too close together. Reposition them and run the DRC again to find more problems.</source>
         <translation>Oblasti na vaší desce, vyznačené červeně, jsou propojky, nebo spoje, které se překrývají, nebo jsou příliš blízko sebe. Přemístěte je a pro nalezení dalších problémů spusťte DRC znovu.</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="881"/>
+        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="876"/>
         <source>
 
 Note: %n parts are not located entirely on the board.</source>
@@ -762,56 +828,56 @@ in order to fix this connector</source>
 <context>
     <name>FApplication</name>
     <message>
-        <location filename="../src/fapplication.cpp" line="1227"/>
-        <location filename="../src/fapplication.cpp" line="1231"/>
+        <location filename="../src/fapplication.cpp" line="1204"/>
+        <location filename="../src/fapplication.cpp" line="1208"/>
         <source>Fritzing failure</source>
         <translation>Aplikace Fritzing selhala</translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="1227"/>
+        <location filename="../src/fapplication.cpp" line="1204"/>
         <source>Fritzing caught an exception %1 from %2 in event %3</source>
         <translation>Fritzing zachytil vyjímku %1 z %2 v události %3</translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="1231"/>
+        <location filename="../src/fapplication.cpp" line="1208"/>
         <source>Fritzing caught an exception from %1 in event %2</source>
         <translation>Fritzing zachytil vyjímku z %1 v události %2</translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="1342"/>
+        <location filename="../src/fapplication.cpp" line="1319"/>
         <source>Import files from previous version?</source>
         <translation>Importovat soubory z předchozí verze?</translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="1343"/>
+        <location filename="../src/fapplication.cpp" line="1320"/>
         <source>Do you want to import parts and bins that you have created with earlier versions of Fritzing?
 </source>
         <translation>Přejete si importovat součástky a zásobníky, které jste vytvořili v předchozí verzi Fritzingu?</translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="1344"/>
+        <location filename="../src/fapplication.cpp" line="1321"/>
         <source>
 Note: You can import them later using the &quot;Help&quot; &gt; &quot;Import parts and bins from old version...&quot; menu action.</source>
         <translation>
 Pozn.: Můžete importovat později, s použitím položky &quot;Nápověda&quot; &gt; &quot;Import součástek a zásobníků z dřívější verze...&quot; z nabídky.</translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="1350"/>
+        <location filename="../src/fapplication.cpp" line="1327"/>
         <source>Import</source>
         <translation>Import</translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="1351"/>
+        <location filename="../src/fapplication.cpp" line="1328"/>
         <source>Do not import now</source>
         <translation>Nyní neimportovat</translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="1385"/>
+        <location filename="../src/fapplication.cpp" line="1362"/>
         <source>Please specify an .fzz file name to save to (cancel will delete the backup)</source>
         <translation>Zadejte název souboru .fzz pro uložení (Zrušit odstraní zálohu)</translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="1385"/>
+        <location filename="../src/fapplication.cpp" line="1362"/>
         <source>Fritzing (*%1)</source>
         <translation>Fritzing (*%1)</translation>
     </message>
@@ -1008,72 +1074,82 @@ Je také možné zvolit konektory jako výplň země kliknutím pravým tlačít
 <context>
     <name>HtmlInfoView</name>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="137"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="138"/>
         <source>Change the part label here</source>
         <translation>Zde změnit popisek součástky</translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="162"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="163"/>
         <source>Part breadboard view image</source>
         <translation>Obrázek součástky montážní desky</translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="164"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="165"/>
         <source>Part schematic view image</source>
         <translation>Obrázek součástky schématu</translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="166"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="167"/>
         <source>Part pcb view image</source>
         <translation>Obrázek součástky desky PCB</translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="173"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="174"/>
         <source>Part version number</source>
         <translation>Číslo verze součástky</translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="178"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="181"/>
         <source>Locked</source>
         <translation>Uzamčeno</translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="180"/>
-        <source>Change the locked state of the part in this view.  A locked part can&apos;t be moved</source>
-        <translation>Změní stav uzamčení součástky v tomto zobrazení. Uzamčenou součástku nelze přesunovat</translation>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="183"/>
+        <source>Change the locked state of the part in this view. A locked part can&apos;t be moved.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="202"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="187"/>
+        <source>Sticky</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="189"/>
+        <source>Change the &quot;sticky&quot; state of the part in this view. When a sticky part is moved, objects on top of it also move.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="213"/>
         <source>Properties</source>
         <translation>Vlastnosti</translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="214"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="225"/>
         <source>Tags</source>
         <translation>Značky</translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="223"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="234"/>
         <source>Connections</source>
         <translation>Piny</translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="235"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="246"/>
         <source>conn.</source>
         <translation>kon.</translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="242"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="253"/>
         <source>name</source>
         <translation>název</translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="249"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="260"/>
         <source>type</source>
         <translation>typ</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/infoview/htmlinfoview.cpp" line="333"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="344"/>
         <source>connected to %n item(s)</source>
         <translation>
             <numerusform>připojeno k %n položce</numerusform>
@@ -1082,27 +1158,27 @@ Je také možné zvolit konektory jako výplň země kliknutím pravým tlačít
         </translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="370"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="381"/>
         <source>(autoroutable)</source>
         <translation>(automaticky routovatelné)</translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="371"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="382"/>
         <source>Wire</source>
         <translation>Propojka</translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="374"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="385"/>
         <source>Ratsnest wire</source>
         <translation>Propojovací síť</translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="377"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="388"/>
         <source>Trace wire %1</source>
         <translation>Plošný spoj %1</translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="657"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="677"/>
         <source>v. %1</source>
         <translation>v. %1</translation>
     </message>
@@ -1110,207 +1186,207 @@ Je také možné zvolit konektory jako výplň země kliknutím pravým tlačít
 <context>
     <name>ItemBase</name>
     <message>
-        <location filename="../src/items/itembase.cpp" line="265"/>
+        <location filename="../src/items/itembase.cpp" line="267"/>
         <source>family</source>
         <translation>rodina</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="266"/>
+        <location filename="../src/items/itembase.cpp" line="268"/>
         <source>type</source>
         <translation>typ</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="267"/>
+        <location filename="../src/items/itembase.cpp" line="269"/>
         <source>model</source>
         <translation>model</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="268"/>
+        <location filename="../src/items/itembase.cpp" line="270"/>
         <source>size</source>
         <translation>velikost</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="269"/>
+        <location filename="../src/items/itembase.cpp" line="271"/>
         <source>color</source>
         <translation>barva</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="270"/>
+        <location filename="../src/items/itembase.cpp" line="272"/>
         <source>resistance</source>
         <translation>odpor</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="271"/>
+        <location filename="../src/items/itembase.cpp" line="273"/>
         <source>capacitance</source>
         <translation>kondenzátor</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="272"/>
+        <location filename="../src/items/itembase.cpp" line="274"/>
         <source>inductance</source>
         <translation>indukčnost</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="273"/>
+        <location filename="../src/items/itembase.cpp" line="275"/>
         <source>voltage</source>
         <translation>napětí</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="274"/>
+        <location filename="../src/items/itembase.cpp" line="276"/>
         <source>current</source>
         <translation>aktuální</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="275"/>
+        <location filename="../src/items/itembase.cpp" line="277"/>
         <source>power</source>
         <translation>napájení</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="276"/>
+        <location filename="../src/items/itembase.cpp" line="278"/>
         <source>pin spacing</source>
         <translation>odstup pinů</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="277"/>
+        <location filename="../src/items/itembase.cpp" line="279"/>
         <source>rated power</source>
         <translation>jmenovité napájení</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="278"/>
+        <location filename="../src/items/itembase.cpp" line="280"/>
         <source>rated voltage</source>
         <translation>jmenovité napětí</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="279"/>
+        <location filename="../src/items/itembase.cpp" line="281"/>
         <source>rated current</source>
         <translation>jmenovitý proud</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="280"/>
+        <location filename="../src/items/itembase.cpp" line="282"/>
         <source>version</source>
         <translation>verze</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="281"/>
+        <location filename="../src/items/itembase.cpp" line="283"/>
         <source>package</source>
         <translation>pouzdro</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="282"/>
+        <location filename="../src/items/itembase.cpp" line="284"/>
         <source>shape</source>
         <translation>tvar</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="283"/>
+        <location filename="../src/items/itembase.cpp" line="285"/>
         <source>form</source>
         <translation>forma</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="284"/>
+        <location filename="../src/items/itembase.cpp" line="286"/>
         <source>part number</source>
         <translation>číslo součástky</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="285"/>
+        <location filename="../src/items/itembase.cpp" line="287"/>
         <source>maximum resistance</source>
         <translation>maximální odpor</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="286"/>
+        <location filename="../src/items/itembase.cpp" line="288"/>
         <source>pins</source>
         <translation>piny</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="287"/>
+        <location filename="../src/items/itembase.cpp" line="289"/>
         <source>spacing</source>
         <translation>odstup</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="288"/>
+        <location filename="../src/items/itembase.cpp" line="290"/>
         <source>frequency</source>
         <translation>kmitočet</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="289"/>
+        <location filename="../src/items/itembase.cpp" line="291"/>
         <source>processor</source>
         <translation>procesor</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="290"/>
+        <location filename="../src/items/itembase.cpp" line="292"/>
         <source>variant</source>
         <translation>varianta</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="291"/>
+        <location filename="../src/items/itembase.cpp" line="293"/>
         <source>layers</source>
         <translation>vrstvy</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="292"/>
+        <location filename="../src/items/itembase.cpp" line="294"/>
         <source>tolerance</source>
         <translation>tolerance</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="293"/>
+        <location filename="../src/items/itembase.cpp" line="295"/>
         <source>descr</source>
         <translation>popis</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="294"/>
+        <location filename="../src/items/itembase.cpp" line="296"/>
         <source>filename</source>
         <translation>název souboru</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="295"/>
+        <location filename="../src/items/itembase.cpp" line="297"/>
         <source>title</source>
         <translation>titulek</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="296"/>
+        <location filename="../src/items/itembase.cpp" line="298"/>
         <source>date</source>
         <translation>datum</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="297"/>
+        <location filename="../src/items/itembase.cpp" line="299"/>
         <source>rev</source>
         <translation>rev</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="298"/>
+        <location filename="../src/items/itembase.cpp" line="300"/>
         <source>sheet</source>
         <translation>list</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="299"/>
+        <location filename="../src/items/itembase.cpp" line="301"/>
         <source>project</source>
         <translation>projekt</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="305"/>
+        <location filename="../src/items/itembase.cpp" line="307"/>
         <source>Part</source>
         <translation>Součástka</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="1182"/>
+        <location filename="../src/items/itembase.cpp" line="1236"/>
         <source>model part problem</source>
         <translation>problém modelu součástky</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="1186"/>
+        <location filename="../src/items/itembase.cpp" line="1240"/>
         <source>part xml missing</source>
         <translation>xml součástky chybí</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="1192"/>
+        <location filename="../src/items/itembase.cpp" line="1246"/>
         <source>missing xml for view %1 layer %2</source>
         <translation>chybějící xml pro zobrazení %1 vrstva %2</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="1215"/>
+        <location filename="../src/items/itembase.cpp" line="1269"/>
         <source>file %1 not found</source>
         <translation>soubor %1 nenalezen</translation>
     </message>
     <message>
-        <location filename="../src/items/itembase.cpp" line="1296"/>
+        <location filename="../src/items/itembase.cpp" line="1350"/>
         <source>unable to create renderer for svg %1</source>
         <translation>nelze vytvořit renderování svg %1</translation>
     </message>
@@ -1362,283 +1438,227 @@ Je také možné zvolit konektory jako výplň země kliknutím pravým tlačít
 <context>
     <name>LogoItem</name>
     <message>
-        <location filename="../src/items/logoitem.cpp" line="67"/>
-        <source>
-
-A custom board svg typically has one silkscreen layer and one board layer.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/items/logoitem.cpp" line="68"/>
-        <source>Have a look at the circle_pcb.svg file in your Fritzing installation folder at parts/svg/core/pcb/.
-
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/items/logoitem.cpp" line="185"/>
-        <location filename="../src/items/logoitem.cpp" line="610"/>
+        <location filename="../src/items/logoitem.cpp" line="558"/>
         <source>logo</source>
         <translation>logo</translation>
     </message>
     <message>
-        <location filename="../src/items/logoitem.cpp" line="201"/>
-        <source>image file</source>
-        <translation>soubor obrázku</translation>
-    </message>
-    <message>
-        <location filename="../src/items/logoitem.cpp" line="220"/>
-        <source>load image file</source>
-        <translation>načíst soubor obrázku</translation>
-    </message>
-    <message>
-        <location filename="../src/items/logoitem.cpp" line="238"/>
+        <location filename="../src/items/logoitem.cpp" line="208"/>
         <source>shape</source>
         <translation>tvar</translation>
     </message>
     <message>
-        <location filename="../src/items/logoitem.cpp" line="247"/>
-        <source>Images</source>
-        <translation>Obrázky</translation>
-    </message>
-    <message>
-        <location filename="../src/items/logoitem.cpp" line="261"/>
-        <source>Select an image file to load</source>
-        <translation>Preferencesyberte soubor obrázku</translation>
-    </message>
-    <message>
-        <location filename="../src/items/logoitem.cpp" line="330"/>
+        <location filename="../src/items/logoitem.cpp" line="276"/>
         <source>due to a rendering error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/items/logoitem.cpp" line="344"/>
+        <location filename="../src/items/logoitem.cpp" line="290"/>
         <source>because the svg is empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/items/logoitem.cpp" line="360"/>
+        <location filename="../src/items/logoitem.cpp" line="306"/>
         <source>due to an xml problem: %1 line:%2 column:%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/items/logoitem.cpp" line="366"/>
+        <location filename="../src/items/logoitem.cpp" line="312"/>
         <source>because the file has no root element</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/items/logoitem.cpp" line="371"/>
+        <location filename="../src/items/logoitem.cpp" line="317"/>
         <source>because the file has no &lt;svg&gt; element</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/items/logoitem.cpp" line="389"/>
+        <location filename="../src/items/logoitem.cpp" line="337"/>
         <source>because of an improper width or height attribute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/items/logoitem.cpp" line="418"/>
+        <location filename="../src/items/logoitem.cpp" line="366"/>
         <source>for unknown reasons--possibly the image file is corrupted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/items/logoitem.cpp" line="435"/>
+        <location filename="../src/items/logoitem.cpp" line="383"/>
         <source>Unable to display</source>
         <translation>Nelze zobrazit</translation>
     </message>
     <message>
-        <location filename="../src/items/logoitem.cpp" line="436"/>
+        <location filename="../src/items/logoitem.cpp" line="384"/>
         <source>Unable to display image from %1</source>
         <translation>Nelze zobrazit obrázek z %1</translation>
-    </message>
-    <message>
-        <location filename="../src/items/logoitem.cpp" line="716"/>
-        <source>Unable to load</source>
-        <translation>Nelze načíst</translation>
-    </message>
-    <message>
-        <location filename="../src/items/logoitem.cpp" line="717"/>
-        <source>Unable to load image from %1 %2</source>
-        <translation type="unfinished">Nelze načíst obrázek z %1 %2</translation>
-    </message>
-    <message>
-        <location filename="../src/items/logoitem.cpp" line="724"/>
-        <source>Can load, but</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/items/logoitem.cpp" line="725"/>
-        <source>The image from %1 can be loaded, but %2
-Use the file?</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/mainwindow.cpp" line="763"/>
-        <location filename="../src/mainwindow_menu.cpp" line="1072"/>
+        <location filename="../src/mainwindow.cpp" line="769"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1118"/>
         <source>Rotate</source>
         <translation>Otočit</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="772"/>
+        <location filename="../src/mainwindow.cpp" line="777"/>
         <source>Share</source>
         <translation>Sdílet</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="781"/>
+        <location filename="../src/mainwindow.cpp" line="786"/>
         <source>Flip</source>
         <translation>Překlopit</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="790"/>
+        <location filename="../src/mainwindow.cpp" line="794"/>
         <source>Autoroute</source>
         <translation>Automaticky routovat</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="813"/>
+        <location filename="../src/mainwindow.cpp" line="817"/>
         <source>Both Layers</source>
         <translation>Obě vrstvy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="818"/>
+        <location filename="../src/mainwindow.cpp" line="822"/>
         <source>Bottom Layer</source>
         <translation>Spodní vrstva</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="823"/>
+        <location filename="../src/mainwindow.cpp" line="827"/>
         <source>Top Layer</source>
         <translation>Horní vrstva</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="831"/>
-        <location filename="../src/mainwindow_menu.cpp" line="680"/>
+        <location filename="../src/mainwindow.cpp" line="835"/>
+        <location filename="../src/mainwindow_menu.cpp" line="713"/>
         <source>Add a note</source>
         <translation>Přidá poznámku</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="918"/>
+        <location filename="../src/mainwindow.cpp" line="922"/>
         <location filename="../src/mainwindow_export.cpp" line="161"/>
         <source>Ready</source>
         <translation>Připraven</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1077"/>
+        <location filename="../src/mainwindow.cpp" line="1081"/>
         <source>Save %1</source>
         <translation>Uložit %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1147"/>
+        <location filename="../src/mainwindow.cpp" line="1151"/>
         <source>Updating existing part</source>
         <translation>Aktualizace existující součástky</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1148"/>
+        <location filename="../src/mainwindow.cpp" line="1152"/>
         <source>Some connectors have changed.
 In order to see the changes, you have to restart fritzing.
 Do you want to restart now?</source>
         <translation>Některé konektory byly změněny. Pro správné zobrazení změn, musí být Fritzing restartován. Chcete nyní restartovat?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1246"/>
-        <location filename="../src/mainwindow.cpp" line="1477"/>
+        <location filename="../src/mainwindow.cpp" line="1383"/>
+        <location filename="../src/mainwindow_export.cpp" line="747"/>
         <source>Specify a file name</source>
         <translation>Zadejte název souboru</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1246"/>
-        <location filename="../src/mainwindow.cpp" line="2353"/>
-        <location filename="../src/mainwindow_menu.cpp" line="187"/>
+        <location filename="../src/mainwindow.cpp" line="2287"/>
+        <location filename="../src/mainwindow_export.cpp" line="747"/>
+        <location filename="../src/mainwindow_menu.cpp" line="218"/>
         <source>Fritzing (*%1)</source>
         <translation>Fritzing (*%1)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1312"/>
-        <location filename="../src/mainwindow.cpp" line="1327"/>
-        <location filename="../src/mainwindow.cpp" line="1343"/>
-        <location filename="../src/mainwindow.cpp" line="1378"/>
-        <location filename="../src/mainwindow.cpp" line="1433"/>
-        <location filename="../src/mainwindow.cpp" line="1447"/>
-        <location filename="../src/mainwindow.cpp" line="1511"/>
-        <location filename="../src/mainwindow.cpp" line="2087"/>
-        <location filename="../src/mainwindow_export.cpp" line="535"/>
-        <location filename="../src/mainwindow_export.cpp" line="577"/>
-        <location filename="../src/mainwindow_export.cpp" line="664"/>
-        <location filename="../src/mainwindow_export.cpp" line="832"/>
-        <location filename="../src/mainwindow_export.cpp" line="1064"/>
-        <location filename="../src/mainwindow_export.cpp" line="1232"/>
-        <location filename="../src/mainwindow_export.cpp" line="1237"/>
-        <location filename="../src/mainwindow_menu.cpp" line="133"/>
-        <location filename="../src/mainwindow_menu.cpp" line="144"/>
-        <location filename="../src/mainwindow_menu.cpp" line="162"/>
-        <location filename="../src/mainwindow_menu.cpp" line="1955"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2098"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3022"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3145"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3254"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3257"/>
+        <location filename="../src/mainwindow.cpp" line="1233"/>
+        <location filename="../src/mainwindow.cpp" line="1249"/>
+        <location filename="../src/mainwindow.cpp" line="1284"/>
+        <location filename="../src/mainwindow.cpp" line="1339"/>
+        <location filename="../src/mainwindow.cpp" line="1353"/>
+        <location filename="../src/mainwindow.cpp" line="1417"/>
+        <location filename="../src/mainwindow.cpp" line="2021"/>
+        <location filename="../src/mainwindow_export.cpp" line="538"/>
+        <location filename="../src/mainwindow_export.cpp" line="580"/>
+        <location filename="../src/mainwindow_export.cpp" line="667"/>
+        <location filename="../src/mainwindow_export.cpp" line="813"/>
+        <location filename="../src/mainwindow_export.cpp" line="933"/>
+        <location filename="../src/mainwindow_export.cpp" line="1165"/>
+        <location filename="../src/mainwindow_export.cpp" line="1334"/>
+        <location filename="../src/mainwindow_export.cpp" line="1339"/>
+        <location filename="../src/mainwindow_menu.cpp" line="164"/>
+        <location filename="../src/mainwindow_menu.cpp" line="175"/>
+        <location filename="../src/mainwindow_menu.cpp" line="193"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2035"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2178"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3143"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3266"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3488"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3491"/>
         <source>Fritzing</source>
         <translation>Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1313"/>
+        <location filename="../src/mainwindow_export.cpp" line="814"/>
         <source>Unable to export %1 as shareable</source>
         <translation>Nelze exportovat %1 jako sdílený</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1379"/>
+        <location filename="../src/mainwindow.cpp" line="1285"/>
         <source>Unable to open shareable %1</source>
         <translation>Nelze otevřít sdílený %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1412"/>
+        <location filename="../src/mainwindow.cpp" line="1318"/>
         <source>Select one or more parts to import</source>
         <translation>Vyberte jednu nebo více součástek pro import</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1414"/>
+        <location filename="../src/mainwindow.cpp" line="1320"/>
         <source>External Part (*%1)</source>
         <translation>Externí součástka (*%1)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1434"/>
+        <location filename="../src/mainwindow.cpp" line="1340"/>
         <source>Unable to open shareable part %1</source>
         <translation>Nelze otevřít sdílenou součástku %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1448"/>
+        <location filename="../src/mainwindow.cpp" line="1354"/>
         <source>Unable to read shareable part %1</source>
         <translation>Nelze číst sdílenou součástku %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1479"/>
+        <location filename="../src/mainwindow.cpp" line="1385"/>
         <source>Fritzing Part (*%1)</source>
         <translation>Fritzing součástka (*%1)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1512"/>
+        <location filename="../src/mainwindow.cpp" line="1418"/>
         <source>Unable to export %1 to shareable sketch</source>
         <translation>Nelze exportovat %1 do sdíleného návrhu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1601"/>
+        <location filename="../src/mainwindow.cpp" line="1507"/>
         <source>Do you want to keep the imported parts?</source>
         <translation>Přejete zachovat importované součástky?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1669"/>
+        <location filename="../src/mainwindow.cpp" line="1575"/>
         <source>No connections to route</source>
         <translation>Žádné propojky k routování</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1672"/>
+        <location filename="../src/mainwindow.cpp" line="1578"/>
         <source>Routing completed</source>
         <translation>Routing dokončen</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/mainwindow.cpp" line="1675"/>
+        <location filename="../src/mainwindow.cpp" line="1581"/>
         <source>Routing completed using %n jumper part(s)</source>
         <translation>
             <numerusform>Routing dokončen s použitím %n propojky</numerusform>
@@ -1647,37 +1667,37 @@ Do you want to restart now?</source>
         </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2441"/>
+        <location filename="../src/mainwindow.cpp" line="2376"/>
         <source>Using SMD parts</source>
         <translation>Použití SMD součástek</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2442"/>
+        <location filename="../src/mainwindow.cpp" line="2377"/>
         <source>When using SMD parts, a double-sided board is usually desired. On the default single-sided board, SMD parts will end up on the back of the board.</source>
         <translation>Pokud použijete SMD součástky, je obyčejně vyžadována oboustranná deska. Na základní jednostranné desce skončí SMD součástky na zadní straně desky.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2444"/>
+        <location filename="../src/mainwindow.cpp" line="2379"/>
         <source>Do you want to swap to a double-sided board now?</source>
         <translation>Chcete nyní přepnout na oboustranou desku?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2449"/>
+        <location filename="../src/mainwindow.cpp" line="2384"/>
         <source>Swap</source>
         <translation>Přepnout</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2450"/>
+        <location filename="../src/mainwindow.cpp" line="2385"/>
         <source>Don&apos;t Swap</source>
         <translation>Nepřepínat</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2503"/>
+        <location filename="../src/mainwindow.cpp" line="2431"/>
         <source>%1 %2 %3</source>
         <translation>%1 %2 %3</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/mainwindow.cpp" line="1678"/>
+        <location filename="../src/mainwindow.cpp" line="1584"/>
         <source>%1 of %2 nets routed - %n connector(s) still to be routed</source>
         <translation>
             <numerusform>%1 z %2 routovaných propojů - %n propojka, která bude ještě routována</numerusform>
@@ -1686,138 +1706,154 @@ Do you want to restart now?</source>
         </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="231"/>
+        <location filename="../src/mainwindow.cpp" line="232"/>
         <source>Ctrl+R</source>
         <comment>Rotate Clockwise</comment>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="233"/>
+        <location filename="../src/mainwindow.cpp" line="234"/>
         <source>Alt+Ctrl+R</source>
         <comment>Rotate Clockwise</comment>
         <translation>Alt+Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="235"/>
+        <location filename="../src/mainwindow.cpp" line="236"/>
         <source>Meta+Ctrl+R</source>
         <comment>Rotate Clockwise</comment>
         <translation>Meta+Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="238"/>
+        <location filename="../src/mainwindow.cpp" line="239"/>
         <source>Shift+Ctrl+R</source>
         <comment>Rotate Counterclockwise</comment>
         <translation>Shift+Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="240"/>
+        <location filename="../src/mainwindow.cpp" line="241"/>
         <source>Alt+Shift+Ctrl+R</source>
         <comment>Rotate Counterclockwise</comment>
         <translation>Alt+Shift+Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="242"/>
+        <location filename="../src/mainwindow.cpp" line="243"/>
         <source>Meta+Shift+Ctrl+R</source>
         <comment>Rotate Counterclockwise</comment>
         <translation>Meta+Shift+Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="245"/>
+        <location filename="../src/mainwindow.cpp" line="246"/>
         <source>Shift+Ctrl+Tab</source>
         <comment>Toggle Active Layer</comment>
         <translation>Shift+Ctrl+Tab</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="797"/>
+        <location filename="../src/mainwindow.cpp" line="801"/>
         <source>Order PCB</source>
         <translation>Objednat PCB</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="841"/>
+        <location filename="../src/mainwindow.cpp" line="845"/>
         <source>Export for PCB</source>
         <translation>Export pro PCB</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1328"/>
+        <location filename="../src/mainwindow.cpp" line="1234"/>
         <source>Unable to open &apos;%1&apos;</source>
         <translation>Nelze otevřít &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1344"/>
+        <location filename="../src/mainwindow.cpp" line="1250"/>
         <source>No Sketch found in &apos;%1&apos;</source>
         <translation>V &apos;%1&apos; žádný návrh nenalezen</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1714"/>
+        <location filename="../src/mainwindow.cpp" line="1620"/>
         <source>%1 - [%2]</source>
         <translation>%1 - [%2]</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1842"/>
+        <location filename="../src/mainwindow.cpp" line="1748"/>
         <source>No copper top layer</source>
         <translation>Žádná měděná horní vrstva</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1843"/>
+        <location filename="../src/mainwindow.cpp" line="1749"/>
         <source>The copper top (copper 1) layer is not available on a one-sided board.  Please switch the board to double-sided or choose the copper bottom (copper 0) layer.</source>
         <translation>Na jednostranné desce není horní měděná vrstva (měď 1) k dispozici.  Přepněte desku na oboustrannou, nebo zvolte spodní měděnou vrstvu (měď 0).</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1952"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3083"/>
+        <location filename="../src/mainwindow.cpp" line="1858"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3204"/>
         <source>Sorry!</source>
         <translation>Promiňte!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1953"/>
+        <location filename="../src/mainwindow.cpp" line="1859"/>
         <source>No part with those characteristics.
 We&apos;re working to avoid this message, and only let you choose between properties that do exist</source>
         <translation>Součástka s touto charakteristikou neexistuje.
 Pracujeme na potlačení této zprávy a nyní Vám nezbývá, než zvolit mezi vlastnostmi, které existují</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1965"/>
+        <location filename="../src/mainwindow.cpp" line="1871"/>
         <source>No exactly matching part found; Fritzing chose the closest match.</source>
         <translation>Nebyla nalezena přesně shodná součástka; Fritzing vybral součástku s nejbližšími vlastnostmi.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2038"/>
+        <location filename="../src/mainwindow.cpp" line="1920"/>
+        <source>Change to single layer pcb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1920"/>
+        <location filename="../src/mainwindow.cpp" line="2398"/>
+        <source>Change to two layer pcb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1953"/>
         <source>Swapped %1 with module %2</source>
         <translation>Přepnut %1 s modulem %2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2088"/>
+        <location filename="../src/mainwindow.cpp" line="1965"/>
+        <source>Change image to %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="2022"/>
         <source>Svg %1 is missing a &apos;%2&apos; layer. For more information on how to create a custom board shape, see the tutorial at &lt;a href=&apos;http://fritzing.org/learning/tutorials/designing-pcb/pcb-custom-shape/&apos;&gt;http://fritzing.org/learning/tutorials/designing-pcb/pcb-custom-shape/&lt;/a&gt;.</source>
         <translation>SVG %1 neobsahuje vrstvu &apos;%2&apos;. Další informace o tom, jak vytvořit vlastní obrazec desky naleznete v kurzu na &lt;a href=&apos;http://fritzing.org/learning/tutorials/designing-pcb/pcb-custom-shape/&apos;&gt;http://fritzing.org/learning/tutorials/designing-pcb/pcb-custom-shape/&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2125"/>
+        <location filename="../src/mainwindow.cpp" line="2059"/>
         <source>loading %1</source>
         <translation>načítání %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2134"/>
+        <location filename="../src/mainwindow.cpp" line="2068"/>
         <source>Loading...</source>
         <translation>Načítání...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2140"/>
+        <location filename="../src/mainwindow.cpp" line="2074"/>
         <source>new sketch</source>
         <translation>nový návrh</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2262"/>
+        <location filename="../src/mainwindow.cpp" line="2196"/>
         <source>Backing up &apos;%1&apos;</source>
         <translation>Zálohovat &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="1233"/>
+        <location filename="../src/mainwindow_export.cpp" line="1335"/>
         <source>Your sketch does not have a board yet!  Please add a PCB in order to export to Gerber.</source>
         <translation>Váš návrh dosud neobsahuje desku! Pro úspěšný export do Gerber přidejte PCB.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="205"/>
-        <location filename="../src/mainwindow_export.cpp" line="1244"/>
+        <location filename="../src/mainwindow_export.cpp" line="208"/>
+        <location filename="../src/mainwindow_export.cpp" line="1344"/>
         <source>Choose a folder for exporting</source>
         <translation>Vybrat složku pro export</translation>
     </message>
@@ -1852,295 +1888,296 @@ Pracujeme na potlačení této zprávy a nyní Vám nezbývá, než zvolit mezi 
         <translation>Tisk...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="188"/>
+        <location filename="../src/mainwindow_export.cpp" line="187"/>
         <source>All traces have not yet been routed.</source>
         <translation>Nebyly zroutovány ještě všechny spoje.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="189"/>
+        <location filename="../src/mainwindow_export.cpp" line="188"/>
         <source>Do you want to proceed anyway?</source>
         <translation>Přesto chcete pokračovat?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="191"/>
+        <location filename="../src/mainwindow_export.cpp" line="190"/>
         <source>Proceed</source>
         <translation>Provést</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="192"/>
-        <location filename="../src/mainwindow_menu.cpp" line="179"/>
+        <location filename="../src/mainwindow_export.cpp" line="191"/>
+        <location filename="../src/mainwindow_menu.cpp" line="210"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3305"/>
         <source>Cancel</source>
         <translation>Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="303"/>
-        <location filename="../src/mainwindow_export.cpp" line="469"/>
+        <location filename="../src/mainwindow_export.cpp" line="306"/>
+        <location filename="../src/mainwindow_export.cpp" line="472"/>
         <source>Sketch exported</source>
         <translation>Návrh exportován</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="448"/>
+        <location filename="../src/mainwindow_export.cpp" line="451"/>
         <source>Export...</source>
         <translation>Export...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="467"/>
+        <location filename="../src/mainwindow_export.cpp" line="470"/>
         <source>Exporting...</source>
         <translation>Exportování...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="535"/>
+        <location filename="../src/mainwindow_export.cpp" line="538"/>
         <source>Unable to save %1</source>
         <translation>Nelze uložit %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="577"/>
+        <location filename="../src/mainwindow_export.cpp" line="580"/>
         <source>Cannot print to %1</source>
         <translation>Nelze tisknout na %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="665"/>
+        <location filename="../src/mainwindow_export.cpp" line="668"/>
         <source>Cannot write file %1:
 %2.</source>
         <translation>Nelze zapsat soubor %1:
 %2.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="680"/>
+        <location filename="../src/mainwindow_export.cpp" line="683"/>
         <source>Saved &apos;%1&apos;</source>
         <translation>Uložit &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="123"/>
+        <location filename="../src/mainwindow_menu.cpp" line="143"/>
         <source>Select a Fritzing File to Open</source>
         <translation>Vybrat soubor Fritzing pro otevření</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="125"/>
+        <location filename="../src/mainwindow_menu.cpp" line="145"/>
         <source>Fritzing Files (*%1 *%2);;Fritzing (*%1);;Fritzing Shareable (*%2)</source>
         <translation>Fritzing soubory (*%1 *%2);;Fritzing (*%1);;Fritzing sdílené (*%2)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="134"/>
+        <location filename="../src/mainwindow_menu.cpp" line="165"/>
         <source>Cannot find file %1.</source>
         <translation>Nelze nalézt soubor %1.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="145"/>
+        <location filename="../src/mainwindow_menu.cpp" line="176"/>
         <source>Cannot read file  1 %1:
 %2.</source>
         <translation>Nelze číst soubor  1 %1:
 %2.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="162"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2098"/>
+        <location filename="../src/mainwindow_menu.cpp" line="193"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2178"/>
         <source>File &apos;%1&apos; not found</source>
         <translation>Soubor &apos;%1&apos; nenalezen</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="219"/>
+        <location filename="../src/mainwindow_menu.cpp" line="250"/>
         <source>directly loading parts</source>
         <translation>přímé načtení součástek</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="251"/>
+        <location filename="../src/mainwindow_menu.cpp" line="282"/>
         <source>loading %1 (model)</source>
         <translation>načítání %1 (model)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="273"/>
+        <location filename="../src/mainwindow_menu.cpp" line="304"/>
         <source>loading %1 (breadboard)</source>
         <translation>načítání %1 (montážní deska)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="282"/>
+        <location filename="../src/mainwindow_menu.cpp" line="313"/>
         <source>loading %1 (pcb)</source>
         <translation>načítání %1 (pcb)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="291"/>
+        <location filename="../src/mainwindow_menu.cpp" line="322"/>
         <source>loading %1 (schematic)</source>
         <translation>načítání %1 (schéma)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="420"/>
+        <location filename="../src/mainwindow_menu.cpp" line="451"/>
         <source>New</source>
         <translation>Nový</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="421"/>
+        <location filename="../src/mainwindow_menu.cpp" line="452"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="422"/>
+        <location filename="../src/mainwindow_menu.cpp" line="453"/>
         <source>Create a new sketch</source>
         <translation>Vytvoří nový návrh</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="425"/>
+        <location filename="../src/mainwindow_menu.cpp" line="456"/>
         <source>&amp;Open...</source>
         <translation>&amp;Otevřít...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="426"/>
+        <location filename="../src/mainwindow_menu.cpp" line="457"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="427"/>
+        <location filename="../src/mainwindow_menu.cpp" line="458"/>
         <source>Open a sketch</source>
         <translation>Otevře návrh</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="725"/>
+        <location filename="../src/mainwindow_export.cpp" line="826"/>
         <source>&amp;Save</source>
         <translation>&amp;Uložit</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="726"/>
+        <location filename="../src/mainwindow_export.cpp" line="827"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="727"/>
-        <location filename="../src/mainwindow_export.cpp" line="732"/>
+        <location filename="../src/mainwindow_export.cpp" line="828"/>
+        <location filename="../src/mainwindow_export.cpp" line="833"/>
         <source>Save the current sketch</source>
         <translation>Uloží aktuální návrh</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="730"/>
+        <location filename="../src/mainwindow_export.cpp" line="831"/>
         <source>&amp;Save As...</source>
         <translation>&amp;Uložit jako...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="731"/>
+        <location filename="../src/mainwindow_export.cpp" line="832"/>
         <source>Shift+Ctrl+S</source>
         <translation>Shift+Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="735"/>
+        <location filename="../src/mainwindow_export.cpp" line="836"/>
         <source>Share online...</source>
         <translation>Sdílet online...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="736"/>
+        <location filename="../src/mainwindow_export.cpp" line="837"/>
         <source>Post a project to the Fritzing website</source>
         <translation>Pošle projekt na webové stránky Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="739"/>
+        <location filename="../src/mainwindow_export.cpp" line="840"/>
         <source>JPG...</source>
         <translation>JPG...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="741"/>
+        <location filename="../src/mainwindow_export.cpp" line="842"/>
         <source>Export the visible area of the current sketch as a JPG image</source>
         <translation>Exportuje viditelnou oblast aktuálního návrhu jako JPG obrázek</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="744"/>
+        <location filename="../src/mainwindow_export.cpp" line="845"/>
         <source>PNG...</source>
         <translation>PNG...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="746"/>
+        <location filename="../src/mainwindow_export.cpp" line="847"/>
         <source>Export the visible area of the current sketch as a PNG image</source>
         <translation>Exportuje viditelnou oblast aktuálního návrhu jako PNG obrázek</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="749"/>
+        <location filename="../src/mainwindow_export.cpp" line="850"/>
         <source>PostScript...</source>
         <translation>PostScript...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="751"/>
+        <location filename="../src/mainwindow_export.cpp" line="852"/>
         <source>Export the visible area of the current sketch as a PostScript image</source>
         <translation>Exportuje viditelnou oblast aktuálního návrhu jako PostScript obrázek</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="754"/>
+        <location filename="../src/mainwindow_export.cpp" line="855"/>
         <source>PDF...</source>
         <translation>PDF...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="756"/>
+        <location filename="../src/mainwindow_export.cpp" line="857"/>
         <source>Export the visible area of the current sketch as a PDF image</source>
         <translation>Exportuje viditelnou oblast aktuálního návrhu jako PDF obrázek</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="759"/>
+        <location filename="../src/mainwindow_export.cpp" line="860"/>
         <source>SVG...</source>
         <translation>SVG...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="761"/>
+        <location filename="../src/mainwindow_export.cpp" line="862"/>
         <source>Export the current sketch as an SVG image</source>
         <translation>Exportuje aktuální návrh jako SVG obrázek</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="764"/>
+        <location filename="../src/mainwindow_export.cpp" line="865"/>
         <source>List of parts (&amp;Bill of Materials)...</source>
         <translation>Seznam součástek (&amp;Soupiska materiálu)...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="766"/>
+        <location filename="../src/mainwindow_export.cpp" line="867"/>
         <source>Save a Bill of Materials (BoM)/Shopping List as text</source>
         <translation>Uloží soupisku materiálu (BoM)/Nákupní seznam jako text</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="769"/>
+        <location filename="../src/mainwindow_export.cpp" line="870"/>
         <source>XML Netlist...</source>
         <translation>XML Netlist...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="771"/>
+        <location filename="../src/mainwindow_export.cpp" line="872"/>
         <source>Save a netlist in XML format</source>
         <translation>Uloží netlist v XML formátu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="774"/>
+        <location filename="../src/mainwindow_export.cpp" line="875"/>
         <source>Eagle...</source>
         <translation>Eagle...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="776"/>
+        <location filename="../src/mainwindow_export.cpp" line="877"/>
         <source>Export the current sketch to Eagle CAD</source>
         <translation>Exportuje aktuální návrh do Eagle CAD</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="784"/>
+        <location filename="../src/mainwindow_export.cpp" line="885"/>
         <source>Etchable (PDF)...</source>
         <translation>Leptatelné (PDF)...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="785"/>
+        <location filename="../src/mainwindow_export.cpp" line="886"/>
         <source>Export the current sketch to PDF for DIY PCB production (photoresist)</source>
         <translation>Exportuje aktuální návrh do PDF pro DIY výrobu PCB (fotocesta)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="791"/>
+        <location filename="../src/mainwindow_export.cpp" line="892"/>
         <source>Export the current sketch to PDF for DIY PCB production (tone transfer)</source>
         <translation>Exportuje aktuální návrh do PDF pro DIY výrobu PCB (přenos toneru)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="797"/>
+        <location filename="../src/mainwindow_export.cpp" line="898"/>
         <source>Export the current sketch to SVG for DIY PCB production (photoresist)</source>
         <translation>Exportuje aktuální návrh do SVG pro DIY výrobu PCB (fotocesta)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="1238"/>
-        <source>Gerber export can not handle multiple boards.</source>
-        <translation>Gerber export nemůže zpracovat více desek.</translation>
+        <location filename="../src/mainwindow_export.cpp" line="1340"/>
+        <source>Gerber export can only handle one board at a time--please select the board you want to export.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="1258"/>
+        <location filename="../src/mainwindow_export.cpp" line="1364"/>
         <source>Sketch exported to Gerber</source>
         <translation>Návrh exportován do Gerber</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="790"/>
+        <location filename="../src/mainwindow_export.cpp" line="891"/>
         <source>Etchable mirrored (PDF)...</source>
         <translation>Leptatelné zrcadlové (PDF)...</translation>
     </message>
@@ -2150,343 +2187,343 @@ Pracujeme na potlačení této zprávy a nyní Vám nezbývá, než zvolit mezi 
         <translation>Textový soubor BoM (*.html)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="779"/>
+        <location filename="../src/mainwindow_export.cpp" line="880"/>
         <source>Extended Gerber (RS-274X)...</source>
         <translation>Extended Gerber (RS-274X)...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="781"/>
+        <location filename="../src/mainwindow_export.cpp" line="882"/>
         <source>Export the current sketch to Extended Gerber format (RS-274X) for professional PCB production</source>
         <translation>Exportuje aktuální návrh do Extended Gerber formátu (RS-274X) pro professionální výrobu PCB</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="796"/>
+        <location filename="../src/mainwindow_export.cpp" line="897"/>
         <source>Etchable (SVG)...</source>
         <translation>Leptatelné (SVG)...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="802"/>
+        <location filename="../src/mainwindow_export.cpp" line="903"/>
         <source>Etchable mirrored (SVG)...</source>
         <translation>Leptatelné zrcadlové (SVG)...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="803"/>
+        <location filename="../src/mainwindow_export.cpp" line="904"/>
         <source>Export the current sketch to SVG for DIY PCB production (tone transfer)</source>
         <translation>Exportuje aktuální návrh do SVG pro DIY výrobu PCB (přenos toneru)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="813"/>
+        <location filename="../src/mainwindow_export.cpp" line="914"/>
         <source>&amp;Print...</source>
         <translation>&amp;Tisk...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="814"/>
+        <location filename="../src/mainwindow_export.cpp" line="915"/>
         <source>Ctrl+P</source>
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="815"/>
+        <location filename="../src/mainwindow_export.cpp" line="916"/>
         <source>Print the current view</source>
         <translation>Vytiskne aktuální pohled</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="441"/>
+        <location filename="../src/mainwindow_menu.cpp" line="472"/>
         <source>Shell launch %1</source>
         <translation>Shell spustil %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="446"/>
+        <location filename="../src/mainwindow_menu.cpp" line="477"/>
         <source>throw test exception</source>
         <translation>vlož testovací vyjímku</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="447"/>
+        <location filename="../src/mainwindow_menu.cpp" line="478"/>
         <source>throw a fake exception to see what happens</source>
         <translation>Vloží falešnou výjimku , aby bylo vidět, co se stane</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="451"/>
+        <location filename="../src/mainwindow_menu.cpp" line="482"/>
         <source>&amp;Quit</source>
         <translation>&amp;Ukončit</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="452"/>
+        <location filename="../src/mainwindow_menu.cpp" line="483"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="453"/>
+        <location filename="../src/mainwindow_menu.cpp" line="484"/>
         <source>Quit the application</source>
         <translation>Ukončí aplikaci</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="460"/>
+        <location filename="../src/mainwindow_menu.cpp" line="491"/>
         <source>&amp;Open Example</source>
         <translation>&amp;Otevřít příklad</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="482"/>
+        <location filename="../src/mainwindow_menu.cpp" line="513"/>
         <source>All</source>
         <translation>Vše</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="530"/>
+        <location filename="../src/mainwindow_menu.cpp" line="561"/>
         <source>MainWindow::populateMenuWithIndex: couldn&apos;t load example with id=&apos;%1&apos;</source>
         <translation>MainWindow::populateMenuWithIndex: nelze načíst příklad s id=&apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="580"/>
+        <location filename="../src/mainwindow_menu.cpp" line="611"/>
         <source>&amp;Open Recent Files</source>
         <translation>&amp;Otevřít nedávné soubory</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="608"/>
+        <location filename="../src/mainwindow_menu.cpp" line="641"/>
         <source>&amp;%1 %2</source>
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="625"/>
-        <location filename="../src/mainwindow_menu.cpp" line="627"/>
+        <location filename="../src/mainwindow_menu.cpp" line="658"/>
+        <location filename="../src/mainwindow_menu.cpp" line="660"/>
         <source>Undo</source>
         <translation>Zpět</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="629"/>
-        <location filename="../src/mainwindow_menu.cpp" line="631"/>
+        <location filename="../src/mainwindow_menu.cpp" line="662"/>
+        <location filename="../src/mainwindow_menu.cpp" line="664"/>
         <source>Redo</source>
         <translation>Vpřed</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="633"/>
+        <location filename="../src/mainwindow_menu.cpp" line="666"/>
         <source>&amp;Cut</source>
         <translation>V&amp;yjmout</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="634"/>
+        <location filename="../src/mainwindow_menu.cpp" line="667"/>
         <source>Ctrl+X</source>
         <translation>Ctrl+X</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="635"/>
+        <location filename="../src/mainwindow_menu.cpp" line="668"/>
         <source>Cut selection</source>
         <translation>Vyjme výběr</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="638"/>
+        <location filename="../src/mainwindow_menu.cpp" line="671"/>
         <source>&amp;Copy</source>
         <translation>&amp;Kopírovat</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="639"/>
+        <location filename="../src/mainwindow_menu.cpp" line="672"/>
         <source>Ctrl+C</source>
         <translation>Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="640"/>
+        <location filename="../src/mainwindow_menu.cpp" line="673"/>
         <source>Copy selection</source>
         <translation>Kopíruje vybrané</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="643"/>
+        <location filename="../src/mainwindow_menu.cpp" line="676"/>
         <source>&amp;Paste</source>
         <translation>&amp;Vložit</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="644"/>
+        <location filename="../src/mainwindow_menu.cpp" line="677"/>
         <source>Ctrl+V</source>
         <translation>Ctrl+V</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="645"/>
+        <location filename="../src/mainwindow_menu.cpp" line="678"/>
         <source>Paste clipboard contents</source>
         <translation>Vloží obsah schránky</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="648"/>
+        <location filename="../src/mainwindow_menu.cpp" line="681"/>
         <source>Paste in Place</source>
         <translation>Vložit na místo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="650"/>
+        <location filename="../src/mainwindow_menu.cpp" line="683"/>
         <source>Paste clipboard contents in place</source>
         <translation>Vloží obsah schránky na místo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="653"/>
+        <location filename="../src/mainwindow_menu.cpp" line="686"/>
         <source>&amp;Duplicate</source>
         <translation>&amp;Duplikovat</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2451"/>
-        <location filename="../src/mainwindow_menu.cpp" line="654"/>
+        <location filename="../src/mainwindow.cpp" line="2386"/>
+        <location filename="../src/mainwindow_menu.cpp" line="687"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="655"/>
+        <location filename="../src/mainwindow_menu.cpp" line="688"/>
         <source>Duplicate selection</source>
         <translation>Duplikuje výběr</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="658"/>
+        <location filename="../src/mainwindow_menu.cpp" line="691"/>
         <source>&amp;Delete</source>
         <translation>&amp;Vymazat</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="659"/>
+        <location filename="../src/mainwindow_menu.cpp" line="692"/>
         <source>Delete selection</source>
         <translation>Vymaže výběr</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="670"/>
+        <location filename="../src/mainwindow_menu.cpp" line="703"/>
         <source>&amp;Select All</source>
         <translation>&amp;Vybrat vše</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="671"/>
+        <location filename="../src/mainwindow_menu.cpp" line="704"/>
         <source>Ctrl+A</source>
         <translation>Ctrl+A</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="672"/>
+        <location filename="../src/mainwindow_menu.cpp" line="705"/>
         <source>Select all elements</source>
         <translation>Vybere všechny prvky</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="675"/>
+        <location filename="../src/mainwindow_menu.cpp" line="708"/>
         <source>&amp;Deselect</source>
         <translation>&amp;Zrušit výběr</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="676"/>
+        <location filename="../src/mainwindow_menu.cpp" line="709"/>
         <source>Deselect</source>
         <translation>Zruší výběr</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="679"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2422"/>
+        <location filename="../src/mainwindow_menu.cpp" line="712"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2517"/>
         <source>Add Note</source>
         <translation>Přidat poznámku</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="683"/>
+        <location filename="../src/mainwindow_menu.cpp" line="716"/>
         <source>&amp;Preferences...</source>
         <translation>&amp;Předvolby...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="684"/>
-        <location filename="../src/mainwindow_menu.cpp" line="952"/>
+        <location filename="../src/mainwindow_menu.cpp" line="717"/>
+        <location filename="../src/mainwindow_menu.cpp" line="998"/>
         <source>Show the application&apos;s about box</source>
         <translation>Zobrazí okno O programu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="690"/>
+        <location filename="../src/mainwindow_menu.cpp" line="723"/>
         <source>&amp;New</source>
         <translation>&amp;Nová</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="691"/>
+        <location filename="../src/mainwindow_menu.cpp" line="724"/>
         <source>Alt+Ctrl+N</source>
         <translation>Alt+Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="692"/>
+        <location filename="../src/mainwindow_menu.cpp" line="725"/>
         <source>Create new part</source>
         <translation>Vytvoří novou součástku</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="695"/>
-        <location filename="../src/mainwindow_menu.cpp" line="1040"/>
+        <location filename="../src/mainwindow_menu.cpp" line="728"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1086"/>
         <source>&amp;Edit</source>
         <translation>&amp;Upravit</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="696"/>
+        <location filename="../src/mainwindow_menu.cpp" line="729"/>
         <source>Ctrl+Return</source>
         <translation>Ctrl+Enter</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="697"/>
+        <location filename="../src/mainwindow_menu.cpp" line="730"/>
         <source>Open the old parts editor</source>
         <translation>Otevře editor součástek</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="700"/>
+        <location filename="../src/mainwindow_menu.cpp" line="733"/>
         <source>&amp;Add to bin...</source>
         <translation>&amp;Přidat do zásobníku...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="701"/>
+        <location filename="../src/mainwindow_menu.cpp" line="734"/>
         <source>Add selected part to bin</source>
         <translation>Přidá vybranou součástku do zásobníku</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="703"/>
+        <location filename="../src/mainwindow_menu.cpp" line="736"/>
         <source>Disconnect All Wires</source>
         <translation>Odpojí všechny propojky</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="704"/>
+        <location filename="../src/mainwindow_menu.cpp" line="737"/>
         <source>Disconnect all wires connected to this connector</source>
         <translation>Odpojí všechny propojky od této špičky</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="708"/>
+        <location filename="../src/mainwindow_menu.cpp" line="741"/>
         <source>Update InfoView on hover</source>
         <translation>Aktualizuje InfoView při přechodu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="715"/>
+        <location filename="../src/mainwindow_menu.cpp" line="748"/>
         <source>Export Normalized SVG</source>
         <translation>Exportuje normalizované SVG</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="716"/>
+        <location filename="../src/mainwindow_menu.cpp" line="749"/>
         <source>Export 1000 dpi SVG of this part in this view</source>
         <translation>Exportuje 1000 dpi SVG této součástky v tomto zobrazení</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="719"/>
+        <location filename="../src/mainwindow_menu.cpp" line="752"/>
         <source>Export Normalized Flattened SVG</source>
         <translation>Exportuje normalizované sloučené SVG</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="720"/>
+        <location filename="../src/mainwindow_menu.cpp" line="753"/>
         <source>Export 1000 dpi Flattened SVG of this part in this view</source>
         <translation>Exportuje 1000 dpi sloučený SVG této součástky v tomto zobrazení</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="730"/>
+        <location filename="../src/mainwindow_menu.cpp" line="763"/>
         <source>Rotate the selected parts by 90 degrees clockwise</source>
         <translation>Otočí vybrané součástkyr o 90 stupňů vpravo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="734"/>
+        <location filename="../src/mainwindow_menu.cpp" line="767"/>
         <source>Rotate the selected parts by 180 degrees</source>
         <translation>Otočí vybrané součástkyr o 180 stupňů</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="738"/>
+        <location filename="../src/mainwindow_menu.cpp" line="771"/>
         <source>Rotate current selection 90 degrees counter clockwise</source>
         <translation>Otočí aktuální výběr o 90 stupňů vlevo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="742"/>
+        <location filename="../src/mainwindow_menu.cpp" line="775"/>
         <source>Rotate current selection 45 degrees counter clockwise</source>
         <translation>Otočí aktuální výběr o 45 stupňů vlevo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="726"/>
+        <location filename="../src/mainwindow_menu.cpp" line="759"/>
         <source>Rotate current selection 45 degrees clockwise</source>
         <translation>Otočí aktuální výběr o 45 stupňů vpravo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="170"/>
+        <location filename="../src/mainwindow_menu.cpp" line="201"/>
         <source>the .fz file format is obsolete</source>
         <translation>fz formát je zastaralý</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="171"/>
+        <location filename="../src/mainwindow_menu.cpp" line="202"/>
         <source>The .fz file format has been deprecated.
 
 Would you like to convert &apos;%1&apos; to the .fzz format now or open it read-only?
@@ -2497,342 +2534,372 @@ Would you like to convert &apos;%1&apos; to the .fzz format now or open it read-
 </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="172"/>
+        <location filename="../src/mainwindow_menu.cpp" line="203"/>
         <source>The conversion process will not modify &apos;%1&apos;.</source>
         <translation>Procesem převodu se &apos;%1&apos; nemění.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="177"/>
+        <location filename="../src/mainwindow_menu.cpp" line="208"/>
         <source>Convert</source>
         <translation>Převést</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="178"/>
+        <location filename="../src/mainwindow_menu.cpp" line="209"/>
         <source>Read-only</source>
         <translation>Pouze pro čtení</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="187"/>
+        <location filename="../src/mainwindow_menu.cpp" line="218"/>
         <source>Please specify an .fzz file name to save &apos;%1&apos; to</source>
         <translation>Zadejte název souboru .fzz pro oložení &apos;%1&apos; do</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="649"/>
+        <location filename="../src/mainwindow_menu.cpp" line="682"/>
         <source>Ctrl+B</source>
         <translation>Ctrl+B</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="745"/>
+        <location filename="../src/mainwindow_menu.cpp" line="778"/>
         <source>&amp;Flip Horizontal</source>
         <translation>&amp;Překlopit vodorovně</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="746"/>
+        <location filename="../src/mainwindow_menu.cpp" line="779"/>
         <source>Flip current selection horizontally</source>
         <translation>Překlopí aktuální výběr vodorovně</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="749"/>
+        <location filename="../src/mainwindow_menu.cpp" line="782"/>
         <source>&amp;Flip Vertical</source>
         <translation>&amp;Překlopit svisle</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="750"/>
+        <location filename="../src/mainwindow_menu.cpp" line="783"/>
         <source>Flip current selection vertically</source>
         <translation>Překlopí aktuální výběr svisle</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="753"/>
+        <location filename="../src/mainwindow_menu.cpp" line="786"/>
         <source>Bring to Front</source>
         <translation>Přesunout dopředu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="754"/>
+        <location filename="../src/mainwindow_menu.cpp" line="787"/>
         <source>Shift+Ctrl+]</source>
         <translation>Shift+Ctrl+]</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="755"/>
+        <location filename="../src/mainwindow_menu.cpp" line="788"/>
         <source>Bring selected object(s) to front of their layer</source>
         <translation>Přenese vybraný(é) objekt(y) dopředu v jejich vrstvě</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="760"/>
+        <location filename="../src/mainwindow_menu.cpp" line="793"/>
         <source>Bring Forward</source>
         <translation>Posunout vpřed</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="761"/>
+        <location filename="../src/mainwindow_menu.cpp" line="794"/>
         <source>Ctrl+]</source>
         <translation>Ctrl+]</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="762"/>
+        <location filename="../src/mainwindow_menu.cpp" line="795"/>
         <source>Bring selected object(s) forward in their layer</source>
         <translation>Posune vybraný(é) objekt(y) vpřed v jejich vrstvě</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="767"/>
+        <location filename="../src/mainwindow_menu.cpp" line="800"/>
         <source>Send Backward</source>
         <translation>Posunout vzad</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="768"/>
+        <location filename="../src/mainwindow_menu.cpp" line="801"/>
         <source>Ctrl+[</source>
         <translation>Ctrl+[</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="769"/>
+        <location filename="../src/mainwindow_menu.cpp" line="802"/>
         <source>Send selected object(s) back in their layer</source>
         <translation>Posune vybraný objekt(y) vzad ve své vrstvě</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="774"/>
+        <location filename="../src/mainwindow_menu.cpp" line="807"/>
         <source>Send to Back</source>
         <translation>Přesunout dozadu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="775"/>
+        <location filename="../src/mainwindow_menu.cpp" line="808"/>
         <source>Shift+Ctrl+[</source>
         <translation>Shift+Ctrl+[</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="776"/>
+        <location filename="../src/mainwindow_menu.cpp" line="809"/>
         <source>Send selected object(s) to the back of their layer</source>
         <translation>Přesune vybraný objekt(y) dozadu ve své vrstvě</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="781"/>
+        <location filename="../src/mainwindow_menu.cpp" line="814"/>
         <source>Lock Part</source>
         <translation>Uzamknout součástku</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="782"/>
+        <location filename="../src/mainwindow_menu.cpp" line="815"/>
         <source>Prevent a part from being moved</source>
         <translation>Zabrání přesunu součástky</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="786"/>
+        <location filename="../src/mainwindow_menu.cpp" line="819"/>
+        <source>Sticky</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow_menu.cpp" line="820"/>
+        <source>If a &quot;sticky&quot; part is moved, parts on top of it are also moved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow_menu.cpp" line="824"/>
         <source>Select All Locked Parts</source>
         <translation>Vybrat všechny uzamčené součástky</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="787"/>
+        <location filename="../src/mainwindow_menu.cpp" line="825"/>
         <source>Select all parts that can&apos;t be moved</source>
         <translation>Vybere všechny součástky, které nemohou být přesunuty</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="790"/>
+        <location filename="../src/mainwindow_menu.cpp" line="828"/>
         <source>&amp;Show All Layers</source>
         <translation>&amp;Zobrazit všechny vrstvy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="791"/>
+        <location filename="../src/mainwindow_menu.cpp" line="829"/>
         <source>Show all the available layers for the current view</source>
         <translation>Zobrazí všechny dostupné vrstvy pro aktuální zobrazení</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="794"/>
+        <location filename="../src/mainwindow_menu.cpp" line="832"/>
         <source>&amp;Hide All Layers</source>
         <translation>&amp;Skrýt všechny vrstvy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="795"/>
+        <location filename="../src/mainwindow_menu.cpp" line="833"/>
         <source>Hide all the layers of the current view</source>
         <translation>Skryje všechny vrstvy aktuálního zobrazení</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="798"/>
+        <location filename="../src/mainwindow_menu.cpp" line="836"/>
         <source>&amp;Show part label</source>
         <translation>&amp;Zobrazit popisku součástky</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="799"/>
+        <location filename="../src/mainwindow_menu.cpp" line="837"/>
         <source>Show or hide the label for the selected parts</source>
         <translation>Zobrazí, nebo skryje popisek vybraných součástek</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="803"/>
+        <location filename="../src/mainwindow_menu.cpp" line="841"/>
         <source>&amp;Import...</source>
         <translation>&amp;Import...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="804"/>
+        <location filename="../src/mainwindow_menu.cpp" line="842"/>
         <source>Import a part</source>
         <translation>Importuje součástku</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="807"/>
+        <location filename="../src/mainwindow_menu.cpp" line="845"/>
         <source>&amp;Export...</source>
         <translation>&amp;Exportovat...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="808"/>
+        <location filename="../src/mainwindow_menu.cpp" line="846"/>
         <source>Export selected part</source>
         <translation>Exportuje vybranou součástku</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="811"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2468"/>
+        <location filename="../src/mainwindow_menu.cpp" line="849"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2563"/>
         <source>Add Bendpoint</source>
         <translation>Přidat bod zlomu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="812"/>
+        <location filename="../src/mainwindow_menu.cpp" line="850"/>
         <source>Add a bendpoint to the selected wire</source>
         <translation>Přidá bod zlomu vybrané propojce</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="815"/>
+        <location filename="../src/mainwindow_menu.cpp" line="853"/>
         <source>Straighten Curve</source>
         <translation>Vyrovnat křivku</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="816"/>
+        <location filename="../src/mainwindow_menu.cpp" line="854"/>
         <source>Straighten the curve of the selected wire</source>
         <translation>Vyrovná křivku vybrané propojky</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="819"/>
-        <location filename="../src/mainwindow_menu.cpp" line="820"/>
+        <location filename="../src/mainwindow_menu.cpp" line="857"/>
+        <location filename="../src/mainwindow_menu.cpp" line="858"/>
         <source>Select outdated parts</source>
         <translation>Vybrat neaktuální součástky</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="823"/>
-        <location filename="../src/mainwindow_menu.cpp" line="824"/>
+        <location filename="../src/mainwindow_menu.cpp" line="861"/>
+        <location filename="../src/mainwindow_menu.cpp" line="862"/>
         <source>Update selected parts</source>
         <translation>Aktualizovat vybrané součástky</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="827"/>
+        <location filename="../src/mainwindow_menu.cpp" line="865"/>
         <source>Open programming window</source>
         <translation>Otevřít programátorské okno</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="828"/>
+        <location filename="../src/mainwindow_menu.cpp" line="866"/>
         <source>Open microcontroller programming window</source>
         <translation>Otevře programátorské okno mikroprocesoru</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="833"/>
+        <location filename="../src/mainwindow_menu.cpp" line="871"/>
         <source>&amp;Zoom In</source>
         <translation>&amp;Zvětšit</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="834"/>
+        <location filename="../src/mainwindow_menu.cpp" line="872"/>
         <source>Ctrl++</source>
         <translation>Ctrl++</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="835"/>
+        <location filename="../src/mainwindow_menu.cpp" line="873"/>
         <source>Zoom in</source>
         <translation>Zvětšit</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="841"/>
+        <location filename="../src/mainwindow_menu.cpp" line="879"/>
         <source>Ctrl+=</source>
         <translation>Ctrl+=</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="845"/>
+        <location filename="../src/mainwindow_menu.cpp" line="883"/>
         <source>&amp;Zoom Out</source>
         <translation>&amp;Zmenšit</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="846"/>
+        <location filename="../src/mainwindow_menu.cpp" line="884"/>
         <source>Ctrl+-</source>
         <translation>Ctrl+-</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="847"/>
+        <location filename="../src/mainwindow_menu.cpp" line="885"/>
         <source>Zoom out</source>
         <translation>Zmenšit</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="850"/>
+        <location filename="../src/mainwindow_menu.cpp" line="888"/>
         <source>&amp;Fit in Window</source>
         <translation>&amp;Přizpůsobit oknu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="851"/>
+        <location filename="../src/mainwindow_menu.cpp" line="889"/>
         <source>Ctrl+0</source>
         <translation>Ctrl+0</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="852"/>
+        <location filename="../src/mainwindow_menu.cpp" line="890"/>
         <source>Fit in window</source>
         <translation>Přizpůsobí oknu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="855"/>
+        <location filename="../src/mainwindow_menu.cpp" line="893"/>
         <source>&amp;Actual Size</source>
         <translation>&amp;Aktuální velikost</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="856"/>
+        <location filename="../src/mainwindow_menu.cpp" line="894"/>
         <source>Actual (real world physical) size</source>
         <translation>Aktuální (skutečná fyzická) velikost</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="859"/>
+        <location filename="../src/mainwindow_menu.cpp" line="897"/>
         <source>100% Size</source>
         <translation>100% Velikost</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="860"/>
+        <location filename="../src/mainwindow_menu.cpp" line="898"/>
         <source>Shift+Ctrl+0</source>
         <translation>Shift+Ctrl+0</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="861"/>
+        <location filename="../src/mainwindow_menu.cpp" line="899"/>
         <source>100% (pixel) size</source>
         <translation>100% (pixelů) velikost</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="864"/>
+        <location filename="../src/mainwindow_menu.cpp" line="902"/>
         <source>Align to Grid</source>
         <translation>Přichytit k mřížce</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="865"/>
+        <location filename="../src/mainwindow_menu.cpp" line="903"/>
         <source>Align items to grid when dragging</source>
         <translation>Při přetažení přichytí položky k mřížce</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="869"/>
+        <location filename="../src/mainwindow_menu.cpp" line="907"/>
         <source>Show Grid</source>
         <translation>Zobrazit mřížku</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="870"/>
+        <location filename="../src/mainwindow_menu.cpp" line="908"/>
         <source>Show the grid</source>
         <translation>Zobrazí mřížku</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1132"/>
-        <location filename="../src/mainwindow_menu.cpp" line="1163"/>
-        <location filename="../src/mainwindow_menu.cpp" line="1175"/>
+        <location filename="../src/mainwindow_menu.cpp" line="912"/>
+        <source>Set Grid Size...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow_menu.cpp" line="913"/>
+        <source>Set the size of the grid in this view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow_menu.cpp" line="916"/>
+        <source>Set Background Color...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow_menu.cpp" line="917"/>
+        <source>Set the background color of this view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow_menu.cpp" line="1181"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1212"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1224"/>
         <source>&amp;Routing</source>
         <translation>&amp;Routování</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1702"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1782"/>
         <source>Actual Size</source>
         <translation>Aktuální velikost</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1703"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1783"/>
         <source>It doesn&apos;t seem to be possible to automatically determine the actual physical size of the monitor, so &apos;actual size&apos; as currently implemented is only a guess. Your best bet would be to drag out a ruler part, then place a real (physical) ruler on top and zoom until they match up.</source>
         <translation>Zdá se, že není možné automaticky určit skutečnou, fyzickou velikost monitoru, takže současně implementovaná &apos;aktuální velikost&apos; je pouhý odhad. Nejlepší by bylo použít funkci pravítka, poté  přes něj umístit skutečné pravítko (fyzické) a  měnit velikost, dokud se neshodují.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1790"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1870"/>
         <source>Parts Editor</source>
         <translation>Editor součástek</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1791"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1871"/>
         <source>A new Parts Editor is under construction. The old Parts Editor is still available, but the code is pretty buggy. So use it at your own risk.
 
 Open the old Parts Editor?</source>
@@ -2841,708 +2908,758 @@ Open the old Parts Editor?</source>
 Otevřít starý editor součástek?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2152"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2232"/>
         <source>&amp;Create trace from ratsnest</source>
         <translation>&amp;Vytvořit spoj ze sítě propojů</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2153"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2233"/>
         <source>Create a trace from the ratsnest line</source>
         <translation>Vytvoří spoj z propoje</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2156"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2236"/>
         <source>&amp;Create wire from ratsnest</source>
         <translation>&amp;Vytvořit propojku ze sítě propojů</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2157"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2237"/>
         <source>Create a wire from the ratsnest line</source>
         <translation>Vytvoří prostý propoj z propojky</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2176"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2256"/>
         <source>Select All Wires</source>
         <translation>Vybrat všechny propojky</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2177"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2257"/>
         <source>Select all wires</source>
         <translation>Vybere všechny propojky</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2188"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2268"/>
         <source>Select All &quot;Don&apos;t Autoroute&quot; Traces</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2192"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2272"/>
         <source>Select All Autoroutable Traces</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2193"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2273"/>
         <source>Select all trace wires that can be changed during autorouting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2220"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2300"/>
         <source>Choose Ground Fill Seed(s)...</source>
         <translation>Vybrat plochu(y) zemní výplně...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2224"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2304"/>
         <source>Set Ground Fill Seed</source>
         <translation>Nastaví plochu zemní výplně</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2225"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2305"/>
         <source>Treat this connector and its connections as a &apos;ground&apos; during ground fill.</source>
         <translation>Během vytváření zemní výplně považovat tento konektor a jeho připojení jako &quot;zem&quot;.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2229"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2309"/>
         <source>Clear Ground Fill Seeds</source>
         <translation>Vymazat plochy zemní výplně</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2230"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2310"/>
         <source>Clear ground fill seeds--enable copper fill only.</source>
         <translation>Vymaže plochy zemní výplně--povolí pouze výplň mědí.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2570"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2479"/>
+        <source>jumpers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow_menu.cpp" line="2483"/>
+        <source>copperfill</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow_menu.cpp" line="2487"/>
+        <source>vias</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow_menu.cpp" line="2665"/>
         <source>Generating %1 fill...</source>
         <translation>Vytváření %1 výplňl...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2570"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2665"/>
         <source>ground</source>
         <translation>zemní</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2570"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2665"/>
         <source>copper</source>
         <translation>měděnou</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2621"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2722"/>
         <source>Copper Fill Traces</source>
         <translation>Měděná výplň spojů</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2622"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2723"/>
         <source>There are traces connected to copper fill which will also be removed. Proceed?</source>
         <translation>Spoje propojené s měděnou výplní budou rovněž odstraněny. Pokračovat?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3084"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3205"/>
         <source>unable to find replacement for %1.
 </source>
         <translation>nelze nalézt náhradu pro %1.
 </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="874"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3306"/>
+        <source>OK</source>
+        <translation type="unfinished">OK</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow_menu.cpp" line="3328"/>
+        <source>Set the grid size for %1.</source>
+        <translation type="unfinished">Nastaví velikost mřížky pro %1.</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow_menu.cpp" line="3335"/>
+        <source>Grid Size:</source>
+        <translation type="unfinished">Velikost mřížky:</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow_menu.cpp" line="3349"/>
+        <source>in</source>
+        <translation type="unfinished">palce</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow_menu.cpp" line="3352"/>
+        <source>mm</source>
+        <translation type="unfinished">mm</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow_menu.cpp" line="3361"/>
+        <source>Restore Default</source>
+        <translation type="unfinished">Obnovit výchozí</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow_menu.cpp" line="3647"/>
+        <source>%1 background Color</source>
+        <translation type="unfinished">pozadí %1</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow_menu.cpp" line="920"/>
         <source>&amp;Show Breadboard</source>
         <translation>&amp;Zobrazit montážní desku</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="725"/>
+        <location filename="../src/mainwindow_menu.cpp" line="758"/>
         <source>Rotate 45° Clockwise</source>
         <translation>Otočit o 45° vpravo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="729"/>
+        <location filename="../src/mainwindow_menu.cpp" line="762"/>
         <source>Rotate 90° Clockwise</source>
         <translation>Otočit o 90° vpravo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="733"/>
+        <location filename="../src/mainwindow_menu.cpp" line="766"/>
         <source>Rotate 180°</source>
         <translation>Otočit o 180°</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="737"/>
+        <location filename="../src/mainwindow_menu.cpp" line="770"/>
         <source>Rotate 90° Counter Clockwise</source>
         <translation>Otočit o 90° vlevo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="741"/>
+        <location filename="../src/mainwindow_menu.cpp" line="774"/>
         <source>Rotate 45° Counter Clockwise</source>
         <translation>Otočit o 45° vlevo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="875"/>
+        <location filename="../src/mainwindow_menu.cpp" line="921"/>
         <source>Ctrl+1</source>
         <translation>Ctrl+1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="876"/>
+        <location filename="../src/mainwindow_menu.cpp" line="922"/>
         <source>Show the breadboard view</source>
         <translation>Zobrazí pohled na montážní desku</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="879"/>
+        <location filename="../src/mainwindow_menu.cpp" line="925"/>
         <source>&amp;Show Schematic</source>
         <translation>&amp;Zobrazit schéma</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="880"/>
+        <location filename="../src/mainwindow_menu.cpp" line="926"/>
         <source>Ctrl+2</source>
         <translation>Ctrl+2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="881"/>
+        <location filename="../src/mainwindow_menu.cpp" line="927"/>
         <source>Show the schematic view</source>
         <translation>Zobrazí pohled na schéma</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="884"/>
+        <location filename="../src/mainwindow_menu.cpp" line="930"/>
         <source>&amp;Show PCB</source>
         <translation>&amp;Zobrazit PCB</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="885"/>
+        <location filename="../src/mainwindow_menu.cpp" line="931"/>
         <source>Ctrl+3</source>
         <translation>Ctrl+3</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="886"/>
+        <location filename="../src/mainwindow_menu.cpp" line="932"/>
         <source>Show the PCB view</source>
         <translation>Zobrazí pohled na PCB</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="889"/>
+        <location filename="../src/mainwindow_menu.cpp" line="935"/>
         <source>Show Parts Bin Icon View</source>
         <translation>Zobrazit součástky zásobníku jako ikony</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="890"/>
+        <location filename="../src/mainwindow_menu.cpp" line="936"/>
         <source>Display the parts bin in an icon view</source>
         <translation>Zobrazí zásobník součástek jako ikony</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="893"/>
+        <location filename="../src/mainwindow_menu.cpp" line="939"/>
         <source>Show Parts Bin List View</source>
         <translation>Zobrazit součástky zásobníku jako seznam</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="894"/>
+        <location filename="../src/mainwindow_menu.cpp" line="940"/>
         <source>Display the parts bin in a list view</source>
         <translation>Zobrazí zásobník součástek jako seznam</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="900"/>
+        <location filename="../src/mainwindow_menu.cpp" line="946"/>
         <source>&amp;Minimize</source>
         <translation>&amp;Minimalizovat</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="901"/>
+        <location filename="../src/mainwindow_menu.cpp" line="947"/>
         <source>Ctrl+M</source>
         <translation>Ctrl+M</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="902"/>
+        <location filename="../src/mainwindow_menu.cpp" line="948"/>
         <source>Minimize current window</source>
         <translation>Minimalizuje aktuální okno</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="914"/>
+        <location filename="../src/mainwindow_menu.cpp" line="960"/>
         <source>Debugger Output</source>
         <translation>Výstup debuggeru</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="920"/>
+        <location filename="../src/mainwindow_menu.cpp" line="966"/>
         <source>Online Tutorials</source>
         <translation>Online výuka</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="921"/>
+        <location filename="../src/mainwindow_menu.cpp" line="967"/>
         <source>Ctrl+?</source>
         <translation>Ctrl+?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="922"/>
+        <location filename="../src/mainwindow_menu.cpp" line="968"/>
         <source>Open Fritzing help</source>
         <translation>Otevře nápovědu Fritzingu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="925"/>
+        <location filename="../src/mainwindow_menu.cpp" line="971"/>
         <source>Donate to Fritzing</source>
         <translation>Podpořte Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="926"/>
+        <location filename="../src/mainwindow_menu.cpp" line="972"/>
         <source>Open Fritzing donation web page</source>
         <translation>Otevře web stránku daru pro Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="929"/>
+        <location filename="../src/mainwindow_menu.cpp" line="975"/>
         <source>Online Projects Gallery</source>
         <translation>Online galerie projektů</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="930"/>
+        <location filename="../src/mainwindow_menu.cpp" line="976"/>
         <source>Open Fritzing examples</source>
         <translation>Otevře Fritzing příklady</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="933"/>
+        <location filename="../src/mainwindow_menu.cpp" line="979"/>
         <source>Online Parts Reference</source>
         <translation>Online reference součástek</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="934"/>
+        <location filename="../src/mainwindow_menu.cpp" line="980"/>
         <source>Open Parts Reference</source>
         <translation>Otevře reference součástek</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="937"/>
+        <location filename="../src/mainwindow_menu.cpp" line="983"/>
         <source>First Time Help</source>
         <translation>První nápověda</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="938"/>
+        <location filename="../src/mainwindow_menu.cpp" line="984"/>
         <source>Show or Hide First Time Help</source>
         <translation>Zobrazí nebo skryje první nápovědu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="947"/>
+        <location filename="../src/mainwindow_menu.cpp" line="993"/>
         <source>Check for updates...</source>
         <translation>Kontrola aktualizace...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="948"/>
+        <location filename="../src/mainwindow_menu.cpp" line="994"/>
         <source>Check whether a newer version of Fritzing is available for download</source>
         <translation>Zkontroluje, zda není ke stažení novější verze Fritzingu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="951"/>
+        <location filename="../src/mainwindow_menu.cpp" line="997"/>
         <source>&amp;About</source>
         <translation>&amp;O programu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="956"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1002"/>
         <source>Tips, Tricks and Shortcuts</source>
         <translation>Tipy, triky a klávesové zkratky</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="957"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1003"/>
         <source>Display some handy Fritzing tips and tricks</source>
         <translation>Zobrazí některé užitečné tipy a triky Fritzingu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="960"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1006"/>
         <source>&amp;About Qt</source>
         <translation>&amp;O Qt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="961"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1007"/>
         <source>Show Qt&apos;s about box</source>
         <translation>Zobrazí okno o Qt&apos;s</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="964"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1010"/>
         <source>Report a bug...</source>
         <translation>Nahlásit chybu...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="965"/>
-        <location filename="../src/mainwindow_menu.cpp" line="969"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1011"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1015"/>
         <source>Report a but you&apos;ve found in Fritzing</source>
         <translation>Nahlásí chybu, kterou jste nalezli ve Fritzingu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="968"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1014"/>
         <source>Enable debugging log</source>
         <translation>Povolit debugging log</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="974"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1020"/>
         <source>&amp;Import parts and bins from old version...</source>
         <translation>&amp;Import součástek a zásobníků z předchozích verzí...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="975"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1021"/>
         <source>Import parts and bins from previous installation</source>
         <translation>Importuje součástky a zásobníky z předchozích instalací</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="981"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1027"/>
         <source>&amp;File</source>
         <translation>&amp;Soubor</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="998"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1044"/>
         <source>&amp;Export</source>
         <translation>&amp;Exportovat</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1019"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1065"/>
         <source>as Image</source>
         <translation>jako obrázek</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1027"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1073"/>
         <source>for Production</source>
         <translation>pro výrobu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1060"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1106"/>
         <source>&amp;Part</source>
         <translation>&amp;Součástka</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1073"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1119"/>
         <source>Raise and Lower</source>
         <translation>Řazení</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1103"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1150"/>
         <source>&amp;View</source>
         <translation>&amp;Zobrazení</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1125"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1174"/>
         <source>&amp;Window</source>
         <translation>&amp;Okno</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1137"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2208"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2571"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1186"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2288"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2666"/>
         <source>Ground Fill</source>
         <translation>Zemnící výplň</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1186"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1235"/>
         <source>&amp;Help</source>
         <translation>&amp;Nápověda</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1380"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1429"/>
         <source>Delete Ratsnest Line</source>
         <translation>Vymazat propojovací čáru</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1383"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1432"/>
         <source>Delete Wire</source>
         <translation>Vymazat propojku</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2132"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2212"/>
         <source>Shift+Ctrl+A</source>
         <translation>Shift+Ctrl+A</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2139"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2219"/>
         <source>Shift+Ctrl+3</source>
         <translation>Shift+Ctrl+3</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2144"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2224"/>
         <source>Shift+Ctrl+2</source>
         <translation>Shift+Ctrl+2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2149"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2229"/>
         <source>Shift+Ctrl+1</source>
         <translation>Shift+Ctrl+1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2161"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2241"/>
         <source>Do not autoroute</source>
         <translation>Neprovádět autoroutování</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2162"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2242"/>
         <source>When autorouting, do not rip up this trace wire, via, or jumper item</source>
         <translation>Při autoroutingu se nezničí tento propojovací spoj, průchod, nebo propojku</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2168"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2248"/>
         <source>Move to other side of the board</source>
         <translation>Přesunout na druhou stranu desky</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2169"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2249"/>
         <source>Move selected traces to the other side of the board (note: the &apos;first&apos; trace will be moved and the rest will follow to the same side)</source>
         <translation>Přesunoue vybrané spoje na druhou stranu desky (Pozn.: &quot;první&quot; stopa bude přesunuta a ostatní budou následovat na stejnou stranu)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2180"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2260"/>
         <source>Select All CopperFill</source>
         <translation>Vybrat všechny měděné výplně</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2181"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2261"/>
         <source>Select all copper fill items</source>
         <translation>Vybere všechny položky měděné výplně</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2197"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2277"/>
         <source>Select all jumper item parts</source>
         <translation>Vybrat všechny položky propojek součástek</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2200"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2280"/>
         <source>Select All Vias</source>
         <translation>Vybrat všechny průchodky</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2201"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2281"/>
         <source>Select all via parts</source>
         <translation>Vybere všechny průchodky součástek</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2209"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2289"/>
         <source>Fill empty regions of the copper layer--fill will include all traces connected to a GROUND</source>
         <translation>Vyplní prázdné oblasti měděné vrstvy--včetně všech spojů připojených k ZEMI</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2213"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2293"/>
         <source>Fill empty regions of the copper layer--not including traces connected to a GROUND</source>
         <translation>Vyplní prázdné oblasti měděné vrstvy--s vyjímkou všech spojů připojených k ZEMI</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2221"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2301"/>
         <source>Fill empty regions of the copper layer--fill will include all traces connected to the seeds</source>
         <translation>Vyplní prázdné oblasti měděné vrstvy--výplň bude obsahovat všechny spoje připojené k plochám</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2235"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2315"/>
         <source>Shift+Ctrl+D</source>
         <translation>Shift+Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2238"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2318"/>
         <source>Autorouter settings...</source>
         <translation>Nastavení Autorouteru...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2239"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2319"/>
         <source>Set autorouting parameters...</source>
         <translation>Nastaví parametry autoroutingu...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1551"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1631"/>
         <source>Delete</source>
         <translation>Vymazat</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1951"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2031"/>
         <source>Page Setup</source>
         <translation>Nastavení stránky</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1956"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2036"/>
         <source>Sorry, &quot;%1&quot; has not been implemented yet</source>
         <translation>Promiňte, funkce %1 nebyla dosud implementována</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="823"/>
+        <location filename="../src/mainwindow_export.cpp" line="924"/>
         <source>This will soon provide an export of your Fritzing sketch to the EAGLE layout software. If you&apos;d like to have more exports to your favourite EDA tool, please let us know, or contribute.</source>
         <translation>Tato funkce brzy poskytne export návrhu Fritzing do EAGLE PCB software. Pokud byste chtěli mít více exportů do svých oblíbených nástrojů EDA, prosím dejte nám vědět, nebo nám přispějte.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="887"/>
+        <location filename="../src/mainwindow_export.cpp" line="988"/>
         <source>Export SVG...</source>
         <translation>Exportovat SVG...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="1040"/>
+        <location filename="../src/mainwindow_export.cpp" line="1141"/>
         <source>Export Bill of Materials (BoM)...</source>
         <translation>Export soupisky materiálu (BoM)...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="1064"/>
+        <location filename="../src/mainwindow_export.cpp" line="1165"/>
         <source>Unable to save BOM file, but the text is on the clipboard.</source>
         <translation>Nelze uložit soubor BOM, ale text je uložen ve schránce.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="1156"/>
+        <location filename="../src/mainwindow_export.cpp" line="1257"/>
         <source>Export Netlist...</source>
         <translation>Export netlistu...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2130"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2210"/>
         <source>&amp;Autoroute</source>
         <translation>&amp;Automaticky routovat</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2131"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2211"/>
         <source>Autoroute...</source>
         <translation>Automaticky routuje...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2137"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2138"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2217"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2218"/>
         <source>Set both copper layers clickable</source>
         <translation>Nastaví obě měděné vrstvy klikatelné</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2142"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2143"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2222"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2223"/>
         <source>Set copper top layer clickable</source>
         <translation>Nastaví horní měděnou vrstvu klikatelnou</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2147"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2148"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2227"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2228"/>
         <source>Set copper bottom layer clickable</source>
         <translation>Nastaví spodní měděnou vrstvu klikatelnou</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2172"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2252"/>
         <source>Select All Traces</source>
         <translation>Vybere všechny spoje</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2173"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2253"/>
         <source>Select all trace wires</source>
         <translation>Vybere všechny spoje</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2184"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2264"/>
         <source>Force Update Routing Status and Ratsnests</source>
         <translation>Provedení aktualizace routingu a propojení</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2185"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2265"/>
         <source>Recalculate routing status and ratsnest wires (in case the auto-update isn&apos;t working correctly)</source>
         <translation>Přepočítat stav routingu a propojení propojek (v případě, že autoaktualizace nepracuje správně)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2189"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2269"/>
         <source>Select all trace wires excluded from autorouting</source>
         <translation>Vybere všechny spoje vyjmuté z autoroutingu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2196"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2276"/>
         <source>Select All Jumpers</source>
         <translation>Vybrat všechny propojky</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2204"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2284"/>
         <source>Tidy Wires</source>
         <translation>Uspořádat propoje</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2205"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2285"/>
         <source>Tidy selected wires</source>
         <translation>Uspořádá vybrané propoje</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2212"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2571"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2292"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2666"/>
         <source>Copper Fill</source>
         <translation>Měděná výplň</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2216"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2296"/>
         <source>Remove Copper Fill</source>
         <translation>Odstranit měděnou výplň</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2217"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2297"/>
         <source>Remove the copper fill</source>
         <translation>Odstraní měděnou výplň</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2233"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2313"/>
         <source>Design Rules Check</source>
         <translation>Kontrola pravidel návrhu (DRC)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2234"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2314"/>
         <source>Select any parts that are too close together for safe board production (w/in 10 mil)</source>
         <translation>Vybere všechny součástky, které jsou příliš blízko u sebe pro bezpečnou výrobu desky (š/in 10 mil)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2249"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2329"/>
         <source>Copper Top and Copper Bottom layers are both active</source>
         <translation>Obě měděné vrstvy, horní i spodní, jsou aktivní</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2298"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2378"/>
         <source>Order a PCB...</source>
         <translation>Objednat PCB...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2299"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2379"/>
         <source>Order a PCB created from your sketch--from fabulous Fritzing Fab</source>
         <translation>Objedná PCB, vytvořené z Vašeho návrhu - v báječném Fritzing Fab</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2259"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2339"/>
         <source>Copper Top layer is active</source>
         <translation>Horní měděná vrstva je aktivní</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2269"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2349"/>
         <source>Copper Bottom layer is active</source>
         <translation>Spodní měděná vrstva je aktivní</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2307"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2395"/>
         <source>Autorouting...</source>
         <translation>Autorouting...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2312"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2400"/>
         <source>Autorouting Progress...</source>
         <translation>Probíhá autorouting...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2462"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2557"/>
         <source>Remove Bendpoint</source>
         <translation>Odstranit bod zlomu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2503"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2598"/>
         <source>Please choose the previous Fritzing folder...</source>
         <translation>Vyberte předchozí složku Fritzingu...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2510"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2605"/>
         <source>The folder &quot;%1&quot; isn&apos;t a Friting installation folder</source>
         <translation>Složka %1 není instalační složka Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2544"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2639"/>
         <source>You will have to restart Fritzing in order to use the imported parts</source>
         <translation>Pro použití importovaných součástek musí být Fritzing restartován</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2634"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2735"/>
         <source>Remove copper fill</source>
         <translation>Odstranit měděnou výplň</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2687"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2788"/>
         <source>&amp;Wire Color</source>
         <translation>&amp;Barva propojky</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2941"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3062"/>
         <source>Launch %1...</source>
         <translation>Spustit %1...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3022"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3143"/>
         <source>No outdated parts found.
 All your parts are up-to-date.</source>
         <translation>Nebyly nalezeny žádné neaktuální součástky.
 Všechny Vaše součástky jsou aktuální.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3027"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3148"/>
         <source>Outdated parts</source>
         <translation>Neaktuální součástky</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/mainwindow_menu.cpp" line="3028"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3149"/>
         <source>Found %n outdated parts. Do you want to update them now?</source>
         <translation>
             <numerusform>Nalezena %n neaktuální součástka. Chcete ji nyní aktualizovat?</numerusform>
@@ -3551,14 +3668,14 @@ Všechny Vaše součástky jsou aktuální.</translation>
         </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3145"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3266"/>
         <source>Successfully updated %1 part(s).
 Please check all views for potential side-effects.</source>
         <translation>Úspěšně aktualizováno %1 součástek.
 Zkontrolujte, všechny pohledy pro potenciální vedlejší účinky.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3140"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3261"/>
         <source>Update %1 part(s)</source>
         <translation>Aktualizace %1 součástek</translation>
     </message>
@@ -3657,51 +3774,66 @@ Důvod: %2 (chyb.kód %3)</translation>
         <translation>Vytvořit spoj ze sítě propojů</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="288"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="299"/>
         <source>Click this connector to drag out a new trace.</source>
         <translation>Klikněte na tento pin pro vytažení nového spoje.</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="742"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1301"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="746"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1315"/>
         <source>Resize board to %1 %2</source>
         <translation>Změnit velikost desky na %1 %2</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1133"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1148"/>
         <source>Change trace layer</source>
         <translation>Změnit vrstvu spoje</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1639"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1644"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1671"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1684"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1696"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1717"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1734"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1772"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1777"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1786"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1658"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1663"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1689"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1702"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1714"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1735"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1752"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1791"/>
         <location filename="../src/sketch/pcbsketchwidget.cpp" line="1796"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1817"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1833"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1803"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1813"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1834"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1850"/>
         <source>Fritzing</source>
         <translation>Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1640"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1773"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1659"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1792"/>
         <source>Your sketch does not have a board yet!  Please add a PCB in order to use copper fill.</source>
         <translation>Váš návrh ještě neobsahuje desku! Přidejte PCB Aby bylo možné použít měděnou výplň.</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1645"/>
-        <source>Copper Fill: multiple boards are not supported.</source>
-        <translation>Měděná výplň: použití více desek není podporováno.</translation>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1664"/>
+        <source>%1 Fill: please select the board you want to apply fill to.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1656"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1664"/>
+        <source>Ground</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1664"/>
+        <source>Copper</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1797"/>
+        <source>Copper fill: please select only the board you want to fill.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1674"/>
         <source>Please designate one or more ground fill seeds before doing a ground fill.
 
 </source>
@@ -3710,45 +3842,40 @@ Důvod: %2 (chyb.kód %3)</translation>
 </translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1671"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1796"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1689"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1813"/>
         <source>Fritzing error: unable to render board svg (1).</source>
         <translation>Chyba Fritzingu: Nelze renderovat desku v SVG (1).</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1684"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1696"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1817"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1702"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1714"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1834"/>
         <source>Fritzing error: unable to render copper svg (1).</source>
         <translation>Chyba Fritzingu: Nelze renderovat měď v SVG (1).</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1717"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1735"/>
         <source>Fritzing error: unable to write copper fill (1).</source>
         <translation>Chyba Fritzingu: Nelze zapsat měděnou výplň (1).</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1734"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1752"/>
         <source>Fritzing error: unable to write copper fill (2).</source>
         <translation>Chyba Fritzingu: Nelze zapsat měděnou výplň (2).</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1778"/>
-        <source>Copper fill: multiple boards are not supported.</source>
-        <translation>Měděná výplň: použití více desek není podporováno.</translation>
-    </message>
-    <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1786"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1803"/>
         <source>Unable to create copper fill--probably the part wasn&apos;t dropped onto the PCB.</source>
         <translation>Nelze vytvořit měděnou výplň - pravděpodobně součástka nebyla vloženal na PCB.</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1833"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1850"/>
         <source>Unable to create copper fill--possibly the part was dropped onto another part or wire rather than the actual PCB.</source>
         <translation>Nelze vytvořit měděnou výplň - součástka byla pravděpodobně vložena na jinou část nebo propoj, spíše než aktuální PCB.</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2188"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2212"/>
         <source>Clear ground fill seeds</source>
         <translation>Vymazat plochy zemní výplně</translation>
     </message>
@@ -3756,38 +3883,38 @@ Důvod: %2 (chyb.kód %3)</translation>
 <context>
     <name>Pad</name>
     <message>
-        <location filename="../src/items/pad.cpp" line="167"/>
+        <location filename="../src/items/pad.cpp" line="197"/>
         <source>shape</source>
         <translation>tvar</translation>
     </message>
     <message>
-        <location filename="../src/items/pad.cpp" line="176"/>
+        <location filename="../src/items/pad.cpp" line="207"/>
         <source>center</source>
         <translation>střed</translation>
     </message>
     <message>
-        <location filename="../src/items/pad.cpp" line="177"/>
+        <location filename="../src/items/pad.cpp" line="208"/>
         <source>north</source>
         <translation>sever</translation>
     </message>
     <message>
-        <location filename="../src/items/pad.cpp" line="178"/>
+        <location filename="../src/items/pad.cpp" line="209"/>
         <source>east</source>
         <translation>východ</translation>
     </message>
     <message>
-        <location filename="../src/items/pad.cpp" line="179"/>
+        <location filename="../src/items/pad.cpp" line="210"/>
         <source>south</source>
         <translation>jih</translation>
     </message>
     <message>
-        <location filename="../src/items/pad.cpp" line="180"/>
+        <location filename="../src/items/pad.cpp" line="211"/>
         <source>west</source>
         <translation>západ</translation>
     </message>
     <message>
-        <location filename="../src/items/pad.cpp" line="192"/>
-        <location filename="../src/items/pad.cpp" line="315"/>
+        <location filename="../src/items/pad.cpp" line="223"/>
+        <location filename="../src/items/pad.cpp" line="313"/>
         <source>connect to</source>
         <translation>propojit s</translation>
     </message>
@@ -3795,29 +3922,29 @@ Důvod: %2 (chyb.kód %3)</translation>
 <context>
     <name>PaletteItem</name>
     <message>
-        <location filename="../src/items/paletteitem.cpp" line="564"/>
+        <location filename="../src/items/paletteitem.cpp" line="560"/>
         <source>Edit Pin Labels</source>
         <translation>Upravit popisku pinu</translation>
     </message>
     <message>
-        <location filename="../src/items/paletteitem.cpp" line="582"/>
-        <location filename="../src/items/paletteitem.cpp" line="593"/>
-        <location filename="../src/items/paletteitem.cpp" line="617"/>
+        <location filename="../src/items/paletteitem.cpp" line="578"/>
+        <location filename="../src/items/paletteitem.cpp" line="589"/>
+        <location filename="../src/items/paletteitem.cpp" line="613"/>
         <source>Fritzing</source>
         <translation>Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/items/paletteitem.cpp" line="583"/>
+        <location filename="../src/items/paletteitem.cpp" line="579"/>
         <source>Unable to proceed; unable to find top level view.</source>
         <translation>Nelze pokračovat, nelze najít nejvyšší úroveň zobrazení.</translation>
     </message>
     <message>
-        <location filename="../src/items/paletteitem.cpp" line="594"/>
+        <location filename="../src/items/paletteitem.cpp" line="590"/>
         <source>Unable to proceed; part connectors do no have standard IDs.</source>
         <translation>Nelze pokračovat, piny součástky nemají standardní ID.</translation>
     </message>
     <message>
-        <location filename="../src/items/paletteitem.cpp" line="618"/>
+        <location filename="../src/items/paletteitem.cpp" line="614"/>
         <source>Label mismatch.  Nothing was saved.</source>
         <translation>Popisek nesoulhlasí. Nic nebylo uloženo.</translation>
     </message>
@@ -4520,91 +4647,90 @@ Poznámka: Během této relace se již toto varování nebude opakovat.</transla
 <context>
     <name>PrefsDialog</name>
     <message>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="83"/>
+        <location filename="../src/dialogs/prefsdialog.cpp" line="80"/>
         <source>General</source>
         <translation>Všeobecné</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="98"/>
+        <location filename="../src/dialogs/prefsdialog.cpp" line="95"/>
         <source>Cancel</source>
         <translation>Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="99"/>
+        <location filename="../src/dialogs/prefsdialog.cpp" line="96"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="175"/>
+        <location filename="../src/dialogs/prefsdialog.cpp" line="156"/>
         <source>Mouse Wheel Behavior</source>
         <translation>Chování kolečka myši</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="181"/>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="384"/>
+        <location filename="../src/dialogs/prefsdialog.cpp" line="162"/>
+        <location filename="../src/dialogs/prefsdialog.cpp" line="365"/>
         <source>Command</source>
         <translation>Příkaz</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="183"/>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="386"/>
+        <location filename="../src/dialogs/prefsdialog.cpp" line="164"/>
+        <location filename="../src/dialogs/prefsdialog.cpp" line="367"/>
         <source>Control</source>
         <translation>Řízení</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="191"/>
+        <location filename="../src/dialogs/prefsdialog.cpp" line="172"/>
         <source>Change Wheel Behavior</source>
         <translation>Změnit chování kolečka myši</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="201"/>
+        <location filename="../src/dialogs/prefsdialog.cpp" line="182"/>
         <source>Autosave</source>
         <translation>Automatické ukládání</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="206"/>
+        <location filename="../src/dialogs/prefsdialog.cpp" line="187"/>
         <source>Autosave every:</source>
         <translation>Automaticky uložit každých:</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="219"/>
+        <location filename="../src/dialogs/prefsdialog.cpp" line="200"/>
         <source>minutes</source>
         <translation>minut</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="234"/>
+        <location filename="../src/dialogs/prefsdialog.cpp" line="215"/>
         <source>Language</source>
         <translation>Jazyk</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="263"/>
+        <location filename="../src/dialogs/prefsdialog.cpp" line="244"/>
         <source>Colors</source>
         <translation>Barvy</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="271"/>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="283"/>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="528"/>
+        <location filename="../src/dialogs/prefsdialog.cpp" line="252"/>
+        <location filename="../src/dialogs/prefsdialog.cpp" line="264"/>
         <source>%1 (click to change...)</source>
         <translation>%1 (kliknout pro změnu...)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="296"/>
+        <location filename="../src/dialogs/prefsdialog.cpp" line="277"/>
         <source>Debug</source>
         <translation>Debug</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="336"/>
+        <location filename="../src/dialogs/prefsdialog.cpp" line="317"/>
         <source>Connected Highlight</source>
         <translation>Zvýraznění propojených</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="352"/>
+        <location filename="../src/dialogs/prefsdialog.cpp" line="333"/>
         <source>Unconnected Highlight</source>
         <translation>Zvýraznění nepropojených</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="392"/>
+        <location filename="../src/dialogs/prefsdialog.cpp" line="373"/>
         <source>no keys down = scroll
 shift key swaps scroll axis
 Alt or %1 key = zoom</source>
@@ -4613,7 +4739,7 @@ klávesa SHIFT přepne posun osy
 Klávesa Alt nebo klávesa %1 = zvětšení</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="395"/>
+        <location filename="../src/dialogs/prefsdialog.cpp" line="376"/>
         <source>no keys down = zoom
 Alt or %1 key = scroll
 shift key swaps scroll axis</source>
@@ -4622,52 +4748,12 @@ klávesa SHIFT přepne posun osy
 Klávesa Alt nebo klávesa %1 = posunout</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="411"/>
-        <source>Align-to-Grid size</source>
-        <translation>Velikost mřížky přichycení</translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="415"/>
-        <source>Set the grid size for %1.</source>
-        <translation>Nastaví velikost mřížky pro %1.</translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="422"/>
-        <source>Grid Size:</source>
-        <translation>Velikost mřížky:</translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="436"/>
-        <source>in</source>
-        <translation>palce</translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="439"/>
-        <source>mm</source>
-        <translation>mm</translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="448"/>
-        <source>Restore Default</source>
-        <translation>Obnovit výchozí</translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="525"/>
-        <source>Background color</source>
-        <translation>Barva pozadí</translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="547"/>
-        <source>%1 background Color</source>
-        <translation>pozadí %1</translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="573"/>
+        <location filename="../src/dialogs/prefsdialog.cpp" line="392"/>
         <source>Curvy vs. straight wires</source>
         <translation>Křivky vs. rovné propojky</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="576"/>
+        <location filename="../src/dialogs/prefsdialog.cpp" line="395"/>
         <source>When you mouse-down and drag on a wire or the leg of a part (as opposed to a connector or a bendpoint) do you want to change the curvature of the wire (or leg) or drag out a new bendpoint?
 
 This checkbox sets the default behavior. You can switch back to the non-default behavior by holding down the Control key (Mac: Command key) when you drag.
@@ -5018,46 +5104,46 @@ Toto políčko nastavuje výchozí chování. Na opačný stav chování můžet
         <translation>Předvolby</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="239"/>
+        <location filename="../src/dialogs/prefsdialog.cpp" line="220"/>
         <source>&lt;b&gt;Language&lt;/b&gt;</source>
         <translation>&lt;b&gt;Jazyk&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="253"/>
+        <location filename="../src/dialogs/prefsdialog.cpp" line="234"/>
         <source>Please note that a new language setting will not take effect until the next time you run Fritzing.</source>
         <translation>Mějte na paměti, že nové nastavení jazyka se projeví až při dalším spuštění Fritzingu.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="268"/>
+        <location filename="../src/dialogs/prefsdialog.cpp" line="249"/>
         <source>&lt;b&gt;Connected highlight color&lt;/b&gt;</source>
         <translation>&lt;b&gt;Barva zvýraznění propojených&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="280"/>
+        <location filename="../src/dialogs/prefsdialog.cpp" line="261"/>
         <source>&lt;b&gt;Unconnected highlight color&lt;/b&gt;</source>
         <translation>&lt;b&gt;Barva zvýraznění nepropojených&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="302"/>
+        <location filename="../src/dialogs/prefsdialog.cpp" line="283"/>
         <source>Clear all saved settings and close this dialog (debug mode only).</source>
         <translation>Vymazat všechna uložená nastavení a zavřít tento dialog (pouze debug mód).</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/prefsdialog.cpp" line="304"/>
+        <location filename="../src/dialogs/prefsdialog.cpp" line="285"/>
         <source>Clear</source>
         <translation>Vymazat</translation>
     </message>
     <message>
-        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="510"/>
-        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="559"/>
-        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="624"/>
-        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="734"/>
-        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="973"/>
+        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="505"/>
+        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="554"/>
+        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="619"/>
+        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="729"/>
+        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="968"/>
         <location filename="../src/fapplication.cpp" line="779"/>
         <location filename="../src/fritzingwindow.cpp" line="53"/>
         <location filename="../src/fritzingwindow.cpp" line="146"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2509"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2543"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2604"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2638"/>
         <location filename="../src/model/modelbase.cpp" line="70"/>
         <location filename="../src/model/modelbase.cpp" line="83"/>
         <location filename="../src/model/modelbase.cpp" line="94"/>
@@ -5074,32 +5160,32 @@ Toto políčko nastavuje výchozí chování. Na opačný stav chování můžet
         <location filename="../src/partseditor/partseditorpaletteitem.cpp" line="261"/>
         <location filename="../src/program/programtab.cpp" line="583"/>
         <location filename="../src/sketch/sketchwidget.cpp" line="797"/>
-        <location filename="../src/svg/gerbergenerator.cpp" line="321"/>
+        <location filename="../src/svg/gerbergenerator.cpp" line="319"/>
         <source>Fritzing</source>
         <translation>Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="510"/>
+        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="505"/>
         <source>Cannot autoroute: no board (or multiple boards) found</source>
         <translation>Nelze spustit Autorouting: žádná deska (nebo více desek) nenalezena</translation>
     </message>
     <message>
-        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="559"/>
+        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="554"/>
         <source>No connections to route&apos;.</source>
         <translation>Žádné propoje pro routování.</translation>
     </message>
     <message>
-        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="624"/>
+        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="619"/>
         <source>Cannot autoroute: maybe all traces are marked &apos;do not autoroute&apos;.</source>
         <translation>Nelze autoroutovat: možná jsou označeny všechny spoje &quot;neprovádět autoroutování&quot;.</translation>
     </message>
     <message>
-        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="972"/>
+        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="967"/>
         <source>Cannot autoroute: parts or traces are overlapping</source>
         <translation>Nelze autoroutovat: překrývající se součástky nebo spoje</translation>
     </message>
     <message>
-        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="1667"/>
+        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="1662"/>
         <source>tiling failure: possibly due wire crossing layers bug. Wire at %1,%2 %3,%4 (in)</source>
         <translation>tilling selhal: možná kvůli chybě přechodu propojky přes vrstvy. Propojka na %1,%2 %3,%4 (in)</translation>
     </message>
@@ -5110,12 +5196,12 @@ Toto políčko nastavuje výchozí chování. Na opačný stav chování můžet
         <translation>Fritzing není schopen načíst zásobník součástek</translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="955"/>
+        <location filename="../src/fapplication.cpp" line="932"/>
         <source>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;&amp;#169; 2007-%1 Fachhochschule Potsdam&lt;/font&gt;</source>
         <translation>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;&amp;#169; 2007-%1 Fachhochschule Potsdam&lt;/font&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="969"/>
+        <location filename="../src/fapplication.cpp" line="946"/>
         <source>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;Version %1.%2.%3 (%4%5)%6&lt;/font&gt;</source>
         <translation>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;Version %1.%2.%3 (%4%5)%6&lt;/font&gt;</translation>
     </message>
@@ -5130,18 +5216,23 @@ Toto políčko nastavuje výchozí chování. Na opačný stav chování můžet
         <translation>Upravit odkaz</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2660"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2666"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2674"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2761"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2767"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2775"/>
         <source>Part</source>
         <translation>Součástka</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2684"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2714"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2737"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2785"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2815"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2838"/>
         <source>Wire</source>
         <translation>Propojka</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow_menu.cpp" line="3298"/>
+        <source>Set Grid Size</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/model/modelbase.cpp" line="71"/>
@@ -5340,13 +5431,13 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
 Fritzing stále funguje, ale nebudete moci změnit vlastnosti Součástek.</translation>
     </message>
     <message>
-        <location filename="../src/sketch/breadboardsketchwidget.cpp" line="42"/>
+        <location filename="../src/sketch/breadboardsketchwidget.cpp" line="43"/>
         <source>bb</source>
         <translation>bb</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinview.cpp" line="49"/>
-        <location filename="../src/sketch/breadboardsketchwidget.cpp" line="43"/>
+        <location filename="../src/sketch/breadboardsketchwidget.cpp" line="44"/>
         <source>Breadboard View</source>
         <translation>Zobrazení montážní desky</translation>
     </message>
@@ -5372,12 +5463,12 @@ Fritzing stále funguje, ale nebudete moci změnit vlastnosti Součástek.</tran
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1530"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1546"/>
         <source>change trace %1</source>
         <translation>změnit spoj %1</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1589"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1605"/>
         <source>delete trace %1</source>
         <translation>Vymazat spoj %1</translation>
     </message>
@@ -5398,78 +5489,74 @@ Fritzing stále funguje, ale nebudete moci změnit vlastnosti Součástek.</tran
         <translation>Chyba čtení souboru %1: %2.</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3381"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3348"/>
         <source>%1 %2,%3 %4</source>
         <translation>%1 %2,%3 %4</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3410"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3377"/>
         <source>Change leg of %1,%2</source>
         <translation>Změna pinu %1,%2</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3570"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3537"/>
         <source>%1 %2 %3</source>
         <translation>%1 %2 %3</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3828"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3795"/>
         <source>%1 Layer</source>
         <translation>Vrstva %1</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="4046"/>
-        <location filename="../src/sketch/sketchwidget.cpp" line="4063"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="4013"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="4030"/>
         <source>Bring forward</source>
         <translation>Posunout vpřed</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="4055"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="4022"/>
         <source>Send backward</source>
         <translation>Posunout vzad</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="4072"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="4039"/>
         <source>Bring to front</source>
         <translation>Přesunout dopředu</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5278"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5266"/>
         <source>Split Wire</source>
         <translation>Rozdělit propojku</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5335"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5323"/>
         <source>Join Wire</source>
         <translation>Spojit propojku</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7501"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7479"/>
         <source>Trace wires</source>
         <translation>Vytvoř spoj z propoje</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7504"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7482"/>
         <source>Ratsnest wires</source>
         <translation>Vytvoř síť spojů</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7506"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2361"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7484"/>
         <source>Select all %1</source>
         <translation>Vybrat všechny %1</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7785"/>
-        <source>Select all jumpers</source>
-        <translation>Vybrat všechny propojky</translation>
-    </message>
-    <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7800"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7762"/>
         <source>Select outdated parts</source>
         <translation>Vybrat všechny neaktuální součástky</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7814"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7776"/>
         <source>Select locked parts</source>
         <translation>Vybrat všechny uzamčené součástky</translation>
     </message>
@@ -5835,82 +5922,82 @@ Fritzing stále funguje, ale nebudete moci změnit vlastnosti Součástek.</tran
         <translation>Nastavení Autorouteru</translation>
     </message>
     <message>
-        <location filename="../src/svg/gerbergenerator.cpp" line="122"/>
+        <location filename="../src/svg/gerbergenerator.cpp" line="121"/>
         <source>outline is empty</source>
         <translation>obrys je prázdný</translation>
     </message>
     <message>
-        <location filename="../src/svg/gerbergenerator.cpp" line="143"/>
+        <location filename="../src/svg/gerbergenerator.cpp" line="142"/>
         <source>the board outline layer, </source>
         <translation>vrstva obrysu desky, </translation>
     </message>
     <message>
-        <location filename="../src/svg/gerbergenerator.cpp" line="144"/>
+        <location filename="../src/svg/gerbergenerator.cpp" line="143"/>
         <source>silkscreen layer(s), </source>
         <translation>vrstva(y) potisku, </translation>
     </message>
     <message>
-        <location filename="../src/svg/gerbergenerator.cpp" line="145"/>
+        <location filename="../src/svg/gerbergenerator.cpp" line="144"/>
         <source>copper layer(s), </source>
         <translation>vrstva(y) mědi, </translation>
     </message>
     <message>
-        <location filename="../src/svg/gerbergenerator.cpp" line="146"/>
+        <location filename="../src/svg/gerbergenerator.cpp" line="145"/>
         <source>mask layer(s), </source>
         <translation>vrstva(y) masky, </translation>
     </message>
     <message>
-        <location filename="../src/svg/gerbergenerator.cpp" line="148"/>
+        <location filename="../src/svg/gerbergenerator.cpp" line="147"/>
         <source>Unable to translate svg curves in %1</source>
         <translation>Nelze převést SVG křivky v %1</translation>
     </message>
     <message>
-        <location filename="../src/svg/gerbergenerator.cpp" line="159"/>
+        <location filename="../src/svg/gerbergenerator.cpp" line="158"/>
         <source>%1 file export failure (1)</source>
         <translation>export soubor %1 selhal (1)</translation>
     </message>
     <message>
-        <location filename="../src/svg/gerbergenerator.cpp" line="168"/>
+        <location filename="../src/svg/gerbergenerator.cpp" line="167"/>
         <source>%1 file export failure (3)</source>
         <translation>export soubor %1 selhal (3)</translation>
     </message>
     <message>
-        <location filename="../src/svg/gerbergenerator.cpp" line="182"/>
+        <location filename="../src/svg/gerbergenerator.cpp" line="181"/>
         <source>silk file export failure (1)</source>
         <translation>export souboru potisku selhal (1)</translation>
     </message>
     <message>
-        <location filename="../src/svg/gerbergenerator.cpp" line="202"/>
+        <location filename="../src/svg/gerbergenerator.cpp" line="201"/>
         <source>silk export failure</source>
         <translation>export potisku selhal</translation>
     </message>
     <message>
-        <location filename="../src/svg/gerbergenerator.cpp" line="225"/>
+        <location filename="../src/svg/gerbergenerator.cpp" line="224"/>
         <source>drill file export failure (1)</source>
         <translation>export vrtacího souboru selhal (1)</translation>
     </message>
     <message>
-        <location filename="../src/svg/gerbergenerator.cpp" line="239"/>
+        <location filename="../src/svg/gerbergenerator.cpp" line="238"/>
         <source>drill export failure</source>
         <translation>export vrtání selhal</translation>
     </message>
     <message>
-        <location filename="../src/svg/gerbergenerator.cpp" line="256"/>
+        <location filename="../src/svg/gerbergenerator.cpp" line="255"/>
         <source>mask file export failure (1)</source>
         <translation>export souboru masky selhal (1)</translation>
     </message>
     <message>
-        <location filename="../src/svg/gerbergenerator.cpp" line="269"/>
+        <location filename="../src/svg/gerbergenerator.cpp" line="268"/>
         <source>%1 mask export failure (2)</source>
         <translation>%1 maska exportu selhala (2)</translation>
     </message>
     <message>
-        <location filename="../src/svg/gerbergenerator.cpp" line="306"/>
+        <location filename="../src/svg/gerbergenerator.cpp" line="304"/>
         <source>%1 file export failure (2)</source>
         <translation>export souboru %1 selhal (2)</translation>
     </message>
     <message>
-        <location filename="../src/svg/gerbergenerator.cpp" line="278"/>
+        <location filename="../src/svg/gerbergenerator.cpp" line="277"/>
         <source>mask export failure</source>
         <translation>export masky selhal</translation>
     </message>
@@ -5930,7 +6017,7 @@ Fritzing stále funguje, ale nebudete moci změnit vlastnosti Součástek.</tran
         <translation>palce</translation>
     </message>
     <message>
-        <location filename="../src/commands.cpp" line="1902"/>
+        <location filename="../src/commands.cpp" line="1904"/>
         <source>Set Ground Fill Seed</source>
         <translation>Nastaví plochu zemní výplně</translation>
     </message>
@@ -5943,25 +6030,25 @@ Fritzing stále funguje, ale nebudete moci změnit vlastnosti Součástek.</tran
 <context>
     <name>QShortcut</name>
     <message>
-        <location filename="../src/mainwindow.cpp" line="326"/>
+        <location filename="../src/mainwindow.cpp" line="327"/>
         <source>Ctrl</source>
         <comment>for naming shortcut keys on menu items</comment>
         <translation>Ctrl</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="327"/>
+        <location filename="../src/mainwindow.cpp" line="328"/>
         <source>Alt</source>
         <comment>for naming shortcut keys on menu items</comment>
         <translation>Alt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="328"/>
+        <location filename="../src/mainwindow.cpp" line="329"/>
         <source>Shift</source>
         <comment>for naming shortcut keys on menu items</comment>
         <translation>Shift</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="329"/>
+        <location filename="../src/mainwindow.cpp" line="330"/>
         <source>Meta</source>
         <comment>for naming shortcut keys on menu items</comment>
         <translation>Meta</translation>
@@ -6029,40 +6116,45 @@ Fritzing stále funguje, ale nebudete moci změnit vlastnosti Součástek.</tran
 <context>
     <name>ResizableBoard</name>
     <message>
-        <location filename="../src/items/resizableboard.cpp" line="528"/>
+        <location filename="../src/items/resizableboard.cpp" line="849"/>
         <source>shape</source>
         <translation>tvar</translation>
     </message>
     <message>
-        <location filename="../src/items/resizableboard.cpp" line="544"/>
+        <location filename="../src/items/resizableboard.cpp" line="865"/>
         <source>width: %1mm</source>
         <translation>šířka: %1mm</translation>
     </message>
     <message>
-        <location filename="../src/items/resizableboard.cpp" line="549"/>
+        <location filename="../src/items/resizableboard.cpp" line="870"/>
         <source>height: %1mm</source>
         <translation>výška: %1mm</translation>
     </message>
     <message>
-        <location filename="../src/items/resizableboard.cpp" line="784"/>
+        <location filename="../src/items/resizableboard.cpp" line="1105"/>
         <source>width(mm)</source>
         <translation>šířka(mm)</translation>
     </message>
     <message>
-        <location filename="../src/items/resizableboard.cpp" line="796"/>
+        <location filename="../src/items/resizableboard.cpp" line="1117"/>
         <source>height(mm)</source>
         <translation>výška(mm)</translation>
     </message>
     <message>
-        <location filename="../src/items/resizableboard.cpp" line="833"/>
-        <source>keep in proportion</source>
-        <translation>dodržet stranový poměr</translation>
+        <location filename="../src/items/resizableboard.cpp" line="1155"/>
+        <source>keep aspect ratio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/items/resizableboard.cpp" line="1169"/>
+        <source>Revert</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Ruler</name>
     <message>
-        <location filename="../src/items/ruler.cpp" line="216"/>
+        <location filename="../src/items/ruler.cpp" line="220"/>
         <source>width</source>
         <translation>šířka</translation>
     </message>
@@ -6113,7 +6205,7 @@ Fritzing stále funguje, ale nebudete moci změnit vlastnosti Součástek.</tran
 <context>
     <name>SchematicSketchWidget</name>
     <message>
-        <location filename="../src/sketch/schematicsketchwidget.cpp" line="257"/>
+        <location filename="../src/sketch/schematicsketchwidget.cpp" line="258"/>
         <source>Change voltage from %1 to %2</source>
         <translation>Změna napětí z %1 na %2</translation>
     </message>
@@ -6217,80 +6309,80 @@ Fritzing stále funguje, ale nebudete moci změnit vlastnosti Součástek.</tran
         <translation>Zruší výběr</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="1869"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="1847"/>
         <source>Add %1</source>
         <translation>Přidat %1</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="1963"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="1946"/>
         <source>Selection</source>
         <translation>Výběr</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3101"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3068"/>
         <source>Move %2 (%1)</source>
         <translation>Přesun %2 (%1)</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3104"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3071"/>
         <source>Move %2 items (%1)</source>
         <translation>Přesun %2 položky (%1)</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3279"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3246"/>
         <source>Select %1</source>
         <translation>Vybrat %1</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3282"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3249"/>
         <source>Select %1 items</source>
         <translation>Vybrat %1 položek</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3369"/>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3554"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3336"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3521"/>
         <source>Disconnect</source>
         <translation>Odpojit</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3562"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3529"/>
         <source>Change</source>
         <translation>Změnit</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3377"/>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3566"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3344"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3533"/>
         <source>Connect</source>
         <translation>Připojit</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3378"/>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3567"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3345"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3534"/>
         <source>to %1</source>
         <translation>do %1</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3619"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3586"/>
         <source>Create and connect wire</source>
         <translation>Vytvořit a připojit propojku</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="4371"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="4338"/>
         <source>Rotate %2 (%1)</source>
         <translation>Otočit %2 (%1)</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6796"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6784"/>
         <source>Rotate</source>
         <translation>Otočit</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6796"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6784"/>
         <source>Flip</source>
         <translation>Překlopit</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5434"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5422"/>
         <source>Double-click</source>
         <translation>Dvojklik</translation>
     </message>
@@ -6300,112 +6392,112 @@ Fritzing stále funguje, ale nebudete moci změnit vlastnosti Součástek.</tran
         <translation>Vymazat síť propojů</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3370"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3337"/>
         <source>from %1</source>
         <translation>z %1</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3373"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3340"/>
         <source>Move leg of</source>
         <translation>Přesunout pin</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3432"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3399"/>
         <source>Change leg curvature for %1.</source>
         <translation>Změnit křivku pinu pro %1.</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3458"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3425"/>
         <source>Change leg bendpoint for %1.</source>
         <translation>Změnit zlomový bod pinu pro %1.</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3739"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3706"/>
         <source>Fritzing</source>
         <translation>Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3739"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3706"/>
         <source>This seems like an attempt to create a trace across layers. This circumstance should not arise: please contact the developers.</source>
         <translation>To se jeví jako pokus o vytvoření spoje napříč vrstvami. Tato skutečnost by neměla vzniknout: kontaktujte vývojáře.</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3746"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3713"/>
         <source>Create and connect %1</source>
         <translation>Vytvořte propojku %1</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3746"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3713"/>
         <source>wire</source>
         <translation>propojka</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3746"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3713"/>
         <source>trace</source>
         <translation>spoj</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="4518"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="4485"/>
         <source>Flip %2 (%1)</source>
         <translation>Překlopit %2 (%1)</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5434"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5422"/>
         <source>Drag or double-click</source>
         <translation>Přetáhnout nebo dvojklik</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5435"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5423"/>
         <source>or alt-drag to move the segment</source>
         <translation>nebo Alt-přetažení pro přetažení segmentu</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5500"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5488"/>
         <source>Double-click to delete this bend point</source>
         <translation>Dvojklik pro odstranění tohoto zlomového bodu</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5562"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5550"/>
         <source>Change note to &apos;%2&apos;</source>
         <translation>Změnit poznámku na &apos;%2&apos;</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5587"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5575"/>
         <source>Change %1 label to &apos;%2&apos;</source>
         <translation>Změnit %1 popisku na &apos;%2&apos;</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6044"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6032"/>
         <source>Change %1 color from %2 to %3</source>
         <translation>Změnit barvu %1 z %2 na %3</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6050"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6038"/>
         <source>Change color of %1 wires to %2</source>
         <translation>Změnit barvu propojky %1 na %2</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6096"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6084"/>
         <source>Change %1 width from %2 to %3</source>
         <translation>Změnit šířku %1 z %2 na %3</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6102"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6090"/>
         <source>Change width of %1 wires to %2</source>
         <translation>Změnit šířku propojky %1 na %2</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6789"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6777"/>
         <source>Move label &apos;%1&apos;</source>
         <translation>Posunout popisku &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6796"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6784"/>
         <source>%1 label &apos;%2&apos;</source>
         <translation>popiska %1 &apos;%2&apos;</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/sketch/sketchwidget.cpp" line="6831"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6819"/>
         <source>show part label(s)</source>
         <translation>
             <numerusform>zobrazit popisek součástky(ek)</numerusform>
@@ -6414,7 +6506,7 @@ Fritzing stále funguje, ale nebudete moci změnit vlastnosti Součástek.</tran
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/sketch/sketchwidget.cpp" line="6834"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6822"/>
         <source>hide part label(s)</source>
         <translation>
             <numerusform>skrýt  popisek součástky</numerusform>
@@ -6423,63 +6515,63 @@ Fritzing stále funguje, ale nebudete moci změnit vlastnosti Součástek.</tran
         </translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6848"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6836"/>
         <source>Resize Note</source>
         <translation>Změnit velikost popisku</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7206"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7178"/>
         <source>Change pin spacing from %1 to %2</source>
         <translation>Změnit osdtup pinů z %1 na %2</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7218"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7190"/>
         <source>Change form from %1 to %2</source>
         <translation>Změna podoby z %1 na %2</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7243"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7215"/>
         <source>Change Resistance from %1 to %2</source>
         <translation>Změna odporu z %1 na %2</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7267"/>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7276"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7239"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7248"/>
         <source>Change %1 from %2 to %3</source>
         <translation>Změna %1 z %2 na %3</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7352"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7324"/>
         <source>Resize ruler to %1%2</source>
         <translation>Změnit velikost pravítka %1%2</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7406"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7378"/>
         <source>Create wire from Ratsnest</source>
         <translation>Vytvořit propojku ze sítě propojů</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7603"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7581"/>
         <source>Disconnect all wires from %1</source>
         <translation>Odpojit všechny propojky od %1</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7606"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7584"/>
         <source>Disconnect all wires from %1 items</source>
         <translation>Odpojit všechny propojky od %1 položek</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7871"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7838"/>
         <source>Change image from %1 to %2</source>
         <translation>Změnit obrázek z %1 na %2</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="8534"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="8519"/>
         <source>Rotate %1</source>
         <translation>Otočit %1</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="8628"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="8613"/>
         <source>change pin labels</source>
         <translation>změnit popisky pinů</translation>
     </message>
