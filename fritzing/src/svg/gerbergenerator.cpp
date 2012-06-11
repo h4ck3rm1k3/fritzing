@@ -388,7 +388,7 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 					 boardRect.width() * res / FSvgRenderer::printerScale(), boardRect.height() * res / FSvgRenderer::printerScale());
 	int twidth = sourceRes.width();
 	int theight = sourceRes.height();
-	QSize imgSize(twidth, theight);
+	QSize imgSize(twidth + 2, theight + 2);
 
 	QImage * clipImage = NULL;
 	if (!clipString.isEmpty()) {

@@ -997,20 +997,36 @@ void GroundPlaneGenerator::collectBorderPoints(QImage & image, QList<QPoint> & p
 		return;
 	}
 
+    //int inc = 0;
 	while (true) {
-		if (tryNextPoint(currentX, currentY + 1, image, points));
-		else if (tryNextPoint(currentX + 1, currentY, image, points));
-		else if (tryNextPoint(currentX, currentY - 1, image, points));
-		else if (tryNextPoint(currentX - 1, currentY, image, points));
-		else if (tryNextPoint(currentX + 1, currentY + 1, image, points));
-		else if (tryNextPoint(currentX - 1, currentY + 1, image, points));
-		else if (tryNextPoint(currentX + 1, currentY - 1, image, points));
-		else if (tryNextPoint(currentX - 1, currentY - 1, image, points));
-		else break;
+        if (try8(currentX, currentY, image, points)) ;
+		else {
+            
+            QPoint p = points.first();
+            if (qAbs(p.x() - currentX) < 4 && qAbs(p.y() - currentY) < 4) {
+                // we're near the beginning again
+                break;
+            }
+
+            bool keepGoing = false;
+            for (int ix = points.count() - 2; ix >= 0; ix--) {
+                QPoint p = points.at(ix);
+                if (try8(p.x(), p.y(), image, points)) {
+                    keepGoing = true; 
+                    break;
+                }
+            }
+
+            if (!keepGoing) break;
+        }
 
 		QPoint p = points.last();
 		currentX = p.x();
 		currentY = p.y();
+        //DebugDialog::debug(QString("next point %1 %2").arg(currentX).arg(currentY));
+        //if (++inc % 100 == 0) {
+        //    DebugDialog::debug("\n");
+        //}
 	}
 }
 
@@ -1054,6 +1070,19 @@ void GroundPlaneGenerator::scanOutline(QImage & image, double bWidth, double bHe
 	*/
 }
 
+
+bool GroundPlaneGenerator::try8(int x, int y, QImage & image, QList<QPoint> & points) {
+    if (tryNextPoint(x, y + 1, image, points)) return true;
+	else if (tryNextPoint(x + 1, y, image, points)) return true;
+	else if (tryNextPoint(x, y - 1, image, points)) return true;
+	else if (tryNextPoint(x - 1, y, image, points)) return true;
+	else if (tryNextPoint(x + 1, y + 1, image, points)) return true;
+	else if (tryNextPoint(x - 1, y + 1, image, points)) return true;
+	else if (tryNextPoint(x + 1, y - 1, image, points)) return true;
+	else if (tryNextPoint(x - 1, y - 1, image, points)) return true;
+    return false;
+}
+
 bool GroundPlaneGenerator::tryNextPoint(int x, int y, QImage & image, QList<QPoint> & points)
 {
 	if (x < 0) return false;
@@ -1088,6 +1117,7 @@ bool GroundPlaneGenerator::tryNextPoint(int x, int y, QImage & image, QList<QPoi
 	}
 
 	QRgb pixel = image.pixel(x, y);
+    //DebugDialog::debug(QString("pixel %1,%2 %3").arg(x).arg(y).arg(pixel, 0, 16));
 	if (pixel != 0xffffffff) {						
 		// empty pixel, not on the border
 		return false;

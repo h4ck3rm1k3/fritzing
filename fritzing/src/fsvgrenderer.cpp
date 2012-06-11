@@ -554,12 +554,20 @@ bool FSvgRenderer::initConnectorInfoStructAux(QDomElement & element, ConnectorIn
 
 	double sw = element.attribute("stroke-width").toDouble(&ok);	
 	if (!ok) {
+        QString text;
+        QTextStream stream(&text);
+        element.save(stream, 0);
+        DebugDialog::debug("no circle stroke width set:" + text);
+        element.setAttribute("stroke-width", 1);
+        sw = 1;
+        //return false;
+
 		//QString strokewidth("stroke-width");
 		//QString s = element.attribute("style");
 		//SvgFileSplitter::fixStyleAttribute(connectorElement, s, strokewidth);
 		//sw = connectorElement.attribute("stroke-width").toDouble(&ok);
 		//if (!ok) {
-			return false;
+			//return false;
 		//}
 	}
 
