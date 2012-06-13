@@ -160,7 +160,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>to Alex Kaltsas for the Greek translation, </source>
+        <source>to Alexander Kaltsas for the Greek translation, </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -244,14 +244,6 @@
         <translation>Kan geen NULL mand zetten als de huidige</translation>
     </message>
     <message>
-        <source>Select a part to import</source>
-        <translation>Selecteer een onderdeel om te importeren</translation>
-    </message>
-    <message>
-        <source>External Part (*%1)</source>
-        <translation>Extern onderdeel (*%1)</translation>
-    </message>
-    <message>
         <source>BinManager::updateTitle: Couldn&apos;t set the bin &apos;%1&apos; as dirty</source>
         <translation type="unfinished"></translation>
     </message>
@@ -269,14 +261,6 @@
     </message>
     <message>
         <source>Create a new parts bin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open Bin...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open a parts bin from a file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -345,10 +329,6 @@
     </message>
     <message>
         <source>New Part...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Import Part...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1267,10 +1247,6 @@ Wilt u nu herstarten?</translation>
         <translation>Niet mogelijk om de uitwisselbare %1 te openen</translation>
     </message>
     <message>
-        <source>External Part (*%1)</source>
-        <translation>Uitwendig onderdeel (*%1)</translation>
-    </message>
-    <message>
         <source>Unable to open shareable part %1</source>
         <translation>Niet mogelijk om uitwisselbaar onderdeel %1 te openen</translation>
     </message>
@@ -1400,10 +1376,6 @@ Wij werken er momenteel aan om dit bericht te vermijden en je te laten kiezen tu
     <message>
         <source>Select a Fritzing File to Open</source>
         <translation>Selecteer een Fritzing bestand om te openen</translation>
-    </message>
-    <message>
-        <source>Fritzing Files (*%1 *%2);;Fritzing (*%1);;Fritzing Shareable (*%2)</source>
-        <translation>Fritzing bestanden (*%1 *%2);;Fritzing (*%1);;Fritzing uitwisselbare (*%2)</translation>
     </message>
     <message>
         <source>Cannot find file %1.</source>
@@ -1828,14 +1800,6 @@ Wij werken er momenteel aan om dit bericht te vermijden en je te laten kiezen tu
         <translation>Toon of verstop de label van de geselecteerde componenten</translation>
     </message>
     <message>
-        <source>&amp;Import...</source>
-        <translation>&amp;Importeer</translation>
-    </message>
-    <message>
-        <source>Import a part</source>
-        <translation>Importeer een onderdeel</translation>
-    </message>
-    <message>
         <source>&amp;Export...</source>
         <translation>&amp;Exporteer...</translation>
     </message>
@@ -2244,10 +2208,6 @@ Controleer a.u.b. alle views voor potentiële fouten.</translation>
     </message>
     <message>
         <source>Top Layer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select one or more parts to import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2908,6 +2868,10 @@ Open the old Parts Editor?</source>
     </message>
     <message>
         <source>%1 background Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fritzing Files (*%1 *%2 *%3 *%4 *%5);;Fritzing (*%1);;Fritzing Shareable (*%2);;Fritzing Part (*%3);;Fritzing Bin (*%4);;Fritzing Shareable Bin (*%5)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5438,6 +5402,10 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
     </message>
     <message>
         <source>Indonesian - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Slovak - %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

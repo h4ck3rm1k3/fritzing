@@ -160,7 +160,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>to Alex Kaltsas for the Greek translation, </source>
+        <source>to Alexander Kaltsas for the Greek translation, </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -244,14 +244,6 @@
         <translation>Не могу установить нулевой bin текущим</translation>
     </message>
     <message>
-        <source>Select a part to import</source>
-        <translation>Выбрать часть для импорта</translation>
-    </message>
-    <message>
-        <source>External Part (*%1)</source>
-        <translation>Внешняя часть (*%1)</translation>
-    </message>
-    <message>
         <source>BinManager::updateTitle: Couldn&apos;t set the bin &apos;%1&apos; as dirty</source>
         <translation type="unfinished"></translation>
     </message>
@@ -269,14 +261,6 @@
     </message>
     <message>
         <source>Create a new parts bin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open Bin...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open a parts bin from a file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -345,10 +329,6 @@
     </message>
     <message>
         <source>New Part...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Import Part...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1272,10 +1252,6 @@ Do you want to restart now?</source>
         <translation>Невозможно открыть общий %1</translation>
     </message>
     <message>
-        <source>External Part (*%1)</source>
-        <translation>Внешний элемент (*%1)</translation>
-    </message>
-    <message>
         <source>Unable to open shareable part %1</source>
         <translation>Невозможно открыть общий элемент %1</translation>
     </message>
@@ -1402,10 +1378,6 @@ We&apos;re working to avoid this message, and only let you choose between proper
     <message>
         <source>Select a Fritzing File to Open</source>
         <translation>Выбрать файл Fritzing для открытия</translation>
-    </message>
-    <message>
-        <source>Fritzing Files (*%1 *%2);;Fritzing (*%1);;Fritzing Shareable (*%2)</source>
-        <translation>Файлы Fritzing (*%1 *%2);;Fritzing (*%1);;Открытые Fritzing (*%2)</translation>
     </message>
     <message>
         <source>Cannot find file %1.</source>
@@ -1800,14 +1772,6 @@ We&apos;re working to avoid this message, and only let you choose between proper
     <message>
         <source>Show or hide the label for the selected parts</source>
         <translation>Показать или скрыть метки для выделенных элементов</translation>
-    </message>
-    <message>
-        <source>&amp;Import...</source>
-        <translation>Импорт (&amp;I)...</translation>
-    </message>
-    <message>
-        <source>Import a part</source>
-        <translation>Импорт элемент</translation>
     </message>
     <message>
         <source>&amp;Export...</source>
@@ -2249,10 +2213,6 @@ Please check all views for potential side-effects.</source>
     </message>
     <message>
         <source>Top Layer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select one or more parts to import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2914,6 +2874,10 @@ Open the old Parts Editor?</source>
     </message>
     <message>
         <source>%1 background Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fritzing Files (*%1 *%2 *%3 *%4 *%5);;Fritzing (*%1);;Fritzing Shareable (*%2);;Fritzing Part (*%3);;Fritzing Bin (*%4);;Fritzing Shareable Bin (*%5)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5450,6 +5414,10 @@ Fritzing по-прежнему работает, но вы не сможете �
     </message>
     <message>
         <source>Indonesian - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Slovak - %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

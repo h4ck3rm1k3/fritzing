@@ -114,6 +114,7 @@ protected:
 
 class BoardLogoItem : public LogoItem
 {
+Q_OBJECT
 public:
 	BoardLogoItem(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel);
 	~BoardLogoItem();

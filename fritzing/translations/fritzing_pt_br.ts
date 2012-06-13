@@ -160,7 +160,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>to Alex Kaltsas for the Greek translation, </source>
+        <source>to Alexander Kaltsas for the Greek translation, </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -232,14 +232,6 @@
         <translation>Novo repositório (%1)</translation>
     </message>
     <message>
-        <source>Select a part to import</source>
-        <translation>Selecione um componente para importar</translation>
-    </message>
-    <message>
-        <source>External Part (*%1)</source>
-        <translation>Componenete Externo (*%1)</translation>
-    </message>
-    <message>
         <source>BinManager::setDirtyTab: Couldn&apos;t set the bin &apos;%1&apos; as dirty</source>
         <translation>BinManager::setDirtyTab: Não foi possível definir a caixa&apos;%1&apos; como suja</translation>
     </message>
@@ -270,14 +262,6 @@
     <message>
         <source>Create a new parts bin</source>
         <translation>Criar um novo repositório para componentes</translation>
-    </message>
-    <message>
-        <source>Open Bin...</source>
-        <translation>Abrir Repositório...</translation>
-    </message>
-    <message>
-        <source>Open a parts bin from a file</source>
-        <translation>Abrir os repositórios de um arquivo</translation>
     </message>
     <message>
         <source>Close Bin</source>
@@ -346,10 +330,6 @@
     <message>
         <source>New Part...</source>
         <translation>Novo Componente...</translation>
-    </message>
-    <message>
-        <source>Import Part...</source>
-        <translation>Importar Componente...</translation>
     </message>
     <message>
         <source>Edit Part...</source>
@@ -1252,10 +1232,6 @@ It is also possible to choose a connector as a ground fill seed by right-clickin
         <translation>Impossível de exportar %1 como um sketch compartilhável</translation>
     </message>
     <message>
-        <source>External Part (*%1)</source>
-        <translation>Componente Externo (*%1)</translation>
-    </message>
-    <message>
         <source>Unable to open shareable part %1</source>
         <translation>Impossível de abrir a elemento compartilhável %1</translation>
     </message>
@@ -1343,10 +1319,6 @@ It is also possible to choose a connector as a ground fill seed by right-clickin
     <message>
         <source>Select a Fritzing File to Open</source>
         <translation>Selecione um arquivo Fritzing para abrir</translation>
-    </message>
-    <message>
-        <source>Fritzing Files (*%1 *%2);;Fritzing (*%1);;Fritzing Shareable (*%2)</source>
-        <translation>Arquivos Fritzing (*%1 *%2);;Fritzing (*%1);;Fritzing compartilhávell (*%2)</translation>
     </message>
     <message>
         <source>Cannot find file %1.</source>
@@ -1675,10 +1647,6 @@ It is also possible to choose a connector as a ground fill seed by right-clickin
         <translation>Mostrar ou esconder a etiqueta do componentes selecionados</translation>
     </message>
     <message>
-        <source>Import a part</source>
-        <translation>Importar um componente</translation>
-    </message>
-    <message>
         <source>&amp;Zoom In</source>
         <translation>&amp;Mais Zoom</translation>
     </message>
@@ -1825,10 +1793,6 @@ It is also possible to choose a connector as a ground fill seed by right-clickin
     <message>
         <source>&amp;Edit</source>
         <translation>&amp;Editar</translation>
-    </message>
-    <message>
-        <source>&amp;Import...</source>
-        <translation>&amp;Importar...</translation>
     </message>
     <message>
         <source>&amp;Export...</source>
@@ -2248,10 +2212,6 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
     <message>
         <source>Top Layer</source>
         <translation>Camada Superior</translation>
-    </message>
-    <message>
-        <source>Select one or more parts to import</source>
-        <translation>Selecione um ou mais elementos para importar</translation>
     </message>
     <message>
         <source>Unable to read shareable part %1</source>
@@ -2913,6 +2873,10 @@ Open the old Parts Editor?</source>
     <message>
         <source>%1 background Color</source>
         <translation type="unfinished">Cor do fundo %1</translation>
+    </message>
+    <message>
+        <source>Fritzing Files (*%1 *%2 *%3 *%4 *%5);;Fritzing (*%1);;Fritzing Shareable (*%2);;Fritzing Part (*%3);;Fritzing Bin (*%4);;Fritzing Shareable Bin (*%5)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5456,6 +5420,10 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>Indonesian - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Slovak - %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

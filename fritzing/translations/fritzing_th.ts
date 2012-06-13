@@ -160,7 +160,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>to Alex Kaltsas for the Greek translation, </source>
+        <source>to Alexander Kaltsas for the Greek translation, </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -244,14 +244,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select a part to import</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>External Part (*%1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>BinManager::updateTitle: Couldn&apos;t set the bin &apos;%1&apos; as dirty</source>
         <translation type="unfinished"></translation>
     </message>
@@ -269,14 +261,6 @@
     </message>
     <message>
         <source>Create a new parts bin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open Bin...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open a parts bin from a file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -345,10 +329,6 @@
     </message>
     <message>
         <source>New Part...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Import Part...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1257,10 +1237,6 @@ Do you want to restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>External Part (*%1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Unable to open shareable part %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1386,10 +1362,6 @@ We&apos;re working to avoid this message, and only let you choose between proper
     </message>
     <message>
         <source>Select a Fritzing File to Open</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fritzing Files (*%1 *%2);;Fritzing (*%1);;Fritzing Shareable (*%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1810,14 +1782,6 @@ We&apos;re working to avoid this message, and only let you choose between proper
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Import...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Import a part</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;Export...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2227,10 +2191,6 @@ Please check all views for potential side-effects.</source>
     </message>
     <message>
         <source>Top Layer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select one or more parts to import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2890,6 +2850,10 @@ Open the old Parts Editor?</source>
     </message>
     <message>
         <source>%1 background Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fritzing Files (*%1 *%2 *%3 *%4 *%5);;Fritzing (*%1);;Fritzing Shareable (*%2);;Fritzing Part (*%3);;Fritzing Bin (*%4);;Fritzing Shareable Bin (*%5)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5392,6 +5356,10 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     </message>
     <message>
         <source>Indonesian - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Slovak - %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

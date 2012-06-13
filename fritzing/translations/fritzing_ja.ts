@@ -160,7 +160,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>to Alex Kaltsas for the Greek translation, </source>
+        <source>to Alexander Kaltsas for the Greek translation, </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -232,14 +232,6 @@
         <translation>新しいビン (%1)</translation>
     </message>
     <message>
-        <source>Select a part to import</source>
-        <translation>インポートするファイルを選択してください</translation>
-    </message>
-    <message>
-        <source>External Part (*%1)</source>
-        <translation>拡張部品(*%1)</translation>
-    </message>
-    <message>
         <source>BinManager::setDirtyTab: Couldn&apos;t set the bin &apos;%1&apos; as dirty</source>
         <translatorcomment>デバッグ用メッセージ?</translatorcomment>
         <translation>BinManager::setDirtyTab: &apos;%1&apos;をdirtyにセットできません</translation>
@@ -271,14 +263,6 @@
     </message>
     <message>
         <source>Create a new parts bin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open Bin...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open a parts bin from a file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -347,10 +331,6 @@
     </message>
     <message>
         <source>New Part...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Import Part...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1649,10 +1629,6 @@ It is also possible to choose a connector as a ground fill seed by right-clickin
         <translation>選択されたパーツのラベルを表示または隠す</translation>
     </message>
     <message>
-        <source>&amp;Import...</source>
-        <translation>インポート(&amp;I) ...</translation>
-    </message>
-    <message>
         <source>&amp;Export...</source>
         <translation>エクスポート (&amp;E)...</translation>
     </message>
@@ -1873,24 +1849,12 @@ It is also possible to choose a connector as a ground fill seed by right-clickin
         <translation>自動配線 ...</translation>
     </message>
     <message>
-        <source>External Part (*%1)</source>
-        <translation>外部パーツ (*%1)</translation>
-    </message>
-    <message>
         <source>Unable to open shareable part %1</source>
         <translation>公開部品 %1 を開けません</translation>
     </message>
     <message>
         <source>Do you want to keep the imported parts?</source>
         <translation>インポートした部品を残したいですか?</translation>
-    </message>
-    <message>
-        <source>Fritzing Files (*%1 *%2);;Fritzing (*%1);;Fritzing Shareable (*%2)</source>
-        <translation>Fritzing ファイル (*%1 *%2);;Fritzing (*%1);;Fritzing 公開 (*%2)</translation>
-    </message>
-    <message>
-        <source>Import a part</source>
-        <translation>パーツのインポート</translation>
     </message>
     <message>
         <source>&amp;About Qt</source>
@@ -2240,10 +2204,6 @@ Please check all views for potential side-effects.</source>
     </message>
     <message>
         <source>Top Layer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select one or more parts to import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2903,6 +2863,10 @@ Open the old Parts Editor?</source>
     </message>
     <message>
         <source>%1 background Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fritzing Files (*%1 *%2 *%3 *%4 *%5);;Fritzing (*%1);;Fritzing Shareable (*%2);;Fritzing Part (*%3);;Fritzing Bin (*%4);;Fritzing Shareable Bin (*%5)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5428,6 +5392,10 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>Indonesian - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Slovak - %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

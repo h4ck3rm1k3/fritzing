@@ -160,7 +160,7 @@
         <translation>Jinbuhm Kim对韩语的翻译, </translation>
     </message>
     <message>
-        <source>to Alex Kaltsas for the Greek translation, </source>
+        <source>to Alexander Kaltsas for the Greek translation, </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -244,14 +244,6 @@
         <translation>不能设置当前库为空</translation>
     </message>
     <message>
-        <source>Select a part to import</source>
-        <translation>选择导入元件</translation>
-    </message>
-    <message>
-        <source>External Part (*%1)</source>
-        <translation>外部元件 (*%1)</translation>
-    </message>
-    <message>
         <source>BinManager::updateTitle: Couldn&apos;t set the bin &apos;%1&apos; as dirty</source>
         <translation>库管理器::更新标题:不能把库&apos;%1&apos;设置dirty</translation>
     </message>
@@ -270,14 +262,6 @@
     <message>
         <source>Create a new parts bin</source>
         <translation>创建新元件库</translation>
-    </message>
-    <message>
-        <source>Open Bin...</source>
-        <translation>打开元件库...</translation>
-    </message>
-    <message>
-        <source>Open a parts bin from a file</source>
-        <translation>从文件打开元件库</translation>
     </message>
     <message>
         <source>Close Bin</source>
@@ -346,10 +330,6 @@
     <message>
         <source>New Part...</source>
         <translation>新元件...</translation>
-    </message>
-    <message>
-        <source>Import Part...</source>
-        <translation>导入元件...</translation>
     </message>
     <message>
         <source>Edit Part...</source>
@@ -1272,10 +1252,6 @@ Do you want to restart now?</source>
         <translation>不能打开分享的%1</translation>
     </message>
     <message>
-        <source>External Part (*%1)</source>
-        <translation>外部元件 (*%1)</translation>
-    </message>
-    <message>
         <source>Unable to open shareable part %1</source>
         <translation>不能打开分享的元件%1</translation>
     </message>
@@ -1400,10 +1376,6 @@ We&apos;re working to avoid this message, and only let you choose between proper
     <message>
         <source>Select a Fritzing File to Open</source>
         <translation>选择要打开的Fritzing文件</translation>
-    </message>
-    <message>
-        <source>Fritzing Files (*%1 *%2);;Fritzing (*%1);;Fritzing Shareable (*%2)</source>
-        <translation>Fritzing 文件(*%1 *%2);;Fritzing(*%1);;Fritzing可分享(*%2)</translation>
     </message>
     <message>
         <source>Cannot find file %1.</source>
@@ -1798,14 +1770,6 @@ We&apos;re working to avoid this message, and only let you choose between proper
     <message>
         <source>Show or hide the label for the selected parts</source>
         <translation>显示或隐藏选择的元件标签</translation>
-    </message>
-    <message>
-        <source>&amp;Import...</source>
-        <translation>导入(&amp;I)...</translation>
-    </message>
-    <message>
-        <source>Import a part</source>
-        <translation>导入一个元件</translation>
     </message>
     <message>
         <source>&amp;Export...</source>
@@ -2248,10 +2212,6 @@ Please check all views for potential side-effects.</source>
     <message>
         <source>Top Layer</source>
         <translation>顶层</translation>
-    </message>
-    <message>
-        <source>Select one or more parts to import</source>
-        <translation>选择导入一个或多个元件</translation>
     </message>
     <message>
         <source>Unable to read shareable part %1</source>
@@ -2924,6 +2884,10 @@ Open the old Parts Editor?</source>
     <message>
         <source>%1 background Color</source>
         <translation type="unfinished">%1 背景色</translation>
+    </message>
+    <message>
+        <source>Fritzing Files (*%1 *%2 *%3 *%4 *%5);;Fritzing (*%1);;Fritzing Shareable (*%2);;Fritzing Part (*%3);;Fritzing Bin (*%4);;Fritzing Shareable Bin (*%5)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5464,6 +5428,10 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     </message>
     <message>
         <source>Indonesian - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Slovak - %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
