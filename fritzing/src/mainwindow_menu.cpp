@@ -2677,6 +2677,7 @@ void MainWindow::groundFillAux(bool fillGroundTraces)
 
     FileProgressDialog fileProgress(tr("Generating %1 fill...").arg(fillGroundTraces ? tr("ground") : tr("copper")), 0, this);
 	QUndoCommand * parentCommand = new QUndoCommand(fillGroundTraces ? tr("Ground Fill") : tr("Copper Fill"));
+    removeGroundFill(true, parentCommand);
 	if (m_pcbGraphicsView->groundFill(fillGroundTraces, parentCommand)) {
 		m_undoStack->push(parentCommand);
 	}
@@ -2685,7 +2686,11 @@ void MainWindow::groundFillAux(bool fillGroundTraces)
 	}
 }
 
-void MainWindow::removeGroundFill(bool force) {
+void MainWindow::removeGroundFill() {
+    removeGroundFill(false, NULL);
+}
+
+void MainWindow::removeGroundFill(bool force, QUndoCommand * parentCommand) {
 	QSet<ItemBase *> toDelete;
     int boardCount;
     ItemBase * board = m_pcbGraphicsView->findSelectedBoard(boardCount);
@@ -2696,8 +2701,7 @@ void MainWindow::removeGroundFill(bool force) {
 		if (itemBase == NULL) continue;
         //if (itemBase->moveLock()) continue;
 
-		if (isGroundFill(itemBase)) {
-
+		if (isGroundFill(itemBase) && !itemBase->moveLock()) {
 			toDelete.insert(itemBase->layerKinChief());
 		}
 	}
@@ -2745,7 +2749,11 @@ void MainWindow::removeGroundFill(bool force) {
 
 	}
 
-	QUndoCommand * parentCommand = new QUndoCommand(tr("Remove copper fill"));
+    bool push = (parentCommand == NULL);
+
+    if (push) {
+	    parentCommand = new QUndoCommand(tr("Remove copper fill"));
+    }
 
 	new CleanUpWiresCommand(m_pcbGraphicsView, CleanUpWiresCommand::UndoOnly, parentCommand);
 
@@ -2762,7 +2770,15 @@ void MainWindow::removeGroundFill(bool force) {
 
 	new CleanUpWiresCommand(m_pcbGraphicsView, CleanUpWiresCommand::RedoOnly, parentCommand);
 
-	m_undoStack->push(parentCommand);
+    if (push) {
+	    m_undoStack->push(parentCommand);
+    }
+    else {
+        foreach (ItemBase * itemBase, toDelete) {
+            // move them out of the way because they are about to be deleted anyhow
+            itemBase->setPos(itemBase->pos() + board->sceneBoundingRect().bottomRight() + QPointF(10000, 10000));
+        }
+    }
 }
 
 bool MainWindow::isGroundFill(ItemBase * itemBase) {

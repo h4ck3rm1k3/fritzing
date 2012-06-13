@@ -1155,6 +1155,14 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
 	}
 
 	mainWindow->showPCBView();
+
+	foreach (QGraphicsItem * item, mainWindow->pcbView()->scene()->items()) {
+		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+		if (itemBase == NULL) continue;
+
+		itemBase->setMoveLock(false);
+	}
+
 	QString fritzingVersion = mainWindow->fritzingVersion();
 	VersionThing versionThing;
 	versionThing.majorVersion = 0;
@@ -1179,7 +1187,7 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
         }
 
         if (wasOne) {
-	        mainWindow->removeGroundFill(true);
+	        mainWindow->removeGroundFill(true, NULL);
 		    fillType = GroundPlane::fillTypeNone;
 	    }
 
@@ -1188,7 +1196,7 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
 		    filled = true;
 	    }
 	    else if ((fillType == GroundPlane::fillTypeGround) && oldGround) {
-		    mainWindow->removeGroundFill(true);
+		    mainWindow->removeGroundFill(true, NULL);
 		    mainWindow->groundFill();
 		    filled = true;
 	    }

@@ -1691,7 +1691,7 @@ bool PCBSketchWidget::groundFill(bool fillGroundTraces, QUndoCommand * parentCom
 	}
 
 	viewLayerIDs.clear();
-	viewLayerIDs << ViewLayer::Copper0 << ViewLayer::Copper0Trace;
+	viewLayerIDs << ViewLayer::Copper0 << ViewLayer::Copper0Trace  << ViewLayer::GroundPlane0;
 	QSizeF copperImageSize;
 
 	// hide ground traces so the ground plane will intersect them
@@ -1706,7 +1706,7 @@ bool PCBSketchWidget::groundFill(bool fillGroundTraces, QUndoCommand * parentCom
 	QString svg2;
 	if (boardLayers() > 1) {
 		viewLayerIDs.clear();
-		viewLayerIDs << ViewLayer::Copper1 << ViewLayer::Copper1Trace;
+		viewLayerIDs << ViewLayer::Copper1 << ViewLayer::Copper1Trace << ViewLayer::GroundPlane1;
 		if (fillGroundTraces) showGroundTraces(seeds, false);
 		svg2 = renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, true, copperImageSize, board, GraphicsUtils::StandardFritzingDPI, false, true, empty);
 		if (fillGroundTraces) showGroundTraces(seeds, true);

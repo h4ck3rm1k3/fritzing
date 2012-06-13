@@ -160,6 +160,7 @@ public:
 	void selectAllObsolete(bool displayFeedback);
 	void hideTempBin();
 	const QString & fritzingVersion();
+	void removeGroundFill(bool force, QUndoCommand * parentCommand);
 
 public:
 	static void initNames();
@@ -185,7 +186,7 @@ public slots:
 	void warnSMD(const QString & moduleID);
     void showPCBView();
 	void groundFill();
-	void removeGroundFill(bool force = false);
+	void removeGroundFill();
 	void copperFill();
 	void setOneGroundFillSeed();
 	void setGroundFillSeeds();	
