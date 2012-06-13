@@ -376,8 +376,7 @@ void LogoItem::loadImage(const QString & fileName, bool addName)
 		gpg.setMinRunSize(1, 1);
 		double res = image.dotsPerMeterX() / GraphicsUtils::InchesPerMeter;
 		gpg.scanImage(image, image.width(), image.height(), 1, res, colorString(), false, false, QSizeF(0, 0), 0, QPointF(0, 0));
-		QStringList newSvgs = gpg.newSVGs();
-		if (newSvgs.count() < 1) {
+		if (gpg.newSVGs().count() < 1) {
 			QMessageBox::information(
 				NULL,
 				tr("Unable to display"),
@@ -386,11 +385,7 @@ void LogoItem::loadImage(const QString & fileName, bool addName)
 			return;
 		}
 
-		QDomDocument doc;
-		foreach (QString newSvg, newSvgs) {
-			TextUtils::mergeSvg(doc, newSvg, layerName());
-		}
-		svg = TextUtils::mergeSvgFinish(doc);
+        svg = gpg.mergeSVGs("", layerName());
 	}
 
 	reloadImage(svg, QSizeF(0, 0), fileName, addName);

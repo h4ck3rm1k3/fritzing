@@ -60,6 +60,7 @@ public:
 	void setLayerName(const QString &);
 	const QString & layerName();
 	void setMinRunSize(int minRunSize, int minRiseSize);
+    QString mergeSVGs(const QString & initialSVG, const QString & layerName);
 
 public:
 	static QString ConnectorName;

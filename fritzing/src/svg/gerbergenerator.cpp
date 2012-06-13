@@ -40,6 +40,7 @@ $Date$
 #include "../utils/folderutils.h"
 
 static QRegExp AaCc("[aAcCqQtTsS]");
+static QRegExp MultipleZs("z\\s*[^\\s]");
 
 const QString GerberGenerator::SilkTopSuffix = "_silkTop.gto";
 const QString GerberGenerator::SilkBottomSuffix = "_silkBottom.gbo";
@@ -345,9 +346,34 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 		return "";
 	}
 
+    bool multipleContours = false;
+    if (forWhy == SVG2gerber::ForOutline) { 
+        // split path into multiple contours
+        QDomNodeList paths = root.elementsByTagName("path");
+        // should only be one
+        for (int p = 0; p < paths.count(); p++) {
+            QDomElement path = paths.at(p).toElement();
+            QString originalPath = path.attribute("d", "").trimmed();
+            if (MultipleZs.indexIn(originalPath) >= 0) {
+                multipleContours = true;
+                QStringList ds = path.attribute("d").split("z");
+                for (int i = 1; i < ds.count(); i++) {
+                    QDomElement newPath = path.cloneNode(true).toElement();
+                    QString z = ((i < ds.count() - 1) || originalPath.endsWith("z", Qt::CaseInsensitive)) ? "z" : "";
+                    QString d = ds.at(i).trimmed() + z;
+                    if (!d.startsWith("M")) {
+                        DebugDialog::debug("subpath doesn't start with M: " + originalPath);
+                    }
+                    newPath.setAttribute("d",  d);
+                    path.parentNode().appendChild(newPath);
+                }
+                path.setAttribute("d", ds.at(0) + "z");
+            }
+        }
+    }
+
 	// document 2 will contain svg that must be rasterized for gerber conversion
-	QDomDocument domDocument2;
-	domDocument2.setContent(svgString, &errorStr, &errorLine, &errorColumn);
+	QDomDocument domDocument2 = domDocument1.cloneNode(true).toDocument();
 
 	bool anyConverted = false;
     if (TextUtils::squashElement(domDocument1, "text", "", QRegExp())) {
@@ -372,6 +398,11 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 		anyConverted = true;
     }
 
+	// gerber can't handle multiple subpaths if there are intersections
+    if (TextUtils::squashElement(domDocument1, "path", "d", MultipleZs)) {
+		anyConverted = true;
+    }
+
 	QVector <QDomElement> leaves1;
 	int transformCount1 = 0;
     QDomElement e1 = domDocument1.documentElement();
@@ -389,6 +420,7 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 	int twidth = sourceRes.width();
 	int theight = sourceRes.height();
 	QSize imgSize(twidth + 2, theight + 2);
+	QRectF target(0, 0, twidth, theight);
 
 	QImage * clipImage = NULL;
 	if (!clipString.isEmpty()) {
@@ -396,7 +428,6 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 		clipImage->fill(0xffffffff);
 		clipImage->setDotsPerMeterX(res * GraphicsUtils::InchesPerMeter);
 		clipImage->setDotsPerMeterY(res * GraphicsUtils::InchesPerMeter);
-		QRectF target(0, 0, twidth, theight);
 
 		QXmlStreamReader reader(clipString);
 		QSvgRenderer renderer(&reader);		
@@ -411,39 +442,29 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 	QXmlStreamReader reader(svgString);
 	QSvgRenderer renderer(&reader);
 	bool anyClipped = false;
-	for (int i = 0; i < transformCount1; i++) {
-		QString n = QString::number(i);
-		QRectF bounds = renderer.boundsOnElement(n);
-		QMatrix m = renderer.matrixForElement(n);
-		QDomElement element = leaves1.at(i);
-		QRectF mBounds = m.mapRect(bounds);
-		if (mBounds.left() < sourceRes.left() - 0.1|| mBounds.top() < sourceRes.top() - 0.1 || mBounds.right() > sourceRes.right() + 0.1 || mBounds.bottom() > sourceRes.bottom() + 0.1) {
-			// element is outside of bounds--squash it so it will be clipped
-			// we don't care if the board shape is irregular
-			// since anything printed between the shape and the bounding rectangle 
-			// will be physically clipped when the board is cut out
-			element.setTagName("g");
-			anyClipped = anyConverted = true;
-		}	
-	}
-
-	if (forWhy == SVG2gerber::ForOutline) {
-		// make one big polygon.  Assume there are no holes in the board
-
-		if (anyConverted || leaves1.count() > 1) {
-			anyClipped = true;
-			foreach (QDomElement l, leaves1) {
-				l.setTagName("g");
-			}
-		}
-	}
+    if (forWhy !=  SVG2gerber::ForOutline) { 
+	    for (int i = 0; i < transformCount1; i++) {
+		    QString n = QString::number(i);
+		    QRectF bounds = renderer.boundsOnElement(n);
+		    QMatrix m = renderer.matrixForElement(n);
+		    QDomElement element = leaves1.at(i);
+		    QRectF mBounds = m.mapRect(bounds);
+		    if (mBounds.left() < sourceRes.left() - 0.1|| mBounds.top() < sourceRes.top() - 0.1 || mBounds.right() > sourceRes.right() + 0.1 || mBounds.bottom() > sourceRes.bottom() + 0.1) {
+			    // element is outside of bounds--squash it so it will be clipped
+			    // we don't care if the board shape is irregular
+			    // since anything printed between the shape and the bounding rectangle 
+			    // will be physically clipped when the board is cut out
+			    element.setTagName("g");
+			    anyClipped = anyConverted = true;
+		    }	
+	    }
+    }
 
 	if (clipImage) {
 		QImage another(imgSize, QImage::Format_Mono);
 		another.fill(0xffffffff);
 		another.setDotsPerMeterX(res * GraphicsUtils::InchesPerMeter);
 		another.setDotsPerMeterY(res * GraphicsUtils::InchesPerMeter);
-		QRectF target(0, 0, twidth, theight);
 
 		svgString = TextUtils::removeXMLEntities(domDocument1.toString());
 		QXmlStreamReader reader(svgString);
@@ -506,69 +527,85 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 			root.setAttribute("viewBox", coords.join(" "));
 		}
 
-		QString svg = TextUtils::removeXMLEntities(domDocument2.toString());
-
 		QStringList exceptions;
 		exceptions << "none" << "";
 		QString toColor("#000000");
 		QByteArray svgByteArray;
-		SvgFileSplitter::changeColors(svg, toColor, exceptions, svgByteArray);
+		SvgFileSplitter::changeColors(domDocument2.documentElement(), toColor, exceptions);
 
-		QImage image(imgSize, QImage::Format_Mono);
-		image.fill(0xffffffff);
+        QImage image(imgSize, QImage::Format_Mono);
 		image.setDotsPerMeterX(res * GraphicsUtils::InchesPerMeter);
 		image.setDotsPerMeterY(res * GraphicsUtils::InchesPerMeter);
-		QRectF target(0, 0, twidth, theight);
 
-		QSvgRenderer renderer(svgByteArray);
-		QPainter painter;
-		painter.begin(&image);
-		renderer.render(&painter, target);
-		painter.end();
-		image.invertPixels();				// need white pixels on a black background for GroundPlaneGenerator
+        if (forWhy == SVG2gerber::ForOutline) {		
+            QDomNodeList paths = root.elementsByTagName("path");
+            for (int p = 0; p < paths.count(); p++) {
+                QDomElement path = paths.at(p).toElement();
+                path.setTagName("g");
+            }
+            for (int p = 0; p < paths.count(); p++) {
+                QDomElement path = paths.at(p).toElement();
+                path.setTagName("path");
+                if (p > 0) {
+                    paths.at(p - 1).toElement().setTagName("g");
+                }
+                image.fill(0xffffffff);
+		        svgByteArray = TextUtils::removeXMLEntities(domDocument2.toString()).toUtf8();
 
-		if (clipImage != NULL) {
-			// can this be done with a single blt using composition mode
-			// if not, grab a scanline instead of testing every pixel
-			for (int y = 0; y < theight; y++) {
-				for (int x = 0; x < twidth; x++) {
-					if (clipImage->pixel(x, y) != 0xffffffff) {
-						image.setPixel(x, y, 0);
-					}
-				}
-			}
+		        QSvgRenderer renderer(svgByteArray);
+		        QPainter painter;
+		        painter.begin(&image);
+		        renderer.render(&painter, target);
+		        painter.end();
+		        image.invertPixels();				// need white pixels on a black background for GroundPlaneGenerator
+
+                #ifndef QT_NO_DEBUG
+		            image.save(QString("output%1.png").arg(p));
+                #endif
+
+		        GroundPlaneGenerator gpg;
+		        gpg.setLayerName(layerName);
+		        gpg.setMinRunSize(1, 1);
+                gpg.scanOutline(image, image.width(), image.height(), GraphicsUtils::StandardFritzingDPI / res, GraphicsUtils::StandardFritzingDPI, "#000000", false, false, QSizeF(0, 0), 0);
+		        if (gpg.newSVGs().count() > 0) {
+                    svgString = gpg.mergeSVGs(svgString, "");
+		        }
+            }
 		}
+        else {
+		    image.fill(0xffffffff);
+		    QString svg = TextUtils::removeXMLEntities(domDocument2.toString());
 
-#ifndef QT_NO_DEBUG
-		image.save("output.png");
-#endif
+		    QSvgRenderer renderer(svgByteArray);
+		    QPainter painter;
+		    painter.begin(&image);
+		    renderer.render(&painter, target);
+		    painter.end();
+		    image.invertPixels();				// need white pixels on a black background for GroundPlaneGenerator
 
-		GroundPlaneGenerator gpg;
-		gpg.setLayerName(layerName);
-		gpg.setMinRunSize(1, 1);
-		if (forWhy == SVG2gerber::ForOutline) {
-		//	int tinyWidth = boardRect.width();
-		//	int tinyHeight = boardRect.height();
-		//	QRectF tinyTarget(0, 0, tinyWidth, tinyHeight);
-		//	QImage tinyImage(tinyWidth, tinyHeight, QImage::Format_Mono);
-		//	QPainter painter;
-		//	painter.begin(&tinyImage);
-		//	renderer.render(&painter, tinyTarget);
-		//	painter.end();
-		//	tinyImage.invertPixels();				// need white pixels on a black background for GroundPlaneGenerator
-			gpg.scanOutline(image, image.width(), image.height(), GraphicsUtils::StandardFritzingDPI / res, GraphicsUtils::StandardFritzingDPI, "#000000", false, false, QSizeF(0, 0), 0);
-		}
-		else {
+		    if (clipImage != NULL) {
+			    // can this be done with a single blt using composition mode
+			    // if not, grab a scanline instead of testing every pixel
+			    for (int y = 0; y < theight; y++) {
+				    for (int x = 0; x < twidth; x++) {
+					    if (clipImage->pixel(x, y) != 0xffffffff) {
+						    image.setPixel(x, y, 0);
+					    }
+				    }
+			    }
+		    }
+
+    #ifndef QT_NO_DEBUG
+		    image.save("output.png");
+    #endif
+
+		    GroundPlaneGenerator gpg;
+		    gpg.setLayerName(layerName);
+		    gpg.setMinRunSize(1, 1);
 			gpg.scanImage(image, image.width(), image.height(), GraphicsUtils::StandardFritzingDPI / res, GraphicsUtils::StandardFritzingDPI, "#000000", false, false, QSizeF(0, 0), 0, sourceRes.topLeft());
-		}
-
-		if (gpg.newSVGs().count() > 0) {
-			QDomDocument doc;
-			TextUtils::mergeSvg(doc, svgString, "");
-			foreach (QString gsvg, gpg.newSVGs()) {
-				TextUtils::mergeSvg(doc, gsvg, "");
-			}
-			svgString = TextUtils::mergeSvgFinish(doc);
+		    if (gpg.newSVGs().count() > 0) {
+                svgString = gpg.mergeSVGs(svgString, "");
+		    }
 		}
 	}
 

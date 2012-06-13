@@ -1190,3 +1190,15 @@ void GroundPlaneGenerator::setMinRunSize(int mrus, int mris) {
 	m_minRunSize = mrus;
 	m_minRiseSize = mris;
 }
+
+QString GroundPlaneGenerator::mergeSVGs(const QString & initialSVG, const QString & layerName) {
+    QDomDocument doc;
+    if (!initialSVG.isEmpty()) {
+		TextUtils::mergeSvg(doc, initialSVG, layerName);        
+    }
+	foreach (QString newSvg, m_newSVGs) {
+		TextUtils::mergeSvg(doc, newSvg, layerName);
+	}
+	return TextUtils::mergeSvgFinish(doc);
+}
+
