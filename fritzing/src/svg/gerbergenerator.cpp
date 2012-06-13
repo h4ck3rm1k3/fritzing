@@ -94,10 +94,14 @@ void GerberGenerator::exportToGerber(const QString & prefix, const QString & exp
 	LayerList viewLayerIDs = ViewLayer::copperLayers(ViewLayer::Bottom);
 	int copperInvalidCount = doCopper(board, sketchWidget, viewLayerIDs, "Copper0", CopperBottomSuffix, prefix, exportDir, displayMessageBoxes);
 
-	if (sketchWidget->boardLayers() == 2) {
+    
+    if (sketchWidget->boardLayers() == 2) {
 		viewLayerIDs = ViewLayer::copperLayers(ViewLayer::Top);
 		copperInvalidCount += doCopper(board, sketchWidget, viewLayerIDs, "Copper1", CopperTopSuffix, prefix, exportDir, displayMessageBoxes);
 	}
+
+
+
 
 	LayerList maskLayerIDs = ViewLayer::maskLayers(ViewLayer::Bottom);
 	QString maskBottom, maskTop;
@@ -356,7 +360,7 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
             QString originalPath = path.attribute("d", "").trimmed();
             if (MultipleZs.indexIn(originalPath) >= 0) {
                 multipleContours = true;
-                QStringList ds = path.attribute("d").split("z");
+                QStringList ds = path.attribute("d").split("z", QString::SkipEmptyParts);
                 for (int i = 1; i < ds.count(); i++) {
                     QDomElement newPath = path.cloneNode(true).toElement();
                     QString z = ((i < ds.count() - 1) || originalPath.endsWith("z", Qt::CaseInsensitive)) ? "z" : "";
