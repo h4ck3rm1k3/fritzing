@@ -747,21 +747,6 @@ void BinManager::newPartTo(PartsBinPaletteWidget* bin) {
 	partsEditor->raise();
 }
 
-void BinManager::importPartTo(PartsBinPaletteWidget* bin) {
-	QString newPartPath = QFileDialog::getOpenFileName(
-		this,
-		tr("Select a part to import"),
-		"",
-		tr("External Part (*%1)").arg(FritzingBundledPartExtension)
-	);
-	if(!newPartPath.isEmpty() && !newPartPath.isNull()) {
-		ModelPart *mp = m_mainWindow->loadBundledPart(newPartPath,!bin->allowsChanges());
-		if (bin->allowsChanges()) {
-			addPartTo(bin,mp);
-		}
-	}
-}
-
 void BinManager::editSelectedPartFrom(PartsBinPaletteWidget* bin) {
 	ModelPart *selectedMP = bin->selected();
 	PartsEditorMainWindow *partsEditor = m_mainWindow->getPartsEditor(selectedMP, -1, NULL, bin);
@@ -875,7 +860,6 @@ void BinManager::updateBinCombinedMenu(PartsBinPaletteWidget * bin) {
 	m_editPartAction->setEnabled(enabled);
 	m_exportPartAction->setEnabled(enabled && !mp->isCore());
 	m_removePartAction->setEnabled(enabled && bin->allowsChanges());
-	m_importPartAction->setEnabled(true);
 }
 
 void BinManager::createCombinedMenu() 
@@ -885,10 +869,6 @@ void BinManager::createCombinedMenu()
 	m_newBinAction = new QAction(tr("New Bin..."), this);
 	m_newBinAction->setToolTip(tr("Create a new parts bin"));
 	connect(m_newBinAction, SIGNAL(triggered()),this, SLOT(newBinIn()));
-
-	m_openBinAction = new QAction(tr("Open Bin..."), this);
-	m_openBinAction->setToolTip(tr("Open a parts bin from a file"));
-	connect(m_openBinAction, SIGNAL(triggered()),this, SLOT(openNewBin()));
 
 	m_closeBinAction = new QAction(tr("Close Bin"), this);
 	m_closeBinAction->setToolTip(tr("Close parts bin"));
@@ -925,7 +905,6 @@ void BinManager::createCombinedMenu()
 	connect(m_showIconViewAction, SIGNAL(triggered()),this, SLOT(toIconView()));
 
 	m_combinedMenu->addAction(m_newBinAction);
-	m_combinedMenu->addAction(m_openBinAction);
 	m_combinedMenu->addSeparator();
 	m_combinedMenu->addAction(m_closeBinAction);
 	m_combinedMenu->addAction(m_deleteBinAction);
@@ -938,13 +917,11 @@ void BinManager::createCombinedMenu()
 	m_combinedMenu->addAction(m_showListViewAction);
 
 	m_newPartAction = new QAction(tr("New Part..."), this);
-	m_importPartAction = new QAction(tr("Import Part..."),this);
 	m_editPartAction = new QAction(tr("Edit Part..."),this);
 	m_exportPartAction = new QAction(tr("Export Part..."),this);
 	m_removePartAction = new QAction(tr("Remove Part"),this);
 
 	connect(m_newPartAction, SIGNAL(triggered()),this, SLOT(newPart()));
-	connect(m_importPartAction, SIGNAL(triggered()),this, SLOT(importPart()));
 	connect(m_editPartAction, SIGNAL(triggered()),this, SLOT(editSelected()));
 	connect(m_exportPartAction, SIGNAL(triggered()),this, SLOT(exportSelected()));
 	connect(m_removePartAction, SIGNAL(triggered()),this, SLOT(removeSelected()));
@@ -953,7 +930,6 @@ void BinManager::createCombinedMenu()
 
 	m_combinedMenu->addSeparator();
 	m_combinedMenu->addAction(m_newPartAction);
-	m_combinedMenu->addAction(m_importPartAction);
 	m_combinedMenu->addSeparator();
 	m_combinedMenu->addAction(m_editPartAction);
 	m_combinedMenu->addAction(m_exportPartAction);
@@ -974,10 +950,6 @@ void BinManager::createContextMenus() {
 	m_partContextMenu->addAction(m_editPartAction);
 	m_partContextMenu->addAction(m_exportPartAction);
 	m_partContextMenu->addAction(m_removePartAction);
-}
-
-void BinManager::openNewBin() {
-	openBinIn("", false);
 }
 
 void BinManager::closeBin() {
@@ -1007,8 +979,17 @@ void BinManager::newPart() {
 	newPartTo(currentBin());
 }
 
-void BinManager::importPart() {
-	importPartTo(currentBin());
+void BinManager::importPart(const QString & filename) {
+
+	if (!filename.isEmpty() && !filename.isNull()) {
+        PartsBinPaletteWidget * bin = currentBin();
+        if (bin == NULL) return;
+
+		ModelPart *mp = m_mainWindow->loadBundledPart(filename, !bin->allowsChanges());
+		if (bin->allowsChanges()) {
+			addPartTo(bin, mp);
+		}
+	}
 }
 
 void BinManager::editSelected() {

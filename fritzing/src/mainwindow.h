@@ -177,7 +177,7 @@ signals:
 
 public slots:
 	void ensureClosable();
-	ModelPart* loadBundledPart(const QString &fileName, bool addToBin=true);
+	ModelPart* loadBundledPart(const QString &fileName, bool addToBin);
 	void partsEditorClosed(long id);
 	void importFilesFromPrevInstall();
 	void acceptAlienFiles();
@@ -303,7 +303,6 @@ protected slots:
 	void shareOnline();
 	void saveBundledPart(const QString &moduleId=___emptyString___);
 	QStringList saveBundledAux(ModelPart *mp, const QDir &destFolder);
-	void loadBundledPart();
 
 	void binSaved(bool hasAlienParts);
 	void routingStatusSlot(SketchWidget *, const RoutingStatus &);
@@ -630,7 +629,6 @@ protected:
 	QAction *m_flipHorizontalAct;
 	QAction *m_flipVerticalAct;
 	QAction *m_showPartLabelAct;
-	QAction *m_loadBundledPart;
 	QAction *m_saveBundledPart;
 	QAction *m_disconnectAllAct;
 	QAction *m_selectAllObsoleteAct;

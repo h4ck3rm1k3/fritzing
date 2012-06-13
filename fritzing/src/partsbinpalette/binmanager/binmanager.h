@@ -97,7 +97,6 @@ class BinManager : public QFrame {
 
 		void addPartTo(PartsBinPaletteWidget* bin, ModelPart* mp);
 		void newPartTo(PartsBinPaletteWidget* bin);
-		void importPartTo(PartsBinPaletteWidget* bin);
 		void editSelectedPartFrom(PartsBinPaletteWidget* bin);
 
 		void dockedInto(class FDockWidget* dock);
@@ -115,6 +114,7 @@ class BinManager : public QFrame {
 		QMenu * combinedMenu();
 		void setTabIcon(PartsBinPaletteWidget* w, QIcon *);
 		void copyFilesToContrib(ModelPart *, QWidget * originator);
+		void importPart(const QString & filename);
 
 	signals:
 		void savePartAsBundled(const QString &moduleId);
@@ -131,11 +131,9 @@ class BinManager : public QFrame {
 		void currentChanged(int);
 		void tabCloseRequested(int);
 		PartsBinPaletteWidget* newBinIn();
-		void openNewBin();
 		void closeBin();
 		void deleteBin();
 		void newPart();
-		void importPart();
 		void editSelected();
 		void saveBin();
 		void saveBinAs();
@@ -185,7 +183,6 @@ protected:
 		QMenu *m_combinedMenu;		
 
 		QAction *m_newBinAction;
-		QAction *m_openBinAction;
 		QAction *m_closeBinAction;
 		QAction *m_deleteBinAction;
 		QAction *m_saveBinAction;
@@ -199,7 +196,6 @@ protected:
 		QMenu *m_partContextMenu;
 		QMenu *m_partMenu;	
 		QAction *m_newPartAction;
-		QAction *m_importPartAction;
 		QAction *m_editPartAction;
 		QAction *m_exportPartAction;
 		QAction *m_removePartAction;

@@ -1312,21 +1312,6 @@ void MainWindow::loadBundledPartFromWeb() {
 }
 */
 
-void MainWindow::loadBundledPart() {
-	QStringList fileNames = FolderUtils::getOpenFileNames(
-		this,
-		tr("Select one or more parts to import"),
-		defaultSaveFolder(),
-		tr("External Part (*%1)").arg(FritzingBundledPartExtension)
-	);
-
-	if (fileNames.count() == 0) return;
-
-	foreach (QString fileName, fileNames) {
-		loadBundledPart(fileName);
-	}
-}
-
 ModelPart* MainWindow::loadBundledPart(const QString &fileName, bool addToBin) {
 	QDir destFolder = QDir::temp();
 
@@ -1344,8 +1329,7 @@ ModelPart* MainWindow::loadBundledPart(const QString &fileName, bool addToBin) {
 
 	QDir unzipDir(unzipDirPath);
 
-	QList<ModelPart*> mps = moveToPartsFolder(unzipDir,this,addToBin,true, 
-		FolderUtils::getUserDataStorePath("parts"),"contrib");
+	QList<ModelPart*> mps = moveToPartsFolder(unzipDir, this, addToBin, true, FolderUtils::getUserDataStorePath("parts"), "contrib");
 	if (mps.count()!=1) {
 		// if this fails, that means that the bundled was wrong
 		QMessageBox::warning(

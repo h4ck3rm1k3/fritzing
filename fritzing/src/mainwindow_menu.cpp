@@ -142,8 +142,25 @@ void MainWindow::mainLoad() {
 			this,
 			tr("Select a Fritzing File to Open"),
 			path,
-			tr("Fritzing Files (*%1 *%2);;Fritzing (*%1);;Fritzing Shareable (*%2)").arg(FritzingSketchExtension).arg(FritzingBundleExtension)
+			tr("Fritzing Files (*%1 *%2 *%3 *%4 *%5);;Fritzing (*%1);;Fritzing Shareable (*%2);;Fritzing Part (*%3);;Fritzing Bin (*%4);;Fritzing Shareable Bin (*%5)")
+                .arg(FritzingSketchExtension)
+                .arg(FritzingBundleExtension)
+                .arg(FritzingBundledPartExtension)
+                .arg(FritzingBinExtension)
+                .arg(FritzingBundledBinExtension)
 		);
+
+    if (fileName.isEmpty()) return;
+
+    if (fileName.endsWith(FritzingBundledPartExtension)) {
+        m_binManager->importPart(fileName);
+        return;
+    }
+
+    if (fileName.endsWith(FritzingBinExtension) || fileName.endsWith(FritzingBundledBinExtension)) {
+        m_binManager->openBinIn(fileName, false);
+        return;
+    }
 
     mainLoadAux(fileName);
 }
@@ -250,7 +267,7 @@ bool MainWindow::loadWhich(const QString & fileName, bool setAsLastOpened, bool 
 		notYetImplemented(tr("directly loading parts"));
 	}  
 	else if (fileName.endsWith(FritzingBundledPartExtension)) {
-		loadBundledPart(fileName);
+		loadBundledPart(fileName, true);
 		result = true;
 	}
 
@@ -838,10 +855,6 @@ void MainWindow::createPartMenuActions() {
 	m_showPartLabelAct->setCheckable(true);
 	connect(m_showPartLabelAct, SIGNAL(triggered()), this, SLOT(showPartLabels()));
 
-	m_loadBundledPart = new QAction(tr("&Import..."), this);
-	m_loadBundledPart->setStatusTip(tr("Import a part"));
-	connect(m_loadBundledPart, SIGNAL(triggered()), this, SLOT(loadBundledPart()));
-
 	m_saveBundledPart = new QAction(tr("&Export..."), this);
 	m_saveBundledPart->setStatusTip(tr("Export selected part"));
 	connect(m_saveBundledPart, SIGNAL(triggered()), this, SLOT(saveBundledPart()));
@@ -1107,10 +1120,10 @@ void MainWindow::createMenus()
     connect(m_partMenu, SIGNAL(aboutToShow()), this, SLOT(updatePartMenu()));
 
     m_partMenu->addAction(m_createNewPart);
-	m_partMenu->addAction(m_loadBundledPart);
-	m_partMenu->addSeparator();
 	m_partMenu->addAction(m_openInPartsEditorAct);
-	m_partMenu->addAction(m_saveBundledPart);
+	m_partMenu->addSeparator();
+
+    m_partMenu->addAction(m_saveBundledPart);
 
 	m_partMenu->addSeparator();
 	m_partMenu->addAction(m_flipHorizontalAct);
