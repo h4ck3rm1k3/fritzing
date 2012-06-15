@@ -89,8 +89,8 @@ QString Pad::makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, double mmW, double
 
 	QString connectAt = m_modelPart->localProp("connect").toString();
 	QRectF terminal;
-	double minW = qMin(1.0, wpx / 3);
-	double minH = qMin(1.0, hpx / 3);
+	double minW = qMin((double) 1.0, wpx / 3);
+	double minH = qMin((double) 1.0, hpx / 3);
 	if (connectAt.compare("center", Qt::CaseInsensitive) == 0) {
 		terminal.setRect(2, 2, wpx, hpx);
 	}
