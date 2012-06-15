@@ -1763,10 +1763,10 @@ void CMRouter::hookUpWires(QList<PathUnit *> & fullPath, QList<Wire *> & wires) 
 
 	QList<Tile *> alreadyTiled;
 	tileWires(wires, alreadyTiled, m_sketchWidget->autorouteTypePCB() ? Tile::OBSTACLE : Tile::SCHEMATICWIRESPACE, CMRouter::ClipAllOverlaps, true);
-	double l = std::numeric_limits<int>::max();
-	double t = std::numeric_limits<int>::max();
-	double r = std::numeric_limits<int>::min();
-	double b = std::numeric_limits<int>::min();
+	qreal l = std::numeric_limits<int>::max();        // qreal for armel  
+	qreal t = std::numeric_limits<int>::max();        // qreal for armel 
+	qreal r = std::numeric_limits<int>::min();        // qreal for armel 
+	qreal b = std::numeric_limits<int>::min();        // qreal for armel 
 	foreach (Wire * w, wires) {
 		viewLayerIDs.insert(w->viewLayerID());
 		QPointF p1 = w->pos();
