@@ -535,7 +535,8 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 		exceptions << "none" << "";
 		QString toColor("#000000");
 		QByteArray svgByteArray;
-		SvgFileSplitter::changeColors(domDocument2.documentElement(), toColor, exceptions);
+        QDomElement root2 = domDocument2.documentElement();
+		SvgFileSplitter::changeColors(root2, toColor, exceptions);
 
         QImage image(imgSize, QImage::Format_Mono);
 		image.setDotsPerMeterX(res * GraphicsUtils::InchesPerMeter);
