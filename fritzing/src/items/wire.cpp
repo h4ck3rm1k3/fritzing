@@ -1739,3 +1739,12 @@ bool Wire::canChainMultiple()
 {
 	return m_canChainMultiple;
 }
+
+ViewIdentifierClass::ViewIdentifier Wire::useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier vid, bool) 
+{
+    if (vid == ViewIdentifierClass::BreadboardView) {
+        return ViewIdentifierClass::IconView;
+    }
+
+    return ViewIdentifierClass::UnknownView;
+}

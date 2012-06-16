@@ -33,6 +33,7 @@ ItemDrag * ItemDrag::Singleton = new ItemDrag();
 ItemDrag::ItemDrag(QObject * parent) :
 	QObject(parent)
 {
+    m_originator = NULL;
 }
 
 void ItemDrag::__dragIsDone() {

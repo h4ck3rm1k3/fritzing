@@ -212,6 +212,7 @@ protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
     void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 	void updateCursor(Qt::KeyboardModifiers);
+    ViewIdentifierClass::ViewIdentifier useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier, bool swappingEnabled);
 
 protected:
 	QLineF	m_line;

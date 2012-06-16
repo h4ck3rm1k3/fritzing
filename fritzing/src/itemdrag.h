@@ -32,6 +32,7 @@ $Date$
 #include <QDrag>
 #include <QHash>
 #include <QPixmap>
+#include <QPointer>
 
 
 class ItemDrag : public QObject {
@@ -56,7 +57,7 @@ signals:
 
 protected:
 	QHash<QObject *, QObject *> m_cache;
-	QWidget * m_originator;
+	QPointer<QWidget> m_originator;
 	
 protected:
 	static ItemDrag * Singleton;
