@@ -47,8 +47,6 @@ $Date$
 #include <QGroupBox>
 #include <QSettings>
 
-static const int rowHeight = 21;
-
 const double Hole::OffsetPixels = 2;
 QHash<QString, QString> Hole::HoleSizes;
 const QString Hole::AutorouteViaHoleSize = "autorouteViaHoleSize";
@@ -86,8 +84,6 @@ Hole::Hole( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdent
 
 	m_holeSettings.holeDiameter = sizes.at(0);
 	m_holeSettings.ringThickness = sizes.at(1);
-
-	m_otherLayerRenderer = m_extraRenderer = NULL;
 }
 
 Hole::~Hole() {
@@ -95,12 +91,7 @@ Hole::~Hole() {
 
 void Hole::initHoleSettings(HoleSettings & holeSettings) 
 {
-	holeSettings.diameterEdit = holeSettings.thicknessEdit = NULL;
-	holeSettings.diameterValidator = holeSettings.thicknessValidator = NULL;
-	holeSettings.inRadioButton = holeSettings.mmRadioButton = NULL;
-	holeSettings.sizesComboBox = NULL;
-	holeSettings.holeDiameterRange = Hole::holeDiameterRange;
-	holeSettings.ringThicknessRange = Hole::ringThicknessRange;
+    PaletteItem::initHoleSettings(holeSettings, &HoleSizes, Hole::holeDiameterRange,  Hole::ringThicknessRange);
 }
 
 
@@ -109,39 +100,18 @@ void Hole::setUpHoleSizes() {
 	QString ringThickness = settings.value(AutorouteViaRingThickness, "").toString();
 	QString holeSize = settings.value(AutorouteViaHoleSize, "").toString();
 
-	QFile file(":/resources/vias.xml");
+    bool holeSizeWasEmpty = holeSize.isEmpty();
+    bool ringThicknessWasEmpty = holeSize.isEmpty();
+    PaletteItem::setUpHoleSizes(holeSize, ringThickness, "hole", HoleSizes);
 
-	QString errorStr;
-	int errorLine;
-	int errorColumn;
-
-	QDomDocument domDocument;
-	if (!domDocument.setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
-		DebugDialog::debug(QString("failed loading properties %1 line:%2 col:%3").arg(errorStr).arg(errorLine).arg(errorColumn));
-		return;
+	if (ringThicknessWasEmpty) {
+		settings.setValue(AutorouteViaRingThickness, ringThickness);
+		DefaultAutorouteViaRingThickness = ringThickness;
 	}
 
-	QDomElement root = domDocument.documentElement();
-	if (root.isNull()) return;
-	if (root.tagName() != "vias") return;
-
-	QDomElement ve = root.firstChildElement("via");
-	while (!ve.isNull()) {
-		QString rt = ve.attribute("ringthickness");
-		QString hs = ve.attribute("holesize");
-		QString name = ve.attribute("name");
-		if (ve.attribute("default").compare("yes") == 0) {
-			if (ringThickness.isEmpty()) {
-				settings.setValue(AutorouteViaRingThickness, rt);
-				DefaultAutorouteViaRingThickness = rt;
-			}
-			if (holeSize.isEmpty()) {
-				settings.setValue(AutorouteViaHoleSize, hs);
-				DefaultAutorouteViaHoleSize = hs;
-			}
-		}
-		HoleSizes.insert(name, QString("%1,%2").arg(hs).arg(rt));
-		ve = ve.nextSiblingElement("via");
+	if (holeSizeWasEmpty) {
+		settings.setValue(AutorouteViaHoleSize, holeSize);
+		DefaultAutorouteViaHoleSize = holeSize;
 	}
 }
 
@@ -231,7 +201,7 @@ void Hole::setBoth(const QString & holeDiameter, const QString & ringThickness) 
 	ItemBase * otherLayer = setBothSvg(holeDiameter, ringThickness);
 
 	// there's only one NonConnectorItem
-	foreach (SvgIdLayer * svgIdLayer, m_extraRenderer->setUpNonConnectors()) {
+	foreach (SvgIdLayer * svgIdLayer, fsvgRenderer()->setUpNonConnectors()) {
 		if (svgIdLayer == NULL) continue;
 
 		setBothNonConnectors(this, svgIdLayer);
@@ -246,7 +216,7 @@ void Hole::setBoth(const QString & holeDiameter, const QString & ringThickness) 
 ItemBase * Hole::setBothSvg(const QString & holeDiameter, const QString & ringThickness) 
 {
 	QString svg = makeSvg(holeDiameter, ringThickness, m_viewLayerID);
-	loadExtraRenderer(svg.toUtf8(), false);
+	resetRenderer(svg);
 	//DebugDialog::debug("both");
 	//DebugDialog::debug(svg);
 
@@ -264,17 +234,8 @@ ItemBase * Hole::setBothSvg(const QString & holeDiameter, const QString & ringTh
 
 	if (otherLayer) {
 		osvg = makeSvg(holeDiameter, ringThickness, otherLayer->viewLayerID());
-		if (m_otherLayerRenderer == NULL) {
-			m_otherLayerRenderer = new FSvgRenderer(this);
-		}
-
 		//DebugDialog::debug(osvg);
-
-
-		bool result = m_otherLayerRenderer->loadSvgString(osvg);
-		if (result) {
-			qobject_cast<PaletteItemBase *>(otherLayer)->setSharedRendererEx(m_otherLayerRenderer);
-		}
+		otherLayer->resetRenderer(osvg);
 	}
 
 	//DebugDialog::debug("other");
@@ -412,7 +373,7 @@ bool Hole::collectExtraInfo(QWidget * parent, const QString & family, const QStr
 		returnProp = tr("hole size");
 
 		returnValue = m_modelPart->localProp("hole size").toString();
-		QWidget * frame = createHoleSettings(parent, m_holeSettings, swappingEnabled, returnValue);
+		QWidget * frame = createHoleSettings(parent, m_holeSettings, swappingEnabled, returnValue, true);
 
 		connect(m_holeSettings.sizesComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeHoleSize(const QString &)));	
 		connect(m_holeSettings.mmRadioButton, SIGNAL(toggled(bool)), this, SLOT(changeUnits(bool)));
@@ -496,21 +457,6 @@ QString Hole::changeUnits(const QString & units, HoleSettings & holeSettings)
 	return newVal;
 }
 
-void Hole::updateValidators(HoleSettings & holeSettings)
-{
-	if (holeSettings.diameterValidator == NULL) return;
-	if (holeSettings.thicknessValidator == NULL) return;
-	if (holeSettings.mmRadioButton == NULL) return;
-
-	QString units = holeSettings.currentUnits();
-	QPointF hdRange = holeSettings.holeDiameterRange(holeSettings.ringThickness);
-	QPointF rtRange = holeSettings.ringThicknessRange(holeSettings.holeDiameter);
-
-	double multiplier = (units == "mm") ? 25.4 : 1.0;
-	holeSettings.diameterValidator->setRange(hdRange.x() * multiplier, hdRange.y() * multiplier, 3);
-	holeSettings.thicknessValidator->setRange(rtRange.x() * multiplier, rtRange.y() * multiplier, 3);
-}
-
 
 QPointF Hole::ringThicknessRange(const QString & holeDiameter) {
 	double hd = TextUtils::convertToInches(holeDiameter);
@@ -534,66 +480,6 @@ void Hole::changeHoleSize(const QString & newSize) {
 	}
 }
 
-void Hole::updateEditTexts(HoleSettings & holeSettings) {
-	if (holeSettings.diameterEdit == NULL) return;
-	if (holeSettings.thicknessEdit == NULL) return;
-	if (holeSettings.mmRadioButton == NULL) return;
-
-	double hd = TextUtils::convertToInches(holeSettings.holeDiameter);
-	double rt = TextUtils::convertToInches(holeSettings.ringThickness);
-
-	QString newVal;
-	if (holeSettings.currentUnits() == "in") {
-		newVal = QString("%1,%2").arg(hd).arg(rt);
-	}
-	else {
-		newVal = QString("%1,%2").arg(hd * 25.4).arg(rt * 25.4);
-	}
-
-	QStringList sizes = newVal.split(",");
-	holeSettings.diameterEdit->setText(sizes.at(0));
-	holeSettings.thicknessEdit->setText(sizes.at(1));
-}
-
-void Hole::updateSizes(HoleSettings &  holeSettings) {
-	if (holeSettings.sizesComboBox == NULL) return;
-
-	int newIndex = -1;
-
-	QPointF current(TextUtils::convertToInches(holeSettings.holeDiameter), TextUtils::convertToInches(holeSettings.ringThickness));
-	for (int ix = 0; ix < holeSettings.sizesComboBox->count(); ix++) {
-		QString key = holeSettings.sizesComboBox->itemText(ix);
-		QString value = HoleSizes.value(key, "");
-		QStringList sizes;
-		if (value.isEmpty()) {
-			sizes = key.split(",");
-		}
-		else {
-			sizes = value.split(",");
-		}
-		if (sizes.count() < 2) continue;
-
-		QPointF p(TextUtils::convertToInches(sizes.at(0)), TextUtils::convertToInches(sizes.at(1)));
-		if (p == current) {
-			newIndex = ix;
-			break;
-		}
-	}
-
-	if (newIndex < 0) {
-		QString newItem = holeSettings.holeDiameter + "," + holeSettings.ringThickness;
-		holeSettings.sizesComboBox->addItem(newItem);
-		newIndex = holeSettings.sizesComboBox->findText(newItem);
-
-		HoleSizes.insert(newItem, newItem);
-	}
-
-	// don't want to trigger another undo command
-	bool wasBlocked = holeSettings.sizesComboBox->blockSignals(true);
-	holeSettings.sizesComboBox->setCurrentIndex(newIndex);
-	holeSettings.sizesComboBox->blockSignals(wasBlocked);
-}
-
 bool Hole::canEditPart() {
 	return false;
 }
@@ -601,106 +487,6 @@ bool Hole::canEditPart() {
 bool Hole::hasPartNumberProperty()
 {
 	return false;
-}
-
-QWidget * Hole::createHoleSettings(QWidget * parent, HoleSettings & holeSettings, bool swappingEnabled, const QString & currentHoleSize) {
-	QFrame * frame = new QFrame(parent);
-	frame->setObjectName("infoViewPartFrame");
-
-	QVBoxLayout * vBoxLayout = new QVBoxLayout(frame);
-	vBoxLayout->setMargin(0);
-	vBoxLayout->setContentsMargins(0, 0, 0, 0);
-	vBoxLayout->setSpacing(0);
-
-	holeSettings.sizesComboBox = new QComboBox(frame);
-	holeSettings.sizesComboBox->setEditable(false);
-	holeSettings.sizesComboBox->setObjectName("infoViewComboBox");
-
-	vBoxLayout->addWidget(holeSettings.sizesComboBox);
-
-    QFrame * hFrame = new QFrame(frame);
-    QHBoxLayout * hLayout = new QHBoxLayout(hFrame);
-	hLayout->setMargin(0);
-
-	QGroupBox * subFrame = new QGroupBox(tr("advanced settings"), frame);
-	subFrame->setObjectName("infoViewGroupBox");
-
-	QGridLayout * gridLayout = new QGridLayout(subFrame);
-	gridLayout->setMargin(0);
-
-	QGroupBox * rbFrame = new QGroupBox("", subFrame);
-	rbFrame->setObjectName("infoViewGroupBox");
-	QVBoxLayout * vbl = new QVBoxLayout(rbFrame);
-	vbl->setMargin(0);
-
-	holeSettings.inRadioButton = new QRadioButton(tr("in"), subFrame);
-	gridLayout->addWidget(holeSettings.inRadioButton, 0, 2);
-	holeSettings.inRadioButton->setObjectName("infoViewRadioButton");
-
-	holeSettings.mmRadioButton = new QRadioButton(tr("mm"), subFrame);
-	gridLayout->addWidget(holeSettings.mmRadioButton, 1, 2);
-	holeSettings.inRadioButton->setObjectName("infoViewRadioButton");
-
-	vbl->addWidget(holeSettings.inRadioButton);
-	vbl->addWidget(holeSettings.mmRadioButton);
-	rbFrame->setLayout(vbl);
-
-	gridLayout->addWidget(rbFrame, 0, 2, 2, 1, Qt::AlignVCenter);
-
-	holeSettings.diameterEdit = new QLineEdit(subFrame);
-	holeSettings.diameterEdit->setMinimumHeight(rowHeight);
-	holeSettings.diameterValidator = new QDoubleValidator(holeSettings.diameterEdit);
-	holeSettings.diameterValidator->setNotation(QDoubleValidator::StandardNotation);
-	holeSettings.diameterEdit->setValidator(holeSettings.diameterValidator);
-	gridLayout->addWidget(holeSettings.diameterEdit, 0, 1);
-	holeSettings.diameterEdit->setObjectName("infoViewLineEdit");
-
-	QLabel * label = new QLabel(tr("Hole Diameter"));
-	label->setMinimumHeight(rowHeight);
-	label->setObjectName("infoViewLabel");
-	gridLayout->addWidget(label, 0, 0);
-
-	holeSettings.thicknessEdit = new QLineEdit(subFrame);
-	holeSettings.thicknessEdit->setMinimumHeight(rowHeight);
-	holeSettings.thicknessValidator = new QDoubleValidator(holeSettings.thicknessEdit);
-	holeSettings.thicknessValidator->setNotation(QDoubleValidator::StandardNotation);
-	holeSettings.thicknessEdit->setValidator(holeSettings.thicknessValidator);
-	gridLayout->addWidget(holeSettings.thicknessEdit, 1, 1);
-	holeSettings.thicknessEdit->setObjectName("infoViewLineEdit");
-
-	label = new QLabel(tr("Ring Thickness"));
-	label->setMinimumHeight(rowHeight);
-	gridLayout->addWidget(label, 1, 0);
-	label->setObjectName("infoViewLabel");
-
-	gridLayout->setContentsMargins(10, 2, 0, 2);
-	gridLayout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum), 0, 3);
-	gridLayout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum), 1, 3);
-
-    hLayout->addWidget(subFrame);
-    hLayout->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Expanding,QSizePolicy::Minimum));
-    vBoxLayout->addWidget(hFrame);
-
-	holeSettings.sizesComboBox->addItems(HoleSizes.keys());
-	holeSettings.sizesComboBox->setEnabled(swappingEnabled);
-	holeSettings.mmRadioButton->setEnabled(swappingEnabled);
-	holeSettings.inRadioButton->setEnabled(swappingEnabled);
-	holeSettings.diameterEdit->setEnabled(swappingEnabled);
-	holeSettings.thicknessEdit->setEnabled(swappingEnabled);
-
-
-	if (currentHoleSize.contains("mm")) {
-		holeSettings.mmRadioButton->setChecked(true);
-	}
-	else {
-		holeSettings.inRadioButton->setChecked(true);
-	}
-
-	updateEditTexts(holeSettings);
-	updateValidators(holeSettings);
-	updateSizes(holeSettings);
-
-	return frame;
 }
 
 bool Hole::rotationAllowed() {
@@ -719,3 +505,11 @@ QString Hole::currentUnits() {
 	return m_holeSettings.currentUnits();
 }
 
+ViewIdentifierClass::ViewIdentifier Hole::useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier vid, bool) 
+{
+    if (vid == ViewIdentifierClass::PCBView) {
+        return ViewIdentifierClass::IconView;
+    }
+
+    return ViewIdentifierClass::UnknownView;
+}

@@ -51,6 +51,7 @@ public:
 	void setProp(const QString & prop, const QString & value);
  	bool setUpImage(ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, ViewLayer::ViewLayerSpec, bool doConnectors, LayerAttributes &, QString & error);
 	const QString & title();
+    ViewIdentifierClass::ViewIdentifier useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier, bool swappingEnabled);
 
 protected:
 	void setColor(const QString & color);

@@ -62,6 +62,7 @@ public slots:
 
 protected:
 	QString makeSvg(double inches);
+    ViewIdentifierClass::ViewIdentifier useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier, bool swappingEnabled);
 	
 protected:
 	QPointer<QLineEdit> m_widthEditor;

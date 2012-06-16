@@ -174,7 +174,7 @@ void GroundPlane::setSvgAux(const QString & svg) {
 	QString cpy = svg;
 	bool result = splitter.splitString(cpy, xmlName);
 	if (result) {
-		loadExtraRenderer(svg.toUtf8(), false);
+		resetRenderer(svg);
 		if (m_connector0) {
 			QPainterPath painterPath = splitter.painterPath(FSvgRenderer::printerScale(), GroundPlaneGenerator::ConnectorName);
 			m_connector0->setRect(painterPath.boundingRect());
@@ -263,3 +263,11 @@ QPainterPath GroundPlane::shape() const
     return PaletteItemBase::shape();
 }
 
+ViewIdentifierClass::ViewIdentifier GroundPlane::useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier vid, bool) 
+{
+    if (vid == ViewIdentifierClass::PCBView) {
+        return ViewIdentifierClass::IconView;
+    }
+
+    return ViewIdentifierClass::UnknownView;
+}

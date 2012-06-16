@@ -49,7 +49,7 @@ void Via::setBoth(const QString & holeDiameter, const QString & ringThickness) {
 	if (this->m_viewIdentifier != ViewIdentifierClass::PCBView) return;
 
 	ItemBase * otherLayer = setBothSvg(holeDiameter, ringThickness);
-	resetConnectors(otherLayer, m_otherLayerRenderer);
+	resetConnectors(otherLayer, otherLayer->fsvgRenderer());
 
     double hd = TextUtils::convertToInches(holeDiameter) * FSvgRenderer::printerScale();
     double rt = TextUtils::convertToInches(ringThickness) * FSvgRenderer::printerScale();

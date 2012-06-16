@@ -65,7 +65,6 @@ public:
 	//bool isBuriedConnectorHit(QGraphicsSceneMouseEvent *event);
 	QRectF boundingRect() const;
 	QRectF boundingRectWithoutLegs() const;
-	void setSharedRendererEx(class FSvgRenderer *);
 	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi);
 	virtual bool canEditPart();
 	QPainterPath shape() const;

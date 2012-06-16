@@ -32,9 +32,33 @@ $Date$
 #include <QPainterPath>
 #include <QPixmap>
 #include <QVariant>
+#include <QComboBox>
+#include <QRadioButton>
+#include <QDoubleValidator>
+#include <QLineEdit>
 
 #include "paletteitembase.h"
 #include "../viewlayer.h"
+
+typedef QPointF (*RangeCalc)(const QString &);
+
+struct HoleSettings
+{
+	QString holeDiameter;
+	QString ringThickness;
+    QHash<QString, QString> * holeSizes;
+	QPointer<QDoubleValidator> diameterValidator;
+	QPointer<QDoubleValidator> thicknessValidator;
+	QPointer<QLineEdit> diameterEdit;
+	QPointer<QLineEdit> thicknessEdit;
+	QPointer<QRadioButton> inRadioButton;
+	QPointer<QRadioButton> mmRadioButton;
+	QPointer<QComboBox> sizesComboBox;
+	RangeCalc ringThicknessRange;
+	RangeCalc holeDiameterRange;
+
+	QString currentUnits();
+};
 
 class PaletteItem : public PaletteItemBase 
 {
@@ -77,7 +101,6 @@ public:
 	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
 	virtual bool changePinLabels(bool singleRow, bool sip);
 	QStringList getPinLabels(bool & hasLocal);
-	bool loadExtraRenderer(const QString & svg, bool fastload);
 	void renamePins(const QStringList & labels, bool singleRow);
 	void resetConnectors();
 	void resetConnectors(ItemBase * otherLayer, FSvgRenderer * otherLayerRenderer);
@@ -86,6 +109,13 @@ public:
 
 public:
 	static QString genFZP(const QString & moduleid, const QString & templateName, int minPins, int maxPins, int steps, bool smd);
+
+	static QWidget * createHoleSettings(QWidget * parent, HoleSettings &, bool swappingEnabled, const QString & currentHoleSize, bool advanced);
+	static void updateValidators(HoleSettings &);
+	static void updateEditTexts(HoleSettings &);
+	static void updateSizes(HoleSettings &);
+    static void initHoleSettings(HoleSettings & holeSettings, QHash<QString, QString> * holeSizes, RangeCalc holeDiameterRange,  RangeCalc ringThicknessRange);
+
 
 signals:
 	void pinLabelSwap(ItemBase *, const QString & moduleID);
@@ -103,8 +133,10 @@ protected:
 	QList<ConnectorItem *> sortConnectorItems();
 
 protected:
+	static void setUpHoleSizes(QString & holeSize, QString & ringThickness, const QString & attribute, QHash<QString, QString> & holeSizes);
+
+protected:
  	QList<class ItemBase *> m_layerKin;
-	QPointer<class FSvgRenderer> m_extraRenderer;
 
 };
 

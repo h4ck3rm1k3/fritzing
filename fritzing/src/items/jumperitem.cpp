@@ -96,7 +96,6 @@ JumperItem::JumperItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifi
 }
 
 JumperItem::~JumperItem() {
-	m_renderers.clear();
 }
 
 QRectF JumperItem::boundingRect() const
@@ -345,7 +344,7 @@ void JumperItem::resize() {
 
 	QString s = makeSvg(ViewLayer::Copper0);
 	//DebugDialog::debug(s);
-	loadExtraRenderer(s, false);
+	resetRenderer(s);
 
 	foreach (ItemBase * itemBase, m_layerKin) {
 		switch(itemBase->viewLayerID()) {
@@ -354,18 +353,8 @@ void JumperItem::resize() {
 			case ViewLayer::Silkscreen1:
 			//case ViewLayer::Silkscreen0:
                 {
-					FSvgRenderer * renderer = m_renderers.value(itemBase->viewLayerID(), NULL);
-					if (renderer == NULL) {
-						renderer = new FSvgRenderer(itemBase);
-						m_renderers.insert(itemBase->viewLayerID(), renderer);
-					}
-
 					s = makeSvg(itemBase->viewLayerID());
-					bool result = renderer->loadSvgString(s);
-					if (result) {
-						itemBase->prepareGeometryChange();
-						qobject_cast<PaletteItemBase *>(itemBase)->setSharedRendererEx(renderer);
-					}
+					itemBase->resetRenderer(s);
                 }
 				break;
             default:
@@ -564,4 +553,13 @@ void JumperItem::saveInstanceLocation(QXmlStreamWriter & streamWriter)
 bool JumperItem::hasPartNumberProperty()
 {
 	return false;
+}
+
+ViewIdentifierClass::ViewIdentifier JumperItem::useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier vid, bool) 
+{
+    if (vid == ViewIdentifierClass::PCBView) {
+        return ViewIdentifierClass::IconView;
+    }
+
+    return ViewIdentifierClass::UnknownView;
 }

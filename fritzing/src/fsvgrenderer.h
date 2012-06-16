@@ -53,6 +53,7 @@ typedef QHash<ViewLayer::ViewLayerID, class FSvgRenderer *> RendererHash;
 
 class FSvgRenderer : public QSvgRenderer
 {
+Q_OBJECT
 public:
 	FSvgRenderer(QObject * parent = 0);
 	~FSvgRenderer();
@@ -69,27 +70,23 @@ public:
 	QList<SvgIdLayer *> setUpNonConnectors();
 
 public:
-	static void set(const QString & moduleID, ViewLayer::ViewLayerID, FSvgRenderer *);
-	static FSvgRenderer * getByModuleID(const QString & moduleID, ViewLayer::ViewLayerID);
-	static FSvgRenderer * getByFilename(const QString & filename, ViewLayer::ViewLayerID);
-	static QPixmap * getPixmap(const QString & moduleID, ViewLayer::ViewLayerID viewLayerID, QSize size);
 	static void calcPrinterScale();
 	static double printerScale();
 	static void cleanup();
 	static QSizeF parseForWidthAndHeight(QXmlStreamReader &);
-	static void removeFromHash(const QString &moduleId, const QString filename);
+	static QPixmap * getPixmap(QSvgRenderer * renderer, QSize size);
 
 protected:
 	bool determineDefaultSize(QXmlStreamReader &);
 	QByteArray loadAux (const QByteArray & contents, const QString & filename, const QStringList & connectorIDs, const QStringList & terminalIDs, const QStringList & legIDs, const QString & setColor, const QString & colorElementID, bool findNonConnectors);
-	bool initConnectorInfo(QDomDocument &, const QStringList & connectorIDs, const QStringList & terminalIDs, const QStringList & legIDs);
-	ConnectorInfo * initConnectorInfoStruct(QDomElement & connectorElement);
-	bool initConnectorInfoStructAux(QDomElement &, ConnectorInfo * connectorInfo);
-	void initNonConnectorInfo(QDomDocument & domDocument);
-	void initNonConnectorInfoAux(QDomElement & element);
+	bool initConnectorInfo(QDomDocument &, const QStringList & connectorIDs, const QStringList & terminalIDs, const QStringList & legIDs, const QString & filename);
+	ConnectorInfo * initConnectorInfoStruct(QDomElement & connectorElement, const QString & filename);
+	bool initConnectorInfoStructAux(QDomElement &, ConnectorInfo * connectorInfo, const QString & filename);
+	void initNonConnectorInfo(QDomDocument & domDocument, const QString & filename);
+	void initNonConnectorInfoAux(QDomElement & element, const QString & filename);
 	void initTerminalInfoAux(QDomElement & element, const QStringList & connectorIDs, const QStringList & terminalIDs);
 	void initLegInfoAux(QDomElement & element, const QStringList & connectorIDs, const QStringList & legIDs, bool & gotOne);
-	void initConnectorInfoAux(QDomElement & element, const QStringList & connectorIDs);
+	void initConnectorInfoAux(QDomElement & element, const QStringList & connectorIDs, const QString & filename);
 	QPointF calcTerminalPoint(const QString & terminalId, const QRectF & connectorRect, bool ignoreTerminalPoint, const QRectF & viewBox, QMatrix & terminalMatrix);
 	bool initLegInfoAux(QDomElement & element, ConnectorInfo * connectorInfo);
 	void calcLeg(SvgIdLayer *, const QRectF & viewBox, ConnectorInfo * connectorInfo);
@@ -104,9 +101,6 @@ protected:
 
 protected:
 	static double m_printerScale;
-	static QHash<QString, RendererHash * > m_filenameRendererHash;
-	static QHash<QString, RendererHash * > m_moduleIDRendererHash;
-	static QSet<RendererHash *> m_deleted;
 
 public:
 	static QString NonConnectorName;

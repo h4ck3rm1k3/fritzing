@@ -73,7 +73,10 @@ protected:
 	QString makeFirstLayerSvg(double mmW, double mmH, double milsW, double milsH);
 	QString makeNextLayerSvg(ViewLayer::ViewLayerID, double mmW, double mmH, double milsW, double milsH);
 	bool makeLineEdit(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
-	QTextEdit * m_textEdit;
+    ViewIdentifierClass::ViewIdentifier useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier, bool swappingEnabled);
+
+protected:
+    QTextEdit * m_textEdit;
 	bool m_wrapInitialized;
 
 protected:

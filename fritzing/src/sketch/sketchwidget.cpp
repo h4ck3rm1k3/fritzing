@@ -8593,7 +8593,7 @@ void SketchWidget::changePinLabelsSlot(ItemBase * itemBase, bool singleRow)
 		else {
 			svg = Dip::makeSchematicSvg(labels);
 		}
-		paletteItem->loadExtraRenderer(svg, false);
+		paletteItem->resetRenderer(svg);
 		if (!hasLayout && !sip) {
 			paletteItem->resetConnectors();
 		}

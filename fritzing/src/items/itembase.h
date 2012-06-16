@@ -205,6 +205,12 @@ public:
 	class PartLabel * partLabel();
 	virtual void doneLoading();
 	QString family();
+	QPixmap * getPixmap(QSize size);
+    class FSvgRenderer * fsvgRenderer() const;
+	void setSharedRendererEx(class FSvgRenderer *);
+	bool reloadRenderer(const QString & svg, bool fastload);
+	bool resetRenderer(const QString & svg);
+    void getPixmaps(QPixmap * &, QPixmap * &, QPixmap * &, bool swappingEnabled, QSize);
 
 public:
 	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, double & opacity, double & negativePenWidth, bool & negativeOffsetRect);
@@ -295,6 +301,8 @@ protected:
 	virtual void setDefaultTooltip();
 	void setInstanceTitleAux(const QString & title);
 	void saveLocAndTransform(QXmlStreamWriter & streamWriter);
+    QPixmap * getPixmap(ViewIdentifierClass::ViewIdentifier, bool swappingEnabled, QSize size);
+    virtual ViewIdentifierClass::ViewIdentifier useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier, bool swappingEnabled);
 
 protected:
 	static bool getFlipDoc(ModelPart * modelPart, const QString & filename, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec, QDomDocument &);
@@ -331,8 +339,9 @@ protected:
 	QList<ConnectorItem *> m_cachedConnectorItems;
 	QGraphicsSvgItem * m_moveLockItem;
 	QGraphicsSvgItem * m_stickyItem;
-
-protected:
+    FSvgRenderer * m_fsvgRenderer;
+       
+ protected:
 	static long nextID;
 	static QPointer<class ReferenceModel> referenceModel;
 

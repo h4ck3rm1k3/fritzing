@@ -107,7 +107,7 @@ AutorouterSettingsDialog::AutorouterSettingsDialog(QWidget *parent) : QDialog(pa
 	QVBoxLayout * viaLayout = new QVBoxLayout();
 	viaGroupBox->setLayout(viaLayout);
 
-	QWidget * viaWidget = Hole::createHoleSettings(viaGroupBox, m_holeSettings, true, "");
+	QWidget * viaWidget = Hole::createHoleSettings(viaGroupBox, m_holeSettings, true, "", true);
 
 	connect(m_holeSettings.sizesComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeHoleSize(const QString &)));
 	connect(m_holeSettings.mmRadioButton, SIGNAL(toggled(bool)), this, SLOT(changeUnits(bool)));

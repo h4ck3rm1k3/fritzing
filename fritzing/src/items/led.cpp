@@ -133,7 +133,7 @@ void LED::setColor(const QString & color)
 			return;
 	}
 
-	loadExtraRenderer(getColorSVG(color, m_viewLayerID).toUtf8(),true);
+	reloadRenderer(getColorSVG(color, m_viewLayerID),true);
 
 	QString title = modelPart()->modelPartShared()->title();  // bypass any local title by going to modelPartShared
 	if (title.startsWith("red", Qt::CaseInsensitive)) {
@@ -189,3 +189,12 @@ const QString & LED::title() {
 	m_title = prop("color") + " LED";
 	return m_title;
 }
+
+ViewIdentifierClass::ViewIdentifier LED::useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier vid, bool swappingEnabled) {
+    if (swappingEnabled && vid == ViewIdentifierClass::BreadboardView) {
+        return vid;
+    }
+
+    return ItemBase::useViewIdentifierForPixmap(vid, swappingEnabled);
+}
+

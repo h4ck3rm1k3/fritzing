@@ -115,7 +115,7 @@ SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ViewIdentifierClass::ViewIde
 		}
 
 		QPixmap pixmap(plural ? *PluralImage : *SingularImage);
-		QPixmap * icon = FSvgRenderer::getPixmap(m_moduleId, ViewLayer::Icon, QSize(ICON_SIZE, ICON_SIZE));
+		QPixmap * icon = FSvgRenderer::getPixmap(renderer, QSize(ICON_SIZE, ICON_SIZE));
 		if (icon) {
 			QPainter painter;
 			painter.begin(&pixmap);
@@ -139,6 +139,8 @@ SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ViewIdentifierClass::ViewIde
 			m_itemBase->setTooltip();
 			setToolTip(m_itemBase->toolTip());
 		}
+
+        itemBase->setSharedRendererEx(renderer);
 	}
 }
 

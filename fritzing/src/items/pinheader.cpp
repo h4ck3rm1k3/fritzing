@@ -55,12 +55,32 @@ static int MinShroudedPins = 6;
 static int MaxPins = 64;
 static QHash<QString, QString> Spacings;
 static QString ShroudedSpacing;
+static QString DefaultHoleSize;
+static QString DefaultRingThickness;
+static QString DefaultHoleSizeValue;
 
+QHash<QString, QString> HoleSizes;
 
 PinHeader::PinHeader( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
-	m_form = modelPart->localProp("form").toString();
+	if (HoleSizes.count() == 0) {       
+		setUpHoleSizes(DefaultHoleSize, DefaultRingThickness, "pinheader", HoleSizes);
+        DefaultHoleSizeValue = QString("%1,%2").arg(DefaultHoleSize).arg(DefaultRingThickness);
+	}
+
+    initHoleSettings(m_holeSettings, &HoleSizes, NULL, NULL);
+    QStringList localHoleSize = modelPart->localProp("hole size").toString().split(",");
+    if (localHoleSize.count() == 2) {
+        m_holeSettings.ringThickness = localHoleSize.at(1);
+        m_holeSettings.holeDiameter = localHoleSize.at(0);
+    }
+    else {
+        m_holeSettings.ringThickness = DefaultRingThickness;
+        m_holeSettings.holeDiameter = DefaultHoleSize;
+    }
+
+    m_form = modelPart->localProp("form").toString();
 	if (m_form.isEmpty()) {
 		m_form = modelPart->properties().value("form", FemaleFormString);
 		modelPart->setLocalProp("form", m_form);
@@ -326,9 +346,10 @@ QString PinHeader::makePcbSvg(const QString & expectedFileName)
 	double outerBorder = 15;
 	double innerBorder = outerBorder / 2;
 	double silkStrokeWidth = 10;
-	double radius = 27.5;
+	double standardRadius = 27.5;
+    double radius = 29;
 	double copperStrokeWidth = 20;
-	double totalWidth = (outerBorder * 2) + (silkStrokeWidth * 2) + (innerBorder * 2) + (radius * 2) + copperStrokeWidth;
+	double totalWidth = (outerBorder * 2) + (silkStrokeWidth * 2) + (innerBorder * 2) + (standardRadius * 2) + copperStrokeWidth;
 	double center = totalWidth / 2;
 	double spacing = TextUtils::convertToInches(spacingString) * GraphicsUtils::StandardFritzingDPI; 
 
@@ -634,3 +655,22 @@ QString PinHeader::makePcbSMDSvg(const QString & expectedFileName)
 	return svg;
 }
 
+bool PinHeader::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget) 
+{
+	if (prop.compare("hole size", Qt::CaseInsensitive) == 0) {
+		returnProp = tr("hole size");
+
+		returnValue = m_modelPart->localProp("hole size").toString();
+        if (returnValue.isEmpty()) {
+            returnValue = DefaultHoleSizeValue;
+        }
+		QWidget * frame = createHoleSettings(parent, m_holeSettings, swappingEnabled, returnValue, false);
+
+		connect(m_holeSettings.sizesComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeHoleSize(const QString &)));	
+
+		returnWidget = frame;
+		return true;
+	}
+
+	return PaletteItem::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
+}

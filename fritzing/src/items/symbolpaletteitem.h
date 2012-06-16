@@ -63,6 +63,7 @@ protected:
 	double useVoltage(ConnectorItem * connectorItem);
 	QString makeSvg();
 	QString replaceTextElement(QString svg);
+    ViewIdentifierClass::ViewIdentifier useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier, bool swappingEnabled);
 
 protected:
 	double m_voltage;

@@ -32,30 +32,9 @@ $Date$
 #include <QPainterPath>
 #include <QPixmap>
 #include <QVariant>
-#include <QComboBox>
-#include <QRadioButton>
-#include <QDoubleValidator>
 
 #include "paletteitem.h"
 
-typedef QPointF (*RangeCalc)(const QString &);
-
-struct HoleSettings
-{
-	QString holeDiameter;
-	QString ringThickness;
-	QPointer<QDoubleValidator> diameterValidator;
-	QPointer<QDoubleValidator> thicknessValidator;
-	QPointer<QLineEdit> diameterEdit;
-	QPointer<QLineEdit> thicknessEdit;
-	QPointer<QRadioButton> inRadioButton;
-	QPointer<QRadioButton> mmRadioButton;
-	QPointer<QComboBox> sizesComboBox;
-	RangeCalc ringThicknessRange;
-	RangeCalc holeDiameterRange;
-
-	QString currentUnits();
-};
 
 class Hole : public PaletteItem 
 {
@@ -83,10 +62,6 @@ public:
 	bool canFindConnectorsUnder();
 
 public:
-	static QWidget * createHoleSettings(QWidget * parent, HoleSettings &, bool swappingEnabled, const QString & currentHoleSize);
-	static void updateValidators(HoleSettings &);
-	static void updateEditTexts(HoleSettings &);
-	static void updateSizes(HoleSettings &);
 	static QString changeUnits(const QString &, HoleSettings &);
 	static QPointF ringThicknessRange(const QString & holeDiameter);
 	static QPointF holeDiameterRange(const QString & ringThickness);
@@ -112,9 +87,9 @@ protected:
 	QString currentUnits();
 	static QStringList getSizes(QString & holeSize);
 	QRectF getRect(const QString & newSize);
+    ViewIdentifierClass::ViewIdentifier useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier, bool swappingEnabled);
 
 protected:
-	QPointer<class FSvgRenderer> m_otherLayerRenderer;
 	HoleSettings m_holeSettings;
 
 public:

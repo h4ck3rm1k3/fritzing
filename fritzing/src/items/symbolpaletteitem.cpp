@@ -206,7 +206,7 @@ void SymbolPaletteItem::setVoltage(double v) {
 	if (!m_voltageReference) return;
 
 	QString svg = makeSvg();
-	loadExtraRenderer(svg, false);
+	reloadRenderer(svg, false);
 
     if (m_partLabel) m_partLabel->displayTextsIf();
 }
@@ -325,4 +325,11 @@ bool SymbolPaletteItem::hasPartNumberProperty()
 	return false;
 }
 
+ViewIdentifierClass::ViewIdentifier SymbolPaletteItem::useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier vid, bool) 
+{
+    if (vid == ViewIdentifierClass::SchematicView) {
+        return ViewIdentifierClass::IconView;
+    }
 
+    return ViewIdentifierClass::UnknownView;
+}

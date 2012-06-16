@@ -95,6 +95,7 @@ public:
 	void addViewItem(class ItemBase *);
 	void removeViewItem(class ItemBase *);
 	class ItemBase * viewItem(QGraphicsScene * scene);
+	class ItemBase * viewItem(ViewIdentifierClass::ViewIdentifier);
 	bool hasViewItems();
 	void initConnectors(bool force=false);
 	const QHash<QString, QPointer<Connector> > & connectors();

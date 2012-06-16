@@ -138,7 +138,7 @@ void Resistor::setResistance(QString resistance, QString pinSpacing, bool force)
 			if (force || resistance.compare(m_ohms) != 0) {
 				QString svg = makeSvg(resistance, m_viewLayerID);
 				//DebugDialog::debug(svg);
-				loadExtraRenderer(svg.toUtf8(), false);
+				reloadRenderer(svg, false);
 			}
 			break;
 		case ViewIdentifierClass::PCBView:
@@ -154,7 +154,6 @@ void Resistor::setResistance(QString resistance, QString pinSpacing, bool force)
 					if (element.isNull()) break;
 
 					// hack the dom element and call setUpImage
-					FSvgRenderer::removeFromHash(moduleID(), "");
 					QString filename = PinSpacings.value(pinSpacing, "");
 					if (filename.isEmpty()) break;
 
@@ -416,3 +415,10 @@ bool Resistor::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdenti
 	return result;
 }
 
+ViewIdentifierClass::ViewIdentifier Resistor::useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier vid, bool swappingEnabled) {
+    if (swappingEnabled && vid == ViewIdentifierClass::BreadboardView) {
+        return vid;
+    }
+
+    return ItemBase::useViewIdentifierForPixmap(vid, swappingEnabled);
+}

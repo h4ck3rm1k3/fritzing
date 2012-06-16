@@ -77,7 +77,7 @@ void Ruler::resizeMM(double magnitude, double unitsFlag, const LayerHash & viewL
 
 	QString s = makeSvg(newW);
 
-	bool result = loadExtraRenderer(s.toUtf8(), false);
+	bool result = resetRenderer(s);
 	if (result) {
         modelPart()->setLocalProp("width", QVariant(QString::number(magnitude) + units));
 	}
@@ -344,4 +344,9 @@ bool Ruler::hasPartNumberProperty()
 
 bool Ruler::canFindConnectorsUnder() {
 	return false;
+}
+
+ViewIdentifierClass::ViewIdentifier Ruler::useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier, bool) 
+{
+    return ViewIdentifierClass::IconView;
 }

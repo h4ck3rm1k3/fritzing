@@ -74,6 +74,7 @@ protected:
 	void initialResize(ViewIdentifierClass::ViewIdentifier);
 	void paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	void paintSelected(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    ViewIdentifierClass::ViewIdentifier useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier, bool swappingEnabled);
 
 signals:
 	void alignMe(JumperItem *, QPointF & p); 
@@ -93,7 +94,6 @@ protected:
 	QPointF m_itemPos;
 	QPointF m_itemC0;
 	QPointF m_itemC1;
-	QHash <ViewLayer::ViewLayerID, QPointer<FSvgRenderer> > m_renderers;
 };
 
 #endif

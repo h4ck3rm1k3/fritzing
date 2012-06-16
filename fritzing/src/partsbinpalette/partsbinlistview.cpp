@@ -111,10 +111,11 @@ int PartsBinListView::setItemAux(ModelPart * modelPart, int position) {
 				itemBase->setFilename(renderer->filename());
 			}
 			QSize size(HtmlInfoView::STANDARD_ICON_IMG_WIDTH, HtmlInfoView::STANDARD_ICON_IMG_HEIGHT);
-			QPixmap * pixmap = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Icon, size);
+			QPixmap * pixmap = FSvgRenderer::getPixmap(renderer, size);
 			lwi->setIcon(QIcon(*pixmap));
 			delete pixmap;
 			lwi->setData(Qt::UserRole + 1, renderer->defaultSize());
+            itemBase->setSharedRendererEx(renderer);
 		}
 
 		m_partHash[moduleID] = modelPart;

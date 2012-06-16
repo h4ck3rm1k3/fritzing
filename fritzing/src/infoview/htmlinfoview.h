@@ -113,13 +113,12 @@ protected:
 	void setCurrentItem(ItemBase *);
 	void setNullContent();
 	void setUpTitle(ItemBase *);
-	void setUpIcons(ModelPart *);
+	void setUpIcons(ItemBase *, bool swappingEnabled);
 	void addTags(ModelPart * modelPart);
 	void partTitle(const QString & title, const QString & version, const QString & url);
 	void displayProps(ModelPart * modelPart, ItemBase * itemBase, bool swappingEnabled);
 	void clearPropThingPlugin(PropThing * propThing);
 	void clearPropThingPlugin(PropThing * propThing, QWidget * plugin);
-	QPixmap * getPixmap(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier);
 	void viewConnectorItemInfo(QGraphicsSceneHoverEvent * event, ConnectorItem* item);
 
 protected:
@@ -161,14 +160,13 @@ protected:
 	ModelPart * m_lastTagsModelPart;
 	int m_lastConnectorItemCount;
 	ConnectorItem * m_lastConnectorItem;
-	ModelPart * m_lastIconModelPart;
+	ItemBase * m_lastIconItemBase;
 	ModelPart * m_lastPropsModelPart;
 	ItemBase * m_lastPropsItemBase;
 	bool m_lastPropsSwappingEnabled;
-	// end note
 
-protected:
-	static QHash<QString, QPixmap *> m_pixmaps;
+
+
 };
 
 #endif

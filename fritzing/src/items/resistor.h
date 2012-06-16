@@ -64,6 +64,7 @@ protected:
 	ConnectorItem* newConnectorItem(ItemBase * layerkin, Connector *connector);
 	QStringList collectValues(const QString & family, const QString & prop, QString & value);
 	void setBands(QDomElement & element, int firstband, int secondband, int thirdband, int multiplier, const QString & tolerance);
+    ViewIdentifierClass::ViewIdentifier useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier, bool swappingEnabled);
 
 public slots:
 	void resistanceEntry(const QString & text);

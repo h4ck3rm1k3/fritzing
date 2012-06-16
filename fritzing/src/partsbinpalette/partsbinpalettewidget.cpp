@@ -142,6 +142,8 @@ PartsBinPaletteWidget::~PartsBinPaletteWidget() {
 		delete m_model;
 		m_model = NULL;
 	}
+   
+    if (m_icon) delete m_icon;
 }
 
 QSize PartsBinPaletteWidget::sizeHint() const {

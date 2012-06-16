@@ -401,6 +401,15 @@ void Board::prepLoadImageAux(const QString & fileName, bool addName)
 	}
 }
 
+ViewIdentifierClass::ViewIdentifier Board::useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier vid, bool) 
+{
+    if (vid == ViewIdentifierClass::PCBView) {
+        return ViewIdentifierClass::IconView;
+    }
+
+    return ViewIdentifierClass::UnknownView;
+}
+
 ///////////////////////////////////////////////////////////
 
 ResizableBoard::ResizableBoard( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
@@ -414,7 +423,6 @@ ResizableBoard::ResizableBoard( ModelPart * modelPart, ViewIdentifierClass::View
     m_aspectRatioLabel = NULL;
     m_revertButton = NULL;
 
-	m_silkscreenRenderer = NULL;
 	m_corner = ResizableBoard::NO_CORNER;
 	m_currentScale = 1.0;
 	m_decimalsAfter = 1;
@@ -667,15 +675,16 @@ bool ResizableBoard::resizeMM(double mmW, double mmH, const LayerHash & viewLaye
 }
 
 
-void ResizableBoard::resizeMMAux(double mmW, double mmH) {
-
+void ResizableBoard::resizeMMAux(double mmW, double mmH)
+{
 	double milsW = GraphicsUtils::mm2mils(mmW);
 	double milsH = GraphicsUtils::mm2mils(mmH);
 
 	QString s = makeFirstLayerSvg(mmW, mmH, milsW, milsH);
 
-	bool result = loadExtraRenderer(s.toUtf8(), false);
-	if (result) {
+    bool result = resetRenderer(s);
+    if (result) {
+
 		modelPart()->setLocalProp("width", mmW);
 		modelPart()->setLocalProp("height", mmH);
 
@@ -687,13 +696,8 @@ void ResizableBoard::resizeMMAux(double mmW, double mmH) {
 	foreach (ItemBase * itemBase, m_layerKin) {
 		QString s = makeNextLayerSvg(itemBase->viewLayerID(), mmW, mmH, milsW, milsH);
 		if (!s.isEmpty()) {
-			if (m_silkscreenRenderer == NULL) {
-				m_silkscreenRenderer = new FSvgRenderer(itemBase);
-			}
-			itemBase->prepareGeometryChange();
-			bool result = m_silkscreenRenderer->loadSvgString(s);
-			if (result) {
-				qobject_cast<PaletteItemBase *>(itemBase)->setSharedRendererEx(m_silkscreenRenderer);
+            result = itemBase->resetRenderer(s);
+            if (result) {
 				itemBase->modelPart()->setLocalProp("width", mmW);
 				itemBase->modelPart()->setLocalProp("height", mmH);
 			}

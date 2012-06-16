@@ -51,8 +51,6 @@ const int HtmlInfoView::STANDARD_ICON_IMG_WIDTH = 32;
 const int HtmlInfoView::STANDARD_ICON_IMG_HEIGHT = 32;
 const int IconSpace = 0;
 
-QHash<QString, QPixmap *> HtmlInfoView::m_pixmaps;
-
 /////////////////////////////////////
 
 QLabel * addLabel(QHBoxLayout * hboxLayout, QPixmap * pixmap) {
@@ -109,7 +107,7 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	m_lastTitleItemBase = NULL;
 	m_lastTagsModelPart = NULL;
 	m_lastConnectorItem = NULL;
-	m_lastIconModelPart = NULL;
+	m_lastIconItemBase = NULL;
 	m_lastPropsModelPart = NULL;
 	m_lastPropsItemBase = NULL;
 
@@ -282,11 +280,6 @@ HtmlInfoView::~HtmlInfoView() {
 		delete propThing;
 	}
 	m_propThings.clear();
-
-	foreach (QPixmap * pixmap, m_pixmaps.values()) {
-		delete pixmap;
-	}
-	m_pixmaps.clear();
 }
 
 void HtmlInfoView::cleanup() {
@@ -396,7 +389,7 @@ void HtmlInfoView::appendWireStuff(Wire* wire, bool swappingEnabled) {
 	m_stickyCheckbox->setVisible(false);
 
 	setUpTitle(wire);
-	setUpIcons(wire->modelPart());
+	setUpIcons(wire, swappingEnabled);
 
 	displayProps(modelPart, wire, swappingEnabled);
 	addTags(modelPart);
@@ -415,7 +408,7 @@ void HtmlInfoView::appendItemStuff(ItemBase * itemBase, ModelPart * modelPart, b
 	if (modelPart->modelPartShared() == NULL) return;
 
 	setUpTitle(itemBase);
-	setUpIcons(modelPart);
+	setUpIcons(itemBase, swappingEnabled);
 
 	QString nameString;
 	if (swappingEnabled) {
@@ -507,7 +500,7 @@ void HtmlInfoView::setNullContent()
 	partTitle("", "", "");
 	m_lockCheckbox->setVisible(false);
 	m_stickyCheckbox->setVisible(false);
-	setUpIcons(NULL);
+	setUpIcons(NULL, false);
 	displayProps(NULL, NULL, false);
 	addTags(NULL);
 	viewConnectorItemInfo(NULL, NULL);
@@ -588,48 +581,24 @@ void HtmlInfoView::setUpTitle(ItemBase * itemBase)
 
 }
 
-void HtmlInfoView::setUpIcons(ModelPart * modelPart) {
-	if (m_lastIconModelPart == modelPart) return;
+void HtmlInfoView::setUpIcons(ItemBase * itemBase, bool swappingEnabled) {
+	if (m_lastIconItemBase == itemBase) return;
 	
-	m_lastIconModelPart = modelPart;
+	m_lastIconItemBase = itemBase;
 
-	QPixmap *pixmap0 = NULL;
 	QPixmap *pixmap1 = NULL;
 	QPixmap *pixmap2 = NULL;
 	QPixmap *pixmap3 = NULL;
 
-	QSize size = NoIcon->size();
+    QSize size = NoIcon->size();
 
-	if (modelPart != NULL) {
-		pixmap0 = getPixmap(modelPart, ViewIdentifierClass::IconView);
-		pixmap1 = getPixmap(modelPart, ViewIdentifierClass::BreadboardView);
-		pixmap2 = getPixmap(modelPart, ViewIdentifierClass::SchematicView);
-		pixmap3 = getPixmap(modelPart, ViewIdentifierClass::PCBView);
-	}
+    if (itemBase) {
+        itemBase->getPixmaps(pixmap1, pixmap2, pixmap3, swappingEnabled, size);
+    }
 
 	QPixmap* use1 = pixmap1;
 	QPixmap* use2 = pixmap2;
 	QPixmap* use3 = pixmap3;
-
-	// use the icon image instead of the breadboard image, unless the item doesn't have a breadboard view
-	if (pixmap1 && pixmap2 && pixmap3) {
-		use1 = pixmap0;
-		if (pixmap2 == pixmap1) {
-			use2 = pixmap0;
-		}
-		if (pixmap3 == pixmap1) {
-			use3 = pixmap0;
-		}
-	}
-	else if (pixmap3) {
-		use3 = pixmap0;
-	}
-	else if (pixmap1) {
-		use1 = pixmap0;
-	}
-	else if (pixmap2) {
-		use2 = pixmap0;
-	}
 
 	if (use1 == NULL) use1 = NoIcon;
 	if (use2 == NULL) use2 = NoIcon;
@@ -638,6 +607,10 @@ void HtmlInfoView::setUpIcons(ModelPart * modelPart) {
 	m_icon1->setPixmap(*use1);
 	m_icon2->setPixmap(*use2);
 	m_icon3->setPixmap(*use3);
+
+    if (pixmap1 != NULL) delete pixmap1;
+    if (pixmap2 != NULL) delete pixmap2;
+    if (pixmap3 != NULL) delete pixmap3;
 }
 
 void HtmlInfoView::addTags(ModelPart * modelPart) {
@@ -828,45 +801,6 @@ void HtmlInfoView::clearPropThingPlugin(PropThing * propThing, QWidget * plugin)
 }
 
 
-QPixmap * HtmlInfoView::getPixmap(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier) {
-	if (!modelPart->hasViewFor(viewIdentifier)) return NULL;
-
-	QString baseName = modelPart->hasBaseNameFor(viewIdentifier);
-	if (baseName.isEmpty()) return NULL;
-
-	QString filename = ItemBase::getSvgFilename(modelPart, baseName);
-	if (filename.isEmpty()) {
-		return NULL;
-	}
-
-	QPixmap * cached = m_pixmaps.value(filename, NULL);
-	if (cached) {
-		return cached;
-	}
-
-	QSvgRenderer renderer(filename);
-
-	QSize size = NoIcon->size();
-	QPixmap * pixmap = new QPixmap(size);
-	pixmap->fill(Qt::transparent);
-	QPainter painter(pixmap);
-	// preserve aspect ratio
-	QSize def = renderer.defaultSize();
-	double newW = size.width();
-	double newH = newW * def.height() / def.width();
-	if (newH > size.height()) {
-		newH = size.height();
-		newW = newH * def.width() / def.height();
-	}
-	QRectF bounds((size.width() - newW) / 2.0, (size.height() - newH) / 2.0, newW, newH);
-	renderer.render(&painter, bounds);
-	painter.end();
-
-	m_pixmaps.insert(filename, pixmap);
-
-	return pixmap;
-}
-
 QHash<QString, QString> HtmlInfoView::getPartProperties(ModelPart * modelPart, ItemBase * itemBase, bool wantDebug, QStringList & keys) 
 {
 	QHash<QString, QString> properties;
@@ -909,11 +843,12 @@ QHash<QString, QString> HtmlInfoView::getPartProperties(ModelPart * modelPart, I
 				keys.insert(insertAt++, "class");
 			}
 			else {
-				FSvgRenderer * renderer = FSvgRenderer::getByModuleID(modelPart->moduleID(), ViewLayer::Icon);
-				if (renderer != NULL) {
-					properties.insert("svg", renderer->filename());
-					keys.insert(insertAt++, "svg");
-				}
+                DebugDialog::debug("htmlinfoview has modelpart without itembase?");
+				//FSvgRenderer * renderer = FSvgRenderer::getByModuleID(modelPart->moduleID(), ViewLayer::Icon);
+				//if (renderer != NULL) {
+				//	properties.insert("svg", renderer->filename());
+				//	keys.insert(insertAt++, "svg");
+				//}
 			}
 			if (modelPart->modelPartShared()) {
 				properties.insert("fzp",  modelPart->path());

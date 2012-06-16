@@ -77,6 +77,7 @@ protected:
 	void disconnectSlots();
 	void forceFormat(int position, int charsAdded);
 	QString retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi);
+    ViewIdentifierClass::ViewIdentifier useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier, bool swappingEnabled);
 
 protected slots:
 	void contentsChangeSlot(int position, int charsAdded, int charsRemoved);

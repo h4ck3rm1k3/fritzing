@@ -49,6 +49,8 @@ $Date$
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QRegExp>
+#include <QGroupBox>
+#include <QLabel>
 #include <limits>
 
 /////////////////////////////////////////////////
@@ -101,7 +103,6 @@ bool byID(ConnectorItem * c1, ConnectorItem * c2)
 PaletteItem::PaletteItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
-	m_extraRenderer = NULL;
 	if(doLabel) {
 		m_partLabel = new PartLabel(this, NULL);
 		m_partLabel->setVisible(false);
@@ -694,35 +695,16 @@ QStringList PaletteItem::getPinLabels(bool & hasLocal) {
 	return labels;
 }
 
-bool PaletteItem::loadExtraRenderer(const QString & svg, bool fastLoad) {
-	if (!svg.isEmpty()) {
-		if (m_extraRenderer == NULL) {
-			m_extraRenderer = new FSvgRenderer(this);
-		}
-		//DebugDialog::debug(svg);
-
-		bool result = fastLoad ? m_extraRenderer->fastLoad(svg.toUtf8()) : m_extraRenderer->loadSvgString(svg);
-		if (result) {
-			prepareGeometryChange();
-			setSharedRendererEx(m_extraRenderer);
-		}
-
-		return result;
-	}
-
-	return false;
-}
-
 void PaletteItem::resetConnectors() {
 	if (m_viewIdentifier != ViewIdentifierClass::SchematicView) return;
 
-	QSizeF size = m_extraRenderer->defaultSizeF();   // pixels
-	QRectF viewBox = m_extraRenderer->viewBoxF();
+	QSizeF size = fsvgRenderer()->defaultSizeF();   // pixels
+	QRectF viewBox = fsvgRenderer()->viewBoxF();
 	foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
 		SvgIdLayer * svgIdLayer = connectorItem->connector()->fullPinInfo(m_viewIdentifier, m_viewLayerID);
 		if (svgIdLayer == NULL) continue;
 
-		QRectF bounds = this->m_extraRenderer->boundsOnElement(svgIdLayer->m_svgId);
+		QRectF bounds = fsvgRenderer()->boundsOnElement(svgIdLayer->m_svgId);
 		QPointF p(bounds.left() * size.width() / viewBox.width(), bounds.top() * size.height() / viewBox.height());
 		QRectF r = connectorItem->rect();
 		r.moveTo(p.x(), p.y());
@@ -741,7 +723,7 @@ void PaletteItem::resetConnectors(ItemBase * otherLayer,FSvgRenderer * otherLaye
 		SvgIdLayer * svgIdLayer = connector->fullPinInfo(m_viewIdentifier, m_viewLayerID);
 		if (svgIdLayer == NULL) continue;
 
-		bool result = m_extraRenderer->setUpConnector(svgIdLayer, false);
+		bool result = fsvgRenderer()->setUpConnector(svgIdLayer, false);
 		if (!result) continue;
 
 		resetConnector(this, svgIdLayer);
@@ -778,3 +760,238 @@ void PaletteItem::resetConnector(ItemBase * itemBase, SvgIdLayer * svgIdLayer)
 	}
 }
 
+void PaletteItem::setUpHoleSizes(QString & holeSize, QString & ringThickness, const QString & attribute, QHash<QString, QString> & holeSizes) {
+	QFile file(":/resources/vias.xml");
+
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+
+	QDomDocument domDocument;
+	if (!domDocument.setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
+		DebugDialog::debug(QString("failed loading properties %1 line:%2 col:%3").arg(errorStr).arg(errorLine).arg(errorColumn));
+		return;
+	}
+
+	QDomElement root = domDocument.documentElement();
+	if (root.isNull()) return;
+	if (root.tagName() != "vias") return;
+
+	QDomElement ve = root.firstChildElement("via");
+	while (!ve.isNull()) {
+		QString rt = ve.attribute("ringthickness");
+		QString hs = ve.attribute("holesize");
+		QString name = ve.attribute("name");
+        QString ok = ve.attribute(attribute);
+        if (ok.toInt() == 1) {
+		    if (ve.attribute(attribute + "default").compare("yes") == 0) {
+			    if (ringThickness.isEmpty()) {
+				    ringThickness = rt;
+			    }
+			    if (holeSize.isEmpty()) {
+				    holeSize = hs;
+			    }
+		    }
+		    holeSizes.insert(name, QString("%1,%2").arg(hs).arg(rt));
+        }
+		ve = ve.nextSiblingElement("via");
+	}
+}
+
+QWidget * PaletteItem::createHoleSettings(QWidget * parent, HoleSettings & holeSettings, bool swappingEnabled, const QString & currentHoleSize, bool advanced) {
+    static const int RowHeight = 21;
+
+    holeSettings.diameterEdit = NULL;
+	holeSettings.thicknessEdit = NULL;
+	holeSettings.mmRadioButton = NULL;
+	holeSettings.inRadioButton = NULL;
+	holeSettings.diameterValidator = NULL;
+	holeSettings.thicknessValidator = NULL;
+
+    QFrame * frame = new QFrame(parent);
+	frame->setObjectName("infoViewPartFrame");
+
+	QVBoxLayout * vBoxLayout = new QVBoxLayout(frame);
+	vBoxLayout->setMargin(0);
+	vBoxLayout->setContentsMargins(0, 0, 0, 0);
+	vBoxLayout->setSpacing(0);
+
+	holeSettings.sizesComboBox = new QComboBox(frame);
+	holeSettings.sizesComboBox->setEditable(false);
+	holeSettings.sizesComboBox->setObjectName("infoViewComboBox");
+	holeSettings.sizesComboBox->addItems(holeSettings.holeSizes->keys());
+	holeSettings.sizesComboBox->setEnabled(swappingEnabled);
+
+	vBoxLayout->addWidget(holeSettings.sizesComboBox);
+
+    if (advanced) {
+        QFrame * hFrame = new QFrame(frame);
+        QHBoxLayout * hLayout = new QHBoxLayout(hFrame);
+	    hLayout->setMargin(0);
+
+	    QGroupBox * subFrame = new QGroupBox(tr("advanced settings"), frame);
+	    subFrame->setObjectName("infoViewGroupBox");
+
+	    QGridLayout * gridLayout = new QGridLayout(subFrame);
+	    gridLayout->setMargin(0);
+
+	    QGroupBox * rbFrame = new QGroupBox("", subFrame);
+	    rbFrame->setObjectName("infoViewGroupBox");
+	    QVBoxLayout * vbl = new QVBoxLayout(rbFrame);
+	    vbl->setMargin(0);
+
+	    holeSettings.inRadioButton = new QRadioButton(tr("in"), subFrame);
+	    gridLayout->addWidget(holeSettings.inRadioButton, 0, 2);
+	    holeSettings.inRadioButton->setObjectName("infoViewRadioButton");
+
+	    holeSettings.mmRadioButton = new QRadioButton(tr("mm"), subFrame);
+	    gridLayout->addWidget(holeSettings.mmRadioButton, 1, 2);
+	    holeSettings.inRadioButton->setObjectName("infoViewRadioButton");
+
+	    vbl->addWidget(holeSettings.inRadioButton);
+	    vbl->addWidget(holeSettings.mmRadioButton);
+	    rbFrame->setLayout(vbl);
+
+	    gridLayout->addWidget(rbFrame, 0, 2, 2, 1, Qt::AlignVCenter);
+
+	    holeSettings.diameterEdit = new QLineEdit(subFrame);
+	    holeSettings.diameterEdit->setMinimumHeight(RowHeight);
+	    holeSettings.diameterValidator = new QDoubleValidator(holeSettings.diameterEdit);
+	    holeSettings.diameterValidator->setNotation(QDoubleValidator::StandardNotation);
+	    holeSettings.diameterEdit->setValidator(holeSettings.diameterValidator);
+	    gridLayout->addWidget(holeSettings.diameterEdit, 0, 1);
+	    holeSettings.diameterEdit->setObjectName("infoViewLineEdit");
+
+	    QLabel * label = new QLabel(tr("Hole Diameter"));
+	    label->setMinimumHeight(RowHeight);
+	    label->setObjectName("infoViewLabel");
+	    gridLayout->addWidget(label, 0, 0);
+
+	    holeSettings.thicknessEdit = new QLineEdit(subFrame);
+	    holeSettings.thicknessEdit->setMinimumHeight(RowHeight);
+	    holeSettings.thicknessValidator = new QDoubleValidator(holeSettings.thicknessEdit);
+	    holeSettings.thicknessValidator->setNotation(QDoubleValidator::StandardNotation);
+	    holeSettings.thicknessEdit->setValidator(holeSettings.thicknessValidator);
+	    gridLayout->addWidget(holeSettings.thicknessEdit, 1, 1);
+	    holeSettings.thicknessEdit->setObjectName("infoViewLineEdit");
+
+	    label = new QLabel(tr("Ring Thickness"));
+	    label->setMinimumHeight(RowHeight);
+	    gridLayout->addWidget(label, 1, 0);
+	    label->setObjectName("infoViewLabel");
+
+	    gridLayout->setContentsMargins(10, 2, 0, 2);
+	    gridLayout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum), 0, 3);
+	    gridLayout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum), 1, 3);
+
+        hLayout->addWidget(subFrame);
+        hLayout->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Expanding,QSizePolicy::Minimum));
+        vBoxLayout->addWidget(hFrame);
+
+
+	    holeSettings.mmRadioButton->setEnabled(swappingEnabled);
+	    holeSettings.inRadioButton->setEnabled(swappingEnabled);
+	    holeSettings.diameterEdit->setEnabled(swappingEnabled);
+	    holeSettings.thicknessEdit->setEnabled(swappingEnabled);
+
+
+	    if (currentHoleSize.contains("mm")) {
+		    holeSettings.mmRadioButton->setChecked(true);
+	    }
+	    else {
+		    holeSettings.inRadioButton->setChecked(true);
+	    }
+    }
+
+	updateEditTexts(holeSettings);
+	updateValidators(holeSettings);
+	updateSizes(holeSettings);
+
+	return frame;
+}
+
+void PaletteItem::updateEditTexts(HoleSettings & holeSettings) {
+	if (holeSettings.diameterEdit == NULL) return;
+	if (holeSettings.thicknessEdit == NULL) return;
+	if (holeSettings.mmRadioButton == NULL) return;
+
+	double hd = TextUtils::convertToInches(holeSettings.holeDiameter);
+	double rt = TextUtils::convertToInches(holeSettings.ringThickness);
+
+	QString newVal;
+	if (holeSettings.currentUnits() == "in") {
+		newVal = QString("%1,%2").arg(hd).arg(rt);
+	}
+	else {
+		newVal = QString("%1,%2").arg(hd * 25.4).arg(rt * 25.4);
+	}
+
+	QStringList sizes = newVal.split(",");
+	holeSettings.diameterEdit->setText(sizes.at(0));
+	holeSettings.thicknessEdit->setText(sizes.at(1));
+}
+
+void PaletteItem::updateSizes(HoleSettings &  holeSettings) {
+	if (holeSettings.sizesComboBox == NULL) return;
+
+	int newIndex = -1;
+
+	QPointF current(TextUtils::convertToInches(holeSettings.holeDiameter), TextUtils::convertToInches(holeSettings.ringThickness));
+	for (int ix = 0; ix < holeSettings.sizesComboBox->count(); ix++) {
+		QString key = holeSettings.sizesComboBox->itemText(ix);
+		QString value = holeSettings.holeSizes->value(key, "");
+		QStringList sizes;
+		if (value.isEmpty()) {
+			sizes = key.split(",");
+		}
+		else {
+			sizes = value.split(",");
+		}
+		if (sizes.count() < 2) continue;
+
+		QPointF p(TextUtils::convertToInches(sizes.at(0)), TextUtils::convertToInches(sizes.at(1)));
+		if (p == current) {
+			newIndex = ix;
+			break;
+		}
+	}
+
+	if (newIndex < 0) {
+		QString newItem = holeSettings.holeDiameter + "," + holeSettings.ringThickness;
+		holeSettings.sizesComboBox->addItem(newItem);
+		newIndex = holeSettings.sizesComboBox->findText(newItem);
+
+		holeSettings.holeSizes->insert(newItem, newItem);
+	}
+
+	// don't want to trigger another undo command
+	bool wasBlocked = holeSettings.sizesComboBox->blockSignals(true);
+	holeSettings.sizesComboBox->setCurrentIndex(newIndex);
+	holeSettings.sizesComboBox->blockSignals(wasBlocked);
+}
+
+void PaletteItem::updateValidators(HoleSettings & holeSettings)
+{
+	if (holeSettings.diameterValidator == NULL) return;
+	if (holeSettings.thicknessValidator == NULL) return;
+	if (holeSettings.mmRadioButton == NULL) return;
+
+	QString units = holeSettings.currentUnits();
+	QPointF hdRange = holeSettings.holeDiameterRange(holeSettings.ringThickness);
+	QPointF rtRange = holeSettings.ringThicknessRange(holeSettings.holeDiameter);
+
+	double multiplier = (units == "mm") ? 25.4 : 1.0;
+	holeSettings.diameterValidator->setRange(hdRange.x() * multiplier, hdRange.y() * multiplier, 3);
+	holeSettings.thicknessValidator->setRange(rtRange.x() * multiplier, rtRange.y() * multiplier, 3);
+}
+
+void PaletteItem::initHoleSettings(HoleSettings & holeSettings, QHash<QString, QString> * holeSizes, RangeCalc holeDiameterRange,  RangeCalc ringThicknessRange) 
+{
+    holeSettings.holeSizes = holeSizes;
+	holeSettings.diameterEdit = holeSettings.thicknessEdit = NULL;
+	holeSettings.diameterValidator = holeSettings.thicknessValidator = NULL;
+	holeSettings.inRadioButton = holeSettings.mmRadioButton = NULL;
+	holeSettings.sizesComboBox = NULL;
+	holeSettings.holeDiameterRange = holeDiameterRange;
+	holeSettings.ringThicknessRange = ringThicknessRange;
+}

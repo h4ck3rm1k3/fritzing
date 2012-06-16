@@ -66,6 +66,7 @@ protected:
 	void setSvg(const QString &);
 	void setSvgAux(const QString &);
 	QString generateSvg();
+    ViewIdentifierClass::ViewIdentifier useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier, bool swappingEnabled);
 
 protected:
 	ConnectorItem * m_connector0;

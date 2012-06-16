@@ -247,22 +247,19 @@ bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ViewIdentifierCla
 	FSvgRenderer * renderer = NULL;
 	if (renderer == NULL) {
         QString fn = m_svgStrings->coreContribOrUser()+(!m_svgStrings->relativePath().isEmpty()?QString("/")+m_svgStrings->relativePath():QString(""));
-		renderer = FSvgRenderer::getByFilename(fn, viewLayerID);
-		if (renderer == NULL) {
-			renderer = new FSvgRenderer();
-			QByteArray loaded;
-			if (!m_itemSVG.isEmpty()) {
-				loaded = renderer->loadSvg(m_itemSVG.toUtf8(), m_svgStrings->absolutePath());
-			}
-			if (loaded.isEmpty()) {
-				loaded = renderer->loadSvg(m_svgStrings->absolutePath());
-			}
-			if (loaded.isEmpty()) {
-				QMessageBox::information( NULL, QObject::tr("Fritzing"),
-						QObject::tr("The file %1 is not a Fritzing file (7).").arg(m_svgStrings->absolutePath()));
-				delete renderer;
-				return false;
-			}
+		renderer = new FSvgRenderer();
+		QByteArray loaded;
+		if (!m_itemSVG.isEmpty()) {
+			loaded = renderer->loadSvg(m_itemSVG.toUtf8(), m_svgStrings->absolutePath());
+		}
+		if (loaded.isEmpty()) {
+			loaded = renderer->loadSvg(m_svgStrings->absolutePath());
+		}
+		if (loaded.isEmpty()) {
+			QMessageBox::information( NULL, QObject::tr("Fritzing"),
+					QObject::tr("The file %1 is not a Fritzing file (7).").arg(m_svgStrings->absolutePath()));
+			delete renderer;
+			return false;
 		}
 
 		createSvgFile(m_svgStrings->absolutePath());

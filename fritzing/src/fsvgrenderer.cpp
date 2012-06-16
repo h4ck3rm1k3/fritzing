@@ -39,10 +39,6 @@ $Date$
 
 QString FSvgRenderer::NonConnectorName("nonconn");
 
-QHash<QString, RendererHash *> FSvgRenderer::m_moduleIDRendererHash;
-QHash<QString, RendererHash * > FSvgRenderer::m_filenameRendererHash;
-QSet<RendererHash * > FSvgRenderer::m_deleted;
-
 double FSvgRenderer::m_printerScale = 90.0;
 
 static ConnectorInfo VanillaConnectorInfo;
@@ -66,22 +62,7 @@ void FSvgRenderer::clearConnectorInfoHash(QHash<QString, ConnectorInfo *> & hash
 }
 
 void FSvgRenderer::cleanup() {
-	foreach (RendererHash * rendererHash, m_filenameRendererHash.values()) {
-		foreach (FSvgRenderer * renderer, rendererHash->values()) {
-			delete renderer;
-		}
-		delete rendererHash;
-	}
-	m_filenameRendererHash.clear();
-	foreach (RendererHash * rendererHash, m_moduleIDRendererHash.values()) {
-		delete rendererHash;
-	}
-	m_moduleIDRendererHash.clear();
 
-	foreach (RendererHash * rendererHash, m_deleted) {
-		delete rendererHash;
-	}
-	m_deleted.clear();
 }
 
 QByteArray FSvgRenderer::loadSvg(const QString & filename) {
@@ -196,11 +177,11 @@ QByteArray FSvgRenderer::loadAux(const QByteArray & contents, const QString & fi
 			}
 		}
 		if (connectorIDs.count() > 0) {
-			bool init =  initConnectorInfo(doc, connectorIDs, terminalIDs, legIDs);
+			bool init =  initConnectorInfo(doc, connectorIDs, terminalIDs, legIDs, filename);
 			resetContents = resetContents || init;
 		}
 		if (findNonConnectors) {
-			initNonConnectorInfo(doc);
+			initNonConnectorInfo(doc, filename);
 		}
 
 		if (resetContents) {
@@ -246,57 +227,28 @@ const QString & FSvgRenderer::filename() {
 	return m_filename;
 }
 
-FSvgRenderer * FSvgRenderer::getByFilename(const QString & filename, ViewLayer::ViewLayerID viewLayerID) {
-	RendererHash * rendererHash = m_filenameRendererHash.value(filename);
-	if (rendererHash == NULL) return NULL;
-
-	return rendererHash->value(viewLayerID, NULL);
-}
-
-FSvgRenderer * FSvgRenderer::getByModuleID(const QString & moduleID, ViewLayer::ViewLayerID viewLayerID) {
-	RendererHash * rendererHash = m_moduleIDRendererHash.value(moduleID);
-	if (rendererHash == NULL) return NULL;
-
-	return rendererHash->value(viewLayerID, NULL);
-}
-
-QPixmap * FSvgRenderer::getPixmap(const QString & moduleID, ViewLayer::ViewLayerID viewLayerId, QSize size) {
-	// TODO: cache pixmap by size?
-
-	QPixmap *pixmap = NULL;
-	FSvgRenderer * renderer = getByModuleID(moduleID, viewLayerId);
-	if (renderer) {
-		pixmap = new QPixmap(size);
-		pixmap->fill(Qt::transparent);
-		QPainter painter(pixmap);
-		// preserve aspect ratio
-		QSizeF def = renderer->defaultSizeF();
-		double newW = size.width();
-		double newH = newW * def.height() / def.width();
-		if (newH > size.height()) {
-			newH = size.height();
-			newW = newH * def.width() / def.height();
-		}
-		QRectF bounds((size.width() - newW) / 2.0, (size.height() - newH) / 2.0, newW, newH);
-		renderer->render(&painter, bounds);
-		painter.end();
+QPixmap * FSvgRenderer::getPixmap(QSvgRenderer * renderer, QSize size) 
+{
+	QPixmap *pixmap = new QPixmap(size);
+	pixmap->fill(Qt::transparent);
+	QPainter painter(pixmap);
+	// preserve aspect ratio
+	QSizeF def = renderer->defaultSize();
+    FSvgRenderer * frenderer = qobject_cast<FSvgRenderer *>(renderer);
+    if (frenderer) {
+        def = frenderer->defaultSizeF();
+    }
+	double newW = size.width();
+	double newH = newW * def.height() / def.width();
+	if (newH > size.height()) {
+		newH = size.height();
+		newW = newH * def.width() / def.height();
 	}
-	return pixmap;
-}
+	QRectF bounds((size.width() - newW) / 2.0, (size.height() - newH) / 2.0, newW, newH);
+	renderer->render(&painter, bounds);
+	painter.end();
 
-void FSvgRenderer::set(const QString & moduleID, ViewLayer::ViewLayerID viewLayerID, FSvgRenderer * renderer) {
-	RendererHash * rendererHash = m_filenameRendererHash.value(renderer->filename());
-	if (rendererHash == NULL) {
-		rendererHash = new RendererHash();
-		m_filenameRendererHash.insert(renderer->filename(), rendererHash);
-	}
-	rendererHash->insert(viewLayerID, renderer);
-	rendererHash = m_moduleIDRendererHash.value(moduleID);
-	if (rendererHash == NULL) {
-		rendererHash = new RendererHash();
-		m_moduleIDRendererHash.insert(moduleID, rendererHash);
-	}
-	rendererHash->insert(viewLayerID, renderer);
+    return pixmap;
 }
 
 bool FSvgRenderer::determineDefaultSize(QXmlStreamReader & xml)
@@ -382,33 +334,33 @@ double FSvgRenderer::printerScale() {
 	return m_printerScale;
 }
 
-void FSvgRenderer::initNonConnectorInfo(QDomDocument & domDocument)
+void FSvgRenderer::initNonConnectorInfo(QDomDocument & domDocument, const QString & filename)
 {
 	clearConnectorInfoHash(m_nonConnectorInfoHash);
 	QDomElement root = domDocument.documentElement();
-	initNonConnectorInfoAux(root);
+	initNonConnectorInfoAux(root, filename);
 }
 
-void FSvgRenderer::initNonConnectorInfoAux(QDomElement & element)
+void FSvgRenderer::initNonConnectorInfoAux(QDomElement & element, const QString & filename)
 {
 	QString id = element.attribute("id");
 	if (id.startsWith(NonConnectorName, Qt::CaseInsensitive)) {
-		ConnectorInfo * connectorInfo = initConnectorInfoStruct(element);
+		ConnectorInfo * connectorInfo = initConnectorInfoStruct(element, filename);
 		m_nonConnectorInfoHash.insert(id, connectorInfo);
 	}
 	QDomElement child = element.firstChildElement();
 	while (!child.isNull()) {
-		initNonConnectorInfoAux(child);
+		initNonConnectorInfoAux(child, filename);
 		child = child.nextSiblingElement();
 	}
 }
 
-bool FSvgRenderer::initConnectorInfo(QDomDocument & domDocument, const QStringList & connectorIDs, const QStringList & terminalIDs, const QStringList & legIDs)
+bool FSvgRenderer::initConnectorInfo(QDomDocument & domDocument, const QStringList & connectorIDs, const QStringList & terminalIDs, const QStringList & legIDs, const QString & filename)
 {
 	bool result = false;
 	clearConnectorInfoHash(m_connectorInfoHash);
 	QDomElement root = domDocument.documentElement();
-	initConnectorInfoAux(root, connectorIDs);
+	initConnectorInfoAux(root, connectorIDs, filename);
 	if (terminalIDs.count() > 0) {
 		initTerminalInfoAux(root, connectorIDs, terminalIDs);
 	}
@@ -499,12 +451,12 @@ void FSvgRenderer::initTerminalInfoAux(QDomElement & element, const QStringList 
 	}
 }
 
-void FSvgRenderer::initConnectorInfoAux(QDomElement & element, const QStringList & connectorIDs)
+void FSvgRenderer::initConnectorInfoAux(QDomElement & element, const QStringList & connectorIDs, const QString & filename)
 {
 	QString id = element.attribute("id");
 	if (!id.isEmpty()) {
 		if (connectorIDs.contains(id)) {
-			ConnectorInfo * connectorInfo = initConnectorInfoStruct(element);
+			ConnectorInfo * connectorInfo = initConnectorInfoStruct(element, filename);
 			m_connectorInfoHash.insert(id, connectorInfo);
 		}
 		// don't return here, might miss other connectors
@@ -512,12 +464,12 @@ void FSvgRenderer::initConnectorInfoAux(QDomElement & element, const QStringList
 
 	QDomElement child = element.firstChildElement();
 	while (!child.isNull()) {
-		initConnectorInfoAux(child, connectorIDs);
+		initConnectorInfoAux(child, connectorIDs, filename);
 		child = child.nextSiblingElement();
 	}
 }
 
-ConnectorInfo * FSvgRenderer::initConnectorInfoStruct(QDomElement & connectorElement) {
+ConnectorInfo * FSvgRenderer::initConnectorInfoStruct(QDomElement & connectorElement, const QString & filename) {
 	ConnectorInfo * connectorInfo = new ConnectorInfo();
 	connectorInfo->radius = connectorInfo->strokeWidth = 0;
 	connectorInfo->gotCircle = false;
@@ -525,17 +477,17 @@ ConnectorInfo * FSvgRenderer::initConnectorInfoStruct(QDomElement & connectorEle
 	if (connectorElement.isNull()) return connectorInfo;
 
 	connectorInfo->matrix = TextUtils::elementToMatrix(connectorElement);
-	initConnectorInfoStructAux(connectorElement, connectorInfo);
+	initConnectorInfoStructAux(connectorElement, connectorInfo, filename);
 	return connectorInfo;
 }
 
-bool FSvgRenderer::initConnectorInfoStructAux(QDomElement & element, ConnectorInfo * connectorInfo) 
+bool FSvgRenderer::initConnectorInfoStructAux(QDomElement & element, ConnectorInfo * connectorInfo, const QString & filename) 
 {
 	// right now we only handle circles
 	if (element.nodeName().compare("circle") != 0) {
 		QDomElement child = element.firstChildElement();
 		while (!child.isNull()) {
-			if (initConnectorInfoStructAux(child, connectorInfo)) return true;
+			if (initConnectorInfoStructAux(child, connectorInfo, filename)) return true;
 
 			child = child.nextSiblingElement();
 		}
@@ -557,7 +509,7 @@ bool FSvgRenderer::initConnectorInfoStructAux(QDomElement & element, ConnectorIn
         QString text;
         QTextStream stream(&text);
         element.save(stream, 0);
-        DebugDialog::debug("no circle stroke width set:" + text);
+        DebugDialog::debug(QString("no circle stroke width set in %1: %2").arg(filename).arg(text));
         element.setAttribute("stroke-width", 1);
         sw = 1;
         //return false;
@@ -587,19 +539,6 @@ bool FSvgRenderer::initConnectorInfoStructAux(QDomElement & element, ConnectorIn
 	connectorInfo->radius = r;
 	connectorInfo->strokeWidth = sw;
 	return true;
-}
-
-void FSvgRenderer::removeFromHash(const QString &moduleId, const QString filename) {
-	//DebugDialog::debug(QString("length before %1").arg(m_moduleIDRendererHash.size()));
-	RendererHash * r = m_moduleIDRendererHash.take(moduleId);
-	if (r != NULL) {
-		m_deleted.insert(r);
-	}
-	//DebugDialog::debug(QString("length after %1").arg(m_moduleIDRendererHash.size()));
-	r = m_filenameRendererHash.take(filename);
-	if (r != NULL) {
-		m_deleted.insert(r);
-	}
 }
 
 ConnectorInfo * FSvgRenderer::getConnectorInfo(const QString & connectorID) {

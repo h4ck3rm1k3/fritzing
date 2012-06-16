@@ -6,6 +6,7 @@
     <date>2009-10-23</date>
     <tags/>
     <properties>
+        <property name="hole size"></property>
         <property name="family">Pin Header</property>
         <property name="Pins">10</property>
         <property name="Form">♂ (shrouded male)</property>

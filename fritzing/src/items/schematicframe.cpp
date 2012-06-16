@@ -438,3 +438,12 @@ void SchematicFrame::sheetEntry(int value) {
 		infoGraphicsView->setProp(this, "sheet", tr("sheet"), prop("sheet"), strings.at(0) + "/" + strings[1], true);
 	}
 }
+
+ViewIdentifierClass::ViewIdentifier SchematicFrame::useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier vid, bool) 
+{
+    if (vid == ViewIdentifierClass::SchematicView) {
+        return ViewIdentifierClass::IconView;
+    }
+
+    return ViewIdentifierClass::UnknownView;
+}

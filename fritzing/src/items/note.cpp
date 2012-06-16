@@ -831,3 +831,8 @@ QString Note::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QSt
 
 	return svg;	
 }
+
+ViewIdentifierClass::ViewIdentifier Note::useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier, bool) 
+{
+    return ViewIdentifierClass::IconView;
+}

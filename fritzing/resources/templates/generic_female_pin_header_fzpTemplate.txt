@@ -7,6 +7,7 @@
     <tags/>
     <properties>
         <property name="family">Pin Header</property>
+        <property name="hole size"></property>
         <property name="Pins">%1</property>
         <property name="Form">.percent.3</property>
         <property name="Pin Spacing">.percent.1</property>

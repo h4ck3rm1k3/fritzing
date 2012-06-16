@@ -143,7 +143,9 @@ static QHash<QString, QStringList> CachedValues;
 ItemBase::ItemBase( ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu )
 	: QGraphicsSvgItem()
 {
-	//DebugDialog::debug(QString("itembase %1 %2").arg(id).arg((long) static_cast<QGraphicsItem *>(this), 0, 16));
+    m_fsvgRenderer = NULL;
+
+    //DebugDialog::debug(QString("itembase %1 %2").arg(id).arg((long) static_cast<QGraphicsItem *>(this), 0, 16));
 	m_hasRubberBandLeg = m_moveLock = m_hoverEnterSpaceBarWasPressed = m_spaceBarWasPressed = false;
 
 	m_moveLockItem = NULL;
@@ -193,6 +195,11 @@ ItemBase::~ItemBase() {
 	if (m_modelPart != NULL) {
 		m_modelPart->removeViewItem(this);
 	}
+
+    if (m_fsvgRenderer) {
+        delete m_fsvgRenderer;
+    }
+
 }
 
 void ItemBase::setTooltip() {
@@ -692,7 +699,7 @@ void ItemBase::paintBody(QPainter *painter, const QStyleOptionGraphicsItem *opti
 	Q_UNUSED(widget);
 
 	// Qt's SVG renderer's defaultSize is not correct when the svg has a fractional pixel size
-	renderer()->render(painter, boundingRectWithoutLegs());
+	fsvgRenderer()->render(painter, boundingRectWithoutLegs());
 }
 
 void ItemBase::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -1253,117 +1260,107 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 
 
 	//DebugDialog::debug(QString("set up image elapsed (1) %1").arg(t.elapsed()) );
-	FSvgRenderer * renderer = FSvgRenderer::getByModuleID(modelPartShared->moduleID(), viewLayerID);
-	if (renderer == NULL) {
-		QString filename = getSvgFilename(modelPart, layerAttributes.filename());
-		if (filename.isEmpty()) {
-			filename = PartFactory::getSvgFilename(modelPart, layerAttributes.filename());
-		}
+	QString filename = getSvgFilename(modelPart, layerAttributes.filename());
+	if (filename.isEmpty()) {
+		filename = PartFactory::getSvgFilename(modelPart, layerAttributes.filename());
+	}
 
 //#ifndef QT_NO_DEBUG
-		//DebugDialog::debug(QString("set up image elapsed (2) %1").arg(t.elapsed()) );
+	//DebugDialog::debug(QString("set up image elapsed (2) %1").arg(t.elapsed()) );
 //#endif
 
-		if (filename.isEmpty()) {
-			//QString deleteme = modelPartShared->domDocument()->toString();
-			error = tr("file %1 not found").arg(layerAttributes.filename());
+	if (filename.isEmpty()) {
+		//QString deleteme = modelPartShared->domDocument()->toString();
+		error = tr("file %1 not found").arg(layerAttributes.filename());
+        return NULL;
+	}
+
+	QStringList connectorIDs, terminalIDs, legIDs;
+	QString setColor;
+	QString colorElementID;
+	switch (viewIdentifier) {
+		case ViewIdentifierClass::PCBView:
+			colorElementID = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
+			switch (viewLayerID) {
+				case ViewLayer::Copper0:
+					modelPartShared->connectorIDs(viewIdentifier, viewLayerID, connectorIDs, terminalIDs, legIDs);
+					setColor = ViewLayer::Copper0Color;
+					break;
+				case ViewLayer::Copper1:
+					modelPartShared->connectorIDs(viewIdentifier, viewLayerID, connectorIDs, terminalIDs, legIDs);
+					setColor = ViewLayer::Copper1Color;
+					break;
+				case ViewLayer::Silkscreen1:
+					setColor = ViewLayer::Silkscreen1Color;
+					break;
+				case ViewLayer::Silkscreen0:
+					setColor = ViewLayer::Silkscreen0Color;
+					break;
+				default:
+					break;
+			}
+			break;
+		case ViewIdentifierClass::BreadboardView:
+			modelPartShared->connectorIDs(viewIdentifier, viewLayerID, connectorIDs, terminalIDs, legIDs);
+			break;
+        default:
+            break;
+	}
+
+	bool gotOne = false;
+	FSvgRenderer * newRenderer = new FSvgRenderer();
+	QDomDocument flipDoc;
+	if (!getFlipDoc(modelPart, filename, viewLayerID, viewLayerSpec, flipDoc)) {
+		fixCopper1(modelPart, filename, viewLayerID, viewLayerSpec, flipDoc);
+	}
+	if (layerAttributes.multiLayer()) {
+		// need to treat create "virtual" svg file for each layer
+		SvgFileSplitter svgFileSplitter;
+		bool result;
+		if (flipDoc.isNull()) {
+			result = svgFileSplitter.split(filename, layerAttributes.layerName());
 		}
 		else {
-			renderer = FSvgRenderer::getByFilename(filename, viewLayerID);
-			if (renderer == NULL) {
-				QStringList connectorIDs, terminalIDs, legIDs;
-				QString setColor;
-				QString colorElementID;
-				switch (viewIdentifier) {
-					case ViewIdentifierClass::PCBView:
-						colorElementID = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
-						switch (viewLayerID) {
-							case ViewLayer::Copper0:
-								modelPartShared->connectorIDs(viewIdentifier, viewLayerID, connectorIDs, terminalIDs, legIDs);
-								setColor = ViewLayer::Copper0Color;
-								break;
-							case ViewLayer::Copper1:
-								modelPartShared->connectorIDs(viewIdentifier, viewLayerID, connectorIDs, terminalIDs, legIDs);
-								setColor = ViewLayer::Copper1Color;
-								break;
-							case ViewLayer::Silkscreen1:
-								setColor = ViewLayer::Silkscreen1Color;
-								break;
-							case ViewLayer::Silkscreen0:
-								setColor = ViewLayer::Silkscreen0Color;
-								break;
-							default:
-								break;
-						}
-						break;
-					case ViewIdentifierClass::BreadboardView:
-						modelPartShared->connectorIDs(viewIdentifier, viewLayerID, connectorIDs, terminalIDs, legIDs);
-						break;
-                    default:
-                        break;
-				}
-
-				bool gotOne = false;
-				renderer = new FSvgRenderer();
-				QDomDocument flipDoc;
-				if (!getFlipDoc(modelPart, filename, viewLayerID, viewLayerSpec, flipDoc)) {
-					fixCopper1(modelPart, filename, viewLayerID, viewLayerSpec, flipDoc);
-				}
-				if (layerAttributes.multiLayer()) {
-					// need to treat create "virtual" svg file for each layer
-					SvgFileSplitter svgFileSplitter;
-					bool result;
-					if (flipDoc.isNull()) {
-						result = svgFileSplitter.split(filename, layerAttributes.layerName());
-					}
-					else {
-						QString f = flipDoc.toString(); 
-						result = svgFileSplitter.splitString(f, layerAttributes.layerName());
-					}
-					if (result) {
-						QByteArray bytes = renderer->loadSvg(svgFileSplitter.byteArray(), filename, connectorIDs, terminalIDs, legIDs, setColor, colorElementID, viewIdentifier == ViewIdentifierClass::PCBView);
-						if (!bytes.isEmpty()) {
-							gotOne = true;
-						}
-					}
-				}
-				else {
+			QString f = flipDoc.toString(); 
+			result = svgFileSplitter.splitString(f, layerAttributes.layerName());
+		}
+		if (result) {
+			QByteArray bytes = newRenderer->loadSvg(svgFileSplitter.byteArray(), filename, connectorIDs, terminalIDs, legIDs, setColor, colorElementID, viewIdentifier == ViewIdentifierClass::PCBView);
+			if (!bytes.isEmpty()) {
+				gotOne = true;
+			}
+		}
+	}
+	else {
 //#ifndef QT_NO_DEBUG
 //					DebugDialog::debug(QString("set up image elapsed (2.3) %1").arg(t.elapsed()) );
 //#endif
-					// only one layer, just load it directly
-					if (flipDoc.isNull()) {
-						layerAttributes.setLoaded(renderer->loadSvg(filename, connectorIDs, terminalIDs, legIDs, setColor, colorElementID, viewIdentifier == ViewIdentifierClass::PCBView));
-					}
-					else {
-						layerAttributes.setLoaded(renderer->loadSvg(flipDoc.toByteArray(), filename, connectorIDs, terminalIDs, legIDs, setColor, colorElementID, viewIdentifier == ViewIdentifierClass::PCBView));
-					}
-					if (!layerAttributes.loaded().isEmpty()) {
-						gotOne = true;
-					}
+		// only one layer, just load it directly
+		if (flipDoc.isNull()) {
+			layerAttributes.setLoaded(newRenderer->loadSvg(filename, connectorIDs, terminalIDs, legIDs, setColor, colorElementID, viewIdentifier == ViewIdentifierClass::PCBView));
+		}
+		else {
+			layerAttributes.setLoaded(newRenderer->loadSvg(flipDoc.toByteArray(), filename, connectorIDs, terminalIDs, legIDs, setColor, colorElementID, viewIdentifier == ViewIdentifierClass::PCBView));
+		}
+		if (!layerAttributes.loaded().isEmpty()) {
+			gotOne = true;
+		}
 //#ifndef QT_NO_DEBUG
 //					DebugDialog::debug(QString("set up image elapsed (2.4) %1").arg(t.elapsed()) );
 //#endif
-				}
-				if (!gotOne) {
-					delete renderer;
-					error = tr("unable to create renderer for svg %1").arg(filename);
-					renderer = NULL;
-				}
-			}
-			//DebugDialog::debug(QString("set up image elapsed (3) %1").arg(t.elapsed()) );
+	}
+	if (!gotOne) {
+		delete newRenderer;
+		error = tr("unable to create renderer for svg %1").arg(filename);
+		newRenderer = NULL;
+	}
+	//DebugDialog::debug(QString("set up image elapsed (3) %1").arg(t.elapsed()) );
 
-			if (renderer) {
-				FSvgRenderer::set(modelPartShared->moduleID(), viewLayerID, renderer);
-			}
-    	}
+	if (newRenderer) {
+		layerAttributes.setFilename(newRenderer->filename());
 	}
 
-	if (renderer) {
-		layerAttributes.setFilename(renderer->filename());
-	}
-
-	return renderer;
+	return newRenderer;
 }
 
 QString ItemBase::getSvgFilename(ModelPart * modelPart, const QString & baseName) 
@@ -1912,7 +1909,7 @@ QRectF ItemBase::boundingRectWithoutLegs() const
 
 QRectF ItemBase::boundingRect() const
 {    
-	FSvgRenderer * frenderer = dynamic_cast<FSvgRenderer *>(this->renderer());
+	FSvgRenderer * frenderer = fsvgRenderer();
 	if (frenderer == NULL) {
 		return QGraphicsSvgItem::boundingRect();
 	}
@@ -1941,4 +1938,130 @@ void ItemBase::doneLoading() {
 
 QString ItemBase::family() {
 	return modelPart()->family();
+}
+
+QPixmap * ItemBase::getPixmap(QSize size) {
+    return FSvgRenderer::getPixmap(renderer(), size);
+}
+
+FSvgRenderer * ItemBase::fsvgRenderer() const {
+    if (m_fsvgRenderer) return m_fsvgRenderer;
+
+    FSvgRenderer * f = qobject_cast<FSvgRenderer *>(renderer());
+    if (f == NULL) {
+        DebugDialog::debug("shouldn't happen: missing fsvgRenderer");
+    }
+    return f;
+}
+
+void ItemBase::setSharedRendererEx(FSvgRenderer * newRenderer) {
+	if (newRenderer != m_fsvgRenderer) {
+		setSharedRenderer(newRenderer);  // original renderer is deleted if it is not shared
+        if (m_fsvgRenderer) delete m_fsvgRenderer;
+        m_fsvgRenderer = newRenderer;
+	}
+	else {
+		update();
+	}
+	m_size = newRenderer->defaultSizeF();
+}
+
+bool ItemBase::reloadRenderer(const QString & svg, bool fastLoad) {
+	if (!svg.isEmpty()) {
+		//DebugDialog::debug(svg);
+		prepareGeometryChange();
+		bool result = fastLoad ? fsvgRenderer()->fastLoad(svg.toUtf8()) : fsvgRenderer()->loadSvgString(svg.toUtf8());
+		if (result) {
+            update();
+		}
+
+		return result;
+	}
+
+	return false;
+}
+
+bool ItemBase::resetRenderer(const QString & svg) {
+    // use resetRenderer instead of reloadRender because if the svg size changes, with reloadRenderer the new image seems to be scaled to the old bounds
+    // what I don't understand is why the old renderer causes a crash if it is deleted here
+    
+    FSvgRenderer * newRenderer = new FSvgRenderer();
+    bool result = newRenderer->loadSvgString(svg);
+    if (result) {
+        setSharedRendererEx(newRenderer);
+    }
+    else {
+        delete newRenderer;
+    }
+    return result;
+}
+
+void ItemBase::getPixmaps(QPixmap * & pixmap1, QPixmap * & pixmap2, QPixmap * & pixmap3, bool swappingEnabled, QSize size) 
+{
+    pixmap1 = getPixmap(ViewIdentifierClass::BreadboardView, swappingEnabled, size);
+    pixmap2 = getPixmap(ViewIdentifierClass::SchematicView, swappingEnabled, size);
+    pixmap3 = getPixmap(ViewIdentifierClass::PCBView, swappingEnabled, size);
+}
+
+QPixmap * ItemBase::getPixmap(ViewIdentifierClass::ViewIdentifier vid, bool swappingEnabled, QSize size)
+{
+    ItemBase * vItemBase = NULL;
+
+    if (viewIdentifier() == vid) {
+        if (!isEverVisible()) return NULL;
+    }
+    else {
+        vItemBase = modelPart()->viewItem(vid);
+        if (vItemBase && !vItemBase->isEverVisible()) return NULL;
+    }
+
+    vid = useViewIdentifierForPixmap(vid, swappingEnabled);
+    if (vid == ViewIdentifierClass::UnknownView) return NULL;
+
+    if (viewIdentifier() == vid) {
+        return getPixmap(size);
+    }
+
+    if (vItemBase) {
+        return vItemBase->getPixmap(size);
+    }
+
+
+	if (!modelPart()->hasViewFor(vid)) return NULL;
+
+	QString baseName = modelPart()->hasBaseNameFor(vid);
+	if (baseName.isEmpty()) return NULL;
+
+	QString filename = ItemBase::getSvgFilename(modelPart(), baseName);
+	if (filename.isEmpty()) {
+		return NULL;
+	}
+
+	QSvgRenderer renderer(filename);
+
+	QPixmap * pixmap = new QPixmap(size);
+	pixmap->fill(Qt::transparent);
+	QPainter painter(pixmap);
+	// preserve aspect ratio
+	QSize def = renderer.defaultSize();
+	double newW = size.width();
+	double newH = newW * def.height() / def.width();
+	if (newH > size.height()) {
+		newH = size.height();
+		newW = newH * def.width() / def.height();
+	}
+	QRectF bounds((size.width() - newW) / 2.0, (size.height() - newH) / 2.0, newW, newH);
+	renderer.render(&painter, bounds);
+	painter.end();
+
+	return pixmap;
+}
+
+ViewIdentifierClass::ViewIdentifier ItemBase::useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier vid, bool) 
+{
+    if (vid == ViewIdentifierClass::BreadboardView) {
+        return ViewIdentifierClass::IconView;
+    }
+
+    return vid;
 }

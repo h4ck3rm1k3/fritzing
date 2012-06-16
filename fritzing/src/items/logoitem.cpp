@@ -90,7 +90,7 @@ void LogoItem::addedToScene(bool temporary)
 		QString svg = prop("shape");
 		if (!svg.isEmpty()) {					
 			m_aspectRatio = modelPart()->localProp("aspectratio").toSizeF();
-			if (loadExtraRenderer(getShapeForRenderer(svg).toUtf8(), false)) {
+			if (resetRenderer(getShapeForRenderer(svg))) {
 			}
 			else {
 				DebugDialog::debug("bad shape in " + m_originalFilename + " " + svg);
@@ -228,10 +228,10 @@ void LogoItem::prepLoadImageAux(const QString & fileName, bool addName)
 bool LogoItem::reloadImage(const QString & svg, const QSizeF & aspectRatio, const QString & fileName, bool addName) 
 {
     QString shape = getShapeForRenderer(svg);
-	bool result = loadExtraRenderer(shape.toUtf8(), false);
+	bool result = resetRenderer(shape);
 	if (result) {
 		if (aspectRatio == QSizeF(0, 0)) {
-			QRectF r = m_extraRenderer->viewBoxF();
+			QRectF r = fsvgRenderer()->viewBoxF();
 			m_aspectRatio.setWidth(r.width());
 			m_aspectRatio.setHeight(r.height());
 		}
@@ -243,7 +243,7 @@ bool LogoItem::reloadImage(const QString & svg, const QSizeF & aspectRatio, cons
 		modelPart()->setLocalProp("logo", "");
 		modelPart()->setLocalProp("lastfilename", fileName);
 
-        QSizeF size = m_extraRenderer->defaultSizeF();
+        QSizeF size = fsvgRenderer()->defaultSizeF();
 
         double mmW = GraphicsUtils::pixels2mm(size.width(), FSvgRenderer::printerScale());
         double mmH = GraphicsUtils::pixels2mm(size.height(), FSvgRenderer::printerScale());
@@ -272,7 +272,7 @@ bool LogoItem::reloadImage(const QString & svg, const QSizeF & aspectRatio, cons
 	}
 	else {
 		// restore previous (not sure whether this is necessary)
-		loadExtraRenderer(getShapeForRenderer(prop("shape")).toUtf8(), false);
+		resetRenderer(getShapeForRenderer(prop("shape")));
 		unableToLoad(fileName, tr("due to a rendering error"));
         return false;
 	}
@@ -440,7 +440,7 @@ bool LogoItem::resizeMM(double mmW, double mmH, const LayerHash & viewLayers)
 	svg = TextUtils::removeXMLEntities(domDocument.toString());	
     QString shape = getShapeForRenderer(svg);
 
-	bool result = loadExtraRenderer(shape.toUtf8(), false);
+	bool result = resetRenderer(shape);
 	if (result) {
 		modelPart()->setLocalProp("shape", svg);
 		modelPart()->setLocalProp("width", mmW);
@@ -480,7 +480,7 @@ void LogoItem::setLogo(QString logo, bool force) {
 
 	QSizeF oldSize = m_size;
 	QXmlStreamReader streamReader(svg);
-	QSizeF oldSvgSize = m_extraRenderer ? m_extraRenderer->viewBoxF().size() : QSizeF(0, 0);
+	QSizeF oldSvgSize = fsvgRenderer() ? fsvgRenderer()->viewBoxF().size() : QSizeF(0, 0);
 	
 	DebugDialog::debug(QString("size %1 %2, %3 %4").arg(m_size.width()).arg(m_size.height()).arg(oldSvgSize.width()).arg(oldSvgSize.height()));
 
@@ -493,7 +493,7 @@ void LogoItem::setLogo(QString logo, bool force) {
 	modelPart()->setLocalProp("logo", logo);
 	modelPart()->setLocalProp("shape", svg);
 	if (ok && !force) {
-		QSizeF newSvgSize = m_extraRenderer->viewBoxF().size();
+		QSizeF newSvgSize = fsvgRenderer()->viewBoxF().size();
 		QSizeF newSize = newSvgSize * oldSize.height() / oldSvgSize.height();
 		DebugDialog::debug(QString("size %1 %2, %3 %4").arg(m_size.width()).arg(m_size.height()).arg(newSize.width()).arg(newSize.height()));
 		
@@ -509,9 +509,9 @@ void LogoItem::setLogo(QString logo, bool force) {
 
 bool LogoItem::rerender(const QString & svg)
 {
-	bool result = loadExtraRenderer(svg.toUtf8(), false);
+	bool result = resetRenderer(svg);
 	if (result) {
-		QRectF r = m_extraRenderer->viewBoxF();
+		QRectF r = fsvgRenderer()->viewBoxF();
 		m_aspectRatio.setWidth(r.width());
 		m_aspectRatio.setHeight(r.height());
 	}
@@ -838,12 +838,8 @@ void BoardLogoItem::reloadLayerKin(double mmW, double mmH)
         if (itemBase->viewLayerID() == LogoItem::layer()) {
 		    QString svg = ResizableBoard::getShapeForRenderer(prop("shape"), LogoItem::layer());
 		    if (!svg.isEmpty()) {
-			    if (m_silkscreenRenderer == NULL) {
-				    m_silkscreenRenderer = new FSvgRenderer(itemBase);
-			    }
 			    itemBase->prepareGeometryChange();
-			    if (m_silkscreenRenderer->loadSvgString(svg)) {
-				    qobject_cast<PaletteItemBase *>(itemBase)->setSharedRendererEx(m_silkscreenRenderer);
+			    if (itemBase->resetRenderer(svg)) {
 				    itemBase->modelPart()->setLocalProp("width", mmW);
 				    itemBase->modelPart()->setLocalProp("height", mmH);
 			    }

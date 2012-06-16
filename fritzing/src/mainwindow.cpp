@@ -1141,7 +1141,6 @@ ModelPart *MainWindow::loadPartFromFile(const QString& newPartPath, bool connect
 	} else {
 		ModelPart* mp = m_refModel->addPart(newPartPath, true, true);
 		m_refModel->addPart(mp,true);
-		FSvgRenderer::removeFromHash(mp->moduleID(), newPartPath);
 		return mp;
 	}
 }

@@ -412,16 +412,6 @@ bool PaletteItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::Vie
 	return true;
 }
 
-void PaletteItemBase::setSharedRendererEx(FSvgRenderer * newRenderer) {
-	if (newRenderer != renderer()) {
-		setSharedRenderer(newRenderer);
-	}
-	else {
-		update();
-	}
-	m_size = newRenderer->defaultSizeF();
-}
-
 void PaletteItemBase::setUpConnectors(FSvgRenderer * renderer, bool ignoreTerminalPoints) {
 	clearConnectorItemCache();
 
@@ -771,3 +761,4 @@ void PaletteItemBase::setPos(double x, double y) {
 
 
 */
+

@@ -65,6 +65,7 @@ protected:
 	void unableToLoad(const QString & fileName, const QString & reason);
 	bool canLoad(const QString & fileName, const QString & reason);
 	virtual void prepLoadImageAux(const QString & fileName, bool addName);
+    ViewIdentifierClass::ViewIdentifier useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier, bool swappingEnabled);
 
 public:
 	static QString OneLayerTranslated;
@@ -158,7 +159,6 @@ protected:
 	static const double CornerHandleSize;
 
 	Corner m_corner;
-	class FSvgRenderer * m_silkscreenRenderer;
 	QSizeF m_boardSize;
 	QPointF m_boardPos;
 	QPointer<QLineEdit> m_widthEditor;

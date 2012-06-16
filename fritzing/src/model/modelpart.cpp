@@ -189,6 +189,14 @@ ItemBase * ModelPart::viewItem(QGraphicsScene * scene) {
 	return NULL;
 }
 
+ItemBase * ModelPart::viewItem(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+	foreach (ItemBase * itemBase, m_viewItems) {
+		if (itemBase->viewIdentifier() == viewIdentifier) return itemBase;
+	}
+
+	return NULL;
+}
+
 void ModelPart::saveInstances(const QString & fileName, QXmlStreamWriter & streamWriter, bool startDocument) {
 	if (startDocument) {
 		streamWriter.writeStartDocument();
