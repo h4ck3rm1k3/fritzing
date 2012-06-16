@@ -77,9 +77,6 @@ PartsEditorPaletteItem::~PartsEditorPaletteItem()
 	if (m_shouldDeletePath && m_svgStrings) {
 		delete m_svgStrings;
 	}
-	if (this->renderer()) {
-		delete this->renderer();
-	}
 }
 
 void PartsEditorPaletteItem::createSvgFile(QString path) {
