@@ -378,10 +378,15 @@ void PaletteItemBase::collectWireConnectees(QSet<Wire *> & wires) {
 		}
 	}
 }
-
 bool PaletteItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors, LayerAttributes & layerAttributes, QString & error)
 {
-	FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, viewIdentifier, viewLayerID, viewLayerSpec, layerAttributes, error);
+    return setUpImage(modelPart, NULL, viewIdentifier, viewLayers, viewLayerID, viewLayerSpec, doConnectors, layerAttributes, error);
+}
+
+
+bool PaletteItemBase::setUpImage(ModelPart * modelPart, QDomDocument * domDocument, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors, LayerAttributes & layerAttributes, QString & error)
+{
+	FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, domDocument, viewIdentifier, viewLayerID, viewLayerSpec, layerAttributes, error);
 	if (renderer == NULL) {
 		return false;
 	}

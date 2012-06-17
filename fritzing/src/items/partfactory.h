@@ -43,8 +43,8 @@ public:
 	static void cleanup();
 	static class ModelPart * fixObsoleteModuleID(QDomDocument & domDocument, QDomElement & instance, QString & moduleIDRef, class ModelBase * referenceModel);
 	static QString folderPath();
-
-
+	static QString fzpPath();
+	static QString partPath();
 
 protected:
 	static QString getFzpFilenameAux(const QString & moduleID, QString (*getFzp)(const QString &));

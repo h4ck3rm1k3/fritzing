@@ -58,6 +58,7 @@ struct HoleSettings
 	RangeCalc holeDiameterRange;
 
 	QString currentUnits();
+    QString holeSize();
 };
 
 class PaletteItem : public PaletteItemBase 
@@ -96,8 +97,8 @@ public:
 	ItemBase * lowerConnectorLayerVisible(ItemBase *);
 	void resetID();
 	void slamZ(double z);
-	void resetImage(class InfoGraphicsView *);
-	void resetKinImage(ItemBase * layerKin, InfoGraphicsView * infoGraphicsView);
+	void resetImage(class InfoGraphicsView *, QDomDocument *);
+	void resetKinImage(ItemBase * layerKin, InfoGraphicsView * infoGraphicsView, QDomDocument *);
 	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
 	virtual bool changePinLabels(bool singleRow, bool sip);
 	QStringList getPinLabels(bool & hasLocal);
@@ -115,6 +116,7 @@ public:
 	static void updateEditTexts(HoleSettings &);
 	static void updateSizes(HoleSettings &);
     static void initHoleSettings(HoleSettings & holeSettings, QHash<QString, QString> * holeSizes, RangeCalc holeDiameterRange,  RangeCalc ringThicknessRange);
+	static bool setHoleSize(QString & holeSize, bool force, HoleSettings & holeSettings);
 
 
 signals:
@@ -134,6 +136,7 @@ protected:
 
 protected:
 	static void setUpHoleSizes(QString & holeSize, QString & ringThickness, const QString & attribute, QHash<QString, QString> & holeSizes);
+	static QStringList getSizes(QString & holeSize, HoleSettings &);
 
 protected:
  	QList<class ItemBase *> m_layerKin;

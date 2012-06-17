@@ -159,7 +159,7 @@ void Resistor::setResistance(QString resistance, QString pinSpacing, bool force)
 
 					element.setAttribute("image", filename);
 					m_changingPinSpacing = true;
-					resetImage(infoGraphicsView);
+					resetImage(infoGraphicsView, NULL);
 					m_changingPinSpacing = false;
 
 					updateConnections();

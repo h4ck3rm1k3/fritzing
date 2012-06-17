@@ -273,7 +273,7 @@ QString PartFactory::getSvgFilenameAux(const QString & expectedFileName, QString
 	QString path = FolderUtils::getApplicationSubFolderPath("parts") + "/"+ ItemBase::SvgFilesDir + "/core/";
 	if (QFileInfo(path + expectedFileName).exists()) return expectedFileName;
 
-	path = PartFactoryFolderPath + "/svg/core/" + expectedFileName;
+	path = partPath() + expectedFileName;
 	QFile file(path);
 	if (file.exists()) {
 		return path;
@@ -293,7 +293,7 @@ QString PartFactory::getSvgFilenameAux(const QString & expectedFileName, QString
 
 QString PartFactory::getFzpFilenameAux(const QString & moduleID, QString (*getFzp)(const QString &))
 {
-	QString path = PartFactoryFolderPath + "/core/" + moduleID + FritzingPartExtension;
+	QString path = fzpPath() + moduleID + FritzingPartExtension;
 	QFile file(path);
 	if (file.exists()) {
 		return path;
@@ -314,6 +314,10 @@ QString PartFactory::getFzpFilenameAux(const QString & moduleID, QString (*getFz
 
 QString PartFactory::getFzpFilename(const QString & moduleID) 
 {
+    QString filename = fzpPath() + moduleID + ".fzp";
+    QFileInfo info(filename);
+    if (info.exists()) return filename;
+
 	if (moduleID.endsWith(ModuleIDNames::PerfboardModuleIDName)) {
 		return getFzpFilenameAux(moduleID, &Perfboard::genFZP);
 	}
@@ -410,4 +414,13 @@ ModelPart * PartFactory::fixObsoleteModuleID(QDomDocument & domDocument, QDomEle
 
 QString PartFactory::folderPath() {
 	return PartFactoryFolderPath;
+}
+
+QString PartFactory::fzpPath() {
+    return PartFactoryFolderPath + "/core/";
+}
+
+
+QString PartFactory::partPath() {
+    return PartFactoryFolderPath + "/svg/core/";
 }

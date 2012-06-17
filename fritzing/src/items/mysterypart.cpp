@@ -111,7 +111,7 @@ void MysteryPart::setSpacing(QString spacing, bool force) {
 				element.setAttribute("image", filename);
 
 				m_changingSpacing = true;
-				resetImage(infoGraphicsView);
+				resetImage(infoGraphicsView, NULL);
 				m_changingSpacing = false;
 
 				if (m_viewIdentifier == ViewIdentifierClass::BreadboardView) {

@@ -1232,11 +1232,6 @@ void ItemBase::saveLocAndTransform(QXmlStreamWriter & streamWriter)
 
 FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, LayerAttributes & layerAttributes, QString & error)
 {
-#ifndef QT_NO_DEBUG
-	QTime t;
-	t.start();
-#endif
-
     ModelPartShared * modelPartShared = modelPart->modelPartShared();
 
 	if (modelPartShared == NULL) {
@@ -1248,7 +1243,33 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 		return NULL;
 	}
 
-	bool result = layerAttributes.getSvgElementID(modelPartShared->domDocument(), viewIdentifier, viewLayerID);
+    return setUpImage(modelPart, NULL, viewIdentifier, viewLayerID, viewLayerSpec, layerAttributes, error);
+
+}
+
+FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, QDomDocument * domDocument, ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, LayerAttributes & layerAttributes, QString & error)
+{
+#ifndef QT_NO_DEBUG
+	QTime t;
+	t.start();
+#endif
+
+    ModelPartShared * modelPartShared = modelPart->modelPartShared();
+
+	if (modelPartShared == NULL) {
+		error = tr("model part problem");
+		return NULL;
+	}
+
+    if (domDocument == NULL) {
+        domDocument = modelPart->domDocument();
+        if (domDocument == NULL) {
+            error = tr("dom document problem");
+		    return NULL;
+        }
+    }
+
+	bool result = layerAttributes.getSvgElementID(domDocument, viewIdentifier, viewLayerID);
 	if (!result) {
 		error = tr("missing xml for view %1 layer %2").arg(viewIdentifier).arg(viewLayerID);
 		return NULL;

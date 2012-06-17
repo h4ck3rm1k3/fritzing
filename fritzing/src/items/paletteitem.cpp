@@ -33,6 +33,7 @@ $Date$
 #include "partlabel.h"
 #include "../commands.h"
 #include "../connectors/connectoritem.h"
+#include "../connectors/connector.h"
 #include "../connectors/svgidlayer.h"
 #include "../layerattributes.h"
 #include "../dialogs/pinlabeldialog.h"
@@ -52,6 +53,17 @@ $Date$
 #include <QGroupBox>
 #include <QLabel>
 #include <limits>
+
+/////////////////////////////////////////////////
+
+QString HoleSettings::currentUnits() {
+	if (mmRadioButton->isChecked()) return QObject::tr("mm");
+	return QObject::tr("in");
+}
+
+QString HoleSettings::holeSize() {
+	return QString("%1,%2").arg(holeDiameter).arg(ringThickness);
+}
 
 /////////////////////////////////////////////////
 
@@ -483,28 +495,28 @@ void PaletteItem::slamZ(double z) {
 	}
 }
 
-void PaletteItem::resetImage(InfoGraphicsView * infoGraphicsView) {
+void PaletteItem::resetImage(InfoGraphicsView * infoGraphicsView, QDomDocument * domDocument) {
 	foreach (Connector * connector, modelPart()->connectors()) {
 		connector->unprocess(this->viewIdentifier(), this->viewLayerID());
 	}
 
 	QString error;
 	LayerAttributes layerAttributes;
-	this->setUpImage(modelPart(), this->viewIdentifier(), infoGraphicsView->viewLayers(), this->viewLayerID(), this->viewLayerSpec(), true, layerAttributes, error);
+	this->setUpImage(modelPart(), domDocument, this->viewIdentifier(), infoGraphicsView->viewLayers(), this->viewLayerID(), this->viewLayerSpec(), true, layerAttributes, error);
 	
 	foreach (ItemBase * layerKin, m_layerKin) {
-		resetKinImage(layerKin, infoGraphicsView);
+		resetKinImage(layerKin, infoGraphicsView, domDocument);
 	}
 }
 
-void PaletteItem::resetKinImage(ItemBase * layerKin, InfoGraphicsView * infoGraphicsView) 
+void PaletteItem::resetKinImage(ItemBase * layerKin, InfoGraphicsView * infoGraphicsView, QDomDocument * domDocument) 
 {
 	foreach (Connector * connector, modelPart()->connectors()) {
 		connector->unprocess(layerKin->viewIdentifier(), layerKin->viewLayerID());
 	}
 	QString error;
 	LayerAttributes layerAttributes;
-	qobject_cast<PaletteItemBase *>(layerKin)->setUpImage(modelPart(), layerKin->viewIdentifier(), infoGraphicsView->viewLayers(), layerKin->viewLayerID(), layerKin->viewLayerSpec(), true, layerAttributes, error);
+	qobject_cast<PaletteItemBase *>(layerKin)->setUpImage(modelPart(), domDocument, layerKin->viewIdentifier(), infoGraphicsView->viewLayers(), layerKin->viewLayerID(), layerKin->viewLayerSpec(), true, layerAttributes, error);
 }
 
 QString PaletteItem::genFZP(const QString & moduleid, const QString & templateName, int minPins, int maxPins, int steps, bool smd)
@@ -994,4 +1006,37 @@ void PaletteItem::initHoleSettings(HoleSettings & holeSettings, QHash<QString, Q
 	holeSettings.sizesComboBox = NULL;
 	holeSettings.holeDiameterRange = holeDiameterRange;
 	holeSettings.ringThicknessRange = ringThicknessRange;
+}
+
+
+bool PaletteItem::setHoleSize(QString & holeSize, bool force, HoleSettings & holeSettings)
+{
+	QStringList sizes = getSizes(holeSize, holeSettings);
+	if (sizes.count() < 2) return false;
+
+	if (!force && (holeSettings.holeDiameter.compare(sizes.at(0)) == 0) && (holeSettings.ringThickness.compare(sizes.at(1)) == 0)) 
+	{
+		return false;
+	}
+
+	holeSettings.holeDiameter = sizes.at(0);
+	holeSettings.ringThickness = sizes.at(1);
+	updateEditTexts(holeSettings);
+	updateValidators(holeSettings);
+	updateSizes(holeSettings);
+	return true;
+}
+
+QStringList PaletteItem::getSizes(QString & holeSize, HoleSettings & holeSettings)
+{
+	QStringList sizes;
+	QString hashedHoleSize = holeSettings.holeSizes->value(holeSize);
+	if (hashedHoleSize.isEmpty()) {
+		sizes = holeSize.split(",");
+	}
+	else {
+		sizes = hashedHoleSize.split(",");
+		holeSize = sizes[0] + "," + sizes[1];
+	}
+	return sizes;
 }

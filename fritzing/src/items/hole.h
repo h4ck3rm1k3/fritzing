@@ -67,8 +67,6 @@ public:
 	static QPointF holeDiameterRange(const QString & ringThickness);
 	static bool changeDiameter(HoleSettings & holeSettings, QObject * sender);
 	static bool changeThickness(HoleSettings & holeSettings, QObject * sender);
-	static bool setHoleSize(QString & holeSize, bool force, HoleSettings & holeSettings);
-	static QString holeSize(HoleSettings &);
 	static void initHoleSettings(HoleSettings & holeSettings);
 
 protected slots:
@@ -85,7 +83,6 @@ protected:
 	void setUpHoleSizes();
 	virtual void setBoth(const QString & holeDiameter, const QString &  thickness);
 	QString currentUnits();
-	static QStringList getSizes(QString & holeSize);
 	QRectF getRect(const QString & newSize);
     ViewIdentifierClass::ViewIdentifier useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier, bool swappingEnabled);
 

@@ -113,9 +113,7 @@ void PrefsDialog::initGeneral(QWidget * widget, QFileInfoList & list)
 	vLayout->addWidget(createZoomerForm());
 	vLayout->addWidget(createAutosaveForm());
 
-#ifndef QT_NO_DEBUG
 	vLayout->addWidget(createOtherForm());
-#endif
 
 	widget->setLayout(vLayout);
 }
@@ -274,15 +272,18 @@ QWidget* PrefsDialog::createColorForm()
 
 QWidget* PrefsDialog::createOtherForm() 
 {
-	QGroupBox * formGroupBox = new QGroupBox(tr("Debug"));
+	QGroupBox * formGroupBox = new QGroupBox(tr("Clear Settings"));
     QFormLayout *layout = new QFormLayout();
 
 	QLabel * clearLabel = new QLabel(this);
 	clearLabel->setFixedWidth(195);
 	clearLabel->setWordWrap(true);
-	clearLabel->setText(QObject::tr("Clear all saved settings and close this dialog (debug mode only)."));	
+	clearLabel->setText(QObject::tr("Clear all saved settings and close this dialog immediately.\n\n") +
+                        QObject::tr("This action does not delete any files; it restores settings to their default values.\n\n") +
+                        QObject::tr("There is no undo for this action, and no further warning!!!!")
+                        );	
 
-	QPushButton * clear = new QPushButton(QObject::tr("Clear"), this);
+	QPushButton * clear = new QPushButton(QObject::tr("Clear Settings"), this);
 	clear->setMaximumWidth(220);
 	connect(clear, SIGNAL(clicked()), this, SLOT(clear()));
 

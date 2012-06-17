@@ -236,7 +236,7 @@ void AutorouterSettingsDialog::widthEntry(const QString & text) {
 
 void AutorouterSettingsDialog::changeHoleSize(const QString & newSize) {
 	QString s = newSize;
-	Hole::setHoleSize(s, false, m_holeSettings);
+	PaletteItem::setHoleSize(s, false, m_holeSettings);
 }
 
 void AutorouterSettingsDialog::changeUnits(bool) 

@@ -321,7 +321,7 @@ void Perfboard::changeBoardSize()
 
     InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
     if (infoGraphicsView != NULL) {
-        infoGraphicsView->swap(modelPart()->properties().value("family"), "size", m_propsMap, this);
+        infoGraphicsView->swap(family(), "size", m_propsMap, this);
     }
 }
 

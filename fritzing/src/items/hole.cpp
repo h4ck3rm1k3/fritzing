@@ -54,12 +54,6 @@ const QString Hole::AutorouteViaRingThickness = "autorouteViaRingThickness";
 QString Hole::DefaultAutorouteViaHoleSize;
 QString Hole::DefaultAutorouteViaRingThickness;
 
-
-QString HoleSettings::currentUnits() {
-	if (mmRadioButton->isChecked()) return QObject::tr("mm");
-	return QObject::tr("in");
-}
-
 //////////////////////////////////////////////////
 
 Hole::Hole( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
@@ -126,12 +120,9 @@ void Hole::setProp(const QString & prop, const QString & value) {
 }
 
 QString Hole::holeSize() {
-	return holeSize(m_holeSettings);
+	return m_holeSettings.holeSize();
 }
 
-QString Hole::holeSize(HoleSettings & holeSettings) {
-	return QString("%1,%2").arg(holeSettings.holeDiameter).arg(holeSettings.ringThickness);
-}
 
 void Hole::setHoleSize(QString newSize, bool force) {
 	//DebugDialog::debug(QString("old holesize %1").arg(viewIdentifier()) + holeSize(), sceneBoundingRect());
@@ -139,7 +130,7 @@ void Hole::setHoleSize(QString newSize, bool force) {
 	//	DebugDialog::debug(QString("   child"), childItem->sceneBoundingRect());
 	//}
 
-	if (setHoleSize(newSize, force, m_holeSettings)) {
+	if (PaletteItem::setHoleSize(newSize, force, m_holeSettings)) {
 		setBoth(m_holeSettings.holeDiameter, m_holeSettings.ringThickness);
 		modelPart()->setLocalProp("hole size", newSize);
 
@@ -151,27 +142,9 @@ void Hole::setHoleSize(QString newSize, bool force) {
 	//}
 }
 
-bool Hole::setHoleSize(QString & holeSize, bool force, HoleSettings & holeSettings)
-{
-	QStringList sizes = getSizes(holeSize);
-	if (sizes.count() < 2) return false;
-
-	if (!force && (holeSettings.holeDiameter.compare(sizes.at(0)) == 0) && (holeSettings.ringThickness.compare(sizes.at(1)) == 0)) 
-	{
-		return false;
-	}
-
-	holeSettings.holeDiameter = sizes.at(0);
-	holeSettings.ringThickness = sizes.at(1);
-	updateEditTexts(holeSettings);
-	updateValidators(holeSettings);
-	updateSizes(holeSettings);
-	return true;
-}
-
 QRectF Hole::getRect(const QString & newSize) {
 	QString s = newSize;
-	QStringList sizes = getSizes(s);
+	QStringList sizes = getSizes(s, m_holeSettings);
 	if (sizes.count() < 2) return boundingRect();
 
 	double diameter = TextUtils::convertToInches(sizes.at(0));
@@ -179,20 +152,6 @@ QRectF Hole::getRect(const QString & newSize) {
 	double dim = (diameter + ringThickness + ringThickness) * FSvgRenderer::printerScale();
 	//DebugDialog::debug(QString("get rect %1 %2").arg(newSize).arg(dim));
 	return QRectF(0, 0, dim, dim);
-}
-
-QStringList Hole::getSizes(QString & holeSize)
-{
-	QStringList sizes;
-	QString hashedHoleSize = HoleSizes.value(holeSize);
-	if (hashedHoleSize.isEmpty()) {
-		sizes = holeSize.split(",");
-	}
-	else {
-		sizes = hashedHoleSize.split(",");
-		holeSize = sizes[0] + "," + sizes[1];
-	}
-	return sizes;
 }
 
 void Hole::setBoth(const QString & holeDiameter, const QString & ringThickness) {
@@ -319,7 +278,7 @@ QString Hole::getProperty(const QString & key) {
 void Hole::addedToScene(bool temporary)
 {
 	if (this->scene()) {
-		setHoleSize(holeSize(m_holeSettings), true);
+		setHoleSize(m_holeSettings.holeSize(), true);
 	}
 
     return PaletteItem::addedToScene(temporary);
