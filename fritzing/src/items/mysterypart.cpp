@@ -397,7 +397,7 @@ QString MysteryPart::genModuleID(QMap<QString, QString> & currPropsMap)
 	}
 }
 
-QString MysteryPart::makeSchematicSvg(const QString & expectedFileName) 
+QString MysteryPart::makeSchematicSvg(const QString & expectedFileName, const QString & moduleID) 
 {
 	bool sip = expectedFileName.contains("sip", Qt::CaseInsensitive);
 
@@ -499,15 +499,15 @@ QString MysteryPart::makeSchematicSvg(const QStringList & labels, bool sip)
 	return svg;
 }
 
-QString MysteryPart::makeBreadboardSvg(const QString & expectedFileName) 
+QString MysteryPart::makeBreadboardSvg(const QString & expectedFileName, const QString & moduleID) 
 {
-	if (expectedFileName.contains("_sip_")) return makeBreadboardSipSvg(expectedFileName);
-	if (expectedFileName.contains("_dip_")) return makeBreadboardDipSvg(expectedFileName);
+	if (expectedFileName.contains("_sip_")) return makeBreadboardSipSvg(expectedFileName, moduleID);
+	if (expectedFileName.contains("_dip_")) return makeBreadboardDipSvg(expectedFileName, moduleID);
 
 	return "";
 }
 
-QString MysteryPart::makeBreadboardDipSvg(const QString & expectedFileName) 
+QString MysteryPart::makeBreadboardDipSvg(const QString & expectedFileName, const QString & moduleID) 
 {
 	QStringList pieces = expectedFileName.split("_");
 	if (pieces.count() != 6) return "";
@@ -570,7 +570,7 @@ QString MysteryPart::makeBreadboardDipSvg(const QString & expectedFileName)
 	return svg.arg(TextUtils::getViewBoxCoord(svg, 2) / 100).arg(repeatTs).arg(repeatBs);
 }
 
-QString MysteryPart::makeBreadboardSipSvg(const QString & expectedFileName) 
+QString MysteryPart::makeBreadboardSipSvg(const QString & expectedFileName, const QString & moduleID) 
 {
 	QStringList pieces = expectedFileName.split("_");
 	if (pieces.count() != 6) return "";

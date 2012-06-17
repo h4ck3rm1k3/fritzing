@@ -46,6 +46,7 @@ $Date$
 
 
 static QRegExp ConnectorFinder("connector\\d+pin");
+static const QString HoleSizePrefix("_hs_");
 
 static QStringList Forms;
 
@@ -205,30 +206,35 @@ ItemBase::PluralType PinHeader::isPlural() {
 	return Plural;
 }
 
-QString PinHeader::genFZP(const QString & moduleid)
+QString PinHeader::genFZP(const QString & moduleID)
 {
 	initSpacings();
-	QStringList pieces = moduleid.split("_");
+
+    QString useModuleID = moduleID;
+    int hsix = useModuleID.lastIndexOf(HoleSizePrefix);
+    if (hsix >= 0) useModuleID.truncate(hsix);
+
+	QStringList pieces = useModuleID.split("_");
 	if (pieces.count() < 6 || pieces.count() > 9) return "";
 
 	QString spacing = pieces.at(pieces.count() - 1);
 
-	QString result = PaletteItem::genFZP(moduleid, "generic_female_pin_header_fzpTemplate", MinPins, MaxPins, 1, moduleid.contains("smd")); 
+	QString result = PaletteItem::genFZP(useModuleID, "generic_female_pin_header_fzpTemplate", MinPins, MaxPins, 1, useModuleID.contains("smd")); 
 	result.replace(".percent.", "%");
 	QString form = MaleFormString;
 	QString formBread = "male";
 	QString formText = formBread;
 	QString formSchematic = formBread;
 	QString formModule = formBread;
-	if (moduleid.contains("rounded")) {
+	if (useModuleID.contains("rounded")) {
 		form = FemaleRoundedFormString;
 		formModule = formBread = "rounded_female";
 		formText = "rounded female";
 		formSchematic = "female";
 	}
-	else if (moduleid.contains("female")) {
-		if (moduleid.contains("smd")) {
-			if (moduleid.contains("single")) {
+	else if (useModuleID.contains("female")) {
+		if (useModuleID.contains("smd")) {
+			if (useModuleID.contains("single")) {
 				form = FemaleSingleRowSMDFormString;
 				formText = "single row SMD female";
 				formModule = "single_row_smd_female";
@@ -245,12 +251,12 @@ QString PinHeader::genFZP(const QString & moduleid)
 		}
 		formBread = formSchematic = "female";
 	}
-	else if (moduleid.contains("shrouded")) {
+	else if (useModuleID.contains("shrouded")) {
 		form = ShroudedFormString;
 		formText = formBread = formModule = "shrouded";
 	}
-	else if (moduleid.contains("smd")) {
-		if (moduleid.contains("single")) {
+	else if (useModuleID.contains("smd")) {
+		if (useModuleID.contains("single")) {
 			form = MaleSingleRowSMDFormString;
 			formText = "single row SMD male";
 			formModule = "single_row_smd_male";
@@ -263,15 +269,22 @@ QString PinHeader::genFZP(const QString & moduleid)
 	}
 
 	result = result.arg(Spacings.value(spacing, "")).arg(spacing).arg(form).arg(formBread).arg(formText).arg(formSchematic).arg(formModule); 
-	if (moduleid.contains("smd")) {
-		QString sd = moduleid.contains("single") ? "single" : "double";
+	if (useModuleID.contains("smd")) {
+		QString sd = useModuleID.contains("single") ? "single" : "double";
 		result.replace("nsjumper", QString("smd_%1_row_pin_header").arg(sd));
 		result.replace("jumper", QString("smd_%1_row_pin_header").arg(sd));
 	}
-	else if (moduleid.contains("shrouded")) {
+	else if (useModuleID.contains("shrouded")) {
 		result.replace("nsjumper", "shrouded");
 		result.replace("jumper", "shrouded");
 	}
+
+    if (hsix >= 0) {
+        QDomDocument document;
+        document.setContent(result);
+        QStringList strings = moduleID.mid(hsix).split("_");
+        result = hackFzp(document, moduleID, "pcb/" + moduleID + ".svg", strings.at(2) + "," + strings.at(3));     
+    }
 
 	return result;
 }
@@ -335,71 +348,107 @@ QString PinHeader::genModuleID(QMap<QString, QString> & currPropsMap)
 	return "";
 }
 
-QString PinHeader::makePcbSvg(const QString & expectedFileName) 
+QString PinHeader::makePcbSvg(const QString & originalExpectedFileName, const QString & moduleID) 
 {
+    QString expectedFileName = originalExpectedFileName;
+    int hsix = expectedFileName.indexOf(HoleSizePrefix);
+    if (hsix >= 0) {
+        expectedFileName.truncate(hsix);
+    }
 	initSpacings();
 
 	if (expectedFileName.contains("smd")) {
-		return makePcbSMDSvg(expectedFileName);
+		return makePcbSMDSvg(expectedFileName, moduleID);
 	}
 
 	QStringList pieces = expectedFileName.split("_");
-	if (pieces.count() != 4) return "";
+    int pix = 0;
+    foreach (QString piece, pieces) {
+        bool ok;
+        piece.toInt(&ok);
+        if (ok) break;
 
-	int pins = pieces.at(1).toInt();
-	QString spacingString = pieces.at(2);
+        pix++;
+    }
+    if (pix >= pieces.count()) return "";
+
+	int pins = pieces.at(pix).toInt();
+	QString spacingString = pieces.at(pix + 1);
+
+    QString svg;
 
 	if (expectedFileName.contains("shrouded")) {
-		return makePcbShroudedSvg(pins);
+		svg = makePcbShroudedSvg(pins);
 	}
+    else {
+	    static QString pcbLayerTemplate = "";
 
-	static QString pcbLayerTemplate = "";
+	    QFile file(":/resources/templates/jumper_pcb_svg_template.txt");
+	    file.open(QFile::ReadOnly);
+	    pcbLayerTemplate = file.readAll();
+	    file.close();
 
-	QFile file(":/resources/templates/jumper_pcb_svg_template.txt");
-	file.open(QFile::ReadOnly);
-	pcbLayerTemplate = file.readAll();
-	file.close();
+	    double outerBorder = 15;
+	    double innerBorder = outerBorder / 2;
+	    double silkStrokeWidth = 10;
+	    double standardRadius = 27.5;
+        double radius = 29;
+	    double copperStrokeWidth = 20;
+	    double totalWidth = (outerBorder * 2) + (silkStrokeWidth * 2) + (innerBorder * 2) + (standardRadius * 2) + copperStrokeWidth;
+	    double center = totalWidth / 2;
+	    double spacing = TextUtils::convertToInches(spacingString) * GraphicsUtils::StandardFritzingDPI; 
 
-	double outerBorder = 15;
-	double innerBorder = outerBorder / 2;
-	double silkStrokeWidth = 10;
-	double standardRadius = 27.5;
-    double radius = 29;
-	double copperStrokeWidth = 20;
-	double totalWidth = (outerBorder * 2) + (silkStrokeWidth * 2) + (innerBorder * 2) + (standardRadius * 2) + copperStrokeWidth;
-	double center = totalWidth / 2;
-	double spacing = TextUtils::convertToInches(spacingString) * GraphicsUtils::StandardFritzingDPI; 
+	    QString middle;
 
-	QString middle;
+        bool addSquare = false;
+        if (expectedFileName.contains("nsjumper")) {
+        }
+        else if (expectedFileName.contains("jumper")) {
+            addSquare = true;
+        }
+        else {
+            DebugDialog::debug(QString("square: expected filename is confusing %1 %2").arg(expectedFileName).arg(moduleID));
+        }
 
-	if (!expectedFileName.contains("nsjumper")) {
-		middle += QString( "<rect fill='none' height='%1' width='%1' stroke='rgb(255, 191, 0)' stroke-width='%2' x='%3' y='%3'/>\n")
-					.arg(radius * 2)
-					.arg(copperStrokeWidth)
-					.arg(center - radius);
-	}
-	for (int i = 0; i < pins; i++) {
-		middle += QString("<circle cx='%1' cy='%2' fill='none' id='connector%3pin' r='%4' stroke='rgb(255, 191, 0)' stroke-width='%5'/>\n")
-					.arg(center)
-					.arg(center + (i * spacing)) 
-					.arg(i)
-					.arg(radius)
-					.arg(copperStrokeWidth);
-	}
+	    if (addSquare) {
+		    middle += QString( "<rect fill='none' height='%1' width='%1' stroke='rgb(255, 191, 0)' stroke-width='%2' x='%3' y='%3'/>\n")
+					    .arg(radius * 2)
+					    .arg(copperStrokeWidth)
+					    .arg(center - radius);
+	    }
+	    for (int i = 0; i < pins; i++) {
+		    middle += QString("<circle cx='%1' cy='%2' fill='none' id='connector%3pin' r='%4' stroke='rgb(255, 191, 0)' stroke-width='%5'/>\n")
+					    .arg(center)
+					    .arg(center + (i * spacing)) 
+					    .arg(i)
+					    .arg(radius)
+					    .arg(copperStrokeWidth);
+	    }
 
-	double totalHeight = totalWidth + (pins * spacing) - spacing;
+	    double totalHeight = totalWidth + (pins * spacing) - spacing;
 
-	QString svg = pcbLayerTemplate
-					.arg(totalWidth / GraphicsUtils::StandardFritzingDPI)
-					.arg(totalHeight / GraphicsUtils::StandardFritzingDPI)
-					.arg(totalWidth)
-					.arg(totalHeight)
-					.arg(totalWidth - outerBorder - (silkStrokeWidth / 2))
-					.arg(totalHeight - outerBorder - (silkStrokeWidth / 2))
-					.arg(totalWidth - outerBorder - (silkStrokeWidth / 2))
-					.arg(silkStrokeWidth)
-					.arg(silkStrokeWidth / 2)
-					.arg(middle);
+	    svg = pcbLayerTemplate
+					    .arg(totalWidth / GraphicsUtils::StandardFritzingDPI)
+					    .arg(totalHeight / GraphicsUtils::StandardFritzingDPI)
+					    .arg(totalWidth)
+					    .arg(totalHeight)
+					    .arg(totalWidth - outerBorder - (silkStrokeWidth / 2))
+					    .arg(totalHeight - outerBorder - (silkStrokeWidth / 2))
+					    .arg(totalWidth - outerBorder - (silkStrokeWidth / 2))
+					    .arg(silkStrokeWidth)
+					    .arg(silkStrokeWidth / 2)
+					    .arg(middle);
+    }
+
+    if (hsix >= 0) {
+        QDomDocument document;
+        document.setContent(svg);
+        QFileInfo info(originalExpectedFileName);
+        QString baseName = info.completeBaseName();
+        hsix = baseName.indexOf(HoleSizePrefix);
+        QStringList strings = baseName.mid(hsix).split("_");
+        svg = hackSvg(document, strings.at(2), strings.at(3));
+    }
 
 	return svg;
 }
@@ -412,8 +461,9 @@ void PinHeader::initSpacings() {
 	}
 }
 
-QString PinHeader::makeSchematicSvg(const QString & expectedFileName) 
+QString PinHeader::makeSchematicSvg(const QString & expectedFileName, const QString & moduleID) 
 {
+    Q_UNUSED(moduleID);
 	QStringList pieces = expectedFileName.split("_");
 	if (pieces.count() < 7) return "";
 
@@ -440,8 +490,9 @@ QString PinHeader::makeSchematicSvg(const QString & expectedFileName)
 	return svg;
 }
 
-QString PinHeader::makeBreadboardSvg(const QString & expectedFileName) 
+QString PinHeader::makeBreadboardSvg(const QString & expectedFileName, const QString & moduleID) 
 {
+    Q_UNUSED(moduleID);
 	QStringList pieces = expectedFileName.split("_");
 	if (pieces.count() < 7) return "";
 
@@ -606,8 +657,9 @@ QString PinHeader::makePcbShroudedSvg(int pins)
 	return svg.arg(TextUtils::getViewBoxCoord(svg, 3) / 10000.0).arg(repeatLs).arg(repeatRs);
 }
 
-QString PinHeader::makePcbSMDSvg(const QString & expectedFileName) 
+QString PinHeader::makePcbSMDSvg(const QString & expectedFileName, const QString & moduleID) 
 {
+    Q_UNUSED(moduleID);
 	QStringList pieces = expectedFileName.split("_");
 	if (pieces.count() != 8) return "";
 
@@ -751,6 +803,11 @@ void PinHeader::changeHoleSize(const QString & newSize) {
 
 QString PinHeader::hackFzp(const QString & newModuleID, const QString & pcbFilename, const QString & newSize) {
     QDomDocument document = modelPart()->domDocument()->cloneNode(true).toDocument();
+    return hackFzp(document, newModuleID, pcbFilename, newSize);
+}
+
+QString PinHeader::hackFzp(QDomDocument & document, const QString & newModuleID, const QString & pcbFilename, const QString & newSize) 
+{
     QDomElement root = document.documentElement();
     root.setAttribute("moduleId", newModuleID);
 
@@ -783,11 +840,6 @@ QString PinHeader::hackFzp(const QString & newModuleID, const QString & pcbFilen
 
 
 QString PinHeader::hackSvg(const QString & holeDiameter, const QString & ringThickness) {
-
-    double rt = TextUtils::convertToInches(ringThickness) * GraphicsUtils::StandardFritzingDPI;
-    double hs = TextUtils::convertToInches(holeDiameter) * GraphicsUtils::StandardFritzingDPI;
-    double rad = (hs + rt) / 2;
-
     QFile file(filename());
     QString errorStr;
     int errorLine;
@@ -798,6 +850,15 @@ QString PinHeader::hackSvg(const QString & holeDiameter, const QString & ringThi
 		DebugDialog::debug(QString("unable to parse pinheader pcb svg xml: %1 %2 %3").arg(errorStr).arg(errorLine).arg(errorColumn));
 		return "";
 	}
+
+    return hackSvg(domDocument, holeDiameter, ringThickness);
+}
+
+QString PinHeader::hackSvg(QDomDocument & domDocument, const QString & holeDiameter, const QString & ringThickness) {
+
+    double rt = TextUtils::convertToInches(ringThickness) * GraphicsUtils::StandardFritzingDPI;
+    double hs = TextUtils::convertToInches(holeDiameter) * GraphicsUtils::StandardFritzingDPI;
+    double rad = (hs + rt) / 2;
 
     QDomElement root = domDocument.documentElement();
 
@@ -818,10 +879,10 @@ QString PinHeader::appendHoleSize(const QString & filename, const QString & hole
 {
     QFileInfo info(filename);
     QString baseName = info.completeBaseName();
-    int ix = baseName.lastIndexOf("_hs_");
+    int ix = baseName.lastIndexOf(HoleSizePrefix);
     if (ix >= 0) {
         baseName.truncate(ix);
     }
 
-    return baseName + QString("_hs_%1_%2").arg(holeSize).arg(ringThickness);
+    return baseName + QString("%1%2_%3").arg(HoleSizePrefix).arg(holeSize).arg(ringThickness);
 }

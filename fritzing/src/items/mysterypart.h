@@ -65,11 +65,11 @@ public:
 	static QString genSipFZP(const QString & moduleid);
 	static QString genDipFZP(const QString & moduleid);
 	static QString genModuleID(QMap<QString, QString> & currPropsMap);
-	static QString makeSchematicSvg(const QString & expectedFileName);
+	static QString makeSchematicSvg(const QString & expectedFileName, const QString & moduleID);
 	static QString makeSchematicSvg(const QStringList & labels, bool sip);
-	static QString makeBreadboardSvg(const QString & expectedFileName);
-	static QString makeBreadboardSipSvg(const QString & expectedFileName);
-	static QString makeBreadboardDipSvg(const QString & expectedFileName);
+	static QString makeBreadboardSvg(const QString & expectedFileName, const QString & moduleID);
+	static QString makeBreadboardSipSvg(const QString & expectedFileName, const QString & moduleID);
+	static QString makeBreadboardDipSvg(const QString & expectedFileName, const QString & moduleID);
 
 protected:
 	QString makeSvg(const QString & chipLabel, bool replace);

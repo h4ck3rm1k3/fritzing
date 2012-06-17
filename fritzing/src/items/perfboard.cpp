@@ -79,7 +79,7 @@ void Perfboard::setProp(const QString & prop, const QString & value)
 	switch (this->m_viewIdentifier) {
 		case ViewIdentifierClass::BreadboardView:
 			if (value.compare(m_size) != 0) {
-				QString svg = makeBreadboardSvg(value);
+				QString svg = makeBreadboardSvg(value, "");
 				reloadRenderer(svg, false);
 				//DebugDialog::debug(svg);
 			}
@@ -95,8 +95,10 @@ void Perfboard::setProp(const QString & prop, const QString & value)
     if (m_partLabel) m_partLabel->displayTextsIf();
 }
 
-QString Perfboard::makeBreadboardSvg(const QString & size) 
+QString Perfboard::makeBreadboardSvg(const QString & size, const QString & moduleID) 
 {
+    Q_UNUSED(moduleID);
+
 	QString BreadboardLayerTemplate = "";
 	QString ConnectorTemplate = "";
 

@@ -73,17 +73,19 @@ public:
 	static void initNames();
 	static QString genFZP(const QString & moduleid);
 	static QString genModuleID(QMap<QString, QString> & currPropsMap);
-	static QString makePcbSvg(const QString & expectedFileName);
+	static QString makePcbSvg(const QString & expectedFileName, const QString & moduleID);
 	static QString makePcbShroudedSvg(int pins);
-	static QString makePcbSMDSvg(const QString & expectedFileName);
-	static QString makeSchematicSvg(const QString & expectedFileName);
-	static QString makeBreadboardSvg(const QString & expectedFileName);
+	static QString makePcbSMDSvg(const QString & expectedFileName, const QString & moduleID);
+	static QString makeSchematicSvg(const QString & expectedFileName, const QString & moduleID);
+	static QString makeBreadboardSvg(const QString & expectedFileName, const QString & moduleID);
 	static QString makeBreadboardShroudedSvg(int pins);
 	static QString findForm(const QString & filename);
 
 protected:
 	static const QStringList & forms();
 	static void initSpacings();
+    static QString hackFzp(QDomDocument & document, const QString & newModuleID, const QString & pcbFilename, const QString & newSize);
+    static QString hackSvg(QDomDocument & domDocument, const QString & holeDiameter, const QString & ringThickness);
 
 protected:
 	QString m_form;

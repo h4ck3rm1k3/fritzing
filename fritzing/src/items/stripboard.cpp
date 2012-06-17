@@ -454,9 +454,9 @@ QString Stripboard::genModuleID(QMap<QString, QString> & currPropsMap)
 	return size + ModuleIDNames::StripboardModuleIDName;
 }
 
-QString Stripboard::makeBreadboardSvg(const QString & size) 
+QString Stripboard::makeBreadboardSvg(const QString & size, const QString & moduleID) 
 {
-	return Perfboard::makeBreadboardSvg(size);
+	return Perfboard::makeBreadboardSvg(size, moduleID);
 }
 
 void Stripboard::initCutting(Stripbit *) 

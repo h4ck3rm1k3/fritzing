@@ -128,7 +128,7 @@ QString Dip::genModuleID(QMap<QString, QString> & currPropsMap)
 	}
 }
 
-QString Dip::makePcbSvg(const QString & expectedFileName) 
+QString Dip::makePcbSvg(const QString & expectedFileName, const QString & moduleID) 
 {
 	QStringList pieces = expectedFileName.split("_");
 	if (pieces.count() != 4) return "";
@@ -193,7 +193,7 @@ QString Dip::retrieveSchematicSvg(QString & svg) {
 	return TextUtils::replaceTextElement(svg, "label", m_chipLabel);
 }
 
-QString Dip::makeSchematicSvg(const QString & expectedFileName) 
+QString Dip::makeSchematicSvg(const QString & expectedFileName, const QString & moduleID) 
 {
 	QStringList pieces = expectedFileName.split("_");
 	if (pieces.count() != 5) return "";
@@ -288,14 +288,14 @@ QString Dip::makeSchematicSvg(const QStringList & labels)
 	return svg;
 }
  
-QString Dip::makeBreadboardSvg(const QString & expectedFileName) 
+QString Dip::makeBreadboardSvg(const QString & expectedFileName, const QString & moduleID) 
 {
-	if (expectedFileName.contains("_sip_")) return makeBreadboardSipSvg(expectedFileName);
-	if (expectedFileName.contains("_dip_")) return makeBreadboardDipSvg(expectedFileName);
+	if (expectedFileName.contains("_sip_")) return makeBreadboardSipSvg(expectedFileName, moduleID);
+	if (expectedFileName.contains("_dip_")) return makeBreadboardDipSvg(expectedFileName, moduleID);
 	return "";
 }
 
-QString Dip::makeBreadboardSipSvg(const QString & expectedFileName) 
+QString Dip::makeBreadboardSipSvg(const QString & expectedFileName, const QString & moduleID) 
 {
 	QStringList pieces = expectedFileName.split("_");
 	if (pieces.count() != 5) return "";
@@ -319,7 +319,7 @@ QString Dip::makeBreadboardSipSvg(const QString & expectedFileName)
 
 }
 
-QString Dip::makeBreadboardDipSvg(const QString & expectedFileName) 
+QString Dip::makeBreadboardDipSvg(const QString & expectedFileName, const QString & moduleID) 
 {
 	QStringList pieces = expectedFileName.split("_");
 	if (pieces.count() != 6) return "";

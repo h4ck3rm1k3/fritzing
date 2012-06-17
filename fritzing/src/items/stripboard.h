@@ -93,7 +93,7 @@ protected:
 
 public:
 	static QString genFZP(const QString & moduleID);
-	static QString makeBreadboardSvg(const QString & size);
+	static QString makeBreadboardSvg(const QString & size, const QString & moduleID);
 	static QString genModuleID(QMap<QString, QString> & currPropsMap);
 
 protected:
