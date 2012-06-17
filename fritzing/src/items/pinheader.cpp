@@ -377,8 +377,10 @@ QString PinHeader::makePcbSvg(const QString & originalExpectedFileName, const QS
 
     QString svg;
 
+    bool shrouded = false;
 	if (expectedFileName.contains("shrouded")) {
 		svg = makePcbShroudedSvg(pins);
+        shrouded = true;
 	}
     else {
 	    static QString pcbLayerTemplate = "";
@@ -447,7 +449,7 @@ QString PinHeader::makePcbSvg(const QString & originalExpectedFileName, const QS
         QString baseName = info.completeBaseName();
         hsix = baseName.indexOf(HoleSizePrefix);
         QStringList strings = baseName.mid(hsix).split("_");
-        svg = hackSvg(document, strings.at(2), strings.at(3));
+        svg = hackSvg(document, strings.at(2), strings.at(3), shrouded);
     }
 
 	return svg;
@@ -763,7 +765,7 @@ void PinHeader::changeHoleSize(const QString & newSize) {
     QStringList sizes = getSizes(holeSize, m_holeSettings);
     if (sizes.count() != 2) return;
 
-    QString svg = hackSvg(sizes.at(0), sizes.at(1));
+    QString svg = hackSvg(sizes.at(0), sizes.at(1), moduleID().contains("shrouded"));
     if (svg.isEmpty()) return;
 
     // figure out the new filename
@@ -839,7 +841,7 @@ QString PinHeader::hackFzp(QDomDocument & document, const QString & newModuleID,
 }
 
 
-QString PinHeader::hackSvg(const QString & holeDiameter, const QString & ringThickness) {
+QString PinHeader::hackSvg(const QString & holeDiameter, const QString & ringThickness, bool shrouded) {
     QFile file(filename());
     QString errorStr;
     int errorLine;
@@ -851,13 +853,18 @@ QString PinHeader::hackSvg(const QString & holeDiameter, const QString & ringThi
 		return "";
 	}
 
-    return hackSvg(domDocument, holeDiameter, ringThickness);
+    return hackSvg(domDocument, holeDiameter, ringThickness, shrouded);
 }
 
-QString PinHeader::hackSvg(QDomDocument & domDocument, const QString & holeDiameter, const QString & ringThickness) {
+QString PinHeader::hackSvg(QDomDocument & domDocument, const QString & holeDiameter, const QString & ringThickness, bool shrouded) {
 
     double rt = TextUtils::convertToInches(ringThickness) * GraphicsUtils::StandardFritzingDPI;
     double hs = TextUtils::convertToInches(holeDiameter) * GraphicsUtils::StandardFritzingDPI;
+    if (shrouded) {
+        // used 10000 dpi for some reason
+        rt *= 10;
+        hs *= 10;
+    }
     double rad = (hs + rt) / 2;
 
     QDomElement root = domDocument.documentElement();

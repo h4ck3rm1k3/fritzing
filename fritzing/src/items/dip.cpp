@@ -130,6 +130,7 @@ QString Dip::genModuleID(QMap<QString, QString> & currPropsMap)
 
 QString Dip::makePcbSvg(const QString & expectedFileName, const QString & moduleID) 
 {
+    Q_UNUSED(moduleID);
 	QStringList pieces = expectedFileName.split("_");
 	if (pieces.count() != 4) return "";
 
@@ -195,6 +196,7 @@ QString Dip::retrieveSchematicSvg(QString & svg) {
 
 QString Dip::makeSchematicSvg(const QString & expectedFileName, const QString & moduleID) 
 {
+    Q_UNUSED(moduleID);
 	QStringList pieces = expectedFileName.split("_");
 	if (pieces.count() != 5) return "";
 
@@ -297,6 +299,7 @@ QString Dip::makeBreadboardSvg(const QString & expectedFileName, const QString &
 
 QString Dip::makeBreadboardSipSvg(const QString & expectedFileName, const QString & moduleID) 
 {
+    Q_UNUSED(moduleID);
 	QStringList pieces = expectedFileName.split("_");
 	if (pieces.count() != 5) return "";
 
@@ -321,6 +324,7 @@ QString Dip::makeBreadboardSipSvg(const QString & expectedFileName, const QStrin
 
 QString Dip::makeBreadboardDipSvg(const QString & expectedFileName, const QString & moduleID) 
 {
+    Q_UNUSED(moduleID);
 	QStringList pieces = expectedFileName.split("_");
 	if (pieces.count() != 6) return "";
 

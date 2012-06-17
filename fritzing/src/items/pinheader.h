@@ -51,7 +51,7 @@ public:
 
 protected:
 	QStringList collectValues(const QString & family, const QString & prop, QString & value);
-    QString hackSvg(const QString & holeDiameter, const QString & ringThickness);
+    QString hackSvg(const QString & holeDiameter, const QString & ringThickness, bool shrouded);
     QString hackFzp(const QString & moduleID, const QString & pcbFilename, const QString & holeSize);
     QString appendHoleSize(const QString & filename, const QString & holeSize, const QString & ringThickness);
 
@@ -85,7 +85,7 @@ protected:
 	static const QStringList & forms();
 	static void initSpacings();
     static QString hackFzp(QDomDocument & document, const QString & newModuleID, const QString & pcbFilename, const QString & newSize);
-    static QString hackSvg(QDomDocument & domDocument, const QString & holeDiameter, const QString & ringThickness);
+    static QString hackSvg(QDomDocument & domDocument, const QString & holeDiameter, const QString & ringThickness, bool shrouded);
 
 protected:
 	QString m_form;
