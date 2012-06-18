@@ -579,13 +579,7 @@ void FApplication::runGedaService() {
 			newfilepath.replace(".fp", ".svg");
 			GedaElement2Svg geda;
 			QString svg = geda.convert(filepath, false);
-			QFile file(newfilepath);
-			if (file.open(QFile::WriteOnly)) {
-				QTextStream stream(&file);
-				stream.setCodec("UTF-8");
-				stream << svg;
-				file.close();
-			}
+            TextUtils::writeUtf8(newfilepath, svg);
 		}
 	}
 	catch (const QString & msg) {
@@ -618,14 +612,8 @@ void FApplication::runKicadFootprintService() {
 
 				QString newFilePath = dir.absoluteFilePath(moduleName + "_" + filename);
 				newFilePath.replace(".mod", ".svg");
-				QFile file(newFilePath);
-				if (file.open(QFile::WriteOnly)) {
-					QTextStream stream(&file);
-					stream.setCodec("UTF-8");
-					stream << svg;
-					file.close();
-				}
-				else {
+
+				if (!TextUtils::writeUtf8(newFilePath, svg)) {
 					DebugDialog::debug("unable to open file " + newFilePath);
 				}
 			}
@@ -663,14 +651,9 @@ void FApplication::runKicadSchematicService() {
 
 				QString newFilePath = dir.absoluteFilePath(defName + "_" + filename);
 				newFilePath.replace(".lib", ".svg");
+                
 				QFile file(newFilePath);
-				if (file.open(QFile::WriteOnly)) {
-					QTextStream stream(&file);
-					stream.setCodec("UTF-8");
-					stream << svg;
-					file.close();
-				}
-				else {
+				if (!TextUtils::writeUtf8(newFilePath, svg)) {
 					DebugDialog::debug("unable to open file " + newFilePath);
 				}
 			}

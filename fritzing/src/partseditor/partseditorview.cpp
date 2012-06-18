@@ -708,7 +708,7 @@ void PartsEditorView::beforeSVGLoading(const QString &filename, bool &canceled) 
 
 	if(fileHasChanged) {
 		file.close();
-		if(!file.open(QIODevice::WriteOnly )) {
+		if(!TextUtils::writeUtf8(filename, fileContent)) {
 			QMessageBox::warning(
 				NULL,
 				tr("Couldn't write into file"),
@@ -721,12 +721,7 @@ void PartsEditorView::beforeSVGLoading(const QString &filename, bool &canceled) 
 				"More information at http://fritzing.org/using-svg-images-new-parts/"
 				)
 			);
-		} else {
-			QTextStream out(&file);
-			out.setCodec("UTF-8");
-			out << fileContent;
-			file.close();
-		}
+		} 
 	}
 
 }
@@ -1233,22 +1228,13 @@ void PartsEditorView::aboutToSave(bool fakeDefaultIfNone) {
 
 				ensureFilePath(tempFile);
 
-				QFile file(tempFile);
-				if(!file.open(QFile::WriteOnly)) {
+				if(!TextUtils::writeUtf8(tempFile, TextUtils::removeXMLEntities(svgDom->toString()))) {
 					/*QMessageBox::information(NULL,"",
 						QString("Couldn't open file for update, after drawing connectors: '%1'")
 							.arg(tempFile)
 					);*/
+                    DebugDialog::debug(QString("Couldn't open file for update, after drawing connectors: '%1'").arg(tempFile));
 				}
-				else {
-					QTextStream out(&file);
-					out.setCodec("UTF-8");
-					out << TextUtils::removeXMLEntities(svgDom->toString());
-
-					file.close();
-					updateModelPart(tempFile);
-				}
-
 			}
 		} else {
 			DebugDialog::debug("updating part view svg file: could not load file "+m_item->flatSvgFilePath());
@@ -1766,15 +1752,9 @@ void PartsEditorView::updatePinsInfo(QList< QPointer<ConnectorShared> > connsSha
 }
 
 QString PartsEditorView::saveSvg(const QString & svg, const QString & newFilePath) {
-	QFile file(newFilePath);
-	if (!file.open(QFile::WriteOnly)) {
-		throw tr("unable to open temp file %1").arg(newFilePath);
-	}
-
-	QTextStream stream(&file);
-	stream.setCodec("UTF-8");
-	stream << svg;
-	file.close();
+    if (!TextUtils::writeUtf8(newFilePath, svg)) {
+        throw tr("unable to open temp file %1").arg(newFilePath);
+    }
 	return newFilePath;
 }
 

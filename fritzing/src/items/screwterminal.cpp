@@ -118,6 +118,7 @@ void ScrewTerminal::initSpacings() {
 
 QString ScrewTerminal::makeBreadboardSvg(const QString & expectedFileName, const QString & moduleID) 
 {
+    Q_UNUSED(moduleID);
 	QStringList pieces = expectedFileName.split("_");
 	if (pieces.count() != 5) return "";
 
@@ -144,6 +145,7 @@ QString ScrewTerminal::makeBreadboardSvg(const QString & expectedFileName, const
 
 QString ScrewTerminal::makeSchematicSvg(const QString & expectedFileName, const QString & moduleID) 
 {
+    Q_UNUSED(moduleID);
 	QStringList pieces = expectedFileName.split("_");
 	if (pieces.count() != 5) return "";
 
@@ -172,6 +174,7 @@ QString ScrewTerminal::makeSchematicSvg(const QString & expectedFileName, const 
 
 QString ScrewTerminal::makePcbSvg(const QString & expectedFileName, const QString & moduleID) 
 {
+    Q_UNUSED(moduleID);
 	QStringList pieces = expectedFileName.split("_");
 	if (pieces.count() != 5) return "";
 

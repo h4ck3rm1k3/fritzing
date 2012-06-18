@@ -1261,3 +1261,17 @@ void TextUtils::expandAndFillAux(QDomElement & element, const QString & color, d
 	element.setAttribute("stroke-width", QString::number(sw));
 
 }
+
+bool TextUtils::writeUtf8(const QString & fileName, const QString & text)
+{
+	QFile file(fileName);
+	if (file.open(QIODevice::WriteOnly)) {
+		QTextStream out(&file);
+		out.setCodec("UTF-8");
+		out << text;
+		file.close();
+        return true;
+    }
+
+    return false;
+}

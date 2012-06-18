@@ -260,13 +260,7 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 			QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, true, imageSize, board, GraphicsUtils::IllustratorDPI, false, false, empty);
 			massageOutput(svg, doMask, doSilk, maskTop, maskBottom, fileName, GraphicsUtils::IllustratorDPI);		
 			svg = mergeBoardSvg(svg, board, GraphicsUtils::IllustratorDPI, imageSize, flip);
-			
-			QFile file(fileName);
-			file.open(QIODevice::WriteOnly);
-			QTextStream out(&file);
-			out.setCodec("UTF-8");
-			out << svg;
-			file.close();
+            TextUtils::writeUtf8(fileName, svg);
 		}
 		else {
 			QPrinter printer(QPrinter::HighResolution);
@@ -1014,12 +1008,7 @@ void MainWindow::exportSvg(double res, bool selectedItems, bool flatten) {
 		exportSvgWatermark(svg, res);
 	}
 
-	QFile file(fileName);
-	file.open(QIODevice::WriteOnly);
-	QTextStream out(&file);
-	out.setCodec("UTF-8");
-	out << TextUtils::convertExtendedChars(svg);
-	file.close();
+    TextUtils::writeUtf8(fileName, TextUtils::convertExtendedChars(svg));
 	delete fileProgressDialog;
 
 }
@@ -1154,18 +1143,12 @@ void MainWindow::exportBOM() {
 		fileName += bomActionType;
     }
 
-    QFile fp(fileName);
-   	if (fp.open(QIODevice::WriteOnly)) {
-   		QTextStream out(&fp);
-		out.setCodec("UTF-8");
-   		out << bom;
-		fp.close();
-	}
-	else {
+   	if (!TextUtils::writeUtf8(fileName, bom)) {
 		QMessageBox::warning(this, tr("Fritzing"), tr("Unable to save BOM file, but the text is on the clipboard."));
 	}
 
-	if (fp.exists()) {
+    QFileInfo info(fileName);
+	if (info.exists()) {
 		QDesktopServices::openUrl(QString("file:///%1").arg(fileName));
 	}
 

@@ -291,13 +291,7 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 	foreach (PlanePair * planePair, planePairs) {
 		planePair->layoutSVG += "</svg>";
 		QString fname = svgDir.absoluteFilePath(QString("%1.panel_%2.layout.svg").arg(panelParams.prefix).arg(planePair->index));
-		QFile outfile(fname);
-		if (outfile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-			QTextStream out(&outfile);
-			out.setCodec("UTF-8");
-			out << planePair->layoutSVG;
-			outfile.close();
-		}
+        TextUtils::writeUtf8(fname, planePair->layoutSVG);
 	}
 
 	QList<LayerThing> layerThingList;
@@ -363,13 +357,7 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 			planePair->svgs.replace(i, planePair->svgs.at(i) + "</svg>");
 
 			QString fname = svgDir.absoluteFilePath(QString("%1.%2.svg").arg(prefix).arg(layerThingList.at(i).name));
-			QFile outfile(fname);
-			if (outfile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-				QTextStream out(&outfile);
-				out.setCodec("UTF-8");
-				out << planePair->svgs.at(i);
-				outfile.close();
-			}
+			TextUtils::writeUtf8(fname, planePair->svgs.at(i));
 
 			QString suffix = layerThingList.at(i).suffix;
 			DebugDialog::debug("converting " + prefix + " " + suffix);
@@ -395,13 +383,7 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 		TextUtils::mergeSvg(doc, merger, "");
 		merger = TextUtils::mergeSvgFinish(doc);
 		QString fname = svgDir.absoluteFilePath(QString("%1.%2.svg").arg(prefix).arg("identification"));
-		QFile outfile(fname);
-		if (outfile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-			QTextStream out(&outfile);
-			out.setCodec("UTF-8");
-			out << merger;
-			outfile.close();
-		}
+		TextUtils::writeUtf8(fname, merger);
 	}
 
 	foreach (PanelItem * panelItem, refPanelItems) {

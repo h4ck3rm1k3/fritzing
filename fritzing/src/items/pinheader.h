@@ -55,6 +55,10 @@ protected:
     QString hackFzp(const QString & moduleID, const QString & pcbFilename, const QString & holeSize);
     QString appendHoleSize(const QString & filename, const QString & holeSize, const QString & ringThickness);
 
+
+public slots:
+	void swapEntry(const QString & text);
+
 protected slots:
 	void changeHoleSize(const QString &);
 

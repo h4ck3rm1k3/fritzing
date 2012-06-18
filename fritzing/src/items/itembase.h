@@ -276,7 +276,7 @@ public slots:
 	void showPartLabel(bool show, ViewLayer *);
 	void hidePartLabel();
 	void partLabelChanged(const QString &newText);
-	void swapEntry(const QString & text);
+	virtual void swapEntry(const QString & text);
 
 public:
 	static bool zLessThan(ItemBase * & p1, ItemBase * & p2);

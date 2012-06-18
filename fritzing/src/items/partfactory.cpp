@@ -56,6 +56,7 @@ $Date$
 #include "led.h"
 #include "../utils/folderutils.h"
 #include "../utils/lockmanager.h"
+#include "../utils/textutils.h"
 
 static QString PartFactoryFolderPath;
 static QHash<QString, LockedFile *> LockedFiles;
@@ -267,43 +268,52 @@ QString PartFactory::getSvgFilename(ModelPart * modelPart, const QString & expec
 	return "";
 }
 
-QString PartFactory::getSvgFilenameAux(const QString & expectedFileName, const QString & moduleID, GetSVGFun getSvg)
-{
-	QString path = FolderUtils::getApplicationSubFolderPath("parts") + "/"+ ItemBase::SvgFilesDir + "/core/";
-	if (QFileInfo(path + expectedFileName).exists()) return expectedFileName;
+bool PartFactory::svgFileExists(const QString & expectedFileName, QString & path) {
+	QString p = FolderUtils::getApplicationSubFolderPath("parts") + "/"+ ItemBase::SvgFilesDir + "/core/";
+	if (QFileInfo(p + expectedFileName).exists()) {
+        path = expectedFileName;
+        return true;
+    }
 
 	path = partPath() + expectedFileName;
-	QFile file(path);
-	if (file.exists()) {
-		return path;
-	} 
+	QFileInfo info(path);
+	return info.exists();
+}
+
+QString PartFactory::getSvgFilenameAux(const QString & expectedFileName, const QString & moduleID, GetSVGFun getSvg)
+{
+    QString path;
+    if (svgFileExists(expectedFileName, path)) return path;
 
 	QString svg = (*getSvg)(expectedFileName, moduleID);
-	if (file.open(QFile::WriteOnly)) {
-		QTextStream stream(&file);
-		stream.setCodec("UTF-8");
-		stream << svg;
-		file.close();
+	if (TextUtils::writeUtf8(path, svg)) {
 		return path;
 	}
 
 	return "";
 }
 
+
+bool PartFactory::fzpFileExists(const QString & moduleID, QString & path) {
+    QString expectedFileName = moduleID + FritzingPartExtension;
+	path = FolderUtils::getApplicationSubFolderPath("parts") + "/core/" + expectedFileName;
+	if (QFileInfo(path).exists()) {
+        path = expectedFileName;
+        return true;
+    }
+
+	path = fzpPath() + expectedFileName;
+	QFileInfo info(path);
+	return info.exists();
+}
+
 QString PartFactory::getFzpFilenameAux(const QString & moduleID, QString (*getFzp)(const QString &))
 {
-	QString path = fzpPath() + moduleID + FritzingPartExtension;
-	QFile file(path);
-	if (file.exists()) {
-		return path;
-	}
+	QString path;
+    if (fzpFileExists(moduleID, path)) return path;
 
 	QString fzp = (*getFzp)(moduleID);
-	if (file.open(QFile::WriteOnly)) {
-		QTextStream stream(&file);
-		stream.setCodec("UTF-8");
-		stream << fzp;
-		file.close();
+	if (TextUtils::writeUtf8(path, fzp)) {
 		return path;
 	}
 

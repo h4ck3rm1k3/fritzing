@@ -47,6 +47,8 @@ public:
 	static QString folderPath();
 	static QString fzpPath();
 	static QString partPath();
+    static bool svgFileExists(const QString & expectedFileName, QString & path);
+    static bool fzpFileExists(const QString & moduleID, QString & path);
 
 protected:
 	static QString getFzpFilenameAux(const QString & moduleID, QString (*getFzp)(const QString &));

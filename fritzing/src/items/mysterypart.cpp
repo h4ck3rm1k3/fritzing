@@ -399,6 +399,7 @@ QString MysteryPart::genModuleID(QMap<QString, QString> & currPropsMap)
 
 QString MysteryPart::makeSchematicSvg(const QString & expectedFileName, const QString & moduleID) 
 {
+    Q_UNUSED(moduleID);
 	bool sip = expectedFileName.contains("sip", Qt::CaseInsensitive);
 
 	QStringList pieces = expectedFileName.split("_");
@@ -509,6 +510,7 @@ QString MysteryPart::makeBreadboardSvg(const QString & expectedFileName, const Q
 
 QString MysteryPart::makeBreadboardDipSvg(const QString & expectedFileName, const QString & moduleID) 
 {
+    Q_UNUSED(moduleID);
 	QStringList pieces = expectedFileName.split("_");
 	if (pieces.count() != 6) return "";
 
@@ -572,6 +574,7 @@ QString MysteryPart::makeBreadboardDipSvg(const QString & expectedFileName, cons
 
 QString MysteryPart::makeBreadboardSipSvg(const QString & expectedFileName, const QString & moduleID) 
 {
+    Q_UNUSED(moduleID);
 	QStringList pieces = expectedFileName.split("_");
 	if (pieces.count() != 6) return "";
 

@@ -35,6 +35,7 @@ $Date$
 #include "../sketch/infographicsview.h"
 #include "../connectors/connectoritem.h"
 #include "../connectors/connector.h"
+#include "../utils/familypropertycombobox.h"
 
 #include <QDomNodeList>
 #include <QDomDocument>
@@ -775,24 +776,14 @@ void PinHeader::changeHoleSize(const QString & newSize) {
 
     QString fzp = hackFzp(newModuleID, newSvgFilename, sizes.at(0) + "," + sizes.at(1));    
     if (fzp.isEmpty()) return;
-
-    QFile filef(PartFactory::fzpPath() + newFzpFilename);
-    if (filef.open(QFile::WriteOnly)) {
-        QTextStream out(&filef);
-		out.setCodec("UTF-8");
-		out << fzp;
-		filef.close();    
+   
+    if (!TextUtils::writeUtf8(PartFactory::fzpPath() + newFzpFilename, fzp)) {
+        return;
     }
-    else return;
 
-    QFile files(PartFactory::partPath() + newSvgFilename);
-    if (files.open(QFile::WriteOnly)) {
-        QTextStream out(&files);
-		out.setCodec("UTF-8");
-		out << svg;
-		files.close();    
+    if (!TextUtils::writeUtf8(PartFactory::partPath() + newSvgFilename, svg)) {
+        return;
     }
-    else return;
 
     m_propsMap.insert("hole size", newSize);
     m_propsMap.insert("moduleID", newModuleID);
@@ -892,4 +883,52 @@ QString PinHeader::appendHoleSize(const QString & filename, const QString & hole
     }
 
     return baseName + QString("%1%2_%3").arg(HoleSizePrefix).arg(holeSize).arg(ringThickness);
+}
+
+void PinHeader::swapEntry(const QString & text) {
+    FamilyPropertyComboBox * comboBox = qobject_cast<FamilyPropertyComboBox *>(sender());
+    if (comboBox == NULL) return;
+
+    m_propsMap.insert(comboBox->prop(), text);
+
+    QString newModuleID = genModuleID(m_propsMap);
+    if (!newModuleID.contains("smd", Qt::CaseInsensitive)) {
+        // add hole size
+        int ix = moduleID().indexOf(HoleSizePrefix);
+        if (ix >= 0) {
+            newModuleID.append(moduleID().mid(ix));
+        }
+    }
+
+    QString path;
+    if (!PartFactory::fzpFileExists(newModuleID, path)) {
+        QString fzp = genFZP(newModuleID);
+        TextUtils::writeUtf8(path, fzp);
+
+        QDomDocument doc;
+        doc.setContent(fzp);
+
+        QString bbName = LayerAttributes::getSvgElementLayers(&doc, ViewIdentifierClass::BreadboardView).attribute("image");
+        QString schName = LayerAttributes::getSvgElementLayers(&doc, ViewIdentifierClass::SchematicView).attribute("image");
+        QString pcbName = LayerAttributes::getSvgElementLayers(&doc, ViewIdentifierClass::PCBView).attribute("image");
+
+        if (!PartFactory::svgFileExists(bbName, path)) {
+            QString svg = makeBreadboardSvg(bbName, newModuleID);
+	        TextUtils::writeUtf8(path, svg);
+        }
+
+        if (!PartFactory::svgFileExists(schName, path)) {
+            QString svg = makeSchematicSvg(schName, newModuleID);
+	        TextUtils::writeUtf8(path, svg);
+        }
+
+        if (!PartFactory::svgFileExists(pcbName, path)) {
+            QString svg = makePcbSvg(pcbName, newModuleID);
+	        TextUtils::writeUtf8(path, svg);
+        }      
+    }
+
+    m_propsMap.insert("moduleID", newModuleID);
+
+    PaletteItem::swapEntry(text);
 }

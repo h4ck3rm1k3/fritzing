@@ -103,6 +103,7 @@ public:
 	static QString getMacAddress();
 	static QString expandAndFill(const QString & svg, const QString & color, double expandBy);
 	static void expandAndFillAux(QDomElement &, const QString & color, double expandBy);
+    static bool writeUtf8(const QString & fileName, const QString & text);
 	
 public:
 	static const QRegExp FindWhitespace;
