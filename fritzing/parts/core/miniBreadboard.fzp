@@ -2389,7 +2389,35 @@
         </pcbView>
       </views>
     </connector>
-  </connectors>
+     <connector id="I17" name="I17" type="female">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="I17pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="I17pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="I17pin"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector id="J17" name="J17" type="female">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p layer="breadboardbreadboard" svgId="J17pin"/>
+        </breadboardView>
+        <schematicView>
+          <p layer="breadboardbreadboard" svgId="J17pin"/>
+        </schematicView>
+        <pcbView>
+          <p layer="breadboardbreadboard" svgId="J17pin"/>
+        </pcbView>
+      </views>
+    </connector>
+ </connectors>
   <buses>
     <bus id="bus0-1">
       <nodeMember connectorId="A1"/>
