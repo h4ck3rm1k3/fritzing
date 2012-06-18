@@ -428,7 +428,7 @@ bool GraphUtils::chooseRatsnestGraph(const QList<ConnectorItem *> * partConnecto
 
 #define add_edge_d(i, j, g) \
 	add_edge(verts[i], verts[j], g); \
-	//partConnectorItems[i]->debugInfo(QString("edge from %1").arg(i)); \
+    //partConnectorItems[i]->debugInfo(QString("edge from %1").arg(i));
 	//partConnectorItems[j]->debugInfo(QString("\tto %1").arg(j));
 
 bool GraphUtils::scoreOneNet(QList<ConnectorItem *> & partConnectorItems, ViewGeometry::WireFlags myTrace, RoutingStatus & routingStatus) {
