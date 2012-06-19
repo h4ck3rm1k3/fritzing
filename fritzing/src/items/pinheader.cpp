@@ -423,7 +423,7 @@ QString PinHeader::makePcbSvg(const QString & originalExpectedFileName, const QS
         }
 
 	    if (addSquare) {
-		    middle += QString( "<rect fill='none' height='%1' width='%1' stroke='rgb(255, 191, 0)' stroke-width='%2' x='%3' y='%3'/>\n")
+		    middle += QString( "<rect id='square' fill='none' height='%1' width='%1' stroke='rgb(255, 191, 0)' stroke-width='%2' x='%3' y='%3'/>\n")
 					    .arg(radius * 2)
 					    .arg(copperStrokeWidth)
 					    .arg(center - radius);
@@ -852,6 +852,24 @@ QString PinHeader::hackSvg(QDomDocument & domDocument, const QString & holeDiame
             circle.setAttribute("stroke-width", rt);
         }
     }
+
+    QDomNodeList rects = root.elementsByTagName("rect");
+    for (int i = 0; i < rects.count(); i++) {
+        QDomElement rect = rects.at(i).toElement();
+        QString id = rect.attribute("id");
+        if (id.compare("square") == 0) {
+            double oldWidth = rect.attribute("width").toDouble();
+            double oldX = rect.attribute("x").toDouble();
+            double oldY = rect.attribute("y").toDouble();
+
+            rect.setAttribute("width", rad * 2);
+            rect.setAttribute("height", rad * 2);
+            rect.setAttribute("x", oldX + (oldWidth / 2) - rad);
+            rect.setAttribute("y", oldY + (oldWidth / 2) - rad);
+            rect.setAttribute("stroke-width", rt);
+        }
+    }
+
 
     return TextUtils::removeXMLEntities(domDocument.toString());
 }
