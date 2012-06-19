@@ -10,7 +10,9 @@
         <property name="family">Pin Header</property>
         <property name="Pins">10</property>
         <property name="Form">♂ (shrouded male)</property>
-        <property name="Pin Spacing">0.1in (2.54mm)</property>
+         <property name="Row">double</property>
+        <property name="Package">THT</property>
+       <property name="Pin Spacing">0.1in (2.54mm)</property>
     <property name="package">THT</property></properties>
     <description>Generic shrouded header</description>
     <views>

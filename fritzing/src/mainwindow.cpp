@@ -1757,11 +1757,6 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 			if (family.compare("screw terminal", Qt::CaseInsensitive) == 0) {
 				generatedModuleID = ScrewTerminal::genModuleID(currPropsMap);
 			}
-
-			PinHeader * pinHeader = qobject_cast<PinHeader *>(itemBase);
-			if (pinHeader) {
-				generatedModuleID = PinHeader::genModuleID(currPropsMap);
-			}
 		}
 	}
 
@@ -1784,11 +1779,7 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 
 	if (generatedModuleID.isEmpty()) {
 		if (prop.compare("pins") == 0) {
-			PinHeader * pinHeader = qobject_cast<PinHeader *>(itemBase);
-			if (pinHeader) {
-				generatedModuleID = PinHeader::genModuleID(currPropsMap);
-			}
-			else if (itemBase->moduleID().startsWith("screw_terminal_", Qt::CaseInsensitive)) {
+			if (itemBase->moduleID().startsWith("screw_terminal_", Qt::CaseInsensitive)) {
 				generatedModuleID = ScrewTerminal::genModuleID(currPropsMap);
 			}
 			else if (itemBase->moduleID().startsWith("generic_sip", Qt::CaseInsensitive)) {
@@ -1800,15 +1791,6 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 			else if (itemBase->moduleID().startsWith("mystery_part_", Qt::CaseInsensitive)) 
 			{
 				generatedModuleID = MysteryPart::genModuleID(currPropsMap);
-			}
-		}
-	}
-
-	if (generatedModuleID.isEmpty()) {
-		if (prop.compare("form") == 0) {
-			PinHeader * pinHeader = qobject_cast<PinHeader *>(itemBase);
-			if (pinHeader) {
-				generatedModuleID = PinHeader::genModuleID(currPropsMap);
 			}
 		}
 	}

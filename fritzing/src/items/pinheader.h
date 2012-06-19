@@ -68,28 +68,23 @@ public:
 	static QString FemaleRoundedFormString;
 	static QString MaleFormString;
 	static QString ShroudedFormString;
-	static QString MaleSingleRowSMDFormString;
-	static QString FemaleSingleRowSMDFormString;
-	static QString MaleDoubleRowSMDFormString;
-	static QString FemaleDoubleRowSMDFormString;
 
 public:
 	static void initNames();
 	static QString genFZP(const QString & moduleid);
-	static QString genModuleID(QMap<QString, QString> & currPropsMap);
 	static QString makePcbSvg(const QString & expectedFileName, const QString & moduleID);
 	static QString makePcbShroudedSvg(int pins);
 	static QString makePcbSMDSvg(const QString & expectedFileName, const QString & moduleID);
 	static QString makeSchematicSvg(const QString & expectedFileName, const QString & moduleID);
 	static QString makeBreadboardSvg(const QString & expectedFileName, const QString & moduleID);
 	static QString makeBreadboardShroudedSvg(int pins);
-	static QString findForm(const QString & filename);
 
 protected:
 	static const QStringList & forms();
 	static void initSpacings();
     static QString hackFzp(QDomDocument & document, const QString & newModuleID, const QString & pcbFilename, const QString & newSize);
     static QString hackSvg(QDomDocument & domDocument, const QString & holeDiameter, const QString & ringThickness, bool shrouded);
+	static QString genModuleID(QMap<QString, QString> & currPropsMap);
 
 protected:
 	QString m_form;

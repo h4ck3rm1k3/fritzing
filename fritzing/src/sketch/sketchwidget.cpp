@@ -5037,6 +5037,7 @@ void SketchWidget::prepDeleteProps(ItemBase * itemBase, long id, const QString &
 		return;
 	}
 
+    /*
 	PinHeader * pinHeader = qobject_cast<PinHeader *>(itemBase);
 	if (pinHeader != NULL) {
 		// deal with old-style pin headers (pre 0.6.4)
@@ -5044,7 +5045,7 @@ void SketchWidget::prepDeleteProps(ItemBase * itemBase, long id, const QString &
 		prepDeleteOtherProps(itemBase, id, newModuleID, parentCommand);
 		return;
 	}
-
+    */
 
 	Hole * hole = qobject_cast<Hole *>(itemBase);
 	if (hole != NULL) {
