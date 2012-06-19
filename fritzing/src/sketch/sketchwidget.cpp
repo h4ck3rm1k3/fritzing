@@ -5548,7 +5548,7 @@ void SketchWidget::cleanUpWiresSlot(CleanUpWiresCommand * command) {
 
 void SketchWidget::noteChanged(ItemBase * item, const QString &oldText, const QString & newText, QSizeF oldSize, QSizeF newSize) {
 	ChangeNoteTextCommand * command = new ChangeNoteTextCommand(this, item->id(), oldText, newText, oldSize, newSize, NULL);
-	command->setText(tr("Change note to '%2'").arg(newText));
+	command->setText(tr("Note text change"));
 	m_undoStack->waitPush(command, PropChangeDelay);
 }
 
