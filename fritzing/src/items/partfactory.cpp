@@ -280,12 +280,12 @@ bool PartFactory::svgFileExists(const QString & expectedFileName, QString & path
 	return info.exists();
 }
 
-QString PartFactory::getSvgFilenameAux(const QString & expectedFileName, const QString & moduleID, GetSVGFun getSvg)
+QString PartFactory::getSvgFilenameAux(const QString & expectedFileName, const QString & moduleID, GenSvg genSvg)
 {
     QString path;
     if (svgFileExists(expectedFileName, path)) return path;
 
-	QString svg = (*getSvg)(expectedFileName, moduleID);
+	QString svg = (*genSvg)(expectedFileName, moduleID);
 	if (TextUtils::writeUtf8(path, svg)) {
 		return path;
 	}

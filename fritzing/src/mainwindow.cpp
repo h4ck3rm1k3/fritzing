@@ -1753,14 +1753,6 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 	}
 
 	if (generatedModuleID.isEmpty()) {
-		if (prop.compare("pin spacing", Qt::CaseInsensitive) == 0) {
-			if (family.compare("screw terminal", Qt::CaseInsensitive) == 0) {
-				generatedModuleID = ScrewTerminal::genModuleID(currPropsMap);
-			}
-		}
-	}
-
-	if (generatedModuleID.isEmpty()) {
 		if (prop.compare("package", Qt::CaseInsensitive) == 0) {
 			QString package = currPropsMap.value(prop);
 			if (package.startsWith("sip", Qt::CaseInsensitive) || package.startsWith("dip", Qt::CaseInsensitive)) {

@@ -33,7 +33,6 @@ $Date$
 #include "../viewidentifierclass.h"
 #include "../viewlayer.h"
 
-typedef QString (*GetSVGFun)(const QString & expectedFileName, const QString & moduleID);
 
 class PartFactory
 {
@@ -51,8 +50,8 @@ public:
     static bool fzpFileExists(const QString & moduleID, QString & path);
 
 protected:
-	static QString getFzpFilenameAux(const QString & moduleID, QString (*getFzp)(const QString &));
-	static QString getSvgFilenameAux(const QString & expectedFileName, const QString & moduleID, GetSVGFun);
+	static QString getFzpFilenameAux(const QString & moduleID, GenFzp);
+	static QString getSvgFilenameAux(const QString & expectedFileName, const QString & moduleID, GenSvg);
 	static class ItemBase * createPartAux(class ModelPart *, ViewIdentifierClass::ViewIdentifier, const class ViewGeometry & viewGeometry, long id, QMenu * itemMenu, QMenu * wireMenu, bool doLabel);
 };
 

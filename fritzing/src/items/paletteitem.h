@@ -133,13 +133,30 @@ protected:
 	void figureHover();
 	bool isSingleRow(QList<ConnectorItem *> & connectorItems);
 	QList<ConnectorItem *> sortConnectorItems();
+    QString hackSvgHoleSize(const QString & holeDiameter, const QString & ringThickness);
+    QString hackFzpHoleSize(const QString & moduleID, const QString & pcbFilename, const QString & holeSize);
+    QString appendHoleSize(const QString & moduleID, const QString & holeSize, const QString & ringThickness);
+    void generateSwap(const QString & text, GenModuleID, GenFzp, GenSvg makeBreadboardSvg, GenSvg makeSchematicSvg, GenSvg makePcbSvg);
 
 protected:
+    void setUpHoleSizes(const QString & type, QString & holeSize, QString & ringThickness, QString & holeSizeValue, QHash<QString, QString> & holeSizes);
+    bool collectHoleSizeInfo(const QString & defaultHoleSizeValue, QWidget * parent, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
 	static void setUpHoleSizes(QString & holeSize, QString & ringThickness, const QString & attribute, QHash<QString, QString> & holeSizes);
 	static QStringList getSizes(QString & holeSize, HoleSettings &);
+    static QString hackFzpHoleSize(QDomDocument & document, const QString & newModuleID, const QString & pcbFilename, const QString & newSize);
+    static QString hackFzpHoleSize(const QString & fzp, const QString & moduleid, int hsix); 
+    static QString hackSvgHoleSize(QDomDocument & domDocument, const QString & holeDiameter, const QString & ringThickness);
+    static QString hackSvgHoleSizeAux(const QString & svg, const QString & expectedFileName);
+
+protected slots:
+	void changeHoleSize(const QString &);
+
+public:
+    static const QString HoleSizePrefix;
 
 protected:
  	QList<class ItemBase *> m_layerKin;
+    HoleSettings m_holeSettings;
 
 };
 

@@ -45,10 +45,6 @@ $Date$
 
 //////////////////////////////////////////////////
 
-
-static QRegExp ConnectorFinder("connector\\d+pin");
-static const QString HoleSizePrefix("_hs_");
-
 static QStringList Forms;
 
 QString PinHeader::FemaleFormString;
@@ -61,39 +57,17 @@ static int MinShroudedPins = 6;
 static int MaxPins = 64;
 static QHash<QString, QString> Spacings;
 static QString ShroudedSpacing;
+
 static QString DefaultHoleSize;
 static QString DefaultRingThickness;
 static QString DefaultHoleSizeValue;
-
-QHash<QString, QString> HoleSizes;
+static QHash<QString, QString> HoleSizes;
 
 PinHeader::PinHeader( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
-	if (HoleSizes.count() == 0) {       
-		setUpHoleSizes(DefaultHoleSize, DefaultRingThickness, "pinheader", HoleSizes);
-        DefaultHoleSizeValue = QString("%1,%2").arg(DefaultHoleSize).arg(DefaultRingThickness);
-	}
 
-    initHoleSettings(m_holeSettings, &HoleSizes, NULL, NULL);
-    QStringList localHoleSize = modelPart->localProp("hole size").toString().split(",");
-    if (localHoleSize.count() == 2) {
-        m_holeSettings.ringThickness = localHoleSize.at(1);
-        m_holeSettings.holeDiameter = localHoleSize.at(0);
-    }
-    else {
-        QString hs = modelPart->properties().value("hole size");
-        localHoleSize = hs.split(",");
-        if (localHoleSize.count() == 2) {
-            modelPart->setLocalProp("hole size", hs);
-            m_holeSettings.ringThickness = localHoleSize.at(1);
-            m_holeSettings.holeDiameter = localHoleSize.at(0);
-        }
-        else {
-            m_holeSettings.ringThickness = DefaultRingThickness;
-            m_holeSettings.holeDiameter = DefaultHoleSize;
-        }
-    }
+    setUpHoleSizes("pinheader", DefaultHoleSize, DefaultRingThickness, DefaultHoleSizeValue, HoleSizes);
 
     m_form = modelPart->localProp("form").toString();
 	if (m_form.isEmpty()) {
@@ -288,10 +262,7 @@ QString PinHeader::genFZP(const QString & moduleID)
 	}
 
     if (hsix >= 0) {
-        QDomDocument document;
-        document.setContent(result);
-        QStringList strings = moduleID.mid(hsix).split("_");
-        result = hackFzp(document, moduleID, "pcb/" + moduleID + ".svg", strings.at(2) + "," + strings.at(3));     
+        return hackFzpHoleSize(result, moduleID, hsix);
     }
 
 	return result;
@@ -453,13 +424,7 @@ QString PinHeader::makePcbSvg(const QString & originalExpectedFileName, const QS
     }
 
     if (hsix >= 0) {
-        QDomDocument document;
-        document.setContent(svg);
-        QFileInfo info(originalExpectedFileName);
-        QString baseName = info.completeBaseName();
-        hsix = baseName.indexOf(HoleSizePrefix);
-        QStringList strings = baseName.mid(hsix).split("_");
-        svg = hackSvg(document, strings.at(2), strings.at(3), shrouded);
+        return hackSvgHoleSizeAux(svg, originalExpectedFileName);
     }
 
 	return svg;
@@ -609,7 +574,7 @@ QString PinHeader::makePcbShroudedSvg(int pins)
 					"x='0in' y='0in' width='0.3542in' height='%1in' viewBox='0 0 3542 [3952]'>"
 					"<g id='copper0' >\n"					
 					"<g id='copper1' >\n"
-					"<rect x='936' y='1691' width='570' height='570' stroke='#ff9400' r='285' fill='none' stroke-width='170'/>\n"
+					"<rect id='square' x='936' y='1691' width='570' height='570' stroke='#ff9400' r='285' fill='none' stroke-width='170'/>\n"
 					"%2\n"
 					"%3\n"
 					"</g>\n"
@@ -714,222 +679,18 @@ bool PinHeader::collectExtraInfo(QWidget * parent, const QString & family, const
 {
 	if (prop.compare("hole size", Qt::CaseInsensitive) == 0) {
         if (moduleID().contains("smd", Qt::CaseInsensitive)) {
-            // or just do nothing?
+            // or call the ancestor function?
             return false;
         }
         else {
-		    returnProp = tr("hole size");
-
-		    returnValue = m_modelPart->localProp("hole size").toString();
-            if (returnValue.isEmpty()) {
-                returnValue = DefaultHoleSizeValue;
-            }
-		    QWidget * frame = createHoleSettings(parent, m_holeSettings, swappingEnabled, returnValue, false);
-
-		    connect(m_holeSettings.sizesComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeHoleSize(const QString &)));	
-
-		    returnWidget = frame;
-		    return true;
+            return collectHoleSizeInfo(DefaultHoleSizeValue, parent, swappingEnabled, returnProp, returnValue, returnWidget);
         }
 	}
 
 	return PaletteItem::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
 }
 
-void PinHeader::changeHoleSize(const QString & newSize) {
-    if (this->m_viewIdentifier != ViewIdentifierClass::PCBView) {
-        PinHeader * pinHeader = qobject_cast<PinHeader *>(modelPart()->viewItem(ViewIdentifierClass::PCBView));
-        if (pinHeader == NULL) return;
-
-        pinHeader->changeHoleSize(newSize);
-        return;
-    }
-
-    QString holeSize = newSize;
-    QStringList sizes = getSizes(holeSize, m_holeSettings);
-    if (sizes.count() != 2) return;
-
-    QString svg = hackSvg(sizes.at(0), sizes.at(1), moduleID().contains("shrouded"));
-    if (svg.isEmpty()) return;
-
-    // figure out the new filename
-    QString newModuleID = appendHoleSize(moduleID(), sizes.at(0), sizes.at(1));
-    QString newFzpFilename = newModuleID + ".fzp"; 
-    QString newSvgFilename = "pcb/" + newModuleID + ".svg";
-
-    QString fzp = hackFzp(newModuleID, newSvgFilename, sizes.at(0) + "," + sizes.at(1));    
-    if (fzp.isEmpty()) return;
-   
-    if (!TextUtils::writeUtf8(PartFactory::fzpPath() + newFzpFilename, fzp)) {
-        return;
-    }
-
-    if (!TextUtils::writeUtf8(PartFactory::partPath() + newSvgFilename, svg)) {
-        return;
-    }
-
-    m_propsMap.insert("hole size", newSize);
-    m_propsMap.insert("moduleID", newModuleID);
-
-    InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
-    if (infoGraphicsView != NULL) {
-        infoGraphicsView->swap(family(), newModuleID, m_propsMap, this);
-    }
-}
-
-QString PinHeader::hackFzp(const QString & newModuleID, const QString & pcbFilename, const QString & newSize) {
-    QDomDocument document = modelPart()->domDocument()->cloneNode(true).toDocument();
-    return hackFzp(document, newModuleID, pcbFilename, newSize);
-}
-
-QString PinHeader::hackFzp(QDomDocument & document, const QString & newModuleID, const QString & pcbFilename, const QString & newSize) 
-{
-    QDomElement root = document.documentElement();
-    root.setAttribute("moduleId", newModuleID);
-
-    QDomElement views = root.firstChildElement("views");
-    QDomElement pcbView = views.firstChildElement("pcbView");
-    QDomElement layers = pcbView.firstChildElement("layers");
-    if (layers.isNull()) return "";
-
-    layers.setAttribute("image", pcbFilename);
-
-    QDomElement properties = root.firstChildElement("properties");
-    QDomElement prop = properties.firstChildElement("property");
-    bool gotProp = false;
-    while (!prop.isNull()) {
-        QString name = prop.attribute("name");
-        if (name.compare("hole size", Qt::CaseInsensitive) == 0) {
-            gotProp = true;
-            TextUtils::replaceChildText(document, prop, newSize);
-            break;
-        }
-
-        prop = prop.nextSiblingElement("property");
-    }
-
-    if (!gotProp) return "";
-
-
-    return TextUtils::removeXMLEntities(document.toString());
-}
-
-
-QString PinHeader::hackSvg(const QString & holeDiameter, const QString & ringThickness, bool shrouded) {
-    QFile file(filename());
-    QString errorStr;
-    int errorLine;
-    int errorColumn;
-
-    QDomDocument domDocument;
-    if (!domDocument.setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
-		DebugDialog::debug(QString("unable to parse pinheader pcb svg xml: %1 %2 %3").arg(errorStr).arg(errorLine).arg(errorColumn));
-		return "";
-	}
-
-    return hackSvg(domDocument, holeDiameter, ringThickness, shrouded);
-}
-
-QString PinHeader::hackSvg(QDomDocument & domDocument, const QString & holeDiameter, const QString & ringThickness, bool shrouded) {
-
-    double rt = TextUtils::convertToInches(ringThickness) * GraphicsUtils::StandardFritzingDPI;
-    double hs = TextUtils::convertToInches(holeDiameter) * GraphicsUtils::StandardFritzingDPI;
-    if (shrouded) {
-        // used 10000 dpi for some reason
-        rt *= 10;
-        hs *= 10;
-    }
-    double rad = (hs + rt) / 2;
-
-    QDomElement root = domDocument.documentElement();
-
-    QDomNodeList circles = root.elementsByTagName("circle");
-    for (int i = 0; i < circles.count(); i++) {
-        QDomElement circle = circles.at(i).toElement();
-        QString id = circle.attribute("id");
-        if (ConnectorFinder.indexIn(id) == 0) {
-            circle.setAttribute("r", rad);
-            circle.setAttribute("stroke-width", rt);
-        }
-    }
-
-    QDomNodeList rects = root.elementsByTagName("rect");
-    for (int i = 0; i < rects.count(); i++) {
-        QDomElement rect = rects.at(i).toElement();
-        QString id = rect.attribute("id");
-        if (id.compare("square") == 0) {
-            double oldWidth = rect.attribute("width").toDouble();
-            double oldX = rect.attribute("x").toDouble();
-            double oldY = rect.attribute("y").toDouble();
-
-            rect.setAttribute("width", rad * 2);
-            rect.setAttribute("height", rad * 2);
-            rect.setAttribute("x", oldX + (oldWidth / 2) - rad);
-            rect.setAttribute("y", oldY + (oldWidth / 2) - rad);
-            rect.setAttribute("stroke-width", rt);
-        }
-    }
-
-
-    return TextUtils::removeXMLEntities(domDocument.toString());
-}
-
-QString PinHeader::appendHoleSize(const QString & filename, const QString & holeSize, const QString & ringThickness)
-{
-    QFileInfo info(filename);
-    QString baseName = info.completeBaseName();
-    int ix = baseName.lastIndexOf(HoleSizePrefix);
-    if (ix >= 0) {
-        baseName.truncate(ix);
-    }
-
-    return baseName + QString("%1%2_%3").arg(HoleSizePrefix).arg(holeSize).arg(ringThickness);
-}
-
 void PinHeader::swapEntry(const QString & text) {
-    FamilyPropertyComboBox * comboBox = qobject_cast<FamilyPropertyComboBox *>(sender());
-    if (comboBox == NULL) return;
-
-    QMap<QString, QString> propsMap(m_propsMap);
-    propsMap.insert(comboBox->prop(), text);
-    QString newModuleID = genModuleID(propsMap);
-    if (!newModuleID.contains("smd", Qt::CaseInsensitive)) {
-        // add hole size
-        int ix = moduleID().indexOf(HoleSizePrefix);
-        if (ix >= 0) {
-            newModuleID.append(moduleID().mid(ix));
-        }
-    }
-
-    QString path;
-    if (!PartFactory::fzpFileExists(newModuleID, path)) {
-        QString fzp = genFZP(newModuleID);
-        TextUtils::writeUtf8(path, fzp);
-
-        QDomDocument doc;
-        doc.setContent(fzp);
-
-        QString bbName = LayerAttributes::getSvgElementLayers(&doc, ViewIdentifierClass::BreadboardView).attribute("image");
-        QString schName = LayerAttributes::getSvgElementLayers(&doc, ViewIdentifierClass::SchematicView).attribute("image");
-        QString pcbName = LayerAttributes::getSvgElementLayers(&doc, ViewIdentifierClass::PCBView).attribute("image");
-
-        if (!PartFactory::svgFileExists(bbName, path)) {
-            QString svg = makeBreadboardSvg(bbName, newModuleID);
-	        TextUtils::writeUtf8(path, svg);
-        }
-
-        if (!PartFactory::svgFileExists(schName, path)) {
-            QString svg = makeSchematicSvg(schName, newModuleID);
-	        TextUtils::writeUtf8(path, svg);
-        }
-
-        if (!PartFactory::svgFileExists(pcbName, path)) {
-            QString svg = makePcbSvg(pcbName, newModuleID);
-	        TextUtils::writeUtf8(path, svg);
-        }      
-    }
-
-    m_propsMap.insert("moduleID", newModuleID);
-
+    generateSwap(text, genModuleID, genFZP, makeBreadboardSvg, makeSchematicSvg, makePcbSvg);
     PaletteItem::swapEntry(text);
 }

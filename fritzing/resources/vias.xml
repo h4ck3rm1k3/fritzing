@@ -1,10 +1,11 @@
 <vias>
-<via holesize=".038in" ringthickness=".02in" name="Pin Header" pinheader="1" hole="1" pinheaderdefault="yes"/>
-<via holesize=".035in" ringthickness=".02in" name="Standard Through-hole" pinheader="1"  hole="1" />
-<via holesize=".042in" ringthickness=".02in" name="Big Through-hole" pinheader="1"  hole="1"/>
-<via holesize=".086in" ringthickness=".02in" name="Mounting Hole" pinheader="0"  hole="1"/> 
-<via holesize=".028in" ringthickness=".02in" name="Fine Lead Parts" pinheader="1"  hole="1"/>
-<via holesize=".052in" ringthickness=".02in" name="Thick Lead Parts" pinheader="1"  hole="1"/>
-<via holesize="0.6mm" ringthickness="0.3mm" name="Professionally Printed Via" holedefault="yes" pinheader="1"  hole="1"/>
-<via holesize="0.8mm" ringthickness="0.3mm" name="Homebrew Etched Via" pinheader="1"  hole="1"/>
+<via holesize="0.6mm" ringthickness="0.3mm" name="Professionally Printed Via" holedefault="yes" pinheader="1"  hole="1" screwterminal="1"/>
+<via holesize="0.8mm" ringthickness="0.3mm" name="Homebrew Etched Via" pinheader="1"  hole="1" screwterminal="1"/>
+<via holesize=".028in" ringthickness=".02in" name="Fine Lead Parts" pinheader="1"  hole="1" screwterminal="1"/>
+<via holesize=".035in" ringthickness=".02in" name="Standard Through-hole" pinheader="1"  hole="1" screwterminal="1"/>
+<via holesize=".038in" ringthickness=".02in" name="Pin Header" pinheader="1" hole="1" pinheaderdefault="yes" screwterminal="1" />
+<via holesize=".040in" ringthickness=".02in" name="Screw Terminal" pinheader="1" hole="1" screwterminaldefault="yes" screwterminal="1" />
+<via holesize=".042in" ringthickness=".02in" name="Big Through-hole" pinheader="1"  hole="1" screwterminal="1"/>
+<via holesize=".052in" ringthickness=".02in" name="Thick Lead Parts" pinheader="1"  hole="1" screwterminal="1"/>
+<via holesize=".086in" ringthickness=".02in" name="Mounting Hole"  hole="1" /> 
 </vias>

@@ -9,6 +9,7 @@
         <property name="family">Screw Terminal</property>
         <property name="Pins">%1</property>
         <property name="Pin Spacing">.percent.2</property>
+        <property name="hole size">.percent.3</property>
     <property name="package">THT</property></properties>
     <description>Screw terminal with %1 pins</description>
     <views>

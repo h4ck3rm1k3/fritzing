@@ -51,17 +51,10 @@ public:
 
 protected:
 	QStringList collectValues(const QString & family, const QString & prop, QString & value);
-    QString hackSvg(const QString & holeDiameter, const QString & ringThickness, bool shrouded);
-    QString hackFzp(const QString & moduleID, const QString & pcbFilename, const QString & holeSize);
-    QString appendHoleSize(const QString & filename, const QString & holeSize, const QString & ringThickness);
 
 
 public slots:
 	void swapEntry(const QString & text);
-
-protected slots:
-	void changeHoleSize(const QString &);
-
 
 public:
 	static QString FemaleFormString;
@@ -82,13 +75,10 @@ public:
 protected:
 	static const QStringList & forms();
 	static void initSpacings();
-    static QString hackFzp(QDomDocument & document, const QString & newModuleID, const QString & pcbFilename, const QString & newSize);
-    static QString hackSvg(QDomDocument & domDocument, const QString & holeDiameter, const QString & ringThickness, bool shrouded);
 	static QString genModuleID(QMap<QString, QString> & currPropsMap);
 
 protected:
 	QString m_form;
-    HoleSettings m_holeSettings;
 };
 
 #endif

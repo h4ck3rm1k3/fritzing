@@ -86,9 +86,6 @@ protected:
 	QRectF getRect(const QString & newSize);
     ViewIdentifierClass::ViewIdentifier useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier, bool swappingEnabled);
 
-protected:
-	HoleSettings m_holeSettings;
-
 public:
 	static QHash<QString, QString> HoleSizes;
 

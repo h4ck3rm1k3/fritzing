@@ -42,9 +42,16 @@ static const int MinPins = 2;
 static const int MaxPins = 20;
 static QHash<QString, QString> Spacings;
 
+static QString DefaultHoleSize;
+static QString DefaultRingThickness;
+static QString DefaultHoleSizeValue;
+static QHash<QString, QString> HoleSizes;
+
 ScrewTerminal::ScrewTerminal( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
+    setUpHoleSizes("screwterminal", DefaultHoleSize, DefaultRingThickness, DefaultHoleSizeValue, HoleSizes);
+
 }
 
 ScrewTerminal::~ScrewTerminal() {
@@ -81,13 +88,21 @@ QString ScrewTerminal::genFZP(const QString & moduleid)
 {
 	initSpacings();
 
-	QStringList pieces = moduleid.split("_");
-	if (pieces.count() != 4) return "";
+    QString useModuleID = moduleid;
+    int hsix = useModuleID.lastIndexOf(HoleSizePrefix);
+    if (hsix >= 0) useModuleID.truncate(hsix);
 
-	QString result = PaletteItem::genFZP(moduleid, "screw_terminal_fzpTemplate", MinPins, MaxPins, 1, false);
+	QStringList pieces = useModuleID.split("_");
+
+	QString result = PaletteItem::genFZP(useModuleID, "screw_terminal_fzpTemplate", MinPins, MaxPins, 1, false);
 	result.replace(".percent.", "%");
 	QString spacing = pieces.at(3);
-	return result.arg(spacing).arg(Spacings.value(spacing, "")); 
+	result = result.arg(spacing).arg(Spacings.value(spacing, ""));
+    if (hsix >= 0) {
+        return hackFzpHoleSize(result, moduleid, hsix);
+    }
+
+    return result;
 }
 
 QString ScrewTerminal::genModuleID(QMap<QString, QString> & currPropsMap)
@@ -120,7 +135,6 @@ QString ScrewTerminal::makeBreadboardSvg(const QString & expectedFileName, const
 {
     Q_UNUSED(moduleID);
 	QStringList pieces = expectedFileName.split("_");
-	if (pieces.count() != 5) return "";
 
 	int pins = pieces.at(2).toInt();
 	double increment = 0.1;  // inches
@@ -147,7 +161,6 @@ QString ScrewTerminal::makeSchematicSvg(const QString & expectedFileName, const 
 {
     Q_UNUSED(moduleID);
 	QStringList pieces = expectedFileName.split("_");
-	if (pieces.count() != 5) return "";
 
 	int pins = pieces.at(2).toInt();
 	double increment = GraphicsUtils::StandardSchematicSeparationMils / 1000;				
@@ -172,11 +185,17 @@ QString ScrewTerminal::makeSchematicSvg(const QString & expectedFileName, const 
 	return svg;
 }
 
-QString ScrewTerminal::makePcbSvg(const QString & expectedFileName, const QString & moduleID) 
+QString ScrewTerminal::makePcbSvg(const QString & originalExpectedFileName, const QString & moduleID) 
 {
     Q_UNUSED(moduleID);
+
+    QString expectedFileName = originalExpectedFileName;
+    int hsix = expectedFileName.indexOf(HoleSizePrefix);
+    if (hsix >= 0) {
+        expectedFileName.truncate(hsix);
+    }
+
 	QStringList pieces = expectedFileName.split("_");
-	if (pieces.count() != 5) return "";
 
 	int pins = pieces.at(2).toInt();
 	bool ok;
@@ -200,7 +219,7 @@ QString ScrewTerminal::makePcbSvg(const QString & expectedFileName, const QStrin
 					"</g>\n"
 					"<g id='copper1'>\n"
 					"<g id='copper0'>\n"
-					"<rect width='60' height='60' x='%6' y='%7' fill='none' stroke='rgb(255, 191, 0)' stroke-width='20' />\n");
+					"<rect id='square' width='60' height='60' x='%6' y='%7' fill='none' stroke='rgb(255, 191, 0)' stroke-width='20' />\n");
 
 	QString repeat("<circle cx='%1' cy='%2' fill='none' id='connector%3pin' r='30' stroke='rgb(255, 191, 0)' stroke-width='20'/>\n");
 
@@ -217,6 +236,24 @@ QString ScrewTerminal::makePcbSvg(const QString & expectedFileName, const QStrin
 	}
 
 	svg += "</g>\n</g>\n</svg>\n";
+
+    if (hsix >= 0) {
+        return hackSvgHoleSizeAux(svg, originalExpectedFileName);
+    }
+
 	return svg;
 }
 
+bool ScrewTerminal::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget) 
+{
+	if (prop.compare("hole size", Qt::CaseInsensitive) == 0) {
+        return collectHoleSizeInfo(DefaultHoleSizeValue, parent, swappingEnabled, returnProp, returnValue, returnWidget);
+	}
+
+	return PaletteItem::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
+}
+
+void ScrewTerminal::swapEntry(const QString & text) {
+    generateSwap(text, genModuleID, genFZP, makeBreadboardSvg, makeSchematicSvg, makePcbSvg);
+    PaletteItem::swapEntry(text);
+}

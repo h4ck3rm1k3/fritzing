@@ -40,6 +40,10 @@ public:
 
 	PluralType isPlural();
 	QStringList collectValues(const QString & family, const QString & prop, QString & value);
+	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
+
+public slots:
+	void swapEntry(const QString & text);
 
 public:
 	static QString genFZP(const QString & moduleid);
