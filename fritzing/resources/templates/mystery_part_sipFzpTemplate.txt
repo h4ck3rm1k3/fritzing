@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><module moduleId="mystery_part_%1">
+<?xml version="1.0" encoding="UTF-8"?><module moduleId="mystery_part_sip_%1_.percent.2">
  <version>4</version>
  <author>Fritzing Part-o-matic</author>
  <title>Mystery Part - %1 pins</title>
@@ -15,6 +15,7 @@
   <property name="pin spacing">100mil</property>
   <property name="chip label">?</property>
  <property name="package">THT</property>
+   <property name="hole size"></property>
  <property name='editable pin labels'>true</property>
  </properties>
 <taxonomy>part.mystery.magical.%1.pins</taxonomy>

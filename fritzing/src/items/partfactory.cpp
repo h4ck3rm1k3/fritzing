@@ -190,7 +190,14 @@ ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClas
 QString PartFactory::getSvgFilename(ModelPart * modelPart, const QString & expectedFileName) {
 
 	if (expectedFileName.startsWith("pcb/dip_", Qt::CaseInsensitive)) {
-		return getSvgFilenameAux(expectedFileName, modelPart->moduleID(), &Dip::makePcbSvg);
+		return getSvgFilenameAux(expectedFileName, modelPart->moduleID(), &MysteryPart::makePcbDipSvg);
+	}
+
+	if (expectedFileName.startsWith("pcb/mystery_part_", Qt::CaseInsensitive)) {
+        if (expectedFileName.contains("dip")) {
+		    return getSvgFilenameAux(expectedFileName, modelPart->moduleID(), &MysteryPart::makePcbDipSvg);
+        }
+        return getSvgFilenameAux(expectedFileName, modelPart->moduleID(), &PinHeader::makePcbSvg);
 	}
 
 	if (expectedFileName.startsWith("breadboard/mystery_part_", Qt::CaseInsensitive)) {

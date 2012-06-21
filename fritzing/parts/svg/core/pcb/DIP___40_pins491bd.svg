@@ -2,7 +2,7 @@
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
 <svg width="0.72in" x="0in" version="1.2" y="0in" xmlns="http://www.w3.org/2000/svg" height="2.02in" viewBox="0 0 720 2020" baseProfile="tiny" xmlns:svg="http://www.w3.org/2000/svg">
  <g  id="copper0" stroke-width="0">
-  <rect width="55" x="32.5" y="32.5" fill="none"  height="55" stroke="rgb(255, 191, 0)" stroke-width="20"/>
+  <rect id='square' width="55" x="32.5" y="32.5" fill="none"  height="55" stroke="rgb(255, 191, 0)" stroke-width="20"/>
   <circle fill="none" cx="60"  cy="60" stroke="rgb(255, 191, 0)" id="connector0pin" r="27.5" stroke-width="20"/>
   <circle fill="none" cx="660"  cy="60" stroke="rgb(255, 191, 0)" id="connector39pin" r="27.5" stroke-width="20"/>
   <circle fill="none" cx="60"  cy="160" stroke="rgb(255, 191, 0)" id="connector1pin" r="27.5" stroke-width="20"/>

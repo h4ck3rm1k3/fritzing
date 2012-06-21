@@ -200,8 +200,6 @@ QString PinHeader::genFZP(const QString & moduleID)
     if (hsix >= 0) useModuleID.truncate(hsix);
 
 	QStringList pieces = useModuleID.split("_");
-	if (pieces.count() < 6 || pieces.count() > 9) return "";
-
 	QString spacing = pieces.at(pieces.count() - 1);
 
 	QString result = PaletteItem::genFZP(useModuleID, "generic_female_pin_header_fzpTemplate", MinPins, MaxPins, 1, useModuleID.contains("smd")); 
@@ -342,19 +340,9 @@ QString PinHeader::makePcbSvg(const QString & originalExpectedFileName, const QS
 		return makePcbSMDSvg(expectedFileName, moduleID);
 	}
 
-	QStringList pieces = expectedFileName.split("_");
-    int pix = 0;
-    foreach (QString piece, pieces) {
-        bool ok;
-        piece.toInt(&ok);
-        if (ok) break;
-
-        pix++;
-    }
-    if (pix >= pieces.count()) return "";
-
-	int pins = pieces.at(pix).toInt();
-	QString spacingString = pieces.at(pix + 1);
+    QString spacingString;
+    int pins = getPinsAndSpacing(expectedFileName, spacingString);
+    if (pins == 0) return "";
 
     QString svg;
 

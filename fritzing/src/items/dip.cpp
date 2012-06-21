@@ -27,8 +27,10 @@ $Date$
 #include "dip.h"
 #include "../utils/textutils.h"
 #include "../utils/graphicsutils.h"
+#include "../utils/familypropertycombobox.h"
 #include "../connectors/connectoritem.h"
 #include "../fsvgrenderer.h"
+#include "pinheader.h"
 
 #include <QFontMetricsF>
 
@@ -81,12 +83,12 @@ const QStringList & Dip::spacings() {
 
 QString Dip::genSipFZP(const QString & moduleid)
 {
-	return PaletteItem::genFZP(moduleid, "generic_sip_fzpTemplate", MinSipPins, MaxSipPins, 1, false);
+	return genxFZP(moduleid, "generic_sip_fzpTemplate", MinSipPins, MaxSipPins, 1);
 }
 
 QString Dip::genDipFZP(const QString & moduleid)
 {
-	return PaletteItem::genFZP(moduleid, "generic_dip_fzpTemplate", MinDipPins, MaxDipPins, 2, false);
+	return genxFZP(moduleid, "generic_dip_fzpTemplate", MinDipPins, MaxDipPins, 2);
 }
 
 QStringList Dip::collectValues(const QString & family, const QString & prop, QString & value) {
@@ -126,56 +128,6 @@ QString Dip::genModuleID(QMap<QString, QString> & currPropsMap)
 		if (p % 2 == 1) p--;
 		return QString("generic_ic_dip_%1_300mil").arg(p);
 	}
-}
-
-QString Dip::makePcbSvg(const QString & expectedFileName, const QString & moduleID) 
-{
-    Q_UNUSED(moduleID);
-	QStringList pieces = expectedFileName.split("_");
-	if (pieces.count() != 4) return "";
-
-	int pins = pieces.at(1).toInt();
-	QString spacingString = pieces.at(2);
-
-	QString header("<?xml version='1.0' encoding='UTF-8'?>\n"
-				    "<svg baseProfile='tiny' version='1.2' width='%1in' height='%2in' viewBox='0 0 %3 %4' xmlns='http://www.w3.org/2000/svg'>\n"
-				    "<desc>Fritzing footprint SVG</desc>\n"
-					"<g id='silkscreen'>\n"
-					"<line stroke='white' stroke-width='10' x1='10' x2='10' y1='10' y2='%5'/>\n"
-					"<line stroke='white' stroke-width='10' x1='10' x2='%6' y1='%5' y2='%5'/>\n"
-					"<line stroke='white' stroke-width='10' x1='%6' x2='%6' y1='%5' y2='10'/>\n"
-					"<line stroke='white' stroke-width='10' x1='10' x2='%7' y1='10' y2='10'/>\n"
-					"<line stroke='white' stroke-width='10' x1='%8' x2='%6' y1='10' y2='10'/>\n"
-					"</g>\n"
-					"<g id='copper1'><g id='copper0'>\n"
-					"<rect fill='none' height='55' stroke='rgb(255, 191, 0)' stroke-width='20' width='55' x='32.5' y='32.5'/>\n");
-
-	double outerBorder = 10;
-	double silkSplitTop = 100;
-	double offsetX = 60;
-	double offsetY = 60;
-	double spacing = TextUtils::convertToInches(spacingString) * GraphicsUtils::StandardFritzingDPI; 
-	double totalWidth = 120 + spacing;
-	double totalHeight = (100 * pins / 2) + (outerBorder * 2);
-	double center = totalWidth / 2;
-
-	QString svg = header.arg(totalWidth / GraphicsUtils::StandardFritzingDPI).arg(totalHeight / GraphicsUtils::StandardFritzingDPI).arg(totalWidth).arg(totalHeight)
-							.arg(totalHeight - outerBorder).arg(totalWidth - outerBorder)
-							.arg(center - (silkSplitTop / 2)).arg(center + (silkSplitTop / 2));
-
-	QString circle("<circle cx='%1' cy='%2' fill='none' id='connector%3pin' r='27.5' stroke='rgb(255, 191, 0)' stroke-width='20'/>\n");
-
-	int y = offsetY;
-	for (int i = 0; i < pins / 2; i++) {
-		svg += circle.arg(offsetX).arg(y).arg(i);
-		svg += circle.arg(totalWidth - offsetX).arg(y).arg(pins - 1 - i);
-		y += 100;
-	}
-
-	svg += "</g></g>\n";
-	svg += "</svg>\n";
-
-	return svg;
 }
 
 QString Dip::retrieveSchematicSvg(QString & svg) {
@@ -436,4 +388,31 @@ void Dip::addedToScene(bool temporary)
 			resetConnectors();
 		}
 	}
+}
+
+void Dip::swapEntry(const QString & text) {
+
+    FamilyPropertyComboBox * comboBox = qobject_cast<FamilyPropertyComboBox *>(sender());
+    if (comboBox == NULL) return;
+
+    bool sip = moduleID().contains("sip");
+    bool dip = moduleID().contains("dip");
+
+    if (comboBox->prop().contains("package", Qt::CaseInsensitive)) {
+        sip = text.contains("sip", Qt::CaseInsensitive);
+        dip = text.contains("dip", Qt::CaseInsensitive);
+        if (!dip && !sip) {
+            // one of the generic smds
+            PaletteItem::swapEntry(text);
+            return;
+        }
+    }
+
+    if (sip) {
+        generateSwap(text, genModuleID, genSipFZP, makeBreadboardSvg, makeSchematicSvg, PinHeader::makePcbSvg);
+    }
+    else if (dip) {
+        generateSwap(text, genModuleID, genDipFZP, makeBreadboardSvg, makeSchematicSvg, makePcbDipSvg);
+    }
+    PaletteItem::swapEntry(text);
 }

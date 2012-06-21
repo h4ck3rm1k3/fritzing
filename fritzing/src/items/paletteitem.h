@@ -117,6 +117,7 @@ public:
 	static void updateSizes(HoleSettings &);
     static void initHoleSettings(HoleSettings & holeSettings, QHash<QString, QString> * holeSizes, RangeCalc holeDiameterRange,  RangeCalc ringThicknessRange);
 	static bool setHoleSize(QString & holeSize, bool force, HoleSettings & holeSettings);
+    static int getPinsAndSpacing(const QString & expectedFileName, QString & spacingString);
 
 
 signals:

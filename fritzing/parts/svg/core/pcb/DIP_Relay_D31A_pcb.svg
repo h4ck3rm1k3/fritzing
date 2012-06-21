@@ -10,7 +10,7 @@
  </g>
  <g id="copper0"> <g id="copper1">
   <g id="g10452" transform="matrix(0.09,0,0,0.09,-0.45,-0.45)">
-   <rect width="55" x="32.5" y="32.5" height="55" style="fill:none;stroke:#ffbf00;stroke-width:20" id="rect4160"/>
+   <rect id='square' width="55" x="32.5" y="32.5" height="55" style="fill:none;stroke:#ffbf00;stroke-width:20" id="rect4160"/>
   </g>
   <circle id="connector13pin" cx="360" cy="60" style="fill:none;stroke:#ffbf00;stroke-width:20" r="27.5" transform="matrix(0.09,0,0,0.09,-0.45,-0.45)"/>
   <circle id="connector1pin" cx="60" cy="160" style="fill:none;stroke:#ffbf00;stroke-width:20" r="27.5" transform="matrix(0.09,0,0,0.09,-0.45,-0.45)"/>

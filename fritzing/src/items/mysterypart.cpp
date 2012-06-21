@@ -26,12 +26,14 @@ $Date$
 
 #include "mysterypart.h"
 #include "../utils/graphicsutils.h"
+#include "../utils/familypropertycombobox.h"
 #include "../fsvgrenderer.h"
 #include "../sketch/infographicsview.h"
 #include "../commands.h"
 #include "../utils/textutils.h"
 #include "../layerattributes.h"
 #include "partlabel.h"
+#include "pinheader.h"
 #include "../connectors/connectoritem.h"
 
 
@@ -49,6 +51,10 @@ static const int MaxSipPins = 64;
 static const int MinDipPins = 4;
 static const int MaxDipPins = 64;
 
+static QString DefaultHoleSize;
+static QString DefaultRingThickness;
+static QString DefaultHoleSizeValue;
+static QHash<QString, QString> HoleSizes;
 
 // TODO
 //	save into parts bin
@@ -67,6 +73,9 @@ MysteryPart::MysteryPart( ModelPart * modelPart, ViewIdentifierClass::ViewIdenti
 		m_spacing = modelPart->properties().value("spacing", "300mil");
 		modelPart->setLocalProp("spacing", m_spacing);
 	}
+
+    setUpHoleSizes("mystery", DefaultHoleSize, DefaultRingThickness, DefaultHoleSizeValue, HoleSizes);
+
 }
 
 MysteryPart::~MysteryPart() {
@@ -264,6 +273,10 @@ bool MysteryPart::collectExtraInfo(QWidget * parent, const QString & family, con
 		return true;
 	}
 
+    if (prop.compare("hole size", Qt::CaseInsensitive) == 0) {
+        return collectHoleSizeInfo(DefaultHoleSizeValue, parent, swappingEnabled, returnProp, returnValue, returnWidget);
+	}
+
 	return PaletteItem::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
 }
 
@@ -374,12 +387,31 @@ ItemBase::PluralType MysteryPart::isPlural() {
 
 QString MysteryPart::genSipFZP(const QString & moduleid)
 {
-	return PaletteItem::genFZP(moduleid, "mystery_part_sipFzpTemplate", MinSipPins, MaxSipPins, 1, false);
+    return genxFZP(moduleid, "mystery_part_sipFzpTemplate", MinSipPins, MaxSipPins, 1);
 }
 
 QString MysteryPart::genDipFZP(const QString & moduleid)
 {
-	return PaletteItem::genFZP(moduleid, "mystery_part_dipFzpTemplate", MinDipPins, MaxDipPins, 2, false);
+    return genxFZP(moduleid, "mystery_part_dipFzpTemplate", MinDipPins, MaxDipPins, 2);
+
+}
+
+QString MysteryPart::genxFZP(const QString & moduleid, const QString & templateName, int minPins, int maxPins, int step) {
+    QString spacingString;
+    getPinsAndSpacing(moduleid, spacingString);
+    QString result = PaletteItem::genFZP(moduleid, templateName, minPins, maxPins, step, false);
+   	result.replace(".percent.", "%");
+	result = result.arg(spacingString);
+	return hackFzpHoleSize(result, moduleid);
+}
+
+QString MysteryPart::hackFzpHoleSize(const QString & fzp, const QString & moduleid) {
+    int hsix = moduleid.lastIndexOf(HoleSizePrefix);
+    if (hsix >= 0) {
+        return PaletteItem::hackFzpHoleSize(fzp, moduleid, hsix);
+    }
+
+    return fzp;
 }
 
 QString MysteryPart::genModuleID(QMap<QString, QString> & currPropsMap)
@@ -387,13 +419,13 @@ QString MysteryPart::genModuleID(QMap<QString, QString> & currPropsMap)
 	QString value = currPropsMap.value("layout");
 	QString pins = currPropsMap.value("pins");
 	if (value.contains("single", Qt::CaseInsensitive)) {
-		return QString("mystery_part_%1").arg(pins);
+		return QString("mystery_part_sip_%1_100mil").arg(pins);
 	}
 	else {
 		int p = pins.toInt();
 		if (p < 4) p = 4;
 		if (p % 2 == 1) p--;
-		return QString("mystery_part_%1_dip_300mil").arg(p);
+		return QString("mystery_part_dip_%1_300mil").arg(p);
 	}
 }
 
@@ -403,12 +435,6 @@ QString MysteryPart::makeSchematicSvg(const QString & expectedFileName, const QS
 	bool sip = expectedFileName.contains("sip", Qt::CaseInsensitive);
 
 	QStringList pieces = expectedFileName.split("_");
-	if (sip) {
-		if (pieces.count() != 5) return "";
-	}
-	else {
-		if (pieces.count() != 4) return "";
-	}
 
 	int pins = pieces.at(2).toInt();
 	QStringList labels;
@@ -618,3 +644,78 @@ bool MysteryPart::changePinLabels(bool singleRow, bool sip) {
 
 	return true;
 }
+
+void MysteryPart::swapEntry(const QString & text) {
+
+    FamilyPropertyComboBox * comboBox = qobject_cast<FamilyPropertyComboBox *>(sender());
+    if (comboBox == NULL) return;
+
+    QString layout = m_propsMap.value("layout");
+
+    if (comboBox->prop().contains("layout", Qt::CaseInsensitive)) {
+        layout = text;
+    }
+
+    if (layout.contains("single", Qt::CaseInsensitive)) {
+        generateSwap(text, genModuleID, genSipFZP, makeBreadboardSvg, makeSchematicSvg, PinHeader::makePcbSvg);
+    }
+    else {
+        generateSwap(text, genModuleID, genDipFZP, makeBreadboardSvg, makeSchematicSvg, makePcbDipSvg);
+    }
+    PaletteItem::swapEntry(text);
+}
+
+QString MysteryPart::makePcbDipSvg(const QString & expectedFileName, const QString & moduleID) 
+{
+    Q_UNUSED(moduleID);
+
+    QString spacingString;
+	int pins = getPinsAndSpacing(expectedFileName, spacingString);
+    if (pins == 0) return "";  
+
+	QString header("<?xml version='1.0' encoding='UTF-8'?>\n"
+				    "<svg baseProfile='tiny' version='1.2' width='%1in' height='%2in' viewBox='0 0 %3 %4' xmlns='http://www.w3.org/2000/svg'>\n"
+				    "<desc>Fritzing footprint SVG</desc>\n"
+					"<g id='silkscreen'>\n"
+					"<line stroke='white' stroke-width='10' x1='10' x2='10' y1='10' y2='%5'/>\n"
+					"<line stroke='white' stroke-width='10' x1='10' x2='%6' y1='%5' y2='%5'/>\n"
+					"<line stroke='white' stroke-width='10' x1='%6' x2='%6' y1='%5' y2='10'/>\n"
+					"<line stroke='white' stroke-width='10' x1='10' x2='%7' y1='10' y2='10'/>\n"
+					"<line stroke='white' stroke-width='10' x1='%8' x2='%6' y1='10' y2='10'/>\n"
+					"</g>\n"
+					"<g id='copper1'><g id='copper0'>\n"
+					"<rect id='square' fill='none' height='55' stroke='rgb(255, 191, 0)' stroke-width='20' width='55' x='32.5' y='32.5'/>\n");
+
+	double outerBorder = 10;
+	double silkSplitTop = 100;
+	double offsetX = 60;
+	double offsetY = 60;
+	double spacing = TextUtils::convertToInches(spacingString) * GraphicsUtils::StandardFritzingDPI; 
+	double totalWidth = 120 + spacing;
+	double totalHeight = (100 * pins / 2) + (outerBorder * 2);
+	double center = totalWidth / 2;
+
+	QString svg = header.arg(totalWidth / GraphicsUtils::StandardFritzingDPI).arg(totalHeight / GraphicsUtils::StandardFritzingDPI).arg(totalWidth).arg(totalHeight)
+							.arg(totalHeight - outerBorder).arg(totalWidth - outerBorder)
+							.arg(center - (silkSplitTop / 2)).arg(center + (silkSplitTop / 2));
+
+	QString circle("<circle cx='%1' cy='%2' fill='none' id='connector%3pin' r='27.5' stroke='rgb(255, 191, 0)' stroke-width='20'/>\n");
+
+	int y = offsetY;
+	for (int i = 0; i < pins / 2; i++) {
+		svg += circle.arg(offsetX).arg(y).arg(i);
+		svg += circle.arg(totalWidth - offsetX).arg(y).arg(pins - 1 - i);
+		y += 100;
+	}
+
+	svg += "</g></g>\n";
+	svg += "</svg>\n";
+
+    int hsix = expectedFileName.indexOf(HoleSizePrefix);
+    if (hsix >= 0) {
+        return hackSvgHoleSizeAux(svg, expectedFileName);
+    }
+
+	return svg;
+}
+

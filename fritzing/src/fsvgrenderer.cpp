@@ -506,21 +506,32 @@ bool FSvgRenderer::initConnectorInfoStructAux(QDomElement & element, ConnectorIn
 
 	double sw = element.attribute("stroke-width").toDouble(&ok);	
 	if (!ok) {
-        QString text;
-        QTextStream stream(&text);
-        element.save(stream, 0);
-        DebugDialog::debug(QString("no circle stroke width set in %1: %2").arg(filename).arg(text));
-        element.setAttribute("stroke-width", 1);
-        sw = 1;
-        //return false;
+        QDomElement parent = element.parentNode().toElement();
+        while (!parent.isNull()) {
+            sw = element.attribute("stroke-width").toDouble(&ok);
+            if (ok) {
+                break;
+            }
 
-		//QString strokewidth("stroke-width");
-		//QString s = element.attribute("style");
-		//SvgFileSplitter::fixStyleAttribute(connectorElement, s, strokewidth);
-		//sw = connectorElement.attribute("stroke-width").toDouble(&ok);
-		//if (!ok) {
-			//return false;
-		//}
+            parent = parent.parentNode().toElement();
+        }
+
+        if (!ok) {
+            QString text;
+            QTextStream stream(&text);
+            element.save(stream, 0);
+            DebugDialog::debug(QString("no circle stroke width set in %1: %2").arg(filename).arg(text));
+            element.setAttribute("stroke-width", 1);
+            sw = 1;
+
+		    //QString strokewidth("stroke-width");
+		    //QString s = element.attribute("style");
+		    //SvgFileSplitter::fixStyleAttribute(connectorElement, s, strokewidth);
+		    //sw = connectorElement.attribute("stroke-width").toDouble(&ok);
+		    //if (!ok) {
+			    //return false;
+		    //}
+        }
 	}
 
 	QMatrix matrix = TextUtils::elementToMatrix(element);

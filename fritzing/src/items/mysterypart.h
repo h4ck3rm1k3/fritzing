@@ -60,6 +60,7 @@ public:
 
 public slots:
 	void chipLabelEntry();
+	void swapEntry(const QString & text);
 
 public:
 	static QString genSipFZP(const QString & moduleid);
@@ -70,6 +71,7 @@ public:
 	static QString makeBreadboardSvg(const QString & expectedFileName, const QString & moduleID);
 	static QString makeBreadboardSipSvg(const QString & expectedFileName, const QString & moduleID);
 	static QString makeBreadboardDipSvg(const QString & expectedFileName, const QString & moduleID);
+	static QString makePcbDipSvg(const QString & expectedFileName, const QString & moduleID);
 
 protected:
 	QString makeSvg(const QString & chipLabel, bool replace);
@@ -81,6 +83,11 @@ protected:
 	virtual const QStringList & spacings();
 	virtual QString retrieveSchematicSvg(QString & svg);
 
+protected:
+    static QString hackFzpHoleSize(const QString & fzp, const QString & moduleid); 
+    static QString genxFZP(const QString & moduleid, const QString & templateName, int minPins, int maxPins, int step);
+
+protected:
 	static int NoExcusePins;
 
 protected:

@@ -1761,28 +1761,14 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 		}
 	}
 
-	if (generatedModuleID.isEmpty()) {
-		if (prop.compare("layout", Qt::CaseInsensitive) == 0) {
-			if (family.compare("mystery part", Qt::CaseInsensitive) == 0) {
-				generatedModuleID = MysteryPart::genModuleID(currPropsMap);
-			}
-		}
-	}
 
 	if (generatedModuleID.isEmpty()) {
 		if (prop.compare("pins") == 0) {
-			if (itemBase->moduleID().startsWith("screw_terminal_", Qt::CaseInsensitive)) {
-				generatedModuleID = ScrewTerminal::genModuleID(currPropsMap);
-			}
-			else if (itemBase->moduleID().startsWith("generic_sip", Qt::CaseInsensitive)) {
+			if (itemBase->moduleID().startsWith("generic_sip", Qt::CaseInsensitive)) {
 				generatedModuleID = Dip::genModuleID(currPropsMap);
 			}
 			else if (itemBase->moduleID().startsWith("generic_ic_dip", Qt::CaseInsensitive)) {
 				generatedModuleID = Dip::genModuleID(currPropsMap);
-			}
-			else if (itemBase->moduleID().startsWith("mystery_part_", Qt::CaseInsensitive)) 
-			{
-				generatedModuleID = MysteryPart::genModuleID(currPropsMap);
 			}
 		}
 	}
