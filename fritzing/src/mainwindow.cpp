@@ -1752,27 +1752,6 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 		}
 	}
 
-	if (generatedModuleID.isEmpty()) {
-		if (prop.compare("package", Qt::CaseInsensitive) == 0) {
-			QString package = currPropsMap.value(prop);
-			if (package.startsWith("sip", Qt::CaseInsensitive) || package.startsWith("dip", Qt::CaseInsensitive)) {
-				generatedModuleID = Dip::genModuleID(currPropsMap);
-			}
-		}
-	}
-
-
-	if (generatedModuleID.isEmpty()) {
-		if (prop.compare("pins") == 0) {
-			if (itemBase->moduleID().startsWith("generic_sip", Qt::CaseInsensitive)) {
-				generatedModuleID = Dip::genModuleID(currPropsMap);
-			}
-			else if (itemBase->moduleID().startsWith("generic_ic_dip", Qt::CaseInsensitive)) {
-				generatedModuleID = Dip::genModuleID(currPropsMap);
-			}
-		}
-	}
-
 	if (!generatedModuleID.isEmpty()) {
 		ModelPart * modelPart = m_refModel->retrieveModelPart(generatedModuleID);
 		if (modelPart == NULL) {

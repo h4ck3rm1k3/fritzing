@@ -391,8 +391,8 @@ ModelPart * PartFactory::fixObsoleteModuleID(QDomDocument & domDocument, QDomEle
 		QString pins = oldDip.cap(1);
 		moduleIDRef = QString("generic_ic_dip_%1_300mil").arg(pins);
 		ModelPart * modelPart = referenceModel->retrieveModelPart(moduleIDRef);
+		instance.setAttribute("moduleIdRef", moduleIDRef);
 		if (modelPart != NULL) {
-			instance.setAttribute("moduleIdRef", moduleIDRef);
 			QDomElement prop = domDocument.createElement("property");
 			instance.appendChild(prop);
 			prop.setAttribute("name", "spacing");
