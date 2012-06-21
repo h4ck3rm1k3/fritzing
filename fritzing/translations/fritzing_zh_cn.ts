@@ -828,26 +828,6 @@ It is also possible to choose a connector as a ground fill seed by right-clickin
         <source>hole size</source>
         <translation>孔径</translation>
     </message>
-    <message>
-        <source>Hole Diameter</source>
-        <translation>内径</translation>
-    </message>
-    <message>
-        <source>Ring Thickness</source>
-        <translation>外径</translation>
-    </message>
-    <message>
-        <source>advanced settings</source>
-        <translation>高级设置</translation>
-    </message>
-    <message>
-        <source>in</source>
-        <translation>in</translation>
-    </message>
-    <message>
-        <source>mm</source>
-        <translation>mm</translation>
-    </message>
 </context>
 <context>
     <name>HtmlInfoView</name>
@@ -1103,6 +1083,10 @@ It is also possible to choose a connector as a ground fill seed by right-clickin
     <message>
         <source>unable to create renderer for svg %1</source>
         <translation>不能为svg%1创建渲染</translation>
+    </message>
+    <message>
+        <source>dom document problem</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3093,6 +3077,30 @@ Reason: %2 (errcode %3)</source>
         <source>Label mismatch.  Nothing was saved.</source>
         <translation>标签不匹配。什么都没保存。</translation>
     </message>
+    <message>
+        <source>hole size</source>
+        <translation type="unfinished">孔径</translation>
+    </message>
+    <message>
+        <source>advanced settings</source>
+        <translation type="unfinished">高级设置</translation>
+    </message>
+    <message>
+        <source>in</source>
+        <translation type="unfinished">in</translation>
+    </message>
+    <message>
+        <source>mm</source>
+        <translation type="unfinished">mm</translation>
+    </message>
+    <message>
+        <source>Hole Diameter</source>
+        <translation type="unfinished">内径</translation>
+    </message>
+    <message>
+        <source>Ring Thickness</source>
+        <translation type="unfinished">外径</translation>
+    </message>
 </context>
 <context>
     <name>PartLabel</name>
@@ -3717,10 +3725,6 @@ Note: this warning will not be repeated during this session.</source>
         <translation>分钟</translation>
     </message>
     <message>
-        <source>Debug</source>
-        <translation>调试</translation>
-    </message>
-    <message>
         <source>no keys down = scroll
 shift key swaps scroll axis
 Alt or %1 key = zoom</source>
@@ -3753,6 +3757,10 @@ This checkbox sets the default behavior. You can switch back to the non-default 
         <translation>当按下鼠标拖动线或元件的针脚（区别于接插件或者曲点）你想改变线（或腿）的曲率或者拖一个新的拐点出来么？
 
 这个选框设置了默认的属性，你可以在拖动时按下Control键（Mac：Command键）切换至没有默认属性。</translation>
+    </message>
+    <message>
+        <source>Clear Settings</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4050,14 +4058,6 @@ This checkbox sets the default behavior. You can switch back to the non-default 
     <message>
         <source>&lt;b&gt;Unconnected highlight color&lt;/b&gt;</source>
         <translation>&lt;b&gt;未连接的高亮颜色&lt;/b&gt;</translation>
-    </message>
-    <message>
-        <source>Clear all saved settings and close this dialog (debug mode only).</source>
-        <translation>清除所有保存的设置关闭对话框(只在debug模式下)。</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation>清除</translation>
     </message>
     <message>
         <source>Fritzing</source>
@@ -4728,6 +4728,26 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
         <source>Set Grid Size</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Clear all saved settings and close this dialog immediately.
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This action does not delete any files; it restores settings to their default values.
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>There is no undo for this action, and no further warning!!!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QShortcut</name>
@@ -5110,10 +5130,6 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
         <translation>改变%1从%2至%3</translation>
     </message>
     <message>
-        <source>Change note to &apos;%2&apos;</source>
-        <translation>改变注释为&apos;%2&apos;</translation>
-    </message>
-    <message>
         <source>from %1</source>
         <translation>从%1</translation>
     </message>
@@ -5168,6 +5184,10 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     <message>
         <source>Create wire from Ratsnest</source>
         <translation>从覆铜创建线</translation>
+    </message>
+    <message>
+        <source>Note text change</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

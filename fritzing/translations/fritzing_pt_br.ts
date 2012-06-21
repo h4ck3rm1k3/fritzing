@@ -827,26 +827,6 @@ It is also possible to choose a connector as a ground fill seed by right-clickin
         <source>hole size</source>
         <translation>tamanho do furo</translation>
     </message>
-    <message>
-        <source>Hole Diameter</source>
-        <translation>Diâmetro do Furo</translation>
-    </message>
-    <message>
-        <source>Ring Thickness</source>
-        <translation>Espessura do Anel</translation>
-    </message>
-    <message>
-        <source>advanced settings</source>
-        <translation>configurações avançadas</translation>
-    </message>
-    <message>
-        <source>in</source>
-        <translation type="unfinished">in</translation>
-    </message>
-    <message>
-        <source>mm</source>
-        <translation type="unfinished">mm</translation>
-    </message>
 </context>
 <context>
     <name>HtmlInfoView</name>
@@ -1103,6 +1083,10 @@ It is also possible to choose a connector as a ground fill seed by right-clickin
     <message>
         <source>unable to create renderer for svg %1</source>
         <translation>Incapaz de criar a representação para o svg %1</translation>
+    </message>
+    <message>
+        <source>dom document problem</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3081,6 +3065,30 @@ Razão: %2 (código do erro %3)</translation>
         <source>Label mismatch.  Nothing was saved.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>hole size</source>
+        <translation type="unfinished">tamanho do furo</translation>
+    </message>
+    <message>
+        <source>advanced settings</source>
+        <translation type="unfinished">configurações avançadas</translation>
+    </message>
+    <message>
+        <source>in</source>
+        <translation type="unfinished">in</translation>
+    </message>
+    <message>
+        <source>mm</source>
+        <translation type="unfinished">mm</translation>
+    </message>
+    <message>
+        <source>Hole Diameter</source>
+        <translation type="unfinished">Diâmetro do Furo</translation>
+    </message>
+    <message>
+        <source>Ring Thickness</source>
+        <translation type="unfinished">Espessura do Anel</translation>
+    </message>
 </context>
 <context>
     <name>PartLabel</name>
@@ -3706,10 +3714,6 @@ Note: this warning will not be repeated during this session.</source>
         <translation>minutos</translation>
     </message>
     <message>
-        <source>Debug</source>
-        <translation>Depurar</translation>
-    </message>
-    <message>
         <source>no keys down = scroll
 shift key swaps scroll axis
 Alt or %1 key = zoom</source>
@@ -3741,6 +3745,10 @@ This checkbox sets the default behavior. You can switch back to the non-default 
         <translation>Quando você move o cursor para baixo e arrasta um fio ou uma &quot;pata&quot; de um componente (ao contrário de uma ligação) queres manter a curvatura do fio (ou &quot;pata&quot;) ou criar um novo ponto de dobragem?
 
 Esta caixa de verificação define as definições padrão. Para mudar essas configurações, pressione continuamente a tecla Control (Mac: Tecla de Comando) enquanto move um componente.</translation>
+    </message>
+    <message>
+        <source>Clear Settings</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4148,14 +4156,6 @@ Esta caixa de verificação define as definições padrão. Para mudar essas con
     <message>
         <source>Please note that a new language setting will not take effect until the next time you run Fritzing.</source>
         <translation>Note que a definição de uma nova linguagem não terá efeito até você reiniciar o Fritzing.</translation>
-    </message>
-    <message>
-        <source>Clear all saved settings and close this dialog (debug mode only).</source>
-        <translation>Limpar todas as modificações salvas nesta caixa e fechar (apenas modo depurador).</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation>Limpar</translation>
     </message>
     <message>
         <source>Oops!</source>
@@ -4712,6 +4712,26 @@ is already there, we won&apos;t add it again, right?</source>
         <source>Set Grid Size</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Clear all saved settings and close this dialog immediately.
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This action does not delete any files; it restores settings to their default values.
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>There is no undo for this action, and no further warning!!!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QShortcut</name>
@@ -5100,10 +5120,6 @@ is already there, we won&apos;t add it again, right?</source>
         <translation>Mudar %1 de %2 para %3</translation>
     </message>
     <message>
-        <source>Change note to &apos;%2&apos;</source>
-        <translation>Mudar a nota para &apos;%2&apos;</translation>
-    </message>
-    <message>
         <source>from %1</source>
         <translation>de %1</translation>
     </message>
@@ -5157,6 +5173,10 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>Create wire from Ratsnest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Note text change</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
