@@ -142,7 +142,7 @@ SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, Q
 	m_clearSceneRect = false;
 	m_draggingBendpoint = false;
 	m_zoom = 100;
-	m_showGrid = m_alignToGrid = false;
+	m_showGrid = m_alignToGrid = true;
 	m_movingByMouse = m_movingByArrow = false;
 	m_statusConnectState = StatusConnectNotTried;
 	m_dragBendpointWire = NULL;

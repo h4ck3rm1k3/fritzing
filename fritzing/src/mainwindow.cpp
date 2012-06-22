@@ -1037,6 +1037,17 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 		}
 	}
 
+    ModelPart * root = m_binManager->tempRoot();
+    if (root) {
+        foreach (QObject * o, root->children()) {
+            ModelPart * modelPart = qobject_cast<ModelPart *>(o);
+            if (modelPart == NULL) continue;
+
+            QString moduleID = modelPart->moduleID();
+            m_paletteModel->removePart(moduleID);
+            m_refModel->removePart(moduleID);
+        }
+    }
 
 	DebugDialog::debug(QString("top level windows: %1").arg(QApplication::topLevelWidgets().size()));
 	/*

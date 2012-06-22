@@ -93,6 +93,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		bool fastLoaded();
 		BinLocation::Location location();
 		void copyFilesToContrib(ModelPart *, QWidget * originator);
+        ModelPart * root();
 
 	public slots:
 		void addPartCommand(const QString& moduleID);

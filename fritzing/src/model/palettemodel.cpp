@@ -666,6 +666,7 @@ void PaletteModel::removePart(const QString &moduleID) {
 		ModelPart* mp = qobject_cast<ModelPart *>(*i);
 		if (mp == NULL) continue;
 
+        //DebugDialog::debug(QString("remove part %1").arg(mp->moduleID()));
 		if(mp->moduleID() == moduleID) {
 			mpToRemove = mp;
 			break;
@@ -673,8 +674,12 @@ void PaletteModel::removePart(const QString &moduleID) {
 	}
 	if(mpToRemove) {
 		mpToRemove->setParent(NULL);
+
 		delete mpToRemove;
 	}
+    //DebugDialog::debug(QString("part hash count %1").arg(m_partHash.count()));
+    m_partHash.remove(moduleID);
+    //DebugDialog::debug(QString("part hash count %1").arg(m_partHash.count()));
 }
 
 void PaletteModel::removeParts() {
@@ -688,6 +693,7 @@ void PaletteModel::removeParts() {
 
     foreach(ModelPart * modelPart, modelParts) {
         modelPart->setParent(NULL);
+        m_partHash.remove(modelPart->moduleID());
         delete modelPart;
     }
 }

@@ -1151,3 +1151,16 @@ void BinManager::copyFilesToContrib(ModelPart * mp, QWidget * originator) {
 		}
 	}
 }
+
+ModelPart * BinManager::tempRoot() {
+
+	for (int i = 0; i < m_stackTabWidget->count(); i++) {
+		PartsBinPaletteWidget* bin = (PartsBinPaletteWidget *) m_stackTabWidget->widget(i);
+        if (bin->fileName() == TempPartsBinLocation) {
+            return bin->root();
+		}
+	}
+
+    return NULL;
+
+}
