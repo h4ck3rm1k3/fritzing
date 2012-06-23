@@ -7954,8 +7954,8 @@ void SketchWidget::initGrid() {
             m_gridSizeText = szString;
 		}
 	}
-	m_alignToGrid = settings.value(QString("%1AlignToGrid").arg(viewName()), false).toBool();
-	m_showGrid = settings.value(QString("%1ShowGrid").arg(viewName()), false).toBool();
+	m_alignToGrid = settings.value(QString("%1AlignToGrid").arg(viewName()), true).toBool();
+	m_showGrid = settings.value(QString("%1ShowGrid").arg(viewName()), true).toBool();
 }
 
 
