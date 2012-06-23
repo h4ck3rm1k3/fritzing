@@ -481,7 +481,6 @@ CMRouter::CMRouter(PCBSketchWidget * sketchWidget, ItemBase * board, bool adjust
 	m_maxRect90 = matrix90.mapRect(m_maxRect);
 
 	qrectToTile(m_maxRect, m_tileMaxRect); 
-	qrectToTile(m_maxRect90, m_tileMaxRect90); 
 
 	setUpWidths(m_sketchWidget->getAutorouterTraceWidth());
 
@@ -501,7 +500,8 @@ CMRouter::~CMRouter()
 
 void CMRouter::start()
 {	
-	if (m_sketchWidget->autorouteTypePCB() && m_board == NULL) {
+    bool isPCBType = m_sketchWidget->autorouteTypePCB();
+	if (isPCBType && m_board == NULL) {
 		QMessageBox::warning(NULL, QObject::tr("Fritzing"), QObject::tr("Cannot autoroute: no board (or multiple boards) found"));
 		return;
 	}
@@ -525,12 +525,14 @@ void CMRouter::start()
 	QHash<ConnectorItem *, int> indexer;
 	m_sketchWidget->collectAllNets(indexer, m_allPartConnectorItems, false, m_bothSidesNow);
 
-	// remove any vias or jumperItems that will be deleted
+    QRectF boardRect;
+    if (m_board) boardRect = m_board->sceneBoundingRect();
+	// remove any vias or jumperItems that will be deleted, also remove off-board items
 	for (int i = m_allPartConnectorItems.count() - 1; i >= 0; i--) {
 		QList<ConnectorItem *> * connectorItems = m_allPartConnectorItems.at(i);
 		for (int j = connectorItems->count() - 1; j >= 0; j--) {
 			ConnectorItem * connectorItem = connectorItems->at(j);
-			connectorItem->debugInfo("pci");
+			//connectorItem->debugInfo("pci");
 			bool doRemove = false;
 			if (connectorItem->attachedToItemType() == ModelPart::Via) {
 				Via * via = qobject_cast<Via *>(connectorItem->attachedTo()->layerKinChief());
@@ -540,6 +542,11 @@ void CMRouter::start()
 				JumperItem * jumperItem = qobject_cast<JumperItem *>(connectorItem->attachedTo()->layerKinChief());
 				doRemove = jumperItem->getAutoroutable();
 			}
+            if (!doRemove && isPCBType) {
+                if (!connectorItem->sceneBoundingRect().intersects(boardRect)) {
+                    doRemove = true;
+                }
+            }
 			if (doRemove) {
 				connectorItems->removeAt(j);
 			}
@@ -551,7 +558,8 @@ void CMRouter::start()
 	}
 
 	if (m_allPartConnectorItems.count() == 0) {
-		QMessageBox::information(NULL, QObject::tr("Fritzing"), QObject::tr("No connections to route'."));
+        QString message = isPCBType ?  QObject::tr("No connections (on the PCB) to route.") : QObject::tr("No connections to route.");
+		QMessageBox::information(NULL, QObject::tr("Fritzing"), message);
 		cleanUpNets();
 		return;
 	}
@@ -882,16 +890,16 @@ bool CMRouter::drc(QString & message)
 void CMRouter::drcClean() 
 {
 	clearGridEntries();
-	foreach (Plane * plane, m_planes) clearPlane(plane, false);
+	foreach (Plane * plane, m_planes) clearPlane(plane);
 	m_planeHash.clear();
 	m_specHash.clear();
 	m_planes.clear();
 	if (m_unionPlane) {
-		clearPlane(m_unionPlane, false);
+		clearPlane(m_unionPlane);
 		m_unionPlane = NULL;
 	}
 	if (m_union90Plane) {
-		clearPlane(m_union90Plane, true);
+		clearPlane(m_union90Plane);
 		m_union90Plane = NULL;
 	}
 }
@@ -945,10 +953,10 @@ bool CMRouter::drc(CMRouter::OverlapType overlapType, CMRouter::OverlapType wire
 
 	if (eliminateThin && m_unionPlane != NULL) {
 		QList<TileRect> tileRects;
-		TiSrArea(NULL, m_unionPlane, &m_tileMaxRect, collectThinTiles, &tileRects);
+		TiSrArea(NULL, m_unionPlane, &m_unionPlane->maxRect, collectThinTiles, &tileRects);
 		eliminateThinTiles(tileRects, m_unionPlane);
 		tileRects.clear();
-		TiSrArea(NULL, m_union90Plane, &m_tileMaxRect90, collectThinTiles, &tileRects);
+		TiSrArea(NULL, m_union90Plane, &m_union90Plane->maxRect, collectThinTiles, &tileRects);
 		eliminateThinTiles(tileRects, m_union90Plane);
 	}
 
@@ -988,7 +996,7 @@ bool CMRouter::runEdges(QList<Edge *> & edges, QVector<int> & netCounters, Routi
 		SourceAndDestinationStruct sourceAndDestinationStruct;
 		sourceAndDestinationStruct.edge = edge;
 		foreach (Plane * plane, m_planes) {
-			TiSrArea(NULL, plane, &m_tileMaxRect, findSourceAndDestination, &sourceAndDestinationStruct);
+			TiSrArea(NULL, plane, &plane->maxRect, findSourceAndDestination, &sourceAndDestinationStruct);
 		}
 
 		m_nearestSpaces.clear();
@@ -1086,16 +1094,20 @@ Plane * CMRouter::initPlane(bool rotate90) {
 	QRectF bufferRect(rotate90 ? m_maxRect90 : m_maxRect);
 	bufferRect.adjust(-bufferRect.width(), -bufferRect.height(), bufferRect.width(), bufferRect.height());
 
-    SETLEFT(bufferTile, fasterRealToTile(bufferRect.left()));
-    SETYMIN(bufferTile, fasterRealToTile(bufferRect.top()));		// TILE is Math Y-axis not computer-graphic Y-axis
+    int l = fasterRealToTile(bufferRect.left());
+    int t = fasterRealToTile(bufferRect.top());
+    int r = fasterRealToTile(bufferRect.right());
+    int b = fasterRealToTile(bufferRect.bottom());
+    SETLEFT(bufferTile, l);
+    SETYMIN(bufferTile, t);		// TILE is Math Y-axis not computer-graphic Y-axis
 
-	Plane * thePlane = TiNewPlane(bufferTile);
+	Plane * thePlane = TiNewPlane(bufferTile, l, t, r, b);
 
-    SETRIGHT(bufferTile, fasterRealToTile(bufferRect.right()));
-	SETYMAX(bufferTile, fasterRealToTile(bufferRect.bottom()));		// TILE is Math Y-axis not computer-graphic Y-axis
+    SETRIGHT(bufferTile, r);
+	SETYMAX(bufferTile, b);		// TILE is Math Y-axis not computer-graphic Y-axis
 
 	// do not use InsertTile here
-	TiInsertTile(thePlane, rotate90 ? &m_tileMaxRect90 : &m_tileMaxRect, NULL, Tile::SPACE); 
+	TiInsertTile(thePlane, &thePlane->maxRect, NULL, Tile::SPACE); 
 
 	return thePlane;
 }
@@ -1240,7 +1252,7 @@ Plane * CMRouter::tilePlane(ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewL
 
 	if (eliminateThin) {
 		QList<TileRect> tileRects;
-		TiSrArea(NULL, thePlane, &m_tileMaxRect, collectThinTiles, &tileRects);
+		TiSrArea(NULL, thePlane, &thePlane->maxRect, collectThinTiles, &tileRects);
 		eliminateThinTiles(tileRects, thePlane);
 	}
 
@@ -2293,7 +2305,7 @@ void CMRouter::seedNext(PathUnit * pathUnit, QList<Tile *> & tiles) {
 	//DebugDialog::debug(QString("seed next %1").arg((long) pathUnit, 0, 16));
 	//infoTile("seed next", pathUnit->tile);
 	int tWidthNeeded = TileStandardWireWidth;
-	if ((RIGHT(pathUnit->tile) < m_tileMaxRect.xmaxi) && (HEIGHT(pathUnit->tile) >= tWidthNeeded)) {
+	if ((RIGHT(pathUnit->tile) < pathUnit->plane->maxRect.xmaxi) && (HEIGHT(pathUnit->tile) >= tWidthNeeded)) {
 		Tile * next = TR(pathUnit->tile);
 		appendIf(pathUnit, next, tiles, PathUnit::Right, tWidthNeeded);
 		while (true) {
@@ -2306,7 +2318,7 @@ void CMRouter::seedNext(PathUnit * pathUnit, QList<Tile *> & tiles) {
 		}
 	}
 
-	if ((LEFT(pathUnit->tile) > m_tileMaxRect.xmini) && (HEIGHT(pathUnit->tile) >= tWidthNeeded)) {
+	if ((LEFT(pathUnit->tile) > pathUnit->plane->maxRect.xmini) && (HEIGHT(pathUnit->tile) >= tWidthNeeded)) {
 		Tile * next = BL(pathUnit->tile);
 		appendIf(pathUnit, next, tiles, PathUnit::Left, tWidthNeeded);
 		while (true) {
@@ -2319,7 +2331,7 @@ void CMRouter::seedNext(PathUnit * pathUnit, QList<Tile *> & tiles) {
 		}
 	}
 
-	if ((YMAX(pathUnit->tile) < m_tileMaxRect.ymaxi) && (WIDTH(pathUnit->tile) >= tWidthNeeded)) {	
+	if ((YMAX(pathUnit->tile) < pathUnit->plane->maxRect.ymaxi) && (WIDTH(pathUnit->tile) >= tWidthNeeded)) {	
 		Tile * next = RT(pathUnit->tile);
 		appendIf(pathUnit, next, tiles, PathUnit::Down, tWidthNeeded);
 		while (true) {
@@ -2332,7 +2344,7 @@ void CMRouter::seedNext(PathUnit * pathUnit, QList<Tile *> & tiles) {
 		}
 	}
 
-	if ((YMIN(pathUnit->tile) > m_tileMaxRect.ymini) && (WIDTH(pathUnit->tile) >= tWidthNeeded)) {		
+	if ((YMIN(pathUnit->tile) > pathUnit->plane->maxRect.ymini) && (WIDTH(pathUnit->tile) >= tWidthNeeded)) {		
 		Tile * next = LB(pathUnit->tile);
 		appendIf(pathUnit, next, tiles, PathUnit::Up, tWidthNeeded);
 		while (true) {
@@ -2738,12 +2750,12 @@ void CMRouter::hideTiles()
 	}
 }
 
-void CMRouter::clearPlane(Plane * thePlane, bool rotate90) 
+void CMRouter::clearPlane(Plane * thePlane) 
 {
 	if (thePlane == NULL) return;
 
 	QSet<Tile *> tiles;
-	TiSrArea(NULL, thePlane, rotate90 ? &m_tileMaxRect90 : &m_tileMaxRect, prepDeleteTile, &tiles);
+	TiSrArea(NULL, thePlane, &thePlane->maxRect, prepDeleteTile, &tiles);
 	foreach (Tile * tile, tiles) {
 		TiFree(tile);
 	}
@@ -2785,8 +2797,26 @@ Tile * CMRouter::insertTile(Plane * thePlane, QRectF & rect, QList<Tile *> & alr
 Tile * CMRouter::insertTile(Plane * thePlane, TileRect & tileRect, QList<Tile *> & alreadyTiled, QGraphicsItem * item, Tile::TileType tileType, CMRouter::OverlapType overlapType) 
 {
 	//infoTileRect("insert tile", tileRect);
-	if (tileRect.xmaxi - tileRect.xmini <= 0) {
+	if (tileRect.xmaxi - tileRect.xmini <= 0 || tileRect.ymaxi - tileRect.ymini <= 0) {
 		DebugDialog::debug("attempting to insert zero width tile");
+		return NULL;
+	}
+
+    if (tileRect.xmaxi > thePlane->maxRect.xmaxi) {
+        tileRect.xmaxi = thePlane->maxRect.xmaxi;
+    }
+    if (tileRect.xmini < thePlane->maxRect.xmini) {
+        tileRect.xmini = thePlane->maxRect.xmini;
+    }
+
+    if (tileRect.ymaxi > thePlane->maxRect.ymaxi) {
+        tileRect.ymaxi = thePlane->maxRect.ymaxi;
+    }
+    if (tileRect.ymini < thePlane->maxRect.ymini) {
+        tileRect.ymini = thePlane->maxRect.ymini;
+    }
+
+    if (tileRect.xmaxi - tileRect.xmini <= 0 || tileRect.ymaxi - tileRect.ymini <= 0) {
 		return NULL;
 	}
 
@@ -3045,16 +3075,16 @@ bool CMRouter::findNearestSpaceOne(PathUnit * pathUnit, int tWidthNeeded, int tH
 	//drawTileRect(tileRect, QColor(255,255,0,128));
 	if (tileRect.xmaxi - tileRect.xmini >= tWidthNeeded) {
 		TileRect searchRect = tileRect;
-		searchRect.xmini = qMax(m_tileMaxRect.xmini, tileRect.xmini - tWidthNeeded + TileStandardWireWidth);
-		searchRect.xmaxi = qMin(m_tileMaxRect.xmaxi, tileRect.xmaxi + tWidthNeeded - TileStandardWireWidth);
+		searchRect.xmini = qMax(pathUnit->plane->maxRect.xmini, tileRect.xmini - tWidthNeeded + TileStandardWireWidth);
+		searchRect.xmaxi = qMin(pathUnit->plane->maxRect.xmaxi, tileRect.xmaxi + tWidthNeeded - TileStandardWireWidth);
 		if (searchRect.xmaxi - searchRect.xmini >= tWidthNeeded) {
 			result = findNearestSpaceAux(pathUnit, searchRect, tWidthNeeded, tHeightNeeded, nearest, bestCost, nearestSpace, true);
 		}
 	}
 	if (tileRect.ymaxi - tileRect.ymini >= tHeightNeeded) {
 		TileRect searchRect = tileRect;
-		searchRect.ymini = qMax(m_tileMaxRect.ymini, tileRect.ymini - tHeightNeeded + TileStandardWireWidth);
-		searchRect.ymaxi = qMin(m_tileMaxRect.ymaxi, tileRect.ymaxi + tHeightNeeded - TileStandardWireWidth);
+		searchRect.ymini = qMax(pathUnit->plane->maxRect.ymini, tileRect.ymini - tHeightNeeded + TileStandardWireWidth);
+		searchRect.ymaxi = qMin(pathUnit->plane->maxRect.ymaxi, tileRect.ymaxi + tHeightNeeded - TileStandardWireWidth);
 		if (searchRect.ymaxi - searchRect.ymini >= tHeightNeeded) {
 			result = result || findNearestSpaceAux(pathUnit, searchRect, tWidthNeeded, tHeightNeeded, nearest, bestCost, nearestSpace, false);
 		}
@@ -3363,10 +3393,10 @@ bool CMRouter::propagate(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit 
 
 	foreach (Plane * plane, m_planes) {
 		if (m_sketchWidget->autorouteTypePCB()) {
-			TiSrArea(NULL, plane, &m_tileMaxRect, clearSourceAndDestination, NULL);
+			TiSrArea(NULL, plane, &plane->maxRect, clearSourceAndDestination, NULL);
 		}
 		else {
-			TiSrArea(NULL, plane, &m_tileMaxRect, clearSourceAndDestination2, NULL);
+			TiSrArea(NULL, plane, &plane->maxRect, clearSourceAndDestination2, NULL);
 		}
 	}
 
@@ -3491,7 +3521,7 @@ void CMRouter::crossLayerSource(PathUnit * pathUnit, PriorityQueue<PathUnit *> &
 
 	PathUnit * nextPathUnit = new PathUnit(&sourceQueue);
 	m_pathUnits.append(nextPathUnit);
-	int crossLayerCost = ((m_tileMaxRect.xmaxi - m_tileMaxRect.xmini) + (m_tileMaxRect.ymaxi - m_tileMaxRect.ymini)) / 2;
+	int crossLayerCost = ((pathUnit->plane->maxRect.xmaxi - pathUnit->plane->maxRect.xmini) + (pathUnit->plane->maxRect.ymaxi - pathUnit->plane->maxRect.ymini)) / 2;
 	nextPathUnit->sourceCost = pathUnit->sourceCost + crossLayerCost;
 	nextPathUnit->destCost = pathUnit->destCost;
 	nextPathUnit->minCostRect = pathUnit->minCostRect;
@@ -4038,12 +4068,31 @@ void CMRouter::insertUnion(TileRect & tileRect, QGraphicsItem *, Tile::TileType 
 	if (m_unionPlane == NULL) return;
 	if (tileType == Tile::SPACE) return;
 	if (tileType == Tile::SPACE2) return;
-			
+
 	TiInsertTile(m_unionPlane, &tileRect, NULL, Tile::OBSTACLE);
 	//infoTileRect("union", tileRect);
 
 	TileRect tileRect90;
 	tileRotate90(tileRect, tileRect90);
+
+    if (tileRect90.xmaxi > m_union90Plane->maxRect.xmaxi) {
+        tileRect90.xmaxi = m_union90Plane->maxRect.xmaxi;
+    }
+    if (tileRect90.xmini < m_union90Plane->maxRect.xmini) {
+        tileRect90.xmini = m_union90Plane->maxRect.xmini;
+    }
+
+    if (tileRect90.ymaxi > m_union90Plane->maxRect.ymaxi) {
+        tileRect90.ymaxi = m_union90Plane->maxRect.ymaxi;
+    }
+    if (tileRect90.ymini < m_union90Plane->maxRect.ymini) {
+        tileRect90.ymini = m_union90Plane->maxRect.ymini;
+    }
+
+    if (tileRect90.xmaxi - tileRect90.xmini <= 0 || tileRect90.ymaxi - tileRect90.ymini <= 0) {
+		return;
+	}
+
 	TiInsertTile(m_union90Plane, &tileRect90, NULL, Tile::OBSTACLE);
 }
 

@@ -259,7 +259,16 @@ void PCBSketchWidget::selectAllXTraces(bool autoroutable, const QString & cmdTex
     if (forPCB) {
         int boardCount;
         ItemBase * board = findSelectedBoard(boardCount);
-        if (board == NULL) return;
+        if (boardCount == 0  && autorouteTypePCB()) {
+            QMessageBox::critical(NULL, tr("Fritzing"),
+                       tr("Your sketch does not have a board yet! Please add a PCB in order to use this selection operation."));
+            return;
+        }
+        if (board == NULL) {
+            QMessageBox::critical(NULL, tr("Fritzing"),
+                       tr("Please click on a PCB first--this selection operation only works for one board at a time."));
+            return;
+        }
 
         items = scene()->collidingItems(board);
     }
@@ -1428,8 +1437,7 @@ ItemBase * PCBSketchWidget::placePartDroppedInOtherView(ModelPart * modelPart, V
             else if (ResizableBoard::isBoard(itemBase)) continue;
 
             // itemBase->debugInfo("tiling");
-		    QRectF r = itemBase->sceneBoundingRect();
-		    r.adjust(-keepout, -keepout, keepout, keepout);
+		    QRectF r = itemBase->sceneBoundingRect().adjusted(-keepout, -keepout, keepout, keepout);
 		    router.insertTile(plane, r, alreadyTiled, NULL, Tile::OBSTACLE, CMRouter::IgnoreAllOverlaps);
 	    }
 
@@ -2354,10 +2362,19 @@ int PCBSketchWidget::selectAllItemType(ModelPart::ItemType itemType, const QStri
 {
     int boardCount;
     ItemBase * board = findSelectedBoard(boardCount);
-    if (board == NULL) return 0;
+    if (boardCount == 0  && autorouteTypePCB()) {
+        QMessageBox::critical(NULL, tr("Fritzing"),
+                   tr("Your sketch does not have a board yet!  Please add a PCB in order to use this selection operation."));
+        return 0;
+    }
+    if (board == NULL) {
+        QMessageBox::critical(NULL, tr("Fritzing"),
+                   tr("Please click on a PCB first--this selection operation only works for one board at a time."));
+        return 0;
+    }
 
     QSet<ItemBase *> itemBases;
-	foreach (QGraphicsItem * item, scene()->collidingItems(board)) {
+	foreach (QGraphicsItem * item, (board == NULL ? scene()->items() : scene()->collidingItems(board))) {
 		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 		if (itemBase == NULL) continue;
 		if (itemBase->itemType() != itemType) continue;
@@ -2374,7 +2391,16 @@ void PCBSketchWidget::selectAllWires(ViewGeometry::WireFlag flag)
 {
     int boardCount;
     ItemBase * board = findSelectedBoard(boardCount);
-    if (board == NULL) return;
+    if (boardCount == 0  && autorouteTypePCB()) {
+        QMessageBox::critical(NULL, tr("Fritzing"),
+                   tr("Your sketch does not have a board yet!  Please add a PCB in order to use this selection operation."));
+        return;
+    }
+    if (board == NULL) {
+        QMessageBox::critical(NULL, tr("Fritzing"),
+                   tr("Please click on a PCB first--this selection operation only works for one board at a time."));
+        return;
+    }
 
     QList<QGraphicsItem *> items = scene()->collidingItems(board);
     selectAllWiresFrom(flag, items);

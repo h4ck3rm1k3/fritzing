@@ -597,13 +597,17 @@ PlanePair * Panelizer::makePlanePair(PanelParams & panelParams)
 	QRectF panelRect(0, 0, panelParams.panelWidth + panelParams.panelSpacing - panelParams.panelBorder, 
 							panelParams.panelHeight + panelParams.panelSpacing - panelParams.panelBorder);
 
-    SETLEFT(bufferTile, fasterRealToTile(panelRect.left() - 10));
-    SETYMIN(bufferTile, fasterRealToTile(panelRect.top() - 10));		
+    int l = fasterRealToTile(panelRect.left() - 10);
+    int t = fasterRealToTile(panelRect.top() - 10);
+    int r = fasterRealToTile(panelRect.right() + 10);
+    int b = fasterRealToTile(panelRect.bottom() + 10);
+    SETLEFT(bufferTile, l);
+    SETYMIN(bufferTile, t);		
 
-	planePair->thePlane = TiNewPlane(bufferTile);
+	planePair->thePlane = TiNewPlane(bufferTile, l, t, r, b);
 
-    SETRIGHT(bufferTile, fasterRealToTile(panelRect.right() + 10));
-	SETYMAX(bufferTile, fasterRealToTile(panelRect.bottom() + 10));		
+    SETRIGHT(bufferTile, r);
+	SETYMAX(bufferTile, b);		
 
 	qrectToTile(panelRect, planePair->tilePanelRect);
 	TiInsertTile(planePair->thePlane, &planePair->tilePanelRect, NULL, Tile::SPACE); 
@@ -616,13 +620,17 @@ PlanePair * Panelizer::makePlanePair(PanelParams & panelParams)
 	TiSetType(bufferTile90, Tile::BUFFER);
 	TiSetBody(bufferTile90, NULL);
 
-    SETLEFT(bufferTile90, fasterRealToTile(panelRect90.left() - 10));
-    SETYMIN(bufferTile90, fasterRealToTile(panelRect90.top() - 10));		
+    l = fasterRealToTile(panelRect90.left() - 10);
+    t = fasterRealToTile(panelRect90.top() - 10);
+    r = fasterRealToTile(panelRect.right() + 10);
+    b = fasterRealToTile(panelRect.bottom() + 10);
+    SETLEFT(bufferTile90, l);
+    SETYMIN(bufferTile90, t);		
 
-	planePair->thePlane90 = TiNewPlane(bufferTile90);
+	planePair->thePlane90 = TiNewPlane(bufferTile90, l, t, r, b);
 
-    SETRIGHT(bufferTile90, fasterRealToTile(panelRect.right() + 10));
-	SETYMAX(bufferTile90, fasterRealToTile(panelRect.bottom() + 10));		
+    SETRIGHT(bufferTile90, r);
+	SETYMAX(bufferTile90, b);		
 
 	qrectToTile(panelRect90, planePair->tilePanelRect90);
 	TiInsertTile(planePair->thePlane90, &planePair->tilePanelRect90, NULL, Tile::SPACE); 

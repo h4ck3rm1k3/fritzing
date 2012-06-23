@@ -1742,31 +1742,30 @@ void MainWindow::updateTraceMenu() {
 		}
 	}
 
-    bool oneBoard = (boardCount == 1 || (boardCount > 1 && boardSelectedCount == 1));
-    bool oneBoardOr = (oneBoard || (m_currentGraphicsView != m_pcbGraphicsView));
+    bool anyOrNo = (boardCount >= 1 || m_currentGraphicsView != m_pcbGraphicsView);
 
 	m_excludeFromAutorouteAct->setEnabled(exEnabled);
 	m_excludeFromAutorouteAct->setChecked(exChecked);
 	m_changeTraceLayerAct->setEnabled(ctlEnabled);
-	m_autorouteAct->setEnabled(arEnabled && oneBoardOr);
+	m_autorouteAct->setEnabled(arEnabled && anyOrNo);
 	m_orderFabAct->setEnabled(boardCount > 0);
-	m_selectAllTracesAct->setEnabled(tEnabled && oneBoardOr);
-	m_selectAllWiresAct->setEnabled(tEnabled && oneBoardOr);
-	m_selectAllCopperFillAct->setEnabled(gfrEnabled && oneBoard);
-	m_selectAllExcludedTracesAct->setEnabled(tEnabled && oneBoardOr);
-	m_selectAllIncludedTracesAct->setEnabled(tEnabled && oneBoardOr);
-	m_selectAllJumperItemsAct->setEnabled(jiEnabled && oneBoard);
-	m_selectAllViasAct->setEnabled(viaEnabled && oneBoard);
+	m_selectAllTracesAct->setEnabled(tEnabled && anyOrNo);
+	m_selectAllWiresAct->setEnabled(tEnabled && anyOrNo);
+	m_selectAllCopperFillAct->setEnabled(gfrEnabled && boardCount >= 1);
+	m_selectAllExcludedTracesAct->setEnabled(tEnabled && anyOrNo);
+	m_selectAllIncludedTracesAct->setEnabled(tEnabled && anyOrNo);
+	m_selectAllJumperItemsAct->setEnabled(jiEnabled && boardCount >= 1);
+	m_selectAllViasAct->setEnabled(viaEnabled && boardCount >= 1);
 	m_tidyWiresAct->setEnabled(twEnabled);
-	m_groundFillAct->setEnabled(oneBoard);
-	m_copperFillAct->setEnabled(oneBoard);
-	m_removeGroundFillAct->setEnabled(gfrEnabled && oneBoard);
+	m_groundFillAct->setEnabled(boardCount >= 1);
+	m_copperFillAct->setEnabled(boardCount >= 1);
+	m_removeGroundFillAct->setEnabled(gfrEnabled && boardCount >= 1);
 
 	// TODO: set and clear enabler logic
-	m_setGroundFillSeedsAct->setEnabled(gfsEnabled && oneBoard);
-	m_clearGroundFillSeedsAct->setEnabled(gfsEnabled && oneBoard);
+	m_setGroundFillSeedsAct->setEnabled(gfsEnabled && boardCount >= 1);
+	m_clearGroundFillSeedsAct->setEnabled(gfsEnabled && boardCount >= 1);
 
-	m_designRulesCheckAct->setEnabled(oneBoard);
+	m_designRulesCheckAct->setEnabled(boardCount >= 1);
 	m_autorouterSettingsAct->setEnabled(m_currentGraphicsView == m_pcbGraphicsView);
 	m_updateRoutingStatusAct->setEnabled(true);
 }
@@ -2401,10 +2400,18 @@ void MainWindow::autoroute() {
     if (pcbSketchWidget->autorouteTypePCB()) {
         int boardCount;
 		board = pcbSketchWidget->findSelectedBoard(boardCount);
-        if (board == NULL) return;
+        if (boardCount == 0) {
+            QMessageBox::critical(this, tr("Fritzing"),
+                       tr("Your sketch does not have a board yet!  Please add a PCB in order to use the autorouter."));
+            return;
+        }
+        if (board == NULL) {
+            QMessageBox::critical(this, tr("Fritzing"),
+                       tr("Please select the board you want to autoroute. The autorouter can only handle one board at a time."));
+            return;
+        }
 	}
-
-    
+   
     dynamic_cast<SketchAreaWidget *>(pcbSketchWidget->parent())->routingStatusLabel()->setText(tr("Autorouting..."));
 
 	bool copper0Active = pcbSketchWidget->layerIsActive(ViewLayer::Copper0);
@@ -2464,7 +2471,8 @@ void MainWindow::excludeFromAutoroute() {
 	pcbSketchWidget->excludeFromAutoroute(wire == NULL ? m_excludeFromAutorouteAct->isChecked() : m_excludeFromAutorouteWireAct->isChecked());
 }
 
-void MainWindow::selectAllTraces() {
+void MainWindow::selectAllTraces() 
+{
 	m_currentGraphicsView->selectAllWires(m_currentGraphicsView->getTraceFlag());
 }
 
@@ -2675,6 +2683,20 @@ void MainWindow::groundFillAux(bool fillGroundTraces)
 
 	if (m_pcbGraphicsView == NULL) return;
 
+    int boardCount;
+    ItemBase * board = m_pcbGraphicsView->findSelectedBoard(boardCount);
+    if (boardCount == 0) {
+        QMessageBox::critical(NULL, tr("Fritzing"),
+                   tr("Your sketch does not have a board yet!  Please add a PCB in order to use ground or copper fill."));
+        return;
+    }
+    if (board == NULL) {
+        QMessageBox::critical(NULL, tr("Fritzing"),
+                   tr("Please select a PCB--copper fill only works for one board at a time."));
+        return;
+    }
+
+
     FileProgressDialog fileProgress(tr("Generating %1 fill...").arg(fillGroundTraces ? tr("ground") : tr("copper")), 0, this);
 	QUndoCommand * parentCommand = new QUndoCommand(fillGroundTraces ? tr("Ground Fill") : tr("Copper Fill"));
     removeGroundFill(true, parentCommand);
@@ -2694,7 +2716,16 @@ void MainWindow::removeGroundFill(bool force, QUndoCommand * parentCommand) {
 	QSet<ItemBase *> toDelete;
     int boardCount;
     ItemBase * board = m_pcbGraphicsView->findSelectedBoard(boardCount);
-    if (board == NULL) return;
+    if (boardCount == 0) {
+        QMessageBox::critical(NULL, tr("Fritzing"),
+                   tr("Your sketch does not have a board yet!  Please add a PCB in order to remove copper fill."));
+        return;
+    }
+    if (board == NULL) {
+        QMessageBox::critical(NULL, tr("Fritzing"),
+                   tr("Please select a PCB--ground fill operations only work on a one board at a time."));
+        return;
+    }
 
 	foreach (QGraphicsItem * item, m_pcbGraphicsView->scene()->collidingItems(board)) {
 		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
@@ -3506,7 +3537,16 @@ void MainWindow::designRulesCheck()
     if (pcbSketchWidget->autorouteTypePCB()) {
         int boardCount;
 		board = pcbSketchWidget->findSelectedBoard(boardCount);
-        if (board == NULL) return;
+        if (boardCount == 0) {
+            QMessageBox::critical(NULL, tr("Fritzing"),
+                       tr("Your sketch does not have a board yet! DRC only works with a PCB."));
+            return;
+        }
+        if (board == NULL) {
+            QMessageBox::critical(NULL, tr("Fritzing"),
+                       tr("Please select a PCB. DRC only works on one board at a time."));
+            return;
+        }
 	}
 
 	CMRouter cmRouter(pcbSketchWidget, board, true);
@@ -3606,11 +3646,37 @@ void MainWindow::orderFab()
 }
 
 void MainWindow::setGroundFillSeeds() {
+    int boardCount;
+    ItemBase * board = m_pcbGraphicsView->findSelectedBoard(boardCount);
+    if (boardCount == 0) {
+        QMessageBox::critical(NULL, tr("Fritzing"),
+                   tr("Your sketch does not have a board yet! Please add a PCB in order to use copper fill operations."));
+        return;
+    }
+    if (board == NULL) {
+        QMessageBox::critical(NULL, tr("Fritzing"),
+                   tr("Please select a PCB. Copper fill operations only work on one board at a time."));
+        return;
+    }
+
 	m_pcbGraphicsView->setGroundFillSeeds();
 }
 
 void MainWindow::clearGroundFillSeeds() {
-	m_pcbGraphicsView->clearGroundFillSeeds();
+    int boardCount;
+    ItemBase * board = m_pcbGraphicsView->findSelectedBoard(boardCount);
+    if (boardCount == 0) {
+        QMessageBox::critical(NULL, tr("Fritzing"),
+                   tr("Your sketch does not have a board yet! Please add a PCB in order to use copper fill operations."));
+        return;
+    }
+    if (board == NULL) {
+        QMessageBox::critical(NULL, tr("Fritzing"),
+                   tr("Please select a PCB. Copper fill operations only work on one board at a time."));
+        return;
+    }
+
+    m_pcbGraphicsView->clearGroundFillSeeds();
 }
 
 void MainWindow::setOneGroundFillSeed() {

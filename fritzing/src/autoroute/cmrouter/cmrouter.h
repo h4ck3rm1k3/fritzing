@@ -257,7 +257,7 @@ protected:
 	bool overlapsOnly(QGraphicsItem * item, QList<Tile *> & alreadyTiled);
 	void eliminateThinTiles(QList<TileRect> & tileRects, Plane * thePlane);
 	void eliminateThinTiles2(QList<TileRect> & tileRects, Plane * thePlane);
-	void clearPlane(Plane * thePlane, bool rotate90);
+	void clearPlane(Plane * thePlane);
 	bool allowEquipotentialOverlaps(QGraphicsItem * item, QList<Tile *> & alreadyTiled);
 	PathUnit * findNearestSpace(PriorityQueue<PathUnit *> & priorityQueue, QMultiHash<Tile *, PathUnit *> & tilePathUnits, int tWidthNeeded, int tHeightNeeded, TileRect & nearestSpace);
 	bool findNearestSpaceOne(PathUnit * pathUnit, int tWidthNeeded, int tHeightNeeded, PathUnit * & nearest, int & bestCost, TileRect & nearestSpace);
@@ -297,7 +297,6 @@ protected:
 	QRectF m_maxRect;
 	TileRect m_tileMaxRect;
 	QRectF m_maxRect90;
-	TileRect m_tileMaxRect90;
 	TileRect m_overlappingTileRect;
 	QList<PathUnit *> m_pathUnits;
 	LayerList m_viewLayerIDs;

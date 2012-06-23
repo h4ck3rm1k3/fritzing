@@ -178,6 +178,7 @@ struct Plane
     Tile	*pl_hint;	/* Pointer to a "hint" at which to
 				 * begin searching.
 				 */
+    TileRect maxRect;
 };
 
 /*
@@ -212,7 +213,7 @@ typedef int (*TileCallback)(Tile *, UserData);
  * ever needed by modules other than the tile module.
  */
 
-Plane *TiNewPlane(Tile *tile);
+Plane *TiNewPlane(Tile *tile, int minx, int miny, int maxx, int maxy);
 void TiFreePlane(Plane *plane);
 void TiToRect(Tile *tile, TileRect *rect);
 Tile *TiSplitX(Tile *tile, int x);

@@ -74,7 +74,7 @@ int MINFINITY	= -TINFINITY;
  */
 
 Plane *
-TiNewPlane(Tile *tile)
+TiNewPlane(Tile *tile, int minx, int miny, int maxx, int maxy)
     /* Tile to become initial tile of plane.
 			 * May be NULL.
 			 */
@@ -87,6 +87,11 @@ TiNewPlane(Tile *tile)
     newplane->pl_right = TiAlloc();
     newplane->pl_bottom = TiAlloc();
     newplane->pl_left = TiAlloc();
+
+    newplane->maxRect.xmini = minx;
+    newplane->maxRect.ymini = miny;
+    newplane->maxRect.xmaxi = maxx;
+    newplane->maxRect.ymaxi = maxy;
 
     /*
      * Since the lower left coordinates of the TR and RT
