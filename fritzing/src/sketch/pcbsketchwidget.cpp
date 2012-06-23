@@ -1420,6 +1420,14 @@ ItemBase * PCBSketchWidget::placePartDroppedInOtherView(ModelPart * modelPart, V
 		    if (itemBase->layerKinChief() == board) continue;
 		    if (itemBase->layerKinChief() == newItem) continue;    
 
+            Wire * wire = qobject_cast<Wire *>(itemBase);
+            if (wire != NULL) {
+                if (!wire->getTrace()) continue;
+                if (!wire->isTraceType(getTraceFlag())) continue;
+            }
+            else if (ResizableBoard::isBoard(itemBase)) continue;
+
+            // itemBase->debugInfo("tiling");
 		    QRectF r = itemBase->sceneBoundingRect();
 		    r.adjust(-keepout, -keepout, keepout, keepout);
 		    router.insertTile(plane, r, alreadyTiled, NULL, Tile::OBSTACLE, CMRouter::IgnoreAllOverlaps);
