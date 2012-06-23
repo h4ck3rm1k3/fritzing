@@ -374,6 +374,16 @@
                 </iconView>
             </views>
         </instance>
+		<instance moduleIdRef="045cef49a96039c64e7363608e127209" modelIndex="1000" path="parts/core/Dual_VNH2SP30_Motor_Driver.fzp">
+            <views>
+                <iconView layer="">
+                    <geometry z="0" x="-1" y="-1"/>
+                </iconView>
+                <iconView layer="">
+                    <geometry z="0" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
         <instance moduleIdRef="1099ABDE24_ST_relay" modelIndex="29" path="parts/core/basic-relay.fzp">
             <views>
                 <iconView layer="icon">
@@ -623,20 +633,17 @@
                 </iconView>
             </views>
         </instance>
+        <instance moduleIdRef="15719464aa8d63048081b2444ea6d39c" modelIndex="44" path="parts/core/microSD-socket-molex-502774-0891.fzp">
+            <views>
+                <iconView layer="icon"> 
+                    <geometry z="-1" x="-1" y="-1"/> 
+                </iconView>
+            </views>
+        </instance>
         <instance moduleIdRef="1a4bfb87a0f0fd2c59be43f3497d72e6" modelIndex="42" path="parts/core/xbee.fzp">
             <views>
                 <iconView layer="icon">
                   <geometry z="-1" x="-1" y="-1"/>
-                </iconView>
-            </views>
-        </instance>
-				<instance moduleIdRef="045cef49a96039c64e7363608e127209" modelIndex="1000" >
-            <views>
-                <iconView layer="">
-                    <geometry z="0" x="-1" y="-1"/>
-                </iconView>
-                <iconView layer="">
-                    <geometry z="0" x="-1" y="-1"/>
                 </iconView>
             </views>
         </instance>
@@ -647,14 +654,14 @@
                 </iconView>
             </views>
         </instance>
-	<instance moduleIdRef="proto_shield_v6MEGA" modelIndex="48" path="parts/core/proto_shield_v6MEGA.fzp">
+	<instance moduleIdRef="WIZ820io" modelIndex="48" path="parts/core/WIZ820io.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
                 </iconView>
             </views>
         </instance>
-	<instance moduleIdRef="WIZ820io" modelIndex="48" path="parts/core/WIZ820io.fzp">
+	<instance moduleIdRef="proto_shield_v6MEGA" modelIndex="48" path="parts/core/proto_shield_v6MEGA.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>

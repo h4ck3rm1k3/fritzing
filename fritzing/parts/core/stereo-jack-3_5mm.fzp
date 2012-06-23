@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.18b.04.14.4111" moduleId="stereo-jack-3_5mm">
     <version>4</version>
     <author>Lionel Michel</author>
-    <title>Stereo Jack (TRS) 3.5mm</title>
+    <title>Audio Jack (TRS) 3.5mm</title>
     <label>TRS</label>
     <date>2010-04-14</date>
     <tags>
@@ -14,7 +14,7 @@
     </tags>
     <properties>
         <property name="package">PG203J [THT]</property>
-        <property name="channels">Stereo</property>
+        <property name="channels">Stereo (TRS)</property>
         <property name="size">3.5 mm</property>
         <property name="family">Audio Connector</property>
     </properties>

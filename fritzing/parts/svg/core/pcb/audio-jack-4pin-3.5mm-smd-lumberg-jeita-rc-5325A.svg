@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Generator: Adobe Illustrator 15.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg xmlns="http://www.w3.org/2000/svg" width="0.664389in" xml:space="preserve" xmlns:xml="http://www.w3.org/XML/1998/namespace" x="0px" version="1.2" y="0px" height="0.40625in" viewBox="0 0 47.836 29.25" baseProfile="tiny">
+<g id="copper1">
+<rect  width="5.669" x="13.868" y="22.858" fill="#F7BD13" height="6.392" id="connector0pad"/>
+<rect  width="7.086" x="40.693" y="11.907" fill="#F7BD13" height="5.67" id="connector1pad"/>
+<rect  width="5.669" x="13.868" y="0.000" fill="#F7BD13" height="6.392" id="connector2pad"/>
+<rect  width="7.086" x="40.693" y="21.625" fill="#F7BD13" height="5.67" id="connector3pad"/>
+<rect  width="7.086" x="40.693" y="2.327" fill="#F7BD13" height="5.631" id="connector4pad"/>
+<circle  cx="13.031" cy="9.637" id="nonconn0" r="2.632" stroke="none"/>
+<circle  cx="13.031" cy="19.65" id="nonconn1" r="2.632" stroke="none"/>
+</g>
+<g  id="silkscreen">
+<line  fill="none" stroke="#F0F0F0" stroke-linecap="round" y1="4.625" stroke-width="0.254" x1="20.256" y2="4.625" x2="39.943"/>
+<line  fill="none" stroke="#F0F0F0" stroke-linecap="round" y1="8.437" stroke-width="0.254" x1="41.068" y2="11.312" x2="41.068"/>
+<line  fill="none" stroke="#F0F0F0" stroke-linecap="round" y1="18.062" stroke-width="0.254" x1="41.068" y2="21.187" x2="41.068"/>
+<line  fill="none" stroke="#F0F0F0" stroke-linecap="round" y1="24.46" stroke-width="0.254" x1="20.256" y2="24.46" x2="39.943"/>
+<polyline  fill="none" points="13.031,4.625 7.256,4.625 7.256,24.46 13.031,24.46 " stroke="#F0F0F0" stroke-linecap="round" stroke-width="0.254"/>
+<polyline  fill="none" points="7.256,6.062 0.256,6.062 0.256,22.858 7.256,22.858 " stroke="#F0F0F0" stroke-linecap="round" stroke-width="0.254"/>
+</g>
+</svg>
