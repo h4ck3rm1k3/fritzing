@@ -2323,7 +2323,7 @@ void SketchWidget::findAlignmentAnchor(ItemBase * originatingItem, 	QHash<long, 
 			return;
 		}
 		if (canAlignToCenter(itemBase)) {
-			m_alignmentStartPoint = originatingItem->sceneBoundingRect().center();
+			m_alignmentStartPoint = itemBase->sceneBoundingRect().center();
 			m_alignmentItem = itemBase;
 			return;
 		}
