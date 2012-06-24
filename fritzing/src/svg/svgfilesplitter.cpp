@@ -81,9 +81,9 @@ bool SvgFileSplitter::splitString(QString & contents, const QString & elementID)
 	m_byteArray.clear();
 
 	// gets rid of some crap inserted by illustrator which can screw up polygons and paths
-	contents.remove(QChar('\t'));
-	contents.remove(QChar('\n'));
-	contents.remove(QChar('\r'));
+	contents.replace('\t', ' ');
+	contents.replace('\n', ' ');
+	contents.replace('\r', ' ');
 
 	// get rid of inkscape stuff too
 	contents.remove(TextUtils::SodipodiDetector);
@@ -93,6 +93,7 @@ bool SvgFileSplitter::splitString(QString & contents, const QString & elementID)
 	int errorColumn;
 
 	if (!m_domDocument.setContent(contents, true, &errorStr, &errorLine, &errorColumn)) {
+        DebugDialog::debug(QString("parse error: %1 l:%2 c:%3\n\n%4").arg(errorStr).arg(errorLine).arg(errorColumn).arg(contents));
 		return false;
 	}
 
