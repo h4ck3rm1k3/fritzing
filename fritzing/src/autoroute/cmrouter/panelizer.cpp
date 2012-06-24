@@ -622,8 +622,8 @@ PlanePair * Panelizer::makePlanePair(PanelParams & panelParams)
 
     l = fasterRealToTile(panelRect90.left() - 10);
     t = fasterRealToTile(panelRect90.top() - 10);
-    r = fasterRealToTile(panelRect.right() + 10);
-    b = fasterRealToTile(panelRect.bottom() + 10);
+    r = fasterRealToTile(panelRect90.right() + 10);
+    b = fasterRealToTile(panelRect90.bottom() + 10);
     SETLEFT(bufferTile90, l);
     SETYMIN(bufferTile90, t);		
 

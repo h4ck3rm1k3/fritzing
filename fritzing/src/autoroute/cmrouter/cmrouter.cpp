@@ -953,6 +953,10 @@ bool CMRouter::drc(CMRouter::OverlapType overlapType, CMRouter::OverlapType wire
 
 	if (eliminateThin && m_unionPlane != NULL) {
 		QList<TileRect> tileRects;
+
+
+        //infoTileRect("union plane", m_unionPlane->maxRect),
+        //infoTileRect("union 90 plane", m_union90Plane->maxRect),
 		TiSrArea(NULL, m_unionPlane, &m_unionPlane->maxRect, collectThinTiles, &tileRects);
 		eliminateThinTiles(tileRects, m_unionPlane);
 		tileRects.clear();
@@ -996,6 +1000,8 @@ bool CMRouter::runEdges(QList<Edge *> & edges, QVector<int> & netCounters, Routi
 		SourceAndDestinationStruct sourceAndDestinationStruct;
 		sourceAndDestinationStruct.edge = edge;
 		foreach (Plane * plane, m_planes) {
+            //infoTileRect("edge", plane->maxRect),
+
 			TiSrArea(NULL, plane, &plane->maxRect, findSourceAndDestination, &sourceAndDestinationStruct);
 		}
 
@@ -1092,7 +1098,14 @@ Plane * CMRouter::initPlane(bool rotate90) {
 	TiSetBody(bufferTile, NULL);
 
 	QRectF bufferRect(rotate90 ? m_maxRect90 : m_maxRect);
+
+    TileRect br;
+    qrectToTile(bufferRect, br);
+
 	bufferRect.adjust(-bufferRect.width(), -bufferRect.height(), bufferRect.width(), bufferRect.height());
+    //DebugDialog::debug("max rect", m_maxRect);
+    //DebugDialog::debug("max rect 90", m_maxRect90);
+
 
     int l = fasterRealToTile(bufferRect.left());
     int t = fasterRealToTile(bufferRect.top());
@@ -1101,13 +1114,14 @@ Plane * CMRouter::initPlane(bool rotate90) {
     SETLEFT(bufferTile, l);
     SETYMIN(bufferTile, t);		// TILE is Math Y-axis not computer-graphic Y-axis
 
-	Plane * thePlane = TiNewPlane(bufferTile, l, t, r, b);
+	Plane * thePlane = TiNewPlane(bufferTile, br.xmini, br.ymini, br.xmaxi, br.ymaxi);
 
     SETRIGHT(bufferTile, r);
 	SETYMAX(bufferTile, b);		// TILE is Math Y-axis not computer-graphic Y-axis
 
 	// do not use InsertTile here
 	TiInsertTile(thePlane, &thePlane->maxRect, NULL, Tile::SPACE); 
+    //infoTileRect("insert", thePlane->maxRect);
 
 	return thePlane;
 }
@@ -1252,6 +1266,8 @@ Plane * CMRouter::tilePlane(ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewL
 
 	if (eliminateThin) {
 		QList<TileRect> tileRects;
+            //infoTileRect("elim", thePlane->maxRect),
+
 		TiSrArea(NULL, thePlane, &thePlane->maxRect, collectThinTiles, &tileRects);
 		eliminateThinTiles(tileRects, thePlane);
 	}
@@ -2305,6 +2321,8 @@ void CMRouter::seedNext(PathUnit * pathUnit, QList<Tile *> & tiles) {
 	//DebugDialog::debug(QString("seed next %1").arg((long) pathUnit, 0, 16));
 	//infoTile("seed next", pathUnit->tile);
 	int tWidthNeeded = TileStandardWireWidth;
+                //infoTileRect("seed", pathUnit->plane->maxRect);
+
 	if ((RIGHT(pathUnit->tile) < pathUnit->plane->maxRect.xmaxi) && (HEIGHT(pathUnit->tile) >= tWidthNeeded)) {
 		Tile * next = TR(pathUnit->tile);
 		appendIf(pathUnit, next, tiles, PathUnit::Right, tWidthNeeded);
@@ -2755,6 +2773,9 @@ void CMRouter::clearPlane(Plane * thePlane)
 	if (thePlane == NULL) return;
 
 	QSet<Tile *> tiles;
+
+                    //infoTileRect("clear", thePlane->maxRect);
+
 	TiSrArea(NULL, thePlane, &thePlane->maxRect, prepDeleteTile, &tiles);
 	foreach (Tile * tile, tiles) {
 		TiFree(tile);
@@ -3074,6 +3095,8 @@ bool CMRouter::findNearestSpaceOne(PathUnit * pathUnit, int tWidthNeeded, int tH
 	TiToRect(pathUnit->tile, &tileRect);
 	//drawTileRect(tileRect, QColor(255,255,0,128));
 	if (tileRect.xmaxi - tileRect.xmini >= tWidthNeeded) {
+                        //infoTileRect("near1", pathUnit->plane->maxRect);
+
 		TileRect searchRect = tileRect;
 		searchRect.xmini = qMax(pathUnit->plane->maxRect.xmini, tileRect.xmini - tWidthNeeded + TileStandardWireWidth);
 		searchRect.xmaxi = qMin(pathUnit->plane->maxRect.xmaxi, tileRect.xmaxi + tWidthNeeded - TileStandardWireWidth);
@@ -3082,6 +3105,9 @@ bool CMRouter::findNearestSpaceOne(PathUnit * pathUnit, int tWidthNeeded, int tH
 		}
 	}
 	if (tileRect.ymaxi - tileRect.ymini >= tHeightNeeded) {
+
+                        //infoTileRect("near2", pathUnit->plane->maxRect);
+
 		TileRect searchRect = tileRect;
 		searchRect.ymini = qMax(pathUnit->plane->maxRect.ymini, tileRect.ymini - tHeightNeeded + TileStandardWireWidth);
 		searchRect.ymaxi = qMin(pathUnit->plane->maxRect.ymaxi, tileRect.ymaxi + tHeightNeeded - TileStandardWireWidth);
@@ -3521,6 +3547,9 @@ void CMRouter::crossLayerSource(PathUnit * pathUnit, PriorityQueue<PathUnit *> &
 
 	PathUnit * nextPathUnit = new PathUnit(&sourceQueue);
 	m_pathUnits.append(nextPathUnit);
+
+                    //infoTileRect("cst", pathUnit->plane->maxRect);
+
 	int crossLayerCost = ((pathUnit->plane->maxRect.xmaxi - pathUnit->plane->maxRect.xmini) + (pathUnit->plane->maxRect.ymaxi - pathUnit->plane->maxRect.ymini)) / 2;
 	nextPathUnit->sourceCost = pathUnit->sourceCost + crossLayerCost;
 	nextPathUnit->destCost = pathUnit->destCost;
