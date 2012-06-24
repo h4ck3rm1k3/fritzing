@@ -54,13 +54,13 @@ Via::Via( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentif
     PaletteItem::setUpHoleSizes("via", TheHoleThing);
 
 	if (ringThicknessWasEmpty) {
-		settings.setValue(AutorouteViaRingThickness, ringThickness);
-		DefaultAutorouteViaRingThickness = ringThickness;
+		settings.setValue(AutorouteViaRingThickness, TheHoleThing.ringThickness);
+		DefaultAutorouteViaRingThickness = TheHoleThing.ringThickness;
 	}
 
 	if (holeSizeWasEmpty) {
-		settings.setValue(AutorouteViaHoleSize, holeSize);
-		DefaultAutorouteViaHoleSize = holeSize;
+		settings.setValue(AutorouteViaHoleSize, TheHoleThing.holeSize);
+		DefaultAutorouteViaHoleSize = TheHoleThing.holeSize;
 	}
 
 	//DebugDialog::debug(QString("creating via %1 %2 %3").arg((long) this, 0, 16).arg(id).arg(m_viewIdentifier));
