@@ -51,10 +51,7 @@ static const int MaxSipPins = 64;
 static const int MinDipPins = 4;
 static const int MaxDipPins = 64;
 
-static QString DefaultHoleSize;
-static QString DefaultRingThickness;
-static QString DefaultHoleSizeValue;
-static QHash<QString, QString> HoleSizes;
+static HoleClassThing TheHoleThing;
 
 // TODO
 //	save into parts bin
@@ -74,7 +71,7 @@ MysteryPart::MysteryPart( ModelPart * modelPart, ViewIdentifierClass::ViewIdenti
 		modelPart->setLocalProp("spacing", m_spacing);
 	}
 
-    setUpHoleSizes("mystery", DefaultHoleSize, DefaultRingThickness, DefaultHoleSizeValue, HoleSizes);
+    setUpHoleSizes("mystery", TheHoleThing);
 
 }
 
@@ -274,7 +271,7 @@ bool MysteryPart::collectExtraInfo(QWidget * parent, const QString & family, con
 	}
 
     if (prop.compare("hole size", Qt::CaseInsensitive) == 0) {
-        return collectHoleSizeInfo(DefaultHoleSizeValue, parent, swappingEnabled, returnProp, returnValue, returnWidget);
+        return collectHoleSizeInfo(TheHoleThing.holeSizeValue, parent, swappingEnabled, returnProp, returnValue, returnWidget);
 	}
 
 	return PaletteItem::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);

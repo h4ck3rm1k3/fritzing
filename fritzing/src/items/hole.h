@@ -61,39 +61,20 @@ public:
 	bool rotation45Allowed();
 	bool canFindConnectorsUnder();
 
-public:
-	static QString changeUnits(const QString &, HoleSettings &);
-	static QPointF ringThicknessRange(const QString & holeDiameter);
-	static QPointF holeDiameterRange(const QString & ringThickness);
-	static bool changeDiameter(HoleSettings & holeSettings, QObject * sender);
-	static bool changeThickness(HoleSettings & holeSettings, QObject * sender);
-	static void initHoleSettings(HoleSettings & holeSettings);
-
 protected slots:
-	void changeDiameter();
-	void changeThickness();
-	void changeUnits(bool);
 	void changeHoleSize(const QString &);
+	void changeUnits(bool);
 
 protected:
 	QString makeSvg(const QString & holeDiameter, const QString & ringThickness, ViewLayer::ViewLayerID);
 	virtual QString makeID();
 	ItemBase * setBothSvg(const QString & holeDiameter, const QString & ringThickness); 
 	void setBothNonConnectors(ItemBase * itemBase, SvgIdLayer * svgIdLayer);
-	void setUpHoleSizes();
 	virtual void setBoth(const QString & holeDiameter, const QString &  thickness);
-	QString currentUnits();
 	QRectF getRect(const QString & newSize);
     ViewIdentifierClass::ViewIdentifier useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier, bool swappingEnabled);
 
 public:
-	static QHash<QString, QString> HoleSizes;
-
-public:
-	static const QString AutorouteViaHoleSize;
-	static const QString AutorouteViaRingThickness;
-	static QString DefaultAutorouteViaHoleSize;
-	static QString DefaultAutorouteViaRingThickness;
 	static const double OffsetPixels;
 };
 

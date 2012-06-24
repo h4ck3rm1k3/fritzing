@@ -48,67 +48,19 @@ $Date$
 #include <QSettings>
 
 const double Hole::OffsetPixels = 2;
-QHash<QString, QString> Hole::HoleSizes;
-const QString Hole::AutorouteViaHoleSize = "autorouteViaHoleSize";
-const QString Hole::AutorouteViaRingThickness = "autorouteViaRingThickness";
-QString Hole::DefaultAutorouteViaHoleSize;
-QString Hole::DefaultAutorouteViaRingThickness;
+
+static HoleClassThing TheHoleThing;
 
 //////////////////////////////////////////////////
 
 Hole::Hole( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
-	initHoleSettings(m_holeSettings);
-
-	if (HoleSizes.count() == 0) {
-		setUpHoleSizes();
-	}
-
-	QString holeSize = modelPart->localProp("hole size").toString();
-	QStringList sizes = holeSize.split(",");
-	if (sizes.count() != 2) {
-		holeSize = HoleSizes.value(holeSize, "");
-		if (holeSize.isEmpty()) {
-			holeSize = modelPart->properties().value("hole size", ".035in,0.2in");
-			modelPart->setLocalProp("hole size", holeSize);
-		}
-		sizes = holeSize.split(",");
-	}
-
-	m_holeSettings.holeDiameter = sizes.at(0);
-	m_holeSettings.ringThickness = sizes.at(1);
+	PaletteItem::setUpHoleSizes("hole", TheHoleThing);
 }
 
 Hole::~Hole() {
 }
-
-void Hole::initHoleSettings(HoleSettings & holeSettings) 
-{
-    PaletteItem::initHoleSettings(holeSettings, &HoleSizes, Hole::holeDiameterRange,  Hole::ringThicknessRange);
-}
-
-
-void Hole::setUpHoleSizes() {
-	QSettings settings;
-	QString ringThickness = settings.value(AutorouteViaRingThickness, "").toString();
-	QString holeSize = settings.value(AutorouteViaHoleSize, "").toString();
-
-    bool holeSizeWasEmpty = holeSize.isEmpty();
-    bool ringThicknessWasEmpty = holeSize.isEmpty();
-    PaletteItem::setUpHoleSizes(holeSize, ringThickness, "hole", HoleSizes);
-
-	if (ringThicknessWasEmpty) {
-		settings.setValue(AutorouteViaRingThickness, ringThickness);
-		DefaultAutorouteViaRingThickness = ringThickness;
-	}
-
-	if (holeSizeWasEmpty) {
-		settings.setValue(AutorouteViaHoleSize, holeSize);
-		DefaultAutorouteViaHoleSize = holeSize;
-	}
-}
-
 
 void Hole::setProp(const QString & prop, const QString & value) {
 	if (prop.compare("hole size", Qt::CaseInsensitive) == 0) {
@@ -329,106 +281,11 @@ QString Hole::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QSt
 bool Hole::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget) 
 {
 	if (prop.compare("hole size", Qt::CaseInsensitive) == 0) {
-		returnProp = tr("hole size");
-
-		returnValue = m_modelPart->localProp("hole size").toString();
-		QWidget * frame = createHoleSettings(parent, m_holeSettings, swappingEnabled, returnValue, true);
-
-		connect(m_holeSettings.sizesComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeHoleSize(const QString &)));	
-		connect(m_holeSettings.mmRadioButton, SIGNAL(toggled(bool)), this, SLOT(changeUnits(bool)));
-		connect(m_holeSettings.inRadioButton, SIGNAL(toggled(bool)), this, SLOT(changeUnits(bool)));
-		connect(m_holeSettings.diameterEdit, SIGNAL(editingFinished()), this, SLOT(changeDiameter()));
-		connect(m_holeSettings.thicknessEdit, SIGNAL(editingFinished()), this, SLOT(changeThickness()));
-
-		returnWidget = frame;
-		return true;
+        return collectHoleSizeInfo(TheHoleThing.holeSizeValue, parent, swappingEnabled, returnProp, returnValue, returnWidget);
 	}
 
 	return PaletteItem::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
 }
-
-void Hole::changeThickness() 
-{
-	if (changeThickness(m_holeSettings, sender())) {
-		QLineEdit * edit = qobject_cast<QLineEdit *>(sender());
-		changeHoleSize(m_holeSettings.holeDiameter + "," + edit->text() + currentUnits());
-	}	
-}
-
-bool Hole::changeThickness(HoleSettings & holeSettings, QObject * sender) 
-{
-	QLineEdit * edit = qobject_cast<QLineEdit *>(sender);
-	if (edit == NULL) return false;
-
-	double newValue = edit->text().toDouble();
-	QString temp = holeSettings.ringThickness;
-	temp.chop(2);
-	double oldValue = temp.toDouble();
-	return (newValue != oldValue);
-}
-
-void Hole::changeDiameter() 
-{
-	if (changeDiameter(m_holeSettings, sender())) {
-		QLineEdit * edit = qobject_cast<QLineEdit *>(sender());
-		changeHoleSize(edit->text() + currentUnits() + "," + m_holeSettings.ringThickness);
-	}
-}
-
-bool Hole::changeDiameter(HoleSettings & holeSettings, QObject * sender) 
-{
-	QLineEdit * edit = qobject_cast<QLineEdit *>(sender);
-	if (edit == NULL) return false;
-
-	double newValue = edit->text().toDouble();
-	QString temp = holeSettings.holeDiameter;
-	temp.chop(2);
-	double oldValue = temp.toDouble();
-	return (newValue != oldValue);
-}
-
-void Hole::changeUnits(bool) 
-{
-	QString newVal = changeUnits(currentUnits(), m_holeSettings);
-	modelPart()->setLocalProp("hole size", newVal);
-}
-
-QString Hole::changeUnits(const QString & units, HoleSettings & holeSettings) 
-{
-	double hd = TextUtils::convertToInches(holeSettings.holeDiameter);
-	double rt = TextUtils::convertToInches(holeSettings.ringThickness);
-	QString newVal;
-	if (units == "in") {
-		newVal = QString("%1in,%2in").arg(hd).arg(rt);
-	}
-	else {
-		newVal = QString("%1mm,%2mm").arg(hd * 25.4).arg(rt * 25.4);
-	}
-
-	QStringList sizes = newVal.split(",");
-	holeSettings.ringThickness = sizes.at(1);
-	holeSettings.holeDiameter = sizes.at(0);
-
-	updateValidators(holeSettings);
-	updateSizes(holeSettings);
-	updateEditTexts(holeSettings);
-	
-	return newVal;
-}
-
-
-QPointF Hole::ringThicknessRange(const QString & holeDiameter) {
-	double hd = TextUtils::convertToInches(holeDiameter);
-	QPointF p(hd > 0 ? 0 : .001, 10.0);
-	return p;
-}
-
-QPointF Hole::holeDiameterRange(const QString & ringThickness) {
-	double rt = TextUtils::convertToInches(ringThickness);
-	QPointF p(rt > 0 ? 0 : .001, 10.0);
-	return p;
-}
-
 
 void Hole::changeHoleSize(const QString & newSize) {
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
@@ -460,10 +317,6 @@ bool Hole::canFindConnectorsUnder() {
 	return false;
 }
 
-QString Hole::currentUnits() {
-	return m_holeSettings.currentUnits();
-}
-
 ViewIdentifierClass::ViewIdentifier Hole::useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier vid, bool) 
 {
     if (vid == ViewIdentifierClass::PCBView) {
@@ -471,4 +324,10 @@ ViewIdentifierClass::ViewIdentifier Hole::useViewIdentifierForPixmap(ViewIdentif
     }
 
     return ViewIdentifierClass::UnknownView;
+}
+
+void Hole::changeUnits(bool) 
+{
+	QString newVal = PaletteItem::changeUnits(m_holeSettings);
+	modelPart()->setLocalProp("hole size", newVal);
 }

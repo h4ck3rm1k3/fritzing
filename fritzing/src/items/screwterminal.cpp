@@ -42,16 +42,12 @@ static const int MinPins = 2;
 static const int MaxPins = 20;
 static QHash<QString, QString> Spacings;
 
-static QString DefaultHoleSize;
-static QString DefaultRingThickness;
-static QString DefaultHoleSizeValue;
-static QHash<QString, QString> HoleSizes;
+static HoleClassThing TheHoleThing;
 
 ScrewTerminal::ScrewTerminal( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
-    setUpHoleSizes("screwterminal", DefaultHoleSize, DefaultRingThickness, DefaultHoleSizeValue, HoleSizes);
-
+    setUpHoleSizes("screwterminal", TheHoleThing);
 }
 
 ScrewTerminal::~ScrewTerminal() {
@@ -247,7 +243,7 @@ QString ScrewTerminal::makePcbSvg(const QString & originalExpectedFileName, cons
 bool ScrewTerminal::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget) 
 {
 	if (prop.compare("hole size", Qt::CaseInsensitive) == 0) {
-        return collectHoleSizeInfo(DefaultHoleSizeValue, parent, swappingEnabled, returnProp, returnValue, returnWidget);
+        return collectHoleSizeInfo(TheHoleThing.holeSizeValue, parent, swappingEnabled, returnProp, returnValue, returnWidget);
 	}
 
 	return PaletteItem::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);

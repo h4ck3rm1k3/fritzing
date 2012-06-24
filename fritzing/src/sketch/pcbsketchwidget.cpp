@@ -1485,10 +1485,10 @@ void PCBSketchWidget::getViaSize(double & ringThickness, double & holeSize) {
 }
 
 void PCBSketchWidget::getDefaultViaSize(QString & ringThickness, QString & holeSize) {
-	// these settings are initialized in hole.cpp
+	// these settings are initialized in via.cpp
 	QSettings settings;
-	ringThickness = settings.value(Hole::AutorouteViaRingThickness, Hole::DefaultAutorouteViaRingThickness).toString();
-	holeSize = settings.value(Hole::AutorouteViaHoleSize, Hole::DefaultAutorouteViaHoleSize).toString();
+	ringThickness = settings.value(Via::AutorouteViaRingThickness, Via::DefaultAutorouteViaRingThickness).toString();
+	holeSize = settings.value(Via::AutorouteViaHoleSize, Via::DefaultAutorouteViaHoleSize).toString();
 }
 
 void PCBSketchWidget::changeTrace(Wire * wire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand) 

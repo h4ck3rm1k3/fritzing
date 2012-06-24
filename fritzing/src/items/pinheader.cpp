@@ -58,16 +58,13 @@ static int MaxPins = 64;
 static QHash<QString, QString> Spacings;
 static QString ShroudedSpacing;
 
-static QString DefaultHoleSize;
-static QString DefaultRingThickness;
-static QString DefaultHoleSizeValue;
-static QHash<QString, QString> HoleSizes;
+static HoleClassThing TheHoleThing;
 
 PinHeader::PinHeader( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
 
-    setUpHoleSizes("pinheader", DefaultHoleSize, DefaultRingThickness, DefaultHoleSizeValue, HoleSizes);
+    setUpHoleSizes("pinheader", TheHoleThing);
 
     m_form = modelPart->localProp("form").toString();
 	if (m_form.isEmpty()) {
@@ -671,7 +668,7 @@ bool PinHeader::collectExtraInfo(QWidget * parent, const QString & family, const
             return false;
         }
         else {
-            return collectHoleSizeInfo(DefaultHoleSizeValue, parent, swappingEnabled, returnProp, returnValue, returnWidget);
+            return collectHoleSizeInfo(TheHoleThing.holeSizeValue, parent, swappingEnabled, returnProp, returnValue, returnWidget);
         }
 	}
 

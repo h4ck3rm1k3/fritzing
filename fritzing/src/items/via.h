@@ -42,8 +42,14 @@ public:
 	ConnectorItem * connectorItem();
 	void saveInstanceLocation(QXmlStreamWriter & streamWriter);
 
-	static QPointF ringThicknessRange(const QString & holeDiameter);
-	static QPointF holeDiameterRange(const QString & ringThickness);
+public:
+	static const QString AutorouteViaHoleSize;
+	static const QString AutorouteViaRingThickness;
+	static QString DefaultAutorouteViaHoleSize;
+	static QString DefaultAutorouteViaRingThickness;
+
+public:
+	static void initHoleSettings(HoleSettings & holeSettings);
 
 protected:
 	QString makeID();

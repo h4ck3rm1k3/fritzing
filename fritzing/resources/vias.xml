@@ -1,11 +1,17 @@
 <vias>
-<via holesize="0.6mm" ringthickness="0.3mm" name="Professionally Printed Via" holedefault="yes" pinheader="1"  hole="1" screwterminal="1" mystery="1"/>
-<via holesize="0.8mm" ringthickness="0.3mm" name="Homebrew Etched Via" pinheader="1"  hole="1" screwterminal="1" mystery="1"/>
-<via holesize=".028in" ringthickness=".02in" name="Fine Lead Parts" pinheader="1"  hole="1" screwterminal="1" mystery="1"/>
-<via holesize=".035in" ringthickness=".02in" name="Standard Through-hole" pinheader="1"  hole="1" screwterminal="1" mystery="1" mysterydefault="yes" />
-<via holesize=".038in" ringthickness=".02in" name="Pin Header" pinheader="1" hole="1" pinheaderdefault="yes" screwterminal="1"  mystery="1" />
-<via holesize=".040in" ringthickness=".02in" name="Screw Terminal" pinheader="1" hole="1" screwterminaldefault="yes" screwterminal="1"  mystery="1"/>
-<via holesize=".042in" ringthickness=".02in" name="Big Through-hole" pinheader="1"  hole="1" screwterminal="1"  mystery="1"/>
-<via holesize=".052in" ringthickness=".02in" name="Thick Lead Parts" pinheader="1"  hole="1" screwterminal="1"  mystery="1"/>
-<via holesize=".086in" ringthickness=".02in" name="Mounting Hole"  hole="1"  /> 
+<via holesize="0.4mm" ringthickness="0.3mm" name="Standard Via (0.4mm/0.0157in)" viadefault="yes" via="1" viaringthicknesslow=".002in" viaringthicknesshigh="10in" viaholediameterlow=".002in" viaholediameterhigh="20.0in"/>
+<via holesize="0.9mm" ringthickness="0.508mm" name="Home Etched Via (0.9mm/0.0354in)" via="1" />
+
+<via holesize="2.2mm" ringthickness="0.0mm" name="M2 screw 2.2mm" hole="1"/>
+<via holesize="3.2mm" ringthickness="0.0mm" name="M3 screw 3.2mm (Arduino mounting hole)"  holedefault="yes" hole="1" holeringthicknesslow="0in" holeringthicknesshigh="10in" holeholediameterlow="0in" holeholediameterhigh="20.0in"/>
+<via holesize="4.2mm" ringthickness="0.0mm" name="M4 screw 4.2mm" viadefault="yes" hole="1"/>
+
+<via holesize="0.7mm" ringthickness="0.508mm" name="Small (0.7mm/0.0275in)" pinheader="1"  screwterminal="1" mystery="1"/>
+<via holesize=".035in" ringthickness=".02in" name="Standard" mystery="1" mysterydefault="yes" via="1" hole="1" mysteryringthicknesslow=".002in" mysteryringthicknesshigh=".052in" mysteryholediameterlow=".002in" mysteryholediameterhigh=".052in"/>
+<via holesize="0.9mm" ringthickness="0.508mm" name="Medium (0.9mm/0.0354in)" pinheader="1"  screwterminal="1" mystery="1"/>
+<via holesize=".038in" ringthickness=".02in" name="Standard" pinheader="1" pinheaderdefault="yes"  pinheaderringthicknesslow=".002n" pinheaderringthicknesshigh=".052in" pinheaderholediameterlow=".002in" pinheaderholediameterhigh=".052in"/>
+<via holesize=".040in" ringthickness=".02in" name="Standard" screwterminaldefault="yes" screwterminal="1" screwterminalringthicknesslow=".002in" screwterminalringthicknesshigh=".052n" screwterminalholediameterlow=".002in" screwterminalholediameterhigh=".052in" />
+<via holesize="1.1mm" ringthickness="0.508mm" name="Large (1.1mm/0.0433in)" pinheader="1"  screwterminal="1" mystery="1"/>
+<via holesize="1.5mm" ringthickness="0.508mm" name="Extra (1.5mm/0.0591in)" pinheader="1"  screwterminal="1" mystery="1"/>
+
 </vias>

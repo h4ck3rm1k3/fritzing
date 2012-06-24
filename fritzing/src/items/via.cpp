@@ -32,17 +32,48 @@ $Date$
 #include "../connectors/connectoritem.h"
 #include "../connectors/svgidlayer.h"
 
+#include <QSettings>
+
+static HoleClassThing TheHoleThing;
+
+const QString Via::AutorouteViaHoleSize = "autorouteViaHoleSize";
+const QString Via::AutorouteViaRingThickness = "autorouteViaRingThickness";
+QString Via::DefaultAutorouteViaHoleSize;
+QString Via::DefaultAutorouteViaRingThickness;
 
 Via::Via( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: Hole(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
-	m_holeSettings.holeDiameterRange = Via::holeDiameterRange;
-	m_holeSettings.ringThicknessRange = Via::ringThicknessRange;
+	QSettings settings;
+	QString ringThickness = settings.value(AutorouteViaRingThickness, "").toString();
+	QString holeSize = settings.value(AutorouteViaHoleSize, "").toString();
+
+    bool holeSizeWasEmpty = holeSize.isEmpty();
+    bool ringThicknessWasEmpty = holeSize.isEmpty();
+
+    PaletteItem::setUpHoleSizes("via", TheHoleThing);
+
+	if (ringThicknessWasEmpty) {
+		settings.setValue(AutorouteViaRingThickness, ringThickness);
+		DefaultAutorouteViaRingThickness = ringThickness;
+	}
+
+	if (holeSizeWasEmpty) {
+		settings.setValue(AutorouteViaHoleSize, holeSize);
+		DefaultAutorouteViaHoleSize = holeSize;
+	}
+
 	//DebugDialog::debug(QString("creating via %1 %2 %3").arg((long) this, 0, 16).arg(id).arg(m_viewIdentifier));
 }
 
 Via::~Via() {
 	//DebugDialog::debug(QString("deleting via %1 %2 %3").arg((long) this, 0, 16).arg(m_id).arg(m_viewIdentifier));
+}
+
+void Via::initHoleSettings(HoleSettings & holeSettings) 
+{
+    // called only by AutorouterSettingsDialog
+    PaletteItem::initHoleSettings(holeSettings, &TheHoleThing);
 }
 
 void Via::setBoth(const QString & holeDiameter, const QString & ringThickness) {
@@ -61,18 +92,6 @@ void Via::setBoth(const QString & holeDiameter, const QString & ringThickness) {
 
 QString Via::makeID() {
 	return "connector0pin";
-}
-
-QPointF Via::ringThicknessRange(const QString & holeDiameter) {
-	Q_UNUSED(holeDiameter);
-	QPointF p(.001, 10.0);
-	return p;
-}
-
-QPointF Via::holeDiameterRange(const QString & ringThickness) {
-	Q_UNUSED(ringThickness);
-	QPointF p(.001, 20.0);
-	return p;
 }
 
 void Via::setAutoroutable(bool ar) {

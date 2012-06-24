@@ -40,13 +40,21 @@ $Date$
 #include "paletteitembase.h"
 #include "../viewlayer.h"
 
-typedef QPointF (*RangeCalc)(const QString &);
+struct HoleClassThing {
+    QString holeSize;
+    QString ringThickness;
+    QString holeSizeValue;
+    QHash<QString, QString> holeSizes;
+	QPointF ringThicknessRange;
+	QPointF holeDiameterRange;
+
+};
 
 struct HoleSettings
 {
 	QString holeDiameter;
 	QString ringThickness;
-    QHash<QString, QString> * holeSizes;
+    HoleClassThing * holeThing;
 	QPointer<QDoubleValidator> diameterValidator;
 	QPointer<QDoubleValidator> thicknessValidator;
 	QPointer<QLineEdit> diameterEdit;
@@ -54,8 +62,6 @@ struct HoleSettings
 	QPointer<QRadioButton> inRadioButton;
 	QPointer<QRadioButton> mmRadioButton;
 	QPointer<QComboBox> sizesComboBox;
-	RangeCalc ringThicknessRange;
-	RangeCalc holeDiameterRange;
 
 	QString currentUnits();
     QString holeSize();
@@ -115,10 +121,12 @@ public:
 	static void updateValidators(HoleSettings &);
 	static void updateEditTexts(HoleSettings &);
 	static void updateSizes(HoleSettings &);
-    static void initHoleSettings(HoleSettings & holeSettings, QHash<QString, QString> * holeSizes, RangeCalc holeDiameterRange,  RangeCalc ringThicknessRange);
+    static void initHoleSettings(HoleSettings & holeSettings, HoleClassThing *);
 	static bool setHoleSize(QString & holeSize, bool force, HoleSettings & holeSettings);
     static int getPinsAndSpacing(const QString & expectedFileName, QString & spacingString);
-
+    static QString changeUnits(HoleSettings &);
+	static bool changeDiameter(HoleSettings & holeSettings, QObject * sender);
+	static bool changeThickness(HoleSettings & holeSettings, QObject * sender);
 
 signals:
 	void pinLabelSwap(ItemBase *, const QString & moduleID);
@@ -140,17 +148,21 @@ protected:
     void generateSwap(const QString & text, GenModuleID, GenFzp, GenSvg makeBreadboardSvg, GenSvg makeSchematicSvg, GenSvg makePcbSvg);
 
 protected:
-    void setUpHoleSizes(const QString & type, QString & holeSize, QString & ringThickness, QString & holeSizeValue, QHash<QString, QString> & holeSizes);
+    void setUpHoleSizes(const QString & type, HoleClassThing &);
+	void setUpHoleSizesAux(HoleClassThing &, const QString & type);
     bool collectHoleSizeInfo(const QString & defaultHoleSizeValue, QWidget * parent, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
-	static void setUpHoleSizes(QString & holeSize, QString & ringThickness, const QString & attribute, QHash<QString, QString> & holeSizes);
 	static QStringList getSizes(QString & holeSize, HoleSettings &);
     static QString hackFzpHoleSize(QDomDocument & document, const QString & newModuleID, const QString & pcbFilename, const QString & newSize);
     static QString hackFzpHoleSize(const QString & fzp, const QString & moduleid, int hsix); 
     static QString hackSvgHoleSize(QDomDocument & domDocument, const QString & holeDiameter, const QString & ringThickness);
-    static QString hackSvgHoleSizeAux(const QString & svg, const QString & expectedFileName);
+    static QString hackSvgHoleSizeAux(const QString & svg, const QString & expectedFileName);	
 
 protected slots:
-	void changeHoleSize(const QString &);
+	virtual void changeHoleSize(const QString &);
+	virtual void changeUnits(bool);
+	void changeDiameter();
+	void changeThickness();
+
 
 public:
     static const QString HoleSizePrefix;

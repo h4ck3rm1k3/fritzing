@@ -777,14 +777,33 @@ void PaletteItem::resetConnector(ItemBase * itemBase, SvgIdLayer * svgIdLayer)
 	}
 }
 
-void PaletteItem::setUpHoleSizes(const QString & type, QString & holeSize, QString & ringThickness, QString & holeSizeValue, QHash<QString, QString> & holeSizes) 
+bool PaletteItem::collectHoleSizeInfo(const QString & defaultHoleSizeValue, QWidget * parent, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget) 
 {
-	if (holeSizes.count() == 0) {       
-		setUpHoleSizes(holeSize, ringThickness, type, holeSizes);
-        holeSizeValue = QString("%1,%2").arg(holeSize).arg(ringThickness);
+	returnProp = tr("hole size");
+
+	returnValue = m_modelPart->localProp("hole size").toString();
+    if (returnValue.isEmpty()) {
+        returnValue = defaultHoleSizeValue;
+    }
+	QWidget * frame = createHoleSettings(parent, m_holeSettings, swappingEnabled, returnValue, true);
+
+	connect(m_holeSettings.sizesComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeHoleSize(const QString &)));	
+	connect(m_holeSettings.mmRadioButton, SIGNAL(toggled(bool)), this, SLOT(changeUnits(bool)));
+	connect(m_holeSettings.inRadioButton, SIGNAL(toggled(bool)), this, SLOT(changeUnits(bool)));
+	connect(m_holeSettings.diameterEdit, SIGNAL(editingFinished()), this, SLOT(changeDiameter()));
+	connect(m_holeSettings.thicknessEdit, SIGNAL(editingFinished()), this, SLOT(changeThickness()));
+
+	returnWidget = frame;
+	return true;
+}
+
+void PaletteItem::setUpHoleSizes(const QString & type, HoleClassThing & holeThing) 
+{
+	if (holeThing.holeSizes.count() == 0) {       
+		setUpHoleSizesAux(holeThing, type);
 	}
 
-    initHoleSettings(m_holeSettings, &holeSizes, NULL, NULL);
+    initHoleSettings(m_holeSettings, &holeThing);
     QStringList localHoleSize = modelPart()->localProp("hole size").toString().split(",");
     if (localHoleSize.count() == 2) {
         m_holeSettings.ringThickness = localHoleSize.at(1);
@@ -799,31 +818,12 @@ void PaletteItem::setUpHoleSizes(const QString & type, QString & holeSize, QStri
             m_holeSettings.holeDiameter = localHoleSize.at(0);
         }
         else {
-            m_holeSettings.ringThickness = ringThickness;
-            m_holeSettings.holeDiameter = holeSize;
+            m_holeSettings.ringThickness = holeThing.ringThickness;
+            m_holeSettings.holeDiameter = holeThing.holeSize;
         }
     }
 }
-
-bool PaletteItem::collectHoleSizeInfo(const QString & defaultHoleSizeValue, QWidget * parent, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget) 
-{
-	returnProp = tr("hole size");
-
-	returnValue = m_modelPart->localProp("hole size").toString();
-    if (returnValue.isEmpty()) {
-        returnValue = defaultHoleSizeValue;
-    }
-	QWidget * frame = createHoleSettings(parent, m_holeSettings, swappingEnabled, returnValue, false);
-
-	connect(m_holeSettings.sizesComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeHoleSize(const QString &)));	
-
-	returnWidget = frame;
-	return true;
-}
-
-
-
-void PaletteItem::setUpHoleSizes(QString & holeSize, QString & ringThickness, const QString & attribute, QHash<QString, QString> & holeSizes) {
+void PaletteItem::setUpHoleSizesAux(HoleClassThing & holeThing, const QString & type) {
 	QFile file(":/resources/vias.xml");
 
 	QString errorStr;
@@ -845,20 +845,42 @@ void PaletteItem::setUpHoleSizes(QString & holeSize, QString & ringThickness, co
 		QString rt = ve.attribute("ringthickness");
 		QString hs = ve.attribute("holesize");
 		QString name = ve.attribute("name");
-        QString ok = ve.attribute(attribute);
-        if (ok.toInt() == 1) {
-		    if (ve.attribute(attribute + "default").compare("yes") == 0) {
-			    if (ringThickness.isEmpty()) {
-				    ringThickness = rt;
+        QString isOK = ve.attribute(type);
+        if (isOK.toInt() == 1) {
+		    if (ve.attribute(type + "default").compare("yes") == 0) {
+			    if (holeThing.ringThickness.isEmpty()) {
+				    holeThing.ringThickness = rt;
 			    }
-			    if (holeSize.isEmpty()) {
-				    holeSize = hs;
+			    if (holeThing.holeSize.isEmpty()) {
+				    holeThing.holeSize = hs;
 			    }
 		    }
-		    holeSizes.insert(name, QString("%1,%2").arg(hs).arg(rt));
+
+            bool ok;
+            double val = TextUtils::convertToInches(ve.attribute(type + "ringthicknesslow"), &ok, false);
+            if (ok) {
+                holeThing.ringThicknessRange.setX(val);
+            }
+            val = TextUtils::convertToInches(ve.attribute(type + "ringthicknesshigh"), &ok, false);
+            if (ok) {
+                holeThing.ringThicknessRange.setY(val);
+            }
+            val = TextUtils::convertToInches(ve.attribute(type + "holediameterlow"), &ok, false);
+            if (ok) {
+                holeThing.holeDiameterRange.setX(val);
+            }
+            val = TextUtils::convertToInches(ve.attribute(type + "holediameterhigh"), &ok, false);
+            if (ok) {
+                holeThing.holeDiameterRange.setY(val);
+            }
+
+		    holeThing.holeSizes.insert(name, QString("%1,%2").arg(hs).arg(rt));
         }
 		ve = ve.nextSiblingElement("via");
 	}
+
+    holeThing.holeSizeValue = QString("%1,%2").arg(holeThing.holeSize).arg(holeThing.ringThickness);
+
 }
 
 QWidget * PaletteItem::createHoleSettings(QWidget * parent, HoleSettings & holeSettings, bool swappingEnabled, const QString & currentHoleSize, bool advanced) {
@@ -882,7 +904,7 @@ QWidget * PaletteItem::createHoleSettings(QWidget * parent, HoleSettings & holeS
 	holeSettings.sizesComboBox = new QComboBox(frame);
 	holeSettings.sizesComboBox->setEditable(false);
 	holeSettings.sizesComboBox->setObjectName("infoViewComboBox");
-	holeSettings.sizesComboBox->addItems(holeSettings.holeSizes->keys());
+	holeSettings.sizesComboBox->addItems(holeSettings.holeThing->holeSizes.keys());
 	holeSettings.sizesComboBox->setEnabled(swappingEnabled);
 
 	vBoxLayout->addWidget(holeSettings.sizesComboBox);
@@ -1002,7 +1024,7 @@ void PaletteItem::updateSizes(HoleSettings &  holeSettings) {
 	QPointF current(TextUtils::convertToInches(holeSettings.holeDiameter), TextUtils::convertToInches(holeSettings.ringThickness));
 	for (int ix = 0; ix < holeSettings.sizesComboBox->count(); ix++) {
 		QString key = holeSettings.sizesComboBox->itemText(ix);
-		QString value = holeSettings.holeSizes->value(key, "");
+		QString value = holeSettings.holeThing->holeSizes.value(key, "");
 		QStringList sizes;
 		if (value.isEmpty()) {
 			sizes = key.split(",");
@@ -1024,7 +1046,7 @@ void PaletteItem::updateSizes(HoleSettings &  holeSettings) {
 		holeSettings.sizesComboBox->addItem(newItem);
 		newIndex = holeSettings.sizesComboBox->findText(newItem);
 
-		holeSettings.holeSizes->insert(newItem, newItem);
+		holeSettings.holeThing->holeSizes.insert(newItem, newItem);
 	}
 
 	// don't want to trigger another undo command
@@ -1040,23 +1062,18 @@ void PaletteItem::updateValidators(HoleSettings & holeSettings)
 	if (holeSettings.mmRadioButton == NULL) return;
 
 	QString units = holeSettings.currentUnits();
-	QPointF hdRange = holeSettings.holeDiameterRange(holeSettings.ringThickness);
-	QPointF rtRange = holeSettings.ringThicknessRange(holeSettings.holeDiameter);
-
 	double multiplier = (units == "mm") ? 25.4 : 1.0;
-	holeSettings.diameterValidator->setRange(hdRange.x() * multiplier, hdRange.y() * multiplier, 3);
-	holeSettings.thicknessValidator->setRange(rtRange.x() * multiplier, rtRange.y() * multiplier, 3);
+	holeSettings.diameterValidator->setRange(holeSettings.holeThing->holeDiameterRange.x() * multiplier, holeSettings.holeThing->holeDiameterRange.y() * multiplier, 3);
+	holeSettings.thicknessValidator->setRange(holeSettings.holeThing->ringThicknessRange.x() * multiplier, holeSettings.holeThing->ringThicknessRange.y() * multiplier, 3);
 }
 
-void PaletteItem::initHoleSettings(HoleSettings & holeSettings, QHash<QString, QString> * holeSizes, RangeCalc holeDiameterRange,  RangeCalc ringThicknessRange) 
+void PaletteItem::initHoleSettings(HoleSettings & holeSettings, HoleClassThing * holeThing) 
 {
-    holeSettings.holeSizes = holeSizes;
+    holeSettings.holeThing = holeThing;
 	holeSettings.diameterEdit = holeSettings.thicknessEdit = NULL;
 	holeSettings.diameterValidator = holeSettings.thicknessValidator = NULL;
 	holeSettings.inRadioButton = holeSettings.mmRadioButton = NULL;
 	holeSettings.sizesComboBox = NULL;
-	holeSettings.holeDiameterRange = holeDiameterRange;
-	holeSettings.ringThicknessRange = ringThicknessRange;
 }
 
 
@@ -1081,7 +1098,7 @@ bool PaletteItem::setHoleSize(QString & holeSize, bool force, HoleSettings & hol
 QStringList PaletteItem::getSizes(QString & holeSize, HoleSettings & holeSettings)
 {
 	QStringList sizes;
-	QString hashedHoleSize = holeSettings.holeSizes->value(holeSize);
+	QString hashedHoleSize = holeSettings.holeThing->holeSizes.value(holeSize);
 	if (hashedHoleSize.isEmpty()) {
 		sizes = holeSize.split(",");
 	}
@@ -1337,3 +1354,71 @@ int PaletteItem::getPinsAndSpacing(const QString & expectedFileName, QString & s
     return pins;
 }
 
+void PaletteItem::changeUnits(bool) 
+{
+	QString newVal = changeUnits(m_holeSettings);
+	changeHoleSize(newVal);
+}
+
+QString PaletteItem::changeUnits(HoleSettings & holeSettings) 
+{
+	double hd = TextUtils::convertToInches(holeSettings.holeDiameter);
+	double rt = TextUtils::convertToInches(holeSettings.ringThickness);
+	QString newVal;
+	if (holeSettings.currentUnits() == "in") {
+		newVal = QString("%1in,%2in").arg(hd).arg(rt);
+	}
+	else {
+		newVal = QString("%1mm,%2mm").arg(hd * 25.4).arg(rt * 25.4);
+	}
+
+	QStringList sizes = newVal.split(",");
+	holeSettings.ringThickness = sizes.at(1);
+	holeSettings.holeDiameter = sizes.at(0);
+
+	updateValidators(holeSettings);
+	updateSizes(holeSettings);
+	updateEditTexts(holeSettings);
+
+	return newVal;
+}
+
+void PaletteItem::changeThickness() 
+{
+	if (changeThickness(m_holeSettings, sender())) {
+		QLineEdit * edit = qobject_cast<QLineEdit *>(sender());
+		changeHoleSize(m_holeSettings.holeDiameter + "," + edit->text() + m_holeSettings.currentUnits());
+	}	
+}
+
+bool PaletteItem::changeThickness(HoleSettings & holeSettings, QObject * sender) 
+{
+	QLineEdit * edit = qobject_cast<QLineEdit *>(sender);
+	if (edit == NULL) return false;
+
+	double newValue = edit->text().toDouble();
+	QString temp = holeSettings.ringThickness;
+	temp.chop(2);
+	double oldValue = temp.toDouble();
+	return (newValue != oldValue);
+}
+
+void PaletteItem::changeDiameter() 
+{
+	if (changeDiameter(m_holeSettings, sender())) {
+		QLineEdit * edit = qobject_cast<QLineEdit *>(sender());
+		changeHoleSize(edit->text() + m_holeSettings.currentUnits() + "," + m_holeSettings.ringThickness);
+	}
+}
+
+bool PaletteItem::changeDiameter(HoleSettings & holeSettings, QObject * sender) 
+{
+	QLineEdit * edit = qobject_cast<QLineEdit *>(sender);
+	if (edit == NULL) return false;
+
+	double newValue = edit->text().toDouble();
+	QString temp = holeSettings.holeDiameter;
+	temp.chop(2);
+	double oldValue = temp.toDouble();
+	return (newValue != oldValue);
+}
