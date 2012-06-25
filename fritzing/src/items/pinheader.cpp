@@ -207,11 +207,18 @@ QString PinHeader::genFZP(const QString & moduleID)
 	QString formSchematic = formBread;
 	QString formModule = formBread;
     QString formPackage = useModuleID.contains("smd", Qt::CaseInsensitive) ? "smd" : "tht";
-    QString formRow = useModuleID.contains("shrouded") || useModuleID.contains("double") ? "double" : "single";
+    bool isDouble = useModuleID.contains("shrouded") || useModuleID.contains("double");
+    QString formRow = isDouble ? "double" : "single";
 	if (useModuleID.contains("rounded")) {
 		form = FemaleRoundedFormString;
-		formModule = formBread = "rounded_female";
-		formText = "rounded female";
+        if (isDouble) {
+		    formModule = formBread = "double_row_rounded_female";
+		    formText = "double row rounded female";
+        }
+        else {
+		    formModule = formBread = "rounded_female";
+		    formText = "rounded female";
+        }
 		formSchematic = "female";
 	}
 	else if (useModuleID.contains("female")) {
@@ -222,9 +229,15 @@ QString PinHeader::genFZP(const QString & moduleID)
             formModule.replace(' ', '_');
 		}
 		else {
-			formModule = formText = "female";
+            if (isDouble) {
+			    formBread = formModule = "double_row_female";
+                formText = "double row female";
+            }
+            else {
+			    formBread = formModule = formText = "female";
+            }
 		}
-		formBread = formSchematic = "female";
+        formSchematic = "female";
 	}
 	else if (useModuleID.contains("shrouded")) {
 		form = ShroudedFormString;
@@ -235,6 +248,10 @@ QString PinHeader::genFZP(const QString & moduleID)
         formModule = formText.toLower();
         formModule.replace(' ', '_');
 	}
+    else if (isDouble) {
+	    formBread = formModule = "double_row_male";
+        formText = "double row male";
+    }
 
 	result = result
         .arg(Spacings.value(spacing, ""))
@@ -255,6 +272,10 @@ QString PinHeader::genFZP(const QString & moduleID)
 		result.replace("nsjumper", "shrouded");
 		result.replace("jumper", "shrouded");
 	}
+
+    if (isDouble) {
+        result.replace("jumper", "jumper_double");
+    }
 
     if (hsix >= 0) {
         return hackFzpHoleSize(result, moduleID, hsix);
@@ -285,7 +306,13 @@ QString PinHeader::genModuleID(QMap<QString, QString> & currPropsMap)
 		formWord = "shrouded";
 	}
 	else if (form.contains("rounded")) {
-		formWord ="rounded_female";
+        if (row.contains("single", Qt::CaseInsensitive)) {
+		    formWord ="rounded_female";
+        }
+        else {
+		    formWord ="double_row_rounded_female";
+			isDouble = true;
+        }
 	}
 	else if (form.contains("female")) {
 		if (package.contains("smd")) {
@@ -298,7 +325,13 @@ QString PinHeader::genModuleID(QMap<QString, QString> & currPropsMap)
 			}
 		}
 		else {
-			formWord = "female";
+            if (row.contains("single", Qt::CaseInsensitive)) {
+			    formWord = "female";
+            }
+            else {
+				isDouble = true;
+                formWord = "double_row_female";
+            }
 		}
 	}
 	else if (package.contains("smd")) {
@@ -310,6 +343,10 @@ QString PinHeader::genModuleID(QMap<QString, QString> & currPropsMap)
 			formWord = "double_row_smd_male";
 		}
 	}
+    else if (row.contains("double", Qt::CaseInsensitive)) {
+		formWord = "double_row_male";
+	    isDouble = true;
+    }
 
 	if (isDouble && (p % 2 == 1)) {
 		pins = QString::number(p + 1);
@@ -350,11 +387,21 @@ QString PinHeader::makePcbSvg(const QString & originalExpectedFileName, const QS
 	}
     else {
 	    static QString pcbLayerTemplate = "";
+	    static QString pcbLayerTemplate2 = "";
 
-	    QFile file(":/resources/templates/jumper_pcb_svg_template.txt");
-	    file.open(QFile::ReadOnly);
-	    pcbLayerTemplate = file.readAll();
-	    file.close();
+        if (pcbLayerTemplate.isEmpty()) {
+	        QFile file(":/resources/templates/jumper_pcb_svg_template.txt");
+	        file.open(QFile::ReadOnly);
+	        pcbLayerTemplate = file.readAll();
+	        file.close();
+            QFile file2(":/resources/templates/jumper_pcb_svg_2nd_template.txt");
+	        file2.open(QFile::ReadOnly);
+	        pcbLayerTemplate2 = file2.readAll();
+	        file2.close();
+        }
+
+        bool isDouble = expectedFileName.contains("double");
+        QString useTemplate = isDouble ? pcbLayerTemplate2 : pcbLayerTemplate;
 
 	    double outerBorder = 15;
 	    double innerBorder = outerBorder / 2;
@@ -365,6 +412,7 @@ QString PinHeader::makePcbSvg(const QString & originalExpectedFileName, const QS
 	    double totalWidth = (outerBorder * 2) + (silkStrokeWidth * 2) + (innerBorder * 2) + (standardRadius * 2) + copperStrokeWidth;
 	    double center = totalWidth / 2;
 	    double spacing = TextUtils::convertToInches(spacingString) * GraphicsUtils::StandardFritzingDPI; 
+
 
 	    QString middle;
 
@@ -384,25 +432,65 @@ QString PinHeader::makePcbSvg(const QString & originalExpectedFileName, const QS
 					    .arg(copperStrokeWidth)
 					    .arg(center - radius);
 	    }
-	    for (int i = 0; i < pins; i++) {
-		    middle += QString("<circle cx='%1' cy='%2' fill='none' id='connector%3pin' r='%4' stroke='rgb(255, 191, 0)' stroke-width='%5'/>\n")
-					    .arg(center)
-					    .arg(center + (i * spacing)) 
-					    .arg(i)
-					    .arg(radius)
-					    .arg(copperStrokeWidth);
-	    }
+
+        QString circle("<circle cx='%1' cy='%2' fill='none' id='connector%3pin' r='%4' stroke='rgb(255, 191, 0)' stroke-width='%5'/>\n");
+
+        if (isDouble) {
+	        for (int i = 0; i < pins / 2; i++) {
+		        middle += circle
+					        .arg(center)
+					        .arg(center + (i * spacing)) 
+					        .arg(i)
+					        .arg(radius)
+					        .arg(copperStrokeWidth);
+	        }
+	        for (int i = 0; i < pins / 2; i++) {
+		        middle += circle
+					        .arg(center)
+					        .arg(center + (i * spacing)) 
+					        .arg(i)
+					        .arg(radius)
+					        .arg(copperStrokeWidth);
+	        }
+	        for (int i = pins / 2; i < pins; i++) {
+		        middle += circle
+					        .arg(center + 100)
+					        .arg(center + ((pins - i - 1) * spacing)) 
+					        .arg(i)
+					        .arg(radius)
+					        .arg(copperStrokeWidth);
+	        }
+
+        }
+        else {
+	        for (int i = 0; i < pins; i++) {
+		        middle += circle
+					        .arg(center)
+					        .arg(center + (i * spacing)) 
+					        .arg(i)
+					        .arg(radius)
+					        .arg(copperStrokeWidth);
+	        }
+        }
 
 	    double totalHeight = totalWidth + (pins * spacing) - spacing;
+        double originalTotalWidth = totalWidth;
+        if (isDouble) {
+            totalHeight = totalWidth + (spacing * pins / 2) - spacing;
+            totalWidth += 100;
+        }
 
-	    svg = pcbLayerTemplate
+	    svg = useTemplate
 					    .arg(totalWidth / GraphicsUtils::StandardFritzingDPI)
 					    .arg(totalHeight / GraphicsUtils::StandardFritzingDPI)
 					    .arg(totalWidth)
 					    .arg(totalHeight)
+
 					    .arg(totalWidth - outerBorder - (silkStrokeWidth / 2))
 					    .arg(totalHeight - outerBorder - (silkStrokeWidth / 2))
-					    .arg(totalWidth - outerBorder - (silkStrokeWidth / 2))
+
+					    .arg(originalTotalWidth - outerBorder - (silkStrokeWidth / 2))
+
 					    .arg(silkStrokeWidth)
 					    .arg(silkStrokeWidth / 2)
 					    .arg(middle);
@@ -464,6 +552,9 @@ QString PinHeader::makeBreadboardSvg(const QString & expectedFileName, const QSt
 	if (expectedFileName.contains("shrouded")) {
 		return makeBreadboardShroudedSvg(pins);
 	}
+    if (expectedFileName.contains("double") && !expectedFileName.contains("smd", Qt::CaseInsensitive)) {
+        return makeBreadboardDoubleSvg(expectedFileName, pins);
+    }
 
 	double unitHeight = 0.1;  // inches
 	double unitHeightPoints = unitHeight * 10000;
@@ -495,6 +586,44 @@ QString PinHeader::makeBreadboardSvg(const QString & expectedFileName, const QSt
 
 	return svg;
 }
+
+QString PinHeader::makeBreadboardDoubleSvg(const QString & expectedFileName, int pins) {
+	QString header("<?xml version='1.0' encoding='utf-8'?>\n"
+				"<svg version='1.2' baseProfile='tiny' "
+				"xmlns='http://www.w3.org/2000/svg'  x='0in' y='0in' width='%1in' "
+				"height='0.2in' viewBox='0 0 %2 2000'>\n"
+				"<g id='breadboard' >\n");
+
+	QString fileForm;
+	if (expectedFileName.contains("round")) {
+		fileForm = "rounded_female";
+		header += "<rect fill='#404040' width='%2' height='2000'/>\n";
+	}
+	else if (expectedFileName.contains("female")) {
+		fileForm = "female";
+		header += "<rect fill='#404040' width='%2' height='2000'/>\n";
+	}
+	else {
+		fileForm = "male";
+	}
+
+	double unitHeight = 0.1;  // inches
+	double unitHeightPoints = unitHeight * 10000;
+
+	int userData[2];
+	userData[0] = pins;
+	userData[1] = 1;	QString svg = header.arg(unitHeight * pins / 2).arg(unitHeightPoints * pins / 2);
+	svg += TextUtils::incrementTemplate(QString(":/resources/templates/generic_%1_pin_header_bread_template.txt").arg(fileForm),
+							 pins / 2, unitHeightPoints, TextUtils::standardMultiplyPinFunction, TextUtils::negIncCopyPinFunction, userData);
+
+	svg += TextUtils::incrementTemplate(QString(":/resources/templates/generic_%1_pin_header_bread_2nd_template.txt").arg(fileForm),
+							 pins / 2, unitHeightPoints, TextUtils::standardMultiplyPinFunction, TextUtils::standardCopyPinFunction, NULL);
+
+	svg += "</g>\n</svg>";
+
+	return svg;
+}
+
 
 QString PinHeader::makeBreadboardShroudedSvg(int pins) 
 {
