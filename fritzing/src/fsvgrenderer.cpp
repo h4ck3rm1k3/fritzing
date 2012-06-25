@@ -520,7 +520,7 @@ bool FSvgRenderer::initConnectorInfoStructAux(QDomElement & element, ConnectorIn
             QString text;
             QTextStream stream(&text);
             element.save(stream, 0);
-            DebugDialog::debug(QString("no circle stroke width set in %1: %2").arg(filename).arg(text));
+            //DebugDialog::debug(QString("no circle stroke width set in %1: %2").arg(filename).arg(text));
             element.setAttribute("stroke-width", 1);
             sw = 1;
 

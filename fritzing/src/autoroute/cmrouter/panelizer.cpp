@@ -268,9 +268,19 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 		return;
 	}
 
+    QList<LayerThing> layerThingList;
+	layerThingList.append(LayerThing("outline", ViewLayer::outlineLayers(), SVG2gerber::ForOutline, GerberGenerator::OutlineSuffix));  
+	layerThingList.append(LayerThing("copper_top", ViewLayer::copperLayers(ViewLayer::Top), SVG2gerber::ForCopper, GerberGenerator::CopperTopSuffix));
+	layerThingList.append(LayerThing("copper_bottom", ViewLayer::copperLayers(ViewLayer::Bottom), SVG2gerber::ForCopper, GerberGenerator::CopperBottomSuffix));
+	layerThingList.append(LayerThing("mask_top", ViewLayer::maskLayers(ViewLayer::Top), SVG2gerber::ForMask, GerberGenerator:: MaskTopSuffix));
+	layerThingList.append(LayerThing("mask_bottom", ViewLayer::maskLayers(ViewLayer::Bottom), SVG2gerber::ForMask, GerberGenerator::MaskBottomSuffix));
+	layerThingList.append(LayerThing("silk_top", ViewLayer::silkLayers(ViewLayer::Top), SVG2gerber::ForSilk, GerberGenerator::SilkTopSuffix));
+	layerThingList.append(LayerThing("silk_bottom", ViewLayer::silkLayers(ViewLayer::Bottom), SVG2gerber::ForSilk, GerberGenerator::SilkBottomSuffix));
+	layerThingList.append(LayerThing("drill", ViewLayer::drillLayers(), SVG2gerber::ForDrill, GerberGenerator::DrillSuffix));
+
 	QList<PanelItem *> refPanelItems;
 	board = boards.firstChildElement("board");
-	if (!openWindows(board, fzzFilePaths, app, panelParams, fzDir, refPanelItems)) return;
+	if (!openWindows(board, fzzFilePaths, app, panelParams, fzDir, svgDir, refPanelItems, layerThingList)) return;
 
 	QList<PanelItem *> insertPanelItems;
 	int optionalCount = 0;
@@ -296,21 +306,6 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
         TextUtils::writeUtf8(fname, planePair->layoutSVG);
 	}
 
-	QList<LayerThing> layerThingList;
-	layerThingList.append(LayerThing("outline", ViewLayer::outlineLayers(), SVG2gerber::ForOutline, GerberGenerator::OutlineSuffix));  
-	layerThingList.append(LayerThing("copper_top", ViewLayer::copperLayers(ViewLayer::Top), SVG2gerber::ForCopper, GerberGenerator::CopperTopSuffix));
-	layerThingList.append(LayerThing("copper_bottom", ViewLayer::copperLayers(ViewLayer::Bottom), SVG2gerber::ForCopper, GerberGenerator::CopperBottomSuffix));
-	layerThingList.append(LayerThing("mask_top", ViewLayer::maskLayers(ViewLayer::Top), SVG2gerber::ForMask, GerberGenerator:: MaskTopSuffix));
-	layerThingList.append(LayerThing("mask_bottom", ViewLayer::maskLayers(ViewLayer::Bottom), SVG2gerber::ForMask, GerberGenerator::MaskBottomSuffix));
-	layerThingList.append(LayerThing("silk_top", ViewLayer::silkLayers(ViewLayer::Top), SVG2gerber::ForSilk, GerberGenerator::SilkTopSuffix));
-	layerThingList.append(LayerThing("silk_bottom", ViewLayer::silkLayers(ViewLayer::Bottom), SVG2gerber::ForSilk, GerberGenerator::SilkBottomSuffix));
-	layerThingList.append(LayerThing("drill", ViewLayer::drillLayers(), SVG2gerber::ForDrill, GerberGenerator::DrillSuffix));
-	  
-	QHash<QString, bool> rotated;
-	foreach(PanelItem * panelItem, refPanelItems) {
-		rotated.insert(panelItem->path, false);
-	}
-
 	foreach (PlanePair * planePair, planePairs) {
 		for (int i = 0; i < layerThingList.count(); i++) {
 			planePair->svgs << TextUtils::makeSVGHeader(1, GraphicsUtils::StandardFritzingDPI, planePair->panelWidth, planePair->panelHeight);
@@ -321,33 +316,8 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 			if (panelItem->planePair != planePair) continue;
 
 			DebugDialog::debug(QString("placing %1 on panel %2").arg(panelItem->boardName).arg(planePair->index));
-            if ((panelItem->rotate90 && !rotated.value(panelItem->path)) || (panelItem->rotate90 == false && rotated.value(panelItem->path))) {
-                needToRotate << panelItem;
-                continue;
-            }
 
-            doOnePanelItem(planePair, layerThingList, panelItem);
-		}
-
-        foreach (PanelItem * panelItem, needToRotate) {
-            if ((panelItem->rotate90 && !rotated.value(panelItem->path)) || (panelItem->rotate90 == false && rotated.value(panelItem->path)))
-		    {
-			    // try to minimize rotations by keeping state
-			    rotated.insert(panelItem->path, !rotated.value(panelItem->path));
-
-			    panelItem->window->pcbView()->selectAllItems(true, false);
-			    DebugDialog::debug(QString("rotating 90:%1 %2").arg(panelItem->path).arg((long) panelItem, 0, 16));
-			    QMatrix matrix = panelItem->board->matrix();
-			    DebugDialog::debug(QString("\tmatrix m11:%1 m12:%2 m21:%3 m22:%4 dx:%5 dy:%6").arg(matrix.m11()).arg(matrix.m12()).arg(matrix.m21()).arg(matrix.m22()).arg(matrix.dx()).arg(matrix.dy()));
-			    panelItem->window->pcbView()->rotateX(90, false);
-			    matrix = panelItem->board->matrix();
-			    DebugDialog::debug(QString("\tmatrix m11:%1 m12:%2 m21:%3 m22:%4 dx:%5 dy:%6").arg(matrix.m11()).arg(matrix.m12()).arg(matrix.m21()).arg(matrix.m22()).arg(matrix.dx()).arg(matrix.dy()));
-		    }
-        }
-
-		foreach (PanelItem * panelItem, needToRotate) {
-			DebugDialog::debug(QString("placing %1 on panel %2").arg(panelItem->boardName).arg(planePair->index));
-            doOnePanelItem(planePair, layerThingList, panelItem);
+            doOnePanelItem(planePair, layerThingList, panelItem, svgDir);
 		}
 
 
@@ -414,83 +384,8 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 
 		painter.end();
 	}
-
-	foreach (PanelItem * panelItem, refPanelItems) {
-		panelItem->window->close();
-	}
 }
 
-
-void Panelizer::doOnePanelItem(PlanePair * planePair, QList<LayerThing> & layerThingList, PanelItem * panelItem) {
-	try {
-		
-		QSizeF imageSize;
-		bool empty;
-
-		QString maskTop;
-		QString maskBottom;
-
-		for (int i = 0; i < planePair->svgs.count(); i++) {					
-			SVG2gerber::ForWhy forWhy = layerThingList.at(i).forWhy;
-			QString name = layerThingList.at(i).name;
-			QList<ItemBase *> copperLogoItems;
-			if (forWhy == SVG2gerber::ForMask) {
-				panelItem->window->pcbView()->hideCopperLogoItems(copperLogoItems);
-			}
-			QString one = panelItem->window->pcbView()->renderToSVG(FSvgRenderer::printerScale(), layerThingList.at(i).layerList, true, imageSize, panelItem->board, GraphicsUtils::StandardFritzingDPI, false, false, empty);
-					
-			QString clipString;
-					
-			switch (forWhy) {
-				case SVG2gerber::ForOutline:
-					one = GerberGenerator::cleanOutline(one);
-					break;
-				case SVG2gerber::ForMask:
-					panelItem->window->pcbView()->restoreCopperLogoItems(copperLogoItems);
-					one = TextUtils::expandAndFill(one, "black", GerberGenerator::MaskClearanceMils * 2);
-					forWhy = SVG2gerber::ForCopper;
-					if (name.contains("bottom")) {
-						maskBottom = one;
-					}
-					else {
-						maskTop = one;
-					}
-					break;
-				case SVG2gerber::ForSilk:
-					if (name.contains("bottom")) {
-						clipString = maskBottom;
-					}
-					else {
-						clipString = maskTop;
-					}
-					break;
-				default:
-					break;
-			}
-					
-			one = GerberGenerator::clipToBoard(one, panelItem->board, name, forWhy, clipString);
-			if (one.isEmpty()) continue;
-
-			int left = one.indexOf("<svg");
-			left = one.indexOf(">", left + 1);
-			int right = one.lastIndexOf("<");
-			one = QString("<g transform='translate(%1,%2)'>\n").arg(panelItem->x * GraphicsUtils::StandardFritzingDPI).arg(panelItem->y * GraphicsUtils::StandardFritzingDPI) + 
-							one.mid(left + 1, right - left - 1) + 
-							"</g>\n";
-
-			planePair->svgs.replace(i, planePair->svgs.at(i) + one);
-		}
-	}
-	catch (const char * msg) {
-		DebugDialog::debug(QString("panelizer error 1 %1 %2").arg(panelItem->boardName).arg(msg));
-	}
-	catch (const QString & msg) {
-		DebugDialog::debug(QString("panelizer error 2 %1 %2").arg(panelItem->boardName).arg(msg));
-	}
-	catch (...) {
-		DebugDialog::debug(QString("panelizer error 3 %1").arg(panelItem->boardName));
-	}
-}
 
 void Panelizer::bestFit(QList<PanelItem *> & insertPanelItems, PanelParams & panelParams, QList<PlanePair *> & planePairs)
 {
@@ -735,17 +630,24 @@ bool Panelizer::checkBoards(QDomElement & board, QHash<QString, QString> & fzzFi
 	return true;
 }
 
-bool Panelizer::openWindows(QDomElement & board, QHash<QString, QString> & fzzFilePaths, FApplication * app, PanelParams & panelParams, QDir & fzDir, QList<PanelItem *> & refPanelItems)
+bool Panelizer::openWindows(QDomElement & boardElement, QHash<QString, QString> & fzzFilePaths, FApplication * app, PanelParams & panelParams, QDir & fzDir, QDir & svgDir, QList<PanelItem *> & refPanelItems, QList<LayerThing> & layerThingList)
 {
-	while (!board.isNull()) {
-		int required = board.attribute("requiredCount", "").toInt();
-		int optional = board.attribute("maxOptionalCount", "").toInt();
+    QDir rotateDir(svgDir);
+    QDir norotateDir(svgDir);
+    rotateDir.mkdir("rotate");
+    rotateDir.cd("rotate");
+    norotateDir.mkdir("norotate");
+    norotateDir.cd("norotate");
+
+	while (!boardElement.isNull()) {
+		int required = boardElement.attribute("requiredCount", "").toInt();
+		int optional = boardElement.attribute("maxOptionalCount", "").toInt();
 		if (required == 0 && optional == 0) {
-			board = board.nextSiblingElement("board"); 
+			boardElement = boardElement.nextSiblingElement("board"); 
 			continue;
 		}
 
-		QString boardName = board.attribute("name");
+		QString boardName = boardElement.attribute("name");
 		QString path = fzzFilePaths.value(boardName, "");
 		int loaded = 0;
 		MainWindow * mainWindow = app->loadWindows(loaded, false);
@@ -770,11 +672,10 @@ bool Panelizer::openWindows(QDomElement & board, QHash<QString, QString> & fzzFi
         foreach (ItemBase * boardItem, boards) {
 		    PanelItem * panelItem = new PanelItem;
 		    panelItem->boardName = boardName;
-		    panelItem->window = mainWindow;
 		    panelItem->path = path;
-		    panelItem->board = boardItem;
 		    panelItem->required = required;
 		    panelItem->maxOptional = optional;
+            panelItem->boardID = boardItem->id();
 
 		    QRectF sbr = boardItem->layerKinChief()->sceneBoundingRect();
 		    panelItem->boardSizeInches = sbr.size() / FSvgRenderer::printerScale();
@@ -825,11 +726,25 @@ bool Panelizer::openWindows(QDomElement & board, QHash<QString, QString> & fzzFi
 		    }
 
 
+            makeSVGs(mainWindow, boardItem, boardName, layerThingList, norotateDir);
+
 		    refPanelItems << panelItem;
         }
-		mainWindow->setCloseSilently(true);
 
-		board = board.nextSiblingElement("board");
+        // now save the rotated version
+		mainWindow->pcbView()->selectAllItems(true, false);
+	    QMatrix matrix;
+		mainWindow->pcbView()->rotateX(90, false);
+
+        foreach (ItemBase * boardItem, boards) {
+            makeSVGs(mainWindow, boardItem, boardName, layerThingList, rotateDir);
+        }
+
+		mainWindow->setCloseSilently(true);
+        mainWindow->close();
+        delete mainWindow,
+
+		boardElement = boardElement.nextSiblingElement("board");
 	}
 
 	return true;
@@ -1253,3 +1168,107 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
 
 	return mainWindow;
 }
+
+void Panelizer::makeSVGs(MainWindow * mainWindow, ItemBase * board, const QString & boardName, QList<LayerThing> & layerThingList, QDir & saveDir) {
+	try {
+		
+		QSizeF imageSize;
+		bool empty;
+
+		QString maskTop;
+		QString maskBottom;
+
+		foreach (LayerThing layerThing, layerThingList) {					
+			SVG2gerber::ForWhy forWhy = layerThing.forWhy;
+			QString name = layerThing.name;
+			QList<ItemBase *> copperLogoItems;
+			if (forWhy == SVG2gerber::ForMask) {
+				mainWindow->pcbView()->hideCopperLogoItems(copperLogoItems);
+			}
+			QString one = mainWindow->pcbView()->renderToSVG(FSvgRenderer::printerScale(), layerThing.layerList, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, empty);
+					
+			QString clipString;
+					
+			switch (forWhy) {
+				case SVG2gerber::ForOutline:
+					one = GerberGenerator::cleanOutline(one);
+					break;
+				case SVG2gerber::ForMask:
+					mainWindow->pcbView()->restoreCopperLogoItems(copperLogoItems);
+					one = TextUtils::expandAndFill(one, "black", GerberGenerator::MaskClearanceMils * 2);
+					forWhy = SVG2gerber::ForCopper;
+					if (name.contains("bottom")) {
+						maskBottom = one;
+					}
+					else {
+						maskTop = one;
+					}
+					break;
+				case SVG2gerber::ForSilk:
+					if (name.contains("bottom")) {
+						clipString = maskBottom;
+					}
+					else {
+						clipString = maskTop;
+					}
+					break;
+				default:
+					break;
+			}
+					
+			one = GerberGenerator::clipToBoard(one, board, name, forWhy, clipString);
+			if (one.isEmpty()) continue;
+
+            QString filename = saveDir.absoluteFilePath(QString("%1_%2_%3.svg").arg(boardName).arg(board->id()).arg(name));
+            TextUtils::writeUtf8(filename, one);
+		}
+	}
+	catch (const char * msg) {
+		DebugDialog::debug(QString("panelizer error 1 %1 %2").arg(boardName).arg(msg));
+	}
+	catch (const QString & msg) {
+		DebugDialog::debug(QString("panelizer error 2 %1 %2").arg(boardName).arg(msg));
+	}
+	catch (...) {
+		DebugDialog::debug(QString("panelizer error 3 %1").arg(boardName));
+	}
+}
+
+void Panelizer::doOnePanelItem(PlanePair * planePair, QList<LayerThing> & layerThingList, PanelItem * panelItem, QDir & svgDir) {
+	try {
+		
+		for (int i = 0; i < planePair->svgs.count(); i++) {					
+			QString name = layerThingList.at(i).name;
+
+            QString rot = panelItem->rotate90 ? "rotate" : "norotate";
+            QString filename = svgDir.absoluteFilePath(QString("%1/%2_%3_%4.svg").arg(rot).arg(panelItem->boardName).arg(panelItem->boardID).arg(name));
+            QFile file(filename);
+            if (file.open(QFile::ReadOnly)) {		
+			    QString one = file.readAll();
+			    if (one.isEmpty()) continue;
+
+			    int left = one.indexOf("<svg");
+			    left = one.indexOf(">", left + 1);
+			    int right = one.lastIndexOf("<");
+			    one = QString("<g transform='translate(%1,%2)'>\n").arg(panelItem->x * GraphicsUtils::StandardFritzingDPI).arg(panelItem->y * GraphicsUtils::StandardFritzingDPI) + 
+							    one.mid(left + 1, right - left - 1) + 
+							    "</g>\n";
+
+			    planePair->svgs.replace(i, planePair->svgs.at(i) + one);
+            }
+            else {
+                DebugDialog::debug(QString("panelizer error? 1 %1 %2").arg(filename).arg("one text not found"));
+            }
+		}
+	}
+	catch (const char * msg) {
+		DebugDialog::debug(QString("panelizer error 1 %1 %2").arg(panelItem->boardName).arg(msg));
+	}
+	catch (const QString & msg) {
+		DebugDialog::debug(QString("panelizer error 2 %1 %2").arg(panelItem->boardName).arg(msg));
+	}
+	catch (...) {
+		DebugDialog::debug(QString("panelizer error 3 %1").arg(panelItem->boardName));
+	}
+}
+

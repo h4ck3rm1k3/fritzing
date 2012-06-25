@@ -52,11 +52,10 @@ struct PanelItem {
 	// per window
 	QString boardName;
 	QString path;
-	MainWindow * window;
 	int required;
 	int maxOptional;
 	QSizeF boardSizeInches;
-	ItemBase * board;
+    long boardID;
 
 	// per instance
 	double x, y;
@@ -69,11 +68,10 @@ struct PanelItem {
 	PanelItem(PanelItem * from) {
 		this->boardName = from->boardName;
 		this->path = from->path;
-		this->window = from->window;
 		this->required = from->required;
 		this->maxOptional = from->maxOptional;
 		this->boardSizeInches = from->boardSizeInches;
-		this->board = from->board;
+		this->boardID = from->boardID;
 	}
 };
 
@@ -129,12 +127,13 @@ protected:
 	static PlanePair * makePlanePair(PanelParams &, bool big);
 	static void collectFiles(QDomElement & path, QHash<QString, QString> & fzzFilePaths);
 	static bool checkBoards(QDomElement & board, QHash<QString, QString> & fzzFilePaths);
-	static bool openWindows(QDomElement & board, QHash<QString, QString> & fzzFilePaths, class FApplication *, PanelParams &, QDir & fzDir, QList<PanelItem *> & refPanelItems);
+	static bool openWindows(QDomElement & board, QHash<QString, QString> & fzzFilePaths, class FApplication *, PanelParams &, QDir & fzDir, QDir & svgDir, QList<PanelItem *> & refPanelItems, QList<LayerThing> & layerThingList);
 	static void bestFit(QList<PanelItem *> & insertPanelItems, PanelParams &, QList<PlanePair *> &);
 	static bool bestFitOne(PanelItem * panelItem, PanelParams & panelParams, QList<PlanePair *> & planePairs, bool createNew);
 	static void addOptional(int optionalCount, QList<PanelItem *> & refPanelItems, QList<PanelItem *> & insertPanelItems, PanelParams &, QList<PlanePair *> &);
 	static class MainWindow * inscribeBoard(QDomElement & board, QHash<QString, QString> & fzzFilePaths, FApplication * app, QDir & fzDir);
-    static void doOnePanelItem(PlanePair * planePair, QList<LayerThing> & layerThingList, PanelItem * panelItem);
+    static void doOnePanelItem(PlanePair * planePair, QList<LayerThing> & layerThingList, PanelItem * panelItem, QDir & svgDir);
+    static void makeSVGs(MainWindow *, ItemBase *, const QString & boardName, QList<LayerThing> & layerThingList, QDir & saveDir);
 };
 
 #endif

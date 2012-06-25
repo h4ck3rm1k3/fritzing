@@ -439,6 +439,11 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 		painter.begin(clipImage);
 		renderer.render(&painter, target);
 		painter.end();
+
+#ifndef QT_NO_DEBUG
+        clipImage->save("clip.png");
+#endif
+
 	}
 
 	svgString = TextUtils::removeXMLEntities(domDocument1.toString());
@@ -534,7 +539,6 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 		QStringList exceptions;
 		exceptions << "none" << "";
 		QString toColor("#000000");
-		QByteArray svgByteArray;
         QDomElement root2 = domDocument2.documentElement();
 		SvgFileSplitter::changeColors(root2, toColor, exceptions);
 
@@ -555,9 +559,9 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
                     paths.at(p - 1).toElement().setTagName("g");
                 }
                 image.fill(0xffffffff);
-		        svgByteArray = TextUtils::removeXMLEntities(domDocument2.toString()).toUtf8();
+		        QByteArray svg = TextUtils::removeXMLEntities(domDocument2.toString()).toUtf8();
 
-		        QSvgRenderer renderer(svgByteArray);
+		        QSvgRenderer renderer(svg);
 		        QPainter painter;
 		        painter.begin(&image);
 		        renderer.render(&painter, target);
@@ -579,14 +583,17 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 		}
         else {
 		    image.fill(0xffffffff);
-		    QString svg = TextUtils::removeXMLEntities(domDocument2.toString());
-
-		    QSvgRenderer renderer(svgByteArray);
+		    QByteArray svg = TextUtils::removeXMLEntities(domDocument2.toString()).toUtf8();
+		    QSvgRenderer renderer(svg);
 		    QPainter painter;
 		    painter.begin(&image);
 		    renderer.render(&painter, target);
 		    painter.end();
 		    image.invertPixels();				// need white pixels on a black background for GroundPlaneGenerator
+
+    #ifndef QT_NO_DEBUG
+		    image.save("preclip_output.png");
+    #endif
 
 		    if (clipImage != NULL) {
 			    // can this be done with a single blt using composition mode
