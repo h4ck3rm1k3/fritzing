@@ -36,6 +36,7 @@ $Date$
 #include <QRadioButton>
 #include <QLineEdit>
 #include <QDoubleValidator>
+#include <QPointer>
 
 
 struct ViewInfoThing
@@ -85,12 +86,10 @@ protected slots:
 	void curvyChanged();
 
 protected:
-	QTabWidget * m_tabWidget;
-	QWidget * m_general;
-	QWidget * m_breadboard;
-	QWidget * m_schematic;
-	QWidget * m_pcb;
-	QLabel * m_wheelLabel;
+	QPointer<QTabWidget> m_tabWidget;
+	QPointer<QWidget> m_general;
+	QPointer<QWidget> m_breadboard;
+	QPointer<QLabel> m_wheelLabel;
 	QHash<QString, QString> m_settings;
 	QHash<QString, QString> m_tempSettings;
 	QString m_name;

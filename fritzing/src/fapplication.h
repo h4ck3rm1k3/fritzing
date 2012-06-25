@@ -64,6 +64,7 @@ signals:
 
 public slots:
 	void preferences();
+	void preferencesAfter();
 	void checkForUpdates();
 	void checkForUpdates(bool atUserRequest);
 	void enableCheckUpdates(bool enabled);

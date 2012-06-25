@@ -74,8 +74,8 @@ void PrefsDialog::initLayout(QFileInfoList & list)
 	m_tabWidget = new QTabWidget();
 	m_general = new QWidget();
 	m_breadboard = new QWidget();
-	m_schematic = new QWidget();
-	m_pcb = new QWidget();
+	//m_schematic = new QWidget();
+	//m_pcb = new QWidget();
 
 	m_tabWidget->addTab(m_general, tr("General"));
 	m_tabWidget->addTab(m_breadboard, m_viewInfoThings[0].viewName);

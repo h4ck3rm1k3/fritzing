@@ -822,6 +822,13 @@ void FApplication::loadOne(MainWindow * mw, QString path, int loaded) {
 }
 
 void FApplication::preferences() {
+    // delay keeps OS 7 from crashing?
+
+    QTimer::singleShot(30, this, SLOT(preferencesAfter()));
+}
+
+void FApplication::preferencesAfter() 
+{
 	QDir dir(m_translationPath);
 	QStringList nameFilters;
 	nameFilters << "*.qm";
