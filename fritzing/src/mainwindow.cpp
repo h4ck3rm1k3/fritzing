@@ -1853,7 +1853,7 @@ bool MainWindow::swapSpecial(const QString & theProp, QMap<QString, QString> & c
         currPropsMap.insert("layers", QString::number(layers));
         if (theProp.compare("layers") == 0) {
             QString msg = (layers == 1) ? tr("Change to single layer pcb") : tr("Change to two layer pcb");
-            swapLayers(itemBase, layers, msg, true);
+            swapLayers(itemBase, layers, msg, true, SketchWidget::PropChangeDelay);
             return true;
         }
 	}
@@ -1875,12 +1875,12 @@ bool MainWindow::swapSpecial(const QString & theProp, QMap<QString, QString> & c
 	return false;
 }
 
-void MainWindow::swapLayers(ItemBase * itemBase, int layers, const QString & msg, bool flip) {
+void MainWindow::swapLayers(ItemBase * itemBase, int layers, const QString & msg, bool flip, int delay) {
     QUndoCommand* parentCommand = new QUndoCommand(msg);
 	new CleanUpWiresCommand(m_breadboardGraphicsView, CleanUpWiresCommand::UndoOnly, parentCommand);
     m_pcbGraphicsView->swapLayers(itemBase, layers, flip, parentCommand);
 	// need to defer execution so the content of the info view doesn't change during an event that started in the info view
-	m_undoStack->waitPush(parentCommand, SketchWidget::PropChangeDelay);
+	m_undoStack->waitPush(parentCommand, delay);
 }
 
 void MainWindow::swapSelectedAux(ItemBase * itemBase, const QString & moduleID) {
@@ -2330,7 +2330,7 @@ void MainWindow::warnSMDReally()
 
     int boardCount;
 	ItemBase * board = m_pcbGraphicsView->findSelectedBoard(boardCount);
-	swapLayers(board, 2, tr("Change to two layer pcb"), true);
+	swapLayers(board, 2, tr("Change to two layer pcb"), true, SketchWidget::PropChangeDelay);
 }
 
 

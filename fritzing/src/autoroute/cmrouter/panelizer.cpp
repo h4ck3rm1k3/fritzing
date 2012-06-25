@@ -40,6 +40,7 @@ $Date$
 #include "../../autoroute/cmrouter/cmrouter.h"
 #include "../../referencemodel/referencemodel.h"
 #include "../../version/version.h"
+#include "../../processeventblocker.h"
 
 #include "tileutils.h"
 
@@ -49,6 +50,7 @@ $Date$
 #include <QDir>
 #include <qmath.h>
 #include <limits>
+#include <QPrinter>
 
 bool areaGreaterThan(PanelItem * p1, PanelItem * p2)
 {
@@ -281,7 +283,7 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 	}
 
 	QList<PlanePair *> planePairs;
-	planePairs << makePlanePair(panelParams);
+	planePairs << makePlanePair(panelParams, true);  // to do: start with a small one and grow it
 
 	qSort(insertPanelItems.begin(), insertPanelItems.end(), areaGreaterThan);
 	bestFit(insertPanelItems, panelParams, planePairs);
@@ -311,7 +313,7 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 
 	foreach (PlanePair * planePair, planePairs) {
 		for (int i = 0; i < layerThingList.count(); i++) {
-			planePair->svgs << TextUtils::makeSVGHeader(1, GraphicsUtils::StandardFritzingDPI, panelParams.panelWidth, panelParams.panelHeight);
+			planePair->svgs << TextUtils::makeSVGHeader(1, GraphicsUtils::StandardFritzingDPI, planePair->panelWidth, planePair->panelHeight);
 		}
 
         QList<PanelItem *> needToRotate;
@@ -361,7 +363,7 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 
 			QString suffix = layerThingList.at(i).suffix;
 			DebugDialog::debug("converting " + prefix + " " + suffix);
-			QSizeF svgSize(panelParams.panelWidth, panelParams.panelHeight);
+			QSizeF svgSize(planePair->panelWidth, planePair->panelHeight);
 			SVG2gerber::ForWhy forWhy = layerThingList.at(i).forWhy;
 			if (forWhy == SVG2gerber::ForMask) forWhy = SVG2gerber::ForCopper;
 			GerberGenerator::doEnd(planePair->svgs.at(i), 2, layerThingList.at(i).name, forWhy, svgSize, gerberDir.absolutePath(), prefix, suffix, false);
@@ -384,6 +386,33 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 		merger = TextUtils::mergeSvgFinish(doc);
 		QString fname = svgDir.absoluteFilePath(QString("%1.%2.svg").arg(prefix).arg("identification"));
 		TextUtils::writeUtf8(fname, merger);
+
+        // save to pdf
+		QPrinter printer(QPrinter::HighResolution);
+		printer.setOutputFormat(QPrinter::PdfFormat);
+        QString pdfname = fname;
+        pdfname.replace(".svg", ".pdf");
+		printer.setOutputFileName(pdfname);
+		int res = printer.resolution();
+			
+		// now convert to pdf
+		QSvgRenderer svgRenderer;
+		svgRenderer.load(merger.toLatin1());
+		double trueWidth = planePair->panelWidth;
+		double trueHeight = planePair->panelHeight;
+		QRectF target(0, 0, trueWidth * res, trueHeight * res);
+
+		QSizeF psize((target.width() + printer.paperRect().width() - printer.width()) / res, 
+						(target.height() + printer.paperRect().height() - printer.height()) / res);
+		printer.setPaperSize(psize, QPrinter::Inch);
+
+		QPainter painter;
+		if (painter.begin(&printer))
+		{
+			svgRenderer.render(&painter, target);
+		}
+
+		painter.end();
 	}
 
 	foreach (PanelItem * panelItem, refPanelItems) {
@@ -499,7 +528,7 @@ bool Panelizer::bestFitOne(PanelItem * panelItem, PanelParams & panelParams, QLi
 			}
 
 			// create next panel
-			planePair = makePlanePair(panelParams);
+			planePair = makePlanePair(panelParams, false);
 			planePairs << planePair;
 			DebugDialog::debug(QString("ran out of room placing %1").arg(panelItem->boardName));
 			continue;
@@ -582,20 +611,29 @@ bool Panelizer::bestFitOne(PanelItem * panelItem, PanelParams & panelParams, QLi
 	return false;
 }
 
-PlanePair * Panelizer::makePlanePair(PanelParams & panelParams)
+PlanePair * Panelizer::makePlanePair(PanelParams & panelParams, bool big)
 {
 	PlanePair * planePair = new PlanePair;
 
+    if (big) {
+        planePair->panelWidth = panelParams.panelWidth;
+        planePair->panelHeight = panelParams.panelHeight;
+    }
+    else {
+        planePair->panelWidth = panelParams.panelSmallWidth;
+        planePair->panelHeight = panelParams.panelSmallHeight;
+    }
+
 	// for debugging
-	planePair->layoutSVG = TextUtils::makeSVGHeader(1, GraphicsUtils::StandardFritzingDPI, panelParams.panelWidth, panelParams.panelHeight);
+	planePair->layoutSVG = TextUtils::makeSVGHeader(1, GraphicsUtils::StandardFritzingDPI, planePair->panelWidth, planePair->panelHeight);
 	planePair->index = PlanePairIndex++;
 
 	Tile * bufferTile = TiAlloc();
 	TiSetType(bufferTile, Tile::BUFFER);
 	TiSetBody(bufferTile, NULL);
 
-	QRectF panelRect(0, 0, panelParams.panelWidth + panelParams.panelSpacing - panelParams.panelBorder, 
-							panelParams.panelHeight + panelParams.panelSpacing - panelParams.panelBorder);
+	QRectF panelRect(0, 0, planePair->panelWidth + panelParams.panelSpacing - panelParams.panelBorder, 
+							planePair->panelHeight + panelParams.panelSpacing - panelParams.panelBorder);
 
     int l = fasterRealToTile(panelRect.left() - 10);
     int t = fasterRealToTile(panelRect.top() - 10);
@@ -822,6 +860,18 @@ bool Panelizer::initPanelParams(QDomElement & root, PanelParams & panelParams)
 	panelParams.panelHeight = TextUtils::convertToInches(root.attribute("height"), &ok, false);
 	if (!ok) {
 		DebugDialog::debug(QString("Can't parse panel height '%1'").arg(root.attribute("height")));
+		return false;
+	}
+
+	panelParams.panelSmallWidth = TextUtils::convertToInches(root.attribute("small-width"), &ok, false);
+	if (!ok) {
+		DebugDialog::debug(QString("Can't parse panel small-width '%1'").arg(root.attribute("small-width")));
+		return false;
+	}
+
+	panelParams.panelSmallHeight = TextUtils::convertToInches(root.attribute("small-height"), &ok, false);
+	if (!ok) {
+		DebugDialog::debug(QString("Can't parse panel small-height '%1'").arg(root.attribute("small-height")));
 		return false;
 	}
 
@@ -1119,6 +1169,7 @@ void Panelizer::inscribe(FApplication * app, const QString & panelFilename)
 		if (mainWindow) {
 			mainWindow->setCloseSilently(true);
 			mainWindow->close();
+            delete mainWindow;
 		}
 		board = board.nextSiblingElement("board");
 	}
@@ -1172,17 +1223,20 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
         boardItem->setSelected(true);
 	    QString fillType = mainWindow->pcbView()->characterizeGroundFill();
 	    if (boardItem->prop("layers").compare("1") == 0) {
-            mainWindow->swapLayers(boardItem, 2, "", false);
+            mainWindow->swapLayers(boardItem, 2, "", false, 0);
+            ProcessEventBlocker::processEvents();
             wasOne = true;
         }
 
         if (wasOne) {
 	        mainWindow->removeGroundFill(true, NULL);
+            ProcessEventBlocker::processEvents();
 		    fillType = GroundPlane::fillTypeNone;
 	    }
 
 	    if (fillType == GroundPlane::fillTypeNone) {
 		    mainWindow->copperFill();
+            ProcessEventBlocker::processEvents();
 		    filled = true;
 	    }
 	    else if ((fillType == GroundPlane::fillTypeGround) && oldGround) {

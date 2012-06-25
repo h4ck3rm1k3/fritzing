@@ -898,17 +898,16 @@ void PCBSketchWidget::swapLayers(ItemBase *, int newLayers, bool flip, QUndoComm
 	QList<ItemBase *> pads;
     QList<Wire *> already;
 
-	if (!flip) {
-		new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
-		return;
-	}
-
-
 	ChangeBoardLayersCommand * changeBoardCommand = new ChangeBoardLayersCommand(this, m_boardLayers, newLayers, parentCommand);
     QList<ItemBase *> boards = findBoard();
     foreach (ItemBase * board, boards) {
         new SetPropCommand(this, board->id(), "layers", QString::number(m_boardLayers), QString::number(newLayers), true, parentCommand);
     }
+
+    if (!flip) {
+		new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
+		return;
+	}
 
 	// disconnect and flip smds
 	foreach (QGraphicsItem * item, scene()->items()) {

@@ -41,6 +41,8 @@ struct PlanePair
 	Plane * thePlane90;
 	TileRect tilePanelRect;
 	TileRect tilePanelRect90;
+    double panelWidth;
+    double panelHeight;
 	QStringList svgs;
 	QString layoutSVG;
 	int index;
@@ -93,6 +95,8 @@ struct PanelParams
 {
 	double panelWidth;
 	double panelHeight;
+	double panelSmallWidth;
+	double panelSmallHeight;
 	double panelSpacing;
 	double panelBorder;
 	QString prefix;
@@ -122,7 +126,7 @@ public:
 
 protected:
 	static bool initPanelParams(QDomElement & root, PanelParams &);
-	static PlanePair * makePlanePair(PanelParams &);
+	static PlanePair * makePlanePair(PanelParams &, bool big);
 	static void collectFiles(QDomElement & path, QHash<QString, QString> & fzzFilePaths);
 	static bool checkBoards(QDomElement & board, QHash<QString, QString> & fzzFilePaths);
 	static bool openWindows(QDomElement & board, QHash<QString, QString> & fzzFilePaths, class FApplication *, PanelParams &, QDir & fzDir, QList<PanelItem *> & refPanelItems);

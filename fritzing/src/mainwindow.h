@@ -154,7 +154,7 @@ public:
 	class PCBSketchWidget * pcbView();
 	void noBackup();
 	void swapSelectedAux(ItemBase * itemBase, const QString & moduleID);
-    void swapLayers(ItemBase * itemBase, int layers, const QString & msg, bool flip);
+    void swapLayers(ItemBase * itemBase, int layers, const QString & msg, bool flip, int delay);
 	bool saveAsAux(const QString & fileName);
 	void swapObsolete(bool displayFeedback);
 	void selectAllObsolete(bool displayFeedback);

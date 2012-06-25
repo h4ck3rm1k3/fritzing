@@ -81,6 +81,11 @@ void WaitPushUndoStack::push(QUndoCommand * cmd)
 
 void WaitPushUndoStack::waitPush(QUndoCommand * command, int delayMS) {
 	clearDeadTimers();
+    if (delayMS <= 0) {
+        push(command);
+        return;
+    }
+
 	new CommandTimer(command, delayMS, this);
 }
 
