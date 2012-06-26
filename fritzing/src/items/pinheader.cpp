@@ -211,14 +211,22 @@ QString PinHeader::genFZP(const QString & moduleID)
     QString formRow = isDouble ? "double" : "single";
 	if (useModuleID.contains("rounded")) {
 		form = FemaleRoundedFormString;
-        if (isDouble) {
-		    formModule = formBread = "double_row_rounded_female";
-		    formText = "double row rounded female";
-        }
-        else {
-		    formModule = formBread = "rounded_female";
-		    formText = "rounded female";
-        }
+		if (useModuleID.contains("smd")) {
+            formText = formRow + " row SMD rounded female";
+            formModule = formText.toLower();
+            formModule.replace(' ', '_');
+            formBread = "rounded_female";
+		}
+		else {
+            if (isDouble) {
+			    formBread = formModule = "double_row_rounded_female";
+                formText = "double row rounded female";
+            }
+            else {
+			    formBread = formModule = "rounded_female";
+                formText = "rounded female";
+            }
+		}
 		formSchematic = "female";
 	}
 	else if (useModuleID.contains("female")) {
@@ -227,6 +235,7 @@ QString PinHeader::genFZP(const QString & moduleID)
             formText = formRow + " row SMD female";
             formModule = formText.toLower();
             formModule.replace(' ', '_');
+            formBread = "female";
 		}
 		else {
             if (isDouble) {
@@ -305,32 +314,24 @@ QString PinHeader::genModuleID(QMap<QString, QString> & currPropsMap)
 		spacing = ShroudedSpacing;
 		formWord = "shrouded";
 	}
-	else if (form.contains("rounded")) {
-        if (row.contains("single", Qt::CaseInsensitive)) {
-		    formWord ="rounded_female";
-        }
-        else {
-		    formWord ="double_row_rounded_female";
-			isDouble = true;
-        }
-	}
 	else if (form.contains("female")) {
+        QString ff = form.contains("rounded") ? "rounded_female" : "female";
 		if (package.contains("smd")) {
 			if (row.contains("single", Qt::CaseInsensitive)) {
-				formWord = "single_row_smd_female";
+				formWord = "single_row_smd_" + ff;
 			}
 			else {
 				isDouble = true;
-				formWord = "double_row_smd_female";
+				formWord = "double_row_smd_" + ff;
 			}
 		}
 		else {
             if (row.contains("single", Qt::CaseInsensitive)) {
-			    formWord = "female";
+			    formWord = ff;
             }
             else {
 				isDouble = true;
-                formWord = "double_row_female";
+                formWord = "double_row_" + ff;
             }
 		}
 	}
@@ -726,7 +727,6 @@ QString PinHeader::makePcbSMDSvg(const QString & expectedFileName, const QString
 {
     Q_UNUSED(moduleID);
 	QStringList pieces = expectedFileName.split("_");
-	if (pieces.count() != 8) return "";
 
 	int pins = pieces.at(5).toInt();
 	QString spacingString = pieces.at(6);
