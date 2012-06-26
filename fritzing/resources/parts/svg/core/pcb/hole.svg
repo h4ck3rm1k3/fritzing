@@ -3,7 +3,7 @@
   <desc>Hole SVG</desc>
   <g id="copper0" > 
   <g id="copper1" >
-    <circle fill="none" cx="37.5" cy="37.5" stroke="rgb(255, 191, 0)" r="27.5" id="nonconn0" stroke-width="20" />
+    <circle fill="none" cx="27.7" cy="27.7" stroke="rgb(255, 191, 0)" r="27.5" id="nonconn0" stroke-width="20" />
   </g>  
   </g>
 </svg>

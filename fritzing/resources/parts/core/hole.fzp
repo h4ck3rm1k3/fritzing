@@ -11,7 +11,7 @@
   <tag>fritzing core</tag>
  </tags>
  <properties>
-  <property name="hole size" >0.035in,0.02in</property>
+  <property name="hole size" >2.2mm,0.0mm</property>
   <property name="family" >Hole</property>
  </properties>
  <taxonomy>discreteParts.pcb.hole</taxonomy>

@@ -45,6 +45,7 @@ struct HoleClassThing {
     QString ringThickness;
     QString holeSizeValue;
     QHash<QString, QString> holeSizes;
+    QList<QString> holeSizeKeys;                // need this for menu item ordering purposes
 	QPointF ringThicknessRange;
 	QPointF holeDiameterRange;
 

@@ -875,6 +875,7 @@ void PaletteItem::setUpHoleSizesAux(HoleClassThing & holeThing, const QString & 
             }
 
 		    holeThing.holeSizes.insert(name, QString("%1,%2").arg(hs).arg(rt));
+            holeThing.holeSizeKeys.append(name);
         }
 		ve = ve.nextSiblingElement("via");
 	}
@@ -904,7 +905,9 @@ QWidget * PaletteItem::createHoleSettings(QWidget * parent, HoleSettings & holeS
 	holeSettings.sizesComboBox = new QComboBox(frame);
 	holeSettings.sizesComboBox->setEditable(false);
 	holeSettings.sizesComboBox->setObjectName("infoViewComboBox");
-	holeSettings.sizesComboBox->addItems(holeSettings.holeThing->holeSizes.keys());
+    foreach (QString key, holeSettings.holeThing->holeSizeKeys) {
+	    holeSettings.sizesComboBox->addItem(key);
+    }
 	holeSettings.sizesComboBox->setEnabled(swappingEnabled);
 
 	vBoxLayout->addWidget(holeSettings.sizesComboBox);
@@ -1047,6 +1050,7 @@ void PaletteItem::updateSizes(HoleSettings &  holeSettings) {
 		newIndex = holeSettings.sizesComboBox->findText(newItem);
 
 		holeSettings.holeThing->holeSizes.insert(newItem, newItem);
+        holeSettings.holeThing->holeSizeKeys.prepend(newItem);
 	}
 
 	// don't want to trigger another undo command

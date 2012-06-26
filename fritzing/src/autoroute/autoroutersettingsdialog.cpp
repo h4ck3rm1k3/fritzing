@@ -201,7 +201,7 @@ void AutorouterSettingsDialog::enableCustom(bool enable)
 bool AutorouterSettingsDialog::initRadios() 
 {
 	bool custom = true;
-	foreach (QString name, m_holeSettings.holeThing->holeSizes.keys()) {
+	foreach (QString name, m_holeSettings.holeThing->holeSizeKeys) {
 		QStringList values = m_holeSettings.holeThing->holeSizes.value(name).split(",");
 		QString ringThickness = values[1];
 		QString holeSize = values[0];
