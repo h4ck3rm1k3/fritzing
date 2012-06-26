@@ -1735,7 +1735,7 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 	QString generatedModuleID = currPropsMap.value("moduleID");
 
 	if (generatedModuleID.isEmpty()) {
-	    if (family.compare("logo") == 0 && prop.compare("layer") == 0) {
+	    if ((family.compare("logo") == 0 || family.compare("pad") == 0) && prop.compare("layer") == 0) {
 		    QString value = currPropsMap.value(prop);
 		    if (value.contains("1") && m_currentGraphicsView->boardLayers() == 1) {
 			    QMessageBox::warning(

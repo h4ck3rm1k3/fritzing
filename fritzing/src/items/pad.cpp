@@ -170,7 +170,7 @@ QString Pad::makeNextLayerSvg(ViewLayer::ViewLayerID viewLayerID, double mmW, do
 }
 
 QString Pad::makeFirstLayerSvg(double mmW, double mmH, double milsW, double milsH) {
-	return makeLayerSvg(ViewLayer::Copper1, mmW, mmH, milsW, milsH);
+	return makeLayerSvg(moduleID().compare(ModuleIDNames::Copper0PadModuleIDName) == 0 ? ViewLayer::Copper0 : ViewLayer::Copper1, mmW, mmH, milsW, milsH);
 }
 
 ViewIdentifierClass::ViewIdentifier Pad::theViewIdentifier() {

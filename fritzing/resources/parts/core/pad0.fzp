@@ -14,6 +14,7 @@
   <property name="family" >pad</property>
   <property name="shape" ></property>
   <property name="connect to" ></property>
+  <property name="layer" >copper0</property>
  </properties>
  <taxonomy>discreteParts.pcb.pad</taxonomy>
  <description>Pad</description>
@@ -24,17 +25,17 @@
    </layers>
   </iconView>
   <breadboardView>
-   <layers image="pcb/pad.svg" >
+   <layers image="pcb/pad0.svg" >
     <layer layerId="copper0" />
    </layers>
   </breadboardView>
   <schematicView>
-   <layers image="pcb/pad.svg" >
+   <layers image="pcb/pad0.svg" >
     <layer layerId="copper0" />
    </layers>
   </schematicView>
   <pcbView>
-   <layers image="pcb/pad.svg" >
+   <layers image="pcb/pad0.svg" >
     <layer layerId="copper0" />
    </layers>
   </pcbView>
