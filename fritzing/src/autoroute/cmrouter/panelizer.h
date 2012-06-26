@@ -62,17 +62,9 @@ struct PanelItem {
 	bool rotate90;
 	PlanePair * planePair;
 
-	PanelItem() {
-	}
+	PanelItem() {}
 
-	PanelItem(PanelItem * from) {
-		this->boardName = from->boardName;
-		this->path = from->path;
-		this->required = from->required;
-		this->maxOptional = from->maxOptional;
-		this->boardSizeInches = from->boardSizeInches;
-		this->boardID = from->boardID;
-	}
+	PanelItem(PanelItem * from); 
 };
 
 struct BestPlace
@@ -134,6 +126,7 @@ protected:
 	static class MainWindow * inscribeBoard(QDomElement & board, QHash<QString, QString> & fzzFilePaths, FApplication * app, QDir & fzDir);
     static void doOnePanelItem(PlanePair * planePair, QList<LayerThing> & layerThingList, PanelItem * panelItem, QDir & svgDir);
     static void makeSVGs(MainWindow *, ItemBase *, const QString & boardName, QList<LayerThing> & layerThingList, QDir & saveDir);
+    static void shrinkLastPanel( QList<PlanePair *> & planePairs, QList<PanelItem *> & insertPanelItems, PanelParams &);
 };
 
 #endif

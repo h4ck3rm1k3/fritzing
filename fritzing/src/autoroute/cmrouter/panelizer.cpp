@@ -175,6 +175,15 @@ BestPlace::BestPlace() {
     bestArea = Worst;
 }
 
+PanelItem::PanelItem(PanelItem * from) {
+	this->boardName = from->boardName;
+	this->path = from->path;
+	this->required = from->required;
+	this->maxOptional = from->maxOptional;
+	this->boardSizeInches = from->boardSizeInches;
+	this->boardID = from->boardID;
+}
+
 /////////////////////////////////////////////////////////////////////////////////
 
 void Panelizer::panelize(FApplication * app, const QString & panelFilename) 
@@ -293,10 +302,12 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 	}
 
 	QList<PlanePair *> planePairs;
-	planePairs << makePlanePair(panelParams, true);  // to do: start with a small one and grow it
+	planePairs << makePlanePair(panelParams, true);  
 
 	qSort(insertPanelItems.begin(), insertPanelItems.end(), areaGreaterThan);
 	bestFit(insertPanelItems, panelParams, planePairs);
+
+    shrinkLastPanel(planePairs, insertPanelItems, panelParams);
 
 	addOptional(optionalCount, refPanelItems, insertPanelItems, panelParams, planePairs);
 
@@ -423,7 +434,7 @@ bool Panelizer::bestFitOne(PanelItem * panelItem, PanelParams & panelParams, QLi
 			}
 
 			// create next panel
-			planePair = makePlanePair(panelParams, false);
+			planePair = makePlanePair(panelParams, true);
 			planePairs << planePair;
 			DebugDialog::debug(QString("ran out of room placing %1").arg(panelItem->boardName));
 			continue;
@@ -1272,3 +1283,43 @@ void Panelizer::doOnePanelItem(PlanePair * planePair, QList<LayerThing> & layerT
 	}
 }
 
+void Panelizer::shrinkLastPanel( QList<PlanePair *> & planePairs, QList<PanelItem *> & insertPanelItems, PanelParams & panelParams) 
+{
+    PlanePair * lastPlanePair = planePairs.last();
+    PlanePair * smallPlanePair = makePlanePair(panelParams, false);
+    smallPlanePair->index = lastPlanePair->index;
+    QList<PlanePair *> smallPlanePairs;
+    smallPlanePairs << smallPlanePair;
+    bool canFitSmaller = true;
+    QList<PanelItem *> smallPanelItems;
+    foreach (PanelItem * panelItem, insertPanelItems) {
+        if (panelItem->planePair != lastPlanePair) continue;
+
+        PanelItem * copy = new PanelItem(panelItem);
+        smallPanelItems << copy;
+
+		if (!bestFitOne(copy, panelParams, smallPlanePairs, false)) {
+            canFitSmaller = false;
+        }
+	}
+
+    if (canFitSmaller) {
+        foreach (PanelItem * panelItem, insertPanelItems) {
+            if (panelItem->planePair != lastPlanePair) continue;
+
+            insertPanelItems.removeOne(panelItem);
+            delete panelItem;
+        }
+        planePairs.removeOne(lastPlanePair);
+        delete lastPlanePair;
+        insertPanelItems.append(smallPanelItems);
+        planePairs.append(smallPlanePair);      
+    }
+    else {
+        foreach (PanelItem * copy, smallPanelItems) {
+            delete copy;
+        }
+        delete smallPlanePair;
+    }
+
+}
