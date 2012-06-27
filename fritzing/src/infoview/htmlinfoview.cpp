@@ -28,7 +28,6 @@ $Date$
 #include <QHBoxLayout>
 #include <QSettings>
 #include <QPalette>
-#include <QFormLayout>
 #include <QFontMetricsF>
 #include <qmath.h>
 

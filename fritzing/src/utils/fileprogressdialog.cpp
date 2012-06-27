@@ -28,7 +28,7 @@ $Date$
 #include "../debugdialog.h"
 #include "../processeventblocker.h"
 
-#include <QFormLayout>
+#include <QVBoxLayout>
 #include <QTextStream>
 #include <QLabel>
 #include <QComboBox>

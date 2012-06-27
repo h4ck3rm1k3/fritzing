@@ -89,7 +89,7 @@ protected:
 	QPointer<QTabWidget> m_tabWidget;
 	QPointer<QWidget> m_general;
 	QPointer<QWidget> m_breadboard;
-	QPointer<QLabel> m_wheelLabel;
+	QPointer<QLabel> m_wheelLabel[3];
 	QHash<QString, QString> m_settings;
 	QHash<QString, QString> m_tempSettings;
 	QString m_name;

@@ -28,7 +28,6 @@ $Date$
 #include "../debugdialog.h"
 #include "../partseditor/zoomcontrols.h"
 
-#include <QFormLayout>
 #include <QLabel>
 #include <QComboBox>
 #include <QPushButton>

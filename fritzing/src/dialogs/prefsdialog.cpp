@@ -46,6 +46,8 @@ $Date$
 #include <QLineEdit>
 
 #define MARGIN 5
+#define FORMLABELWIDTH 195
+#define SPACING 15
 
 PrefsDialog::PrefsDialog(const QString & language, QWidget *parent)
 	: QDialog(parent)
@@ -82,7 +84,7 @@ void PrefsDialog::initLayout(QFileInfoList & list)
 	//m_tabWidget->addTab(m_schematic, m_viewInfoThings[1].viewName);
 	//m_tabWidget->addTab(m_pcb, m_viewInfoThings[2].viewName);
 
-	QVBoxLayout * vLayout = new QVBoxLayout(this);
+	QVBoxLayout * vLayout = new QVBoxLayout();
 	vLayout->addWidget(m_tabWidget);
 
 	initGeneral(m_general, list);
@@ -100,11 +102,13 @@ void PrefsDialog::initLayout(QFileInfoList & list)
 
 	vLayout->addWidget(buttonBox);
 
+    this->setLayout(vLayout);
+
 }
 
 void PrefsDialog::initGeneral(QWidget * widget, QFileInfoList & list)
 {
-	QVBoxLayout * vLayout = new QVBoxLayout(widget);
+	QVBoxLayout * vLayout = new QVBoxLayout();
 
 	// TODO: if no translation files found, don't put up the translation part of this dialog
 
@@ -120,11 +124,9 @@ void PrefsDialog::initGeneral(QWidget * widget, QFileInfoList & list)
 
 void PrefsDialog::initBreadboard(QWidget * widget, ViewInfoThing * viewInfoThing)
 {
-	QVBoxLayout * vLayout = new QVBoxLayout(widget);
-	
-	QWidget * w3 = createCurvyForm(viewInfoThing);
-	vLayout->addWidget(w3);
+	QVBoxLayout * vLayout = new QVBoxLayout();
 
+	vLayout->addWidget(createCurvyForm(viewInfoThing));
 	vLayout->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Preferred, QSizePolicy::Expanding));
 
 	widget->setLayout(vLayout);
@@ -133,7 +135,7 @@ void PrefsDialog::initBreadboard(QWidget * widget, ViewInfoThing * viewInfoThing
 void PrefsDialog::initSchematic(QWidget * widget, ViewInfoThing * viewInfoThing)
 {
     Q_UNUSED(viewInfoThing);
-	QVBoxLayout * vLayout = new QVBoxLayout(widget);
+	QVBoxLayout * vLayout = new QVBoxLayout();
 
 	vLayout->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Preferred, QSizePolicy::Expanding));
 
@@ -143,7 +145,7 @@ void PrefsDialog::initSchematic(QWidget * widget, ViewInfoThing * viewInfoThing)
 void PrefsDialog::initPCB(QWidget * widget, ViewInfoThing * viewInfoThing)
 {
     Q_UNUSED(viewInfoThing);
-	QVBoxLayout * vLayout = new QVBoxLayout(widget);
+	QVBoxLayout * vLayout = new QVBoxLayout();
 
 	vLayout->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Preferred, QSizePolicy::Expanding));
 
@@ -154,18 +156,24 @@ QWidget * PrefsDialog::createZoomerForm() {
 	QGroupBox * zoomer = new QGroupBox(tr("Mouse Wheel Behavior"), this );
 
 	QHBoxLayout * zhlayout = new QHBoxLayout();
-	zhlayout->setSpacing(5);
+	zhlayout->setSpacing(SPACING);
 
-#ifdef Q_WS_MAC
-	QString cKey = tr("Command");
-#else
-	QString cKey = tr("Control");
-#endif
+    QFrame * frame = new QFrame();
+    frame->setFixedWidth(FORMLABELWIDTH);
 
-	m_wheelLabel = new QLabel(this);
-	m_wheelLabel->setWordWrap(true);
+    QVBoxLayout * vLayout = new QVBoxLayout();
+    vLayout->setSpacing(0);
+    vLayout->setMargin(0);
+
+    for (int i = 0; i < 3; i++) {
+	    m_wheelLabel[i] = new QLabel();
+        vLayout->addWidget(m_wheelLabel[i]);
+    }
+
 	updateWheelText();
-	zhlayout->addWidget(m_wheelLabel);
+
+    frame->setLayout(vLayout);
+	zhlayout->addWidget(frame);
 
 	QPushButton * pushButton = new QPushButton(tr("Change Wheel Behavior"), this);
 	connect(pushButton, SIGNAL(clicked()), this, SLOT(changeWheelBehavior()));
@@ -180,7 +188,7 @@ QWidget * PrefsDialog::createAutosaveForm() {
 	QGroupBox * autosave = new QGroupBox(tr("Autosave"), this );
 
 	QHBoxLayout * zhlayout = new QHBoxLayout();
-	zhlayout->setSpacing(5);
+	zhlayout->setSpacing(SPACING);
 
 	QCheckBox * box = new QCheckBox(tr("Autosave every:"));
 	box->setChecked(MainWindow::AutosaveEnabled);
@@ -207,15 +215,10 @@ QWidget * PrefsDialog::createAutosaveForm() {
 	return autosave;
 }
 
-
 QWidget * PrefsDialog::createLanguageForm(QFileInfoList & list) 
 {
 	QGroupBox * formGroupBox = new QGroupBox(tr("Language"));
-    QFormLayout *layout = new QFormLayout();
-
-	QLabel * languageLabel = new QLabel(this);
-	languageLabel->setWordWrap(true);
-	languageLabel->setText(QObject::tr("<b>Language</b>"));
+    QVBoxLayout *layout = new QVBoxLayout();
 	
 	QComboBox* comboBox = new QComboBox(this);
 	m_translatorListModel = new TranslatorListModel(list, this);
@@ -223,15 +226,14 @@ QWidget * PrefsDialog::createLanguageForm(QFileInfoList & list)
 	comboBox->setCurrentIndex(m_translatorListModel->findIndex(m_name));
 	connect(comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(changeLanguage(int)));
 
-	layout->addRow(languageLabel, comboBox);	
+	layout->addWidget(comboBox);	
 
-	QLabel * ll = new QLabel(this);
-	ll->setFixedWidth(250);
+	QLabel * ll = new QLabel();
 	ll->setMinimumHeight(45);
 	ll->setWordWrap(true);
 	ll->setText(QObject::tr("Please note that a new language setting will not take effect "
 		"until the next time you run Fritzing."));
-	layout->addRow(ll);
+	layout->addWidget(ll);
 
 	formGroupBox->setLayout(layout);
 	return formGroupBox;
@@ -240,11 +242,18 @@ QWidget * PrefsDialog::createLanguageForm(QFileInfoList & list)
 QWidget* PrefsDialog::createColorForm() 
 {
 	QGroupBox * formGroupBox = new QGroupBox(tr("Colors"));
-    QFormLayout *layout = new QFormLayout();
+    QVBoxLayout *layout = new QVBoxLayout();
+    layout->setSpacing(0);
+    layout->setMargin(0);
 
-	QLabel * c1 = new QLabel(this);
+    QFrame * f1 = new QFrame();
+    QHBoxLayout * h1 = new QHBoxLayout();
+    h1->setSpacing(SPACING);
+
+	QLabel * c1 = new QLabel(QObject::tr("Connected highlight color"));
 	c1->setWordWrap(true);
-	c1->setText(QObject::tr("<b>Connected highlight color</b>"));
+    c1->setFixedWidth(FORMLABELWIDTH);
+    h1->addWidget(c1);
 
 	QColor connectedColor = ItemBase::connectedColor();
 	ClickableLabel * cl1 = new ClickableLabel(tr("%1 (click to change...)").arg(connectedColor.name()), this);
@@ -252,11 +261,19 @@ QWidget* PrefsDialog::createColorForm()
 	cl1->setPalette(QPalette(connectedColor));
 	cl1->setAutoFillBackground(true);
 	cl1->setMargin(MARGIN);
-	layout->addRow(c1, cl1);
+	h1->addWidget(cl1);
 
-	QLabel * c2 = new QLabel(this);
+    f1->setLayout(h1);
+    layout->addWidget(f1);
+
+    QFrame * f2 = new QFrame();
+    QHBoxLayout * h2 = new QHBoxLayout();
+    h2->setSpacing(SPACING);
+
+	QLabel * c2 = new QLabel(QObject::tr("Unconnected highlight color"));
 	c2->setWordWrap(true);
-	c2->setText(QObject::tr("<b>Unconnected highlight color</b>"));
+    c2->setFixedWidth(FORMLABELWIDTH);
+    h2->addWidget(c2);
 
 	QColor unconnectedColor = ItemBase::unconnectedColor();
 	ClickableLabel * cl2 = new ClickableLabel(tr("%1 (click to change...)").arg(unconnectedColor.name()), this);
@@ -264,7 +281,10 @@ QWidget* PrefsDialog::createColorForm()
 	cl2->setPalette(QPalette(unconnectedColor));
 	cl2->setAutoFillBackground(true);
 	cl2->setMargin(MARGIN);
-	layout->addRow(c2, cl2);
+	h2->addWidget(cl2);
+
+    f2->setLayout(h2);
+    layout->addWidget(f2);
 
 	formGroupBox->setLayout(layout);
 	return formGroupBox;
@@ -273,21 +293,41 @@ QWidget* PrefsDialog::createColorForm()
 QWidget* PrefsDialog::createOtherForm() 
 {
 	QGroupBox * formGroupBox = new QGroupBox(tr("Clear Settings"));
-    QFormLayout *layout = new QFormLayout();
+    QHBoxLayout *layout = new QHBoxLayout();
+    layout->setSpacing(SPACING);
 
-	QLabel * clearLabel = new QLabel(this);
-	clearLabel->setFixedWidth(195);
-	clearLabel->setWordWrap(true);
-	clearLabel->setText(QObject::tr("Clear all saved settings and close this dialog immediately.\n\n") +
-                        QObject::tr("This action does not delete any files; it restores settings to their default values.\n\n") +
-                        QObject::tr("There is no undo for this action, and no further warning!!!!")
-                        );	
+    QFrame * frame = new QFrame;
+    QVBoxLayout * vlayout = new QVBoxLayout();
+    vlayout->setMargin(0);
+    vlayout->setSpacing(0);
+
+    QLabel * clearLabel = new QLabel(QObject::tr("Clear all saved settings and close this dialog immediately."));
+    clearLabel->setWordWrap(true);
+    clearLabel->setFixedWidth(FORMLABELWIDTH);
+    vlayout->addWidget(clearLabel);
+
+    vlayout->addSpacing(SPACING);
+
+    clearLabel = new QLabel(QObject::tr("This action does not delete any files; it restores settings to their default values."));
+    clearLabel->setWordWrap(true);
+    clearLabel->setFixedWidth(FORMLABELWIDTH);
+    vlayout->addWidget(clearLabel);
+
+    vlayout->addSpacing(SPACING);
+
+    clearLabel = new QLabel(QObject::tr("There is no undo for this action, and no further warning!!!!"));
+    clearLabel->setWordWrap(true);
+    clearLabel->setFixedWidth(FORMLABELWIDTH);
+    vlayout->addWidget(clearLabel);
+
+    frame->setLayout(vlayout);
+    layout->addWidget(frame);
 
 	QPushButton * clear = new QPushButton(QObject::tr("Clear Settings"), this);
 	clear->setMaximumWidth(220);
 	connect(clear, SIGNAL(clicked()), this, SLOT(clear()));
 
-	layout->addRow(clearLabel, clear);	
+	layout->addWidget(clear);	
 
 	formGroupBox->setLayout(layout);
 	return formGroupBox;
@@ -377,7 +417,11 @@ void PrefsDialog::updateWheelText() {
 			text = tr("no keys down = zoom\nAlt or %1 key = scroll\nshift key swaps scroll axis").arg(cKey);
 			break;
 	}
-	m_wheelLabel->setText(text);
+
+    QStringList strings = text.split('\n');
+    for (int i = 0; i < 3; i++) {
+        m_wheelLabel[i]->setText(strings.at(i));
+    }
 }
 
 void PrefsDialog::toggleAutosave(bool checked) {
