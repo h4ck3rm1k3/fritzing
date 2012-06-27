@@ -8,9 +8,9 @@
 
 <via holesize="0.7mm" ringthickness="0.508mm" name="Small (0.7mm/0.0275in)" pinheader="1"  screwterminal="1" mystery="1"/>
 <via holesize="1.0mm" ringthickness="0.508mm" name="Medium (1.0mm/0.0394in)" pinheader="1" screwterminaldefault="yes"  mysterydefault="yes"  pinheaderdefault="yes" screwterminal="1" mystery="1"
-		pinheaderringthicknesslow=".002n" pinheaderringthicknesshigh=".052in" pinheaderholediameterlow=".002in" pinheaderholediameterhigh=".052in"
-		mysteryringthicknesslow=".002in" mysteryringthicknesshigh=".052in" mysteryholediameterlow=".002in" mysteryholediameterhigh=".052in"
-		screwterminalringthicknesslow=".002in" screwterminalringthicknesshigh=".052n" screwterminalholediameterlow=".002in" screwterminalholediameterhigh=".052in"
+		pinheaderringthicknesslow=".002n" pinheaderringthicknesshigh="10in" pinheaderholediameterlow=".002in" pinheaderholediameterhigh="20in"
+		mysteryringthicknesslow=".002in" mysteryringthicknesshigh="10in" mysteryholediameterlow=".002in" mysteryholediameterhigh="20in"
+		screwterminalringthicknesslow=".002in" screwterminalringthicknesshigh="10in" screwterminalholediameterlow=".002in" screwterminalholediameterhigh="20in"
 />
 <via holesize="1.1mm" ringthickness="0.508mm" name="Large (1.1mm/0.0433in)" pinheader="1"  screwterminal="1" mystery="1"/>
 <via holesize="1.5mm" ringthickness="0.508mm" name="Extra (1.5mm/0.0591in)" pinheader="1"  screwterminal="1" mystery="1"/>
