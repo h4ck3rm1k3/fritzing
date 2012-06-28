@@ -471,8 +471,8 @@ protected:
 	QString constructFileName(const QString & differentiator, const QString & extension);
 	bool isGroundFill(ItemBase * itemBase);
 
-	QString getBoardSilkscreenSvg(ItemBase * board, int res, QSizeF & imageSize);
-	QString mergeBoardSvg(QString & svg, ItemBase * board, int res, QSizeF & imageSize, bool flip);
+	QString getBoardSvg(ItemBase * board, int res, QSizeF & imageSize, LayerList &);
+	QString mergeBoardSvg(QString & svg, ItemBase * board, int res, QSizeF & imageSize, bool flip, LayerList &);
 
 	bool wannaRestart();
 

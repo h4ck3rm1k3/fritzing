@@ -177,7 +177,16 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 {
     int boardCount;
     ItemBase * board = m_pcbGraphicsView->findSelectedBoard(boardCount);
-    if (board == NULL) return;
+    if (boardCount == 0) {
+        QMessageBox::critical(this, tr("Fritzing"),
+                   tr("Your sketch does not have a board yet! Please add a PCB in order to export etchable."));
+        return;
+    }
+    if (board == NULL) {
+        QMessageBox::critical(this, tr("Fritzing"),
+                   tr("Etchable export can only handle one board at a time--please select the board you want to export."));
+        return;
+    }
 
 	RoutingStatus routingStatus;
 	m_pcbGraphicsView->updateRoutingStatus(NULL, routingStatus, true);
@@ -259,7 +268,7 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 			bool empty;
 			QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, true, imageSize, board, GraphicsUtils::IllustratorDPI, false, false, empty);
 			massageOutput(svg, doMask, doSilk, maskTop, maskBottom, fileName, GraphicsUtils::IllustratorDPI);		
-			svg = mergeBoardSvg(svg, board, GraphicsUtils::IllustratorDPI, imageSize, flip);
+			svg = mergeBoardSvg(svg, board, GraphicsUtils::IllustratorDPI, imageSize, flip, viewLayerIDs);
             TextUtils::writeUtf8(fileName, svg);
 		}
 		else {
@@ -270,7 +279,7 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 			bool empty;
 			QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, true, imageSize, board, res, false, false, empty);
 			massageOutput(svg, doMask, doSilk, maskTop, maskBottom, fileName, res);
-			svg = mergeBoardSvg(svg, board, res, imageSize, flip);
+			svg = mergeBoardSvg(svg, board, res, imageSize, flip, viewLayerIDs);
 			
 			// now convert to pdf
 			QSvgRenderer svgRenderer;
@@ -368,9 +377,9 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 
 }
 
-QString MainWindow::mergeBoardSvg(QString & svg, ItemBase * board, int res, QSizeF & imageSize, bool flip) {
+QString MainWindow::mergeBoardSvg(QString & svg, ItemBase * board, int res, QSizeF & imageSize, bool flip, LayerList & viewLayerIDs) {
 	QSizeF boardImageSize;
-	QString boardSvg = getBoardSilkscreenSvg(board, res, boardImageSize);
+	QString boardSvg = getBoardSvg(board, res, boardImageSize, viewLayerIDs);
 	if (boardSvg.isEmpty()) return svg;
 
 	//QByteArray byteArray;
@@ -380,8 +389,25 @@ QString MainWindow::mergeBoardSvg(QString & svg, ItemBase * board, int res, QSiz
 	return TextUtils::convertExtendedChars(TextUtils::mergeSvg(boardSvg /* QString(byteArray) */, svg, "", flip));
 }
 
-QString MainWindow::getBoardSilkscreenSvg(ItemBase * board, int res, QSizeF & imageSize) {
+QString MainWindow::getBoardSvg(ItemBase * board, int res, QSizeF & imageSize, LayerList & viewLayerIDs) {
 	if (board == NULL) return ___emptyString___;
+
+    board = board->layerKinChief();
+    QList<ItemBase *> boardLayers;
+    boardLayers << board;
+    foreach (ItemBase * lk, board->layerKin()) {
+        boardLayers << lk;
+    }
+
+    bool gotOne = false;
+    foreach (ItemBase * boardLayer, boardLayers) {
+        if (viewLayerIDs.contains(boardLayer->viewLayerID())) {
+            gotOne = true;
+            break;
+        }
+    }
+
+    if (!gotOne) return "";
 
 	m_pcbGraphicsView->setIgnoreSelectionChangeEvents(true);
 
