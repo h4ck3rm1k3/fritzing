@@ -2858,6 +2858,54 @@ Open the old Parts Editor?</source>
         <source>Fritzing Files (*%1 *%2 *%3 *%4 *%5);;Fritzing (*%1);;Fritzing Shareable (*%2);;Fritzing Part (*%3);;Fritzing Bin (*%4);;Fritzing Shareable Bin (*%5)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Your sketch does not have a board yet! Please add a PCB in order to export etchable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Etchable export can only handle one board at a time--please select the board you want to export.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your sketch does not have a board yet!  Please add a PCB in order to use the autorouter.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select the board you want to autoroute. The autorouter can only handle one board at a time.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your sketch does not have a board yet!  Please add a PCB in order to use ground or copper fill.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select a PCB--copper fill only works for one board at a time.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your sketch does not have a board yet!  Please add a PCB in order to remove copper fill.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select a PCB--ground fill operations only work on a one board at a time.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your sketch does not have a board yet! DRC only works with a PCB.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select a PCB. DRC only works on one board at a time.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your sketch does not have a board yet! Please add a PCB in order to use copper fill operations.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select a PCB. Copper fill operations only work on one board at a time.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -3005,6 +3053,18 @@ Reden : %2 (errcode %3)</translation>
     </message>
     <message>
         <source>Copper fill: please select only the board you want to fill.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your sketch does not have a board yet! Please add a PCB in order to use this selection operation.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please click on a PCB first--this selection operation only works for one board at a time.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your sketch does not have a board yet!  Please add a PCB in order to use this selection operation.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4011,20 +4071,8 @@ This checkbox sets the default behavior. You can switch back to the non-default 
         <translation>eigenschappen</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Language&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Taal&lt;/b&gt;</translation>
-    </message>
-    <message>
         <source>Please note that a new language setting will not take effect until the next time you run Fritzing.</source>
         <translation>De wijziging van taal zal pas werken bij de volgende start van het programma.</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Connected highlight color&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Aangesloten highlight kleur&lt;/b&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Unconnected highlight color&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Niet aangesloten highlight kleur&lt;/b&gt;</translation>
     </message>
     <message>
         <source>Fritzing</source>
@@ -4493,10 +4541,6 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>No connections to route&apos;.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cannot autoroute: maybe all traces are marked &apos;do not autoroute&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4700,23 +4744,35 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Clear all saved settings and close this dialog immediately.
-
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This action does not delete any files; it restores settings to their default values.
-
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>There is no undo for this action, and no further warning!!!!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Clear Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No connections (on the PCB) to route.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No connections to route.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connected highlight color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unconnected highlight color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear all saved settings and close this dialog immediately.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This action does not delete any files; it restores settings to their default values.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
