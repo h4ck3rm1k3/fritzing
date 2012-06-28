@@ -554,7 +554,7 @@ QString PinHeader::makeBreadboardSvg(const QString & expectedFileName, const QSt
 		return makeBreadboardShroudedSvg(pins);
 	}
     if (expectedFileName.contains("double") && !expectedFileName.contains("smd", Qt::CaseInsensitive)) {
-        return makeBreadboardDoubleSvg(expectedFileName, pins);
+        //return makeBreadboardDoubleSvg(expectedFileName, pins);
     }
 
 	double unitHeight = 0.1;  // inches
