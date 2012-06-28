@@ -7,8 +7,8 @@
 <rect  width="5.669" x="13.868" y="0.000" fill="#F7BD13" height="6.392" id="connector2pad"/>
 <rect  width="7.086" x="40.693" y="21.625" fill="#F7BD13" height="5.67" id="connector3pad"/>
 <rect  width="7.086" x="40.693" y="2.327" fill="#F7BD13" height="5.631" id="connector4pad"/>
-<circle  cx="13.031" cy="9.637" id="nonconn0" r="2.632" stroke="none"/>
-<circle  cx="13.031" cy="19.65" id="nonconn1" r="2.632" stroke="none"/>
+<circle  cx="13.031" cy="9.637" id="nonconn0" r="2.632" stroke="none" stroke-width="0"/>
+<circle  cx="13.031" cy="19.65" id="nonconn1" r="2.632" stroke="none" stroke-width="0"/>
 </g>
 <g  id="silkscreen">
 <line  fill="none" stroke="#F0F0F0" stroke-linecap="round" y1="4.625" stroke-width="0.254" x1="20.256" y2="4.625" x2="39.943"/>

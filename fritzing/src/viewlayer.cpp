@@ -310,7 +310,7 @@ const LayerList & ViewLayer::outlineLayers() {
 const LayerList & ViewLayer::drillLayers() {
 	static LayerList layerList;
 	if (layerList.isEmpty()) {
-		layerList << ViewLayer::Copper0;
+		layerList << ViewLayer::Copper0 << ViewLayer::Copper1;
 	}
 	
 	return layerList;

@@ -144,7 +144,13 @@ int SVG2gerber::renderGerber(bool doubleSided, const QString & mainLayerName, Fo
 				continue;
 			}
 
-			apertures.insert(current, string);
+            QStringList values = apertures.values(current);
+            if (values.contains(string)) {
+                DebugDialog::debug("already have this value");
+            }
+            else {
+			    apertures.insert(current, string);
+            }
 		}
 
 		foreach (QString T, apertures.uniqueKeys()) {
