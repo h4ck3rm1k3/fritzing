@@ -55,7 +55,7 @@ QString PinHeader::ShroudedFormString;
 static int MinPins = 1;
 static int MinShroudedPins = 6;
 static int MaxPins = 64;
-static QHash<QString, QString> Spacings;
+static QMap<QString, QString> Spacings;
 static QString ShroudedSpacing;
 
 static HoleClassThing TheHoleThing;
