@@ -507,6 +507,9 @@ QString PinHeader::makePcbSvg(const QString & originalExpectedFileName, const QS
 void PinHeader::initSpacings() {
 	if (Spacings.count() == 0) {
 		ShroudedSpacing = "0.1in (2.54mm)";
+		Spacings.insert("50mil", "0.05in (1.27mm)");
+		Spacings.insert("78.7401575mil", "0.07874in (2mm)");
+		Spacings.insert("98.4251969mil", "0.09843in (2.5mm)");
 		Spacings.insert("100mil", ShroudedSpacing);
 		Spacings.insert("200mil", "0.2in (5.08mm)");
 	}
