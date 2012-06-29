@@ -863,6 +863,10 @@ void MainWindow::createPartMenuActions() {
 	m_addBendpointAct->setStatusTip(tr("Add a bendpoint to the selected wire"));
 	connect(m_addBendpointAct, SIGNAL(triggered()), this, SLOT(addBendpoint()));
 
+	m_convertToViaAct = new BendpointAction(tr("Convert Bendpoint to Via"), this);
+	m_convertToViaAct->setStatusTip(tr("Convert the bendpoint to a via"));
+	connect(m_convertToViaAct, SIGNAL(triggered()), this, SLOT(convertToVia()));
+
 	m_flattenCurveAct = new BendpointAction(tr("Straighten Curve"), this);
 	m_flattenCurveAct->setStatusTip(tr("Straighten the curve of the selected wire"));
 	connect(m_flattenCurveAct, SIGNAL(triggered()), this, SLOT(flattenCurve()));
@@ -2559,6 +2563,7 @@ bool MainWindow::alreadyOpen(const QString & fileName) {
 
 void MainWindow::enableAddBendpointAct(QGraphicsItem * graphicsItem) {
 	m_addBendpointAct->setEnabled(false);
+	m_convertToViaAct->setEnabled(false);
 	m_flattenCurveAct->setEnabled(false);
 
 	Wire * wire = dynamic_cast<Wire *>(graphicsItem);
@@ -2568,30 +2573,40 @@ void MainWindow::enableAddBendpointAct(QGraphicsItem * graphicsItem) {
 	m_flattenCurveAct->setEnabled(wire->isCurved());
 
 	BendpointAction * bendpointAction = qobject_cast<BendpointAction *>(m_addBendpointAct);
+	BendpointAction * convertToViaAction = qobject_cast<BendpointAction *>(m_convertToViaAct);
 	FGraphicsScene * scene = qobject_cast<FGraphicsScene *>(graphicsItem->scene());
 	if (scene != NULL) {
 		bendpointAction->setLastLocation(scene->lastContextMenuPos());
+		convertToViaAction->setLastLocation(scene->lastContextMenuPos());
 	}
 
 	bool enabled = false;
+    bool ctvEnabled = false;
 	if (m_currentGraphicsView->lastHoverEnterConnectorItem()) {
 		bendpointAction->setText(tr("Remove Bendpoint"));
 		bendpointAction->setLastHoverEnterConnectorItem(m_currentGraphicsView->lastHoverEnterConnectorItem());
 		bendpointAction->setLastHoverEnterItem(NULL);
-		enabled = true;
+		convertToViaAction->setLastHoverEnterConnectorItem(m_currentGraphicsView->lastHoverEnterConnectorItem());
+		convertToViaAction->setLastHoverEnterItem(NULL);
+		ctvEnabled = enabled = true;
 	}
 	else if (m_currentGraphicsView->lastHoverEnterItem()) {
 		bendpointAction->setText(tr("Add Bendpoint"));
 		bendpointAction->setLastHoverEnterItem(m_currentGraphicsView->lastHoverEnterItem());
 		bendpointAction->setLastHoverEnterConnectorItem(NULL);
+		convertToViaAction->setLastHoverEnterItem(NULL);
+		convertToViaAction->setLastHoverEnterConnectorItem(NULL);
 		enabled = true;
 	}
 	else {
 		bendpointAction->setLastHoverEnterItem(NULL);
 		bendpointAction->setLastHoverEnterConnectorItem(NULL);
+		convertToViaAction->setLastHoverEnterItem(NULL);
+		convertToViaAction->setLastHoverEnterConnectorItem(NULL);
 	}
 
 	m_addBendpointAct->setEnabled(enabled);
+	m_convertToViaAct->setEnabled(ctvEnabled && (m_currentGraphicsView == m_pcbGraphicsView));
 }
 
 void MainWindow::addBendpoint()
@@ -2600,6 +2615,14 @@ void MainWindow::addBendpoint()
 
 	m_currentGraphicsView->addBendpoint(bendpointAction->lastHoverEnterItem(),
 										bendpointAction->lastHoverEnterConnectorItem(),
+										bendpointAction->lastLocation());
+}
+
+void MainWindow::convertToVia()
+{
+	BendpointAction * bendpointAction = qobject_cast<BendpointAction *>(m_convertToViaAct);
+
+	m_currentGraphicsView->convertToVia(bendpointAction->lastHoverEnterConnectorItem(),
 										bendpointAction->lastLocation());
 }
 
@@ -2882,6 +2905,7 @@ QMenu *MainWindow::pcbWireMenu() {
 	menu->addAction(m_deleteWireAct);
 	menu->addSeparator();
 	menu->addAction(m_addBendpointAct);
+	menu->addAction(m_convertToViaAct);
 	menu->addAction(m_flattenCurveAct);
 
 #ifndef QT_NO_DEBUG

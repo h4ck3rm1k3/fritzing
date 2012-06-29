@@ -2428,3 +2428,48 @@ QString PCBSketchWidget::checkDroppedModuleID(const QString & moduleID) {
     return moduleID;
 }
 
+
+void PCBSketchWidget::convertToVia(ConnectorItem * lastHoverEnterConnectorItem, QPointF lastLocation) {
+    Wire * wire = qobject_cast<Wire *>(lastHoverEnterConnectorItem->attachedTo());
+    if (wire == NULL) return;
+    
+    this->clearHoldingSelectItem();
+	this->m_moveEventCount = 0;  // clear this so an extra MoveItemCommand isn't posted
+
+	QUndoCommand * parentCommand = new QUndoCommand(QObject::tr("Convert to Via"));
+
+    new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
+
+    long newID = ItemBase::getNextID();
+	ViewGeometry viewGeometry;
+	viewGeometry.setLoc(lastLocation);
+    new AddItemCommand(this, BaseCommand::CrossView, ModuleIDNames::ViaModuleIDName, wire->viewLayerSpec(), viewGeometry, newID, true, -1, parentCommand);
+
+    foreach (ConnectorItem * connectorItem, lastHoverEnterConnectorItem->connectedToItems()) {
+        Wire * w = qobject_cast<Wire *>(connectorItem->attachedTo());
+        if (w) {
+		    new ChangeConnectionCommand(this, BaseCommand::CrossView, wire->id(), lastHoverEnterConnectorItem->connectorSharedID(),
+			    w->id(), connectorItem->connectorSharedID(),
+			    ViewLayer::specFromID(wire->viewLayerID()),
+			    false, parentCommand);
+		    new ChangeConnectionCommand(this, BaseCommand::CrossView, w->id(), connectorItem->connectorSharedID(),
+			    newID, "connector0",
+			    ViewLayer::specFromID(wire->viewLayerID()),
+			    true, parentCommand);   
+        }
+    }
+
+    new ChangeConnectionCommand(this, BaseCommand::CrossView, wire->id(), lastHoverEnterConnectorItem->connectorSharedID(),
+	    newID, "connector0",
+	    ViewLayer::specFromID(wire->viewLayerID()),
+	    true, parentCommand);   
+
+
+	SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
+	selectItemCommand->addRedo(newID);
+
+	new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
+
+	m_undoStack->push(parentCommand);
+
+}

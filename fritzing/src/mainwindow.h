@@ -270,6 +270,7 @@ protected slots:
 	void hideAllLayers();
 	void showInViewHelp();
 	void addBendpoint();
+	void convertToVia();
 	void flattenCurve();
 	void disconnectAll();
 
@@ -637,6 +638,7 @@ protected:
 	QAction * m_openProgramWindowAct;
 
 	QAction *m_addBendpointAct;
+	QAction *m_convertToViaAct;
 	QAction *m_flattenCurveAct;
 
     QAction *m_showAllLayersAct;

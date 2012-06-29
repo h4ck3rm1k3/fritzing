@@ -124,6 +124,7 @@ public:
 	void rotateX(double degrees, bool rubberBandLegEnabled);
 	void flipX(Qt::Orientations orientation, bool rubberBandLegEnabled);
 	void addBendpoint(ItemBase * lastHoverEnterItem, ConnectorItem * lastHoverEnterConnectorItem, QPointF lastLocation);
+	virtual void convertToVia(ConnectorItem * lastHoverEnterConnectorItem, QPointF lastLocation);
 	void flattenCurve(ItemBase * lastHoverEnterItem, ConnectorItem * lastHoverEnterConnectorItem, QPointF lastLocation);
 
 	void deleteSelected(Wire *);

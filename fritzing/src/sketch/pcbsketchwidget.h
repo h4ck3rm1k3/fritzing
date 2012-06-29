@@ -104,6 +104,7 @@ public:
 	void restoreCopperLogoItems(QList<ItemBase *> & copperLogoItems);
 	int selectAllItemType(ModelPart::ItemType, const QString & typeName);
 	bool isBoardLayerChange(ItemBase * itemBase, const QString & newModuleID, int & newLayers);
+	void convertToVia(ConnectorItem * lastHoverEnterConnectorItem, QPointF lastLocation);
 
 public:
 	static QSizeF jumperItemSize();

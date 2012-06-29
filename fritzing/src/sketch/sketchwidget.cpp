@@ -8782,3 +8782,7 @@ QString SketchWidget::checkDroppedModuleID(const QString & moduleID) {
     return moduleID;
 }
 
+void SketchWidget::convertToVia(ConnectorItem * lastHoverEnterConnectorItem, QPointF lastLocation) {
+    Q_UNUSED(lastHoverEnterConnectorItem);
+    Q_UNUSED(lastLocation);
+}
