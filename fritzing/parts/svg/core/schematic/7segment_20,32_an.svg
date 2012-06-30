@@ -62,8 +62,8 @@
 	<path d="M28.154,63.98l-7.327-9.185c-0.345-0.435-0.271-1.062,0.158-1.405l0,0c0.431-0.347,1.062-0.271,1.406,0.159l0,0
 		l7.325,9.183c0.345,0.433,0.272,1.062-0.158,1.403l0,0c-0.187,0.146-0.404,0.22-0.623,0.22l0,0
 		C28.641,64.357,28.35,64.229,28.154,63.98L28.154,63.98z"/>
-	<polygon fill="none" points="43.23,77.503 0.03,77.503 0,12.833 43.23,12.962 	"/>
-	<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="20.7" y1="28.132" x2="18" y2="28.132"/>
+
+<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="20.7" y1="28.132" x2="18" y2="28.132"/>
 	<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="18.45" y1="25.433" x2="21.15" y2="25.433"/>
 	<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="21.6" y1="28.132" x2="21.6" y2="28.132"/>
 	<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="18.45" y1="25.433" x2="18" y2="28.132"/>
@@ -91,8 +91,8 @@
 	<path d="M71.354,63.98l-7.327-9.185c-0.345-0.435-0.271-1.062,0.158-1.405l0,0c0.431-0.347,1.062-0.271,1.406,0.159l0,0
 		l7.324,9.183c0.346,0.433,0.273,1.062-0.157,1.403l0,0c-0.187,0.146-0.404,0.22-0.623,0.22l0,0
 		C71.842,64.357,71.551,64.229,71.354,63.98L71.354,63.98z"/>
-	<polygon fill="none" points="86.43,77.503 43.23,77.503 43.2,12.833 86.43,12.962 	"/>
-	<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="64.8" y1="22.731" x2="62.1" y2="22.731"/>
+
+<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="64.8" y1="22.731" x2="62.1" y2="22.731"/>
 	<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="63.899" y1="28.132" x2="61.2" y2="28.132"/>
 	<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="61.65" y1="25.433" x2="64.35" y2="25.433"/>
 	<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="64.8" y1="28.132" x2="64.8" y2="28.132"/>
@@ -120,8 +120,8 @@
 	<path d="M114.554,63.98l-7.327-9.185c-0.346-0.435-0.271-1.062,0.158-1.405l0,0c0.431-0.347,1.062-0.271,1.405,0.159l0,0
 		l7.325,9.183c0.345,0.433,0.273,1.062-0.158,1.403l0,0c-0.186,0.146-0.403,0.22-0.623,0.22l0,0
 		C115.041,64.357,114.75,64.229,114.554,63.98L114.554,63.98z"/>
-	<polygon fill="none" points="129.63,77.503 86.43,77.503 86.4,12.833 129.63,12.962 	"/>
-	<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="108" y1="22.731" x2="105.301" y2="22.731"/>
+
+<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="108" y1="22.731" x2="105.301" y2="22.731"/>
 	<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="107.1" y1="28.132" x2="104.4" y2="28.132"/>
 	<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="104.85" y1="25.433" x2="107.551" y2="25.433"/>
 	<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="108" y1="28.132" x2="108" y2="28.132"/>
@@ -149,8 +149,8 @@
 	<path d="M157.724,63.98l-7.327-9.185c-0.345-0.435-0.271-1.062,0.158-1.405l0,0c0.431-0.347,1.062-0.271,1.405,0.159l0,0
 		l7.325,9.183c0.346,0.433,0.273,1.062-0.158,1.403l0,0c-0.186,0.146-0.403,0.22-0.623,0.22l0,0
 		C158.211,64.357,157.92,64.229,157.724,63.98L157.724,63.98z"/>
-	<polygon fill="none" points="172.801,77.503 129.6,77.503 129.57,12.833 172.801,12.962 	"/>
-	<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="151.169" y1="22.731" x2="148.47" y2="22.731"/>
+
+<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="151.169" y1="22.731" x2="148.47" y2="22.731"/>
 	<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="148.02" y1="25.433" x2="150.72" y2="25.433"/>
 	
 		<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="151.169" y1="28.132" x2="151.169" y2="28.132"/>
@@ -179,8 +179,8 @@
 	<path d="M200.954,63.98l-7.327-9.185c-0.346-0.435-0.271-1.062,0.158-1.405l0,0c0.432-0.347,1.062-0.271,1.406,0.159l0,0
 		l7.324,9.183c0.346,0.433,0.272,1.062-0.158,1.403l0,0c-0.187,0.146-0.403,0.22-0.623,0.22l0,0
 		C201.441,64.357,201.15,64.229,200.954,63.98L200.954,63.98z"/>
-	<polygon fill="none" points="216.029,77.503 172.831,77.503 172.801,12.833 216.029,12.962 	"/>
-	<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="194.4" y1="22.731" x2="191.7" y2="22.731"/>
+
+<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="194.4" y1="22.731" x2="191.7" y2="22.731"/>
 	<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="193.5" y1="28.132" x2="190.801" y2="28.132"/>
 	<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="191.25" y1="25.433" x2="193.95" y2="25.433"/>
 	<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="194.4" y1="28.132" x2="194.4" y2="28.132"/>
@@ -208,8 +208,8 @@
 	<path d="M244.154,63.98l-7.327-9.185c-0.345-0.435-0.271-1.062,0.157-1.405l0,0c0.432-0.347,1.062-0.271,1.406,0.159l0,0
 		l7.325,9.183c0.345,0.433,0.271,1.062-0.157,1.403l0,0c-0.188,0.146-0.404,0.22-0.623,0.22l0,0
 		C244.641,64.357,244.35,64.229,244.154,63.98L244.154,63.98z"/>
-	<polygon fill="none" points="259.23,77.503 216.029,77.503 216,12.833 259.23,12.962 	"/>
-	<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="237.6" y1="22.731" x2="234.9" y2="22.731"/>
+
+<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="237.6" y1="22.731" x2="234.9" y2="22.731"/>
 	<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="236.7" y1="28.132" x2="234" y2="28.132"/>
 	<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="234.45" y1="25.433" x2="237.15" y2="25.433"/>
 	<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="237.6" y1="28.132" x2="237.6" y2="28.132"/>
@@ -237,8 +237,8 @@
 	<path d="M287.354,63.98l-7.326-9.185c-0.346-0.435-0.271-1.062,0.158-1.405l0,0c0.43-0.347,1.062-0.271,1.405,0.159l0,0
 		l7.324,9.183c0.347,0.433,0.273,1.062-0.157,1.403l0,0c-0.187,0.146-0.404,0.22-0.623,0.22l0,0
 		C287.842,64.357,287.551,64.229,287.354,63.98L287.354,63.98z"/>
-	<polygon fill="none" points="302.43,77.503 259.23,77.503 259.2,12.833 302.43,12.962 	"/>
-	<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="280.801" y1="22.731" x2="278.1" y2="22.731"/>
+
+<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="280.801" y1="22.731" x2="278.1" y2="22.731"/>
 	<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="279.9" y1="28.132" x2="277.2" y2="28.132"/>
 	
 		<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="280.801" y1="28.132" x2="280.801" y2="28.132"/>
@@ -267,8 +267,8 @@
 	<path d="M330.523,63.98l-7.326-9.185c-0.346-0.435-0.271-1.062,0.158-1.405l0,0c0.431-0.347,1.062-0.271,1.406,0.159l0,0
 		l7.323,9.183c0.347,0.433,0.273,1.062-0.157,1.403l0,0c-0.187,0.146-0.404,0.22-0.623,0.22l0,0
 		C331.012,64.357,330.721,64.229,330.523,63.98L330.523,63.98z"/>
-	<polygon fill="none" points="345.6,77.503 302.4,77.503 302.37,12.833 345.6,12.962 	"/>
-	<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="323.971" y1="22.731" x2="321.27" y2="22.731"/>
+
+<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="323.971" y1="22.731" x2="321.27" y2="22.731"/>
 	<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="323.07" y1="28.132" x2="320.37" y2="28.132"/>
 	<line fill="none" stroke="#CCCCCC" stroke-width="0.5" stroke-linecap="round" x1="320.82" y1="25.433" x2="323.52" y2="25.433"/>
 	
