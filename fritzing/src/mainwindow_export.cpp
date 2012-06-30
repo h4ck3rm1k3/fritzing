@@ -416,8 +416,7 @@ QString MainWindow::getBoardSvg(ItemBase * board, int res, QSizeF & imageSize, L
 		item->setSelected(false);
 	}
 	board->setSelected(true);
-	LayerList viewLayerIDs;
-	viewLayerIDs << ViewLayer::Silkscreen1;
+
 	bool empty;
 	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, true, imageSize, board, res, true, false, empty);
 	board->setSelected(false);
