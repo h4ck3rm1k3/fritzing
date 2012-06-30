@@ -1521,19 +1521,18 @@ void MainWindow::updatePartMenu() {
 }
 
 bool MainWindow::updateExportActions() {
-    ItemBase * board = NULL;
+    int boardCount;
     if (m_pcbGraphicsView != NULL) {
-        int boardCount;
-        board = m_pcbGraphicsView->findSelectedBoard(boardCount);
+        ItemBase * board = m_pcbGraphicsView->findSelectedBoard(boardCount);
     }
 
-	m_exportEtchablePdfAct->setEnabled(board != NULL);
-	m_exportEtchablePdfFlipAct->setEnabled(board != NULL);
-	m_exportEtchableSvgAct->setEnabled(board != NULL);
-	m_exportEtchableSvgFlipAct->setEnabled(board != NULL);
-    m_exportGerberAct->setEnabled(board != NULL);
+	m_exportEtchablePdfAct->setEnabled(boardCount > 0);
+	m_exportEtchablePdfFlipAct->setEnabled(boardCount > 0);
+	m_exportEtchableSvgAct->setEnabled(boardCount > 0);
+	m_exportEtchableSvgFlipAct->setEnabled(boardCount > 0);
+    m_exportGerberAct->setEnabled(boardCount > 0);
 
-    return (board != NULL);
+    return (boardCount > 0);
 }
 
 void MainWindow::updateTransformationActions() {
