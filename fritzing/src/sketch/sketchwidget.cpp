@@ -7061,7 +7061,6 @@ void SketchWidget::drawBackground( QPainter * painter, const QRectF & rect )
         QColor gridColor(0, 0, 0, 20);
 		double gridSize = m_gridSizeInches * FSvgRenderer::printerScale();
 
-		painter->save();
 		double left = int(rect.left() * 10000) - (int(rect.left() * 10000) % int(gridSize * 10000));
 		left /= 10000;
 		double top = int(rect.top() * 10000) - (int(rect.top() * 10000) % int(gridSize * 10000));
@@ -7077,6 +7076,8 @@ void SketchWidget::drawBackground( QPainter * painter, const QRectF & rect )
 			linesY.append(QLineF(rect.left(), y, rect.right(), y));
 		}
 
+        //DebugDialog::debug(QString("lines %1 %2").arg(linesX.count()).arg(linesY.count()));
+
 		QPen pen;
 		pen.setColor(gridColor);
 		pen.setWidth(0);
@@ -7085,6 +7086,7 @@ void SketchWidget::drawBackground( QPainter * painter, const QRectF & rect )
 		//QVector<double> dashes;                   // removed dash pattern at forum suggestion: http://fritzing.org/forum/thread/855
 		//dashes << 1 << 1;
 		//pen.setDashPattern(dashes);
+		painter->save();
 		painter->setPen(pen);
 		painter->drawLines(linesX.data(), linesX.size());
 		painter->drawLines(linesY.data(), linesY.size());

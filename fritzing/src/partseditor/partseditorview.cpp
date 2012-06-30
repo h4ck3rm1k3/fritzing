@@ -67,6 +67,7 @@ PartsEditorView::PartsEditorView(
 		ItemBase * fromItem)
 	: SketchWidget(viewId, parent, size, size)
 {
+    m_alignToGrid = m_showGrid = false;
 	m_viewItem = NULL;
 	m_item = NULL;
 	m_connsLayerID = ViewLayer::UnknownLayer;
