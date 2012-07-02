@@ -5866,7 +5866,7 @@ void SketchWidget::checkFitAux(ItemBase * tempItemBase, ItemBase * itemBase, lon
 	QList<ConnectorItem *> removeFromFound;
 
 	foreach (ConnectorItem * foundConnectorItem, found.keys()) {
-		if (!m2f.value(foundConnectorItem, false)) {
+		if (m2f.value(foundConnectorItem, NULL) == NULL) {
 			// we only care about replacing the female connectors here
 
 			continue;
