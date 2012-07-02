@@ -110,12 +110,15 @@ SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ViewIdentifierClass::ViewIde
 		QString error;
 		LayerAttributes layerAttributes;
 		FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, viewIdentifier, ViewLayer::Icon, ViewLayer::ThroughHoleThroughTop_OneLayer, layerAttributes, error);
+        if (renderer == NULL) {
+            DebugDialog::debug(QString("missing renderer for %1 %2").arg(modelPart->moduleID()).arg(itemBase->filename()));
+        }
 		if (renderer && m_itemBase) {
 			m_itemBase->setFilename(renderer->filename());
 		}
 
 		QPixmap pixmap(plural ? *PluralImage : *SingularImage);
-		QPixmap * icon = FSvgRenderer::getPixmap(renderer, QSize(ICON_SIZE, ICON_SIZE));
+		QPixmap * icon = (renderer == NULL) ? NULL : FSvgRenderer::getPixmap(renderer, QSize(ICON_SIZE, ICON_SIZE));
 		if (icon) {
 			QPainter painter;
 			painter.begin(&pixmap);
@@ -140,7 +143,9 @@ SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ViewIdentifierClass::ViewIde
 			setToolTip(m_itemBase->toolTip());
 		}
 
-        itemBase->setSharedRendererEx(renderer);
+        if (renderer) {
+            itemBase->setSharedRendererEx(renderer);
+        }
 	}
 }
 
