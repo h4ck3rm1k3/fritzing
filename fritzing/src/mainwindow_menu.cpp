@@ -1523,7 +1523,7 @@ void MainWindow::updatePartMenu() {
 bool MainWindow::updateExportActions() {
     int boardCount;
     if (m_pcbGraphicsView != NULL) {
-        ItemBase * board = m_pcbGraphicsView->findSelectedBoard(boardCount);
+        m_pcbGraphicsView->findSelectedBoard(boardCount);
     }
 
 	m_exportEtchablePdfAct->setEnabled(boardCount > 0);
