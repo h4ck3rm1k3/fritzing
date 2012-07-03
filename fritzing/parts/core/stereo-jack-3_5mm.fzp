@@ -13,7 +13,7 @@
         <tag>tip ring sleeve</tag>
     </tags>
     <properties>
-        <property name="package">PG203J [THT]</property>
+        <property name="package">4Ucon 08780 [THT]</property>
         <property name="channels">Stereo (TRS)</property>
         <property name="size">3.5 mm</property>
         <property name="family">Audio Connector</property>
@@ -36,7 +36,7 @@
             </layers>
         </schematicView>
         <pcbView>
-            <layers image="pcb/stereo-jack-3_5mm-PG203J_h.svg">
+            <layers image="pcb/stereo-jack-3_5mm-08780_h.svg">
                 <layer layerId="copper0"/>
                 <layer layerId="silkscreen"/>
             <layer layerId="copper1"/></layers>
