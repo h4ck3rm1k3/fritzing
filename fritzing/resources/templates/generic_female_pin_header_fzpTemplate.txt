@@ -13,6 +13,7 @@
         <property name="Pin Spacing">.percent.1</property>
          <property name="Row">.percent.8</property>
         <property name="package">.percent.9</property>
+        <property name="Position">.percent.10</property>
    <property name="package">THT</property></properties>
     <description>Generic .percent.5 header</description>
     <views>

@@ -69,7 +69,7 @@ public:
 	static QString genFZP(const QString & moduleid);
 	static QString makePcbSvg(const QString & expectedFileName, const QString & moduleID);
 	static QString makePcbShroudedSvg(int pins);
-	static QString makePcbLongPadSvg(int pins);
+	static QString makePcbLongPadSvg(int pins, bool lock);
 	static QString makePcbMolexSvg(int pins);
 	static QString makePcbSMDSvg(const QString & expectedFileName, const QString & moduleID);
 	static QString makeSchematicSvg(const QString & expectedFileName, const QString & moduleID);

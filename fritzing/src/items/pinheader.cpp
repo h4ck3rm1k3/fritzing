@@ -109,6 +109,15 @@ QStringList PinHeader::collectValues(const QString & family, const QString & pro
 		return values;
 	}
 
+	if (prop.compare("position", Qt::CaseInsensitive) == 0) {
+		QStringList values;
+		values.append("center");
+        values.append("lock");
+
+		value = (moduleID().contains("lock")) ? "lock" : "center";
+		return values;
+	}
+
 	if (prop.compare("package", Qt::CaseInsensitive) == 0) {
 		QStringList values;
 		values.append("through-hole");
@@ -146,11 +155,12 @@ QStringList PinHeader::collectValues(const QString & family, const QString & pro
 
 		value = modelPart()->properties().value("pin spacing");
 		if (m_form.contains("shrouded")) {
-			values.clear();
 			values.append(value);
 		}
 		else {
-			values = Spacings.values();
+            foreach (QString key, Spacings.keys()) {
+			    values.append(Spacings.value(key));
+            }
 		}
 		
 		return values;
@@ -211,6 +221,7 @@ QString PinHeader::genFZP(const QString & moduleID)
 	QString formSchematic = formBread;
 	QString formModule = formBread;
     QString formPackage = useModuleID.contains("smd", Qt::CaseInsensitive) ? "smd" : "tht";
+    QString formPosition = useModuleID.contains("lock", Qt::CaseInsensitive) ? "lock" : "";
     bool isDouble = useModuleID.contains("shrouded") || useModuleID.contains("double");
     QString formRow = isDouble ? "double" : "single";
 	if (useModuleID.contains("rounded")) {
@@ -229,6 +240,10 @@ QString PinHeader::genFZP(const QString & moduleID)
             else {
 			    formBread = formModule = "rounded_female";
                 formText = "rounded female";
+                if (!formPosition.isEmpty()) {
+                    formText += " lock";
+                    formModule += "_lock";
+                }
             }
 		}
 		formSchematic = "female";
@@ -237,6 +252,10 @@ QString PinHeader::genFZP(const QString & moduleID)
         form = LongPadFormString;
 	    formBread = formModule = "longpad";
         formText = "longpad";
+        if (!formPosition.isEmpty()) {
+            formText += " lock";
+            formModule += "_lock";
+        }
     }
     else if (useModuleID.contains("molex")) {
         form = MolexFormString;
@@ -258,6 +277,10 @@ QString PinHeader::genFZP(const QString & moduleID)
             }
             else {
 			    formBread = formModule = formText = "female";
+                if (!formPosition.isEmpty()) {
+                    formText += " lock";
+                    formModule += "_lock";
+                }
             }
 		}
         formSchematic = "female";
@@ -275,6 +298,11 @@ QString PinHeader::genFZP(const QString & moduleID)
 	    formBread = formModule = "double_row_male";
         formText = "double row male";
     }
+    else if (!formPosition.isEmpty()) {
+        formText += " lock";
+        formModule += "_lock";
+    }
+
 
 	result = result
         .arg(Spacings.value(spacing, ""))
@@ -286,6 +314,7 @@ QString PinHeader::genFZP(const QString & moduleID)
         .arg(formModule)
         .arg(formRow)
         .arg(formPackage)
+        .arg(formPosition);
         ; 
 	if (useModuleID.contains("smd")) {
 		result.replace("nsjumper", QString("smd_%1_row_pin_header").arg(formRow));
@@ -296,16 +325,19 @@ QString PinHeader::genFZP(const QString & moduleID)
 		result.replace("jumper", "shrouded");
 	}
 	else if (useModuleID.contains("longpad")) {
-		result.replace("nsjumper", "longpad");
-		result.replace("jumper", "longpad");
+		result.replace("nsjumper", "formModule");
+		result.replace("jumper", "formModule");
 	}
 	else if (useModuleID.contains("molex")) {
 		result.replace("nsjumper", "molex");
 		result.replace("jumper", "molex");
 	}
-
-    if (isDouble) {
+    else if (isDouble) {
         result.replace("jumper", "jumper_double");
+    }
+    else if (!formPosition.isEmpty()) {
+		result.replace("nsjumper", "nsjumper_lock");
+		result.replace("jumper", "jumper_lock");
     }
 
     if (hsix >= 0) {
@@ -325,6 +357,7 @@ QString PinHeader::genModuleID(QMap<QString, QString> & currPropsMap)
 	QString form = currPropsMap.value("form").toLower();
     QString package = currPropsMap.value("package").toLower();
     QString row = currPropsMap.value("row").toLower();
+    QString position = currPropsMap.value("position").toLower();
 	QString formWord = "male";
 	bool isDouble = false;
 
@@ -338,6 +371,9 @@ QString PinHeader::genModuleID(QMap<QString, QString> & currPropsMap)
 	}
 	else if (form.contains("long pad")) {
 		formWord = "longpad";
+        if (position.contains("lock")) {
+            formWord += "_lock";
+        }
 	}
 	else if (form.contains("molex")) {
 		formWord = "molex";
@@ -356,6 +392,9 @@ QString PinHeader::genModuleID(QMap<QString, QString> & currPropsMap)
 		else {
             if (row.contains("single", Qt::CaseInsensitive)) {
 			    formWord = ff;
+                if (position.contains("lock")) {
+                    formWord += "_lock";
+                }
             }
             else {
 				isDouble = true;
@@ -375,6 +414,9 @@ QString PinHeader::genModuleID(QMap<QString, QString> & currPropsMap)
     else if (row.contains("double", Qt::CaseInsensitive)) {
 		formWord = "double_row_male";
 	    isDouble = true;
+    }
+    else if (position.contains("lock")) {
+        formWord += "_lock";
     }
 
 	if (isDouble && (p % 2 == 1)) {
@@ -413,7 +455,7 @@ QString PinHeader::makePcbSvg(const QString & originalExpectedFileName, const QS
 		svg = makePcbShroudedSvg(pins);
 	}
 	else if (expectedFileName.contains("longpad")) {
-		svg = makePcbLongPadSvg(pins);
+		svg = makePcbLongPadSvg(pins, expectedFileName.contains("lock"));
 	}
 	else if (expectedFileName.contains("molex")) {
 		svg = makePcbMolexSvg(pins);
@@ -446,7 +488,6 @@ QString PinHeader::makePcbSvg(const QString & originalExpectedFileName, const QS
 	    double center = totalWidth / 2;
 	    double spacing = TextUtils::convertToInches(spacingString) * GraphicsUtils::StandardFritzingDPI; 
 
-
 	    QString middle;
 
         bool addSquare = false;
@@ -459,10 +500,19 @@ QString PinHeader::makePcbSvg(const QString & originalExpectedFileName, const QS
             DebugDialog::debug(QString("square: expected filename is confusing %1 %2").arg(expectedFileName).arg(moduleID));
         }
 
+        double lockOffset = 5;  // mils
+        double useLock = 0;
+        if (!isDouble && expectedFileName.contains("lock")) {
+            useLock = lockOffset;
+        }
+
+
+
 	    if (addSquare) {
-		    middle += QString( "<rect id='square' fill='none' height='%1' width='%1' stroke='rgb(255, 191, 0)' stroke-width='%2' x='%3' y='%3'/>\n")
+		    middle += QString( "<rect id='square' fill='none' height='%1' width='%1' stroke='rgb(255, 191, 0)' stroke-width='%2' x='%3' y='%4'/>\n")
 					    .arg(radius * 2)
 					    .arg(copperStrokeWidth)
+					    .arg(center - radius + useLock)
 					    .arg(center - radius);
 	    }
 
@@ -498,7 +548,7 @@ QString PinHeader::makePcbSvg(const QString & originalExpectedFileName, const QS
         else {
 	        for (int i = 0; i < pins; i++) {
 		        middle += circle
-					        .arg(center)
+					        .arg(center + (i % 2 == 0 ? useLock : -useLock))
 					        .arg(center + (i * spacing)) 
 					        .arg(i)
 					        .arg(radius)
@@ -539,9 +589,11 @@ QString PinHeader::makePcbSvg(const QString & originalExpectedFileName, const QS
 void PinHeader::initSpacings() {
 	if (Spacings.count() == 0) {
 		ShroudedSpacing = "0.1in (2.54mm)";
+		Spacings.insert("1mm", "0.03937in (1.0mm)");
 		Spacings.insert("50mil", "0.05in (1.27mm)");
-		Spacings.insert("78.7401575mil", "0.07874in (2mm)");
-		Spacings.insert("98.4251969mil", "0.09843in (2.5mm)");
+		Spacings.insert("1.5mm", "0.0591in (1.5mm)");
+		Spacings.insert("2mm", "0.07874in (2mm)");
+		Spacings.insert("2.5mm", "0.09843in (2.5mm)");
 		Spacings.insert("100mil", ShroudedSpacing);
 		Spacings.insert("200mil", "0.2in (5.08mm)");
 	}
@@ -758,7 +810,7 @@ QString PinHeader::makePcbShroudedSvg(int pins)
 	return svg.arg(TextUtils::getViewBoxCoord(svg, 3) / 10000.0).arg(repeatLs).arg(repeatRs);
 }
 
-QString PinHeader::makePcbLongPadSvg(int pins) 
+QString PinHeader::makePcbLongPadSvg(int pins, bool lock) 
 {
     double dpi = 25.4;
     double originalWidth = 0.108;           // inches
