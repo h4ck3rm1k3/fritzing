@@ -51,6 +51,8 @@ QString PinHeader::FemaleFormString;
 QString PinHeader::FemaleRoundedFormString;
 QString PinHeader::MaleFormString;
 QString PinHeader::ShroudedFormString;
+QString PinHeader::LongPadFormString;
+QString PinHeader::MolexFormString;
 
 static int MinPins = 1;
 static int MinShroudedPins = 6;
@@ -82,6 +84,8 @@ void PinHeader::initNames() {
 		FemaleRoundedFormString = FemaleSymbolString + " (female rounded)";
 		MaleFormString = MaleSymbolString + " (male)";
 		ShroudedFormString = MaleSymbolString + " (shrouded male)";
+		LongPadFormString = "long pad";
+		MolexFormString = "molex";
 	}
 }
 
@@ -179,7 +183,7 @@ const QString & PinHeader::form() {
 
 const QStringList & PinHeader::forms() {
 	if (Forms.count() == 0) {
-		Forms << FemaleFormString << FemaleRoundedFormString << MaleFormString << ShroudedFormString;
+		Forms << FemaleFormString << FemaleRoundedFormString << MaleFormString << ShroudedFormString << LongPadFormString << MolexFormString;
 	}
 	return Forms;
 }
@@ -229,6 +233,16 @@ QString PinHeader::genFZP(const QString & moduleID)
 		}
 		formSchematic = "female";
 	}
+    else if (useModuleID.contains("longpad")) {
+        form = LongPadFormString;
+	    formBread = formModule = "longpad";
+        formText = "longpad";
+    }
+    else if (useModuleID.contains("molex")) {
+        form = MolexFormString;
+	    formBread = formModule = "molex";
+        formText = "molex";
+    }
 	else if (useModuleID.contains("female")) {
 	    form = FemaleFormString;
 		if (useModuleID.contains("smd")) {
@@ -281,6 +295,14 @@ QString PinHeader::genFZP(const QString & moduleID)
 		result.replace("nsjumper", "shrouded");
 		result.replace("jumper", "shrouded");
 	}
+	else if (useModuleID.contains("longpad")) {
+		result.replace("nsjumper", "longpad");
+		result.replace("jumper", "longpad");
+	}
+	else if (useModuleID.contains("molex")) {
+		result.replace("nsjumper", "molex");
+		result.replace("jumper", "molex");
+	}
 
     if (isDouble) {
         result.replace("jumper", "jumper_double");
@@ -313,6 +335,12 @@ QString PinHeader::genModuleID(QMap<QString, QString> & currPropsMap)
 		isDouble = true; 
 		spacing = ShroudedSpacing;
 		formWord = "shrouded";
+	}
+	else if (form.contains("long pad")) {
+		formWord = "longpad";
+	}
+	else if (form.contains("molex")) {
+		formWord = "molex";
 	}
 	else if (form.contains("female")) {
         QString ff = form.contains("rounded") ? "rounded_female" : "female";
@@ -381,10 +409,14 @@ QString PinHeader::makePcbSvg(const QString & originalExpectedFileName, const QS
 
     QString svg;
 
-    bool shrouded = false;
 	if (expectedFileName.contains("shrouded")) {
 		svg = makePcbShroudedSvg(pins);
-        shrouded = true;
+	}
+	else if (expectedFileName.contains("longpad")) {
+		svg = makePcbLongPadSvg(pins);
+	}
+	else if (expectedFileName.contains("molex")) {
+		svg = makePcbMolexSvg(pins);
 	}
     else {
 	    static QString pcbLayerTemplate = "";
@@ -724,6 +756,81 @@ QString PinHeader::makePcbShroudedSvg(int pins)
 	QString repeatRs = TextUtils::incrementTemplateString(repeatL, pins / 2, increment, TextUtils::standardMultiplyPinFunction, TextUtils::standardCopyPinFunction, NULL);
 
 	return svg.arg(TextUtils::getViewBoxCoord(svg, 3) / 10000.0).arg(repeatLs).arg(repeatRs);
+}
+
+QString PinHeader::makePcbLongPadSvg(int pins) 
+{
+    double dpi = 25.4;
+    double originalWidth = 0.108;           // inches
+    double increment = 0.1;                 // inches
+	QString header("<?xml version='1.0' encoding='utf-8'?>\n"
+					"<svg version='1.2' baseProfile='tiny' xmlns='http://www.w3.org/2000/svg' \n"
+                    "x='0in' y='0in' width='%1in' height='0.148in' viewBox='0 0 %2 3.7592'>\n"
+					"<g id='copper0' >\n"					
+					"<g id='copper1' >\n"
+					"%3\n"
+					"</g>\n"
+					"</g>\n"
+					"<g id='silkscreen' >\n"	
+                    "<line class='other' x1='0.1016' y1='1.2446' x2='0.1016' y2='2.5146' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n"
+                    "<line class='other' x1='%4' y1='1.2446' x2='%4' y2='2.5146' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n"
+					"</g>\n"
+					"</svg>\n"
+				);
+
+   
+    double cx = 1.3716;
+    double cx2 = 0.8128;
+	QString repeat = "<circle id='connector%1pin' cx='%2' cy='1.8796' r='0.7493' stroke='#F7BD13' stroke-width='0.381' fill='none' />\n"
+                     "<path stroke='none' stroke-width='0' fill='#F7BD13'\n"
+                     "d='m%2,0a0.9398,0.9398 0 0 1 0.9398,0.9398l0,1.8796a0.9398,0.9398 0 0 1 -0.9398,0.9398l-0,0a0.9398,0.9398 0 0 1 -0.9398,-0.9398l0,-1.8796a0.9398,0.9398 0 0 1 0.9398,-0.9398l0,0zM%3,1.8796a0.5588,0.5588 0 1 0 1.1176,0 0.5588,0.5588 0 1 0 -1.1176,0z' />\n";
+
+    QString repeats;
+    for (int i = 0; i < pins; i++) {
+        repeats += repeat.arg(i).arg(cx).arg(cx2);
+        cx += increment * dpi;
+        cx2 += increment * dpi;
+    }
+
+    double totalWidth = originalWidth + ((pins - 1) * increment);
+    double lineOffset = 0.1016;  // already in dpi
+    return header.arg(totalWidth).arg(totalWidth * dpi).arg(repeats).arg(totalWidth * dpi - lineOffset);
+}
+
+QString PinHeader::makePcbMolexSvg(int pins) 
+{
+    double dpi = 25.4;
+    double originalWidth = 0.105;           // inches
+    double increment = 0.1;                 // inches
+	QString header("<?xml version='1.0' encoding='utf-8'?>\n"
+					"<svg version='1.2' baseProfile='tiny' xmlns='http://www.w3.org/2000/svg' \n"
+                    "x='0in' y='0in' width='%1in' height='0.225in' viewBox='0 0 %2 5.715'>\n"
+					"<g id='copper0' >\n"					
+					"<g id='copper1' >\n"
+                    "<rect id='square' stroke='#F7BD13' stroke-width='0.4318' fill='none' x='.6096' y='2.3876' width='1.4478' height='1.4478' />\n"
+					"%3\n"
+					"</g>\n"
+					"</g>\n"
+					"<g id='silkscreen' >\n"	
+                    "<rect class='other' stroke='#f0f0f0' stroke-width='0.127' fill='none' stroke-linecap='round' x='0.0635' y='0.0635'  width='%4' height='5.588' />\n"
+                    "<rect class='other' stroke='#f0f0f0' stroke-width='0.127' fill='none' stroke-linecap='round' x='1.3335' y='4.3815'  width='%5' height='1.27' />\n"                
+                    "</g>\n"
+					"</svg>\n"
+				);
+
+   
+    double cx = 1.3335;         // already in dpi
+	QString repeat = "<circle id='connector%1pin' cx='%2' cy='3.1115' r='0.7239' stroke='#F7BD13' stroke-width='0.4318' fill='none' />\n";
+
+    QString repeats;
+    for (int i = 0; i < pins; i++) {
+        repeats += repeat.arg(i).arg(cx + (i * increment * dpi));
+    }
+
+    double totalWidth = originalWidth + ((pins - 1) * increment);
+    double strokeWidth = .127;  // already in dpi
+    double w = 0.0001;
+    return header.arg(totalWidth).arg(totalWidth * dpi).arg(repeats).arg((totalWidth * dpi) - strokeWidth).arg(qMax(w, (totalWidth * dpi) - cx - cx));
 }
 
 QString PinHeader::makePcbSMDSvg(const QString & expectedFileName, const QString & moduleID) 

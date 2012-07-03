@@ -61,12 +61,16 @@ public:
 	static QString FemaleRoundedFormString;
 	static QString MaleFormString;
 	static QString ShroudedFormString;
+	static QString LongPadFormString;
+	static QString MolexFormString;
 
 public:
 	static void initNames();
 	static QString genFZP(const QString & moduleid);
 	static QString makePcbSvg(const QString & expectedFileName, const QString & moduleID);
 	static QString makePcbShroudedSvg(int pins);
+	static QString makePcbLongPadSvg(int pins);
+	static QString makePcbMolexSvg(int pins);
 	static QString makePcbSMDSvg(const QString & expectedFileName, const QString & moduleID);
 	static QString makeSchematicSvg(const QString & expectedFileName, const QString & moduleID);
 	static QString makeBreadboardSvg(const QString & expectedFileName, const QString & moduleID);
