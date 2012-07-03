@@ -726,7 +726,7 @@ void PCBSketchWidget::resizeBoard(double mmW, double mmH, bool doEmit)
 			handle = true;
 			break;
 		case ModelPart::Part:
-			handle = item->moduleID().endsWith(ModuleIDNames::PadModuleIDName);
+			handle = item->moduleID().endsWith(ModuleIDNames::PadModuleIDName) || item->moduleID().endsWith(ModuleIDNames::CopperBlockerModuleIDName);
 			break;
 		default:
 			break;
