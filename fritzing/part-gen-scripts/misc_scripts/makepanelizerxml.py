@@ -96,7 +96,7 @@ def main():
         countIndex = fields.index("count")
         orderNumberIndex = fields.index("order-nr")
         filenameIndex = fields.index("Filename")
-        optionalIndex = fields.index("count optional")
+        optionalIndex = fields.index("optional")
     except:
         print "file", fromName, "missing 'count', 'order-nr' or 'Filename' field"
         return
