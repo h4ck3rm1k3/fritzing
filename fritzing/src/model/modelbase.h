@@ -52,6 +52,7 @@ public:
 	void setReportMissingModules(bool);
 	ModelPart * genFZP(const QString & moduleID, ModelBase * refModel);
 	const QString & fritzingVersion();
+    void setReferenceModel(ModelBase *);
 
 signals:
 	void loadedViews(ModelBase *, QDomElement & views);

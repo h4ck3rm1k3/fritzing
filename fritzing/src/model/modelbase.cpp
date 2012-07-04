@@ -629,3 +629,7 @@ void ModelBase::checkTraces(QDomElement & instance) {
 const QString & ModelBase::fritzingVersion() {
 	return m_fritzingVersion;
 }
+
+void ModelBase::setReferenceModel(ModelBase * modelBase) {
+    m_referenceModel = modelBase;
+}
