@@ -415,3 +415,7 @@ void SchematicSketchWidget::selectAllWires(ViewGeometry::WireFlag flag)
 void SchematicSketchWidget::convertToVia(ConnectorItem * lastHoverEnterConnectorItem, QPointF lastLocation) {
    SketchWidget::convertToVia(lastHoverEnterConnectorItem, lastLocation);
 }
+
+bool SchematicSketchWidget::canConnect(Wire *, ItemBase *) {
+    return true;
+}

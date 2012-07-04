@@ -94,6 +94,7 @@ protected:
 	QString makeCircleSVG(QPointF p, double r, QPointF offset, double dpi, double printerScale);
 	ViewLayer::ViewLayerSpec createWireViewLayerSpec(ConnectorItem * from, ConnectorItem * to);
     void selectAllWires(ViewGeometry::WireFlag flag);
+    bool canConnect(Wire * from, ItemBase * to);
 
 protected:
 	QTimer m_updateDotsTimer;
