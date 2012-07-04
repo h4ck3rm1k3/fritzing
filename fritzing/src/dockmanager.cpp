@@ -82,6 +82,7 @@ void DockManager::dockChangeActivation(bool activate, QWidget * originator) {
 
 void DockManager::createBinAndInfoViewDocks() {
 	m_mainWindow->m_infoView = new HtmlInfoView();
+    connect(m_mainWindow->m_infoView, SIGNAL(clickObsoleteSignal()), m_mainWindow, SLOT(selectAllObsolete()));
 	DebugDialog::debug("after html view");
 
 	m_mainWindow->m_binManager = new BinManager(m_mainWindow->m_refModel, m_mainWindow->m_infoView, m_mainWindow->m_undoStack, m_mainWindow);

@@ -169,6 +169,9 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	m_partVersion = new QLabel();
 	m_partVersion->setObjectName("infoViewPartVersion");
 	m_partVersion->setToolTip(tr("Part version number"));
+    m_partVersion->setOpenExternalLinks(false);
+    m_partVersion->setAlignment(Qt::AlignLeft | Qt::AlignTop);
+    connect(m_partVersion, SIGNAL(linkActivated(const QString &)), this, SLOT(clickObsolete(const QString &)));
 	subVersionLayout->addWidget(m_partVersion, 0, Qt::AlignLeft);
 	subVersionLayout->addStretch(1);
 	versionLayout->addLayout(subVersionLayout);
@@ -383,7 +386,7 @@ void HtmlInfoView::appendWireStuff(Wire* wire, bool swappingEnabled) {
 	else {
 		 nameString = modelPart->description();
 	}
-	partTitle(nameString, modelPart->version(), modelPart->url());
+	partTitle(nameString, modelPart->version(), modelPart->url(), modelPart->isObsolete());
 	m_lockCheckbox->setVisible(false);
 	m_stickyCheckbox->setVisible(false);
 
@@ -416,7 +419,7 @@ void HtmlInfoView::appendItemStuff(ItemBase * itemBase, ModelPart * modelPart, b
 	else {
 		nameString = modelPart->description();
 	}
-	partTitle(nameString, modelPart->version(), modelPart->url());
+	partTitle(nameString, modelPart->version(), modelPart->url(), modelPart->isObsolete());
 	m_lockCheckbox->setVisible(true);
 	m_lockCheckbox->setChecked(itemBase->moveLock());
     if (itemBase->isBaseSticky()) {
@@ -496,7 +499,7 @@ void HtmlInfoView::reloadContent(InfoGraphicsView * infoGraphicsView) {
 void HtmlInfoView::setNullContent()
 {
 	setUpTitle(NULL);
-	partTitle("", "", "");
+	partTitle("", "", "", false);
 	m_lockCheckbox->setVisible(false);
 	m_stickyCheckbox->setVisible(false);
 	setUpIcons(NULL, false);
@@ -627,7 +630,7 @@ void HtmlInfoView::addTags(ModelPart * modelPart) {
 	m_tagsTextLabel->setText(modelPart->tags().join(", "));
 }
 
-void HtmlInfoView::partTitle(const QString & title, const QString & version, const QString & url) {
+void HtmlInfoView::partTitle(const QString & title, const QString & version, const QString & url, bool isObsolete) {
 	if (m_partTitle == NULL) return;
 
 	if (m_lastPartTitle == title && m_lastPartVersion == version) return;
@@ -646,7 +649,7 @@ void HtmlInfoView::partTitle(const QString & title, const QString & version, con
 
 	m_partTitle->setText(title);
 	if (!version.isEmpty()) {
-		m_partVersion->setText(tr("v. %1").arg(version));
+		m_partVersion->setText(tr("v. %1 %2").arg(version).arg(isObsolete ? QString("<a href='x'>%1</a>").arg(tr("obsolete")) : ""));
 	}
 	else m_partVersion->setText("");
 }
@@ -879,4 +882,8 @@ void HtmlInfoView::changeSticky(bool lockState)
 	if (m_currentItem->itemType() == ModelPart::Wire) return;
 
 	m_currentItem->setLocalSticky(lockState);
+}
+
+void HtmlInfoView::clickObsolete(const QString &) {
+    emit clickObsoleteSignal();
 }

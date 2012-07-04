@@ -93,6 +93,9 @@ public:
 	static void cleanup();
 	static QHash<QString, QString> getPartProperties(ModelPart * modelPart, ItemBase * itemBase, bool wantDebug, QStringList & keys);
 
+signals:
+    void clickObsoleteSignal();
+
 protected slots:
 	void setContent();
 	void setInstanceTitle();
@@ -101,6 +104,7 @@ protected slots:
 	void instanceTitleEditable(bool editable);
 	void changeLock(bool);
 	void changeSticky(bool);
+    void clickObsolete(const QString &);
 
 protected:
 	void appendStuff(ItemBase* item, bool swappingEnabled); //finds out if it's a wire or something else
@@ -115,7 +119,7 @@ protected:
 	void setUpTitle(ItemBase *);
 	void setUpIcons(ItemBase *, bool swappingEnabled);
 	void addTags(ModelPart * modelPart);
-	void partTitle(const QString & title, const QString & version, const QString & url);
+	void partTitle(const QString & title, const QString & version, const QString & url, bool obsolete);
 	void displayProps(ModelPart * modelPart, ItemBase * itemBase, bool swappingEnabled);
 	void clearPropThingPlugin(PropThing * propThing);
 	void clearPropThingPlugin(PropThing * propThing, QWidget * plugin);
