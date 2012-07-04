@@ -551,8 +551,8 @@ void MainWindow::exportAux(QString fileName, QImage::Format format, bool removeB
 	if (imageWriter.supportsOption(QImageIOHandler::Description)) {
 		imageWriter.setText("", TextUtils::CreatedWithFritzingString);
 	}
+    imageWriter.setQuality(100);
 	bool result = imageWriter.write(image);
-	//bool result = image.save(fileName);
 	if (!result) {
 		QMessageBox::warning(this, tr("Fritzing"), tr("Unable to save %1").arg(fileName) );
 	}

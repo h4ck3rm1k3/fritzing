@@ -272,11 +272,6 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 	app->registerFonts();
 	app->loadReferenceModel();
 
-	if (!app->loadBin("")) {
-		DebugDialog::debug(QString("load bin failed"));
-		return;
-	}
-
     QList<LayerThing> layerThingList;
 	layerThingList.append(LayerThing("outline", ViewLayer::outlineLayers(), SVG2gerber::ForOutline, GerberGenerator::OutlineSuffix));  
 	layerThingList.append(LayerThing("copper_top", ViewLayer::copperLayers(ViewLayer::Top), SVG2gerber::ForCopper, GerberGenerator::CopperTopSuffix));
@@ -1083,11 +1078,6 @@ void Panelizer::inscribe(FApplication * app, const QString & panelFilename)
 	app->createUserDataStoreFolderStructure();
 	app->registerFonts();
 	app->loadReferenceModel();
-
-	if (!app->loadBin("")) {
-		DebugDialog::debug(QString("load bin failed"));
-		return;
-	}
 
 	board = boards.firstChildElement("board");
 	while (!board.isNull()) {
