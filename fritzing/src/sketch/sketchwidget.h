@@ -61,6 +61,8 @@ struct ItemCount {
 };
 
 struct SwapThing {
+    bool firstTime;
+    long newID;
     ItemBase * itemBase;
     long newModelIndex;
     QString newModuleID;
@@ -307,6 +309,9 @@ public:
 	void setGroundFillSeed(long id, const QString & connectorID, bool seed);
 	void setWireExtras(long id, const QDomElement &);
     void resolveTemporary(bool, ItemBase *);
+	virtual bool sameElectricalLayer2(ViewLayer::ViewLayerID, ViewLayer::ViewLayerID);
+	void deleteMiddle(QSet<ItemBase *> & deletedItems, QUndoCommand * parentCommand);
+    void setPasting(bool);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -346,7 +351,6 @@ protected:
 
 	void cutDeleteAux(QString undoStackMessage);
 	void deleteAux(QSet<ItemBase *> & deletedItems, QUndoCommand * parentCommand, bool doPush);
-	void deleteMiddle(QHash<ItemBase *, SketchWidget *> & otherDeletedItems, QUndoCommand * parentCommand);
 
 	ChangeConnectionCommand * extendChangeConnectionCommand(BaseCommand::CrossViewType, long fromID, const QString & fromConnectorID,
 									   long toID, const QString & toConnectorID,
@@ -445,7 +449,6 @@ protected:
 	virtual ItemBase * placePartDroppedInOtherView(ModelPart *, ViewLayer::ViewLayerSpec, const ViewGeometry & viewGeometry, long id, SketchWidget * dropOrigin);
 	void alignOneToGrid(ItemBase * itemBase);
 	void showPartLabelsAux(bool show, QList<ItemBase *> & itemBases);
-	virtual void changeTrace(Wire * wire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand);
 	virtual void extraRenderSvgStep(ItemBase *, QPointF offset, double dpi, double printerScale, QString & outputSvg);
 	virtual ViewLayer::ViewLayerSpec createWireViewLayerSpec(ConnectorItem * from, ConnectorItem * to);
 	virtual Wire * createTempWireForDragging(Wire * fromWire, ModelPart * wireModel, ConnectorItem * connectorItem, ViewGeometry & viewGeometry, ViewLayer::ViewLayerSpec);
@@ -470,6 +473,8 @@ protected:
 	bool createOneTrace(Wire * wire, ViewGeometry::WireFlag flag, bool allowAny, QList<Wire *> & done, QUndoCommand * parentCommand);
 	void removeWire(Wire * w, QList<ConnectorItem *> & ends, QList<Wire *> & done, QUndoCommand * parentCommand);
     void selectAllWiresFrom(ViewGeometry::WireFlag flag, QList<QGraphicsItem *> & items);
+    bool canConnect(ItemBase * from, ItemBase * to);
+    virtual bool canConnect(Wire * from, ItemBase * to);
 
 protected:
 	static bool lessThan(int a, int b);
@@ -518,6 +523,8 @@ signals:
 	void removeRatsnestSignal(QList<struct ConnectorEdge *> & cutSet, QUndoCommand * parentCommand); 
 	void updateLayerMenuSignal();
     void swapBoardImageSignal(SketchWidget * sketchWidget, ItemBase * itemBase, const QString & filename, const QString & moduleID, bool addName);
+    void canConnectSignal(Wire * from, ItemBase * to, bool & connect);
+    void swapStartSignal(SwapThing & swapThing, bool master);
 
 protected slots:
 	void itemAddedSlot(ModelPart *, ViewLayer::ViewLayerSpec, const ViewGeometry &, long id, SketchWidget * dropOrigin);
@@ -558,6 +565,8 @@ protected slots:
 	void collectRatsnestSlot(QList<SketchWidget *> & foreignSketchWidgets);
 	void removeRatsnestSlot(QList<struct ConnectorEdge *> & cutSet, QUndoCommand * parentCommand);
     void deleteTemporary();
+    void canConnect(Wire * from, ItemBase * to, bool & connect);
+    long swapStart(SwapThing & swapThing, bool master);
 
 public slots:
 	void changeWireColor(const QString newColor);
@@ -692,6 +701,7 @@ protected:
 	bool m_rubberBandLegWasEnabled;
 	RoutingStatus m_routingStatus;
 	bool m_anyInRotation;
+    bool m_pasting;
 
 public:
 	static ViewLayer::ViewLayerID defaultConnectorLayer(ViewIdentifierClass::ViewIdentifier viewId);

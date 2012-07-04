@@ -31,6 +31,7 @@ $Date$
 
 #include "fapplication.h"
 #include "debugdialog.h"
+#include "utils/folderutils.h"
 
 #ifdef Q_WS_WIN
 #ifndef QT_NO_DEBUG
@@ -41,8 +42,8 @@ $Date$
 QtMsgHandler originalMsgHandler;
 
 void writeCrashMessage(const char * msg) {
-	QString path = QCoreApplication::applicationDirPath();
-	path += "/../fritzingcrash.txt";
+	QString path = FolderUtils::getUserDataStorePath("");
+	path += "/fritzingcrash.txt";
 	QFile file(path);
 	if (file.open(QIODevice::Append | QIODevice::Text)) {
 		QTextStream out(&file);
@@ -86,7 +87,10 @@ int main(int argc, char *argv[])
 #ifndef QT_NO_DEBUG
 #ifdef WIN_CHECK_LEAKS
 	HANDLE hLogFile;
-	hLogFile = CreateFile(L"fritzing_leak_log.txt", GENERIC_WRITE,
+    QString path = FolderUtils::getUserDataStorePath("") + "/fritzing_leak_log.txt";
+    std::wstring wstr = path.toStdWString();
+    LPCWSTR ptr = wstr.c_str();
+	hLogFile = CreateFile(ptr, GENERIC_WRITE,
 		  FILE_SHARE_WRITE, NULL, CREATE_ALWAYS,
 		  FILE_ATTRIBUTE_NORMAL, NULL);
 	_CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_FILE);

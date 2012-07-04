@@ -226,3 +226,4 @@ const QString & ConnectorShared::busID() {
 ErcData * ConnectorShared::ercData() {
 	return m_ercData;
 }
+

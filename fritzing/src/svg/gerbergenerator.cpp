@@ -569,7 +569,7 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 		        image.invertPixels();				// need white pixels on a black background for GroundPlaneGenerator
 
                 #ifndef QT_NO_DEBUG
-		            image.save(QString("output%1.png").arg(p));
+		            image.save(QString("%2/output%1.png").arg(p).arg(FolderUtils::getUserDataStorePath("")));
                 #endif
 
 		        GroundPlaneGenerator gpg;
@@ -592,7 +592,7 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 		    image.invertPixels();				// need white pixels on a black background for GroundPlaneGenerator
 
     #ifndef QT_NO_DEBUG
-		    image.save("preclip_output.png");
+		    image.save(FolderUtils::getUserDataStorePath("") + "/preclip_output.png");
     #endif
 
 		    if (clipImage != NULL) {
@@ -608,7 +608,7 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 		    }
 
     #ifndef QT_NO_DEBUG
-		    image.save("output.png");
+		    image.save(FolderUtils::getUserDataStorePath("") + "/output.png");
     #endif
 
 		    GroundPlaneGenerator gpg;

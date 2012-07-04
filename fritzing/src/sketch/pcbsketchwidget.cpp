@@ -965,26 +965,6 @@ void PCBSketchWidget::swapLayers(ItemBase *, int newLayers, bool flip, QUndoComm
 
 }
 
-long PCBSketchWidget::setUpSwap(SwapThing & swapThing, bool master)
-{
-	bool wasSMD = swapThing.itemBase->modelPart()->flippedSMD();
-
-	long newID = SketchWidget::setUpSwap(swapThing, master);
-
-	if (!wasSMD) {
-		ModelPart * mp = paletteModel()->retrieveModelPart(swapThing.newModuleID);
-		if (mp->flippedSMD()) {
-            // part was through-hole, now is smd, so remove traces on the now-missing layer
-            QList<Wire *> already;
-	        QList<ItemBase *> smds;
-			smds.append(swapThing.itemBase);
-			clearSmdTraces(smds, already, swapThing.parentCommand);
-		}
-	}
-
-	return newID;
-}
-
 void PCBSketchWidget::clearSmdTraces(QList<ItemBase *> & smds, 	QList<Wire *> & already, QUndoCommand * parentCommand) {
 
 	foreach (ItemBase * smd, smds) {
@@ -1106,18 +1086,20 @@ bool PCBSketchWidget::sameElectricalLayer2(ViewLayer::ViewLayerID id1, ViewLayer
 	switch (id1) {
 		case ViewLayer::Copper0Trace:
 			if (id1 == id2) return true;
-			return (id2 == ViewLayer::Copper0);
+			return (id2 == ViewLayer::Copper0 || id2 == ViewLayer::GroundPlane0);
 		case ViewLayer::Copper0:
+		case ViewLayer::GroundPlane0:
 			if (id1 == id2) return true;
 			return (id2 == ViewLayer::Copper0Trace);
 		case ViewLayer::Copper1Trace:
 			if (id1 == id2) return true;
-			return (id2 == ViewLayer::Copper1);
+			return (id2 == ViewLayer::Copper1 || id2 == ViewLayer::GroundPlane1);
 		case ViewLayer::Copper1:
+		case ViewLayer::GroundPlane1:
 			if (id1 == id2) return true;
 			return (id2 == ViewLayer::Copper1Trace);
-                default:
-                        break;
+        default:
+            break;
 	}
 
 	return false;
@@ -1137,7 +1119,6 @@ void PCBSketchWidget::changeTraceLayer() {
 		QList<ConnectorItem *> ends;
 		tw->collectChained(wires, ends);
 		visitedWires.append(wires);
-		if (ends.count() < 2) continue;   // should never happen, since traces have to be connected at both ends
 
 		bool canChange = true;
 		foreach(ConnectorItem * end, ends) {
@@ -1489,141 +1470,6 @@ void PCBSketchWidget::getDefaultViaSize(QString & ringThickness, QString & holeS
 	ringThickness = settings.value(Via::AutorouteViaRingThickness, Via::DefaultAutorouteViaRingThickness).toString();
 	holeSize = settings.value(Via::AutorouteViaHoleSize, Via::DefaultAutorouteViaHoleSize).toString();
 }
-
-void PCBSketchWidget::changeTrace(Wire * wire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand) 
-{
-	// first figure out whether this is a delete or a reconnect
-	QList<ConnectorItem *> ends;
-	QList<Wire *> wires;
-	wire->collectChained(wires, ends);
-
-	ConnectorItem * anchor = wire->otherConnector(from);
-
-	ConnectorItem * fromDest = NULL;
-	bool reconnect = (to != NULL);
-	if (reconnect) {
-		// check whether wire end was dropped on a legitimate target
-		if (ends.contains(to)) {
-			reconnect = false;
-		}
-		else {
-			foreach (Wire * w, wires) {
-				if (w->connector0() == to) {
-					reconnect = false;
-					break;
-				}
-				if (w->connector1() == to) {
-					reconnect = false;
-					break;
-				}
-			}
-		}
-	}
-
-	if (reconnect) {
-		foreach (ConnectorItem * toConnectorItem, from->connectedToItems()) {
-			if (toConnectorItem->attachedToItemType() == ModelPart::Wire) continue;
-
-			// the part we were originally connected to
-			fromDest = toConnectorItem;
-			break;
-		}
-	}
-
-	if (fromDest) {
-		ViewGeometry vg = wire->getViewGeometry();
-		ViewGeometry newvg;
-		QPointF wp = wire->pos();
-		QPointF ap = anchor->sceneAdjustedTerminalPoint(NULL);
-		if (wp == ap) {
-			makeRatsnestViewGeometry(newvg, anchor, to);
-		}
-		else {
-			makeRatsnestViewGeometry(newvg, to, anchor);
-		}
-
-		new ChangeWireCommand(this, wire->id(), vg.line(), newvg.line(), vg.loc(), newvg.loc(), true, true, parentCommand);
-
-		extendChangeConnectionCommand(BaseCommand::CrossView, from, fromDest, 
-					ViewLayer::specFromID(wire->viewLayerID()),
-					false, parentCommand);
-
-
-		ConnectorItem * toDest = to;
-		if (toDest->attachedToItemType() == ModelPart::Wire) {
-			toDest = this->findNearestPartConnectorItem(toDest);
-		}
-
-		extendChangeConnectionCommand(BaseCommand::CrossView, from, to, 
-				ViewLayer::specFromID(wire->viewLayerID()),
-				true, parentCommand);
-
-		parentCommand->setText(QObject::tr("change trace %1").arg(wire->title()) );
-		new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
-		m_undoStack->waitPush(parentCommand, PropChangeDelay);
-		return;
-	}
-
-
-	QList<Wire *> toDelete;
-	ConnectorItem * target = anchor;
-	toDelete.append(wire);
-	while (true) {
-		int count = 0;
-		Wire * candidate = NULL;
-		ConnectorItem * candidateTarget = NULL;
-		foreach (ConnectorItem * toTarget, target->connectedToItems()) {
-			Wire * w = qobject_cast<Wire *>(toTarget->attachedTo());
-			if (w == NULL) {
-				// this is a part, so delete all wires
-				break;
-			}
-
-			candidate = w;
-			candidateTarget = w->otherConnector(toTarget);
-			++count;
-
-			// it may be that the other connector is the one with multiple connections
-			foreach (ConnectorItem * toTargetTarget, toTarget->connectedToItems()) {
-				Wire * wx = qobject_cast<Wire *>(toTargetTarget->attachedTo());
-				if (wx == NULL) continue;
-				if (toTargetTarget->attachedTo() == target->attachedTo()) continue;
-
-				++count;
-				break;
-			}
-
-			if (count > 1) {
-				break;
-			}
-		}
-
-		if (candidate == NULL) {
-			// connected to a part
-			break;
-		}
-
-		if (count > 1) {
-			// junction for multiple wires; stop here
-			break;
-		}
-
-		toDelete.append(candidate);
-		target = candidateTarget;	
-	}
-
-	makeWiresChangeConnectionCommands(toDelete, parentCommand);
-	foreach (Wire * w, toDelete) {
-		makeDeleteItemCommand(w, BaseCommand::CrossView, parentCommand);
-	}
-
-	parentCommand->setText(QObject::tr("delete trace %1").arg(wire->title()) );
-
-	new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
-	m_undoStack->waitPush(parentCommand, PropChangeDelay);
-}
-
-
 
 void PCBSketchWidget::deleteItem(ItemBase * itemBase, bool deleteModelPart, bool doEmit, bool later)
 {
@@ -2473,3 +2319,20 @@ void PCBSketchWidget::convertToVia(ConnectorItem * lastHoverEnterConnectorItem, 
 	m_undoStack->push(parentCommand);
 
 }
+
+bool PCBSketchWidget::canConnect(Wire * from, ItemBase * to) {
+    to = to->layerKinChief();
+    QList<ItemBase *> kin;
+    kin.append(to);
+    kin.append(to->layerKin());
+
+    foreach (ItemBase * itemBase, kin) {
+        if (!ViewLayer::isCopperLayer(itemBase->viewLayerID())) continue;
+
+        if (ViewLayer::canConnect(from->viewLayerID(), itemBase->viewLayerID())) return true;
+    }
+
+    return false;
+}
+
+

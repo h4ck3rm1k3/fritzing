@@ -90,7 +90,7 @@ bool GroundPlaneGenerator::getBoardRects(const QString & boardSvg, QGraphicsItem
 	painter.end();
 
 #ifndef QT_NO_DEBUG
-	image.save("getBoardRects.png");
+	image.save(FolderUtils::getUserDataStorePath("") + "/getBoardRects.png");
 #endif
 
 	QColor keepaway(255,255,255);
@@ -117,7 +117,7 @@ bool GroundPlaneGenerator::getBoardRects(const QString & boardSvg, QGraphicsItem
 	painter.end();
 
 #ifndef QT_NO_DEBUG
-	image2.save("getBoardRects2.png");
+	image2.save(FolderUtils::getUserDataStorePath("") + "/getBoardRects2.png");
 #endif
 
 	scanLines(image2, bWidth, bHeight, rects);

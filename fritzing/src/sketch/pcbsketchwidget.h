@@ -72,13 +72,12 @@ public:
 	double getRatsnestWidth();
 
 	void setBoardLayers(int, bool redraw);
-	long setUpSwap(SwapThing &, bool master);
     void swapLayers(ItemBase * itemBase, int newLayers, bool flip, QUndoCommand * parentCommand);
 	void loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType, QUndoCommand * parentCommand, 
 							bool offsetPaste, const QRectF * boundingRect, bool seekOutsideConnections, QList<long> & newIDs);
 	virtual bool isInLayers(ConnectorItem *, ViewLayer::ViewLayerSpec);
 	bool routeBothSides();
-	virtual bool sameElectricalLayer2(ViewLayer::ViewLayerID, ViewLayer::ViewLayerID);
+	bool sameElectricalLayer2(ViewLayer::ViewLayerID, ViewLayer::ViewLayerID);
 	void changeTraceLayer();
 	void changeLayer(long id, double z, ViewLayer::ViewLayerID viewLayerID);
 	void updateNet(Wire*);
@@ -151,7 +150,6 @@ protected:
 	void resizeJumperItem();
 	QPoint calcFixedToCenterItemOffset(const QRect & viewPortRect, const QSizeF & helpSize);
 	void dealWithDefaultParts();
-	void changeTrace(Wire * wire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand);
 	void clearSmdTraces(QList<ItemBase *> & smds, 	QList<Wire *> & already, QUndoCommand * parentCommand);
 	bool connectorItemHasSpec(ConnectorItem * connectorItem, ViewLayer::ViewLayerSpec spec);
 	ViewLayer::ViewLayerSpec createWireViewLayerSpec(ConnectorItem * from, ConnectorItem * to);
@@ -166,6 +164,7 @@ protected:
 	bool canAlignToCenter(ItemBase *);
     void selectAllWires(ViewGeometry::WireFlag flag);
     QString checkDroppedModuleID(const QString & moduleID);
+    bool canConnect(Wire * from, ItemBase * to);
 
 signals:
 	void subSwapSignal(SketchWidget *, ItemBase *, const QString & newModuleID, ViewLayer::ViewLayerSpec, long & newID, QUndoCommand * parentCommand);

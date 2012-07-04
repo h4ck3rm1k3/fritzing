@@ -306,7 +306,7 @@ void PartsBinPaletteWidget::grabTitle(const QString & title, QString & iconFilen
 		painter.begin(&image);
 		renderer.render(&painter, target);
 		painter.end();	
-		image.save("test icon.png");
+		//image.save(FolderUtils::getUserDataStorePath("") + "/test icon.png");
 		m_icon = new QIcon(QPixmap::fromImage(image));
 	}
 	else {

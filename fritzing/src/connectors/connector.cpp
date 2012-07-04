@@ -279,3 +279,4 @@ void Connector::setConnectorLocalName(const QString & name) {
 const QString & Connector::connectorLocalName() {
 	return m_connectorLocalName;
 }
+

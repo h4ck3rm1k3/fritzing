@@ -1611,11 +1611,6 @@ void CMRouter::tileWire(Wire * wire, QList<Wire *> & beenThere, QList<Tile *> & 
 	QList<Wire *> wires;
 	wire->collectChained(wires, ends);
 	beenThere.append(wires);
-	if (ends.count() < 1) {
-		// something is very wrong
-		return;
-	}
-
 	tileWires(wires, alreadyTiled, tileType, overlapType, eliminateThin);
 }
 

@@ -661,6 +661,14 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 									 slotter, SLOT(removeRatsnestSlot(QList<struct ConnectorEdge *> &, QUndoCommand *)),
 									 Qt::DirectConnection);
 
+	succeeded = succeeded && connect(signaller, SIGNAL(canConnectSignal(Wire *, ItemBase *, bool &)),
+									 slotter, SLOT(canConnect(Wire *, ItemBase *, bool &)),
+									 Qt::DirectConnection);
+
+	succeeded = succeeded && connect(signaller, SIGNAL(swapStartSignal(SwapThing &, bool)),
+									 slotter, SLOT(swapStart(SwapThing &, bool)),
+									 Qt::DirectConnection);
+
 	if (!succeeded) {
 		DebugDialog::debug("connectPair failed");
 	}
@@ -1933,6 +1941,7 @@ long MainWindow::swapSelectedAuxAux(ItemBase * itemBase, const QString & moduleI
 	}
 
     SwapThing swapThing;
+    swapThing.firstTime = true;
     swapThing.itemBase = itemBase;
     swapThing.newModelIndex = modelIndex;
     swapThing.newModuleID = moduleID;

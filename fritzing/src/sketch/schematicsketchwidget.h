@@ -63,7 +63,6 @@ public:
 	double defaultGridSizeInches();
 	const QString & traceColor(ConnectorItem * forColor);
 	const QString & traceColor(ViewLayer::ViewLayerSpec);
-	long setUpSwap(SwapThing &, bool master);
 	bool isInLayers(ConnectorItem *, ViewLayer::ViewLayerSpec);
 	bool routeBothSides();
 	void addDefaultParts();

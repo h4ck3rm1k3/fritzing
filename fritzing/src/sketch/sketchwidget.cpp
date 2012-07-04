@@ -129,7 +129,8 @@ bool zLessThan(QGraphicsItem * & p1, QGraphicsItem * & p2)
 SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
 {
-	m_rubberBandLegWasEnabled = m_curvyWires = false;
+    m_pasting = false;
+    m_rubberBandLegWasEnabled = m_curvyWires = false;
 	m_middleMouseIsPressed = false;
 	m_arrowTimer.setParent(this);
 	m_arrowTimer.setInterval(AutoRepeatDelay);
@@ -1002,27 +1003,13 @@ void SketchWidget::deleteAux(QSet<ItemBase *> & deletedItems, QUndoCommand * par
 
 	new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
 
-	// some day we won't have to go through all this crap because all items will exist in all 3 views.
-	QHash<ItemBase *, SketchWidget *> otherDeletedItems;
-	QList<long> deletedIDs;
-	foreach(ItemBase * itemBase, deletedItems) {
-		deletedIDs.append(itemBase->id());
-	}
-	emit deleteTracesSignal(deletedItems, otherDeletedItems, deletedIDs, true, parentCommand);
-
-	deleteTracesSlot(deletedItems, otherDeletedItems, deletedIDs, false, parentCommand);
-	foreach (ItemBase * itemBase, deletedItems) {
-		otherDeletedItems.insert(itemBase, this);
-	}
-	deleteMiddle(otherDeletedItems, parentCommand);
-	//emit deleteMoreTracesSignal(deletedItems, otherDeletedItems, parentCommand);
+	deleteMiddle(deletedItems, parentCommand);
 
 	new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
 
 	// actual delete commands must come last for undo to work properly
-	foreach (ItemBase * itemBase, otherDeletedItems.keys()) {
-		SketchWidget * sketchWidget = otherDeletedItems.value(itemBase);
-		sketchWidget->makeDeleteItemCommand(itemBase, BaseCommand::CrossView, parentCommand);
+	foreach (ItemBase * itemBase, deletedItems) {
+		this->makeDeleteItemCommand(itemBase, BaseCommand::CrossView, parentCommand);
 	}
 	if (doPush) {
    		m_undoStack->waitPush(parentCommand, PropChangeDelay);
@@ -1033,11 +1020,11 @@ bool isVirtualWireConnector(ConnectorItem * toConnectorItem) {
 	return (qobject_cast<VirtualWire *>(toConnectorItem->attachedTo()) != NULL);
 }
 
-void SketchWidget::deleteMiddle(QHash<ItemBase *, SketchWidget *> & deletedItems, QUndoCommand * parentCommand) {
-	foreach (ItemBase * itemBase, deletedItems.keys()) {
+void SketchWidget::deleteMiddle(QSet<ItemBase *> & deletedItems, QUndoCommand * parentCommand) {
+	foreach (ItemBase * itemBase, deletedItems) {
 		foreach (ConnectorItem * fromConnectorItem, itemBase->cachedConnectorItems()) {
 			foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
-				deletedItems.value(itemBase)->extendChangeConnectionCommand(BaseCommand::CrossView, fromConnectorItem, toConnectorItem,
+				extendChangeConnectionCommand(BaseCommand::CrossView, fromConnectorItem, toConnectorItem,
 											  ViewLayer::specFromID(fromConnectorItem->attachedToViewLayerID()),
 											  false, parentCommand);
 				fromConnectorItem->tempRemove(toConnectorItem, false);
@@ -1047,7 +1034,7 @@ void SketchWidget::deleteMiddle(QHash<ItemBase *, SketchWidget *> & deletedItems
 			fromConnectorItem = fromConnectorItem->getCrossLayerConnectorItem();
 			if (fromConnectorItem) {
 				foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
-					deletedItems.value(itemBase)->extendChangeConnectionCommand(BaseCommand::CrossView, fromConnectorItem, toConnectorItem,
+					extendChangeConnectionCommand(BaseCommand::CrossView, fromConnectorItem, toConnectorItem,
 												  ViewLayer::specFromID(fromConnectorItem->attachedToViewLayerID()),
 												  false, parentCommand);
 					fromConnectorItem->tempRemove(toConnectorItem, false);
@@ -3491,11 +3478,6 @@ void SketchWidget::wireChangedSlot(Wire* wire, const QLineF & oldLine, const QLi
 		}
 	}
 
-	if (wire->getTrace() && !chained) {
-		changeTrace(wire, from, to, parentCommand);
-		return;
-	}
-
 	new ChangeWireCommand(this, fromID, oldLine, newLine, oldPos, newPos, true, true, parentCommand);
 	new CheckStickyCommand(this, BaseCommand::SingleView, fromID, false, CheckStickyCommand::RedoOnly, parentCommand);
 
@@ -4735,15 +4717,19 @@ void SketchWidget::changeConnectionAux(long fromID, const QString & fromConnecto
 		return;
 	}
 
-	fromConnectorItem->debugInfo("   from");
-	toConnectorItem->debugInfo("   to");
+	//fromConnectorItem->debugInfo("   from");
+	//toConnectorItem->debugInfo("   to");
 
 	ratsnestConnect(fromConnectorItem, toConnectorItem, connect);
 
 	if (connect) {
-		fromConnectorItem->connector()->connectTo(toConnectorItem->connector());
-		fromConnectorItem->connectTo(toConnectorItem);
-		toConnectorItem->connectTo(fromConnectorItem);
+        // canConnect checks for when a THT part has been swapped for an SMD part, and the connections are now on different layers
+        // it seems very difficult to test this condition before the part has actually been created
+        if (canConnect(fromItem, toItem)) {
+		    fromConnectorItem->connector()->connectTo(toConnectorItem->connector());
+		    fromConnectorItem->connectTo(toConnectorItem);
+		    toConnectorItem->connectTo(fromConnectorItem);
+        }
 	}
 	else {
 		fromConnectorItem->connector()->disconnectFrom(toConnectorItem->connector());
@@ -5601,50 +5587,36 @@ void SketchWidget::updateInfoViewSlot() {
 
 long SketchWidget::setUpSwap(SwapThing & swapThing, bool master)
 {
-	long newID = ItemBase::getNextID(swapThing.newModelIndex);
+    if (swapThing.firstTime) {
+        swapThing.firstTime = false;
+        swapThing.newID = swapStart(swapThing, master);
+
+        // need to ensure the parts are all created first thing
+        emit swapStartSignal(swapThing, master);
+    }
 
     ItemBase * itemBase = swapThing.itemBase;
-
 	if (itemBase->viewIdentifier() != m_viewIdentifier) {
 		itemBase = findItem(itemBase->id());
-		if (itemBase == NULL) return newID;
+		if (itemBase == NULL) return swapThing.newID;
 	}
 
-	ViewGeometry vg = itemBase->getViewGeometry();
-	QTransform oldTransform = vg.transform();
-	bool needsTransform = false;
-	if (!oldTransform.isIdentity()) {
-		// restore identity transform
-		vg.setTransform(QTransform());
-		needsTransform = true;
-	}
-
-	new MoveItemCommand(this, itemBase->id(), vg, vg, false, swapThing.parentCommand);
-
-	// command created for each view
-	newAddItemCommand(BaseCommand::SingleView, swapThing.newModuleID, swapThing.viewLayerSpec, vg, newID, true, swapThing.newModelIndex, swapThing.parentCommand);
-
-	if (needsTransform) {
-		QMatrix m;
-		m.setMatrix(oldTransform.m11(), oldTransform.m12(), oldTransform.m21(), oldTransform.m22(), 0, 0);
-		new TransformItemCommand(this, newID, m, m, swapThing.parentCommand);
-	}
-
-	setUpSwapReconnect(swapThing, itemBase, newID, master);
-	new CheckStickyCommand(this, BaseCommand::SingleView, newID, false, CheckStickyCommand::RemoveOnly, swapThing.parentCommand);
+	setUpSwapReconnect(swapThing, itemBase, swapThing.newID, master);
+	new CheckStickyCommand(this, BaseCommand::SingleView, swapThing.newID, false, CheckStickyCommand::RemoveOnly, swapThing.parentCommand);
 	if (itemBase->isPartLabelVisible()) {
 		ShowLabelCommand * slc = new ShowLabelCommand(this, swapThing.parentCommand);
-		slc->add(newID, true, true);
+		slc->add(swapThing.newID, true, true);
 	}
 
 	if (master) {		
 		SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, swapThing.parentCommand);
-		selectItemCommand->addRedo(newID);
+		selectItemCommand->addRedo(swapThing.newID);
 		selectItemCommand->addUndo(itemBase->id());
 
 		new ChangeLabelTextCommand(this, itemBase->id(), itemBase->instanceTitle(), itemBase->instanceTitle(), swapThing.parentCommand);
-		new ChangeLabelTextCommand(this, newID, itemBase->instanceTitle(), itemBase->instanceTitle(), swapThing.parentCommand);
+		new ChangeLabelTextCommand(this, swapThing.newID, itemBase->instanceTitle(), itemBase->instanceTitle(), swapThing.parentCommand);
 
+        /*
 		foreach (Wire * wire, swapThing.wiresToDelete) {
 			QList<Wire *> chained;
 			QList<ConnectorItem *> ends;
@@ -5658,16 +5630,17 @@ long SketchWidget::setUpSwap(SwapThing & swapThing, bool master)
 		foreach (Wire * wire, swapThing.wiresToDelete) {
 			makeDeleteItemCommand(wire, BaseCommand::CrossView, swapThing.parentCommand);
 		}
+        */
 
 		makeDeleteItemCommand(itemBase, BaseCommand::CrossView, swapThing.parentCommand);
 		selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, swapThing.parentCommand);
-		selectItemCommand->addRedo(newID);  // to make sure new item is selected so it appears in the info view
+		selectItemCommand->addRedo(swapThing.newID);  // to make sure new item is selected so it appears in the info view
 
-		prepDeleteProps(itemBase, newID, swapThing.newModuleID, swapThing.parentCommand);
+		prepDeleteProps(itemBase, swapThing.newID, swapThing.newModuleID, swapThing.parentCommand);
 		new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, swapThing.parentCommand);
 	}
 
-	return newID;
+	return swapThing.newID;
 }
 
 void SketchWidget::setUpSwapReconnect(SwapThing & swapThing, ItemBase * itemBase, long newID, bool master)
@@ -5705,19 +5678,26 @@ void SketchWidget::setUpSwapReconnect(SwapThing & swapThing, ItemBase * itemBase
 		QString fromDescription = fromConnectorItem->connectorSharedDescription();
 		foreach (Connector * connector, newConnectors) {
 			QString toName = connector->connectorSharedName();
+            bool gotOne = false;
 			QString toDescription = connector->connectorSharedDescription();
 			if (fromName.compare(toName, Qt::CaseInsensitive) == 0) {
-				candidates.append(connector);
+				gotOne = true;
 			}
 			else if (fromDescription.compare(toDescription, Qt::CaseInsensitive) == 0) {
-				candidates.append(connector);
+				gotOne = true;
 			}
 			else if (fromDescription.compare(toName, Qt::CaseInsensitive) == 0) {
-				candidates.append(connector);
+				gotOne = true;
 			}
 			else if (fromName.compare(toDescription, Qt::CaseInsensitive) == 0) {
-				candidates.append(connector);
+				gotOne = true;
 			}
+                    
+            
+
+            if (gotOne) {
+                candidates.append(connector);
+            }
 		}
 
 		if (candidates.count() > 0) {
@@ -5754,18 +5734,23 @@ void SketchWidget::setUpSwapReconnect(SwapThing & swapThing, ItemBase * itemBase
 
 	fromConnectorItems.append(other);
 	foreach (ConnectorItem * fromConnectorItem, fromConnectorItems) {
+        //fromConnectorItem->debugInfo("from");
 		Connector * newConnector = found.value(fromConnectorItem, NULL);
 		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
 			// delete connection to part being swapped out
+
+            
 			Wire * wire = qobject_cast<Wire *>(toConnectorItem->attachedTo());
 			if (wire != NULL) {
 				if (wire->getRatsnest()) continue;
 
-				if (newConnector == NULL && wire->getTrace() && wire->isTraceType(getTraceFlag())) {
-					swapThing.wiresToDelete.append(wire);
-					continue;
-				}
+				//if (newConnector == NULL && wire->getTrace() && wire->isTraceType(getTraceFlag())) {
+				//	swapThing.wiresToDelete.append(wire);
+				//	continue;
+				//}
 			}
+
+            
 
 			// command created for each view
 			extendChangeConnectionCommand(BaseCommand::SingleView,
@@ -5780,14 +5765,14 @@ void SketchWidget::setUpSwapReconnect(SwapThing & swapThing, ItemBase * itemBase
 			if ((newConnector == NULL) || cleanup) {
 					// clean up after disconnect
 			}
-			else {
+			else {                
 				// reconnect directly without cleaning up; command created for each view
+                // if it's an smd swap, deal with reconnecting the wire at reconnect time
 				new ChangeConnectionCommand(this, BaseCommand::SingleView,
-											newID, newConnector->connectorSharedID(),
-											toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
-											ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
-											true, swapThing.parentCommand);
-
+										newID, newConnector->connectorSharedID(),
+										toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
+										ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
+										true, swapThing.parentCommand);
 			}
 
 			if (cleanup && master) {
@@ -7623,7 +7608,7 @@ void SketchWidget::disconnectAllSlot(QList<ConnectorItem *> connectorItems, QHas
 		}
 	}
 
-	QHash<ItemBase *, SketchWidget *> deletedItems;
+	QSet<ItemBase *> deletedItems;
 	foreach (ConnectorItem * fromConnectorItem, myConnectorItems) {
 		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
 			if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
@@ -7634,7 +7619,7 @@ void SketchWidget::disconnectAllSlot(QList<ConnectorItem *> connectorItems, QHas
 					wire->collectChained(chained, ends);
 					foreach (Wire * w, chained) {
 						itemsToDelete.insert(w, this);
-						deletedItems.insert(w, this);
+						deletedItems.insert(w);
 					}
 				}
 			}
@@ -7674,6 +7659,7 @@ void SketchWidget::disconnectAllSlot(QList<ConnectorItem *> connectorItems, QHas
 
 	deleteMiddle(deletedItems, parentCommand);
 }
+
 
 bool SketchWidget::canDisconnectAll() {
 	return true;
@@ -8346,13 +8332,6 @@ void SketchWidget::alignOneToGrid(ItemBase * itemBase) {
 	}
 }
 
-void SketchWidget::changeTrace(Wire * wire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand) {
-	Q_UNUSED(wire);
-	Q_UNUSED(from);
-	Q_UNUSED(to);
-	Q_UNUSED(parentCommand);
-}
-
 ViewGeometry::WireFlag SketchWidget::getTraceFlag() {
 	return ViewGeometry::NormalFlag;
 }
@@ -8787,4 +8766,93 @@ QString SketchWidget::checkDroppedModuleID(const QString & moduleID) {
 void SketchWidget::convertToVia(ConnectorItem * lastHoverEnterConnectorItem, QPointF lastLocation) {
     Q_UNUSED(lastHoverEnterConnectorItem);
     Q_UNUSED(lastLocation);
+}
+
+bool SketchWidget::sameElectricalLayer2(ViewLayer::ViewLayerID, ViewLayer::ViewLayerID) {
+	return true;
+}
+
+bool SketchWidget::canConnect(ItemBase * from, ItemBase * to) {
+    if (m_pasting) return true;             // no need to check in this case
+
+    Wire * fromWire = qobject_cast<Wire *>(from);
+    Wire * toWire = qobject_cast<Wire *>(to);
+
+    if (fromWire != NULL && fromWire->getTrace()) {
+        if (fromWire->isTraceType(getTraceFlag())) {
+           return canConnect(fromWire, to); 
+        }
+        else {
+            bool can;
+            emit canConnectSignal(fromWire, to, can);
+            return can;
+        }
+    }
+
+    if (toWire != NULL && toWire->getTrace()) {
+        if (toWire->isTraceType(getTraceFlag())) {
+            return canConnect(toWire, from);
+        }
+        else {
+            bool can;
+            emit canConnectSignal(toWire, from, can);
+            return can;
+        }
+    }
+    
+
+    return true; 
+
+}
+
+bool SketchWidget::canConnect(Wire *, ItemBase *) {
+    return true;
+}
+ 
+void SketchWidget::canConnect(Wire * from, ItemBase * to, bool & connect) {
+    if (!from->isTraceType(getTraceFlag())) return;
+
+    from->debugInfo("can connect");
+    to->debugInfo("\t");
+    from = qobject_cast<Wire *>(findItem(from->id()));
+    to = findItem(to->id());
+    connect = canConnect(from, to);
+}
+ 
+long SketchWidget::swapStart(SwapThing & swapThing, bool master) {
+    Q_UNUSED(master);
+
+	long newID = ItemBase::getNextID(swapThing.newModelIndex);
+
+    ItemBase * itemBase = swapThing.itemBase;
+	if (itemBase->viewIdentifier() != m_viewIdentifier) {
+		itemBase = findItem(itemBase->id());
+		if (itemBase == NULL) return newID;
+	}
+
+	ViewGeometry vg = itemBase->getViewGeometry();
+	QTransform oldTransform = vg.transform();
+	bool needsTransform = false;
+	if (!oldTransform.isIdentity()) {
+		// restore identity transform
+		vg.setTransform(QTransform());
+		needsTransform = true;
+	}
+
+	new MoveItemCommand(this, itemBase->id(), vg, vg, false, swapThing.parentCommand);
+
+	// command created for each view
+	newAddItemCommand(BaseCommand::SingleView, swapThing.newModuleID, swapThing.viewLayerSpec, vg, newID, true, swapThing.newModelIndex, swapThing.parentCommand);
+
+	if (needsTransform) {
+		QMatrix m;
+		m.setMatrix(oldTransform.m11(), oldTransform.m12(), oldTransform.m21(), oldTransform.m22(), 0, 0);
+		new TransformItemCommand(this, newID, m, m, swapThing.parentCommand);
+	}
+
+    return newID;
+}
+
+void SketchWidget::setPasting(bool pasting) {
+    m_pasting = pasting;
 }

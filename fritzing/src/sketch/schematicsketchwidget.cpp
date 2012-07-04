@@ -294,11 +294,6 @@ const QString & SchematicSketchWidget::traceColor(ViewLayer::ViewLayerSpec) {
 	return SchematicTraceColor;
 }
 
-long SchematicSketchWidget::setUpSwap(SwapThing & swapThing, bool master)
-{
-	return SketchWidget::setUpSwap(swapThing, master);
-}
-
 bool SchematicSketchWidget::isInLayers(ConnectorItem * connectorItem, ViewLayer::ViewLayerSpec viewLayerSpec) {
 	Q_UNUSED(connectorItem);
 	Q_UNUSED(viewLayerSpec);
