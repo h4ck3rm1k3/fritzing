@@ -39,7 +39,7 @@ class PartsBinView {
 
 	public:
 		PartsBinView(ReferenceModel *refModel, PartsBinPaletteWidget *parent);
-		virtual ~PartsBinView() {};				// removes compiler warnings
+		virtual ~PartsBinView();				// removes compiler warnings
 
 		virtual void setPaletteModel(PaletteModel * model, bool clear = false);
 		void reloadParts(PaletteModel * model);
@@ -71,11 +71,13 @@ class PartsBinView {
 
 		virtual int setItemAux(ModelPart * modelPart, int position = -1) = 0;
 
+    public:
+        static void cleanup();
+
 	public:
 		static QHash<QString, QString> TranslatedCategoryNames;
 
 	protected:
-
 		ReferenceModel *m_refModel;
 		PartsBinPaletteWidget *m_parent;
 
@@ -83,6 +85,8 @@ class PartsBinView {
 		bool m_infoViewOnHover;
 
 		QPoint m_dragStartPos;
+
+        static QHash<QString, class ItemBase *> ItemBaseHash;
 };
 
 #endif /* PARTSBINVIEW_H_ */

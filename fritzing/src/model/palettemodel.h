@@ -68,6 +68,8 @@ protected:
 
 signals:
 	void loadedPart(int i, int total);
+    void incSearch();
+    void addSearchMaximum(int);
 
 protected:
 	virtual void initParts(bool fastLoad);

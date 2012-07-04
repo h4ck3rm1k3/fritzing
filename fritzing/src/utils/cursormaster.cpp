@@ -56,10 +56,19 @@ CursorMaster CursorMaster::TheCursorMaster;
 static QList<QObject *> Listeners;
 
 static QHash<QGraphicsScene *, QGraphicsPixmapItem *> CursorItems;
+static QList<QCursor **> Cursors;
+
 
 CursorMaster::CursorMaster() : QObject()
 {
     m_blocked = false;
+}
+
+void CursorMaster::cleanup() {
+    foreach (QCursor ** cursor, Cursors) {
+        delete *cursor;
+    }
+    Cursors.clear();
 }
 
 void CursorMaster::initCursors()
@@ -71,7 +80,6 @@ void CursorMaster::initCursors()
 
 		QStringList names;
 		QStringList masks;
-		QList<QCursor **> cursors;
 
 		names << ":resources/images/cursor/bendpoint.bmp" 
 			<< ":resources/images/cursor/new_bendpoint.bmp"
@@ -93,7 +101,7 @@ void CursorMaster::initCursors()
 			<< ":resources/images/cursor/rotate_mask.bmp"
 			<< ":resources/images/cursor/scale_mask.bmp";
 
-		cursors << &BendpointCursor
+		Cursors << &BendpointCursor
 			<< &NewBendpointCursor
 			<< &MakeWireCursor
 			<< &MakeCurveCursor
@@ -103,10 +111,10 @@ void CursorMaster::initCursors()
 			<< &RotateCursor
 			<< &ScaleCursor;
 
-		for (int i = 0; i < cursors.count(); i++) {
+		for (int i = 0; i < Cursors.count(); i++) {
 			QBitmap bitmap1(names.at(i));
 			QBitmap bitmap1m(masks.at(i));
-			*cursors.at(i) = new QCursor(bitmap1, bitmap1m, 0, 0);
+			*Cursors.at(i) = new QCursor(bitmap1, bitmap1m, 0, 0);
 		}
 
 		QApplication::instance()->installEventFilter(instance());

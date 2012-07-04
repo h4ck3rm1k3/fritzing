@@ -436,9 +436,7 @@ PartsBinPaletteWidget* BinManager::openBinIn(QString fileName, bool fastLoad) {
 			// to force the user to take a decision of what to do with the imported parts
 			if(fileName.endsWith(FritzingBundledBinExtension)) {
 				setDirtyTab(bin);
-			} else {
-				bin->saveAsLastBin();
-			}
+			} 
 		}
 	}
 	if (!fastLoad) {
@@ -729,11 +727,11 @@ void BinManager::tabCloseRequested(int index) {
 	closeBinIn(index);
 }
 
-void BinManager::addPartTo(PartsBinPaletteWidget* bin, ModelPart* mp) {
+void BinManager::addPartTo(PartsBinPaletteWidget* bin, ModelPart* mp, bool setDirty) {
 	if(mp) {
 		bool alreadyIn = bin->contains(mp->moduleID());
 		bin->addPart(mp);
-		if(!alreadyIn) {
+		if(!alreadyIn && setDirty) {
 			setDirtyTab(bin,true);
 		}
 	}
@@ -811,14 +809,21 @@ void BinManager::search(const QString & searchText) {
     PartsBinPaletteWidget * searchBin = getOrOpenSearchBin();
     if (searchBin == NULL) return;
 
+    FileProgressDialog progress(tr("Searching..."), 0, this);
+    progress.setIncValueMod(10);
+    connect(m_refModel, SIGNAL(addSearchMaximum(int)), &progress, SLOT(addMaximum(int)));
+    connect(m_refModel, SIGNAL(incSearch()), &progress, SLOT(incValue()));
+
     QList<ModelPart *> modelParts = m_refModel->search(searchText, false);
 
+    progress.setIncValueMod(1);
     searchBin->removeParts();
     foreach (ModelPart * modelPart, modelParts) {
         //DebugDialog::debug(modelPart->title());
-        this->addPartTo(searchBin, modelPart);
+        this->addPartTo(searchBin, modelPart, false);
+        progress.incValue();
     }
-
+ 
     setDirtyTab(searchBin);
 }
 
@@ -987,7 +992,7 @@ void BinManager::importPart(const QString & filename) {
 
 		ModelPart *mp = m_mainWindow->loadBundledPart(filename, !bin->allowsChanges());
 		if (bin->allowsChanges()) {
-			addPartTo(bin, mp);
+			addPartTo(bin, mp, true);
 		}
 	}
 }

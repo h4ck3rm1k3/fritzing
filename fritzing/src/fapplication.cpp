@@ -44,7 +44,9 @@ $Date$
 #include "utils/folderutils.h"
 #include "utils/lockmanager.h"
 #include "dialogs/translatorlistmodel.h"
+#include "partsbinpalette/partsbinview.h"
 #include "partsbinpalette/svgiconwidget.h"
+#include "partsbinpalette/partsbinpalettewidget.h"
 #include "items/moduleidnames.h"
 #include "partsbinpalette/searchlineedit.h"
 #include "utils/ratsnestcolors.h"
@@ -58,6 +60,7 @@ $Date$
 #include "installedfonts.h"
 #include "items/pinheader.h"
 #include "items/partfactory.h"
+#include "items/propertydef.h"
 #include "dialogs/recoverydialog.h"
 #include "lib/qtsysteminfo/QtSystemInfo.h"
 #include "processeventblocker.h"
@@ -324,6 +327,11 @@ FApplication::~FApplication(void)
 	HtmlInfoView::cleanup();
 	SvgIconWidget::cleanup();
 	PartFactory::cleanup();
+    PartsBinView::cleanup();
+    PropertyDefMaster::cleanup();
+    CursorMaster::cleanup();
+    LockManager::cleanup();
+    PartsBinPaletteWidget::cleanup();
 }
 
 void FApplication::clearModels() {
@@ -755,13 +763,6 @@ int FApplication::startup(bool firstRun)
 
 	if (m_progressIndex >= 0) splash.showProgress(m_progressIndex, 0.65);
 	ProcessEventBlocker::processEvents();
-
-	QSettings settings;
-	if (!loadBin(settings.value("lastBin").toString())) {
-			// TODO: we're really screwed, what now?
-		QMessageBox::warning(NULL, QObject::tr("Fritzing"), QObject::tr("Friting cannot load the parts bin"));
-		return -1;
-	}
 
 	if (m_progressIndex >= 0) splash.showProgress(m_progressIndex, 0.825);
 	ProcessEventBlocker::processEvents();

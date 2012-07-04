@@ -1187,7 +1187,7 @@ void MainWindow::loadPart(const QString &newPartPath, long partsEditorId, bool c
 	if(modelPart && modelPart->hasViewIdentifier(ViewIdentifierClass::IconView)) {
 		if(m_binsWithPartsEditorRequests.contains(partsEditorId)
 		   && !m_binsWithPartsEditorRequests[partsEditorId]->currentBinIsCore()	) {
-			m_binManager->addPartTo(m_binsWithPartsEditorRequests[partsEditorId],modelPart);
+			m_binManager->addPartTo(m_binsWithPartsEditorRequests[partsEditorId],modelPart, true);
 		} else {
 			m_binManager->addNewPart(modelPart);
 		}

@@ -59,6 +59,9 @@ protected slots:
 	void moveCursor();
 
 public:
+    static void cleanup();
+
+public:
 	static QCursor * BendpointCursor;
 	static QCursor * NewBendpointCursor;
 	static QCursor * MakeWireCursor;

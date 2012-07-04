@@ -45,6 +45,7 @@ public:
 	int value();
 	void setBinLoadingCount(int);
 	void setBinLoadingChunk(int);
+    void setIncValueMod(int);
 
 protected:
 	void closeEvent(QCloseEvent *);
@@ -53,7 +54,9 @@ protected:
 public slots:
 	void setMinimum(int);
 	void setMaximum(int);
+    void addMaximum(int);
 	void setValue(int);
+	void incValue();
 	void setMessage(const QString & message);
 	void sendCancel();
 
@@ -75,7 +78,8 @@ protected:
 	int m_binLoadingCount;
 	int m_binLoadingIndex;
 	int m_binLoadingStart;
-	int m_binLoadingChunk;
+    int m_binLoadingChunk;
+    int m_incValueMod;
 	double m_binLoadingInc;
 	double m_binLoadingValue;
 };

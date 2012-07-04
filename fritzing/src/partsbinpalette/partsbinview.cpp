@@ -36,6 +36,7 @@ $Date$
 #include "../utils/misc.h"
 
 QHash<QString, QString> PartsBinView::TranslatedCategoryNames;
+QHash<QString, ItemBase *> PartsBinView::ItemBaseHash;
 
 PartsBinView::PartsBinView(ReferenceModel *refModel, PartsBinPaletteWidget *parent) {
 	if (TranslatedCategoryNames.count() == 0) {
@@ -58,6 +59,15 @@ PartsBinView::PartsBinView(ReferenceModel *refModel, PartsBinPaletteWidget *pare
 
 	m_refModel = refModel;
 	m_parent = parent;
+}
+
+PartsBinView::~PartsBinView() {
+}	
+
+void PartsBinView::cleanup() {
+    foreach (ItemBase * itemBase, ItemBaseHash.values()) {
+        delete itemBase;
+    }
 }
 
 void PartsBinView::setPaletteModel(PaletteModel * model, bool clear) {

@@ -95,7 +95,7 @@ class BinManager : public QFrame {
 		PartsBinPaletteWidget* openCoreBinIn();
 		void closeBinIn(int index);
 
-		void addPartTo(PartsBinPaletteWidget* bin, ModelPart* mp);
+		void addPartTo(PartsBinPaletteWidget* bin, ModelPart* mp, bool setDirty);
 		void newPartTo(PartsBinPaletteWidget* bin);
 		void editSelectedPartFrom(PartsBinPaletteWidget* bin);
 

@@ -58,6 +58,8 @@ inline bool isCustomSvg(const QString & string) {
 	return string.startsWith("<?xml") && string.contains(CustomIconTitle);
 }
 
+static QHash<QString, PaletteModel *> PaletteBinModels;
+
 //////////////////////////////////////////////
 
 PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoView *infoView, WaitPushUndoStack *undoStack, BinManager* manager) :
@@ -145,6 +147,14 @@ PartsBinPaletteWidget::~PartsBinPaletteWidget() {
    
     if (m_icon) delete m_icon;
 }
+
+void PartsBinPaletteWidget::cleanup() {
+    foreach (PaletteModel * paletteModel, PaletteBinModels) {
+        delete paletteModel;
+    }
+    PaletteBinModels.clear();
+}
+
 
 QSize PartsBinPaletteWidget::sizeHint() const {
 	return QSize(DockManager::DockDefaultWidth, DockManager::PartsBinDefaultHeight);
@@ -239,7 +249,6 @@ bool PartsBinPaletteWidget::saveAsAux(const QString &filename) {
 
 	m_location = BinLocation::findLocation(filename);
 
-	saveAsLastBin();
 	if(oldFilename != m_fileName) {
 		emit fileNameUpdated(this,m_fileName,oldFilename);
 	}
@@ -388,7 +397,6 @@ void PartsBinPaletteWidget::saveBundledBin() {
 		m_model->root()->getAllNonCoreParts(), true, "", true, false
 	);
 	setDirty(wasModified);
-	saveAsLastBin();
 }
 
 bool PartsBinPaletteWidget::loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps) {
@@ -428,7 +436,6 @@ bool PartsBinPaletteWidget::open(QString fileName, QWidget * progressTarget, boo
 
     if(fileName.endsWith(FritzingBinExtension)) {
     	load(fileName, progressTarget, fastLoad);
-    	saveAsLastBin();
     	m_isDirty = false;
     } else if(fileName.endsWith(FritzingBundledBinExtension)) {
     	m_manager->mainWindow()->loadBundledNonAtomicEntity(fileName,this,false, false);
@@ -456,60 +463,62 @@ void PartsBinPaletteWidget::load(const QString &filename, QWidget * progressTarg
 	}
 
 	m_fastLoaded = false;
-	PaletteModel * oldModel = (m_canDeleteModel) ? m_model : NULL;
-	PaletteModel * paletteBinModel = new PaletteModel(true, false, false);
+    PaletteModel * paletteBinModel = PaletteBinModels.value(filename);
+    if (paletteBinModel == NULL) {
+	    paletteBinModel = new PaletteModel(true, false, false);
+	    DebugDialog::debug("after palette model");
 
+	    QString name = m_title;
+	    if (name.isEmpty()) name = QFileInfo(filename).baseName();
 
-	DebugDialog::debug("after palette model");
-
-	QString name = m_title;
-	if (name.isEmpty()) name = QFileInfo(filename).baseName();
-
-	bool deleteWhenDone = false;
-    if (progressTarget != NULL) {
-        DebugDialog::debug("open progress " + filename);
-		deleteWhenDone = true;
-        progressTarget = m_loadingProgressDialog = new FileProgressDialog(tr("Loading..."), 200, progressTarget);
-		m_loadingProgressDialog->setBinLoadingChunk(200);
-		m_loadingProgressDialog->setBinLoadingCount(1);
-		m_loadingProgressDialog->setMessage(tr("loading bin '%1'").arg(name));
-		m_loadingProgressDialog->show();
-	}
+	    bool deleteWhenDone = false;
+        if (progressTarget != NULL) {
+            DebugDialog::debug("open progress " + filename);
+		    deleteWhenDone = true;
+            progressTarget = m_loadingProgressDialog = new FileProgressDialog(tr("Loading..."), 200, progressTarget);
+		    m_loadingProgressDialog->setBinLoadingChunk(200);
+		    m_loadingProgressDialog->setBinLoadingCount(1);
+		    m_loadingProgressDialog->setMessage(tr("loading bin '%1'").arg(name));
+		    m_loadingProgressDialog->show();
+	    }
 	
-	if (progressTarget) {
-		connect(paletteBinModel, SIGNAL(loadingInstances(ModelBase *, QDomElement &)), progressTarget, SLOT(loadingInstancesSlot(ModelBase *, QDomElement &)));
-		connect(paletteBinModel, SIGNAL(loadingInstance(ModelBase *, QDomElement &)), progressTarget, SLOT(loadingInstanceSlot(ModelBase *, QDomElement &)));
-		connect(m_iconView, SIGNAL(settingItem()), progressTarget, SLOT(settingItemSlot()));
-		connect(m_listView, SIGNAL(settingItem()), progressTarget, SLOT(settingItemSlot()));
-	}
-	DebugDialog::debug(QString("loading bin '%1'").arg(name));
-	bool result = paletteBinModel->load(filename, m_refModel);
-	DebugDialog::debug(QString("done loading bin '%1'").arg(name));
+	    if (progressTarget) {
+		    connect(paletteBinModel, SIGNAL(loadingInstances(ModelBase *, QDomElement &)), progressTarget, SLOT(loadingInstancesSlot(ModelBase *, QDomElement &)));
+		    connect(paletteBinModel, SIGNAL(loadingInstance(ModelBase *, QDomElement &)), progressTarget, SLOT(loadingInstanceSlot(ModelBase *, QDomElement &)));
+		    connect(m_iconView, SIGNAL(settingItem()), progressTarget, SLOT(settingItemSlot()));
+		    connect(m_listView, SIGNAL(settingItem()), progressTarget, SLOT(settingItemSlot()));
+	    }
+	    DebugDialog::debug(QString("loading bin '%1'").arg(name));
+	    bool result = paletteBinModel->load(filename, m_refModel);
+	    DebugDialog::debug(QString("done loading bin '%1'").arg(name));
 
-	if (!result) {
-		QMessageBox::warning(NULL, QObject::tr("Fritzing"), QObject::tr("Friting cannot load the parts bin"));
-	}
-	else {
+	    if (!result) {
+		    QMessageBox::warning(NULL, QObject::tr("Fritzing"), QObject::tr("Friting cannot load the parts bin"));
+	    }
+	    else {
+		    m_fileName = filename;
+		    setPaletteModel(paletteBinModel,true);
+            PaletteBinModels.insert(filename, paletteBinModel);
+	    }
+
+	    if (progressTarget) {
+            DebugDialog::debug("close progress " + filename);
+		    disconnect(paletteBinModel, SIGNAL(loadingInstances(ModelBase *, QDomElement &)), progressTarget, SLOT(loadingInstancesSlot(ModelBase *, QDomElement &)));
+		    disconnect(paletteBinModel, SIGNAL(loadingInstance(ModelBase *, QDomElement &)), progressTarget, SLOT(loadingInstanceSlot(ModelBase *, QDomElement &)));
+		    disconnect(m_iconView, SIGNAL(settingItem()), progressTarget, SLOT(settingItemSlot()));
+		    disconnect(m_listView, SIGNAL(settingItem()), progressTarget, SLOT(settingItemSlot()));
+		    if (deleteWhenDone) {
+			    m_loadingProgressDialog->close();
+			    delete m_loadingProgressDialog;
+		    }
+		    m_loadingProgressDialog = NULL;
+	    }
+    }
+    else {
 		m_fileName = filename;
 		setPaletteModel(paletteBinModel,true);
-		m_canDeleteModel = true;					// since we just created this model, we can delete it later
-		if (oldModel) {
-			delete oldModel;
-		}
-	}
+    }
 
-	if (progressTarget) {
-        DebugDialog::debug("close progress " + filename);
-		disconnect(paletteBinModel, SIGNAL(loadingInstances(ModelBase *, QDomElement &)), progressTarget, SLOT(loadingInstancesSlot(ModelBase *, QDomElement &)));
-		disconnect(paletteBinModel, SIGNAL(loadingInstance(ModelBase *, QDomElement &)), progressTarget, SLOT(loadingInstanceSlot(ModelBase *, QDomElement &)));
-		disconnect(m_iconView, SIGNAL(settingItem()), progressTarget, SLOT(settingItemSlot()));
-		disconnect(m_listView, SIGNAL(settingItem()), progressTarget, SLOT(settingItemSlot()));
-		if (deleteWhenDone) {
-			m_loadingProgressDialog->close();
-			delete m_loadingProgressDialog;
-		}
-		m_loadingProgressDialog = NULL;
-	}
 
 	//DebugDialog::debug("done loading bin");
 	//delete paletteReferenceModel;
@@ -564,13 +573,7 @@ bool PartsBinPaletteWidget::beforeClosing() {
 	return retval;
 }
 
-void PartsBinPaletteWidget::saveAsLastBin() {
-	QSettings settings;
-	settings.setValue("lastBin",m_fileName);
-}
-
 void PartsBinPaletteWidget::closeEvent(QCloseEvent* event) {
-	saveAsLastBin();
 	QFrame::closeEvent(event);
 }
 

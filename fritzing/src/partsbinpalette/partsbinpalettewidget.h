@@ -99,7 +99,6 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		void addPartCommand(const QString& moduleID);
 		void removeAlienParts();
 		void itemMoved();
-		void saveAsLastBin();
 		void toIconView();
 		void toListView();
 		bool save();
@@ -181,6 +180,9 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		QStackedWidget * m_searchStackedWidget;
 		bool m_fastLoaded;
 		BinLocation::Location m_location;
+
+    public:
+        static void cleanup();
 
 	public:
 		static QString Title;

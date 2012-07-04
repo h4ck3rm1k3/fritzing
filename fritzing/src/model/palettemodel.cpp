@@ -769,14 +769,18 @@ void PaletteModel::search(ModelPart * modelPart, const QStringList & searchStrin
         else
         {
             modelParts.append(candidate);
+            emit addSearchMaximum(1);
         }
     }
+
+    emit addSearchMaximum(modelPart->children().count());
 
 	foreach(QObject * child, modelPart->children()) {
 		ModelPart * mp = qobject_cast<ModelPart *>(child);
 		if (mp == NULL) continue;
 
         search(mp, searchStrings, modelParts, allowObsolete);
+        emit incSearch();
 	}
 }
 

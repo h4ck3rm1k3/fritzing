@@ -44,6 +44,7 @@ $Date$
 #include "../utils/autoclosemessagebox.h"
 #include "../utils/graphicsutils.h"
 #include "../utils/textutils.h"
+#include "../utils/folderutils.h"
 #include "../processeventblocker.h"
 #include "../autoroute/cmrouter/cmrouter.h"
 #include "../autoroute/cmrouter/tileutils.h"
@@ -2002,7 +2003,7 @@ void PCBSketchWidget::postImageSlot(GroundPlaneGenerator * gpg, QImage * image, 
 	}
 	painter.end();
 #ifndef QT_NO_DEBUG
-	image->save("testGroundFillCopperPost.png");
+	image->save(FolderUtils::getUserDataStorePath("") + "/testGroundFillCopperPost.png");
 #endif
 }
 

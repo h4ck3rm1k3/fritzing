@@ -222,7 +222,7 @@ bool GroundPlaneGenerator::generateGroundPlaneUnit(const QString & boardSvg, QSi
 	}
 
 #ifndef QT_NO_DEBUG
-	image->save("testGroundPlaneUnit3.png");
+	image->save(FolderUtils::getUserDataStorePath("") + "/testGroundPlaneUnit3.png");
 #endif
 
 	scanImage(*image, bWidth, bHeight, GraphicsUtils::StandardFritzingDPI / res, res, color, true, true, QSizeF(.05, .05), 1 / FSvgRenderer::printerScale(), QPointF(0,0));
@@ -293,7 +293,7 @@ QImage * GroundPlaneGenerator::generateGroundPlaneAux(const QString & boardSvg, 
 	painter.end();
 
 #ifndef QT_NO_DEBUG
-	image->save("testGroundFillBoard.png");
+	image->save(FolderUtils::getUserDataStorePath("") + "/testGroundFillBoard.png");
 #endif
 
 	for (double m = 0; m < BORDERINCHES; m += (1.0 / res)) {   // 1 mm
@@ -321,7 +321,7 @@ QImage * GroundPlaneGenerator::generateGroundPlaneAux(const QString & boardSvg, 
 	}
 
 #ifndef QT_NO_DEBUG
-	image->save("testGroundFillBoardBorder.png");
+	image->save(FolderUtils::getUserDataStorePath("") + "/testGroundFillBoardBorder.png");
 #endif
 	
 	// "blur" the image a little
@@ -353,7 +353,7 @@ QImage * GroundPlaneGenerator::generateGroundPlaneAux(const QString & boardSvg, 
 	painter.end();
 
 #ifndef QT_NO_DEBUG
-	image->save("testGroundFillCopper.png");
+	image->save(FolderUtils::getUserDataStorePath("") + "/testGroundFillCopper.png");
 #endif
 
 	emit postImageSignal(this, image, board);	

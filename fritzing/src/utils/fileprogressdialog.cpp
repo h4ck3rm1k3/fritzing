@@ -45,6 +45,8 @@ $Date$
 
 FileProgressDialog::FileProgressDialog(const QString & title, int initialMaximum, QWidget * parent) : QDialog(parent)
 {
+    m_incValueMod = 2;
+
 	QSplashScreen *splash = NULL;
 	foreach (QWidget *widget, QApplication::topLevelWidgets()) {
         splash = qobject_cast<QSplashScreen *>(widget);
@@ -114,12 +116,26 @@ void FileProgressDialog::setMinimum(int minimum) {
 
 void FileProgressDialog::setMaximum(int maximum) {
 	m_progressBar->setMaximum(maximum);
-	DebugDialog::debug(QString("set maximum:%1").arg(maximum)); 
+	//DebugDialog::debug(QString("set maximum:%1").arg(maximum)); 
+}
+
+void FileProgressDialog::addMaximum(int maximum) {
+    if (maximum != 0) {
+	    m_progressBar->setMaximum(m_progressBar->maximum() + maximum);
+	    //DebugDialog::debug(QString("set maximum:%1").arg(maximum)); 
+    }
 }
 
 void FileProgressDialog::setValue(int value) {
 	m_progressBar->setValue(value);
 	ProcessEventBlocker::processEvents();
+}
+
+void FileProgressDialog::incValue() {
+	m_progressBar->setValue(m_progressBar->value() + 1);
+    if (m_progressBar->value() % m_incValueMod == 0) {
+	    ProcessEventBlocker::processEvents();
+    }
 }
 
 int FileProgressDialog::value() {
@@ -187,4 +203,8 @@ void FileProgressDialog::resizeEvent(QResizeEvent * event)
 	QDialog::resizeEvent(event);
 	QRect scr = QApplication::desktop()->screenGeometry();
 	move( scr.center() - rect().center() );
+}
+
+void FileProgressDialog::setIncValueMod(int mod) {
+    m_incValueMod = mod;
 }

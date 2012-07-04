@@ -441,7 +441,7 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 		painter.end();
 
 #ifndef QT_NO_DEBUG
-        clipImage->save("clip.png");
+        clipImage->save(FolderUtils::getUserDataStorePath("") + "/clip.png");
 #endif
 
 	}

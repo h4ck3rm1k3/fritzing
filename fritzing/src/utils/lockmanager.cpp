@@ -70,6 +70,14 @@ LockManager::~LockManager()
 	TheTimers.clear();
 }
 
+void LockManager::cleanup() {
+    foreach (QTimer * timer, TheTimers) {
+        timer->stop();
+        delete timer;
+    }
+    TheTimers.clear();
+}
+
 void LockManager::touchFiles() {
 	QTimer * timer = qobject_cast<QTimer *>(sender());
 	if (timer == NULL) return;
@@ -105,6 +113,7 @@ LockedFile * LockManager::makeLockedFile(const QString & path, long touchFrequen
 		timer->setSingleShot(false);
 		QObject::connect(timer, SIGNAL(timeout()), &TheLockManager, SLOT(touchFiles()));
 		timer->start();
+        TheTimers.insert(touchFrequency, timer);
 	}
 	return lockedFile;
 }

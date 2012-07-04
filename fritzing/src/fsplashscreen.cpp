@@ -85,6 +85,9 @@ FSplashScreen::~FSplashScreen() {
 	foreach (MessageThing * messageThing, m_messages) {
 		delete messageThing;
 	}
+	foreach (MessageThing * messageThing, m_items) {
+		delete messageThing;
+	}
 	foreach (PixmapThing * pixmapThing, m_pixmaps) {
 		delete pixmapThing;
 	}

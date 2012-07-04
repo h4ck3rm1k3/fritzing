@@ -66,10 +66,6 @@ PartsBinListView::PartsBinListView(ReferenceModel* refModel, PartsBinPaletteWidg
 }
 
 PartsBinListView::~PartsBinListView() {
-	for (int i = 0; i < this->count(); i++) {
-		QListWidgetItem * item = this->item(i);
-		delete item->data(Qt::UserRole).value<ItemBase *>();
-	}
 }
 
 void PartsBinListView::doClear() {
@@ -88,7 +84,7 @@ int PartsBinListView::setItemAux(ModelPart * modelPart, int position) {
 	emit settingItem();
 	QString moduleID = modelPart->moduleID();
 	if(contains(moduleID)) {
-		m_partHash[moduleID]->copy(modelPart);
+		m_partHash[moduleID]->copy(modelPart);   // copies into the cached modelPart, but I don't know why
 		return position;
 	}
 
@@ -101,22 +97,26 @@ int PartsBinListView::setItemAux(ModelPart * modelPart, int position) {
 		lwi->setText("        " + TranslatedCategoryNames.value(modelPart->instanceText(), modelPart->instanceText()));
 	}
 	else {
-		ItemBase * itemBase = PartFactory::createPart(modelPart, ViewLayer::ThroughHoleThroughTop_OneLayer, ViewIdentifierClass::IconView, ViewGeometry(), ItemBase::getNextID(), NULL, NULL, false);
+        ItemBase * itemBase = ItemBaseHash.value(moduleID);
+        if (itemBase == NULL) {
+		    itemBase = PartFactory::createPart(modelPart, ViewLayer::ThroughHoleThroughTop_OneLayer, ViewIdentifierClass::IconView, ViewGeometry(), ItemBase::getNextID(), NULL, NULL, false);
+		    ItemBaseHash.insert(moduleID, itemBase);
+            QString error;
+		    LayerAttributes layerAttributes;
+		    FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, ViewIdentifierClass::IconView, ViewLayer::Icon, itemBase->viewLayerSpec(), layerAttributes, error);
+		    if (renderer != NULL) {
+			    if (itemBase) {
+				    itemBase->setFilename(renderer->filename());
+			    }
+                itemBase->setSharedRendererEx(renderer);
+            }
+        }
 		lwi->setData(Qt::UserRole, qVariantFromValue( itemBase ) );
-		QString error;
-		LayerAttributes layerAttributes;
-		FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, ViewIdentifierClass::IconView, ViewLayer::Icon, itemBase->viewLayerSpec(), layerAttributes, error);
-		if (renderer != NULL) {
-			if (itemBase) {
-				itemBase->setFilename(renderer->filename());
-			}
-			QSize size(HtmlInfoView::STANDARD_ICON_IMG_WIDTH, HtmlInfoView::STANDARD_ICON_IMG_HEIGHT);
-			QPixmap * pixmap = FSvgRenderer::getPixmap(renderer, size);
-			lwi->setIcon(QIcon(*pixmap));
-			delete pixmap;
-			lwi->setData(Qt::UserRole + 1, renderer->defaultSize());
-            itemBase->setSharedRendererEx(renderer);
-		}
+		QSize size(HtmlInfoView::STANDARD_ICON_IMG_WIDTH, HtmlInfoView::STANDARD_ICON_IMG_HEIGHT);
+		QPixmap * pixmap = FSvgRenderer::getPixmap(itemBase->renderer(), size);
+		lwi->setIcon(QIcon(*pixmap));
+		delete pixmap;
+		lwi->setData(Qt::UserRole + 1, itemBase->renderer()->defaultSize());
 
 		m_partHash[moduleID] = modelPart;
 	}

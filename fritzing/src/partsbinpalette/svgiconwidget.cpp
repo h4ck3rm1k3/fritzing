@@ -159,7 +159,7 @@ void SvgIconWidget::initNames() {
 }
 
 SvgIconWidget::~SvgIconWidget() {
-	delete m_itemBase;
+	//delete m_itemBase;  // these are now shared
 }
 
 void SvgIconWidget::cleanup() {
