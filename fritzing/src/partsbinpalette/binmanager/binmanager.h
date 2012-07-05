@@ -64,9 +64,6 @@ class BinManager : public QFrame {
 		BinManager(class ReferenceModel *refModel, class HtmlInfoView *infoView, class WaitPushUndoStack *undoStack, MainWindow* parent);
 		virtual ~BinManager();
 
-		void loadFromModel(PaletteModel *model);
-		void setPaletteModel(PaletteModel *model);
-
 		void addBin(PartsBinPaletteWidget* bin);
 		void insertBin(PartsBinPaletteWidget* bin, int index);
 		void addPart(ModelPart *modelPart, int position = -1);
@@ -167,7 +164,6 @@ class BinManager : public QFrame {
 
 protected:
 		ReferenceModel *m_refModel;
-		PaletteModel *m_paletteModel;
 
 		HtmlInfoView *m_infoView;
 		WaitPushUndoStack *m_undoStack;

@@ -156,6 +156,7 @@ bool FApplication::init() {
 		if ((m_arguments[i].compare("-e", Qt::CaseInsensitive) == 0) ||
 			(m_arguments[i].compare("-examples", Qt::CaseInsensitive) == 0)||
 			(m_arguments[i].compare("--examples", Qt::CaseInsensitive) == 0)) {
+            DebugDialog::setEnabled(true);
 			m_serviceType = ExampleService;
 			m_outputFolder = " ";					// otherwise program will bail out
 			toRemove << i;
@@ -204,6 +205,7 @@ bool FApplication::init() {
 			(m_arguments[i].compare("-gerber", Qt::CaseInsensitive) == 0)||
 			(m_arguments[i].compare("--gerber", Qt::CaseInsensitive) == 0)) {
 			m_serviceType = GerberService;
+            DebugDialog::setEnabled(true);
 			m_outputFolder = m_arguments[i + 1];
 			toRemove << i << i + 1;
 		}
@@ -473,19 +475,6 @@ ReferenceModel * FApplication::loadReferenceModel() {
 	return m_referenceModel;
 }
 
-bool FApplication::loadBin(QString binToOpen) {
-	binToOpen = binToOpen.isNull() || binToOpen.isEmpty()? BinManager::CorePartsBinLocation: binToOpen;
-
-	if (!m_paletteBinModel->load(binToOpen, m_referenceModel)) {
-		if(binToOpen == BinManager::CorePartsBinLocation
-		   || !m_paletteBinModel->load(BinManager::CorePartsBinLocation, m_referenceModel)) {
-			return false;
-		}
-	}
-
-	return true;
-}
-
 MainWindow * FApplication::loadWindows(int & loaded, bool lockFiles) {
 	// our MainWindows use WA_DeleteOnClose so this has to be added to the heap (via new) rather than the stack (for local vars)
 	MainWindow * mainWindow = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, "", false, lockFiles);   // this is also slow
@@ -550,9 +539,6 @@ void FApplication::runGerberService()
 
 	registerFonts();
 	loadReferenceModel();
-	if (!loadBin("")) {
-		return;
-	}
 
 	QDir dir(m_outputFolder);
 	QString s = dir.absolutePath();
@@ -1461,11 +1447,6 @@ void FApplication::runExampleService()
 	createUserDataStoreFolderStructure();
 	registerFonts();
 	loadReferenceModel();
-
-	if (!loadBin("")) {
-		DebugDialog::debug(QString("load bin failed"));
-		return;
-	}
 
 	QDir sketchesDir(FolderUtils::getApplicationSubFolderPath("sketches"));
 	runExampleService(sketchesDir);

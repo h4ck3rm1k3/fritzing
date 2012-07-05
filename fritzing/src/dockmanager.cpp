@@ -88,11 +88,6 @@ void DockManager::createBinAndInfoViewDocks() {
 	m_mainWindow->m_binManager = new BinManager(m_mainWindow->m_refModel, m_mainWindow->m_infoView, m_mainWindow->m_undoStack, m_mainWindow);
 
 	DebugDialog::debug("after bin manager");
-	if (m_mainWindow->m_paletteModel->loadedFromFile()) {
-		m_mainWindow->m_binManager->loadFromModel(m_mainWindow->m_paletteModel);
-	} else {
-		m_mainWindow->m_binManager->setPaletteModel(m_mainWindow->m_paletteModel);
-	}
 }
 
 void DockManager::createDockWindows()

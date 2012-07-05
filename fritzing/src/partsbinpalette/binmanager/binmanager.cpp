@@ -109,7 +109,6 @@ BinManager::BinManager(class ReferenceModel *refModel, class HtmlInfoView *infoV
 	BinManager::Title = tr("Parts");
 
 	m_refModel = refModel;
-	m_paletteModel = NULL;
 	m_infoView = infoView;
 	m_undoStack = undoStack;
 	m_defaultSaveFolder = FolderUtils::getUserDataStorePath("bins");
@@ -201,18 +200,6 @@ void BinManager::insertBin(PartsBinPaletteWidget* bin, int index) {
 	registerBin(bin);
 	m_stackTabWidget->insertTab(index, bin, bin->icon(), bin->title());
 	m_stackTabWidget->setCurrentIndex(index);
-}
-
-void BinManager::loadFromModel(PaletteModel *model) {
-	Q_UNUSED(model);
-	/*PartsBinPaletteWidget* bin = newBin();
-	m_paletteModel=model;
-	bin->loadFromModel(model);
-	addBin(bin);*/
-}
-
-void BinManager::setPaletteModel(PaletteModel *model) {
-	m_paletteModel = model;
 }
 
 bool BinManager::beforeClosing() {
