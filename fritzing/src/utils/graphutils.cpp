@@ -488,9 +488,27 @@ bool GraphUtils::scoreOneNet(QList<ConnectorItem *> & partConnectorItems, ViewGe
 			routingStatus.m_jumperItemCount++;				
 		}
 		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
-			if (toConnectorItem->attachedToItemType() != ModelPart::Wire) {
-				continue;
-			}
+            switch (toConnectorItem->attachedToItemType()) {
+                case ModelPart::Wire:
+                    break;
+                case ModelPart::Breadboard:
+                    if (toConnectorItem->attachedTo()->isEverVisible()) {
+                        QList<ConnectorItem *> ends;
+                        collectBreadboard(toConnectorItem, partConnectorItems, ends);
+                        foreach (ConnectorItem * end, ends) {
+				            if (end == fromConnectorItem) continue;
+
+				            int j = partConnectorItems.indexOf(end);
+				            if (j >= 0) {
+					            add_edge_d(i, j, G);
+					            add_edge_d(j, i, G);
+				            }
+			            }
+                    }
+                    continue;
+                default:
+                    continue;
+            }
 
 			Wire * wire = qobject_cast<Wire *>(toConnectorItem->attachedTo());
 			if (wire == NULL) continue;
@@ -554,4 +572,34 @@ bool GraphUtils::scoreOneNet(QList<ConnectorItem *> & partConnectorItems, ViewGe
 	return true;
 }
 
+void GraphUtils::collectBreadboard(ConnectorItem * connectorItem, QList<ConnectorItem *> & partConnectorItems, QList<ConnectorItem *> & ends)
+{
+    QList<ConnectorItem *> itemsToGo;
+    itemsToGo.append(connectorItem);
+    for (int i = 0; i < itemsToGo.count(); i++) {
+        ConnectorItem * candidate = itemsToGo.at(i);
+        if (partConnectorItems.contains(candidate)) {
+            if (!ends.contains(candidate)) {
+                ends.append(candidate);
+            }
+            continue;
+        }
 
+        Bus * bus = candidate->bus();
+        if (bus) {
+            QList<ConnectorItem *> busConnectorItems;
+            candidate->attachedTo()->busConnectorItems(bus, busConnectorItems);
+            foreach (ConnectorItem * bci, busConnectorItems) {
+                if (!itemsToGo.contains(bci)) {
+                    itemsToGo.append(bci);
+                }
+            }
+        }
+        
+        foreach (ConnectorItem * to, candidate->connectedToItems()) {
+            if (!itemsToGo.contains(to)) {
+                itemsToGo.append(to);
+            }
+        }
+    }
+}

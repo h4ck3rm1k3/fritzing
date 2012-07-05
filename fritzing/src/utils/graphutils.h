@@ -49,6 +49,10 @@ public:
 	static bool chooseRatsnestGraph(const QList<ConnectorItem *> * equipotentials, ViewGeometry::WireFlags, ConnectorPairHash & result);
 	static bool scoreOneNet(QList<ConnectorItem *> & partConnectorItems, ViewGeometry::WireFlags, RoutingStatus & routingStatus);
 	static void minCut(QList<ConnectorItem *> & connectorItems, QList<class SketchWidget *> & foreighSketchWidgets, ConnectorItem * source, ConnectorItem * sink, QList<ConnectorEdge *> & cutSet); 
+
+protected:
+    static void collectBreadboard(ConnectorItem * connectorItem, QList<ConnectorItem *> & partConnectorItems, QList<ConnectorItem *> & ends);
+
 };
 
 #endif
