@@ -15,7 +15,7 @@
 <description>A breadboard for easily prototyping circuits</description>
 <views>
 <iconView>
-<layers image="breadboard/breadboard2.svg">
+<layers image="icon/breadboardicon.svg">
 <layer layerId="icon"/>
 </layers>
 </iconView>

@@ -35,7 +35,7 @@ public:
 	static const QString ModuleIDNameSuffix;
 	static const QString RulerModuleIDName;
 	static const QString BreadboardModuleIDName;
-	static const QString TinyBreadboardModuleIDName;
+	static const QString FullPlusBreadboardModuleIDName;
 	static const QString RectanglePCBModuleIDName;
 	static const QString TwoSidedRectanglePCBModuleIDName;
 	static const QString EllipsePCBModuleIDName;

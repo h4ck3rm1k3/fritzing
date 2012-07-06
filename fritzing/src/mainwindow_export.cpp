@@ -85,6 +85,8 @@ static QHash<QString, QString> fileExtFormats;
 static QRegExp AaCc("[aAcC]");
 static QRegExp LabelNumber("([^\\d]+)(.*)");
 
+static const double InchesPerMeter = 39.3700787;
+
 ////////////////////////////////////////////////////////
 
 bool sortPartList(ItemBase * b1, ItemBase * b2) {
@@ -528,8 +530,8 @@ void MainWindow::exportAux(QString fileName, QImage::Format format, bool removeB
 
 	QSize imgSize(width, height);
 	QImage image(imgSize,format);
-	image.setDotsPerMeterX(39.3700787 * FSvgRenderer::printerScale());
-	image.setDotsPerMeterY(39.3700787 * FSvgRenderer::printerScale());
+	image.setDotsPerMeterX(InchesPerMeter * FSvgRenderer::printerScale());
+	image.setDotsPerMeterY(InchesPerMeter * FSvgRenderer::printerScale());
 	QPainter painter;
 	QColor color;
 	if (removeBackground) {

@@ -14,8 +14,6 @@
  <taxonomy>prototyping.breadboard.breadboard.breadboard0</taxonomy>
  <description>A breadboard for easily prototyping circuits</description>
  <views>
-  <image composited="false" file="breadboard/part/breadboard.svg"/>
-  <defaultUnits>cmil</defaultUnits>
   <iconView>
    <layers image="icon/breadboardicon.svg">
     <layer layerId="icon"/>
