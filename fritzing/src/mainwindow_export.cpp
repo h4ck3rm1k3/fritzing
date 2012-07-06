@@ -507,6 +507,8 @@ void MainWindow::doExport() {
 
 void MainWindow::exportAux(QString fileName, QImage::Format format, bool removeBackground) 
 {
+    double resMultiplier = 3;
+
 	QRectF source = m_currentGraphicsView->scene()->itemsBoundingRect();
 	QGraphicsItem * watermark = m_currentGraphicsView->addWatermark(":resources/images/watermark_fritzing_outline.svg");
 	if (watermark) {
@@ -528,10 +530,10 @@ void MainWindow::exportAux(QString fileName, QImage::Format format, bool removeB
 	}
 	*/
 
-	QSize imgSize(width, height);
+	QSize imgSize(width * resMultiplier, height * resMultiplier);
 	QImage image(imgSize,format);
-	image.setDotsPerMeterX(InchesPerMeter * FSvgRenderer::printerScale());
-	image.setDotsPerMeterY(InchesPerMeter * FSvgRenderer::printerScale());
+	image.setDotsPerMeterX(InchesPerMeter * FSvgRenderer::printerScale() * resMultiplier);
+	image.setDotsPerMeterY(InchesPerMeter * FSvgRenderer::printerScale() * resMultiplier);
 	QPainter painter;
 	QColor color;
 	if (removeBackground) {
@@ -541,7 +543,7 @@ void MainWindow::exportAux(QString fileName, QImage::Format format, bool removeB
 
 	painter.begin(&image);
 	//m_currentGraphicsView->render(&painter);
-	QRectF target(0, 0, width, height);
+	QRectF target(0, 0, imgSize.width(), imgSize.height());
 	m_currentGraphicsView->scene()->render(&painter, target, source, Qt::KeepAspectRatio);
 	painter.end();
 
