@@ -232,6 +232,8 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 	
 	FileProgressDialog * fileProgressDialog = exportProgress();
 
+    QRectF r = board->sceneBoundingRect();
+    QSizeF boardImageSize(r.width(), r.height());
 
 	QString maskTop, maskBottom;
 	QList<ItemBase *> copperLogoItems;
@@ -263,12 +265,12 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 			m_pcbGraphicsView->hideCopperLogoItems(copperLogoItems);
 		}
 
-		QSizeF imageSize;
 		if (wantSVG) {
 			bool empty;
+		    QSizeF imageSize;
 			QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, true, imageSize, board, GraphicsUtils::IllustratorDPI, false, false, empty);
 			massageOutput(svg, doMask, doSilk, maskTop, maskBottom, fileName, GraphicsUtils::IllustratorDPI);		
-			svg = mergeBoardSvg(svg, board, GraphicsUtils::IllustratorDPI, imageSize, flip, viewLayerIDs);
+			svg = mergeBoardSvg(svg, board, GraphicsUtils::IllustratorDPI, flip, viewLayerIDs);
             TextUtils::writeUtf8(fileName, svg);
 		}
 		else {
@@ -277,15 +279,16 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 			printer.setOutputFileName(fileName);
 			int res = printer.resolution();
 			bool empty;
+            QSizeF imageSize;
 			QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, true, imageSize, board, res, false, false, empty);
 			massageOutput(svg, doMask, doSilk, maskTop, maskBottom, fileName, res);
-			svg = mergeBoardSvg(svg, board, res, imageSize, flip, viewLayerIDs);
+			svg = mergeBoardSvg(svg, board, res, flip, viewLayerIDs);
 			
 			// now convert to pdf
 			QSvgRenderer svgRenderer;
 			svgRenderer.load(svg.toLatin1());
-			double trueWidth = imageSize.width() / FSvgRenderer::printerScale();
-			double trueHeight = imageSize.height() / FSvgRenderer::printerScale();
+			double trueWidth = boardImageSize.width() / FSvgRenderer::printerScale();
+			double trueHeight = boardImageSize.height() / FSvgRenderer::printerScale();
 			QRectF target(0, 0, trueWidth * res, trueHeight * res);
 
 			QSizeF psize((target.width() + printer.paperRect().width() - printer.width()) / res, 
@@ -377,19 +380,19 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 
 }
 
-QString MainWindow::mergeBoardSvg(QString & svg, ItemBase * board, int res, QSizeF & imageSize, bool flip, LayerList & viewLayerIDs) {
-	QSizeF boardImageSize;
-	QString boardSvg = getBoardSvg(board, res, boardImageSize, viewLayerIDs);
-	if (boardSvg.isEmpty()) return svg;
+QString MainWindow::mergeBoardSvg(QString & svg, ItemBase * board, int res, bool flip, LayerList & viewLayerIDs) {
+	QString boardSvg = getBoardSvg(board, res, viewLayerIDs);
+	if (boardSvg.isEmpty()) {
+        if (!flip) return svg;
+    }
 
 	//QByteArray byteArray;
 	//SvgFileSplitter::changeStrokeWidth(boardSvg, res / 360.0, true, byteArray);
-	imageSize = boardImageSize;
-
-	return TextUtils::convertExtendedChars(TextUtils::mergeSvg(boardSvg /* QString(byteArray) */, svg, "", flip));
+	
+	return TextUtils::convertExtendedChars(TextUtils::mergeSvg(boardSvg, svg, "", flip));
 }
 
-QString MainWindow::getBoardSvg(ItemBase * board, int res, QSizeF & imageSize, LayerList & viewLayerIDs) {
+QString MainWindow::getBoardSvg(ItemBase * board, int res,  LayerList & viewLayerIDs) {
 	if (board == NULL) return ___emptyString___;
 
     board = board->layerKinChief();
@@ -418,6 +421,7 @@ QString MainWindow::getBoardSvg(ItemBase * board, int res, QSizeF & imageSize, L
 	board->setSelected(true);
 
 	bool empty;
+    QSizeF imageSize;
 	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, true, imageSize, board, res, true, false, empty);
 	board->setSelected(false);
 	foreach (QGraphicsItem * item, items) {

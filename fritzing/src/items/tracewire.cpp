@@ -56,6 +56,7 @@ QComboBox * TraceWire::createWidthComboBox(double m, QWidget * parent)
 	QIntValidator * intValidator = new QIntValidator(comboBox);
 	intValidator->setRange(MinTraceWidthMils, MaxTraceWidthMils);
 	comboBox->setValidator(intValidator);
+    comboBox->setToolTip(tr("Select from the dropdown, or type in any value from %1 to %2").arg(MinTraceWidthMils).arg(MaxTraceWidthMils));
 
 	int ix = 0;
 	if (!Wire::widths.contains(m)) {

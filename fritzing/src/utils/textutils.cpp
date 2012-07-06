@@ -280,7 +280,9 @@ QString TextUtils::mergeSvgFinish(QDomDocument & doc) {
 QString TextUtils::mergeSvg(const QString & svg1, const QString & svg2, const QString & id, bool flip) {
 
 	QDomDocument doc1;
-	if (!TextUtils::mergeSvg(doc1, svg1, id)) return ___emptyString___;
+    if (!svg1.isEmpty()) {
+	    if (!TextUtils::mergeSvg(doc1, svg1, id)) return ___emptyString___;
+    }
 
 	if (!TextUtils::mergeSvg(doc1, svg2, id)) return ___emptyString___;
 
