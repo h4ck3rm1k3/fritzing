@@ -226,7 +226,7 @@ void BreadboardSketchWidget::showEvent(QShowEvent * event) {
 
 			// add a board to the empty sketch, and place it below the help area.
 
-			p += QPointF(0, 50);
+            p += QPointF(4, 50);
 			QPointF q = mapToScene(p.toPoint());
 			m_addedDefaultPart->setPos(q);
 			QTimer::singleShot(10, this, SLOT(vScrollToZero()));
