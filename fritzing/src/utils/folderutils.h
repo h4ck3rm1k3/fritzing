@@ -61,6 +61,7 @@ public:
 	static void cleanup();
 	static void collectFiles(const QDir & parent, QStringList & filters, QStringList & files);
 	static void makePartFolderHierarchy(const QString & prefixFolder, const QString & destFolder);
+    static void copyBin(const QString & source, const QString & dest);
 
 protected:
 	FolderUtils();

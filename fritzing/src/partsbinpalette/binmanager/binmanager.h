@@ -69,8 +69,8 @@ class BinManager : public QFrame {
 		void addPart(ModelPart *modelPart, int position = -1);
 		void addToMyPart(ModelPart *modelPart);
 		void addToContrib(ModelPart *modelPart);
-		void addToTemp(ModelPart *modelPart);
-		void hideTemp();
+		void addToTempPartsBin(ModelPart *modelPart);
+		void hideTempPartsBin();
 
 		void addNewPart(ModelPart *modelPart);
 
@@ -112,7 +112,9 @@ class BinManager : public QFrame {
 		void setTabIcon(PartsBinPaletteWidget* w, QIcon *);
 		void copyFilesToContrib(ModelPart *, QWidget * originator);
 		void importPart(const QString & filename);
-        ModelPart * tempRoot();
+        ModelPart * tempPartsBinRoot();
+        bool isTempPartsBin(PartsBinPaletteWidget * bin);
+        void setTempPartsBinLocation(const QString & filename);
 
 	signals:
 		void savePartAsBundled(const QString &moduleId);
@@ -197,6 +199,8 @@ protected:
 		QAction *m_exportPartAction;
 		QAction *m_removePartAction;
 
+        QString m_tempPartsBinLocation;
+
 	protected:
 		static QString StandardBinStyle;
 		static QString CurrentBinStyle;
@@ -210,7 +214,6 @@ protected:
         static QString SearchBinTemplateLocation;
 		static QString ContribPartsBinLocation;
 		static QString ContribPartsBinTemplateLocation;
-		static QString TempPartsBinLocation;
 		static QString TempPartsBinTemplateLocation;
 		static QHash<QString, QString> StandardBinIcons;
 

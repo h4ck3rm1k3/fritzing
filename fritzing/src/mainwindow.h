@@ -158,7 +158,7 @@ public:
 	bool saveAsAux(const QString & fileName);
 	void swapObsolete(bool displayFeedback);
 	void selectAllObsolete(bool displayFeedback);
-	void hideTempBin();
+	void hideTempPartsBin();
 	const QString & fritzingVersion();
 	void removeGroundFill(bool force, QUndoCommand * parentCommand);
 

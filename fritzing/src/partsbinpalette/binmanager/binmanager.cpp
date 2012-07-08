@@ -94,7 +94,6 @@ QString BinManager::SearchBinLocation;
 QString BinManager::SearchBinTemplateLocation;
 QString BinManager::ContribPartsBinLocation;
 QString BinManager::ContribPartsBinTemplateLocation;
-QString BinManager::TempPartsBinLocation;
 QString BinManager::TempPartsBinTemplateLocation;
 QString BinManager::CorePartsBinLocation;
 
@@ -153,7 +152,6 @@ BinManager::BinManager(class ReferenceModel *refModel, class HtmlInfoView *infoV
 }
 
 BinManager::~BinManager() {
-
 }
 
 void BinManager::addBin(PartsBinPaletteWidget* bin) {
@@ -177,7 +175,7 @@ void BinManager::registerBin(PartsBinPaletteWidget* bin) {
 	else if (bin->fileName().compare(ContribPartsBinLocation) == 0) {
 		bin->setAllowsChanges(false);
 	}
-	else if (bin->fileName().compare(TempPartsBinLocation) == 0) {
+	else if (bin->fileName().compare(m_tempPartsBinLocation)) {
 		bin->setAllowsChanges(false);
 	}
 	else if (bin->fileName().contains(FolderUtils::getApplicationSubFolderPath("bins"))) {
@@ -317,8 +315,8 @@ void BinManager::addToContrib(ModelPart *modelPart) {
 	}
 }
 
-void BinManager::addToTemp(ModelPart *modelPart) {
-	PartsBinPaletteWidget *bin = getOrOpenBin(TempPartsBinLocation, TempPartsBinTemplateLocation);
+void BinManager::addToTempPartsBin(ModelPart *modelPart) {
+	PartsBinPaletteWidget *bin = getOrOpenBin(m_tempPartsBinLocation, TempPartsBinTemplateLocation);
 	if (bin) {
 		addPartAux(bin,modelPart);
 		setAsCurrentTab(bin);
@@ -326,10 +324,10 @@ void BinManager::addToTemp(ModelPart *modelPart) {
 	}
 }
 
-void BinManager::hideTemp() {
+void BinManager::hideTempPartsBin() {
 	for (int i = 0; i < m_stackTabWidget->count(); i++) {
 		PartsBinPaletteWidget* bin = (PartsBinPaletteWidget *) m_stackTabWidget->widget(i);
-        if (bin->fileName() == TempPartsBinLocation) {
+        if (bin->fileName().compare(m_tempPartsBinLocation) == 0) {
             m_stackTabWidget->removeTab(i);
 			break;
 		}
@@ -782,14 +780,13 @@ void BinManager::initNames() {
     BinManager::SearchBinLocation = FolderUtils::getUserDataStorePath("bins")+"/search.fzb";
     BinManager::SearchBinTemplateLocation =":/resources/bins/search.fzb";
 	BinManager::ContribPartsBinLocation = FolderUtils::getUserDataStorePath("bins")+"/contribParts.fzb";
-	BinManager::TempPartsBinLocation = FolderUtils::getUserDataStorePath("bins")+"/tempParts.fzb";
     BinManager::CorePartsBinLocation = FolderUtils::getApplicationSubFolderPath("bins")+"/core.fzb";
+    BinManager::TempPartsBinTemplateLocation =":/resources/bins/temp.fzb";
 
 	StandardBinIcons.insert(BinManager::MyPartsBinLocation, "Mine.png");
 	StandardBinIcons.insert(BinManager::SearchBinLocation, "Search.png");
 	StandardBinIcons.insert(BinManager::ContribPartsBinLocation, "Contrib.png");
 	StandardBinIcons.insert(BinManager::CorePartsBinLocation, "Core.png");
-	StandardBinIcons.insert(BinManager::TempPartsBinLocation, "Temp.png");
 }
 
 void BinManager::search(const QString & searchText) {
@@ -1111,12 +1108,11 @@ void BinManager::setTabIcon(PartsBinPaletteWidget* w, QIcon * icon)
 	}
 }
 
-
 void BinManager::copyFilesToContrib(ModelPart * mp, QWidget * originator) {
 	PartsBinPaletteWidget * bin = qobject_cast<PartsBinPaletteWidget *>(originator);
 	if (bin == NULL) return;
 
-	if (bin->fileName().compare(TempPartsBinLocation) != 0) return;				// only copy from temp bin
+	if (bin->fileName().compare(m_tempPartsBinLocation) != 0) return;				// only copy from temp bin
 
 	QString path = mp->path();
 	if (path.isEmpty()) return;
@@ -1144,15 +1140,24 @@ void BinManager::copyFilesToContrib(ModelPart * mp, QWidget * originator) {
 	}
 }
 
-ModelPart * BinManager::tempRoot() {
+ModelPart * BinManager::tempPartsBinRoot() {
 
 	for (int i = 0; i < m_stackTabWidget->count(); i++) {
 		PartsBinPaletteWidget* bin = (PartsBinPaletteWidget *) m_stackTabWidget->widget(i);
-        if (bin->fileName() == TempPartsBinLocation) {
+        if (bin->fileName() == m_tempPartsBinLocation) {
             return bin->root();
 		}
 	}
 
     return NULL;
 
+}
+
+bool BinManager::isTempPartsBin(PartsBinPaletteWidget * bin) {
+    return bin->fileName().compare(m_tempPartsBinLocation);
+}
+
+void BinManager::setTempPartsBinLocation(const QString & name) {
+    m_tempPartsBinLocation = name;
+    //StandardBinIcons.insert(m_tempPartsBinLocation, "Temp.png");
 }

@@ -285,6 +285,7 @@
 
         <file>resources/bins/my_parts.fzb</file>
         <file>resources/bins/search.fzb</file>	
+        <file>resources/bins/temp.fzb</file>	
         <file>resources/bins/order.xml</file>
         <file>resources/bins/icons/Arduino.png</file>
         <file>resources/bins/icons/Core.png</file>

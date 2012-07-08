@@ -882,7 +882,7 @@ bool PartsBinPaletteWidget::canClose() {
 		if (m_fileName.compare(BinManager::SearchBinLocation) == 0) return false;
 		if (m_fileName.compare(BinManager::ContribPartsBinLocation) == 0) return false;
 		if (m_fileName.compare(BinManager::MyPartsBinLocation) == 0) return false;	
-		if (m_fileName.compare(BinManager::TempPartsBinLocation) == 0) return false;	
+		if (m_manager->isTempPartsBin(this)) return false;	
 		return true;
 	case BinLocation::More:
 		return false;

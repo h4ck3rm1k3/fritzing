@@ -1045,7 +1045,7 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 		}
 	}
 
-    ModelPart * root = m_binManager->tempRoot();
+    ModelPart * root = m_binManager->tempPartsBinRoot();
     if (root) {
         foreach (QObject * o, root->children()) {
             ModelPart * modelPart = qobject_cast<ModelPart *>(o);
@@ -1257,6 +1257,9 @@ void MainWindow::loadBundledSketch(const QString &fileName, bool addToRecent, bo
 
 	QDir dir(m_fzzFolder);
 	FolderUtils::makePartFolderHierarchy(m_fzzFolder, "contrib");
+    QString binFileName = dir.absoluteFilePath(QFileInfo(BinManager::TempPartsBinTemplateLocation).fileName());
+    m_binManager->setTempPartsBinLocation(binFileName);
+    FolderUtils::copyBin(binFileName, BinManager::TempPartsBinTemplateLocation);
 
 	QStringList namefilters;
 	namefilters << "*"+FritzingSketchExtension;
@@ -1278,11 +1281,11 @@ void MainWindow::loadBundledSketch(const QString &fileName, bool addToRecent, bo
 	QList<ModelPart*> mps = moveToPartsFolder(dir, this, false, false, m_fzzFolder, "contrib");
 	foreach (ModelPart * mp, mps) {
 		mp->setFzz(true);
-		m_binManager->addToTemp(mp);
+		m_binManager->addToTempPartsBin(mp);
 	}
 
 	if (mps.count() == 0) {
-		m_binManager->hideTemp();
+		m_binManager->hideTempPartsBin();
 	}
 
 	// the bundled itself
@@ -2439,8 +2442,8 @@ void MainWindow::dropTempSlot(ModelPart * mp, QWidget * widget) {
 	m_binManager->copyFilesToContrib(mp, widget);
 }
 
-void MainWindow::hideTempBin() {
-	if (m_binManager) m_binManager->hideTemp();
+void MainWindow::hideTempPartsBin() {
+	if (m_binManager) m_binManager->hideTempPartsBin();
 }
 
 void MainWindow::setActiveWire(Wire * wire) {

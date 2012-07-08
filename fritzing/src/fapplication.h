@@ -85,7 +85,6 @@ protected:
 	void initSplash(class FSplashScreen & splash);
 	void registerFont(const QString &fontFile, bool reallyRegister);
 	void clearModels();
-    void copyBin(const QString & source, const QString & dest);
     bool notify(QObject *receiver, QEvent *e);
 	void runGedaService();
 	void runKicadFootprintService();

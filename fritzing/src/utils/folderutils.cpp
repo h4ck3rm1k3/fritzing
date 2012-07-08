@@ -503,3 +503,33 @@ void FolderUtils::makePartFolderHierarchy(const QString & prefixFolder, const QS
 	dir.mkdir("schematic");
 	dir.mkdir("pcb");
 }
+
+void FolderUtils::copyBin(const QString & dest, const QString & source) {
+    if(QFileInfo(dest).exists()) return;
+
+    // this copy action, is not working on windows, because is a resources file
+    if(!QFile(source).copy(dest)) {
+#ifdef Q_WS_WIN // may not be needed from qt 4.5.2 on
+        DebugDialog::debug("Failed to copy a file from the resources");
+        QDir binsFolder = QFileInfo(dest).dir().absolutePath();
+        QStringList binFiles = binsFolder.entryList(QDir::AllEntries | QDir::NoDotAndDotDot);
+        foreach(QString binName, binFiles) {
+            if(binName.startsWith("qt_temp.")) {
+                QString filePath = binsFolder.absoluteFilePath(binName);
+                bool success = QFile(filePath).rename(dest);
+                Q_UNUSED(success);
+                break;
+            }
+        }
+#endif
+    }
+    QFlags<QFile::Permission> ps = QFile::permissions(dest);
+    QFile::setPermissions(
+        dest,
+        QFile::WriteOwner | QFile::WriteUser | ps
+#ifdef Q_WS_WIN
+        | QFile::WriteOther | QFile::WriteGroup
+#endif
+
+    );
+}
