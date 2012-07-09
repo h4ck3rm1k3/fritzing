@@ -1705,6 +1705,13 @@ void CMRouter::tileWires(QList<Wire *> & wires, QList<Tile *> & alreadyTiled, Ti
 
 ConnectorItem * CMRouter::splitTrace(Wire * wire, QPointF point, Edge * edge) 
 {
+    if (point == wire->pos()) {
+        return wire->connector0();
+    }
+    if (point == wire->pos() + wire->line().p2()) {
+        return wire->connector1();
+    }
+
 	TraceWire * doNotAutorouteWire = NULL;
 	if (!wire->getAutoroutable()) {
 		doNotAutorouteWire = qobject_cast<TraceWire *>(wire);
@@ -2014,6 +2021,26 @@ void CMRouter::shortenUs(QList<QPointF> & allPoints, JSubedge * subedge)
 }
 */
 
+
+void CMRouter::removeColinear(QList<QPointF> & allPoints) {
+    	// eliminate redundant colinear points
+	int ix = 0;
+	while (ix < allPoints.count() - 2) {
+		QPointF p1 = allPoints[ix];
+		QPointF p2 = allPoints[ix + 1];
+		QPointF p3 = allPoints[ix + 2];
+		if (p1.x() == p2.x() && p2.x() == p3.x()) {
+			allPoints.removeAt(ix + 1);
+			ix--;
+		}
+		else if (p1.y() == p2.y() && p2.y() == p3.y()) {
+			allPoints.removeAt(ix + 1);
+			ix--;
+		}
+		ix++;
+	}
+}
+
 void CMRouter::removeCorners(QList<QPointF> & allPoints, Plane * thePlane)
 {
 	int ix = 0;
@@ -2073,6 +2100,8 @@ void CMRouter::removeCorners(QList<QPointF> & allPoints, Plane * thePlane)
 		ix--;
 		allPoints.replace(ix + 1, proposed);
 		allPoints.removeAt(ix + 2);
+        removeColinear(allPoints);
+        /*
 		if (ix + 3 < allPoints.count()) {
 			if (proposed.x() == p3.x()) {
 				if (p3.x() == allPoints.at(ix + 3).x()) {
@@ -2097,8 +2126,10 @@ void CMRouter::removeCorners(QList<QPointF> & allPoints, Plane * thePlane)
 				}
 			}
 		}
+
+        */
 		//foreach (QPointF p, allPoints) {
-			//DebugDialog::debug("allpoint during:", p);
+		//	DebugDialog::debug("allpoint during:", p);
 		//}
 	}
 }
@@ -2612,6 +2643,7 @@ void CMRouter::restoreOriginalState(QUndoCommand * parentCommand) {
 
 void CMRouter::addWireToUndo(Wire * wire, QUndoCommand * parentCommand) 
 {
+    
 	new AddItemCommand(m_sketchWidget, BaseCommand::CrossView, ModuleIDNames::WireModuleIDName, wire->viewLayerSpec(), wire->getViewGeometry(), wire->id(), false, -1, parentCommand);
 	new CheckStickyCommand(m_sketchWidget, BaseCommand::SingleView, wire->id(), false, CheckStickyCommand::RemoveOnly, parentCommand);
 	
@@ -3913,7 +3945,7 @@ void CMRouter::traceViaPath(PathUnit * from, PathUnit * to, QList<Via *> & vias)
 void CMRouter::cleanPoints(QList<QPointF> & allPoints, Plane * thePlane) 
 {
 	//foreach (QPointF p, allPoints) {
-		//DebugDialog::debug("allpoint before:", p);
+	//	DebugDialog::debug("allpoint before:", p);
 	//}
 
 	// remove redundant pairs
@@ -3938,26 +3970,10 @@ void CMRouter::cleanPoints(QList<QPointF> & allPoints, Plane * thePlane)
 		ix++;
 	}
 
-	// eliminate redundant colinear points
-	ix = 0;
-	while (ix < allPoints.count() - 2) {
-		QPointF p1 = allPoints[ix];
-		QPointF p2 = allPoints[ix + 1];
-		QPointF p3 = allPoints[ix + 2];
-		if (p1.x() == p2.x() && p2.x() == p3.x()) {
-			allPoints.removeAt(ix + 1);
-			ix--;
-		}
-		else if (p1.y() == p2.y() && p2.y() == p3.y()) {
-			allPoints.removeAt(ix + 1);
-			ix--;
-		}
-		ix++;
-	}
-
+    removeColinear(allPoints);
 
 	//foreach (QPointF p, allPoints) {
-		//DebugDialog::debug("allpoint before rc:", p);
+	//	DebugDialog::debug("allpoint before rc:", p);
 	//}
 
 	removeCorners(allPoints, thePlane);

@@ -203,7 +203,12 @@ void AddItemCommand::turnOffFirstRedo() {
 }
 
 QString AddItemCommand::getParamString() const {
-	return "AddItemCommand " + AddDeleteItemCommand::getParamString();
+	return "AddItemCommand " + AddDeleteItemCommand::getParamString() +
+        QString(" loc:%1,%2 pt1:%3,%4 pt2:%5,%6")
+            .arg(m_viewGeometry.loc().x()).arg(m_viewGeometry.loc().y())
+            .arg(m_viewGeometry.line().p1().x()).arg(m_viewGeometry.line().p1().y())
+            .arg(m_viewGeometry.line().p2().x()).arg(m_viewGeometry.line().p2().y())
+        ;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////

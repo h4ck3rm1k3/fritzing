@@ -1539,6 +1539,9 @@ bool PCBSketchWidget::groundFill(bool fillGroundTraces, QUndoCommand * parentCom
 		}
 
 		ConnectorItem::collectEqualPotential(seeds, true, ViewGeometry::NoFlag);
+        //foreach (ConnectorItem * seed, seeds) {
+        //    seed->debugInfo("seed");
+        //}
 		m_groundFillSeeds = &seeds;
 	}
 

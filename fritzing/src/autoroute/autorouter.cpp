@@ -63,6 +63,11 @@ void Autorouter::updateRoutingStatus() {
 
 TraceWire * Autorouter::drawOneTrace(QPointF fromPos, QPointF toPos, double width, ViewLayer::ViewLayerSpec viewLayerSpec)
 {
+    if (qAbs(fromPos.x() - toPos.x()) < 0.01 && qAbs(fromPos.y() - toPos.y()) < 0.01) {
+        DebugDialog::debug("zero length trace", fromPos);
+    }
+    
+
 	long newID = ItemBase::getNextID();
 	ViewGeometry viewGeometry;
 	viewGeometry.setWireFlags(m_sketchWidget->getTraceFlag());

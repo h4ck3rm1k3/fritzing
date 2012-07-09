@@ -399,7 +399,7 @@ bool LogoItem::resizeMM(double mmW, double mmH, const LayerHash & viewLayers)
 		return false;
 	}
 
-	DebugDialog::debug(QString("resize mm %1 %2").arg(mmW).arg(mmH));
+	// DebugDialog::debug(QString("resize mm %1 %2").arg(mmW).arg(mmH));
 
 	QRectF r = this->boundingRect();
 	if (qAbs(GraphicsUtils::pixels2mm(r.width(), FSvgRenderer::printerScale()) - mmW) < .001 &&

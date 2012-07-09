@@ -159,7 +159,9 @@ void MysteryPart::setChipLabel(QString chipLabel, bool force) {
 			break;
 	}
 
-	resetRenderer(svg);
+    if (!svg.isEmpty()) {
+	    resetRenderer(svg);
+    }
 
 	modelPart()->setLocalProp("chip label", chipLabel);
 

@@ -111,7 +111,7 @@ SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ViewIdentifierClass::ViewIde
 		LayerAttributes layerAttributes;
 		FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, viewIdentifier, ViewLayer::Icon, ViewLayer::ThroughHoleThroughTop_OneLayer, layerAttributes, error);
         if (renderer == NULL) {
-            DebugDialog::debug(QString("missing renderer for %1 %2").arg(modelPart->moduleID()).arg(itemBase->filename()));
+            DebugDialog::debug(QString("missing renderer for icon %1 %2").arg(modelPart->moduleID()).arg(renderer->filename()));
         }
 		if (renderer && m_itemBase) {
 			m_itemBase->setFilename(renderer->filename());

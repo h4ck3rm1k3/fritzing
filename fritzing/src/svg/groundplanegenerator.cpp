@@ -984,7 +984,7 @@ void GroundPlaneGenerator::collectBorderPoints(QImage & image, QList<QPoint> & p
 
 			currentX = x;
 			currentY = y;
-			DebugDialog::debug(QString("first point %1 %2").arg(currentX).arg(currentY));
+			//DebugDialog::debug(QString("first point %1 %2").arg(currentX).arg(currentY));
 			points.append(QPoint(currentX, currentY));
 			gotSomething = true;
 			break;

@@ -212,6 +212,7 @@ protected:
 	//bool findShortcut(TileRect & tileRect, bool useX, bool targetGreater, JSubedge * subedge, QList<QPointF> & allPoints, int ix);
 	//void shortenUs(QList<QPointF> & allPoints, JSubedge *);
 	void removeCorners(QList<QPointF> & allPoints, Plane *);
+	void removeColinear(QList<QPointF> & allPoints);
 	bool checkProposed(const QPointF & proposed, const QPointF & p1, const QPointF & p3, Plane *, bool atStartOrEnd); 
 	bool runEdges(QList<Edge *> &, QVector<int> & netCounters, struct RoutingStatus &, 
 					bool makeJumper, Ordering * bestOrdering);

@@ -612,23 +612,28 @@ bool Panelizer::checkBoards(QDomElement & board, QHash<QString, QString> & fzzFi
 		QString boardname = board.attribute("name");
 		//DebugDialog::debug(QString("board %1").arg(boardname));
 		bool ok;
-		int test = board.attribute("requiredCount", "").toInt(&ok);
-		if (!ok) {
-			DebugDialog::debug(QString("requiredCount for board '%1' not an integer: '%2'").arg(boardname).arg(board.attribute("requiredCount")));
-			return false;
-		}
-
-		test = board.attribute("maxOptionalCount", "").toInt(&ok);
+		int optional = board.attribute("maxOptionalCount", "").toInt(&ok);
 		if (!ok) {
 			DebugDialog::debug(QString("maxOptionalCount for board '%1' not an integer: '%2'").arg(boardname).arg(board.attribute("maxOptionalCount")));
 			return false;
 		}
 
-		QString path = fzzFilePaths.value(boardname, "");
-		if (path.isEmpty()) {
-			DebugDialog::debug(QString("File for board '%1' not found in search paths").arg(boardname));
+		int required = board.attribute("requiredCount", "").toInt(&ok);
+		if (!ok) {
+			DebugDialog::debug(QString("required for board '%1' not an integer: '%2'").arg(boardname).arg(board.attribute("maxOptionalCount")));
 			return false;
 		}
+
+        if (optional > 0 || required> 0) {
+		    QString path = fzzFilePaths.value(boardname, "");
+		    if (path.isEmpty()) {
+			    DebugDialog::debug(QString("File for board '%1' not found in search paths").arg(boardname));
+			    return false;
+		    }
+        }
+        else {
+            DebugDialog::debug(QString("skipping board '%1'").arg(boardname));
+        }
 
 		board = board.nextSiblingElement("board");
 	}
@@ -1097,6 +1102,9 @@ void Panelizer::inscribe(FApplication * app, const QString & panelFilename)
 MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QString> & fzzFilePaths, FApplication * app, QDir & fzDir)
 {
 	QString boardName = board.attribute("name");
+	int optional = board.attribute("maxOptionalCount", "").toInt();
+	int required = board.attribute("requiredCount", "").toInt();
+    if (optional <= 0 && required <= 0) return NULL;
 
 	QString path = fzzFilePaths.value(boardName, "");
 
