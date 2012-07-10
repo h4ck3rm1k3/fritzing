@@ -384,12 +384,21 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 
 QString MainWindow::mergeBoardSvg(QString & svg, ItemBase * board, int res, bool flip, LayerList & viewLayerIDs) {
 	QString boardSvg = getBoardSvg(board, res, viewLayerIDs);
-	if (boardSvg.isEmpty()) {
-        if (!flip) return svg;
-    }
 
-	//QByteArray byteArray;
-	//SvgFileSplitter::changeStrokeWidth(boardSvg, res / 360.0, true, byteArray);
+    LayerList outlineLayerIDs = ViewLayer::outlineLayers();
+	QSizeF imageSize;
+	bool empty;
+
+	QString outlineSvg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), outlineLayerIDs, true, imageSize, board, res, false, false, empty);
+	outlineSvg = GerberGenerator::cleanOutline(outlineSvg);
+    outlineSvg = TextUtils::slamStrokeAndFill(outlineSvg, "black", "0.5", "none");
+
+    if (!boardSvg.isEmpty() && !outlineSvg.isEmpty()) {
+        boardSvg = TextUtils::mergeSvg(boardSvg, outlineSvg, "", false);
+    }
+    else if (boardSvg.isEmpty()) {
+        boardSvg = outlineSvg;
+    }
 	
 	return TextUtils::convertExtendedChars(TextUtils::mergeSvg(boardSvg, svg, "", flip));
 }

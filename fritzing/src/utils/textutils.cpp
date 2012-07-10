@@ -985,6 +985,17 @@ QDomElement TextUtils::copyText(QDomDocument & svgDom, QDomElement & parent, QDo
 	return ___emptyElement___;
 }
 
+QString TextUtils::slamStrokeAndFill(const QString & svg, const QString & stroke, const QString & strokeWidth, const QString & fill)
+{
+	QDomDocument doc;
+    if (doc.setContent(svg)) {
+        slamStrokeAndFill(doc.documentElement(), stroke, strokeWidth, fill);
+        return doc.toString();
+    }
+
+    return svg;
+}
+
 void TextUtils::slamStrokeAndFill(QDomElement & element, const QString & stroke, const QString & strokeWidth, const QString & fill)
 {
 	// assumes style elements have been normalized already
