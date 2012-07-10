@@ -284,6 +284,12 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 				if (locked) {
 					itemBase->setMoveLock(true);
 				}
+
+                if (itemBase->isSticky()) {
+                    // make sure the icon is displayed
+                    itemBase->setLocalSticky(true);
+                }
+
 				zmap.insert(viewGeometry.z() - qFloor(viewGeometry.z()), itemBase);   
 				bool gotOne = false;
 				if (!gotOne) {
