@@ -585,8 +585,6 @@ public slots:
 	void setProp(long itemID, const QString & prop, const QString & value, bool redraw, bool doEmit);
 	void setProp(ItemBase *, const QString & propName, const QString & translatedPropName, const QString & oldValue, const QString & newValue, bool redraw);
 	void setHoleSize(ItemBase *, const QString & propName, const QString & translatedPropName, const QString & oldValue, const QString & newValue, QRectF & oldRect, QRectF & newRect, bool redraw);
-	void setSpacing(const QString & spacing);
-	void setForm(const QString & form);
 	virtual void showLabelFirstTime(long itemID, bool show, bool doEmit);
 	void resizeBoard(double w, double h, bool doEmit);
 	virtual void changeBoardLayers(int layers, bool doEmit);

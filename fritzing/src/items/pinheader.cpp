@@ -446,7 +446,7 @@ QString PinHeader::makePcbSvg(const QString & originalExpectedFileName, const QS
 	}
 
     QString spacingString;
-    int pins = getPinsAndSpacing(expectedFileName, spacingString);
+    int pins = TextUtils::getPinsAndSpacing(expectedFileName, spacingString);
     if (pins == 0) return "";
 
     QString svg;

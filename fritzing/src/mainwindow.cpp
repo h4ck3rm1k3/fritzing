@@ -1838,18 +1838,6 @@ bool MainWindow::swapSpecial(const QString & theProp, QMap<QString, QString> & c
 			}
         }
 
-		if (key.compare("spacing", Qt::CaseInsensitive) == 0) {
-			MysteryPart * mysteryPart = qobject_cast<MysteryPart *>(itemBase);
-			if (mysteryPart == NULL) continue;
-
-			if (mysteryPart->onlySpacingChanges(currPropsMap)) {
-				m_currentGraphicsView->setSpacing(currPropsMap.value(key));
-				return true;
-			}
-
-			continue;
-		}
-
 		if (key.compare("resistance", Qt::CaseInsensitive) == 0) {
 			resistance = currPropsMap.value(key);
 			continue;

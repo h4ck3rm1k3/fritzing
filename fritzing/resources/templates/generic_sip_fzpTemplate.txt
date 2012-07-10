@@ -12,7 +12,7 @@
   <property name="family">Generic IC</property>
   <property name="package">SIP (Single Inline) [THT]</property>
   <property name="pins">%1</property>
-  <property name="spacing">300mil</property>
+  <property name="pin spacing">300mil</property>
   <property name="chip label">IC</property>
   <property name="hole size"></property>
  <property name='editable pin labels'>true</property>

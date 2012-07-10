@@ -294,6 +294,7 @@ void ItemBase::initNames() {
 		TranslatedPropertyNames.insert("maximum resistance", tr("maximum resistance"));
 		TranslatedPropertyNames.insert("pins", tr("pins"));
 		TranslatedPropertyNames.insert("spacing", tr("spacing"));
+		TranslatedPropertyNames.insert("pin spacing", tr("pin spacing"));
 		TranslatedPropertyNames.insert("frequency", tr("frequency"));
 		TranslatedPropertyNames.insert("processor", tr("processor"));
 		TranslatedPropertyNames.insert("variant", tr("variant"));

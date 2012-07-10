@@ -12,13 +12,13 @@
   <property name="family">Generic IC</property>
   <property name="package">DIP (Dual Inline) [THT]</property>
   <property name="pins">%1</property>
-  <property name="spacing">300mil</property>
+  <property name="pin spacing">.percent.1</property>
   <property name="chip label">IC</property>
   <property name="hole size"></property>
  <property name='editable pin labels'>true</property>
 </properties>
  <taxonomy>part.dip.%1.pins</taxonomy>
- <description>A DIP stand-in part for whatever IC you want.  With %1 pins on a 300 mil dual inline package (DIP) footprint.</description>
+ <description>A DIP stand-in part for whatever IC you want.  With %1 pins on a .percent.1 dual inline package (DIP) footprint.</description>
  <views>
   <iconView>
    <layers image="icon/dip_icon.svg">
@@ -36,7 +36,7 @@
    </layers>
   </schematicView>
   <pcbView>
-   <layers image="pcb/dip_%1_300mil_pcb.svg">
+   <layers image="pcb/dip_%1_.percent.1_pcb.svg">
     <layer layerId="silkscreen"/>
     <layer layerId="copper0"/>
    <layer layerId="copper1"/></layers>

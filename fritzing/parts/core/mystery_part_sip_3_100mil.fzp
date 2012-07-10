@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><module moduleId="mystery_part_3">
+<?xml version="1.0" encoding="UTF-8"?><module moduleId="mystery_part_sip_3_100mil">
  <version>4</version>
  <author>Fritzing Part-o-matic</author>
  <title>Mystery Part - 3 pins</title>
@@ -16,9 +16,8 @@
   <property name="chip label">?</property>
  <property name="package">THT</property>
    <property name="hole size"></property>
-
  <property name='editable pin labels'>true</property>
-</properties>
+ </properties>
 <taxonomy>part.mystery.magical.3.pins</taxonomy>
  <description>A dummy, proxy, ersatz, stand-in part for whatever you want.  With 3 pins on a 100 mil inline pin header footprint.</description>
  <views>

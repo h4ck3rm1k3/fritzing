@@ -385,22 +385,6 @@ void PartFactory::cleanup()
 
 ModelPart * PartFactory::fixObsoleteModuleID(QDomDocument & domDocument, QDomElement & instance, QString & moduleIDRef, ModelBase * referenceModel) {
 	// TODO: less hard-coding
-	QRegExp oldDip("generic_ic_dip_(\\d{1,2})_(\\d{3}mil)");
-	if (oldDip.indexIn(moduleIDRef) == 0) {
-		QString spacing = oldDip.cap(2);
-		QString pins = oldDip.cap(1);
-		moduleIDRef = QString("generic_ic_dip_%1_300mil").arg(pins);
-		ModelPart * modelPart = referenceModel->retrieveModelPart(moduleIDRef);
-		instance.setAttribute("moduleIdRef", moduleIDRef);
-		if (modelPart != NULL) {
-			QDomElement prop = domDocument.createElement("property");
-			instance.appendChild(prop);
-			prop.setAttribute("name", "spacing");
-			prop.setAttribute("value", spacing);
-			return modelPart;
-		}
-	}
-
 	if (moduleIDRef.startsWith("generic_male")) {
 		ModelPart * modelPart = referenceModel->retrieveModelPart(moduleIDRef);
 		if (modelPart != NULL) {

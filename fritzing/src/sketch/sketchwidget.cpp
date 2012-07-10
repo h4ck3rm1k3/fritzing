@@ -5018,7 +5018,6 @@ void SketchWidget::prepDeleteProps(ItemBase * itemBase, long id, const QString &
 	MysteryPart * mysteryPart = qobject_cast<MysteryPart *>(itemBase);
 	if (mysteryPart != NULL) {
 		new SetPropCommand(this, id, "chip label", mysteryPart->chipLabel(), mysteryPart->chipLabel(), true, parentCommand);
-		new SetPropCommand(this, id, "spacing", mysteryPart->spacing(), mysteryPart->spacing(), true, parentCommand);
 		prepDeleteOtherProps(itemBase, id, newModuleID, parentCommand);
 		return;
 	}
@@ -7153,30 +7152,6 @@ void SketchWidget::setLastPaletteItemSelectedIf(ItemBase * itemBase)
 	if (paletteItem == NULL) return;
 
 	setLastPaletteItemSelected(paletteItem);
-}
-
-void SketchWidget::setSpacing(const QString & spacing) {
-	PaletteItem * item = getSelectedPart();
-	if (item == NULL) return;
-
-	MysteryPart * mysteryPart = qobject_cast<MysteryPart *>(item);
-	if (mysteryPart == NULL) return;
-
-	SetPropCommand * cmd = new SetPropCommand(this, item->id(), "spacing", mysteryPart->spacing(), spacing, true, NULL);
-	cmd->setText(tr("Change pin spacing from %1 to %2").arg(mysteryPart->spacing()).arg(spacing));
-	m_undoStack->waitPush(cmd, PropChangeDelay);
-}
-
-void SketchWidget::setForm(const QString & form) {
-	PaletteItem * item = getSelectedPart();
-	if (item == NULL) return;
-
-	PinHeader * pinHeader = qobject_cast<PinHeader *>(item);
-	if (pinHeader == NULL) return;
-
-	SetPropCommand * cmd = new SetPropCommand(this, item->id(), "form", pinHeader->form(), form, true, NULL);
-	cmd->setText(tr("Change form from %1 to %2").arg(pinHeader->form()).arg(form));
-	m_undoStack->waitPush(cmd, PropChangeDelay);
 }
 
 void SketchWidget::setResistance(QString resistance, QString pinSpacing)

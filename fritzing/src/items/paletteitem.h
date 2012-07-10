@@ -124,7 +124,6 @@ public:
 	static void updateSizes(HoleSettings &);
     static void initHoleSettings(HoleSettings & holeSettings, HoleClassThing *);
 	static bool setHoleSize(QString & holeSize, bool force, HoleSettings & holeSettings);
-    static int getPinsAndSpacing(const QString & expectedFileName, QString & spacingString);
     static QString changeUnits(HoleSettings &);
 	static bool changeDiameter(HoleSettings & holeSettings, QObject * sender);
 	static bool changeThickness(HoleSettings & holeSettings, QObject * sender);

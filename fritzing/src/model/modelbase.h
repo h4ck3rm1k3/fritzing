@@ -67,6 +67,7 @@ protected:
 	ModelPart * fixObsoleteModuleID(QDomDocument & domDocument, QDomElement & instance, QString & moduleIDRef);
 	static bool isRatsnest(QDomElement & instance);
 	static void checkTraces(QDomElement & instance);
+	static void checkMystery(QDomElement & instance);
 
 protected:
 	QPointer<ModelPart> m_root;

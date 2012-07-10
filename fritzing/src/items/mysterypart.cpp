@@ -59,16 +59,10 @@ static HoleClassThing TheHoleThing;
 MysteryPart::MysteryPart( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
-	m_changingSpacing = false;
 	m_chipLabel = modelPart->localProp("chip label").toString();
 	if (m_chipLabel.isEmpty()) {
 		m_chipLabel = modelPart->properties().value("chip label", "?");
 		modelPart->setLocalProp("chip label", m_chipLabel);
-	}
-	m_spacing = modelPart->localProp("spacing").toString();
-	if (m_spacing.isEmpty()) {
-		m_spacing = modelPart->properties().value("spacing", "300mil");
-		modelPart->setLocalProp("spacing", m_spacing);
 	}
 
     setUpHoleSizes("mystery", TheHoleThing);
@@ -84,60 +78,7 @@ void MysteryPart::setProp(const QString & prop, const QString & value) {
 		return;
 	}
 
-	if (prop.compare("spacing", Qt::CaseInsensitive) == 0) {
-		setSpacing(value, false);
-		return;
-	}
-
 	PaletteItem::setProp(prop, value);
-}
-
-void MysteryPart::setSpacing(QString spacing, bool force) {
-	if (!force && m_spacing.compare(spacing) == 0) return;
-	if (!isDIP()) return;
-
-	switch (this->m_viewIdentifier) {
-		case ViewIdentifierClass::BreadboardView:
-		case ViewIdentifierClass::PCBView:
-			{
-				InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
-				if (infoGraphicsView == NULL) break;
-
-				// hack the dom element and call setUpImage
-				QDomElement element = LayerAttributes::getSvgElementLayers(modelPart()->domDocument(), m_viewIdentifier);
-				if (element.isNull()) break;
-
-				QString filename = element.attribute("image");
-				if (filename.isEmpty()) break;
-
-				if (spacing.indexOf(Digits) < 0) break;
-
-				QString newSpacing = Digits.cap(0);		
-				filename.replace(DigitsMil, newSpacing + "mil");
-				element.setAttribute("image", filename);
-
-				m_changingSpacing = true;
-				resetImage(infoGraphicsView, NULL);
-				m_changingSpacing = false;
-
-				if (m_viewIdentifier == ViewIdentifierClass::BreadboardView) {
-					if (modelPart()->properties().value("chip label", "").compare(m_chipLabel) != 0) {
-						setChipLabel(m_chipLabel, true);
-					}
-				}
-
-				updateConnections();
-			}
-			break;
-		default:
-			break;
-	}
-
-	m_spacing = spacing;
-	modelPart()->setLocalProp("spacing", spacing);
-
-    if (m_partLabel) m_partLabel->displayTextsIf();
-
 }
 
 void MysteryPart::setChipLabel(QString chipLabel, bool force) {
@@ -217,18 +158,20 @@ QString MysteryPart::makeSvg(const QString & chipLabel, bool replace) {
 }
 
 QStringList MysteryPart::collectValues(const QString & family, const QString & prop, QString & value) {
-	if (prop.compare("spacing", Qt::CaseInsensitive) == 0) {
+	if (prop.compare("pin spacing", Qt::CaseInsensitive) == 0) {
 		QStringList values;
+        QString spacing;
+        TextUtils::getPinsAndSpacing(moduleID(), spacing);
 		if (isDIP()) {
 			foreach (QString f, spacings()) {
 				values.append(f);
 			}
 		}
 		else {
-			values.append(m_spacing);
+			values.append(spacing);
 		}
 
-		value = m_spacing;
+		value = spacing;
 		return values;
 	}
 
@@ -284,10 +227,6 @@ QString MysteryPart::getProperty(const QString & key) {
 		return m_chipLabel;
 	}
 
-	if (key.compare("spacing", Qt::CaseInsensitive) == 0) {
-		return m_spacing;
-	}
-
 	return PaletteItem::getProperty(key);
 }
 
@@ -299,7 +238,6 @@ void MysteryPart::addedToScene(bool temporary)
 {
 	if (this->scene()) {
 		setChipLabel(m_chipLabel, true);
-		setSpacing(m_spacing, true);
 	}
 
     PaletteItem::addedToScene(temporary);
@@ -331,36 +269,6 @@ void MysteryPart::chipLabelEntry() {
 	if (infoGraphicsView != NULL) {
 		infoGraphicsView->setProp(this, "chip label", tr("chip label"), this->chipLabel(), edit->text(), true);
 	}
-}
-
-ConnectorItem* MysteryPart::newConnectorItem(Connector *connector) {
-	if (m_changingSpacing) {
-		return connector->connectorItemByViewLayerID(viewIdentifier(), viewLayerID());
-	}
-
-	return PaletteItem::newConnectorItem(connector);
-}
-
-ConnectorItem* MysteryPart::newConnectorItem(ItemBase * layerKin, Connector *connector) {
-	if (m_changingSpacing) {
-		return connector->connectorItemByViewLayerID(viewIdentifier(), layerKin->viewLayerID());
-	}
-
-	return PaletteItem::newConnectorItem(layerKin, connector);
-}
-
-const QString & MysteryPart::spacing() {
-	return m_spacing;
-}
-
-bool MysteryPart::onlySpacingChanges(QMap<QString, QString> & propsMap) {
-	if (propsMap.value("spacing", "").compare(m_spacing) == 0) return false;
-
-	if (modelPart()->properties().value("pins", "").compare(propsMap.value("pins", "")) != 0) return false;
-
-	if (otherPropsChange(propsMap)) return false;
-
-	return true;
 }
 
 bool MysteryPart::isDIP() {
@@ -397,7 +305,7 @@ QString MysteryPart::genDipFZP(const QString & moduleid)
 
 QString MysteryPart::genxFZP(const QString & moduleid, const QString & templateName, int minPins, int maxPins, int step) {
     QString spacingString;
-    getPinsAndSpacing(moduleid, spacingString);
+    TextUtils::getPinsAndSpacing(moduleid, spacingString);
     QString result = PaletteItem::genFZP(moduleid, templateName, minPins, maxPins, step, false);
    	result.replace(".percent.", "%");
 	result = result.arg(spacingString);
@@ -416,15 +324,17 @@ QString MysteryPart::hackFzpHoleSize(const QString & fzp, const QString & module
 QString MysteryPart::genModuleID(QMap<QString, QString> & currPropsMap)
 {
 	QString value = currPropsMap.value("layout");
+    bool single = value.contains("single", Qt::CaseInsensitive);
 	QString pins = currPropsMap.value("pins");
-	if (value.contains("single", Qt::CaseInsensitive)) {
+    QString spacing = currPropsMap.value("pin spacing", "300mil");
+	if (single) {
 		return QString("mystery_part_sip_%1_100mil").arg(pins);
 	}
 	else {
 		int p = pins.toInt();
 		if (p < 4) p = 4;
 		if (p % 2 == 1) p--;
-		return QString("mystery_part_dip_%1_300mil").arg(p);
+		return QString("mystery_part_dip_%1_%2").arg(p).arg(spacing);
 	}
 }
 
@@ -536,12 +446,10 @@ QString MysteryPart::makeBreadboardSvg(const QString & expectedFileName, const Q
 QString MysteryPart::makeBreadboardDipSvg(const QString & expectedFileName, const QString & moduleID) 
 {
     Q_UNUSED(moduleID);
-	QStringList pieces = expectedFileName.split("_");
-	if (pieces.count() != 6) return "";
 
-	int pins = pieces.at(2).toInt();
-	double spacing = TextUtils::convertToInches(pieces.at(4)) * 100;
-
+    QString spacingString;
+    int pins = TextUtils::getPinsAndSpacing(expectedFileName, spacingString);
+	double spacing = TextUtils::convertToInches(spacingString) * 100;
 
 	int increment = 10;
 
@@ -669,7 +577,7 @@ QString MysteryPart::makePcbDipSvg(const QString & expectedFileName, const QStri
     Q_UNUSED(moduleID);
 
     QString spacingString;
-	int pins = getPinsAndSpacing(expectedFileName, spacingString);
+	int pins = TextUtils::getPinsAndSpacing(expectedFileName, spacingString);
     if (pins == 0) return "";  
 
 	QString header("<?xml version='1.0' encoding='UTF-8'?>\n"

@@ -28,6 +28,7 @@ $Date$
 #include "../debugdialog.h"
 #include "../items/partfactory.h"
 #include "../items/moduleidnames.h"
+#include "../utils/textutils.h"
 #include "../version/version.h"
 #include "../viewgeometry.h"
 
@@ -104,6 +105,7 @@ bool ModelBase::load(const QString & fileName, ModelBase * refModel, QList<Model
 
 	bool checkForRats = true;
 	bool checkForTraces = true;
+    bool checkForMysteryParts = true;
 	m_fritzingVersion = root.attribute("fritzingVersion");
 	if (m_fritzingVersion.length() > 0) {
 		// with version 0.4.3 ratsnests in fz files are obsolete
@@ -119,6 +121,10 @@ bool ModelBase::load(const QString & fileName, ModelBase * refModel, QList<Model
 		versionThingRats.minorVersion = 6;
 		versionThingRats.minorSubVersion = 4;
 		checkForTraces = !Version::greaterThan(versionThingRats, versionThingFz);
+        // with version 0.7.6 mystery part spacing implementation changes
+		versionThingRats.minorVersion = 7;
+		versionThingRats.minorSubVersion = 5;
+		checkForMysteryParts = !Version::greaterThan(versionThingRats, versionThingFz);
 	}
 
 	ModelPartSharedRoot * modelPartSharedRoot = this->rootModelPartShared();
@@ -145,7 +151,6 @@ bool ModelBase::load(const QString & fileName, ModelBase * refModel, QList<Model
 	if (!searchTerm.isEmpty() && modelPartSharedRoot != NULL) {
 		modelPartSharedRoot->setSearchTerm(searchTerm);
 	}
-
 
     QDomElement views = root.firstChildElement("views");
 	emit loadedViews(this, views);
@@ -181,6 +186,14 @@ bool ModelBase::load(const QString & fileName, ModelBase * refModel, QList<Model
 		QDomElement instance = instances.firstChildElement("instance");
    		while (!instance.isNull()) {
 			checkTraces(instance);
+			instance = instance.nextSiblingElement("instance");
+		}
+	}
+
+	if (checkForMysteryParts) {
+		QDomElement instance = instances.firstChildElement("instance");
+   		while (!instance.isNull()) {
+			checkMystery(instance);
 			instance = instance.nextSiblingElement("instance");
 		}
 	}
@@ -632,4 +645,39 @@ const QString & ModelBase::fritzingVersion() {
 
 void ModelBase::setReferenceModel(ModelBase * modelBase) {
     m_referenceModel = modelBase;
+}
+
+void ModelBase::checkMystery(QDomElement & instance) 
+{
+	QString moduleIDRef = instance.attribute("moduleIdRef");
+    bool mystery = false;
+    bool sip = false;
+    bool dip = false;
+	if (moduleIDRef.contains("mystery", Qt::CaseInsensitive)) mystery = true;	
+    else if (moduleIDRef.contains("sip", Qt::CaseInsensitive)) sip = true;    
+    else if (moduleIDRef.contains("dip", Qt::CaseInsensitive)) dip = true;
+    else return;
+
+    QString spacing;
+    int pins = TextUtils::getPinsAndSpacing(moduleIDRef, spacing);
+
+    QDomElement prop = instance.firstChildElement("property");
+    while (!prop.isNull()) {
+        if (prop.attribute("name", "").compare("spacing") == 0) {
+            QString trueSpacing = prop.attribute("value", "");
+            if (trueSpacing.isEmpty()) trueSpacing = "300mil";
+
+            if (moduleIDRef.contains(spacing)) {
+                moduleIDRef.replace(spacing, trueSpacing);
+                instance.setAttribute("moduleIdRef", moduleIDRef);
+                return;
+            }
+
+            // if we're here, it's a single sided mystery part.
+            moduleIDRef = QString("mystery_part_sip_%1_100mil").arg(pins);
+            instance.setAttribute("moduleIdRef", moduleIDRef);
+            return;
+        }
+        prop = prop.nextSiblingElement("property");
+    }
 }

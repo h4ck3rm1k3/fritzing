@@ -1277,3 +1277,30 @@ bool TextUtils::writeUtf8(const QString & fileName, const QString & text)
 
     return false;
 }
+
+int TextUtils::getPinsAndSpacing(const QString & expectedFileName, QString & spacingString) 
+{
+    QStringList pieces = expectedFileName.split("_");
+    int pix = 0;
+    foreach (QString piece, pieces) {
+        bool ok;
+        piece.toInt(&ok);
+        if (ok) break;
+
+        pix++;
+    }
+    if (pix >= pieces.count()) return 0;
+
+	int pins = pieces.at(pix).toInt();
+
+	spacingString = "100mil";
+    for (++pix; pix < pieces.count(); pix++) {
+        if (QRegExp("\\d").indexIn(pieces.at(pix)) == 0) {
+            spacingString = pieces.at(pix);
+            return pins;
+        }
+    }
+
+    return pins;
+}
+

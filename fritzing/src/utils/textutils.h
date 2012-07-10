@@ -104,6 +104,7 @@ public:
 	static QString expandAndFill(const QString & svg, const QString & color, double expandBy);
 	static void expandAndFillAux(QDomElement &, const QString & color, double expandBy);
     static bool writeUtf8(const QString & fileName, const QString & text);
+    static int getPinsAndSpacing(const QString & expectedFileName, QString & spacingString);
 	
 public:
 	static const QRegExp FindWhitespace;

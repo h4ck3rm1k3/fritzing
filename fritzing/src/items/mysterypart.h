@@ -51,9 +51,6 @@ public:
 	QString chipLabel();
 	const QString & title();
 	bool hasCustomSVG();
-	void setSpacing(QString spacing, bool force);
-	const QString & spacing();
-	bool onlySpacingChanges(QMap<QString, QString> & propsMap);
 	PluralType isPlural();
 	void addedToScene(bool temporary);
 	bool changePinLabels(bool singleRow, bool sip);
@@ -75,8 +72,6 @@ public:
 
 protected:
 	QString makeSvg(const QString & chipLabel, bool replace);
-	ConnectorItem* newConnectorItem(class Connector *connector);
-	ConnectorItem* newConnectorItem(ItemBase * layerkin, Connector *connector);
 	QStringList collectValues(const QString & family, const QString & prop, QString & value);
 	virtual bool isDIP();
 	virtual bool otherPropsChange(const QMap<QString, QString> & propsMap);
@@ -93,8 +88,6 @@ protected:
 protected:
 	QString m_chipLabel;
 	QString m_title;
-	bool m_changingSpacing;
-	QString m_spacing;
 };
 
 #endif
