@@ -212,6 +212,7 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 
 	QString suffix = (wantPDF) ? pdfActionType : svgActionType;
     QString prefix = "";
+    QString mirror = flip ? "_mirror" : "";
     if (boardCount > 1) {
         prefix = QString("%1_%2_").arg(board->instanceTitle()).arg(board->id());
     }
@@ -223,13 +224,13 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 	if (exportDir.isEmpty()) return;
 
 	FolderUtils::setOpenSaveFolder(exportDir);
-	fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_copper_bottom", suffix));
-	fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_mask_bottom", suffix));
+	fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_copper_bottom" + mirror, suffix));
+	fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_mask_bottom" + mirror, suffix));
 	if (m_pcbGraphicsView->boardLayers() > 1) {
-		fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_copper_top", suffix));
-		fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_mask_top", suffix));
+		fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_copper_top" + mirror, suffix));
+		fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_mask_top" + mirror, suffix));
 	}
-	fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_silk_top", suffix));
+	fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_silk_top" + mirror, suffix));
 	fileExt = extFmt;
 	
 	FileProgressDialog * fileProgressDialog = exportProgress();
