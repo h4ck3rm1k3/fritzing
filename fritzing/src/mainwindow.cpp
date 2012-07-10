@@ -1416,7 +1416,8 @@ void MainWindow::saveBundledPart(const QString &moduleId) {
 
 	saveBundledAux(mp, destFolder);
 
-	if(!FolderUtils::createZipAndSaveTo(destFolder, bundledFileName)) {
+    QStringList skipSuffixes;
+	if(!FolderUtils::createZipAndSaveTo(destFolder, bundledFileName, skipSuffixes)) {
 		QMessageBox::warning(
 			this,
 			tr("Fritzing"),

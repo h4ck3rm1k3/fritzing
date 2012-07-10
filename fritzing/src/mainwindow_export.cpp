@@ -810,6 +810,8 @@ void MainWindow::saveBundledNonAtomicEntity(QString &filename, const QString &ex
 							 destFolder.path()+"/"+aux.left(aux.size()-1);
 	DebugDialog::debug("saving entity temporarily to "+destSketchPath);
 
+    QStringList skipSuffixes;
+
 	if (extension.compare(FritzingBundleExtension) == 0) {
 		for (int i = 0; i < m_linkedProgramFiles.count(); i++) {
 			LinkedFile * linkedFile = m_linkedProgramFiles.at(i);
@@ -817,6 +819,7 @@ void MainWindow::saveBundledNonAtomicEntity(QString &filename, const QString &ex
 			QFile file(linkedFile->linkedFilename);
 			file.copy(destFolder.absoluteFilePath(fileInfo.fileName()));
 		}
+        skipSuffixes << FritzingBinExtension << FritzingBundleExtension;
 	}
 
 	if (saveModel) {
@@ -844,7 +847,7 @@ void MainWindow::saveBundledNonAtomicEntity(QString &filename, const QString &ex
 
 	QApplication::processEvents();
 
-	if(!FolderUtils::createZipAndSaveTo(destFolder, bundledFileName)) {
+	if(!FolderUtils::createZipAndSaveTo(destFolder, bundledFileName, skipSuffixes)) {
 		QMessageBox::warning(
 			this,
 			tr("Fritzing"),

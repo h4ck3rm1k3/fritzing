@@ -326,7 +326,7 @@ void FolderUtils::rmdir(QDir & dir) {
 	dir.rmdir(dir.path());
 }
 
-bool FolderUtils::createZipAndSaveTo(const QDir &dirToCompress, const QString &filepath) {
+bool FolderUtils::createZipAndSaveTo(const QDir &dirToCompress, const QString &filepath, const QStringList & skipSuffixes) {
 	DebugDialog::debug("zipping "+dirToCompress.path()+" into "+filepath);
 
 	QString tempZipFile = QDir::temp().path()+"/"+getRandText()+".zip";
@@ -347,6 +347,15 @@ bool FolderUtils::createZipAndSaveTo(const QDir &dirToCompress, const QString &f
 	foreach(QFileInfo file, files) {
 		if(!file.isFile()||file.fileName()==filepath) continue;
 		if (file.fileName().contains(LockManager::LockedFileName)) continue;
+
+        bool skip = false;
+        foreach (QString suffix, skipSuffixes) {
+            if (file.fileName().endsWith(suffix)) {
+                skip = true;
+                break;
+            }
+        }
+        if (skip) continue;
 
 //#pragma message("remove fzz check")
 //if (file.fileName().endsWith(".fzz")) continue;
