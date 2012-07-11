@@ -2278,7 +2278,6 @@ QString PCBSketchWidget::checkDroppedModuleID(const QString & moduleID) {
     return moduleID;
 }
 
-
 void PCBSketchWidget::convertToVia(ConnectorItem * lastHoverEnterConnectorItem, QPointF lastLocation) {
     Wire * wire = qobject_cast<Wire *>(lastHoverEnterConnectorItem->attachedTo());
     if (wire == NULL) return;
@@ -2295,25 +2294,40 @@ void PCBSketchWidget::convertToVia(ConnectorItem * lastHoverEnterConnectorItem, 
 	viewGeometry.setLoc(lastLocation);
     new AddItemCommand(this, BaseCommand::CrossView, ModuleIDNames::ViaModuleIDName, wire->viewLayerSpec(), viewGeometry, newID, true, -1, parentCommand);
 
-    foreach (ConnectorItem * connectorItem, lastHoverEnterConnectorItem->connectedToItems()) {
-        Wire * w = qobject_cast<Wire *>(connectorItem->attachedTo());
-        if (w) {
-		    new ChangeConnectionCommand(this, BaseCommand::CrossView, wire->id(), lastHoverEnterConnectorItem->connectorSharedID(),
-			    w->id(), connectorItem->connectorSharedID(),
-			    ViewLayer::specFromID(wire->viewLayerID()),
-			    false, parentCommand);
-		    new ChangeConnectionCommand(this, BaseCommand::CrossView, w->id(), connectorItem->connectorSharedID(),
-			    newID, "connector0",
-			    ViewLayer::specFromID(wire->viewLayerID()),
-			    true, parentCommand);   
+    QList<ConnectorItem *> connectorItems;
+    connectorItems.append(lastHoverEnterConnectorItem);
+    for (int i = 0; i < connectorItems.count(); i++) {
+        ConnectorItem * from = connectorItems.at(i);
+        foreach (ConnectorItem * to, from->connectedToItems()) {
+            Wire * w = qobject_cast<Wire *>(to->attachedTo());
+            if (w != NULL && w->isTraceType(getTraceFlag())) {
+                if (!connectorItems.contains(to)) {
+                    connectorItems.append(to);
+                }
+            }
+        }
+    }
+   
+  
+    foreach (ConnectorItem * from, connectorItems) {
+        foreach (ConnectorItem * to, from->connectedToItems()) {
+            Wire * w = qobject_cast<Wire *>(to->attachedTo());
+            if (w != NULL && w->isTraceType(getTraceFlag())) {
+		        new ChangeConnectionCommand(this, BaseCommand::CrossView, from->attachedToID(), from->connectorSharedID(),
+			        to->attachedToID(), to->connectorSharedID(),
+			        ViewLayer::specFromID(w->viewLayerID()),
+			        false, parentCommand);
+            }
         }
     }
 
-    new ChangeConnectionCommand(this, BaseCommand::CrossView, wire->id(), lastHoverEnterConnectorItem->connectorSharedID(),
-	    newID, "connector0",
-	    ViewLayer::specFromID(wire->viewLayerID()),
-	    true, parentCommand);   
+    foreach (ConnectorItem * from, connectorItems) {
+		new ChangeConnectionCommand(this, BaseCommand::CrossView, from->attachedToID(), from->connectorSharedID(),
+			newID, "connector0",
+			ViewLayer::specFromID(wire->viewLayerID()),
+			true, parentCommand);   
 
+    }
 
 	SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
 	selectItemCommand->addRedo(newID);
@@ -2323,6 +2337,132 @@ void PCBSketchWidget::convertToVia(ConnectorItem * lastHoverEnterConnectorItem, 
 	m_undoStack->push(parentCommand);
 
 }
+
+void PCBSketchWidget::convertToBendpoint() {
+
+    ItemBase * itemBase = NULL;
+    foreach (QGraphicsItem * item,  scene()->selectedItems()) {
+        ItemBase * candidate = dynamic_cast<ItemBase *>(item);
+        if (candidate == NULL) continue;
+
+        if (itemBase == NULL) itemBase = candidate->layerKinChief();
+        else if (candidate->layerKinChief() != itemBase) return;
+    }
+
+    Via * via = dynamic_cast<Via *>(itemBase);
+    if (via == NULL) return;
+
+    QList<ConnectorItem *> viaConnectorItems;
+    viaConnectorItems << via->connectorItem();
+    if (via->connectorItem()->getCrossLayerConnectorItem()) {
+        viaConnectorItems << via->connectorItem()->getCrossLayerConnectorItem();
+    }
+
+    QList<ConnectorItem *> targets;
+    int copper0 = 0;
+    int copper1 = 0;
+    bool copper0Only = false;
+    bool copper1Only = false;
+
+    foreach (ConnectorItem * viaConnectorItem, viaConnectorItems) {
+        foreach (ConnectorItem * connectorItem, viaConnectorItem->connectedToItems()) {
+            Wire * wire = qobject_cast<Wire *>(connectorItem->attachedTo());
+            if (wire == NULL) continue;
+            if (wire->getRatsnest()) continue;
+            if (!wire->isTraceType(getTraceFlag())) continue;
+
+            bool gotOne = false;;
+            if (wire->viewLayerID() == ViewLayer::Copper0Trace) {
+                copper0++;
+                gotOne = true;
+            }
+            else if (wire->viewLayerID() == ViewLayer::Copper1Trace) {
+                copper1++;
+                gotOne = true;
+            }
+
+            if (!gotOne) continue;
+
+            targets.append(connectorItem);
+            QList<Wire *> wires;
+            QList<ConnectorItem *> ends;
+            wire->collectChained(wires, ends);
+            foreach (ConnectorItem * end, ends) {
+                if (end->getCrossLayerConnectorItem() == NULL) {
+                    if (ViewLayer::copperLayers(ViewLayer::Top).contains(end->attachedToViewLayerID())) {
+                        copper1Only = true;
+                    }
+                    else {
+                        copper0Only = true;
+                    }
+                }
+            }
+        }
+    }
+
+    if (copper0Only && copper1Only) {
+        QMessageBox::warning(NULL, tr("Fritzing"),
+              tr("Unable to convert this via to a bendpoint because it is connected to a part that is only on the bottom layer and another part that is only on the top layer."));
+        return;
+    }
+
+    this->clearHoldingSelectItem();
+	this->m_moveEventCount = 0;  // clear this so an extra MoveItemCommand isn't posted
+
+	QUndoCommand * parentCommand = new QUndoCommand(QObject::tr("Convert Via to Bendpoint"));
+
+    new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
+
+    foreach (ConnectorItem * target, targets) {
+		new ChangeConnectionCommand(this, BaseCommand::CrossView, target->attachedToID(), target->connectorSharedID(),
+			via->id(), via->connectorItem()->connectorSharedID(),
+			ViewLayer::specFromID(target->attachedToViewLayerID()),
+			false, parentCommand);
+    }
+
+    ViewLayer::ViewLayerID dest = ViewLayer::Copper0Trace;
+    if (copper1Only) {
+        dest = ViewLayer::Copper1Trace;
+    }
+    else if (!copper0Only) {
+        if (copper1 > copper0) {
+            dest = ViewLayer::Copper1Trace;
+        }
+    }
+
+    if (copper0 > 0 && copper1 > 0) {
+        foreach (ConnectorItem * target, targets) {
+            if (target->attachedToViewLayerID() == dest) continue;
+
+            Wire * wire = qobject_cast<Wire *>(target->attachedTo());
+            QList<Wire *> wires;
+            QList<ConnectorItem *> ends;
+            wire->collectChained(wires, ends);
+            foreach (Wire * w, wires) {
+	            new ChangeLayerCommand(this, w->id(), w->zValue(), m_viewLayers.value(dest)->nextZ(), w->viewLayerID(), dest, parentCommand);
+            }
+        }
+    }
+
+
+    ConnectorItem * from = targets.at(0);
+    for (int j = 1; j < targets.count(); j++) {
+        ConnectorItem * to = targets.at(j);
+        new ChangeConnectionCommand(this, BaseCommand::CrossView, from->attachedToID(), from->connectorSharedID(),
+			to->attachedToID(), to->connectorSharedID(),
+			ViewLayer::specFromID(dest),
+			true, parentCommand);
+    }
+
+
+    makeDeleteItemCommand(via, BaseCommand::CrossView, parentCommand);
+
+	new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
+
+	m_undoStack->push(parentCommand);
+}
+
+
 
 bool PCBSketchWidget::canConnect(Wire * from, ItemBase * to) {
     to = to->layerKinChief();

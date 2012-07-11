@@ -873,6 +873,10 @@ void MainWindow::createPartMenuActions() {
 	m_convertToViaAct->setStatusTip(tr("Convert the bendpoint to a via"));
 	connect(m_convertToViaAct, SIGNAL(triggered()), this, SLOT(convertToVia()));
 
+	m_convertToBendpointAct = new QAction(tr("Convert Via to Bendpoint"), this);
+	m_convertToBendpointAct->setStatusTip(tr("Convert the via to a bendpoint"));
+	connect(m_convertToBendpointAct, SIGNAL(triggered()), this, SLOT(convertToBendpoint()));
+
 	m_flattenCurveAct = new BendpointAction(tr("Straighten Curve"), this);
 	m_flattenCurveAct->setStatusTip(tr("Straighten the curve of the selected wire"));
 	connect(m_flattenCurveAct, SIGNAL(triggered()), this, SLOT(flattenCurve()));
@@ -1482,7 +1486,7 @@ void MainWindow::updatePartMenu() {
 	m_bringForwardAct->setEnabled(zenable);
 	m_sendBackwardAct->setEnabled(zenable);
 	m_sendToBackAct->setEnabled(zenable);
-
+    
 	m_moveLockAct->setEnabled(itemCount.selCount > 0 && itemCount.selCount > itemCount.wireCount);
 	m_moveLockAct->setChecked(itemCount.moveLockCount > 0);
 	m_selectMoveLockAct->setEnabled(true);
@@ -1508,9 +1512,39 @@ void MainWindow::updatePartMenu() {
 	updateEditMenu();
 
 
+    bool ctbpVisible = false;
+    bool ctbpEnabled = false;
 	if (itemCount.selCount == 1) {
         ItemBase * itemBase = dynamic_cast<ItemBase *>(m_currentGraphicsView->scene()->selectedItems()[0]);
 		enableAddBendpointAct(itemBase);
+
+        Via * via = qobject_cast<Via *>(itemBase->layerKinChief());
+        if (via) {
+            ctbpVisible = true;
+            int count = 0;
+            QList<ConnectorItem *> viaConnectorItems;
+            viaConnectorItems << via->connectorItem();
+            if (via->connectorItem()->getCrossLayerConnectorItem()) {
+                viaConnectorItems << via->connectorItem()->getCrossLayerConnectorItem();
+            }
+
+            foreach (ConnectorItem * viaConnectorItem, viaConnectorItems) {
+                foreach (ConnectorItem * connectorItem, viaConnectorItem->connectedToItems()) {
+                    Wire * wire = qobject_cast<Wire *>(connectorItem->attachedTo());
+                    if (wire == NULL) continue;
+                    if (wire->getRatsnest()) continue;
+
+                    if (wire->isTraceType(m_currentGraphicsView->getTraceFlag())) {
+                        count++;
+                        if (count > 1) { 
+                            ctbpEnabled = true;
+                            break;
+                        }
+                    }
+                }
+                if (count > 1) break;
+            }
+        }
 
         m_stickyAct->setVisible(itemBase->isBaseSticky());
 	    m_stickyAct->setEnabled(true);
@@ -1519,6 +1553,9 @@ void MainWindow::updatePartMenu() {
     else {
         m_stickyAct->setVisible(false);
     }
+    m_convertToBendpointAct->setEnabled(ctbpEnabled);
+    m_convertToBendpointAct->setVisible(ctbpVisible);
+    m_convertToBendpointSeparator->setVisible(ctbpVisible);
 
 	// TODO: only enable if there is an obsolete part in the sketch
 	m_selectAllObsoleteAct->setEnabled(true);
@@ -2627,8 +2664,13 @@ void MainWindow::convertToVia()
 {
 	BendpointAction * bendpointAction = qobject_cast<BendpointAction *>(m_convertToViaAct);
 
-	m_currentGraphicsView->convertToVia(bendpointAction->lastHoverEnterConnectorItem(),
+	m_pcbGraphicsView->convertToVia(bendpointAction->lastHoverEnterConnectorItem(),
 										bendpointAction->lastLocation());
+}
+
+void MainWindow::convertToBendpoint()
+{
+    m_pcbGraphicsView->convertToBendpoint();
 }
 
 void MainWindow::flattenCurve()
@@ -2816,6 +2858,8 @@ QMenu *MainWindow::pcbItemMenu() {
 	menu->addMenu(m_rotateMenu);
 	menu = viewItemMenuAux(menu);
 	menu->addSeparator();
+    menu->addAction(m_convertToBendpointAct);
+	m_convertToBendpointSeparator = menu->addSeparator();
 	menu->addAction(m_setOneGroundFillSeedAct);
 	menu->addAction(m_clearGroundFillSeedsAct);
 	return menu;
