@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Ebene_1" xmlns:svg="http://www.w3.org/2000/svg"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="58.895px"
+	 height="103.178px" viewBox="3.24 -9.002 58.895 103.178" enable-background="new 3.24 -9.002 58.895 103.178"
+	 xml:space="preserve">
+<g id="copper1">
+	<circle id="connector0pin" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="7.488" cy="7.488" r="1.842"/>
+	<circle id="connector1pin" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="7.488" cy="14.688" r="1.843"/>
+	<circle id="connector2pin" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="7.488" cy="21.888" r="1.843"/>
+	<circle id="connector3pin" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="7.488" cy="29.088" r="1.843"/>
+	<circle id="connector5pin" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="7.488" cy="43.488" r="1.842"/>
+	<circle id="connector6pin" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="7.488" cy="50.688" r="1.843"/>
+	<circle id="connector8pin" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="7.488" cy="65.088" r="1.843"/>
+	<circle id="connector9pin" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="7.488" cy="72.288" r="1.842"/>
+	<circle id="connector10pin" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="7.488" cy="79.488" r="1.842"/>
+	<circle id="connector11pin" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="7.488" cy="86.688" r="1.843"/>
+	<circle id="connector12pin" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="57.888" cy="86.688" r="1.843"/>
+	<circle id="connector13pin" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="57.888" cy="79.488" r="1.842"/>
+	<circle id="connector14pin" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="57.888" cy="72.288" r="1.842"/>
+	<circle id="connector15pin" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="57.888" cy="65.088" r="1.843"/>
+	<circle id="connector17pin" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="57.888" cy="50.688" r="1.843"/>
+	<circle id="connector18pin" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="57.888" cy="43.488" r="1.842"/>
+	<circle id="connector20pin" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="57.888" cy="29.088" r="1.843"/>
+	<circle id="connector21pin" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="57.888" cy="21.888" r="1.843"/>
+	<circle id="connector22pin" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="57.888" cy="14.688" r="1.843"/>
+	<circle id="connector23pin" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="57.888" cy="7.488" r="1.842"/>
+	<g id="copper0">
+		<circle id="connector0pin_1_" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="7.488" cy="7.488" r="1.842"/>
+		<circle id="connector1pin_1_" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="7.488" cy="14.688" r="1.843"/>
+		<circle id="connector2pin_1_" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="7.488" cy="21.888" r="1.843"/>
+		<circle id="connector3pin_1_" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="7.488" cy="29.088" r="1.843"/>
+		<circle id="connector5pin_1_" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="7.488" cy="43.488" r="1.842"/>
+		<circle id="connector6pin_1_" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="7.488" cy="50.688" r="1.843"/>
+		<circle id="connector8pin_1_" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="7.488" cy="65.088" r="1.843"/>
+		<circle id="connector9pin_1_" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="7.488" cy="72.288" r="1.842"/>
+		<circle id="connector10pin_1_" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="7.488" cy="79.488" r="1.842"/>
+		<circle id="connector11pin_1_" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="7.488" cy="86.688" r="1.843"/>
+		<circle id="connector12pin_1_" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="57.888" cy="86.688" r="1.843"/>
+		<circle id="connector13pin_1_" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="57.888" cy="79.488" r="1.842"/>
+		<circle id="connector14pin_1_" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="57.888" cy="72.288" r="1.842"/>
+		<circle id="connector15pin_1_" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="57.888" cy="65.088" r="1.843"/>
+		<circle id="connector17pin_1_" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="57.888" cy="50.688" r="1.843"/>
+		<circle id="connector18pin_1_" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="57.888" cy="43.488" r="1.842"/>
+		<circle id="connector20pin_1_" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="57.888" cy="29.088" r="1.843"/>
+		<circle id="connector21pin_1_" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="57.888" cy="21.888" r="1.843"/>
+		<circle id="connector22pin_1_" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="57.888" cy="14.688" r="1.843"/>
+		<circle id="connector23pin_1_" fill="none" stroke="#F7BD13" stroke-width="0.4" cx="57.888" cy="7.488" r="1.842"/>
+	</g>
+</g>
+<g>
+	<polygon fill="#ADADAD" points="8.409,91.338 56.966,91.338 56.966,94.176 62.135,94.176 62.098,-0.002 3.24,0.002 3.277,94.178 
+		8.409,94.178 	"/>
+	<polygon fill="#808080" points="8.409,91.338 56.966,91.338 56.966,94.176 62.135,94.176 62.098,-0.002 3.24,0.002 3.277,94.178 
+		8.409,94.178 	"/>
+</g>
+<g>
+	<polygon fill="#ADADAD" points="3.277,85.178 3.24,-8.998 62.098,-9.002 62.135,85.176 	"/>
+	<polygon fill="#333333" points="3.277,85.178 3.24,-8.998 62.098,-9.002 62.135,85.176 	"/>
+</g>
+<g id="silkscreen">
+	<polygon fill="#CCCCCC" points="14.328,37.728 17.568,7.488 19.008,4.968 22.968,9.288 20.088,34.848 17.568,37.728 	"/>
+	<polygon fill="#CCCCCC" points="21.888,2.088 20.088,3.888 23.688,7.488 32.328,7.488 35.208,4.608 35.208,2.088 	"/>
+	<polygon fill="#CCCCCC" points="36.648,4.968 39.168,7.488 48.528,7.488 51.047,4.248 49.967,2.088 36.648,2.088 	"/>
+	<polygon fill="#CCCCCC" points="50.329,40.248 46.728,69.768 44.928,70.848 41.688,68.328 44.208,43.128 47.088,40.248 	"/>
+	<polygon fill="#CCCCCC" points="29.088,72.288 29.088,74.448 42.409,74.448 43.848,72.648 40.249,69.768 31.248,69.768 	"/>
+	<polygon fill="#CCCCCC" points="16.488,66.888 19.008,43.128 17.208,40.608 13.968,40.608 11.088,68.688 12.888,70.488 	"/>
+	<polygon fill="#CCCCCC" points="45.288,35.208 47.448,38.088 50.688,38.088 54.288,8.208 52.488,4.968 48.528,9.288 	"/>
+	<polygon fill="#CCCCCC" points="30.168,34.848 33.048,8.568 35.928,5.688 38.088,8.208 34.848,34.848 32.328,38.088 	"/>
+	<polygon fill="#CCCCCC" points="37.728,25.128 47.088,9.648 46.008,19.008 36.288,34.848 	"/>
+	<path fill="#CCCCCC" d="M23.328,19.728l5.4,14.76l1.08-9.359l-5.4-15.48C24.085,13.012,23.725,16.372,23.328,19.728z"/>
+	<polygon fill="#CCCCCC" points="28.008,70.488 25.488,67.968 28.728,43.128 31.968,39.888 33.768,43.488 30.528,67.968 	"/>
+	<polygon fill="#CCCCCC" points="20.448,41.688 18.648,39.168 21.168,36.288 28.368,36.288 30.528,39.168 27.288,41.688 	"/>
+	<polygon fill="#CCCCCC" points="43.488,36.288 46.008,39.168 43.127,42.048 35.568,42.048 33.768,39.168 36.648,36.288 	"/>
+	<polygon fill="#CCCCCC" points="34.127,54.288 35.208,43.488 41.329,58.248 40.249,67.968 	"/>
+	<polygon fill="#CCCCCC" points="19.008,56.448 27.288,43.488 25.848,53.568 17.928,66.888 	"/>
+	<polyline fill="#CCCCCC" points="24.768,69.768 16.128,69.768 13.248,73.008 14.688,74.448 27.288,74.448 27.288,72.288 
+		24.768,69.768 	"/>
+	<circle fill="#CCCCCC" cx="14.688" cy="1.368" r="2.099"/>
+	<circle fill="#CCCCCC" cx="49.249" cy="75.888" r="1.938"/>
+</g>
+</svg>
