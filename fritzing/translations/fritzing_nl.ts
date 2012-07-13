@@ -490,20 +490,17 @@ Use the file?</source>
         <source>/%n jumpers</source>
         <translation type="unfinished">
             <numerusform></numerusform>
-            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>/%n vias</source>
         <translation type="unfinished">
             <numerusform></numerusform>
-            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Note: the autorouter did not route %n parts, because they are not located entirely on the board.</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
@@ -520,7 +517,6 @@ Use the file?</source>
 
 Note: %n parts are not located entirely on the board.</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
@@ -1429,7 +1425,7 @@ Wij werken er momenteel aan om dit bericht te vermijden en je te laten kiezen tu
     </message>
     <message>
         <source>&amp;Save As...</source>
-        <translation>&amp;Oplsaan als...</translation>
+        <translation type="unfinished">&amp;Opslaan als...</translation>
     </message>
     <message>
         <source>Shift+Ctrl+S</source>
@@ -2278,7 +2274,6 @@ Controleer a.u.b. alle views voor potentiële fouten.</translation>
         <source>Routing completed using %n jumper part(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
-            <numerusform></numerusform>
         </translation>
     </message>
     <message>
@@ -2941,7 +2936,6 @@ Reden : %2 (errcode %3)</translation>
     <message numerus="yes">
         <source>Unable to find the following %n part(s):</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
@@ -5232,7 +5226,6 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
     <message numerus="yes">
         <source>%1 %n strip(s)</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
