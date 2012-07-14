@@ -409,7 +409,7 @@ protected:
     void exportNetlist();
     void exportSvg(double res, bool selectedItems, bool flatten);
 	void exportSvgWatermark(QString & svg, double res);
-	void exportEtchable(bool wantPDF, bool wantSVG, bool flip);
+	void exportEtchable(bool wantPDF, bool wantSVG);
 
 	QList<QWidget*> getButtonsForView(ViewIdentifierClass::ViewIdentifier viewId);
 	const QString untitledFileName();
@@ -588,8 +588,6 @@ protected:
 	QAction *m_exportGerberAct;
 	QAction *m_exportEtchablePdfAct;
 	QAction *m_exportEtchableSvgAct;
-	QAction *m_exportEtchablePdfFlipAct;
-	QAction *m_exportEtchableSvgFlipAct;
 	QAction *m_exportBomAct;
 	QAction *m_exportNetlistAct;
 	QAction *m_exportSvgAct;

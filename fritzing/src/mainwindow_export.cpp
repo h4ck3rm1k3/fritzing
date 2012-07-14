@@ -170,12 +170,12 @@ void MainWindow::print() {
 void MainWindow::exportEtchable() {
 	if (sender() == NULL) return;
 
-	bool wantSvg = sender()->property("svg").toBool();
-	exportEtchable(!wantSvg, wantSvg, sender()->property("flip").toBool());
+    bool wantSvg = sender()->property("svg").toBool();
+	exportEtchable(!wantSvg, wantSvg);
 }
 
 
-void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
+void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 {
     int boardCount;
     ItemBase * board = m_pcbGraphicsView->findSelectedBoard(boardCount);
@@ -205,14 +205,12 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 		if (ret != QMessageBox::Yes) return;
 	}
 
-	QStringList fileNames;
 	QString path = defaultSaveFolder();
 	QString extFmt = (wantPDF) ? fileExtFormats.value(pdfActionType) : fileExtFormats.value(svgActionType);
-	QString fileExt;
+	QString fileExt = extFmt;
 
 	QString suffix = (wantPDF) ? pdfActionType : svgActionType;
     QString prefix = "";
-    QString mirror = flip ? "_mirror" : "";
     if (boardCount > 1) {
         prefix = QString("%1_%2_").arg(board->instanceTitle()).arg(board->id());
     }
@@ -224,19 +222,20 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 	if (exportDir.isEmpty()) return;
 
 	FolderUtils::setOpenSaveFolder(exportDir);
-	fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_copper_bottom" + mirror, suffix));
-	fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_mask_bottom" + mirror, suffix));
-	if (m_pcbGraphicsView->boardLayers() > 1) {
-		fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_copper_top" + mirror, suffix));
-		fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_mask_top" + mirror, suffix));
-	}
-	fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_silk_top" + mirror, suffix));
-	fileExt = extFmt;
-	
 	FileProgressDialog * fileProgressDialog = exportProgress();
 
     QRectF r = board->sceneBoundingRect();
     QSizeF boardImageSize(r.width(), r.height());
+  
+	QStringList fileNames;
+
+	fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_copper_bottom%1", suffix));
+	fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_mask_bottom%1", suffix));
+	if (m_pcbGraphicsView->boardLayers() > 1) {
+		fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_copper_top%1", suffix));
+		fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_mask_top%1", suffix));
+	}
+	fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_silk_top%1", suffix));
 
 	QString maskTop, maskBottom;
 	QList<ItemBase *> copperLogoItems;
@@ -273,38 +272,50 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 		    QSizeF imageSize;
 			QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, true, imageSize, board, GraphicsUtils::IllustratorDPI, false, false, empty);
 			massageOutput(svg, doMask, doSilk, maskTop, maskBottom, fileName, GraphicsUtils::IllustratorDPI);		
-			svg = mergeBoardSvg(svg, board, GraphicsUtils::IllustratorDPI, flip, viewLayerIDs);
-            TextUtils::writeUtf8(fileName, svg);
+			QString merged = mergeBoardSvg(svg, board, GraphicsUtils::IllustratorDPI, false, viewLayerIDs);
+            TextUtils::writeUtf8(fileName.arg(""), merged);
+			merged = mergeBoardSvg(svg, board, GraphicsUtils::IllustratorDPI, true, viewLayerIDs);
+            TextUtils::writeUtf8(fileName.arg("_mirror"), merged);
 		}
 		else {
-			QPrinter printer(QPrinter::HighResolution);
-			printer.setOutputFormat(filePrintFormats[fileExt]);
-			printer.setOutputFileName(fileName);
-			int res = printer.resolution();
-			bool empty;
-            QSizeF imageSize;
-			QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, true, imageSize, board, res, false, false, empty);
-			massageOutput(svg, doMask, doSilk, maskTop, maskBottom, fileName, res);
-			svg = mergeBoardSvg(svg, board, res, flip, viewLayerIDs);
+            QString svg;
+            QList<bool> flips;
+            flips << false << true;
+            foreach (bool flip, flips) {
+                QString mirror = flip ? "_mirror" : "";
+			    QPrinter printer(QPrinter::HighResolution);
+			    printer.setOutputFormat(filePrintFormats[fileExt]);
+			    printer.setOutputFileName(fileName.arg(mirror));
+			    int res = printer.resolution();
+
+                if (svg.isEmpty()) {
+			        bool empty;
+                    QSizeF imageSize;
+			        svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, true, imageSize, board, res, false, false, empty);
+			        massageOutput(svg, doMask, doSilk, maskTop, maskBottom, fileName, res);
+                }
 			
-			// now convert to pdf
-			QSvgRenderer svgRenderer;
-			svgRenderer.load(svg.toLatin1());
-			double trueWidth = boardImageSize.width() / FSvgRenderer::printerScale();
-			double trueHeight = boardImageSize.height() / FSvgRenderer::printerScale();
-			QRectF target(0, 0, trueWidth * res, trueHeight * res);
+                QString merged = mergeBoardSvg(svg, board, res, flip, viewLayerIDs);
+			
+			    // now convert to pdf
+			    QSvgRenderer svgRenderer;
+			    svgRenderer.load(merged.toLatin1());
+			    double trueWidth = boardImageSize.width() / FSvgRenderer::printerScale();
+			    double trueHeight = boardImageSize.height() / FSvgRenderer::printerScale();
+			    QRectF target(0, 0, trueWidth * res, trueHeight * res);
 
-			QSizeF psize((target.width() + printer.paperRect().width() - printer.width()) / res, 
-						 (target.height() + printer.paperRect().height() - printer.height()) / res);
-			printer.setPaperSize(psize, QPrinter::Inch);
+			    QSizeF psize((target.width() + printer.paperRect().width() - printer.width()) / res, 
+						     (target.height() + printer.paperRect().height() - printer.height()) / res);
+			    printer.setPaperSize(psize, QPrinter::Inch);
 
-			QPainter painter;
-			if (painter.begin(&printer))
-			{
-				svgRenderer.render(&painter, target);
-			}
+			    QPainter painter;
+			    if (painter.begin(&printer))
+			    {
+				    svgRenderer.render(&painter, target);
+			    }
 
-			painter.end();
+			    painter.end();
+            }
 		}
 		if (doMask) {
 			m_pcbGraphicsView->restoreCopperLogoItems(copperLogoItems);
@@ -925,26 +936,12 @@ void MainWindow::createExportActions() {
 	m_exportEtchablePdfAct = new QAction(tr("Etchable (PDF)..."), this);
 	m_exportEtchablePdfAct->setStatusTip(tr("Export the current sketch to PDF for DIY PCB production (photoresist)"));
 	m_exportEtchablePdfAct->setProperty("svg", false);
-	m_exportEtchablePdfAct->setProperty("flip", false);
 	connect(m_exportEtchablePdfAct, SIGNAL(triggered()), this, SLOT(exportEtchable()));
-
-	m_exportEtchablePdfFlipAct = new QAction(tr("Etchable mirrored (PDF)..."), this);
-	m_exportEtchablePdfFlipAct->setStatusTip(tr("Export the current sketch to PDF for DIY PCB production (tone transfer)"));
-	m_exportEtchablePdfFlipAct->setProperty("svg", false);
-	m_exportEtchablePdfFlipAct->setProperty("flip", true);
-	connect(m_exportEtchablePdfFlipAct, SIGNAL(triggered()), this, SLOT(exportEtchable()));
 
 	m_exportEtchableSvgAct = new QAction(tr("Etchable (SVG)..."), this);
 	m_exportEtchableSvgAct->setStatusTip(tr("Export the current sketch to SVG for DIY PCB production (photoresist)"));
 	m_exportEtchableSvgAct->setProperty("svg", true);
-	m_exportEtchableSvgAct->setProperty("flip", false);
 	connect(m_exportEtchableSvgAct, SIGNAL(triggered()), this, SLOT(exportEtchable()));
-
-	m_exportEtchableSvgFlipAct = new QAction(tr("Etchable mirrored (SVG)..."), this);
-	m_exportEtchableSvgFlipAct->setStatusTip(tr("Export the current sketch to SVG for DIY PCB production (tone transfer)"));
-	m_exportEtchableSvgFlipAct->setProperty("svg", true);
-	m_exportEtchableSvgFlipAct->setProperty("flip", true);
-	connect(m_exportEtchableSvgFlipAct, SIGNAL(triggered()), this, SLOT(exportEtchable()));
 
 	/*m_pageSetupAct = new QAction(tr("&Page Setup..."), this);
 	m_pageSetupAct->setShortcut(tr("Shift+Ctrl+P"));

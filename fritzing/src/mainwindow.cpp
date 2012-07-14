@@ -847,7 +847,7 @@ SketchToolButton *MainWindow::createNoteButton(SketchAreaWidget *parent) {
 
 SketchToolButton *MainWindow::createExportEtchableButton(SketchAreaWidget *parent) {
 	QList<QAction*> actions;
-	actions << m_exportEtchablePdfAct << m_exportEtchablePdfFlipAct << m_exportEtchableSvgAct << m_exportEtchableSvgFlipAct << m_exportGerberAct;
+	actions << m_exportEtchablePdfAct << m_exportEtchableSvgAct << m_exportGerberAct;
 	SketchToolButton *exportEtchableButton = new SketchToolButton("Diy",parent, actions);
 	exportEtchableButton->setDefaultAction(m_exportEtchablePdfAct);
 	exportEtchableButton->setText(tr("Export for PCB"));

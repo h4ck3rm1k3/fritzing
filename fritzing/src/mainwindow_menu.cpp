@@ -1100,8 +1100,6 @@ void MainWindow::createMenus()
 	QMenu * productionMenu = m_exportMenu->addMenu(tr("for Production"));
 	productionMenu->addAction(m_exportEtchablePdfAct);
 	productionMenu->addAction(m_exportEtchableSvgAct);
-	productionMenu->addAction(m_exportEtchablePdfFlipAct);
-	productionMenu->addAction(m_exportEtchableSvgFlipAct);
 	productionMenu->addSeparator();
 	productionMenu->addAction(m_exportGerberAct);
 
@@ -1570,9 +1568,7 @@ bool MainWindow::updateExportActions() {
     }
 
 	m_exportEtchablePdfAct->setEnabled(boardCount > 0);
-	m_exportEtchablePdfFlipAct->setEnabled(boardCount > 0);
 	m_exportEtchableSvgAct->setEnabled(boardCount > 0);
-	m_exportEtchableSvgFlipAct->setEnabled(boardCount > 0);
     m_exportGerberAct->setEnabled(boardCount > 0);
 
     return (boardCount > 0);
