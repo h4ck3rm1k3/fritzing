@@ -232,7 +232,7 @@ QWidget * PrefsDialog::createLanguageForm(QFileInfoList & list)
 	ll->setMinimumHeight(45);
 	ll->setWordWrap(true);
 	ll->setText(QObject::tr("Please note that a new language setting will not take effect "
-		"until the next time you run Fritzing."));
+		                    "until the next time you run Fritzing."));
 	layout->addWidget(ll);
 
 	formGroupBox->setLayout(layout);
@@ -437,12 +437,17 @@ QWidget* PrefsDialog::createCurvyForm(ViewInfoThing * viewInfoThing)
 	QGroupBox * groupBox = new QGroupBox(tr("Curvy vs. straight wires"));
     QVBoxLayout *layout = new QVBoxLayout;
 
-	QLabel * label = new QLabel(tr("When you mouse-down and drag on a wire or the leg of a part (as opposed to a connector or a bendpoint) "
-									"do you want to change the curvature of the wire (or leg) or drag out a new bendpoint?\n\n" 
-									"This checkbox sets the default behavior. "
-									"You can switch back to the non-default behavior by holding down the Control key (Mac: Command key) when you drag.\n"));
-	label->setWordWrap(true);
-	layout->addWidget(label);
+    QLabel * label1 = new QLabel(tr("When you mouse-down and drag on a wire or the leg of a part (as opposed to a connector or a bendpoint) "
+									"do you want to change the curvature of the wire (or leg) or drag out a new bendpoint?"));
+	label1->setWordWrap(true);
+	layout->addWidget(label1);
+
+	QLabel * label2 = new QLabel(tr("This checkbox sets the default behavior. "
+									"You can switch back to the non-default behavior by holding down the Control key (Mac: Command key) when you drag."));
+    label2->setWordWrap(true);
+	layout->addWidget(label2);
+
+    layout->addSpacing(10);
 
 	QCheckBox * checkbox = new QCheckBox("Curvy wires and legs");
 	checkbox->setProperty("index", viewInfoThing->index);
