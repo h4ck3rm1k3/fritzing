@@ -128,6 +128,7 @@ void GerberGenerator::exportToGerber(const QString & prefix, const QString & exp
     }
 
 	svgOutline = cleanOutline(svgOutline);
+    // at this point svgOutline must be a single element; a path element may contain cutouts
 	svgOutline = clipToBoard(svgOutline, board, "board", SVG2gerber::ForOutline, "");
 
 	QXmlStreamReader streamReader(svgOutline);
@@ -345,15 +346,15 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 		return "";
 	}
 
-	QDomElement root = domDocument1.documentElement();
-	if (root.firstChildElement().isNull()) {
+	QDomElement root1 = domDocument1.documentElement();
+	if (root1.firstChildElement().isNull()) {
 		return "";
 	}
 
     bool multipleContours = false;
     if (forWhy == SVG2gerber::ForOutline) { 
         // split path into multiple contours
-        QDomNodeList paths = root.elementsByTagName("path");
+        QDomNodeList paths = root1.elementsByTagName("path");
         // should only be one
         for (int p = 0; p < paths.count(); p++) {
             QDomElement path = paths.at(p).toElement();
@@ -451,7 +452,7 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 	QXmlStreamReader reader(svgString);
 	QSvgRenderer renderer(&reader);
 	bool anyClipped = false;
-    if (forWhy !=  SVG2gerber::ForOutline) { 
+    if (forWhy != SVG2gerber::ForOutline) { 
 	    for (int i = 0; i < transformCount1; i++) {
 		    QString n = QString::number(i);
 		    QRectF bounds = renderer.boundsOnElement(n);
@@ -525,21 +526,20 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 		
 
 		// expand the svg to fill the space of the image
-		QDomElement root = domDocument2.documentElement();
-		root.setAttribute("width", QString("%1px").arg(twidth));
-		root.setAttribute("height", QString("%1px").arg(theight));
+		QDomElement root2 = domDocument2.documentElement();
+		root2.setAttribute("width", QString("%1px").arg(twidth));
+		root2.setAttribute("height", QString("%1px").arg(theight));
 		if (boardRect.x() != 0 || boardRect.y() != 0) {
-			QString viewBox = root.attribute("viewBox");
+			QString viewBox = root2.attribute("viewBox");
 			QStringList coords = viewBox.split(" ", QString::SkipEmptyParts);
 			coords[0] = QString::number(sourceRes.left());
 			coords[1] = QString::number(sourceRes.top());
-			root.setAttribute("viewBox", coords.join(" "));
+			root2.setAttribute("viewBox", coords.join(" "));
 		}
 
 		QStringList exceptions;
 		exceptions << "none" << "";
 		QString toColor("#000000");
-        QDomElement root2 = domDocument2.documentElement();
 		SvgFileSplitter::changeColors(root2, toColor, exceptions);
 
         QImage image(imgSize, QImage::Format_Mono);
@@ -547,38 +547,24 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 		image.setDotsPerMeterY(res * GraphicsUtils::InchesPerMeter);
 
         if (forWhy == SVG2gerber::ForOutline) {		
-            QDomNodeList paths = root.elementsByTagName("path");
-            for (int p = 0; p < paths.count(); p++) {
-                QDomElement path = paths.at(p).toElement();
-                path.setTagName("g");
+            QDomNodeList paths = root2.elementsByTagName("path");
+            if (paths.count() == 0) {
+                // some non-path element makes up the outline
+                mergeOutlineElement(image, target, res, domDocument2, svgString, 0, layerName);
             }
-            for (int p = 0; p < paths.count(); p++) {
-                QDomElement path = paths.at(p).toElement();
-                path.setTagName("path");
-                if (p > 0) {
-                    paths.at(p - 1).toElement().setTagName("g");
+            else {
+                for (int p = 0; p < paths.count(); p++) {
+                    QDomElement path = paths.at(p).toElement();
+                    path.setTagName("g");
                 }
-                image.fill(0xffffffff);
-		        QByteArray svg = TextUtils::removeXMLEntities(domDocument2.toString()).toUtf8();
-
-		        QSvgRenderer renderer(svg);
-		        QPainter painter;
-		        painter.begin(&image);
-		        renderer.render(&painter, target);
-		        painter.end();
-		        image.invertPixels();				// need white pixels on a black background for GroundPlaneGenerator
-
-                #ifndef QT_NO_DEBUG
-		            image.save(QString("%2/output%1.png").arg(p).arg(FolderUtils::getUserDataStorePath("")));
-                #endif
-
-		        GroundPlaneGenerator gpg;
-		        gpg.setLayerName(layerName);
-		        gpg.setMinRunSize(1, 1);
-                gpg.scanOutline(image, image.width(), image.height(), GraphicsUtils::StandardFritzingDPI / res, GraphicsUtils::StandardFritzingDPI, "#000000", false, false, QSizeF(0, 0), 0);
-		        if (gpg.newSVGs().count() > 0) {
-                    svgString = gpg.mergeSVGs(svgString, "");
-		        }
+                for (int p = 0; p < paths.count(); p++) {
+                    QDomElement path = paths.at(p).toElement();
+                    path.setTagName("path");
+                    if (p > 0) {
+                        paths.at(p - 1).toElement().setTagName("g");
+                    }
+                    mergeOutlineElement(image, target, res, domDocument2, svgString, p, layerName);
+                }
             }
 		}
         else {
@@ -655,4 +641,28 @@ QString GerberGenerator::cleanOutline(const QString & outlineSvg)
 	if (leaves.count() == 0) return "";
 
 	return outlineSvg;
+}
+
+void GerberGenerator::mergeOutlineElement(QImage & image, QRectF & target, double res, QDomDocument & document, QString & svgString, int ix, const QString & layerName) {
+    image.fill(0xffffffff);
+	QByteArray svg = TextUtils::removeXMLEntities(document.toString()).toUtf8();
+
+	QSvgRenderer renderer(svg);
+	QPainter painter;
+	painter.begin(&image);
+	renderer.render(&painter, target);
+	painter.end();
+	image.invertPixels();				// need white pixels on a black background for GroundPlaneGenerator
+
+    #ifndef QT_NO_DEBUG
+		image.save(QString("%2/output%1.png").arg(ix).arg(FolderUtils::getUserDataStorePath("")));
+    #endif
+
+	GroundPlaneGenerator gpg;
+	gpg.setLayerName(layerName);
+	gpg.setMinRunSize(1, 1);
+    gpg.scanOutline(image, image.width(), image.height(), GraphicsUtils::StandardFritzingDPI / res, GraphicsUtils::StandardFritzingDPI, "#000000", false, false, QSizeF(0, 0), 0);
+	if (gpg.newSVGs().count() > 0) {
+        svgString = gpg.mergeSVGs(svgString, "");
+	}
 }
