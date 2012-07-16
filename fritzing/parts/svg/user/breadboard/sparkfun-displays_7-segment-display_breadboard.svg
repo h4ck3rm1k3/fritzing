@@ -1,33 +1,49 @@
-<?xml version='1.0' encoding='UTF-8' standalone='no'?>
-<!-- Created with Fritzing (http://www.fritzing.org/) -->
-<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.496189in' height='0.677291in' viewBox='0 0 12.6032 17.2032' >
-<g id='breadboard'>
-<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l12.6032,0 0,17.2032 -12.6032,0 0,-17.2032z
-M0.8966,16.2216a0.325,0.325 0 1 0 0.65,0 0.325,0.325 0 1 0 -0.65,0z
-M3.4366,16.2216a0.325,0.325 0 1 0 0.65,0 0.325,0.325 0 1 0 -0.65,0z
-M5.9766,16.2216a0.325,0.325 0 1 0 0.65,0 0.325,0.325 0 1 0 -0.65,0z
-M8.5166,16.2216a0.325,0.325 0 1 0 0.65,0 0.325,0.325 0 1 0 -0.65,0z
-M11.0566,16.2216a0.325,0.325 0 1 0 0.65,0 0.325,0.325 0 1 0 -0.65,0z
-M11.0566,0.9816a0.325,0.325 0 1 0 0.65,0 0.325,0.325 0 1 0 -0.65,0z
-M8.5166,0.9816a0.325,0.325 0 1 0 0.65,0 0.325,0.325 0 1 0 -0.65,0z
-M5.9766,0.9816a0.325,0.325 0 1 0 0.65,0 0.325,0.325 0 1 0 -0.65,0z
-M3.4366,0.9816a0.325,0.325 0 1 0 0.65,0 0.325,0.325 0 1 0 -0.65,0z
-M0.8966,0.9816a0.325,0.325 0 1 0 0.65,0 0.325,0.325 0 1 0 -0.65,0z
-'/>
-<circle id='connector0pin' connectorname='1' cx='1.2216' cy='16.2216' r='0.6324' stroke='#9A916C' stroke-width='0.6148' fill='none' />
-<circle id='connector1pin' connectorname='2' cx='3.7616' cy='16.2216' r='0.6324' stroke='#9A916C' stroke-width='0.6148' fill='none' />
-<circle id='connector2pin' connectorname='3' cx='6.3016' cy='16.2216' r='0.6324' stroke='#9A916C' stroke-width='0.6148' fill='none' />
-<circle id='connector3pin' connectorname='4' cx='8.8416' cy='16.2216' r='0.6324' stroke='#9A916C' stroke-width='0.6148' fill='none' />
-<circle id='connector4pin' connectorname='5' cx='11.3816' cy='16.2216' r='0.6324' stroke='#9A916C' stroke-width='0.6148' fill='none' />
-<circle id='connector5pin' connectorname='6' cx='11.3816' cy='0.9816' r='0.6324' stroke='#9A916C' stroke-width='0.6148' fill='none' />
-<circle id='connector6pin' connectorname='7' cx='8.8416' cy='0.9816' r='0.6324' stroke='#9A916C' stroke-width='0.6148' fill='none' />
-<circle id='connector7pin' connectorname='8' cx='6.3016' cy='0.9816' r='0.6324' stroke='#9A916C' stroke-width='0.6148' fill='none' />
-<circle id='connector8pin' connectorname='9' cx='3.7616' cy='0.9816' r='0.6324' stroke='#9A916C' stroke-width='0.6148' fill='none' />
-<circle id='connector9pin' connectorname='10' cx='1.2216' cy='0.9816' r='0.6324' stroke='#9A916C' stroke-width='0.6148' fill='none' />
-<line class='other' x1='12.5016' y1='0.1016' x2='0.1016' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line class='other' x1='0.1016' y1='0.1016' x2='0.1016' y2='17.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line class='other' x1='0.1016' y1='17.1016' x2='12.5016' y2='17.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line class='other' x1='12.5016' y1='17.1016' x2='12.5016' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<circle class='other' cx='11.3016' cy='14.6016' r='0.6' stroke='#f8f8f8' stroke-width='0.2032' fill='none' />
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Ebene_1" xmlns:svg="http://www.w3.org/2000/svg"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="35.726px"
+	 height="48.766px" viewBox="0 0 35.726 48.766" enable-background="new 0 0 35.726 48.766" xml:space="preserve">
+<g id="breadboard">
+	<path fill="#1F7A34" d="M0,0h35.726v48.766H0V0z M2.542,45.982c0,0.509,0.413,0.922,0.921,0.922s0.921-0.413,0.921-0.922
+		s-0.413-0.921-0.921-0.921S2.542,45.473,2.542,45.982z M9.742,45.982c0,0.509,0.412,0.922,0.92,0.922
+		c0.509,0.001,0.922-0.412,0.922-0.921c0,0,0,0,0-0.001c0-0.509-0.413-0.921-0.921-0.921S9.742,45.473,9.742,45.982z M16.941,45.982
+		c0,0.509,0.413,0.922,0.921,0.922s0.922-0.413,0.922-0.922s-0.413-0.921-0.922-0.921S16.941,45.473,16.941,45.982z M24.142,45.982
+		c-0.001,0.509,0.411,0.922,0.92,0.923c0.509,0,0.922-0.412,0.922-0.921c0,0,0-0.001,0-0.002c0-0.509-0.411-0.921-0.92-0.922
+		s-0.922,0.411-0.922,0.92C24.142,45.981,24.142,45.982,24.142,45.982z M31.341,45.982c0,0.509,0.412,0.922,0.92,0.923
+		c0.51,0,0.922-0.412,0.923-0.921c0,0,0-0.001,0-0.002c0.001-0.509-0.411-0.921-0.921-0.922c-0.508-0.001-0.921,0.411-0.922,0.92
+		C31.341,45.981,31.341,45.982,31.341,45.982z M31.341,2.783c0,0.509,0.412,0.921,0.92,0.922c0.51,0,0.922-0.411,0.923-0.92
+		c0-0.001,0-0.002,0-0.002c0.001-0.509-0.411-0.922-0.921-0.923c-0.508,0-0.921,0.412-0.922,0.921
+		C31.341,2.781,31.341,2.782,31.341,2.783z M24.142,2.783c-0.001,0.509,0.411,0.921,0.92,0.922c0.509,0,0.922-0.411,0.922-0.92
+		c0-0.001,0-0.002,0-0.002c0-0.509-0.411-0.922-0.92-0.923c-0.509,0-0.922,0.412-0.922,0.921
+		C24.142,2.781,24.142,2.782,24.142,2.783z M16.941,2.783c0,0.509,0.413,0.921,0.921,0.921s0.922-0.412,0.922-0.921
+		s-0.413-0.922-0.922-0.922S16.941,2.274,16.941,2.783z M9.742,2.783c0,0.509,0.412,0.921,0.92,0.921
+		c0.509,0.001,0.922-0.411,0.922-0.92c0-0.001,0-0.001,0-0.001c0-0.509-0.413-0.922-0.921-0.922S9.742,2.274,9.742,2.783z
+		 M2.542,2.783c0,0.509,0.413,0.921,0.921,0.921s0.921-0.412,0.921-0.921S3.972,1.861,3.463,1.861S2.542,2.274,2.542,2.783z"/>
+	<circle id="connector0pin" fill="none" stroke="#9A916C" stroke-width="0.6148" cx="3.463" cy="45.983" r="1.792"/>
+	<circle id="connector1pin" fill="none" stroke="#9A916C" stroke-width="0.6148" cx="10.663" cy="45.983" r="1.792"/>
+	<circle id="connector2pin" fill="none" stroke="#9A916C" stroke-width="0.6148" cx="17.863" cy="45.983" r="1.792"/>
+	<circle id="connector3pin" fill="none" stroke="#9A916C" stroke-width="0.6148" cx="25.063" cy="45.983" r="1.792"/>
+	<circle id="connector4pin" fill="none" stroke="#9A916C" stroke-width="0.6148" cx="32.263" cy="45.983" r="1.792"/>
+	<circle id="connector5pin" fill="none" stroke="#9A916C" stroke-width="0.6148" cx="32.263" cy="2.782" r="1.792"/>
+	<circle id="connector6pin" fill="none" stroke="#9A916C" stroke-width="0.6148" cx="25.063" cy="2.782" r="1.792"/>
+	<circle id="connector7pin" fill="none" stroke="#9A916C" stroke-width="0.6148" cx="17.863" cy="2.782" r="1.792"/>
+	<circle id="connector8pin" fill="none" stroke="#9A916C" stroke-width="0.6148" cx="10.663" cy="2.782" r="1.792"/>
+	<circle id="connector9pin" fill="none" stroke="#9A916C" stroke-width="0.6148" cx="3.463" cy="2.782" r="1.792"/>
+</g>
+<g>
+	<polygon fill="#323232" points="0,5.346 34.583,5.346 35.726,6.374 35.726,43.114 1.024,43.114 0,41.774 	"/>
+	<polygon fill="#C7C7C7" points="34.7,41.774 0,41.774 1.024,43.114 35.726,43.114 	"/>
+	<polygon fill="#AAAAAA" points="34.583,41.774 35.726,43.114 35.726,6.374 34.583,5.346 	"/>
+</g>
+<g>
+	<polygon fill="#646464" points="14.274,8.309 26.716,8.309 27.544,9.136 25.884,11.626 15.101,11.626 13.446,9.136 	"/>
+	<polygon fill="#EF1818" points="28.375,9.966 29.205,11.626 27.544,20.752 25.884,22.409 24.228,20.752 25.884,12.454 	"/>
+	<polygon fill="#EF1818" points="25.884,23.238 26.716,24.896 25.056,34.022 23.398,35.68 21.74,34.022 23.398,25.729 	"/>
+	<polygon fill="#646464" points="21.74,37.34 9.296,37.34 8.466,36.508 10.125,34.022 20.91,34.022 22.568,36.51 	"/>
+	<polygon fill="#EF1818" points="7.636,35.68 6.808,34.022 8.466,24.896 10.125,23.238 11.784,24.896 10.125,33.191 	"/>
+	<polygon fill="#EF1818" points="10.125,22.409 9.296,20.752 10.957,11.626 12.614,9.966 14.274,11.626 12.614,19.922 	"/>
+	<polyline fill="#EF1818" points="10.957,22.409 12.614,20.752 23.398,20.752 25.056,22.409 23.398,24.068 12.614,24.068 	"/>
+	<circle fill="#646464" cx="27.189" cy="35.677" r="1.748"/>
 </g>
 </svg>
