@@ -989,7 +989,8 @@ QString TextUtils::slamStrokeAndFill(const QString & svg, const QString & stroke
 {
 	QDomDocument doc;
     if (doc.setContent(svg)) {
-        slamStrokeAndFill(doc.documentElement(), stroke, strokeWidth, fill);
+        QDomElement root = doc.documentElement();
+        slamStrokeAndFill(root, stroke, strokeWidth, fill);
         return doc.toString();
     }
 
