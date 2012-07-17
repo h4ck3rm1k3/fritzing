@@ -163,6 +163,10 @@
         <source>to Alexander Kaltsas for the Greek translation, </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>to Lubomir Duchon for the Slovak translation, </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AbstractEditableLabelWidget</name>
@@ -374,6 +378,10 @@
     <message>
         <source>Do you really want to remove &apos;%1&apos; from the bin?</source>
         <translation>Deseja realmente remover &apos;%1&apos; do repositório?</translation>
+    </message>
+    <message>
+        <source>Searching...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -874,10 +882,6 @@ It is also possible to choose a connector as a ground fill seed by right-clickin
         <translation>Marcadores</translation>
     </message>
     <message>
-        <source>v. %1</source>
-        <translation>v. %1</translation>
-    </message>
-    <message>
         <source>Change the part label here</source>
         <translation>Mudar o nome do componente aqui</translation>
     </message>
@@ -915,6 +919,14 @@ It is also possible to choose a connector as a ground fill seed by right-clickin
     </message>
     <message>
         <source>Change the &quot;sticky&quot; state of the part in this view. When a sticky part is moved, objects on top of it also move.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>v. %1 %2</source>
+        <translation type="unfinished">v. %1 %2</translation>
+    </message>
+    <message>
+        <source>obsolete</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2353,16 +2365,8 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
         <translation>Exportar o desenho atual para PDF para DIY produção de PCB (fotoresistivo)</translation>
     </message>
     <message>
-        <source>Export the current sketch to PDF for DIY PCB production (tone transfer)</source>
-        <translation>Exportar o desenho atual para PDF para DIY produção de PCB (transferência de tom)</translation>
-    </message>
-    <message>
         <source>Export the current sketch to SVG for DIY PCB production (photoresist)</source>
         <translation>Exportar o desenho atual para SVG para DIY produção de PCB (fotoresistivo)</translation>
-    </message>
-    <message>
-        <source>Export the current sketch to SVG for DIY PCB production (tone transfer)</source>
-        <translation>Exportar o desenho atual para SVG para DIY produção de PCB (transferência de tom)</translation>
     </message>
     <message>
         <source>Autorouter settings...</source>
@@ -2401,16 +2405,8 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
         <translation>Etchable (PDF)...</translation>
     </message>
     <message>
-        <source>Etchable mirrored (PDF)...</source>
-        <translation>Etchable espelhado (PDF)...</translation>
-    </message>
-    <message>
         <source>Etchable (SVG)...</source>
         <translation>Etchable (SVG)...</translation>
-    </message>
-    <message>
-        <source>Etchable mirrored (SVG)...</source>
-        <translation>Etchable espelhado (SVG)...</translation>
     </message>
     <message>
         <source>as Image</source>
@@ -2622,14 +2618,6 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
         <translation>Preencher as regiões livres da camada de cobre--preenchimento não vai incluir todas as trilhas ligadas à GND</translation>
     </message>
     <message>
-        <source>Copper Fill Traces</source>
-        <translation>Preencher as trilhas de cobre</translation>
-    </message>
-    <message>
-        <source>There are traces connected to copper fill which will also be removed. Proceed?</source>
-        <translation>Existem trilhas ligadas à camada de cobre este também vai ser removido. Prosseguir?</translation>
-    </message>
-    <message>
         <source>No copper top layer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2711,12 +2699,6 @@ Would you like to convert &apos;%1&apos; to the .fzz format now or open it read-
     <message>
         <source>Parts Editor</source>
         <translation type="unfinished">Editor de Componentes</translation>
-    </message>
-    <message>
-        <source>A new Parts Editor is under construction. The old Parts Editor is still available, but the code is pretty buggy. So use it at your own risk.
-
-Open the old Parts Editor?</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Choose Ground Fill Seed(s)...</source>
@@ -2910,6 +2892,30 @@ Open the old Parts Editor?</source>
         <source>Please select a PCB. Copper fill operations only work on one board at a time.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Convert Bendpoint to Via</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert the bendpoint to a via</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert Via to Bendpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert the via to a bendpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A new Parts Editor is under construction. The old Parts Editor is still available, but the code is pretty buggy. So use it at your own risk.
+
+For many purposes you can use a Generic IC chip instead (first part in the ICs section of the Parts Bin). Drag one into your sketch and from the Inspector change the package: there are SIPs, DIPS, and a set of SMDs. Depending on the package you choose, you can also change the chip label, set the number of pins, and change the pin labels.
+
+Open the old Parts Editor?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -3069,6 +3075,10 @@ Razão: %2 (código do erro %3)</translation>
     </message>
     <message>
         <source>Your sketch does not have a board yet!  Please add a PCB in order to use this selection operation.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to convert this via to a bendpoint because it is connected to a part that is only on the bottom layer and another part that is only on the top layer.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3798,16 +3808,15 @@ tecla shift troca o eixo de scroll</translation>
         <translation>Fios curvos e direitos</translation>
     </message>
     <message>
-        <source>When you mouse-down and drag on a wire or the leg of a part (as opposed to a connector or a bendpoint) do you want to change the curvature of the wire (or leg) or drag out a new bendpoint?
-
-This checkbox sets the default behavior. You can switch back to the non-default behavior by holding down the Control key (Mac: Command key) when you drag.
-</source>
-        <translation>Quando você move o cursor para baixo e arrasta um fio ou uma &quot;pata&quot; de um componente (ao contrário de uma ligação) queres manter a curvatura do fio (ou &quot;pata&quot;) ou criar um novo ponto de dobragem?
-
-Esta caixa de verificação define as definições padrão. Para mudar essas configurações, pressione continuamente a tecla Control (Mac: Tecla de Comando) enquanto move um componente.</translation>
+        <source>Clear Settings</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Clear Settings</source>
+        <source>When you mouse-down and drag on a wire or the leg of a part (as opposed to a connector or a bendpoint) do you want to change the curvature of the wire (or leg) or drag out a new bendpoint?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This checkbox sets the default behavior. You can switch back to the non-default behavior by holding down the Control key (Mac: Command key) when you drag.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4606,14 +4615,6 @@ is already there, we won&apos;t add it again, right?</source>
         <translation>Frame</translation>
     </message>
     <message>
-        <source>change trace %1</source>
-        <translation>Mudar traço %1</translation>
-    </message>
-    <message>
-        <source>delete trace %1</source>
-        <translation>Apagar pista %1</translation>
-    </message>
-    <message>
         <source>%1 %2,%3 %4</source>
         <translation>%1 %2,%3 %4</translation>
     </message>
@@ -4786,6 +4787,14 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>This action does not delete any files; it restores settings to their default values.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert to Via</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert Via to Bendpoint</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5156,14 +5165,6 @@ is already there, we won&apos;t add it again, right?</source>
         </translation>
     </message>
     <message>
-        <source>Change pin spacing from %1 to %2</source>
-        <translation>Mudar o espaçamento entre pinos de %1 para %2</translation>
-    </message>
-    <message>
-        <source>Change form from %1 to %2</source>
-        <translation>Mudar o formato de %1 para %2</translation>
-    </message>
-    <message>
         <source>Resize ruler to %1%2</source>
         <translation>Redimensionar a régua para %1%2</translation>
     </message>
@@ -5382,6 +5383,10 @@ is already there, we won&apos;t add it again, right?</source>
     <message>
         <source>width</source>
         <translation>largura</translation>
+    </message>
+    <message>
+        <source>Select from the dropdown, or type in any value from %1 to %2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

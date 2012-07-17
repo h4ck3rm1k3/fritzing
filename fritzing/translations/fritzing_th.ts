@@ -163,6 +163,10 @@
         <source>to Alexander Kaltsas for the Greek translation, </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>to Lubomir Duchon for the Slovak translation, </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AbstractEditableLabelWidget</name>
@@ -373,6 +377,10 @@
     </message>
     <message>
         <source>Do you really want to remove &apos;%1&apos; from the bin?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Searching...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -861,10 +869,6 @@ It is also possible to choose a connector as a ground fill seed by right-clickin
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>v. %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Change the part label here</source>
         <translation type="unfinished"></translation>
     </message>
@@ -902,6 +906,14 @@ It is also possible to choose a connector as a ground fill seed by right-clickin
     </message>
     <message>
         <source>Change the &quot;sticky&quot; state of the part in this view. When a sticky part is moved, objects on top of it also move.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>v. %1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>obsolete</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2332,15 +2344,7 @@ Please check all views for potential side-effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Export the current sketch to PDF for DIY PCB production (tone transfer)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Export the current sketch to SVG for DIY PCB production (photoresist)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Export the current sketch to SVG for DIY PCB production (tone transfer)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2380,15 +2384,7 @@ Please check all views for potential side-effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Etchable mirrored (PDF)...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Etchable (SVG)...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Etchable mirrored (SVG)...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2600,14 +2596,6 @@ Please check all views for potential side-effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Copper Fill Traces</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>There are traces connected to copper fill which will also be removed. Proceed?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>No copper top layer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2688,12 +2676,6 @@ Would you like to convert &apos;%1&apos; to the .fzz format now or open it read-
     </message>
     <message>
         <source>Parts Editor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A new Parts Editor is under construction. The old Parts Editor is still available, but the code is pretty buggy. So use it at your own risk.
-
-Open the old Parts Editor?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2888,6 +2870,30 @@ Open the old Parts Editor?</source>
         <source>Please select a PCB. Copper fill operations only work on one board at a time.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Convert Bendpoint to Via</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert the bendpoint to a via</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert Via to Bendpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert the via to a bendpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A new Parts Editor is under construction. The old Parts Editor is still available, but the code is pretty buggy. So use it at your own risk.
+
+For many purposes you can use a Generic IC chip instead (first part in the ICs section of the Parts Bin). Drag one into your sketch and from the Inspector change the package: there are SIPs, DIPS, and a set of SMDs. Depending on the package you choose, you can also change the chip label, set the number of pins, and change the pin labels.
+
+Open the old Parts Editor?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -3045,6 +3051,10 @@ Reason: %2 (errcode %3)</source>
     </message>
     <message>
         <source>Your sketch does not have a board yet!  Please add a PCB in order to use this selection operation.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to convert this via to a bendpoint because it is connected to a part that is only on the bottom layer and another part that is only on the top layer.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3751,14 +3761,15 @@ shift key swaps scroll axis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>When you mouse-down and drag on a wire or the leg of a part (as opposed to a connector or a bendpoint) do you want to change the curvature of the wire (or leg) or drag out a new bendpoint?
-
-This checkbox sets the default behavior. You can switch back to the non-default behavior by holding down the Control key (Mac: Command key) when you drag.
-</source>
+        <source>Clear Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Clear Settings</source>
+        <source>When you mouse-down and drag on a wire or the leg of a part (as opposed to a connector or a bendpoint) do you want to change the curvature of the wire (or leg) or drag out a new bendpoint?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This checkbox sets the default behavior. You can switch back to the non-default behavior by holding down the Control key (Mac: Command key) when you drag.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4550,14 +4561,6 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>change trace %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>delete trace %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>%1 %2,%3 %4</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4730,6 +4733,14 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     </message>
     <message>
         <source>This action does not delete any files; it restores settings to their default values.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert to Via</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert Via to Bendpoint</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5082,14 +5093,6 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Change pin spacing from %1 to %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Change form from %1 to %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Change Resistance from %1 to %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5317,6 +5320,10 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     <name>TraceWire</name>
     <message>
         <source>width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select from the dropdown, or type in any value from %1 to %2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
