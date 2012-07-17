@@ -150,7 +150,7 @@
     </message>
     <message>
         <location filename="../src/help/aboutbox.cpp" line="164"/>
-        <source>to Lubomir Duchon for the Slovak translation, </source>
+        <source>to &amp;#313;ubom&amp;iacute;r Ducho&amp;#328; for the Slovak translation, </source>
         <translation type="unfinished"></translation>
     </message>
     <message>

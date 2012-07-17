@@ -644,6 +644,7 @@ QString GerberGenerator::cleanOutline(const QString & outlineSvg)
 }
 
 void GerberGenerator::mergeOutlineElement(QImage & image, QRectF & target, double res, QDomDocument & document, QString & svgString, int ix, const QString & layerName) {
+    
     image.fill(0xffffffff);
 	QByteArray svg = TextUtils::removeXMLEntities(document.toString()).toUtf8();
 
@@ -656,6 +657,8 @@ void GerberGenerator::mergeOutlineElement(QImage & image, QRectF & target, doubl
 
     #ifndef QT_NO_DEBUG
 		image.save(QString("%2/output%1.png").arg(ix).arg(FolderUtils::getUserDataStorePath("")));
+    #else
+        Q_UNUSED(ix);
     #endif
 
 	GroundPlaneGenerator gpg;

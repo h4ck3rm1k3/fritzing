@@ -161,6 +161,7 @@ QString("<br /><br /><br /><br /><br /><br /><br /><br /><br />") +
 	tr("to Steven Noppe for the Dutch translation, " ) +
 	tr("to Josef Dustira for the Czech translation, " ) +
 	tr("to Jinbuhm Kim for the Korean translation, " ) +
+	tr("to &#313;ubom&iacute;r Ducho&#328; for the Slovak translation, " ) + 
     tr("to Alexander Kaltsas for the Greek translation, " ) +
    
 	tr("and to Arthur Zanona, Nuno Pessanha Santos, and Leandro Nunes for the Portuguese (Brazilian) translation. " ) +

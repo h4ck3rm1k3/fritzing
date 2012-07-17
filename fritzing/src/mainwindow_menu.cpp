@@ -1922,7 +1922,11 @@ PartsEditorMainWindow* MainWindow::getPartsEditor(ModelPart *modelPart, long _id
 	QMessageBox::StandardButton answer = QMessageBox::question(
             this,
             tr("Parts Editor"),
-            tr("A new Parts Editor is under construction. The old Parts Editor is still available, but the code is pretty buggy. So use it at your own risk.\n\nOpen the old Parts Editor?"),
+            tr("A new Parts Editor is under construction. The old Parts Editor is still available, but the code is pretty buggy. So use it at your own risk.\n\n"
+            "For many purposes you can use a Generic IC chip instead (first part in the ICs section of the Parts Bin). "
+            "Drag one into your sketch and from the Inspector change the package: there are SIPs, DIPS, and a set of SMDs. "
+                "Depending on the package you choose, you can also change the chip label, set the number of pins, and change the pin labels."
+                "\n\nOpen the old Parts Editor?"),
             QMessageBox::Yes | QMessageBox::No,
             QMessageBox::Yes
     );
