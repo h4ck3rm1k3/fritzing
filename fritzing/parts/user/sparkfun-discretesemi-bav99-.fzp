@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DiscreteSemi-BAV99-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DiscreteSemi' BAV99  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>D</label>
 <author>www.fritzing.org</author>
 <description>Two small signal silicon diodes connected anode to cathode.&lt;br&gt;
@@ -14,7 +14,8 @@ Connections to all three nodes available.</description>
 </tags>
 <properties>
 <property name='package'>sot23</property>
-<property name='family'>bav99</property>
+<property name='family'>Diode</property>
+<property name='chip'>BAV99</property>
 </properties>
 <views>
 <breadboardView>

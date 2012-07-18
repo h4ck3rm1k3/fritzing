@@ -912,5 +912,12 @@
 </iconView>
 </views>
 </instance>
+<instance moduleIdRef='SparkFun-DigitalIC-MBED_NXP_LPC1768-' modelIndex='130'>
+<views>
+<iconView layer='icon'>
+<geometry z='-1' x='-1' y='-1'></geometry>
+</iconView>
+</views>
+</instance>
 </instances>
 </module>

@@ -2,18 +2,18 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-INVERTER-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' INVERTER  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Single inverter, SOT23-5</description>
 <title>INVERTER</title>
 <tags>
-<tag>INVERTER</tag>
 <tag>SOT23-5</tag>
+<tag>INVERTER</tag>
 </tags>
 <properties>
 <property name='package'>sot23-5</property>
-<property name='family'>inverter</property>
+<property name='family'>Inverter</property>
 </properties>
 <views>
 <breadboardView>

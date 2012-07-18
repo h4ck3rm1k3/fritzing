@@ -2,18 +2,19 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-LED-LIGHTPIPE-7511-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-LED' LIGHTPIPE-7511  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
-<description></description>
+<description>Lightpipes provide   High Contrast and Wide Viewing Angle for Greater
+Visibility</description>
 <title>LIGHTPIPE-7511</title>
 <tags>
-<tag>LIGHTPIPE-7511</tag>
 <tag>LIGHTPIPE-7511</tag>
 </tags>
 <properties>
 <property name='package'>lightpipe-7511</property>
-<property name='family'>lightpipe-7511</property>
+<property name='fits'>SMT</property>
+<property name='family'>LED (Accessoires)</property>
 </properties>
 <views>
 <breadboardView>

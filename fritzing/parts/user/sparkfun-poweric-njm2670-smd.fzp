@@ -2,19 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-NJM2670-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-PowerIC' NJM2670 SMD -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Dual H-bridge driver</description>
 <title>NJM2670</title>
 <tags>
+<tag>SO-24W</tag>
 <tag>SMD</tag>
 <tag>NJM2670</tag>
-<tag>SO-24W</tag>
 </tags>
 <properties>
 <property name='package'>so-24w</property>
-<property name='family'>njm2670</property>
+<property name='family'>H-Bridge (Dual)</property>
+<property name='chip'>NJM2670</property>
 <property name='variant'>smd</property>
 </properties>
 <views>

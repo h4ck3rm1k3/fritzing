@@ -2,18 +2,18 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DiscreteSemi-TCMT1103-OPTO-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DiscreteSemi' TCMT1103-OPTO  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Optoisolator- NPN output</description>
 <title>TCMT1103-OPTO</title>
 <tags>
-<tag>TCMT1103-OPTO</tag>
 <tag>SSOP-4</tag>
+<tag>TCMT1103-OPTO</tag>
 </tags>
 <properties>
 <property name='package'>ssop-4</property>
-<property name='family'>tcmt1103-opto</property>
+<property name='family'>Optoisolator</property>
 </properties>
 <views>
 <breadboardView>

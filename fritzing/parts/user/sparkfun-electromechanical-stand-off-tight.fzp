@@ -2,20 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-STAND-OFF-TIGHT'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' STAND-OFF TIGHT -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;#4 Stand Off&lt;/b&gt;&lt;p&gt;
 This is the mechanical footprint for a #4 phillips button head screw. Use the keepout ring to avoid running the screw head into surrounding components. SKU : PRT-00447</description>
 <title>#4 Stand Off</title>
 <tags>
+<tag>STAND-OFF-TIGHT</tag>
 <tag>TIGHT</tag>
 <tag>STAND-OFF</tag>
-<tag>STAND-OFF-TIGHT</tag>
 </tags>
 <properties>
 <property name='package'>stand-off-tight</property>
-<property name='family'>stand-off</property>
+<property name='family'>Stand off</property>
 <property name='variant'>tight</property>
 </properties>
 <views>

@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DiscreteSemi-DIODE-SOT23'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DiscreteSemi' DIODE SOT23 -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>D</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Diode&lt;/b&gt;
@@ -10,12 +10,12 @@ These are standard reverse protection diodes and small signal diodes. SMA packag
 <title>Diode</title>
 <tags>
 <tag>SOT23</tag>
-<tag>DIODE</tag>
 <tag>SOT23-3</tag>
+<tag>DIODE</tag>
 </tags>
 <properties>
 <property name='package'>sot23-3</property>
-<property name='family'>diode</property>
+<property name='family'>Diode</property>
 <property name='variant'>sot23</property>
 </properties>
 <views>

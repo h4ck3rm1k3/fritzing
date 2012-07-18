@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-V_REG_LD1117VXX-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-PowerIC' V_REG_LD1117VXX  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>LD1117VXX voltage regulator. We carry the 3.3V version (COM-00526) in TO-220 package.</description>
@@ -13,7 +13,9 @@
 </tags>
 <properties>
 <property name='package'>78xxl</property>
-<property name='family'>v_reg_ld1117vxx</property>
+<property name='family'>Voltage Regulator</property>
+<property name='voltage'>3.3V</property>
+<property name='chip'>LD1117VXX</property>
 </properties>
 <views>
 <breadboardView>

@@ -2,19 +2,19 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-SOLAR-IXYS--'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' SOLAR-IXYS - -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>D</label>
 <author>www.fritzing.org</author>
 <description></description>
 <title>SOLAR-IXYS</title>
 <tags>
-<tag>-</tag>
-<tag>SOLAR-IXYS</tag>
 <tag>SOLARBIT-12X1</tag>
+<tag>SOLAR-IXYS</tag>
+<tag>-</tag>
 </tags>
 <properties>
 <property name='package'>solarbit-12x1</property>
-<property name='family'>solar-ixys</property>
+<property name='family'>Solar cell</property>
 <property name='variant'>-</property>
 </properties>
 <views>

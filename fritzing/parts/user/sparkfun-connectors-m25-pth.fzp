@@ -2,19 +2,19 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-M25-PTH'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' M25 PTH -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
-<description>1x25 .1&quot; header</description>
+<description>1x25 .1 header</description>
 <title>M25</title>
 <tags>
 <tag>PTH</tag>
-<tag>M25</tag>
 <tag>1X25</tag>
+<tag>M25</tag>
 </tags>
 <properties>
 <property name='package'>1x25</property>
-<property name='family'>m25</property>
+<property name='family'>Pin Header</property>
 <property name='variant'>pth</property>
 </properties>
 <views>

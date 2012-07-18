@@ -2,20 +2,21 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-BLUERADIO_BR-C40N-SFE'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-RF' BLUERADIO_BR-C40N SFE -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Bluetooth SMD Module&lt;/b&gt;
 BR-C40A with antenna cut off. 50 Ohm antenna trace and connector required. Footprint fully proven. Spark Fun Electronics SKU : WRL-00149</description>
 <title>Bluetooth SMD Module</title>
 <tags>
-<tag>SFE</tag>
-<tag>BLUERADIO_BR-C40N</tag>
 <tag>BLUETOOTH-SMD-FP</tag>
+<tag>BLUERADIO_BR-C40N</tag>
+<tag>SFE</tag>
 </tags>
 <properties>
 <property name='package'>bluetooth-smd-fp</property>
-<property name='family'>blueradio_br-c40n</property>
+<property name='family'>Bluetooth IC</property>
+<property name='chip'>BR-C40N</property>
 <property name='variant'>sfe</property>
 </properties>
 <views>

@@ -2,19 +2,19 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-SWITCH-MOMENTARY-2-12MM'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' SWITCH-MOMENTARY-2 12MM -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>S</label>
 <author>www.fritzing.org</author>
 <description>Various NO switches- pushbuttons, reed, etc</description>
 <title>SWITCH-MOMENTARY-2</title>
 <tags>
 <tag>12MM</tag>
-<tag>SWITCH-MOMENTARY-2</tag>
 <tag>TACTILE-PTH-12MM</tag>
+<tag>SWITCH-MOMENTARY-2</tag>
 </tags>
 <properties>
 <property name='package'>tactile-pth-12mm</property>
-<property name='family'>switch-momentary-2</property>
+<property name='family'>Push button</property>
 <property name='variant'>12mm</property>
 </properties>
 <views>

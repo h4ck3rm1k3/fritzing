@@ -2,18 +2,18 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DiscreteSemi-MOSFET-NCHANNEL-SOIC8-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DiscreteSemi' MOSFET-NCHANNEL-SOIC8  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>IRF9410 and NDS8434 SOIC-8 parts.</description>
 <title>MOSFET-NCHANNEL-SOIC8</title>
 <tags>
-<tag>MOSFET-NCHANNEL-SOIC8</tag>
 <tag>SO08</tag>
+<tag>MOSFET-NCHANNEL-SOIC8</tag>
 </tags>
 <properties>
 <property name='package'>so08</property>
-<property name='family'>mosfet-nchannel-soic8</property>
+<property name='family'>Mosfet (N Channel)</property>
 </properties>
 <views>
 <breadboardView>

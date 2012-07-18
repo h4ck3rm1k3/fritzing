@@ -2,20 +2,21 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-NRF24AP1-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-RF' NRF24AP1 SMD -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;2.4GHz ANT IC&lt;/b&gt;
 Nordic Semiconductor 2.4GHz transceiver that implements the ANT protocol.</description>
 <title>2.4GHz ANT IC</title>
 <tags>
-<tag>SMD</tag>
-<tag>NRF24AP1</tag>
 <tag>MLP-24</tag>
+<tag>NRF24AP1</tag>
+<tag>SMD</tag>
 </tags>
 <properties>
 <property name='package'>mlp-24</property>
-<property name='family'>nrf24ap1</property>
+<property name='family'>2.4GHz Tranceiver</property>
+<property name='chip'>NRF24AP1</property>
 <property name='variant'>smd</property>
 </properties>
 <views>

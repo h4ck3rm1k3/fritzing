@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-CMA3000-A01-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' CMA3000-A01  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>3-axis 2/8g analog output accelerometer</description>
@@ -13,7 +13,11 @@
 </tags>
 <properties>
 <property name='package'>cma3000</property>
-<property name='family'>cma3000-a01</property>
+<property name='family'>Accelerometer</property>
+<property name='chip'>cma3000-A01</property>
+<property name='interface'>analog</property>
+<property name='axis'>3</property>
+<property name='sensitivity'>2/8g</property>
 </properties>
 <views>
 <breadboardView>

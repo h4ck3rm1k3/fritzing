@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-SHT1X-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' SHT1X SMD -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;SHT1x Humdity Sensor&lt;/b&gt;
@@ -11,11 +11,11 @@ Sensirion humdity sensor. Schematic element and footprint proven. Spark Fun Elec
 <tags>
 <tag>SMD</tag>
 <tag>SHT1X</tag>
-<tag>SHT1X</tag>
 </tags>
 <properties>
 <property name='package'>sht1x</property>
-<property name='family'>sht1x</property>
+<property name='family'>Humidity Sensor</property>
+<property name='chip'>sht1x</property>
 <property name='variant'>smd</property>
 </properties>
 <views>

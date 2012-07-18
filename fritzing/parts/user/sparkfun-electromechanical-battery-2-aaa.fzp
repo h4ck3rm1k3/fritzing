@@ -2,19 +2,19 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-BATTERY-2-AAA'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' BATTERY-2 AAA -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>AA and AAA battery holders</description>
 <title>BATTERY-2</title>
 <tags>
-<tag>AAA</tag>
-<tag>BATTERY-2</tag>
 <tag>BATTERY-AAA</tag>
+<tag>BATTERY-2</tag>
+<tag>AAA</tag>
 </tags>
 <properties>
 <property name='package'>battery-aaa</property>
-<property name='family'>battery-2</property>
+<property name='family'>Battery Holder</property>
 <property name='variant'>aaa</property>
 </properties>
 <views>

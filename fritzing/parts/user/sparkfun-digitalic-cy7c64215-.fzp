@@ -2,18 +2,19 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-CY7C64215-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' CY7C64215  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
-<description>Cypress PSOC uC with USB</description>
+<description>The enCoRe III is based on the flexible PSoC architecture and is a full-featured, full-speed (12-Mbps) USB part. Configurable analog, digital, and interconnect circuitry enable a high level of integration in a host of consumer, and communication applications.</description>
 <title>CY7C64215</title>
 <tags>
-<tag>CY7C64215</tag>
 <tag>SSOP28DB</tag>
+<tag>CY7C64215</tag>
 </tags>
 <properties>
 <property name='package'>ssop28db</property>
-<property name='family'>cy7c64215</property>
+<property name='family'>USB IC</property>
+<property name='chip'>CY7C64215</property>
 </properties>
 <views>
 <breadboardView>

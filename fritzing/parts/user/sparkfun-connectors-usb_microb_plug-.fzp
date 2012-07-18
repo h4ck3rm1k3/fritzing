@@ -2,19 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-USB_MICROB_PLUG-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' USB_MICROB_PLUG  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;USB Micro-B Plug&lt;/h3&gt;
-Comes in a variety of packages.  Check out Hirose&apos;s ZX-x0 line: http://www.hirose.co.jp/cataloge_hp/e24200011.pdf</description>
+Comes in a variety of packages. Check out Hirose&apos;s ZX-x0 line: http://www.hirose.co.jp/cataloge_hp/e24200011.pdf</description>
 <title>USB_MICROB_PLUG</title>
 <tags>
-<tag>USB_MICROB_PLUG</tag>
 <tag>MICRO-B-RA-SMT</tag>
+<tag>USB_MICROB_PLUG</tag>
 </tags>
 <properties>
 <property name='package'>micro-b-ra-smt</property>
-<property name='family'>usb_microb_plug</property>
+<property name='target'>Micro-B</property>
+<property name='family'>USB Plug</property>
 </properties>
 <views>
 <breadboardView>

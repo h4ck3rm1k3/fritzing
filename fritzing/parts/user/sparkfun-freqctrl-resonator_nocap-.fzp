@@ -2,18 +2,17 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-FreqCtrl-RESONATOR_NOCAP-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-FreqCtrl' RESONATOR_NOCAP  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description></description>
 <title>RESONATOR_NOCAP</title>
 <tags>
 <tag>RESONATOR_NOCAP</tag>
-<tag>RESONATOR_NOCAP</tag>
 </tags>
 <properties>
 <property name='package'>resonator_nocap</property>
-<property name='family'>resonator_nocap</property>
+<property name='family'>Resonator</property>
 </properties>
 <views>
 <breadboardView>

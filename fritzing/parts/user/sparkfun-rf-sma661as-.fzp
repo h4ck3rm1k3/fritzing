@@ -2,18 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-SMA661AS-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-RF' SMA661AS  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>GPS low noise amplifier, 18dB gain, low external parts count</description>
 <title>SMA661AS</title>
 <tags>
-<tag>SMA661AS</tag>
 <tag>SOT666</tag>
+<tag>SMA661AS</tag>
 </tags>
 <properties>
 <property name='package'>sot666</property>
-<property name='family'>sma661as</property>
+<property name='family'>GPS amplifier</property>
+<property name='chip'>SMA661AS</property>
+<property name='gain'>18dB</property>
 </properties>
 <views>
 <breadboardView>

@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-LED-LED_BARGRAPH_10-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-LED' LED_BARGRAPH_10  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>D</label>
 <author>www.fritzing.org</author>
 <description>10-Segment LED Bar Graph&lt;p&gt;
@@ -14,12 +14,13 @@ COM-09937 (blue, Vf = 3.4V, Ifmax = 20mA)&lt;br&gt;
 COM-09938 (green, Vf = 3.4V, Ifmax = 20mA)&lt;br&gt;</description>
 <title>LED_BARGRAPH_10</title>
 <tags>
-<tag>LED_BARGRAPH_10</tag>
 <tag>LED_BARGAPH_10</tag>
+<tag>LED_BARGRAPH_10</tag>
 </tags>
 <properties>
 <property name='package'>led_bargaph_10</property>
-<property name='family'>led_bargraph_10</property>
+<property name='family'>LED (Bar graph)</property>
+<property name='segments'>10</property>
 </properties>
 <views>
 <breadboardView>

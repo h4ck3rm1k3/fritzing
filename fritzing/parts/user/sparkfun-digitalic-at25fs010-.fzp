@@ -2,18 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-AT25FS010-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' AT25FS010  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>1-Mbit SPI flash memory</description>
 <title>AT25FS010</title>
 <tags>
-<tag>AT25FS010</tag>
 <tag>SO08WIDE</tag>
+<tag>AT25FS010</tag>
 </tags>
 <properties>
 <property name='package'>so08wide</property>
-<property name='family'>at25fs010</property>
+<property name='family'>Flash Memory</property>
+<property name='capacity'>1 Mbit</property>
+<property name='chip'>AT25FS010</property>
 </properties>
 <views>
 <breadboardView>

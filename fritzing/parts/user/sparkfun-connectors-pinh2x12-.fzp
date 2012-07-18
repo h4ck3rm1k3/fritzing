@@ -2,18 +2,18 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-PINH2X12-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' PINH2X12  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description></description>
 <title>PINH2X12</title>
 <tags>
-<tag>PINH2X12</tag>
 <tag>2X12</tag>
+<tag>PINH2X12</tag>
 </tags>
 <properties>
 <property name='package'>2x12</property>
-<property name='family'>pinh2x12</property>
+<property name='family'>Pin Header</property>
 </properties>
 <views>
 <breadboardView>

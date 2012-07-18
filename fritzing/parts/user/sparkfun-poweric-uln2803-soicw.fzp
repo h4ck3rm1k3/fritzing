@@ -2,20 +2,23 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-ULN2803-SOICW'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-PowerIC' ULN2803 SOICW -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>ULN2803</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Darlington Driver&lt;/b&gt;
 ULN2803 Darlington array. 500mA max per channel, 8-channel package. Spark Fun Electronics SKU : COM-00312</description>
 <title>Darlington Driver</title>
 <tags>
-<tag>SOICW</tag>
-<tag>ULN2803</tag>
 <tag>SO18L</tag>
+<tag>ULN2803</tag>
+<tag>SOICW</tag>
 </tags>
 <properties>
 <property name='package'>so18l</property>
-<property name='family'>uln2803</property>
+<property name='channels'>8</property>
+<property name='family'>Darlington Driver (Array)</property>
+<property name='current'>500mA per channel</property>
+<property name='chip'>uln2803</property>
 <property name='variant'>soicw</property>
 </properties>
 <views>

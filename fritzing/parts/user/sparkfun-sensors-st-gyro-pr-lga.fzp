@@ -2,19 +2,19 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-ST-GYRO-PR-LGA'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' ST-GYRO-PR LGA -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description></description>
 <title>ST-GYRO-PR</title>
 <tags>
 <tag>LGA</tag>
-<tag>ST-GYRO-PR</tag>
 <tag>ST-GYRO</tag>
+<tag>ST-GYRO-PR</tag>
 </tags>
 <properties>
 <property name='package'>st-gyro</property>
-<property name='family'>st-gyro-pr</property>
+<property name='family'>Gyroscope</property>
 <property name='variant'>lga</property>
 </properties>
 <views>

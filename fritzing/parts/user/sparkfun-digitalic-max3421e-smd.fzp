@@ -2,19 +2,19 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-MAX3421E-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' MAX3421E SMD -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>USB Peripheral/Host Controller w/ SPI</description>
 <title>MAX3421E</title>
 <tags>
+<tag>TQFP32-5MM</tag>
 <tag>SMD</tag>
 <tag>MAX3421E</tag>
-<tag>TQFP32-5MM</tag>
 </tags>
 <properties>
 <property name='package'>tqfp32-5mm</property>
-<property name='family'>max3421e</property>
+<property name='family'>USB Controller</property>
 <property name='variant'>smd</property>
 </properties>
 <views>

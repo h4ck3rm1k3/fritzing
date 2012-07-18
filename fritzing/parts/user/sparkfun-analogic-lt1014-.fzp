@@ -2,18 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-LT1014-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-AnalogIC' LT1014  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Precision quad op-amp. I/O range includes negative rail.</description>
 <title>LT1014</title>
 <tags>
-<tag>LT1014</tag>
 <tag>SO16L</tag>
+<tag>LT1014</tag>
 </tags>
 <properties>
 <property name='package'>so16l</property>
-<property name='family'>lt1014</property>
+<property name='channels'>4</property>
+<property name='family'>Op-Amp</property>
+<property name='chip'>Lt1014</property>
 </properties>
 <views>
 <breadboardView>

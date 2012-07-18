@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Displays-7-SEGMENT-4DIGIT-PTH'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Displays' 7-SEGMENT-4DIGIT PTH -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description></description>
@@ -10,11 +10,12 @@
 <tags>
 <tag>PTH</tag>
 <tag>7-SEGMENT-4DIGIT</tag>
-<tag>7-SEGMENT-4DIGIT</tag>
 </tags>
 <properties>
 <property name='package'>7-segment-4digit</property>
-<property name='family'>7-segment-4digit</property>
+<property name='family'>LED Segment Display</property>
+<property name='digits'>4</property>
+<property name='segments'>7</property>
 <property name='variant'>pth</property>
 </properties>
 <views>

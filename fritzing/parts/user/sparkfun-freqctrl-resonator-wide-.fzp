@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-FreqCtrl-RESONATOR-WIDE-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-FreqCtrl' RESONATOR-WIDE  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description></description>
@@ -13,7 +13,7 @@
 </tags>
 <properties>
 <property name='package'>resonator-wide-smd</property>
-<property name='family'>resonator-wide</property>
+<property name='family'>Resonator</property>
 </properties>
 <views>
 <breadboardView>

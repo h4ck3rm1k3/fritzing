@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Displays-7-SEGMENT-4DIGIT-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Displays' 7-SEGMENT-4DIGIT  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description></description>
@@ -13,7 +13,9 @@
 </tags>
 <properties>
 <property name='package'>7-segment-4digit-youngsun</property>
-<property name='family'>7-segment-4digit</property>
+<property name='family'>LED Segment Display</property>
+<property name='digits'>4</property>
+<property name='segments'>7</property>
 </properties>
 <views>
 <breadboardView>

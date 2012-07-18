@@ -2,18 +2,18 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-LPC213X-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' LPC213X  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>IC</label>
 <author>www.fritzing.org</author>
 <description>Schematic element and footprint for NXP LPC213x uC. Spark Fun Electronics SKU : COM-00520</description>
 <title>LPC213X</title>
 <tags>
-<tag>LPC213X</tag>
 <tag>SQFP-S-10X10-64</tag>
+<tag>LPC213X</tag>
 </tags>
 <properties>
 <property name='package'>sqfp-s-10x10-64</property>
-<property name='family'>lpc213x</property>
+<property name='family'>ARM</property>
 </properties>
 <views>
 <breadboardView>

@@ -2,19 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-GE863_GPS-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-RF' GE863_GPS  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;GE863 Cellular Module with GPS&lt;/b&gt;
 Proto layout and schematic for GE863 cellular module with SiRF III GPS. Spark Fun Electronics SKU : CEL-08246</description>
 <title>GE863 Cellular Module with GPS</title>
 <tags>
-<tag>GE863_GPS</tag>
 <tag>GE863</tag>
+<tag>GE863_GPS</tag>
 </tags>
 <properties>
 <property name='package'>ge863</property>
-<property name='family'>ge863_gps</property>
+<property name='family'>GPS</property>
+<property name='chip'>GE863</property>
 </properties>
 <views>
 <breadboardView>

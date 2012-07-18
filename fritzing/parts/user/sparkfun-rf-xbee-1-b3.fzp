@@ -2,19 +2,19 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-XBEE-1-B3'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-RF' XBEE-1 B3 -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Xbee module footprints</description>
 <title>XBEE-1</title>
 <tags>
 <tag>B3</tag>
-<tag>XBEE-1</tag>
 <tag>XBEE-SMD</tag>
+<tag>XBEE-1</tag>
 </tags>
 <properties>
 <property name='package'>xbee-smd</property>
-<property name='family'>xbee-1</property>
+<property name='family'>Xbee</property>
 <property name='variant'>b3</property>
 </properties>
 <views>

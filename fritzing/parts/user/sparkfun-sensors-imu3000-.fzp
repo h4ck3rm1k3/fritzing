@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-IMU3000-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' IMU3000  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>3-axis I2C programmable gyro.&lt;BR&gt;
@@ -14,7 +14,10 @@ Can interface with an I2C accelerometer to provide 6-axis motion information.</d
 </tags>
 <properties>
 <property name='package'>qfn-24</property>
-<property name='family'>imu3000</property>
+<property name='family'>Gyroscope</property>
+<property name='features'>programmable</property>
+<property name='interface'>I2C</property>
+<property name='axis'>3</property>
 </properties>
 <views>
 <breadboardView>

@@ -2,20 +2,23 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-LY530AL-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' LY530AL SMD -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Single-axis 300deg/s gyro w/available 4x amplified output</description>
 <title>LY530AL</title>
 <tags>
 <tag>SMD</tag>
-<tag>LY530AL</tag>
 <tag>LGA16</tag>
+<tag>LY530AL</tag>
 </tags>
 <properties>
 <property name='package'>lga16</property>
-<property name='family'>ly530al</property>
+<property name='family'>Gyroscope</property>
+<property name='features'>4x amplified output</property>
 <property name='variant'>smd</property>
+<property name='sensitivity'>300deg/s</property>
+<property name='axis'>1</property>
 </properties>
 <views>
 <breadboardView>

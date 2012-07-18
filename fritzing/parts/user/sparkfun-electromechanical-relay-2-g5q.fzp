@@ -2,19 +2,19 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-RELAY-2-G5Q'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' RELAY-2 G5Q -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>SPDT relay (COM-00100)</description>
 <title>RELAY-2</title>
 <tags>
-<tag>G5Q</tag>
 <tag>RELAY-2</tag>
 <tag>RELAY-G5V</tag>
+<tag>G5Q</tag>
 </tags>
 <properties>
 <property name='package'>relay-g5v</property>
-<property name='family'>relay-2</property>
+<property name='family'>Relay (SPDT)</property>
 <property name='variant'>g5q</property>
 </properties>
 <views>

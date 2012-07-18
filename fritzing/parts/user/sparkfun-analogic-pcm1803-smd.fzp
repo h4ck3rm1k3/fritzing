@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-PCM1803-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-AnalogIC' PCM1803 SMD -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>24-bit ADC</description>
@@ -14,7 +14,9 @@
 </tags>
 <properties>
 <property name='package'>ssop20</property>
-<property name='family'>pcm1803</property>
+<property name='resolution'>24-bit</property>
+<property name='family'>ADC</property>
+<property name='chip'>PCM1803</property>
 <property name='variant'>smd</property>
 </properties>
 <views>

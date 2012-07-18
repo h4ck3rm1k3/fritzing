@@ -2,19 +2,21 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-74HC4052-DIP'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-AnalogIC' 74HC4052 DIP -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Dual 4:1 analog mux</description>
 <title>74HC4052</title>
 <tags>
-<tag>DIP</tag>
 <tag>74HC4052</tag>
+<tag>DIP</tag>
 <tag>DIL16</tag>
 </tags>
 <properties>
 <property name='package'>dil16</property>
-<property name='family'>74hc4052</property>
+<property name='channels'>Dual 4-1</property>
+<property name='family'>Analog MUX</property>
+<property name='chip'>74HC4052</property>
 <property name='variant'>dip</property>
 </properties>
 <views>

@@ -2,19 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-V_REG_TPS61040-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-PowerIC' V_REG_TPS61040 SMD -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description></description>
 <title>V_REG_TPS61040</title>
 <tags>
-<tag>SMD</tag>
 <tag>V_REG_TPS61040</tag>
+<tag>SMD</tag>
 <tag>SOT23-5</tag>
 </tags>
 <properties>
 <property name='package'>sot23-5</property>
-<property name='family'>v_reg_tps61040</property>
+<property name='family'>Voltage Regulator</property>
+<property name='chip'>TPS61040</property>
 <property name='variant'>smd</property>
 </properties>
 <views>

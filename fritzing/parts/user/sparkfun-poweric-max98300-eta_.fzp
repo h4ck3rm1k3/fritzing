@@ -2,12 +2,12 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-MAX98300-ETA+'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-PowerIC' MAX98300 ETA+ -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Mono 2.6W Class D Amplifier&lt;/b&gt;&lt;p&gt;
 
-Datasheet: &lt;a href=&quot;http://datasheets.maxim-ic.com/en/ds/MAX98300.pdf&quot;&gt;http://datasheets.maxim-ic.com/en/ds/MAX98300.pdf&lt;/a&gt;&lt;p&gt;
+Datasheet: &lt;a href=http://datasheets.maxim-ic.com/en/ds/MAX98300.pdf&gt;http://datasheets.maxim-ic.com/en/ds/MAX98300.pdf&lt;/a&gt;&lt;p&gt;
 
 The MAX98300 mono 2.6W Class D amplifier provides
 Class AB audio performance with Class D efficiency.
@@ -28,13 +28,15 @@ Both packages are specified over the extended -40NC to
 +85NC temperature range.</description>
 <title>Mono 2.6W Class D Amplifier</title>
 <tags>
-<tag>ETA+</tag>
 <tag>MAX98300</tag>
+<tag>ETA+</tag>
 <tag>8-TDFN-EP</tag>
 </tags>
 <properties>
 <property name='package'>8-tdfn-ep</property>
-<property name='family'>max98300</property>
+<property name='family'>Audio Amplifier</property>
+<property name='chip'>max98300</property>
+<property name='power'>2.6W (Class D)</property>
 <property name='variant'>eta+</property>
 </properties>
 <views>

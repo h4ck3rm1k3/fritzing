@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-ZXLD1360-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-PowerIC' ZXLD1360  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Adjustable constant current switching driver for high-power LEDs</description>
@@ -13,7 +13,8 @@
 </tags>
 <properties>
 <property name='package'>sot23-5</property>
-<property name='family'>zxld1360</property>
+<property name='family'>LED Driver</property>
+<property name='chip'>ZXLD1360</property>
 </properties>
 <views>
 <breadboardView>

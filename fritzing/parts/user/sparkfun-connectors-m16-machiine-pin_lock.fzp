@@ -2,19 +2,19 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-M16-MACHIINE-PIN_LOCK'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' M16 MACHIINE-PIN_LOCK -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
-<description>1x16 .1&quot; header</description>
+<description>1x16 .1 header</description>
 <title>M16</title>
 <tags>
 <tag>MACHIINE-PIN_LOCK</tag>
-<tag>M16</tag>
 <tag>1X16_MACHINE-PIN-HEADER_LOCK.004</tag>
+<tag>M16</tag>
 </tags>
 <properties>
 <property name='package'>1x16_machine-pin-header_lock.004</property>
-<property name='family'>m16</property>
+<property name='family'>Pin Header</property>
 <property name='variant'>machiine-pin_lock</property>
 </properties>
 <views>

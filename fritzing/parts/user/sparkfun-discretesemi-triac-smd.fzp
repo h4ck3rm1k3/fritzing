@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DiscreteSemi-TRIAC-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DiscreteSemi' TRIAC SMD -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Low-power generic TRIAC packages</description>
@@ -14,7 +14,7 @@
 </tags>
 <properties>
 <property name='package'>sot223</property>
-<property name='family'>triac</property>
+<property name='family'>TRIAC</property>
 <property name='variant'>smd</property>
 </properties>
 <views>

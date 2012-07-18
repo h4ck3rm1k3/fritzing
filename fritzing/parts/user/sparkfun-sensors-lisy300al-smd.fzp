@@ -2,21 +2,24 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-LISY300AL-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' LISY300AL SMD -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Single-axis 300 deg/s analog gyroscope.&lt;br&gt;
 Untested part.</description>
 <title>LISY300AL</title>
 <tags>
-<tag>SMD</tag>
 <tag>LISY300AL</tag>
+<tag>SMD</tag>
 <tag>LGA28</tag>
 </tags>
 <properties>
 <property name='package'>lga28</property>
-<property name='family'>lisy300al</property>
+<property name='family'>Gyroscope</property>
+<property name='interface'>analog</property>
 <property name='variant'>smd</property>
+<property name='axis'>1</property>
+<property name='sensitivity'>300deg/s</property>
 </properties>
 <views>
 <breadboardView>

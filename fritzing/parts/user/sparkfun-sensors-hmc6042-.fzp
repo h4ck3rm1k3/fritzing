@@ -2,18 +2,18 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-HMC6042-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' HMC6042  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Honeywell 2-axis magnetic sensor</description>
 <title>HMC6042</title>
 <tags>
 <tag>HMC6042</tag>
-<tag>HMC6042</tag>
 </tags>
 <properties>
 <property name='package'>hmc6042</property>
-<property name='family'>hmc6042</property>
+<property name='family'>Magnetic Sensor</property>
+<property name='axis'>2</property>
 </properties>
 <views>
 <breadboardView>

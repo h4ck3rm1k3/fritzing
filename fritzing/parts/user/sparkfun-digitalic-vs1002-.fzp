@@ -2,10 +2,10 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-VS1002-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' VS1002  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
-<description>MP3 deecoder</description>
+<description>MP3 decoder</description>
 <title>VS1002</title>
 <tags>
 <tag>VS1002</tag>
@@ -13,7 +13,9 @@
 </tags>
 <properties>
 <property name='package'>lqfp-48</property>
-<property name='family'>vs1002</property>
+<property name='family'>Audio IC</property>
+<property name='chip'>VS1002</property>
+<property name='function'>MP3 decoder</property>
 </properties>
 <views>
 <breadboardView>

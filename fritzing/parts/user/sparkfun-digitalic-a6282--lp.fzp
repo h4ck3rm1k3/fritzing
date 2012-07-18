@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-A6282--LP'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' A6282 -LP -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>16-Channel Constant-Current LED Driver&lt;br&gt;
@@ -12,13 +12,14 @@ Last modified: 8/20/10&lt;br&gt;
 &lt;B&gt;Unproven!&lt;/b&gt;&lt;br&gt;</description>
 <title>A6282</title>
 <tags>
-<tag>-LP</tag>
 <tag>A6282</tag>
 <tag>TSSOP-24</tag>
+<tag>-LP</tag>
 </tags>
 <properties>
 <property name='package'>tssop-24</property>
-<property name='family'>a6282</property>
+<property name='family'>Led Driver</property>
+<property name='chip'>A6282</property>
 <property name='variant'>-lp</property>
 </properties>
 <views>

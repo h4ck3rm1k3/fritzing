@@ -2,19 +2,19 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-SWITCH-MOMENTARY-2-PTH_REED'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' SWITCH-MOMENTARY-2 PTH_REED -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>S</label>
 <author>www.fritzing.org</author>
 <description>Various NO switches- pushbuttons, reed, etc</description>
 <title>SWITCH-MOMENTARY-2</title>
 <tags>
+<tag>REED_SWITCH_PTH</tag>
 <tag>PTH_REED</tag>
 <tag>SWITCH-MOMENTARY-2</tag>
-<tag>REED_SWITCH_PTH</tag>
 </tags>
 <properties>
 <property name='package'>reed_switch_pth</property>
-<property name='family'>switch-momentary-2</property>
+<property name='family'>Reed switch</property>
 <property name='variant'>pth_reed</property>
 </properties>
 <views>

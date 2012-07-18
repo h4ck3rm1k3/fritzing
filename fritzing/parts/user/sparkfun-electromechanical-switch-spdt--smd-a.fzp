@@ -2,20 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-SWITCH-SPDT--SMD-A'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' SWITCH-SPDT -SMD-A -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>S</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;SPST Switch&lt;/b&gt;
 Simple slide switch. Spark Fun Electronics SKU : COM-00102</description>
 <title>SPST Switch</title>
 <tags>
+<tag>SWITCH-SPST-SMD-A</tag>
 <tag>-SMD-A</tag>
 <tag>SWITCH-SPDT</tag>
-<tag>SWITCH-SPST-SMD-A</tag>
 </tags>
 <properties>
 <property name='package'>switch-spst-smd-a</property>
-<property name='family'>switch-spdt</property>
+<property name='family'>Switch (SPST)</property>
 <property name='variant'>-smd-a</property>
 </properties>
 <views>

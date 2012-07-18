@@ -2,20 +2,19 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-AUDIO-JACK-PTH'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' AUDIO-JACK PTH -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
-<description>&lt;b&gt;3.5mm Audio Jack&lt;/b&gt;
-Simple 3.5mm common PCB mount audio jack. SKU: PRT-08032</description>
+<description>Simple 3.5mm common PCB mount audio jack. SKU: PRT-08032</description>
 <title>3.5mm Audio Jack</title>
 <tags>
 <tag>PTH</tag>
 <tag>AUDIO-JACK</tag>
-<tag>AUDIO-JACK</tag>
 </tags>
 <properties>
 <property name='package'>audio-jack</property>
-<property name='family'>audio-jack</property>
+<property name='size'>3.5mm</property>
+<property name='family'>Audio Jack</property>
 <property name='variant'>pth</property>
 </properties>
 <views>

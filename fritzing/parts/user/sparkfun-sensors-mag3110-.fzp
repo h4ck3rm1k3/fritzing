@@ -2,18 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-MAG3110-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' MAG3110  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>3-axis digital (I2C) magnetometer</description>
 <title>MAG3110</title>
 <tags>
-<tag>MAG3110</tag>
 <tag>DFN-10</tag>
+<tag>MAG3110</tag>
 </tags>
 <properties>
 <property name='package'>dfn-10</property>
-<property name='family'>mag3110</property>
+<property name='family'>Magnetic Sensor</property>
+<property name='interface'>I2C</property>
+<property name='axis'>3</property>
 </properties>
 <views>
 <breadboardView>

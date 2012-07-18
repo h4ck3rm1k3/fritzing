@@ -2,18 +2,19 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-ATMEGA128RFA1-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-RF' ATMEGA128RFA1  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Atmel 8-bit micro with 802.15.4 wireless support and 128k flash</description>
 <title>ATMEGA128RFA1</title>
 <tags>
-<tag>ATMEGA128RFA1</tag>
 <tag>QFN-64</tag>
+<tag>ATMEGA128RFA1</tag>
 </tags>
 <properties>
 <property name='package'>qfn-64</property>
-<property name='family'>atmega128rfa1</property>
+<property name='family'>ATmega UC</property>
+<property name='chip'>ATMEGA128RF</property>
 </properties>
 <views>
 <breadboardView>

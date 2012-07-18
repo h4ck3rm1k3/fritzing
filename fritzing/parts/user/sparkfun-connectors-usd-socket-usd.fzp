@@ -2,20 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-USD-SOCKET-USD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' USD-SOCKET USD -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;microSD Socket&lt;/b&gt;
 Push-push type uSD socket. Schematic element and footprint production proven. Spark Fun Electronics SKU : PRT-00127. tDoc lines correctly indicate media card edge positions when inserting (unlocked, locked, depressed).</description>
 <title>microSD Socket</title>
 <tags>
-<tag>USD</tag>
 <tag>USD-SOCKET</tag>
+<tag>USD</tag>
 <tag>USD-SOCKET-PP</tag>
 </tags>
 <properties>
 <property name='package'>usd-socket-pp</property>
-<property name='family'>usd-socket</property>
+<property name='family'>microSD Socket</property>
 <property name='variant'>usd</property>
 </properties>
 <views>

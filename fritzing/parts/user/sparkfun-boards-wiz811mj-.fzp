@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Boards-WIZ811MJ-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Boards' WIZ811MJ  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;WIZnet W5100 Network Module with MagJack - WIZ811MJ&lt;/h3&gt;
@@ -12,7 +12,6 @@ See http://www.sparkfun.com/commerce/product_info.php?products_id=9473 for more 
 &lt;B&gt;**UNPROVEN&lt;/b&gt;</description>
 <title>WIZ811MJ</title>
 <tags>
-<tag>WIZ811MJ</tag>
 <tag>WIZ811MJ</tag>
 </tags>
 <properties>

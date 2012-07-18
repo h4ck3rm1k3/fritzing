@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-TC7SU04F-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' TC7SU04F  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Single gate inverter</description>
@@ -13,7 +13,8 @@
 </tags>
 <properties>
 <property name='package'>sot23-5</property>
-<property name='family'>tc7su04f</property>
+<property name='family'>Logic IC</property>
+<property name='chip'>TC7SU04F</property>
 </properties>
 <views>
 <breadboardView>

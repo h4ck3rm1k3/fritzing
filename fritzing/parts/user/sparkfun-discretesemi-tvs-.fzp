@@ -2,19 +2,19 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DiscreteSemi-TVS-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DiscreteSemi' TVS  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Transient voltage suppressor- prevents ESD on inputs.&lt;br&gt;
 Ignore package description- MBRA140 is NOT this type of part!!!</description>
 <title>TVS</title>
 <tags>
-<tag>TVS</tag>
 <tag>SMA-DIODE</tag>
+<tag>TVS</tag>
 </tags>
 <properties>
 <property name='package'>sma-diode</property>
-<property name='family'>tvs</property>
+<property name='family'>Diode (TVS)</property>
 </properties>
 <views>
 <breadboardView>

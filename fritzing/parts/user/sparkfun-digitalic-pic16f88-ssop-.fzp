@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-PIC16F88-SSOP-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' PIC16F88-SSOP  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>IC</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;PIC 16F8x&lt;/b&gt;
@@ -16,7 +16,7 @@
 </tags>
 <properties>
 <property name='package'>ssop20</property>
-<property name='family'>pic16f88-ssop</property>
+<property name='family'>PIC UC</property>
 </properties>
 <views>
 <breadboardView>

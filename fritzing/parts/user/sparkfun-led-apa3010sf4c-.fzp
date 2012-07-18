@@ -2,18 +2,19 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-LED-APA3010SF4C-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-LED' APA3010SF4C  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>D</label>
 <author>www.fritzing.org</author>
 <description>Right-angle 880nm SMT infrared LED</description>
 <title>APA3010SF4C</title>
 <tags>
 <tag>APA3010SF4C</tag>
-<tag>APA3010SF4C</tag>
 </tags>
 <properties>
 <property name='package'>apa3010sf4c</property>
-<property name='family'>apa3010sf4c</property>
+<property name='mount'>Right-angle</property>
+<property name='family'>LED (IR)</property>
+<property name='wavelength'>880nm</property>
 </properties>
 <views>
 <breadboardView>

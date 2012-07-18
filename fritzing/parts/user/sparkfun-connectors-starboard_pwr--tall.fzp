@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-STARBOARD_PWR--TALL'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' STARBOARD_PWR -TALL -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>J</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;StarbBoard Power pad&lt;/h3&gt;
@@ -10,7 +10,6 @@ Power pads are designated by the star cutout in the top layer.</description>
 <title>STARBOARD_PWR</title>
 <tags>
 <tag>-TALL</tag>
-<tag>STARBOARD_PWR</tag>
 <tag>STARBOARD_PWR</tag>
 </tags>
 <properties>

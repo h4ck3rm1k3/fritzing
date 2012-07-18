@@ -28,7 +28,7 @@ $Date$
 
 #include "../utils/misc.h"
 #include "../utils/textutils.h"
-#include "../debugdialog.h"
+//#include "../debugdialog.h"
 #include "svgpathparser.h"
 #include "svgpathlexer.h"
 #include "svgpathrunner.h"
@@ -93,7 +93,7 @@ bool SvgFileSplitter::splitString(QString & contents, const QString & elementID)
 	int errorColumn;
 
 	if (!m_domDocument.setContent(contents, true, &errorStr, &errorLine, &errorColumn)) {
-        DebugDialog::debug(QString("parse error: %1 l:%2 c:%3\n\n%4").arg(errorStr).arg(errorLine).arg(errorColumn).arg(contents));
+        //DebugDialog::debug(QString("parse error: %1 l:%2 c:%3\n\n%4").arg(errorStr).arg(errorLine).arg(errorColumn).arg(contents));
 		return false;
 	}
 

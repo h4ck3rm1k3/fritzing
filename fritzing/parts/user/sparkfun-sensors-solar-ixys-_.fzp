@@ -2,19 +2,19 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-SOLAR-IXYS-_'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' SOLAR-IXYS _ -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>D</label>
 <author>www.fritzing.org</author>
 <description></description>
 <title>SOLAR-IXYS</title>
 <tags>
-<tag>_</tag>
-<tag>SOLAR-IXYS</tag>
 <tag>SO08</tag>
+<tag>SOLAR-IXYS</tag>
+<tag>_</tag>
 </tags>
 <properties>
 <property name='package'>so08</property>
-<property name='family'>solar-ixys</property>
+<property name='family'>Solar cell</property>
 <property name='variant'>_</property>
 </properties>
 <views>

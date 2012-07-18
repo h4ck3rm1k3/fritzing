@@ -2,19 +2,19 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-RELAY-PTH4'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' RELAY PTH4 -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>SPDT relay (COM-00101)</description>
 <title>RELAY</title>
 <tags>
 <tag>PTH4</tag>
-<tag>RELAY</tag>
 <tag>RELAY-JZC</tag>
+<tag>RELAY</tag>
 </tags>
 <properties>
 <property name='package'>relay-jzc</property>
-<property name='family'>relay</property>
+<property name='family'>Relay (SPDT)</property>
 <property name='variant'>pth4</property>
 </properties>
 <views>

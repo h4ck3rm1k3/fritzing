@@ -2,19 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-ATMEGA32U4-QFN2'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' ATMEGA32U4 QFN2 -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Atmel 44-pin 8-bit Microcontroller with 32KBytes of ISP Flash and USB Controller</description>
 <title>ATMEGA32U4</title>
 <tags>
 <tag>QFN2</tag>
-<tag>ATMEGA32U4</tag>
 <tag>QFN-44-NOPAD</tag>
+<tag>ATMEGA32U4</tag>
 </tags>
 <properties>
 <property name='package'>qfn-44-nopad</property>
-<property name='family'>atmega32u4</property>
+<property name='family'>ATmega</property>
+<property name='chip'>atmega32</property>
 <property name='variant'>qfn2</property>
 </properties>
 <views>

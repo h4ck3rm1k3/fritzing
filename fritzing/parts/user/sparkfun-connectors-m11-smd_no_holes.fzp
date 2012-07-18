@@ -2,20 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-M11-SMD_NO_HOLES'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' M11 SMD_NO_HOLES -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Header 11&lt;/b&gt;
-Standard 11-pin 0.1&quot; header. Use with straight break away headers (SKU : PRT-00116), right angle break away headers (PRT-00553), swiss pins (PRT-00743), machine pins (PRT-00117), and female headers (PRT-00115).</description>
+Standard 11-pin 0.1 header. Use with straight break away headers (SKU : PRT-00116), right angle break away headers (PRT-00553), swiss pins (PRT-00743), machine pins (PRT-00117), and female headers (PRT-00115).</description>
 <title>Header 11</title>
 <tags>
-<tag>SMD_NO_HOLES</tag>
-<tag>M11</tag>
 <tag>1X11_SMD_NO_HOLES</tag>
+<tag>M11</tag>
+<tag>SMD_NO_HOLES</tag>
 </tags>
 <properties>
 <property name='package'>1x11_smd_no_holes</property>
-<property name='family'>m11</property>
+<property name='family'>Pin Header</property>
 <property name='variant'>smd_no_holes</property>
 </properties>
 <views>

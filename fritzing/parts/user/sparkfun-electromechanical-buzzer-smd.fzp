@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-BUZZER-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' BUZZER SMD -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>SG</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Buzzer 12mm&lt;/b&gt;
@@ -10,12 +10,13 @@ Spark Fun Electronics SKU : Comp-Buzzer</description>
 <title>Buzzer 12mm</title>
 <tags>
 <tag>SMD</tag>
-<tag>BUZZER</tag>
 <tag>BUZZER-CMT1603</tag>
+<tag>BUZZER</tag>
 </tags>
 <properties>
 <property name='package'>buzzer-cmt1603</property>
-<property name='family'>buzzer</property>
+<property name='size'>12mm</property>
+<property name='family'>Buzzer</property>
 <property name='variant'>smd</property>
 </properties>
 <views>

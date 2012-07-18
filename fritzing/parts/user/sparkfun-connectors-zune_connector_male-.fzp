@@ -2,18 +2,19 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-ZUNE_CONNECTOR_MALE-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' ZUNE_CONNECTOR_MALE  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Male connector for the Zune media player.  UNPROVEN FOOTPRINT!  This connector must be used only with a 1.2mm PCB thickness.</description>
 <title>ZUNE_CONNECTOR_MALE</title>
 <tags>
 <tag>ZUNE_CONNECTOR_MALE</tag>
-<tag>ZUNE_CONNECTOR_MALE</tag>
 </tags>
 <properties>
 <property name='package'>zune_connector_male</property>
-<property name='family'>zune_connector_male</property>
+<property name='gender'>male</property>
+<property name='target'>Zune media player</property>
+<property name='family'>Zune Connector</property>
 </properties>
 <views>
 <breadboardView>

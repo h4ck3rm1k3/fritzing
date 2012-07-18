@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-FT232RL-BASIC-SSOP'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' FT232RL-BASIC SSOP -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;USB UART&lt;/b&gt;
@@ -10,12 +10,13 @@ This is the simplified version of the FT232RL unit. Only what you need, nothing 
 <title>USB UART</title>
 <tags>
 <tag>SSOP</tag>
-<tag>FT232RL-BASIC</tag>
 <tag>SSOP28DB</tag>
+<tag>FT232RL-BASIC</tag>
 </tags>
 <properties>
 <property name='package'>ssop28db</property>
-<property name='family'>ft232rl-basic</property>
+<property name='family'>USB IC</property>
+<property name='chip'>FT232RL</property>
 <property name='variant'>ssop</property>
 </properties>
 <views>

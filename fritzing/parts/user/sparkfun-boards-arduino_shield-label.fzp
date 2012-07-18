@@ -2,15 +2,15 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Boards-ARDUINO_SHIELD-LABEL'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Boards' ARDUINO_SHIELD LABEL -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Arduino shield footprint</description>
 <title>ARDUINO_SHIELD</title>
 <tags>
-<tag>LABEL</tag>
 <tag>ARDUINO_SHIELD</tag>
 <tag>DUEMILANOVE_SHIELD</tag>
+<tag>LABEL</tag>
 </tags>
 <properties>
 <property name='package'>duemilanove_shield</property>

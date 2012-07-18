@@ -2,20 +2,22 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-V_REG_78XX--TO-220'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-PowerIC' V_REG_78XX -TO-220 -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>IC</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Voltage Regulator&lt;/b&gt;
 Standard 7805 5V regulator. IGO (Input Ground Output). Spark Fun Electronics SKU : COM-00107</description>
 <title>Voltage Regulator</title>
 <tags>
+<tag>TO-220-ALT</tag>
 <tag>-TO-220</tag>
 <tag>V_REG_78XX</tag>
-<tag>TO-220-ALT</tag>
 </tags>
 <properties>
 <property name='package'>to-220-alt</property>
-<property name='family'>v_reg_78xx</property>
+<property name='family'>Voltage Regulator</property>
+<property name='voltage'>5V</property>
+<property name='chip'>78005</property>
 <property name='variant'>-to-220</property>
 </properties>
 <views>

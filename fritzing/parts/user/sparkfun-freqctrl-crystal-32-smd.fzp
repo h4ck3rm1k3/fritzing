@@ -2,19 +2,19 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-FreqCtrl-CRYSTAL-32-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-FreqCtrl' CRYSTAL 32-SMD -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>Y</label>
 <author>www.fritzing.org</author>
 <description>Various standard crystals. Proven footprints. Spark Fun Electronics SKU : COM-00534</description>
 <title>CRYSTAL</title>
 <tags>
+<tag>CRYSTAL-32KHZ-SMD</tag>
 <tag>32-SMD</tag>
 <tag>CRYSTAL</tag>
-<tag>CRYSTAL-32KHZ-SMD</tag>
 </tags>
 <properties>
 <property name='package'>crystal-32khz-smd</property>
-<property name='family'>crystal</property>
+<property name='family'>Crystal</property>
 <property name='variant'>32-smd</property>
 </properties>
 <views>

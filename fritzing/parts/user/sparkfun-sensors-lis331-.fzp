@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-LIS331-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' LIS331  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>3-axis 6/12/24g SPI/I2C accelerometer</description>
@@ -13,7 +13,10 @@
 </tags>
 <properties>
 <property name='package'>lga16-3mm</property>
-<property name='family'>lis331</property>
+<property name='family'>Accelerometer</property>
+<property name='interface'>I2C/SPI</property>
+<property name='axis'>3</property>
+<property name='sensitivity'>6/12/24g</property>
 </properties>
 <views>
 <breadboardView>

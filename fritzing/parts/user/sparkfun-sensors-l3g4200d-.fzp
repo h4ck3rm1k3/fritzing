@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-L3G4200D-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' L3G4200D  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;L3G4200D Three-axis, digital output gyroscope&lt;/h3&gt;
@@ -17,7 +17,10 @@ It includes a sensing element and an IC interface capable of providing the measu
 </tags>
 <properties>
 <property name='package'>lga16-4x4</property>
-<property name='family'>l3g4200d</property>
+<property name='family'>Gyroscope</property>
+<property name='interface'>I2C/SPI</property>
+<property name='axis'>3</property>
+<property name='sensitivity'>±250/±500/±2000dps</property>
 </properties>
 <views>
 <breadboardView>

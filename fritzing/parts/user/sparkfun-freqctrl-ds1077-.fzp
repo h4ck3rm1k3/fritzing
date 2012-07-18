@@ -2,18 +2,21 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-FreqCtrl-DS1077-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-FreqCtrl' DS1077  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>I2C non-volatile programmable oscillator, 16kHz to 133MHz</description>
 <title>DS1077</title>
 <tags>
-<tag>DS1077</tag>
 <tag>SO08</tag>
+<tag>DS1077</tag>
 </tags>
 <properties>
 <property name='package'>so08</property>
-<property name='family'>ds1077</property>
+<property name='frequency'>16kHz – 133MHz</property>
+<property name='family'>Oscillator</property>
+<property name='chip'>DS1077</property>
+<property name='interface'>I2C</property>
 </properties>
 <views>
 <breadboardView>

@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Passives-SOLDERJUMPER-NO'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Passives' SOLDERJUMPER NO -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>SJ</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Solder Jumper&lt;/b&gt;
@@ -15,7 +15,7 @@ Standard SMD solder jumper. Used to automate production. Two varients : Normally
 </tags>
 <properties>
 <property name='package'>sj_2s-no</property>
-<property name='family'>solderjumper</property>
+<property name='family'>PCB Jumper (Solder)</property>
 <property name='variant'>no</property>
 </properties>
 <views>

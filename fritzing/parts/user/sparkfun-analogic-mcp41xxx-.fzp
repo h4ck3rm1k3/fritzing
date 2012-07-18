@@ -2,18 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-MCP41XXX-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-AnalogIC' MCP41XXX  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>SPI controlled single digital potentiometer by Microchip</description>
-<title>MCP41XXX</title>
+<title>MCP41xxx</title>
 <tags>
-<tag>MCP41XXX</tag>
 <tag>SO08</tag>
+<tag>MCP41XXX</tag>
 </tags>
 <properties>
 <property name='package'>so08</property>
-<property name='family'>mcp41xxx</property>
+<property name='family'>Digital Potentiometer</property>
+<property name='chip'>mcp41xxx</property>
+<property name='interface'>SPI</property>
 </properties>
 <views>
 <breadboardView>

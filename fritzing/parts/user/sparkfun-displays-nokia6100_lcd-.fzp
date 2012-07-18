@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Displays-NOKIA6100_LCD-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Displays' NOKIA6100_LCD  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Nokia 6100 Color LCD&lt;/b&gt;
@@ -10,11 +10,10 @@ Schematic element and footprint production proven but could use some touching up
 <title>Nokia 6100 Color LCD</title>
 <tags>
 <tag>NOKIA6100_LCD</tag>
-<tag>NOKIA6100_LCD</tag>
 </tags>
 <properties>
 <property name='package'>nokia6100_lcd</property>
-<property name='family'>nokia6100_lcd</property>
+<property name='family'>LCD (Graphical)</property>
 </properties>
 <views>
 <breadboardView>

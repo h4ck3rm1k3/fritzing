@@ -2,19 +2,19 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-MCP130-SOT'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' MCP130 SOT -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Open-drain microcontroller supervisor chip</description>
 <title>MCP130</title>
 <tags>
 <tag>SOT</tag>
-<tag>MCP130</tag>
 <tag>SOT23-3</tag>
+<tag>MCP130</tag>
 </tags>
 <properties>
 <property name='package'>sot23-3</property>
-<property name='family'>mcp130</property>
+<property name='family'>Misc Mikrocontroller</property>
 <property name='variant'>sot</property>
 </properties>
 <views>

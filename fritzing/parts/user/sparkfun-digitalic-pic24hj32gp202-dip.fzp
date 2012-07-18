@@ -2,19 +2,19 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-PIC24HJ32GP202-DIP'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' PIC24HJ32GP202 DIP -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description></description>
 <title>PIC24HJ32GP202</title>
 <tags>
-<tag>DIP</tag>
 <tag>PIC24HJ32GP202</tag>
+<tag>DIP</tag>
 <tag>DIL28-3</tag>
 </tags>
 <properties>
 <property name='package'>dil28-3</property>
-<property name='family'>pic24hj32gp202</property>
+<property name='family'>PIC UC</property>
 <property name='variant'>dip</property>
 </properties>
 <views>

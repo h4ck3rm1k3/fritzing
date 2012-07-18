@@ -2,18 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-LITTLEBITS_MALE-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' LITTLEBITS_MALE  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Male end for LittleBits boards</description>
 <title>LITTLEBITS_MALE</title>
 <tags>
-<tag>LITTLEBITS_MALE</tag>
 <tag>LITTLE_BITS_MALE</tag>
+<tag>LITTLEBITS_MALE</tag>
 </tags>
 <properties>
 <property name='package'>little_bits_male</property>
-<property name='family'>littlebits_male</property>
+<property name='target'>LittleBits</property>
+<property name='family'>LittleBits</property>
+<property name='variant'>male</property>
 </properties>
 <views>
 <breadboardView>

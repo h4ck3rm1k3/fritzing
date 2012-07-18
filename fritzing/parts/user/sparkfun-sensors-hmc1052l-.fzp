@@ -2,19 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-HMC1052L-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' HMC1052L  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;HMC1052L&lt;/b&gt;
 Dual axis magnetic sensor. Used for compass and magnetometer applications. Schematic and footprint are not tested and probably need fixing. Spark Fun Electronics SKU : COM-00708</description>
 <title>HMC1052L</title>
 <tags>
-<tag>HMC1052L</tag>
 <tag>16LPCC</tag>
+<tag>HMC1052L</tag>
 </tags>
 <properties>
 <property name='package'>16lpcc</property>
-<property name='family'>hmc1052l</property>
+<property name='family'>Magnetic Sensor</property>
+<property name='axis'>2</property>
 </properties>
 <views>
 <breadboardView>

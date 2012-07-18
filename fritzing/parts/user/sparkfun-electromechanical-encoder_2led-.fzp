@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-ENCODER_2LED-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' ENCODER_2LED  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;H3&gt;Illuminated Rotary Encoder w/ 2 LEDs&lt;/h3&gt;</description>
@@ -13,7 +13,8 @@
 </tags>
 <properties>
 <property name='package'>encoder_led_2</property>
-<property name='family'>encoder_2led</property>
+<property name='family'>Rotary Encoder</property>
+<property name='has_switch'>false</property>
 </properties>
 <views>
 <breadboardView>

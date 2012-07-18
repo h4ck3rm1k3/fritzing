@@ -2,19 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-XMEGA-100-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' XMEGA-100 SMD -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Atmel XMega uC</description>
 <title>XMEGA-100</title>
 <tags>
-<tag>SMD</tag>
-<tag>XMEGA-100</tag>
 <tag>TQFP-100-14X14MM</tag>
+<tag>XMEGA-100</tag>
+<tag>SMD</tag>
 </tags>
 <properties>
 <property name='package'>tqfp-100-14x14mm</property>
-<property name='family'>xmega-100</property>
+<property name='family'>AVR UC</property>
+<property name='chip'>XMega</property>
 <property name='variant'>smd</property>
 </properties>
 <views>

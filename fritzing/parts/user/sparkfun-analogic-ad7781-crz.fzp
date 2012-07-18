@@ -2,19 +2,21 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-AD7781-CRZ'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-AnalogIC' AD7781 CRZ -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>20-Bit, Pin-Programmable, Ultralow Power Sigma-Delta ADC</description>
 <title>AD7781</title>
 <tags>
+<tag>SOIC-14</tag>
 <tag>CRZ</tag>
 <tag>AD7781</tag>
-<tag>SOIC-14</tag>
 </tags>
 <properties>
 <property name='package'>soic-14</property>
-<property name='family'>ad7781</property>
+<property name='resolution'>20-bit</property>
+<property name='family'>ADC</property>
+<property name='chip'>ad7781</property>
 <property name='variant'>crz</property>
 </properties>
 <views>

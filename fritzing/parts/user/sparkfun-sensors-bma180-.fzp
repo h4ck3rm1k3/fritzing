@@ -2,19 +2,24 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-BMA180-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' BMA180  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>3-axis, 14-bit SPI/I2C accelerometer.&lt;br&gt;
 Range 1/1.5/2/3/4/8/16g.</description>
 <title>BMA180</title>
 <tags>
-<tag>BMA180</tag>
 <tag>LGA12</tag>
+<tag>BMA180</tag>
 </tags>
 <properties>
 <property name='package'>lga12</property>
-<property name='family'>bma180</property>
+<property name='resolution'>14-bit</property>
+<property name='family'>Accelerometer</property>
+<property name='chip'>BMA180</property>
+<property name='interface'>SPI/I2C</property>
+<property name='axis'>3</property>
+<property name='sensitivity'>1/1.5/2/3/4/8/16g</property>
 </properties>
 <views>
 <breadboardView>

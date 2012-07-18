@@ -2,20 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-M02-JST-PTH-2'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' M02 JST-PTH-2 -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Header 2&lt;/b&gt;
-Standard 2-pin 0.1&quot; header. Use with straight break away headers (SKU : PRT-00116), right angle break away headers (PRT-00553), swiss pins (PRT-00743), machine pins (PRT-00117), and female headers (PRT-00115). Molex polarized connector foot print use with SKU : PRT-08233 with associated crimp pins and housings.</description>
+Standard 2-pin 0.1 header. Use with straight break away headers (SKU : PRT-00116), right angle break away headers (PRT-00553), swiss pins (PRT-00743), machine pins (PRT-00117), and female headers (PRT-00115). Molex polarized connector foot print use with SKU : PRT-08233 with associated crimp pins and housings.</description>
 <title>Header 2</title>
 <tags>
-<tag>JST-PTH-2</tag>
 <tag>M02</tag>
 <tag>JST-2-PTH</tag>
+<tag>JST-PTH-2</tag>
 </tags>
 <properties>
 <property name='package'>jst-2-pth</property>
-<property name='family'>m02</property>
+<property name='family'>Pin Header</property>
 <property name='variant'>jst-pth-2</property>
 </properties>
 <views>

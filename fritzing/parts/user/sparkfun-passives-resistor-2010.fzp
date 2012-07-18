@@ -2,20 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Passives-RESISTOR-2010'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Passives' RESISTOR 2010 -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>R</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Resistor&lt;/b&gt;
 Basic schematic elements and footprints for 0603, 1206, and PTH resistors.</description>
 <title>Resistor</title>
 <tags>
-<tag>2010</tag>
 <tag>RESISTOR</tag>
 <tag>R2010</tag>
+<tag>2010</tag>
 </tags>
 <properties>
 <property name='package'>r2010</property>
-<property name='family'>resistor</property>
+<property name='family'>Resistor</property>
 <property name='variant'>2010</property>
 </properties>
 <views>

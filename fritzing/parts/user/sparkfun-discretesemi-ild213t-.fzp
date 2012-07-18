@@ -2,18 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DiscreteSemi-ILD213T-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DiscreteSemi' ILD213T  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>IC</label>
 <author>www.fritzing.org</author>
 <description>Dual optoisolator.</description>
 <title>ILD213T</title>
 <tags>
-<tag>ILD213T</tag>
 <tag>SO08</tag>
+<tag>ILD213T</tag>
 </tags>
 <properties>
 <property name='package'>so08</property>
-<property name='family'>ild213t</property>
+<property name='channels'>2</property>
+<property name='family'>Optoisolator</property>
+<property name='chip'>ILD213T</property>
 </properties>
 <views>
 <breadboardView>

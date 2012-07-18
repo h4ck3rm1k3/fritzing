@@ -2,18 +2,19 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-RS9110-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-RF' RS9110  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Redpine WiFi module</description>
 <title>RS9110</title>
 <tags>
-<tag>RS9110</tag>
 <tag>RS9110-N-11-22-SHORT</tag>
+<tag>RS9110</tag>
 </tags>
 <properties>
 <property name='package'>rs9110-n-11-22-short</property>
-<property name='family'>rs9110</property>
+<property name='family'>Wi-Fi module</property>
+<property name='chip'>RS9110</property>
 </properties>
 <views>
 <breadboardView>

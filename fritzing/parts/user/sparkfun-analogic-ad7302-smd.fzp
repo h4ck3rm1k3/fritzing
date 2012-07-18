@@ -2,19 +2,21 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-AD7302-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-AnalogIC' AD7302 SMD -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
-<description>8-bit parallel input 2-output DAC</description>
+<description>8-bit parallel input, dual output DAC</description>
 <title>AD7302</title>
 <tags>
-<tag>SMD</tag>
 <tag>AD7302</tag>
+<tag>SMD</tag>
 <tag>TSSOP20</tag>
 </tags>
 <properties>
 <property name='package'>tssop20</property>
-<property name='family'>ad7302</property>
+<property name='resolution'>8-bit</property>
+<property name='family'>DAC</property>
+<property name='chip'>ad7302</property>
 <property name='variant'>smd</property>
 </properties>
 <views>

@@ -2,18 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-MAX7456-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' MAX7456  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Monochrome NTSC/PAL on-screen display generator (SPI)</description>
 <title>MAX7456</title>
 <tags>
-<tag>MAX7456</tag>
 <tag>TSSOP28</tag>
+<tag>MAX7456</tag>
 </tags>
 <properties>
 <property name='package'>tssop28</property>
-<property name='family'>max7456</property>
+<property name='family'>Video</property>
+<property name='function'>OSD generator</property>
+<property name='interface'>SPI</property>
 </properties>
 <views>
 <breadboardView>

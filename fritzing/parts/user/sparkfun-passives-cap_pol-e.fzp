@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Passives-CAP_POL-E'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Passives' CAP_POL E -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>C</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Capacitor Polarized&lt;/b&gt;
@@ -15,7 +15,7 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 </tags>
 <properties>
 <property name='package'>panasonic_e</property>
-<property name='family'>cap_pol</property>
+<property name='family'>Cap (Polarized)</property>
 <property name='variant'>e</property>
 </properties>
 <views>

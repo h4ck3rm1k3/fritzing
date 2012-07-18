@@ -2,20 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Passives-CAP-_'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Passives' CAP _ -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>C</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Capacitor&lt;/b&gt;
-Standard 0603 ceramic capacitor, and 0.1&quot; leaded capacitor.</description>
+Standard 0603 ceramic capacitor, and 0.1 leaded capacitor.</description>
 <title>Capacitor</title>
 <tags>
+<tag>AXIAL-5MM</tag>
 <tag>_</tag>
 <tag>CAP</tag>
-<tag>AXIAL-5MM</tag>
 </tags>
 <properties>
 <property name='package'>axial-5mm</property>
-<property name='family'>cap</property>
+<property name='family'>Cap</property>
 <property name='variant'>_</property>
 </properties>
 <views>

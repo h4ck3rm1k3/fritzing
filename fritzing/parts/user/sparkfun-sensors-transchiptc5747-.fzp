@@ -2,18 +2,19 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-TRANSCHIPTC5747-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' TRANSCHIPTC5747  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>CMOS image sensor</description>
 <title>TRANSCHIPTC5747</title>
 <tags>
-<tag>TRANSCHIPTC5747</tag>
 <tag>CAMERA_SFV24R-2ST_2</tag>
+<tag>TRANSCHIPTC5747</tag>
 </tags>
 <properties>
 <property name='package'>camera_sfv24r-2st_2</property>
-<property name='family'>transchiptc5747</property>
+<property name='family'>Image Sensor (Camera)</property>
+<property name='technology'>CMOS</property>
 </properties>
 <views>
 <breadboardView>

@@ -2,10 +2,10 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Displays-7-SEGMENT-DISPLAY-1_-RED-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Displays' 7-SEGMENT-DISPLAY-1_-RED  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
-<description>7-Segment Display 1&quot; Red (COM-08546)</description>
+<description>7-Segment Display 1 Red (COM-08546)</description>
 <title>7-SEGMENT-DISPLAY-1_-RED</title>
 <tags>
 <tag>7-SEGMENT-DISPLAY-1_-RED</tag>
@@ -13,7 +13,9 @@
 </tags>
 <properties>
 <property name='package'>7-segment-1_pth</property>
-<property name='family'>7-segment-display-1_-red</property>
+<property name='family'>Charakter Display</property>
+<property name='digits'>1</property>
+<property name='segments'>7</property>
 </properties>
 <views>
 <breadboardView>

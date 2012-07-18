@@ -2,20 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Passives-JUMPER-2-SMD-NO-NS'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Passives' JUMPER-2 SMD-NO-NS -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Jumper&lt;/b&gt;
-Basic 0.1&quot; spaced jumper. Use with breakaway headers.</description>
+Basic 0.1 spaced jumper. Use with breakaway headers.</description>
 <title>Jumper</title>
 <tags>
-<tag>SMD-NO-NS</tag>
 <tag>JUMPER-2</tag>
 <tag>SJ_2S-NO-NS</tag>
+<tag>SMD-NO-NS</tag>
 </tags>
 <properties>
 <property name='package'>sj_2s-no-ns</property>
-<property name='family'>jumper-2</property>
+<property name='family'>Jumper</property>
 <property name='variant'>smd-no-ns</property>
 </properties>
 <views>

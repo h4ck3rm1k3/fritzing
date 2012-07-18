@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-STW5093-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' STW5093  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>STW5093 - PCM Audio Codec</description>
@@ -13,7 +13,8 @@
 </tags>
 <properties>
 <property name='package'>tssop30</property>
-<property name='family'>stw5093</property>
+<property name='family'>Audio IC</property>
+<property name='chip'>STW5093</property>
 </properties>
 <views>
 <breadboardView>

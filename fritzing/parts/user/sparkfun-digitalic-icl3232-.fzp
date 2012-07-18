@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-ICL3232-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' ICL3232  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>3V to RS-232 transceiver</description>
@@ -13,7 +13,8 @@
 </tags>
 <properties>
 <property name='package'>dil16</property>
-<property name='family'>icl3232</property>
+<property name='family'>Serial IC</property>
+<property name='chip'>ICL3232</property>
 </properties>
 <views>
 <breadboardView>

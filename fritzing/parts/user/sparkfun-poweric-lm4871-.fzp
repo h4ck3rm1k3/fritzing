@@ -2,18 +2,19 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-LM4871-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-PowerIC' LM4871  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>3W audio amplifier</description>
 <title>LM4871</title>
 <tags>
-<tag>LM4871</tag>
 <tag>SO08</tag>
+<tag>LM4871</tag>
 </tags>
 <properties>
 <property name='package'>so08</property>
-<property name='family'>lm4871</property>
+<property name='output'>3W</property>
+<property name='family'>Audio Amplifier</property>
 </properties>
 <views>
 <breadboardView>

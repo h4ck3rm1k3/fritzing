@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-WTV020SD-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' WTV020SD  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>IC</label>
 <author>www.fritzing.org</author>
 <description>SD audio playback IC&lt;br&gt;
@@ -16,7 +16,8 @@ available in SSOP-20 or DIP-20</description>
 </tags>
 <properties>
 <property name='package'>ssop_20</property>
-<property name='family'>wtv020sd</property>
+<property name='family'>Audio IC</property>
+<property name='chip'>WTV020SD</property>
 </properties>
 <views>
 <breadboardView>

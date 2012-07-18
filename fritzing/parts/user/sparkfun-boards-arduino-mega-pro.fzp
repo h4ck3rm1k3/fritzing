@@ -2,15 +2,15 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Boards-ARDUINO-MEGA-PRO'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Boards' ARDUINO-MEGA PRO -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Arduino Mega board footprint</description>
 <title>ARDUINO-MEGA</title>
 <tags>
 <tag>PRO</tag>
-<tag>ARDUINO-MEGA</tag>
 <tag>ARDUINO_MEGA-PRO-3.3V</tag>
+<tag>ARDUINO-MEGA</tag>
 </tags>
 <properties>
 <property name='package'>arduino_mega-pro-3.3v</property>

@@ -2,20 +2,22 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-ZIFSOCKET-28-3-ZIFFSOCKET-28-3'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' ZIFSOCKET-28-3 ZIFFSOCKET-28-3 -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Lever-action ZIF socket for 28-pin ICs</description>
 <title>ZIFSOCKET-28-3</title>
 <tags>
-<tag>ZIFFSOCKET-28-3</tag>
 <tag>ZIFSOCKET-28-3</tag>
+<tag>ZIFFSOCKET-28-3</tag>
 <tag>DIL28-3-ZIF_SOCKET</tag>
 </tags>
 <properties>
 <property name='package'>dil28-3-zif_socket</property>
-<property name='family'>zifsocket-28-3</property>
+<property name='family'>IC Socket</property>
 <property name='variant'>ziffsocket-28-3</property>
+<property name='pins'>28</property>
+<property name='technology'>ZIF</property>
 </properties>
 <views>
 <breadboardView>

@@ -2,20 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Passives-SOLDERJUMPER_2WAY-OLD-T'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Passives' SOLDERJUMPER_2WAY-OLD T -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>SJ</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Solder Jumper&lt;/b&gt;
 2 way solder jumper</description>
 <title>Solder Jumper</title>
 <tags>
-<tag>T</tag>
 <tag>SOLDERJUMPER_2WAY-OLD</tag>
 <tag>SJ_2</tag>
+<tag>T</tag>
 </tags>
 <properties>
 <property name='package'>sj_2</property>
-<property name='family'>solderjumper_2way-old</property>
+<property name='family'>PCB Jumper (Solder)</property>
 <property name='variant'>t</property>
 </properties>
 <views>

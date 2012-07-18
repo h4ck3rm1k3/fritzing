@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DiscreteSemi-DIODE-ZENER--BZT52'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DiscreteSemi' DIODE-ZENER -BZT52 -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Zener Diode
@@ -10,13 +10,13 @@ Production Part - 8199
 3.4V Zener Voltage</description>
 <title>DIODE-ZENER</title>
 <tags>
-<tag>-BZT52</tag>
 <tag>DIODE-ZENER</tag>
 <tag>SOD-323</tag>
+<tag>-BZT52</tag>
 </tags>
 <properties>
 <property name='package'>sod-323</property>
-<property name='family'>diode-zener</property>
+<property name='family'>Zener Diode</property>
 <property name='variant'>-bzt52</property>
 </properties>
 <views>

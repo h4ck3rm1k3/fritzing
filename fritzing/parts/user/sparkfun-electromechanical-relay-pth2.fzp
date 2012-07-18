@@ -2,19 +2,19 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-RELAY-PTH2'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' RELAY PTH2 -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>SPDT relay (COM-00101)</description>
 <title>RELAY</title>
 <tags>
-<tag>PTH2</tag>
-<tag>RELAY</tag>
 <tag>RELAY-T9A</tag>
+<tag>RELAY</tag>
+<tag>PTH2</tag>
 </tags>
 <properties>
 <property name='package'>relay-t9a</property>
-<property name='family'>relay</property>
+<property name='family'>Relay (SPDT)</property>
 <property name='variant'>pth2</property>
 </properties>
 <views>

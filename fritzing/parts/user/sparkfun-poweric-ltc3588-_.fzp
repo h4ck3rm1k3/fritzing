@@ -2,19 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-LTC3588-_'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-PowerIC' LTC3588 _ -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Energy Harvesting Power Supply</description>
 <title>LTC3588</title>
 <tags>
-<tag>_</tag>
 <tag>LTC3588</tag>
+<tag>_</tag>
 <tag>MSOP-10-GNDPAD</tag>
 </tags>
 <properties>
 <property name='package'>msop-10-gndpad</property>
-<property name='family'>ltc3588</property>
+<property name='family'>Energy Harveting IC</property>
+<property name='chip'>ltc3588</property>
 <property name='variant'>_</property>
 </properties>
 <views>

@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-D2523T-_'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-RF' D2523T _ -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>D2523T GPS Module</description>
@@ -14,7 +14,8 @@
 </tags>
 <properties>
 <property name='package'>em406</property>
-<property name='family'>d2523t</property>
+<property name='family'>GPS</property>
+<property name='chip'>D2523T</property>
 <property name='variant'>_</property>
 </properties>
 <views>

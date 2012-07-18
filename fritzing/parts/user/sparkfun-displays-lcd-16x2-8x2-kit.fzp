@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Displays-LCD-16X2-8X2-KIT'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Displays' LCD-16X2 8X2-KIT -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Standard text-only 16x2 parallel input LCD</description>
@@ -14,7 +14,8 @@
 </tags>
 <properties>
 <property name='package'>lcd-8x2-kit</property>
-<property name='family'>lcd-16x2</property>
+<property name='family'>LCD (Text-only)</property>
+<property name='characters'>8x2</property>
 <property name='variant'>8x2-kit</property>
 </properties>
 <views>

@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-PTC-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-PowerIC' PTC SMD -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>F</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Resettable Fuse PTC&lt;/b&gt;
@@ -10,12 +10,12 @@ Resettable Fuse. Spark Fun Electronics SKU : COM-08357</description>
 <title>Resettable Fuse PTC</title>
 <tags>
 <tag>SMD</tag>
-<tag>PTC</tag>
 <tag>PTC-1206</tag>
+<tag>PTC</tag>
 </tags>
 <properties>
 <property name='package'>ptc-1206</property>
-<property name='family'>ptc</property>
+<property name='family'>Fuse (Resettable)</property>
 <property name='variant'>smd</property>
 </properties>
 <views>

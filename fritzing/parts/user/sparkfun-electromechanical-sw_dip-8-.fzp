@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-SW_DIP-8-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' SW_DIP-8  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>SW</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;DIP Switch 8 Position&lt;/b&gt;
@@ -14,7 +14,8 @@ Spark Fun Electronics SKU : COM-08034</description>
 </tags>
 <properties>
 <property name='package'>dipswitch-08</property>
-<property name='family'>sw_dip-8</property>
+<property name='channels'>8</property>
+<property name='family'>DIP Switch</property>
 </properties>
 <views>
 <breadboardView>

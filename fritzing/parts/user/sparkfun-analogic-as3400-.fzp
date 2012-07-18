@@ -2,13 +2,12 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-AS3400-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-AnalogIC' AS3400  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Active noise cancellation chip.&lt;br&gt;
 Stereo in, stereo out, two microphones.&lt;br&gt;
-Single alkaline cell power.&lt;br&gt;
-QFN-24 w/exposed pad.</description>
+Single alkaline cell power.&lt;br&gt;</description>
 <title>AS3400</title>
 <tags>
 <tag>AS3400</tag>
@@ -16,7 +15,7 @@ QFN-24 w/exposed pad.</description>
 </tags>
 <properties>
 <property name='package'>qfn-24_alt2</property>
-<property name='family'>as3400</property>
+<property name='family'>AS3400</property>
 </properties>
 <views>
 <breadboardView>

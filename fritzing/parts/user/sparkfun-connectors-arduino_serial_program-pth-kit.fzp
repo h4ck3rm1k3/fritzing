@@ -2,15 +2,15 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-ARDUINO_SERIAL_PROGRAM-PTH-KIT'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' ARDUINO_SERIAL_PROGRAM PTH-KIT -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>FTDI connector footprints</description>
 <title>ARDUINO_SERIAL_PROGRAM</title>
 <tags>
 <tag>PTH-KIT</tag>
-<tag>ARDUINO_SERIAL_PROGRAM</tag>
 <tag>1X06-KIT</tag>
+<tag>ARDUINO_SERIAL_PROGRAM</tag>
 </tags>
 <properties>
 <property name='package'>1x06-kit</property>

@@ -2,18 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-ENC28J60-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' ENC28J60  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Microchip SPI 10Base ethernet IC</description>
 <title>ENC28J60</title>
 <tags>
-<tag>ENC28J60</tag>
 <tag>SSOP28DB</tag>
+<tag>ENC28J60</tag>
 </tags>
 <properties>
 <property name='package'>ssop28db</property>
-<property name='family'>enc28j60</property>
+<property name='family'>Ethernet IC</property>
+<property name='chip'>ENC28J60</property>
+<property name='interface'>SPI</property>
 </properties>
 <views>
 <breadboardView>

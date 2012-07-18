@@ -2,18 +2,19 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-GE865_2-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-RF' GE865_2  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Telit quad cell module (CEL-09720)</description>
 <title>GE865_2</title>
 <tags>
-<tag>GE865_2</tag>
 <tag>GE865</tag>
+<tag>GE865_2</tag>
 </tags>
 <properties>
 <property name='package'>ge865</property>
-<property name='family'>ge865_2</property>
+<property name='family'>Cell module</property>
+<property name='chip'>GE865</property>
 </properties>
 <views>
 <breadboardView>

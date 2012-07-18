@@ -2,19 +2,19 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-ST-GYRO-PY-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' ST-GYRO-PY SMD -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description></description>
 <title>ST-GYRO-PY</title>
 <tags>
-<tag>SMD</tag>
 <tag>ST-GYRO-PY</tag>
+<tag>SMD</tag>
 <tag>ST-GYRO</tag>
 </tags>
 <properties>
 <property name='package'>st-gyro</property>
-<property name='family'>st-gyro-py</property>
+<property name='family'>Gyroscope</property>
 <property name='variant'>smd</property>
 </properties>
 <views>

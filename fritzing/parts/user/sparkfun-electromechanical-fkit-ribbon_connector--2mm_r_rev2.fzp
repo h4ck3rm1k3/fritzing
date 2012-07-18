@@ -2,19 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-FKIT-RIBBON_CONNECTOR--2MM_R_REV2'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' FKIT-RIBBON_CONNECTOR -2MM_R_REV2 -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>J</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;fabrick.it Conductive Ribbon Connector&lt;/h3&gt;</description>
 <title>FKIT-RIBBON_CONNECTOR</title>
 <tags>
-<tag>-2MM_R_REV2</tag>
-<tag>FKIT-RIBBON_CONNECTOR</tag>
 <tag>FKIT-RIBBON_CONNECTOR_03_2MM_R</tag>
+<tag>FKIT-RIBBON_CONNECTOR</tag>
+<tag>-2MM_R_REV2</tag>
 </tags>
 <properties>
 <property name='package'>fkit-ribbon_connector_03_2mm_r</property>
-<property name='family'>fkit-ribbon_connector</property>
+<property name='family'>E-Textiles Connector</property>
+<property name='function'>Ribbon</property>
 <property name='variant'>-2mm_r_rev2</property>
 </properties>
 <views>

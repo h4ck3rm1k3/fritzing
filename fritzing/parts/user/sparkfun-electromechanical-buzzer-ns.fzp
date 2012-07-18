@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-BUZZER-NS'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' BUZZER NS -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>SG</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Buzzer 12mm&lt;/b&gt;
@@ -10,12 +10,13 @@ Spark Fun Electronics SKU : Comp-Buzzer</description>
 <title>Buzzer 12mm</title>
 <tags>
 <tag>NS</tag>
-<tag>BUZZER</tag>
 <tag>BUZZER-12MM-NS</tag>
+<tag>BUZZER</tag>
 </tags>
 <properties>
 <property name='package'>buzzer-12mm-ns</property>
-<property name='family'>buzzer</property>
+<property name='size'>12mm</property>
+<property name='family'>Buzzer</property>
 <property name='variant'>ns</property>
 </properties>
 <views>

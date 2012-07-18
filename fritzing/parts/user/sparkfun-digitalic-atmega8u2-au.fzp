@@ -2,19 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-ATMEGA8U2-AU'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' ATMEGA8U2 AU -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Atmel 32-pin 8-bit Microcontroller with 8/16/32K Bystes of ISP Flash and USB Controller. ATmega8U2, ATmega16U2, and ATmega32U2</description>
 <title>ATMEGA8U2</title>
 <tags>
-<tag>AU</tag>
 <tag>ATMEGA8U2</tag>
 <tag>TQFP32-08</tag>
+<tag>AU</tag>
 </tags>
 <properties>
 <property name='package'>tqfp32-08</property>
-<property name='family'>atmega8u2</property>
+<property name='family'>ATmega</property>
+<property name='chip'>atmega8</property>
 <property name='variant'>au</property>
 </properties>
 <views>

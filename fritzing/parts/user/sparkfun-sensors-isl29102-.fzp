@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-ISL29102-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' ISL29102  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Light-to-voltage converter.</description>
@@ -13,7 +13,7 @@
 </tags>
 <properties>
 <property name='package'>odfn6</property>
-<property name='family'>isl29102</property>
+<property name='family'>Light Sensor</property>
 </properties>
 <views>
 <breadboardView>

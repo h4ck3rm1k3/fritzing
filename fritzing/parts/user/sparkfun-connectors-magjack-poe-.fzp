@@ -2,18 +2,18 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-MAGJACK-POE-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' MAGJACK-POE  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;PoE compatible MagJack&lt;/h3&gt;</description>
 <title>MAGJACK-POE</title>
 <tags>
 <tag>MAGJACK-POE</tag>
-<tag>MAGJACK-POE</tag>
 </tags>
 <properties>
 <property name='package'>magjack-poe</property>
-<property name='family'>magjack-poe</property>
+<property name='target'>RJ45</property>
+<property name='family'>RJxx Jack</property>
 </properties>
 <views>
 <breadboardView>

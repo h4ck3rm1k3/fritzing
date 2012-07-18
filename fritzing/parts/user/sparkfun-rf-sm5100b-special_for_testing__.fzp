@@ -2,19 +2,21 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-SM5100B-SPECIAL_FOR_TESTING!!'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-RF' SM5100B SPECIAL_FOR_TESTING!! -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Quad-band GSM modem</description>
 <title>SM5100B</title>
 <tags>
-<tag>SPECIAL_FOR_TESTING!!</tag>
 <tag>SM5100B</tag>
 <tag>SM5100B-SPECIAL_FOR_TESTING</tag>
+<tag>SPECIAL_FOR_TESTING!!</tag>
 </tags>
 <properties>
 <property name='package'>sm5100b-special_for_testing</property>
-<property name='family'>sm5100b</property>
+<property name='channels'>4</property>
+<property name='family'>GSM modem</property>
+<property name='chip'>SM5100B</property>
 <property name='variant'>special_for_testing!!</property>
 </properties>
 <views>

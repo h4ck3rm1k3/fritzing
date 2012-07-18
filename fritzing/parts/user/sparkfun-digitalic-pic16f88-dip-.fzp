@@ -2,18 +2,18 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-PIC16F88-DIP-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' PIC16F88-DIP  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>8-bit PIC uC</description>
 <title>PIC16F88-DIP</title>
 <tags>
-<tag>PIC16F88-DIP</tag>
 <tag>DIL18</tag>
+<tag>PIC16F88-DIP</tag>
 </tags>
 <properties>
 <property name='package'>dil18</property>
-<property name='family'>pic16f88-dip</property>
+<property name='family'>PIC UC</property>
 </properties>
 <views>
 <breadboardView>

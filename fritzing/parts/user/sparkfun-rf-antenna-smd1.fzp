@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-ANTENNA-SMD1'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-RF' ANTENNA SMD1 -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Chip antenna&lt;/b&gt;&lt;p&gt;
@@ -10,12 +10,12 @@ Chip antenna with ground or secondary connection. Common with larger metal RF co
 <title>Chip antenna</title>
 <tags>
 <tag>SMD1</tag>
-<tag>ANTENNA</tag>
 <tag>ANTENNA-CHIP</tag>
+<tag>ANTENNA</tag>
 </tags>
 <properties>
 <property name='package'>antenna-chip</property>
-<property name='family'>antenna</property>
+<property name='family'>Antenna (Chip)</property>
 <property name='variant'>smd1</property>
 </properties>
 <views>

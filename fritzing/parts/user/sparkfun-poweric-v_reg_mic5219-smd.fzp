@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-V_REG_MIC5219-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-PowerIC' V_REG_MIC5219 SMD -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;V_REG MIC5219&lt;/b&gt;
@@ -11,12 +11,15 @@ may be left open.</description>
 <title>V_REG MIC5219</title>
 <tags>
 <tag>SMD</tag>
-<tag>V_REG_MIC5219</tag>
 <tag>SOT23-5</tag>
+<tag>V_REG_MIC5219</tag>
 </tags>
 <properties>
 <property name='package'>sot23-5</property>
-<property name='family'>v_reg_mic5219</property>
+<property name='family'>Voltage Regulator</property>
+<property name='current'>500mA</property>
+<property name='features'>LDO</property>
+<property name='chip'>MIC5219</property>
 <property name='variant'>smd</property>
 </properties>
 <views>

@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-LTC6244-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-AnalogIC' LTC6244  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Low-noise, high-speed rail-to-rail CMOS op-amp</description>
@@ -13,7 +13,9 @@
 </tags>
 <properties>
 <property name='package'>msop8</property>
-<property name='family'>ltc6244</property>
+<property name='output'>R2R</property>
+<property name='family'>Op-Amp</property>
+<property name='chip'>ltc6244</property>
 </properties>
 <views>
 <breadboardView>
@@ -22,7 +24,7 @@
 </layers>
 </breadboardView>
 <schematicView>
-<layers image='schematic/sparkfun-analogic_ltc6244_mix_6_schematic.svg'>
+<layers image='schematic/sparkfun-analogic_ltc6244_mix_7_schematic.svg'>
 <layer layerId='schematic'/>
 </layers>
 </schematicView>

@@ -2,19 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-CP210X_USB_UART-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' CP210X_USB_UART  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>IC</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Single-Chip USB to UART Bridge&lt;/b&gt;&lt;p&gt;
 Source: www.silabs.com .. CP2101.pdf / cp2102.pdf. Spark Fun Electronics SKU : COM-00310</description>
 <title>Single-Chip USB to UART Bridge</title>
 <tags>
-<tag>CP210X_USB_UART</tag>
 <tag>MLP28</tag>
+<tag>CP210X_USB_UART</tag>
 </tags>
 <properties>
 <property name='package'>mlp28</property>
-<property name='family'>cp210x_usb_uart</property>
+<property name='family'>USB IC</property>
+<property name='chip'>CP210X</property>
 </properties>
 <views>
 <breadboardView>

@@ -2,20 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-BLUERADIO_BR-C40A-BAS'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-RF' BLUERADIO_BR-C40A BAS -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Bluetooth SMD Module&lt;/b&gt;
 Footprint fully proven. Spark Fun Electronics SKU : WRL-00149</description>
 <title>Bluetooth SMD Module</title>
 <tags>
+<tag>BLUERADIO_BR-C40A</tag>
 <tag>BAS</tag>
-<tag>BLUERADIO_BR-C40A</tag>
-<tag>BLUERADIO_BR-C40A</tag>
 </tags>
 <properties>
 <property name='package'>blueradio_br-c40a</property>
-<property name='family'>blueradio_br-c40a</property>
+<property name='family'>Bluetooth IC</property>
+<property name='chip'>BR-C40A</property>
 <property name='variant'>bas</property>
 </properties>
 <views>

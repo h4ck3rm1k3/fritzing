@@ -2,20 +2,22 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-MLX90609-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' MLX90609 SMD -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Single axis 150 deg/s analog and SPI MEMs gyroscope. Spark Fun Electronics SKU: COM-08336 and others</description>
 <title>MLX90609</title>
 <tags>
+<tag>MLX90609</tag>
 <tag>SMD</tag>
-<tag>MLX90609</tag>
-<tag>MLX90609</tag>
 </tags>
 <properties>
 <property name='package'>mlx90609</property>
-<property name='family'>mlx90609</property>
+<property name='family'>Gyroscope</property>
+<property name='interface'>SPI</property>
 <property name='variant'>smd</property>
+<property name='axis'>1</property>
+<property name='sensitivity'>150deg/s</property>
 </properties>
 <views>
 <breadboardView>

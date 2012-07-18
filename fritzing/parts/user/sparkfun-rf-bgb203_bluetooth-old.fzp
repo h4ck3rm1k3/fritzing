@@ -2,19 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-BGB203_BLUETOOTH-OLD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-RF' BGB203_BLUETOOTH OLD -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Bluetooth SMD IC</description>
 <title>BGB203_BLUETOOTH</title>
 <tags>
+<tag>BGB203_ORIGINAL</tag>
 <tag>OLD</tag>
 <tag>BGB203_BLUETOOTH</tag>
-<tag>BGB203_ORIGINAL</tag>
 </tags>
 <properties>
 <property name='package'>bgb203_original</property>
-<property name='family'>bgb203_bluetooth</property>
+<property name='family'>Bluetooth IC</property>
+<property name='chip'>BGB203</property>
 <property name='variant'>old</property>
 </properties>
 <views>

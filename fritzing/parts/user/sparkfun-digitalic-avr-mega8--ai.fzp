@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-AVR-MEGA8--AI'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' AVR-MEGA8 -AI -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U$</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;MICROCONTROLLER&lt;/b&gt;&lt;p&gt;
@@ -14,13 +14,14 @@ USART&lt;p&gt;
 2-channel 8 bit ADC</description>
 <title>MICROCONTROLLER</title>
 <tags>
+<tag>TQFP32-08</tag>
 <tag>-AI</tag>
 <tag>AVR-MEGA8</tag>
-<tag>TQFP32-08</tag>
 </tags>
 <properties>
 <property name='package'>tqfp32-08</property>
-<property name='family'>avr-mega8</property>
+<property name='family'>ATmega</property>
+<property name='chip'>atmega8</property>
 <property name='variant'>-ai</property>
 </properties>
 <views>

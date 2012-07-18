@@ -2,18 +2,18 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-PIC32MX440F512H-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' PIC32MX440F512H  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description></description>
 <title>PIC32MX440F512H</title>
 <tags>
-<tag>PIC32MX440F512H</tag>
 <tag>SQFP-S-10X10-64</tag>
+<tag>PIC32MX440F512H</tag>
 </tags>
 <properties>
 <property name='package'>sqfp-s-10x10-64</property>
-<property name='family'>pic32mx440f512h</property>
+<property name='family'>PIC UC</property>
 </properties>
 <views>
 <breadboardView>

@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-WLANMODULE-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-RF' WLANMODULE  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;DPAC WiFi Module&lt;/b&gt;
@@ -10,11 +10,10 @@ Footprint for DPAC wireless module. Not fully tested so double check it. Spark F
 <title>DPAC WiFi Module</title>
 <tags>
 <tag>WLANMODULE</tag>
-<tag>WLANMODULE</tag>
 </tags>
 <properties>
 <property name='package'>wlanmodule</property>
-<property name='family'>wlanmodule</property>
+<property name='family'>Wi-Fi module</property>
 </properties>
 <views>
 <breadboardView>

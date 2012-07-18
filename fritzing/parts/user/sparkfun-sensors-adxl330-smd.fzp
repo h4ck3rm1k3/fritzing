@@ -2,21 +2,25 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-ADXL330-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' ADXL330 SMD -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Triple Axis Accelerometer&lt;/b&gt;
 Analog Devices ADXL330 +/-3g 2.4V-5.25V Analog output. Spark Fun Electronics SKU : COM-00730. Center pad paste layer has been reduced to avoid shorting.</description>
 <title>Triple Axis Accelerometer</title>
 <tags>
-<tag>SMD</tag>
 <tag>ADXL330</tag>
 <tag>LFCSP-16</tag>
+<tag>SMD</tag>
 </tags>
 <properties>
 <property name='package'>lfcsp-16</property>
-<property name='family'>adxl330</property>
+<property name='family'>Accelerometer</property>
+<property name='chip'>ADXL330</property>
+<property name='interface'>analog</property>
 <property name='variant'>smd</property>
+<property name='axis'>3</property>
+<property name='sensitivity'>+/-3g</property>
 </properties>
 <views>
 <breadboardView>

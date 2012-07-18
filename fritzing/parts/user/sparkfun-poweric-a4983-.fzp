@@ -2,18 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-A4983-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-PowerIC' A4983  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>DMOS Microstepping Driver with Translator</description>
 <title>A4983</title>
 <tags>
-<tag>A4983</tag>
 <tag>QFN-28-5MM</tag>
+<tag>A4983</tag>
 </tags>
 <properties>
 <property name='package'>qfn-28-5mm</property>
-<property name='family'>a4983</property>
+<property name='family'>Stepper Driver</property>
+<property name='chip'>a4983</property>
+<property name='technology'>DMOS</property>
 </properties>
 <views>
 <breadboardView>

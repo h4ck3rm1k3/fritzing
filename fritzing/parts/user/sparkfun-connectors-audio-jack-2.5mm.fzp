@@ -2,20 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-AUDIO-JACK-2.5MM'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' AUDIO-JACK 2.5MM -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
-<description>&lt;b&gt;3.5mm Audio Jack&lt;/b&gt;
-Simple 3.5mm common PCB mount audio jack. SKU: PRT-08032</description>
-<title>3.5mm Audio Jack</title>
+<description>Simple 2.5mm common PCB mount audio jack. SKU: PRT-08032</description>
+<title>2.5mm Audio Jack</title>
 <tags>
+<tag>STEREOJACK2.5MM_STEREOJACK2.5MM</tag>
 <tag>2.5MM</tag>
 <tag>AUDIO-JACK</tag>
-<tag>STEREOJACK2.5MM_STEREOJACK2.5MM</tag>
 </tags>
 <properties>
 <property name='package'>stereojack2.5mm_stereojack2.5mm</property>
-<property name='family'>audio-jack</property>
+<property name='size'>2.5mm</property>
+<property name='family'>Audio Jack</property>
 <property name='variant'>2.5mm</property>
 </properties>
 <views>

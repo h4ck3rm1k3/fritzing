@@ -2,19 +2,21 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Displays-7-SEGMENT-4DIGIT-FOR_POGOBED_ONLY'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Displays' 7-SEGMENT-4DIGIT FOR_POGOBED_ONLY -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description></description>
 <title>7-SEGMENT-4DIGIT</title>
 <tags>
-<tag>FOR_POGOBED_ONLY</tag>
 <tag>7-SEGMENT-4DIGIT</tag>
+<tag>FOR_POGOBED_ONLY</tag>
 <tag>7-SEGMENT-4DIGIT_LONGPADS_FOR_POGOBED</tag>
 </tags>
 <properties>
 <property name='package'>7-segment-4digit_longpads_for_pogobed</property>
-<property name='family'>7-segment-4digit</property>
+<property name='family'>LED Segment Display</property>
+<property name='digits'>4</property>
+<property name='segments'>7</property>
 <property name='variant'>for_pogobed_only</property>
 </properties>
 <views>

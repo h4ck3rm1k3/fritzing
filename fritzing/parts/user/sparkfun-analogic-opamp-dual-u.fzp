@@ -2,19 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-OPAMP-DUAL-U'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-AnalogIC' OPAMP-DUAL U -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>IC</label>
 <author>www.fritzing.org</author>
 <description>Generic op-amp footprint</description>
-<title>OPAMP-DUAL</title>
+<title>Dual Op-Amp</title>
 <tags>
 <tag>U</tag>
-<tag>OPAMP-DUAL</tag>
 <tag>SO08</tag>
+<tag>OPAMP-DUAL</tag>
 </tags>
 <properties>
 <property name='package'>so08</property>
-<property name='family'>opamp-dual</property>
+<property name='channels'>dual</property>
+<property name='family'>Op-Amp</property>
 <property name='variant'>u</property>
 </properties>
 <views>
@@ -24,7 +25,7 @@
 </layers>
 </breadboardView>
 <schematicView>
-<layers image='schematic/sparkfun-analogic_op-amp_-_mix_7_schematic.svg'>
+<layers image='schematic/sparkfun-analogic_op-amp_-_mix_6_schematic.svg'>
 <layer layerId='schematic'/>
 </layers>
 </schematicView>

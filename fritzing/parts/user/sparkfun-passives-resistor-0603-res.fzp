@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Passives-RESISTOR-0603-RES'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Passives' RESISTOR 0603-RES -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>R</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Resistor&lt;/b&gt;
@@ -11,11 +11,10 @@ Basic schematic elements and footprints for 0603, 1206, and PTH resistors.</desc
 <tags>
 <tag>0603-RES</tag>
 <tag>RESISTOR</tag>
-<tag>0603-RES</tag>
 </tags>
 <properties>
 <property name='package'>0603-res</property>
-<property name='family'>resistor</property>
+<property name='family'>Resistor</property>
 <property name='variant'>0603-res</property>
 </properties>
 <views>

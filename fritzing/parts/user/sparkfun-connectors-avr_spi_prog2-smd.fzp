@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-AVR_SPI_PROG2-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' AVR_SPI_PROG2 SMD -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;AVR 10-pin ICSP Header&lt;/b&gt; 
@@ -10,13 +10,14 @@ This is the standard AVR In Circuit Serial Programming header. Minimal, but incl
 <title>AVR 10-pin ICSP Header</title>
 <tags>
 <tag>SMD</tag>
-<tag>AVR_SPI_PROG2</tag>
 <tag>2X5-SHROUDED_SMD</tag>
+<tag>AVR_SPI_PROG2</tag>
 </tags>
 <properties>
 <property name='package'>2x5-shrouded_smd</property>
-<property name='family'>avr_spi_prog2</property>
+<property name='family'>ICSP Header</property>
 <property name='variant'>smd</property>
+<property name='pins'>2x5</property>
 </properties>
 <views>
 <breadboardView>

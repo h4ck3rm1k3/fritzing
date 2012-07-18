@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-GM862-GM862_CONNECTOR'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-RF' GM862 GM862_CONNECTOR -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;GM862 Cellular Module with GPS&lt;/b&gt;
@@ -11,11 +11,11 @@ Proven layout and schematic for GM862 cellular module with SiRF III GPS. Spark F
 <tags>
 <tag>GM862_CONNECTOR</tag>
 <tag>GM862</tag>
-<tag>GM862_CONNECTOR</tag>
 </tags>
 <properties>
 <property name='package'>gm862_connector</property>
-<property name='family'>gm862</property>
+<property name='family'>Cell module</property>
+<property name='chip'>GE862</property>
 <property name='variant'>gm862_connector</property>
 </properties>
 <views>

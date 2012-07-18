@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-JOYSTICK-PTH'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' JOYSTICK PTH -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Thumb Joystick&lt;/b&gt;
@@ -11,11 +11,10 @@ Joystick commonly found in PS2 controllers. Two pots and a select switch. Footpr
 <tags>
 <tag>PTH</tag>
 <tag>JOYSTICK</tag>
-<tag>JOYSTICK</tag>
 </tags>
 <properties>
 <property name='package'>joystick</property>
-<property name='family'>joystick</property>
+<property name='family'>Joystick</property>
 <property name='variant'>pth</property>
 </properties>
 <views>

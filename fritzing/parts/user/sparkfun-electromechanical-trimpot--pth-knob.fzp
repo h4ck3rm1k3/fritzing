@@ -2,19 +2,19 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-TRIMPOT--PTH-KNOB'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' TRIMPOT -PTH-KNOB -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>R</label>
 <author>www.fritzing.org</author>
-<description>Various small potentiometers for &quot;set-and-forget&quot; applications</description>
+<description>Various small potentiometers for set-and-forget applications</description>
 <title>TRIMPOT</title>
 <tags>
+<tag>3386U</tag>
 <tag>-PTH-KNOB</tag>
 <tag>TRIMPOT</tag>
-<tag>3386U</tag>
 </tags>
 <properties>
 <property name='package'>3386u</property>
-<property name='family'>trimpot</property>
+<property name='family'>Trimpot</property>
 <property name='variant'>-pth-knob</property>
 </properties>
 <views>

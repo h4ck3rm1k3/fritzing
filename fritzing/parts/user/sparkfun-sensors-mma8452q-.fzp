@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-MMA8452Q-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' MMA8452Q  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;MMA8452Q 3-Axis, 12/8-bit Digital Accelerometer&lt;/h3&gt;
@@ -23,7 +23,12 @@ http://cache.freescale.com/files/sensors/doc/data_sheet/MMA8452Q.pdf</descriptio
 </tags>
 <properties>
 <property name='package'>qfn-16_0.5mm</property>
-<property name='family'>mma8452q</property>
+<property name='resolution'>12/8-bit</property>
+<property name='family'>Accelerometer</property>
+<property name='update'>1.56Hz-800Hz</property>
+<property name='interface'>I2C</property>
+<property name='axis'>3</property>
+<property name='sensitivity'>2/4/8g</property>
 </properties>
 <views>
 <breadboardView>

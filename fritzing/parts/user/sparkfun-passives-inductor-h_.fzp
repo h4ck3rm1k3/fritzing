@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Passives-INDUCTOR-H*'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Passives' INDUCTOR H* -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>L</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Inductors&lt;/b&gt;
@@ -15,7 +15,7 @@ Basic Inductor/Choke - 0603 and 1206. Footprints are not proven and vary greatly
 </tags>
 <properties>
 <property name='package'>inductor-1206</property>
-<property name='family'>inductor</property>
+<property name='family'>Inductor</property>
 <property name='variant'>h*</property>
 </properties>
 <views>

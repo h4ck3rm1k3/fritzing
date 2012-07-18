@@ -2,19 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-VENUS634-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-RF' VENUS634 SMD -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Venus634 from SkyTraq</description>
 <title>VENUS634</title>
 <tags>
+<tag>LGA44</tag>
 <tag>SMD</tag>
 <tag>VENUS634</tag>
-<tag>LGA44</tag>
 </tags>
 <properties>
 <property name='package'>lga44</property>
 <property name='family'>venus634</property>
+<property name='chip'>LGA44</property>
 <property name='variant'>smd</property>
 </properties>
 <views>

@@ -2,19 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-MCP9700-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' MCP9700 SMD -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Analog-output temperature sensor</description>
 <title>MCP9700</title>
 <tags>
-<tag>SMD</tag>
 <tag>MCP9700</tag>
 <tag>SOT23-3</tag>
+<tag>SMD</tag>
 </tags>
 <properties>
 <property name='package'>sot23-3</property>
-<property name='family'>mcp9700</property>
+<property name='family'>Temperature Sensor</property>
+<property name='interface'>analog</property>
 <property name='variant'>smd</property>
 </properties>
 <views>

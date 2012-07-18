@@ -2,18 +2,19 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-MAX1704X-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-PowerIC' MAX1704X  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
-<description>MAX17043/MAX17044: Battery Fuel Guage (43 is 1cell, 44 is 2cell)</description>
+<description>MAX17043/MAX17044: Battery Fuel Gauge (43 is 1cell, 44 is 2cell)</description>
 <title>MAX1704X</title>
 <tags>
-<tag>MAX1704X</tag>
 <tag>TDFN-8</tag>
+<tag>MAX1704X</tag>
 </tags>
 <properties>
 <property name='package'>tdfn-8</property>
-<property name='family'>max1704x</property>
+<property name='family'>Battery Gauge</property>
+<property name='chip'>MAX1704X</property>
 </properties>
 <views>
 <breadboardView>

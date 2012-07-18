@@ -2,18 +2,21 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-BD10KA5WF-E2-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-PowerIC' BD10KA5WF-E2  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>500mA LDO, 1.0V SO-8 (COM-10827)</description>
 <title>BD10KA5WF-E2</title>
 <tags>
-<tag>BD10KA5WF-E2</tag>
 <tag>SO08WIDE</tag>
+<tag>BD10KA5WF-E2</tag>
 </tags>
 <properties>
 <property name='package'>so08wide</property>
-<property name='family'>bd10ka5wf-e2</property>
+<property name='family'>Voltage Regulator</property>
+<property name='voltage'>1.0V ±1%</property>
+<property name='max_current'>500mA</property>
+<property name='chip'>BD10KA5WF-E2</property>
 </properties>
 <views>
 <breadboardView>

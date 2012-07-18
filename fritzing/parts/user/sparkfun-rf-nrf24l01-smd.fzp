@@ -2,20 +2,21 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-NRF24L01-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-RF' NRF24L01 SMD -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;2.4GHz Low Power Transceiver&lt;/b&gt;
 This is the very popular, low cost, very low power RF transceiver from Nordic Semiconductor. Simple SPI interface. SKU: COM-00690</description>
 <title>2.4GHz Low Power Transceiver</title>
 <tags>
+<tag>QFN20</tag>
 <tag>SMD</tag>
 <tag>NRF24L01</tag>
-<tag>QFN20</tag>
 </tags>
 <properties>
 <property name='package'>qfn20</property>
-<property name='family'>nrf24l01</property>
+<property name='family'>2.4GHz Tranceiver</property>
+<property name='chip'>NRF24L01</property>
 <property name='variant'>smd</property>
 </properties>
 <views>

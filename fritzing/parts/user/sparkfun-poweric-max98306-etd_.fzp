@@ -2,12 +2,12 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-MAX98306-ETD+'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-PowerIC' MAX98306 ETD+ -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Stereo 3.7W Class D Amplifier&lt;/b&gt;&lt;p&gt;
 
-Datasheet: &lt;a href=&quot;http://datasheets.maxim-ic.com/en/ds/MAX98306.pdf&quot;&gt;http://datasheets.maxim-ic.com/en/ds/MAX98306.pdf&lt;/a&gt;&lt;p&gt;
+Datasheet: &lt;a href=http://datasheets.maxim-ic.com/en/ds/MAX98306.pdf&gt;http://datasheets.maxim-ic.com/en/ds/MAX98306.pdf&lt;/a&gt;&lt;p&gt;
 
 The MAX98306 stereo 3.7W Class D amplifier provides
 Class AB audio performance with Class D efficiency.
@@ -27,13 +27,15 @@ The IC is available in a 14-pin TDFN (3mm x 3mm x
 +85NC temperature range.</description>
 <title>Stereo 3.7W Class D Amplifier</title>
 <tags>
+<tag>14-TDFN</tag>
 <tag>ETD+</tag>
 <tag>MAX98306</tag>
-<tag>14-TDFN</tag>
 </tags>
 <properties>
 <property name='package'>14-tdfn</property>
-<property name='family'>max98306</property>
+<property name='family'>Audio Amplifier</property>
+<property name='chip'>max98306</property>
+<property name='power'>Stereo 3.7 (Class D)</property>
 <property name='variant'>etd+</property>
 </properties>
 <views>

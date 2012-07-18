@@ -2,11 +2,11 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Passives-CAP-PTH'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Passives' CAP PTH -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>C</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Capacitor&lt;/b&gt;
-Standard 0603 ceramic capacitor, and 0.1&quot; leaded capacitor.</description>
+Standard 0603 ceramic capacitor, and 0.1 leaded capacitor.</description>
 <title>Capacitor</title>
 <tags>
 <tag>PTH</tag>
@@ -15,7 +15,7 @@ Standard 0603 ceramic capacitor, and 0.1&quot; leaded capacitor.</description>
 </tags>
 <properties>
 <property name='package'>cap-pth-small</property>
-<property name='family'>cap</property>
+<property name='family'>Cap</property>
 <property name='variant'>pth</property>
 </properties>
 <views>

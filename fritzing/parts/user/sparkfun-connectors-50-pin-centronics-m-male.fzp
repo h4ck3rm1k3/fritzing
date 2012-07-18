@@ -2,20 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-50-PIN-CENTRONICS-M-MALE'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' 50-PIN-CENTRONICS-M MALE -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
-<description></description>
+<description>Male SCSI connector</description>
 <title>50-PIN-CENTRONICS-M</title>
 <tags>
+<tag>50-PIN-CENTRONICS-M</tag>
 <tag>MALE</tag>
-<tag>50-PIN-CENTRONICS-M</tag>
-<tag>50-PIN-CENTRONICS-M</tag>
 </tags>
 <properties>
 <property name='package'>50-pin-centronics-m</property>
-<property name='family'>50-pin-centronics-m</property>
+<property name='family'>SCSI</property>
 <property name='variant'>male</property>
+<property name='pins'>50</property>
 </properties>
 <views>
 <breadboardView>

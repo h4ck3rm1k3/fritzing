@@ -2,14 +2,14 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-QRB1114-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' QRB1114  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>Q</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;PHOTOTRANSISTOR REFLECTIVE OBJECT SENSOR&lt;/b&gt;
 &lt;p&gt;
 The QRB1113/1114 consists of an infrared emitting diode and an NPN silicon phototransistor mounted side by side on a converging
 optical axis in a black plastic housing. The phototransistor responds to radiation from the emitting diode only when a reflective
-object passes within its field of view. The area of the optimum response approximates a circle .200&quot; in diameter.
+object passes within its field of view. The area of the optimum response approximates a circle .200 in diameter.
 &lt;p&gt;Datasheet: http://www.sparkfun.com/datasheets/Sensors/QRB1114.pdf
 &lt;p&gt;MAX RATINGS:
 &lt;p&gt;EMITTER
@@ -28,7 +28,7 @@ object passes within its field of view. The area of the optimum response approxi
 </tags>
 <properties>
 <property name='package'>qrb1114-side</property>
-<property name='family'>qrb1114</property>
+<property name='family'>Reflective Object Sensor</property>
 </properties>
 <views>
 <breadboardView>

@@ -2,20 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Passives-SOLDERJUMPER-NC'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Passives' SOLDERJUMPER NC -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>SJ</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Solder Jumper&lt;/b&gt;
 Standard SMD solder jumper. Used to automate production. Two varients : Normally Open and Normally Closed are the same, but have different paste layers. NC will have a large amount of paste and should jumper during reflow.</description>
 <title>Solder Jumper</title>
 <tags>
+<tag>SJ_2S</tag>
 <tag>NC</tag>
 <tag>SOLDERJUMPER</tag>
-<tag>SJ_2S</tag>
 </tags>
 <properties>
 <property name='package'>sj_2s</property>
-<property name='family'>solderjumper</property>
+<property name='family'>PCB Jumper (Solder)</property>
 <property name='variant'>nc</property>
 </properties>
 <views>

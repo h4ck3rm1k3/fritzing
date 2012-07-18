@@ -2,18 +2,17 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-QRD1114-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' QRD1114  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Reflective object sensor</description>
 <title>QRD1114</title>
 <tags>
 <tag>QRD1114</tag>
-<tag>QRD1114</tag>
 </tags>
 <properties>
 <property name='package'>qrd1114</property>
-<property name='family'>qrd1114</property>
+<property name='family'>Reflective Object Sensor</property>
 </properties>
 <views>
 <breadboardView>

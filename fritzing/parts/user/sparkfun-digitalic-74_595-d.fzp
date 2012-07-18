@@ -2,19 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-74*595-D'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' 74*595 D -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>IC</label>
 <author>www.fritzing.org</author>
 <description>8-bit &lt;b&gt;SHIFT REGISTER&lt;/b&gt;, output latch</description>
 <title>SHIFT REGISTER</title>
 <tags>
 <tag>D</tag>
-<tag>74*595</tag>
 <tag>SO16</tag>
+<tag>74*595</tag>
 </tags>
 <properties>
 <property name='package'>so16</property>
-<property name='family'>74*595</property>
+<property name='family'>Logic IC</property>
+<property name='chip'>74*595</property>
 <property name='variant'>d</property>
 </properties>
 <views>

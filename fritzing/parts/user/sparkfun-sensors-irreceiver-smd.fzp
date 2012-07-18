@@ -2,19 +2,21 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-IRRECEIVER-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' IRRECEIVER SMD -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>TSOP85238 38kHz IR receiver with built in demodulation and filtering- SEN-08545</description>
 <title>IRRECEIVER</title>
 <tags>
-<tag>SMD</tag>
 <tag>IRRECEIVER</tag>
+<tag>SMD</tag>
 <tag>TSOP8523</tag>
 </tags>
 <properties>
 <property name='package'>tsop8523</property>
-<property name='family'>irreceiver</property>
+<property name='frequency'>38kHz</property>
+<property name='family'>TSOP</property>
+<property name='chip'>tsop8523</property>
 <property name='variant'>smd</property>
 </properties>
 <views>

@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-HDJD-S822-QR999-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' HDJD-S822-QR999  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Avago RGB color sensor, analog out</description>
@@ -13,7 +13,8 @@
 </tags>
 <properties>
 <property name='package'>qfn-16</property>
-<property name='family'>hdjd-s822-qr999</property>
+<property name='family'>Color Sensor</property>
+<property name='interface'>analog</property>
 </properties>
 <views>
 <breadboardView>

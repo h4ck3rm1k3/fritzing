@@ -2,19 +2,19 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Displays-LCD-16X2-SILK'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Displays' LCD-16X2 SILK -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Standard text-only 16x2 parallel input LCD</description>
 <title>LCD-16X2</title>
 <tags>
+<tag>LCD-16X2</tag>
 <tag>SILK</tag>
-<tag>LCD-16X2</tag>
-<tag>LCD-16X2</tag>
 </tags>
 <properties>
 <property name='package'>lcd-16x2</property>
-<property name='family'>lcd-16x2</property>
+<property name='family'>LCD (Text-only)</property>
+<property name='characters'>16x2</property>
 <property name='variant'>silk</property>
 </properties>
 <views>

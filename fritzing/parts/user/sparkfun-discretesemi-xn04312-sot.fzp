@@ -2,20 +2,21 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DiscreteSemi-XN04312-SOT'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DiscreteSemi' XN04312 SOT -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;NPN/PNP Transistor Array&lt;/b&gt;
 Handy dandy transistor array for level shifting and inverting signals. Spark Fun Electronics SKU : COM-00588</description>
 <title>NPN_PNP Transistor Array</title>
 <tags>
-<tag>SOT</tag>
 <tag>XN04312</tag>
+<tag>SOT</tag>
 <tag>SOT23-6</tag>
 </tags>
 <properties>
 <property name='package'>sot23-6</property>
-<property name='family'>xn04312</property>
+<property name='family'>NPN/PNP Transistor Array</property>
+<property name='chip'>XN04312</property>
 <property name='variant'>sot</property>
 </properties>
 <views>

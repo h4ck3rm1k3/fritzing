@@ -2,18 +2,17 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-DIN7-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' DIN7  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Mini-DIN7 connector</description>
 <title>DIN7</title>
 <tags>
 <tag>DIN7</tag>
-<tag>DIN7</tag>
 </tags>
 <properties>
 <property name='package'>din7</property>
-<property name='family'>din7</property>
+<property name='family'>Mini-DIN7</property>
 </properties>
 <views>
 <breadboardView>

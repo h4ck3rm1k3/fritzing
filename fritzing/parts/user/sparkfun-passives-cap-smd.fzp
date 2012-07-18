@@ -2,20 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Passives-CAP-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Passives' CAP SMD -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>C</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Capacitor&lt;/b&gt;
-Standard 0603 ceramic capacitor, and 0.1&quot; leaded capacitor.</description>
+Standard 0603 ceramic capacitor, and 0.1 leaded capacitor.</description>
 <title>Capacitor</title>
 <tags>
+<tag>GRM43D</tag>
 <tag>SMD</tag>
 <tag>CAP</tag>
-<tag>GRM43D</tag>
 </tags>
 <properties>
 <property name='package'>grm43d</property>
-<property name='family'>cap</property>
+<property name='family'>Cap</property>
 <property name='variant'>smd</property>
 </properties>
 <views>

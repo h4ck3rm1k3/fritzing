@@ -2,18 +2,19 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-L298_BRIDGE_DRIVER-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-PowerIC' L298_BRIDGE_DRIVER  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Full-bridge power driver IC</description>
 <title>L298_BRIDGE_DRIVER</title>
 <tags>
-<tag>L298_BRIDGE_DRIVER</tag>
 <tag>POWERSO20</tag>
+<tag>L298_BRIDGE_DRIVER</tag>
 </tags>
 <properties>
 <property name='package'>powerso20</property>
-<property name='family'>l298_bridge_driver</property>
+<property name='family'>Bridge Driver</property>
+<property name='chip'>L298</property>
 </properties>
 <views>
 <breadboardView>

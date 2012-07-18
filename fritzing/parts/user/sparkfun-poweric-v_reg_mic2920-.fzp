@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-V_REG_MIC2920-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-PowerIC' V_REG_MIC2920  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>MIC2920A (http://www.micrel.com/_PDF/mic2920.pdf) - 400mA output LDO Regulator</description>
@@ -13,7 +13,10 @@
 </tags>
 <properties>
 <property name='package'>sot223</property>
-<property name='family'>v_reg_mic2920</property>
+<property name='family'>Voltage Regulator</property>
+<property name='current'>400mA</property>
+<property name='features'>LDO</property>
+<property name='chip'>MIC2920A</property>
 </properties>
 <views>
 <breadboardView>

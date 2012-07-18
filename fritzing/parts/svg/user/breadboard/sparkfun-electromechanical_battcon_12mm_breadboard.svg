@@ -5,17 +5,17 @@
  <g id="breadboard">
   <g id="icon">
    <path fill="#1F7A34" stroke="none" stroke-width="0" d="M0,0L0,170A30,30 0 0 1 0,230L0,400L200,400L200,0L0,0z"/>
-   <g transform="translate(-272.5,-34.821)">
-    <g transform="matrix(0, 0, 0, 0, 372.5, 234.821)">
-     <rect width="156" x="294.5" y="139.142" fill="#F7BD13" connectorname="GND" height="156" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="125" x="0" y="154.642" fill="#F7BD13" connectorname="PWR@1" height="125" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="125" x="620" y="154.642" fill="#F7BD13" connectorname="PWR@2" height="125" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="485" x="0" y="0" fill="#303030" height="469.642" stroke="none" stroke-width="0"/>
-     <polygon fill="#1f1f1f" points="0,0 485,0 475,10 10,10"/>
-     <polygon fill="#1f1f1f" points="0,469.642 485,469.642 475,459.642 10,459.642"/>
-     <polygon fill="#000000" points="0,0 0,469.642 10,459.642 10,10"/>
-     <polygon fill="#3d3d3d" points="485,0 485,469.642 475,459.642 475,10"/>
-     <circle fill="#1f1f1f" cx="30" cy="439.642" stroke="none" r="10" stroke-width="0"/>
+   <g transform="translate(-272.5,-36.321)">
+    <g transform="matrix(0, 0, 0, 0, 372.5, 236.321)">
+     <rect width="156" x="294.5" y="140.642" fill="#F7BD13" connectorname="GND" height="156" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="125" x="0" y="156.142" fill="#F7BD13" connectorname="PWR@1" height="125" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="125" x="620" y="156.142" fill="#F7BD13" connectorname="PWR@2" height="125" stroke="none" stroke-linecap="round" stroke-width="0"/>
+     <rect width="488" x="0" y="0" fill="#303030" height="472.642" stroke="none" stroke-width="0"/>
+     <polygon fill="#1f1f1f" points="0,0 488,0 478,10 10,10"/>
+     <polygon fill="#1f1f1f" points="0,472.642 488,472.642 478,462.642 10,462.642"/>
+     <polygon fill="#000000" points="0,0 0,472.642 10,462.642 10,10"/>
+     <polygon fill="#3d3d3d" points="488,0 488,472.642 478,462.642 478,10"/>
+     <circle fill="#1f1f1f" cx="30" cy="442.642" stroke="none" r="10" stroke-width="0"/>
     </g>
    </g>
    <text x="50" y="224.375" font-family="OCRA" fill="white" text-anchor="start" stroke="none" id="label" stroke-width="0" font-size="65">BATTCON_12MM</text>

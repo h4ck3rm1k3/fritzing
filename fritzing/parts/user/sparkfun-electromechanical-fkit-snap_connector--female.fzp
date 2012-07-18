@@ -2,19 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-FKIT-SNAP_CONNECTOR--FEMALE'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' FKIT-SNAP_CONNECTOR -FEMALE -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Snap connector for Fabrick.it products</description>
 <title>FKIT-SNAP_CONNECTOR</title>
 <tags>
-<tag>-FEMALE</tag>
 <tag>FKIT-SNAP_CONNECTOR</tag>
+<tag>-FEMALE</tag>
 <tag>FKIT-SNAP_FEMALE</tag>
 </tags>
 <properties>
 <property name='package'>fkit-snap_female</property>
-<property name='family'>fkit-snap_connector</property>
+<property name='family'>E-Textiles Connector</property>
+<property name='function'>Snap</property>
 <property name='variant'>-female</property>
 </properties>
 <views>

@@ -2,20 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-BATTERY-12PTH'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' BATTERY 12PTH -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>BAT</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Battery Holders&lt;/b&gt;
 Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <title>Battery Holders</title>
 <tags>
-<tag>12PTH</tag>
-<tag>BATTERY</tag>
 <tag>BATTCON_12MM_PTH</tag>
+<tag>BATTERY</tag>
+<tag>12PTH</tag>
 </tags>
 <properties>
 <property name='package'>battcon_12mm_pth</property>
-<property name='family'>battery</property>
+<property name='family'>Battery Holder</property>
 <property name='variant'>12pth</property>
 </properties>
 <views>

@@ -2,18 +2,21 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-DC-DC_CONVERTER-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-PowerIC' DC-DC_CONVERTER  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>APTS006A0X-SRZ Step-down 6A variable voltage switching module (TOL-09275)</description>
 <title>DC-DC_CONVERTER</title>
 <tags>
 <tag>DC-DC_CONVERTER</tag>
-<tag>DC-DC_CONVERTER</tag>
 </tags>
 <properties>
 <property name='package'>dc-dc_converter</property>
-<property name='family'>dc-dc_converter</property>
+<property name='output'>0.59V-5.5VDC</property>
+<property name='family'>Step-down IC</property>
+<property name='input'>4.5-14V</property>
+<property name='current'>6A</property>
+<property name='chip'>APTS006A0X</property>
 </properties>
 <views>
 <breadboardView>

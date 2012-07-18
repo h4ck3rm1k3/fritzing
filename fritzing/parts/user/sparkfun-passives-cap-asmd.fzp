@@ -2,20 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Passives-CAP-ASMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Passives' CAP ASMD -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>C</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Capacitor&lt;/b&gt;
-Standard 0603 ceramic capacitor, and 0.1&quot; leaded capacitor.</description>
+Standard 0603 ceramic capacitor, and 0.1 leaded capacitor.</description>
 <title>Capacitor</title>
 <tags>
 <tag>ASMD</tag>
-<tag>CAP</tag>
 <tag>CTZ3</tag>
+<tag>CAP</tag>
 </tags>
 <properties>
 <property name='package'>ctz3</property>
-<property name='family'>cap</property>
+<property name='family'>Cap</property>
 <property name='variant'>asmd</property>
 </properties>
 <views>

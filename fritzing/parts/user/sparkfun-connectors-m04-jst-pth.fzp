@@ -2,11 +2,11 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-M04-JST-PTH'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' M04 JST-PTH -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Header 4&lt;/b&gt;
-Standard 4-pin 0.1&quot; header. Use with straight break away headers (SKU : PRT-00116), right angle break away headers (PRT-00553), swiss pins (PRT-00743), machine pins (PRT-00117), and female headers (PRT-00115). Molex polarized connector foot print use with SKU : PRT-08231 with associated crimp pins and housings. 1MM SMD Version SKU: PRT-10208</description>
+Standard 4-pin 0.1 header. Use with straight break away headers (SKU : PRT-00116), right angle break away headers (PRT-00553), swiss pins (PRT-00743), machine pins (PRT-00117), and female headers (PRT-00115). Molex polarized connector foot print use with SKU : PRT-08231 with associated crimp pins and housings. 1MM SMD Version SKU: PRT-10208</description>
 <title>Header 4</title>
 <tags>
 <tag>JST-PTH</tag>
@@ -15,7 +15,7 @@ Standard 4-pin 0.1&quot; header. Use with straight break away headers (SKU : PRT
 </tags>
 <properties>
 <property name='package'>jst-4-pth</property>
-<property name='family'>m04</property>
+<property name='family'>Pin Header</property>
 <property name='variant'>jst-pth</property>
 </properties>
 <views>

@@ -2,18 +2,19 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-HMC1051Z-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' HMC1051Z  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Honeywell 1-axis magnetometer</description>
 <title>HMC1051Z</title>
 <tags>
-<tag>HMC1051Z</tag>
 <tag>HMC1051Z3</tag>
+<tag>HMC1051Z</tag>
 </tags>
 <properties>
 <property name='package'>hmc1051z3</property>
-<property name='family'>hmc1051z</property>
+<property name='family'>Magnetic Sensor</property>
+<property name='axis'>1</property>
 </properties>
 <views>
 <breadboardView>

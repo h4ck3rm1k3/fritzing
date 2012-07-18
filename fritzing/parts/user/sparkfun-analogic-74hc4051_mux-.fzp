@@ -2,18 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-74HC4051_MUX-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-AnalogIC' 74HC4051_MUX  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>8:1 analog mux</description>
-<title>74HC4051_MUX</title>
+<title>74HC4051</title>
 <tags>
-<tag>74HC4051_MUX</tag>
 <tag>SO16</tag>
+<tag>74HC4051_MUX</tag>
 </tags>
 <properties>
 <property name='package'>so16</property>
-<property name='family'>74hc4051_mux</property>
+<property name='channels'>8-1</property>
+<property name='family'>Analog MUX</property>
+<property name='chip'>74HC4051</property>
 </properties>
 <views>
 <breadboardView>

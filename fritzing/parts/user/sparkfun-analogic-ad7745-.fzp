@@ -2,18 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-AD7745-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-AnalogIC' AD7745  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>24-bit capacitance to digital converter</description>
 <title>AD7745</title>
 <tags>
-<tag>AD7745</tag>
 <tag>TSSOP16</tag>
+<tag>AD7745</tag>
 </tags>
 <properties>
 <property name='package'>tssop16</property>
-<property name='family'>ad7745</property>
+<property name='resolution'>24-bit</property>
+<property name='family'>CDC</property>
+<property name='variant'>ad7745</property>
 </properties>
 <views>
 <breadboardView>

@@ -2,18 +2,17 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-SLIDER-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' SLIDER  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Slide-type potentiometer- COM-9119</description>
 <title>SLIDER</title>
 <tags>
 <tag>SLIDER</tag>
-<tag>SLIDER</tag>
 </tags>
 <properties>
 <property name='package'>slider</property>
-<property name='family'>slider</property>
+<property name='family'>Potentiometer (Fader)</property>
 </properties>
 <views>
 <breadboardView>

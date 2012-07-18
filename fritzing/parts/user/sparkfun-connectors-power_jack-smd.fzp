@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-POWER_JACK-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' POWER_JACK SMD -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>J</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Power Jack&lt;/b&gt;
@@ -10,12 +10,13 @@ This is the standard 5.5mm barrel jack for power. The PTH is the most common, pr
 <title>Power Jack</title>
 <tags>
 <tag>SMD</tag>
-<tag>POWER_JACK</tag>
 <tag>POWER_JACK_SMD</tag>
+<tag>POWER_JACK</tag>
 </tags>
 <properties>
 <property name='package'>power_jack_smd</property>
-<property name='family'>power_jack</property>
+<property name='family'>Power Jack</property>
+<property name='type'>5.5mm barrel</property>
 <property name='variant'>smd</property>
 </properties>
 <views>

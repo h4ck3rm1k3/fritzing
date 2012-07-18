@@ -2,18 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-LITTLE_BITS_CONN-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' LITTLE_BITS_CONN  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Connector used in LittleBits</description>
 <title>LITTLE_BITS_CONN</title>
 <tags>
-<tag>LITTLE_BITS_CONN</tag>
 <tag>LITTLEBITS</tag>
+<tag>LITTLE_BITS_CONN</tag>
 </tags>
 <properties>
 <property name='package'>littlebits</property>
-<property name='family'>little_bits_conn</property>
+<property name='target'>LittleBits</property>
+<property name='family'>LittleBits</property>
+<property name='variant'>connector</property>
 </properties>
 <views>
 <breadboardView>

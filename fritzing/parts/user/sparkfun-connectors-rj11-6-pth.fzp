@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-RJ11-6-PTH'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' RJ11-6 PTH -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>J</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;RJ11 Jack&lt;/b&gt;
@@ -11,11 +11,11 @@ Simple 6 pin RJ11 jack. Commonly found on CAT3 devices and Microchip programmers
 <tags>
 <tag>PTH</tag>
 <tag>RJ11-6</tag>
-<tag>RJ11-6</tag>
 </tags>
 <properties>
 <property name='package'>rj11-6</property>
-<property name='family'>rj11-6</property>
+<property name='target'>RJ-11</property>
+<property name='family'>RJ-XX Jack</property>
 <property name='variant'>pth</property>
 </properties>
 <views>

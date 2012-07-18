@@ -2,19 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-SWITCH-4PDT-CNK_LOCK'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' SWITCH-4PDT CNK_LOCK -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>For use with a push-button switch made by CnK components.</description>
 <title>SWITCH-4PDT</title>
 <tags>
 <tag>CNK_LOCK</tag>
-<tag>SWITCH-4PDT</tag>
 <tag>SWITCH-4PDT-CNK</tag>
+<tag>SWITCH-4PDT</tag>
 </tags>
 <properties>
 <property name='package'>switch-4pdt-cnk</property>
-<property name='family'>switch-4pdt</property>
+<property name='channels'>4</property>
+<property name='family'>Push button</property>
 <property name='variant'>cnk_lock</property>
 </properties>
 <views>

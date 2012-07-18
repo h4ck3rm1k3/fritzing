@@ -2,19 +2,19 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-TRIMPOT-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' TRIMPOT SMD -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>R</label>
 <author>www.fritzing.org</author>
-<description>Various small potentiometers for &quot;set-and-forget&quot; applications</description>
+<description>Various small potentiometers for set-and-forget applications</description>
 <title>TRIMPOT</title>
 <tags>
+<tag>TRIMPOT-3MM</tag>
 <tag>SMD</tag>
 <tag>TRIMPOT</tag>
-<tag>TRIMPOT-3MM</tag>
 </tags>
 <properties>
 <property name='package'>trimpot-3mm</property>
-<property name='family'>trimpot</property>
+<property name='family'>Trimpot</property>
 <property name='variant'>smd</property>
 </properties>
 <views>

@@ -2,14 +2,14 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Boards-ARDUINO_SHIELD-NOHOLESORLABELS'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Boards' ARDUINO_SHIELD NOHOLESORLABELS -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Arduino shield footprint</description>
 <title>ARDUINO_SHIELD</title>
 <tags>
-<tag>NOHOLESORLABELS</tag>
 <tag>ARDUINO_SHIELD</tag>
+<tag>NOHOLESORLABELS</tag>
 <tag>DUEMILANOVE_SHIELD_NOHOLES_NOLABELS</tag>
 </tags>
 <properties>

@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-TB6621FNG-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-PowerIC' TB6621FNG  -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Toshiba 1A dual motor driver</description>
@@ -13,7 +13,9 @@
 </tags>
 <properties>
 <property name='package'>ssop24</property>
-<property name='family'>tb6621fng</property>
+<property name='family'>Motor Driver (Dual)</property>
+<property name='current'>1A</property>
+<property name='chip'>TB6621FNG</property>
 </properties>
 <views>
 <breadboardView>

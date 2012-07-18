@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Passives-CAP_POL-1206-KIT'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Passives' CAP_POL 1206-KIT -->
 <version>4</version>
-<date>2012-05-25</date>
+<date>2012-07-18</date>
 <label>C</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Capacitor Polarized&lt;/b&gt;
@@ -10,12 +10,12 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <title>Capacitor Polarized</title>
 <tags>
 <tag>1206-KIT</tag>
-<tag>CAP_POL</tag>
 <tag>EIA3216-KIT</tag>
+<tag>CAP_POL</tag>
 </tags>
 <properties>
 <property name='package'>eia3216-kit</property>
-<property name='family'>cap_pol</property>
+<property name='family'>Cap (Polarized)</property>
 <property name='variant'>1206-kit</property>
 </properties>
 <views>
