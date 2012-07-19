@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-HMC6352-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' HMC6352  -->
 <version>4</version>
-<date>2012-07-18</date>
+<date>2012-07-19</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Compass module from Honeywell. Works very well. Schematic and footprint are production proven. Spark Fun Electronics SKU : COM-07892</description>
@@ -39,11 +39,11 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector22' type='pad' name='CA1'>
+<connector id='connector22' type='male' name='CA1'>
 <description>CA1</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector22pad'/>
+<p layer='breadboard' svgId='connector22pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
@@ -53,11 +53,11 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector21' type='pad' name='CA2'>
+<connector id='connector21' type='male' name='CA2'>
 <description>CA2</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector21pad'/>
+<p layer='breadboard' svgId='connector21pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
@@ -67,11 +67,11 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector19' type='pad' name='CB1'>
+<connector id='connector19' type='male' name='CB1'>
 <description>CB1</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector19pad'/>
+<p layer='breadboard' svgId='connector19pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
@@ -81,11 +81,11 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector18' type='pad' name='CB2'>
+<connector id='connector18' type='male' name='CB2'>
 <description>CB2</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector18pad'/>
+<p layer='breadboard' svgId='connector18pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
@@ -95,11 +95,11 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='pad' name='GND'>
+<connector id='connector4' type='male' name='GND'>
 <description>GND</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector4pad'/>
+<p layer='breadboard' svgId='connector4pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/>
@@ -109,11 +109,11 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector9' type='pad' name='SCL'>
+<connector id='connector9' type='male' name='SCL'>
 <description>SCL</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector9pad'/>
+<p layer='breadboard' svgId='connector9pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>
@@ -123,11 +123,11 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='pad' name='SDA'>
+<connector id='connector6' type='male' name='SDA'>
 <description>SDA</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector6pad'/>
+<p layer='breadboard' svgId='connector6pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector6pin' terminalId='connector6terminal'/>
@@ -137,11 +137,11 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector13' type='pad' name='VCC'>
+<connector id='connector13' type='male' name='VCC'>
 <description>VCC</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector13pad'/>
+<p layer='breadboard' svgId='connector13pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector7pin' terminalId='connector7terminal'/>

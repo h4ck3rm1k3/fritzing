@@ -168,11 +168,11 @@
 <line class='pin' id='connector17pin' connectorname='NC@13' x1='0.0762' y1='51.164' x2='2.6162' y2='51.164' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector17terminal' x='0.0762' y='51.164' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='3.0734' y='51.4688' text-anchor='start'>NC@13</text>
-<line class='pin' id='connector18pin' connectorname='VCC@6' x1='0.0762' y1='15.604' x2='2.6162' y2='15.604' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector18terminal' x='0.0762' y='15.604' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<line class='pin' id='connector19pin' connectorname='VCC@6' x1='0.0762' y1='15.604' x2='2.6162' y2='15.604' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector19terminal' x='0.0762' y='15.604' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='3.0734' y='15.9088' text-anchor='start'>VCC@6</text>
-<line class='pin' id='connector19pin' connectorname='VCC@18' x1='0.0762' y1='18.144' x2='2.6162' y2='18.144' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector19terminal' x='0.0762' y='18.144' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<line class='pin' id='connector18pin' connectorname='VCC@18' x1='0.0762' y1='18.144' x2='2.6162' y2='18.144' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector18terminal' x='0.0762' y='18.144' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='3.0734' y='18.4488' text-anchor='start'>VCC@18</text>
 </g>
 </svg>

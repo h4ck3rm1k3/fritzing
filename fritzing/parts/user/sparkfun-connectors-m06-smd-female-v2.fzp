@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-M06-SMD-FEMALE-V2'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' M06 SMD-FEMALE-V2 -->
 <version>4</version>
-<date>2012-07-18</date>
+<date>2012-07-19</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Header 6&lt;/b&gt;
@@ -51,11 +51,11 @@ will be further integrated into the Sparkfun Library for other footprints. It ca
 </iconView>
 </views>
 <connectors>
-<connector id='connector0' type='pad' name='1'>
+<connector id='connector0' type='male' name='1'>
 <description>1</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector0pad'/>
+<p layer='breadboard' svgId='connector0pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
@@ -65,11 +65,11 @@ will be further integrated into the Sparkfun Library for other footprints. It ca
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='pad' name='2'>
+<connector id='connector1' type='male' name='2'>
 <description>2</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector1pad'/>
+<p layer='breadboard' svgId='connector1pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
@@ -79,11 +79,11 @@ will be further integrated into the Sparkfun Library for other footprints. It ca
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='pad' name='3'>
+<connector id='connector2' type='male' name='3'>
 <description>3</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector2pad'/>
+<p layer='breadboard' svgId='connector2pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
@@ -93,11 +93,11 @@ will be further integrated into the Sparkfun Library for other footprints. It ca
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='pad' name='4'>
+<connector id='connector3' type='male' name='4'>
 <description>4</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector3pad'/>
+<p layer='breadboard' svgId='connector3pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
@@ -107,11 +107,11 @@ will be further integrated into the Sparkfun Library for other footprints. It ca
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='pad' name='5'>
+<connector id='connector4' type='male' name='5'>
 <description>5</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector4pad'/>
+<p layer='breadboard' svgId='connector4pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/>
@@ -121,11 +121,11 @@ will be further integrated into the Sparkfun Library for other footprints. It ca
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='pad' name='6'>
+<connector id='connector5' type='male' name='6'>
 <description>6</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector5pad'/>
+<p layer='breadboard' svgId='connector5pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>

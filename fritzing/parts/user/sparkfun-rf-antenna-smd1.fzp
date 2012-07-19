@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-ANTENNA-SMD1'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-RF' ANTENNA SMD1 -->
 <version>4</version>
-<date>2012-07-18</date>
+<date>2012-07-19</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Chip antenna&lt;/b&gt;&lt;p&gt;
@@ -42,11 +42,11 @@ Chip antenna with ground or secondary connection. Common with larger metal RF co
 </iconView>
 </views>
 <connectors>
-<connector id='connector7' type='pad' name='GND'>
+<connector id='connector7' type='male' name='GND'>
 <description>GND</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector7pad'/>
+<p layer='breadboard' svgId='connector7pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
@@ -56,11 +56,11 @@ Chip antenna with ground or secondary connection. Common with larger metal RF co
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='pad' name='SIGNAL'>
+<connector id='connector6' type='male' name='SIGNAL'>
 <description>SIGNAL</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector6pad'/>
+<p layer='breadboard' svgId='connector6pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>

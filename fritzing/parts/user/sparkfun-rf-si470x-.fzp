@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-SI470X-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-RF' SI470X  -->
 <version>4</version>
-<date>2012-07-18</date>
+<date>2012-07-19</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>FM receiver IC. Tested with Si4703. You really only need SEN, RST, SCLK, and SDIO to get a full FM radio working. Antenna comes from headphone jack. See BOB-10344.</description>
@@ -38,7 +38,7 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector4' type='pad' name='!RST'>
+<connector id='connector4' type='male' name='!RST'>
 <description>!RST</description>
 <views>
 <breadboardView>
@@ -52,7 +52,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='pad' name='!SEN'>
+<connector id='connector5' type='male' name='!SEN'>
 <description>!SEN</description>
 <views>
 <breadboardView>
@@ -66,7 +66,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector14' type='pad' name='DOUT'>
+<connector id='connector14' type='male' name='DOUT'>
 <description>DOUT</description>
 <views>
 <breadboardView>
@@ -80,7 +80,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='pad' name='FMIP'>
+<connector id='connector1' type='male' name='FMIP'>
 <description>FMIP</description>
 <views>
 <breadboardView>
@@ -94,7 +94,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector11' type='pad' name='GND@12'>
+<connector id='connector11' type='male' name='GND@12'>
 <description>GND@12</description>
 <views>
 <breadboardView>
@@ -108,7 +108,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector20' type='pad' name='GND@PAD'>
+<connector id='connector20' type='male' name='GND@PAD'>
 <description>GND@PAD</description>
 <views>
 <breadboardView>
@@ -122,7 +122,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector18' type='pad' name='GPIO1'>
+<connector id='connector18' type='male' name='GPIO1'>
 <description>GPIO1</description>
 <views>
 <breadboardView>
@@ -136,7 +136,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector17' type='pad' name='GPIO2'>
+<connector id='connector17' type='male' name='GPIO2'>
 <description>GPIO2</description>
 <views>
 <breadboardView>
@@ -150,7 +150,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector16' type='pad' name='GPIO3'>
+<connector id='connector16' type='male' name='GPIO3'>
 <description>GPIO3</description>
 <views>
 <breadboardView>
@@ -164,7 +164,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector13' type='pad' name='LOUT'>
+<connector id='connector13' type='male' name='LOUT'>
 <description>LOUT</description>
 <views>
 <breadboardView>
@@ -178,7 +178,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='pad' name='LPI'>
+<connector id='connector3' type='male' name='LPI'>
 <description>LPI</description>
 <views>
 <breadboardView>
@@ -192,7 +192,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='pad' name='RCLK'>
+<connector id='connector8' type='male' name='RCLK'>
 <description>RCLK</description>
 <views>
 <breadboardView>
@@ -206,7 +206,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='pad' name='RFGND'>
+<connector id='connector2' type='male' name='RFGND'>
 <description>RFGND</description>
 <views>
 <breadboardView>
@@ -220,7 +220,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector12' type='pad' name='ROUT'>
+<connector id='connector12' type='male' name='ROUT'>
 <description>ROUT</description>
 <views>
 <breadboardView>
@@ -234,7 +234,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='pad' name='SCLK'>
+<connector id='connector6' type='male' name='SCLK'>
 <description>SCLK</description>
 <views>
 <breadboardView>
@@ -248,7 +248,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='pad' name='SDIO'>
+<connector id='connector7' type='male' name='SDIO'>
 <description>SDIO</description>
 <views>
 <breadboardView>
@@ -262,7 +262,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector15' type='pad' name='VA'>
+<connector id='connector15' type='male' name='VA'>
 <description>VA</description>
 <views>
 <breadboardView>
@@ -276,7 +276,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='pad' name='VD'>
+<connector id='connector10' type='male' name='VD'>
 <description>VD</description>
 <views>
 <breadboardView>
@@ -290,7 +290,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector9' type='pad' name='VIO'>
+<connector id='connector9' type='male' name='VIO'>
 <description>VIO</description>
 <views>
 <breadboardView>

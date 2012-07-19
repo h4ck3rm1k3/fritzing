@@ -21,13 +21,13 @@
 <line class='other' x1='0.762' y1='0.762' x2='0.762' y2='4.572' stroke='#000000' stroke-width='0.254' stroke-linecap='round'/>
 <line class='other' x1='0.762' y1='0.762' x2='8.382' y2='0.762' stroke='#000000' stroke-width='0.254' stroke-linecap='round'/>
 <line class='other' x1='0.762' y1='4.572' x2='8.382' y2='4.572' stroke='#000000' stroke-width='0.254' stroke-linecap='round'/>
-<line class='pin' id='connector0pin' connectorname='2' x1='5.842' y1='7.112' x2='5.842' y2='4.572' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector0terminal' x='5.842' y='7.112' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<line class='pin' id='connector1pin' connectorname='2' x1='5.842' y1='7.112' x2='5.842' y2='4.572' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector1terminal' x='5.842' y='7.112' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <g transform='translate(6.1468,4.1148)'><g transform='rotate(270)'>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='0' y='0' text-anchor='start'>2</text>
 </g></g>
-<line class='pin' id='connector1pin' connectorname='1' x1='3.302' y1='7.112' x2='3.302' y2='4.572' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector1terminal' x='3.302' y='7.112' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<line class='pin' id='connector0pin' connectorname='1' x1='3.302' y1='7.112' x2='3.302' y2='4.572' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector0terminal' x='3.302' y='7.112' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <g transform='translate(3.6068,4.1148)'><g transform='rotate(270)'>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='0' y='0' text-anchor='start'>1</text>
 </g></g>

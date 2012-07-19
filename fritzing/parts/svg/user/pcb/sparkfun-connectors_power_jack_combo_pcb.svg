@@ -10,19 +10,19 @@
 <line class='other' x1='7.6416' y1='12.8566' x2='5.1016' y2='12.8566' stroke='#F7BD13' stroke-width='1.27' stroke-linecap='round'/>
 <line class='other' x1='11.4516' y1='12.8566' x2='7.6416' y2='12.8566' stroke='#F7BD13' stroke-width='1.27' stroke-linecap='round'/>
 <line class='other' x1='10.8166' y1='9.0466' x2='7.6416' y2='9.0466' stroke='#F7BD13' stroke-width='1.27' stroke-linecap='round'/>
-<circle id='connector0pin' connectorname='POWER' cx='13.7216' cy='4.6016' r='1.6256' stroke='#F7BD13' stroke-width='0.254' fill='none' />
-<circle id='connector1pin' connectorname='GND@1' cx='7.7216' cy='4.6016' r='1.6256' stroke='#F7BD13' stroke-width='0.254' fill='none' />
-<circle id='connector2pin' connectorname='GND' cx='10.7216' cy='9.3016' r='1.6256' stroke='#F7BD13' stroke-width='0.254' fill='none' />
-<rect id='connector3pad' connectorname='POWER@1' x='3.7016' y='0.2416' width='2.8' height='2.4' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
-<rect id='connector4pad' connectorname='GND@3' x='3.7016' y='11.6416' width='2.8' height='2.4' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
-<rect id='connector5pad' connectorname='POWER@2' x='9.8016' y='0.2416' width='2.8' height='2.4' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
-<rect id='connector6pad' connectorname='GND@4' x='9.8016' y='11.6416' width='2.8' height='2.4' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<circle id='connector6pad' connectorname='POWER' cx='13.7216' cy='4.6016' r='1.6256' stroke='#F7BD13' stroke-width='0.254' fill='none' />
+<circle id='connector1pad' connectorname='GND@1' cx='7.7216' cy='4.6016' r='1.6256' stroke='#F7BD13' stroke-width='0.254' fill='none' />
+<circle id='connector5pad' connectorname='GND' cx='10.7216' cy='9.3016' r='1.6256' stroke='#F7BD13' stroke-width='0.254' fill='none' />
+<rect id='connector0pad' connectorname='POWER@1' x='3.7016' y='0.2416' width='2.8' height='2.4' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector3pad' connectorname='GND@3' x='3.7016' y='11.6416' width='2.8' height='2.4' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector2pad' connectorname='POWER@2' x='9.8016' y='0.2416' width='2.8' height='2.4' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector4pad' connectorname='GND@4' x='9.8016' y='11.6416' width='2.8' height='2.4' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <circle cx='5.1016' cy='7.1416' r='0.8' stroke='black' stroke-width='0' fill='black' id='nonconn0' />
 <circle cx='10.1816' cy='7.1416' r='0.8' stroke='black' stroke-width='0' fill='black' id='nonconn1' />
 <g id='copper0'>
-<circle id='connector0pin' connectorname='POWER' cx='13.7216' cy='4.6016' r='1.6256' stroke='#F7BD13' stroke-width='0.254' fill='none' />
-<circle id='connector1pin' connectorname='GND@1' cx='7.7216' cy='4.6016' r='1.6256' stroke='#F7BD13' stroke-width='0.254' fill='none' />
-<circle id='connector2pin' connectorname='GND' cx='10.7216' cy='9.3016' r='1.6256' stroke='#F7BD13' stroke-width='0.254' fill='none' />
+<circle id='connector6pad' connectorname='POWER' cx='13.7216' cy='4.6016' r='1.6256' stroke='#F7BD13' stroke-width='0.254' fill='none' />
+<circle id='connector1pad' connectorname='GND@1' cx='7.7216' cy='4.6016' r='1.6256' stroke='#F7BD13' stroke-width='0.254' fill='none' />
+<circle id='connector5pad' connectorname='GND' cx='10.7216' cy='9.3016' r='1.6256' stroke='#F7BD13' stroke-width='0.254' fill='none' />
 <circle cx='5.1016' cy='7.1416' r='0.8' stroke='black' stroke-width='0' fill='black' id='nonconn2' />
 <circle cx='10.1816' cy='7.1416' r='0.8' stroke='black' stroke-width='0' fill='black' id='nonconn3' />
 </g>

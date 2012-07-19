@@ -13,13 +13,13 @@ M11.354,7.889a1.05,1.05 0 1 0 2.1,0 1.05,1.05 0 1 0 -2.1,0z
 M9.304,0.889a0.55,0.55 0 1 0 1.1,0 0.55,0.55 0 1 0 -1.1,0z
 M3.304,0.889a0.55,0.55 0 1 0 1.1,0 0.55,0.55 0 1 0 -1.1,0z
 '/>
-<circle id='connector0pin' connectorname='A' cx='4.354' cy='15.389' r='0.725' stroke='#9A916C' stroke-width='0.35' fill='none' />
-<circle id='connector1pin' connectorname='C' cx='6.854' cy='15.389' r='0.725' stroke='#9A916C' stroke-width='0.35' fill='none' />
-<circle id='connector2pin' connectorname='B' cx='9.354' cy='15.389' r='0.725' stroke='#9A916C' stroke-width='0.35' fill='none' />
-<circle id='connector3pin' connectorname='+G' cx='7.854' cy='0.889' r='0.7195' stroke='#9A916C' stroke-width='0.339' fill='none' />
-<circle id='connector4pin' connectorname='+R' cx='5.854' cy='0.889' r='0.7195' stroke='#9A916C' stroke-width='0.339' fill='none' />
-<circle id='connector5pin' connectorname='P$1' cx='1.304' cy='7.889' r='1.177' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector6pin' connectorname='P$2' cx='12.404' cy='7.889' r='1.177' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector4pin' connectorname='A' cx='4.354' cy='15.389' r='0.725' stroke='#9A916C' stroke-width='0.35' fill='none' />
+<circle id='connector6pin' connectorname='C' cx='6.854' cy='15.389' r='0.725' stroke='#9A916C' stroke-width='0.35' fill='none' />
+<circle id='connector5pin' connectorname='B' cx='9.354' cy='15.389' r='0.725' stroke='#9A916C' stroke-width='0.35' fill='none' />
+<circle id='connector2pin' connectorname='+G' cx='7.854' cy='0.889' r='0.7195' stroke='#9A916C' stroke-width='0.339' fill='none' />
+<circle id='connector3pin' connectorname='+R' cx='5.854' cy='0.889' r='0.7195' stroke='#9A916C' stroke-width='0.339' fill='none' />
+<circle id='connector0pin' connectorname='P$1' cx='1.304' cy='7.889' r='1.177' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector1pin' connectorname='P$2' cx='12.404' cy='7.889' r='1.177' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <circle id='connector7pin' connectorname='GND' cx='9.854' cy='0.889' r='0.7195' stroke='#9A916C' stroke-width='0.339' fill='none' />
 <circle id='connector8pin' connectorname='SW' cx='3.854' cy='0.889' r='0.7195' stroke='#9A916C' stroke-width='0.339' fill='none' />
 <line class='other' x1='0.654' y1='6.189' x2='0.654' y2='1.9952' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>

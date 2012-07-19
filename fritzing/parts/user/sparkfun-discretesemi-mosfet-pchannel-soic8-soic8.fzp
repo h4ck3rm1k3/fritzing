@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DiscreteSemi-MOSFET-PCHANNEL-SOIC8-SOIC8'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DiscreteSemi' MOSFET-PCHANNEL-SOIC8 SOIC8 -->
 <version>4</version>
-<date>2012-07-18</date>
+<date>2012-07-19</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Generic 8-pin PMOSFET</description>
@@ -41,7 +41,7 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector4' type='pad' name='D@1'>
+<connector id='connector4' type='male' name='D@1'>
 <description>D@1</description>
 <views>
 <breadboardView>
@@ -55,7 +55,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='pad' name='D@2'>
+<connector id='connector5' type='male' name='D@2'>
 <description>D@2</description>
 <views>
 <breadboardView>
@@ -69,7 +69,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='pad' name='D@3'>
+<connector id='connector6' type='male' name='D@3'>
 <description>D@3</description>
 <views>
 <breadboardView>
@@ -83,7 +83,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='pad' name='D@4'>
+<connector id='connector7' type='male' name='D@4'>
 <description>D@4</description>
 <views>
 <breadboardView>
@@ -97,7 +97,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='pad' name='G'>
+<connector id='connector3' type='male' name='G'>
 <description>G</description>
 <views>
 <breadboardView>
@@ -111,7 +111,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='pad' name='S@1'>
+<connector id='connector0' type='male' name='S@1'>
 <description>S@1</description>
 <views>
 <breadboardView>
@@ -125,7 +125,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='pad' name='S@2'>
+<connector id='connector1' type='male' name='S@2'>
 <description>S@2</description>
 <views>
 <breadboardView>
@@ -139,7 +139,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='pad' name='S@3'>
+<connector id='connector2' type='male' name='S@3'>
 <description>S@3</description>
 <views>
 <breadboardView>

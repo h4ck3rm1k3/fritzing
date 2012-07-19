@@ -12,7 +12,7 @@ M13.462,6.11938a0.9271,0.9271 0 1 0 1.8542,0 0.9271,0.9271 0 1 0 -1.8542,0z
 <circle id='connector1pin' connectorname='VCC@2' cx='14.3891' cy='6.11938' r='1.0541' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <path stroke='none' stroke-width='0' d='m13.208,4.93828 2.3622,0 0,2.3622 -2.3622,0 0,-3zM13.462,6.11938a0.9271,0.9271 0 1 0 1.8542,0 0.9271,0.9271 0 1 0 -1.8542,0z
 ' fill='#9A916C' />
-<rect id='connector2pad' connectorname='GND' x='3.9751' y='2.30938' width='7.62' height='7.62' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector2pin' connectorname='GND' x='3.9751' y='2.30938' width='7.62' height='7.62' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <line class='other' x1='1.4351' y1='9.92938' x2='3.9751' y2='12.4694' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line class='other' x1='3.9751' y1='12.4694' x2='11.5951' y2='12.4694' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line class='other' x1='11.5951' y1='12.4694' x2='14.1351' y2='9.92938' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>

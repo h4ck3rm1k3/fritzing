@@ -4,8 +4,8 @@
 <g id='copper1'>
 <rect id='connector0pad' connectorname='P$1' x='0.0016' y='1.3316' width='1.6' height='3' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <rect id='connector1pad' connectorname='P$2' x='6.8016' y='1.3316' width='1.6' height='3' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
-<rect id='connector2pad' connectorname='VCC' x='2.7016' y='2.3516' width='1' height='5.5' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
-<rect id='connector3pad' connectorname='GND' x='4.7016' y='2.3516' width='1' height='5.5' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector3pad' connectorname='VCC' x='2.7016' y='2.3516' width='1' height='5.5' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector2pad' connectorname='GND' x='4.7016' y='2.3516' width='1' height='5.5' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <g id='copper0'>
 </g>
 </g>

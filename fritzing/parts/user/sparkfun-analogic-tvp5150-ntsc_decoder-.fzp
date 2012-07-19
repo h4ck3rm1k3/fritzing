@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-TVP5150-NTSC_DECODER-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-AnalogIC' TVP5150-NTSC_DECODER  -->
 <version>4</version>
-<date>2012-07-18</date>
+<date>2012-07-19</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Texas Instrument NTSC/PAL Decoder. Decodes NTSC video signal to YCbCr 4:2:2 signal</description>
@@ -41,7 +41,7 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector6' type='pad' name='AGND'>
+<connector id='connector6' type='male' name='AGND'>
 <description>AGND</description>
 <views>
 <breadboardView>
@@ -55,7 +55,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='pad' name='AIP1A'>
+<connector id='connector0' type='male' name='AIP1A'>
 <description>AIP1A</description>
 <views>
 <breadboardView>
@@ -69,7 +69,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='pad' name='AIP1B'>
+<connector id='connector1' type='male' name='AIP1B'>
 <description>AIP1B</description>
 <views>
 <breadboardView>
@@ -83,7 +83,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector25' type='pad' name='AVID'>
+<connector id='connector25' type='male' name='AVID'>
 <description>AVID</description>
 <views>
 <breadboardView>
@@ -97,7 +97,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector30' type='pad' name='CH_AGND'>
+<connector id='connector30' type='male' name='CH_AGND'>
 <description>CH_AGND</description>
 <views>
 <breadboardView>
@@ -111,7 +111,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector31' type='pad' name='CH_AVDD'>
+<connector id='connector31' type='male' name='CH_AVDD'>
 <description>CH_AVDD</description>
 <views>
 <breadboardView>
@@ -125,7 +125,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector18' type='pad' name='DGND'>
+<connector id='connector18' type='male' name='DGND'>
 <description>DGND</description>
 <views>
 <breadboardView>
@@ -139,7 +139,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector19' type='pad' name='DVDD'>
+<connector id='connector19' type='male' name='DVDD'>
 <description>DVDD</description>
 <views>
 <breadboardView>
@@ -153,7 +153,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector22' type='pad' name='FID_GLCO'>
+<connector id='connector22' type='male' name='FID_GLCO'>
 <description>FID_GLCO</description>
 <views>
 <breadboardView>
@@ -167,7 +167,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector24' type='pad' name='HSYNC'>
+<connector id='connector24' type='male' name='HSYNC'>
 <description>HSYNC</description>
 <views>
 <breadboardView>
@@ -181,7 +181,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector26' type='pad' name='INT_REQ'>
+<connector id='connector26' type='male' name='INT_REQ'>
 <description>INT_REQ</description>
 <views>
 <breadboardView>
@@ -195,7 +195,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector9' type='pad' name='IO_DVDD'>
+<connector id='connector9' type='male' name='IO_DVDD'>
 <description>IO_DVDD</description>
 <views>
 <breadboardView>
@@ -209,7 +209,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='pad' name='PCLK_SCLK'>
+<connector id='connector8' type='male' name='PCLK_SCLK'>
 <description>PCLK_SCLK</description>
 <views>
 <breadboardView>
@@ -223,7 +223,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector27' type='pad' name='PDN'>
+<connector id='connector27' type='male' name='PDN'>
 <description>PDN</description>
 <views>
 <breadboardView>
@@ -237,7 +237,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='pad' name='PLL_AGND'>
+<connector id='connector2' type='male' name='PLL_AGND'>
 <description>PLL_AGND</description>
 <views>
 <breadboardView>
@@ -251,7 +251,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='pad' name='PLL_AVDD'>
+<connector id='connector3' type='male' name='PLL_AVDD'>
 <description>PLL_AVDD</description>
 <views>
 <breadboardView>
@@ -265,7 +265,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector29' type='pad' name='REFM'>
+<connector id='connector29' type='male' name='REFM'>
 <description>REFM</description>
 <views>
 <breadboardView>
@@ -279,7 +279,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector28' type='pad' name='REFP'>
+<connector id='connector28' type='male' name='REFP'>
 <description>REFP</description>
 <views>
 <breadboardView>
@@ -293,7 +293,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='pad' name='RESET_'>
+<connector id='connector7' type='male' name='RESET_'>
 <description>RESET_</description>
 <views>
 <breadboardView>
@@ -307,7 +307,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector20' type='pad' name='SCL'>
+<connector id='connector20' type='male' name='SCL'>
 <description>SCL</description>
 <views>
 <breadboardView>
@@ -321,7 +321,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector21' type='pad' name='SDA'>
+<connector id='connector21' type='male' name='SDA'>
 <description>SDA</description>
 <views>
 <breadboardView>
@@ -335,7 +335,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector23' type='pad' name='VSYNC'>
+<connector id='connector23' type='male' name='VSYNC'>
 <description>VSYNC</description>
 <views>
 <breadboardView>
@@ -349,7 +349,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='pad' name='XTAL1'>
+<connector id='connector4' type='male' name='XTAL1'>
 <description>XTAL1</description>
 <views>
 <breadboardView>
@@ -363,7 +363,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='pad' name='XTAL2'>
+<connector id='connector5' type='male' name='XTAL2'>
 <description>XTAL2</description>
 <views>
 <breadboardView>
@@ -377,7 +377,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector17' type='pad' name='YOUT_0'>
+<connector id='connector17' type='male' name='YOUT_0'>
 <description>YOUT_0</description>
 <views>
 <breadboardView>
@@ -391,7 +391,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector16' type='pad' name='YOUT_1'>
+<connector id='connector16' type='male' name='YOUT_1'>
 <description>YOUT_1</description>
 <views>
 <breadboardView>
@@ -405,7 +405,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector15' type='pad' name='YOUT_2'>
+<connector id='connector15' type='male' name='YOUT_2'>
 <description>YOUT_2</description>
 <views>
 <breadboardView>
@@ -419,7 +419,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector14' type='pad' name='YOUT_3'>
+<connector id='connector14' type='male' name='YOUT_3'>
 <description>YOUT_3</description>
 <views>
 <breadboardView>
@@ -433,7 +433,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector13' type='pad' name='YOUT_4'>
+<connector id='connector13' type='male' name='YOUT_4'>
 <description>YOUT_4</description>
 <views>
 <breadboardView>
@@ -447,7 +447,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector12' type='pad' name='YOUT_5'>
+<connector id='connector12' type='male' name='YOUT_5'>
 <description>YOUT_5</description>
 <views>
 <breadboardView>
@@ -461,7 +461,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector11' type='pad' name='YOUT_6'>
+<connector id='connector11' type='male' name='YOUT_6'>
 <description>YOUT_6</description>
 <views>
 <breadboardView>
@@ -475,7 +475,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='pad' name='YOUT_7'>
+<connector id='connector10' type='male' name='YOUT_7'>
 <description>YOUT_7</description>
 <views>
 <breadboardView>

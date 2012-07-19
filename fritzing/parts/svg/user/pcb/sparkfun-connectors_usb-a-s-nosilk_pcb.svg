@@ -2,15 +2,15 @@
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
 <svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.86872in' height='1.21203in' viewBox='0 0 22.0655 30.7856' >
 <g id='copper1'>
-<circle id='connector0pin' connectorname='P$5' cx='10.3505' cy='29.3759' r='1.2827' stroke='#F7BD13' stroke-width='0.254' fill='none' />
-<circle id='connector1pin' connectorname='P$6' cx='10.3505' cy='16.2441' r='1.2827' stroke='#F7BD13' stroke-width='0.254' fill='none' />
-<rect id='connector2pad' connectorname='D-' x='12.3005' y='21.36' width='3' height='0.9' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
-<rect id='connector3pad' connectorname='VBUS' x='12.3005' y='19.36' width='3' height='0.9' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
-<rect id='connector4pad' connectorname='D+' x='12.3005' y='23.36' width='3' height='0.9' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
-<rect id='connector5pad' connectorname='GND' x='12.3005' y='25.36' width='3' height='0.9' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<circle id='connector0pad' connectorname='P$5' cx='10.3505' cy='29.3759' r='1.2827' stroke='#F7BD13' stroke-width='0.254' fill='none' />
+<circle id='connector1pad' connectorname='P$6' cx='10.3505' cy='16.2441' r='1.2827' stroke='#F7BD13' stroke-width='0.254' fill='none' />
+<rect id='connector3pad' connectorname='D-' x='12.3005' y='21.36' width='3' height='0.9' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector5pad' connectorname='VBUS' x='12.3005' y='19.36' width='3' height='0.9' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector2pad' connectorname='D+' x='12.3005' y='23.36' width='3' height='0.9' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
+<rect id='connector4pad' connectorname='GND' x='12.3005' y='25.36' width='3' height='0.9' stroke='none' stroke-width='0' fill='#F7BD13' stroke-linecap='round'/>
 <g id='copper0'>
-<circle id='connector0pin' connectorname='P$5' cx='10.3505' cy='29.3759' r='1.2827' stroke='#F7BD13' stroke-width='0.254' fill='none' />
-<circle id='connector1pin' connectorname='P$6' cx='10.3505' cy='16.2441' r='1.2827' stroke='#F7BD13' stroke-width='0.254' fill='none' />
+<circle id='connector0pad' connectorname='P$5' cx='10.3505' cy='29.3759' r='1.2827' stroke='#F7BD13' stroke-width='0.254' fill='none' />
+<circle id='connector1pad' connectorname='P$6' cx='10.3505' cy='16.2441' r='1.2827' stroke='#F7BD13' stroke-width='0.254' fill='none' />
 </g>
 </g>
 <g id='silkscreen'>

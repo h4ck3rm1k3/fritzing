@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-M15-LOCK'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' M15 LOCK -->
 <version>4</version>
-<date>2012-07-18</date>
+<date>2012-07-19</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Header 15&lt;/b&gt;
@@ -53,8 +53,8 @@ Standard 15-pin 0.1 header. Use with straight break away headers (SKU : PRT-0011
 <p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector0pin'/>
-<p layer='copper1' svgId='connector0pin'/>
+<p layer='copper0' svgId='connector0pad'/>
+<p layer='copper1' svgId='connector0pad'/>
 </pcbView>
 </views>
 </connector>
@@ -65,11 +65,11 @@ Standard 15-pin 0.1 header. Use with straight break away headers (SKU : PRT-0011
 <p layer='breadboard' svgId='connector9pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector9pin' terminalId='connector9terminal'/>
+<p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector9pin'/>
-<p layer='copper1' svgId='connector9pin'/>
+<p layer='copper0' svgId='connector9pad'/>
+<p layer='copper1' svgId='connector9pad'/>
 </pcbView>
 </views>
 </connector>
@@ -80,11 +80,11 @@ Standard 15-pin 0.1 header. Use with straight break away headers (SKU : PRT-0011
 <p layer='breadboard' svgId='connector10pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector10pin' terminalId='connector10terminal'/>
+<p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector10pin'/>
-<p layer='copper1' svgId='connector10pin'/>
+<p layer='copper0' svgId='connector10pad'/>
+<p layer='copper1' svgId='connector10pad'/>
 </pcbView>
 </views>
 </connector>
@@ -95,11 +95,11 @@ Standard 15-pin 0.1 header. Use with straight break away headers (SKU : PRT-0011
 <p layer='breadboard' svgId='connector11pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector11pin' terminalId='connector11terminal'/>
+<p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector11pin'/>
-<p layer='copper1' svgId='connector11pin'/>
+<p layer='copper0' svgId='connector11pad'/>
+<p layer='copper1' svgId='connector11pad'/>
 </pcbView>
 </views>
 </connector>
@@ -110,11 +110,11 @@ Standard 15-pin 0.1 header. Use with straight break away headers (SKU : PRT-0011
 <p layer='breadboard' svgId='connector12pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector12pin' terminalId='connector12terminal'/>
+<p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector12pin'/>
-<p layer='copper1' svgId='connector12pin'/>
+<p layer='copper0' svgId='connector12pad'/>
+<p layer='copper1' svgId='connector12pad'/>
 </pcbView>
 </views>
 </connector>
@@ -125,11 +125,11 @@ Standard 15-pin 0.1 header. Use with straight break away headers (SKU : PRT-0011
 <p layer='breadboard' svgId='connector13pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector13pin' terminalId='connector13terminal'/>
+<p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector13pin'/>
-<p layer='copper1' svgId='connector13pin'/>
+<p layer='copper0' svgId='connector13pad'/>
+<p layer='copper1' svgId='connector13pad'/>
 </pcbView>
 </views>
 </connector>
@@ -140,11 +140,11 @@ Standard 15-pin 0.1 header. Use with straight break away headers (SKU : PRT-0011
 <p layer='breadboard' svgId='connector14pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector14pin' terminalId='connector14terminal'/>
+<p layer='schematic' svgId='connector6pin' terminalId='connector6terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector14pin'/>
-<p layer='copper1' svgId='connector14pin'/>
+<p layer='copper0' svgId='connector14pad'/>
+<p layer='copper1' svgId='connector14pad'/>
 </pcbView>
 </views>
 </connector>
@@ -155,11 +155,11 @@ Standard 15-pin 0.1 header. Use with straight break away headers (SKU : PRT-0011
 <p layer='breadboard' svgId='connector1pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
+<p layer='schematic' svgId='connector7pin' terminalId='connector7terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector1pin'/>
-<p layer='copper1' svgId='connector1pin'/>
+<p layer='copper0' svgId='connector1pad'/>
+<p layer='copper1' svgId='connector1pad'/>
 </pcbView>
 </views>
 </connector>
@@ -170,11 +170,11 @@ Standard 15-pin 0.1 header. Use with straight break away headers (SKU : PRT-0011
 <p layer='breadboard' svgId='connector2pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
+<p layer='schematic' svgId='connector8pin' terminalId='connector8terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector2pin'/>
-<p layer='copper1' svgId='connector2pin'/>
+<p layer='copper0' svgId='connector2pad'/>
+<p layer='copper1' svgId='connector2pad'/>
 </pcbView>
 </views>
 </connector>
@@ -185,11 +185,11 @@ Standard 15-pin 0.1 header. Use with straight break away headers (SKU : PRT-0011
 <p layer='breadboard' svgId='connector3pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
+<p layer='schematic' svgId='connector9pin' terminalId='connector9terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector3pin'/>
-<p layer='copper1' svgId='connector3pin'/>
+<p layer='copper0' svgId='connector3pad'/>
+<p layer='copper1' svgId='connector3pad'/>
 </pcbView>
 </views>
 </connector>
@@ -200,11 +200,11 @@ Standard 15-pin 0.1 header. Use with straight break away headers (SKU : PRT-0011
 <p layer='breadboard' svgId='connector4pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/>
+<p layer='schematic' svgId='connector10pin' terminalId='connector10terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector4pin'/>
-<p layer='copper1' svgId='connector4pin'/>
+<p layer='copper0' svgId='connector4pad'/>
+<p layer='copper1' svgId='connector4pad'/>
 </pcbView>
 </views>
 </connector>
@@ -215,11 +215,11 @@ Standard 15-pin 0.1 header. Use with straight break away headers (SKU : PRT-0011
 <p layer='breadboard' svgId='connector5pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>
+<p layer='schematic' svgId='connector11pin' terminalId='connector11terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector5pin'/>
-<p layer='copper1' svgId='connector5pin'/>
+<p layer='copper0' svgId='connector5pad'/>
+<p layer='copper1' svgId='connector5pad'/>
 </pcbView>
 </views>
 </connector>
@@ -230,11 +230,11 @@ Standard 15-pin 0.1 header. Use with straight break away headers (SKU : PRT-0011
 <p layer='breadboard' svgId='connector6pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector6pin' terminalId='connector6terminal'/>
+<p layer='schematic' svgId='connector12pin' terminalId='connector12terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector6pin'/>
-<p layer='copper1' svgId='connector6pin'/>
+<p layer='copper0' svgId='connector6pad'/>
+<p layer='copper1' svgId='connector6pad'/>
 </pcbView>
 </views>
 </connector>
@@ -245,11 +245,11 @@ Standard 15-pin 0.1 header. Use with straight break away headers (SKU : PRT-0011
 <p layer='breadboard' svgId='connector7pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector7pin' terminalId='connector7terminal'/>
+<p layer='schematic' svgId='connector13pin' terminalId='connector13terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector7pin'/>
-<p layer='copper1' svgId='connector7pin'/>
+<p layer='copper0' svgId='connector7pad'/>
+<p layer='copper1' svgId='connector7pad'/>
 </pcbView>
 </views>
 </connector>
@@ -260,11 +260,11 @@ Standard 15-pin 0.1 header. Use with straight break away headers (SKU : PRT-0011
 <p layer='breadboard' svgId='connector8pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector8pin' terminalId='connector8terminal'/>
+<p layer='schematic' svgId='connector14pin' terminalId='connector14terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector8pin'/>
-<p layer='copper1' svgId='connector8pin'/>
+<p layer='copper0' svgId='connector8pad'/>
+<p layer='copper1' svgId='connector8pad'/>
 </pcbView>
 </views>
 </connector>

@@ -5,81 +5,155 @@
  <g id="breadboard">
   <g id="icon">
    <path fill="#1F7A34" stroke="none" stroke-width="0" d="M0,0L0,270A30,30 0 0 1 0,330L0,600L500,600L500,0L0,0z"/>
-   <g transform="translate(92.5197,83.4646)">
-    <g transform="matrix(0.5, 0, 0, 0.5, 78.7402, 108.268)">
-     <rect width="98.4253" x="216.536" y="206.693" fill="#F7BD13" connectorname="D+" height="19.685" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="98.4253" x="216.536" y="175.197" fill="#F7BD13" connectorname="D-" height="19.685" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="98.4253" x="216.536" y="269.685" fill="#F7BD13" connectorname="GND" height="19.685" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="98.4253" x="216.536" y="238.189" fill="#F7BD13" connectorname="ID" height="19.685" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="98.4253" x="0" y="354.331" fill="#F7BD13" connectorname="MTN3" height="78.7402" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="98.4253" x="0" y="0" fill="#F7BD13" connectorname="MTN1" height="78.7402" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="98.4253" x="216.536" y="354.331" fill="#F7BD13" connectorname="MTN4" height="78.7402" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="98.4253" x="216.536" y="0" fill="#F7BD13" connectorname="MTN2" height="78.7402" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <rect width="98.4253" x="216.536" y="143.701" fill="#F7BD13" connectorname="VBUS" height="19.685" stroke="none" stroke-linecap="round" stroke-width="0"/>
-     <circle fill="black" cx="167.323" cy="129.921" stroke="black" r="17.7166" id="nonconn0" stroke-width="0"/>
-     <circle fill="black" cx="167.323" cy="303.15" stroke="black" r="17.7166" id="nonconn1" stroke-width="0"/>
-     <rect width="189.102" x="62.9291" y="62.9291" fill="#303030" height="307.213" stroke="none" stroke-width="0"/>
-     <polygon fill="#1f1f1f" points="62.9291,62.9291 252.031,62.9291 242.031,72.9291 72.9291,72.9291"/>
-     <polygon fill="#1f1f1f" points="62.9291,370.142 252.031,370.142 242.031,360.142 72.9291,360.142"/>
-     <polygon fill="#000000" points="62.9291,62.9291 62.9291,370.142 72.9291,360.142 72.9291,72.9291"/>
-     <polygon fill="#3d3d3d" points="252.031,62.9291 252.031,370.142 242.031,360.142 242.031,72.9291"/>
-     <circle fill="#1f1f1f" cx="92.9291" cy="340.142" stroke="none" r="10" stroke-width="0"/>
+   <g transform="translate(30.354,85.021)">
+    <g transform="matrix(0.5, 0, 0, 0.5, 109.823, 107.49)">
+     <path fill="#4D4D4D" stroke-width="0" d="M-6788.62,6001.74c0,2.75,2.25,5,5,5l227.125,0c2.75,0,5,-2.25,5,-5l0,-11.2639c0,-2.75,2.02778,-6.01389,4.47222,-7.22222l20.7222,-10.25c2.45833,-1.20833,4.47222,-4.45833,4.47222,-7.22222l0,-34.5694c0,-2.75,-2.25,-5,-5,-5l-286.486,0c-2.75,0,-5,2.25,-5,5l0,34.5694c0,2.75,2.01389,6.01389,4.48611,7.22222l20.7222,10.25c2.47222,1.20833,4.48611,4.45833,4.48611,7.22222L-6788.62,6001.74z"/>
+     <g stroke-width="0">
+      <rect width="91.5833" x="-6889.67" y="5589.92" fill="#666666" height="86.8611" stroke-width="0"/>
+      <rect width="91.5833" x="-6889.67" y="5758.07" fill="#666666" height="100.514" stroke-width="0"/>
+     </g>
+     <rect width="188.375" x="-6764.22" y="5935.76" fill="#1A1A1A" height="21.5" stroke-width="0"/>
+     <g stroke-width="0">
+      <rect width="91.6111" x="-6541.99" y="5589.92" fill="#666666" height="86.8611" stroke-width="0"/>
+      <rect width="91.6111" x="-6541.99" y="5758.07" fill="#666666" height="100.514" stroke-width="0"/>
+     </g>
+     <g stroke-width="0">
+      <polygon fill="#999999" points="-6611.68,5626.12,-6623.14,5610.9,-6536.07,5610.9,-6536.07,5597.53,-6804.82,5597.53,-6804.82,5610.9,-6716.97,5610.9,-6728.44,5626.12,-6818.32,5626.12,-6818.32,5943.38,-6521.83,5943.38,-6521.83,5626.12" stroke-width="0"/>
+     </g>
+     <path stroke-width="0" d="M-6733.19,5750.14c2.16667,0,3.76389,1.76389,3.55556,3.90278l-15.2361,145.764c-0.236111,2.13889,-2.125,3.90278,-4.33333,3.90278l-24.2083,0c-2.13889,0,-4.125,-1.76389,-4.33333,-3.90278l-15.2778,-145.764c-0.25,-2.13889,1.41667,-3.90278,3.52778,-3.90278l3.55556,0c2.125,0,4.125,1.76389,4.31944,3.90278l11.5278,132.514c0.152778,2.13889,2.08333,3.90278,4.27778,3.90278l9.01389,0c2.125,0,4.09722,-1.76389,4.30556,-3.90278l11.5139,-132.514c0.180556,-2.13889,2.09722,-3.90278,4.30556,-3.90278L-6733.19,5750.14z"/>
+     <path stroke-width="0" d="M-6550.67,5750.14c2.11111,0,3.76389,1.76389,3.55556,3.90278l-15.3056,145.778c-0.291667,2.13889,-2.125,3.90278,-4.33333,3.90278l-24.1944,0c-2.15278,0,-4.125,-1.76389,-4.33333,-3.90278l-15.2778,-145.778c-0.263889,-2.13889,1.40278,-3.90278,3.52778,-3.90278l3.56944,0c2.15278,0,4.09722,1.76389,4.34722,3.90278l11.5,132.514c0.194444,2.13889,2.02778,3.90278,4.31944,3.90278l8.97222,0c2.08333,0,4.125,-1.76389,4.33333,-3.90278l11.4583,-132.514c0.263889,-2.13889,2.02778,-3.90278,4.33333,-3.90278L-6550.67,5750.14z"/>
+     <g stroke-width="0">
+      <polygon fill="none" points="-6587.29,5890.39,-6570.39,5890.39,-6569.39,5878.89,-6588.18,5878.89" stroke-width="0"/>
+      <polygon fill="#939393" points="-6569.39,5878.89,-6570.39,5890.39,-6587.29,5890.39,-6588.18,5878.89" stroke-width="0"/>
+      <polygon fill="#545454" points="-6569.39,5878.89,-6568.94,5874.04,-6588.71,5874.04,-6588.18,5878.89" stroke-width="0"/>
+     </g>
+     <g stroke-width="0">
+      <polygon fill="none" points="-6769.83,5890.39,-6752.83,5890.39,-6751.9,5878.89,-6770.71,5878.89" stroke-width="0"/>
+      <polygon fill="#939393" points="-6751.9,5878.89,-6752.83,5890.39,-6769.83,5890.39,-6770.71,5878.89" stroke-width="0"/>
+      <polygon fill="#545454" points="-6751.9,5878.89,-6751.42,5874.04,-6771.24,5874.04,-6770.71,5878.89" stroke-width="0"/>
+     </g>
+     <rect width="77.1528" x="-6710.44" y="5771.39" fill="#808080" height="27.9722" stroke-width="0"/>
+     <rect width="77.1528" x="-6710.44" y="5755.92" fill="#545454" height="15.4861" stroke-width="0"/>
+     <path stroke-width="0" d="M-6715.11,5917c2.13889,0,4.06944,-1.76389,4.18056,-3.91667l9.70833,-161.181c0.138889,-2.13889,2.02778,-3.91667,4.18056,-3.91667l54.0139,0c2.15278,0,4.04167,1.77778,4.23611,3.91667l9.58333,161.181c0.125,2.15278,2.02778,3.91667,4.19444,3.91667l7.22222,0c2.13889,0,3.76389,-1.76389,3.70833,-3.91667l-13.3333,-183.222c-0.222222,-2.13889,-2.02778,-3.93056,-4.29167,-3.93056l-76.6667,0c-2.13889,0,-4.09722,1.79167,-4.29167,3.93056l-13.2778,183.236c-0.152778,2.13889,1.5,3.91667,3.65278,3.91667L-6715.11,5917L-6715.11,5917z"/>
+     <line stroke-opacity="0.24" fill="none" stroke="#FFFFFF" stroke-linecap="round" y1="5634.14" x1="-6809.56" y2="5929.04" stroke-width="0" x2="-6809.56"/>
+     <line stroke-opacity="0.15" fill="none" stroke="#FFFFFF" stroke-linecap="round" y1="5634.14" stroke-width="6.94444" x1="-6527.03" y2="5935.76" x2="-6527.03"/>
+     <line stroke-opacity="0.3" fill="none" stroke="#FFFFFF" stroke-linecap="round" y1="5612.33" x1="-6707.51" y2="5612.33" stroke-width="0" x2="-6632.67"/>
+     <g stroke-width="0">
+      <path fill="#E6E6E6" stroke-width="0" d="M-6526.83,5943.57c0.833333,0,1.52778,0.708333,1.52778,1.52778l0,20.6806c0,1.44444,-1.26389,3.47222,-2.55556,4.11111l-20.7083,10.2361c-3.66667,1.80556,-6.41667,6.23611,-6.41667,10.3333l0,11.2639c0,0.833333,-0.708333,1.52778,-1.52778,1.52778l-227.125,0c-0.833333,0,-1.52778,-0.708333,-1.52778,-1.52778l0,-11.2639c0,-4.09722,-2.76389,-8.54167,-6.41667,-10.3194l-20.7361,-10.2639c-1.27778,-0.625,-2.54167,-2.65278,-2.54167,-4.09722l0,-20.6806c0,-0.833333,0.694444,-1.52778,1.52778,-1.52778L-6526.83,5943.57M-6526.83,5940.1l-286.486,0c-2.75,0,-5,2.25,-5,5l0,20.6806c0,2.75,2.01389,6.01389,4.48611,7.22222l20.7222,10.25c2.47222,1.20833,4.48611,4.45833,4.48611,7.22222l0,11.2639c0,2.75,2.25,5,5,5l227.125,0c2.75,0,5,-2.25,5,-5l0,-11.2639c0,-2.75,2.02778,-6.01389,4.47222,-7.22222l20.7222,-10.25c2.45833,-1.20833,4.47222,-4.45833,4.47222,-7.22222l0,-20.6806C-6521.83,5942.35,-6524.08,5940.1,-6526.83,5940.1L-6526.83,5940.1z"/>
+     </g>
+     <path fill="#333333" stroke-width="0" d="M-6575.85,5972.65c0,2.75,-2.25,5,-5,5l-178.361,0c-2.75,0,-5,-2.25,-5,-5l0,-15.5972l188.375,0L-6575.83,5972.65z"/>
+     <g stroke-width="0">
+      <g stroke-width="0">
+       <rect width="15.8472" x="-6607.96" y="5961.6" fill="#1A1A1A" height="9.55556" stroke-width="0"/>
+      </g>
+      <g stroke-width="0">
+       <rect width="15.8472" x="-6642.94" y="5961.6" fill="#1A1A1A" height="9.55556" stroke-width="0"/>
+      </g>
+      <g stroke-width="0">
+       <rect width="15.8472" x="-6677.96" y="5961.6" fill="#1A1A1A" height="9.55556" stroke-width="0"/>
+      </g>
+      <g stroke-width="0">
+       <rect width="15.8472" x="-6712.96" y="5961.6" fill="#1A1A1A" height="9.55556" stroke-width="0"/>
+      </g>
+      <g stroke-width="0">
+       <rect width="15.8472" x="-6747.96" y="5961.6" fill="#1A1A1A" height="9.55556" stroke-width="0"/>
+      </g>
+     </g>
+     <g stroke-width="0">
+      <g stroke-width="0">
+       <rect width="7.16667" x="-6603.61" y="5961.6" fill="#E6E6E6" height="3.25" stroke-width="0"/>
+      </g>
+      <g stroke-width="0">
+       <rect width="7.16667" x="-6638.61" y="5961.6" fill="#E6E6E6" height="3.25" stroke-width="0"/>
+      </g>
+      <g stroke-width="0">
+       <rect width="7.16667" x="-6673.61" y="5961.6" fill="#E6E6E6" height="3.25" stroke-width="0"/>
+      </g>
+      <g stroke-width="0">
+       <rect width="7.16667" x="-6708.61" y="5961.6" fill="#E6E6E6" height="3.25" stroke-width="0"/>
+      </g>
+      <g stroke-width="0">
+       <rect width="7.16667" x="-6743.61" y="5961.6" fill="#E6E6E6" height="3.25" stroke-width="0"/>
+      </g>
+     </g>
+     <g stroke-width="0">
+      <g stroke-width="0">
+       <rect width="11.9861" x="-6629.01" y="5576.78" fill="#666666" height="20.75" stroke-width="0"/>
+       <rect width="1.93056" x="-6629.01" y="5576.78" fill="#CCCCCC" height="20.75" stroke-width="0"/>
+      </g>
+      <g stroke-width="0">
+       <rect width="11.9861" x="-6652.51" y="5576.78" fill="#666666" height="20.75" stroke-width="0"/>
+       <rect width="1.93056" x="-6652.51" y="5576.78" fill="#CCCCCC" height="20.75" stroke-width="0"/>
+      </g>
+      <g stroke-width="0">
+       <rect width="11.9861" x="-6676.01" y="5576.78" fill="#666666" height="20.75" stroke-width="0"/>
+       <rect width="1.93056" x="-6676.01" y="5576.78" fill="#CCCCCC" height="20.75" stroke-width="0"/>
+      </g>
+      <g stroke-width="0">
+       <rect width="12" x="-6699.51" y="5576.78" fill="#666666" height="20.75" stroke-width="0"/>
+       <rect width="1.94444" x="-6699.51" y="5576.78" fill="#CCCCCC" height="20.75" stroke-width="0"/>
+      </g>
+      <g stroke-width="0">
+       <rect width="12" x="-6723.01" y="5576.78" fill="#666666" height="20.75" stroke-width="0"/>
+       <rect width="1.95833" x="-6723.01" y="5576.78" fill="#CCCCCC" height="20.75" stroke-width="0"/>
+      </g>
+     </g>
     </g>
    </g>
    <text x="50" y="324.375" font-family="OCRA" fill="white" text-anchor="start" stroke="none" id="label" stroke-width="0" font-size="65">USB-MINIB</text>
    <g transform="translate(63.5,526.05)">
     <g transform="rotate(-90)">
-     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">1</text>
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">MTN1</text>
     </g>
    </g>
    <g transform="translate(63.5,73.95)">
     <g transform="rotate(-90)">
-     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">10</text>
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45"/>
     </g>
    </g>
    <g transform="translate(163.5,526.05)">
     <g transform="rotate(-90)">
-     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">2</text>
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">MTN2</text>
     </g>
    </g>
    <g transform="translate(163.5,73.95)">
     <g transform="rotate(-90)">
-     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">9</text>
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">VBUS</text>
     </g>
    </g>
    <g transform="translate(263.5,526.05)">
     <g transform="rotate(-90)">
-     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">3</text>
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">MTN3</text>
     </g>
    </g>
    <g transform="translate(263.5,73.95)">
     <g transform="rotate(-90)">
-     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">8</text>
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">ID</text>
     </g>
    </g>
    <g transform="translate(363.5,526.05)">
     <g transform="rotate(-90)">
-     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">4</text>
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">MTN4</text>
     </g>
    </g>
    <g transform="translate(363.5,73.95)">
     <g transform="rotate(-90)">
-     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">7</text>
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">GND</text>
     </g>
    </g>
    <g transform="translate(463.5,526.05)">
     <g transform="rotate(-90)">
-     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">5</text>
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">D+</text>
     </g>
    </g>
    <g transform="translate(463.5,73.95)">
     <g transform="rotate(-90)">
-     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">6</text>
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">D-</text>
     </g>
    </g>
   </g>
   <g transform="translate(34.035,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector0pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector0pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -87,7 +161,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(34.035,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector9pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -95,7 +169,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(134.035,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector1pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector1pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -103,7 +177,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(134.035,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector8pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector8pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -111,7 +185,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(234.035,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector2pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector2pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -119,7 +193,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(234.035,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector7pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector7pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -127,7 +201,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(334.035,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector3pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector3pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -135,7 +209,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(334.035,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector6pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector6pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -143,7 +217,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(434.035,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector4pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector4pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -151,7 +225,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(434.035,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector5pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector5pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>

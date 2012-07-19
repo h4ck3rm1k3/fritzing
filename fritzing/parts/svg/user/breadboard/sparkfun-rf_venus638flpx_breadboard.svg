@@ -92,7 +92,7 @@
    </g>
    <g transform="translate(63.5,73.95)">
     <g transform="rotate(-90)">
-     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">70</text>
+     <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45"/>
     </g>
    </g>
    <g transform="translate(163.5,526.05)">
@@ -437,7 +437,7 @@
    </g>
   </g>
   <g transform="translate(34.035,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector0pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector0pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -445,7 +445,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(34.035,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector69pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -453,7 +453,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(134.035,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector1pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector1pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -461,7 +461,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(134.035,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector68pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector68pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -469,7 +469,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(234.035,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector2pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector2pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -477,7 +477,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(234.035,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector67pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector67pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -485,7 +485,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(334.035,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector3pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector3pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -493,7 +493,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(334.035,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector66pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector66pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -501,7 +501,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(434.035,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector4pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector4pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -509,7 +509,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(434.035,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector65pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector65pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -517,7 +517,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(534.035,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector5pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector5pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -525,7 +525,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(534.035,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector64pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector64pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -533,7 +533,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(634.035,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector6pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector6pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -541,7 +541,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(634.035,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector63pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector63pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -549,7 +549,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(734.035,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector7pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector7pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -557,7 +557,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(734.035,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector62pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector62pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -565,7 +565,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(834.035,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector8pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector8pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -573,7 +573,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(834.035,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector61pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector61pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -581,7 +581,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(934.035,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector9pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector9pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -589,7 +589,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(934.035,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector60pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector60pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -597,7 +597,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(1034.04,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector10pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector10pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -605,7 +605,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(1034.04,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector59pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector59pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -613,7 +613,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(1134.04,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector11pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector11pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -621,7 +621,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(1134.04,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector58pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector58pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -629,7 +629,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(1234.04,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector12pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector12pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -637,7 +637,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(1234.04,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector57pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector57pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -645,7 +645,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(1334.04,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector13pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector13pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -653,7 +653,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(1334.04,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector56pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector56pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -661,7 +661,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(1434.04,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector14pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector14pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -669,7 +669,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(1434.04,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector55pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector55pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -677,7 +677,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(1534.04,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector15pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector15pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -685,7 +685,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(1534.04,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector54pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector54pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -693,7 +693,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(1634.04,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector16pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector16pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -701,7 +701,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(1634.04,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector53pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector53pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -709,7 +709,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(1734.04,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector17pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector17pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -717,7 +717,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(1734.04,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector52pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector52pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -725,7 +725,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(1834.04,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector18pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector18pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -733,7 +733,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(1834.04,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector51pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector51pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -741,7 +741,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(1934.04,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector19pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector19pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -749,7 +749,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(1934.04,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector50pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector50pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -757,7 +757,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(2034.04,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector20pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector20pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -765,7 +765,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(2034.04,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector49pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector49pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -773,7 +773,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(2134.03,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector21pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector21pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -781,7 +781,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(2134.03,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector48pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector48pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -789,7 +789,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(2234.03,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector22pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector22pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -797,7 +797,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(2234.03,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector47pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector47pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -805,7 +805,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(2334.03,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector23pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector23pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -813,7 +813,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(2334.03,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector46pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector46pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -821,7 +821,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(2434.03,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector24pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector24pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -829,7 +829,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(2434.03,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector45pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector45pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -837,7 +837,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(2534.03,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector25pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector25pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -845,7 +845,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(2534.03,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector44pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector44pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -853,7 +853,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(2634.03,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector26pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector26pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -861,7 +861,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(2634.03,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector43pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector43pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -869,7 +869,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(2734.03,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector27pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector27pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -877,7 +877,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(2734.03,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector42pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector42pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -885,7 +885,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(2834.03,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector28pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector28pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -893,7 +893,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(2834.03,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector41pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector41pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -901,7 +901,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(2934.03,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector29pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector29pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -909,7 +909,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(2934.03,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector40pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector40pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -917,7 +917,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(3034.03,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector30pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector30pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -925,7 +925,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(3034.03,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector39pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector39pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -933,7 +933,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(3134.03,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector31pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector31pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -941,7 +941,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(3134.03,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector38pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector38pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -949,7 +949,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(3234.03,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector32pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector32pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -957,7 +957,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(3234.03,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector37pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector37pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -965,7 +965,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(3334.03,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector33pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector33pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -973,7 +973,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(3334.03,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector36pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector36pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -981,7 +981,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(3434.03,534.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector34pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector34pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>
@@ -989,7 +989,7 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
   <g transform="translate(3434.03,34.05)">
-   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector35pad" stroke-width="0"/>
+   <rect width="31.93" x="0" y="0" fill="#8D8C8C" height="31.9" id="connector35pin" stroke-width="0"/>
    <rect width="16.4442" x="7.79153" y="7.73544" fill="#8C8663" height="16.4152" stroke-width="0"/>
    <polygon fill="#B8AF82" points="0,31.9,7.79153,24.1368,7.79153,6.97162,0,0" stroke-width="0"/>
    <polygon fill="#80795B" points="24.2079,7.76321,7.90264,7.76321,0,0,31.93,0" stroke-width="0"/>

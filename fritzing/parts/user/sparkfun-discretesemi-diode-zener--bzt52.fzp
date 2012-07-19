@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DiscreteSemi-DIODE-ZENER--BZT52'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DiscreteSemi' DIODE-ZENER -BZT52 -->
 <version>4</version>
-<date>2012-07-18</date>
+<date>2012-07-19</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Zener Diode
@@ -43,11 +43,11 @@ Production Part - 8199
 </iconView>
 </views>
 <connectors>
-<connector id='connector1' type='pad' name='A'>
+<connector id='connector1' type='male' name='A'>
 <description>A</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector1pad'/>
+<p layer='breadboard' svgId='connector1pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
@@ -57,11 +57,11 @@ Production Part - 8199
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='pad' name='C'>
+<connector id='connector0' type='male' name='C'>
 <description>C</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector0pad'/>
+<p layer='breadboard' svgId='connector0pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>

@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-74HC4052-SO'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-AnalogIC' 74HC4052 SO -->
 <version>4</version>
-<date>2012-07-18</date>
+<date>2012-07-19</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Dual 4:1 analog mux</description>
@@ -43,7 +43,7 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector9' type='pad' name='A'>
+<connector id='connector9' type='male' name='A'>
 <description>A</description>
 <views>
 <breadboardView>
@@ -57,7 +57,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='pad' name='B'>
+<connector id='connector8' type='male' name='B'>
 <description>B</description>
 <views>
 <breadboardView>
@@ -71,7 +71,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='pad' name='GND'>
+<connector id='connector7' type='male' name='GND'>
 <description>GND</description>
 <views>
 <breadboardView>
@@ -85,7 +85,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='pad' name='INH'>
+<connector id='connector5' type='male' name='INH'>
 <description>INH</description>
 <views>
 <breadboardView>
@@ -99,7 +99,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector15' type='pad' name='VCC'>
+<connector id='connector15' type='male' name='VCC'>
 <description>VCC</description>
 <views>
 <breadboardView>
@@ -113,7 +113,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='pad' name='VEE'>
+<connector id='connector6' type='male' name='VEE'>
 <description>VEE</description>
 <views>
 <breadboardView>
@@ -127,7 +127,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector12' type='pad' name='X'>
+<connector id='connector12' type='male' name='X'>
 <description>X</description>
 <views>
 <breadboardView>
@@ -141,7 +141,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector11' type='pad' name='X0'>
+<connector id='connector11' type='male' name='X0'>
 <description>X0</description>
 <views>
 <breadboardView>
@@ -155,7 +155,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector13' type='pad' name='X1'>
+<connector id='connector13' type='male' name='X1'>
 <description>X1</description>
 <views>
 <breadboardView>
@@ -169,7 +169,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector14' type='pad' name='X2'>
+<connector id='connector14' type='male' name='X2'>
 <description>X2</description>
 <views>
 <breadboardView>
@@ -183,7 +183,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='pad' name='X3'>
+<connector id='connector10' type='male' name='X3'>
 <description>X3</description>
 <views>
 <breadboardView>
@@ -197,7 +197,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='pad' name='Y'>
+<connector id='connector2' type='male' name='Y'>
 <description>Y</description>
 <views>
 <breadboardView>
@@ -211,7 +211,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='pad' name='Y0'>
+<connector id='connector0' type='male' name='Y0'>
 <description>Y0</description>
 <views>
 <breadboardView>
@@ -225,7 +225,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='pad' name='Y1'>
+<connector id='connector4' type='male' name='Y1'>
 <description>Y1</description>
 <views>
 <breadboardView>
@@ -239,7 +239,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='pad' name='Y2'>
+<connector id='connector1' type='male' name='Y2'>
 <description>Y2</description>
 <views>
 <breadboardView>
@@ -253,7 +253,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='pad' name='Y3'>
+<connector id='connector3' type='male' name='Y3'>
 <description>Y3</description>
 <views>
 <breadboardView>

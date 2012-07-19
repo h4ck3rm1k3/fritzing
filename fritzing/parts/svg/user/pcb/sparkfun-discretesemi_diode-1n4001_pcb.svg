@@ -2,11 +2,11 @@
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
 <svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.832661in' height='0.23185in' viewBox='0 0 21.1496 5.889' >
 <g id='copper1'>
-<circle id='connector0pin' connectorname='A' cx='0.9906' cy='4.492' r='0.7453' stroke='#F7BD13' stroke-width='0.4906' fill='none' />
-<circle id='connector1pin' connectorname='C' cx='11.1506' cy='4.492' r='0.7453' stroke='#F7BD13' stroke-width='0.4906' fill='none' />
+<circle id='connector0pad' connectorname='A' cx='0.9906' cy='4.492' r='0.7453' stroke='#F7BD13' stroke-width='0.4906' fill='none' />
+<circle id='connector1pad' connectorname='C' cx='11.1506' cy='4.492' r='0.7453' stroke='#F7BD13' stroke-width='0.4906' fill='none' />
 <g id='copper0'>
-<circle id='connector0pin' connectorname='A' cx='0.9906' cy='4.492' r='0.7453' stroke='#F7BD13' stroke-width='0.4906' fill='none' />
-<circle id='connector1pin' connectorname='C' cx='11.1506' cy='4.492' r='0.7453' stroke='#F7BD13' stroke-width='0.4906' fill='none' />
+<circle id='connector0pad' connectorname='A' cx='0.9906' cy='4.492' r='0.7453' stroke='#F7BD13' stroke-width='0.4906' fill='none' />
+<circle id='connector1pad' connectorname='C' cx='11.1506' cy='4.492' r='0.7453' stroke='#F7BD13' stroke-width='0.4906' fill='none' />
 </g>
 </g>
 <g id='silkscreen'>

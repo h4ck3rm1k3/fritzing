@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-OPAMP-DUAL-U'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-AnalogIC' OPAMP-DUAL U -->
 <version>4</version>
-<date>2012-07-18</date>
+<date>2012-07-19</date>
 <label>IC</label>
 <author>www.fritzing.org</author>
 <description>Generic op-amp footprint</description>
@@ -42,7 +42,7 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector2' type='pad' name='A +IN'>
+<connector id='connector2' type='male' name='A +IN'>
 <description>A +IN</description>
 <views>
 <breadboardView>
@@ -56,7 +56,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='pad' name='A -IN'>
+<connector id='connector1' type='male' name='A -IN'>
 <description>A -IN</description>
 <views>
 <breadboardView>
@@ -70,7 +70,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='pad' name='A OUT'>
+<connector id='connector0' type='male' name='A OUT'>
 <description>A OUT</description>
 <views>
 <breadboardView>
@@ -84,7 +84,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='pad' name='A V+'>
+<connector id='connector7' type='male' name='A V+'>
 <description>A V+</description>
 <views>
 <breadboardView>
@@ -98,7 +98,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='pad' name='A V-'>
+<connector id='connector3' type='male' name='A V-'>
 <description>A V-</description>
 <views>
 <breadboardView>
@@ -112,7 +112,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='pad' name='B +IN'>
+<connector id='connector4' type='male' name='B +IN'>
 <description>B +IN</description>
 <views>
 <breadboardView>
@@ -126,7 +126,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='pad' name='B -IN'>
+<connector id='connector5' type='male' name='B -IN'>
 <description>B -IN</description>
 <views>
 <breadboardView>
@@ -140,7 +140,7 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='pad' name='B OUT'>
+<connector id='connector6' type='male' name='B OUT'>
 <description>B OUT</description>
 <views>
 <breadboardView>

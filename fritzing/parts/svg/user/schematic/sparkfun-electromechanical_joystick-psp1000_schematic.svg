@@ -9,17 +9,17 @@
 <g transform='translate(14.0462,59)'><g transform='rotate(270)'>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='2.3114' x='0' y='0' text-anchor='start'>Joystick-PSP</text>
 </g></g>
-<line class='pin' id='connector0pin' connectorname='X' x1='0.0762' y1='42.236' x2='5.1562' y2='42.236' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector0terminal' x='0.0762' y='42.236' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<line class='pin' id='connector2pin' connectorname='X' x1='0.0762' y1='42.236' x2='5.1562' y2='42.236' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector2terminal' x='0.0762' y='42.236' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='5.6134' y='42.5408' text-anchor='start'>X</text>
-<line class='pin' id='connector1pin' connectorname='Y' x1='0.0762' y1='52.396' x2='5.1562' y2='52.396' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector1terminal' x='0.0762' y='52.396' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<line class='pin' id='connector3pin' connectorname='Y' x1='0.0762' y1='52.396' x2='5.1562' y2='52.396' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector3terminal' x='0.0762' y='52.396' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='5.6134' y='52.7008' text-anchor='start'>Y</text>
-<line class='pin' id='connector2pin' connectorname='VCC' x1='0.0762' y1='47.316' x2='5.1562' y2='47.316' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector2terminal' x='0.0762' y='47.316' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<line class='pin' id='connector1pin' connectorname='VCC' x1='0.0762' y1='47.316' x2='5.1562' y2='47.316' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector1terminal' x='0.0762' y='47.316' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='5.6134' y='47.6208' text-anchor='start'>VCC</text>
-<line class='pin' id='connector3pin' connectorname='GND' x1='0.0762' y1='57.476' x2='5.1562' y2='57.476' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector3terminal' x='0.0762' y='57.476' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<line class='pin' id='connector0pin' connectorname='GND' x1='0.0762' y1='57.476' x2='5.1562' y2='57.476' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector0terminal' x='0.0762' y='57.476' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='5.6134' y='57.7808' text-anchor='start'>GND</text>
 </g>
 </svg>

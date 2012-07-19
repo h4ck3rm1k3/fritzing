@@ -8,6 +8,6 @@ M4.6482,2.1717a0.6731,0.6731 0 1 0 1.3462,0 0.6731,0.6731 0 1 0 -1.3462,0z
 '/>
 <circle id='connector0pin' connectorname='P$1' cx='1.3335' cy='2.1717' r='0.8001' stroke='#9A916C' stroke-width='0.254' fill='none' />
 <circle id='connector1pin' connectorname='P$2' cx='5.3213' cy='2.1717' r='0.8001' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<rect id='connector2pad' connectorname='P$3' x='0' y='0' width='6.6548' height='4.3434' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector2pin' connectorname='P$3' x='0' y='0' width='6.6548' height='4.3434' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 </g>
 </svg>

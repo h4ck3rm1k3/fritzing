@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-M01-SNAP-MALE'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' M01 SNAP-MALE -->
 <version>4</version>
-<date>2012-07-18</date>
+<date>2012-07-19</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Header 1&lt;/b&gt;
@@ -41,11 +41,11 @@ Standard 1-pin 0.1 header. Use with straight break away headers (SKU : PRT-00116
 </iconView>
 </views>
 <connectors>
-<connector id='connector0' type='pad' name='1'>
+<connector id='connector0' type='male' name='1'>
 <description>1</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector0pad'/>
+<p layer='breadboard' svgId='connector0pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>

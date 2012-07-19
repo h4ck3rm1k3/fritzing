@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DiscreteSemi-MOSFET-NCHANNEL-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DiscreteSemi' MOSFET-NCHANNEL SMD -->
 <version>4</version>
-<date>2012-07-18</date>
+<date>2012-07-19</date>
 <label>Q</label>
 <author>www.fritzing.org</author>
 <description>Generic NMOS footprint</description>
@@ -41,11 +41,11 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector2' type='pad' name='D'>
+<connector id='connector2' type='male' name='D'>
 <description>D</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector2pad'/>
+<p layer='breadboard' svgId='connector2pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
@@ -55,11 +55,11 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='pad' name='G'>
+<connector id='connector0' type='male' name='G'>
 <description>G</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector0pad'/>
+<p layer='breadboard' svgId='connector0pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
@@ -69,11 +69,11 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='pad' name='S'>
+<connector id='connector1' type='male' name='S'>
 <description>S</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector1pad'/>
+<p layer='breadboard' svgId='connector1pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>

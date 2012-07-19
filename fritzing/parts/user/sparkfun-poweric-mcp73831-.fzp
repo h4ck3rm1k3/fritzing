@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-MCP73831-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-PowerIC' MCP73831  -->
 <version>4</version>
-<date>2012-07-18</date>
+<date>2012-07-19</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Miniature single cell, fully integrated Li-Ion, Li-polymer charge management controller&lt;br&gt;
@@ -42,25 +42,25 @@ http://ww1.microchip.com/downloads/en/DeviceDoc/21984a.pdf</description>
 </iconView>
 </views>
 <connectors>
-<connector id='connector4' type='pad' name='PROG'>
+<connector id='connector4' type='male' name='PROG'>
 <description>PROG</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector4pad'/>
+<p layer='breadboard' svgId='connector4pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
+<p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector4pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='pad' name='STAT'>
+<connector id='connector0' type='male' name='STAT'>
 <description>STAT</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector0pad'/>
+<p layer='breadboard' svgId='connector0pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
@@ -70,11 +70,11 @@ http://ww1.microchip.com/downloads/en/DeviceDoc/21984a.pdf</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='pad' name='VBAT'>
+<connector id='connector2' type='male' name='VBAT'>
 <description>VBAT</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector2pad'/>
+<p layer='breadboard' svgId='connector2pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
@@ -84,25 +84,25 @@ http://ww1.microchip.com/downloads/en/DeviceDoc/21984a.pdf</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='pad' name='VIN'>
+<connector id='connector3' type='male' name='VIN'>
 <description>VIN</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector3pad'/>
+<p layer='breadboard' svgId='connector3pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
+<p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector3pad'/>
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='pad' name='VSS'>
+<connector id='connector1' type='male' name='VSS'>
 <description>VSS</description>
 <views>
 <breadboardView>
-<p layer='breadboard' svgId='connector1pad'/>
+<p layer='breadboard' svgId='connector1pin'/>
 </breadboardView>
 <schematicView>
 <p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/>

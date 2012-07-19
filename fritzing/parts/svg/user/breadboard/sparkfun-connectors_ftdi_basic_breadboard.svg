@@ -10,12 +10,12 @@ M8.4836,1.3716a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
 M11.0236,1.3716a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
 M13.5636,1.3716a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z
 '/>
-<circle id='connector0pin' connectorname='DTR' cx='1.3716' cy='1.3716' r='0.7239' stroke='#9A916C' stroke-width='0.4318' fill='none' />
-<circle id='connector1pin' connectorname='RXI' cx='3.9116' cy='1.3716' r='0.7239' stroke='#9A916C' stroke-width='0.4318' fill='none' />
-<circle id='connector2pin' connectorname='TXO' cx='6.4516' cy='1.3716' r='0.7239' stroke='#9A916C' stroke-width='0.4318' fill='none' />
-<circle id='connector3pin' connectorname='VCC' cx='8.9916' cy='1.3716' r='0.7239' stroke='#9A916C' stroke-width='0.4318' fill='none' />
-<circle id='connector4pin' connectorname='CTS' cx='11.5316' cy='1.3716' r='0.7239' stroke='#9A916C' stroke-width='0.4318' fill='none' />
-<circle id='connector5pin' connectorname='GND' cx='14.0716' cy='1.3716' r='0.7239' stroke='#9A916C' stroke-width='0.4318' fill='none' />
+<circle id='connector1pin' connectorname='DTR' cx='1.3716' cy='1.3716' r='0.7239' stroke='#9A916C' stroke-width='0.4318' fill='none' />
+<circle id='connector3pin' connectorname='RXI' cx='3.9116' cy='1.3716' r='0.7239' stroke='#9A916C' stroke-width='0.4318' fill='none' />
+<circle id='connector4pin' connectorname='TXO' cx='6.4516' cy='1.3716' r='0.7239' stroke='#9A916C' stroke-width='0.4318' fill='none' />
+<circle id='connector5pin' connectorname='VCC' cx='8.9916' cy='1.3716' r='0.7239' stroke='#9A916C' stroke-width='0.4318' fill='none' />
+<circle id='connector0pin' connectorname='CTS' cx='11.5316' cy='1.3716' r='0.7239' stroke='#9A916C' stroke-width='0.4318' fill='none' />
+<circle id='connector2pin' connectorname='GND' cx='14.0716' cy='1.3716' r='0.7239' stroke='#9A916C' stroke-width='0.4318' fill='none' />
 <line class='other' x1='12.8016' y1='0.7366' x2='13.4366' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line class='other' x1='13.4366' y1='0.1016' x2='14.7066' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line class='other' x1='14.7066' y1='0.1016' x2='15.3416' y2='0.7366' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
