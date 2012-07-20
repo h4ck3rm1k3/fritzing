@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Ebene_1" xmlns:svg="http://www.w3.org/2000/svg"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="22.935px"
+	 height="21.521px" viewBox="2.423 1.051 22.935 21.521" enable-background="new 2.423 1.051 22.935 21.521" xml:space="preserve">
+<polygon fill="#B3B3B3" points="23.327,20.156 21.108,22.416 6.483,22.416 4.483,20.385 4.483,1.418 23.328,1.418 "/>
+<polygon fill="#999999" points="6.484,22.243 15.732,22.241 12.543,18.838 4.698,18.838 4.698,20.322 "/>
+<g id="copper1">
+	<rect id="connector1pad" x="17.079" y="1.051" fill="#666666" width="0.992" height="2.917"/>
+	<rect id="connector3pad" x="13.394" y="1.051" fill="#666666" width="0.992" height="2.917"/>
+	<rect id="connector4pad" x="15.236" y="1.051" fill="#666666" width="0.992" height="2.917"/>
+	<rect id="connector2pad" x="11.551" y="1.051" fill="#666666" width="0.992" height="2.917"/>
+	<rect id="connector0pad" x="9.708" y="1.051" fill="#666666" width="0.992" height="2.917"/>
+	<rect id="connector0pad_1_" x="9.708" y="1.051" fill="#999999" width="0.103" height="2.917"/>
+	<rect id="connector0pad_2_" x="11.551" y="1.051" fill="#999999" width="0.103" height="2.917"/>
+	<rect id="connector0pad_4_" x="13.413" y="1.051" fill="#999999" width="0.103" height="2.917"/>
+	<rect id="connector0pad_3_" x="15.256" y="1.051" fill="#999999" width="0.103" height="2.917"/>
+	<rect id="connector0pad_5_" x="17.079" y="1.051" fill="#999999" width="0.103" height="2.917"/>
+	<g id="copper0">
+	</g>
+</g>
+<rect x="23.527" y="8.031" fill="#666666" width="1.831" height="3.041"/>
+<rect x="2.423" y="8.031" fill="#666666" width="1.829" height="3.041"/>
+<rect x="4.483" y="1.418" fill="#CCCCCC" width="18.845" height="0.13"/>
+<rect x="8.744" y="1.418" fill="#333333" width="10.291" height="18.363"/>
+<rect x="3.249" y="19.239" fill="#B3B3B3" width="1.003" height="1.083"/>
+<rect x="3.612" y="19.239" fill="#CCCCCC" width="0.64" height="1.083"/>
+<rect x="23.526" y="19.239" fill="#B3B3B3" width="1.001" height="1.083"/>
+<rect x="23.526" y="19.239" fill="#CCCCCC" width="0.64" height="1.083"/>
+<g>
+	<g>
+		<rect x="17.823" y="20.156" fill="#F2F2F2" width="0.475" height="0.65"/>
+	</g>
+	<g>
+		<rect x="15.736" y="20.156" fill="#F2F2F2" width="0.477" height="0.65"/>
+	</g>
+	<g>
+		<rect x="13.652" y="20.156" fill="#F2F2F2" width="0.475" height="0.65"/>
+	</g>
+	<g>
+		<rect x="11.566" y="20.156" fill="#F2F2F2" width="0.475" height="0.65"/>
+	</g>
+	<g>
+		<rect x="9.481" y="20.156" fill="#F2F2F2" width="0.475" height="0.65"/>
+	</g>
+	<g>
+		<rect x="9.481" y="20.156" fill="#808080" width="0.096" height="0.65"/>
+	</g>
+	<g>
+		<rect x="11.566" y="20.156" fill="#808080" width="0.096" height="0.65"/>
+	</g>
+	<g>
+		<rect x="13.652" y="20.156" fill="#808080" width="0.096" height="0.65"/>
+	</g>
+	<g>
+		<rect x="15.737" y="20.156" fill="#808080" width="0.096" height="0.65"/>
+	</g>
+	<g>
+		<rect x="17.824" y="20.156" fill="#808080" width="0.096" height="0.65"/>
+	</g>
+</g>
+<path fill="#4D4D4D" d="M8.968,20.989h0.513v-0.395h0.475v0.395h1.61v-0.395h0.475v0.395h1.61v-0.395h0.475v0.395h1.609v-0.395
+	h0.477v0.395h1.61v-0.395h0.475v0.395h0.326h0.268c0.079,0,0.144-0.064,0.144-0.144v-1.067c0-0.079-0.064-0.144-0.144-0.144H8.888
+	c-0.079,0-0.144,0.064-0.144,0.144v1.067c0,0.079,0.065,0.144,0.144,0.144H8.968z"/>
+<path fill="#CCCCCC" d="M4.252,1.984l0.231-0.566h2.534c0,0-2.301,0.113-2.383,0.283s0.109,0.283,0.109,0.283H4.252z"/>
+<path fill="#CCCCCC" d="M23.527,1.984l-0.231-0.566h-2.534c0,0,2.301,0.113,2.383,0.283s-0.109,0.283-0.109,0.283H23.527z"/>
+<path fill="#CCCCCC" d="M4.252,17.739v2.657l2.018,2.176h15.031l2.227-2.176v-2.657H4.252z M23.081,20.303L21.1,22.24L6.484,22.243
+	l-1.786-1.921v-1.484h18.383V20.303z"/>
+<path fill="#E6E6E6" d="M20.137,1.984v1.067h-1.604V1.418h-0.461v0.566H9.708V1.418H9.182v1.634H7.577V1.984H4.252v16.441h19.275
+	V1.984H20.137z M9.182,15.275v0.817H7.59v-0.882c-0.426-0.278-0.708-0.759-0.708-1.306c0-0.596,0.218-1.106,0.708-1.37l0,0V8.052
+	h1.591v4.483c0.489,0.264,0.826,0.774,0.826,1.37S9.671,15.011,9.182,15.275z M20.071,15.275v0.817h-1.592v-0.882
+	c-0.426-0.278-0.707-0.759-0.707-1.306c0-0.596,0.217-1.106,0.707-1.37l0,0V8.052h1.592v4.483c0.49,0.264,0.826,0.774,0.826,1.37
+	S20.562,15.011,20.071,15.275z"/>
+<polygon fill="#F2F2F2" points="4.658,18.426 4.252,18.426 4.252,1.984 5.783,1.984 "/>
+<polygon fill="#999999" points="23.527,18.426 22.958,7.447 22.39,1.984 23.527,1.984 "/>
+<rect x="7.59" y="8.052" fill="#CCCCCC" width="1.591" height="0.13"/>
+<rect x="18.481" y="8.052" fill="#CCCCCC" width="1.591" height="0.13"/>
+<rect x="5.197" y="17.564" fill="#B3B3B3" width="17.385" height="0.661"/>
+<rect x="5.197" y="18.114" fill="#CCCCCC" width="17.385" height="0.312"/>
+</svg>

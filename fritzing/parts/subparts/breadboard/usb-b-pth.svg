@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Ebene_1" xmlns:svg="http://www.w3.org/2000/svg"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="34.309px"
+	 height="42.047px" viewBox="0 0 34.309 42.047" enable-background="new 0 0 34.309 42.047" xml:space="preserve">
+<g>
+	<g>
+		<path fill="#999999" d="M34.308,21.349v2.06h-1.421v-2.06h-1.421v-1.344h2.21c0.349,0,0.632,0.283,0.632,0.632V21.349z"/>
+		<path fill="#808080" d="M34.308,20.568h-2.842v-0.563c0,0,2.125,0,2.313,0C34.06,20.005,34.308,20.396,34.308,20.568z"/>
+	</g>
+	<g>
+		<g>
+			<g>
+				<path fill="#E6E6E6" d="M31.467,41.147c0,0.495-0.403,0.9-0.899,0.9H3.741c-0.495,0-0.9-0.405-0.9-0.9V24.718
+					c0-0.495,0.405-0.9,0.9-0.9h26.826c0.496,0,0.899,0.405,0.899,0.9V41.147z"/>
+				<rect x="2.842" y="5.274" fill="#B3B3B3" width="28.625" height="19.107"/>
+				<rect x="2.842" fill="#999999" width="28.625" height="5.274"/>
+			</g>
+		</g>
+		<polygon fill="#808080" points="13.035,26.212 8.547,29.276 8.547,40.297 25.763,40.297 25.763,29.276 21.274,26.212 		"/>
+		<rect x="13.176" y="26.212" fill="#999999" width="8.208" height="5.313"/>
+		<g>
+			<g>
+				<rect x="14.441" y="26.212" fill="#666666" width="1.208" height="4.75"/>
+				<rect x="19.118" y="26.212" fill="#666666" width="1.209" height="4.75"/>
+			</g>
+		</g>
+		<g>
+			<g>
+				<rect x="14.336" y="26.212" fill="#CCCCCC" width="1.208" height="4.75"/>
+				<rect x="19.012" y="26.212" fill="#CCCCCC" width="1.209" height="4.75"/>
+			</g>
+		</g>
+		<rect x="13.176" y="31.526" fill="#CCCCCC" width="8.208" height="5.146"/>
+		<rect x="13.176" y="31.526" fill="#B3B3B3" width="8.208" height="0.563"/>
+		<rect x="2.842" opacity="0.5" fill="#CCCCCC" width="1.427" height="24.381"/>
+		<rect x="30.04" opacity="0.2" width="1.427" height="24.381"/>
+		<polygon fill="#666666" points="21.384,26.288 21.384,31.526 21.384,36.672 18.919,36.672 18.102,40.297 25.763,40.297 
+			25.763,29.276 		"/>
+		<polygon fill="#999999" points="20.811,36.672 21.384,36.672 21.384,31.526 20.811,32.087 		"/>
+		<polygon fill="#E6E6E6" points="13.176,36.672 13.748,36.672 13.748,32.087 13.176,31.526 		"/>
+	</g>
+	<g>
+		<path fill="#B3B3B3" d="M0,21.349v2.06h1.421v-2.06h1.421v-1.344h-2.21C0.282,20.005,0,20.288,0,20.637V21.349z"/>
+		<path fill="#E6E6E6" d="M0,20.568h2.842v-0.563c0,0-2.125,0-2.313,0C0.248,20.005,0,20.396,0,20.568z"/>
+	</g>
+</g>
+</svg>
