@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-MAX232-SOIC16'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' MAX232 SOIC16 -->
 <version>4</version>
-<date>2012-07-19</date>
+<date>2012-07-20</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;RS232 Transceiver&lt;/b&gt;

@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-TMP102-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' TMP102  -->
 <version>4</version>
-<date>2012-07-19</date>
+<date>2012-07-20</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>I2C degC temp sensor</description>
