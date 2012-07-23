@@ -160,7 +160,9 @@ public:
 	void selectAllObsolete(bool displayFeedback);
 	void hideTempPartsBin();
 	const QString & fritzingVersion();
-	void removeGroundFill(bool force, QUndoCommand * parentCommand);
+	void removeGroundFill(ViewLayer::ViewLayerID, QUndoCommand * parentCommand);
+	void groundFill(ViewLayer::ViewLayerID);
+	void copperFill(ViewLayer::ViewLayerID);
 
 public:
 	static void initNames();
@@ -488,7 +490,7 @@ protected:
 	class ConnectorItem * retrieveConnectorItem();
 	QString getBomProps(ItemBase *);
 	ModelPart * findReplacedby(ModelPart * originalModelPart);
-	void groundFillAux(bool fillGroundTraces);
+	void groundFillAux(bool fillGroundTraces, ViewLayer::ViewLayerID viewLayerID);
 	void connectStartSave(bool connect);
 	void loadBundledSketch(const QString &fileName, bool addToRecent, bool setAsLastOpened);
     void dropEvent(QDropEvent *event);

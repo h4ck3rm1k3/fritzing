@@ -2007,8 +2007,16 @@ bool ItemBase::resetRenderer(const QString & svg) {
     // use resetRenderer instead of reloadRender because if the svg size changes, with reloadRenderer the new image seems to be scaled to the old bounds
     // what I don't understand is why the old renderer causes a crash if it is deleted here
     
+    QString nothing;
+    return resetRenderer(svg, nothing);
+}
+
+bool ItemBase::resetRenderer(const QString & svg, QString & newSvg) {
+    // use resetRenderer instead of reloadRender because if the svg size changes, with reloadRenderer the new image seems to be scaled to the old bounds
+    // what I don't understand is why the old renderer causes a crash if it is deleted here
+    
     FSvgRenderer * newRenderer = new FSvgRenderer();
-    bool result = newRenderer->loadSvgString(svg);
+    bool result = newRenderer->loadSvgString(svg, newSvg);
     if (result) {
         setSharedRendererEx(newRenderer);
     }

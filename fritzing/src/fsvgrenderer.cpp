@@ -93,7 +93,14 @@ QByteArray FSvgRenderer::loadSvg(const QString & filename, const QStringList & c
 bool FSvgRenderer::loadSvgString(const QString & svg) {
 	QByteArray byteArray(svg.toUtf8());
 	QByteArray result = loadSvg(byteArray, "");
-	return !result.isEmpty();
+    return (!result.isEmpty());
+}
+
+bool FSvgRenderer::loadSvgString(const QString & svg, QString & newSvg) {
+	QByteArray byteArray(svg.toUtf8());
+	QByteArray result = loadSvg(byteArray, "");
+    newSvg = QString(result);
+    return (!result.isEmpty());
 }
 
 QByteArray FSvgRenderer::loadSvg(const QByteArray & contents, const QString & filename) {
@@ -106,14 +113,14 @@ QByteArray FSvgRenderer::loadSvg(const QByteArray & contents, const QString & fi
 	return loadAux(contents, filename, connectorIDs, terminalIDs, legIDs, setColor, colorElementID, findNonConnectors);
 }
 
-QByteArray FSvgRenderer::loadAux(const QByteArray & contents, const QString & filename, const QStringList & connectorIDs, const QStringList & terminalIDs, const QStringList & legIDs, const QString & setColor, const QString & colorElementID, bool findNonConnectors) {
+QByteArray FSvgRenderer::loadAux(const QByteArray & theContents, const QString & filename, const QStringList & connectorIDs, const QStringList & terminalIDs, const QStringList & legIDs, const QString & setColor, const QString & colorElementID, bool findNonConnectors) {
 
-	QByteArray cleanContents;
+	QByteArray cleanContents(theContents);
 	bool cleaned = false;
-	if (TextUtils::isIllustratorFile(contents)) {
-		QString string(contents);
+	if (TextUtils::isIllustratorFile(cleanContents)) {
+		QString string(cleanContents);
 
-		if (contents.contains("sodipodi") || contents.contains("inkscape")) {
+		if (string.contains("sodipodi") || string.contains("inkscape")) {
 			// if svg has both Illustrator and Inkscape crap then converting back and forth between strings and QDomDocument
 			// in FixPixelDimensionsIn() can result in invalid xml
 			TextUtils::cleanSodipodi(string);
@@ -131,26 +138,29 @@ QByteArray FSvgRenderer::loadAux(const QByteArray & contents, const QString & fi
 		}
 	}
 	
-	if (contents.contains("sodipodi") || contents.contains("inkscape")) {
+	if (cleanContents.contains("sodipodi") || cleanContents.contains("inkscape")) {
 		//DebugDialog::debug("inkscape " + filename);
 	}
 
-	if (contents.contains("<tspan")) {
-		QString string(contents);
+	if (cleanContents.contains("<tspan")) {
+		QString string(cleanContents);
 		TextUtils::tspanRemove(string);
 		cleanContents = string.toUtf8();
 		cleaned = true;
 	}
 
-	if (contents.contains("<use")) {
-		QString string(contents);
+	if (cleanContents.contains("<use")) {
+		QString string(cleanContents);
 		TextUtils::noUse(string);
 		cleanContents = string.toUtf8();
 		cleaned = true;
 	}
 
-	if (!cleaned) {
-		cleanContents = contents; 
+	if (cleanContents.contains("<pattern")) {
+		QString string(cleanContents);
+		TextUtils::noPattern(string);
+		cleanContents = string.toUtf8();
+		cleaned = true;
 	}
 
 	// no it isn't
@@ -261,41 +271,8 @@ bool FSvgRenderer::determineDefaultSize(QXmlStreamReader & xml)
 
 QSizeF FSvgRenderer::parseForWidthAndHeight(QXmlStreamReader & xml)
 {
-    xml.setNamespaceProcessing(false);
-
-	QSizeF size(0,0);
-
-	bool isIllustrator = false;
-	bool bad = false;
-
-	while (!xml.atEnd() && !bad) {
-        switch (xml.readNext()) {
-		case QXmlStreamReader::Comment:
-			if (!isIllustrator) {
-				isIllustrator = TextUtils::isIllustratorFile(xml.text().toString());
-			}
-			break;
-        case QXmlStreamReader::StartElement:
-			if (xml.name().toString().compare("svg") == 0) {
-				QString ws = xml.attributes().value("width").toString();
-				QString hs = xml.attributes().value("height").toString();
-				bool okw, okh;
-				double w = TextUtils::convertToInches(ws, &okw, isIllustrator);
-				double h = TextUtils::convertToInches(hs, &okh, isIllustrator);
-				if (!okw || qIsNaN(w) || qIsInf(w) || !okh || qIsNaN(h) || qIsInf(h)) {
-					bad = true;
-					break;
-				}
-
-				size.setWidth(w);
-				size.setHeight(h);
-				return size;
-			}
-			break;		
-		default:
-			break;		
-		}
-	}
+    QSizeF size = TextUtils::parseForWidthAndHeight(xml);
+    if (size.width() != 0 && size.height() != 0) return size;
 
 	QIODevice * device = xml.device();
 	DebugDialog::debug("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");

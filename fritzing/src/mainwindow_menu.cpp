@@ -2735,15 +2735,24 @@ void MainWindow::tidyWires() {
 }
 
 void MainWindow::copperFill() {
-	groundFillAux(false);
+	groundFillAux(false, ViewLayer::UnknownLayer);
 }
 
 void MainWindow::groundFill()
 {
-	groundFillAux(true);
+	groundFillAux(true, ViewLayer::UnknownLayer);
 }
 
-void MainWindow::groundFillAux(bool fillGroundTraces)
+void MainWindow::copperFill(ViewLayer::ViewLayerID viewLayerID) {
+	groundFillAux(false, viewLayerID);
+}
+
+void MainWindow::groundFill(ViewLayer::ViewLayerID viewLayerID)
+{
+	groundFillAux(true, viewLayerID);
+}
+
+void MainWindow::groundFillAux(bool fillGroundTraces, ViewLayer::ViewLayerID viewLayerID)
 {
 	// TODO:
 	//		what about leftover temp files from crashes?
@@ -2769,8 +2778,8 @@ void MainWindow::groundFillAux(bool fillGroundTraces)
 
     FileProgressDialog fileProgress(tr("Generating %1 fill...").arg(fillGroundTraces ? tr("ground") : tr("copper")), 0, this);
 	QUndoCommand * parentCommand = new QUndoCommand(fillGroundTraces ? tr("Ground Fill") : tr("Copper Fill"));
-    removeGroundFill(true, parentCommand);
-	if (m_pcbGraphicsView->groundFill(fillGroundTraces, parentCommand)) {
+    removeGroundFill(viewLayerID, parentCommand);
+	if (m_pcbGraphicsView->groundFill(fillGroundTraces, viewLayerID, parentCommand)) {
 		m_undoStack->push(parentCommand);
 	}
 	else {
@@ -2779,10 +2788,10 @@ void MainWindow::groundFillAux(bool fillGroundTraces)
 }
 
 void MainWindow::removeGroundFill() {
-    removeGroundFill(false, NULL);
+    removeGroundFill(ViewLayer::UnknownLayer, NULL);
 }
 
-void MainWindow::removeGroundFill(bool force, QUndoCommand * parentCommand) {
+void MainWindow::removeGroundFill(ViewLayer::ViewLayerID viewLayerID, QUndoCommand * parentCommand) {
 	QSet<ItemBase *> toDelete;
     int boardCount;
     ItemBase * board = m_pcbGraphicsView->findSelectedBoard(boardCount);
@@ -2800,12 +2809,18 @@ void MainWindow::removeGroundFill(bool force, QUndoCommand * parentCommand) {
 	foreach (QGraphicsItem * item, m_pcbGraphicsView->scene()->collidingItems(board)) {
 		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 		if (itemBase == NULL) continue;
-        //if (itemBase->moveLock()) continue;
+        if (itemBase->moveLock()) continue;
+        if (!isGroundFill(itemBase)) continue;
 
-		if (isGroundFill(itemBase) && !itemBase->moveLock()) {
-			toDelete.insert(itemBase->layerKinChief());
-		}
+        if (viewLayerID != ViewLayer::UnknownLayer) {
+            if (itemBase->viewLayerID() != viewLayerID) continue;
+        }
+
+		toDelete.insert(itemBase->layerKinChief());
 	}
+
+    if (toDelete.count() == 0) return;
+
 
     bool push = (parentCommand == NULL);
 

@@ -35,6 +35,9 @@ $Date$
 #include <QBuffer>
 #include <QFile>
 
+#include <qmath.h>
+#include <qnumeric.h>
+
 const QString TextUtils::CreatedWithFritzingString("Created with Fritzing (http://www.fritzing.org/)");
 const QString TextUtils::CreatedWithFritzingXmlComment("<!-- " + CreatedWithFritzingString + " -->\n");
 
@@ -851,6 +854,30 @@ void TextUtils::gWrap(QDomDocument & domDocument, const QHash<QString, QString> 
 	}
 }
 
+
+bool TextUtils::noPattern(QString &svg) {
+	if (!svg.contains("<pattern")) return false;
+
+	QDomDocument svgDom;
+	QString errorMsg;
+	int errorLine;
+	int errorCol;
+	if(!svgDom.setContent(svg, true, &errorMsg, &errorLine, &errorCol)) {
+		return false;
+	}
+
+	QDomNodeList nodeList = svgDom.elementsByTagName("pattern");
+    for (int i = 0; i < nodeList.count(); i++) {
+        QDomNode pattern = nodeList.at(i);
+
+        pattern.parentNode().removeChild(pattern);
+	}
+
+    svg = removeXMLEntities(svgDom.toString());
+	return true;
+}
+
+
 bool TextUtils::tspanRemove(QString &svg) {
 	if (!svg.contains("<tspan")) return false;
 
@@ -1316,3 +1343,49 @@ int TextUtils::getPinsAndSpacing(const QString & expectedFileName, QString & spa
     return pins;
 }
 
+QSizeF TextUtils::parseForWidthAndHeight(const QString & svg)
+{
+	QXmlStreamReader streamReader(svg);
+    return parseForWidthAndHeight(streamReader);
+}
+
+QSizeF TextUtils::parseForWidthAndHeight(QXmlStreamReader & svg)
+{
+    svg.setNamespaceProcessing(false);
+
+	QSizeF size(0,0);
+
+	bool isIllustrator = false;
+	bool bad = false;
+
+	while (!svg.atEnd() && !bad) {
+        switch (svg.readNext()) {
+		case QXmlStreamReader::Comment:
+			if (!isIllustrator) {
+				isIllustrator = TextUtils::isIllustratorFile(svg.text().toString());
+			}
+			break;
+        case QXmlStreamReader::StartElement:
+			if (svg.name().toString().compare("svg") == 0) {
+				QString ws = svg.attributes().value("width").toString();
+				QString hs = svg.attributes().value("height").toString();
+				bool okw, okh;
+				double w = TextUtils::convertToInches(ws, &okw, isIllustrator);
+				double h = TextUtils::convertToInches(hs, &okh, isIllustrator);
+				if (!okw || qIsNaN(w) || qIsInf(w) || !okh || qIsNaN(h) || qIsInf(h)) {
+					bad = true;
+					break;
+				}
+
+				size.setWidth(w);
+				size.setHeight(h);
+				return size;
+			}
+			break;		
+		default:
+			break;		
+		}
+	}
+
+    return size;
+}

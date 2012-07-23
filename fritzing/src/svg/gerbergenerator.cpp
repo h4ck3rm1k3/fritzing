@@ -130,9 +130,7 @@ void GerberGenerator::exportToGerber(const QString & prefix, const QString & exp
 	svgOutline = cleanOutline(svgOutline);
     // at this point svgOutline must be a single element; a path element may contain cutouts
 	svgOutline = clipToBoard(svgOutline, board, "board", SVG2gerber::ForOutline, "");
-
-	QXmlStreamReader streamReader(svgOutline);
-	QSizeF svgSize = FSvgRenderer::parseForWidthAndHeight(streamReader);
+	QSizeF svgSize = TextUtils::parseForWidthAndHeight(svgOutline);
 
     // create outline gerber from svg
     SVG2gerber outlineGerber;
@@ -165,8 +163,7 @@ int GerberGenerator::doCopper(ItemBase * board, PCBSketchWidget * sketchWidget, 
 		return 0;
 	}
 
-	QXmlStreamReader streamReader(svg);
-	QSizeF svgSize = FSvgRenderer::parseForWidthAndHeight(streamReader);
+	QSizeF svgSize = TextUtils::parseForWidthAndHeight(svg);
 
 	svg = clipToBoard(svg, board, copperName, SVG2gerber::ForCopper, "");
 	if (svg.isEmpty()) {
@@ -199,8 +196,7 @@ int GerberGenerator::doSilk(LayerList silkLayerIDs, const QString & silkName, co
 	//fs << svgSilk;
 	//f.close();
 
-	QXmlStreamReader streamReader(svgSilk);
-	QSizeF svgSize = FSvgRenderer::parseForWidthAndHeight(streamReader);
+	QSizeF svgSize = TextUtils::parseForWidthAndHeight(svgSilk);
 
 	svgSilk = clipToBoard(svgSilk, board, silkName, SVG2gerber::ForSilk, clipString);
 	if (svgSilk.isEmpty()) {
@@ -236,8 +232,7 @@ int GerberGenerator::doDrill(ItemBase * board, PCBSketchWidget * sketchWidget, c
 		return 0;
 	}
 
-	QXmlStreamReader streamReader(svgDrill);
-	QSizeF svgSize = FSvgRenderer::parseForWidthAndHeight(streamReader);
+	QSizeF svgSize = TextUtils::parseForWidthAndHeight(svgDrill);
 
 	svgDrill = clipToBoard(svgDrill, board, "Copper0", SVG2gerber::ForDrill, "");
 	if (svgDrill.isEmpty()) {
@@ -275,8 +270,7 @@ int GerberGenerator::doMask(LayerList maskLayerIDs, const QString &maskName, con
 		return 0;
 	}
 
-	QXmlStreamReader streamReader(svgMask);
-	QSizeF svgSize = FSvgRenderer::parseForWidthAndHeight(streamReader);
+	QSizeF svgSize = TextUtils::parseForWidthAndHeight(svgMask);
 
 	svgMask = clipToBoard(svgMask, board, maskName, SVG2gerber::ForCopper, "");
 	if (svgMask.isEmpty()) {

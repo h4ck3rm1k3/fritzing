@@ -210,6 +210,7 @@ public:
 	void setSharedRendererEx(class FSvgRenderer *);
 	bool reloadRenderer(const QString & svg, bool fastload);
 	bool resetRenderer(const QString & svg);
+	bool resetRenderer(const QString & svg, QString & newSvg);
     void getPixmaps(QPixmap * &, QPixmap * &, QPixmap * &, bool swappingEnabled, QSize);
 
 public:

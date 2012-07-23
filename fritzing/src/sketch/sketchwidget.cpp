@@ -6957,6 +6957,13 @@ QString SketchWidget::renderToSVG(double printerScale, bool blackOnly, QSizeF & 
                 TextUtils::noUse(itemSvg);
             }
 
+            if (itemSvg.contains("<pattern")) {
+                TextUtils::noPattern(itemSvg);
+            }
+
+
+            // TODO: gradient, other cleaning?
+
 			foreach (ConnectorItem * ci, itemBase->cachedConnectorItems()) {
 				if (!ci->hasRubberBandLeg()) continue;
 

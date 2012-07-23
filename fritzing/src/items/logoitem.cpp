@@ -509,6 +509,7 @@ void LogoItem::setLogo(QString logo, bool force) {
 
 bool LogoItem::rerender(const QString & svg)
 {
+    QString newSvg;
 	bool result = resetRenderer(svg);
 	if (result) {
 		QRectF r = fsvgRenderer()->viewBoxF();

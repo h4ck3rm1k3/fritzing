@@ -90,14 +90,14 @@ public:
 	virtual double getAutorouterTraceWidth();
 	void getBendpointWidths(class Wire *, double w, double & w1, double & w2, bool & negativeOffsetRect);
 	double getSmallerTraceWidth(double minDim);
-	bool groundFill(bool fillGroundTraces, QUndoCommand * parentCommand);
+	bool groundFill(bool fillGroundTraces, ViewLayer::ViewLayerID, QUndoCommand * parentCommand);
 	void setGroundFillSeeds();
 	void clearGroundFillSeeds();
 	QString generateCopperFillUnit(ItemBase * itemBase, QPointF whereToStart);
 	double getWireStrokeWidth(Wire *, double wireWidth);
 	bool curvyWiresIndicated(Qt::KeyboardModifiers);
 	ItemBase * addCopperLogoItem(ViewLayer::ViewLayerSpec viewLayerSpec);
-	QString characterizeGroundFill();
+	QString characterizeGroundFill(ViewLayer::ViewLayerID);
 	ViewGeometry::WireFlag getTraceFlag();
 	void hideCopperLogoItems(QList<ItemBase *> & copperLogoItems);
 	void restoreCopperLogoItems(QList<ItemBase *> & copperLogoItems);

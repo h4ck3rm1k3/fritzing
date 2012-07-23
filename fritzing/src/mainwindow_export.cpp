@@ -1066,11 +1066,8 @@ void MainWindow::exportSvgWatermark(QString & svg, double res)
 
 	if (!watermarkSvg.contains("<svg")) return;
 
-	QXmlStreamReader wStreamReader(watermarkSvg);
-	QSizeF watermarkSize = FSvgRenderer::parseForWidthAndHeight(wStreamReader);
-
-	QXmlStreamReader streamReader(svg);
-	QSizeF svgSize = FSvgRenderer::parseForWidthAndHeight(streamReader);
+	QSizeF watermarkSize = TextUtils::parseForWidthAndHeight(watermarkSvg);
+	QSizeF svgSize = TextUtils::parseForWidthAndHeight(svg);
 
 	SvgFileSplitter splitter;
 	bool result = splitter.splitString(watermarkSvg, "watermark");

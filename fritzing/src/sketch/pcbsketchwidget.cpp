@@ -1510,7 +1510,7 @@ double PCBSketchWidget::getSmallerTraceWidth(double minDim) {
 	return GraphicsUtils::mils2pixels(mils, FSvgRenderer::printerScale());
 }
 
-bool PCBSketchWidget::groundFill(bool fillGroundTraces, QUndoCommand * parentCommand)
+bool PCBSketchWidget::groundFill(bool fillGroundTraces, ViewLayer::ViewLayerID viewLayerID, QUndoCommand * parentCommand)
 {
 	m_groundFillSeeds = NULL;
     int boardCount;
@@ -1555,27 +1555,31 @@ bool PCBSketchWidget::groundFill(bool fillGroundTraces, QUndoCommand * parentCom
 		return false;
 	}
 
-	viewLayerIDs.clear();
-	viewLayerIDs << ViewLayer::Copper0 << ViewLayer::Copper0Trace  << ViewLayer::GroundPlane0;
+    QString svg0;
 	QSizeF copperImageSize;
+    if (viewLayerID == ViewLayer::UnknownLayer || viewLayerID == ViewLayer::GroundPlane0) {
+	    viewLayerIDs.clear();
+	    viewLayerIDs << ViewLayer::Copper0 << ViewLayer::Copper0Trace  << ViewLayer::GroundPlane0;
 
-	// hide ground traces so the ground plane will intersect them
-	if (fillGroundTraces) showGroundTraces(seeds, false);
-	QString svg = renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, true, copperImageSize, board, GraphicsUtils::StandardFritzingDPI, false, true, empty);
-	if (fillGroundTraces) showGroundTraces(seeds, true);
-	if (svg.isEmpty()) {
-        QMessageBox::critical(NULL, tr("Fritzing"), tr("Fritzing error: unable to render copper svg (1)."));
-		return false;
-	}
+	    // hide ground traces so the ground plane will intersect them
+	    if (fillGroundTraces) showGroundTraces(seeds, false);
+	    svg0 = renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, true, copperImageSize, board, GraphicsUtils::StandardFritzingDPI, false, true, empty);
+	    if (fillGroundTraces) showGroundTraces(seeds, true);
+	    if (svg0.isEmpty()) {
+            QMessageBox::critical(NULL, tr("Fritzing"), tr("Fritzing error: unable to render copper svg (1)."));
+		    return false;
+	    }
+    }
 
-	QString svg2;
-	if (boardLayers() > 1) {
+	QString svg1;
+	if (boardLayers() > 1 && (viewLayerID == ViewLayer::UnknownLayer || viewLayerID == ViewLayer::GroundPlane1)) {
 		viewLayerIDs.clear();
 		viewLayerIDs << ViewLayer::Copper1 << ViewLayer::Copper1Trace << ViewLayer::GroundPlane1;
+
 		if (fillGroundTraces) showGroundTraces(seeds, false);
-		svg2 = renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, true, copperImageSize, board, GraphicsUtils::StandardFritzingDPI, false, true, empty);
+		svg1 = renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, true, copperImageSize, board, GraphicsUtils::StandardFritzingDPI, false, true, empty);
 		if (fillGroundTraces) showGroundTraces(seeds, true);
-		if (svg2.isEmpty()) {
+		if (svg1.isEmpty()) {
 			QMessageBox::critical(NULL, tr("Fritzing"), tr("Fritzing error: unable to render copper svg (1)."));
 			return false;
 		}
@@ -1584,34 +1588,36 @@ bool PCBSketchWidget::groundFill(bool fillGroundTraces, QUndoCommand * parentCom
 	QStringList exceptions;
 	exceptions << "none" << "" << background().name();    // the color of holes in the board
 
-	GroundPlaneGenerator gpg;
-	gpg.setBlurBy(BlurBy);
-	gpg.setLayerName("groundplane");
-	gpg.setStrokeWidthIncrement(StrokeWidthIncrement);
-	gpg.setMinRunSize(10, 10);
-	if (fillGroundTraces) {
-		connect(&gpg, SIGNAL(postImageSignal(GroundPlaneGenerator *, QImage *, QGraphicsItem *)), 
-				this, SLOT(postImageSlot(GroundPlaneGenerator *, QImage *, QGraphicsItem *)));
-	}
+	GroundPlaneGenerator gpg0;
+    if (!svg0.isEmpty()) {
+	    gpg0.setBlurBy(BlurBy);
+	    gpg0.setLayerName("groundplane");
+	    gpg0.setStrokeWidthIncrement(StrokeWidthIncrement);
+	    gpg0.setMinRunSize(10, 10);
+	    if (fillGroundTraces) {
+		    connect(&gpg0, SIGNAL(postImageSignal(GroundPlaneGenerator *, QImage *, QGraphicsItem *)), 
+				    this, SLOT(postImageSlot(GroundPlaneGenerator *, QImage *, QGraphicsItem *)));
+	    }
 
-	bool result = gpg.generateGroundPlane(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board, GraphicsUtils::StandardFritzingDPI / 2.0  /* 2 MIL */,
-											ViewLayer::Copper0Color);
-	if (result == false) {
-        QMessageBox::critical(NULL, tr("Fritzing"), tr("Fritzing error: unable to write copper fill (1)."));
-		return false;
-	}
+	    bool result = gpg0.generateGroundPlane(boardSvg, boardImageSize, svg0, copperImageSize, exceptions, board, GraphicsUtils::StandardFritzingDPI / 2.0  /* 2 MIL */,
+											    ViewLayer::Copper0Color);
+	    if (result == false) {
+            QMessageBox::critical(NULL, tr("Fritzing"), tr("Fritzing error: unable to write copper fill (1)."));
+		    return false;
+	    }
+    }
 
-	GroundPlaneGenerator gpg2;
-	if (boardLayers() > 1) {
-		gpg2.setBlurBy(BlurBy);
-		gpg2.setLayerName("groundplane1");
-		gpg2.setStrokeWidthIncrement(StrokeWidthIncrement);
-		gpg2.setMinRunSize(10, 10);
+	GroundPlaneGenerator gpg1;
+	if (boardLayers() > 1 && !svg1.isEmpty()) {
+		gpg1.setBlurBy(BlurBy);
+		gpg1.setLayerName("groundplane1");
+		gpg1.setStrokeWidthIncrement(StrokeWidthIncrement);
+		gpg1.setMinRunSize(10, 10);
 		if (fillGroundTraces) {
-			connect(&gpg2, SIGNAL(postImageSignal(GroundPlaneGenerator *, QImage *, QGraphicsItem *)), 
+			connect(&gpg1, SIGNAL(postImageSignal(GroundPlaneGenerator *, QImage *, QGraphicsItem *)), 
 					this, SLOT(postImageSlot(GroundPlaneGenerator *, QImage *, QGraphicsItem *)));
 		}
-		bool result = gpg2.generateGroundPlane(boardSvg, boardImageSize, svg2, copperImageSize, exceptions, board, GraphicsUtils::StandardFritzingDPI / 2.0  /* 2 MIL */,
+		bool result = gpg1.generateGroundPlane(boardSvg, boardImageSize, svg1, copperImageSize, exceptions, board, GraphicsUtils::StandardFritzingDPI / 2.0  /* 2 MIL */,
 												ViewLayer::Copper1Color);
 		if (result == false) {
 			QMessageBox::critical(NULL, tr("Fritzing"), tr("Fritzing error: unable to write copper fill (2)."));
@@ -1624,9 +1630,9 @@ bool PCBSketchWidget::groundFill(bool fillGroundTraces, QUndoCommand * parentCom
 	QRectF bsbr = board->sceneBoundingRect();
 
 	int ix = 0;
-	foreach (QString svg, gpg.newSVGs()) {
+	foreach (QString svg, gpg0.newSVGs()) {
 		ViewGeometry vg;
-		vg.setLoc(bsbr.topLeft() + gpg.newOffsets()[ix++]);
+		vg.setLoc(bsbr.topLeft() + gpg0.newOffsets()[ix++]);
 		long newID = ItemBase::getNextID();
 		new AddItemCommand(this, BaseCommand::CrossView, ModuleIDNames::GroundPlaneModuleIDName, ViewLayer::GroundPlane_Bottom, vg, newID, false, -1, parentCommand);
 		new SetPropCommand(this, newID, "svg", svg, svg, true, parentCommand);
@@ -1634,9 +1640,9 @@ bool PCBSketchWidget::groundFill(bool fillGroundTraces, QUndoCommand * parentCom
 	}
 
 	ix = 0;
-	foreach (QString svg, gpg2.newSVGs()) {
+	foreach (QString svg, gpg1.newSVGs()) {
 		ViewGeometry vg;
-		vg.setLoc(bsbr.topLeft() + gpg2.newOffsets()[ix++]);
+		vg.setLoc(bsbr.topLeft() + gpg1.newOffsets()[ix++]);
 		long newID = ItemBase::getNextID();
 		new AddItemCommand(this, BaseCommand::CrossView, ModuleIDNames::GroundPlaneModuleIDName, ViewLayer::GroundPlane_Top, vg, newID, false, -1, parentCommand);
 		new SetPropCommand(this, newID, "svg", svg, svg, true, parentCommand);
@@ -1832,9 +1838,8 @@ void PCBSketchWidget::rotatePartLabels(double degrees, QTransform & transform, Q
 	}
 }
 
-QString PCBSketchWidget::characterizeGroundFill() {
+QString PCBSketchWidget::characterizeGroundFill(ViewLayer::ViewLayerID whichGroundPlane) {
 	QString result = GroundPlane::fillTypeNone;
-	bool gotZero = false;
 	bool gotOne = false;
 
     int boardCount;
@@ -1843,21 +1848,19 @@ QString PCBSketchWidget::characterizeGroundFill() {
 		GroundPlane * gp = dynamic_cast<GroundPlane *>(item);
 		if (gp == NULL) continue;
 
-		if (gp->viewLayerID() == ViewLayer::GroundPlane0) {
-			gotZero = true;
-		}
-		else if (gp->viewLayerID() == ViewLayer::GroundPlane1) {
+		if (gp->viewLayerID() == whichGroundPlane) {
 			gotOne = true;
+            break;
 		}
 
-		if (gotZero && gotOne) break;
 	}
 
-	if (!(gotZero && gotOne)) return result;
+	if (!gotOne) return result;
 
 	foreach (QGraphicsItem * item, scene()->items()) {
 		GroundPlane * gp = dynamic_cast<GroundPlane *>(item);
 		if (gp == NULL) continue;
+        if (gp->viewLayerID() != whichGroundPlane) continue;
 
 		QString fillType = gp->prop("fillType");
 		if (fillType.isEmpty()) {

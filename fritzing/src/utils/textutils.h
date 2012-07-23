@@ -32,6 +32,7 @@ $Date$
 #include <QSet>
 #include <QMatrix>
 #include <QTransform>
+#include <QXmlStreamReader>
 
 typedef QString (*CopyPinFunction)(int pin, const QString & argString, void * userData);
 typedef QString (*MultiplyPinFunction)(int pin, double increment, double value);
@@ -81,6 +82,7 @@ public:
 	static void gWrap(QDomDocument & domDocument, const QHash<QString, QString> & attributes);
 	static bool tspanRemove(QString &svg);
 	static bool noUse(QString &svg);
+	static bool noPattern(QString &svg);
 	static void slamStrokeAndFill(QDomElement &, const QString & stroke, const QString & strokeWidth, const QString & fill);
 	static QString slamStrokeAndFill(const QString & svg, const QString & stroke, const QString & strokeWidth, const QString & fill);
 	static QString incrementTemplate(const QString & filename, int pins, double unitIncrement, MultiplyPinFunction, CopyPinFunction, void * userData);
@@ -106,7 +108,9 @@ public:
 	static void expandAndFillAux(QDomElement &, const QString & color, double expandBy);
     static bool writeUtf8(const QString & fileName, const QString & text);
     static int getPinsAndSpacing(const QString & expectedFileName, QString & spacingString);
-	
+	static QSizeF parseForWidthAndHeight(QXmlStreamReader &);
+	static QSizeF parseForWidthAndHeight(const QString & svg);
+
 public:
 	static const QRegExp FindWhitespace;
 	static const QRegExp SodipodiDetector;

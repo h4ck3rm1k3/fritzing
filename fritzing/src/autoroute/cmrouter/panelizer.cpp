@@ -1145,29 +1145,27 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
 	foreach (ItemBase * boardItem, boards) {
         mainWindow->pcbView()->selectAllItems(false, false);
         boardItem->setSelected(true);
-	    QString fillType = mainWindow->pcbView()->characterizeGroundFill();
 	    if (boardItem->prop("layers").compare("1") == 0) {
             mainWindow->swapLayers(boardItem, 2, "", false, 0);
             ProcessEventBlocker::processEvents();
             wasOne = true;
         }
 
-        if (wasOne) {
-	        mainWindow->removeGroundFill(true, NULL);
-            ProcessEventBlocker::processEvents();
-		    fillType = GroundPlane::fillTypeNone;
-	    }
-
-	    if (fillType == GroundPlane::fillTypeNone) {
-		    mainWindow->copperFill();
-            ProcessEventBlocker::processEvents();
-		    filled = true;
-	    }
-	    else if ((fillType == GroundPlane::fillTypeGround) && oldGround) {
-		    mainWindow->removeGroundFill(true, NULL);
-		    mainWindow->groundFill();
-		    filled = true;
-	    }
+        LayerList groundLayers;
+        groundLayers << ViewLayer::GroundPlane0 << ViewLayer::GroundPlane1;
+        foreach (ViewLayer::ViewLayerID viewLayerID, groundLayers) {
+            QString fillType = mainWindow->pcbView()->characterizeGroundFill(viewLayerID);
+	        if (fillType == GroundPlane::fillTypeNone) {
+		        mainWindow->copperFill(viewLayerID);
+                ProcessEventBlocker::processEvents();
+		        filled = true;
+	        }
+	        else if ((fillType == GroundPlane::fillTypeGround) && oldGround) {
+		        mainWindow->groundFill(viewLayerID);
+                ProcessEventBlocker::processEvents();
+		        filled = true;
+	        }
+        }
     }
 
 	if (filled) { 
