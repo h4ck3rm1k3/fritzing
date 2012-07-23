@@ -109,6 +109,9 @@ def main():
             pair = diffile.readline()
             value = diffile.readline()
             if pair.startswith("1"):
+                while (not value.endswith('"\n')):
+                    value += diffile.readline()
+            
                 value = value.replace('"', "")
                 value = value.replace("\n", "")
                 values.append(value)
@@ -125,7 +128,7 @@ def main():
                 done = 1
                 break
             else:
-                print "file", fromName, "unexpected format 4"
+                print "file", fromName, "unexpected format 4", pair, value
                 return
              
 
