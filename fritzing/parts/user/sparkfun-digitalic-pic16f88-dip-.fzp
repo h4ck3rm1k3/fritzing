@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-PIC16F88-DIP-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' PIC16F88-DIP  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>8-bit PIC uC</description>
@@ -311,4 +311,6 @@
 </views>
 </connector>
 </connectors>
+<buses>
+</buses>
 </module>

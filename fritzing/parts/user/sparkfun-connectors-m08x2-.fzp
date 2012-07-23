@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-M08X2-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' M08X2  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>.1 headers, two rows of 8 each</description>
@@ -281,4 +281,6 @@
 </views>
 </connector>
 </connectors>
+<buses>
+</buses>
 </module>

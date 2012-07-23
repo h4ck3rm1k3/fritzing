@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-MAX1704X-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-PowerIC' MAX1704X  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>MAX17043/MAX17044: Battery Fuel Gauge (43 is 1cell, 44 is 2cell)</description>
@@ -82,8 +82,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='male' name='GND@4'>
-<description>GND@4</description>
+<connector id='connector3' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pin'/>
@@ -96,8 +96,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='male' name='GND@EP'>
-<description>GND@EP</description>
+<connector id='connector8' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector8pin'/>
@@ -167,4 +167,10 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='GND'>
+<nodeMember connectorId='connector8' />
+<nodeMember connectorId='connector3' />
+</bus>
+</buses>
 </module>

@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-ADXL330-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' ADXL330 SMD -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Triple Axis Accelerometer&lt;/b&gt;
@@ -60,8 +60,8 @@ Analog Devices ADXL330 +/-3g 2.4V-5.25V Analog output. Spark Fun Electronics SKU
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='male' name='COM@1'>
-<description>COM@1</description>
+<connector id='connector5' type='male' name='COM'>
+<description>COM</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector5pin'/>
@@ -74,8 +74,8 @@ Analog Devices ADXL330 +/-3g 2.4V-5.25V Analog output. Spark Fun Electronics SKU
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='male' name='COM@2'>
-<description>COM@2</description>
+<connector id='connector6' type='male' name='COM'>
+<description>COM</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pin'/>
@@ -88,8 +88,8 @@ Analog Devices ADXL330 +/-3g 2.4V-5.25V Analog output. Spark Fun Electronics SKU
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='male' name='COM@3'>
-<description>COM@3</description>
+<connector id='connector7' type='male' name='COM'>
+<description>COM</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pin'/>
@@ -130,8 +130,8 @@ Analog Devices ADXL330 +/-3g 2.4V-5.25V Analog output. Spark Fun Electronics SKU
 </pcbView>
 </views>
 </connector>
-<connector id='connector15' type='male' name='VS@1'>
-<description>VS@1</description>
+<connector id='connector15' type='male' name='VS'>
+<description>VS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector15pin'/>
@@ -187,4 +187,16 @@ Analog Devices ADXL330 +/-3g 2.4V-5.25V Analog output. Spark Fun Electronics SKU
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='COM'>
+<nodeMember connectorId='connector7' />
+<nodeMember connectorId='connector6' />
+<nodeMember connectorId='connector5' />
+<nodeMember connectorId='connector3' />
+</bus>
+<bus id='VS'>
+<nodeMember connectorId='connector15' />
+<nodeMember connectorId='connector14' />
+</bus>
+</buses>
 </module>

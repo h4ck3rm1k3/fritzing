@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Boards-WIZ811MJ-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Boards' WIZ811MJ  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;WIZnet W5100 Network Module with MagJack - WIZ811MJ&lt;/h3&gt;
@@ -478,8 +478,8 @@ See http://www.sparkfun.com/commerce/product_info.php?products_id=9473 for more 
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='male' name='GND@1'>
-<description>GND@1</description>
+<connector id='connector10' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pin'/>
@@ -493,8 +493,8 @@ See http://www.sparkfun.com/commerce/product_info.php?products_id=9473 for more 
 </pcbView>
 </views>
 </connector>
-<connector id='connector28' type='male' name='GND@2'>
-<description>GND@2</description>
+<connector id='connector28' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector28pin'/>
@@ -508,8 +508,8 @@ See http://www.sparkfun.com/commerce/product_info.php?products_id=9473 for more 
 </pcbView>
 </views>
 </connector>
-<connector id='connector38' type='male' name='GND@3'>
-<description>GND@3</description>
+<connector id='connector38' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector38pin'/>
@@ -523,8 +523,8 @@ See http://www.sparkfun.com/commerce/product_info.php?products_id=9473 for more 
 </pcbView>
 </views>
 </connector>
-<connector id='connector39' type='male' name='GND@4'>
-<description>GND@4</description>
+<connector id='connector39' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector39pin'/>
@@ -538,8 +538,8 @@ See http://www.sparkfun.com/commerce/product_info.php?products_id=9473 for more 
 </pcbView>
 </views>
 </connector>
-<connector id='connector29' type='male' name='GND@5'>
-<description>GND@5</description>
+<connector id='connector29' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector29pin'/>
@@ -598,8 +598,8 @@ See http://www.sparkfun.com/commerce/product_info.php?products_id=9473 for more 
 </pcbView>
 </views>
 </connector>
-<connector id='connector11' type='male' name='VCC@1'>
-<description>VCC@1</description>
+<connector id='connector11' type='male' name='VCC'>
+<description>VCC</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector11pin'/>
@@ -613,8 +613,8 @@ See http://www.sparkfun.com/commerce/product_info.php?products_id=9473 for more 
 </pcbView>
 </views>
 </connector>
-<connector id='connector20' type='male' name='VCC@2'>
-<description>VCC@2</description>
+<connector id='connector20' type='male' name='VCC'>
+<description>VCC</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector20pin'/>
@@ -629,4 +629,17 @@ See http://www.sparkfun.com/commerce/product_info.php?products_id=9473 for more 
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='VCC'>
+<nodeMember connectorId='connector20' />
+<nodeMember connectorId='connector11' />
+</bus>
+<bus id='GND'>
+<nodeMember connectorId='connector29' />
+<nodeMember connectorId='connector39' />
+<nodeMember connectorId='connector38' />
+<nodeMember connectorId='connector28' />
+<nodeMember connectorId='connector10' />
+</bus>
+</buses>
 </module>

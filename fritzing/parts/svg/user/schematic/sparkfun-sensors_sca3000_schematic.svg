@@ -49,15 +49,12 @@
 <g transform='translate(15.621,5.6134)'><g transform='rotate(270)'>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='0' y='0' text-anchor='end'>AVDD</text>
 </g></g>
-<line class='pin' id='connector1pin' connectorname='AVSS@15' x1='12.7762' y1='45.7962' x2='12.7762' y2='40.7162' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector1pin' connectorname='AVSS' x1='12.7762' y1='45.7962' x2='12.7762' y2='40.7162' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector1terminal' x='12.7762' y='45.7962' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <g transform='translate(13.081,40.259)'><g transform='rotate(270)'>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='0' y='0' text-anchor='start'>AVSS@15</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='0' y='0' text-anchor='start'>AVSS</text>
 </g></g>
-<line class='pin' id='connector2pin' connectorname='AVSS@16' x1='15.3162' y1='45.7962' x2='15.3162' y2='40.7162' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector2terminal' x='15.3162' y='45.7962' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<g transform='translate(15.621,40.259)'><g transform='rotate(270)'>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='0' y='0' text-anchor='start'>AVSS@16</text>
-</g></g>
+<line class='pin' id='connector2pin' connectorname='AVSS' x1='12.7762' y1='45.7962' x2='12.7762' y2='40.7162' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector2terminal' x='12.7762' y='45.7962' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 </g>
 </svg>

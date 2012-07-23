@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-GE863_GPS-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-RF' GE863_GPS  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;GE863 Cellular Module with GPS&lt;/b&gt;
@@ -293,8 +293,8 @@ Proto layout and schematic for GE863 cellular module with SiRF III GPS. Spark Fu
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='male' name='GND@0'>
-<description>GND@0</description>
+<connector id='connector7' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pin'/>
@@ -307,8 +307,8 @@ Proto layout and schematic for GE863 cellular module with SiRF III GPS. Spark Fu
 </pcbView>
 </views>
 </connector>
-<connector id='connector16' type='male' name='GND@1'>
-<description>GND@1</description>
+<connector id='connector16' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector16pin'/>
@@ -321,8 +321,8 @@ Proto layout and schematic for GE863 cellular module with SiRF III GPS. Spark Fu
 </pcbView>
 </views>
 </connector>
-<connector id='connector71' type='male' name='GND@10'>
-<description>GND@10</description>
+<connector id='connector71' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector71pin'/>
@@ -335,8 +335,8 @@ Proto layout and schematic for GE863 cellular module with SiRF III GPS. Spark Fu
 </pcbView>
 </views>
 </connector>
-<connector id='connector76' type='male' name='GND@11'>
-<description>GND@11</description>
+<connector id='connector76' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector76pin'/>
@@ -349,8 +349,8 @@ Proto layout and schematic for GE863 cellular module with SiRF III GPS. Spark Fu
 </pcbView>
 </views>
 </connector>
-<connector id='connector78' type='male' name='GND@12'>
-<description>GND@12</description>
+<connector id='connector78' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector78pin'/>
@@ -363,8 +363,8 @@ Proto layout and schematic for GE863 cellular module with SiRF III GPS. Spark Fu
 </pcbView>
 </views>
 </connector>
-<connector id='connector81' type='male' name='GND@13'>
-<description>GND@13</description>
+<connector id='connector81' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector81pin'/>
@@ -377,8 +377,8 @@ Proto layout and schematic for GE863 cellular module with SiRF III GPS. Spark Fu
 </pcbView>
 </views>
 </connector>
-<connector id='connector27' type='male' name='GND@2'>
-<description>GND@2</description>
+<connector id='connector27' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector27pin'/>
@@ -391,8 +391,8 @@ Proto layout and schematic for GE863 cellular module with SiRF III GPS. Spark Fu
 </pcbView>
 </views>
 </connector>
-<connector id='connector35' type='male' name='GND@3'>
-<description>GND@3</description>
+<connector id='connector35' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector35pin'/>
@@ -405,8 +405,8 @@ Proto layout and schematic for GE863 cellular module with SiRF III GPS. Spark Fu
 </pcbView>
 </views>
 </connector>
-<connector id='connector44' type='male' name='GND@4'>
-<description>GND@4</description>
+<connector id='connector44' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector44pin'/>
@@ -419,8 +419,8 @@ Proto layout and schematic for GE863 cellular module with SiRF III GPS. Spark Fu
 </pcbView>
 </views>
 </connector>
-<connector id='connector47' type='male' name='GND@5'>
-<description>GND@5</description>
+<connector id='connector47' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector47pin'/>
@@ -433,8 +433,8 @@ Proto layout and schematic for GE863 cellular module with SiRF III GPS. Spark Fu
 </pcbView>
 </views>
 </connector>
-<connector id='connector49' type='male' name='GND@6'>
-<description>GND@6</description>
+<connector id='connector49' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector49pin'/>
@@ -447,8 +447,8 @@ Proto layout and schematic for GE863 cellular module with SiRF III GPS. Spark Fu
 </pcbView>
 </views>
 </connector>
-<connector id='connector55' type='male' name='GND@7'>
-<description>GND@7</description>
+<connector id='connector55' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector55pin'/>
@@ -461,8 +461,8 @@ Proto layout and schematic for GE863 cellular module with SiRF III GPS. Spark Fu
 </pcbView>
 </views>
 </connector>
-<connector id='connector66' type='male' name='GND@8'>
-<description>GND@8</description>
+<connector id='connector66' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector66pin'/>
@@ -475,8 +475,8 @@ Proto layout and schematic for GE863 cellular module with SiRF III GPS. Spark Fu
 </pcbView>
 </views>
 </connector>
-<connector id='connector68' type='male' name='GND@9'>
-<description>GND@9</description>
+<connector id='connector68' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector68pin'/>
@@ -1092,4 +1092,22 @@ Proto layout and schematic for GE863 cellular module with SiRF III GPS. Spark Fu
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='GND'>
+<nodeMember connectorId='connector68' />
+<nodeMember connectorId='connector66' />
+<nodeMember connectorId='connector55' />
+<nodeMember connectorId='connector49' />
+<nodeMember connectorId='connector47' />
+<nodeMember connectorId='connector44' />
+<nodeMember connectorId='connector35' />
+<nodeMember connectorId='connector27' />
+<nodeMember connectorId='connector81' />
+<nodeMember connectorId='connector78' />
+<nodeMember connectorId='connector76' />
+<nodeMember connectorId='connector71' />
+<nodeMember connectorId='connector16' />
+<nodeMember connectorId='connector7' />
+</bus>
+</buses>
 </module>

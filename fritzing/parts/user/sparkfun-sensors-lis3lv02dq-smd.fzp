@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-LIS3LV02DQ-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' LIS3LV02DQ SMD -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>3-axis 2/6g I2C/SPI accelerometer</description>
@@ -72,8 +72,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='male' name='GND@0'>
-<description>GND@0</description>
+<connector id='connector0' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pin'/>
@@ -86,8 +86,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector17' type='male' name='GND@17'>
-<description>GND@17</description>
+<connector id='connector17' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector17pin'/>
@@ -100,8 +100,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='male' name='GND@2'>
-<description>GND@2</description>
+<connector id='connector2' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pin'/>
@@ -114,8 +114,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='male' name='GND@5'>
-<description>GND@5</description>
+<connector id='connector5' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector5pin'/>
@@ -184,8 +184,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector19' type='male' name='VDD@19'>
-<description>VDD@19</description>
+<connector id='connector19' type='male' name='VDD'>
+<description>VDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector19pin'/>
@@ -198,8 +198,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector20' type='male' name='VDD@20'>
-<description>VDD@20</description>
+<connector id='connector20' type='male' name='VDD'>
+<description>VDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector20pin'/>
@@ -212,8 +212,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='male' name='VDD@3'>
-<description>VDD@3</description>
+<connector id='connector3' type='male' name='VDD'>
+<description>VDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pin'/>
@@ -241,4 +241,17 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='VDD'>
+<nodeMember connectorId='connector3' />
+<nodeMember connectorId='connector20' />
+<nodeMember connectorId='connector19' />
+</bus>
+<bus id='GND'>
+<nodeMember connectorId='connector5' />
+<nodeMember connectorId='connector2' />
+<nodeMember connectorId='connector17' />
+<nodeMember connectorId='connector0' />
+</bus>
+</buses>
 </module>

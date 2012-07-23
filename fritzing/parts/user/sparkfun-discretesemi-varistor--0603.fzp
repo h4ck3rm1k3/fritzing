@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DiscreteSemi-VARISTOR--0603'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DiscreteSemi' VARISTOR -0603 -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>Z</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;Varistor&lt;/h3&gt;
@@ -73,4 +73,6 @@ Varistor is equivalent with Zener diode of two series connection.</description>
 </views>
 </connector>
 </connectors>
+<buses>
+</buses>
 </module>

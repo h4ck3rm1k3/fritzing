@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DiscreteSemi-MOSFET-PCHANNEL-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DiscreteSemi' MOSFET-PCHANNEL SMD -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>Q</label>
 <author>www.fritzing.org</author>
 <description>Generic PMOSFET</description>
@@ -84,4 +84,6 @@
 </views>
 </connector>
 </connectors>
+<buses>
+</buses>
 </module>

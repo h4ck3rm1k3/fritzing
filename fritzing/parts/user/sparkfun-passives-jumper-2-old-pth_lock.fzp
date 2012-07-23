@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Passives-JUMPER-2-OLD-PTH_LOCK'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Passives' JUMPER-2-OLD PTH_LOCK -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Jumper&lt;/b&gt;
@@ -74,4 +74,6 @@ Basic 0.1 spaced jumper. Use with breakaway headers.</description>
 </views>
 </connector>
 </connectors>
+<buses>
+</buses>
 </module>

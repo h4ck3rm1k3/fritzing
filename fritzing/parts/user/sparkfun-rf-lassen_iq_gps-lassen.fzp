@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-LASSEN_IQ_GPS-LASSEN'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-RF' LASSEN_IQ_GPS LASSEN -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Lassen iq 
@@ -155,4 +155,6 @@
 </views>
 </connector>
 </connectors>
+<buses>
+</buses>
 </module>

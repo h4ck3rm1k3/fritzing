@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-HMC1051Z-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' HMC1051Z  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Honeywell 1-axis magnetometer</description>
@@ -41,8 +41,8 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector0' type='male' name='GND@1'>
-<description>GND@1</description>
+<connector id='connector0' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pin'/>
@@ -56,8 +56,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='male' name='GND@4'>
-<description>GND@4</description>
+<connector id='connector3' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pin'/>
@@ -71,8 +71,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='male' name='GND@5'>
-<description>GND@5</description>
+<connector id='connector4' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pin'/>
@@ -162,4 +162,11 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='GND'>
+<nodeMember connectorId='connector4' />
+<nodeMember connectorId='connector3' />
+<nodeMember connectorId='connector0' />
+</bus>
+</buses>
 </module>

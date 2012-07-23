@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-PIC16F913-SOIC28'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' PIC16F913 SOIC28 -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description></description>
@@ -419,8 +419,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector18' type='male' name='VSS@19'>
-<description>VSS@19</description>
+<connector id='connector18' type='male' name='VSS'>
+<description>VSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector18pin'/>
@@ -434,4 +434,10 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='VSS'>
+<nodeMember connectorId='connector18' />
+<nodeMember connectorId='connector7' />
+</bus>
+</buses>
 </module>

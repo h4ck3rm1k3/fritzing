@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-NRF24L01-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-RF' NRF24L01 SMD -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;2.4GHz Low Power Transceiver&lt;/b&gt;
@@ -183,8 +183,8 @@ This is the very popular, low cost, very low power RF transceiver from Nordic Se
 </pcbView>
 </views>
 </connector>
-<connector id='connector15' type='male' name='VDD@15'>
-<description>VDD@15</description>
+<connector id='connector15' type='male' name='VDD'>
+<description>VDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector15pin'/>
@@ -197,8 +197,8 @@ This is the very popular, low cost, very low power RF transceiver from Nordic Se
 </pcbView>
 </views>
 </connector>
-<connector id='connector18' type='male' name='VDD@18'>
-<description>VDD@18</description>
+<connector id='connector18' type='male' name='VDD'>
+<description>VDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector18pin'/>
@@ -211,8 +211,8 @@ This is the very popular, low cost, very low power RF transceiver from Nordic Se
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='male' name='VDD@7'>
-<description>VDD@7</description>
+<connector id='connector7' type='male' name='VDD'>
+<description>VDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pin'/>
@@ -239,8 +239,8 @@ This is the very popular, low cost, very low power RF transceiver from Nordic Se
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='male' name='VSS@0'>
-<description>VSS@0</description>
+<connector id='connector0' type='male' name='VSS'>
+<description>VSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pin'/>
@@ -253,8 +253,8 @@ This is the very popular, low cost, very low power RF transceiver from Nordic Se
 </pcbView>
 </views>
 </connector>
-<connector id='connector14' type='male' name='VSS@14'>
-<description>VSS@14</description>
+<connector id='connector14' type='male' name='VSS'>
+<description>VSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector14pin'/>
@@ -267,8 +267,8 @@ This is the very popular, low cost, very low power RF transceiver from Nordic Se
 </pcbView>
 </views>
 </connector>
-<connector id='connector17' type='male' name='VSS@17'>
-<description>VSS@17</description>
+<connector id='connector17' type='male' name='VSS'>
+<description>VSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector17pin'/>
@@ -281,8 +281,8 @@ This is the very popular, low cost, very low power RF transceiver from Nordic Se
 </pcbView>
 </views>
 </connector>
-<connector id='connector20' type='male' name='VSS@20'>
-<description>VSS@20</description>
+<connector id='connector20' type='male' name='VSS'>
+<description>VSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector20pin'/>
@@ -295,8 +295,8 @@ This is the very popular, low cost, very low power RF transceiver from Nordic Se
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='male' name='VSS@8'>
-<description>VSS@8</description>
+<connector id='connector8' type='male' name='VSS'>
+<description>VSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector8pin'/>
@@ -338,4 +338,18 @@ This is the very popular, low cost, very low power RF transceiver from Nordic Se
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='VSS'>
+<nodeMember connectorId='connector8' />
+<nodeMember connectorId='connector20' />
+<nodeMember connectorId='connector17' />
+<nodeMember connectorId='connector14' />
+<nodeMember connectorId='connector0' />
+</bus>
+<bus id='VDD'>
+<nodeMember connectorId='connector7' />
+<nodeMember connectorId='connector18' />
+<nodeMember connectorId='connector15' />
+</bus>
+</buses>
 </module>

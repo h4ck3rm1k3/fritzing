@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DiscreteSemi-MOSFET-PCHANNEL-SOIC8-SOIC8'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DiscreteSemi' MOSFET-PCHANNEL-SOIC8 SOIC8 -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Generic 8-pin PMOSFET</description>
@@ -41,8 +41,8 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector4' type='male' name='D@1'>
-<description>D@1</description>
+<connector id='connector4' type='male' name='D'>
+<description>D</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pin'/>
@@ -55,8 +55,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='male' name='D@2'>
-<description>D@2</description>
+<connector id='connector5' type='male' name='D'>
+<description>D</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector5pin'/>
@@ -69,8 +69,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='male' name='D@3'>
-<description>D@3</description>
+<connector id='connector6' type='male' name='D'>
+<description>D</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pin'/>
@@ -83,8 +83,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='male' name='D@4'>
-<description>D@4</description>
+<connector id='connector7' type='male' name='D'>
+<description>D</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pin'/>
@@ -111,8 +111,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='male' name='S@1'>
-<description>S@1</description>
+<connector id='connector0' type='male' name='S'>
+<description>S</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pin'/>
@@ -125,8 +125,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='male' name='S@2'>
-<description>S@2</description>
+<connector id='connector1' type='male' name='S'>
+<description>S</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pin'/>
@@ -139,8 +139,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='male' name='S@3'>
-<description>S@3</description>
+<connector id='connector2' type='male' name='S'>
+<description>S</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pin'/>
@@ -154,4 +154,17 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='D'>
+<nodeMember connectorId='connector7' />
+<nodeMember connectorId='connector6' />
+<nodeMember connectorId='connector5' />
+<nodeMember connectorId='connector4' />
+</bus>
+<bus id='S'>
+<nodeMember connectorId='connector2' />
+<nodeMember connectorId='connector1' />
+<nodeMember connectorId='connector0' />
+</bus>
+</buses>
 </module>

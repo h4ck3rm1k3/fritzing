@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-MAX3421E-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' MAX3421E SMD -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>USB Peripheral/Host Controller w/ SPI</description>
@@ -69,8 +69,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector18' type='male' name='GND@19'>
-<description>GND@19</description>
+<connector id='connector18' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector18pin'/>
@@ -83,8 +83,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='male' name='GND@3'>
-<description>GND@3</description>
+<connector id='connector2' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pin'/>
@@ -490,4 +490,10 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='GND'>
+<nodeMember connectorId='connector2' />
+<nodeMember connectorId='connector18' />
+</bus>
+</buses>
 </module>

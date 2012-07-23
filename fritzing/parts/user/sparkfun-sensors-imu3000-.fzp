@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-IMU3000-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' IMU3000  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>3-axis I2C programmable gyro.&lt;BR&gt;
@@ -127,8 +127,8 @@ Can interface with an I2C accelerometer to provide 6-axis motion information.</d
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='male' name='GND@11'>
-<description>GND@11</description>
+<connector id='connector10' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pin'/>
@@ -141,8 +141,8 @@ Can interface with an I2C accelerometer to provide 6-axis motion information.</d
 </pcbView>
 </views>
 </connector>
-<connector id='connector17' type='male' name='GND@18'>
-<description>GND@18</description>
+<connector id='connector17' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector17pin'/>
@@ -240,4 +240,10 @@ Can interface with an I2C accelerometer to provide 6-axis motion information.</d
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='GND'>
+<nodeMember connectorId='connector17' />
+<nodeMember connectorId='connector10' />
+</bus>
+</buses>
 </module>

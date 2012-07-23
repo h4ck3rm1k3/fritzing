@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-W5100-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' W5100  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;WIZnet W5100&lt;/h3&gt;
@@ -128,8 +128,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm, 0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='male' name='1V8A@0'>
-<description>1V8A@0</description>
+<connector id='connector6' type='male' name='1V8A'>
+<description>1V8A</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pin'/>
@@ -142,8 +142,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm, 0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector73' type='male' name='1V8A@1'>
-<description>1V8A@1</description>
+<connector id='connector73' type='male' name='1V8A'>
+<description>1V8A</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector73pin'/>
@@ -156,8 +156,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm, 0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector14' type='male' name='1V8D@0'>
-<description>1V8D@0</description>
+<connector id='connector14' type='male' name='1V8D'>
+<description>1V8D</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector14pin'/>
@@ -170,8 +170,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm, 0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector15' type='male' name='1V8D@1'>
-<description>1V8D@1</description>
+<connector id='connector15' type='male' name='1V8D'>
+<description>1V8D</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector15pin'/>
@@ -184,8 +184,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm, 0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector32' type='male' name='1V8D@2'>
-<description>1V8D@2</description>
+<connector id='connector32' type='male' name='1V8D'>
+<description>1V8D</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector32pin'/>
@@ -198,8 +198,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm, 0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector68' type='male' name='1V8D@3'>
-<description>1V8D@3</description>
+<connector id='connector68' type='male' name='1V8D'>
+<description>1V8D</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector68pin'/>
@@ -240,8 +240,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm, 0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector11' type='male' name='3V3D@0'>
-<description>3V3D@0</description>
+<connector id='connector11' type='male' name='3V3D'>
+<description>3V3D</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector11pin'/>
@@ -254,8 +254,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm, 0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector17' type='male' name='3V3D@1'>
-<description>3V3D@1</description>
+<connector id='connector17' type='male' name='3V3D'>
+<description>3V3D</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector17pin'/>
@@ -268,8 +268,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm, 0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector43' type='male' name='3V3D@2'>
-<description>3V3D@2</description>
+<connector id='connector43' type='male' name='3V3D'>
+<description>3V3D</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector43pin'/>
@@ -632,8 +632,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm, 0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='male' name='GNDA@0'>
-<description>GNDA@0</description>
+<connector id='connector3' type='male' name='GNDA'>
+<description>GNDA</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pin'/>
@@ -646,8 +646,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm, 0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector9' type='male' name='GNDA@1'>
-<description>GNDA@1</description>
+<connector id='connector9' type='male' name='GNDA'>
+<description>GNDA</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector9pin'/>
@@ -660,8 +660,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm, 0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector76' type='male' name='GNDA@2'>
-<description>GNDA@2</description>
+<connector id='connector76' type='male' name='GNDA'>
+<description>GNDA</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector76pin'/>
@@ -674,8 +674,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm, 0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector12' type='male' name='GNDD@0'>
-<description>GNDD@0</description>
+<connector id='connector12' type='male' name='GNDD'>
+<description>GNDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector12pin'/>
@@ -688,8 +688,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm, 0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector13' type='male' name='GNDD@1'>
-<description>GNDD@1</description>
+<connector id='connector13' type='male' name='GNDD'>
+<description>GNDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector13pin'/>
@@ -702,8 +702,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm, 0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector16' type='male' name='GNDD@2'>
-<description>GNDD@2</description>
+<connector id='connector16' type='male' name='GNDD'>
+<description>GNDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector16pin'/>
@@ -716,8 +716,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm, 0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector31' type='male' name='GNDD@3'>
-<description>GNDD@3</description>
+<connector id='connector31' type='male' name='GNDD'>
+<description>GNDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector31pin'/>
@@ -730,8 +730,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm, 0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector42' type='male' name='GNDD@4'>
-<description>GNDD@4</description>
+<connector id='connector42' type='male' name='GNDD'>
+<description>GNDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector42pin'/>
@@ -744,8 +744,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm, 0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector67' type='male' name='GNDD@5'>
-<description>GNDD@5</description>
+<connector id='connector67' type='male' name='GNDD'>
+<description>GNDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector67pin'/>
@@ -800,8 +800,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm, 0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='male' name='NC@0'>
-<description>NC@0</description>
+<connector id='connector2' type='male' name='NC'>
+<description>NC</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pin'/>
@@ -814,8 +814,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm, 0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector59' type='male' name='NC@1'>
-<description>NC@1</description>
+<connector id='connector59' type='male' name='NC'>
+<description>NC</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector59pin'/>
@@ -828,8 +828,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm, 0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector60' type='male' name='NC@2'>
-<description>NC@2</description>
+<connector id='connector60' type='male' name='NC'>
+<description>NC</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector60pin'/>
@@ -842,8 +842,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm, 0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector61' type='male' name='NC@3'>
-<description>NC@3</description>
+<connector id='connector61' type='male' name='NC'>
+<description>NC</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector61pin'/>
@@ -856,8 +856,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm, 0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector77' type='male' name='NC@4'>
-<description>NC@4</description>
+<connector id='connector77' type='male' name='NC'>
+<description>NC</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector77pin'/>
@@ -870,8 +870,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm, 0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector78' type='male' name='NC@5'>
-<description>NC@5</description>
+<connector id='connector78' type='male' name='NC'>
+<description>NC</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector78pin'/>
@@ -884,8 +884,8 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm, 0.4mm pitch</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector79' type='male' name='NC@6'>
-<description>NC@6</description>
+<connector id='connector79' type='male' name='NC'>
+<description>NC</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector79pin'/>
@@ -1165,4 +1165,43 @@ Package: &lt;b&gt;LQFP-80&lt;/b&gt;,10x10mm, 0.4mm pitch</description>
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='NC'>
+<nodeMember connectorId='connector79' />
+<nodeMember connectorId='connector78' />
+<nodeMember connectorId='connector77' />
+<nodeMember connectorId='connector61' />
+<nodeMember connectorId='connector60' />
+<nodeMember connectorId='connector59' />
+<nodeMember connectorId='connector2' />
+</bus>
+<bus id='GNDA'>
+<nodeMember connectorId='connector76' />
+<nodeMember connectorId='connector9' />
+<nodeMember connectorId='connector3' />
+</bus>
+<bus id='GNDD'>
+<nodeMember connectorId='connector67' />
+<nodeMember connectorId='connector42' />
+<nodeMember connectorId='connector31' />
+<nodeMember connectorId='connector16' />
+<nodeMember connectorId='connector13' />
+<nodeMember connectorId='connector12' />
+</bus>
+<bus id='3V3D'>
+<nodeMember connectorId='connector43' />
+<nodeMember connectorId='connector17' />
+<nodeMember connectorId='connector11' />
+</bus>
+<bus id='1V8A'>
+<nodeMember connectorId='connector73' />
+<nodeMember connectorId='connector6' />
+</bus>
+<bus id='1V8D'>
+<nodeMember connectorId='connector68' />
+<nodeMember connectorId='connector32' />
+<nodeMember connectorId='connector15' />
+<nodeMember connectorId='connector14' />
+</bus>
+</buses>
 </module>

@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-A6282--ES'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' A6282 -ES -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>16-Channel Constant-Current LED Driver&lt;br&gt;
@@ -60,8 +60,8 @@ Last modified: 8/20/10&lt;br&gt;
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='male' name='GND@1'>
-<description>GND@1</description>
+<connector id='connector3' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pin'/>
@@ -74,8 +74,8 @@ Last modified: 8/20/10&lt;br&gt;
 </pcbView>
 </views>
 </connector>
-<connector id='connector24' type='male' name='GND@2'>
-<description>GND@2</description>
+<connector id='connector24' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector24pin'/>
@@ -397,4 +397,10 @@ Last modified: 8/20/10&lt;br&gt;
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='GND'>
+<nodeMember connectorId='connector24' />
+<nodeMember connectorId='connector3' />
+</bus>
+</buses>
 </module>

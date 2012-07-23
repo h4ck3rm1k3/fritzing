@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-TB6621FNG-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-PowerIC' TB6621FNG  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Toshiba 1A dual motor driver</description>
@@ -41,8 +41,8 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector0' type='male' name='A01@1'>
-<description>A01@1</description>
+<connector id='connector0' type='male' name='A01'>
+<description>A01</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pin'/>
@@ -55,8 +55,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='male' name='A01@2'>
-<description>A01@2</description>
+<connector id='connector1' type='male' name='A01'>
+<description>A01</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pin'/>
@@ -69,8 +69,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='male' name='A02@5'>
-<description>A02@5</description>
+<connector id='connector4' type='male' name='A02'>
+<description>A02</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pin'/>
@@ -83,8 +83,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='male' name='A02@6'>
-<description>A02@6</description>
+<connector id='connector5' type='male' name='A02'>
+<description>A02</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector5pin'/>
@@ -125,8 +125,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='male' name='B01@11'>
-<description>B01@11</description>
+<connector id='connector10' type='male' name='B01'>
+<description>B01</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pin'/>
@@ -139,8 +139,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector11' type='male' name='B01@12'>
-<description>B01@12</description>
+<connector id='connector11' type='male' name='B01'>
+<description>B01</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector11pin'/>
@@ -153,8 +153,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='male' name='B02@7'>
-<description>B02@7</description>
+<connector id='connector6' type='male' name='B02'>
+<description>B02</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pin'/>
@@ -167,8 +167,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='male' name='B02@8'>
-<description>B02@8</description>
+<connector id='connector7' type='male' name='B02'>
+<description>B02</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pin'/>
@@ -223,8 +223,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='male' name='PGND1@3'>
-<description>PGND1@3</description>
+<connector id='connector2' type='male' name='PGND1'>
+<description>PGND1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pin'/>
@@ -237,8 +237,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='male' name='PGND1@4'>
-<description>PGND1@4</description>
+<connector id='connector3' type='male' name='PGND1'>
+<description>PGND1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pin'/>
@@ -251,8 +251,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector9' type='male' name='PGND2@10'>
-<description>PGND2@10</description>
+<connector id='connector9' type='male' name='PGND2'>
+<description>PGND2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector9pin'/>
@@ -265,8 +265,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='male' name='PGND2@9'>
-<description>PGND2@9</description>
+<connector id='connector8' type='male' name='PGND2'>
+<description>PGND2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector8pin'/>
@@ -378,4 +378,30 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='B01'>
+<nodeMember connectorId='connector11' />
+<nodeMember connectorId='connector10' />
+</bus>
+<bus id='B02'>
+<nodeMember connectorId='connector7' />
+<nodeMember connectorId='connector6' />
+</bus>
+<bus id='PGND1'>
+<nodeMember connectorId='connector3' />
+<nodeMember connectorId='connector2' />
+</bus>
+<bus id='PGND2'>
+<nodeMember connectorId='connector8' />
+<nodeMember connectorId='connector9' />
+</bus>
+<bus id='A01'>
+<nodeMember connectorId='connector1' />
+<nodeMember connectorId='connector0' />
+</bus>
+<bus id='A02'>
+<nodeMember connectorId='connector5' />
+<nodeMember connectorId='connector4' />
+</bus>
+</buses>
 </module>

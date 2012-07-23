@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-GR-10-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-RF' GR-10 SMD -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;GR-10 GPS Receiver Module&lt;/b&gt;
@@ -42,8 +42,8 @@ Proto layout and schematic for GR-10 GPS receiver. Spark Fun Electronics SKU : G
 </iconView>
 </views>
 <connectors>
-<connector id='connector9' type='male' name='1.8V@10'>
-<description>1.8V@10</description>
+<connector id='connector9' type='male' name='1.8V'>
+<description>1.8V</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector9pin'/>
@@ -56,8 +56,8 @@ Proto layout and schematic for GR-10 GPS receiver. Spark Fun Electronics SKU : G
 </pcbView>
 </views>
 </connector>
-<connector id='connector20' type='male' name='1.8V@21'>
-<description>1.8V@21</description>
+<connector id='connector20' type='male' name='1.8V'>
+<description>1.8V</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector20pin'/>
@@ -70,8 +70,8 @@ Proto layout and schematic for GR-10 GPS receiver. Spark Fun Electronics SKU : G
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='male' name='1.8V@3'>
-<description>1.8V@3</description>
+<connector id='connector2' type='male' name='1.8V'>
+<description>1.8V</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pin'/>
@@ -210,8 +210,8 @@ Proto layout and schematic for GR-10 GPS receiver. Spark Fun Electronics SKU : G
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='male' name='GND@11'>
-<description>GND@11</description>
+<connector id='connector10' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pin'/>
@@ -224,8 +224,8 @@ Proto layout and schematic for GR-10 GPS receiver. Spark Fun Electronics SKU : G
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='male' name='GND@2'>
-<description>GND@2</description>
+<connector id='connector1' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pin'/>
@@ -238,8 +238,8 @@ Proto layout and schematic for GR-10 GPS receiver. Spark Fun Electronics SKU : G
 </pcbView>
 </views>
 </connector>
-<connector id='connector23' type='male' name='GND@24'>
-<description>GND@24</description>
+<connector id='connector23' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector23pin'/>
@@ -252,8 +252,8 @@ Proto layout and schematic for GR-10 GPS receiver. Spark Fun Electronics SKU : G
 </pcbView>
 </views>
 </connector>
-<connector id='connector26' type='male' name='GND@27'>
-<description>GND@27</description>
+<connector id='connector26' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector26pin'/>
@@ -266,8 +266,8 @@ Proto layout and schematic for GR-10 GPS receiver. Spark Fun Electronics SKU : G
 </pcbView>
 </views>
 </connector>
-<connector id='connector28' type='male' name='GND@29'>
-<description>GND@29</description>
+<connector id='connector28' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector28pin'/>
@@ -280,8 +280,8 @@ Proto layout and schematic for GR-10 GPS receiver. Spark Fun Electronics SKU : G
 </pcbView>
 </views>
 </connector>
-<connector id='connector30' type='male' name='GND@31'>
-<description>GND@31</description>
+<connector id='connector30' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector30pin'/>
@@ -547,4 +547,19 @@ Proto layout and schematic for GR-10 GPS receiver. Spark Fun Electronics SKU : G
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='1.8V'>
+<nodeMember connectorId='connector2' />
+<nodeMember connectorId='connector20' />
+<nodeMember connectorId='connector9' />
+</bus>
+<bus id='GND'>
+<nodeMember connectorId='connector30' />
+<nodeMember connectorId='connector28' />
+<nodeMember connectorId='connector26' />
+<nodeMember connectorId='connector23' />
+<nodeMember connectorId='connector1' />
+<nodeMember connectorId='connector10' />
+</bus>
+</buses>
 </module>

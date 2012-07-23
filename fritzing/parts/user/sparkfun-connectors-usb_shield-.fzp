@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-USB+SHIELD-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' USB+SHIELD  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;USB+Shield&lt;/h3&gt;
@@ -133,4 +133,6 @@ USB connector with shield pins connectable</description>
 </views>
 </connector>
 </connectors>
+<buses>
+</buses>
 </module>

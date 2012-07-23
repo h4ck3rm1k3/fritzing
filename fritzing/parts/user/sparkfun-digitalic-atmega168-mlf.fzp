@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-ATMEGA168-MLF'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' ATMEGA168 MLF -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Atmel 32-pin 8-bit micro, 16k flash.</description>
@@ -112,8 +112,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='male' name='GND@1'>
-<description>GND@1</description>
+<connector id='connector2' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pin'/>
@@ -126,8 +126,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='male' name='GND@2'>
-<description>GND@2</description>
+<connector id='connector4' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pin'/>
@@ -462,8 +462,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='male' name='VCC@1'>
-<description>VCC@1</description>
+<connector id='connector3' type='male' name='VCC'>
+<description>VCC</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pin'/>
@@ -476,8 +476,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='male' name='VCC@2'>
-<description>VCC@2</description>
+<connector id='connector5' type='male' name='VCC'>
+<description>VCC</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector5pin'/>
@@ -491,4 +491,14 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='GND'>
+<nodeMember connectorId='connector4' />
+<nodeMember connectorId='connector2' />
+</bus>
+<bus id='VCC'>
+<nodeMember connectorId='connector5' />
+<nodeMember connectorId='connector3' />
+</bus>
+</buses>
 </module>

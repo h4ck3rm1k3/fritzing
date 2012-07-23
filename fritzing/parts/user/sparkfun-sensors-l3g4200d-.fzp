@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-L3G4200D-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' L3G4200D  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;L3G4200D Three-axis, digital output gyroscope&lt;/h3&gt;
@@ -116,8 +116,8 @@ It includes a sensing element and an IC interface capable of providing the measu
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='male' name='RSDVG@3'>
-<description>RSDVG@3</description>
+<connector id='connector10' type='male' name='RSDVG'>
+<description>RSDVG</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pin'/>
@@ -130,8 +130,8 @@ It includes a sensing element and an IC interface capable of providing the measu
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='male' name='RSVDG@0'>
-<description>RSVDG@0</description>
+<connector id='connector7' type='male' name='RSVDG'>
+<description>RSVDG</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pin'/>
@@ -144,8 +144,8 @@ It includes a sensing element and an IC interface capable of providing the measu
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='male' name='RSVDG@1'>
-<description>RSVDG@1</description>
+<connector id='connector8' type='male' name='RSVDG'>
+<description>RSVDG</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector8pin'/>
@@ -158,8 +158,8 @@ It includes a sensing element and an IC interface capable of providing the measu
 </pcbView>
 </views>
 </connector>
-<connector id='connector9' type='male' name='RSVDG@2'>
-<description>RSVDG@2</description>
+<connector id='connector9' type='male' name='RSVDG'>
+<description>RSVDG</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector9pin'/>
@@ -172,8 +172,8 @@ It includes a sensing element and an IC interface capable of providing the measu
 </pcbView>
 </views>
 </connector>
-<connector id='connector11' type='male' name='RSVDG@4'>
-<description>RSVDG@4</description>
+<connector id='connector11' type='male' name='RSVDG'>
+<description>RSVDG</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector11pin'/>
@@ -186,8 +186,8 @@ It includes a sensing element and an IC interface capable of providing the measu
 </pcbView>
 </views>
 </connector>
-<connector id='connector14' type='male' name='RSVDV@0'>
-<description>RSVDV@0</description>
+<connector id='connector14' type='male' name='RSVDV'>
+<description>RSVDV</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector14pin'/>
@@ -271,4 +271,12 @@ It includes a sensing element and an IC interface capable of providing the measu
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='RSVDG'>
+<nodeMember connectorId='connector11' />
+<nodeMember connectorId='connector9' />
+<nodeMember connectorId='connector8' />
+<nodeMember connectorId='connector7' />
+</bus>
+</buses>
 </module>

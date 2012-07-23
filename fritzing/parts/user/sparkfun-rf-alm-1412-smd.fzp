@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-ALM-1412-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-RF' ALM-1412 SMD -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;GPS Antenna Amp&lt;/b&gt;
@@ -56,8 +56,8 @@ Filter and Amp built into one. Very small package.</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='male' name='GND@6'>
-<description>GND@6</description>
+<connector id='connector5' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector5pin'/>
@@ -70,8 +70,8 @@ Filter and Amp built into one. Very small package.</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='male' name='GND@7'>
-<description>GND@7</description>
+<connector id='connector6' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pin'/>
@@ -84,8 +84,8 @@ Filter and Amp built into one. Very small package.</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='male' name='GND@8'>
-<description>GND@8</description>
+<connector id='connector7' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pin'/>
@@ -98,8 +98,8 @@ Filter and Amp built into one. Very small package.</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='male' name='GND@9'>
-<description>GND@9</description>
+<connector id='connector8' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector8pin'/>
@@ -169,4 +169,13 @@ Filter and Amp built into one. Very small package.</description>
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='GND'>
+<nodeMember connectorId='connector8' />
+<nodeMember connectorId='connector7' />
+<nodeMember connectorId='connector6' />
+<nodeMember connectorId='connector5' />
+<nodeMember connectorId='connector1' />
+</bus>
+</buses>
 </module>

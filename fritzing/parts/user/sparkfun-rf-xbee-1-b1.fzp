@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-XBEE-1-B1'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-RF' XBEE-1 B1 -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Xbee module footprints</description>
@@ -251,8 +251,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector13' type='male' name='RES@14'>
-<description>RES@14</description>
+<connector id='connector13' type='male' name='RES'>
+<description>RES</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector13pin'/>
@@ -266,8 +266,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='male' name='RES@8'>
-<description>RES@8</description>
+<connector id='connector7' type='male' name='RES'>
+<description>RES</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pin'/>
@@ -342,4 +342,10 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='RES'>
+<nodeMember connectorId='connector7' />
+<nodeMember connectorId='connector13' />
+</bus>
+</buses>
 </module>

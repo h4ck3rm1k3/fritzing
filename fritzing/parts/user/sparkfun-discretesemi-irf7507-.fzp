@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DiscreteSemi-IRF7507-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DiscreteSemi' IRF7507  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Dual transistor NMOS/PMOS in one package.</description>
@@ -41,8 +41,8 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector6' type='male' name='D1@7'>
-<description>D1@7</description>
+<connector id='connector6' type='male' name='D1'>
+<description>D1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pin'/>
@@ -55,8 +55,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='male' name='D1@8'>
-<description>D1@8</description>
+<connector id='connector7' type='male' name='D1'>
+<description>D1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pin'/>
@@ -69,8 +69,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='male' name='D2@5'>
-<description>D2@5</description>
+<connector id='connector4' type='male' name='D2'>
+<description>D2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pin'/>
@@ -83,8 +83,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='male' name='D2@6'>
-<description>D2@6</description>
+<connector id='connector5' type='male' name='D2'>
+<description>D2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector5pin'/>
@@ -154,4 +154,14 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='D1'>
+<nodeMember connectorId='connector7' />
+<nodeMember connectorId='connector6' />
+</bus>
+<bus id='D2'>
+<nodeMember connectorId='connector5' />
+<nodeMember connectorId='connector4' />
+</bus>
+</buses>
 </module>

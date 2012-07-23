@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-RN171-RN171'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-RF' RN171 RN171 -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>WiFi Module</description>
@@ -110,8 +110,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='male' name='GND@1'>
-<description>GND@1</description>
+<connector id='connector0' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pin'/>
@@ -124,8 +124,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector13' type='male' name='GND@14'>
-<description>GND@14</description>
+<connector id='connector13' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector13pin'/>
@@ -138,8 +138,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector19' type='male' name='GND@20'>
-<description>GND@20</description>
+<connector id='connector19' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector19pin'/>
@@ -152,8 +152,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector20' type='male' name='GND@21'>
-<description>GND@21</description>
+<connector id='connector20' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector20pin'/>
@@ -166,8 +166,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector21' type='male' name='GND@22'>
-<description>GND@22</description>
+<connector id='connector21' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector21pin'/>
@@ -180,8 +180,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector22' type='male' name='GND@23'>
-<description>GND@23</description>
+<connector id='connector22' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector22pin'/>
@@ -194,8 +194,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector24' type='male' name='GND@25'>
-<description>GND@25</description>
+<connector id='connector24' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector24pin'/>
@@ -208,8 +208,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector25' type='male' name='GND@26'>
-<description>GND@26</description>
+<connector id='connector25' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector25pin'/>
@@ -222,8 +222,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector26' type='male' name='GND@27'>
-<description>GND@27</description>
+<connector id='connector26' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector26pin'/>
@@ -236,8 +236,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector27' type='male' name='GND@28'>
-<description>GND@28</description>
+<connector id='connector27' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector27pin'/>
@@ -250,8 +250,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector38' type='male' name='GND@39'>
-<description>GND@39</description>
+<connector id='connector38' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector38pin'/>
@@ -264,8 +264,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector46' type='male' name='GND@47'>
-<description>GND@47</description>
+<connector id='connector46' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector46pin'/>
@@ -629,4 +629,20 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='GND'>
+<nodeMember connectorId='connector46' />
+<nodeMember connectorId='connector38' />
+<nodeMember connectorId='connector27' />
+<nodeMember connectorId='connector26' />
+<nodeMember connectorId='connector25' />
+<nodeMember connectorId='connector24' />
+<nodeMember connectorId='connector22' />
+<nodeMember connectorId='connector21' />
+<nodeMember connectorId='connector20' />
+<nodeMember connectorId='connector19' />
+<nodeMember connectorId='connector13' />
+<nodeMember connectorId='connector0' />
+</bus>
+</buses>
 </module>

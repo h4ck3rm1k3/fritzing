@@ -184,36 +184,24 @@
 <line class='pin' id='connector55pin' connectorname='VCPCON/RP24/GD9/VBUSCHG/CN50/RD1' x1='0.0762' y1='61.0362' x2='5.1562' y2='61.0362' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector55terminal' x='0.0762' y='61.0362' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='5.6134' y='61.341' text-anchor='start'>VCPCON/RP24/GD9/VBUSCHG/CN50/RD1</text>
-<line class='pin' id='connector56pin' connectorname='VDD@1' x1='28.0162' y1='104.216' x2='28.0162' y2='99.1362' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector56pin' connectorname='VDD' x1='28.0162' y1='104.216' x2='28.0162' y2='99.1362' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector56terminal' x='28.0162' y='104.216' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <g transform='translate(28.321,98.679)'><g transform='rotate(270)'>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='0' y='0' text-anchor='start'>VDD@1</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='0' y='0' text-anchor='start'>VDD</text>
 </g></g>
-<line class='pin' id='connector57pin' connectorname='VDD@2' x1='38.1762' y1='104.216' x2='38.1762' y2='99.1362' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector57terminal' x='38.1762' y='104.216' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<g transform='translate(38.481,98.679)'><g transform='rotate(270)'>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='0' y='0' text-anchor='start'>VDD@2</text>
-</g></g>
-<line class='pin' id='connector58pin' connectorname='VDD@3' x1='48.3362' y1='104.216' x2='48.3362' y2='99.1362' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector58terminal' x='48.3362' y='104.216' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<g transform='translate(48.641,98.679)'><g transform='rotate(270)'>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='0' y='0' text-anchor='start'>VDD@3</text>
-</g></g>
-<line class='pin' id='connector59pin' connectorname='VSS@1' x1='30.5562' y1='104.216' x2='30.5562' y2='99.1362' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector57pin' connectorname='VDD' x1='28.0162' y1='104.216' x2='28.0162' y2='99.1362' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector57terminal' x='28.0162' y='104.216' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<line class='pin' id='connector58pin' connectorname='VDD' x1='28.0162' y1='104.216' x2='28.0162' y2='99.1362' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector58terminal' x='28.0162' y='104.216' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<line class='pin' id='connector59pin' connectorname='VSS' x1='30.5562' y1='104.216' x2='30.5562' y2='99.1362' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector59terminal' x='30.5562' y='104.216' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <g transform='translate(30.861,98.679)'><g transform='rotate(270)'>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='0' y='0' text-anchor='start'>VSS@1</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='0' y='0' text-anchor='start'>VSS</text>
 </g></g>
-<line class='pin' id='connector60pin' connectorname='VSS@2' x1='40.7162' y1='104.216' x2='40.7162' y2='99.1362' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector60terminal' x='40.7162' y='104.216' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<g transform='translate(41.021,98.679)'><g transform='rotate(270)'>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='0' y='0' text-anchor='start'>VSS@2</text>
-</g></g>
-<line class='pin' id='connector61pin' connectorname='VSS@3' x1='50.8762' y1='104.216' x2='50.8762' y2='99.1362' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector61terminal' x='50.8762' y='104.216' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<g transform='translate(51.181,98.679)'><g transform='rotate(270)'>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='0' y='0' text-anchor='start'>VSS@3</text>
-</g></g>
+<line class='pin' id='connector60pin' connectorname='VSS' x1='30.5562' y1='104.216' x2='30.5562' y2='99.1362' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector60terminal' x='30.5562' y='104.216' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<line class='pin' id='connector61pin' connectorname='VSS' x1='30.5562' y1='104.216' x2='30.5562' y2='99.1362' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector61terminal' x='30.5562' y='104.216' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector62pin' connectorname='VSYNC/CN63/RE5' x1='0.0762' y1='15.3162' x2='5.1562' y2='15.3162' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector62terminal' x='0.0762' y='15.3162' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='5.6134' y='15.621' text-anchor='start'>VSYNC/CN63/RE5</text>

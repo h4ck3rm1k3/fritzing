@@ -102,15 +102,15 @@ M24.6516,4.25a0.25,0.25 0 1 0 0.5,0 0.25,0.25 0 1 0 -0.5,0z
 <circle id='connector0pin' connectorname='1' cx='8.9016' cy='13.95' r='0.3125' stroke='#9A916C' stroke-width='0.125' fill='none' />
 <path stroke='none' stroke-width='0' d='m8.9016,13.2a0.375,0.375 0 0 1 0.375,0.375l0,0.75a0.375,0.375 0 0 1 -0.375,0.375l-0,0a0.375,0.375 0 0 1 -0.375,-0.375l0,-0.75a0.375,0.375 0 0 1 0.375,-0.375l0,0zM8.6516,13.95a0.25,0.25 0 1 0 0.5,0 0.25,0.25 0 1 0 -0.5,0z
 ' fill='#9A916C' />
-<circle id='connector28pin' connectorname='29' cx='24.9016' cy='10.45' r='0.3125' stroke='#9A916C' stroke-width='0.125' fill='none' />
+<circle id='connector25pin' connectorname='29' cx='24.9016' cy='10.45' r='0.3125' stroke='#9A916C' stroke-width='0.125' fill='none' />
 <path stroke='none' stroke-width='0' d='m25.2766,10.075a0.375,0.375 0 0 1 0.375,0.375l0,0a0.375,0.375 0 0 1 -0.375,0.375l-0.75,0a0.375,0.375 0 0 1 -0.375,-0.375l0,-0a0.375,0.375 0 0 1 0.375,-0.375l0.75,0zM24.6516,10.45a0.25,0.25 0 1 0 0.5,0 0.25,0.25 0 1 0 -0.5,0z
 ' fill='#9A916C' />
-<circle id='connector27pin' connectorname='28' cx='24.9016' cy='4.25' r='0.3125' stroke='#9A916C' stroke-width='0.125' fill='none' />
+<circle id='connector24pin' connectorname='28' cx='24.9016' cy='4.25' r='0.3125' stroke='#9A916C' stroke-width='0.125' fill='none' />
 <path stroke='none' stroke-width='0' d='m25.2766,3.875a0.375,0.375 0 0 1 0.375,0.375l0,0a0.375,0.375 0 0 1 -0.375,0.375l-0.75,0a0.375,0.375 0 0 1 -0.375,-0.375l0,-0a0.375,0.375 0 0 1 0.375,-0.375l0.75,0zM24.6516,4.25a0.25,0.25 0 1 0 0.5,0 0.25,0.25 0 1 0 -0.5,0z
 ' fill='#9A916C' />
-<rect id='connector26pin' connectorname='27' x='5.3516' y='5.35' width='1.8' height='0.8' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector24pin' connectorname='25' x='5.3516' y='2.15' width='1.8' height='0.8' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
-<rect id='connector25pin' connectorname='26' x='5.3516' y='3.75' width='1.8' height='0.8' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector28pin' connectorname='27' x='5.3516' y='5.35' width='1.8' height='0.8' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector26pin' connectorname='25' x='5.3516' y='2.15' width='1.8' height='0.8' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
+<rect id='connector27pin' connectorname='26' x='5.3516' y='3.75' width='1.8' height='0.8' stroke='none' stroke-width='0' fill='#9A916C' stroke-linecap='round'/>
 <line class='other' x1='24.9016' y1='0.75' x2='23.9016' y2='0.75' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line class='other' x1='24.9016' y1='0.75' x2='24.9016' y2='1.75' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
 <line class='other' x1='24.9016' y1='13.95' x2='24.9016' y2='12.95' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>

@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-IPOD_CONNECTOR_MALE-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' IPOD_CONNECTOR_MALE  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;iPod Male Connector&lt;/b&gt;
@@ -111,8 +111,8 @@ This is the connector that will insert into an iPods. Use this connector to gain
 </pcbView>
 </views>
 </connector>
-<connector id='connector18' type='male' name='FW_12V@19'>
-<description>FW_12V@19</description>
+<connector id='connector18' type='male' name='FW_12V'>
+<description>FW_12V</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector18pin'/>
@@ -125,8 +125,8 @@ This is the connector that will insert into an iPods. Use this connector to gain
 </pcbView>
 </views>
 </connector>
-<connector id='connector19' type='male' name='FW_12V@20'>
-<description>FW_12V@20</description>
+<connector id='connector19' type='male' name='FW_12V'>
+<description>FW_12V</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector19pin'/>
@@ -195,8 +195,8 @@ This is the connector that will insert into an iPods. Use this connector to gain
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='male' name='GND@1'>
-<description>GND@1</description>
+<connector id='connector0' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pin'/>
@@ -209,8 +209,8 @@ This is the connector that will insert into an iPods. Use this connector to gain
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='male' name='GND@11'>
-<description>GND@11</description>
+<connector id='connector10' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pin'/>
@@ -223,8 +223,8 @@ This is the connector that will insert into an iPods. Use this connector to gain
 </pcbView>
 </views>
 </connector>
-<connector id='connector14' type='male' name='GND@15'>
-<description>GND@15</description>
+<connector id='connector14' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector14pin'/>
@@ -237,8 +237,8 @@ This is the connector that will insert into an iPods. Use this connector to gain
 </pcbView>
 </views>
 </connector>
-<connector id='connector15' type='male' name='GND@16'>
-<description>GND@16</description>
+<connector id='connector15' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector15pin'/>
@@ -251,8 +251,8 @@ This is the connector that will insert into an iPods. Use this connector to gain
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='male' name='GND@2'>
-<description>GND@2</description>
+<connector id='connector1' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pin'/>
@@ -265,8 +265,8 @@ This is the connector that will insert into an iPods. Use this connector to gain
 </pcbView>
 </views>
 </connector>
-<connector id='connector28' type='male' name='GND@29'>
-<description>GND@29</description>
+<connector id='connector28' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector28pin'/>
@@ -279,8 +279,8 @@ This is the connector that will insert into an iPods. Use this connector to gain
 </pcbView>
 </views>
 </connector>
-<connector id='connector29' type='male' name='GND@30'>
-<description>GND@30</description>
+<connector id='connector29' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector29pin'/>
@@ -462,4 +462,19 @@ This is the connector that will insert into an iPods. Use this connector to gain
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='FW_12V'>
+<nodeMember connectorId='connector19' />
+<nodeMember connectorId='connector18' />
+</bus>
+<bus id='GND'>
+<nodeMember connectorId='connector29' />
+<nodeMember connectorId='connector28' />
+<nodeMember connectorId='connector1' />
+<nodeMember connectorId='connector15' />
+<nodeMember connectorId='connector14' />
+<nodeMember connectorId='connector10' />
+<nodeMember connectorId='connector0' />
+</bus>
+</buses>
 </module>

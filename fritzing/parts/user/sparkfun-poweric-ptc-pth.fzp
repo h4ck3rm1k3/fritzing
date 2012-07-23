@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-PTC-PTH'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-PowerIC' PTC PTH -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>F</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Resettable Fuse PTC&lt;/b&gt;
@@ -73,4 +73,6 @@ Resettable Fuse. Spark Fun Electronics SKU : COM-08357</description>
 </views>
 </connector>
 </connectors>
+<buses>
+</buses>
 </module>

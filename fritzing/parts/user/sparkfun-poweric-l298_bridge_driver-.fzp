@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-L298_BRIDGE_DRIVER-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-PowerIC' L298_BRIDGE_DRIVER  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Full-bridge power driver IC</description>
@@ -68,8 +68,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='male' name='GND@1'>
-<description>GND@1</description>
+<connector id='connector0' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pin'/>
@@ -82,8 +82,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector9' type='male' name='GND@10'>
-<description>GND@10</description>
+<connector id='connector9' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector9pin'/>
@@ -96,8 +96,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='male' name='GND@11'>
-<description>GND@11</description>
+<connector id='connector10' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pin'/>
@@ -110,8 +110,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector19' type='male' name='GND@20'>
-<description>GND@20</description>
+<connector id='connector19' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector19pin'/>
@@ -180,8 +180,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector17' type='male' name='NC@18'>
-<description>NC@18</description>
+<connector id='connector17' type='male' name='NC'>
+<description>NC</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector17pin'/>
@@ -194,8 +194,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='male' name='NC@3'>
-<description>NC@3</description>
+<connector id='connector2' type='male' name='NC'>
+<description>NC</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pin'/>
@@ -321,4 +321,16 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='NC'>
+<nodeMember connectorId='connector2' />
+<nodeMember connectorId='connector17' />
+</bus>
+<bus id='GND'>
+<nodeMember connectorId='connector19' />
+<nodeMember connectorId='connector10' />
+<nodeMember connectorId='connector9' />
+<nodeMember connectorId='connector0' />
+</bus>
+</buses>
 </module>

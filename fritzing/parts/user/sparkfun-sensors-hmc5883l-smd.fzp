@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-HMC5883L-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' HMC5883L SMD -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>3 Axis Digital Compass IC</description>
@@ -70,8 +70,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='male' name='GND@1'>
-<description>GND@1</description>
+<connector id='connector8' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector8pin'/>
@@ -84,8 +84,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='male' name='GND@2'>
-<description>GND@2</description>
+<connector id='connector10' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pin'/>
@@ -98,8 +98,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='male' name='NC@1'>
-<description>NC@1</description>
+<connector id='connector2' type='male' name='NC'>
+<description>NC</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pin'/>
@@ -112,8 +112,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='male' name='NC@2'>
-<description>NC@2</description>
+<connector id='connector4' type='male' name='NC'>
+<description>NC</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pin'/>
@@ -126,8 +126,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='male' name='NC@3'>
-<description>NC@3</description>
+<connector id='connector5' type='male' name='NC'>
+<description>NC</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector5pin'/>
@@ -140,8 +140,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='male' name='NC@4'>
-<description>NC@4</description>
+<connector id='connector6' type='male' name='NC'>
+<description>NC</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pin'/>
@@ -154,8 +154,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector13' type='male' name='NC@5'>
-<description>NC@5</description>
+<connector id='connector13' type='male' name='NC'>
+<description>NC</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector13pin'/>
@@ -267,4 +267,17 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='NC'>
+<nodeMember connectorId='connector13' />
+<nodeMember connectorId='connector6' />
+<nodeMember connectorId='connector5' />
+<nodeMember connectorId='connector4' />
+<nodeMember connectorId='connector2' />
+</bus>
+<bus id='GND'>
+<nodeMember connectorId='connector10' />
+<nodeMember connectorId='connector8' />
+</bus>
+</buses>
 </module>

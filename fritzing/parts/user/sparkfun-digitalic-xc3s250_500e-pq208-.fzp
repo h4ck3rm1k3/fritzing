@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-XC3S250_500E-PQ208-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' XC3S250_500E-PQ208  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Xilinx Spartan3E FPGA</description>
@@ -82,8 +82,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector94' type='male' name='GND@10'>
-<description>GND@10</description>
+<connector id='connector94' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector94pin'/>
@@ -96,8 +96,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector104' type='male' name='GND@11'>
-<description>GND@11</description>
+<connector id='connector104' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector104pin'/>
@@ -110,8 +110,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector120' type='male' name='GND@12'>
-<description>GND@12</description>
+<connector id='connector120' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector120pin'/>
@@ -124,8 +124,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector130' type='male' name='GND@13'>
-<description>GND@13</description>
+<connector id='connector130' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector130pin'/>
@@ -138,8 +138,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector140' type='male' name='GND@14'>
-<description>GND@14</description>
+<connector id='connector140' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector140pin'/>
@@ -152,8 +152,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector155' type='male' name='GND@15'>
-<description>GND@15</description>
+<connector id='connector155' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector155pin'/>
@@ -166,8 +166,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector172' type='male' name='GND@16'>
-<description>GND@16</description>
+<connector id='connector172' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector172pin'/>
@@ -180,8 +180,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector181' type='male' name='GND@17'>
-<description>GND@17</description>
+<connector id='connector181' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector181pin'/>
@@ -194,8 +194,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector187' type='male' name='GND@18'>
-<description>GND@18</description>
+<connector id='connector187' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector187pin'/>
@@ -208,8 +208,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector197' type='male' name='GND@19'>
-<description>GND@19</description>
+<connector id='connector197' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector197pin'/>
@@ -222,8 +222,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector16' type='male' name='GND@2'>
-<description>GND@2</description>
+<connector id='connector16' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector16pin'/>
@@ -236,8 +236,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector207' type='male' name='GND@20'>
-<description>GND@20</description>
+<connector id='connector207' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector207pin'/>
@@ -250,8 +250,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector26' type='male' name='GND@3'>
-<description>GND@3</description>
+<connector id='connector26' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector26pin'/>
@@ -264,8 +264,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector36' type='male' name='GND@4'>
-<description>GND@4</description>
+<connector id='connector36' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector36pin'/>
@@ -278,8 +278,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector51' type='male' name='GND@5'>
-<description>GND@5</description>
+<connector id='connector51' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector51pin'/>
@@ -292,8 +292,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector52' type='male' name='GND@6'>
-<description>GND@6</description>
+<connector id='connector52' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector52pin'/>
@@ -306,8 +306,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector69' type='male' name='GND@7'>
-<description>GND@7</description>
+<connector id='connector69' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector69pin'/>
@@ -320,8 +320,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector78' type='male' name='GND@8'>
-<description>GND@8</description>
+<connector id='connector78' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector78pin'/>
@@ -334,8 +334,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector84' type='male' name='GND@9'>
-<description>GND@9</description>
+<connector id='connector84' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector84pin'/>
@@ -2140,8 +2140,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector147' type='male' name='IP@10'>
-<description>IP@10</description>
+<connector id='connector147' type='male' name='IP'>
+<description>IP</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector147pin'/>
@@ -2154,8 +2154,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector153' type='male' name='IP@11'>
-<description>IP@11</description>
+<connector id='connector153' type='male' name='IP'>
+<description>IP</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector153pin'/>
@@ -2168,8 +2168,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector53' type='male' name='IP@12'>
-<description>IP@12</description>
+<connector id='connector53' type='male' name='IP'>
+<description>IP</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector53pin'/>
@@ -2182,8 +2182,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector90' type='male' name='IP@13'>
-<description>IP@13</description>
+<connector id='connector90' type='male' name='IP'>
+<description>IP</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector90pin'/>
@@ -2196,8 +2196,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector100' type='male' name='IP@14'>
-<description>IP@14</description>
+<connector id='connector100' type='male' name='IP'>
+<description>IP</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector100pin'/>
@@ -2210,8 +2210,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='male' name='IP@15'>
-<description>IP@15</description>
+<connector id='connector5' type='male' name='IP'>
+<description>IP</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector5pin'/>
@@ -2224,8 +2224,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector13' type='male' name='IP@16'>
-<description>IP@16</description>
+<connector id='connector13' type='male' name='IP'>
+<description>IP</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector13pin'/>
@@ -2238,8 +2238,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector25' type='male' name='IP@17'>
-<description>IP@17</description>
+<connector id='connector25' type='male' name='IP'>
+<description>IP</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector25pin'/>
@@ -2252,8 +2252,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector31' type='male' name='IP@18'>
-<description>IP@18</description>
+<connector id='connector31' type='male' name='IP'>
+<description>IP</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector31pin'/>
@@ -2266,8 +2266,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector42' type='male' name='IP@19'>
-<description>IP@19</description>
+<connector id='connector42' type='male' name='IP'>
+<description>IP</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector42pin'/>
@@ -2280,8 +2280,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector168' type='male' name='IP@2'>
-<description>IP@2</description>
+<connector id='connector168' type='male' name='IP'>
+<description>IP</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector168pin'/>
@@ -2294,8 +2294,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector50' type='male' name='IP@20'>
-<description>IP@20</description>
+<connector id='connector50' type='male' name='IP'>
+<description>IP</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector50pin'/>
@@ -2308,8 +2308,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector193' type='male' name='IP@3'>
-<description>IP@3</description>
+<connector id='connector193' type='male' name='IP'>
+<description>IP</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector193pin'/>
@@ -2322,8 +2322,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector203' type='male' name='IP@4'>
-<description>IP@4</description>
+<connector id='connector203' type='male' name='IP'>
+<description>IP</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector203pin'/>
@@ -2336,8 +2336,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector109' type='male' name='IP@5'>
-<description>IP@5</description>
+<connector id='connector109' type='male' name='IP'>
+<description>IP</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector109pin'/>
@@ -2350,8 +2350,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector117' type='male' name='IP@6'>
-<description>IP@6</description>
+<connector id='connector117' type='male' name='IP'>
+<description>IP</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector117pin'/>
@@ -2364,8 +2364,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector123' type='male' name='IP@7'>
-<description>IP@7</description>
+<connector id='connector123' type='male' name='IP'>
+<description>IP</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector123pin'/>
@@ -2378,8 +2378,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector129' type='male' name='IP@8'>
-<description>IP@8</description>
+<connector id='connector129' type='male' name='IP'>
+<description>IP</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector129pin'/>
@@ -2392,8 +2392,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector141' type='male' name='IP@9'>
-<description>IP@9</description>
+<connector id='connector141' type='male' name='IP'>
+<description>IP</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector141pin'/>
@@ -2630,8 +2630,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector124' type='male' name='VCC0_1@2'>
-<description>VCC0_1@2</description>
+<connector id='connector124' type='male' name='VCC0_1'>
+<description>VCC0_1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector124pin'/>
@@ -2644,8 +2644,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector142' type='male' name='VCC0_1@3'>
-<description>VCC0_1@3</description>
+<connector id='connector142' type='male' name='VCC0_1'>
+<description>VCC0_1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector142pin'/>
@@ -2672,8 +2672,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector43' type='male' name='VCCAUX@2'>
-<description>VCCAUX@2</description>
+<connector id='connector43' type='male' name='VCCAUX'>
+<description>VCCAUX</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector43pin'/>
@@ -2686,8 +2686,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector65' type='male' name='VCCAUX@3'>
-<description>VCCAUX@3</description>
+<connector id='connector65' type='male' name='VCCAUX'>
+<description>VCCAUX</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector65pin'/>
@@ -2700,8 +2700,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector91' type='male' name='VCCAUX@4'>
-<description>VCCAUX@4</description>
+<connector id='connector91' type='male' name='VCCAUX'>
+<description>VCCAUX</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector91pin'/>
@@ -2714,8 +2714,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector110' type='male' name='VCCAUX@5'>
-<description>VCCAUX@5</description>
+<connector id='connector110' type='male' name='VCCAUX'>
+<description>VCCAUX</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector110pin'/>
@@ -2728,8 +2728,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector148' type='male' name='VCCAUX@6'>
-<description>VCCAUX@6</description>
+<connector id='connector148' type='male' name='VCCAUX'>
+<description>VCCAUX</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector148pin'/>
@@ -2742,8 +2742,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector165' type='male' name='VCCAUX@7'>
-<description>VCCAUX@7</description>
+<connector id='connector165' type='male' name='VCCAUX'>
+<description>VCCAUX</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector165pin'/>
@@ -2756,8 +2756,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector194' type='male' name='VCCAUX@8'>
-<description>VCCAUX@8</description>
+<connector id='connector194' type='male' name='VCCAUX'>
+<description>VCCAUX</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector194pin'/>
@@ -2784,8 +2784,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector66' type='male' name='VCCINT@2'>
-<description>VCCINT@2</description>
+<connector id='connector66' type='male' name='VCCINT'>
+<description>VCCINT</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector66pin'/>
@@ -2798,8 +2798,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector116' type='male' name='VCCINT@3'>
-<description>VCCINT@3</description>
+<connector id='connector116' type='male' name='VCCINT'>
+<description>VCCINT</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector116pin'/>
@@ -2812,8 +2812,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector169' type='male' name='VCCINT@4'>
-<description>VCCINT@4</description>
+<connector id='connector169' type='male' name='VCCINT'>
+<description>VCCINT</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector169pin'/>
@@ -2840,8 +2840,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector190' type='male' name='VCCO_0@2'>
-<description>VCCO_0@2</description>
+<connector id='connector190' type='male' name='VCCO_0'>
+<description>VCCO_0</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector190pin'/>
@@ -2854,8 +2854,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector200' type='male' name='VCCO_0@3'>
-<description>VCCO_0@3</description>
+<connector id='connector200' type='male' name='VCCO_0'>
+<description>VCCO_0</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector200pin'/>
@@ -2882,8 +2882,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector72' type='male' name='VCCO_2@2'>
-<description>VCCO_2@2</description>
+<connector id='connector72' type='male' name='VCCO_2'>
+<description>VCCO_2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector72pin'/>
@@ -2896,8 +2896,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector87' type='male' name='VCCO_2@3'>
-<description>VCCO_2@3</description>
+<connector id='connector87' type='male' name='VCCO_2'>
+<description>VCCO_2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector87pin'/>
@@ -2924,8 +2924,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector37' type='male' name='VCCO_3@2'>
-<description>VCCO_3@2</description>
+<connector id='connector37' type='male' name='VCCO_3'>
+<description>VCCO_3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector37pin'/>
@@ -2938,8 +2938,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector45' type='male' name='VCCO_3@3'>
-<description>VCCO_3@3</description>
+<connector id='connector45' type='male' name='VCCO_3'>
+<description>VCCO_3</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector45pin'/>
@@ -2953,4 +2953,86 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='VCCO_0'>
+<nodeMember connectorId='connector200' />
+<nodeMember connectorId='connector190' />
+<nodeMember connectorId='connector175' />
+</bus>
+<bus id='VCCO_2'>
+<nodeMember connectorId='connector87' />
+<nodeMember connectorId='connector72' />
+<nodeMember connectorId='connector58' />
+</bus>
+<bus id='VCCO_3'>
+<nodeMember connectorId='connector45' />
+<nodeMember connectorId='connector37' />
+<nodeMember connectorId='connector20' />
+</bus>
+<bus id='VCCINT'>
+<nodeMember connectorId='connector169' />
+<nodeMember connectorId='connector116' />
+<nodeMember connectorId='connector66' />
+<nodeMember connectorId='connector12' />
+</bus>
+<bus id='VCC0_1'>
+<nodeMember connectorId='connector142' />
+<nodeMember connectorId='connector124' />
+<nodeMember connectorId='connector113' />
+</bus>
+<bus id='VCCAUX'>
+<nodeMember connectorId='connector194' />
+<nodeMember connectorId='connector165' />
+<nodeMember connectorId='connector148' />
+<nodeMember connectorId='connector110' />
+<nodeMember connectorId='connector91' />
+<nodeMember connectorId='connector65' />
+<nodeMember connectorId='connector43' />
+<nodeMember connectorId='connector6' />
+</bus>
+<bus id='GND'>
+<nodeMember connectorId='connector84' />
+<nodeMember connectorId='connector78' />
+<nodeMember connectorId='connector69' />
+<nodeMember connectorId='connector52' />
+<nodeMember connectorId='connector51' />
+<nodeMember connectorId='connector36' />
+<nodeMember connectorId='connector26' />
+<nodeMember connectorId='connector207' />
+<nodeMember connectorId='connector16' />
+<nodeMember connectorId='connector197' />
+<nodeMember connectorId='connector187' />
+<nodeMember connectorId='connector181' />
+<nodeMember connectorId='connector172' />
+<nodeMember connectorId='connector155' />
+<nodeMember connectorId='connector140' />
+<nodeMember connectorId='connector130' />
+<nodeMember connectorId='connector120' />
+<nodeMember connectorId='connector104' />
+<nodeMember connectorId='connector94' />
+<nodeMember connectorId='connector9' />
+</bus>
+<bus id='IP'>
+<nodeMember connectorId='connector141' />
+<nodeMember connectorId='connector129' />
+<nodeMember connectorId='connector123' />
+<nodeMember connectorId='connector117' />
+<nodeMember connectorId='connector109' />
+<nodeMember connectorId='connector203' />
+<nodeMember connectorId='connector193' />
+<nodeMember connectorId='connector50' />
+<nodeMember connectorId='connector168' />
+<nodeMember connectorId='connector42' />
+<nodeMember connectorId='connector31' />
+<nodeMember connectorId='connector25' />
+<nodeMember connectorId='connector13' />
+<nodeMember connectorId='connector5' />
+<nodeMember connectorId='connector100' />
+<nodeMember connectorId='connector90' />
+<nodeMember connectorId='connector53' />
+<nodeMember connectorId='connector153' />
+<nodeMember connectorId='connector147' />
+<nodeMember connectorId='connector158' />
+</bus>
+</buses>
 </module>

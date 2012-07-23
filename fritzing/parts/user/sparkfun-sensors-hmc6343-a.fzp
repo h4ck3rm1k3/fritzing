@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-HMC6343-A'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' HMC6343 A -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Honeywell compass IC with tilt compensation, SEN-08656</description>
@@ -70,8 +70,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector24' type='male' name='GND@25'>
-<description>GND@25</description>
+<connector id='connector24' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector24pin'/>
@@ -84,8 +84,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector28' type='male' name='GND@29'>
-<description>GND@29</description>
+<connector id='connector28' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector28pin'/>
@@ -126,8 +126,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='male' name='VDD@11'>
-<description>VDD@11</description>
+<connector id='connector10' type='male' name='VDD'>
+<description>VDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pin'/>
@@ -140,8 +140,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector20' type='male' name='VDD@21'>
-<description>VDD@21</description>
+<connector id='connector20' type='male' name='VDD'>
+<description>VDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector20pin'/>
@@ -154,8 +154,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='male' name='VDD@3'>
-<description>VDD@3</description>
+<connector id='connector2' type='male' name='VDD'>
+<description>VDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pin'/>
@@ -169,4 +169,15 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='VDD'>
+<nodeMember connectorId='connector2' />
+<nodeMember connectorId='connector20' />
+<nodeMember connectorId='connector10' />
+</bus>
+<bus id='GND'>
+<nodeMember connectorId='connector28' />
+<nodeMember connectorId='connector24' />
+</bus>
+</buses>
 </module>

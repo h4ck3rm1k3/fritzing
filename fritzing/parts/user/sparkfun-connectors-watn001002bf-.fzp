@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-WATN001002BF-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' WATN001002BF  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>connector for 10x2 16-segment E-paper Display (LCD-10150)&lt;br&gt;
@@ -153,8 +153,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector11' type='male' name='RESERVED@1'>
-<description>RESERVED@1</description>
+<connector id='connector11' type='male' name='RESERVED'>
+<description>RESERVED</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector11pin'/>
@@ -167,8 +167,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector16' type='male' name='RESERVED@2'>
-<description>RESERVED@2</description>
+<connector id='connector16' type='male' name='RESERVED'>
+<description>RESERVED</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector16pin'/>
@@ -181,8 +181,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector20' type='male' name='RESERVED@3'>
-<description>RESERVED@3</description>
+<connector id='connector20' type='male' name='RESERVED'>
+<description>RESERVED</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector20pin'/>
@@ -195,8 +195,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector27' type='male' name='RESERVED@4'>
-<description>RESERVED@4</description>
+<connector id='connector27' type='male' name='RESERVED'>
+<description>RESERVED</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector27pin'/>
@@ -237,8 +237,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='male' name='V0@1'>
-<description>V0@1</description>
+<connector id='connector0' type='male' name='V0'>
+<description>V0</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pin'/>
@@ -251,8 +251,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector26' type='male' name='V0@2'>
-<description>V0@2</description>
+<connector id='connector26' type='male' name='V0'>
+<description>V0</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector26pin'/>
@@ -265,8 +265,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='male' name='V1@1'>
-<description>V1@1</description>
+<connector id='connector2' type='male' name='V1'>
+<description>V1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pin'/>
@@ -279,8 +279,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector25' type='male' name='V1@2'>
-<description>V1@2</description>
+<connector id='connector25' type='male' name='V1'>
+<description>V1</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector25pin'/>
@@ -293,8 +293,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='male' name='V2@1'>
-<description>V2@1</description>
+<connector id='connector4' type='male' name='V2'>
+<description>V2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pin'/>
@@ -307,8 +307,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector24' type='male' name='V2@2'>
-<description>V2@2</description>
+<connector id='connector24' type='male' name='V2'>
+<description>V2</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector24pin'/>
@@ -335,8 +335,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='male' name='VSS@1'>
-<description>VSS@1</description>
+<connector id='connector6' type='male' name='VSS'>
+<description>VSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pin'/>
@@ -349,8 +349,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector22' type='male' name='VSS@2'>
-<description>VSS@2</description>
+<connector id='connector22' type='male' name='VSS'>
+<description>VSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector22pin'/>
@@ -363,8 +363,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='male' name='VSSE@1'>
-<description>VSSE@1</description>
+<connector id='connector5' type='male' name='VSSE'>
+<description>VSSE</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector5pin'/>
@@ -377,8 +377,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector23' type='male' name='VSSE@2'>
-<description>VSSE@2</description>
+<connector id='connector23' type='male' name='VSSE'>
+<description>VSSE</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector23pin'/>
@@ -406,4 +406,32 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='VSS'>
+<nodeMember connectorId='connector22' />
+<nodeMember connectorId='connector6' />
+</bus>
+<bus id='VSSE'>
+<nodeMember connectorId='connector23' />
+<nodeMember connectorId='connector5' />
+</bus>
+<bus id='V0'>
+<nodeMember connectorId='connector26' />
+<nodeMember connectorId='connector0' />
+</bus>
+<bus id='V1'>
+<nodeMember connectorId='connector25' />
+<nodeMember connectorId='connector2' />
+</bus>
+<bus id='V2'>
+<nodeMember connectorId='connector24' />
+<nodeMember connectorId='connector4' />
+</bus>
+<bus id='RESERVED'>
+<nodeMember connectorId='connector27' />
+<nodeMember connectorId='connector20' />
+<nodeMember connectorId='connector16' />
+<nodeMember connectorId='connector11' />
+</bus>
+</buses>
 </module>

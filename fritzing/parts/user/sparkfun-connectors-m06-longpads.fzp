@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-M06-LONGPADS'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' M06 LONGPADS -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Header 6&lt;/b&gt;
@@ -143,4 +143,6 @@ will be further integrated into the Sparkfun Library for other footprints. It ca
 </views>
 </connector>
 </connectors>
+<buses>
+</buses>
 </module>

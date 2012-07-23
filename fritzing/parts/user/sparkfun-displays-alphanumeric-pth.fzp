@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Displays-ALPHANUMERIC-PTH'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Displays' ALPHANUMERIC PTH -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Alphanumeric LED Display&lt;/b&gt; Common anode. Multiple LEDs on some segments. Multiple LED colors available. Works great with A6282 driver IC. Decimal points are unfornately not connected. SKU: COM-09933.</description>
@@ -282,8 +282,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='male' name='NC@1'>
-<description>NC@1</description>
+<connector id='connector0' type='male' name='NC'>
+<description>NC</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pin'/>
@@ -297,8 +297,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='male' name='NC@13'>
-<description>NC@13</description>
+<connector id='connector10' type='male' name='NC'>
+<description>NC</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pin'/>
@@ -312,8 +312,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector14' type='male' name='VCC@18'>
-<description>VCC@18</description>
+<connector id='connector14' type='male' name='VCC'>
+<description>VCC</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector14pin'/>
@@ -327,8 +327,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='male' name='VCC@6'>
-<description>VCC@6</description>
+<connector id='connector4' type='male' name='VCC'>
+<description>VCC</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pin'/>
@@ -343,4 +343,14 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='NC'>
+<nodeMember connectorId='connector10' />
+<nodeMember connectorId='connector0' />
+</bus>
+<bus id='VCC'>
+<nodeMember connectorId='connector4' />
+<nodeMember connectorId='connector14' />
+</bus>
+</buses>
 </module>

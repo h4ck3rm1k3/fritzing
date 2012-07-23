@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-NJM2670-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-PowerIC' NJM2670 SMD -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Dual H-bridge driver</description>
@@ -70,8 +70,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='male' name='GND@1'>
-<description>GND@1</description>
+<connector id='connector5' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector5pin'/>
@@ -84,8 +84,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='male' name='GND@2'>
-<description>GND@2</description>
+<connector id='connector6' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pin'/>
@@ -98,8 +98,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector17' type='male' name='GND@3'>
-<description>GND@3</description>
+<connector id='connector17' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector17pin'/>
@@ -112,8 +112,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector18' type='male' name='GND@4'>
-<description>GND@4</description>
+<connector id='connector18' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector18pin'/>
@@ -182,8 +182,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='male' name='NC@1'>
-<description>NC@1</description>
+<connector id='connector3' type='male' name='NC'>
+<description>NC</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pin'/>
@@ -196,8 +196,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector9' type='male' name='NC@2'>
-<description>NC@2</description>
+<connector id='connector9' type='male' name='NC'>
+<description>NC</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector9pin'/>
@@ -210,8 +210,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector14' type='male' name='NC@3'>
-<description>NC@3</description>
+<connector id='connector14' type='male' name='NC'>
+<description>NC</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector14pin'/>
@@ -224,8 +224,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector20' type='male' name='NC@4'>
-<description>NC@4</description>
+<connector id='connector20' type='male' name='NC'>
+<description>NC</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector20pin'/>
@@ -379,4 +379,18 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='NC'>
+<nodeMember connectorId='connector20' />
+<nodeMember connectorId='connector14' />
+<nodeMember connectorId='connector9' />
+<nodeMember connectorId='connector3' />
+</bus>
+<bus id='GND'>
+<nodeMember connectorId='connector18' />
+<nodeMember connectorId='connector17' />
+<nodeMember connectorId='connector6' />
+<nodeMember connectorId='connector5' />
+</bus>
+</buses>
 </module>

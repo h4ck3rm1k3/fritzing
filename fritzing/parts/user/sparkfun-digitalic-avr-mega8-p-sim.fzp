@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-AVR-MEGA8-P-SIM'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' AVR-MEGA8-P SIM -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>IC</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;MICROCONTROLLER&lt;/b&gt;&lt;p&gt;
@@ -94,8 +94,8 @@ USART&lt;p&gt;
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='male' name='GND@1'>
-<description>GND@1</description>
+<connector id='connector7' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pin'/>
@@ -454,8 +454,8 @@ USART&lt;p&gt;
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='male' name='VCC@1'>
-<description>VCC@1</description>
+<connector id='connector6' type='male' name='VCC'>
+<description>VCC</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pin'/>
@@ -470,4 +470,6 @@ USART&lt;p&gt;
 </views>
 </connector>
 </connectors>
+<buses>
+</buses>
 </module>

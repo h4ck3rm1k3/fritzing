@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-IDG300-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' IDG300 SMD -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Invensense 300deg/s dual axis gyro. Works very well. Schematic and footprint are not yet production proven. Spark Fun Electronics SKU : COM-00700</description>
@@ -56,8 +56,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='male' name='GND@0'>
-<description>GND@0</description>
+<connector id='connector1' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pin'/>
@@ -70,8 +70,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector21' type='male' name='GND@1'>
-<description>GND@1</description>
+<connector id='connector21' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector21pin'/>
@@ -84,8 +84,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector24' type='male' name='GND@2'>
-<description>GND@2</description>
+<connector id='connector24' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector24pin'/>
@@ -98,8 +98,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector37' type='male' name='GND@3'>
-<description>GND@3</description>
+<connector id='connector37' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector37pin'/>
@@ -112,8 +112,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector38' type='male' name='GND@4'>
-<description>GND@4</description>
+<connector id='connector38' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector38pin'/>
@@ -126,8 +126,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector39' type='male' name='GND@5'>
-<description>GND@5</description>
+<connector id='connector39' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector39pin'/>
@@ -140,8 +140,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector40' type='male' name='GND@6'>
-<description>GND@6</description>
+<connector id='connector40' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector40pin'/>
@@ -154,8 +154,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector13' type='male' name='VDD@0'>
-<description>VDD@0</description>
+<connector id='connector13' type='male' name='VDD'>
+<description>VDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector13pin'/>
@@ -168,8 +168,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector28' type='male' name='VDD@1'>
-<description>VDD@1</description>
+<connector id='connector28' type='male' name='VDD'>
+<description>VDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector28pin'/>
@@ -182,8 +182,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector33' type='male' name='VDD@2'>
-<description>VDD@2</description>
+<connector id='connector33' type='male' name='VDD'>
+<description>VDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector33pin'/>
@@ -267,4 +267,20 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='VDD'>
+<nodeMember connectorId='connector33' />
+<nodeMember connectorId='connector28' />
+<nodeMember connectorId='connector13' />
+</bus>
+<bus id='GND'>
+<nodeMember connectorId='connector40' />
+<nodeMember connectorId='connector39' />
+<nodeMember connectorId='connector38' />
+<nodeMember connectorId='connector37' />
+<nodeMember connectorId='connector24' />
+<nodeMember connectorId='connector21' />
+<nodeMember connectorId='connector1' />
+</bus>
+</buses>
 </module>

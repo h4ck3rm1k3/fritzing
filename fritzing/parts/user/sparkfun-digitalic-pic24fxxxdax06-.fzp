@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-PIC24FXXXDAX06-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' PIC24FXXXDAX06  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;PIC24FXXXDAX06&lt;/b&gt;
@@ -824,8 +824,8 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector9' type='male' name='VDD@1'>
-<description>VDD@1</description>
+<connector id='connector9' type='male' name='VDD'>
+<description>VDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector9pin'/>
@@ -838,8 +838,8 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector25' type='male' name='VDD@2'>
-<description>VDD@2</description>
+<connector id='connector25' type='male' name='VDD'>
+<description>VDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector25pin'/>
@@ -852,8 +852,8 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector37' type='male' name='VDD@3'>
-<description>VDD@3</description>
+<connector id='connector37' type='male' name='VDD'>
+<description>VDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector37pin'/>
@@ -866,8 +866,8 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='male' name='VSS@1'>
-<description>VSS@1</description>
+<connector id='connector8' type='male' name='VSS'>
+<description>VSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector8pin'/>
@@ -880,8 +880,8 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector24' type='male' name='VSS@2'>
-<description>VSS@2</description>
+<connector id='connector24' type='male' name='VSS'>
+<description>VSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector24pin'/>
@@ -894,8 +894,8 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 </pcbView>
 </views>
 </connector>
-<connector id='connector40' type='male' name='VSS@3'>
-<description>VSS@3</description>
+<connector id='connector40' type='male' name='VSS'>
+<description>VSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector40pin'/>
@@ -937,4 +937,16 @@ PIC24FXXXDA106 / PIC24FXXXDA206</description>
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='VSS'>
+<nodeMember connectorId='connector40' />
+<nodeMember connectorId='connector24' />
+<nodeMember connectorId='connector8' />
+</bus>
+<bus id='VDD'>
+<nodeMember connectorId='connector37' />
+<nodeMember connectorId='connector25' />
+<nodeMember connectorId='connector9' />
+</bus>
+</buses>
 </module>

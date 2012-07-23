@@ -84,11 +84,10 @@
 <line class='pin' id='connector25pin' connectorname='VDD' x1='0.0762' y1='12.827' x2='2.6162' y2='12.827' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector25terminal' x='0.0762' y='12.827' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='3.0734' y='13.1318' text-anchor='start'>VDD</text>
-<line class='pin' id='connector26pin' connectorname='VSS@1' x1='0.0762' y1='45.847' x2='2.6162' y2='45.847' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector26pin' connectorname='VSS' x1='0.0762' y1='45.847' x2='2.6162' y2='45.847' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector26terminal' x='0.0762' y='45.847' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='3.0734' y='46.1518' text-anchor='start'>VSS@1</text>
-<line class='pin' id='connector27pin' connectorname='VSS@2' x1='0.0762' y1='48.387' x2='2.6162' y2='48.387' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector27terminal' x='0.0762' y='48.387' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='3.0734' y='48.6918' text-anchor='start'>VSS@2</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='3.0734' y='46.1518' text-anchor='start'>VSS</text>
+<line class='pin' id='connector27pin' connectorname='VSS' x1='0.0762' y1='45.847' x2='2.6162' y2='45.847' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector27terminal' x='0.0762' y='45.847' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 </g>
 </svg>

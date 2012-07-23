@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-LPC213X-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' LPC213X  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>IC</label>
 <author>www.fritzing.org</author>
 <description>Schematic element and footprint for NXP LPC213x uC. Spark Fun Electronics SKU : COM-00520</description>
@@ -837,8 +837,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector17' type='male' name='VSS@1'>
-<description>VSS@1</description>
+<connector id='connector17' type='male' name='VSS'>
+<description>VSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector17pin'/>
@@ -851,8 +851,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector24' type='male' name='VSS@2'>
-<description>VSS@2</description>
+<connector id='connector24' type='male' name='VSS'>
+<description>VSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector24pin'/>
@@ -865,8 +865,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector41' type='male' name='VSS@3'>
-<description>VSS@3</description>
+<connector id='connector41' type='male' name='VSS'>
+<description>VSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector41pin'/>
@@ -879,8 +879,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector49' type='male' name='VSS@4'>
-<description>VSS@4</description>
+<connector id='connector49' type='male' name='VSS'>
+<description>VSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector49pin'/>
@@ -936,4 +936,13 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='VSS'>
+<nodeMember connectorId='connector49' />
+<nodeMember connectorId='connector41' />
+<nodeMember connectorId='connector24' />
+<nodeMember connectorId='connector17' />
+<nodeMember connectorId='connector5' />
+</bus>
+</buses>
 </module>

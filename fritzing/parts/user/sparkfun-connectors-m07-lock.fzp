@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-M07-LOCK'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' M07 LOCK -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Header 7&lt;/b&gt;
@@ -149,4 +149,6 @@ Standard 7-pin 0.1 header. Use with straight break away headers (SKU : PRT-00116
 </views>
 </connector>
 </connectors>
+<buses>
+</buses>
 </module>

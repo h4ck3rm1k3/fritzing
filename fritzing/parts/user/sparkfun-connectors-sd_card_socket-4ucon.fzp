@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-SD_CARD_SOCKET-4UCON'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' SD_CARD_SOCKET 4UCON -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>SD Memory Card Connector, push-push normal type, CD enable, WP enable</description>
@@ -139,8 +139,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='male' name='SH@1'>
-<description>SH@1</description>
+<connector id='connector0' type='male' name='SH'>
+<description>SH</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pin'/>
@@ -153,8 +153,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='male' name='SH@2'>
-<description>SH@2</description>
+<connector id='connector2' type='male' name='SH'>
+<description>SH</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pin'/>
@@ -224,4 +224,10 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='SH'>
+<nodeMember connectorId='connector2' />
+<nodeMember connectorId='connector0' />
+</bus>
+</buses>
 </module>

@@ -45,15 +45,15 @@
 <line class='pin' id='connector18pin' connectorname='VSS' x1='0.0762' y1='15.4432' x2='2.6162' y2='15.4432' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector18terminal' x='0.0762' y='15.4432' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='3.0734' y='15.748' text-anchor='start'>VSS</text>
-<line class='pin' id='connector19pin' connectorname='VSS@1' x1='0.0762' y1='12.9032' x2='2.6162' y2='12.9032' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector19pin' connectorname='VSS' x1='0.0762' y1='12.9032' x2='2.6162' y2='12.9032' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector19terminal' x='0.0762' y='12.9032' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='3.0734' y='13.208' text-anchor='start'>VSS@1</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='3.0734' y='13.208' text-anchor='start'>VSS</text>
 <line class='pin' id='connector16pin' connectorname='VDD' x1='35.6362' y1='15.4432' x2='33.0962' y2='15.4432' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector16terminal' x='35.6362' y='15.4432' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='32.639' y='15.748' text-anchor='end'>VDD</text>
-<line class='pin' id='connector17pin' connectorname='VDD@1' x1='35.6362' y1='12.9032' x2='33.0962' y2='12.9032' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector17pin' connectorname='VDD' x1='35.6362' y1='12.9032' x2='33.0962' y2='12.9032' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector17terminal' x='35.6362' y='12.9032' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='32.639' y='13.208' text-anchor='end'>VDD@1</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='32.639' y='13.208' text-anchor='end'>VDD</text>
 <line class='pin' id='connector6pin' connectorname='RA6/OSC2' x1='35.6362' y1='10.3632' x2='33.0962' y2='10.3632' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector6terminal' x='35.6362' y='10.3632' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='32.639' y='10.668' text-anchor='end'>RA6/OSC2</text>

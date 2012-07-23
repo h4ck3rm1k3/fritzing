@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-LM386-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-AnalogIC' LM386  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>low voltage audio power amplifier</description>
@@ -86,8 +86,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='male' name='GAIN@1'>
-<description>GAIN@1</description>
+<connector id='connector0' type='male' name='GAIN'>
+<description>GAIN</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pin'/>
@@ -101,8 +101,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='male' name='GAIN@8'>
-<description>GAIN@8</description>
+<connector id='connector7' type='male' name='GAIN'>
+<description>GAIN</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pin'/>
@@ -162,4 +162,10 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='GAIN'>
+<nodeMember connectorId='connector7' />
+<nodeMember connectorId='connector0' />
+</bus>
+</buses>
 </module>

@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-PIC16F88-SSOP-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' PIC16F88-SSOP  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>IC</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;PIC 16F8x&lt;/b&gt;
@@ -280,8 +280,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector15' type='male' name='VDD@1'>
-<description>VDD@1</description>
+<connector id='connector15' type='male' name='VDD'>
+<description>VDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector15pin'/>
@@ -308,8 +308,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='male' name='VSS@1'>
-<description>VSS@1</description>
+<connector id='connector5' type='male' name='VSS'>
+<description>VSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector5pin'/>
@@ -323,4 +323,14 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='VSS'>
+<nodeMember connectorId='connector5' />
+<nodeMember connectorId='connector4' />
+</bus>
+<bus id='VDD'>
+<nodeMember connectorId='connector15' />
+<nodeMember connectorId='connector14' />
+</bus>
+</buses>
 </module>

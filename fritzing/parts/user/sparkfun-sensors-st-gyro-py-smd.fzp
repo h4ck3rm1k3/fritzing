@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-ST-GYRO-PY-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' ST-GYRO-PY SMD -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description></description>
@@ -181,8 +181,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector13' type='male' name='RES@14'>
-<description>RES@14</description>
+<connector id='connector13' type='male' name='RES'>
+<description>RES</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector13pin'/>
@@ -195,8 +195,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector14' type='male' name='RES@15'>
-<description>RES@15</description>
+<connector id='connector14' type='male' name='RES'>
+<description>RES</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector14pin'/>
@@ -266,4 +266,10 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='RES'>
+<nodeMember connectorId='connector14' />
+<nodeMember connectorId='connector13' />
+</bus>
+</buses>
 </module>

@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-V_REG_MIC5216-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-PowerIC' V_REG_MIC5216  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>500mA LDO, MSOP8 for better dissipation</description>
@@ -67,8 +67,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='male' name='GND@5'>
-<description>GND@5</description>
+<connector id='connector4' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pin'/>
@@ -81,8 +81,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='male' name='GND@6'>
-<description>GND@6</description>
+<connector id='connector5' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector5pin'/>
@@ -95,8 +95,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='male' name='GND@7'>
-<description>GND@7</description>
+<connector id='connector6' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pin'/>
@@ -109,8 +109,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='male' name='GND@8'>
-<description>GND@8</description>
+<connector id='connector7' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pin'/>
@@ -152,4 +152,12 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='GND'>
+<nodeMember connectorId='connector7' />
+<nodeMember connectorId='connector6' />
+<nodeMember connectorId='connector5' />
+<nodeMember connectorId='connector4' />
+</bus>
+</buses>
 </module>

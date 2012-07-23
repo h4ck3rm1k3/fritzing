@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-SMA_EDGE-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' SMA_EDGE  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>J$</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;SMA Antenna Connector&lt;/b&gt;
@@ -41,8 +41,8 @@ End launch SMA connector. The paste layer has been removed so that the connector
 </iconView>
 </views>
 <connectors>
-<connector id='connector0' type='male' name='GND@0'>
-<description>GND@0</description>
+<connector id='connector0' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pin'/>
@@ -55,8 +55,8 @@ End launch SMA connector. The paste layer has been removed so that the connector
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='male' name='GND@1'>
-<description>GND@1</description>
+<connector id='connector1' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pin'/>
@@ -69,8 +69,8 @@ End launch SMA connector. The paste layer has been removed so that the connector
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='male' name='GND@2'>
-<description>GND@2</description>
+<connector id='connector2' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pin'/>
@@ -83,8 +83,8 @@ End launch SMA connector. The paste layer has been removed so that the connector
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='male' name='GND@3'>
-<description>GND@3</description>
+<connector id='connector3' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pin'/>
@@ -112,4 +112,12 @@ End launch SMA connector. The paste layer has been removed so that the connector
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='GND'>
+<nodeMember connectorId='connector3' />
+<nodeMember connectorId='connector2' />
+<nodeMember connectorId='connector1' />
+<nodeMember connectorId='connector0' />
+</bus>
+</buses>
 </module>

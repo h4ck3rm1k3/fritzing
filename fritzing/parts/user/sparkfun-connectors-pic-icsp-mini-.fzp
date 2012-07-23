@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-PIC-ICSP-MINI-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' PIC-ICSP-MINI  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;PIC-ICSP-Mini&lt;/b&gt;
@@ -117,4 +117,6 @@ Miniature 5-pin connection for temporary programming of PICs. Use this device in
 </views>
 </connector>
 </connectors>
+<buses>
+</buses>
 </module>

@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-ST-GYRO-PR-LGA28'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' ST-GYRO-PR LGA28 -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description></description>
@@ -181,8 +181,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector18' type='male' name='RES@14'>
-<description>RES@14</description>
+<connector id='connector18' type='male' name='RES'>
+<description>RES</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector18pin'/>
@@ -195,8 +195,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector24' type='male' name='RES@15'>
-<description>RES@15</description>
+<connector id='connector24' type='male' name='RES'>
+<description>RES</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector24pin'/>
@@ -266,4 +266,10 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='RES'>
+<nodeMember connectorId='connector24' />
+<nodeMember connectorId='connector18' />
+</bus>
+</buses>
 </module>

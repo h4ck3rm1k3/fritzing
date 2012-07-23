@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-SM130-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-RF' SM130  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>13.56MHz RFID Mifare Read/Write Module</description>
@@ -191,8 +191,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector22' type='male' name='RFGND@23'>
-<description>RFGND@23</description>
+<connector id='connector22' type='male' name='RFGND'>
+<description>RFGND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector22pin'/>
@@ -206,8 +206,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector24' type='male' name='RFGND@25'>
-<description>RFGND@25</description>
+<connector id='connector24' type='male' name='RFGND'>
+<description>RFGND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector24pin'/>
@@ -221,8 +221,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector26' type='male' name='RFGND@27'>
-<description>RFGND@27</description>
+<connector id='connector26' type='male' name='RFGND'>
+<description>RFGND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector26pin'/>
@@ -327,4 +327,11 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='RFGND'>
+<nodeMember connectorId='connector26' />
+<nodeMember connectorId='connector24' />
+<nodeMember connectorId='connector22' />
+</bus>
+</buses>
 </module>

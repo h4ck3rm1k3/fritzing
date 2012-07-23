@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-TCM8240MD-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' TCM8240MD  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>1.3MP color image sensor</description>
@@ -193,8 +193,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='male' name='GND@11'>
-<description>GND@11</description>
+<connector id='connector10' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pin'/>
@@ -207,8 +207,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector16' type='male' name='GND@17'>
-<description>GND@17</description>
+<connector id='connector16' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector16pin'/>
@@ -221,8 +221,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector19' type='male' name='GND@20'>
-<description>GND@20</description>
+<connector id='connector19' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector19pin'/>
@@ -235,8 +235,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='male' name='GND@5'>
-<description>GND@5</description>
+<connector id='connector4' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pin'/>
@@ -249,8 +249,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='male' name='GND@9'>
-<description>GND@9</description>
+<connector id='connector8' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector8pin'/>
@@ -376,4 +376,13 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='GND'>
+<nodeMember connectorId='connector8' />
+<nodeMember connectorId='connector4' />
+<nodeMember connectorId='connector19' />
+<nodeMember connectorId='connector16' />
+<nodeMember connectorId='connector10' />
+</bus>
+</buses>
 </module>

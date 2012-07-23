@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-AVR_MINI_PROG-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' AVR_MINI_PROG SMD -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>AVR ISP 6-pin inline header</description>
@@ -132,4 +132,6 @@
 </views>
 </connector>
 </connectors>
+<buses>
+</buses>
 </module>

@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-FreqCtrl-RESONATOR-PTH'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-FreqCtrl' RESONATOR PTH -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>Y</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Resonator&lt;/b&gt;
@@ -90,4 +90,6 @@ Small SMD resonator. This is the itty bitty 10/20MHz resonators with built in ca
 </views>
 </connector>
 </connectors>
+<buses>
+</buses>
 </module>

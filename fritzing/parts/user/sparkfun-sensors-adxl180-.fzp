@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-ADXL180-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' ADXL180  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Configurable 50-500g 1-axis MEMS accelerometer, digital output</description>
@@ -56,8 +56,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector9' type='male' name='VBN@10'>
-<description>VBN@10</description>
+<connector id='connector9' type='male' name='VBN'>
+<description>VBN</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector9pin'/>
@@ -70,8 +70,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector17' type='male' name='VBN@18'>
-<description>VBN@18</description>
+<connector id='connector17' type='male' name='VBN'>
+<description>VBN</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector17pin'/>
@@ -84,8 +84,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='male' name='VBN@3'>
-<description>VBN@3</description>
+<connector id='connector2' type='male' name='VBN'>
+<description>VBN</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pin'/>
@@ -98,8 +98,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='male' name='VBN@8'>
-<description>VBN@8</description>
+<connector id='connector7' type='male' name='VBN'>
+<description>VBN</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pin'/>
@@ -155,4 +155,12 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='VBN'>
+<nodeMember connectorId='connector7' />
+<nodeMember connectorId='connector2' />
+<nodeMember connectorId='connector17' />
+<nodeMember connectorId='connector9' />
+</bus>
+</buses>
 </module>

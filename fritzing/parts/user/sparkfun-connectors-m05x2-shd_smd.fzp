@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-M05X2-SHD_SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' M05X2 SHD_SMD -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Header 5x2&lt;/b&gt;
@@ -183,4 +183,6 @@ Standard 10-pin dual row 0.1 header. Commonly used with AVR-ISP. Use with Spark 
 </views>
 </connector>
 </connectors>
+<buses>
+</buses>
 </module>

@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-PIC24HJ32GP202-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' PIC24HJ32GP202 SMD -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description></description>
@@ -405,8 +405,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='male' name='VSS@1'>
-<description>VSS@1</description>
+<connector id='connector7' type='male' name='VSS'>
+<description>VSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pin'/>
@@ -419,8 +419,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector18' type='male' name='VSS@2'>
-<description>VSS@2</description>
+<connector id='connector18' type='male' name='VSS'>
+<description>VSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector18pin'/>
@@ -434,4 +434,10 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='VSS'>
+<nodeMember connectorId='connector18' />
+<nodeMember connectorId='connector7' />
+</bus>
+</buses>
 </module>

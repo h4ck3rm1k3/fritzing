@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-ATMEGA128RFA1-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-RF' ATMEGA128RFA1  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Atmel 8-bit micro with 802.15.4 wireless support and 128k flash</description>
@@ -68,8 +68,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector57' type='male' name='AVSS@58'>
-<description>AVSS@58</description>
+<connector id='connector57' type='male' name='AVSS'>
+<description>AVSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector57pin'/>
@@ -82,8 +82,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector60' type='male' name='AVSS@61'>
-<description>AVSS@61</description>
+<connector id='connector60' type='male' name='AVSS'>
+<description>AVSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector60pin'/>
@@ -138,8 +138,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector22' type='male' name='DEVDD@23'>
-<description>DEVDD@23</description>
+<connector id='connector22' type='male' name='DEVDD'>
+<description>DEVDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector22pin'/>
@@ -152,8 +152,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector33' type='male' name='DEVDD@34'>
-<description>DEVDD@34</description>
+<connector id='connector33' type='male' name='DEVDD'>
+<description>DEVDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector33pin'/>
@@ -166,8 +166,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector43' type='male' name='DEVDD@44'>
-<description>DEVDD@44</description>
+<connector id='connector43' type='male' name='DEVDD'>
+<description>DEVDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector43pin'/>
@@ -180,8 +180,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector53' type='male' name='DEVDD@54'>
-<description>DEVDD@54</description>
+<connector id='connector53' type='male' name='DEVDD'>
+<description>DEVDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector53pin'/>
@@ -194,8 +194,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector20' type='male' name='DVDD@21'>
-<description>DVDD@21</description>
+<connector id='connector20' type='male' name='DVDD'>
+<description>DVDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector20pin'/>
@@ -208,8 +208,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector21' type='male' name='DVDD@22'>
-<description>DVDD@22</description>
+<connector id='connector21' type='male' name='DVDD'>
+<description>DVDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector21pin'/>
@@ -222,8 +222,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector19' type='male' name='DVSS@20'>
-<description>DVSS@20</description>
+<connector id='connector19' type='male' name='DVSS'>
+<description>DVSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector19pin'/>
@@ -236,8 +236,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector23' type='male' name='DVSS@24'>
-<description>DVSS@24</description>
+<connector id='connector23' type='male' name='DVSS'>
+<description>DVSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector23pin'/>
@@ -250,8 +250,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector34' type='male' name='DVSS@35'>
-<description>DVSS@35</description>
+<connector id='connector34' type='male' name='DVSS'>
+<description>DVSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector34pin'/>
@@ -264,8 +264,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector44' type='male' name='DVSS@45'>
-<description>DVSS@45</description>
+<connector id='connector44' type='male' name='DVSS'>
+<description>DVSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector44pin'/>
@@ -278,8 +278,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector54' type='male' name='DVSS@55'>
-<description>DVSS@55</description>
+<connector id='connector54' type='male' name='DVSS'>
+<description>DVSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector54pin'/>
@@ -937,4 +937,27 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='DEVDD'>
+<nodeMember connectorId='connector53' />
+<nodeMember connectorId='connector43' />
+<nodeMember connectorId='connector33' />
+<nodeMember connectorId='connector22' />
+</bus>
+<bus id='AVSS'>
+<nodeMember connectorId='connector60' />
+<nodeMember connectorId='connector57' />
+</bus>
+<bus id='DVSS'>
+<nodeMember connectorId='connector54' />
+<nodeMember connectorId='connector44' />
+<nodeMember connectorId='connector34' />
+<nodeMember connectorId='connector23' />
+<nodeMember connectorId='connector19' />
+</bus>
+<bus id='DVDD'>
+<nodeMember connectorId='connector21' />
+<nodeMember connectorId='connector20' />
+</bus>
+</buses>
 </module>

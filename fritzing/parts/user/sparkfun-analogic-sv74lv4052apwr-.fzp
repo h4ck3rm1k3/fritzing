@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-SV74LV4052APWR-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-AnalogIC' SV74LV4052APWR  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Dual 4:1 analog mux</description>
@@ -209,8 +209,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='male' name='GND@8'>
-<description>GND@8</description>
+<connector id='connector7' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pin'/>
@@ -223,8 +223,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='male' name='GNG@7'>
-<description>GNG@7</description>
+<connector id='connector6' type='male' name='GNG'>
+<description>GNG</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pin'/>
@@ -266,4 +266,6 @@
 </views>
 </connector>
 </connectors>
+<buses>
+</buses>
 </module>

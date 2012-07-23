@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-TPS6214X-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-PowerIC' TPS6214X  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>3-17V, 2A Step Down Converter</description>
@@ -151,8 +151,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector14' type='male' name='PGND@15'>
-<description>PGND@15</description>
+<connector id='connector14' type='male' name='PGND'>
+<description>PGND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector14pin'/>
@@ -165,8 +165,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector15' type='male' name='PGND@16'>
-<description>PGND@16</description>
+<connector id='connector15' type='male' name='PGND'>
+<description>PGND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector15pin'/>
@@ -179,8 +179,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='male' name='PVIN@11'>
-<description>PVIN@11</description>
+<connector id='connector10' type='male' name='PVIN'>
+<description>PVIN</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pin'/>
@@ -193,8 +193,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector11' type='male' name='PVIN@12'>
-<description>PVIN@12</description>
+<connector id='connector11' type='male' name='PVIN'>
+<description>PVIN</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector11pin'/>
@@ -221,8 +221,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='male' name='SW@1'>
-<description>SW@1</description>
+<connector id='connector0' type='male' name='SW'>
+<description>SW</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pin'/>
@@ -235,8 +235,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='male' name='SW@2'>
-<description>SW@2</description>
+<connector id='connector1' type='male' name='SW'>
+<description>SW</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pin'/>
@@ -249,8 +249,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='male' name='SW@3'>
-<description>SW@3</description>
+<connector id='connector2' type='male' name='SW'>
+<description>SW</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pin'/>
@@ -278,4 +278,19 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='SW'>
+<nodeMember connectorId='connector2' />
+<nodeMember connectorId='connector1' />
+<nodeMember connectorId='connector0' />
+</bus>
+<bus id='PVIN'>
+<nodeMember connectorId='connector11' />
+<nodeMember connectorId='connector10' />
+</bus>
+<bus id='PGND'>
+<nodeMember connectorId='connector15' />
+<nodeMember connectorId='connector14' />
+</bus>
+</buses>
 </module>

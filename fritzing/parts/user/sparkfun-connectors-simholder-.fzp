@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-SIMHOLDER-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' SIMHOLDER  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;SIM Socket&lt;/b&gt;
@@ -152,4 +152,6 @@ Socket for SIM cellular cards. Schematic element and footprint production proven
 </views>
 </connector>
 </connectors>
+<buses>
+</buses>
 </module>

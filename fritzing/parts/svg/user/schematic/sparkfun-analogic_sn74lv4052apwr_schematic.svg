@@ -25,12 +25,12 @@
 <line class='pin' id='connector14pin' connectorname='INH' x1='30.5562' y1='12.048' x2='25.4762' y2='12.048' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector14terminal' x='30.5562' y='12.048' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='25.019' y='12.3528' text-anchor='end'>INH</text>
-<line class='pin' id='connector13pin' connectorname='GNG@7' x1='0.0762' y1='34.908' x2='5.1562' y2='34.908' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector13pin' connectorname='GNG' x1='0.0762' y1='34.908' x2='5.1562' y2='34.908' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector13terminal' x='0.0762' y='34.908' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='5.6134' y='35.2128' text-anchor='start'>GNG@7</text>
-<line class='pin' id='connector12pin' connectorname='GND@8' x1='0.0762' y1='37.448' x2='5.1562' y2='37.448' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='5.6134' y='35.2128' text-anchor='start'>GNG</text>
+<line class='pin' id='connector12pin' connectorname='GND' x1='0.0762' y1='37.448' x2='5.1562' y2='37.448' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector12terminal' x='0.0762' y='37.448' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='5.6134' y='37.7528' text-anchor='start'>GND@8</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='5.6134' y='37.7528' text-anchor='start'>GND</text>
 <line class='pin' id='connector11pin' connectorname='B' x1='0.0762' y1='19.668' x2='5.1562' y2='19.668' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector11terminal' x='0.0762' y='19.668' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='5.6134' y='19.9728' text-anchor='start'>B</text>

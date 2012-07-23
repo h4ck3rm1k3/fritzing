@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-PIC32MX440F512H-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' PIC32MX440F512H  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description></description>
@@ -823,8 +823,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector9' type='male' name='VDD@10'>
-<description>VDD@10</description>
+<connector id='connector9' type='male' name='VDD'>
+<description>VDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector9pin'/>
@@ -837,8 +837,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector25' type='male' name='VDD@26'>
-<description>VDD@26</description>
+<connector id='connector25' type='male' name='VDD'>
+<description>VDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector25pin'/>
@@ -851,8 +851,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector37' type='male' name='VDD@38'>
-<description>VDD@38</description>
+<connector id='connector37' type='male' name='VDD'>
+<description>VDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector37pin'/>
@@ -865,8 +865,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector24' type='male' name='VSS@25'>
-<description>VSS@25</description>
+<connector id='connector24' type='male' name='VSS'>
+<description>VSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector24pin'/>
@@ -879,8 +879,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector40' type='male' name='VSS@41'>
-<description>VSS@41</description>
+<connector id='connector40' type='male' name='VSS'>
+<description>VSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector40pin'/>
@@ -893,8 +893,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='male' name='VSS@9'>
-<description>VSS@9</description>
+<connector id='connector8' type='male' name='VSS'>
+<description>VSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector8pin'/>
@@ -936,4 +936,16 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='VSS'>
+<nodeMember connectorId='connector8' />
+<nodeMember connectorId='connector40' />
+<nodeMember connectorId='connector24' />
+</bus>
+<bus id='VDD'>
+<nodeMember connectorId='connector37' />
+<nodeMember connectorId='connector25' />
+<nodeMember connectorId='connector9' />
+</bus>
+</buses>
 </module>

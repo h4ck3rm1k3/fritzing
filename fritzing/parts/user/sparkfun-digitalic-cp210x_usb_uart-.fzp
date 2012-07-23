@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-CP210X_USB_UART-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' CP210X_USB_UART  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>IC</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Single-Chip USB to UART Bridge&lt;/b&gt;&lt;p&gt;
@@ -167,8 +167,8 @@ Source: www.silabs.com .. CP2101.pdf / cp2102.pdf. Spark Fun Electronics SKU : C
 </pcbView>
 </views>
 </connector>
-<connector id='connector28' type='male' name='GND@EXP'>
-<description>GND@EXP</description>
+<connector id='connector28' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector28pin'/>
@@ -181,8 +181,8 @@ Source: www.silabs.com .. CP2101.pdf / cp2102.pdf. Spark Fun Electronics SKU : C
 </pcbView>
 </views>
 </connector>
-<connector id='connector29' type='male' name='GND@M'>
-<description>GND@M</description>
+<connector id='connector29' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector29pin'/>
@@ -308,4 +308,11 @@ Source: www.silabs.com .. CP2101.pdf / cp2102.pdf. Spark Fun Electronics SKU : C
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='GND'>
+<nodeMember connectorId='connector29' />
+<nodeMember connectorId='connector28' />
+<nodeMember connectorId='connector2' />
+</bus>
+</buses>
 </module>

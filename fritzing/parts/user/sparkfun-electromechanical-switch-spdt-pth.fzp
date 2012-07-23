@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-SWITCH-SPDT-PTH'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' SWITCH-SPDT PTH -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>S</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;SPST Switch&lt;/b&gt;
@@ -88,4 +88,6 @@ Simple slide switch. Spark Fun Electronics SKU : COM-00102</description>
 </views>
 </connector>
 </connectors>
+<buses>
+</buses>
 </module>

@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-ATMEGA128-_SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' ATMEGA128 _SMD -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>ATmega128/128L/1281/2561. Note: The ATmega128 pin 1 is PEN and the ATmega256/1281 pin 1 is PG5.</description>
@@ -84,8 +84,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector21' type='male' name='GND@22'>
-<description>GND@22</description>
+<connector id='connector21' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector21pin'/>
@@ -98,8 +98,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector52' type='male' name='GND@53'>
-<description>GND@53</description>
+<connector id='connector52' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector52pin'/>
@@ -882,8 +882,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector20' type='male' name='VCC@21'>
-<description>VCC@21</description>
+<connector id='connector20' type='male' name='VCC'>
+<description>VCC</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector20pin'/>
@@ -896,8 +896,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector51' type='male' name='VCC@52'>
-<description>VCC@52</description>
+<connector id='connector51' type='male' name='VCC'>
+<description>VCC</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector51pin'/>
@@ -939,4 +939,14 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='VCC'>
+<nodeMember connectorId='connector51' />
+<nodeMember connectorId='connector20' />
+</bus>
+<bus id='GND'>
+<nodeMember connectorId='connector52' />
+<nodeMember connectorId='connector21' />
+</bus>
+</buses>
 </module>

@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-ADXL335-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' ADXL335  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>3-axis, 3g accelerometer, analog out</description>
@@ -43,8 +43,8 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector3' type='male' name='COM@3'>
-<description>COM@3</description>
+<connector id='connector3' type='male' name='COM'>
+<description>COM</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pin'/>
@@ -57,8 +57,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector5' type='male' name='COM@5'>
-<description>COM@5</description>
+<connector id='connector5' type='male' name='COM'>
+<description>COM</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector5pin'/>
@@ -71,8 +71,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='male' name='COM@6'>
-<description>COM@6</description>
+<connector id='connector6' type='male' name='COM'>
+<description>COM</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pin'/>
@@ -85,8 +85,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='male' name='COM@7'>
-<description>COM@7</description>
+<connector id='connector7' type='male' name='COM'>
+<description>COM</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pin'/>
@@ -113,8 +113,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector14' type='male' name='VS@14'>
-<description>VS@14</description>
+<connector id='connector14' type='male' name='VS'>
+<description>VS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector14pin'/>
@@ -127,8 +127,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector15' type='male' name='VS@15'>
-<description>VS@15</description>
+<connector id='connector15' type='male' name='VS'>
+<description>VS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector15pin'/>
@@ -184,4 +184,16 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='COM'>
+<nodeMember connectorId='connector7' />
+<nodeMember connectorId='connector6' />
+<nodeMember connectorId='connector5' />
+<nodeMember connectorId='connector3' />
+</bus>
+<bus id='VS'>
+<nodeMember connectorId='connector15' />
+<nodeMember connectorId='connector14' />
+</bus>
+</buses>
 </module>

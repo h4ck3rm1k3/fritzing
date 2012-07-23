@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-AT45DB041B-WIDE'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' AT45DB041B WIDE -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>4-Mbit SPI flash memory</description>
@@ -156,4 +156,6 @@
 </views>
 </connector>
 </connectors>
+<buses>
+</buses>
 </module>

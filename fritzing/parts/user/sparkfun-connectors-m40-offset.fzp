@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-M40-OFFSET'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' M40 OFFSET -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>1x40 .1 header</description>
@@ -643,4 +643,6 @@
 </views>
 </connector>
 </connectors>
+<buses>
+</buses>
 </module>

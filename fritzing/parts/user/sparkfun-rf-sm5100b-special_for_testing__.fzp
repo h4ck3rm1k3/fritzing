@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-SM5100B-SPECIAL_FOR_TESTING!!'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-RF' SM5100B SPECIAL_FOR_TESTING!! -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Quad-band GSM modem</description>
@@ -183,8 +183,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector12' type='male' name='GND@0'>
-<description>GND@0</description>
+<connector id='connector12' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector12pin'/>
@@ -197,8 +197,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector14' type='male' name='GND@1'>
-<description>GND@1</description>
+<connector id='connector14' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector14pin'/>
@@ -211,8 +211,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector16' type='male' name='GND@2'>
-<description>GND@2</description>
+<connector id='connector16' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector16pin'/>
@@ -225,8 +225,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='male' name='GND@3'>
-<description>GND@3</description>
+<connector id='connector8' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector8pin'/>
@@ -239,8 +239,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='male' name='GND@4'>
-<description>GND@4</description>
+<connector id='connector10' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pin'/>
@@ -771,8 +771,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='male' name='VBAT@0'>
-<description>VBAT@0</description>
+<connector id='connector6' type='male' name='VBAT'>
+<description>VBAT</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pin'/>
@@ -785,8 +785,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='male' name='VBAT@1'>
-<description>VBAT@1</description>
+<connector id='connector0' type='male' name='VBAT'>
+<description>VBAT</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pin'/>
@@ -799,8 +799,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='male' name='VBAT@2'>
-<description>VBAT@2</description>
+<connector id='connector2' type='male' name='VBAT'>
+<description>VBAT</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pin'/>
@@ -813,8 +813,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='male' name='VBAT@3'>
-<description>VBAT@3</description>
+<connector id='connector4' type='male' name='VBAT'>
+<description>VBAT</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pin'/>
@@ -827,8 +827,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector46' type='male' name='VCC@0'>
-<description>VCC@0</description>
+<connector id='connector46' type='male' name='VCC'>
+<description>VCC</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector46pin'/>
@@ -841,8 +841,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector59' type='male' name='VCC@1'>
-<description>VCC@1</description>
+<connector id='connector59' type='male' name='VCC'>
+<description>VCC</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector59pin'/>
@@ -855,8 +855,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='male' name='VCHG@0'>
-<description>VCHG@0</description>
+<connector id='connector1' type='male' name='VCHG'>
+<description>VCHG</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pin'/>
@@ -869,8 +869,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='male' name='VCHG@1'>
-<description>VCHG@1</description>
+<connector id='connector3' type='male' name='VCHG'>
+<description>VCHG</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pin'/>
@@ -884,4 +884,27 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='VBAT'>
+<nodeMember connectorId='connector4' />
+<nodeMember connectorId='connector2' />
+<nodeMember connectorId='connector0' />
+<nodeMember connectorId='connector6' />
+</bus>
+<bus id='VCC'>
+<nodeMember connectorId='connector59' />
+<nodeMember connectorId='connector46' />
+</bus>
+<bus id='VCHG'>
+<nodeMember connectorId='connector3' />
+<nodeMember connectorId='connector1' />
+</bus>
+<bus id='GND'>
+<nodeMember connectorId='connector10' />
+<nodeMember connectorId='connector8' />
+<nodeMember connectorId='connector16' />
+<nodeMember connectorId='connector14' />
+<nodeMember connectorId='connector12' />
+</bus>
+</buses>
 </module>

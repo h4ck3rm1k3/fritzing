@@ -45,9 +45,9 @@
 <line class='pin' id='connector26pin' connectorname='VSS' x1='0.0762' y1='20.5232' x2='2.6162' y2='20.5232' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector26terminal' x='0.0762' y='20.5232' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='3.0734' y='20.828' text-anchor='start'>VSS</text>
-<line class='pin' id='connector27pin' connectorname='VSS@19' x1='38.1762' y1='25.6032' x2='35.6362' y2='25.6032' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector27pin' connectorname='VSS' x1='38.1762' y1='25.6032' x2='35.6362' y2='25.6032' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector27terminal' x='38.1762' y='25.6032' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='35.179' y='25.908' text-anchor='end'>VSS@19</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='35.179' y='25.908' text-anchor='end'>VSS</text>
 <line class='pin' id='connector11pin' connectorname='RB2' x1='38.1762' y1='15.4432' x2='35.6362' y2='15.4432' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector11terminal' x='38.1762' y='15.4432' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='35.179' y='15.748' text-anchor='end'>RB2</text>

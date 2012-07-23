@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-RN-131G-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-RF' RN-131G  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Roving Netowrks WiFLy GSX Module</description>
@@ -151,8 +151,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector18' type='male' name='GND@19'>
-<description>GND@19</description>
+<connector id='connector18' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector18pin'/>
@@ -165,8 +165,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector35' type='male' name='GND@36'>
-<description>GND@36</description>
+<connector id='connector35' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector35pin'/>
@@ -179,8 +179,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector36' type='male' name='GND@37'>
-<description>GND@37</description>
+<connector id='connector36' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector36pin'/>
@@ -193,8 +193,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector37' type='male' name='GND@38'>
-<description>GND@38</description>
+<connector id='connector37' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector37pin'/>
@@ -207,8 +207,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector38' type='male' name='GND@39'>
-<description>GND@39</description>
+<connector id='connector38' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector38pin'/>
@@ -221,8 +221,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector39' type='male' name='GND@40'>
-<description>GND@40</description>
+<connector id='connector39' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector39pin'/>
@@ -235,8 +235,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector40' type='male' name='GND@41'>
-<description>GND@41</description>
+<connector id='connector40' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector40pin'/>
@@ -249,8 +249,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector41' type='male' name='GND@42'>
-<description>GND@42</description>
+<connector id='connector41' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector41pin'/>
@@ -263,8 +263,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector42' type='male' name='GND@43'>
-<description>GND@43</description>
+<connector id='connector42' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector42pin'/>
@@ -277,8 +277,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector43' type='male' name='GND@44'>
-<description>GND@44</description>
+<connector id='connector43' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector43pin'/>
@@ -642,4 +642,18 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='GND'>
+<nodeMember connectorId='connector43' />
+<nodeMember connectorId='connector42' />
+<nodeMember connectorId='connector41' />
+<nodeMember connectorId='connector40' />
+<nodeMember connectorId='connector39' />
+<nodeMember connectorId='connector38' />
+<nodeMember connectorId='connector37' />
+<nodeMember connectorId='connector36' />
+<nodeMember connectorId='connector35' />
+<nodeMember connectorId='connector18' />
+</bus>
+</buses>
 </module>

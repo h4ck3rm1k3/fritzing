@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-USD-SOCKET-NEW'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' USD-SOCKET NEW -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;microSD Socket&lt;/b&gt;
@@ -140,8 +140,8 @@ Push-push type uSD socket. Schematic element and footprint production proven. Sp
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='male' name='SHIELD@1'>
-<description>SHIELD@1</description>
+<connector id='connector6' type='male' name='SHIELD'>
+<description>SHIELD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pin'/>
@@ -154,8 +154,8 @@ Push-push type uSD socket. Schematic element and footprint production proven. Sp
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='male' name='SHIELD@2'>
-<description>SHIELD@2</description>
+<connector id='connector1' type='male' name='SHIELD'>
+<description>SHIELD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pin'/>
@@ -168,8 +168,8 @@ Push-push type uSD socket. Schematic element and footprint production proven. Sp
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='male' name='SHIELD@3'>
-<description>SHIELD@3</description>
+<connector id='connector2' type='male' name='SHIELD'>
+<description>SHIELD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pin'/>
@@ -182,8 +182,8 @@ Push-push type uSD socket. Schematic element and footprint production proven. Sp
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='male' name='SHIELD@4'>
-<description>SHIELD@4</description>
+<connector id='connector4' type='male' name='SHIELD'>
+<description>SHIELD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pin'/>
@@ -211,4 +211,12 @@ Push-push type uSD socket. Schematic element and footprint production proven. Sp
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='SHIELD'>
+<nodeMember connectorId='connector4' />
+<nodeMember connectorId='connector2' />
+<nodeMember connectorId='connector1' />
+<nodeMember connectorId='connector6' />
+</bus>
+</buses>
 </module>

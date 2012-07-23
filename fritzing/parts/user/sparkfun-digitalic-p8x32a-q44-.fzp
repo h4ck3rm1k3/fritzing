@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-P8X32A-Q44-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' P8X32A-Q44  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Propellor uC</description>
@@ -38,8 +38,8 @@
 </iconView>
 </views>
 <connectors>
-<connector id='connector7' type='male' name='P VDD@1'>
-<description>P VDD@1</description>
+<connector id='connector7' type='male' name='P VDD'>
+<description>P VDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pin'/>
@@ -52,8 +52,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector17' type='male' name='P VDD@2'>
-<description>P VDD@2</description>
+<connector id='connector17' type='male' name='P VDD'>
+<description>P VDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector17pin'/>
@@ -66,8 +66,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector29' type='male' name='P VDD@3'>
-<description>P VDD@3</description>
+<connector id='connector29' type='male' name='P VDD'>
+<description>P VDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector29pin'/>
@@ -80,8 +80,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector39' type='male' name='P VDD@4'>
-<description>P VDD@4</description>
+<connector id='connector39' type='male' name='P VDD'>
+<description>P VDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector39pin'/>
@@ -94,8 +94,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='male' name='P VSS@1'>
-<description>P VSS@1</description>
+<connector id='connector4' type='male' name='P VSS'>
+<description>P VSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pin'/>
@@ -108,8 +108,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector16' type='male' name='P VSS@2'>
-<description>P VSS@2</description>
+<connector id='connector16' type='male' name='P VSS'>
+<description>P VSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector16pin'/>
@@ -122,8 +122,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector26' type='male' name='P VSS@3'>
-<description>P VSS@3</description>
+<connector id='connector26' type='male' name='P VSS'>
+<description>P VSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector26pin'/>
@@ -136,8 +136,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector38' type='male' name='P VSS@4'>
-<description>P VSS@4</description>
+<connector id='connector38' type='male' name='P VSS'>
+<description>P VSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector38pin'/>
@@ -655,4 +655,18 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='P VDD'>
+<nodeMember connectorId='connector39' />
+<nodeMember connectorId='connector29' />
+<nodeMember connectorId='connector17' />
+<nodeMember connectorId='connector7' />
+</bus>
+<bus id='P VSS'>
+<nodeMember connectorId='connector38' />
+<nodeMember connectorId='connector26' />
+<nodeMember connectorId='connector16' />
+<nodeMember connectorId='connector4' />
+</bus>
+</buses>
 </module>

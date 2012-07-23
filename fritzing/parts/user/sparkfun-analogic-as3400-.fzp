@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-AS3400-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-AnalogIC' AS3400  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Active noise cancellation chip.&lt;br&gt;
@@ -392,4 +392,6 @@ Single alkaline cell power.&lt;br&gt;</description>
 </views>
 </connector>
 </connectors>
+<buses>
+</buses>
 </module>

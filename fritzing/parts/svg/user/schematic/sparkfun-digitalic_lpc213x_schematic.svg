@@ -72,18 +72,15 @@
 <line class='pin' id='connector46pin' connectorname='P1.31(/TRST)' x1='0.0762' y1='129.743' x2='5.1562' y2='129.743' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector46terminal' x='0.0762' y='129.743' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='5.6134' y='130.048' text-anchor='start'>P1.31(/TRST)</text>
-<line class='pin' id='connector57pin' connectorname='VSS@1' x1='0.0762' y1='23.0632' x2='5.1562' y2='23.0632' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector57pin' connectorname='VSS' x1='0.0762' y1='23.0632' x2='5.1562' y2='23.0632' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector57terminal' x='0.0762' y='23.0632' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='5.6134' y='23.368' text-anchor='start'>VSS@1</text>
-<line class='pin' id='connector58pin' connectorname='VSS@2' x1='0.0762' y1='25.6032' x2='5.1562' y2='25.6032' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector58terminal' x='0.0762' y='25.6032' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='5.6134' y='25.908' text-anchor='start'>VSS@2</text>
-<line class='pin' id='connector59pin' connectorname='VSS@3' x1='0.0762' y1='28.1432' x2='5.1562' y2='28.1432' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector59terminal' x='0.0762' y='28.1432' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='5.6134' y='28.448' text-anchor='start'>VSS@3</text>
-<line class='pin' id='connector60pin' connectorname='VSS@4' x1='0.0762' y1='30.6832' x2='5.1562' y2='30.6832' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector60terminal' x='0.0762' y='30.6832' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='5.6134' y='30.988' text-anchor='start'>VSS@4</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='5.6134' y='23.368' text-anchor='start'>VSS</text>
+<line class='pin' id='connector58pin' connectorname='VSS' x1='0.0762' y1='23.0632' x2='5.1562' y2='23.0632' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector58terminal' x='0.0762' y='23.0632' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<line class='pin' id='connector59pin' connectorname='VSS' x1='0.0762' y1='23.0632' x2='5.1562' y2='23.0632' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector59terminal' x='0.0762' y='23.0632' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<line class='pin' id='connector60pin' connectorname='VSS' x1='0.0762' y1='23.0632' x2='5.1562' y2='23.0632' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector60terminal' x='0.0762' y='23.0632' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector11pin' connectorname='(DSR1/MAT1.0/AD1.3)P0.12' x1='73.7362' y1='35.7632' x2='68.6562' y2='35.7632' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector11terminal' x='73.7362' y='35.7632' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='68.199' y='36.068' text-anchor='end'>(DSR1/MAT1.0/AD1.3)P0.12</text>

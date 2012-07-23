@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-MAX98306-ETD+'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-PowerIC' MAX98306 ETD+ -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Stereo 3.7W Class D Amplifier&lt;/b&gt;&lt;p&gt;
@@ -76,8 +76,8 @@ The IC is available in a 14-pin TDFN (3mm x 3mm x
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='male' name='GND@1'>
-<description>GND@1</description>
+<connector id='connector0' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pin'/>
@@ -90,8 +90,8 @@ The IC is available in a 14-pin TDFN (3mm x 3mm x
 </pcbView>
 </views>
 </connector>
-<connector id='connector7' type='male' name='GND@2'>
-<description>GND@2</description>
+<connector id='connector7' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector7pin'/>
@@ -104,8 +104,8 @@ The IC is available in a 14-pin TDFN (3mm x 3mm x
 </pcbView>
 </views>
 </connector>
-<connector id='connector14' type='male' name='GND@3'>
-<description>GND@3</description>
+<connector id='connector14' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector14pin'/>
@@ -244,8 +244,8 @@ The IC is available in a 14-pin TDFN (3mm x 3mm x
 </pcbView>
 </views>
 </connector>
-<connector id='connector10' type='male' name='VDD@1'>
-<description>VDD@1</description>
+<connector id='connector10' type='male' name='VDD'>
+<description>VDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector10pin'/>
@@ -258,8 +258,8 @@ The IC is available in a 14-pin TDFN (3mm x 3mm x
 </pcbView>
 </views>
 </connector>
-<connector id='connector11' type='male' name='VDD@2'>
-<description>VDD@2</description>
+<connector id='connector11' type='male' name='VDD'>
+<description>VDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector11pin'/>
@@ -273,4 +273,15 @@ The IC is available in a 14-pin TDFN (3mm x 3mm x
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='VDD'>
+<nodeMember connectorId='connector11' />
+<nodeMember connectorId='connector10' />
+</bus>
+<bus id='GND'>
+<nodeMember connectorId='connector14' />
+<nodeMember connectorId='connector7' />
+<nodeMember connectorId='connector0' />
+</bus>
+</buses>
 </module>

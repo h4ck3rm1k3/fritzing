@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-MAGJACK-POE-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' MAGJACK-POE  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;PoE compatible MagJack&lt;/h3&gt;</description>
@@ -115,8 +115,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='male' name='SHIELD@0'>
-<description>SHIELD@0</description>
+<connector id='connector0' type='male' name='SHIELD'>
+<description>SHIELD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pin'/>
@@ -130,8 +130,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector2' type='male' name='SHIELD@1'>
-<description>SHIELD@1</description>
+<connector id='connector2' type='male' name='SHIELD'>
+<description>SHIELD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector2pin'/>
@@ -251,4 +251,10 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='SHIELD'>
+<nodeMember connectorId='connector2' />
+<nodeMember connectorId='connector0' />
+</bus>
+</buses>
 </module>

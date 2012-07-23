@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-MMA8452Q-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' MMA8452Q  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;MMA8452Q 3-Axis, 12/8-bit Digital Accelerometer&lt;/h3&gt;
@@ -68,8 +68,8 @@ http://cache.freescale.com/files/sensors/doc/data_sheet/MMA8452Q.pdf</descriptio
 </pcbView>
 </views>
 </connector>
-<connector id='connector4' type='male' name='GND@0'>
-<description>GND@0</description>
+<connector id='connector4' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector4pin'/>
@@ -82,8 +82,8 @@ http://cache.freescale.com/files/sensors/doc/data_sheet/MMA8452Q.pdf</descriptio
 </pcbView>
 </views>
 </connector>
-<connector id='connector9' type='male' name='GND@1'>
-<description>GND@1</description>
+<connector id='connector9' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector9pin'/>
@@ -96,8 +96,8 @@ http://cache.freescale.com/files/sensors/doc/data_sheet/MMA8452Q.pdf</descriptio
 </pcbView>
 </views>
 </connector>
-<connector id='connector11' type='male' name='GND@2'>
-<description>GND@2</description>
+<connector id='connector11' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector11pin'/>
@@ -209,4 +209,11 @@ http://cache.freescale.com/files/sensors/doc/data_sheet/MMA8452Q.pdf</descriptio
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='GND'>
+<nodeMember connectorId='connector11' />
+<nodeMember connectorId='connector9' />
+<nodeMember connectorId='connector4' />
+</bus>
+</buses>
 </module>

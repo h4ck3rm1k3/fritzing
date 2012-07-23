@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-FT232RL-SSOP'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' FT232RL SSOP -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>IC</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;USB UART&lt;/b&gt;
@@ -408,4 +408,6 @@ FT232RL 4&lt;sup&gt;th&lt;/sup&gt; Generation USB UART (USB &amp;lt;-&amp;gt; Se
 </views>
 </connector>
 </connectors>
+<buses>
+</buses>
 </module>

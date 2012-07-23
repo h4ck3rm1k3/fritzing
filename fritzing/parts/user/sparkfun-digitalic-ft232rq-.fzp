@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-FT232RQ-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' FT232RQ  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>USB to USART. Non-stock item, unproven FP for this part.</description>
@@ -124,8 +124,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector16' type='male' name='GND@17'>
-<description>GND@17</description>
+<connector id='connector16' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector16pin'/>
@@ -138,8 +138,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector19' type='male' name='GND@20'>
-<description>GND@20</description>
+<connector id='connector19' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector19pin'/>
@@ -152,8 +152,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector3' type='male' name='GND@4'>
-<description>GND@4</description>
+<connector id='connector3' type='male' name='GND'>
+<description>GND</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector3pin'/>
@@ -405,4 +405,11 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='GND'>
+<nodeMember connectorId='connector3' />
+<nodeMember connectorId='connector19' />
+<nodeMember connectorId='connector16' />
+</bus>
+</buses>
 </module>

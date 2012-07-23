@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-LPC2103-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' LPC2103  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>NXP LPC2103 ARM7 based MCU</description>
@@ -585,8 +585,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector16' type='male' name='VDD(3V3)@17'>
-<description>VDD(3V3)@17</description>
+<connector id='connector16' type='male' name='VDD(3V3)'>
+<description>VDD(3V3)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector16pin'/>
@@ -599,8 +599,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector39' type='male' name='VDD(3V3)@40'>
-<description>VDD(3V3)@40</description>
+<connector id='connector39' type='male' name='VDD(3V3)'>
+<description>VDD(3V3)</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector39pin'/>
@@ -627,8 +627,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector18' type='male' name='VSS@19'>
-<description>VSS@19</description>
+<connector id='connector18' type='male' name='VSS'>
+<description>VSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector18pin'/>
@@ -641,8 +641,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector42' type='male' name='VSS@43'>
-<description>VSS@43</description>
+<connector id='connector42' type='male' name='VSS'>
+<description>VSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector42pin'/>
@@ -655,8 +655,8 @@
 </pcbView>
 </views>
 </connector>
-<connector id='connector6' type='male' name='VSS@7'>
-<description>VSS@7</description>
+<connector id='connector6' type='male' name='VSS'>
+<description>VSS</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector6pin'/>
@@ -712,4 +712,15 @@
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='VSS'>
+<nodeMember connectorId='connector6' />
+<nodeMember connectorId='connector42' />
+<nodeMember connectorId='connector18' />
+</bus>
+<bus id='VDD(3V3)'>
+<nodeMember connectorId='connector39' />
+<nodeMember connectorId='connector16' />
+</bus>
+</buses>
 </module>

@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-MCP73833-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-PowerIC' MCP73833  -->
 <version>4</version>
-<date>2012-07-20</date>
+<date>2012-07-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Stand-alone Linear Li-ion/Li-polymer Charge Management Controller&lt;br&gt;
@@ -101,8 +101,8 @@ Last modified: 8/17/10&lt;br&gt;
 </pcbView>
 </views>
 </connector>
-<connector id='connector8' type='male' name='VBAT@1'>
-<description>VBAT@1</description>
+<connector id='connector8' type='male' name='VBAT'>
+<description>VBAT</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector8pin'/>
@@ -115,8 +115,8 @@ Last modified: 8/17/10&lt;br&gt;
 </pcbView>
 </views>
 </connector>
-<connector id='connector9' type='male' name='VBAT@2'>
-<description>VBAT@2</description>
+<connector id='connector9' type='male' name='VBAT'>
+<description>VBAT</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector9pin'/>
@@ -129,8 +129,8 @@ Last modified: 8/17/10&lt;br&gt;
 </pcbView>
 </views>
 </connector>
-<connector id='connector0' type='male' name='VDD@1'>
-<description>VDD@1</description>
+<connector id='connector0' type='male' name='VDD'>
+<description>VDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector0pin'/>
@@ -143,8 +143,8 @@ Last modified: 8/17/10&lt;br&gt;
 </pcbView>
 </views>
 </connector>
-<connector id='connector1' type='male' name='VDD@2'>
-<description>VDD@2</description>
+<connector id='connector1' type='male' name='VDD'>
+<description>VDD</description>
 <views>
 <breadboardView>
 <p layer='breadboard' svgId='connector1pin'/>
@@ -186,4 +186,14 @@ Last modified: 8/17/10&lt;br&gt;
 </views>
 </connector>
 </connectors>
+<buses>
+<bus id='VDD'>
+<nodeMember connectorId='connector1' />
+<nodeMember connectorId='connector0' />
+</bus>
+<bus id='VBAT'>
+<nodeMember connectorId='connector9' />
+<nodeMember connectorId='connector8' />
+</bus>
+</buses>
 </module>
