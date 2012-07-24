@@ -248,6 +248,22 @@ QString PartFactory::getSvgFilename(ModelPart * modelPart, const QString & expec
 		return getSvgFilenameAux(expectedFileName, modelPart->moduleID(), &PinHeader::makePcbSvg);
 	}
 
+	if (expectedFileName.startsWith("pcb/molex_", Qt::CaseInsensitive)) {
+		return getSvgFilenameAux(expectedFileName, modelPart->moduleID(), &PinHeader::makePcbSvg);
+	}
+
+	if (expectedFileName.startsWith("pcb/longpad_", Qt::CaseInsensitive)) {
+		return getSvgFilenameAux(expectedFileName, modelPart->moduleID(), &PinHeader::makePcbSvg);
+	}
+
+	if (expectedFileName.startsWith("bread/molex_", Qt::CaseInsensitive)) {
+		return getSvgFilenameAux(expectedFileName, modelPart->moduleID(), &PinHeader::makeBreadboardSvg);
+	}
+
+	if (expectedFileName.startsWith("bread/longpad_", Qt::CaseInsensitive)) {
+		return getSvgFilenameAux(expectedFileName, modelPart->moduleID(), &PinHeader::makeBreadboardSvg);
+	}
+
 	if (expectedFileName.contains("pin_header", Qt::CaseInsensitive)) {
 		if (expectedFileName.contains("schematic", Qt::CaseInsensitive)) {
 			return getSvgFilenameAux(expectedFileName, modelPart->moduleID(), &PinHeader::makeSchematicSvg);
