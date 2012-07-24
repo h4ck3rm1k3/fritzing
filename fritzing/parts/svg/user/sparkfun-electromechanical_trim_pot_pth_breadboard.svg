@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1"
+	 id="svg2" xmlns:svg="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" sodipodi:docname="sparkfun-electromechanical_trim_pot_pth_breadboard.svg" inkscape:version="0.48.2 r9819"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="17.799px"
+	 height="23.76px" viewBox="0 0 17.799 23.76" enable-background="new 0 0 17.799 23.76" xml:space="preserve">
+<rect id="connector0pin_1_" x="0.619" y="20.88" fill="none" width="2.16" height="2.88"/>
+<rect id="connector1pin_2_" x="7.819" y="0" fill="none" width="2.161" height="2.88"/>
+<rect id="connector2pin_1_" x="15.019" y="20.88" fill="none" width="2.16" height="2.88"/>
+<rect id="connector0terminal_1_" x="0.619" y="21.6" fill="none" width="2.16" height="2.16"/>
+<rect id="connector1terminal_1_" x="7.819" y="0" fill="none" width="2.161" height="2.16"/>
+<rect id="connector2terminal_1_" x="15.019" y="21.6" fill="none" width="2.16" height="2.16"/>
+<path id="path20" fill="#B3B3B3" d="M0,1.081v17.798h8.897h8.901V1.08L0,1.081z"/>
+<rect id="rect11" y="18.505" fill="#1A1A1A" width="17.799" height="2.375"/>
+<g id="legs">
+	<g id="pin0">
+		<rect id="rect14" x="0.619" y="20.081" fill="#4D4D4D" width="2.16" height="3.679"/>
+		<rect id="rect10" x="0.619" y="18.879" fill="#666666" width="4.892" height="2.449"/>
+	</g>
+	<g id="pin2">
+		<rect id="rect16" x="15.019" y="20.06" fill="#4D4D4D" width="2.16" height="3.7"/>
+		<rect id="rect8" x="12.26" y="18.879" fill="#666666" width="4.919" height="2.428"/>
+	</g>
+	<g id="pin1">
+		<rect id="rect18" x="7.819" y="0" fill="#8C8C8C" width="2.161" height="4.317"/>
+	</g>
+</g>
+<polygon id="polygon22" fill="#CCCCCC" points="0.449,10.109 16.899,1.08 0.449,1.08 "/>
+<circle id="circle24" fill="#B35D13" cx="8.899" cy="9.935" r="6.563"/>
+<rect id="rect26" x="2.337" y="8.352" fill="#B35D13" width="13.125" height="1.583"/>
+<circle id="circle28" fill="#FF7701" cx="8.899" cy="8.352" r="6.563"/>
+<path id="path30" fill="#FF9234" d="M9.055,1.946c0,0-1.937,0.153-3.656,1.842C2.268,6.862,2.492,8.508,2.492,8.508
+	C2.492,4.884,5.431,1.946,9.055,1.946z"/>
+<rect id="rect32" x="8.066" y="4.248" fill="#803C01" width="1.666" height="8.208"/>
+<rect id="rect34" x="4.795" y="7.518" fill="#803C01" width="8.209" height="1.667"/>
+<rect id="rect36" x="8.066" y="5.414" fill="#BF5901" width="1.666" height="7.042"/>
+<rect id="rect38" x="4.695" y="9.185" fill="#FF9234" width="3.371" height="0.333"/>
+<rect id="rect40" x="9.731" y="9.185" fill="#FF9234" width="3.371" height="0.333"/>
+<text id="text42" transform="matrix(1 0 0 1 7.1201 14.3928)" font-family="'ArialMT'" font-size="2">E01</text>
+<rect id="rect44" x="4.441" y="0.215" fill="#666666" width="8.917" height="1.345"/>
+<rect id="rect12" x="4.441" y="0" fill="#E6E6E6" width="8.917" height="0.375"/>
+<rect id="rect12_1_" x="4.441" y="0.19" fill="#CCCCCC" width="8.917" height="0.254"/>
+<path id="path48" fill="#808080" d="M0,18.505h17.799c0,0,0.065,0.374-0.62,0.374c-0.685,0-15.94,0-16.56,0
+	C-0.001,18.879,0,18.505,0,18.505z"/>
+<polygon id="polygon50" fill="#CCCCCC" points="17.179,1.08 17.798,1.08 17.798,18.505 17.179,18.693 "/>
+<rect id="rect52" x="17.606" y="1.08" fill="#E6E6E6" width="0.242" height="17.425"/>
+<rect id="rect54" y="1.08" fill="#CCCCCC" width="0.449" height="17.425"/>
+<rect id="rect56" y="1.08" fill="#E6E6E6" width="0.212" height="17.425"/>
+<g>
+	<defs>
+		<path id="SVGID_1_" d="M0,18.505h17.799c0,0,0.065,0.374-0.62,0.374c-0.685,0-15.94,0-16.56,0C-0.001,18.879,0,18.505,0,18.505z"
+			/>
+	</defs>
+	<clipPath id="SVGID_2_">
+		<use xlink:href="#SVGID_1_"  overflow="visible"/>
+	</clipPath>
+	<rect id="rect66" y="18.366" clip-path="url(#SVGID_2_)" fill="#999999" width="17.799" height="0.42"/>
+</g>
+<g>
+	<defs>
+		<path id="SVGID_3_" d="M0,18.505h17.799c0,0,0.065,0.374-0.62,0.374c-0.685,0-15.94,0-16.56,0C-0.001,18.879,0,18.505,0,18.505z"
+			/>
+	</defs>
+	<clipPath id="SVGID_4_">
+		<use xlink:href="#SVGID_3_"  overflow="visible"/>
+	</clipPath>
+	<polygon id="polygon68" opacity="0.46" clip-path="url(#SVGID_4_)" fill="#B3B3B3" enable-background="new    " points="
+		17.799,18.366 17.487,18.693 0.274,18.693 0,18.366 	"/>
+</g>
+<rect id="rect70" x="8.066" y="4.248" fill="#803C01" width="0.24" height="8.208"/>
+<rect id="rect72" x="4.795" y="8.684" fill="#BF5901" width="8.209" height="0.5"/>
+<path id="path74" fill="#FF9234" d="M9.731,4.248v3.27h3.271v1.667H9.731v3.271H8.066V9.185H4.795V7.518h3.271v-3.27H9.731
+	 M9.831,4.148h-0.1H8.066h-0.1v0.101v3.169H4.795h-0.1v0.1v1.667v0.101h0.1h3.171v3.171v0.1h0.1h1.666h0.101v-0.1v-3.17h3.173h0.1
+	V9.185V7.518v-0.1h-0.1H9.831v-3.17V4.148L9.831,4.148z"/>
+</svg>
