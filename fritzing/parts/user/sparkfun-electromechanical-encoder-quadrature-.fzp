@@ -13,7 +13,7 @@
 </tags>
 <properties>
 <property name='package'>encoder-16mm-quad</property>
-<property name='family'>encoder-quadrature</property>
+<property name='family'>Rotary Encoder</property>
 </properties>
 <views>
 <breadboardView>

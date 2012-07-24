@@ -14,7 +14,7 @@
 </tags>
 <properties>
 <property name='package'>computer-peripheral-power-ra</property>
-<property name='family'>computer-peripheral-power</property>
+<property name='family'>Molex</property>
 <property name='variant'>ra</property>
 </properties>
 <views>

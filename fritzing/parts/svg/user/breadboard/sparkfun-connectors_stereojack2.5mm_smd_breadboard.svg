@@ -6,24 +6,26 @@
   <g id="icon">
    <path fill="#1F7A34" stroke="none" stroke-width="0" d="M0,0L0,270A30,30 0 0 1 0,330L0,600L655.403,600L655.403,0L0,0z"/>
    <g transform="translate(100,205.702)">
-    <rect width="398.667" x="0" y="83.7222" fill="#333333" height="188.667" stroke-width="0"/>
-    <polygon fill="#2B2B2B" points="394.722,137.167,394.722,137.167,394.722,219,394.722,219,394.722,237.778,436.944,237.778,436.944,118.375,394.722,118.375" stroke-width="0"/>
-    <polygon fill="#292929" points="394.722,216.264,394.722,219,394.722,219,394.722,233.514,436.944,233.514,436.944,216.264" stroke-width="0"/>
-    <polygon fill="#292929" points="394.722,142.847,394.722,136.847,394.722,136.847,394.722,122.306,436.944,122.306,436.944,142.847" stroke-width="0"/>
-    <rect width="42.0139" x="394.722" y="156.611" fill="#333333" height="31.75" stroke-width="0"/>
-    <rect width="42.0139" x="394.722" y="165.75" fill="#383838" height="17.4167" stroke-width="0"/>
-    <rect width="42.2361" x="394.722" y="233.486" fill="#212121" height="4.31944" stroke-width="0"/>
-    <rect width="42.2361" x="394.722" y="118.389" fill="#212121" height="3.91667" stroke-width="0"/>
-    <rect width="18.625" x="436.778" y="118.389" fill="#A1A1A1" height="119.347" stroke-width="0"/>
-    <rect width="18.625" x="436.778" y="142.833" fill="#ABABAB" height="73.4722" stroke-width="0"/>
-    <rect width="18.625" x="436.778" y="156.611" fill="#C7C7C7" height="31.75" stroke-width="0"/>
-    <rect width="18.625" x="436.778" y="165.75" fill="#E6E6E6" height="17.4167" stroke-width="0"/>
-    <rect width="18.625" x="436.778" y="118.389" fill="#737373" height="3.91667" stroke-width="0"/>
-    <rect width="18.625" x="436.778" y="233.667" fill="#737373" height="3.91667" stroke-width="0"/>
-    <rect width="51.3056" x="291.125" y="83.7917" height="25" stroke-width="0"/>
-    <rect width="51.3472" x="239.764" y="247.389" height="25.0139" stroke-width="0"/>
-    <rect width="51.3056" x="291.125" y="83.7917" fill="#C7C7C7" height="8.26389" stroke-width="0"/>
-    <rect width="51.3472" x="239.764" y="264.139" fill="#C7C7C7" height="8.26389" stroke-width="0"/>
+    <g stroke-width="0">
+     <rect width="398.667" x="0" y="0" fill="#333333" height="188.667" stroke-width="0"/>
+     <polygon fill="#2B2B2B" points="394.722,53.4444,394.722,53.4444,394.722,135.292,394.722,135.292,394.722,154.056,436.944,154.056,436.944,34.6528,394.722,34.6528" stroke-width="0"/>
+     <polygon fill="#292929" points="394.722,132.542,394.722,135.292,394.722,135.292,394.722,149.806,436.944,149.806,436.944,132.542" stroke-width="0"/>
+     <polygon fill="#292929" points="394.722,59.1389,394.722,53.125,394.722,53.125,394.722,38.5833,436.944,38.5833,436.944,59.1389" stroke-width="0"/>
+     <rect width="42.0139" x="394.722" y="72.8889" fill="#333333" height="31.75" stroke-width="0"/>
+     <rect width="42.0139" x="394.722" y="82.0278" fill="#383838" height="17.4167" stroke-width="0"/>
+     <rect width="42.2361" x="394.722" y="149.778" fill="#212121" height="4.31944" stroke-width="0"/>
+     <rect width="42.2361" x="394.722" y="34.6667" fill="#212121" height="3.91667" stroke-width="0"/>
+     <rect width="18.625" x="436.778" y="34.6667" fill="#A1A1A1" height="119.361" stroke-width="0"/>
+     <rect width="18.625" x="436.778" y="59.1111" fill="#ABABAB" height="73.4722" stroke-width="0"/>
+     <rect width="18.625" x="436.778" y="72.8889" fill="#C7C7C7" height="31.75" stroke-width="0"/>
+     <rect width="18.625" x="436.778" y="82.0278" fill="#E6E6E6" height="17.4167" stroke-width="0"/>
+     <rect width="18.625" x="436.778" y="34.6667" fill="#737373" height="3.91667" stroke-width="0"/>
+     <rect width="18.625" x="436.778" y="149.931" fill="#737373" height="3.93056" stroke-width="0"/>
+     <rect width="51.2917" x="291.125" y="0.0694444" height="24.9861" stroke-width="0"/>
+     <rect width="51.3333" x="239.778" y="163.667" height="25.0139" stroke-width="0"/>
+     <rect width="51.2917" x="291.125" y="0.0694444" fill="#C7C7C7" height="8.26389" stroke-width="0"/>
+     <rect width="51.3333" x="239.778" y="180.431" fill="#C7C7C7" height="8.25" stroke-width="0"/>
+    </g>
    </g>
   </g>
   <g transform="translate(211.737,534.05)">

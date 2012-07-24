@@ -13,7 +13,7 @@
 </tags>
 <properties>
 <property name='package'>sot323</property>
-<property name='family'>mosfet-nchannel</property>
+<property name='family'>Transistor (Mosfet)</property>
 <property name='variant'>sot323</property>
 </properties>
 <views>

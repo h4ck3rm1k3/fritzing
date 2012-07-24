@@ -13,7 +13,9 @@
 </tags>
 <properties>
 <property name='package'>msop8</property>
-<property name='family'>v_reg_mic5216</property>
+<property name='family'>Voltage Regulator</property>
+<property name='current'>500mA</property>
+<property name='features'>LDO</property>
 </properties>
 <views>
 <breadboardView>

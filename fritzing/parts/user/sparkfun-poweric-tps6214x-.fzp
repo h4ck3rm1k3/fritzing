@@ -13,7 +13,9 @@
 </tags>
 <properties>
 <property name='package'>qfn16-3x3mm</property>
-<property name='family'>tps6214x</property>
+<property name='family'>Step-Down</property>
+<property name='curerrent'>2A</property>
+<property name='voltage'>3-17V</property>
 </properties>
 <views>
 <breadboardView>

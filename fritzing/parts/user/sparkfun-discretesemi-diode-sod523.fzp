@@ -14,7 +14,7 @@ These are standard reverse protection diodes and small signal diodes. SMA packag
 </tags>
 <properties>
 <property name='package'>sod523</property>
-<property name='family'>diode</property>
+<property name='family'>Diode</property>
 <property name='variant'>sod523</property>
 </properties>
 <views>

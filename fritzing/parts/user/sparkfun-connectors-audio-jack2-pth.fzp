@@ -14,6 +14,7 @@
 </tags>
 <properties>
 <property name='package'>audio-jack</property>
+<property name='size'>3.5mm</property>
 <property name='family'>Audio Jack</property>
 <property name='variant'>pth</property>
 </properties>

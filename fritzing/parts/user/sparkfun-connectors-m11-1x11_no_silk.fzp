@@ -14,7 +14,7 @@ Standard 11-pin 0.1 header. Use with straight break away headers (SKU : PRT-0011
 </tags>
 <properties>
 <property name='package'>1x11_no_silk</property>
-<property name='family'>m11</property>
+<property name='family'>Pinheader</property>
 <property name='variant'>1x11_no_silk</property>
 </properties>
 <views>

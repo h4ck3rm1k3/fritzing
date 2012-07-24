@@ -13,7 +13,7 @@ Socket for SIM cellular cards. Schematic element and footprint production proven
 </tags>
 <properties>
 <property name='package'>simholder</property>
-<property name='family'>SIM Socket</property>
+<property name='family'>micro SIM Socket</property>
 </properties>
 <views>
 <breadboardView>

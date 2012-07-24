@@ -12,7 +12,7 @@
 </tags>
 <properties>
 <property name='package'>rca</property>
-<property name='family'>rca</property>
+<property name='family'>RCA Plug</property>
 </properties>
 <views>
 <breadboardView>

@@ -14,7 +14,7 @@
 </tags>
 <properties>
 <property name='package'>sdcard_4uconn</property>
-<property name='family'>sd_card_socket</property>
+<property name='family'>SD Card</property>
 <property name='variant'>4ucon</property>
 </properties>
 <views>

@@ -14,7 +14,7 @@
 </tags>
 <properties>
 <property name='package'>rca_lock</property>
-<property name='family'>rca</property>
+<property name='family'>RCA Plug</property>
 <property name='variant'>-lock</property>
 </properties>
 <views>
