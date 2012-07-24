@@ -112,9 +112,9 @@ QStringList PinHeader::collectValues(const QString & family, const QString & pro
 	if (prop.compare("position", Qt::CaseInsensitive) == 0) {
 		QStringList values;
 		values.append("center");
-        values.append("lock");
+        values.append("alternating");
 
-		value = (moduleID().contains("lock")) ? "lock" : "center";
+		value = (moduleID().contains("alternating")) ? "alternating" : "center";
 		return values;
 	}
 
@@ -221,7 +221,7 @@ QString PinHeader::genFZP(const QString & moduleID)
 	QString formSchematic = formBread;
 	QString formModule = formBread;
     QString formPackage = useModuleID.contains("smd", Qt::CaseInsensitive) ? "smd" : "tht";
-    QString formPosition = useModuleID.contains("lock", Qt::CaseInsensitive) ? "lock" : "";
+    QString formPosition = useModuleID.contains("alternating", Qt::CaseInsensitive) ? "alternating" : "";
     bool isDouble = useModuleID.contains("shrouded") || useModuleID.contains("double");
     QString formRow = isDouble ? "double" : "single";
 	if (useModuleID.contains("rounded")) {
@@ -241,8 +241,8 @@ QString PinHeader::genFZP(const QString & moduleID)
 			    formBread = formModule = "rounded_female";
                 formText = "rounded female";
                 if (!formPosition.isEmpty()) {
-                    formText += " lock";
-                    formModule += "_lock";
+                    formText += " alternating";
+                    formModule += "_alternating";
                 }
             }
 		}
@@ -253,8 +253,8 @@ QString PinHeader::genFZP(const QString & moduleID)
 	    formBread = formModule = "longpad";
         formText = "longpad";
         if (!formPosition.isEmpty()) {
-            formText += " lock";
-            formModule += "_lock";
+            formText += " alternating";
+            formModule += "_alternating";
         }
     }
     else if (useModuleID.contains("molex")) {
@@ -278,8 +278,8 @@ QString PinHeader::genFZP(const QString & moduleID)
             else {
 			    formBread = formModule = formText = "female";
                 if (!formPosition.isEmpty()) {
-                    formText += " lock";
-                    formModule += "_lock";
+                    formText += " alternating";
+                    formModule += "_alternating";
                 }
             }
 		}
@@ -299,8 +299,8 @@ QString PinHeader::genFZP(const QString & moduleID)
         formText = "double row male";
     }
     else if (!formPosition.isEmpty()) {
-        formText += " lock";
-        formModule += "_lock";
+        formText += " alternating";
+        formModule += "_alternating";
     }
 
 
@@ -325,8 +325,8 @@ QString PinHeader::genFZP(const QString & moduleID)
 		result.replace("jumper", "shrouded");
 	}
 	else if (useModuleID.contains("longpad")) {
-		result.replace("nsjumper", "longpad");
-		result.replace("jumper", "longpad");
+		result.replace("nsjumper", formModule);
+		result.replace("jumper", formModule);
 	}
 	else if (useModuleID.contains("molex")) {
 		result.replace("nsjumper", "molex");
@@ -336,8 +336,8 @@ QString PinHeader::genFZP(const QString & moduleID)
         result.replace("jumper", "jumper_double");
     }
     else if (!formPosition.isEmpty()) {
-		result.replace("nsjumper", "nsjumper_lock");
-		result.replace("jumper", "jumper_lock");
+		result.replace("nsjumper", "nsjumper_alternating");
+		result.replace("jumper", "jumper_alternating");
     }
 
     if (hsix >= 0) {
@@ -371,8 +371,8 @@ QString PinHeader::genModuleID(QMap<QString, QString> & currPropsMap)
 	}
 	else if (form.contains("long pad")) {
 		formWord = "longpad";
-        if (position.contains("lock")) {
-            formWord += "_lock";
+        if (position.contains("alternating")) {
+            formWord += "_alternating";
         }
 	}
 	else if (form.contains("molex")) {
@@ -392,8 +392,8 @@ QString PinHeader::genModuleID(QMap<QString, QString> & currPropsMap)
 		else {
             if (row.contains("single", Qt::CaseInsensitive)) {
 			    formWord = ff;
-                if (position.contains("lock")) {
-                    formWord += "_lock";
+                if (position.contains("alternating")) {
+                    formWord += "_alternating";
                 }
             }
             else {
@@ -415,8 +415,8 @@ QString PinHeader::genModuleID(QMap<QString, QString> & currPropsMap)
 		formWord = "double_row_male";
 	    isDouble = true;
     }
-    else if (position.contains("lock")) {
-        formWord += "_lock";
+    else if (position.contains("alternating")) {
+        formWord += "_alternating";
     }
 
 	if (isDouble && (p % 2 == 1)) {
@@ -455,7 +455,7 @@ QString PinHeader::makePcbSvg(const QString & originalExpectedFileName, const QS
 		svg = makePcbShroudedSvg(pins);
 	}
 	else if (expectedFileName.contains("longpad")) {
-		svg = makePcbLongPadSvg(pins, expectedFileName.contains("lock"));
+		svg = makePcbLongPadSvg(pins, expectedFileName.contains("alternating"));
 	}
 	else if (expectedFileName.contains("molex")) {
 		svg = makePcbMolexSvg(pins);
@@ -502,7 +502,7 @@ QString PinHeader::makePcbSvg(const QString & originalExpectedFileName, const QS
 
         double lockOffset = 5;  // mils
         double useLock = 0;
-        if (!isDouble && expectedFileName.contains("lock")) {
+        if (!isDouble && expectedFileName.contains("alternating")) {
             useLock = lockOffset;
         }
 
@@ -812,6 +812,8 @@ QString PinHeader::makePcbShroudedSvg(int pins)
 
 QString PinHeader::makePcbLongPadSvg(int pins, bool lock) 
 {
+    if (lock) return makePcbLongPadLockSvg(pins);
+
     double dpi = 25.4;
     double originalWidth = 0.108;           // inches
     double increment = 0.1;                 // inches
@@ -847,6 +849,63 @@ QString PinHeader::makePcbLongPadSvg(int pins, bool lock)
     double totalWidth = originalWidth + ((pins - 1) * increment);
     double lineOffset = 0.1016;  // already in dpi
     return header.arg(totalWidth).arg(totalWidth * dpi).arg(repeats).arg(totalWidth * dpi - lineOffset);
+}
+
+QString PinHeader::makePcbLongPadLockSvg(int pins) 
+{
+    double dpi = 25.4;
+    double originalWidth = 0.108;           // inches
+    double increment = 0.1;                 // inches
+	QString header("<?xml version='1.0' encoding='utf-8'?>\n"
+					"<svg version='1.2' baseProfile='tiny' xmlns='http://www.w3.org/2000/svg' \n"
+                    "x='0in' y='0in' width='%1in' height='0.13in' viewBox='0 0 %2 3.302'>\n"
+					"<g id='copper0' >\n"					
+					"<g id='copper1' >\n"
+					"%3\n"
+					"</g>\n"
+					"</g>\n"
+					"<g id='silkscreen' >\n"	
+                    "<line class='other' x1='0.1016' y1='1.651' x2='0.3556' y2='1.651' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n"
+                    "<line class='other' x1='0.1016' y1='1.651' x2='0.1016' y2='0.6604' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n"
+                    "<line class='other' x1='0.1016' y1='0.6604' x2='0.381' y2='0.381' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n"
+                    "<line class='other' x1='0.1016' y1='1.651' x2='0.1016' y2='2.6416' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n"
+                    "<line class='other' x1='0.1016' y1='2.6416' x2='0.381' y2='2.921' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n"
+                    "%4\n"
+                    "%5\n"
+                    "</g>\n"
+					"</svg>\n"
+				);
+
+    QString right("<line class='other' x1='[2.6416]' y1='1.651' x2='[2.3876]' y2='1.651' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n"
+                  "<line class='other' x1='[2.6416]' y1='1.651' x2='[2.6416]' y2='2.6416' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n"
+                  "<line class='other' x1='[2.6416]' y1='2.6416' x2='[2.3622]' y2='2.921' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n"
+                  "<line class='other' x1='[2.6416]' y1='1.651' x2='[2.6416]' y2='0.6604' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n"
+                  "<line class='other' x1='[2.6416]' y1='0.6604' x2='[2.3622]' y2='0.381' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n");
+    right = TextUtils::incrementTemplateString(right, 1, increment * dpi * (pins - 1), TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction, NULL);
+
+
+    QString between("<line class='other' x1='[2.8956]' y1='1.651' x2='[2.3876]' y2='1.651' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n");
+    QString betweens = TextUtils::incrementTemplateString(between, pins - 1, increment * dpi, TextUtils::standardMultiplyPinFunction, TextUtils::noCopyPinFunction, NULL);
+
+
+
+
+   
+    double cx = 1.3716;
+    double cx2 = 0.8128;
+	QString repeat = "<circle id='connector%1pin' cx='%2' cy='1.8796' r='0.7493' stroke='#F7BD13' stroke-width='0.381' fill='none' />\n"
+                     "<path stroke='none' stroke-width='0' fill='#F7BD13'\n"
+                     "d='m%2,0a0.9398,0.9398 0 0 1 0.9398,0.9398l0,1.8796a0.9398,0.9398 0 0 1 -0.9398,0.9398l-0,0a0.9398,0.9398 0 0 1 -0.9398,-0.9398l0,-1.8796a0.9398,0.9398 0 0 1 0.9398,-0.9398l0,0zM%3,1.8796a0.5588,0.5588 0 1 0 1.1176,0 0.5588,0.5588 0 1 0 -1.1176,0z' />\n";
+
+    QString repeats;
+    for (int i = 0; i < pins; i++) {
+        repeats += repeat.arg(i).arg(cx).arg(cx2);
+        cx += increment * dpi;
+        cx2 += increment * dpi;
+    }
+
+    double totalWidth = originalWidth + ((pins - 1) * increment);
+    return header.arg(totalWidth).arg(totalWidth * dpi).arg(repeats).arg(right).arg(betweens);
 }
 
 QString PinHeader::makePcbMolexSvg(int pins) 

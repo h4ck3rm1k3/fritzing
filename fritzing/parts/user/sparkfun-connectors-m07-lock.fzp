@@ -30,7 +30,7 @@ Standard 7-pin 0.1 header. Use with straight break away headers (SKU : PRT-00116
 </layers>
 </schematicView>
 <pcbView>
-<layers image='pcb/nsjumper_lock_7_100mil_pcb.svg'>
+<layers image='pcb/nsjumper_alternating_7_100mil_pcb.svg'>
 <layer layerId='copper1'/>
 <layer layerId='silkscreen'/>
 <layer layerId='copper0'/>

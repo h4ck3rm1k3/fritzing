@@ -30,7 +30,7 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 </layers>
 </schematicView>
 <pcbView>
-<layers image='pcb/nsjumper_lock_20_100mil_pcb.svg'>
+<layers image='pcb/nsjumper_alternating_20_100mil_pcb.svg'>
 <layer layerId='copper1'/>
 <layer layerId='silkscreen'/>
 <layer layerId='copper0'/>

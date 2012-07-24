@@ -30,7 +30,7 @@ Basic 0.1 spaced jumper. Use with breakaway headers.</description>
 </layers>
 </schematicView>
 <pcbView>
-<layers image='pcb/nsjumper_lock_2_100mil_pcb.svg'>
+<layers image='pcb/nsjumper_alternating_2_100mil_pcb.svg'>
 <layer layerId='copper1'/>
 <layer layerId='silkscreen'/>
 <layer layerId='copper0'/>

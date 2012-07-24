@@ -39,7 +39,7 @@ will be further integrated into the Sparkfun Library for other footprints. It ca
 </layers>
 </schematicView>
 <pcbView>
-<layers image='pcb/nsjumper_lock_6_100mil_pcb.svg'>
+<layers image='pcb/nsjumper_alternating_6_100mil_pcb.svg'>
 <layer layerId='copper1'/>
 <layer layerId='silkscreen'/>
 <layer layerId='copper0'/>
