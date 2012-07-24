@@ -325,8 +325,8 @@ QString PinHeader::genFZP(const QString & moduleID)
 		result.replace("jumper", "shrouded");
 	}
 	else if (useModuleID.contains("longpad")) {
-		result.replace("nsjumper", "formModule");
-		result.replace("jumper", "formModule");
+		result.replace("nsjumper", "longpad");
+		result.replace("jumper", "longpad");
 	}
 	else if (useModuleID.contains("molex")) {
 		result.replace("nsjumper", "molex");
