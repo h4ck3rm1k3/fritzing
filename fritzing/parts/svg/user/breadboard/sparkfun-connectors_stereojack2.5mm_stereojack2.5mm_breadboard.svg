@@ -1,29 +1,29 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Ebene_1" xmlns:svg="http://www.w3.org/2000/svg"
-	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="32.789px"
-	 height="13.595px" viewBox="0 0 32.789 13.595" enable-background="new 0 0 32.789 13.595" xml:space="preserve">
-<g>
-	<polygon fill="#333333" points="8.684,0.011 8.684,1.875 0,1.875 0,11.701 8.684,11.701 8.684,13.595 28.705,13.595 28.705,0.011 	
-		"/>
-	<polygon fill="#2B2B2B" points="28.419,3.859 28.419,3.859 28.419,9.75 28.419,9.75 28.419,11.103 31.46,11.103 31.46,2.506 
-		28.419,2.506 	"/>
-	<polygon fill="#292929" points="28.419,9.554 28.419,9.75 28.419,9.75 28.419,10.794 31.46,10.794 31.46,9.554 	"/>
-	<polygon fill="#292929" points="28.419,4.268 28.419,3.834 28.419,3.834 28.419,2.789 31.46,2.789 31.46,4.268 	"/>
-	<rect x="28.419" y="5.258" fill="#333333" width="3.025" height="2.286"/>
-	<rect x="28.419" y="5.917" fill="#383838" width="3.025" height="1.255"/>
-	<rect x="28.419" y="10.792" fill="#212121" width="3.041" height="0.312"/>
-	<rect x="28.419" y="2.507" fill="#212121" width="3.041" height="0.282"/>
-	<rect x="31.449" y="2.507" fill="#A1A1A1" width="1.34" height="8.592"/>
-	<rect x="31.449" y="4.266" fill="#ABABAB" width="1.34" height="5.29"/>
-	<rect x="31.449" y="5.258" fill="#C7C7C7" width="1.34" height="2.286"/>
-	<rect x="31.449" y="5.917" fill="#E6E6E6" width="1.34" height="1.255"/>
-	<rect x="31.449" y="2.507" fill="#737373" width="1.34" height="0.282"/>
-	<rect x="31.449" y="10.806" fill="#737373" width="1.34" height="0.283"/>
-	<rect x="20.96" y="0.016" width="3.693" height="1.8"/>
-	<rect x="17.262" y="11.794" width="3.697" height="1.801"/>
-	<rect x="20.96" y="0.016" fill="#C7C7C7" width="3.693" height="0.595"/>
-	<rect x="17.262" y="13" fill="#C7C7C7" width="3.697" height="0.596"/>
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<!-- Created with Fritzing (http://www.fritzing.org/) -->
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.465697in' height='0.221669in' viewBox='0 0 11.8287 5.6304' >
+<g id='breadboard'>
+<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l11.8287,0 0,5.6304 -11.8287,0 0,-5.6304z
+M8.3135,4.6652a0.55,0.55 0 1 0 1.1,0 0.55,0.55 0 1 0 -1.1,0z
+M8.3135,0.9652a0.55,0.55 0 1 0 1.1,0 0.55,0.55 0 1 0 -1.1,0z
+M3.4635,2.8152a0.5,0.5 0 1 0 1,0 0.5,0.5 0 1 0 -1,0z
+M10.3135,2.8152a0.55,0.55 0 1 0 1.1,0 0.55,0.55 0 1 0 -1.1,0z
+'/>
+<circle id='connector0pin' connectorname='RING1' cx='8.8635' cy='4.6652' r='0.7576' stroke='#9A916C' stroke-width='0.4152' fill='none' />
+<circle id='connector1pin' connectorname='RING2' cx='8.8635' cy='0.9652' r='0.7576' stroke='#9A916C' stroke-width='0.4152' fill='none' />
+<circle id='connector2pin' connectorname='SHIELD' cx='3.9635' cy='2.8152' r='0.7326' stroke='#9A916C' stroke-width='0.4652' fill='none' />
+<circle id='connector3pin' connectorname='TIP' cx='10.8635' cy='2.8152' r='0.7576' stroke='#9A916C' stroke-width='0.4152' fill='none' />
+<circle cx='6.3635' cy='2.8152' r='0.6' stroke='black' stroke-width='0' fill='black' id='nonconn2' />
+<line class='other' x1='10.7635' y1='0.3152' x2='10.5635' y2='0.3152' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='10.5635' y1='0.3152' x2='3.0635' y2='0.3152' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='3.0635' y1='0.3152' x2='3.0635' y2='1.1152' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='3.0635' y1='1.1152' x2='3.0635' y2='4.7152' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='3.0635' y1='4.7152' x2='3.0635' y2='5.4152' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='3.0635' y1='5.4152' x2='10.9635' y2='5.4152' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='10.9635' y1='5.4152' x2='10.9635' y2='4.3152' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='10.9635' y1='1.3152' x2='10.9635' y2='0.3152' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='10.9635' y1='0.3152' x2='10.5635' y2='0.3152' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='3.0635' y1='1.1152' x2='0.0635' y2='1.1152' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='0.0635' y1='1.1152' x2='0.0635' y2='4.7152' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<line class='other' x1='0.0635' y1='4.7152' x2='3.0635' y2='4.7152' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
 </g>
 </svg>

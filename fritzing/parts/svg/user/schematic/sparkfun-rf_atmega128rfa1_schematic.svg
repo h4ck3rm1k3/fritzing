@@ -171,23 +171,23 @@
 <line class='pin' id='connector6pin' connectorname='CLKI' x1='0.0762' y1='48.387' x2='2.6162' y2='48.387' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector6terminal' x='0.0762' y='48.387' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='3.0734' y='48.6918' text-anchor='start'>CLKI</text>
-<line class='pin' id='connector12pin' connectorname='DVDD' x1='0.0762' y1='17.907' x2='2.6162' y2='17.907' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector12pin' connectorname='DVDD' x1='0.0762' y1='17.907' x2='2.6162' y2='17.907' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector12terminal' x='0.0762' y='17.907' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector14pin' connectorname='DVSS' x1='0.0762' y1='78.867' x2='2.6162' y2='78.867' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector14pin' connectorname='DVSS' x1='0.0762' y1='78.867' x2='2.6162' y2='78.867' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector14terminal' x='0.0762' y='78.867' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector15pin' connectorname='DVSS' x1='0.0762' y1='78.867' x2='2.6162' y2='78.867' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector15pin' connectorname='DVSS' x1='0.0762' y1='78.867' x2='2.6162' y2='78.867' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector15terminal' x='0.0762' y='78.867' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector16pin' connectorname='DVSS' x1='0.0762' y1='78.867' x2='2.6162' y2='78.867' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector16pin' connectorname='DVSS' x1='0.0762' y1='78.867' x2='2.6162' y2='78.867' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector16terminal' x='0.0762' y='78.867' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector17pin' connectorname='DVSS' x1='0.0762' y1='78.867' x2='2.6162' y2='78.867' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector17pin' connectorname='DVSS' x1='0.0762' y1='78.867' x2='2.6162' y2='78.867' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector17terminal' x='0.0762' y='78.867' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector8pin' connectorname='DEVDD' x1='0.0762' y1='5.207' x2='2.6162' y2='5.207' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector8pin' connectorname='DEVDD' x1='0.0762' y1='5.207' x2='2.6162' y2='5.207' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector8terminal' x='0.0762' y='5.207' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector9pin' connectorname='DEVDD' x1='0.0762' y1='5.207' x2='2.6162' y2='5.207' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector9pin' connectorname='DEVDD' x1='0.0762' y1='5.207' x2='2.6162' y2='5.207' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector9terminal' x='0.0762' y='5.207' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector10pin' connectorname='DEVDD' x1='0.0762' y1='5.207' x2='2.6162' y2='5.207' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector10pin' connectorname='DEVDD' x1='0.0762' y1='5.207' x2='2.6162' y2='5.207' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector10terminal' x='0.0762' y='5.207' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector3pin' connectorname='AVSS' x1='0.0762' y1='91.567' x2='2.6162' y2='91.567' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector3pin' connectorname='AVSS' x1='0.0762' y1='91.567' x2='2.6162' y2='91.567' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector3terminal' x='0.0762' y='91.567' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 </g>
 </svg>

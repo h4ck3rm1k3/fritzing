@@ -42,7 +42,7 @@
 <line class='pin' id='connector11pin' connectorname='P11' x1='0.0762' y1='30.607' x2='5.1562' y2='30.607' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector11terminal' x='0.0762' y='30.607' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='5.6134' y='30.9118' text-anchor='start'>P11</text>
-<line class='pin' id='connector27pin' connectorname='VSS' x1='0.0762' y1='2.667' x2='5.1562' y2='2.667' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector27pin' connectorname='VSS' x1='0.0762' y1='2.667' x2='5.1562' y2='2.667' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector27terminal' x='0.0762' y='2.667' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector0pin' connectorname='D+' x1='0.0762' y1='35.687' x2='5.1562' y2='35.687' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector0terminal' x='0.0762' y='35.687' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
@@ -86,7 +86,7 @@
 <line class='pin' id='connector8pin' connectorname='P06' x1='33.0962' y1='5.207' x2='28.0162' y2='5.207' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector8terminal' x='33.0962' y='5.207' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='27.559' y='5.5118' text-anchor='end'>P06</text>
-<line class='pin' id='connector25pin' connectorname='VDD' x1='33.0962' y1='33.147' x2='28.0162' y2='33.147' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector25pin' connectorname='VDD' x1='33.0962' y1='33.147' x2='28.0162' y2='33.147' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector25terminal' x='33.0962' y='33.147' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 </g>
 </svg>

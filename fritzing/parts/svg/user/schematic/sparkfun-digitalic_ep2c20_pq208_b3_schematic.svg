@@ -1,118 +1,118 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
-<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='2.206in' height='2.01in' viewBox='0 0 56.0324 51.054' >
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='2.203in' height='2.01in' viewBox='0 0 55.9562 51.054' >
 <g id='schematic'>
-<line class='other' x1='10.2362' y1='0.127' x2='50.8762' y2='0.127' stroke='#000000' stroke-width='0.254' stroke-linecap='round'/>
-<line class='other' x1='50.8762' y1='0.127' x2='50.8762' y2='50.927' stroke='#000000' stroke-width='0.254' stroke-linecap='round'/>
-<line class='other' x1='50.8762' y1='50.927' x2='10.2362' y2='50.927' stroke='#000000' stroke-width='0.254' stroke-linecap='round'/>
-<line class='other' x1='10.2362' y1='50.927' x2='10.2362' y2='0.127' stroke='#000000' stroke-width='0.254' stroke-linecap='round'/>
-<line class='pin' id='connector0pin' connectorname='IO_LVDS56N' x1='5.1562' y1='2.667' x2='10.2362' y2='2.667' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector0terminal' x='5.1562' y='2.667' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6934' y='2.9718' text-anchor='start'>IO_LVDS56N</text>
-<line class='pin' id='connector1pin' connectorname='IO_LVDS56P' x1='5.1562' y1='5.207' x2='10.2362' y2='5.207' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector1terminal' x='5.1562' y='5.207' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6934' y='5.5118' text-anchor='start'>IO_LVDS56P</text>
-<line class='pin' id='connector2pin' connectorname='VCCIO3' x1='5.1562' y1='7.747' x2='10.2362' y2='7.747' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector2terminal' x='5.1562' y='7.747' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6934' y='8.0518' text-anchor='start'>VCCIO3</text>
-<line class='pin' id='connector3pin' connectorname='IO_LVDS53N' x1='5.1562' y1='10.287' x2='10.2362' y2='10.287' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector3terminal' x='5.1562' y='10.287' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6934' y='10.5918' text-anchor='start'>IO_LVDS53N</text>
-<line class='pin' id='connector4pin' connectorname='IO_LVDS53P' x1='5.1562' y1='12.827' x2='10.2362' y2='12.827' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector4terminal' x='5.1562' y='12.827' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6934' y='13.1318' text-anchor='start'>IO_LVDS53P</text>
-<line class='pin' id='connector5pin' connectorname='IO_LVDS52N' x1='5.1562' y1='15.367' x2='10.2362' y2='15.367' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector5terminal' x='5.1562' y='15.367' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6934' y='15.6718' text-anchor='start'>IO_LVDS52N</text>
-<line class='pin' id='connector6pin' connectorname='IO_LVDS52P' x1='5.1562' y1='17.907' x2='10.2362' y2='17.907' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector6terminal' x='5.1562' y='17.907' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6934' y='18.2118' text-anchor='start'>IO_LVDS52P</text>
-<line class='pin' id='connector7pin' connectorname='IO_LVDS51N' x1='5.1562' y1='20.447' x2='10.2362' y2='20.447' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector7terminal' x='5.1562' y='20.447' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6934' y='20.7518' text-anchor='start'>IO_LVDS51N</text>
-<line class='pin' id='connector8pin' connectorname='IO_LVDS51P' x1='5.1562' y1='22.987' x2='10.2362' y2='22.987' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector8terminal' x='5.1562' y='22.987' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6934' y='23.2918' text-anchor='start'>IO_LVDS51P</text>
-<line class='pin' id='connector9pin' connectorname='IO_VREFB3N1' x1='5.1562' y1='25.527' x2='10.2362' y2='25.527' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector9terminal' x='5.1562' y='25.527' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6934' y='25.8318' text-anchor='start'>IO_VREFB3N1</text>
-<line class='pin' id='connector10pin' connectorname='VCCIO3' x1='5.1562' y1='7.747' x2='10.2362' y2='7.747' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector10terminal' x='5.1562' y='7.747' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector11pin' connectorname='IO_LVDS48N' x1='5.1562' y1='33.147' x2='10.2362' y2='33.147' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector11terminal' x='5.1562' y='33.147' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6934' y='33.4518' text-anchor='start'>IO_LVDS48N</text>
-<line class='pin' id='connector12pin' connectorname='IO_LVDS48P' x1='5.1562' y1='35.687' x2='10.2362' y2='35.687' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector12terminal' x='5.1562' y='35.687' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6934' y='35.9918' text-anchor='start'>IO_LVDS48P</text>
-<line class='pin' id='connector13pin' connectorname='CLK7_LVDSCLK3N' x1='5.1562' y1='38.227' x2='10.2362' y2='38.227' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector13terminal' x='5.1562' y='38.227' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6934' y='38.5318' text-anchor='start'>CLK7_LVDSCLK3N</text>
-<line class='pin' id='connector14pin' connectorname='CLK6_LVDSCLK3P' x1='5.1562' y1='40.767' x2='10.2362' y2='40.767' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector14terminal' x='5.1562' y='40.767' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6934' y='41.0718' text-anchor='start'>CLK6_LVDSCLK3P</text>
-<line class='pin' id='connector15pin' connectorname='CLK5_LVDSCLK2N' x1='5.1562' y1='43.307' x2='10.2362' y2='43.307' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector15terminal' x='5.1562' y='43.307' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6934' y='43.6118' text-anchor='start'>CLK5_LVDSCLK2N</text>
-<line class='pin' id='connector16pin' connectorname='CLK4_LVDSCLK2P' x1='5.1562' y1='45.847' x2='10.2362' y2='45.847' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector16terminal' x='5.1562' y='45.847' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6934' y='46.1518' text-anchor='start'>CLK4_LVDSCLK2P</text>
-<line class='pin' id='connector17pin' connectorname='IO_LVDS47N' x1='5.1562' y1='48.387' x2='10.2362' y2='48.387' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector17terminal' x='5.1562' y='48.387' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6934' y='48.6918' text-anchor='start'>IO_LVDS47N</text>
-<line class='pin' id='connector18pin' connectorname='IO_LVDS47P' x1='55.9562' y1='2.667' x2='50.8762' y2='2.667' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector18terminal' x='55.9562' y='2.667' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='50.419' y='2.9718' text-anchor='end'>IO_LVDS47P</text>
-<line class='pin' id='connector19pin' connectorname='IO_LVDS46N' x1='55.9562' y1='5.207' x2='50.8762' y2='5.207' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector19terminal' x='55.9562' y='5.207' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='50.419' y='5.5118' text-anchor='end'>IO_LVDS46N</text>
-<line class='pin' id='connector20pin' connectorname='VCCIO3' x1='5.1562' y1='7.747' x2='0.0762' y2='7.747' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector20terminal' x='5.1562' y='7.747' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector21pin' connectorname='IO_LVDS46P' x1='55.9562' y1='10.287' x2='50.8762' y2='10.287' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector21terminal' x='55.9562' y='10.287' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='50.419' y='10.5918' text-anchor='end'>IO_LVDS46P</text>
-<line class='pin' id='connector22pin' connectorname='IO_LVDS45N' x1='55.9562' y1='12.827' x2='50.8762' y2='12.827' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector22terminal' x='55.9562' y='12.827' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='50.419' y='13.1318' text-anchor='end'>IO_LVDS45N</text>
-<line class='pin' id='connector23pin' connectorname='IO_LVDS45P' x1='55.9562' y1='15.367' x2='50.8762' y2='15.367' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector23terminal' x='55.9562' y='15.367' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='50.419' y='15.6718' text-anchor='end'>IO_LVDS45P</text>
-<line class='pin' id='connector24pin' connectorname='IO_LVDS44N' x1='55.9562' y1='17.907' x2='50.8762' y2='17.907' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector24terminal' x='55.9562' y='17.907' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='50.419' y='18.2118' text-anchor='end'>IO_LVDS44N</text>
-<line class='pin' id='connector25pin' connectorname='IO_LVDS44P' x1='55.9562' y1='20.447' x2='50.8762' y2='20.447' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector25terminal' x='55.9562' y='20.447' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='50.419' y='20.7518' text-anchor='end'>IO_LVDS44P</text>
-<line class='pin' id='connector26pin' connectorname='IO_LVDS42N' x1='55.9562' y1='22.987' x2='50.8762' y2='22.987' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector26terminal' x='55.9562' y='22.987' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='50.419' y='23.2918' text-anchor='end'>IO_LVDS42N</text>
-<line class='pin' id='connector27pin' connectorname='IO_LVDS42P' x1='55.9562' y1='25.527' x2='50.8762' y2='25.527' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector27terminal' x='55.9562' y='25.527' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='50.419' y='25.8318' text-anchor='end'>IO_LVDS42P</text>
-<line class='pin' id='connector28pin' connectorname='IO_VREFB3N0' x1='55.9562' y1='28.067' x2='50.8762' y2='28.067' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector28terminal' x='55.9562' y='28.067' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='50.419' y='28.3718' text-anchor='end'>IO_VREFB3N0</text>
-<line class='pin' id='connector29pin' connectorname='IO_LVDS39N' x1='55.9562' y1='30.607' x2='50.8762' y2='30.607' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector29terminal' x='55.9562' y='30.607' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='50.419' y='30.9118' text-anchor='end'>IO_LVDS39N</text>
-<line class='pin' id='connector30pin' connectorname='IO_LVDS39P' x1='55.9562' y1='33.147' x2='50.8762' y2='33.147' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector30terminal' x='55.9562' y='33.147' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='50.419' y='33.4518' text-anchor='end'>IO_LVDS39P</text>
-<line class='pin' id='connector31pin' connectorname='VCCIO3' x1='5.1562' y1='7.747' x2='0.0762' y2='7.747' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector31terminal' x='5.1562' y='7.747' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector32pin' connectorname='IO_LVDS38N' x1='55.9562' y1='38.227' x2='50.8762' y2='38.227' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector32terminal' x='55.9562' y='38.227' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='50.419' y='38.5318' text-anchor='end'>IO_LVDS38N</text>
-<line class='pin' id='connector33pin' connectorname='IO_LVDS38P' x1='55.9562' y1='40.767' x2='50.8762' y2='40.767' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector33terminal' x='55.9562' y='40.767' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='50.419' y='41.0718' text-anchor='end'>IO_LVDS38P</text>
-<line class='pin' id='connector34pin' connectorname='IO_PLL2_OUTP' x1='55.9562' y1='43.307' x2='50.8762' y2='43.307' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector34terminal' x='55.9562' y='43.307' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='50.419' y='43.6118' text-anchor='end'>IO_PLL2_OUTP</text>
-<line class='pin' id='connector35pin' connectorname='IO_PLL2_OUTN' x1='55.9562' y1='45.847' x2='50.8762' y2='45.847' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector35terminal' x='55.9562' y='45.847' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='50.419' y='46.1518' text-anchor='end'>IO_PLL2_OUTN</text>
-<line class='pin' id='connector36pin' connectorname='IO' x1='5.1562' y1='28.067' x2='10.2362' y2='28.067' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector36terminal' x='5.1562' y='28.067' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6934' y='28.3718' text-anchor='start'>IO</text>
+<line class='other' x1='10.16' y1='0.127' x2='50.8' y2='0.127' stroke='#000000' stroke-width='0.254' stroke-linecap='round'/>
+<line class='other' x1='50.8' y1='0.127' x2='50.8' y2='50.927' stroke='#000000' stroke-width='0.254' stroke-linecap='round'/>
+<line class='other' x1='50.8' y1='50.927' x2='10.16' y2='50.927' stroke='#000000' stroke-width='0.254' stroke-linecap='round'/>
+<line class='other' x1='10.16' y1='50.927' x2='10.16' y2='0.127' stroke='#000000' stroke-width='0.254' stroke-linecap='round'/>
+<line class='pin' id='connector0pin' connectorname='IO_LVDS56N' x1='5.08' y1='2.667' x2='10.16' y2='2.667' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector0terminal' x='5.08' y='2.667' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6172' y='2.9718' text-anchor='start'>IO_LVDS56N</text>
+<line class='pin' id='connector1pin' connectorname='IO_LVDS56P' x1='5.08' y1='5.207' x2='10.16' y2='5.207' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector1terminal' x='5.08' y='5.207' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6172' y='5.5118' text-anchor='start'>IO_LVDS56P</text>
+<line class='pin' id='connector2pin' connectorname='VCCIO3' x1='5.08' y1='7.747' x2='10.16' y2='7.747' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector2terminal' x='5.08' y='7.747' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6172' y='8.0518' text-anchor='start'>VCCIO3</text>
+<line class='pin' id='connector3pin' connectorname='IO_LVDS53N' x1='5.08' y1='10.287' x2='10.16' y2='10.287' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector3terminal' x='5.08' y='10.287' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6172' y='10.5918' text-anchor='start'>IO_LVDS53N</text>
+<line class='pin' id='connector4pin' connectorname='IO_LVDS53P' x1='5.08' y1='12.827' x2='10.16' y2='12.827' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector4terminal' x='5.08' y='12.827' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6172' y='13.1318' text-anchor='start'>IO_LVDS53P</text>
+<line class='pin' id='connector5pin' connectorname='IO_LVDS52N' x1='5.08' y1='15.367' x2='10.16' y2='15.367' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector5terminal' x='5.08' y='15.367' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6172' y='15.6718' text-anchor='start'>IO_LVDS52N</text>
+<line class='pin' id='connector6pin' connectorname='IO_LVDS52P' x1='5.08' y1='17.907' x2='10.16' y2='17.907' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector6terminal' x='5.08' y='17.907' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6172' y='18.2118' text-anchor='start'>IO_LVDS52P</text>
+<line class='pin' id='connector7pin' connectorname='IO_LVDS51N' x1='5.08' y1='20.447' x2='10.16' y2='20.447' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector7terminal' x='5.08' y='20.447' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6172' y='20.7518' text-anchor='start'>IO_LVDS51N</text>
+<line class='pin' id='connector8pin' connectorname='IO_LVDS51P' x1='5.08' y1='22.987' x2='10.16' y2='22.987' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector8terminal' x='5.08' y='22.987' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6172' y='23.2918' text-anchor='start'>IO_LVDS51P</text>
+<line class='pin' id='connector9pin' connectorname='IO_VREFB3N1' x1='5.08' y1='25.527' x2='10.16' y2='25.527' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector9terminal' x='5.08' y='25.527' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6172' y='25.8318' text-anchor='start'>IO_VREFB3N1</text>
+<line class='pin' id='connector10pin' connectorname='VCCIO3' x1='5.08' y1='7.747' x2='10.16' y2='7.747' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
+<rect class='terminal' id='connector10terminal' x='5.08' y='7.747' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<line class='pin' id='connector11pin' connectorname='IO_LVDS48N' x1='5.08' y1='33.147' x2='10.16' y2='33.147' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector11terminal' x='5.08' y='33.147' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6172' y='33.4518' text-anchor='start'>IO_LVDS48N</text>
+<line class='pin' id='connector12pin' connectorname='IO_LVDS48P' x1='5.08' y1='35.687' x2='10.16' y2='35.687' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector12terminal' x='5.08' y='35.687' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6172' y='35.9918' text-anchor='start'>IO_LVDS48P</text>
+<line class='pin' id='connector13pin' connectorname='CLK7_LVDSCLK3N' x1='5.08' y1='38.227' x2='10.16' y2='38.227' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector13terminal' x='5.08' y='38.227' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6172' y='38.5318' text-anchor='start'>CLK7_LVDSCLK3N</text>
+<line class='pin' id='connector14pin' connectorname='CLK6_LVDSCLK3P' x1='5.08' y1='40.767' x2='10.16' y2='40.767' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector14terminal' x='5.08' y='40.767' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6172' y='41.0718' text-anchor='start'>CLK6_LVDSCLK3P</text>
+<line class='pin' id='connector15pin' connectorname='CLK5_LVDSCLK2N' x1='5.08' y1='43.307' x2='10.16' y2='43.307' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector15terminal' x='5.08' y='43.307' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6172' y='43.6118' text-anchor='start'>CLK5_LVDSCLK2N</text>
+<line class='pin' id='connector16pin' connectorname='CLK4_LVDSCLK2P' x1='5.08' y1='45.847' x2='10.16' y2='45.847' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector16terminal' x='5.08' y='45.847' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6172' y='46.1518' text-anchor='start'>CLK4_LVDSCLK2P</text>
+<line class='pin' id='connector17pin' connectorname='IO_LVDS47N' x1='5.08' y1='48.387' x2='10.16' y2='48.387' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector17terminal' x='5.08' y='48.387' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6172' y='48.6918' text-anchor='start'>IO_LVDS47N</text>
+<line class='pin' id='connector18pin' connectorname='IO_LVDS47P' x1='55.88' y1='2.667' x2='50.8' y2='2.667' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector18terminal' x='55.88' y='2.667' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='50.3428' y='2.9718' text-anchor='end'>IO_LVDS47P</text>
+<line class='pin' id='connector19pin' connectorname='IO_LVDS46N' x1='55.88' y1='5.207' x2='50.8' y2='5.207' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector19terminal' x='55.88' y='5.207' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='50.3428' y='5.5118' text-anchor='end'>IO_LVDS46N</text>
+<line class='pin' id='connector20pin' connectorname='VCCIO3' x1='5.08' y1='7.747' x2='0' y2='7.747' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
+<rect class='terminal' id='connector20terminal' x='5.08' y='7.747' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<line class='pin' id='connector21pin' connectorname='IO_LVDS46P' x1='55.88' y1='10.287' x2='50.8' y2='10.287' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector21terminal' x='55.88' y='10.287' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='50.3428' y='10.5918' text-anchor='end'>IO_LVDS46P</text>
+<line class='pin' id='connector22pin' connectorname='IO_LVDS45N' x1='55.88' y1='12.827' x2='50.8' y2='12.827' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector22terminal' x='55.88' y='12.827' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='50.3428' y='13.1318' text-anchor='end'>IO_LVDS45N</text>
+<line class='pin' id='connector23pin' connectorname='IO_LVDS45P' x1='55.88' y1='15.367' x2='50.8' y2='15.367' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector23terminal' x='55.88' y='15.367' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='50.3428' y='15.6718' text-anchor='end'>IO_LVDS45P</text>
+<line class='pin' id='connector24pin' connectorname='IO_LVDS44N' x1='55.88' y1='17.907' x2='50.8' y2='17.907' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector24terminal' x='55.88' y='17.907' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='50.3428' y='18.2118' text-anchor='end'>IO_LVDS44N</text>
+<line class='pin' id='connector25pin' connectorname='IO_LVDS44P' x1='55.88' y1='20.447' x2='50.8' y2='20.447' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector25terminal' x='55.88' y='20.447' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='50.3428' y='20.7518' text-anchor='end'>IO_LVDS44P</text>
+<line class='pin' id='connector26pin' connectorname='IO_LVDS42N' x1='55.88' y1='22.987' x2='50.8' y2='22.987' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector26terminal' x='55.88' y='22.987' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='50.3428' y='23.2918' text-anchor='end'>IO_LVDS42N</text>
+<line class='pin' id='connector27pin' connectorname='IO_LVDS42P' x1='55.88' y1='25.527' x2='50.8' y2='25.527' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector27terminal' x='55.88' y='25.527' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='50.3428' y='25.8318' text-anchor='end'>IO_LVDS42P</text>
+<line class='pin' id='connector28pin' connectorname='IO_VREFB3N0' x1='55.88' y1='28.067' x2='50.8' y2='28.067' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector28terminal' x='55.88' y='28.067' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='50.3428' y='28.3718' text-anchor='end'>IO_VREFB3N0</text>
+<line class='pin' id='connector29pin' connectorname='IO_LVDS39N' x1='55.88' y1='30.607' x2='50.8' y2='30.607' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector29terminal' x='55.88' y='30.607' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='50.3428' y='30.9118' text-anchor='end'>IO_LVDS39N</text>
+<line class='pin' id='connector30pin' connectorname='IO_LVDS39P' x1='55.88' y1='33.147' x2='50.8' y2='33.147' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector30terminal' x='55.88' y='33.147' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='50.3428' y='33.4518' text-anchor='end'>IO_LVDS39P</text>
+<line class='pin' id='connector31pin' connectorname='VCCIO3' x1='5.08' y1='7.747' x2='0' y2='7.747' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
+<rect class='terminal' id='connector31terminal' x='5.08' y='7.747' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<line class='pin' id='connector32pin' connectorname='IO_LVDS38N' x1='55.88' y1='38.227' x2='50.8' y2='38.227' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector32terminal' x='55.88' y='38.227' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='50.3428' y='38.5318' text-anchor='end'>IO_LVDS38N</text>
+<line class='pin' id='connector33pin' connectorname='IO_LVDS38P' x1='55.88' y1='40.767' x2='50.8' y2='40.767' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector33terminal' x='55.88' y='40.767' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='50.3428' y='41.0718' text-anchor='end'>IO_LVDS38P</text>
+<line class='pin' id='connector34pin' connectorname='IO_PLL2_OUTP' x1='55.88' y1='43.307' x2='50.8' y2='43.307' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector34terminal' x='55.88' y='43.307' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='50.3428' y='43.6118' text-anchor='end'>IO_PLL2_OUTP</text>
+<line class='pin' id='connector35pin' connectorname='IO_PLL2_OUTN' x1='55.88' y1='45.847' x2='50.8' y2='45.847' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector35terminal' x='55.88' y='45.847' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='50.3428' y='46.1518' text-anchor='end'>IO_PLL2_OUTN</text>
+<line class='pin' id='connector36pin' connectorname='IO' x1='5.08' y1='28.067' x2='10.16' y2='28.067' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector36terminal' x='5.08' y='28.067' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='10.6172' y='28.3718' text-anchor='start'>IO</text>
 </g>
 </svg>

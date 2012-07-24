@@ -45,7 +45,7 @@
 <g transform='translate(20.701,3.0734)'><g transform='rotate(270)'>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='0' y='0' text-anchor='end'>RES</text>
 </g></g>
-<line class='pin' id='connector11pin' connectorname='RES' x1='20.3962' y1='0.0762' x2='20.3962' y2='2.6162' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector11pin' connectorname='RES' x1='20.3962' y1='0.0762' x2='20.3962' y2='2.6162' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector11terminal' x='20.3962' y='0.0762' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector12pin' connectorname='ST' x1='35.6362' y1='15.3162' x2='33.0962' y2='15.3162' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector12terminal' x='35.6362' y='15.3162' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>

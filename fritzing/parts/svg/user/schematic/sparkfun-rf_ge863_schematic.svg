@@ -55,7 +55,7 @@
 <line class='pin' id='connector53pin' connectorname='MIC_HF-' x1='43.2562' y1='39.48' x2='38.1762' y2='39.48' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector53terminal' x='43.2562' y='39.48' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='37.719' y='39.7848' text-anchor='end'>MIC_HF-</text>
-<line class='pin' id='connector19pin' connectorname='GND' x1='0.0762' y1='80.12' x2='5.1562' y2='80.12' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector19pin' connectorname='GND' x1='0.0762' y1='80.12' x2='5.1562' y2='80.12' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector19terminal' x='0.0762' y='80.12' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector63pin' connectorname='SIMCLK' x1='43.2562' y1='105.52' x2='38.1762' y2='105.52' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector63terminal' x='43.2562' y='105.52' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
@@ -87,7 +87,7 @@
 <line class='pin' id='connector73pin' connectorname='VBATT' x1='43.2562' y1='11.54' x2='38.1762' y2='11.54' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector73terminal' x='43.2562' y='11.54' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='37.719' y='11.8448' text-anchor='end'>VBATT</text>
-<line class='pin' id='connector24pin' connectorname='GND' x1='0.0762' y1='80.12' x2='5.1562' y2='80.12' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector24pin' connectorname='GND' x1='0.0762' y1='80.12' x2='5.1562' y2='80.12' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector24terminal' x='0.0762' y='80.12' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector68pin' connectorname='STAT_LED' x1='0.0762' y1='16.62' x2='5.1562' y2='16.62' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector68terminal' x='0.0762' y='16.62' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
@@ -110,7 +110,7 @@
 <line class='pin' id='connector12pin' connectorname='CHARGE' x1='0.0762' y1='19.16' x2='5.1562' y2='19.16' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector12terminal' x='0.0762' y='19.16' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='5.6134' y='19.4648' text-anchor='start'>CHARGE</text>
-<line class='pin' id='connector25pin' connectorname='GND' x1='0.0762' y1='80.12' x2='5.1562' y2='80.12' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector25pin' connectorname='GND' x1='0.0762' y1='80.12' x2='5.1562' y2='80.12' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector25terminal' x='0.0762' y='80.12' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector3pin' connectorname='C103/TXD' x1='43.2562' y1='80.12' x2='38.1762' y2='80.12' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector3terminal' x='43.2562' y='80.12' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
@@ -136,7 +136,7 @@
 <line class='pin' id='connector10pin' connectorname='C125/RING' x1='43.2562' y1='62.34' x2='38.1762' y2='62.34' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector10terminal' x='43.2562' y='62.34' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='37.719' y='62.6448' text-anchor='end'>C125/RING</text>
-<line class='pin' id='connector26pin' connectorname='GND' x1='0.0762' y1='80.12' x2='5.1562' y2='80.12' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector26pin' connectorname='GND' x1='0.0762' y1='80.12' x2='5.1562' y2='80.12' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector26terminal' x='0.0762' y='80.12' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector56pin' connectorname='ON/OFF' x1='0.0762' y1='14.08' x2='5.1562' y2='14.08' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector56terminal' x='0.0762' y='14.08' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
@@ -144,12 +144,12 @@
 <line class='pin' id='connector59pin' connectorname='RESET' x1='0.0762' y1='11.54' x2='5.1562' y2='11.54' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector59terminal' x='0.0762' y='11.54' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='5.6134' y='11.8448' text-anchor='start'>RESET</text>
-<line class='pin' id='connector27pin' connectorname='GND' x1='0.0762' y1='80.12' x2='5.1562' y2='80.12' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector27pin' connectorname='GND' x1='0.0762' y1='80.12' x2='5.1562' y2='80.12' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector27terminal' x='0.0762' y='80.12' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector1pin' connectorname='ANT' x1='43.2562' y1='16.62' x2='38.1762' y2='16.62' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector1terminal' x='43.2562' y='16.62' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='37.719' y='16.9248' text-anchor='end'>ANT</text>
-<line class='pin' id='connector28pin' connectorname='GND' x1='0.0762' y1='80.12' x2='5.1562' y2='80.12' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector28pin' connectorname='GND' x1='0.0762' y1='80.12' x2='5.1562' y2='80.12' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector28terminal' x='0.0762' y='80.12' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector48pin' connectorname='GPIO7/BUZZER' x1='0.0762' y1='59.8' x2='5.1562' y2='59.8' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector48terminal' x='0.0762' y='59.8' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
@@ -166,7 +166,7 @@
 <line class='pin' id='connector44pin' connectorname='GPIO3/CAM_SCL' x1='0.0762' y1='69.96' x2='5.1562' y2='69.96' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector44terminal' x='0.0762' y='69.96' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='5.6134' y='70.2648' text-anchor='start'>GPIO3/CAM_SCL</text>
-<line class='pin' id='connector29pin' connectorname='GND' x1='0.0762' y1='80.12' x2='5.1562' y2='80.12' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector29pin' connectorname='GND' x1='0.0762' y1='80.12' x2='5.1562' y2='80.12' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector29terminal' x='0.0762' y='80.12' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector41pin' connectorname='GPIO17' x1='0.0762' y1='34.4' x2='5.1562' y2='34.4' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector41terminal' x='0.0762' y='34.4' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
@@ -180,17 +180,17 @@
 <line class='pin' id='connector40pin' connectorname='GPIO16' x1='0.0762' y1='36.94' x2='5.1562' y2='36.94' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector40terminal' x='0.0762' y='36.94' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='5.6134' y='37.2448' text-anchor='start'>GPIO16</text>
-<line class='pin' id='connector30pin' connectorname='GND' x1='0.0762' y1='80.12' x2='5.1562' y2='80.12' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector30pin' connectorname='GND' x1='0.0762' y1='80.12' x2='5.1562' y2='80.12' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector30terminal' x='0.0762' y='80.12' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector69pin' connectorname='TX_GPS' x1='43.2562' y1='34.4' x2='38.1762' y2='34.4' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector69terminal' x='43.2562' y='34.4' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='37.719' y='34.7048' text-anchor='end'>TX_GPS</text>
-<line class='pin' id='connector31pin' connectorname='GND' x1='0.0762' y1='80.12' x2='5.1562' y2='80.12' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector31pin' connectorname='GND' x1='0.0762' y1='80.12' x2='5.1562' y2='80.12' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector31terminal' x='0.0762' y='80.12' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector39pin' connectorname='GPIO15' x1='0.0762' y1='39.48' x2='5.1562' y2='39.48' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector39terminal' x='0.0762' y='39.48' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='5.6134' y='39.7848' text-anchor='start'>GPIO15</text>
-<line class='pin' id='connector20pin' connectorname='GND' x1='0.0762' y1='80.12' x2='5.1562' y2='80.12' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector20pin' connectorname='GND' x1='0.0762' y1='80.12' x2='5.1562' y2='80.12' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector20terminal' x='0.0762' y='80.12' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector60pin' connectorname='RX_GPS' x1='43.2562' y1='31.86' x2='38.1762' y2='31.86' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector60terminal' x='43.2562' y='31.86' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
@@ -201,17 +201,17 @@
 <line class='pin' id='connector42pin' connectorname='GPIO18' x1='0.0762' y1='31.86' x2='5.1562' y2='31.86' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector42terminal' x='0.0762' y='31.86' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='5.6134' y='32.1648' text-anchor='start'>GPIO18</text>
-<line class='pin' id='connector21pin' connectorname='GND' x1='0.0762' y1='80.12' x2='5.1562' y2='80.12' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector21pin' connectorname='GND' x1='0.0762' y1='80.12' x2='5.1562' y2='80.12' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector21terminal' x='0.0762' y='80.12' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector61pin' connectorname='RX_GPS_BIN' x1='43.2562' y1='26.78' x2='38.1762' y2='26.78' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector61terminal' x='43.2562' y='26.78' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='37.719' y='27.0848' text-anchor='end'>RX_GPS_BIN</text>
-<line class='pin' id='connector22pin' connectorname='GND' x1='0.0762' y1='80.12' x2='5.1562' y2='80.12' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector22pin' connectorname='GND' x1='0.0762' y1='80.12' x2='5.1562' y2='80.12' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector22terminal' x='0.0762' y='80.12' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector70pin' connectorname='TX_GPS_BIN' x1='43.2562' y1='24.24' x2='38.1762' y2='24.24' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector70terminal' x='43.2562' y='24.24' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='37.719' y='24.5448' text-anchor='end'>TX_GPS_BIN</text>
-<line class='pin' id='connector23pin' connectorname='GND' x1='0.0762' y1='80.12' x2='5.1562' y2='80.12' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector23pin' connectorname='GND' x1='0.0762' y1='80.12' x2='5.1562' y2='80.12' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector23terminal' x='0.0762' y='80.12' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector51pin' connectorname='GPS_ANT' x1='43.2562' y1='19.16' x2='38.1762' y2='19.16' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector51terminal' x='43.2562' y='19.16' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>

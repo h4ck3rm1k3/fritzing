@@ -78,7 +78,7 @@
 <line class='pin' id='connector19pin' connectorname='OUT9' x1='25.4762' y1='25.527' x2='22.9362' y2='25.527' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector19terminal' x='25.4762' y='25.527' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='22.479' y='25.8318' text-anchor='end'>OUT9</text>
-<line class='pin' id='connector2pin' connectorname='GND' x1='0.0762' y1='40.767' x2='2.6162' y2='40.767' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector2pin' connectorname='GND' x1='0.0762' y1='40.767' x2='2.6162' y2='40.767' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector2terminal' x='0.0762' y='40.767' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 </g>
 </svg>

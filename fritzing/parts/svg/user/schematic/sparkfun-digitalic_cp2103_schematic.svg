@@ -60,7 +60,7 @@
 <line class='pin' id='connector9pin' connectorname='GND' x1='0.0762' y1='40.767' x2='5.1562' y2='40.767' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector9terminal' x='0.0762' y='40.767' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='5.6134' y='41.0718' text-anchor='start'>GND</text>
-<line class='pin' id='connector10pin' connectorname='GND' x1='0.0762' y1='40.767' x2='5.1562' y2='40.767' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector10pin' connectorname='GND' x1='0.0762' y1='40.767' x2='5.1562' y2='40.767' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector10terminal' x='0.0762' y='40.767' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector11pin' connectorname='GPIO_0' x1='38.1762' y1='12.827' x2='33.0962' y2='12.827' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector11terminal' x='38.1762' y='12.827' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>

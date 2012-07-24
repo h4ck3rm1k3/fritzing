@@ -25,7 +25,7 @@
 <g transform='translate(18.161,30.099)'><g transform='rotate(270)'>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='0' y='0' text-anchor='start'>GND</text>
 </g></g>
-<line class='pin' id='connector5pin' connectorname='GND' x1='17.8562' y1='33.0962' x2='17.8562' y2='30.5562' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector5pin' connectorname='GND' x1='17.8562' y1='33.0962' x2='17.8562' y2='30.5562' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector5terminal' x='17.8562' y='33.0962' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector6pin' connectorname='GPIO1' x1='35.6362' y1='10.2362' x2='33.0962' y2='10.2362' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector6terminal' x='35.6362' y='10.2362' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>

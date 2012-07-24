@@ -65,23 +65,23 @@
 <g transform='translate(23.241,5.6134)'><g transform='rotate(270)'>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='0' y='0' text-anchor='end'>VDD</text>
 </g></g>
-<line class='pin' id='connector19pin' connectorname='VSS' x1='20.3962' y1='48.3362' x2='20.3962' y2='43.2562' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector19pin' connectorname='VSS' x1='20.3962' y1='48.3362' x2='20.3962' y2='43.2562' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector19terminal' x='20.3962' y='48.3362' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector6pin' connectorname='IREF' x1='48.3362' y1='38.1762' x2='43.2562' y2='38.1762' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector6terminal' x='48.3362' y='38.1762' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='42.799' y='38.481' text-anchor='end'>IREF</text>
-<line class='pin' id='connector20pin' connectorname='VSS' x1='20.3962' y1='48.3362' x2='20.3962' y2='43.2562' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector20pin' connectorname='VSS' x1='20.3962' y1='48.3362' x2='20.3962' y2='43.2562' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector20terminal' x='20.3962' y='48.3362' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector14pin' connectorname='VDD' x1='22.9362' y1='0.0762' x2='22.9362' y2='5.1562' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector14pin' connectorname='VDD' x1='22.9362' y1='0.0762' x2='22.9362' y2='5.1562' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector14terminal' x='22.9362' y='0.0762' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector21pin' connectorname='VSS' x1='20.3962' y1='48.3362' x2='20.3962' y2='43.2562' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector21pin' connectorname='VSS' x1='20.3962' y1='48.3362' x2='20.3962' y2='43.2562' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector21terminal' x='20.3962' y='48.3362' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector7pin' connectorname='PORTSEL' x1='0.0762' y1='10.2362' x2='5.1562' y2='10.2362' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector7terminal' x='0.0762' y='10.2362' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='5.6134' y='10.541' text-anchor='start'>PORTSEL</text>
-<line class='pin' id='connector15pin' connectorname='VDD' x1='22.9362' y1='0.0762' x2='22.9362' y2='5.1562' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector15pin' connectorname='VDD' x1='22.9362' y1='0.0762' x2='22.9362' y2='5.1562' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector15terminal' x='22.9362' y='0.0762' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector17pin' connectorname='VSS' x1='20.3962' y1='48.3362' x2='20.3962' y2='43.2562' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector17pin' connectorname='VSS' x1='20.3962' y1='48.3362' x2='20.3962' y2='43.2562' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector17terminal' x='20.3962' y='48.3362' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 </g>
 </svg>

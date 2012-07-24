@@ -36,41 +36,41 @@
 <line class='pin' id='connector13pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector13terminal' x='10.287' y='20.447' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='15.8242' y='20.7518' text-anchor='start'>GND</text>
-<line class='pin' id='connector15pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector15pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector15terminal' x='10.287' y='20.447' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector16pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector16pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector16terminal' x='10.287' y='20.447' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector17pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector17pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector17terminal' x='10.287' y='20.447' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector18pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector18pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector18terminal' x='10.287' y='20.447' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector19pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector19pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector19terminal' x='10.287' y='20.447' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector20pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector20pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector20terminal' x='10.287' y='20.447' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector21pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector21pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector21terminal' x='10.287' y='20.447' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector3pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector3pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector3terminal' x='10.287' y='20.447' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector4pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector4pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector4terminal' x='10.287' y='20.447' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector5pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector5pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector5terminal' x='10.287' y='20.447' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector6pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector6pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector6terminal' x='10.287' y='20.447' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector7pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector7pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector7terminal' x='10.287' y='20.447' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector8pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector8pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector8terminal' x='10.287' y='20.447' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector9pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector9pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector9terminal' x='10.287' y='20.447' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector10pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector10pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector10terminal' x='10.287' y='20.447' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector11pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector11pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector11terminal' x='10.287' y='20.447' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector12pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector12pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector12terminal' x='10.287' y='20.447' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector14pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector14pin' connectorname='GND' x1='10.287' y1='20.447' x2='15.367' y2='20.447' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector14terminal' x='10.287' y='20.447' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector187pin' connectorname='VCCAUX' x1='48.387' y1='22.987' x2='43.307' y2='22.987' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector187terminal' x='48.387' y='22.987' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
@@ -78,17 +78,17 @@
 <line class='pin' id='connector188pin' connectorname='VCCAUX' x1='48.387' y1='25.527' x2='43.307' y2='25.527' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector188terminal' x='48.387' y='25.527' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='42.8498' y='25.8318' text-anchor='end'>VCCAUX</text>
-<line class='pin' id='connector189pin' connectorname='VCCAUX' x1='48.387' y1='25.527' x2='43.307' y2='25.527' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector189pin' connectorname='VCCAUX' x1='48.387' y1='25.527' x2='43.307' y2='25.527' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector189terminal' x='48.387' y='25.527' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector190pin' connectorname='VCCAUX' x1='48.387' y1='25.527' x2='43.307' y2='25.527' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector190pin' connectorname='VCCAUX' x1='48.387' y1='25.527' x2='43.307' y2='25.527' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector190terminal' x='48.387' y='25.527' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector191pin' connectorname='VCCAUX' x1='48.387' y1='25.527' x2='43.307' y2='25.527' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector191pin' connectorname='VCCAUX' x1='48.387' y1='25.527' x2='43.307' y2='25.527' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector191terminal' x='48.387' y='25.527' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector192pin' connectorname='VCCAUX' x1='48.387' y1='25.527' x2='43.307' y2='25.527' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector192pin' connectorname='VCCAUX' x1='48.387' y1='25.527' x2='43.307' y2='25.527' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector192terminal' x='48.387' y='25.527' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector193pin' connectorname='VCCAUX' x1='48.387' y1='25.527' x2='43.307' y2='25.527' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector193pin' connectorname='VCCAUX' x1='48.387' y1='25.527' x2='43.307' y2='25.527' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector193terminal' x='48.387' y='25.527' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector194pin' connectorname='VCCAUX' x1='48.387' y1='25.527' x2='43.307' y2='25.527' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector194pin' connectorname='VCCAUX' x1='48.387' y1='25.527' x2='43.307' y2='25.527' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector194terminal' x='48.387' y='25.527' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector195pin' connectorname='VCCINT' x1='48.387' y1='53.467' x2='43.307' y2='53.467' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector195terminal' x='48.387' y='53.467' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
@@ -96,9 +96,9 @@
 <line class='pin' id='connector196pin' connectorname='VCCINT' x1='48.387' y1='56.007' x2='43.307' y2='56.007' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector196terminal' x='48.387' y='56.007' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='42.8498' y='56.3118' text-anchor='end'>VCCINT</text>
-<line class='pin' id='connector197pin' connectorname='VCCINT' x1='48.387' y1='56.007' x2='43.307' y2='56.007' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector197pin' connectorname='VCCINT' x1='48.387' y1='56.007' x2='43.307' y2='56.007' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector197terminal' x='48.387' y='56.007' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector198pin' connectorname='VCCINT' x1='48.387' y1='56.007' x2='43.307' y2='56.007' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector198pin' connectorname='VCCINT' x1='48.387' y1='56.007' x2='43.307' y2='56.007' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector198terminal' x='48.387' y='56.007' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector1pin' connectorname='DONE' x1='10.287' y1='106.807' x2='15.367' y2='106.807' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector1terminal' x='10.287' y='106.807' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
@@ -214,9 +214,9 @@
 <line class='pin' id='connector160pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector160terminal' x='162.687' y='45.847' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='157.15' y='46.1518' text-anchor='end'>IP</text>
-<line class='pin' id='connector162pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector162pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector162terminal' x='162.687' y='45.847' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector163pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector163pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector163terminal' x='162.687' y='45.847' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector171pin' connectorname='IP_L06N_0' x1='162.687' y1='53.467' x2='157.607' y2='53.467' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector171terminal' x='162.687' y='53.467' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
@@ -236,7 +236,7 @@
 <line class='pin' id='connector200pin' connectorname='VCCO_0' x1='162.687' y1='66.167' x2='157.607' y2='66.167' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector200terminal' x='162.687' y='66.167' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='157.15' y='66.4718' text-anchor='end'>VCCO_0</text>
-<line class='pin' id='connector201pin' connectorname='VCCO_0' x1='162.687' y1='66.167' x2='157.607' y2='66.167' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector201pin' connectorname='VCCO_0' x1='162.687' y1='66.167' x2='157.607' y2='66.167' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector201terminal' x='162.687' y='66.167' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector31pin' connectorname='IO_L01N_1/A15' x1='205.867' y1='17.907' x2='210.947' y2='17.907' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector31terminal' x='205.867' y='17.907' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
@@ -334,19 +334,19 @@
 <line class='pin' id='connector29pin' connectorname='IO_16P_1/LDC1' x1='271.907' y1='40.767' x2='266.827' y2='40.767' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector29terminal' x='271.907' y='40.767' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='266.37' y='41.0718' text-anchor='end'>IO_16P_1/LDC1</text>
-<line class='pin' id='connector164pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector164pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector164terminal' x='162.687' y='45.847' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector165pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector165pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector165terminal' x='162.687' y='45.847' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector166pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector166pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector166terminal' x='162.687' y='45.847' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector167pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector167pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector167terminal' x='162.687' y='45.847' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector168pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector168pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector168terminal' x='162.687' y='45.847' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector150pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector150pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector150terminal' x='162.687' y='45.847' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector151pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector151pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector151terminal' x='162.687' y='45.847' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector148pin' connectorname='IP/VREF_1' x1='271.907' y1='61.087' x2='266.827' y2='61.087' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector148terminal' x='271.907' y='61.087' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
@@ -357,7 +357,7 @@
 <line class='pin' id='connector185pin' connectorname='VCC0_1' x1='271.907' y1='66.167' x2='266.827' y2='66.167' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector185terminal' x='271.907' y='66.167' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='266.37' y='66.4718' text-anchor='end'>VCC0_1</text>
-<line class='pin' id='connector186pin' connectorname='VCC0_1' x1='271.907' y1='66.167' x2='266.827' y2='66.167' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector186pin' connectorname='VCC0_1' x1='271.907' y1='66.167' x2='266.827' y2='66.167' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector186terminal' x='271.907' y='66.167' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector23pin' connectorname='IO/D5' x1='89.027' y1='83.947' x2='94.107' y2='83.947' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector23terminal' x='89.027' y='83.947' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
@@ -452,11 +452,11 @@
 <line class='pin' id='connector145pin' connectorname='IO_L17P_2/VS0/A17' x1='162.687' y1='104.267' x2='157.607' y2='104.267' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector145terminal' x='162.687' y='104.267' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='157.15' y='104.572' text-anchor='end'>IO_L17P_2/VS0/A17</text>
-<line class='pin' id='connector152pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector152pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector152terminal' x='162.687' y='45.847' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector153pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector153pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector153terminal' x='162.687' y='45.847' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector154pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector154pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector154terminal' x='162.687' y='45.847' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector169pin' connectorname='IP_L02N_2' x1='162.687' y1='114.427' x2='157.607' y2='114.427' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector169terminal' x='162.687' y='114.427' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
@@ -482,7 +482,7 @@
 <line class='pin' id='connector203pin' connectorname='VCCO_2' x1='162.687' y1='132.207' x2='157.607' y2='132.207' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector203terminal' x='162.687' y='132.207' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='157.15' y='132.512' text-anchor='end'>VCCO_2</text>
-<line class='pin' id='connector204pin' connectorname='VCCO_2' x1='162.687' y1='132.207' x2='157.607' y2='132.207' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector204pin' connectorname='VCCO_2' x1='162.687' y1='132.207' x2='157.607' y2='132.207' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector204terminal' x='162.687' y='132.207' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector28pin' connectorname='IO/VREF_3' x1='205.867' y1='83.947' x2='210.947' y2='83.947' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector28terminal' x='205.867' y='83.947' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
@@ -583,17 +583,17 @@
 <line class='pin' id='connector143pin' connectorname='IO_L16P_3' x1='271.907' y1='109.347' x2='266.827' y2='109.347' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector143terminal' x='271.907' y='109.347' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='266.37' y='109.652' text-anchor='end'>IO_L16P_3</text>
-<line class='pin' id='connector155pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector155pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector155terminal' x='162.687' y='45.847' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector156pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector156pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector156terminal' x='162.687' y='45.847' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector157pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector157pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector157terminal' x='162.687' y='45.847' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector158pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector158pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector158terminal' x='162.687' y='45.847' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector159pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector159pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector159terminal' x='162.687' y='45.847' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector161pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector161pin' connectorname='IP' x1='162.687' y1='45.847' x2='157.607' y2='45.847' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector161terminal' x='162.687' y='45.847' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector149pin' connectorname='IP/VREF_3' x1='271.907' y1='127.127' x2='266.827' y2='127.127' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector149terminal' x='271.907' y='127.127' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
@@ -604,7 +604,7 @@
 <line class='pin' id='connector206pin' connectorname='VCCO_3' x1='271.907' y1='132.207' x2='266.827' y2='132.207' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector206terminal' x='271.907' y='132.207' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='266.37' y='132.512' text-anchor='end'>VCCO_3</text>
-<line class='pin' id='connector207pin' connectorname='VCCO_3' x1='271.907' y1='132.207' x2='266.827' y2='132.207' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector207pin' connectorname='VCCO_3' x1='271.907' y1='132.207' x2='266.827' y2='132.207' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector207terminal' x='271.907' y='132.207' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 </g>
 </svg>

@@ -135,20 +135,20 @@
 <line class='pin' id='connector15pin' connectorname='DGND' x1='55.9562' y1='50.927' x2='50.8762' y2='50.927' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector15terminal' x='55.9562' y='50.927' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='50.419' y='51.2318' text-anchor='end'>DGND</text>
-<line class='pin' id='connector16pin' connectorname='DGND' x1='55.9562' y1='50.927' x2='50.8762' y2='50.927' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector16pin' connectorname='DGND' x1='55.9562' y1='50.927' x2='50.8762' y2='50.927' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector16terminal' x='55.9562' y='50.927' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector18pin' connectorname='DGND' x1='55.9562' y1='50.927' x2='50.8762' y2='50.927' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector18pin' connectorname='DGND' x1='55.9562' y1='50.927' x2='50.8762' y2='50.927' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector18terminal' x='55.9562' y='50.927' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector14pin' connectorname='DGND' x1='55.9562' y1='50.927' x2='50.8762' y2='50.927' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector14pin' connectorname='DGND' x1='55.9562' y1='50.927' x2='50.8762' y2='50.927' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector14terminal' x='55.9562' y='50.927' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector17pin' connectorname='DGND' x1='55.9562' y1='50.927' x2='50.8762' y2='50.927' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector17pin' connectorname='DGND' x1='55.9562' y1='50.927' x2='50.8762' y2='50.927' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector17terminal' x='55.9562' y='50.927' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector0pin' connectorname='AGND' x1='55.9562' y1='63.627' x2='50.8762' y2='63.627' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector0terminal' x='55.9562' y='63.627' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='50.419' y='63.9318' text-anchor='end'>AGND</text>
-<line class='pin' id='connector1pin' connectorname='AGND' x1='55.9562' y1='63.627' x2='50.8762' y2='63.627' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector1pin' connectorname='AGND' x1='55.9562' y1='63.627' x2='50.8762' y2='63.627' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector1terminal' x='55.9562' y='63.627' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<line class='pin' id='connector2pin' connectorname='AGND' x1='55.9562' y1='63.627' x2='50.8762' y2='63.627' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector2pin' connectorname='AGND' x1='55.9562' y1='63.627' x2='50.8762' y2='63.627' stroke='#000000' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector2terminal' x='55.9562' y='63.627' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 </g>
 </svg>
