@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-ACS712-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-AnalogIC' ACS712  -->
 <version>4</version>
-<date>2012-07-24</date>
+<date>2012-07-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Hall-effect-based isolated linear current sensor</description>

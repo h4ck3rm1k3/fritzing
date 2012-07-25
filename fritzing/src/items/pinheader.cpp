@@ -886,20 +886,22 @@ QString PinHeader::makePcbLongPadLockSvg(int pins)
 
     QString between("<line class='other' x1='[2.8956]' y1='1.651' x2='[2.3876]' y2='1.651' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n");
     QString betweens = TextUtils::incrementTemplateString(between, pins - 1, increment * dpi, TextUtils::standardMultiplyPinFunction, TextUtils::noCopyPinFunction, NULL);
-
-
-
-
    
     double cx = 1.3716;
-    double cx2 = 0.8128;
-	QString repeat = "<circle id='connector%1pin' cx='%2' cy='1.8796' r='0.7493' stroke='#F7BD13' stroke-width='0.381' fill='none' />\n"
-                     "<path stroke='none' stroke-width='0' fill='#F7BD13'\n"
-                     "d='m%2,0a0.9398,0.9398 0 0 1 0.9398,0.9398l0,1.8796a0.9398,0.9398 0 0 1 -0.9398,0.9398l-0,0a0.9398,0.9398 0 0 1 -0.9398,-0.9398l0,-1.8796a0.9398,0.9398 0 0 1 0.9398,-0.9398l0,0zM%3,1.8796a0.5588,0.5588 0 1 0 1.1176,0 0.5588,0.5588 0 1 0 -1.1176,0z' />\n";
+    double cy = 1.524;
+    double cx2 = 0.8636;
+    double cy2 = 0;
+    double offset = 0.254;
+
+    QString repeat("<circle id='connector%1pin' cx='%2' cy='%3' r='0.635' stroke='#F7BD13' stroke-width='0.254' fill='none' />\n"
+                    "<path fill='#F7BD13' stroke='none' stroke-width='0'\n"
+                    "d='m%2,%4a0.762,0.762 0 0 1 0.762,0.762l0,1.524a0.762,0.762 0 0 1 -0.762,0.762l-0,0a0.762,0.762 0 0 1 -0.762,-0.762l0,-1.524a0.762,0.762 0 0 1 0.762,-0.762l0,0z\n"
+                    "M%5,%3a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z' />\n");
 
     QString repeats;
     for (int i = 0; i < pins; i++) {
-        repeats += repeat.arg(i).arg(cx).arg(cx2);
+        double useOffset = (i % 2 == 1) ? offset : 0;
+        repeats += repeat.arg(i).arg(cx).arg(cy + useOffset).arg(cy2 + useOffset).arg(cx2);
         cx += increment * dpi;
         cx2 += increment * dpi;
     }

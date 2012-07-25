@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-M04-POLAR'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' M04 POLAR -->
 <version>4</version>
-<date>2012-07-24</date>
+<date>2012-07-25</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Header 4&lt;/b&gt;
@@ -20,7 +20,7 @@ Standard 4-pin 0.1 header. Use with straight break away headers (SKU : PRT-00116
 </properties>
 <views>
 <breadboardView>
-<layers image='breadboard/generic_molex_pin_header_4_100mil_bread.svg'>
+<layers image='breadboard/generic_female_pin_header_4_100mil_bread.svg'>
 <layer layerId='breadboard'/>
 </layers>
 </breadboardView>
@@ -37,7 +37,7 @@ Standard 4-pin 0.1 header. Use with straight break away headers (SKU : PRT-00116
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/generic_molex_pin_header_4_100mil_bread.svg'>
+<layers image='breadboard/generic_female_pin_header_4_100mil_bread.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

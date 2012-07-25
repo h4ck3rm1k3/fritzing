@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-AD9835-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-AnalogIC' AD9835  -->
 <version>4</version>
-<date>2012-07-24</date>
+<date>2012-07-25</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>50MHz DDS waveform generator</description>
