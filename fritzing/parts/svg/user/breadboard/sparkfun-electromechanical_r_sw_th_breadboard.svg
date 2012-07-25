@@ -1,21 +1,53 @@
-<?xml version='1.0' encoding='UTF-8' standalone='no'?>
-<!-- Created with Fritzing (http://www.fritzing.org/) -->
-<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.608in' height='0.854in' viewBox='0 0 15.4432 21.6916' >
-<g id='breadboard'>
-<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l15.4432,0 0,21.6916 -15.4432,0 0,-21.6916z
-M0.9525,19.3548a0.8001,0.8001 0 1 0 1.6002,0 0.8001,0.8001 0 1 0 -1.6002,0z
-M0.9525,2.3622a0.8001,0.8001 0 1 0 1.6002,0 0.8001,0.8001 0 1 0 -1.6002,0z
-M13.0429,3.8608a0.8001,0.8001 0 1 0 1.6002,0 0.8001,0.8001 0 1 0 -1.6002,0z
-M13.0429,10.8966a0.8001,0.8001 0 1 0 1.6002,0 0.8001,0.8001 0 1 0 -1.6002,0z
-'/>
-<circle id='connector0pin' connectorname='P$1' cx='1.7526' cy='19.3548' r='0.9271' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector1pin' connectorname='P$2' cx='1.7526' cy='2.3622' r='0.9271' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector2pin' connectorname='P$3' cx='13.843' cy='3.8608' r='0.9271' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector3pin' connectorname='P$4' cx='13.843' cy='10.8966' r='0.9271' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<line class='other' x1='0.1016' y1='0.1016' x2='0.1016' y2='20.7264' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line class='other' x1='0.1016' y1='20.7264' x2='0.1016' y2='21.59' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line class='other' x1='0.1016' y1='0.1016' x2='15.3416' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line class='other' x1='15.3416' y1='0.1016' x2='15.3416' y2='21.59' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line class='other' x1='15.3416' y1='21.59' x2='0.1016' y2='21.59' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Ebene_1" xmlns:svg="http://www.w3.org/2000/svg"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="52.458px"
+	 height="53.292px" viewBox="-0.911 8.196 52.458 53.292" enable-background="new -0.911 8.196 52.458 53.292" xml:space="preserve"
+	>
+<g>
+	<g>
+		<rect x="31.067" y="8.196" fill="#CCCCCC" width="2.875" height="8.12"/>
+		<rect x="31.067" y="8.196" fill="#E6E6E6" width="0.542" height="8.12"/>
+		<rect x="33.442" y="8.196" fill="#B3B3B3" width="0.542" height="8.12"/>
+	</g>
+	<g>
+		<rect x="16.666" y="8.196" fill="#CCCCCC" width="2.875" height="8.12"/>
+		<rect x="16.666" y="8.196" fill="#E6E6E6" width="0.542" height="8.12"/>
+		<rect x="19.041" y="8.196" fill="#B3B3B3" width="0.542" height="8.12"/>
+	</g>
 </g>
+<polygon fill="#666666" points="7.218,16.315 7.218,13.44 1.808,13.44 1.808,17.244 1.823,17.244 1.823,24.743 48.826,24.743 
+	48.826,16.315 "/>
+<rect x="18.665" y="16.315" fill="#4D4D4D" width="13.32" height="8.428"/>
+<circle cx="25.325" cy="24.743" r="4.706"/>
+<rect x="18.665" y="16.315" fill="#333333" width="13.32" height="3.723"/>
+<polyline fill="#333333" points="51.546,25.479 51.546,61.488 -0.895,61.488 -0.895,25.479 51.546,25.479 "/>
+<polygon fill="#4D4D4D" points="6.184,30.162 6.084,30.907 44.535,30.713 44.411,30.162 "/>
+<polygon fill="#4D4D4D" points="6.184,56.804 6.084,56.06 44.535,56.254 44.411,56.804 "/>
+<path d="M44.975,43.484c0-6.945-0.252-13.106-0.563-13.106H6.24c-0.312,0-0.563,6.161-0.563,13.106S5.928,56.59,6.24,56.59h38.172
+	C44.723,56.59,44.975,50.429,44.975,43.484z"/>
+<polyline fill="#333333" points="51.531,23.443 -0.911,23.443 -0.911,25.479 51.531,25.479 51.531,23.443 "/>
+<path fill="#1A1A1A" d="M39.382,30.907H6.601c-0.312,0-0.563,5.631-0.563,12.577S6.289,56.06,6.601,56.06h32.781V30.907z"/>
+<text transform="matrix(-4.442216e-008 1.0163 -1 -4.371139e-008 8.0574 42.7771)" fill="#F8F8F8" font-family="'ArialMT'" font-size="5">I</text>
+<g>
+	<polyline fill="#333333" points="41.038,30.907 41.038,56.06 13.163,56.06 13.163,30.907 41.038,30.907 	"/>
+	<polyline fill="#4D4D4D" points="40.329,30.907 40.329,56.06 18.523,56.06 18.523,30.907 40.329,30.907 	"/>
+	<polyline fill="#666666" points="40.538,30.907 40.538,56.06 26.163,56.06 26.163,30.907 40.538,30.907 	"/>
+	<path fill="#808080" d="M32.322,56.06V30.907h8.746c0.396,0,0.721,0.324,0.721,0.721V55.34c0,0.396-0.324,0.721-0.721,0.721H32.322
+		z"/>
+</g>
+<text transform="matrix(-4.442216e-008 1.0163 -1 -4.371139e-008 35.5374 41.5076)" fill="#F8F8F8" font-family="'ArialMT'" font-size="5">O</text>
+<path fill="#808080" d="M41.631,55.783c0.312,0,0.563-5.354,0.563-12.299s-0.252-12.299-0.563-12.299"/>
+<path opacity="0.15" fill="#FFFFFF" d="M41.038,30.907c0,0,0.464,0.061,0.678,0.374H6.464c0.043-0.157,0.137-0.374,0.137-0.374
+	H41.038z"/>
+<g>
+	<polygon opacity="0.24" points="51.545,61.489 51.545,60.485 0.109,60.485 -0.896,61.489 	"/>
+	<polygon opacity="0.24" fill="#F2F2F2" points="50.541,26.484 51.545,25.479 -0.896,25.479 -0.896,26.484 	"/>
+	<polygon opacity="0.24" fill="#F2F2F2" points="0.109,60.485 -0.896,61.489 -0.896,26.484 0.109,26.484 	"/>
+	<polygon opacity="0.24" points="51.546,25.479 50.541,26.484 50.541,60.485 51.546,60.485 	"/>
+</g>
+<rect x="43.417" y="13.44" fill="#666666" width="5.409" height="3.804"/>
+<polygon fill="#4D4D4D" points="0.388,23.443 1.823,23.443 1.823,18.177 "/>
+<polygon fill="#4D4D4D" points="48.826,23.443 50.261,23.443 48.826,18.177 "/>
 </svg>

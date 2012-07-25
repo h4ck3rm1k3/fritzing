@@ -1,18 +1,42 @@
-<?xml version='1.0' encoding='UTF-8' standalone='no'?>
-<!-- Created with Fritzing (http://www.fritzing.org/) -->
-<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.500126in' height='0.854394in' viewBox='0 0 12.7032 21.7016' >
-<g id='breadboard'>
-<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l12.7032,0 0,21.7016 -12.7032,0 0,-21.7016z
-M5.6516,12.35a0.7,0.7 0 1 0 1.4,0 0.7,0.7 0 1 0 -1.4,0z
-M5.6516,5.35a0.7,0.7 0 1 0 1.4,0 0.7,0.7 0 1 0 -1.4,0z
-'/>
-<circle id='connector1pin' connectorname='2' cx='6.3516' cy='12.35' r='0.9215' stroke='#9A916C' stroke-width='0.443' fill='none' />
-<circle id='connector0pin' connectorname='1' cx='6.3516' cy='5.35' r='0.9215' stroke='#9A916C' stroke-width='0.443' fill='none' />
-<line class='other' x1='0.1016' y1='3.1' x2='12.6016' y2='3.1' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line class='other' x1='12.6016' y1='3.1' x2='12.6016' y2='21.6' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line class='other' x1='12.6016' y1='21.6' x2='0.1016' y2='21.6' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line class='other' x1='0.1016' y1='21.6' x2='0.1016' y2='3.1' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='1.651' x='2.5416' y='19.208' text-anchor='start'>-</text>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='1.651' x='2.5416' y='6' text-anchor='start'>O</text>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="36.01px"
+	 height="61.516px" viewBox="0 0 36.01 61.516" enable-background="new 0 0 36.01 61.516" xml:space="preserve">
+<g id="Ebene_2">
+	<path fill="#1F7A34" d="M0,0h36.01v61.516H0V0z M16.02,35.008c0,1.096,0.889,1.984,1.984,1.984s1.984-0.889,1.984-1.984
+		s-0.889-1.984-1.984-1.984S16.02,33.912,16.02,35.008z M16.02,15.165c0,1.096,0.889,1.984,1.984,1.984s1.984-0.889,1.984-1.984
+		s-0.889-1.984-1.984-1.984S16.02,14.07,16.02,15.165z"/>
+	<circle id="connector1pin" fill="none" stroke="#9A916C" stroke-width="0.443" cx="18.005" cy="35.008" r="2.612"/>
+	<circle id="connector0pin" fill="none" stroke="#9A916C" stroke-width="0.443" cx="18.005" cy="15.165" r="2.612"/>
+</g>
+<g id="Ebene_1" xmlns:svg="http://www.w3.org/2000/svg">
+	<polyline fill="#333333" points="0,0 36.01,0 36.01,52.442 0,52.442 0,0 	"/>
+	<polygon fill="#4D4D4D" points="4.683,45.363 5.429,45.462 5.234,7.011 4.683,7.135 	"/>
+	<polygon fill="#4D4D4D" points="31.326,45.363 30.581,45.462 30.775,7.011 31.326,7.135 	"/>
+	<path d="M18.005,6.572c-6.945,0-13.105,0.252-13.105,0.563v38.172c0,0.312,6.161,0.563,13.106,0.563s13.105-0.252,13.105-0.563
+		V7.135C31.111,6.823,24.95,6.572,18.005,6.572z"/>
+	<polyline fill="#1A1A1A" points="0,54.883 36.01,54.883 36.01,52.442 0,52.442 0,54.883 	"/>
+	<path fill="#1A1A1A" d="M5.429,12.164v32.781c0,0.312,5.631,0.563,12.577,0.563s12.575-0.252,12.575-0.563V12.164H5.429z"/>
+	<polyline points="0,54.883 36.01,54.883 36.01,61.516 0,61.516 0,54.883 	"/>
+	<text transform="matrix(1.0163 0 0 1 17.2986 43.4885)" fill="#F8F8F8" font-family="'ArialMT'" font-size="5">I</text>
+	<g>
+		<polyline fill="#333333" points="5.429,10.508 30.581,10.508 30.581,38.383 5.429,38.383 5.429,10.508 		"/>
+		<polyline fill="#4D4D4D" points="5.429,11.217 30.581,11.217 30.581,33.024 5.429,33.024 5.429,11.217 		"/>
+		<polyline fill="#666666" points="5.429,11.008 30.581,11.008 30.581,25.383 5.429,25.383 5.429,11.008 		"/>
+		<path fill="#808080" d="M30.581,19.225H5.429v-8.747c0-0.396,0.324-0.72,0.72-0.72h23.712c0.396,0,0.72,0.324,0.72,0.72V19.225z"
+			/>
+	</g>
+	<text transform="matrix(1.0163 0 0 1 16.0286 16.0085)" fill="#F8F8F8" font-family="'ArialMT'" font-size="5">O</text>
+	<rect x="13.431" y="54.883" width="9.146" height="6.633"/>
+	<rect x="13.431" y="54.883" fill="#4D4D4D" width="9.146" height="6.633"/>
+	<rect x="13.431" y="58.199" fill="#333333" width="9.146" height="3.316"/>
+	<path fill="#808080" d="M30.303,9.915c0-0.312-5.354-0.563-12.299-0.563S5.706,9.604,5.706,9.915"/>
+	<path opacity="0.15" fill="#FFFFFF" d="M5.429,10.508c0,0,0.06-0.464,0.373-0.677v35.251c-0.156-0.043-0.373-0.137-0.373-0.137
+		V10.508z"/>
+	<polygon opacity="0.24" points="36.01,52.442 35.005,52.442 35.005,1.005 36.01,0 	"/>
+	<polygon opacity="0.24" fill="#F2F2F2" points="1.005,51.438 0,52.442 0,0 1.005,0 	"/>
+	<polygon opacity="0.24" fill="#F2F2F2" points="35.006,1.005 36.01,0 1.005,0 1.005,1.005 	"/>
+	<polygon opacity="0.24" points="0,52.443 1.005,51.438 35.005,51.438 35.005,52.443 	"/>
 </g>
 </svg>
