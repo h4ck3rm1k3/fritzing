@@ -2536,7 +2536,8 @@ QString PCBSketchWidget::makePasteMask(const QString & svgMask, ItemBase * board
     QDomDocument doc;
     doc.setContent(svgMask);
     QList<QDomElement> leaves;
-    TextUtils::collectLeaves(doc.documentElement(), leaves);
+    QDomElement root = doc.documentElement();
+    TextUtils::collectLeaves(root, leaves);
     int ix = 0;
     foreach (QDomElement element, leaves) {
         element.setAttribute("id", ix++);
