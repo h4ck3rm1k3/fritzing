@@ -1,34 +1,96 @@
-<?xml version='1.0' encoding='UTF-8' standalone='no'?>
-<!-- Created with Fritzing (http://www.fritzing.org/) -->
-<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.63811in' height='0.402638in' viewBox='0 0 16.208 10.227' >
-<g id='breadboard'>
-<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l16.208,0 0,10.227 -16.208,0 0,-10.227z
-M7.004,1.8635a1.1,1.1 0 1 0 2.2,0 1.1,1.1 0 1 0 -2.2,0z
-M0.254,2.6635a1.1,1.1 0 1 0 2.2,0 1.1,1.1 0 1 0 -2.2,0z
-M13.754,2.6635a1.1,1.1 0 1 0 2.2,0 1.1,1.1 0 1 0 -2.2,0z
-M6.354,5.6635a0.45,0.45 0 1 0 0.9,0 0.45,0.45 0 1 0 -0.9,0z
-M8.954,5.6635a0.45,0.45 0 1 0 0.9,0 0.45,0.45 0 1 0 -0.9,0z
-M4.254,5.6635a0.45,0.45 0 1 0 0.9,0 0.45,0.45 0 1 0 -0.9,0z
-M11.054,5.6635a0.45,0.45 0 1 0 0.9,0 0.45,0.45 0 1 0 -0.9,0z
-M4.254,8.1635a0.45,0.45 0 1 0 0.9,0 0.45,0.45 0 1 0 -0.9,0z
-M8.554,8.1635a0.45,0.45 0 1 0 0.9,0 0.45,0.45 0 1 0 -0.9,0z
-M11.054,8.1635a0.45,0.45 0 1 0 0.9,0 0.45,0.45 0 1 0 -0.9,0z
-'/>
-<circle id='connector1pin' connectorname='P$1' cx='8.104' cy='1.8635' r='1.227' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector3pin' connectorname='P$2' cx='1.354' cy='2.6635' r='1.227' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector5pin' connectorname='P$3' cx='14.854' cy='2.6635' r='1.227' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector2pin' connectorname='2' cx='6.804' cy='5.6635' r='0.577' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector0pin' connectorname='1' cx='9.404' cy='5.6635' r='0.577' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector4pin' connectorname='3' cx='4.704' cy='5.6635' r='0.577' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector6pin' connectorname='4' cx='11.504' cy='5.6635' r='0.577' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector7pin' connectorname='5' cx='4.704' cy='8.1635' r='0.577' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector8pin' connectorname='6' cx='9.004' cy='8.1635' r='0.577' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector9pin' connectorname='7' cx='11.504' cy='8.1635' r='0.577' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<line class='other' x1='0.604' y1='0.0635' x2='15.604' y2='0.0635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line class='other' x1='15.604' y1='0.0635' x2='15.604' y2='1.0135' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line class='other' x1='0.604' y1='0.0635' x2='0.604' y2='1.0135' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line class='other' x1='0.604' y1='10.1635' x2='15.604' y2='10.1635' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line class='other' x1='15.604' y1='10.1635' x2='15.604' y2='4.3135' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
-<line class='other' x1='0.604' y1='10.1635' x2='0.604' y2='4.3135' stroke='#f8f8f8' stroke-width='0.127' stroke-linecap='round'/>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Ebene_1" xmlns:svg="http://www.w3.org/2000/svg"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="45.943px"
+	 height="55.768px" viewBox="0 0 45.943 55.768" enable-background="new 0 0 45.943 55.768" xml:space="preserve">
+<g id="breadboard">
+	<circle id="connector2pin" fill="none" stroke="#9A916C" stroke-width="0.254" cx="19.287" cy="16.054" r="1.635"/>
+	<circle id="connector0pin" fill="none" stroke="#9A916C" stroke-width="0.254" cx="26.657" cy="16.054" r="1.635"/>
+	<circle id="connector4pin" fill="none" stroke="#9A916C" stroke-width="0.254" cx="13.334" cy="16.054" r="1.635"/>
+	<circle id="connector6pin" fill="none" stroke="#9A916C" stroke-width="0.254" cx="32.61" cy="16.054" r="1.635"/>
+	<circle id="connector7pin" fill="none" stroke="#9A916C" stroke-width="0.254" cx="13.334" cy="23.14" r="1.636"/>
+	<circle id="connector8pin" fill="none" stroke="#9A916C" stroke-width="0.254" cx="25.523" cy="23.14" r="1.636"/>
+	<circle id="connector9pin" fill="none" stroke="#9A916C" stroke-width="0.254" cx="32.61" cy="23.14" r="1.636"/>
+</g>
+<g>
+	<g>
+		<rect x="0" y="9.942" fill="#999999" width="45.943" height="44.531"/>
+		<rect x="0" y="11.236" fill="#4D4D4D" width="45.943" height="44.531"/>
+		<g>
+			<circle cx="22.972" cy="33.502" r="17.713"/>
+			<circle fill="#666666" cx="22.972" cy="33.502" r="17.713"/>
+			<circle cx="22.972" cy="33.502" r="16.955"/>
+			<path fill="#333333" d="M22.972,16.547c-11.354,0-15.398,9.847-15.398,9.847v6.326h30.908v-6.076
+				C38.483,26.643,34.534,16.547,22.972,16.547z"/>
+			<g>
+				<path fill="#808080" d="M32.011,39.499h5.192c0.821-1.891,1.279-3.977,1.279-6.17c0-7.447-5.251-13.666-12.25-15.164v3.402
+					h-6.52v-3.402c-7,1.498-12.251,7.717-12.251,15.164c0,2.193,0.458,4.279,1.279,6.17h5.194v6.431
+					c2.545,1.83,5.665,2.91,9.039,2.91c3.373,0,6.492-1.08,9.038-2.909V39.499z"/>
+				<g>
+					<g>
+						<g>
+							<rect x="29.105" y="24.805" fill="#4D4D4D" width="4.578" height="4.578"/>
+							<rect x="29.675" y="25.375" width="3.438" height="3.438"/>
+						</g>
+						<g>
+							<rect x="20.832" y="24.805" fill="#4D4D4D" width="4.578" height="4.578"/>
+							<rect x="21.402" y="25.375" width="3.438" height="3.438"/>
+						</g>
+						<g>
+							<rect x="12.56" y="24.805" fill="#4D4D4D" width="4.577" height="4.578"/>
+							<rect x="13.13" y="25.375" width="3.438" height="3.438"/>
+						</g>
+					</g>
+					<g>
+						<g>
+							<rect x="30.526" y="32.719" fill="#4D4D4D" width="4.577" height="4.577"/>
+							<rect x="31.095" y="33.29" width="3.439" height="3.438"/>
+						</g>
+						<g>
+							<rect x="19.262" y="32.719" fill="#4D4D4D" width="7.66" height="4.577"/>
+							<rect x="19.832" y="33.29" width="6.519" height="3.438"/>
+						</g>
+						<g>
+							<rect x="10.841" y="32.719" fill="#4D4D4D" width="4.578" height="4.577"/>
+							<rect x="11.41" y="33.29" width="3.438" height="3.438"/>
+						</g>
+					</g>
+					<g>
+						<rect x="16.206" y="39.46" fill="#4D4D4D" width="4.578" height="4.578"/>
+						<rect x="16.776" y="40.03" width="3.438" height="3.438"/>
+					</g>
+					<g>
+						<rect x="24.063" y="39.46" fill="#4D4D4D" width="4.577" height="4.578"/>
+						<rect x="24.633" y="40.03" width="3.438" height="3.438"/>
+					</g>
+				</g>
+			</g>
+			<path fill="#1A1A1A" d="M22.972,14.129c-10.7,0-19.374,8.673-19.374,19.373c0,10.701,8.673,19.373,19.374,19.373
+				c10.701,0,19.373-8.672,19.373-19.373C42.345,22.802,33.673,14.129,22.972,14.129z M22.972,51.854
+				c-10.136,0-18.353-8.217-18.353-18.353s8.217-18.353,18.353-18.353c10.135,0,18.352,8.217,18.352,18.353
+				S33.108,51.854,22.972,51.854z"/>
+			<path fill="#B3B3B3" d="M22.972,14.803c-10.327,0-18.699,8.371-18.699,18.698c0,10.328,8.372,18.698,18.699,18.698
+				c10.328,0,18.698-8.37,18.698-18.698C41.67,23.175,33.3,14.803,22.972,14.803z M22.972,51.215
+				c-9.783,0-17.713-7.931-17.713-17.713s7.93-17.713,17.713-17.713c9.782,0,17.712,7.931,17.712,17.713
+				S32.754,51.215,22.972,51.215z"/>
+			<path fill="#333333" d="M18.722,17.291c1.365-0.317,2.788-0.485,4.25-0.485c1.477,0,2.915,0.171,4.293,0.495v-2.002
+				c-1.379-0.324-2.816-0.495-4.293-0.495c-1.462,0-2.885,0.168-4.25,0.485V17.291z"/>
+		</g>
+	</g>
+	<polygon fill="#1A1A1A" points="26.657,55.75 19.287,55.75 19.287,51.93 23.03,52.555 26.657,51.93 	"/>
+	<rect x="1.712" y="0" fill="#808080" width="42.52" height="9.942"/>
+	<rect x="20.421" y="0" fill="#666666" width="5.102" height="9.942"/>
+	<rect x="22.388" y="0" fill="#4D4D4D" width="1.167" height="9.942"/>
+	<rect x="1.712" y="0" fill="#B3B3B3" width="1.167" height="9.942"/>
+	<rect x="43.065" y="0" fill="#666666" width="1.167" height="9.942"/>
+	<g opacity="0.25">
+		<polygon fill="#1A1A1A" points="45.944,55.75 44.722,55.75 44.722,12.459 45.944,11.219 		"/>
+		<polygon fill="#1A1A1A" points="0,55.75 1.222,54.527 45.753,54.527 45.753,55.75 		"/>
+	</g>
+	<g opacity="0.23">
+		<polygon fill="#E6E6E6" points="1.222,54.527 0,55.767 0,11.236 1.222,11.236 		"/>
+		<polygon fill="#E6E6E6" points="1.222,12.459 1.222,11.236 45.944,11.236 44.722,12.459 		"/>
+	</g>
 </g>
 </svg>
