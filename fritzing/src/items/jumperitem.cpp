@@ -54,10 +54,10 @@ void shorten(QRectF r0, QPointF r0c, QPointF r1c, double & r0x, double & r0y, do
 {
 	double radius = r0.width() / 2.0;
 	GraphicsUtils::shortenLine(r0c, r1c, radius, radius);
-	r0x = GraphicsUtils::pixels2mils(r0c.x(), FSvgRenderer::printerScale());
-	r0y = GraphicsUtils::pixels2mils(r0c.y(), FSvgRenderer::printerScale());
-	r1x = GraphicsUtils::pixels2mils(r1c.x(), FSvgRenderer::printerScale());
-	r1y = GraphicsUtils::pixels2mils(r1c.y(), FSvgRenderer::printerScale());
+	r0x = GraphicsUtils::pixels2mils(r0c.x(), GraphicsUtils::SVGDPI);
+	r0y = GraphicsUtils::pixels2mils(r0c.y(), GraphicsUtils::SVGDPI);
+	r1x = GraphicsUtils::pixels2mils(r1c.x(), GraphicsUtils::SVGDPI);
+	r1y = GraphicsUtils::pixels2mils(r1c.y(), GraphicsUtils::SVGDPI);
 }
 
 
@@ -193,10 +193,10 @@ void JumperItem::initialResize(ViewIdentifierClass::ViewIdentifier viewIdentifie
 	double r1y = m_modelPart->localProp("r1y").toDouble(&ok);
 	if (!ok) return;
 							
-	resizeAux(GraphicsUtils::mils2pixels(r0x, FSvgRenderer::printerScale()), 
-				GraphicsUtils::mils2pixels(r0y, FSvgRenderer::printerScale()),
-				GraphicsUtils::mils2pixels(r1x, FSvgRenderer::printerScale()), 
-				GraphicsUtils::mils2pixels(r1y, FSvgRenderer::printerScale()));
+	resizeAux(GraphicsUtils::mils2pixels(r0x, GraphicsUtils::SVGDPI), 
+				GraphicsUtils::mils2pixels(r0y, GraphicsUtils::SVGDPI),
+				GraphicsUtils::mils2pixels(r1x, GraphicsUtils::SVGDPI), 
+				GraphicsUtils::mils2pixels(r1y, GraphicsUtils::SVGDPI));
 
 }
 
@@ -279,15 +279,15 @@ QString JumperItem::makeSvg(ViewLayer::ViewLayerID viewLayerID)
 	QRectF r0 = m_connector0->rect();
 	QRectF r1 = m_connector1->rect();
 	QRectF r = r0.united(r1);
-	double w = GraphicsUtils::pixels2ins(r.width() + m_connectorTL.x() + m_connectorBR.x(), FSvgRenderer::printerScale());
-	double h = GraphicsUtils::pixels2ins(r.height() + m_connectorTL.y() + m_connectorBR.y(), FSvgRenderer::printerScale());
+	double w = GraphicsUtils::pixels2ins(r.width() + m_connectorTL.x() + m_connectorBR.x(), GraphicsUtils::SVGDPI);
+	double h = GraphicsUtils::pixels2ins(r.height() + m_connectorTL.y() + m_connectorBR.y(), GraphicsUtils::SVGDPI);
 
 	QPointF r0c = r0.center();
 	QPointF r1c = r1.center();
-	double r0x = GraphicsUtils::pixels2mils(r0c.x(), FSvgRenderer::printerScale());
-	double r0y = GraphicsUtils::pixels2mils(r0c.y(), FSvgRenderer::printerScale());
-	double r1x = GraphicsUtils::pixels2mils(r1c.x(), FSvgRenderer::printerScale());
-	double r1y = GraphicsUtils::pixels2mils(r1c.y(), FSvgRenderer::printerScale());
+	double r0x = GraphicsUtils::pixels2mils(r0c.x(), GraphicsUtils::SVGDPI);
+	double r0y = GraphicsUtils::pixels2mils(r0c.y(), GraphicsUtils::SVGDPI);
+	double r1x = GraphicsUtils::pixels2mils(r1c.x(), GraphicsUtils::SVGDPI);
+	double r1y = GraphicsUtils::pixels2mils(r1c.y(), GraphicsUtils::SVGDPI);
 
 	modelPart()->setLocalProp("r0x", r0x);
 	modelPart()->setLocalProp("r0y", r0y);

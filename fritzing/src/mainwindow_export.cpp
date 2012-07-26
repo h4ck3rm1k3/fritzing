@@ -270,7 +270,7 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 		if (wantSVG) {
 			bool empty;
 		    QSizeF imageSize;
-			QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, true, imageSize, board, GraphicsUtils::IllustratorDPI, false, false, empty);
+			QString svg = m_pcbGraphicsView->renderToSVG(GraphicsUtils::SVGDPI, viewLayerIDs, true, imageSize, board, GraphicsUtils::IllustratorDPI, false, false, empty);
 			massageOutput(svg, doMask, doSilk, maskTop, maskBottom, fileName, GraphicsUtils::IllustratorDPI);		
 			QString merged = mergeBoardSvg(svg, board, GraphicsUtils::IllustratorDPI, false, viewLayerIDs);
             TextUtils::writeUtf8(fileName.arg(""), merged);
@@ -291,7 +291,7 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
                 if (svg.isEmpty()) {
 			        bool empty;
                     QSizeF imageSize;
-			        svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, true, imageSize, board, res, false, false, empty);
+			        svg = m_pcbGraphicsView->renderToSVG(GraphicsUtils::SVGDPI, viewLayerIDs, true, imageSize, board, res, false, false, empty);
 			        massageOutput(svg, doMask, doSilk, maskTop, maskBottom, fileName, res);
                 }
 			
@@ -300,8 +300,8 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 			    // now convert to pdf
 			    QSvgRenderer svgRenderer;
 			    svgRenderer.load(merged.toLatin1());
-			    double trueWidth = boardImageSize.width() / FSvgRenderer::printerScale();
-			    double trueHeight = boardImageSize.height() / FSvgRenderer::printerScale();
+			    double trueWidth = boardImageSize.width() / GraphicsUtils::SVGDPI;
+			    double trueHeight = boardImageSize.height() / GraphicsUtils::SVGDPI;
 			    QRectF target(0, 0, trueWidth * res, trueHeight * res);
 
 			    QSizeF psize((target.width() + printer.paperRect().width() - printer.width()) / res, 
@@ -401,7 +401,7 @@ QString MainWindow::mergeBoardSvg(QString & svg, ItemBase * board, int res, bool
 	QSizeF imageSize;
 	bool empty;
 
-	QString outlineSvg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), outlineLayerIDs, true, imageSize, board, res, false, false, empty);
+	QString outlineSvg = m_pcbGraphicsView->renderToSVG(GraphicsUtils::SVGDPI, outlineLayerIDs, true, imageSize, board, res, false, false, empty);
 	outlineSvg = GerberGenerator::cleanOutline(outlineSvg);
     outlineSvg = TextUtils::slamStrokeAndFill(outlineSvg, "black", "0.5", "none");
 
@@ -445,7 +445,7 @@ QString MainWindow::getBoardSvg(ItemBase * board, int res,  LayerList & viewLaye
 
 	bool empty;
     QSizeF imageSize;
-	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, true, imageSize, board, res, true, false, empty);
+	QString svg = m_pcbGraphicsView->renderToSVG(GraphicsUtils::SVGDPI, viewLayerIDs, true, imageSize, board, res, true, false, empty);
 	board->setSelected(false);
 	foreach (QGraphicsItem * item, items) {
 		item->setSelected(true);
@@ -553,8 +553,8 @@ void MainWindow::exportAux(QString fileName, QImage::Format format, bool removeB
 
 	QSize imgSize(width * resMultiplier, height * resMultiplier);
 	QImage image(imgSize,format);
-	image.setDotsPerMeterX(InchesPerMeter * FSvgRenderer::printerScale() * resMultiplier);
-	image.setDotsPerMeterY(InchesPerMeter * FSvgRenderer::printerScale() * resMultiplier);
+	image.setDotsPerMeterX(InchesPerMeter * GraphicsUtils::SVGDPI * resMultiplier);
+	image.setDotsPerMeterY(InchesPerMeter * GraphicsUtils::SVGDPI * resMultiplier);
 	QPainter painter;
 	QColor color;
 	if (removeBackground) {
@@ -589,7 +589,7 @@ void MainWindow::exportAux(QString fileName, QImage::Format format, bool removeB
 
 void MainWindow::printAux(QPrinter &printer, bool removeBackground, bool paginate) {
 	int res = printer.resolution();
-	double scale2 = res / FSvgRenderer::printerScale();
+	double scale2 = res / GraphicsUtils::SVGDPI;
 	DebugDialog::debug(QString("p.w:%1 p.h:%2 pager.w:%3 pager.h:%4 paperr.w:%5 paperr.h:%6 source.w:%7 source.h:%8")
 		.arg(printer.width())
 		.arg(printer.height())
@@ -1041,7 +1041,7 @@ void MainWindow::exportSvg(double res, bool selectedItems, bool flatten) {
 
 	QSizeF imageSize;
 	bool empty;
-	QString svg = m_currentGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, false, imageSize, NULL, res, selectedItems, false, empty);
+	QString svg = m_currentGraphicsView->renderToSVG(GraphicsUtils::SVGDPI, viewLayerIDs, false, imageSize, NULL, res, selectedItems, false, empty);
 	if (svg.isEmpty()) {
 		// tell the user something reasonable
 		return;

@@ -71,11 +71,10 @@ public:
 	QList<SvgIdLayer *> setUpNonConnectors();
 
 public:
-	static void calcPrinterScale();
-	static double printerScale();
 	static void cleanup();
 	static QSizeF parseForWidthAndHeight(QXmlStreamReader &);
 	static QPixmap * getPixmap(QSvgRenderer * renderer, QSize size);
+    static void initNames();
 
 protected:
 	bool determineDefaultSize(QXmlStreamReader &);
@@ -99,9 +98,6 @@ protected:
 	QSizeF m_defaultSizeF;
 	QHash<QString, ConnectorInfo *> m_connectorInfoHash;
 	QHash<QString, ConnectorInfo *> m_nonConnectorInfoHash;
-
-protected:
-	static double m_printerScale;
 
 public:
 	static QString NonConnectorName;

@@ -45,7 +45,8 @@ public:
 		ForSilk,
 		ForOutline,
 		ForMask,
-		ForDrill
+		ForDrill,
+        ForPasteMask
 	};
 
 	int convert(const QString & svgStr, bool doubleSided, const QString & mainLayerName, ForWhy, QSizeF boardSize);

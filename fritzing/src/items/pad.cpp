@@ -279,8 +279,8 @@ void Pad::setInitialSize() {
 	double w = m_modelPart->localProp("width").toDouble();
 	if (w == 0) {
 		// set the size so the infoGraphicsView will display the size as you drag
-		modelPart()->setLocalProp("width", GraphicsUtils::pixels2mm(OriginalWidth, FSvgRenderer::printerScale())); 
-		modelPart()->setLocalProp("height", GraphicsUtils::pixels2mm(OriginalHeight, FSvgRenderer::printerScale())); 
+		modelPart()->setLocalProp("width", GraphicsUtils::pixels2mm(OriginalWidth, GraphicsUtils::SVGDPI)); 
+		modelPart()->setLocalProp("height", GraphicsUtils::pixels2mm(OriginalHeight, GraphicsUtils::SVGDPI)); 
 		modelPart()->setLocalProp("connect", "center"); 
 	}
 }

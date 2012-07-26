@@ -176,11 +176,11 @@ void GroundPlane::setSvgAux(const QString & svg) {
 	if (result) {
 		resetRenderer(svg);
 		if (m_connector0) {
-			QPainterPath painterPath = splitter.painterPath(FSvgRenderer::printerScale(), GroundPlaneGenerator::ConnectorName);
+			QPainterPath painterPath = splitter.painterPath(GraphicsUtils::SVGDPI, GroundPlaneGenerator::ConnectorName);
 			m_connector0->setRect(painterPath.boundingRect());
 			m_connector0->setShape(painterPath);
 		}
-		//QPainterPath painterPath = splitter.painterPath(FSvgRenderer::printerScale(), xmlName);
+		//QPainterPath painterPath = splitter.painterPath(GraphicsUtils::SVGDPI, xmlName);
 		//this->setShape(painterPath);  
 	}
 }

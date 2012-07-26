@@ -284,7 +284,7 @@ bool FApplication::init() {
 	Q_INIT_RESOURCE(phoenixresources);
 
 	MainWindow::initNames();
-	FSvgRenderer::calcPrinterScale();
+	FSvgRenderer::initNames();
 	ViewIdentifierClass::initNames();
 	RatsnestColors::initNames();
 	Wire::initNames();

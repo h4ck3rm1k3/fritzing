@@ -32,6 +32,9 @@ $Date$
 #include <qmath.h>
 
 
+const double GraphicsUtils::IllustratorDPI = 72;
+const double GraphicsUtils::StandardFritzingDPI = 1000;
+const double GraphicsUtils::SVGDPI = 90;
 const double GraphicsUtils::InchesPerMeter = 39.370078;
 const double GraphicsUtils::StandardSchematicSeparationMils = 295.275591;   // 7.5mm
 

@@ -33,6 +33,7 @@ $Date$
 #include "../debugdialog.h"
 #include "../fsvgrenderer.h"
 #include "../sketch/pcbsketchwidget.h"
+#include "../connectors/connectorItem.h"
 #include "svgfilesplitter.h"
 #include "groundplanegenerator.h"
 #include "../utils/graphicsutils.h"
@@ -48,6 +49,8 @@ const QString GerberGenerator::CopperTopSuffix = "_copperTop.gtl";
 const QString GerberGenerator::CopperBottomSuffix = "_copperBottom.gbl";
 const QString GerberGenerator::MaskTopSuffix = "_maskTop.gts";
 const QString GerberGenerator::MaskBottomSuffix = "_maskBottom.gbs";
+const QString GerberGenerator::PasteMaskTopSuffix = "_pasteMaskTop.gtp";
+const QString GerberGenerator::PasteMaskBottomSuffix = "_pasteMaskBottom.gbp";
 const QString GerberGenerator::DrillSuffix = "_drill.txt";
 const QString GerberGenerator::OutlineSuffix = "_contour.gm1";
 const QString GerberGenerator::MagicBoardOutlineID = "boardoutline";
@@ -93,15 +96,11 @@ void GerberGenerator::exportToGerber(const QString & prefix, const QString & exp
 
 	LayerList viewLayerIDs = ViewLayer::copperLayers(ViewLayer::Bottom);
 	int copperInvalidCount = doCopper(board, sketchWidget, viewLayerIDs, "Copper0", CopperBottomSuffix, prefix, exportDir, displayMessageBoxes);
-
-    
+ 
     if (sketchWidget->boardLayers() == 2) {
 		viewLayerIDs = ViewLayer::copperLayers(ViewLayer::Top);
 		copperInvalidCount += doCopper(board, sketchWidget, viewLayerIDs, "Copper1", CopperTopSuffix, prefix, exportDir, displayMessageBoxes);
 	}
-
-
-
 
 	LayerList maskLayerIDs = ViewLayer::maskLayers(ViewLayer::Bottom);
 	QString maskBottom, maskTop;
@@ -110,6 +109,14 @@ void GerberGenerator::exportToGerber(const QString & prefix, const QString & exp
 	if (sketchWidget->boardLayers() == 2) {
 		maskLayerIDs = ViewLayer::maskLayers(ViewLayer::Top);
 		maskInvalidCount += doMask(maskLayerIDs, "Mask1", MaskTopSuffix, board, sketchWidget, prefix, exportDir, displayMessageBoxes, maskTop);
+	}
+
+	maskLayerIDs = ViewLayer::maskLayers(ViewLayer::Bottom);
+	int pasteMaskInvalidCount = doPasteMask(maskLayerIDs, "PasteMask0", PasteMaskBottomSuffix, board, sketchWidget, prefix, exportDir, displayMessageBoxes);
+
+	if (sketchWidget->boardLayers() == 2) {
+		maskLayerIDs = ViewLayer::maskLayers(ViewLayer::Top);
+		pasteMaskInvalidCount += doPasteMask(maskLayerIDs, "PasteMask1", PasteMaskTopSuffix, board, sketchWidget, prefix, exportDir, displayMessageBoxes);
 	}
 
     LayerList silkLayerIDs = ViewLayer::silkLayers(ViewLayer::Top);
@@ -121,7 +128,7 @@ void GerberGenerator::exportToGerber(const QString & prefix, const QString & exp
     LayerList outlineLayerIDs = ViewLayer::outlineLayers();
 	QSizeF imageSize;
 	bool empty;
-	QString svgOutline = sketchWidget->renderToSVG(FSvgRenderer::printerScale(), outlineLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, empty);
+	QString svgOutline = sketchWidget->renderToSVG(GraphicsUtils::SVGDPI, outlineLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, empty);
     if (svgOutline.isEmpty()) {
         displayMessage(QObject::tr("outline is empty"), displayMessageBoxes);
         return;
@@ -141,12 +148,13 @@ void GerberGenerator::exportToGerber(const QString & prefix, const QString & exp
 
 	doDrill(board, sketchWidget, prefix, exportDir, displayMessageBoxes);
 
-	if (outlineInvalidCount > 0 || silkInvalidCount > 0 || copperInvalidCount > 0 || maskInvalidCount) {
+	if (outlineInvalidCount > 0 || silkInvalidCount > 0 || copperInvalidCount > 0 || maskInvalidCount || pasteMaskInvalidCount) {
 		QString s;
 		if (outlineInvalidCount > 0) s += QObject::tr("the board outline layer, ");
 		if (silkInvalidCount > 0) s += QObject::tr("silkscreen layer(s), ");
 		if (copperInvalidCount > 0) s += QObject::tr("copper layer(s), ");
 		if (maskInvalidCount > 0) s += QObject::tr("mask layer(s), ");
+		if (pasteMaskInvalidCount > 0) s += QObject::tr("paste mask layer(s), ");
 		s.chop(2);
 		displayMessage(QObject::tr("Unable to translate svg curves in %1").arg(s), displayMessageBoxes);
 	}
@@ -157,7 +165,7 @@ int GerberGenerator::doCopper(ItemBase * board, PCBSketchWidget * sketchWidget, 
 {
 	QSizeF imageSize;
 	bool empty;
-	QString svg = sketchWidget->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, empty);
+	QString svg = sketchWidget->renderToSVG(GraphicsUtils::SVGDPI, viewLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, empty);
 	if (svg.isEmpty()) {
 		displayMessage(QObject::tr("%1 file export failure (1)").arg(copperName), displayMessageBoxes);
 		return 0;
@@ -179,7 +187,7 @@ int GerberGenerator::doSilk(LayerList silkLayerIDs, const QString & silkName, co
 {
 	QSizeF imageSize;
 	bool empty;
-	QString svgSilk = sketchWidget->renderToSVG(FSvgRenderer::printerScale(), silkLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, empty);
+	QString svgSilk = sketchWidget->renderToSVG(GraphicsUtils::SVGDPI, silkLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, empty);
     if (svgSilk.isEmpty()) {
 		displayMessage(QObject::tr("silk file export failure (1)"), displayMessageBoxes);
         return 0;
@@ -221,7 +229,7 @@ int GerberGenerator::doDrill(ItemBase * board, PCBSketchWidget * sketchWidget, c
 
 	QSizeF imageSize;
 	bool empty;
-	QString svgDrill = sketchWidget->renderToSVG(FSvgRenderer::printerScale(), drillLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, empty);
+	QString svgDrill = sketchWidget->renderToSVG(GraphicsUtils::SVGDPI, drillLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, empty);
     if (svgDrill.isEmpty()) {
 		displayMessage(QObject::tr("drill file export failure (1)"), displayMessageBoxes);
         return 0;
@@ -251,7 +259,7 @@ int GerberGenerator::doMask(LayerList maskLayerIDs, const QString &maskName, con
 
 	QSizeF imageSize;
 	bool empty;
-	QString svgMask = sketchWidget->renderToSVG(FSvgRenderer::printerScale(), maskLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, empty);
+	QString svgMask = sketchWidget->renderToSVG(GraphicsUtils::SVGDPI, maskLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, empty);
     if (svgMask.isEmpty()) {
 		displayMessage(QObject::tr("mask file export failure (1)"), displayMessageBoxes);
         return 0;
@@ -279,6 +287,80 @@ int GerberGenerator::doMask(LayerList maskLayerIDs, const QString &maskName, con
 	}
 
 	clipString = svgMask;
+
+	return doEnd(svgMask, sketchWidget->boardLayers(), maskName, SVG2gerber::ForCopper, svgSize * GraphicsUtils::StandardFritzingDPI, exportDir, filename, gerberSuffix, displayMessageBoxes);
+}
+
+int GerberGenerator::doPasteMask(LayerList maskLayerIDs, const QString &maskName, const QString & gerberSuffix, ItemBase * board, PCBSketchWidget * sketchWidget, const QString & filename, const QString & exportDir, bool displayMessageBoxes) 
+{
+	// don't want these in the mask laqyer
+	QList<ItemBase *> copperLogoItems;
+	sketchWidget->hideCopperLogoItems(copperLogoItems);
+    QList<ConnectorItem *> connectorItems;
+
+	QSizeF imageSize;
+	bool empty;
+	QString svgMask = sketchWidget->renderToSVG(GraphicsUtils::SVGDPI, maskLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, empty);
+    if (svgMask.isEmpty()) {
+		displayMessage(QObject::tr("mask file export failure (1)"), displayMessageBoxes);
+        return 0;
+    }
+
+	sketchWidget->restoreCopperLogoItems(copperLogoItems);
+
+	if (empty) {
+		// don't bother with file
+		return 0;
+	}
+
+    QList<ConnectorItem *> throughHoles;
+    QList<ConnectorItem *> pads;
+    sketchWidget->collectThroughHole(throughHoles, pads, maskLayerIDs);
+    if (pads.count() == 0) return 0;
+
+    QRectF boardRect = board->sceneBoundingRect();
+    QList<QRectF> connectorRects;
+    foreach (ConnectorItem * connectorItem, throughHoles) {
+        QRectF r = connectorItem->sceneBoundingRect();
+        QRectF s((r.left() - boardRect.left())  * GraphicsUtils::StandardFritzingDPI / GraphicsUtils::SVGDPI, 
+                 (r.top() - boardRect.top()) * GraphicsUtils::StandardFritzingDPI / GraphicsUtils::SVGDPI,
+                 r.width() * GraphicsUtils::StandardFritzingDPI / GraphicsUtils::SVGDPI,
+                 r.height() * GraphicsUtils::StandardFritzingDPI / GraphicsUtils::SVGDPI);                                            
+        connectorRects << s;
+    }
+
+    QDomDocument doc;
+    doc.setContent(svgMask);
+    QList<QDomElement> leaves;
+    TextUtils::collectLeaves(doc.documentElement(), leaves);
+    int ix = 0;
+    foreach (QDomElement element, leaves) {
+        element.setAttribute("id", ix++);
+    }
+
+    QSvgRenderer renderer;
+    renderer.load(doc.toByteArray());
+
+    foreach (QDomElement element, leaves) {
+        QString id = element.attribute("id");
+        QRectF bounds = renderer.boundsOnElement(id);
+        QRectF leafRect = renderer.matrixForElement(id).mapRect(bounds);
+        foreach (QRectF r, connectorRects) {
+            if (leafRect.intersects(r)) {
+                element.setTagName("g");
+                break;
+            }
+        }
+    }
+
+    svgMask = doc.toString();
+	QSizeF svgSize = TextUtils::parseForWidthAndHeight(svgMask);
+
+	svgMask = clipToBoard(svgMask, board, maskName, SVG2gerber::ForCopper, "");
+	if (svgMask.isEmpty()) {
+		displayMessage(QObject::tr("mask export failure"), displayMessageBoxes);
+		return 0;
+	}
 
 	return doEnd(svgMask, sketchWidget->boardLayers(), maskName, SVG2gerber::ForCopper, svgSize * GraphicsUtils::StandardFritzingDPI, exportDir, filename, gerberSuffix, displayMessageBoxes);
 }
@@ -414,8 +496,8 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 
 	double res = GraphicsUtils::StandardFritzingDPI;
 	// convert from pixel dpi to StandardFritzingDPI
-	QRectF sourceRes(boardRect.left() * res / FSvgRenderer::printerScale(), boardRect.top() * res / FSvgRenderer::printerScale(), 
-					 boardRect.width() * res / FSvgRenderer::printerScale(), boardRect.height() * res / FSvgRenderer::printerScale());
+	QRectF sourceRes(boardRect.left() * res / GraphicsUtils::SVGDPI, boardRect.top() * res / GraphicsUtils::SVGDPI, 
+					 boardRect.width() * res / GraphicsUtils::SVGDPI, boardRect.height() * res / GraphicsUtils::SVGDPI);
 	int twidth = sourceRes.width();
 	int theight = sourceRes.height();
 	QSize imgSize(twidth + 2, theight + 2);

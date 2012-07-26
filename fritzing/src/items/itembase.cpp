@@ -1730,11 +1730,11 @@ bool ItemBase::getFlipDoc(ModelPart * modelPart, const QString & filename, ViewL
 {
 	if (viewLayerSpec == ViewLayer::ThroughHoleThroughTop_OneLayer) {
 		if ((viewLayerID == ViewLayer::Copper0) && modelPart->flippedSMD()) {
-			SvgFlattener::flipSMDSvg(filename, "", flipDoc, ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper1), ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper0), FSvgRenderer::printerScale());
+			SvgFlattener::flipSMDSvg(filename, "", flipDoc, ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper1), ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper0), GraphicsUtils::SVGDPI);
 			return true;
 		}
 		else if ((viewLayerID == ViewLayer::Silkscreen0) && modelPart->flippedSMD()) {
-			SvgFlattener::flipSMDSvg(filename, "", flipDoc, ViewLayer::viewLayerXmlNameFromID(ViewLayer::Silkscreen1), ViewLayer::viewLayerXmlNameFromID(ViewLayer::Silkscreen0), FSvgRenderer::printerScale());
+			SvgFlattener::flipSMDSvg(filename, "", flipDoc, ViewLayer::viewLayerXmlNameFromID(ViewLayer::Silkscreen1), ViewLayer::viewLayerXmlNameFromID(ViewLayer::Silkscreen0), GraphicsUtils::SVGDPI);
 			return true;
 		}
 	}

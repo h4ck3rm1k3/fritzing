@@ -1245,8 +1245,8 @@ void PCBSketchWidget::alignJumperItem(JumperItem * jumperItem, QPointF & loc) {
 	if (!m_alignToGrid) return;
 
 	QPointF newPos = loc - m_jumperDragOffset - m_alignmentStartPoint;
-	double ny = GraphicsUtils::getNearestOrdinate(newPos.y(), gridSizeInches() * FSvgRenderer::printerScale());
-	double nx = GraphicsUtils::getNearestOrdinate(newPos.x(), gridSizeInches() * FSvgRenderer::printerScale());
+	double ny = GraphicsUtils::getNearestOrdinate(newPos.y(), gridSizeInches() * GraphicsUtils::SVGDPI);
+	double nx = GraphicsUtils::getNearestOrdinate(newPos.x(), gridSizeInches() * GraphicsUtils::SVGDPI);
 	loc.setX(loc.x() + nx - newPos.x());
 	loc.setY(loc.y() + ny - newPos.y());
 }
@@ -1367,7 +1367,7 @@ QSizeF PCBSketchWidget::jumperItemSize() {
 }
 
 double PCBSketchWidget::getKeepout() {
-	return 0.015 * FSvgRenderer::printerScale();  // mils converted to pixels
+	return 0.015 * GraphicsUtils::SVGDPI;  // mils converted to pixels
 }
 
 bool PCBSketchWidget::acceptsTrace(const ViewGeometry & viewGeometry) {
@@ -1461,8 +1461,8 @@ void PCBSketchWidget::getViaSize(double & ringThickness, double & holeSize) {
 	getDefaultViaSize(ringThicknessStr, holeSizeStr);
 	double rt = TextUtils::convertToInches(ringThicknessStr);
 	double hs = TextUtils::convertToInches(holeSizeStr);
-	ringThickness = rt * FSvgRenderer::printerScale();
-	holeSize = hs * FSvgRenderer::printerScale();
+	ringThickness = rt * GraphicsUtils::SVGDPI;
+	holeSize = hs * GraphicsUtils::SVGDPI;
 }
 
 void PCBSketchWidget::getDefaultViaSize(QString & ringThickness, QString & holeSize) {
@@ -1493,9 +1493,9 @@ double PCBSketchWidget::getTraceWidth() {
 
 double PCBSketchWidget::getAutorouterTraceWidth() {
 	QSettings settings;
-	QString def = QString::number(GraphicsUtils::pixels2mils(getTraceWidth(), FSvgRenderer::printerScale()));
+	QString def = QString::number(GraphicsUtils::pixels2mils(getTraceWidth(), GraphicsUtils::SVGDPI));
 	int traceWidthMils = settings.value(AutorouterSettingsDialog::AutorouteTraceWidth, def).toInt();
-	return FSvgRenderer::printerScale() * traceWidthMils / 1000.0;
+	return GraphicsUtils::SVGDPI * traceWidthMils / 1000.0;
 }
 
 void PCBSketchWidget::getBendpointWidths(Wire * wire, double width, double & bendpointWidth, double & bendpoint2Width, bool & negativeOffsetRect) 
@@ -1506,8 +1506,8 @@ void PCBSketchWidget::getBendpointWidths(Wire * wire, double width, double & ben
 }
 
 double PCBSketchWidget::getSmallerTraceWidth(double minDim) {
-	int mils = qMax((int) GraphicsUtils::pixels2mils(minDim, FSvgRenderer::printerScale()) - 1, TraceWire::MinTraceWidthMils);
-	return GraphicsUtils::mils2pixels(mils, FSvgRenderer::printerScale());
+	int mils = qMax((int) GraphicsUtils::pixels2mils(minDim, GraphicsUtils::SVGDPI) - 1, TraceWire::MinTraceWidthMils);
+	return GraphicsUtils::mils2pixels(mils, GraphicsUtils::SVGDPI);
 }
 
 bool PCBSketchWidget::groundFill(bool fillGroundTraces, ViewLayer::ViewLayerID viewLayerID, QUndoCommand * parentCommand)
@@ -1549,7 +1549,7 @@ bool PCBSketchWidget::groundFill(bool fillGroundTraces, ViewLayer::ViewLayerID v
 	viewLayerIDs << ViewLayer::Board;
 	QSizeF boardImageSize;
 	bool empty;
-	QString boardSvg = renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, true, boardImageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, empty);
+	QString boardSvg = renderToSVG(GraphicsUtils::SVGDPI, viewLayerIDs, true, boardImageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, empty);
 	if (boardSvg.isEmpty()) {
         QMessageBox::critical(NULL, tr("Fritzing"), tr("Fritzing error: unable to render board svg (1)."));
 		return false;
@@ -1563,7 +1563,7 @@ bool PCBSketchWidget::groundFill(bool fillGroundTraces, ViewLayer::ViewLayerID v
 
 	    // hide ground traces so the ground plane will intersect them
 	    if (fillGroundTraces) showGroundTraces(seeds, false);
-	    svg0 = renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, true, copperImageSize, board, GraphicsUtils::StandardFritzingDPI, false, true, empty);
+	    svg0 = renderToSVG(GraphicsUtils::SVGDPI, viewLayerIDs, true, copperImageSize, board, GraphicsUtils::StandardFritzingDPI, false, true, empty);
 	    if (fillGroundTraces) showGroundTraces(seeds, true);
 	    if (svg0.isEmpty()) {
             QMessageBox::critical(NULL, tr("Fritzing"), tr("Fritzing error: unable to render copper svg (1)."));
@@ -1577,7 +1577,7 @@ bool PCBSketchWidget::groundFill(bool fillGroundTraces, ViewLayer::ViewLayerID v
 		viewLayerIDs << ViewLayer::Copper1 << ViewLayer::Copper1Trace << ViewLayer::GroundPlane1;
 
 		if (fillGroundTraces) showGroundTraces(seeds, false);
-		svg1 = renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, true, copperImageSize, board, GraphicsUtils::StandardFritzingDPI, false, true, empty);
+		svg1 = renderToSVG(GraphicsUtils::SVGDPI, viewLayerIDs, true, copperImageSize, board, GraphicsUtils::StandardFritzingDPI, false, true, empty);
 		if (fillGroundTraces) showGroundTraces(seeds, true);
 		if (svg1.isEmpty()) {
 			QMessageBox::critical(NULL, tr("Fritzing"), tr("Fritzing error: unable to render copper svg (1)."));
@@ -1679,7 +1679,7 @@ QString PCBSketchWidget::generateCopperFillUnit(ItemBase * itemBase, QPointF whe
 	viewLayerIDs << ViewLayer::Board;
 	QSizeF boardImageSize;
 	bool empty;
-	QString boardSvg = renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, true, boardImageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, empty);
+	QString boardSvg = renderToSVG(GraphicsUtils::SVGDPI, viewLayerIDs, true, boardImageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, empty);
 	if (boardSvg.isEmpty()) {
         QMessageBox::critical(NULL, tr("Fritzing"), tr("Fritzing error: unable to render board svg (1)."));
 		return "";
@@ -1699,7 +1699,7 @@ QString PCBSketchWidget::generateCopperFillUnit(ItemBase * itemBase, QPointF whe
 
 	bool vis = itemBase->isVisible();
 	itemBase->setVisible(false);
-	QString svg = renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, true, copperImageSize, board, GraphicsUtils::StandardFritzingDPI, false, true, empty);
+	QString svg = renderToSVG(GraphicsUtils::SVGDPI, viewLayerIDs, true, copperImageSize, board, GraphicsUtils::StandardFritzingDPI, false, true, empty);
 	itemBase->setVisible(vis);
 	if (svg.isEmpty()) {
         QMessageBox::critical(NULL, tr("Fritzing"), tr("Fritzing error: unable to render copper svg (1)."));
@@ -2035,6 +2035,27 @@ bool PCBSketchWidget::hasNeighbor(ConnectorItem * connectorItem, ViewLayer::View
 	}
 
 	return false;
+}
+
+void PCBSketchWidget::collectThroughHole(QList<ConnectorItem *> & th, QList<ConnectorItem *> & pads, const LayerList & layerList)
+{
+	foreach (QGraphicsItem * item, scene()->items()) {
+		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
+		if (connectorItem == NULL) continue;
+        if (!connectorItem->attachedTo()->isVisible()) continue;
+        if (!layerList.contains(connectorItem->attachedToViewLayerID())) continue;
+        if (connectorItem->attachedTo()->moduleID().endsWith(ModuleIDNames::PadModuleIDName)) {
+            pads.append(connectorItem);
+            continue;
+        }
+
+        if (connectorItem->attachedTo()->modelPart()->flippedSMD()) {
+            pads.append(connectorItem);
+            continue;
+        }
+
+        th << connectorItem;
+	}
 }
 
 void PCBSketchWidget::hideCopperLogoItems(QList<ItemBase *> & copperLogoItems)

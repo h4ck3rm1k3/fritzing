@@ -291,8 +291,8 @@ QString KicadSchematic2Svg::convertField(const QString & xString, const QString 
 
 	// convert back to 1000 dpi
 	QRectF brf(0, 0,
-			   bri.width() * GraphicsUtils::StandardFritzingDPI / FSvgRenderer::printerScale(), 
-			   bri.height() * GraphicsUtils::StandardFritzingDPI / FSvgRenderer::printerScale());
+			   bri.width() * GraphicsUtils::StandardFritzingDPI / GraphicsUtils::SVGDPI, 
+			   bri.height() * GraphicsUtils::StandardFritzingDPI / GraphicsUtils::SVGDPI);
 
 	if (anchor == "start") {
 		brf.translate(x, y - (brf.height() / 2));

@@ -692,7 +692,7 @@ void Wire::setExtras(const QDomElement & element, InfoGraphicsView * infoGraphic
 	else {
 		w = element.attribute("mils").toDouble(&ok);
 		if (ok) {
-			double wpix = GraphicsUtils::mils2pixels(w, FSvgRenderer::printerScale());
+			double wpix = GraphicsUtils::mils2pixels(w, GraphicsUtils::SVGDPI);
 			setWireWidth(wpix, infoGraphicsView, infoGraphicsView->getWireStrokeWidth(this, wpix));
 		}
 	}
@@ -1116,7 +1116,7 @@ double Wire::shadowWidth() {
 }
 
 double Wire::mils() {
-	return 1000 * m_pen.widthF() / FSvgRenderer::printerScale();
+	return 1000 * m_pen.widthF() / GraphicsUtils::SVGDPI;
 }
 
 void Wire::setColorString(QString colorName, double op) {
@@ -1162,10 +1162,10 @@ void Wire::initNames() {
 	widthTrans.insert(widths[i++], tr("super fine (8 mil)"));
 	widthTrans.insert(widths[i++], tr("extra thin (12 mil)"));
 
-	THIN_TRACE_WIDTH = GraphicsUtils::mils2pixels(widths[i], FSvgRenderer::printerScale());
+	THIN_TRACE_WIDTH = GraphicsUtils::mils2pixels(widths[i], GraphicsUtils::SVGDPI);
 	widthTrans.insert(widths[i++], tr("thin (16 mil)"));
 
-	STANDARD_TRACE_WIDTH = GraphicsUtils::mils2pixels(widths[i], FSvgRenderer::printerScale());
+	STANDARD_TRACE_WIDTH = GraphicsUtils::mils2pixels(widths[i], GraphicsUtils::SVGDPI);
 	widthTrans.insert(widths[i++], tr("standard (24 mil)"));
 
 	widthTrans.insert(widths[i++], tr("thick (32 mil)"));

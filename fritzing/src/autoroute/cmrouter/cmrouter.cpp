@@ -1522,21 +1522,21 @@ bool CMRouter::initBoard(ItemBase * board, Plane * thePlane, QList<Tile *> & alr
 	QSizeF boardSize = board->size();
 	ResizableBoard * resizableBoard = qobject_cast<ResizableBoard *>(board->layerKinChief());
 	if (resizableBoard != NULL) {
-		boardSize = resizableBoard->getSizeMM() * FSvgRenderer::printerScale() / 25.4;
+		boardSize = resizableBoard->getSizeMM() * GraphicsUtils::SVGDPI / 25.4;
 	}
-	QString svg = TextUtils::makeSVGHeader(FSvgRenderer::printerScale(), 
-										   FSvgRenderer::printerScale(), 
+	QString svg = TextUtils::makeSVGHeader(GraphicsUtils::SVGDPI, 
+										   GraphicsUtils::SVGDPI, 
 										   boardSize.width(), 
 										   boardSize.height());
-	svg += board->retrieveSvg(ViewLayer::Board, svgHash, true, FSvgRenderer::printerScale());
-	svg += board->retrieveSvg(ViewLayer::Silkscreen1, svgHash, true, FSvgRenderer::printerScale());
-	svg += board->retrieveSvg(ViewLayer::Silkscreen0, svgHash, true, FSvgRenderer::printerScale());
+	svg += board->retrieveSvg(ViewLayer::Board, svgHash, true, GraphicsUtils::SVGDPI);
+	svg += board->retrieveSvg(ViewLayer::Silkscreen1, svgHash, true, GraphicsUtils::SVGDPI);
+	svg += board->retrieveSvg(ViewLayer::Silkscreen0, svgHash, true, GraphicsUtils::SVGDPI);
 	svg += "</svg>";
 
 	GroundPlaneGenerator gpg;
 	QList<QRect> rects;
 	gpg.setMinRunSize(1, 1);
-	gpg.getBoardRects(svg, board, FSvgRenderer::printerScale(), m_keepout, rects);
+	gpg.getBoardRects(svg, board, GraphicsUtils::SVGDPI, m_keepout, rects);
 	QRectF bsbr = board->sceneBoundingRect();
 	foreach (QRect r, rects) {
 		TileRect tileRect;
@@ -1683,10 +1683,10 @@ void CMRouter::tileWires(QList<Wire *> & wires, QList<Tile *> & alreadyTiled, Ti
 				QPointF p1 = w->connector0()->sceneAdjustedTerminalPoint(NULL);
 				QPointF p2 = w->connector1()->sceneAdjustedTerminalPoint(NULL);
 				throw QObject::tr("tiling failure: possibly due wire crossing layers bug. Wire at %1,%2 %3,%4 (in)")
-					.arg(p1.x() / FSvgRenderer::printerScale())
-					.arg(p1.y() / FSvgRenderer::printerScale())
-					.arg(p2.x() / FSvgRenderer::printerScale())
-					.arg(p2.y() / FSvgRenderer::printerScale());
+					.arg(p1.x() / GraphicsUtils::SVGDPI)
+					.arg(p1.y() / GraphicsUtils::SVGDPI)
+					.arg(p2.x() / GraphicsUtils::SVGDPI)
+					.arg(p2.y() / GraphicsUtils::SVGDPI);
 			}
 			Tile * newTile = insertTile(plane, tileRect, alreadyTiled, w, tileType, overlapType);
 			drawGridItem(newTile);
@@ -4280,8 +4280,8 @@ Via * CMRouter::makeVia(PathUnit * pathUnit) {
 	double ringThickness, holeSize;
 	m_sketchWidget->getViaSize(ringThickness, holeSize);
 	via->setHoleSize(QString("%1in,%2in")
-						.arg(holeSize / FSvgRenderer::printerScale())
-						.arg(ringThickness / FSvgRenderer::printerScale()),
+						.arg(holeSize / GraphicsUtils::SVGDPI)
+						.arg(ringThickness / GraphicsUtils::SVGDPI),
 		false);
 
 	//DebugDialog::debug(QString("set via size %1 %2").arg(holeSize).arg(ringThickness));

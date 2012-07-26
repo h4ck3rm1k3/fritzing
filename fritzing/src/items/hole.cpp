@@ -101,7 +101,7 @@ QRectF Hole::getRect(const QString & newSize) {
 
 	double diameter = TextUtils::convertToInches(sizes.at(0));
 	double ringThickness = TextUtils::convertToInches(sizes.at(1));
-	double dim = (diameter + ringThickness + ringThickness) * FSvgRenderer::printerScale();
+	double dim = (diameter + ringThickness + ringThickness) * GraphicsUtils::SVGDPI;
 	//DebugDialog::debug(QString("get rect %1 %2").arg(newSize).arg(dim));
 	return QRectF(0, 0, dim, dim);
 }
@@ -169,7 +169,7 @@ void Hole::setBothNonConnectors(ItemBase * itemBase, SvgIdLayer * svgIdLayer) {
 
 QString Hole::makeSvg(const QString & holeDiameter, const QString & ringThickness, ViewLayer::ViewLayerID viewLayerID) 
 {
-	double offsetDPI = OffsetPixels / FSvgRenderer::printerScale();
+	double offsetDPI = OffsetPixels / GraphicsUtils::SVGDPI;
 	double hd = TextUtils::convertToInches(holeDiameter);
 	double rt = TextUtils::convertToInches(ringThickness);
 

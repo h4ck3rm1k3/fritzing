@@ -1846,8 +1846,8 @@ void MainWindow::actualSize() {
 	DebugDialog::debug(QString("actual size %1 %2").arg(dpi).arg(l));
 
 	// remember the parameter to the next two functions is a percent
-	m_currentGraphicsView->absoluteZoom(dpi * 100.0 / FSvgRenderer::printerScale());
-	m_zoomSlider->setValue(dpi * 100.0 / FSvgRenderer::printerScale());
+	m_currentGraphicsView->absoluteZoom(dpi * 100.0 / GraphicsUtils::SVGDPI);
+	m_zoomSlider->setValue(dpi * 100.0 / GraphicsUtils::SVGDPI);
 }
 
 void MainWindow::showBreadboardView() {

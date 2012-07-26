@@ -28,6 +28,7 @@ $Date$
 #include "debugdialog.h"
 #include "svg/svgfilesplitter.h"
 #include "utils/textutils.h"
+#include "utils/graphicsutils.h"
 #include "connectors/svgidlayer.h"
 
 #include <QRegExp>
@@ -38,8 +39,6 @@ $Date$
 #include <qnumeric.h>
 
 QString FSvgRenderer::NonConnectorName("nonconn");
-
-double FSvgRenderer::m_printerScale = 90.0;
 
 static ConnectorInfo VanillaConnectorInfo;
 
@@ -52,6 +51,10 @@ FSvgRenderer::~FSvgRenderer()
 {
 	clearConnectorInfoHash(m_connectorInfoHash);
 	clearConnectorInfoHash(m_nonConnectorInfoHash);
+}
+
+void FSvgRenderer::initNames() {
+    VanillaConnectorInfo.gotCircle = false;	
 }
 
 void FSvgRenderer::clearConnectorInfoHash(QHash<QString, ConnectorInfo *> & hash) {
@@ -265,7 +268,7 @@ bool FSvgRenderer::determineDefaultSize(QXmlStreamReader & xml)
 {
 	QSizeF size = parseForWidthAndHeight(xml);
 
-	m_defaultSizeF = QSizeF(size.width() * m_printerScale, size.height() * m_printerScale);
+	m_defaultSizeF = QSizeF(size.width() * GraphicsUtils::SVGDPI, size.height() * GraphicsUtils::SVGDPI);
 	return (size.width() != 0 && size.height() != 0);
 }
 
@@ -295,21 +298,6 @@ QSizeF FSvgRenderer::defaultSizeF() {
 	return m_defaultSizeF;
 }
 
-void FSvgRenderer::calcPrinterScale() {
-
-	// note: I think that printerScale is probably just 90 dpi, since the calculation
-	// result is 89.8407 for the breadboard svg across all three platforms 
-	// note: calculation result depends on the svg used; if the svg size is a float, the scale will vary a little
-	// using an svg file with exactly a 1-inch width (like 'wire.svg') gives exactly a 90.0 printerscale value.
-
-	VanillaConnectorInfo.gotCircle = false;				
-	m_printerScale = 90.0;
-
-}
-
-double FSvgRenderer::printerScale() {
-	return m_printerScale;
-}
 
 void FSvgRenderer::initNonConnectorInfo(QDomDocument & domDocument, const QString & filename)
 {

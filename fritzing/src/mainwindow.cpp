@@ -2355,8 +2355,8 @@ void MainWindow::cursorLocationSlot(double xinches, double yinches)
 		}
 		else if (m_locationLabelUnits.compare("px") == 0) {
 			units = "px";
-			x = xinches * FSvgRenderer::printerScale();
-			y = yinches * FSvgRenderer::printerScale();
+			x = xinches * GraphicsUtils::SVGDPI;
+			y = yinches * GraphicsUtils::SVGDPI;
 		}
 		else {
 			units = "in";

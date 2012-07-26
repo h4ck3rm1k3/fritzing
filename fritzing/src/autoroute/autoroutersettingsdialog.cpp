@@ -64,7 +64,7 @@ AutorouterSettingsDialog::AutorouterSettingsDialog(QWidget *parent) : QDialog(pa
 		QSettings settings;
 		m_traceWidth = settings.value(AutorouteTraceWidth, "0").toInt();
 		if (m_traceWidth == 0) {
-			m_traceWidth = GraphicsUtils::pixels2mils(Wire::STANDARD_TRACE_WIDTH, FSvgRenderer::printerScale());
+			m_traceWidth = GraphicsUtils::pixels2mils(Wire::STANDARD_TRACE_WIDTH, GraphicsUtils::SVGDPI);
 			settings.setValue(AutorouteTraceWidth, m_traceWidth);
 		}
 	}

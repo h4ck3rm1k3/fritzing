@@ -1989,8 +1989,8 @@ bool SketchWidget::moveByArrow(int dx, int dy, QKeyEvent * event) {
 	}
 
 	if (m_alignToGrid) {
-		dx *= gridSizeInches() * FSvgRenderer::printerScale();
-		dy *= gridSizeInches() * FSvgRenderer::printerScale();
+		dx *= gridSizeInches() * GraphicsUtils::SVGDPI;
+		dy *= gridSizeInches() * GraphicsUtils::SVGDPI;
 	}
 
 	m_arrowTotalX += dx;
@@ -2265,8 +2265,8 @@ void SketchWidget::alignLoc(QPointF & loc, const QPointF startPoint, const QPoin
 	// applied to loc, which is the location of the item being dragged
 
 	QPointF newPos = startPoint + newLoc - originalLoc;
-	double ny = GraphicsUtils::getNearestOrdinate(newPos.y(), gridSizeInches() * FSvgRenderer::printerScale());
-	double nx = GraphicsUtils::getNearestOrdinate(newPos.x(), gridSizeInches() * FSvgRenderer::printerScale());
+	double ny = GraphicsUtils::getNearestOrdinate(newPos.y(), gridSizeInches() * GraphicsUtils::SVGDPI);
+	double nx = GraphicsUtils::getNearestOrdinate(newPos.x(), gridSizeInches() * GraphicsUtils::SVGDPI);
 	loc.setX(loc.x() + nx - newPos.x());
 	loc.setY(loc.y() + ny - newPos.y());
 }
@@ -2751,7 +2751,7 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 	if (m_movingByArrow) return;
 
 	QPointF sp = mapToScene(event->pos());
-	emit cursorLocationSignal(sp.x() / FSvgRenderer::printerScale(), sp.y() / FSvgRenderer::printerScale());
+	emit cursorLocationSignal(sp.x() / GraphicsUtils::SVGDPI, sp.y() / GraphicsUtils::SVGDPI);
 
 	if (m_dragBendpointWire != NULL) {
 		Wire * tempWire = m_dragBendpointWire;
@@ -2780,7 +2780,7 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 				//drag->setDragCursor(bitmap, Qt::MoveAction);
 
 				QPointF offset;
-				QString svg = makeMoveSVG(FSvgRenderer::printerScale(),  GraphicsUtils::StandardFritzingDPI, offset);
+				QString svg = makeMoveSVG(GraphicsUtils::SVGDPI,  GraphicsUtils::StandardFritzingDPI, offset);
 				m_movingSVGRenderer = new QSvgRenderer(new QXmlStreamReader(svg));
 				m_movingSVGOffset = m_mousePressScenePos - offset;
 
@@ -6057,7 +6057,7 @@ void SketchWidget::changeWireWidthMils(const QString newWidthStr)
 	double newWidth = newWidthStr.toDouble(&ok);
 	if (!ok) return;
 
-	double trueWidth = FSvgRenderer::printerScale() * newWidth / 1000.0;
+	double trueWidth = GraphicsUtils::SVGDPI * newWidth / 1000.0;
 
 	QList <Wire *> wires;
 	foreach (QGraphicsItem * item, scene()->selectedItems()) {
@@ -7056,7 +7056,7 @@ void SketchWidget::drawBackground( QPainter * painter, const QRectF & rect )
 
 	if (m_showGrid) {
         QColor gridColor(0, 0, 0, 20);
-		double gridSize = m_gridSizeInches * FSvgRenderer::printerScale();
+		double gridSize = m_gridSizeInches * GraphicsUtils::SVGDPI;
 
 		double left = int(rect.left() * 10000) - (int(rect.left() * 10000) % int(gridSize * 10000));
 		left /= 10000;

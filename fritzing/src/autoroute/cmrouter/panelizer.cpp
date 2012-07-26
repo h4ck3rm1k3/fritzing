@@ -689,7 +689,7 @@ bool Panelizer::openWindows(QDomElement & boardElement, QHash<QString, QString> 
             panelItem->boardID = boardItem->id();
 
 		    QRectF sbr = boardItem->layerKinChief()->sceneBoundingRect();
-		    panelItem->boardSizeInches = sbr.size() / FSvgRenderer::printerScale();
+		    panelItem->boardSizeInches = sbr.size() / GraphicsUtils::SVGDPI;
 		    DebugDialog::debug(QString("board size inches c %1, %2, %3")
 				    .arg(panelItem->boardSizeInches.width())
 				    .arg(panelItem->boardSizeInches.height())
@@ -706,7 +706,7 @@ bool Panelizer::openWindows(QDomElement & boardElement, QHash<QString, QString> 
 				    .arg(path), boardItem->sceneBoundingRect());
 		    }
 		    else {
-			    panelItem->boardSizeInches = boardSize / FSvgRenderer::printerScale();
+			    panelItem->boardSizeInches = boardSize / GraphicsUtils::SVGDPI;
 			    DebugDialog::debug(QString("board size inches b %1, %2, %3")
 				    .arg(panelItem->boardSizeInches.width())
 				    .arg(panelItem->boardSizeInches.height())
@@ -1192,7 +1192,7 @@ void Panelizer::makeSVGs(MainWindow * mainWindow, ItemBase * board, const QStrin
 			if (forWhy == SVG2gerber::ForMask) {
 				mainWindow->pcbView()->hideCopperLogoItems(copperLogoItems);
 			}
-			QString one = mainWindow->pcbView()->renderToSVG(FSvgRenderer::printerScale(), layerThing.layerList, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, empty);
+			QString one = mainWindow->pcbView()->renderToSVG(GraphicsUtils::SVGDPI, layerThing.layerList, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, empty);
 					
 			QString clipString;
 					

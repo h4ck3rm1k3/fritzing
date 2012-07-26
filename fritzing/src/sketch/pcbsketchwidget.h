@@ -101,6 +101,7 @@ public:
 	ViewGeometry::WireFlag getTraceFlag();
 	void hideCopperLogoItems(QList<ItemBase *> & copperLogoItems);
 	void restoreCopperLogoItems(QList<ItemBase *> & copperLogoItems);
+	void collectThroughHole(QList<ConnectorItem *> & th, QList<ConnectorItem *> & pads, const LayerList &);
 	int selectAllItemType(ModelPart::ItemType, const QString & typeName);
 	bool isBoardLayerChange(ItemBase * itemBase, const QString & newModuleID, int & newLayers);
 	void convertToVia(ConnectorItem * lastHoverEnterConnectorItem, QPointF lastLocation);

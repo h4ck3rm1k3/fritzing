@@ -324,11 +324,11 @@ QString Stripboard::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QStrin
 
 		stripSvg += QString("<path stroke='none' stroke-width='0' fill='%6' " 
 						"d='m%1,%2 %3,0 0,%4 -%3,0z m0,%4a%5,%5  0,1,0 0,-%4z  m%3,-%4a%5,%5 0,1,0 0,%4z'/>\n")
-					.arg(p.x() * dpi / FSvgRenderer::printerScale())
-					.arg(p.y() * dpi / FSvgRenderer::printerScale())
-					.arg(r.width() * dpi / FSvgRenderer::printerScale() )
-					.arg(r.height() * dpi / FSvgRenderer::printerScale())
-					.arg(r.height() * dpi * .5 / FSvgRenderer::printerScale()) 
+					.arg(p.x() * dpi / GraphicsUtils::SVGDPI)
+					.arg(p.y() * dpi / GraphicsUtils::SVGDPI)
+					.arg(r.width() * dpi / GraphicsUtils::SVGDPI )
+					.arg(r.height() * dpi / GraphicsUtils::SVGDPI)
+					.arg(r.height() * dpi * .5 / GraphicsUtils::SVGDPI) 
 					.arg(blackOnly ? "black" : "#c49c59")
 				;
 	}

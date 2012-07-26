@@ -122,7 +122,7 @@ QString Ruler::makeSvg(double inches) {
 	double cm = 1 / 2.54;
 	double offset = 0.125;
 	double mmW = inches * 25.4;
-	QString svg = TextUtils::makeSVGHeader(FSvgRenderer::printerScale(), GraphicsUtils::StandardFritzingDPI, (inches + offset + offset) * FSvgRenderer::printerScale(), FSvgRenderer::printerScale());
+	QString svg = TextUtils::makeSVGHeader(GraphicsUtils::SVGDPI, GraphicsUtils::StandardFritzingDPI, (inches + offset + offset) * GraphicsUtils::SVGDPI, GraphicsUtils::SVGDPI);
 	svg += "<g font-family='DroidSans' text-anchor='middle' font-size='100' stroke-width='1px' stroke='black'>";
 	int counter = 0;
 	for (int i = 0; i <= qCeil(mmW); i++) {

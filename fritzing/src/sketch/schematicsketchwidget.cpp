@@ -318,7 +318,7 @@ bool SchematicSketchWidget::sameElectricalLayer2(ViewLayer::ViewLayerID, ViewLay
 }
 
 double SchematicSketchWidget::getKeepout() {
-	return 0.1 * FSvgRenderer::printerScale();
+	return 0.1 * GraphicsUtils::SVGDPI;
 }
 
 bool SchematicSketchWidget::acceptsTrace(const ViewGeometry & viewGeometry) {
@@ -330,7 +330,7 @@ ViewGeometry::WireFlag SchematicSketchWidget::getTraceFlag() {
 }
 
 double SchematicSketchWidget::getTraceWidth() {
-	return FSvgRenderer::printerScale() * TraceWidthMils / 1000;
+	return GraphicsUtils::SVGDPI * TraceWidthMils / 1000;
 }
 
 double SchematicSketchWidget::getAutorouterTraceWidth() {

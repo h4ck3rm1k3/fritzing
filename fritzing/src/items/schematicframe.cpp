@@ -160,7 +160,7 @@ QString SchematicFrame::makeLayerSvg(ViewLayer::ViewLayerID viewLayerID, double 
 		font.setWeight(QFont::Normal);
 		font.setPointSizeF(72.0 * FontSize / GraphicsUtils::StandardFritzingDPI);
 		m_textEdit->setFont(font);
-		m_textEdit->setLineWrapColumnOrWidth(FSvgRenderer::printerScale() * (OriginalWidth - Margin) / GraphicsUtils::StandardFritzingDPI);  
+		m_textEdit->setLineWrapColumnOrWidth(GraphicsUtils::SVGDPI * (OriginalWidth - Margin) / GraphicsUtils::StandardFritzingDPI);  
 	}
 
 
@@ -222,11 +222,11 @@ ViewIdentifierClass::ViewIdentifier SchematicFrame::theViewIdentifier() {
 }
 
 double SchematicFrame::minWidth() {
-	return OriginalWidth * FSvgRenderer::printerScale() / GraphicsUtils::StandardFritzingDPI;
+	return OriginalWidth * GraphicsUtils::SVGDPI / GraphicsUtils::StandardFritzingDPI;
 }
 
 double SchematicFrame::minHeight() {
-	return OriginalHeight * FSvgRenderer::printerScale() / GraphicsUtils::StandardFritzingDPI;
+	return OriginalHeight * GraphicsUtils::SVGDPI / GraphicsUtils::StandardFritzingDPI;
 }
 
 void SchematicFrame::addedToScene(bool temporary)

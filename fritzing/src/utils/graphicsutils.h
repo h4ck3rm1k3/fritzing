@@ -70,8 +70,9 @@ public:
 	static QPointF calcRotation(QTransform & rotation, QPointF rCenter, QPointF p, QPointF pCenter); 
 
 public:
-	static const int IllustratorDPI = 72;
-	static const int StandardFritzingDPI = 1000;
+	static const double IllustratorDPI;
+	static const double StandardFritzingDPI;
+	static const double SVGDPI;
 	static const double InchesPerMeter;
 	static const double StandardSchematicSeparationMils;
 

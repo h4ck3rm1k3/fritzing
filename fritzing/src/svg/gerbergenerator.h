@@ -50,6 +50,8 @@ public:
 	static const QString CopperBottomSuffix;
 	static const QString MaskTopSuffix;
 	static const QString MaskBottomSuffix;
+	static const QString PasteMaskTopSuffix;
+	static const QString PasteMaskBottomSuffix;
 	static const QString DrillSuffix;
 	static const QString OutlineSuffix;
 	static const QString MagicBoardOutlineID;
@@ -59,6 +61,7 @@ public:
 protected:
 	static int doSilk(LayerList silkLayerIDs, const QString & silkName, const QString & gerberSuffix, ItemBase * board, PCBSketchWidget * sketchWidget, const QString & filename, const QString & exportDir, bool displayMessageBoxes, const QString & clipString);
 	static int doMask(LayerList maskLayerIDs, const QString & maskName, const QString & gerberSuffix, ItemBase * board, PCBSketchWidget * sketchWidget, const QString & filename, const QString & exportDir, bool displayMessageBoxes, QString & clipString);
+	static int doPasteMask(LayerList maskLayerIDs, const QString & maskName, const QString & gerberSuffix, ItemBase * board, PCBSketchWidget * sketchWidget, const QString & filename, const QString & exportDir, bool displayMessageBoxes);
 	static int doCopper(ItemBase * board, PCBSketchWidget * sketchWidget, LayerList & viewLayerIDs, const QString & copperName, const QString & copperSuffix, const QString & filename, const QString & exportDir, bool displayMessageBoxes);
 	static int doDrill(ItemBase * board, PCBSketchWidget * sketchWidget, const QString & filename, const QString & exportDir, bool displayMessageBoxes);
 	static void displayMessage(const QString & message, bool displayMessageBoxes);

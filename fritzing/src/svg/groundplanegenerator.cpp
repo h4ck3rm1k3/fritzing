@@ -75,8 +75,8 @@ bool GroundPlaneGenerator::getBoardRects(const QString & boardSvg, QGraphicsItem
 	}
 
 	QRectF br = board->sceneBoundingRect();
-	double bWidth = res * br.width() / FSvgRenderer::printerScale();
-	double bHeight = res * br.height() / FSvgRenderer::printerScale();
+	double bWidth = res * br.width() / GraphicsUtils::SVGDPI;
+	double bHeight = res * br.height() / GraphicsUtils::SVGDPI;
 	QImage image(bWidth, bHeight, QImage::Format_Mono);  
 	image.setDotsPerMeterX(res * GraphicsUtils::InchesPerMeter);
 	image.setDotsPerMeterY(res * GraphicsUtils::InchesPerMeter);
@@ -162,8 +162,8 @@ bool GroundPlaneGenerator::generateGroundPlaneUnit(const QString & boardSvg, QSi
 
 	QRectF bsbr = board->sceneBoundingRect();
 
-	QPoint s(qRound(res * (whereToStart.x() - bsbr.topLeft().x()) / FSvgRenderer::printerScale()),
-			qRound(res * (whereToStart.y() - bsbr.topLeft().y()) / FSvgRenderer::printerScale()));
+	QPoint s(qRound(res * (whereToStart.x() - bsbr.topLeft().x()) / GraphicsUtils::SVGDPI),
+			qRound(res * (whereToStart.y() - bsbr.topLeft().y()) / GraphicsUtils::SVGDPI));
 
 	QBitArray redMarker(image->height() * image->width(), false);
 
@@ -225,7 +225,7 @@ bool GroundPlaneGenerator::generateGroundPlaneUnit(const QString & boardSvg, QSi
 	image->save(FolderUtils::getUserDataStorePath("") + "/testGroundPlaneUnit3.png");
 #endif
 
-	scanImage(*image, bWidth, bHeight, GraphicsUtils::StandardFritzingDPI / res, res, color, true, true, QSizeF(.05, .05), 1 / FSvgRenderer::printerScale(), QPointF(0,0));
+	scanImage(*image, bWidth, bHeight, GraphicsUtils::StandardFritzingDPI / res, res, color, true, true, QSizeF(.05, .05), 1 / GraphicsUtils::SVGDPI, QPointF(0,0));
 	delete image;
 	return true;
 }
@@ -239,7 +239,7 @@ bool GroundPlaneGenerator::generateGroundPlane(const QString & boardSvg, QSizeF 
 	QImage * image = generateGroundPlaneAux(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board, res, bWidth, bHeight);
 	if (image == NULL) return false;
 
-	scanImage(*image, bWidth, bHeight, GraphicsUtils::StandardFritzingDPI / res, res, color, true, true, QSizeF(.05, .05), 1 / FSvgRenderer::printerScale(), QPointF(0,0));
+	scanImage(*image, bWidth, bHeight, GraphicsUtils::StandardFritzingDPI / res, res, color, true, true, QSizeF(.05, .05), 1 / GraphicsUtils::SVGDPI, QPointF(0,0));
 	delete image;
 	return true;
 }
@@ -272,12 +272,12 @@ QImage * GroundPlaneGenerator::generateGroundPlaneAux(const QString & boardSvg, 
 	//file1.close();
 	
 
-	double svgWidth = res * qMax(boardImageSize.width(), copperImageSize.width()) / FSvgRenderer::printerScale();
-	double svgHeight = res * qMax(boardImageSize.height(), copperImageSize.height()) / FSvgRenderer::printerScale();
+	double svgWidth = res * qMax(boardImageSize.width(), copperImageSize.width()) / GraphicsUtils::SVGDPI;
+	double svgHeight = res * qMax(boardImageSize.height(), copperImageSize.height()) / GraphicsUtils::SVGDPI;
 
 	QRectF br =  board->sceneBoundingRect();
-	bWidth = res * br.width() / FSvgRenderer::printerScale();
-	bHeight = res * br.height() / FSvgRenderer::printerScale();
+	bWidth = res * br.width() / GraphicsUtils::SVGDPI;
+	bHeight = res * br.height() / GraphicsUtils::SVGDPI;
 	QImage * image = new QImage(qMax(svgWidth, bWidth), qMax(svgHeight, bHeight), QImage::Format_Mono); //
 	image->setDotsPerMeterX(res * GraphicsUtils::InchesPerMeter);
 	image->setDotsPerMeterY(res * GraphicsUtils::InchesPerMeter);
@@ -287,7 +287,7 @@ QImage * GroundPlaneGenerator::generateGroundPlaneAux(const QString & boardSvg, 
 	QPainter painter;
 	painter.begin(image);
 	painter.setRenderHint(QPainter::Antialiasing, false);
-	QRectF boardBounds(0, 0, res * boardImageSize.width() / FSvgRenderer::printerScale(), res * boardImageSize.height() / FSvgRenderer::printerScale()); 
+	QRectF boardBounds(0, 0, res * boardImageSize.width() / GraphicsUtils::SVGDPI, res * boardImageSize.height() / GraphicsUtils::SVGDPI); 
 	DebugDialog::debug("boardbounds", boardBounds);
 	renderer.render(&painter, boardBounds);
 	painter.end();
@@ -329,7 +329,7 @@ QImage * GroundPlaneGenerator::generateGroundPlaneAux(const QString & boardSvg, 
 	QSvgRenderer renderer2(copperByteArray);
 	painter.begin(image);
 	painter.setRenderHint(QPainter::Antialiasing, false);
-	QRectF bounds(0, 0, res * copperImageSize.width() / FSvgRenderer::printerScale(), res * copperImageSize.height() / FSvgRenderer::printerScale());
+	QRectF bounds(0, 0, res * copperImageSize.width() / GraphicsUtils::SVGDPI, res * copperImageSize.height() / GraphicsUtils::SVGDPI);
 	DebugDialog::debug("copperbounds", bounds);
 	renderer2.render(&painter, bounds);
 	if (m_blurBy != 0) {
@@ -385,7 +385,7 @@ void GroundPlaneGenerator::scanImage(QImage & image, double bWidth, double bHeig
 
 		m_newSVGs.append(pSvg);
 		if (makeOffset) {
-			offset *= FSvgRenderer::printerScale();
+			offset *= GraphicsUtils::SVGDPI;
 			m_newOffsets.append(offset);			// offset now in pixels
 		}
 
@@ -1056,7 +1056,7 @@ void GroundPlaneGenerator::scanOutline(QImage & image, double bWidth, double bHe
 	if (!pSvg.isEmpty()) {
 		m_newSVGs.append(pSvg);
 		if (makeOffset) {
-			offset *= FSvgRenderer::printerScale();
+			offset *= GraphicsUtils::SVGDPI;
 			m_newOffsets.append(offset);			// offset now in pixels
 		}
 	}

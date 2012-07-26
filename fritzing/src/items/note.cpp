@@ -758,13 +758,13 @@ QString Note::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QSt
 	QString svg = "<g>";
 
 	QString penColor = blackOnly ? "#000000" : m_pen.color().name();
-	double penWidth = m_pen.widthF() * dpi / FSvgRenderer::printerScale();
+	double penWidth = m_pen.widthF() * dpi / GraphicsUtils::SVGDPI;
 	QString brushColor = blackOnly ? "none" : m_brush.color().name();
 	svg += QString("<rect x='%1' y='%2' width='%3' height='%4' fill='%5' stroke='%6' stroke-width='%7' />")
 		.arg(penWidth / 2)
 		.arg(penWidth / 2)
-		.arg((m_rect.width() * dpi / FSvgRenderer::printerScale()) - penWidth)
-		.arg((m_rect.height() * dpi / FSvgRenderer::printerScale()) - penWidth)
+		.arg((m_rect.width() * dpi / GraphicsUtils::SVGDPI) - penWidth)
+		.arg((m_rect.height() * dpi / GraphicsUtils::SVGDPI) - penWidth)
 		.arg(brushColor)
 		.arg(penColor)
 		.arg(penWidth)
@@ -787,10 +787,10 @@ QString Note::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QSt
 			QString soFar;
 
 			svg += QString("<text  x='%1' y='%2' font-family='%3' stroke='none' fill='#000000' text-anchor='left' font-size='%4' >\n")
-				.arg((left + r.left()) * dpi / FSvgRenderer::printerScale())
-				.arg((top + r.top() + line.ascent()) * dpi / FSvgRenderer::printerScale())
+				.arg((left + r.left()) * dpi / GraphicsUtils::SVGDPI)
+				.arg((top + r.top() + line.ascent()) * dpi / GraphicsUtils::SVGDPI)
 				.arg("Droid Sans")
-				.arg(line.ascent() * dpi / FSvgRenderer::printerScale()) 
+				.arg(line.ascent() * dpi / GraphicsUtils::SVGDPI) 
 				;
 
 

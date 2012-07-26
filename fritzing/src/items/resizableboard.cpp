@@ -455,11 +455,11 @@ void ResizableBoard::loadTemplates() {
 }
 
 double ResizableBoard::minWidth() {
-	return 0.5 * FSvgRenderer::printerScale();
+	return 0.5 * GraphicsUtils::SVGDPI;
 }
 
 double ResizableBoard::minHeight() {
-	return 0.5 * FSvgRenderer::printerScale();
+	return 0.5 * GraphicsUtils::SVGDPI;
 }
 
 
@@ -649,7 +649,7 @@ ViewIdentifierClass::ViewIdentifier ResizableBoard::theViewIdentifier() {
 }
 
 void ResizableBoard::resizePixels(double w, double h, const LayerHash & viewLayers) {
-	resizeMM(GraphicsUtils::pixels2mm(w, FSvgRenderer::printerScale()), GraphicsUtils::pixels2mm(h, FSvgRenderer::printerScale()), viewLayers);
+	resizeMM(GraphicsUtils::pixels2mm(w, GraphicsUtils::SVGDPI), GraphicsUtils::pixels2mm(h, GraphicsUtils::SVGDPI), viewLayers);
 }
 
 bool ResizableBoard::resizeMM(double mmW, double mmH, const LayerHash & viewLayers) {
@@ -664,8 +664,8 @@ bool ResizableBoard::resizeMM(double mmW, double mmH, const LayerHash & viewLaye
 	}
 
 	QRectF r = this->boundingRect();
-	if (qAbs(GraphicsUtils::pixels2mm(r.width(), FSvgRenderer::printerScale()) - mmW) < .001 &&
-		qAbs(GraphicsUtils::pixels2mm(r.height(), FSvgRenderer::printerScale()) - mmH) < .001) 
+	if (qAbs(GraphicsUtils::pixels2mm(r.width(), GraphicsUtils::SVGDPI) - mmW) < .001 &&
+		qAbs(GraphicsUtils::pixels2mm(r.height(), GraphicsUtils::SVGDPI) - mmH) < .001) 
 	{
 		return false;
 	}
@@ -721,8 +721,8 @@ void ResizableBoard::setInitialSize() {
 	if (w == 0) {
 		// set the size so the infoGraphicsView will display the size as you drag
 		QSizeF sz = this->boundingRect().size();
-		modelPart()->setLocalProp("width", GraphicsUtils::pixels2mm(sz.width(), FSvgRenderer::printerScale())); 
-		modelPart()->setLocalProp("height", GraphicsUtils::pixels2mm(sz.height(), FSvgRenderer::printerScale())); 
+		modelPart()->setLocalProp("width", GraphicsUtils::pixels2mm(sz.width(), GraphicsUtils::SVGDPI)); 
+		modelPart()->setLocalProp("height", GraphicsUtils::pixels2mm(sz.height(), GraphicsUtils::SVGDPI)); 
 	}
 }
 
@@ -865,12 +865,12 @@ bool ResizableBoard::collectExtraInfo(QWidget * parent, const QString & family, 
 
 			double tens = pow(10.0, m_decimalsAfter);
 			QRectF r = this->boundingRect();
-			double w = qRound(GraphicsUtils::pixels2mm(r.width(), FSvgRenderer::printerScale()) * tens) / tens;
+			double w = qRound(GraphicsUtils::pixels2mm(r.width(), GraphicsUtils::SVGDPI) * tens) / tens;
 			QLabel * l1 = new QLabel(tr("width: %1mm").arg(w));	
 			l1->setMargin(0);
 			l1->setObjectName("infoViewLabel");		
 
-			double h = qRound(GraphicsUtils::pixels2mm(r.height(), FSvgRenderer::printerScale()) * tens) / tens;
+			double h = qRound(GraphicsUtils::pixels2mm(r.height(), GraphicsUtils::SVGDPI) * tens) / tens;
 			QLabel * l2 = new QLabel(tr("height: %1mm").arg(h));
 			l2->setMargin(0);
 			l2->setObjectName("infoViewLabel");		

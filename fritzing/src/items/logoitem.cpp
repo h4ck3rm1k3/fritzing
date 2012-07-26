@@ -245,8 +245,8 @@ bool LogoItem::reloadImage(const QString & svg, const QSizeF & aspectRatio, cons
 
         QSizeF size = fsvgRenderer()->defaultSizeF();
 
-        double mmW = GraphicsUtils::pixels2mm(size.width(), FSvgRenderer::printerScale());
-        double mmH = GraphicsUtils::pixels2mm(size.height(), FSvgRenderer::printerScale());
+        double mmW = GraphicsUtils::pixels2mm(size.width(), GraphicsUtils::SVGDPI);
+        double mmH = GraphicsUtils::pixels2mm(size.height(), GraphicsUtils::SVGDPI);
         modelPart()->setLocalProp("width", mmW);
 		modelPart()->setLocalProp("height", mmH);
         modelPart()->setLocalProp("originalWidth", mmW);
@@ -331,8 +331,8 @@ void LogoItem::loadImage(const QString & fileName, bool addName)
 		QString viewBox = root.attribute("viewBox");
 		if (viewBox.isEmpty()) {
 			bool ok1, ok2;
-			double w = TextUtils::convertToInches(root.attribute("width"), &ok1, isIllustrator) * FSvgRenderer::printerScale();
-			double h = TextUtils::convertToInches(root.attribute("height"), &ok2, isIllustrator) * FSvgRenderer::printerScale();
+			double w = TextUtils::convertToInches(root.attribute("width"), &ok1, isIllustrator) * GraphicsUtils::SVGDPI;
+			double h = TextUtils::convertToInches(root.attribute("height"), &ok2, isIllustrator) * GraphicsUtils::SVGDPI;
 			if (!ok1 || !ok2) {
 				unableToLoad(fileName, tr("because of an improper width or height attribute"));
 				return;
@@ -402,8 +402,8 @@ bool LogoItem::resizeMM(double mmW, double mmH, const LayerHash & viewLayers)
 	// DebugDialog::debug(QString("resize mm %1 %2").arg(mmW).arg(mmH));
 
 	QRectF r = this->boundingRect();
-	if (qAbs(GraphicsUtils::pixels2mm(r.width(), FSvgRenderer::printerScale()) - mmW) < .001 &&
-		qAbs(GraphicsUtils::pixels2mm(r.height(), FSvgRenderer::printerScale()) - mmH) < .001) 
+	if (qAbs(GraphicsUtils::pixels2mm(r.width(), GraphicsUtils::SVGDPI) - mmW) < .001 &&
+		qAbs(GraphicsUtils::pixels2mm(r.height(), GraphicsUtils::SVGDPI) - mmH) < .001) 
 	{
 		return false;
 	}
@@ -500,8 +500,8 @@ void LogoItem::setLogo(QString logo, bool force) {
 		// set the new text to approximately the same height as the original
 		// if the text is non-proportional that will be lost
 		LayerHash layerHash;
-		resizeMM(GraphicsUtils::pixels2mm(newSize.width(), FSvgRenderer::printerScale()),
-				 GraphicsUtils::pixels2mm(newSize.height(), FSvgRenderer::printerScale()),
+		resizeMM(GraphicsUtils::pixels2mm(newSize.width(), GraphicsUtils::SVGDPI),
+				 GraphicsUtils::pixels2mm(newSize.height(), GraphicsUtils::SVGDPI),
 				 layerHash);
 		//DebugDialog::debug(QString("size %1 %2").arg(m_size.width()).arg(m_size.height()));
 	}
