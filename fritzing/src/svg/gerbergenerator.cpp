@@ -314,7 +314,7 @@ int GerberGenerator::doPasteMask(LayerList maskLayerIDs, const QString &maskName
 		return 0;
 	}
 
-    svgMask = sketchWidget->makePasteMask(svgMask, board, maskLayerIDs);
+    svgMask = sketchWidget->makePasteMask(svgMask, board, GraphicsUtils::StandardFritzingDPI, maskLayerIDs);
     if (svgMask.isEmpty()) return 0;
 
 	QSizeF svgSize = TextUtils::parseForWidthAndHeight(svgMask);

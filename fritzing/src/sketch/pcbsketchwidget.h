@@ -102,7 +102,7 @@ public:
 	void hideCopperLogoItems(QList<ItemBase *> &);
 	void restoreCopperLogoItems(QList<ItemBase *> &);
 	void hideHoles(QList<ItemBase *> &);
-    QString makePasteMask(const QString & svgMask, ItemBase * board, const LayerList & maskLayerIDs);
+    QString makePasteMask(const QString & svgMask, ItemBase * board, double dpi, const LayerList & maskLayerIDs);
 	int selectAllItemType(ModelPart::ItemType, const QString & typeName);
 	bool isBoardLayerChange(ItemBase * itemBase, const QString & newModuleID, int & newLayers);
 	void convertToVia(ConnectorItem * lastHoverEnterConnectorItem, QPointF lastLocation);

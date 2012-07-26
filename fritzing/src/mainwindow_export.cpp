@@ -115,21 +115,6 @@ bool sortPartList(ItemBase * b1, ItemBase * b2) {
     return d1 < d2;
 }
 
-void massageOutput(QString & svg, bool doMask, bool doSilk, bool doPaste, QString & maskTop, QString & maskBottom, const QString & fileName, int dpi)
-{
-	if (doMask) {
-		if (fileName.contains("bottom")) maskBottom = svg; else maskTop = svg;
-		svg = TextUtils::expandAndFill(svg, "black", GerberGenerator::MaskClearanceMils * 2 * dpi / 1000);
-	}
-	else if (doSilk) {
-		QString use = (fileName.contains("bottom")) ? maskBottom : maskTop;
-		use = TextUtils::expandAndFill(use, "white", GerberGenerator::MaskClearanceMils * 2 * dpi / 1000);
-		svg = TextUtils::mergeSvg(svg, use, "", false);
-	}
-    else if (doPaste) {
-    }
-}
-
 /////////////////////////////////////////////////////////
 
 void MainWindow::initNames()
@@ -237,7 +222,7 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 	if (m_pcbGraphicsView->boardLayers() > 1) {
 		fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_copper_top%1", suffix));
 		fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_mask_top%1", suffix));
-		fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_paset_mask_top%1", suffix));
+		fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_paste_mask_top%1", suffix));
 	}
 	fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_silk_top%1", suffix));
 
@@ -281,7 +266,7 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 			bool empty;
 		    QSizeF imageSize;
 			QString svg = m_pcbGraphicsView->renderToSVG(GraphicsUtils::SVGDPI, viewLayerIDs, true, imageSize, board, GraphicsUtils::IllustratorDPI, false, false, empty);
-			massageOutput(svg, doMask, doSilk, doPaste, maskTop, maskBottom, fileName, GraphicsUtils::IllustratorDPI);		
+			massageOutput(svg, doMask, doSilk, doPaste, maskTop, maskBottom, fileName, board, GraphicsUtils::IllustratorDPI, viewLayerIDs);		
 			QString merged = mergeBoardSvg(svg, board, GraphicsUtils::IllustratorDPI, false, viewLayerIDs);
             TextUtils::writeUtf8(fileName.arg(""), merged);
 			merged = mergeBoardSvg(svg, board, GraphicsUtils::IllustratorDPI, true, viewLayerIDs);
@@ -302,7 +287,7 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 			        bool empty;
                     QSizeF imageSize;
 			        svg = m_pcbGraphicsView->renderToSVG(GraphicsUtils::SVGDPI, viewLayerIDs, true, imageSize, board, res, false, false, empty);
-			        massageOutput(svg, doMask, doSilk, doPaste, maskTop, maskBottom, fileName, res);
+			        massageOutput(svg, doMask, doSilk, doPaste, maskTop, maskBottom, fileName, board, res, viewLayerIDs);
                 }
 			
                 QString merged = mergeBoardSvg(svg, board, res, flip, viewLayerIDs);
@@ -1423,3 +1408,21 @@ QString MainWindow::constructFileName(const QString & differentiator, const QStr
 	fn += "_" + (differentiator.isEmpty() ? m_currentGraphicsView->getShortName() : differentiator);
 	return fn + suffix;
 }
+
+void MainWindow::massageOutput(QString & svg, bool doMask, bool doSilk, bool doPaste, QString & maskTop, QString & maskBottom, const QString & fileName, ItemBase * board, int dpi, const LayerList & viewLayerIDs)
+{
+	if (doPaste) {
+        // must test doPaste first, since doMask will also be true
+        svg = pcbView()->makePasteMask(svg, board, dpi, viewLayerIDs);
+    }
+	else if (doSilk) {
+		QString use = (fileName.contains("bottom")) ? maskBottom : maskTop;
+		use = TextUtils::expandAndFill(use, "white", GerberGenerator::MaskClearanceMils * 2 * dpi / 1000);
+		svg = TextUtils::mergeSvg(svg, use, "", false);
+	}
+    else if (doMask) {
+		if (fileName.contains("bottom")) maskBottom = svg; else maskTop = svg;
+		svg = TextUtils::expandAndFill(svg, "black", GerberGenerator::MaskClearanceMils * 2 * dpi / 1000);
+	}
+}
+

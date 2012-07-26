@@ -498,6 +498,7 @@ protected:
     void mainLoadAux(const QString & fileName);
     bool updateExportActions();
 	QWidget * createGridSizeForm(GridSizeThing *);
+    void massageOutput(QString & svg, bool doMask, bool doSilk, bool doPaste, QString & maskTop, QString & maskBottom, const QString & fileName, ItemBase * board, int dpi, const LayerList &);
 
 protected:
 	static void removeActionsStartingAt(QMenu *menu, int start=0);

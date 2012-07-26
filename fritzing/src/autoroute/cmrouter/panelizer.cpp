@@ -1210,7 +1210,7 @@ void Panelizer::makeSVGs(MainWindow * mainWindow, ItemBase * board, const QStrin
 				case SVG2gerber::ForPasteMask:
 					mainWindow->pcbView()->restoreCopperLogoItems(copperLogoItems);
 					mainWindow->pcbView()->restoreCopperLogoItems(holes);
-                    one = mainWindow->pcbView()->makePasteMask(one, board, layerThing.layerList);
+                    one = mainWindow->pcbView()->makePasteMask(one, board, GraphicsUtils::StandardFritzingDPI, layerThing.layerList);
                     if (one.isEmpty()) continue;
 
 					forWhy = SVG2gerber::ForCopper;

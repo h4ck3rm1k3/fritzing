@@ -2515,7 +2515,7 @@ bool PCBSketchWidget::canConnect(Wire * from, ItemBase * to) {
     return false;
 }
 
-QString PCBSketchWidget::makePasteMask(const QString & svgMask, ItemBase * board, const LayerList & maskLayerIDs) 
+QString PCBSketchWidget::makePasteMask(const QString & svgMask, ItemBase * board, double dpi, const LayerList & maskLayerIDs) 
 {
     QList<ConnectorItem *> throughHoles;
     QList<ConnectorItem *> pads;
@@ -2526,10 +2526,10 @@ QString PCBSketchWidget::makePasteMask(const QString & svgMask, ItemBase * board
     QList<QRectF> connectorRects;
     foreach (ConnectorItem * connectorItem, throughHoles) {
         QRectF r = connectorItem->sceneBoundingRect();
-        QRectF s((r.left() - boardRect.left())  * GraphicsUtils::StandardFritzingDPI / GraphicsUtils::SVGDPI, 
-                 (r.top() - boardRect.top()) * GraphicsUtils::StandardFritzingDPI / GraphicsUtils::SVGDPI,
-                 r.width() * GraphicsUtils::StandardFritzingDPI / GraphicsUtils::SVGDPI,
-                 r.height() * GraphicsUtils::StandardFritzingDPI / GraphicsUtils::SVGDPI);                                            
+        QRectF s((r.left() - boardRect.left())  * dpi / GraphicsUtils::SVGDPI, 
+                 (r.top() - boardRect.top()) * dpi / GraphicsUtils::SVGDPI,
+                 r.width() * dpi / GraphicsUtils::SVGDPI,
+                 r.height() * dpi / GraphicsUtils::SVGDPI);                                            
         connectorRects << s;
     }
 
