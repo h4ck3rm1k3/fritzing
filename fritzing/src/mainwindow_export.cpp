@@ -115,7 +115,7 @@ bool sortPartList(ItemBase * b1, ItemBase * b2) {
     return d1 < d2;
 }
 
-void massageOutput(QString & svg, bool doMask, bool doSilk, QString & maskTop, QString & maskBottom, const QString & fileName, int dpi)
+void massageOutput(QString & svg, bool doMask, bool doSilk, bool doPaste, QString & maskTop, QString & maskBottom, const QString & fileName, int dpi)
 {
 	if (doMask) {
 		if (fileName.contains("bottom")) maskBottom = svg; else maskTop = svg;
@@ -126,6 +126,8 @@ void massageOutput(QString & svg, bool doMask, bool doSilk, QString & maskTop, Q
 		use = TextUtils::expandAndFill(use, "white", GerberGenerator::MaskClearanceMils * 2 * dpi / 1000);
 		svg = TextUtils::mergeSvg(svg, use, "", false);
 	}
+    else if (doPaste) {
+    }
 }
 
 /////////////////////////////////////////////////////////
@@ -231,17 +233,20 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 
 	fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_copper_bottom%1", suffix));
 	fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_mask_bottom%1", suffix));
+	fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_paste_mask_bottom%1", suffix));
 	if (m_pcbGraphicsView->boardLayers() > 1) {
 		fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_copper_top%1", suffix));
 		fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_mask_top%1", suffix));
+		fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_paset_mask_top%1", suffix));
 	}
 	fileNames.append(exportDir + "/" + constructFileName(prefix + "etch_silk_top%1", suffix));
 
 	QString maskTop, maskBottom;
-	QList<ItemBase *> copperLogoItems;
+	QList<ItemBase *> copperLogoItems, holes;
 	for (int ix = 0; ix < fileNames.count(); ix++) {
 		bool doMask = false;
 		bool doSilk = false;
+        bool doPaste = false;
 		QString fileName = fileNames[ix];
 		LayerList viewLayerIDs;
 		if (fileName.contains("copper_bottom")) {
@@ -250,6 +255,7 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 		else if (fileName.contains("mask_bottom")) {
 			doMask = true;
 			viewLayerIDs << ViewLayer::Copper0;
+            doPaste = fileName.contains("paste");
 		}
 		else if (fileName.contains("copper_top")) {
 			viewLayerIDs << ViewLayer::GroundPlane1 << ViewLayer::Copper1 << ViewLayer::Copper1Trace;
@@ -257,6 +263,7 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 		else if (fileName.contains("mask_top")) {
 			viewLayerIDs << ViewLayer::Copper1;
 			doMask = true;
+            doPaste = fileName.contains("paste");
 		}
 		else if (fileName.contains("silk_top")) {
 			viewLayerIDs << ViewLayer::Silkscreen1 << ViewLayer::Silkscreen1Label;
@@ -266,12 +273,15 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 		if (doMask) {
 			m_pcbGraphicsView->hideCopperLogoItems(copperLogoItems);
 		}
+		if (doPaste) {
+			m_pcbGraphicsView->hideHoles(holes);
+		}
 
 		if (wantSVG) {
 			bool empty;
 		    QSizeF imageSize;
 			QString svg = m_pcbGraphicsView->renderToSVG(GraphicsUtils::SVGDPI, viewLayerIDs, true, imageSize, board, GraphicsUtils::IllustratorDPI, false, false, empty);
-			massageOutput(svg, doMask, doSilk, maskTop, maskBottom, fileName, GraphicsUtils::IllustratorDPI);		
+			massageOutput(svg, doMask, doSilk, doPaste, maskTop, maskBottom, fileName, GraphicsUtils::IllustratorDPI);		
 			QString merged = mergeBoardSvg(svg, board, GraphicsUtils::IllustratorDPI, false, viewLayerIDs);
             TextUtils::writeUtf8(fileName.arg(""), merged);
 			merged = mergeBoardSvg(svg, board, GraphicsUtils::IllustratorDPI, true, viewLayerIDs);
@@ -292,7 +302,7 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 			        bool empty;
                     QSizeF imageSize;
 			        svg = m_pcbGraphicsView->renderToSVG(GraphicsUtils::SVGDPI, viewLayerIDs, true, imageSize, board, res, false, false, empty);
-			        massageOutput(svg, doMask, doSilk, maskTop, maskBottom, fileName, res);
+			        massageOutput(svg, doMask, doSilk, doPaste, maskTop, maskBottom, fileName, res);
                 }
 			
                 QString merged = mergeBoardSvg(svg, board, res, flip, viewLayerIDs);
@@ -319,6 +329,9 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 		}
 		if (doMask) {
 			m_pcbGraphicsView->restoreCopperLogoItems(copperLogoItems);
+		}
+		if (doPaste) {
+			m_pcbGraphicsView->restoreCopperLogoItems(holes);
 		}
 
 	}

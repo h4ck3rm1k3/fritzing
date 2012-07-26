@@ -33,7 +33,6 @@ $Date$
 #include "../debugdialog.h"
 #include "../fsvgrenderer.h"
 #include "../sketch/pcbsketchwidget.h"
-#include "../connectors/connectorItem.h"
 #include "svgfilesplitter.h"
 #include "groundplanegenerator.h"
 #include "../utils/graphicsutils.h"
@@ -296,7 +295,8 @@ int GerberGenerator::doPasteMask(LayerList maskLayerIDs, const QString &maskName
 	// don't want these in the mask laqyer
 	QList<ItemBase *> copperLogoItems;
 	sketchWidget->hideCopperLogoItems(copperLogoItems);
-    QList<ConnectorItem *> connectorItems;
+	QList<ItemBase *> holes;
+	sketchWidget->hideHoles(holes);
 
 	QSizeF imageSize;
 	bool empty;
@@ -307,53 +307,16 @@ int GerberGenerator::doPasteMask(LayerList maskLayerIDs, const QString &maskName
     }
 
 	sketchWidget->restoreCopperLogoItems(copperLogoItems);
+	sketchWidget->restoreCopperLogoItems(holes);
 
 	if (empty) {
 		// don't bother with file
 		return 0;
 	}
 
-    QList<ConnectorItem *> throughHoles;
-    QList<ConnectorItem *> pads;
-    sketchWidget->collectThroughHole(throughHoles, pads, maskLayerIDs);
-    if (pads.count() == 0) return 0;
+    svgMask = sketchWidget->makePasteMask(svgMask, board, maskLayerIDs);
+    if (svgMask.isEmpty()) return 0;
 
-    QRectF boardRect = board->sceneBoundingRect();
-    QList<QRectF> connectorRects;
-    foreach (ConnectorItem * connectorItem, throughHoles) {
-        QRectF r = connectorItem->sceneBoundingRect();
-        QRectF s((r.left() - boardRect.left())  * GraphicsUtils::StandardFritzingDPI / GraphicsUtils::SVGDPI, 
-                 (r.top() - boardRect.top()) * GraphicsUtils::StandardFritzingDPI / GraphicsUtils::SVGDPI,
-                 r.width() * GraphicsUtils::StandardFritzingDPI / GraphicsUtils::SVGDPI,
-                 r.height() * GraphicsUtils::StandardFritzingDPI / GraphicsUtils::SVGDPI);                                            
-        connectorRects << s;
-    }
-
-    QDomDocument doc;
-    doc.setContent(svgMask);
-    QList<QDomElement> leaves;
-    TextUtils::collectLeaves(doc.documentElement(), leaves);
-    int ix = 0;
-    foreach (QDomElement element, leaves) {
-        element.setAttribute("id", ix++);
-    }
-
-    QSvgRenderer renderer;
-    renderer.load(doc.toByteArray());
-
-    foreach (QDomElement element, leaves) {
-        QString id = element.attribute("id");
-        QRectF bounds = renderer.boundsOnElement(id);
-        QRectF leafRect = renderer.matrixForElement(id).mapRect(bounds);
-        foreach (QRectF r, connectorRects) {
-            if (leafRect.intersects(r)) {
-                element.setTagName("g");
-                break;
-            }
-        }
-    }
-
-    svgMask = doc.toString();
 	QSizeF svgSize = TextUtils::parseForWidthAndHeight(svgMask);
 
 	svgMask = clipToBoard(svgMask, board, maskName, SVG2gerber::ForCopper, "");

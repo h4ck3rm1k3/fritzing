@@ -2069,6 +2069,18 @@ void PCBSketchWidget::hideCopperLogoItems(QList<ItemBase *> & copperLogoItems)
 	}
 }
 
+void PCBSketchWidget::hideHoles(QList<ItemBase *> & holes)
+{
+	foreach (QGraphicsItem * item, this->items()) {
+		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+        // for some reason the layerkin of the hole doesn't have a modelPart->itemType() == ModelPart::Hole
+		if (itemBase && itemBase->isVisible() && itemBase->layerKinChief()->modelPart()->itemType() == ModelPart::Hole) {
+			holes.append(itemBase);
+			itemBase->setVisible(false);
+		}
+	}
+}
+
 void PCBSketchWidget::restoreCopperLogoItems(QList<ItemBase *> & copperLogoItems)
 {
 	foreach (ItemBase * logoItem, copperLogoItems) {
@@ -2503,4 +2515,54 @@ bool PCBSketchWidget::canConnect(Wire * from, ItemBase * to) {
     return false;
 }
 
+QString PCBSketchWidget::makePasteMask(const QString & svgMask, ItemBase * board, const LayerList & maskLayerIDs) 
+{
+    QList<ConnectorItem *> throughHoles;
+    QList<ConnectorItem *> pads;
+    collectThroughHole(throughHoles, pads, maskLayerIDs);
+    if (pads.count() == 0) return "";
+
+    QRectF boardRect = board->sceneBoundingRect();
+    QList<QRectF> connectorRects;
+    foreach (ConnectorItem * connectorItem, throughHoles) {
+        QRectF r = connectorItem->sceneBoundingRect();
+        QRectF s((r.left() - boardRect.left())  * GraphicsUtils::StandardFritzingDPI / GraphicsUtils::SVGDPI, 
+                 (r.top() - boardRect.top()) * GraphicsUtils::StandardFritzingDPI / GraphicsUtils::SVGDPI,
+                 r.width() * GraphicsUtils::StandardFritzingDPI / GraphicsUtils::SVGDPI,
+                 r.height() * GraphicsUtils::StandardFritzingDPI / GraphicsUtils::SVGDPI);                                            
+        connectorRects << s;
+    }
+
+    QDomDocument doc;
+    doc.setContent(svgMask);
+    QList<QDomElement> leaves;
+    TextUtils::collectLeaves(doc.documentElement(), leaves);
+    int ix = 0;
+    foreach (QDomElement element, leaves) {
+        element.setAttribute("id", ix++);
+    }
+
+    QSvgRenderer renderer;
+    renderer.load(doc.toByteArray());
+
+    foreach (QDomElement element, leaves) {
+        QString id = element.attribute("id");
+        QRectF bounds = renderer.boundsOnElement(id);
+        QRectF leafRect = renderer.matrixForElement(id).mapRect(bounds);
+        QPointF leafCenter = leafRect.center();
+        foreach (QRectF r, connectorRects) {
+            if (!leafRect.intersects(r)) continue;
+
+            if (!r.contains(leafCenter)) continue;
+
+            QPointF rCenter = r.center();
+            if (!leafRect.contains(rCenter)) continue;
+
+            element.setTagName("g");
+            break;
+        }
+    }
+
+    return doc.toString();
+}
 

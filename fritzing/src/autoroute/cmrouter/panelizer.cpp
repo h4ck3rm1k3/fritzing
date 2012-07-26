@@ -278,6 +278,8 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 	layerThingList.append(LayerThing("copper_bottom", ViewLayer::copperLayers(ViewLayer::Bottom), SVG2gerber::ForCopper, GerberGenerator::CopperBottomSuffix));
 	layerThingList.append(LayerThing("mask_top", ViewLayer::maskLayers(ViewLayer::Top), SVG2gerber::ForMask, GerberGenerator:: MaskTopSuffix));
 	layerThingList.append(LayerThing("mask_bottom", ViewLayer::maskLayers(ViewLayer::Bottom), SVG2gerber::ForMask, GerberGenerator::MaskBottomSuffix));
+	layerThingList.append(LayerThing("paste_mask_top", ViewLayer::maskLayers(ViewLayer::Top), SVG2gerber::ForPasteMask, GerberGenerator:: PasteMaskTopSuffix));
+	layerThingList.append(LayerThing("paste_mask_bottom", ViewLayer::maskLayers(ViewLayer::Bottom), SVG2gerber::ForPasteMask, GerberGenerator::PasteMaskBottomSuffix));
 	layerThingList.append(LayerThing("silk_top", ViewLayer::silkLayers(ViewLayer::Top), SVG2gerber::ForSilk, GerberGenerator::SilkTopSuffix));
 	layerThingList.append(LayerThing("silk_bottom", ViewLayer::silkLayers(ViewLayer::Bottom), SVG2gerber::ForSilk, GerberGenerator::SilkBottomSuffix));
 	layerThingList.append(LayerThing("drill", ViewLayer::drillLayers(), SVG2gerber::ForDrill, GerberGenerator::DrillSuffix));
@@ -341,7 +343,7 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 			DebugDialog::debug("converting " + prefix + " " + suffix);
 			QSizeF svgSize(planePair->panelWidth, planePair->panelHeight);
 			SVG2gerber::ForWhy forWhy = layerThingList.at(i).forWhy;
-			if (forWhy == SVG2gerber::ForMask) forWhy = SVG2gerber::ForCopper;
+			if (forWhy == SVG2gerber::ForMask || forWhy == SVG2gerber::ForPasteMask) forWhy = SVG2gerber::ForCopper;
 			GerberGenerator::doEnd(planePair->svgs.at(i), 2, layerThingList.at(i).name, forWhy, svgSize, gerberDir.absolutePath(), prefix, suffix, false);
 			DebugDialog::debug("after converting " + prefix + " " + suffix);
 		}
@@ -1188,9 +1190,14 @@ void Panelizer::makeSVGs(MainWindow * mainWindow, ItemBase * board, const QStrin
 		foreach (LayerThing layerThing, layerThingList) {					
 			SVG2gerber::ForWhy forWhy = layerThing.forWhy;
 			QString name = layerThing.name;
-			QList<ItemBase *> copperLogoItems;
-			if (forWhy == SVG2gerber::ForMask) {
-				mainWindow->pcbView()->hideCopperLogoItems(copperLogoItems);
+			QList<ItemBase *> copperLogoItems, holes;
+            switch (forWhy) {
+                case SVG2gerber::ForPasteMask:
+                    mainWindow->pcbView()->hideHoles(holes);
+                case SVG2gerber::ForMask:
+				    mainWindow->pcbView()->hideCopperLogoItems(copperLogoItems);
+                default:
+                    break;
 			}
 			QString one = mainWindow->pcbView()->renderToSVG(GraphicsUtils::SVGDPI, layerThing.layerList, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, empty);
 					
@@ -1200,6 +1207,14 @@ void Panelizer::makeSVGs(MainWindow * mainWindow, ItemBase * board, const QStrin
 				case SVG2gerber::ForOutline:
 					one = GerberGenerator::cleanOutline(one);
 					break;
+				case SVG2gerber::ForPasteMask:
+					mainWindow->pcbView()->restoreCopperLogoItems(copperLogoItems);
+					mainWindow->pcbView()->restoreCopperLogoItems(holes);
+                    one = mainWindow->pcbView()->makePasteMask(one, board, layerThing.layerList);
+                    if (one.isEmpty()) continue;
+
+					forWhy = SVG2gerber::ForCopper;
+                    break;
 				case SVG2gerber::ForMask:
 					mainWindow->pcbView()->restoreCopperLogoItems(copperLogoItems);
 					one = TextUtils::expandAndFill(one, "black", GerberGenerator::MaskClearanceMils * 2);

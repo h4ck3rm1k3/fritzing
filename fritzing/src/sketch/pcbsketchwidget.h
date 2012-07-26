@@ -99,9 +99,10 @@ public:
 	ItemBase * addCopperLogoItem(ViewLayer::ViewLayerSpec viewLayerSpec);
 	QString characterizeGroundFill(ViewLayer::ViewLayerID);
 	ViewGeometry::WireFlag getTraceFlag();
-	void hideCopperLogoItems(QList<ItemBase *> & copperLogoItems);
-	void restoreCopperLogoItems(QList<ItemBase *> & copperLogoItems);
-	void collectThroughHole(QList<ConnectorItem *> & th, QList<ConnectorItem *> & pads, const LayerList &);
+	void hideCopperLogoItems(QList<ItemBase *> &);
+	void restoreCopperLogoItems(QList<ItemBase *> &);
+	void hideHoles(QList<ItemBase *> &);
+    QString makePasteMask(const QString & svgMask, ItemBase * board, const LayerList & maskLayerIDs);
 	int selectAllItemType(ModelPart::ItemType, const QString & typeName);
 	bool isBoardLayerChange(ItemBase * itemBase, const QString & newModuleID, int & newLayers);
 	void convertToVia(ConnectorItem * lastHoverEnterConnectorItem, QPointF lastLocation);
@@ -167,6 +168,7 @@ protected:
     void selectAllWires(ViewGeometry::WireFlag flag);
     QString checkDroppedModuleID(const QString & moduleID);
     bool canConnect(Wire * from, ItemBase * to);
+	void collectThroughHole(QList<ConnectorItem *> & th, QList<ConnectorItem *> & pads, const LayerList &);
 
 signals:
 	void subSwapSignal(SketchWidget *, ItemBase *, const QString & newModuleID, ViewLayer::ViewLayerSpec, long & newID, QUndoCommand * parentCommand);
