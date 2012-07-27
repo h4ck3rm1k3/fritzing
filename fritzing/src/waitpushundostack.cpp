@@ -65,11 +65,11 @@ WaitPushUndoStack::~WaitPushUndoStack() {
 	clearDeadTimers();
 }
 
-#ifndef QT_NO_DEBUG
 void WaitPushUndoStack::push(QUndoCommand * cmd) 
 {
+#ifndef QT_NO_DEBUG
 	writeUndo(cmd, 0, NULL);
-
+#endif
     if (m_temporary == cmd) {
         m_temporary->redo();
         return;
@@ -77,7 +77,7 @@ void WaitPushUndoStack::push(QUndoCommand * cmd)
 	
 	QUndoStack::push(cmd);
 }
-#endif
+
 
 void WaitPushUndoStack::waitPush(QUndoCommand * command, int delayMS) {
 	clearDeadTimers();
@@ -118,8 +118,10 @@ void WaitPushUndoStack::resolveTemporary() {
 }
 
 void WaitPushUndoStack::deleteTemporary() {
-    delete m_temporary;
-    m_temporary = NULL;
+    if (m_temporary != NULL) {
+        delete m_temporary;
+        m_temporary = NULL;
+    }
 }
 
 #ifndef QT_NO_DEBUG

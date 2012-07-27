@@ -43,10 +43,10 @@ public:
     void resolveTemporary();
     void deleteTemporary();
     void deleteTimer(QTimer *);
+	void push(QUndoCommand *);
 
 #ifndef QT_NO_DEBUG
 public:
-	void push(QUndoCommand *);
 	void writeUndo(const QUndoCommand *, int indent, const class BaseCommand * parent);
 
 protected:
