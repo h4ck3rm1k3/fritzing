@@ -862,8 +862,17 @@ int ConnectorItem::connectionsCount() {
 
 void ConnectorItem::attachedMoved() {
 	//DebugDialog::debug("attached moved");
-	foreach (ConnectorItem * toConnector, m_connectedTo) {
-		ItemBase * itemBase = toConnector->attachedTo();
+    QSet<ConnectorItem *> allTo;
+    allTo.insert(this);
+	foreach (ConnectorItem * toConnectorItem, m_connectedTo) {
+        allTo.insert(toConnectorItem);
+        foreach (ConnectorItem * subTo, toConnectorItem->connectedToItems()) {
+            allTo.insert(subTo);
+        }
+	}
+    allTo.remove(this);
+    foreach (ConnectorItem * toConnectorItem, allTo) {
+        ItemBase * itemBase = toConnectorItem->attachedTo();
 		if (itemBase == NULL) continue;
 		if (!itemBase->isVisible()) {
 			//this->debugInfo("continue");
@@ -871,8 +880,8 @@ void ConnectorItem::attachedMoved() {
 			continue;
 		}
 
-		itemBase->connectedMoved(this, toConnector);
-	}
+        toConnectorItem->attachedTo()->connectedMoved(this, toConnectorItem);
+    }
 }
 
 ConnectorItem * ConnectorItem::firstConnectedToIsh() {
@@ -2747,7 +2756,7 @@ void ConnectorItem::updateWireCursor(Qt::KeyboardModifiers modifiers)
 	if (isBendpoint()) {
 		//DebugDialog::debug("uwc bend");
 		if (modifiers & altOrMetaModifier()) {
-			DebugDialog::debug("uwc alt");
+			//DebugDialog::debug("uwc alt");
 			Wire * wire = qobject_cast<Wire *>(attachedTo());
 			if (wire != NULL && wire->canChainMultiple()) {
 				//DebugDialog::debug("uwc make wire");

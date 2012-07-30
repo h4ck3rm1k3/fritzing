@@ -554,16 +554,21 @@ void Wire::mouseMoveEventAux(QPointF eventPos, Qt::KeyboardModifiers modifiers) 
 	}
 	setConnector1Rect();
 
-	bool chained = false;
+
+    QSet<ConnectorItem *> allTo;
+    allTo.insert(whichConnectorItem);
 	foreach (ConnectorItem * toConnectorItem, whichConnectorItem->connectedToItems()) {
 		Wire * chainedWire = qobject_cast<Wire *>(toConnectorItem->attachedTo());
 		if (chainedWire == NULL) continue;
 
-		chainedWire->simpleConnectedMoved(whichConnectorItem, toConnectorItem);
-		chained = true;
+        allTo.insert(toConnectorItem);
+        foreach (ConnectorItem * subTo, toConnectorItem->connectedToItems()) {
+            allTo.insert(subTo);
+        }
 	}
+    allTo.remove(whichConnectorItem);
 
-	if (!chained) {
+	if (allTo.count() == 0) {
 		// don't allow wire to connect back to something the other end is already directly connected to
 		QList<Wire *> wires;
 		QList<ConnectorItem *> ends;
@@ -588,6 +593,12 @@ void Wire::mouseMoveEventAux(QPointF eventPos, Qt::KeyboardModifiers modifiers) 
 		}
 		whichConnectorItem->findConnectorUnder(false, true, ends, true, originatingConnector);
 	}
+    else {
+        foreach (ConnectorItem * toConnectorItem, allTo) {
+            Wire * chained = qobject_cast<Wire *>(toConnectorItem->attachedTo());
+            chained->simpleConnectedMoved(whichConnectorItem, toConnectorItem);
+        }
+    }
 }
 
 void Wire::setConnector0Rect() {
