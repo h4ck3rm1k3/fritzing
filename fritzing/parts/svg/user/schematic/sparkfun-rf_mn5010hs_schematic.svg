@@ -2,7 +2,7 @@
 <!-- Created with Fritzing (http://www.fritzing.org/) -->
 <svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='1.206in' height='1.308in' viewBox='0 0 30.6324 33.2232' >
 <g id='schematic'>
-<rect x='5.1562' y='5.1562' width='20.32' height='27.94' stroke='none' stroke-width='0' fill='#ffffff' />
+<rect x='5.1562' y='0.127' width='20.32' height='27.94' stroke='none' stroke-width='0' fill='#ffffff' />
 <line class='other' x1='5.1562' y1='0.127' x2='5.1562' y2='28.067' stroke='#000000' stroke-width='0.254' stroke-linecap='round'/>
 <line class='other' x1='5.1562' y1='28.067' x2='25.4762' y2='28.067' stroke='#000000' stroke-width='0.254' stroke-linecap='round'/>
 <line class='other' x1='25.4762' y1='28.067' x2='25.4762' y2='0.127' stroke='#000000' stroke-width='0.254' stroke-linecap='round'/>
