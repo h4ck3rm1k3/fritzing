@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Displays-LCD-16X2-NOHOLES'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Displays' LCD-16X2 NOHOLES -->
 <version>4</version>
-<date>2012-07-25</date>
+<date>2012-07-30</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Standard text-only 16x2 parallel input LCD</description>
