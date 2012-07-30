@@ -10,20 +10,20 @@
 <line class='other' x1='0.2032' y1='24.762' x2='0.2032' y2='26.54' stroke='#000000' stroke-width='0.4064' stroke-linecap='round'/>
 <line class='other' x1='10.3632' y1='26.54' x2='10.3632' y2='13.84' stroke='#000000' stroke-width='0.4064' stroke-linecap='round'/>
 <line class='other' x1='0.2032' y1='13.84' x2='1.9812' y2='13.84' stroke='#000000' stroke-width='0.4064' stroke-linecap='round'/>
-<line class='pin' id='connector0pin' connectorname='12V' x1='12.9032' y1='16.38' x2='10.3632' y2='16.38' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector0pin' connectorname='12V' x1='12.9032' y1='16.38' x2='10.3632' y2='16.38' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector0terminal' x='12.9032' y='16.38' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='9.906' y='16.6848' text-anchor='end'>12V</text>
-<line class='pin' id='connector3pin' connectorname='NC' x1='12.9032' y1='18.92' x2='10.3632' y2='18.92' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='9.906' y='16.6848' text-anchor='end'>12V</text>
+<line class='pin' id='connector3pin' connectorname='NC' x1='12.9032' y1='18.92' x2='10.3632' y2='18.92' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector3terminal' x='12.9032' y='18.92' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='9.906' y='19.2248' text-anchor='end'>NC</text>
-<line class='pin' id='connector2pin' connectorname='GND' x1='12.9032' y1='21.46' x2='10.3632' y2='21.46' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='9.906' y='19.2248' text-anchor='end'>NC</text>
+<line class='pin' id='connector2pin' connectorname='GND' x1='12.9032' y1='21.46' x2='10.3632' y2='21.46' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector2terminal' x='12.9032' y='21.46' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='9.906' y='21.7648' text-anchor='end'>GND</text>
-<line class='pin' id='connector1pin' connectorname='5V' x1='12.9032' y1='24' x2='10.3632' y2='24' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='9.906' y='21.7648' text-anchor='end'>GND</text>
+<line class='pin' id='connector1pin' connectorname='5V' x1='12.9032' y1='24' x2='10.3632' y2='24' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector1terminal' x='12.9032' y='24' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='9.906' y='24.3048' text-anchor='end'>5V</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='9.906' y='24.3048' text-anchor='end'>5V</text>
 <g transform='translate(2.4892,24)'><g transform='rotate(270)'>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='2.3114' x='0' y='0' text-anchor='start'>4-Pin</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='2.3114' x='0' y='0' text-anchor='start'>4-Pin</text>
 </g></g>
 <line class='other' x1='1.9812' y1='13.84' x2='2.7432' y2='13.84' stroke='#000000' stroke-width='0.4064' stroke-linecap='round'/>
 <line class='other' x1='2.7432' y1='13.84' x2='10.3632' y2='13.84' stroke='#000000' stroke-width='0.4064' stroke-linecap='round'/>

@@ -7,11 +7,11 @@
 <line class='other' x1='3.8862' y1='0.127' x2='3.8862' y2='1.397' stroke='#000000' stroke-width='0.254' stroke-linecap='round'/>
 <line class='other' x1='1.3462' y1='0.127' x2='1.3462' y2='2.667' stroke='#000000' stroke-width='0.254' stroke-linecap='round'/>
 <line class='other' x1='3.8862' y1='1.397' x2='3.8862' y2='2.667' stroke='#000000' stroke-width='0.254' stroke-linecap='round'/>
-<line class='pin' id='connector0pin' connectorname='A' x1='0.0762' y1='1.397' x2='2.6162' y2='1.397' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<line class='pin' id='connector0pin' connectorname='A' x1='0.0762' y1='1.397' x2='2.6162' y2='1.397' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector0terminal' x='0.0762' y='1.397' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='3.0734' y='1.7018' text-anchor='start'>A</text>
-<line class='pin' id='connector1pin' connectorname='C' x1='5.1562' y1='1.397' x2='2.6162' y2='1.397' stroke='#000000' stroke-width='0.1524' stroke-linecap='round'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='3.0734' y='1.7018' text-anchor='start'>A</text>
+<line class='pin' id='connector1pin' connectorname='C' x1='5.1562' y1='1.397' x2='2.6162' y2='1.397' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector1terminal' x='5.1562' y='1.397' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#000000' font-size='1.0668' x='2.159' y='1.7018' text-anchor='end'>C</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='2.159' y='1.7018' text-anchor='end'>C</text>
 </g>
 </svg>
