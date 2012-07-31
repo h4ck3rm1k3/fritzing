@@ -2567,3 +2567,58 @@ QString PCBSketchWidget::makePasteMask(const QString & svgMask, ItemBase * board
     return doc.toString();
 }
 
+bool PCBSketchWidget::checkLoadedTraces() {
+
+    QCoreApplication::processEvents();
+    scene()->clearSelection();
+    QList<Wire *> wires;
+    QHash<Wire *, QLineF> lines;
+    foreach (QGraphicsItem * item, scene()->items()) {
+        Wire * wire = dynamic_cast<Wire *>(item);
+        if (wire == NULL) continue;
+        if (!wire->isTraceType(getTraceFlag())) continue;
+
+        ConnectorItem * c0 = wire->connector0();
+        ConnectorItem * c1 = wire->connector1();
+        QPointF p0 = c0->sceneBoundingRect().center();
+        QPointF p1 = c1->sceneBoundingRect().center();  
+        QLineF line(p0, p1);
+        lines.insert(wire, line);
+    }
+
+    foreach (Wire * wire, lines.keys()) {
+		wire->updateConnections(wire->connector0());
+		wire->updateConnections(wire->connector1());
+    }
+
+    foreach (Wire * wire, lines.keys()) {
+        QLineF line = wire->line();
+        QPointF l0 = wire->pos() + line.p1();
+        QPointF l1 = wire->pos() + line.p2();
+        QLineF oldLine = lines.value(wire);
+
+        double d = 0.1;
+
+        if (qAbs(oldLine.p1().x() - l0.x()) > d || 
+            qAbs(oldLine.p1().y() - l0.y()) > d || 
+            qAbs(oldLine.p2().x() - l1.x()) > d ||
+            qAbs(oldLine.p2().y() - l1.y()) > d) 
+        {
+            wires.append(wire);
+            wire->debugInfo(QString("wire moved from:%1,%2 %3,%4  to:%5,%6 %7,%8")
+                .arg(oldLine.p1().x()).arg(oldLine.p1().y()).arg(oldLine.p2().x()).arg(oldLine.p2().y())
+                .arg(l0.x()).arg(l0.y()).arg(l1.x()).arg(l1.y())
+            );
+        }
+    }
+
+    foreach (Wire * wire, wires) {
+        wire->setSelected(true);
+    }
+
+    if (wires.count() > 0) {
+        return false;
+    }
+
+    return true;
+}

@@ -374,6 +374,7 @@ protected slots:
 	void setActiveConnectorItem(ConnectorItem *);
 	void gridUnits(bool);
 	void restoreDefaultGrid();
+    void checkLoadedTraces();
 
 protected:
 	void initSketchWidget(SketchWidget *);
@@ -708,6 +709,7 @@ protected:
 	QAction *m_designRulesCheckAct;
 	QAction *m_autorouterSettingsAct;
 	QAction *m_tidyWiresAct;
+	QAction *m_checkLoadedTracesAct;
 
 	// Help Menu
     QMenu *m_helpMenu;

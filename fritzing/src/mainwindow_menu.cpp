@@ -1206,6 +1206,7 @@ void MainWindow::createMenus()
 	m_pcbTraceMenu = menuBar()->addMenu(tr("&Routing"));
 	m_pcbTraceMenu->addAction(m_autorouteAct);
 	m_pcbTraceMenu->addAction(m_designRulesCheckAct);
+	m_pcbTraceMenu->addAction(m_checkLoadedTracesAct);
 	m_pcbTraceMenu->addAction(m_autorouterSettingsAct);
 
 	QMenu * groundFillMenu = m_pcbTraceMenu->addMenu(tr("Ground Fill"));
@@ -1808,6 +1809,7 @@ void MainWindow::updateTraceMenu() {
 	m_clearGroundFillSeedsAct->setEnabled(gfsEnabled && boardCount >= 1);
 
 	m_designRulesCheckAct->setEnabled(boardCount >= 1);
+	m_checkLoadedTracesAct->setEnabled(true);
 	m_autorouterSettingsAct->setEnabled(m_currentGraphicsView == m_pcbGraphicsView);
 	m_updateRoutingStatusAct->setEnabled(true);
 }
@@ -2372,6 +2374,10 @@ void MainWindow::createTraceMenuActions() {
 	m_designRulesCheckAct->setStatusTip(tr("Select any parts that are too close together for safe board production (w/in 10 mil)"));
 	m_designRulesCheckAct->setShortcut(tr("Shift+Ctrl+D"));
 	connect(m_designRulesCheckAct, SIGNAL(triggered()), this, SLOT(designRulesCheck()));
+
+	m_checkLoadedTracesAct = new QAction(tr("Check Loaded Traces"), this);
+	m_checkLoadedTracesAct->setStatusTip(tr("Select any traces where the screen location doesn't match their actual location."));
+	connect(m_checkLoadedTracesAct, SIGNAL(triggered()), this, SLOT(checkLoadedTraces()));
 
 	m_autorouterSettingsAct = new QAction(tr("Autorouter settings..."), this);
 	m_autorouterSettingsAct->setStatusTip(tr("Set autorouting parameters..."));
@@ -3786,4 +3792,8 @@ void MainWindow::setBackgroundColor()
 	QColor newColor = setColorDialog.selectedColor();
     m_currentGraphicsView->setBackgroundColor(newColor, setColorDialog.isPrefsColor());
     setWindowModified(true);
+}
+
+void MainWindow::checkLoadedTraces() {
+    if (m_pcbGraphicsView) m_pcbGraphicsView->checkLoadedTraces();
 }
