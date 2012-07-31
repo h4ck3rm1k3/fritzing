@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-USB_AB-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' USB_AB  -->
 <version>4</version>
-<date>2012-07-30</date>
+<date>2012-07-31</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>This is a USB AB connector that is compatible with USB OTG. i.e. this connector can serve as a host or device</description>

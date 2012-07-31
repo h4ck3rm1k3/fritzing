@@ -2,11 +2,11 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-M20-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' M20  -->
 <version>4</version>
-<date>2012-07-30</date>
+<date>2012-07-31</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>1x20 .1 header&lt;br&gt;
-This is just like the LOCK variant in that the holes are staggared by 5 mil, but except for the last two holes. They are not altered from the standard footprint layout. This is used for a special purpose on the layout of our Graphic LCD Backpack. Make sure you want to use this device before selecting it for you project!</description>
+This is just like the LOCK variant in that the holes are staggared by 5 mil, but except for the last two holes.  They are not altered from the standard footprint layout.  This is used for a special purpose on the layout of our Graphic LCD Backpack.  Make sure you want to use this device before selecting it for you project!</description>
 <title>M20</title>
 <tags>
 <tag>1X20</tag>

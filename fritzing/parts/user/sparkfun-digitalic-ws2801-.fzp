@@ -2,14 +2,14 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-WS2801-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' WS2801  -->
 <version>4</version>
-<date>2012-07-30</date>
+<date>2012-07-31</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;WS2801&lt;/h3&gt;
 3 Channel Constant Current LED Driver with programmable PWM outputs.
 &lt;br&gt;
 &lt;br&gt;
-Datasheet: http://www.sparkfun.com/datasheets/Components/LED/WS2801.pdf</description>
+Datasheet:  http://www.sparkfun.com/datasheets/Components/LED/WS2801.pdf</description>
 <title>WS2801</title>
 <tags>
 <tag>WS2801</tag>

@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-CAPSENSE_PAD-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' CAPSENSE_PAD  -->
 <version>4</version>
-<date>2012-07-30</date>
+<date>2012-07-31</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Generic copper pad for a capacitive touch sensor.</description>

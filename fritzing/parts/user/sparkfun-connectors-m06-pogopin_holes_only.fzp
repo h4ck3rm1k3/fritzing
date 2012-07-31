@@ -2,20 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-M06-POGOPIN_HOLES_ONLY'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' M06 POGOPIN_HOLES_ONLY -->
 <version>4</version>
-<date>2012-07-30</date>
+<date>2012-07-31</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Header 6&lt;/b&gt;
 Standard 6-pin 0.1 header. Use with straight break away headers (SKU : PRT-00116), right angle break away headers (PRT-00553), swiss pins (PRT-00743), machine pins (PRT-00117), and female headers (PRT-00115). Molex polarized connector foot print use with SKU : PRT-08094 with associated crimp pins and housings.
 
 NOTES ON THE VARIANTS LOCK and LOCK_LONGPADS...
-This footprint was designed to help hold the alignment of a through-hole component (i.e. 6-pin header) while soldering it into place. 
-You may notice that each hole has been shifted either up or down by 0.005 of an inch from it&apos;s more standard position (which is a perfectly straight line). 
-This slight alteration caused the pins (the squares in the middle) to touch the edges of the holes. Because they are alternating, it causes a brace 
-to hold the component in place. 0.005 has proven to be the perfect amount of off-center position when using our standard breakaway headers.
-Although looks a little odd when you look at the bare footprint, once you have a header in there, the alteration is very hard to notice. Also,
-if you push a header all the way into place, it is covered up entirely on the bottom side. This idea of altering the position of holes to aid alignment 
-will be further integrated into the Sparkfun Library for other footprints. It can help hold any component with 3 or more connection pins.</description>
+This footprint was designed to help hold the alignment of a through-hole component (i.e.  6-pin header) while soldering it into place.  
+You may notice that each hole has been shifted either up or down by 0.005 of an inch from it&apos;s more standard position (which is a perfectly straight line).  
+This slight alteration caused the pins (the squares in the middle) to touch the edges of the holes.  Because they are alternating, it causes a brace 
+to hold the component in place.  0.005 has proven to be the perfect amount of off-center position when using our standard breakaway headers.
+Although looks a little odd when you look at the bare footprint, once you have a header in there, the alteration is very hard to notice.  Also,
+if you push a header all the way into place, it is covered up entirely on the bottom side.  This idea of altering the position of holes to aid alignment 
+will be further integrated into the Sparkfun Library for other footprints.  It can help hold any component with 3 or more connection pins.</description>
 <title>Header 6</title>
 <tags>
 <tag>1X06_HOLES_ONLY</tag>
