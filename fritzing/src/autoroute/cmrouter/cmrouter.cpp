@@ -457,6 +457,40 @@ double Ordering::score() {
 
 ////////////////////////////////////////////////////////////////////
 
+void tempConnectTo(ConnectorItem * c1, ConnectorItem * c2, bool applyColor) {
+    c1->tempConnectTo(c2, applyColor);
+    c2->tempConnectTo(c1, applyColor);
+
+
+    /*
+    QPointF p1 = c1->sceneBoundingRect().center();
+    QPointF p2 = c2->sceneBoundingRect().center();
+    if (qAbs(p1.x() - p2.x()) >= 1 || qAbs(p1.y() - p2.y()) >= 1) {
+        c1->debugInfo(QString("bad connect %1,%2  %3,%4").arg(p1.x()).arg(p1.y()).arg(p2.x()).arg(p2.y()));
+        c2->debugInfo("c2");
+        c1->attachedTo()->debugInfo("c1 item");
+        c2->attachedTo()->debugInfo("c2 item");
+        foreach (ConnectorItem * ci, c1->attachedTo()->cachedConnectorItems()) {
+            if (ci == c2) continue;
+            if (ci == c1) continue;
+
+            QPointF p = ci->sceneBoundingRect().center();
+            ci->debugInfo(QString("c1 to %1,%2").arg(p.x()).arg(p.y()));
+        }
+        foreach (ConnectorItem * ci, c2->attachedTo()->cachedConnectorItems()) {
+            if (ci == c2) continue;
+            if (ci == c1) continue;
+
+            QPointF p = ci->sceneBoundingRect().center();
+            ci->debugInfo(QString("c2 to %1,%2").arg(p.x()).arg(p.y()));
+        }
+    }
+
+    */
+}
+
+////////////////////////////////////////////////////////////////////
+
 CMRouter::CMRouter(PCBSketchWidget * sketchWidget, ItemBase * board, bool adjustIf) : Autorouter(sketchWidget)
 {
 	QSettings settings;
@@ -1729,12 +1763,10 @@ ConnectorItem * CMRouter::splitTrace(Wire * wire, QPointF point, Edge * edge)
 			m_tracesToEdges.insert(tw, edge);
 			m_splitDNA.insert(doNotAutorouteWire, tw);
 			foreach (ConnectorItem * toConnectorItem, wire->connector1()->connectedToItems()) {
-				tw->connector1()->tempConnectTo(toConnectorItem, false);
-				toConnectorItem->tempConnectTo(tw->connector1(), false);
+				tempConnectTo(tw->connector1(), toConnectorItem, false);
 			}
 			foreach (ConnectorItem * toConnectorItem, wire->connector0()->connectedToItems()) {
-				tw->connector0()->tempConnectTo(toConnectorItem, false);
-				toConnectorItem->tempConnectTo(tw->connector0(), false);
+				tempConnectTo(tw->connector0(), toConnectorItem, false);
 			}
 			wire = tw;
 		}
@@ -1742,26 +1774,44 @@ ConnectorItem * CMRouter::splitTrace(Wire * wire, QPointF point, Edge * edge)
 
 	// split the trace at point
 	QLineF originalLine = wire->line();
-	QLineF newLine(QPointF(0,0), point - wire->pos());
-	wire->setLine(newLine);
+	ConnectorItem * connector1 = wire->connector1();
+	ConnectorItem * connector0 = wire->connector0();
+
+    //wire->debugInfo(QString("\noldwire wire pos %1,%2").arg(wire->pos().x()).arg(wire->pos().y()));
+    //DebugDialog::debug("point", point);
+
+    //DebugDialog::debug("old c0", connector0->sceneBoundingRect().center());
+    //DebugDialog::debug("old c1", connector1->sceneBoundingRect().center());
+
+    QLineF newLine(QPointF(0,0), point - wire->pos());
+	wire->setLineAnd(newLine, wire->pos(), true);
+    wire->saveGeometry();       // make sure the geometry is updated as it is used to construct the wire's AddItemCommand
 	TraceWire * splitWire = drawOneTrace(point, originalLine.p2() + wire->pos(), wire->width(), wire->viewLayerSpec());
 	if (doNotAutorouteWire) {
 		m_splitDNA.insert(doNotAutorouteWire, splitWire);
 	}
 	m_tracesToEdges.insert(splitWire, edge);
-	ConnectorItem * connector1 = wire->connector1();
+
 	ConnectorItem * newConnector1 = splitWire->connector1();
+	ConnectorItem * newConnector0 = splitWire->connector0();
+
+
+    //DebugDialog::debug("old c0 after", connector0->sceneBoundingRect().center());
+    //DebugDialog::debug("old c1 after", connector1->sceneBoundingRect().center());
+
+    //splitWire->debugInfo("new wire");
+    //DebugDialog::debug("new c0", newConnector0->sceneBoundingRect().center());
+    //DebugDialog::debug("new c1", newConnector1->sceneBoundingRect().center());
+
 	foreach (ConnectorItem * toConnectorItem, connector1->connectedToItems()) {
 		connector1->tempRemove(toConnectorItem, false);
 		toConnectorItem->tempRemove(connector1, false);
-		newConnector1->tempConnectTo(toConnectorItem, false);
-		toConnectorItem->tempConnectTo(newConnector1, false);
+		tempConnectTo(newConnector1, toConnectorItem, false);
 	}
 
-	connector1->tempConnectTo(splitWire->connector0(), false);
-	splitWire->connector0()->tempConnectTo(connector1, false);
+	tempConnectTo(connector1, newConnector0, false);
 
-	return splitWire->connector0();
+	return newConnector0;
 }
 
 void CMRouter::hookUpWires(QList<PathUnit *> & fullPath, QList<Wire *> & wires) {
@@ -1772,23 +1822,20 @@ void CMRouter::hookUpWires(QList<PathUnit *> & fullPath, QList<Wire *> & wires) 
 	PathUnit * fromPathUnit = fullPath.first();
 	PathUnit * toPathUnit = fullPath.last();
 	if (fromPathUnit->connectorItem) {
-		fromPathUnit->connectorItem->tempConnectTo(wires[0]->connector0(), true);
-		wires[0]->connector0()->tempConnectTo(fromPathUnit->connectorItem, true);
+		tempConnectTo(fromPathUnit->connectorItem, wires[0]->connector0(), true);
 	}
 	else {
 	}
 	int last = wires.count() - 1;
 	if (toPathUnit->connectorItem) {
-		toPathUnit->connectorItem->tempConnectTo(wires[last]->connector1(), true);
-		wires[last]->connector1()->tempConnectTo(toPathUnit->connectorItem, true);
+		tempConnectTo(toPathUnit->connectorItem, wires[last]->connector1(), true);
 	}
 	else {
 	}
 	for (int i = 0; i < last; i++) {
 		ConnectorItem * c1 = wires[i]->connector1();
 		ConnectorItem * c0 = wires[i + 1]->connector0();
-		c1->tempConnectTo(c0, true);
-		c0->tempConnectTo(c1, true);
+		tempConnectTo(c1, c0, true);
 	}
 
 	QList<Tile *> alreadyTiled;

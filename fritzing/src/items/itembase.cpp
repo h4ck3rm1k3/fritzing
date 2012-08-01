@@ -1821,6 +1821,8 @@ void ItemBase::debugInfo(const QString & msg) const
 {
 
 #ifndef QT_NO_DEBUG
+
+    debugInfo2(msg);
 	DebugDialog::debug(QString("%1 '%2' id:%3 '%4' vid:%9 vlid:%5 spec:%6 flg:%7 gi:%8")
 		.arg(msg)
 		.arg(this->title())
@@ -1841,6 +1843,27 @@ void ItemBase::debugInfo(const QString & msg) const
 #else
 	Q_UNUSED(msg);
 #endif
+}
+
+void ItemBase::debugInfo2(const QString & msg) const
+{
+	DebugDialog::debug(QString("%1 '%2' id:%3 '%4' vid:%9 vlid:%5 spec:%6 flg:%7 gi:%8")
+		.arg(msg)
+		.arg(this->title())
+		.arg(this->id())
+		.arg(this->instanceTitle())
+		.arg(this->viewLayerID())
+		.arg(this->viewLayerSpec())
+		.arg(this->wireFlags())
+		.arg((long) dynamic_cast<const QGraphicsItem *const>(this), 0, 16)
+		.arg(m_viewIdentifier)
+	);
+
+	/*
+	foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
+		if (connectorItem) connectorItem->debugInfo("\t");
+	}
+	*/
 }
 
 void ItemBase::addedToScene(bool temporary) {

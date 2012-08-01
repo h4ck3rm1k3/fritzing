@@ -107,7 +107,7 @@ public:
 	bool isBoardLayerChange(ItemBase * itemBase, const QString & newModuleID, int & newLayers);
 	void convertToVia(ConnectorItem * lastHoverEnterConnectorItem, QPointF lastLocation);
 	void convertToBendpoint();
-    bool checkLoadedTraces();
+    int checkLoadedTraces();
 
 public:
 	static QSizeF jumperItemSize();

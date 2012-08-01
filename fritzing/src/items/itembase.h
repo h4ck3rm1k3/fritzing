@@ -184,6 +184,7 @@ public:
 	bool moveLock();
 	virtual void setMoveLock(bool);
 	void debugInfo(const QString & msg) const;
+	void debugInfo2(const QString & msg) const;
 	virtual void addedToScene(bool temporary);
 	virtual bool hasPartNumberProperty();
 	void collectPropsMap(QString & family, QMap<QString, QString> &);

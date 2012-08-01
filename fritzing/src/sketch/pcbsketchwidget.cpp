@@ -2567,7 +2567,7 @@ QString PCBSketchWidget::makePasteMask(const QString & svgMask, ItemBase * board
     return doc.toString();
 }
 
-bool PCBSketchWidget::checkLoadedTraces() {
+int PCBSketchWidget::checkLoadedTraces() {
 
     QCoreApplication::processEvents();
     scene()->clearSelection();
@@ -2605,7 +2605,7 @@ bool PCBSketchWidget::checkLoadedTraces() {
             qAbs(oldLine.p2().y() - l1.y()) > d) 
         {
             wires.append(wire);
-            wire->debugInfo(QString("wire moved from:%1,%2 %3,%4  to:%5,%6 %7,%8")
+            wire->debugInfo2(QString("wire moved from:\n%1,%2 %3,%4\n%5,%6 %7,%8")
                 .arg(oldLine.p1().x()).arg(oldLine.p1().y()).arg(oldLine.p2().x()).arg(oldLine.p2().y())
                 .arg(l0.x()).arg(l0.y()).arg(l1.x()).arg(l1.y())
             );
@@ -2616,9 +2616,5 @@ bool PCBSketchWidget::checkLoadedTraces() {
         wire->setSelected(true);
     }
 
-    if (wires.count() > 0) {
-        return false;
-    }
-
-    return true;
+    return wires.count();
 }

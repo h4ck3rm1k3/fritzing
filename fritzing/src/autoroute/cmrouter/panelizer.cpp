@@ -1123,8 +1123,9 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
 
 	mainWindow->showPCBView();
 
-    if (!mainWindow->pcbView()->checkLoadedTraces()) {
-        QMessageBox::warning(NULL, QObject::tr("Fritzing"), QObject::tr("Wires moved from their saved position in %1.").arg(path));
+    int moved = mainWindow->pcbView()->checkLoadedTraces();
+    if (moved > 0) {
+        QMessageBox::warning(NULL, QObject::tr("Fritzing"), QObject::tr("%1 wires moved from their saved position in %2.").arg(moved).arg(path));
     }
 
 
