@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-SWITCH-DPDT-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' SWITCH-DPDT SMD -->
 <version>4</version>
-<date>2012-07-31</date>
+<date>2012-08-02</date>
 <label>S</label>
 <author>www.fritzing.org</author>
 <description>DPDT Version of the COM-00597</description>
@@ -35,7 +35,7 @@
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/sparkfun-electromechanical_ayz0202_breadboard.svg'>
+<layers image='icon/AYZ0202'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

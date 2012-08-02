@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-ADXL345-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' ADXL345  -->
 <version>4</version>
-<date>2012-07-31</date>
+<date>2012-08-02</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>3-axis SPI/I2C 2/4/8/16g accelerometer</description>

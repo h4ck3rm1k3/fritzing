@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-RJ45-8-PTH'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' RJ45-8 PTH -->
 <version>4</version>
-<date>2012-07-31</date>
+<date>2012-08-02</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;RJ45 Jack&lt;/b&gt;
@@ -37,7 +37,7 @@ Simple RJ45, 8-pin connection - connector for common Cat5, Cat5e, and Cat6 Ether
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/sparkfun-connectors_rj45-8_breadboard.svg'>
+<layers image='icon/RJ45-8'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

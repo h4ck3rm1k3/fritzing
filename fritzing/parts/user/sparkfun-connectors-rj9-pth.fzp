@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-RJ9-PTH'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' RJ9 PTH -->
 <version>4</version>
-<date>2012-07-31</date>
+<date>2012-08-02</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>RJ9 connector (e.g., phone handsets)</description>
@@ -36,7 +36,7 @@
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/sparkfun-connectors_rj9_breadboard.svg'>
+<layers image='icon/RJ9'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

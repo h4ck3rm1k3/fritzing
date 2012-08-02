@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-FTDI_BASIC-PTH'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' FTDI_BASIC PTH -->
 <version>4</version>
-<date>2012-07-31</date>
+<date>2012-08-02</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>FTDI Basic header with labels</description>
@@ -35,7 +35,7 @@
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/sparkfun-connectors_ftdi_basic_breadboard.svg'>
+<layers image='icon/FTDI_BASIC'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-M10-_'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' M10 _ -->
 <version>4</version>
-<date>2012-07-31</date>
+<date>2012-08-02</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Header 10&lt;/b&gt;
@@ -37,7 +37,7 @@ Standard 10-pin 0.1 header. Use with straight break away headers (SKU : PRT-0011
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/generic_female_pin_header_10_100mil_bread.svg'>
+<layers image='icon/1X10'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

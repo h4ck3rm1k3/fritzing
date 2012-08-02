@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-SM5100B-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-RF' SM5100B  -->
 <version>4</version>
-<date>2012-07-31</date>
+<date>2012-08-02</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Quad-band GSM modem</description>
@@ -34,7 +34,7 @@
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/sparkfun-rf_sm5100b_breadboard.svg'>
+<layers image='icon/SM5100B'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

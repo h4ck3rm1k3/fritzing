@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-USD-SOCKET-USD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' USD-SOCKET USD -->
 <version>4</version>
-<date>2012-07-31</date>
+<date>2012-08-02</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;microSD Socket&lt;/b&gt;
@@ -36,7 +36,7 @@ Push-push type uSD socket. Schematic element and footprint production proven. Sp
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/sparkfun-connectors_usd-socket-pp_breadboard.svg'>
+<layers image='icon/USD-SOCKET-PP'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

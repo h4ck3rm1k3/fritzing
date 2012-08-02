@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-74*595-N'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' 74*595 N -->
 <version>4</version>
-<date>2012-07-31</date>
+<date>2012-08-02</date>
 <label>IC</label>
 <author>www.fritzing.org</author>
 <description>8-bit &lt;b&gt;SHIFT REGISTER&lt;/b&gt;, output latch</description>

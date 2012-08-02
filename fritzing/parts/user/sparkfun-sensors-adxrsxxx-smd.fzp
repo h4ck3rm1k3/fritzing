@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-ADXRSXXX-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' ADXRSXXX SMD -->
 <version>4</version>
-<date>2012-07-31</date>
+<date>2012-08-02</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Various MEMS gyros- ADXRS6xx, 150, 300, 401</description>

@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-TAC_SWITCH-PTH'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' TAC_SWITCH PTH -->
 <version>4</version>
-<date>2012-07-31</date>
+<date>2012-08-02</date>
 <label>S</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Momentary Switch&lt;/b&gt;
@@ -37,7 +37,7 @@ Button commonly used for reset or general input. Spark Fun Electronics SKU : COM
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/sparkfun-electromechanical_tactile-pth_breadboard.svg'>
+<layers image='icon/TACTILE-PTH'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

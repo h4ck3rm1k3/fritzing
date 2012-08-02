@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-AYZ0202-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' AYZ0202  -->
 <version>4</version>
-<date>2012-07-31</date>
+<date>2012-08-02</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;SPDT Slide Switch&lt;/b&gt;
@@ -35,7 +35,7 @@ Simple SMD single-pull double-throw slide switch. Good for  less than 350mA powe
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/sparkfun-electromechanical_ayz0202_breadboard.svg'>
+<layers image='icon/AYZ0202'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

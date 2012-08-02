@@ -287,55 +287,55 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
  </g>
- <text x="50" y="924.375" font-family="OCRA" fill="white" text-anchor="start" stroke="none" id="label" stroke-width="0" font-size="65">SMARTCARD</text>
+ <text x="50" y="924.375" font-family="OCRA" fill="white" text-anchor="start" stroke="none" id="label" stroke-width="0" font-size="65"/>
  <g transform="translate(1027.37,1726.05)">
   <g transform="rotate(-90)">
-   <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">P1</text>
+   <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45"/>
   </g>
  </g>
  <g transform="translate(1027.37,73.95)">
   <g transform="rotate(-90)">
-   <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">C8</text>
+   <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45"/>
   </g>
  </g>
  <g transform="translate(1127.37,1726.05)">
   <g transform="rotate(-90)">
-   <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">C1</text>
+   <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45"/>
   </g>
  </g>
  <g transform="translate(1127.37,73.95)">
   <g transform="rotate(-90)">
-   <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">C7</text>
+   <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45"/>
   </g>
  </g>
  <g transform="translate(1227.37,1726.05)">
   <g transform="rotate(-90)">
-   <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">P2</text>
+   <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45"/>
   </g>
  </g>
  <g transform="translate(1227.37,73.95)">
   <g transform="rotate(-90)">
-   <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">C6</text>
+   <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45"/>
   </g>
  </g>
  <g transform="translate(1327.37,1726.05)">
   <g transform="rotate(-90)">
-   <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">C2</text>
+   <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45"/>
   </g>
  </g>
  <g transform="translate(1327.37,73.95)">
   <g transform="rotate(-90)">
-   <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">C5</text>
+   <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45"/>
   </g>
  </g>
  <g transform="translate(1427.37,1726.05)">
   <g transform="rotate(-90)">
-   <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45">C3</text>
+   <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45"/>
   </g>
  </g>
  <g transform="translate(1427.37,73.95)">
   <g transform="rotate(-90)">
-   <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45">C4</text>
+   <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45"/>
   </g>
  </g>
 </svg>

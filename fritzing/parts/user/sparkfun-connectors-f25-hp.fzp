@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-F25-HP'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' F25 HP -->
 <version>4</version>
-<date>2012-07-31</date>
+<date>2012-08-02</date>
 <label>X</label>
 <author>www.fritzing.org</author>
 <description>25 Pin male connector. PCB edge mount for regular PCB thicknesses. This connector will connect directly to the back of a PC parallel port or through a normal DB25 extension cable (M/F). SKU: PRT-08287</description>
@@ -36,7 +36,7 @@
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/sparkfun-connectors_f25hp_breadboard.svg'>
+<layers image='icon/F25HP'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

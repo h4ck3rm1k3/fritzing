@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-M20-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' M20  -->
 <version>4</version>
-<date>2012-07-31</date>
+<date>2012-08-02</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>1x20 .1 header&lt;br&gt;
@@ -35,7 +35,7 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/generic_female_pin_header_20_100mil_bread.svg'>
+<layers image='icon/1X20'>
 <layer layerId='icon'/>
 </layers>
 </iconView>
