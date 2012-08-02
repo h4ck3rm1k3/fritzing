@@ -53,7 +53,6 @@ The LOCOSYS LS20126 GPS smart antenna module is a high sensitivity, low power, S
 <p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector7pad'/>
 <p layer='copper1' svgId='connector7pad'/>
 </pcbView>
 </views>
@@ -68,7 +67,6 @@ The LOCOSYS LS20126 GPS smart antenna module is a high sensitivity, low power, S
 <p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector8pad'/>
 <p layer='copper1' svgId='connector8pad'/>
 </pcbView>
 </views>
@@ -83,7 +81,6 @@ The LOCOSYS LS20126 GPS smart antenna module is a high sensitivity, low power, S
 <p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector2pad'/>
 <p layer='copper1' svgId='connector2pad'/>
 </pcbView>
 </views>
@@ -128,7 +125,6 @@ The LOCOSYS LS20126 GPS smart antenna module is a high sensitivity, low power, S
 <p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector6pad'/>
 <p layer='copper1' svgId='connector6pad'/>
 </pcbView>
 </views>
@@ -143,7 +139,6 @@ The LOCOSYS LS20126 GPS smart antenna module is a high sensitivity, low power, S
 <p layer='schematic' svgId='connector6pin' terminalId='connector6terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector5pad'/>
 <p layer='copper1' svgId='connector5pad'/>
 </pcbView>
 </views>
@@ -158,7 +153,6 @@ The LOCOSYS LS20126 GPS smart antenna module is a high sensitivity, low power, S
 <p layer='schematic' svgId='connector7pin' terminalId='connector7terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector4pad'/>
 <p layer='copper1' svgId='connector4pad'/>
 </pcbView>
 </views>
@@ -173,7 +167,6 @@ The LOCOSYS LS20126 GPS smart antenna module is a high sensitivity, low power, S
 <p layer='schematic' svgId='connector8pin' terminalId='connector8terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector9pad'/>
 <p layer='copper1' svgId='connector9pad'/>
 </pcbView>
 </views>
@@ -188,7 +181,6 @@ The LOCOSYS LS20126 GPS smart antenna module is a high sensitivity, low power, S
 <p layer='schematic' svgId='connector9pin' terminalId='connector9terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector3pad'/>
 <p layer='copper1' svgId='connector3pad'/>
 </pcbView>
 </views>

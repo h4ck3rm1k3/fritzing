@@ -54,7 +54,6 @@ Comes in a variety of packages.  Check out Hirose&apos;s ZX-x0 line: http://www.
 <p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector6pad'/>
 <p layer='copper1' svgId='connector6pad'/>
 </pcbView>
 </views>
@@ -69,7 +68,6 @@ Comes in a variety of packages.  Check out Hirose&apos;s ZX-x0 line: http://www.
 <p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector5pad'/>
 <p layer='copper1' svgId='connector5pad'/>
 </pcbView>
 </views>
@@ -84,7 +82,6 @@ Comes in a variety of packages.  Check out Hirose&apos;s ZX-x0 line: http://www.
 <p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector8pad'/>
 <p layer='copper1' svgId='connector8pad'/>
 </pcbView>
 </views>
@@ -99,7 +96,6 @@ Comes in a variety of packages.  Check out Hirose&apos;s ZX-x0 line: http://www.
 <p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector7pad'/>
 <p layer='copper1' svgId='connector7pad'/>
 </pcbView>
 </views>
@@ -114,7 +110,6 @@ Comes in a variety of packages.  Check out Hirose&apos;s ZX-x0 line: http://www.
 <p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/>
 </schematicView>
 <pcbView>
-<p layer='copper0' svgId='connector4pad'/>
 <p layer='copper1' svgId='connector4pad'/>
 </pcbView>
 </views>
