@@ -60,6 +60,7 @@ public:
 	bool rotationAllowed();
 	bool rotation45Allowed();
 	bool canFindConnectorsUnder();
+    QRectF trueSceneBoundingRect();
 
 protected slots:
 	void changeHoleSize(const QString &);

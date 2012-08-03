@@ -100,6 +100,7 @@ $Date$
 #include "../../items/moduleidnames.h"
 #include "../../processeventblocker.h"
 #include "../../svg/groundplanegenerator.h"
+#include "../../svg/svgfilesplitter.h"
 #include "../../fsvgrenderer.h"
 
 #include "tile.h"
@@ -127,6 +128,12 @@ static const int GridEntryAlpha = 128;
 static const int DefaultMaxCycles = 10;
 
 const int Segment::NotSet = std::numeric_limits<int>::min();
+
+#ifndef QT_NO_DEBUG
+#define DGI(item) drawGridItem(item)
+#else
+#define DGI(item) Q_UNUSED(item)
+#endif
 
 static inline double dot(const QPointF & p1, const QPointF & p2)
 {
@@ -1168,10 +1175,10 @@ Plane * CMRouter::tilePlane(ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewL
 	m_specHash.insert(thePlane, viewLayerSpec);
 	//DebugDialog::debug(QString("spec hash %1 %2").arg((long) thePlane, 0, 16).arg(viewLayerSpec));
 
-	// if board is not rectangular, add tiles for the outside edges;
-	if (!initBoard(m_board, thePlane, alreadyTiled)) return thePlane;
-
 	if (m_sketchWidget->autorouteTypePCB()) {
+	    // if board is not rectangular, add tiles for the outside edges; also deal with holes
+	    if (!initBoard(m_board, thePlane, alreadyTiled)) return thePlane;
+
         QList<QGraphicsItem *> collidingItems = m_sketchWidget->scene()->collidingItems(m_board);
 		// deal with "rectangular" elements first
 		foreach (QGraphicsItem * item, collidingItems) {
@@ -1181,6 +1188,7 @@ Plane * CMRouter::tilePlane(ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewL
 			if (!connectorItem->attachedTo()->isVisible()) continue;
 			if (connectorItem->attachedTo()->hidden()) continue;
 			if (connectorItem->attachedToItemType() == ModelPart::Wire) continue;
+			if (connectorItem->attachedToItemType() == ModelPart::Hole) continue;
 			if (!m_sketchWidget->sameElectricalLayer2(connectorItem->attachedToViewLayerID(), viewLayerID)) continue;
 			if (m_offBoardConnectors.contains(connectorItem)) continue;
 
@@ -1224,42 +1232,6 @@ Plane * CMRouter::tilePlane(ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewL
 				}
 			}	
 		}
-
-		// now nonconnectors
-		foreach (QGraphicsItem * item, collidingItems) {
-			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
-			if (connectorItem != NULL) {
-				continue;
-			}
-
-			NonConnectorItem * nonConnectorItem = dynamic_cast<NonConnectorItem *>(item);
-			if (nonConnectorItem == NULL) continue;
-
-			if (!nonConnectorItem->attachedTo()->isVisible()) continue;
-			if (nonConnectorItem->attachedTo()->hidden()) continue;
-
-			QPolygonF poly = nonConnectorItem->mapToScene(nonConnectorItem->boundingRect());
-			if (!m_maxRect.contains(poly.boundingRect())) {
-				continue;
-			}
-
-			/*
-			DebugDialog::debug(QString("coords nonconnectoritem %1 %2")
-									.arg(nonConnectorItem->attachedToTitle())
-									.arg(nonConnectorItem->attachedToID())
-									);
-			*/
-
-			addTile(nonConnectorItem, Tile::OBSTACLE, thePlane, alreadyTiled, overlapType);
-			if (alreadyTiled.count() > 0) {
-				m_hasOverlaps = true;
-				if (overlapType != ReportAllOverlaps) return thePlane;
-				else {
-					displayBadTiles(alreadyTiled);
-					alreadyTiled.clear();
-				}
-			}
-		}
 	}
 	else {
 		foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
@@ -1293,7 +1265,7 @@ Plane * CMRouter::tilePlane(ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewL
 				extendToBounds(tileRect, partTileRect);
 				Tile * newTile = insertTile(thePlane, tileRect, alreadyTiled, connectorItem, Tile::OBSTACLE, CMRouter::IgnoreAllOverlaps);
                 Q_UNUSED(newTile);
-				drawGridItem(newTile);
+				DGI(newTile);
 			}
 		}
 	}
@@ -1364,7 +1336,7 @@ void CMRouter::eliminateThinTiles(QList<TileRect> & originalTileRects, Plane * t
 				QList<Tile *> alreadyTiled;
 				Tile * newTile = insertTile(thePlane, newRect, alreadyTiled, NULL, Tile::SPACE2, CMRouter::IgnoreAllOverlaps);
                 Q_UNUSED(newTile);
-				drawGridItem(newTile);
+				DGI(newTile);
 				TileRect leftRect = originalTileRect;
 				leftRect.xmaxi = newRect.xmini;
 				if (leftRect.xmaxi -leftRect.xmini > 0) tileRects.append(leftRect);
@@ -1523,7 +1495,7 @@ void CMRouter::eliminateThinTiles2(QList<TileRect> & tileRects, Plane * thePlane
 		if (doInsert) {
 			QList<Tile *> alreadyTiled;
 			Tile * newTile = insertTile(thePlane, newRect, alreadyTiled, NULL, Tile::SPACE2, CMRouter::IgnoreAllOverlaps);
-			drawGridItem(newTile);
+			DGI(newTile);
             Q_UNUSED(newTile);
 			TileRect leftRect = originalTileRect;
 			leftRect.xmaxi = newRect.xmini;
@@ -1543,7 +1515,7 @@ void CMRouter::eliminateThinTiles2(QList<TileRect> & tileRects, Plane * thePlane
 		if (tile == NULL) continue;
 
 		//infoTile("remaining", tile);
-		drawGridItem(tile);
+		DGI(tile);
 	}
 
 }
@@ -1567,16 +1539,40 @@ bool CMRouter::initBoard(ItemBase * board, Plane * thePlane, QList<Tile *> & alr
 	svg += board->retrieveSvg(ViewLayer::Silkscreen0, svgHash, true, GraphicsUtils::SVGDPI);
 	svg += "</svg>";
 
+	QByteArray boardByteArray;
+    QString tempColor("#000000");
+	QStringList exceptions;
+	exceptions << "none" << "";
+    if (!SvgFileSplitter::changeColors(svg, tempColor, exceptions, boardByteArray)) {
+		return true;
+	}
+
+    int ix = boardByteArray.indexOf("</svg>");
+    if (ix < 0) return true;
+
+    foreach (QGraphicsItem * item, m_sketchWidget->scene()->collidingItems(board)) {
+        Hole * hole = dynamic_cast<Hole *>(item);
+        if (hole == NULL) continue;
+        if (hole->itemType() != ModelPart::Hole) continue;
+
+        QRectF r = hole->trueSceneBoundingRect().adjusted(-m_keepout, -m_keepout, m_keepout, m_keepout);
+        QPointF center = r.center() - board->sceneBoundingRect().topLeft();
+        QString circle = QString("<circle cx='%1' cy='%2' r='%3' fill='#ffffff' stroke='none' stroke-width='0' />\n")
+                            .arg(center.x()).arg(center.y()).arg(r.width() / 2);
+        boardByteArray.insert(ix, circle);
+
+    }
+
 	GroundPlaneGenerator gpg;
 	QList<QRect> rects;
 	gpg.setMinRunSize(1, 1);
-	gpg.getBoardRects(svg, board, GraphicsUtils::SVGDPI, m_keepout, rects);
+	gpg.getBoardRects(boardByteArray, board, GraphicsUtils::SVGDPI, m_keepout, rects);
 	QRectF bsbr = board->sceneBoundingRect();
 	foreach (QRect r, rects) {
 		TileRect tileRect;
 		realsToTile(tileRect, r.left() + bsbr.topLeft().x(), r.top() + bsbr.topLeft().y(), r.right() + bsbr.topLeft().x(), r.bottom() + 1 + bsbr.topLeft().y());  // note off-by-one weirdness
 		Tile * newTile = insertTile(thePlane, tileRect, alreadyTiled, NULL, Tile::OBSTACLE, CMRouter::IgnoreAllOverlaps);
-		drawGridItem(newTile);
+		DGI(newTile);
 	}
 
 	return true;
@@ -1723,7 +1719,7 @@ void CMRouter::tileWires(QList<Wire *> & wires, QList<Tile *> & alreadyTiled, Ti
 					.arg(p2.y() / GraphicsUtils::SVGDPI);
 			}
 			Tile * newTile = insertTile(plane, tileRect, alreadyTiled, w, tileType, overlapType);
-			drawGridItem(newTile);
+			DGI(newTile);
 			if (alreadyTiled.count() > 0) {
 				m_hasOverlaps = true;
 				if (overlapType != ReportAllOverlaps) return;
@@ -1775,7 +1771,7 @@ ConnectorItem * CMRouter::splitTrace(Wire * wire, QPointF point, Edge * edge)
 	// split the trace at point
 	QLineF originalLine = wire->line();
 	ConnectorItem * connector1 = wire->connector1();
-	ConnectorItem * connector0 = wire->connector0();
+	//ConnectorItem * connector0 = wire->connector0();
 
     //wire->debugInfo(QString("\noldwire wire pos %1,%2").arg(wire->pos().x()).arg(wire->pos().y()));
     //DebugDialog::debug("point", point);
@@ -2263,7 +2259,7 @@ void CMRouter::appendIf(PathUnit * pathUnit, Tile * next, QList<Tile *> & tiles,
 	}
 
 	if (bail) {
-		drawGridItem(next);
+		DGI(next);
 		return;
 	}
 
@@ -2293,16 +2289,16 @@ void CMRouter::appendIf(PathUnit * pathUnit, Tile * next, QList<Tile *> & tiles,
 	}
 
 	if (bail) {
-		drawGridItem(next);
+		DGI(next);
 		return;
 	}
 
 	if (!roomToNext(pathUnit, horizontal, tWidthNeeded, nextRect)) {
-		drawGridItem(next);
+		DGI(next);
 		return;
 	}
 
-	drawGridItem(next);
+	DGI(next);
 
 	tiles.append(next);
 }
@@ -2451,7 +2447,7 @@ void CMRouter::seedNext(PathUnit * pathUnit, QList<Tile *> & tiles) {
 
 GridEntry * CMRouter::drawGridItem(Tile * tile)
 {
-    return NULL;
+    return NULL; 
 
 	if (tile == NULL) return NULL;
 
@@ -2830,7 +2826,7 @@ Tile * CMRouter::addTile(NonConnectorItem * nci, Tile::TileType type, Plane * th
 	TileRect tileRect;
 	realsToTile(tileRect, r.left() - m_keepout, r.top() - m_keepout, r.right() + m_keepout, r.bottom() + m_keepout);
 	Tile * tile = insertTile(thePlane, tileRect, alreadyTiled, nci, type, overlapType);
-	drawGridItem(tile);
+	DGI(tile);
 	return tile;
 }
 
@@ -2972,7 +2968,7 @@ Tile * CMRouter::insertTile(Plane * thePlane, TileRect & tileRect, QList<Tile *>
 		insertUnion(tileRect, item, tileType);
 	}
 
-	drawGridItem(newTile);
+	DGI(newTile);
 	return newTile;
 }
 
@@ -3139,7 +3135,7 @@ PathUnit * CMRouter::initPathUnit(Edge * edge, Tile * tile, PriorityQueue<PathUn
 	m_pathUnits.append(pathUnit);
 	pathUnit->edge = edge;
 	pathUnit->tile = tile;
-	drawGridItem(tile);
+	DGI(tile);
 	pq.append(pathUnit);
 	tilePathUnits.insert(tile, pathUnit);
 	return pathUnit;
@@ -3260,6 +3256,7 @@ void CMRouter::clipParts()
         if (Board::isBoard(itemBase)) continue;
 
 		switch (itemBase->itemType()) {
+			case ModelPart::Hole: 
 			case ModelPart::Wire: 
 			case ModelPart::Jumper: 
 			case ModelPart::Breadboard: 
@@ -3644,7 +3641,7 @@ void CMRouter::crossLayerDest(PathUnit * pathUnit, PriorityQueue<PathUnit *> & s
 	getViaSize(tWidthNeeded, tHeightNeeded);
 	int bestCost = std::numeric_limits<int>::max();
 	TileRect nearestSpace;
-	drawGridItem(pathUnit->tile);
+	DGI(pathUnit->tile);
 	if (findNearestSpaceOne(pathUnit, tWidthNeeded, tHeightNeeded, nearest, bestCost, nearestSpace)) {
 		PathUnit * nextPathUnit = new PathUnit(&sourceQueue);
 		m_pathUnits.append(nextPathUnit);

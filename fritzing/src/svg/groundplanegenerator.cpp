@@ -64,15 +64,8 @@ GroundPlaneGenerator::GroundPlaneGenerator()
 GroundPlaneGenerator::~GroundPlaneGenerator() {
 }
 
-bool GroundPlaneGenerator::getBoardRects(const QString & boardSvg, QGraphicsItem * board, double res, double keepoutSpace, QList<QRect> & rects)
+bool GroundPlaneGenerator::getBoardRects(const QByteArray & boardByteArray, QGraphicsItem * board, double res, double keepoutSpace, QList<QRect> & rects)
 {
-	QByteArray boardByteArray;
-    QString tempColor("#000000");
-	QStringList exceptions;
-	exceptions << "none" << "";
-    if (!SvgFileSplitter::changeColors(boardSvg, tempColor, exceptions, boardByteArray)) {
-		return false;
-	}
 
 	QRectF br = board->sceneBoundingRect();
 	double bWidth = res * br.width() / GraphicsUtils::SVGDPI;

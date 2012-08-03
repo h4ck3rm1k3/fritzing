@@ -331,3 +331,10 @@ void Hole::changeUnits(bool)
 	QString newVal = PaletteItem::changeUnits(m_holeSettings);
 	modelPart()->setLocalProp("hole size", newVal);
 }
+
+QRectF Hole::trueSceneBoundingRect() {
+    QRectF r = sceneBoundingRect();
+    return r.adjusted(OffsetPixels, OffsetPixels, -OffsetPixels, -OffsetPixels);
+}
+
+

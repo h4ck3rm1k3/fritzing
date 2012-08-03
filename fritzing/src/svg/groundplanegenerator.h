@@ -52,7 +52,7 @@ public:
 	void scanOutline(QImage & image, double bWidth, double bHeight, double pixelFactor, double res, 
 					const QString & colorString, bool makeConnector, bool makeOffset, QSizeF minAreaInches, double minDimensionInches);  
 	void scanLines(QImage & image, int bWidth, int bHeight, QList<QRect> & rects);
-	bool getBoardRects(const QString & boardSvg, QGraphicsItem * board, double res, double keepoutSpace, QList<QRect> & rects);
+	bool getBoardRects(const QByteArray & boardByteArray, QGraphicsItem * board, double res, double keepoutSpace, QList<QRect> & rects);
 	const QStringList & newSVGs();
 	const QList<QPointF> & newOffsets();
 	void setBlurBy(double);
