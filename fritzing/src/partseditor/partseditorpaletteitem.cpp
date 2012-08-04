@@ -247,7 +247,7 @@ bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ViewIdentifierCla
 		renderer = new FSvgRenderer();
 		QByteArray loaded;
 		if (!m_itemSVG.isEmpty()) {
-			loaded = renderer->loadSvg(m_itemSVG.toUtf8(), m_svgStrings->absolutePath());
+			loaded = renderer->loadSvg(m_itemSVG.toUtf8(), m_svgStrings->absolutePath(), false);
 		}
 		if (loaded.isEmpty()) {
 			loaded = renderer->loadSvg(m_svgStrings->absolutePath());

@@ -1551,16 +1551,18 @@ bool CMRouter::initBoard(ItemBase * board, Plane * thePlane, QList<Tile *> & alr
     if (ix < 0) return true;
 
     foreach (QGraphicsItem * item, m_sketchWidget->scene()->collidingItems(board)) {
-        Hole * hole = dynamic_cast<Hole *>(item);
-        if (hole == NULL) continue;
-        if (hole->itemType() != ModelPart::Hole) continue;
+        NonConnectorItem * nci = dynamic_cast<NonConnectorItem *>(item);
+        if (nci == NULL) continue;
 
-        QRectF r = hole->trueSceneBoundingRect().adjusted(-m_keepout, -m_keepout, m_keepout, m_keepout);
+        ConnectorItem * ci = dynamic_cast<ConnectorItem *>(item);
+        if (ci != NULL) continue;
+
+        nci->attachedTo()->debugInfo("nci");
+        QRectF r = nci->sceneBoundingRect().adjusted(-m_keepout, -m_keepout, m_keepout, m_keepout);
         QPointF center = r.center() - board->sceneBoundingRect().topLeft();
         QString circle = QString("<circle cx='%1' cy='%2' r='%3' fill='#ffffff' stroke='none' stroke-width='0' />\n")
                             .arg(center.x()).arg(center.y()).arg(r.width() / 2);
         boardByteArray.insert(ix, circle);
-
     }
 
 	GroundPlaneGenerator gpg;

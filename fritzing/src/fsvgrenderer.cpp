@@ -95,21 +95,21 @@ QByteArray FSvgRenderer::loadSvg(const QString & filename, const QStringList & c
 
 bool FSvgRenderer::loadSvgString(const QString & svg) {
 	QByteArray byteArray(svg.toUtf8());
-	QByteArray result = loadSvg(byteArray, "");
+	QByteArray result = loadSvg(byteArray, "", true);
     return (!result.isEmpty());
 }
 
 bool FSvgRenderer::loadSvgString(const QString & svg, QString & newSvg) {
 	QByteArray byteArray(svg.toUtf8());
-	QByteArray result = loadSvg(byteArray, "");
+	QByteArray result = loadSvg(byteArray, "", true);
     newSvg = QString(result);
     return (!result.isEmpty());
 }
 
-QByteArray FSvgRenderer::loadSvg(const QByteArray & contents, const QString & filename) {
+QByteArray FSvgRenderer::loadSvg(const QByteArray & contents, const QString & filename, bool findNonConnectors) {
 	QStringList strings;
 	QString string;
-	return loadSvg(contents, filename, strings, strings, strings, string, string, false);
+	return loadSvg(contents, filename, strings, strings, strings, string, string, findNonConnectors);
 }
 
 QByteArray FSvgRenderer::loadSvg(const QByteArray & contents, const QString & filename, const QStringList & connectorIDs, const QStringList & terminalIDs, const QStringList & legIDs, const QString & setColor, const QString & colorElementID, bool findNonConnectors) {

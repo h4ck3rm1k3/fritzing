@@ -61,7 +61,7 @@ public:
 	QByteArray loadSvg(const QString & filename, const QStringList & connectorIDs, const QStringList & terminalIDs, const QStringList & legIDs, const QString & setColor, const QString & colorElementID, bool findNonConnectors);
 	QByteArray loadSvg(const QString & filename);
 	QByteArray loadSvg( const QByteArray & contents, const QString & filename, const QStringList & connectorIDs, const QStringList & terminalIDs, const QStringList & legIDs, const QString & setColor, const QString & colorElementID, bool findNonConnectors);     // for SvgSplitter loads
-	QByteArray loadSvg( const QByteArray & contents, const QString & filename);						// for SvgSplitter loads
+	QByteArray loadSvg( const QByteArray & contents, const QString & filename, bool findNonConnectors);						// for SvgSplitter loads
 	bool loadSvgString(const QString & svg);
 	bool loadSvgString(const QString & svg, QString & newSvg);
 	bool fastLoad(const QByteArray & contents);								
