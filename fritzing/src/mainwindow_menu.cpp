@@ -153,7 +153,7 @@ void MainWindow::mainLoad() {
     if (fileName.isEmpty()) return;
 
     if (fileName.endsWith(FritzingBundledPartExtension)) {
-        m_binManager->importPart(fileName);
+        m_binManager->importPartToContribBin(fileName);
         return;
     }
 

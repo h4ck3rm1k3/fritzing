@@ -111,7 +111,8 @@ class BinManager : public QFrame {
 		QMenu * combinedMenu();
 		void setTabIcon(PartsBinPaletteWidget* w, QIcon *);
 		void copyFilesToContrib(ModelPart *, QWidget * originator);
-		void importPart(const QString & filename);
+		void importPartToCurrentBin(const QString & filename);
+		void importPartToContribBin(const QString & filename);
         ModelPart * tempPartsBinRoot();
         bool isTempPartsBin(PartsBinPaletteWidget * bin);
         void setTempPartsBinLocation(const QString & filename);
@@ -163,6 +164,8 @@ class BinManager : public QFrame {
 		void findBins(QDir &, QList<BinLocation *> & actualLocations, BinLocation::Location);
 		void readTheoreticalLocations(QList<BinLocation *> & theoreticalLocations);
 		void updateBinCombinedMenu(PartsBinPaletteWidget * bin);
+        void importPart(const QString & filename, PartsBinPaletteWidget * bin);
+
 
 protected:
 		ReferenceModel *m_refModel;

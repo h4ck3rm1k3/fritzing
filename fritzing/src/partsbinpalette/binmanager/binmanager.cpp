@@ -968,16 +968,30 @@ void BinManager::newPart() {
 	newPartTo(currentBin());
 }
 
-void BinManager::importPart(const QString & filename) {
+void BinManager::importPartToContribBin(const QString & filename) {
+
+	if (!filename.isEmpty() && !filename.isNull()) {
+        PartsBinPaletteWidget * bin = getOrOpenBin(ContribPartsBinLocation, ContribPartsBinTemplateLocation);
+        if (bin == NULL) return;
+
+        importPart(filename, bin);
+    }
+}
+
+void BinManager::importPartToCurrentBin(const QString & filename) {
 
 	if (!filename.isEmpty() && !filename.isNull()) {
         PartsBinPaletteWidget * bin = currentBin();
         if (bin == NULL) return;
 
-		ModelPart *mp = m_mainWindow->loadBundledPart(filename, !bin->allowsChanges());
-		if (bin->allowsChanges()) {
-			addPartTo(bin, mp, true);
-		}
+        importPart(filename, bin);
+	}
+}
+
+void BinManager::importPart(const QString & filename, PartsBinPaletteWidget * bin) {
+	ModelPart *mp = m_mainWindow->loadBundledPart(filename, !bin->allowsChanges());
+	if (bin->allowsChanges()) {
+		addPartTo(bin, mp, true);
 	}
 }
 

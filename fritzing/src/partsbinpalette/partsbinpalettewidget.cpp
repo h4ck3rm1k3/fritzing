@@ -757,8 +757,16 @@ bool PartsBinPaletteWidget::allowsChanges() {
 	return m_allowsChanges;
 }
 
+bool PartsBinPaletteWidget::readOnly() {
+	return !allowsChanges();
+}
+
 void PartsBinPaletteWidget::setAllowsChanges(bool allowsChanges) {
 	m_allowsChanges = allowsChanges;
+}
+
+void PartsBinPaletteWidget::setReadOnly(bool readOnly) {
+	setAllowsChanges(!readOnly);
 }
 
 void PartsBinPaletteWidget::focusSearch() {

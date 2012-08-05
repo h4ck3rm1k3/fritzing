@@ -79,7 +79,9 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		class PartsBinView *currentView();
 		QAction *addPartToMeAction();
 		bool allowsChanges();
+		bool readOnly();
 		void setAllowsChanges(bool);
+		void setReadOnly(bool);
 		void focusSearch();
 		void setSaveQuietly(bool);
         bool open(QString fileName, QWidget * progressTarget, bool fastLoad);
