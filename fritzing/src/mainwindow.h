@@ -203,6 +203,7 @@ public slots:
 
 protected slots:
 	void mainLoad();
+	void revert();
 	void openRecentOrExampleFile();
     void print();
     void doExport();
@@ -560,6 +561,7 @@ protected:
 	QMenu *m_fileMenu;
 	QAction *m_newAct;
 	QAction *m_openAct;
+	QAction *m_revertAct;
 	QMenu *m_openRecentFileMenu;
     QAction *m_openRecentFileActs[MaxRecentFiles];
 	QMenu *m_openExampleMenu;

@@ -204,6 +204,32 @@ void MainWindow::mainLoadAux(const QString & fileName)
 	closeIfEmptySketch(mw);
 }
 
+void MainWindow::revert() {
+	QMessageBox::StandardButton answer = QMessageBox::question(
+            this,
+            tr("Revert?"),
+            tr("This operation can not be undone--you will lose all of your changes."
+                "\n\nGo ahead and revert?"),
+            QMessageBox::Yes | QMessageBox::No,
+            QMessageBox::Yes
+    );
+    // TODO: make button texts translatable
+    if (answer != QMessageBox::Yes) {
+        return;
+    }	
+
+    MainWindow* mw = newMainWindow(m_paletteModel, m_refModel, fileName(), true, true);
+    mw->setGeometry(this->geometry());
+	mw->loadWhich(fileName(), true, true, "");
+    mw->clearFileProgressDialog();
+
+    // TODO: restore zoom, scroll, etc. for each view
+    mw->m_tabWidget->setCurrentIndex(this->m_tabWidget->currentIndex());
+
+    this->setCloseSilently(true);
+    this->close();
+}
+
 bool MainWindow::loadWhich(const QString & fileName, bool setAsLastOpened, bool addToRecent, const QString & displayName)
 {
 	if (!QFileInfo(fileName).exists()) {
@@ -481,6 +507,10 @@ void MainWindow::createFileMenuActions() {
 	m_openAct->setStatusTip(tr("Open a sketch"));
 	connect(m_openAct, SIGNAL(triggered()), this, SLOT(mainLoad()));
 
+	m_revertAct = new QAction(tr("Revert"), this);
+	m_revertAct->setStatusTip(tr("Reload the sketch"));
+	connect(m_revertAct, SIGNAL(triggered()), this, SLOT(revert()));
+
 	createOpenRecentMenu();
 	createOpenExampleMenu();
 	createCloseAction();
@@ -649,6 +679,8 @@ void MainWindow::createOpenRecentMenu() {
 void MainWindow::updateFileMenu() {
 	updateRecentFileActions();
 	m_orderFabAct->setEnabled(true);
+
+    m_revertAct->setEnabled(m_undoStack->canUndo());
 
     updateExportActions();
 }
@@ -1054,6 +1086,7 @@ void MainWindow::createMenus()
     m_fileMenu = menuBar()->addMenu(tr("&File"));
     m_fileMenu->addAction(m_newAct);
     m_fileMenu->addAction(m_openAct);
+    m_fileMenu->addAction(m_revertAct);
     m_fileMenu->addMenu(m_openRecentFileMenu);
     m_fileMenu->addMenu(m_openExampleMenu);
 
