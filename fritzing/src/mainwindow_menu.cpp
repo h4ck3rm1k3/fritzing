@@ -504,7 +504,7 @@ void MainWindow::createFileMenuActions() {
 
 	m_openAct = new QAction(tr("&Open..."), this);
 	m_openAct->setShortcut(tr("Ctrl+O"));
-	m_openAct->setStatusTip(tr("Open a sketch"));
+	m_openAct->setStatusTip(tr("Open a Fritzing sketch (.fzz, .fz), or load a Fritzing part (.fzpz), or a Fritzing parts bin (.fzb, .fzbz)"));
 	connect(m_openAct, SIGNAL(triggered()), this, SLOT(mainLoad()));
 
 	m_revertAct = new QAction(tr("Revert"), this);
