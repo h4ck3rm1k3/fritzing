@@ -1033,6 +1033,20 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 		}
 	}
 
+    // collect these now, as the root is no longer available after dealing with something in the "if (!m_closeSilently) {" paragraph below 
+    QList<QString> tempToRemove;
+    ModelPart * root = m_binManager->tempPartsBinRoot();
+    if (root) {
+        foreach (QObject * o, root->children()) {
+            ModelPart * modelPart = qobject_cast<ModelPart *>(o);
+            if (modelPart == NULL) continue;
+
+            QString moduleID = modelPart->moduleID();
+            tempToRemove << moduleID;
+        }
+    }
+
+
 	if (!m_closeSilently) {
 		bool whatWithAliens = whatToDoWithAlienFiles();
 		if(!beforeClosing() || !whatWithAliens ||!m_binManager->beforeClosing()) {
@@ -1045,16 +1059,9 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 		}
 	}
 
-    ModelPart * root = m_binManager->tempPartsBinRoot();
-    if (root) {
-        foreach (QObject * o, root->children()) {
-            ModelPart * modelPart = qobject_cast<ModelPart *>(o);
-            if (modelPart == NULL) continue;
-
-            QString moduleID = modelPart->moduleID();
-            m_paletteModel->removePart(moduleID);
-            m_refModel->removePart(moduleID);
-        }
+    foreach (QString moduleID, tempToRemove) {
+        m_paletteModel->removePart(moduleID);
+        m_refModel->removePart(moduleID);
     }
 
 	DebugDialog::debug(QString("top level windows: %1").arg(QApplication::topLevelWidgets().size()));

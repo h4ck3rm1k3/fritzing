@@ -227,7 +227,13 @@ ModelPart *PartsBinListView::itemModelPart(const QListWidgetItem *item) const {
 }
 
 const QString &PartsBinListView::itemModuleID(const QListWidgetItem *item) {
-	return itemModelPart(item)->moduleID();
+    ModelPart *modelPart = itemModelPart(item);
+    if (modelPart == NULL) {
+        // this shouldn't happen?
+        return ___emptyString___;
+    }
+
+	return modelPart->moduleID();
 }
 
 ModelPart *PartsBinListView::selected() {
