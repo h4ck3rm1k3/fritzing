@@ -42,7 +42,7 @@
         </pcbView>
     </views>
     <connectors>
-        <connector id="connector3" type="pad" name="RING1" type="male">
+        <connector id="connector3" type="pad" name="RING1" >
             <description>RING 1</description>
             <views>
                 <breadboardView>
@@ -56,7 +56,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector4" type="pad" name="RING2" type="male">
+        <connector id="connector4" type="pad" name="RING2" >
             <description>RING 2</description>
             <views>
                 <breadboardView>
@@ -70,7 +70,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector0" type="pad" name="TIP" type="male">
+        <connector id="connector0" type="pad" name="TIP" >
             <description>TIP</description>
             <views>
                 <breadboardView>
@@ -84,7 +84,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector1" type="pad" name="SLEEVE" type="male">
+        <connector id="connector1" type="pad" name="SLEEVE" >
             <description>SLEEVE</description>
             <views>
                 <breadboardView>
@@ -98,7 +98,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector2" type="pad" name="TIP" type="male">
+        <connector id="connector2" type="pad" name="TIP" >
             <description>TIP</description>
             <views>
                 <breadboardView>

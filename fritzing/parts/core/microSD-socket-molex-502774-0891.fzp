@@ -40,7 +40,7 @@
         </pcbView>
     </views>
     <connectors>
-        <connector id="connector0" type="pad" name="NC" type="male">
+        <connector id="connector0" type="pad" name="NC" >
             <description>Not connected</description>
             <views>
                 <breadboardView>
@@ -54,7 +54,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector1" type="pad" name="CS" type="male">
+        <connector id="connector1" type="pad" name="CS" >
             <description>Chip Select</description>
             <views>
                 <breadboardView>
@@ -68,7 +68,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector2" type="pad" name="DI" type="male">
+        <connector id="connector2" type="pad" name="DI" >
             <description>Digital In (MOSI)</description>
             <views>
                 <breadboardView>
@@ -82,7 +82,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector3" type="pad" name="VCC" type="male">
+        <connector id="connector3" type="pad" name="VCC" >
             <description>Power (3.3V)</description>
             <views>
                 <breadboardView>
@@ -96,7 +96,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector4" type="pad" name="SCK" type="male">
+        <connector id="connector4" type="pad" name="SCK" >
             <description>Serial Clock</description>
             <views>
                 <breadboardView>
@@ -110,7 +110,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector5" type="pad" name="GND" type="male">
+        <connector id="connector5" type="pad" name="GND" >
             <description>Ground</description>
             <views>
                 <breadboardView>
@@ -124,7 +124,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector6" type="pad" name="DO" type="male">
+        <connector id="connector6" type="pad" name="DO" >
             <description>Digital Out (MISO)</description>
             <views>
                 <breadboardView>
@@ -138,7 +138,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector7" type="pad" name="RSV" type="male">
+        <connector id="connector7" type="pad" name="RSV" >
             <description>Reserved</description>
             <views>
                 <breadboardView>
@@ -152,7 +152,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector8" type="pad" name="SHIELD" type="male">
+        <connector id="connector8" type="pad" name="SHIELD" >
             <description>Shield</description>
             <views>
                 <breadboardView>
@@ -166,7 +166,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector9" type="pad" name="SHIELD" type="male">
+        <connector id="connector9" type="pad" name="SHIELD" >
             <description>Shield</description>
             <views>
                 <breadboardView>
@@ -180,7 +180,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector10" type="pad" name="SHIELD" type="male">
+        <connector id="connector10" type="pad" name="SHIELD" >
             <description>Shield</description>
             <views>
                 <breadboardView>
@@ -194,7 +194,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector11" type="pad" name="SHIELD" type="male">
+        <connector id="connector11" type="pad" name="SHIELD" >
             <description>Shield</description>
             <views>
                 <breadboardView>
