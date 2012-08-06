@@ -2670,8 +2670,7 @@ void MainWindow::convertToVia()
 {
 	BendpointAction * bendpointAction = qobject_cast<BendpointAction *>(m_convertToViaAct);
 
-	m_pcbGraphicsView->convertToVia(bendpointAction->lastHoverEnterConnectorItem(),
-										bendpointAction->lastLocation());
+	m_pcbGraphicsView->convertToVia(bendpointAction->lastHoverEnterConnectorItem());
 }
 
 void MainWindow::convertToBendpoint()

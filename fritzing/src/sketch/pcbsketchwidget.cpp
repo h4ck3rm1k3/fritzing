@@ -2310,11 +2310,10 @@ QString PCBSketchWidget::checkDroppedModuleID(const QString & moduleID) {
         return ModuleIDNames::Copper0PadModuleIDName;
     }
 
-
     return moduleID;
 }
 
-void PCBSketchWidget::convertToVia(ConnectorItem * lastHoverEnterConnectorItem, QPointF lastLocation) {
+void PCBSketchWidget::convertToVia(ConnectorItem * lastHoverEnterConnectorItem) {
     Wire * wire = qobject_cast<Wire *>(lastHoverEnterConnectorItem->attachedTo());
     if (wire == NULL) return;
     
@@ -2325,9 +2324,14 @@ void PCBSketchWidget::convertToVia(ConnectorItem * lastHoverEnterConnectorItem, 
 
     new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
 
+    double ringThickness, holeSize;
+    getViaSize(ringThickness, holeSize);
+    QPointF p = lastHoverEnterConnectorItem->sceneAdjustedTerminalPoint(NULL);
+    double d = ringThickness + (holeSize / 2) + Via::OffsetPixels;
+    QPointF loc(p.x() - d, p.y() - d);
     long newID = ItemBase::getNextID();
 	ViewGeometry viewGeometry;
-	viewGeometry.setLoc(lastLocation);
+	viewGeometry.setLoc(loc);
     new AddItemCommand(this, BaseCommand::CrossView, ModuleIDNames::ViaModuleIDName, wire->viewLayerSpec(), viewGeometry, newID, true, -1, parentCommand);
 
     QList<ConnectorItem *> connectorItems;
