@@ -75,13 +75,13 @@ def main():
             titleText = ""
             titles = fzp.getElementsByTagName("title")
             for title in titles:
-                titleText = getText(title.childNodes) + ","
+                titleText = getText(title.childNodes)
                 break       # assume only one title
                 
             taxonomyText = ""
             taxonomies = fzp.getElementsByTagName("taxonomy")
             for taxonomy in taxonomies:
-                taxonomyText = getText(taxonomy.childNodes) + ","
+                taxonomyText = getText(taxonomy.childNodes)
                 break       # assume only one title
                 
             location = "core"
