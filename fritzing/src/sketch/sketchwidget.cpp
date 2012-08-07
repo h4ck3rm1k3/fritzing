@@ -1828,6 +1828,20 @@ void SketchWidget::dropEvent(QDropEvent *event)
 void SketchWidget::dropItemEvent(QDropEvent *event) {
 	if (m_droppingItem == NULL) return;
 
+    QWidget * originator = ItemDrag::originator();
+    if (originator != NULL && originator->window() != this->window()) {
+        // dragging from parts bin in a different window
+        if (ItemDrag::originatorIsTempBin()) {
+            QMessageBox::warning(NULL, QObject::tr("Fritzing"),
+				QObject::tr("Sorry, dragging from the Temporary Parts Bin directly into another sketch is not yet implemented.\n"
+                            "Please drag the icon from the Temporary Parts Bin into your 'Mine' Bin, "
+                            "then you can drag the icon from the 'Mine' Bin into another sketch.") 
+             );
+
+            return;
+        }
+    }
+
 	if (m_clearSceneRect) {
 		m_clearSceneRect = false;
 		scene()->setSceneRect(QRectF());

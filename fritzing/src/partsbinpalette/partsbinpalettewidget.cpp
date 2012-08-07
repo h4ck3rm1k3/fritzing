@@ -911,3 +911,7 @@ ModelPart * PartsBinPaletteWidget::root() {
 
     return m_model->root();
 }
+
+bool PartsBinPaletteWidget::isTempPartsBin() {
+    return m_manager->isTempPartsBin(this);
+}

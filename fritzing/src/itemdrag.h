@@ -48,9 +48,11 @@ public:
 	static ItemDrag * singleton();
 	static QHash<QObject *, QObject *> & cache();
 	static void dragIsDone();
-	static QWidget * originator();
 	static void cleanup();
 	static void setOriginator(QWidget *);
+	static QWidget * originator();
+    static bool originatorIsTempBin();
+    static void setOriginatorIsTempBin(bool);
 
 signals:
 	void dragIsDoneSignal(ItemDrag *);
@@ -58,6 +60,7 @@ signals:
 protected:
 	QHash<QObject *, QObject *> m_cache;
 	QPointer<QWidget> m_originator;
+    bool m_originatorIsTempBin;
 	
 protected:
 	static ItemDrag * Singleton;

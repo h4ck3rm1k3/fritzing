@@ -119,6 +119,7 @@ void PartsBinView::mousePressOnItem(const QPoint &dragStartPos, const QString &m
 	mimeData->setData("action", "part-reordering");
 
 	ItemDrag::setOriginator(this->m_parent);
+    ItemDrag::setOriginatorIsTempBin(m_parent->isTempPartsBin());
 
 	QDrag * drag = new QDrag(dynamic_cast<QWidget*>(this));
 

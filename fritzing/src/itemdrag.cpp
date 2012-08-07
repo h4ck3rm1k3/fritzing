@@ -34,6 +34,7 @@ ItemDrag::ItemDrag(QObject * parent) :
 	QObject(parent)
 {
     m_originator = NULL;
+    m_originatorIsTempBin = false;
 }
 
 void ItemDrag::__dragIsDone() {
@@ -66,4 +67,12 @@ void ItemDrag::setOriginator(QWidget * originator) {
 
 QWidget* ItemDrag::originator() {
 	return Singleton->m_originator;
+}
+
+void ItemDrag::setOriginatorIsTempBin(bool itb) {
+	Singleton->m_originatorIsTempBin = itb;
+}
+
+bool ItemDrag::originatorIsTempBin() {
+	return Singleton->m_originatorIsTempBin;
 }
