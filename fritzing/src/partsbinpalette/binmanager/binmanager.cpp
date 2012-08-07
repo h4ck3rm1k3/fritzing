@@ -175,7 +175,7 @@ void BinManager::registerBin(PartsBinPaletteWidget* bin) {
 	else if (bin->fileName().compare(ContribPartsBinLocation) == 0) {
 		bin->setAllowsChanges(false);
 	}
-	else if (bin->fileName().compare(m_tempPartsBinLocation)) {
+	else if (bin->fileName().compare(m_tempPartsBinLocation) == 0) {
 		bin->setAllowsChanges(false);
 	}
 	else if (bin->fileName().contains(FolderUtils::getApplicationSubFolderPath("bins"))) {
@@ -855,6 +855,10 @@ void BinManager::createCombinedMenu()
 {
 	m_combinedMenu = new QMenu(tr("Bin"), this);
 
+    m_openAction = new QAction(tr("Open..."), this);
+	m_openAction->setToolTip(tr("Load a Fritzing part (.fzpz), or a Fritzing parts bin (.fzb, .fzbz)"));
+	connect(m_openAction, SIGNAL(triggered()), this, SLOT(mainLoad()));
+
 	m_newBinAction = new QAction(tr("New Bin..."), this);
 	m_newBinAction->setToolTip(tr("Create a new parts bin"));
 	connect(m_newBinAction, SIGNAL(triggered()),this, SLOT(newBinIn()));
@@ -893,8 +897,10 @@ void BinManager::createCombinedMenu()
 	m_showIconViewAction->setToolTip(tr("Display parts as icons"));
 	connect(m_showIconViewAction, SIGNAL(triggered()),this, SLOT(toIconView()));
 
-	m_combinedMenu->addAction(m_newBinAction);
+    m_combinedMenu->addAction(m_openAction);
 	m_combinedMenu->addSeparator();
+
+	m_combinedMenu->addAction(m_newBinAction);
 	m_combinedMenu->addAction(m_closeBinAction);
 	m_combinedMenu->addAction(m_deleteBinAction);
 	m_combinedMenu->addAction(m_saveBinAction);
@@ -919,7 +925,6 @@ void BinManager::createCombinedMenu()
 
 	m_combinedMenu->addSeparator();
 	m_combinedMenu->addAction(m_newPartAction);
-	m_combinedMenu->addSeparator();
 	m_combinedMenu->addAction(m_editPartAction);
 	m_combinedMenu->addAction(m_exportPartAction);
 	m_combinedMenu->addAction(m_removePartAction);
@@ -1168,10 +1173,36 @@ ModelPart * BinManager::tempPartsBinRoot() {
 }
 
 bool BinManager::isTempPartsBin(PartsBinPaletteWidget * bin) {
-    return bin->fileName().compare(m_tempPartsBinLocation);
+    return bin->fileName().compare(m_tempPartsBinLocation) == 0;
 }
 
 void BinManager::setTempPartsBinLocation(const QString & name) {
     m_tempPartsBinLocation = name;
     //StandardBinIcons.insert(m_tempPartsBinLocation, "Temp.png");
 }
+
+void BinManager::mainLoad() {
+	QString path = m_defaultSaveFolder;
+
+	QString fileName = FolderUtils::getOpenFileName(
+			this,
+			tr("Select a Fritzing File to Open"),
+			path,
+			tr("Fritzing Files (*%1 *%2 *%3);;Fritzing Part (*%1);;Fritzing Bin (*%2);;Fritzing Shareable Bin (*%3)")
+                .arg(FritzingBundledPartExtension)
+                .arg(FritzingBinExtension)
+                .arg(FritzingBundledBinExtension)
+		);
+
+    if (fileName.isEmpty()) return;
+
+    if (fileName.endsWith(FritzingBundledPartExtension)) {
+        importPartToCurrentBin(fileName);
+        return;
+    }
+
+    if (fileName.endsWith(FritzingBinExtension) || fileName.endsWith(FritzingBundledBinExtension)) {
+        openBinIn(fileName, false);
+    }
+}
+

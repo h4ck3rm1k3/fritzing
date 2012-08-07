@@ -220,8 +220,18 @@ void MainWindow::revert() {
 
     MainWindow* mw = newMainWindow(m_paletteModel, m_refModel, fileName(), true, true);
     mw->setGeometry(this->geometry());
-	mw->loadWhich(fileName(), true, true, "");
-    mw->clearFileProgressDialog();
+
+    QFileInfo info(fileName());
+    if (info.exists() || !FolderUtils::isEmptyFileName(this->m_fwFilename, untitledFileName())) {
+	    mw->loadWhich(fileName(), true, true, "");
+    }
+    else {
+	    mw->addDefaultParts();
+        mw->show();
+	    mw->hideTempPartsBin();
+    }
+
+    mw->clearFileProgressDialog();   
 
     // TODO: restore zoom, scroll, etc. for each view
     mw->m_tabWidget->setCurrentIndex(this->m_tabWidget->currentIndex());
