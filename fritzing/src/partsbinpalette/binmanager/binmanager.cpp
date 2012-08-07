@@ -162,25 +162,25 @@ void BinManager::addBin(PartsBinPaletteWidget* bin) {
 
 void BinManager::registerBin(PartsBinPaletteWidget* bin) {
 
-	if(bin->fileName() != ___emptyString___) {
+	if (!bin->fileName().isEmpty()) {
 		m_openedBins[bin->fileName()] = bin;
-	}
 
-	if (bin->fileName().compare(CorePartsBinLocation) == 0) {
-		bin->setAllowsChanges(false);
-	}
-	else if (bin->fileName().compare(SearchBinLocation) == 0) {
-		bin->setAllowsChanges(false);
-	}
-	else if (bin->fileName().compare(ContribPartsBinLocation) == 0) {
-		bin->setAllowsChanges(false);
-	}
-	else if (bin->fileName().compare(m_tempPartsBinLocation) == 0) {
-		bin->setAllowsChanges(false);
-	}
-	else if (bin->fileName().contains(FolderUtils::getApplicationSubFolderPath("bins"))) {
-		bin->setAllowsChanges(false);
-	}
+	    if (bin->fileName().compare(CorePartsBinLocation) == 0) {
+		    bin->setAllowsChanges(false);
+	    }
+	    else if (bin->fileName().compare(SearchBinLocation) == 0) {
+		    bin->setAllowsChanges(false);
+	    }
+	    else if (bin->fileName().compare(ContribPartsBinLocation) == 0) {
+		    bin->setAllowsChanges(false);
+	    }
+	    else if (bin->fileName().compare(m_tempPartsBinLocation) == 0) {
+		    bin->setAllowsChanges(false);
+	    }
+	    else if (bin->fileName().contains(FolderUtils::getApplicationSubFolderPath("bins"))) {
+		    bin->setAllowsChanges(false);
+	    }
+    }
 }
 
 void BinManager::connectTabWidget() {
@@ -380,9 +380,10 @@ void BinManager::updateTitle(PartsBinPaletteWidget* w, const QString& newTitle) 
 
 PartsBinPaletteWidget* BinManager::newBinIn() {
 	PartsBinPaletteWidget* bin = newBin();
-	bin->setPaletteModel(new PaletteModel(true, false, false),true);
+	bin->setPaletteModel(new PaletteModel(true, false, false), true);
 	bin->setTitle(tr("New bin (%1)").arg(++m_unsavedBinsCount));
 	insertBin(bin, m_stackTabWidget->count());
+    bin->setReadOnly(false);
 	renameBin();
 	return bin;
 }
@@ -855,46 +856,46 @@ void BinManager::createCombinedMenu()
 {
 	m_combinedMenu = new QMenu(tr("Bin"), this);
 
-    m_openAction = new QAction(tr("Open..."), this);
-	m_openAction->setToolTip(tr("Load a Fritzing part (.fzpz), or a Fritzing parts bin (.fzb, .fzbz)"));
+    m_openAction = new QAction(tr("Import..."), this);
+	m_openAction->setStatusTip(tr("Load a Fritzing part (.fzpz), or a Fritzing parts bin (.fzb, .fzbz)"));
 	connect(m_openAction, SIGNAL(triggered()), this, SLOT(mainLoad()));
 
 	m_newBinAction = new QAction(tr("New Bin..."), this);
-	m_newBinAction->setToolTip(tr("Create a new parts bin"));
+	m_newBinAction->setStatusTip(tr("Create a new parts bin"));
 	connect(m_newBinAction, SIGNAL(triggered()),this, SLOT(newBinIn()));
 
 	m_closeBinAction = new QAction(tr("Close Bin"), this);
-	m_closeBinAction->setToolTip(tr("Close parts bin"));
+	m_closeBinAction->setStatusTip(tr("Close parts bin"));
 	connect(m_closeBinAction, SIGNAL(triggered()),this, SLOT(closeBin()));
 
 	m_deleteBinAction = new QAction(tr("Delete Bin"), this);
-	m_deleteBinAction->setToolTip(tr("Delete parts bin"));
+	m_deleteBinAction->setStatusTip(tr("Delete parts bin"));
 	connect(m_deleteBinAction, SIGNAL(triggered()),this, SLOT(deleteBin()));
 
 	m_saveBinAction = new QAction(tr("Save Bin"), this);
-	m_saveBinAction->setToolTip(tr("Save parts bin"));
+	m_saveBinAction->setStatusTip(tr("Save parts bin"));
 	connect(m_saveBinAction, SIGNAL(triggered()),this, SLOT(saveBin()));
 
 	m_saveBinAsAction = new QAction(tr("Save Bin As..."), this);
-	m_saveBinAsAction->setToolTip(tr("Save parts bin as..."));
+	m_saveBinAsAction->setStatusTip(tr("Save parts bin as..."));
 	connect(m_saveBinAsAction, SIGNAL(triggered()),this, SLOT(saveBinAs()));
 
 	m_saveBinAsBundledAction = new QAction(tr("Export Bin..."), this);
-	m_saveBinAsBundledAction->setToolTip(tr("Save parts bin in compressed format..."));
+	m_saveBinAsBundledAction->setStatusTip(tr("Save parts bin in compressed format..."));
 	connect(m_saveBinAsBundledAction, SIGNAL(triggered()),this, SLOT(saveBundledBin()));
 
 	m_renameBinAction = new QAction(tr("Rename Bin..."), this);
-	m_renameBinAction->setToolTip(tr("Rename parts bin..."));
+	m_renameBinAction->setStatusTip(tr("Rename parts bin..."));
 	connect(m_renameBinAction, SIGNAL(triggered()),this, SLOT(renameBin()));
 
 	m_showListViewAction = new QAction(tr("Show Bin in List View"), this);
 	m_showListViewAction->setCheckable(true);
-	m_showListViewAction->setToolTip(tr("Display parts as a list"));
+	m_showListViewAction->setStatusTip(tr("Display parts as a list"));
 	connect(m_showListViewAction, SIGNAL(triggered()),this, SLOT(toListView()));
 
 	m_showIconViewAction = new QAction(tr("Show Bin in Icon View"), this);
 	m_showIconViewAction->setCheckable(true);
-	m_showIconViewAction->setToolTip(tr("Display parts as icons"));
+	m_showIconViewAction->setStatusTip(tr("Display parts as icons"));
 	connect(m_showIconViewAction, SIGNAL(triggered()),this, SLOT(toIconView()));
 
     m_combinedMenu->addAction(m_openAction);
