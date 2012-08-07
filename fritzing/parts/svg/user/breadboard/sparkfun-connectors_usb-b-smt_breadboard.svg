@@ -5,47 +5,44 @@
  <g id="breadboard">
   <g id="icon">
    <path fill="#1F7A34" stroke="none" stroke-width="0" d="M0,0L0,470A30,30 0 0 1 0,530L0,1000L621.361,1000L621.361,0L0,0z"/>
-   <g transform="translate(100,227.604)">
+   <g transform="translate(100,226.5)">
     <g stroke-width="0">
      <g stroke-width="0">
+      <rect width="53.5694" x="0" y="43.6806" fill="#B3B3B3" height="83.3333" stroke-width="0"/>
+      <rect width="53.5278" x="367.792" y="43.6806" fill="#B3B3B3" height="83.3333" stroke-width="0"/>
+     </g>
+     <g stroke-width="0">
       <g stroke-width="0">
-       <path fill="#E6E6E6" stroke-width="0" d="M367.792,532.264c0,6.88889,-5.58333,12.5,-12.4444,12.5L66.0694,544.764c-6.875,0,-12.5,-5.61111,-12.5,-12.5L53.5694,304.111c0,-6.88889,5.625,-12.4861,12.5,-12.4861l289.278,0c6.86111,0,12.4444,5.59722,12.4444,12.4861L367.792,532.264z"/>
-       <rect width="314.222" x="53.5694" y="20.7639" fill="#B3B3B3" height="278.653" stroke-width="0"/>
-       <g stroke-width="0">
-        <rect width="12" x="188.764" y="0.0138889" fill="#999999" height="20.7361" stroke-width="0"/>
-        <rect width="12" x="156.833" y="0.0138889" fill="#999999" height="20.7361" stroke-width="0"/>
-        <rect width="11.9583" x="251.347" y="0.0138889" fill="#999999" height="20.7361" stroke-width="0"/>
-        <rect width="11.9861" x="219.847" y="0.0138889" fill="#999999" height="20.7361" stroke-width="0"/>
-        <rect width="1.94444" x="156.833" y="0.0138889" fill="#CCCCCC" height="20.7361" stroke-width="0"/>
-        <rect width="1.98611" x="219.847" y="0.0138889" fill="#CCCCCC" height="20.7361" stroke-width="0"/>
-        <rect width="1.95833" x="251.347" y="0.0138889" fill="#CCCCCC" height="20.7361" stroke-width="0"/>
-        <rect width="1.94444" x="188.764" y="0.0138889" fill="#CCCCCC" height="20.7361" stroke-width="0"/>
+       <rect width="314.458" x="53.4722" y="73.25" fill="#B3B3B3" height="265.361" stroke-width="0"/>
+       <rect width="314.458" x="53.4722" y="0" fill="#999999" height="73.25" stroke-width="0"/>
+       <rect width="19.8194" x="53.4722" opacity="0.5" y="0" fill="#CCCCCC" height="338.611" enable-background="new    " stroke-width="0"/>
+       <rect width="19.8194" x="348.097" opacity="0.2" y="0" height="338.611" enable-background="new    " stroke-width="0"/>
+      </g>
+     </g>
+     <g stroke-width="0">
+      <g enable-background="new    " stroke-width="0">
+       <defs>
+        <rect width="314.236" x="53.4722" y="338.611" height="208.389" id="SVGID_1_" enable-background="new    " stroke-width="0"/>
+       </defs>
+       <clipPath id="SVGID_2_">
+        <use overflow="visible" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#SVGID_1_"/>
+       </clipPath>
+       <g stroke-width="0" clip-path="url(#SVGID_2_)">
+        <path fill="#E6E6E6" stroke-width="0" d="M254.722,356.597l14.625,0l0,0.875l0,0l60.875,35.9444l0,132.597L91.0972,526.014l0,-132.597l62.3611,-36.8056l1.88889,0l16.125,0l16.875,0l1.38889,0l46.7361,0l16.7639,0L254.722,356.611M367.708,338.611L53.4722,338.611l0,197.569c0,5.97222,5.75,10.8194,12.5,10.8194l289.25,0c7,0,12.4722,-4.86111,12.4722,-10.8194L367.694,338.611"/>
+        <polyline fill="#808080" points="155.347,356.597,153.458,356.597,91.0972,393.403,91.0972,526,330.208,526,223.847,526,235.222,482.389,155.347,482.389,155.347,420.458,155.347,356.597" stroke-width="0"/>
+        <polyline fill="#999999" points="269.347,356.597,254.722,356.597,254.722,413.639,237.958,413.639,236.458,413.639,236.458,356.597,189.722,356.597,189.722,413.639,172.958,413.639,171.472,413.639,171.472,356.597,155.347,356.597,155.347,420.458,269.347,420.458,269.347,357.472,269.347,356.597" stroke-width="0"/>
+        <polyline fill="#666666" points="189.722,356.597,188.347,356.597,188.347,413.639,172.958,413.639,189.722,413.639,189.722,356.597" stroke-width="0"/>
+        <polyline fill="#666666" points="254.722,356.597,253.222,356.597,253.222,413.639,237.958,413.639,254.722,413.639,254.722,356.597" stroke-width="0"/>
+        <polyline fill="#CCCCCC" points="188.347,356.597,171.472,356.597,171.472,413.639,172.958,413.639,188.347,413.639,188.347,356.597" stroke-width="0"/>
+        <polyline fill="#CCCCCC" points="253.222,356.597,236.458,356.597,236.458,413.639,237.958,413.639,253.222,413.639,253.222,356.597" stroke-width="0"/>
+        <polyline fill="#CCCCCC" points="155.347,420.458,155.347,482.389,235.222,482.389,269.347,482.389,261.472,482.389,261.472,427.264,163.347,427.264,163.347,482.389,155.347,482.389,155.347,427.264,155.347,420.458" stroke-width="0"/>
+        <polyline fill="#B3B3B3" points="269.347,420.458,155.347,420.458,163.347,427.181,163.347,427.264,261.472,427.264,261.472,427.181,269.347,420.458" stroke-width="0"/>
+        <polyline fill="#666666" points="269.347,357.472,269.347,357.472,269.347,420.458,269.347,482.389,235.222,482.389,223.847,526,330.208,526,330.208,393.403,269.347,357.472" stroke-width="0"/>
+        <polyline fill="#999999" points="269.347,420.458,261.472,427.181,261.472,427.264,261.472,482.389,269.347,482.389,269.347,420.458" stroke-width="0"/>
+        <polyline fill="#E6E6E6" points="155.347,420.458,155.347,427.264,155.347,482.389,163.347,482.389,163.347,427.264,163.347,427.181,155.347,420.458" stroke-width="0"/>
        </g>
       </g>
      </g>
-     <polygon fill="#808080" points="153.486,324.861,91.1528,367.403,91.1528,520.472,330.25,520.472,330.25,367.403,267.917,324.861" stroke-width="0"/>
-     <rect width="114" x="155.431" y="324.861" fill="#999999" height="73.7917" stroke-width="0"/>
-     <g stroke-width="0">
-      <g stroke-width="0">
-       <rect width="16.7778" x="173.028" y="324.861" fill="#666666" height="65.9722" stroke-width="0"/>
-       <rect width="16.7917" x="237.972" y="324.861" fill="#666666" height="65.9722" stroke-width="0"/>
-      </g>
-     </g>
-     <g stroke-width="0">
-      <g stroke-width="0">
-       <rect width="16.7778" x="171.569" y="324.861" fill="#CCCCCC" height="65.9722" stroke-width="0"/>
-       <rect width="16.7917" x="236.5" y="324.861" fill="#CCCCCC" height="65.9722" stroke-width="0"/>
-      </g>
-     </g>
-     <rect width="114" x="155.431" y="398.653" fill="#CCCCCC" height="71.4722" stroke-width="0"/>
-     <rect width="114" x="155.431" y="398.653" fill="#B3B3B3" height="7.81944" stroke-width="0"/>
-     <rect width="19.8194" x="53.5694" y="20.7639" fill="#CCCCCC" height="278.653" stroke-width="0"/>
-     <rect width="19.8333" x="348" y="20.7639" fill="#999999" height="278.653" stroke-width="0"/>
-     <polygon fill="#666666" points="269.431,325.903,269.431,398.653,269.431,470.125,235.208,470.125,223.861,520.472,330.25,520.472,330.25,367.403" stroke-width="0"/>
-     <polygon fill="#999999" points="261.486,470.125,269.431,470.125,269.431,398.653,261.486,406.458" stroke-width="0"/>
-     <polygon fill="#E6E6E6" points="155.431,470.125,163.403,470.125,163.403,406.458,155.431,398.653" stroke-width="0"/>
-     <rect width="53.5694" x="0" y="42.5694" fill="#B3B3B3" height="83.3333" stroke-width="0"/>
-     <rect width="53.5417" x="367.792" y="42.5694" fill="#B3B3B3" height="83.3333" stroke-width="0"/>
     </g>
    </g>
   </g>

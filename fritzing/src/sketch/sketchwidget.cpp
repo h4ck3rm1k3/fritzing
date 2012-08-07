@@ -1672,10 +1672,10 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 	if (m_droppingWire) {
 		viewLayerID = getWireViewLayerID(m_droppingItem->getViewGeometry(), m_droppingItem->viewLayerSpec());
 	}
-	else if(modelPart->moduleID().compare(ModuleIDNames::RulerModuleIDName)) {
+	else if(modelPart->moduleID().compare(ModuleIDNames::RulerModuleIDName) == 0) {
 		viewLayerID = getRulerViewLayerID();
 	}
-	else if(modelPart->moduleID().compare(ModuleIDNames::NoteModuleIDName)) {
+	else if(modelPart->moduleID().compare(ModuleIDNames::NoteModuleIDName) == 0) {
 		viewLayerID = getNoteViewLayerID();
 	}
 	else {

@@ -142,6 +142,7 @@ class BinManager : public QFrame {
 		void exportSelected();
 		bool removeSelected();
 		void saveBundledBin();
+        void mainLoad();
 
 	protected:
 		void createMenu();
@@ -184,6 +185,7 @@ protected:
 		QMenu *m_binContextMenu;
 		QMenu *m_combinedMenu;		
 
+		QAction *m_openAction;
 		QAction *m_newBinAction;
 		QAction *m_closeBinAction;
 		QAction *m_deleteBinAction;

@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-POWER_JACK-PTH_LOCK'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' POWER_JACK PTH_LOCK -->
 <version>4</version>
-<date>2012-08-02</date>
+<date>2012-08-07</date>
 <label>J</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Power Jack&lt;/b&gt;
@@ -38,7 +38,7 @@ This is the standard 5.5mm barrel jack for power. The PTH is the most common, pr
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/sparkfun-connectors_power_jack_pth_lock_breadboard.svg'>
+<layers image='icon/POWER_JACK_PTH_LOCK'>
 <layer layerId='icon'/>
 </layers>
 </iconView>
