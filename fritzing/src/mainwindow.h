@@ -196,7 +196,6 @@ public slots:
 	void changeBoardLayers(int layers, bool doEmit);
 	void selectAllObsolete();
 	void swapObsolete();
-	void dropTempSlot(ModelPart *, QWidget *);
     void swapBoardImageSlot(SketchWidget * sketchWidget, ItemBase * itemBase, const QString & filename, const QString & moduleID, bool addName);
 	void updateTraceMenu();
 	void updateFileMenu();

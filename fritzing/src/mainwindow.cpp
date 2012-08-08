@@ -65,6 +65,7 @@ $Date$
 #include "items/pinheader.h"
 #include "items/perfboard.h"
 #include "items/stripboard.h"
+#include "items/partfactory.h"
 #include "layerpalette.h"
 #include "items/paletteitem.h"
 #include "items/virtualwire.h"
@@ -502,11 +503,6 @@ void MainWindow::connectPairs() {
 	connectPair(m_schematicGraphicsView, m_pcbGraphicsView);
 	connectPair(m_pcbGraphicsView, m_breadboardGraphicsView);
 	connectPair(m_pcbGraphicsView, m_schematicGraphicsView);
-
-	connect(m_breadboardGraphicsView, SIGNAL(dropTempSignal(ModelPart *, QWidget *)), this, SLOT(dropTempSlot(ModelPart *, QWidget *)));
-	connect(m_schematicGraphicsView, SIGNAL(dropTempSignal(ModelPart *, QWidget *)), this, SLOT(dropTempSlot(ModelPart *, QWidget *)));
-	connect(m_pcbGraphicsView, SIGNAL(dropTempSignal(ModelPart *, QWidget *)), this, SLOT(dropTempSlot(ModelPart *, QWidget *)));
-
 
 	connect(m_pcbGraphicsView, SIGNAL(groundFillSignal()), this, SLOT(groundFill()));
 	connect(m_pcbGraphicsView, SIGNAL(copperFillSignal()), this, SLOT(copperFill()));
@@ -1033,20 +1029,6 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 		}
 	}
 
-    // collect these now, as the root is no longer available after dealing with something in the "if (!m_closeSilently) {" paragraph below 
-    QList<QString> tempToRemove;
-    ModelPart * root = m_binManager->tempPartsBinRoot();
-    if (root) {
-        foreach (QObject * o, root->children()) {
-            ModelPart * modelPart = qobject_cast<ModelPart *>(o);
-            if (modelPart == NULL) continue;
-
-            QString moduleID = modelPart->moduleID();
-            tempToRemove << moduleID;
-        }
-    }
-
-
 	if (!m_closeSilently) {
 		bool whatWithAliens = whatToDoWithAlienFiles();
 		if(!beforeClosing() || !whatWithAliens ||!m_binManager->beforeClosing()) {
@@ -1058,11 +1040,6 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 			m_binManager->createIfMyPartsNotExists();
 		}
 	}
-
-    foreach (QString moduleID, tempToRemove) {
-        m_paletteModel->removePart(moduleID);
-        m_refModel->removePart(moduleID);
-    }
 
 	DebugDialog::debug(QString("top level windows: %1").arg(QApplication::topLevelWidgets().size()));
 	/*
@@ -1263,7 +1240,6 @@ void MainWindow::loadBundledSketch(const QString &fileName, bool addToRecent, bo
 	}
 
 	QDir dir(m_fzzFolder);
-	FolderUtils::makePartFolderHierarchy(m_fzzFolder, "contrib");
     QString binFileName = dir.absoluteFilePath(QFileInfo(BinManager::TempPartsBinTemplateLocation).fileName());
     m_binManager->setTempPartsBinLocation(binFileName);
     FolderUtils::copyBin(binFileName, BinManager::TempPartsBinTemplateLocation);
@@ -1285,13 +1261,78 @@ void MainWindow::loadBundledSketch(const QString &fileName, bool addToRecent, bo
 
 	QString sketchName = dir.absoluteFilePath(sketchInfo.fileName());
 
-	QList<ModelPart*> mps = moveToPartsFolder(dir, this, false, false, m_fzzFolder, "contrib");
-	foreach (ModelPart * mp, mps) {
-		mp->setFzz(true);
-		m_binManager->addToTempPartsBin(mp);
-	}
+    namefilters.clear();
+    namefilters << "*" + FritzingPartExtension;
+    entryInfoList = dir.entryInfoList(namefilters);
+    QRegExp moduleIDFinder("moduleId=\"([^\"]+)");
 
-	if (mps.count() == 0) {
+    namefilters.clear();
+	namefilters << "*.svg";
+	QFileInfoList svgEntryInfoList = dir.entryInfoList(namefilters);
+
+    bool addedToTemp = false;
+
+    foreach (QFileInfo fzpInfo, entryInfoList) {
+        QFile file(dir.absoluteFilePath(fzpInfo.fileName()));
+        if (!file.open(QFile::ReadOnly)) {
+            DebugDialog::debug(QString("unable to open %1: %2").arg(file.fileName()));
+            continue;
+        }
+
+
+        // TODO: could be more efficient by using a streamreader
+        QString fzp = file.readAll();
+        file.close();
+        int ix = fzp.indexOf(moduleIDFinder);
+        if (ix < 0) {
+            DebugDialog::debug(QString("unable to find module id in %1: %2").arg(file.fileName()).arg(fzp));
+            continue;
+        }
+
+        QString moduleID = moduleIDFinder.cap(1);
+        ModelPart * mp = m_paletteModel->retrieveModelPart(moduleID);
+        if (mp == NULL) {
+            QDomDocument doc;
+            if (!doc.setContent(fzp)) {
+                DebugDialog::debug(QString("unable to parse fzp in %1: %2").arg(file.fileName()).arg(fzp));
+                continue;
+            }
+
+
+            mp = copyToPartsFolder(fzpInfo, false, false, PartFactory::folderPath(), "contrib");
+            if (mp == NULL) {
+                DebugDialog::debug(QString("unable to create model part in %1: %2").arg(file.fileName()).arg(fzp));
+                continue;
+            }
+
+            QDomElement root = doc.documentElement();
+	        QDomElement views = root.firstChildElement("views");
+	        QDomElement view = views.firstChildElement();
+            while (!view.isNull()) {
+                QDomElement layers = view.firstChildElement("layers");
+                QString path = layers.attribute("image", "");
+                if (!path.isEmpty()) {
+                    int ix = path.indexOf("/");
+                    path = path.mid(ix + 1);
+                    for (int jx = svgEntryInfoList.count() - 1; jx >= 0; jx--) {
+                        QFileInfo svgInfo = svgEntryInfoList.at(jx);
+                        if (svgInfo.fileName().contains(path)) {
+                            copyToSvgFolder(svgInfo, false, PartFactory::folderPath(), "contrib");
+                            svgEntryInfoList.removeAt(jx);
+                        }
+                    }
+                }
+                view = view.nextSiblingElement();
+            }
+
+        	mp->setFzz(true);
+        }
+
+		m_binManager->addToTempPartsBin(mp);
+        addedToTemp = true;
+    }
+
+	if (!addedToTemp) {
 		m_binManager->hideTempPartsBin();
 	}
 
@@ -1377,7 +1418,7 @@ void MainWindow::saveBundledPart(const QString &moduleId) {
 	QString modIdToExport;
 	ModelPart* mp;
 
-	if(moduleId == ___emptyString___) {
+	if(moduleId.isEmpty()) {
 		if (m_currentGraphicsView == NULL) return;
 		PaletteItem *selectedPart = m_currentGraphicsView->getSelectedPart();
 		mp = selectedPart->modelPart();
@@ -1806,7 +1847,7 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 	QString moduleID = m_refModel->retrieveModuleIdWith(family, prop, true);
 	bool exactMatch = m_refModel->lastWasExactMatch();
 
-	if(moduleID == ___emptyString___) {
+	if(moduleID.isEmpty()) {
 		QMessageBox::information(
 			this,
 			tr("Sorry!"),
@@ -2432,10 +2473,6 @@ PCBSketchWidget * MainWindow::pcbView() {
 void MainWindow::noBackup()
 {
 	m_autosaveTimer.stop();
-}
-
-void MainWindow::dropTempSlot(ModelPart * mp, QWidget * widget) {
-	m_binManager->copyFilesToContrib(mp, widget);
 }
 
 void MainWindow::hideTempPartsBin() {

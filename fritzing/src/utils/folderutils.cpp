@@ -216,7 +216,7 @@ void FolderUtils::setOpenSaveFolderAux(const QString& path)
 
 
 const QString FolderUtils::openSaveFolder() {
-	if(m_openSaveFolder == ___emptyString___) {
+	if(m_openSaveFolder.isEmpty()) {
 		QSettings settings;
 		QString tempFolder = settings.value("openSaveFolder").toString();
 		if (!tempFolder.isEmpty()) {

@@ -173,8 +173,8 @@ void FritzingWindow::undoStackCleanChanged(bool isClean) {
 }
 
 bool FritzingWindow::alreadyHasExtension(const QString &fileName, const QString &fileExt) {
-	// TODO: Make something preattier to manage all the supported formats at once
-	if(fileExt != ___emptyString___) {
+	// TODO: Make something prettier to manage all the supported formats at once
+	if(!fileExt.isEmpty()) {
 		return fileName.endsWith(fileExt);
 	} else {
 		foreach (QString extension, fritzingExtensions()) {

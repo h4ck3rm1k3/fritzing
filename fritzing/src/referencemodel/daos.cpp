@@ -54,7 +54,7 @@ const QString &PartProperty::name() const {
 
 void PartProperty::setName(const QString &name) {
 	m_name = name.toLower().trimmed();
-	//Q_ASSERT(m_name != ___emptyString___);
+	//Q_ASSERT(!m_name.isEmpty());
 }
 
 const QString &PartProperty::value() const {
@@ -63,7 +63,7 @@ const QString &PartProperty::value() const {
 
 void PartProperty::setValue(const QString &value) {
 	m_value = value.toLower().trimmed();
-	//Q_ASSERT(m_value != ___emptyString___);
+	//Q_ASSERT(!m_value.isEmpty());
 }
 
 Part *PartProperty::part() {
@@ -161,7 +161,7 @@ const QString & Part::family() const {
 
 void Part::setFamily(const QString &family) {
 	m_family = family.toLower().trimmed();
-	//Q_ASSERT(m_family != ___emptyString___);
+	//Q_ASSERT(!m_family.isEmpty());
 }
 
 PartPropertyList Part::properties() const {

@@ -392,6 +392,7 @@ void PartFactory::initFolder()
 	QFileInfoList backupList;
 	LockManager::checkLockedFiles("partfactory", backupList, LockedFiles, true, LockManager::SlowTime);
 	FolderUtils::makePartFolderHierarchy(PartFactoryFolderPath, "core");
+	FolderUtils::makePartFolderHierarchy(PartFactoryFolderPath, "contrib");
 }
 
 void PartFactory::cleanup()

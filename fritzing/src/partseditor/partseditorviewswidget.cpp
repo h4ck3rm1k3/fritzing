@@ -36,9 +36,9 @@ $Date$
 #include "../waitpushundostack.h"
 #include "../debugdialog.h"
 
-QString PartsEditorViewsWidget::EmptyBreadViewText = ___emptyString___;
-QString PartsEditorViewsWidget::EmptySchemViewText = ___emptyString___;
-QString PartsEditorViewsWidget::EmptyPcbViewText = ___emptyString___;
+QString PartsEditorViewsWidget::EmptyBreadViewText;
+QString PartsEditorViewsWidget::EmptySchemViewText;
+QString PartsEditorViewsWidget::EmptyPcbViewText;
 
 PartsEditorViewsWidget::PartsEditorViewsWidget(SketchModel *sketchModel, WaitPushUndoStack *undoStack, ConnectorsInfoWidget* info, QWidget *parent, ItemBase * fromItem) : QFrame(parent) {
 	init();
@@ -105,13 +105,13 @@ PartsEditorViewsWidget::~PartsEditorViewsWidget() {
 void PartsEditorViewsWidget::init() {
 	m_connsPosChanged = false;
 
-	if(EmptyBreadViewText == ___emptyString___) {
+	if(EmptyBreadViewText.isEmpty()) {
 		EmptyBreadViewText = tr("What does this\npart look like on\nthe breadboard?");
 	}
-	if(EmptySchemViewText == ___emptyString___) {
+	if(EmptySchemViewText.isEmpty()) {
 		EmptySchemViewText = tr("What does this\npart look like in\na schematic view?");
 	}
-	if(EmptyPcbViewText == ___emptyString___) {
+	if(EmptyPcbViewText.isEmpty()) {
 		EmptyPcbViewText = tr("What does this\npart look like in\nthe PCB view?");
 	}
 }

@@ -130,7 +130,7 @@ ModelPart *SqliteReferenceModel::loadPart(const QString & path, bool update, boo
 }
 
 ModelPart *SqliteReferenceModel::retrieveModelPart(const QString &moduleID) {
-	if(moduleID == ___emptyString___) {
+	if (moduleID.isEmpty()) {
 		return NULL;
 	}
 	return m_partHash.value(moduleID, NULL);
@@ -164,7 +164,7 @@ QString SqliteReferenceModel::retrieveModuleId(const QString &family, const QMul
 
 QString SqliteReferenceModel::retrieveModuleId(const Part *examplePart, const QString &propertyName, bool closestMatch) {
 	PartPropertyList props = examplePart->properties();
-	QString propertyValue = ___emptyString___;
+	QString propertyValue;
 
 	if(props.size() > 0) {
 		QString queryStr =
@@ -196,7 +196,7 @@ QString SqliteReferenceModel::retrieveModuleId(const Part *examplePart, const QS
 			query.bindValue(name,params[name]);
 		}
 
-		QString moduleId = ___emptyString___;
+		QString moduleId;
 		if(query.exec()) {
 			//DebugDialog::debug("SQLITE: retrieving: \n"+queryDebug);
 			if(query.next()) {
@@ -205,7 +205,6 @@ QString SqliteReferenceModel::retrieveModuleId(const Part *examplePart, const QS
 			//DebugDialog::debug("SQLITE: found: "+moduleId);
 			query.clear();
 		} else {
-			moduleId = ___emptyString___;
 			DebugDialog::debug(
 				"SQLITE: couldn't retrieve part\n"
 				"\t "+query.lastQuery()+"\n"
@@ -214,10 +213,10 @@ QString SqliteReferenceModel::retrieveModuleId(const Part *examplePart, const QS
 			);
 		}
 
-		if(moduleId != ___emptyString___) {
+		if(!moduleId.isEmpty()) {
 			m_lastWasExactMatch = true;
 			return moduleId;
-		} else if(closestMatch || propertyName!=___emptyString___) {
+		} else if(closestMatch || !propertyName.isEmpty()) {
 			m_lastWasExactMatch = false;
 			return closestMatchId(examplePart, propertyName, propertyValue);
 		} else {
@@ -261,7 +260,6 @@ QStringList SqliteReferenceModel::getPossibleMatches(const Part *examplePart, co
 	Q_UNUSED(dbgQueryStr);
 	//DebugDialog::debug(dbgQueryStr);
 
-	QString moduleId = ___emptyString___;
 	if(query.exec()) {
 		while(query.next()) {
 			result << query.value(0).toString();
@@ -269,7 +267,6 @@ QStringList SqliteReferenceModel::getPossibleMatches(const Part *examplePart, co
 		//DebugDialog::debug(QString("SQLITE: %1 possible matches found").arg(result.size()));
 		query.clear();
 	} else {
-		moduleId = ___emptyString___;
 		DebugDialog::debug(
 			"SQLITE: couldn't retrieve part\n"
 			"\t "+query.lastQuery()+"\n"
@@ -284,7 +281,7 @@ QStringList SqliteReferenceModel::getPossibleMatches(const Part *examplePart, co
 QString SqliteReferenceModel::getClosestMatch(const Part *examplePart, QStringList possibleMatches) {
 	int propsInCommonCount = 0;
 	int propsInCommonCountAux = 0;
-	QString result = ___emptyString___;
+	QString result;
 	foreach(QString modId, possibleMatches) {
 		propsInCommonCountAux = countPropsInCommon(examplePart,retrieveModelPart(modId));
 		if(propsInCommonCountAux > propsInCommonCount) {

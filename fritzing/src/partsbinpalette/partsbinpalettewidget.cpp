@@ -347,12 +347,12 @@ QToolButton* PartsBinPaletteWidget::newToolButton(const QString& btnObjName, con
 	toolBtn->setObjectName(btnObjName);
 	toolBtn->setToolButtonStyle(Qt::ToolButtonIconOnly);
 	toolBtn->setArrowType(Qt::NoArrow);
-	if (text != ___emptyString___) {
+	if (!text.isEmpty()) {
 		toolBtn->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 		toolBtn->setText(text);
 	}
 	toolBtn->setPopupMode(QToolButton::InstantPopup);
-	if (imgPath != ___emptyString___) {
+	if (!imgPath.isEmpty()) {
 		toolBtn->setIcon(QIcon(imgPath));
 	}
 	toolBtn->setArrowType(Qt::NoArrow);
@@ -635,7 +635,7 @@ void PartsBinPaletteWidget::addPartCommand(const QString& moduleID) {
 	/*bool updating = alreadyIn(moduleID);
 
 	QString partTitle = m_refModel->partTitle(moduleID);
-	if(partTitle == ___emptyString___) partTitle = moduleID;
+	if(partTitle.isEmpty()) partTitle = moduleID;
 
 	QString undoStackMsg;
 

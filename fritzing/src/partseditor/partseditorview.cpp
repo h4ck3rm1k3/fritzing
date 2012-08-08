@@ -188,7 +188,7 @@ ItemBase * PartsEditorView::addItemAux(ModelPart * modelPart, ViewLayer::ViewLay
 	if(paletteItem) {
 		modelPart->initConnectors();    // is a no-op if connectors already in place
 		QString layerFileName = getLayerFileName(modelPart);
-		if(layerFileName != ___emptyString___) {
+		if(!layerFileName.isEmpty()) {
 			if(paletteItem->createSvgPath(modelPart->path(), layerFileName)) {
 				paletteItem->createSvgFile(paletteItem->svgFilePath()->absolutePath());
 				ViewLayer::ViewLayerID viewLayerID =
@@ -284,7 +284,7 @@ ModelPart *PartsEditorView::createFakeModelPart(SvgAndPartFilePath *svgpath) {
 	const QHash<QString,ConnectorTerminalSvgIdPair> connIds = getConnectorsSvgIds(svgpath->absolutePath());
 	const QStringList layers = getLayers(svgpath->absolutePath());
 
-	QString path = svgpath->relativePath() == ___emptyString___ ? svgpath->absolutePath() : svgpath->relativePath();
+	QString path = svgpath->relativePath().isEmpty() ? svgpath->absolutePath() : svgpath->relativePath();
 	ModelPart * mp = createFakeModelPart(connIds, layers, path);
 
 	return mp;
@@ -524,7 +524,7 @@ void PartsEditorView::findConnectorsLayerIdsAux(QStringList &result, QDomElement
 }
 
 QString PartsEditorView::findConnectorsLayerId(QDomDocument *svgDom) {
-	QString result = ___emptyString___;
+	QString result;
 	QStringList layers;
 	QDomElement docElem = svgDom->documentElement();
 	if(findConnectorsLayerIdAux(result, docElem, layers)) {
@@ -638,7 +638,7 @@ void PartsEditorView::loadFile() {
 			return;
 		}
 	}
-	if(origPath != ___emptyString___) {
+	if(!origPath.isEmpty()) {
 		if(m_startItem) {
 			m_fixedToCenterItems.removeAll(m_startItem);
 			delete m_startItem;
@@ -1510,7 +1510,7 @@ bool PartsEditorView::addRectToSvg(QDomDocument* svgDom, const QString &id, cons
 	connElem.setAttribute("height",rect.height());
 	connElem.setAttribute("fill","none");
 
-	if(connectorsLayerId == ___emptyString___) {
+	if(connectorsLayerId.isEmpty()) {
 		svgDom->firstChildElement("svg").appendChild(connElem);
 		return true;
 	} else {
@@ -1720,7 +1720,7 @@ void PartsEditorView::updatePinsInfo(QList< QPointer<ConnectorShared> > connsSha
 		if (pinInfo == NULL) {
 			notFound << cs;
 		}
-		else if(m_svgIds[connId].connectorId != ___emptyString___) {
+		else if(!m_svgIds[connId].connectorId.isEmpty()) {
 			pinInfo->m_svgId = m_svgIds[connId].connectorId;
 			// terminal points are already updated (by the function updateTerminalPoints)
 				// pinInfo->m_terminalId = m_svgIds[connId].terminalId;
@@ -1739,7 +1739,7 @@ void PartsEditorView::updatePinsInfo(QList< QPointer<ConnectorShared> > connsSha
 		foreach(ConnectorShared* cs, notFound) {
 			QString connId = cs->id();
 			SvgIdLayer* pinInfo = cs->fullPinInfo(m_viewIdentifier, vlid);
-			if (pinInfo != NULL && m_svgIds[connId].connectorId != ___emptyString___) {
+			if (pinInfo != NULL && !m_svgIds[connId].connectorId.isEmpty()) {
 				pinInfo->m_svgId = m_svgIds[connId].connectorId;
 				pinInfo->m_svgViewLayerID = layerID;
 				found << cs;

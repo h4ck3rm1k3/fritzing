@@ -1389,7 +1389,7 @@ QString ItemBase::getSvgFilename(ModelPart * modelPart, const QString & baseName
 {
 	QStringList tempPaths;
 	QString postfix = +"/"+ ItemBase::SvgFilesDir +"/%1/"+ baseName;
-	if(modelPart->path() != ___emptyString___) {
+	if(!modelPart->path().isEmpty()) {
 		QDir dir(modelPart->path());			// is a path to a filename
 		dir.cdUp();									// lop off the filename
 		dir.cdUp();									// parts root

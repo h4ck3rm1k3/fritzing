@@ -113,7 +113,6 @@ class BinManager : public QFrame {
 		void copyFilesToContrib(ModelPart *, QWidget * originator);
 		void importPartToCurrentBin(const QString & filename);
 		void importPartToContribBin(const QString & filename);
-        ModelPart * tempPartsBinRoot();
         bool isTempPartsBin(PartsBinPaletteWidget * bin);
         void setTempPartsBinLocation(const QString & filename);
 

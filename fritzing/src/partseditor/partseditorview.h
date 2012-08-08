@@ -40,9 +40,6 @@ $Date$
 
 struct ConnectorTerminalSvgIdPair {
 	ConnectorTerminalSvgIdPair() {
-		connectorId = ___emptyString___;
-		terminalId = ___emptyString___;
-		connectorName = ___emptyString___;
 	}
 	QString connectorId;
 	QString terminalId;

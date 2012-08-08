@@ -729,7 +729,7 @@ bool MainWindow::saveAsAux(const QString & fileName) {
 	m_statusBar->showMessage(tr("Saved '%1'").arg(fileName), 2000);
     setCurrentFile(fileName, true, true);
 
-	if(m_restarting && m_fwFilename != ___emptyString___) {
+	if(m_restarting && !m_fwFilename.isEmpty()) {
 		QSettings settings;
 		settings.setValue("lastOpenSketch",m_fwFilename);
 	}

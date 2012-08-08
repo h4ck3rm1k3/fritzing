@@ -506,7 +506,7 @@ bool PartsEditorMainWindow::saveAs() {
 
 	m_moduleId = ___emptyString___;
 	QString title = m_title->text();
-	m_fwFilename = title != ___emptyString___ ? title+FritzingPartExtension : QFileInfo(m_fwFilename).baseName();
+	m_fwFilename = !title.isEmpty() ? title+FritzingPartExtension : QFileInfo(m_fwFilename).baseName();
 
 	// TODO Mariano: This folder should be defined in the preferences... some day
 	QString partsFolderPath = FolderUtils::getUserDataStorePath("parts")+"/";

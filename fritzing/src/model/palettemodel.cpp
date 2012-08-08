@@ -49,9 +49,9 @@ static bool JustAppendAllPartsInstances = false;
 static bool FirstTime = true;
 static bool FirstTimeWrite = true;
 
-QString PaletteModel::AllPartsBinFilePath = ___emptyString___;
-QString PaletteModel::NonCorePartsBinFilePath = ___emptyString___;
-QString PaletteModel::ContribPartsBinFilePath = ___emptyString___;
+QString PaletteModel::AllPartsBinFilePath;
+QString PaletteModel::NonCorePartsBinFilePath;
+QString PaletteModel::ContribPartsBinFilePath;
 
 static QString FritzingContribPath;
 

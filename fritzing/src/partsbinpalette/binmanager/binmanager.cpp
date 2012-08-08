@@ -1160,19 +1160,6 @@ void BinManager::copyFilesToContrib(ModelPart * mp, QWidget * originator) {
 	}
 }
 
-ModelPart * BinManager::tempPartsBinRoot() {
-
-	for (int i = 0; i < m_stackTabWidget->count(); i++) {
-		PartsBinPaletteWidget* bin = (PartsBinPaletteWidget *) m_stackTabWidget->widget(i);
-        if (bin->fileName() == m_tempPartsBinLocation) {
-            return bin->root();
-		}
-	}
-
-    return NULL;
-
-}
-
 bool BinManager::isTempPartsBin(PartsBinPaletteWidget * bin) {
     return bin->fileName().compare(m_tempPartsBinLocation) == 0;
 }
