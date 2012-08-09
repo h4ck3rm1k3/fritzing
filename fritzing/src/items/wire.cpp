@@ -569,34 +569,48 @@ void Wire::mouseMoveEventAux(QPointF eventPos, Qt::KeyboardModifiers modifiers) 
     allTo.remove(whichConnectorItem);
 
 	if (allTo.count() == 0) {
+        // TODO: this could all be determined once in advance
+
 		// don't allow wire to connect back to something the other end is already directly connected to
 		QList<Wire *> wires;
 		QList<ConnectorItem *> ends;
-		collectChained(otherConnectorItem, wires, ends);
-		for (int i = 0; i < wires.count(); i++) {
-			Wire * w = wires[i];
-			collectChained(w->m_connector1, wires, ends);
-			collectChained(w->m_connector0, wires, ends);
-		}
-		ends.append(otherConnectorItem);
-		foreach (Wire * w, wires) {
-			ends.append(w->connector0());
-			ends.append(w->connector1());
-		}
+		collectChained(wires, ends);
+
+        // but allow to restore connections at this end (collect chained above got both ends of this wire) 
 		foreach (ConnectorItem * toConnectorItem, whichConnectorItem->connectedToItems()) {
 			ends.removeOne(toConnectorItem);
 		}
 
+        QList<ConnectorItem *> moreEnds;
+        foreach (ConnectorItem * end, ends) {
+            foreach (ConnectorItem * eci, end->connectedToItems()) {
+                moreEnds.append(eci);
+            }
+        }
+      
+        ends.append(moreEnds);
+        foreach (Wire * w, wires) {
+			ends << w->connector0() << w->connector1();
+		}
+        
 		ConnectorItem * originatingConnector = NULL;
 		if (otherConnectorItem && otherConnectorItem->connectionsCount() > 0) {
 			originatingConnector = otherConnectorItem->connectedToItems()[0];
 		}
+
+        // but allow to restore connections at this end (collect chained above got both ends of this wire) 
+		foreach (ConnectorItem * toConnectorItem, whichConnectorItem->connectedToItems()) {
+			ends.removeOne(toConnectorItem);
+		}
+
 		whichConnectorItem->findConnectorUnder(false, true, ends, true, originatingConnector);
 	}
     else {
         foreach (ConnectorItem * toConnectorItem, allTo) {
             Wire * chained = qobject_cast<Wire *>(toConnectorItem->attachedTo());
-            chained->simpleConnectedMoved(whichConnectorItem, toConnectorItem);
+            if (chained) {
+                chained->simpleConnectedMoved(whichConnectorItem, toConnectorItem);
+            }
         }
     }
 }
