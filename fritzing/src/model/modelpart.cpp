@@ -105,7 +105,7 @@ ModelPart::~ModelPart() {
 	clearBuses();
 }
 
-const QString & ModelPart::moduleID() {
+const QString & ModelPart::moduleID() const {
 	if (m_modelPartShared != NULL) return m_modelPartShared->moduleID();
 
 	return ___emptyString___;

@@ -338,9 +338,8 @@ QString MysteryPart::genModuleID(QMap<QString, QString> & currPropsMap)
 	}
 }
 
-QString MysteryPart::makeSchematicSvg(const QString & expectedFileName, const QString & moduleID) 
+QString MysteryPart::makeSchematicSvg(const QString & expectedFileName) 
 {
-    Q_UNUSED(moduleID);
 	bool sip = expectedFileName.contains("sip", Qt::CaseInsensitive);
 
 	QStringList pieces = expectedFileName.split("_");
@@ -435,18 +434,16 @@ QString MysteryPart::makeSchematicSvg(const QStringList & labels, bool sip)
 	return svg;
 }
 
-QString MysteryPart::makeBreadboardSvg(const QString & expectedFileName, const QString & moduleID) 
+QString MysteryPart::makeBreadboardSvg(const QString & expectedFileName) 
 {
-	if (expectedFileName.contains("_sip_")) return makeBreadboardSipSvg(expectedFileName, moduleID);
-	if (expectedFileName.contains("_dip_")) return makeBreadboardDipSvg(expectedFileName, moduleID);
+	if (expectedFileName.contains("_sip_")) return makeBreadboardSipSvg(expectedFileName);
+	if (expectedFileName.contains("_dip_")) return makeBreadboardDipSvg(expectedFileName);
 
 	return "";
 }
 
-QString MysteryPart::makeBreadboardDipSvg(const QString & expectedFileName, const QString & moduleID) 
+QString MysteryPart::makeBreadboardDipSvg(const QString & expectedFileName) 
 {
-    Q_UNUSED(moduleID);
-
     QString spacingString;
     int pins = TextUtils::getPinsAndSpacing(expectedFileName, spacingString);
 	double spacing = TextUtils::convertToInches(spacingString) * 100;
@@ -505,9 +502,8 @@ QString MysteryPart::makeBreadboardDipSvg(const QString & expectedFileName, cons
 	return svg.arg(TextUtils::getViewBoxCoord(svg, 2) / 100).arg(repeatTs).arg(repeatBs);
 }
 
-QString MysteryPart::makeBreadboardSipSvg(const QString & expectedFileName, const QString & moduleID) 
+QString MysteryPart::makeBreadboardSipSvg(const QString & expectedFileName) 
 {
-    Q_UNUSED(moduleID);
 	QStringList pieces = expectedFileName.split("_");
 	if (pieces.count() != 6) return "";
 
@@ -572,10 +568,8 @@ void MysteryPart::swapEntry(const QString & text) {
     PaletteItem::swapEntry(text);
 }
 
-QString MysteryPart::makePcbDipSvg(const QString & expectedFileName, const QString & moduleID) 
+QString MysteryPart::makePcbDipSvg(const QString & expectedFileName) 
 {
-    Q_UNUSED(moduleID);
-
     QString spacingString;
 	int pins = TextUtils::getPinsAndSpacing(expectedFileName, spacingString);
     if (pins == 0) return "";  
@@ -626,3 +620,5 @@ QString MysteryPart::makePcbDipSvg(const QString & expectedFileName, const QStri
 	return svg;
 }
 
+void MysteryPart::makeLocalMods(QByteArray &, const QString &) {
+}

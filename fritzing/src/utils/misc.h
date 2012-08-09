@@ -88,8 +88,4 @@ static const QString MaleSymbolString = QString("%1").arg(QChar(0x2642));
 
 Qt::KeyboardModifier altOrMetaModifier();
 
-typedef QString (*GenModuleID)(QMap<QString, QString> & currPropsMap);
-typedef QString (*GenSvg)(const QString & expectedFileName, const QString & moduleID);
-typedef QString (*GenFzp)(const QString &);
-
 #endif

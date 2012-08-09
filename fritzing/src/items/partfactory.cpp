@@ -190,102 +190,96 @@ ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClas
 QString PartFactory::getSvgFilename(ModelPart * modelPart, const QString & expectedFileName) {
 
 	if (expectedFileName.startsWith("pcb/dip_", Qt::CaseInsensitive)) {
-		return getSvgFilenameAux(expectedFileName, modelPart->moduleID(), &MysteryPart::makePcbDipSvg);
+		return getSvgFilenameAux(expectedFileName, modelPart, &MysteryPart::makePcbDipSvg);
 	}
 
 	if (expectedFileName.startsWith("pcb/mystery_part_", Qt::CaseInsensitive)) {
         if (expectedFileName.contains("dip")) {
-		    return getSvgFilenameAux(expectedFileName, modelPart->moduleID(), &MysteryPart::makePcbDipSvg);
+		    return getSvgFilenameAux(expectedFileName, modelPart, &MysteryPart::makePcbDipSvg);
         }
-        return getSvgFilenameAux(expectedFileName, modelPart->moduleID(), &PinHeader::makePcbSvg);
+        return getSvgFilenameAux(expectedFileName, modelPart, &PinHeader::makePcbSvg);
 	}
 
 	if (expectedFileName.startsWith("breadboard/mystery_part_", Qt::CaseInsensitive)) {
-		return getSvgFilenameAux(expectedFileName, modelPart->moduleID(), &MysteryPart::makeBreadboardSvg);
+		return getSvgFilenameAux(expectedFileName, modelPart, &MysteryPart::makeBreadboardSvg);
 	}
 
 	if (expectedFileName.startsWith("breadboard/screw_terminal_", Qt::CaseInsensitive)) {
-		return getSvgFilenameAux(expectedFileName, modelPart->moduleID(), &ScrewTerminal::makeBreadboardSvg);
+		return getSvgFilenameAux(expectedFileName, modelPart, &ScrewTerminal::makeBreadboardSvg);
 	}
 
 	if (expectedFileName.startsWith("schematic/screw_terminal_", Qt::CaseInsensitive)) {
-		return getSvgFilenameAux(expectedFileName, modelPart->moduleID(), &ScrewTerminal::makeSchematicSvg);
+		return getSvgFilenameAux(expectedFileName, modelPart, &ScrewTerminal::makeSchematicSvg);
 	}
 
 	if (expectedFileName.startsWith("pcb/screw_terminal_", Qt::CaseInsensitive)) {
-		return getSvgFilenameAux(expectedFileName, modelPart->moduleID(), &ScrewTerminal::makePcbSvg);
+		return getSvgFilenameAux(expectedFileName, modelPart, &ScrewTerminal::makePcbSvg);
 	}
 
 	if (expectedFileName.startsWith("breadboard/generic_sip_", Qt::CaseInsensitive)) {
-		return getSvgFilenameAux(expectedFileName, modelPart->moduleID(), &Dip::makeBreadboardSvg);
+		return getSvgFilenameAux(expectedFileName, modelPart, &Dip::makeBreadboardSvg);
 	}
 
 	if (expectedFileName.startsWith("schematic/mystery_part_", Qt::CaseInsensitive)) {
-		return getSvgFilenameAux(expectedFileName, modelPart->moduleID(), &MysteryPart::makeSchematicSvg);
+		return getSvgFilenameAux(expectedFileName, modelPart, &MysteryPart::makeSchematicSvg);
 	}
 
 	if (expectedFileName.startsWith("schematic/generic_sip_", Qt::CaseInsensitive)) {
-		return getSvgFilenameAux(expectedFileName, modelPart->moduleID(), &MysteryPart::makeSchematicSvg);
+		return getSvgFilenameAux(expectedFileName, modelPart, &MysteryPart::makeSchematicSvg);
 	}
 
 	if (expectedFileName.startsWith("schematic/generic_ic_dip_", Qt::CaseInsensitive)) {
-		return getSvgFilenameAux(expectedFileName, modelPart->moduleID(), &Dip::makeSchematicSvg);
+		return getSvgFilenameAux(expectedFileName, modelPart, &Dip::makeSchematicSvg);
 	}
 
 	if (expectedFileName.startsWith("breadboard/generic_ic_dip_", Qt::CaseInsensitive)) {
-		return getSvgFilenameAux(expectedFileName, modelPart->moduleID(), &Dip::makeBreadboardSvg);
+		return getSvgFilenameAux(expectedFileName, modelPart, &Dip::makeBreadboardSvg);
 	}
 
 	if (expectedFileName.startsWith("pcb/nsjumper_", Qt::CaseInsensitive)) {
-		return getSvgFilenameAux(expectedFileName, modelPart->moduleID(), &PinHeader::makePcbSvg);
+		return getSvgFilenameAux(expectedFileName, modelPart, &PinHeader::makePcbSvg);
 	}
 
 	if (expectedFileName.startsWith("pcb/jumper_", Qt::CaseInsensitive)) {
-		return getSvgFilenameAux(expectedFileName, modelPart->moduleID(), &PinHeader::makePcbSvg);
+		return getSvgFilenameAux(expectedFileName, modelPart, &PinHeader::makePcbSvg);
 	}
 
 	if (expectedFileName.startsWith("pcb/shrouded_", Qt::CaseInsensitive)) {
-		return getSvgFilenameAux(expectedFileName, modelPart->moduleID(), &PinHeader::makePcbSvg);
+		return getSvgFilenameAux(expectedFileName, modelPart, &PinHeader::makePcbSvg);
 	}
 
 	if (expectedFileName.startsWith("pcb/molex_", Qt::CaseInsensitive)) {
-		return getSvgFilenameAux(expectedFileName, modelPart->moduleID(), &PinHeader::makePcbSvg);
+		return getSvgFilenameAux(expectedFileName, modelPart, &PinHeader::makePcbSvg);
 	}
 
 	if (expectedFileName.startsWith("pcb/longpad_", Qt::CaseInsensitive)) {
-		return getSvgFilenameAux(expectedFileName, modelPart->moduleID(), &PinHeader::makePcbSvg);
+		return getSvgFilenameAux(expectedFileName, modelPart, &PinHeader::makePcbSvg);
 	}
 
 	if (expectedFileName.startsWith("bread/molex_", Qt::CaseInsensitive)) {
-		return getSvgFilenameAux(expectedFileName, modelPart->moduleID(), &PinHeader::makeBreadboardSvg);
+		return getSvgFilenameAux(expectedFileName, modelPart, &PinHeader::makeBreadboardSvg);
 	}
 
 	if (expectedFileName.startsWith("bread/longpad_", Qt::CaseInsensitive)) {
-		return getSvgFilenameAux(expectedFileName, modelPart->moduleID(), &PinHeader::makeBreadboardSvg);
+		return getSvgFilenameAux(expectedFileName, modelPart, &PinHeader::makeBreadboardSvg);
 	}
 
 	if (expectedFileName.contains("pin_header", Qt::CaseInsensitive)) {
 		if (expectedFileName.contains("schematic", Qt::CaseInsensitive)) {
-			return getSvgFilenameAux(expectedFileName, modelPart->moduleID(), &PinHeader::makeSchematicSvg);
+			return getSvgFilenameAux(expectedFileName, modelPart, &PinHeader::makeSchematicSvg);
 		}
 		else if (expectedFileName.contains("bread", Qt::CaseInsensitive)) {
-			return getSvgFilenameAux(expectedFileName, modelPart->moduleID(), &PinHeader::makeBreadboardSvg);		
+			return getSvgFilenameAux(expectedFileName, modelPart, &PinHeader::makeBreadboardSvg);		
 		}
 		else if (expectedFileName.contains("pcb", Qt::CaseInsensitive)) {
-			return getSvgFilenameAux(expectedFileName, modelPart->moduleID(), &PinHeader::makePcbSvg);		
+			return getSvgFilenameAux(expectedFileName, modelPart, &PinHeader::makePcbSvg);		
 		}
 	}
 
-	if (expectedFileName.contains("perfboard", Qt::CaseInsensitive)) {
+	if (expectedFileName.contains("perfboard", Qt::CaseInsensitive) || expectedFileName.contains("stripboard", Qt::CaseInsensitive)) {
 		if (expectedFileName.contains("icon")) return expectedFileName;
 
-		return getSvgFilenameAux(expectedFileName, modelPart->moduleID(), &Perfboard::makeBreadboardSvg);		
-	}
-
-	if (expectedFileName.contains("stripboard", Qt::CaseInsensitive)) {
-		if (expectedFileName.contains("icon")) return expectedFileName;
-
-		return getSvgFilenameAux(expectedFileName, modelPart->moduleID(), &Stripboard::makeBreadboardSvg);		
+		return getSvgFilenameAux(expectedFileName, modelPart, &Perfboard::makeBreadboardSvg);		
 	}
 
 	return "";
@@ -303,12 +297,14 @@ bool PartFactory::svgFileExists(const QString & expectedFileName, QString & path
 	return info.exists();
 }
 
-QString PartFactory::getSvgFilenameAux(const QString & expectedFileName, const QString & moduleID, GenSvg genSvg)
+QString PartFactory::getSvgFilenameAux(const QString & expectedFileName, const ModelPart * modelPart, GenSvg genSvg)
 {
+    Q_UNUSED(modelPart);
+
     QString path;
     if (svgFileExists(expectedFileName, path)) return path;
 
-	QString svg = (*genSvg)(expectedFileName, moduleID);
+	QString svg = (*genSvg)(expectedFileName);
 	if (TextUtils::writeUtf8(path, svg)) {
 		return path;
 	}
@@ -437,7 +433,20 @@ QString PartFactory::fzpPath() {
     return PartFactoryFolderPath + "/core/";
 }
 
-
 QString PartFactory::partPath() {
     return PartFactoryFolderPath + "/svg/core/";
 }
+
+QString PartFactory::makeSipOrDipOr(const QStringList & labels, bool hasLayout, bool sip) 
+{		
+	if (hasLayout) {
+		return MysteryPart::makeSchematicSvg(labels, false);
+	}
+		
+    if (sip) {
+		return MysteryPart::makeSchematicSvg(labels, true);
+	}
+
+	return Dip::makeSchematicSvg(labels);
+}
+

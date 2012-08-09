@@ -32,6 +32,7 @@ $Date$
 #include <QDomElement>
 #include "../viewidentifierclass.h"
 #include "../viewlayer.h"
+#include "paletteitem.h"
 
 
 class PartFactory
@@ -48,10 +49,12 @@ public:
 	static QString partPath();
     static bool svgFileExists(const QString & expectedFileName, QString & path);
     static bool fzpFileExists(const QString & moduleID, QString & path);
+    static QString makeSipOrDipOr(const QStringList & labels, bool hasLayout, bool sip);
+
 
 protected:
 	static QString getFzpFilenameAux(const QString & moduleID, GenFzp);
-	static QString getSvgFilenameAux(const QString & expectedFileName, const QString & moduleID, GenSvg);
+	static QString getSvgFilenameAux(const QString & expectedFileName, const ModelPart *, GenSvg);
 	static class ItemBase * createPartAux(class ModelPart *, ViewIdentifierClass::ViewIdentifier, const class ViewGeometry & viewGeometry, long id, QMenu * itemMenu, QMenu * wireMenu, bool doLabel);
 };
 

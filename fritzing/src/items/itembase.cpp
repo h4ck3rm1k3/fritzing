@@ -1283,9 +1283,6 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, QDomDocument * domDoc
 
 	//DebugDialog::debug(QString("set up image elapsed (1) %1").arg(t.elapsed()) );
 	QString filename = getSvgFilename(modelPart, layerAttributes.filename());
-	if (filename.isEmpty()) {
-		filename = PartFactory::getSvgFilename(modelPart, layerAttributes.filename());
-	}
 
 //#ifndef QT_NO_DEBUG
 	//DebugDialog::debug(QString("set up image elapsed (2) %1").arg(t.elapsed()) );
@@ -1329,12 +1326,12 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, QDomDocument * domDoc
             break;
 	}
 
-	bool gotOne = false;
 	FSvgRenderer * newRenderer = new FSvgRenderer();
 	QDomDocument flipDoc;
 	if (!getFlipDoc(modelPart, filename, viewLayerID, viewLayerSpec, flipDoc)) {
 		fixCopper1(modelPart, filename, viewLayerID, viewLayerSpec, flipDoc);
 	}
+    QByteArray bytesToLoad;
 	if (layerAttributes.multiLayer()) {
 		// need to treat create "virtual" svg file for each layer
 		SvgFileSplitter svgFileSplitter;
@@ -1347,31 +1344,34 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, QDomDocument * domDoc
 			result = svgFileSplitter.splitString(f, layerAttributes.layerName());
 		}
 		if (result) {
-			QByteArray bytes = newRenderer->loadSvg(svgFileSplitter.byteArray(), filename, connectorIDs, terminalIDs, legIDs, setColor, colorElementID, viewIdentifier == ViewIdentifierClass::PCBView);
-			if (!bytes.isEmpty()) {
-				gotOne = true;
-			}
+            bytesToLoad = svgFileSplitter.byteArray();
 		}
 	}
 	else {
-//#ifndef QT_NO_DEBUG
-//					DebugDialog::debug(QString("set up image elapsed (2.3) %1").arg(t.elapsed()) );
-//#endif
 		// only one layer, just load it directly
 		if (flipDoc.isNull()) {
-			layerAttributes.setLoaded(newRenderer->loadSvg(filename, connectorIDs, terminalIDs, legIDs, setColor, colorElementID, viewIdentifier == ViewIdentifierClass::PCBView));
+            QFile file(filename);
+            file.open(QFile::ReadOnly);
+            bytesToLoad = file.readAll();
 		}
 		else {
-			layerAttributes.setLoaded(newRenderer->loadSvg(flipDoc.toByteArray(), filename, connectorIDs, terminalIDs, legIDs, setColor, colorElementID, viewIdentifier == ViewIdentifierClass::PCBView));
+            bytesToLoad = flipDoc.toByteArray();
 		}
-		if (!layerAttributes.loaded().isEmpty()) {
-			gotOne = true;
-		}
-//#ifndef QT_NO_DEBUG
-//					DebugDialog::debug(QString("set up image elapsed (2.4) %1").arg(t.elapsed()) );
-//#endif
-	}
-	if (!gotOne) {
+    }
+
+    QByteArray resultBytes; 
+    if (!bytesToLoad.isEmpty()) {
+        makeLocalMods(bytesToLoad, filename);
+        resultBytes = newRenderer->loadSvg(bytesToLoad, filename, connectorIDs, terminalIDs, legIDs, setColor, colorElementID, viewIdentifier == ViewIdentifierClass::PCBView);
+    }
+
+    layerAttributes.setLoaded(resultBytes);
+
+#ifndef QT_NO_DEBUG
+//	DebugDialog::debug(QString("set up image elapsed (2.3) %1").arg(t.elapsed()) );
+#endif
+
+	if (resultBytes.isEmpty()) {
 		delete newRenderer;
 		error = tr("unable to create renderer for svg %1").arg(filename);
 		newRenderer = NULL;
@@ -2117,4 +2117,7 @@ ViewIdentifierClass::ViewIdentifier ItemBase::useViewIdentifierForPixmap(ViewIde
     }
 
     return vid;
+}
+
+void ItemBase::makeLocalMods(QByteArray &, const QString &) {
 }

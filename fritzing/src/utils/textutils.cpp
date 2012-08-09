@@ -183,6 +183,28 @@ QString TextUtils::replaceTextElement(const QString & svg, const QString & id, c
 	return svg;
 }
 
+QByteArray TextUtils::replaceTextElement(const QByteArray & svg, const QString & id, const QString & newValue) {
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+	QDomDocument doc;
+	if (!doc.setContent(svg, &errorStr, &errorLine, &errorColumn)) return svg;
+
+	QDomElement root = doc.documentElement();
+	QDomNodeList domNodeList = root.elementsByTagName("text");
+	for (int i = 0; i < domNodeList.count(); i++) {
+		QDomElement node = domNodeList.item(i).toElement();
+		if (node.isNull()) continue;
+
+		if (node.attribute("id").compare(id) != 0) continue;
+
+		replaceChildText(doc, node, newValue);
+		return doc.toByteArray();
+	}
+		
+	return svg;
+}
+
 QString TextUtils::replaceTextElements(const QString & svg, const QHash<QString, QString> & hash) {
 	QString errorStr;
 	int errorLine;

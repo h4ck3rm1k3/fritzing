@@ -83,7 +83,7 @@ public:
 
 	ModelPart::ItemType itemType() const;
 	void setItemType(ItemType);
-	const QString & moduleID();
+	const QString & moduleID() const;
 	void copy(ModelPart *);
 	void copyNew(ModelPart *);
 	void copyStuff(ModelPart * modelPart);

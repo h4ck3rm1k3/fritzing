@@ -40,6 +40,10 @@ $Date$
 #include "paletteitembase.h"
 #include "../viewlayer.h"
 
+typedef QString (*GenModuleID)(QMap<QString, QString> & currPropsMap);
+typedef QString (*GenSvg)(const QString & expectedFileName);
+typedef QString (*GenFzp)(const QString &);
+
 struct HoleClassThing {
     QString holeSize;
     QString ringThickness;
@@ -113,7 +117,7 @@ public:
 	void resetConnectors();
 	void resetConnectors(ItemBase * otherLayer, FSvgRenderer * otherLayerRenderer);
 	void resetConnector(ItemBase * itemBase, SvgIdLayer * svgIdLayer);
-
+    QStringList sipOrDipOr(bool & hasLayout, bool & sip);
 
 public:
 	static QString genFZP(const QString & moduleid, const QString & templateName, int minPins, int maxPins, int steps, bool smd);
@@ -140,12 +144,13 @@ protected:
 	void updateConnections();
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void figureHover();
-	bool isSingleRow(QList<ConnectorItem *> & connectorItems);
-	QList<ConnectorItem *> sortConnectorItems();
+	bool isSingleRow(const QList<ConnectorItem *> & connectorItems);
+	QList<Connector *> sortConnectors();
     QString hackSvgHoleSize(const QString & holeDiameter, const QString & ringThickness);
     QString hackFzpHoleSize(const QString & moduleID, const QString & pcbFilename, const QString & holeSize);
     QString appendHoleSize(const QString & moduleID, const QString & holeSize, const QString & ringThickness);
     void generateSwap(const QString & text, GenModuleID, GenFzp, GenSvg makeBreadboardSvg, GenSvg makeSchematicSvg, GenSvg makePcbSvg);
+    void makeLocalMods(QByteArray & svg, const QString & filename);
 
 protected:
     void setUpHoleSizes(const QString & type, HoleClassThing &);

@@ -8529,39 +8529,11 @@ void SketchWidget::changePinLabelsSlot(ItemBase * itemBase, bool singleRow)
 		paletteItem->changePinLabels(singleRow, false);
 	}
 	else {
-		bool hasLocal = false;
-		QStringList labels = paletteItem->getPinLabels(hasLocal);
-		if (labels.count() == 0) return;
+        bool hasLayout, sip;
+        QStringList labels = paletteItem->sipOrDipOr(hasLayout, sip);
+        if (labels.count() == 0) return;
 
-		// part was formerly a mystery part or generic ic ...
-		QHash<QString, QString> properties = itemBase->modelPart()->properties();
-		bool hasLayout = false;
-		bool sip = false;
-		foreach (QString key, properties.keys()) {
-			QString value = properties.value(key);
-			if (key.compare("layout", Qt::CaseInsensitive) == 0) {
-				// was a mystery part
-				hasLayout = true;
-				break;
-			}
-
-			if (key.compare("package") == 0) {
-				// was a generic ic
-				QString svg;
-				sip = value.contains("sip", Qt::CaseInsensitive);		
-			}
-		}
-
-		QString svg;
-		if (hasLayout) {
-			svg = MysteryPart::makeSchematicSvg(labels, false);
-		}
-		else if (sip) {
-			svg = MysteryPart::makeSchematicSvg(labels, true);
-		}
-		else {
-			svg = Dip::makeSchematicSvg(labels);
-		}
+        QString svg = PartFactory::makeSipOrDipOr(labels, hasLayout, sip);
 		paletteItem->resetRenderer(svg);
 		if (!hasLayout && !sip) {
 			paletteItem->resetConnectors();

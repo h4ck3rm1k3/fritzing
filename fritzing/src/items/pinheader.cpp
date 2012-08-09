@@ -432,7 +432,7 @@ QString PinHeader::genModuleID(QMap<QString, QString> & currPropsMap)
 	return "";
 }
 
-QString PinHeader::makePcbSvg(const QString & originalExpectedFileName, const QString & moduleID) 
+QString PinHeader::makePcbSvg(const QString & originalExpectedFileName) 
 {
     QString expectedFileName = originalExpectedFileName;
     int hsix = expectedFileName.indexOf(HoleSizePrefix);
@@ -442,7 +442,7 @@ QString PinHeader::makePcbSvg(const QString & originalExpectedFileName, const QS
 	initSpacings();
 
 	if (expectedFileName.contains("smd")) {
-		return makePcbSMDSvg(expectedFileName, moduleID);
+		return makePcbSMDSvg(expectedFileName);
 	}
 
     QString spacingString;
@@ -497,7 +497,7 @@ QString PinHeader::makePcbSvg(const QString & originalExpectedFileName, const QS
             addSquare = true;
         }
         else {
-            DebugDialog::debug(QString("square: expected filename is confusing %1 %2").arg(expectedFileName).arg(moduleID));
+            DebugDialog::debug(QString("square: expected filename is confusing %1").arg(expectedFileName));
         }
 
         double lockOffset = 5;  // mils
@@ -599,9 +599,8 @@ void PinHeader::initSpacings() {
 	}
 }
 
-QString PinHeader::makeSchematicSvg(const QString & expectedFileName, const QString & moduleID) 
+QString PinHeader::makeSchematicSvg(const QString & expectedFileName) 
 {
-    Q_UNUSED(moduleID);
 	QStringList pieces = expectedFileName.split("_");
 	if (pieces.count() < 7) return "";
 
@@ -628,9 +627,8 @@ QString PinHeader::makeSchematicSvg(const QString & expectedFileName, const QStr
 	return svg;
 }
 
-QString PinHeader::makeBreadboardSvg(const QString & expectedFileName, const QString & moduleID) 
+QString PinHeader::makeBreadboardSvg(const QString & expectedFileName) 
 {
-    Q_UNUSED(moduleID);
 	QStringList pieces = expectedFileName.split("_");
 	if (pieces.count() < 7) return "";
 
@@ -946,9 +944,8 @@ QString PinHeader::makePcbMolexSvg(int pins)
     return header.arg(totalWidth).arg(totalWidth * dpi).arg(repeats).arg((totalWidth * dpi) - strokeWidth).arg(qMax(w, (totalWidth * dpi) - cx - cx));
 }
 
-QString PinHeader::makePcbSMDSvg(const QString & expectedFileName, const QString & moduleID) 
+QString PinHeader::makePcbSMDSvg(const QString & expectedFileName) 
 {
-    Q_UNUSED(moduleID);
 	QStringList pieces = expectedFileName.split("_");
 
 	int pins = pieces.at(5).toInt();

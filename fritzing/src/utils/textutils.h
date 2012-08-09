@@ -52,6 +52,7 @@ public:
 	static double convertFromPowerPrefixU(QString & val, const QString & symbol);
 
 	static QString replaceTextElement(const QString & svg, const QString & id, const QString &  newValue);
+	static QByteArray replaceTextElement(const QByteArray & svg, const QString & id, const QString &  newValue);
 	static QString replaceTextElements(const QString & svg, const QHash<QString, QString> &);
     static bool squashElement(QDomDocument &, const QString & elementName, const QString & attName, const QRegExp & matchContent);
     static QString mergeSvg(const QString & svg1, const QString & svg2, const QString & id, bool flip);

@@ -87,7 +87,6 @@ SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ViewIdentifierClass::ViewIde
 	m_moduleId = modelPart->moduleID();
 	m_itemBase = itemBase;
 
-
 	if (modelPart->itemType() == ModelPart::Space) {
 		m_moduleId = ModuleIDNames::SpacerModuleIDName;
 		QString text = PartsBinView::TranslatedCategoryNames.value(modelPart->instanceText(), modelPart->instanceText());
@@ -109,7 +108,7 @@ SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ViewIdentifierClass::ViewIde
 
 		QString error;
 		LayerAttributes layerAttributes;
-		FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, viewIdentifier, ViewLayer::Icon, ViewLayer::ThroughHoleThroughTop_OneLayer, layerAttributes, error);
+		FSvgRenderer * renderer = m_itemBase->setUpImage(modelPart, viewIdentifier, ViewLayer::Icon, ViewLayer::ThroughHoleThroughTop_OneLayer, layerAttributes, error);
         if (renderer == NULL) {
             DebugDialog::debug(QString("missing renderer for icon %1").arg(modelPart->moduleID()));
         }

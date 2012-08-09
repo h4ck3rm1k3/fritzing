@@ -93,7 +93,7 @@ int findNumber(const QString & string) {
 	return result;
 }
 
-bool byID(ConnectorItem * c1, ConnectorItem * c2)
+bool byID(Connector * c1, Connector * c2)
 {
 	int i1 = findNumber(c1->connectorSharedID());
 	if (i1 < 0) {
@@ -600,8 +600,8 @@ void PaletteItem::openPinLabelDialog() {
 	}
 
 	QStringList labels;
-	QList<ConnectorItem *> sortedConnectorItems = sortConnectorItems();
-	if (sortedConnectorItems.count() == 0) {
+	QList<Connector *> sortedConnectors = sortConnectors();
+	if (sortedConnectors.count() == 0) {
 		QMessageBox::warning(
 			NULL,
 			tr("Fritzing"),
@@ -610,8 +610,8 @@ void PaletteItem::openPinLabelDialog() {
 		return;
 	}
 
-	foreach (ConnectorItem * connectorItem, sortedConnectorItems) {
-		labels.append(connectorItem->connectorSharedName());
+	foreach (Connector * connector, sortedConnectors) {
+		labels.append(connector->connectorSharedName());
 	}
 
 	QString chipLabel = modelPart()->localProp("chip label").toString();
@@ -619,13 +619,13 @@ void PaletteItem::openPinLabelDialog() {
 		chipLabel = instanceTitle();
 	}
 
-	bool singleRow = isSingleRow(sortedConnectorItems);
+	bool singleRow = isSingleRow(cachedConnectorItems());
 	PinLabelDialog pinLabelDialog(labels, singleRow, chipLabel, modelPart()->isCore(), NULL);
 	int result = pinLabelDialog.exec();
 	if (result != QDialog::Accepted) return;
 
 	QStringList newLabels = pinLabelDialog.labels();
-	if (newLabels.count() != sortedConnectorItems.count()) {
+	if (newLabels.count() != sortedConnectors.count()) {
 		QMessageBox::warning(
 			NULL,
 			tr("Fritzing"),
@@ -639,17 +639,17 @@ void PaletteItem::openPinLabelDialog() {
 
 void PaletteItem::renamePins(const QStringList & labels, bool singleRow)
 {
-	QList<ConnectorItem *> sortedConnectorItems = sortConnectorItems();
+	QList<Connector *> sortedConnectors = sortConnectors();
 	for (int i = 0; i < labels.count(); i++) {
-		ConnectorItem * connectorItem = sortedConnectorItems.at(i);
-		connectorItem->setConnectorLocalName(labels.at(i));
+		Connector * connector = sortedConnectors.at(i);
+		connector->setConnectorLocalName(labels.at(i));
 	}
 
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	infoGraphicsView->changePinLabels(this, singleRow);
 }
 
-bool PaletteItem::isSingleRow(QList<ConnectorItem *> & connectorItems) {
+bool PaletteItem::isSingleRow(const QList<ConnectorItem *> & connectorItems) {
 	if (connectorItems.count() == 2) {
 		// no way to tell? so default to double
 		return false;
@@ -677,15 +677,18 @@ bool PaletteItem::isSingleRow(QList<ConnectorItem *> & connectorItems) {
 	return true;
 }
 
-QList<ConnectorItem *> PaletteItem::sortConnectorItems() {
-	QList<ConnectorItem *> sortedConnectorItems(this->cachedConnectorItems());
+QList<Connector *> PaletteItem::sortConnectors() { 
+	QList<Connector *> sortedConnectors;
+    foreach (Connector * connector, modelPart()->connectors().values()) {
+        sortedConnectors.append(connector);
+    }
 	ByIDParseSuccessful = true;
-	qSort(sortedConnectorItems.begin(), sortedConnectorItems.end(), byID);
-	if (!ByIDParseSuccessful || sortedConnectorItems.count() == 0) {		
-		sortedConnectorItems.clear();
+	qSort(sortedConnectors.begin(), sortedConnectors.end(), byID);
+	if (!ByIDParseSuccessful || sortedConnectors.count() == 0) {		
+		sortedConnectors.clear();
 	}
 
-	return sortedConnectorItems;
+	return sortedConnectors;
 }
 
 bool PaletteItem::changePinLabels(bool singleRow, bool sip) {
@@ -699,12 +702,12 @@ bool PaletteItem::changePinLabels(bool singleRow, bool sip) {
 QStringList PaletteItem::getPinLabels(bool & hasLocal) {
 	hasLocal = false;
 	QStringList labels;
-	QList<ConnectorItem *> sortedConnectorItems = sortConnectorItems();
-	if (sortedConnectorItems.count() == 0) return labels;
+	QList<Connector *> sortedConnectors = sortConnectors();
+	if (sortedConnectors.count() == 0) return labels;
 
-	foreach (ConnectorItem * connectorItem, sortedConnectorItems) {
-		labels.append(connectorItem->connectorSharedName());
-		if (!connectorItem->connector()->connectorLocalName().isEmpty()) {
+	foreach (Connector * connector, sortedConnectors) {
+		labels.append(connector->connectorSharedName());
+		if (!connector->connectorLocalName().isEmpty()) {
 			hasLocal = true;
 		}
 	}
@@ -1313,19 +1316,19 @@ void PaletteItem::generateSwap(const QString & text, GenModuleID genModuleID, Ge
         QString pcbName = LayerAttributes::getSvgElementLayers(&doc, ViewIdentifierClass::PCBView).attribute("image");
 
         if (!PartFactory::svgFileExists(bbName, path)) {
-            QString svg = makeBreadboardSvg(bbName, newModuleID);
+            QString svg = makeBreadboardSvg(bbName);
 	        TextUtils::writeUtf8(path, svg);
         }
 
         if (!PartFactory::svgFileExists(schName, path)) {
-            QString svg = makeSchematicSvg(schName, newModuleID);
+            QString svg = makeSchematicSvg(schName);
 	        TextUtils::writeUtf8(path, svg);
         }
 
         if (!PartFactory::svgFileExists(pcbName, path)) {
-            QString svg = makePcbSvg(pcbName, newModuleID);
+            QString svg = makePcbSvg(pcbName);
 	        TextUtils::writeUtf8(path, svg);
-        }      
+        } 
     }
 
     m_propsMap.insert("moduleID", newModuleID);
@@ -1400,3 +1403,64 @@ bool PaletteItem::changeDiameter(HoleSettings & holeSettings, QObject * sender)
 	double oldValue = temp.toDouble();
 	return (newValue != oldValue);
 }
+
+void PaletteItem::makeLocalMods(QByteArray & svg, const QString & filename) {
+    // at the moment, this is only for chip labels and pin labels for saved-as-new-part parts (i.e. that are no longer MysteryParts)
+    switch (m_viewIdentifier) {
+        case ViewIdentifierClass::IconView:
+        case ViewIdentifierClass::PCBView:
+            return;
+            
+        default:
+            if (itemType() != ModelPart::Part) return;
+
+            if (filename.contains("mystery") || filename.contains("sip") || filename.contains("dip")) {
+                break;
+            }
+
+            return;
+    }
+
+
+    QString chipLabel = modelPart()->properties().value("chip label", ""); 
+    if (!chipLabel.isEmpty()) {
+        svg = TextUtils::replaceTextElement(svg, "label", chipLabel);
+    }
+
+    if (m_viewIdentifier == ViewIdentifierClass::SchematicView) {
+        QString value = modelPart()->properties().value("editable pin labels", "");
+        if (value.compare("true") == 0) {
+            bool hasLayout, sip;
+            QStringList labels = sipOrDipOr(hasLayout, sip);
+            if (labels.count() > 0) {
+                svg = PartFactory::makeSipOrDipOr(labels, hasLayout, sip).toUtf8();
+            }
+        }
+    }
+}
+
+QStringList PaletteItem::sipOrDipOr(bool & hasLayout, bool & sip) {
+	hasLayout = sip = false;
+    bool hasLocal = false;
+	QStringList labels = getPinLabels(hasLocal);
+	if (labels.count() == 0) return labels;
+
+	// part was formerly a mystery part or generic ic ...
+	QHash<QString, QString> properties = modelPart()->properties();
+	foreach (QString key, properties.keys()) {
+		QString value = properties.value(key);
+		if (key.compare("layout", Qt::CaseInsensitive) == 0) {
+			// was a mystery part
+			hasLayout = true;
+			break;
+		}
+
+		if (key.compare("package") == 0) {
+			// was a generic ic
+			sip = value.contains("sip", Qt::CaseInsensitive);		
+		}
+	}
+
+    return labels;
+}
+

@@ -213,6 +213,9 @@ public:
 	bool resetRenderer(const QString & svg);
 	bool resetRenderer(const QString & svg, QString & newSvg);
     void getPixmaps(QPixmap * &, QPixmap * &, QPixmap * &, bool swappingEnabled, QSize);
+    class FSvgRenderer * setUpImage(class ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID, ViewLayer::ViewLayerSpec, class LayerAttributes &, QString & error);
+	class FSvgRenderer * setUpImage(class ModelPart * modelPart, QDomDocument *, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID, ViewLayer::ViewLayerSpec, class LayerAttributes &, QString & error);
+
 
 public:
 	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, double & opacity, double & negativePenWidth, bool & negativeOffsetRect);
@@ -284,8 +287,6 @@ public:
 	static bool zLessThan(ItemBase * & p1, ItemBase * & p2);
 	static qint64 getNextID();
 	static qint64 getNextID(qint64 fromIndex);
-	static class FSvgRenderer * setUpImage(class ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID, ViewLayer::ViewLayerSpec, class LayerAttributes &, QString & error);
-	static class FSvgRenderer * setUpImage(class ModelPart * modelPart, QDomDocument *, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID, ViewLayer::ViewLayerSpec, class LayerAttributes &, QString & error);
 	static QString getSvgFilename(ModelPart *, const QString & baseName); 
 
 protected:
@@ -306,6 +307,7 @@ protected:
 	void saveLocAndTransform(QXmlStreamWriter & streamWriter);
     QPixmap * getPixmap(ViewIdentifierClass::ViewIdentifier, bool swappingEnabled, QSize size);
     virtual ViewIdentifierClass::ViewIdentifier useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier, bool swappingEnabled);
+    virtual void makeLocalMods(QByteArray & svg, const QString & filename);
 
 protected:
 	static bool getFlipDoc(ModelPart * modelPart, const QString & filename, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec, QDomDocument &);
