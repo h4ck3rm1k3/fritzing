@@ -813,40 +813,42 @@ QString PinHeader::makePcbLongPadSvg(int pins, bool lock)
     if (lock) return makePcbLongPadLockSvg(pins);
 
     double dpi = 25.4;
-    double originalWidth = 0.108;           // inches
+    double originalHeight = 0.108;           // inches
     double increment = 0.1;                 // inches
 	QString header("<?xml version='1.0' encoding='utf-8'?>\n"
 					"<svg version='1.2' baseProfile='tiny' xmlns='http://www.w3.org/2000/svg' \n"
-                    "x='0in' y='0in' width='%1in' height='0.148in' viewBox='0 0 %2 3.7592'>\n"
+                    "x='0in' y='0in' width='0.148in' height='%1in' viewBox='0 0 3.7592 %2'>\n"
 					"<g id='copper0' >\n"					
 					"<g id='copper1' >\n"
 					"%3\n"
 					"</g>\n"
 					"</g>\n"
 					"<g id='silkscreen' >\n"	
-                    "<line class='other' x1='0.1016' y1='1.2446' x2='0.1016' y2='2.5146' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n"
-                    "<line class='other' x1='%4' y1='1.2446' x2='%4' y2='2.5146' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n"
+                    "<line class='other' x1='1.2446' y1='0.1016' x2='2.5146' y2='0.1016' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n"
+                    "<line class='other' x1='1.2446' y1='%4' x2='2.5146' y2='%4' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n"
 					"</g>\n"
 					"</svg>\n"
 				);
 
    
-    double cx = 1.3716;
-    double cx2 = 0.8128;
-	QString repeat = "<circle id='connector%1pin' cx='%2' cy='1.8796' r='0.7493' stroke='#F7BD13' stroke-width='0.381' fill='none' />\n"
+    double cy = 1.3716;
+    double cy2 = 0.8128;
+	QString repeat = "<circle id='connector%1pin' cx='1.8796' cy='%2' r='0.7493' stroke='#F7BD13' stroke-width='0.381' fill='none' />\n"
                      "<path stroke='none' stroke-width='0' fill='#F7BD13'\n"
-                     "d='m%2,0a0.9398,0.9398 0 0 1 0.9398,0.9398l0,1.8796a0.9398,0.9398 0 0 1 -0.9398,0.9398l-0,0a0.9398,0.9398 0 0 1 -0.9398,-0.9398l0,-1.8796a0.9398,0.9398 0 0 1 0.9398,-0.9398l0,0zM%3,1.8796a0.5588,0.5588 0 1 0 1.1176,0 0.5588,0.5588 0 1 0 -1.1176,0z' />\n";
+                     "d='m0,%2a0.9398,0.9398 0 0 0 0.9398,0.9398l1.8796,0a0.9398,0.9398 0 0 0 0.9398,-0.9398l-0,0"
+                     "a0.9398,0.9398 0 0 0 -0.9398,-0.9398l-1.8796,0a0.9398,0.9398 0 0 0 -0.9398,0.9398l0,0z"
+                     "M1.8796,%3a0.5588,0.5588 0 1 1 0,1.1176 0.5588,0.5588 0 1 1 0,-1.1176z' />\n";
 
     QString repeats;
     for (int i = 0; i < pins; i++) {
-        repeats += repeat.arg(i).arg(cx).arg(cx2);
-        cx += increment * dpi;
-        cx2 += increment * dpi;
+        repeats += repeat.arg(i).arg(cy).arg(cy2);
+        cy += increment * dpi;
+        cy2 += increment * dpi;
     }
 
-    double totalWidth = originalWidth + ((pins - 1) * increment);
+    double totalHeight = originalHeight + ((pins - 1) * increment);
     double lineOffset = 0.1016;  // already in dpi
-    return header.arg(totalWidth).arg(totalWidth * dpi).arg(repeats).arg(totalWidth * dpi - lineOffset);
+    return header.arg(totalHeight).arg(totalHeight * dpi).arg(repeats).arg(totalHeight * dpi - lineOffset);
 }
 
 QString PinHeader::makePcbLongPadLockSvg(int pins) 
