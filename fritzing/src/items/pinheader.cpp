@@ -854,60 +854,61 @@ QString PinHeader::makePcbLongPadSvg(int pins, bool lock)
 QString PinHeader::makePcbLongPadLockSvg(int pins) 
 {
     double dpi = 25.4;
-    double originalWidth = 0.108;           // inches
+    double originalHeight = 0.108;           // inches
     double increment = 0.1;                 // inches
 	QString header("<?xml version='1.0' encoding='utf-8'?>\n"
 					"<svg version='1.2' baseProfile='tiny' xmlns='http://www.w3.org/2000/svg' \n"
-                    "x='0in' y='0in' width='%1in' height='0.13in' viewBox='0 0 %2 3.302'>\n"
+                    "x='0in' y='0in' width='0.13in' height='%1in' viewBox='0 0 3.302 %2'>\n"
 					"<g id='copper0' >\n"					
 					"<g id='copper1' >\n"
 					"%3\n"
 					"</g>\n"
 					"</g>\n"
 					"<g id='silkscreen' >\n"	
-                    "<line class='other' x1='0.1016' y1='1.651' x2='0.3556' y2='1.651' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n"
-                    "<line class='other' x1='0.1016' y1='1.651' x2='0.1016' y2='0.6604' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n"
-                    "<line class='other' x1='0.1016' y1='0.6604' x2='0.381' y2='0.381' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n"
-                    "<line class='other' x1='0.1016' y1='1.651' x2='0.1016' y2='2.6416' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n"
-                    "<line class='other' x1='0.1016' y1='2.6416' x2='0.381' y2='2.921' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n"
+                    "<line class='other' x1='1.651' y1='0.1016' x2='1.651' y2='0.3556' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n"
+                    "<line class='other' x1='1.651' y1='0.1016' x2='0.6604' y2='0.1016' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n"
+                    "<line class='other' x1='0.6604' y1='0.1016' x2='0.381' y2='0.381' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n"
+                    "<line class='other' x1='1.651' y1='0.1016' x2='2.6416' y2='0.1016' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n"
+                    "<line class='other' x1='2.6416' y1='0.1016' x2='2.921' y2='0.381' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n"
                     "%4\n"
                     "%5\n"
                     "</g>\n"
 					"</svg>\n"
 				);
 
-    QString right("<line class='other' x1='[2.6416]' y1='1.651' x2='[2.3876]' y2='1.651' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n"
-                  "<line class='other' x1='[2.6416]' y1='1.651' x2='[2.6416]' y2='2.6416' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n"
-                  "<line class='other' x1='[2.6416]' y1='2.6416' x2='[2.3622]' y2='2.921' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n"
-                  "<line class='other' x1='[2.6416]' y1='1.651' x2='[2.6416]' y2='0.6604' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n"
-                  "<line class='other' x1='[2.6416]' y1='0.6604' x2='[2.3622]' y2='0.381' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n");
-    right = TextUtils::incrementTemplateString(right, 1, increment * dpi * (pins - 1), TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction, NULL);
+    QString bottom("<line class='other' x1='1.651' y1='[2.6416]' x2='1.651' y2='[2.3876]' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n"
+                  "<line class='other' x1='1.651' y1='[2.6416]' x2='2.6416' y2='[2.6416]' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n"
+                  "<line class='other' x1='2.6416' y1='[2.6416]' x2='2.921' y2='[2.3622]' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n"
+                  "<line class='other' x1='1.651' y1='[2.6416]' x2='0.6604' y2='[2.6416]' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n"
+                  "<line class='other' x1='0.6604' y1='[2.6416]' x2='0.381' y2='[2.3622]' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n");
+    bottom = TextUtils::incrementTemplateString(bottom, 1, increment * dpi * (pins - 1), TextUtils::incMultiplyPinFunction, TextUtils::noCopyPinFunction, NULL);
 
 
-    QString between("<line class='other' x1='[2.8956]' y1='1.651' x2='[2.3876]' y2='1.651' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n");
+    QString between("<line class='other' x1='1.651' y1='[2.8956]' x2='1.651' y2='[2.3876]' stroke='#f0f0f0' stroke-width='0.2032' stroke-linecap='round'/>\n");
     QString betweens = TextUtils::incrementTemplateString(between, pins - 1, increment * dpi, TextUtils::standardMultiplyPinFunction, TextUtils::noCopyPinFunction, NULL);
    
-    double cx = 1.3716;
-    double cy = 1.524;
-    double cx2 = 0.8636;
-    double cy2 = 0;
+    double ncy = 1.3716;
+    double ncx = 1.524;
+    double ncy2 = 0.8636;
+    double ncx2 = 0;
     double offset = 0.254;
 
-    QString repeat("<circle id='connector%1pin' cx='%2' cy='%3' r='0.635' stroke='#F7BD13' stroke-width='0.254' fill='none' />\n"
+    QString repeat("<circle id='connector%1pin' cx='%3' cy='%2' r='0.635' stroke='#F7BD13' stroke-width='0.254' fill='none' />\n"
                     "<path fill='#F7BD13' stroke='none' stroke-width='0'\n"
-                    "d='m%2,%4a0.762,0.762 0 0 1 0.762,0.762l0,1.524a0.762,0.762 0 0 1 -0.762,0.762l-0,0a0.762,0.762 0 0 1 -0.762,-0.762l0,-1.524a0.762,0.762 0 0 1 0.762,-0.762l0,0z\n"
-                    "M%5,%3a0.508,0.508 0 1 0 1.016,0 0.508,0.508 0 1 0 -1.016,0z' />\n");
+                    "d='m%4,%2a0.762,0.762 0 0 0 0.762,0.762l1.524,0a0.762,0.762 0 0 0 0.762,-0.762l-0,0"
+                    "a0.762,0.762 0 0 0 -0.762,-0.762l-1.524,0a0.762,0.762 0 0 0 -0.762,0.762l0,0z\n"
+                    "M%3,%5a0.508,0.508 0 0 1 0,1.016 0.508,0.508 0 0 1 0,-1.016z' />\n");
 
     QString repeats;
     for (int i = 0; i < pins; i++) {
         double useOffset = (i % 2 == 1) ? offset : 0;
-        repeats += repeat.arg(i).arg(cx).arg(cy + useOffset).arg(cy2 + useOffset).arg(cx2);
-        cx += increment * dpi;
-        cx2 += increment * dpi;
+        repeats += repeat.arg(i).arg(ncy).arg(ncx + useOffset).arg(ncx2 + useOffset).arg(ncy2);
+        ncy += increment * dpi;
+        ncy2 += increment * dpi;
     }
 
-    double totalWidth = originalWidth + ((pins - 1) * increment);
-    return header.arg(totalWidth).arg(totalWidth * dpi).arg(repeats).arg(right).arg(betweens);
+    double totalHeight = originalHeight + ((pins - 1) * increment);
+    return header.arg(totalHeight).arg(totalHeight * dpi).arg(repeats).arg(bottom).arg(betweens);
 }
 
 QString PinHeader::makePcbMolexSvg(int pins) 
