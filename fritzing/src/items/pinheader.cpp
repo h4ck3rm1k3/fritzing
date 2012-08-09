@@ -911,37 +911,37 @@ QString PinHeader::makePcbLongPadLockSvg(int pins)
 QString PinHeader::makePcbMolexSvg(int pins) 
 {
     double dpi = 25.4;
-    double originalWidth = 0.105;           // inches
+    double originalHeight = 0.105;           // inches
     double increment = 0.1;                 // inches
 	QString header("<?xml version='1.0' encoding='utf-8'?>\n"
 					"<svg version='1.2' baseProfile='tiny' xmlns='http://www.w3.org/2000/svg' \n"
-                    "x='0in' y='0in' width='%1in' height='0.225in' viewBox='0 0 %2 5.715'>\n"
+                    "x='0in' y='0in' width='0.225in' height='%1in' viewBox='0 0 5.715 %2'>\n"
 					"<g id='copper0' >\n"					
 					"<g id='copper1' >\n"
-                    "<rect id='square' stroke='#F7BD13' stroke-width='0.4318' fill='none' x='.6096' y='2.3876' width='1.4478' height='1.4478' />\n"
+                    "<rect id='square' stroke='#F7BD13' stroke-width='0.4318' fill='none' x='2.3876' y='.6096' width='1.4478' height='1.4478' />\n"
 					"%3\n"
 					"</g>\n"
 					"</g>\n"
 					"<g id='silkscreen' >\n"	
-                    "<rect class='other' stroke='#f0f0f0' stroke-width='0.127' fill='none' stroke-linecap='round' x='0.0635' y='0.0635'  width='%4' height='5.588' />\n"
-                    "<rect class='other' stroke='#f0f0f0' stroke-width='0.127' fill='none' stroke-linecap='round' x='1.3335' y='4.3815'  width='%5' height='1.27' />\n"                
+                    "<rect class='other' stroke='#f0f0f0' stroke-width='0.127' fill='none' stroke-linecap='round' x='0.0635' y='0.0635'  width='5.588' height='%4' />\n"
+                    "<rect class='other' stroke='#f0f0f0' stroke-width='0.127' fill='none' stroke-linecap='round' x='4.3815' y='1.3335'  width='1.27' height='%5' />\n"                
                     "</g>\n"
 					"</svg>\n"
 				);
 
    
-    double cx = 1.3335;         // already in dpi
-	QString repeat = "<circle id='connector%1pin' cx='%2' cy='3.1115' r='0.7239' stroke='#F7BD13' stroke-width='0.4318' fill='none' />\n";
+    double cy = 1.3335;         // already in dpi
+	QString repeat = "<circle id='connector%1pin' cx='3.1115' cy='%2' r='0.7239' stroke='#F7BD13' stroke-width='0.4318' fill='none' />\n";
 
     QString repeats;
     for (int i = 0; i < pins; i++) {
-        repeats += repeat.arg(i).arg(cx + (i * increment * dpi));
+        repeats += repeat.arg(i).arg(cy + (i * increment * dpi));
     }
 
-    double totalWidth = originalWidth + ((pins - 1) * increment);
+    double totalHeight = originalHeight + ((pins - 1) * increment);
     double strokeWidth = .127;  // already in dpi
-    double w = 0.0001;
-    return header.arg(totalWidth).arg(totalWidth * dpi).arg(repeats).arg((totalWidth * dpi) - strokeWidth).arg(qMax(w, (totalWidth * dpi) - cx - cx));
+    double h = 0.0001;
+    return header.arg(totalHeight).arg(totalHeight * dpi).arg(repeats).arg((totalHeight * dpi) - strokeWidth).arg(qMax(h, (totalHeight * dpi) - cy - cy));
 }
 
 QString PinHeader::makePcbSMDSvg(const QString & expectedFileName) 
