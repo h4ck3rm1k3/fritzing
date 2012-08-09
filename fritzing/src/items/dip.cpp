@@ -152,11 +152,16 @@ QString Dip::makeSchematicSvg(const QString & expectedFileName)
 	QStringList pieces = expectedFileName.split("_");
 	if (pieces.count() != 5) return "";
 
-	int pins = pieces.at(3).toInt();
+    QString spacing;
+    int pins = TextUtils::getPinsAndSpacing(expectedFileName, spacing);
 	QStringList labels;
 	for (int i = 0; i < pins; i++) {
 		labels << QString::number(i + 1);
 	}
+    
+    if (expectedFileName.contains("sip", Qt::CaseInsensitive)) {
+        return MysteryPart::makeSchematicSvg(labels, true);
+    }
 
 	return makeSchematicSvg(labels);
 }

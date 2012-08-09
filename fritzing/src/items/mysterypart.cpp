@@ -158,6 +158,14 @@ QString MysteryPart::makeSvg(const QString & chipLabel, bool replace) {
 }
 
 QStringList MysteryPart::collectValues(const QString & family, const QString & prop, QString & value) {
+	if (prop.compare("layout", Qt::CaseInsensitive) == 0) {
+        // TODO: translate these
+        QStringList values;
+        values << "Single Row" << "Double Row";
+        value = values.at(moduleID().contains("sip", Qt::CaseInsensitive) ? 0 : 1);
+        return values;
+    }
+
 	if (prop.compare("pin spacing", Qt::CaseInsensitive) == 0) {
 		QStringList values;
         QString spacing;
@@ -557,6 +565,12 @@ void MysteryPart::swapEntry(const QString & text) {
 
     if (comboBox->prop().contains("layout", Qt::CaseInsensitive)) {
         layout = text;
+    }
+
+    if (layout.isEmpty()) {
+        if (moduleID().contains("sip", Qt::CaseInsensitive)) {
+            layout = "single";
+        }
     }
 
     if (layout.contains("single", Qt::CaseInsensitive)) {
