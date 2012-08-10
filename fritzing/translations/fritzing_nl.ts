@@ -383,6 +383,22 @@
         <source>Searching...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Import...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load a Fritzing part (.fzpz), or a Fritzing parts bin (.fzb, .fzbz)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a Fritzing File to Open</source>
+        <translation type="unfinished">Selecteer een Fritzing bestand om te openen</translation>
+    </message>
+    <message>
+        <source>Fritzing Files (*%1 *%2 *%3);;Fritzing Part (*%1);;Fritzing Bin (*%2);;Fritzing Shareable Bin (*%3)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Board</name>
@@ -1422,10 +1438,6 @@ Wij werken er momenteel aan om dit bericht te vermijden en je te laten kiezen tu
     <message>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
-    </message>
-    <message>
-        <source>Open a sketch</source>
-        <translation>Open een sketch</translation>
     </message>
     <message>
         <source>&amp;Save</source>
@@ -2910,6 +2922,36 @@ Would you like to convert &apos;%1&apos; to the .fzz format now or open it read-
 For many purposes you can use a Generic IC chip instead (first part in the ICs section of the Parts Bin). Drag one into your sketch and from the Inspector change the package: there are SIPs, DIPS, and a set of SMDs. Depending on the package you choose, you can also change the chip label, set the number of pins, and change the pin labels.
 
 Open the old Parts Editor?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Revert?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This operation can not be undone--you will lose all of your changes.
+
+Go ahead and revert?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open a Fritzing sketch (.fzz, .fz), or load a Fritzing part (.fzpz), or a Fritzing parts bin (.fzb, .fzbz)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Revert</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload the sketch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Check Loaded Traces</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select any traces where the screen location doesn&apos;t match their actual location.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4784,6 +4826,14 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
     </message>
     <message>
         <source>Convert Via to Bendpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 wires moved from their saved position in %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>paste mask layer(s), </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
