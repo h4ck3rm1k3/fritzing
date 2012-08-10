@@ -30,7 +30,6 @@
         <breadboardView>
             <layers image="breadboard/3_Axis_Accelerometer_Breakout___MMA8452Q_BB.svg">
                 <layer layerId="breadboard"/>
-                <layer layerId="icon"/>
             </layers>
         </breadboardView>
         <schematicView>

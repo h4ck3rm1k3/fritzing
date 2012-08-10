@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-A4983-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-PowerIC' A4983  -->
 <version>4</version>
-<date>2012-08-07</date>
+<date>2012-08-10</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>DMOS Microstepping Driver with Translator</description>
