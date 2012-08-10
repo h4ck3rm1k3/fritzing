@@ -23,8 +23,9 @@ cd ../pcb
 rm -rf *
 cd ../icon
 rm -rf *
-cd $compile_folder/bins
-rm -rf sparkfun-*.fzp
+cd $current_dir
+cd $compile_folder/bins/more
+rm -rf sparkfun-*.fzb
 
 echo "make sure parts bins are ok"
 
