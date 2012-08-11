@@ -187,6 +187,14 @@ bool FApplication::init() {
 			toRemove << i << i + 1;
 		}
 
+		if ((m_arguments[i].compare("-db", Qt::CaseInsensitive) == 0) ||
+            (m_arguments[i].compare("-database", Qt::CaseInsensitive) == 0) ||
+			(m_arguments[i].compare("--database", Qt::CaseInsensitive) == 0)) {
+			m_serviceType = DatabaseService;
+			m_outputFolder = m_arguments[i + 1];
+			toRemove << i << i + 1;
+		}
+
 		if ((m_arguments[i].compare("-kicad", Qt::CaseInsensitive) == 0) ||
 			(m_arguments[i].compare("--kicad", Qt::CaseInsensitive) == 0)) {
 			m_serviceType = KicadFootprintService;
@@ -464,11 +472,11 @@ void FApplication::registerFonts() {
 	*/	
 }
 
-ReferenceModel * FApplication::loadReferenceModel() {
+ReferenceModel * FApplication::loadReferenceModel(const QString & databaseName) {
 	m_referenceModel = new CurrentReferenceModel();	
 	ItemBase::setReferenceModel(m_referenceModel);
 	connect(m_referenceModel, SIGNAL(loadedPart(int, int)), this, SLOT(loadedPart(int, int)));
-	m_referenceModel->loadAll(true);								// this is very slow
+	m_referenceModel->loadAll(true, databaseName);								// this is very slow
 	m_paletteBinModel = new PaletteModel(true, false, false);
     m_paletteBinModel->setReferenceModel(m_referenceModel);
 	//DebugDialog::debug("after new palette model");
@@ -500,6 +508,10 @@ int FApplication::serviceStartup() {
 	switch (m_serviceType) {
 		case GedaService:
 			runGedaService();
+			return 0;
+	
+		case DatabaseService:
+			runDatabaseService();
 			return 0;
 	
 		case KicadFootprintService:
@@ -538,7 +550,7 @@ void FApplication::runGerberService()
 	createUserDataStoreFolderStructure();
 
 	registerFonts();
-	loadReferenceModel();
+	loadReferenceModel("");
 
 	QDir dir(m_outputFolder);
 	QString s = dir.absolutePath();
@@ -560,6 +572,12 @@ void FApplication::runGerberService()
 		mainWindow->setCloseSilently(true);
 		mainWindow->close();
 	}
+}
+
+
+void FApplication::runDatabaseService()
+{
+	loadReferenceModel(m_outputFolder);  // actually a full path ending in ".db"
 }
 
 void FApplication::runGedaService() {
@@ -717,7 +735,7 @@ int FApplication::startup(bool firstRun)
 		FSvgRenderer::cleanup();
 	}
 
-	loadReferenceModel();
+	loadReferenceModel("");
 
 	QString prevVersion;
 	{
@@ -1416,7 +1434,7 @@ void FApplication::runExampleService()
 
 	createUserDataStoreFolderStructure();
 	registerFonts();
-	loadReferenceModel();
+	loadReferenceModel("");
 
 	QDir sketchesDir(FolderUtils::getApplicationSubFolderPath("sketches"));
 	runExampleService(sketchesDir);

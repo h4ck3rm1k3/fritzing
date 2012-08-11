@@ -24,6 +24,7 @@ $Date$
 
 ********************************************************************/
 
+// copying a table from one SQWL database to another http://sqlite.phxsoftware.com/forums/t/285.aspx
 
 #include <QSqlRecord>
 #include <QSqlError>
@@ -34,18 +35,25 @@ $Date$
 
 #define MAX_CONN_TRIES 3
 
+void debugError(bool result, QSqlQuery & query) {
+    if (result) return;
+
+    QSqlError error = query.lastError();
+    DebugDialog::debug(QString("%1 %2 %3").arg(error.text()).arg(error.number()).arg(error.type()));
+}
+
 SqliteReferenceModel::SqliteReferenceModel() {
 	m_swappingEnabled = false;
 	m_lastWasExactMatch = true;
 }
 
-void SqliteReferenceModel::loadAll(bool fastLoad)
+void SqliteReferenceModel::loadAll(bool fastLoad, const QString & databaseName)
 {
 	initParts(fastLoad);
 
 	int tries = 0;
 	while(!m_swappingEnabled && tries < MAX_CONN_TRIES) {
-		createConnection();
+		createConnection(databaseName);
 		if(!m_swappingEnabled) {
 			deleteConnection();
 		}
@@ -74,45 +82,129 @@ void SqliteReferenceModel::initParts(bool fastLoad) {
 	m_init = false;
 }
 
-bool SqliteReferenceModel::createConnection() {
+bool SqliteReferenceModel::createConnection(const QString & databaseName) {
 	m_swappingEnabled = true;
 	QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-	db.setDatabaseName(":memory:");
+	db.setDatabaseName(databaseName.isEmpty() ? ":memory:" : databaseName);
 	if (!db.open()) {
 		m_swappingEnabled = false;
 	} else {
 		QSqlQuery query;
-		query.exec("CREATE TABLE parts (\n"
+		bool result = query.exec("CREATE TABLE parts (\n"
 			"id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n"
-			"moduleID VARCHAR NOT NULL,\n"
-			"family VARCHAR NOT NULL,\n"
-			"core VARCHAR NOT NULL\n"
+			"moduleID TEXT NOT NULL,\n"
+			"family TEXT NOT NULL,\n"
+			"version REAL,\n"
+	        "fritzing_version TEXT,\n"
+            "author TEXT,\n"
+			"title TEXT,\n"
+			"label TEXT,\n"
+			"date TEXT,\n"
+			"description TEXT,\n"
+			"taxonomy TEXT,\n"
+            "core TEXT NOT NULL\n"
 		")");
-		query.exec("CREATE INDEX idx_part_id ON parts (id ASC)");
-		query.exec("CREATE INDEX idx_part_moduleID ON parts (moduleID ASC)");
-		query.exec("CREATE INDEX idx_part_family ON parts (family ASC)");
+        debugError(result, query);
+		result = query.exec("CREATE INDEX idx_part_id ON parts (id ASC)");
+        debugError(result, query);
+		result = query.exec("CREATE INDEX idx_part_moduleID ON parts (moduleID ASC)");
+        debugError(result, query);
+		result = query.exec("CREATE INDEX idx_part_family ON parts (family ASC)");
+        debugError(result, query);
 
-		query.exec("CREATE TABLE properties (\n"
+
+        result = query.exec("CREATE TABLE views (\n"
+			"id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n"
+			"viewname TEXT NOT NULL,\n"             // char b=breadboard, p=pcb, s=schematic, i=icon
+			"image TEXT NOT NULL,\n"
+			"layer0 INTEGER,\n"                         // ViewLayer::ViewLayerID
+			"layer1 INTEGER,\n"                         
+			"layer2 INTEGER,\n"                         
+			"layer3 INTEGER,\n"                         
+			"layer4 INTEGER,\n"                         
+            "part_id INTEGER NOT NULL"
+		")");
+        debugError(result, query);
+		result = query.exec("CREATE INDEX idx_view_part_id ON views (part_id ASC)");
+        debugError(result, query);
+
+        result = query.exec("CREATE TABLE connectors (\n"
+			"id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n"
+			"connectorid TEXT NOT NULL,\n"
+			"type TEXT NOT NULL,\n"
+			"name TEXT NOT NULL,\n"
+			"description TEXT NOT NULL,\n"
+            "part_id INTEGER NOT NULL"
+		")");
+        debugError(result, query);
+		result = query.exec("CREATE INDEX idx_connector_part_id ON connectors (part_id ASC)");
+        debugError(result, query);
+
+        result = query.exec("CREATE TABLE connectorlayers (\n"
+			"id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n"
+			"view TEXT NOT NULL,\n"
+			"layer INTEGER NOT NULL,\n"                     // ViewLayer::ViewLayerID
+			"svgid TEXT NOT NULL,\n"
+			"hybrid INTEGER NOT NULL,\n"
+			"terminalid TEXT,\n"
+            "connector_id INTEGER NOT NULL"
+		")");
+        debugError(result, query);
+		result = query.exec("CREATE INDEX idx_connectorlayer_connector_id ON connectorlayers (connector_id ASC)");
+        debugError(result, query);
+
+        result = query.exec("CREATE TABLE buses (\n"
+			"id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n"
+			"name TEXT NOT NULL,\n"
+            "part_id INTEGER NOT NULL"
+		")");
+        debugError(result, query);
+		result = query.exec("CREATE INDEX idx_bus_part_id ON buses (part_id ASC)");
+        debugError(result, query);
+
+        result = query.exec("CREATE TABLE busmembers (\n"
+			"id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n"
+			"connectorid TEXT NOT NULL,\n"
+            "bus_id INTEGER NOT NULL"
+		")");
+        debugError(result, query);
+		result = query.exec("CREATE INDEX idx_busmember_bus_id ON busmembers (bus_id ASC)");
+        debugError(result, query);
+
+		result = query.exec("CREATE TABLE tags (\n"
 			"id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,\n"
-			"name VARCHAR NOT NULL,\n"
-			"value VARCHAR NOT NULL,\n"
+			"tag TEXT NOT NULL,\n"
+            "part_id INTEGER NOT NULL"
+		")");
+        debugError(result, query);
+		result = query.exec("CREATE INDEX idx_tag_part_id ON tags (part_id ASC)");
+        debugError(result, query);
+
+		result = query.exec("CREATE TABLE properties (\n"
+			"id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,\n"
+			"name TEXT NOT NULL,\n"
+			"value TEXT NOT NULL,\n"
 			"part_id INTEGER NOT NULL"
 		")");
-		query.exec("CREATE INDEX idx_property_name ON properties (name ASC)");
+        debugError(result, query);
+		result = query.exec("CREATE INDEX idx_property_name ON properties (name ASC)");
+        debugError(result, query);
 
-		query.exec("CREATE TRIGGER unique_part__moduleID \n"
+		result = query.exec("CREATE TRIGGER unique_part__moduleID \n"
 			"BEFORE INSERT ON parts \n"
 			"FOR EACH ROW BEGIN \n"
 				"SELECT RAISE(ROLLBACK, 'insert on table \"parts\" violates unique constraint \"unique_part__moduleID\"') \n"
 					"WHERE (SELECT count(*) FROM parts WHERE moduleID = NEW.moduleID) > 0; \n"
 			"END; "
 		);
+        debugError(result, query);
 
 		foreach(ModelPart* mp, m_partHash.values()) {
 			addPartAux(mp);
 		}
 
 		db.commit();
+
 	}
 	return m_swappingEnabled;
 }
@@ -551,3 +643,4 @@ QString SqliteReferenceModel::partTitle(const QString moduleID) {
 		return ___emptyString___;
 	}
 }
+

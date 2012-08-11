@@ -70,6 +70,8 @@ QString HoleSettings::holeSize() {
 
 /////////////////////////////////////////////////
 
+static QRegExp LabelFinder("id=['|\"]label['|\"]");
+
 static bool ByIDParseSuccessful = true;
 static QRegExp IntegerFinder("\\d+");
 
@@ -1413,14 +1415,24 @@ void PaletteItem::makeLocalMods(QByteArray & svg, const QString & filename) {
             
         default:
             if (itemType() != ModelPart::Part) return;
-
-            if (filename.contains("mystery") || filename.contains("sip") || filename.contains("dip")) {
-                break;
-            }
-
-            return;
+            break;
     }
-
+    
+    bool isMystery = (filename.contains("mystery") || filename.contains("sip") || filename.contains("dip"));
+    if (!isMystery) {
+        int rix = svg.indexOf("label");
+        if (rix >= 0) {
+            rix = qMax(0, rix - 4);     // backup for id="
+            int ix = svg.indexOf("id=\"label\"", rix);
+            if (ix < 0) {
+                ix = svg.indexOf("id='label'", rix);
+            }
+            if (ix >= 0) {
+                svg = TextUtils::replaceTextElement(svg, "label", modelPart()->title());
+            }
+        }
+        return;
+    }
 
     QString chipLabel = modelPart()->properties().value("chip label", ""); 
     if (!chipLabel.isEmpty()) {

@@ -30,7 +30,7 @@ $Date$
 
 double ViewLayer::zIncrement = 0.00001;  // 0.000000001;
 
-QHash<ViewLayer::ViewLayerID, StringPair * > ViewLayer::names;
+QHash<ViewLayer::ViewLayerID, NamePair * > ViewLayer::names;
 QMultiHash<ViewLayer::ViewLayerID, ViewLayer::ViewLayerID> ViewLayer::alternatives;
 QMultiHash<ViewLayer::ViewLayerID, ViewLayer::ViewLayerID> ViewLayer::unconnectables;
 QHash<QString, ViewLayer::ViewLayerID> ViewLayer::xmlHash;
@@ -45,6 +45,14 @@ static LayerList CopperBottomLayers;
 static LayerList CopperTopLayers;
 static LayerList NonCopperLayers;  // just NonCopperLayers in pcb view
 
+
+NamePair::NamePair(QString xml, QString display)
+{
+    xmlName = xml;
+    displayName = display;
+}
+
+//////////////////////////////////////////////
 
 ViewLayer::ViewLayer(ViewLayerID viewLayerID, bool visible, double initialZ )
 {
@@ -76,47 +84,47 @@ void ViewLayer::initNames() {
 
 	if (names.count() == 0) {
 		// xmlname, displayname
-		names.insert(ViewLayer::Icon, new StringPair("icon", QObject::tr("Icon")));
-		names.insert(ViewLayer::BreadboardBreadboard, new StringPair("breadboardbreadboard", QObject::tr("Breadboard")));
-		names.insert(ViewLayer::Breadboard, new StringPair("breadboard", QObject::tr("Parts")));
-		names.insert(ViewLayer::BreadboardWire,  new StringPair("breadboardWire", QObject::tr("Wires")));
-		names.insert(ViewLayer::BreadboardLabel,  new StringPair("breadboardLabel", QObject::tr("Part Labels")));
-		names.insert(ViewLayer::BreadboardRatsnest, new StringPair("breadboardRatsnest", QObject::tr("Ratsnest")));
-		names.insert(ViewLayer::BreadboardNote,  new StringPair("breadboardNote", QObject::tr("Notes")));
-		names.insert(ViewLayer::BreadboardRuler,  new StringPair("breadboardRuler", QObject::tr("Rulers")));
+		names.insert(ViewLayer::Icon, new NamePair("icon", QObject::tr("Icon")));
+		names.insert(ViewLayer::BreadboardBreadboard, new NamePair("breadboardbreadboard", QObject::tr("Breadboard")));
+		names.insert(ViewLayer::Breadboard, new NamePair("breadboard", QObject::tr("Parts")));
+		names.insert(ViewLayer::BreadboardWire,  new NamePair("breadboardWire", QObject::tr("Wires")));
+		names.insert(ViewLayer::BreadboardLabel,  new NamePair("breadboardLabel", QObject::tr("Part Labels")));
+		names.insert(ViewLayer::BreadboardRatsnest, new NamePair("breadboardRatsnest", QObject::tr("Ratsnest")));
+		names.insert(ViewLayer::BreadboardNote,  new NamePair("breadboardNote", QObject::tr("Notes")));
+		names.insert(ViewLayer::BreadboardRuler,  new NamePair("breadboardRuler", QObject::tr("Rulers")));
 
-		names.insert(ViewLayer::SchematicFrame,  new StringPair("schematicframe", QObject::tr("Frame")));
-		names.insert(ViewLayer::Schematic,  new StringPair("schematic", QObject::tr("Parts")));
-		names.insert(ViewLayer::SchematicWire,  new StringPair("schematicWire",QObject::tr("Ratsnest")));
-		names.insert(ViewLayer::SchematicTrace,  new StringPair("schematicTrace",QObject::tr("Wires")));
-		names.insert(ViewLayer::SchematicLabel,  new StringPair("schematicLabel", QObject::tr("Part Labels")));
-		names.insert(ViewLayer::SchematicNote,  new StringPair("schematicNote", QObject::tr("Notes")));
-		names.insert(ViewLayer::SchematicRuler,  new StringPair("schematicRuler", QObject::tr("Rulers")));
+		names.insert(ViewLayer::SchematicFrame,  new NamePair("schematicframe", QObject::tr("Frame")));
+		names.insert(ViewLayer::Schematic,  new NamePair("schematic", QObject::tr("Parts")));
+		names.insert(ViewLayer::SchematicWire,  new NamePair("schematicWire",QObject::tr("Ratsnest")));
+		names.insert(ViewLayer::SchematicTrace,  new NamePair("schematicTrace",QObject::tr("Wires")));
+		names.insert(ViewLayer::SchematicLabel,  new NamePair("schematicLabel", QObject::tr("Part Labels")));
+		names.insert(ViewLayer::SchematicNote,  new NamePair("schematicNote", QObject::tr("Notes")));
+		names.insert(ViewLayer::SchematicRuler,  new NamePair("schematicRuler", QObject::tr("Rulers")));
 
-		names.insert(ViewLayer::Board,  new StringPair("board", QObject::tr("Board")));
-		names.insert(ViewLayer::Silkscreen1,  new StringPair("silkscreen", QObject::tr("Silkscreen Top")));			// really should be silkscreen1
-		names.insert(ViewLayer::Silkscreen1Label,  new StringPair("silkscreenLabel", QObject::tr("Silkscreen Top (Part Labels)")));
-		names.insert(ViewLayer::GroundPlane0,  new StringPair("groundplane", QObject::tr("Copper Fill Bottom")));
-		names.insert(ViewLayer::Copper0,  new StringPair("copper0", QObject::tr("Copper Bottom")));
-		names.insert(ViewLayer::Copper0Trace,  new StringPair("copper0trace", QObject::tr("Copper Bottom Trace")));
-		names.insert(ViewLayer::GroundPlane1,  new StringPair("groundplane1", QObject::tr("Copper Fill Top")));
-		names.insert(ViewLayer::Copper1,  new StringPair("copper1", QObject::tr("Copper Top")));
-		names.insert(ViewLayer::Copper1Trace,  new StringPair("copper1trace", QObject::tr("Copper Top Trace")));
-		names.insert(ViewLayer::PcbRatsnest, new StringPair("ratsnest", QObject::tr("Ratsnest")));
-		names.insert(ViewLayer::Silkscreen0,  new StringPair("silkscreen0", QObject::tr("Silkscreen Bottom")));
-		names.insert(ViewLayer::Silkscreen0Label,  new StringPair("silkscreen0Label", QObject::tr("Silkscreen Bottom (Part Labels)")));
-		//names.insert(ViewLayer::Soldermask,  new StringPair("soldermask",  QObject::tr("Solder mask")));
-		//names.insert(ViewLayer::Outline,  new StringPair("outline",  QObject::tr("Outline")));
-		//names.insert(ViewLayer::Keepout, new StringPair("keepout", QObject::tr("Keep out")));
-		names.insert(ViewLayer::PartImage, new StringPair("partimage", QObject::tr("Part Image")));
-		names.insert(ViewLayer::PcbNote,  new StringPair("pcbNote", QObject::tr("Notes")));
-		names.insert(ViewLayer::PcbRuler,  new StringPair("pcbRuler", QObject::tr("Rulers")));
+		names.insert(ViewLayer::Board,  new NamePair("board", QObject::tr("Board")));
+		names.insert(ViewLayer::Silkscreen1,  new NamePair("silkscreen", QObject::tr("Silkscreen Top")));			// really should be silkscreen1
+		names.insert(ViewLayer::Silkscreen1Label,  new NamePair("silkscreenLabel", QObject::tr("Silkscreen Top (Part Labels)")));
+		names.insert(ViewLayer::GroundPlane0,  new NamePair("groundplane", QObject::tr("Copper Fill Bottom")));
+		names.insert(ViewLayer::Copper0,  new NamePair("copper0", QObject::tr("Copper Bottom")));
+		names.insert(ViewLayer::Copper0Trace,  new NamePair("copper0trace", QObject::tr("Copper Bottom Trace")));
+		names.insert(ViewLayer::GroundPlane1,  new NamePair("groundplane1", QObject::tr("Copper Fill Top")));
+		names.insert(ViewLayer::Copper1,  new NamePair("copper1", QObject::tr("Copper Top")));
+		names.insert(ViewLayer::Copper1Trace,  new NamePair("copper1trace", QObject::tr("Copper Top Trace")));
+		names.insert(ViewLayer::PcbRatsnest, new NamePair("ratsnest", QObject::tr("Ratsnest")));
+		names.insert(ViewLayer::Silkscreen0,  new NamePair("silkscreen0", QObject::tr("Silkscreen Bottom")));
+		names.insert(ViewLayer::Silkscreen0Label,  new NamePair("silkscreen0Label", QObject::tr("Silkscreen Bottom (Part Labels)")));
+		//names.insert(ViewLayer::Soldermask,  new NamePair("soldermask",  QObject::tr("Solder mask")));
+		//names.insert(ViewLayer::Outline,  new NamePair("outline",  QObject::tr("Outline")));
+		//names.insert(ViewLayer::Keepout, new NamePair("keepout", QObject::tr("Keep out")));
+		names.insert(ViewLayer::PartImage, new NamePair("partimage", QObject::tr("Part Image")));
+		names.insert(ViewLayer::PcbNote,  new NamePair("pcbNote", QObject::tr("Notes")));
+		names.insert(ViewLayer::PcbRuler,  new NamePair("pcbRuler", QObject::tr("Rulers")));
 
 		foreach (ViewLayerID key, names.keys()) {
-			xmlHash.insert(names.value(key)->first, key);
+			xmlHash.insert(names.value(key)->xmlName, key);
 		}
 
-		names.insert(ViewLayer::UnknownLayer,  new StringPair("unknown", QObject::tr("Unknown Layer")));
+		names.insert(ViewLayer::UnknownLayer,  new NamePair("unknown", QObject::tr("Unknown Layer")));
 
 		alternatives.insert(ViewLayer::Copper0, ViewLayer::Copper1);
 		alternatives.insert(ViewLayer::Copper1, ViewLayer::Copper0);
@@ -134,7 +142,7 @@ void ViewLayer::initNames() {
 }
 
 QString & ViewLayer::displayName() {
-	return names[m_viewLayerID]->second;
+	return names[m_viewLayerID]->displayName;
 }
 
 void ViewLayer::setAction(QAction * action) {
@@ -179,17 +187,17 @@ double ViewLayer::getZIncrement() {
 }
 
 const QString & ViewLayer::viewLayerNameFromID(ViewLayerID viewLayerID) {
-	StringPair * sp = names.value(viewLayerID);
+	NamePair * sp = names.value(viewLayerID);
 	if (sp == NULL) return ___emptyString___;
 
-	return sp->second;
+	return sp->displayName;
 }
 
 const QString & ViewLayer::viewLayerXmlNameFromID(ViewLayerID viewLayerID) {
-	StringPair * sp = names.value(viewLayerID);
+	NamePair * sp = names.value(viewLayerID);
 	if (sp == NULL) return ___emptyString___;
 
-	return sp->first;
+	return sp->xmlName;
 }
 
 ViewLayer * ViewLayer::parentLayer() {
@@ -212,7 +220,7 @@ bool ViewLayer::alreadyInLayer(double z) {
 }
 
 void ViewLayer::cleanup() {
-	foreach (StringPair * sp, names.values()) {
+	foreach (NamePair * sp, names.values()) {
 		delete sp;
 	}
 	names.clear();

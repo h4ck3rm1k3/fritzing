@@ -63,7 +63,6 @@ $Date$
 #define ALLMOUSEBUTTONS (Qt::LeftButton | Qt::MidButton | Qt::RightButton | Qt::XButton1 | Qt::XButton2)
 
 typedef QPair<double, double> RealPair;
-typedef QPair<QString, QString> StringPair;
 
 static QString ___emptyString___;
 static QDomElement ___emptyElement___;

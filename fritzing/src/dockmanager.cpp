@@ -66,9 +66,6 @@ DockManager::DockManager(MainWindow *mainWindow)
 	m_topDock = NULL;
 	m_bottomDock = NULL;
 	m_dontKeepMargins = true;
-
-	m_oldTopDockStyle;
-	m_oldBottomDockStyle;
 }
 
 void DockManager::dockChangeActivation(bool activate, QWidget * originator) {

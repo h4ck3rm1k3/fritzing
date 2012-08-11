@@ -42,7 +42,7 @@ class SqliteReferenceModel : public ReferenceModel {
 		SqliteReferenceModel();
 		~SqliteReferenceModel();
 
-		void loadAll(bool fastLoad);
+		void loadAll(bool fastLoad, const QString & databaseName);
 		ModelPart *loadPart(const QString & path, bool update, bool fastLoad);
 
 		ModelPart *retrieveModelPart(const QString &moduleID);
@@ -78,7 +78,7 @@ class SqliteReferenceModel : public ReferenceModel {
 		QString getClosestMatch(const Part *examplePart, QStringList possibleMatches);
 		int countPropsInCommon(const Part *part1, const ModelPart *part2);
 
-		bool createConnection();
+		bool createConnection(const QString & databaseName);
 		void deleteConnection();
 		bool insertPart(Part *part);
 		bool insertProperty(PartProperty *property);

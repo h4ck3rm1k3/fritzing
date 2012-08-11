@@ -50,7 +50,7 @@ public:
 	int startup(bool firstRun);
 	int serviceStartup();
 	void finish();
-	class ReferenceModel * loadReferenceModel();
+	class ReferenceModel * loadReferenceModel(const QString & databaseName);
 	void registerFonts();
 	class MainWindow * loadWindows(int & loaded, bool lockFiles);
 
@@ -87,6 +87,7 @@ protected:
 	void clearModels();
     bool notify(QObject *receiver, QEvent *e);
 	void runGedaService();
+	void runDatabaseService();
 	void runKicadFootprintService();
 	void runKicadSchematicService();
 	void runGerberService();
@@ -114,6 +115,7 @@ protected:
 		KicadSchematicService,
 		KicadFootprintService,
 		ExampleService,
+        DatabaseService,
 		NoService
 	};
 

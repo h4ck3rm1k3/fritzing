@@ -270,7 +270,7 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 
 	app->createUserDataStoreFolderStructure();
 	app->registerFonts();
-	app->loadReferenceModel();
+	app->loadReferenceModel("");
 
     QList<LayerThing> layerThingList;
 	layerThingList.append(LayerThing("outline", ViewLayer::outlineLayers(), SVG2gerber::ForOutline, GerberGenerator::OutlineSuffix));  
@@ -1084,7 +1084,7 @@ void Panelizer::inscribe(FApplication * app, const QString & panelFilename)
 
 	app->createUserDataStoreFolderStructure();
 	app->registerFonts();
-	app->loadReferenceModel();
+	app->loadReferenceModel("");
 
 	board = boards.firstChildElement("board");
 	while (!board.isNull()) {

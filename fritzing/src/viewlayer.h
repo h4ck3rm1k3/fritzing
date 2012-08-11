@@ -32,7 +32,12 @@ $Date$
 #include <QHash>
 #include <QMultiHash>
 
-#include "utils/misc.h"
+struct NamePair {
+    QString xmlName;
+    QString displayName;
+
+    NamePair(QString xml, QString display);
+};
 
 class ViewLayer : public QObject
 {
@@ -102,7 +107,7 @@ public:
 
 protected:
 	static double zIncrement;
-	static QHash<ViewLayerID, StringPair *> names;
+	static QHash<ViewLayerID, NamePair *> names;
 	static QMultiHash<ViewLayerID, ViewLayerID> alternatives;
 	static QMultiHash<ViewLayerID, ViewLayerID> unconnectables;
 	static QHash<QString, ViewLayerID> xmlHash;

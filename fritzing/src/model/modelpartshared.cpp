@@ -364,7 +364,7 @@ void ModelPartShared::initConnectors() {
 		return;
 	}
 
-	QString deleteMe = m_domDocument->toString();
+	//QString deleteMe = m_domDocument->toString();
 
 	m_connectorsInitialized = true;
 	QDomElement root = m_domDocument->documentElement();
@@ -594,8 +594,8 @@ void ModelPartShared::flipSMDAnd() {
 	}
 
 #ifndef QT_NO_DEBUG
-	QString temp = m_domDocument->toString();
-	Q_UNUSED(temp);
+	//QString temp = m_domDocument->toString();
+	//Q_UNUSED(temp);
 	//DebugDialog::debug(temp);
 #endif
 }

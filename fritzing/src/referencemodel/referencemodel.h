@@ -34,7 +34,7 @@ $Date$
 class ReferenceModel : public PaletteModel {
 	Q_OBJECT
 	public:
-		virtual void loadAll(bool fastLoad) = 0;
+		virtual void loadAll(bool fastLoad, const QString & databaseName) = 0;
 		virtual ModelPart *loadPart(const QString & path, bool update, bool fastLoad) = 0;
 
 		virtual ModelPart *retrieveModelPart(const QString &moduleID) = 0;

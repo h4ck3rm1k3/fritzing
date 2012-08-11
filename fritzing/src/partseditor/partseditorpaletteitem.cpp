@@ -41,6 +41,7 @@ $Date$
 #include "../utils/folderutils.h"
 #include "../utils/graphicsutils.h"
 
+typedef QPair<QString, QString> StringPair;
 
 PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorView *owner, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier) :
 	PaletteItem(modelPart, viewIdentifier, m_viewGeometry, ItemBase::getNextID(), NULL, false)
