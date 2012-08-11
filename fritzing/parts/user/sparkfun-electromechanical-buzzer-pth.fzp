@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-BUZZER-PTH'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' BUZZER PTH -->
 <version>4</version>
-<date>2012-08-10</date>
+<date>2012-08-11</date>
 <label>SG</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Buzzer 12mm&lt;/b&gt;
@@ -38,7 +38,7 @@ Spark Fun Electronics SKU : Comp-Buzzer</description>
 </layers>
 </pcbView>
 <iconView>
-<layers image='icon/BUZZER-12MM'>
+<layers image='icon/BUZZER-12MM.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-EM408_CON-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' EM408_CON  -->
 <version>4</version>
-<date>2012-08-10</date>
+<date>2012-08-11</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>This is the mating connector for the EM408 GPS receiver.  The EM408 connects to the board via a cable, 
@@ -36,7 +36,7 @@ You should include the EM408_Outline device in your schematic if you are to use 
 </layers>
 </pcbView>
 <iconView>
-<layers image='icon/EM408_CON'>
+<layers image='icon/EM408_CON.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

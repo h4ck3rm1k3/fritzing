@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-EB-85A-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' EB-85A SMD -->
 <version>4</version>
-<date>2012-08-10</date>
+<date>2012-08-11</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;EB-85A Connector&lt;/b&gt;
@@ -36,7 +36,7 @@ Proven layout and schematic for ETek 5Hz GPS receiver connector. Spark Fun Elect
 </layers>
 </pcbView>
 <iconView>
-<layers image='icon/EB-85A'>
+<layers image='icon/EB-85A.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

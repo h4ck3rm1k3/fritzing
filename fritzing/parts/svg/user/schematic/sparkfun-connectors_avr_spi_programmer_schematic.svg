@@ -3,6 +3,7 @@
 <svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='1.30807in' height='0.76922in' viewBox='0 0 33.225 19.5382' >
 <g id='schematic'>
 <rect x='7.62' y='4.095' width='12.7' height='15.24' stroke='none' stroke-width='0' fill='#ffffff' />
+<text class='text' id='label' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='2.8956' x='13.97' y='11.715' text-anchor='middle'></text>
 <line class='other' x1='7.62' y1='19.335' x2='20.32' y2='19.335' stroke='#000000' stroke-width='0.4064' stroke-linecap='round'/>
 <line class='other' x1='20.32' y1='19.335' x2='20.32' y2='4.095' stroke='#000000' stroke-width='0.4064' stroke-linecap='round'/>
 <line class='other' x1='20.32' y1='4.095' x2='7.62' y2='4.095' stroke='#000000' stroke-width='0.4064' stroke-linecap='round'/>

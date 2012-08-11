@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-FreqCtrl-CRYSTAL-5X3'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-FreqCtrl' CRYSTAL 5X3 -->
 <version>4</version>
-<date>2012-08-10</date>
+<date>2012-08-11</date>
 <label>Y</label>
 <author>www.fritzing.org</author>
 <description>Various standard crystals. Proven footprints. Spark Fun Electronics SKU : COM-00534</description>

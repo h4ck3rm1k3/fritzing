@@ -1,26 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="29.879px" height="7.2px" viewBox="0 0 29.879 7.2" enable-background="new 0 0 29.879 7.2" xml:space="preserve">
-<g id="breadboard">
-	<rect id="connector0pin" x="0.011" y="2.583" fill="none" width="1" height="1"/>
-	<rect id="connector1pin" x="25.576" y="2.583" fill="none" width="1" height="1"/>
-	
-		<line id="connector0leg" fill="none" stroke="#8C8C8C" stroke-width="2.094" stroke-linecap="round" x1="1.047" y1="3.63" x2="2.094" y2="3.63"/>
-	
-		<line id="connector1leg" fill="none" stroke="#8C8C8C" stroke-width="2.094" stroke-linecap="round" x1="27.785" y1="3.63" x2="28.832" y2="3.63"/>
-	<rect id="rect7" x="2.094" y="2.583" fill="#8C8C8C" width="25.691" height="2.094"/>
-	<g>
-		<path id="Body_1_" fill="#9A2D33" d="M9.159,0H7.002c-0.475,0-0.393,7.193,0,7.193h2.157c0.396,0,11.114,0,11.508,0h2.158
-			c0.515,0,0.558-7.193,0-7.193h-2.158C20.27,0,9.553,0,9.159,0z"/>
-		<rect id="rect16" x="9.783" opacity="0.74" fill="#1A1A1A" enable-background="new    " width="1.992" height="7.193"/>
-		<path id="Reflex_1_" opacity="0.4" fill="#FFFFFF" enable-background="new    " d="M7.289,0.358c0.726,0,1.145,0,1.866,0
-			c0.719,0,10.787,0,11.508,0c0.021,0,0.229,0,0.479,0c0.563,0,1.065,0,1.311,0c0.354,0,1.146,0.36-0.354,0.36
-			c-1.08,0-0.727,0-1.438,0c-0.718,0-10.791,0-11.508,0c-0.723,0-1.145,0-1.866,0C6.931,0.719,6.573,0.358,7.289,0.358z"/>
-		<path id="Shaddow_1_" opacity="0.4" enable-background="new    " d="M22.822,7.194c-0.727,0.014-1.438,0-2.156,0
-			c-0.902,0-12.942,0-13.667,0c-0.091,0-0.202-0.723-0.182-0.723c1.293,0,1.613,0,2.336,0c0.723,0,10.789,0,11.509,0s1.67,0,2.393,0
-			C23.076,6.471,22.969,7.192,22.822,7.194z"/>
-	</g>
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<!-- Created with Fritzing (http://www.fritzing.org/) -->
+<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.348937in' height='0.0927402in' viewBox='0 0 8.863 2.3556' >
+<g id='breadboard'>
+<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l8.863,0 0,2.3556 -8.863,0 0,-2.3556z
+M0.254,1.492a0.45,0.45 0 1 0 0.9,0 0.45,0.45 0 1 0 -0.9,0z
+M7.366,1.492a0.45,0.45 0 1 0 0.9,0 0.45,0.45 0 1 0 -0.9,0z
+'/>
+<circle id='connector0pin' connectorname='P$1' cx='0.704' cy='1.492' r='0.577' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<circle id='connector1pin' connectorname='P$2' cx='7.816' cy='1.492' r='0.577' stroke='#9A916C' stroke-width='0.254' fill='none' />
+<line class='other' x1='2.482' y1='0.73' x2='6.038' y2='0.73' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='6.038' y1='1.492' x2='6.038' y2='2.254' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='6.038' y1='2.254' x2='2.482' y2='2.254' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='2.482' y1='2.254' x2='2.482' y2='1.492' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='2.482' y1='1.492' x2='2.482' y2='0.73' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='6.038' y1='1.492' x2='6.8' y2='1.492' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='2.482' y1='1.492' x2='1.72' y2='1.492' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='6.038' y1='0.73' x2='6.038' y2='1.492' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<line class='other' x1='2.99' y1='0.857' x2='2.99' y2='2.127' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='0.52832' x='2.863' y='2' text-anchor='start'>&gt;Value</text>
 </g>
 </svg>

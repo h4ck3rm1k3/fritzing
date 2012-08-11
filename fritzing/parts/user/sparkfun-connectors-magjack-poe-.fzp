@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-MAGJACK-POE-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' MAGJACK-POE  -->
 <version>4</version>
-<date>2012-08-10</date>
+<date>2012-08-11</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;PoE compatible MagJack&lt;/h3&gt;</description>
@@ -34,7 +34,7 @@
 </layers>
 </pcbView>
 <iconView>
-<layers image='icon/MAGJACK-POE'>
+<layers image='icon/MAGJACK-POE.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

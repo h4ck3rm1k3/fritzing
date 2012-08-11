@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-SMARTCARD-SMD'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' SMARTCARD SMD -->
 <version>4</version>
-<date>2012-08-10</date>
+<date>2012-08-11</date>
 <label>JP</label>
 <author>www.fritzing.org</author>
 <description>Smart card socket- PRT-09368</description>
@@ -34,7 +34,7 @@
 </layers>
 </pcbView>
 <iconView>
-<layers image='icon/SMARTCARD'>
+<layers image='icon/SMARTCARD.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

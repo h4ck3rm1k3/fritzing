@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DiscreteSemi-TVS-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DiscreteSemi' TVS  -->
 <version>4</version>
-<date>2012-08-10</date>
+<date>2012-08-11</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Transient voltage suppressor- prevents ESD on inputs.&lt;br&gt;
@@ -34,7 +34,7 @@ Ignore package description- MBRA140 is NOT this type of part!!!</description>
 </layers>
 </pcbView>
 <iconView>
-<layers image='icon/SMA-DIODE'>
+<layers image='icon/SMA-DIODE.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

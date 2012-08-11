@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-DB9-FEMALE'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' DB9 FEMALE -->
 <version>4</version>
-<date>2012-08-10</date>
+<date>2012-08-11</date>
 <label>X</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;DB9 Connector&lt;/b&gt;
@@ -36,7 +36,7 @@ Standard DB9 (D-Sub 9) serial connector. Can be used for CAN bus as well as RS48
 </layers>
 </pcbView>
 <iconView>
-<layers image='icon/DB9'>
+<layers image='icon/DB9.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-ENCODER-QUADRATURE-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' ENCODER-QUADRATURE  -->
 <version>4</version>
-<date>2012-08-10</date>
+<date>2012-08-11</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>quadrature encoder from Top-Up, part#EC16PHBF-B-20F-24-24C-16Y</description>

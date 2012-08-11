@@ -71,30 +71,4 @@
    <polygon fill="#9A916C" points="0,31.9,7.87486,24.1368,24.2079,24.1368,31.93,31.9" stroke-width="0"/>
   </g>
  </g>
- <text x="50" y="324.375" font-family="OCRA" fill="white" text-anchor="start" stroke="none" id="label" stroke-width="0" font-size="65"/>
- <g transform="translate(333.327,526.05)">
-  <g transform="rotate(-90)">
-   <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45"/>
-  </g>
- </g>
- <g transform="translate(433.327,526.05)">
-  <g transform="rotate(-90)">
-   <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45"/>
-  </g>
- </g>
- <g transform="translate(433.327,73.95)">
-  <g transform="rotate(-90)">
-   <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45"/>
-  </g>
- </g>
- <g transform="translate(533.327,526.05)">
-  <g transform="rotate(-90)">
-   <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="start" stroke="none" stroke-width="0" font-size="45"/>
-  </g>
- </g>
- <g transform="translate(533.327,73.95)">
-  <g transform="rotate(-90)">
-   <text x="0" y="0" font-family="OCRA" fill="white" text-anchor="end" stroke="none" stroke-width="0" font-size="45"/>
-  </g>
- </g>
 </svg>

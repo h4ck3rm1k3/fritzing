@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-SWITCH-SPST-2-RA'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' SWITCH-SPST-2 RA -->
 <version>4</version>
-<date>2012-08-10</date>
+<date>2012-08-11</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description></description>
@@ -36,7 +36,7 @@
 </layers>
 </pcbView>
 <iconView>
-<layers image='icon/R_SW_TH'>
+<layers image='icon/R_SW_TH.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

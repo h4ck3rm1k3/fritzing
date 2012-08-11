@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DiscreteSemi-DIODE-ZENER--BZT52'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DiscreteSemi' DIODE-ZENER -BZT52 -->
 <version>4</version>
-<date>2012-08-10</date>
+<date>2012-08-11</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Zener Diode
@@ -37,7 +37,7 @@ Production Part - 8199
 </layers>
 </pcbView>
 <iconView>
-<layers image='icon/SOD-323'>
+<layers image='icon/SOD-323.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>
