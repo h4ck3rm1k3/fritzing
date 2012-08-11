@@ -1225,6 +1225,7 @@ bool PCBSketchWidget::resizingJumperItemPress(QGraphicsItem * item) {
 			if (board == NULL) {
 				foreach (QGraphicsItem * item, scene()->items()) {
 					PaletteItemBase * itemBase = dynamic_cast<PaletteItemBase *>(item);
+                    if (itemBase == NULL) continue;
 					if (itemBase->itemType() == ModelPart::Jumper) continue;
 
 					savedItems.insert(itemBase->layerKinChief()->id(), itemBase);
