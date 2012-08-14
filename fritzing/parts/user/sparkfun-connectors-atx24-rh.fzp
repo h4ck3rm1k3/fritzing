@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-ATX24-RH'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' ATX24 RH -->
 <version>4</version>
-<date>2012-08-11</date>
+<date>2012-08-14</date>
 <label>J</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;ATX24 Pin Power Supply Connector&lt;/b&gt; This is a good connector for connecting a computer power supply to a PCB. It&apos;s massive, but provides many amps of power at 5V and 12V. SKU: PRT-09498</description>

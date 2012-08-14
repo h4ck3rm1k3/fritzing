@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-FreqCtrl-OSCILLATOR-SMD6'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-FreqCtrl' OSCILLATOR SMD6 -->
 <version>4</version>
-<date>2012-08-11</date>
+<date>2012-08-14</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Generic 5x3 and 7x5 oscillators</description>

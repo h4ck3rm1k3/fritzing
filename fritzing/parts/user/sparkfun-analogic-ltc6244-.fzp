@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-LTC6244-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-AnalogIC' LTC6244  -->
 <version>4</version>
-<date>2012-08-11</date>
+<date>2012-08-14</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Low-noise, high-speed rail-to-rail CMOS op-amp</description>

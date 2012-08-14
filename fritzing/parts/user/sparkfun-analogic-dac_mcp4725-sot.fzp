@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-DAC_MCP4725-SOT'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-AnalogIC' DAC_MCP4725 SOT -->
 <version>4</version>
-<date>2012-08-11</date>
+<date>2012-08-14</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>The MCP4725 is a low-power, high accuracy, single channel, buffered voltage output 12-bit Digital-to-Analog Convertor (DAC) with non-volatile memory (EEPROM). Its on-board precision output amplifier allows it to achieve rail-to-rail analog output.</description>

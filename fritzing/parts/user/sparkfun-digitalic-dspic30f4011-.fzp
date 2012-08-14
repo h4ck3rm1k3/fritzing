@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-DSPIC30F4011-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' DSPIC30F4011  -->
 <version>4</version>
-<date>2012-08-11</date>
+<date>2012-08-14</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Microchip 16-bit DSP for UAVv2x, not tested</description>

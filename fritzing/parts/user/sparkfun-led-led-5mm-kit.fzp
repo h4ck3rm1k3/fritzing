@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-LED-LED-5MM-KIT'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-LED' LED 5MM-KIT -->
 <version>4</version>
-<date>2012-08-11</date>
+<date>2012-08-14</date>
 <label>LED</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;LEDs&lt;/b&gt;
@@ -20,7 +20,7 @@ Standard schematic elements and footprints for 5mm, 3mm, 1206, and 0603 sized LE
 </properties>
 <views>
 <breadboardView>
-<layers image='breadboard/sparkfun-led_led5mm-kit_breadboard.svg'>
+<layers image='breadboard/LED-generic-5mm.svg'>
 <layer layerId='breadboard'/>
 </layers>
 </breadboardView>
@@ -37,7 +37,7 @@ Standard schematic elements and footprints for 5mm, 3mm, 1206, and 0603 sized LE
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/sparkfun-led_led5mm-kit_breadboard.svg'>
+<layers image='breadboard/LED-generic-5mm.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

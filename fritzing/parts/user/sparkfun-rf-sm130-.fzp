@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-SM130-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-RF' SM130  -->
 <version>4</version>
-<date>2012-08-11</date>
+<date>2012-08-14</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>13.56MHz RFID Mifare Read/Write Module</description>

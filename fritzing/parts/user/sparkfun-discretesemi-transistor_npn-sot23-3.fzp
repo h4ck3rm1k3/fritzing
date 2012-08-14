@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DiscreteSemi-TRANSISTOR_NPN-SOT23-3'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DiscreteSemi' TRANSISTOR_NPN SOT23-3 -->
 <version>4</version>
-<date>2012-08-11</date>
+<date>2012-08-14</date>
 <label>Q</label>
 <author>www.fritzing.org</author>
 <description>Generic NPN BJT. MMBT2222 is the common NPN we use. Double check against datasheet- not all devices are the same!</description>
