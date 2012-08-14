@@ -862,6 +862,8 @@ int ConnectorItem::connectionsCount() {
 
 void ConnectorItem::attachedMoved() {
 	//DebugDialog::debug("attached moved");
+    if (!this->isVisible()) return;
+
     QSet<ConnectorItem *> allTo;
     allTo.insert(this);
 	foreach (ConnectorItem * toConnectorItem, m_connectedTo) {
@@ -879,6 +881,9 @@ void ConnectorItem::attachedMoved() {
 			//itemBase->debugInfo("    ");
 			continue;
 		}
+        if (itemBase->getRatsnest()) {
+            continue;
+        }
 
         toConnectorItem->attachedTo()->connectedMoved(this, toConnectorItem);
     }
